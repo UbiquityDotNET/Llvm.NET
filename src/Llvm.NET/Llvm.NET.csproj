@@ -1,0 +1,152 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$([MSBuild]::GetDirectoryNameOfFileAbove($(MSBuildThisFileDirectory), EnlistmentInfo.props))\EnlistmentInfo.props" Condition=" '$([MSBuild]::GetDirectoryNameOfFileAbove($(MSBuildThisFileDirectory), EnlistmentInfo.props))' != '' " />
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">x64</Platform>
+    <ProjectGuid>{0162C8CE-6641-4922-8664-F8A44356FBF7}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Llvm.NET</RootNamespace>
+    <AssemblyName>Llvm.NET</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|AnyCPU'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>..\Build\AnyCPU\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|AnyCPU'">
+    <OutputPath>..\Build\AnyCPU\Release\</OutputPath>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'RelWithDebInfo|AnyCPU'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>..\Build\AnyCPU\RelWithDebInfo\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>full</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="Microsoft.CSharp" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="AlignmentInfo.cs" />
+    <Compile Include="Values\Argument.cs" />
+    <Compile Include="Types\ArrayType.cs" />
+    <Compile Include="Values\BasicBlock.cs" />
+    <Compile Include="Values\Constant.cs" />
+    <Compile Include="Values\ConstantArray.cs" />
+    <Compile Include="Values\ConstantExpression.cs" />
+    <Compile Include="Values\ConstantFP.cs" />
+    <Compile Include="Values\ConstantInt.cs" />
+    <Compile Include="Values\ConstPointerNull.cs" />
+    <Compile Include="Context.cs" />
+    <Compile Include="DebugInfo\DebugInfoBuilder.cs" />
+    <Compile Include="DebugInfo\Descriptor.cs" />
+    <Compile Include="DebugInfo\DwarfEnumerations.cs" />
+    <Compile Include="Enumerations.cs" />
+    <Compile Include="Values\Function.cs" />
+    <Compile Include="Types\FunctionType.cs" />
+    <Compile Include="Values\GlobalAlias.cs" />
+    <Compile Include="Values\GlobalObject.cs" />
+    <Compile Include="GlobalPassRegistry.cs" />
+    <Compile Include="Values\GlobalValue.cs" />
+    <Compile Include="Values\GlobalVariable.cs" />
+    <Compile Include="IExtensiblePropertyContainer.cs" />
+    <Compile Include="InstructionBuilder.cs" />
+    <Compile Include="Instructions\InsertValue.cs" />
+    <Compile Include="Instructions\Switch.cs" />
+    <Compile Include="InternalCodeGeneratorException.cs" />
+    <Compile Include="Instructions\Alloca.cs" />
+    <Compile Include="Instructions\BinaryOperator.cs" />
+    <Compile Include="Instructions\BitCast.cs" />
+    <Compile Include="Instructions\Branch.cs" />
+    <Compile Include="Instructions\Call.cs" />
+    <Compile Include="Instructions\Cast.cs" />
+    <Compile Include="Instructions\Cmp.cs" />
+    <Compile Include="Instructions\DebugDeclare.cs" />
+    <Compile Include="Instructions\DebugInfoIntrinsic.cs" />
+    <Compile Include="Instructions\ExtractValue.cs" />
+    <Compile Include="Instructions\GetElementPtr.cs" />
+    <Compile Include="Instructions\Instruction.cs" />
+    <Compile Include="Instructions\Intrinsic.cs" />
+    <Compile Include="Instructions\FCmp.cs" />
+    <Compile Include="Instructions\IntCmp.cs" />
+    <Compile Include="Instructions\ExtractElement.cs" />
+    <Compile Include="Instructions\IntToPointer.cs" />
+    <Compile Include="Instructions\Load.cs" />
+    <Compile Include="Instructions\MemCpy.cs" />
+    <Compile Include="Instructions\MemIntrinsic.cs" />
+    <Compile Include="Instructions\MemMove.cs" />
+    <Compile Include="Instructions\MemSet.cs" />
+    <Compile Include="Instructions\PhiNode.cs" />
+    <Compile Include="Instructions\PointerToInt.cs" />
+    <Compile Include="Instructions\Return.cs" />
+    <Compile Include="Instructions\SignExtend.cs" />
+    <Compile Include="Instructions\Store.cs" />
+    <Compile Include="Instructions\Terminator.cs" />
+    <Compile Include="Instructions\Trunc.cs" />
+    <Compile Include="Instructions\UnaryInstruction.cs" />
+    <Compile Include="Instructions\ZeroExtend.cs" />
+    <Compile Include="LLVM\Generated.cs" />
+    <Compile Include="LLVM\GeneratedExtensions.cs" />
+    <Compile Include="LLVM\LLVMNative.cs" />
+    <Compile Include="MemoryBuffer.cs" />
+    <Compile Include="Module.cs" />
+    <Compile Include="NativeMethods.cs" />
+    <Compile Include="Values\FunctionParameterList.cs" />
+    <Compile Include="PassManagerBuilder.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Types\SequenceType.cs" />
+    <Compile Include="SizeAndAlignment.cs" />
+    <Compile Include="StaticState.cs" />
+    <Compile Include="Types\StructType.cs" />
+    <Compile Include="Target.cs" />
+    <Compile Include="TargetLayout.cs" />
+    <Compile Include="TargetMachine.cs" />
+    <Compile Include="TragetData.cs" />
+    <Compile Include="Types\TypeRef.cs" />
+    <Compile Include="Values\User.cs" />
+    <Compile Include="Values\UserOperandList.cs" />
+    <Compile Include="Values\Value.cs" />
+    <Compile Include="Types\PointerType.cs" />
+    <Compile Include="Types\VectorType.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\LibLLVM\LibLLVM.vcxproj">
+      <Project>{6c77a7de-d464-430f-96a9-a64768763b5f}</Project>
+      <Name>LibLLVM.3.6.1</Name>
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+      <Private>True</Private>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PostBuildEvent>
+    </PostBuildEvent>
+  </PropertyGroup>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
