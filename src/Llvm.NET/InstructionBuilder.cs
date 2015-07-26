@@ -144,13 +144,13 @@ namespace Llvm.NET
 
         public Value Return( Value value ) => Value.FromHandle( LLVMNative.BuildRet( BuilderHandle, value.ValueHandle ) );
 
-        public Value Call( Value func, params Value[ ] args ) => Call( string.Empty, func, ( IReadOnlyList<Value> )args );
-        public Value Call( Value func, IReadOnlyList<Value> args ) => Call( string.Empty, func, args );
-        public Value Call( string name, Value func, params Value[ ] args ) => Call( name, func, ( IReadOnlyList<Value> )args );
-        public Value Call( string name, Value func, IReadOnlyList<Value> args )
+        public Call Call( Value func, params Value[ ] args ) => Call( string.Empty, func, ( IReadOnlyList<Value> )args );
+        public Call Call( Value func, IReadOnlyList<Value> args ) => Call( string.Empty, func, args );
+        public Call Call( string name, Value func, params Value[ ] args ) => Call( name, func, ( IReadOnlyList<Value> )args );
+        public Call Call( string name, Value func, IReadOnlyList<Value> args )
         {
             LLVMValueRef hCall = BuildCall( name, func, args );
-            return Value.FromHandle( hCall );
+            return (Call)Value.FromHandle( hCall );
         }
 
         /// <summary>Builds an LLVM Store instruction</summary>
