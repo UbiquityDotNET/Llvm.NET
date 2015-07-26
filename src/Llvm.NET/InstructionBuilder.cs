@@ -124,16 +124,20 @@ namespace Llvm.NET
 
         public Value Or( Value lhs, Value rhs, string name ) => BuildBinOp( LLVMNative.BuildOr, lhs, rhs, name );
 
-        public Value Alloca( TypeRef typeRef ) => Alloca( typeRef, string.Empty );
+        public Alloca Alloca( TypeRef typeRef ) => Alloca( typeRef, string.Empty );
 
-        public Value Alloca( TypeRef typeRef, string name ) => Value.FromHandle( LLVMNative.BuildAlloca( BuilderHandle, typeRef.TypeHandle, name ) );
+        public Alloca Alloca( TypeRef typeRef, string name )
+        {
+            var handle = LLVMNative.BuildAlloca( BuilderHandle, typeRef.TypeHandle, name );
+            return ( Alloca )Value.FromHandle( handle );
+        }
 
-        public Value Alloca( TypeRef typeRef, ConstantInt elements ) => Alloca( typeRef, elements, string.Empty );
+        public Alloca Alloca( TypeRef typeRef, ConstantInt elements ) => Alloca( typeRef, elements, string.Empty );
 
-        public Value Alloca( TypeRef typeRef, ConstantInt elements, string name )
+        public Alloca Alloca( TypeRef typeRef, ConstantInt elements, string name )
         {
             var instHandle = LLVMNative.BuildArrayAlloca( BuilderHandle, typeRef.TypeHandle, elements.ValueHandle, name );
-            return Value.FromHandle( instHandle );
+            return (Alloca)Value.FromHandle( instHandle );
         }
 
         public Value Return( ) => Value.FromHandle( LLVMNative.BuildRetVoid( BuilderHandle ) );
@@ -643,7 +647,12 @@ namespace Llvm.NET
                 return Cast.FromHandle( LLVMNative.BuildFPExt( BuilderHandle, valueRef.ValueHandle, toType.TypeHandle, name ) );
         }
 
-        public Value PhiNode( TypeRef resultType ) => Value.FromHandle( LLVMNative.BuildPhi( BuilderHandle, resultType.TypeHandle, string.Empty ) );
+        public PhiNode PhiNode( TypeRef resultType ) => PhiNode( resultType, string.Empty );
+        public PhiNode PhiNode( TypeRef resultType, string name )
+        {
+            var handle = LLVMNative.BuildPhi( BuilderHandle, resultType.TypeHandle, string.Empty );
+            return (PhiNode)Value.FromHandle( handle );
+        }
 
         public Value ExtractValue( Value instance, uint index ) => ExtractValue( instance, index, string.Empty );
         public Value ExtractValue( Value instance, uint index, string name )
