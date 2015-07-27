@@ -98,7 +98,7 @@ namespace Llvm.NET.Values
                 throw new ArgumentException( "Instruction is from a different block", nameof( instruction ) );
 
             var hInst = LLVMNative.GetNextInstruction( instruction.ValueHandle );
-            return hInst.Pointer == IntPtr.Zero ? null : Instruction.FromHandle( hInst );
+            return hInst.Pointer == IntPtr.Zero ? null : (Instruction)Value.FromHandle( hInst );
         }
 
         private BasicBlock( LLVMValueRef valueRef )

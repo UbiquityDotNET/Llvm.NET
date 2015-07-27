@@ -12,7 +12,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Build.cmd" />
-    <None Include="Llvm.NET.3.6.1.nuspec">
+    <None Include="Llvm.NET.nuspec">
       <SubType>Designer</SubType>
     </None>
     <None Include="Llvm.NET.targets" />

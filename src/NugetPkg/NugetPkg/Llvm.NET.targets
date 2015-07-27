@@ -1,19 +1,19 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
     <ItemGroup Condition="'$(MSBuildThisFileDirectory)' != '' And HasTrailingSlash('$(MSBuildThisFileDirectory)')">
-        <Content Include="$(MSBuildThisFileDirectory)LibLLVM\x64\$(Configuration)\LibLLVM.3.6.1.dll">
+        <Content Include="$(MSBuildThisFileDirectory)LibLLVM\x64\LibLLVM.3.6.1.dll">
             <Link>LibLLVM\x64\LibLLVM.3.6.1.dll</Link>
             <CopyToOutputDirectory>Always</CopyToOutputDirectory>
         </Content>
-        <Content Include="$(MSBuildThisFileDirectory)LibLLVM\x64\$(Configuration)\LibLLVM.3.6.1.pdb">
+        <Content Condition="'$(Configuration)'=='Debug'" Include="$(MSBuildThisFileDirectory)LibLLVM\x64\LibLLVM.3.6.1.pdb">
             <Link>LibLLVM\x64\LibLLVM.3.6.1.pdb</Link>
             <CopyToOutputDirectory>Always</CopyToOutputDirectory>
         </Content>
-        <Content Include="$(MSBuildThisFileDirectory)LibLLVM\x86\$(Configuration)\LibLLVM.3.6.1.dll">
+        <Content Include="$(MSBuildThisFileDirectory)LibLLVM\x86\LibLLVM.3.6.1.dll">
             <Link>LibLLVM\x86\LibLLVM.3.6.1.dll</Link>
             <CopyToOutputDirectory>Always</CopyToOutputDirectory>
         </Content>
-        <Content Include="$(MSBuildThisFileDirectory)LibLLVM\x86\$(Configuration)\LibLLVM.3.6.1.pdb">
+        <Content Condition="'$(Configuration)'=='Debug'" Include="$(MSBuildThisFileDirectory)LibLLVM\x86\LibLLVM.3.6.1.pdb">
             <Link>LibLLVM\x86\LibLLVM.3.6.1.pdb</Link>
             <CopyToOutputDirectory>Always</CopyToOutputDirectory>
         </Content>
