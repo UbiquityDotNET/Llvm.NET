@@ -312,7 +312,7 @@ namespace Llvm.NET
             {
                 LLVMModuleRef modRef;
                 IntPtr errMsgPtr;
-                if( LLVMNative.ParseBitcodeInContext( ctx.ContextHandle, buffer.OpaqueHandle, out modRef, out errMsgPtr ).Failed )
+                if( LLVMNative.ParseBitcodeInContext( ctx.ContextHandle, buffer.BufferHandle, out modRef, out errMsgPtr ).Failed )
                 {
                     var errMsg = Marshal.PtrToStringAnsi( errMsgPtr );
                     LLVMNative.DisposeMessage( errMsgPtr );

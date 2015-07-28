@@ -6,6 +6,11 @@ namespace Llvm.NET.Instructions
     public class PhiNode
         : Instruction
     {
+        public void AddIncoming( Value value, BasicBlock srcBlock )
+        {
+            AddIncoming( Tuple.Create( value, srcBlock ) );
+        }
+
         public void AddIncoming( Tuple<Value, BasicBlock> firstIncoming, params Tuple<Value, BasicBlock>[ ] additionalIncoming )
         {
             LLVMValueRef[] llvmValues= new LLVMValueRef[ additionalIncoming.Length + 1 ];
