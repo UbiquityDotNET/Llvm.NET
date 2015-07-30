@@ -173,11 +173,7 @@ namespace Llvm.NET
              || ( value.Type.Kind == TypeKind.Integer && value.Type.IntegerBitWidth != ptrType.ElementType.IntegerBitWidth )
               )
             {
-                var msg = string.Format( "Incompatible types: destination pointer must be of the same type as the value stored.\nTypes are:\n\t{0}\n\t{1}"
-                                       , ptrType.ElementType.ToString( )
-                                       , value.Type.ToString( )
-                                       );
-                throw new ArgumentException( msg );
+                throw new ArgumentException( string.Format( IncompatibleTypeMsgFmt, ptrType.ElementType, value.Type ) );
             }
 
             return Value.FromHandle( LLVMNative.BuildStore( BuilderHandle, value.ValueHandle, destination.ValueHandle ) );
@@ -931,5 +927,11 @@ namespace Llvm.NET
             var hCall = LLVMNative.BuildCall( BuilderHandle, func.ValueHandle, out llvmArgs[ 0 ], ( uint )argCount, name );
             return hCall;
         }
+
+        const string IncompatibleTypeMsgFmt = "Incompatible types: destination pointer must be of the same type as the value stored.\n"
+                                            + "Types are:\n"
+                                            + "\tDestination: {0}\n"
+                                            + "\tValue: {1}";
+
     }
 }
