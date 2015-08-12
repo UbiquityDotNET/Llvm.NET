@@ -10,6 +10,7 @@
     // 3.7 minimal while allowing us to achieve progress
     // on current projects.
 
+    /// <summary>Array of <see cref="Type"/> nodes for use with <see cref="DebugInfoBuilder"/> methods</summary>
     public class TypeArray
     {
         internal TypeArray( LLVMMetadataRef handle )
@@ -20,6 +21,7 @@
         internal LLVMMetadataRef MetadataHandle { get; }
     }
 
+    /// <summary>Array of <see cref="Descriptor"/> nodes for use with <see cref="DebugInfoBuilder"/> methods</summary>
     public class Array
     {
         internal Array( LLVMMetadataRef handle )
@@ -30,8 +32,11 @@
         internal LLVMMetadataRef MetadataHandle { get; }
     }
 
+    /// <summary>Root of the object hierarchy for Debug information metadata nodes</summary>
     public class Descriptor
     {
+        public Tag Tag => (Tag)LLVMNative.DescriptorGetTag( MetadataHandle );
+
         internal Descriptor( LLVMMetadataRef handle )
         {
             MetadataHandle = handle;
@@ -40,14 +45,25 @@
         internal LLVMMetadataRef MetadataHandle { get; }
     }
 
-    public class Variable : Descriptor
+    /// <summary><see cref="http://llvm.org/docs/LangRef.html#diglobalvariable"/></summary>
+    public class GlobalVariable : Descriptor
     {
-        internal Variable( LLVMMetadataRef handle )
+        internal GlobalVariable( LLVMMetadataRef handle )
             : base( handle )
         {
         }
     }
 
+    /// <summary><see cref="http://llvm.org/docs/LangRef.html#dilocalvariable"/></summary>
+    public class LocalVariable : Descriptor
+    {
+        internal LocalVariable( LLVMMetadataRef handle )
+            : base( handle )
+        {
+        }
+    }
+
+    /// <summary><see cref="http://llvm.org/docs/LangRef.html#dienumerator"/></summary>
     public class Enumerator : Descriptor
     {
         internal Enumerator( LLVMMetadataRef handle )
@@ -56,6 +72,7 @@
         }
     }
 
+    /// <summary><see cref="http://llvm.org/docs/LangRef.html#disubrange"/></summary>
     public class Subrange : Descriptor
     {
         internal Subrange( LLVMMetadataRef handle )
@@ -64,6 +81,7 @@
         }
     }
 
+    /// <summary>Base class for all Debug info scopes</summary>
     public class Scope : Descriptor
     {
         internal Scope( LLVMMetadataRef handle )
@@ -72,6 +90,7 @@
         }
     }
 
+    /// <summary><see cref="http://llvm.org/docs/LangRef.html#dicompileunit"/></summary>
     public class CompileUnit : Scope
     {
         internal CompileUnit( LLVMMetadataRef handle )
@@ -80,6 +99,7 @@
         }
     }
 
+    /// <summary><see cref="http://llvm.org/docs/LangRef.html#difile"/></summary>
     public class File : Scope
     {
         internal File( LLVMMetadataRef handle )
@@ -88,6 +108,7 @@
         }
     }
 
+    /// <summary><see cref="http://llvm.org/docs/LangRef.html#dilexicalblock"/></summary>
     public class LexicalBlock : Scope
     {
         internal LexicalBlock( LLVMMetadataRef handle )
@@ -96,6 +117,7 @@
         }
     }
 
+    /// <summary><see cref="http://llvm.org/docs/LangRef.html#dilexicalblockfile"/></summary>
     public class LexicalBlockFile : Scope
     {
         internal LexicalBlockFile( LLVMMetadataRef handle )
@@ -104,6 +126,7 @@
         }
     }
 
+    /// <summary><see cref="http://llvm.org/docs/LangRef.html#dinamespace"/></summary>
     public class Namespace : Scope
     {
         internal Namespace( LLVMMetadataRef handle )
@@ -112,6 +135,7 @@
         }
     }
 
+    /// <summary><see cref="http://llvm.org/docs/LangRef.html#disubprogram"/></summary>
     public class SubProgram : Scope
     {
         internal SubProgram( LLVMMetadataRef handle )
@@ -120,6 +144,7 @@
         }
     }
 
+    /// <summary>Base class for Debug info types</summary>
     public class Type : Scope
     {
         internal Type( LLVMMetadataRef handle )
@@ -128,6 +153,7 @@
         }
     }
 
+    /// <summary><see cref="http://llvm.org/docs/LangRef.html#dibasictype"/></summary>
     public class BasicType : Type
     {
         internal BasicType( LLVMMetadataRef handle )
@@ -136,6 +162,7 @@
         }
     }
 
+    /// <summary><see cref="http://llvm.org/docs/LangRef.html#diderivedtype"/></summary>
     public class DerivedType : Type
     {
         internal DerivedType( LLVMMetadataRef handle )
@@ -144,6 +171,7 @@
         }
     }
 
+    /// <summary><see cref="http://llvm.org/docs/LangRef.html#dicompositetype"/></summary>
     public class CompositeType : Type
     {
         internal CompositeType( LLVMMetadataRef handle )
@@ -152,7 +180,7 @@
         }
     }
 
-    // signature of a SubProgram is a type
+    /// <summary><see cref="http://llvm.org/docs/LangRef.html#disubroutinetype"/></summary>
     public class SubroutineType : CompositeType
     {
         internal SubroutineType( LLVMMetadataRef handle )

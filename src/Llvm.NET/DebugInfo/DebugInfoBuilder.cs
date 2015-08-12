@@ -104,7 +104,7 @@ namespace Llvm.NET.DebugInfo
             return new SubProgram( handle );
         }
 
-        public Variable CreateLocalVariable( uint dwarfTag
+        public LocalVariable CreateLocalVariable( uint dwarfTag
                                            , Scope scope
                                            , string name
                                            , File file
@@ -125,7 +125,7 @@ namespace Llvm.NET.DebugInfo
                                                                 , flags
                                                                 , argNo
                                                                 );
-            return new Variable( handle );
+            return new LocalVariable( handle );
         }
 
         public BasicType CreateBasicType( string name, ulong bitSize, ulong bitAlign, uint encoding )
@@ -264,20 +264,26 @@ namespace Llvm.NET.DebugInfo
             return new TypeArray( handle );
         }
 
-        CompositeType CreateEnumerationType( Scope scope
-                                           , string name
-                                           , File file
-                                           , uint lineNumber
-                                           , ulong sizeInBits
-                                           , ulong alignInBits
-                                           , IEnumerable<Enumerator> elements
-                                           , Type underlyingType
-                                           , string uniqueId = ""
-                                           )
+        public Enumerator CreateEnumeratorValue( string name, long value )
+        {
+            var handle = LLVMNative.DIBuilderCreateEnumeratorValue( BuilderHandle, name, value );
+            return new Enumerator( handle );
+        }
+
+        public CompositeType CreateEnumerationType( Scope scope
+                                                  , string name
+                                                  , File file
+                                                  , uint lineNumber
+                                                  , ulong sizeInBits
+                                                  , ulong alignInBits
+                                                  , IEnumerable<Enumerator> elements
+                                                  , Type underlyingType
+                                                  , string uniqueId = ""
+                                                  )
         {
             var elementHandles = elements.Select( e => e.MetadataHandle ).ToArray( );
             var elementArray = LLVMNative.DIBuilderGetOrCreateArray( BuilderHandle, out elementHandles[ 0 ], (ulong)elementHandles.LongLength );
-            var handle = LLVMNative.DiBuilderCreateEnumerationType( BuilderHandle
+            var handle = LLVMNative.DIBuilderCreateEnumerationType( BuilderHandle
                                                                   , scope.MetadataHandle
                                                                   , name
                                                                   , file.MetadataHandle

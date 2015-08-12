@@ -158,7 +158,7 @@ extern "C"
                                                , Name
                                                , unwrapDI<DIFile>( File )
                                                , Line
-                                               , unwrapDI<DIType>( Ty )
+                                               , unwrapDI<DIType>( Ty ) // REVIEW: This is suppossed to be a DITypeRef, impl will use implicit casts from node. Is this valid?
                                                , AlwaysPreserve
                                                , Flags
                                                , ArgNo
@@ -368,7 +368,7 @@ extern "C"
         return wrap( Instr );
     }
 
-    LLVMMetadataRef LLVMDiBuilderCreateEnumerationType( LLVMDIBuilderRef Dref
+    LLVMMetadataRef LLVMDIBuilderCreateEnumerationType( LLVMDIBuilderRef Dref
                                                         , LLVMMetadataRef Scope          // DIScope
                                                         , char const* Name
                                                         , LLVMMetadataRef File           // DIFile
@@ -396,10 +396,16 @@ extern "C"
 
     /// createEnumerator - Create a single enumerator value.
     //DIEnumerator createEnumerator( StringRef Name, int64_t Val );
-    LLVMMetadataRef LLVMDiBuilderCreateEnumeratorValue( LLVMDIBuilderRef Dref, char const* Name, int64_t Val )
+    LLVMMetadataRef LLVMDIBuilderCreateEnumeratorValue( LLVMDIBuilderRef Dref, char const* Name, int64_t Val )
     {
         DIBuilder* D = unwrap( Dref );
         DIEnumerator enumerator = D->createEnumerator( Name, Val );
         return wrap( enumerator );
+    }
+
+    LLVMDwarfTag LLVMDIDescriptorGetTag( LLVMMetadataRef descriptor )
+    {
+        DIDescriptor desc = unwrapDI< DIDescriptor >( descriptor );
+        return (LLVMDwarfTag)desc.getTag( );
     }
 }

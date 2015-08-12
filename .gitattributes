@@ -15,6 +15,9 @@
 *.cpp text eol=crlf
 *.s text eol=crlf
 *.ll text eol=crlf
+*.cmd text eol=crlf
+*.props text eol=crlf
+*.def text eol-crlf
 
 ###############################################################################
 # Set the merge driver for project and solution files
