@@ -34,7 +34,7 @@ extern "C"
 {
     void LLVMSetDebugLoc( LLVMValueRef inst, unsigned line, unsigned column, LLVMMetadataRef scope )
     {
-        unwrap<Instruction>(inst)->setDebugLoc( DebugLoc::get( line, column, unwrap<MDNode>( scope ) ) );
+        unwrap<Instruction>( inst )->setDebugLoc( DebugLoc::get( line, column, unwrap<MDNode>( scope ) ) );
     }
 
     LLVMDIBuilderRef LLVMNewDIBuilder( LLVMModuleRef mref, LLVMBool allowUnresolved )
@@ -366,5 +366,40 @@ extern "C"
                                                          , unwrap( Block )
                                                          );
         return wrap( Instr );
+    }
+
+    LLVMMetadataRef LLVMDiBuilderCreateEnumerationType( LLVMDIBuilderRef Dref
+                                                        , LLVMMetadataRef Scope          // DIScope
+                                                        , char const* Name
+                                                        , LLVMMetadataRef File           // DIFile
+                                                        , unsigned LineNumber
+                                                        , uint64_t SizeInBits
+                                                        , uint64_t AlignInBits
+                                                        , LLVMMetadataRef Elements       // DIArray
+                                                        , LLVMMetadataRef UnderlyingType // DIType
+                                                        , char const* UniqueId
+                                                        )
+    {
+        DIBuilder* D = unwrap( Dref );
+        DICompositeType type = D->createEnumerationType( unwrapDI<DIScope>( Scope )
+                                                         , Name
+                                                         , unwrapDI<DIFile>( File )
+                                                         , LineNumber
+                                                         , SizeInBits
+                                                         , AlignInBits
+                                                         , unwrapDI<DIArray>( Elements )
+                                                         , unwrapDI<DIType>( UnderlyingType )
+                                                         , UniqueId
+                                                         );
+        return wrap( type );
+    }
+
+    /// createEnumerator - Create a single enumerator value.
+    //DIEnumerator createEnumerator( StringRef Name, int64_t Val );
+    LLVMMetadataRef LLVMDiBuilderCreateEnumeratorValue( LLVMDIBuilderRef Dref, char const* Name, int64_t Val )
+    {
+        DIBuilder* D = unwrap( Dref );
+        DIEnumerator enumerator = D->createEnumerator( Name, Val );
+        return wrap( enumerator );
     }
 }

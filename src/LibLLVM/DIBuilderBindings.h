@@ -185,6 +185,33 @@ extern "C" {
                                               , LLVMBasicBlockRef Block
                                               );
 
+    /// createEnumerationType - Create debugging information entry for an
+    /// enumeration.
+    /// @param Scope          Scope in which this enumeration is defined.
+    /// @param Name           Union name.
+    /// @param File           File where this member is defined.
+    /// @param LineNumber     Line number.
+    /// @param SizeInBits     Member size.
+    /// @param AlignInBits    Member alignment.
+    /// @param Elements       Enumeration elements.
+    /// @param UnderlyingType Underlying type of a C++11/ObjC fixed enum.
+    /// @param UniqueIdentifier A unique identifier for the enum.
+    LLVMMetadataRef LLVMDiBuilderCreateEnumerationType( LLVMDIBuilderRef D
+                                                      , LLVMMetadataRef Scope          // DIScope
+                                                      , char const* Name
+                                                      , LLVMMetadataRef File           // DIFile
+                                                      , unsigned LineNumber
+                                                      , uint64_t SizeInBits
+                                                      , uint64_t AlignInBits
+                                                      , LLVMMetadataRef Elements       // DIArray
+                                                      , LLVMMetadataRef UnderlyingType // DIType
+                                                      , char const*
+                                                      );
+
+    /// createEnumerator - Create a single enumerator value.
+    //DIEnumerator createEnumerator( StringRef Name, int64_t Val );
+    LLVMMetadataRef LLVMDiBuilderCreateEnumeratorValue( LLVMDIBuilderRef D, char const* Name, int64_t Val );
+
 #ifdef __cplusplus
 } // extern "C"
 #endif

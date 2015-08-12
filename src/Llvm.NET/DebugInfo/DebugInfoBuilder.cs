@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using Llvm.NET.Values;
 
@@ -261,6 +262,33 @@ namespace Llvm.NET.DebugInfo
             var buf = types.Select( t => t.MetadataHandle ).ToArray();
             var handle = LLVMNative.DIBuilderGetOrCreateTypeArray( BuilderHandle, out buf[ 0 ], (ulong)buf.LongLength );
             return new TypeArray( handle );
+        }
+
+        CompositeType CreateEnumerationType( Scope scope
+                                           , string name
+                                           , File file
+                                           , uint lineNumber
+                                           , ulong sizeInBits
+                                           , ulong alignInBits
+                                           , IEnumerable<Enumerator> elements
+                                           , Type underlyingType
+                                           , string uniqueId = ""
+                                           )
+        {
+            var elementHandles = elements.Select( e => e.MetadataHandle ).ToArray( );
+            var elementArray = LLVMNative.DIBuilderGetOrCreateArray( BuilderHandle, out elementHandles[ 0 ], (ulong)elementHandles.LongLength );
+            var handle = LLVMNative.DiBuilderCreateEnumerationType( BuilderHandle
+                                                                  , scope.MetadataHandle
+                                                                  , name
+                                                                  , file.MetadataHandle
+                                                                  , lineNumber
+                                                                  , sizeInBits
+                                                                  , alignInBits
+                                                                  , elementArray
+                                                                  , underlyingType.MetadataHandle
+                                                                  , uniqueId
+                                                                  );
+            return new CompositeType( handle );
         }
 
         public void Finish()

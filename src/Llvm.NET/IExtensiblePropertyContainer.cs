@@ -99,7 +99,7 @@ namespace Llvm.NET
                 object currentValue;
                 if( Items.TryGetValue( id, out currentValue ) )
                 {
-                    if( currentValue.GetType( ) != value.GetType() )
+                    if( currentValue != null && value !=null && currentValue.GetType( ) != value.GetType() )
                         throw new ArgumentException( " Cannot change type of an extended property once set", nameof( value ) );
                 }
                 Items[ id ] = value;

@@ -75,12 +75,7 @@ namespace Llvm.NET
         public override string ToString( )
         {
             IntPtr msgPtr = LLVMNative.CopyStringRepOfTargetData( OpaqueHandle );
-            if( msgPtr == IntPtr.Zero )
-                return string.Empty;
-
-            var retVal = Marshal.PtrToStringAnsi( msgPtr );
-            LLVMNative.DisposeMessage( msgPtr );
-            return retVal;
+            return LLVMNative.MarshalMsg( msgPtr );
         }
 
         internal TargetData( LLVMTargetDataRef targetDataHandle, bool isDisposable )

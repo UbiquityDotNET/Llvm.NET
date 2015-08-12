@@ -3,8 +3,8 @@ setlocal
 set OUTPUT_DIR=..\..\..\BuildOutput\Nuget\%2
 set clean=
 
-if /i '%1'=='rebuild' set clean=true
-if /i '%1'=='clean' set clean=true
+REM if /i '%1'=='rebuild' set clean=true
+REM if /i '%1'=='clean' set clean=true
 if DEFINED clean del /q %OUTPUT_DIR%\Llvm.NET.*.nupkg
 if '%1'=='clean' goto :return
 

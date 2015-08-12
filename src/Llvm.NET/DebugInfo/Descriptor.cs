@@ -48,6 +48,14 @@
         }
     }
 
+    public class Enumerator : Descriptor
+    {
+        internal Enumerator( LLVMMetadataRef handle )
+            : base( handle )
+        {
+        }
+    }
+
     public class Subrange : Descriptor
     {
         internal Subrange( LLVMMetadataRef handle )

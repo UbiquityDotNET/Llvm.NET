@@ -237,5 +237,11 @@ namespace Llvm.NET
 
         [DllImport(libraryPath, EntryPoint = "LLVMDIBuilderInsertValueAtEnd", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl)]
         internal static extern int DIBuilderInsertValueAtEnd(LLVMDIBuilderRef @D, int @Val, ulong @Offset, LLVMMetadataRef @VarInfo, LLVMMetadataRef @Expr, int @Block);
+
+        [DllImport(libraryPath, EntryPoint = "LLVMDiBuilderCreateEnumerationType", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl)]
+        internal static extern LLVMMetadataRef DiBuilderCreateEnumerationType( LLVMDIBuilderRef @D, LLVMMetadataRef @Scope, string @Name, LLVMMetadataRef @File, uint @LineNumber, ulong @SizeInBits, ulong @AlignInBits, LLVMMetadataRef @Elements, LLVMMetadataRef @UnderlyingType, string @UniqueId );
+
+        [DllImport( libraryPath, EntryPoint = "LLVMDiBuilderCreateEnumeratorValue", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl )]
+        internal static extern LLVMMetadataRef DiBuilderCreateEnumeratorValue( LLVMDIBuilderRef @D, string @Name, long @Val );
     }
 }

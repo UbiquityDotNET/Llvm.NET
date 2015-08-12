@@ -22,8 +22,18 @@ namespace Llvm.NET
 
         internal static string MarshalMsg( IntPtr msg )
         {
-            var retVal = Marshal.PtrToStringAnsi( msg );
-            DisposeMessage( msg );
+            var retVal = string.Empty;
+            if( msg != IntPtr.Zero )
+            {
+                try
+                {
+                    retVal = Marshal.PtrToStringAnsi( msg );
+                }
+                finally
+                {
+                    DisposeMessage( msg );
+                }
+            }
             return retVal;
         }
 

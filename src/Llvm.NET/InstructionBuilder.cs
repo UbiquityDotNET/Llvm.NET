@@ -247,12 +247,12 @@ namespace Llvm.NET
         /// and C++ programmers an expression like pFoo->bar seems to only have a single offset or
         /// index. However that is only syntactic sugar where the compiler implicitly hides the first
         /// index. That is, there is no difference between pFoo[0].bar and pFoo->bar except that the
-        /// former makes the first index explicit. LLVM requires an explicit first index even if it is
-        /// zero, in order to properly compute the offset for a given element in an aggregate type.
+        /// former makes the first index explicit. In order to properly compute the offset for a given
+        /// element in an aggregate type LLVM requires an explicit first index even if it is zero.
         /// </remarks>
         public Value GetElementPtr( Value pointer, IEnumerable<Value> args ) => GetElementPtr( pointer, args, string.Empty );
 
-            /// <summary>Creates a <see cref="User"/> that accesses an element of a type referenced by a pointer</summary>
+        /// <summary>Creates a <see cref="User"/> that accesses an element of a type referenced by a pointer</summary>
         /// <param name="pointer">pointer to get an element from</param>
         /// <param name="args">additional indeces for computing the resulting pointer</param>
         /// <param name="name">Name to give to the instruction</param>
@@ -271,8 +271,8 @@ namespace Llvm.NET
         /// and C++ programmers an expression like pFoo->bar seems to only have a single offset or
         /// index. However that is only syntactic sugar where the compiler implicitly hides the first
         /// index. That is, there is no difference between pFoo[0].bar and pFoo->bar except that the
-        /// former makes the first index explicit. LLVM requires an explicit first index even if it is
-        /// zero, in order to properly compute the offset for a given element in an aggregate type.
+        /// former makes the first index explicit. In order to properly compute the offset for a given
+        /// element in an aggregate type LLVM requires an explicit first index even if it is zero.
         /// </remarks>
         public Value GetElementPtr( Value pointer, IEnumerable<Value> args, string name )
         {
@@ -305,8 +305,8 @@ namespace Llvm.NET
         /// and C++ programmers an expression like pFoo->bar seems to only have a single offset or
         /// index. However that is only syntactic sugar where the compiler implicitly hides the first
         /// index. That is, there is no difference between pFoo[0].bar and pFoo->bar except that the
-        /// former makes the first index explicit. LLVM requires an explicit first index even if it is
-        /// zero, in order to properly compute the offset for a given element in an aggregate type.
+        /// former makes the first index explicit. In order to properly compute the offset for a given
+        /// element in an aggregate type LLVM requires an explicit first index even if it is zero.
         /// </remarks>
         public Value GetElementPtrInBounds( Value pointer, params Value[ ] args ) => GetElementPtrInBounds( pointer, args, string.Empty );
         public Value GetElementPtrInBounds( Value pointer, string name, params Value[ ] args ) => GetElementPtrInBounds( pointer, args, name );
@@ -328,10 +328,10 @@ namespace Llvm.NET
         /// basic gist is that the GEP instruction does not access memory, it only computes a pointer
         /// offset from a base. A common confusion is around the first index and what it means. For C
         /// and C++ programmers an expression like pFoo->bar seems to only have a single offset or
-        /// index. However that is only syntactic sugar where the compiler implicitly hides the first
+        /// index. However, that is only syntactic sugar where the compiler implicitly hides the first
         /// index. That is, there is no difference between pFoo[0].bar and pFoo->bar except that the
-        /// former makes the first index explicit. LLVM requires an explicit first index even if it is
-        /// zero, in order to properly compute the offset for a given element in an aggregate type.
+        /// former makes the first index explicit. In order to properly compute the offset for a given
+        /// element in an aggregate type LLVM requires an explicit first index even if it is zero.
         /// </remarks>
         public Value GetElementPtrInBounds( Value pointer, IEnumerable<Value> args, string name )
         {
