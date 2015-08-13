@@ -17,6 +17,7 @@
 #include "llvm/IR/IRBuilder.h"
 #include "llvm/IR/Module.h"
 #include "llvm/IR/DIBuilder.h"
+#include "llvm/IR/Constant.h"
 
 using namespace llvm;
 
@@ -158,7 +159,7 @@ extern "C"
                                                , Name
                                                , unwrapDI<DIFile>( File )
                                                , Line
-                                               , unwrapDI<DIType>( Ty ) // REVIEW: This is suppossed to be a DITypeRef, impl will use implicit casts from node. Is this valid?
+                                               , unwrapDI<DIType>( Ty )
                                                , AlwaysPreserve
                                                , Flags
                                                , ArgNo
@@ -408,4 +409,31 @@ extern "C"
         DIDescriptor desc = unwrapDI< DIDescriptor >( descriptor );
         return (LLVMDwarfTag)desc.getTag( );
     }
+
+    LLVMMetadataRef LLVMDIBuilderCreateGlobalVariable( LLVMDIBuilderRef Dref
+                                                       , LLVMMetadataRef Context
+                                                       , char const* Name
+                                                       , char const* LinkageName
+                                                       , LLVMMetadataRef File  // DIFile
+                                                       , unsigned LineNo
+                                                       , LLVMMetadataRef Ty    //DITypeRef
+                                                       , LLVMBool isLocalToUnit
+                                                       , LLVMValueRef Val
+                                                       , LLVMMetadataRef Decl // = nullptr
+                                                       )
+    {
+        DIBuilder* D = unwrap( Dref );
+        DIGlobalVariable globalVar = D->createGlobalVariable( unwrapDI<DIDescriptor>( Context )
+                                                            , Name
+                                                            , LinkageName
+                                                            , unwrapDI<DIFile>( File )
+                                                            , LineNo
+                                                            , unwrapDI<DIType>( Ty )
+                                                            , isLocalToUnit
+                                                            , unwrap<Constant>( Val )
+                                                            , unwrapDI<DIDescriptor>( Decl )
+                                                            );
+        return wrap( globalVar );
+    }
+
 }

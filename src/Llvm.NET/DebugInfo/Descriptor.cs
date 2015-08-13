@@ -35,7 +35,7 @@
     /// <summary>Root of the object hierarchy for Debug information metadata nodes</summary>
     public class Descriptor
     {
-        public Tag Tag => (Tag)LLVMNative.DescriptorGetTag( MetadataHandle );
+        public Tag Tag => (Tag)LLVMNative.DIDescriptorGetTag( MetadataHandle );
 
         internal Descriptor( LLVMMetadataRef handle )
         {

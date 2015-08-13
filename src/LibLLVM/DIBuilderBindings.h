@@ -304,17 +304,18 @@ extern "C" {
     ///                      externally visible or not.
     /// @param Val         llvm::Value of the variable.
     /// @param Decl        Reference to the corresponding declaration.
-    //DIGlobalVariable LLVMDIBuilderCreateGlobalVariable( LLVMDIBuilderRef D
-    //                                                  , LLVMMetadataRef Context
-    //                                                  , char const* Name
-    //                                                  , char const* LinkageName
-    //                                                  , LLVMMetadataRef File  // DIFile
-    //                                                  , unsigned LineNo
-    //                                                  , DITypeRef Ty          //DITypeRef???
-    //                                                  , bool isLocalToUnit
-    //                                                  , LLVMValueRef Val
-    //                                                  , MDNode *Decl, // = nullptr
-    //                                                  );
+    /*DIGlobalVariable*/
+    LLVMMetadataRef LLVMDIBuilderCreateGlobalVariable( LLVMDIBuilderRef D
+                                                      , LLVMMetadataRef Context
+                                                      , char const* Name
+                                                      , char const* LinkageName
+                                                      , LLVMMetadataRef File  // DIFile
+                                                      , unsigned LineNo
+                                                      , LLVMMetadataRef Ty    //DITypeRef
+                                                      , LLVMBool isLocalToUnit
+                                                      , LLVMValueRef Val
+                                                      , LLVMMetadataRef Decl // = nullptr
+                                                      );
 
     LLVMDwarfTag LLVMDIDescriptorGetTag( LLVMMetadataRef descriptor );
 

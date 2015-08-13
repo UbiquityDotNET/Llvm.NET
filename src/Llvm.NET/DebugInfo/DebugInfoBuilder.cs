@@ -297,6 +297,31 @@ namespace Llvm.NET.DebugInfo
             return new CompositeType( handle );
         }
 
+        public GlobalVariable CreateGlobalVariable( Descriptor scope
+                                                  , string name
+                                                  , string linkageName
+                                                  , File file
+                                                  , uint lineNo
+                                                  , Type type
+                                                  , bool isLocalToUnit
+                                                  , Value value
+                                                  , Descriptor decl
+                                                  )
+        {
+            var handle = LLVMNative.DIBuilderCreateGlobalVariable( BuilderHandle
+                                                                 , scope.MetadataHandle
+                                                                 , name
+                                                                 , linkageName
+                                                                 , file.MetadataHandle
+                                                                 , lineNo
+                                                                 , type.MetadataHandle
+                                                                 , isLocalToUnit
+                                                                 , value.ValueHandle
+                                                                 , decl.MetadataHandle
+                                                                 );
+            return new GlobalVariable( handle );
+        }
+
         public void Finish()
         {
             if( !IsFinished )
