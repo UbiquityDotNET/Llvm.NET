@@ -10,7 +10,7 @@ set LLVM_ROOT=%~d0%~p0
 @REM By default do the following:
 @REM 1 - Generate the build project and solutions from CMake
 @REM 2 - Build all the Platform\configuration combos (2x3)
-@REM 3 - Register the outpurt location in registry
+@REM 3 - Register the output location in registry
 set GENERATE=1
 set BUILD=1
 set REGISTER=1
