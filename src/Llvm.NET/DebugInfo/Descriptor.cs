@@ -33,6 +33,11 @@
     }
 
     /// <summary>Root of the object hierarchy for Debug information metadata nodes</summary>
+    /// <remarks>
+    /// A descriptor is just a wraper around a Metadata Node (MDNode in LLVM C++) and, unlike
+    /// <see cref="Values.Value"/> they are not uniqued, although the underlying metadata nodes
+    /// usually are. 
+    /// </remarks>
     public class Descriptor
     {
         public Tag Tag => (Tag)LLVMNative.DIDescriptorGetTag( MetadataHandle );

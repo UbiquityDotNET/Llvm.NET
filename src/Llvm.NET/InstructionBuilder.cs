@@ -338,6 +338,9 @@ namespace Llvm.NET
             if( pointer.Type.Kind != TypeKind.Pointer )
                 throw new ArgumentException( "Pointer value expected", nameof( pointer ) );
 
+            if( args.Any( a => !a.Type.IsInteger ) )
+                throw new ArgumentException( $"GEP index arguments must be integers" );
+
             LLVMValueRef[ ] llvmArgs = args.Select( a => a.ValueHandle ).ToArray( );
             if( llvmArgs.Length == 0 )
                 throw new ArgumentException( "There must be at least one index argument", nameof( args ) );
