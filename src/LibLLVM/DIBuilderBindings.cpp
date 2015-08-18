@@ -273,6 +273,22 @@ extern "C"
         return wrap( CT );
     }
 
+    LLVMMetadataRef LLVMDIBuilderCreateVectorType( LLVMDIBuilderRef Dref
+                                                  , uint64_t SizeInBits
+                                                  , uint64_t AlignInBits
+                                                  , LLVMMetadataRef ElementType
+                                                  , LLVMMetadataRef Subscripts
+                                                  )
+    {
+        DIBuilder *D = unwrap( Dref );
+        DICompositeType CT = D->createVectorType( SizeInBits
+                                                 , AlignInBits
+                                                 , unwrapDI<DIType>( ElementType )
+                                                 , unwrapDI<DIArray>( Subscripts )
+                                                 );
+        return wrap( CT );
+    }
+
     LLVMMetadataRef LLVMDIBuilderCreateTypedef( LLVMDIBuilderRef Dref
                                                 , LLVMMetadataRef Ty
                                                 , const char *Name

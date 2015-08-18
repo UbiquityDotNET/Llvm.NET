@@ -187,10 +187,7 @@ namespace Llvm.NET
         }
 
         public Value Load( Value sourcePtr ) => Load( sourcePtr, string.Empty );
-        public Value Load( Value sourcePtr, string name )
-        {
-            return Value.FromHandle( LLVMNative.BuildLoad( BuilderHandle, sourcePtr.ValueHandle, name ) );
-        }
+        public Value Load( Value sourcePtr, string name ) => Value.FromHandle( LLVMNative.BuildLoad( BuilderHandle, sourcePtr.ValueHandle, name ) );
 
         /// <summary>Creates a <see cref="User"/> that accesses an element (field) of a structure</summary>
         /// <param name="pointer">pointer to the strucure to get an element from</param>
@@ -203,10 +200,7 @@ namespace Llvm.NET
         /// <para>Note that <paramref name="pointer"/> must be a pointer to a structure
         /// or an excpetion is thrown.</para>
         /// </returns>
-        public Value GetStructElementPointer( Value pointer, uint index )
-        {
-            return GetStructElementPointer( pointer, index, string.Empty );
-        }
+        public Value GetStructElementPointer( Value pointer, uint index ) => GetStructElementPointer( pointer, index, string.Empty );
 
         /// <summary>Creates a <see cref="User"/> that accesses an element (field) of a structure</summary>
         /// <param name="pointer">pointer to the strucure to get an element from</param>
@@ -276,13 +270,7 @@ namespace Llvm.NET
         /// </remarks>
         public Value GetElementPtr( Value pointer, IEnumerable<Value> args, string name )
         {
-            if( pointer.Type.Kind != TypeKind.Pointer )
-                throw new ArgumentException( "Pointer value expected", nameof( pointer ) );
-
-            LLVMValueRef[ ] llvmArgs = args.Select( a=> a.ValueHandle ).ToArray();
-            if( llvmArgs.Length == 0 )
-                throw new ArgumentException( "There must be at least one index argument", nameof( args ) );
-
+            var llvmArgs = GetValidatedGEPArgs( pointer, args );
             var hRetVal = LLVMNative.BuildGEP( BuilderHandle, pointer.ValueHandle, out llvmArgs[ 0 ], ( uint )llvmArgs.Length, string.Empty );
             return Value.FromHandle( hRetVal );
         }
@@ -335,16 +323,7 @@ namespace Llvm.NET
         /// </remarks>
         public Value GetElementPtrInBounds( Value pointer, IEnumerable<Value> args, string name )
         {
-            if( pointer.Type.Kind != TypeKind.Pointer )
-                throw new ArgumentException( "Pointer value expected", nameof( pointer ) );
-
-            if( args.Any( a => !a.Type.IsInteger ) )
-                throw new ArgumentException( $"GEP index arguments must be integers" );
-
-            LLVMValueRef[ ] llvmArgs = args.Select( a => a.ValueHandle ).ToArray( );
-            if( llvmArgs.Length == 0 )
-                throw new ArgumentException( "There must be at least one index argument", nameof( args ) );
-
+            var llvmArgs = GetValidatedGEPArgs( pointer, args );
             var hRetVal = LLVMNative.BuildInBoundsGEP( BuilderHandle, pointer.ValueHandle, out llvmArgs[ 0 ], ( uint )llvmArgs.Length, string.Empty );
             return Value.FromHandle( hRetVal );
         }
@@ -365,21 +344,16 @@ namespace Llvm.NET
         /// basic gist is that the GEP instruction does not access memory, it only computes a pointer
         /// offset from a base. A common confusion is around the first index and what it means. For C
         /// and C++ programmers an expression like pFoo->bar seems to only have a single offset or
-        /// index. However that is only sytactic sugar where the compiler implicitly hides the first
+        /// index. However that is only syntactic sugar where the compiler implicitly hides the first
         /// index. That is, there is no difference between pFoo[0].bar and pFoo->bar except that the
         /// former makes the first index explicit. LLVM requires an explicit first index even if it is
         /// zero, in order to properly compute the offset for a given element in an aggregate type.
         /// </remarks>
         public Value ConstGetElementPtrInBounds( Value pointer, params Value[ ] args )
         {
-            if( pointer.Type.Kind != TypeKind.Pointer )
-                throw new ArgumentException( "Pointer value expected", nameof( pointer ) );
-
-            LLVMValueRef[ ] llvmArgs = args.Select( a => a.ValueHandle ).ToArray( );
-            if( llvmArgs.Length == 0 )
-                throw new ArgumentException( "There must be at least one index argument", nameof( args ) );
-
-            return Value.FromHandle( LLVMNative.ConstInBoundsGEP( pointer.ValueHandle, out llvmArgs[ 0 ], ( uint )llvmArgs.Length ) );
+            var llvmArgs = GetValidatedGEPArgs( pointer, args );
+            var handle = LLVMNative.ConstInBoundsGEP( pointer.ValueHandle, out llvmArgs[ 0 ], ( uint )llvmArgs.Length );
+            return Value.FromHandle( handle );
         }
 
         /// <summary>Builds a cast from an integer to a pointer</summary>
@@ -856,6 +830,21 @@ namespace Llvm.NET
             Dispose( false );
         }
         #endregion
+
+        LLVMValueRef[ ] GetValidatedGEPArgs( Value pointer, IEnumerable<Value> args)
+        {
+            if( pointer.Type.Kind != TypeKind.Pointer )
+                throw new ArgumentException( "Pointer value expected", nameof( pointer ) );
+
+            if( args.Any( a => !a.Type.IsInteger ) )
+                throw new ArgumentException( $"GEP index arguments must be integers" );
+
+            LLVMValueRef[ ] llvmArgs = args.Select( a => a.ValueHandle ).ToArray( );
+            if( llvmArgs.Length == 0 )
+                throw new ArgumentException( "There must be at least one index argument", nameof( args ) );
+
+            return llvmArgs;
+        }
 
         internal LLVMBuilderRef BuilderHandle { get; }
 

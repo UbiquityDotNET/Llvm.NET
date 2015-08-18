@@ -222,6 +222,13 @@ extern "C" {
                                                 , LLVMMetadataRef Subscripts
                                                 );
 
+    LLVMMetadataRef LLVMDIBuilderCreateVectorType( LLVMDIBuilderRef D
+                                                  , uint64_t SizeInBits
+                                                  , uint64_t AlignInBits
+                                                  , LLVMMetadataRef ElementType
+                                                  , LLVMMetadataRef Subscripts
+                                                  );
+
     LLVMMetadataRef LLVMDIBuilderCreateTypedef( LLVMDIBuilderRef D
                                               , LLVMMetadataRef Ty
                                               , const char *Name
