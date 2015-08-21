@@ -48,6 +48,19 @@
         }
 
         internal LLVMMetadataRef MetadataHandle { get; }
+
+        public static Descriptor Empty = new Descriptor( LLVMMetadataRef.Zero );
+    }
+
+    /// <summary><see cref="http://llvm.org/docs/LangRef.html#diexpression"/></summary>
+    public class Expression : Descriptor
+    {
+        internal Expression( LLVMMetadataRef handle )
+            : base( handle )
+        {
+        }
+
+        public new static Expression Empty = new Expression( LLVMMetadataRef.Zero );
     }
 
     /// <summary><see cref="http://llvm.org/docs/LangRef.html#diglobalvariable"/></summary>
@@ -57,6 +70,7 @@
             : base( handle )
         {
         }
+        public new static GlobalVariable Empty = new GlobalVariable( LLVMMetadataRef.Zero );
     }
 
     /// <summary><see cref="http://llvm.org/docs/LangRef.html#dilocalvariable"/></summary>
@@ -66,6 +80,7 @@
             : base( handle )
         {
         }
+        public new static LocalVariable Empty = new LocalVariable( LLVMMetadataRef.Zero );
     }
 
     /// <summary><see cref="http://llvm.org/docs/LangRef.html#dienumerator"/></summary>
@@ -75,6 +90,7 @@
             : base( handle )
         {
         }
+        public new static Enumerator Empty = new Enumerator( LLVMMetadataRef.Zero );
     }
 
     /// <summary><see cref="http://llvm.org/docs/LangRef.html#disubrange"/></summary>
@@ -84,6 +100,7 @@
             : base( handle )
         {
         }
+        public new static Subrange Empty = new Subrange( LLVMMetadataRef.Zero );
     }
 
     /// <summary>Base class for all Debug info scopes</summary>
@@ -93,6 +110,7 @@
             : base( handle )
         {
         }
+        public new static Scope Empty = new Scope( LLVMMetadataRef.Zero );
     }
 
     /// <summary><see cref="http://llvm.org/docs/LangRef.html#dicompileunit"/></summary>
@@ -102,6 +120,7 @@
             : base( handle )
         {
         }
+        public new static CompileUnit Empty = new CompileUnit( LLVMMetadataRef.Zero );
     }
 
     /// <summary><see cref="http://llvm.org/docs/LangRef.html#difile"/></summary>
@@ -111,6 +130,7 @@
             : base( handle )
         {
         }
+        public new static File Empty = new File( LLVMMetadataRef.Zero );
     }
 
     /// <summary><see cref="http://llvm.org/docs/LangRef.html#dilexicalblock"/></summary>
@@ -120,6 +140,7 @@
             : base( handle )
         {
         }
+        public new static LexicalBlock Empty = new LexicalBlock( LLVMMetadataRef.Zero );
     }
 
     /// <summary><see cref="http://llvm.org/docs/LangRef.html#dilexicalblockfile"/></summary>
@@ -129,6 +150,7 @@
             : base( handle )
         {
         }
+        public new static LexicalBlockFile Empty = new LexicalBlockFile( LLVMMetadataRef.Zero );
     }
 
     /// <summary><see cref="http://llvm.org/docs/LangRef.html#dinamespace"/></summary>
@@ -138,6 +160,7 @@
             : base( handle )
         {
         }
+        public new static Namespace Empty = new Namespace( LLVMMetadataRef.Zero );
     }
 
     /// <summary><see cref="http://llvm.org/docs/LangRef.html#disubprogram"/></summary>
@@ -147,6 +170,7 @@
             : base( handle )
         {
         }
+        public new static SubProgram Empty = new SubProgram( LLVMMetadataRef.Zero );
     }
 
     /// <summary>Base class for Debug info types</summary>
@@ -156,6 +180,7 @@
             : base( handle )
         {
         }
+        public new static Type Empty = new Type( LLVMMetadataRef.Zero );
     }
 
     /// <summary><see cref="http://llvm.org/docs/LangRef.html#dibasictype"/></summary>
@@ -165,6 +190,7 @@
             : base( handle )
         {
         }
+        public new static BasicType Empty = new BasicType( LLVMMetadataRef.Zero );
     }
 
     /// <summary><see cref="http://llvm.org/docs/LangRef.html#diderivedtype"/></summary>
@@ -174,6 +200,7 @@
             : base( handle )
         {
         }
+        public new static DerivedType Empty = new DerivedType( LLVMMetadataRef.Zero );
     }
 
     /// <summary><see cref="http://llvm.org/docs/LangRef.html#dicompositetype"/></summary>
@@ -183,6 +210,8 @@
             : base( handle )
         {
         }
+
+        public new static CompositeType Empty = new CompositeType( LLVMMetadataRef.Zero );
     }
 
     /// <summary><see cref="http://llvm.org/docs/LangRef.html#disubroutinetype"/></summary>
@@ -192,5 +221,7 @@
             : base( handle )
         {
         }
+
+        public new static SubroutineType Empty = new SubroutineType( LLVMMetadataRef.Zero );
     }
 }

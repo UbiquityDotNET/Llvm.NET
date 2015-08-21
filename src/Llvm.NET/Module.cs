@@ -46,7 +46,7 @@ namespace Llvm.NET
         /// <summary>Data layout string</summary>
         /// <remarks>
         /// Note the data layout string doesn't do what seems obvious.
-        /// That is, it doesn't force the target backend to generate code
+        /// That is, it doesn't force the target back-end to generate code
         /// or types with a particular layout. Rather the layout string has
         /// to match the implicit layout of the target. Instead the layout
         /// string provides hints to the optimization passes about the target
@@ -121,8 +121,8 @@ namespace Llvm.NET
             }
         }
 
-        /// <summary>Verifies a bitcode module/summary>
-        /// <param name="errmsg">Error messages describing any issues found in the bitcode</param>
+        /// <summary>Verifies a bit-code module/summary>
+        /// <param name="errmsg">Error messages describing any issues found in the bit-code</param>
         /// <returns>true if the verification succeeded and false if not.</returns>
         public bool Verify( out string errmsg )
         {
@@ -171,8 +171,8 @@ namespace Llvm.NET
             return (Function)Value.FromHandle( LLVMNative.GetOrInsertFunction( ModuleHandle, name, signature.TypeHandle ) );
         }
 
-        /// <summary>Wrties a bitcode module to a file</summary>
-        /// <param name="path">Path to write the bitcode into</param>
+        /// <summary>Writes a bit-code module to a file</summary>
+        /// <param name="path">Path to write the bit-code into</param>
         /// <remarks>
         /// This is a blind write. (e.g. no verification is performed)
         /// So if an invalid module is saved it might not work with any
@@ -190,7 +190,7 @@ namespace Llvm.NET
         /// <remarks>
         /// This is intentionally NOT an override of ToString() as that is
         /// used by debuggers to show the value of a type and this can take
-        /// an extermely long time (up to many seconds depending on complexity
+        /// an extremely long time (up to many seconds depending on complexity
         /// of the module) which is bad for the debugger.
         /// </remarks>
         public string AsString( )
@@ -292,11 +292,12 @@ namespace Llvm.NET
 
         /// <summary>Name of the Debug Version information module flag</summary>
         public const string DebugVersionValue = "Debug Info Version";
+        public const string DwarfVersionValue = "Dwarf Version";
 
         /// <summary>Version of the Debug information Metadata</summary>
         public const UInt32 DebugMetadataVersion = 2; /* DEBUG_METADATA_VERSION (for LLVM v3.6.1) */
 
-        /// <summary>Load a bitcode module from a given file</summary>
+        /// <summary>Load a bit-code module from a given file</summary>
         /// <param name="path">path of the file to load</param>
         /// <returns>Loaded <see cref="Module"/></returns>
         public static Module LoadFrom( string path )
@@ -305,7 +306,7 @@ namespace Llvm.NET
                 throw new ArgumentException( "path cannot be null or an empty string", nameof( path ) );
 
             if( !File.Exists( path ) )
-                throw new FileNotFoundException( "Specfied bit code file does not exist", path );
+                throw new FileNotFoundException( "Specified bit-code file does not exist", path );
 
             var ctx = Context.CurrentContext;
             using( var buffer = new MemoryBuffer( path ) )

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using Llvm.NET.Values;
+using Llvm.NET.Instructions;
 
 namespace Llvm.NET.DebugInfo
 {
@@ -48,6 +49,9 @@ namespace Llvm.NET.DebugInfo
 
         public File CreateFile( string path )
         {
+            if( string.IsNullOrWhiteSpace( path ) )
+                return File.Empty;
+
             return CreateFile( System.IO.Path.GetFileName( path ), System.IO.Path.GetDirectoryName( path ) );
         }
 
@@ -105,18 +109,19 @@ namespace Llvm.NET.DebugInfo
         }
 
         public LocalVariable CreateLocalVariable( uint dwarfTag
-                                           , Scope scope
-                                           , string name
-                                           , File file
-                                           , uint line
-                                           , Type type
-                                           , bool alwaysPreserve
-                                           , uint flags
-                                           , uint argNo
-                                           )
+                                                , Scope scope
+                                                , string name
+                                                , File file
+                                                , uint line
+                                                , Type type
+                                                , bool alwaysPreserve
+                                                , uint flags
+                                                , uint argNo
+                                                )
         {
             var handle = LLVMNative.DIBuilderCreateLocalVariable( BuilderHandle
-                                                                , dwarfTag, scope.MetadataHandle
+                                                                , dwarfTag
+                                                                , scope.MetadataHandle
                                                                 , name
                                                                 , file.MetadataHandle
                                                                 , line
@@ -128,9 +133,9 @@ namespace Llvm.NET.DebugInfo
             return new LocalVariable( handle );
         }
 
-        public BasicType CreateBasicType( string name, ulong bitSize, ulong bitAlign, uint encoding )
+        public BasicType CreateBasicType( string name, ulong bitSize, ulong bitAlign, TypeKind encoding )
         {
-            var handle = LLVMNative.DIBuilderCreateBasicType( BuilderHandle, name, bitSize, bitAlign, encoding );
+            var handle = LLVMNative.DIBuilderCreateBasicType( BuilderHandle, name, bitSize, bitAlign, (uint)encoding );
             return new BasicType( handle );
         }
 
@@ -177,12 +182,12 @@ namespace Llvm.NET.DebugInfo
             var handle = LLVMNative.DIBuilderCreateStructType( BuilderHandle
                                                              , scope.MetadataHandle
                                                              , name
-                                                             , file.MetadataHandle
+                                                             , file?.MetadataHandle ?? LLVMMetadataRef.Zero
                                                              , line
                                                              , bitSize
                                                              , bitAlign
                                                              , flags
-                                                             , derivedFrom.MetadataHandle
+                                                             , derivedFrom?.MetadataHandle ?? LLVMMetadataRef.Zero
                                                              , elements.MetadataHandle
                                                              );
             return new CompositeType( handle );
@@ -216,7 +221,7 @@ namespace Llvm.NET.DebugInfo
             var handle = LLVMNative.DIBuilderCreateMemberType( BuilderHandle
                                                              , scope.MetadataHandle
                                                              , name
-                                                             , file.MetadataHandle
+                                                             , file?.MetadataHandle ?? LLVMMetadataRef.Zero
                                                              , line
                                                              , bitSize
                                                              , bitAlign
@@ -253,7 +258,12 @@ namespace Llvm.NET.DebugInfo
         public Array GetOrCreateArray( Descriptor[ ] elements )
         {
             var buf = elements.Select( d => d.MetadataHandle ).ToArray( );
-            var handle = LLVMNative.DIBuilderGetOrCreateArray( BuilderHandle, out buf[ 0 ], ( ulong )buf.LongLength );
+            var actualLen = buf.LongLength;
+            // for the out parameter trick to work - need to have a valid array with at least one element
+            if( buf.LongLength == 0 )
+                buf = new LLVMMetadataRef[ 1 ];
+
+            var handle = LLVMNative.DIBuilderGetOrCreateArray( BuilderHandle, out buf[ 0 ], ( ulong )actualLen );
             return new Array( handle );
         }
 
@@ -329,6 +339,51 @@ namespace Llvm.NET.DebugInfo
                 LLVMNative.DIBuilderFinalize( BuilderHandle );
                 IsFinished = true;
             }
+        }
+
+        public Value InsertDeclare( Value storage, LocalVariable varInfo, Instruction insertBefore )
+        {
+            return InsertDeclare( storage, varInfo, CreateExpression( ), insertBefore );
+        }
+
+        public Value InsertDeclare( Value storage, LocalVariable varInfo, Expression expr, Instruction insertBefore )
+        {
+            var handle = LLVMNative.DIBuilderInsertDeclareBefore( BuilderHandle
+                                                                , storage.ValueHandle
+                                                                , varInfo.MetadataHandle
+                                                                , expr.MetadataHandle
+                                                                , insertBefore.ValueHandle
+                                                                );
+            return Value.FromHandle( handle );
+        }
+
+        public Value InsertDeclare( Value storage, LocalVariable varInfo, BasicBlock insertAtEnd )
+        {
+            return InsertDeclare( storage, varInfo, CreateExpression( ), insertAtEnd );
+        }
+
+        public Value InsertDeclare( Value storage, LocalVariable varInfo, Expression expr, BasicBlock insertAtEnd )
+        {
+            var handle = LLVMNative.DIBuilderInsertDeclareAtEnd( BuilderHandle
+                                                                , storage.ValueHandle
+                                                                , varInfo.MetadataHandle
+                                                                , expr.MetadataHandle
+                                                                , insertAtEnd.BlockHandle
+                                                                );
+            return Value.FromHandle( handle );
+        }
+
+        public Expression CreateExpression( params ExpressionOp[ ] operations ) => CreateExpression( ( IEnumerable<ExpressionOp> )operations );
+
+        public Expression CreateExpression( IEnumerable<ExpressionOp> operations )
+        {
+            var args = operations.Cast<long>().ToArray( );
+            var actualCount = args.LongLength;
+            if( args.Length == 0 )
+                args = new long[ 1 ];
+
+            var handle = LLVMNative.DIBuilderCreateExpression( BuilderHandle, out args[ 0 ], (ulong)actualCount );
+            return new Expression( handle );
         }
 
         public void Dispose( )

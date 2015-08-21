@@ -452,4 +452,19 @@ extern "C"
         return wrap( globalVar );
     }
 
+    LLVMValueRef LLVMDIBuilderInsertDeclareBefore( LLVMDIBuilderRef Dref
+                                                 , LLVMValueRef Storage      // Value
+                                                 , LLVMMetadataRef VarInfo   // DIVariable
+                                                 , LLVMMetadataRef Expr      // DIExpression
+                                                 , LLVMValueRef InsertBefore // Instruction
+                                                 )
+    {
+        DIBuilder* D = unwrap( Dref );
+        Instruction* pInstruction = D->insertDeclare( unwrap( Storage )
+                                                    , unwrapDI<DIVariable>( VarInfo )
+                                                    , unwrapDI<DIExpression>( Expr )
+                                                    , unwrap<Instruction>(InsertBefore)
+                                                    );
+        return wrap( pInstruction );
+    }
 }

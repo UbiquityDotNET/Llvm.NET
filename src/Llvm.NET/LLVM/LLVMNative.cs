@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Runtime.InteropServices;
-using System.Threading;
 
 namespace Llvm.NET
 {
@@ -14,6 +13,11 @@ namespace Llvm.NET
 
         public static implicit operator LLVMBool( bool value ) => new LLVMBool( value ? 1 : 0 );
         public static implicit operator bool( LLVMBool value ) => value.Value != 0;
+    }
+
+    internal partial struct LLVMMetadataRef
+    {
+        internal static LLVMMetadataRef Zero = new LLVMMetadataRef( IntPtr.Zero );
     }
 
     internal static partial class LLVMNative
@@ -37,8 +41,9 @@ namespace Llvm.NET
             return retVal;
         }
 
+#if DYNAMICALLY_LOAD_LIBLLVM
         // force loading the appropriate architecture specific 
-        // DLL before any use of the wrapped interop APIs to 
+        // DLL before any use of the wrapped inter-op APIs to 
         // allow building this library as ANYCPU
         static LLVMNative()
         {
@@ -46,5 +51,6 @@ namespace Llvm.NET
             if( handle == IntPtr.Zero )
                 throw new InvalidOperationException( "Verification of DLL Load Failed!" );
         }
+#endif
     }
 }

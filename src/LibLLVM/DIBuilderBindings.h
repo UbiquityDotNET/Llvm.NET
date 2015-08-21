@@ -326,6 +326,19 @@ extern "C" {
 
     LLVMDwarfTag LLVMDIDescriptorGetTag( LLVMMetadataRef descriptor );
 
+    /// insertDeclare - Insert a new llvm.dbg.declare intrinsic call.
+    /// @param Storage      llvm::Value of the variable
+    /// @param VarInfo      Variable's debug info descriptor.
+    /// @param Expr         A complex location expression.
+    /// @param InsertBefore Location for the new intrinsic.
+    /*Instruction */
+    LLVMValueRef LLVMDIBuilderInsertDeclareBefore( LLVMDIBuilderRef Dref
+                                                   , LLVMValueRef Storage      // Value
+                                                   , LLVMMetadataRef VarInfo   // DIVariable
+                                                   , LLVMMetadataRef Expr      // DIExpression
+                                                   , LLVMValueRef InsertBefore // Instruction
+                                                   );
+
 #ifdef __cplusplus
 } // extern "C"
 #endif

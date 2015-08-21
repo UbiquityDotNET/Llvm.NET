@@ -344,7 +344,7 @@ namespace Llvm.NET
         /// basic gist is that the GEP instruction does not access memory, it only computes a pointer
         /// offset from a base. A common confusion is around the first index and what it means. For C
         /// and C++ programmers an expression like pFoo->bar seems to only have a single offset or
-        /// index. However that is only syntactic sugar where the compiler implicitly hides the first
+        /// index. However that is only sytactic sugar where the compiler implicitly hides the first
         /// index. That is, there is no difference between pFoo[0].bar and pFoo->bar except that the
         /// former makes the first index explicit. LLVM requires an explicit first index even if it is
         /// zero, in order to properly compute the offset for a given element in an aggregate type.

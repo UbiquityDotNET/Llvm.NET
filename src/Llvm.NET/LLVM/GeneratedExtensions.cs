@@ -7,7 +7,7 @@
 //  - removed C++ function unwrap()
 //  - removed DEFINE_ISA_CONVERSION_FUNCTIONS which was erroneously mis-identified as a function
 //    declaration rather than a preprocessor macro instantiation
-//  - converted several int return and param types to proper LLVMxxxRef types not handled correctly
+//  - converted several int return and parameter types to proper LLVMxxxRef types not handled correctly
 //    by the ClangSharp code generator
 //
 using System;
@@ -78,7 +78,7 @@ namespace Llvm.NET
         @LLVMValueKindMetadataAsValueVal,       // This is an instance of MetadataAsValue
         @LLVMValueKindInlineAsmVal,             // This is an instance of InlineAsm
         @LLVMValueKindInstructionVal,           // This is an instance of Instruction
-                                               // Enum values starting at InstructionVal are used for Instructions;
+                                                // Enum values starting at InstructionVal are used for Instructions;
 
         // Markers:
         @LLVMValueKindConstantFirstVal = LLVMValueKindFunctionVal,
@@ -315,10 +315,10 @@ namespace Llvm.NET
         internal static extern LLVMMetadataRef DIBuilderCreateExpression(LLVMDIBuilderRef @Dref, out long @Addr, ulong @Length);
 
         [DllImport(libraryPath, EntryPoint = "LLVMDIBuilderInsertDeclareAtEnd", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl)]
-        internal static extern int DIBuilderInsertDeclareAtEnd(LLVMDIBuilderRef @D, int @Storage, LLVMMetadataRef @VarInfo, LLVMMetadataRef @Expr, int @Block);
+        internal static extern LLVMValueRef DIBuilderInsertDeclareAtEnd(LLVMDIBuilderRef @D, LLVMValueRef @Storage, LLVMMetadataRef @VarInfo, LLVMMetadataRef @Expr, LLVMBasicBlockRef @Block);
 
         [DllImport(libraryPath, EntryPoint = "LLVMDIBuilderInsertValueAtEnd", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl)]
-        internal static extern int DIBuilderInsertValueAtEnd(LLVMDIBuilderRef @D, int @Val, ulong @Offset, LLVMMetadataRef @VarInfo, LLVMMetadataRef @Expr, int @Block);
+        internal static extern int DIBuilderInsertValueAtEnd(LLVMDIBuilderRef @D, LLVMValueRef @Val, ulong @Offset, LLVMMetadataRef @VarInfo, LLVMMetadataRef @Expr, int @Block);
 
         [DllImport(libraryPath, EntryPoint = "LLVMDiBuilderCreateEnumerationType", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl)]
         internal static extern LLVMMetadataRef DIBuilderCreateEnumerationType( LLVMDIBuilderRef @D, LLVMMetadataRef @Scope, string @Name, LLVMMetadataRef @File, uint @LineNumber, ulong @SizeInBits, ulong @AlignInBits, LLVMMetadataRef @Elements, LLVMMetadataRef @UnderlyingType, string @UniqueId );
@@ -331,5 +331,8 @@ namespace Llvm.NET
 
         [DllImport( libraryPath, EntryPoint = "LLVMDIBuilderCreateGlobalVariable", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl )]
         internal static extern LLVMMetadataRef DIBuilderCreateGlobalVariable( LLVMDIBuilderRef Dref, LLVMMetadataRef Context,string Name, string LinkageName, LLVMMetadataRef File, uint LineNo, LLVMMetadataRef Ty, LLVMBool isLocalToUnit, LLVMValueRef Val, LLVMMetadataRef Decl );
+
+        [DllImport( libraryPath, EntryPoint = "LLVMDIBuilderInsertDeclareBefore", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl )]
+        internal static extern LLVMValueRef DIBuilderInsertDeclareBefore( LLVMDIBuilderRef Dref, LLVMValueRef Storage, LLVMMetadataRef VarInfo, LLVMMetadataRef Expr, LLVMValueRef InsertBefore );
     }
 }
