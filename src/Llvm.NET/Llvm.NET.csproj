@@ -121,7 +121,7 @@
     <Compile Include="Target.cs" />
     <Compile Include="TargetLayout.cs" />
     <Compile Include="TargetMachine.cs" />
-    <Compile Include="TragetData.cs" />
+    <Compile Include="TargetData.cs" />
     <Compile Include="Types\TypeRef.cs" />
     <Compile Include="Values\User.cs" />
     <Compile Include="Values\UserOperandList.cs" />

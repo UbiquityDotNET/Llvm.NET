@@ -7,8 +7,6 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "LibLLVM.3.6.1", "LibLLVM\Li
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Llvm.NET", "Llvm.NET\Llvm.NET.csproj", "{0162C8CE-6641-4922-8664-F8A44356FBF7}"
 EndProject
-Project("{7CF6DF6D-3B04-46F8-A40B-537D21BCA0B4}") = "Documentation", "Documentation\Documentation.shfbproj", "{9AD0061D-0F8A-4094-A17D-FB2E7E593A50}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -55,24 +53,6 @@ Global
 		{0162C8CE-6641-4922-8664-F8A44356FBF7}.RelWithDebInfo|Win32.Build.0 = RelWithDebInfo|Any CPU
 		{0162C8CE-6641-4922-8664-F8A44356FBF7}.RelWithDebInfo|x64.ActiveCfg = RelWithDebInfo|Any CPU
 		{0162C8CE-6641-4922-8664-F8A44356FBF7}.RelWithDebInfo|x64.Build.0 = RelWithDebInfo|Any CPU
-		{9AD0061D-0F8A-4094-A17D-FB2E7E593A50}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{9AD0061D-0F8A-4094-A17D-FB2E7E593A50}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{9AD0061D-0F8A-4094-A17D-FB2E7E593A50}.Debug|Win32.ActiveCfg = Debug|Any CPU
-		{9AD0061D-0F8A-4094-A17D-FB2E7E593A50}.Debug|Win32.Build.0 = Debug|Any CPU
-		{9AD0061D-0F8A-4094-A17D-FB2E7E593A50}.Debug|x64.ActiveCfg = Debug|Any CPU
-		{9AD0061D-0F8A-4094-A17D-FB2E7E593A50}.Debug|x64.Build.0 = Debug|Any CPU
-		{9AD0061D-0F8A-4094-A17D-FB2E7E593A50}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{9AD0061D-0F8A-4094-A17D-FB2E7E593A50}.Release|Any CPU.Build.0 = Release|Any CPU
-		{9AD0061D-0F8A-4094-A17D-FB2E7E593A50}.Release|Win32.ActiveCfg = Release|Any CPU
-		{9AD0061D-0F8A-4094-A17D-FB2E7E593A50}.Release|Win32.Build.0 = Release|Any CPU
-		{9AD0061D-0F8A-4094-A17D-FB2E7E593A50}.Release|x64.ActiveCfg = Release|Any CPU
-		{9AD0061D-0F8A-4094-A17D-FB2E7E593A50}.Release|x64.Build.0 = Release|Any CPU
-		{9AD0061D-0F8A-4094-A17D-FB2E7E593A50}.RelWithDebInfo|Any CPU.ActiveCfg = Release|Any CPU
-		{9AD0061D-0F8A-4094-A17D-FB2E7E593A50}.RelWithDebInfo|Any CPU.Build.0 = Release|Any CPU
-		{9AD0061D-0F8A-4094-A17D-FB2E7E593A50}.RelWithDebInfo|Win32.ActiveCfg = Release|Any CPU
-		{9AD0061D-0F8A-4094-A17D-FB2E7E593A50}.RelWithDebInfo|Win32.Build.0 = Release|Any CPU
-		{9AD0061D-0F8A-4094-A17D-FB2E7E593A50}.RelWithDebInfo|x64.ActiveCfg = Release|Any CPU
-		{9AD0061D-0F8A-4094-A17D-FB2E7E593A50}.RelWithDebInfo|x64.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
