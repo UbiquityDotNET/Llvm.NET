@@ -338,6 +338,27 @@ extern "C" {
                                                    , LLVMMetadataRef Expr      // DIExpression
                                                    , LLVMValueRef InsertBefore // Instruction
                                                    );
+    
+    // caller must call LLVMDisposeMessage() on the returned string
+    char const* LLVMDIDescriptorAsString( LLVMMetadataRef descriptor );
+
+    void LLVMDiDescriptorReplaceAllUsesWith( LLVMContextRef context, LLVMMetadataRef oldDescriptor, LLVMMetadataRef newDescriptor );
+
+    /// \brief Create a permanent forward-declared type.
+    /*DICompositeType*/ 
+    LLVMMetadataRef LLVMDIBuilderCreateReplaceableForwardDecl( LLVMDIBuilderRef Dref
+                                                              , unsigned Tag
+                                                              , const char* Name
+                                                              , /*DIDescriptor*/ LLVMMetadataRef Scope
+                                                              , /*DIFile*/ LLVMMetadataRef F
+                                                              , unsigned Line
+                                                              , unsigned RuntimeLang /* = 0*/
+                                                              , uint64_t SizeInBits /* = 0*/
+                                                              , uint64_t AlignInBits /* = 0*/
+                                                              , const char* UniqueIdentifier /* default empty string */
+                                                              );
+
+
 
 #ifdef __cplusplus
 } // extern "C"

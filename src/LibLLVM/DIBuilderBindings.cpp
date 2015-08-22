@@ -18,6 +18,7 @@
 #include "llvm/IR/Module.h"
 #include "llvm/IR/DIBuilder.h"
 #include "llvm/IR/Constant.h"
+#include "llvm/Support/raw_ostream.h"
 
 using namespace llvm;
 
@@ -467,4 +468,47 @@ extern "C"
                                                     );
         return wrap( pInstruction );
     }
+
+    char const* LLVMDIDescriptorAsString( LLVMMetadataRef descriptor )
+    {
+        std::string Messages;
+        raw_string_ostream Msg( Messages );
+        DIDescriptor d = unwrapDI<DIDescriptor>( descriptor );
+        d.print( Msg );
+        return LLVMCreateMessage( Msg.str( ).c_str( ) );
+    }
+
+    void LLVMDiDescriptorReplaceAllUsesWith( LLVMContextRef context, LLVMMetadataRef oldDescriptor, LLVMMetadataRef newDescriptor )
+    {
+        DIDescriptor o = unwrapDI<DIDescriptor>( oldDescriptor );
+        DIDescriptor n = unwrapDI<DIDescriptor>( newDescriptor );
+        o.replaceAllUsesWith( *unwrap( context ), n );
+    }
+
+    LLVMMetadataRef LLVMDIBuilderCreateReplaceableForwardDecl( LLVMDIBuilderRef Dref
+                                                              , unsigned Tag
+                                                              , const char* Name
+                                                              , /*DIDescriptor*/ LLVMMetadataRef Scope
+                                                              , /*DIFile*/ LLVMMetadataRef F
+                                                              , unsigned Line
+                                                              , unsigned RuntimeLang /* = 0*/
+                                                              , uint64_t SizeInBits /* = 0*/
+                                                              , uint64_t AlignInBits /* = 0*/
+                                                              , const char* UniqueIdentifier /* default empty string */
+                                                              )
+    {
+        DIBuilder* D = unwrap( Dref );
+        DICompositeType fwdDecl = D->createReplaceableForwardDecl( Tag
+                                                                 , Name
+                                                                 , unwrapDI<DIDescriptor>( Scope )
+                                                                 , unwrapDI<DIFile>( F )
+                                                                 , Line
+                                                                 , RuntimeLang
+                                                                 , SizeInBits
+                                                                 , AlignInBits
+                                                                 , UniqueIdentifier
+                                                                 );
+        return wrap( fwdDecl );
+    }
+
 }

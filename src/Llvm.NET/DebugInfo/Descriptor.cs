@@ -40,6 +40,7 @@
     /// </remarks>
     public class Descriptor
     {
+        /// <summary>Dwarf tag for the descriptor</summary>
         public Tag Tag => (Tag)LLVMNative.DIDescriptorGetTag( MetadataHandle );
 
         internal Descriptor( LLVMMetadataRef handle )
@@ -47,8 +48,20 @@
             MetadataHandle = handle;
         }
 
+        /// <inheritdoc/>
+        public override string ToString( ) => LLVMNative.MarshalMsg( LLVMNative.DIDescriptorAsString( MetadataHandle ) );
+
+        /// <summary>Replace all uses of this descriptor with another</summary>
+        /// <param name="context">Context to use for replacement</param>
+        /// <param name="other">New descriptor to replace this one with</param>
+        public void ReplaceAllUsesWith( Context context, Descriptor other )
+        {
+            LLVMNative.DiDescriptorReplaceAllUsesWith( context.ContextHandle, MetadataHandle, other.MetadataHandle );
+        }
+
         internal LLVMMetadataRef MetadataHandle { get; }
 
+        /// <summary>Empty Descriptor</summary>
         public static Descriptor Empty = new Descriptor( LLVMMetadataRef.Zero );
     }
 

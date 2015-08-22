@@ -386,6 +386,31 @@ namespace Llvm.NET.DebugInfo
             return new Expression( handle );
         }
 
+        public CompositeType CreateReplaceableForwardDecl( Tag tag
+                                                         , string name
+                                                         , Descriptor scope
+                                                         , File file
+                                                         , uint line
+                                                         , uint lang = 0
+                                                         , ulong sizeInBits = 0
+                                                         , ulong alignBits = 0
+                                                         , string uniqueIdentifier = null
+                                                         )
+        {
+            var handle = LLVMNative.DIBuilderCreateReplaceableForwardDecl( BuilderHandle
+                                                                         , ( uint )tag
+                                                                         , name
+                                                                         , scope.MetadataHandle
+                                                                         , file.MetadataHandle
+                                                                         , line
+                                                                         , lang
+                                                                         , sizeInBits
+                                                                         , alignBits
+                                                                         , uniqueIdentifier ?? string.Empty
+                                                                         );
+            return new CompositeType( handle );
+        }
+
         public void Dispose( )
         {
             if( BuilderHandle.Pointer != IntPtr.Zero )
