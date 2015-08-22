@@ -62,12 +62,53 @@ namespace Llvm.NET
         /// The values in the example table are for x86-32 linux.
         /// </note>
         ///</remarks>
-        public ulong BitSizeOf( TypeRef typeRef ) => LLVMNative.SizeOfTypeInBits( OpaqueHandle, typeRef.TypeHandle );
-        public ulong StoreSizeOf( TypeRef typeRef ) => LLVMNative.StoreSizeOfType( OpaqueHandle, typeRef.TypeHandle );
-        public ulong AbiSizeOf( TypeRef typeRef ) => LLVMNative.ABISizeOfType( OpaqueHandle, typeRef.TypeHandle );
-        public uint AbiAlignmentOf( TypeRef typeRef ) => LLVMNative.ABIAlignmentOfType( OpaqueHandle, typeRef.TypeHandle );
-        public uint CallFrameAlignmentOf( TypeRef typeRef ) => LLVMNative.CallFrameAlignmentOfType( OpaqueHandle, typeRef.TypeHandle );
-        public uint PreferredAlignmentOf( TypeRef typeRef ) => LLVMNative.PreferredAlignmentOfType( OpaqueHandle, typeRef.TypeHandle );
+        public ulong BitSizeOf( TypeRef typeRef )
+        {
+            if( !LLVMNative.TypeIsSized( typeRef.TypeHandle ) )
+                throw new ArgumentException( "Type must be sized to get target size information" );
+
+            return LLVMNative.SizeOfTypeInBits( OpaqueHandle, typeRef.TypeHandle );
+        }
+        public ulong StoreSizeOf( TypeRef typeRef )
+        {
+            if( !LLVMNative.TypeIsSized( typeRef.TypeHandle ) )
+                throw new ArgumentException( "Type must be sized to get target size information" );
+
+            return LLVMNative.StoreSizeOfType( OpaqueHandle, typeRef.TypeHandle );
+        }
+
+        public ulong AbiSizeOf( TypeRef typeRef )
+        {
+            if( !LLVMNative.TypeIsSized( typeRef.TypeHandle ) )
+                throw new ArgumentException( "Type must be sized to get target size information" );
+
+            return LLVMNative.ABISizeOfType( OpaqueHandle, typeRef.TypeHandle );
+        }
+
+        public uint AbiAlignmentOf( TypeRef typeRef )
+        {
+            if( !LLVMNative.TypeIsSized( typeRef.TypeHandle ) )
+                throw new ArgumentException( "Type must be sized to get target size information" );
+
+            return LLVMNative.ABIAlignmentOfType( OpaqueHandle, typeRef.TypeHandle );
+        }
+
+        public uint CallFrameAlignmentOf( TypeRef typeRef )
+        {
+            if( !LLVMNative.TypeIsSized( typeRef.TypeHandle ) )
+                throw new ArgumentException( "Type must be sized to get target size information" );
+
+            return LLVMNative.CallFrameAlignmentOfType( OpaqueHandle, typeRef.TypeHandle );
+        }
+
+        public uint PreferredAlignmentOf( TypeRef typeRef )
+        {
+            if( !LLVMNative.TypeIsSized( typeRef.TypeHandle ) )
+                throw new ArgumentException( "Type must be sized to get target size information" );
+
+            return LLVMNative.PreferredAlignmentOfType( OpaqueHandle, typeRef.TypeHandle );
+        }
+
         public uint PreferredAlignmentOf( Value value ) => LLVMNative.PreferredAlignmentOfGlobal( OpaqueHandle, value.ValueHandle );
         public uint ElementAtOffset( TypeRef structType, ulong offset ) => LLVMNative.ElementAtOffset( OpaqueHandle, structType.TypeHandle, offset );
         public ulong OffsetOfElement( TypeRef structType, uint element ) => LLVMNative.OffsetOfElement( OpaqueHandle, structType.TypeHandle, element );
