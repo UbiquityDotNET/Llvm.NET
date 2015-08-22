@@ -207,6 +207,20 @@ namespace Llvm.NET.DebugInfo
             return CreateStructType( scope, name, file, line, bitSize, bitAlign, flags, derivedFrom, GetOrCreateArray( elements ) );
         }
 
+        public CompositeType CreateStructType( Scope scope
+                                             , string name
+                                             , File file
+                                             , uint line
+                                             , ulong bitSize
+                                             , ulong bitAlign
+                                             , uint flags
+                                             , Type derivedFrom
+                                             , IEnumerable<Descriptor> elements
+                                             )
+        {
+            return CreateStructType( scope, name, file, line, bitSize, bitAlign, flags, derivedFrom, GetOrCreateArray( elements ) );
+        }
+
         public DerivedType CreateMemberType( Scope scope
                                            , string name
                                            , File file
@@ -255,7 +269,7 @@ namespace Llvm.NET.DebugInfo
             return new Subrange( handle );
         }
 
-        public Array GetOrCreateArray( Descriptor[ ] elements )
+        public Array GetOrCreateArray( IEnumerable<Descriptor> elements )
         {
             var buf = elements.Select( d => d.MetadataHandle ).ToArray( );
             var actualLen = buf.LongLength;
@@ -267,7 +281,7 @@ namespace Llvm.NET.DebugInfo
             return new Array( handle );
         }
 
-        public TypeArray GetOrCreateTypeArray( Type[] types )
+        public TypeArray GetOrCreateTypeArray( IEnumerable<Type> types )
         {
             var buf = types.Select( t => t.MetadataHandle ).ToArray();
             var handle = LLVMNative.DIBuilderGetOrCreateTypeArray( BuilderHandle, out buf[ 0 ], (ulong)buf.LongLength );
