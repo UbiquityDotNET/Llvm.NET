@@ -121,7 +121,7 @@ namespace Llvm.NET
             }
         }
 
-        /// <summary>Verifies a bit-code module/summary>
+        /// <summary>Verifies a bit-code module</summary>
         /// <param name="errmsg">Error messages describing any issues found in the bit-code</param>
         /// <returns>true if the verification succeeded and false if not.</returns>
         public bool Verify( out string errmsg )
@@ -288,6 +288,11 @@ namespace Llvm.NET
         {
             // AddModuleFlag comes from custom LLVMDebug-C api
             LLVMNative.AddModuleFlag( ModuleHandle, ( LLVMModFlagBehavior )behavior, name, value );
+        }
+
+        public void AddNamedMetadataOperand( string name, Value value )
+        {
+            LLVMNative.AddNamedMetadataOperand( ModuleHandle, name, value.ValueHandle );
         }
 
         /// <summary>Name of the Debug Version information module flag</summary>

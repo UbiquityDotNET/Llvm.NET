@@ -47,15 +47,15 @@ namespace Llvm.NET
         ///   <term>StoreSizeInBits</term>
         ///   <term>AllocSizeInBits</term>
         ///   </listheader>
-        ///   <item><term>i1</term>         <term>1</term>   <term>8</term>   <term>8</term>
-        ///   <item><term>i8</term>         <term>8</term>   <term>8</term>   <term>8</term>
-        ///   <item><term>i19</term>        <term>19</term>  <term>24</term>  <term>32</term>
-        ///   <item><term>i32</term>        <term>32</term>  <term>32</term>  <term>32</term>
-        ///   <item><term>i100</term>       <term>100</term> <term>104</term> <term>128</term>
-        ///   <item><term>i128</term>       <term>128</term> <term>128</term> <term>128</term>
-        ///   <item><term>Float</term>      <term>32</term>  <term>32</term>  <term>32</term>
-        ///   <item><term>Double</term>     <term>64</term>  <term>64</term>  <term>64</term>
-        ///   <item><term>X86_FP80</term>   <term>80</term>  <term>80</term>  <term>96</term>
+        ///   <item><term>i1</term>         <term>1</term>   <term>8</term>   <term>8</term></item>
+        ///   <item><term>i8</term>         <term>8</term>   <term>8</term>   <term>8</term></item>
+        ///   <item><term>i19</term>        <term>19</term>  <term>24</term>  <term>32</term></item>
+        ///   <item><term>i32</term>        <term>32</term>  <term>32</term>  <term>32</term></item>
+        ///   <item><term>i100</term>       <term>100</term> <term>104</term> <term>128</term></item>
+        ///   <item><term>i128</term>       <term>128</term> <term>128</term> <term>128</term></item>
+        ///   <item><term>Float</term>      <term>32</term>  <term>32</term>  <term>32</term></item>
+        ///   <item><term>Double</term>     <term>64</term>  <term>64</term>  <term>64</term></item>
+        ///   <item><term>X86_FP80</term>   <term>80</term>  <term>80</term>  <term>96</term></item>
         /// </list>
         /// <note type="note">
         /// The alloc size depends on the alignment, and thus on the target.

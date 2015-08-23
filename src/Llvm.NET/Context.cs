@@ -266,6 +266,18 @@ namespace Llvm.NET
             return GetModuleFor( retVal );
         }
 
+        public Value CreateMetadataString( string value )
+        {
+            var handle = LLVMNative.MDStringInContext( ContextHandle, value, (uint)value.Length );
+            return Value.FromHandle( handle );
+        }
+
+        public Value CreateConstantString( string value )
+        {
+            var handle = LLVMNative.ConstStringInContext( ContextHandle, value, (uint)value.Length, true );
+            return Value.FromHandle( handle );
+        }
+
         /// <summary>Global context</summary>
         public static Context GlobalContext => LazyGlobalContext.Value;
 

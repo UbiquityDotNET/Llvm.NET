@@ -1,10 +1,10 @@
 ﻿struct foo
 {
     int a;
-    int b;
+    int b[0];
 };
 
-void copy( foo src, foo* pDst )
+void copy( struct foo src, struct foo* pDst )
 {
     *pDst = src;
 }

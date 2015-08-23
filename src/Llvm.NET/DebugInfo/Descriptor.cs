@@ -10,7 +10,7 @@
     // 3.7 minimal while allowing us to achieve progress
     // on current projects.
 
-    /// <summary>Array of <see cref="Type"/> nodes for use with <see cref="DebugInfoBuilder"/> methods</summary>
+    /// <summary>Array of see <a href="Type"/> nodes for use with see <a href="DebugInfoBuilder"/> methods</summary>
     public class TypeArray
     {
         internal TypeArray( LLVMMetadataRef handle )
@@ -21,7 +21,7 @@
         internal LLVMMetadataRef MetadataHandle { get; }
     }
 
-    /// <summary>Array of <see cref="Descriptor"/> nodes for use with <see cref="DebugInfoBuilder"/> methods</summary>
+    /// <summary>Array of see <a href="Descriptor"/> nodes for use with see <a href="DebugInfoBuilder"/> methods</summary>
     public class Array
     {
         internal Array( LLVMMetadataRef handle )
@@ -35,7 +35,7 @@
     /// <summary>Root of the object hierarchy for Debug information metadata nodes</summary>
     /// <remarks>
     /// A descriptor is just a wraper around a Metadata Node (MDNode in LLVM C++) and, unlike
-    /// <see cref="Values.Value"/> they are not uniqued, although the underlying metadata nodes
+    /// see <a href="Values.Value"/> they are not uniqued, although the underlying metadata nodes
     /// usually are. 
     /// </remarks>
     public class Descriptor
@@ -65,7 +65,7 @@
         public static Descriptor Empty = new Descriptor( LLVMMetadataRef.Zero );
     }
 
-    /// <summary><see cref="http://llvm.org/docs/LangRef.html#diexpression"/></summary>
+    /// <summary>see <a href="http://llvm.org/docs/LangRef.html#diexpression"/></summary>
     public class Expression : Descriptor
     {
         internal Expression( LLVMMetadataRef handle )
@@ -76,7 +76,7 @@
         public new static Expression Empty = new Expression( LLVMMetadataRef.Zero );
     }
 
-    /// <summary><see cref="http://llvm.org/docs/LangRef.html#diglobalvariable"/></summary>
+    /// <summary>see <a href="http://llvm.org/docs/LangRef.html#diglobalvariable"/></summary>
     public class GlobalVariable : Descriptor
     {
         internal GlobalVariable( LLVMMetadataRef handle )
@@ -86,7 +86,7 @@
         public new static GlobalVariable Empty = new GlobalVariable( LLVMMetadataRef.Zero );
     }
 
-    /// <summary><see cref="http://llvm.org/docs/LangRef.html#dilocalvariable"/></summary>
+    /// <summary>see <a href="http://llvm.org/docs/LangRef.html#dilocalvariable"/></summary>
     public class LocalVariable : Descriptor
     {
         internal LocalVariable( LLVMMetadataRef handle )
@@ -96,7 +96,7 @@
         public new static LocalVariable Empty = new LocalVariable( LLVMMetadataRef.Zero );
     }
 
-    /// <summary><see cref="http://llvm.org/docs/LangRef.html#dienumerator"/></summary>
+    /// <summary>see <a href="http://llvm.org/docs/LangRef.html#dienumerator"/></summary>
     public class Enumerator : Descriptor
     {
         internal Enumerator( LLVMMetadataRef handle )
@@ -106,7 +106,7 @@
         public new static Enumerator Empty = new Enumerator( LLVMMetadataRef.Zero );
     }
 
-    /// <summary><see cref="http://llvm.org/docs/LangRef.html#disubrange"/></summary>
+    /// <summary>see <a href="http://llvm.org/docs/LangRef.html#disubrange"/></summary>
     public class Subrange : Descriptor
     {
         internal Subrange( LLVMMetadataRef handle )
@@ -126,7 +126,7 @@
         public new static Scope Empty = new Scope( LLVMMetadataRef.Zero );
     }
 
-    /// <summary><see cref="http://llvm.org/docs/LangRef.html#dicompileunit"/></summary>
+    /// <summary>see <a href="http://llvm.org/docs/LangRef.html#dicompileunit"/></summary>
     public class CompileUnit : Scope
     {
         internal CompileUnit( LLVMMetadataRef handle )
@@ -136,7 +136,7 @@
         public new static CompileUnit Empty = new CompileUnit( LLVMMetadataRef.Zero );
     }
 
-    /// <summary><see cref="http://llvm.org/docs/LangRef.html#difile"/></summary>
+    /// <summary>see <a href="http://llvm.org/docs/LangRef.html#difile"/></summary>
     public class File : Scope
     {
         internal File( LLVMMetadataRef handle )
@@ -146,7 +146,7 @@
         public new static File Empty = new File( LLVMMetadataRef.Zero );
     }
 
-    /// <summary><see cref="http://llvm.org/docs/LangRef.html#dilexicalblock"/></summary>
+    /// <summary>see <a href="http://llvm.org/docs/LangRef.html#dilexicalblock"/></summary>
     public class LexicalBlock : Scope
     {
         internal LexicalBlock( LLVMMetadataRef handle )
@@ -156,7 +156,7 @@
         public new static LexicalBlock Empty = new LexicalBlock( LLVMMetadataRef.Zero );
     }
 
-    /// <summary><see cref="http://llvm.org/docs/LangRef.html#dilexicalblockfile"/></summary>
+    /// <summary>see <a href="http://llvm.org/docs/LangRef.html#dilexicalblockfile"/></summary>
     public class LexicalBlockFile : Scope
     {
         internal LexicalBlockFile( LLVMMetadataRef handle )
@@ -166,7 +166,7 @@
         public new static LexicalBlockFile Empty = new LexicalBlockFile( LLVMMetadataRef.Zero );
     }
 
-    /// <summary><see cref="http://llvm.org/docs/LangRef.html#dinamespace"/></summary>
+    /// <summary>see <a href="http://llvm.org/docs/LangRef.html#dinamespace"/></summary>
     public class Namespace : Scope
     {
         internal Namespace( LLVMMetadataRef handle )
@@ -176,7 +176,7 @@
         public new static Namespace Empty = new Namespace( LLVMMetadataRef.Zero );
     }
 
-    /// <summary><see cref="http://llvm.org/docs/LangRef.html#disubprogram"/></summary>
+    /// <summary>see <a href="http://llvm.org/docs/LangRef.html#disubprogram"/></summary>
     public class SubProgram : Scope
     {
         internal SubProgram( LLVMMetadataRef handle )
@@ -196,7 +196,7 @@
         public new static Type Empty = new Type( LLVMMetadataRef.Zero );
     }
 
-    /// <summary><see cref="http://llvm.org/docs/LangRef.html#dibasictype"/></summary>
+    /// <summary>see <a href="http://llvm.org/docs/LangRef.html#dibasictype"/></summary>
     public class BasicType : Type
     {
         internal BasicType( LLVMMetadataRef handle )
@@ -206,7 +206,7 @@
         public new static BasicType Empty = new BasicType( LLVMMetadataRef.Zero );
     }
 
-    /// <summary><see cref="http://llvm.org/docs/LangRef.html#diderivedtype"/></summary>
+    /// <summary>see <a href="http://llvm.org/docs/LangRef.html#diderivedtype"/></summary>
     public class DerivedType : Type
     {
         internal DerivedType( LLVMMetadataRef handle )
@@ -216,7 +216,7 @@
         public new static DerivedType Empty = new DerivedType( LLVMMetadataRef.Zero );
     }
 
-    /// <summary><see cref="http://llvm.org/docs/LangRef.html#dicompositetype"/></summary>
+    /// <summary>see <a href="http://llvm.org/docs/LangRef.html#dicompositetype"/></summary>
     public class CompositeType : Type
     {
         internal CompositeType( LLVMMetadataRef handle )
@@ -227,7 +227,7 @@
         public new static CompositeType Empty = new CompositeType( LLVMMetadataRef.Zero );
     }
 
-    /// <summary><see cref="http://llvm.org/docs/LangRef.html#disubroutinetype"/></summary>
+    /// <summary>see <a href="http://llvm.org/docs/LangRef.html#disubroutinetype"/></summary>
     public class SubroutineType : CompositeType
     {
         internal SubroutineType( LLVMMetadataRef handle )

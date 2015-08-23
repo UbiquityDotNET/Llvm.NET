@@ -88,7 +88,7 @@ namespace Llvm.NET.Values
         /// <summary>Gets the instruction that follows a given instruction in a block</summary>
         /// <param name="instruction">instruction in the block to get the next instruction from</param>
         /// <returns>Next instruction or null if none</returns>
-        /// <exception cref="ArgumentException">Thrown when <paramref cref="instruction"/> is from a different block</exception>
+        /// <exception cref="ArgumentException">Thrown when <paramref cref="Instruction"/> is from a different block</exception>
         public Instruction GetNextInstruction( Instruction instruction )
         {
             if( instruction == null )

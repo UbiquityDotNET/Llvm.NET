@@ -91,6 +91,12 @@ namespace Llvm.NET.DebugInfo
                                         , Function function
                                         )
         {
+            if( string.IsNullOrWhiteSpace( name ) )
+                name = string.Empty;
+
+            if( string.IsNullOrWhiteSpace( mangledName ) )
+                mangledName = string.Empty;
+
             var handle = LLVMNative.DIBuilderCreateFunction( BuilderHandle
                                                            , scope.MetadataHandle
                                                            , name
@@ -141,7 +147,7 @@ namespace Llvm.NET.DebugInfo
 
         public DerivedType CreatePointerType( Type pointeeType, string name, ulong bitSize, ulong bitAlign)
         {
-            var handle = LLVMNative.DIBuilderCreatePointerType( BuilderHandle, pointeeType.MetadataHandle, bitSize, bitAlign, name );
+            var handle = LLVMNative.DIBuilderCreatePointerType( BuilderHandle, pointeeType.MetadataHandle, bitSize, bitAlign, name ?? string.Empty );
             return new DerivedType( handle );
         }
 
@@ -271,7 +277,7 @@ namespace Llvm.NET.DebugInfo
 
         public Array GetOrCreateArray( IEnumerable<Descriptor> elements )
         {
-            var buf = elements.Select( d => d.MetadataHandle ).ToArray( );
+            var buf = elements.Select( d => d?.MetadataHandle ?? LLVMMetadataRef.Zero ).ToArray( );
             var actualLen = buf.LongLength;
             // for the out parameter trick to work - need to have a valid array with at least one element
             if( buf.LongLength == 0 )
@@ -283,7 +289,7 @@ namespace Llvm.NET.DebugInfo
 
         public TypeArray GetOrCreateTypeArray( IEnumerable<Type> types )
         {
-            var buf = types.Select( t => t.MetadataHandle ).ToArray();
+            var buf = types.Select( t => t?.MetadataHandle ?? LLVMMetadataRef.Zero ).ToArray();
             var handle = LLVMNative.DIBuilderGetOrCreateTypeArray( BuilderHandle, out buf[ 0 ], (ulong)buf.LongLength );
             return new TypeArray( handle );
         }
