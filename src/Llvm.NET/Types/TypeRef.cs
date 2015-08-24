@@ -9,7 +9,16 @@ namespace Llvm.NET.Types
         : IExtensiblePropertyContainer
     {
         /// <summary>Flag to indicate if the type is sized</summary>
-        public bool CheckIfSized() => Kind != TypeKind.Function || LLVMNative.TypeIsSized( TypeHandle );
+        public bool IsSized
+        {
+            get
+            {
+                if( Kind == TypeKind.Function )
+                    return false;
+
+                return LLVMNative.TypeIsSized( TypeHandle );
+            }
+        }
 
         /// <summary>LLVM Type kind for this type</summary>
         public TypeKind Kind => ( TypeKind )LLVMNative.GetTypeKind( TypeHandle );
@@ -86,9 +95,9 @@ namespace Llvm.NET.Types
         public Constant GetNullValue() => Constant.NullValueFor( this );
 
         /// <summary>Retrieves an expression that results in the size of the type</summary>
-        public Constant GetSizeOf()
+        public Constant GetSizeOfExpression()
         {
-            if( !CheckIfSized()
+            if( !IsSized
                 || Kind == TypeKind.Void
                 || Kind == TypeKind.Function
                 || ( Kind == TypeKind.Struct && ( LLVMNative.IsOpaqueStruct( TypeHandle ) ) )

@@ -421,7 +421,7 @@ namespace Llvm.NET.DebugInfo
                                                                          , ( uint )tag
                                                                          , name
                                                                          , scope.MetadataHandle
-                                                                         , file.MetadataHandle
+                                                                         , file?.MetadataHandle ?? LLVMMetadataRef.Zero
                                                                          , line
                                                                          , lang
                                                                          , sizeInBits
