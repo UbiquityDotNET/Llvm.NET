@@ -410,7 +410,6 @@ namespace Llvm.NET
         [DllImport( libraryPath, EntryPoint = "LLVMDIDescriptorIsExpression", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl )]
         internal static extern LLVMBool DIDescriptorIsExpression( LLVMMetadataRef descriptor );
 
-
         [DllImport( libraryPath, EntryPoint = "LLVMMetadataAsValue", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl )]
         internal static extern LLVMValueRef MetadataAsValue( LLVMContextRef context, LLVMMetadataRef metadataRef );
     }
