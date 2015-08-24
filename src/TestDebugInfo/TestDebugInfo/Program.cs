@@ -100,8 +100,9 @@ namespace TestDebugInfo
                     var instBuilder = new InstructionBuilder( blk );
 
                     // create debug info locals for the arguments
-                    var paramSrc = diBuilder.CreateLocalVariable( (uint)Tag.ArgVariable, copyFuncDi, "src", diFile, 7, fooOpaque, false, 0, 0 );
-                    var paramDst = diBuilder.CreateLocalVariable( ( uint )Tag.ArgVariable, copyFuncDi, "pDst", diFile, 7, fooDiPtr, false, 0, 1 );
+                    // NOTE: Debug parameter indeces are 1 based!
+                    var paramSrc = diBuilder.CreateLocalVariable( ( uint )Tag.ArgVariable, copyFuncDi, "src", diFile, 7, fooOpaque, false, 0, 1 );
+                    var paramDst = diBuilder.CreateLocalVariable( ( uint )Tag.ArgVariable, copyFuncDi, "pDst", diFile, 7, fooDiPtr, false, 0, 2 );
 
                     // create an alloc to map debuging for writes through the destiniation parameter
                     var fooPtrStackAlign = targetData.CallFrameAlignmentOf( copyFunc.Parameters[ 1 ].Type );
