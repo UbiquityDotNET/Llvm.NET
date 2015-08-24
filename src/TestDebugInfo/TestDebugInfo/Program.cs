@@ -2,6 +2,7 @@
 using Llvm.NET;
 using Llvm.NET.DebugInfo;
 using Llvm.NET.Instructions;
+using Llvm.NET.Values;
 
 namespace TestDebugInfo
 {
@@ -43,6 +44,8 @@ namespace TestDebugInfo
                     // add debug module flags to the module
                     module.AddModuleFlag( ModuleFlagBehavior.Override, Module.DebugVersionValue, Module.DebugMetadataVersion );
                     module.AddModuleFlag( ModuleFlagBehavior.Override, Module.DwarfVersionValue, 4 );
+                    module.DataLayout = targetMachine.TargetData.ToString( );
+
                     var diBuilder = new DebugInfoBuilder( module );
                     
                     // create compile unit and file as the scope for everything
@@ -52,7 +55,7 @@ namespace TestDebugInfo
                     // create the LLVM structure type and body
                     // The full body is used with targetMachine.TargetData to determine size, alignment and element offsets
                     // in a target independent manner.
-                    var foo = context.CreateStructType( "Struct.foo" );
+                    var foo = context.CreateStructType( "struct.foo" );
                     foo.SetBody( false, context.Int32Type, context.Int32Type.CreateArrayType(0) );
 
                     // use targetMachine to get size and alignemnt of struct and fields
@@ -82,6 +85,13 @@ namespace TestDebugInfo
                     var copyFunc = module.AddFunction( "copy", copySig );
                     copyFunc.AddAttributes( Attributes.NoUnwind );
                     var copyFuncDi = diBuilder.CreateFunction( diFile, "copy", null, diFile, 7, copySigDi, false, true, 7, (uint)DebugInfoFlags.Prototyped, false, copyFunc );
+                    
+                    // ByVal pointers indicate by value semantics. LLVM recognizes this pattern and has a pass to map
+                    // to an efficient register usage whenever plausible.
+                    copyFunc.Parameters[ 0 ].AddAttributes( Attributes.ByVal );
+                    copyFunc.Parameters[ 0 ].SetAlignment( fooAbiAlignment );
+                    copyFunc.Parameters[ 0 ].Name = "src";
+                    copyFunc.Parameters[ 1 ].Name = "pDst";
 
                     // create block for the function body, only need one for this simple sample
                     var blk = copyFunc.AppendBasicBlock( "entry" );
@@ -89,24 +99,37 @@ namespace TestDebugInfo
                     // create instruction builder to build the body
                     var instBuilder = new InstructionBuilder( blk );
 
-                    // create parameter declaration instrinssic instructions
+                    // create debug info locals for the arguments
                     var paramSrc = diBuilder.CreateLocalVariable( (uint)Tag.ArgVariable, copyFuncDi, "src", diFile, 7, fooOpaque, false, 0, 0 );
-                    var srcDeclare = (Instruction)diBuilder.InsertDeclare( copyFunc.Parameters[ 0 ], paramSrc, blk );
-                    // NOTE: Scope for an instruction debug location must be the function or a lexical block 
-                    //       not the file the line, column info refere to since it is assumed the file is the
-                    //       same as the scope. For parmaters and local declarations this allows assigning both
-                    //       line and column location information to the arguments declaration, which isn't
-                    //       possible with CreateLocalVariable(...) alone
-                    srcDeclare.SetDebugLocation( 7, 23, copyFuncDi );
-
                     var paramDst = diBuilder.CreateLocalVariable( ( uint )Tag.ArgVariable, copyFuncDi, "pDst", diFile, 7, fooDiPtr, false, 0, 1 );
-                    var dstDeclare = (Instruction)diBuilder.InsertDeclare( copyFunc.Parameters[ 1 ], paramDst, blk );
-                    dstDeclare.SetDebugLocation( 7, 40, copyFuncDi );
 
-                    // create a store instruction to copy the src into the destination
-                    var storeInst = (Instruction)instBuilder.Store( copyFunc.Parameters[ 0 ], copyFunc.Parameters[ 1 ] );
-                    storeInst.SetDebugLocation( 9, 5, copyFuncDi );
-                    instBuilder.Return( );
+                    // create an alloc to map debuging for writes through the destiniation parameter
+                    var fooPtrStackAlign = targetData.CallFrameAlignmentOf( copyFunc.Parameters[ 1 ].Type );
+                    var dstAddr = (Instruction)instBuilder.Alloca( copyFunc.Parameters[ 1 ].Type, "pDst.addr" );
+                    dstAddr.Alignment = targetData.CallFrameAlignmentOf( copyFunc.Parameters[ 1 ].Type );
+
+                    var srcDeclare = (Instruction)diBuilder.InsertDeclare( copyFunc.Parameters[ 0 ], paramSrc, blk );
+                    srcDeclare.SetDebugLocation( 7, 23, copyFuncDi );
+                    var dstStore = (Instruction)instBuilder.Store( copyFunc.Parameters[ 1 ], dstAddr );
+                    dstStore.Alignment = fooPtrStackAlign;
+
+                    var dstDeclare = (Instruction)diBuilder.InsertDeclare( dstAddr, paramDst, blk );
+                    dstDeclare.SetDebugLocation( 7, 40, copyFuncDi );
+                    var loadedDst = (Instruction)instBuilder.Load( dstAddr );
+                    loadedDst.Alignment = fooPtrStackAlign;
+                    loadedDst.SetDebugLocation( 9, 6, copyFuncDi );
+
+                    var dstPtr = (Instruction)instBuilder.BitCast( loadedDst, context.Int8Type.CreatePointerType( ) );
+                    dstPtr.SetDebugLocation( 9, 5, copyFuncDi );
+
+                    var srcPtr = (Instruction)instBuilder.BitCast( copyFunc.Parameters[ 0 ], context.Int8Type.CreatePointerType( ) );
+                    srcPtr.SetDebugLocation( 9, 5, copyFuncDi );
+
+                    var memCpy = (Instruction)instBuilder.MemCpy( module, dstPtr, srcPtr, ConstantInt.From( (int)fooBitSize / 8 ), (int)fooAbiAlignment, false );
+                    memCpy.SetDebugLocation( 9, 5, copyFuncDi );
+
+                    var ret = (Instruction)instBuilder.Return( );
+                    ret.SetDebugLocation( 10, 1, copyFuncDi );
 
                     // Create concrete type and RAUW of the opaque one with the complete version
                     // despite what seems intuitively obvious the scope for the createMemberType isn't the type the member is a part of,
@@ -144,7 +167,7 @@ namespace TestDebugInfo
                                                                 , elements: diFields );
                     fooOpaque.ReplaceAllUsesWith( context, fooConcrete );
                     // NOTE: Use of fooOpaque at this point will generate an error/aassert or crash from the LLVM native code layer
-                    // so it should be set to null or simply re-assigned the new concreate value, this sample is making the names
+                    // so it should be set to null or simply re-assigned the new concrete value, this sample is making the names
                     // and instances distinct for illustration so the opaque value is set to null as it should not be used after RAUW
                     fooOpaque = null;
 
