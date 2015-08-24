@@ -343,5 +343,8 @@ namespace Llvm.NET
 
         [DllImport( libraryPath, EntryPoint = "LLVMDIBuilderCreateReplaceableForwardDecl", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl )]
         internal static extern LLVMMetadataRef DIBuilderCreateReplaceableForwardDecl( LLVMDIBuilderRef Dref, uint Tag, string Name, LLVMMetadataRef Scope, LLVMMetadataRef F, uint Line, uint RuntimeLang , ulong SizeInBits, ulong AlignInBits, string UniqueIdentifier );
+
+        [DllImport( libraryPath, EntryPoint = "LLVMMetadataAsValue", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl )]
+        internal static extern LLVMValueRef MetadataAsValue( LLVMContextRef context, LLVMMetadataRef metadataRef );
     }
 }

@@ -278,6 +278,14 @@ namespace Llvm.NET
             return Value.FromHandle( handle );
         }
 
+        public Value CreateMetadataConstantString( string value )
+        {
+            var hString = LLVMNative.ConstStringInContext( ContextHandle, value, (uint)value.Length, true );
+            var hStringAsMD = LLVMNative.ConstantAsMetadata( hString );
+            var handle = LLVMNative.MetadataAsValue( ContextHandle, hStringAsMD );
+            return Value.FromHandle( handle );
+        }
+
         /// <summary>Global context</summary>
         public static Context GlobalContext => LazyGlobalContext.Value;
 

@@ -2,7 +2,7 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
     <metadata>
         <id>Llvm.NET</id>
-        <version>0.2.16-alpha</version>
+        <version>0.2.17-alpha</version>
         <authors>Microsoft Corporation,LLVM.org</authors>
         <requireLicenseAcceptance>false</requireLicenseAcceptance>
         <description>.NET Bindings for LLVM 3.6.1</description>
