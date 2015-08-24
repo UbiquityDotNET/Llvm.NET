@@ -358,7 +358,29 @@ extern "C" {
                                                               , const char* UniqueIdentifier /* default empty string */
                                                               );
 
+   unsigned LLVMDITypeGetFlags( LLVMMetadataRef type );
 
+   LLVMBool LLVMDIDescriptorIsDerivedType( LLVMMetadataRef descriptor );
+   LLVMBool LLVMDIDescriptorIsCompositeType( LLVMMetadataRef descriptor );
+   LLVMBool LLVMDIDescriptorIsSubroutineType( LLVMMetadataRef descriptor );
+   LLVMBool LLVMDIDescriptorIsBasicType( LLVMMetadataRef descriptor );
+   LLVMBool LLVMDIDescriptorIsVariable( LLVMMetadataRef descriptor );
+   LLVMBool LLVMDIDescriptorIsSubprogram( LLVMMetadataRef descriptor );
+   LLVMBool LLVMDIDescriptorIsGlobalVariable( LLVMMetadataRef descriptor );
+   LLVMBool LLVMDIDescriptorIsScope( LLVMMetadataRef descriptor );
+   LLVMBool LLVMDIDescriptorIsFile( LLVMMetadataRef descriptor );
+   LLVMBool LLVMDIDescriptorIsCompileUnit( LLVMMetadataRef descriptor );
+   LLVMBool LLVMDIDescriptorIsNameSpace( LLVMMetadataRef descriptor );
+   LLVMBool LLVMDIDescriptorIsLexicalBlockFile( LLVMMetadataRef descriptor );
+   LLVMBool LLVMDIDescriptorIsLexicalBlock( LLVMMetadataRef descriptor );
+   LLVMBool LLVMDIDescriptorIsSubrange( LLVMMetadataRef descriptor );
+   LLVMBool LLVMDIDescriptorIsEnumerator( LLVMMetadataRef descriptor );
+   LLVMBool LLVMDIDescriptorIsType( LLVMMetadataRef descriptor );
+   LLVMBool LLVMDIDescriptorIsTemplateTypeParameter( LLVMMetadataRef descriptor );
+   LLVMBool LLVMDIDescriptorIsTemplateValueParameter( LLVMMetadataRef descriptor );
+   LLVMBool LLVMDIDescriptorIsObjCProperty( LLVMMetadataRef descriptor );
+   LLVMBool LLVMDIDescriptorIsImportedEntity( LLVMMetadataRef descriptor );
+   LLVMBool LLVMDIDescriptorIsExpression( LLVMMetadataRef descriptor );
 
 #ifdef __cplusplus
 } // extern "C"

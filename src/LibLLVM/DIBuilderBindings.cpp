@@ -511,4 +511,135 @@ extern "C"
         return wrap( fwdDecl );
     }
 
+    unsigned LLVMDITypeGetFlags( LLVMMetadataRef t )
+    {
+       DIType type = unwrapDI<DIType>( t );
+       return type.getFlags();
+    }
+
+    LLVMBool LLVMDIDescriptorIsDerivedType( LLVMMetadataRef descriptor )
+    {
+        DIDescriptor d = unwrapDI<DIDescriptor>( descriptor );
+        return d.isDerivedType();
+    }
+
+    LLVMBool LLVMDIDescriptorIsCompositeType( LLVMMetadataRef descriptor )
+    {
+        DIDescriptor d = unwrapDI<DIDescriptor>( descriptor );
+        return d.isCompositeType();
+    }
+
+    LLVMBool LLVMDIDescriptorIsSubroutineType( LLVMMetadataRef descriptor )
+    {
+        DIDescriptor d = unwrapDI<DIDescriptor>( descriptor );
+        return d.isSubroutineType();
+    }
+
+    LLVMBool LLVMDIDescriptorIsBasicType( LLVMMetadataRef descriptor )
+    {
+        DIDescriptor d = unwrapDI<DIDescriptor>( descriptor );
+        return d.isBasicType();
+    }
+
+    LLVMBool LLVMDIDescriptorIsVariable( LLVMMetadataRef descriptor )
+    {
+        DIDescriptor d = unwrapDI<DIDescriptor>( descriptor );
+        return d.isVariable();
+    }
+
+    LLVMBool LLVMDIDescriptorIsSubprogram( LLVMMetadataRef descriptor )
+    {
+        DIDescriptor d = unwrapDI<DIDescriptor>( descriptor );
+        return d.isSubprogram();
+    }
+
+    LLVMBool LLVMDIDescriptorIsGlobalVariable( LLVMMetadataRef descriptor )
+    {
+        DIDescriptor d = unwrapDI<DIDescriptor>( descriptor );
+        return d.isGlobalVariable();
+    }
+
+    LLVMBool LLVMDIDescriptorIsScope( LLVMMetadataRef descriptor )
+    {
+        DIDescriptor d = unwrapDI<DIDescriptor>( descriptor );
+        return d.isScope();
+    }
+
+    LLVMBool LLVMDIDescriptorIsFile( LLVMMetadataRef descriptor )
+    {
+        DIDescriptor d = unwrapDI<DIDescriptor>( descriptor );
+        return d.isFile();
+    }
+
+    LLVMBool LLVMDIDescriptorIsCompileUnit( LLVMMetadataRef descriptor )
+    {
+        DIDescriptor d = unwrapDI<DIDescriptor>( descriptor );
+        return d.isCompileUnit();
+    }
+
+    LLVMBool LLVMDIDescriptorIsNameSpace( LLVMMetadataRef descriptor )
+    {
+        DIDescriptor d = unwrapDI<DIDescriptor>( descriptor );
+        return d.isNameSpace();
+    }
+
+    LLVMBool LLVMDIDescriptorIsLexicalBlockFile( LLVMMetadataRef descriptor )
+    {
+        DIDescriptor d = unwrapDI<DIDescriptor>( descriptor );
+        return d.isLexicalBlockFile();
+    }
+
+    LLVMBool LLVMDIDescriptorIsLexicalBlock( LLVMMetadataRef descriptor )
+    {
+        DIDescriptor d = unwrapDI<DIDescriptor>( descriptor );
+        return d.isLexicalBlock();
+    }
+
+    LLVMBool LLVMDIDescriptorIsSubrange( LLVMMetadataRef descriptor )
+    {
+        DIDescriptor d = unwrapDI<DIDescriptor>( descriptor );
+        return d.isSubrange();
+    }
+
+    LLVMBool LLVMDIDescriptorIsEnumerator( LLVMMetadataRef descriptor )
+    {
+        DIDescriptor d = unwrapDI<DIDescriptor>( descriptor );
+        return d.isEnumerator();
+    }
+
+    LLVMBool LLVMDIDescriptorIsType( LLVMMetadataRef descriptor )
+    {
+        DIDescriptor d = unwrapDI<DIDescriptor>( descriptor );
+        return d.isType();
+    }
+
+    LLVMBool LLVMDIDescriptorIsTemplateTypeParameter( LLVMMetadataRef descriptor )
+    {
+        DIDescriptor d = unwrapDI<DIDescriptor>( descriptor );
+        return d.isTemplateTypeParameter();
+    }
+
+    LLVMBool LLVMDIDescriptorIsTemplateValueParameter( LLVMMetadataRef descriptor )
+    {
+        DIDescriptor d = unwrapDI<DIDescriptor>( descriptor );
+        return d.isTemplateValueParameter();
+    }
+
+    LLVMBool LLVMDIDescriptorIsObjCProperty( LLVMMetadataRef descriptor )
+    {
+        DIDescriptor d = unwrapDI<DIDescriptor>( descriptor );
+        return d.isObjCProperty();
+    }
+
+    LLVMBool LLVMDIDescriptorIsImportedEntity( LLVMMetadataRef descriptor )
+    {
+        DIDescriptor d = unwrapDI<DIDescriptor>( descriptor );
+        return d.isImportedEntity();
+    }
+
+    LLVMBool LLVMDIDescriptorIsExpression( LLVMMetadataRef descriptor )
+    {
+        DIDescriptor d = unwrapDI<DIDescriptor>( descriptor );
+        return d.isExpression();
+    }
 }

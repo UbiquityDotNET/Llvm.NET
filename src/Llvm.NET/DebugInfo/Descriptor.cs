@@ -1,4 +1,6 @@
-﻿namespace Llvm.NET.DebugInfo
+﻿using System;
+
+namespace Llvm.NET.DebugInfo
 {
     // for now the DebugInfo hierarchy is mostly empty
     // classes. This is due to the "in transition" state
@@ -43,6 +45,28 @@
         /// <summary>Dwarf tag for the descriptor</summary>
         public Tag Tag => (Tag)LLVMNative.DIDescriptorGetTag( MetadataHandle );
 
+        public bool IsDerivedType => LLVMNative.DIDescriptorIsDerivedType( MetadataHandle );
+        public bool IsCompositeType => LLVMNative.DIDescriptorIsCompositeType( MetadataHandle );
+        public bool IsSubroutineType => LLVMNative.DIDescriptorIsSubroutineType( MetadataHandle );
+        public bool IsBasicType => LLVMNative.DIDescriptorIsBasicType( MetadataHandle );
+        public bool IsVariable => LLVMNative.DIDescriptorIsVariable( MetadataHandle );
+        public bool IsSubprogram => LLVMNative.DIDescriptorIsSubprogram( MetadataHandle );
+        public bool IsGlobalVariable => LLVMNative.DIDescriptorIsGlobalVariable( MetadataHandle );
+        public bool IsScope => LLVMNative.DIDescriptorIsScope( MetadataHandle );
+        public bool IsFile => LLVMNative.DIDescriptorIsFile( MetadataHandle );
+        public bool IsCompileUnit => LLVMNative.DIDescriptorIsCompileUnit( MetadataHandle );
+        public bool IsNameSpace => LLVMNative.DIDescriptorIsNameSpace( MetadataHandle );
+        public bool IsLexicalBlockFile => LLVMNative.DIDescriptorIsLexicalBlockFile( MetadataHandle );
+        public bool IsLexicalBlock => LLVMNative.DIDescriptorIsLexicalBlock( MetadataHandle );
+        public bool IsSubrange => LLVMNative.DIDescriptorIsSubrange( MetadataHandle );
+        public bool IsEnumerator => LLVMNative.DIDescriptorIsEnumerator( MetadataHandle );
+        public bool IsType => LLVMNative.DIDescriptorIsType( MetadataHandle );
+        public bool IsTemplateTypeParameter => LLVMNative.DIDescriptorIsTemplateTypeParameter( MetadataHandle );
+        public bool IsTemplateValueParameter => LLVMNative.DIDescriptorIsTemplateValueParameter( MetadataHandle );
+        public bool IsObjCProperty => LLVMNative.DIDescriptorIsObjCProperty( MetadataHandle );
+        public bool IsImportedEntity => LLVMNative.DIDescriptorIsImportedEntity( MetadataHandle );
+        public bool IsExpression => LLVMNative.DIDescriptorIsExpression( MetadataHandle );
+
         internal Descriptor( LLVMMetadataRef handle )
         {
             MetadataHandle = handle;
@@ -62,7 +86,6 @@
         internal LLVMMetadataRef MetadataHandle { get; }
 
         /// <summary>Empty Descriptor</summary>
-        public static Descriptor Empty = new Descriptor( LLVMMetadataRef.Zero );
     }
 
     /// <summary>see <a href="http://llvm.org/docs/LangRef.html#diexpression"/></summary>
@@ -73,7 +96,6 @@
         {
         }
 
-        public new static Expression Empty = new Expression( LLVMMetadataRef.Zero );
     }
 
     /// <summary>see <a href="http://llvm.org/docs/LangRef.html#diglobalvariable"/></summary>
@@ -82,8 +104,9 @@
         internal GlobalVariable( LLVMMetadataRef handle )
             : base( handle )
         {
+            if( !LLVMNative.DIDescriptorIsGlobalVariable( handle ) )
+                throw new ArgumentException( "Invalid handle" );
         }
-        public new static GlobalVariable Empty = new GlobalVariable( LLVMMetadataRef.Zero );
     }
 
     /// <summary>see <a href="http://llvm.org/docs/LangRef.html#dilocalvariable"/></summary>
@@ -92,8 +115,9 @@
         internal LocalVariable( LLVMMetadataRef handle )
             : base( handle )
         {
+            if( !LLVMNative.DIDescriptorIsVariable( handle ) )
+                throw new ArgumentException( "Invalid handle" );
         }
-        public new static LocalVariable Empty = new LocalVariable( LLVMMetadataRef.Zero );
     }
 
     /// <summary>see <a href="http://llvm.org/docs/LangRef.html#dienumerator"/></summary>
@@ -102,8 +126,9 @@
         internal Enumerator( LLVMMetadataRef handle )
             : base( handle )
         {
+            if( !LLVMNative.DIDescriptorIsExpression( handle ) )
+                throw new ArgumentException( "Invalid handle" );
         }
-        public new static Enumerator Empty = new Enumerator( LLVMMetadataRef.Zero );
     }
 
     /// <summary>see <a href="http://llvm.org/docs/LangRef.html#disubrange"/></summary>
@@ -112,8 +137,9 @@
         internal Subrange( LLVMMetadataRef handle )
             : base( handle )
         {
+            if( !LLVMNative.DIDescriptorIsSubrange( handle ) )
+                throw new ArgumentException( "Invalid handle" );
         }
-        public new static Subrange Empty = new Subrange( LLVMMetadataRef.Zero );
     }
 
     /// <summary>Base class for all Debug info scopes</summary>
@@ -122,8 +148,9 @@
         internal Scope( LLVMMetadataRef handle )
             : base( handle )
         {
+            if( !LLVMNative.DIDescriptorIsScope( handle ) )
+                throw new ArgumentException( "Invalid handle" );
         }
-        public new static Scope Empty = new Scope( LLVMMetadataRef.Zero );
     }
 
     /// <summary>see <a href="http://llvm.org/docs/LangRef.html#dicompileunit"/></summary>
@@ -132,8 +159,9 @@
         internal CompileUnit( LLVMMetadataRef handle )
             : base( handle )
         {
+            if( !LLVMNative.DIDescriptorIsCompileUnit( handle ) )
+                throw new ArgumentException( "Invalid handle" );
         }
-        public new static CompileUnit Empty = new CompileUnit( LLVMMetadataRef.Zero );
     }
 
     /// <summary>see <a href="http://llvm.org/docs/LangRef.html#difile"/></summary>
@@ -142,8 +170,9 @@
         internal File( LLVMMetadataRef handle )
             : base( handle )
         {
+            if( !LLVMNative.DIDescriptorIsFile( handle ) )
+                throw new ArgumentException( "Invalid handle" );
         }
-        public new static File Empty = new File( LLVMMetadataRef.Zero );
     }
 
     /// <summary>see <a href="http://llvm.org/docs/LangRef.html#dilexicalblock"/></summary>
@@ -152,8 +181,9 @@
         internal LexicalBlock( LLVMMetadataRef handle )
             : base( handle )
         {
+            if( !LLVMNative.DIDescriptorIsLexicalBlock( handle ) )
+                throw new ArgumentException( "Invalid handle" );
         }
-        public new static LexicalBlock Empty = new LexicalBlock( LLVMMetadataRef.Zero );
     }
 
     /// <summary>see <a href="http://llvm.org/docs/LangRef.html#dilexicalblockfile"/></summary>
@@ -162,8 +192,9 @@
         internal LexicalBlockFile( LLVMMetadataRef handle )
             : base( handle )
         {
+            if( !LLVMNative.DIDescriptorIsLexicalBlockFile( handle ) )
+                throw new ArgumentException( "Invalid handle" );
         }
-        public new static LexicalBlockFile Empty = new LexicalBlockFile( LLVMMetadataRef.Zero );
     }
 
     /// <summary>see <a href="http://llvm.org/docs/LangRef.html#dinamespace"/></summary>
@@ -172,8 +203,9 @@
         internal Namespace( LLVMMetadataRef handle )
             : base( handle )
         {
+            if( !LLVMNative.DIDescriptorIsNameSpace( handle ) )
+                throw new ArgumentException( "Invalid handle" );
         }
-        public new static Namespace Empty = new Namespace( LLVMMetadataRef.Zero );
     }
 
     /// <summary>see <a href="http://llvm.org/docs/LangRef.html#disubprogram"/></summary>
@@ -182,8 +214,9 @@
         internal SubProgram( LLVMMetadataRef handle )
             : base( handle )
         {
+            if( !LLVMNative.DIDescriptorIsSubprogram( handle ) )
+                throw new ArgumentException( "Invalid handle" );
         }
-        public new static SubProgram Empty = new SubProgram( LLVMMetadataRef.Zero );
     }
 
     /// <summary>Base class for Debug info types</summary>
@@ -192,8 +225,11 @@
         internal Type( LLVMMetadataRef handle )
             : base( handle )
         {
+            if( !LLVMNative.DIDescriptorIsType( handle ) )
+                throw new ArgumentException( "Invalid handle" );
         }
-        public new static Type Empty = new Type( LLVMMetadataRef.Zero );
+
+        public DebugInfoFlags Flags => ( DebugInfoFlags )LLVMNative.DITypeGetFlags( MetadataHandle );
     }
 
     /// <summary>see <a href="http://llvm.org/docs/LangRef.html#dibasictype"/></summary>
@@ -202,8 +238,9 @@
         internal BasicType( LLVMMetadataRef handle )
             : base( handle )
         {
+            if( !LLVMNative.DIDescriptorIsBasicType( handle ) )
+                throw new ArgumentException( "Invalid handle" );
         }
-        public new static BasicType Empty = new BasicType( LLVMMetadataRef.Zero );
     }
 
     /// <summary>see <a href="http://llvm.org/docs/LangRef.html#diderivedtype"/></summary>
@@ -212,8 +249,9 @@
         internal DerivedType( LLVMMetadataRef handle )
             : base( handle )
         {
+            if( !LLVMNative.DIDescriptorIsDerivedType( handle ) )
+                throw new ArgumentException( "Invalid handle" );
         }
-        public new static DerivedType Empty = new DerivedType( LLVMMetadataRef.Zero );
     }
 
     /// <summary>see <a href="http://llvm.org/docs/LangRef.html#dicompositetype"/></summary>
@@ -222,9 +260,10 @@
         internal CompositeType( LLVMMetadataRef handle )
             : base( handle )
         {
+            if( !LLVMNative.DIDescriptorIsCompositeType( handle ) )
+                throw new ArgumentException( "Invalid handle" );
         }
 
-        public new static CompositeType Empty = new CompositeType( LLVMMetadataRef.Zero );
     }
 
     /// <summary>see <a href="http://llvm.org/docs/LangRef.html#disubroutinetype"/></summary>
@@ -233,8 +272,9 @@
         internal SubroutineType( LLVMMetadataRef handle )
             : base( handle )
         {
+            if( !LLVMNative.DIDescriptorIsSubroutineType( handle ) )
+                throw new ArgumentException( "Invalid handle" );
         }
 
-        public new static SubroutineType Empty = new SubroutineType( LLVMMetadataRef.Zero );
     }
 }

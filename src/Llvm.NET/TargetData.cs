@@ -110,8 +110,8 @@ namespace Llvm.NET
         }
 
         public uint PreferredAlignmentOf( Value value ) => LLVMNative.PreferredAlignmentOfGlobal( OpaqueHandle, value.ValueHandle );
-        public uint ElementAtOffset( TypeRef structType, ulong offset ) => LLVMNative.ElementAtOffset( OpaqueHandle, structType.TypeHandle, offset );
-        public ulong OffsetOfElement( TypeRef structType, uint element ) => LLVMNative.OffsetOfElement( OpaqueHandle, structType.TypeHandle, element );
+        public uint ElementAtOffset( StructType structType, ulong offset ) => LLVMNative.ElementAtOffset( OpaqueHandle, structType.TypeHandle, offset );
+        public ulong OffsetOfElement( StructType structType, uint element ) => LLVMNative.OffsetOfElement( OpaqueHandle, structType.TypeHandle, element );
 
         public override string ToString( )
         {
