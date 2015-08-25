@@ -65,7 +65,7 @@ namespace TestDebugInfo
                     var int32AbiAlignment = targetData.AbiAlignmentOf( context.Int32Type ) * 8;
                     
                     // get a debug info type for int32
-                    var diInt32 = diBuilder.CreateBasicType( "int", int32BitSize, int32AbiAlignment, Llvm.NET.DebugInfo.TypeKind.Signed );
+                    var diInt32 = diBuilder.CreateBasicType( "int", int32BitSize, int32AbiAlignment, DiTypeKind.Signed );
                     var diInt32ArrayType = diBuilder.CreateArrayType( 0, 32, diInt32, diBuilder.CreateSubrange( 0, 0) );
 
                     // Create debug info for the structure
@@ -135,7 +135,7 @@ namespace TestDebugInfo
                     // Create concrete type and RAUW of the opaque one with the complete version
                     // despite what seems intuitively obvious the scope for the createMemberType isn't the type the member is a part of,
                     // since it hasn't been created yet. Instead, it's the file (or compile unit )
-                    var diFields = new Llvm.NET.DebugInfo.Type[]
+                    var diFields = new DiType[]
                         { diBuilder.CreateMemberType( scope: cu
                                                     , name: "a"
                                                     , file: diFile

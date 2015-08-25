@@ -13,9 +13,9 @@ namespace Llvm.NET.DebugInfo
     // on current projects.
 
     /// <summary>Array of see <a href="Type"/> nodes for use with see <a href="DebugInfoBuilder"/> methods</summary>
-    public class TypeArray
+    public class DiTypeArray
     {
-        internal TypeArray( LLVMMetadataRef handle )
+        internal DiTypeArray( LLVMMetadataRef handle )
         {
             MetadataHandle = handle;
         }
@@ -24,9 +24,9 @@ namespace Llvm.NET.DebugInfo
     }
 
     /// <summary>Array of see <a href="Descriptor"/> nodes for use with see <a href="DebugInfoBuilder"/> methods</summary>
-    public class Array
+    public class DiArray
     {
-        internal Array( LLVMMetadataRef handle )
+        internal DiArray( LLVMMetadataRef handle )
         {
             MetadataHandle = handle;
         }
@@ -40,7 +40,7 @@ namespace Llvm.NET.DebugInfo
     /// see <a href="Values.Value"/> they are not uniqued, although the underlying metadata nodes
     /// usually are. 
     /// </remarks>
-    public class Descriptor
+    public class DiDescriptor
     {
         /// <summary>Dwarf tag for the descriptor</summary>
         public Tag Tag => (Tag)LLVMNative.DIDescriptorGetTag( MetadataHandle );
@@ -67,7 +67,7 @@ namespace Llvm.NET.DebugInfo
         public bool IsImportedEntity => LLVMNative.DIDescriptorIsImportedEntity( MetadataHandle );
         public bool IsExpression => LLVMNative.DIDescriptorIsExpression( MetadataHandle );
 
-        internal Descriptor( LLVMMetadataRef handle )
+        internal DiDescriptor( LLVMMetadataRef handle )
         {
             MetadataHandle = handle;
         }
@@ -78,7 +78,7 @@ namespace Llvm.NET.DebugInfo
         /// <summary>Replace all uses of this descriptor with another</summary>
         /// <param name="context">Context to use for replacement</param>
         /// <param name="other">New descriptor to replace this one with</param>
-        public void ReplaceAllUsesWith( Context context, Descriptor other )
+        public void ReplaceAllUsesWith( Context context, DiDescriptor other )
         {
             LLVMNative.DiDescriptorReplaceAllUsesWith( context.ContextHandle, MetadataHandle, other.MetadataHandle );
         }
@@ -89,9 +89,9 @@ namespace Llvm.NET.DebugInfo
     }
 
     /// <summary>see <a href="http://llvm.org/docs/LangRef.html#diexpression"/></summary>
-    public class Expression : Descriptor
+    public class DiExpression : DiDescriptor
     {
-        internal Expression( LLVMMetadataRef handle )
+        internal DiExpression( LLVMMetadataRef handle )
             : base( handle )
         {
         }
@@ -99,9 +99,9 @@ namespace Llvm.NET.DebugInfo
     }
 
     /// <summary>see <a href="http://llvm.org/docs/LangRef.html#diglobalvariable"/></summary>
-    public class GlobalVariable : Descriptor
+    public class DiGlobalVariable : DiDescriptor
     {
-        internal GlobalVariable( LLVMMetadataRef handle )
+        internal DiGlobalVariable( LLVMMetadataRef handle )
             : base( handle )
         {
             if( !LLVMNative.DIDescriptorIsGlobalVariable( handle ) )
@@ -110,9 +110,9 @@ namespace Llvm.NET.DebugInfo
     }
 
     /// <summary>see <a href="http://llvm.org/docs/LangRef.html#dilocalvariable"/></summary>
-    public class LocalVariable : Descriptor
+    public class DiLocalVariable : DiDescriptor
     {
-        internal LocalVariable( LLVMMetadataRef handle )
+        internal DiLocalVariable( LLVMMetadataRef handle )
             : base( handle )
         {
             if( !LLVMNative.DIDescriptorIsVariable( handle ) )
@@ -121,9 +121,9 @@ namespace Llvm.NET.DebugInfo
     }
 
     /// <summary>see <a href="http://llvm.org/docs/LangRef.html#dienumerator"/></summary>
-    public class Enumerator : Descriptor
+    public class DiEnumerator : DiDescriptor
     {
-        internal Enumerator( LLVMMetadataRef handle )
+        internal DiEnumerator( LLVMMetadataRef handle )
             : base( handle )
         {
             if( !LLVMNative.DIDescriptorIsExpression( handle ) )
@@ -132,9 +132,9 @@ namespace Llvm.NET.DebugInfo
     }
 
     /// <summary>see <a href="http://llvm.org/docs/LangRef.html#disubrange"/></summary>
-    public class Subrange : Descriptor
+    public class DiSubrange : DiDescriptor
     {
-        internal Subrange( LLVMMetadataRef handle )
+        internal DiSubrange( LLVMMetadataRef handle )
             : base( handle )
         {
             if( !LLVMNative.DIDescriptorIsSubrange( handle ) )
@@ -143,9 +143,9 @@ namespace Llvm.NET.DebugInfo
     }
 
     /// <summary>Base class for all Debug info scopes</summary>
-    public class Scope : Descriptor
+    public class DiScope : DiDescriptor
     {
-        internal Scope( LLVMMetadataRef handle )
+        internal DiScope( LLVMMetadataRef handle )
             : base( handle )
         {
             if( !LLVMNative.DIDescriptorIsScope( handle ) )
@@ -154,9 +154,9 @@ namespace Llvm.NET.DebugInfo
     }
 
     /// <summary>see <a href="http://llvm.org/docs/LangRef.html#dicompileunit"/></summary>
-    public class CompileUnit : Scope
+    public class DiCompileUnit : DiScope
     {
-        internal CompileUnit( LLVMMetadataRef handle )
+        internal DiCompileUnit( LLVMMetadataRef handle )
             : base( handle )
         {
             if( !LLVMNative.DIDescriptorIsCompileUnit( handle ) )
@@ -165,9 +165,9 @@ namespace Llvm.NET.DebugInfo
     }
 
     /// <summary>see <a href="http://llvm.org/docs/LangRef.html#difile"/></summary>
-    public class File : Scope
+    public class DiFile : DiScope
     {
-        internal File( LLVMMetadataRef handle )
+        internal DiFile( LLVMMetadataRef handle )
             : base( handle )
         {
             if( !LLVMNative.DIDescriptorIsFile( handle ) )
@@ -176,9 +176,9 @@ namespace Llvm.NET.DebugInfo
     }
 
     /// <summary>see <a href="http://llvm.org/docs/LangRef.html#dilexicalblock"/></summary>
-    public class LexicalBlock : Scope
+    public class DiLexicalBlock : DiScope
     {
-        internal LexicalBlock( LLVMMetadataRef handle )
+        internal DiLexicalBlock( LLVMMetadataRef handle )
             : base( handle )
         {
             if( !LLVMNative.DIDescriptorIsLexicalBlock( handle ) )
@@ -187,9 +187,9 @@ namespace Llvm.NET.DebugInfo
     }
 
     /// <summary>see <a href="http://llvm.org/docs/LangRef.html#dilexicalblockfile"/></summary>
-    public class LexicalBlockFile : Scope
+    public class DiLexicalBlockFile : DiScope
     {
-        internal LexicalBlockFile( LLVMMetadataRef handle )
+        internal DiLexicalBlockFile( LLVMMetadataRef handle )
             : base( handle )
         {
             if( !LLVMNative.DIDescriptorIsLexicalBlockFile( handle ) )
@@ -198,9 +198,9 @@ namespace Llvm.NET.DebugInfo
     }
 
     /// <summary>see <a href="http://llvm.org/docs/LangRef.html#dinamespace"/></summary>
-    public class Namespace : Scope
+    public class DiNamespace : DiScope
     {
-        internal Namespace( LLVMMetadataRef handle )
+        internal DiNamespace( LLVMMetadataRef handle )
             : base( handle )
         {
             if( !LLVMNative.DIDescriptorIsNameSpace( handle ) )
@@ -209,9 +209,9 @@ namespace Llvm.NET.DebugInfo
     }
 
     /// <summary>see <a href="http://llvm.org/docs/LangRef.html#disubprogram"/></summary>
-    public class SubProgram : Scope
+    public class DiSubProgram : DiScope
     {
-        internal SubProgram( LLVMMetadataRef handle )
+        internal DiSubProgram( LLVMMetadataRef handle )
             : base( handle )
         {
             if( !LLVMNative.DIDescriptorIsSubprogram( handle ) )
@@ -220,9 +220,9 @@ namespace Llvm.NET.DebugInfo
     }
 
     /// <summary>Base class for Debug info types</summary>
-    public class Type : Scope
+    public class DiType : DiScope
     {
-        internal Type( LLVMMetadataRef handle )
+        internal DiType( LLVMMetadataRef handle )
             : base( handle )
         {
             if( !LLVMNative.DIDescriptorIsType( handle ) )
@@ -233,9 +233,9 @@ namespace Llvm.NET.DebugInfo
     }
 
     /// <summary>see <a href="http://llvm.org/docs/LangRef.html#dibasictype"/></summary>
-    public class BasicType : Type
+    public class DiBasicType : DiType
     {
-        internal BasicType( LLVMMetadataRef handle )
+        internal DiBasicType( LLVMMetadataRef handle )
             : base( handle )
         {
             if( !LLVMNative.DIDescriptorIsBasicType( handle ) )
@@ -244,9 +244,9 @@ namespace Llvm.NET.DebugInfo
     }
 
     /// <summary>see <a href="http://llvm.org/docs/LangRef.html#diderivedtype"/></summary>
-    public class DerivedType : Type
+    public class DiDerivedType : DiType
     {
-        internal DerivedType( LLVMMetadataRef handle )
+        internal DiDerivedType( LLVMMetadataRef handle )
             : base( handle )
         {
             if( !LLVMNative.DIDescriptorIsDerivedType( handle ) )
@@ -255,9 +255,9 @@ namespace Llvm.NET.DebugInfo
     }
 
     /// <summary>see <a href="http://llvm.org/docs/LangRef.html#dicompositetype"/></summary>
-    public class CompositeType : Type
+    public class DiCompositeType : DiType
     {
-        internal CompositeType( LLVMMetadataRef handle )
+        internal DiCompositeType( LLVMMetadataRef handle )
             : base( handle )
         {
             if( !LLVMNative.DIDescriptorIsCompositeType( handle ) )
@@ -267,9 +267,9 @@ namespace Llvm.NET.DebugInfo
     }
 
     /// <summary>see <a href="http://llvm.org/docs/LangRef.html#disubroutinetype"/></summary>
-    public class SubroutineType : CompositeType
+    public class DiSubroutineType : DiCompositeType
     {
-        internal SubroutineType( LLVMMetadataRef handle )
+        internal DiSubroutineType( LLVMMetadataRef handle )
             : base( handle )
         {
             if( !LLVMNative.DIDescriptorIsSubroutineType( handle ) )
