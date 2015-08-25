@@ -43,29 +43,245 @@ namespace Llvm.NET.DebugInfo
     public class DiDescriptor
     {
         /// <summary>Dwarf tag for the descriptor</summary>
-        public Tag Tag => (Tag)LLVMNative.DIDescriptorGetTag( MetadataHandle );
+        public Tag Tag
+        {
+            get
+            {
+                if( MetadataHandle.Pointer == IntPtr.Zero )
+                    return (Tag)(ushort.MaxValue);
 
-        public bool IsDerivedType => LLVMNative.DIDescriptorIsDerivedType( MetadataHandle );
-        public bool IsCompositeType => LLVMNative.DIDescriptorIsCompositeType( MetadataHandle );
-        public bool IsSubroutineType => LLVMNative.DIDescriptorIsSubroutineType( MetadataHandle );
-        public bool IsBasicType => LLVMNative.DIDescriptorIsBasicType( MetadataHandle );
-        public bool IsVariable => LLVMNative.DIDescriptorIsVariable( MetadataHandle );
-        public bool IsSubprogram => LLVMNative.DIDescriptorIsSubprogram( MetadataHandle );
-        public bool IsGlobalVariable => LLVMNative.DIDescriptorIsGlobalVariable( MetadataHandle );
-        public bool IsScope => LLVMNative.DIDescriptorIsScope( MetadataHandle );
-        public bool IsFile => LLVMNative.DIDescriptorIsFile( MetadataHandle );
-        public bool IsCompileUnit => LLVMNative.DIDescriptorIsCompileUnit( MetadataHandle );
-        public bool IsNameSpace => LLVMNative.DIDescriptorIsNameSpace( MetadataHandle );
-        public bool IsLexicalBlockFile => LLVMNative.DIDescriptorIsLexicalBlockFile( MetadataHandle );
-        public bool IsLexicalBlock => LLVMNative.DIDescriptorIsLexicalBlock( MetadataHandle );
-        public bool IsSubrange => LLVMNative.DIDescriptorIsSubrange( MetadataHandle );
-        public bool IsEnumerator => LLVMNative.DIDescriptorIsEnumerator( MetadataHandle );
-        public bool IsType => LLVMNative.DIDescriptorIsType( MetadataHandle );
-        public bool IsTemplateTypeParameter => LLVMNative.DIDescriptorIsTemplateTypeParameter( MetadataHandle );
-        public bool IsTemplateValueParameter => LLVMNative.DIDescriptorIsTemplateValueParameter( MetadataHandle );
-        public bool IsObjCProperty => LLVMNative.DIDescriptorIsObjCProperty( MetadataHandle );
-        public bool IsImportedEntity => LLVMNative.DIDescriptorIsImportedEntity( MetadataHandle );
-        public bool IsExpression => LLVMNative.DIDescriptorIsExpression( MetadataHandle );
+                return ( Tag )LLVMNative.DIDescriptorGetTag( MetadataHandle );
+            }
+        }
+
+        public bool IsDerivedType
+        {
+            get
+            {
+                if( MetadataHandle.Pointer == IntPtr.Zero )
+                    return false;
+
+                return LLVMNative.DIDescriptorIsDerivedType( MetadataHandle );
+            }
+        }
+
+        public bool IsCompositeType
+        {
+            get
+            {
+                if( MetadataHandle.Pointer == IntPtr.Zero )
+                    return false;
+
+                return LLVMNative.DIDescriptorIsCompositeType( MetadataHandle );
+            }
+        }
+
+        public bool IsSubroutineType
+        {
+            get
+            {
+                if( MetadataHandle.Pointer == IntPtr.Zero )
+                    return false;
+
+                return LLVMNative.DIDescriptorIsSubroutineType( MetadataHandle );
+            }
+        }
+
+        public bool IsBasicType
+        {
+            get
+            {
+                if( MetadataHandle.Pointer == IntPtr.Zero )
+                    return false;
+
+                return LLVMNative.DIDescriptorIsBasicType( MetadataHandle );
+            }
+        }
+
+        public bool IsVariable
+        {
+            get
+            {
+                if( MetadataHandle.Pointer == IntPtr.Zero )
+                    return false;
+
+                return LLVMNative.DIDescriptorIsVariable( MetadataHandle );
+            }
+        }
+
+        public bool IsSubprogram
+        {
+            get
+            {
+                if( MetadataHandle.Pointer == IntPtr.Zero )
+                    return false;
+
+                return LLVMNative.DIDescriptorIsSubprogram( MetadataHandle );
+            }
+        }
+
+        public bool IsGlobalVariable
+        {
+            get
+            {
+                if( MetadataHandle.Pointer == IntPtr.Zero )
+                    return false;
+
+                return LLVMNative.DIDescriptorIsGlobalVariable( MetadataHandle );
+            }
+        }
+
+        public bool IsScope
+        {
+            get
+            {
+                if( MetadataHandle.Pointer == IntPtr.Zero )
+                    return false;
+
+                return LLVMNative.DIDescriptorIsScope( MetadataHandle );
+            }
+        }
+        public bool IsFile
+        {
+            get
+            {
+                if( MetadataHandle.Pointer == IntPtr.Zero )
+                    return false;
+
+                return LLVMNative.DIDescriptorIsFile( MetadataHandle );
+            }
+        }
+
+        public bool IsCompileUnit
+        {
+            get
+            {
+                if( MetadataHandle.Pointer == IntPtr.Zero )
+                    return false;
+
+                return LLVMNative.DIDescriptorIsCompileUnit( MetadataHandle );
+            }
+        }
+
+        public bool IsNameSpace
+        {
+            get
+            {
+                if( MetadataHandle.Pointer == IntPtr.Zero )
+                    return false;
+
+                return LLVMNative.DIDescriptorIsNameSpace( MetadataHandle );
+            }
+        }
+
+        public bool IsLexicalBlockFile
+        {
+            get
+            {
+                if( MetadataHandle.Pointer == IntPtr.Zero )
+                    return false;
+
+                return LLVMNative.DIDescriptorIsLexicalBlockFile( MetadataHandle );
+            }
+        }
+
+        public bool IsLexicalBlock
+        {
+            get
+            {
+                if( MetadataHandle.Pointer == IntPtr.Zero )
+                    return false;
+
+                return LLVMNative.DIDescriptorIsLexicalBlock( MetadataHandle );
+            }
+        }
+
+        public bool IsSubrange
+        {
+            get
+            {
+                if( MetadataHandle.Pointer == IntPtr.Zero )
+                    return false;
+
+                return LLVMNative.DIDescriptorIsSubrange( MetadataHandle );
+            }
+        }
+        public bool IsEnumerator
+        {
+            get
+            {
+                if( MetadataHandle.Pointer == IntPtr.Zero )
+                    return false;
+
+                return LLVMNative.DIDescriptorIsEnumerator( MetadataHandle );
+            }
+        }
+
+        public bool IsType
+        {
+            get
+            {
+                if( MetadataHandle.Pointer == IntPtr.Zero )
+                    return false;
+
+                return LLVMNative.DIDescriptorIsType( MetadataHandle );
+            }
+        }
+
+        public bool IsTemplateTypeParameter
+        {
+            get
+            {
+                if( MetadataHandle.Pointer == IntPtr.Zero )
+                    return false;
+
+                return LLVMNative.DIDescriptorIsTemplateTypeParameter( MetadataHandle );
+            }
+        }
+
+        public bool IsTemplateValueParameter
+        {
+            get
+            {
+                if( MetadataHandle.Pointer == IntPtr.Zero )
+                    return false;
+
+                return LLVMNative.DIDescriptorIsTemplateValueParameter( MetadataHandle );
+            }
+        }
+
+        public bool IsObjCProperty
+        {
+            get
+            {
+                if( MetadataHandle.Pointer == IntPtr.Zero )
+                    return false;
+
+                return LLVMNative.DIDescriptorIsObjCProperty( MetadataHandle );
+            }
+        }
+
+        public bool IsImportedEntity
+        {
+            get
+            {
+                if( MetadataHandle.Pointer == IntPtr.Zero )
+                    return false;
+
+                return LLVMNative.DIDescriptorIsImportedEntity( MetadataHandle );
+            }
+        }
+
+        public bool IsExpression
+        {
+            get
+            {
+                if( MetadataHandle.Pointer == IntPtr.Zero )
+                    return false;
+
+                return LLVMNative.DIDescriptorIsExpression( MetadataHandle );
+            }
+        }
 
         internal DiDescriptor( LLVMMetadataRef handle )
         {
@@ -73,19 +289,27 @@ namespace Llvm.NET.DebugInfo
         }
 
         /// <inheritdoc/>
-        public override string ToString( ) => LLVMNative.MarshalMsg( LLVMNative.DIDescriptorAsString( MetadataHandle ) );
+        public override string ToString( )
+        {
+            if( MetadataHandle.Pointer == IntPtr.Zero )
+                return string.Empty;
+
+            return LLVMNative.MarshalMsg( LLVMNative.DIDescriptorAsString( MetadataHandle ) );
+        }
 
         /// <summary>Replace all uses of this descriptor with another</summary>
         /// <param name="context">Context to use for replacement</param>
         /// <param name="other">New descriptor to replace this one with</param>
         public void ReplaceAllUsesWith( Context context, DiDescriptor other )
         {
+            if( MetadataHandle.Pointer == IntPtr.Zero )
+                throw new InvalidOperationException( "Cannot Replace all uses of a null descriptor" );
+
             LLVMNative.DiDescriptorReplaceAllUsesWith( context.ContextHandle, MetadataHandle, other.MetadataHandle );
+            MetadataHandle = LLVMMetadataRef.Zero;
         }
 
-        internal LLVMMetadataRef MetadataHandle { get; }
-
-        /// <summary>Empty Descriptor</summary>
+        internal LLVMMetadataRef MetadataHandle { get; private set; }
     }
 
     /// <summary>see <a href="http://llvm.org/docs/LangRef.html#diexpression"/></summary>
@@ -229,7 +453,16 @@ namespace Llvm.NET.DebugInfo
                 throw new ArgumentException( "Invalid handle" );
         }
 
-        public DebugInfoFlags Flags => ( DebugInfoFlags )LLVMNative.DITypeGetFlags( MetadataHandle );
+        public DebugInfoFlags Flags
+        {
+            get
+            {
+                if( MetadataHandle.Pointer == IntPtr.Zero )
+                    return 0;
+
+                return ( DebugInfoFlags )LLVMNative.DITypeGetFlags( MetadataHandle );
+            }
+        }
     }
 
     /// <summary>see <a href="http://llvm.org/docs/LangRef.html#dibasictype"/></summary>
