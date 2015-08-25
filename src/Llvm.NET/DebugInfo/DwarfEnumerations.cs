@@ -130,7 +130,7 @@ namespace Llvm.NET.DebugInfo
         HiUser = LLVMDwarfTag.LLVMDwarfTagHiUser
     }
 
-    public enum TypeKind : uint
+    public enum DiTypeKind : uint
     {
         // Encoding attribute values
         Address = 0x01,
