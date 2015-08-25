@@ -50,7 +50,7 @@ namespace Llvm.NET.DebugInfo
         public File CreateFile( string path )
         {
             if( string.IsNullOrWhiteSpace( path ) )
-                return File.Empty;
+                throw new ArgumentException( "Path cannot be null, empty or whitespace" );
 
             return CreateFile( System.IO.Path.GetFileName( path ), System.IO.Path.GetDirectoryName( path ) );
         }
