@@ -285,7 +285,7 @@ namespace Llvm.NET
         internal static extern LLVMMetadataRef DIBuilderCreatePointerType(LLVMDIBuilderRef @D, LLVMMetadataRef @PointeeType, ulong @SizeInBits, ulong @AlignInBits, [MarshalAs(UnmanagedType.LPStr)] string @Name);
 
         [DllImport(libraryPath, EntryPoint = "LLVMDIBuilderCreateSubroutineType", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl)]
-        internal static extern LLVMMetadataRef DIBuilderCreateSubroutineType(LLVMDIBuilderRef @D, LLVMMetadataRef @File, LLVMMetadataRef @ParameterTypes);
+        internal static extern LLVMMetadataRef DIBuilderCreateSubroutineType(LLVMDIBuilderRef @D, LLVMMetadataRef @File, LLVMMetadataRef @ParameterTypes, uint @Flags);
 
         [DllImport(libraryPath, EntryPoint = "LLVMDIBuilderCreateStructType", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl)]
         internal static extern LLVMMetadataRef DIBuilderCreateStructType(LLVMDIBuilderRef @D, LLVMMetadataRef @Scope, [MarshalAs(UnmanagedType.LPStr)] string @Name, LLVMMetadataRef @File, uint @Line, ulong @SizeInBits, ulong @AlignInBits, uint @Flags, LLVMMetadataRef @DerivedFrom, LLVMMetadataRef @ElementTypes);
@@ -315,10 +315,10 @@ namespace Llvm.NET
         internal static extern LLVMMetadataRef DIBuilderCreateExpression(LLVMDIBuilderRef @Dref, out long @Addr, ulong @Length);
 
         [DllImport(libraryPath, EntryPoint = "LLVMDIBuilderInsertDeclareAtEnd", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl)]
-        internal static extern LLVMValueRef DIBuilderInsertDeclareAtEnd(LLVMDIBuilderRef @D, LLVMValueRef @Storage, LLVMMetadataRef @VarInfo, LLVMMetadataRef @Expr, LLVMBasicBlockRef @Block);
+        internal static extern LLVMValueRef DIBuilderInsertDeclareAtEnd(LLVMDIBuilderRef @D, LLVMValueRef @Storage, LLVMMetadataRef @VarInfo, LLVMMetadataRef @Expr, LLVMMetadataRef Location, LLVMBasicBlockRef @Block);
 
         [DllImport(libraryPath, EntryPoint = "LLVMDIBuilderInsertValueAtEnd", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl)]
-        internal static extern int DIBuilderInsertValueAtEnd(LLVMDIBuilderRef @D, LLVMValueRef @Val, ulong @Offset, LLVMMetadataRef @VarInfo, LLVMMetadataRef @Expr, int @Block);
+        internal static extern int DIBuilderInsertValueAtEnd(LLVMDIBuilderRef @D, LLVMValueRef @Val, ulong @Offset, LLVMMetadataRef @VarInfo, LLVMMetadataRef @Expr, LLVMMetadataRef Location, LLVMBasicBlockRef @Block);
 
         [DllImport(libraryPath, EntryPoint = "LLVMDiBuilderCreateEnumerationType", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl)]
         internal static extern LLVMMetadataRef DIBuilderCreateEnumerationType( LLVMDIBuilderRef @D, LLVMMetadataRef @Scope, string @Name, LLVMMetadataRef @File, uint @LineNumber, ulong @SizeInBits, ulong @AlignInBits, LLVMMetadataRef @Elements, LLVMMetadataRef @UnderlyingType, string @UniqueId );
@@ -333,84 +333,27 @@ namespace Llvm.NET
         internal static extern LLVMMetadataRef DIBuilderCreateGlobalVariable( LLVMDIBuilderRef Dref, LLVMMetadataRef Context,string Name, string LinkageName, LLVMMetadataRef File, uint LineNo, LLVMMetadataRef Ty, LLVMBool isLocalToUnit, LLVMValueRef Val, LLVMMetadataRef Decl );
 
         [DllImport( libraryPath, EntryPoint = "LLVMDIBuilderInsertDeclareBefore", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl )]
-        internal static extern LLVMValueRef DIBuilderInsertDeclareBefore( LLVMDIBuilderRef Dref, LLVMValueRef Storage, LLVMMetadataRef VarInfo, LLVMMetadataRef Expr, LLVMValueRef InsertBefore );
+        internal static extern LLVMValueRef DIBuilderInsertDeclareBefore( LLVMDIBuilderRef Dref, LLVMValueRef Storage, LLVMMetadataRef VarInfo, LLVMMetadataRef Expr, LLVMMetadataRef Location, LLVMValueRef InsertBefore );
 
         [DllImport( libraryPath, EntryPoint = "LLVMDIDescriptorAsString", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl )]
         internal static extern IntPtr DIDescriptorAsString( LLVMMetadataRef descriptor );
 
-        [DllImport( libraryPath, EntryPoint = "LLVMDiDescriptorReplaceAllUsesWith", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl )]
-        internal static extern void DiDescriptorReplaceAllUsesWith( LLVMContextRef context, LLVMMetadataRef oldDescriptor, LLVMMetadataRef newDescriptor );
-
-        [DllImport( libraryPath, EntryPoint = "LLVMDIBuilderCreateReplaceableForwardDecl", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl )]
-        internal static extern LLVMMetadataRef DIBuilderCreateReplaceableForwardDecl( LLVMDIBuilderRef Dref, uint Tag, string Name, LLVMMetadataRef Scope, LLVMMetadataRef F, uint Line, uint RuntimeLang , ulong SizeInBits, ulong AlignInBits, string UniqueIdentifier );
+        [DllImport( libraryPath, EntryPoint = "LLVMMDNodeReplaceAllUsesWith", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl )]
+        internal static extern void MDNodeReplaceAllUsesWith( LLVMMetadataRef oldDescriptor, LLVMMetadataRef newDescriptor );
 
         [DllImport( libraryPath, EntryPoint = "LLVMDITypeGetFlags", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl )]
         internal static extern uint DITypeGetFlags( LLVMMetadataRef type );
 
-        [DllImport( libraryPath, EntryPoint = "LLVMDIDescriptorIsDerivedType", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl )]
-        internal static extern LLVMBool DIDescriptorIsDerivedType( LLVMMetadataRef descriptor );
-
-        [DllImport( libraryPath, EntryPoint = "LLVMDIDescriptorIsCompositeType", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl )]
-        internal static extern LLVMBool DIDescriptorIsCompositeType( LLVMMetadataRef descriptor );
-
-        [DllImport( libraryPath, EntryPoint = "LLVMDIDescriptorIsSubroutineType", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl )]
-        internal static extern LLVMBool DIDescriptorIsSubroutineType( LLVMMetadataRef descriptor );
-
-        [DllImport( libraryPath, EntryPoint = "LLVMDIDescriptorIsBasicType", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl )]
-        internal static extern LLVMBool DIDescriptorIsBasicType( LLVMMetadataRef descriptor );
-
-        [DllImport( libraryPath, EntryPoint = "LLVMDIDescriptorIsVariable", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl )]
-        internal static extern LLVMBool DIDescriptorIsVariable( LLVMMetadataRef descriptor );
-
-        [DllImport( libraryPath, EntryPoint = "LLVMDIDescriptorIsSubprogram", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl )]
-        internal static extern LLVMBool DIDescriptorIsSubprogram( LLVMMetadataRef descriptor );
-
-        [DllImport( libraryPath, EntryPoint = "LLVMDIDescriptorIsGlobalVariable", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl )]
-        internal static extern LLVMBool DIDescriptorIsGlobalVariable( LLVMMetadataRef descriptor );
-
-        [DllImport( libraryPath, EntryPoint = "LLVMDIDescriptorIsScope", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl )]
-        internal static extern LLVMBool DIDescriptorIsScope( LLVMMetadataRef descriptor );
-
-        [DllImport( libraryPath, EntryPoint = "LLVMDIDescriptorIsFile", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl )]
-        internal static extern LLVMBool DIDescriptorIsFile( LLVMMetadataRef descriptor );
-
-        [DllImport( libraryPath, EntryPoint = "LLVMDIDescriptorIsCompileUnit", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl )]
-        internal static extern LLVMBool DIDescriptorIsCompileUnit( LLVMMetadataRef descriptor );
-
-        [DllImport( libraryPath, EntryPoint = "LLVMDIDescriptorIsNameSpace", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl )]
-        internal static extern LLVMBool DIDescriptorIsNameSpace( LLVMMetadataRef descriptor );
-
-        [DllImport( libraryPath, EntryPoint = "LLVMDIDescriptorIsLexicalBlockFile", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl )]
-        internal static extern LLVMBool DIDescriptorIsLexicalBlockFile( LLVMMetadataRef descriptor );
-
-        [DllImport( libraryPath, EntryPoint = "LLVMDIDescriptorIsLexicalBlock", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl )]
-        internal static extern LLVMBool DIDescriptorIsLexicalBlock( LLVMMetadataRef descriptor );
-
-        [DllImport( libraryPath, EntryPoint = "LLVMDIDescriptorIsSubrange", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl )]
-        internal static extern LLVMBool DIDescriptorIsSubrange( LLVMMetadataRef descriptor );
-
-        [DllImport( libraryPath, EntryPoint = "LLVMDIDescriptorIsEnumerator", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl )]
-        internal static extern LLVMBool DIDescriptorIsEnumerator( LLVMMetadataRef descriptor );
-
-        [DllImport( libraryPath, EntryPoint = "LLVMDIDescriptorIsType", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl )]
-        internal static extern LLVMBool DIDescriptorIsType( LLVMMetadataRef descriptor );
-
-        [DllImport( libraryPath, EntryPoint = "LLVMDIDescriptorIsTemplateTypeParameter", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl )]
-        internal static extern LLVMBool DIDescriptorIsTemplateTypeParameter( LLVMMetadataRef descriptor );
-
-        [DllImport( libraryPath, EntryPoint = "LLVMDIDescriptorIsTemplateValueParameter", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl )]
-        internal static extern LLVMBool DIDescriptorIsTemplateValueParameter( LLVMMetadataRef descriptor );
-
-        [DllImport( libraryPath, EntryPoint = "LLVMDIDescriptorIsObjCProperty", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl )]
-        internal static extern LLVMBool DIDescriptorIsObjCProperty( LLVMMetadataRef descriptor );
-
-        [DllImport( libraryPath, EntryPoint = "LLVMDIDescriptorIsImportedEntity", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl )]
-        internal static extern LLVMBool DIDescriptorIsImportedEntity( LLVMMetadataRef descriptor );
-
-        [DllImport( libraryPath, EntryPoint = "LLVMDIDescriptorIsExpression", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl )]
-        internal static extern LLVMBool DIDescriptorIsExpression( LLVMMetadataRef descriptor );
-
         [DllImport( libraryPath, EntryPoint = "LLVMMetadataAsValue", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl )]
         internal static extern LLVMValueRef MetadataAsValue( LLVMContextRef context, LLVMMetadataRef metadataRef );
+
+        [DllImport( libraryPath, EntryPoint = "LLVMDIBuilderCreateReplaceableCompositeType", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl )]
+        internal static extern LLVMMetadataRef DIBuilderCreateReplaceableCompositeType( LLVMDIBuilderRef Dref, uint Tag, string Name, LLVMMetadataRef Scope, LLVMMetadataRef File, uint Line, uint RuntimeLang, ulong SizeInBits, ulong AlignInBits, uint Flags);
+
+        [DllImport( libraryPath, EntryPoint = "LLVMDILocation", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl )]
+        internal static extern LLVMMetadataRef DILocation( LLVMContextRef context, uint Line, uint Column, LLVMMetadataRef scope, LLVMMetadataRef InlinedAt );
+
+        [DllImport( libraryPath, EntryPoint = "LLVMGetDITypeName", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl )]
+        internal static extern IntPtr GetDITypeName( LLVMMetadataRef diType );
     }
 }

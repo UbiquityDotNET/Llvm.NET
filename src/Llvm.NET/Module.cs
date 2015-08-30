@@ -290,9 +290,16 @@ namespace Llvm.NET
             LLVMNative.AddModuleFlag( ModuleHandle, ( LLVMModFlagBehavior )behavior, name, value );
         }
 
-        public void AddNamedMetadataOperand( string name, Value value )
+        public void AddNamedMetadataOperand( string name, Metadata value )
         {
-            LLVMNative.AddNamedMetadataOperand( ModuleHandle, name, value.ValueHandle );
+            LLVMNative.AddNamedMetadataOperand2( ModuleHandle, name, value.MetadataHandle );
+        }
+
+        public void AddVersionIdentMetadata( string version )
+        {
+            var elements = new LLVMMetadataRef[ ] { LLVMNative.MDString2( Context.ContextHandle, version, (uint)version.Length ) };
+            var hNode = LLVMNative.MDNode2( Context.ContextHandle, out elements[ 0 ], 1 );
+            LLVMNative.AddNamedMetadataOperand2( ModuleHandle, "llvm.ident", hNode );
         }
 
         /// <summary>Name of the Debug Version information module flag</summary>
@@ -300,7 +307,7 @@ namespace Llvm.NET
         public const string DwarfVersionValue = "Dwarf Version";
 
         /// <summary>Version of the Debug information Metadata</summary>
-        public const UInt32 DebugMetadataVersion = 2; /* DEBUG_METADATA_VERSION (for LLVM v3.6.1) */
+        public const UInt32 DebugMetadataVersion = 3; /* DEBUG_METADATA_VERSION (for LLVM v3.6.1) */
 
         /// <summary>Load a bit-code module from a given file</summary>
         /// <param name="path">path of the file to load</param>

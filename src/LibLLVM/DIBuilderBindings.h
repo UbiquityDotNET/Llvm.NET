@@ -16,8 +16,8 @@
 #ifndef LLVM_BINDINGS_LLVM_DIBUILDERBINDINGS_H
 #define LLVM_BINDINGS_LLVM_DIBUILDERBINDINGS_H
 
-#include "llvm-c/Core.h"
 #include "IRBindings.h"
+#include "llvm-c/Core.h"
 
 #ifdef __cplusplus
 extern "C" {
@@ -103,12 +103,9 @@ extern "C" {
         LLVMDwarfTagHiUser = 0xffff
     };
 
-    // FIXME: These bindings shouldn't be Language binding-specific and should eventually move to
-    // a (somewhat) less stable collection of C APIs for use in creating bindings of
-    // LLVM in other languages.
+    #define DECLARE_LLVMC_REF( n ) typedef struct LLVMOpaque##n##* LLVM##n##Ref
 
     typedef struct LLVMOpaqueDIBuilder *LLVMDIBuilderRef;
-    typedef struct LLVMOpaqueDebugLoc *LLVMDebugLocRef;
 
     void LLVMSetDebugLoc( LLVMValueRef inst, unsigned line, unsigned column, LLVMMetadataRef scope );
 
@@ -189,6 +186,7 @@ extern "C" {
     LLVMMetadataRef LLVMDIBuilderCreateSubroutineType( LLVMDIBuilderRef D
                                                      , LLVMMetadataRef File
                                                      , LLVMMetadataRef ParameterTypes
+                                                     , unsigned Flags
                                                      );
 
     LLVMMetadataRef LLVMDIBuilderCreateStructType( LLVMDIBuilderRef D
@@ -202,7 +200,19 @@ extern "C" {
                                                  , LLVMMetadataRef DerivedFrom
                                                  , LLVMMetadataRef ElementTypes
                                                  );
-
+                                                 
+LLVMMetadataRef LLVMDIBuilderCreateReplaceableCompositeType( LLVMDIBuilderRef D
+                                                           , unsigned Tag
+                                                           , const char *Name
+                                                           , LLVMMetadataRef Scope
+                                                           , LLVMMetadataRef File
+                                                           , unsigned Line
+                                                           , unsigned RuntimeLang
+                                                           , uint64_t SizeInBits
+                                                           , uint64_t AlignInBits
+                                                           , unsigned Flags
+                                                           );
+                                                           
     LLVMMetadataRef LLVMDIBuilderCreateMemberType( LLVMDIBuilderRef D
                                                  , LLVMMetadataRef Scope
                                                  , const char *Name
@@ -261,6 +271,7 @@ extern "C" {
                                                 , LLVMValueRef Storage
                                                 , LLVMMetadataRef VarInfo
                                                 , LLVMMetadataRef Expr
+                                                , LLVMMetadataRef diLocation
                                                 , LLVMBasicBlockRef Block
                                                 );
 
@@ -269,6 +280,7 @@ extern "C" {
                                               , uint64_t Offset
                                               , LLVMMetadataRef VarInfo
                                               , LLVMMetadataRef Expr
+                                              , LLVMMetadataRef diLocation
                                               , LLVMBasicBlockRef Block
                                               );
 
@@ -336,51 +348,19 @@ extern "C" {
                                                    , LLVMValueRef Storage      // Value
                                                    , LLVMMetadataRef VarInfo   // DIVariable
                                                    , LLVMMetadataRef Expr      // DIExpression
+                                                   , LLVMMetadataRef diLocation
                                                    , LLVMValueRef InsertBefore // Instruction
                                                    );
     
     // caller must call LLVMDisposeMessage() on the returned string
     char const* LLVMDIDescriptorAsString( LLVMMetadataRef descriptor );
 
-    void LLVMDiDescriptorReplaceAllUsesWith( LLVMContextRef context, LLVMMetadataRef oldDescriptor, LLVMMetadataRef newDescriptor );
+    void LLVMMDNodeReplaceAllUsesWith( LLVMMetadataRef oldDescriptor, LLVMMetadataRef newDescriptor );
 
-    /// \brief Create a permanent forward-declared type.
-    /*DICompositeType*/ 
-    LLVMMetadataRef LLVMDIBuilderCreateReplaceableForwardDecl( LLVMDIBuilderRef Dref
-                                                              , unsigned Tag
-                                                              , const char* Name
-                                                              , /*DIDescriptor*/ LLVMMetadataRef Scope
-                                                              , /*DIFile*/ LLVMMetadataRef F
-                                                              , unsigned Line
-                                                              , unsigned RuntimeLang /* = 0*/
-                                                              , uint64_t SizeInBits /* = 0*/
-                                                              , uint64_t AlignInBits /* = 0*/
-                                                              , const char* UniqueIdentifier /* default empty string */
-                                                              );
+    unsigned LLVMDITypeGetFlags( LLVMMetadataRef type );
 
-   unsigned LLVMDITypeGetFlags( LLVMMetadataRef type );
-
-   LLVMBool LLVMDIDescriptorIsDerivedType( LLVMMetadataRef descriptor );
-   LLVMBool LLVMDIDescriptorIsCompositeType( LLVMMetadataRef descriptor );
-   LLVMBool LLVMDIDescriptorIsSubroutineType( LLVMMetadataRef descriptor );
-   LLVMBool LLVMDIDescriptorIsBasicType( LLVMMetadataRef descriptor );
-   LLVMBool LLVMDIDescriptorIsVariable( LLVMMetadataRef descriptor );
-   LLVMBool LLVMDIDescriptorIsSubprogram( LLVMMetadataRef descriptor );
-   LLVMBool LLVMDIDescriptorIsGlobalVariable( LLVMMetadataRef descriptor );
-   LLVMBool LLVMDIDescriptorIsScope( LLVMMetadataRef descriptor );
-   LLVMBool LLVMDIDescriptorIsFile( LLVMMetadataRef descriptor );
-   LLVMBool LLVMDIDescriptorIsCompileUnit( LLVMMetadataRef descriptor );
-   LLVMBool LLVMDIDescriptorIsNameSpace( LLVMMetadataRef descriptor );
-   LLVMBool LLVMDIDescriptorIsLexicalBlockFile( LLVMMetadataRef descriptor );
-   LLVMBool LLVMDIDescriptorIsLexicalBlock( LLVMMetadataRef descriptor );
-   LLVMBool LLVMDIDescriptorIsSubrange( LLVMMetadataRef descriptor );
-   LLVMBool LLVMDIDescriptorIsEnumerator( LLVMMetadataRef descriptor );
-   LLVMBool LLVMDIDescriptorIsType( LLVMMetadataRef descriptor );
-   LLVMBool LLVMDIDescriptorIsTemplateTypeParameter( LLVMMetadataRef descriptor );
-   LLVMBool LLVMDIDescriptorIsTemplateValueParameter( LLVMMetadataRef descriptor );
-   LLVMBool LLVMDIDescriptorIsObjCProperty( LLVMMetadataRef descriptor );
-   LLVMBool LLVMDIDescriptorIsImportedEntity( LLVMMetadataRef descriptor );
-   LLVMBool LLVMDIDescriptorIsExpression( LLVMMetadataRef descriptor );
+    LLVMMetadataRef LLVMDILocation( LLVMContextRef context, unsigned Line, unsigned Column, LLVMMetadataRef scope, LLVMMetadataRef InlinedAt );
+    char const* LLVMGetDITypeName( LLVMMetadataRef diType );
 
 #ifdef __cplusplus
 } // extern "C"

@@ -836,7 +836,7 @@ namespace Llvm.NET
 
     internal static partial class LLVMNative
     {
-        private const string libraryPath = "LibLlvm.3.6.1.dll";
+        private const string libraryPath = "LibLlvm.dll";
 
         [DllImport(libraryPath, EntryPoint = "LLVMLoadLibraryPermanently", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl)]
         public static extern LLVMBool LoadLibraryPermanently([MarshalAs(UnmanagedType.LPStr)] string @Filename);

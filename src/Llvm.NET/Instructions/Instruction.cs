@@ -10,7 +10,7 @@ namespace Llvm.NET.Instructions
         /// <summary>Block that contains this instruction</summary>
         public BasicBlock ContainingBlock => BasicBlock.FromHandle( LLVMNative.GetInstructionParent( ValueHandle ) );
 
-        public void SetDebugLocation( uint line, uint column, DebugInfo.DiScope scope )
+        public void SetDebugLocation( uint line, uint column, DebugInfo.DIScope scope )
         {
             LLVMNative.SetDebugLoc( ValueHandle, line, column, scope.MetadataHandle );
         }

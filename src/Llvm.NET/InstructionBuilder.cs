@@ -156,7 +156,7 @@ namespace Llvm.NET
         /// <summary>Builds an LLVM Store instruction</summary>
         /// <param name="value">Value to store in destination</param>
         /// <param name="destination">value for the destination</param>
-        /// <returns><see cref="Store"/> instruction</returns>
+        /// <returns><see cref="Instructions.Store"/> instruction</returns>
         /// <remarks>
         /// Since store targets memory the type of <paramref name="destination"/>
         /// must be a <see cref="PointerType"/>. Furthermore, the element type of
@@ -196,7 +196,7 @@ namespace Llvm.NET
         /// <para><see cref="User"/> for the member access. This is a User as LLVM may 
         /// optimize the expression to a <see cref="ConstantExpression"/> if it 
         /// can so the actual type of the result may be <see cref="ConstantExpression"/>
-        /// or <see cref="GetElementPtr"/>.</para>
+        /// or <see cref="Instructions.GetElementPtr"/>.</para>
         /// <para>Note that <paramref name="pointer"/> must be a pointer to a structure
         /// or an excpetion is thrown.</para>
         /// </returns>
@@ -210,7 +210,7 @@ namespace Llvm.NET
         /// <para><see cref="User"/> for the member access. This is a User as LLVM may 
         /// optimize the expression to a <see cref="ConstantExpression"/> if it 
         /// can so the actual type of the result may be <see cref="ConstantExpression"/>
-        /// or <see cref="GetElementPtr"/>.</para>
+        /// or <see cref="Instructions.GetElementPtr"/>.</para>
         /// <para>Note that <paramref name="pointer"/> must be a pointer to a structure
         /// or an excpetion is thrown.</para>
         /// </returns>
@@ -230,7 +230,7 @@ namespace Llvm.NET
         /// <para><see cref="User"/> for the member access. This is a User as LLVM may 
         /// optimize the expression to a <see cref="ConstantExpression"/> if it 
         /// can so the actual type of the result may be <see cref="ConstantExpression"/>
-        /// or <see cref="GetElementPtr"/>.</para>
+        /// or <see cref="Instructions.GetElementPtr"/>.</para>
         /// <para>Note that <paramref name="pointer"/> must be a pointer to a structure
         /// or an excpetion is thrown.</para>
         /// </returns>
@@ -254,7 +254,7 @@ namespace Llvm.NET
         /// <para><see cref="User"/> for the member access. This is a User as LLVM may 
         /// optimize the expression to a <see cref="ConstantExpression"/> if it 
         /// can so the actual type of the result may be <see cref="ConstantExpression"/>
-        /// or <see cref="GetElementPtr"/>.</para>
+        /// or <see cref="Instructions.GetElementPtr"/>.</para>
         /// <para>Note that <paramref name="pointer"/> must be a pointer to a structure
         /// or an excpetion is thrown.</para>
         /// </returns>
@@ -282,7 +282,7 @@ namespace Llvm.NET
         /// <para><see cref="User"/> for the member access. This is a User as LLVM may 
         /// optimize the expression to a <see cref="ConstantExpression"/> if it 
         /// can so the actual type of the result may be <see cref="ConstantExpression"/>
-        /// or <see cref="GetElementPtr"/>.</para>
+        /// or <see cref="Instructions.GetElementPtr"/>.</para>
         /// <para>Note that <paramref name="pointer"/> must be a pointer to a structure
         /// or an excpetion is thrown.</para>
         /// </returns>
@@ -307,7 +307,7 @@ namespace Llvm.NET
         /// <para><see cref="User"/> for the member access. This is a User as LLVM may 
         /// optimize the expression to a <see cref="ConstantExpression"/> if it 
         /// can so the actual type of the result may be <see cref="ConstantExpression"/>
-        /// or <see cref="GetElementPtr"/>.</para>
+        /// or <see cref="Instructions.GetElementPtr"/>.</para>
         /// <para>Note that <paramref name="pointer"/> must be a pointer to a structure
         /// or an excpetion is thrown.</para>
         /// </returns>
@@ -335,7 +335,7 @@ namespace Llvm.NET
         /// <para><see cref="User"/> for the member access. This is a User as LLVM may 
         /// optimize the expression to a <see cref="ConstantExpression"/> if it 
         /// can so the actual type of the result may be <see cref="ConstantExpression"/>
-        /// or <see cref="GetElementPtr"/>.</para>
+        /// or <see cref="Instructions.GetElementPtr"/>.</para>
         /// <para>Note that <paramref name="pointer"/> must be a pointer to a structure
         /// or an excpetion is thrown.</para>
         /// </returns>
@@ -361,7 +361,7 @@ namespace Llvm.NET
         /// <param name="ptrType">pointer type to return</param>
         /// <returns>Resulting value from the cast</returns>
         /// <remarks>
-        /// The actual type of value returned depends on <paramref name="intVal"/>
+        /// The actual type of value returned depends on <paramref name="intValue"/>
         /// and is either a <see cref="ConstantExpression"/> or an <see cref="Instructions.IntToPointer"/>
         /// instruction. Conversion to a constant expression is performed whenever possible.
         /// </remarks>
@@ -724,7 +724,7 @@ namespace Llvm.NET
         /// <returns><see cref="Intrinsic"/> call for the memcpy</returns>
         /// <remarks>
         /// LLVM has many overloaded variants of the memmov instrinsic, this implementation currently assumes the 
-        /// single form defined by <see cref="Intrinsic.MemMovName"/>, which matches the classic "C" style memmov
+        /// single form defined by <see cref="Intrinsic.MemMoveName"/>, which matches the classic "C" style memmov
         /// function. However future implementations should be able to deduce the types from the provided values
         /// and generate a more specific call without changing any caller code. 
         /// </remarks>
