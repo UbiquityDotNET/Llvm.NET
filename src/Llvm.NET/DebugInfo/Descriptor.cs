@@ -13,9 +13,9 @@ namespace Llvm.NET.DebugInfo
     // on current projects.
 
     /// <summary>Array of see <a href="Type"/> nodes for use with see <a href="DebugInfoBuilder"/> methods</summary>
-    public class DiTypeArray
+    public class DITypeArray
     {
-        internal DiTypeArray( LLVMMetadataRef handle )
+        internal DITypeArray( LLVMMetadataRef handle )
         {
             MetadataHandle = handle;
         }
@@ -24,9 +24,9 @@ namespace Llvm.NET.DebugInfo
     }
 
     /// <summary>Array of see <a href="Descriptor"/> nodes for use with see <a href="DebugInfoBuilder"/> methods</summary>
-    public class DiArray
+    public class DIArray
     {
-        internal DiArray( LLVMMetadataRef handle )
+        internal DIArray( LLVMMetadataRef handle )
         {
             MetadataHandle = handle;
         }
@@ -35,12 +35,7 @@ namespace Llvm.NET.DebugInfo
     }
 
     /// <summary>Root of the object hierarchy for Debug information metadata nodes</summary>
-    /// <remarks>
-    /// A descriptor is just a wraper around a Metadata Node (MDNode in LLVM C++) and, unlike
-    /// see <a href="Values.Value"/> they are not uniqued, although the underlying metadata nodes
-    /// usually are. 
-    /// </remarks>
-    public class DiDescriptor
+    public class DINode : MDNode
     {
         /// <summary>Dwarf tag for the descriptor</summary>
         public Tag Tag
@@ -54,238 +49,9 @@ namespace Llvm.NET.DebugInfo
             }
         }
 
-        public bool IsDerivedType
+        internal DINode( LLVMMetadataRef handle )
+            : base( handle )
         {
-            get
-            {
-                if( MetadataHandle.Pointer == IntPtr.Zero )
-                    return false;
-
-                return LLVMNative.DIDescriptorIsDerivedType( MetadataHandle );
-            }
-        }
-
-        public bool IsCompositeType
-        {
-            get
-            {
-                if( MetadataHandle.Pointer == IntPtr.Zero )
-                    return false;
-
-                return LLVMNative.DIDescriptorIsCompositeType( MetadataHandle );
-            }
-        }
-
-        public bool IsSubroutineType
-        {
-            get
-            {
-                if( MetadataHandle.Pointer == IntPtr.Zero )
-                    return false;
-
-                return LLVMNative.DIDescriptorIsSubroutineType( MetadataHandle );
-            }
-        }
-
-        public bool IsBasicType
-        {
-            get
-            {
-                if( MetadataHandle.Pointer == IntPtr.Zero )
-                    return false;
-
-                return LLVMNative.DIDescriptorIsBasicType( MetadataHandle );
-            }
-        }
-
-        public bool IsVariable
-        {
-            get
-            {
-                if( MetadataHandle.Pointer == IntPtr.Zero )
-                    return false;
-
-                return LLVMNative.DIDescriptorIsVariable( MetadataHandle );
-            }
-        }
-
-        public bool IsSubprogram
-        {
-            get
-            {
-                if( MetadataHandle.Pointer == IntPtr.Zero )
-                    return false;
-
-                return LLVMNative.DIDescriptorIsSubprogram( MetadataHandle );
-            }
-        }
-
-        public bool IsGlobalVariable
-        {
-            get
-            {
-                if( MetadataHandle.Pointer == IntPtr.Zero )
-                    return false;
-
-                return LLVMNative.DIDescriptorIsGlobalVariable( MetadataHandle );
-            }
-        }
-
-        public bool IsScope
-        {
-            get
-            {
-                if( MetadataHandle.Pointer == IntPtr.Zero )
-                    return false;
-
-                return LLVMNative.DIDescriptorIsScope( MetadataHandle );
-            }
-        }
-        public bool IsFile
-        {
-            get
-            {
-                if( MetadataHandle.Pointer == IntPtr.Zero )
-                    return false;
-
-                return LLVMNative.DIDescriptorIsFile( MetadataHandle );
-            }
-        }
-
-        public bool IsCompileUnit
-        {
-            get
-            {
-                if( MetadataHandle.Pointer == IntPtr.Zero )
-                    return false;
-
-                return LLVMNative.DIDescriptorIsCompileUnit( MetadataHandle );
-            }
-        }
-
-        public bool IsNameSpace
-        {
-            get
-            {
-                if( MetadataHandle.Pointer == IntPtr.Zero )
-                    return false;
-
-                return LLVMNative.DIDescriptorIsNameSpace( MetadataHandle );
-            }
-        }
-
-        public bool IsLexicalBlockFile
-        {
-            get
-            {
-                if( MetadataHandle.Pointer == IntPtr.Zero )
-                    return false;
-
-                return LLVMNative.DIDescriptorIsLexicalBlockFile( MetadataHandle );
-            }
-        }
-
-        public bool IsLexicalBlock
-        {
-            get
-            {
-                if( MetadataHandle.Pointer == IntPtr.Zero )
-                    return false;
-
-                return LLVMNative.DIDescriptorIsLexicalBlock( MetadataHandle );
-            }
-        }
-
-        public bool IsSubrange
-        {
-            get
-            {
-                if( MetadataHandle.Pointer == IntPtr.Zero )
-                    return false;
-
-                return LLVMNative.DIDescriptorIsSubrange( MetadataHandle );
-            }
-        }
-        public bool IsEnumerator
-        {
-            get
-            {
-                if( MetadataHandle.Pointer == IntPtr.Zero )
-                    return false;
-
-                return LLVMNative.DIDescriptorIsEnumerator( MetadataHandle );
-            }
-        }
-
-        public bool IsType
-        {
-            get
-            {
-                if( MetadataHandle.Pointer == IntPtr.Zero )
-                    return false;
-
-                return LLVMNative.DIDescriptorIsType( MetadataHandle );
-            }
-        }
-
-        public bool IsTemplateTypeParameter
-        {
-            get
-            {
-                if( MetadataHandle.Pointer == IntPtr.Zero )
-                    return false;
-
-                return LLVMNative.DIDescriptorIsTemplateTypeParameter( MetadataHandle );
-            }
-        }
-
-        public bool IsTemplateValueParameter
-        {
-            get
-            {
-                if( MetadataHandle.Pointer == IntPtr.Zero )
-                    return false;
-
-                return LLVMNative.DIDescriptorIsTemplateValueParameter( MetadataHandle );
-            }
-        }
-
-        public bool IsObjCProperty
-        {
-            get
-            {
-                if( MetadataHandle.Pointer == IntPtr.Zero )
-                    return false;
-
-                return LLVMNative.DIDescriptorIsObjCProperty( MetadataHandle );
-            }
-        }
-
-        public bool IsImportedEntity
-        {
-            get
-            {
-                if( MetadataHandle.Pointer == IntPtr.Zero )
-                    return false;
-
-                return LLVMNative.DIDescriptorIsImportedEntity( MetadataHandle );
-            }
-        }
-
-        public bool IsExpression
-        {
-            get
-            {
-                if( MetadataHandle.Pointer == IntPtr.Zero )
-                    return false;
-
-                return LLVMNative.DIDescriptorIsExpression( MetadataHandle );
-            }
-        }
-
-        internal DiDescriptor( LLVMMetadataRef handle )
-        {
-            MetadataHandle = handle;
         }
 
         /// <inheritdoc/>
@@ -296,26 +62,43 @@ namespace Llvm.NET.DebugInfo
 
             return LLVMNative.MarshalMsg( LLVMNative.DIDescriptorAsString( MetadataHandle ) );
         }
+    }
 
-        /// <summary>Replace all uses of this descriptor with another</summary>
-        /// <param name="context">Context to use for replacement</param>
-        /// <param name="other">New descriptor to replace this one with</param>
-        public void ReplaceAllUsesWith( Context context, DiDescriptor other )
+    public class DILocation : MDNode
+    {
+        public DILocation( uint line, uint column, DILocalScope scope )
+            : this( line, column, scope, null )
         {
-            if( MetadataHandle.Pointer == IntPtr.Zero )
-                throw new InvalidOperationException( "Cannot Replace all uses of a null descriptor" );
-
-            LLVMNative.DiDescriptorReplaceAllUsesWith( context.ContextHandle, MetadataHandle, other.MetadataHandle );
-            MetadataHandle = LLVMMetadataRef.Zero;
         }
 
-        internal LLVMMetadataRef MetadataHandle { get; private set; }
+        public DILocation( uint line, uint column, DILocalScope scope, DILocation inlinedAt )
+            : this( Context.CurrentContext, line, column, scope, inlinedAt )
+        {
+        }
+
+        public DILocation( Context context, uint line, uint column, DILocalScope scope, DILocation inlinedAt )
+            : base( LLVMNative.DILocation( context.ContextHandle, line, column, scope.MetadataHandle, inlinedAt?.MetadataHandle ?? LLVMMetadataRef.Zero ) )
+        {
+        }
+
+        internal DILocation( LLVMMetadataRef handle )
+            : base( handle )
+        {
+        }
+    }
+
+    public class GenericDINode : DINode
+    {
+        internal GenericDINode( LLVMMetadataRef handle )
+            : base( handle )
+        {
+        }
     }
 
     /// <summary>see <a href="http://llvm.org/docs/LangRef.html#diexpression"/></summary>
-    public class DiExpression : DiDescriptor
+    public class DIExpression : MDNode
     {
-        internal DiExpression( LLVMMetadataRef handle )
+        internal DIExpression( LLVMMetadataRef handle )
             : base( handle )
         {
         }
@@ -323,134 +106,171 @@ namespace Llvm.NET.DebugInfo
     }
 
     /// <summary>see <a href="http://llvm.org/docs/LangRef.html#diglobalvariable"/></summary>
-    public class DiGlobalVariable : DiDescriptor
+    public class DIGlobalVariable : DIVariable
     {
-        internal DiGlobalVariable( LLVMMetadataRef handle )
+        internal DIGlobalVariable( LLVMMetadataRef handle )
             : base( handle )
         {
-            if( !LLVMNative.DIDescriptorIsGlobalVariable( handle ) )
-                throw new ArgumentException( "Invalid handle" );
+        }
+    }
+
+    public class DIVariable : DINode
+    {
+        internal DIVariable( LLVMMetadataRef handle )
+            : base( handle )
+        {
         }
     }
 
     /// <summary>see <a href="http://llvm.org/docs/LangRef.html#dilocalvariable"/></summary>
-    public class DiLocalVariable : DiDescriptor
+    public class DILocalVariable : DIVariable
     {
-        internal DiLocalVariable( LLVMMetadataRef handle )
+        internal DILocalVariable( LLVMMetadataRef handle )
             : base( handle )
         {
-            if( !LLVMNative.DIDescriptorIsVariable( handle ) )
-                throw new ArgumentException( "Invalid handle" );
         }
     }
 
     /// <summary>see <a href="http://llvm.org/docs/LangRef.html#dienumerator"/></summary>
-    public class DiEnumerator : DiDescriptor
+    public class DIEnumerator : DINode
     {
-        internal DiEnumerator( LLVMMetadataRef handle )
+        internal DIEnumerator( LLVMMetadataRef handle )
             : base( handle )
         {
-            if( !LLVMNative.DIDescriptorIsExpression( handle ) )
-                throw new ArgumentException( "Invalid handle" );
         }
     }
 
     /// <summary>see <a href="http://llvm.org/docs/LangRef.html#disubrange"/></summary>
-    public class DiSubrange : DiDescriptor
+    public class DISubrange : DINode
     {
-        internal DiSubrange( LLVMMetadataRef handle )
+        internal DISubrange( LLVMMetadataRef handle )
             : base( handle )
         {
-            if( !LLVMNative.DIDescriptorIsSubrange( handle ) )
-                throw new ArgumentException( "Invalid handle" );
         }
     }
 
     /// <summary>Base class for all Debug info scopes</summary>
-    public class DiScope : DiDescriptor
+    public class DIScope : DINode
     {
-        internal DiScope( LLVMMetadataRef handle )
+        internal DIScope( LLVMMetadataRef handle )
             : base( handle )
         {
-            if( !LLVMNative.DIDescriptorIsScope( handle ) )
-                throw new ArgumentException( "Invalid handle" );
         }
     }
 
-    /// <summary>see <a href="http://llvm.org/docs/LangRef.html#dicompileunit"/></summary>
-    public class DiCompileUnit : DiScope
+    /// <summary>Legal scope for lexical blocks, local variables, and debug info locations</summary>
+    public class DILocalScope : DIScope
     {
-        internal DiCompileUnit( LLVMMetadataRef handle )
+        internal DILocalScope( LLVMMetadataRef handle )
             : base( handle )
         {
-            if( !LLVMNative.DIDescriptorIsCompileUnit( handle ) )
-                throw new ArgumentException( "Invalid handle" );
+        }
+
+        // returns "this" if the scope is a subprogram, otherwise walks up the scopes to find 
+        // the containing subprogram.
+        //public DISubProgram Subprogram { get; }
+    }
+
+    /// <summary>see <a href="http://llvm.org/docs/LangRef.html#dicompileunit"/></summary>
+    public class DICompileUnit : DIScope
+    {
+        internal DICompileUnit( LLVMMetadataRef handle )
+            : base( handle )
+        {
+        }
+    }
+
+    public class DIModule : DIScope
+    {
+        internal DIModule( LLVMMetadataRef handle )
+            : base( handle )
+        {
+        }
+    }
+
+    public class DITemplateParameter : DINode
+    {
+        internal DITemplateParameter( LLVMMetadataRef handle )
+            : base( handle )
+        {
+        }
+    }
+
+    public class DITemplateTypeParameter : DITemplateParameter
+    {
+        internal DITemplateTypeParameter( LLVMMetadataRef handle )
+            : base( handle )
+        {
+        }
+    }
+
+    public class DITemplateValueParameter : DITemplateParameter
+    {
+        internal DITemplateValueParameter( LLVMMetadataRef handle )
+            : base( handle )
+        {
         }
     }
 
     /// <summary>see <a href="http://llvm.org/docs/LangRef.html#difile"/></summary>
-    public class DiFile : DiScope
+    public class DIFile : DIScope
     {
-        internal DiFile( LLVMMetadataRef handle )
+        internal DIFile( LLVMMetadataRef handle )
             : base( handle )
         {
-            if( !LLVMNative.DIDescriptorIsFile( handle ) )
-                throw new ArgumentException( "Invalid handle" );
+        }
+    }
+
+    public class DILexicalBlockBase : DILocalScope
+    {
+        internal DILexicalBlockBase( LLVMMetadataRef handle )
+            : base( handle )
+        {
         }
     }
 
     /// <summary>see <a href="http://llvm.org/docs/LangRef.html#dilexicalblock"/></summary>
-    public class DiLexicalBlock : DiScope
+    public class DILexicalBlock : DILexicalBlockBase
     {
-        internal DiLexicalBlock( LLVMMetadataRef handle )
+        internal DILexicalBlock( LLVMMetadataRef handle )
             : base( handle )
         {
-            if( !LLVMNative.DIDescriptorIsLexicalBlock( handle ) )
-                throw new ArgumentException( "Invalid handle" );
         }
     }
 
     /// <summary>see <a href="http://llvm.org/docs/LangRef.html#dilexicalblockfile"/></summary>
-    public class DiLexicalBlockFile : DiScope
+    public class DILexicalBlockFile : DILexicalBlockBase
     {
-        internal DiLexicalBlockFile( LLVMMetadataRef handle )
+        internal DILexicalBlockFile( LLVMMetadataRef handle )
             : base( handle )
         {
-            if( !LLVMNative.DIDescriptorIsLexicalBlockFile( handle ) )
-                throw new ArgumentException( "Invalid handle" );
         }
     }
 
     /// <summary>see <a href="http://llvm.org/docs/LangRef.html#dinamespace"/></summary>
-    public class DiNamespace : DiScope
+    public class DINamespace : DIScope
     {
-        internal DiNamespace( LLVMMetadataRef handle )
+        internal DINamespace( LLVMMetadataRef handle )
             : base( handle )
         {
-            if( !LLVMNative.DIDescriptorIsNameSpace( handle ) )
-                throw new ArgumentException( "Invalid handle" );
         }
     }
 
     /// <summary>see <a href="http://llvm.org/docs/LangRef.html#disubprogram"/></summary>
-    public class DiSubProgram : DiScope
+    public class DISubProgram : DILocalScope
     {
-        internal DiSubProgram( LLVMMetadataRef handle )
+        internal DISubProgram( LLVMMetadataRef handle )
             : base( handle )
         {
-            if( !LLVMNative.DIDescriptorIsSubprogram( handle ) )
-                throw new ArgumentException( "Invalid handle" );
         }
     }
 
     /// <summary>Base class for Debug info types</summary>
-    public class DiType : DiScope
+    public class DIType : DIScope
     {
-        internal DiType( LLVMMetadataRef handle )
+        internal DIType( LLVMMetadataRef handle )
             : base( handle )
         {
-            if( !LLVMNative.DIDescriptorIsType( handle ) )
-                throw new ArgumentException( "Invalid handle" );
         }
 
         public DebugInfoFlags Flags
@@ -463,51 +283,51 @@ namespace Llvm.NET.DebugInfo
                 return ( DebugInfoFlags )LLVMNative.DITypeGetFlags( MetadataHandle );
             }
         }
+
+        public string Name => LLVMNative.MarshalMsg( LLVMNative.GetDITypeName( MetadataHandle ) );
     }
 
     /// <summary>see <a href="http://llvm.org/docs/LangRef.html#dibasictype"/></summary>
-    public class DiBasicType : DiType
+    public class DIBasicType : DIType
     {
-        internal DiBasicType( LLVMMetadataRef handle )
+        internal DIBasicType( LLVMMetadataRef handle )
             : base( handle )
         {
-            if( !LLVMNative.DIDescriptorIsBasicType( handle ) )
-                throw new ArgumentException( "Invalid handle" );
         }
     }
 
     /// <summary>see <a href="http://llvm.org/docs/LangRef.html#diderivedtype"/></summary>
-    public class DiDerivedType : DiType
+    public class DIDerivedType : DIType
     {
-        internal DiDerivedType( LLVMMetadataRef handle )
+        internal DIDerivedType( LLVMMetadataRef handle )
             : base( handle )
         {
-            if( !LLVMNative.DIDescriptorIsDerivedType( handle ) )
-                throw new ArgumentException( "Invalid handle" );
         }
     }
 
     /// <summary>see <a href="http://llvm.org/docs/LangRef.html#dicompositetype"/></summary>
-    public class DiCompositeType : DiType
+    public class DICompositeType : DIType
     {
-        internal DiCompositeType( LLVMMetadataRef handle )
+        internal DICompositeType( LLVMMetadataRef handle )
             : base( handle )
         {
-            if( !LLVMNative.DIDescriptorIsCompositeType( handle ) )
-                throw new ArgumentException( "Invalid handle" );
         }
-
     }
 
     /// <summary>see <a href="http://llvm.org/docs/LangRef.html#disubroutinetype"/></summary>
-    public class DiSubroutineType : DiCompositeType
+    public class DISubroutineType : DICompositeType
     {
-        internal DiSubroutineType( LLVMMetadataRef handle )
+        internal DISubroutineType( LLVMMetadataRef handle )
             : base( handle )
         {
-            if( !LLVMNative.DIDescriptorIsSubroutineType( handle ) )
-                throw new ArgumentException( "Invalid handle" );
         }
+    }
 
+    public class DIObjCProperty : DINode
+    {
+        internal DIObjCProperty( LLVMMetadataRef handle )
+            : base( handle )
+        {
+        }
     }
 }

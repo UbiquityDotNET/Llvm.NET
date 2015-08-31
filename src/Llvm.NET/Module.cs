@@ -108,6 +108,18 @@ namespace Llvm.NET
             }
         }
 
+        public string Name
+        {
+            get
+            {
+                var ptr = LLVMNative.GetModuleName( ModuleHandle );
+                if( ptr == IntPtr.Zero )
+                    return string.Empty;
+
+                return Marshal.PtrToStringAnsi( ptr );
+            }
+        }
+
         /// <summary>Link another module into the current module</summary>
         /// <param name="otherModule">Module to merge into this one</param>
         /// <param name="linkMode">Linker mode to use when merging</param>
@@ -199,16 +211,7 @@ namespace Llvm.NET
             if( !Verify( out errMsg ) )
                 return $"Invalid Module: {errMsg}";
 
-            var msgString = LLVMNative.PrintModuleToString( ModuleHandle );
-            try
-            {
-                var retVal = Marshal.PtrToStringAnsi( msgString );
-                return retVal;
-            }
-            finally
-            {
-                LLVMNative.DisposeMessage( msgString );
-            }
+            return LLVMNative.MarshalMsg( LLVMNative.PrintModuleToString( ModuleHandle ) );
         }
 
         /// <summary>Add an alias to the module</summary>
@@ -245,6 +248,12 @@ namespace Llvm.NET
             return (GlobalVariable)Value.FromHandle( handle );
         }
 
+        /// <summary>Adds a global to this module</summary>
+        /// <param name="typeRef">Type of the global's value</param>
+        /// <param name="isConst">Flag to indicate if this global is a constant</param>
+        /// <param name="linkage">Linkage type for this global</param>
+        /// <param name="constVal">Initial value for the global</param>
+        /// <returns>New global variable</returns>
         public GlobalVariable AddGlobal( TypeRef typeRef, bool isConst, Linkage linkage, Constant constVal )
         {
             return AddGlobal( typeRef, isConst, linkage, constVal, string.Empty );
@@ -290,9 +299,16 @@ namespace Llvm.NET
             LLVMNative.AddModuleFlag( ModuleHandle, ( LLVMModFlagBehavior )behavior, name, value );
         }
 
-        public void AddNamedMetadataOperand( string name, Value value )
+        public void AddNamedMetadataOperand( string name, Metadata value )
         {
-            LLVMNative.AddNamedMetadataOperand( ModuleHandle, name, value.ValueHandle );
+            LLVMNative.AddNamedMetadataOperand2( ModuleHandle, name, value.MetadataHandle );
+        }
+
+        public void AddVersionIdentMetadata( string version )
+        {
+            var elements = new LLVMMetadataRef[ ] { LLVMNative.MDString2( Context.ContextHandle, version, (uint)version.Length ) };
+            var hNode = LLVMNative.MDNode2( Context.ContextHandle, out elements[ 0 ], 1 );
+            LLVMNative.AddNamedMetadataOperand2( ModuleHandle, "llvm.ident", hNode );
         }
 
         /// <summary>Name of the Debug Version information module flag</summary>
@@ -300,7 +316,7 @@ namespace Llvm.NET
         public const string DwarfVersionValue = "Dwarf Version";
 
         /// <summary>Version of the Debug information Metadata</summary>
-        public const UInt32 DebugMetadataVersion = 2; /* DEBUG_METADATA_VERSION (for LLVM v3.6.1) */
+        public const UInt32 DebugMetadataVersion = 3; /* DEBUG_METADATA_VERSION (for LLVM v3.7.0) */
 
         /// <summary>Load a bit-code module from a given file</summary>
         /// <param name="path">path of the file to load</param>

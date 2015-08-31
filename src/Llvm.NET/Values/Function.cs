@@ -94,11 +94,11 @@ namespace Llvm.NET.Values
         public Attributes Attributes => (Attributes)LLVMNative.GetFunctionAttr( ValueHandle );
 
         /// <summary>Add attribute flags to the function</summary>
-        /// <param name="attrib"><see cref="LLVM.Attributes"/> flags to add to the function</param>
+        /// <param name="attrib"><see cref="Attributes"/> flags to add to the function</param>
         public void AddAttributes( Attributes attrib ) => LLVMNative.AddFunctionAttr( ValueHandle, ( LLVMAttribute )attrib );
 
         /// <summary>Remove attribute flags from the function</summary>
-        /// <param name="attrib"><see cref="LLVM.Attributes"/> flags to remove from the function</param>
+        /// <param name="attrib"><see cref="Attributes"/> flags to remove from the function</param>
         public void RemoveAttributes( Attributes attrib ) => LLVMNative.RemoveFunctionAttr( ValueHandle, ( LLVMAttribute )attrib );
 
         /// <summary>Add a new basic block to the beginning of a function</summary>

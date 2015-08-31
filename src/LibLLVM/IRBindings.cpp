@@ -32,7 +32,9 @@ extern "C"
         const AttributeSet PALnew = PAL.addAttributes( Func->getContext( )
                                                        , AttributeSet::FunctionIndex
                                                        , AttributeSet::get( Func->getContext( )
-                                                                            , AttributeSet::FunctionIndex, B )
+                                                                          , AttributeSet::FunctionIndex
+                                                                          , B
+                                                                          )
                                                        );
         Func->setAttributes( PALnew );
     }
@@ -52,7 +54,9 @@ extern "C"
         const AttributeSet PALnew = PAL.removeAttributes( Func->getContext( )
                                                           , AttributeSet::FunctionIndex
                                                           , AttributeSet::get( Func->getContext( )
-                                                                               , AttributeSet::FunctionIndex, B )
+                                                                             , AttributeSet::FunctionIndex
+                                                                             , B
+                                                                             )
                                                           );
         Func->setAttributes( PALnew );
     }
@@ -83,10 +87,10 @@ extern "C"
                                          , unsigned Count
                                          )
     {
-        auto node = MDNode::getTemporary( *unwrap( C )
+        auto node = MDTuple::getTemporary( *unwrap( C )
                                           , ArrayRef<Metadata *>( unwrap( MDs ), Count )
                                           );
-        return wrap( node );
+        return wrap( node.release() );
     }
 
     void LLVMAddNamedMetadataOperand2( LLVMModuleRef M
@@ -112,8 +116,8 @@ extern "C"
 
     void LLVMMetadataReplaceAllUsesWith( LLVMMetadataRef MD, LLVMMetadataRef New )
     {
-        auto *Node = unwrap<MDNodeFwdDecl>( MD );
-        Node->replaceAllUsesWith( unwrap<MDNode>( New ) );
+        auto *Node = unwrap<MDNode>( MD );
+        Node->replaceAllUsesWith( unwrap<Metadata>( New ) );
         MDNode::deleteTemporary( Node );
     }
 

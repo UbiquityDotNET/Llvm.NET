@@ -27,6 +27,24 @@
             return FromHandle( LLVMNative.ConstReal( context.DoubleType.TypeHandle, constValue ) );
         }
 
+        public double Value
+        {
+            get
+            {
+                bool loosesInfo;
+                return GetValue( out loosesInfo );
+            }
+        }
+
+        public double GetValue( out bool loosesInfo )
+        {
+            loosesInfo = false;
+            LLVMBool nativeLoosesInfo;
+            var retVal = LLVMNative.ConstRealGetDouble( ValueHandle, out nativeLoosesInfo );
+            loosesInfo = nativeLoosesInfo;
+            return retVal;
+        }
+
         [System.Diagnostics.CodeAnalysis.SuppressMessage( "Language", "CSE0003:Use expression-bodied members", Justification = "Readability" )]
         internal new static ConstantFP FromHandle( LLVMValueRef valueRef )
         {
