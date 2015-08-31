@@ -64,8 +64,8 @@ namespace Llvm.NET
                     {
                         ContextCache.Remove( ContextHandle );
                     }
-                    foreach( var kvp in ModuleCache )
-                        kvp.Value.Dispose( );
+                    foreach( var module in ModuleCache.Values )
+                        module.Dispose( );
 
                     ModuleCache.Clear( );
                 }
