@@ -19,6 +19,7 @@ LLVMGetOrInsertFunction
 LLVMBuildIntCast2
 LLVMGetValueID
 LLVMMetadataAsValue
+LLVMGetModuleName
 
 ; Debug info functions not part of standard LLVM-C API
 LLVMSetDebugLoc

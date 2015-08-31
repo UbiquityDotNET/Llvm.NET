@@ -106,21 +106,24 @@ namespace Llvm.NET.Values
             case ValueKind.GlobalVariable:
                 return new GlobalVariable( h, true );
 
-            //case ValueKind.UndefValue:
-            //    return new UndefValue( h, true );
+            case ValueKind.UndefValue:
+                return new UndefValue( h, true );
 
-            //case ValueKind.BlockAddress:
-            //    return new BlockAddress( h, true );
+            case ValueKind.BlockAddress:
+                return new BlockAddress( h, true );
 
             case ValueKind.ConstantExpr:
                 return new ConstantExpression( h, true );
 
-            //case ValueKind.ConstantAggregateZero:
-            //    break;
-            //case ValueKind.ConstantDataArray:
-            //    break;
-            //case ValueKind.ConstantDataVector:
-            //    break;
+            case ValueKind.ConstantAggregateZero:
+                return new ConstantAggregateZero( h, true );
+
+            case ValueKind.ConstantDataArray:
+                return new ConstantDataArray( h, true );
+
+            case ValueKind.ConstantDataVector:
+                return new ConstantDataVector( h, true );
+
             case ValueKind.ConstantInt:
                 return new ConstantInt( h, true );
 
@@ -130,16 +133,21 @@ namespace Llvm.NET.Values
             case ValueKind.ConstantArray:
                 return new ConstantArray( h, true );
 
-            //case ValueKind.ConstantStruct:
-            //    break;
-            //case ValueKind.ConstantVector:
-            //    break;
-            //case ValueKind.ConstantPointerNull:
-            //    break;
-            //case ValueKind.MetadataAsValue:
-            //    break;
-            //case ValueKind.InlineAsm:
-            //    break;
+            case ValueKind.ConstantStruct:
+                return new ConstantStruct( h, true );
+
+            case ValueKind.ConstantVector:
+                return new ConstantVector( h, true );
+
+            case ValueKind.ConstantPointerNull:
+                return new ConstantPointerNull( h, true );
+
+            case ValueKind.MetadataAsValue:
+                return new MetadataAsValue( h, true );
+
+            case ValueKind.InlineAsm:
+                return new InlineAsm( h, true );
+
             case ValueKind.Instruction:
                 throw new ArgumentException( "Value with kind==Instruction is not valid" );
 
@@ -152,14 +160,14 @@ namespace Llvm.NET.Values
             case ValueKind.Switch:
                 return new Instructions.Switch( h, true );
 
-            //case ValueKind.IndirectBranch:
-            //    return new Instructions.IndirectBranch( h, true );
+            case ValueKind.IndirectBranch:
+                return new Instructions.IndirectBranch( h, true );
 
-            //case ValueKind.Invoke:
-            //    return new Instructions.Inoke( h, true );
+            case ValueKind.Invoke:
+                return new Instructions.Invoke( h, true );
                 
-            //case ValueKind.Unreachable:
-            //    break;
+            case ValueKind.Unreachable:
+                return new Instructions.Unreachable( h, true );
 
             case ValueKind.Add:
             case ValueKind.FAdd:
@@ -202,13 +210,24 @@ namespace Llvm.NET.Values
             case ValueKind.SignExtend:
                 return new Instructions.SignExtend( h, true );
 
-            //case ValueKind.FPToUI:
-            //case ValueKind.FPToSI:
-            //case ValueKind.UIToFP:
-            //case ValueKind.SIToFP:
-            //case ValueKind.FPTrunc:
-            //case ValueKind.FPExt:
-            //    break;
+            case ValueKind.FPToUI:
+                return new Instructions.FPToUI( h, true );
+
+            case ValueKind.FPToSI:
+                return new Instructions.FPToSI( h, true );
+
+            case ValueKind.UIToFP:
+                return new Instructions.UIToFP( h, true );
+
+            case ValueKind.SIToFP:
+                return new Instructions.SIToFP( h, true );
+
+            case ValueKind.FPTrunc:
+                return new Instructions.FPTrunc( h, true );
+
+            case ValueKind.FPExt:
+                return new Instructions.FPExt( h, true );
+
             case ValueKind.PtrToInt:
                 return new Instructions.PointerToInt( h, true );
 
@@ -218,8 +237,9 @@ namespace Llvm.NET.Values
             case ValueKind.BitCast:
                 return new Instructions.BitCast( h, true );
 
-            //case ValueKind.AddrSpaceCast:
-            //    break;
+            case ValueKind.AddrSpaceCast:
+                return new Instructions.AddressSpaceCast( h, true );
+
             case ValueKind.ICmp:
                 return new Instructions.IntCmp( h, true );
 
@@ -232,35 +252,48 @@ namespace Llvm.NET.Values
             case ValueKind.Call:
                 return new Instructions.Call( h, true );
 
-            //case ValueKind.Select:
-            //    break;
-            //case ValueKind.UserOp1:
-            //case ValueKind.UserOp2:
-            //case ValueKind.VaArg:
-            //    break;
+            case ValueKind.Select:
+                return new Instructions.Select( h, true );
+
+            case ValueKind.UserOp1:
+                return new Instructions.UserOp1( h, true );
+
+            case ValueKind.UserOp2:
+                return new Instructions.UserOp2( h, true );
+
+            case ValueKind.VaArg:
+                return new Instructions.VaArg( h, true );
+
             case ValueKind.ExtractElement:
                 return new Instructions.ExtractElement( h, true );
 
-            //case ValueKind.InsertElement:
-            //    break;
-            //case ValueKind.ShuffleVector:
-            //    break;
+            case ValueKind.InsertElement:
+                return new Instructions.InsertElement( h, true );
+
+            case ValueKind.ShuffleVector:
+                return new Instructions.ShuffleVector( h, true );
+
             case ValueKind.ExtractValue:
                 return new Instructions.ExtractValue( h, true );
 
             case ValueKind.InsertValue:
                 return new Instructions.InsertValue( h, true );
 
-            //case ValueKind.Fence:
-            //    break;
-            //case ValueKind.AtomicCmpXchg:
-            //    break;
-            //case ValueKind.AtomicRMW:
-            //    break;
-            //case ValueKind.Resume:
-            //    break;
-            //case ValueKind.LandingPad:
-            //    break;
+            case ValueKind.Fence:
+                return new Instructions.Fence( h, true );
+
+            case ValueKind.AtomicCmpXchg:
+                return new Instructions.AtomicCmpXchg( h, true );
+
+            case ValueKind.AtomicRMW:
+                return new Instructions.AtomicRMW( h, true );
+
+            case ValueKind.Resume:
+                return new Instructions.Resume( h, true );
+
+            case ValueKind.LandingPad:
+                return new Instructions.LandingPad( h, true );
+
             default:
                 if( kind >= ValueKind.ConstantFirstVal && kind <= ValueKind.ConstantLastVal )
                     return new Constant( h, true );

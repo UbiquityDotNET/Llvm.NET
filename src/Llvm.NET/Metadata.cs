@@ -56,9 +56,22 @@ namespace Llvm.NET
 
     public class MetadataAsValue : Value
     {
-        internal MetadataAsValue( LLVMValueRef valueHandle )
-            : base( valueHandle )
+        internal MetadataAsValue( LLVMValueRef valueRef )
+            : this( valueRef, false )
         {
+        }
+
+        internal MetadataAsValue( LLVMValueRef valueRef, bool preValidated )
+            : base( preValidated ? valueRef : ValidateConversion( valueRef, IsAMetadataAsValue ) )
+        {
+        }
+
+        internal static LLVMValueRef IsAMetadataAsValue( LLVMValueRef value )
+        {
+            if( value.Pointer == IntPtr.Zero )
+                return value;
+
+            return LLVMNative.GetValueKind( value ) == ValueKind.MetadataAsValue ? value : default(LLVMValueRef);
         }
 
         public static implicit operator Metadata( MetadataAsValue self )

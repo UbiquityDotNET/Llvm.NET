@@ -70,13 +70,13 @@ namespace TestDebugInfo
                     DebugTypeInfo foo = new DebugTypeInfo( context.CreateStructType( "struct.foo" ), diBuilder, targetData, "foo", cu );
                     ( ( StructType )foo.LlvmType ).SetBody( false, context.Int32Type, context.FloatType, i32Array_0_2.LlvmType );
 
+                    // add global variables 
                     var barValue = context.CreateNamedConstantStruct( (StructType)foo.LlvmType
                                                                     , ConstantInt.From( 1 )
                                                                     , ConstantFP.From( 2.0f )
                                                                     , ConstantArray.From( i32.LlvmType, ConstantInt.From( 3 ), ConstantInt.From( 4 ) )
                                                                     );
                     
-                    // add global variables 
                     var bar = module.AddGlobal( foo.LlvmType, false, 0, barValue, "bar" );
                     bar.Alignment = foo.AbiAlignment;
                     diBuilder.CreateGlobalVariable( cu, "bar", string.Empty, diFile, 8, foo.DebugType, false, bar );
@@ -133,12 +133,10 @@ namespace TestDebugInfo
                                                 )
         {
             // Create concrete DIType and RAUW of the opaque one with the complete version
-            // despite what seems intuitively obvious the scope for the createMemberType
-            // isn't the type the member is a part of, since it hasn't been created yet.
-            // Instead, it's the file (or compile unit ).
             // While this two phase approach isn't strictly necessary in this sample it
             // isn't an uncommon case in the real world so this example demonstrates how
-            // to use forward decalarations
+            // to use forward decalarations and replace them with a complete type when
+            // all of the type information is available
             var diFields = new DIType[ ]
                 { diBuilder.CreateMemberType( scope: foo.DebugType
                                             , name: "a"

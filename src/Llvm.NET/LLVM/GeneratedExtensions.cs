@@ -355,5 +355,8 @@ namespace Llvm.NET
 
         [DllImport( libraryPath, EntryPoint = "LLVMGetDITypeName", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl )]
         internal static extern IntPtr GetDITypeName( LLVMMetadataRef diType );
+
+        [DllImport( libraryPath, EntryPoint = "LLVMGetModuleName", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl )]
+        internal static extern IntPtr GetModuleName( LLVMModuleRef module );
     }
 }
