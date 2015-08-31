@@ -45,7 +45,7 @@ namespace Llvm.NET
 
         /// <summary>Gets a value for the property from the container</summary>
         /// <param name="container">container</param>
-        /// <returns>Value retrieved from the property or the default value of type <paramref name="T"/></returns>
+        /// <returns>Value retrieved from the property or the default value of type <typeparamref name="T"/></returns>
         public T GetValueFrom( IExtensiblePropertyContainer container )
         {
             return GetValueFrom( container, default(T) );

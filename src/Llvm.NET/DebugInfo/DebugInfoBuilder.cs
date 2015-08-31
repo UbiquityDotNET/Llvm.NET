@@ -26,7 +26,7 @@ namespace Llvm.NET.DebugInfo
             BuilderHandle = LLVMNative.NewDIBuilder( owningModule.ModuleHandle, allowUnresolved );
         }
 
-        public DiCompileUnit CreateCompileUnit( SourceLanguage language
+        public DICompileUnit CreateCompileUnit( SourceLanguage language
                                             , string fileName
                                             , string filePath
                                             , string producer
@@ -44,10 +44,10 @@ namespace Llvm.NET.DebugInfo
                                                               , flags
                                                               , runtimeVersion
                                                               );
-            return new DiCompileUnit( handle );
+            return new DICompileUnit( handle );
         }
 
-        public DiFile CreateFile( string path )
+        public DIFile CreateFile( string path )
         {
             if( string.IsNullOrWhiteSpace( path ) )
                 throw new ArgumentException( "Path cannot be null, empty or whitespace" );
@@ -55,34 +55,34 @@ namespace Llvm.NET.DebugInfo
             return CreateFile( System.IO.Path.GetFileName( path ), System.IO.Path.GetDirectoryName( path ) );
         }
 
-        public DiFile CreateFile( string fileName, string directory )
+        public DIFile CreateFile( string fileName, string directory )
         {
             if( string.IsNullOrWhiteSpace( fileName ) )
                 throw new ArgumentException( "File name cannot be empty or null" );
 
             var handle = LLVMNative.DIBuilderCreateFile( BuilderHandle, fileName, directory??string.Empty );
             // REVIEW: should this deal with uniquing? if so, is it per context? Per module? ...?
-            return new DiFile( handle );
+            return new DIFile( handle );
         }
 
-        public DiLexicalBlock CreateLexicalBlock( DiScope scope, DiFile file, uint line, uint column )
+        public DILexicalBlock CreateLexicalBlock( DIScope scope, DIFile file, uint line, uint column )
         {
             var handle = LLVMNative.DIBuilderCreateLexicalBlock( BuilderHandle, scope.MetadataHandle, file.MetadataHandle, line, column );
-            return new DiLexicalBlock( handle );
+            return new DILexicalBlock( handle );
         }
 
-        public DiLexicalBlockFile CreateLexicalBlockFile( DiScope scope, DiFile file, uint discriminator )
+        public DILexicalBlockFile CreateLexicalBlockFile( DIScope scope, DIFile file, uint discriminator )
         {
             var handle = LLVMNative.DIBuilderCreateLexicalBlockFile( BuilderHandle, scope.MetadataHandle, file.MetadataHandle, discriminator );
-            return new DiLexicalBlockFile( handle );
+            return new DILexicalBlockFile( handle );
         }
 
-        public DiSubProgram CreateFunction( DiScope scope
+        public DISubProgram CreateFunction( DIScope scope
                                         , string name
                                         , string mangledName
-                                        , DiFile file
+                                        , DIFile file
                                         , uint line
-                                        , DiCompositeType compositeType
+                                        , DICompositeType compositeType
                                         , bool isLocalToUnit
                                         , bool isDefinition
                                         , uint scopeLine
@@ -111,15 +111,15 @@ namespace Llvm.NET.DebugInfo
                                                            , isOptimized ? 1 : 0
                                                            , function.ValueHandle
                                                            );
-            return new DiSubProgram( handle );
+            return new DISubProgram( handle );
         }
 
-        public DiLocalVariable CreateLocalVariable( uint dwarfTag
-                                                , DiScope scope
+        public DILocalVariable CreateLocalVariable( uint dwarfTag
+                                                , DIScope scope
                                                 , string name
-                                                , DiFile file
+                                                , DIFile file
                                                 , uint line
-                                                , DiType type
+                                                , DIType type
                                                 , bool alwaysPreserve
                                                 , uint flags
                                                 , uint argNo
@@ -136,22 +136,22 @@ namespace Llvm.NET.DebugInfo
                                                                 , flags
                                                                 , argNo
                                                                 );
-            return new DiLocalVariable( handle );
+            return new DILocalVariable( handle );
         }
 
-        public DiBasicType CreateBasicType( string name, ulong bitSize, ulong bitAlign, DiTypeKind encoding )
+        public DIBasicType CreateBasicType( string name, ulong bitSize, ulong bitAlign, DiTypeKind encoding )
         {
             var handle = LLVMNative.DIBuilderCreateBasicType( BuilderHandle, name, bitSize, bitAlign, (uint)encoding );
-            return new DiBasicType( handle );
+            return new DIBasicType( handle );
         }
 
-        public DiDerivedType CreatePointerType( DiType pointeeType, string name, ulong bitSize, ulong bitAlign)
+        public DIDerivedType CreatePointerType( DIType pointeeType, string name, ulong bitSize, ulong bitAlign)
         {
             var handle = LLVMNative.DIBuilderCreatePointerType( BuilderHandle, pointeeType.MetadataHandle, bitSize, bitAlign, name ?? string.Empty );
-            return new DiDerivedType( handle );
+            return new DIDerivedType( handle );
         }
 
-        public DiTypeArray CreateTypeArray( params DiType[ ] types )
+        public DITypeArray CreateTypeArray( params DIType[ ] types )
         {
             var handles = types.Select( t => t.MetadataHandle ).ToArray( );
             var count = handles.LongLength;
@@ -159,30 +159,35 @@ namespace Llvm.NET.DebugInfo
                 handles = new LLVMMetadataRef[ ] { default( LLVMMetadataRef ) };
 
             var handle = LLVMNative.DIBuilderGetOrCreateTypeArray( BuilderHandle, out handles[ 0 ], (ulong)count );
-            return new DiTypeArray( handle );
+            return new DITypeArray( handle );
         }
 
-        public DiSubroutineType CreateSubroutineType( DiFile file, DiTypeArray types )
+        public DISubroutineType CreateSubroutineType( DIFile file, uint flags, DITypeArray types )
         {
-            var handle = LLVMNative.DIBuilderCreateSubroutineType( BuilderHandle, file.MetadataHandle, types.MetadataHandle );
-            return new DiSubroutineType( handle );
+            var handle = LLVMNative.DIBuilderCreateSubroutineType( BuilderHandle, file.MetadataHandle, types.MetadataHandle, flags );
+            return new DISubroutineType( handle );
         }
 
-        public DiSubroutineType CreateSubroutineType( DiFile file, params DiType[] types )
+        public DISubroutineType CreateSubroutineType( DIFile file, uint flags )
         {
-            var typeArray = GetOrCreateTypeArray( types );
-            return CreateSubroutineType( file, typeArray );
+            var typeArray = GetOrCreateTypeArray( null );
+            return CreateSubroutineType( file, flags, typeArray );
+        }
+        public DISubroutineType CreateSubroutineType( DIFile file, uint flags, DIType returnType, IEnumerable<DIType> types )
+        {
+            var typeArray = GetOrCreateTypeArray( ScalarEnumerable.Combine( returnType, types ) );
+            return CreateSubroutineType( file, flags, typeArray );
         }
 
-        public DiCompositeType CreateStructType( DiScope scope
+        public DICompositeType CreateStructType( DIScope scope
                                              , string name
-                                             , DiFile file
+                                             , DIFile file
                                              , uint line
                                              , ulong bitSize
                                              , ulong bitAlign
                                              , uint flags
-                                             , DiType derivedFrom
-                                             , DiArray elements
+                                             , DIType derivedFrom
+                                             , DIArray elements
                                              )
         {
             var handle = LLVMNative.DIBuilderCreateStructType( BuilderHandle
@@ -196,46 +201,46 @@ namespace Llvm.NET.DebugInfo
                                                              , derivedFrom?.MetadataHandle ?? LLVMMetadataRef.Zero
                                                              , elements.MetadataHandle
                                                              );
-            return new DiCompositeType( handle );
+            return new DICompositeType( handle );
         }
 
-        public DiCompositeType CreateStructType( DiScope scope
+        public DICompositeType CreateStructType( DIScope scope
                                              , string name
-                                             , DiFile file
+                                             , DIFile file
                                              , uint line
                                              , ulong bitSize
                                              , ulong bitAlign
                                              , uint flags
-                                             , DiType derivedFrom
-                                             , params DiDescriptor[] elements
+                                             , DIType derivedFrom
+                                             , params DINode[] elements
                                              )
         {
             return CreateStructType( scope, name, file, line, bitSize, bitAlign, flags, derivedFrom, GetOrCreateArray( elements ) );
         }
 
-        public DiCompositeType CreateStructType( DiScope scope
+        public DICompositeType CreateStructType( DIScope scope
                                              , string name
-                                             , DiFile file
+                                             , DIFile file
                                              , uint line
                                              , ulong bitSize
                                              , ulong bitAlign
                                              , uint flags
-                                             , DiType derivedFrom
-                                             , IEnumerable<DiDescriptor> elements
+                                             , DIType derivedFrom
+                                             , IEnumerable<DINode> elements
                                              )
         {
             return CreateStructType( scope, name, file, line, bitSize, bitAlign, flags, derivedFrom, GetOrCreateArray( elements ) );
         }
 
-        public DiDerivedType CreateMemberType( DiScope scope
+        public DIDerivedType CreateMemberType( DIScope scope
                                            , string name
-                                           , DiFile file
+                                           , DIFile file
                                            , uint line
                                            , ulong bitSize
                                            , ulong bitAlign
                                            , ulong bitOffset
                                            , uint flags
-                                           , DiType type
+                                           , DIType type
                                            )
         {
             var handle = LLVMNative.DIBuilderCreateMemberType( BuilderHandle
@@ -249,33 +254,33 @@ namespace Llvm.NET.DebugInfo
                                                              , flags
                                                              , type.MetadataHandle
                                                              );
-            return new DiDerivedType( handle );
+            return new DIDerivedType( handle );
         }
 
-        public DiCompositeType CreateArrayType( ulong bitSize, ulong bitAlign, DiType elementType, DiArray subScripts )
+        public DICompositeType CreateArrayType( ulong bitSize, ulong bitAlign, DIType elementType, DIArray subScripts )
         {
             var handle = LLVMNative.DIBuilderCreateArrayType( BuilderHandle, bitSize, bitAlign, elementType.MetadataHandle, subScripts.MetadataHandle );
-            return new DiCompositeType( handle );
+            return new DICompositeType( handle );
         }
 
-        public DiCompositeType CreateArrayType( ulong bitSize, ulong bitAlign, DiType elementType, params DiDescriptor[] subScripts )
+        public DICompositeType CreateArrayType( ulong bitSize, ulong bitAlign, DIType elementType, params DINode[] subScripts )
         {
             return CreateArrayType( bitSize, bitAlign, elementType, GetOrCreateArray( subScripts ) );
         }
 
-        public DiDerivedType CreateTypedef(DiType type, string name, DiFile file, uint line, DiDescriptor context )
+        public DIDerivedType CreateTypedef(DIType type, string name, DIFile file, uint line, DINode context )
         {
             var handle = LLVMNative.DIBuilderCreateTypedef( BuilderHandle, type.MetadataHandle, name, file.MetadataHandle, line, context.MetadataHandle );
-            return new DiDerivedType( handle );
+            return new DIDerivedType( handle );
         }
 
-        public DiSubrange CreateSubrange( long lo, long count )
+        public DISubrange CreateSubrange( long lo, long count )
         {
             var handle = LLVMNative.DIBuilderGetOrCreateSubrange( BuilderHandle, lo, count );
-            return new DiSubrange( handle );
+            return new DISubrange( handle );
         }
 
-        public DiArray GetOrCreateArray( IEnumerable<DiDescriptor> elements )
+        public DIArray GetOrCreateArray( IEnumerable<DINode> elements )
         {
             var buf = elements.Select( d => d?.MetadataHandle ?? LLVMMetadataRef.Zero ).ToArray( );
             var actualLen = buf.LongLength;
@@ -284,30 +289,31 @@ namespace Llvm.NET.DebugInfo
                 buf = new LLVMMetadataRef[ 1 ];
 
             var handle = LLVMNative.DIBuilderGetOrCreateArray( BuilderHandle, out buf[ 0 ], ( ulong )actualLen );
-            return new DiArray( handle );
+            return new DIArray( handle );
         }
 
-        public DiTypeArray GetOrCreateTypeArray( IEnumerable<DiType> types )
+        public DITypeArray GetOrCreateTypeArray( params DIType[ ] types ) => GetOrCreateTypeArray( ( IEnumerable<DIType> )types );
+        public DITypeArray GetOrCreateTypeArray( IEnumerable<DIType> types )
         {
             var buf = types.Select( t => t?.MetadataHandle ?? LLVMMetadataRef.Zero ).ToArray();
             var handle = LLVMNative.DIBuilderGetOrCreateTypeArray( BuilderHandle, out buf[ 0 ], (ulong)buf.LongLength );
-            return new DiTypeArray( handle );
+            return new DITypeArray( handle );
         }
 
-        public DiEnumerator CreateEnumeratorValue( string name, long value )
+        public DIEnumerator CreateEnumeratorValue( string name, long value )
         {
             var handle = LLVMNative.DIBuilderCreateEnumeratorValue( BuilderHandle, name, value );
-            return new DiEnumerator( handle );
+            return new DIEnumerator( handle );
         }
 
-        public DiCompositeType CreateEnumerationType( DiScope scope
+        public DICompositeType CreateEnumerationType( DIScope scope
                                                   , string name
-                                                  , DiFile file
+                                                  , DIFile file
                                                   , uint lineNumber
                                                   , ulong sizeInBits
                                                   , ulong alignInBits
-                                                  , IEnumerable<DiEnumerator> elements
-                                                  , DiType underlyingType
+                                                  , IEnumerable<DIEnumerator> elements
+                                                  , DIType underlyingType
                                                   , string uniqueId = ""
                                                   )
         {
@@ -324,18 +330,18 @@ namespace Llvm.NET.DebugInfo
                                                                   , underlyingType.MetadataHandle
                                                                   , uniqueId
                                                                   );
-            return new DiCompositeType( handle );
+            return new DICompositeType( handle );
         }
 
-        public DiGlobalVariable CreateGlobalVariable( DiDescriptor scope
+        public DIGlobalVariable CreateGlobalVariable( DINode scope
                                                   , string name
                                                   , string linkageName
-                                                  , DiFile file
+                                                  , DIFile file
                                                   , uint lineNo
-                                                  , DiType type
+                                                  , DIType type
                                                   , bool isLocalToUnit
                                                   , Value value
-                                                  , DiDescriptor decl
+                                                  , DINode decl = null
                                                   )
         {
             var handle = LLVMNative.DIBuilderCreateGlobalVariable( BuilderHandle
@@ -347,9 +353,9 @@ namespace Llvm.NET.DebugInfo
                                                                  , type.MetadataHandle
                                                                  , isLocalToUnit
                                                                  , value.ValueHandle
-                                                                 , decl.MetadataHandle
+                                                                 , decl?.MetadataHandle ?? LLVMMetadataRef.Zero
                                                                  );
-            return new DiGlobalVariable( handle );
+            return new DIGlobalVariable( handle );
         }
 
         public void Finish()
@@ -361,41 +367,43 @@ namespace Llvm.NET.DebugInfo
             }
         }
 
-        public Value InsertDeclare( Value storage, DiLocalVariable varInfo, Instruction insertBefore )
+        public Value InsertDeclare( Value storage, DILocalVariable varInfo, DILocation location, Instruction insertBefore )
         {
-            return InsertDeclare( storage, varInfo, CreateExpression( ), insertBefore );
+            return InsertDeclare( storage, varInfo, CreateExpression( ), location, insertBefore );
         }
 
-        public Value InsertDeclare( Value storage, DiLocalVariable varInfo, DiExpression expr, Instruction insertBefore )
+        public Value InsertDeclare( Value storage, DILocalVariable varInfo, DIExpression expr, DILocation location, Instruction insertBefore )
         {
             var handle = LLVMNative.DIBuilderInsertDeclareBefore( BuilderHandle
                                                                 , storage.ValueHandle
                                                                 , varInfo.MetadataHandle
                                                                 , expr.MetadataHandle
+                                                                , location.MetadataHandle
                                                                 , insertBefore.ValueHandle
                                                                 );
             return Value.FromHandle( handle );
         }
 
-        public Value InsertDeclare( Value storage, DiLocalVariable varInfo, BasicBlock insertAtEnd )
+        public Value InsertDeclare( Value storage, DILocalVariable varInfo, DILocation location, BasicBlock insertAtEnd )
         {
-            return InsertDeclare( storage, varInfo, CreateExpression( ), insertAtEnd );
+            return InsertDeclare( storage, varInfo, CreateExpression( ), location, insertAtEnd );
         }
 
-        public Value InsertDeclare( Value storage, DiLocalVariable varInfo, DiExpression expr, BasicBlock insertAtEnd )
+        public Value InsertDeclare( Value storage, DILocalVariable varInfo, DIExpression expr, DILocation location, BasicBlock insertAtEnd )
         {
             var handle = LLVMNative.DIBuilderInsertDeclareAtEnd( BuilderHandle
                                                                 , storage.ValueHandle
                                                                 , varInfo.MetadataHandle
                                                                 , expr.MetadataHandle
+                                                                , location.MetadataHandle
                                                                 , insertAtEnd.BlockHandle
                                                                 );
             return Value.FromHandle( handle );
         }
 
-        public DiExpression CreateExpression( params ExpressionOp[ ] operations ) => CreateExpression( ( IEnumerable<ExpressionOp> )operations );
+        public DIExpression CreateExpression( params ExpressionOp[ ] operations ) => CreateExpression( ( IEnumerable<ExpressionOp> )operations );
 
-        public DiExpression CreateExpression( IEnumerable<ExpressionOp> operations )
+        public DIExpression CreateExpression( IEnumerable<ExpressionOp> operations )
         {
             var args = operations.Cast<long>().ToArray( );
             var actualCount = args.LongLength;
@@ -403,32 +411,32 @@ namespace Llvm.NET.DebugInfo
                 args = new long[ 1 ];
 
             var handle = LLVMNative.DIBuilderCreateExpression( BuilderHandle, out args[ 0 ], (ulong)actualCount );
-            return new DiExpression( handle );
+            return new DIExpression( handle );
         }
 
-        public DiCompositeType CreateReplaceableForwardDecl( Tag tag
-                                                         , string name
-                                                         , DiDescriptor scope
-                                                         , DiFile file
-                                                         , uint line
-                                                         , uint lang = 0
-                                                         , ulong sizeInBits = 0
-                                                         , ulong alignBits = 0
-                                                         , string uniqueIdentifier = null
-                                                         )
+        public DICompositeType CreateReplaceableCompositeType( Tag tag
+                                                              , string name
+                                                              , DINode scope
+                                                              , DIFile file
+                                                              , uint line
+                                                              , uint lang = 0
+                                                              , ulong sizeInBits = 0
+                                                              , ulong alignBits = 0
+                                                              , uint flags = 0
+                                                              )
         {
-            var handle = LLVMNative.DIBuilderCreateReplaceableForwardDecl( BuilderHandle
-                                                                         , ( uint )tag
-                                                                         , name
-                                                                         , scope.MetadataHandle
-                                                                         , file?.MetadataHandle ?? LLVMMetadataRef.Zero
-                                                                         , line
-                                                                         , lang
-                                                                         , sizeInBits
-                                                                         , alignBits
-                                                                         , uniqueIdentifier ?? string.Empty
-                                                                         );
-            return new DiCompositeType( handle );
+            var handle = LLVMNative.DIBuilderCreateReplaceableCompositeType( BuilderHandle
+                                                                           , ( uint )tag
+                                                                           , name
+                                                                           , scope.MetadataHandle
+                                                                           , file?.MetadataHandle ?? LLVMMetadataRef.Zero
+                                                                           , line
+                                                                           , lang
+                                                                           , sizeInBits
+                                                                           , alignBits
+                                                                           , flags
+                                                                           );
+            return new DICompositeType( handle );
         }
 
         public void Dispose( )

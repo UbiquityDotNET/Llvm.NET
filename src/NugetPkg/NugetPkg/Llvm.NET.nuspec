@@ -2,18 +2,18 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
     <metadata>
         <id>Llvm.NET</id>
-        <version>0.3.1-alpha</version>
+        <version>3.7.0-alpha0020</version>
         <authors>Microsoft Corporation,LLVM.org</authors>
         <requireLicenseAcceptance>false</requireLicenseAcceptance>
-        <description>.NET Bindings for LLVM 3.6.1</description>
+        <description>.NET Bindings for LLVM 3.7.0</description>
         <tags>LLVM</tags>
     </metadata>
     <files>
         <file src="Llvm.NET.targets" target="build\Llvm.NET.targets" />
-        <file src="..\..\..\BuildOutput\LibLLVM\x64\$configuration$\LibLLVM.3.6.1.dll" target="build\LibLLVM\x64\LibLLVM.3.6.1.dll" />
-        <file src="..\..\..\BuildOutput\LibLLVM\x64\$configuration$\LibLLVM.3.6.1.pdb" target="build\LibLLVM\x64\LibLLVM.3.6.1.pdb" />
-        <file src="..\..\..\BuildOutput\LibLLVM\Win32\$configuration$\LibLLVM.3.6.1.dll" target="build\LibLLVM\x86\LibLLVM.3.6.1.dll" />
-        <file src="..\..\..\BuildOutput\LibLLVM\Win32\$configuration$\LibLLVM.3.6.1.pdb" target="build\LibLLVM\x86\LibLLVM.3.6.1.pdb" />
+        <file src="..\..\..\BuildOutput\LibLLVM\x64\$configuration$\LibLLVM.dll" target="build\LibLLVM\x64\LibLLVM.dll" />
+        <file src="..\..\..\BuildOutput\LibLLVM\x64\$configuration$\LibLLVM.pdb" target="build\LibLLVM\x64\LibLLVM.pdb" />
+        <file src="..\..\..\BuildOutput\LibLLVM\Win32\$configuration$\LibLLVM.dll" target="build\LibLLVM\x86\LibLLVM.dll" />
+        <file src="..\..\..\BuildOutput\LibLLVM\Win32\$configuration$\LibLLVM.pdb" target="build\LibLLVM\x86\LibLLVM.pdb" />
         <file src="..\..\..\BuildOutput\Llvm.NET\AnyCPU\$configuration$\Llvm.NET.dll" target="lib\net45\Llvm.NET.dll" />
         <file src="..\..\..\BuildOutput\Llvm.NET\AnyCPU\$configuration$\Llvm.NET.pdb" target="lib\net45\Llvm.NET.pdb" />
     </files>

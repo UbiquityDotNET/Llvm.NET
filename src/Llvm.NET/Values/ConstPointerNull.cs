@@ -9,14 +9,18 @@ namespace Llvm.NET.Values
             return FromHandle( LLVMNative.ConstPointerNull( type.TypeHandle ) );
         }
 
-        [System.Diagnostics.CodeAnalysis.SuppressMessage( "Language", "CSE0003:Use expression-bodied members", Justification = "Readability" )]
         internal new static ConstantPointerNull FromHandle( LLVMValueRef valueRef )
         {
             return ( ConstantPointerNull )Context.CurrentContext.GetValueFor( valueRef, ( h ) => new ConstantPointerNull( h ) );
         }
 
         internal ConstantPointerNull( LLVMValueRef valueRef )
-            : base( ValidateConversion( valueRef, LLVMNative.IsAConstantPointerNull ) )
+            : this( valueRef, false )
+        {
+        }
+
+        internal ConstantPointerNull( LLVMValueRef valueRef, bool preValidated )
+            : base( preValidated ? valueRef : ValidateConversion( valueRef, LLVMNative.IsAConstantDataVector ) )
         {
         }
     }

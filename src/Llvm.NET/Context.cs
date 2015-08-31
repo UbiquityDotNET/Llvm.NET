@@ -108,7 +108,7 @@ namespace Llvm.NET
         /// <summary>Get a type that is a pointer to a value of a given type</summary>
         /// <param name="elementType">Type of value the pointer points to</param>
         /// <returns><see cref="PointerType"/> for a pointer that references a value of type <paramref name="elementType"/></returns>
-        public PointerType GetPointerTypeFor( TypeRef elementType ) => new PointerType( LLVMNative.PointerType( elementType.TypeHandle, 0 ) );
+        public PointerType GetPointerTypeFor( TypeRef elementType ) => PointerType.FromHandle( LLVMNative.PointerType( elementType.TypeHandle, 0 ) );
 
         /// <summary>Get's an LLVM integer type of arbitrary bit width</summary>
         /// <remarks>
@@ -135,7 +135,7 @@ namespace Llvm.NET
             case 64:
                 return Int64Type;
             default:
-                return TypeRef.FromHandle( LLVMNative.IntType( bitWidth ) );
+                return TypeRef.FromHandle( LLVMNative.IntTypeInContext( ContextHandle, bitWidth ) );
             }
         }
 
@@ -188,6 +188,11 @@ namespace Llvm.NET
             return StructType.FromHandle( hType );
         }
 
+        public ConstantStruct CreateConstantStruct( bool packed, params Constant[] values )
+        {
+            return CreateConstantStruct( values, packed );
+        }
+
         /// <summary>Create a constant struct</summary>
         /// <param name="values">values for the members of the struct</param>
         /// <param name="packed">Flag to indicate if the members are packed (e.g. no automatic padding/alignment should be applied)</param>
@@ -196,11 +201,16 @@ namespace Llvm.NET
         /// Constant structs are often used as initializers for global data structures that are compile time constants such as
         /// initialized const data, vtables, etc...
         /// </remarks>
-        public Constant CreateConstantStruct( IEnumerable<Constant> values, bool packed )
+        public ConstantStruct CreateConstantStruct( IEnumerable<Constant> values, bool packed )
         {
             var valueHandles = values.Select( v => v.ValueHandle ).ToArray( );
             var handle = LLVMNative.ConstStructInContext( ContextHandle, out valueHandles[ 0 ], (uint)valueHandles.Length, packed );
-            return Constant.FromHandle( handle );
+            return (ConstantStruct)Value.FromHandle( handle );
+        }
+
+        public Constant CreateNamedConstantStruct( StructType type, params Constant[ ] values )
+        {
+            return CreateNamedConstantStruct( type, ( IEnumerable<Constant> )values );
         }
 
         public Constant CreateNamedConstantStruct( StructType type, IEnumerable<Constant> values )
@@ -259,6 +269,9 @@ namespace Llvm.NET
         /// <returns>LLVM <see cref="Module"/></returns>
         public Module CreateModule( string moduleId )
         {
+            if( moduleId == null )
+                throw new ArgumentNullException( nameof( moduleId ) );
+
             var retVal = LLVMNative.ModuleCreateWithNameInContext( moduleId, ContextHandle );
             if( retVal.Pointer == IntPtr.Zero )
                 return null;
@@ -266,24 +279,16 @@ namespace Llvm.NET
             return GetModuleFor( retVal );
         }
 
-        public Value CreateMetadataString( string value )
+        public MDString CreateMetadataString( string value )
         {
-            var handle = LLVMNative.MDStringInContext( ContextHandle, value, (uint)value.Length );
-            return Value.FromHandle( handle );
+            var handle = LLVMNative.MDString2( ContextHandle, value, (uint)value.Length );
+            return new MDString( handle );
         }
 
-        public Value CreateConstantString( string value )
+        public ConstantDataArray CreateConstantString( string value )
         {
             var handle = LLVMNative.ConstStringInContext( ContextHandle, value, (uint)value.Length, true );
-            return Value.FromHandle( handle );
-        }
-
-        public Value CreateMetadataConstantString( string value )
-        {
-            var hString = LLVMNative.ConstStringInContext( ContextHandle, value, (uint)value.Length, true );
-            var hStringAsMD = LLVMNative.ConstantAsMetadata( hString );
-            var handle = LLVMNative.MetadataAsValue( ContextHandle, hStringAsMD );
-            return Value.FromHandle( handle );
+            return (ConstantDataArray)Value.FromHandle( handle );
         }
 
         /// <summary>Global context</summary>
