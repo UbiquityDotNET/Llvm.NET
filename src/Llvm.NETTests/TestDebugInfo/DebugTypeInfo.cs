@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Linq;
-using System.Collections.Generic;
 using Llvm.NET;
 using Llvm.NET.DebugInfo;
 using Llvm.NET.Types;

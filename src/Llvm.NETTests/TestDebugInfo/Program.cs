@@ -17,7 +17,7 @@ namespace TestDebugInfo
         /// <summary>Creates a test LLVM module with debug information</summary>
         /// <param name="args">ignored</param>
         /// <remarks>
-        /// <code language="C#" title="Example code generated">
+        /// <code language="C++" title="Example code generated">
         /// struct foo                                        // 1
         /// {                                                 // 2
         ///     int a;                                        // 3
