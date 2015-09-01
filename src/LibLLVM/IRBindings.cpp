@@ -135,4 +135,16 @@ extern "C"
                                   );
         unwrap( Bref )->SetCurrentDebugLocation( loc );
     }
+
+    LLVMBool LLVMIsTemporary( LLVMMetadataRef M )
+    {
+        auto pMetadata = unwrap<MDNode>( M );
+        return pMetadata->isTemporary();
+    }
+
+    LLVMBool LLVMIsResolved( LLVMMetadataRef M )
+    {
+        auto pMetadata = unwrap<MDNode>( M );
+        return pMetadata->isResolved( );
+    }
 }
