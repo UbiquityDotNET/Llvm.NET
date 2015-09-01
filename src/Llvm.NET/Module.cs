@@ -25,7 +25,21 @@ namespace Llvm.NET
 
         protected virtual void Dispose( bool disposing )
         {
-            if( ModuleHandle.Pointer != IntPtr.Zero )
+            // if not already disposed, dispose the module
+            // NOTE:
+            // The test logic here is backwards from what you might think
+            // Ordinarily unmanged resource are always released independent
+            // of the value of the disposing param. However, since the Context
+            // ultimately owns the module it will destroy it when it is finalized
+            // furthermore. Finalization isn't deterministic in that the Context
+            // can be finalized BEFORE the module is. But since LLVM will destroy 
+            // the underlying module when the context is destroyed that ends up
+            // with a dangling pointer/handle in the module. WHen the finalizer 
+            // eventually gets to finalize the module the handle is invalid and
+            // casues an exception in the native code of LLVM. Thus disposing the
+            // module will release the resources for a module early so it doesn't 
+            // leak if the same context is used to generate multiple modules. 
+            if( disposing )
             {
                 LLVMNative.DisposeModule( ModuleHandle );
                 ModuleHandle = new LLVMModuleRef( );
@@ -34,14 +48,7 @@ namespace Llvm.NET
         #endregion
 
         /// <summary><see cref="Context"/> this module belongs to</summary>
-        public Context Context
-        {
-            get
-            {
-                var hContext = LLVMNative.GetModuleContext( ModuleHandle );
-                return Context.GetContextFor( hContext );
-            }
-        }
+        public Context Context { get; }
 
         /// <summary>Data layout string</summary>
         /// <remarks>
@@ -350,6 +357,8 @@ namespace Llvm.NET
                 throw new ArgumentNullException( nameof( moduleRef ) );
 
             ModuleHandle = moduleRef;
+            var hContext = LLVMNative.GetModuleContext( ModuleHandle );
+            Context = Llvm.NET.Context.GetContextFor( hContext );
         }
 
         internal LLVMModuleRef ModuleHandle { get; private set; }

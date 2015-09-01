@@ -20,6 +20,8 @@ LLVMBuildIntCast2
 LLVMGetValueID
 LLVMMetadataAsValue
 LLVMGetModuleName
+LLVMIsTemporary
+LLVMIsResolved
 
 ; Debug info functions not part of standard LLVM-C API
 LLVMSetDebugLoc

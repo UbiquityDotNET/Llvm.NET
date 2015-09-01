@@ -89,8 +89,14 @@ namespace Llvm.NET
         {
         }
 
+        public bool IsTemporary => LLVMNative.IsTemporary( MetadataHandle );
+        public bool IsResolved => LLVMNative.IsResolved( MetadataHandle );
+
         public void ReplaceAllUsesWith( Metadata other )
         {
+            if( !IsTemporary || IsResolved )
+                throw new InvalidOperationException( "Cannot replace non temporary or resolved metadata nodes" );
+
             if( MetadataHandle.Pointer == IntPtr.Zero )
                 throw new InvalidOperationException( "Cannot Replace all uses of a null descriptor" );
 

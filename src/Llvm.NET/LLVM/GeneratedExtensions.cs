@@ -358,5 +358,11 @@ namespace Llvm.NET
 
         [DllImport( libraryPath, EntryPoint = "LLVMGetModuleName", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl )]
         internal static extern IntPtr GetModuleName( LLVMModuleRef module );
+
+        [DllImport( libraryPath, EntryPoint = "LLVMIsTemporary", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl )]
+        internal static extern LLVMBool IsTemporary( LLVMMetadataRef M );
+
+        [DllImport( libraryPath, EntryPoint = "LLVMIsResolved", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl )]
+        internal static extern LLVMBool IsResolved( LLVMMetadataRef M );
     }
 }

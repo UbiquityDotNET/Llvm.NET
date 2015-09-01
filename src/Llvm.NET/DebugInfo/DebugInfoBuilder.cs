@@ -150,8 +150,9 @@ namespace Llvm.NET.DebugInfo
             var handle = LLVMNative.DIBuilderCreatePointerType( BuilderHandle, pointeeType.MetadataHandle, bitSize, bitAlign, name ?? string.Empty );
             return new DIDerivedType( handle );
         }
+        public DITypeArray CreateTypeArray( params DIType[ ] types ) => CreateTypeArray( ( IEnumerable<DIType> )types );
 
-        public DITypeArray CreateTypeArray( params DIType[ ] types )
+        public DITypeArray CreateTypeArray( IEnumerable<DIType> types )
         {
             var handles = types.Select( t => t.MetadataHandle ).ToArray( );
             var count = handles.LongLength;

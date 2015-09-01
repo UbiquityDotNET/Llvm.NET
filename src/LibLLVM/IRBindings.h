@@ -47,6 +47,9 @@ void LLVMSetMetadata2(LLVMValueRef Inst, unsigned KindID, LLVMMetadataRef MD);
 void LLVMMetadataReplaceAllUsesWith(LLVMMetadataRef MD, LLVMMetadataRef New);
 void LLVMSetCurrentDebugLocation2(LLVMBuilderRef Bref, unsigned Line, unsigned Col, LLVMMetadataRef Scope, LLVMMetadataRef InlinedAt);
 
+LLVMBool LLVMIsTemporary( LLVMMetadataRef M );
+LLVMBool LLVMIsResolved( LLVMMetadataRef M );
+
 #ifdef __cplusplus
 }
 
