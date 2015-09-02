@@ -16,7 +16,7 @@ namespace Llvm.NET
     /// threaded applications. The second form is the per thread context,
     /// which provides uniqueness of items on a per thread basis. This allows
     /// running multiple LLVM tool transforms etc.. on different threads
-    /// without causing them to colide namespaces and types even if 
+    /// without causing them to collide namespaces and types even if 
     /// they use the same name (e.g. module one may have a type Foo, and
     /// so does module two but they are completely distinct from each other)
     /// The global context allows for sharing uniqued items that are common
@@ -178,41 +178,90 @@ namespace Llvm.NET
             return FunctionType.FromHandle( signature );
         }
 
-        ///<summary>Create a named structure (e.g. forward reference)</summary>
-        public StructType CreateStructType( string name )
-        {
-            if( string.IsNullOrWhiteSpace( name ) )
-                throw new ArgumentNullException( nameof( name ) );
-
-            var hType = LLVMNative.StructCreateNamed( ContextHandle, name );
-            return StructType.FromHandle( hType );
-        }
-
-        public ConstantStruct CreateConstantStruct( bool packed, params Constant[] values )
-        {
-            return CreateConstantStruct( values, packed );
-        }
-
-        /// <summary>Create a constant struct</summary>
-        /// <param name="values">values for the members of the struct</param>
-        /// <param name="packed">Flag to indicate if the members are packed (e.g. no automatic padding/alignment should be applied)</param>
-        /// <returns>Constant value for the struct</returns>
+        /// <summary>Creates a constant structure from a set of values</summary>
+        /// <param name="packed">Flag to indicate if the structure is packed and no alignment should be applied to the members</param>
+        /// <param name="values">Set of values to use in forming the structure</param>
+        /// <returns>Newly created <see cref="Constant"/></returns>
         /// <remarks>
-        /// Constant structs are often used as initializers for global data structures that are compile time constants such as
-        /// initialized const data, vtables, etc...
+        /// <note type="note">The actual concrete return type depends on the parameters provided and will be one of the following:
+        /// <list type="unordered">
+        /// <listheader>
+        /// <term><see cref="Constant"/> derived type</term><description>Description</description>
+        /// </listheader>
+        /// <item><term>ConstantAggregateZero</term><description>If all the member values are zero constants</description></item>
+        /// <item><term>UndefValue</term><description>If all the member values are UndefValue</description></item>
+        /// <item><term>ConstantStruct</term><description>All other cases</description></item>
+        /// </list>
+        /// </note>
         /// </remarks>
-        public ConstantStruct CreateConstantStruct( IEnumerable<Constant> values, bool packed )
+        public Constant CreateConstantStruct( bool packed, params Constant[] values )
+        {
+            return CreateConstantStruct( packed, (IEnumerable<Constant>)values );
+        }
+
+        /// <summary>Creates a constant structure from a set of values</summary>
+        /// <param name="values">Set of values to use in forming the structure</param>
+        /// <param name="packed">Flag to indicate if the structure is packed and no alignment should be applied to the members</param>
+        /// <returns>Newly created <see cref="Constant"/></returns>
+        /// <remarks>
+        /// <note type="note">The actual concrete return type depends on the parameters provided and will be one of the following:
+        /// <list type="unordered">
+        /// <listheader>
+        /// <term><see cref="Constant"/> derived type</term><description>Description</description>
+        /// </listheader>
+        /// <item><term>ConstantAggregateZero</term><description>If all the member values are zero constants</description></item>
+        /// <item><term>UndefValue</term><description>If all the member values are UndefValue</description></item>
+        /// <item><term>ConstantStruct</term><description>All other cases</description></item>
+        /// </list>
+        /// </note>
+        /// </remarks>
+        public Constant CreateConstantStruct( bool packed, IEnumerable<Constant> values )
         {
             var valueHandles = values.Select( v => v.ValueHandle ).ToArray( );
+            if( valueHandles.Length == 0 )
+                throw new ArgumentException( "structure must have at least one element", nameof( values ) );
+
             var handle = LLVMNative.ConstStructInContext( ContextHandle, out valueHandles[ 0 ], (uint)valueHandles.Length, packed );
             return (ConstantStruct)Value.FromHandle( handle );
         }
 
+        /// <summary>Creates a constant instance of a specified structure type from a set of values</summary>
+        /// <param name="type">Type of the structure to create</param>
+        /// <param name="values">Set of values to use in forming the structure</param>
+        /// <returns>Newly created <see cref="Constant"/></returns>
+        /// <remarks>
+        /// <note type="note">The actual concrete return type depends on the parameters provided and will be one of the following:
+        /// <list type="unordered">
+        /// <listheader>
+        /// <term><see cref="Constant"/> derived type</term><description>Description</description>
+        /// </listheader>
+        /// <item><term>ConstantAggregateZero</term><description>If all the member values are zero constants</description></item>
+        /// <item><term>UndefValue</term><description>If all the member values are UndefValue</description></item>
+        /// <item><term>ConstantStruct</term><description>All other cases</description></item>
+        /// </list>
+        /// </note>
+        /// </remarks>
         public Constant CreateNamedConstantStruct( StructType type, params Constant[ ] values )
         {
             return CreateNamedConstantStruct( type, ( IEnumerable<Constant> )values );
         }
 
+        /// <summary>Creates a constant instance of a specified structure type from a set of values</summary>
+        /// <param name="type">Type of the structure to create</param>
+        /// <param name="values">Set of values to use in forming the structure</param>
+        /// <returns>Newly created <see cref="Constant"/></returns>
+        /// <remarks>
+        /// <note type="note">The actual concrete return type depends on the parameters provided and will be one of the following:
+        /// <list type="unordered">
+        /// <listheader>
+        /// <term><see cref="Constant"/> derived type</term><description>Description</description>
+        /// </listheader>
+        /// <item><term>ConstantAggregateZero</term><description>If all the member values are zero constants</description></item>
+        /// <item><term>UndefValue</term><description>If all the member values are UndefValue</description></item>
+        /// <item><term>ConstantStruct</term><description>All other cases</description></item>
+        /// </list>
+        /// </note>
+        /// </remarks>
         public Constant CreateNamedConstantStruct( StructType type, IEnumerable<Constant> values )
         {
             if( type.Context != this )
@@ -221,6 +270,18 @@ namespace Llvm.NET
             var valueHandles = values.Select( v => v.ValueHandle ).ToArray( );
             var handle = LLVMNative.ConstNamedStruct(type.TypeHandle, out valueHandles[ 0 ], ( uint )valueHandles.Length );
             return Constant.FromHandle( handle );
+        }
+
+        /// <summary>Create an empty structure type</summary>
+        /// <param name="name">Name of the type</param>
+        /// <returns>New type</returns>
+        public StructType CreateStructType( string name )
+        {
+            if( string.IsNullOrWhiteSpace( name ) )
+                throw new ArgumentNullException( nameof( name ) );
+
+            var hType = LLVMNative.StructCreateNamed( ContextHandle, name );
+            return StructType.FromHandle( hType );
         }
 
         /// <summary>Create an anonymous structure type (e.g. Tuple)</summary>
@@ -251,7 +312,7 @@ namespace Llvm.NET
         /// <remarks>
         /// If the elements argument list is empty then an opaque type is created (e.g. a forward reference)
         /// The <see cref="StructType.SetBody(bool, TypeRef[])"/> method provides a means to add a body to
-        /// an opaque type at a later time if the details of the body are required. (If only a pointers to
+        /// an opaque type at a later time if the details of the body are required. (If only pointers to
         /// to the type are required the body isn't required) 
         /// </remarks>
         public StructType CreateStructType( string name, bool packed, params TypeRef[] elements )
@@ -279,15 +340,40 @@ namespace Llvm.NET
             return GetModuleFor( retVal );
         }
 
+        /// <summary>Creates a metadata string from the given string</summary>
+        /// <param name="value">string to create as metadata</param>
+        /// <returns>new metadata string</returns>
         public MDString CreateMetadataString( string value )
         {
+            value = value ?? string.Empty;
             var handle = LLVMNative.MDString2( ContextHandle, value, (uint)value.Length );
             return new MDString( handle );
         }
 
+        /// <summary>Create a constant data string value</summary>
+        /// <param name="value">string to convert into an LLVM constant value</param>
+        /// <returns>new <see cref="ConstantDataArray"/></returns>
+        /// <remarks>
+        /// This converts th string to ANSI form and creates an LLVM constant array of i8 
+        /// characters for the data without any terminating null character.
+        /// </remarks>
         public ConstantDataArray CreateConstantString( string value )
         {
             var handle = LLVMNative.ConstStringInContext( ContextHandle, value, (uint)value.Length, true );
+            return (ConstantDataArray)Value.FromHandle( handle );
+        }
+
+        /// <summary>Create a constant data string value</summary>
+        /// <param name="value">string to convert into an LLVM constant value</param>
+        /// <param name="nullTerminate">flag to indicate if the string should include a null terminator</param>
+        /// <returns>new <see cref="ConstantDataArray"/></returns>
+        /// <remarks>
+        /// This converts th string to ANSI form and creates an LLVM constant array of i8 
+        /// characters for the data without any terminating null character.
+        /// </remarks>
+        public ConstantDataArray CreateConstantString( string value, bool nullTerminate )
+        {
+            var handle = LLVMNative.ConstStringInContext( ContextHandle, value, (uint)value.Length, !nullTerminate );
             return (ConstantDataArray)Value.FromHandle( handle );
         }
 

@@ -33,13 +33,13 @@
     <BuildAssemblerVerbosity>OnlyWarningsAndErrors</BuildAssemblerVerbosity>
     <HelpFileFormat>Website</HelpFileFormat>
     <IndentHtml>False</IndentHtml>
-    <KeepLogFile>True</KeepLogFile>
+    <KeepLogFile>False</KeepLogFile>
     <DisableCodeBlockComponent>False</DisableCodeBlockComponent>
     <CppCommentsFixup>False</CppCommentsFixup>
     <CleanIntermediates>True</CleanIntermediates>
-    <MaximumGroupParts>8</MaximumGroupParts>
+    <MaximumGroupParts>6</MaximumGroupParts>
     <NamespaceGrouping>False</NamespaceGrouping>
-    <SyntaxFilters>Standard</SyntaxFilters>
+    <SyntaxFilters>C#</SyntaxFilters>
     <SdkLinkTarget>Blank</SdkLinkTarget>
     <RootNamespaceContainer>True</RootNamespaceContainer>
     <PresentationStyle>VS2013</PresentationStyle>
@@ -49,26 +49,33 @@
     <ContentPlacement>AboveNamespaces</ContentPlacement>
     <NamespaceSummaries>
       <NamespaceSummaryItem name="Llvm.NET" isDocumented="True" xmlns="">Core namespace for all LLVM.NET types and data</NamespaceSummaryItem>
-<NamespaceSummaryItem name="Llvm.NET.DebugInfo" isDocumented="True" xmlns="">Contaisn types for generating Debug Information in the final output binary for us in symbolic/source level debugging.</NamespaceSummaryItem>
-<NamespaceSummaryItem name="Llvm.NET.Instructions" isDocumented="True" xmlns="">Contains support for LLVM bit code IR instructions</NamespaceSummaryItem>
-<NamespaceSummaryItem name="Llvm.NET.Types" isDocumented="True" xmlns="">Contains classes representing data types in LLVM</NamespaceSummaryItem>
-<NamespaceSummaryItem name="Llvm.NET.Values" isDocumented="True" xmlns="">Contains classes representing LLVM Values</NamespaceSummaryItem></NamespaceSummaries>
-    <VisibleItems>Attributes, ExplicitInterfaceImplementations, InheritedMembers, InheritedFrameworkMembers, Protected, ProtectedInternalAsProtected</VisibleItems>
+      <NamespaceSummaryItem name="Llvm.NET.DebugInfo" isDocumented="True" xmlns="">Contaisn types for generating Debug Information in the final output binary for us in symbolic/source level debugging.</NamespaceSummaryItem>
+      <NamespaceSummaryItem name="Llvm.NET.Instructions" isDocumented="True" xmlns="">Contains support for LLVM bit code IR instructions</NamespaceSummaryItem>
+      <NamespaceSummaryItem name="Llvm.NET.Types" isDocumented="True" xmlns="">Contains classes representing data types in LLVM</NamespaceSummaryItem>
+      <NamespaceSummaryItem name="Llvm.NET.Values" isDocumented="True" xmlns="">Contains classes representing LLVM Values</NamespaceSummaryItem>
+    </NamespaceSummaries>
+    <VisibleItems>Attributes, ExplicitInterfaceImplementations, InheritedMembers, InheritedFrameworkMembers, Protected</VisibleItems>
     <ComponentConfigurations>
       <ComponentConfig id="Code Block Component" enabled="True" xmlns="">
         <component id="Code Block Component">
-  <basePath value="{@HtmlEncProjectFolder}" />
-  <outputPaths>{@HelpFormatOutputPaths}</outputPaths>
-  <allowMissingSource value="false" />
-  <removeRegionMarkers value="false" />
-  <colorizer syntaxFile="{@SHFBFolder}PresentationStyles\Colorizer\highlight.xml" styleFile="{@SHFBFolder}PresentationStyles\Colorizer\highlight.xsl" stylesheet="{@SHFBFolder}PresentationStyles\Colorizer\highlight.css" scriptFile="{@SHFBFolder}PresentationStyles\Colorizer\highlight.js" disabled="{@DisableCodeBlockComponent}" language="cs" tabSize="4" numberLines="false" outlining="false" keepSeeTags="false" defaultTitle="true" />
-</component>
+          <basePath value="{@HtmlEncProjectFolder}" />
+          <outputPaths>{@HelpFormatOutputPaths}</outputPaths>
+          <allowMissingSource value="false" />
+          <removeRegionMarkers value="false" />
+          <colorizer syntaxFile="{@SHFBFolder}PresentationStyles\Colorizer\highlight.xml" styleFile="{@SHFBFolder}PresentationStyles\Colorizer\highlight.xsl" stylesheet="{@SHFBFolder}PresentationStyles\Colorizer\highlight.css" scriptFile="{@SHFBFolder}PresentationStyles\Colorizer\highlight.js" disabled="{@DisableCodeBlockComponent}" language="cs" tabSize="4" numberLines="false" outlining="false" keepSeeTags="false" defaultTitle="true" />
+        </component>
       </ComponentConfig>
-<ComponentConfig id="IntelliSense Component" enabled="True" xmlns=""><component id="IntelliSense Component"><!-- Output options (optional)
+      <ComponentConfig id="IntelliSense Component" enabled="True" xmlns="">
+        <component id="IntelliSense Component">
+          <!-- Output options (optional)
   Attributes:
     Include namespaces (false by default)
     Namespaces comments filename ("Namespaces" if not specified or empty)
-    Output folder (current folder if not specified or empty) --><output includeNamespaces="false" namespacesFile="Namespaces" folder="{@OutputFolder}" /></component></ComponentConfig></ComponentConfigurations>
+    Output folder (current folder if not specified or empty) -->
+          <output includeNamespaces="false" namespacesFile="Namespaces" folder="{@OutputFolder}" />
+        </component>
+      </ComponentConfig>
+    </ComponentConfigurations>
     <RootNamespaceTitle>Namespaces</RootNamespaceTitle>
   </PropertyGroup>
   <!-- There are no properties for these groups.  AnyCPU needs to appear in order for Visual Studio to perform

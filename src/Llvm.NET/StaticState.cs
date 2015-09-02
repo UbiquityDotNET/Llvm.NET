@@ -67,7 +67,6 @@ namespace Llvm.NET
                 LLVMNative.InitializeAllAsmParsers( );
         }
 
-        //basic pattern to follow for any new targets in the future
         public static void RegisterNative( TargetRegistration regFlags = TargetRegistration.All )
         {
             if( regFlags.HasFlag( TargetRegistration.Target ) )
