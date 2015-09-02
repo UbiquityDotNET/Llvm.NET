@@ -20,7 +20,7 @@ namespace Llvm.NET.Values
         }
 
         internal ConstantPointerNull( LLVMValueRef valueRef, bool preValidated )
-            : base( preValidated ? valueRef : ValidateConversion( valueRef, LLVMNative.IsAConstantDataVector ) )
+            : base( preValidated ? valueRef : ValidateConversion( valueRef, LLVMNative.IsAConstantPointerNull ) )
         {
         }
     }

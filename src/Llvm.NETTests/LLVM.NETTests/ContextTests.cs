@@ -544,7 +544,7 @@ namespace Llvm.NET.Tests
             using( var ctx = Context.CreateThreadContext( ) )
             {
                 var fields = new List<Constant> { ConstantInt.From( ( byte )1 ), ConstantFP.From( 2.0f ), ConstantInt.From( ( short )-3 ) };
-                var value = ctx.CreateConstantStruct( fields, true );
+                var value = ctx.CreateConstantStruct( true, fields );
                 Assert.AreEqual( 3, value.Operands.Count );
                 Assert.IsInstanceOfType( value.Operands[ 0 ], typeof( ConstantInt ) );
                 Assert.IsInstanceOfType( value.Operands[ 1 ], typeof( ConstantFP ) );
@@ -574,7 +574,7 @@ namespace Llvm.NET.Tests
             using( var ctx = Context.CreateThreadContext( ) )
             {
                 var fields = new List<Constant> { ConstantInt.From( ( byte )1 ), ConstantFP.From( 2.0f ), ConstantInt.From( ( short )-3 ) };
-                var value = ctx.CreateConstantStruct( fields, false );
+                var value = ctx.CreateConstantStruct( false, fields );
                 Assert.AreEqual( 3, value.Operands.Count );
                 Assert.IsInstanceOfType( value.Operands[ 0 ], typeof( ConstantInt ) );
                 Assert.IsInstanceOfType( value.Operands[ 1 ], typeof( ConstantFP ) );
