@@ -42,6 +42,8 @@ LLVMMetadataRef LLVMMDString2(LLVMContextRef C, const char *Str, unsigned SLen);
 LLVMMetadataRef LLVMMDNode2(LLVMContextRef C, LLVMMetadataRef *MDs, unsigned Count);
 LLVMMetadataRef LLVMTemporaryMDNode(LLVMContextRef C, LLVMMetadataRef *MDs, unsigned Count);
 
+char const* LLVMGetMDStringText( LLVMMetadataRef mdstring, unsigned* len );
+
 void LLVMAddNamedMetadataOperand2(LLVMModuleRef M, const char *name, LLVMMetadataRef Val);
 void LLVMSetMetadata2(LLVMValueRef Inst, unsigned KindID, LLVMMetadataRef MD);
 void LLVMMetadataReplaceAllUsesWith(LLVMMetadataRef MD, LLVMMetadataRef New);

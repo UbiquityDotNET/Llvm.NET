@@ -241,6 +241,11 @@ namespace Llvm.NET
             return (GlobalAlias)Value.FromHandle( LLVMNative.AddAlias( ModuleHandle, typeRef.TypeHandle, aliasee.ValueHandle, aliasName ) );
         }
 
+        public GlobalAlias GetAlias( string name )
+        {
+            return (GlobalAlias)Value.FromHandle( LLVMNative.GetGlobalAlias( ModuleHandle, name ) );
+        }
+
         /// <summary>Adds a global to this module</summary>
         /// <param name="typeRef">Type of the global's value</param>
         /// <param name="name">Name of the global</param>

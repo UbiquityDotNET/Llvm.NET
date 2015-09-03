@@ -45,19 +45,19 @@
     <None Include="test.c" />
   </ItemGroup>
   <ItemGroup>
-    <Reference Include="Llvm.NET, Version=1.0.5722.41501, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Llvm.NET.3.7.0-alpha0022\lib\net45\Llvm.NET.dll</HintPath>
+    <Reference Include="Llvm.NET, Version=1.0.5723.38116, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Llvm.NET.3.7.0-alpha0024\lib\net45\Llvm.NET.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="System" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
-  <Import Project="..\packages\Llvm.NET.3.7.0-alpha0022\build\Llvm.NET.targets" Condition="Exists('..\packages\Llvm.NET.3.7.0-alpha0022\build\Llvm.NET.targets')" />
+  <Import Project="..\packages\Llvm.NET.3.7.0-alpha0024\build\Llvm.NET.targets" Condition="Exists('..\packages\Llvm.NET.3.7.0-alpha0024\build\Llvm.NET.targets')" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>
       <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
     </PropertyGroup>
-    <Error Condition="!Exists('..\packages\Llvm.NET.3.7.0-alpha0022\build\Llvm.NET.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Llvm.NET.3.7.0-alpha0022\build\Llvm.NET.targets'))" />
+    <Error Condition="!Exists('..\packages\Llvm.NET.3.7.0-alpha0024\build\Llvm.NET.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Llvm.NET.3.7.0-alpha0024\build\Llvm.NET.targets'))" />
   </Target>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

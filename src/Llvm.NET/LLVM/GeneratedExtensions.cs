@@ -364,5 +364,14 @@ namespace Llvm.NET
 
         [DllImport( libraryPath, EntryPoint = "LLVMIsResolved", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl )]
         internal static extern LLVMBool IsResolved( LLVMMetadataRef M );
+
+        [DllImport( libraryPath, EntryPoint = "LLVMGetMDStringText", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl )]
+        internal static extern IntPtr GetMDStringText( LLVMMetadataRef M, out uint len );
+
+        [DllImport( libraryPath, EntryPoint = "LLVMGetGlobalAlias", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl )]
+        internal static extern LLVMValueRef GetGlobalAlias( LLVMModuleRef module, string name );
+
+        [DllImport( libraryPath, EntryPoint = "LLVMGetAliasee", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl )]
+        internal static extern LLVMValueRef GetAliasee( LLVMValueRef Val );
     }
 }

@@ -22,6 +22,9 @@ LLVMMetadataAsValue
 LLVMGetModuleName
 LLVMIsTemporary
 LLVMIsResolved
+LLVMGetMDStringText
+LLVMGetGlobalAlias
+LLVMGetAliasee
 
 ; Debug info functions not part of standard LLVM-C API
 LLVMSetDebugLoc

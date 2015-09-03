@@ -11,26 +11,13 @@ namespace Llvm.NET.Tests
     [TestClass]
     public class ModuleTests
     {
-        private Context Ctx;
-
-        [TestInitialize]
-        public void TestMethodInit()
-        {
-            Ctx = Context.CreateThreadContext( );
-        }
-
-        [TestCleanup]
-        public void TestMethodCleanup()
-        {
-            Ctx.Dispose( );
-            Ctx = null;
-        }
-
         [TestMethod]
         public void DisposeTest( )
         {
-            var module = Ctx.CreateModule( "test " );
-            module.Dispose( );
+            using( var ctx = Context.CreateThreadContext( ) )
+            using( var module = ctx.CreateModule( "test" ) )
+            {
+            }
         }
 
         [TestMethod]
@@ -72,7 +59,31 @@ namespace Llvm.NET.Tests
         [TestMethod]
         public void AddAliasTest( )
         {
-            Assert.Inconclusive( );
+            using( var ctx = Context.CreateThreadContext( ) )
+            using( var module = ctx.CreateModule( "test" ) )
+            {
+                // create a fully defined function to make an alias to 
+                var testFunc = module.AddFunction( "_test", ctx.GetFunctionType( ctx.VoidType ) );
+                testFunc.AppendBasicBlock( "entry" );
+                var irBuilder = new InstructionBuilder( testFunc.EntryBlock );
+                irBuilder.Return( );
+
+                var alias = module.AddAlias( testFunc, "test" );
+                Assert.AreSame( alias, module.GetAlias( "test" ) );
+                Assert.AreSame( module, alias.ParentModule );
+                Assert.AreSame( testFunc, alias.Aliasee );
+                Assert.AreEqual( "test", alias.Name );
+                Assert.AreEqual( Linkage.External, alias.Linkage );
+                Assert.AreSame( testFunc.Type, alias.Type );
+                
+                // alias.Operands[ 0 ] is just another way to get alias.Aliasee
+                Assert.AreEqual( 1, alias.Operands.Count );
+                Assert.AreSame( testFunc, alias.Operands[ 0 ] );
+
+                Assert.IsFalse( alias.IsNull );
+                Assert.IsFalse( alias.IsUndefined );
+                Assert.IsFalse( alias.IsZeroValue );
+            }
         }
 
         [TestMethod]
