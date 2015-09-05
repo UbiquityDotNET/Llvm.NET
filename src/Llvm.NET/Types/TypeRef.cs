@@ -146,14 +146,7 @@ namespace Llvm.NET.Types
         public override string ToString( )
         {
             var msgString = LLVMNative.PrintTypeToString( TypeHandle );
-            try
-            {
-                return Marshal.PtrToStringAnsi( msgString );
-            }
-            finally
-            {
-                LLVMNative.DisposeMessage( msgString );
-            }
+            return LLVMNative.MarshalMsg( msgString );
         }
 
         internal TypeRef( LLVMTypeRef typeRef )

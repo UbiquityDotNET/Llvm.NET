@@ -113,7 +113,7 @@ namespace Llvm.NET
         {
             uint len;
             var ptr = LLVMNative.GetMDStringText( MetadataHandle, out len );
-            return Marshal.PtrToStringAnsi( ptr, ( int )len );
+            return LLVMNative.NormalizeLineEndings( ptr, (int)len );
         }
     } 
 }

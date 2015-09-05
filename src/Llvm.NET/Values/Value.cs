@@ -51,14 +51,7 @@ namespace Llvm.NET.Values
         public override string ToString( )
         {
             var ptr = LLVMNative.PrintValueToString( ValueHandle );
-            try
-            {
-                return Marshal.PtrToStringAnsi( ptr );
-            }
-            finally
-            {
-                LLVMNative.DisposeMessage( ptr );
-            }
+            return LLVMNative.MarshalMsg( ptr );
         }
 
         public void ReplaceAllUsesWith( Value other )
@@ -324,19 +317,11 @@ namespace Llvm.NET.Values
             var ex = new ArgumentException( "Incompatible handle type" );
             
             // Use LLVM to print to the debugger what the handle is for use in diagnosing the problem
-            var msgString = LLVMNative.PrintValueToString( fromHandle );
-            try
-            {
-                var txt = Marshal.PtrToStringAnsi( msgString );
-                Debug.Print( txt );
-                // attach the details to the exception so it is available after the fact in the debugger
-                // and any logs that dump exception details.
-                ex.Data.Add( "Llvm.NETNative.Handle.Dump", txt );
-            }
-            finally
-            {
-                LLVMNative.DisposeMessage( msgString );
-            }
+            var msgString = LLVMNative.MarshalMsg( LLVMNative.PrintValueToString( fromHandle ) );
+            Debug.Print( msgString );
+            // attach the details to the exception so it is available after the fact in the debugger
+            // and any logs that dump exception details.
+            ex.Data.Add( "Llvm.NETNative.Handle.Dump", msgString );
             throw ex;
         }
 

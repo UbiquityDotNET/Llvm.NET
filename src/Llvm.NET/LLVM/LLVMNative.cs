@@ -1,5 +1,7 @@
 ﻿using System;
+using System.ComponentModel;
 using System.Runtime.InteropServices;
+using System.Text.RegularExpressions;
 
 namespace Llvm.NET
 {
@@ -31,7 +33,7 @@ namespace Llvm.NET
             {
                 try
                 {
-                    retVal = Marshal.PtrToStringAnsi( msg );
+                    retVal = NormalizeLineEndings( msg );
                 }
                 finally
                 {
@@ -41,16 +43,54 @@ namespace Llvm.NET
             return retVal;
         }
 
-#if DYNAMICALLY_LOAD_LIBLLVM
-        // force loading the appropriate architecture specific 
-        // DLL before any use of the wrapped inter-op APIs to 
-        // allow building this library as ANYCPU
         static LLVMNative()
         {
-            var handle = NativeMethods.LoadWin32Library( "LibLLVM", libraryPath );
-            if( handle == IntPtr.Zero )
-                throw new InvalidOperationException( "Verification of DLL Load Failed!" );
+            try
+            {
+                // force loading the appropriate architecture specific 
+                // DLL before any use of the wrapped inter-op APIs to 
+                // allow building this library as ANYCPU
+                var handle = NativeMethods.LoadWin32Library( libraryPath, "LibLLVM" );
+            }
+            catch( Win32Exception )
+            {
+                // fallback to standard library search paths to allow building
+                // CPU specific variants with only one DLL without needing
+                // conditional compilation on this library
+                NativeMethods.LoadWin32Library( libraryPath, null );
+            }
         }
-#endif
+
+        // LLVM doesn't honor environment/OS specific default line endings, so this will
+        // normalize the line endings from strings provided by LLVM into the current
+        // environment's format.
+        internal static string NormalizeLineEndings( IntPtr llvmString )
+        {
+            if( llvmString == IntPtr.Zero )
+                return string.Empty;
+
+            var str = Marshal.PtrToStringAnsi( llvmString );
+            return NormalizeLineEndings( str );
+        }
+
+        internal static string NormalizeLineEndings( IntPtr llvmString, int len )
+        {
+            if( llvmString == IntPtr.Zero )
+                return string.Empty;
+
+            var str = Marshal.PtrToStringAnsi( llvmString, len );
+            return NormalizeLineEndings( str );
+        }
+
+        private static string NormalizeLineEndings( string txt )
+        {
+            // shortcut optimization for environments that match the LLVM assumption
+            if( Environment.NewLine.Length == 1 && Environment.NewLine[ 0 ] == '\n' )
+                return txt;
+
+            return LineEndingNormalizingRegEx.Replace( txt, Environment.NewLine );
+        }
+
+        private static readonly Regex LineEndingNormalizingRegEx = new Regex( "(\r\n|\n\n|\n\r|\r|\n)" );
     }
 }

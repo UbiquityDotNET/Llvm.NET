@@ -15,14 +15,7 @@ namespace Llvm.NET
             if( LLVMNative.CreateMemoryBufferWithContentsOfFile( path, out BufferHandle_, out msg ).Succeeded )
                 return;
 
-            var msgText = string.Empty;
-            if( msg != IntPtr.Zero )
-            {
-                msgText = Marshal.PtrToStringAnsi( msg );
-                LLVMNative.DisposeMessage( msg );
-            }
-
-            throw new InternalCodeGeneratorException( msgText );
+            throw new InternalCodeGeneratorException( LLVMNative.MarshalMsg( msg ) );
         }
 
         /// <summary>Size of the buffer</summary>
