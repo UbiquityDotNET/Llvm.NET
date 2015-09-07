@@ -33,25 +33,27 @@ namespace TestDebugInfo
         /// <param name="args">ignored</param>
         /// <remarks>
         /// <code language="C++" title="Example code generated">
-        /// struct foo                                        // 1
-        /// {                                                 // 2
-        ///     int a;                                        // 3
-        ///     float b;                                      // 4
-        ///     int c[2];                                     // 5
-        /// };                                                // 6
-        ///                                                   // 7
-        /// struct foo bar = { 1, 2.0, { 3, 4 } };            // 8
-        /// struct foo baz;                                   // 9
-        ///                                                   // 10
-        /// void copy( struct foo src, struct foo* pDst )     // 11
-        /// {                                                 // 12
-        ///     *pDst = src;                                  // 13
-        /// }                                                 // 14
-        ///                                                   // 15
-        /// void DoCopy( )                                    // 16
-        /// {                                                 // 17
-        ///     copy( bar, &amp;baz );                        // 18
-        /// }                                                 // 19
+        /// struct foo
+        /// {
+        ///     int a;
+        ///     float b;
+        ///     int c[2];
+        /// };
+        /// 
+        /// struct foo bar = { 1, 2.0, { 3, 4 } };
+        /// struct foo baz;
+        /// 
+        /// inline static void copy( struct foo src     // function line here
+        ///                        , struct foo* pDst
+        ///                        )
+        /// { // function's ScopeLine here
+        ///     *pDst = src;
+        /// }
+        /// 
+        /// void DoCopy( )
+        /// {
+        ///     copy( bar, &baz );
+        /// }
         /// </code>
         /// </remarks>
         static void Main( string[ ] args )
@@ -119,16 +121,17 @@ namespace TestDebugInfo
 
                     // create types for function args
                     var fooPtr = fooType.CreatePointerType( module.DIBuilder, targetData );
-                    // WARNING: This would generate the wrong debug info signature!
-                    //          Since the the first parameter is passed by value 
-                    //          using the pointer+alloca+memcopy pattern, the actual
-                    //          source, and therefore debug, signature is NOT a pointer.
-                    //          However, this usage will create a signature with two
-                    //          pointers as the arguments and thus the correct approach
-                    //          is to insert an explicit ParameterTypePair that overrides
-                    //          the default behavior to pair LLVM pointer type with the
-                    //          original source type.
-                    //var copySig = context.CreateFunctionType( module.DIBuilder, diFile, context.VoidType, fooPtr, fooType.DIType, fooPtr );
+
+                    // Create function signatures
+
+                    // Since the the first parameter is passed by value 
+                    // using the pointer+alloca+memcopy pattern, the actual
+                    // source, and therefore debug, signature is NOT a pointer.
+                    // However, this usage will create a signature with two
+                    // pointers as the arguments and thus the correct approach
+                    // is to insert an explicit ParameterTypePair that overrides
+                    // the default behavior to pair LLVM pointer type with the
+                    // original source type.
                     var copySig = context.CreateFunctionType( module.DIBuilder, diFile, context.VoidType, new ParameterTypePair( fooPtr, fooType.DIType ), fooPtr );
                     var doCopySig = context.CreateFunctionType( module.DIBuilder, diFile, context.VoidType );
 
@@ -183,7 +186,7 @@ namespace TestDebugInfo
                         // Module is good, so generate the output files
                         module.WriteToFile( "test.bc" );
                         var lltxt = module.AsString( );
-                        System.IO.File.WriteAllText( "test.ll", lltxt );
+                        File.WriteAllText( "test.ll", lltxt );
                         targetMachine.EmitToFile( module, "test.o", CodeGenFileType.ObjectFile );
                         targetMachine.EmitToFile( module, "test.s", CodeGenFileType.AssemblySource );
                     }
