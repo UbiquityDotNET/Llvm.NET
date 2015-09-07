@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Runtime.InteropServices;
 using Llvm.NET.Values;
 
 namespace Llvm.NET
@@ -50,6 +49,7 @@ namespace Llvm.NET
                 throw new InvalidOperationException( "Cannot Replace all uses of a null descriptor" );
 
             LLVMNative.MetadataReplaceAllUsesWith( MetadataHandle, other.MetadataHandle );
+            MetadataHandle = LLVMMetadataRef.Zero;
         }
 
         internal LLVMMetadataRef MetadataHandle { get; set; }
@@ -92,13 +92,18 @@ namespace Llvm.NET
 
         public bool IsTemporary => LLVMNative.IsTemporary( MetadataHandle );
         public bool IsResolved => LLVMNative.IsResolved( MetadataHandle );
+        public void ResolveCycles( ) => LLVMNative.MDNodeResolveCycles( MetadataHandle );
 
         public override void ReplaceAllUsesWith( Metadata other )
         {
             if( !IsTemporary || IsResolved )
                 throw new InvalidOperationException( "Cannot replace non temporary or resolved  MDNode" );
 
-            base.ReplaceAllUsesWith( other );
+            if( MetadataHandle.Pointer == IntPtr.Zero )
+                throw new InvalidOperationException( "Cannot Replace all uses of a null descriptor" );
+
+            LLVMNative.MDNodeReplaceAllUsesWith( MetadataHandle, other.MetadataHandle );
+            MetadataHandle = LLVMMetadataRef.Zero;
         }
     }
 

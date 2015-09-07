@@ -1,5 +1,5 @@
 ﻿using System;
-using System.ComponentModel;
+using System.IO;
 using System.Runtime.InteropServices;
 using System.Text.RegularExpressions;
 
@@ -9,7 +9,7 @@ namespace Llvm.NET
     internal partial struct LLVMBool
     {
         // sometimes LLVMBool values are actually success/failure codes
-        // and thus 0 actually means success and not "false".
+        // and thus a zero value actually means success and not false or failure.
         public bool Succeeded => Value == 0;
         public bool Failed => !Succeeded;
 
@@ -45,18 +45,19 @@ namespace Llvm.NET
 
         static LLVMNative()
         {
-            try
+            // force loading the appropriate architecture specific 
+            // DLL before any use of the wrapped inter-op APIs to 
+            // allow building this library as ANYCPU
+            if( Directory.Exists( "LibLLVM") )
             {
-                // force loading the appropriate architecture specific 
-                // DLL before any use of the wrapped inter-op APIs to 
-                // allow building this library as ANYCPU
-                var handle = NativeMethods.LoadWin32Library( libraryPath, "LibLLVM" );
+                NativeMethods.LoadWin32Library( libraryPath, "LibLLVM" );
             }
-            catch( Win32Exception )
+            else
             {
                 // fallback to standard library search paths to allow building
                 // CPU specific variants with only one DLL without needing
-                // conditional compilation on this library
+                // conditional compilation on this library, which is useful for
+                // unit testing or whenever the Nuget packaging isn't desired.
                 NativeMethods.LoadWin32Library( libraryPath, null );
             }
         }
@@ -75,7 +76,7 @@ namespace Llvm.NET
 
         internal static string NormalizeLineEndings( IntPtr llvmString, int len )
         {
-            if( llvmString == IntPtr.Zero )
+            if( llvmString == IntPtr.Zero || len == 0 )
                 return string.Empty;
 
             var str = Marshal.PtrToStringAnsi( llvmString, len );
@@ -91,6 +92,6 @@ namespace Llvm.NET
             return LineEndingNormalizingRegEx.Replace( txt, Environment.NewLine );
         }
 
-        private static readonly Regex LineEndingNormalizingRegEx = new Regex( "(\r\n|\n\n|\n\r|\r|\n)" );
+        private static readonly Regex LineEndingNormalizingRegEx = new Regex( "(\r\n|\n\r|\r|\n)" );
     }
 }

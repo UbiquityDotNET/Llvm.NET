@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.IO;
 using Llvm.NET;
 using Llvm.NET.DebugInfo;
 using Llvm.NET.Instructions;
@@ -13,6 +15,19 @@ namespace TestDebugInfo
         const string Triple = "x86_64-pc-windows-msvc18.0.0"; //"thumbv7m-none-eabi";
         const string Cpu = "x86-64";//"cortex-m3";
         const string Features = "+sse,+sse2";
+        static readonly Dictionary<string, string> TargetDependentAttributes = new Dictionary<string, string>
+        {
+            [ "disable-tail-calls" ] = "false",
+            [ "less-precise-fpmad" ] = "false",
+            [ "no-frame-pointer-elim" ] = "false",
+            [ "no-infs-fp-math" ] = "false",
+            [ "no-nans-fp-math" ] = "false",
+            [ "stack-protector-buffer-size" ] = "8",
+            [ "target-cpu" ] = "x86-64",
+            [ "target-features" ] = "+sse,+sse2",
+            [ "unsafe-fp-math" ] = "false",
+            [ "use-soft-float" ] = "false",
+        };
 
         /// <summary>Creates a test LLVM module with debug information</summary>
         /// <param name="args">ignored</param>
@@ -49,41 +64,50 @@ namespace TestDebugInfo
                 using( var module = context.CreateModule( "test.bc" ) )
                 {
                     var targetData = targetMachine.TargetData;
-                    var diBuilder = new DebugInfoBuilder( module );
 
                     module.TargetTriple = targetMachine.Triple;
                     module.DataLayout = targetMachine.TargetData.ToString( );
 
                     // create compile unit and file as the top level scope for everything
-                    var cu = diBuilder.CreateCompileUnit( SourceLanguage.C99, "test.c", Environment.CurrentDirectory, "TestDebugInfo", false, "", 0 );
-                    var diFile = diBuilder.CreateFile( "test.c", Environment.CurrentDirectory );
+                    var srcPath = @"C:\Github\NETMF\Llvm.NET\src\Llvm.NETTests\TestDebugInfo\test.c";
+                    var cu = module.DIBuilder.CreateCompileUnit( SourceLanguage.C99
+                                                               , Path.GetFileName( srcPath )
+                                                               , Path.GetDirectoryName( srcPath )
+                                                               , "TestDebugInfo"
+                                                               , false
+                                                               , ""
+                                                               , 0
+                                                               );
+                    var diFile = module.DIBuilder.CreateFile( srcPath );
 
                     // Create basic types used in this compilation
-                    DebugTypeInfo i32 = new DebugTypeInfo( context.Int32Type, diBuilder, targetData, "int", cu );
-                    DebugTypeInfo f32 = new DebugTypeInfo( context.FloatType, diBuilder, targetData, "float", cu );
-                    DebugTypeInfo voidType = new DebugTypeInfo( context.VoidType, diBuilder, targetData, "void", cu );
-                    var i32Array_0_2 = i32.AsArrayType( diBuilder, 0, 2 );
+                    context.Int32Type.CreateDIType( module.DIBuilder, targetData, "int", cu );
+                    context.FloatType.CreateDIType( module.DIBuilder, targetData, "float", cu );
+                    var i32 = context.Int32Type;
+                    var f32 = context.FloatType;
+                    var i32Array_0_2 = i32.CreateArrayType( module.DIBuilder, targetData, 0, 2 );
 
                     // create the LLVM structure type and body
                     // The full body is used with targetMachine.TargetData to determine size, alignment and element offsets
                     // in a target independent manner.
-                    DebugTypeInfo foo = new DebugTypeInfo( context.CreateStructType( "struct.foo" ), diBuilder, targetData, "foo", cu );
-                    ( ( StructType )foo.LlvmType ).SetBody( false, context.Int32Type, context.FloatType, i32Array_0_2.LlvmType );
+                    var fooType = context.CreateStructType( "struct.foo" );
+                    fooType.CreateDIType( module.DIBuilder, targetData, "foo", cu );
+                    fooType.SetBody( false, context.Int32Type, context.FloatType, i32Array_0_2 );
 
-                    // add global variables 
-                    var barValue = context.CreateNamedConstantStruct( (StructType)foo.LlvmType
+                    // add global variables and constants
+                    var barValue = context.CreateNamedConstantStruct( fooType
                                                                     , ConstantInt.From( 1 )
                                                                     , ConstantFP.From( 2.0f )
-                                                                    , ConstantArray.From( i32.LlvmType, ConstantInt.From( 3 ), ConstantInt.From( 4 ) )
+                                                                    , ConstantArray.From( i32, ConstantInt.From( 3 ), ConstantInt.From( 4 ) )
                                                                     );
-                    
-                    var bar = module.AddGlobal( foo.LlvmType, false, 0, barValue, "bar" );
-                    bar.Alignment = foo.AbiAlignment;
-                    diBuilder.CreateGlobalVariable( cu, "bar", string.Empty, diFile, 8, foo.DebugType, false, bar );
 
-                    var baz = module.AddGlobal( foo.LlvmType, false, Linkage.Common, Constant.NullValueFor( foo.LlvmType ), "baz" );
-                    baz.Alignment = foo.AbiAlignment;
-                    diBuilder.CreateGlobalVariable( cu, "baz", string.Empty, diFile, 9, foo.DebugType, false, bar );
+                    var bar = module.AddGlobal( fooType, false, 0, barValue, "bar" );
+                    bar.Alignment = targetData.AbiAlignmentOf( fooType );
+                    module.DIBuilder.CreateGlobalVariable( cu, "bar", string.Empty, diFile, 8, fooType.DIType, false, bar );
+
+                    var baz = module.AddGlobal( fooType, false, Linkage.Common, Constant.NullValueFor( fooType ), "baz" );
+                    baz.Alignment = targetData.AbiAlignmentOf( fooType );
+                    module.DIBuilder.CreateGlobalVariable( cu, "baz", string.Empty, diFile, 9, fooType.DIType, false, baz );
 
                     // add module flags and ident
                     // this can technically occur at any point, though placing it here makes
@@ -94,18 +118,61 @@ namespace TestDebugInfo
                     module.AddVersionIdentMetadata( "testdebuginfo 0.0.1-test" );
 
                     // create types for function args
-                    var fooPtr = foo.AsPointerType( diBuilder );
-                    var copySig = DebugTypeInfo.CreateFunctionType( diBuilder, diFile, voidType, fooPtr, fooPtr );
-                    var doCopySig = DebugTypeInfo.CreateFunctionType( diBuilder, diFile, voidType );
+                    var fooPtr = fooType.CreatePointerType( module.DIBuilder, targetData );
+                    // WARNING: This would generate the wrong debug info signature!
+                    //          Since the the first parameter is passed by value 
+                    //          using the pointer+alloca+memcopy pattern, the actual
+                    //          source, and therefore debug, signature is NOT a pointer.
+                    //          However, this usage will create a signature with two
+                    //          pointers as the arguments and thus the correct approach
+                    //          is to insert an explicit ParameterTypePair that overrides
+                    //          the default behavior to pair LLVM pointer type with the
+                    //          original source type.
+                    //var copySig = context.CreateFunctionType( module.DIBuilder, diFile, context.VoidType, fooPtr, fooType.DIType, fooPtr );
+                    var copySig = context.CreateFunctionType( module.DIBuilder, diFile, context.VoidType, new ParameterTypePair( fooPtr, fooType.DIType ), fooPtr );
+                    var doCopySig = context.CreateFunctionType( module.DIBuilder, diFile, context.VoidType );
 
                     // Create the functions
-                    var copyFunc = CreateCopyFunction( module, diBuilder, diFile, foo, fooPtr, copySig );
-                    CreateDoCopyFunction( module, diBuilder, diFile, foo, fooPtr, doCopySig, bar, baz, copyFunc );
-                    finalizeFooDebugInfo( diBuilder, cu, diFile, i32, i32Array_0_2, f32, foo );
+                    // NOTE: The ordering is reveresd from that of the sample code file (test.c)
+                    //       However this is what Clang ends up doing for some reason so it is
+                    //       replicated here to aid in comparing the generated LL files.
+                    var doCopyFunc = module.CreateFunction( scope: diFile
+                                                          , name: "DoCopy"
+                                                          , linkageName: null
+                                                          , file: diFile
+                                                          , line: 18
+                                                          , signature: doCopySig
+                                                          , isLocalToUnit: false
+                                                          , isDefinition: true
+                                                          , scopeLine: 19
+                                                          , flags: 0
+                                                          , isOptimized: false
+                                                          ).AddAttributes( Attributes.NoUnwind | Attributes.UnwindTable )
+                                                           .AddAttributes( TargetDependentAttributes );
+
+                    var copyFunc = module.CreateFunction( scope: diFile
+                                                         , name: "copy"
+                                                         , linkageName: null
+                                                         , file: diFile
+                                                         , line: 11
+                                                         , signature: copySig
+                                                         , isLocalToUnit: true
+                                                         , isDefinition: true
+                                                         , scopeLine: 14
+                                                         , flags: DebugInfoFlags.Prototyped
+                                                         , isOptimized: false
+                                                         ).AddAttributes( Attributes.NoUnwind | Attributes.UnwindTable | Attributes.InlineHint )
+                                                          .AddAttributes( TargetDependentAttributes )
+                                                          .Linkage( Linkage.Internal ); // static function
+
+                    CreateDoCopyFunctionBody( module, targetData, doCopyFunc, fooType, bar, baz, copyFunc );
+                    CreateCopyFunctionBody( module, targetData, copyFunc, diFile, fooType, fooPtr );
+                    finalizeFooDebugInfo( module.DIBuilder, targetData, cu, diFile, i32, i32Array_0_2, f32, fooType );
 
                     // finalize the debug information
-                    diBuilder.Finish( );
+                    module.DIBuilder.Finish( );
 
+                    // verify the module is still good and print any errors found
                     string msg;
                     if( !module.Verify( out msg ) )
                     {
@@ -113,9 +180,10 @@ namespace TestDebugInfo
                     }
                     else
                     {
-                        // generate output files
+                        // Module is good, so generate the output files
                         module.WriteToFile( "test.bc" );
-                        System.IO.File.WriteAllText( "test.ll", module.AsString( ) );
+                        var lltxt = module.AsString( );
+                        System.IO.File.WriteAllText( "test.ll", lltxt );
                         targetMachine.EmitToFile( module, "test.o", CodeGenFileType.ObjectFile );
                         targetMachine.EmitToFile( module, "test.s", CodeGenFileType.AssemblySource );
                     }
@@ -124,90 +192,77 @@ namespace TestDebugInfo
         }
 
         private static void finalizeFooDebugInfo( DebugInfoBuilder diBuilder
+                                                , TargetData layout
                                                 , DICompileUnit cu
                                                 , DIFile diFile
-                                                , DebugTypeInfo i32
-                                                , DebugTypeInfo i32Array_0_2
-                                                , DebugTypeInfo f32
-                                                , DebugTypeInfo foo
+                                                , TypeRef i32
+                                                , TypeRef i32Array_0_2
+                                                , TypeRef f32
+                                                , StructType foo
                                                 )
         {
             // Create concrete DIType and RAUW of the opaque one with the complete version
             // While this two phase approach isn't strictly necessary in this sample it
             // isn't an uncommon case in the real world so this example demonstrates how
-            // to use forward decalarations and replace them with a complete type when
+            // to use forward type decalarations and replace them with a complete type when
             // all of the type information is available
             var diFields = new DIType[ ]
-                { diBuilder.CreateMemberType( scope: foo.DebugType
+                { diBuilder.CreateMemberType( scope: foo.DIType
                                             , name: "a"
                                             , file: diFile
                                             , line: 3
-                                            , bitSize: i32.BitSize
-                                            , bitAlign: i32.AbiBitAlignment
-                                            , bitOffset: foo.BitOffsetOfElement( 0 )
+                                            , bitSize: layout.BitSizeOf( i32 )
+                                            , bitAlign: layout.AbiBitAlignmentOf( i32 )
+                                            , bitOffset: layout.BitOffsetOfElement( foo, 0 )
                                             , flags: 0
-                                            , type: i32.DebugType
+                                            , type: i32.DIType
                                             )
-                , diBuilder.CreateMemberType( scope: foo.DebugType
+                , diBuilder.CreateMemberType( scope: foo.DIType
                                             , name: "b"
                                             , file: diFile
                                             , line: 4
-                                            , bitSize: f32.BitSize
-                                            , bitAlign: f32.AbiBitAlignment
-                                            , bitOffset: foo.BitOffsetOfElement( 1 )
+                                            , bitSize: layout.BitSizeOf( f32 )
+                                            , bitAlign: layout.AbiBitAlignmentOf( f32 )
+                                            , bitOffset: layout.BitOffsetOfElement( foo, 1 )
                                             , flags: 0
-                                            , type: f32.DebugType
+                                            , type: f32.DIType
                                             )
-                , diBuilder.CreateMemberType( scope: foo.DebugType
+                , diBuilder.CreateMemberType( scope: foo.DIType
                                             , name: "c"
                                             , file: diFile
                                             , line: 5
-                                            , bitSize: i32Array_0_2.BitSize
-                                            , bitAlign: i32Array_0_2.AbiBitAlignment
-                                            , bitOffset: foo.BitOffsetOfElement( 2 )
+                                            , bitSize: layout.BitSizeOf( i32Array_0_2 )
+                                            , bitAlign: layout.AbiBitAlignmentOf( i32Array_0_2 )
+                                            , bitOffset: layout.BitOffsetOfElement( foo, 2 )
                                             , flags: 0
-                                            , type: i32Array_0_2.DebugType
+                                            , type: i32Array_0_2.DIType
                                             )
                 };
             var fooConcrete = diBuilder.CreateStructType( scope: cu
                                                         , name: "foo"
                                                         , file: diFile
                                                         , line: 1
-                                                        , bitSize: foo.BitSize
-                                                        , bitAlign: foo.AbiBitAlignment
+                                                        , bitSize: layout.BitSizeOf( foo )
+                                                        , bitAlign: layout.AbiBitAlignmentOf( foo )
                                                         , flags: 0
                                                         , derivedFrom: null
                                                         , elements: diFields );
-            foo.ReplaceDebugTypeWith( fooConcrete );
+            foo.ReplaceAllUsesOfDebugTypeWith( fooConcrete );
         }
 
-        private static Function CreateCopyFunction( Module module
-                                                  , DebugInfoBuilder diBuilder
+        private static void CreateCopyFunctionBody( Module module
+                                                  , TargetData layout
+                                                  , Function copyFunc
                                                   , DIFile diFile
-                                                  , DebugTypeInfo foo
-                                                  , DebugTypeInfo fooPtr
-                                                  , DebugTypeInfo copySig
+                                                  , StructType foo
+                                                  , PointerType fooPtr
                                                   )
         {
-            var copyFunc = module.AddFunction( "copy", ( FunctionType )copySig.LlvmType );
-            copyFunc.AddAttributes( Attributes.NoUnwind | Attributes.UnwindTable );
-            var copyFuncDi = diBuilder.CreateFunction( scope: diFile
-                                                     , name: "copy"
-                                                     , mangledName: null
-                                                     , file: diFile
-                                                     , line: 11
-                                                     , compositeType: ( DICompositeType )copySig.DebugType
-                                                     , isLocalToUnit: false
-                                                     , isDefinition: true
-                                                     , scopeLine: 12
-                                                     , flags: ( uint )DebugInfoFlags.Prototyped
-                                                     , isOptimized: false
-                                                     , function: copyFunc
-                                                     );
+            var diBuilder = module.DIBuilder;
 
             // ByVal pointers indicate by value semantics. LLVM recognizes this pattern and has a pass to map
             // to an efficient register usage whenever plausible.
-            // Though it seems unnecessary as CLang doesn't apply the attribute...
+            // Though it seems unnecessary as Clang doesn't apply the attribute...
             //copyFunc.Parameters[ 0 ].AddAttributes( Attributes.ByVal );
             //copyFunc.Parameters[ 0 ].SetAlignment( foo.AbiAlignment );
             copyFunc.Parameters[ 0 ].Name = "src";
@@ -218,75 +273,69 @@ namespace TestDebugInfo
 
             // create instruction builder to build the body
             var instBuilder = new InstructionBuilder( blk );
-            
+
             // create debug info locals for the arguments
             // NOTE: Debug parameter indeces are 1 based!
-            var paramSrc = diBuilder.CreateLocalVariable( ( uint )Tag.ArgVariable, copyFuncDi, "src", diFile, 11, foo.DebugType, false, 0, 1 );
-            var paramDst = diBuilder.CreateLocalVariable( ( uint )Tag.ArgVariable, copyFuncDi, "pDst", diFile, 11, fooPtr.DebugType, false, 0, 2 );
+            var paramSrc = diBuilder.CreateArgument( copyFunc.DISubProgram, "src", diFile, 11, foo.DIType, false, 0, 1 );
+            var paramDst = diBuilder.CreateArgument( copyFunc.DISubProgram, "pDst", diFile, 12, fooPtr.DIType, false, 0, 2 );
 
+            var ptrAlign = layout.CallFrameAlignmentOf( fooPtr );
+            
             // create Locals
-            var dstAddr = ( Instruction )instBuilder.Alloca( fooPtr.LlvmType, "pDst.addr" );
-            dstAddr.Alignment = fooPtr.CallFrameAlignment;
-            var dstStore = ( Instruction )instBuilder.Store( copyFunc.Parameters[ 1 ], dstAddr );
-            dstStore.Alignment = fooPtr.CallFrameAlignment;
-            
+            // NOTE: There's no debug location attatched to these instructions.
+            //       The debug info will come from the declare instrinsic below.
+            var dstAddr = instBuilder.Alloca( fooPtr, "pDst.addr" )
+                                     .Alignment( ptrAlign );
+
+            var dstStore = instBuilder.Store( copyFunc.Parameters[ 1 ], dstAddr)
+                                      .Alignment( ptrAlign );
+
             // insert declare pseudo instruction to attach debug info to the local declarations
-            var dstDeclare = ( Instruction )diBuilder.InsertDeclare( dstAddr, paramDst, new DILocation( 11, 40, copyFuncDi ), blk );
-            
+            var dstDeclare = diBuilder.InsertDeclare( dstAddr, paramDst, new DILocation( 12, 38, copyFunc.DISubProgram ), blk );
+
             // since the function's LLVM signature uses a pointer, which is copied locally
             // inform the debugger to treat it as the value by dereferencing the pointer
-            var srcDeclare = ( Instruction )diBuilder.InsertDeclare( copyFunc.Parameters[ 0 ]
-                                                                   , paramSrc
-                                                                   , diBuilder.CreateExpression( ExpressionOp.deref )
-                                                                   , new DILocation( 11, 23, copyFuncDi )
-                                                                   , blk
-                                                                   );
+            var srcDeclare = diBuilder.InsertDeclare( copyFunc.Parameters[ 0 ]
+                                                           , paramSrc
+                                                           , diBuilder.CreateExpression( ExpressionOp.deref )
+                                                           , new DILocation( 11, 37, copyFunc.DISubProgram )
+                                                           , blk
+                                                           );
 
-            var loadedDst = ( Instruction )instBuilder.Load( dstAddr );
-            loadedDst.Alignment = fooPtr.CallFrameAlignment;
-            loadedDst.SetDebugLocation( 13, 6, copyFuncDi );
+            var loadedDst = instBuilder.Load( dstAddr )
+                                       .Alignment( ptrAlign )
+                                       .SetDebugLocation( 15, 6, copyFunc.DISubProgram );
 
-            var dstPtr = ( Instruction )instBuilder.BitCast( loadedDst, module.Context.Int8Type.CreatePointerType( ) );
-            dstPtr.SetDebugLocation( 13, 13, copyFuncDi );
+            var dstPtr = instBuilder.BitCast( loadedDst, module.Context.Int8Type.CreatePointerType( ) )
+                                    .SetDebugLocation( 15, 13, copyFunc.DISubProgram );
 
-            var srcPtr = ( Instruction )instBuilder.BitCast( copyFunc.Parameters[ 0 ], module.Context.Int8Type.CreatePointerType( ) );
-            srcPtr.SetDebugLocation( 13, 13, copyFuncDi );
+            var srcPtr = instBuilder.BitCast( copyFunc.Parameters[ 0 ], module.Context.Int8Type.CreatePointerType( ) )
+                                    .SetDebugLocation( 15, 13, copyFunc.DISubProgram );
 
-            var memCpy = ( Instruction )instBuilder.MemCpy( module, dstPtr, srcPtr, ConstantInt.From( ( int )foo.BitSize / 8 ), ( int )foo.AbiAlignment, false );
-            memCpy.SetDebugLocation( 13, 13, copyFuncDi );
+            var memCpy = instBuilder.MemCpy( module
+                                           , dstPtr
+                                           , srcPtr
+                                           , ConstantInt.From( layout.ByteSizeOf( foo ) )
+                                           , ( int )layout.AbiAlignmentOf( foo )
+                                           , false
+                                           ).SetDebugLocation( 15, 13, copyFunc.DISubProgram );
 
-            var ret = ( Instruction )instBuilder.Return( );
-            ret.SetDebugLocation( 14, 1, copyFuncDi );
-
-            return copyFunc;
+            var ret = instBuilder.Return( )
+                                 .SetDebugLocation( 16, 1, copyFunc.DISubProgram );
         }
 
-        private static void CreateDoCopyFunction( Module module
-                                                , DebugInfoBuilder diBuilder
-                                                , DIFile diFile
-                                                , DebugTypeInfo foo
-                                                , DebugTypeInfo fooPtr
-                                                , DebugTypeInfo doCopySig
-                                                , GlobalVariable bar
-                                                , GlobalVariable baz
-                                                , Function copyFunc
-                                                )
+        private static void CreateDoCopyFunctionBody( Module module
+                                                    , TargetData layout
+                                                    , Function doCopyFunc
+                                                    , StructType foo
+                                                    , GlobalVariable bar
+                                                    , GlobalVariable baz
+                                                    , Function copyFunc
+                                                    )
         {
-            var doCopyFunc = module.AddFunction( "DoCopy", ( FunctionType )doCopySig.LlvmType );
-            doCopyFunc.AddAttributes( Attributes.NoUnwind | Attributes.UnwindTable );
-            var copyFuncDi = diBuilder.CreateFunction( scope: diFile
-                                                     , name: "DoCopy"
-                                                     , mangledName: null
-                                                     , file: diFile
-                                                     , line: 16
-                                                     , compositeType: ( DICompositeType )doCopySig.DebugType
-                                                     , isLocalToUnit: false
-                                                     , isDefinition: true
-                                                     , scopeLine: 17
-                                                     , flags: 0
-                                                     , isOptimized: false
-                                                     , function: doCopyFunc
-                                                     );
+            var diBuilder = module.DIBuilder;
+
+            var bytePtrType = module.Context.Int8Type.CreatePointerType( );
 
             // create block for the function body, only need one for this simple sample
             var blk = doCopyFunc.AppendBasicBlock( "entry" );
@@ -295,18 +344,28 @@ namespace TestDebugInfo
             var instBuilder = new InstructionBuilder( blk );
 
             // create a temp local copy of the global structure
-            var dstAddr = ( Instruction )instBuilder.Alloca( foo.LlvmType, "agg.tmp" );
-            dstAddr.Alignment = foo.CallFrameAlignment;
-            var bytePtrType = module.Context.Int8Type.CreatePointerType( );
-            var bitCastDst = (Instruction)instBuilder.BitCast( dstAddr, bytePtrType );
-            bitCastDst.SetDebugLocation( 18, 11, copyFuncDi );
-            var bitCastSrc = instBuilder.BitCast( bar, bytePtrType );
-            var memCpy = (Instruction)instBuilder.MemCpy( module, bitCastDst, bitCastSrc, ConstantInt.From( ( int )foo.BitSize / 8 ), ( int )foo.CallFrameAlignment, false );
-            memCpy.SetDebugLocation( 18, 11, copyFuncDi );
-            var callCopy = instBuilder.Call( copyFunc, dstAddr, baz );
-            callCopy.SetDebugLocation( 18, 5, copyFuncDi );
-            var ret = ( Instruction )instBuilder.Return( );
-            ret.SetDebugLocation( 19, 1, copyFuncDi );
+            var dstAddr = instBuilder.Alloca( foo, "agg.tmp" )
+                                     .Alignment( layout.CallFrameAlignmentOf( foo ) );
+
+            var bitCastDst = instBuilder.BitCast( dstAddr, bytePtrType )
+                                        .SetDebugLocation( 20, 11, doCopyFunc.DISubProgram );
+
+            var bitCastSrc = instBuilder.BitCast( bar, bytePtrType )
+                                        .SetDebugLocation( 20, 11, doCopyFunc.DISubProgram );
+
+            var memCpy = instBuilder.MemCpy( module
+                                           , bitCastDst
+                                           , bitCastSrc
+                                           , ConstantInt.From( layout.ByteSizeOf( foo ) )
+                                           , ( int )layout.CallFrameAlignmentOf( foo )
+                                           , false
+                                           ).SetDebugLocation( 20, 11, doCopyFunc.DISubProgram );
+
+            var callCopy = instBuilder.Call( copyFunc, dstAddr, baz )
+                                      .SetDebugLocation( 20, 5, doCopyFunc.DISubProgram );
+
+            var ret =instBuilder.Return( )
+                                .SetDebugLocation( 21, 1, doCopyFunc.DISubProgram );
         }
     }
 }

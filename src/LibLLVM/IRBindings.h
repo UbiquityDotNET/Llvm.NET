@@ -51,6 +51,7 @@ void LLVMSetCurrentDebugLocation2(LLVMBuilderRef Bref, unsigned Line, unsigned C
 
 LLVMBool LLVMIsTemporary( LLVMMetadataRef M );
 LLVMBool LLVMIsResolved( LLVMMetadataRef M );
+void LLVMMDNodeResolveCycles( LLVMMetadataRef M );
 
 #ifdef __cplusplus
 }

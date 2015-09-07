@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Runtime.InteropServices;
+using Llvm.NET.DebugInfo;
 using Llvm.NET.Values;
 
 namespace Llvm.NET.Types
@@ -94,6 +95,8 @@ namespace Llvm.NET.Types
         /// <remarks>This is a getter function instead of a property as it can throw exceptions</remarks>
         public Constant GetNullValue() => Constant.NullValueFor( this );
 
+        public DIType DIType { get; internal set; }
+
         /// <summary>Retrieves an expression that results in the size of the type</summary>
         public Constant GetSizeOfExpression()
         {
@@ -149,11 +152,101 @@ namespace Llvm.NET.Types
             return LLVMNative.MarshalMsg( msgString );
         }
 
+        public void ReplaceAllUsesOfDebugTypeWith( DICompositeType compositeType )
+        {
+            DIType.ReplaceAllUsesWith( compositeType );
+            DIType = compositeType;
+        }
+
+        public PointerType CreatePointerType(  DebugInfoBuilder diBuilder, TargetData layout )
+        {
+            if( DIType == null )
+                throw new ArgumentException( "Type does not have associated Debug type from which to construct a pointer type" );
+
+            var retVal = CreatePointerType( );
+            var diPtr = diBuilder.CreatePointerType( DIType, string.Empty, layout.BitSizeOf( retVal ), layout.AbiBitAlignmentOf( retVal ) );
+            retVal.DIType = diPtr;
+            return retVal;
+        }
+
+        public TypeRef CreateArrayType( DebugInfoBuilder diBuilder, TargetData layout, uint lowerBound, uint count )
+        {
+            if( DIType == null )
+                throw new ArgumentException( "Type does not have associated Debug type from which to construct an array type" );
+
+            var llvmArray = CreateArrayType( count );
+            var diArray = diBuilder.CreateArrayType( layout.BitSizeOf( llvmArray )
+                                                   , layout.AbiBitAlignmentOf( llvmArray )
+                                                   , DIType
+                                                   , diBuilder.CreateSubrange( lowerBound, count )
+                                                   );
+            llvmArray.DIType = diArray;
+            return llvmArray;
+        }
+
+        public DIType CreateDIType( DebugInfoBuilder diBuilder, TargetData layout, string name, DIScope scope )
+        {
+            DIType retVal;
+            switch( Kind )
+            {
+            case TypeKind.Float32:
+            case TypeKind.Float64:
+            case TypeKind.Float16:
+            case TypeKind.X86Float80:
+            case TypeKind.Float128m112:
+            case TypeKind.Float128:
+            case TypeKind.Integer:
+                retVal = GetDiBasicType( this, diBuilder, layout, name );
+                break;
+
+            case TypeKind.Struct:
+                retVal =  diBuilder.CreateReplaceableCompositeType( Tag.StructureType, name, scope, null, 0 );
+                break;
+
+            case TypeKind.Void:
+            case TypeKind.Function:
+            case TypeKind.Array:
+                return null;
+
+            case TypeKind.Pointer:
+                retVal = ((PointerType )this).ElementType.CreateDIType( diBuilder, layout, $"{name}*", scope );
+                break;
+
+            default:
+                throw new NotSupportedException( "Type not supported for this target/language" );
+            }
+            DIType = retVal;
+            return retVal;
+        }
+
         internal TypeRef( LLVMTypeRef typeRef )
         {
             TypeHandle = typeRef;
             if( typeRef.Pointer == IntPtr.Zero )
                 throw new ArgumentNullException( nameof( typeRef ) );
+        }
+
+        private static DIBasicType GetDiBasicType( TypeRef llvmType, DebugInfoBuilder diBuilder, TargetData layout, string name )
+        {
+            var bitSize = layout.BitSizeOf( llvmType );
+            var bitAlignment = layout.AbiBitAlignmentOf( llvmType );
+
+            switch( llvmType.Kind )
+            {
+            case TypeKind.Float32:
+            case TypeKind.Float64:
+            case TypeKind.Float16:
+            case TypeKind.X86Float80:
+            case TypeKind.Float128m112:
+            case TypeKind.Float128:
+                return diBuilder.CreateBasicType( name, bitSize, bitAlignment, DiTypeKind.Float );
+
+            case TypeKind.Integer:
+                return diBuilder.CreateBasicType( name, bitSize, bitAlignment, DiTypeKind.Signed );
+
+            default:
+                throw new NotSupportedException( "Not a basic type!" );
+            }
         }
 
         internal static TypeRef FromHandle( LLVMTypeRef typeRef )

@@ -10,7 +10,8 @@
 
         internal const string DoNothingName = "llvm.donothing";
         internal const string DebugTrapName = "llvm.debugtrap";
-        internal const string MemCpyName = "llvm.memcpy.p0i8.p0i8.i32";
+        
+        // TODO: move these out of here to follow pattern in MemCpy
         internal const string MemMoveName = "llvm.memmove.p0i8.p0i8.i32";
         internal const string MemSetName = "llvm.memset.p0i8.i32";
     };

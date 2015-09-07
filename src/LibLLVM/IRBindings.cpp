@@ -154,4 +154,13 @@ extern "C"
         *len = S->getString( ).size( );
         return S->getString( ).data( );
     }
+
+    void LLVMMDNodeResolveCycles( LLVMMetadataRef M )
+    {
+        MDNode* pNode = unwrap<MDNode>( M );
+        if( pNode->isResolved() )
+            return;
+
+        pNode->resolveCycles( );
+    }
 }

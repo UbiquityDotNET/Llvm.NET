@@ -17,6 +17,7 @@
 //    read the LLVM-C API documentation. In the Future it may be good to Create an LLVMStatusResult
 //    type for those function returning a status and use standard marshalling techniques for actual
 //    boolean values...
+//  - manually updated to 3.7.0 apis
  
 using System;
 using System.Runtime.InteropServices;
@@ -211,7 +212,9 @@ namespace Llvm.NET
             this.Pointer = pointer;
         }
 
-        public IntPtr Pointer;
+        public IntPtr Pointer { get; }
+
+        public readonly static LLVMValueRef Zero = new LLVMValueRef( IntPtr.Zero );
     }
 
     internal struct LLVMBasicBlockRef

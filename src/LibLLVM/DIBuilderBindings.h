@@ -155,7 +155,26 @@ extern "C" {
                                                , unsigned Flags
                                                , int IsOptimized
                                                , LLVMValueRef Function
+                                               , LLVMMetadataRef /*MDNode* */ TParam /*= nullptr*/
+                                               , LLVMMetadataRef /*MDNode* */ Decl /*= nullptr*/
                                                );
+
+    LLVMMetadataRef LLVMDIBuilderCreateTempFunctionFwdDecl( LLVMDIBuilderRef D
+                                                           , LLVMMetadataRef /*DIScope* */Scope
+                                                           , char const* Name
+                                                           , char const* LinkageName
+                                                           , LLVMMetadataRef /*DIFile* */ File
+                                                           , unsigned LineNo
+                                                           , LLVMMetadataRef /*DISubroutineType* */ Ty
+                                                           , bool isLocalToUnit
+                                                           , bool isDefinition
+                                                           , unsigned ScopeLine
+                                                           , unsigned Flags /*= 0*/
+                                                           , bool isOptimized /*= false*/
+                                                           , LLVMValueRef /*Function* */ Fn /*= nullptr*/
+                                                           , LLVMMetadataRef /*MDNode* */ TParam /*= nullptr*/
+                                                           , LLVMMetadataRef /*MDNode* */ Decl /*= nullptr*/
+                                                           );
 
     LLVMMetadataRef LLVMDIBuilderCreateLocalVariable( LLVMDIBuilderRef D
                                                     , unsigned Tag
@@ -361,6 +380,7 @@ LLVMMetadataRef LLVMDIBuilderCreateReplaceableCompositeType( LLVMDIBuilderRef D
 
     LLVMMetadataRef LLVMDILocation( LLVMContextRef context, unsigned Line, unsigned Column, LLVMMetadataRef scope, LLVMMetadataRef InlinedAt );
     char const* LLVMGetDITypeName( LLVMMetadataRef diType );
+    LLVMBool LLVMSubProgramDescribes( LLVMMetadataRef subProgram, LLVMValueRef /*const Function **/F );
 
 #ifdef __cplusplus
 } // extern "C"

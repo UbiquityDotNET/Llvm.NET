@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Runtime.InteropServices;
 using Llvm.NET.Types;
+using Llvm.NET.DebugInfo;
 
 namespace Llvm.NET.Values
 {
@@ -67,6 +68,8 @@ namespace Llvm.NET.Values
         /// <summary>Return type of the function</summary>
         public TypeRef ReturnType => Signature.ReturnType;
 
+        public DISubProgram DISubProgram { get; internal set; }
+
         /// <summary>Garbage collection engine name that this function is generated to work with</summary>
         /// <remarks>For details on GC support in LLVM see: http://llvm.org/docs/GarbageCollection.html </remarks>
         public string GcName
@@ -95,11 +98,32 @@ namespace Llvm.NET.Values
 
         /// <summary>Add attribute flags to the function</summary>
         /// <param name="attrib"><see cref="Attributes"/> flags to add to the function</param>
-        public void AddAttributes( Attributes attrib ) => LLVMNative.AddFunctionAttr( ValueHandle, ( LLVMAttribute )attrib );
+        public Function AddAttributes( Attributes attrib )
+        {
+            LLVMNative.AddFunctionAttr( ValueHandle, ( LLVMAttribute )attrib );
+            return this;
+        }
 
         /// <summary>Remove attribute flags from the function</summary>
         /// <param name="attrib"><see cref="Attributes"/> flags to remove from the function</param>
-        public void RemoveAttributes( Attributes attrib ) => LLVMNative.RemoveFunctionAttr( ValueHandle, ( LLVMAttribute )attrib );
+        public Function RemoveAttributes( Attributes attrib )
+        {
+            LLVMNative.RemoveFunctionAttr( ValueHandle, ( LLVMAttribute )attrib );
+            return this;
+        }
+
+        public Function AddAttributes( IDictionary<string, string> targetDependentAttributes )
+        {
+            foreach( var kvp in targetDependentAttributes )
+                AddAttribute( kvp.Key, kvp.Value );
+            return this;
+        }
+
+        public Function AddAttribute( string targetDependentAttributeName, string value )
+        {
+            LLVMNative.AddTargetDependentFunctionAttr( ValueHandle, targetDependentAttributeName, value );
+            return this;
+        }
 
         /// <summary>Add a new basic block to the beginning of a function</summary>
         /// <param name="name">Name (label) for the block</param>

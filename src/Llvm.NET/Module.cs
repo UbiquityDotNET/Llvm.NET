@@ -1,7 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
-using System.Runtime.InteropServices;
+using Llvm.NET.DebugInfo;
 using Llvm.NET.Types;
 using Llvm.NET.Values;
 
@@ -10,6 +11,7 @@ namespace Llvm.NET
     /// <summary>LLVM Bit code module</summary>
     public class Module 
         : IDisposable
+        , IExtensiblePropertyContainer
     {
         #region IDisposable Pattern
         public void Dispose()
@@ -303,6 +305,8 @@ namespace Llvm.NET
             LLVMNative.AddNamedMetadataOperand2( ModuleHandle, "llvm.ident", hNode );
         }
 
+        public DebugInfoBuilder DIBuilder => DIBuilder_.Value;
+
         /// <summary>Name of the Debug Version information module flag</summary>
         public const string DebugVersionValue = "Debug Info Version";
         public const string DwarfVersionValue = "Dwarf Version";
@@ -335,6 +339,57 @@ namespace Llvm.NET
             }
         }
 
+        public Function CreateFunction( DIScope scope
+                                      , string name
+                                      , string linkageName
+                                      , DIFile file
+                                      , uint line
+                                      , FunctionType signature
+                                      , bool isLocalToUnit
+                                      , bool isDefinition
+                                      , uint scopeLine
+                                      , DebugInfoFlags flags
+                                      , bool isOptimized
+                                      , MDNode tParam = null
+                                      , MDNode decl = null
+                                      )
+        {
+            if( string.IsNullOrWhiteSpace( name ) )
+                throw new ArgumentException("Name cannot be null, empty or whitespace", nameof( name ) );
+
+            var func = AddFunction( linkageName ?? name, signature );
+            var diSignature = signature.DIType as DISubroutineType;
+            Debug.Assert( diSignature != null );
+            var diFunc = DIBuilder.CreateFunction( scope: scope
+                                                 , name: name
+                                                 , mangledName: linkageName
+                                                 , file: file
+                                                 , line: line
+                                                 , compositeType: diSignature
+                                                 , isLocalToUnit: isLocalToUnit
+                                                 , isDefinition: isDefinition
+                                                 , scopeLine: scopeLine
+                                                 , flags: ( uint )flags
+                                                 , isOptimized: false
+                                                 , function: func
+                                                 , TParam: tParam
+                                                 , Decl: decl
+                                                 );
+            Debug.Assert( diFunc.Describes( func ) );
+            func.DISubProgram = diFunc;
+            return func;
+        }
+
+        bool IExtensiblePropertyContainer.TryGetExtendedPropertyValue<T>( string id, out T value )
+        {
+            return PropertyBag.TryGetExtendedPropertyValue<T>( id, out value );
+        }
+
+        void IExtensiblePropertyContainer.AddExtendedPropertyValue( string id, object value )
+        {
+            PropertyBag.AddExtendedPropertyValue( id, value );
+        }
+
         internal Module( LLVMModuleRef moduleRef )
         {
             if( moduleRef.Pointer == IntPtr.Zero )
@@ -343,8 +398,12 @@ namespace Llvm.NET
             ModuleHandle = moduleRef;
             var hContext = LLVMNative.GetModuleContext( ModuleHandle );
             Context = Llvm.NET.Context.GetContextFor( hContext );
+            DIBuilder_ = new Lazy<DebugInfoBuilder>( ()=>new DebugInfoBuilder( this ) );
         }
 
+        internal ExtensiblePropertyContainer PropertyBag = new ExtensiblePropertyContainer( );
+
         internal LLVMModuleRef ModuleHandle { get; private set; }
+        private readonly Lazy<DebugInfoBuilder> DIBuilder_;
     }
 }

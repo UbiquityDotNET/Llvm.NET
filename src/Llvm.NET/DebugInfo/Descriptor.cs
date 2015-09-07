@@ -1,4 +1,5 @@
 ﻿using System;
+using Llvm.NET.Values;
 
 namespace Llvm.NET.DebugInfo
 {
@@ -263,6 +264,8 @@ namespace Llvm.NET.DebugInfo
             : base( handle )
         {
         }
+
+        public bool Describes( Function function ) => LLVMNative.SubProgramDescribes( MetadataHandle, function.ValueHandle );
     }
 
     /// <summary>Base class for Debug info types</summary>

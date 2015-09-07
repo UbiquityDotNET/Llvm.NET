@@ -1,6 +1,7 @@
 ﻿using System.Linq;
 using System.Collections.Generic;
 using System.Runtime.InteropServices;
+using Llvm.NET.DebugInfo;
 
 namespace Llvm.NET.Types
 {
@@ -54,6 +55,31 @@ namespace Llvm.NET.Types
                 }
                 return members;
             }
+        }
+
+        public DICompositeType CreateDIType( DebugInfoBuilder diBuilder
+                                           , TargetData layout
+                                           , DIScope scope
+                                           , string name
+                                           , DIFile file
+                                           , uint line
+                                           , DebugInfoFlags flags
+                                           , DIType derivedFrom
+                                           , IEnumerable<DIType> elements
+                                           )
+        {
+            var retVal = diBuilder.CreateStructType( scope
+                                                   , name
+                                                   , file
+                                                   , line
+                                                   , layout.BitSizeOf( this )
+                                                   , layout.AbiBitAlignmentOf( this )
+                                                   , (uint)flags
+                                                   , derivedFrom
+                                                   , elements
+                                                   );
+            DIType = retVal;
+            return retVal;
         }
 
         internal StructType( LLVMTypeRef typeRef )

@@ -10,11 +10,6 @@ namespace Llvm.NET.Instructions
         /// <summary>Block that contains this instruction</summary>
         public BasicBlock ContainingBlock => BasicBlock.FromHandle( LLVMNative.GetInstructionParent( ValueHandle ) );
 
-        public void SetDebugLocation( uint line, uint column, DebugInfo.DIScope scope )
-        {
-            LLVMNative.SetDebugLoc( ValueHandle, line, column, scope.MetadataHandle );
-        }
-        
         public Opcode Opcode => (Opcode)LLVMNative.GetInstructionOpcode( ValueHandle );
         public bool IsMemoryAccess
         {
@@ -51,6 +46,33 @@ namespace Llvm.NET.Instructions
         internal Instruction( LLVMValueRef valueRef )
             : base( ValidateConversion( valueRef, LLVMNative.IsAInstruction ) )
         { 
+        }
+    }
+
+    /// <summary>Provides extension methods to <see cref="Instruction"/> that cannot be achieved as members of the class</summary>
+    /// <remarks>
+    /// Using generic static extension methods allows for fluent coding while retaining the type of the "this" parameter.
+    /// If these were members of the <see cref="Instruction"/> class then the only return type could be <see cref="Instruction"/>
+    /// thus losing the orignal type and requiring a cast to get back to it.
+    /// </remarks>
+    public static class InstructionExtensions
+    {
+        public static T Alignment<T>( this T inst, uint alignment )
+            where T : Instruction
+        {
+            if( inst.IsMemoryAccess )
+                inst.Alignment = alignment;
+
+            return inst;
+        }
+
+        public static T IsVolatile<T>( this T inst, uint alignment )
+            where T : Instruction
+        {
+            if( inst.IsMemoryAccess )
+                inst.Alignment = alignment;
+
+            return inst;
         }
     }
 }

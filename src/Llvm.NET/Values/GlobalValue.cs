@@ -59,4 +59,23 @@
         {
         }
     }
+
+    public static class GlobalValueExtensions
+    {
+        /// <summary>Visibility of this global value</summary>
+        public static T Visibility<T>( this T value, Visibility visibility )
+            where T : GlobalValue
+        {
+            value.Visibility = visibility;
+            return value;
+        }
+
+        /// <summary>Linkage specification for this symbol</summary>
+        public static T Linkage<T>( this T value, Linkage linkage )
+            where T : GlobalValue
+        {
+            value.Linkage = linkage;
+            return value;
+        }
+    }
 }
