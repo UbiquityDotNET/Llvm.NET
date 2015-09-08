@@ -22,6 +22,10 @@ LLVMMetadataAsValue
 LLVMGetModuleName
 LLVMIsTemporary
 LLVMIsResolved
+LLVMGetMDStringText
+LLVMGetGlobalAlias
+LLVMGetAliasee
+LLVMMDNodeResolveCycles
 
 ; Debug info functions not part of standard LLVM-C API
 LLVMSetDebugLoc
@@ -33,6 +37,7 @@ LLVMDIBuilderCreateFile
 LLVMDIBuilderCreateLexicalBlock
 LLVMDIBuilderCreateLexicalBlockFile
 LLVMDIBuilderCreateFunction
+LLVMDIBuilderCreateTempFunctionFwdDecl
 LLVMDIBuilderCreateLocalVariable
 LLVMDIBuilderCreateBasicType
 LLVMDIBuilderCreatePointerType
@@ -59,6 +64,7 @@ LLVMMDNodeReplaceAllUsesWith
 LLVMDITypeGetFlags
 LLVMDILocation
 LLVMGetDITypeName
+LLVMSubProgramDescribes
 
 ; Instrumentation Bindings
 LLVMAddAddressSanitizerFunctionPass

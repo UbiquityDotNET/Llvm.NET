@@ -1,6 +1,7 @@
 #include "ValueBindings.h"
 #include <llvm\IR\Constant.h>
 #include <llvm\IR\GlobalVariable.h>
+#include <llvm\IR\GlobalAlias.h>
 #include <llvm\IR\IRBuilder.h>
 
 using namespace llvm;
@@ -39,4 +40,11 @@ LLVMValueRef LLVMMetadataAsValue( LLVMContextRef context, LLVMMetadataRef metada
     auto md = unwrap( metadataRef );
     return wrap( MetadataAsValue::get( *ctx, md ) );
 }
+
+LLVMValueRef LLVMGetAliasee( LLVMValueRef Val )
+{
+    auto pAlias = unwrap<GlobalAlias>( Val );
+    return wrap( pAlias->getAliasee( ) );
+}
+
 

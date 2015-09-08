@@ -7,6 +7,8 @@ using Llvm.NET.Types;
 
 namespace Llvm.NET
 {
+    // TODO: Now that the RegisterName extension method is available, remove all overloads providing the register name
+
     ///<summary>LLVM Instruction builder allowing managed code to generate IR instructions</summary>
     public class InstructionBuilder
         : IDisposable
@@ -163,7 +165,7 @@ namespace Llvm.NET
         /// the pointer must match the type of <paramref name="value"/> Otherwise an
         /// <see cref="ArgumentException"/> is thrown.
         /// </remarks>
-        public Value Store( Value value, Value destination )
+        public Store Store( Value value, Value destination )
         {
             var ptrType = destination.Type as PointerType;
             if( ptrType == null )
@@ -176,22 +178,14 @@ namespace Llvm.NET
                 throw new ArgumentException( string.Format( IncompatibleTypeMsgFmt, ptrType.ElementType, value.Type ) );
             }
 
-            return Value.FromHandle( LLVMNative.BuildStore( BuilderHandle, value.ValueHandle, destination.ValueHandle ) );
+            return (Store)Value.FromHandle( LLVMNative.BuildStore( BuilderHandle, value.ValueHandle, destination.ValueHandle ) );
         }
 
-        public Value Store( Value value, Value destination, bool isVolatile )
-        {
-            var retVal = (Store)Store( value, destination );
-            retVal.IsVolatile = isVolatile;
-            return retVal;
-        }
-
-        public Value Load( Value sourcePtr ) => Load( sourcePtr, string.Empty );
-        public Value Load( Value sourcePtr, string name ) => Value.FromHandle( LLVMNative.BuildLoad( BuilderHandle, sourcePtr.ValueHandle, name ) );
+        public Load Load( Value sourcePtr ) => (Load)Value.FromHandle( LLVMNative.BuildLoad( BuilderHandle, sourcePtr.ValueHandle, string.Empty ) );
 
         /// <summary>Creates a <see cref="User"/> that accesses an element (field) of a structure</summary>
-        /// <param name="pointer">pointer to the strucure to get an element from</param>
-        /// <param name="index">element index</param>
+        /// <param name="pointer">Pointer to the structure to get an element from</param>
+        /// <param name="index">Element index</param>
         /// <returns>
         /// <para><see cref="User"/> for the member access. This is a User as LLVM may 
         /// optimize the expression to a <see cref="ConstantExpression"/> if it 
@@ -677,17 +671,18 @@ namespace Llvm.NET
         /// <param name="isVolatile">Flag to indicate if the copy invovles volatile data such as physical registers</param>
         /// <returns><see cref="Intrinsic"/> call for the memcpy</returns>
         /// <remarks>
-        /// LLVM has many overloaded variants of the memcpy instrinsic, this implementation currently assumes the 
-        /// single form defined by <see cref="Intrinsic.MemCpyName"/>, which matches the classic "C" style memcpy
-        /// function. However future implementations should be able to deduce the types from the provided values
-        /// and generate a more specific call without changing any caller code. 
+        /// LLVM has many overloaded variants of the memcpy instrinsic, this implementation will deduce the types from
+        /// the provided values and generate a more specific call without the need to provide overloaded forms of this
+        /// method and otherwise complicating the calling code.
         /// </remarks>
         public Value MemCpy( Module module, Value destination, Value source, Value len, Int32 align, bool isVolatile )
         {
-            if( !destination.Type.IsPointer )
+            var dstPtrType = destination.Type as PointerType;
+            if( dstPtrType == null )
                 throw new ArgumentException( "Pointer type expected", nameof( destination ) );
 
-            if( !source.Type.IsPointer )
+            var srcPtrType = source.Type as PointerType;
+            if( srcPtrType == null )
                 throw new ArgumentException( "Pointer type expected", nameof( source ) );
 
             if( !len.Type.IsInteger )
@@ -697,18 +692,18 @@ namespace Llvm.NET
 
             destination = BitCast( destination, ctx.Int8Type.CreatePointerType( ) );
             source = BitCast( source, ctx.Int8Type.CreatePointerType( ) );
-
-            var func = module.GetFunction( Intrinsic.MemCpyName );
+            var intrinsicName = Instructions.MemCpy.GetIntrinsicNameForArgs( dstPtrType, srcPtrType, len.Type );
+            var func = module.GetFunction( intrinsicName );
             if( func == null )
             {
-                var signature = ctx.GetFunctionType( ctx.VoidType
-                                                   , ctx.Int8Type.CreatePointerType( )
-                                                   , ctx.Int8Type.CreatePointerType( )
-                                                   , ctx.Int32Type
-                                                   , ctx.Int32Type
-                                                   , ctx.BoolType
+                var signature = ctx.GetFunctionType( ctx.VoidType  // return
+                                                   , dstPtrType
+                                                   , srcPtrType
+                                                   , len.Type
+                                                   , ctx.Int32Type // alignment
+                                                   , ctx.BoolType  // isVolatile
                                                    );
-                func = module.AddFunction( Intrinsic.MemCpyName, signature );
+                func = module.AddFunction( intrinsicName, signature );
             }
             var call = BuildCall( func, destination, source, len, ConstantInt.From( align ), ConstantInt.From( isVolatile ) );
             return Value.FromHandle( call );
@@ -770,7 +765,7 @@ namespace Llvm.NET
         /// <returns><see cref="Intrinsic"/> call for the memcpy</returns>
         /// <remarks>
         /// LLVM has many overloaded variants of the memcpy instrinsic, this implementation currently assumes the 
-        /// single form defined by <see cref="Intrinsic.MemCpyName"/>, which matches the classic "C" style memcpy
+        /// single form defined by <see cref="Intrinsic.MemSetName"/>, which matches the classic "C" style memcpy
         /// function. However future implementations should be able to deduce the types from the provided values
         /// and generate a more specific call without changing any caller code. 
         /// </remarks>
@@ -897,7 +892,7 @@ namespace Llvm.NET
                 throw new ArgumentException( "A pointer to a function is required for an indirect call", nameof( func ) );
 
             if( args.Count != elementType.ParameterTypes.Count )
-                throw new ArgumentException( "Mismatch paramater count with call site", nameof( args ) );
+                throw new ArgumentException( "Mismatched parameter count with call site", nameof( args ) );
 
             for(int i = 0; i < args.Count; ++i )
             {

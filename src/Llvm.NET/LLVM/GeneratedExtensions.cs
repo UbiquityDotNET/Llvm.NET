@@ -9,7 +9,10 @@
 //    declaration rather than a preprocessor macro instantiation
 //  - converted several int return and parameter types to proper LLVMxxxRef types not handled correctly
 //    by the ClangSharp code generator
-//
+//  - numerous additional extension methods added manually. (e.g. as new apis are added they are done so
+//    rather than re-running a tool and then fixing everything up again )
+//  - manually updated to 3.7.0 APIs
+
 using System;
 using System.Runtime.InteropServices;
 
@@ -273,7 +276,10 @@ namespace Llvm.NET
         internal static extern LLVMMetadataRef DIBuilderCreateLexicalBlockFile(LLVMDIBuilderRef @D, LLVMMetadataRef @Scope, LLVMMetadataRef @File, uint @Discriminator);
 
         [DllImport(libraryPath, EntryPoint = "LLVMDIBuilderCreateFunction", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl)]
-        internal static extern LLVMMetadataRef DIBuilderCreateFunction(LLVMDIBuilderRef @D, LLVMMetadataRef @Scope, [MarshalAs(UnmanagedType.LPStr)] string @Name, [MarshalAs(UnmanagedType.LPStr)] string @LinkageName, LLVMMetadataRef @File, uint @Line, LLVMMetadataRef @CompositeType, int @IsLocalToUnit, int @IsDefinition, uint @ScopeLine, uint @Flags, int @IsOptimized, LLVMValueRef @Function);
+        internal static extern LLVMMetadataRef DIBuilderCreateFunction(LLVMDIBuilderRef @D, LLVMMetadataRef @Scope, [MarshalAs(UnmanagedType.LPStr)] string @Name, [MarshalAs(UnmanagedType.LPStr)] string @LinkageName, LLVMMetadataRef @File, uint @Line, LLVMMetadataRef @CompositeType, int @IsLocalToUnit, int @IsDefinition, uint @ScopeLine, uint @Flags, int @IsOptimized, LLVMValueRef @Function, LLVMMetadataRef TParam, LLVMMetadataRef Decl );
+
+        [DllImport(libraryPath, EntryPoint = "LLVMDIBuilderCreateTempFunctionFwdDecl", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl)]
+        internal static extern LLVMMetadataRef DIBuilderCreateTempFunctionFwdDecl(LLVMDIBuilderRef @D, LLVMMetadataRef @Scope, [MarshalAs(UnmanagedType.LPStr)] string @Name, [MarshalAs(UnmanagedType.LPStr)] string @LinkageName, LLVMMetadataRef @File, uint @Line, LLVMMetadataRef @CompositeType, int @IsLocalToUnit, int @IsDefinition, uint @ScopeLine, uint @Flags, int @IsOptimized, LLVMValueRef @Function, LLVMMetadataRef TParam, LLVMMetadataRef Decl );
 
         [DllImport(libraryPath, EntryPoint = "LLVMDIBuilderCreateLocalVariable", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl)]
         internal static extern LLVMMetadataRef DIBuilderCreateLocalVariable(LLVMDIBuilderRef @D, uint @Tag, LLVMMetadataRef @Scope, [MarshalAs(UnmanagedType.LPStr)] string @Name, LLVMMetadataRef @File, uint @Line, LLVMMetadataRef @Ty, int @AlwaysPreserve, uint @Flags, uint @ArgNo);
@@ -364,5 +370,20 @@ namespace Llvm.NET
 
         [DllImport( libraryPath, EntryPoint = "LLVMIsResolved", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl )]
         internal static extern LLVMBool IsResolved( LLVMMetadataRef M );
+
+        [DllImport( libraryPath, EntryPoint = "LLVMGetMDStringText", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl )]
+        internal static extern IntPtr GetMDStringText( LLVMMetadataRef M, out uint len );
+
+        [DllImport( libraryPath, EntryPoint = "LLVMGetGlobalAlias", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl )]
+        internal static extern LLVMValueRef GetGlobalAlias( LLVMModuleRef module, string name );
+
+        [DllImport( libraryPath, EntryPoint = "LLVMGetAliasee", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl )]
+        internal static extern LLVMValueRef GetAliasee( LLVMValueRef Val );
+
+        [DllImport( libraryPath, EntryPoint = "LLVMMDNodeResolveCycles", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl )]
+        internal static extern void MDNodeResolveCycles( LLVMMetadataRef M );
+
+        [DllImport( libraryPath, EntryPoint = "LLVMSubProgramDescribes", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl )]
+        internal static extern LLVMBool SubProgramDescribes( LLVMMetadataRef subProgram, LLVMValueRef function );
     }
 }

@@ -2,7 +2,9 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.Text;
 using System.Threading;
+using Llvm.NET.DebugInfo;
 using Llvm.NET.Types;
 using Llvm.NET.Values;
 
@@ -169,13 +171,68 @@ namespace Llvm.NET
 
             LLVMTypeRef[] llvmArgs = args.Select( a => a.TypeHandle).ToArray();
             var argCount = llvmArgs.Length;
-            // have to pass a valid adrresable object to native interop
+            // have to pass a valid adrressable object to native interop
             // so allocate space for a single value but tell LLVM the length is 0
             if( llvmArgs.Length == 0 )
                 llvmArgs = new LLVMTypeRef[ 1 ];
 
             var signature = LLVMNative.FunctionType( returnType.TypeHandle, out llvmArgs[ 0 ], (uint)argCount, isVarArgs );
             return FunctionType.FromHandle( signature );
+        }
+
+        /// <summary>Creates a FunctionType with Debug information</summary>
+        /// <param name="diBuilder"><see cref="DebugInfoBuilder"/>to use to create the debug information</param>
+        /// <param name="diFile"><see cref="DIFile"/> that contains the function</param>
+        /// <param name="retType">Return type of the function</param>
+        /// <param name="argTypes">Argument types of the function</param>
+        /// <returns>Function signature</returns>
+        public FunctionType CreateFunctionType( DebugInfoBuilder diBuilder
+                                              , DIFile diFile
+                                              , ParameterTypePair retType
+                                              , params ParameterTypePair[] argTypes
+                                              )
+        {
+            return CreateFunctionType( diBuilder, diFile, false, retType, argTypes );
+        }
+
+        /// <summary>Creates a FunctionType with Debug information</summary>
+        /// <param name="diBuilder"><see cref="DebugInfoBuilder"/>to use to create the debug information</param>
+        /// <param name="diFile"><see cref="DIFile"/> that contains the function</param>
+        /// <param name="isVarArg">Flag to indicate if this function is variadic</param>
+        /// <param name="retType">Return type of the function</param>
+        /// <param name="argTypes">Argument types of the function</param>
+        /// <returns>Function signature</returns>
+        public FunctionType CreateFunctionType( DebugInfoBuilder diBuilder
+                                              , DIFile diFile
+                                              , bool isVarArg
+                                              , ParameterTypePair retType
+                                              , params ParameterTypePair[] argTypes
+                                              )
+        {
+            if( retType.DIType == null && !retType.LlvmType.IsVoid )
+                throw new ArgumentNullException( nameof( retType ), "Type does not have debug information" );
+
+            // if any params don't have a DIType then provide a hopefully helpful message indicating which one
+            var q = from argInfo in argTypes.Select( ( t, i ) => new { T = t, I = i } )
+                    where argInfo.T.DIType == null
+                    select $"\tArgument {argInfo.I} does not contain debug type information";
+            if( q.Any() )
+            {
+                var msg = new StringBuilder( "One or more parameter types has no associated debug information:" );
+                msg.AppendLine( );
+                foreach( var itemMsg in q )
+                    msg.AppendLine( itemMsg );
+
+                throw new ArgumentException( msg.ToString(), nameof( argTypes ) );
+            }
+            var llvmArgTypes = argTypes.Select( p => p.LlvmType );
+            var llvmType = GetFunctionType( retType.LlvmType, llvmArgTypes, isVarArg );
+            var diArgTypes = argTypes.Select( t => t.DIType );
+            var diType =  diBuilder.CreateSubroutineType( diFile, 0, retType.DIType, diArgTypes );
+            Debug.Assert( diType != null && !diType.IsTemporary );
+
+            llvmType.DIType = diType;
+            return llvmType;
         }
 
         /// <summary>Creates a constant structure from a set of values</summary>

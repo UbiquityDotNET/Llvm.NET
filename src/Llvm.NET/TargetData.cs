@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Runtime.InteropServices;
 using Llvm.NET.Types;
 using Llvm.NET.Values;
 
@@ -64,54 +63,57 @@ namespace Llvm.NET
         ///</remarks>
         public ulong BitSizeOf( TypeRef typeRef )
         {
-            if( !LLVMNative.TypeIsSized( typeRef.TypeHandle ) )
-                throw new ArgumentException( "Type must be sized to get target size information" );
-
+            VerifySized( typeRef, nameof( typeRef ) );
             return LLVMNative.SizeOfTypeInBits( OpaqueHandle, typeRef.TypeHandle );
         }
+
         public ulong StoreSizeOf( TypeRef typeRef )
         {
-            if( !LLVMNative.TypeIsSized( typeRef.TypeHandle ) )
-                throw new ArgumentException( "Type must be sized to get target size information" );
-
+            VerifySized( typeRef, nameof( typeRef ) );
             return LLVMNative.StoreSizeOfType( OpaqueHandle, typeRef.TypeHandle );
         }
 
         public ulong AbiSizeOf( TypeRef typeRef )
         {
-            if( !LLVMNative.TypeIsSized( typeRef.TypeHandle ) )
-                throw new ArgumentException( "Type must be sized to get target size information" );
-
+            VerifySized( typeRef, nameof( typeRef ) );
             return LLVMNative.ABISizeOfType( OpaqueHandle, typeRef.TypeHandle );
         }
 
         public uint AbiAlignmentOf( TypeRef typeRef )
         {
-            if( !LLVMNative.TypeIsSized( typeRef.TypeHandle ) )
-                throw new ArgumentException( "Type must be sized to get target size information" );
-
+            VerifySized( typeRef, nameof( typeRef ) );
             return LLVMNative.ABIAlignmentOfType( OpaqueHandle, typeRef.TypeHandle );
         }
 
         public uint CallFrameAlignmentOf( TypeRef typeRef )
         {
-            if( !LLVMNative.TypeIsSized( typeRef.TypeHandle ) )
-                throw new ArgumentException( "Type must be sized to get target size information" );
-
+            VerifySized( typeRef, nameof( typeRef ) );
             return LLVMNative.CallFrameAlignmentOfType( OpaqueHandle, typeRef.TypeHandle );
         }
 
         public uint PreferredAlignmentOf( TypeRef typeRef )
         {
-            if( !LLVMNative.TypeIsSized( typeRef.TypeHandle ) )
-                throw new ArgumentException( "Type must be sized to get target size information" );
-
+            VerifySized( typeRef, nameof( typeRef ) );
             return LLVMNative.PreferredAlignmentOfType( OpaqueHandle, typeRef.TypeHandle );
         }
 
-        public uint PreferredAlignmentOf( Value value ) => LLVMNative.PreferredAlignmentOfGlobal( OpaqueHandle, value.ValueHandle );
-        public uint ElementAtOffset( StructType structType, ulong offset ) => LLVMNative.ElementAtOffset( OpaqueHandle, structType.TypeHandle, offset );
-        public ulong OffsetOfElement( StructType structType, uint element ) => LLVMNative.OffsetOfElement( OpaqueHandle, structType.TypeHandle, element );
+        public uint PreferredAlignmentOf( Value value )
+        {
+            VerifySized( value.Type, nameof( value ) );
+            return LLVMNative.PreferredAlignmentOfGlobal( OpaqueHandle, value.ValueHandle );
+        }
+
+        public uint ElementAtOffset( StructType structType, ulong offset )
+        {
+            VerifySized( structType, nameof( structType ) );
+            return LLVMNative.ElementAtOffset( OpaqueHandle, structType.TypeHandle, offset );
+        }
+
+        public ulong OffsetOfElement( StructType structType, uint element )
+        {
+            VerifySized( structType, nameof( structType ) );
+            return LLVMNative.OffsetOfElement( OpaqueHandle, structType.TypeHandle, element );
+        }
 
         public override string ToString( )
         {
@@ -119,16 +121,24 @@ namespace Llvm.NET
             return LLVMNative.MarshalMsg( msgPtr );
         }
 
+        public ulong ByteSizeOf( TypeRef llvmType ) => BitSizeOf( llvmType ) / 8u;
+
+        public uint PreferredBitAlignementOf( TypeRef llvmType ) => PreferredAlignmentOf( llvmType ) * 8;
+
+        public uint AbiBitAlignmentOf( TypeRef llvmType ) => AbiAlignmentOf( llvmType ) * 8;
+
+        public ulong BitOffsetOfElement( StructType llvmType, uint element ) => OffsetOfElement( llvmType, element ) * 8;
+
+        public static TargetData Parse( string layoutString )
+        {
+            var handle = LLVMNative.CreateTargetData( layoutString );
+            return FromHandle( handle, true );
+        }
+
         internal TargetData( LLVMTargetDataRef targetDataHandle, bool isDisposable )
         {
             OpaqueHandle = targetDataHandle;
             IsDisposable = isDisposable;
-        }
-
-        internal static TargetData Parse( string layoutString )
-        {
-            var handle = LLVMNative.CreateTargetData( layoutString );
-            return FromHandle( handle, true );
         }
 
         internal static TargetData FromHandle( LLVMTargetDataRef targetDataRef, bool isDisposable )
@@ -146,6 +156,13 @@ namespace Llvm.NET
         }
 
         internal LLVMTargetDataRef OpaqueHandle { get; private set; }
+
+        private static void VerifySized( TypeRef type, string name )
+        {
+            if( !type.IsSized )
+                throw new ArgumentException( "Type must be sized to get target size information", name );
+        }
+
         private readonly bool IsDisposable;
 
         private static readonly Dictionary<IntPtr, TargetData> TargetDataMap = new Dictionary<IntPtr, TargetData>( );

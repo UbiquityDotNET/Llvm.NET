@@ -8,6 +8,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 namespace Llvm.NET.Tests
 {
     [TestClass]
+    [DeploymentItem("LibLLVM.dll")]
     public class ContextTests
     {
         [TestMethod]
@@ -508,6 +509,46 @@ namespace Llvm.NET.Tests
             }
         }
 
+        [TestMethod]
+        [TestCategory("Anonymous Structs")]
+        public void CreateAnonymousConstantNestedStructTest( )
+        {
+            using( var ctx = Context.CreateThreadContext( ) )
+            {
+                var nestedValue = ctx.CreateConstantStruct( false, ConstantInt.From( 5 ), ctx.CreateConstantString("Hello"), ConstantInt.From( 6 ) );
+                var value = ctx.CreateConstantStruct( true, ConstantInt.From( ( byte )1), ConstantFP.From( 2.0f ), nestedValue, ConstantInt.From( ( short )-3 ) );
+                Assert.AreEqual( 4, value.Operands.Count );
+                Assert.IsInstanceOfType( value.Operands[ 0 ], typeof( ConstantInt ) );
+                Assert.IsInstanceOfType( value.Operands[ 1 ], typeof( ConstantFP ) );
+                Assert.IsInstanceOfType( value.Operands[ 2 ], typeof( ConstantStruct ) );
+                Assert.IsInstanceOfType( value.Operands[ 3 ], typeof( ConstantInt ) );
+                Assert.AreEqual( 1L, ( ( ConstantInt )value.Operands[ 0 ] ).SignExtendedValue );
+                Assert.AreEqual( 2.0, ( ( ConstantFP )value.Operands[ 1 ] ).Value );
+                Assert.AreEqual( -3L, ( ( ConstantInt )value.Operands[ 3 ] ).SignExtendedValue );
+
+                // verify the nested struct is genrated correctly
+                var nestedConst = ( Constant )value.Operands[ 2 ];
+                Assert.IsInstanceOfType( nestedConst.Operands[ 0 ], typeof( ConstantInt ) );
+                Assert.IsInstanceOfType( nestedConst.Operands[ 1 ], typeof( ConstantDataArray ) );
+                Assert.IsInstanceOfType( nestedConst.Operands[ 2 ], typeof( ConstantInt ) );
+
+                Assert.AreEqual( 5, ( ( ConstantInt )nestedConst.Operands[ 0 ] ).SignExtendedValue );
+                Assert.AreEqual( "Hello", ( ( ConstantDataSequential )nestedConst.Operands[ 1 ] ).GetAsString() );
+                Assert.AreEqual( 6, ( ( ConstantInt )nestedConst.Operands[ 2 ] ).SignExtendedValue );
+
+                // verify additional properties created properly
+                Assert.AreEqual( 0U, value.Type.IntegerBitWidth );
+                Assert.IsFalse( value.Type.IsDouble );
+                Assert.IsFalse( value.Type.IsFloat );
+                Assert.IsFalse( value.Type.IsFloatingPoint );
+                Assert.IsFalse( value.Type.IsInteger );
+                Assert.IsFalse( value.Type.IsPointer );
+                Assert.IsFalse( value.Type.IsPointerPointer );
+                Assert.IsFalse( value.Type.IsSequence );
+                Assert.IsFalse( value.Type.IsVoid );
+            }
+        }
+
         [TestCategory("Anonymous Structs")]
         [TestMethod]
         public void CreateAnonymousUnpackedConstantStructUsingParamsTest( )
@@ -767,7 +808,35 @@ namespace Llvm.NET.Tests
         [TestMethod]
         public void CreateMetadataStringTest( )
         {
-            Assert.Inconclusive( );
+            using( var ctx = Context.CreateThreadContext( ) )
+            {
+                var content = "Test MDString";
+                var mdstring = ctx.CreateMetadataString( content );
+                Assert.IsNotNull( mdstring );
+                Assert.AreEqual( content, mdstring.ToString( ) );
+            }
+        }
+
+        [TestMethod]
+        public void CreateMetadataStringWithEmptyArgTest( )
+        {
+            using( var ctx = Context.CreateThreadContext( ) )
+            {
+                var mdstring = ctx.CreateMetadataString( string.Empty );
+                Assert.IsNotNull( mdstring );
+                Assert.AreEqual( string.Empty, mdstring.ToString( ) );
+            }
+        }
+
+        [TestMethod]
+        public void CreateMetadataStringWithNullArgTest( )
+        {
+            using( var ctx = Context.CreateThreadContext( ) )
+            {
+                var mdstring = ctx.CreateMetadataString( null );
+                Assert.IsNotNull( mdstring );
+                Assert.AreEqual( string.Empty, mdstring.ToString( ) );
+            }
         }
 
         [TestMethod]

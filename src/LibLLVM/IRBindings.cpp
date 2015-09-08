@@ -147,4 +147,20 @@ extern "C"
         auto pMetadata = unwrap<MDNode>( M );
         return pMetadata->isResolved( );
     }
+
+    char const* LLVMGetMDStringText( LLVMMetadataRef mdstring, unsigned* len )
+    {
+        MDString const* S = unwrap<MDString>( mdstring );
+        *len = S->getString( ).size( );
+        return S->getString( ).data( );
+    }
+
+    void LLVMMDNodeResolveCycles( LLVMMetadataRef M )
+    {
+        MDNode* pNode = unwrap<MDNode>( M );
+        if( pNode->isResolved() )
+            return;
+
+        pNode->resolveCycles( );
+    }
 }

@@ -1,7 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
-using System.Runtime.InteropServices;
+using Llvm.NET.DebugInfo;
 using Llvm.NET.Types;
 using Llvm.NET.Values;
 
@@ -10,6 +11,7 @@ namespace Llvm.NET
     /// <summary>LLVM Bit code module</summary>
     public class Module 
         : IDisposable
+        , IExtensiblePropertyContainer
     {
         #region IDisposable Pattern
         public void Dispose()
@@ -65,7 +67,7 @@ namespace Llvm.NET
             get
             {
                 var ptr = LLVMNative.GetDataLayout( ModuleHandle );
-                return Marshal.PtrToStringAnsi( ptr );
+                return LLVMNative.NormalizeLineEndings( ptr );
             }
             set
             {
@@ -79,7 +81,7 @@ namespace Llvm.NET
             get
             {
                 var ptr = LLVMNative.GetTarget( ModuleHandle );
-                return Marshal.PtrToStringAnsi( ptr );
+                return LLVMNative.NormalizeLineEndings( ptr );
             }
             set 
             {
@@ -120,10 +122,7 @@ namespace Llvm.NET
             get
             {
                 var ptr = LLVMNative.GetModuleName( ModuleHandle );
-                if( ptr == IntPtr.Zero )
-                    return string.Empty;
-
-                return Marshal.PtrToStringAnsi( ptr );
+                return LLVMNative.NormalizeLineEndings( ptr );
             }
         }
 
@@ -148,19 +147,11 @@ namespace Llvm.NET
             errmsg = null;
             IntPtr msgPtr;
             LLVMBool result = LLVMNative.VerifyModule( ModuleHandle, LLVMVerifierFailureAction.LLVMReturnStatusAction, out msgPtr );
-            try
-            {
-                if( result.Succeeded )
-                    return true;
+            if( result.Succeeded )
+                return true;
 
-                errmsg = Marshal.PtrToStringAnsi( msgPtr );
-                return false;
-            }
-            finally
-            {
-                if( msgPtr != IntPtr.Zero )
-                    LLVMNative.DisposeMessage( msgPtr );
-            }
+            errmsg = LLVMNative.MarshalMsg( msgPtr );
+            return false;
         }
 
         /// <summary>Gets a function by name from this module</summary>
@@ -225,20 +216,16 @@ namespace Llvm.NET
         /// <param name="aliasee">Value being aliased</param>
         /// <param name="aliasName">Name of the alias</param>
         /// <returns><see cref="GlobalAlias"/> for the alias</returns>
-        public GlobalAlias AddAlias( Value aliasee, string aliasName ) => AddAlias( aliasee.Type, aliasee, aliasName );
-
-        /// <summary>Add an alias to the module</summary>
-        /// <param name="typeRef">Type of the alias</param>
-        /// <param name="aliasee">Value being aliased</param>
-        /// <param name="aliasName">Name of the alias</param>
-        /// <returns><see cref="GlobalAlias"/> for the alias</returns>
-        /// <openissues>
-        /// - What does LLVM do if creating a second alias with the same name (return null, throw, crash??,...)
-        /// </openissues>
-        [System.Diagnostics.CodeAnalysis.SuppressMessage( "Language", "CSE0003:Use expression-bodied members", Justification = "Readability" )]
-        public GlobalAlias AddAlias( TypeRef typeRef, Value aliasee, string aliasName )
+        public GlobalAlias AddAlias( Value aliasee, string aliasName )
         {
-            return (GlobalAlias)Value.FromHandle( LLVMNative.AddAlias( ModuleHandle, typeRef.TypeHandle, aliasee.ValueHandle, aliasName ) );
+            var handle = LLVMNative.AddAlias( ModuleHandle, aliasee.Type.TypeHandle, aliasee.ValueHandle, aliasName );
+            return (GlobalAlias)Value.FromHandle( handle );
+        }
+
+        public GlobalAlias GetAlias( string name )
+        {
+            var handle = LLVMNative.GetGlobalAlias( ModuleHandle, name );
+            return (GlobalAlias)Value.FromHandle( handle );
         }
 
         /// <summary>Adds a global to this module</summary>
@@ -318,6 +305,8 @@ namespace Llvm.NET
             LLVMNative.AddNamedMetadataOperand2( ModuleHandle, "llvm.ident", hNode );
         }
 
+        public DebugInfoBuilder DIBuilder => DIBuilder_.Value;
+
         /// <summary>Name of the Debug Version information module flag</summary>
         public const string DebugVersionValue = "Debug Info Version";
         public const string DwarfVersionValue = "Dwarf Version";
@@ -343,12 +332,62 @@ namespace Llvm.NET
                 IntPtr errMsgPtr;
                 if( LLVMNative.ParseBitcodeInContext( ctx.ContextHandle, buffer.BufferHandle, out modRef, out errMsgPtr ).Failed )
                 {
-                    var errMsg = Marshal.PtrToStringAnsi( errMsgPtr );
-                    LLVMNative.DisposeMessage( errMsgPtr );
+                    var errMsg = LLVMNative.MarshalMsg( errMsgPtr );
                     throw new InternalCodeGeneratorException( errMsg );
                 }
                 return ctx.GetModuleFor( modRef );
             }
+        }
+
+        public Function CreateFunction( DIScope scope
+                                      , string name
+                                      , string linkageName
+                                      , DIFile file
+                                      , uint line
+                                      , FunctionType signature
+                                      , bool isLocalToUnit
+                                      , bool isDefinition
+                                      , uint scopeLine
+                                      , DebugInfoFlags flags
+                                      , bool isOptimized
+                                      , MDNode tParam = null
+                                      , MDNode decl = null
+                                      )
+        {
+            if( string.IsNullOrWhiteSpace( name ) )
+                throw new ArgumentException("Name cannot be null, empty or whitespace", nameof( name ) );
+
+            var func = AddFunction( linkageName ?? name, signature );
+            var diSignature = signature.DIType as DISubroutineType;
+            Debug.Assert( diSignature != null );
+            var diFunc = DIBuilder.CreateFunction( scope: scope
+                                                 , name: name
+                                                 , mangledName: linkageName
+                                                 , file: file
+                                                 , line: line
+                                                 , compositeType: diSignature
+                                                 , isLocalToUnit: isLocalToUnit
+                                                 , isDefinition: isDefinition
+                                                 , scopeLine: scopeLine
+                                                 , flags: ( uint )flags
+                                                 , isOptimized: false
+                                                 , function: func
+                                                 , TParam: tParam
+                                                 , Decl: decl
+                                                 );
+            Debug.Assert( diFunc.Describes( func ) );
+            func.DISubProgram = diFunc;
+            return func;
+        }
+
+        bool IExtensiblePropertyContainer.TryGetExtendedPropertyValue<T>( string id, out T value )
+        {
+            return PropertyBag.TryGetExtendedPropertyValue<T>( id, out value );
+        }
+
+        void IExtensiblePropertyContainer.AddExtendedPropertyValue( string id, object value )
+        {
+            PropertyBag.AddExtendedPropertyValue( id, value );
         }
 
         internal Module( LLVMModuleRef moduleRef )
@@ -359,8 +398,12 @@ namespace Llvm.NET
             ModuleHandle = moduleRef;
             var hContext = LLVMNative.GetModuleContext( ModuleHandle );
             Context = Llvm.NET.Context.GetContextFor( hContext );
+            DIBuilder_ = new Lazy<DebugInfoBuilder>( ()=>new DebugInfoBuilder( this ) );
         }
 
+        internal ExtensiblePropertyContainer PropertyBag = new ExtensiblePropertyContainer( );
+
         internal LLVMModuleRef ModuleHandle { get; private set; }
+        private readonly Lazy<DebugInfoBuilder> DIBuilder_;
     }
 }

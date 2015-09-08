@@ -14,7 +14,7 @@ namespace Llvm.NET.DebugInfo
     /// </remarks>
     public sealed class DebugInfoBuilder : IDisposable
     {
-        public DebugInfoBuilder( Module owningModule )
+        internal DebugInfoBuilder( Module owningModule )
             : this( owningModule, true )
         {
         }
@@ -23,6 +23,9 @@ namespace Llvm.NET.DebugInfo
         // allowUnresolved == false
         private DebugInfoBuilder( Module owningModule, bool allowUnresolved )
         {
+            if( owningModule == null )
+                throw new ArgumentNullException( nameof( owningModule ) );
+
             BuilderHandle = LLVMNative.NewDIBuilder( owningModule.ModuleHandle, allowUnresolved );
         }
 
@@ -78,18 +81,20 @@ namespace Llvm.NET.DebugInfo
         }
 
         public DISubProgram CreateFunction( DIScope scope
-                                        , string name
-                                        , string mangledName
-                                        , DIFile file
-                                        , uint line
-                                        , DICompositeType compositeType
-                                        , bool isLocalToUnit
-                                        , bool isDefinition
-                                        , uint scopeLine
-                                        , uint flags
-                                        , bool isOptimized
-                                        , Function function
-                                        )
+                                          , string name
+                                          , string mangledName
+                                          , DIFile file
+                                          , uint line
+                                          , DICompositeType compositeType
+                                          , bool isLocalToUnit
+                                          , bool isDefinition
+                                          , uint scopeLine
+                                          , uint flags
+                                          , bool isOptimized
+                                          , Function function
+                                          , MDNode TParam = null
+                                          , MDNode Decl = null
+                                          )
         {
             if( string.IsNullOrWhiteSpace( name ) )
                 name = string.Empty;
@@ -110,33 +115,77 @@ namespace Llvm.NET.DebugInfo
                                                            , flags
                                                            , isOptimized ? 1 : 0
                                                            , function.ValueHandle
+                                                           , TParam?.MetadataHandle ?? LLVMMetadataRef.Zero
+                                                           , Decl?.MetadataHandle ?? LLVMMetadataRef.Zero
                                                            );
             return new DISubProgram( handle );
         }
 
-        public DILocalVariable CreateLocalVariable( uint dwarfTag
-                                                , DIScope scope
-                                                , string name
-                                                , DIFile file
-                                                , uint line
-                                                , DIType type
-                                                , bool alwaysPreserve
-                                                , uint flags
-                                                , uint argNo
-                                                )
+        public DISubProgram ForwardDeclareFunction( DIScope scope
+                                                  , string name
+                                                  , string mangledName
+                                                  , DIFile file
+                                                  , uint line
+                                                  , DICompositeType compositeType
+                                                  , bool isLocalToUnit
+                                                  , bool isDefinition
+                                                  , uint scopeLine
+                                                  , uint flags
+                                                  , bool isOptimized
+                                                  , Function function = null
+                                                  , MDNode TParam = null
+                                                  , MDNode Decl = null
+                                                  )
         {
-            var handle = LLVMNative.DIBuilderCreateLocalVariable( BuilderHandle
-                                                                , dwarfTag
-                                                                , scope.MetadataHandle
-                                                                , name
-                                                                , file.MetadataHandle
-                                                                , line
-                                                                , type.MetadataHandle
-                                                                , alwaysPreserve ? 1 : 0
-                                                                , flags
-                                                                , argNo
-                                                                );
-            return new DILocalVariable( handle );
+            if( string.IsNullOrWhiteSpace( name ) )
+                name = string.Empty;
+
+            if( string.IsNullOrWhiteSpace( mangledName ) )
+                mangledName = string.Empty;
+
+            var handle = LLVMNative.DIBuilderCreateTempFunctionFwdDecl( BuilderHandle
+                                                                      , scope.MetadataHandle
+                                                                      , name
+                                                                      , mangledName
+                                                                      , file.MetadataHandle
+                                                                      , line
+                                                                      , compositeType.MetadataHandle
+                                                                      , isLocalToUnit ? 1 : 0
+                                                                      , isDefinition ? 1 : 0
+                                                                      , scopeLine
+                                                                      , flags
+                                                                      , isOptimized ? 1 : 0
+                                                                      , function?.ValueHandle ?? LLVMValueRef.Zero
+                                                                      , TParam?.MetadataHandle ?? LLVMMetadataRef.Zero
+                                                                      , Decl?.MetadataHandle ?? LLVMMetadataRef.Zero
+                                                                      );
+            return new DISubProgram( handle );
+        }
+
+        public DILocalVariable CreateLocalVariable( DIScope scope
+                                                  , string name
+                                                  , DIFile file
+                                                  , uint line
+                                                  , DIType type
+                                                  , bool alwaysPreserve
+                                                  , uint flags
+                                                  , uint argNo
+                                                  )
+        {
+            return CreateLocalVariable( Tag.AutoVariable, scope, name, file, line, type, alwaysPreserve, flags, argNo );
+        }
+
+        public DILocalVariable CreateArgument( DIScope scope
+                                             , string name
+                                             , DIFile file
+                                             , uint line
+                                             , DIType type
+                                             , bool alwaysPreserve
+                                             , uint flags
+                                             , uint argNo
+                                             )
+        {
+            return CreateLocalVariable( Tag.ArgVariable, scope, name, file, line, type, alwaysPreserve, flags, argNo );
         }
 
         public DIBasicType CreateBasicType( string name, ulong bitSize, ulong bitAlign, DiTypeKind encoding )
@@ -308,15 +357,15 @@ namespace Llvm.NET.DebugInfo
         }
 
         public DICompositeType CreateEnumerationType( DIScope scope
-                                                  , string name
-                                                  , DIFile file
-                                                  , uint lineNumber
-                                                  , ulong sizeInBits
-                                                  , ulong alignInBits
-                                                  , IEnumerable<DIEnumerator> elements
-                                                  , DIType underlyingType
-                                                  , string uniqueId = ""
-                                                  )
+                                                    , string name
+                                                    , DIFile file
+                                                    , uint lineNumber
+                                                    , ulong sizeInBits
+                                                    , ulong alignInBits
+                                                    , IEnumerable<DIEnumerator> elements
+                                                    , DIType underlyingType
+                                                    , string uniqueId = ""
+                                                    )
         {
             var elementHandles = elements.Select( e => e.MetadataHandle ).ToArray( );
             var elementArray = LLVMNative.DIBuilderGetOrCreateArray( BuilderHandle, out elementHandles[ 0 ], (ulong)elementHandles.LongLength );
@@ -447,6 +496,31 @@ namespace Llvm.NET.DebugInfo
                 LLVMNative.DIBuilderDestroy( BuilderHandle );
                 BuilderHandle = default(LLVMDIBuilderRef);
             }
+        }
+
+        private DILocalVariable CreateLocalVariable( Tag dwarfTag
+                                                   , DIScope scope
+                                                   , string name
+                                                   , DIFile file
+                                                   , uint line
+                                                   , DIType type
+                                                   , bool alwaysPreserve
+                                                   , uint flags
+                                                   , uint argNo
+                                                   )
+        {
+            var handle = LLVMNative.DIBuilderCreateLocalVariable( BuilderHandle
+                                                                , (uint)dwarfTag
+                                                                , scope.MetadataHandle
+                                                                , name
+                                                                , file.MetadataHandle
+                                                                , line
+                                                                , type.MetadataHandle
+                                                                , alwaysPreserve ? 1 : 0
+                                                                , flags
+                                                                , argNo
+                                                                );
+            return new DILocalVariable( handle );
         }
 
         private bool IsFinished;

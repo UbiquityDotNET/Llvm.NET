@@ -24,7 +24,7 @@ namespace Llvm.NET.Values
 
             int len;
             var strPtr = LLVMNative.GetAsString( ValueHandle, out len );
-            return Marshal.PtrToStringAnsi( strPtr, len );
+            return LLVMNative.NormalizeLineEndings( strPtr, len );
         }
 
         internal ConstantDataSequential( LLVMValueRef valueRef )

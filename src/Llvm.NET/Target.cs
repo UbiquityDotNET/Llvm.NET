@@ -11,7 +11,7 @@ namespace Llvm.NET
         public string Name => Marshal.PtrToStringAnsi( LLVMNative.GetTargetName( TargetHandle ) );
 
         /// <summary>Description of this target</summary>
-        public string Description => Marshal.PtrToStringAnsi( LLVMNative.GetTargetDescription( TargetHandle ) );
+        public string Description => LLVMNative.NormalizeLineEndings( LLVMNative.GetTargetDescription( TargetHandle ) );
 
         /// <summary>Flag indicating if this target has JIT support</summary>
         public bool HasJIT => 0 != LLVMNative.TargetHasJIT( TargetHandle ).Value;
@@ -75,8 +75,7 @@ namespace Llvm.NET
             IntPtr msgPtr;
             if( 0 != LLVMNative.GetTargetFromTriple( targetTriple, out targetHandle, out msgPtr ).Value )
             {
-                var msg = Marshal.PtrToStringAnsi( msgPtr );
-                LLVMNative.DisposeMessage( msgPtr );
+                var msg = LLVMNative.MarshalMsg( msgPtr );
                 throw new InternalCodeGeneratorException( msg );
             }
 
