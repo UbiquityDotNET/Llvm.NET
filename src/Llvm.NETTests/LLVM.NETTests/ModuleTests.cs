@@ -5,6 +5,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 namespace Llvm.NET.Tests
 {
     [TestClass]
+    [DeploymentItem("LibLLVM.dll")]
     public class ModuleTests
     {
         [TestMethod]

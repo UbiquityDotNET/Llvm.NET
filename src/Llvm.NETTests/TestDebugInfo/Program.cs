@@ -12,8 +12,8 @@ namespace TestDebugInfo
     /// <summary>Program to test/demonstrate Aspects of debug information generation with Llvm.NET</summary>
     class Program
     {
-        const string Triple = "x86_64-pc-windows-msvc18.0.0"; //"thumbv7m-none-eabi";
-        const string Cpu = "x86-64";//"cortex-m3";
+        const string Triple = "x86_64-pc-windows-msvc18.0.0";
+        const string Cpu = "x86-64";
         const string Features = "+sse,+sse2";
         static readonly Dictionary<string, string> TargetDependentAttributes = new Dictionary<string, string>
         {

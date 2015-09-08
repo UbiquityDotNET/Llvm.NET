@@ -75,6 +75,10 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="..\..\..\BuildOutput\x64\Debug\LibLLVM.dll">
+      <Link>LibLLVM.dll</Link>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="TestModuleAsString.ll">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
@@ -83,6 +87,12 @@
     <ProjectReference Include="..\..\Llvm.NET\Llvm.NET.csproj">
       <Project>{0162c8ce-6641-4922-8664-f8a44356fbf7}</Project>
       <Name>Llvm.NET</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\LibLLVM\LibLLVM.vcxproj">
+      <Project>{6c77a7de-d464-430f-96a9-a64768763b5f}</Project>
+      <Name>LibLLVM</Name>
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+      <Private>True</Private>
     </ProjectReference>
   </ItemGroup>
   <Choose>

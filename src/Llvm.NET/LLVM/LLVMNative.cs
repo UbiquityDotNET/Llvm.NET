@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using System.Reflection;
 using System.Runtime.InteropServices;
 using System.Text.RegularExpressions;
 
@@ -48,7 +49,8 @@ namespace Llvm.NET
             // force loading the appropriate architecture specific 
             // DLL before any use of the wrapped inter-op APIs to 
             // allow building this library as ANYCPU
-            if( Directory.Exists( "LibLLVM") )
+            var path = Path.GetDirectoryName( Assembly.GetExecutingAssembly( ).Location );
+            if( Directory.Exists( Path.Combine( path, "LibLLVM") ) )
             {
                 NativeMethods.LoadWin32Library( libraryPath, "LibLLVM" );
             }
