@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Llvm.NET.Values;
 using Llvm.NET.Instructions;
+using System.IO;
 
 namespace Llvm.NET.DebugInfo
 {
@@ -27,27 +28,51 @@ namespace Llvm.NET.DebugInfo
                 throw new ArgumentNullException( nameof( owningModule ) );
 
             BuilderHandle = LLVMNative.NewDIBuilder( owningModule.ModuleHandle, allowUnresolved );
+            OwningModule = owningModule;
         }
 
         public DICompileUnit CreateCompileUnit( SourceLanguage language
-                                            , string fileName
-                                            , string filePath
-                                            , string producer
-                                            , bool optimized
-                                            , string flags
-                                            , uint runtimeVersion
-                                            )
+                                              , string srcFilePath
+                                              , string producer
+                                              , bool optimized
+                                              , string flags
+                                              , uint runtimeVersion
+                                              )
         {
+            return CreateCompileUnit( language
+                                    , Path.GetFileName( srcFilePath )
+                                    , Path.GetDirectoryName( srcFilePath )
+                                    , producer
+                                    , optimized
+                                    , flags
+                                    , runtimeVersion
+                                    );
+        }
+
+        public DICompileUnit CreateCompileUnit( SourceLanguage language
+                                              , string fileName
+                                              , string fileDirectory
+                                              , string producer
+                                              , bool optimized
+                                              , string flags
+                                              , uint runtimeVersion
+                                              )
+        {
+            if( OwningModule.DICompileUnit != null )
+                throw new InvalidOperationException( "LLVM only allows one DICompileUnit per module" );
+
             var handle = LLVMNative.DIBuilderCreateCompileUnit( BuilderHandle
                                                               , ( uint )language
                                                               , fileName
-                                                              , filePath
+                                                              , fileDirectory
                                                               , producer
                                                               , optimized ? 1 : 0
                                                               , flags
                                                               , runtimeVersion
                                                               );
-            return new DICompileUnit( handle );
+            var retVal = new DICompileUnit( handle );
+            OwningModule.DICompileUnit = retVal;
+            return retVal;
         }
 
         public DIFile CreateFile( string path )
@@ -55,7 +80,7 @@ namespace Llvm.NET.DebugInfo
             if( string.IsNullOrWhiteSpace( path ) )
                 throw new ArgumentException( "Path cannot be null, empty or whitespace" );
 
-            return CreateFile( System.IO.Path.GetFileName( path ), System.IO.Path.GetDirectoryName( path ) );
+            return CreateFile( Path.GetFileName( path ), Path.GetDirectoryName( path ) );
         }
 
         public DIFile CreateFile( string fileName, string directory )
@@ -384,15 +409,15 @@ namespace Llvm.NET.DebugInfo
         }
 
         public DIGlobalVariable CreateGlobalVariable( DINode scope
-                                                  , string name
-                                                  , string linkageName
-                                                  , DIFile file
-                                                  , uint lineNo
-                                                  , DIType type
-                                                  , bool isLocalToUnit
-                                                  , Value value
-                                                  , DINode decl = null
-                                                  )
+                                                    , string name
+                                                    , string linkageName
+                                                    , DIFile file
+                                                    , uint lineNo
+                                                    , DIType type
+                                                    , bool isLocalToUnit
+                                                    , Value value
+                                                    , DINode decl = null
+                                                    )
         {
             var handle = LLVMNative.DIBuilderCreateGlobalVariable( BuilderHandle
                                                                  , scope.MetadataHandle
@@ -523,6 +548,7 @@ namespace Llvm.NET.DebugInfo
             return new DILocalVariable( handle );
         }
 
+        private readonly Module OwningModule;
         private bool IsFinished;
         internal LLVMDIBuilderRef BuilderHandle { get; private set; }
     }

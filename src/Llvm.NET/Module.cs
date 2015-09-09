@@ -306,6 +306,7 @@ namespace Llvm.NET
         }
 
         public DebugInfoBuilder DIBuilder => DIBuilder_.Value;
+        public DICompileUnit DICompileUnit { get; internal set; }
 
         /// <summary>Name of the Debug Version information module flag</summary>
         public const string DebugVersionValue = "Debug Info Version";
