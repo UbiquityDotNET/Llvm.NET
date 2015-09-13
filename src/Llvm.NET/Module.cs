@@ -9,10 +9,29 @@ using Llvm.NET.Values;
 namespace Llvm.NET
 {
     /// <summary>LLVM Bit code module</summary>
-    public class Module 
+    public sealed class Module 
         : IDisposable
         , IExtensiblePropertyContainer
     {
+        public Module( )
+            :this( string.Empty )
+        {
+        }
+
+        public Module( string moduleId )
+        {
+            if( moduleId == null )
+                throw new ArgumentNullException( nameof( moduleId ) );
+
+            var hContext = LLVMNative.ContextCreate( );
+            ModuleHandle = LLVMNative.ModuleCreateWithNameInContext( moduleId, hContext );
+            if( ModuleHandle.Pointer == IntPtr.Zero )
+                throw new InternalCodeGeneratorException("Could not create module in context");
+
+            DIBuilder_ = new Lazy<DebugInfoBuilder>( ()=>new DebugInfoBuilder( this ) );
+            Context.AddModule( this );
+        }
+
         #region IDisposable Pattern
         public void Dispose()
         {
@@ -25,32 +44,39 @@ namespace Llvm.NET
             Dispose( false );
         }
 
-        protected virtual void Dispose( bool disposing )
+        void Dispose( bool disposing )
         {
-            // if not already disposed, dispose the module
-            // NOTE:
-            // The test logic here is backwards from what you might think
-            // Ordinarily unmanged resource are always released independent
-            // of the value of the disposing param. However, since the Context
-            // ultimately owns the module it will destroy it when it is finalized
-            // furthermore. Finalization isn't deterministic in that the Context
-            // can be finalized BEFORE the module is. But since LLVM will destroy 
-            // the underlying module when the context is destroyed that ends up
-            // with a dangling pointer/handle in the module. WHen the finalizer 
-            // eventually gets to finalize the module the handle is invalid and
-            // casues an exception in the native code of LLVM. Thus disposing the
-            // module will release the resources for a module early so it doesn't 
-            // leak if the same context is used to generate multiple modules. 
-            if( disposing )
-            {
-                LLVMNative.DisposeModule( ModuleHandle );
-                ModuleHandle = new LLVMModuleRef( );
-            }
+            // if not already disposed, dispose the context
+            // NOTE: the module itself is released when the 
+            // containing context is release, so only the
+            // context is explicitly closed.
+            if( Context != null )
+                Context.Close( );
+
+            ModuleHandle = default( LLVMModuleRef );
         }
         #endregion
 
+        /// <summary>Name of the Debug Version information module flag</summary>
+        public const string DebugVersionValue = "Debug Info Version";
+        public const string DwarfVersionValue = "Dwarf Version";
+
+        /// <summary>Version of the Debug information Metadata</summary>
+        public const UInt32 DebugMetadataVersion = 3; /* DEBUG_METADATA_VERSION (for LLVM v3.7.0) */
+
         /// <summary><see cref="Context"/> this module belongs to</summary>
-        public Context Context { get; }
+        public Context Context
+        {
+            get
+            {
+                if( ModuleHandle.Pointer == IntPtr.Zero )
+                    return null;
+
+                return Llvm.NET.Context.GetContextFor( ModuleHandle );
+            }
+        }
+        public DebugInfoBuilder DIBuilder => DIBuilder_.Value;
+        public DICompileUnit DICompileUnit { get; internal set; }
 
         /// <summary>Data layout string</summary>
         /// <remarks>
@@ -111,7 +137,7 @@ namespace Llvm.NET
                 var current = LLVMNative.GetFirstFunction( ModuleHandle );
                 while( current.Pointer != IntPtr.Zero )
                 {
-                    yield return (Function)Value.FromHandle( current );
+                    yield return Value.FromHandle<Function>( current );
                     current = LLVMNative.GetNextFunction( current );
                 }
             }
@@ -163,7 +189,7 @@ namespace Llvm.NET
             if( funcRef.Pointer == IntPtr.Zero )
                 return null;
 
-            return (Function)Value.FromHandle( funcRef );
+            return Value.FromHandle<Function>( funcRef );
         }
 
         /// <summary>Add a function with the specified signature to the module</summary>
@@ -178,7 +204,7 @@ namespace Llvm.NET
         /// </remarks>
         public Function AddFunction( string name, FunctionType signature )
         {
-            return (Function)Value.FromHandle( LLVMNative.GetOrInsertFunction( ModuleHandle, name, signature.TypeHandle ) );
+            return Value.FromHandle<Function>( LLVMNative.GetOrInsertFunction( ModuleHandle, name, signature.TypeHandle ) );
         }
 
         /// <summary>Writes a bit-code module to a file</summary>
@@ -219,13 +245,13 @@ namespace Llvm.NET
         public GlobalAlias AddAlias( Value aliasee, string aliasName )
         {
             var handle = LLVMNative.AddAlias( ModuleHandle, aliasee.Type.TypeHandle, aliasee.ValueHandle, aliasName );
-            return (GlobalAlias)Value.FromHandle( handle );
+            return Value.FromHandle<GlobalAlias>( handle );
         }
 
         public GlobalAlias GetAlias( string name )
         {
             var handle = LLVMNative.GetGlobalAlias( ModuleHandle, name );
-            return (GlobalAlias)Value.FromHandle( handle );
+            return Value.FromHandle<GlobalAlias>( handle );
         }
 
         /// <summary>Adds a global to this module</summary>
@@ -235,11 +261,10 @@ namespace Llvm.NET
         /// <openissues>
         /// - What does LLVM do if creating a second Global with the same name (return null, throw, crash??,...)
         /// </openissues>
-        [System.Diagnostics.CodeAnalysis.SuppressMessage( "Language", "CSE0003:Use expression-bodied members", Justification = "Readability" )]
         public GlobalVariable AddGlobal( TypeRef typeRef, string name )
         {
             var handle = LLVMNative.AddGlobal( ModuleHandle, typeRef.TypeHandle, name );
-            return (GlobalVariable)Value.FromHandle( handle );
+            return Value.FromHandle<GlobalVariable>( handle );
         }
 
         /// <summary>Adds a global to this module</summary>
@@ -280,7 +305,7 @@ namespace Llvm.NET
             if( hGlobal.Pointer == IntPtr.Zero )
                 return null;
 
-            return (GlobalVariable)Value.FromHandle( hGlobal );
+            return Value.FromHandle<GlobalVariable>( hGlobal );
         }
 
         /// <summary>Adds a module flag to the module</summary>
@@ -303,41 +328,6 @@ namespace Llvm.NET
             var elements = new LLVMMetadataRef[ ] { LLVMNative.MDString2( Context.ContextHandle, version, (uint)version.Length ) };
             var hNode = LLVMNative.MDNode2( Context.ContextHandle, out elements[ 0 ], 1 );
             LLVMNative.AddNamedMetadataOperand2( ModuleHandle, "llvm.ident", hNode );
-        }
-
-        public DebugInfoBuilder DIBuilder => DIBuilder_.Value;
-        public DICompileUnit DICompileUnit { get; internal set; }
-
-        /// <summary>Name of the Debug Version information module flag</summary>
-        public const string DebugVersionValue = "Debug Info Version";
-        public const string DwarfVersionValue = "Dwarf Version";
-
-        /// <summary>Version of the Debug information Metadata</summary>
-        public const UInt32 DebugMetadataVersion = 3; /* DEBUG_METADATA_VERSION (for LLVM v3.7.0) */
-
-        /// <summary>Load a bit-code module from a given file</summary>
-        /// <param name="path">path of the file to load</param>
-        /// <returns>Loaded <see cref="Module"/></returns>
-        public static Module LoadFrom( string path )
-        {
-            if( string.IsNullOrWhiteSpace( path ) )
-                throw new ArgumentException( "path cannot be null or an empty string", nameof( path ) );
-
-            if( !File.Exists( path ) )
-                throw new FileNotFoundException( "Specified bit-code file does not exist", path );
-
-            var ctx = Context.CurrentContext;
-            using( var buffer = new MemoryBuffer( path ) )
-            {
-                LLVMModuleRef modRef;
-                IntPtr errMsgPtr;
-                if( LLVMNative.ParseBitcodeInContext( ctx.ContextHandle, buffer.BufferHandle, out modRef, out errMsgPtr ).Failed )
-                {
-                    var errMsg = LLVMNative.MarshalMsg( errMsgPtr );
-                    throw new InternalCodeGeneratorException( errMsg );
-                }
-                return ctx.GetModuleFor( modRef );
-            }
         }
 
         public Function CreateFunction( DIScope scope
@@ -391,20 +381,34 @@ namespace Llvm.NET
             PropertyBag.AddExtendedPropertyValue( id, value );
         }
 
-        internal Module( LLVMModuleRef moduleRef )
+        /// <summary>Load a bit-code module from a given file</summary>
+        /// <param name="path">path of the file to load</param>
+        /// <returns>Loaded <see cref="Module"/></returns>
+        public static Module LoadFrom( string path )
         {
-            if( moduleRef.Pointer == IntPtr.Zero )
-                throw new ArgumentNullException( nameof( moduleRef ) );
+            if( string.IsNullOrWhiteSpace( path ) )
+                throw new ArgumentException( "path cannot be null or an empty string", nameof( path ) );
 
-            ModuleHandle = moduleRef;
-            var hContext = LLVMNative.GetModuleContext( ModuleHandle );
-            Context = Llvm.NET.Context.GetContextFor( hContext );
-            DIBuilder_ = new Lazy<DebugInfoBuilder>( ()=>new DebugInfoBuilder( this ) );
+            if( !File.Exists( path ) )
+                throw new FileNotFoundException( "Specified bit-code file does not exist", path );
+
+            var ctx = new Context( );
+            using( var buffer = new MemoryBuffer( path ) )
+            {
+                LLVMModuleRef modRef;
+                IntPtr errMsgPtr;
+                if( LLVMNative.ParseBitcodeInContext( ctx.ContextHandle, buffer.BufferHandle, out modRef, out errMsgPtr ).Failed )
+                {
+                    var errMsg = LLVMNative.MarshalMsg( errMsgPtr );
+                    throw new InternalCodeGeneratorException( errMsg );
+                }
+                return ctx.GetModuleFor( modRef );
+            }
         }
 
-        internal ExtensiblePropertyContainer PropertyBag = new ExtensiblePropertyContainer( );
-
         internal LLVMModuleRef ModuleHandle { get; private set; }
+
+        private ExtensiblePropertyContainer PropertyBag = new ExtensiblePropertyContainer( );
         private readonly Lazy<DebugInfoBuilder> DIBuilder_;
     }
 }

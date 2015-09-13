@@ -16,7 +16,7 @@ namespace Llvm.NET.Types
         public bool IsVarArg => LLVMNative.IsFunctionVarArg( TypeHandle );
 
         /// <summary></summary>
-        public TypeRef ReturnType => TypeRef.FromHandle( LLVMNative.GetReturnType( TypeHandle ) );
+        public TypeRef ReturnType => FromHandle<TypeRef>( LLVMNative.GetReturnType( TypeHandle ) );
         public IReadOnlyList<TypeRef> ParameterTypes
         {
             get
@@ -27,16 +27,10 @@ namespace Llvm.NET.Types
 
                 var paramTypes = new LLVMTypeRef[ paramCount ];
                 LLVMNative.GetParamTypes( TypeHandle, out paramTypes[ 0 ] );
-                return paramTypes.Select( TypeRef.FromHandle )
+                return paramTypes.Select( h => FromHandle<TypeRef>( h ) )
                                  .ToList( )
                                  .AsReadOnly( );
             }
-        }
-
-        [System.Diagnostics.CodeAnalysis.SuppressMessage( "Language", "CSE0003:Use expression-bodied members", Justification = "Readability" )]
-        internal new static FunctionType FromHandle( LLVMTypeRef typeRef )
-        {
-            return ( FunctionType )Context.CurrentContext.GetTypeFor( typeRef, ( h ) => new FunctionType( h ) );
         }
     }
 }

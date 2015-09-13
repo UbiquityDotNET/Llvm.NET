@@ -35,11 +35,11 @@ namespace Llvm.NET.Values
             }
         }
 
-        [System.Diagnostics.CodeAnalysis.SuppressMessage( "Language", "CSE0003:Use expression-bodied members", Justification = "Readability" )]
-        internal new static User FromHandle( LLVMValueRef valueRef )
-        {
-            return (User)Context.CurrentContext.GetValueFor( valueRef, ( h )=>new User( h ) );
-        }
+        //[System.Diagnostics.CodeAnalysis.SuppressMessage( "Language", "CSE0003:Use expression-bodied members", Justification = "Readability" )]
+        //internal new static User FromHandle( LLVMValueRef valueRef )
+        //{
+        //    return (User)Context.CurrentContext.GetValueFor( valueRef, ( h )=>new User( h ) );
+        //}
 
         private UserOperandList OperandList;
     }
@@ -55,7 +55,7 @@ namespace Llvm.NET.Values
             OpaqueHandle = useRef;
         }
 
-        public User User => User.FromHandle( LLVMNative.GetUser( OpaqueHandle ) );
+        public User User => Value.FromHandle<User>( LLVMNative.GetUser( OpaqueHandle ) );
         public Value Value => Value.FromHandle( LLVMNative.GetUsedValue( OpaqueHandle ) );
         private LLVMUseRef OpaqueHandle;
     }

@@ -6,12 +6,7 @@ namespace Llvm.NET.Values
     {
         public static ConstantPointerNull From( TypeRef type )
         {
-            return FromHandle( LLVMNative.ConstPointerNull( type.TypeHandle ) );
-        }
-
-        internal new static ConstantPointerNull FromHandle( LLVMValueRef valueRef )
-        {
-            return ( ConstantPointerNull )Context.CurrentContext.GetValueFor( valueRef, ( h ) => new ConstantPointerNull( h ) );
+            return FromHandle<ConstantPointerNull>( LLVMNative.ConstPointerNull( type.TypeHandle ) );
         }
 
         internal ConstantPointerNull( LLVMValueRef valueRef )

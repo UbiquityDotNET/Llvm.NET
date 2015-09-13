@@ -27,6 +27,9 @@ namespace Llvm.NET.Values
         {
             get
             {
+                if( Context.IsDisposed )
+                    return string.Empty;
+
                 var ptr = LLVMNative.GetValueName( ValueHandle );
                 return Marshal.PtrToStringAnsi( ptr );
             }
@@ -45,6 +48,8 @@ namespace Llvm.NET.Values
 
         /// <summary>Type of the value</summary>
         public TypeRef Type => TypeRef.FromHandle( LLVMNative.TypeOf( ValueHandle ) );
+
+        public Context Context => Type.Context;
 
         /// <summary>Generates a string representing the LLVM syntax of the value</summary>
         /// <returns>string version of the value formatted by LLVM</returns>
@@ -67,16 +72,22 @@ namespace Llvm.NET.Values
             if( valueRef.Pointer == IntPtr.Zero )
                 throw new ArgumentNullException( nameof( valueRef ) );
 
-            Context.CurrentContext.AssertValueNotInterned( valueRef );
+#if DEBUG
+            var context = Llvm.NET.Context.GetContextFor( valueRef );
+            context.AssertValueNotInterned( valueRef );
+#endif
             ValueHandle = valueRef;
         }
 
         internal LLVMValueRef ValueHandle { get; }
 
-        [System.Diagnostics.CodeAnalysis.SuppressMessage( "Language", "CSE0003:Use expression-bodied members", Justification = "Readability" )]
-        internal static Value FromHandle( LLVMValueRef valueRef )
+        internal static Value FromHandle( LLVMValueRef valueRef ) => FromHandle<Value>( valueRef );
+
+        internal static T FromHandle<T>( LLVMValueRef valueRef )
+            where T : Value
         {
-            return Context.CurrentContext.GetValueFor( valueRef, StaticFactory );
+            var context = Context.GetContextFor( valueRef );
+            return (T)context.GetValueFor( valueRef, StaticFactory );
         }
 
         private static Value StaticFactory( LLVMValueRef h )
@@ -331,7 +342,7 @@ namespace Llvm.NET.Values
     /// <summary>Provides extension methods to <see cref="Value"/> that cannot be achieved as members of the class</summary>
     /// <remarks>
     /// Using generic static extension methods allows for fluent coding while retaining the type of the "this" parameter.
-    /// If these were members of the <see cref="Value"/> class then the only return type could be <see cref="Value"/>
+    /// If these were members of the <see cref="Value"/> class then the only return type could be <see cref="Value"/>,
     /// thus losing the orignal type and requiring a cast to get back to it.
     /// </remarks>
     public static class ValueExtensions
@@ -345,13 +356,13 @@ namespace Llvm.NET.Values
         /// <remarks>
         /// Technically speaking only an <see cref="Instructions.Instruction"/> can have debug location
         /// information. However, since LLVM will perform constant folding in the <see cref="InstructionBuilder"/>
-        /// it almost all of the methods in <see cref="InstructionBuilder"/> return a <see cref="Value"/> rather
-        /// than an more specific <see cref="Instructions.Instruction"/>. Thus, without this extension method here,
+        /// most of the methods in <see cref="InstructionBuilder"/> return a <see cref="Value"/> rather than a
+        /// more specific <see cref="Instructions.Instruction"/>. Thus, without this extension method here,
         /// code would need to know ahead of time that an actual instruction would be produced then cast the result
         /// to an <see cref="Instructions.Instruction"/> and then set the debug location. This makes the code rather
         /// ugly and tedious to manage. Placing this as a generic extension method ensures that the return type matches
         /// the original and no additional casting is needed, which would defeat the purpose of doing this. For
-        ///  <see cref="Value"/> types that are not instructions this does nothing. This allows for a simpler fluent
+        /// <see cref="Value"/> types that are not instructions this does nothing. This allows for a simpler fluent
         /// style of programming where the actual type is retained even in cases where an <see cref="InstructionBuilder"/>
         /// method will always return an atual instruction.
         /// </remarks>

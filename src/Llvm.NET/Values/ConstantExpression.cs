@@ -17,12 +17,12 @@ namespace Llvm.NET.Values
             if( !( type is PointerType ) )
                 throw new ArgumentException( "pointer type expected", nameof( type ) );
 
-            return Constant.FromHandle( LLVMNative.ConstIntToPtr( value.ValueHandle, type.TypeHandle ) );
+            return FromHandle<Constant>( LLVMNative.ConstIntToPtr( value.ValueHandle, type.TypeHandle ) );
         }
 
         public static Constant BitCast( Constant value, TypeRef toType )
         {
-            return Constant.FromHandle( LLVMNative.ConstBitCast( value.ValueHandle, toType.TypeHandle ) );
+            return FromHandle<Constant>( LLVMNative.ConstBitCast( value.ValueHandle, toType.TypeHandle ) );
         }
 
         internal ConstantExpression( LLVMValueRef valueRef )

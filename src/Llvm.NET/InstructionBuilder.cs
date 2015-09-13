@@ -13,26 +13,23 @@ namespace Llvm.NET
     public class InstructionBuilder
         : IDisposable
     {
-        /// <summary>Constructs a new InstructionBuilder</summary>
-        public InstructionBuilder( )
-            : this( Context.CurrentContext )
-        {
-        }
-
         /// <summary>Creates an <see cref="InstructionBuilder"/> for a given context</summary>
-        /// <param name="context">Context to use for creating instructions</param>
+        /// <param name="context">Context used for creating instructions</param>
         public InstructionBuilder( Context context )
         {
+            Context = context;
             BuilderHandle = LLVMNative.CreateBuilderInContext( context.ContextHandle );
         }
 
         /// <summary>Creates an <see cref="InstructionBuilder"/> for a <see cref="BasicBlock"/></summary>
         /// <param name="block">Block this builder is initially attached to</param>
         public InstructionBuilder( BasicBlock block )
-            : this( block.ContainingFunction.Type.Context )
+            : this( block.ContainingFunction.ParentModule.Context )
         {
             PositionAtEnd( block );
         }
+
+        public Context Context { get; }
 
         /// <summary>Positions the builder at the end of a given <see cref="BasicBlock"/></summary>
         /// <param name="basicBlock"></param>
@@ -131,7 +128,7 @@ namespace Llvm.NET
         public Alloca Alloca( TypeRef typeRef, string name )
         {
             var handle = LLVMNative.BuildAlloca( BuilderHandle, typeRef.TypeHandle, name );
-            return ( Alloca )Value.FromHandle( handle );
+            return Value.FromHandle<Alloca>( handle );
         }
 
         public Alloca Alloca( TypeRef typeRef, ConstantInt elements ) => Alloca( typeRef, elements, string.Empty );
@@ -139,12 +136,12 @@ namespace Llvm.NET
         public Alloca Alloca( TypeRef typeRef, ConstantInt elements, string name )
         {
             var instHandle = LLVMNative.BuildArrayAlloca( BuilderHandle, typeRef.TypeHandle, elements.ValueHandle, name );
-            return (Alloca)Value.FromHandle( instHandle );
+            return Value.FromHandle<Alloca>( instHandle );
         }
 
-        public Value Return( ) => Value.FromHandle( LLVMNative.BuildRetVoid( BuilderHandle ) );
+        public Return Return( ) => Value.FromHandle<Return>( LLVMNative.BuildRetVoid( BuilderHandle ) );
 
-        public Value Return( Value value ) => Value.FromHandle( LLVMNative.BuildRet( BuilderHandle, value.ValueHandle ) );
+        public Return Return( Value value ) => Value.FromHandle<Return>( LLVMNative.BuildRet( BuilderHandle, value.ValueHandle ) );
 
         public Call Call( Value func, params Value[ ] args ) => Call( string.Empty, func, ( IReadOnlyList<Value> )args );
         public Call Call( Value func, IReadOnlyList<Value> args ) => Call( string.Empty, func, args );
@@ -152,7 +149,7 @@ namespace Llvm.NET
         public Call Call( string name, Value func, IReadOnlyList<Value> args )
         {
             LLVMValueRef hCall = BuildCall( name, func, args );
-            return (Call)Value.FromHandle( hCall );
+            return Value.FromHandle<Call>( hCall );
         }
 
         /// <summary>Builds an LLVM Store instruction</summary>
@@ -178,10 +175,10 @@ namespace Llvm.NET
                 throw new ArgumentException( string.Format( IncompatibleTypeMsgFmt, ptrType.ElementType, value.Type ) );
             }
 
-            return (Store)Value.FromHandle( LLVMNative.BuildStore( BuilderHandle, value.ValueHandle, destination.ValueHandle ) );
+            return Value.FromHandle<Store>( LLVMNative.BuildStore( BuilderHandle, value.ValueHandle, destination.ValueHandle ) );
         }
 
-        public Load Load( Value sourcePtr ) => (Load)Value.FromHandle( LLVMNative.BuildLoad( BuilderHandle, sourcePtr.ValueHandle, string.Empty ) );
+        public Load Load( Value sourcePtr ) => Value.FromHandle<Load>( LLVMNative.BuildLoad( BuilderHandle, sourcePtr.ValueHandle, string.Empty ) );
 
         /// <summary>Creates a <see cref="User"/> that accesses an element (field) of a structure</summary>
         /// <param name="pointer">Pointer to the structure to get an element from</param>
@@ -392,12 +389,12 @@ namespace Llvm.NET
             return Value.FromHandle( hValue );
         }
 
-        public Value Branch( BasicBlock target ) => Value.FromHandle( LLVMNative.BuildBr( BuilderHandle, target.BlockHandle ) );
+        public Branch Branch( BasicBlock target ) => Value.FromHandle<Branch>( LLVMNative.BuildBr( BuilderHandle, target.BlockHandle ) );
 
-        public Value Branch( Value ifCondition, BasicBlock thenTarget, BasicBlock elseTarget )
+        public Branch Branch( Value ifCondition, BasicBlock thenTarget, BasicBlock elseTarget )
         {
             var branchHandle = LLVMNative.BuildCondBr( BuilderHandle, ifCondition.ValueHandle, thenTarget.BlockHandle, elseTarget.BlockHandle );
-            return Value.FromHandle( branchHandle );
+            return Value.FromHandle<Branch>( branchHandle );
         }
 
         /// <summary>Builds an Integer compare instruction</summary>
@@ -479,9 +476,6 @@ namespace Llvm.NET
         public Value ZeroExtendOrBitCast( Value valueRef, TypeRef targetType, string name )
         {
             // short circuit cast to same type as it won't be a Constant or a BitCast
-            // REVIEW: This is one of many edge cases that ultimately an imporved Value.FromHandle
-            // that could figure out the correct type based on TypeKind and IsaXXX functions
-            // would be able to avoid...
             if( valueRef.Type == targetType )
                 return valueRef;
 
@@ -499,9 +493,6 @@ namespace Llvm.NET
         public Value SignExtendOrBitCast( Value valueRef, TypeRef targetType, string name )
         {
             // short circuit cast to same type as it won't be a Constant or a BitCast
-            // REVIEW: This is one of many edge cases that ultimately an imporved Value.FromHandle
-            // that could figure out the correct type based on TypeKind and IsaXXX functions
-            // would be able to avoid...
             if( valueRef.Type == targetType )
                 return valueRef;
 
@@ -519,9 +510,6 @@ namespace Llvm.NET
         public Value TruncOrBitCast( Value valueRef, TypeRef targetType, string name )
         {
             // short circuit cast to same type as it won't be a Constant or a BitCast
-            // REVIEW: This is one of many edge cases that ultimately an imporved Value.FromHandle
-            // that could figure out the correct type based on TypeKind and IsaXXX functions
-            // would be able to avoid...
             if( valueRef.Type == targetType )
                 return valueRef;
 
@@ -556,9 +544,6 @@ namespace Llvm.NET
         public Value BitCast( Value valueRef, TypeRef targetType, string name )
         {
             // short circuit cast to same type as it won't be a Constant or a BitCast
-            // REVIEW: This is one of many edge cases that ultimately an imporved Value.FromHandle
-            // that could figure out the correct type based on TypeKind and IsaXXX functions
-            // would be able to avoid...
             if( valueRef.Type == targetType )
                 return valueRef;
 
@@ -611,14 +596,14 @@ namespace Llvm.NET
             if( valueRef is Constant )
                 return Value.FromHandle( LLVMNative.ConstFPExt( valueRef.ValueHandle, toType.TypeHandle ) );
             else
-                return Cast.FromHandle( LLVMNative.BuildFPExt( BuilderHandle, valueRef.ValueHandle, toType.TypeHandle, name ) );
+                return Cast.FromHandle<Value>( LLVMNative.BuildFPExt( BuilderHandle, valueRef.ValueHandle, toType.TypeHandle, name ) );
         }
 
         public PhiNode PhiNode( TypeRef resultType ) => PhiNode( resultType, string.Empty );
         public PhiNode PhiNode( TypeRef resultType, string name )
         {
             var handle = LLVMNative.BuildPhi( BuilderHandle, resultType.TypeHandle, string.Empty );
-            return (PhiNode)Value.FromHandle( handle );
+            return Value.FromHandle<PhiNode>( handle );
         }
 
         public Value ExtractValue( Value instance, uint index ) => ExtractValue( instance, index, string.Empty );
@@ -630,7 +615,7 @@ namespace Llvm.NET
 
         public Switch Switch( Value value, BasicBlock defaultCase, uint numCases )
         {
-            return (Switch)Value.FromHandle( LLVMNative.BuildSwitch( BuilderHandle, value.ValueHandle, defaultCase.BlockHandle, numCases ) );
+            return Value.FromHandle<Switch>( LLVMNative.BuildSwitch( BuilderHandle, value.ValueHandle, defaultCase.BlockHandle, numCases ) );
         }
 
         public Value DoNothing( Module module )
@@ -688,24 +673,42 @@ namespace Llvm.NET
             if( !len.Type.IsInteger )
                 throw new ArgumentException( "Integer type expected", nameof( len ) );
 
-            var ctx = module.Context;
+            if( Context != module.Context )
+                throw new ArgumentException( "Module and instruction builder must come from the same context" );
 
-            destination = BitCast( destination, ctx.Int8Type.CreatePointerType( ) );
-            source = BitCast( source, ctx.Int8Type.CreatePointerType( ) );
+            if( !dstPtrType.ElementType.IsInteger )
+            {
+                dstPtrType = module.Context.Int8Type.CreatePointerType();
+                destination = BitCast( destination, dstPtrType );
+            }
+
+            if( !srcPtrType.ElementType.IsInteger )
+            {
+                srcPtrType = module.Context.Int8Type.CreatePointerType();
+                source = BitCast( destination, srcPtrType );
+            }
+
             var intrinsicName = Instructions.MemCpy.GetIntrinsicNameForArgs( dstPtrType, srcPtrType, len.Type );
             var func = module.GetFunction( intrinsicName );
             if( func == null )
             {
-                var signature = ctx.GetFunctionType( ctx.VoidType  // return
+                var signature = module.Context.GetFunctionType( module.Context.VoidType  // return
                                                    , dstPtrType
                                                    , srcPtrType
                                                    , len.Type
-                                                   , ctx.Int32Type // alignment
-                                                   , ctx.BoolType  // isVolatile
+                                                   , module.Context.Int32Type // alignment
+                                                   , module.Context.BoolType  // isVolatile
                                                    );
                 func = module.AddFunction( intrinsicName, signature );
             }
-            var call = BuildCall( func, destination, source, len, ConstantInt.From( align ), ConstantInt.From( isVolatile ) );
+
+            var call = BuildCall( func
+                                , destination
+                                , source
+                                , len
+                                , module.Context.CreateConstant( align )
+                                , module.Context.CreateConstant( isVolatile )
+                                );
             return Value.FromHandle( call );
         }
 
@@ -725,6 +728,7 @@ namespace Llvm.NET
         /// </remarks>
         public Value MemMove( Module module, Value destination, Value source, Value len, Int32 align, bool isVolatile )
         {
+            //TODO: make this auto select the LLVM instrinsic signature like memcpy...
             if( !destination.Type.IsPointer )
                 throw new ArgumentException( "Pointer type expected", nameof( destination ) );
 
@@ -751,7 +755,8 @@ namespace Llvm.NET
                                                    );
                 func = module.AddFunction( Intrinsic.MemMoveName, signature );
             }
-            var call = BuildCall( func, destination, source, len, ConstantInt.From( align ), ConstantInt.From( isVolatile ) );
+
+            var call = BuildCall( func, destination, source, len, module.Context.CreateConstant( align ), module.Context.CreateConstant( isVolatile ) );
             return Value.FromHandle( call );
         }
 
@@ -793,7 +798,15 @@ namespace Llvm.NET
                                                    );
                 func = module.AddFunction( Intrinsic.MemSetName, signature );
             }
-            var call = BuildCall( func, destination, value, len, ConstantInt.From( align ), ConstantInt.From( isVolatile ) );
+
+            var call = BuildCall( func
+                                , destination
+                                , value
+                                , len
+                                , module.Context.CreateConstant( align )
+                                , module.Context.CreateConstant( isVolatile )
+                                );
+
             return Value.FromHandle( call );
         }
 
@@ -919,6 +932,5 @@ namespace Llvm.NET
                                             + "Types are:\n"
                                             + "\tDestination: {0}\n"
                                             + "\tValue: {1}";
-
     }
 }

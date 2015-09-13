@@ -48,12 +48,6 @@
         /// <summary>Module containing this global value</summary>
         public Module ParentModule => Type.Context.GetModuleFor( LLVMNative.GetGlobalParent( ValueHandle ) );
 
-        [System.Diagnostics.CodeAnalysis.SuppressMessage( "Language", "CSE0003:Use expression-bodied members", Justification = "Readability" )]
-        internal new static GlobalValue FromHandle( LLVMValueRef valueRef )
-        {
-            return (GlobalValue)Context.CurrentContext.GetValueFor( valueRef, ( h )=>new GlobalValue( h ) );
-        }
-
         internal GlobalValue( LLVMValueRef valueRef )
             : base( ValidateConversion( valueRef, LLVMNative.IsAGlobalValue ) )
         {

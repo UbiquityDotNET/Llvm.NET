@@ -13,7 +13,7 @@ namespace Llvm.NET.Values
         : GlobalObject
     {
         /// <summary>Signature type of the function</summary>
-        public FunctionType Signature => FunctionType.FromHandle( LLVMNative.GetElementType( LLVMNative.TypeOf( ValueHandle ) ) );
+        public FunctionType Signature => TypeRef.FromHandle<FunctionType>( LLVMNative.GetElementType( LLVMNative.TypeOf( ValueHandle ) ) );
 
         /// <summary>Entry block for this function</summary>
         public BasicBlock EntryBlock
@@ -37,7 +37,7 @@ namespace Llvm.NET.Values
                 if( count > 0 )
                     LLVMNative.GetBasicBlocks( ValueHandle, out buf[ 0 ] );
 
-                return buf.Select( BasicBlock.FromHandle )
+                return buf.Select( h => BasicBlock.FromHandle( h ) )
                           .ToList( )
                           .AsReadOnly( );
             }

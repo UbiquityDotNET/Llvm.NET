@@ -12,11 +12,5 @@ namespace Llvm.NET.Types
             if( LLVMNative.GetTypeKind( typeRef ) != LLVMTypeKind.LLVMVectorTypeKind )
                 throw new ArgumentException( "Vector type reference expected", nameof( typeRef ) );
         }
-
-        [System.Diagnostics.CodeAnalysis.SuppressMessage( "Language", "CSE0003:Use expression-bodied members", Justification = "Readability" )]
-        internal new static VectorType FromHandle( LLVMTypeRef typeRef )
-        {
-            return ( VectorType )Context.CurrentContext.GetTypeFor( typeRef, ( h ) => new VectorType( h ) );
-        }
     }
 }

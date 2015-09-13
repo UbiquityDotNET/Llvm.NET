@@ -25,11 +25,5 @@
                 }
             }
         }
-
-        [System.Diagnostics.CodeAnalysis.SuppressMessage( "Language", "CSE0003:Use expression-bodied members", Justification = "Readability" )]
-        internal new static Cmp FromHandle( LLVMValueRef valueRef )
-        {
-            return (Cmp)Context.CurrentContext.GetValueFor( valueRef, ( h )=>new Cmp( h ) );
-        }
     }
 }

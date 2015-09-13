@@ -51,7 +51,7 @@ namespace Llvm.NET.Types
                 {
                     LLVMTypeRef[] structElements = new LLVMTypeRef[ LLVMNative.CountStructElementTypes( TypeHandle ) ];
                     LLVMNative.GetStructElementTypes( TypeHandle, out structElements[ 0 ] );
-                    members.AddRange( structElements.Select( TypeRef.FromHandle ) );
+                    members.AddRange( structElements.Select( h=> FromHandle<TypeRef>( h ) ) );
                 }
                 return members;
             }
@@ -85,12 +85,6 @@ namespace Llvm.NET.Types
         internal StructType( LLVMTypeRef typeRef )
             : base( typeRef )
         {
-        }
-
-        [System.Diagnostics.CodeAnalysis.SuppressMessage( "Language", "CSE0003:Use expression-bodied members", Justification = "Readability" )]
-        internal new static StructType FromHandle( LLVMTypeRef typeRef )
-        {
-            return ( StructType )Context.CurrentContext.GetTypeFor( typeRef, ( h ) => new StructType( h ) );
         }
     }
 }

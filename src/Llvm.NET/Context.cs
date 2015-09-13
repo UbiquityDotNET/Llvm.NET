@@ -13,72 +13,33 @@ namespace Llvm.NET
     /// <summary>Encapsulates an LLVM context</summary>
     /// <remarks>
     /// <para>A context in LLVM is a container for uniqueing (e.g. interning)
-    /// various types and values in the system. There are two kinds of
-    /// contexts, the global context which is used as a default for single
-    /// threaded applications. The second form is the per thread context,
-    /// which provides uniqueness of items on a per thread basis. This allows
+    /// various types and values in the system. This allows
     /// running multiple LLVM tool transforms etc.. on different threads
     /// without causing them to collide namespaces and types even if 
     /// they use the same name (e.g. module one may have a type Foo, and
     /// so does module two but they are completely distinct from each other)
-    /// The global context allows for sharing uniqued items that are common
-    /// across multiple parallel processing of LLVM modules so they aren't
-    /// re-created for each one. This is most often used for standard
-    /// language and run-time support functions etc...</para>
-    /// <para>Since a Context essentially owns the lifetime of various
-    /// LLVM internal objects it must be disposed of to properly clean up
-    /// and shutdown LLVM. While the Context class has a <see cref="CurrentContext"/>
-    /// property to prevent needing to pass the context around to everything
-    /// it is not automaticallly created on first use. To ensure that the 
-    /// context is disposed in a controlled fashion the <see cref="CreateThreadContext"/>
-    /// method is typically called in a using statement to automatically 
-    /// dispose the context when work with LLVM is completed.
-    /// </para>
-    /// <para>
-    /// It is important to note that a Context is not thread safe. The context 
-    /// itself and the object instances it owns are intended for use by a single
-    /// thread only. Accessing and manipulating LLVM objects from multiple threads
-    /// may lead to race conditions corrupted state and any number of other issues.
-    /// </para>
+    ///</para>
+    /// <para>LLVM Debug information is ultimately all parented to a top level
+    /// <see cref="DebugInfo.DICompileUnit"/> as the scope, and a compilation
+    /// unit is bound to a module, even though, technically the types are owned
+    /// by a context. Thus to keep things simpler and help make working with
+    /// debug infomration easier. Lllvm.NET encapsulates the context into a module.
+    /// This establishes a strict one to one module and context. Doing this allows
+    /// Llvm.NET to add debug information properties to <see cref="Types.TypeRef"/>s
+    /// and other classes. It also allows for establishing a fluent style programming
+    /// for adding debug location information to instructions. While this is a
+    /// technical departure from the underlying LLVM implementation the significant
+    /// simplification of managing debug information makes it worth the small
+    /// deviation.</para>
+    /// <note type="note">It is important to be aware of the fact that a Context
+    /// is not thread safe. The context itself and the object instances it owns
+    /// are intended for use by a single thread only. Accessing and manipulating
+    /// LLVM objects from multiple threads may lead to race conditions corrupted
+    /// state and any number of other issues.</note>
     /// </remarks>
-    public class Context 
-        : IDisposable
+    public sealed class Context 
     {
-        #region IDisposable Pattern
-        public void Dispose()
-        {
-            Dispose( true );
-            GC.SuppressFinalize( ContextHandle );
-        }
-
-        ~Context()
-        {
-            Dispose( false );
-        }
-
-        protected virtual void Dispose( bool disposing )
-        {
-            if( ContextHandle.Pointer != IntPtr.Zero )
-            {
-                if( disposing )
-                {
-                    lock(ContextCache)
-                    {
-                        ContextCache.Remove( ContextHandle );
-                    }
-                    foreach( var module in ModuleCache.Values )
-                        module.Dispose( );
-
-                    ModuleCache.Clear( );
-                }
-
-                LLVMNative.ContextDispose( ContextHandle );
-                ContextHandle = new LLVMContextRef( );
-                if( CurrentContext_ == this )
-                    CurrentContext_ = null;
-            }
-        }
-        #endregion
+        public bool IsDisposed => ContextHandle.Pointer == IntPtr.Zero;
 
         /// <summary>Get's the LLVM void type for this context</summary>
         public TypeRef VoidType => TypeRef.FromHandle( LLVMNative.VoidTypeInContext( ContextHandle ) );
@@ -110,7 +71,7 @@ namespace Llvm.NET
         /// <summary>Get a type that is a pointer to a value of a given type</summary>
         /// <param name="elementType">Type of value the pointer points to</param>
         /// <returns><see cref="PointerType"/> for a pointer that references a value of type <paramref name="elementType"/></returns>
-        public PointerType GetPointerTypeFor( TypeRef elementType ) => PointerType.FromHandle( LLVMNative.PointerType( elementType.TypeHandle, 0 ) );
+        public PointerType GetPointerTypeFor( TypeRef elementType ) => TypeRef.FromHandle<PointerType>( LLVMNative.PointerType( elementType.TypeHandle, 0 ) );
 
         /// <summary>Get's an LLVM integer type of arbitrary bit width</summary>
         /// <remarks>
@@ -177,7 +138,7 @@ namespace Llvm.NET
                 llvmArgs = new LLVMTypeRef[ 1 ];
 
             var signature = LLVMNative.FunctionType( returnType.TypeHandle, out llvmArgs[ 0 ], (uint)argCount, isVarArgs );
-            return FunctionType.FromHandle( signature );
+            return TypeRef.FromHandle<FunctionType>( signature );
         }
 
         /// <summary>Creates a FunctionType with Debug information</summary>
@@ -279,7 +240,7 @@ namespace Llvm.NET
                 throw new ArgumentException( "structure must have at least one element", nameof( values ) );
 
             var handle = LLVMNative.ConstStructInContext( ContextHandle, out valueHandles[ 0 ], (uint)valueHandles.Length, packed );
-            return (ConstantStruct)Value.FromHandle( handle );
+            return Value.FromHandle<ConstantStruct>( handle );
         }
 
         /// <summary>Creates a constant instance of a specified structure type from a set of values</summary>
@@ -326,7 +287,7 @@ namespace Llvm.NET
 
             var valueHandles = values.Select( v => v.ValueHandle ).ToArray( );
             var handle = LLVMNative.ConstNamedStruct(type.TypeHandle, out valueHandles[ 0 ], ( uint )valueHandles.Length );
-            return Constant.FromHandle( handle );
+            return Value.FromHandle<Constant>( handle );
         }
 
         /// <summary>Create an empty structure type</summary>
@@ -337,10 +298,10 @@ namespace Llvm.NET
             if( string.IsNullOrWhiteSpace( name ) )
                 throw new ArgumentNullException( nameof( name ) );
 
-            var hType = LLVMNative.StructCreateNamed( ContextHandle, name );
-            return StructType.FromHandle( hType );
+            var handle = LLVMNative.StructCreateNamed( ContextHandle, name );
+            return TypeRef.FromHandle<StructType>( handle );
         }
-
+        
         /// <summary>Create an anonymous structure type (e.g. Tuple)</summary>
         /// <param name="packed">Flag to indicate if the structure is "packed"</param>
         /// <param name="element0">Type of the first field of the structure</param>
@@ -356,7 +317,7 @@ namespace Llvm.NET
                 llvmArgs[ i ] = elements[ i - 1 ].TypeHandle;
 
             var handle = LLVMNative.StructTypeInContext( ContextHandle, out llvmArgs[ 0 ], ( uint )llvmArgs.Length, packed );
-            return StructType.FromHandle( handle );
+            return TypeRef.FromHandle<StructType>( handle );
         }
 
         /// <summary>Creates a new structure type in this <see cref="Context"/></summary>
@@ -374,27 +335,12 @@ namespace Llvm.NET
         /// </remarks>
         public StructType CreateStructType( string name, bool packed, params TypeRef[] elements )
         {
-            var retVal = StructType.FromHandle( LLVMNative.StructCreateNamed( ContextHandle, name ) );
+            var retVal = TypeRef.FromHandle<StructType>( LLVMNative.StructCreateNamed( ContextHandle, name ) );
             if( elements.Length > 0 )
             {
                 retVal.SetBody( packed, elements );
             }
             return retVal;
-        }
-
-        /// <summary>Creates an LLVM bit code module for generating bit code into</summary>
-        /// <param name="moduleId">Identifier for the module</param>
-        /// <returns>LLVM <see cref="Module"/></returns>
-        public Module CreateModule( string moduleId )
-        {
-            if( moduleId == null )
-                throw new ArgumentNullException( nameof( moduleId ) );
-
-            var retVal = LLVMNative.ModuleCreateWithNameInContext( moduleId, ContextHandle );
-            if( retVal.Pointer == IntPtr.Zero )
-                return null;
-
-            return GetModuleFor( retVal );
         }
 
         /// <summary>Creates a metadata string from the given string</summary>
@@ -417,7 +363,7 @@ namespace Llvm.NET
         public ConstantDataArray CreateConstantString( string value )
         {
             var handle = LLVMNative.ConstStringInContext( ContextHandle, value, (uint)value.Length, true );
-            return (ConstantDataArray)Value.FromHandle( handle );
+            return Value.FromHandle<ConstantDataArray>( handle );
         }
 
         /// <summary>Create a constant data string value</summary>
@@ -425,53 +371,149 @@ namespace Llvm.NET
         /// <param name="nullTerminate">flag to indicate if the string should include a null terminator</param>
         /// <returns>new <see cref="ConstantDataArray"/></returns>
         /// <remarks>
-        /// This converts th string to ANSI form and creates an LLVM constant array of i8 
+        /// This converts the string to ANSI form and creates an LLVM constant array of i8 
         /// characters for the data without any terminating null character.
         /// </remarks>
         public ConstantDataArray CreateConstantString( string value, bool nullTerminate )
         {
             var handle = LLVMNative.ConstStringInContext( ContextHandle, value, (uint)value.Length, !nullTerminate );
-            return (ConstantDataArray)Value.FromHandle( handle );
+            return Value.FromHandle<ConstantDataArray>( handle );
         }
 
-        /// <summary>Global context</summary>
-        public static Context GlobalContext => LazyGlobalContext.Value;
-
-        /// <summary>Current thread context</summary>
-        /// <remarks>
-        /// <para>Users of this context must never store or retain it outside of the immediate scope where this is accessed.
-        /// The context is disposable and there can be only one owner with the resposibility to dispose the instance
-        /// for proper clean up of LLVM native resources.</para>
-        /// <para>If no owner has created a per thread context then this property will return null. The owner must call
-        /// <see cref="CreateThreadContext"/>, typically in a using statement, to force the creatino of the context for
-        /// the current thread.</para>
-        /// </remarks>
-        public static Context CurrentContext => CurrentContext_;
-
-        /// <summary>Creates a per thread context for the current thread</summary>
-        /// <returns>new <see cref="Context"/> for the current thread</returns>
-        /// <remarks>
-        /// The <see cref="CurrentContext"/> property is null until after this method is called. When this method is called
-        /// a new context is created and set as the <see cref="CurrentContext"/>. When the returned <see cref="Context"/>
-        /// is disposed <see cref="CurrentContext"/> is reset to null. Furthermore, if <see cref="CurrentContext"/> is not
-        /// null when this is called an <see cref="InvalidOperationException"/> is thrown. This ensures that there is only
-        /// one owner with the responsibility of disposing the context for a thread. 
-        /// </remarks>
-        public static Context CreateThreadContext()
+        /// <summary>Creates a new <see cref="ConstantInt"/> with a bit length of 1</summary>
+        /// <param name="constValue">Value for the constant</param>
+        /// <returns><see cref="ConstantInt"/> representing the value</returns>
+        public Constant CreateConstant( bool constValue )
         {
-            if( CurrentContext_ != null )
-                throw new InvalidOperationException( "Only one lifetime controlling point allowed for per thread context");
-
-            CurrentContext_ = new Context();
-            return CurrentContext_;
+            var handle = LLVMNative.ConstInt( BoolType.TypeHandle
+                                            , ( ulong )( constValue ? 1 : 0 )
+                                            , new LLVMBool( 0 )
+                                            );
+            return Value.FromHandle<Constant>( handle );
         }
 
-        internal Context( )
-            : this( LLVMNative.ContextCreate( ) )
+        /// <summary>Creates a new <see cref="ConstantInt"/> with a bit length of 8</summary>
+        /// <param name="constValue">Value for the constant</param>
+        /// <returns><see cref="ConstantInt"/> representing the value</returns>
+        public  Constant CreateConstant( byte constValue )
         {
+            var handle = LLVMNative.ConstInt( Int8Type.TypeHandle, constValue, new LLVMBool( 0 ) );
+            return Value.FromHandle<Constant>( handle );
+        }
+
+        /// <summary>Creates a new <see cref="ConstantInt"/> with a bit length of 8</summary>
+        /// <param name="constValue">Value for the constant</param>
+        /// <returns><see cref="ConstantInt"/> representing the value</returns>
+        public  Constant CreateConstant( sbyte constValue )
+        {
+            var handle = LLVMNative.ConstInt( Int8Type.TypeHandle, ( ulong )constValue, new LLVMBool( 1 ) );
+            return Value.FromHandle<Constant>( handle );
+        }
+
+        /// <summary>Creates a new <see cref="ConstantInt"/> with a bit length of 16</summary>
+        /// <param name="constValue">Value for the constant</param>
+        /// <returns><see cref="ConstantInt"/> representing the value</returns>
+        public  Constant CreateConstant( Int16 constValue )
+        {
+            var handle = LLVMNative.ConstInt( Int16Type.TypeHandle, ( ulong )constValue, new LLVMBool( 1 ) );
+            return Value.FromHandle<Constant>( handle );
+        }
+
+        /// <summary>Creates a new <see cref="ConstantInt"/> with a bit length of 16</summary>
+        /// <param name="constValue">Value for the constant</param>
+        /// <returns><see cref="ConstantInt"/> representing the value</returns>
+        [System.Diagnostics.CodeAnalysis.SuppressMessage( "Language", "CSE0003:Use expression-bodied members", Justification = "Readability" )]
+        public  Constant CreateConstant( UInt16 constValue )
+        {
+            var handle = LLVMNative.ConstInt( Int16Type.TypeHandle, ( ulong )constValue, new LLVMBool( 0 ) );
+            return Value.FromHandle<Constant>( handle );
+        }
+
+        /// <summary>Creates a new <see cref="ConstantInt"/> with a bit length of 32</summary>
+        /// <param name="constValue">Value for the constant</param>
+        /// <returns><see cref="ConstantInt"/> representing the value</returns>
+        public  Constant CreateConstant( Int32 constValue )
+        {
+            var handle = LLVMNative.ConstInt( Int32Type.TypeHandle, ( ulong )constValue, new LLVMBool( 1 ) );
+            return Value.FromHandle<Constant>( handle );
+        }
+
+        /// <summary>Creates a new <see cref="ConstantInt"/> with a bit length of 32</summary>
+        /// <param name="constValue">Value for the constant</param>
+        /// <returns><see cref="ConstantInt"/> representing the value</returns>
+        public  Constant CreateConstant( UInt32 constValue )
+        {
+            var handle = LLVMNative.ConstInt( Int32Type.TypeHandle, constValue, new LLVMBool( 0 ) );
+            return Value.FromHandle<Constant>( handle );
+        }
+
+        /// <summary>Creates a new <see cref="ConstantInt"/> with a bit length of 64</summary>
+        /// <param name="constValue">Value for the constant</param>
+        /// <returns><see cref="ConstantInt"/> representing the value</returns>
+        public  Constant CreateConstant( Int64 constValue )
+        {
+            var handle = LLVMNative.ConstInt( Int64Type.TypeHandle, ( ulong )constValue, new LLVMBool( 1 ) );
+            return Value.FromHandle<Constant>( handle );
+        }
+
+        /// <summary>Creates a new <see cref="ConstantInt"/> with a bit length of 64</summary>
+        /// <param name="constValue">Value for the constant</param>
+        /// <returns><see cref="ConstantInt"/> representing the value</returns>
+        [System.Diagnostics.CodeAnalysis.SuppressMessage( "Language", "CSE0003:Use expression-bodied members", Justification = "Readability" )]
+        public  Constant CreateConstant( UInt64 constValue )
+        {
+            var handle = LLVMNative.ConstInt( Int64Type.TypeHandle, constValue, new LLVMBool( 0 ) );
+            return Value.FromHandle<Constant>( handle );
+        }
+
+        /// <summary>Creates a new <see cref="ConstantInt"/> with a bit length of 64</summary>
+        /// <param name="bitWidth">Bit width of the integer</param>
+        /// <param name="constValue">Value for the constant</param>
+        /// <param name="signExtend">flag to indicate if the const value should be sign extended</param>
+        /// <returns><see cref="ConstantInt"/> representing the value</returns>
+        public  Constant CreateConstant( uint bitWidth, UInt64 constValue, bool signExtend )
+        {
+            var intType = GetIntType( bitWidth );
+            return CreateConstant( intType, constValue, signExtend );
+        }
+
+        public  Constant CreateConstant( TypeRef intType, UInt64 constValue, bool signExtend )
+        {
+            if( intType.Kind != TypeKind.Integer )
+                throw new ArgumentException( "Integer type required", nameof( intType ) );
+
+            return Value.FromHandle<Constant>( LLVMNative.ConstInt( intType.TypeHandle, constValue, signExtend ) );
+        }
+
+        public ConstantFP CreateConstant( float constValue )
+        {
+            return Value.FromHandle<ConstantFP>( LLVMNative.ConstReal( FloatType.TypeHandle, constValue ) );
+        }
+
+        public ConstantFP CreateConstant( double constValue )
+        {
+            return Value.FromHandle<ConstantFP>( LLVMNative.ConstReal( DoubleType.TypeHandle, constValue ) );
+        }
+
+        internal void Close()
+        {
+            if( ContextHandle.Pointer != IntPtr.Zero )
+            {
+                lock( ContextCache )
+                {
+                    ContextCache.Remove( ContextHandle );
+                }
+                LLVMNative.ContextDispose( ContextHandle );
+                ContextHandle = default( LLVMContextRef );
+            }
         }
 
         #region Interning Factories
+        internal void AddModule( Module module )
+        {
+            ModuleCache.Add( module.ModuleHandle.Pointer, module );
+        }
+
         internal Module GetModuleFor( LLVMModuleRef moduleRef )
         {
             if( moduleRef.Pointer == IntPtr.Zero )
@@ -479,16 +521,47 @@ namespace Llvm.NET
 
             Module retVal;
             if( !ModuleCache.TryGetValue( moduleRef.Pointer, out retVal ) )
-            { 
-                retVal = new Module( moduleRef );
-                ModuleCache.Add( moduleRef.Pointer, retVal );
-            }
+                return null;
+
             return retVal;
+        }
+
+        internal static Context GetContextFor( LLVMModuleRef moduleRef )
+        {
+            if( moduleRef.Pointer == IntPtr.Zero )
+                return null;
+
+            var hContext = LLVMNative.GetModuleContext( moduleRef );
+            Debug.Assert( hContext.Pointer != IntPtr.Zero );
+            return GetContextFor( hContext );
+        }
+
+        internal static Context GetContextFor( LLVMValueRef valueRef )
+        {
+            if( valueRef.Pointer == IntPtr.Zero )
+                return null;
+
+            var hType = LLVMNative.TypeOf( valueRef );
+            Debug.Assert( hType.Pointer != IntPtr.Zero );
+            return GetContextFor( hType );
+        }
+
+        internal static Context GetContextFor( LLVMTypeRef typeRef )
+        {
+            if( typeRef.Pointer == IntPtr.Zero )
+                return null;
+
+            var hContext = LLVMNative.GetTypeContext( typeRef );
+            Debug.Assert( hContext.Pointer != IntPtr.Zero );
+            return GetContextFor( hContext );
         }
 
         internal static Context GetContextFor( LLVMContextRef contextRef )
         {
-            lock( ContextCache )
+            if( contextRef.Pointer == IntPtr.Zero )
+                return null;
+
+            lock ( ContextCache )
             {
                 Context retVal;
                 if( ContextCache.TryGetValue( contextRef, out retVal ) )
@@ -528,6 +601,12 @@ namespace Llvm.NET
             ValueCache.Add( value.ValueHandle.Pointer, value );
         }
 
+        [Conditional("DEBUG")]
+        internal void AssertTypeNotInterned( LLVMTypeRef typeRef )
+        {
+            Debug.Assert( !TypeCache.ContainsKey( typeRef.Pointer ) );
+        }
+
         internal TypeRef GetTypeFor( LLVMTypeRef valueRef, Func<LLVMTypeRef, TypeRef> constructor )
         {
             if( valueRef.Pointer == IntPtr.Zero )
@@ -543,6 +622,11 @@ namespace Llvm.NET
         }
         #endregion
 
+        internal Context( )
+            : this( LLVMNative.ContextCreate( ) )
+        {
+        }
+
         private Context( LLVMContextRef contextRef )
         {
             ContextHandle = contextRef;
@@ -555,6 +639,7 @@ namespace Llvm.NET
 
         private void DiagnosticHandler(out LLVMOpaqueDiagnosticInfo param0, IntPtr param1)
         {
+            Debug.Assert( false );
         }
 
         private Dictionary<IntPtr, Value> ValueCache = new Dictionary<IntPtr, Value>( );
@@ -568,12 +653,6 @@ namespace Llvm.NET
         }
 
         private static Dictionary<LLVMContextRef, Context> ContextCache = new Dictionary<LLVMContextRef, Context>( );
-
-        [ThreadStatic]
-        private static Context CurrentContext_;
-        private static Lazy<Context> LazyGlobalContext = new Lazy<Context>( ( ) => GetContextFor( LLVMNative.GetGlobalContext( ) )
-                                                                          , LazyThreadSafetyMode.ExecutionAndPublication
-                                                                          );
 
         // lazy init a singleton unmanaged delegate and hold on to it so it is never collected
         private static Lazy<LLVMFatalErrorHandler> FatalErrorHandlerDelegate 

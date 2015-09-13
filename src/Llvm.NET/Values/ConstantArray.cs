@@ -39,7 +39,7 @@ namespace Llvm.NET.Values
                 valueHandles = new LLVMValueRef[ 1 ];
 
             var handle = LLVMNative.ConstArray( elementType.TypeHandle, out valueHandles[ 0 ], (uint)argCount );
-            return Constant.FromHandle( handle );
+            return FromHandle<Constant>( handle );
         }
 
         internal ConstantArray( LLVMValueRef valueRef )

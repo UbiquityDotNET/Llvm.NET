@@ -15,11 +15,5 @@ namespace Llvm.NET.Types
             if( LLVMNative.GetTypeKind( typeRef ) != LLVMTypeKind.LLVMPointerTypeKind )
                 throw new ArgumentException( "Pointer type reference expected", nameof( typeRef ) );
         }
-
-        [System.Diagnostics.CodeAnalysis.SuppressMessage( "Language", "CSE0003:Use expression-bodied members", Justification = "Readability" )]
-        internal new static PointerType FromHandle( LLVMTypeRef typeRef )
-        {
-            return ( PointerType )Context.CurrentContext.GetTypeFor( typeRef, ( h ) => new PointerType( h ) );
-        }
     }
 }

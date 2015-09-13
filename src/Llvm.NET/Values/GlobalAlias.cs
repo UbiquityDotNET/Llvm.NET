@@ -17,7 +17,7 @@ namespace Llvm.NET.Values
                 if( handle.Pointer == IntPtr.Zero )
                     return null;
 
-                return Constant.FromHandle( handle );
+                return FromHandle<Constant>( handle );
             }
         }
 

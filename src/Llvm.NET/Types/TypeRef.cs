@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Runtime.InteropServices;
 using Llvm.NET.DebugInfo;
 using Llvm.NET.Values;
 
@@ -67,14 +66,7 @@ namespace Llvm.NET.Types
         public bool IsStruct => Kind == TypeKind.Struct;
 
         /// <summary>Context that owns this type</summary>
-        public Context Context
-        {
-            get
-            {
-                var hContext = LLVMNative.GetTypeContext( TypeHandle );
-                return Context.GetContextFor( hContext );
-            }
-        }
+        public Context Context => Context.GetContextFor( TypeHandle );
 
         /// <summary>Integer bid width of this type or 0 for non integer types</summary>
         public uint IntegerBitWidth
@@ -98,6 +90,7 @@ namespace Llvm.NET.Types
         public DIType DIType { get; internal set; }
 
         /// <summary>Retrieves an expression that results in the size of the type</summary>
+        [Obsolete("Use TargetData layout information to compute size and create a constant from that")]
         public Constant GetSizeOfExpression()
         {
             if( !IsSized
@@ -106,7 +99,7 @@ namespace Llvm.NET.Types
                 || ( Kind == TypeKind.Struct && ( LLVMNative.IsOpaqueStruct( TypeHandle ) ) )
                 )
             {
-                return ConstantInt.From( 0 );
+                return Context.CreateConstant( 0 );
             }
 
             var hSize = LLVMNative.SizeOf( TypeHandle );
@@ -118,19 +111,19 @@ namespace Llvm.NET.Types
 
             var hConstExp =  LLVMNative.IsAConstantExpr( hSize );
             if( hConstExp.Pointer != null )
-                return ConstantExpression.FromHandle( hConstExp );
+                return Value.FromHandle<ConstantExpression>( hConstExp );
 
             var hConstInt = LLVMNative.IsAConstantInt( hSize );
             if( hConstInt.Pointer != null )
-                return ConstantInt.FromHandle( hConstInt );
+                return Value.FromHandle<ConstantInt>( hConstInt );
 
-            return Constant.FromHandle( hSize );
+            return Value.FromHandle<Constant>( hSize );
         }
 
         /// <summary>Array type factory for an array with elements of this type</summary>
         /// <param name="count">Number of elements in the array</param>
         /// <returns><see cref="ArrayType"/> for the array</returns>
-        public ArrayType CreateArrayType( uint count ) => ArrayType.FromHandle( LLVMNative.ArrayType( TypeHandle, count ) );
+        public ArrayType CreateArrayType( uint count ) => FromHandle<ArrayType>( LLVMNative.ArrayType( TypeHandle, count ) );
 
         /// <summary>Get a <see cref="PointerType"/> for a type that points to elements of this type in the default (0) address space</summary>
         /// <returns><see cref="PointerType"/>corresponding to the type of a pointer that referns to elements of this type</returns>
@@ -139,7 +132,7 @@ namespace Llvm.NET.Types
         /// <summary>Get a <see cref="PointerType"/> for a type that points to elements of this type in the specified address space</summary>
         /// <param name="addressSpace">Address space for the pointer</param>
         /// <returns><see cref="PointerType"/>corresponding to the type of a pointer that referns to elements of this type</returns>
-        public PointerType CreatePointerType( uint addressSpace ) => PointerType.FromHandle( LLVMNative.PointerType( TypeHandle, addressSpace ) );
+        public PointerType CreatePointerType( uint addressSpace ) => FromHandle<PointerType>( LLVMNative.PointerType( TypeHandle, addressSpace ) );
 
         public bool TryGetExtendedPropertyValue<T>( string id, out T value ) => ExtensibleProperties.TryGetExtendedPropertyValue<T>( id, out value );
         public void AddExtendedPropertyValue( string id, object value ) => ExtensibleProperties.AddExtendedPropertyValue( id, value );
@@ -224,6 +217,11 @@ namespace Llvm.NET.Types
             TypeHandle = typeRef;
             if( typeRef.Pointer == IntPtr.Zero )
                 throw new ArgumentNullException( nameof( typeRef ) );
+
+#if DEBUG
+            var ctx = Llvm.NET.Context.GetContextFor( typeRef );
+            ctx.AssertTypeNotInterned( typeRef );
+#endif
         }
 
         private static DIBasicType GetDiBasicType( TypeRef llvmType, DebugInfoBuilder diBuilder, TargetData layout, string name )
@@ -249,25 +247,36 @@ namespace Llvm.NET.Types
             }
         }
 
-        internal static TypeRef FromHandle( LLVMTypeRef typeRef )
+        internal static TypeRef FromHandle( LLVMTypeRef typeRef ) => FromHandle<TypeRef>( typeRef );
+        internal static T FromHandle<T>( LLVMTypeRef typeRef )
+            where T : TypeRef
+        {
+            if( typeRef.Pointer == IntPtr.Zero )
+                return null;
+
+            var ctx = Context.GetContextFor( typeRef );
+            return ( T )ctx.GetTypeFor( typeRef, StaticFactory );
+        }
+
+        private static TypeRef StaticFactory( LLVMTypeRef typeRef )
         {
             var kind = (TypeKind)LLVMNative.GetTypeKind( typeRef );
             switch( kind )
             {
             case TypeKind.Struct:
-                return StructType.FromHandle( typeRef );
+                return new StructType( typeRef );
 
             case TypeKind.Array:
-                return ArrayType.FromHandle( typeRef );
+                return new ArrayType( typeRef );
 
             case TypeKind.Pointer:
-                return PointerType.FromHandle( typeRef );
+                return new PointerType( typeRef );
 
             case TypeKind.Vector:
-                return VectorType.FromHandle( typeRef );
+                return new VectorType( typeRef );
 
             case TypeKind.Function: // NOTE: This is a signature rather than a Function, which is a Value
-                return FunctionType.FromHandle( typeRef );
+                return new FunctionType( typeRef );
 
             // other types not yet supported in Object wrappers
             // but the pattern for doing so should be pretty obvious...
@@ -283,7 +292,7 @@ namespace Llvm.NET.Types
             case TypeKind.Metadata:
             case TypeKind.X86MMX:
             default:
-                return Context.CurrentContext.GetTypeFor( typeRef, ( h ) => new TypeRef( typeRef ) );
+                return new TypeRef( typeRef );
             }
         }
 

@@ -25,7 +25,7 @@ namespace Llvm.NET.Values
                 // cache functions and use lookups to ensure
                 // identity/interning remains consistent with actual
                 // LLVM model of interning
-                return (Function)Value.FromHandle( parent );
+                return Value.FromHandle<Function>( parent );
             }
         }
 
@@ -38,7 +38,7 @@ namespace Llvm.NET.Values
                 if( firstInst.Pointer == IntPtr.Zero )
                     return null;
 
-                return (Instruction)Value.FromHandle( firstInst );
+                return Value.FromHandle<Instruction>( firstInst );
             }
         }
 
@@ -51,7 +51,7 @@ namespace Llvm.NET.Values
                 if( lastInst.Pointer == IntPtr.Zero)
                     return null;
 
-                return (Instruction)Value.FromHandle( lastInst );
+                return Value.FromHandle<Instruction>( lastInst );
             }
         }
 
@@ -67,7 +67,7 @@ namespace Llvm.NET.Values
                 if( terminator.Pointer == IntPtr.Zero)
                     return null;
 
-                return (Instruction)Value.FromHandle( terminator );
+                return Value.FromHandle<Instruction>( terminator );
             }
         }
 
@@ -98,7 +98,7 @@ namespace Llvm.NET.Values
                 throw new ArgumentException( "Instruction is from a different block", nameof( instruction ) );
 
             var hInst = LLVMNative.GetNextInstruction( instruction.ValueHandle );
-            return hInst.Pointer == IntPtr.Zero ? null : (Instruction)Value.FromHandle( hInst );
+            return hInst.Pointer == IntPtr.Zero ? null : Value.FromHandle<Instruction>( hInst );
         }
 
         private BasicBlock( LLVMValueRef valueRef )
@@ -118,16 +118,9 @@ namespace Llvm.NET.Values
 
         internal LLVMBasicBlockRef BlockHandle => LLVMNative.ValueAsBasicBlock( ValueHandle );
 
-        [System.Diagnostics.CodeAnalysis.SuppressMessage( "Language", "CSE0003:Use expression-bodied members", Justification = "Readability" )]
-        internal new static BasicBlock FromHandle( LLVMValueRef valueRef )
-        {
-            return (BasicBlock)Context.CurrentContext.GetValueFor( valueRef, ( h )=>new BasicBlock( h ) );
-        }
-
-        [System.Diagnostics.CodeAnalysis.SuppressMessage( "Language", "CSE0003:Use expression-bodied members", Justification = "Readability" )]
         internal static BasicBlock FromHandle( LLVMBasicBlockRef basicBlockRef )
         {
-            return (BasicBlock)Context.CurrentContext.GetValueFor( LLVMNative.BasicBlockAsValue( basicBlockRef ), ( h )=>new BasicBlock( h, true ) );
+            return Value.FromHandle<BasicBlock>( LLVMNative.BasicBlockAsValue( basicBlockRef ) );
         }
     }
 }

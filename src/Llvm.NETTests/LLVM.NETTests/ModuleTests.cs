@@ -11,8 +11,7 @@ namespace Llvm.NET.Tests
         [TestMethod]
         public void DisposeTest( )
         {
-            using( var ctx = Context.CreateThreadContext( ) )
-            using( var module = ctx.CreateModule( "test" ) )
+            using( var module = new Module( "test" ) )
             {
             }
         }
@@ -26,8 +25,7 @@ namespace Llvm.NET.Tests
         [TestMethod]
         public void VerifyValidModuleTest( )
         {
-            using( var ctx = Context.CreateThreadContext( ) )
-            using( var module = ctx.CreateModule( "test" ) )
+            using( var module = new Module( "test" ) )
             {
                 Function testFunc = CreateSimpleVoidNopTestFunction( module, "foo" );
                 // verify basics
@@ -42,8 +40,7 @@ namespace Llvm.NET.Tests
         [TestMethod]
         public void VerifyInvalidModuleTest( )
         {
-            using( var ctx = Context.CreateThreadContext( ) )
-            using( var module = ctx.CreateModule( "test" ) )
+            using( var module = new Module( "test" ) )
             {
                 Function testFunc = CreateInvalidFunction( module, "badfunc" );
                 // verify basics
@@ -61,8 +58,7 @@ namespace Llvm.NET.Tests
         [TestMethod]
         public void AddFunctionGetFunctionTest( )
         {
-            using( var ctx = Context.CreateThreadContext( ) )
-            using( var module = ctx.CreateModule( "test" ) )
+            using( var module = new Module( "test" ) )
             {
                 Function testFunc = CreateSimpleVoidNopTestFunction( module, "foo" );
                 // verify basics
@@ -86,8 +82,7 @@ namespace Llvm.NET.Tests
         [DeploymentItem("TestModuleAsString.ll")]
         public void AsStringTest( )
         {
-            using( var ctx = Context.CreateThreadContext( ) )
-            using( var module = ctx.CreateModule( "test" ) )
+            using( var module = new Module( "test" ) )
             {
                 Function testFunc = CreateSimpleVoidNopTestFunction( module, "foo" );
                 // verify basics
@@ -102,8 +97,7 @@ namespace Llvm.NET.Tests
         [TestMethod]
         public void AddAliasGetAliasTest( )
         {
-            using( var ctx = Context.CreateThreadContext( ) )
-            using( var module = ctx.CreateModule( "test" ) )
+            using( var module = new Module( "test" ) )
             {
                 Function testFunc = CreateSimpleVoidNopTestFunction( module, "_test" );
 
@@ -182,7 +176,7 @@ namespace Llvm.NET.Tests
         private static Function CreateSimpleVoidNopTestFunction( Module module, string name )
         {
             var ctx = module.Context;
-
+            Assert.IsNotNull( ctx );
             var testFunc = module.AddFunction( name, ctx.GetFunctionType( ctx.VoidType ) );
             testFunc.AppendBasicBlock( "entry" );
             var irBuilder = new InstructionBuilder( testFunc.EntryBlock );

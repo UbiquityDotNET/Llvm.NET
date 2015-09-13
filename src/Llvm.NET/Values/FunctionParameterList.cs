@@ -19,7 +19,7 @@ namespace Llvm.NET.Values
                 if( index >= Count || index < 0 )
                     throw new IndexOutOfRangeException( );
 
-                return (Argument)Value.FromHandle( LLVMNative.GetParam( OwningFunction.ValueHandle, ( uint )index ) );
+                return Value.FromHandle<Argument>( LLVMNative.GetParam( OwningFunction.ValueHandle, ( uint )index ) );
             }
         }
 
@@ -40,7 +40,7 @@ namespace Llvm.NET.Values
                 if( val.Pointer == IntPtr.Zero )
                     yield break;
 
-                yield return (Argument)Value.FromHandle( val );
+                yield return Value.FromHandle<Argument>( val );
             }
         }
 

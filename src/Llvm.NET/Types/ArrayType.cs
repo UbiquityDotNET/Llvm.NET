@@ -18,11 +18,5 @@ namespace Llvm.NET.Types
             if( LLVMNative.GetTypeKind( typeRef ) != LLVMTypeKind.LLVMArrayTypeKind )
                 throw new ArgumentException( "Array type reference expected", nameof( typeRef ) );
         }
-
-        [System.Diagnostics.CodeAnalysis.SuppressMessage( "Language", "CSE0003:Use expression-bodied members", Justification = "Readability" )]
-        internal new static ArrayType FromHandle( LLVMTypeRef typeRef )
-        {
-            return ( ArrayType )Context.CurrentContext.GetTypeFor( typeRef, ( h ) => new ArrayType( h ) );
-        }
     }
 }

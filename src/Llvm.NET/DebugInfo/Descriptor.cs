@@ -67,13 +67,8 @@ namespace Llvm.NET.DebugInfo
 
     public class DILocation : MDNode
     {
-        public DILocation( uint line, uint column, DILocalScope scope )
-            : this( line, column, scope, null )
-        {
-        }
-
-        public DILocation( uint line, uint column, DILocalScope scope, DILocation inlinedAt )
-            : this( Context.CurrentContext, line, column, scope, inlinedAt )
+        public DILocation( Context context, uint line, uint column, DILocalScope scope )
+            : this( context, line, column, scope, null )
         {
         }
 
