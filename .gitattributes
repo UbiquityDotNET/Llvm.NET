@@ -1,9 +1,4 @@
 ###############################################################################
-# Set default behavior to automatically normalize line endings.
-###############################################################################
-* binary
-
-###############################################################################
 # Set default behavior for command prompt diff.
 #
 # This is need for earlier builds of msysgit that does not have it on by
@@ -58,3 +53,6 @@
 #*.PDF   diff=astextplain
 #*.rtf   diff=astextplain
 #*.RTF   diff=astextplain
+
+# everything else is considered binary
+* binary
