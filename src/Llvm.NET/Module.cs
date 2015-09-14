@@ -32,6 +32,19 @@ namespace Llvm.NET
             Context.AddModule( this );
         }
 
+        public Module( string moduleId
+                     , SourceLanguage language
+                     , string srcFilePath
+                     , string producer
+                     , bool optimized
+                     , string flags
+                     , uint runtimeVersion
+                     )
+            : this( moduleId )
+        {
+            DIBuilder.CreateCompileUnit( language, srcFilePath, producer, optimized, flags, runtimeVersion );
+        }
+
         #region IDisposable Pattern
         public void Dispose()
         {
@@ -88,18 +101,30 @@ namespace Llvm.NET
         /// at the expense of making the bit code and front-end a bit target
         /// dependent.
         /// </remarks>
-        public string DataLayout
+        public string DataLayoutString
         {
             get
             {
-                var ptr = LLVMNative.GetDataLayout( ModuleHandle );
-                return LLVMNative.NormalizeLineEndings( ptr );
+                return Layout?.ToString( ) ?? string.Empty;
             }
             set
             {
-                LLVMNative.SetDataLayout( ModuleHandle, value );
+                Layout = TargetData.Parse( value );
             }
         }
+
+        public TargetData Layout
+        {
+            get { return Layout_; }
+            set
+            {
+                if( Layout_ != null )
+                    Layout_.Dispose( );
+                Layout_ = value;
+                LLVMNative.SetDataLayout( ModuleHandle, value.ToString( ) );
+            }
+        }
+        private TargetData Layout_;
 
         /// <summary>Target Triple describing the target, ABI and OS</summary>
         public string TargetTriple

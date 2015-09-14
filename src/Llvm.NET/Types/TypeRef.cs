@@ -151,33 +151,40 @@ namespace Llvm.NET.Types
             DIType = compositeType;
         }
 
-        public PointerType CreatePointerType(  DebugInfoBuilder diBuilder, TargetData layout )
+        /// <summary>Creates a pointer type with debug information</summary>
+        /// <param name="module">Module to use for building debug information</param>
+        /// <returns><see cref="PointerType"/></returns>
+        public PointerType CreatePointerType( Module module )
         {
             if( DIType == null )
                 throw new ArgumentException( "Type does not have associated Debug type from which to construct a pointer type" );
 
             var retVal = CreatePointerType( );
-            var diPtr = diBuilder.CreatePointerType( DIType, string.Empty, layout.BitSizeOf( retVal ), layout.AbiBitAlignmentOf( retVal ) );
+            var diPtr = module.DIBuilder.CreatePointerType( DIType
+                                                          , string.Empty
+                                                          , module.Layout.BitSizeOf( retVal )
+                                                          , module.Layout.AbiBitAlignmentOf( retVal )
+                                                          );
             retVal.DIType = diPtr;
             return retVal;
         }
 
-        public TypeRef CreateArrayType( DebugInfoBuilder diBuilder, TargetData layout, uint lowerBound, uint count )
+        public TypeRef CreateArrayType( Module module, uint lowerBound, uint count )
         {
             if( DIType == null )
                 throw new ArgumentException( "Type does not have associated Debug type from which to construct an array type" );
 
             var llvmArray = CreateArrayType( count );
-            var diArray = diBuilder.CreateArrayType( layout.BitSizeOf( llvmArray )
-                                                   , layout.AbiBitAlignmentOf( llvmArray )
-                                                   , DIType
-                                                   , diBuilder.CreateSubrange( lowerBound, count )
-                                                   );
+            var diArray = module.DIBuilder.CreateArrayType( module.Layout.BitSizeOf( llvmArray )
+                                                          , module.Layout.AbiBitAlignmentOf( llvmArray )
+                                                          , DIType
+                                                          , module.DIBuilder.CreateSubrange( lowerBound, count )
+                                                          );
             llvmArray.DIType = diArray;
             return llvmArray;
         }
 
-        public DIType CreateDIType( DebugInfoBuilder diBuilder, TargetData layout, string name, DIScope scope )
+        public DIType CreateDIType( Module module, string name, DIScope scope )
         {
             DIType retVal;
             switch( Kind )
@@ -189,11 +196,11 @@ namespace Llvm.NET.Types
             case TypeKind.Float128m112:
             case TypeKind.Float128:
             case TypeKind.Integer:
-                retVal = GetDiBasicType( this, diBuilder, layout, name );
+                retVal = GetDiBasicType( this, module, name );
                 break;
 
             case TypeKind.Struct:
-                retVal =  diBuilder.CreateReplaceableCompositeType( Tag.StructureType, name, scope, null, 0 );
+                retVal =  module.DIBuilder.CreateReplaceableCompositeType( Tag.StructureType, name, scope, null, 0 );
                 break;
 
             case TypeKind.Void:
@@ -202,7 +209,7 @@ namespace Llvm.NET.Types
                 return null;
 
             case TypeKind.Pointer:
-                retVal = ((PointerType )this).ElementType.CreateDIType( diBuilder, layout, $"{name}*", scope );
+                retVal = ((PointerType )this).ElementType.CreateDIType( module, $"{name}*", scope );
                 break;
 
             default:
@@ -224,10 +231,10 @@ namespace Llvm.NET.Types
 #endif
         }
 
-        private static DIBasicType GetDiBasicType( TypeRef llvmType, DebugInfoBuilder diBuilder, TargetData layout, string name )
+        private static DIBasicType GetDiBasicType( TypeRef llvmType, Module module, string name )
         {
-            var bitSize = layout.BitSizeOf( llvmType );
-            var bitAlignment = layout.AbiBitAlignmentOf( llvmType );
+            var bitSize = module.Layout.BitSizeOf( llvmType );
+            var bitAlignment = module.Layout.AbiBitAlignmentOf( llvmType );
 
             switch( llvmType.Kind )
             {
@@ -237,10 +244,10 @@ namespace Llvm.NET.Types
             case TypeKind.X86Float80:
             case TypeKind.Float128m112:
             case TypeKind.Float128:
-                return diBuilder.CreateBasicType( name, bitSize, bitAlignment, DiTypeKind.Float );
+                return module.DIBuilder.CreateBasicType( name, bitSize, bitAlignment, DiTypeKind.Float );
 
             case TypeKind.Integer:
-                return diBuilder.CreateBasicType( name, bitSize, bitAlignment, DiTypeKind.Signed );
+                return module.DIBuilder.CreateBasicType( name, bitSize, bitAlignment, DiTypeKind.Signed );
 
             default:
                 throw new NotSupportedException( "Not a basic type!" );

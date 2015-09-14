@@ -1,6 +1,7 @@
 @rem args: %1=build|rebuild|clean %2=$(Configuration)
 setlocal
-set OUTPUT_DIR=..\..\..\BuildOutput\Nuget\%2
+set BUILDOUTPUT=..\..\..\BuildOutput
+set OUTPUT_DIR=%BuildOutput%\Nuget\%2
 set clean=
 
 REM Don't delete old versions, otherwise clients won't be able to perform an update
@@ -13,7 +14,7 @@ if DEFINED clean del /q %OUTPUT_DIR%\Llvm.NET.*.nupkg
 if '%1'=='clean' goto :return
 
 if NOT EXIST %OUTPUT_DIR% md %OUTPUT_DIR%
-packages\NuGet.CommandLine.2.8.6\tools\nuget pack Llvm.NET.nuspec -OutputDirectory %OUTPUT_DIR% -Properties configuration=%2 -NoPackageAnalysis
+packages\NuGet.CommandLine.2.8.6\tools\nuget pack Llvm.NET.nuspec -OutputDirectory %OUTPUT_DIR% -Properties configuration=%2;buildoutput=%BUILDOUTPUT% -NoPackageAnalysis
 
 :return
 endlocal

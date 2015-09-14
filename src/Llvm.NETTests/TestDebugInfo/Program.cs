@@ -58,22 +58,28 @@ namespace TestDebugInfo
         /// </remarks>
         static void Main( string[ ] args )
         {
+            var srcPath = args[0];
+            if( !File.Exists( srcPath ) )
+            {
+                Console.Error.WriteLine( "Src file not found: '{0}'", srcPath );
+                return;
+            }
+
             StaticState.RegisterAll( );
             var target = Target.FromTriple( Triple );
             using( var targetMachine = target.CreateTargetMachine( Triple, Cpu, Features, CodeGenOpt.Aggressive, Reloc.Default, CodeModel.Small ) )
-            using( var module = new Module( "test.bc" ) )
+            using( var module = new Module( "test_x86.bc" ) )
             {
                 var targetData = targetMachine.TargetData;
 
                 module.TargetTriple = targetMachine.Triple;
-                module.DataLayout = targetMachine.TargetData.ToString( );
+                module.DataLayoutString = targetMachine.TargetData.ToString( );
 
                 // create compile unit and file as the top level scope for everything
-                var srcPath = @"C:\Github\NETMF\Llvm.NET\src\Llvm.NETTests\TestDebugInfo\test.c";
                 var cu = module.DIBuilder.CreateCompileUnit( SourceLanguage.C99
                                                             , Path.GetFileName( srcPath )
                                                             , Path.GetDirectoryName( srcPath )
-                                                            , "TestDebugInfo"
+                                                            , "clang version 3.7.0 " // obviously not clang but helps in diff with actual clang output
                                                             , false
                                                             , ""
                                                             , 0
@@ -81,17 +87,17 @@ namespace TestDebugInfo
                 var diFile = module.DIBuilder.CreateFile( srcPath );
 
                 // Create basic types used in this compilation
-                module.Context.Int32Type.CreateDIType( module.DIBuilder, targetData, "int", cu );
-                module.Context.FloatType.CreateDIType( module.DIBuilder, targetData, "float", cu );
+                module.Context.Int32Type.CreateDIType( module, "int", cu );
+                module.Context.FloatType.CreateDIType( module, "float", cu );
                 var i32 = module.Context.Int32Type;
                 var f32 = module.Context.FloatType;
-                var i32Array_0_2 = i32.CreateArrayType( module.DIBuilder, targetData, 0, 2 );
+                var i32Array_0_2 = i32.CreateArrayType( module, 0, 2 );
 
                 // create the LLVM structure type and body
                 // The full body is used with targetMachine.TargetData to determine size, alignment and element offsets
                 // in a target independent manner.
                 var fooType = module.Context.CreateStructType( "struct.foo" );
-                fooType.CreateDIType( module.DIBuilder, targetData, "foo", cu );
+                fooType.CreateDIType( module, "foo", cu );
                 fooType.SetBody( false, module.Context.Int32Type, module.Context.FloatType, i32Array_0_2 );
 
                 // add global variables and constants
@@ -116,42 +122,44 @@ namespace TestDebugInfo
                 module.AddModuleFlag( ModuleFlagBehavior.Warning, Module.DwarfVersionValue, 4 );
                 module.AddModuleFlag( ModuleFlagBehavior.Warning, Module.DebugVersionValue, Module.DebugMetadataVersion );
                 module.AddModuleFlag( ModuleFlagBehavior.Error, "PIC Level", 2 );
-                module.AddVersionIdentMetadata( "testdebuginfo 0.0.1-test" );
+                module.AddVersionIdentMetadata( "clang version 3.7.0 " );
 
                 // create types for function args
-                var fooPtr = fooType.CreatePointerType( module.DIBuilder, targetData );
-
+                var constFoo = module.DIBuilder.CreateQualifiedType( fooType.DIType, QualifiedTypeTag.Const );
+                var fooPtr = fooType.CreatePointerType( module );
+                //var constFooPtr = module.DIBuilder.CreatePointerType( constFoo, string.Empty, targetData.BitSizeOf( fooPtr ), targetData.AbiBitAlignmentOf( fooPtr ) );
                 // Create function signatures
 
                 // Since the the first parameter is passed by value 
                 // using the pointer+alloca+memcopy pattern, the actual
                 // source, and therefore debug, signature is NOT a pointer.
-                // However, this usage will create a signature with two
-                // pointers as the arguments and thus the correct approach
-                // is to insert an explicit ParameterTypePair that overrides
-                // the default behavior to pair LLVM pointer type with the
-                // original source type.
+                // However, that usage would create a signature with two
+                // pointers as the arguments, which doesn't match the source
+                // To get the correct debug info signature this inserts an
+                // explicit ParameterTypePair that overrides the default
+                // behavior to pair LLVM pointer type with the original
+                // source type.
                 var copySig = module.Context.CreateFunctionType( module.DIBuilder
                                                                , diFile
                                                                , module.Context.VoidType
-                                                               , new ParameterTypePair( fooPtr, fooType.DIType )
+                                                               , new ParameterTypePair( fooPtr, constFoo )
                                                                , fooPtr
                                                                );
                 var doCopySig = module.Context.CreateFunctionType( module.DIBuilder, diFile, module.Context.VoidType );
 
                 // Create the functions
-                // NOTE: The ordering is reveresd from that of the sample code file (test.c)
-                //       However this is what Clang ends up doing for some reason so it is
+                // NOTE: The declaration ordering is reveresd from that of the sample code file (test.c)
+                //       However, this is what Clang ends up doing for some reason so it is
                 //       replicated here to aid in comparing the generated LL files.
                 var doCopyFunc = module.CreateFunction( scope: diFile
                                                       , name: "DoCopy"
                                                       , linkageName: null
                                                       , file: diFile
-                                                      , line: 18
+                                                      , line: 23
                                                       , signature: doCopySig
                                                       , isLocalToUnit: false
                                                       , isDefinition: true
-                                                      , scopeLine: 19
+                                                      , scopeLine: 24
                                                       , flags: 0
                                                       , isOptimized: false
                                                       ).AddAttributes( Attributes.NoUnwind | Attributes.UnwindTable )
@@ -173,10 +181,15 @@ namespace TestDebugInfo
                                                      .Linkage( Linkage.Internal ); // static function
 
                 CreateDoCopyFunctionBody( module, targetData, doCopyFunc, fooType, bar, baz, copyFunc );
-                CreateCopyFunctionBody( module, targetData, copyFunc, diFile, fooType, fooPtr );
+                CreateCopyFunctionBody( module, targetData, copyFunc, diFile, fooType, fooPtr, constFoo );
+
+                // fill in the debug info body for type foo
                 finalizeFooDebugInfo( module.DIBuilder, targetData, cu, diFile, i32, i32Array_0_2, f32, fooType );
 
                 // finalize the debug information
+                // all temporaries must be replaced by now, this resolves any remaining
+                // forward declarations and marks the builder to prevent adding any
+                // nodes that are not completely resolved.
                 module.DIBuilder.Finish( );
 
                 // verify the module is still good and print any errors found
@@ -189,8 +202,7 @@ namespace TestDebugInfo
                 {
                     // Module is good, so generate the output files
                     module.WriteToFile( "test.bc" );
-                    var lltxt = module.AsString( );
-                    File.WriteAllText( "test.ll", lltxt );
+                    File.WriteAllText( "test.ll", module.AsString( ) );
                     targetMachine.EmitToFile( module, "test.o", CodeGenFileType.ObjectFile );
                     targetMachine.EmitToFile( module, "test.s", CodeGenFileType.AssemblySource );
                 }
@@ -262,6 +274,7 @@ namespace TestDebugInfo
                                                   , DIFile diFile
                                                   , StructType foo
                                                   , PointerType fooPtr
+                                                  , DIDerivedType constFooType
                                                   )
         {
             var diBuilder = module.DIBuilder;
@@ -282,7 +295,7 @@ namespace TestDebugInfo
 
             // create debug info locals for the arguments
             // NOTE: Debug parameter indeces are 1 based!
-            var paramSrc = diBuilder.CreateArgument( copyFunc.DISubProgram, "src", diFile, 11, foo.DIType, false, 0, 1 );
+            var paramSrc = diBuilder.CreateArgument( copyFunc.DISubProgram, "src", diFile, 11, constFooType, false, 0, 1 );
             var paramDst = diBuilder.CreateArgument( copyFunc.DISubProgram, "pDst", diFile, 12, fooPtr.DIType, false, 0, 2 );
 
             var ptrAlign = layout.CallFrameAlignmentOf( fooPtr );
@@ -304,7 +317,7 @@ namespace TestDebugInfo
             var srcDeclare = diBuilder.InsertDeclare( copyFunc.Parameters[ 0 ]
                                                            , paramSrc
                                                            , diBuilder.CreateExpression( ExpressionOp.deref )
-                                                           , new DILocation( module.Context, 11, 37, copyFunc.DISubProgram )
+                                                           , new DILocation( module.Context, 11, 43, copyFunc.DISubProgram )
                                                            , blk
                                                            );
 
@@ -354,10 +367,10 @@ namespace TestDebugInfo
                                      .Alignment( layout.CallFrameAlignmentOf( foo ) );
 
             var bitCastDst = instBuilder.BitCast( dstAddr, bytePtrType )
-                                        .SetDebugLocation( 20, 11, doCopyFunc.DISubProgram );
+                                        .SetDebugLocation( 25, 11, doCopyFunc.DISubProgram );
 
             var bitCastSrc = instBuilder.BitCast( bar, bytePtrType )
-                                        .SetDebugLocation( 20, 11, doCopyFunc.DISubProgram );
+                                        .SetDebugLocation( 25, 11, doCopyFunc.DISubProgram );
 
             var memCpy = instBuilder.MemCpy( module
                                            , bitCastDst
@@ -365,13 +378,13 @@ namespace TestDebugInfo
                                            , module.Context.CreateConstant( layout.ByteSizeOf( foo ) )
                                            , ( int )layout.CallFrameAlignmentOf( foo )
                                            , false
-                                           ).SetDebugLocation( 20, 11, doCopyFunc.DISubProgram );
+                                           ).SetDebugLocation( 25, 11, doCopyFunc.DISubProgram );
 
             var callCopy = instBuilder.Call( copyFunc, dstAddr, baz )
-                                      .SetDebugLocation( 20, 5, doCopyFunc.DISubProgram );
+                                      .SetDebugLocation( 25, 5, doCopyFunc.DISubProgram );
 
             var ret =instBuilder.Return( )
-                                .SetDebugLocation( 21, 1, doCopyFunc.DISubProgram );
+                                .SetDebugLocation( 26, 1, doCopyFunc.DISubProgram );
         }
     }
 }

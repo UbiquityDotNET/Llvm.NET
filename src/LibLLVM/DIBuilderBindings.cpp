@@ -235,6 +235,17 @@ extern "C"
         return wrap( T );
     }
 
+    LLVMMetadataRef LLVMDIBuilderCreateQualifiedType( LLVMDIBuilderRef Dref
+                                                      , uint32_t Tag
+                                                      , LLVMMetadataRef BaseType
+                                                      )
+    {
+        DIBuilder* D = unwrap( Dref );
+        DIDerivedType* T = D->createQualifiedType( Tag, unwrap<DIType>( BaseType ) );
+        return wrap( T );
+    }
+
+
     LLVMMetadataRef LLVMDIBuilderCreateSubroutineType( LLVMDIBuilderRef Dref
                                                        , LLVMMetadataRef File
                                                        , LLVMMetadataRef ParameterTypes

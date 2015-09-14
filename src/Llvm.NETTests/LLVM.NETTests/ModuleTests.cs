@@ -1,4 +1,5 @@
 ﻿using System.IO;
+using System.Linq;
 using Llvm.NET.Values;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
@@ -8,6 +9,83 @@ namespace Llvm.NET.Tests
     [DeploymentItem("LibLLVM.dll")]
     public class ModuleTests
     {
+
+        [TestMethod]
+        public void DefaultConstructorTest( )
+        {
+            using( var module = new Module( ) )
+            {
+                Assert.AreSame( string.Empty, module.Name );
+                Assert.IsNotNull( module );
+                Assert.IsNotNull( module.Context );
+                Assert.AreSame( string.Empty, module.DataLayoutString );
+                Assert.IsNull( module.Layout );
+                Assert.AreSame( string.Empty, module.TargetTriple );
+                Assert.IsNotNull( module.DIBuilder );
+
+                // until explicitly created DICompileUnit should be null
+                Assert.IsNull( module.DICompileUnit );
+                
+                // Functions collection should be valid but empty
+                Assert.IsNotNull( module.Functions );
+                Assert.IsFalse( module.Functions.Any( ) );
+
+                // Globals collection should be valid but empty
+                Assert.IsNotNull( module.Globals );
+                Assert.IsFalse( module.Globals.Any( ) );
+            }
+        }
+
+        [TestMethod]
+        public void ConstructorTestWithName( )
+        {
+            using( var module = new Module( "test" ) )
+            {
+                Assert.AreEqual( "test", module.Name );
+                Assert.IsNotNull( module );
+                Assert.IsNotNull( module.Context );
+                Assert.AreSame( string.Empty, module.DataLayoutString );
+                Assert.IsNull( module.Layout );
+                Assert.AreSame( string.Empty, module.TargetTriple );
+                Assert.IsNotNull( module.DIBuilder );
+
+                // until explicitly created DICompileUnit should be null
+                Assert.IsNull( module.DICompileUnit );
+                
+                // Functions collection should be valid but empty
+                Assert.IsNotNull( module.Functions );
+                Assert.IsFalse( module.Functions.Any( ) );
+
+                // Globals collection should be valid but empty
+                Assert.IsNotNull( module.Globals );
+                Assert.IsFalse( module.Globals.Any( ) );
+            }
+        }
+
+        [TestMethod]
+        public void ConstructorTestWithNameAndCompileUnit( )
+        {
+            using( var module = new Module( "test", DebugInfo.SourceLanguage.C99, "test.c", "unitTest", false, string.Empty, 0 ) )
+            {
+                Assert.AreEqual( "test", module.Name );
+                Assert.IsNotNull( module );
+                Assert.IsNotNull( module.Context );
+                Assert.AreSame( string.Empty, module.DataLayoutString );
+                Assert.IsNull( module.Layout );
+                Assert.AreSame( string.Empty, module.TargetTriple );
+                Assert.IsNotNull( module.DIBuilder );
+                Assert.IsNotNull( module.DICompileUnit );
+                
+                // Functions collection should be valid but empty
+                Assert.IsNotNull( module.Functions );
+                Assert.IsFalse( module.Functions.Any( ) );
+
+                // Globals collection should be valid but empty
+                Assert.IsNotNull( module.Globals );
+                Assert.IsFalse( module.Globals.Any( ) );
+            }
+        }
+
         [TestMethod]
         public void DisposeTest( )
         {

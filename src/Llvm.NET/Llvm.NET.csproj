@@ -83,6 +83,36 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AlignmentInfo.cs" />
+    <Compile Include="DebugInfo\DIArray.cs" />
+    <Compile Include="DebugInfo\DIBasicType.cs" />
+    <Compile Include="DebugInfo\DICompileUnit.cs" />
+    <Compile Include="DebugInfo\DICompositeType.cs" />
+    <Compile Include="DebugInfo\DIDerivedType.cs" />
+    <Compile Include="DebugInfo\DIEnumerator.cs" />
+    <Compile Include="DebugInfo\DIExpression.cs" />
+    <Compile Include="DebugInfo\DIFile.cs" />
+    <Compile Include="DebugInfo\DIGlobalVariable.cs" />
+    <Compile Include="DebugInfo\DILexicalBlock.cs" />
+    <Compile Include="DebugInfo\DILexicalBlockBase.cs" />
+    <Compile Include="DebugInfo\DILexicalBlockFile.cs" />
+    <Compile Include="DebugInfo\DILocalScope.cs" />
+    <Compile Include="DebugInfo\DILocalVariable.cs" />
+    <Compile Include="DebugInfo\DILocation.cs" />
+    <Compile Include="DebugInfo\DIModule.cs" />
+    <Compile Include="DebugInfo\DINamespace.cs" />
+    <Compile Include="DebugInfo\DINode.cs" />
+    <Compile Include="DebugInfo\DIObjCProperty.cs" />
+    <Compile Include="DebugInfo\DIScope.cs" />
+    <Compile Include="DebugInfo\DISubProgram.cs" />
+    <Compile Include="DebugInfo\DISubRange.cs" />
+    <Compile Include="DebugInfo\DISubroutineType.cs" />
+    <Compile Include="DebugInfo\DITemplateParameter.cs" />
+    <Compile Include="DebugInfo\DITemplateTypeParameter.cs" />
+    <Compile Include="DebugInfo\DITemplateValueParameter.cs" />
+    <Compile Include="DebugInfo\DIType.cs" />
+    <Compile Include="DebugInfo\DITypeArray.cs" />
+    <Compile Include="DebugInfo\DIVariable.cs" />
+    <Compile Include="DebugInfo\GenericDINode.cs" />
     <Compile Include="DebugInfo\ParameterTypePair.cs" />
     <Compile Include="Instructions\AddressSpaceCast.cs" />
     <Compile Include="Instructions\AtomicCmpXchg.cs" />
@@ -125,7 +155,6 @@
     <Compile Include="Values\ConstPointerNull.cs" />
     <Compile Include="Context.cs" />
     <Compile Include="DebugInfo\DebugInfoBuilder.cs" />
-    <Compile Include="DebugInfo\Descriptor.cs" />
     <Compile Include="DebugInfo\DwarfEnumerations.cs" />
     <Compile Include="Enumerations.cs" />
     <Compile Include="Values\Function.cs" />

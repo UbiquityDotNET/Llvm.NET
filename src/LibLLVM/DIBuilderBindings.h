@@ -202,6 +202,11 @@ extern "C" {
                                                   , const char *Name
                                                   );
 
+    LLVMMetadataRef LLVMDIBuilderCreateQualifiedType( LLVMDIBuilderRef D
+                                                    , uint32_t Tag
+                                                    , LLVMMetadataRef BaseType
+                                                    );
+
     LLVMMetadataRef LLVMDIBuilderCreateSubroutineType( LLVMDIBuilderRef D
                                                      , LLVMMetadataRef File
                                                      , LLVMMetadataRef ParameterTypes

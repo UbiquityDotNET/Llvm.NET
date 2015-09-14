@@ -5,6 +5,16 @@ using Llvm.NET.Values;
 using Llvm.NET.Instructions;
 using System.IO;
 
+// for now the DebugInfo hierarchy is mostly empty
+// classes. This is due to the "in transition" state
+// of the underlying LLVM C++ model. All of these
+// are just a wrapper around a Metadata* allocated
+// in the LLVM native libraries. The only properties
+// or methods exposed are those required by current
+// projects. This keeps the code churn to move into
+// 3.8 minimal while allowing us to achieve progress
+// on current projects.
+
 namespace Llvm.NET.DebugInfo
 {
     /// <summary>DebugInfoBuilder is a factory class for creating DebugInformation for an LLVM <see cref="Module"/></summary>
@@ -41,7 +51,7 @@ namespace Llvm.NET.DebugInfo
         {
             return CreateCompileUnit( language
                                     , Path.GetFileName( srcFilePath )
-                                    , Path.GetDirectoryName( srcFilePath )
+                                    , Path.GetDirectoryName( srcFilePath )?? Environment.CurrentDirectory
                                     , producer
                                     , optimized
                                     , flags
@@ -224,6 +234,13 @@ namespace Llvm.NET.DebugInfo
             var handle = LLVMNative.DIBuilderCreatePointerType( BuilderHandle, pointeeType.MetadataHandle, bitSize, bitAlign, name ?? string.Empty );
             return new DIDerivedType( handle );
         }
+
+        public DIDerivedType CreateQualifiedType( DIType baseType, QualifiedTypeTag tag )
+        {
+            var handle = LLVMNative.DIBuilderCreateQualifiedType( BuilderHandle, ( uint )tag, baseType.MetadataHandle );
+            return new DIDerivedType( handle );
+        }
+
         public DITypeArray CreateTypeArray( params DIType[ ] types ) => CreateTypeArray( ( IEnumerable<DIType> )types );
 
         public DITypeArray CreateTypeArray( IEnumerable<DIType> types )
