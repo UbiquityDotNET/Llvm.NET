@@ -32,7 +32,7 @@ namespace TestDebugInfo
         /// <summary>Creates a test LLVM module with debug information</summary>
         /// <param name="args">ignored</param>
         /// <remarks>
-        /// <code language="C++" title="Example code generated">
+        /// <code language="C99" title="Example code generated">
         /// struct foo
         /// {
         ///     int a;
@@ -50,6 +50,11 @@ namespace TestDebugInfo
         ///     *pDst = src;
         /// }
         /// 
+        /// //void OtherSig( struct foo const* pSrc, struct foo* pDst )
+        /// //{
+        /// //    copy( *pSrc, pDst );
+        /// //}
+        /// //
         /// void DoCopy( )
         /// {
         ///     copy( bar, &baz );
@@ -79,7 +84,7 @@ namespace TestDebugInfo
                 var cu = module.DIBuilder.CreateCompileUnit( SourceLanguage.C99
                                                             , Path.GetFileName( srcPath )
                                                             , Path.GetDirectoryName( srcPath )
-                                                            , "clang version 3.7.0 " // obviously not clang but helps in diff with actual clang output
+                                                            , "clang version 3.7.0 " // obviously this is not clang but helps in diff with actual clang output
                                                             , false
                                                             , ""
                                                             , 0
@@ -184,7 +189,7 @@ namespace TestDebugInfo
                 CreateCopyFunctionBody( module, targetData, copyFunc, diFile, fooType, fooPtr, constFoo );
 
                 // fill in the debug info body for type foo
-                finalizeFooDebugInfo( module.DIBuilder, targetData, cu, diFile, i32, i32Array_0_2, f32, fooType );
+                finalizeFooDebugInfo( module.DIBuilder, targetData, cu, diFile, fooType );
 
                 // finalize the debug information
                 // all temporaries must be replaced by now, this resolves any remaining
@@ -213,9 +218,6 @@ namespace TestDebugInfo
                                                 , TargetData layout
                                                 , DICompileUnit cu
                                                 , DIFile diFile
-                                                , TypeRef i32
-                                                , TypeRef i32Array_0_2
-                                                , TypeRef f32
                                                 , StructType foo
                                                 )
         {
@@ -229,31 +231,31 @@ namespace TestDebugInfo
                                             , name: "a"
                                             , file: diFile
                                             , line: 3
-                                            , bitSize: layout.BitSizeOf( i32 )
-                                            , bitAlign: layout.AbiBitAlignmentOf( i32 )
+                                            , bitSize: layout.BitSizeOf( foo.Members[0] )
+                                            , bitAlign: layout.AbiBitAlignmentOf( foo.Members[0] )
                                             , bitOffset: layout.BitOffsetOfElement( foo, 0 )
                                             , flags: 0
-                                            , type: i32.DIType
+                                            , type: foo.Members[0].DIType
                                             )
                 , diBuilder.CreateMemberType( scope: foo.DIType
                                             , name: "b"
                                             , file: diFile
                                             , line: 4
-                                            , bitSize: layout.BitSizeOf( f32 )
-                                            , bitAlign: layout.AbiBitAlignmentOf( f32 )
+                                            , bitSize: layout.BitSizeOf( foo.Members[1] )
+                                            , bitAlign: layout.AbiBitAlignmentOf( foo.Members[1] )
                                             , bitOffset: layout.BitOffsetOfElement( foo, 1 )
                                             , flags: 0
-                                            , type: f32.DIType
+                                            , type: foo.Members[1].DIType
                                             )
                 , diBuilder.CreateMemberType( scope: foo.DIType
                                             , name: "c"
                                             , file: diFile
                                             , line: 5
-                                            , bitSize: layout.BitSizeOf( i32Array_0_2 )
-                                            , bitAlign: layout.AbiBitAlignmentOf( i32Array_0_2 )
+                                            , bitSize: layout.BitSizeOf( foo.Members[2] )
+                                            , bitAlign: layout.AbiBitAlignmentOf( foo.Members[2] )
                                             , bitOffset: layout.BitOffsetOfElement( foo, 2 )
                                             , flags: 0
-                                            , type: i32Array_0_2.DIType
+                                            , type: foo.Members[2].DIType
                                             )
                 };
             var fooConcrete = diBuilder.CreateStructType( scope: cu
@@ -279,8 +281,8 @@ namespace TestDebugInfo
         {
             var diBuilder = module.DIBuilder;
 
-            // ByVal pointers indicate by value semantics. LLVM recognizes this pattern and has a pass to map
-            // to an efficient register usage whenever plausible.
+            // ByVal pointers indicate by value semantics. LLVM recognizes this pattern
+            // and has a pass to map to an efficient register usage whenever plausible.
             // Though it seems unnecessary as Clang doesn't apply the attribute...
             //copyFunc.Parameters[ 0 ].AddAttributes( Attributes.ByVal );
             //copyFunc.Parameters[ 0 ].SetAlignment( foo.AbiAlignment );
@@ -315,11 +317,11 @@ namespace TestDebugInfo
             // since the function's LLVM signature uses a pointer, which is copied locally
             // inform the debugger to treat it as the value by dereferencing the pointer
             var srcDeclare = diBuilder.InsertDeclare( copyFunc.Parameters[ 0 ]
-                                                           , paramSrc
-                                                           , diBuilder.CreateExpression( ExpressionOp.deref )
-                                                           , new DILocation( module.Context, 11, 43, copyFunc.DISubProgram )
-                                                           , blk
-                                                           );
+                                                    , paramSrc
+                                                    , diBuilder.CreateExpression( ExpressionOp.deref )
+                                                    , new DILocation( module.Context, 11, 43, copyFunc.DISubProgram )
+                                                    , blk
+                                                    );
 
             var loadedDst = instBuilder.Load( dstAddr )
                                        .Alignment( ptrAlign )
