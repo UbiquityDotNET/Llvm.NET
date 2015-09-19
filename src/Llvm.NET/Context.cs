@@ -42,36 +42,36 @@ namespace Llvm.NET
         public bool IsDisposed => ContextHandle.Pointer == IntPtr.Zero;
 
         /// <summary>Get's the LLVM void type for this context</summary>
-        public TypeRef VoidType => TypeRef.FromHandle( LLVMNative.VoidTypeInContext( ContextHandle ) );
+        public ITypeRef VoidType => TypeRef.FromHandle( LLVMNative.VoidTypeInContext( ContextHandle ) );
 
         /// <summary>Get's the LLVM boolean type for this context</summary>
-        public TypeRef BoolType => TypeRef.FromHandle( LLVMNative.Int1TypeInContext( ContextHandle ) );
+        public ITypeRef BoolType => TypeRef.FromHandle( LLVMNative.Int1TypeInContext( ContextHandle ) );
 
         /// <summary>Get's the LLVM 8 bit integer type for this context</summary>
-        public TypeRef Int8Type => TypeRef.FromHandle( LLVMNative.Int8TypeInContext( ContextHandle ) );
+        public ITypeRef Int8Type => TypeRef.FromHandle( LLVMNative.Int8TypeInContext( ContextHandle ) );
 
         /// <summary>Get's the LLVM 16 bit integer type for this context</summary>
-        public TypeRef Int16Type => TypeRef.FromHandle( LLVMNative.Int16TypeInContext( ContextHandle ) );
+        public ITypeRef Int16Type => TypeRef.FromHandle( LLVMNative.Int16TypeInContext( ContextHandle ) );
 
         /// <summary>Get's the LLVM 32 bit integer type for this context</summary>
-        public TypeRef Int32Type => TypeRef.FromHandle( LLVMNative.Int32TypeInContext( ContextHandle ) );
+        public ITypeRef Int32Type => TypeRef.FromHandle( LLVMNative.Int32TypeInContext( ContextHandle ) );
 
         /// <summary>Get's the LLVM 64 bit integer type for this context</summary>
-        public TypeRef Int64Type => TypeRef.FromHandle( LLVMNative.Int64TypeInContext( ContextHandle ) );
+        public ITypeRef Int64Type => TypeRef.FromHandle( LLVMNative.Int64TypeInContext( ContextHandle ) );
 
         /// <summary>Get's the LLVM half precision floating point type for this context</summary>
-        public TypeRef HalfFloatType => TypeRef.FromHandle( LLVMNative.HalfTypeInContext( ContextHandle ) );
+        public ITypeRef HalfFloatType => TypeRef.FromHandle( LLVMNative.HalfTypeInContext( ContextHandle ) );
 
         /// <summary>Get's the LLVM single precision floating point type for this context</summary>
-        public TypeRef FloatType => TypeRef.FromHandle( LLVMNative.FloatTypeInContext( ContextHandle ) );
+        public ITypeRef FloatType => TypeRef.FromHandle( LLVMNative.FloatTypeInContext( ContextHandle ) );
 
         /// <summary>Get's the LLVM double precision floating point type for this context</summary>
-        public TypeRef DoubleType => TypeRef.FromHandle( LLVMNative.DoubleTypeInContext( ContextHandle ) );
+        public ITypeRef DoubleType => TypeRef.FromHandle( LLVMNative.DoubleTypeInContext( ContextHandle ) );
 
         /// <summary>Get a type that is a pointer to a value of a given type</summary>
         /// <param name="elementType">Type of value the pointer points to</param>
-        /// <returns><see cref="PointerType"/> for a pointer that references a value of type <paramref name="elementType"/></returns>
-        public PointerType GetPointerTypeFor( TypeRef elementType ) => TypeRef.FromHandle<PointerType>( LLVMNative.PointerType( elementType.TypeHandle, 0 ) );
+        /// <returns><see cref="IPointerType"/> for a pointer that references a value of type <paramref name="elementType"/></returns>
+        public IPointerType GetPointerTypeFor( ITypeRef elementType ) => TypeRef.FromHandle<IPointerType>( LLVMNative.PointerType( elementType.GetTypeRef(), 0 ) );
 
         /// <summary>Get's an LLVM integer type of arbitrary bit width</summary>
         /// <remarks>
@@ -80,7 +80,7 @@ namespace Llvm.NET
         /// (e.g. GetIntType(1) is the same as <see cref="BoolType"/>,
         ///  GetIntType(16) is the same as <see cref="Int16Type"/>, etc... )
         /// </remarks>
-        public TypeRef GetIntType( uint bitWidth )
+        public ITypeRef GetIntType( uint bitWidth )
         {
             if( bitWidth == 0 )
                 throw new ArgumentException( "integer bit width must be greater than 0" );
@@ -106,7 +106,7 @@ namespace Llvm.NET
         /// <param name="returnType">Return type of the function</param>
         /// <param name="args">Optional set of function argument types</param>
         /// <returns>Signature type for the specified signature</returns>
-        public FunctionType GetFunctionType( TypeRef returnType, params TypeRef[ ] args )
+        public IFunctionType GetFunctionType( ITypeRef returnType, params ITypeRef[ ] args )
         {
             return GetFunctionType( returnType, args, false );
         }
@@ -115,7 +115,7 @@ namespace Llvm.NET
         /// <param name="returnType">Return type of the function</param>
         /// <param name="args">Potentially empty set of function argument types</param>
         /// <returns>Signature type for the specified signature</returns>
-        public FunctionType GetFunctionType( TypeRef returnType, IEnumerable<TypeRef> args )
+        public IFunctionType GetFunctionType( ITypeRef returnType, IEnumerable<ITypeRef> args )
         {
             return GetFunctionType( returnType, args, false );
         }
@@ -125,20 +125,20 @@ namespace Llvm.NET
         /// <param name="args">Potentially empty set of function argument types</param>
         /// <param name="isVarArgs">Flag to indicate if the method supports C/C++ style VarArgs</param>
         /// <returns>Signature type for the specified signature</returns>
-        public FunctionType GetFunctionType( TypeRef returnType, IEnumerable<TypeRef> args, bool isVarArgs )
+        public IFunctionType GetFunctionType( ITypeRef returnType, IEnumerable<ITypeRef> args, bool isVarArgs )
         {
             if( ContextHandle.Pointer != returnType.Context.ContextHandle.Pointer ) 
                 throw new ArgumentException( "Mismatched context", nameof( returnType ) );
 
-            LLVMTypeRef[] llvmArgs = args.Select( a => a.TypeHandle).ToArray();
+            LLVMTypeRef[] llvmArgs = args.Select( a => a.GetTypeRef()).ToArray();
             var argCount = llvmArgs.Length;
             // have to pass a valid adrressable object to native interop
             // so allocate space for a single value but tell LLVM the length is 0
             if( llvmArgs.Length == 0 )
                 llvmArgs = new LLVMTypeRef[ 1 ];
 
-            var signature = LLVMNative.FunctionType( returnType.TypeHandle, out llvmArgs[ 0 ], (uint)argCount, isVarArgs );
-            return TypeRef.FromHandle<FunctionType>( signature );
+            var signature = LLVMNative.FunctionType( returnType.GetTypeRef(), out llvmArgs[ 0 ], (uint)argCount, isVarArgs );
+            return TypeRef.FromHandle<IFunctionType>( signature );
         }
 
         /// <summary>Creates a FunctionType with Debug information</summary>
@@ -147,11 +147,11 @@ namespace Llvm.NET
         /// <param name="retType">Return type of the function</param>
         /// <param name="argTypes">Argument types of the function</param>
         /// <returns>Function signature</returns>
-        public FunctionType CreateFunctionType( DebugInfoBuilder diBuilder
-                                              , DIFile diFile
-                                              , ParameterTypePair retType
-                                              , params ParameterTypePair[] argTypes
-                                              )
+        public IFunctionType CreateFunctionType( DebugInfoBuilder diBuilder
+                                               , DIFile diFile
+                                               , ITypeRef retType
+                                               , params ITypeRef[] argTypes
+                                               )
         {
             return CreateFunctionType( diBuilder, diFile, false, retType, argTypes );
         }
@@ -163,14 +163,14 @@ namespace Llvm.NET
         /// <param name="retType">Return type of the function</param>
         /// <param name="argTypes">Argument types of the function</param>
         /// <returns>Function signature</returns>
-        public FunctionType CreateFunctionType( DebugInfoBuilder diBuilder
-                                              , DIFile diFile
-                                              , bool isVarArg
-                                              , ParameterTypePair retType
-                                              , params ParameterTypePair[] argTypes
-                                              )
+        public IFunctionType CreateFunctionType( DebugInfoBuilder diBuilder
+                                               , DIFile diFile
+                                               , bool isVarArg
+                                               , ITypeRef retType
+                                               , params ITypeRef[] argTypes
+                                               )
         {
-            if( retType.DIType == null && !retType.LlvmType.IsVoid )
+            if( retType.DIType == null && !retType.IsVoid )
                 throw new ArgumentNullException( nameof( retType ), "Type does not have debug information" );
 
             // if any params don't have a DIType then provide a hopefully helpful message indicating which one
@@ -179,21 +179,19 @@ namespace Llvm.NET
                     select $"\tArgument {argInfo.I} does not contain debug type information";
             if( q.Any() )
             {
-                var msg = new StringBuilder( "One or more parameter types has no associated debug information:" );
+                var msg = new StringBuilder( "One or more parameter types do not include debug information:" );
                 msg.AppendLine( );
                 foreach( var itemMsg in q )
                     msg.AppendLine( itemMsg );
 
                 throw new ArgumentException( msg.ToString(), nameof( argTypes ) );
             }
-            var llvmArgTypes = argTypes.Select( p => p.LlvmType );
-            var llvmType = GetFunctionType( retType.LlvmType, llvmArgTypes, isVarArg );
+            var llvmType = GetFunctionType( retType, argTypes, isVarArg );
             var diArgTypes = argTypes.Select( t => t.DIType );
             var diType =  diBuilder.CreateSubroutineType( diFile, 0, retType.DIType, diArgTypes );
             Debug.Assert( diType != null && !diType.IsTemporary );
 
-            llvmType.DIType = diType;
-            return llvmType;
+            return new DebugFunctionType( llvmType, diType );
         }
 
         /// <summary>Creates a constant structure from a set of values</summary>
@@ -259,7 +257,7 @@ namespace Llvm.NET
         /// </list>
         /// </note>
         /// </remarks>
-        public Constant CreateNamedConstantStruct( StructType type, params Constant[ ] values )
+        public Constant CreateNamedConstantStruct( IStructType type, params Constant[ ] values )
         {
             return CreateNamedConstantStruct( type, ( IEnumerable<Constant> )values );
         }
@@ -280,26 +278,26 @@ namespace Llvm.NET
         /// </list>
         /// </note>
         /// </remarks>
-        public Constant CreateNamedConstantStruct( StructType type, IEnumerable<Constant> values )
+        public Constant CreateNamedConstantStruct( IStructType type, IEnumerable<Constant> values )
         {
             if( type.Context != this )
                 throw new ArgumentException( "Cannot create named constant struct with type from another context", nameof( type ) );
 
             var valueHandles = values.Select( v => v.ValueHandle ).ToArray( );
-            var handle = LLVMNative.ConstNamedStruct(type.TypeHandle, out valueHandles[ 0 ], ( uint )valueHandles.Length );
+            var handle = LLVMNative.ConstNamedStruct(type.GetTypeRef(), out valueHandles[ 0 ], ( uint )valueHandles.Length );
             return Value.FromHandle<Constant>( handle );
         }
 
         /// <summary>Create an empty structure type</summary>
         /// <param name="name">Name of the type</param>
         /// <returns>New type</returns>
-        public StructType CreateStructType( string name )
+        public IStructType CreateStructType( string name )
         {
             if( string.IsNullOrWhiteSpace( name ) )
                 throw new ArgumentNullException( nameof( name ) );
 
             var handle = LLVMNative.StructCreateNamed( ContextHandle, name );
-            return TypeRef.FromHandle<StructType>( handle );
+            return TypeRef.FromHandle<IStructType>( handle );
         }
         
         /// <summary>Create an anonymous structure type (e.g. Tuple)</summary>
@@ -307,17 +305,17 @@ namespace Llvm.NET
         /// <param name="element0">Type of the first field of the structure</param>
         /// <param name="elements">Types of any additional fields of the structure</param>
         /// <returns>
-        /// <see cref="StructType"/> with the specified body defined.
+        /// <see cref="IStructType"/> with the specified body defined.
         /// </returns>
-        public StructType CreateStructType( bool packed, TypeRef element0, params TypeRef[] elements )
+        public IStructType CreateStructType( bool packed, ITypeRef element0, params ITypeRef[] elements )
         {
             LLVMTypeRef[] llvmArgs = new LLVMTypeRef[ elements.Length + 1 ];
-            llvmArgs[ 0 ] = element0.TypeHandle;
+            llvmArgs[ 0 ] = element0.GetTypeRef();
             for( int i = 1; i < llvmArgs.Length; ++i)
-                llvmArgs[ i ] = elements[ i - 1 ].TypeHandle;
+                llvmArgs[ i ] = elements[ i - 1 ].GetTypeRef();
 
             var handle = LLVMNative.StructTypeInContext( ContextHandle, out llvmArgs[ 0 ], ( uint )llvmArgs.Length, packed );
-            return TypeRef.FromHandle<StructType>( handle );
+            return TypeRef.FromHandle<IStructType>( handle );
         }
 
         /// <summary>Creates a new structure type in this <see cref="Context"/></summary>
@@ -325,17 +323,17 @@ namespace Llvm.NET
         /// <param name="packed">Flag indicating if the structure is packed</param>
         /// <param name="elements">Types for the structures elements in layout order</param>
         /// <returns>
-        /// <see cref="StructType"/> with the specified body defined.
+        /// <see cref="IStructType"/> with the specified body defined.
         /// </returns>
         /// <remarks>
         /// If the elements argument list is empty then an opaque type is created (e.g. a forward reference)
-        /// The <see cref="StructType.SetBody(bool, TypeRef[])"/> method provides a means to add a body to
+        /// The <see cref="IStructType.SetBody(bool, ITypeRef[])"/> method provides a means to add a body to
         /// an opaque type at a later time if the details of the body are required. (If only pointers to
         /// to the type are required the body isn't required) 
         /// </remarks>
-        public StructType CreateStructType( string name, bool packed, params TypeRef[] elements )
+        public IStructType CreateStructType( string name, bool packed, params ITypeRef[] elements )
         {
-            var retVal = TypeRef.FromHandle<StructType>( LLVMNative.StructCreateNamed( ContextHandle, name ) );
+            var retVal = TypeRef.FromHandle<IStructType>( LLVMNative.StructCreateNamed( ContextHandle, name ) );
             if( elements.Length > 0 )
             {
                 retVal.SetBody( packed, elements );
@@ -385,7 +383,7 @@ namespace Llvm.NET
         /// <returns><see cref="ConstantInt"/> representing the value</returns>
         public Constant CreateConstant( bool constValue )
         {
-            var handle = LLVMNative.ConstInt( BoolType.TypeHandle
+            var handle = LLVMNative.ConstInt( BoolType.GetTypeRef()
                                             , ( ulong )( constValue ? 1 : 0 )
                                             , new LLVMBool( 0 )
                                             );
@@ -397,25 +395,25 @@ namespace Llvm.NET
         /// <returns><see cref="ConstantInt"/> representing the value</returns>
         public  Constant CreateConstant( byte constValue )
         {
-            var handle = LLVMNative.ConstInt( Int8Type.TypeHandle, constValue, new LLVMBool( 0 ) );
+            var handle = LLVMNative.ConstInt( Int8Type.GetTypeRef(), constValue, new LLVMBool( 0 ) );
             return Value.FromHandle<Constant>( handle );
         }
 
         /// <summary>Creates a new <see cref="ConstantInt"/> with a bit length of 8</summary>
         /// <param name="constValue">Value for the constant</param>
         /// <returns><see cref="ConstantInt"/> representing the value</returns>
-        public  Constant CreateConstant( sbyte constValue )
+        public Constant CreateConstant( sbyte constValue )
         {
-            var handle = LLVMNative.ConstInt( Int8Type.TypeHandle, ( ulong )constValue, new LLVMBool( 1 ) );
+            var handle = LLVMNative.ConstInt( Int8Type.GetTypeRef(), ( ulong )constValue, new LLVMBool( 1 ) );
             return Value.FromHandle<Constant>( handle );
         }
 
         /// <summary>Creates a new <see cref="ConstantInt"/> with a bit length of 16</summary>
         /// <param name="constValue">Value for the constant</param>
         /// <returns><see cref="ConstantInt"/> representing the value</returns>
-        public  Constant CreateConstant( Int16 constValue )
+        public Constant CreateConstant( Int16 constValue )
         {
-            var handle = LLVMNative.ConstInt( Int16Type.TypeHandle, ( ulong )constValue, new LLVMBool( 1 ) );
+            var handle = LLVMNative.ConstInt( Int16Type.GetTypeRef(), ( ulong )constValue, new LLVMBool( 1 ) );
             return Value.FromHandle<Constant>( handle );
         }
 
@@ -423,36 +421,36 @@ namespace Llvm.NET
         /// <param name="constValue">Value for the constant</param>
         /// <returns><see cref="ConstantInt"/> representing the value</returns>
         [System.Diagnostics.CodeAnalysis.SuppressMessage( "Language", "CSE0003:Use expression-bodied members", Justification = "Readability" )]
-        public  Constant CreateConstant( UInt16 constValue )
+        public Constant CreateConstant( UInt16 constValue )
         {
-            var handle = LLVMNative.ConstInt( Int16Type.TypeHandle, ( ulong )constValue, new LLVMBool( 0 ) );
+            var handle = LLVMNative.ConstInt( Int16Type.GetTypeRef(), ( ulong )constValue, new LLVMBool( 0 ) );
             return Value.FromHandle<Constant>( handle );
         }
 
         /// <summary>Creates a new <see cref="ConstantInt"/> with a bit length of 32</summary>
         /// <param name="constValue">Value for the constant</param>
         /// <returns><see cref="ConstantInt"/> representing the value</returns>
-        public  Constant CreateConstant( Int32 constValue )
+        public Constant CreateConstant( Int32 constValue )
         {
-            var handle = LLVMNative.ConstInt( Int32Type.TypeHandle, ( ulong )constValue, new LLVMBool( 1 ) );
+            var handle = LLVMNative.ConstInt( Int32Type.GetTypeRef(), ( ulong )constValue, new LLVMBool( 1 ) );
             return Value.FromHandle<Constant>( handle );
         }
 
         /// <summary>Creates a new <see cref="ConstantInt"/> with a bit length of 32</summary>
         /// <param name="constValue">Value for the constant</param>
         /// <returns><see cref="ConstantInt"/> representing the value</returns>
-        public  Constant CreateConstant( UInt32 constValue )
+        public Constant CreateConstant( UInt32 constValue )
         {
-            var handle = LLVMNative.ConstInt( Int32Type.TypeHandle, constValue, new LLVMBool( 0 ) );
+            var handle = LLVMNative.ConstInt( Int32Type.GetTypeRef(), constValue, new LLVMBool( 0 ) );
             return Value.FromHandle<Constant>( handle );
         }
 
         /// <summary>Creates a new <see cref="ConstantInt"/> with a bit length of 64</summary>
         /// <param name="constValue">Value for the constant</param>
         /// <returns><see cref="ConstantInt"/> representing the value</returns>
-        public  Constant CreateConstant( Int64 constValue )
+        public Constant CreateConstant( Int64 constValue )
         {
-            var handle = LLVMNative.ConstInt( Int64Type.TypeHandle, ( ulong )constValue, new LLVMBool( 1 ) );
+            var handle = LLVMNative.ConstInt( Int64Type.GetTypeRef(), ( ulong )constValue, new LLVMBool( 1 ) );
             return Value.FromHandle<Constant>( handle );
         }
 
@@ -460,9 +458,9 @@ namespace Llvm.NET
         /// <param name="constValue">Value for the constant</param>
         /// <returns><see cref="ConstantInt"/> representing the value</returns>
         [System.Diagnostics.CodeAnalysis.SuppressMessage( "Language", "CSE0003:Use expression-bodied members", Justification = "Readability" )]
-        public  Constant CreateConstant( UInt64 constValue )
+        public Constant CreateConstant( UInt64 constValue )
         {
-            var handle = LLVMNative.ConstInt( Int64Type.TypeHandle, constValue, new LLVMBool( 0 ) );
+            var handle = LLVMNative.ConstInt( Int64Type.GetTypeRef(), constValue, new LLVMBool( 0 ) );
             return Value.FromHandle<Constant>( handle );
         }
 
@@ -471,28 +469,28 @@ namespace Llvm.NET
         /// <param name="constValue">Value for the constant</param>
         /// <param name="signExtend">flag to indicate if the const value should be sign extended</param>
         /// <returns><see cref="ConstantInt"/> representing the value</returns>
-        public  Constant CreateConstant( uint bitWidth, UInt64 constValue, bool signExtend )
+        public Constant CreateConstant( uint bitWidth, UInt64 constValue, bool signExtend )
         {
             var intType = GetIntType( bitWidth );
             return CreateConstant( intType, constValue, signExtend );
         }
 
-        public  Constant CreateConstant( TypeRef intType, UInt64 constValue, bool signExtend )
+        public Constant CreateConstant( ITypeRef intType, UInt64 constValue, bool signExtend )
         {
             if( intType.Kind != TypeKind.Integer )
                 throw new ArgumentException( "Integer type required", nameof( intType ) );
 
-            return Value.FromHandle<Constant>( LLVMNative.ConstInt( intType.TypeHandle, constValue, signExtend ) );
+            return Value.FromHandle<Constant>( LLVMNative.ConstInt( intType.GetTypeRef(), constValue, signExtend ) );
         }
 
         public ConstantFP CreateConstant( float constValue )
         {
-            return Value.FromHandle<ConstantFP>( LLVMNative.ConstReal( FloatType.TypeHandle, constValue ) );
+            return Value.FromHandle<ConstantFP>( LLVMNative.ConstReal( FloatType.GetTypeRef(), constValue ) );
         }
 
         public ConstantFP CreateConstant( double constValue )
         {
-            return Value.FromHandle<ConstantFP>( LLVMNative.ConstReal( DoubleType.TypeHandle, constValue ) );
+            return Value.FromHandle<ConstantFP>( LLVMNative.ConstReal( DoubleType.GetTypeRef(), constValue ) );
         }
 
         internal void Close()
@@ -607,12 +605,12 @@ namespace Llvm.NET
             Debug.Assert( !TypeCache.ContainsKey( typeRef.Pointer ) );
         }
 
-        internal TypeRef GetTypeFor( LLVMTypeRef valueRef, Func<LLVMTypeRef, TypeRef> constructor )
+        internal ITypeRef GetTypeFor( LLVMTypeRef valueRef, Func<LLVMTypeRef, ITypeRef> constructor )
         {
             if( valueRef.Pointer == IntPtr.Zero )
                 throw new ArgumentNullException( nameof( valueRef ) );
 
-            TypeRef retVal;
+            ITypeRef retVal;
             if( TypeCache.TryGetValue( valueRef.Pointer, out retVal ) )
                 return retVal;
 
@@ -643,7 +641,7 @@ namespace Llvm.NET
         }
 
         private Dictionary<IntPtr, Value> ValueCache = new Dictionary<IntPtr, Value>( );
-        private Dictionary<IntPtr, TypeRef> TypeCache = new Dictionary<IntPtr, TypeRef>( );
+        private Dictionary<IntPtr, ITypeRef> TypeCache = new Dictionary<IntPtr, ITypeRef>( );
         private Dictionary<IntPtr, Module> ModuleCache = new Dictionary<IntPtr, Module>( );
 
         static void FatalErrorHandler(string Reason)

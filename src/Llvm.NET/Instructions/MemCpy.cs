@@ -11,7 +11,7 @@ namespace Llvm.NET.Instructions
         {
         }
 
-        internal static string GetIntrinsicNameForArgs( PointerType dst, PointerType src, TypeRef len )
+        internal static string GetIntrinsicNameForArgs( IPointerType dst, IPointerType src, ITypeRef len )
         {
             Debug.Assert( dst != null && dst.ElementType.IsInteger && dst.ElementType.IntegerBitWidth > 0 );
             Debug.Assert( src != null && src.ElementType.IsInteger && src.ElementType.IntegerBitWidth > 0 );

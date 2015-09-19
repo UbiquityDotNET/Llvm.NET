@@ -2,15 +2,22 @@
 
 namespace Llvm.NET.Types
 {
+    public interface IArrayType
+        : ISequenceType
+    {
+        uint Length { get; }
+    }
+
     /// <summary>Array type definition</summary>
     /// <remarks>
     /// Array's in LLVM are fixed length sequences of elements
     /// </remarks>
-    public class ArrayType
+    internal class ArrayType
         : SequenceType
+        , IArrayType
     {
         /// <summary>Length of the array</summary>
-        public uint Length => LLVMNative.GetArrayLength( TypeHandle );
+        public uint Length => LLVMNative.GetArrayLength( TypeHandle_ );
 
         internal ArrayType( LLVMTypeRef typeRef )
             : base( typeRef )

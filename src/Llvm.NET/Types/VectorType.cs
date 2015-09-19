@@ -2,9 +2,17 @@
 
 namespace Llvm.NET.Types
 {
-    public class VectorType : SequenceType
+    public interface IVectorType
+        : ISequenceType
     {
-        public uint Size => LLVMNative.GetVectorSize( TypeHandle );
+        uint Size { get; }
+    }
+
+    internal class VectorType
+        : SequenceType
+        , IVectorType
+    {
+        public uint Size => LLVMNative.GetVectorSize( TypeHandle_ );
 
         internal VectorType( LLVMTypeRef typeRef )
             : base( typeRef )

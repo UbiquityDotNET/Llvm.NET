@@ -19,7 +19,7 @@ namespace Llvm.NET.Values
         /// <param name="elementType">Type of elements in the array</param>
         /// <param name="values">Values to initialize the array</param>
         /// <returns>Constant representing the array</returns>
-        public static Constant From( TypeRef elementType, params Constant[ ] values )
+        public static Constant From( ITypeRef elementType, params Constant[ ] values )
         {
             return From( elementType, ( IEnumerable<Constant> )values );
         }
@@ -28,7 +28,7 @@ namespace Llvm.NET.Values
         /// <param name="elementType">Type of elements in the array</param>
         /// <param name="values">Values to initialize the array</param>
         /// <returns>Constant representing the array</returns>
-        public static Constant From( TypeRef elementType, IEnumerable<Constant> values )
+        public static Constant From( ITypeRef elementType, IEnumerable<Constant> values )
         {
             if( values.Any( v => v.Type != elementType ) )
                 throw new ArgumentException( "One or more value(s) type does not match specified array element type" );
@@ -38,7 +38,7 @@ namespace Llvm.NET.Values
             if( argCount == 0 )
                 valueHandles = new LLVMValueRef[ 1 ];
 
-            var handle = LLVMNative.ConstArray( elementType.TypeHandle, out valueHandles[ 0 ], (uint)argCount );
+            var handle = LLVMNative.ConstArray( elementType.GetTypeRef(), out valueHandles[ 0 ], (uint)argCount );
             return FromHandle<Constant>( handle );
         }
 

@@ -5,9 +5,12 @@ using Llvm.NET.Values;
 namespace Llvm.NET.Types
 {
     /// <summary>LLVM Type</summary>
-    public class TypeRef 
-        : IExtensiblePropertyContainer
+    internal class TypeRef 
+        : ITypeRef
+        , IExtensiblePropertyContainer
     {
+        public IntPtr TypeHandle => TypeHandle_.Pointer;
+
         /// <summary>Flag to indicate if the type is sized</summary>
         public bool IsSized
         {
@@ -16,14 +19,13 @@ namespace Llvm.NET.Types
                 if( Kind == TypeKind.Function )
                     return false;
 
-                return LLVMNative.TypeIsSized( TypeHandle );
+                return LLVMNative.TypeIsSized( TypeHandle_ );
             }
         }
 
         /// <summary>LLVM Type kind for this type</summary>
-        public TypeKind Kind => ( TypeKind )LLVMNative.GetTypeKind( TypeHandle );
-
-        public bool IsInteger => Kind == TypeKind.Integer;
+        public TypeKind Kind => ( TypeKind )LLVMNative.GetTypeKind( TypeHandle_ );
+        public bool IsInteger=> Kind == TypeKind.Integer;
 
         // Return true if value is 'float', a 32-bit IEEE fp type.
         public bool IsFloat => Kind == TypeKind.Float32;
@@ -32,6 +34,13 @@ namespace Llvm.NET.Types
         public bool IsDouble => Kind == TypeKind.Float64;
 
         public bool IsVoid => Kind == TypeKind.Void;
+
+        public bool IsStruct => Kind == TypeKind.Struct;
+
+        public bool IsPointer => Kind == TypeKind.Pointer;
+
+        /// <summary>Flag to indicate if the type is a sequence type</summary>
+        public bool IsSequence => Kind == TypeKind.Array || Kind == TypeKind.Vector || Kind == TypeKind.Pointer;
 
         public bool IsFloatingPoint
         {
@@ -53,20 +62,17 @@ namespace Llvm.NET.Types
             }
         }
 
-        public bool IsPointer => Kind == TypeKind.Pointer;
         public bool IsPointerPointer
         {
             get
             {
-                var ptrType = this as PointerType;
+                var ptrType = this as IPointerType;
                 return ptrType != null && ptrType.ElementType.Kind == TypeKind.Pointer;
             }
         }
 
-        public bool IsStruct => Kind == TypeKind.Struct;
-
         /// <summary>Context that owns this type</summary>
-        public Context Context => Context.GetContextFor( TypeHandle );
+        public Context Context => Context.GetContextFor( TypeHandle_ );
 
         /// <summary>Integer bid width of this type or 0 for non integer types</summary>
         public uint IntegerBitWidth
@@ -76,63 +82,61 @@ namespace Llvm.NET.Types
                 if( Kind != TypeKind.Integer )
                     return 0;
 
-                return LLVMNative.GetIntTypeWidth( TypeHandle );
+                return LLVMNative.GetIntTypeWidth( TypeHandle_ );
             }
         }
-
-        /// <summary>Flag to indicate if the type is a sequence type</summary>
-        public bool IsSequence => Kind == TypeKind.Array || Kind == TypeKind.Vector || Kind == TypeKind.Pointer;
 
         /// <summary>Gets a null value (e.g. all bits = 0 ) for the type</summary>
         /// <remarks>This is a getter function instead of a property as it can throw exceptions</remarks>
         public Constant GetNullValue() => Constant.NullValueFor( this );
 
-        public DIType DIType { get; internal set; }
+        /// <inheritdoc/>
+        /// <remarks>
+        /// This is virtual to allow blocking assignment for a raw FunctionType as, unlike all
+        /// other types, there is a one to many relationship for FunctionType to DISubroutineType
+        /// </remarks>
+        public virtual DIType DIType { get; set; }
 
         /// <summary>Retrieves an expression that results in the size of the type</summary>
         [Obsolete("Use TargetData layout information to compute size and create a constant from that")]
-        public Constant GetSizeOfExpression()
+        public Constant GetSizeOfExpression( int pointerSize )
         {
             if( !IsSized
                 || Kind == TypeKind.Void
                 || Kind == TypeKind.Function
-                || ( Kind == TypeKind.Struct && ( LLVMNative.IsOpaqueStruct( TypeHandle ) ) )
+                || ( Kind == TypeKind.Struct && ( LLVMNative.IsOpaqueStruct( TypeHandle_ ) ) )
                 )
             {
                 return Context.CreateConstant( 0 );
             }
 
-            var hSize = LLVMNative.SizeOf( TypeHandle );
-    
+            var hSize = LLVMNative.SizeOf( TypeHandle_ );
+
             // LLVM uses an expression to construct Sizeof, however it is hard coded to
-            // use an i64 as the type for the size, which isn't valid for a 32 bit system
-            if( LLVMNative.GetIntTypeWidth( LLVMNative.TypeOf( hSize ) ) > 32 )
-                hSize = LLVMNative.ConstTrunc( hSize, Context.Int32Type.TypeHandle );
-
-            var hConstExp =  LLVMNative.IsAConstantExpr( hSize );
-            if( hConstExp.Pointer != null )
-                return Value.FromHandle<ConstantExpression>( hConstExp );
-
-            var hConstInt = LLVMNative.IsAConstantInt( hSize );
-            if( hConstInt.Pointer != null )
-                return Value.FromHandle<ConstantInt>( hConstInt );
+            // use an i64 as the type for the size, which isn't valid for 32 bit systems
+            var sizeOfBitWidth = LLVMNative.GetIntTypeWidth( LLVMNative.TypeOf( hSize ) );
+            var hIntPtr = new LLVMTypeRef( Context.GetIntType( ( uint )pointerSize ).TypeHandle );
+            if( sizeOfBitWidth > pointerSize )
+                hSize = LLVMNative.ConstTrunc( hSize, hIntPtr );
+            else if( sizeOfBitWidth < pointerSize )
+                hSize = LLVMNative.ConstZExt( hSize, hIntPtr );
 
             return Value.FromHandle<Constant>( hSize );
         }
 
         /// <summary>Array type factory for an array with elements of this type</summary>
         /// <param name="count">Number of elements in the array</param>
-        /// <returns><see cref="ArrayType"/> for the array</returns>
-        public ArrayType CreateArrayType( uint count ) => FromHandle<ArrayType>( LLVMNative.ArrayType( TypeHandle, count ) );
+        /// <returns><see cref="IArrayType"/> for the array</returns>
+        public IArrayType CreateArrayType( uint count ) => FromHandle<IArrayType>( LLVMNative.ArrayType( TypeHandle_, count ) );
 
-        /// <summary>Get a <see cref="PointerType"/> for a type that points to elements of this type in the default (0) address space</summary>
-        /// <returns><see cref="PointerType"/>corresponding to the type of a pointer that referns to elements of this type</returns>
-        public PointerType CreatePointerType( ) => CreatePointerType( 0 );
+        /// <summary>Get a <see cref="IPointerType"/> for a type that points to elements of this type in the default (0) address space</summary>
+        /// <returns><see cref="IPointerType"/>corresponding to the type of a pointer that referns to elements of this type</returns>
+        public IPointerType CreatePointerType( ) => CreatePointerType( 0 );
 
-        /// <summary>Get a <see cref="PointerType"/> for a type that points to elements of this type in the specified address space</summary>
+        /// <summary>Get a <see cref="IPointerType"/> for a type that points to elements of this type in the specified address space</summary>
         /// <param name="addressSpace">Address space for the pointer</param>
-        /// <returns><see cref="PointerType"/>corresponding to the type of a pointer that referns to elements of this type</returns>
-        public PointerType CreatePointerType( uint addressSpace ) => FromHandle<PointerType>( LLVMNative.PointerType( TypeHandle, addressSpace ) );
+        /// <returns><see cref="IPointerType"/>corresponding to the type of a pointer that referns to elements of this type</returns>
+        public IPointerType CreatePointerType( uint addressSpace ) => FromHandle<IPointerType>( LLVMNative.PointerType( TypeHandle_, addressSpace ) );
 
         public bool TryGetExtendedPropertyValue<T>( string id, out T value ) => ExtensibleProperties.TryGetExtendedPropertyValue<T>( id, out value );
         public void AddExtendedPropertyValue( string id, object value ) => ExtensibleProperties.AddExtendedPropertyValue( id, value );
@@ -141,7 +145,7 @@ namespace Llvm.NET.Types
         /// <returns>Formatted string for this type</returns>
         public override string ToString( )
         {
-            var msgString = LLVMNative.PrintTypeToString( TypeHandle );
+            var msgString = LLVMNative.PrintTypeToString( TypeHandle_ );
             return LLVMNative.MarshalMsg( msgString );
         }
 
@@ -153,13 +157,14 @@ namespace Llvm.NET.Types
 
         /// <summary>Creates a pointer type with debug information</summary>
         /// <param name="module">Module to use for building debug information</param>
-        /// <returns><see cref="PointerType"/></returns>
-        public PointerType CreatePointerType( Module module )
+        /// <param name="addressSpace">Address space of the pointer</param>
+        /// <returns><see cref="IPointerType"/></returns>
+        public IPointerType CreatePointerType( Module module, uint addressSpace )
         {
             if( DIType == null )
                 throw new ArgumentException( "Type does not have associated Debug type from which to construct a pointer type" );
 
-            var retVal = CreatePointerType( );
+            var retVal = CreatePointerType( addressSpace );
             var diPtr = module.DIBuilder.CreatePointerType( DIType
                                                           , string.Empty
                                                           , module.Layout.BitSizeOf( retVal )
@@ -169,7 +174,7 @@ namespace Llvm.NET.Types
             return retVal;
         }
 
-        public TypeRef CreateArrayType( Module module, uint lowerBound, uint count )
+        public IArrayType CreateArrayType( Module module, uint lowerBound, uint count )
         {
             if( DIType == null )
                 throw new ArgumentException( "Type does not have associated Debug type from which to construct an array type" );
@@ -184,44 +189,9 @@ namespace Llvm.NET.Types
             return llvmArray;
         }
 
-        public DIType CreateDIType( Module module, string name, DIScope scope )
-        {
-            DIType retVal;
-            switch( Kind )
-            {
-            case TypeKind.Float32:
-            case TypeKind.Float64:
-            case TypeKind.Float16:
-            case TypeKind.X86Float80:
-            case TypeKind.Float128m112:
-            case TypeKind.Float128:
-            case TypeKind.Integer:
-                retVal = GetDiBasicType( this, module, name );
-                break;
-
-            case TypeKind.Struct:
-                retVal =  module.DIBuilder.CreateReplaceableCompositeType( Tag.StructureType, name, scope, null, 0 );
-                break;
-
-            case TypeKind.Void:
-            case TypeKind.Function:
-            case TypeKind.Array:
-                return null;
-
-            case TypeKind.Pointer:
-                retVal = ((PointerType )this).ElementType.CreateDIType( module, $"{name}*", scope );
-                break;
-
-            default:
-                throw new NotSupportedException( "Type not supported for this target/language" );
-            }
-            DIType = retVal;
-            return retVal;
-        }
-
         internal TypeRef( LLVMTypeRef typeRef )
         {
-            TypeHandle = typeRef;
+            TypeHandle_ = typeRef;
             if( typeRef.Pointer == IntPtr.Zero )
                 throw new ArgumentNullException( nameof( typeRef ) );
 
@@ -231,32 +201,10 @@ namespace Llvm.NET.Types
 #endif
         }
 
-        private static DIBasicType GetDiBasicType( TypeRef llvmType, Module module, string name )
-        {
-            var bitSize = module.Layout.BitSizeOf( llvmType );
-            var bitAlignment = module.Layout.AbiBitAlignmentOf( llvmType );
-
-            switch( llvmType.Kind )
-            {
-            case TypeKind.Float32:
-            case TypeKind.Float64:
-            case TypeKind.Float16:
-            case TypeKind.X86Float80:
-            case TypeKind.Float128m112:
-            case TypeKind.Float128:
-                return module.DIBuilder.CreateBasicType( name, bitSize, bitAlignment, DiTypeKind.Float );
-
-            case TypeKind.Integer:
-                return module.DIBuilder.CreateBasicType( name, bitSize, bitAlignment, DiTypeKind.Signed );
-
-            default:
-                throw new NotSupportedException( "Not a basic type!" );
-            }
-        }
-
         internal static TypeRef FromHandle( LLVMTypeRef typeRef ) => FromHandle<TypeRef>( typeRef );
         internal static T FromHandle<T>( LLVMTypeRef typeRef )
-            where T : TypeRef
+            where T : class, ITypeRef
+
         {
             if( typeRef.Pointer == IntPtr.Zero )
                 return null;
@@ -265,7 +213,7 @@ namespace Llvm.NET.Types
             return ( T )ctx.GetTypeFor( typeRef, StaticFactory );
         }
 
-        private static TypeRef StaticFactory( LLVMTypeRef typeRef )
+        private static ITypeRef StaticFactory( LLVMTypeRef typeRef )
         {
             var kind = (TypeKind)LLVMNative.GetTypeKind( typeRef );
             switch( kind )
@@ -303,7 +251,7 @@ namespace Llvm.NET.Types
             }
         }
 
-        internal LLVMTypeRef TypeHandle { get; }
+        internal readonly LLVMTypeRef TypeHandle_;
         private ExtensiblePropertyContainer ExtensibleProperties = new ExtensiblePropertyContainer( );
     }
 }

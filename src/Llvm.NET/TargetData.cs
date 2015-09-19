@@ -13,20 +13,20 @@ namespace Llvm.NET
         public uint PointerSize() => LLVMNative.PointerSize( OpaqueHandle );
         public uint PointerSize( uint addressSpace ) => LLVMNative.PointerSizeForAS( OpaqueHandle, addressSpace );
 
-        public TypeRef IntPtrType() => TypeRef.FromHandle( LLVMNative.IntPtrType( OpaqueHandle ) );
-        public TypeRef IntPtrType( uint addressSpace )
+        public ITypeRef IntPtrType() => TypeRef.FromHandle( LLVMNative.IntPtrType( OpaqueHandle ) );
+        public ITypeRef IntPtrType( uint addressSpace )
         {
             var typeHandle = LLVMNative.IntPtrTypeForAS( OpaqueHandle, addressSpace );
             return TypeRef.FromHandle( typeHandle );
         }
 
-        public TypeRef IntPtrType( Context context )
+        public ITypeRef IntPtrType( Context context )
         {
             var typeHandle = LLVMNative.IntPtrTypeInContext( context.ContextHandle, OpaqueHandle );
             return TypeRef.FromHandle( typeHandle );
         }
 
-        public TypeRef IntPtrType( Context context, uint addressSpace )
+        public ITypeRef IntPtrType( Context context, uint addressSpace )
         {
             var typeHandle = LLVMNative.IntPtrTypeInContext( context.ContextHandle, OpaqueHandle );
             return TypeRef.FromHandle( typeHandle );
@@ -61,40 +61,40 @@ namespace Llvm.NET
         /// The values in the example table are for x86-32 linux.
         /// </note>
         ///</remarks>
-        public ulong BitSizeOf( TypeRef typeRef )
+        public ulong BitSizeOf( ITypeRef typeRef )
         {
             VerifySized( typeRef, nameof( typeRef ) );
-            return LLVMNative.SizeOfTypeInBits( OpaqueHandle, typeRef.TypeHandle );
+            return LLVMNative.SizeOfTypeInBits( OpaqueHandle, typeRef.GetTypeRef() );
         }
 
-        public ulong StoreSizeOf( TypeRef typeRef )
+        public ulong StoreSizeOf( ITypeRef typeRef )
         {
             VerifySized( typeRef, nameof( typeRef ) );
-            return LLVMNative.StoreSizeOfType( OpaqueHandle, typeRef.TypeHandle );
+            return LLVMNative.StoreSizeOfType( OpaqueHandle, typeRef.GetTypeRef() );
         }
 
-        public ulong AbiSizeOf( TypeRef typeRef )
+        public ulong AbiSizeOf( ITypeRef typeRef )
         {
             VerifySized( typeRef, nameof( typeRef ) );
-            return LLVMNative.ABISizeOfType( OpaqueHandle, typeRef.TypeHandle );
+            return LLVMNative.ABISizeOfType( OpaqueHandle, typeRef.GetTypeRef() );
         }
 
-        public uint AbiAlignmentOf( TypeRef typeRef )
+        public uint AbiAlignmentOf( ITypeRef typeRef )
         {
             VerifySized( typeRef, nameof( typeRef ) );
-            return LLVMNative.ABIAlignmentOfType( OpaqueHandle, typeRef.TypeHandle );
+            return LLVMNative.ABIAlignmentOfType( OpaqueHandle, typeRef.GetTypeRef() );
         }
 
-        public uint CallFrameAlignmentOf( TypeRef typeRef )
+        public uint CallFrameAlignmentOf( ITypeRef typeRef )
         {
             VerifySized( typeRef, nameof( typeRef ) );
-            return LLVMNative.CallFrameAlignmentOfType( OpaqueHandle, typeRef.TypeHandle );
+            return LLVMNative.CallFrameAlignmentOfType( OpaqueHandle, typeRef.GetTypeRef() );
         }
 
-        public uint PreferredAlignmentOf( TypeRef typeRef )
+        public uint PreferredAlignmentOf( ITypeRef typeRef )
         {
             VerifySized( typeRef, nameof( typeRef ) );
-            return LLVMNative.PreferredAlignmentOfType( OpaqueHandle, typeRef.TypeHandle );
+            return LLVMNative.PreferredAlignmentOfType( OpaqueHandle, typeRef.GetTypeRef() );
         }
 
         public uint PreferredAlignmentOf( Value value )
@@ -103,16 +103,16 @@ namespace Llvm.NET
             return LLVMNative.PreferredAlignmentOfGlobal( OpaqueHandle, value.ValueHandle );
         }
 
-        public uint ElementAtOffset( StructType structType, ulong offset )
+        public uint ElementAtOffset( IStructType structType, ulong offset )
         {
             VerifySized( structType, nameof( structType ) );
-            return LLVMNative.ElementAtOffset( OpaqueHandle, structType.TypeHandle, offset );
+            return LLVMNative.ElementAtOffset( OpaqueHandle, structType.GetTypeRef(), offset );
         }
 
-        public ulong OffsetOfElement( StructType structType, uint element )
+        public ulong OffsetOfElement( IStructType structType, uint element )
         {
             VerifySized( structType, nameof( structType ) );
-            return LLVMNative.OffsetOfElement( OpaqueHandle, structType.TypeHandle, element );
+            return LLVMNative.OffsetOfElement( OpaqueHandle, structType.GetTypeRef(), element );
         }
 
         public override string ToString( )
@@ -121,13 +121,13 @@ namespace Llvm.NET
             return LLVMNative.MarshalMsg( msgPtr );
         }
 
-        public ulong ByteSizeOf( TypeRef llvmType ) => BitSizeOf( llvmType ) / 8u;
+        public ulong ByteSizeOf( ITypeRef llvmType ) => BitSizeOf( llvmType ) / 8u;
 
-        public uint PreferredBitAlignementOf( TypeRef llvmType ) => PreferredAlignmentOf( llvmType ) * 8;
+        public uint PreferredBitAlignementOf( ITypeRef llvmType ) => PreferredAlignmentOf( llvmType ) * 8;
 
-        public uint AbiBitAlignmentOf( TypeRef llvmType ) => AbiAlignmentOf( llvmType ) * 8;
+        public uint AbiBitAlignmentOf( ITypeRef llvmType ) => AbiAlignmentOf( llvmType ) * 8;
 
-        public ulong BitOffsetOfElement( StructType llvmType, uint element ) => OffsetOfElement( llvmType, element ) * 8;
+        public ulong BitOffsetOfElement( IStructType llvmType, uint element ) => OffsetOfElement( llvmType, element ) * 8;
 
         public static TargetData Parse( string layoutString )
         {
@@ -157,7 +157,7 @@ namespace Llvm.NET
 
         internal LLVMTargetDataRef OpaqueHandle { get; private set; }
 
-        private static void VerifySized( TypeRef type, string name )
+        private static void VerifySized( ITypeRef type, string name )
         {
             if( !type.IsSized )
                 throw new ArgumentException( "Type must be sized to get target size information", name );

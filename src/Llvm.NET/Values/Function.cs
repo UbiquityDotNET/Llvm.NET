@@ -13,7 +13,7 @@ namespace Llvm.NET.Values
         : GlobalObject
     {
         /// <summary>Signature type of the function</summary>
-        public FunctionType Signature => TypeRef.FromHandle<FunctionType>( LLVMNative.GetElementType( LLVMNative.TypeOf( ValueHandle ) ) );
+        public IFunctionType Signature => TypeRef.FromHandle<IFunctionType>( LLVMNative.GetElementType( LLVMNative.TypeOf( ValueHandle ) ) );
 
         /// <summary>Entry block for this function</summary>
         public BasicBlock EntryBlock
@@ -66,7 +66,7 @@ namespace Llvm.NET.Values
         public bool IsVarArg => Signature.IsVarArg;
 
         /// <summary>Return type of the function</summary>
-        public TypeRef ReturnType => Signature.ReturnType;
+        public ITypeRef ReturnType => Signature.ReturnType;
 
         public DISubProgram DISubProgram { get; internal set; }
 

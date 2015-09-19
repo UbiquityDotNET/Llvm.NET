@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Collections.Generic;
 using Llvm.NET.Types;
 using Llvm.NET.Values;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -107,7 +105,7 @@ namespace Llvm.NET.Tests
                 Assert.IsNotNull( module.Context.Int16Type );
 
                 // i16 ( i32, float )
-                var argTypes = new TypeRef[ ] { module.Context.Int32Type, module.Context.FloatType };
+                var argTypes = new ITypeRef[ ] { module.Context.Int32Type, module.Context.FloatType };
                 var funcSig = module.Context.GetFunctionType( module.Context.Int16Type, argTypes );
                 Assert.IsNotNull( funcSig );
                 Assert.AreSame( module.Context, funcSig.Context );
@@ -138,7 +136,7 @@ namespace Llvm.NET.Tests
             using( var module = new Module("test") )
             {
                 // i16 ( i32, float )
-                var argTypes = new List<TypeRef> { module.Context.Int32Type, module.Context.FloatType };
+                var argTypes = new List<ITypeRef> { module.Context.Int32Type, module.Context.FloatType };
                 var funcSig = module.Context.GetFunctionType( module.Context.Int16Type, argTypes, true );
                 Assert.IsNotNull( funcSig );
                 Assert.AreSame( module.Context, funcSig.Context );
@@ -857,7 +855,7 @@ namespace Llvm.NET.Tests
                 Assert.IsFalse( value.IsUndefined );
                 Assert.AreSame( string.Empty, value.Name );
                 Assert.IsNotNull( value.Type );
-                var arrayType = value.Type as Types.ArrayType;
+                var arrayType = value.Type as IArrayType;
                 Assert.IsNotNull( arrayType );
                 Assert.AreSame( module.Context, arrayType.Context );
                 Assert.AreSame( module.Context.Int8Type, arrayType.ElementType );

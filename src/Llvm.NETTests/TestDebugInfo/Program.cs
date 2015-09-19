@@ -147,7 +147,7 @@ namespace TestDebugInfo
                 var copySig = module.Context.CreateFunctionType( module.DIBuilder
                                                                , diFile
                                                                , module.Context.VoidType
-                                                               , new ParameterTypePair( fooPtr, constFoo )
+                                                               , new DebugTypePair<DIDerivedType>( fooPtr, constFoo )
                                                                , fooPtr
                                                                );
                 var doCopySig = module.Context.CreateFunctionType( module.DIBuilder, diFile, module.Context.VoidType );
@@ -218,7 +218,7 @@ namespace TestDebugInfo
                                                 , TargetData layout
                                                 , DICompileUnit cu
                                                 , DIFile diFile
-                                                , StructType foo
+                                                , IStructType foo
                                                 )
         {
             // Create concrete DIType and RAUW of the opaque one with the complete version
@@ -274,8 +274,8 @@ namespace TestDebugInfo
                                                   , TargetData layout
                                                   , Function copyFunc
                                                   , DIFile diFile
-                                                  , StructType foo
-                                                  , PointerType fooPtr
+                                                  , IStructType foo
+                                                  , IPointerType fooPtr
                                                   , DIDerivedType constFooType
                                                   )
         {
@@ -348,7 +348,7 @@ namespace TestDebugInfo
         private static void CreateDoCopyFunctionBody( Module module
                                                     , TargetData layout
                                                     , Function doCopyFunc
-                                                    , StructType foo
+                                                    , IStructType foo
                                                     , GlobalVariable bar
                                                     , GlobalVariable baz
                                                     , Function copyFunc

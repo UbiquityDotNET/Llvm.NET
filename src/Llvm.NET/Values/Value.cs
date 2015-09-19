@@ -47,7 +47,7 @@ namespace Llvm.NET.Values
         public bool IsNull => LLVMNative.IsNull( ValueHandle );
 
         /// <summary>Type of the value</summary>
-        public TypeRef Type => TypeRef.FromHandle( LLVMNative.TypeOf( ValueHandle ) );
+        public ITypeRef Type => TypeRef.FromHandle( LLVMNative.TypeOf( ValueHandle ) );
 
         public Context Context => Type.Context;
 

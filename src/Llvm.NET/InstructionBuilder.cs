@@ -123,19 +123,19 @@ namespace Llvm.NET
 
         public Value Or( Value lhs, Value rhs, string name ) => BuildBinOp( LLVMNative.BuildOr, lhs, rhs, name );
 
-        public Alloca Alloca( TypeRef typeRef ) => Alloca( typeRef, string.Empty );
+        public Alloca Alloca( ITypeRef typeRef ) => Alloca( typeRef, string.Empty );
 
-        public Alloca Alloca( TypeRef typeRef, string name )
+        public Alloca Alloca( ITypeRef typeRef, string name )
         {
-            var handle = LLVMNative.BuildAlloca( BuilderHandle, typeRef.TypeHandle, name );
+            var handle = LLVMNative.BuildAlloca( BuilderHandle, typeRef.GetTypeRef(), name );
             return Value.FromHandle<Alloca>( handle );
         }
 
-        public Alloca Alloca( TypeRef typeRef, ConstantInt elements ) => Alloca( typeRef, elements, string.Empty );
+        public Alloca Alloca( ITypeRef typeRef, ConstantInt elements ) => Alloca( typeRef, elements, string.Empty );
 
-        public Alloca Alloca( TypeRef typeRef, ConstantInt elements, string name )
+        public Alloca Alloca( ITypeRef typeRef, ConstantInt elements, string name )
         {
-            var instHandle = LLVMNative.BuildArrayAlloca( BuilderHandle, typeRef.TypeHandle, elements.ValueHandle, name );
+            var instHandle = LLVMNative.BuildArrayAlloca( BuilderHandle, typeRef.GetTypeRef(), elements.ValueHandle, name );
             return Value.FromHandle<Alloca>( instHandle );
         }
 
@@ -158,13 +158,13 @@ namespace Llvm.NET
         /// <returns><see cref="Instructions.Store"/> instruction</returns>
         /// <remarks>
         /// Since store targets memory the type of <paramref name="destination"/>
-        /// must be a <see cref="PointerType"/>. Furthermore, the element type of
+        /// must be a <see cref="IPointerType"/>. Furthermore, the element type of
         /// the pointer must match the type of <paramref name="value"/> Otherwise an
         /// <see cref="ArgumentException"/> is thrown.
         /// </remarks>
         public Store Store( Value value, Value destination )
         {
-            var ptrType = destination.Type as PointerType;
+            var ptrType = destination.Type as IPointerType;
             if( ptrType == null )
                 throw new ArgumentException( "Expected pointer value", nameof( destination ) );
 
@@ -356,12 +356,12 @@ namespace Llvm.NET
         /// and is either a <see cref="ConstantExpression"/> or an <see cref="Instructions.IntToPointer"/>
         /// instruction. Conversion to a constant expression is performed whenever possible.
         /// </remarks>
-        public Value IntToPointer( Value intValue, PointerType ptrType )
+        public Value IntToPointer( Value intValue, IPointerType ptrType )
         {
             if( intValue is Constant )
-                return Value.FromHandle( LLVMNative.ConstIntToPtr( intValue.ValueHandle, ptrType.TypeHandle ) );
+                return Value.FromHandle( LLVMNative.ConstIntToPtr( intValue.ValueHandle, ptrType.GetTypeRef() ) );
 
-            var hValue = LLVMNative.BuildIntToPtr( BuilderHandle, intValue.ValueHandle, ptrType.TypeHandle, string.Empty );
+            var hValue = LLVMNative.BuildIntToPtr( BuilderHandle, intValue.ValueHandle, ptrType.GetTypeRef(), string.Empty );
             return Value.FromHandle( hValue );
         }
 
@@ -374,7 +374,7 @@ namespace Llvm.NET
         /// and is either a <see cref="ConstantExpression"/> or a <see cref="Instructions.PointerToInt"/>
         /// instruction. Conversion to a constant expression is performed whenever possible.
         /// </remarks>
-        public Value PointerToInt( Value ptrValue, TypeRef intType )
+        public Value PointerToInt( Value ptrValue, ITypeRef intType )
         {
             if( ptrValue.Type.Kind != TypeKind.Pointer )
                 throw new ArgumentException( "Expected a pointer value", nameof( ptrValue ) );
@@ -383,9 +383,9 @@ namespace Llvm.NET
                 throw new ArgumentException( "Expected pointer to integral type", nameof( intType ) );
 
             if( ptrValue is Constant )
-                return Value.FromHandle( LLVMNative.ConstPtrToInt( ptrValue.ValueHandle, intType.TypeHandle ) );
+                return Value.FromHandle( LLVMNative.ConstPtrToInt( ptrValue.ValueHandle, intType.GetTypeRef() ) );
 
-            var hValue = LLVMNative.BuildPtrToInt( BuilderHandle, ptrValue.ValueHandle, intType.TypeHandle, string.Empty );
+            var hValue = LLVMNative.BuildPtrToInt( BuilderHandle, ptrValue.ValueHandle, intType.GetTypeRef(), string.Empty );
             return Value.FromHandle( hValue );
         }
 
@@ -468,141 +468,141 @@ namespace Llvm.NET
                 throw new ArgumentOutOfRangeException( nameof( predicate ), $"'{predicate}' is not a valid value for a compare predicate" );
         }
 
-        public Value ZeroExtendOrBitCast( Value valueRef, TypeRef targetType )
+        public Value ZeroExtendOrBitCast( Value valueRef, ITypeRef targetType )
         {
             return ZeroExtendOrBitCast( valueRef, targetType, string.Empty );
         }
 
-        public Value ZeroExtendOrBitCast( Value valueRef, TypeRef targetType, string name )
+        public Value ZeroExtendOrBitCast( Value valueRef, ITypeRef targetType, string name )
         {
             // short circuit cast to same type as it won't be a Constant or a BitCast
             if( valueRef.Type == targetType )
                 return valueRef;
 
             if( valueRef is Constant )
-                return Value.FromHandle( LLVMNative.ConstZExtOrBitCast( valueRef.ValueHandle, targetType.TypeHandle ) );
+                return Value.FromHandle( LLVMNative.ConstZExtOrBitCast( valueRef.ValueHandle, targetType.GetTypeRef() ) );
             else
-                return Value.FromHandle( LLVMNative.BuildZExtOrBitCast( BuilderHandle, valueRef.ValueHandle, targetType.TypeHandle, name ) );
+                return Value.FromHandle( LLVMNative.BuildZExtOrBitCast( BuilderHandle, valueRef.ValueHandle, targetType.GetTypeRef(), name ) );
         }
 
-        public Value SignExtendOrBitCast( Value valueRef, TypeRef targetType )
+        public Value SignExtendOrBitCast( Value valueRef, ITypeRef targetType )
         {
             return SignExtendOrBitCast( valueRef, targetType, string.Empty );
         }
 
-        public Value SignExtendOrBitCast( Value valueRef, TypeRef targetType, string name )
+        public Value SignExtendOrBitCast( Value valueRef, ITypeRef targetType, string name )
         {
             // short circuit cast to same type as it won't be a Constant or a BitCast
             if( valueRef.Type == targetType )
                 return valueRef;
 
             if( valueRef is Constant )
-                return Value.FromHandle( LLVMNative.ConstSExtOrBitCast( valueRef.ValueHandle, targetType.TypeHandle ) );
+                return Value.FromHandle( LLVMNative.ConstSExtOrBitCast( valueRef.ValueHandle, targetType.GetTypeRef() ) );
             else
-                return Value.FromHandle( LLVMNative.BuildSExtOrBitCast( BuilderHandle, valueRef.ValueHandle, targetType.TypeHandle, name ) );
+                return Value.FromHandle( LLVMNative.BuildSExtOrBitCast( BuilderHandle, valueRef.ValueHandle, targetType.GetTypeRef(), name ) );
         }
 
-        public Value TruncOrBitCast( Value valueRef, TypeRef targetType )
+        public Value TruncOrBitCast( Value valueRef, ITypeRef targetType )
         {
             return TruncOrBitCast( valueRef, targetType, string.Empty );
         }
 
-        public Value TruncOrBitCast( Value valueRef, TypeRef targetType, string name )
+        public Value TruncOrBitCast( Value valueRef, ITypeRef targetType, string name )
         {
             // short circuit cast to same type as it won't be a Constant or a BitCast
             if( valueRef.Type == targetType )
                 return valueRef;
 
             if( valueRef is Constant )
-                return Value.FromHandle( LLVMNative.ConstTruncOrBitCast( valueRef.ValueHandle, targetType.TypeHandle ) );
+                return Value.FromHandle( LLVMNative.ConstTruncOrBitCast( valueRef.ValueHandle, targetType.GetTypeRef() ) );
             else
-                return Value.FromHandle( LLVMNative.BuildTruncOrBitCast( BuilderHandle, valueRef.ValueHandle, targetType.TypeHandle, name ) );
+                return Value.FromHandle( LLVMNative.BuildTruncOrBitCast( BuilderHandle, valueRef.ValueHandle, targetType.GetTypeRef(), name ) );
         }
 
 
-        public Value ZeroExtend( Value valueRef, TypeRef targetType )
+        public Value ZeroExtend( Value valueRef, ITypeRef targetType )
         {
             if( valueRef is Constant )
-                return Value.FromHandle( LLVMNative.ConstZExt( valueRef.ValueHandle, targetType.TypeHandle ) );
+                return Value.FromHandle( LLVMNative.ConstZExt( valueRef.ValueHandle, targetType.GetTypeRef() ) );
             else
-                return Value.FromHandle( LLVMNative.BuildZExt( BuilderHandle, valueRef.ValueHandle, targetType.TypeHandle, string.Empty ) );
+                return Value.FromHandle( LLVMNative.BuildZExt( BuilderHandle, valueRef.ValueHandle, targetType.GetTypeRef(), string.Empty ) );
         }
 
-        public Value SignExtend( Value valueRef, TypeRef targetType )
+        public Value SignExtend( Value valueRef, ITypeRef targetType )
         {
             if( valueRef is Constant )
-                return Value.FromHandle( LLVMNative.ConstSExt( valueRef.ValueHandle, targetType.TypeHandle ) );
+                return Value.FromHandle( LLVMNative.ConstSExt( valueRef.ValueHandle, targetType.GetTypeRef() ) );
             else
             {
-                var retValueRef = LLVMNative.BuildSExt( BuilderHandle, valueRef.ValueHandle, targetType.TypeHandle, string.Empty );
+                var retValueRef = LLVMNative.BuildSExt( BuilderHandle, valueRef.ValueHandle, targetType.GetTypeRef(), string.Empty );
                 return Value.FromHandle( retValueRef );
             }
         }
 
-        public Value BitCast( Value valueRef, TypeRef targetType ) => BitCast( valueRef, targetType, string.Empty );
+        public Value BitCast( Value valueRef, ITypeRef targetType ) => BitCast( valueRef, targetType, string.Empty );
 
-        public Value BitCast( Value valueRef, TypeRef targetType, string name )
+        public Value BitCast( Value valueRef, ITypeRef targetType, string name )
         {
             // short circuit cast to same type as it won't be a Constant or a BitCast
             if( valueRef.Type == targetType )
                 return valueRef;
 
             if( valueRef is Constant )
-                return Value.FromHandle( LLVMNative.ConstBitCast( valueRef.ValueHandle, targetType.TypeHandle ) );
+                return Value.FromHandle( LLVMNative.ConstBitCast( valueRef.ValueHandle, targetType.GetTypeRef() ) );
             else
-                return Value.FromHandle( LLVMNative.BuildBitCast( BuilderHandle, valueRef.ValueHandle, targetType.TypeHandle, name ) );
+                return Value.FromHandle( LLVMNative.BuildBitCast( BuilderHandle, valueRef.ValueHandle, targetType.GetTypeRef(), name ) );
         }
 
-        public Value IntCast( Value valueRef, TypeRef targetType, bool isSigned ) => IntCast( valueRef, targetType, isSigned, string.Empty );
+        public Value IntCast( Value valueRef, ITypeRef targetType, bool isSigned ) => IntCast( valueRef, targetType, isSigned, string.Empty );
 
-        public Value IntCast( Value valueRef, TypeRef targetType, bool isSigned, string name )
+        public Value IntCast( Value valueRef, ITypeRef targetType, bool isSigned, string name )
         {
             if( valueRef is Constant )
-                return Value.FromHandle( LLVMNative.ConstIntCast( valueRef.ValueHandle, targetType.TypeHandle, isSigned ) );
+                return Value.FromHandle( LLVMNative.ConstIntCast( valueRef.ValueHandle, targetType.GetTypeRef(), isSigned ) );
             else
-                return Value.FromHandle( LLVMNative.BuildIntCast( BuilderHandle, valueRef.ValueHandle, targetType.TypeHandle, name ) );
+                return Value.FromHandle( LLVMNative.BuildIntCast( BuilderHandle, valueRef.ValueHandle, targetType.GetTypeRef(), name ) );
         }
 
-        public Value Trunc( Value valueRef, TypeRef targetType )
+        public Value Trunc( Value valueRef, ITypeRef targetType )
         {
             if( valueRef is Constant )
-                return Value.FromHandle( LLVMNative.ConstTrunc( valueRef.ValueHandle, targetType.TypeHandle ) );
+                return Value.FromHandle( LLVMNative.ConstTrunc( valueRef.ValueHandle, targetType.GetTypeRef() ) );
             else
-                return Value.FromHandle( LLVMNative.BuildTrunc( BuilderHandle, valueRef.ValueHandle, targetType.TypeHandle, string.Empty ) );
+                return Value.FromHandle( LLVMNative.BuildTrunc( BuilderHandle, valueRef.ValueHandle, targetType.GetTypeRef(), string.Empty ) );
         }
 
-        public Value SIToFPCast( Value valueRef, TypeRef targetType ) => SIToFPCast( valueRef, targetType, string.Empty );
+        public Value SIToFPCast( Value valueRef, ITypeRef targetType ) => SIToFPCast( valueRef, targetType, string.Empty );
 
-        public Value SIToFPCast( Value valueRef, TypeRef targetType, string name )
+        public Value SIToFPCast( Value valueRef, ITypeRef targetType, string name )
         {
             if( valueRef is Constant )
-                return Value.FromHandle( LLVMNative.ConstSIToFP( valueRef.ValueHandle, targetType.TypeHandle ) );
+                return Value.FromHandle( LLVMNative.ConstSIToFP( valueRef.ValueHandle, targetType.GetTypeRef() ) );
             else
-                return Value.FromHandle( LLVMNative.BuildSIToFP( BuilderHandle, valueRef.ValueHandle, targetType.TypeHandle, name ) );
+                return Value.FromHandle( LLVMNative.BuildSIToFP( BuilderHandle, valueRef.ValueHandle, targetType.GetTypeRef(), name ) );
         }
 
-        public Value FPToUICast( Value valueRef, TypeRef targetType ) => FPToUICast( valueRef, targetType, string.Empty );
+        public Value FPToUICast( Value valueRef, ITypeRef targetType ) => FPToUICast( valueRef, targetType, string.Empty );
 
-        public Value FPToUICast( Value valueRef, TypeRef targetType, string name )
+        public Value FPToUICast( Value valueRef, ITypeRef targetType, string name )
         {
             if( valueRef is Constant )
-                return Value.FromHandle( LLVMNative.ConstFPToUI( valueRef.ValueHandle, targetType.TypeHandle ) );
+                return Value.FromHandle( LLVMNative.ConstFPToUI( valueRef.ValueHandle, targetType.GetTypeRef() ) );
             else
-                return Value.FromHandle( LLVMNative.BuildFPToUI( BuilderHandle, valueRef.ValueHandle, targetType.TypeHandle, name ) );
+                return Value.FromHandle( LLVMNative.BuildFPToUI( BuilderHandle, valueRef.ValueHandle, targetType.GetTypeRef(), name ) );
         }
 
-        public Value FPExt( Value valueRef, TypeRef toType, string name )
+        public Value FPExt( Value valueRef, ITypeRef toType, string name )
         {
             if( valueRef is Constant )
-                return Value.FromHandle( LLVMNative.ConstFPExt( valueRef.ValueHandle, toType.TypeHandle ) );
+                return Value.FromHandle( LLVMNative.ConstFPExt( valueRef.ValueHandle, toType.GetTypeRef() ) );
             else
-                return Cast.FromHandle<Value>( LLVMNative.BuildFPExt( BuilderHandle, valueRef.ValueHandle, toType.TypeHandle, name ) );
+                return Cast.FromHandle<Value>( LLVMNative.BuildFPExt( BuilderHandle, valueRef.ValueHandle, toType.GetTypeRef(), name ) );
         }
 
-        public PhiNode PhiNode( TypeRef resultType ) => PhiNode( resultType, string.Empty );
-        public PhiNode PhiNode( TypeRef resultType, string name )
+        public PhiNode PhiNode( ITypeRef resultType ) => PhiNode( resultType, string.Empty );
+        public PhiNode PhiNode( ITypeRef resultType, string name )
         {
-            var handle = LLVMNative.BuildPhi( BuilderHandle, resultType.TypeHandle, string.Empty );
+            var handle = LLVMNative.BuildPhi( BuilderHandle, resultType.GetTypeRef(), string.Empty );
             return Value.FromHandle<PhiNode>( handle );
         }
 
@@ -662,11 +662,11 @@ namespace Llvm.NET
         /// </remarks>
         public Value MemCpy( Module module, Value destination, Value source, Value len, Int32 align, bool isVolatile )
         {
-            var dstPtrType = destination.Type as PointerType;
+            var dstPtrType = destination.Type as IPointerType;
             if( dstPtrType == null )
                 throw new ArgumentException( "Pointer type expected", nameof( destination ) );
 
-            var srcPtrType = source.Type as PointerType;
+            var srcPtrType = source.Type as IPointerType;
             if( srcPtrType == null )
                 throw new ArgumentException( "Pointer type expected", nameof( source ) );
 
@@ -896,7 +896,7 @@ namespace Llvm.NET
             if( func == null )
                 throw new ArgumentNullException( nameof( func ) );
 
-            var funcPtrType = func.Type as PointerType;
+            var funcPtrType = func.Type as IPointerType;
             if( funcPtrType == null )
                 throw new ArgumentException( "Expected pointer to function", nameof( func ) );
 

@@ -227,9 +227,9 @@ namespace Llvm.NET
         /// the same name exists with a different signature an exception is thrown as LLVM does
         /// not perform any function overloading.
         /// </remarks>
-        public Function AddFunction( string name, FunctionType signature )
+        public Function AddFunction( string name, IFunctionType signature )
         {
-            return Value.FromHandle<Function>( LLVMNative.GetOrInsertFunction( ModuleHandle, name, signature.TypeHandle ) );
+            return Value.FromHandle<Function>( LLVMNative.GetOrInsertFunction( ModuleHandle, name, signature.GetTypeRef() ) );
         }
 
         /// <summary>Writes a bit-code module to a file</summary>
@@ -269,7 +269,7 @@ namespace Llvm.NET
         /// <returns><see cref="GlobalAlias"/> for the alias</returns>
         public GlobalAlias AddAlias( Value aliasee, string aliasName )
         {
-            var handle = LLVMNative.AddAlias( ModuleHandle, aliasee.Type.TypeHandle, aliasee.ValueHandle, aliasName );
+            var handle = LLVMNative.AddAlias( ModuleHandle, aliasee.Type.GetTypeRef(), aliasee.ValueHandle, aliasName );
             return Value.FromHandle<GlobalAlias>( handle );
         }
 
@@ -286,9 +286,9 @@ namespace Llvm.NET
         /// <openissues>
         /// - What does LLVM do if creating a second Global with the same name (return null, throw, crash??,...)
         /// </openissues>
-        public GlobalVariable AddGlobal( TypeRef typeRef, string name )
+        public GlobalVariable AddGlobal( ITypeRef typeRef, string name )
         {
-            var handle = LLVMNative.AddGlobal( ModuleHandle, typeRef.TypeHandle, name );
+            var handle = LLVMNative.AddGlobal( ModuleHandle, typeRef.GetTypeRef(), name );
             return Value.FromHandle<GlobalVariable>( handle );
         }
 
@@ -298,12 +298,12 @@ namespace Llvm.NET
         /// <param name="linkage">Linkage type for this global</param>
         /// <param name="constVal">Initial value for the global</param>
         /// <returns>New global variable</returns>
-        public GlobalVariable AddGlobal( TypeRef typeRef, bool isConst, Linkage linkage, Constant constVal )
+        public GlobalVariable AddGlobal( ITypeRef typeRef, bool isConst, Linkage linkage, Constant constVal )
         {
             return AddGlobal( typeRef, isConst, linkage, constVal, string.Empty );
         }
 
-        public GlobalVariable AddGlobal( TypeRef typeRef, bool isConst, Linkage linkage, Constant constVal, string name )
+        public GlobalVariable AddGlobal( ITypeRef typeRef, bool isConst, Linkage linkage, Constant constVal, string name )
         {
             var retVal = AddGlobal( typeRef, name );
             retVal.IsConstant = isConst;
@@ -312,10 +312,10 @@ namespace Llvm.NET
             return retVal;
         }
 
-        /// <summary>Retrieves a <see cref="TypeRef"/> by name from the module</summary>
+        /// <summary>Retrieves a <see cref="ITypeRef"/> by name from the module</summary>
         /// <param name="name">Name of the type</param>
         /// <returns>The type or null if no type with the specified name exists in the module</returns>
-        public TypeRef GetTypeByName( string name )
+        public ITypeRef GetTypeByName( string name )
         {
             var hType = LLVMNative.GetTypeByName( ModuleHandle, name );
             return hType.Pointer == IntPtr.Zero ? null : TypeRef.FromHandle( hType );
@@ -360,7 +360,7 @@ namespace Llvm.NET
                                       , string linkageName
                                       , DIFile file
                                       , uint line
-                                      , FunctionType signature
+                                      , IFunctionType signature
                                       , bool isLocalToUnit
                                       , bool isDefinition
                                       , uint scopeLine

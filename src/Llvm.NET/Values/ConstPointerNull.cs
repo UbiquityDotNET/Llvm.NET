@@ -4,9 +4,9 @@ namespace Llvm.NET.Values
 {
     public class ConstantPointerNull : Constant
     {
-        public static ConstantPointerNull From( TypeRef type )
+        public static ConstantPointerNull From( ITypeRef type )
         {
-            return FromHandle<ConstantPointerNull>( LLVMNative.ConstPointerNull( type.TypeHandle ) );
+            return FromHandle<ConstantPointerNull>( LLVMNative.ConstPointerNull( type.GetTypeRef() ) );
         }
 
         internal ConstantPointerNull( LLVMValueRef valueRef )
