@@ -12,7 +12,7 @@ namespace Llvm.NET.Values
     public class User : Value
     {
         internal User( LLVMValueRef userRef )
-            : base( ValidateConversion( userRef, LLVMNative.IsAUser ) )
+            : base( ValidateConversion( userRef, NativeMethods.IsAUser ) )
         {
             OperandList = new UserOperandList( this );
         }
@@ -25,12 +25,12 @@ namespace Llvm.NET.Values
         {
             get
             {
-                LLVMUseRef current = LLVMNative.GetFirstUse( ValueHandle );
+                LLVMUseRef current = NativeMethods.GetFirstUse( ValueHandle );
                 while( current.Pointer != IntPtr.Zero )
                 {
                     // TODO: intern the use instances?
                     yield return new Use( current );
-                    current = LLVMNative.GetNextUse( current );
+                    current = NativeMethods.GetNextUse( current );
                 }
             }
         }
@@ -55,8 +55,8 @@ namespace Llvm.NET.Values
             OpaqueHandle = useRef;
         }
 
-        public User User => Value.FromHandle<User>( LLVMNative.GetUser( OpaqueHandle ) );
-        public Value Value => Value.FromHandle( LLVMNative.GetUsedValue( OpaqueHandle ) );
+        public User User => Value.FromHandle<User>( NativeMethods.GetUser( OpaqueHandle ) );
+        public Value Value => Value.FromHandle( NativeMethods.GetUsedValue( OpaqueHandle ) );
         private LLVMUseRef OpaqueHandle;
     }
 

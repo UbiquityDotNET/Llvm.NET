@@ -8,7 +8,7 @@
         }
 
         public DILocation( Context context, uint line, uint column, DILocalScope scope, DILocation inlinedAt )
-            : base( LLVMNative.DILocation( context.ContextHandle, line, column, scope.MetadataHandle, inlinedAt?.MetadataHandle ?? LLVMMetadataRef.Zero ) )
+            : base( NativeMethods.DILocation( context.ContextHandle, line, column, scope.MetadataHandle, inlinedAt?.MetadataHandle ?? LLVMMetadataRef.Zero ) )
         {
         }
 

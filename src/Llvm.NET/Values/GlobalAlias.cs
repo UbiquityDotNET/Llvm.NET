@@ -13,7 +13,7 @@ namespace Llvm.NET.Values
                 if( ValueHandle.Pointer == IntPtr.Zero )
                     return null;
 
-                var handle = LLVMNative.GetAliasee( ValueHandle );
+                var handle = NativeMethods.GetAliasee( ValueHandle );
                 if( handle.Pointer == IntPtr.Zero )
                     return null;
 
@@ -27,7 +27,7 @@ namespace Llvm.NET.Values
         }
 
         internal GlobalAlias( LLVMValueRef valueRef, bool preValidated )
-            : base( preValidated ? valueRef : ValidateConversion( valueRef, LLVMNative.IsAGlobalAlias ) )
+            : base( preValidated ? valueRef : ValidateConversion( valueRef, NativeMethods.IsAGlobalAlias ) )
         {
         }
     }

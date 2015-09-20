@@ -1,12 +1,11 @@
 ﻿using System;
 using System.ComponentModel;
 using System.IO;
-using System.Reflection;
 using System.Runtime.InteropServices;
 
 namespace Llvm.NET
 {
-    internal static class NativeMethods
+    internal static partial class NativeMethods
     {
         /// <summary>Dynamically loads a DLL from a directory dependent on the current architecture</summary>
         /// <param name="moduleName">name of the DLL</param>
@@ -51,7 +50,7 @@ namespace Llvm.NET
             return moduleHandle;
         }
 
-        [DllImport("kernel32", SetLastError=true, CharSet = CharSet.Ansi)]
+        [DllImport("kernel32", SetLastError=true, BestFitMapping = false, ThrowOnUnmappableChar = true)]
         static extern IntPtr LoadLibrary([MarshalAs(UnmanagedType.LPStr)]string lpFileName);
     }
 }

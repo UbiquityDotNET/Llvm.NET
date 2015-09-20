@@ -6,7 +6,7 @@ namespace Llvm.NET.Values
     {
         public static ConstantPointerNull From( ITypeRef type )
         {
-            return FromHandle<ConstantPointerNull>( LLVMNative.ConstPointerNull( type.GetTypeRef() ) );
+            return FromHandle<ConstantPointerNull>( NativeMethods.ConstPointerNull( type.GetTypeRef() ) );
         }
 
         internal ConstantPointerNull( LLVMValueRef valueRef )
@@ -15,7 +15,7 @@ namespace Llvm.NET.Values
         }
 
         internal ConstantPointerNull( LLVMValueRef valueRef, bool preValidated )
-            : base( preValidated ? valueRef : ValidateConversion( valueRef, LLVMNative.IsAConstantPointerNull ) )
+            : base( preValidated ? valueRef : ValidateConversion( valueRef, NativeMethods.IsAConstantPointerNull ) )
         {
         }
     }

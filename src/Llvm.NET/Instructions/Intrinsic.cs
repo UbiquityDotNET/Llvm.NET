@@ -4,7 +4,7 @@
         : Call
     {
         internal Intrinsic( LLVMValueRef valueRef )
-            : base( ValidateConversion( valueRef, LLVMNative.IsAIntrinsicInst ) )
+            : base( ValidateConversion( valueRef, NativeMethods.IsAIntrinsicInst ) )
         { 
         }
 

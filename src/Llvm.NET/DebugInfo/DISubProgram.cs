@@ -10,6 +10,6 @@ namespace Llvm.NET.DebugInfo
         {
         }
 
-        public bool Describes( Function function ) => LLVMNative.SubProgramDescribes( MetadataHandle, function.ValueHandle );
+        public bool Describes( Function function ) => NativeMethods.SubProgramDescribes( MetadataHandle, function.ValueHandle );
     }
 }

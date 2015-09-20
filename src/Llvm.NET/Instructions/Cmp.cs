@@ -4,7 +4,7 @@
         : Instruction
     {
         internal Cmp( LLVMValueRef valueRef )
-            : base( ValidateConversion( valueRef, LLVMNative.IsACmpInst ) )
+            : base( ValidateConversion( valueRef, NativeMethods.IsACmpInst ) )
         {
         }
 
@@ -15,10 +15,10 @@
                 switch( Opcode )
                 {
                 case Opcode.ICmp:
-                    return ( Predicate )LLVMNative.GetICmpPredicate( ValueHandle );
+                    return ( Predicate )NativeMethods.GetICmpPredicate( ValueHandle );
 
                 case Opcode.FCmp:
-                    return ( Predicate )LLVMNative.GetFCmpPredicate( ValueHandle );
+                    return ( Predicate )NativeMethods.GetFCmpPredicate( ValueHandle );
 
                 default:
                     return Predicate.BadFcmpPredicate;

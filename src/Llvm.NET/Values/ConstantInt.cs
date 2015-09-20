@@ -12,10 +12,10 @@ namespace Llvm.NET.Values
         : Constant
     {
         /// <summary>Retrieves the value of the constant zero extended to 64 bits</summary>
-        public UInt64 ZeroExtendedValue => LLVMNative.ConstIntGetZExtValue( ValueHandle );
+        public UInt64 ZeroExtendedValue => NativeMethods.ConstIntGetZExtValue( ValueHandle );
 
         /// <summary>Sign extends the value to a 64 bit value</summary>
-        public Int64 SignExtendedValue => LLVMNative.ConstIntGetSExtValue( ValueHandle );
+        public Int64 SignExtendedValue => NativeMethods.ConstIntGetSExtValue( ValueHandle );
 
         internal ConstantInt( LLVMValueRef valueRef )
             : this( valueRef, false )
@@ -23,7 +23,7 @@ namespace Llvm.NET.Values
         }
 
         internal ConstantInt( LLVMValueRef valueRef, bool preValidated )
-            : base( preValidated ? valueRef : ValidateConversion( valueRef, LLVMNative.IsAConstantInt ) )
+            : base( preValidated ? valueRef : ValidateConversion( valueRef, NativeMethods.IsAConstantInt ) )
         {
         }
     }

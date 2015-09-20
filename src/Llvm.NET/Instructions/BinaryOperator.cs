@@ -9,7 +9,7 @@
         }
 
         internal BinaryOperator( LLVMValueRef valueRef, bool preValidated )
-            : base( preValidated ? valueRef : ValidateConversion( valueRef, LLVMNative.IsABinaryOperator ) )
+            : base( preValidated ? valueRef : ValidateConversion( valueRef, NativeMethods.IsABinaryOperator ) )
         {
         }
     }

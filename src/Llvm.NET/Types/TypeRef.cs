@@ -19,12 +19,12 @@ namespace Llvm.NET.Types
                 if( Kind == TypeKind.Function )
                     return false;
 
-                return LLVMNative.TypeIsSized( TypeHandle_ );
+                return NativeMethods.TypeIsSized( TypeHandle_ );
             }
         }
 
         /// <summary>LLVM Type kind for this type</summary>
-        public TypeKind Kind => ( TypeKind )LLVMNative.GetTypeKind( TypeHandle_ );
+        public TypeKind Kind => ( TypeKind )NativeMethods.GetTypeKind( TypeHandle_ );
         public bool IsInteger=> Kind == TypeKind.Integer;
 
         // Return true if value is 'float', a 32-bit IEEE fp type.
@@ -82,7 +82,7 @@ namespace Llvm.NET.Types
                 if( Kind != TypeKind.Integer )
                     return 0;
 
-                return LLVMNative.GetIntTypeWidth( TypeHandle_ );
+                return NativeMethods.GetIntTypeWidth( TypeHandle_ );
             }
         }
 
@@ -104,22 +104,22 @@ namespace Llvm.NET.Types
             if( !IsSized
                 || Kind == TypeKind.Void
                 || Kind == TypeKind.Function
-                || ( Kind == TypeKind.Struct && ( LLVMNative.IsOpaqueStruct( TypeHandle_ ) ) )
+                || ( Kind == TypeKind.Struct && ( NativeMethods.IsOpaqueStruct( TypeHandle_ ) ) )
                 )
             {
                 return Context.CreateConstant( 0 );
             }
 
-            var hSize = LLVMNative.SizeOf( TypeHandle_ );
+            var hSize = NativeMethods.SizeOf( TypeHandle_ );
 
             // LLVM uses an expression to construct Sizeof, however it is hard coded to
             // use an i64 as the type for the size, which isn't valid for 32 bit systems
-            var sizeOfBitWidth = LLVMNative.GetIntTypeWidth( LLVMNative.TypeOf( hSize ) );
+            var sizeOfBitWidth = NativeMethods.GetIntTypeWidth( NativeMethods.TypeOf( hSize ) );
             var hIntPtr = new LLVMTypeRef( Context.GetIntType( ( uint )pointerSize ).TypeHandle );
             if( sizeOfBitWidth > pointerSize )
-                hSize = LLVMNative.ConstTrunc( hSize, hIntPtr );
+                hSize = NativeMethods.ConstTrunc( hSize, hIntPtr );
             else if( sizeOfBitWidth < pointerSize )
-                hSize = LLVMNative.ConstZExt( hSize, hIntPtr );
+                hSize = NativeMethods.ConstZExt( hSize, hIntPtr );
 
             return Value.FromHandle<Constant>( hSize );
         }
@@ -127,7 +127,7 @@ namespace Llvm.NET.Types
         /// <summary>Array type factory for an array with elements of this type</summary>
         /// <param name="count">Number of elements in the array</param>
         /// <returns><see cref="IArrayType"/> for the array</returns>
-        public IArrayType CreateArrayType( uint count ) => FromHandle<IArrayType>( LLVMNative.ArrayType( TypeHandle_, count ) );
+        public IArrayType CreateArrayType( uint count ) => FromHandle<IArrayType>( NativeMethods.ArrayType( TypeHandle_, count ) );
 
         /// <summary>Get a <see cref="IPointerType"/> for a type that points to elements of this type in the default (0) address space</summary>
         /// <returns><see cref="IPointerType"/>corresponding to the type of a pointer that referns to elements of this type</returns>
@@ -136,7 +136,7 @@ namespace Llvm.NET.Types
         /// <summary>Get a <see cref="IPointerType"/> for a type that points to elements of this type in the specified address space</summary>
         /// <param name="addressSpace">Address space for the pointer</param>
         /// <returns><see cref="IPointerType"/>corresponding to the type of a pointer that referns to elements of this type</returns>
-        public IPointerType CreatePointerType( uint addressSpace ) => FromHandle<IPointerType>( LLVMNative.PointerType( TypeHandle_, addressSpace ) );
+        public IPointerType CreatePointerType( uint addressSpace ) => FromHandle<IPointerType>( NativeMethods.PointerType( TypeHandle_, addressSpace ) );
 
         public bool TryGetExtendedPropertyValue<T>( string id, out T value ) => ExtensibleProperties.TryGetExtendedPropertyValue<T>( id, out value );
         public void AddExtendedPropertyValue( string id, object value ) => ExtensibleProperties.AddExtendedPropertyValue( id, value );
@@ -145,8 +145,8 @@ namespace Llvm.NET.Types
         /// <returns>Formatted string for this type</returns>
         public override string ToString( )
         {
-            var msgString = LLVMNative.PrintTypeToString( TypeHandle_ );
-            return LLVMNative.MarshalMsg( msgString );
+            var msgString = NativeMethods.PrintTypeToString( TypeHandle_ );
+            return NativeMethods.MarshalMsg( msgString );
         }
 
         public void ReplaceAllUsesOfDebugTypeWith( DICompositeType compositeType )
@@ -215,7 +215,7 @@ namespace Llvm.NET.Types
 
         private static ITypeRef StaticFactory( LLVMTypeRef typeRef )
         {
-            var kind = (TypeKind)LLVMNative.GetTypeKind( typeRef );
+            var kind = (TypeKind)NativeMethods.GetTypeKind( typeRef );
             switch( kind )
             {
             case TypeKind.Struct:

@@ -13,17 +13,17 @@ namespace Llvm.NET.Values
         : GlobalObject
     {
         /// <summary>Signature type of the function</summary>
-        public IFunctionType Signature => TypeRef.FromHandle<IFunctionType>( LLVMNative.GetElementType( LLVMNative.TypeOf( ValueHandle ) ) );
+        public IFunctionType Signature => TypeRef.FromHandle<IFunctionType>( NativeMethods.GetElementType( NativeMethods.TypeOf( ValueHandle ) ) );
 
         /// <summary>Entry block for this function</summary>
         public BasicBlock EntryBlock
         {
             get
             {
-                if( LLVMNative.CountBasicBlocks( ValueHandle ) == 0 )
+                if( NativeMethods.CountBasicBlocks( ValueHandle ) == 0 )
                     return null;
 
-                return BasicBlock.FromHandle( LLVMNative.GetEntryBasicBlock( ValueHandle ) );
+                return BasicBlock.FromHandle( NativeMethods.GetEntryBasicBlock( ValueHandle ) );
             }
         }
 
@@ -32,10 +32,10 @@ namespace Llvm.NET.Values
         {
             get
             {
-                uint count = LLVMNative.CountBasicBlocks( ValueHandle );
+                uint count = NativeMethods.CountBasicBlocks( ValueHandle );
                 var buf = new LLVMBasicBlockRef[ count ];
                 if( count > 0 )
-                    LLVMNative.GetBasicBlocks( ValueHandle, out buf[ 0 ] );
+                    NativeMethods.GetBasicBlocks( ValueHandle, out buf[ 0 ] );
 
                 return buf.Select( h => BasicBlock.FromHandle( h ) )
                           .ToList( )
@@ -51,16 +51,16 @@ namespace Llvm.NET.Values
         {
             get
             {
-                return ( CallingConvention )LLVMNative.GetFunctionCallConv( ValueHandle );
+                return ( CallingConvention )NativeMethods.GetFunctionCallConv( ValueHandle );
             }
             set
             {
-                LLVMNative.SetFunctionCallConv( ValueHandle, ( uint )value );
+                NativeMethods.SetFunctionCallConv( ValueHandle, ( uint )value );
             }
         }
 
         /// <summary>LLVM instrinsicID for the method</summary>
-        public uint IntrinsicId => LLVMNative.GetIntrinsicID( ValueHandle );
+        public uint IntrinsicId => NativeMethods.GetIntrinsicID( ValueHandle );
 
         /// <summary>Flag to indicate if the method signature accepts variable arguments</summary>
         public bool IsVarArg => Signature.IsVarArg;
@@ -76,31 +76,31 @@ namespace Llvm.NET.Values
         {
             get
             {
-                var nativePtr = LLVMNative.GetGC( ValueHandle );
+                var nativePtr = NativeMethods.GetGC( ValueHandle );
                 return Marshal.PtrToStringAnsi( nativePtr );
             }
             set
             {
-                LLVMNative.SetGC( ValueHandle, value );
+                NativeMethods.SetGC( ValueHandle, value );
             }
         }
 
         public void Verify()
         {
             IntPtr errMsgPtr;
-            var status = LLVMNative.VerifyFunctionEx( ValueHandle, LLVMVerifierFailureAction.LLVMReturnStatusAction, out errMsgPtr );
+            var status = NativeMethods.VerifyFunctionEx( ValueHandle, LLVMVerifierFailureAction.LLVMReturnStatusAction, out errMsgPtr );
             if( status )
-                throw new InternalCodeGeneratorException( LLVMNative.MarshalMsg( errMsgPtr) );
+                throw new InternalCodeGeneratorException( NativeMethods.MarshalMsg( errMsgPtr) );
         }
 
         /// <summary>Attribute flags for the function</summary>
-        public Attributes Attributes => (Attributes)LLVMNative.GetFunctionAttr( ValueHandle );
+        public Attributes Attributes => (Attributes)NativeMethods.GetFunctionAttr( ValueHandle );
 
         /// <summary>Add attribute flags to the function</summary>
         /// <param name="attrib"><see cref="Attributes"/> flags to add to the function</param>
         public Function AddAttributes( Attributes attrib )
         {
-            LLVMNative.AddFunctionAttr( ValueHandle, ( LLVMAttribute )attrib );
+            NativeMethods.AddFunctionAttr( ValueHandle, ( LLVMAttribute )attrib );
             return this;
         }
 
@@ -108,7 +108,7 @@ namespace Llvm.NET.Values
         /// <param name="attrib"><see cref="Attributes"/> flags to remove from the function</param>
         public Function RemoveAttributes( Attributes attrib )
         {
-            LLVMNative.RemoveFunctionAttr( ValueHandle, ( LLVMAttribute )attrib );
+            NativeMethods.RemoveFunctionAttr( ValueHandle, ( LLVMAttribute )attrib );
             return this;
         }
 
@@ -121,7 +121,7 @@ namespace Llvm.NET.Values
 
         public Function AddAttribute( string targetDependentAttributeName, string value )
         {
-            LLVMNative.AddTargetDependentFunctionAttr( ValueHandle, targetDependentAttributeName, value );
+            NativeMethods.AddTargetDependentFunctionAttr( ValueHandle, targetDependentAttributeName, value );
             return this;
         }
 
@@ -130,7 +130,7 @@ namespace Llvm.NET.Values
         /// <returns><see cref="BasicBlock"/> created and insterted into the begining function</returns>
         public BasicBlock PrependBasicBlock( string name )
         {
-            LLVMBasicBlockRef firstBlock = LLVMNative.GetFirstBasicBlock( ValueHandle );
+            LLVMBasicBlockRef firstBlock = NativeMethods.GetFirstBasicBlock( ValueHandle );
             BasicBlock retVal;
             if( firstBlock.Pointer == IntPtr.Zero )
             {
@@ -138,7 +138,7 @@ namespace Llvm.NET.Values
             }
             else
             {
-                var blockRef = LLVMNative.InsertBasicBlockInContext( Type.Context.ContextHandle, firstBlock, name );
+                var blockRef = NativeMethods.InsertBasicBlockInContext( Type.Context.ContextHandle, firstBlock, name );
                 retVal = BasicBlock.FromHandle( firstBlock );
             }
             return retVal;
@@ -150,7 +150,7 @@ namespace Llvm.NET.Values
         public BasicBlock AppendBasicBlock( string name )
         {
             BasicBlock result;
-            LLVMBasicBlockRef blockRef = LLVMNative.AppendBasicBlockInContext( Type.Context.ContextHandle, ValueHandle, name );
+            LLVMBasicBlockRef blockRef = NativeMethods.AppendBasicBlockInContext( Type.Context.ContextHandle, ValueHandle, name );
             result = BasicBlock.FromHandle( blockRef );
             return result;
         }
@@ -178,7 +178,7 @@ namespace Llvm.NET.Values
         }
 
         internal Function( LLVMValueRef valueRef, bool preValidated )
-            : base( preValidated ? valueRef : ValidateConversion( valueRef, LLVMNative.IsAFunction ) )
+            : base( preValidated ? valueRef : ValidateConversion( valueRef, NativeMethods.IsAFunction ) )
         {
         }
     }

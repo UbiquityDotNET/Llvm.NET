@@ -17,10 +17,10 @@ namespace Llvm.NET.DebugInfo
                 if( MetadataHandle.Pointer == IntPtr.Zero )
                     return 0;
 
-                return ( DebugInfoFlags )LLVMNative.DITypeGetFlags( MetadataHandle );
+                return ( DebugInfoFlags )NativeMethods.DITypeGetFlags( MetadataHandle );
             }
         }
 
-        public string Name => LLVMNative.MarshalMsg( LLVMNative.GetDITypeName( MetadataHandle ) );
+        public string Name => NativeMethods.MarshalMsg( NativeMethods.GetDITypeName( MetadataHandle ) );
     }
 }

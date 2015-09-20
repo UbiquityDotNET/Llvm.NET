@@ -8,9 +8,9 @@ namespace Llvm.NET.Instructions
         : User
     {
         /// <summary>Block that contains this instruction</summary>
-        public BasicBlock ContainingBlock => BasicBlock.FromHandle( LLVMNative.GetInstructionParent( ValueHandle ) );
+        public BasicBlock ContainingBlock => BasicBlock.FromHandle( NativeMethods.GetInstructionParent( ValueHandle ) );
 
-        public Opcode Opcode => (Opcode)LLVMNative.GetInstructionOpcode( ValueHandle );
+        public Opcode Opcode => (Opcode)NativeMethods.GetInstructionOpcode( ValueHandle );
         public bool IsMemoryAccess
         {
             get
@@ -32,19 +32,19 @@ namespace Llvm.NET.Instructions
         {
             get
             {
-                return IsMemoryAccess ? LLVMNative.GetAlignment( ValueHandle ) : 0;
+                return IsMemoryAccess ? NativeMethods.GetAlignment( ValueHandle ) : 0;
             }
 
             set
             {
                 if( !IsMemoryAccess )
                     throw new InvalidOperationException( "Alignment can only be set for instructions dealing with memory read/write (alloca, load, store)" );
-                LLVMNative.SetAlignment( ValueHandle, value );
+                NativeMethods.SetAlignment( ValueHandle, value );
             }
         }
 
         internal Instruction( LLVMValueRef valueRef )
-            : base( ValidateConversion( valueRef, LLVMNative.IsAInstruction ) )
+            : base( ValidateConversion( valueRef, NativeMethods.IsAInstruction ) )
         { 
         }
     }

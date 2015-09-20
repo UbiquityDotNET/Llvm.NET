@@ -24,7 +24,7 @@ namespace Llvm.NET.Types
         }
 
         /// <summary>Flag to indicate if this signature is for a variadic function</summary>
-        public bool IsVarArg => LLVMNative.IsFunctionVarArg( TypeHandle_ );
+        public bool IsVarArg => NativeMethods.IsFunctionVarArg( TypeHandle_ );
         public override DIType DIType
         {
             get { return null; }
@@ -32,17 +32,17 @@ namespace Llvm.NET.Types
         }
 
         /// <summary></summary>
-        public ITypeRef ReturnType => FromHandle<ITypeRef>( LLVMNative.GetReturnType( TypeHandle_ ) );
+        public ITypeRef ReturnType => FromHandle<ITypeRef>( NativeMethods.GetReturnType( TypeHandle_ ) );
         public IReadOnlyList<ITypeRef> ParameterTypes
         {
             get
             {
-                var paramCount = LLVMNative.CountParamTypes( TypeHandle_ );
+                var paramCount = NativeMethods.CountParamTypes( TypeHandle_ );
                 if( paramCount == 0 )
                     return new List<TypeRef>().AsReadOnly();
 
                 var paramTypes = new LLVMTypeRef[ paramCount ];
-                LLVMNative.GetParamTypes( TypeHandle_, out paramTypes[ 0 ] );
+                NativeMethods.GetParamTypes( TypeHandle_, out paramTypes[ 0 ] );
                 return paramTypes.Select( h => FromHandle<TypeRef>( h ) )
                                  .ToList( )
                                  .AsReadOnly( );

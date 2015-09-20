@@ -38,7 +38,7 @@ namespace Llvm.NET.Values
             if( argCount == 0 )
                 valueHandles = new LLVMValueRef[ 1 ];
 
-            var handle = LLVMNative.ConstArray( elementType.GetTypeRef(), out valueHandles[ 0 ], (uint)argCount );
+            var handle = NativeMethods.ConstArray( elementType.GetTypeRef(), out valueHandles[ 0 ], (uint)argCount );
             return FromHandle<Constant>( handle );
         }
 
@@ -48,7 +48,7 @@ namespace Llvm.NET.Values
         }
 
         internal ConstantArray( LLVMValueRef valueRef, bool preValidated )
-            : base( preValidated ? valueRef : ValidateConversion( valueRef, LLVMNative.IsAConstantArray ) )
+            : base( preValidated ? valueRef : ValidateConversion( valueRef, NativeMethods.IsAConstantArray ) )
         {
         }
     }

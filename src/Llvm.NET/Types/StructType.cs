@@ -58,7 +58,7 @@ namespace Llvm.NET.Types
 
             LLVMTypeRef[ ] llvmArgs = elements.Select( e => e.GetTypeRef() ).ToArray( );
 
-            LLVMNative.StructSetBody( TypeHandle_, out llvmArgs[ 0 ], ( uint )llvmArgs.Length, packed );
+            NativeMethods.StructSetBody( TypeHandle_, out llvmArgs[ 0 ], ( uint )llvmArgs.Length, packed );
         }
 
         /// <summary>Name of the structure</summary>
@@ -66,16 +66,16 @@ namespace Llvm.NET.Types
         {
             get
             {
-                var ptr =  LLVMNative.GetStructName( TypeHandle_ );
+                var ptr =  NativeMethods.GetStructName( TypeHandle_ );
                 return Marshal.PtrToStringAnsi( ptr );
             }
         }
 
         /// <summary>Indicates if the structure is opaque (e.g. has no body defined yet)</summary>
-        public bool IsOpaque => LLVMNative.IsOpaqueStruct( TypeHandle_ );
+        public bool IsOpaque => NativeMethods.IsOpaqueStruct( TypeHandle_ );
 
         /// <summary>Indicates if the structure is packed (e.g. no automatic alignment padding between elements)</summary>
-        public bool IsPacked => LLVMNative.IsPackedStruct( TypeHandle_ );
+        public bool IsPacked => NativeMethods.IsPackedStruct( TypeHandle_ );
 
         /// <summary>List of types for all member elements of the structure</summary>
         public IReadOnlyList<ITypeRef> Members
@@ -85,8 +85,8 @@ namespace Llvm.NET.Types
                 var members = new List<ITypeRef>( );
                 if( Kind == TypeKind.Struct && !IsOpaque )
                 {
-                    LLVMTypeRef[] structElements = new LLVMTypeRef[ LLVMNative.CountStructElementTypes( TypeHandle_ ) ];
-                    LLVMNative.GetStructElementTypes( TypeHandle_, out structElements[ 0 ] );
+                    LLVMTypeRef[] structElements = new LLVMTypeRef[ NativeMethods.CountStructElementTypes( TypeHandle_ ) ];
+                    NativeMethods.GetStructElementTypes( TypeHandle_, out structElements[ 0 ] );
                     members.AddRange( structElements.Select( h => FromHandle<ITypeRef>( h ) ) );
                 }
                 return members;

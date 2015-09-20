@@ -18,7 +18,7 @@ namespace Llvm.NET
         public InstructionBuilder( Context context )
         {
             Context = context;
-            BuilderHandle = LLVMNative.CreateBuilderInContext( context.ContextHandle );
+            BuilderHandle = NativeMethods.CreateBuilderInContext( context.ContextHandle );
         }
 
         /// <summary>Creates an <see cref="InstructionBuilder"/> for a <see cref="BasicBlock"/></summary>
@@ -35,99 +35,99 @@ namespace Llvm.NET
         /// <param name="basicBlock"></param>
         public void PositionAtEnd( BasicBlock basicBlock )
         {
-            LLVMNative.PositionBuilderAtEnd( BuilderHandle, basicBlock.BlockHandle );
+            NativeMethods.PositionBuilderAtEnd( BuilderHandle, basicBlock.BlockHandle );
         }
 
         public void PositionBefore( Instruction instr )
         {
-            LLVMNative.PositionBuilderBefore( BuilderHandle, instr.ValueHandle );
+            NativeMethods.PositionBuilderBefore( BuilderHandle, instr.ValueHandle );
         }
 
         public Value FNeg( Value value ) => FNeg( value, string.Empty );
 
-        public Value FNeg( Value value, string name ) => BuildUnaryOp( LLVMNative.BuildFNeg, value, name );
+        public Value FNeg( Value value, string name ) => BuildUnaryOp( NativeMethods.BuildFNeg, value, name );
 
         public Value FAdd( Value lhs, Value rhs ) => FAdd( lhs, rhs, string.Empty );
 
-        public Value FAdd( Value lhs, Value rhs, string name ) => BuildBinOp( LLVMNative.BuildFAdd, lhs, rhs, name );
+        public Value FAdd( Value lhs, Value rhs, string name ) => BuildBinOp( NativeMethods.BuildFAdd, lhs, rhs, name );
 
         public Value FSub( Value lhs, Value rhs ) => FSub( lhs, rhs, string.Empty );
 
-        public Value FSub( Value lhs, Value rhs, string name ) => BuildBinOp( LLVMNative.BuildFSub, lhs, rhs, name );
+        public Value FSub( Value lhs, Value rhs, string name ) => BuildBinOp( NativeMethods.BuildFSub, lhs, rhs, name );
 
         public Value FMul( Value lhs, Value rhs ) => FMul( lhs, rhs, string.Empty );
 
-        public Value FMul( Value lhs, Value rhs, string name ) => BuildBinOp( LLVMNative.BuildFMul, lhs, rhs, name );
+        public Value FMul( Value lhs, Value rhs, string name ) => BuildBinOp( NativeMethods.BuildFMul, lhs, rhs, name );
 
-        public Value FDiv( Value lhs, Value rhs ) => BuildBinOp( LLVMNative.BuildFDiv, lhs, rhs, string.Empty );
+        public Value FDiv( Value lhs, Value rhs ) => BuildBinOp( NativeMethods.BuildFDiv, lhs, rhs, string.Empty );
 
-        public Value FDiv( Value lhs, Value rhs, string name ) => BuildBinOp( LLVMNative.BuildFDiv, lhs, rhs, name );
+        public Value FDiv( Value lhs, Value rhs, string name ) => BuildBinOp( NativeMethods.BuildFDiv, lhs, rhs, name );
 
         public Value Neg( Value value ) => Neg( value, string.Empty );
 
-        public Value Neg( Value value, string name ) => BuildUnaryOp( LLVMNative.BuildNeg, value, name );
+        public Value Neg( Value value, string name ) => BuildUnaryOp( NativeMethods.BuildNeg, value, name );
 
         public Value Not( Value value ) => Not( value, string.Empty );
 
-        public Value Not( Value value, string name ) => BuildUnaryOp( LLVMNative.BuildNot, value, name );
+        public Value Not( Value value, string name ) => BuildUnaryOp( NativeMethods.BuildNot, value, name );
 
         public Value Add( Value lhs, Value rhs ) => Add( lhs, rhs, string.Empty );
 
-        public Value Add( Value lhs, Value rhs, string name ) => BuildBinOp( LLVMNative.BuildAdd, lhs, rhs, name );
+        public Value Add( Value lhs, Value rhs, string name ) => BuildBinOp( NativeMethods.BuildAdd, lhs, rhs, name );
 
         public Value And( Value lhs, Value rhs ) => And( lhs, rhs, string.Empty );
 
-        public Value And( Value lhs, Value rhs, string name ) => BuildBinOp( LLVMNative.BuildAnd, lhs, rhs, name );
+        public Value And( Value lhs, Value rhs, string name ) => BuildBinOp( NativeMethods.BuildAnd, lhs, rhs, name );
 
         public Value Sub( Value lhs, Value rhs ) => Sub( lhs, rhs, string.Empty );
 
-        public Value Sub( Value lhs, Value rhs, string name ) => BuildBinOp( LLVMNative.BuildSub, lhs, rhs, name );
+        public Value Sub( Value lhs, Value rhs, string name ) => BuildBinOp( NativeMethods.BuildSub, lhs, rhs, name );
 
         public Value Mul( Value lhs, Value rhs ) => Mul( lhs, rhs, string.Empty );
 
-        public Value Mul( Value lhs, Value rhs, string name ) => BuildBinOp( LLVMNative.BuildMul, lhs, rhs, name );
+        public Value Mul( Value lhs, Value rhs, string name ) => BuildBinOp( NativeMethods.BuildMul, lhs, rhs, name );
 
         public Value ShiftLeft( Value lhs, Value rhs ) => ShiftLeft( lhs, rhs, string.Empty );
 
-        public Value ShiftLeft( Value lhs, Value rhs, string name ) => BuildBinOp( LLVMNative.BuildShl, lhs, rhs, name );
+        public Value ShiftLeft( Value lhs, Value rhs, string name ) => BuildBinOp( NativeMethods.BuildShl, lhs, rhs, name );
 
         public Value ArithmeticShiftRight( Value lhs, Value rhs ) => ArithmeticShiftRight( lhs, rhs, string.Empty );
 
-        public Value ArithmeticShiftRight( Value lhs, Value rhs, string name ) => BuildBinOp( LLVMNative.BuildAShr, lhs, rhs, name );
+        public Value ArithmeticShiftRight( Value lhs, Value rhs, string name ) => BuildBinOp( NativeMethods.BuildAShr, lhs, rhs, name );
 
         public Value LogicalShiftRight( Value lhs, Value rhs ) => LogicalShiftRight( lhs, rhs, string.Empty );
 
-        public Value LogicalShiftRight( Value lhs, Value rhs, string name ) => BuildBinOp( LLVMNative.BuildLShr, lhs, rhs, name );
+        public Value LogicalShiftRight( Value lhs, Value rhs, string name ) => BuildBinOp( NativeMethods.BuildLShr, lhs, rhs, name );
 
-        public Value UDiv( Value lhs, Value rhs ) => BuildBinOp( LLVMNative.BuildUDiv, lhs, rhs, string.Empty );
+        public Value UDiv( Value lhs, Value rhs ) => BuildBinOp( NativeMethods.BuildUDiv, lhs, rhs, string.Empty );
 
-        public Value UDiv( Value lhs, Value rhs, string name ) => BuildBinOp( LLVMNative.BuildUDiv, lhs, rhs, name );
+        public Value UDiv( Value lhs, Value rhs, string name ) => BuildBinOp( NativeMethods.BuildUDiv, lhs, rhs, name );
 
-        public Value SDiv( Value lhs, Value rhs ) => BuildBinOp( LLVMNative.BuildUDiv, lhs, rhs, string.Empty );
+        public Value SDiv( Value lhs, Value rhs ) => BuildBinOp( NativeMethods.BuildUDiv, lhs, rhs, string.Empty );
 
-        public Value SDiv( Value lhs, Value rhs, string name ) => BuildBinOp( LLVMNative.BuildUDiv, lhs, rhs, name );
+        public Value SDiv( Value lhs, Value rhs, string name ) => BuildBinOp( NativeMethods.BuildUDiv, lhs, rhs, name );
 
         public Value URem( Value lhs, Value rhs ) => URem( lhs, rhs, string.Empty );
 
-        public Value URem( Value lhs, Value rhs, string name ) => BuildBinOp( LLVMNative.BuildURem, lhs, rhs, name );
+        public Value URem( Value lhs, Value rhs, string name ) => BuildBinOp( NativeMethods.BuildURem, lhs, rhs, name );
 
         public Value SRem( Value lhs, Value rhs ) => SRem( lhs, rhs, string.Empty );
 
-        public Value SRem( Value lhs, Value rhs, string name ) => BuildBinOp( LLVMNative.BuildSRem, lhs, rhs, name );
+        public Value SRem( Value lhs, Value rhs, string name ) => BuildBinOp( NativeMethods.BuildSRem, lhs, rhs, name );
 
         public Value Xor( Value lhs, Value rhs ) => Xor( lhs, rhs, string.Empty );
 
-        public Value Xor( Value lhs, Value rhs, string name ) => BuildBinOp( LLVMNative.BuildXor, lhs, rhs, name );
+        public Value Xor( Value lhs, Value rhs, string name ) => BuildBinOp( NativeMethods.BuildXor, lhs, rhs, name );
 
         public Value Or( Value lhs, Value rhs ) => Or( lhs, rhs, string.Empty );
 
-        public Value Or( Value lhs, Value rhs, string name ) => BuildBinOp( LLVMNative.BuildOr, lhs, rhs, name );
+        public Value Or( Value lhs, Value rhs, string name ) => BuildBinOp( NativeMethods.BuildOr, lhs, rhs, name );
 
         public Alloca Alloca( ITypeRef typeRef ) => Alloca( typeRef, string.Empty );
 
         public Alloca Alloca( ITypeRef typeRef, string name )
         {
-            var handle = LLVMNative.BuildAlloca( BuilderHandle, typeRef.GetTypeRef(), name );
+            var handle = NativeMethods.BuildAlloca( BuilderHandle, typeRef.GetTypeRef(), name );
             return Value.FromHandle<Alloca>( handle );
         }
 
@@ -135,13 +135,13 @@ namespace Llvm.NET
 
         public Alloca Alloca( ITypeRef typeRef, ConstantInt elements, string name )
         {
-            var instHandle = LLVMNative.BuildArrayAlloca( BuilderHandle, typeRef.GetTypeRef(), elements.ValueHandle, name );
+            var instHandle = NativeMethods.BuildArrayAlloca( BuilderHandle, typeRef.GetTypeRef(), elements.ValueHandle, name );
             return Value.FromHandle<Alloca>( instHandle );
         }
 
-        public Return Return( ) => Value.FromHandle<Return>( LLVMNative.BuildRetVoid( BuilderHandle ) );
+        public Return Return( ) => Value.FromHandle<Return>( NativeMethods.BuildRetVoid( BuilderHandle ) );
 
-        public Return Return( Value value ) => Value.FromHandle<Return>( LLVMNative.BuildRet( BuilderHandle, value.ValueHandle ) );
+        public Return Return( Value value ) => Value.FromHandle<Return>( NativeMethods.BuildRet( BuilderHandle, value.ValueHandle ) );
 
         public Call Call( Value func, params Value[ ] args ) => Call( string.Empty, func, ( IReadOnlyList<Value> )args );
         public Call Call( Value func, IReadOnlyList<Value> args ) => Call( string.Empty, func, args );
@@ -175,10 +175,10 @@ namespace Llvm.NET
                 throw new ArgumentException( string.Format( IncompatibleTypeMsgFmt, ptrType.ElementType, value.Type ) );
             }
 
-            return Value.FromHandle<Store>( LLVMNative.BuildStore( BuilderHandle, value.ValueHandle, destination.ValueHandle ) );
+            return Value.FromHandle<Store>( NativeMethods.BuildStore( BuilderHandle, value.ValueHandle, destination.ValueHandle ) );
         }
 
-        public Load Load( Value sourcePtr ) => Value.FromHandle<Load>( LLVMNative.BuildLoad( BuilderHandle, sourcePtr.ValueHandle, string.Empty ) );
+        public Load Load( Value sourcePtr ) => Value.FromHandle<Load>( NativeMethods.BuildLoad( BuilderHandle, sourcePtr.ValueHandle, string.Empty ) );
 
         /// <summary>Creates a <see cref="User"/> that accesses an element (field) of a structure</summary>
         /// <param name="pointer">Pointer to the structure to get an element from</param>
@@ -210,7 +210,7 @@ namespace Llvm.NET
             if( pointer.Type.Kind != TypeKind.Pointer )
                 throw new ArgumentException( "Pointer value expected", nameof( pointer ) );
 
-            var hRetVal = LLVMNative.BuildStructGEP( BuilderHandle, pointer.ValueHandle, index, name );
+            var hRetVal = NativeMethods.BuildStructGEP( BuilderHandle, pointer.ValueHandle, index, name );
             return Value.FromHandle( hRetVal );
         }
 
@@ -262,7 +262,7 @@ namespace Llvm.NET
         public Value GetElementPtr( Value pointer, IEnumerable<Value> args, string name )
         {
             var llvmArgs = GetValidatedGEPArgs( pointer, args );
-            var hRetVal = LLVMNative.BuildGEP( BuilderHandle, pointer.ValueHandle, out llvmArgs[ 0 ], ( uint )llvmArgs.Length, string.Empty );
+            var hRetVal = NativeMethods.BuildGEP( BuilderHandle, pointer.ValueHandle, out llvmArgs[ 0 ], ( uint )llvmArgs.Length, string.Empty );
             return Value.FromHandle( hRetVal );
         }
 
@@ -315,7 +315,7 @@ namespace Llvm.NET
         public Value GetElementPtrInBounds( Value pointer, IEnumerable<Value> args, string name )
         {
             var llvmArgs = GetValidatedGEPArgs( pointer, args );
-            var hRetVal = LLVMNative.BuildInBoundsGEP( BuilderHandle, pointer.ValueHandle, out llvmArgs[ 0 ], ( uint )llvmArgs.Length, string.Empty );
+            var hRetVal = NativeMethods.BuildInBoundsGEP( BuilderHandle, pointer.ValueHandle, out llvmArgs[ 0 ], ( uint )llvmArgs.Length, string.Empty );
             return Value.FromHandle( hRetVal );
         }
 
@@ -343,7 +343,7 @@ namespace Llvm.NET
         public Value ConstGetElementPtrInBounds( Value pointer, params Value[ ] args )
         {
             var llvmArgs = GetValidatedGEPArgs( pointer, args );
-            var handle = LLVMNative.ConstInBoundsGEP( pointer.ValueHandle, out llvmArgs[ 0 ], ( uint )llvmArgs.Length );
+            var handle = NativeMethods.ConstInBoundsGEP( pointer.ValueHandle, out llvmArgs[ 0 ], ( uint )llvmArgs.Length );
             return Value.FromHandle( handle );
         }
 
@@ -359,9 +359,9 @@ namespace Llvm.NET
         public Value IntToPointer( Value intValue, IPointerType ptrType )
         {
             if( intValue is Constant )
-                return Value.FromHandle( LLVMNative.ConstIntToPtr( intValue.ValueHandle, ptrType.GetTypeRef() ) );
+                return Value.FromHandle( NativeMethods.ConstIntToPtr( intValue.ValueHandle, ptrType.GetTypeRef() ) );
 
-            var hValue = LLVMNative.BuildIntToPtr( BuilderHandle, intValue.ValueHandle, ptrType.GetTypeRef(), string.Empty );
+            var hValue = NativeMethods.BuildIntToPtr( BuilderHandle, intValue.ValueHandle, ptrType.GetTypeRef(), string.Empty );
             return Value.FromHandle( hValue );
         }
 
@@ -383,17 +383,17 @@ namespace Llvm.NET
                 throw new ArgumentException( "Expected pointer to integral type", nameof( intType ) );
 
             if( ptrValue is Constant )
-                return Value.FromHandle( LLVMNative.ConstPtrToInt( ptrValue.ValueHandle, intType.GetTypeRef() ) );
+                return Value.FromHandle( NativeMethods.ConstPtrToInt( ptrValue.ValueHandle, intType.GetTypeRef() ) );
 
-            var hValue = LLVMNative.BuildPtrToInt( BuilderHandle, ptrValue.ValueHandle, intType.GetTypeRef(), string.Empty );
+            var hValue = NativeMethods.BuildPtrToInt( BuilderHandle, ptrValue.ValueHandle, intType.GetTypeRef(), string.Empty );
             return Value.FromHandle( hValue );
         }
 
-        public Branch Branch( BasicBlock target ) => Value.FromHandle<Branch>( LLVMNative.BuildBr( BuilderHandle, target.BlockHandle ) );
+        public Branch Branch( BasicBlock target ) => Value.FromHandle<Branch>( NativeMethods.BuildBr( BuilderHandle, target.BlockHandle ) );
 
         public Branch Branch( Value ifCondition, BasicBlock thenTarget, BasicBlock elseTarget )
         {
-            var branchHandle = LLVMNative.BuildCondBr( BuilderHandle, ifCondition.ValueHandle, thenTarget.BlockHandle, elseTarget.BlockHandle );
+            var branchHandle = NativeMethods.BuildCondBr( BuilderHandle, ifCondition.ValueHandle, thenTarget.BlockHandle, elseTarget.BlockHandle );
             return Value.FromHandle<Branch>( branchHandle );
         }
 
@@ -418,7 +418,7 @@ namespace Llvm.NET
             if( !rhs.Type.IsInteger )
                 throw new ArgumentException( "Expecting an integer type", nameof( rhs ) );
 
-            return Value.FromHandle( LLVMNative.BuildICmp( BuilderHandle, ( LLVMIntPredicate )predicate, lhs.ValueHandle, rhs.ValueHandle, name ) );
+            return Value.FromHandle( NativeMethods.BuildICmp( BuilderHandle, ( LLVMIntPredicate )predicate, lhs.ValueHandle, rhs.ValueHandle, name ) );
         }
 
         /// <summary>Builds a Floating point compare instruction</summary>
@@ -442,7 +442,7 @@ namespace Llvm.NET
             if( !rhs.Type.IsFloatingPoint )
                 throw new ArgumentException( "Expecting an integer type", nameof( rhs ) );
 
-            return Value.FromHandle( LLVMNative.BuildFCmp( BuilderHandle, ( LLVMRealPredicate )predicate, lhs.ValueHandle, rhs.ValueHandle, name ) );
+            return Value.FromHandle( NativeMethods.BuildFCmp( BuilderHandle, ( LLVMRealPredicate )predicate, lhs.ValueHandle, rhs.ValueHandle, name ) );
         }
 
         /// <summary>Builds a compare instruction</summary>
@@ -480,9 +480,9 @@ namespace Llvm.NET
                 return valueRef;
 
             if( valueRef is Constant )
-                return Value.FromHandle( LLVMNative.ConstZExtOrBitCast( valueRef.ValueHandle, targetType.GetTypeRef() ) );
+                return Value.FromHandle( NativeMethods.ConstZExtOrBitCast( valueRef.ValueHandle, targetType.GetTypeRef() ) );
             else
-                return Value.FromHandle( LLVMNative.BuildZExtOrBitCast( BuilderHandle, valueRef.ValueHandle, targetType.GetTypeRef(), name ) );
+                return Value.FromHandle( NativeMethods.BuildZExtOrBitCast( BuilderHandle, valueRef.ValueHandle, targetType.GetTypeRef(), name ) );
         }
 
         public Value SignExtendOrBitCast( Value valueRef, ITypeRef targetType )
@@ -497,9 +497,9 @@ namespace Llvm.NET
                 return valueRef;
 
             if( valueRef is Constant )
-                return Value.FromHandle( LLVMNative.ConstSExtOrBitCast( valueRef.ValueHandle, targetType.GetTypeRef() ) );
+                return Value.FromHandle( NativeMethods.ConstSExtOrBitCast( valueRef.ValueHandle, targetType.GetTypeRef() ) );
             else
-                return Value.FromHandle( LLVMNative.BuildSExtOrBitCast( BuilderHandle, valueRef.ValueHandle, targetType.GetTypeRef(), name ) );
+                return Value.FromHandle( NativeMethods.BuildSExtOrBitCast( BuilderHandle, valueRef.ValueHandle, targetType.GetTypeRef(), name ) );
         }
 
         public Value TruncOrBitCast( Value valueRef, ITypeRef targetType )
@@ -514,27 +514,27 @@ namespace Llvm.NET
                 return valueRef;
 
             if( valueRef is Constant )
-                return Value.FromHandle( LLVMNative.ConstTruncOrBitCast( valueRef.ValueHandle, targetType.GetTypeRef() ) );
+                return Value.FromHandle( NativeMethods.ConstTruncOrBitCast( valueRef.ValueHandle, targetType.GetTypeRef() ) );
             else
-                return Value.FromHandle( LLVMNative.BuildTruncOrBitCast( BuilderHandle, valueRef.ValueHandle, targetType.GetTypeRef(), name ) );
+                return Value.FromHandle( NativeMethods.BuildTruncOrBitCast( BuilderHandle, valueRef.ValueHandle, targetType.GetTypeRef(), name ) );
         }
 
 
         public Value ZeroExtend( Value valueRef, ITypeRef targetType )
         {
             if( valueRef is Constant )
-                return Value.FromHandle( LLVMNative.ConstZExt( valueRef.ValueHandle, targetType.GetTypeRef() ) );
+                return Value.FromHandle( NativeMethods.ConstZExt( valueRef.ValueHandle, targetType.GetTypeRef() ) );
             else
-                return Value.FromHandle( LLVMNative.BuildZExt( BuilderHandle, valueRef.ValueHandle, targetType.GetTypeRef(), string.Empty ) );
+                return Value.FromHandle( NativeMethods.BuildZExt( BuilderHandle, valueRef.ValueHandle, targetType.GetTypeRef(), string.Empty ) );
         }
 
         public Value SignExtend( Value valueRef, ITypeRef targetType )
         {
             if( valueRef is Constant )
-                return Value.FromHandle( LLVMNative.ConstSExt( valueRef.ValueHandle, targetType.GetTypeRef() ) );
+                return Value.FromHandle( NativeMethods.ConstSExt( valueRef.ValueHandle, targetType.GetTypeRef() ) );
             else
             {
-                var retValueRef = LLVMNative.BuildSExt( BuilderHandle, valueRef.ValueHandle, targetType.GetTypeRef(), string.Empty );
+                var retValueRef = NativeMethods.BuildSExt( BuilderHandle, valueRef.ValueHandle, targetType.GetTypeRef(), string.Empty );
                 return Value.FromHandle( retValueRef );
             }
         }
@@ -548,9 +548,9 @@ namespace Llvm.NET
                 return valueRef;
 
             if( valueRef is Constant )
-                return Value.FromHandle( LLVMNative.ConstBitCast( valueRef.ValueHandle, targetType.GetTypeRef() ) );
+                return Value.FromHandle( NativeMethods.ConstBitCast( valueRef.ValueHandle, targetType.GetTypeRef() ) );
             else
-                return Value.FromHandle( LLVMNative.BuildBitCast( BuilderHandle, valueRef.ValueHandle, targetType.GetTypeRef(), name ) );
+                return Value.FromHandle( NativeMethods.BuildBitCast( BuilderHandle, valueRef.ValueHandle, targetType.GetTypeRef(), name ) );
         }
 
         public Value IntCast( Value valueRef, ITypeRef targetType, bool isSigned ) => IntCast( valueRef, targetType, isSigned, string.Empty );
@@ -558,17 +558,17 @@ namespace Llvm.NET
         public Value IntCast( Value valueRef, ITypeRef targetType, bool isSigned, string name )
         {
             if( valueRef is Constant )
-                return Value.FromHandle( LLVMNative.ConstIntCast( valueRef.ValueHandle, targetType.GetTypeRef(), isSigned ) );
+                return Value.FromHandle( NativeMethods.ConstIntCast( valueRef.ValueHandle, targetType.GetTypeRef(), isSigned ) );
             else
-                return Value.FromHandle( LLVMNative.BuildIntCast( BuilderHandle, valueRef.ValueHandle, targetType.GetTypeRef(), name ) );
+                return Value.FromHandle( NativeMethods.BuildIntCast( BuilderHandle, valueRef.ValueHandle, targetType.GetTypeRef(), name ) );
         }
 
         public Value Trunc( Value valueRef, ITypeRef targetType )
         {
             if( valueRef is Constant )
-                return Value.FromHandle( LLVMNative.ConstTrunc( valueRef.ValueHandle, targetType.GetTypeRef() ) );
+                return Value.FromHandle( NativeMethods.ConstTrunc( valueRef.ValueHandle, targetType.GetTypeRef() ) );
             else
-                return Value.FromHandle( LLVMNative.BuildTrunc( BuilderHandle, valueRef.ValueHandle, targetType.GetTypeRef(), string.Empty ) );
+                return Value.FromHandle( NativeMethods.BuildTrunc( BuilderHandle, valueRef.ValueHandle, targetType.GetTypeRef(), string.Empty ) );
         }
 
         public Value SIToFPCast( Value valueRef, ITypeRef targetType ) => SIToFPCast( valueRef, targetType, string.Empty );
@@ -576,9 +576,9 @@ namespace Llvm.NET
         public Value SIToFPCast( Value valueRef, ITypeRef targetType, string name )
         {
             if( valueRef is Constant )
-                return Value.FromHandle( LLVMNative.ConstSIToFP( valueRef.ValueHandle, targetType.GetTypeRef() ) );
+                return Value.FromHandle( NativeMethods.ConstSIToFP( valueRef.ValueHandle, targetType.GetTypeRef() ) );
             else
-                return Value.FromHandle( LLVMNative.BuildSIToFP( BuilderHandle, valueRef.ValueHandle, targetType.GetTypeRef(), name ) );
+                return Value.FromHandle( NativeMethods.BuildSIToFP( BuilderHandle, valueRef.ValueHandle, targetType.GetTypeRef(), name ) );
         }
 
         public Value FPToUICast( Value valueRef, ITypeRef targetType ) => FPToUICast( valueRef, targetType, string.Empty );
@@ -586,36 +586,36 @@ namespace Llvm.NET
         public Value FPToUICast( Value valueRef, ITypeRef targetType, string name )
         {
             if( valueRef is Constant )
-                return Value.FromHandle( LLVMNative.ConstFPToUI( valueRef.ValueHandle, targetType.GetTypeRef() ) );
+                return Value.FromHandle( NativeMethods.ConstFPToUI( valueRef.ValueHandle, targetType.GetTypeRef() ) );
             else
-                return Value.FromHandle( LLVMNative.BuildFPToUI( BuilderHandle, valueRef.ValueHandle, targetType.GetTypeRef(), name ) );
+                return Value.FromHandle( NativeMethods.BuildFPToUI( BuilderHandle, valueRef.ValueHandle, targetType.GetTypeRef(), name ) );
         }
 
         public Value FPExt( Value valueRef, ITypeRef toType, string name )
         {
             if( valueRef is Constant )
-                return Value.FromHandle( LLVMNative.ConstFPExt( valueRef.ValueHandle, toType.GetTypeRef() ) );
+                return Value.FromHandle( NativeMethods.ConstFPExt( valueRef.ValueHandle, toType.GetTypeRef() ) );
             else
-                return Cast.FromHandle<Value>( LLVMNative.BuildFPExt( BuilderHandle, valueRef.ValueHandle, toType.GetTypeRef(), name ) );
+                return Cast.FromHandle<Value>( NativeMethods.BuildFPExt( BuilderHandle, valueRef.ValueHandle, toType.GetTypeRef(), name ) );
         }
 
         public PhiNode PhiNode( ITypeRef resultType ) => PhiNode( resultType, string.Empty );
         public PhiNode PhiNode( ITypeRef resultType, string name )
         {
-            var handle = LLVMNative.BuildPhi( BuilderHandle, resultType.GetTypeRef(), string.Empty );
+            var handle = NativeMethods.BuildPhi( BuilderHandle, resultType.GetTypeRef(), string.Empty );
             return Value.FromHandle<PhiNode>( handle );
         }
 
         public Value ExtractValue( Value instance, uint index ) => ExtractValue( instance, index, string.Empty );
         public Value ExtractValue( Value instance, uint index, string name )
         {
-            var hResult = LLVMNative.BuildExtractValue( BuilderHandle, instance.ValueHandle, index, name );
+            var hResult = NativeMethods.BuildExtractValue( BuilderHandle, instance.ValueHandle, index, name );
             return Value.FromHandle( hResult );
         }
 
         public Switch Switch( Value value, BasicBlock defaultCase, uint numCases )
         {
-            return Value.FromHandle<Switch>( LLVMNative.BuildSwitch( BuilderHandle, value.ValueHandle, defaultCase.BlockHandle, numCases ) );
+            return Value.FromHandle<Switch>( NativeMethods.BuildSwitch( BuilderHandle, value.ValueHandle, defaultCase.BlockHandle, numCases ) );
         }
 
         public Value DoNothing( Module module )
@@ -643,7 +643,7 @@ namespace Llvm.NET
             }
 
             LLVMValueRef args;
-            var hCall = LLVMNative.BuildCall( BuilderHandle, func.ValueHandle, out args, 0U, string.Empty );
+            var hCall = NativeMethods.BuildCall( BuilderHandle, func.ValueHandle, out args, 0U, string.Empty );
             return Value.FromHandle( hCall );
         }
 
@@ -817,7 +817,7 @@ namespace Llvm.NET
 
         public Value InsertValue( Value aggValue, Value elementValue, uint index, string name )
         {
-            var handle = LLVMNative.BuildInsertValue( BuilderHandle, aggValue.ValueHandle, elementValue.ValueHandle, index, name );
+            var handle = NativeMethods.BuildInsertValue( BuilderHandle, aggValue.ValueHandle, elementValue.ValueHandle, index, name );
             return Value.FromHandle( handle );
         }
 
@@ -830,7 +830,7 @@ namespace Llvm.NET
 
         protected virtual void Dispose( bool disposing )
         {
-            LLVMNative.DisposeBuilder( BuilderHandle );
+            NativeMethods.DisposeBuilder( BuilderHandle );
         }
 
         ~InstructionBuilder( )
@@ -924,7 +924,7 @@ namespace Llvm.NET
             if( argCount == 0 )
                 llvmArgs = new LLVMValueRef[ 1 ];
 
-            var hCall = LLVMNative.BuildCall( BuilderHandle, func.ValueHandle, out llvmArgs[ 0 ], ( uint )argCount, name );
+            var hCall = NativeMethods.BuildCall( BuilderHandle, func.ValueHandle, out llvmArgs[ 0 ], ( uint )argCount, name );
             return hCall;
         }
 

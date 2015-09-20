@@ -7,7 +7,7 @@ namespace Llvm.NET.Values
     public class ConstantExpression
         : Constant
     {
-        public Opcode Opcode => (Opcode)LLVMNative.GetConstOpcode( ValueHandle );
+        public Opcode Opcode => (Opcode)NativeMethods.GetConstOpcode( ValueHandle );
 
         public static Constant IntToPtrExpression( Constant value, ITypeRef type )
         {
@@ -17,12 +17,12 @@ namespace Llvm.NET.Values
             if( !( type is PointerType ) )
                 throw new ArgumentException( "pointer type expected", nameof( type ) );
 
-            return FromHandle<Constant>( LLVMNative.ConstIntToPtr( value.ValueHandle, type.GetTypeRef() ) );
+            return FromHandle<Constant>( NativeMethods.ConstIntToPtr( value.ValueHandle, type.GetTypeRef() ) );
         }
 
         public static Constant BitCast( Constant value, ITypeRef toType )
         {
-            return FromHandle<Constant>( LLVMNative.ConstBitCast( value.ValueHandle, toType.GetTypeRef() ) );
+            return FromHandle<Constant>( NativeMethods.ConstBitCast( value.ValueHandle, toType.GetTypeRef() ) );
         }
 
         internal ConstantExpression( LLVMValueRef valueRef )
@@ -31,7 +31,7 @@ namespace Llvm.NET.Values
         }
 
         internal ConstantExpression( LLVMValueRef valueRef, bool preValidated )
-            : base( preValidated ? valueRef : ValidateConversion( valueRef, LLVMNative.IsAConstantExpr ) )
+            : base( preValidated ? valueRef : ValidateConversion( valueRef, NativeMethods.IsAConstantExpr ) )
         {
         }
 

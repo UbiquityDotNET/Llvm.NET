@@ -18,7 +18,7 @@ namespace Llvm.NET.Values
         {
             get
             {
-                var parent = LLVMNative.GetBasicBlockParent( BlockHandle );
+                var parent = NativeMethods.GetBasicBlockParent( BlockHandle );
                 if( parent.Pointer == IntPtr.Zero )
                     return null;
 
@@ -34,7 +34,7 @@ namespace Llvm.NET.Values
         {
             get
             {
-                var firstInst = LLVMNative.GetFirstInstruction( BlockHandle );
+                var firstInst = NativeMethods.GetFirstInstruction( BlockHandle );
                 if( firstInst.Pointer == IntPtr.Zero )
                     return null;
 
@@ -47,7 +47,7 @@ namespace Llvm.NET.Values
         {
             get
             {
-                var lastInst = LLVMNative.GetLastInstruction( BlockHandle );
+                var lastInst = NativeMethods.GetLastInstruction( BlockHandle );
                 if( lastInst.Pointer == IntPtr.Zero)
                     return null;
 
@@ -63,7 +63,7 @@ namespace Llvm.NET.Values
         {
             get
             {
-                var terminator = LLVMNative.GetBasicBlockTerminator( BlockHandle );
+                var terminator = NativeMethods.GetBasicBlockTerminator( BlockHandle );
                 if( terminator.Pointer == IntPtr.Zero)
                     return null;
 
@@ -97,7 +97,7 @@ namespace Llvm.NET.Values
             if( instruction.ContainingBlock != this )
                 throw new ArgumentException( "Instruction is from a different block", nameof( instruction ) );
 
-            var hInst = LLVMNative.GetNextInstruction( instruction.ValueHandle );
+            var hInst = NativeMethods.GetNextInstruction( instruction.ValueHandle );
             return hInst.Pointer == IntPtr.Zero ? null : Value.FromHandle<Instruction>( hInst );
         }
 
@@ -107,20 +107,20 @@ namespace Llvm.NET.Values
         }
 
         private BasicBlock( LLVMBasicBlockRef basicBlockRef )
-            : this( LLVMNative.BasicBlockAsValue( basicBlockRef ), false )
+            : this( NativeMethods.BasicBlockAsValue( basicBlockRef ), false )
         {
         }
 
         internal BasicBlock( LLVMValueRef valueRef, bool preValidated )
-            : base( preValidated ? valueRef : ValidateConversion( valueRef, LLVMNative.IsABasicBlock ) )
+            : base( preValidated ? valueRef : ValidateConversion( valueRef, NativeMethods.IsABasicBlock ) )
         {
         }
 
-        internal LLVMBasicBlockRef BlockHandle => LLVMNative.ValueAsBasicBlock( ValueHandle );
+        internal LLVMBasicBlockRef BlockHandle => NativeMethods.ValueAsBasicBlock( ValueHandle );
 
         internal static BasicBlock FromHandle( LLVMBasicBlockRef basicBlockRef )
         {
-            return Value.FromHandle<BasicBlock>( LLVMNative.BasicBlockAsValue( basicBlockRef ) );
+            return Value.FromHandle<BasicBlock>( NativeMethods.BasicBlockAsValue( basicBlockRef ) );
         }
     }
 }

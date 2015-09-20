@@ -4,7 +4,7 @@
         : Instruction
     {
         internal Terminator( LLVMValueRef valueRef )
-            : base( ValidateConversion( valueRef, LLVMNative.IsATerminatorInst ) )
+            : base( ValidateConversion( valueRef, NativeMethods.IsATerminatorInst ) )
         {
         }
     }

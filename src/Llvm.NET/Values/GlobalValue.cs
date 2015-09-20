@@ -8,11 +8,11 @@
         {
             get
             {
-                return ( Visibility )LLVMNative.GetVisibility( ValueHandle );
+                return ( Visibility )NativeMethods.GetVisibility( ValueHandle );
             }
             set
             {
-                LLVMNative.SetVisibility( ValueHandle, ( LLVMVisibility )value );
+                NativeMethods.SetVisibility( ValueHandle, ( LLVMVisibility )value );
             }
         }
 
@@ -21,11 +21,11 @@
         {
             get
             {
-                return ( Linkage )LLVMNative.GetLinkage( ValueHandle );
+                return ( Linkage )NativeMethods.GetLinkage( ValueHandle );
             }
             set
             {
-                LLVMNative.SetLinkage( ValueHandle, ( LLVMLinkage )value );
+                NativeMethods.SetLinkage( ValueHandle, ( LLVMLinkage )value );
             }
         }
 
@@ -34,22 +34,22 @@
         {
             get
             {
-                return LLVMNative.HasUnnamedAddr( ValueHandle );
+                return NativeMethods.HasUnnamedAddr( ValueHandle );
             }
             set
             {
-                LLVMNative.SetUnnamedAddr( ValueHandle, value );
+                NativeMethods.SetUnnamedAddr( ValueHandle, value );
             }
         }
 
         /// <summary>Flag to indicate if this is a declaration</summary>
-        public bool IsDeclaration => LLVMNative.IsDeclaration( ValueHandle );
+        public bool IsDeclaration => NativeMethods.IsDeclaration( ValueHandle );
 
         /// <summary>Module containing this global value</summary>
-        public Module ParentModule => Type.Context.GetModuleFor( LLVMNative.GetGlobalParent( ValueHandle ) );
+        public Module ParentModule => Type.Context.GetModuleFor( NativeMethods.GetGlobalParent( ValueHandle ) );
 
         internal GlobalValue( LLVMValueRef valueRef )
-            : base( ValidateConversion( valueRef, LLVMNative.IsAGlobalValue ) )
+            : base( ValidateConversion( valueRef, NativeMethods.IsAGlobalValue ) )
         {
         }
     }

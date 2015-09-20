@@ -48,7 +48,7 @@ namespace Llvm.NET
             if( MetadataHandle.Pointer == IntPtr.Zero )
                 throw new InvalidOperationException( "Cannot Replace all uses of a null descriptor" );
 
-            LLVMNative.MetadataReplaceAllUsesWith( MetadataHandle, other.MetadataHandle );
+            NativeMethods.MetadataReplaceAllUsesWith( MetadataHandle, other.MetadataHandle );
             MetadataHandle = LLVMMetadataRef.Zero;
         }
 
@@ -72,7 +72,7 @@ namespace Llvm.NET
             if( value.Pointer == IntPtr.Zero )
                 return value;
 
-            return LLVMNative.GetValueKind( value ) == ValueKind.MetadataAsValue ? value : default(LLVMValueRef);
+            return NativeMethods.GetValueKind( value ) == ValueKind.MetadataAsValue ? value : default(LLVMValueRef);
         }
 
         public static implicit operator Metadata( MetadataAsValue self )
@@ -90,9 +90,9 @@ namespace Llvm.NET
         {
         }
 
-        public bool IsTemporary => LLVMNative.IsTemporary( MetadataHandle );
-        public bool IsResolved => LLVMNative.IsResolved( MetadataHandle );
-        public void ResolveCycles( ) => LLVMNative.MDNodeResolveCycles( MetadataHandle );
+        public bool IsTemporary => NativeMethods.IsTemporary( MetadataHandle );
+        public bool IsResolved => NativeMethods.IsResolved( MetadataHandle );
+        public void ResolveCycles( ) => NativeMethods.MDNodeResolveCycles( MetadataHandle );
 
         public override void ReplaceAllUsesWith( Metadata other )
         {
@@ -102,7 +102,7 @@ namespace Llvm.NET
             if( MetadataHandle.Pointer == IntPtr.Zero )
                 throw new InvalidOperationException( "Cannot Replace all uses of a null descriptor" );
 
-            LLVMNative.MDNodeReplaceAllUsesWith( MetadataHandle, other.MetadataHandle );
+            NativeMethods.MDNodeReplaceAllUsesWith( MetadataHandle, other.MetadataHandle );
             MetadataHandle = LLVMMetadataRef.Zero;
         }
     }
@@ -117,8 +117,8 @@ namespace Llvm.NET
         public override string ToString( )
         {
             uint len;
-            var ptr = LLVMNative.GetMDStringText( MetadataHandle, out len );
-            return LLVMNative.NormalizeLineEndings( ptr, (int)len );
+            var ptr = NativeMethods.GetMDStringText( MetadataHandle, out len );
+            return NativeMethods.NormalizeLineEndings( ptr, (int)len );
         }
     } 
 }

@@ -13,7 +13,7 @@ namespace Llvm.NET.DebugInfo
                 if( MetadataHandle.Pointer == IntPtr.Zero )
                     return (Tag)(ushort.MaxValue);
 
-                return ( Tag )LLVMNative.DIDescriptorGetTag( MetadataHandle );
+                return ( Tag )NativeMethods.DIDescriptorGetTag( MetadataHandle );
             }
         }
 
@@ -28,7 +28,7 @@ namespace Llvm.NET.DebugInfo
             if( MetadataHandle.Pointer == IntPtr.Zero )
                 return string.Empty;
 
-            return LLVMNative.MarshalMsg( LLVMNative.DIDescriptorAsString( MetadataHandle ) );
+            return NativeMethods.MarshalMsg( NativeMethods.DIDescriptorAsString( MetadataHandle ) );
         }
     }
 }

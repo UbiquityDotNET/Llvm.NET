@@ -23,7 +23,7 @@ namespace Llvm.NET
         internal static LLVMMetadataRef Zero = new LLVMMetadataRef( IntPtr.Zero );
     }
 
-    internal static partial class LLVMNative
+    internal static partial class NativeMethods
     {
         internal static ValueKind GetValueKind( LLVMValueRef valueRef ) => ( ValueKind )GetValueID( valueRef );
 
@@ -44,7 +44,7 @@ namespace Llvm.NET
             return retVal;
         }
 
-        static LLVMNative()
+        static NativeMethods()
         {
             // force loading the appropriate architecture specific 
             // DLL before any use of the wrapped inter-op APIs to 

@@ -7,7 +7,7 @@ namespace Llvm.NET.Instructions
         : MemIntrinsic
     {
         internal MemCpy( LLVMValueRef valueRef )
-            : base( ValidateConversion( valueRef, LLVMNative.IsAMemCpyInst ) )
+            : base( ValidateConversion( valueRef, NativeMethods.IsAMemCpyInst ) )
         {
         }
 

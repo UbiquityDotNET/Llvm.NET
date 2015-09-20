@@ -30,24 +30,24 @@ namespace Llvm.NET.Values
                 if( Context.IsDisposed )
                     return string.Empty;
 
-                var ptr = LLVMNative.GetValueName( ValueHandle );
+                var ptr = NativeMethods.GetValueName( ValueHandle );
                 return Marshal.PtrToStringAnsi( ptr );
             }
             set
             {
-                LLVMNative.SetValueName( ValueHandle, value );
+                NativeMethods.SetValueName( ValueHandle, value );
                 Debug.Assert( Name == value );
             }
         }
 
         /// <summary>Indicates if this value is Undefined</summary>
-        public bool IsUndefined => LLVMNative.IsUndef( ValueHandle );
+        public bool IsUndefined => NativeMethods.IsUndef( ValueHandle );
 
         /// <summary>Determines if the Value represents the NULL value for the values type</summary>
-        public bool IsNull => LLVMNative.IsNull( ValueHandle );
+        public bool IsNull => NativeMethods.IsNull( ValueHandle );
 
         /// <summary>Type of the value</summary>
-        public ITypeRef Type => TypeRef.FromHandle( LLVMNative.TypeOf( ValueHandle ) );
+        public ITypeRef Type => TypeRef.FromHandle( NativeMethods.TypeOf( ValueHandle ) );
 
         public Context Context => Type.Context;
 
@@ -55,13 +55,13 @@ namespace Llvm.NET.Values
         /// <returns>string version of the value formatted by LLVM</returns>
         public override string ToString( )
         {
-            var ptr = LLVMNative.PrintValueToString( ValueHandle );
-            return LLVMNative.MarshalMsg( ptr );
+            var ptr = NativeMethods.PrintValueToString( ValueHandle );
+            return NativeMethods.MarshalMsg( ptr );
         }
 
         public void ReplaceAllUsesWith( Value other )
         {
-            LLVMNative.ReplaceAllUsesWith( ValueHandle, other.ValueHandle );
+            NativeMethods.ReplaceAllUsesWith( ValueHandle, other.ValueHandle );
         }
 
         public bool TryGetExtendedPropertyValue<T>( string id, out T value ) => ExtensibleProperties.TryGetExtendedPropertyValue<T>( id, out value );
@@ -92,7 +92,7 @@ namespace Llvm.NET.Values
 
         private static Value StaticFactory( LLVMValueRef h )
         {
-            var kind = LLVMNative.GetValueKind( h );
+            var kind = NativeMethods.GetValueKind( h );
             switch( kind )
             {
             case ValueKind.Argument:
@@ -328,7 +328,7 @@ namespace Llvm.NET.Values
             var ex = new ArgumentException( "Incompatible handle type" );
             
             // Use LLVM to print to the debugger what the handle is for use in diagnosing the problem
-            var msgString = LLVMNative.MarshalMsg( LLVMNative.PrintValueToString( fromHandle ) );
+            var msgString = NativeMethods.MarshalMsg( NativeMethods.PrintValueToString( fromHandle ) );
             Debug.Print( msgString );
             // attach the details to the exception so it is available after the fact in the debugger
             // and any logs that dump exception details.
@@ -370,7 +370,7 @@ namespace Llvm.NET.Values
             where T : Value
         {
             if( value is Instructions.Instruction )
-                LLVMNative.SetDebugLoc( value.ValueHandle, line, column, scope.MetadataHandle );
+                NativeMethods.SetDebugLoc( value.ValueHandle, line, column, scope.MetadataHandle );
 
             return value;
         }

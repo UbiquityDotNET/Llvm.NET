@@ -12,10 +12,10 @@ namespace Llvm.NET
         public MemoryBuffer( string path )
         {
             IntPtr msg;
-            if( LLVMNative.CreateMemoryBufferWithContentsOfFile( path, out BufferHandle_, out msg ).Succeeded )
+            if( NativeMethods.CreateMemoryBufferWithContentsOfFile( path, out BufferHandle_, out msg ).Succeeded )
                 return;
 
-            throw new InternalCodeGeneratorException( LLVMNative.MarshalMsg( msg ) );
+            throw new InternalCodeGeneratorException( NativeMethods.MarshalMsg( msg ) );
         }
 
         /// <summary>Size of the buffer</summary>
@@ -26,7 +26,7 @@ namespace Llvm.NET
                 if( BufferHandle.Pointer == IntPtr.Zero )
                     return 0;
 
-                return LLVMNative.GetBufferSize( BufferHandle );
+                return NativeMethods.GetBufferSize( BufferHandle );
             }
         }
 
@@ -34,7 +34,7 @@ namespace Llvm.NET
         {
             if( BufferHandle.Pointer != IntPtr.Zero )
             {
-                LLVMNative.DisposeMemoryBuffer( BufferHandle );
+                NativeMethods.DisposeMemoryBuffer( BufferHandle );
                 BufferHandle_ = default(LLVMMemoryBufferRef);
             }
         }

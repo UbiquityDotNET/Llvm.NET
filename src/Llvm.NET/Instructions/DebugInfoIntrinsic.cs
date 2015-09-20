@@ -4,7 +4,7 @@
         : Intrinsic
     {
         internal DebugInfoIntrinsic( LLVMValueRef valueRef )
-            : base( ValidateConversion( valueRef, LLVMNative.IsADbgInfoIntrinsic ) )
+            : base( ValidateConversion( valueRef, NativeMethods.IsADbgInfoIntrinsic ) )
         { 
         }
     }

@@ -16,7 +16,7 @@
         {
             loosesInfo = false;
             LLVMBool nativeLoosesInfo;
-            var retVal = LLVMNative.ConstRealGetDouble( ValueHandle, out nativeLoosesInfo );
+            var retVal = NativeMethods.ConstRealGetDouble( ValueHandle, out nativeLoosesInfo );
             loosesInfo = nativeLoosesInfo;
             return retVal;
         }
@@ -27,7 +27,7 @@
         }
 
         internal ConstantFP( LLVMValueRef valueRef, bool preValidated )
-            : base( preValidated ? valueRef : ValidateConversion( valueRef, LLVMNative.IsAConstantFP ) )
+            : base( preValidated ? valueRef : ValidateConversion( valueRef, NativeMethods.IsAConstantFP ) )
         {
         }
     }

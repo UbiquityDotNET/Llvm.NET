@@ -12,12 +12,12 @@ namespace Llvm.NET.Types
         : SequenceType
         , IVectorType
     {
-        public uint Size => LLVMNative.GetVectorSize( TypeHandle_ );
+        public uint Size => NativeMethods.GetVectorSize( TypeHandle_ );
 
         internal VectorType( LLVMTypeRef typeRef )
             : base( typeRef )
         {
-            if( LLVMNative.GetTypeKind( typeRef ) != LLVMTypeKind.LLVMVectorTypeKind )
+            if( NativeMethods.GetTypeKind( typeRef ) != LLVMTypeKind.LLVMVectorTypeKind )
                 throw new ArgumentException( "Vector type reference expected", nameof( typeRef ) );
         }
     }

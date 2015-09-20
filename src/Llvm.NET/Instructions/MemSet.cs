@@ -4,7 +4,7 @@
         : MemIntrinsic
     {
         internal MemSet( LLVMValueRef valueRef )
-            : base( ValidateConversion( valueRef, LLVMNative.IsAMemSetInst ) )
+            : base( ValidateConversion( valueRef, NativeMethods.IsAMemSetInst ) )
         {
         }
     }
