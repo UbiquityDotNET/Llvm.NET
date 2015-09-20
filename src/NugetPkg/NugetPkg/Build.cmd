@@ -6,7 +6,7 @@ set clean=
 
 REM Don't delete old versions, otherwise clients won't be able to perform an update
 REM if they don't have the package installed (e.g. get from version control while
-REM it references and old version, then try to update!) Since this outputs to the
+REM it references an old version, then try to update!) Since this outputs to the
 REM local gallery that would cause problems.
 REM if /i '%1'=='rebuild' set clean=true
 REM if /i '%1'=='clean' set clean=true

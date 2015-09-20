@@ -256,7 +256,7 @@ namespace Llvm.NET.DebugInfo
 
         public DISubroutineType CreateSubroutineType( DIFile file, uint flags, DITypeArray types )
         {
-            var handle = LLVMNative.DIBuilderCreateSubroutineType( BuilderHandle, file.MetadataHandle, types.MetadataHandle, flags );
+            var handle = LLVMNative.DIBuilderCreateSubroutineType( BuilderHandle, file?.MetadataHandle ?? LLVMMetadataRef.Zero , types.MetadataHandle, flags );
             return new DISubroutineType( handle );
         }
 
@@ -265,6 +265,7 @@ namespace Llvm.NET.DebugInfo
             var typeArray = GetOrCreateTypeArray( null );
             return CreateSubroutineType( file, flags, typeArray );
         }
+
         public DISubroutineType CreateSubroutineType( DIFile file, uint flags, DIType returnType, IEnumerable<DIType> types )
         {
             var typeArray = GetOrCreateTypeArray( ScalarEnumerable.Combine( returnType, types ) );
@@ -311,29 +312,29 @@ namespace Llvm.NET.DebugInfo
         }
 
         public DICompositeType CreateStructType( DIScope scope
-                                             , string name
-                                             , DIFile file
-                                             , uint line
-                                             , ulong bitSize
-                                             , ulong bitAlign
-                                             , uint flags
-                                             , DIType derivedFrom
-                                             , IEnumerable<DINode> elements
-                                             )
+                                               , string name
+                                               , DIFile file
+                                               , uint line
+                                               , ulong bitSize
+                                               , ulong bitAlign
+                                               , uint flags
+                                               , DIType derivedFrom
+                                               , IEnumerable<DINode> elements
+                                               )
         {
             return CreateStructType( scope, name, file, line, bitSize, bitAlign, flags, derivedFrom, GetOrCreateArray( elements ) );
         }
 
         public DIDerivedType CreateMemberType( DIScope scope
-                                           , string name
-                                           , DIFile file
-                                           , uint line
-                                           , ulong bitSize
-                                           , ulong bitAlign
-                                           , ulong bitOffset
-                                           , uint flags
-                                           , DIType type
-                                           )
+                                             , string name
+                                             , DIFile file
+                                             , uint line
+                                             , ulong bitSize
+                                             , ulong bitAlign
+                                             , ulong bitOffset
+                                             , uint flags
+                                             , DIType type
+                                             )
         {
             var handle = LLVMNative.DIBuilderCreateMemberType( BuilderHandle
                                                              , scope.MetadataHandle

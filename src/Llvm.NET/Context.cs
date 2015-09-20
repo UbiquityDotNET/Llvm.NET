@@ -188,7 +188,7 @@ namespace Llvm.NET
             }
             var llvmType = GetFunctionType( retType, argTypes, isVarArg );
             var diArgTypes = argTypes.Select( t => t.DIType );
-            var diType =  diBuilder.CreateSubroutineType( diFile, 0, retType.DIType, diArgTypes );
+            var diType = diBuilder.CreateSubroutineType( diFile, 0, retType.DIType, diArgTypes );
             Debug.Assert( diType != null && !diType.IsTemporary );
 
             return new DebugFunctionType( llvmType, diType );
