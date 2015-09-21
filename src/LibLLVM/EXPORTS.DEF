@@ -62,10 +62,16 @@ LLVMDIBuilderCreateGlobalVariable
 LLVMDIBuilderInsertDeclareBefore
 LLVMDIDescriptorAsString
 LLVMMDNodeReplaceAllUsesWith
-LLVMDITypeGetFlags
 LLVMDILocation
-LLVMGetDITypeName
 LLVMSubProgramDescribes
+
+LLVMDITypeGetLine
+LLVMDITypeGetSizeInBits
+LLVMDITypeGetAlignInBits
+LLVMDITypeGetOffsetInBits
+LLVMDITypeGetFlags
+LLVMDITypeGetScope
+LLVMDITypeGetName
 
 ; Instrumentation Bindings
 LLVMAddAddressSanitizerFunctionPass

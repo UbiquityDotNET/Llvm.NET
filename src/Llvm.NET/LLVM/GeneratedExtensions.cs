@@ -338,9 +338,6 @@ namespace Llvm.NET
         [DllImport( libraryPath, EntryPoint = "LLVMMDNodeReplaceAllUsesWith", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl, BestFitMapping = false, ThrowOnUnmappableChar = true)]
         internal static extern void MDNodeReplaceAllUsesWith( LLVMMetadataRef oldDescriptor, LLVMMetadataRef newDescriptor );
 
-        [DllImport( libraryPath, EntryPoint = "LLVMDITypeGetFlags", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl, BestFitMapping = false, ThrowOnUnmappableChar = true)]
-        internal static extern uint DITypeGetFlags( LLVMMetadataRef type );
-
         [DllImport( libraryPath, EntryPoint = "LLVMMetadataAsValue", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl, BestFitMapping = false, ThrowOnUnmappableChar = true)]
         internal static extern LLVMValueRef MetadataAsValue( LLVMContextRef context, LLVMMetadataRef metadataRef );
 
@@ -349,9 +346,6 @@ namespace Llvm.NET
 
         [DllImport( libraryPath, EntryPoint = "LLVMDILocation", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl, BestFitMapping = false, ThrowOnUnmappableChar = true)]
         internal static extern LLVMMetadataRef DILocation( LLVMContextRef context, uint Line, uint Column, LLVMMetadataRef scope, LLVMMetadataRef InlinedAt );
-
-        [DllImport( libraryPath, EntryPoint = "LLVMGetDITypeName", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl, BestFitMapping = false, ThrowOnUnmappableChar = true)]
-        internal static extern IntPtr GetDITypeName( LLVMMetadataRef diType );
 
         [DllImport( libraryPath, EntryPoint = "LLVMGetModuleName", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl, BestFitMapping = false, ThrowOnUnmappableChar = true)]
         internal static extern IntPtr GetModuleName( LLVMModuleRef module );
@@ -376,5 +370,26 @@ namespace Llvm.NET
 
         [DllImport( libraryPath, EntryPoint = "LLVMSubProgramDescribes", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl, BestFitMapping = false, ThrowOnUnmappableChar = true)]
         internal static extern LLVMBool SubProgramDescribes( LLVMMetadataRef subProgram, LLVMValueRef function );
+
+        [DllImport( libraryPath, EntryPoint = "LLVMDITypeGetLine", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl, BestFitMapping = false, ThrowOnUnmappableChar = true)]
+        internal static extern UInt32 DITypeGetLine( LLVMMetadataRef typeRef );
+
+        [DllImport( libraryPath, EntryPoint = "LLVMDITypeGetSizeInBits", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl, BestFitMapping = false, ThrowOnUnmappableChar = true)]
+        internal static extern UInt64 DITypeGetSizeInBits( LLVMMetadataRef typeRef );
+
+        [DllImport( libraryPath, EntryPoint = "LLVMDITypeGetAlignInBits", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl, BestFitMapping = false, ThrowOnUnmappableChar = true)]
+        internal static extern UInt64 DITypeGetAlignInBits( LLVMMetadataRef typeRef );
+
+        [DllImport( libraryPath, EntryPoint = "LLVMDITypeGetOffsetInBits", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl, BestFitMapping = false, ThrowOnUnmappableChar = true)]
+        internal static extern UInt64 DITypeGetOffsetInBits( LLVMMetadataRef typeRef );
+
+        [DllImport( libraryPath, EntryPoint = "LLVMDITypeGetFlags", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl, BestFitMapping = false, ThrowOnUnmappableChar = true)]
+        internal static extern UInt32 DITypeGetFlags( LLVMMetadataRef typeRef );
+
+        [DllImport( libraryPath, EntryPoint = "LLVMDITypeGetScope", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl, BestFitMapping = false, ThrowOnUnmappableChar = true)]
+        internal static extern LLVMMetadataRef DITypeGetScope( LLVMMetadataRef typeRef );
+
+        [DllImport( libraryPath, EntryPoint = "LLVMDITypeGetName", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl, BestFitMapping = false, ThrowOnUnmappableChar = true)]
+        internal static extern IntPtr DITypeGetName( LLVMMetadataRef typeRef );
     }
 }

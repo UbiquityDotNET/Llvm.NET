@@ -72,14 +72,14 @@ namespace Llvm.NET.DebugInfo
                 throw new InvalidOperationException( "LLVM only allows one DICompileUnit per module" );
 
             var handle = NativeMethods.DIBuilderCreateCompileUnit( BuilderHandle
-                                                              , ( uint )language
-                                                              , fileName
-                                                              , fileDirectory
-                                                              , producer
-                                                              , optimized ? 1 : 0
-                                                              , flags
-                                                              , runtimeVersion
-                                                              );
+                                                                 , ( uint )language
+                                                                 , fileName
+                                                                 , fileDirectory
+                                                                 , producer
+                                                                 , optimized ? 1 : 0
+                                                                 , flags
+                                                                 , runtimeVersion
+                                                                 );
             var retVal = new DICompileUnit( handle );
             OwningModule.DICompileUnit = retVal;
             return retVal;
@@ -138,21 +138,21 @@ namespace Llvm.NET.DebugInfo
                 mangledName = string.Empty;
 
             var handle = NativeMethods.DIBuilderCreateFunction( BuilderHandle
-                                                           , scope.MetadataHandle
-                                                           , name
-                                                           , mangledName
-                                                           , file.MetadataHandle
-                                                           , line
-                                                           , compositeType.MetadataHandle
-                                                           , isLocalToUnit ? 1 : 0
-                                                           , isDefinition ? 1 : 0
-                                                           , scopeLine
-                                                           , flags
-                                                           , isOptimized ? 1 : 0
-                                                           , function.ValueHandle
-                                                           , TParam?.MetadataHandle ?? LLVMMetadataRef.Zero
-                                                           , Decl?.MetadataHandle ?? LLVMMetadataRef.Zero
-                                                           );
+                                                              , scope.MetadataHandle
+                                                              , name
+                                                              , mangledName
+                                                              , file.MetadataHandle
+                                                              , line
+                                                              , compositeType.MetadataHandle
+                                                              , isLocalToUnit ? 1 : 0
+                                                              , isDefinition ? 1 : 0
+                                                              , scopeLine
+                                                              , flags
+                                                              , isOptimized ? 1 : 0
+                                                              , function.ValueHandle
+                                                              , TParam?.MetadataHandle ?? LLVMMetadataRef.Zero
+                                                              , Decl?.MetadataHandle ?? LLVMMetadataRef.Zero
+                                                              );
             return new DISubProgram( handle );
         }
 
@@ -284,16 +284,16 @@ namespace Llvm.NET.DebugInfo
                                              )
         {
             var handle = NativeMethods.DIBuilderCreateStructType( BuilderHandle
-                                                             , scope.MetadataHandle
-                                                             , name
-                                                             , file?.MetadataHandle ?? LLVMMetadataRef.Zero
-                                                             , line
-                                                             , bitSize
-                                                             , bitAlign
-                                                             , flags
-                                                             , derivedFrom?.MetadataHandle ?? LLVMMetadataRef.Zero
-                                                             , elements.MetadataHandle
-                                                             );
+                                                                , scope.MetadataHandle
+                                                                , name
+                                                                , file?.MetadataHandle ?? LLVMMetadataRef.Zero
+                                                                , line
+                                                                , bitSize
+                                                                , bitAlign
+                                                                , flags
+                                                                , derivedFrom?.MetadataHandle ?? LLVMMetadataRef.Zero
+                                                                , elements.MetadataHandle
+                                                                );
             return new DICompositeType( handle );
         }
 
@@ -337,16 +337,16 @@ namespace Llvm.NET.DebugInfo
                                              )
         {
             var handle = NativeMethods.DIBuilderCreateMemberType( BuilderHandle
-                                                             , scope.MetadataHandle
-                                                             , name
-                                                             , file?.MetadataHandle ?? LLVMMetadataRef.Zero
-                                                             , line
-                                                             , bitSize
-                                                             , bitAlign
-                                                             , bitOffset
-                                                             , flags
-                                                             , type.MetadataHandle
-                                                             );
+                                                                , scope.MetadataHandle
+                                                                , name
+                                                                , file?.MetadataHandle ?? LLVMMetadataRef.Zero
+                                                                , line
+                                                                , bitSize
+                                                                , bitAlign
+                                                                , bitOffset
+                                                                , flags
+                                                                , type.MetadataHandle
+                                                                );
             return new DIDerivedType( handle );
         }
 
@@ -438,16 +438,16 @@ namespace Llvm.NET.DebugInfo
                                                     )
         {
             var handle = NativeMethods.DIBuilderCreateGlobalVariable( BuilderHandle
-                                                                 , scope.MetadataHandle
-                                                                 , name
-                                                                 , linkageName
-                                                                 , file.MetadataHandle
-                                                                 , lineNo
-                                                                 , type.MetadataHandle
-                                                                 , isLocalToUnit
-                                                                 , value.ValueHandle
-                                                                 , decl?.MetadataHandle ?? LLVMMetadataRef.Zero
-                                                                 );
+                                                                    , scope.MetadataHandle
+                                                                    , name
+                                                                    , linkageName
+                                                                    , file.MetadataHandle
+                                                                    , lineNo
+                                                                    , type.MetadataHandle
+                                                                    , isLocalToUnit
+                                                                    , value.ValueHandle
+                                                                    , decl?.MetadataHandle ?? LLVMMetadataRef.Zero
+                                                                    );
             return new DIGlobalVariable( handle );
         }
 
@@ -468,12 +468,12 @@ namespace Llvm.NET.DebugInfo
         public Value InsertDeclare( Value storage, DILocalVariable varInfo, DIExpression expr, DILocation location, Instruction insertBefore )
         {
             var handle = NativeMethods.DIBuilderInsertDeclareBefore( BuilderHandle
-                                                                , storage.ValueHandle
-                                                                , varInfo.MetadataHandle
-                                                                , expr.MetadataHandle
-                                                                , location.MetadataHandle
-                                                                , insertBefore.ValueHandle
-                                                                );
+                                                                   , storage.ValueHandle
+                                                                   , varInfo.MetadataHandle
+                                                                   , expr.MetadataHandle
+                                                                   , location.MetadataHandle
+                                                                   , insertBefore.ValueHandle
+                                                                   );
             return Value.FromHandle( handle );
         }
 
@@ -485,12 +485,12 @@ namespace Llvm.NET.DebugInfo
         public Value InsertDeclare( Value storage, DILocalVariable varInfo, DIExpression expr, DILocation location, BasicBlock insertAtEnd )
         {
             var handle = NativeMethods.DIBuilderInsertDeclareAtEnd( BuilderHandle
-                                                                , storage.ValueHandle
-                                                                , varInfo.MetadataHandle
-                                                                , expr.MetadataHandle
-                                                                , location.MetadataHandle
-                                                                , insertAtEnd.BlockHandle
-                                                                );
+                                                                  , storage.ValueHandle
+                                                                  , varInfo.MetadataHandle
+                                                                  , expr.MetadataHandle
+                                                                  , location.MetadataHandle
+                                                                  , insertAtEnd.BlockHandle
+                                                                  );
             return Value.FromHandle( handle );
         }
 
@@ -508,27 +508,27 @@ namespace Llvm.NET.DebugInfo
         }
 
         public DICompositeType CreateReplaceableCompositeType( Tag tag
-                                                              , string name
-                                                              , DINode scope
-                                                              , DIFile file
-                                                              , uint line
-                                                              , uint lang = 0
-                                                              , ulong sizeInBits = 0
-                                                              , ulong alignBits = 0
-                                                              , uint flags = 0
-                                                              )
+                                                             , string name
+                                                             , DINode scope
+                                                             , DIFile file
+                                                             , uint line
+                                                             , uint lang = 0
+                                                             , ulong sizeInBits = 0
+                                                             , ulong alignBits = 0
+                                                             , uint flags = 0
+                                                             )
         {
             var handle = NativeMethods.DIBuilderCreateReplaceableCompositeType( BuilderHandle
-                                                                           , ( uint )tag
-                                                                           , name
-                                                                           , scope.MetadataHandle
-                                                                           , file?.MetadataHandle ?? LLVMMetadataRef.Zero
-                                                                           , line
-                                                                           , lang
-                                                                           , sizeInBits
-                                                                           , alignBits
-                                                                           , flags
-                                                                           );
+                                                                              , ( uint )tag
+                                                                              , name
+                                                                              , scope.MetadataHandle
+                                                                              , file?.MetadataHandle ?? LLVMMetadataRef.Zero
+                                                                              , line
+                                                                              , lang
+                                                                              , sizeInBits
+                                                                              , alignBits
+                                                                              , flags
+                                                                              );
             return new DICompositeType( handle );
         }
 
@@ -553,16 +553,16 @@ namespace Llvm.NET.DebugInfo
                                                    )
         {
             var handle = NativeMethods.DIBuilderCreateLocalVariable( BuilderHandle
-                                                                , (uint)dwarfTag
-                                                                , scope.MetadataHandle
-                                                                , name
-                                                                , file.MetadataHandle
-                                                                , line
-                                                                , type.MetadataHandle
-                                                                , alwaysPreserve ? 1 : 0
-                                                                , flags
-                                                                , argNo
-                                                                );
+                                                                   , (uint)dwarfTag
+                                                                   , scope.MetadataHandle
+                                                                   , name
+                                                                   , file.MetadataHandle
+                                                                   , line
+                                                                   , type.MetadataHandle
+                                                                   , alwaysPreserve ? 1 : 0
+                                                                   , flags
+                                                                   , argNo
+                                                                   );
             return new DILocalVariable( handle );
         }
 

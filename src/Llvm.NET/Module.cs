@@ -88,7 +88,11 @@ namespace Llvm.NET
                 return Llvm.NET.Context.GetContextFor( ModuleHandle );
             }
         }
+
+        /// <summary><see cref="DebugInfoBuilder"/> to create debug information for this module</summary>
         public DebugInfoBuilder DIBuilder => DIBuilder_.Value;
+
+        /// <summary>Debug Comile unit for this module</summary>
         public DICompileUnit DICompileUnit { get; internal set; }
 
         /// <summary>Data layout string</summary>
@@ -113,6 +117,13 @@ namespace Llvm.NET
             }
         }
 
+        /// <summary>Target data layout for this module</summary>
+        /// <remarks>The layout is produced by parsing the <see cref="DataLayoutString"/>
+        /// therefore this proerty changes anytime the <see cref="DataLayoutString"/> is 
+        /// set. Furthermore, setting this property will change the value of <see cref="DataLayoutString"/>.
+        /// In other words, Layout and <see cref="DataLayoutString"/> are two different views
+        /// of the same information. 
+        /// </remarks>
         public TargetData Layout
         {
             get { return Layout_; }
@@ -168,6 +179,7 @@ namespace Llvm.NET
             }
         }
 
+        /// <summary>Name of the module</summary>
         public string Name
         {
             get
@@ -243,7 +255,22 @@ namespace Llvm.NET
         {
             var err = NativeMethods.WriteBitcodeToFile( ModuleHandle, path );
             if( err < 0 )
-                throw new System.IO.IOException( );
+                throw new IOException( );
+        }
+
+        /// <summary>Writes this module as LLVM IR source to a file</summary>
+        /// <param name="path">File to write the LLVM IR source to</param>
+        /// <param name="errMsg">Error messages encountered, if any</param>
+        /// <returns><see langword="true"/> if succesful or <see langword="false"/> if not</returns>
+        public bool WriteToTextFile( string path, out string errMsg )
+        {
+            errMsg = string.Empty;
+            IntPtr msg;
+            if( NativeMethods.PrintModuleToFile( ModuleHandle, path, out msg ) )
+                return true;
+
+            errMsg = NativeMethods.MarshalMsg( msg );
+            return false;
         }
 
         /// <summary>Creates a string representation of the module</summary>

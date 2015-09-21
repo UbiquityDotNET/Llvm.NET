@@ -381,10 +381,7 @@ LLVMMetadataRef LLVMDIBuilderCreateReplaceableCompositeType( LLVMDIBuilderRef D
 
     void LLVMMDNodeReplaceAllUsesWith( LLVMMetadataRef oldDescriptor, LLVMMetadataRef newDescriptor );
 
-    unsigned LLVMDITypeGetFlags( LLVMMetadataRef type );
-
     LLVMMetadataRef LLVMDILocation( LLVMContextRef context, unsigned Line, unsigned Column, LLVMMetadataRef scope, LLVMMetadataRef InlinedAt );
-    char const* LLVMGetDITypeName( LLVMMetadataRef diType );
     LLVMBool LLVMSubProgramDescribes( LLVMMetadataRef subProgram, LLVMValueRef /*const Function **/F );
 
 #ifdef __cplusplus

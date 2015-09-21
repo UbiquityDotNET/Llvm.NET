@@ -570,12 +570,6 @@ LLVMMetadataRef LLVMDIBuilderCreateReplaceableCompositeType( LLVMDIBuilderRef Dr
         o->replaceAllUsesWith( n );
     }
 
-    unsigned LLVMDITypeGetFlags( LLVMMetadataRef t )
-    {
-       DIType* type = unwrap<DIType>( t );
-       return type->getFlags();
-    }
-
     LLVMMetadataRef LLVMDILocation( LLVMContextRef context, unsigned Line, unsigned Column, LLVMMetadataRef scope, LLVMMetadataRef InlinedAt )
     {
         DILocation* pLoc = DILocation::get( *unwrap( context )
@@ -585,12 +579,6 @@ LLVMMetadataRef LLVMDIBuilderCreateReplaceableCompositeType( LLVMDIBuilderRef Dr
                                           , InlinedAt ? unwrap<DILocation>( InlinedAt ) : nullptr
                                           );
         return wrap( pLoc );
-    }
-
-    char const* LLVMGetDITypeName( LLVMMetadataRef diType )
-    {
-        DIType* pType = unwrap<DIType>( diType );
-        return LLVMCreateMessage( pType->getName( ).str().c_str() );
     }
 
     LLVMBool LLVMSubProgramDescribes( LLVMMetadataRef subProgram, LLVMValueRef /*const Function **/F )
