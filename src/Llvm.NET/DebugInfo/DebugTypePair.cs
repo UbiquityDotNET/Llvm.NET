@@ -13,7 +13,7 @@ namespace Llvm.NET.DebugInfo
     /// </para>
     /// <para>Since DebugTypePair implements ITypeRef it can be implicitly passed where an ITypeRef is 
     /// expected. This allows for function signature factories to accept ITypeRef. Then, when explicitly
-    /// needed, callers can pass in an appropriate DebugTYpePair instance.</para>
+    /// needed, callers can pass in an appropriate DebugTypePair instance.</para>
     /// </remarks>
     public class DebugTypePair<T>
         : ITypeRef
