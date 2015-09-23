@@ -2,9 +2,6 @@ EXPORTS
 ; extensions to standard LLVM-C API
 LLVMAddModuleFlag
 LLVMVerifyFunctionEx
-LLVMAddFunctionAttr2
-LLVMGetFunctionAttr2
-LLVMRemoveFunctionAttr2
 LLVMConstantAsMetadata
 LLVMMDString2
 LLVMMDNode2
@@ -26,6 +23,11 @@ LLVMGetMDStringText
 LLVMGetGlobalAlias
 LLVMGetAliasee
 LLVMMDNodeResolveCycles
+LLVMAddFunctionAttr2
+LLVMHasFunctionAttr2
+LLVMRemoveFunctionAttr2
+LLVMSetFunctionStackAlignment
+LLVMGetFunctionStackAlignment
 
 ; Debug info functions not part of standard LLVM-C API
 LLVMSetDebugLoc

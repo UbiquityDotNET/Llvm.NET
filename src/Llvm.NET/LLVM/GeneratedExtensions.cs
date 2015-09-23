@@ -168,6 +168,56 @@ namespace Llvm.NET
         LLVMDwarfTagHiUser = 0xffff
     };
 
+    internal enum LLVMAttrKind
+    {
+       @LLVMAttrKindNone,
+       @LLVMAttrKindAlignment,
+       @LLVMAttrKindAlwaysInline,
+       @LLVMAttrKindBuiltin,
+       @LLVMAttrKindByVal,
+       @LLVMAttrKindInAlloca,
+       @LLVMAttrKindCold,
+       @LLVMAttrKindConvergent,
+       @LLVMAttrKindInlineHint,
+       @LLVMAttrKindInReg,
+       @LLVMAttrKindJumpTable,
+       @LLVMAttrKindMinSize,
+       @LLVMAttrKindNaked,
+       @LLVMAttrKindNest,
+       @LLVMAttrKindNoAlias,
+       @LLVMAttrKindNoBuiltin,
+       @LLVMAttrKindNoCapture,
+       @LLVMAttrKindNoDuplicate,
+       @LLVMAttrKindNoImplicitFloat,
+       @LLVMAttrKindNoInline,
+       @LLVMAttrKindNonLazyBind,
+       @LLVMAttrKindNonNull,
+       @LLVMAttrKindDereferenceable,
+       @LLVMAttrKindDereferenceableOrNull,
+       @LLVMAttrKindNoRedZone,
+       @LLVMAttrKindNoReturn,
+       @LLVMAttrKindNoUnwind,
+       @LLVMAttrKindOptimizeForSize,
+       @LLVMAttrKindOptimizeNone,
+       @LLVMAttrKindReadNone,
+       @LLVMAttrKindReadOnly,
+       @LLVMAttrKindArgMemOnly,
+       @LLVMAttrKindReturned,
+       @LLVMAttrKindReturnsTwice,
+       @LLVMAttrKindSExt,
+       @LLVMAttrKindStackAlignment,
+       @LLVMAttrKindStackProtect,
+       @LLVMAttrKindStackProtectReq,
+       @LLVMAttrKindStackProtectStrong,
+       @LLVMAttrKindSafeStack,
+       @LLVMAttrKindStructRet,
+       @LLVMAttrKindSanitizeAddress,
+       @LLVMAttrKindSanitizeThread,
+       @LLVMAttrKindSanitizeMemory,
+       @LLVMAttrKindUWTable,
+       @LLVMAttrKindZExt,
+    };
+
     internal static partial class NativeMethods
     {
         [DllImport( libraryPath, EntryPoint = "LLVMGetValueID", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl, BestFitMapping = false, ThrowOnUnmappableChar = true)]
@@ -203,14 +253,20 @@ namespace Llvm.NET
         [DllImport( libraryPath, EntryPoint = "LLVMGetOrInsertFunction", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl, BestFitMapping = false, ThrowOnUnmappableChar = true)]
         internal static extern LLVMValueRef GetOrInsertFunction( LLVMModuleRef module, [MarshalAs( UnmanagedType.LPStr )] string @name, LLVMTypeRef functionType );
 
-        [DllImport(libraryPath, EntryPoint = "LLVMAddFunctionAttr2", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl, BestFitMapping = false, ThrowOnUnmappableChar = true)]
-        internal static extern void AddFunctionAttr2(LLVMValueRef @Fn, ulong @PA);
+        [DllImport( libraryPath, EntryPoint = "LLVMAddFunctionAttr2", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl, BestFitMapping = false, ThrowOnUnmappableChar = true)]
+        internal static extern void AddFunctionAttr2( LLVMValueRef Fn, int index, LLVMAttrKind kind );
 
-        [DllImport(libraryPath, EntryPoint = "LLVMGetFunctionAttr2", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl, BestFitMapping = false, ThrowOnUnmappableChar = true)]
-        internal static extern ulong GetFunctionAttr2( LLVMValueRef @Fn );
+        [DllImport( libraryPath, EntryPoint = "LLVMHasFunctionAttr2", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl, BestFitMapping = false, ThrowOnUnmappableChar = true)]
+        internal static extern LLVMBool HasFunctionAttr2( LLVMValueRef Fn, int index, LLVMAttrKind kind );
 
-        [DllImport(libraryPath, EntryPoint = "LLVMRemoveFunctionAttr2", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl, BestFitMapping = false, ThrowOnUnmappableChar = true)]
-        internal static extern void RemoveFunctionAttr2( LLVMValueRef @Fn, ulong @PA);
+        [DllImport( libraryPath, EntryPoint = "LLVMRemoveFunctionAttr2", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl, BestFitMapping = false, ThrowOnUnmappableChar = true)]
+        internal static extern void RemoveFunctionAttr2( LLVMValueRef Fn, int index, LLVMAttrKind kind );
+
+        [DllImport( libraryPath, EntryPoint = "LLVMSetFunctionStackAlignment", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl, BestFitMapping = false, ThrowOnUnmappableChar = true)]
+        internal static extern void SetFunctionStackAlignment( LLVMValueRef Fn, UInt32 alignment );
+
+        [DllImport( libraryPath, EntryPoint = "LLVMGetFunctionStackAlignment", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl, BestFitMapping = false, ThrowOnUnmappableChar = true)]
+        internal static extern UInt32 GetFunctionStackAlignment( LLVMValueRef Fn );
 
         [DllImport(libraryPath, EntryPoint = "LLVMIsConstantZeroValue", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl, BestFitMapping = false, ThrowOnUnmappableChar = true)]
         internal static extern LLVMBool IsConstantZeroValue( LLVMValueRef @Val );

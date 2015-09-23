@@ -24,41 +24,45 @@ using namespace llvm;
 
 extern "C"
 {
-    void LLVMAddFunctionAttr2( LLVMValueRef Fn, uint64_t PA )
+    void LLVMSetFunctionStackAlignment( LLVMValueRef Fn, uint32_t alignment )
     {
         Function *Func = unwrap<Function>( Fn );
-        const AttributeSet PAL = Func->getAttributes( );
-        AttrBuilder B( PA );
-        const AttributeSet PALnew = PAL.addAttributes( Func->getContext( )
-                                                       , AttributeSet::FunctionIndex
-                                                       , AttributeSet::get( Func->getContext( )
-                                                                          , AttributeSet::FunctionIndex
-                                                                          , B
-                                                                          )
-                                                       );
-        Func->setAttributes( PALnew );
+        AttrBuilder builder( Func->getAttributes( ), AttributeSet::AttrIndex::FunctionIndex );
+        builder.addStackAlignmentAttr( alignment );
+        auto newAttributeSet = AttributeSet::get( Func->getContext( ), AttributeSet::AttrIndex::FunctionIndex, builder );
+        Func->setAttributes( newAttributeSet );
     }
 
-    uint64_t LLVMGetFunctionAttr2( LLVMValueRef Fn )
+    uint32_t LLVMGetFunctionStackAlignment( LLVMValueRef Fn )
     {
         Function *Func = unwrap<Function>( Fn );
-        const AttributeSet PAL = Func->getAttributes( );
-        return PAL.Raw( AttributeSet::FunctionIndex );
+        AttributeSet const attributes = Func->getAttributes( );
+        return attributes.getStackAlignment( AttributeSet::AttrIndex::FunctionIndex );
     }
 
-    void LLVMRemoveFunctionAttr2( LLVMValueRef Fn, uint64_t PA )
+    void LLVMAddFunctionAttr2( LLVMValueRef Fn, int index, LLVMAttrKind kind )
     {
         Function *Func = unwrap<Function>( Fn );
-        const AttributeSet PAL = Func->getAttributes( );
-        AttrBuilder B( PA );
-        const AttributeSet PALnew = PAL.removeAttributes( Func->getContext( )
-                                                          , AttributeSet::FunctionIndex
-                                                          , AttributeSet::get( Func->getContext( )
-                                                                             , AttributeSet::FunctionIndex
-                                                                             , B
-                                                                             )
-                                                          );
-        Func->setAttributes( PALnew );
+        AttrBuilder builder( Func->getAttributes( ), index );
+        builder.addAttribute( ( Attribute::AttrKind )kind );
+        auto newAttributeSet = AttributeSet::get( Func->getContext( ), index, builder );
+        Func->setAttributes( newAttributeSet );
+    }
+
+    LLVMBool LLVMHasFunctionAttr2( LLVMValueRef Fn, int index, LLVMAttrKind kind )
+    {
+        Function *Func = unwrap<Function>( Fn );
+        AttributeSet const attributes = Func->getAttributes( );
+        return attributes.hasAttribute( index, ( Attribute::AttrKind )kind );
+    }
+
+    void LLVMRemoveFunctionAttr2( LLVMValueRef Fn, int index, LLVMAttrKind kind )
+    {
+        Function *Func = unwrap<Function>( Fn );
+        AttrBuilder builder( Func->getAttributes( ), index );
+        builder.removeAttribute( ( Attribute::AttrKind )kind );
+        auto newAttributeSet = AttributeSet::get( Func->getContext( ), index, builder );
+        Func->setAttributes( newAttributeSet );
     }
 
     LLVMMetadataRef LLVMConstantAsMetadata( LLVMValueRef C )
@@ -66,7 +70,7 @@ extern "C"
         return wrap( ConstantAsMetadata::get( unwrap<Constant>( C ) ) );
     }
 
-    LLVMMetadataRef LLVMMDString2( LLVMContextRef C, const char *Str, unsigned SLen )
+    LLVMMetadataRef LLVMMDString2( LLVMContextRef C, char const *Str, unsigned SLen )
     {
         return wrap( MDString::get( *unwrap( C ), StringRef( Str, SLen ) ) );
     }
@@ -94,7 +98,7 @@ extern "C"
     }
 
     void LLVMAddNamedMetadataOperand2( LLVMModuleRef M
-                                       , const char *name
+                                       , char const *name
                                        , LLVMMetadataRef Val
                                        )
     {
