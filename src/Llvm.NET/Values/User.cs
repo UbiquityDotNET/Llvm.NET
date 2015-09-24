@@ -35,11 +35,6 @@ namespace Llvm.NET.Values
             }
         }
 
-        //[System.Diagnostics.CodeAnalysis.SuppressMessage( "Language", "CSE0003:Use expression-bodied members", Justification = "Readability" )]
-        //internal new static User FromHandle( LLVMValueRef valueRef )
-        //{
-        //    return (User)Context.CurrentContext.GetValueFor( valueRef, ( h )=>new User( h ) );
-        //}
 
         private UserOperandList OperandList;
     }

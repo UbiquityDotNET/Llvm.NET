@@ -41,6 +41,7 @@ namespace Llvm.NET
         {
             MetadataHandle = handle;
         }
+
         /// <summary>Replace all uses of this descriptor with another</summary>
         /// <param name="other">New descriptor to replace this one with</param>
         public virtual void ReplaceAllUsesWith( Metadata other )
