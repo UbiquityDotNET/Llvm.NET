@@ -53,14 +53,14 @@ namespace Llvm.NET.Types
         /// </remarks>
         public void SetBody( bool packed, params ITypeRef[ ] elements )
         {
-            LLVMTypeRef[ ] llvmArgs = elements.Select( e => e.TypeHandle ).ToArray( );
+            LLVMTypeRef[ ] llvmArgs = elements.Select( e => e.GetTypeRef() ).ToArray( );
             uint argsLength = (uint)llvmArgs.Length;
 
             // To interop correctly, we need to have an array of at least size one.
             if ( argsLength == 0 )
                 llvmArgs = new LLVMTypeRef[ 1 ];
 
-            NativeMethods.StructSetBody( TypeHandle, out llvmArgs[ 0 ], argsLength, packed );
+            NativeMethods.StructSetBody( TypeHandle_, out llvmArgs[ 0 ], argsLength, packed );
         }
 
         /// <summary>Name of the structure</summary>

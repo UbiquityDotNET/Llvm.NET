@@ -36,7 +36,8 @@ namespace Llvm.NET.Values
             set
             {
                 NativeMethods.SetValueName( ValueHandle, value );
-                Debug.Assert( Name == value );
+                // LLVM auto adds a numeric suffix if a register with the same name already exists
+                Debug.Assert( Name.StartsWith( value ) );
             }
         }
 
