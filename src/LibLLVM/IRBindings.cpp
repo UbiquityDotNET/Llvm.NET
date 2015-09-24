@@ -24,6 +24,20 @@ using namespace llvm;
 
 extern "C"
 {
+    LLVMBool LLVMFunctionHasAttributes( LLVMValueRef Fn, int index )
+    {
+        Function *Func = unwrap<Function>( Fn );
+        AttributeSet attributes = Func->getAttributes( );
+        return attributes.hasAttributes( index );
+    }
+
+    char const* LLVMGetFunctionAttributesAsString( LLVMValueRef Fn, int index )
+    {
+        Function *Func = unwrap<Function>( Fn );
+        AttributeSet attributes = Func->getAttributes( );
+        return LLVMCreateMessage( attributes.getAsString( index ).c_str( ) );
+    }
+
     void LLVMAddTargetDependentFunctionAttr2( LLVMValueRef Fn, int index, char const* name, char const* value )
     {
         Function *Func = unwrap<Function>( Fn );

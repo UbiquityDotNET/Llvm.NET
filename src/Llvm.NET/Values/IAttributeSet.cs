@@ -60,28 +60,13 @@ namespace Llvm.NET.Values
     internal sealed class AttributeSetImpl
         : IAttributeSet
     {
-        /// <inheritdoc/>
-        internal AttributeSetImpl( Function function, FunctionAttributeIndex index )
+        public override string ToString( )
         {
-            if( function == null )
-                throw new ArgumentNullException( nameof( function ) );
+            if( !NativeMethods.FunctionHasAttributes( OwningFunction.ValueHandle, ( int )Index ) )
+                return string.Empty;
 
-            OwningFunction = function;
-            // validate index parameter
-            switch( index )
-            {
-            case FunctionAttributeIndex.Function:
-            case FunctionAttributeIndex.ReturnType:
-                // OK as-is
-                break;
-            default:
-                // check the index against the actual function's param count
-                var argIndex = ((int)index) - (int)FunctionAttributeIndex.Parameter0;
-                if( argIndex < 0 || argIndex >= OwningFunction.Parameters.Count )
-                    throw new ArgumentOutOfRangeException( nameof( index ) );
-                break;
-            }
-            Index = index;
+            var intPtr = NativeMethods.GetFunctAttributesAsString( OwningFunction.ValueHandle, ( int )Index );
+            return NativeMethods.MarshalMsg( intPtr );
         }
 
         /// <inheritdoc/>
@@ -126,14 +111,17 @@ namespace Llvm.NET.Values
             return this;
         }
 
+        /// <inheritdoc/>
         public IAttributeSet Remove( string name )
         {
             OwningFunction.RemoveAttribute( Index, name );
             return this;
         }
 
+        /// <inheritdoc/>
         public bool Has( AttributeKind kind ) => OwningFunction.HasAttribute( Index, kind );
 
+        /// <inheritdoc/>
         public uint? ParamAlignment
         {
             get
@@ -158,6 +146,7 @@ namespace Llvm.NET.Values
             }
         }
 
+        /// <inheritdoc/>
         public uint? StackAlignment
         {
             get
@@ -182,6 +171,7 @@ namespace Llvm.NET.Values
             }
         }
 
+        /// <inheritdoc/>
         public ulong? DereferenceableBytes
         {
             get
@@ -206,6 +196,7 @@ namespace Llvm.NET.Values
             }
         }
 
+        /// <inheritdoc/>
         public ulong? DereferenceableOrNullBytes
         {
             get
@@ -227,7 +218,29 @@ namespace Llvm.NET.Values
                     OwningFunction.AddAttribute( Index, AttributeKind.DereferenceableOrNull, value.Value );
                 }
             }
+        }
 
+        internal AttributeSetImpl( Function function, FunctionAttributeIndex index )
+        {
+            if( function == null )
+                throw new ArgumentNullException( nameof( function ) );
+
+            OwningFunction = function;
+            // validate index parameter
+            switch( index )
+            {
+            case FunctionAttributeIndex.Function:
+            case FunctionAttributeIndex.ReturnType:
+                // OK as-is
+                break;
+            default:
+                // check the index against the actual function's param count
+                var argIndex = ((int)index) - (int)FunctionAttributeIndex.Parameter0;
+                if( argIndex < 0 || argIndex >= OwningFunction.Parameters.Count )
+                    throw new ArgumentOutOfRangeException( nameof( index ) );
+                break;
+            }
+            Index = index;
         }
 
         private readonly Function OwningFunction;

@@ -83,13 +83,13 @@ namespace TestDebugInfo
 
                 // create compile unit and file as the top level scope for everything
                 var cu = module.DIBuilder.CreateCompileUnit( SourceLanguage.C99
-                                                            , Path.GetFileName( srcPath )
-                                                            , Path.GetDirectoryName( srcPath )
-                                                            , "clang version 3.7.0 " // obviously this is not clang but helps in diff with actual clang output
-                                                            , false
-                                                            , ""
-                                                            , 0
-                                                            );
+                                                           , Path.GetFileName( srcPath )
+                                                           , Path.GetDirectoryName( srcPath )
+                                                           , "clang version 3.7.0 " // obviously this is not clang but helps in diff with actual clang output
+                                                           , false
+                                                           , ""
+                                                           , 0
+                                                           );
                 var diFile = module.DIBuilder.CreateFile( srcPath );
 
                 // Create basic types used in this compilation

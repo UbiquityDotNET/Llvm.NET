@@ -31,6 +31,8 @@ LLVMAddTargetDependentFunctionAttr2
 LLVMRemoveTargetDependentFunctionAttr2
 LLVMGetFunctionAttributeValue
 LLVMSetFunctionAttributeValue
+LLVMFunctionHasAttributes
+LLVMGetFunctionAttributesAsString
 
 ; Debug info functions not part of standard LLVM-C API
 LLVMSetDebugLoc

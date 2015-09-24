@@ -159,6 +159,10 @@ void LLVMSetFunctionAttributeValue( LLVMValueRef Fn, int index, LLVMAttrKind kin
 *
 */
 uint64_t LLVMGetFunctionAttributeValue( LLVMValueRef Fn, int index, LLVMAttrKind kind );
+
+LLVMBool LLVMFunctionHasAttributes( LLVMValueRef Fn, int index );
+char const* LLVMGetFunctionAttributesAsString( LLVMValueRef Fn, int index );
+
 /**
 * @}
 */

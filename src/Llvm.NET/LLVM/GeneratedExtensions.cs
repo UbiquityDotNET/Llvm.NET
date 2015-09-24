@@ -456,5 +456,11 @@ namespace Llvm.NET
 
         [DllImport( libraryPath, EntryPoint = "LLVMGetFunctionAttributeValue", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl, BestFitMapping = false, ThrowOnUnmappableChar = true )]
         internal static extern UInt64 GetFunctionAttributeValue( LLVMValueRef Fn, int index, LLVMAttrKind kind );
+
+        [DllImport( libraryPath, EntryPoint = "LLVMFunctionHasAttributes", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl, BestFitMapping = false, ThrowOnUnmappableChar = true )]
+        internal static extern LLVMBool FunctionHasAttributes( LLVMValueRef Fn, int index );
+
+        [DllImport( libraryPath, EntryPoint = "LLVMGetFunctionAttributesAsString", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl, BestFitMapping = false, ThrowOnUnmappableChar = true )]
+        internal static extern IntPtr GetFunctionAttributesAsString( LLVMValueRef Fn, int index );
     }
 }

@@ -68,6 +68,7 @@ namespace Llvm.NET.Values
         /// <summary>Return type of the function</summary>
         public ITypeRef ReturnType => Signature.ReturnType;
 
+        /// <summary>Debug information for this function</summary>
         public DISubProgram DISubProgram { get; internal set; }
 
         /// <summary>Garbage collection engine name that this function is generated to work with</summary>
@@ -85,6 +86,7 @@ namespace Llvm.NET.Values
             }
         }
 
+        /// <summary>Verifies the function is valid and all blocks properly terminated</summary>
         public void Verify()
         {
             IntPtr errMsgPtr;
@@ -93,7 +95,12 @@ namespace Llvm.NET.Values
                 throw new InternalCodeGeneratorException( NativeMethods.MarshalMsg( errMsgPtr) );
         }
 
+        /// <summary>Gets the <see cref="IAttributeSet"/> for this function itself</summary>
         public IAttributeSet Attributes { get; }
+
+        // REVIEW: Should this be null if the return type is void? Is there any valid use of attributes
+        // to a void return type?
+        /// <summary>Gets the <see cref="IAttributeSet"/> for the return value of this function</summary>
         public IAttributeSet ReturnAttributes { get; }
 
         /// <summary>Add a new basic block to the beginning of a function</summary>
@@ -166,6 +173,7 @@ namespace Llvm.NET.Values
             }
         }
 
+        #region Attribute Support
         /// <summary>Adds a set of boolean attributes to the function index specified</summary>
         /// <param name="index">Function index to apply the attribute to</param>
         /// <param name="attributes">Attributes to add</param>
@@ -265,6 +273,7 @@ namespace Llvm.NET.Values
         {
             return NativeMethods.HasFunctionAttr2( ValueHandle, ( int )index, ( LLVMAttrKind )kind );
         }
+        #endregion
 
         internal Function( LLVMValueRef valueRef ) 
             : this( valueRef, false )
