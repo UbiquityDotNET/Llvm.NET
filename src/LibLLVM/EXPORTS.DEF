@@ -26,8 +26,11 @@ LLVMMDNodeResolveCycles
 LLVMAddFunctionAttr2
 LLVMHasFunctionAttr2
 LLVMRemoveFunctionAttr2
-LLVMSetFunctionStackAlignment
-LLVMGetFunctionStackAlignment
+LLVMGetArgumentIndex
+LLVMAddTargetDependentFunctionAttr2
+LLVMRemoveTargetDependentFunctionAttr2
+LLVMGetFunctionAttributeValue
+LLVMSetFunctionAttributeValue
 
 ; Debug info functions not part of standard LLVM-C API
 LLVMSetDebugLoc

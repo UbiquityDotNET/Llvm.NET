@@ -262,12 +262,6 @@ namespace Llvm.NET
         [DllImport( libraryPath, EntryPoint = "LLVMRemoveFunctionAttr2", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl, BestFitMapping = false, ThrowOnUnmappableChar = true)]
         internal static extern void RemoveFunctionAttr2( LLVMValueRef Fn, int index, LLVMAttrKind kind );
 
-        [DllImport( libraryPath, EntryPoint = "LLVMSetFunctionStackAlignment", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl, BestFitMapping = false, ThrowOnUnmappableChar = true)]
-        internal static extern void SetFunctionStackAlignment( LLVMValueRef Fn, UInt32 alignment );
-
-        [DllImport( libraryPath, EntryPoint = "LLVMGetFunctionStackAlignment", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl, BestFitMapping = false, ThrowOnUnmappableChar = true)]
-        internal static extern UInt32 GetFunctionStackAlignment( LLVMValueRef Fn );
-
         [DllImport(libraryPath, EntryPoint = "LLVMIsConstantZeroValue", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl, BestFitMapping = false, ThrowOnUnmappableChar = true)]
         internal static extern LLVMBool IsConstantZeroValue( LLVMValueRef @Val );
 
@@ -447,5 +441,20 @@ namespace Llvm.NET
 
         [DllImport( libraryPath, EntryPoint = "LLVMDITypeGetName", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl, BestFitMapping = false, ThrowOnUnmappableChar = true)]
         internal static extern IntPtr DITypeGetName( LLVMMetadataRef typeRef );
+
+        [DllImport( libraryPath, EntryPoint = "LLVMGetArgumentIndex", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl, BestFitMapping = false, ThrowOnUnmappableChar = true )]
+        internal static extern UInt32 GetArgumentIndex( LLVMValueRef Val );
+
+        [DllImport( libraryPath, EntryPoint = "LLVMAddTargetDependentFunctionAttr2", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl, BestFitMapping = false, ThrowOnUnmappableChar = true )]
+        internal static extern void AddTargetDependentFunctionAttr2( LLVMValueRef function, int index, [MarshalAs( UnmanagedType.LPStr )] string name, [MarshalAs( UnmanagedType.LPStr )] string value );
+
+        [DllImport( libraryPath, EntryPoint = "LLVMRemoveTargetDependentFunctionAttr2", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl, BestFitMapping = false, ThrowOnUnmappableChar = true )]
+        internal static extern void RemoveTargetDependentFunctionAttr2( LLVMValueRef function, int index, [MarshalAs( UnmanagedType.LPStr )] string name );
+
+        [DllImport( libraryPath, EntryPoint = "LLVMSetFunctionAttributeValue", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl, BestFitMapping = false, ThrowOnUnmappableChar = true )]
+        internal static extern void SetFunctionAttributeValue( LLVMValueRef Fn, int index, LLVMAttrKind kind, UInt64 value );
+
+        [DllImport( libraryPath, EntryPoint = "LLVMGetFunctionAttributeValue", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl, BestFitMapping = false, ThrowOnUnmappableChar = true )]
+        internal static extern UInt64 GetFunctionAttributeValue( LLVMValueRef Fn, int index, LLVMAttrKind kind );
     }
 }

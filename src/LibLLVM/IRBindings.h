@@ -92,13 +92,76 @@ enum LLVMAttrKind
 // These functions duplicate the LLVM*FunctionAttr functions in the stable C
 // API. We cannot use the existing functions because they take 32-bit attribute
 // values, and the these bindings expose all of the LLVM attributes, some of which
-// have values >= 1<<32.
+// have values >= 1<<32. Furthermore the entire attributes as a single bitfield
+// approach is being deprecated so this is forward looking to 3.8.0 and beyond.
+/**
+* @defgroup LibLLVM Attributes
+*
+* Attributes are available for functions, function return types and parameters.
+* In previous releases of LLVM attributes were essentially a bit field. However,
+* as more attributes were added the number of bits had to grow. Furthermore, some
+* of the attributes suxh as stack alignment require a parameter value. Thus, the
+* attribute system evolved. Unfortunately the C API did not. Moving towards version
+* 4.0 of LLVM the entire bitfield approach is being deprecated. Thus these APIs
+* make the functionality of Attribute, AttributeSet and, AttrBuilder available
+* to language bindings based on a C-API
+*
+* The Attribute and AttributeSet classes are problematic to expose in "C" as
+* they are not POD types and therefore have no standard defined portable
+* representation in C or any other language binding. While most, if not all,
+* compilers will create those particular types in a way that we could probably
+* get away with treating them as if they were a POD. However, doing so is relying
+* on behavior that is officially specified as UNDEFINED. Thus, these APIs wrap
+* access to the processes of getting the current AttributSet into a AttrBuilder
+* for mutation and then storing the resulting attribute set back to the function
+* again without actually exposing the problematic classes. 
+* @{
+*/
+
+/**
+* Adds a boolean attribute to a function for the specified index (function, return or param)
+*
+*/
 void LLVMAddFunctionAttr2( LLVMValueRef Fn, int index, LLVMAttrKind kind );
+
+/**
+* Adds a target dependent attribute to a function for the specified index (function, return or param)
+*
+*/
+void LLVMAddTargetDependentFunctionAttr2( LLVMValueRef fn, int index, char const* name, char const* value );
+
+/**
+* Removes a target dependent attribute from a function for the specified index (function, return or param)
+*
+*/
+void LLVMRemoveTargetDependentFunctionAttr2( LLVMValueRef fn, int index, char const* name );
+
+/**
+* Tests if a Function has an attribute of the specified kind and index (function, return or param)
+*
+*/
 LLVMBool LLVMHasFunctionAttr2( LLVMValueRef Fn, int index, LLVMAttrKind kind );
+
+/**
+* Removes an attribute off the specified kind and index (function, return or param) from the function
+*
+*/
 void LLVMRemoveFunctionAttr2( LLVMValueRef Fn, int index, LLVMAttrKind kind );
 
-void LLVMSetFunctionStackAlignment( LLVMValueRef Fn, uint32_t alignment );
-uint32_t LLVMGetFunctionStackAlignment( LLVMValueRef Fn );
+
+/**
+* Sets the attribute value for the function
+*
+*/
+void LLVMSetFunctionAttributeValue( LLVMValueRef Fn, int index, LLVMAttrKind kind, uint64_t value );
+/**
+* Gets the attribute value for the function
+*
+*/
+uint64_t LLVMGetFunctionAttributeValue( LLVMValueRef Fn, int index, LLVMAttrKind kind );
+/**
+* @}
+*/
 
 LLVMMetadataRef LLVMConstantAsMetadata(LLVMValueRef Val);
 LLVMMetadataRef LLVMMDString2(LLVMContextRef C, const char *Str, unsigned SLen);

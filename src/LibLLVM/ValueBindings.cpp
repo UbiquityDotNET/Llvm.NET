@@ -6,6 +6,12 @@
 
 using namespace llvm;
 
+uint32_t LLVMGetArgumentIndex( LLVMValueRef valueRef )
+{
+    auto pArgument = unwrap<Argument>( valueRef );
+    return pArgument->getArgNo();
+}
+
 LLVMBool LLVMIsConstantZeroValue( LLVMValueRef valueRef )
 {
     auto pConstant = dyn_cast< Constant >( unwrap( valueRef ) );

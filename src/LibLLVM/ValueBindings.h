@@ -45,6 +45,8 @@ extern "C" {
     int LLVMGetValueID( LLVMValueRef valueRef);
     LLVMValueRef LLVMMetadataAsValue( LLVMContextRef context, LLVMMetadataRef metadataRef );
     LLVMValueRef LLVMGetAliasee( LLVMValueRef Val );
+    uint32_t LLVMGetArgumentIndex( LLVMValueRef Val);
+
 
 #ifdef __cplusplus
 }

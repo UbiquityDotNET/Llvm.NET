@@ -24,20 +24,68 @@ using namespace llvm;
 
 extern "C"
 {
-    void LLVMSetFunctionStackAlignment( LLVMValueRef Fn, uint32_t alignment )
+    void LLVMAddTargetDependentFunctionAttr2( LLVMValueRef Fn, int index, char const* name, char const* value )
     {
         Function *Func = unwrap<Function>( Fn );
-        AttrBuilder builder( Func->getAttributes( ), AttributeSet::AttrIndex::FunctionIndex );
-        builder.addStackAlignmentAttr( alignment );
+        auto Idx =  static_cast<AttributeSet::AttrIndex>( index );
+        AttrBuilder B;
+
+        B.addAttribute( name, value );
+        AttributeSet Set = AttributeSet::get( Func->getContext( ), Idx, B );
+        Func->addAttributes( Idx, Set );
+    }
+
+    void LLVMRemoveTargetDependentFunctionAttr2( LLVMValueRef Fn, int index, char const* name )
+    {
+        Function *Func = unwrap<Function>( Fn );
+        auto Idx = static_cast<AttributeSet::AttrIndex>( index );
+        AttrBuilder B( Func->getAttributes(), index );
+        B.removeAttribute( name );
+        Func->setAttributes( AttributeSet::get( Func->getContext( ), Idx, B ) );
+    }
+
+    void LLVMSetFunctionAttributeValue( LLVMValueRef Fn, int index, LLVMAttrKind kind, uint64_t value )
+    {
+        Function *Func = unwrap<Function>( Fn );
+        AttrBuilder builder( Func->getAttributes( ), index );
+        switch( kind )
+        {
+        case LLVMAttrKind::LLVMAttrKindAlignment:
+            assert( index > AttributeSet::AttrIndex::ReturnIndex && "Expected parameter index");
+            assert( value <= UINT32_MAX && "expected value <= UINT32_MAX");
+            builder.addAlignmentAttr( value );
+            break;
+
+        case LLVMAttrKind::LLVMAttrKindStackAlignment:
+            assert( index == AttributeSet::AttrIndex::FunctionIndex && "Stack alignment only applicable to the function itself" );
+            assert( value <= UINT32_MAX && "expected value <= UINT32_MAX" );
+            builder.addStackAlignmentAttr( value );
+            break;
+
+        case LLVMAttrKind::LLVMAttrKindDereferenceable:
+            assert( index != AttributeSet::AttrIndex::FunctionIndex && "Expected a return or param index" );
+            builder.addDereferenceableAttr( value );
+            break;
+
+        case LLVMAttrKind::LLVMAttrKindDereferenceableOrNull:
+            assert( index != AttributeSet::AttrIndex::FunctionIndex && "Expected a return or param index" );
+            builder.addDereferenceableOrNullAttr( value );
+            break;
+
+        default:
+            assert( false && "Attribute kind doesn't have a value to set" );
+            break;
+        }
         auto newAttributeSet = AttributeSet::get( Func->getContext( ), AttributeSet::AttrIndex::FunctionIndex, builder );
         Func->setAttributes( newAttributeSet );
     }
 
-    uint32_t LLVMGetFunctionStackAlignment( LLVMValueRef Fn )
+    uint64_t LLVMGetFunctionAttributeValue( LLVMValueRef Fn, int index, LLVMAttrKind kind )
     {
         Function *Func = unwrap<Function>( Fn );
         AttributeSet const attributes = Func->getAttributes( );
-        return attributes.getStackAlignment( AttributeSet::AttrIndex::FunctionIndex );
+        Attribute attr = attributes.getAttribute( index, (Attribute::AttrKind)kind );
+        return attr.getValueAsInt();
     }
 
     void LLVMAddFunctionAttr2( LLVMValueRef Fn, int index, LLVMAttrKind kind )

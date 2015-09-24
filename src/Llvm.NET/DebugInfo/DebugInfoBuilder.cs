@@ -273,15 +273,15 @@ namespace Llvm.NET.DebugInfo
         }
 
         public DICompositeType CreateStructType( DIScope scope
-                                             , string name
-                                             , DIFile file
-                                             , uint line
-                                             , ulong bitSize
-                                             , ulong bitAlign
-                                             , uint flags
-                                             , DIType derivedFrom
-                                             , DIArray elements
-                                             )
+                                               , string name
+                                               , DIFile file
+                                               , uint line
+                                               , ulong bitSize
+                                               , ulong bitAlign
+                                               , uint flags
+                                               , DIType derivedFrom
+                                               , DIArray elements
+                                               )
         {
             var handle = NativeMethods.DIBuilderCreateStructType( BuilderHandle
                                                                 , scope.MetadataHandle
@@ -298,15 +298,15 @@ namespace Llvm.NET.DebugInfo
         }
 
         public DICompositeType CreateStructType( DIScope scope
-                                             , string name
-                                             , DIFile file
-                                             , uint line
-                                             , ulong bitSize
-                                             , ulong bitAlign
-                                             , uint flags
-                                             , DIType derivedFrom
-                                             , params DINode[] elements
-                                             )
+                                               , string name
+                                               , DIFile file
+                                               , uint line
+                                               , ulong bitSize
+                                               , ulong bitAlign
+                                               , uint flags
+                                               , DIType derivedFrom
+                                               , params DINode[] elements
+                                               )
         {
             return CreateStructType( scope, name, file, line, bitSize, bitAlign, flags, derivedFrom, GetOrCreateArray( elements ) );
         }
@@ -413,16 +413,16 @@ namespace Llvm.NET.DebugInfo
             var elementHandles = elements.Select( e => e.MetadataHandle ).ToArray( );
             var elementArray = NativeMethods.DIBuilderGetOrCreateArray( BuilderHandle, out elementHandles[ 0 ], (ulong)elementHandles.LongLength );
             var handle = NativeMethods.DIBuilderCreateEnumerationType( BuilderHandle
-                                                                  , scope.MetadataHandle
-                                                                  , name
-                                                                  , file.MetadataHandle
-                                                                  , lineNumber
-                                                                  , sizeInBits
-                                                                  , alignInBits
-                                                                  , elementArray
-                                                                  , underlyingType.MetadataHandle
-                                                                  , uniqueId
-                                                                  );
+                                                                     , scope.MetadataHandle
+                                                                     , name
+                                                                     , file.MetadataHandle
+                                                                     , lineNumber
+                                                                     , sizeInBits
+                                                                     , alignInBits
+                                                                     , elementArray
+                                                                     , underlyingType.MetadataHandle
+                                                                     , uniqueId
+                                                                     );
             return new DICompositeType( handle );
         }
 

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using Llvm.NET;
 using Llvm.NET.DebugInfo;
 using Llvm.NET.Instructions;
@@ -103,7 +104,7 @@ namespace TestDebugInfo
                 // in a target independent manner.
                 var fooType = module.Context.CreateStructType( "struct.foo" );
                 fooType.CreateDIType( module, "foo", cu );
-                fooType.SetBody( false, module.Context.Int32Type, module.Context.FloatType, i32Array_0_2 );
+                fooType.SetBody( false, i32, f32, i32Array_0_2 );
 
                 // add global variables and constants
                 var constArray = ConstantArray.From( i32, module.Context.CreateConstant( 3 ), module.Context.CreateConstant( 4 ));
@@ -132,7 +133,6 @@ namespace TestDebugInfo
                 // create types for function args
                 var constFoo = module.DIBuilder.CreateQualifiedType( fooType.DIType, QualifiedTypeTag.Const );
                 var fooPtr = fooType.CreatePointerType( module );
-                //var constFooPtr = module.DIBuilder.CreatePointerType( constFoo, string.Empty, targetData.BitSizeOf( fooPtr ), targetData.AbiBitAlignmentOf( fooPtr ) );
                 // Create function signatures
 
                 // Since the the first parameter is passed by value 
@@ -167,8 +167,9 @@ namespace TestDebugInfo
                                                       , scopeLine: 24
                                                       , flags: 0
                                                       , isOptimized: false
-                                                      ).AddAttributes( Attributes.NoUnwind | Attributes.UnwindTable )
-                                                      .AddAttributes( TargetDependentAttributes );
+                                                      );
+                doCopyFunc.Attributes.Add( AttributeKind.NoUnwind, AttributeKind.UWTable )
+                                     .Add( TargetDependentAttributes );
 
                 var copyFunc = module.CreateFunction( scope: diFile
                                                     , name: "copy"
@@ -181,15 +182,15 @@ namespace TestDebugInfo
                                                     , scopeLine: 14
                                                     , flags: DebugInfoFlags.Prototyped
                                                     , isOptimized: false
-                                                    ).AddAttributes( Attributes.NoUnwind | Attributes.UnwindTable | Attributes.InlineHint )
-                                                     .AddAttributes( TargetDependentAttributes )
-                                                     .Linkage( Linkage.Internal ); // static function
+                                                    ).Linkage( Linkage.Internal ); // static function
+                 copyFunc.Attributes.Add( AttributeKind.NoUnwind, AttributeKind.UWTable, AttributeKind.InlineHint )
+                                    .Add( TargetDependentAttributes );
 
                 CreateDoCopyFunctionBody( module, targetData, doCopyFunc, fooType, bar, baz, copyFunc );
                 CreateCopyFunctionBody( module, targetData, copyFunc, diFile, fooType, fooPtr, constFoo );
 
                 // fill in the debug info body for type foo
-                finalizeFooDebugInfo( module.DIBuilder, targetData, cu, diFile, fooType );
+                FinalizeFooDebugInfo( module.DIBuilder, targetData, cu, diFile, fooType );
 
                 // finalize the debug information
                 // all temporaries must be replaced by now, this resolves any remaining
@@ -214,7 +215,7 @@ namespace TestDebugInfo
             }
         }
 
-        private static void finalizeFooDebugInfo( DebugInfoBuilder diBuilder
+        private static void FinalizeFooDebugInfo( DebugInfoBuilder diBuilder
                                                 , TargetData layout
                                                 , DICompileUnit cu
                                                 , DIFile diFile
@@ -222,10 +223,13 @@ namespace TestDebugInfo
                                                 )
         {
             // Create concrete DIType and RAUW of the opaque one with the complete version
-            // While this two phase approach isn't strictly necessary in this sample it
-            // isn't an uncommon case in the real world so this example demonstrates how
-            // to use forward type decalarations and replace them with a complete type when
-            // all of the type information is available
+            // While this two phase approach might not seem strictly necessary in this sample
+            // it actually is, due to how the member's scope requires a DIType. So this
+            // is creating members that are linked to the temporary DIType as the parent scope
+            // but attached to the newly created concrete type. The discrepency is resolved
+            // when ReplaceAllUsesOfDebugTypeWith() is called to replace all instances of the
+            // temporary type with the final concrete type ending up with the members properly
+            // referring to the containing type as the scope.
             var diFields = new DIType[ ]
                 { diBuilder.CreateMemberType( scope: foo.DIType
                                             , name: "a"
@@ -266,7 +270,7 @@ namespace TestDebugInfo
                                                         , bitAlign: layout.AbiBitAlignmentOf( foo )
                                                         , flags: 0
                                                         , derivedFrom: null
-                                                        , elements: diFields );
+                                                        , elements: diFields.AsEnumerable() );
             foo.ReplaceAllUsesOfDebugTypeWith( fooConcrete );
         }
 
@@ -281,11 +285,14 @@ namespace TestDebugInfo
         {
             var diBuilder = module.DIBuilder;
 
-            // ByVal pointers indicate by value semantics. LLVM recognizes this pattern
-            // and has a pass to map to an efficient register usage whenever plausible.
-            // Though it seems unnecessary as Clang doesn't apply the attribute...
-            //copyFunc.Parameters[ 0 ].AddAttributes( Attributes.ByVal );
-            //copyFunc.Parameters[ 0 ].SetAlignment( foo.AbiAlignment );
+            // ByVal pointers indicate by value semantics. The actual semantics are along the lines of
+            // "pass the arg as copy on the arguments stack and set parameter implicitly to that copy's address"
+            // (src: https://github.com/ldc-developers/ldc/issues/937 )
+            //
+            // LLVM recognizes this pattern and has a pass to map to an efficient register usage whenever plausible.
+            // Though it seems Clang doesn't apply the attribute...
+            //copyFunc.Parameters[ 0 ].AddAttribute( FunctionAttributeIndex.Parameter0, AttributeKind.ByVal );
+            //copyFunc.Parameters[ 0 ].SetAlignment( layout.AbiAlignmentOf( foo ) );
             copyFunc.Parameters[ 0 ].Name = "src";
             copyFunc.Parameters[ 1 ].Name = "pDst";
 
@@ -308,20 +315,20 @@ namespace TestDebugInfo
             var dstAddr = instBuilder.Alloca( fooPtr, "pDst.addr" )
                                      .Alignment( ptrAlign );
 
-            var dstStore = instBuilder.Store( copyFunc.Parameters[ 1 ], dstAddr)
-                                      .Alignment( ptrAlign );
+            instBuilder.Store( copyFunc.Parameters[ 1 ], dstAddr)
+                       .Alignment( ptrAlign );
 
             // insert declare pseudo instruction to attach debug info to the local declarations
-            var dstDeclare = diBuilder.InsertDeclare( dstAddr, paramDst, new DILocation( module.Context, 12, 38, copyFunc.DISubProgram ), blk );
+            diBuilder.InsertDeclare( dstAddr, paramDst, new DILocation( module.Context, 12, 38, copyFunc.DISubProgram ), blk );
 
             // since the function's LLVM signature uses a pointer, which is copied locally
             // inform the debugger to treat it as the value by dereferencing the pointer
-            var srcDeclare = diBuilder.InsertDeclare( copyFunc.Parameters[ 0 ]
-                                                    , paramSrc
-                                                    , diBuilder.CreateExpression( ExpressionOp.deref )
-                                                    , new DILocation( module.Context, 11, 43, copyFunc.DISubProgram )
-                                                    , blk
-                                                    );
+            diBuilder.InsertDeclare( copyFunc.Parameters[ 0 ]
+                                   , paramSrc
+                                   , diBuilder.CreateExpression( ExpressionOp.deref )
+                                   , new DILocation( module.Context, 11, 43, copyFunc.DISubProgram )
+                                   , blk
+                                   );
 
             var loadedDst = instBuilder.Load( dstAddr )
                                        .Alignment( ptrAlign )
@@ -333,16 +340,16 @@ namespace TestDebugInfo
             var srcPtr = instBuilder.BitCast( copyFunc.Parameters[ 0 ], module.Context.Int8Type.CreatePointerType( ) )
                                     .SetDebugLocation( 15, 13, copyFunc.DISubProgram );
 
-            var memCpy = instBuilder.MemCpy( module
-                                           , dstPtr
-                                           , srcPtr
-                                           , module.Context.CreateConstant( layout.ByteSizeOf( foo ) )
-                                           , ( int )layout.AbiAlignmentOf( foo )
-                                           , false
-                                           ).SetDebugLocation( 15, 13, copyFunc.DISubProgram );
+            instBuilder.MemCpy( module
+                              , dstPtr
+                              , srcPtr
+                              , module.Context.CreateConstant( layout.ByteSizeOf( foo ) )
+                              , ( int )layout.AbiAlignmentOf( foo )
+                              , false
+                              ).SetDebugLocation( 15, 13, copyFunc.DISubProgram );
 
-            var ret = instBuilder.Return( )
-                                 .SetDebugLocation( 16, 1, copyFunc.DISubProgram );
+            instBuilder.Return( )
+                       .SetDebugLocation( 16, 1, copyFunc.DISubProgram );
         }
 
         private static void CreateDoCopyFunctionBody( Module module
@@ -354,8 +361,6 @@ namespace TestDebugInfo
                                                     , Function copyFunc
                                                     )
         {
-            var diBuilder = module.DIBuilder;
-
             var bytePtrType = module.Context.Int8Type.CreatePointerType( );
 
             // create block for the function body, only need one for this simple sample
@@ -374,19 +379,19 @@ namespace TestDebugInfo
             var bitCastSrc = instBuilder.BitCast( bar, bytePtrType )
                                         .SetDebugLocation( 25, 11, doCopyFunc.DISubProgram );
 
-            var memCpy = instBuilder.MemCpy( module
-                                           , bitCastDst
-                                           , bitCastSrc
-                                           , module.Context.CreateConstant( layout.ByteSizeOf( foo ) )
-                                           , ( int )layout.CallFrameAlignmentOf( foo )
-                                           , false
-                                           ).SetDebugLocation( 25, 11, doCopyFunc.DISubProgram );
+            instBuilder.MemCpy( module
+                              , bitCastDst
+                              , bitCastSrc
+                              , module.Context.CreateConstant( layout.ByteSizeOf( foo ) )
+                              , ( int )layout.CallFrameAlignmentOf( foo )
+                              , false
+                              ).SetDebugLocation( 25, 11, doCopyFunc.DISubProgram );
 
-            var callCopy = instBuilder.Call( copyFunc, dstAddr, baz )
-                                      .SetDebugLocation( 25, 5, doCopyFunc.DISubProgram );
+            instBuilder.Call( copyFunc, dstAddr, baz )
+                       .SetDebugLocation( 25, 5, doCopyFunc.DISubProgram );
 
-            var ret =instBuilder.Return( )
-                                .SetDebugLocation( 26, 1, doCopyFunc.DISubProgram );
+            instBuilder.Return( )
+                       .SetDebugLocation( 26, 1, doCopyFunc.DISubProgram );
         }
     }
 }
