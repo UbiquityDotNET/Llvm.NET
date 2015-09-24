@@ -118,6 +118,13 @@ extern "C"
         return attributes.hasAttribute( index, ( Attribute::AttrKind )kind );
     }
 
+    LLVMBool LLVMHasTargetDependentAttribute( LLVMValueRef Fn, int index, char const* name )
+    {
+        Function *Func = unwrap<Function>( Fn );
+        AttributeSet const attributes = Func->getAttributes( );
+        return attributes.hasAttribute( index, name );
+    }
+
     void LLVMRemoveFunctionAttr2( LLVMValueRef Fn, int index, LLVMAttrKind kind )
     {
         Function *Func = unwrap<Function>( Fn );

@@ -163,6 +163,8 @@ uint64_t LLVMGetFunctionAttributeValue( LLVMValueRef Fn, int index, LLVMAttrKind
 LLVMBool LLVMFunctionHasAttributes( LLVMValueRef Fn, int index );
 char const* LLVMGetFunctionAttributesAsString( LLVMValueRef Fn, int index );
 
+LLVMBool LLVMHasTargetDependentAttribute( LLVMValueRef Fn, int index, char const* name );
+
 /**
 * @}
 */

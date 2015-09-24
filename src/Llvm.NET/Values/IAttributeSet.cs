@@ -19,28 +19,17 @@ namespace Llvm.NET.Values
         /// <summary>Adds a set of boolean attributes to the function itself</summary>
         /// <param name="attributes">Attributes to add</param>
         /// <returns>This instance for use in fluent style coding</returns>
-        IAttributeSet Add( params AttributeKind[ ] attributes );
+        IAttributeSet Add( params AttributeValue[ ] attributes );
 
         /// <summary>Add a collection of attributes to the function itself</summary>
         /// <param name="attributes"></param>
         /// <returns>This instance for use in fluent style coding</returns>
-        IAttributeSet Add( IEnumerable<AttributeKind> attributes );
+        IAttributeSet Add( IEnumerable<AttributeValue> attributes );
 
-        /// <summary>Adds a single boolean attribute to the function itself</summary>
-        /// <param name="kind">Attribute kind to add</param>
+        /// <summary>Adds a single boolean attribute</summary>
+        /// <param name="kind">AttributeValue kind to add</param>
         /// <returns>This instance for use in fluent style coding</returns>
-        IAttributeSet Add( AttributeKind kind );
-
-        /// <summary>Add a collection of target dependent attributes as name+value pairs</summary>
-        /// <param name="targetDependentAttributes">Attributes to add</param>
-        /// <returns>This instance for use in fluent style coding</returns>
-        IAttributeSet Add( IDictionary<string, string> targetDependentAttributes );
-
-        /// <summary>Add a target dependent attribute as a name+value pair</summary>
-        /// <param name="name">Attribute name</param>
-        /// <param name="value">Value for the attribute</param>
-        /// <returns>This instance for use in fluent style coding</returns>
-        IAttributeSet Add( string name, string value );
+        IAttributeSet Add( AttributeValue kind );
 
         /// <summary>Removes the specified attribute from the attribute set</summary>
         /// <returns>This instance for use in fluent style coding</returns>
@@ -51,10 +40,15 @@ namespace Llvm.NET.Values
         /// <returns>This instance for use in fluent style coding</returns>
         IAttributeSet Remove( string name );
 
-        /// <summary>Tests if this attribute set has a given attribute kind</summary>
-        /// <param name="kind">Kind of attribute to test for</param>
-        /// <returns>true if the attribute esists or false if not</returns>
+        /// <summary>Tests if this attribute set has a given AttributeValue kind</summary>
+        /// <param name="kind">Kind of AttributeValue to test for</param>
+        /// <returns>true if the AttributeValue esists or false if not</returns>
         bool Has( AttributeKind kind );
+
+        /// <summary>Tests if this attribute set has a given string attribute</summary>
+        /// <param name="name">Name of the attribute to test for</param>
+        /// <returns>true if the attribute exists or false if not</returns>
+        bool Has( string name );
     }
 
     internal sealed class AttributeSetImpl
@@ -70,39 +64,21 @@ namespace Llvm.NET.Values
         }
 
         /// <inheritdoc/>
-        public IAttributeSet Add( AttributeKind kind )
+        public IAttributeSet Add( AttributeValue attribute )
         {
-            OwningFunction.AddAttribute( Index, kind );
+            OwningFunction.AddAttribute( Index, attribute );
             return this;
         }
 
         /// <inheritdoc/>
-        public IAttributeSet Add( string name, string value )
+        public IAttributeSet Add( IEnumerable< AttributeValue > attributes )
         {
-            OwningFunction.AddAttribute( Index, name, value );
+            OwningFunction.AddAttributes( Index, attributes );
             return this;
         }
 
         /// <inheritdoc/>
-        public IAttributeSet Add( IDictionary< string, string > attributes )
-        {
-            foreach( var kvp in attributes )
-                OwningFunction.AddAttribute( Index, kvp.Key, kvp.Value );
-
-            return this;
-        }
-
-        /// <inheritdoc/>
-        public IAttributeSet Add( IEnumerable< AttributeKind > attributes )
-        {
-            foreach( AttributeKind kind in attributes )
-                OwningFunction.AddAttribute( Index, kind );
-
-            return this;
-        }
-
-        /// <inheritdoc/>
-        public IAttributeSet Add( params AttributeKind[ ] attributes ) => Add( ( IEnumerable<AttributeKind> )attributes );
+        public IAttributeSet Add( params AttributeValue[ ] attributes ) => Add( ( IEnumerable<AttributeValue> )attributes );
 
         /// <inheritdoc/>
         public IAttributeSet Remove( AttributeKind kind )
@@ -120,6 +96,9 @@ namespace Llvm.NET.Values
 
         /// <inheritdoc/>
         public bool Has( AttributeKind kind ) => OwningFunction.HasAttribute( Index, kind );
+
+        /// <inheritdoc/>
+        public bool Has( string name ) => OwningFunction.HasAttribute( Index, name );
 
         /// <inheritdoc/>
         public uint? ParamAlignment
@@ -141,7 +120,7 @@ namespace Llvm.NET.Values
                 }
                 else
                 {
-                    OwningFunction.AddAttribute( Index, AttributeKind.Alignment, value.Value );
+                    OwningFunction.AddAttribute( Index, new AttributeValue( AttributeKind.Alignment, value.Value ) );
                 }
             }
         }
@@ -166,7 +145,7 @@ namespace Llvm.NET.Values
                 }
                 else
                 {
-                    OwningFunction.AddAttribute( Index, AttributeKind.StackAlignment, value.Value );
+                    OwningFunction.AddAttribute( Index, new AttributeValue( AttributeKind.StackAlignment, value.Value ) );
                 }
             }
         }
@@ -191,7 +170,7 @@ namespace Llvm.NET.Values
                 }
                 else
                 {
-                    OwningFunction.AddAttribute( Index, AttributeKind.Dereferenceable, value.Value );
+                    OwningFunction.AddAttribute( Index, new AttributeValue( AttributeKind.Dereferenceable, value.Value ) );
                 }
             }
         }
@@ -215,7 +194,7 @@ namespace Llvm.NET.Values
                 }
                 else
                 {
-                    OwningFunction.AddAttribute( Index, AttributeKind.DereferenceableOrNull, value.Value );
+                    OwningFunction.AddAttribute( Index, new AttributeValue( AttributeKind.DereferenceableOrNull, value.Value ) );
                 }
             }
         }
@@ -234,7 +213,7 @@ namespace Llvm.NET.Values
                 // OK as-is
                 break;
             default:
-                // check the index against the actual function's param count
+                // check the index against the function's param count
                 var argIndex = ((int)index) - (int)FunctionAttributeIndex.Parameter0;
                 if( argIndex < 0 || argIndex >= OwningFunction.Parameters.Count )
                     throw new ArgumentOutOfRangeException( nameof( index ) );

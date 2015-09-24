@@ -16,18 +16,18 @@ namespace TestDebugInfo
         const string Triple = "x86_64-pc-windows-msvc18.0.0";
         const string Cpu = "x86-64";
         const string Features = "+sse,+sse2";
-        static readonly Dictionary<string, string> TargetDependentAttributes = new Dictionary<string, string>
+        static readonly AttributeValue[] TargetDependentAttributes =
         {
-            [ "disable-tail-calls" ] = "false",
-            [ "less-precise-fpmad" ] = "false",
-            [ "no-frame-pointer-elim" ] = "false",
-            [ "no-infs-fp-math" ] = "false",
-            [ "no-nans-fp-math" ] = "false",
-            [ "stack-protector-buffer-size" ] = "8",
-            [ "target-cpu" ] = "x86-64",
-            [ "target-features" ] = "+sse,+sse2",
-            [ "unsafe-fp-math" ] = "false",
-            [ "use-soft-float" ] = "false",
+            new AttributeValue( "disable-tail-calls", "false" ),
+            new AttributeValue( "less-precise-fpmad", "false" ),
+            new AttributeValue( "no-frame-pointer-elim", "false" ),
+            new AttributeValue( "no-infs-fp-math", "false" ),
+            new AttributeValue( "no-nans-fp-math", "false" ),
+            new AttributeValue( "stack-protector-buffer-size", "8" ),
+            new AttributeValue( "target-cpu", "x86-64" ),
+            new AttributeValue( "target-features", "+sse,+sse2" ),
+            new AttributeValue( "unsafe-fp-math", "false" ),
+            new AttributeValue( "use-soft-float", "false" )
         };
 
         /// <summary>Creates a test LLVM module with debug information</summary>
@@ -83,13 +83,13 @@ namespace TestDebugInfo
 
                 // create compile unit and file as the top level scope for everything
                 var cu = module.DIBuilder.CreateCompileUnit( SourceLanguage.C99
-                                                           , Path.GetFileName( srcPath )
-                                                           , Path.GetDirectoryName( srcPath )
-                                                           , "clang version 3.7.0 " // obviously this is not clang but helps in diff with actual clang output
-                                                           , false
-                                                           , ""
-                                                           , 0
-                                                           );
+                                                            , Path.GetFileName( srcPath )
+                                                            , Path.GetDirectoryName( srcPath )
+                                                            , "clang version 3.7.0 " // obviously this is not clang but helps in diff with actual clang output
+                                                            , false
+                                                            , ""
+                                                            , 0
+                                                            );
                 var diFile = module.DIBuilder.CreateFile( srcPath );
 
                 // Create basic types used in this compilation
@@ -167,9 +167,8 @@ namespace TestDebugInfo
                                                       , scopeLine: 24
                                                       , flags: 0
                                                       , isOptimized: false
-                                                      );
-                doCopyFunc.Attributes.Add( AttributeKind.NoUnwind, AttributeKind.UWTable )
-                                     .Add( TargetDependentAttributes );
+                                                      ).AddAttributes( AttributeKind.NoUnwind, AttributeKind.UWTable )
+                                                       .AddAttributes( TargetDependentAttributes );
 
                 var copyFunc = module.CreateFunction( scope: diFile
                                                     , name: "copy"
@@ -182,9 +181,9 @@ namespace TestDebugInfo
                                                     , scopeLine: 14
                                                     , flags: DebugInfoFlags.Prototyped
                                                     , isOptimized: false
-                                                    ).Linkage( Linkage.Internal ); // static function
-                 copyFunc.Attributes.Add( AttributeKind.NoUnwind, AttributeKind.UWTable, AttributeKind.InlineHint )
-                                    .Add( TargetDependentAttributes );
+                                                    ).Linkage( Linkage.Internal ) // static function
+                                                     .AddAttributes( AttributeKind.NoUnwind, AttributeKind.UWTable, AttributeKind.InlineHint )
+                                                     .AddAttributes( TargetDependentAttributes );
 
                 CreateDoCopyFunctionBody( module, targetData, doCopyFunc, fooType, bar, baz, copyFunc );
                 CreateCopyFunctionBody( module, targetData, copyFunc, diFile, fooType, fooPtr, constFoo );

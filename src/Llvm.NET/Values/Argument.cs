@@ -21,6 +21,24 @@ namespace Llvm.NET.Values
         /// <summary>Attributes for this parameter</summary>
         public IAttributeSet Attributes { get; }
 
+        /// <summary>Add a set of attributes using fluent style coding</summary>
+        /// <param name="attributes">Attributes to add</param>
+        /// <returns></returns>
+        public Argument AddAttributes( IEnumerable<AttributeValue> attributes )
+        {
+            Attributes.Add( attributes );
+            return this;
+        }
+
+        /// <summary>Add a set of attributes using fluent style coding</summary>
+        /// <param name="attributes">Attributes to add</param>
+        /// <returns></returns>
+        public Argument AddAttributes( params AttributeValue[] attributes )
+        {
+            Attributes.Add( attributes );
+            return this;
+        }
+
         internal Argument( LLVMValueRef valueRef )
             : this( valueRef, false )
         {

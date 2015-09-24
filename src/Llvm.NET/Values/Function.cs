@@ -103,6 +103,24 @@ namespace Llvm.NET.Values
         /// <summary>Gets the <see cref="IAttributeSet"/> for the return value of this function</summary>
         public IAttributeSet ReturnAttributes { get; }
 
+        /// <summary>Add a set of attributes using fluent style coding</summary>
+        /// <param name="attributes">Attributes to add</param>
+        /// <returns>This instance for use in fluent style code</returns>
+        public Function AddAttributes( IEnumerable<AttributeValue> attributes )
+        {
+            Attributes.Add( attributes );
+            return this;
+        }
+
+        /// <summary>Add a set of attributes using fluent style coding</summary>
+        /// <param name="attributes">Attributes to add</param>
+        /// <returns>This instance for use in fluent style code</returns>
+        public Function AddAttributes( params AttributeValue[] attributes )
+        {
+            Attributes.Add( attributes );
+            return this;
+        }
+
         /// <summary>Add a new basic block to the beginning of a function</summary>
         /// <param name="name">Name (label) for the block</param>
         /// <returns><see cref="BasicBlock"/> created and insterted into the begining function</returns>
@@ -148,13 +166,13 @@ namespace Llvm.NET.Values
             return retVal;
         }
 
-        /// <summary>Determines if a given attribute uses a parameter value</summary>
-        /// <param name="kind">Attribute kind to test</param>
-        /// <returns>true if the attribute has a parameter</returns>
+        /// <summary>Determines if a given AttributeValue uses a parameter value</summary>
+        /// <param name="kind">AttributeValue kind to test</param>
+        /// <returns>true if the AttributeValue has a parameter</returns>
         /// <remarks>
         /// Most of the attributes are simple boolean flags, however some, in particular
         /// those dealing with sizes or alignment require a parameter value. This method
-        /// is used to determine which category the attribute falls into. Any attribute 
+        /// is used to determine which category the AttributeValue falls into. Any AttributeValue 
         /// returning true requires an integer parameter and has special handling so 
         /// cannot be used in the AddAttributes() methods.
         /// </remarks>
@@ -173,21 +191,21 @@ namespace Llvm.NET.Values
             }
         }
 
-        #region Attribute Support
+        #region AttributeValue Support
         /// <summary>Adds a set of boolean attributes to the function index specified</summary>
-        /// <param name="index">Function index to apply the attribute to</param>
+        /// <param name="index">Function index to apply the AttributeValue to</param>
         /// <param name="attributes">Attributes to add</param>
         /// <returns>This function for use in fluent style coding</returns>
-        internal Function AddAttributes( FunctionAttributeIndex index, params AttributeKind[ ] attributes )
+        internal Function AddAttributes( FunctionAttributeIndex index, params AttributeValue[ ] attributes )
         {
-            return AddAttributes( index, ( IEnumerable<AttributeKind> )attributes );
+            return AddAttributes( index, ( IEnumerable<AttributeValue> )attributes );
         }
 
         /// <summary>Adds a set of boolean attributes to the function index specified</summary>
-        /// <param name="index">Function index to apply the attribute to</param>
+        /// <param name="index">Function index to apply the AttributeValue to</param>
         /// <param name="attributes">Attributes to add</param>
         /// <returns>This function for use in fluent style coding</returns>
-        internal Function AddAttributes( FunctionAttributeIndex index, IEnumerable<AttributeKind> attributes )
+        internal Function AddAttributes( FunctionAttributeIndex index, IEnumerable<AttributeValue> attributes )
         {
             foreach( var attribute in attributes )
                 AddAttribute( index, attribute );
@@ -195,11 +213,30 @@ namespace Llvm.NET.Values
             return this;
         }
 
-        /// <summary>Adds a single boolean attribute to the function index specified</summary>
-        /// <param name="index">Function index to apply the attribute to</param>
-        /// <param name="kind">Attribute kind to add</param>
+        internal Function AddAttribute( FunctionAttributeIndex index, AttributeValue attribute )
+        {
+            if( attribute.Kind.HasValue )
+            {
+                if( attribute.IntegerValue.HasValue )
+                    AddAttribute( index, attribute.Kind.Value, attribute.IntegerValue.Value );
+                else
+                    AddAttribute( index, attribute.Kind.Value );
+            }
+            else if( attribute.IsString )
+            {
+                AddAttribute( index, attribute.Name, attribute.StringValue );
+            }
+            else
+                throw new ArgumentException( "Invalid Attrbiute", nameof( attribute ) );
+
+            return this; 
+        }
+
+        /// <summary>Adds a single boolean AttributeValue to the function index specified</summary>
+        /// <param name="index">Function index to apply the AttributeValue to</param>
+        /// <param name="kind">AttributeValue kind to add</param>
         /// <returns>This function for use in fluent style coding</returns>
-        internal void AddAttribute( FunctionAttributeIndex index, AttributeKind kind )
+        private void AddAttribute( FunctionAttributeIndex index, AttributeKind kind )
         {
             if( AttributeHasValue( kind ) )
                 throw new ArgumentException( $"Attribute '{kind}' requires an argument", nameof( kind ) );
@@ -207,27 +244,51 @@ namespace Llvm.NET.Values
             NativeMethods.AddFunctionAttr2( ValueHandle, ( int )index, ( LLVMAttrKind )kind );
         }
 
-        internal void AddAttribute( FunctionAttributeIndex index, AttributeKind kind, UInt64 value )
+        private void AddAttribute( FunctionAttributeIndex index, AttributeKind kind, UInt64 value )
+        {
+            VerifyIntAttributeUsage( index, kind, value );
+            NativeMethods.SetFunctionAttributeValue( ValueHandle, ( int )index, ( LLVMAttrKind )kind, value );
+        }
+
+        internal static void RangeCheckIntAttributeValue( AttributeKind kind, ulong value )
         {
             // To prevent native asserts or crashes - validate params before passing down to native code
             switch( kind )
             {
             case AttributeKind.Alignment:
-                if( index > FunctionAttributeIndex.ReturnType )
-                    throw new ArgumentException( "Alignment only supported on parameters", nameof( index ) );
-
                 if( value > UInt32.MaxValue )
                     throw new ArgumentOutOfRangeException( nameof( value ), "Expected a 32 bit value for alignment" );
 
                 break;
 
             case AttributeKind.StackAlignment:
-                if( index != FunctionAttributeIndex.Function )
-                    throw new ArgumentException( "Stack alignment only applicable to the function itself", nameof( index ) );
-
                 if( value > UInt32.MaxValue )
                     throw new ArgumentOutOfRangeException( nameof( value ), "Expected a 32 bit value for alignment" );
+                break;
 
+            case AttributeKind.Dereferenceable:
+            case AttributeKind.DereferenceableOrNull:
+                break;
+
+            default:
+                throw new ArgumentException( $"Attribute '{kind}' does not support an argument", nameof( kind ) );
+            }
+        }
+
+        private static void VerifyIntAttributeUsage( FunctionAttributeIndex index, AttributeKind kind, ulong value )
+        {
+            RangeCheckIntAttributeValue( kind, value );
+            // To prevent native asserts or crashes - validate params before passing down to native code
+            switch( kind )
+            {
+            case AttributeKind.Alignment:
+                if( index > FunctionAttributeIndex.ReturnType )
+                    throw new ArgumentException( "Alignment only supported on parameters", nameof( index ) );
+                break;
+
+            case AttributeKind.StackAlignment:
+                if( index != FunctionAttributeIndex.Function )
+                    throw new ArgumentException( "Stack alignment only applicable to the function itself", nameof( index ) );
                 break;
 
             case AttributeKind.Dereferenceable:
@@ -243,7 +304,6 @@ namespace Llvm.NET.Values
             default:
                 throw new ArgumentException( $"Attribute '{kind}' does not support an argument", nameof( kind ) );
             }
-            NativeMethods.SetFunctionAttributeValue( ValueHandle, ( int )index, ( LLVMAttrKind )kind, value );
         }
 
         internal UInt64 GetAttributeValue( FunctionAttributeIndex index, AttributeKind kind )
@@ -272,6 +332,11 @@ namespace Llvm.NET.Values
         internal bool HasAttribute( FunctionAttributeIndex index, AttributeKind kind )
         {
             return NativeMethods.HasFunctionAttr2( ValueHandle, ( int )index, ( LLVMAttrKind )kind );
+        }
+
+        internal bool HasAttribute( FunctionAttributeIndex index, string name )
+        {
+            return NativeMethods.LLVMHasTargetDependentAttribute( ValueHandle, ( int )index, name );
         }
         #endregion
 
