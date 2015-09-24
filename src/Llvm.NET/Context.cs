@@ -23,14 +23,14 @@ namespace Llvm.NET
     /// <see cref="DebugInfo.DICompileUnit"/> as the scope, and a compilation
     /// unit is bound to a module, even though, technically the types are owned
     /// by a context. Thus to keep things simpler and help make working with
-    /// debug infomration easier. Lllvm.NET encapsulates the context into a module.
-    /// This establishes a strict one to one module and context. Doing this allows
-    /// Llvm.NET to add debug information properties to <see cref="Types.TypeRef"/>s
-    /// and other classes. It also allows for establishing a fluent style programming
-    /// for adding debug location information to instructions. While this is a
-    /// technical departure from the underlying LLVM implementation the significant
-    /// simplification of managing debug information makes it worth the small
-    /// deviation.</para>
+    /// debug infomration easier. Lllvm.NET encapsulates the context into a
+    /// <see cref="Module"/>. This establishes a strict one to one <see cref="Module"/>
+    /// and context. Doing this allows Llvm.NET to add debug information
+    /// properties to <see cref="Types.ITypeRef"/>s and other classes. It also
+    /// allows for establishing a fluent style programming for adding debug
+    /// location information to instructions. While this is a technical departure
+    /// from the underlying LLVM implementation the significant simplification
+    /// of managing debug information makes it worth the small deviation.</para>
     /// <note type="note">It is important to be aware of the fact that a Context
     /// is not thread safe. The context itself and the object instances it owns
     /// are intended for use by a single thread only. Accessing and manipulating
