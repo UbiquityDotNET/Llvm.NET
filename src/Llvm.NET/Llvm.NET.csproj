@@ -217,7 +217,6 @@
     <Compile Include="StaticState.cs" />
     <Compile Include="Types\StructType.cs" />
     <Compile Include="Target.cs" />
-    <Compile Include="TargetLayout.cs" />
     <Compile Include="TargetMachine.cs" />
     <Compile Include="TargetData.cs" />
     <Compile Include="Types\TypeRef.cs" />

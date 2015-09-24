@@ -65,7 +65,7 @@ namespace Llvm.NET.Values
             if( !NativeMethods.FunctionHasAttributes( OwningFunction.ValueHandle, ( int )Index ) )
                 return string.Empty;
 
-            var intPtr = NativeMethods.GetFunctAttributesAsString( OwningFunction.ValueHandle, ( int )Index );
+            var intPtr = NativeMethods.GetFunctionAttributesAsString( OwningFunction.ValueHandle, ( int )Index );
             return NativeMethods.MarshalMsg( intPtr );
         }
 

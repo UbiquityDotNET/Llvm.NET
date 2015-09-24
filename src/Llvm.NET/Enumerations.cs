@@ -18,39 +18,6 @@ namespace Llvm.NET
         AppendUnique = LLVMModFlagBehavior.AppendUnique
     };
 
-    /// <summary>Attributes for functions globals and parameters</summary>
-    [Flags]
-    [Obsolete]
-    public enum Attributes : int
-    {
-        ZeroExtend = LLVMAttribute.LLVMZExtAttribute,
-        SignExtend = LLVMAttribute.LLVMSExtAttribute,
-        NoReturn = LLVMAttribute.LLVMNoReturnAttribute,
-        InRegister = LLVMAttribute.LLVMInRegAttribute,
-        StructReturn = LLVMAttribute.LLVMStructRetAttribute,
-        NoUnwind = LLVMAttribute.LLVMNoUnwindAttribute,
-        NoAlias = LLVMAttribute.LLVMNoAliasAttribute,
-        ByVal = LLVMAttribute.LLVMByValAttribute,
-        Nest = LLVMAttribute.LLVMNestAttribute,
-        ReadNone = LLVMAttribute.LLVMReadNoneAttribute,
-        ReadOnly = LLVMAttribute.LLVMReadOnlyAttribute,
-        NoInline = LLVMAttribute.LLVMNoInlineAttribute,
-        AlwaysInline = LLVMAttribute.LLVMAlwaysInlineAttribute,
-        OptimizeForSize = LLVMAttribute.LLVMOptimizeForSizeAttribute,
-        StackProtect = LLVMAttribute.LLVMStackProtectAttribute,
-        StackProtectReq = LLVMAttribute.LLVMStackProtectReqAttribute,
-        Alignment = LLVMAttribute.LLVMAlignment,
-        NoCapture = LLVMAttribute.LLVMNoCaptureAttribute,
-        NoRedZone = LLVMAttribute.LLVMNoRedZoneAttribute,
-        NoImplicitFloat = LLVMAttribute.LLVMNoImplicitFloatAttribute,
-        Naked = LLVMAttribute.LLVMNakedAttribute,
-        InlineHint = LLVMAttribute.LLVMInlineHintAttribute,
-        StackAlignment = LLVMAttribute.LLVMStackAlignment,
-        ReturnsTwice = LLVMAttribute.LLVMReturnsTwice,
-        UnwindTable = LLVMAttribute.LLVMUWTable,
-        NonLazyBind = LLVMAttribute.LLVMNonLazyBind
-    }
-
     /// <summary>LLVM Instruction opcodes</summary>
     public enum Opcode : uint
     {

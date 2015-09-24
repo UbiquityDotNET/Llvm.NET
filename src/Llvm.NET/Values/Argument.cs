@@ -8,7 +8,7 @@ namespace Llvm.NET.Values
         : Value
     {
         /// <summary>Function this argument belongs to</summary>
-        public Function ContainingFunction => new Function( NativeMethods.GetParamParent( ValueHandle ) );
+        public Function ContainingFunction => FromHandle<Function>( NativeMethods.GetParamParent( ValueHandle ) );
         public uint Index => NativeMethods.GetArgumentIndex( ValueHandle );
 
         /// <summary>Sets the alignment for the argument</summary>
