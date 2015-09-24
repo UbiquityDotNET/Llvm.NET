@@ -198,4 +198,4 @@ FakesAssemblies/
 #build output locations
 /BuildOutput
 /IntermediateOutput
-/src/Documentation/Help
+#/src/Documentation/Help
