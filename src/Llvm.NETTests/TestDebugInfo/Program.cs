@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using Llvm.NET;
@@ -311,7 +310,8 @@ namespace TestDebugInfo
             // create Locals
             // NOTE: There's no debug location attatched to these instructions.
             //       The debug info will come from the declare instrinsic below.
-            var dstAddr = instBuilder.Alloca( fooPtr, "pDst.addr" )
+            var dstAddr = instBuilder.Alloca( fooPtr )
+                                     .RegisterName( "pDst.addr" )
                                      .Alignment( ptrAlign );
 
             instBuilder.Store( copyFunc.Parameters[ 1 ], dstAddr)
@@ -369,7 +369,8 @@ namespace TestDebugInfo
             var instBuilder = new InstructionBuilder( blk );
 
             // create a temp local copy of the global structure
-            var dstAddr = instBuilder.Alloca( foo, "agg.tmp" )
+            var dstAddr = instBuilder.Alloca( foo )
+                                     .RegisterName( "agg.tmp" )
                                      .Alignment( layout.CallFrameAlignmentOf( foo ) );
 
             var bitCastDst = instBuilder.BitCast( dstAddr, bytePtrType )
