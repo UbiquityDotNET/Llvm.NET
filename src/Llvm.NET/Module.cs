@@ -9,15 +9,21 @@ using Llvm.NET.Values;
 namespace Llvm.NET
 {
     /// <summary>LLVM Bit code module</summary>
+    /// <remarks>
+    /// A module is the basic unit for containing code in LLVM. Modules are an in memory
+    /// representation of the LLVM bitcode. 
+    /// </remarks>
     public sealed class Module 
         : IDisposable
         , IExtensiblePropertyContainer
     {
+        /// <summary>Creates an unnamed module without debug information</summary>
         public Module( )
             :this( string.Empty )
         {
         }
 
+        /// <summary>Creates an named module without debug information</summary>
         public Module( string moduleId )
         {
             if( moduleId == null )
@@ -32,6 +38,14 @@ namespace Llvm.NET
             Context.AddModule( this );
         }
 
+        /// <summary>Creates a named module with a root <see cref="DICompileUnit"/> to contain debugging information</summary>
+        /// <param name="moduleId">Module name</param>
+        /// <param name="language">Language to store in the debugging information</param>
+        /// <param name="srcFilePath">path of source file to set for the compilation unit</param>
+        /// <param name="producer">Name of the application producing this module</param>
+        /// <param name="optimized">Flag to indicate if the module is optimized</param>
+        /// <param name="flags">Additional flags</param>
+        /// <param name="runtimeVersion">Runtime version if any (use 0 if the runtime version has no meaning)</param>
         public Module( string moduleId
                      , SourceLanguage language
                      , string srcFilePath
@@ -72,6 +86,7 @@ namespace Llvm.NET
 
         /// <summary>Name of the Debug Version information module flag</summary>
         public const string DebugVersionValue = "Debug Info Version";
+        /// <summary>Name of the Dwarf Version module flag</summary>
         public const string DwarfVersionValue = "Dwarf Version";
 
         /// <summary>Version of the Debug information Metadata</summary>
@@ -119,10 +134,10 @@ namespace Llvm.NET
 
         /// <summary>Target data layout for this module</summary>
         /// <remarks>The layout is produced by parsing the <see cref="DataLayoutString"/>
-        /// therefore this proerty changes anytime the <see cref="DataLayoutString"/> is 
+        /// therefore this property changes anytime the <see cref="DataLayoutString"/> is 
         /// set. Furthermore, setting this property will change the value of <see cref="DataLayoutString"/>.
         /// In other words, Layout and <see cref="DataLayoutString"/> are two different views
-        /// of the same information. 
+        /// of the same information and setting either one updates the other. 
         /// </remarks>
         public TargetData Layout
         {
@@ -300,6 +315,9 @@ namespace Llvm.NET
             return Value.FromHandle<GlobalAlias>( handle );
         }
 
+        /// <summary>Get an alias by name</summary>
+        /// <param name="name">name of the alias to get</param>
+        /// <returns>Alias matching <paramref name="name"/> or null if no such alias exists</returns>
         public GlobalAlias GetAlias( string name )
         {
             var handle = NativeMethods.GetGlobalAlias( ModuleHandle, name );
@@ -330,6 +348,13 @@ namespace Llvm.NET
             return AddGlobal( typeRef, isConst, linkage, constVal, string.Empty );
         }
 
+        /// <summary>Adds a global to this module</summary>
+        /// <param name="typeRef">Type of the global's value</param>
+        /// <param name="isConst">Flag to indicate if this global is a constant</param>
+        /// <param name="linkage">Linkage type for this global</param>
+        /// <param name="constVal">Initial value for the global</param>
+        /// <param name="name">Name of the variable</param>
+        /// <returns>New global variable</returns>
         public GlobalVariable AddGlobal( ITypeRef typeRef, bool isConst, Linkage linkage, Constant constVal, string name )
         {
             var retVal = AddGlobal( typeRef, name );
@@ -370,11 +395,16 @@ namespace Llvm.NET
             NativeMethods.AddModuleFlag( ModuleHandle, ( LLVMModFlagBehavior )behavior, name, value );
         }
 
+        /// <summary>Adds operand value to named metadata</summary>
+        /// <param name="name">Name of the netadata</param>
+        /// <param name="value">operand value</param>
         public void AddNamedMetadataOperand( string name, Metadata value )
         {
             NativeMethods.AddNamedMetadataOperand2( ModuleHandle, name, value.MetadataHandle );
         }
 
+        /// <summary>Adds an llvm.ident metadata string to the module</summary>
+        /// <param name="version">version information to place in the ident metadata</param>
         public void AddVersionIdentMetadata( string version )
         {
             var elements = new LLVMMetadataRef[ ] { NativeMethods.MDString2( Context.ContextHandle, version, (uint)version.Length ) };
@@ -382,6 +412,25 @@ namespace Llvm.NET
             NativeMethods.AddNamedMetadataOperand2( ModuleHandle, "llvm.ident", hNode );
         }
 
+        /// <summary>Creates a Function definition with Debug information</summary>
+        /// <param name="scope">Containing scope for the function</param>
+        /// <param name="name">Name of the function in source language form</param>
+        /// <param name="linkageName">Mangled linker visible name of the function (may be same as <paramref name="name"/> if mangling not required by source language</param>
+        /// <param name="file">File containing the function definition</param>
+        /// <param name="line">Line number of the function definition</param>
+        /// <param name="signature">LLVM Function type for the signatur of the function</param>
+        /// <param name="isLocalToUnit">Flag to indicate if this function is local to the compilation unit</param>
+        /// <param name="isDefinition">Flag to indicate if this is a definition</param>
+        /// <param name="scopeLine">First line of the function's outermost scope, this may not be the same as the first line of the function definition due to source formatting</param>
+        /// <param name="flags">Additional flags describing this function</param>
+        /// <param name="isOptimized">Flag to indicate if this function is optimized</param>
+        /// <param name="tParam"></param>
+        /// <param name="decl"></param>
+        /// <returns>Function described by the arguments</returns>
+        /// <remarks>
+        /// The <paramref name="signature"/> parameter must have a non <see langword="null"/>  <see cref="ITypeRef.DIType"/> property.
+        /// This is normally achieved by creating the signature via <see cref="O:Context.CreateFunctionType"/>.
+        /// </remarks>
         public Function CreateFunction( DIScope scope
                                       , string name
                                       , string linkageName
@@ -423,11 +472,13 @@ namespace Llvm.NET
             return func;
         }
 
+        /// <inheritdoc/>
         bool IExtensiblePropertyContainer.TryGetExtendedPropertyValue<T>( string id, out T value )
         {
             return PropertyBag.TryGetExtendedPropertyValue<T>( id, out value );
         }
 
+        /// <inheritdoc/>
         void IExtensiblePropertyContainer.AddExtendedPropertyValue( string id, object value )
         {
             PropertyBag.AddExtendedPropertyValue( id, value );

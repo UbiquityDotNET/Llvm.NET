@@ -2,26 +2,24 @@
 <topic id="47ec5af0-5c1c-443e-b2b3-158a100dc594" revisionNumber="1">
     <developerConceptualDocument xmlns="http://ddue.schemas.microsoft.com/authoring/2003/5" xmlns:xlink="http://www.w3.org/1999/xlink">
         <introduction>
-            <para>Llvm.NET is a managed wrapper around an extended LLVM-C API including an OO model that closesly matches 
+            <para>Llvm.NET is a managed wrapper around an extended LLVM-C API including an Object Oriented model that closesly matches 
             the underlying LLVM internal object model. This allows for building code generation and other utilities
             leveraging LLVM from .NET applications.
             </para>
         </introduction>
-
         <section>
             <title>Getting Started</title>
             <content>
-                <para>Insert basic getting started here. This should cover usage of the library, rather than building or maintaining it
-                in particular the following basic top level items should serve as a guide:</para>
+                <para>Insert basic getting started here. This should cover usage of the library, rather than building or maintaining it.
+                In particular the following basic top level items should serve as a guide:</para>
                 <list class="bullet">
-                    <listItem><para>Installing NUGET package</para></listItem>
+                    <listItem><para>Installing the NUGET package</para></listItem>
                     <listItem><para>Initializing LLVM</para></listItem>
-                    <listItem><para>Creating a Context</para></listItem>
                     <listItem><para>Creating a Module</para></listItem>
                     <listItem><para>Creating Types</para></listItem>
                     <listItem><para>Creating Functions</para></listItem>
                     <listItem><para>Saving modules</para></listItem>
-                    <listItem><para>Generating LLVM IR testual (ll) files</para></listItem>
+                    <listItem><para>Generating LLVM IR textual (ll) files</para></listItem>
                     <listItem><para>Generating target object files</para></listItem>
                     <listItem><para>Generating target assembly files</para></listItem>
                 </list>

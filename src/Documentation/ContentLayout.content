@@ -5,14 +5,15 @@
       <HelpKeyword index="K" term="Welcome" />
     </HelpKeywords>
   </Topic>
-  <Topic id="f28bb6c8-7b27-413a-823c-1f1dcaf578de" visible="True" isSelected="true" apiParentMode="InsertAfter" title="Version History">
+  <Topic id="f28bb6c8-7b27-413a-823c-1f1dcaf578de" visible="True" apiParentMode="InsertAfter" title="Version History">
     <HelpKeywords>
       <HelpKeyword index="K" term="version, history" />
     </HelpKeywords>
-    <Topic id="bb78087b-db18-4024-9357-2694f1ff1497" visible="True" title="Version 1.0.0.0">
+    <Topic id="bb78087b-db18-4024-9357-2694f1ff1497" visible="True" title="Version 3.7.0-alpha0043">
       <HelpKeywords>
-        <HelpKeyword index="K" term="version, 1.0.0.0" />
+        <HelpKeyword index="K" term="version, 3.7.0-alpha0043" />
       </HelpKeywords>
     </Topic>
   </Topic>
+  <Topic id="71ceaf97-cbf9-4d0d-8c1a-a7a1565d61dc" visible="True" isSelected="true" title="How-to Create structure types with debug information" />
 </Topics>

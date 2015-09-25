@@ -39,6 +39,7 @@ namespace Llvm.NET
     /// </remarks>
     public sealed class Context 
     {
+        /// <summary>Flag to indicate if this instance is still valid</summary>
         public bool IsDisposed => ContextHandle.Pointer == IntPtr.Zero;
 
         /// <summary>Get's the LLVM void type for this context</summary>
@@ -200,7 +201,7 @@ namespace Llvm.NET
         /// <returns>Newly created <see cref="Constant"/></returns>
         /// <remarks>
         /// <note type="note">The actual concrete return type depends on the parameters provided and will be one of the following:
-        /// <list type="unordered">
+        /// <list type="table">
         /// <listheader>
         /// <term><see cref="Constant"/> derived type</term><description>Description</description>
         /// </listheader>
@@ -221,7 +222,7 @@ namespace Llvm.NET
         /// <returns>Newly created <see cref="Constant"/></returns>
         /// <remarks>
         /// <note type="note">The actual concrete return type depends on the parameters provided and will be one of the following:
-        /// <list type="unordered">
+        /// <list type="table">
         /// <listheader>
         /// <term><see cref="Constant"/> derived type</term><description>Description</description>
         /// </listheader>
@@ -247,7 +248,7 @@ namespace Llvm.NET
         /// <returns>Newly created <see cref="Constant"/></returns>
         /// <remarks>
         /// <note type="note">The actual concrete return type depends on the parameters provided and will be one of the following:
-        /// <list type="unordered">
+        /// <list type="table">
         /// <listheader>
         /// <term><see cref="Constant"/> derived type</term><description>Description</description>
         /// </listheader>
@@ -268,7 +269,7 @@ namespace Llvm.NET
         /// <returns>Newly created <see cref="Constant"/></returns>
         /// <remarks>
         /// <note type="note">The actual concrete return type depends on the parameters provided and will be one of the following:
-        /// <list type="unordered">
+        /// <list type="table">
         /// <listheader>
         /// <term><see cref="Constant"/> derived type</term><description>Description</description>
         /// </listheader>
@@ -475,6 +476,11 @@ namespace Llvm.NET
             return CreateConstant( intType, constValue, signExtend );
         }
 
+        /// <summary>Create a constant value of the specified integer type</summary>
+        /// <param name="intType">Integer type</param>
+        /// <param name="constValue">value</param>
+        /// <param name="signExtend">flag to indicate if <paramref name="constValue"/> is sign extended</param>
+        /// <returns>Constant for the specifiec value</returns>
         public Constant CreateConstant( ITypeRef intType, UInt64 constValue, bool signExtend )
         {
             if( intType.Kind != TypeKind.Integer )
@@ -483,11 +489,17 @@ namespace Llvm.NET
             return Value.FromHandle<Constant>( NativeMethods.ConstInt( intType.GetTypeRef(), constValue, signExtend ) );
         }
 
+        /// <summary>Creates a constant floating point value for a given value</summary>
+        /// <param name="constValue">Value to make into a <see cref="ConstantFP"/></param>
+        /// <returns>Constant value</returns>
         public ConstantFP CreateConstant( float constValue )
         {
             return Value.FromHandle<ConstantFP>( NativeMethods.ConstReal( FloatType.GetTypeRef(), constValue ) );
         }
 
+        /// <summary>Creates a constant floating point value for a given value</summary>
+        /// <param name="constValue">Value to make into a <see cref="ConstantFP"/></param>
+        /// <returns>Constant value</returns>
         public ConstantFP CreateConstant( double constValue )
         {
             return Value.FromHandle<ConstantFP>( NativeMethods.ConstReal( DoubleType.GetTypeRef(), constValue ) );

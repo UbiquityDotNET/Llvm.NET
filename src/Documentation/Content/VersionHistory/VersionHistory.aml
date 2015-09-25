@@ -1,33 +1,33 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <topic id="f28bb6c8-7b27-413a-823c-1f1dcaf578de" revisionNumber="1">
-	<developerConceptualDocument xmlns="http://ddue.schemas.microsoft.com/authoring/2003/5" xmlns:xlink="http://www.w3.org/1999/xlink">
-		<introduction>
-			<para>The topics in this section describe the various changes made to the [TODO: Project Title] over the
+    <developerConceptualDocument xmlns="http://ddue.schemas.microsoft.com/authoring/2003/5" xmlns:xlink="http://www.w3.org/1999/xlink">
+        <introduction>
+            <para>The topics in this section describe the various changes made to <token>projname</token> over the
 life of the project.</para>
-		</introduction>
+        </introduction>
 
-		<section>
-			<title>Version History</title>
-			<content>
-				<para>Select a version below to see a description of its changes.</para>
+        <section>
+            <title>Version History</title>
+            <content>
+                <para>Select a version below to see a description of its changes.</para>
 
-				<list class="bullet">
-					<listItem>
-						<para><link xlink:href="bb78087b-db18-4024-9357-2694f1ff1497" /></para>
-					</listItem>
+                <list class="bullet">
+                    <listItem>
+                        <para><link xlink:href="bb78087b-db18-4024-9357-2694f1ff1497" /></para>
+                    </listItem>
 
-					<listItem>
-						<para>[TODO: Add links to each specific version page]</para>
-					</listItem>
+                    <listItem>
+                        <para>[TODO: Add links to each specific version page]</para>
+                    </listItem>
 
-				</list>
+                </list>
 
-			</content>
-		</section>
+            </content>
+        </section>
 
-		<relatedTopics>
-			<link xlink:href="47ec5af0-5c1c-443e-b2b3-158a100dc594" />
-		</relatedTopics>
+        <relatedTopics>
+            <link xlink:href="47ec5af0-5c1c-443e-b2b3-158a100dc594" />
+        </relatedTopics>
 
-	</developerConceptualDocument>
+    </developerConceptualDocument>
 </topic>
