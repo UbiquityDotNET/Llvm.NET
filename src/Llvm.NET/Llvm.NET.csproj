@@ -83,7 +83,6 @@
     <Reference Include="Microsoft.CSharp" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AlignmentInfo.cs" />
     <Compile Include="DebugInfo\DIArray.cs" />
     <Compile Include="DebugInfo\DIBasicType.cs" />
     <Compile Include="DebugInfo\DICompileUnit.cs" />
@@ -214,7 +213,6 @@
     <Compile Include="PassManagerBuilder.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Types\SequenceType.cs" />
-    <Compile Include="SizeAndAlignment.cs" />
     <Compile Include="StaticState.cs" />
     <Compile Include="Types\StructType.cs" />
     <Compile Include="Target.cs" />
