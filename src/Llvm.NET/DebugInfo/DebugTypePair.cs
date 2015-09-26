@@ -19,7 +19,7 @@ namespace Llvm.NET.DebugInfo
         : ITypeRef
         where T : DIType
     {
-        public DebugTypePair( ITypeRef llvmType, DIType diType )
+        public DebugTypePair( ITypeRef llvmType, T diType )
         {
             LlvmType = llvmType;
             DIType = diType;

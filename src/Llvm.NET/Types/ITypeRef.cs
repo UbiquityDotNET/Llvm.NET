@@ -108,7 +108,7 @@ namespace Llvm.NET.Types
     /// These static extension methods provide common functionality and support to
     /// implementations of the ITypeRef interface.
     /// </remarks>
-    public static class ITypeRefExtensions
+    public static class TypeRefExtensions
     {
         /// <summary>Creates pointer type from the specified type</summary>
         /// <param name="self">Type to create a pointer from</param>
@@ -117,14 +117,24 @@ namespace Llvm.NET.Types
         public static IPointerType CreatePointerType( this ITypeRef self, Module module ) => self.CreatePointerType( module, 0 );
 
         /// <summary>Creates a new <see cref="DIType"/> for an ITypeRef</summary>
-        /// <param name="self">Type to create a pointer for</param>
+        /// <param name="typeRef">Type to create a pointer for</param>
         /// <param name="module">Module to use if creating a new type</param>
         /// <param name="name">Name of the type</param>
         /// <param name="scope">Scope for the type</param>
-        /// <returns>Debug information type</returns>
+        /// <returns><see cref="ITypeRef"/> with debug information, which, for basic types and function signatures will not be <paramref name="typeRef"/></returns>
         /// <remarks>
-        /// The actual <see cref="DIType"/> returned depends on the <see cref="ITypeRef.Kind"/> property of the specified type.
-        /// The following table lists the various options:
+        /// <para>This method is used to construct Debug type information and attach it to a given type.</para>
+        /// <note type="note">
+        /// The returned <see cref="ITypeRef"/> may not be the same instance as <paramref name="typeRef"/>. This is due to the fact that, in LLVM function
+        /// signature types and basic types are uniqued. However, when creating debug information language specific definitions are attached which means
+        /// that a simple 8 bit value could be a byte or an ASCII character. LLVM bit code doesn't neeed to care about that distinction so it treats all
+        /// 8 bit values the same. However a debugger needs to know the difference to display information in a form as close to the original source language
+        /// as is plausible within the debug environment. Thus, for basic types and function signatures this actually returns a new <see cref="ITypeRef"/>
+        /// instance from <see cref="DebugTypePair{T}"/> with the original type from <paramref name="typeRef"/> and a newly created Debug information type.
+        /// </note>
+        /// <para>The actual type of debug information in the <see cref="ITypeRef.DIType"/> property of the returned <see cref="ITypeRef"/>  depends on the
+        /// <see cref="ITypeRef.Kind"/> property of from the <paramref name="typeRef"/> parameter.
+        /// The following table lists the various options:</para>
         /// <list type="table">
         /// <listheader>
         /// <term><see cref="ITypeRef.Kind"/></term><description>Debug information type</description>
@@ -147,12 +157,32 @@ namespace Llvm.NET.Types
         /// </list>
         /// </remarks>
         /// <conceptualLink target="71ceaf97-cbf9-4d0d-8c1a-a7a1565d61dc">How-to create structure types with debug information</conceptualLink>
-        public static DIType CreateDIType( this ITypeRef self, Module module, string name, DIScope scope )
+        public static ITypeRef CreateDIType( this ITypeRef typeRef, Module module, string name, DIScope scope )
+        {
+            if( typeRef.DIType != null )
+                throw new ArgumentException( "Cannot replace debug information with this method - use ITypeRef.ReplaceAllUsesOfDebugTypeWith() instead" );
+
+            var diType  = InternalCreateDIType( typeRef, module, name, scope );
+            // basic times are uniqued in LLVM so wrap them in a DebugTypePair
+            // to allow for distinct native+debug type pairing
+            var basicType = diType as DIBasicType;
+            if( basicType != null )
+            {
+                typeRef = new DebugTypePair<DIBasicType>( typeRef, basicType );
+            }
+            else
+            {
+                typeRef.DIType = diType;
+            }
+
+            return typeRef;
+        }
+
+        private static DIType InternalCreateDIType( ITypeRef self, Module module, string name, DIScope scope )
         {
             if( self.DIType != null )
                 return self.DIType;
 
-            DIType retVal;
             switch( self.Kind )
             {
             case TypeKind.Float32:
@@ -162,12 +192,10 @@ namespace Llvm.NET.Types
             case TypeKind.Float128m112:
             case TypeKind.Float128:
             case TypeKind.Integer:
-                retVal = GetDiBasicType( self, module, name );
-                break;
+                return GetDiBasicType( self, module, name );
 
             case TypeKind.Struct:
-                retVal =  module.DIBuilder.CreateReplaceableCompositeType( Tag.StructureType, name, scope, null, 0 );
-                break;
+                return module.DIBuilder.CreateReplaceableCompositeType( Tag.StructureType, name, scope, null, 0 );
 
             case TypeKind.Void:
             case TypeKind.Function:
@@ -175,14 +203,12 @@ namespace Llvm.NET.Types
                 return null;
 
             case TypeKind.Pointer:
-                retVal = ((IPointerType )self).ElementType.CreateDIType( module, $"{name}*", scope );
-                break;
+                var elementType = InternalCreateDIType( (( IPointerType )self ).ElementType, module, null, scope );
+                return module.DIBuilder.CreatePointerType( elementType, null, module.Layout.BitSizeOf( self ), module.Layout.AbiAlignmentOf( self ) );
 
             default:
                 throw new NotSupportedException( "Type not supported for this target/language" );
             }
-            self.DIType = retVal;
-            return retVal;
         }
 
         private static DIBasicType GetDiBasicType( ITypeRef llvmType, Module module, string name )

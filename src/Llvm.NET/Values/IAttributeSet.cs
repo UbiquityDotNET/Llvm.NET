@@ -54,6 +54,7 @@ namespace Llvm.NET.Values
     internal sealed class AttributeSetImpl
         : IAttributeSet
     {
+        /// <inheritdoc/>
         public override string ToString( )
         {
             if( !NativeMethods.FunctionHasAttributes( OwningFunction.ValueHandle, ( int )Index ) )
