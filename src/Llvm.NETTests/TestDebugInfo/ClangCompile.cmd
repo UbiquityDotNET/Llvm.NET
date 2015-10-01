@@ -1,4 +1,4 @@
-clang -c -g -emit-llvm test.c
+clang -c -g -emit-llvm --target=x86_64-pc-windows-msvc18.0.0 test.c
 if EXIST test_x86.bc del test_x86.bc
 ren test.bc test_x86.bc
 llvm-dis test_x86.bc

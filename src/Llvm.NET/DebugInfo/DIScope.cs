@@ -7,5 +7,7 @@
             : base( handle )
         {
         }
+
+        public DIFile File => new DIFile( NativeMethods.DIScopeGetFile( MetadataHandle ) );
     }
 }

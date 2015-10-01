@@ -1,14 +1,13 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using Llvm.NET.Instructions;
-using System.Collections.Generic;
-using Llvm.NET.Values;
 using Llvm.NET.Types;
+using Llvm.NET.Values;
 
 namespace Llvm.NET
 {
-    // TODO: Now that the RegisterName extension method is available, remove all overloads providing the register name
-
     ///<summary>LLVM Instruction builder allowing managed code to generate IR instructions</summary>
     public class InstructionBuilder
         : IDisposable
@@ -151,11 +150,19 @@ namespace Llvm.NET
         /// </returns>
         public Value GetStructElementPointer( Value pointer, uint index )
         {
-            if( pointer.Type.Kind != TypeKind.Pointer )
+            var ptrType = pointer.Type as IPointerType;
+            if( ptrType == null )
                 throw new ArgumentException( "Pointer value expected", nameof( pointer ) );
 
-            var hRetVal = NativeMethods.BuildStructGEP( BuilderHandle, pointer.ValueHandle, index, string.Empty );
-            return Value.FromHandle( hRetVal );
+            var elementStructType = ptrType.ElementType as IStructType;
+            if( elementStructType == null )
+                throw new ArgumentException( "Pointer to a structure expected", nameof( pointer ) );
+
+            if( !elementStructType.IsSized && index > 0 )
+                throw new ArgumentException( "Cannot get element of unsized/opaque structures" );
+
+            var handle = NativeMethods.BuildStructGEP( BuilderHandle, pointer.ValueHandle, index, string.Empty );
+            return Value.FromHandle( handle );
         }
 
         /// <summary>Creates a <see cref="User"/> that accesses an element of a type referenced by a pointer</summary>
@@ -182,13 +189,13 @@ namespace Llvm.NET
         public Value GetElementPtr( Value pointer, IEnumerable<Value> args )
         {
             var llvmArgs = GetValidatedGEPArgs( pointer, args );
-            var hRetVal = NativeMethods.BuildGEP( BuilderHandle
-                                                , pointer.ValueHandle
-                                                , out llvmArgs[ 0 ]
-                                                , ( uint )llvmArgs.Length
-                                                , string.Empty
-                                                );
-            return Value.FromHandle( hRetVal );
+            var handle = NativeMethods.BuildGEP( BuilderHandle
+                                               , pointer.ValueHandle
+                                               , out llvmArgs[ 0 ]
+                                               , ( uint )llvmArgs.Length
+                                               , string.Empty
+                                               );
+            return Value.FromHandle( handle );
         }
 
         /// <summary>Creates a <see cref="User"/> that accesses an element of a type referenced by a pointer</summary>
@@ -212,11 +219,8 @@ namespace Llvm.NET
         /// former makes the first index explicit. In order to properly compute the offset for a given
         /// element in an aggregate type LLVM requires an explicit first index even if it is zero.
         /// </remarks>
-        public Value GetElementPtrInBounds( Value pointer, params Value[ ] args )
-        {
-            return GetElementPtrInBounds( pointer, (IEnumerable<Value>)args );
-        }
-        
+        public Value GetElementPtrInBounds( Value pointer, params Value[ ] args ) => GetElementPtrInBounds( pointer, ( IEnumerable<Value> )args );
+
         /// <summary>Creates a <see cref="User"/> that accesses an element of a type referenced by a pointer</summary>
         /// <param name="pointer">pointer to get an element from</param>
         /// <param name="args">additional indeces for computing the resulting pointer</param>
@@ -266,7 +270,7 @@ namespace Llvm.NET
         /// basic gist is that the GEP instruction does not access memory, it only computes a pointer
         /// offset from a base. A common confusion is around the first index and what it means. For C
         /// and C++ programmers an expression like pFoo->bar seems to only have a single offset or
-        /// index. However that is only sytactic sugar where the compiler implicitly hides the first
+        /// index. However that is only syntactic sugar where the compiler implicitly hides the first
         /// index. That is, there is no difference between pFoo[0].bar and pFoo->bar except that the
         /// former makes the first index explicit. LLVM requires an explicit first index even if it is
         /// zero, in order to properly compute the offset for a given element in an aggregate type.
@@ -292,8 +296,8 @@ namespace Llvm.NET
             if( intValue is Constant )
                 return Value.FromHandle( NativeMethods.ConstIntToPtr( intValue.ValueHandle, ptrType.GetTypeRef() ) );
 
-            var hValue = NativeMethods.BuildIntToPtr( BuilderHandle, intValue.ValueHandle, ptrType.GetTypeRef(), string.Empty );
-            return Value.FromHandle( hValue );
+            var handle = NativeMethods.BuildIntToPtr( BuilderHandle, intValue.ValueHandle, ptrType.GetTypeRef(), string.Empty );
+            return Value.FromHandle( handle );
         }
 
         /// <summary>Builds a cast from a pointer to an integer type</summary>
@@ -316,21 +320,21 @@ namespace Llvm.NET
             if( ptrValue is Constant )
                 return Value.FromHandle( NativeMethods.ConstPtrToInt( ptrValue.ValueHandle, intType.GetTypeRef() ) );
 
-            var hValue = NativeMethods.BuildPtrToInt( BuilderHandle, ptrValue.ValueHandle, intType.GetTypeRef(), string.Empty );
-            return Value.FromHandle( hValue );
+            var handle = NativeMethods.BuildPtrToInt( BuilderHandle, ptrValue.ValueHandle, intType.GetTypeRef(), string.Empty );
+            return Value.FromHandle( handle );
         }
 
         public Branch Branch( BasicBlock target ) => Value.FromHandle<Branch>( NativeMethods.BuildBr( BuilderHandle, target.BlockHandle ) );
 
         public Branch Branch( Value ifCondition, BasicBlock thenTarget, BasicBlock elseTarget )
         {
-            var branchHandle = NativeMethods.BuildCondBr( BuilderHandle
-                                                        , ifCondition.ValueHandle
-                                                        , thenTarget.BlockHandle
-                                                        , elseTarget.BlockHandle
-                                                        );
+            var handle = NativeMethods.BuildCondBr( BuilderHandle
+                                                  , ifCondition.ValueHandle
+                                                  , thenTarget.BlockHandle
+                                                  , elseTarget.BlockHandle
+                                                  );
 
-            return Value.FromHandle<Branch>( branchHandle );
+            return Value.FromHandle<Branch>( handle );
         }
 
         /// <summary>Builds an Integer compare instruction</summary>
@@ -381,10 +385,11 @@ namespace Llvm.NET
         {
             if( predicate <= Predicate.LastFcmpPredicate )
                 return Compare( ( RealPredicate )predicate, lhs, rhs );
-            else if( predicate >= Predicate.FirstIcmpPredicate && predicate <= Predicate.LastIcmpPredicate )
+
+            if( predicate >= Predicate.FirstIcmpPredicate && predicate <= Predicate.LastIcmpPredicate )
                 return Compare( ( IntPredicate )predicate, lhs, rhs );
-            else
-                throw new ArgumentOutOfRangeException( nameof( predicate ), $"'{predicate}' is not a valid value for a compare predicate" );
+
+            throw new ArgumentOutOfRangeException( nameof( predicate ), $"'{predicate}' is not a valid value for a compare predicate" );
         }
 
         public Value ZeroExtendOrBitCast( Value valueRef, ITypeRef targetType )
@@ -435,21 +440,22 @@ namespace Llvm.NET
 
         public Value ZeroExtend( Value valueRef, ITypeRef targetType )
         {
+            LLVMValueRef handle;
             if( valueRef is Constant )
-                return Value.FromHandle( NativeMethods.ConstZExt( valueRef.ValueHandle, targetType.GetTypeRef() ) );
+                handle = NativeMethods.ConstZExt( valueRef.ValueHandle, targetType.GetTypeRef( ) );
             else
-                return Value.FromHandle( NativeMethods.BuildZExt( BuilderHandle, valueRef.ValueHandle, targetType.GetTypeRef(), string.Empty ) );
+                handle = NativeMethods.BuildZExt( BuilderHandle, valueRef.ValueHandle, targetType.GetTypeRef( ), string.Empty );
+
+            return Value.FromHandle( handle );
         }
 
         public Value SignExtend( Value valueRef, ITypeRef targetType )
         {
             if( valueRef is Constant )
                 return Value.FromHandle( NativeMethods.ConstSExt( valueRef.ValueHandle, targetType.GetTypeRef() ) );
-            else
-            {
-                var retValueRef = NativeMethods.BuildSExt( BuilderHandle, valueRef.ValueHandle, targetType.GetTypeRef(), string.Empty );
-                return Value.FromHandle( retValueRef );
-            }
+
+            var retValueRef = NativeMethods.BuildSExt( BuilderHandle, valueRef.ValueHandle, targetType.GetTypeRef(), string.Empty );
+            return Value.FromHandle( retValueRef );
         }
 
         public Value BitCast( Value valueRef, ITypeRef targetType )
@@ -482,8 +488,8 @@ namespace Llvm.NET
         {
             if( valueRef is Constant )
                 return Value.FromHandle( NativeMethods.ConstTrunc( valueRef.ValueHandle, targetType.GetTypeRef() ) );
-            else
-                return Value.FromHandle( NativeMethods.BuildTrunc( BuilderHandle, valueRef.ValueHandle, targetType.GetTypeRef(), string.Empty ) );
+
+            return Value.FromHandle( NativeMethods.BuildTrunc( BuilderHandle, valueRef.ValueHandle, targetType.GetTypeRef(), string.Empty ) );
         }
 
         public Value SIToFPCast( Value valueRef, ITypeRef targetType )
@@ -527,13 +533,14 @@ namespace Llvm.NET
 
         public Value ExtractValue( Value instance, uint index )
         {
-            var hResult = NativeMethods.BuildExtractValue( BuilderHandle, instance.ValueHandle, index, string.Empty );
-            return Value.FromHandle( hResult );
+            var handle = NativeMethods.BuildExtractValue( BuilderHandle, instance.ValueHandle, index, string.Empty );
+            return Value.FromHandle( handle );
         }
 
-        public Switch Switch( Value value, BasicBlock defaultCase, uint numCases )
+        public Instructions.Switch Switch( Value value, BasicBlock defaultCase, uint numCases )
         {
-            return Value.FromHandle<Switch>( NativeMethods.BuildSwitch( BuilderHandle, value.ValueHandle, defaultCase.BlockHandle, numCases ) );
+            var handle = NativeMethods.BuildSwitch( BuilderHandle, value.ValueHandle, defaultCase.BlockHandle, numCases );
+            return Value.FromHandle<Instructions.Switch>( handle );
         }
 
         public Value DoNothing( Module module )
@@ -580,6 +587,9 @@ namespace Llvm.NET
         /// </remarks>
         public Value MemCpy( Module module, Value destination, Value source, Value len, Int32 align, bool isVolatile )
         {
+            if( destination == source )
+                throw new InvalidOperationException( "Source and destination arguments for MemCopy are the same value" );
+
             var dstPtrType = destination.Type as IPointerType;
             if( dstPtrType == null )
                 throw new ArgumentException( "Pointer type expected", nameof( destination ) );
@@ -603,9 +613,10 @@ namespace Llvm.NET
             if( !srcPtrType.ElementType.IsInteger )
             {
                 srcPtrType = module.Context.Int8Type.CreatePointerType();
-                source = BitCast( destination, srcPtrType );
+                source = BitCast( source, srcPtrType );
             }
 
+            // find the name of the appropriate overloaded form
             var intrinsicName = Instructions.MemCpy.GetIntrinsicNameForArgs( dstPtrType, srcPtrType, len.Type );
             var func = module.GetFunction( intrinsicName );
             if( func == null )
@@ -754,13 +765,18 @@ namespace Llvm.NET
 
         LLVMValueRef[ ] GetValidatedGEPArgs( Value pointer, IEnumerable<Value> args)
         {
+            if( pointer == null )
+                throw new ArgumentNullException( nameof( pointer ) );
+
             if( pointer.Type.Kind != TypeKind.Pointer )
                 throw new ArgumentException( "Pointer value expected", nameof( pointer ) );
 
-            if( args.Any( a => !a.Type.IsInteger ) )
+            // if not an array already, pull from source enumerable into an array only once
+            var argsArray = args as Value[] ?? args.ToArray( );
+            if( argsArray.Any( a => !a.Type.IsInteger ) )
                 throw new ArgumentException( $"GEP index arguments must be integers" );
 
-            LLVMValueRef[ ] llvmArgs = args.Select( a => a.ValueHandle ).ToArray( );
+            LLVMValueRef[ ] llvmArgs = argsArray.Select( a => a.ValueHandle ).ToArray( );
             if( llvmArgs.Length == 0 )
                 throw new ArgumentException( "There must be at least one index argument", nameof( args ) );
 
@@ -792,15 +808,9 @@ namespace Llvm.NET
             return Value.FromHandle( valueRef );
         }
 
-        private LLVMValueRef BuildCall( Value func, params Value[] args )
-        {
-            return BuildCall( func, (IReadOnlyList<Value>)args );
-        }
+        private LLVMValueRef BuildCall( Value func, params Value[ ] args ) => BuildCall( func, ( IReadOnlyList<Value> )args );
 
-        private LLVMValueRef BuildCall( Value func )
-        {
-            return BuildCall( func, new List<Value>() );
-        }
+        private LLVMValueRef BuildCall( Value func ) => BuildCall( func, new List<Value>( ) );
 
         private LLVMValueRef BuildCall( Value func, IReadOnlyList<Value> args )
         {
@@ -822,8 +832,8 @@ namespace Llvm.NET
             {
                 if( args[i].Type != elementType.ParameterTypes[ i ] )
                 {
-                    var msg = $"Call site argument type mismatch at index {i}; argType={args[ i ].Type}; signatureType={elementType.ParameterTypes[ i ]}";
-                    System.Diagnostics.Debug.WriteLine( msg );
+                    var msg = $"Call site argument type mismatch for function {func} at index {i}; argType={args[ i ].Type}; signatureType={elementType.ParameterTypes[ i ]}";
+                    Debug.WriteLine( msg );
                     throw new ArgumentException( msg, nameof( args ) );
                 }
             }

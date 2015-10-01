@@ -34,6 +34,7 @@ LLVMSetFunctionAttributeValue
 LLVMFunctionHasAttributes
 LLVMGetFunctionAttributesAsString
 LLVMHasTargetDependentAttribute
+LLVMDIScopeGetFile
 
 ; Debug info functions not part of standard LLVM-C API
 LLVMSetDebugLoc

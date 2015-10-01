@@ -442,6 +442,9 @@ namespace Llvm.NET
         [DllImport( libraryPath, EntryPoint = "LLVMDITypeGetName", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl, BestFitMapping = false, ThrowOnUnmappableChar = true)]
         internal static extern IntPtr DITypeGetName( LLVMMetadataRef typeRef );
 
+        [DllImport( libraryPath, EntryPoint = "LLVMDIScopeGetFile", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl, BestFitMapping = false, ThrowOnUnmappableChar = true )]
+        internal static extern LLVMMetadataRef DIScopeGetFile( LLVMMetadataRef scope );
+
         [DllImport( libraryPath, EntryPoint = "LLVMGetArgumentIndex", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl, BestFitMapping = false, ThrowOnUnmappableChar = true )]
         internal static extern UInt32 GetArgumentIndex( LLVMValueRef Val );
 

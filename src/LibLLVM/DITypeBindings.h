@@ -15,6 +15,7 @@ extern "C" {
     unsigned LLVMDITypeGetFlags( LLVMMetadataRef typeRef );
     LLVMMetadataRef LLVMDITypeGetScope( LLVMMetadataRef typeRef );
     char const* LLVMDITypeGetName( LLVMMetadataRef typeRef );
+    LLVMMetadataRef LLVMDIScopeGetFile( LLVMMetadataRef typeRef );
 
 #ifdef __cplusplus
 }

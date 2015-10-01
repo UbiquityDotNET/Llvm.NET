@@ -83,6 +83,10 @@
     <Reference Include="Microsoft.CSharp" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DebugInfo\DebugArrayType.cs" />
+    <Compile Include="DebugInfo\DebugMemberInfo.cs" />
+    <Compile Include="DebugInfo\DebugPointerType.cs" />
+    <Compile Include="DebugInfo\DebugStructType.cs" />
     <Compile Include="DebugInfo\DIArray.cs" />
     <Compile Include="DebugInfo\DIBasicType.cs" />
     <Compile Include="DebugInfo\DICompileUnit.cs" />
@@ -113,7 +117,7 @@
     <Compile Include="DebugInfo\DITypeArray.cs" />
     <Compile Include="DebugInfo\DIVariable.cs" />
     <Compile Include="DebugInfo\GenericDINode.cs" />
-    <Compile Include="DebugInfo\DebugTypePair.cs" />
+    <Compile Include="DebugInfo\DebugType.cs" />
     <Compile Include="Instructions\AddressSpaceCast.cs" />
     <Compile Include="Instructions\AtomicCmpXchg.cs" />
     <Compile Include="Instructions\AtomicRMW.cs" />
@@ -137,7 +141,8 @@
     <Compile Include="Instructions\VaArg.cs" />
     <Compile Include="Metadata.cs" />
     <Compile Include="ScalarEnumerable.cs" />
-    <Compile Include="Types\DebugFunctionType.cs" />
+    <Compile Include="DebugInfo\DebugBasicType.cs" />
+    <Compile Include="DebugInfo\DebugFunctionType.cs" />
     <Compile Include="Types\ITypeRef.cs" />
     <Compile Include="Values\Argument.cs" />
     <Compile Include="Types\ArrayType.cs" />

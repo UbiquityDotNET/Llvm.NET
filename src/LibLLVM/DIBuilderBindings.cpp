@@ -227,7 +227,7 @@ extern "C"
                                                     )
     {
         DIBuilder *D = unwrap( Dref );
-        DIDerivedType* T = D->createPointerType( unwrap<DIType>( PointeeType )
+        DIDerivedType* T = D->createPointerType( PointeeType ? unwrap<DIType>( PointeeType ) : nullptr // nullptr == void
                                                 , SizeInBits
                                                 , AlignInBits
                                                 , Name
