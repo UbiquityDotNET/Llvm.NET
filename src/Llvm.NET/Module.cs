@@ -427,16 +427,12 @@ namespace Llvm.NET
         /// <param name="tParam"></param>
         /// <param name="decl"></param>
         /// <returns>Function described by the arguments</returns>
-        /// <remarks>
-        /// The <paramref name="signature"/> parameter must have a non <see langword="null"/>  <see cref="ITypeRef.DIType"/> property.
-        /// This is normally achieved by creating the signature via <see cref="O:Context.CreateFunctionType"/>.
-        /// </remarks>
         public Function CreateFunction( DIScope scope
                                       , string name
                                       , string linkageName
                                       , DIFile file
                                       , uint line
-                                      , IFunctionType signature
+                                      , DebugFunctionType signature
                                       , bool isLocalToUnit
                                       , bool isDefinition
                                       , uint scopeLine
@@ -450,7 +446,7 @@ namespace Llvm.NET
                 throw new ArgumentException("Name cannot be null, empty or whitespace", nameof( name ) );
 
             var func = AddFunction( linkageName ?? name, signature );
-            var diSignature = signature.DIType as DISubroutineType;
+            var diSignature = signature.DIType;
             Debug.Assert( diSignature != null );
             var diFunc = DIBuilder.CreateFunction( scope: scope
                                                  , name: name
@@ -511,7 +507,7 @@ namespace Llvm.NET
 
         internal LLVMModuleRef ModuleHandle { get; private set; }
 
-        private ExtensiblePropertyContainer PropertyBag = new ExtensiblePropertyContainer( );
+        private readonly ExtensiblePropertyContainer PropertyBag = new ExtensiblePropertyContainer( );
         private readonly Lazy<DebugInfoBuilder> DIBuilder_;
     }
 }

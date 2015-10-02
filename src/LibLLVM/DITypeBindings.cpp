@@ -50,4 +50,10 @@ extern "C"
         DIType* pType = unwrap<DIType>( typeRef );
         return pType->getName( ).data( );
     }
+
+    LLVMMetadataRef LLVMDIScopeGetFile( LLVMMetadataRef typeRef )
+    {
+        DIType* pType = unwrap<DIType>( typeRef );
+        return wrap( pType->getFile() );
+    }
 }

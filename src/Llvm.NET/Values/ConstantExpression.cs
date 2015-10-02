@@ -14,7 +14,7 @@ namespace Llvm.NET.Values
             if( value.Type.Kind != TypeKind.Integer )
                 throw new ArgumentException( "Integer Type expected", nameof( value ) );
 
-            if( !( type is PointerType ) )
+            if( !( type is IPointerType ) )
                 throw new ArgumentException( "pointer type expected", nameof( type ) );
 
             return FromHandle<Constant>( NativeMethods.ConstIntToPtr( value.ValueHandle, type.GetTypeRef() ) );
@@ -22,7 +22,8 @@ namespace Llvm.NET.Values
 
         public static Constant BitCast( Constant value, ITypeRef toType )
         {
-            return FromHandle<Constant>( NativeMethods.ConstBitCast( value.ValueHandle, toType.GetTypeRef() ) );
+            var handle = NativeMethods.ConstBitCast( value.ValueHandle, toType.GetTypeRef( ) );
+            return FromHandle<Constant>( handle );
         }
 
         internal ConstantExpression( LLVMValueRef valueRef )
@@ -34,6 +35,5 @@ namespace Llvm.NET.Values
             : base( preValidated ? valueRef : ValidateConversion( valueRef, NativeMethods.IsAConstantExpr ) )
         {
         }
-
     }
 }

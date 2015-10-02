@@ -7,7 +7,6 @@ namespace Llvm.NET.Types
     /// <summary>LLVM Type</summary>
     internal class TypeRef 
         : ITypeRef
-        , IExtensiblePropertyContainer
     {
         public IntPtr TypeHandle => TypeHandle_.Pointer;
 
@@ -90,13 +89,6 @@ namespace Llvm.NET.Types
         /// <remarks>This is a getter function instead of a property as it can throw exceptions</remarks>
         public Constant GetNullValue() => Constant.NullValueFor( this );
 
-        /// <inheritdoc/>
-        /// <remarks>
-        /// This is virtual to allow blocking assignment for a raw FunctionType as, unlike all
-        /// other types, there is a one to many relationship for FunctionType to DISubroutineType
-        /// </remarks>
-        public virtual DIType DIType { get; set; }
-
         /// <summary>Retrieves an expression that results in the size of the type</summary>
         [Obsolete("Use TargetData layout information to compute size and create a constant from that")]
         public Constant GetSizeOfExpression( int pointerSize )
@@ -149,46 +141,6 @@ namespace Llvm.NET.Types
             return NativeMethods.MarshalMsg( msgString );
         }
 
-        public void ReplaceAllUsesOfDebugTypeWith( DICompositeType compositeType )
-        {
-            DIType.ReplaceAllUsesWith( compositeType );
-            DIType = compositeType;
-        }
-
-        /// <summary>Creates a pointer type with debug information</summary>
-        /// <param name="module">Module to use for building debug information</param>
-        /// <param name="addressSpace">Address space of the pointer</param>
-        /// <returns><see cref="IPointerType"/></returns>
-        public IPointerType CreatePointerType( Module module, uint addressSpace )
-        {
-            if( DIType == null )
-                throw new ArgumentException( "Type does not have associated Debug type from which to construct a pointer type" );
-
-            var retVal = CreatePointerType( addressSpace );
-            var diPtr = module.DIBuilder.CreatePointerType( DIType
-                                                          , string.Empty
-                                                          , module.Layout.BitSizeOf( retVal )
-                                                          , module.Layout.AbiBitAlignmentOf( retVal )
-                                                          );
-            retVal.DIType = diPtr;
-            return retVal;
-        }
-
-        public IArrayType CreateArrayType( Module module, uint lowerBound, uint count )
-        {
-            if( DIType == null )
-                throw new ArgumentException( "Type does not have associated Debug type from which to construct an array type" );
-
-            var llvmArray = CreateArrayType( count );
-            var diArray = module.DIBuilder.CreateArrayType( module.Layout.BitSizeOf( llvmArray )
-                                                          , module.Layout.AbiBitAlignmentOf( llvmArray )
-                                                          , DIType
-                                                          , module.DIBuilder.CreateSubrange( lowerBound, count )
-                                                          );
-            llvmArray.DIType = diArray;
-            return llvmArray;
-        }
-
         internal TypeRef( LLVMTypeRef typeRef )
         {
             TypeHandle_ = typeRef;
@@ -202,6 +154,7 @@ namespace Llvm.NET.Types
         }
 
         internal static TypeRef FromHandle( LLVMTypeRef typeRef ) => FromHandle<TypeRef>( typeRef );
+
         internal static T FromHandle<T>( LLVMTypeRef typeRef )
             where T : class, ITypeRef
 
@@ -252,6 +205,6 @@ namespace Llvm.NET.Types
         }
 
         internal readonly LLVMTypeRef TypeHandle_;
-        private ExtensiblePropertyContainer ExtensibleProperties = new ExtensiblePropertyContainer( );
+        private readonly ExtensiblePropertyContainer ExtensibleProperties = new ExtensiblePropertyContainer( );
     }
 }

@@ -231,7 +231,12 @@ namespace Llvm.NET.DebugInfo
 
         public DIDerivedType CreatePointerType( DIType pointeeType, string name, ulong bitSize, ulong bitAlign)
         {
-            var handle = NativeMethods.DIBuilderCreatePointerType( BuilderHandle, pointeeType.MetadataHandle, bitSize, bitAlign, name ?? string.Empty );
+            var handle = NativeMethods.DIBuilderCreatePointerType( BuilderHandle
+                                                                 , pointeeType?.MetadataHandle ?? LLVMMetadataRef.Zero // null == void
+                                                                 , bitSize
+                                                                 , bitAlign
+                                                                 , name ?? string.Empty
+                                                                 );
             return new DIDerivedType( handle );
         }
 

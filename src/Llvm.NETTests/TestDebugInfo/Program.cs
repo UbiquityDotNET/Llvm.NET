@@ -1,11 +1,10 @@
-﻿using System;
-using System.IO;
-using System.Linq;
-using Llvm.NET;
+﻿using Llvm.NET;
 using Llvm.NET.DebugInfo;
 using Llvm.NET.Instructions;
 using Llvm.NET.Types;
 using Llvm.NET.Values;
+using System;
+using System.IO;
 
 namespace TestDebugInfo
 {
@@ -28,6 +27,9 @@ namespace TestDebugInfo
             new AttributeValue( "unsafe-fp-math", "false" ),
             new AttributeValue( "use-soft-float", "false" )
         };
+
+        // obviously this is not clang but using an identical name helps in diff with actual clang output
+        const string VersionIdentString = "clang version 3.7.0 (tags/RELEASE_370/final)";
 
         /// <summary>Creates a test LLVM module with debug information</summary>
         /// <param name="args">ignored</param>
@@ -69,6 +71,7 @@ namespace TestDebugInfo
                 Console.Error.WriteLine( "Src file not found: '{0}'", srcPath );
                 return;
             }
+            srcPath = Path.GetFullPath( srcPath );
 
             StaticState.RegisterAll( );
             var target = Target.FromTriple( Triple );
@@ -84,7 +87,7 @@ namespace TestDebugInfo
                 var cu = module.DIBuilder.CreateCompileUnit( SourceLanguage.C99
                                                             , Path.GetFileName( srcPath )
                                                             , Path.GetDirectoryName( srcPath )
-                                                            , "clang version 3.7.0 " // obviously this is not clang but helps in diff with actual clang output
+                                                            , VersionIdentString
                                                             , false
                                                             , ""
                                                             , 0
@@ -92,18 +95,23 @@ namespace TestDebugInfo
                 var diFile = module.DIBuilder.CreateFile( srcPath );
 
                 // Create basic types used in this compilation
-                module.Context.Int32Type.CreateDIType( module, "int", cu );
-                module.Context.FloatType.CreateDIType( module, "float", cu );
-                var i32 = module.Context.Int32Type;
-                var f32 = module.Context.FloatType;
+                var i32 = new DebugBasicType( module.Context.Int32Type, module, "int", DiTypeKind.Signed );
+                var f32 = new DebugBasicType( module.Context.FloatType, module, "float", DiTypeKind.Float );
+                var voidType = DebugType.Create( module.Context.VoidType, ( DIType )null );
                 var i32Array_0_2 = i32.CreateArrayType( module, 0, 2 );
 
                 // create the LLVM structure type and body
                 // The full body is used with targetMachine.TargetData to determine size, alignment and element offsets
                 // in a target independent manner.
-                var fooType = module.Context.CreateStructType( "struct.foo" );
-                fooType.CreateDIType( module, "foo", cu );
-                fooType.SetBody( false, i32, f32, i32Array_0_2 );
+                var fooType = new DebugStructType( module, "struct.foo", cu, "foo" );
+                
+                // Create concrete debug type with full debug information
+                var fooBody = new [ ]
+                    { new DebugMemberInfo { File = diFile, Line = 3, Name = "a", Type = i32, Index = 0 }
+                    , new DebugMemberInfo { File = diFile, Line = 4, Name = "b", Type = f32, Index = 1 }
+                    , new DebugMemberInfo { File = diFile, Line = 5, Name = "c", Type = i32Array_0_2, Index = 2 }
+                    };
+                fooType.SetBody( false, module, cu, diFile, 1, 0, fooBody );
 
                 // add global variables and constants
                 var constArray = ConstantArray.From( i32, module.Context.CreateConstant( 3 ), module.Context.CreateConstant( 4 ));
@@ -127,11 +135,11 @@ namespace TestDebugInfo
                 module.AddModuleFlag( ModuleFlagBehavior.Warning, Module.DwarfVersionValue, 4 );
                 module.AddModuleFlag( ModuleFlagBehavior.Warning, Module.DebugVersionValue, Module.DebugMetadataVersion );
                 module.AddModuleFlag( ModuleFlagBehavior.Error, "PIC Level", 2 );
-                module.AddVersionIdentMetadata( "clang version 3.7.0 " );
+                module.AddVersionIdentMetadata( VersionIdentString );
 
                 // create types for function args
                 var constFoo = module.DIBuilder.CreateQualifiedType( fooType.DIType, QualifiedTypeTag.Const );
-                var fooPtr = fooType.CreatePointerType( module );
+                var fooPtr = new DebugPointerType( fooType, module );
                 // Create function signatures
 
                 // Since the the first parameter is passed by value 
@@ -140,16 +148,16 @@ namespace TestDebugInfo
                 // However, that usage would create a signature with two
                 // pointers as the arguments, which doesn't match the source
                 // To get the correct debug info signature this inserts an
-                // explicit ParameterTypePair that overrides the default
+                // explicit DebugType<> that overrides the default
                 // behavior to pair LLVM pointer type with the original
                 // source type.
                 var copySig = module.Context.CreateFunctionType( module.DIBuilder
                                                                , diFile
-                                                               , module.Context.VoidType
-                                                               , new DebugTypePair<DIDerivedType>( fooPtr, constFoo )
+                                                               , voidType
+                                                               , DebugType.Create( fooPtr, constFoo )
                                                                , fooPtr
                                                                );
-                var doCopySig = module.Context.CreateFunctionType( module.DIBuilder, diFile, module.Context.VoidType );
+                var doCopySig = module.Context.CreateFunctionType( module.DIBuilder, diFile, voidType );
 
                 // Create the functions
                 // NOTE: The declaration ordering is reveresd from that of the sample code file (test.c)
@@ -187,9 +195,6 @@ namespace TestDebugInfo
                 CreateDoCopyFunctionBody( module, targetData, doCopyFunc, fooType, bar, baz, copyFunc );
                 CreateCopyFunctionBody( module, targetData, copyFunc, diFile, fooType, fooPtr, constFoo );
 
-                // fill in the debug info body for type foo
-                FinalizeFooDebugInfo( module.DIBuilder, targetData, cu, diFile, fooType );
-
                 // finalize the debug information
                 // all temporaries must be replaced by now, this resolves any remaining
                 // forward declarations and marks the builder to prevent adding any
@@ -213,72 +218,13 @@ namespace TestDebugInfo
             }
         }
 
-        private static void FinalizeFooDebugInfo( DebugInfoBuilder diBuilder
-                                                , TargetData layout
-                                                , DICompileUnit cu
-                                                , DIFile diFile
-                                                , IStructType foo
-                                                )
-        {
-            // Create concrete DIType and RAUW of the opaque one with the complete version
-            // While this two phase approach might not seem strictly necessary in this sample
-            // it actually is, due to how the member's scope requires a DIType. So this
-            // is creating members that are linked to the temporary DIType as the parent scope
-            // but attached to the newly created concrete type. The discrepency is resolved
-            // when ReplaceAllUsesOfDebugTypeWith() is called to replace all instances of the
-            // temporary type with the final concrete type ending up with the members properly
-            // referring to the containing type as the scope.
-            var diFields = new DIType[ ]
-                { diBuilder.CreateMemberType( scope: foo.DIType
-                                            , name: "a"
-                                            , file: diFile
-                                            , line: 3
-                                            , bitSize: layout.BitSizeOf( foo.Members[0] )
-                                            , bitAlign: layout.AbiBitAlignmentOf( foo.Members[0] )
-                                            , bitOffset: layout.BitOffsetOfElement( foo, 0 )
-                                            , flags: 0
-                                            , type: foo.Members[0].DIType
-                                            )
-                , diBuilder.CreateMemberType( scope: foo.DIType
-                                            , name: "b"
-                                            , file: diFile
-                                            , line: 4
-                                            , bitSize: layout.BitSizeOf( foo.Members[1] )
-                                            , bitAlign: layout.AbiBitAlignmentOf( foo.Members[1] )
-                                            , bitOffset: layout.BitOffsetOfElement( foo, 1 )
-                                            , flags: 0
-                                            , type: foo.Members[1].DIType
-                                            )
-                , diBuilder.CreateMemberType( scope: foo.DIType
-                                            , name: "c"
-                                            , file: diFile
-                                            , line: 5
-                                            , bitSize: layout.BitSizeOf( foo.Members[2] )
-                                            , bitAlign: layout.AbiBitAlignmentOf( foo.Members[2] )
-                                            , bitOffset: layout.BitOffsetOfElement( foo, 2 )
-                                            , flags: 0
-                                            , type: foo.Members[2].DIType
-                                            )
-                };
-            var fooConcrete = diBuilder.CreateStructType( scope: cu
-                                                        , name: "foo"
-                                                        , file: diFile
-                                                        , line: 1
-                                                        , bitSize: layout.BitSizeOf( foo )
-                                                        , bitAlign: layout.AbiBitAlignmentOf( foo )
-                                                        , flags: 0
-                                                        , derivedFrom: null
-                                                        , elements: diFields.AsEnumerable() );
-            foo.ReplaceAllUsesOfDebugTypeWith( fooConcrete );
-        }
-
         private static void CreateCopyFunctionBody( Module module
                                                   , TargetData layout
                                                   , Function copyFunc
                                                   , DIFile diFile
-                                                  , IStructType foo
-                                                  , IPointerType fooPtr
-                                                  , DIDerivedType constFooType
+                                                  , ITypeRef foo
+                                                  , DebugPointerType fooPtr
+                                                  , DIType constFooType
                                                   )
         {
             var diBuilder = module.DIBuilder;
