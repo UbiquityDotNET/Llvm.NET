@@ -6,6 +6,33 @@ using Llvm.NET.Values;
 namespace Llvm.NET
 {
     /// <summary>Provides access to LLVM target data layout information</summary>
+    /// <remarks>
+    /// <para>There is a distinction between various sizes and alignment for a given type
+    /// that are target dependent.</para>
+    /// <para>The following table illustrates the differences in sizes and their meaning
+    ///  for a sample set of types.</para>
+    /// <list type="table">
+    ///   <listheader>
+    ///   <term>Type</term>
+    ///   <term>SizeInBits</term>
+    ///   <term>StoreSizeInBits</term>
+    ///   <term>AllocSizeInBits</term>
+    ///   </listheader>
+    ///   <item><term>i1</term>         <term>1</term>   <term>8</term>   <term>8</term></item>
+    ///   <item><term>i8</term>         <term>8</term>   <term>8</term>   <term>8</term></item>
+    ///   <item><term>i19</term>        <term>19</term>  <term>24</term>  <term>32</term></item>
+    ///   <item><term>i32</term>        <term>32</term>  <term>32</term>  <term>32</term></item>
+    ///   <item><term>i100</term>       <term>100</term> <term>104</term> <term>128</term></item>
+    ///   <item><term>i128</term>       <term>128</term> <term>128</term> <term>128</term></item>
+    ///   <item><term>Float</term>      <term>32</term>  <term>32</term>  <term>32</term></item>
+    ///   <item><term>Double</term>     <term>64</term>  <term>64</term>  <term>64</term></item>
+    ///   <item><term>X86_FP80</term>   <term>80</term>  <term>80</term>  <term>96</term></item>
+    /// </list>
+    /// <note type="note">
+    /// The alloc size depends on the alignment, and thus on the target.
+    /// The values in the example table are for x86-32-linux.
+    /// </note>
+    /// </remarks>
     public class TargetData
         : IDisposable
     {
@@ -36,30 +63,8 @@ namespace Llvm.NET
         /// <param name="typeRef">Type to retrieve the size of</param>
         /// <remarks>
         /// <para>This method determines the bit size of a type (e.g. the maximum number of
-        /// bits required to hold a value of the given type.) This is distinct from the sorage
-        /// and stack size due to various target alignment requirements. The following table
-        /// illustrates the differences in sizes and their meaning for a sample set of types.</para>
-        /// <list type="table">
-        ///   <listheader>
-        ///   <term>Type</term>
-        ///   <term>SizeInBits</term>
-        ///   <term>StoreSizeInBits</term>
-        ///   <term>AllocSizeInBits</term>
-        ///   </listheader>
-        ///   <item><term>i1</term>         <term>1</term>   <term>8</term>   <term>8</term></item>
-        ///   <item><term>i8</term>         <term>8</term>   <term>8</term>   <term>8</term></item>
-        ///   <item><term>i19</term>        <term>19</term>  <term>24</term>  <term>32</term></item>
-        ///   <item><term>i32</term>        <term>32</term>  <term>32</term>  <term>32</term></item>
-        ///   <item><term>i100</term>       <term>100</term> <term>104</term> <term>128</term></item>
-        ///   <item><term>i128</term>       <term>128</term> <term>128</term> <term>128</term></item>
-        ///   <item><term>Float</term>      <term>32</term>  <term>32</term>  <term>32</term></item>
-        ///   <item><term>Double</term>     <term>64</term>  <term>64</term>  <term>64</term></item>
-        ///   <item><term>X86_FP80</term>   <term>80</term>  <term>80</term>  <term>96</term></item>
-        /// </list>
-        /// <note type="note">
-        /// The alloc size depends on the alignment, and thus on the target.
-        /// The values in the example table are for x86-32 linux.
-        /// </note>
+        /// bits required to hold a value of the given type.) This is distinct from the storage
+        /// and stack size due to various target alignment requirements.</para>
         ///</remarks>
         public ulong BitSizeOf( ITypeRef typeRef )
         {
