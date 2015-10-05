@@ -85,6 +85,15 @@ namespace Llvm.NET.DebugInfo
             return retVal;
         }
 
+        public DINamespace CreateNamespace( DIScope scope, string name, DIFile file, uint line )
+        {
+            if( string.IsNullOrWhiteSpace( name ) )
+                throw new ArgumentException( "name cannot be null or empty", nameof( name ) );
+
+            var handle = NativeMethods.DIBuilderCreateNamespace( BuilderHandle, scope?.MetadataHandle ?? LLVMMetadataRef.Zero, name, file.MetadataHandle, line );
+            return new DINamespace( handle );
+        }
+
         public DIFile CreateFile( string path )
         {
             if( string.IsNullOrWhiteSpace( path ) )
@@ -366,9 +375,15 @@ namespace Llvm.NET.DebugInfo
             return CreateArrayType( bitSize, bitAlign, elementType, GetOrCreateArray( subScripts ) );
         }
 
-        public DIDerivedType CreateTypedef(DIType type, string name, DIFile file, uint line, DINode context )
+        public DIDerivedType CreateTypedef( DIType type, string name, DIFile file, uint line, DINode context )
         {
-            var handle = NativeMethods.DIBuilderCreateTypedef( BuilderHandle, type.MetadataHandle, name, file.MetadataHandle, line, context.MetadataHandle );
+            var handle = NativeMethods.DIBuilderCreateTypedef( BuilderHandle
+                                                             , type?.MetadataHandle ?? LLVMMetadataRef.Zero
+                                                             , name
+                                                             , file?.MetadataHandle  ?? LLVMMetadataRef.Zero
+                                                             , line
+                                                             , context?.MetadataHandle ?? LLVMMetadataRef.Zero
+                                                             );
             return new DIDerivedType( handle );
         }
 

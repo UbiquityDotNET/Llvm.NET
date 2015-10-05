@@ -378,7 +378,7 @@ LLVMMetadataRef LLVMDIBuilderCreateReplaceableCompositeType( LLVMDIBuilderRef Dr
                                                 )
     {
         DIBuilder *D = unwrap( Dref );
-        DIDerivedType* DT = D->createTypedef( unwrap<DIType>( Ty )
+        DIDerivedType* DT = D->createTypedef( Ty ? unwrap<DIType>( Ty ) : nullptr
                                              , Name
                                              , File ? unwrap<DIFile>( File ) : nullptr
                                              , Line
@@ -585,5 +585,16 @@ LLVMMetadataRef LLVMDIBuilderCreateReplaceableCompositeType( LLVMDIBuilderRef Dr
     {
         DISubprogram* pSub = unwrap<DISubprogram>( subProgram );
         return pSub->describes( unwrap<Function>( F ) );
+    }
+
+    LLVMMetadataRef LLVMDIBuilderCreateNamespace( LLVMDIBuilderRef Dref, LLVMMetadataRef scope, char const* name, LLVMMetadataRef file, unsigned line )
+    {
+        DIBuilder* D = unwrap( Dref );
+        DINamespace* pNamespace = D->createNameSpace( scope ? unwrap<DIScope>( scope ) : nullptr
+                                                    , name
+                                                    , unwrap<DIFile>( file )
+                                                    , line
+                                                    );
+        return wrap( pNamespace );
     }
 }
