@@ -22,8 +22,8 @@ namespace Llvm.NET
     /// <para>LLVM Debug information is ultimately all parented to a top level
     /// <see cref="DebugInfo.DICompileUnit"/> as the scope, and a compilation
     /// unit is bound to a module, even though, technically the types are owned
-    /// by a context. Thus to keep things simpler and help make working with
-    /// debug infomration easier. Lllvm.NET encapsulates the context into a
+    /// by a context. Thus, to keep things simpler and help make working with
+    /// debug infomration easier, Lllvm.NET encapsulates the context into a
     /// <see cref="Module"/>. This establishes a strict one to one <see cref="Module"/>
     /// and context. Doing this allows Llvm.NET to add debug information
     /// properties to <see cref="Types.ITypeRef"/>s and other classes. It also
@@ -324,7 +324,7 @@ namespace Llvm.NET
 
             var valueHandles = values.Select( v => v.ValueHandle ).ToArray( );
             if( type.Members.Count != valueHandles.Length )
-                throw new ArgumentException( "Number of values provided, must match the number of elements in the specified type" );
+                throw new ArgumentException( "Number of values provided must match the number of elements in the specified type" );
 
             var handle = NativeMethods.ConstNamedStruct(type.GetTypeRef(), out valueHandles[ 0 ], ( uint )valueHandles.Length );
             return Value.FromHandle<Constant>( handle );
@@ -426,9 +426,9 @@ namespace Llvm.NET
         public Constant CreateConstant( bool constValue )
         {
             var handle = NativeMethods.ConstInt( BoolType.GetTypeRef()
-                                            , ( ulong )( constValue ? 1 : 0 )
-                                            , new LLVMBool( 0 )
-                                            );
+                                               , ( ulong )( constValue ? 1 : 0 )
+                                               , new LLVMBool( 0 )
+                                               );
             return Value.FromHandle<Constant>( handle );
         }
 

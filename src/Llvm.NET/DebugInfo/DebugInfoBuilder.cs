@@ -150,7 +150,7 @@ namespace Llvm.NET.DebugInfo
                                                               , scope.MetadataHandle
                                                               , name
                                                               , mangledName
-                                                              , file.MetadataHandle
+                                                              , file?.MetadataHandle ?? LLVMMetadataRef.Zero
                                                               , line
                                                               , compositeType.MetadataHandle
                                                               , isLocalToUnit ? 1 : 0
