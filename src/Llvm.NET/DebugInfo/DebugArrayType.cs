@@ -1,4 +1,5 @@
-﻿using Llvm.NET.Types;
+﻿using System;
+using Llvm.NET.Types;
 
 namespace Llvm.NET.DebugInfo
 {
@@ -7,21 +8,34 @@ namespace Llvm.NET.DebugInfo
         : DebugType<IArrayType, DICompositeType>
         , IArrayType
     {
+        public DebugArrayType( IArrayType llvmType, IDebugType<ITypeRef, DIType> elementType, Module module, uint count, uint lowerBound = 0 )
+            : base( llvmType
+                  , module.DIBuilder.CreateArrayType( module.Layout.BitSizeOf( llvmType )
+                                                    , module.Layout.AbiBitAlignmentOf( llvmType )
+                                                    , elementType.DIType
+                                                    , module.DIBuilder.CreateSubrange( lowerBound, count )
+                                                    )
+                  )
+        {
+            if( llvmType.ElementType.TypeHandle != elementType.TypeHandle )
+                throw new ArgumentException( "elementType doesn't match array element type" );
+
+            DebugElementType = elementType;
+        }
+
         /// <summary>Constructs a new <see cref="DebugArrayType"/></summary>
         /// <param name="elementType">Type of elements in the array</param>
         /// <param name="module"><see cref="Module"/> to use for the context of the debug information</param>
         /// <param name="count">Number of elements in the array</param>
         /// <param name="lowerBound">Lowerbound value for the array indeces [Default: 0]</param>
         public DebugArrayType( IDebugType<ITypeRef, DIType> elementType, Module module, uint count, uint lowerBound = 0 )
-            : base( elementType.CreateArrayType( count )
-                  , module.DIBuilder.CreateArrayType( module.Layout.BitSizeOf( elementType )
-                                                    , module.Layout.AbiBitAlignmentOf( elementType )
-                                                    , elementType.DIType
-                                                    , module.DIBuilder.CreateSubrange( lowerBound, count )
-                                                    )
+            : this( elementType.CreateArrayType( count )
+                  , elementType
+                  , module
+                  , count
+                  , lowerBound
                   )
         {
-            DebugElementType = elementType;
         }
 
         /// <summary>Constructs a new <see cref="DebugArrayType"/></summary>
