@@ -21,16 +21,11 @@ namespace Llvm.NET
     ///</para>
     /// <para>LLVM Debug information is ultimately all parented to a top level
     /// <see cref="DebugInfo.DICompileUnit"/> as the scope, and a compilation
-    /// unit is bound to a module, even though, technically the types are owned
-    /// by a context. Thus to keep things simpler and help make working with
-    /// debug infomration easier. Lllvm.NET encapsulates the context into a
-    /// <see cref="Module"/>. This establishes a strict one to one <see cref="Module"/>
-    /// and context. Doing this allows Llvm.NET to add debug information
-    /// properties to <see cref="Types.ITypeRef"/>s and other classes. It also
-    /// allows for establishing a fluent style programming for adding debug
-    /// location information to instructions. While this is a technical departure
-    /// from the underlying LLVM implementation the significant simplification
-    /// of managing debug information makes it worth the small deviation.</para>
+    /// unit is bound to a <see cref="Module"/>, even though, technically the
+    /// types are owned by a Context. Thus to keep things simpler and help make
+    /// working with debug infomration easier. Lllvm.NET encapsulates the native
+    /// type and the debug type in seperate classes that are instances of the
+    /// <see cref="IDebugType{NativeT, DebugT}"/> interface </para>
     /// <note type="note">It is important to be aware of the fact that a Context
     /// is not thread safe. The context itself and the object instances it owns
     /// are intended for use by a single thread only. Accessing and manipulating
@@ -39,6 +34,12 @@ namespace Llvm.NET
     /// </remarks>
     public sealed class Context 
     {
+        /// <summary>Creates a new context</summary>
+        public Context( )
+            : this( NativeMethods.ContextCreate( ) )
+        {
+        }
+
         /// <summary>Flag to indicate if this instance is still valid</summary>
         public bool IsDisposed => ContextHandle.Pointer == IntPtr.Zero;
 
@@ -672,11 +673,6 @@ namespace Llvm.NET
             return retVal;
         }
         #endregion
-
-        internal Context( )
-            : this( NativeMethods.ContextCreate( ) )
-        {
-        }
 
         private Context( LLVMContextRef contextRef )
         {

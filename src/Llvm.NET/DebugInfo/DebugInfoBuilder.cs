@@ -5,42 +5,26 @@ using Llvm.NET.Values;
 using Llvm.NET.Instructions;
 using System.IO;
 
-// for now the DebugInfo hierarchy is mostly empty
-// classes. This is due to the "in transition" state
-// of the underlying LLVM C++ model. All of these
-// are just a wrapper around a Metadata* allocated
-// in the LLVM native libraries. The only properties
-// or methods exposed are those required by current
-// projects. This keeps the code churn to move into
-// 3.8 minimal while allowing us to achieve progress
-// on current projects.
-
 namespace Llvm.NET.DebugInfo
 {
-    /// <summary>DebugInfoBuilder is a factory class for creating DebugInformation for an LLVM <see cref="Module"/></summary>
+    /// <summary>DebugInfoBuilder is a factory class for creating DebugInformation for an LLVM
+    /// <see cref="Module"/></summary>
     /// <remarks>
-    /// Many Debug information metadata nodes are created with unresolved references to additional metadata. To ensure such
-    /// metadata is resolved applications should call the <see cref="Finish"/> method to resolve and finalize the metadata.
-    /// After this point only fully resolved nodes may be added to ensure that the data remains valid.
+    /// Many Debug information metadata nodes are created with unresolved references to additional
+    /// metadata. To ensure such metadata is resolved applications should call the <see cref="Finish"/>
+    /// method to resolve and finalize the metadata. After this point only fully resolved nodes may
+    /// be added to ensure that the data remains valid.
     /// </remarks>
     public sealed class DebugInfoBuilder : IDisposable
     {
-        internal DebugInfoBuilder( Module owningModule )
-            : this( owningModule, true )
-        {
-        }
-
-        // keeping this private for now as there doesn't seem to be a good reason to support
-        // allowUnresolved == false
-        private DebugInfoBuilder( Module owningModule, bool allowUnresolved )
-        {
-            if( owningModule == null )
-                throw new ArgumentNullException( nameof( owningModule ) );
-
-            BuilderHandle = NativeMethods.NewDIBuilder( owningModule.ModuleHandle, allowUnresolved );
-            OwningModule = owningModule;
-        }
-
+        /// <summary>Creates a new <see cref="DICompileUnit"/></summary>
+        /// <param name="language"><see cref="SourceLanguage"/> for the compilation unit</param>
+        /// <param name="srcFilePath">Full path to the source file of this compilation unit</param>
+        /// <param name="producer">Name of the application processing the compilation unit</param>
+        /// <param name="optimized">Flag to indicate if the code in this compilation unit is optimized</param>
+        /// <param name="flags">Additional tool specific flags</param>
+        /// <param name="runtimeVersion">Runtime version</param>
+        /// <returns><see cref="DICompileUnit"/></returns>
         public DICompileUnit CreateCompileUnit( SourceLanguage language
                                               , string srcFilePath
                                               , string producer
@@ -59,6 +43,15 @@ namespace Llvm.NET.DebugInfo
                                     );
         }
 
+        /// <summary>Creates a new <see cref="DICompileUnit"/></summary>
+        /// <param name="language"><see cref="SourceLanguage"/> for the compilation unit</param>
+        /// <param name="fileName">Name of the source file of this compilation unit (without any path)</param>
+        /// <param name="fileDirectory">Path of the directory containing the file</param>
+        /// <param name="producer">Name of the application processing the compilation unit</param>
+        /// <param name="optimized">Flag to indicate if the code in this compilation unit is optimized</param>
+        /// <param name="flags">Additional tool specific flags</param>
+        /// <param name="runtimeVersion">Runtime version</param>
+        /// <returns><see cref="DICompileUnit"/></returns>
         public DICompileUnit CreateCompileUnit( SourceLanguage language
                                               , string fileName
                                               , string fileDirectory
@@ -85,6 +78,12 @@ namespace Llvm.NET.DebugInfo
             return retVal;
         }
 
+        /// <summary>Creates a <see cref="DINamespace"/></summary>
+        /// <param name="scope">Containing scope for the namespace or null if the namespace is a global one</param>
+        /// <param name="name">Name of the namespace</param>
+        /// <param name="file">Source file containing the declaration (may be null if more than one or not known)</param>
+        /// <param name="line">Line number of the namespace declaration</param>
+        /// <returns></returns>
         public DINamespace CreateNamespace( DIScope scope, string name, DIFile file, uint line )
         {
             if( string.IsNullOrWhiteSpace( name ) )
@@ -94,18 +93,31 @@ namespace Llvm.NET.DebugInfo
             return new DINamespace( handle );
         }
 
+        /// <summary>Creates a <see cref="DIFile"/></summary>
+        /// <param name="path">Path of the file (may be <see langword="null"/> or empty)</param>
+        /// <returns>
+        /// <see cref="DIFile"/> or <see langword="null"/> if <paramref name="path"/>
+        /// is <see langword="null"/> empty, or all whitespace
+        /// </returns>
         public DIFile CreateFile( string path )
         {
             if( string.IsNullOrWhiteSpace( path ) )
-                throw new ArgumentException( "Path cannot be null, empty or whitespace" );
+                return null;
 
             return CreateFile( Path.GetFileName( path ), Path.GetDirectoryName( path ) );
         }
 
+        /// <summary>Creates a <see cref="DIFile"/></summary>
+        /// <param name="fileName">Name of the file (may be <see langword="null"/> or empty)</param>
+        /// <param name="directory">Path of the directory containing the file (may be <see langword="null"/> or empty)</param>
+        /// <returns>
+        /// <see cref="DIFile"/> or <see langword="null"/> if <paramref name="fileName"/>
+        /// is <see langword="null"/> empty, or all whitespace
+        /// </returns>
         public DIFile CreateFile( string fileName, string directory )
         {
             if( string.IsNullOrWhiteSpace( fileName ) )
-                throw new ArgumentException( "File name cannot be empty or null" );
+                return null;
 
             var handle = NativeMethods.DIBuilderCreateFile( BuilderHandle, fileName, directory??string.Empty );
             // REVIEW: should this deal with uniquing? if so, is it per context? Per module? ...?
@@ -559,6 +571,22 @@ namespace Llvm.NET.DebugInfo
                 NativeMethods.DIBuilderDestroy( BuilderHandle );
                 BuilderHandle = default(LLVMDIBuilderRef);
             }
+        }
+
+        internal DebugInfoBuilder( Module owningModule )
+            : this( owningModule, true )
+        {
+        }
+
+        // keeping this private for now as there doesn't seem to be a good reason to support
+        // allowUnresolved == false
+        private DebugInfoBuilder( Module owningModule, bool allowUnresolved )
+        {
+            if( owningModule == null )
+                throw new ArgumentNullException( nameof( owningModule ) );
+
+            BuilderHandle = NativeMethods.NewDIBuilder( owningModule.ModuleHandle, allowUnresolved );
+            OwningModule = owningModule;
         }
 
         private DILocalVariable CreateLocalVariable( Tag dwarfTag
