@@ -49,7 +49,8 @@ namespace TestDebugInfo
             StaticState.RegisterAll( );
             var target = Target.FromTriple( Triple );
             using( var targetMachine = target.CreateTargetMachine( Triple, Cpu, Features, CodeGenOpt.Aggressive, Reloc.Default, CodeModel.Small ) )
-            using( var module = new Module( "test_x86.bc" ) )
+            using( var context = new Context( ) )
+            using( var module = new Module( "test_x86.bc", context ) )
             {
                 var targetData = targetMachine.TargetData;
 

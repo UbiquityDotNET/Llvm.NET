@@ -115,14 +115,19 @@ namespace Llvm.NET
 
         void Dispose( bool disposing )
         {
-            // if not already disposed, dispose the context
-            // NOTE: the module itself is released when the 
-            // containing context is release, so only the
-            // context is explicitly closed.
-            if( Context != null )
-                Context.Close( );
-
-            ModuleHandle = default( LLVMModuleRef );
+            // if not already disposed, dispose the module
+            // Do this only on dispose. The containing context
+            // will clean up the module when it is disposed or
+            // finalized. Since finalization order isn't
+            // deterministic it is possible that the module is
+            // finalized after the context has already run its
+            // finalizer, which would cause an access violation
+            // in the native LLVM layer.
+            if( disposing && ModuleHandle.Pointer != IntPtr.Zero )
+            {
+                NativeMethods.DisposeModule( ModuleHandle );
+                ModuleHandle = default( LLVMModuleRef );
+            }
         }
         #endregion
 

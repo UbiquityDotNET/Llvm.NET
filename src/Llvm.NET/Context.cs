@@ -32,7 +32,7 @@ namespace Llvm.NET
     /// LLVM objects from multiple threads may lead to race conditions corrupted
     /// state and any number of other issues.</note>
     /// </remarks>
-    public sealed class Context 
+    public sealed class Context : IDisposable
     {
         /// <summary>Creates a new context</summary>
         public Context( )
@@ -549,15 +549,7 @@ namespace Llvm.NET
 
         internal void Close()
         {
-            if( ContextHandle.Pointer != IntPtr.Zero )
-            {
-                lock( ContextCache )
-                {
-                    ContextCache.Remove( ContextHandle );
-                }
-                NativeMethods.ContextDispose( ContextHandle );
-                ContextHandle = default( LLVMContextRef );
-            }
+            Dispose( );
         }
 
         #region Interning Factories
@@ -704,5 +696,32 @@ namespace Llvm.NET
         // lazy init a singleton unmanaged delegate and hold on to it so it is never collected
         private static Lazy<LLVMFatalErrorHandler> FatalErrorHandlerDelegate 
             = new Lazy<LLVMFatalErrorHandler>( ( ) => FatalErrorHandler, LazyThreadSafetyMode.PublicationOnly );
+
+        #region IDisposable Support
+        void Dispose( bool disposing )
+        {
+            if( ContextHandle.Pointer != IntPtr.Zero )
+            {
+                lock( ContextCache )
+                {
+                    ContextCache.Remove( ContextHandle );
+                }
+                NativeMethods.ContextDispose( ContextHandle );
+                ContextHandle = default( LLVMContextRef );
+            }
+        }
+
+        ~Context()
+        {
+           Dispose(false);
+        }
+
+        // This code added to correctly implement the disposable pattern.
+        public void Dispose( )
+        {
+            Dispose( true );
+            GC.SuppressFinalize(this);
+        }
+        #endregion
     }
 }
