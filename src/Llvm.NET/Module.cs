@@ -501,7 +501,7 @@ namespace Llvm.NET
                                                  , isDefinition: isDefinition
                                                  , scopeLine: scopeLine
                                                  , flags: ( uint )flags
-                                                 , isOptimized: false
+                                                 , isOptimized: isOptimized
                                                  , function: func
                                                  , TParam: tParam
                                                  , Decl: decl

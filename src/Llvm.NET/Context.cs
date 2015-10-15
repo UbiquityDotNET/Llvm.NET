@@ -325,7 +325,7 @@ namespace Llvm.NET
 
             var valueHandles = values.Select( v => v.ValueHandle ).ToArray( );
             if( type.Members.Count != valueHandles.Length )
-                throw new ArgumentException( "Number of values provided, must match the number of elements in the specified type" );
+                throw new ArgumentException( "Number of values provided must match the number of elements in the specified type" );
 
             var handle = NativeMethods.ConstNamedStruct(type.GetTypeRef(), out valueHandles[ 0 ], ( uint )valueHandles.Length );
             return Value.FromHandle<Constant>( handle );
