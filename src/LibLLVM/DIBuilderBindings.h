@@ -107,7 +107,13 @@ extern "C" {
 
     typedef struct LLVMOpaqueDIBuilder *LLVMDIBuilderRef;
 
+    void LLVMSetDILocation( LLVMValueRef inst, LLVMMetadataRef location );
     void LLVMSetDebugLoc( LLVMValueRef inst, unsigned line, unsigned column, LLVMMetadataRef scope );
+    
+    LLVMMetadataRef /*DILocalScope*/ LLVMGetDILocationScope( LLVMMetadataRef /*DILocation*/ location );
+    unsigned LLVMGetDILocationLine( LLVMMetadataRef /*DILocation*/ location );
+    unsigned LLVMGetDILocationColumn( LLVMMetadataRef /*DILocation*/ location );
+    LLVMMetadataRef /*DILocation*/ LLVMGetDILocationInlinedAt( LLVMMetadataRef /*DILocation*/ location );
 
     LLVMDIBuilderRef LLVMNewDIBuilder( LLVMModuleRef m, LLVMBool allowUnresolved );
 

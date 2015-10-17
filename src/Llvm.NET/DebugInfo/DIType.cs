@@ -30,7 +30,7 @@ namespace Llvm.NET.DebugInfo
                 if( handle.Pointer == IntPtr.Zero )
                     return null;
 
-                return new DIScope( handle );
+                return FromHandle< DIScope >( handle );
             }
         }
 

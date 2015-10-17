@@ -37,6 +37,11 @@ LLVMHasTargetDependentAttribute
 LLVMDIScopeGetFile
 
 ; Debug info functions not part of standard LLVM-C API
+LLVMGetDILocationScope
+LLVMGetDILocationLine
+LLVMGetDILocationColumn
+LLVMGetDILocationInlinedAt
+LLVMSetDILocation
 LLVMSetDebugLoc
 LLVMNewDIBuilder
 LLVMDIBuilderDestroy
