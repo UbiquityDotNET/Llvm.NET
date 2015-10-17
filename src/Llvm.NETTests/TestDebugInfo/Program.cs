@@ -34,34 +34,7 @@ namespace TestDebugInfo
         /// <summary>Creates a test LLVM module with debug information</summary>
         /// <param name="args">ignored</param>
         /// <remarks>
-        /// <code language="C99" title="Example code generated">
-        /// struct foo
-        /// {
-        ///     int a;
-        ///     float b;
-        ///     int c[2];
-        /// };
-        /// 
-        /// struct foo bar = { 1, 2.0, { 3, 4 } };
-        /// struct foo baz;
-        /// 
-        /// inline static void copy( struct foo src     // function line here
-        ///                        , struct foo* pDst
-        ///                        )
-        /// { // function's ScopeLine here
-        ///     *pDst = src;
-        /// }
-        /// 
-        /// //void OtherSig( struct foo const* pSrc, struct foo* pDst )
-        /// //{
-        /// //    copy( *pSrc, pDst );
-        /// //}
-        /// //
-        /// void DoCopy( )
-        /// {
-        ///     copy( bar, &baz );
-        /// }
-        /// </code>
+        /// <code language="c" title="Example code generated" source="test.c" />
         /// </remarks>
         static void Main( string[ ] args )
         {
@@ -76,7 +49,8 @@ namespace TestDebugInfo
             StaticState.RegisterAll( );
             var target = Target.FromTriple( Triple );
             using( var targetMachine = target.CreateTargetMachine( Triple, Cpu, Features, CodeGenOpt.Aggressive, Reloc.Default, CodeModel.Small ) )
-            using( var module = new Module( "test_x86.bc" ) )
+            using( var context = new Context( ) )
+            using( var module = new Module( "test_x86.bc", context ) )
             {
                 var targetData = targetMachine.TargetData;
 
