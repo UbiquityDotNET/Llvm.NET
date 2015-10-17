@@ -59,7 +59,6 @@ namespace Llvm.NET.DebugInfo
             //case Tag.FormalParameter:
             //case Tag.ImportedDeclaration:
             //case Tag.Label:
-            //case Tag.Member:
             //case Tag.Variant:
             //case Tag.CommonBlock:
             //case Tag.CommonInclusion:
@@ -114,6 +113,7 @@ namespace Llvm.NET.DebugInfo
             case Tag.VolatileType:
             case Tag.RestrictType:
             case Tag.ConstType:
+            case Tag.Member:
                 return new DIDerivedType( handle );
 
             case Tag.CompileUnit:
