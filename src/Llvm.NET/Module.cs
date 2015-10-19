@@ -19,22 +19,30 @@ namespace Llvm.NET
     {
         /// <summary>Creates an unnamed module without debug information</summary>
         public Module( )
-            :this( string.Empty, new Context() )
+            :this( string.Empty, null)
         {
         }
 
         /// <summary>Creates a new module with the specified id in a new context</summary>
         /// <param name="moduleId">Module's ID</param>
         public Module( string moduleId )
-            : this( moduleId, new Context() )
+            : this( moduleId, null )
         {
         }
 
         /// <summary>Creates an named module in a given context</summary>
+        /// <param name="moduleId">Module's ID</param>
+        /// <param name="context">Context for the module</param>
         public Module( string moduleId, Context context )
         {
             if( moduleId == null )
                 moduleId = string.Empty;
+
+            if( context == null )
+            {
+                context = new Context( );
+                OwnsContext = true;
+            }
 
             ModuleHandle = NativeMethods.ModuleCreateWithNameInContext( moduleId, context.ContextHandle );
             if( ModuleHandle.Pointer == IntPtr.Zero )
@@ -61,7 +69,7 @@ namespace Llvm.NET
                      , uint runtimeVersion
                      )
             : this( moduleId
-                  , new Context()
+                  , null
                   , language
                   , srcFilePath
                   , producer
@@ -125,7 +133,13 @@ namespace Llvm.NET
             // in the native LLVM layer.
             if( disposing && ModuleHandle.Pointer != IntPtr.Zero )
             {
-                NativeMethods.DisposeModule( ModuleHandle );
+                // if this module created the context then just dispose
+                // the context as that will clean up the module as well.
+                if( OwnsContext )
+                    Context.Dispose( );
+                else
+                    NativeMethods.DisposeModule( ModuleHandle );
+
                 ModuleHandle = default( LLVMModuleRef );
             }
         }
@@ -501,11 +515,11 @@ namespace Llvm.NET
                                                  , mangledName: linkageName
                                                  , file: file
                                                  , line: line
-                                                 , compositeType: diSignature
+                                                 , signatureType: diSignature
                                                  , isLocalToUnit: isLocalToUnit
                                                  , isDefinition: isDefinition
                                                  , scopeLine: scopeLine
-                                                 , flags: ( uint )flags
+                                                 , flags: flags
                                                  , isOptimized: isOptimized
                                                  , function: func
                                                  , TParam: tParam
@@ -565,5 +579,6 @@ namespace Llvm.NET
 
         private readonly ExtensiblePropertyContainer PropertyBag = new ExtensiblePropertyContainer( );
         private readonly Lazy<DebugInfoBuilder> DIBuilder_;
+        private readonly bool OwnsContext;
     }
 }
