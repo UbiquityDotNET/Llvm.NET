@@ -15,7 +15,7 @@
     <Name>Documentation</Name>
     <!-- SHFB properties -->
     <FrameworkVersion>.NET Framework 4.5</FrameworkVersion>
-    <OutputPath>.\Help\</OutputPath>
+    <OutputPath>..\..\..\llvm.NET-Docs\</OutputPath>
     <HtmlHelpName>Llvm.NET</HtmlHelpName>
     <Language>en-US</Language>
     <TransformComponentArguments>
@@ -132,7 +132,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Content\HowToCreateStructTypes.aml" />
-    <None Include="Content\VersionHistory\v3.7.0-alpha0043.aml" />
+    <None Include="Content\VersionHistory\v3.7.0-alpha.aml" />
     <None Include="Content\VersionHistory\VersionHistory.aml" />
     <None Include="Content\Welcome.aml" />
   </ItemGroup>

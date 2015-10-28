@@ -200,21 +200,21 @@ namespace Llvm.NET.DebugInfo
                 mangledName = string.Empty;
 
             var handle = NativeMethods.DIBuilderCreateTempFunctionFwdDecl( BuilderHandle
-                                                                      , scope.MetadataHandle
-                                                                      , name
-                                                                      , mangledName
-                                                                      , file.MetadataHandle
-                                                                      , line
-                                                                      , compositeType.MetadataHandle
-                                                                      , isLocalToUnit ? 1 : 0
-                                                                      , isDefinition ? 1 : 0
-                                                                      , scopeLine
-                                                                      , flags
-                                                                      , isOptimized ? 1 : 0
-                                                                      , function?.ValueHandle ?? LLVMValueRef.Zero
-                                                                      , TParam?.MetadataHandle ?? LLVMMetadataRef.Zero
-                                                                      , Decl?.MetadataHandle ?? LLVMMetadataRef.Zero
-                                                                      );
+                                                                         , scope.MetadataHandle
+                                                                         , name
+                                                                         , mangledName
+                                                                         , file.MetadataHandle
+                                                                         , line
+                                                                         , compositeType.MetadataHandle
+                                                                         , isLocalToUnit ? 1 : 0
+                                                                         , isDefinition ? 1 : 0
+                                                                         , scopeLine
+                                                                         , flags
+                                                                         , isOptimized ? 1 : 0
+                                                                         , function?.ValueHandle ?? LLVMValueRef.Zero
+                                                                         , TParam?.MetadataHandle ?? LLVMMetadataRef.Zero
+                                                                         , Decl?.MetadataHandle ?? LLVMMetadataRef.Zero
+                                                                         );
             return DINode.FromHandle< DISubProgram >( handle );
         }
 
@@ -274,7 +274,7 @@ namespace Llvm.NET.DebugInfo
             var handles = types.Select( t => t.MetadataHandle ).ToArray( );
             var count = handles.LongLength;
             if( count == 0 )
-                handles = new LLVMMetadataRef[ ] { default( LLVMMetadataRef ) };
+                handles = new [ ] { default( LLVMMetadataRef ) };
 
             var handle = NativeMethods.DIBuilderGetOrCreateTypeArray( BuilderHandle, out handles[ 0 ], (ulong)count );
             return new DITypeArray( handle );
