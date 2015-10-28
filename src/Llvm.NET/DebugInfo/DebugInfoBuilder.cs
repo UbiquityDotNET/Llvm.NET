@@ -141,11 +141,11 @@ namespace Llvm.NET.DebugInfo
                                           , string mangledName
                                           , DIFile file
                                           , uint line
-                                          , DICompositeType compositeType
+                                          , DISubroutineType signatureType
                                           , bool isLocalToUnit
                                           , bool isDefinition
                                           , uint scopeLine
-                                          , uint flags
+                                          , DebugInfoFlags flags
                                           , bool isOptimized
                                           , Function function
                                           , MDNode TParam = null
@@ -164,11 +164,11 @@ namespace Llvm.NET.DebugInfo
                                                               , mangledName
                                                               , file?.MetadataHandle ?? LLVMMetadataRef.Zero
                                                               , line
-                                                              , compositeType.MetadataHandle
+                                                              , signatureType.MetadataHandle
                                                               , isLocalToUnit ? 1 : 0
                                                               , isDefinition ? 1 : 0
                                                               , scopeLine
-                                                              , flags
+                                                              , (uint)flags
                                                               , isOptimized ? 1 : 0
                                                               , function.ValueHandle
                                                               , TParam?.MetadataHandle ?? LLVMMetadataRef.Zero

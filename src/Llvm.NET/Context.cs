@@ -427,9 +427,9 @@ namespace Llvm.NET
         public Constant CreateConstant( bool constValue )
         {
             var handle = NativeMethods.ConstInt( BoolType.GetTypeRef()
-                                            , ( ulong )( constValue ? 1 : 0 )
-                                            , new LLVMBool( 0 )
-                                            );
+                                               , ( ulong )( constValue ? 1 : 0 )
+                                               , new LLVMBool( 0 )
+                                               );
             return Value.FromHandle<Constant>( handle );
         }
 
