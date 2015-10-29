@@ -30,22 +30,12 @@
                 </step>
                 <step>
                     <content>
-                        <para>Set the types method body</para>
-                    </content>
-                </step>
-                <step>
-                    <content>
                         <para>Create an array of debug member descriptions</para>
                     </content>
                 </step>
                 <step>
                     <content>
-                        <para>Create a new concrete type with the array of members to form a full type</para>
-                    </content>
-                </step>
-                <step>
-                    <content>
-                        <para>Replace all uses of the temporary type with the new complete concrete type</para>
+                        <para>Set the types method body</para>
                     </content>
                 </step>
             </steps>
