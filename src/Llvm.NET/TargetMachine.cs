@@ -8,7 +8,7 @@ namespace Llvm.NET
         /// <summary>Retrieves the Target that owns this <see cref="TargetMachine"/></summary>
         public Target Target => Target.FromHandle( NativeMethods.GetTargetMachineTarget( TargetMachineHandle ) );
 
-        /// <summary>Target trip[le describing this machine</summary>
+        /// <summary>Target triple describing this machine</summary>
         public string Triple => NativeMethods.MarshalMsg( NativeMethods.GetTargetMachineTriple( TargetMachineHandle ) );
 
         /// <summary>CPU Type for this machine</summary>

@@ -32,6 +32,11 @@ namespace Llvm.NET.DebugInfo
             }
         }
 
+        public override string ToString( )
+        {
+            return $"{Scope.File}({Line},{Column})";
+        }
+
         internal DILocation( LLVMMetadataRef handle )
             : base( handle )
         {

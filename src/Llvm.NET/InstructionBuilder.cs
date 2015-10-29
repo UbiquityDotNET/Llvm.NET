@@ -513,6 +513,17 @@ namespace Llvm.NET
             return Value.FromHandle( handle );
         }
 
+        public Value UIToFPCast( Value valueRef, ITypeRef targetType )
+        {
+            LLVMValueRef handle;
+            if( valueRef is Constant )
+                handle = NativeMethods.ConstUIToFP( valueRef.ValueHandle, targetType.GetTypeRef( ) );
+            else
+                handle = NativeMethods.BuildUIToFP( BuilderHandle, valueRef.ValueHandle, targetType.GetTypeRef( ), string.Empty );
+
+            return Value.FromHandle( handle );
+        }
+
         public Value FPToUICast( Value valueRef, ITypeRef targetType )
         {
             LLVMValueRef handle;
@@ -524,6 +535,17 @@ namespace Llvm.NET
             return Value.FromHandle( handle );
         }
 
+        public Value FPToSICast( Value valueRef, ITypeRef targetType )
+        {
+            LLVMValueRef handle;
+            if( valueRef is Constant )
+                handle = NativeMethods.ConstFPToSI( valueRef.ValueHandle, targetType.GetTypeRef( ) );
+            else
+                handle = NativeMethods.BuildFPToSI( BuilderHandle, valueRef.ValueHandle, targetType.GetTypeRef( ), string.Empty );
+
+            return Value.FromHandle( handle );
+        }
+
         public Value FPExt( Value valueRef, ITypeRef toType )
         {
             LLVMValueRef handle;
@@ -531,6 +553,17 @@ namespace Llvm.NET
                 handle = NativeMethods.ConstFPExt( valueRef.ValueHandle, toType.GetTypeRef() );
             else
                 handle = NativeMethods.BuildFPExt( BuilderHandle, valueRef.ValueHandle, toType.GetTypeRef(), string.Empty );
+
+            return Value.FromHandle( handle );
+        }
+
+        public Value FPTrunc( Value valueRef, ITypeRef toType )
+        {
+            LLVMValueRef handle;
+            if( valueRef is Constant )
+                handle = NativeMethods.ConstFPTrunc( valueRef.ValueHandle, toType.GetTypeRef() );
+            else
+                handle = NativeMethods.BuildFPTrunc( BuilderHandle, valueRef.ValueHandle, toType.GetTypeRef(), string.Empty );
 
             return Value.FromHandle( handle );
         }

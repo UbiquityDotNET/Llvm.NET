@@ -59,13 +59,13 @@ namespace TestDebugInfo
 
                 // create compile unit and file as the top level scope for everything
                 var cu = module.DIBuilder.CreateCompileUnit( SourceLanguage.C99
-                                                            , Path.GetFileName( srcPath )
-                                                            , Path.GetDirectoryName( srcPath )
-                                                            , VersionIdentString
-                                                            , false
-                                                            , ""
-                                                            , 0
-                                                            );
+                                                           , Path.GetFileName( srcPath )
+                                                           , Path.GetDirectoryName( srcPath )
+                                                           , VersionIdentString
+                                                           , false
+                                                           , ""
+                                                           , 0
+                                                           );
                 var diFile = module.DIBuilder.CreateFile( srcPath );
 
                 // Create basic types used in this compilation
