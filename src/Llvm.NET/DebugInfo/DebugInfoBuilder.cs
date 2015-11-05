@@ -120,22 +120,51 @@ namespace Llvm.NET.DebugInfo
                 return null;
 
             var handle = NativeMethods.DIBuilderCreateFile( BuilderHandle, fileName, directory??string.Empty );
-            // REVIEW: should this deal with uniquing? if so, is it per context? Per module? ...?
             return DINode.FromHandle< DIFile >( handle );
         }
 
+        /// <summary>Creates a new <see cref="DILexicalBlock"/></summary>
+        /// <param name="scope"><see cref="DIScope"/> for the block</param>
+        /// <param name="file"><see cref="DIFile"/> containing the block</param>
+        /// <param name="line">Starting line number for the block</param>
+        /// <param name="column">Starting column for the block</param>
+        /// <returns>
+        /// <see cref="DILexicalBlock"/> created from the parameters
+        /// </returns>
         public DILexicalBlock CreateLexicalBlock( DIScope scope, DIFile file, uint line, uint column )
         {
             var handle = NativeMethods.DIBuilderCreateLexicalBlock( BuilderHandle, scope.MetadataHandle, file.MetadataHandle, line, column );
             return DINode.FromHandle< DILexicalBlock >( handle );
         }
 
+        /// <summary>Creates a <see cref="DILexicalBlockFile"/></summary>
+        /// <param name="scope"><see cref="DIScope"/> for the block</param>
+        /// <param name="file"><see cref="DIFile"/></param>
+        /// <param name="discriminator">Discriminator to disambiguate lexical blocks with the same file info</param>
+        /// <returns>
+        /// <see cref="DILexicalBlockFile"/> constructed from the parameters
+        /// </returns>
         public DILexicalBlockFile CreateLexicalBlockFile( DIScope scope, DIFile file, uint discriminator )
         {
             var handle = NativeMethods.DIBuilderCreateLexicalBlockFile( BuilderHandle, scope.MetadataHandle, file.MetadataHandle, discriminator );
             return DINode.FromHandle< DILexicalBlockFile >( handle );
         }
 
+        /// <summary>Create a <see cref="DISubProgram"/> with debug information</summary>
+        /// <param name="scope"><see cref="DIScope"/> for the function</param>
+        /// <param name="name">Name of the function as it appears in the source language</param>
+        /// <param name="mangledName">Linkage (mangled) name of the function</param>
+        /// <param name="file"><see cref="DIFile"/> containing the function</param>
+        /// <param name="line">starting line of the function definition</param>
+        /// <param name="signatureType"><see cref="DISubroutineType"/> for the function's signature type</param>
+        /// <param name="isLocalToUnit">Flag to indicate if this function is local to the compilation unit or available externally</param>
+        /// <param name="isDefinition">Flag to indicate if this is a definition or a declaration only</param>
+        /// <param name="scopeLine">starting line of the first scope of the function's body</param>
+        /// <param name="flags"><see cref="DebugInfoFlags"/> for this function</param>
+        /// <param name="isOptimized">Flag to indicate if this function is optimized</param>
+        /// <param name="function">Underlying LLVM <see cref="Function"/> to attach debug info to</param>
+        /// <param name="TParam">Template parameter [default = null]</param>
+        /// <param name="Decl">Template declarations [default = null]</param>
         public DISubProgram CreateFunction( DIScope scope
                                           , string name
                                           , string mangledName
@@ -177,12 +206,28 @@ namespace Llvm.NET.DebugInfo
             return DINode.FromHandle< DISubProgram >( handle );
         }
 
+        /// <summary>Creates a new forward declaration to a function</summary>
+        /// <param name="scope"><see cref="DIScope"/> for the declaration</param>
+        /// <param name="name">Name of the function as it appears in source</param>
+        /// <param name="mangledName">mangled name of the function (for linker)</param>
+        /// <param name="file">Source file location for the function</param>
+        /// <param name="line">starting line of the declaration</param>
+        /// <param name="subroutineType">Signature for the function</param>
+        /// <param name="isLocalToUnit">Flag to indicate if this declaration is local to the compilation unit</param>
+        /// <param name="isDefinition">Flag to indicate if this is a definition</param>
+        /// <param name="scopeLine">Line of the first scope block</param>
+        /// <param name="flags"><see cref="DebugInfoFlags"/> for the function</param>
+        /// <param name="isOptimized">Flag to indicate if the function is optimized</param>
+        /// <param name="function">LLVM <see cref="Function"/> for this declaration</param>
+        /// <param name="TParam"></param>
+        /// <param name="Decl"></param>
+        /// <returns></returns>
         public DISubProgram ForwardDeclareFunction( DIScope scope
                                                   , string name
                                                   , string mangledName
                                                   , DIFile file
                                                   , uint line
-                                                  , DICompositeType compositeType
+                                                  , DISubroutineType subroutineType
                                                   , bool isLocalToUnit
                                                   , bool isDefinition
                                                   , uint scopeLine
@@ -205,7 +250,7 @@ namespace Llvm.NET.DebugInfo
                                                                          , mangledName
                                                                          , file.MetadataHandle
                                                                          , line
-                                                                         , compositeType.MetadataHandle
+                                                                         , subroutineType.MetadataHandle
                                                                          , isLocalToUnit ? 1 : 0
                                                                          , isDefinition ? 1 : 0
                                                                          , scopeLine
@@ -231,6 +276,16 @@ namespace Llvm.NET.DebugInfo
             return CreateLocalVariable( Tag.AutoVariable, scope, name, file, line, type, alwaysPreserve, flags, argNo );
         }
 
+        /// <summary>Creates an argument for a function as a <see cref="DILocalVariable"/></summary>
+        /// <param name="scope">Scope for the argument</param>
+        /// <param name="name">Name of the argument</param>
+        /// <param name="file"><see cref="DIFile"/> containing the function this argument is declared in</param>
+        /// <param name="line">Line number fort his argument</param>
+        /// <param name="type">Debug type for this argument</param>
+        /// <param name="alwaysPreserve">FLag to indicate if this argument is always preserved for debug view even if optimization would remove it</param>
+        /// <param name="flags"><see cref="DebugInfoFlags"/> for this argument</param>
+        /// <param name="argNo">One based argument index on the method (e.g the first argument is 1 not 0 )</param>
+        /// <returns><see cref="DILocalVariable"/> representing the function argument</returns>
         public DILocalVariable CreateArgument( DIScope scope
                                              , string name
                                              , DIFile file
@@ -244,6 +299,12 @@ namespace Llvm.NET.DebugInfo
             return CreateLocalVariable( Tag.ArgVariable, scope, name, file, line, type, alwaysPreserve, flags, argNo );
         }
 
+        /// <summary>Construct debug information for a basic type (a.k.a. primitive type)</summary>
+        /// <param name="name">Name of the type</param>
+        /// <param name="bitSize">Bit size for the type</param>
+        /// <param name="bitAlign">Bit alignment for the type</param>
+        /// <param name="encoding"><see cref="DiTypeKind"/> encoding for the type</param>
+        /// <returns></returns>
         public DIBasicType CreateBasicType( string name, ulong bitSize, ulong bitAlign, DiTypeKind encoding )
         {
             var handle = NativeMethods.DIBuilderCreateBasicType( BuilderHandle, name, bitSize, bitAlign, (uint)encoding );

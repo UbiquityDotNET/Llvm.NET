@@ -8,7 +8,18 @@ namespace Llvm.NET.DebugInfo
         : DebugType<IArrayType, DICompositeType>
         , IArrayType
     {
-        public DebugArrayType( IArrayType llvmType, IDebugType<ITypeRef, DIType> elementType, Module module, uint count, uint lowerBound = 0 )
+        /// <summary>Creates a new <see cref="DebugArrayType"/></summary>
+        /// <param name="llvmType">Underlying LLVM array type to bind debug info to</param>
+        /// <param name="elementType">Array element type with debug information</param>
+        /// <param name="module">module to use for creating debug information</param>
+        /// <param name="count">Number of elements in the array</param>
+        /// <param name="lowerBound">Lower bound of the array [default = 0]</param>
+        public DebugArrayType( IArrayType llvmType
+                             , IDebugType<ITypeRef, DIType> elementType
+                             , Module module
+                             , uint count
+                             , uint lowerBound = 0
+                             )
             : base( llvmType
                   , module.DIBuilder.CreateArrayType( module.Layout.BitSizeOf( llvmType )
                                                     , module.Layout.AbiBitAlignmentOf( llvmType )

@@ -190,8 +190,8 @@ namespace Llvm.NET
         /// <param name="pointer">pointer to the strucure to get an element from</param>
         /// <param name="index">element index</param>
         /// <returns>
-        /// <para><see cref="Value"/> for the member access. This is a User as LLVM may 
-        /// optimize the expression to a <see cref="ConstantExpression"/> if it 
+        /// <para><see cref="Value"/> for the member access. This is a <see cref="Value"/>
+        /// as LLVM may optimize the expression to a <see cref="ConstantExpression"/> if it
         /// can so the actual type of the result may be <see cref="ConstantExpression"/>
         /// or <see cref="Instructions.GetElementPtr"/>.</para>
         /// <para>Note that <paramref name="pointer"/> must be a pointer to a structure
@@ -214,12 +214,12 @@ namespace Llvm.NET
             return Value.FromHandle( handle );
         }
 
-        /// <summary>Creates a <see cref="User"/> that accesses an element of a type referenced by a pointer</summary>
+        /// <summary>Creates a <see cref="Value"/> that accesses an element of a type referenced by a pointer</summary>
         /// <param name="pointer">pointer to get an element from</param>
         /// <param name="args">additional indeces for computing the resulting pointer</param>
         /// <returns>
-        /// <para><see cref="User"/> for the member access. This is a User as LLVM may 
-        /// optimize the expression to a <see cref="ConstantExpression"/> if it 
+        /// <para><see cref="Value"/> for the member access. This is a <see cref="Value"/>
+        /// as LLVM may optimize the expression to a <see cref="ConstantExpression"/> if it 
         /// can so the actual type of the result may be <see cref="ConstantExpression"/>
         /// or <see cref="Instructions.GetElementPtr"/>.</para>
         /// <para>Note that <paramref name="pointer"/> must be a pointer to a structure
@@ -247,12 +247,12 @@ namespace Llvm.NET
             return Value.FromHandle( handle );
         }
 
-        /// <summary>Creates a <see cref="User"/> that accesses an element of a type referenced by a pointer</summary>
+        /// <summary>Creates a <see cref="Value"/> that accesses an element of a type referenced by a pointer</summary>
         /// <param name="pointer">pointer to get an element from</param>
         /// <param name="args">additional indeces for computing the resulting pointer</param>
         /// <returns>
-        /// <para><see cref="User"/> for the member access. This is a User as LLVM may 
-        /// optimize the expression to a <see cref="ConstantExpression"/> if it 
+        /// <para><see cref="Value"/> for the member access. This is a <see cref="Value"/>
+        /// as LLVM may optimize the expression to a <see cref="ConstantExpression"/> if it 
         /// can so the actual type of the result may be <see cref="ConstantExpression"/>
         /// or <see cref="Instructions.GetElementPtr"/>.</para>
         /// <para>Note that <paramref name="pointer"/> must be a pointer to a structure
@@ -270,12 +270,12 @@ namespace Llvm.NET
         /// </remarks>
         public Value GetElementPtrInBounds( Value pointer, params Value[ ] args ) => GetElementPtrInBounds( pointer, ( IEnumerable<Value> )args );
 
-        /// <summary>Creates a <see cref="User"/> that accesses an element of a type referenced by a pointer</summary>
+        /// <summary>Creates a <see cref="Value"/> that accesses an element of a type referenced by a pointer</summary>
         /// <param name="pointer">pointer to get an element from</param>
         /// <param name="args">additional indeces for computing the resulting pointer</param>
         /// <returns>
-        /// <para><see cref="User"/> for the member access. This is a User as LLVM may 
-        /// optimize the expression to a <see cref="ConstantExpression"/> if it 
+        /// <para><see cref="Value"/> for the member access. This is a <see cref="Value"/>
+        /// as LLVM may optimize the expression to a <see cref="ConstantExpression"/> if it 
         /// can so the actual type of the result may be <see cref="ConstantExpression"/>
         /// or <see cref="Instructions.GetElementPtr"/>.</para>
         /// <para>Note that <paramref name="pointer"/> must be a pointer to a structure
@@ -303,11 +303,11 @@ namespace Llvm.NET
             return Value.FromHandle( hRetVal );
         }
 
-        /// <summary>Creates a <see cref="User"/> that accesses an element of a type referenced by a pointer</summary>
+        /// <summary>Creates a <see cref="Value"/> that accesses an element of a type referenced by a pointer</summary>
         /// <param name="pointer">pointer to get an element from</param>
         /// <param name="args">additional indeces for computing the resulting pointer</param>
         /// <returns>
-        /// <para><see cref="User"/> for the member access. This is a User as LLVM may 
+        /// <para><see cref="Value"/> for the member access. This is a User as LLVM may 
         /// optimize the expression to a <see cref="ConstantExpression"/> if it 
         /// can so the actual type of the result may be <see cref="ConstantExpression"/>
         /// or <see cref="Instructions.GetElementPtr"/>.</para>
@@ -485,7 +485,6 @@ namespace Llvm.NET
 
             return Value.FromHandle( handle );
         }
-
 
         public Value ZeroExtend( Value valueRef, ITypeRef targetType )
         {
@@ -704,12 +703,12 @@ namespace Llvm.NET
             if( func == null )
             {
                 var signature = module.Context.GetFunctionType( module.Context.VoidType  // return
-                                                   , dstPtrType
-                                                   , srcPtrType
-                                                   , len.Type
-                                                   , module.Context.Int32Type // alignment
-                                                   , module.Context.BoolType  // isVolatile
-                                                   );
+                                                              , dstPtrType
+                                                              , srcPtrType
+                                                              , len.Type
+                                                              , module.Context.Int32Type // alignment
+                                                              , module.Context.BoolType  // isVolatile
+                                                              );
                 func = module.AddFunction( intrinsicName, signature );
             }
 
