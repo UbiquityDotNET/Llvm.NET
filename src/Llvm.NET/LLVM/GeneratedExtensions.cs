@@ -10,7 +10,7 @@
 //  - converted several int return and parameter types to proper LLVMxxxRef types not handled correctly
 //    by the ClangSharp code generator
 //  - numerous additional extension methods added manually. (e.g. as new apis are added they are done so
-//    rather than re-running a tool and then fixing everything up again )
+//    manually rather than re-running a tool and then fixing everything up again )
 //  - manually updated to 3.7.0 APIs
 //  - added BestFitMapping = false, ThrowOnUnmappableChar = true to resolve FxCop issue CA2101
 using System;
@@ -495,5 +495,8 @@ namespace Llvm.NET
 
         [DllImport( libraryPath, EntryPoint = "LLVMBuildAtomicCmpXchg", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl, BestFitMapping = false, ThrowOnUnmappableChar = true )]
         internal static extern LLVMValueRef BuildAtomicCmpXchg( LLVMBuilderRef @B, LLVMValueRef @Ptr, LLVMValueRef @Cmp, LLVMValueRef @New, LLVMAtomicOrdering @successOrdering, LLVMAtomicOrdering @failureOrdering, LLVMBool @singleThread );
+
+        [DllImport( libraryPath, EntryPoint = "LLVMGetNodeContext", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl, BestFitMapping = false, ThrowOnUnmappableChar = true )]
+        internal static extern LLVMContextRef GetNodeContext( LLVMMetadataRef /*MDNode*/ node );
     }
 }

@@ -40,6 +40,9 @@ namespace Llvm.NET
         //public uint Id => LLVMNative.GetMetadataId( );
         internal Metadata( LLVMMetadataRef handle )
         {
+            if( handle == LLVMMetadataRef.Zero )
+                throw new ArgumentNullException( nameof( handle ) );
+
             MetadataHandle = handle;
         }
 
@@ -81,7 +84,7 @@ namespace Llvm.NET
         {
             // TODO: Add support to get the metadata ref from the value...
             // e.g. call C++ MetadataAsValue.getMetadata()
-            return new Metadata( LLVMMetadataRef.Zero );
+            throw new NotImplementedException();
         }
     }
 
@@ -92,6 +95,8 @@ namespace Llvm.NET
         {
         }
 
+        public Context Context => Context.GetContextFor( MetadataHandle );
+        public bool IsDeleted => MetadataHandle == LLVMMetadataRef.Zero;
         public bool IsTemporary => NativeMethods.IsTemporary( MetadataHandle );
         public bool IsResolved => NativeMethods.IsResolved( MetadataHandle );
         public void ResolveCycles( ) => NativeMethods.MDNodeResolveCycles( MetadataHandle );
@@ -104,6 +109,7 @@ namespace Llvm.NET
             if( MetadataHandle.Pointer == IntPtr.Zero )
                 throw new InvalidOperationException( "Cannot Replace all uses of a null descriptor" );
 
+            Context.RemoveDeletedNode( this );
             NativeMethods.MDNodeReplaceAllUsesWith( MetadataHandle, other.MetadataHandle );
             MetadataHandle = LLVMMetadataRef.Zero;
         }

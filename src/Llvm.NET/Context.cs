@@ -204,7 +204,7 @@ namespace Llvm.NET
                                                    , IEnumerable<IDebugType<ITypeRef, DIType>> argTypes
                                                    )
         {
-            if( !retType.HasDebugInfo )
+            if( !retType.HasDebugInfo() )
                 throw new ArgumentNullException( nameof( retType ), "Return type does not have debug information" );
 
             var nativeArgTypes = new List<ITypeRef>();
@@ -216,7 +216,7 @@ namespace Llvm.NET
             {
                 nativeArgTypes.Add( indexedPair.Type.NativeType );
                 debugArgTypes.Add( indexedPair.Type.DIType );
-                if( indexedPair.Type.HasDebugInfo )
+                if( indexedPair.Type.HasDebugInfo() )
                     continue;
 
                 msg.AppendFormat( "\tArgument {0} does not contain debug type information", indexedPair.Index );
@@ -615,6 +615,21 @@ namespace Llvm.NET
             }
         }
 
+        internal static Context GetContextFor( LLVMMetadataRef handle )
+        {
+            if( handle == LLVMMetadataRef.Zero )
+                return null;
+
+            var hContext = NativeMethods.GetNodeContext( handle );
+            Debug.Assert( hContext.Pointer != IntPtr.Zero );
+            return GetContextFor( hContext );
+        }
+
+        internal void RemoveDeletedNode( MDNode node )
+        {
+            NodeCache.Remove( node.MetadataHandle );
+        }
+
         internal LLVMContextRef ContextHandle { get; private set; }
 
         [Conditional("DEBUG")]
@@ -637,12 +652,18 @@ namespace Llvm.NET
             return retVal;
         }
 
-        internal void InternValue( Value value )
+        internal DINode GetNodeFor( LLVMMetadataRef handle, Func<LLVMMetadataRef, DINode> staticFactory )
         {
-            if( ValueCache.ContainsKey( value.ValueHandle.Pointer ) )
-                throw new ArgumentException( "Value already interned", nameof( value ) );
+            if( handle == LLVMMetadataRef.Zero )
+                throw new ArgumentNullException( nameof( handle ) );
 
-            ValueCache.Add( value.ValueHandle.Pointer, value );
+            DINode retVal = null;
+            if( NodeCache.TryGetValue( handle, out retVal ) )
+                return retVal;
+
+            retVal = staticFactory( handle );
+            NodeCache.Add( handle, retVal );
+            return retVal;
         }
 
         [Conditional("DEBUG")]
@@ -665,37 +686,6 @@ namespace Llvm.NET
             return retVal;
         }
         #endregion
-
-        private Context( LLVMContextRef contextRef )
-        {
-            ContextHandle = contextRef;
-            lock ( ContextCache )
-            {
-                ContextCache.Add( contextRef, this );
-            }
-            NativeMethods.ContextSetDiagnosticHandler( ContextHandle, DiagnosticHandler, IntPtr.Zero );
-        }
-
-        private void DiagnosticHandler(out LLVMOpaqueDiagnosticInfo param0, IntPtr param1)
-        {
-            Debug.Assert( false );
-        }
-
-        private Dictionary<IntPtr, Value> ValueCache = new Dictionary<IntPtr, Value>( );
-        private Dictionary<IntPtr, ITypeRef> TypeCache = new Dictionary<IntPtr, ITypeRef>( );
-        private Dictionary<IntPtr, Module> ModuleCache = new Dictionary<IntPtr, Module>( );
-
-        static void FatalErrorHandler(string Reason)
-        {
-            Trace.TraceError( Reason );
-            throw new InternalCodeGeneratorException( Reason );
-        }
-
-        private static Dictionary<LLVMContextRef, Context> ContextCache = new Dictionary<LLVMContextRef, Context>( );
-
-        // lazy init a singleton unmanaged delegate and hold on to it so it is never collected
-        private static Lazy<LLVMFatalErrorHandler> FatalErrorHandlerDelegate 
-            = new Lazy<LLVMFatalErrorHandler>( ( ) => FatalErrorHandler, LazyThreadSafetyMode.PublicationOnly );
 
         #region IDisposable Support
         void Dispose( bool disposing )
@@ -723,5 +713,40 @@ namespace Llvm.NET
             GC.SuppressFinalize(this);
         }
         #endregion
+
+        internal IEnumerable<MDNode> MDNodes => NodeCache.Values;
+
+        private Context( LLVMContextRef contextRef )
+        {
+            ContextHandle = contextRef;
+            lock ( ContextCache )
+            {
+                ContextCache.Add( contextRef, this );
+            }
+            NativeMethods.ContextSetDiagnosticHandler( ContextHandle, DiagnosticHandler, IntPtr.Zero );
+        }
+
+        private void DiagnosticHandler(out LLVMOpaqueDiagnosticInfo param0, IntPtr param1)
+        {
+            Debug.Assert( false );
+        }
+
+        private readonly Dictionary<IntPtr, Value> ValueCache = new Dictionary<IntPtr, Value>( );
+        private readonly Dictionary<IntPtr, ITypeRef> TypeCache = new Dictionary<IntPtr, ITypeRef>( );
+        private readonly Dictionary<IntPtr, Module> ModuleCache = new Dictionary<IntPtr, Module>( );
+        private readonly Dictionary< LLVMMetadataRef, DINode > NodeCache = new Dictionary< LLVMMetadataRef, DINode >( );
+
+        static void FatalErrorHandler(string Reason)
+        {
+            Trace.TraceError( Reason );
+            throw new InternalCodeGeneratorException( Reason );
+        }
+
+        private static Dictionary<LLVMContextRef, Context> ContextCache = new Dictionary<LLVMContextRef, Context>( );
+
+        // lazy init a singleton unmanaged delegate and hold on to it so it is never collected
+        private static Lazy<LLVMFatalErrorHandler> FatalErrorHandlerDelegate 
+            = new Lazy<LLVMFatalErrorHandler>( ( ) => FatalErrorHandler, LazyThreadSafetyMode.PublicationOnly );
+
     }
 }

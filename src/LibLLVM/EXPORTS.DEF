@@ -37,6 +37,7 @@ LLVMHasTargetDependentAttribute
 LLVMDIScopeGetFile
 
 ; Debug info functions not part of standard LLVM-C API
+LLVMGetNodeContext
 LLVMGetDIFileName
 LLVMGetDIFileDirectory
 LLVMGetDILocationScope

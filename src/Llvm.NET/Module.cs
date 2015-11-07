@@ -169,7 +169,7 @@ namespace Llvm.NET
         /// <summary><see cref="DebugInfoBuilder"/> to create debug information for this module</summary>
         public DebugInfoBuilder DIBuilder => DIBuilder_.Value;
 
-        /// <summary>Debug Comile unit for this module</summary>
+        /// <summary>Debug Compile unit for this module</summary>
         public DICompileUnit DICompileUnit { get; internal set; }
 
         /// <summary>Data layout string</summary>
@@ -190,7 +190,7 @@ namespace Llvm.NET
             }
             set
             {
-                Layout = TargetData.Parse( value );
+                Layout = TargetData.Parse( Context, value );
             }
         }
 
@@ -266,7 +266,7 @@ namespace Llvm.NET
             }
         }
 
-        /// <summary>Link another module into the current module</summary>
+        /// <summary>Link another bitcode module into the current module</summary>
         /// <param name="otherModule">Module to merge into this one</param>
         /// <param name="linkMode">Linker mode to use when merging</param>
         public void Link( Module otherModule, LinkerMode linkMode )
@@ -575,8 +575,23 @@ namespace Llvm.NET
             }
         }
 
+        internal DINode GetNodeFor( LLVMMetadataRef nodeRef, Func<LLVMMetadataRef, DINode> constructor )
+        {
+            if( nodeRef.Pointer == IntPtr.Zero )
+                throw new ArgumentNullException( nameof( nodeRef ) );
+
+            DINode retVal = null;
+            if( NodeCache.TryGetValue( nodeRef, out retVal ) )
+                return retVal;
+
+            retVal = constructor( nodeRef );
+            NodeCache.Add( nodeRef, retVal );
+            return retVal;
+        }
+
         internal LLVMModuleRef ModuleHandle { get; private set; }
 
+        private readonly Dictionary< LLVMMetadataRef, DINode > NodeCache = new Dictionary< LLVMMetadataRef, DINode >( );
         private readonly ExtensiblePropertyContainer PropertyBag = new ExtensiblePropertyContainer( );
         private readonly Lazy<DebugInfoBuilder> DIBuilder_;
         private readonly bool OwnsContext;

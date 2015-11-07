@@ -1,3 +1,6 @@
+# Default, everything is considered binary
+* binary
+
 ###############################################################################
 # Set default behavior for command prompt diff.
 #
@@ -54,5 +57,3 @@
 #*.rtf   diff=astextplain
 #*.RTF   diff=astextplain
 
-# everything else is considered binary
-* binary

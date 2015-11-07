@@ -26,6 +26,12 @@ DEFINE_SIMPLE_CONVERSION_FUNCTIONS( DIBuilder, LLVMDIBuilderRef )
 
 extern "C"
 {
+    LLVMContextRef LLVMGetNodeContext( LLVMMetadataRef /*MDNode*/ node )
+    {
+        MDNode* pNode = unwrap<MDNode>( node );
+        return wrap( &pNode->getContext( ) );
+    }
+
     LLVMMetadataRef /*DILocalScope*/ LLVMGetDILocationScope( LLVMMetadataRef /*DILocation*/ location )
     {
         DILocation* loc = unwrap<DILocation>( location );
@@ -343,7 +349,7 @@ extern "C"
         DIBuilder *D = unwrap(Dref);
         DICompositeType* type = D->createReplaceableCompositeType( Tag
                                                                    , Name
-                                                                   , unwrap<DIScope>( Scope )
+                                                                   , Scope ? unwrap<DIScope>( Scope ) : nullptr
                                                                    , File ? unwrap<DIFile>( File ) : nullptr
                                                                    , Line
                                                                    , RuntimeLang

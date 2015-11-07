@@ -41,13 +41,8 @@ namespace Llvm.NET.DebugInfo
             if( handle == LLVMMetadataRef.Zero )
                 return null;
 
-            DINode retVal;
-            if( NodeCache.TryGetValue( handle, out retVal ) )
-                return retVal as T;
-
-            retVal = StaticFactory( handle );
-            NodeCache.Add( handle, retVal );
-            return retVal as T;
+            var context = Context.GetContextFor( handle );
+            return (T)context.GetNodeFor( handle, StaticFactory );
         }
 
         private static DINode StaticFactory( LLVMMetadataRef handle )
@@ -170,7 +165,5 @@ namespace Llvm.NET.DebugInfo
                 return new DIObjCProperty( handle );
             }
         }
-
-        private static readonly Dictionary< LLVMMetadataRef, DINode > NodeCache = new Dictionary< LLVMMetadataRef, DINode >( );
     }
 }

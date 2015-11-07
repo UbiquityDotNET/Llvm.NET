@@ -51,14 +51,14 @@ namespace Llvm.NET
         /// <summary>Retrives an LLVM integer type with the same bit width as
         /// a pointer for the default address sapce of the target</summary>
         /// <returns>Integer type matching the bit width of a native pointer in the target's default address space</returns>
-        public ITypeRef IntPtrType() => TypeRef.FromHandle( NativeMethods.IntPtrType( OpaqueHandle ) );
+        public ITypeRef IntPtrType() => TypeRef.FromHandle( NativeMethods.IntPtrTypeInContext( Context.ContextHandle, OpaqueHandle ) );
 
         /// <summary>Retrives an LLVM integer type with the same bit width as
         /// a pointer for the given address sapce of the target</summary>
         /// <returns>Integer type matching the bit width of a native pointer in the target's address space</returns>
         public ITypeRef IntPtrType( uint addressSpace )
         {
-            var typeHandle = NativeMethods.IntPtrTypeForAS( OpaqueHandle, addressSpace );
+            var typeHandle = NativeMethods.IntPtrTypeForASInContext( Context.ContextHandle, OpaqueHandle, addressSpace );
             return TypeRef.FromHandle( typeHandle );
         }
 
@@ -156,44 +156,15 @@ namespace Llvm.NET
         public ulong BitOffsetOfElement( IStructType llvmType, uint element ) => OffsetOfElement( llvmType, element ) * 8;
 
         /// <summary>Parses an LLVM target layout string</summary>
+        /// <param name="context"><see cref="Context"/> for types created by the ne <see cref="TargetData"/></param>
         /// <param name="layoutString">string to parse</param>
         /// <returns>Parsed target data</returns>
         /// <remarks>For full details on the syntax of the string see <a href="http://llvm.org/releases/3.7.0/docs/LangRef.html#data-layout">http://llvm.org/releases/3.7.0/docs/LangRef.html#data-layout</a></remarks>
-        public static TargetData Parse( string layoutString )
+        public static TargetData Parse( Context context, string layoutString )
         {
             var handle = NativeMethods.CreateTargetData( layoutString );
-            return FromHandle( handle, true );
+            return FromHandle( context, handle, true );
         }
-
-        internal TargetData( LLVMTargetDataRef targetDataHandle, bool isDisposable )
-        {
-            OpaqueHandle = targetDataHandle;
-            IsDisposable = isDisposable;
-        }
-
-        internal static TargetData FromHandle( LLVMTargetDataRef targetDataRef, bool isDisposable )
-        {
-            lock( TargetDataMap )
-            {
-                TargetData retVal;
-                if( TargetDataMap.TryGetValue( targetDataRef.Pointer, out retVal ) )
-                    return retVal;
-
-                retVal = new TargetData( targetDataRef, isDisposable );
-                TargetDataMap.Add( targetDataRef.Pointer, retVal );
-                return retVal;
-            }
-        }
-
-        internal LLVMTargetDataRef OpaqueHandle { get; private set; }
-
-        private static void VerifySized( ITypeRef type, string name )
-        {
-            if( !type.IsSized )
-                throw new ArgumentException( "Type must be sized to get target size information", name );
-        }
-
-        private static readonly Dictionary<IntPtr, TargetData> TargetDataMap = new Dictionary<IntPtr, TargetData>( );
 
         #region IDisposable Support
         private readonly bool IsDisposable;
@@ -221,5 +192,38 @@ namespace Llvm.NET
              GC.SuppressFinalize(this);
         }
         #endregion
+
+        internal TargetData( Context context, LLVMTargetDataRef targetDataHandle, bool isDisposable )
+        {
+            OpaqueHandle = targetDataHandle;
+            IsDisposable = isDisposable;
+            Context = context;
+        }
+
+        internal static TargetData FromHandle( Context context, LLVMTargetDataRef targetDataRef, bool isDisposable )
+        {
+            lock( TargetDataMap )
+            {
+                TargetData retVal;
+                if( TargetDataMap.TryGetValue( targetDataRef.Pointer, out retVal ) )
+                    return retVal;
+
+                retVal = new TargetData( context, targetDataRef, isDisposable );
+                TargetDataMap.Add( targetDataRef.Pointer, retVal );
+                return retVal;
+            }
+        }
+
+        public Context Context { get; }
+
+        internal LLVMTargetDataRef OpaqueHandle { get; private set; }
+
+        private static void VerifySized( ITypeRef type, string name )
+        {
+            if( !type.IsSized )
+                throw new ArgumentException( "Type must be sized to get target size information", name );
+        }
+
+        private static readonly Dictionary<IntPtr, TargetData> TargetDataMap = new Dictionary<IntPtr, TargetData>( );
     }
 }
