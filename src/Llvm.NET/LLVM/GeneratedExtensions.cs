@@ -18,19 +18,11 @@ using System.Runtime.InteropServices;
 
 namespace Llvm.NET
 {
-    internal partial struct LLVMOpaqueMetadata
-    {
-    }
-
-    internal partial struct LLVMOpaqueDIBuilder
-    {
-    }
-
     internal partial struct LLVMMetadataRef
     {
         internal LLVMMetadataRef(IntPtr pointer)
         {
-            this.Pointer = pointer;
+            Pointer = pointer;
         }
 
         internal readonly IntPtr Pointer;
@@ -40,13 +32,22 @@ namespace Llvm.NET
     {
         internal LLVMDIBuilderRef(IntPtr pointer)
         {
-            this.Pointer = pointer;
+            Pointer = pointer;
         }
 
         internal readonly IntPtr Pointer;
     }
 
-    
+    internal partial struct LLVMMDOperandRef
+    {
+        internal LLVMMDOperandRef(IntPtr pointer)
+        {
+            Pointer = pointer;
+        }
+
+        internal readonly IntPtr Pointer;
+    }
+
     internal enum LLVMModFlagBehavior
     {
         @Error = 1,
@@ -144,7 +145,7 @@ namespace Llvm.NET
         LLVMDwarfTagImportedModule = 0x3a,
         LLVMDwarfTagUnspecifiedType = 0x3b,
         LLVMDwarfTagPartialUnit = 0x3c,
-        LLVMDwarfTagInportedUnit = 0x3d,
+        LLVMDwarfTagImportedUnit = 0x3d,
         LLVMDwarfTagCondition = 0x3f,
         LLVMDwarfTagSharedType = 0x40,
         LLVMDwarfTagTypeUnit = 0x41,
@@ -170,52 +171,82 @@ namespace Llvm.NET
 
     internal enum LLVMAttrKind
     {
-       @LLVMAttrKindNone,
-       @LLVMAttrKindAlignment,
-       @LLVMAttrKindAlwaysInline,
-       @LLVMAttrKindBuiltin,
-       @LLVMAttrKindByVal,
-       @LLVMAttrKindInAlloca,
-       @LLVMAttrKindCold,
-       @LLVMAttrKindConvergent,
-       @LLVMAttrKindInlineHint,
-       @LLVMAttrKindInReg,
-       @LLVMAttrKindJumpTable,
-       @LLVMAttrKindMinSize,
-       @LLVMAttrKindNaked,
-       @LLVMAttrKindNest,
-       @LLVMAttrKindNoAlias,
-       @LLVMAttrKindNoBuiltin,
-       @LLVMAttrKindNoCapture,
-       @LLVMAttrKindNoDuplicate,
-       @LLVMAttrKindNoImplicitFloat,
-       @LLVMAttrKindNoInline,
-       @LLVMAttrKindNonLazyBind,
-       @LLVMAttrKindNonNull,
-       @LLVMAttrKindDereferenceable,
-       @LLVMAttrKindDereferenceableOrNull,
-       @LLVMAttrKindNoRedZone,
-       @LLVMAttrKindNoReturn,
-       @LLVMAttrKindNoUnwind,
-       @LLVMAttrKindOptimizeForSize,
-       @LLVMAttrKindOptimizeNone,
-       @LLVMAttrKindReadNone,
-       @LLVMAttrKindReadOnly,
-       @LLVMAttrKindArgMemOnly,
-       @LLVMAttrKindReturned,
-       @LLVMAttrKindReturnsTwice,
-       @LLVMAttrKindSExt,
-       @LLVMAttrKindStackAlignment,
-       @LLVMAttrKindStackProtect,
-       @LLVMAttrKindStackProtectReq,
-       @LLVMAttrKindStackProtectStrong,
-       @LLVMAttrKindSafeStack,
-       @LLVMAttrKindStructRet,
-       @LLVMAttrKindSanitizeAddress,
-       @LLVMAttrKindSanitizeThread,
-       @LLVMAttrKindSanitizeMemory,
-       @LLVMAttrKindUWTable,
-       @LLVMAttrKindZExt,
+        LLVMAttrKindNone,
+        LLVMAttrKindAlignment,
+        LLVMAttrKindAlwaysInline,
+        LLVMAttrKindBuiltin,
+        LLVMAttrKindByVal,
+        LLVMAttrKindInAlloca,
+        LLVMAttrKindCold,
+        LLVMAttrKindConvergent,
+        LLVMAttrKindInlineHint,
+        LLVMAttrKindInReg,
+        LLVMAttrKindJumpTable,
+        LLVMAttrKindMinSize,
+        LLVMAttrKindNaked,
+        LLVMAttrKindNest,
+        LLVMAttrKindNoAlias,
+        LLVMAttrKindNoBuiltin,
+        LLVMAttrKindNoCapture,
+        LLVMAttrKindNoDuplicate,
+        LLVMAttrKindNoImplicitFloat,
+        LLVMAttrKindNoInline,
+        LLVMAttrKindNonLazyBind,
+        LLVMAttrKindNonNull,
+        LLVMAttrKindDereferenceable,
+        LLVMAttrKindDereferenceableOrNull,
+        LLVMAttrKindNoRedZone,
+        LLVMAttrKindNoReturn,
+        LLVMAttrKindNoUnwind,
+        LLVMAttrKindOptimizeForSize,
+        LLVMAttrKindOptimizeNone,
+        LLVMAttrKindReadNone,
+        LLVMAttrKindReadOnly,
+        LLVMAttrKindArgMemOnly,
+        LLVMAttrKindReturned,
+        LLVMAttrKindReturnsTwice,
+        LLVMAttrKindSExt,
+        LLVMAttrKindStackAlignment,
+        LLVMAttrKindStackProtect,
+        LLVMAttrKindStackProtectReq,
+        LLVMAttrKindStackProtectStrong,
+        LLVMAttrKindSafeStack,
+        LLVMAttrKindStructRet,
+        LLVMAttrKindSanitizeAddress,
+        LLVMAttrKindSanitizeThread,
+        LLVMAttrKindSanitizeMemory,
+        LLVMAttrKindUWTable,
+        LLVMAttrKindZExt,
+    };
+
+    internal enum LLVMMetadataKind
+    {
+        LLVMMetadaKindMDTuple,
+        LLVMMetadaKindDILocation,
+        LLVMMetadaKindGenericDINode,
+        LLVMMetadaKindDISubrange,
+        LLVMMetadaKindDIEnumerator,
+        LLVMMetadaKindDIBasicType,
+        LLVMMetadaKindDIDerivedType,
+        LLVMMetadaKindDICompositeType,
+        LLVMMetadaKindDISubroutineType,
+        LLVMMetadaKindDIFile,
+        LLVMMetadaKindDICompileUnit,
+        LLVMMetadaKindDISubprogram,
+        LLVMMetadaKindDILexicalBlock,
+        LLVMMetadaKindDILexicalBlockFile,
+        LLVMMetadaKindDINamespace,
+        LLVMMetadaKindDIModule,
+        LLVMMetadaKindDITemplateTypeParameter,
+        LLVMMetadaKindDITemplateValueParameter,
+        LLVMMetadaKindDIGlobalVariable,
+        LLVMMetadaKindDILocalVariable,
+        LLVMMetadaKindDIExpression,
+        LLVMMetadaKindDIObjCProperty,
+        LLVMMetadaKindDIImportedEntity,
+        LLVMMetadaKindConstantAsMetadata,
+        LLVMMetadaKindLocalAsMetadata,
+        LLVMMetadaKindMDString
     };
 
     internal static partial class NativeMethods
@@ -397,8 +428,8 @@ namespace Llvm.NET
         [DllImport( libraryPath, EntryPoint = "LLVMDIBuilderInsertDeclareBefore", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl, BestFitMapping = false, ThrowOnUnmappableChar = true)]
         internal static extern LLVMValueRef DIBuilderInsertDeclareBefore( LLVMDIBuilderRef Dref, LLVMValueRef Storage, LLVMMetadataRef VarInfo, LLVMMetadataRef Expr, LLVMMetadataRef Location, LLVMValueRef InsertBefore );
 
-        [DllImport( libraryPath, EntryPoint = "LLVMDIDescriptorAsString", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl, BestFitMapping = false, ThrowOnUnmappableChar = true)]
-        internal static extern IntPtr DIDescriptorAsString( LLVMMetadataRef descriptor );
+        [DllImport( libraryPath, EntryPoint = "LLVMMetadataAsString", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl, BestFitMapping = false, ThrowOnUnmappableChar = true)]
+        internal static extern IntPtr MetadataAsString( LLVMMetadataRef descriptor );
 
         [DllImport( libraryPath, EntryPoint = "LLVMMDNodeReplaceAllUsesWith", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl, BestFitMapping = false, ThrowOnUnmappableChar = true)]
         internal static extern void MDNodeReplaceAllUsesWith( LLVMMetadataRef oldDescriptor, LLVMMetadataRef newDescriptor );
@@ -423,6 +454,12 @@ namespace Llvm.NET
 
         [DllImport( libraryPath, EntryPoint = "LLVMIsResolved", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl, BestFitMapping = false, ThrowOnUnmappableChar = true)]
         internal static extern LLVMBool IsResolved( LLVMMetadataRef M );
+
+        [DllImport( libraryPath, EntryPoint = "LLVMIsDistinct", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl, BestFitMapping = false, ThrowOnUnmappableChar = true )]
+        internal static extern LLVMBool IsDistinct( LLVMMetadataRef M );
+
+        [DllImport( libraryPath, EntryPoint = "LLVMIsUniqued", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl, BestFitMapping = false, ThrowOnUnmappableChar = true )]
+        internal static extern LLVMBool IsUniqued( LLVMMetadataRef M );
 
         [DllImport( libraryPath, EntryPoint = "LLVMGetMDStringText", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl, BestFitMapping = false, ThrowOnUnmappableChar = true)]
         internal static extern IntPtr GetMDStringText( LLVMMetadataRef M, out uint len );
@@ -498,5 +535,17 @@ namespace Llvm.NET
 
         [DllImport( libraryPath, EntryPoint = "LLVMGetNodeContext", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl, BestFitMapping = false, ThrowOnUnmappableChar = true )]
         internal static extern LLVMContextRef GetNodeContext( LLVMMetadataRef /*MDNode*/ node );
+
+        [DllImport( libraryPath, EntryPoint = "LLVMGetMetadataID", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl, BestFitMapping = false, ThrowOnUnmappableChar = true )]
+        internal static extern LLVMMetadataKind GetMetadataID( LLVMMetadataRef /*Metadata*/ md );
+
+        [DllImport( libraryPath, EntryPoint = "LLVMMDNodeGetNumOperands", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl, BestFitMapping = false, ThrowOnUnmappableChar = true )]
+        internal static extern UInt32 MDNodeGetNumOperands( LLVMMetadataRef /*MDNode*/ node );
+
+        [DllImport( libraryPath, EntryPoint = "LLVMMDNodeGetOperand", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl, BestFitMapping = false, ThrowOnUnmappableChar = true )]
+        internal static extern LLVMMDOperandRef MDNodeGetOperand( LLVMMetadataRef /*MDNode*/ node, UInt32 index );
+
+        [DllImport( libraryPath, EntryPoint = "LLVMGetOperandNode", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl, BestFitMapping = false, ThrowOnUnmappableChar = true )]
+        internal static extern LLVMMetadataRef GetOperandNode( LLVMMDOperandRef operand );
     }
 }

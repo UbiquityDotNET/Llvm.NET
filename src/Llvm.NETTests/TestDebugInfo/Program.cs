@@ -50,7 +50,7 @@ namespace TestDebugInfo
             var target = Target.FromTriple( Triple );
             using( var context = new Context( ) )
             using( var targetMachine = target.CreateTargetMachine( context, Triple, Cpu, Features, CodeGenOpt.Aggressive, Reloc.Default, CodeModel.Small ) )
-            using( var module = new Module( "test_x86.bc", context ) )
+            using( var module = new NativeModule( "test_x86.bc", context ) )
             {
                 var targetData = targetMachine.TargetData;
 
@@ -81,9 +81,9 @@ namespace TestDebugInfo
                 
                 // Create concrete debug type with full debug information
                 var fooBody = new [ ]
-                    { new DebugMemberInfo { File = diFile, Line = 3, Name = "a", Type = i32, Index = 0 }
-                    , new DebugMemberInfo { File = diFile, Line = 4, Name = "b", Type = f32, Index = 1 }
-                    , new DebugMemberInfo { File = diFile, Line = 5, Name = "c", Type = i32Array_0_2, Index = 2 }
+                    { new DebugMemberInfo { File = diFile, Line = 3, Name = "a", DebugType = i32, Index = 0 }
+                    , new DebugMemberInfo { File = diFile, Line = 4, Name = "b", DebugType = f32, Index = 1 }
+                    , new DebugMemberInfo { File = diFile, Line = 5, Name = "c", DebugType = i32Array_0_2, Index = 2 }
                     };
                 fooType.SetBody( false, module, cu, diFile, 1, 0, fooBody );
 
@@ -106,8 +106,8 @@ namespace TestDebugInfo
                 // add module flags and ident
                 // this can technically occur at any point, though placing it here makes
                 // comparing against clang generated files simpler
-                module.AddModuleFlag( ModuleFlagBehavior.Warning, Module.DwarfVersionValue, 4 );
-                module.AddModuleFlag( ModuleFlagBehavior.Warning, Module.DebugVersionValue, Module.DebugMetadataVersion );
+                module.AddModuleFlag( ModuleFlagBehavior.Warning, NativeModule.DwarfVersionValue, 4 );
+                module.AddModuleFlag( ModuleFlagBehavior.Warning, NativeModule.DebugVersionValue, NativeModule.DebugMetadataVersion );
                 module.AddModuleFlag( ModuleFlagBehavior.Error, "PIC Level", 2 );
                 module.AddVersionIdentMetadata( VersionIdentString );
 
@@ -146,7 +146,7 @@ namespace TestDebugInfo
                                                       , isLocalToUnit: false
                                                       , isDefinition: true
                                                       , scopeLine: 24
-                                                      , flags: 0
+                                                      , debugFlags: DebugInfoFlags.None
                                                       , isOptimized: false
                                                       ).AddAttributes( AttributeKind.NoUnwind, AttributeKind.UWTable )
                                                        .AddAttributes( TargetDependentAttributes );
@@ -160,7 +160,7 @@ namespace TestDebugInfo
                                                     , isLocalToUnit: true
                                                     , isDefinition: true
                                                     , scopeLine: 14
-                                                    , flags: DebugInfoFlags.Prototyped
+                                                    , debugFlags: DebugInfoFlags.Prototyped
                                                     , isOptimized: false
                                                     ).Linkage( Linkage.Internal ) // static function
                                                      .AddAttributes( AttributeKind.NoUnwind, AttributeKind.UWTable, AttributeKind.InlineHint )
@@ -192,7 +192,7 @@ namespace TestDebugInfo
             }
         }
 
-        private static void CreateCopyFunctionBody( Module module
+        private static void CreateCopyFunctionBody( NativeModule module
                                                   , TargetData layout
                                                   , Function copyFunc
                                                   , DIFile diFile
@@ -271,7 +271,7 @@ namespace TestDebugInfo
                        .SetDebugLocation( 16, 1, copyFunc.DISubProgram );
         }
 
-        private static void CreateDoCopyFunctionBody( Module module
+        private static void CreateDoCopyFunctionBody( NativeModule module
                                                     , TargetData layout
                                                     , Function doCopyFunc
                                                     , IStructType foo

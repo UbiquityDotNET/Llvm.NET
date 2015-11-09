@@ -125,16 +125,18 @@ namespace Llvm.NET
 
         public uint PreferredAlignmentOf( Value value )
         {
-            VerifySized( value.Type, nameof( value ) );
+            VerifySized( value.NativeType, nameof( value ) );
             return NativeMethods.PreferredAlignmentOfGlobal( OpaqueHandle, value.ValueHandle );
         }
 
+        [System.Diagnostics.CodeAnalysis.SuppressMessage( "Microsoft.Design", "CA1011:ConsiderPassingBaseTypesAsParameters", Justification = "Specific type required by interop call" )]
         public uint ElementAtOffset( IStructType structType, ulong offset )
         {
             VerifySized( structType, nameof( structType ) );
             return NativeMethods.ElementAtOffset( OpaqueHandle, structType.GetTypeRef(), offset );
         }
 
+        [System.Diagnostics.CodeAnalysis.SuppressMessage( "Microsoft.Design", "CA1011:ConsiderPassingBaseTypesAsParameters", Justification = "Specific type required by interop call" )]
         public ulong OffsetOfElement( IStructType structType, uint element )
         {
             VerifySized( structType, nameof( structType ) );
@@ -157,12 +159,12 @@ namespace Llvm.NET
 
         /// <summary>Parses an LLVM target layout string</summary>
         /// <param name="context"><see cref="Context"/> for types created by the ne <see cref="TargetData"/></param>
-        /// <param name="layoutString">string to parse</param>
+        /// <param name="layout">string to parse</param>
         /// <returns>Parsed target data</returns>
         /// <remarks>For full details on the syntax of the string see <a href="http://llvm.org/releases/3.7.0/docs/LangRef.html#data-layout">http://llvm.org/releases/3.7.0/docs/LangRef.html#data-layout</a></remarks>
-        public static TargetData Parse( Context context, string layoutString )
+        public static TargetData Parse( Context context, string layout )
         {
-            var handle = NativeMethods.CreateTargetData( layoutString );
+            var handle = NativeMethods.CreateTargetData( layout );
             return FromHandle( context, handle, true );
         }
 

@@ -33,10 +33,10 @@ namespace Llvm.NET
         }
 
         /// <summary>Generate code for the target machine from a module</summary>
-        /// <param name="module"><see cref="Module"/> to generate the code from</param>
+        /// <param name="module"><see cref="NativeModule"/> to generate the code from</param>
         /// <param name="path">Path to the output file</param>
         /// <param name="fileType">Type of file to emit</param>
-        public void EmitToFile( Module module, string path, CodeGenFileType fileType )
+        public void EmitToFile( NativeModule module, string path, CodeGenFileType fileType )
         {
             if( module == null )
                 throw new ArgumentNullException( nameof( module ) );

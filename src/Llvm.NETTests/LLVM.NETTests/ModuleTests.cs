@@ -13,7 +13,7 @@ namespace Llvm.NET.Tests
         [TestMethod]
         public void DefaultConstructorTest( )
         {
-            using( var module = new Module( ) )
+            using( var module = new NativeModule( ) )
             {
                 Assert.AreSame( string.Empty, module.Name );
                 Assert.IsNotNull( module );
@@ -39,7 +39,7 @@ namespace Llvm.NET.Tests
         [TestMethod]
         public void ConstructorTestWithName( )
         {
-            using( var module = new Module( "test" ) )
+            using( var module = new NativeModule( "test" ) )
             {
                 Assert.AreEqual( "test", module.Name );
                 Assert.IsNotNull( module );
@@ -65,7 +65,7 @@ namespace Llvm.NET.Tests
         [TestMethod]
         public void ConstructorTestWithNameAndCompileUnit( )
         {
-            using( var module = new Module( "test", DebugInfo.SourceLanguage.C99, "test.c", "unitTest", false, string.Empty, 0 ) )
+            using( var module = new NativeModule( "test", DebugInfo.SourceLanguage.C99, "test.c", "unitTest", false, string.Empty, 0 ) )
             {
                 Assert.AreEqual( "test", module.Name );
                 Assert.IsNotNull( module );
@@ -89,7 +89,7 @@ namespace Llvm.NET.Tests
         [TestMethod]
         public void DisposeTest( )
         {
-            using( var module = new Module( "test" ) )
+            using( var module = new NativeModule( "test" ) )
             {
             }
         }
@@ -103,7 +103,7 @@ namespace Llvm.NET.Tests
         [TestMethod]
         public void VerifyValidModuleTest( )
         {
-            using( var module = new Module( "test" ) )
+            using( var module = new NativeModule( "test" ) )
             {
                 Function testFunc = CreateSimpleVoidNopTestFunction( module, "foo" );
                 // verify basics
@@ -118,7 +118,7 @@ namespace Llvm.NET.Tests
         [TestMethod]
         public void VerifyInvalidModuleTest( )
         {
-            using( var module = new Module( "test" ) )
+            using( var module = new NativeModule( "test" ) )
             {
                 Function testFunc = CreateInvalidFunction( module, "badfunc" );
                 // verify basics
@@ -136,7 +136,7 @@ namespace Llvm.NET.Tests
         [TestMethod]
         public void AddFunctionGetFunctionTest( )
         {
-            using( var module = new Module( "test" ) )
+            using( var module = new NativeModule( "test" ) )
             {
                 Function testFunc = CreateSimpleVoidNopTestFunction( module, "foo" );
                 // verify basics
@@ -160,7 +160,7 @@ namespace Llvm.NET.Tests
         [DeploymentItem("TestModuleAsString.ll")]
         public void AsStringTest( )
         {
-            using( var module = new Module( "test" ) )
+            using( var module = new NativeModule( "test" ) )
             {
                 Function testFunc = CreateSimpleVoidNopTestFunction( module, "foo" );
                 // verify basics
@@ -175,7 +175,7 @@ namespace Llvm.NET.Tests
         [TestMethod]
         public void AddAliasGetAliasTest( )
         {
-            using( var module = new Module( "test" ) )
+            using( var module = new NativeModule( "test" ) )
             {
                 Function testFunc = CreateSimpleVoidNopTestFunction( module, "_test" );
 
@@ -185,7 +185,7 @@ namespace Llvm.NET.Tests
                 Assert.AreSame( testFunc, alias.Aliasee );
                 Assert.AreEqual( "test", alias.Name );
                 Assert.AreEqual( Linkage.External, alias.Linkage );
-                Assert.AreSame( testFunc.Type, alias.Type );
+                Assert.AreSame( testFunc.NativeType, alias.NativeType );
 
                 // alias.Operands[ 0 ] is just another way to get alias.Aliasee
                 Assert.AreEqual( 1, alias.Operands.Count );
@@ -251,7 +251,7 @@ namespace Llvm.NET.Tests
             Assert.Inconclusive( );
         }
 
-        private static Function CreateSimpleVoidNopTestFunction( Module module, string name )
+        private static Function CreateSimpleVoidNopTestFunction( NativeModule module, string name )
         {
             var ctx = module.Context;
             Assert.IsNotNull( ctx );
@@ -262,7 +262,7 @@ namespace Llvm.NET.Tests
             return testFunc;
         }
 
-        private static Function CreateInvalidFunction( Module module, string name )
+        private static Function CreateInvalidFunction( NativeModule module, string name )
         {
             var ctx = module.Context;
 

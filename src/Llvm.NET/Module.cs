@@ -13,19 +13,19 @@ namespace Llvm.NET
     /// A module is the basic unit for containing code in LLVM. Modules are an in memory
     /// representation of the LLVM bitcode. 
     /// </remarks>
-    public sealed class Module 
+    public sealed class NativeModule 
         : IDisposable
         , IExtensiblePropertyContainer
     {
         /// <summary>Creates an unnamed module without debug information</summary>
-        public Module( )
+        public NativeModule( )
             :this( string.Empty, null)
         {
         }
 
         /// <summary>Creates a new module with the specified id in a new context</summary>
         /// <param name="moduleId">Module's ID</param>
-        public Module( string moduleId )
+        public NativeModule( string moduleId )
             : this( moduleId, null )
         {
         }
@@ -33,7 +33,8 @@ namespace Llvm.NET
         /// <summary>Creates an named module in a given context</summary>
         /// <param name="moduleId">Module's ID</param>
         /// <param name="context">Context for the module</param>
-        public Module( string moduleId, Context context )
+        [System.Diagnostics.CodeAnalysis.SuppressMessage( "Microsoft.Reliability", "CA2000:Dispose objects before losing scope" )]
+        public NativeModule( string moduleId, Context context )
         {
             if( moduleId == null )
                 moduleId = string.Empty;
@@ -60,14 +61,14 @@ namespace Llvm.NET
         /// <param name="optimized">Flag to indicate if the module is optimized</param>
         /// <param name="flags">Additional flags</param>
         /// <param name="runtimeVersion">Runtime version if any (use 0 if the runtime version has no meaning)</param>
-        public Module( string moduleId
-                     , SourceLanguage language
-                     , string srcFilePath
-                     , string producer
-                     , bool optimized
-                     , string flags
-                     , uint runtimeVersion
-                     )
+        public NativeModule( string moduleId
+                           , SourceLanguage language
+                           , string srcFilePath
+                           , string producer
+                           , bool optimized
+                           , string flags
+                           , uint runtimeVersion
+                           )
             : this( moduleId
                   , null
                   , language
@@ -87,24 +88,24 @@ namespace Llvm.NET
         /// <param name="srcFilePath">path of source file to set for the compilation unit</param>
         /// <param name="producer">Name of the application producing this module</param>
         /// <param name="optimized">Flag to indicate if the module is optimized</param>
-        /// <param name="flags">Additional flags</param>
+        /// <param name="compilationFlags">Additional flags</param>
         /// <param name="runtimeVersion">Runtime version if any (use 0 if the runtime version has no meaning)</param>
-        public Module( string moduleId
-                     , Context context
-                     , SourceLanguage language
-                     , string srcFilePath
-                     , string producer
-                     , bool optimized
-                     , string flags
-                     , uint runtimeVersion
-                     )
+        public NativeModule( string moduleId
+                           , Context context
+                           , SourceLanguage language
+                           , string srcFilePath
+                           , string producer
+                           , bool optimized
+                           , string compilationFlags
+                           , uint runtimeVersion
+                           )
             : this( moduleId, context )
         {
             DICompileUnit = DIBuilder.CreateCompileUnit( language
                                                        , srcFilePath
                                                        , producer
                                                        , optimized
-                                                       , flags
+                                                       , compilationFlags
                                                        , runtimeVersion
                                                        );
         }
@@ -116,7 +117,7 @@ namespace Llvm.NET
             GC.SuppressFinalize( this );
         }
 
-        ~Module()
+        ~NativeModule()
         {
             Dispose( false );
         }
@@ -269,7 +270,7 @@ namespace Llvm.NET
         /// <summary>Link another bitcode module into the current module</summary>
         /// <param name="otherModule">Module to merge into this one</param>
         /// <param name="linkMode">Linker mode to use when merging</param>
-        public void Link( Module otherModule, LinkerMode linkMode )
+        public void Link( NativeModule otherModule, LinkerMode linkMode )
         {
             IntPtr errMsgPtr;
             if( 0 != NativeMethods.LinkModules( ModuleHandle, otherModule.ModuleHandle, (LLVMLinkerMode)linkMode, out errMsgPtr ).Value )
@@ -316,6 +317,7 @@ namespace Llvm.NET
         /// the same name exists with a different signature an exception is thrown as LLVM does
         /// not perform any function overloading.
         /// </remarks>
+        [System.Diagnostics.CodeAnalysis.SuppressMessage( "Microsoft.Design", "CA1011:ConsiderPassingBaseTypesAsParameters", Justification = "Specific type required by interop call" )]
         public Function AddFunction( string name, IFunctionType signature )
         {
             return Value.FromHandle<Function>( NativeMethods.GetOrInsertFunction( ModuleHandle, name, signature.GetTypeRef() ) );
@@ -373,7 +375,7 @@ namespace Llvm.NET
         /// <returns><see cref="GlobalAlias"/> for the alias</returns>
         public GlobalAlias AddAlias( Value aliasee, string aliasName )
         {
-            var handle = NativeMethods.AddAlias( ModuleHandle, aliasee.Type.GetTypeRef(), aliasee.ValueHandle, aliasName );
+            var handle = NativeMethods.AddAlias( ModuleHandle, aliasee.NativeType.GetTypeRef(), aliasee.ValueHandle, aliasName );
             return Value.FromHandle<GlobalAlias>( handle );
         }
 
@@ -460,7 +462,7 @@ namespace Llvm.NET
         /// <summary>Adds operand value to named metadata</summary>
         /// <param name="name">Name of the netadata</param>
         /// <param name="value">operand value</param>
-        public void AddNamedMetadataOperand( string name, Metadata value )
+        public void AddNamedMetadataOperand( string name, LlvmMetadata value )
         {
             NativeMethods.AddNamedMetadataOperand2( ModuleHandle, name, value.MetadataHandle );
         }
@@ -484,7 +486,7 @@ namespace Llvm.NET
         /// <param name="isLocalToUnit">Flag to indicate if this function is local to the compilation unit</param>
         /// <param name="isDefinition">Flag to indicate if this is a definition</param>
         /// <param name="scopeLine">First line of the function's outermost scope, this may not be the same as the first line of the function definition due to source formatting</param>
-        /// <param name="flags">Additional flags describing this function</param>
+        /// <param name="debugFlags">Additional flags describing this function</param>
         /// <param name="isOptimized">Flag to indicate if this function is optimized</param>
         /// <param name="tParam"></param>
         /// <param name="decl"></param>
@@ -498,7 +500,7 @@ namespace Llvm.NET
                                       , bool isLocalToUnit
                                       , bool isDefinition
                                       , uint scopeLine
-                                      , DebugInfoFlags flags
+                                      , DebugInfoFlags debugFlags
                                       , bool isOptimized
                                       , MDNode tParam = null
                                       , MDNode decl = null
@@ -519,7 +521,7 @@ namespace Llvm.NET
                                                  , isLocalToUnit: isLocalToUnit
                                                  , isDefinition: isDefinition
                                                  , scopeLine: scopeLine
-                                                 , flags: flags
+                                                 , debugFlags: debugFlags
                                                  , isOptimized: isOptimized
                                                  , function: func
                                                  , TParam: tParam
@@ -533,7 +535,7 @@ namespace Llvm.NET
         /// <inheritdoc/>
         bool IExtensiblePropertyContainer.TryGetExtendedPropertyValue<T>( string id, out T value )
         {
-            return PropertyBag.TryGetExtendedPropertyValue<T>( id, out value );
+            return PropertyBag.TryGetExtendedPropertyValue( id, out value );
         }
 
         /// <inheritdoc/>
@@ -544,17 +546,9 @@ namespace Llvm.NET
 
         /// <summary>Load a bit-code module from a given file</summary>
         /// <param name="path">path of the file to load</param>
-        /// <returns>Loaded <see cref="Module"/></returns>
-        public static Module LoadFrom( string path )
-        {
-            return LoadFrom( path, new Context( ) );
-        }
-
-        /// <summary>Load a bit-code module from a given file</summary>
-        /// <param name="path">path of the file to load</param>
         /// <param name="context">Context to use for creating the module</param>
-        /// <returns>Loaded <see cref="Module"/></returns>
-        public static Module LoadFrom( string path, Context context )
+        /// <returns>Loaded <see cref="NativeModule"/></returns>
+        public static NativeModule LoadFrom( string path, Context context )
         {
             if( string.IsNullOrWhiteSpace( path ) )
                 throw new ArgumentException( "path cannot be null or an empty string", nameof( path ) );

@@ -118,6 +118,7 @@
     <Compile Include="DebugInfo\DIVariable.cs" />
     <Compile Include="DebugInfo\GenericDINode.cs" />
     <Compile Include="DebugInfo\DebugType.cs" />
+    <Compile Include="DebugInfo\MDNodeOperandList.cs" />
     <Compile Include="Instructions\AddressSpaceCast.cs" />
     <Compile Include="Instructions\AtomicCmpXchg.cs" />
     <Compile Include="Instructions\AtomicRMW.cs" />

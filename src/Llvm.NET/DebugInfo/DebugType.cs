@@ -44,6 +44,7 @@ namespace Llvm.NET.DebugInfo
             DIType = diType;
         }
 
+        [System.Diagnostics.CodeAnalysis.SuppressMessage( "Microsoft.Naming", "CA2204:Literals should be spelled correctly", MessageId = "DIType" )]
         public DebugT DIType
         {
             get { return DIType_; }
@@ -56,13 +57,13 @@ namespace Llvm.NET.DebugInfo
                 else if( DIType_.IsTemporary )
                 {
                     if( value.IsTemporary )
-                        throw new InvalidOperationException( "Cannot replace a temprory with another temporary" );
+                        throw new InvalidOperationException( "Cannot replace a temporary with another temporary" );
 
                     DIType_.ReplaceAllUsesWith( value );
                     DIType_ = value;
                 }
                 else
-                    throw new InvalidOperationException( "Cannot replace non temprory DIType with a new Type" );
+                    throw new InvalidOperationException( "Cannot replace non temporary DIType with a new Type" );
             }
         }
         private DebugT DIType_;
@@ -105,7 +106,7 @@ namespace Llvm.NET.DebugInfo
 
         public IPointerType CreatePointerType( uint addressSpace ) => NativeType.CreatePointerType( addressSpace );
 
-        public DebugPointerType CreatePointerType( Module module, uint addressSpace )
+        public DebugPointerType CreatePointerType( NativeModule module, uint addressSpace )
         {
             if( DIType == null )
                 throw new ArgumentException( "Type does not have associated Debug type from which to construct a pointer type" );
@@ -114,7 +115,7 @@ namespace Llvm.NET.DebugInfo
             return new DebugPointerType( nativePointer, module, DIType, string.Empty );
         }
 
-        public DebugArrayType CreateArrayType( Module module, uint lowerBound, uint count )
+        public DebugArrayType CreateArrayType( NativeModule module, uint lowerBound, uint count )
         {
             if( DIType == null )
                 throw new ArgumentException( "Type does not have associated Debug type from which to construct an array type" );

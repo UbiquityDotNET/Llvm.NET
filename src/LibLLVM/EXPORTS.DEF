@@ -19,6 +19,8 @@ LLVMMetadataAsValue
 LLVMGetModuleName
 LLVMIsTemporary
 LLVMIsResolved
+LLVMIsUniqued
+LLVMIsDistinct
 LLVMGetMDStringText
 LLVMGetGlobalAlias
 LLVMGetAliasee
@@ -37,6 +39,7 @@ LLVMHasTargetDependentAttribute
 LLVMDIScopeGetFile
 
 ; Debug info functions not part of standard LLVM-C API
+LLVMGetMetadataID
 LLVMGetNodeContext
 LLVMGetDIFileName
 LLVMGetDIFileDirectory
@@ -78,7 +81,7 @@ LLVMDIDescriptorGetTag
 LLVMDIBuilderCreateGlobalVariable
 LLVMDIBuilderInsertDeclareBefore
 LLVMDIBuilderCreateNamespace
-LLVMDIDescriptorAsString
+LLVMMetadataAsString
 LLVMMDNodeReplaceAllUsesWith
 LLVMDILocation
 LLVMSubProgramDescribes
@@ -90,6 +93,10 @@ LLVMDITypeGetOffsetInBits
 LLVMDITypeGetFlags
 LLVMDITypeGetScope
 LLVMDITypeGetName
+
+LLVMMDNodeGetNumOperands
+LLVMMDNodeGetOperand
+LLVMGetOperandNode
 
 ; Instrumentation Bindings
 LLVMAddAddressSanitizerFunctionPass

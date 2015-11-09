@@ -30,7 +30,7 @@ namespace Llvm.NET.Values
         /// <returns>Constant representing the array</returns>
         public static Constant From( ITypeRef elementType, IEnumerable<Constant> values )
         {
-            if( values.Any( v => v.Type.TypeHandle != elementType.TypeHandle ) )
+            if( values.Any( v => v.NativeType.TypeHandle != elementType.TypeHandle ) )
                 throw new ArgumentException( "One or more value(s) type does not match specified array element type" );
 
             var valueHandles = values.Select( v => v.ValueHandle ).ToArray( );

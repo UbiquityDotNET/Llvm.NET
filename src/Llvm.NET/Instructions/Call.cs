@@ -1,14 +1,14 @@
 ﻿namespace Llvm.NET.Instructions
 {
-    public class Call
+    public class CallInstruction
         : Instruction
     {
-        internal Call( LLVMValueRef valueRef )
+        internal CallInstruction( LLVMValueRef valueRef )
             : this( valueRef, false )
         {
         }
 
-        internal Call( LLVMValueRef valueRef, bool preValidated )
+        internal CallInstruction( LLVMValueRef valueRef, bool preValidated )
             : base( preValidated ? valueRef : ValidateConversion( valueRef, NativeMethods.IsACallInst ) )
         {
         }

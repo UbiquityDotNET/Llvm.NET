@@ -26,7 +26,8 @@
 extern "C" {
 #endif
 
-typedef struct LLVMOpaqueMetadata *LLVMMetadataRef;
+typedef struct LLVMOpaqueMetadata* LLVMMetadataRef;
+typedef struct LLVMOpaqueMDOperand* LLVMMDOperandRef;
 
 enum LLVMAttrKind
 {
@@ -183,6 +184,9 @@ void LLVMSetCurrentDebugLocation2(LLVMBuilderRef Bref, unsigned Line, unsigned C
 
 LLVMBool LLVMIsTemporary( LLVMMetadataRef M );
 LLVMBool LLVMIsResolved( LLVMMetadataRef M );
+LLVMBool LLVMIsUniqued( LLVMMetadataRef M );
+LLVMBool LLVMIsDistinct( LLVMMetadataRef M );
+
 void LLVMMDNodeResolveCycles( LLVMMetadataRef M );
 char const* LLVMGetDIFileName( LLVMMetadataRef /*DIFile*/ file );
 char const* LLVMGetDIFileDirectory( LLVMMetadataRef /*DIFile*/ file );

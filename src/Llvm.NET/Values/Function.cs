@@ -148,8 +148,8 @@ namespace Llvm.NET.Values
             }
             else
             {
-                var blockRef = NativeMethods.InsertBasicBlockInContext( Type.Context.ContextHandle, firstBlock, name );
-                retVal = BasicBlock.FromHandle( firstBlock );
+                var blockRef = NativeMethods.InsertBasicBlockInContext( NativeType.Context.ContextHandle, firstBlock, name );
+                retVal = BasicBlock.FromHandle( blockRef );
             }
             return retVal;
         }
@@ -159,7 +159,7 @@ namespace Llvm.NET.Values
         /// <returns><see cref="BasicBlock"/> created and insterted onto the end of the function</returns>
         public BasicBlock AppendBasicBlock( string name )
         {
-            LLVMBasicBlockRef blockRef = NativeMethods.AppendBasicBlockInContext( Type.Context.ContextHandle, ValueHandle, name );
+            LLVMBasicBlockRef blockRef = NativeMethods.AppendBasicBlockInContext( NativeType.Context.ContextHandle, ValueHandle, name );
             return BasicBlock.FromHandle( blockRef );
         }
 

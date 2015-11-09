@@ -22,7 +22,7 @@ namespace Llvm.NET.DebugInfo
         /// <param name="module">Module to use when constructing the debug information</param>
         /// <param name="name">Source language name of the type</param>
         /// <param name="encoding">Encoding for the type</param>
-        public DebugBasicType( ITypeRef llvmType, Module module, string name, DiTypeKind encoding )
+        public DebugBasicType( ITypeRef llvmType, NativeModule module, string name, DiTypeKind encoding )
             : base( ValidateType( llvmType )
                   , module.DIBuilder.CreateBasicType( name
                                                     , module.Layout.BitSizeOf( llvmType )

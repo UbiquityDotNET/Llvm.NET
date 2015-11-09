@@ -21,7 +21,7 @@ namespace Llvm.NET
     ///</para>
     /// <para>LLVM Debug information is ultimately all parented to a top level
     /// <see cref="DebugInfo.DICompileUnit"/> as the scope, and a compilation
-    /// unit is bound to a <see cref="Module"/>, even though, technically the
+    /// unit is bound to a <see cref="NativeModule"/>, even though, technically the
     /// types are owned by a Context. Thus to keep things simpler and help make
     /// working with debug infomration easier. Lllvm.NET encapsulates the native
     /// type and the debug type in seperate classes that are instances of the
@@ -73,7 +73,13 @@ namespace Llvm.NET
         /// <summary>Get a type that is a pointer to a value of a given type</summary>
         /// <param name="elementType">Type of value the pointer points to</param>
         /// <returns><see cref="IPointerType"/> for a pointer that references a value of type <paramref name="elementType"/></returns>
-        public IPointerType GetPointerTypeFor( ITypeRef elementType ) => TypeRef.FromHandle<IPointerType>( NativeMethods.PointerType( elementType.GetTypeRef(), 0 ) );
+        public IPointerType GetPointerTypeFor( ITypeRef elementType )
+        {
+            if( elementType.Context != this )
+                throw new ArgumentException( "Cannot mix types from different contexts", nameof( elementType ) );
+
+            return TypeRef.FromHandle<IPointerType>( NativeMethods.PointerType( elementType.GetTypeRef(), 0 ) );
+        }
 
         /// <summary>Get's an LLVM integer type of arbitrary bit width</summary>
         /// <remarks>
@@ -525,6 +531,9 @@ namespace Llvm.NET
         /// <returns>Constant for the specifiec value</returns>
         public Constant CreateConstant( ITypeRef intType, UInt64 constValue, bool signExtend )
         {
+            if( intType.Context != this )
+                throw new ArgumentException( "Cannot mix types from different contexts", nameof( intType ) );
+
             if( intType.Kind != TypeKind.Integer )
                 throw new ArgumentException( "Integer type required", nameof( intType ) );
 
@@ -547,23 +556,18 @@ namespace Llvm.NET
             return Value.FromHandle<ConstantFP>( NativeMethods.ConstReal( DoubleType.GetTypeRef(), constValue ) );
         }
 
-        internal void Close()
-        {
-            Dispose( );
-        }
-
         #region Interning Factories
-        internal void AddModule( Module module )
+        internal void AddModule( NativeModule module )
         {
             ModuleCache.Add( module.ModuleHandle.Pointer, module );
         }
 
-        internal Module GetModuleFor( LLVMModuleRef moduleRef )
+        internal NativeModule GetModuleFor( LLVMModuleRef moduleRef )
         {
             if( moduleRef.Pointer == IntPtr.Zero )
                 throw new ArgumentNullException( nameof( moduleRef ) );
 
-            Module retVal;
+            NativeModule retVal;
             if( !ModuleCache.TryGetValue( moduleRef.Pointer, out retVal ) )
                 return null;
 
@@ -627,7 +631,7 @@ namespace Llvm.NET
 
         internal void RemoveDeletedNode( MDNode node )
         {
-            NodeCache.Remove( node.MetadataHandle );
+            MetadataCache.Remove( node.MetadataHandle );
         }
 
         internal LLVMContextRef ContextHandle { get; private set; }
@@ -652,17 +656,31 @@ namespace Llvm.NET
             return retVal;
         }
 
-        internal DINode GetNodeFor( LLVMMetadataRef handle, Func<LLVMMetadataRef, DINode> staticFactory )
+        internal LlvmMetadata GetNodeFor( LLVMMetadataRef handle, Func<LLVMMetadataRef, LlvmMetadata> staticFactory )
         {
             if( handle == LLVMMetadataRef.Zero )
                 throw new ArgumentNullException( nameof( handle ) );
 
-            DINode retVal = null;
-            if( NodeCache.TryGetValue( handle, out retVal ) )
+            LlvmMetadata retVal = null;
+            if( MetadataCache.TryGetValue( handle, out retVal ) )
                 return retVal;
 
             retVal = staticFactory( handle );
-            NodeCache.Add( handle, retVal );
+            MetadataCache.Add( handle, retVal );
+            return retVal;
+        }
+
+        internal MDOperand GetOperandFor( LLVMMDOperandRef handle )
+        {
+            if( handle.Pointer == IntPtr.Zero )
+                throw new ArgumentNullException( nameof( handle ) );
+
+            MDOperand retVal = null;
+            if( MDOperandCache.TryGetValue( handle, out retVal ) )
+                return retVal;
+
+            retVal = new MDOperand( handle );
+            MDOperandCache.Add( handle, retVal );
             return retVal;
         }
 
@@ -688,6 +706,7 @@ namespace Llvm.NET
         #endregion
 
         #region IDisposable Support
+        [System.Diagnostics.CodeAnalysis.SuppressMessage( "Microsoft.Usage", "CA1801:ReviewUnusedParameters", MessageId = "disposing" )]
         void Dispose( bool disposing )
         {
             if( ContextHandle.Pointer != IntPtr.Zero )
@@ -714,7 +733,7 @@ namespace Llvm.NET
         }
         #endregion
 
-        internal IEnumerable<MDNode> MDNodes => NodeCache.Values;
+        internal IEnumerable<LlvmMetadata> Metadata => MetadataCache.Values;
 
         private Context( LLVMContextRef contextRef )
         {
@@ -731,10 +750,11 @@ namespace Llvm.NET
             Debug.Assert( false );
         }
 
-        private readonly Dictionary<IntPtr, Value> ValueCache = new Dictionary<IntPtr, Value>( );
-        private readonly Dictionary<IntPtr, ITypeRef> TypeCache = new Dictionary<IntPtr, ITypeRef>( );
-        private readonly Dictionary<IntPtr, Module> ModuleCache = new Dictionary<IntPtr, Module>( );
-        private readonly Dictionary< LLVMMetadataRef, DINode > NodeCache = new Dictionary< LLVMMetadataRef, DINode >( );
+        private readonly Dictionary< IntPtr, Value > ValueCache = new Dictionary< IntPtr, Value >( );
+        private readonly Dictionary< IntPtr, ITypeRef > TypeCache = new Dictionary< IntPtr, ITypeRef >( );
+        private readonly Dictionary< IntPtr, NativeModule > ModuleCache = new Dictionary< IntPtr, NativeModule >( );
+        private readonly Dictionary< LLVMMetadataRef, LlvmMetadata > MetadataCache = new Dictionary< LLVMMetadataRef, LlvmMetadata >( );
+        private readonly Dictionary< LLVMMDOperandRef, MDOperand > MDOperandCache = new Dictionary< LLVMMDOperandRef, MDOperand >( );
 
         static void FatalErrorHandler(string Reason)
         {
@@ -747,6 +767,5 @@ namespace Llvm.NET
         // lazy init a singleton unmanaged delegate and hold on to it so it is never collected
         private static Lazy<LLVMFatalErrorHandler> FatalErrorHandlerDelegate 
             = new Lazy<LLVMFatalErrorHandler>( ( ) => FatalErrorHandler, LazyThreadSafetyMode.PublicationOnly );
-
     }
 }

@@ -221,6 +221,18 @@ extern "C"
         return pMetadata->isResolved( );
     }
 
+    LLVMBool LLVMIsUniqued( LLVMMetadataRef M )
+    {
+        auto pMetadata = unwrap<MDNode>( M );
+        return pMetadata->isUniqued( );
+    }
+
+    LLVMBool LLVMIsDistinct( LLVMMetadataRef M )
+    {
+        auto pMetadata = unwrap<MDNode>( M );
+        return pMetadata->isDistinct( );
+    }
+
     char const* LLVMGetMDStringText( LLVMMetadataRef mdstring, unsigned* len )
     {
         MDString const* S = unwrap<MDString>( mdstring );
