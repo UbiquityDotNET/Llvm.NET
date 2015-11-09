@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics.CodeAnalysis;
 using Llvm.NET.Types;
 using Llvm.NET.Values;
 
@@ -44,7 +45,7 @@ namespace Llvm.NET.DebugInfo
             DIType = diType;
         }
 
-        [System.Diagnostics.CodeAnalysis.SuppressMessage( "Microsoft.Naming", "CA2204:Literals should be spelled correctly", MessageId = "DIType" )]
+        [SuppressMessage( "Microsoft.Naming", "CA2204:Literals should be spelled correctly", MessageId = "DIType" )]
         public DebugT DIType
         {
             get { return DIType_; }
@@ -137,6 +138,7 @@ namespace Llvm.NET.DebugInfo
             PropertyContainer.AddExtendedPropertyValue( id, value );
         }
 
+        [SuppressMessage( "Microsoft.Usage", "CA2225:OperatorOverloadsHaveNamedAlternates", Justification = "Available as a property, this is for convenience" )]
         public static implicit operator DebugT( DebugType<NativeT, DebugT> self ) => self.DIType;
 
         private readonly ExtensiblePropertyContainer PropertyContainer = new ExtensiblePropertyContainer( );

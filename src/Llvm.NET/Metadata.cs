@@ -82,13 +82,12 @@ namespace Llvm.NET
 
         internal LLVMMetadataRef MetadataHandle { get; /*protected*/ set; }
 
-        internal static T FromHandle<T>( LLVMMetadataRef handle )
+        internal static T FromHandle<T>( Context context, LLVMMetadataRef handle )
             where T : LlvmMetadata
         {
             if( handle == LLVMMetadataRef.Zero )
                 return null;
 
-            var context = Context.GetContextFor( handle );
             return (T)context.GetNodeFor( handle, StaticFactory );
         }
 
@@ -99,8 +98,7 @@ namespace Llvm.NET
             switch( kind )
             {
             case MetadataKind.MDTuple:
-                //return new MDTuple( handle );
-                throw new NotImplementedException( );
+                return new MDTuple( handle );
 
             case MetadataKind.DILocation:
                 return new DILocation( handle );
@@ -166,16 +164,13 @@ namespace Llvm.NET
                 return new DIObjCProperty( handle );
 
             case MetadataKind.DIImportedEntity:
-                //return new DIImportedEntity( handle );
-                throw new NotImplementedException( );
+                return new DIImportedEntity( handle );
 
             case MetadataKind.ConstantAsMetadata:
-                //return new ConstantAsMetadata( handle );
-                throw new NotImplementedException( );
+                return new ConstantAsMetadata( handle );
 
             case MetadataKind.LocalAsMetadata:
-                //return new LocalAsMetadata( handle );
-                throw new NotImplementedException( );
+                return new LocalAsMetadata( handle );
 
             case MetadataKind.MDString:
                 return new MDString( handle );
@@ -183,6 +178,33 @@ namespace Llvm.NET
             default:
                 throw new NotImplementedException( );
             }
+        }
+    }
+
+    public class ValueAsMetadata 
+        : LlvmMetadata
+    {
+        internal ValueAsMetadata( LLVMMetadataRef handle )
+            : base( handle )
+        {
+        }
+    }
+
+    public class ConstantAsMetadata
+        : ValueAsMetadata
+    {
+        internal ConstantAsMetadata( LLVMMetadataRef handle )
+            : base( handle )
+        {
+        }
+    }
+
+    public class LocalAsMetadata
+        : ValueAsMetadata
+    {
+        internal LocalAsMetadata( LLVMMetadataRef handle )
+            : base( handle )
+        {
         }
     }
 
@@ -216,19 +238,21 @@ namespace Llvm.NET
 
     public class MDOperand
     {
-        public LlvmMetadata Metadata => LlvmMetadata.FromHandle<LlvmMetadata>( NativeMethods.GetOperandNode( OperandHandle ) );
+        public MDNode OwningNode { get; }
+        public LlvmMetadata Metadata => LlvmMetadata.FromHandle<LlvmMetadata>( OwningNode.Context, NativeMethods.GetOperandNode( OperandHandle ) );
 
-        internal MDOperand( LLVMMDOperandRef handle )
+        internal MDOperand( MDNode owningNode, LLVMMDOperandRef handle )
         {
             if( handle.Pointer == IntPtr.Zero )
                 throw new ArgumentNullException( nameof( handle ) );
 
             OperandHandle = handle;
+            OwningNode = owningNode;
         }
 
         internal static MDOperand FromHandle( MDNode owningNode, LLVMMDOperandRef handle )
         {
-            return owningNode.Context.GetOperandFor( handle );
+            return owningNode.Context.GetOperandFor( owningNode, handle );
         }
 
         private readonly LLVMMDOperandRef OperandHandle;
@@ -264,6 +288,14 @@ namespace Llvm.NET
             Context.RemoveDeletedNode( this );
             NativeMethods.MDNodeReplaceAllUsesWith( MetadataHandle, other.MetadataHandle );
             MetadataHandle = LLVMMetadataRef.Zero;
+        }
+    }
+
+    public class MDTuple : MDNode
+    {
+        internal MDTuple( LLVMMetadataRef handle )
+            : base( handle )
+        {
         }
     }
 

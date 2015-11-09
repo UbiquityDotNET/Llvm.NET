@@ -70,6 +70,8 @@ namespace Llvm.NET
         /// <summary>Get's the LLVM double precision floating point type for this context</summary>
         public ITypeRef DoubleType => TypeRef.FromHandle( NativeMethods.DoubleTypeInContext( ContextHandle ) );
 
+        public IEnumerable<LlvmMetadata> Metadata => MetadataCache.Values;
+
         /// <summary>Get a type that is a pointer to a value of a given type</summary>
         /// <param name="elementType">Type of value the pointer points to</param>
         /// <returns><see cref="IPointerType"/> for a pointer that references a value of type <paramref name="elementType"/></returns>
@@ -670,8 +672,11 @@ namespace Llvm.NET
             return retVal;
         }
 
-        internal MDOperand GetOperandFor( LLVMMDOperandRef handle )
+        internal MDOperand GetOperandFor( MDNode owningNode, LLVMMDOperandRef handle )
         {
+            if( owningNode.Context != this )
+                throw new ArgumentException( "Cannot get operandd for a node from a different context", nameof( owningNode ) );
+
             if( handle.Pointer == IntPtr.Zero )
                 throw new ArgumentNullException( nameof( handle ) );
 
@@ -679,7 +684,7 @@ namespace Llvm.NET
             if( MDOperandCache.TryGetValue( handle, out retVal ) )
                 return retVal;
 
-            retVal = new MDOperand( handle );
+            retVal = new MDOperand( owningNode, handle );
             MDOperandCache.Add( handle, retVal );
             return retVal;
         }
@@ -732,8 +737,6 @@ namespace Llvm.NET
             GC.SuppressFinalize(this);
         }
         #endregion
-
-        internal IEnumerable<LlvmMetadata> Metadata => MetadataCache.Values;
 
         private Context( LLVMContextRef contextRef )
         {

@@ -96,6 +96,7 @@
     <Compile Include="DebugInfo\DIExpression.cs" />
     <Compile Include="DebugInfo\DIFile.cs" />
     <Compile Include="DebugInfo\DIGlobalVariable.cs" />
+    <Compile Include="DebugInfo\DIImportedEntity.cs" />
     <Compile Include="DebugInfo\DILexicalBlock.cs" />
     <Compile Include="DebugInfo\DILexicalBlockBase.cs" />
     <Compile Include="DebugInfo\DILexicalBlockFile.cs" />

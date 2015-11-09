@@ -96,7 +96,7 @@ namespace Llvm.NET.DebugInfo
             }
             else
             {
-                return module.DIBuilder.CreateReplaceableCompositeType( Tag.ArrayType, null, module.DICompileUnit, null, 0 );
+                return module.DIBuilder.CreateReplaceableCompositeType( Tag.ArrayType, string.Empty, module.DICompileUnit, null, 0 );
             }
         }
     }

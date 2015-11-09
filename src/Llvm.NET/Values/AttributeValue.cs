@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Llvm.NET.Values
 {
@@ -87,10 +88,12 @@ namespace Llvm.NET.Values
 
         /// <summary>Implicitly cast an <see cref="AttributeKind"/> to an <see cref="AttributeValue"/></summary>
         /// <param name="kind">Kind of attrinute to create</param>
+        [SuppressMessage( "Microsoft.Usage", "CA2225:OperatorOverloadsHaveNamedAlternates", Justification = "Available via constructor, this is for convenience" )]
         public static implicit operator AttributeValue( AttributeKind kind ) => new AttributeValue( kind );
 
         /// <summary>Implicitly cast a string to an named <see cref="AttributeValue"/></summary>
         /// <param name="kind">Attribute name</param>
+        [SuppressMessage( "Microsoft.Usage", "CA2225:OperatorOverloadsHaveNamedAlternates", Justification = "Available via constructor, this is for convenience" )]
         public static implicit operator AttributeValue( string kind ) => new AttributeValue( kind );
     }
 }
