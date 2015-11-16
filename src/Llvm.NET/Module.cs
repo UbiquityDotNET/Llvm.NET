@@ -17,6 +17,13 @@ namespace Llvm.NET
         : IDisposable
         , IExtensiblePropertyContainer
     {
+        internal NativeModule( LLVMModuleRef handle )
+        {
+            ModuleHandle = handle;
+            DIBuilder_ = new Lazy<DebugInfoBuilder>( ()=>new DebugInfoBuilder( this ) );
+            Context.AddModule( this );
+        }
+
         /// <summary>Creates an unnamed module without debug information</summary>
         public NativeModule( )
             :this( string.Empty, null)
@@ -163,7 +170,7 @@ namespace Llvm.NET
                 if( ModuleHandle.Pointer == IntPtr.Zero )
                     return null;
 
-                return Llvm.NET.Context.GetContextFor( ModuleHandle );
+                return Context.GetContextFor( ModuleHandle );
             }
         }
 

@@ -114,7 +114,11 @@ namespace Llvm.NET
         public CallInstruction Call( Value func, IReadOnlyList<Value> args )
         {
             LLVMValueRef hCall = BuildCall( func, args );
-            return Value.FromHandle<CallInstruction>( hCall );
+            var retVal =  Value.FromHandle<CallInstruction>( hCall );
+            // review:
+            // Should this add callsite param attributes from function?
+            // Underlying LLVM doesn't do that, what's the thinking there...
+            return retVal;
         }
 
         /// <summary>Builds an LLVM Store instruction</summary>
@@ -165,17 +169,13 @@ namespace Llvm.NET
         {
             var ptrType = ptr.NativeType as IPointerType;
             if(ptrType == null)
-            {
                 throw new ArgumentException( "Expected pointer value", nameof( ptr ) );
-            }
+
             if(ptrType.ElementType != cmp.NativeType)
-            {
                 throw new ArgumentException( string.Format( IncompatibleTypeMsgFmt, ptrType.ElementType, cmp.NativeType ) );
-            }
+
             if(ptrType.ElementType != value.NativeType)
-            {
                 throw new ArgumentException( string.Format( IncompatibleTypeMsgFmt, ptrType.ElementType, value.NativeType ) );
-            }
 
             var handle = NativeMethods.BuildAtomicCmpXchg( BuilderHandle
                                                          , ptr.ValueHandle
@@ -326,6 +326,7 @@ namespace Llvm.NET
         /// former makes the first index explicit. LLVM requires an explicit first index even if it is
         /// zero, in order to properly compute the offset for a given element in an aggregate type.
         /// </remarks>
+        [System.Diagnostics.CodeAnalysis.SuppressMessage( "Microsoft.Performance", "CA1822:MarkMembersAsStatic" )]
         public Value ConstGetElementPtrInBounds( Value pointer, params Value[ ] args )
         {
             var llvmArgs = GetValidatedGEPArgs( pointer, args );

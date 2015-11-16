@@ -9,7 +9,7 @@ namespace Llvm.NET.DebugInfo
     /// however in cases where explicitily controlled (or "packed") layout is required, instances of DebugMemberLayout are
     /// used to provide the information necessary to generate a proper type and debug information.
     /// </remarks>
-    public struct DebugMemberLayout
+    public class DebugMemberLayout
     {
         /// <summary>Constructs a new <see cref="DebugMemberLayout"/></summary>
         /// <param name="bitSize">Size of the member in bits</param>
@@ -71,6 +71,6 @@ namespace Llvm.NET.DebugInfo
         /// include the "packed" modifier. 
         /// </note>
         /// </remarks>
-        public DebugMemberLayout? ExplicitLayout { get; set; }
+        public DebugMemberLayout ExplicitLayout { get; set; }
     }
 }

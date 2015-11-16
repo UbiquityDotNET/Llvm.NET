@@ -2,7 +2,7 @@
 {
     int a;
     float b;
-    int c[2];
+    int c[32];
 };
 
 struct foo bar = { 1, 2.0, { 3, 4 } };

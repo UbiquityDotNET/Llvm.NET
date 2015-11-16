@@ -1,4 +1,5 @@
-﻿using Llvm.NET;
+﻿#define TARGET_CORTEX_M3
+using Llvm.NET;
 using Llvm.NET.DebugInfo;
 using Llvm.NET.Instructions;
 using Llvm.NET.Types;
@@ -11,6 +12,8 @@ namespace TestDebugInfo
     /// <summary>Program to test/demonstrate Aspects of debug information generation with Llvm.NET</summary>
     class Program
     {
+#if TARGET_X86
+        const string ModuleName = "test_x86.bc";
         const string Triple = "x86_64-pc-windows-msvc18.0.0";
         const string Cpu = "x86-64";
         const string Features = "+sse,+sse2";
@@ -22,12 +25,31 @@ namespace TestDebugInfo
             new AttributeValue( "no-infs-fp-math", "false" ),
             new AttributeValue( "no-nans-fp-math", "false" ),
             new AttributeValue( "stack-protector-buffer-size", "8" ),
-            new AttributeValue( "target-cpu", "x86-64" ),
-            new AttributeValue( "target-features", "+sse,+sse2" ),
+            new AttributeValue( "target-cpu", Cpu ),
+            new AttributeValue( "target-features", Features ),
             new AttributeValue( "unsafe-fp-math", "false" ),
             new AttributeValue( "use-soft-float", "false" )
         };
-
+#elif TARGET_CORTEX_M3
+        const string ModuleName = "test_M3.bc";
+        const string Triple = "thumbv7m-none--eabi";
+        const string Cpu = "cortex-m3";
+        const string Features = "+hwdiv";
+        static readonly AttributeValue[] TargetDependentAttributes =
+        {
+            new AttributeValue( "disable-tail-calls", "false" ),
+            new AttributeValue( "less-precise-fpmad", "false" ),
+            new AttributeValue( "no-frame-pointer-elim", "true" ),
+            new AttributeValue( "no-frame-pointer-elim-non-leaf" ),
+            new AttributeValue( "no-infs-fp-math", "false" ),
+            new AttributeValue( "no-nans-fp-math", "false" ),
+            new AttributeValue( "stack-protector-buffer-size", "8" ),
+            new AttributeValue( "target-cpu", Cpu ),
+            new AttributeValue( "target-features", Features ),
+            new AttributeValue( "unsafe-fp-math", "false" ),
+            new AttributeValue( "use-soft-float", "false" )
+        };
+#endif
         // obviously this is not clang but using an identical name helps in diff with actual clang output
         const string VersionIdentString = "clang version 3.7.0 (tags/RELEASE_370/final)";
 
@@ -50,7 +72,7 @@ namespace TestDebugInfo
             var target = Target.FromTriple( Triple );
             using( var context = new Context( ) )
             using( var targetMachine = target.CreateTargetMachine( context, Triple, Cpu, Features, CodeGenOpt.Aggressive, Reloc.Default, CodeModel.Small ) )
-            using( var module = new NativeModule( "test_x86.bc", context ) )
+            using( var module = new NativeModule( ModuleName, context ) )
             {
                 var targetData = targetMachine.TargetData;
 
@@ -72,23 +94,23 @@ namespace TestDebugInfo
                 var i32 = new DebugBasicType( module.Context.Int32Type, module, "int", DiTypeKind.Signed );
                 var f32 = new DebugBasicType( module.Context.FloatType, module, "float", DiTypeKind.Float );
                 var voidType = DebugType.Create( module.Context.VoidType, ( DIType )null );
-                var i32Array_0_2 = i32.CreateArrayType( module, 0, 2 );
+                var i32Array_0_32 = i32.CreateArrayType( module, 0, 32 );
 
                 // create the LLVM structure type and body
                 // The full body is used with targetMachine.TargetData to determine size, alignment and element offsets
                 // in a target independent manner.
                 var fooType = new DebugStructType( module, "struct.foo", cu, "foo" );
-                
+
                 // Create concrete debug type with full debug information
-                var fooBody = new [ ]
+                var fooBody = new[ ]
                     { new DebugMemberInfo { File = diFile, Line = 3, Name = "a", DebugType = i32, Index = 0 }
                     , new DebugMemberInfo { File = diFile, Line = 4, Name = "b", DebugType = f32, Index = 1 }
-                    , new DebugMemberInfo { File = diFile, Line = 5, Name = "c", DebugType = i32Array_0_2, Index = 2 }
+                    , new DebugMemberInfo { File = diFile, Line = 5, Name = "c", DebugType = i32Array_0_32, Index = 2 }
                     };
                 fooType.SetBody( false, module, cu, diFile, 1, 0, fooBody );
 
                 // add global variables and constants
-                var constArray = ConstantArray.From( i32, module.Context.CreateConstant( 3 ), module.Context.CreateConstant( 4 ));
+                var constArray = ConstantArray.From( i32, 32, module.Context.CreateConstant( 3 ), module.Context.CreateConstant( 4 ) );
                 var barValue = module.Context.CreateNamedConstantStruct( fooType
                                                                        , module.Context.CreateConstant( 1 )
                                                                        , module.Context.CreateConstant( 2.0f )
@@ -103,71 +125,21 @@ namespace TestDebugInfo
                 baz.Alignment = targetData.AbiAlignmentOf( fooType );
                 module.DIBuilder.CreateGlobalVariable( cu, "baz", string.Empty, diFile, 9, fooType.DIType, false, baz );
 
-                // add module flags and ident
+                // add module flags and compiler identifiers...
                 // this can technically occur at any point, though placing it here makes
-                // comparing against clang generated files simpler
-                module.AddModuleFlag( ModuleFlagBehavior.Warning, NativeModule.DwarfVersionValue, 4 );
-                module.AddModuleFlag( ModuleFlagBehavior.Warning, NativeModule.DebugVersionValue, NativeModule.DebugMetadataVersion );
-                module.AddModuleFlag( ModuleFlagBehavior.Error, "PIC Level", 2 );
-                module.AddVersionIdentMetadata( VersionIdentString );
+                // comparing against clang generated files posssible
+                AddModuleFlags( module );
 
                 // create types for function args
                 var constFoo = module.DIBuilder.CreateQualifiedType( fooType.DIType, QualifiedTypeTag.Const );
                 var fooPtr = new DebugPointerType( fooType, module );
-                // Create function signatures
 
-                // Since the the first parameter is passed by value 
-                // using the pointer+alloca+memcopy pattern, the actual
-                // source, and therefore debug, signature is NOT a pointer.
-                // However, that usage would create a signature with two
-                // pointers as the arguments, which doesn't match the source
-                // To get the correct debug info signature this inserts an
-                // explicit DebugType<> that overrides the default
-                // behavior to pair LLVM pointer type with the original
-                // source type.
-                var copySig = module.Context.CreateFunctionType( module.DIBuilder
-                                                               , diFile
-                                                               , voidType
-                                                               , DebugType.Create( fooPtr, constFoo )
-                                                               , fooPtr
-                                                               );
-                var doCopySig = module.Context.CreateFunctionType( module.DIBuilder, diFile, voidType );
+                Function doCopyFunc = DeclareDoCopyFunc( module, diFile, voidType );
 
-                // Create the functions
-                // NOTE: The declaration ordering is reveresd from that of the sample code file (test.c)
-                //       However, this is what Clang ends up doing for some reason so it is
-                //       replicated here to aid in comparing the generated LL files.
-                var doCopyFunc = module.CreateFunction( scope: diFile
-                                                      , name: "DoCopy"
-                                                      , linkageName: null
-                                                      , file: diFile
-                                                      , line: 23
-                                                      , signature: doCopySig
-                                                      , isLocalToUnit: false
-                                                      , isDefinition: true
-                                                      , scopeLine: 24
-                                                      , debugFlags: DebugInfoFlags.None
-                                                      , isOptimized: false
-                                                      ).AddAttributes( AttributeKind.NoUnwind, AttributeKind.UWTable )
-                                                       .AddAttributes( TargetDependentAttributes );
+                Function copyFunc = DeclareCopyFunc( module, diFile, voidType, constFoo, fooPtr );
 
-                var copyFunc = module.CreateFunction( scope: diFile
-                                                    , name: "copy"
-                                                    , linkageName: null
-                                                    , file: diFile
-                                                    , line: 11
-                                                    , signature: copySig
-                                                    , isLocalToUnit: true
-                                                    , isDefinition: true
-                                                    , scopeLine: 14
-                                                    , debugFlags: DebugInfoFlags.Prototyped
-                                                    , isOptimized: false
-                                                    ).Linkage( Linkage.Internal ) // static function
-                                                     .AddAttributes( AttributeKind.NoUnwind, AttributeKind.UWTable, AttributeKind.InlineHint )
-                                                     .AddAttributes( TargetDependentAttributes );
-
-                CreateDoCopyFunctionBody( module, targetData, doCopyFunc, fooType, bar, baz, copyFunc );
                 CreateCopyFunctionBody( module, targetData, copyFunc, diFile, fooType, fooPtr, constFoo );
+                CreateDoCopyFunctionBody( module, targetData, doCopyFunc, fooType, bar, baz, copyFunc );
 
                 // finalize the debug information
                 // all temporaries must be replaced by now, this resolves any remaining
@@ -192,6 +164,106 @@ namespace TestDebugInfo
             }
         }
 
+        private static Function DeclareDoCopyFunc( NativeModule module, DIFile diFile, IDebugType<ITypeRef, DIType> voidType )
+        {
+            var doCopySig = module.Context.CreateFunctionType( module.DIBuilder, diFile, voidType );
+
+            // Create the functions
+            // NOTE: The declaration ordering is reveresd from that of the sample code file (test.c)
+            //       However, this is what Clang ends up doing for some reason so it is
+            //       replicated here to aid in comparing the generated LL files.
+            var doCopyFunc = module.CreateFunction( scope: diFile
+                                                  , name: "DoCopy"
+                                                  , linkageName: null
+                                                  , file: diFile
+                                                  , line: 23
+                                                  , signature: doCopySig
+                                                  , isLocalToUnit: false
+                                                  , isDefinition: true
+                                                  , scopeLine: 24
+                                                  , debugFlags: DebugInfoFlags.None
+                                                  , isOptimized: false
+                                                  ).AddAttributes( AttributeKind.NoUnwind )
+#if TARGET_X86
+                                                   .AddAttributes( AttributeKind.UWTable )
+#endif
+                                                   .AddAttributes( TargetDependentAttributes );
+            return doCopyFunc;
+        }
+
+        private static Function DeclareCopyFunc( NativeModule module
+                                               , DIFile diFile
+                                               , IDebugType<ITypeRef, DIType> voidType
+                                               , DIDerivedType constFoo
+                                               , DebugPointerType fooPtr
+                                               )
+        {
+            // Since the the first parameter is passed by value 
+            // using the pointer+alloca+memcopy pattern, the actual
+            // source, and therefore debug, signature is NOT a pointer.
+            // However, that usage would create a signature with two
+            // pointers as the arguments, which doesn't match the source
+            // To get the correct debug info signature this inserts an
+            // explicit DebugType<> that overrides the default
+            // behavior to pair LLVM pointer type with the original
+            // source type.
+            var copySig = module.Context.CreateFunctionType( module.DIBuilder
+                                                           , diFile
+                                                           , voidType
+                                                           , DebugType.Create( fooPtr, constFoo )
+                                                           , fooPtr
+                                                           );
+
+            var copyFunc = module.CreateFunction( scope: diFile
+                                                , name: "copy"
+                                                , linkageName: null
+                                                , file: diFile
+                                                , line: 11
+                                                , signature: copySig
+                                                , isLocalToUnit: true
+                                                , isDefinition: true
+                                                , scopeLine: 14
+                                                , debugFlags: DebugInfoFlags.Prototyped
+                                                , isOptimized: false
+                                                ).Linkage( Linkage.Internal ) // static function
+                                                 .AddAttributes( AttributeKind.NoUnwind, AttributeKind.InlineHint )
+#if TARGET_X86
+                                                 .AddAttributes( AttributeKind.UWTable )
+#endif
+                                                 .AddAttributes( TargetDependentAttributes );
+
+            // ByVal pointers indicate by value semantics. The actual semantics are along the lines of
+            // "pass the arg as copy on the arguments stack and set parameter implicitly to that copy's address"
+            // (src: https://github.com/ldc-developers/ldc/issues/937 )
+            //
+            // LLVM recognizes this pattern and has a pass to map to an efficient register usage whenever plausible.
+            // Though it seems Clang doesn't apply the attribute in all cases, for x86 it doesn't appear to ever use
+            // it, for cortex-Mx it seems to use it only for larger structs, otherwsise it uses an [ n x i32]. Thus,
+            // on cortex-m the function params are handled quite differently by clang, which seems odd...
+#if TARGET_CORTEX_M3            
+            copyFunc.AddAttributes( FunctionAttributeIndex.Parameter0
+                                  , AttributeKind.ByVal
+                                  , new AttributeValue(AttributeKind.Alignment, module.Layout.AbiAlignmentOf( fooPtr.ElementType ) )
+                                  );
+#endif
+
+            return copyFunc;
+        }
+
+        private static void AddModuleFlags( NativeModule module )
+        {
+            module.AddModuleFlag( ModuleFlagBehavior.Warning, NativeModule.DwarfVersionValue, 4 );
+            module.AddModuleFlag( ModuleFlagBehavior.Warning, NativeModule.DebugVersionValue, NativeModule.DebugMetadataVersion );
+#if TARGET_X86
+                module.AddModuleFlag( ModuleFlagBehavior.Error, "PIC Level", 2 );
+#elif TARGET_CORTEX_M3
+            // Specify ABI const sizes so linker can detect mismataches
+            module.AddModuleFlag( ModuleFlagBehavior.Error, "wchar_size", 4 );
+            module.AddModuleFlag( ModuleFlagBehavior.Error, "min_enum_size", 4 );
+#endif
+            module.AddVersionIdentMetadata( VersionIdentString );
+        }
+
         private static void CreateCopyFunctionBody( NativeModule module
                                                   , TargetData layout
                                                   , Function copyFunc
@@ -203,14 +275,6 @@ namespace TestDebugInfo
         {
             var diBuilder = module.DIBuilder;
 
-            // ByVal pointers indicate by value semantics. The actual semantics are along the lines of
-            // "pass the arg as copy on the arguments stack and set parameter implicitly to that copy's address"
-            // (src: https://github.com/ldc-developers/ldc/issues/937 )
-            //
-            // LLVM recognizes this pattern and has a pass to map to an efficient register usage whenever plausible.
-            // Though it seems Clang doesn't apply the attribute...
-            //copyFunc.Parameters[ 0 ].AddAttribute( FunctionAttributeIndex.Parameter0, AttributeKind.ByVal );
-            //copyFunc.Parameters[ 0 ].SetAlignment( layout.AbiAlignmentOf( foo ) );
             copyFunc.Parameters[ 0 ].Name = "src";
             copyFunc.Parameters[ 1 ].Name = "pDst";
 
@@ -233,13 +297,20 @@ namespace TestDebugInfo
             var dstAddr = instBuilder.Alloca( fooPtr )
                                      .RegisterName( "pDst.addr" )
                                      .Alignment( ptrAlign );
-
+#if TARGET_CORTEX_M3
+            diBuilder.InsertDeclare( copyFunc.Parameters[ 0 ]
+                                   , paramSrc
+                                   , new DILocation( module.Context, 11, 43, copyFunc.DISubProgram )
+                                   , blk
+                                   );
+#endif
             instBuilder.Store( copyFunc.Parameters[ 1 ], dstAddr)
                        .Alignment( ptrAlign );
 
             // insert declare pseudo instruction to attach debug info to the local declarations
             diBuilder.InsertDeclare( dstAddr, paramDst, new DILocation( module.Context, 12, 38, copyFunc.DISubProgram ), blk );
 
+#if TARGET_X86
             // since the function's LLVM signature uses a pointer, which is copied locally
             // inform the debugger to treat it as the value by dereferencing the pointer
             diBuilder.InsertDeclare( copyFunc.Parameters[ 0 ]
@@ -248,6 +319,7 @@ namespace TestDebugInfo
                                    , new DILocation( module.Context, 11, 43, copyFunc.DISubProgram )
                                    , blk
                                    );
+#endif
 
             var loadedDst = instBuilder.Load( dstAddr )
                                        .Alignment( ptrAlign )
@@ -259,6 +331,7 @@ namespace TestDebugInfo
             var srcPtr = instBuilder.BitCast( copyFunc.Parameters[ 0 ], module.Context.Int8Type.CreatePointerType( ) )
                                     .SetDebugLocation( 15, 13, copyFunc.DISubProgram );
 
+#if TARGET_X86
             instBuilder.MemCpy( module
                               , dstPtr
                               , srcPtr
@@ -266,7 +339,16 @@ namespace TestDebugInfo
                               , ( int )layout.AbiAlignmentOf( foo )
                               , false
                               ).SetDebugLocation( 15, 13, copyFunc.DISubProgram );
-
+#elif TARGET_CORTEX_M3
+            // Cortex-M uses 32bit count param
+            instBuilder.MemCpy( module
+                              , dstPtr
+                              , srcPtr
+                              , module.Context.CreateConstant( (int)layout.ByteSizeOf( foo ) )
+                              , ( int )layout.AbiAlignmentOf( foo )
+                              , false
+                              ).SetDebugLocation( 15, 13, copyFunc.DISubProgram );
+#endif
             instBuilder.Return( )
                        .SetDebugLocation( 16, 1, copyFunc.DISubProgram );
         }
@@ -288,6 +370,7 @@ namespace TestDebugInfo
             // create instruction builder to build the body
             var instBuilder = new InstructionBuilder( blk );
 
+#if TARGET_x86
             // create a temp local copy of the global structure
             var dstAddr = instBuilder.Alloca( foo )
                                      .RegisterName( "agg.tmp" )
@@ -309,7 +392,11 @@ namespace TestDebugInfo
 
             instBuilder.Call( copyFunc, dstAddr, baz )
                        .SetDebugLocation( 25, 5, doCopyFunc.DISubProgram );
-
+#elif TARGET_CORTEX_M3
+            instBuilder.Call( copyFunc, bar, baz )
+                       .SetDebugLocation( 25, 5, doCopyFunc.DISubProgram )
+                       .AddAttributes( FunctionAttributeIndex.Parameter0, copyFunc.Attributes.ParameterAttributes( 0 ) );
+#endif
             instBuilder.Return( )
                        .SetDebugLocation( 26, 1, doCopyFunc.DISubProgram );
         }

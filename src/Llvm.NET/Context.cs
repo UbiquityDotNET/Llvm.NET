@@ -331,9 +331,29 @@ namespace Llvm.NET
             if( type.Context != this )
                 throw new ArgumentException( "Cannot create named constant struct with type from another context", nameof( type ) );
 
-            var valueHandles = values.Select( v => v.ValueHandle ).ToArray( );
+            var valueList = values as IList<Constant> ?? values.ToList( );
+            var valueHandles = valueList.Select( v => v.ValueHandle ).ToArray( );
             if( type.Members.Count != valueHandles.Length )
                 throw new ArgumentException( "Number of values provided must match the number of elements in the specified type" );
+
+            var mismatchedTypes = from indexedVal in valueList.Select( ( v, i ) => new { Value = v, Index = i } )
+                                  where indexedVal.Value.NativeType != type.Members[ indexedVal.Index ]
+                                  select indexedVal;
+
+            if( mismatchedTypes.Any())
+            {
+                var msg = new StringBuilder( "One or more values provided do not match the correspoinding member type:" );
+                msg.AppendLine( );
+                foreach( var mismatch in mismatchedTypes )
+                {
+                    msg.AppendFormat( "\t[{0}]: member type={1}; value type={2}"
+                                    , mismatch.Index
+                                    , type.Members[ mismatch.Index ]
+                                    , valueList[ mismatch.Index ].NativeType
+                                    );
+                }
+                throw new ArgumentException( msg.ToString( ) );
+            }
 
             var handle = NativeMethods.ConstNamedStruct(type.GetTypeRef(), out valueHandles[ 0 ], ( uint )valueHandles.Length );
             return Value.FromHandle<Constant>( handle );
@@ -569,9 +589,13 @@ namespace Llvm.NET
             if( moduleRef.Pointer == IntPtr.Zero )
                 throw new ArgumentNullException( nameof( moduleRef ) );
 
+            var hModuleContext = NativeMethods.GetModuleContext( moduleRef );
+            if( hModuleContext.Pointer != ContextHandle.Pointer )
+                throw new ArgumentException( "Incorrect context for module" );
+
             NativeModule retVal;
             if( !ModuleCache.TryGetValue( moduleRef.Pointer, out retVal ) )
-                return null;
+                retVal = new NativeModule( moduleRef );
 
             return retVal;
         }

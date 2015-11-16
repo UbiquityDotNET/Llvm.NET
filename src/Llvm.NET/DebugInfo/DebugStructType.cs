@@ -128,11 +128,11 @@ namespace Llvm.NET.DebugInfo
 
             // if explicit layout info provided, use it;
             // otherwise use module.Layout as the default
-            if( memberInfo.ExplicitLayout.HasValue )
+            if( memberInfo.ExplicitLayout != null )
             {
-                bitSize = memberInfo.ExplicitLayout.Value.BitSize;
-                bitAlign = memberInfo.ExplicitLayout.Value.BitAlignment;
-                bitOffset = memberInfo.ExplicitLayout.Value.BitOffset;
+                bitSize = memberInfo.ExplicitLayout.BitSize;
+                bitAlign = memberInfo.ExplicitLayout.BitAlignment;
+                bitOffset = memberInfo.ExplicitLayout.BitOffset;
             }
             else
             {

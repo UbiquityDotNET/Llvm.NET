@@ -73,6 +73,7 @@
     <Compile Include="ContextTests.cs" />
     <Compile Include="ModuleTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Values\AttributeSetTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="..\..\..\BuildOutput\x64\Debug\LibLLVM.dll">

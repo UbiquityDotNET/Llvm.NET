@@ -11,6 +11,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Llvm.NETTests", "Llvm.NETTe
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestDebugInfo", "Llvm.NETTests\TestDebugInfo\TestDebugInfo.csproj", "{F9914A60-2E4B-472F-B1F3-BD08FD23CA92}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ReloadModule", "ReloadModule\ReloadModule.csproj", "{04D05E7F-CA04-4E9A-84CD-D7D609B2CE45}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -93,6 +95,24 @@ Global
 		{F9914A60-2E4B-472F-B1F3-BD08FD23CA92}.RelWithDebInfo|Win32.Build.0 = Release|Any CPU
 		{F9914A60-2E4B-472F-B1F3-BD08FD23CA92}.RelWithDebInfo|x64.ActiveCfg = Release|Any CPU
 		{F9914A60-2E4B-472F-B1F3-BD08FD23CA92}.RelWithDebInfo|x64.Build.0 = Release|Any CPU
+		{04D05E7F-CA04-4E9A-84CD-D7D609B2CE45}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{04D05E7F-CA04-4E9A-84CD-D7D609B2CE45}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{04D05E7F-CA04-4E9A-84CD-D7D609B2CE45}.Debug|Win32.ActiveCfg = Debug|Any CPU
+		{04D05E7F-CA04-4E9A-84CD-D7D609B2CE45}.Debug|Win32.Build.0 = Debug|Any CPU
+		{04D05E7F-CA04-4E9A-84CD-D7D609B2CE45}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{04D05E7F-CA04-4E9A-84CD-D7D609B2CE45}.Debug|x64.Build.0 = Debug|Any CPU
+		{04D05E7F-CA04-4E9A-84CD-D7D609B2CE45}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{04D05E7F-CA04-4E9A-84CD-D7D609B2CE45}.Release|Any CPU.Build.0 = Release|Any CPU
+		{04D05E7F-CA04-4E9A-84CD-D7D609B2CE45}.Release|Win32.ActiveCfg = Release|Any CPU
+		{04D05E7F-CA04-4E9A-84CD-D7D609B2CE45}.Release|Win32.Build.0 = Release|Any CPU
+		{04D05E7F-CA04-4E9A-84CD-D7D609B2CE45}.Release|x64.ActiveCfg = Release|Any CPU
+		{04D05E7F-CA04-4E9A-84CD-D7D609B2CE45}.Release|x64.Build.0 = Release|Any CPU
+		{04D05E7F-CA04-4E9A-84CD-D7D609B2CE45}.RelWithDebInfo|Any CPU.ActiveCfg = Release|Any CPU
+		{04D05E7F-CA04-4E9A-84CD-D7D609B2CE45}.RelWithDebInfo|Any CPU.Build.0 = Release|Any CPU
+		{04D05E7F-CA04-4E9A-84CD-D7D609B2CE45}.RelWithDebInfo|Win32.ActiveCfg = Release|Any CPU
+		{04D05E7F-CA04-4E9A-84CD-D7D609B2CE45}.RelWithDebInfo|Win32.Build.0 = Release|Any CPU
+		{04D05E7F-CA04-4E9A-84CD-D7D609B2CE45}.RelWithDebInfo|x64.ActiveCfg = Release|Any CPU
+		{04D05E7F-CA04-4E9A-84CD-D7D609B2CE45}.RelWithDebInfo|x64.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

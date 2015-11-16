@@ -25,18 +25,9 @@ LLVMGetMDStringText
 LLVMGetGlobalAlias
 LLVMGetAliasee
 LLVMMDNodeResolveCycles
-LLVMAddFunctionAttr2
-LLVMHasFunctionAttr2
-LLVMRemoveFunctionAttr2
 LLVMGetArgumentIndex
-LLVMAddTargetDependentFunctionAttr2
-LLVMRemoveTargetDependentFunctionAttr2
-LLVMGetFunctionAttributeValue
-LLVMSetFunctionAttributeValue
-LLVMFunctionHasAttributes
-LLVMGetFunctionAttributesAsString
-LLVMHasTargetDependentAttribute
 LLVMDIScopeGetFile
+
 
 ; Debug info functions not part of standard LLVM-C API
 LLVMGetMetadataID
@@ -97,6 +88,31 @@ LLVMDITypeGetName
 LLVMMDNodeGetNumOperands
 LLVMMDNodeGetOperand
 LLVMGetOperandNode
+
+; AttributeSet manipulation
+LLVMGetAttributeSetSize
+LLVMCopyConstructAttributeSet
+LLVMAttributeSetAddAttribute
+LLVMAttributeSetAddTargetDependentAttribute
+LLVMAttributeSetRemoveTargetDependentAttribute
+LLVMAttributeSetHasAttribute
+LLVMAttributeSetRemoveAttribute
+LLVMAttributeSetSetAttributeValue
+LLVMAttributeSetGetAttributeValue
+LLVMAttributeSetHasAttributes
+LLVMAttributeSetGetAttributesAsString
+LLVMAttributeSetHasTargetDependentAttribute
+LLVMAttributeSetHasAny
+LLVMAttributeSetGetParamAttributes
+LLVMAttributeSetGetReturnAttributes
+LLVMAttributeSetGetFunctionAttributes
+LLVMAttributeSetAddAttributes2
+
+LLVMGetFunctionAttributeSet
+LLVMSetFunctionAttributeSet
+
+LLVMGetCallSiteAttributeSet
+LLVMSetCallSiteAttributeSet
 
 ; Instrumentation Bindings
 LLVMAddAddressSanitizerFunctionPass
@@ -192,18 +208,14 @@ LLVMWriteBitcodeToFileHandle
 LLVMWriteBitcodeToMemoryBuffer
 LLVMInitializeCodeGen
 LLVMAddAlias
-LLVMAddAttribute
 LLVMAddCase
 LLVMAddClause
 LLVMAddDestination
 LLVMAddFunction
-LLVMAddFunctionAttr
 LLVMAddGlobal
 LLVMAddGlobalInAddressSpace
 LLVMAddIncoming
-LLVMAddInstrAttribute
 LLVMAddNamedMetadataOperand
-LLVMAddTargetDependentFunctionAttr
 LLVMAlignOf
 LLVMAppendBasicBlock
 LLVMAppendBasicBlockInContext
@@ -425,7 +437,6 @@ LLVMFunctionType
 LLVMGetAlignment
 LLVMGetArrayLength
 LLVMGetAsString
-LLVMGetAttribute
 LLVMGetBasicBlockParent
 LLVMGetBasicBlockTerminator
 LLVMGetBasicBlocks
@@ -448,7 +459,6 @@ LLVMGetFirstGlobal
 LLVMGetFirstInstruction
 LLVMGetFirstParam
 LLVMGetFirstUse
-LLVMGetFunctionAttr
 LLVMGetFunctionCallConv
 LLVMGetGC
 LLVMGetGlobalContext
@@ -651,10 +661,7 @@ LLVMPrintModuleToFile
 LLVMPrintModuleToString
 LLVMPrintTypeToString
 LLVMPrintValueToString
-LLVMRemoveAttribute
 LLVMRemoveBasicBlockFromParent
-LLVMRemoveFunctionAttr
-LLVMRemoveInstrAttribute
 LLVMReplaceAllUsesWith
 LLVMRunFunctionPassManager
 LLVMRunPassManager

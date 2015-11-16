@@ -565,6 +565,7 @@ namespace Llvm.NET.DebugInfo
                 var unresolvedTemps = from node in OwningModule.Context.Metadata.OfType<MDNode>( )
                                       where node.IsTemporary && !node.IsResolved
                                       select node;
+
                 if( unresolvedTemps.Any() )
                 {
                     var bldr = new StringBuilder( "Temporaries must be resolved before finalizing debug information:\n" );
