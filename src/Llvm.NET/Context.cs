@@ -20,7 +20,7 @@ namespace Llvm.NET
     /// so does module two but they are completely distinct from each other)
     ///</para>
     /// <para>LLVM Debug information is ultimately all parented to a top level
-    /// <see cref="DebugInfo.DICompileUnit"/> as the scope, and a compilation
+    /// <see cref="DICompileUnit"/> as the scope, and a compilation
     /// unit is bound to a <see cref="NativeModule"/>, even though, technically the
     /// types are owned by a Context. Thus to keep things simpler and help make
     /// working with debug infomration easier. Lllvm.NET encapsulates the native

@@ -65,8 +65,12 @@ namespace Llvm.NET.DebugInfo
         ///<inheritdoc/>
         public uint Length => NativeType.Length;
 
+        /// <summary>Lower bound of the array, usually but not always zero</summary>
         public uint LowerBound { get; }
 
+        /// <summary>Resolves a temporary metadata node for the array if full size information wasn't available at creation time</summary>
+        /// <param name="layout">Type layout information</param>
+        /// <param name="diBuilder">Debug information builder for creating the new debug information</param>
         public void ResolveTemporary( TargetData layout, DebugInfoBuilder diBuilder )
         {
             if( DIType.IsTemporary && !DIType.IsResolved )

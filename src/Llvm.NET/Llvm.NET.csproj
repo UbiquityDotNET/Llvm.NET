@@ -22,6 +22,7 @@
     <CodeAnalysisRuleSet>Llvm.NET.ruleset</CodeAnalysisRuleSet>
     <DocumentationFile>$(OutputPath)\Llvm.NET.XML</DocumentationFile>
     <NoWarn>1591</NoWarn>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|AnyCPU'">
     <Optimize>true</Optimize>
@@ -31,6 +32,7 @@
     <CodeAnalysisRuleSet>Llvm.NET.ruleset</CodeAnalysisRuleSet>
     <DocumentationFile>$(OutputPath)\Llvm.NET.XML</DocumentationFile>
     <NoWarn>1591</NoWarn>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'RelWithDebInfo|AnyCPU'">
     <DebugSymbols>true</DebugSymbols>
@@ -42,6 +44,7 @@
     <CodeAnalysisRuleSet>Llvm.NET.ruleset</CodeAnalysisRuleSet>
     <DocumentationFile>$(OutputPath)\Llvm.NET.XML</DocumentationFile>
     <NoWarn>1591</NoWarn>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'">
     <DebugSymbols>true</DebugSymbols>
