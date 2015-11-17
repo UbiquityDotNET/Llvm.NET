@@ -36,16 +36,64 @@ namespace Llvm.NET.Values
             self.Attributes = self.Attributes.Add( index, value );
             return self;
         }
-        
+
+        /// <summary>Compatibility extension method to handle migrating code from older attribute handling</summary>
+        /// <param name="self">Function to add attributes to</param>
+        /// <param name="attributes">Attributes to add</param>
+        /// <returns>The function itself</returns>
+        /// <remarks>
+        /// Adds attributes to a given function itself (as opposed to the return or one of the function's parameters)
+        /// This is equivalent to calling <see cref="AddAttributes{T}(T, FunctionAttributeIndex, AttributeValue[])"/>
+        /// with <see cref="FunctionAttributeIndex.Function"/> as the first parameter
+        /// </remarks>
         public static Function AddAttributes( this Function self, params AttributeValue[] attributes)
         {
             self.Attributes = self.Attributes.Add( FunctionAttributeIndex.Function, attributes );
             return self;
         }
 
+        /// <summary>Compatibility extension method to handle migrating code from older attribute handling</summary>
+        /// <param name="self">Function to add attributes to</param>
+        /// <param name="attributes">Attributes to add</param>
+        /// <returns>The function itself</returns>
+        /// <remarks>
+        /// Adds attributes to a given function itself (as opposed to the return or one of the function's parameters)
+        /// This is equivalent to calling <see cref="AddAttributes{T}(T, FunctionAttributeIndex, IEnumerable{AttributeValue})"/>
+        /// with <see cref="FunctionAttributeIndex.Function"/> as the first parameter
+        /// </remarks>
         public static Function AddAttributes( this Function self, IEnumerable<AttributeValue> attributes)
         {
             self.Attributes = self.Attributes.Add( FunctionAttributeIndex.Function, attributes );
+            return self;
+        }
+
+        /// <summary>Compatibility extension method to handle migrating code from older attribute handling</summary>
+        /// <param name="self">Function to remove attributes from</param>
+        /// <param name="kind">Attribute to remove</param>
+        /// <returns>The function itself</returns>
+        /// <remarks>
+        /// Removes attributes from a given function itself (as opposed to the return or one of the function's parameters)
+        /// This is equivalent to calling <see cref="RemoveAttribute{T}(T, FunctionAttributeIndex, AttributeKind)"/>
+        /// with <see cref="FunctionAttributeIndex.Function"/> as the first parameter
+        /// </remarks>
+        public static Function RemoveAttribute( this Function self, AttributeKind kind )
+        {
+            self.Attributes = self.Attributes.Remove( FunctionAttributeIndex.Function, kind );
+            return self;
+        }
+
+        /// <summary>Compatibility extension method to handle migrating code from older attribute handling</summary>
+        /// <param name="self">Function to remove attributes from</param>
+        /// <param name="name">Attribute to remove</param>
+        /// <returns>The function itself</returns>
+        /// <remarks>
+        /// Removes attributes from a given function itself (as opposed to the return or one of the function's parameters)
+        /// This is equivalent to calling <see cref="RemoveAttribute{T}(T, FunctionAttributeIndex, AttributeKind)"/>
+        /// with <see cref="FunctionAttributeIndex.Function"/> as the first parameter
+        /// </remarks>
+        public static Function RemoveAttribute( this Function self, string name )
+        {
+            self.Attributes = self.Attributes.Remove( FunctionAttributeIndex.Function, name );
             return self;
         }
 

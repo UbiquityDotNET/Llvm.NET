@@ -55,3 +55,4 @@ extern "C"
         return wrap( pAlias->getAliasee( ) );
     }
 }
+

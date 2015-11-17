@@ -92,7 +92,12 @@ namespace Llvm.NET.DebugInfo
             if( string.IsNullOrWhiteSpace( name ) )
                 throw new ArgumentException( "name cannot be null or empty", nameof( name ) );
 
-            var handle = NativeMethods.DIBuilderCreateNamespace( BuilderHandle, scope?.MetadataHandle ?? LLVMMetadataRef.Zero, name, file.MetadataHandle, line );
+            var handle = NativeMethods.DIBuilderCreateNamespace( BuilderHandle
+                                                               , scope?.MetadataHandle ?? LLVMMetadataRef.Zero
+                                                               , name
+                                                               , file?.MetadataHandle ?? LLVMMetadataRef.Zero
+                                                               , line
+                                                               );
             return DINode.FromHandle<DINamespace>( handle );
         }
 
