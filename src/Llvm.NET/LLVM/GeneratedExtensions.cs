@@ -419,6 +419,9 @@ namespace Llvm.NET
         [DllImport( libraryPath, EntryPoint = "LLVMDIBuilderInsertDeclareBefore", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl, BestFitMapping = false, ThrowOnUnmappableChar = true)]
         internal static extern LLVMValueRef DIBuilderInsertDeclareBefore( LLVMDIBuilderRef Dref, LLVMValueRef Storage, LLVMMetadataRef VarInfo, LLVMMetadataRef Expr, LLVMMetadataRef Location, LLVMValueRef InsertBefore );
 
+        [DllImport( libraryPath, EntryPoint = "LLVMDIBuilderInsertValueBefore", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl, BestFitMapping = false, ThrowOnUnmappableChar = true)]
+        internal static extern LLVMValueRef DIBuilderInsertValueBefore( LLVMDIBuilderRef Dref, /*llvm::Value **/LLVMValueRef Val, UInt64 Offset, /*DILocalVariable **/ LLVMMetadataRef VarInfo, /*DIExpression **/ LLVMMetadataRef Expr, /*const DILocation **/ LLVMMetadataRef DL, /*Instruction **/ LLVMValueRef InsertBefore );
+
         [DllImport( libraryPath, EntryPoint = "LLVMMetadataAsString", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl, BestFitMapping = false, ThrowOnUnmappableChar = true)]
         internal static extern IntPtr MetadataAsString( LLVMMetadataRef descriptor );
 

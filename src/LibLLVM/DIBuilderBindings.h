@@ -420,6 +420,23 @@ extern "C" {
                                                    , LLVMValueRef InsertBefore // Instruction
                                                    );
     
+    /// Insert a new llvm.dbg.value intrinsic call.
+    /// \param Val          llvm::Value of the variable
+    /// \param Offset       Offset
+    /// \param VarInfo      Variable's debug info descriptor.
+    /// \param Expr         A complex location expression.
+    /// \param DL           Debug info location.
+    /// \param InsertBefore Location for the new intrinsic.
+    /*Instruction **/
+    LLVMValueRef LLVMDIBuilderInsertValueBefore( LLVMDIBuilderRef Dref
+                                                 , /*llvm::Value **/LLVMValueRef Val
+                                                 , uint64_t Offset
+                                                 , /*DILocalVariable **/ LLVMMetadataRef VarInfo
+                                                 , /*DIExpression **/ LLVMMetadataRef Expr
+                                                 , /*const DILocation **/ LLVMMetadataRef DL
+                                                 , /*Instruction **/ LLVMValueRef InsertBefore
+                                                 );
+
     // caller must call LLVMDisposeMessage() on the returned string
     char const* LLVMMetadataAsString( LLVMMetadataRef descriptor );
 

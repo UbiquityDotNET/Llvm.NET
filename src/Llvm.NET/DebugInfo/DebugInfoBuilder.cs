@@ -585,13 +585,13 @@ namespace Llvm.NET.DebugInfo
             }
         }
 
-        public Value InsertDeclare( Value storage, DILocalVariable varInfo, DILocation location, Instruction insertBefore )
+        public Instruction InsertDeclare( Value storage, DILocalVariable varInfo, DILocation location, Instruction insertBefore )
         {
             return InsertDeclare( storage, varInfo, CreateExpression( ), location, insertBefore );
         }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage( "Microsoft.Design", "CA1011:ConsiderPassingBaseTypesAsParameters", Justification = "Specific type required by interop call" )]
-        public Value InsertDeclare( Value storage, DILocalVariable varInfo, DIExpression expr, DILocation location, Instruction insertBefore )
+        public Instruction InsertDeclare( Value storage, DILocalVariable varInfo, DIExpression expr, DILocation location, Instruction insertBefore )
         {
             var handle = NativeMethods.DIBuilderInsertDeclareBefore( BuilderHandle
                                                                    , storage.ValueHandle
@@ -600,16 +600,16 @@ namespace Llvm.NET.DebugInfo
                                                                    , location.MetadataHandle
                                                                    , insertBefore.ValueHandle
                                                                    );
-            return Value.FromHandle( handle );
+            return Value.FromHandle<Instruction>( handle );
         }
 
-        public Value InsertDeclare( Value storage, DILocalVariable varInfo, DILocation location, BasicBlock insertAtEnd )
+        public Instruction InsertDeclare( Value storage, DILocalVariable varInfo, DILocation location, BasicBlock insertAtEnd )
         {
             return InsertDeclare( storage, varInfo, CreateExpression( ), location, insertAtEnd );
         }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage( "Microsoft.Design", "CA1011:ConsiderPassingBaseTypesAsParameters", Justification = "Specific type required by interop call" )]
-        public Value InsertDeclare( Value storage, DILocalVariable varInfo, DIExpression expr, DILocation location, BasicBlock insertAtEnd )
+        public Instruction InsertDeclare( Value storage, DILocalVariable varInfo, DIExpression expr, DILocation location, BasicBlock insertAtEnd )
         {
             var handle = NativeMethods.DIBuilderInsertDeclareAtEnd( BuilderHandle
                                                                   , storage.ValueHandle
@@ -618,7 +618,36 @@ namespace Llvm.NET.DebugInfo
                                                                   , location.MetadataHandle
                                                                   , insertAtEnd.BlockHandle
                                                                   );
-            return Value.FromHandle( handle );
+            return Value.FromHandle<Instruction>( handle );
+        }
+
+        public Instruction InsertValue( Value value
+                                      , UInt64 offset
+                                      , DILocalVariable varInfo
+                                      , DILocation location
+                                      , Instruction insertBefore
+                                      )
+        {
+            return InsertValue( value, offset, varInfo, null, location, insertBefore );
+        }
+
+        public Instruction InsertValue( Value value
+                                      , UInt64 offset
+                                      , DILocalVariable varInfo
+                                      , DIExpression expression
+                                      , DILocation location
+                                      , Instruction insertBefore
+                                      )
+        {
+            var handle = NativeMethods.DIBuilderInsertValueBefore( BuilderHandle
+                                                                 , value.ValueHandle
+                                                                 , offset
+                                                                 , varInfo.MetadataHandle
+                                                                 , expression?.MetadataHandle ?? CreateExpression().MetadataHandle
+                                                                 , location.MetadataHandle
+                                                                 , insertBefore.ValueHandle
+                                                                 );
+            return Value.FromHandle<Instruction>( handle );
         }
 
         public DIExpression CreateExpression( params ExpressionOp[ ] operations ) => CreateExpression( ( IEnumerable<ExpressionOp> )operations );
