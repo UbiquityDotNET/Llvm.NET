@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="14.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+    <ItemGroup>
+        <BuildConfig Include="Configuration=Debug;Platform=Win32" />
+        <BuildConfig Include="Configuration=Debug;Platform=x64" />
+        <BuildConfig Include="Configuration=Release;Platform=Win32" />
+        <BuildConfig Include="Configuration=Release;Platform=x64" />
+    </ItemGroup>
+    
+    <ItemGroup>
+        <ContentProject Include="src\LibLLVM\LibLLVM.vcxproj"/>
+        <ContentProject Include="src\Llvm.NET\Llvm.NET.csproj"/>
+    </ItemGroup>
+    
+    <ItemGroup>
+        <DocProject Include="src\Documentation\Documentation.shfb.proj" />
+    </ItemGroup>
+    
+    <ItemGroup>
+        <PackageProject Include="src\NugetPkg\NugetPkg\NugetPkg.vcxproj" />
+    </ItemGroup>
+
+    <Target Name="BuildContent">
+        <MSBuild Projects="@(ContentProject)" Properties="%(BuildConfig)" />
+    </Target>
+
+    <Target Name="SignContent" DependsOnTargets="BuildContent">
+        <!-- TODO: Sign release build content -->
+    </Target>
+
+    <Target Name="BuildPackages" DependsOnTargets="SignContent">
+        <MSBuild Projects="@(PackageProject)" Properties="Configuration=Debug" />
+        <MSBuild Projects="@(PackageProject)" Properties="Configuration=Release" />
+    </Target>
+
+    <Target Name="SignPackages" DependsOnTargets="BuildPackages">
+        <!-- TODO: Sign release packages -->
+    </Target>
+
+    <Target Name="Build" DependsOnTargets="SignPackages">
+    </Target>
+</Project>
