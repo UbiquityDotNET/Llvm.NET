@@ -14,7 +14,7 @@ if DEFINED clean del /q %OUTPUT_DIR%\Llvm.NET.*.nupkg
 if '%1'=='clean' goto :return
 
 if NOT EXIST %OUTPUT_DIR% md %OUTPUT_DIR%
-packages\NuGet.CommandLine.2.8.6\tools\nuget pack Llvm.NET.nuspec -OutputDirectory %OUTPUT_DIR% -Properties configuration=%2;buildoutput=%BUILDOUTPUT% -NoPackageAnalysis
+..\packages\NuGet.CommandLine.2.8.6\tools\nuget pack Llvm.NET.nuspec -OutputDirectory %OUTPUT_DIR% -Properties configuration=%2;buildoutput=%BUILDOUTPUT% -NoPackageAnalysis
 
 :return
 endlocal
