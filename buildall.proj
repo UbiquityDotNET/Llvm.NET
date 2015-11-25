@@ -30,11 +30,13 @@
     </ItemGroup>
 
     <Target Name="BuildContentProjects">
+        <Message Importance="high" Text="Building Package Contents..."/>
         <MSBuild Projects="@(NativeProject)" TargetAndPropertyListSeparators="," Properties="%(NativeBuildConfig.Identity)" Targets="Rebuild" SkipNonexistentProjects="true" />
         <MSBuild Projects="@(ManagedProject)" TargetAndPropertyListSeparators="," Properties="%(ManagedBuildConfig.Identity)" Targets="Rebuild" SkipNonexistentProjects="true" />
     </Target>
 
     <Target Name="BuildDocs" DependsOnTargets="BuildContentProjects">
+        <Message Importance="high" Text="Building Documentation..."/>
         <MSBuild Projects="src\Documentation\Documentation.shfbproj" Properties="Configuration=Release;Platform=AnyCPU" />
     </Target>
 
@@ -43,6 +45,7 @@
     </Target>
 
     <Target Name="BuildPackages" DependsOnTargets="SignContent">
+        <Message Importance="high" Text="Building Packages..."/>
         <MSBuild Projects="@(PackageProject)" Properties="Configuration=Debug" />
         <MSBuild Projects="@(PackageProject)" Properties="Configuration=Release" />
     </Target>
