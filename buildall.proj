@@ -1,9 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" ToolsVersion="14.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
     <PropertyGroup>
+        <!--
+        WORKSPACE is an Environment var typically set by the Jenkins build service. 
+        When running builds manually from a command line it won't be set so provide 
+        a default assuming this project file is in the equivalent of a workspace root
+        -->
         <WORKSPACE Condition="'$(WORKSPACE)'==''">$(MSBuildThisFileDirectory)</WORKSPACE>
     </PropertyGroup>
     
+    <!-- Project configurations to build for native code -->
     <ItemGroup>
         <NativeBuildConfig Include="Configuration=Debug,Platform=Win32" />
         <NativeBuildConfig Include="Configuration=Debug,Platform=x64" />
@@ -11,21 +17,17 @@
         <NativeBuildConfig Include="Configuration=Release,Platform=x64" />
     </ItemGroup>
 
+    <!-- Project configurations to build for managed code -->
     <ItemGroup>
         <ManagedBuildConfig Include="Configuration=Debug,Platform=AnyCPU" />
         <ManagedBuildConfig Include="Configuration=Release,Platform=AnyCPU" />
     </ItemGroup>
 
+    <!-- projects to build -->
     <ItemGroup>
         <NativeProject Include="src\LibLLVM\LibLLVM.vcxproj"/>
         <ManagedProject Include="src\Llvm.NET\Llvm.NET.csproj"/>
-    </ItemGroup>
-
-    <ItemGroup>
         <DocProject Include="src\Documentation\Documentation.shfb.proj" />
-    </ItemGroup>
-
-    <ItemGroup>
         <PackageProject Include="src\NugetPkg\NugetPkg\NugetPkg.vcxproj" />
     </ItemGroup>
 
