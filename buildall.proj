@@ -27,6 +27,7 @@
     <ItemGroup>
         <NativeProject Include="src\LibLLVM\LibLLVM.vcxproj"/>
         <ManagedProject Include="src\Llvm.NET\Llvm.NET.csproj"/>
+        <ManagedProject Include="src\Llvm.NETTests\Llvm.NETTests\Llvm.NETTests.csproj"/>
         <DocProject Include="src\Documentation\Documentation.shfb.proj" />
         <PackageProject Include="src\NugetPkg\NugetPkg\NugetPkg.vcxproj" />
     </ItemGroup>
