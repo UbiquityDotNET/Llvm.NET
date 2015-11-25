@@ -1,30 +1,44 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" ToolsVersion="14.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-    <ItemGroup>
-        <BuildConfig Include="Configuration=Debug;Platform=Win32" />
-        <BuildConfig Include="Configuration=Debug;Platform=x64" />
-        <BuildConfig Include="Configuration=Release;Platform=Win32" />
-        <BuildConfig Include="Configuration=Release;Platform=x64" />
-    </ItemGroup>
+    <PropertyGroup>
+        <WORKSPACE Condition="'$(WORKSPACE)'==''">$(MSBuildThisFileDirectory)</WORKSPACE>
+    </PropertyGroup>
     
     <ItemGroup>
-        <ContentProject Include="src\LibLLVM\LibLLVM.vcxproj"/>
-        <ContentProject Include="src\Llvm.NET\Llvm.NET.csproj"/>
+        <NativeBuildConfig Include="Configuration=Debug,Platform=Win32" />
+        <NativeBuildConfig Include="Configuration=Debug,Platform=x64" />
+        <NativeBuildConfig Include="Configuration=Release,Platform=Win32" />
+        <NativeBuildConfig Include="Configuration=Release,Platform=x64" />
     </ItemGroup>
-    
+
+    <ItemGroup>
+        <ManagedBuildConfig Include="Configuration=Debug,Platform=AnyCPU" />
+        <ManagedBuildConfig Include="Configuration=Release,Platform=AnyCPU" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <NativeProject Include="src\LibLLVM\LibLLVM.vcxproj"/>
+        <ManagedProject Include="src\Llvm.NET\Llvm.NET.csproj"/>
+    </ItemGroup>
+
     <ItemGroup>
         <DocProject Include="src\Documentation\Documentation.shfb.proj" />
     </ItemGroup>
-    
+
     <ItemGroup>
         <PackageProject Include="src\NugetPkg\NugetPkg\NugetPkg.vcxproj" />
     </ItemGroup>
 
-    <Target Name="BuildContent">
-        <MSBuild Projects="@(ContentProject)" Properties="%(BuildConfig)" />
+    <Target Name="BuildContentProjects">
+        <MSBuild Projects="@(NativeProject)" TargetAndPropertyListSeparators="," Properties="%(NativeBuildConfig.Identity)" Targets="Rebuild" SkipNonexistentProjects="true" />
+        <MSBuild Projects="@(ManagedProject)" TargetAndPropertyListSeparators="," Properties="%(ManagedBuildConfig.Identity)" Targets="Rebuild" SkipNonexistentProjects="true" />
     </Target>
 
-    <Target Name="SignContent" DependsOnTargets="BuildContent">
+    <Target Name="BuildDocs" DependsOnTargets="BuildContentProjects">
+        <MSBuild Projects="src\Documentation\Documentation.shfbproj" Properties="Configuration=Release;Platform=AnyCPU" />
+    </Target>
+
+    <Target Name="SignContent" DependsOnTargets="BuildContentProjects">
         <!-- TODO: Sign release build content -->
     </Target>
 
@@ -37,6 +51,6 @@
         <!-- TODO: Sign release packages -->
     </Target>
 
-    <Target Name="Build" DependsOnTargets="SignPackages">
+    <Target Name="Build" DependsOnTargets="SignPackages;BuildDocs">
     </Target>
 </Project>
