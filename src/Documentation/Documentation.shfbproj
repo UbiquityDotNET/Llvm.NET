@@ -16,7 +16,7 @@
     <Name>Documentation</Name>
     <!-- SHFB properties -->
     <FrameworkVersion>.NET Framework 4.5</FrameworkVersion>
-      <OutputPath>$(BaseOutputPath)Documentation</OutputPath>
+    <OutputPath>$(BaseOutputPath)Documentation</OutputPath>
     <HtmlHelpName>Llvm.NET</HtmlHelpName>
     <Language>en-US</Language>
     <TransformComponentArguments>
@@ -106,6 +106,7 @@
     <RootNamespaceTitle>Namespaces</RootNamespaceTitle>
     <PlugInConfigurations>
     </PlugInConfigurations>
+    <MissingTags>AutoDocumentCtors, AutoDocumentDispose</MissingTags>
   </PropertyGroup>
   <!-- There are no properties for these groups.  AnyCPU needs to appear in order for Visual Studio to perform
 			 the build.  The others are optional common platform types that may appear. -->
