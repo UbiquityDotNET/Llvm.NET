@@ -29,11 +29,6 @@
                     </content>
                 </step>
                 <step>
-                     <content>
-                        <para>Create an array of debug member descriptions</para>
-                    </content>
-                </step>
-                <step>
                     <content>
                         <para>Set the types method body</para>
                     </content>
