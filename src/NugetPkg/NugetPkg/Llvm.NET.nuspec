@@ -11,10 +11,7 @@
     <files>
         <file src="Llvm.NET.targets" target="build\Llvm.NET.targets" />
         <file src="$buildoutput$\x64\$configuration$\LibLLVM.dll" target="build\LibLLVM\x64\LibLLVM.dll" />
-        <file src="$buildoutput$\x64\$configuration$\LibLLVM.pdb" target="build\LibLLVM\x64\LibLLVM.pdb" />
         <file src="$buildoutput$\Win32\$configuration$\LibLLVM.dll" target="build\LibLLVM\x86\LibLLVM.dll" />
-        <file src="$buildoutput$\Win32\$configuration$\LibLLVM.pdb" target="build\LibLLVM\x86\LibLLVM.pdb" />
         <file src="$buildoutput$\AnyCPU\$configuration$\Llvm.NET.dll" target="lib\net45\Llvm.NET.dll" />
-        <file src="$buildoutput$\AnyCPU\$configuration$\Llvm.NET.pdb" target="lib\net45\Llvm.NET.pdb" />
     </files>
 </package>
