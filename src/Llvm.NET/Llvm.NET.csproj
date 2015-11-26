@@ -34,18 +34,6 @@
     <NoWarn>1591</NoWarn>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'RelWithDebInfo|AnyCPU'">
-    <DebugSymbols>true</DebugSymbols>
-    <DefineConstants>TRACE;DYNAMICALLY_LOAD_LIBLLVM</DefineConstants>
-    <Optimize>true</Optimize>
-    <DebugType>full</DebugType>
-    <PlatformTarget>AnyCPU</PlatformTarget>
-    <ErrorReport>prompt</ErrorReport>
-    <CodeAnalysisRuleSet>Llvm.NET.ruleset</CodeAnalysisRuleSet>
-    <DocumentationFile>$(OutputPath)\Llvm.NET.XML</DocumentationFile>
-    <NoWarn>1591</NoWarn>
-    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
-  </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'">
     <DebugSymbols>true</DebugSymbols>
     <OutputPath>bin\x64\Debug\</OutputPath>
@@ -65,19 +53,6 @@
     <Optimize>true</Optimize>
     <NoWarn>1591</NoWarn>
     <DebugType>pdbonly</DebugType>
-    <PlatformTarget>x64</PlatformTarget>
-    <ErrorReport>prompt</ErrorReport>
-    <CodeAnalysisRuleSet>Llvm.NET.ruleset</CodeAnalysisRuleSet>
-    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'RelWithDebInfo|x64'">
-    <DebugSymbols>true</DebugSymbols>
-    <OutputPath>bin\x64\RelWithDebInfo\</OutputPath>
-    <DefineConstants>TRACE;DYNAMICALLY_LOAD_LIBLLVM</DefineConstants>
-    <DocumentationFile>$(OutputPath)\Llvm.NET.XML</DocumentationFile>
-    <Optimize>true</Optimize>
-    <NoWarn>1591</NoWarn>
-    <DebugType>full</DebugType>
     <PlatformTarget>x64</PlatformTarget>
     <ErrorReport>prompt</ErrorReport>
     <CodeAnalysisRuleSet>Llvm.NET.ruleset</CodeAnalysisRuleSet>
