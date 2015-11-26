@@ -16,6 +16,7 @@
     <ReferencePath>$(ProgramFiles)\Common Files\microsoft shared\VSTT\$(VisualStudioVersion)\UITestExtensionPackages</ReferencePath>
     <IsCodedUITest>False</IsCodedUITest>
     <TestProjectType>UnitTest</TestProjectType>
+    <BuildPlatform Condition="'$(BuildPlatform)'==''">x64</BuildPlatform>
     <NuGetPackageImportStamp>
     </NuGetPackageImportStamp>
   </PropertyGroup>
@@ -76,7 +77,7 @@
     <Compile Include="Values\AttributeSetTests.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="..\..\..\BuildOutput\$(Platform)\$(Configuration)\LibLLVM.dll">
+    <Content Include="..\..\..\BuildOutput\$(BuildPlatform)\$(Configuration)\LibLLVM.dll">
       <Link>LibLLVM.dll</Link>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
