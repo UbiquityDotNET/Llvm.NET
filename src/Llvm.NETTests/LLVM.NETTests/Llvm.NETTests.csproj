@@ -76,7 +76,7 @@
     <Compile Include="Values\AttributeSetTests.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="..\..\..\BuildOutput\x64\Debug\LibLLVM.dll">
+    <Content Include="..\..\..\BuildOutput\$(Platform)\$(Configuration)\LibLLVM.dll">
       <Link>LibLLVM.dll</Link>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
