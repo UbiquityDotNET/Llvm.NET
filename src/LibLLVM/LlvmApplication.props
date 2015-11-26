@@ -9,7 +9,8 @@
         -->
         <LLVM_VERSION Condition="'$(LLVM_VERSION)'==''">3.7.0</LLVM_VERSION>
         <!-- Source ROOT Dir contains the full source of LLVM -->
-        <LLVM_SRCROOT_DIR Condition="'$(LLVM_SRCROOT_DIR)'==''">$([MSBuild]::GetRegistryValue(`HKEY_LOCAL_MACHINE\Software\LLVM\$(LLVM_VERSION)\`, `SrcRoot`))</LLVM_SRCROOT_DIR>
+        <LLVM_SRCROOT_DIR Condition="'$(LLVM_SRCROOT_DIR)'==''">$([MSBuild]::GetRegistryValueFromView(`HKEY_LOCAL_MACHINE\Software\LLVM\$(LLVM_VERSION)\`, `SrcRoot`, null, RegistryView.Registry64, RegistryView.Registry32))</LLVM_SRCROOT_DIR>
+        <LLVM_SRCROOT_DIR Condition="'$(LLVM_SRCROOT_DIR)'==''">$([MSBuild]::GetRegistryValue(`HKEY_CURRENT_USER\Software\LLVM\$(LLVM_VERSION)\`, `SrcRoot`))</LLVM_SRCROOT_DIR>
         <LLVM_SRCROOT_DIR Condition="'$(LLVM_SRCROOT_DIR)'!='' AND !HasTrailingSlash('$(LLVM_SRCROOT_DIR)')">$(LLVM_SRCROOT_DIR)\</LLVM_SRCROOT_DIR>
         <!-- Build dir is assumed to be a sub dir of the source root if not already set -->
         <LLVM_BUILD_DIR Condition="'$(LLVM_BUILD_DIR)'==''">$(LLVM_SRCROOT_DIR)Build\</LLVM_BUILD_DIR>
