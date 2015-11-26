@@ -8,7 +8,7 @@
         -->
         <WORKSPACE Condition="'$(WORKSPACE)'==''">$(MSBuildThisFileDirectory)</WORKSPACE>
     </PropertyGroup>
-    
+
     <!-- Project configurations to build for native code -->
     <ItemGroup>
         <NativeBuildConfig Include="Configuration=Debug,Platform=Win32" />
@@ -40,7 +40,7 @@
 
     <Target Name="BuildDocs" DependsOnTargets="BuildContentProjects">
         <Message Importance="high" Text="Building Documentation..."/>
-        <MSBuild Projects="src\Documentation\Documentation.shfbproj" Properties="Configuration=Release;Platform=AnyCPU" />
+        <MSBuild Projects="@(DocProject)" Properties="Configuration=Release;Platform=AnyCPU" />
     </Target>
 
     <Target Name="SignContent" DependsOnTargets="BuildContentProjects">

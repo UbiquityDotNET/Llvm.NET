@@ -1,42 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="NugetPkgRestore" ToolsVersion="14.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-    <PropertyGroup>
-        <WORKSPACE Condition="'$(WORKSPACE)'==''">$(MSBuildThisFileDirectory)</WORKSPACE>
-        <NugetPath Condition="'$(NugetPath)'==''">$(WORKSPACE)\tools\nuget.exe</NugetPath>
-    </PropertyGroup>
-
-    <!-- Inline task to perform Http GET request for a file -->
-    <UsingTask TaskName="HttpGet" TaskFactory="CodeTaskFactory" AssemblyFile="$(MSBuildToolsPath)\Microsoft.Build.Tasks.v4.0.dll">
-        <ParameterGroup>
-            <SourceUri ParameterType="System.String" Required="true"/>
-            <Destination ParameterType="System.String" Required="true"/>
-        </ParameterGroup>
-        <Task>
-            <Code Type="Fragment" Language="cs">
-                using( var webClient = new System.Net.WebClient() )
-                {
-                    var dir = System.IO.Path.GetDirectoryName( Destination );
-                    if( !System.IO.Directory.Exists( dir ) )
-                        System.IO.Directory.CreateDirectory( dir );
-                    
-                    webClient.DownloadFile( SourceUri, Destination );
-                }
-            </Code>
-        </Task>
-    </UsingTask>
-
-    <!-- Target to get Nuget from the official Nuget site (version specific) if nuget is not already available in the tools directory -->
-    <Target Name="GetNugetExe">
-        <Message Condition="!EXISTS('$(WORKSPACE)\Tools\nuget.exe')" Text="Downloading nuget.exe for package restore" Importance="high"/>
-        <HttpGet Condition="!EXISTS('$(WORKSPACE)\Tools\nuget.exe')" SourceUri="https://dist.nuget.org/win-x86-commandline/v3.2.0/nuget.exe" Destination="$(WORKSPACE)\Tools\nuget.exe" />
-    </Target>
-
-    <!-- Target to restore nuget packages for all solution/package.config files that require packages -->
-    <Target Name="NugetPkgRestore" DependsOnTargets="GetNugetExe">
-        <Exec Command="$(WORKSPACE)\Tools\nuget.exe restore src\nugetpkg\nugetpkg.sln"/>
-        <!-- lather, rinse, repeat for additional solutions/package.config that need nuget restore... -->
-    </Target>
+    <!-- NOTE: This is an isolated project that should not be run from an MSBuild Task
+         ( It should only be run from an isolated msbuild.exe instance ) This is due to
+         the fact that NUGET restore can modify a project, and MSBUILD won't re-evaluate
+         a project file once it is loaded. Thus any modifications wouldn't actually be
+         seen by the build if this is done in the same instance as the build itself.
+         Nomrally this is done by running msbuild.exe twice, once for this project and
+         another for everything else. 
+    -->
+    <Import Project="NugetRestore.Common.props"/>
     
-    <Target Name="Build" DependsOnTargets="NugetPkgRestore">
-    </Target>
+    <ItemGroup>
+        <NugetProject Include="src\nugetpkg\nugetpkg.sln"/>
+        <!--
+        lather, rinse, repeat for additional solution/package.config files
+        that need nuget restore in this repository...
+        -->
+    </ItemGroup>
+
+    <Import Project="NugetRestore.Common.Targets"/>
 </Project>

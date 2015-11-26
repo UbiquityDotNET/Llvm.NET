@@ -13,6 +13,11 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestDebugInfo", "Llvm.NETTe
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ReloadModule", "ReloadModule\ReloadModule.csproj", "{04D05E7F-CA04-4E9A-84CD-D7D609B2CE45}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{07FDA2D2-771E-44F4-8862-2E6FCB0E722E}"
+	ProjectSection(SolutionItems) = preProject
+		Llvm.NETTests.testsettings = Llvm.NETTests.testsettings
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
