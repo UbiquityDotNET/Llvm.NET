@@ -9,13 +9,15 @@
             <Destination ParameterType="System.String" Required="true"/>
         </ParameterGroup>
         <Task>
+            <Using Namespace="System.IO"/>
+            <Using Namespace="System.NET" />
             <Code Type="Fragment" Language="cs"><![CDATA[
-                using( var webClient = new System.Net.WebClient() )
+                using( var webClient = new WebClient() )
                 {
                     // ensure the output directory exists
-                    var dir = System.IO.Path.GetDirectoryName( Destination );
-                    if( !System.IO.Directory.Exists( dir ) )
-                        System.IO.Directory.CreateDirectory( dir );
+                    var dir = Path.GetDirectoryName( Destination );
+                    if( !Directory.Exists( dir ) )
+                        Directory.CreateDirectory( dir );
 
                     webClient.DownloadFile( SourceUri, Destination );
                 }
