@@ -35,20 +35,17 @@ namespace Llvm.NET.DebugInfo
         /// <summary>Constructs a new <see cref="DebugFunctionType"/></summary>
         /// <param name="llvmType">Native LLVM function signature</param>
         /// <param name="module"><see cref="NativeModule"/> to use when constructiong debug information</param>
-        /// <param name="diFile">Source file information for this signature (may be null)</param>
         /// <param name="debugFlags"><see cref="DebugInfoFlags"/> for this signature</param>
         /// <param name="retType">Return type for the function</param>
         /// <param name="argTypes">Potentially empty set of argument types for the signature</param>
         public DebugFunctionType( IFunctionType llvmType
                                 , NativeModule module
-                                , DIFile diFile
                                 , DebugInfoFlags debugFlags
                                 , DebugType<ITypeRef,DIType> retType
                                 , params DebugType<ITypeRef, DIType>[ ] argTypes
                                 )
             : base( llvmType
-                  , module.DIBuilder.CreateSubroutineType( diFile
-                                                         , debugFlags
+                  , module.DIBuilder.CreateSubroutineType( debugFlags
                                                          , retType.DIType
                                                          , argTypes.Select( t=>t.DIType )
                                                          )

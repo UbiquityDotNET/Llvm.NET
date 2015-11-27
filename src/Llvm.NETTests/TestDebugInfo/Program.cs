@@ -166,7 +166,7 @@ namespace TestDebugInfo
 
         private static Function DeclareDoCopyFunc( NativeModule module, DIFile diFile, IDebugType<ITypeRef, DIType> voidType )
         {
-            var doCopySig = module.Context.CreateFunctionType( module.DIBuilder, diFile, voidType );
+            var doCopySig = module.Context.CreateFunctionType( module.DIBuilder, voidType );
 
             // Create the functions
             // NOTE: The declaration ordering is reveresd from that of the sample code file (test.c)
@@ -204,11 +204,9 @@ namespace TestDebugInfo
             // However, that usage would create a signature with two
             // pointers as the arguments, which doesn't match the source
             // To get the correct debug info signature this inserts an
-            // explicit DebugType<> that overrides the default
-            // behavior to pair LLVM pointer type with the original
-            // source type.
+            // explicit DebugType<> that overrides the default behavior
+            // to pair the LLVM pointer type with the original source type.
             var copySig = module.Context.CreateFunctionType( module.DIBuilder
-                                                           , diFile
                                                            , voidType
                                                            , DebugType.Create( fooPtr, constFoo )
                                                            , fooPtr

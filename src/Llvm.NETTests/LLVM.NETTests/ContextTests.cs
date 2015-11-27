@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using Llvm.NET.DebugInfo;
 using Llvm.NET.Types;
 using Llvm.NET.Values;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -9,57 +11,101 @@ namespace Llvm.NET.Tests
     [DeploymentItem("LibLLVM.dll")]
     public class ContextTests
     {
-        [TestMethod]
-        public void DisposeTest( )
+        [AssemblyInitialize]
+        public static void InitializeAssembly(TestContext ctx)
         {
-            using( var module = new NativeModule("test") )
+            StaticState.RegisterAll( );
+        }
+
+        [TestMethod]
+        public void SimpleConstructorDisposeTest( )
+        {
+            var context = new Context( );
+            using( context )
             {
-                Assert.IsNotNull( module.Context );
+                Assert.IsNotNull( context );
+                Assert.IsFalse( context.IsDisposed );
             }
+            Assert.IsTrue( context.IsDisposed );
         }
 
         [TestMethod]
         public void GetPointerTypeForTest( )
         {
-            using( var module = new NativeModule("test") )
+            using( var context = new Context() )
             {
-                var int8PtrType = module.Context.GetPointerTypeFor( module.Context.Int8Type );
+                var int8PtrType = context.GetPointerTypeFor( context.Int8Type );
                 Assert.IsNotNull( int8PtrType );
-                Assert.AreSame( module.Context.Int8Type, int8PtrType.ElementType );
-                Assert.AreSame( module.Context, int8PtrType.Context );
+                Assert.AreSame( context.Int8Type, int8PtrType.ElementType );
+                Assert.AreSame( context, int8PtrType.Context );
 
-                var int8PtrTypeAlt = module.Context.Int8Type.CreatePointerType( );
+                var int8PtrTypeAlt = context.Int8Type.CreatePointerType( );
                 Assert.AreSame( int8PtrType, int8PtrTypeAlt );
+            }
+        }
+
+        [TestMethod]
+        public void VoidTypePropertyTest()
+        {
+            using( var context = new Context( ) )
+            {
+                var voidType = context.VoidType;
+                Assert.AreNotEqual( IntPtr.Zero, voidType.TypeHandle );
+                Assert.AreEqual( TypeKind.Void, voidType.Kind );
+                Assert.IsFalse( voidType.IsDouble );
+                Assert.IsFalse( voidType.IsFloat );
+                Assert.IsFalse( voidType.IsFloatingPoint );
+                Assert.IsFalse( voidType.IsInteger );
+                Assert.IsFalse( voidType.IsPointer );
+                Assert.IsFalse( voidType.IsPointerPointer );
+                Assert.IsFalse( voidType.IsSequence );
+                Assert.IsFalse( voidType.IsStruct );
+                Assert.IsFalse( voidType.IsSized );
+                Assert.IsTrue( voidType.IsVoid );
+                Assert.AreEqual( 0u, voidType.IntegerBitWidth );
+            }
+        }
+
+        [TestMethod]
+        public void IntegerTypePropertiesTest()
+        {
+            using( var context = new Context( ) )
+            {
+                VerifyIntegerType( context.BoolType, 1 );
+                VerifyIntegerType( context.Int8Type, 8 );
+                VerifyIntegerType( context.Int16Type, 16 );
+                VerifyIntegerType( context.Int32Type, 32 );
+                VerifyIntegerType( context.Int64Type, 64 );
             }
         }
 
         [TestMethod]
         public void GetIntTypeTest( )
         {
-            using( var module = new NativeModule("test") )
+            using( var context = new Context() )
             {
-                var int8Type = module.Context.GetIntType( 8 );
-                Assert.AreSame( module.Context.Int8Type, int8Type );
-                Assert.AreSame( module.Context, int8Type.Context );
+                var int8Type = context.GetIntType( 8 );
+                Assert.AreSame( context.Int8Type, int8Type );
+                Assert.AreSame( context, int8Type.Context );
                 Assert.AreEqual( 8U, int8Type.IntegerBitWidth );
 
-                var int16Type = module.Context.GetIntType( 16 );
-                Assert.AreSame( module.Context.Int16Type, int16Type );
-                Assert.AreSame( module.Context, int16Type.Context );
+                var int16Type = context.GetIntType( 16 );
+                Assert.AreSame( context.Int16Type, int16Type );
+                Assert.AreSame( context, int16Type.Context );
                 Assert.AreEqual( 16U, int16Type.IntegerBitWidth );
 
-                var int32Type = module.Context.GetIntType( 32 );
-                Assert.AreSame( module.Context.Int32Type, int32Type );
-                Assert.AreSame( module.Context, int32Type.Context );
+                var int32Type = context.GetIntType( 32 );
+                Assert.AreSame( context.Int32Type, int32Type );
+                Assert.AreSame( context, int32Type.Context );
                 Assert.AreEqual( 32U, int32Type.IntegerBitWidth );
 
-                var int64Type = module.Context.GetIntType( 64 );
-                Assert.AreSame( module.Context.Int64Type, int64Type );
-                Assert.AreSame( module.Context, int64Type.Context );
+                var int64Type = context.GetIntType( 64 );
+                Assert.AreSame( context.Int64Type, int64Type );
+                Assert.AreSame( context, int64Type.Context );
                 Assert.AreEqual( 64U, int64Type.IntegerBitWidth );
 
-                var int128Type = module.Context.GetIntType( 128 );
-                Assert.AreSame( module.Context, int128Type.Context );
+                var int128Type = context.GetIntType( 128 );
+                Assert.AreSame( context, int128Type.Context );
                 Assert.AreEqual( 128U, int128Type.IntegerBitWidth ); 
             }
         }
@@ -67,15 +113,15 @@ namespace Llvm.NET.Tests
         [TestMethod]
         public void GetFunctionTypeTest( )
         {
-            using( var module = new NativeModule("test") )
+            using( var context = new Context() )
             {
                 // i16 ( i32, float )
-                var funcSig = module.Context.GetFunctionType( module.Context.Int16Type, module.Context.Int32Type, module.Context.FloatType );
+                var funcSig = context.GetFunctionType( context.Int16Type, context.Int32Type, context.FloatType );
                 Assert.IsNotNull( funcSig );
-                Assert.AreSame( module.Context, funcSig.Context );
+                Assert.AreSame( context, funcSig.Context );
 
                 Assert.AreEqual( TypeKind.Function, funcSig.Kind );
-                Assert.AreSame( module.Context.Int16Type, funcSig.ReturnType );
+                Assert.AreSame( context.Int16Type, funcSig.ReturnType );
                 Assert.AreEqual( 2, funcSig.ParameterTypes.Count );
                 
                 // verify additional properties created properly
@@ -95,23 +141,115 @@ namespace Llvm.NET.Tests
         }
 
         [TestMethod]
-        public void GetFunctionTypeTest1( )
+        public void CreateFunctionTypeTest( )
         {
-            using( var module = new NativeModule("test") )
+            using( var context = new Context( ) )
+            using( var targetMachine = GetTargetMachine( context ) )
             {
-                Assert.IsNotNull( module.Context );
-                Assert.IsNotNull( module.Context.Int32Type );
-                Assert.IsNotNull( module.Context.FloatType );
-                Assert.IsNotNull( module.Context.Int16Type );
+                var module = new NativeModule( "test.bc", context, SourceLanguage.CSharp, "test.cs", "unittests" );
+                Assert.IsNotNull( module );
+                module.Layout = targetMachine.TargetData;
+
+                var i16 = new DebugBasicType( context.Int16Type, module, "int16", DiTypeKind.Signed );
+                var i32 = new DebugBasicType( context.Int32Type, module, "int32", DiTypeKind.Signed );
+                var f32 = new DebugBasicType( context.FloatType, module, "float", DiTypeKind.Float );
 
                 // i16 ( i32, float )
-                var argTypes = new ITypeRef[ ] { module.Context.Int32Type, module.Context.FloatType };
-                var funcSig = module.Context.GetFunctionType( module.Context.Int16Type, argTypes );
+                var funcSig = context.CreateFunctionType( module.DIBuilder, i16, i32, f32 );
+
                 Assert.IsNotNull( funcSig );
-                Assert.AreSame( module.Context, funcSig.Context );
+                Assert.AreSame( context, funcSig.Context );
 
                 Assert.AreEqual( TypeKind.Function, funcSig.Kind );
-                Assert.AreSame( module.Context.Int16Type, funcSig.ReturnType );
+                Assert.AreSame( context.Int16Type, funcSig.ReturnType );
+                Assert.AreEqual( 2, funcSig.ParameterTypes.Count );
+
+                // verify additional properties created properly
+                Assert.AreEqual( 0U, funcSig.IntegerBitWidth );
+                Assert.IsFalse( funcSig.IsDouble );
+                Assert.IsFalse( funcSig.IsFloat );
+                Assert.IsFalse( funcSig.IsFloatingPoint );
+                Assert.IsFalse( funcSig.IsInteger );
+                Assert.IsFalse( funcSig.IsPointer );
+                Assert.IsFalse( funcSig.IsPointerPointer );
+                Assert.IsFalse( funcSig.IsSequence );
+                Assert.IsFalse( funcSig.IsSized );
+                Assert.IsFalse( funcSig.IsStruct );
+                Assert.IsFalse( funcSig.IsVarArg );
+                Assert.IsFalse( funcSig.IsVoid );
+
+                Assert.IsNotNull( funcSig.DIType );
+                var subroutineType = funcSig.DIType as DISubroutineType;
+                Assert.IsNotNull( subroutineType );
+                Assert.AreSame( context, subroutineType.Context );
+                Assert.AreEqual( DebugInfoFlags.None, subroutineType.DebugInfoFlags );
+                
+                // signatures, have no scope or file
+                Assert.IsNull( subroutineType.Scope );
+                Assert.IsNull( subroutineType.File );
+            }
+        }
+
+        [TestMethod]
+        public void VerifyCreateFunctionTypeWithSameSigIsSameInstanceTest( )
+        {
+            using( var context = new Context( ) )
+            using( var targetMachine = GetTargetMachine( context ) )
+            {
+                var module = new NativeModule( "test.bc", context, SourceLanguage.CSharp, "test.cs", "unittests" );
+                Assert.IsNotNull( module );
+                module.Layout = targetMachine.TargetData;
+
+                var i16 = new DebugBasicType( context.Int16Type, module, "int16", DiTypeKind.Signed );
+                var i32 = new DebugBasicType( context.Int32Type, module, "int32", DiTypeKind.Signed );
+                var f32 = new DebugBasicType( context.FloatType, module, "float", DiTypeKind.Float );
+
+                // i16 ( i32, float )
+                var funcSig = context.CreateFunctionType( module.DIBuilder, i16, i32, f32 );
+                var funcSig2 = context.CreateFunctionType( module.DIBuilder, i16, i32, f32 );
+                Assert.AreSame( funcSig.NativeType, funcSig2.NativeType );
+                Assert.AreSame( funcSig.DIType, funcSig2.DIType );
+            }
+        }
+
+        private static TargetMachine GetTargetMachine( Context context )
+        {
+            var target = Target.FromTriple( "thumbv7m-none--eabi" );
+            return target.CreateTargetMachine( context, "thumbv7m-none--eabi", "cortex-m3", string.Empty, CodeGenOpt.Aggressive, Reloc.Default, CodeModel.Small );
+        }
+
+        [TestMethod]
+        public void VerifySameFunctionSigRetrievesTheSameType()
+        {
+            using( var context = new Context( ) )
+            {
+                // i16 ( i32, float )
+                var funcSig = context.GetFunctionType( context.Int16Type, context.Int32Type, context.FloatType );
+                var funcSig2 = context.GetFunctionType( context.Int16Type, context.Int32Type, context.FloatType );
+                Assert.IsNotNull( funcSig );
+                Assert.IsNotNull( funcSig2 );
+                Assert.AreSame( funcSig, funcSig2 );
+            }
+        }
+
+        [TestMethod]
+        public void GetFunctionTypeTest1( )
+        {
+            using( var context = new Context() )
+            {
+                Assert.IsNotNull( context );
+                Assert.IsNotNull( context.Int32Type );
+                Assert.IsNotNull( context.FloatType );
+                Assert.IsNotNull( context.Int16Type );
+
+                // i16 ( i32, float )
+                var argTypes = new ITypeRef[ ] { context.Int32Type, context.FloatType };
+                var funcSig = context.GetFunctionType( context.Int16Type, argTypes );
+                Assert.IsNotNull( funcSig );
+                Assert.AreSame( context, funcSig.Context );
+
+                Assert.AreEqual( TypeKind.Function, funcSig.Kind );
+                Assert.AreSame( context.Int16Type, funcSig.ReturnType );
                 Assert.AreEqual( 2, funcSig.ParameterTypes.Count );
                 
                 // verify additional properties created properly
@@ -133,16 +271,16 @@ namespace Llvm.NET.Tests
         [TestMethod]
         public void GetFunctionTypeTest2( )
         {
-            using( var module = new NativeModule("test") )
+            using( var context = new Context() )
             {
                 // i16 ( i32, float )
-                var argTypes = new List<ITypeRef> { module.Context.Int32Type, module.Context.FloatType };
-                var funcSig = module.Context.GetFunctionType( module.Context.Int16Type, argTypes, true );
+                var argTypes = new List<ITypeRef> { context.Int32Type, context.FloatType };
+                var funcSig = context.GetFunctionType( context.Int16Type, argTypes, true );
                 Assert.IsNotNull( funcSig );
-                Assert.AreSame( module.Context, funcSig.Context );
+                Assert.AreSame( context, funcSig.Context );
 
                 Assert.AreEqual( TypeKind.Function, funcSig.Kind );
-                Assert.AreSame( module.Context.Int16Type, funcSig.ReturnType );
+                Assert.AreSame( context.Int16Type, funcSig.ReturnType );
                 Assert.AreEqual( 2, funcSig.ParameterTypes.Count );
                 Assert.IsTrue( funcSig.IsVarArg );
                 
@@ -165,12 +303,12 @@ namespace Llvm.NET.Tests
         [TestCategory("Named Structs")]
         public void CreateStructTypeTest( )
         {
-            using( var module = new NativeModule("test") )
+            using( var context = new Context() )
             {
                 var typeName = "struct.test";
-                var type = module.Context.CreateStructType( typeName );
+                var type = context.CreateStructType( typeName );
                 Assert.IsNotNull( type );
-                Assert.AreSame( module.Context, type.Context );
+                Assert.AreSame( context, type.Context );
 
                 // verify type specific attributes
                 Assert.AreEqual( TypeKind.Struct, type.Kind );
@@ -199,18 +337,18 @@ namespace Llvm.NET.Tests
         [TestCategory("Anonymous Structs")]
         public void CreateAnonymousStructTypeTestWithOneMemberUnpacked( )
         {
-            using( var module = new NativeModule("test") )
+            using( var context = new Context() )
             {
-                var type = module.Context.CreateStructType( false, module.Context.Int16Type );
+                var type = context.CreateStructType( false, context.Int16Type );
                 Assert.IsNotNull( type );
-                Assert.AreSame( module.Context, type.Context );
+                Assert.AreSame( context, type.Context );
 
                 // verify type specific attributes
                 Assert.AreEqual( TypeKind.Struct, type.Kind );
                 Assert.IsTrue( type.IsStruct );
                 Assert.IsNull( type.Name );
                 Assert.AreEqual( 1, type.Members.Count );
-                Assert.AreSame( module.Context.Int16Type, type.Members[ 0 ] );
+                Assert.AreSame( context.Int16Type, type.Members[ 0 ] );
                 Assert.IsFalse( type.IsPacked );
                 
                 // with at least one element the type should be considered sized
@@ -234,18 +372,18 @@ namespace Llvm.NET.Tests
         [TestCategory("Anonymous Structs")]
         public void CreateAnonymousStructTypeTestWithOneMemberPacked( )
         {
-            using( var module = new NativeModule("test") )
+            using( var context = new Context() )
             {
-                var type = module.Context.CreateStructType( true, module.Context.Int16Type );
+                var type = context.CreateStructType( true, context.Int16Type );
                 Assert.IsNotNull( type );
-                Assert.AreSame( module.Context, type.Context );
+                Assert.AreSame( context, type.Context );
 
                 // verify type specific attributes
                 Assert.AreEqual( TypeKind.Struct, type.Kind );
                 Assert.IsTrue( type.IsStruct );
                 Assert.IsNull( type.Name );
                 Assert.AreEqual( 1, type.Members.Count );
-                Assert.AreSame( module.Context.Int16Type, type.Members[ 0 ] );
+                Assert.AreSame( context.Int16Type, type.Members[ 0 ] );
                 Assert.IsTrue( type.IsPacked );
                 
                 // with at least one element the type should be considered sized
@@ -269,19 +407,19 @@ namespace Llvm.NET.Tests
         [TestCategory("Anonymous Structs")]
         public void CreateAnonymousStructTypeTestWithMultipleMembersUnpacked( )
         {
-            using( var module = new NativeModule("test") )
+            using( var context = new Context() )
             {
-                var type = module.Context.CreateStructType( false, module.Context.Int16Type, module.Context.Int32Type );
+                var type = context.CreateStructType( false, context.Int16Type, context.Int32Type );
                 Assert.IsNotNull( type );
-                Assert.AreSame( module.Context, type.Context );
+                Assert.AreSame( context, type.Context );
 
                 // verify type specific attributes
                 Assert.AreEqual( TypeKind.Struct, type.Kind );
                 Assert.IsTrue( type.IsStruct );
                 Assert.IsNull( type.Name );
                 Assert.AreEqual( 2, type.Members.Count );
-                Assert.AreSame( module.Context.Int16Type, type.Members[ 0 ] );
-                Assert.AreSame( module.Context.Int32Type, type.Members[ 1 ] );
+                Assert.AreSame( context.Int16Type, type.Members[ 0 ] );
+                Assert.AreSame( context.Int32Type, type.Members[ 1 ] );
                 Assert.IsFalse( type.IsPacked );
                 
                 // with at least one element the type should be considered sized
@@ -305,19 +443,19 @@ namespace Llvm.NET.Tests
         [TestCategory("Anonymous Structs")]
         public void CreateAnonymousStructTypeTestWithMultipleMembersPacked( )
         {
-            using( var module = new NativeModule("test") )
+            using( var context = new Context() )
             {
-                var type = module.Context.CreateStructType( true, module.Context.Int16Type, module.Context.Int32Type );
+                var type = context.CreateStructType( true, context.Int16Type, context.Int32Type );
                 Assert.IsNotNull( type );
-                Assert.AreSame( module.Context, type.Context );
+                Assert.AreSame( context, type.Context );
 
                 // verify type specific attributes
                 Assert.AreEqual( TypeKind.Struct, type.Kind );
                 Assert.IsTrue( type.IsStruct );
                 Assert.IsNull( type.Name );
                 Assert.AreEqual( 2, type.Members.Count );
-                Assert.AreSame( module.Context.Int16Type, type.Members[ 0 ] );
-                Assert.AreSame( module.Context.Int32Type, type.Members[ 1 ] );
+                Assert.AreSame( context.Int16Type, type.Members[ 0 ] );
+                Assert.AreSame( context.Int32Type, type.Members[ 1 ] );
                 Assert.IsTrue( type.IsPacked );
                 
                 // with at least one element the type should be considered sized
@@ -341,19 +479,19 @@ namespace Llvm.NET.Tests
         [TestCategory("Named Structs")]
         public void CreateNamedStructTypeTestWithOneMemberUnpacked( )
         {
-            using( var module = new NativeModule("test") )
+            using( var context = new Context() )
             {
                 var typeName = "struct.test";
-                var type = module.Context.CreateStructType( typeName, false, module.Context.Int16Type );
+                var type = context.CreateStructType( typeName, false, context.Int16Type );
                 Assert.IsNotNull( type );
-                Assert.AreSame( module.Context, type.Context );
+                Assert.AreSame( context, type.Context );
 
                 // verify type specific attributes
                 Assert.AreEqual( TypeKind.Struct, type.Kind );
                 Assert.IsTrue( type.IsStruct );
                 Assert.AreEqual( typeName, type.Name );
                 Assert.AreEqual( 1, type.Members.Count );
-                Assert.AreSame( module.Context.Int16Type, type.Members[ 0 ] );
+                Assert.AreSame( context.Int16Type, type.Members[ 0 ] );
                 Assert.IsFalse( type.IsPacked );
                 
                 // with at least one element the type should be considered sized
@@ -377,19 +515,19 @@ namespace Llvm.NET.Tests
         [TestCategory("Named Structs")]
         public void CreateNamedStructTypeTestWithOneMemberPacked( )
         {
-            using( var module = new NativeModule("test") )
+            using( var context = new Context() )
             {
                 var typeName = "struct.test";
-                var type = module.Context.CreateStructType( typeName, true, module.Context.Int16Type );
+                var type = context.CreateStructType( typeName, true, context.Int16Type );
                 Assert.IsNotNull( type );
-                Assert.AreSame( module.Context, type.Context );
+                Assert.AreSame( context, type.Context );
 
                 // verify type specific attributes
                 Assert.AreEqual( TypeKind.Struct, type.Kind );
                 Assert.IsTrue( type.IsStruct );
                 Assert.AreEqual( typeName, type.Name );
                 Assert.AreEqual( 1, type.Members.Count );
-                Assert.AreSame( module.Context.Int16Type, type.Members[ 0 ] );
+                Assert.AreSame( context.Int16Type, type.Members[ 0 ] );
                 Assert.IsTrue( type.IsPacked );
                 
                 // with at least one element the type should be considered sized
@@ -413,20 +551,20 @@ namespace Llvm.NET.Tests
         [TestCategory("Named Structs")]
         public void CreateNamedStructTypeTestWithMultipleMembersUnpacked( )
         {
-            using( var module = new NativeModule("test") )
+            using( var context = new Context() )
             {
                 var typeName = "struct.test";
-                var type = module.Context.CreateStructType( typeName, false, module.Context.Int16Type, module.Context.Int32Type );
+                var type = context.CreateStructType( typeName, false, context.Int16Type, context.Int32Type );
                 Assert.IsNotNull( type );
-                Assert.AreSame( module.Context, type.Context );
+                Assert.AreSame( context, type.Context );
 
                 // verify type specific attributes
                 Assert.AreEqual( TypeKind.Struct, type.Kind );
                 Assert.IsTrue( type.IsStruct );
                 Assert.AreEqual( typeName, type.Name );
                 Assert.AreEqual( 2, type.Members.Count );
-                Assert.AreSame( module.Context.Int16Type, type.Members[ 0 ] );
-                Assert.AreSame( module.Context.Int32Type, type.Members[ 1 ] );
+                Assert.AreSame( context.Int16Type, type.Members[ 0 ] );
+                Assert.AreSame( context.Int32Type, type.Members[ 1 ] );
                 Assert.IsFalse( type.IsPacked );
                 
                 // with at least one element the type should be considered sized
@@ -450,20 +588,20 @@ namespace Llvm.NET.Tests
         [TestCategory("Named Structs")]
         public void CreateNamedStructTypeTestWithMultipleMembersPacked( )
         {
-            using( var module = new NativeModule("test") )
+            using( var context = new Context() )
             {
                 var typeName = "struct.test";
-                var type = module.Context.CreateStructType( typeName, true, module.Context.Int16Type, module.Context.Int32Type );
+                var type = context.CreateStructType( typeName, true, context.Int16Type, context.Int32Type );
                 Assert.IsNotNull( type );
-                Assert.AreSame( module.Context, type.Context );
+                Assert.AreSame( context, type.Context );
 
                 // verify type specific attributes
                 Assert.AreEqual( TypeKind.Struct, type.Kind );
                 Assert.IsTrue( type.IsStruct );
                 Assert.AreEqual( typeName, type.Name );
                 Assert.AreEqual( 2, type.Members.Count );
-                Assert.AreSame( module.Context.Int16Type, type.Members[ 0 ] );
-                Assert.AreSame( module.Context.Int32Type, type.Members[ 1 ] );
+                Assert.AreSame( context.Int16Type, type.Members[ 0 ] );
+                Assert.AreSame( context.Int32Type, type.Members[ 1 ] );
                 Assert.IsTrue( type.IsPacked );
                 
                 // with at least one element the type should be considered sized
@@ -487,13 +625,13 @@ namespace Llvm.NET.Tests
         [TestCategory("Anonymous Structs")]
         public void CreateAnonymousPackedConstantStructUsingParamsTest( )
         {
-            using( var module = new NativeModule("test") )
+            using( var context = new Context() )
             {
-                var value = module.Context.CreateConstantStruct( true
-                                                               , module.Context.CreateConstant( ( byte )1)
-                                                               , module.Context.CreateConstant( 2.0f )
-                                                               , module.Context.CreateConstant( ( short )-3 )
-                                                               );
+                var value = context.CreateConstantStruct( true
+                                                        , context.CreateConstant( ( byte )1)
+                                                        , context.CreateConstant( 2.0f )
+                                                        , context.CreateConstant( ( short )-3 )
+                                                        );
                 Assert.AreEqual( 3, value.Operands.Count );
                 Assert.IsInstanceOfType( value.Operands[ 0 ], typeof( ConstantInt ) );
                 Assert.IsInstanceOfType( value.Operands[ 1 ], typeof( ConstantFP ) );
@@ -520,19 +658,19 @@ namespace Llvm.NET.Tests
         [TestCategory("Anonymous Structs")]
         public void CreateAnonymousConstantNestedStructTest( )
         {
-            using( var module = new NativeModule("test") )
+            using( var context = new Context() )
             {
-                var nestedValue = module.Context.CreateConstantStruct( false
-                                                                     , module.Context.CreateConstant( 5 )
-                                                                     , module.Context.CreateConstantString("Hello")
-                                                                     , module.Context.CreateConstant( 6 )
-                                                                     );
-                var value = module.Context.CreateConstantStruct( true
-                                                               , module.Context.CreateConstant( ( byte )1)
-                                                               , module.Context.CreateConstant( 2.0f )
-                                                               , nestedValue
-                                                               , module.Context.CreateConstant( ( short )-3 )
-                                                               );
+                var nestedValue = context.CreateConstantStruct( false
+                                                              , context.CreateConstant( 5 )
+                                                              , context.CreateConstantString("Hello")
+                                                              , context.CreateConstant( 6 )
+                                                              );
+                var value = context.CreateConstantStruct( true
+                                                        , context.CreateConstant( ( byte )1)
+                                                        , context.CreateConstant( 2.0f )
+                                                        , nestedValue
+                                                        , context.CreateConstant( ( short )-3 )
+                                                        );
                 Assert.AreEqual( 4, value.Operands.Count );
                 Assert.IsInstanceOfType( value.Operands[ 0 ], typeof( ConstantInt ) );
                 Assert.IsInstanceOfType( value.Operands[ 1 ], typeof( ConstantFP ) );
@@ -569,13 +707,13 @@ namespace Llvm.NET.Tests
         [TestMethod]
         public void CreateAnonymousUnpackedConstantStructUsingParamsTest( )
         {
-            using( var module = new NativeModule("test") )
+            using( var context = new Context() )
             {
-                var value = module.Context.CreateConstantStruct( false
-                                                               , module.Context.CreateConstant( ( byte )1)
-                                                               , module.Context.CreateConstant( 2.0f )
-                                                               , module.Context.CreateConstant( ( short )-3 )
-                                                               );
+                var value = context.CreateConstantStruct( false
+                                                        , context.CreateConstant( ( byte )1)
+                                                        , context.CreateConstant( 2.0f )
+                                                        , context.CreateConstant( ( short )-3 )
+                                                        );
                 Assert.AreEqual( 3, value.Operands.Count );
                 Assert.IsInstanceOfType( value.Operands[ 0 ], typeof( ConstantInt ) );
                 Assert.IsInstanceOfType( value.Operands[ 1 ], typeof( ConstantFP ) );
@@ -602,10 +740,15 @@ namespace Llvm.NET.Tests
         [TestCategory("Anonymous Structs")]
         public void CreateAnonymousPackedConstantStructUsingEnumerableTest( )
         {
-            using( var module = new NativeModule("test") )
+            using( var context = new Context() )
             {
-                var fields = new List<Constant> { module.Context.CreateConstant( ( byte )1 ), module.Context.CreateConstant( 2.0f ), module.Context.CreateConstant( ( short )-3 ) };
-                var value = module.Context.CreateConstantStruct( true, fields );
+                var fields = new List<Constant>
+                    { context.CreateConstant( ( byte )1 )
+                    , context.CreateConstant( 2.0f )
+                    , context.CreateConstant( ( short )-3 )
+                    };
+
+                var value = context.CreateConstantStruct( true, fields );
                 Assert.AreEqual( 3, value.Operands.Count );
                 Assert.IsInstanceOfType( value.Operands[ 0 ], typeof( ConstantInt ) );
                 Assert.IsInstanceOfType( value.Operands[ 1 ], typeof( ConstantFP ) );
@@ -632,13 +775,13 @@ namespace Llvm.NET.Tests
         [TestCategory("Anonymous Structs")]
         public void CreateAnonymousUnpackedConstantStructUsingEnumerableTest( )
         {
-            using( var module = new NativeModule("test") )
+            using( var context = new Context() )
             {
-                var fields = new List<Constant> { module.Context.CreateConstant( ( byte )1 )
-                                                , module.Context.CreateConstant( 2.0f )
-                                                , module.Context.CreateConstant( ( short )-3 )
+                var fields = new List<Constant> { context.CreateConstant( ( byte )1 )
+                                                , context.CreateConstant( 2.0f )
+                                                , context.CreateConstant( ( short )-3 )
                                                 };
-                var value = module.Context.CreateConstantStruct( false, fields );
+                var value = context.CreateConstantStruct( false, fields );
                 Assert.AreEqual( 3, value.Operands.Count );
                 Assert.IsInstanceOfType( value.Operands[ 0 ], typeof( ConstantInt ) );
                 Assert.IsInstanceOfType( value.Operands[ 1 ], typeof( ConstantFP ) );
@@ -664,14 +807,14 @@ namespace Llvm.NET.Tests
         [TestMethod]
         public void CreateNamedConstantPackedStructTestUsingEnumerable( )
         {                                                          
-            using( var module = new NativeModule("test") )
+            using( var context = new Context() )
             {
-                var structType = module.Context.CreateStructType( "struct.test", true, module.Context.Int8Type, module.Context.FloatType, module.Context.Int16Type );
-                var fields = new List<Constant> { module.Context.CreateConstant( ( byte )1 )
-                                                , module.Context.CreateConstant( 2.0f )
-                                                , module.Context.CreateConstant( ( short )-3 )
+                var structType = context.CreateStructType( "struct.test", true, context.Int8Type, context.FloatType, context.Int16Type );
+                var fields = new List<Constant> { context.CreateConstant( ( byte )1 )
+                                                , context.CreateConstant( 2.0f )
+                                                , context.CreateConstant( ( short )-3 )
                                                 };
-                var value = module.Context.CreateNamedConstantStruct( structType, fields );
+                var value = context.CreateNamedConstantStruct( structType, fields );
                 Assert.AreEqual( 3, value.Operands.Count );
                 Assert.IsInstanceOfType( value.Operands[ 0 ], typeof( ConstantInt ) );
                 Assert.IsInstanceOfType( value.Operands[ 1 ], typeof( ConstantFP ) );
@@ -697,19 +840,19 @@ namespace Llvm.NET.Tests
         [TestMethod]
         public void CreateNamedConstantUnpackedStructTestUsingEnumerable( )
         {                                                          
-            using( var module = new NativeModule("test") )
+            using( var context = new Context() )
             {
-                var structType = module.Context.CreateStructType( "struct.test"
-                                                                , false
-                                                                , module.Context.Int8Type
-                                                                , module.Context.FloatType
-                                                                , module.Context.Int16Type
-                                                                );
-                var fields = new List<Constant> { module.Context.CreateConstant( ( byte )1 )
-                                                , module.Context.CreateConstant( 2.0f )
-                                                , module.Context.CreateConstant( ( short )-3 )
+                var structType = context.CreateStructType( "struct.test"
+                                                         , false
+                                                         , context.Int8Type
+                                                         , context.FloatType
+                                                         , context.Int16Type
+                                                         );
+                var fields = new List<Constant> { context.CreateConstant( ( byte )1 )
+                                                , context.CreateConstant( 2.0f )
+                                                , context.CreateConstant( ( short )-3 )
                                                 };
-                var value = module.Context.CreateNamedConstantStruct( structType, fields );
+                var value = context.CreateNamedConstantStruct( structType, fields );
                 Assert.AreEqual( 3, value.Operands.Count );
                 Assert.IsInstanceOfType( value.Operands[ 0 ], typeof( ConstantInt ) );
                 Assert.IsInstanceOfType( value.Operands[ 1 ], typeof( ConstantFP ) );
@@ -735,19 +878,19 @@ namespace Llvm.NET.Tests
         [TestMethod]
         public void CreateNamedConstantPackedStructTestUsingParams( )
         {                                                          
-            using( var module = new NativeModule("test") )
+            using( var context = new Context() )
             {
-                var structType = module.Context.CreateStructType( "struct.test"
-                                                                , true
-                                                                , module.Context.Int8Type
-                                                                , module.Context.FloatType
-                                                                , module.Context.Int16Type
-                                                                );
-                var value = module.Context.CreateNamedConstantStruct( structType
-                                                                    , module.Context.CreateConstant( ( byte )1 )
-                                                                    , module.Context.CreateConstant( 2.0f )
-                                                                    , module.Context.CreateConstant( ( short )-3 )
-                                                                    );
+                var structType = context.CreateStructType( "struct.test"
+                                                         , true
+                                                         , context.Int8Type
+                                                         , context.FloatType
+                                                         , context.Int16Type
+                                                         );
+                var value = context.CreateNamedConstantStruct( structType
+                                                             , context.CreateConstant( ( byte )1 )
+                                                             , context.CreateConstant( 2.0f )
+                                                             , context.CreateConstant( ( short )-3 )
+                                                             );
                 Assert.AreEqual( 3, value.Operands.Count );
                 Assert.IsInstanceOfType( value.Operands[ 0 ], typeof( ConstantInt ) );
                 Assert.IsInstanceOfType( value.Operands[ 1 ], typeof( ConstantFP ) );
@@ -773,19 +916,19 @@ namespace Llvm.NET.Tests
         [TestMethod]
         public void CreateNamedConstantUnpackedStructTestUsingParams( )
         {                                                          
-            using( var module = new NativeModule("test") )
+            using( var context = new Context() )
             {
-                var structType = module.Context.CreateStructType( "struct.test"
-                                                                , false
-                                                                , module.Context.Int8Type
-                                                                , module.Context.FloatType
-                                                                , module.Context.Int16Type
-                                                                );
-                var value = module.Context.CreateNamedConstantStruct( structType
-                                                                    , module.Context.CreateConstant( ( byte )1 )
-                                                                    , module.Context.CreateConstant( 2.0f )
-                                                                    , module.Context.CreateConstant( ( short )-3 )
-                                                                    );
+                var structType = context.CreateStructType( "struct.test"
+                                                         , false
+                                                         , context.Int8Type
+                                                         , context.FloatType
+                                                         , context.Int16Type
+                                                         );
+                var value = context.CreateNamedConstantStruct( structType
+                                                             , context.CreateConstant( ( byte )1 )
+                                                             , context.CreateConstant( 2.0f )
+                                                             , context.CreateConstant( ( short )-3 )
+                                                             );
                 Assert.AreEqual( 3, value.Operands.Count );
                 Assert.IsInstanceOfType( value.Operands[ 0 ], typeof( ConstantInt ) );
                 Assert.IsInstanceOfType( value.Operands[ 1 ], typeof( ConstantFP ) );
@@ -811,10 +954,10 @@ namespace Llvm.NET.Tests
         [TestMethod]
         public void CreateMetadataStringTest( )
         {
-            using( var module = new NativeModule("test") )
+            using( var context = new Context() )
             {
                 var content = "Test MDString";
-                var mdstring = module.Context.CreateMetadataString( content );
+                var mdstring = context.CreateMetadataString( content );
                 Assert.IsNotNull( mdstring );
                 Assert.AreEqual( content, mdstring.ToString( ) );
             }
@@ -823,9 +966,9 @@ namespace Llvm.NET.Tests
         [TestMethod]
         public void CreateMetadataStringWithEmptyArgTest( )
         {
-            using( var module = new NativeModule("test") )
+            using( var context = new Context() )
             {
-                var mdstring = module.Context.CreateMetadataString( string.Empty );
+                var mdstring = context.CreateMetadataString( string.Empty );
                 Assert.IsNotNull( mdstring );
                 Assert.AreEqual( string.Empty, mdstring.ToString( ) );
             }
@@ -834,9 +977,9 @@ namespace Llvm.NET.Tests
         [TestMethod]
         public void CreateMetadataStringWithNullArgTest( )
         {
-            using( var module = new NativeModule("test") )
+            using( var context = new Context() )
             {
-                var mdstring = module.Context.CreateMetadataString( null );
+                var mdstring = context.CreateMetadataString( null );
                 Assert.IsNotNull( mdstring );
                 Assert.AreEqual( string.Empty, mdstring.ToString( ) );
             }
@@ -845,25 +988,43 @@ namespace Llvm.NET.Tests
         [TestMethod]
         public void CreateConstantStringTest( )
         {
-            using( var module = new NativeModule("test") )
+            using( var context = new Context() )
             {
                 var str = "hello world";
-                ConstantDataArray value = module.Context.CreateConstantString( str );
+                ConstantDataArray value = context.CreateConstantString( str );
                 Assert.IsNotNull( value );
                 Assert.IsTrue( value.IsString );
                 Assert.IsFalse( value.IsNull );
                 Assert.IsFalse( value.IsUndefined );
                 Assert.AreSame( string.Empty, value.Name );
                 Assert.IsNotNull( value.NativeType );
+
                 var arrayType = value.NativeType as IArrayType;
                 Assert.IsNotNull( arrayType );
-                Assert.AreSame( module.Context, arrayType.Context );
-                Assert.AreSame( module.Context.Int8Type, arrayType.ElementType );
+                Assert.AreSame( context, arrayType.Context );
+                Assert.AreSame( context.Int8Type, arrayType.ElementType );
                 Assert.AreEqual( ( uint )str.Length, arrayType.Length );
                 var valueStr = value.ExtractAsString( );
                 Assert.IsFalse( string.IsNullOrWhiteSpace( valueStr ) );
                 Assert.AreEqual( str, valueStr );
             }
+        }
+
+        private static void VerifyIntegerType( ITypeRef integerType, uint bitWidth )
+        {
+            Assert.AreNotEqual( IntPtr.Zero, integerType.TypeHandle );
+            Assert.AreEqual( TypeKind.Integer, integerType.Kind );
+            Assert.IsFalse( integerType.IsDouble );
+            Assert.IsFalse( integerType.IsFloat );
+            Assert.IsFalse( integerType.IsFloatingPoint );
+            Assert.IsTrue( integerType.IsInteger );
+            Assert.IsFalse( integerType.IsPointer );
+            Assert.IsFalse( integerType.IsPointerPointer );
+            Assert.IsFalse( integerType.IsSequence );
+            Assert.IsFalse( integerType.IsStruct );
+            Assert.IsTrue( integerType.IsSized );
+            Assert.IsFalse( integerType.IsVoid );
+            Assert.AreEqual( bitWidth, integerType.IntegerBitWidth );
         }
     }
 }

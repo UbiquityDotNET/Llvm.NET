@@ -350,26 +350,30 @@ namespace Llvm.NET.DebugInfo
         }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage( "Microsoft.Design", "CA1011:ConsiderPassingBaseTypesAsParameters", Justification = "Specific type required by interop call" )]
-        public DISubroutineType CreateSubroutineType( DIFile file, DebugInfoFlags debugFlags, DITypeArray types )
+        public DISubroutineType CreateSubroutineType( DebugInfoFlags debugFlags, DITypeArray types )
         {
+            // NOTE:
+            // LLVM API has a "DIFile" as the first arg, however it is ignored as
+            // DISubroutineType doesn't have any scope/file information attached.
+            // Thus, the file arg here is always null.
             var handle = NativeMethods.DIBuilderCreateSubroutineType( BuilderHandle
-                                                                    , file?.MetadataHandle ?? LLVMMetadataRef.Zero
+                                                                    , LLVMMetadataRef.Zero
                                                                     , types.MetadataHandle
                                                                     , (uint)debugFlags
                                                                     );
             return DINode.FromHandle<DISubroutineType>( handle );
         }
 
-        public DISubroutineType CreateSubroutineType( DIFile file, DebugInfoFlags debugFlags )
+        public DISubroutineType CreateSubroutineType( DebugInfoFlags debugFlags )
         {
             var typeArray = GetOrCreateTypeArray( null );
-            return CreateSubroutineType( file, debugFlags, typeArray );
+            return CreateSubroutineType( debugFlags, typeArray );
         }
 
-        public DISubroutineType CreateSubroutineType( DIFile file, DebugInfoFlags debugFlags, DIType returnType, IEnumerable<DIType> types )
+        public DISubroutineType CreateSubroutineType( DebugInfoFlags debugFlags, DIType returnType, IEnumerable<DIType> types )
         {
             var typeArray = GetOrCreateTypeArray( ScalarEnumerable.Combine( returnType, types ) );
-            return CreateSubroutineType( file, debugFlags, typeArray );
+            return CreateSubroutineType( debugFlags, typeArray );
         }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage( "Microsoft.Design", "CA1011:ConsiderPassingBaseTypesAsParameters", Justification = "Specific type required by interop call" )]

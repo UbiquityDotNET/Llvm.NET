@@ -72,9 +72,9 @@ namespace Llvm.NET
                            , SourceLanguage language
                            , string srcFilePath
                            , string producer
-                           , bool optimized
-                           , string flags
-                           , uint runtimeVersion
+                           , bool optimized =false
+                           , string flags = ""
+                           , uint runtimeVersion = 0
                            )
             : this( moduleId
                   , null
@@ -102,9 +102,9 @@ namespace Llvm.NET
                            , SourceLanguage language
                            , string srcFilePath
                            , string producer
-                           , bool optimized
-                           , string compilationFlags
-                           , uint runtimeVersion
+                           , bool optimized = false
+                           , string compilationFlags = ""
+                           , uint runtimeVersion = 0
                            )
             : this( moduleId, context )
         {

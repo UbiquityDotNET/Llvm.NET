@@ -153,60 +153,52 @@ namespace Llvm.NET
 
         /// <summary>Creates a FunctionType with Debug information</summary>
         /// <param name="diBuilder"><see cref="DebugInfoBuilder"/>to use to create the debug information</param>
-        /// <param name="diFile"><see cref="DIFile"/> that contains the function</param>
         /// <param name="retType">Return type of the function</param>
         /// <param name="argTypes">Argument types of the function</param>
         /// <returns>Function signature</returns>
         public DebugFunctionType CreateFunctionType( DebugInfoBuilder diBuilder
-                                                   , DIFile diFile
                                                    , IDebugType<ITypeRef,DIType> retType
                                                    , params IDebugType<ITypeRef, DIType>[ ] argTypes
                                                    )
         {
-            return CreateFunctionType( diBuilder, diFile, false, retType, argTypes );
+            return CreateFunctionType( diBuilder, false, retType, argTypes );
         }
 
         /// <summary>Creates a FunctionType with Debug information</summary>
         /// <param name="diBuilder"><see cref="DebugInfoBuilder"/>to use to create the debug information</param>
-        /// <param name="diFile"><see cref="DIFile"/> that contains the function</param>
         /// <param name="retType">Return type of the function</param>
         /// <param name="argTypes">Argument types of the function</param>
         /// <returns>Function signature</returns>
         public DebugFunctionType CreateFunctionType( DebugInfoBuilder diBuilder
-                                                   , DIFile diFile
                                                    , IDebugType<ITypeRef, DIType> retType
                                                    , IEnumerable<IDebugType<ITypeRef, DIType>> argTypes
                                                    )
         {
-            return CreateFunctionType( diBuilder, diFile, false, retType, argTypes );
+            return CreateFunctionType( diBuilder, false, retType, argTypes );
         }
 
         /// <summary>Creates a FunctionType with Debug information</summary>
         /// <param name="diBuilder"><see cref="DebugInfoBuilder"/>to use to create the debug information</param>
-        /// <param name="diFile"><see cref="DIFile"/> that contains the function</param>
         /// <param name="isVarArg">Flag to indicate if this function is variadic</param>
         /// <param name="retType">Return type of the function</param>
         /// <param name="argTypes">Argument types of the function</param>
         /// <returns>Function signature</returns>
         public DebugFunctionType CreateFunctionType( DebugInfoBuilder diBuilder
-                                                   , DIFile diFile
                                                    , bool isVarArg
                                                    , IDebugType<ITypeRef, DIType> retType
                                                    , params IDebugType<ITypeRef, DIType>[ ] argTypes
                                                    )
         {
-            return CreateFunctionType( diBuilder, diFile, isVarArg, retType, ( IEnumerable<IDebugType<ITypeRef, DIType>> )argTypes );
+            return CreateFunctionType( diBuilder, isVarArg, retType, ( IEnumerable<IDebugType<ITypeRef, DIType>> )argTypes );
         }
 
         /// <summary>Creates a FunctionType with Debug information</summary>
         /// <param name="diBuilder"><see cref="DebugInfoBuilder"/>to use to create the debug information</param>
-        /// <param name="diFile"><see cref="DIFile"/> that contains the function</param>
         /// <param name="isVarArg">Flag to indicate if this function is variadic</param>
         /// <param name="retType">Return type of the function</param>
         /// <param name="argTypes">Argument types of the function</param>
         /// <returns>Function signature</returns>
         public DebugFunctionType CreateFunctionType( DebugInfoBuilder diBuilder
-                                                   , DIFile diFile
                                                    , bool isVarArg
                                                    , IDebugType<ITypeRef, DIType> retType
                                                    , IEnumerable<IDebugType<ITypeRef, DIType>> argTypes
@@ -236,7 +228,8 @@ namespace Llvm.NET
                 throw new ArgumentException( msg.ToString( ), nameof( argTypes ) );
 
             var llvmType = GetFunctionType( retType.NativeType, nativeArgTypes, isVarArg );
-            var diType = diBuilder.CreateSubroutineType( diFile, 0, retType.DIType, debugArgTypes );
+            
+            var diType = diBuilder.CreateSubroutineType( 0, retType.DIType, debugArgTypes );
             Debug.Assert( diType != null && !diType.IsTemporary );
 
             return new DebugFunctionType( llvmType, diType );
