@@ -6,5 +6,5 @@ $midnightToday = New-Object DateTime( $now.Year,$now.Month,$now.Day,0,0,0,[DateT
 $basedate = New-Object DateTime(2000,1,1,0,0,0,[DateTimeKind]::Utc)
 $buildNum = [int]($now  - $basedate).Days
 $buildRevision = [int]((($now - $midnightToday).TotalSeconds) / 2)
-Write-Verbose -Verbose ([String]::Format( "##vso[build.updatebuildnumber]3.7.0-alpha_{0}_{1}",$buildNum,$buildRevision))
+Write-Verbose -Verbose ([String]::Format( "##vso[build.updatebuildnumber]3.7.0-alpha-{0}-{1}",$buildNum,$buildRevision))
  
