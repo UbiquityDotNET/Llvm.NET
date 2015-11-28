@@ -6,7 +6,7 @@ using Llvm.NET.Values;
 namespace Llvm.NET
 {
     /// <summary>Enumeration to define debug information metadata nodes</summary>
-    public enum MetadataKind : uint
+    internal enum MetadataKind : uint
     {
         MDTuple,
         DILocation,
@@ -36,14 +36,8 @@ namespace Llvm.NET
         MDString
     }
 
-    public enum MetadataFormat
-    {
-        Default = 0,
-        AsOperand = 1
-    }
-
     /// <summary>Root of the LLVM Metadata hierarchy</summary>
-    /// <remarks>In LLVM this is just "Metadata" however tha name has the potential
+    /// <remarks>In LLVM this is just "Metadata" however that name has the potential
     /// to conflict with the .NET runtime namespace of the same name, so the name
     /// is changed in the .NET bindings to avoid the conflict.</remarks>
     public abstract class LlvmMetadata
@@ -90,11 +84,12 @@ namespace Llvm.NET
 
             return (T)context.GetNodeFor( handle, StaticFactory );
         }
-
-        [System.Diagnostics.CodeAnalysis.SuppressMessage( "Microsoft.Maintainability", "CA1506:AvoidExcessiveClassCoupling" )]
-        [System.Diagnostics.CodeAnalysis.SuppressMessage( "Microsoft.Maintainability", "CA1502:AvoidExcessiveComplexity" )]
+        
+        [System.Diagnostics.CodeAnalysis.SuppressMessage( "Microsoft.Maintainability", "CA1506:AvoidExcessiveClassCoupling", Justification = "Static factory method" )]
+        [System.Diagnostics.CodeAnalysis.SuppressMessage( "Microsoft.Maintainability", "CA1502:AvoidExcessiveComplexity", Justification = "Static factory method" )]
         private static LlvmMetadata StaticFactory( LLVMMetadataRef handle )
-        {
+        {   // use the native kind value to determine the managed type
+            // that should wrap this particular handle
             var kind = (MetadataKind)NativeMethods.GetMetadataID( handle );
             switch( kind )
             {
@@ -286,8 +281,10 @@ namespace Llvm.NET
             if( MetadataHandle.Pointer == IntPtr.Zero )
                 throw new InvalidOperationException( "Cannot Replace all uses of a null descriptor" );
 
-            Context.RemoveDeletedNode( this );
             NativeMethods.MDNodeReplaceAllUsesWith( MetadataHandle, other.MetadataHandle );
+            // remove current node mapping from the context.
+            // It won't be valid for use after clearing the handle
+            Context.RemoveDeletedNode( this );
             MetadataHandle = LLVMMetadataRef.Zero;
         }
     }

@@ -5,6 +5,10 @@ using Llvm.NET.Values;
 
 namespace Llvm.NET
 {
+    // TODO: rename this to DataLayout to match underlying LLVM
+    // TODO: update this to reflect the deprecation of retrieving a pointer to the layout in 3.7.0
+    //       (e.g. the layout should be copy constructed, rather than holding a pointer/handle)
+
     /// <summary>Provides access to LLVM target data layout information</summary>
     /// <remarks>
     /// <para>There is a distinction between various sizes and alignment for a given type
@@ -36,6 +40,9 @@ namespace Llvm.NET
     public class TargetData
         : IDisposable
     {
+        /// <summary>Context used for this data (in particular, for retrieving pointer types)</summary>
+        public Context Context { get; }
+
         /// <summary>Retrives the byte ordering for this target</summary>
         public ByteOrdering Endianess => (ByteOrdering)NativeMethods.ByteOrder( OpaqueHandle );
 
@@ -215,8 +222,6 @@ namespace Llvm.NET
                 return retVal;
             }
         }
-
-        public Context Context { get; }
 
         internal LLVMTargetDataRef OpaqueHandle { get; private set; }
 
