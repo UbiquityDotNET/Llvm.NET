@@ -23,7 +23,7 @@ if( [string]::IsNullOrWhiteSpace($privateNugetGalleryRoot) )
     throw "Private Nuget Galery location is unkown on this machine"
 }
 
-Write-Verbose "Private Gallery location: " + $privateNugetGalleryRoot
+Write-Verbose "Private Gallery location: $privateNugetGalleryRoot"
 
 # Use relative root to form relative paths from source to create identical folder layout in target
 $relatavieRoot = [System.IO.Path]::Combine( $srcDir, "BuildOutput\Nuget")
@@ -37,6 +37,6 @@ Foreach( $pkg in $pkgs )
         [System.IO.Directory]::CreateDirectory( $targetFolder )
     }
     $targetFile = [System.IO.Path]::Combine($targetFolder, $pkg.Name )
-    Write-Verbose $pkg.FullName + " -> " + $targetFile
+    Write-Verbose "$pkg.FullName -> $targetFile"
     $pkg.CopyTo( $targetFile, $true )
 }
