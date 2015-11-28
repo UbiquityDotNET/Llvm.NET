@@ -5,7 +5,7 @@
             <Link>LibLLVM\x64\LibLLVM.dll</Link>
             <CopyToOutputDirectory>Always</CopyToOutputDirectory>
         </Content>
-        <Content Condition="'$(Configuration)'=='Debug'" Include="$(MSBuildThisFileDirectory)LibLLVM\x64\LibLLVM.pdb">
+        <Content Condition="'$(Configuration)'=='Debug' AND EXISTS('$(MSBuildThisFileDirectory)LibLLVM\x64\LibLLVM.pdb')" Include="$(MSBuildThisFileDirectory)LibLLVM\x64\LibLLVM.pdb">
             <Link>LibLLVM\x64\LibLLVM.pdb</Link>
             <CopyToOutputDirectory>Always</CopyToOutputDirectory>
         </Content>
@@ -13,7 +13,7 @@
             <Link>LibLLVM\x86\LibLLVM.dll</Link>
             <CopyToOutputDirectory>Always</CopyToOutputDirectory>
         </Content>
-        <Content Condition="'$(Configuration)'=='Debug'" Include="$(MSBuildThisFileDirectory)LibLLVM\x86\LibLLVM.pdb">
+        <Content Condition="'$(Configuration)'=='Debug' AND EXISTS('$(MSBuildThisFileDirectory)LibLLVM\x86\LibLLVM.pdb')" Include="$(MSBuildThisFileDirectory)LibLLVM\x86\LibLLVM.pdb">
             <Link>LibLLVM\x86\LibLLVM.pdb</Link>
             <CopyToOutputDirectory>Always</CopyToOutputDirectory>
         </Content>
