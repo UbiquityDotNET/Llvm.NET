@@ -33,9 +33,6 @@ namespace Llvm.NET.Values
         {
             get
             {
-                if( !HasAny( FunctionAttributeIndex.ReturnType ) )
-                    return null;
-
                 return this[ FunctionAttributeIndex.ReturnType ];
             }
         }
@@ -44,9 +41,6 @@ namespace Llvm.NET.Values
         {
             get
             {
-                if( !HasAny( FunctionAttributeIndex.Function ) )
-                    return null;
-
                 return this[ FunctionAttributeIndex.Function ];
             }
         }
@@ -69,9 +63,6 @@ namespace Llvm.NET.Values
                 throw new ArgumentOutOfRangeException( nameof( paramIndex ) );
 
             var index = FunctionAttributeIndex.Parameter0 + paramIndex;
-            if( !HasAny( index ) )
-                return null;
-
             return this[ index ];
         }
 
