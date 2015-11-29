@@ -385,7 +385,7 @@ namespace Llvm.NET.DebugInfo
                                                , ulong bitAlign
                                                , uint flags
                                                , DIType derivedFrom
-                                               , DIArray elements
+                                               , DINodeArray elements
                                                )
         {
             var handle = NativeMethods.DIBuilderCreateStructType( BuilderHandle
@@ -397,7 +397,7 @@ namespace Llvm.NET.DebugInfo
                                                                 , bitAlign
                                                                 , flags
                                                                 , derivedFrom?.MetadataHandle ?? LLVMMetadataRef.Zero
-                                                                , elements.MetadataHandle
+                                                                , elements.Tuple.MetadataHandle
                                                                 );
             return DINode.FromHandle<DICompositeType>( handle );
         }
@@ -457,9 +457,9 @@ namespace Llvm.NET.DebugInfo
         }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage( "Microsoft.Design", "CA1011:ConsiderPassingBaseTypesAsParameters", Justification = "Specific type required by interop call" )]
-        public DICompositeType CreateArrayType( ulong bitSize, ulong bitAlign, DIType elementType, DIArray subscripts )
+        public DICompositeType CreateArrayType( ulong bitSize, ulong bitAlign, DIType elementType, DINodeArray subscripts )
         {
-            var handle = NativeMethods.DIBuilderCreateArrayType( BuilderHandle, bitSize, bitAlign, elementType.MetadataHandle, subscripts.MetadataHandle );
+            var handle = NativeMethods.DIBuilderCreateArrayType( BuilderHandle, bitSize, bitAlign, elementType.MetadataHandle, subscripts.Tuple.MetadataHandle );
             return DINode.FromHandle<DICompositeType>( handle );
         }
 
@@ -487,7 +487,7 @@ namespace Llvm.NET.DebugInfo
             return DINode.FromHandle<DISubrange>( handle );
         }
 
-        public DIArray GetOrCreateArray( IEnumerable<DINode> elements )
+        public DINodeArray GetOrCreateArray( IEnumerable<DINode> elements )
         {
             var buf = elements.Select( d => d?.MetadataHandle ?? LLVMMetadataRef.Zero ).ToArray( );
             var actualLen = buf.LongLength;
@@ -496,7 +496,7 @@ namespace Llvm.NET.DebugInfo
                 buf = new LLVMMetadataRef[ 1 ];
 
             var handle = NativeMethods.DIBuilderGetOrCreateArray( BuilderHandle, out buf[ 0 ], ( ulong )actualLen );
-            return new DIArray( handle );
+            return new DINodeArray( LlvmMetadata.FromHandle<MDTuple>( OwningModule.Context, handle ) );
         }
 
         public DITypeArray GetOrCreateTypeArray( params DIType[ ] types ) => GetOrCreateTypeArray( ( IEnumerable<DIType> )types );

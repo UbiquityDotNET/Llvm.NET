@@ -68,7 +68,9 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
+    <Compile Include="AssemblyInitialize.cs" />
     <Compile Include="ContextTests.cs" />
+    <Compile Include="MDNodeTests.cs" />
     <Compile Include="ModuleTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Values\AttributeSetTests.cs" />

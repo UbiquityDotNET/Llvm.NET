@@ -11,12 +11,6 @@ namespace Llvm.NET.Tests
     [DeploymentItem("LibLLVM.dll")]
     public class ContextTests
     {
-        [AssemblyInitialize]
-        public static void InitializeAssembly(TestContext ctx)
-        {
-            StaticState.RegisterAll( );
-        }
-
         [TestMethod]
         public void SimpleConstructorDisposeTest( )
         {
@@ -212,7 +206,7 @@ namespace Llvm.NET.Tests
             }
         }
 
-        private static TargetMachine GetTargetMachine( Context context )
+        internal static TargetMachine GetTargetMachine( Context context )
         {
             var target = Target.FromTriple( "thumbv7m-none--eabi" );
             return target.CreateTargetMachine( context, "thumbv7m-none--eabi", "cortex-m3", string.Empty, CodeGenOpt.Aggressive, Reloc.Default, CodeModel.Small );
