@@ -369,10 +369,6 @@ namespace Llvm.NET
         /// </remarks>
         public string AsString( )
         {
-            string errMsg;
-            if( !Verify( out errMsg ) )
-                return $"Invalid Module: {errMsg}";
-
             return NativeMethods.MarshalMsg( NativeMethods.PrintModuleToString( ModuleHandle ) );
         }
 
