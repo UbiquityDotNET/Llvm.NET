@@ -5,6 +5,20 @@ using System.Text;
 
 namespace Llvm.NET.Values
 {
+    /// <summary>Enumeration flags to indicate which attribute set index an attribute may apply to</summary>
+    [Flags]
+    public enum FunctionIndexKind
+    {
+        /// <summary>Invalid attributes don't apply to any index</summary>
+        None = 0,
+        /// <summary>The attribute is applicable to a function</summary>
+        Function = 1,
+        /// <summary>The attribute is applicable to a function's return</summary>
+        Return = 2,
+        /// <summary>The aattribute is applicable to a function's parameter</summary>
+        Parameter = 4
+    }
+
     /// <summary>AttributeSet for a <see cref="Function"/>, <see cref="Instructions.CallInstruction"/>, or <see cref="Instructions.Invoke"/> instruction</summary>
     /// <remarks>
     /// The underlying LLVM AttributeSet class is an immutable value type, unfortunately it includes a non-trivial copy constructor
@@ -18,6 +32,9 @@ namespace Llvm.NET.Values
     /// </remarks>
     public class AttributeSet
     {
+        /// <summary>Retrieves an attributeSet filtered by the specified function index</summary>
+        /// <param name="index">Index to filter on</param>
+        /// <returns>A new <see cref="AttributeSet"/>with attributes from this set belonging to the specified index</returns>
         public AttributeSet this[ FunctionAttributeIndex index ]
         {
             get
@@ -29,6 +46,7 @@ namespace Llvm.NET.Values
             }
         }
 
+        /// <summary>Gets the attributes for the function return</summary>
         public AttributeSet ReturnAttributes
         {
             get
@@ -37,6 +55,7 @@ namespace Llvm.NET.Values
             }
         }
 
+        /// <summary>Gets the attributes for the function itself</summary>
         public AttributeSet FunctionAttributes
         {
             get
@@ -57,6 +76,9 @@ namespace Llvm.NET.Values
         /// </remarks>
         public Function TargetFunction { get; }
 
+        /// <summary>Gets the attributes for a function parameter</summary>
+        /// <param name="paramIndex">Parameter index [ 0 based ]</param>
+        /// <returns><see cref="AttributeSet"/>filtered for the specified parameter</returns>
         public AttributeSet ParameterAttributes( int paramIndex )
         {
             if( paramIndex > TargetFunction.Parameters.Count )
@@ -66,6 +88,9 @@ namespace Llvm.NET.Values
             return this[ index ];
         }
 
+        /// <summary>Get LLVM formatted string representation of this <see cref="AttributeSet"/> for a given index</summary>
+        /// <param name="index">Index to get the string for</param>
+        /// <returns>Formatted string for the specified attribute index</returns>
         public string AsString( FunctionAttributeIndex index )
         {
             IntPtr txtPtr = DoPinnedAction( ( p ) =>
@@ -75,6 +100,8 @@ namespace Llvm.NET.Values
             return NativeMethods.MarshalMsg( txtPtr );
         }
 
+        /// <summary>Creates a formatted string representation of the entire <see cref="AttributeSet"/> (e.g. all indeces)</summary>
+        /// <returns>Formatted string representation of the <see cref="AttributeSet"/></returns>
         public override string ToString( )
         {
             var bldr = new StringBuilder( );
@@ -128,6 +155,11 @@ namespace Llvm.NET.Values
             } );
         }
 
+        /// <summary>Adds Attributes from another attribute set along a given index</summary>
+        /// <param name="index">Index to add attributes to and from</param>
+        /// <param name="attribute"><see cref="AttributeSet"/> to add the attributes from</param>
+        /// <returns>New <see cref="AttributeSet"/>Containing all attributes of this set plus any
+        ///  attributes from <paramref name="attribute"/> along the specified <paramref name="index"/></returns>
         public AttributeSet Add( FunctionAttributeIndex index, AttributeSet attribute )
         {
             return DoPinnedAction( ( pThis ) =>
@@ -144,6 +176,7 @@ namespace Llvm.NET.Values
                     } );
             } );
         }
+        
         /// <summary>Removes the specified attribute from the attribute set</summary>
         public AttributeSet Remove( FunctionAttributeIndex index, AttributeKind kind )
         {
@@ -162,7 +195,7 @@ namespace Llvm.NET.Values
         /// <summary>Remove a target specific attribute</summary>
         /// <param name="index">Index for the attribute</param>
         /// <param name="name">Name of the attribute</param>
-        public AttributeSet Remove( FunctionAttributeIndex index,  string name )
+        public AttributeSet Remove( FunctionAttributeIndex index, string name )
         {
             return DoPinnedAction( ( pThis ) =>
             {
@@ -170,14 +203,28 @@ namespace Llvm.NET.Values
                                        , ( p ) =>
                                          {
                                              NativeMethods.CopyConstructAttributeSet( p, pThis );
-                                             NativeMethods.AttributeSetRemoveTargetDependentAttribute( TargetFunction.Context.ContextHandle, p, ( int )index, name );
+                                             NativeMethods.AttributeSetRemoveTargetDependentAttribute( TargetFunction.Context.ContextHandle
+                                                                                                     , p
+                                                                                                     , ( int )index
+                                                                                                     , name
+                                                                                                     );
                                          }
                                        );
             } );
         }
 
+        /// <summary>Get an integer value for an index</summary>
+        /// <param name="index">Index to get the value from</param>
+        /// <param name="kind"><see cref="AttributeKind"/> to get the value of (see remarks for supported attributes)</param>
+        /// <returns>Value of the attribute</returns>
+        /// <remarks>
+        /// The only attributes supporting an integer value are <see cref="AttributeKind.Alignment"/>,
+        /// <see cref="AttributeKind.StackAlignment"/>, <see cref="AttributeKind.Dereferenceable"/>,
+        /// <see cref="AttributeKind.DereferenceableOrNull"/>.
+        /// </remarks>
         public UInt64 GetAttributeValue( FunctionAttributeIndex index, AttributeKind kind )
         {
+            VerifyIntAttributeUsage( index, kind, 0ul );
             return DoPinnedAction( ( p ) =>
             {
                 return NativeMethods.AttributeSetGetAttributeValue( p, (int)index, ( LLVMAttrKind )kind );
@@ -283,7 +330,7 @@ namespace Llvm.NET.Values
         /// This constructor allocates the internal data for the native attribute set, pins a pointer to 
         /// the native data then calls the <paramref name="loadFunc"/> with the pinned pointer to initialize
         /// the newly allocated data structure. The initialization, ordinarily calls various NativeMethods
-        /// to perfomr initialization of the native AttributeSet.
+        /// to perform initialization of the native AttributeSet.
         /// </remarks>
         internal AttributeSet( Function targetFunction, Action<UIntPtr> loadFunc )
             : this( targetFunction )
@@ -322,30 +369,106 @@ namespace Llvm.NET.Values
             }
         }
 
-        internal static void VerifyIntAttributeUsage( FunctionAttributeIndex index, AttributeKind kind, ulong value )
+        public static FunctionIndexKind GetAllowedIndecesForAttribute( AttributeKind kind )
         {
+            switch( kind )
+            {
+            default:
+                return FunctionIndexKind.None;
+
+            case AttributeKind.ZExt:
+            case AttributeKind.SExt:
+            case AttributeKind.InReg:
+            case AttributeKind.ByVal:
+            case AttributeKind.InAlloca:
+            case AttributeKind.StructRet:
+            case AttributeKind.Alignment:
+            case AttributeKind.NoAlias:
+            case AttributeKind.NoCapture:
+            case AttributeKind.Nest:
+            case AttributeKind.Returned:
+            case AttributeKind.NonNull:
+            case AttributeKind.Dereferenceable:
+            case AttributeKind.DereferenceableOrNull:
+                return FunctionIndexKind.Parameter | FunctionIndexKind.Return;
+
+            case AttributeKind.StackAlignment:
+            case AttributeKind.AlwaysInline:
+            case AttributeKind.Builtin:
+            case AttributeKind.Cold:
+            case AttributeKind.Convergent:
+            case AttributeKind.InlineHint:
+            case AttributeKind.JumpTable:
+            case AttributeKind.MinSize:
+            case AttributeKind.Naked:
+            case AttributeKind.NoBuiltin:
+            case AttributeKind.NoDuplicate:
+            case AttributeKind.NoImplicitFloat:
+            case AttributeKind.NoInline:
+            case AttributeKind.NonLazyBind:
+            case AttributeKind.NoRedZone:
+            case AttributeKind.NoReturn:
+            //case AttributeKind.NoRecurse: // ver > 3.7.0?
+            case AttributeKind.NoUnwind:
+            case AttributeKind.OptimizeForSize:
+            case AttributeKind.OptimizeNone:
+            case AttributeKind.ReadNone:
+            case AttributeKind.ReadOnly:
+            case AttributeKind.ArgMemOnly:
+            case AttributeKind.ReturnsTwice:
+            case AttributeKind.SafeStack:
+            case AttributeKind.SanitizeAddress:
+            case AttributeKind.SanitizeMemory:
+            case AttributeKind.SanitizeThread:
+            case AttributeKind.StackProtect:
+            case AttributeKind.StackProtectReq:
+            case AttributeKind.StackProtectStrong:
+            case AttributeKind.UWTable:
+                return FunctionIndexKind.Function;
+            }
+        }
+
+        internal void VerifyAttributeUsage( FunctionAttributeIndex index, AttributeKind kind )
+        {
+            FunctionIndexKind allowedIndeces = GetAllowedIndecesForAttribute( kind );
+            switch( index )
+            {
+            case FunctionAttributeIndex.Function:
+                if( !allowedIndeces.HasFlag( FunctionIndexKind.Function ) )
+                    throw new ArgumentException( "Attribute not allowed on functions", nameof( index ) );
+                break;
+
+            case FunctionAttributeIndex.ReturnType:
+                if( !allowedIndeces.HasFlag( FunctionIndexKind.Return ) )
+                    throw new ArgumentException( "Attribute not allowed on function Return", nameof( index ) );
+                break;
+
+            //case FunctionAttributeIndex.Parameter0:
+            default:
+                if( !allowedIndeces.HasFlag( FunctionIndexKind.Parameter ) )
+                    throw new ArgumentException( "Attribute not allowed on function parameter", nameof( index ) );
+                break;
+            }
+
+            if( index >= FunctionAttributeIndex.Parameter0 )
+            {
+                int paramIndex = index - FunctionAttributeIndex.Parameter0;
+                if( paramIndex >= TargetFunction.Parameters.Count )
+                    throw new ArgumentOutOfRangeException( nameof( index ), "Specified parameter index exceeds the number of parameters in the function" );
+            }
+        }
+
+        // To prevent native asserts or crashes - validates params before passing down to native code
+        internal void VerifyIntAttributeUsage( FunctionAttributeIndex index, AttributeKind kind, ulong value )
+        {
+            VerifyAttributeUsage( index, kind );
             RangeCheckIntAttributeValue( kind, value );
-            // To prevent native asserts or crashes - validate params before passing down to native code
             switch( kind )
             {
             case AttributeKind.Alignment:
-                if( index < FunctionAttributeIndex.Parameter0 )
-                    throw new ArgumentException( "Alignment only supported on parameters", nameof( index ) );
-                break;
-
             case AttributeKind.StackAlignment:
-                if( index != FunctionAttributeIndex.Function )
-                    throw new ArgumentException( "Stack alignment only applicable to the function itself", nameof( index ) );
-                break;
-
             case AttributeKind.Dereferenceable:
-                if( index == FunctionAttributeIndex.Function )
-                    throw new ArgumentException( "Expected a return or param index", nameof( index ) );
-                break;
-
             case AttributeKind.DereferenceableOrNull:
-                if( index == FunctionAttributeIndex.Function )
-                    throw new ArgumentException( "Expected a return or param index", nameof( index ) );
                 break;
 
             default:
@@ -353,8 +476,9 @@ namespace Llvm.NET.Values
             }
         }
 
-        private static void InternalAddOneAttribute( Context context, UIntPtr p, FunctionAttributeIndex index, AttributeValue attribute )
+        private void InternalAddOneAttribute( Context context, UIntPtr p, FunctionAttributeIndex index, AttributeValue attribute )
         {
+            // int or enum?
             if( attribute.Kind.HasValue )
             {
                 if( attribute.IntegerValue.HasValue )
@@ -373,6 +497,8 @@ namespace Llvm.NET.Values
                 throw new ArgumentException( "Invalid Attribute", nameof( attribute ) );
         }
 
+        // internal function to retrieve an attribute set filterd for a given index
+        // this should only be called while the NativeData is pinned
         private static void InternalGetIndexedAttributeSet( FunctionAttributeIndex index, UIntPtr pThis, UIntPtr p )
         {
             switch( index )
@@ -403,6 +529,8 @@ namespace Llvm.NET.Values
         // of the AttributeSet stored in this memory area.
         // 
         private readonly byte[ ] NativeData;
+
+        private static FunctionAttributeIndex[ ] ParamAndReturnAttributes = { FunctionAttributeIndex.Parameter0, FunctionAttributeIndex.ReturnType };
     }
 
 }

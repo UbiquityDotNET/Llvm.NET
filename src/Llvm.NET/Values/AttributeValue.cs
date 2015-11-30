@@ -74,7 +74,7 @@ namespace Llvm.NET.Values
         /// <summary>StringValue for named attributes with values</summary>
         public string StringValue { get; }
 
-        /// <summary>Integer value of the attrinute or null if the attribute doens't have a value</summary>
+        /// <summary>Integer value of the attribute or null if the attribute doens't have a value</summary>
         public UInt64? IntegerValue { get; }
 
         /// <summary>Flag to indicate if this attribute is a target specific string value</summary>

@@ -138,7 +138,7 @@ namespace Llvm.NET.Tests
         public void CreateFunctionTypeTest( )
         {
             using( var context = new Context( ) )
-            using( var targetMachine = GetTargetMachine( context ) )
+            using( var targetMachine = TargetTests.GetTargetMachine( context ) )
             {
                 var module = new NativeModule( "test.bc", context, SourceLanguage.CSharp, "test.cs", "unittests" );
                 Assert.IsNotNull( module );
@@ -188,7 +188,7 @@ namespace Llvm.NET.Tests
         public void VerifyCreateFunctionTypeWithSameSigIsSameInstanceTest( )
         {
             using( var context = new Context( ) )
-            using( var targetMachine = GetTargetMachine( context ) )
+            using( var targetMachine = TargetTests.GetTargetMachine( context ) )
             {
                 var module = new NativeModule( "test.bc", context, SourceLanguage.CSharp, "test.cs", "unittests" );
                 Assert.IsNotNull( module );
@@ -204,12 +204,6 @@ namespace Llvm.NET.Tests
                 Assert.AreSame( funcSig.NativeType, funcSig2.NativeType );
                 Assert.AreSame( funcSig.DIType, funcSig2.DIType );
             }
-        }
-
-        internal static TargetMachine GetTargetMachine( Context context )
-        {
-            var target = Target.FromTriple( "thumbv7m-none--eabi" );
-            return target.CreateTargetMachine( context, "thumbv7m-none--eabi", "cortex-m3", string.Empty, CodeGenOpt.Aggressive, Reloc.Default, CodeModel.Small );
         }
 
         [TestMethod]

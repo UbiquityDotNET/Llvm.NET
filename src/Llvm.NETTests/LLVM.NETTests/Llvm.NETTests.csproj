@@ -70,10 +70,13 @@
   <ItemGroup>
     <Compile Include="AssemblyInitialize.cs" />
     <Compile Include="ContextTests.cs" />
+    <Compile Include="ExpectedArgumentException.cs" />
     <Compile Include="MDNodeTests.cs" />
     <Compile Include="ModuleTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="TargetTests.cs" />
     <Compile Include="Values\AttributeSetTests.cs" />
+    <Compile Include="Values\AttributeValueTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="$(BaseOutputPath)\$(Platform)\$(Configuration)\LibLLVM.dll">

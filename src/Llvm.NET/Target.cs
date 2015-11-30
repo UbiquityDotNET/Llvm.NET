@@ -51,7 +51,7 @@ namespace Llvm.NET
             return new TargetMachine( context, targetMachineHandle );
         }
 
-        /// <summary>Retrives an enumerable collection of the available targets built into this library</summary>
+        /// <summary>Retrieves an enumerable collection of the available targets built into this library</summary>
         public static IEnumerable<Target> AvailableTargets
         {
             get

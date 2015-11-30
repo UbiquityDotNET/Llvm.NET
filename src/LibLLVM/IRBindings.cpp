@@ -76,7 +76,7 @@ extern "C"
         switch( kind )
         {
         case LLVMAttrKind::LLVMAttrKindAlignment:
-            assert( index > AttributeSet::AttrIndex::ReturnIndex && "Expected parameter index");
+            assert( index >= AttributeSet::AttrIndex::ReturnIndex && "Expected parameter index");
             assert( value <= UINT32_MAX && "expected value <= UINT32_MAX");
             builder.addAlignmentAttr( value );
             break;
