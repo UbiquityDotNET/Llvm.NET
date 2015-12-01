@@ -28,7 +28,6 @@ LLVMMDNodeResolveCycles
 LLVMGetArgumentIndex
 LLVMDIScopeGetFile
 
-
 ; Debug info functions not part of standard LLVM-C API
 LLVMGetMetadataID
 LLVMGetNodeContext
