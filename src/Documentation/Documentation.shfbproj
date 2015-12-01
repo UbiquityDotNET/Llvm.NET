@@ -30,7 +30,7 @@
       <Argument Key="defaultLanguage" Value="cs" />
     </TransformComponentArguments>
     <DocumentationSources>
-      <DocumentationSource sourceFile="..\Llvm.NET\Llvm.NET.csproj" xmlns="" />
+      <DocumentationSource sourceFile="..\Llvm.NET\Llvm.NET.csproj" xmlns="" platform="x64" />
     </DocumentationSources>
     <BuildAssemblerVerbosity>OnlyWarningsAndErrors</BuildAssemblerVerbosity>
     <HelpFileFormat>Website</HelpFileFormat>

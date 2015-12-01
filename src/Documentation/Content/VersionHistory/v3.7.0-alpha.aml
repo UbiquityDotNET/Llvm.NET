@@ -12,6 +12,9 @@
                     <listItem>
                         <para>First to include versioned docs</para>
                     </listItem>
+                    <listItem>
+                        <para>Initial public release independent of Llilum project</para>
+                    </listItem>
                 </list>
             </content>
         </section>
