@@ -36,11 +36,14 @@ $pkgs = Get-ChildItem BuildOutput\Nuget\**\*.nupkg
 Foreach( $pkg in $pkgs )
 { 
     $targetFolder = $pkg.DirectoryName.Replace( $relatavieRoot, $privateNugetGalleryRoot)
+    "Package found: $pkg"
+    "Targetfolder: $targetFolder"
     if( ![System.IO.Directory]::Exists( $targetFolder ) )
     {
+        "Creating TargetFolder: $targetFolder"
         [System.IO.Directory]::CreateDirectory( $targetFolder )
     }
     $targetFile = [System.IO.Path]::Combine($targetFolder, $pkg.Name )
-    "copying $pkg.FullName -> $targetFile"
+    "copying $pkg -> $targetFile"
     Copy-Item $pkg.FullName $targetFile
 }
