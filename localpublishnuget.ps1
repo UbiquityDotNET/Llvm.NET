@@ -1,4 +1,7 @@
-﻿$srcDir = $env:BUILD_SOURCESDIRECTORY
+﻿[cmdletbinding()]
+Param()
+
+$srcDir = $env:BUILD_SOURCESDIRECTORY
 if( [String]::IsNullOrWhiteSpace( $srcDir ) )
 {
     $srcDir = (Get-Location).Path
