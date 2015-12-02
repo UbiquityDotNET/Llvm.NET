@@ -1,6 +1,6 @@
 ﻿[cmdletbinding()]
 Param()
-
+Get-Host
 $srcDir = $env:BUILD_SOURCESDIRECTORY
 if( [String]::IsNullOrWhiteSpace( $srcDir ) )
 {
@@ -41,6 +41,6 @@ Foreach( $pkg in $pkgs )
         [System.IO.Directory]::CreateDirectory( $targetFolder )
     }
     $targetFile = [System.IO.Path]::Combine($targetFolder, $pkg.Name )
-    "$pkg -> $targetFile"
-    $pkg.CopyTo( $targetFile, $true )
+    "copying $pkg.FullName -> $targetFile"
+    Copy-Item $pkg.FullName $targetFile
 }
