@@ -41,6 +41,6 @@ Foreach( $pkg in $pkgs )
         [System.IO.Directory]::CreateDirectory( $targetFolder )
     }
     $targetFile = [System.IO.Path]::Combine($targetFolder, $pkg.Name )
-    "$pkg.FullName -> $targetFile"
-    # $pkg.CopyTo( $targetFile, $true )
+    "$pkg -> $targetFile"
+    $pkg.CopyTo( $targetFile, $true )
 }
