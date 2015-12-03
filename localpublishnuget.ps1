@@ -28,14 +28,14 @@ if( [string]::IsNullOrWhiteSpace($privateNugetGalleryRoot) )
 "Private Gallery location: $privateNugetGalleryRoot"
 
 # Use relative root to form relative paths from source to create identical folder layout in target
-$relatavieRoot = [System.IO.Path]::Combine( $srcDir, "BuildOutput\Nuget")
-"RelatvieRoot: $relativeRoot"
+$relativeRoot = [System.IO.Path]::Combine( $srcDir, "BuildOutput\Nuget")
+"RelativeRoot: $relativeRoot"
 
 $pkgs = Get-ChildItem BuildOutput\Nuget\**\*.nupkg | select -ExpandProperty FullName
 Foreach( $pkg in $pkgs )
 { 
     "Package found: $pkg"
-    $targetFile = $pkg.Replace( $relatavieRoot, $privateNugetGalleryRoot)
+    $targetFile = $pkg.Replace( $relativeRoot, $privateNugetGalleryRoot)
     "TargetFile: $targetFile"
 
     $targetFolder = [System.IO.Path]::GetDirectoryName( $pkg )
