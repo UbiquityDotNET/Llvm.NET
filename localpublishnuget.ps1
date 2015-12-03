@@ -1,11 +1,9 @@
 ﻿[cmdletbinding()]
 Param()
 
-$srcDir = $env:BUILD_SOURCESDIRECTORY
-if( [String]::IsNullOrWhiteSpace( $srcDir ) )
-{
-    $srcDir = (Get-Location).Path
-}
+"BUILD_SOURCESDIRECTORY: $env:BUILD_SOURCESDIRECTORY"
+$srcDir = (Get-Location).Path
+"SRCDIR: $srcDir"
 
 # try getting private gallery path from environment first
 # if it isn't available in current environmnet, check registry
@@ -31,13 +29,15 @@ if( [string]::IsNullOrWhiteSpace($privateNugetGalleryRoot) )
 
 # Use relative root to form relative paths from source to create identical folder layout in target
 $relatavieRoot = [System.IO.Path]::Combine( $srcDir, "BuildOutput\Nuget")
+"RelatvieRoot: $relativeRoot"
 
 $pkgs = Get-ChildItem BuildOutput\Nuget\**\*.nupkg | select -ExpandProperty FullName
 Foreach( $pkg in $pkgs )
 { 
-    $targetFile = $pkg.Replace( $relatavieRoot, $privateNugetGalleryRoot)
     "Package found: $pkg"
-    
+    $targetFile = $pkg.Replace( $relatavieRoot, $privateNugetGalleryRoot)
+    "TargetFile: $targetFile"
+
     $targetFolder = [System.IO.Path]::GetDirectoryName( $pkg )
     if( ![System.IO.Directory]::Exists( $targetFolder ) )
     {
