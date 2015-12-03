@@ -1,6 +1,6 @@
 ﻿[cmdletbinding()]
 Param()
-Get-Host
+
 $srcDir = $env:BUILD_SOURCESDIRECTORY
 if( [String]::IsNullOrWhiteSpace( $srcDir ) )
 {
@@ -32,18 +32,19 @@ if( [string]::IsNullOrWhiteSpace($privateNugetGalleryRoot) )
 # Use relative root to form relative paths from source to create identical folder layout in target
 $relatavieRoot = [System.IO.Path]::Combine( $srcDir, "BuildOutput\Nuget")
 
-$pkgs = Get-ChildItem BuildOutput\Nuget\**\*.nupkg
+$pkgs = Get-ChildItem BuildOutput\Nuget\**\*.nupkg | select -ExpandProperty FullName
 Foreach( $pkg in $pkgs )
 { 
-    $targetFolder = $pkg.DirectoryName.Replace( $relatavieRoot, $privateNugetGalleryRoot)
+    $targetFile = $pkg.Replace( $relatavieRoot, $privateNugetGalleryRoot)
     "Package found: $pkg"
-    "Targetfolder: $targetFolder"
+    
+    $targetFolder = [System.IO.Path]::GetDirectoryName( $pkg )
     if( ![System.IO.Directory]::Exists( $targetFolder ) )
     {
         "Creating TargetFolder: $targetFolder"
         [System.IO.Directory]::CreateDirectory( $targetFolder )
     }
-    $targetFile = [System.IO.Path]::Combine($targetFolder, $pkg.Name )
+
     "copying $pkg -> $targetFile"
-    Copy-Item $pkg.FullName $targetFile
+    Copy-Item $pkg $targetFile
 }
