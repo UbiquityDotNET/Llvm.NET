@@ -654,6 +654,38 @@ namespace Llvm.NET.DebugInfo
             return Value.FromHandle<Instruction>( handle );
         }
 
+        public Instruction InsertValue( Value value
+                                      , UInt64 offset
+                                      , DILocalVariable varInfo
+                                      , DILocation location
+                                      , BasicBlock insertAtEnd
+                                      )
+        {
+            return InsertValue( value, offset, varInfo, null, location, insertAtEnd );
+        }
+
+        public Instruction InsertValue( Value value
+                                      , UInt64 offset
+                                      , DILocalVariable varInfo
+                                      , DIExpression expression
+                                      , DILocation location
+                                      , BasicBlock insertAtEnd
+                                      )
+        {
+            if( location.Scope != varInfo.Scope )
+                throw new ArgumentException( "mismatched scopes" );
+
+            var handle = NativeMethods.DIBuilderInsertValueAtEnd( BuilderHandle
+                                                                 , value.ValueHandle
+                                                                 , offset
+                                                                 , varInfo.MetadataHandle
+                                                                 , expression?.MetadataHandle ?? CreateExpression( ).MetadataHandle
+                                                                 , location.MetadataHandle
+                                                                 , insertAtEnd.BlockHandle
+                                                                 );
+            return Value.FromHandle<Instruction>( handle );
+        }
+
         public DIExpression CreateExpression( params ExpressionOp[ ] operations ) => CreateExpression( ( IEnumerable<ExpressionOp> )operations );
 
         public DIExpression CreateExpression( IEnumerable<ExpressionOp> operations )

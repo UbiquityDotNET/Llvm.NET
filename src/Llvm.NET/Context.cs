@@ -228,7 +228,7 @@ namespace Llvm.NET
                 throw new ArgumentException( msg.ToString( ), nameof( argTypes ) );
 
             var llvmType = GetFunctionType( retType.NativeType, nativeArgTypes, isVarArg );
-            
+
             var diType = diBuilder.CreateSubroutineType( 0, retType.DIType, debugArgTypes );
             Debug.Assert( diType != null && !diType.IsTemporary );
 

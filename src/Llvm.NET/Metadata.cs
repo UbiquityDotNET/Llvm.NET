@@ -84,7 +84,7 @@ namespace Llvm.NET
 
             return (T)context.GetNodeFor( handle, StaticFactory );
         }
-        
+
         [System.Diagnostics.CodeAnalysis.SuppressMessage( "Microsoft.Maintainability", "CA1506:AvoidExcessiveClassCoupling", Justification = "Static factory method" )]
         [System.Diagnostics.CodeAnalysis.SuppressMessage( "Microsoft.Maintainability", "CA1502:AvoidExcessiveComplexity", Justification = "Static factory method" )]
         private static LlvmMetadata StaticFactory( LLVMMetadataRef handle )

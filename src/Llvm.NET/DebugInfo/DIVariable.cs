@@ -6,5 +6,15 @@
             : base( handle )
         {
         }
+        
+        // TODO: UInt32 Line => NativeMethods.DIVariableGetLine( MetadataHandle );
+
+        public DIScope Scope => Operands[ 0 ]?.Metadata as DIScope;
+
+        public string Name => ( Operands[ 1 ]?.Metadata as MDString )?.ToString( ) ?? string.Empty;
+
+        public DIFile File => Operands[ 2 ]?.Metadata as DIFile;
+
+        public DIType Type => Operands[ 3 ]?.Metadata as DIType;
     }
 }
