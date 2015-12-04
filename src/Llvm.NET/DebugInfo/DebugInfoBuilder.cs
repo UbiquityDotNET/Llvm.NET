@@ -613,7 +613,7 @@ namespace Llvm.NET.DebugInfo
         }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage( "Microsoft.Design", "CA1011:ConsiderPassingBaseTypesAsParameters", Justification = "Specific type required by interop call" )]
-        public Instruction InsertDeclare( Value storage, DILocalVariable varInfo, DIExpression expr, DILocation location, BasicBlock insertAtEnd )
+        public CallInstruction InsertDeclare( Value storage, DILocalVariable varInfo, DIExpression expr, DILocation location, BasicBlock insertAtEnd )
         {
             var handle = NativeMethods.DIBuilderInsertDeclareAtEnd( BuilderHandle
                                                                   , storage.ValueHandle
@@ -622,26 +622,26 @@ namespace Llvm.NET.DebugInfo
                                                                   , location.MetadataHandle
                                                                   , insertAtEnd.BlockHandle
                                                                   );
-            return Value.FromHandle<Instruction>( handle );
+            return Value.FromHandle<CallInstruction>( handle );
         }
 
-        public Instruction InsertValue( Value value
-                                      , UInt64 offset
-                                      , DILocalVariable varInfo
-                                      , DILocation location
-                                      , Instruction insertBefore
-                                      )
+        public CallInstruction InsertValue( Value value
+                                          , UInt64 offset
+                                          , DILocalVariable varInfo
+                                          , DILocation location
+                                          , Instruction insertBefore
+                                          )
         {
             return InsertValue( value, offset, varInfo, null, location, insertBefore );
         }
 
-        public Instruction InsertValue( Value value
-                                      , UInt64 offset
-                                      , DILocalVariable varInfo
-                                      , DIExpression expression
-                                      , DILocation location
-                                      , Instruction insertBefore
-                                      )
+        public CallInstruction InsertValue( Value value
+                                          , UInt64 offset
+                                          , DILocalVariable varInfo
+                                          , DIExpression expression
+                                          , DILocation location
+                                          , Instruction insertBefore
+                                          )
         {
             var handle = NativeMethods.DIBuilderInsertValueBefore( BuilderHandle
                                                                  , value.ValueHandle
@@ -651,26 +651,28 @@ namespace Llvm.NET.DebugInfo
                                                                  , location.MetadataHandle
                                                                  , insertBefore.ValueHandle
                                                                  );
-            return Value.FromHandle<Instruction>( handle );
+            var retVal = Value.FromHandle<CallInstruction>( handle );
+            retVal.IsTailCall = true;
+            return retVal;
         }
 
-        public Instruction InsertValue( Value value
-                                      , UInt64 offset
-                                      , DILocalVariable varInfo
-                                      , DILocation location
-                                      , BasicBlock insertAtEnd
-                                      )
+        public CallInstruction InsertValue( Value value
+                                          , UInt64 offset
+                                          , DILocalVariable varInfo
+                                          , DILocation location
+                                          , BasicBlock insertAtEnd
+                                          )
         {
             return InsertValue( value, offset, varInfo, null, location, insertAtEnd );
         }
 
-        public Instruction InsertValue( Value value
-                                      , UInt64 offset
-                                      , DILocalVariable varInfo
-                                      , DIExpression expression
-                                      , DILocation location
-                                      , BasicBlock insertAtEnd
-                                      )
+        public CallInstruction InsertValue( Value value
+                                          , UInt64 offset
+                                          , DILocalVariable varInfo
+                                          , DIExpression expression
+                                          , DILocation location
+                                          , BasicBlock insertAtEnd
+                                          )
         {
             if( location.Scope != varInfo.Scope )
                 throw new ArgumentException( "mismatched scopes" );
@@ -683,7 +685,9 @@ namespace Llvm.NET.DebugInfo
                                                                  , location.MetadataHandle
                                                                  , insertAtEnd.BlockHandle
                                                                  );
-            return Value.FromHandle<Instruction>( handle );
+            var retVal = Value.FromHandle<CallInstruction>( handle );
+            retVal.IsTailCall = true;
+            return retVal;
         }
 
         public DIExpression CreateExpression( params ExpressionOp[ ] operations ) => CreateExpression( ( IEnumerable<ExpressionOp> )operations );
