@@ -3,7 +3,7 @@
   <Import Project="$([MSBuild]::GetDirectoryNameOfFileAbove($(MSBuildThisFileDirectory), EnlistmentInfo.props))\EnlistmentInfo.props" Condition=" '$([MSBuild]::GetDirectoryNameOfFileAbove($(MSBuildThisFileDirectory), EnlistmentInfo.props))' != '' " />
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
-    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <Platform Condition=" '$(Platform)' == '' ">x64</Platform>
     <ProjectGuid>{826ADB1C-4BDC-4A89-836B-87088E511D6A}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
@@ -32,7 +32,7 @@
     <DefineConstants>TRACE</DefineConstants>
     <Optimize>true</Optimize>
     <DebugType>pdbonly</DebugType>
-    <PlatformTarget>x64</PlatformTarget>
+    <PlatformTarget>AnyCPU</PlatformTarget>
     <ErrorReport>prompt</ErrorReport>
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
@@ -48,7 +48,7 @@
     <DefineConstants>TRACE</DefineConstants>
     <Optimize>true</Optimize>
     <DebugType>pdbonly</DebugType>
-    <PlatformTarget>x86</PlatformTarget>
+    <PlatformTarget>AnyCPU</PlatformTarget>
     <ErrorReport>prompt</ErrorReport>
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
@@ -79,7 +79,7 @@
     <Compile Include="Values\AttributeValueTests.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="$(BaseOutputPath)\$(Platform)\$(Configuration)\LibLLVM.dll">
+    <Content Include="$(BaseOutputPath)$(Platform)\$(Configuration)\LibLLVM.dll">
       <Link>LibLLVM.dll</Link>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
@@ -88,11 +88,11 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\Llvm.NET\Llvm.NET.csproj">
+    <ProjectReference Include="$(BuildRootDir)\src\Llvm.NET\Llvm.NET.csproj">
       <Project>{0162c8ce-6641-4922-8664-f8a44356fbf7}</Project>
       <Name>Llvm.NET</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\LibLLVM\LibLLVM.vcxproj">
+    <ProjectReference Include="$(BuildRootDir)\src\LibLLVM\LibLLVM.vcxproj">
       <Project>{6c77a7de-d464-430f-96a9-a64768763b5f}</Project>
       <Name>LibLLVM</Name>
       <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
