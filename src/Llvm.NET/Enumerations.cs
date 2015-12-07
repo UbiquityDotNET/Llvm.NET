@@ -450,6 +450,8 @@ namespace Llvm.NET
         SanitizeMemory,        // MemorySanitizer is on.
         UWTable,               // Function must be in a unwind table
         ZExt,                  // Zero extended before/after call
+
+        EndAttrKinds           // Sentinal value useful for loops
     };
 
     /// <summary>Function index for attributes</summary>

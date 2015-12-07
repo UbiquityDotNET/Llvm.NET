@@ -126,6 +126,8 @@
     <Compile Include="Types\ITypeRef.cs" />
     <Compile Include="Values\Argument.cs" />
     <Compile Include="Types\ArrayType.cs" />
+    <Compile Include="Values\AttributeBuilder.cs" />
+    <Compile Include="Values\AttributeKindExtensions.cs" />
     <Compile Include="Values\AttributeValue.cs" />
     <Compile Include="Values\BasicBlock.cs" />
     <Compile Include="Values\BlockAddress.cs" />

@@ -114,12 +114,12 @@ namespace Llvm.NET.Values
         {
             get 
             {
-                return new AttributeSet( this, ( p ) => NativeMethods.GetFunctionAttributeSet( ValueHandle, p ) );
+                return new AttributeSet( this, NativeMethods.GetFunctionAttributeSet( ValueHandle ) );
             }
 
             set
             {
-                value.Store( ( p ) => NativeMethods.SetFunctionAttributeSet( ValueHandle, p ) );
+                NativeMethods.SetFunctionAttributeSet( ValueHandle, value.NativeAttributeSet );
             }
         }
 

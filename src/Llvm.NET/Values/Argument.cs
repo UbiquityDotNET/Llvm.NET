@@ -19,7 +19,7 @@ namespace Llvm.NET.Values
         public Argument SetAlignment( uint value )
         {
             ContainingFunction.AddAttribute( FunctionAttributeIndex.Parameter0 + ( int ) Index
-                                           , new AttributeValue( AttributeKind.Alignment, value )
+                                           , new AttributeValue( Context, AttributeKind.Alignment, value )
                                            );
             return this;
         }

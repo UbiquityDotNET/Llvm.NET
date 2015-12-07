@@ -141,8 +141,6 @@ extern "C" {
         LLVMMetadataFormatAsOperand,
     };
 
-    #define DECLARE_LLVMC_REF( n ) typedef struct LLVMOpaque##n##* LLVM##n##Ref
-
     typedef struct LLVMOpaqueDIBuilder *LLVMDIBuilderRef;
 
     void LLVMSetDILocation( LLVMValueRef inst, LLVMMetadataRef location );

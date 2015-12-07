@@ -7,11 +7,12 @@ namespace Llvm.NET.Values
     /// This is used to allow the <see cref="AttributeSetContainer"/> extension
     /// to act as mutators for the otherwise immutable <see cref="AttributeSet"/>.
     /// Each method of the sextension class will read the attribute set from the container
-    /// and create a new set based on the paramaters (addding or removing attributes fom the set)
+    /// and create a new set based on the paramaters (adding or removing attributes fom the set)
     /// producing a new attributeSet that is then re-assigned back to the container. 
     /// </remarks>
     public interface IAttributeSetContainer
     {
+        /// <summary>Attributes for this container</summary>
         AttributeSet Attributes { get; set; }
     }
 
@@ -30,6 +31,22 @@ namespace Llvm.NET.Values
     /// </remarks>
     public static class AttributeSetContainer
     {
+        public static T AddAttribute<T>( this T self, FunctionAttributeIndex index, AttributeKind[] value )
+            where T : IAttributeSetContainer
+        {
+            AttributeBuilder bldr = new AttributeBuilder( self.Attributes );
+            bldr.Add( index, value );
+            self.Attributes = bldr;
+            return self;
+        }
+
+        public static T AddAttribute<T>( this T self, FunctionAttributeIndex index, AttributeKind value )
+            where T : IAttributeSetContainer
+        {
+            self.Attributes = self.Attributes.Add( index, new AttributeValue( self.Attributes.Context, value ) );
+            return self;
+        }
+
         public static T AddAttribute<T>( this T self, FunctionAttributeIndex index, AttributeValue value )
             where T : IAttributeSetContainer
         {
