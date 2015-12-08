@@ -10,6 +10,7 @@ namespace Llvm.NET.DebugInfo
     /// <remarks>
     /// This treats the operands of a tuple as the elements of the array
     /// </remarks>
+    [System.Diagnostics.CodeAnalysis.SuppressMessage( "Microsoft.Naming", "CA1710:IdentifiersShouldHaveCorrectSuffix" )]
     public class TupleTypedArrayWrapper<T>
         : IReadOnlyList<T>
         where T : LlvmMetadata
@@ -50,9 +51,10 @@ namespace Llvm.NET.DebugInfo
             return GetEnumerator();
         }
     }
-    
+
     /// <summary>Array of <see cref="DINode"/> debug information nodes for use with <see cref="DebugInfoBuilder"/> methods</summary>
     /// <seealso cref="DebugInfoBuilder.GetOrCreateArray(IEnumerable{DINode})"/>
+    [System.Diagnostics.CodeAnalysis.SuppressMessage( "Microsoft.Naming", "CA1710:IdentifiersShouldHaveCorrectSuffix" )]
     public class DINodeArray : TupleTypedArrayWrapper<DINode>
     {
         internal DINodeArray( MDTuple tuple )

@@ -99,17 +99,17 @@ extern "C" {
     *
     * The Attribute and AttributeSet classes are somewhat problematic to expose in
     * "C" as they are not officially POD types and therefore have limited defined
-    * portable usage in "C". However, they are officailly standard layout and trivially
-    * copy constructable. The reason they are not POD is that they have a custom default
+    * portable usage in "C". However, they are officially standard layout and trivially
+    * copy constructible. The reason they are not POD is that they have a custom default
     * constructor. Thus construction cannot be assumed as trivially zero initializing
     * the memory for the type. To manage that with projections to "C" and other languages
     * this API exposes the underlying class constructors as "C" functions returning an
     * instance of the constructed type. Furthermore this API assumes that llvm::Attribute
     * and llvm::AttributeSet are defined using the Pointer to Implementation (PIMPL)
-    * pattern and are entirely represntable in a LLVMAttributeSet. (This is statically checked
+    * pattern and are entirely representable in a LLVMAttributeSet. (This is statically checked
     * in the AttributeBindings.cpp file along with the trivial copy construction and
     * standard layout type traits. Any changes in LLVM that would invalidate these assumptions
-    * will trigger a compilation error, rather than failiing in inexplicable ways at runtime.)
+    * will trigger a compilation error, rather than failing in inexplicable ways at runtime.)
     * @{
     */
     typedef uintptr_t LLVMAttributeSet;
@@ -146,6 +146,7 @@ extern "C" {
 
     unsigned LLVMAttributeSetGetNumSlots( LLVMAttributeSet attributeSet );
     LLVMAttributeSet LLVMAttributeSetGetSlotAttributes( LLVMAttributeSet attributeSet, unsigned slot );
+    unsigned LLVMAttributeSetGetSlotIndex( LLVMAttributeSet attributeSet, unsigned slot );
 
     LLVMAttributeSet LLVMGetFunctionAttributeSet( LLVMValueRef /*Function*/ function );
     void LLVMSetFunctionAttributeSet( LLVMValueRef /*Function*/ function, LLVMAttributeSet attributeSet );
@@ -181,23 +182,24 @@ extern "C" {
     LLVMAttributeBuilderRef LLVMCreateAttributeBuilder( );
     LLVMAttributeBuilderRef LLVMCreateAttributeBuilder2( LLVMAttributeValue value );
     LLVMAttributeBuilderRef LLVMCreateAttributeBuilder3( LLVMAttributeSet attributeSet, unsigned index );
+    void LLVMAttributeBuilderDispose( LLVMAttributeBuilderRef bldr );
 
     void LLVMAttributeBuilderClear( LLVMAttributeBuilderRef bldr );
 
-    LLVMAttributeBuilderRef LLVMAttributeBuilderAddEnum( LLVMAttributeBuilderRef bldr, LLVMAttrKind kind );
-    LLVMAttributeBuilderRef LLVMAttributeBuilderAddAttribute( LLVMAttributeBuilderRef bldr, LLVMAttributeValue value );
-    LLVMAttributeBuilderRef LLVMAttributeBuilderAddStringAttribute( char const* name, char const* value );
-    LLVMAttributeBuilderRef LLVMAttributeBuilderRemoveEnum( LLVMAttributeBuilderRef bldr, LLVMAttrKind kind );
-    LLVMAttributeBuilderRef LLVMAttributeBuilderRemoveAttributes( LLVMAttributeBuilderRef bldr, LLVMAttributeSet attributeSet );
-    LLVMAttributeBuilderRef LLVMAttributeBuilderRemoveAttribute( LLVMAttributeBuilderRef bldr, char const* name );
+    void LLVMAttributeBuilderAddEnum( LLVMAttributeBuilderRef bldr, LLVMAttrKind kind );
+    void LLVMAttributeBuilderAddAttribute( LLVMAttributeBuilderRef bldr, LLVMAttributeValue value );
+    void LLVMAttributeBuilderAddStringAttribute( LLVMAttributeBuilderRef bldr, char const* name, char const* value );
+    void LLVMAttributeBuilderRemoveEnum( LLVMAttributeBuilderRef bldr, LLVMAttrKind kind );
+    void LLVMAttributeBuilderRemoveAttributes( LLVMAttributeBuilderRef bldr, LLVMAttributeSet attributeSet, unsigned index );
+    void LLVMAttributeBuilderRemoveAttribute( LLVMAttributeBuilderRef bldr, char const* name );
+    void LLVMAttributeBuilderRemoveBldr( LLVMAttributeBuilderRef bldr, LLVMAttributeBuilderRef ohter );
 
-    LLVMAttributeBuilderRef LLVMAttributeBuilderMerge( LLVMAttributeBuilderRef bldr, LLVMAttributeBuilderRef ohter );
-    LLVMAttributeBuilderRef LLVMAttributeBuilderRemoveBldr( LLVMAttributeBuilderRef bldr, LLVMAttributeBuilderRef ohter );
+    void LLVMAttributeBuilderMerge( LLVMAttributeBuilderRef bldr, LLVMAttributeBuilderRef ohter );
     LLVMBool LLVMAttributeBuilderOverlaps( LLVMAttributeBuilderRef bldr, LLVMAttributeBuilderRef other );
     LLVMBool LLVMAttributeBuilderContainsEnum( LLVMAttributeBuilderRef bldr, LLVMAttrKind kind );
     LLVMBool LLVMAttributeBuilderContainsName( LLVMAttributeBuilderRef bldr, char const* name );
-    LLVMBool LLVMAttributeBuilderHasAnyAttributes( );
-    LLVMBool LLVMAttribteBuilderHasAttributes( LLVMAttributeBuilderRef bldr, LLVMAttributeSet attributeset, unsigned index );
+    LLVMBool LLVMAttributeBuilderHasAnyAttributes( LLVMAttributeBuilderRef bldr );
+    LLVMBool LLVMAttributeBuilderHasAttributes( LLVMAttributeBuilderRef bldr, LLVMAttributeSet attributeset, unsigned index );
     LLVMBool LLVMAttributeBuilderHasTargetIndependentAttrs( LLVMAttributeBuilderRef bldr );
     LLVMBool LLVMAttributeBuilderHasTargetDependentAttrs( LLVMAttributeBuilderRef bldr );
 

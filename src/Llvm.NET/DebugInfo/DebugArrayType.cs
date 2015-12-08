@@ -34,7 +34,7 @@ namespace Llvm.NET.DebugInfo
         /// <param name="elementType">Type of elements in the array</param>
         /// <param name="module"><see cref="NativeModule"/> to use for the context of the debug information</param>
         /// <param name="count">Number of elements in the array</param>
-        /// <param name="lowerBound">Lowerbound value for the array indeces [Default: 0]</param>
+        /// <param name="lowerBound">Lowerbound value for the array indices [Default: 0]</param>
         public DebugArrayType( IDebugType<ITypeRef, DIType> elementType, NativeModule module, uint count, uint lowerBound = 0 )
             : this( elementType.CreateArrayType( count )
                   , elementType
@@ -50,7 +50,7 @@ namespace Llvm.NET.DebugInfo
         /// <param name="module"><see cref="NativeModule"/> to use for the context of the debug information</param>
         /// <param name="elementType">Debug type of the array elements</param>
         /// <param name="count">Number of elements in the array</param>
-        /// <param name="lowerbound">Lowerbound value for the array indeces [Default: 0]</param>
+        /// <param name="lowerbound">Lowerbound value for the array indices [Default: 0]</param>
         public DebugArrayType( IArrayType llvmType, NativeModule module, DIType elementType, uint count, uint lowerbound = 0 )
             : this( DebugType.Create( llvmType.ElementType, elementType), module, count, lowerbound )
         {

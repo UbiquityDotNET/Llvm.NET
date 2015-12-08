@@ -9,6 +9,7 @@ using Llvm.NET.DebugInfo;
 namespace Llvm.NET.Values
 {
     /// <summary>LLVM Function definition</summary>
+    [System.Diagnostics.CodeAnalysis.SuppressMessage( "Microsoft.Naming", "CA1716:IdentifiersShouldNotMatchKeywords", MessageId = "Function" )]
     public class Function
         : GlobalObject
         , IAttributeSetContainer
@@ -114,18 +115,19 @@ namespace Llvm.NET.Values
         {
             get 
             {
-                return new AttributeSet( this, NativeMethods.GetFunctionAttributeSet( ValueHandle ) );
+                return new AttributeSet( NativeMethods.GetFunctionAttributeSet( ValueHandle ) );
             }
 
             set
             {
+                // TODO: verify that the attribute set doesn't contain any attributes for parameter indices not available in this function.
                 NativeMethods.SetFunctionAttributeSet( ValueHandle, value.NativeAttributeSet );
             }
         }
 
         /// <summary>Add a new basic block to the beginning of a function</summary>
         /// <param name="name">Name (label) for the block</param>
-        /// <returns><see cref="BasicBlock"/> created and insterted into the begining function</returns>
+        /// <returns><see cref="BasicBlock"/> created and inserted at the beginning of the function</returns>
         public BasicBlock PrependBasicBlock( string name )
         {
             LLVMBasicBlockRef firstBlock = NativeMethods.GetFirstBasicBlock( ValueHandle );
@@ -144,7 +146,7 @@ namespace Llvm.NET.Values
 
         /// <summary>Appends a new basic block to a function</summary>
         /// <param name="name">Name (label) of the block</param>
-        /// <returns><see cref="BasicBlock"/> created and insterted onto the end of the function</returns>
+        /// <returns><see cref="BasicBlock"/> created and inserted onto the end of the function</returns>
         public BasicBlock AppendBasicBlock( string name )
         {
             LLVMBasicBlockRef blockRef = NativeMethods.AppendBasicBlockInContext( NativeType.Context.ContextHandle, ValueHandle, name );

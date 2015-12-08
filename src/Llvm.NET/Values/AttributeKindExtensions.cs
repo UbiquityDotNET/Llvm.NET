@@ -5,7 +5,7 @@ namespace Llvm.NET.Values
 {
     /// <summary>Enumeration flags to indicate which attribute set index an attribute may apply to</summary>
     [Flags]
-    public enum FunctionIndexKind
+    public enum FunctionIndexKinds
     {
         /// <summary>Invalid attributes don't apply to any index</summary>
         None = 0,
@@ -13,7 +13,7 @@ namespace Llvm.NET.Values
         Function = 1,
         /// <summary>The attribute is applicable to a function's return</summary>
         Return = 2,
-        /// <summary>The aattribute is applicable to a function's parameter</summary>
+        /// <summary>The attribute is applicable to a function's parameter</summary>
         Parameter = 4
     }
 
@@ -37,41 +37,29 @@ namespace Llvm.NET.Values
 
         public static void VerifyAttributeUsage( this AttributeKind kind, FunctionAttributeIndex index )
         {
-            if( index >= FunctionAttributeIndex.Parameter0 )
-                throw new ArgumentOutOfRangeException( nameof( index ) );
-
-            VerifyAttributeUsage( kind, index, 0 );
-        }
-
-        public static void VerifyAttributeUsage( this AttributeKind kind, FunctionAttributeIndex index, int argCount )
-        {
             Debug.Assert( kind >= AttributeKind.None && kind < AttributeKind.EndAttrKinds );
-            FunctionIndexKind allowedIndeces = kind.GetAllowedIndeces( );
+            FunctionIndexKinds allowedindices = kind.GetAllowedindices( );
             switch( index )
             {
             case FunctionAttributeIndex.Function:
-                if( !allowedIndeces.HasFlag( FunctionIndexKind.Function ) )
+                if( !allowedindices.HasFlag( FunctionIndexKinds.Function ) )
                     throw new ArgumentException( "Attribute not allowed on functions", nameof( index ) );
                 break;
 
             case FunctionAttributeIndex.ReturnType:
-                if( !allowedIndeces.HasFlag( FunctionIndexKind.Return ) )
+                if( !allowedindices.HasFlag( FunctionIndexKinds.Return ) )
                     throw new ArgumentException( "Attribute not allowed on function Return", nameof( index ) );
                 break;
 
             //case FunctionAttributeIndex.Parameter0:
             default:
-                if( !allowedIndeces.HasFlag( FunctionIndexKind.Parameter ) )
+                if( !allowedindices.HasFlag( FunctionIndexKinds.Parameter ) )
                     throw new ArgumentException( "Attribute not allowed on function parameter", nameof( index ) );
-
-                int paramIndex = index - FunctionAttributeIndex.Parameter0;
-                if( paramIndex >= argCount )
-                    throw new ArgumentOutOfRangeException( nameof( index ), "Specified parameter index exceeds the number of parameters in the function" );
                 break;
             }
         }
 
-        // To prevent native asserts or crashes - validates params before passing down to native code
+        // To prevent native asserts or crashes - validates parameters before passing down to native code
         public static void VerifyIntAttributeUsage( this AttributeKind kind, FunctionAttributeIndex index, ulong value )
         {
             kind.VerifyAttributeUsage( index );
@@ -81,7 +69,7 @@ namespace Llvm.NET.Values
         public static void RangeCheckValue( this AttributeKind kind, ulong value )
         {
             Debug.Assert( kind >= AttributeKind.None && kind < AttributeKind.EndAttrKinds );
-            // To prevent native asserts or crashes - validate params before passing down to native code
+            // To prevent native asserts or crashes - validate parameters before passing down to native code
             switch( kind )
             {
             case AttributeKind.Alignment:
@@ -104,13 +92,13 @@ namespace Llvm.NET.Values
             }
         }
 
-        public static FunctionIndexKind GetAllowedIndeces( this AttributeKind kind )
+        public static FunctionIndexKinds GetAllowedindices( this AttributeKind kind )
         {
             Debug.Assert( kind >= AttributeKind.None && kind < AttributeKind.EndAttrKinds );
             switch( kind )
             {
             default:
-                return FunctionIndexKind.None;
+                return FunctionIndexKinds.None;
 
             case AttributeKind.ZExt:
             case AttributeKind.SExt:
@@ -126,7 +114,7 @@ namespace Llvm.NET.Values
             case AttributeKind.NonNull:
             case AttributeKind.Dereferenceable:
             case AttributeKind.DereferenceableOrNull:
-                return FunctionIndexKind.Parameter | FunctionIndexKind.Return;
+                return FunctionIndexKinds.Parameter | FunctionIndexKinds.Return;
 
             case AttributeKind.StackAlignment:
             case AttributeKind.AlwaysInline:
@@ -160,7 +148,7 @@ namespace Llvm.NET.Values
             case AttributeKind.StackProtectReq:
             case AttributeKind.StackProtectStrong:
             case AttributeKind.UWTable:
-                return FunctionIndexKind.Function;
+                return FunctionIndexKinds.Function;
             }
         }
     }

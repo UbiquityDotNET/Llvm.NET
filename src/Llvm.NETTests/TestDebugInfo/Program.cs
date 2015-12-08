@@ -127,7 +127,7 @@ namespace TestDebugInfo
 
                 // add module flags and compiler identifiers...
                 // this can technically occur at any point, though placing it here makes
-                // comparing against clang generated files posssible
+                // comparing against clang generated files possible
                 AddModuleFlags( module );
 
                 // create types for function args
@@ -169,7 +169,7 @@ namespace TestDebugInfo
             var doCopySig = module.Context.CreateFunctionType( module.DIBuilder, voidType );
 
             // Create the functions
-            // NOTE: The declaration ordering is reveresd from that of the sample code file (test.c)
+            // NOTE: The declaration ordering is reversed from that of the sample code file (test.c)
             //       However, this is what Clang ends up doing for some reason so it is
             //       replicated here to aid in comparing the generated LL files.
             var doCopyFunc = module.CreateFunction( scope: diFile
@@ -198,8 +198,8 @@ namespace TestDebugInfo
                                                , DebugPointerType fooPtr
                                                )
         {
-            // Since the the first parameter is passed by value 
-            // using the pointer+alloca+memcopy pattern, the actual
+            // Since the first parameter is passed by value 
+            // using the pointer + alloca + memcopy pattern, the actual
             // source, and therefore debug, signature is NOT a pointer.
             // However, that usage would create a signature with two
             // pointers as the arguments, which doesn't match the source
@@ -236,8 +236,8 @@ namespace TestDebugInfo
             //
             // LLVM recognizes this pattern and has a pass to map to an efficient register usage whenever plausible.
             // Though it seems Clang doesn't apply the attribute in all cases, for x86 it doesn't appear to ever use
-            // it, for cortex-Mx it seems to use it only for larger structs, otherwsise it uses an [ n x i32]. Thus,
-            // on cortex-m the function params are handled quite differently by clang, which seems odd...
+            // it, for Cortex-Mx it seems to use it only for larger structs, otherwise it uses an [ n x i32]. Thus,
+            // on cortex-m the function parameters are handled quite differently by clang, which seems odd...
 #if TARGET_CORTEX_M3            
             copyFunc.AddAttributes( FunctionAttributeIndex.Parameter0
                                   , AttributeKind.ByVal
@@ -255,7 +255,7 @@ namespace TestDebugInfo
 #if TARGET_X86
                 module.AddModuleFlag( ModuleFlagBehavior.Error, "PIC Level", 2 );
 #elif TARGET_CORTEX_M3
-            // Specify ABI const sizes so linker can detect mismataches
+            // Specify ABI const sizes so linker can detect mismatches
             module.AddModuleFlag( ModuleFlagBehavior.Error, "wchar_size", 4 );
             module.AddModuleFlag( ModuleFlagBehavior.Error, "min_enum_size", 4 );
 #endif
@@ -283,15 +283,15 @@ namespace TestDebugInfo
             var instBuilder = new InstructionBuilder( blk );
 
             // create debug info locals for the arguments
-            // NOTE: Debug parameter indeces are 1 based!
+            // NOTE: Debug parameter indices are 1 based!
             var paramSrc = diBuilder.CreateArgument( copyFunc.DISubProgram, "src", diFile, 11, constFooType, false, 0, 1 );
             var paramDst = diBuilder.CreateArgument( copyFunc.DISubProgram, "pDst", diFile, 12, fooPtr.DIType, false, 0, 2 );
 
             var ptrAlign = layout.CallFrameAlignmentOf( fooPtr );
             
             // create Locals
-            // NOTE: There's no debug location attatched to these instructions.
-            //       The debug info will come from the declare instrinsic below.
+            // NOTE: There's no debug location attached to these instructions.
+            //       The debug info will come from the declare intrinsic below.
             var dstAddr = instBuilder.Alloca( fooPtr )
                                      .RegisterName( "pDst.addr" )
                                      .Alignment( ptrAlign );
@@ -338,7 +338,7 @@ namespace TestDebugInfo
                               , false
                               ).SetDebugLocation( 15, 13, copyFunc.DISubProgram );
 #elif TARGET_CORTEX_M3
-            // Cortex-M uses 32bit count param
+            // Cortex-M uses 32bit count parameter (constant for parameter 3)
             instBuilder.MemCpy( module
                               , dstPtr
                               , srcPtr

@@ -218,7 +218,7 @@ namespace Llvm.NET
 
         /// <summary>Creates a <see cref="Value"/> that accesses an element of a type referenced by a pointer</summary>
         /// <param name="pointer">pointer to get an element from</param>
-        /// <param name="args">additional indeces for computing the resulting pointer</param>
+        /// <param name="args">additional indices for computing the resulting pointer</param>
         /// <returns>
         /// <para><see cref="Value"/> for the member access. This is a <see cref="Value"/>
         /// as LLVM may optimize the expression to a <see cref="ConstantExpression"/> if it 
@@ -251,7 +251,7 @@ namespace Llvm.NET
 
         /// <summary>Creates a <see cref="Value"/> that accesses an element of a type referenced by a pointer</summary>
         /// <param name="pointer">pointer to get an element from</param>
-        /// <param name="args">additional indeces for computing the resulting pointer</param>
+        /// <param name="args">additional indices for computing the resulting pointer</param>
         /// <returns>
         /// <para><see cref="Value"/> for the member access. This is a <see cref="Value"/>
         /// as LLVM may optimize the expression to a <see cref="ConstantExpression"/> if it 
@@ -274,7 +274,7 @@ namespace Llvm.NET
 
         /// <summary>Creates a <see cref="Value"/> that accesses an element of a type referenced by a pointer</summary>
         /// <param name="pointer">pointer to get an element from</param>
-        /// <param name="args">additional indeces for computing the resulting pointer</param>
+        /// <param name="args">additional indices for computing the resulting pointer</param>
         /// <returns>
         /// <para><see cref="Value"/> for the member access. This is a <see cref="Value"/>
         /// as LLVM may optimize the expression to a <see cref="ConstantExpression"/> if it 
@@ -307,7 +307,7 @@ namespace Llvm.NET
 
         /// <summary>Creates a <see cref="Value"/> that accesses an element of a type referenced by a pointer</summary>
         /// <param name="pointer">pointer to get an element from</param>
-        /// <param name="args">additional indeces for computing the resulting pointer</param>
+        /// <param name="args">additional indices for computing the resulting pointer</param>
         /// <returns>
         /// <para><see cref="Value"/> for the member access. This is a User as LLVM may 
         /// optimize the expression to a <see cref="ConstantExpression"/> if it 

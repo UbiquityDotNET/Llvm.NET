@@ -197,6 +197,12 @@ extern "C"
         return wrap( attributes.getSlotAttributes( slot ) );
     }
 
+    unsigned LLVMAttributeSetGetSlotIndex( LLVMAttributeSet attributeSet, unsigned slot )
+    {
+        auto attributes = AsAttributeSet( attributeSet );
+        return attributes.getSlotIndex( slot );
+    }
+
     LLVMAttributeSet LLVMGetFunctionAttributeSet( LLVMValueRef /*Function*/ function )
     {
         auto func = unwrap<Function>( function );
@@ -282,5 +288,105 @@ extern "C"
     LLVMAttributeValue LVMCreateTargetDependentAttribute( LLVMContextRef ctx, char const* name, char const* value )
     {
         return wrap( llvm::Attribute::get( *unwrap( ctx ), name, value ) );
+    }
+
+    LLVMAttributeBuilderRef LLVMCreateAttributeBuilder( )
+    {
+        return wrap( new AttrBuilder( ) );
+    }
+
+    LLVMAttributeBuilderRef LLVMCreateAttributeBuilder2( LLVMAttributeValue value )
+    {
+        return wrap( new AttrBuilder( AsAttribute( value ) ) );
+    }
+
+    LLVMAttributeBuilderRef LLVMCreateAttributeBuilder3( LLVMAttributeSet attributeSet, unsigned index )
+    {
+        return wrap( new AttrBuilder( AsAttributeSet( attributeSet ), index ) );
+    }
+
+    void LLVMAttributeBuilderDispose( LLVMAttributeBuilderRef bldr )
+    {
+        delete unwrap( bldr );
+    }
+
+    void LLVMAttributeBuilderClear( LLVMAttributeBuilderRef bldr )
+    {
+        unwrap( bldr )->clear( );
+    }
+
+    void LLVMAttributeBuilderAddEnum( LLVMAttributeBuilderRef bldr, LLVMAttrKind kind )
+    {
+        unwrap( bldr )->addAttribute( ( Attribute::AttrKind )kind );
+    }
+
+    void LLVMAttributeBuilderAddAttribute( LLVMAttributeBuilderRef bldr, LLVMAttributeValue value )
+    {
+        unwrap( bldr )->addAttribute( AsAttribute( value ) );
+    }
+
+    void LLVMAttributeBuilderAddStringAttribute( LLVMAttributeBuilderRef bldr, char const* name, char const* value )
+    {
+        unwrap( bldr )->addAttribute( name, value );
+    }
+
+    void LLVMAttributeBuilderRemoveEnum( LLVMAttributeBuilderRef bldr, LLVMAttrKind kind )
+    {
+        unwrap( bldr )->removeAttribute( ( Attribute::AttrKind )kind );
+    }
+
+    void LLVMAttributeBuilderRemoveAttributes( LLVMAttributeBuilderRef bldr, LLVMAttributeSet attributeSet, unsigned index )
+    {
+        unwrap( bldr )->removeAttributes( AsAttributeSet( attributeSet ), index );
+    }
+
+    void LLVMAttributeBuilderRemoveAttribute( LLVMAttributeBuilderRef bldr, char const* name )
+    {
+        unwrap( bldr )->removeAttribute( name );
+    }
+
+    void LLVMAttributeBuilderRemoveBldr( LLVMAttributeBuilderRef bldr, LLVMAttributeBuilderRef other )
+    {
+        unwrap( bldr )->remove( *unwrap( other ) );
+    }
+
+    void LLVMAttributeBuilderMerge( LLVMAttributeBuilderRef bldr, LLVMAttributeBuilderRef other )
+    {
+        unwrap( bldr )->merge( *unwrap( other ) );
+    }
+
+    LLVMBool LLVMAttributeBuilderOverlaps( LLVMAttributeBuilderRef bldr, LLVMAttributeBuilderRef other )
+    {
+        return unwrap( bldr )->overlaps( *unwrap( other ) );
+    }
+
+    LLVMBool LLVMAttributeBuilderContainsEnum( LLVMAttributeBuilderRef bldr, LLVMAttrKind kind )
+    {
+        return unwrap( bldr )->contains( ( Attribute::AttrKind )kind );
+    }
+
+    LLVMBool LLVMAttributeBuilderContainsName( LLVMAttributeBuilderRef bldr, char const* name )
+    {
+        return unwrap( bldr )->contains( name );
+    }
+
+    LLVMBool LLVMAttributeBuilderHasAnyAttributes( LLVMAttributeBuilderRef bldr )
+    {
+        return unwrap( bldr )->hasAttributes( );
+    }
+
+    LLVMBool LLVMAttributeBuilderHasAttributes( LLVMAttributeBuilderRef bldr, LLVMAttributeSet attributeset, unsigned index )
+    {
+        return unwrap( bldr )->hasAttributes( AsAttributeSet( attributeset ), index );
+    }
+
+    LLVMBool LLVMAttributeBuilderHasTargetIndependentAttrs( LLVMAttributeBuilderRef bldr )
+    {
+        return !unwrap( bldr )->empty( );
+    }
+
+    LLVMBool LLVMAttributeBuilderHasTargetDependentAttrs( LLVMAttributeBuilderRef bldr )
+    {
+        return !unwrap( bldr )->td_empty( );
     }
 }

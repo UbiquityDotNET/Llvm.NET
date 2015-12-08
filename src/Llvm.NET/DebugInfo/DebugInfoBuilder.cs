@@ -626,22 +626,23 @@ namespace Llvm.NET.DebugInfo
         }
 
         public CallInstruction InsertValue( Value value
-                                          , UInt64 offset
-                                          , DILocalVariable varInfo
-                                          , DILocation location
-                                          , Instruction insertBefore
-                                          )
+                                      , UInt64 offset
+                                      , DILocalVariable varInfo
+                                      , DILocation location
+                                      , Instruction insertBefore
+                                      )
         {
             return InsertValue( value, offset, varInfo, null, location, insertBefore );
         }
 
-        public CallInstruction InsertValue( Value value
-                                          , UInt64 offset
-                                          , DILocalVariable varInfo
-                                          , DIExpression expression
-                                          , DILocation location
-                                          , Instruction insertBefore
-                                          )
+        [System.Diagnostics.CodeAnalysis.SuppressMessage( "Microsoft.Design", "CA1011:ConsiderPassingBaseTypesAsParameters" )]
+        public Instruction InsertValue( Value value
+                                      , UInt64 offset
+                                      , DILocalVariable varInfo
+                                      , DIExpression expression
+                                      , DILocation location
+                                      , Instruction insertBefore
+                                      )
         {
             var handle = NativeMethods.DIBuilderInsertValueBefore( BuilderHandle
                                                                  , value.ValueHandle

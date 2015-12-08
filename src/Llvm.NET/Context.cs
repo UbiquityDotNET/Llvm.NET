@@ -12,25 +12,25 @@ namespace Llvm.NET
 {
     /// <summary>Encapsulates an LLVM context</summary>
     /// <remarks>
-    /// <para>A context in LLVM is a container for uniqueing (e.g. interning)
-    /// various types and values in the system. This allows
-    /// running multiple LLVM tool transforms etc.. on different threads
-    /// without causing them to collide namespaces and types even if 
-    /// they use the same name (e.g. module one may have a type Foo, and
-    /// so does module two but they are completely distinct from each other)
+    /// <para>A context in LLVM is a container for interning (LLVM refers
+    /// to this as "uniqueing") various types and values in the system. This
+    /// allows running multiple LLVM tool transforms etc.. on different threads
+    /// without causing them to collide namespaces and types even if they use
+    /// the same name (e.g. module one may have a type Foo, and so does module
+    /// two but they are completely distinct from each other)
     ///</para>
     /// <para>LLVM Debug information is ultimately all parented to a top level
     /// <see cref="DICompileUnit"/> as the scope, and a compilation
-    /// unit is bound to a <see cref="NativeModule"/>, even though, technically the
-    /// types are owned by a Context. Thus to keep things simpler and help make
-    /// working with debug infomration easier. Lllvm.NET encapsulates the native
-    /// type and the debug type in seperate classes that are instances of the
-    /// <see cref="IDebugType{NativeT, DebugT}"/> interface </para>
+    /// unit is bound to a <see cref="NativeModule"/>, even though, technically
+    /// the types are owned by a Context. Thus to keep things simpler and help
+    /// make working with debug information easier. Lllvm.NET encapsulates the
+    /// native type and the debug type in separate classes that are instances
+    /// of the <see cref="IDebugType{NativeT, DebugT}"/> interface </para>
     /// <note type="note">It is important to be aware of the fact that a Context
     /// is not thread safe. The context itself and the object instances it owns
     /// are intended for use by a single thread only. Accessing and manipulating
     /// LLVM objects from multiple threads may lead to race conditions corrupted
-    /// state and any number of other issues.</note>
+    /// state and any number of other undefined issues.</note>
     /// </remarks>
     public sealed class Context : IDisposable
     {
@@ -142,7 +142,7 @@ namespace Llvm.NET
 
             LLVMTypeRef[] llvmArgs = args.Select( a => a.GetTypeRef()).ToArray();
             var argCount = llvmArgs.Length;
-            // have to pass a valid adrressable object to native interop
+            // have to pass a valid addressable object to native interop
             // so allocate space for a single value but tell LLVM the length is 0
             if( llvmArgs.Length == 0 )
                 llvmArgs = new LLVMTypeRef[ 1 ];
@@ -223,7 +223,7 @@ namespace Llvm.NET
                 missingDebugInfo = true;
             }
 
-            // if any params don't have a valid DIType yet, then provide a hopefully helpful message indicating which one(s)
+            // if any parameters don't have a valid DIType yet, then provide a hopefully helpful message indicating which one(s)
             if( missingDebugInfo )
                 throw new ArgumentException( msg.ToString( ), nameof( argTypes ) );
 
@@ -335,7 +335,7 @@ namespace Llvm.NET
 
             if( mismatchedTypes.Any())
             {
-                var msg = new StringBuilder( "One or more values provided do not match the correspoinding member type:" );
+                var msg = new StringBuilder( "One or more values provided do not match the corresponding member type:" );
                 msg.AppendLine( );
                 foreach( var mismatch in mismatchedTypes )
                 {
@@ -543,7 +543,7 @@ namespace Llvm.NET
         /// <param name="intType">Integer type</param>
         /// <param name="constValue">value</param>
         /// <param name="signExtend">flag to indicate if <paramref name="constValue"/> is sign extended</param>
-        /// <returns>Constant for the specifiec value</returns>
+        /// <returns>Constant for the specified value</returns>
         public Constant CreateConstant( ITypeRef intType, UInt64 constValue, bool signExtend )
         {
             if( intType.Context != this )
@@ -571,6 +571,24 @@ namespace Llvm.NET
             return Value.FromHandle<ConstantFP>( NativeMethods.ConstReal( DoubleType.GetTypeRef(), constValue ) );
         }
 
+        /// <summary>Current context for the current thread</summary>
+        /// <remarks>
+        /// While most LLVM types contain the ability to retrieve their owning <see cref="Context"/>
+        /// it is not always possible. For example, in LLVM, an empty <see cref="AttributeSet"/> doesn't 
+        /// actually have a Context so adding attributes to an empty <see cref="AttributeSet"/> requires
+        /// a <see cref="Context"/> but adding attributes to a non-empty set does not. Thus, without some
+        /// other means of getting a default <see cref="Context"/> multiple overloads for the Add operation
+        /// would need to exist. Furthermore, calling code would need to manage dealing with deciding which
+        /// variation of the overloaded methods to call at runtime. All of that and other similar cases are
+        /// eliminated by having a thread static property to access whenever a <see cref="Context"/> instance
+        /// is required but otherwise not conveniently available. 
+        /// </remarks>
+        public static Context CurrentContext => CurrentThreadContext;
+
+        // These methods provide unique mapping between the .NET wrappers and the underlying LLVM instances
+        // The mapping ensures that any LibLLVM handle is always re-mappable to a exactly one wrapper instance.
+        // This helps reduce the number of wrapper instances created and also allows reference equality to work
+        // as expected for managed types.
         #region Interning Factories
         internal void AddModule( NativeModule module )
         {
@@ -692,7 +710,7 @@ namespace Llvm.NET
         internal MDOperand GetOperandFor( MDNode owningNode, LLVMMDOperandRef handle )
         {
             if( owningNode.Context != this )
-                throw new ArgumentException( "Cannot get operandd for a node from a different context", nameof( owningNode ) );
+                throw new ArgumentException( "Cannot get operand for a node from a different context", nameof( owningNode ) );
 
             if( handle.Pointer == IntPtr.Zero )
                 throw new ArgumentNullException( nameof( handle ) );
@@ -733,7 +751,11 @@ namespace Llvm.NET
         {
             if( ContextHandle.Pointer != IntPtr.Zero )
             {
-                lock( ContextCache )
+                // allow creating another context after this one is disposed
+                if( CurrentThreadContext == this )
+                    CurrentThreadContext = null;
+
+                lock ( ContextCache )
                 {
                     ContextCache.Remove( ContextHandle );
                 }
@@ -757,13 +779,20 @@ namespace Llvm.NET
 
         private Context( LLVMContextRef contextRef )
         {
+            if( CurrentThreadContext != null )
+                throw new InvalidOperationException( "Context already exists for this thread");
+
             ContextHandle = contextRef;
-            lock ( ContextCache )
+            lock( ContextCache )
             {
                 ContextCache.Add( contextRef, this );
             }
             NativeMethods.ContextSetDiagnosticHandler( ContextHandle, DiagnosticHandler, IntPtr.Zero );
+            CurrentThreadContext = this;
         }
+
+        [ThreadStatic]
+        private static Context CurrentThreadContext;
 
         private void DiagnosticHandler(out LLVMOpaqueDiagnosticInfo param0, IntPtr param1)
         {
@@ -784,8 +813,8 @@ namespace Llvm.NET
 
         private static Dictionary<LLVMContextRef, Context> ContextCache = new Dictionary<LLVMContextRef, Context>( );
 
-        // lazy init a singleton unmanaged delegate and hold on to it so it is never collected
-        private static Lazy<LLVMFatalErrorHandler> FatalErrorHandlerDelegate 
-            = new Lazy<LLVMFatalErrorHandler>( ( ) => FatalErrorHandler, LazyThreadSafetyMode.PublicationOnly );
+        // lazy initialized singleton unmanaged delegate so it is never collected
+        //private static Lazy<LLVMFatalErrorHandler> FatalErrorHandlerDelegate 
+        //    = new Lazy<LLVMFatalErrorHandler>( ( ) => FatalErrorHandler, LazyThreadSafetyMode.PublicationOnly );
     }
 }

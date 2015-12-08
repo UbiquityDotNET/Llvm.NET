@@ -11,9 +11,9 @@ namespace Llvm.NET.Instructions
             get 
             {
                 if( TargetFunction == null )
-                    return null;
+                    return new AttributeSet();
 
-                return new AttributeSet( TargetFunction, NativeMethods.GetCallSiteAttributeSet( ValueHandle ) );
+                return new AttributeSet( NativeMethods.GetCallSiteAttributeSet( ValueHandle ) );
             }
 
             set
