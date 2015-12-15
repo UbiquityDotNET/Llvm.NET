@@ -604,7 +604,6 @@ extern "C"
         return wrap( pInstruction );
     }
 
-
     LLVMValueRef LLVMDIBuilderInsertValueBefore( LLVMDIBuilderRef Dref
                                                  , /*llvm::Value **/LLVMValueRef Val
                                                  , uint64_t Offset

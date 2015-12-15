@@ -4,7 +4,7 @@
     {
         int a;
         float b;
-        int c[2];
+        int c[32];
     };
 
     foo bar = { 1, 2.0, { 0 } };
@@ -25,5 +25,10 @@
     void DoCopy( )
     {
         copy( bar, &baz );
+    }
+    
+    extern "C" int Add( int x, int y )
+    {
+        return x+y;
     }
 }

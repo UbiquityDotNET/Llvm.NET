@@ -1,33 +1,25 @@
 @REM -- Generate bitcode for x86 from test.c
-clang -c -g -emit-llvm --target=x86_64-pc-windows-msvc18.0.0 test.c
-if EXIST test_x86.bc del test_x86.bc
-ren test.bc test_x86.bc
-llvm-dis test_x86.bc
-opt -O3 test_x86.bc -o test_x86_opt.bc
-llvm-dis test_x86_opt.bc
+Call :GenerateCode x86_64-pc-windows-msvc18.0.0 test.c test_x86
 
 @REM -- Generate bitcode for Cortex-M3 from test.c
-clang -c -g -emit-llvm --target=thumbv7m-none-eabi test.c
-if EXIST test_M3.bc del test_M3.bc
-ren test.bc test_M3.bc
-llvm-dis test_M3.bc
-opt -O3 test_M3.bc -o test_M3_opt.bc
-llvm-dis test_M3_opt.bc
-llc -filetype=asm -asm-show-inst test_M3_opt.bc
+Call :GenerateCode thumbv7m-none-eabi test.c test_M3
 
 @REM -- Generate bitcode for x86 from test2.cpp
-clang -c -g -emit-llvm --target=x86_64-pc-windows-msvc18.0.0 test2.cpp
-if EXIST test2_x86.bc del test2_x86.bc
-ren test2.bc test2_x86.bc
-llvm-dis test2_x86.bc
-opt -O3 test2_x86.bc -o test2_x86_opt.bc
-llvm-dis test2_x86_opt.bc
+Call :GenerateCode x86_64-pc-windows-msvc18.0.0 test2.cpp test2_x86 
 
 @REM -- Generate bitcode for Cortex-M3 from test2.cpp
-clang -c -g -emit-llvm --target=thumbv7m-none-eabi test2.cpp
-if EXIST test2_M3.bc del test2_M3.bc
-ren test2.bc test2_M3.bc
-llvm-dis test2_M3.bc
-opt -O3 test2_M3.bc -o test2_M3_opt.bc
-llvm-dis test2_M3_opt.bc
-llc -filetype=asm -asm-show-inst test2_M3_opt.bc
+Call :GenerateCode thumbv7m-none-eabi test2.cpp test2_M3
+goto :EOF
+
+@REM - %1 = Triple (i.e. x86_64-pc-windows-msvc18.0.0,thumbv7m-none-eabi) 
+@REM - %2 = Source File (C/C++)
+@REM - %3 = Output files base name 
+:GenerateCode
+clang -c -g -emit-llvm --target=%1 %2
+if EXIST %3.bc del %3.bc
+ren %~n2.bc %3.bc
+llvm-dis %3.bc
+opt -O3 %3.bc -o %3_opt.bc
+llvm-dis %3_opt.bc
+llc -filetype=asm -asm-show-inst %3_opt.bc
+goto :EOF

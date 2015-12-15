@@ -34,6 +34,19 @@ namespace Llvm.NET.Instructions
             }
         }
 
+        public bool IsTailCall 
+        {
+            get
+            {
+                return NativeMethods.IsTailCall( ValueHandle );
+            }
+
+            set
+            {
+                NativeMethods.SetTailCall( ValueHandle, value );
+            }
+        }
+
         internal CallInstruction( LLVMValueRef valueRef )
             : this( valueRef, false )
         {
