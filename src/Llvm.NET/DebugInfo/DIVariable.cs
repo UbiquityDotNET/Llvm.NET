@@ -15,6 +15,7 @@
 
         public DIFile File => Operands[ 2 ]?.Metadata as DIFile;
 
+        [System.Diagnostics.CodeAnalysis.SuppressMessage( "Microsoft.Naming", "CA1721:PropertyNamesShouldNotMatchGetMethods" )]
         public DIType Type => Operands[ 3 ]?.Metadata as DIType;
     }
 }

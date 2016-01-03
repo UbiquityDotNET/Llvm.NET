@@ -10,9 +10,10 @@ namespace Llvm.NET.Values
     /// <remarks>
     /// The underlying LLVM AttributeSet class is an immutable value type, unfortunately it includes a non-default constructor
     /// and therefore isn't a POD. However, it is trivially copy constructible and standard layout so this class simply wraps
-    /// the LLVM AttributeSet class. All data allocated for an AttributeSet is owned by a <see cref="Llvm.NET.Context"/>, which
-    /// will handle cleaning it up on <see cref="Llvm.NET.Context.Dispose()"/>.
+    /// the LLVM AttributeSet class. All data allocated for an AttributeSet is owned by a <see cref="NET.Context"/>, which
+    /// will handle cleaning it up on <see cref="NET.Context.Dispose()"/>.
     /// </remarks>
+    [System.Diagnostics.CodeAnalysis.SuppressMessage( "Microsoft.Design", "CA1049:TypesThatOwnNativeResourcesShouldBeDisposable", Justification = "LLVM Context owns the attribute set")]
     public class AttributeSet
         : IEquatable<AttributeSet>
     {
@@ -286,6 +287,7 @@ namespace Llvm.NET.Values
         // the context. Since AttributeSets are "interned" multiple AttributeSets may refer to the same internal
         // implementation instance. There is no dispose for the AttributeSet however as the context will take
         // care of cleaning them up when it is disposed. 
+        [System.Diagnostics.CodeAnalysis.SuppressMessage( "Microsoft.Reliability", "CA2006:UseSafeHandleToEncapsulateNativeResources", Justification = "LLVM Context will clean up the allocations for this" )]
         internal readonly UIntPtr NativeAttributeSet;
     }
 }

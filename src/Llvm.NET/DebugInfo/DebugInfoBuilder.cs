@@ -667,6 +667,7 @@ namespace Llvm.NET.DebugInfo
             return InsertValue( value, offset, varInfo, null, location, insertAtEnd );
         }
 
+        [System.Diagnostics.CodeAnalysis.SuppressMessage( "Microsoft.Design", "CA1011:ConsiderPassingBaseTypesAsParameters" )]
         public CallInstruction InsertValue( Value value
                                           , UInt64 offset
                                           , DILocalVariable varInfo
