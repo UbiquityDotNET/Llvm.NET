@@ -636,7 +636,7 @@ namespace Llvm.NET.DebugInfo
         }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage( "Microsoft.Design", "CA1011:ConsiderPassingBaseTypesAsParameters" )]
-        public Instruction InsertValue( Value value
+        public CallInstruction InsertValue( Value value
                                       , UInt64 offset
                                       , DILocalVariable varInfo
                                       , DIExpression expression
