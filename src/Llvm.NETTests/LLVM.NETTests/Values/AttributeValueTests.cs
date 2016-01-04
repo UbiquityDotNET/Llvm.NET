@@ -1,56 +1,117 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Llvm.NET.Values;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Llvm.NETTests;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace Llvm.NET.Values.Tests
 {
-    [TestClass( )]
+    [TestClass]
     public class AttributeValueTests
     {
-        [TestMethod( )]
+        private const string TestTargetDependentAttributeName = "TestCustom";
+
+        [TestMethod]
         public void AttributeValueTest( )
         {
-            Assert.Inconclusive( );
+            var value = new AttributeValue( );
+            Assert.IsFalse( value.IntegerValue.HasValue );
+            Assert.IsFalse( value.IsEnum );
+            Assert.IsFalse( value.IsInt );
+            Assert.IsFalse( value.IsString );
+            Assert.IsNull( value.Name );
+            Assert.IsNull( value.StringValue );
+            Assert.AreEqual( AttributeKind.None, value.Kind );
         }
 
-        [TestMethod( )]
-        public void AttributeValueTest1( )
+        [TestMethod]
+        [ExpectedArgumentException("ctx", ExpectedExceptionMessage = "Provided context cannot be null or disposed")]
+        public void AttributeValueConstructorNoContextTest( )
         {
-            Assert.Inconclusive( );
+            var value = new AttributeValue( AttributeKind.AlwaysInline );
         }
 
-        [TestMethod( )]
-        public void AttributeValueTest2( )
+        [TestMethod]
+        public void AttributeValueTestEnum( )
         {
-            Assert.Inconclusive( );
+            using( var ctx = new Context( ) )
+            {
+                var value = new AttributeValue( AttributeKind.AlwaysInline );
+                Assert.IsFalse( value.IntegerValue.HasValue );
+                Assert.IsFalse( value.IsInt );
+                Assert.IsFalse( value.IsString );
+                Assert.IsNull( value.Name );
+                Assert.IsNull( value.StringValue );
+                Assert.IsTrue( value.IsEnum );
+                Assert.IsTrue( value.Kind.HasValue );
+                Assert.AreEqual( AttributeKind.AlwaysInline, value.Kind.Value );
+            }
         }
 
-        [TestMethod( )]
-        public void AttributeValueTest3( )
+        [TestMethod]
+        public void AttributeValueEnumInt( )
         {
-            Assert.Inconclusive( );
+            using( var ctx = new Context( ) )
+            {
+                var value = new AttributeValue( AttributeKind.DereferenceableOrNull, 1234ul );
+                Assert.IsTrue( value.IntegerValue.HasValue );
+                Assert.IsTrue( value.IsInt );
+                Assert.IsFalse( value.IsString );
+                Assert.IsNull( value.Name );
+                Assert.IsNull( value.StringValue );
+                Assert.IsFalse( value.IsEnum );
+                Assert.IsTrue( value.Kind.HasValue );
+                Assert.AreEqual( AttributeKind.DereferenceableOrNull, value.Kind.Value );
+                Assert.AreEqual( value.IntegerValue, 1234ul );
+            }
         }
 
-        [TestMethod( )]
-        public void AttributeHasValueTest( )
+        [TestMethod]
+        public void AttributeValueEnumString( )
         {
-            Assert.Inconclusive( );
+            using( var ctx = new Context( ) )
+            {
+                var value = new AttributeValue( TestTargetDependentAttributeName );
+                Assert.IsFalse( value.IntegerValue.HasValue );
+                Assert.IsFalse( value.IsInt );
+                Assert.IsTrue( value.IsString );
+                Assert.AreEqual( TestTargetDependentAttributeName, value.Name );
+                Assert.IsTrue( string.IsNullOrWhiteSpace( value.StringValue ) );
+                Assert.IsFalse( value.IsEnum );
+                Assert.IsFalse( value.Kind.HasValue );
+            }
         }
 
         [TestMethod]
         public void ImplicitCastAttributeKindToAttributeValueTest()
         {
+            using( var ctx = new Context( ) )
+            {
+                AttributeValue value = AttributeKind.NoInline;
+                Assert.IsFalse( value.IntegerValue.HasValue );
+                Assert.IsFalse( value.IsInt );
+                Assert.IsFalse( value.IsString );
+                Assert.IsNull( value.Name );
+                Assert.IsNull( value.StringValue );
+                Assert.IsTrue( value.IsEnum );
+                Assert.IsTrue( value.Kind.HasValue );
+                Assert.AreEqual( AttributeKind.NoInline, value.Kind.Value );
+            }
         }
 
         [TestMethod]
         public void ImplicitCastStringToAttributeValueTest( )
         {
+            using( var ctx = new Context( ) )
+            {
+                AttributeValue value = TestTargetDependentAttributeName;
+                Assert.IsFalse( value.IntegerValue.HasValue );
+                Assert.IsFalse( value.IsInt );
+                Assert.IsTrue( value.IsString );
+                Assert.AreEqual( TestTargetDependentAttributeName, value.Name );
+                Assert.IsTrue( string.IsNullOrWhiteSpace( value.StringValue ) );
+                Assert.IsFalse( value.IsEnum );
+                Assert.IsFalse( value.Kind.HasValue );
+            }
         }
 
-        // test all int value params to ensure that a value is provided (implicit casting from enum should provide default value of 0)
+        // test all int value parameters to ensure that a value is provided (implicit casting from enum should provide default value of 0)
     }
 }

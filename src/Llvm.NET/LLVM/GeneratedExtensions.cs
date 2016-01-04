@@ -48,6 +48,16 @@ namespace Llvm.NET
         internal readonly IntPtr Pointer;
     }
 
+    internal partial struct LLVMNamedMDNodeRef
+    {
+        internal LLVMNamedMDNodeRef(IntPtr pointer)
+        {
+            Pointer = pointer;
+        }
+
+        internal readonly IntPtr Pointer;
+    }
+
     internal enum LLVMModFlagBehavior
     {
         @Error = 1,
@@ -295,6 +305,18 @@ namespace Llvm.NET
 
         [DllImport(libraryPath, EntryPoint = "LLVMAddModuleFlag", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl, BestFitMapping = false, ThrowOnUnmappableChar = true)]
         internal static extern void AddModuleFlag(LLVMModuleRef @M, LLVMModFlagBehavior behavior, [MarshalAs(UnmanagedType.LPStr)] string @name, uint @value);
+
+        [DllImport(libraryPath, EntryPoint = "LLVMModuleGetModuleFlagsMetadata", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl, BestFitMapping = false, ThrowOnUnmappableChar = true)]
+        internal static extern LLVMNamedMDNodeRef ModuleGetModuleFlagsMetadata( LLVMModuleRef module );
+
+        [DllImport(libraryPath, EntryPoint = "LLVMNamedMDNodeGetNumOperands", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl, BestFitMapping = false, ThrowOnUnmappableChar = true)]
+        internal static extern UInt32 NamedMDNodeGetNumOperands( LLVMNamedMDNodeRef namedMDNode );
+
+        [DllImport(libraryPath, EntryPoint = "LLVMNamedMDNodeGetOperand", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl, BestFitMapping = false, ThrowOnUnmappableChar = true)]
+        internal static extern /*MDNode*/ LLVMMetadataRef NamedMDNodeGetOperand( LLVMNamedMDNodeRef namedMDNode, UInt32 index );
+
+        [DllImport(libraryPath, EntryPoint = "LLVMNamedMDNodeGetParentModule", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl, BestFitMapping = false, ThrowOnUnmappableChar = true)]
+        internal static extern LLVMModuleRef NamedMDNodeGetParentModule( LLVMNamedMDNodeRef namedMDNode );
 
         [DllImport( libraryPath, EntryPoint = "LLVMGetOrInsertFunction", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl, BestFitMapping = false, ThrowOnUnmappableChar = true)]
         internal static extern LLVMValueRef GetOrInsertFunction( LLVMModuleRef module, [MarshalAs( UnmanagedType.LPStr )] string @name, LLVMTypeRef functionType );
@@ -601,6 +623,12 @@ namespace Llvm.NET
 
         [DllImport( libraryPath, EntryPoint = "LLVMSetCallSiteAttributeSet", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl, BestFitMapping = false, ThrowOnUnmappableChar = true )]
         internal static extern void SetCallSiteAttributeSet( LLVMValueRef /*Instruction*/ instruction, UIntPtr attributeSet );
+
+        [DllImport( libraryPath, EntryPoint = "LLVMAttributeSetGetIteratorStartToken", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl, BestFitMapping = false, ThrowOnUnmappableChar = true )]
+        internal static extern UIntPtr AttributeSetGetIteratorStartToken( UIntPtr attributeSet, UInt32 slot );
+
+        [DllImport( libraryPath, EntryPoint = "LLVMAttributeSetIteratorGetNext", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl, BestFitMapping = false, ThrowOnUnmappableChar = true )]
+        internal static extern UIntPtr AttributeSetIteratorGetNext( UIntPtr attributeSet, UInt32 slot, ref UIntPtr pToken );
 
         [DllImport( libraryPath, EntryPoint = "LLVMIsEnumAttribute", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl, BestFitMapping = false, ThrowOnUnmappableChar = true )]
         internal static extern LLVMBool IsEnumAttribute( UIntPtr attribute );

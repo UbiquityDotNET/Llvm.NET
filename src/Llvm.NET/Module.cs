@@ -11,7 +11,7 @@ namespace Llvm.NET
     /// <summary>LLVM Bit code module</summary>
     /// <remarks>
     /// A module is the basic unit for containing code in LLVM. Modules are an in memory
-    /// representation of the LLVM bitcode. 
+    /// representation of the LLVM bit-code. 
     /// </remarks>
     public sealed class NativeModule 
         : IDisposable
@@ -264,6 +264,10 @@ namespace Llvm.NET
             }
         }
 
+        // TODO: Add enumerator for GlobalAlias(s)
+        // TODO: Add enumerator for Comdat(s)
+        // TODO: Add enumerator for NamedMDNode(s)
+
         /// <summary>Name of the module</summary>
         public string Name
         {
@@ -274,7 +278,7 @@ namespace Llvm.NET
             }
         }
 
-        /// <summary>Link another bitcode module into the current module</summary>
+        /// <summary>Link another bit-code module into the current module</summary>
         /// <param name="otherModule">Module to merge into this one</param>
         /// <param name="linkMode">Linker mode to use when merging</param>
         public void Link( NativeModule otherModule, LinkerMode linkMode )
@@ -545,6 +549,13 @@ namespace Llvm.NET
         void IExtensiblePropertyContainer.AddExtendedPropertyValue( string id, object value )
         {
             PropertyBag.AddExtendedPropertyValue( id, value );
+        }
+
+
+        internal static NativeModule FromHandle( LLVMModuleRef nativeHandle )
+        {
+            var context = Context.GetContextFor( nativeHandle );
+            return context.GetModuleFor( nativeHandle );
         }
 
         /// <summary>Load a bit-code module from a given file</summary>

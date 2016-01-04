@@ -130,24 +130,45 @@ namespace Llvm.NET.Values
             return NativeMethods.MarshalMsg( msgPtr );
         }
 
+        public IEnumerable<IndexedAttributeValue> AllAttributes
+        {
+            get
+            {
+                var numSlots = NativeMethods.AttributeSetGetNumSlots( NativeAttributeSet );
+                for( uint slot = 0; slot< numSlots; ++slot )
+                {
+                    var index = (FunctionAttributeIndex)NativeMethods.AttributeSetGetSlotIndex( NativeAttributeSet, slot );
+                    UIntPtr token = NativeMethods.AttributeSetGetIteratorStartToken( NativeAttributeSet, slot );
+                    UIntPtr attr = UIntPtr.Zero;
+                    do
+                    {
+                        attr = NativeMethods.AttributeSetIteratorGetNext( NativeAttributeSet, slot, ref token );
+                        if( attr == UIntPtr.Zero )
+                            break;
+
+                        yield return new IndexedAttributeValue( index, new AttributeValue( attr ) );
+                    } while( attr != UIntPtr.Zero );
+                }
+            }
+        }
+
         /// <summary>Creates a formatted string representation of the entire <see cref="AttributeSet"/> (e.g. all indices)</summary>
         /// <returns>Formatted string representation of the <see cref="AttributeSet"/></returns>
         public override string ToString( )
         {
             Context.VerifyOperation();
             var bldr = new StringBuilder( );
-            bldr.AppendFormat( "[Return: {0}]", AsString( FunctionAttributeIndex.ReturnType ) ).AppendLine( )
-                .AppendFormat( "[Function: {0}]", AsString( FunctionAttributeIndex.Function ) ).AppendLine( );
+            var indexGroups = from attribute in AllAttributes
+                              group attribute.Value.ToString( ) by attribute.Index;
 
-            // capture "this" for lambda as lambda's in a struct member can't access the "this" pointer
-            var self = this;
-            var q = from index in Indices
-                    where index >= FunctionAttributeIndex.Parameter0
-                    let param = self[ index ]
-                    select $"[Parameter({index}): {self.AsString( index )}";
-
-            foreach( var param in q )
-                bldr.AppendLine( param );
+            foreach( var group in indexGroups )
+            {
+                var values = string.Join( ", ", group );
+                if( group.Key < FunctionAttributeIndex.Parameter0 )
+                    bldr.AppendFormat( "[{0}: {1}]", group.Key, values );
+                else
+                    bldr.AppendFormat("[Parameter{0}: {1}]", group.Key - FunctionAttributeIndex.Parameter0, values );
+            }
 
             return bldr.ToString( );
         }

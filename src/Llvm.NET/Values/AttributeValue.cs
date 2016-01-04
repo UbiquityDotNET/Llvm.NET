@@ -4,6 +4,57 @@ using System.Runtime.InteropServices;
 
 namespace Llvm.NET.Values
 {
+    public struct IndexedAttributeValue 
+        : IEquatable<IndexedAttributeValue>
+    {
+        public IndexedAttributeValue( FunctionAttributeIndex index, AttributeValue value )
+        {
+            Index = index;
+            Value = value;
+        }
+
+        public FunctionAttributeIndex Index { get; }
+        public AttributeValue Value { get; }
+
+        public override string ToString( )
+        {
+            if( Index < FunctionAttributeIndex.Parameter0 )
+                return $"{Index}: {Value}";
+
+            return $"Parameter{( int )(Index - FunctionAttributeIndex.Parameter0)}: {Value}";
+        }
+        #region Equality operators
+        public bool Equals( IndexedAttributeValue other )
+        {
+            return other.Index == Index
+                && other.Value == Value;
+        }
+
+        public override bool Equals( object obj )
+        {
+            if( !( obj is IndexedAttributeValue ) )
+                return false;
+
+            return Equals( ( IndexedAttributeValue )obj );
+        }
+
+        public override int GetHashCode( )
+        {
+            return Value.GetHashCode( ) ^ Index.GetHashCode( );
+        }
+        
+        public static bool operator==( IndexedAttributeValue lhs, IndexedAttributeValue rhs )
+        {
+            return lhs.Equals( rhs );
+        }
+
+        public static bool operator!=( IndexedAttributeValue lhs, IndexedAttributeValue rhs )
+        {
+            return lhs.Equals( rhs );
+        }
+        #endregion
+    }
+
     /// <summary>Single attribute for functions, function returns and function parameters</summary>
     /// <remarks>
     /// This is the equivalent to the underlying llvm::Attribute class. The name was changed to 
@@ -179,6 +230,34 @@ namespace Llvm.NET.Values
 
         /// <summary>Flag to indicate if this attribute is a simple enumeration value</summary>
         public bool IsEnum => NativeMethods.IsEnumAttribute( NativeAttribute );
+
+        public bool IsValidOn( FunctionAttributeIndex index, Function function )
+        {
+            // for now all string attributes are valid everywhere as they are target dependent
+            // (e.g. no way to verify the validity of an arbitrary without knowing the target)
+            if( IsString )
+                return true;
+
+            return Kind.Value.CheckAttributeUsage( index, function );
+        }
+
+        public override string ToString( )
+        {
+            if( IsString )
+            {
+                if( !string.IsNullOrWhiteSpace( StringValue ) )
+                    return $"\"{ Name }\" = \"{ StringValue }\"";
+
+                return Name;
+            }
+
+            if( IsInt )
+            {
+                return $"{ Kind } = { IntegerValue }";
+            }
+
+            return Kind.ToString( );
+        }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage( "Microsoft.Reliability", "CA2006:UseSafeHandleToEncapsulateNativeResources" )]
         internal readonly UIntPtr NativeAttribute;

@@ -152,6 +152,10 @@ extern "C" {
     void LLVMSetFunctionAttributeSet( LLVMValueRef /*Function*/ function, LLVMAttributeSet attributeSet );
     LLVMAttributeSet LLVMGetCallSiteAttributeSet( LLVMValueRef /*Instruction*/ instruction );
     void LLVMSetCallSiteAttributeSet( LLVMValueRef /*Instruction*/ instruction, LLVMAttributeSet attributeSet );
+
+    uintptr_t LLVMAttributeSetGetIteratorStartToken( LLVMAttributeSet attributeSet, unsigned slot );
+    LLVMAttributeValue LLVMAttributeSetIteratorGetNext( LLVMAttributeSet attributeSet, unsigned slot, uintptr_t* pToken );
+
     /**
     * @}
     */

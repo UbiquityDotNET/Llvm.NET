@@ -11,7 +11,7 @@ namespace Llvm.NET.Values
     /// Value is the root of a hierarchy of types representing values
     /// in LLVM. Values (and derived classes) are never constructed 
     /// directly with the new operator. Instead, they are produced by
-    /// other classes in this library internally. This is becuase they
+    /// other classes in this library internally. This is because they
     /// are just wrappers around the LLVM-C API handles and must
     /// maintain the "uniqueing" semantics. (e.g. allowing reference
     /// equality for values that are fundamentally the same value)
@@ -346,7 +346,7 @@ namespace Llvm.NET.Values
     /// <remarks>
     /// Using generic static extension methods allows for fluent coding while retaining the type of the "this" parameter.
     /// If these were members of the <see cref="Value"/> class then the only return type could be <see cref="Value"/>,
-    /// thus losing the orignal type and requiring a cast to get back to it.
+    /// thus losing the original type and requiring a cast to get back to it.
     /// </remarks>
     public static class ValueExtensions
     {

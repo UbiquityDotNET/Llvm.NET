@@ -41,6 +41,8 @@ AttributeSet AsAttributeSet( LLVMAttributeSet attribute )
     return *reinterpret_cast< AttributeSet* >( &attribute );
 }
 
+static_assert( sizeof( ArrayRef<Attribute>::iterator ) == sizeof( uintptr_t ), "ERROR: Size mismatch on ArrayRef<Attribute>::iterator" );
+
 extern "C"
 {
     //--- AttributeSet wrappers 
@@ -228,6 +230,24 @@ extern "C"
         call.setAttributes( AsAttributeSet( attributeSet ) );
     }
 
+    uintptr_t LLVMAttributeSetGetIteratorStartToken( LLVMAttributeSet attributeSet, unsigned slot )
+    {
+        auto attributes = AsAttributeSet( attributeSet );
+        return reinterpret_cast<uintptr_t>( attributes.begin( slot ) );
+    }
+
+    LLVMAttributeValue LLVMAttributeSetIteratorGetNext( LLVMAttributeSet attributeSet, unsigned slot, uintptr_t* pToken )
+    {
+        auto attributes = AsAttributeSet( attributeSet );
+        auto it = *reinterpret_cast< Attribute**>( pToken );
+        if( it >= attributes.end( slot ) || it < attributes.begin( slot ) )
+            return wrap( Attribute( ) );
+        
+        auto retVal = wrap( *it );
+        *pToken = reinterpret_cast<uintptr_t>( ++it );
+        return retVal;
+    }
+
     //--- Attribute Wrappers
 
     LLVMBool LLVMIsEnumAttribute( LLVMAttributeValue attribute )
@@ -289,6 +309,8 @@ extern "C"
     {
         return wrap( llvm::Attribute::get( *unwrap( ctx ), name, value ) );
     }
+
+    //--- AttrBuilder Wrappers
 
     LLVMAttributeBuilderRef LLVMCreateAttributeBuilder( )
     {

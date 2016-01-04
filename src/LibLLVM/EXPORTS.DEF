@@ -1,6 +1,10 @@
 EXPORTS
 ; extensions to standard LLVM-C API
 LLVMAddModuleFlag
+LLVMModuleGetModuleFlagsMetadata
+LLVMNamedMDNodeGetNumOperands
+LLVMNamedMDNodeGetOperand
+LLVMNamedMDNodeGetParentModule
 LLVMVerifyFunctionEx
 LLVMConstantAsMetadata
 LLVMMDString2
@@ -117,6 +121,9 @@ LLVMGetFunctionAttributeSet
 LLVMSetFunctionAttributeSet
 LLVMGetCallSiteAttributeSet
 LLVMSetCallSiteAttributeSet
+LLVMAttributeSetGetIteratorStartToken
+LLVMAttributeSetIteratorGetNext
+
 LLVMIsEnumAttribute
 LLVMIsIntAttribute
 LLVMIsStringAttribute

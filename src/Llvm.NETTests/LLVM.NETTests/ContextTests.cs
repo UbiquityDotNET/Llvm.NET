@@ -4,6 +4,7 @@ using Llvm.NET.DebugInfo;
 using Llvm.NET.Types;
 using Llvm.NET.Values;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System.Threading.Tasks;
 
 namespace Llvm.NET.Tests
 {
@@ -11,6 +12,19 @@ namespace Llvm.NET.Tests
     [DeploymentItem("LibLLVM.dll")]
     public class ContextTests
     {
+        [TestMethod]
+        public void CurrentThreadContextTest( )
+        {
+            Assert.IsNull( Context.CurrentContext );
+            using( var context = new Context() )
+            {
+                Assert.AreSame( context, Context.CurrentContext );
+                var other = Task.Run( ( ) => Context.CurrentContext ).Result;
+                Assert.IsNull( other );
+            }
+            Assert.IsNull( Context.CurrentContext );
+        }
+
         [TestMethod]
         public void SimpleConstructorDisposeTest( )
         {

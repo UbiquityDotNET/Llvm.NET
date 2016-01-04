@@ -1,4 +1,5 @@
-﻿using Llvm.NET;
+﻿using System.Collections.Generic;
+using Llvm.NET;
 using Llvm.NET.Values;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
@@ -379,19 +380,50 @@ namespace Llvm.NETTests
         [TestMethod]
         public void HasAnyTest( )
         {
-            Assert.Inconclusive( );
+            using( var ctx = new Context( ) )
+            {
+                var attributes = new AttributeSet( );
+                Assert.IsFalse( attributes.HasAny( FunctionAttributeIndex.Function ) );
+                Assert.IsFalse( attributes.HasAny( FunctionAttributeIndex.ReturnType ) );
+                Assert.IsFalse( attributes.HasAny( FunctionAttributeIndex.Parameter0 ) );
+                Assert.IsFalse( attributes.HasAny( FunctionAttributeIndex.Parameter0 + 1 ) );
+
+                attributes = attributes.Add( FunctionAttributeIndex.Function, AttributeKind.AlwaysInline, AttributeKind.Builtin )
+                                       .Add( FunctionAttributeIndex.ReturnType, new AttributeValue( AttributeKind.DereferenceableOrNull, 1 ) )
+                                       .Add( FunctionAttributeIndex.Parameter0, AttributeKind.ByVal )
+                                       .Add( FunctionAttributeIndex.Parameter0 + 1, "TestCustom" );
+
+                Assert.IsTrue( attributes.HasAny( FunctionAttributeIndex.Function ) );
+                Assert.IsTrue( attributes.HasAny( FunctionAttributeIndex.ReturnType ) );
+                Assert.IsTrue( attributes.HasAny( FunctionAttributeIndex.Parameter0 ) );
+                Assert.IsTrue( attributes.HasAny( FunctionAttributeIndex.Parameter0 + 1 ) );
+            }
         }
 
         [TestMethod]
         public void HasTest( )
         {
-            Assert.Inconclusive( );
-        }
+            using( var ctx = new Context( ) )
+            {
+                var attributes = new AttributeSet( );
 
-        [TestMethod]
-        public void HasTest1( )
-        {
-            Assert.Inconclusive( );
+                Assert.IsFalse( attributes.Has( FunctionAttributeIndex.Function, AttributeKind.AlwaysInline ) );
+                Assert.IsFalse( attributes.Has( FunctionAttributeIndex.Function, AttributeKind.Builtin ) );
+                Assert.IsFalse( attributes.Has( FunctionAttributeIndex.ReturnType, AttributeKind.DereferenceableOrNull ) );
+                Assert.IsFalse( attributes.Has( FunctionAttributeIndex.Parameter0, AttributeKind.ByVal ) );
+                Assert.IsFalse( attributes.Has( FunctionAttributeIndex.Parameter0 + 1, "TestCustom" ) );
+
+                attributes = attributes.Add( FunctionAttributeIndex.Function, AttributeKind.AlwaysInline, AttributeKind.Builtin )
+                                       .Add( FunctionAttributeIndex.ReturnType, new AttributeValue( AttributeKind.DereferenceableOrNull, 1 ) )
+                                       .Add( FunctionAttributeIndex.Parameter0, AttributeKind.ByVal )
+                                       .Add( FunctionAttributeIndex.Parameter0 + 1, "TestCustom" );
+
+                Assert.IsTrue( attributes.Has( FunctionAttributeIndex.Function, AttributeKind.AlwaysInline ) );
+                Assert.IsTrue( attributes.Has( FunctionAttributeIndex.Function, AttributeKind.Builtin ) );
+                Assert.IsTrue( attributes.Has( FunctionAttributeIndex.ReturnType, AttributeKind.DereferenceableOrNull ) );
+                Assert.IsTrue( attributes.Has( FunctionAttributeIndex.Parameter0, AttributeKind.ByVal ) );
+                Assert.IsTrue( attributes.Has( FunctionAttributeIndex.Parameter0 + 1, "TestCustom" ) );
+            }
         }
 
         [TestMethod]
@@ -444,6 +476,29 @@ namespace Llvm.NETTests
             Assert.AreEqual( FunctionIndexKinds.Function, AttributeKind.SanitizeThread.GetAllowedindices( ) );
             Assert.AreEqual( FunctionIndexKinds.Function, AttributeKind.SanitizeMemory.GetAllowedindices( ) );
             Assert.AreEqual( FunctionIndexKinds.Function, AttributeKind.UWTable.GetAllowedindices( ) );
+        }
+
+        [TestMethod]
+        [Description("Verifies that the AllAttributesProperty contains the attributes specified for an attribute set")]
+        public void AttributeSetAllAttributesTest( )
+        {
+            using( var ctx = new Context( ) )
+            {
+                var attributes = new AttributeSet( ).Add( FunctionAttributeIndex.Function, AttributeKind.AlwaysInline, AttributeKind.Builtin )
+                                                    .Add( FunctionAttributeIndex.ReturnType, new AttributeValue( AttributeKind.DereferenceableOrNull, 1 ) )
+                                                    .Add( FunctionAttributeIndex.Parameter0, AttributeKind.ByVal )
+                                                    .Add( FunctionAttributeIndex.Parameter0 + 1, "TestCustom" );
+
+                var expectedSet = new HashSet<IndexedAttributeValue>
+                    { new IndexedAttributeValue( FunctionAttributeIndex.Function, AttributeKind.AlwaysInline )
+                    , new IndexedAttributeValue( FunctionAttributeIndex.Function, AttributeKind.Builtin )
+                    , new IndexedAttributeValue( FunctionAttributeIndex.ReturnType, new AttributeValue(AttributeKind.DereferenceableOrNull, 1 ) )
+                    , new IndexedAttributeValue( FunctionAttributeIndex.Parameter0, AttributeKind.ByVal )
+                    , new IndexedAttributeValue( FunctionAttributeIndex.Parameter0 + 1, "TestCustom" )
+                    };
+
+                Assert.IsTrue( expectedSet.SetEquals( attributes.AllAttributes ) );
+            }
         }
     }
 }

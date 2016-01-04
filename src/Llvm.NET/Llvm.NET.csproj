@@ -126,6 +126,7 @@
     <Compile Include="Instructions\VaArg.cs" />
     <Compile Include="LLVM\LlvmHandles.cs" />
     <Compile Include="Metadata.cs" />
+    <Compile Include="NamedMDNode.cs" />
     <Compile Include="ScalarEnumerable.cs" />
     <Compile Include="DebugInfo\DebugBasicType.cs" />
     <Compile Include="DebugInfo\DebugFunctionType.cs" />

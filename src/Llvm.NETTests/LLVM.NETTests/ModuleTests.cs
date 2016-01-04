@@ -9,6 +9,8 @@ namespace Llvm.NET.Tests
     [DeploymentItem("LibLLVM.dll")]
     public class ModuleTests
     {
+        private const string StructTestName = "struct.Test";
+        private const string TestModuleName = "test";
 
         [TestMethod]
         public void DefaultConstructorTest( )
@@ -39,9 +41,9 @@ namespace Llvm.NET.Tests
         [TestMethod]
         public void ConstructorTestWithName( )
         {
-            using( var module = new NativeModule( "test" ) )
+            using( var module = new NativeModule( TestModuleName ) )
             {
-                Assert.AreEqual( "test", module.Name );
+                Assert.AreEqual( TestModuleName, module.Name );
                 Assert.IsNotNull( module );
                 Assert.IsNotNull( module.Context );
                 Assert.AreSame( string.Empty, module.DataLayoutString );
@@ -65,9 +67,9 @@ namespace Llvm.NET.Tests
         [TestMethod]
         public void ConstructorTestWithNameAndCompileUnit( )
         {
-            using( var module = new NativeModule( "test", DebugInfo.SourceLanguage.C99, "test.c", "unitTest", false, string.Empty, 0 ) )
+            using( var module = new NativeModule( TestModuleName, DebugInfo.SourceLanguage.C99, "test.c", "unitTest", false, string.Empty, 0 ) )
             {
-                Assert.AreEqual( "test", module.Name );
+                Assert.AreEqual( TestModuleName, module.Name );
                 Assert.IsNotNull( module );
                 Assert.IsNotNull( module.Context );
                 Assert.AreSame( string.Empty, module.DataLayoutString );
@@ -89,7 +91,7 @@ namespace Llvm.NET.Tests
         [TestMethod]
         public void DisposeTest( )
         {
-            using( var module = new NativeModule( "test" ) )
+            using( var module = new NativeModule( TestModuleName ) )
             {
             }
         }
@@ -103,7 +105,7 @@ namespace Llvm.NET.Tests
         [TestMethod]
         public void VerifyValidModuleTest( )
         {
-            using( var module = new NativeModule( "test" ) )
+            using( var module = new NativeModule( TestModuleName ) )
             {
                 Function testFunc = CreateSimpleVoidNopTestFunction( module, "foo" );
                 // verify basics
@@ -118,7 +120,7 @@ namespace Llvm.NET.Tests
         [TestMethod]
         public void VerifyInvalidModuleTest( )
         {
-            using( var module = new NativeModule( "test" ) )
+            using( var module = new NativeModule( TestModuleName ) )
             {
                 Function testFunc = CreateInvalidFunction( module, "badfunc" );
                 // verify basics
@@ -136,7 +138,7 @@ namespace Llvm.NET.Tests
         [TestMethod]
         public void AddFunctionGetFunctionTest( )
         {
-            using( var module = new NativeModule( "test" ) )
+            using( var module = new NativeModule( TestModuleName ) )
             {
                 Function testFunc = CreateSimpleVoidNopTestFunction( module, "foo" );
                 // verify basics
@@ -160,7 +162,7 @@ namespace Llvm.NET.Tests
         [DeploymentItem("TestModuleAsString.ll")]
         public void AsStringTest( )
         {
-            using( var module = new NativeModule( "test" ) )
+            using( var module = new NativeModule( TestModuleName ) )
             {
                 Function testFunc = CreateSimpleVoidNopTestFunction( module, "foo" );
                 // verify basics
@@ -175,15 +177,15 @@ namespace Llvm.NET.Tests
         [TestMethod]
         public void AddAliasGetAliasTest( )
         {
-            using( var module = new NativeModule( "test" ) )
+            using( var module = new NativeModule( TestModuleName ) )
             {
                 Function testFunc = CreateSimpleVoidNopTestFunction( module, "_test" );
 
-                var alias = module.AddAlias( testFunc, "test" );
-                Assert.AreSame( alias, module.GetAlias( "test" ) );
+                var alias = module.AddAlias( testFunc, TestModuleName );
+                Assert.AreSame( alias, module.GetAlias( TestModuleName ) );
                 Assert.AreSame( module, alias.ParentModule );
                 Assert.AreSame( testFunc, alias.Aliasee );
-                Assert.AreEqual( "test", alias.Name );
+                Assert.AreEqual( TestModuleName, alias.Name );
                 Assert.AreEqual( Linkage.External, alias.Linkage );
                 Assert.AreSame( testFunc.NativeType, alias.NativeType );
 
@@ -200,37 +202,83 @@ namespace Llvm.NET.Tests
         [TestMethod]
         public void AddGlobalTest( )
         {
-            Assert.Inconclusive( );
+            using( var module = new NativeModule( TestModuleName ) )
+            {
+                module.AddGlobal( module.Context.Int32Type, "TestInt" );
+                GlobalVariable globalVar = module.GetNamedGlobal( "TestInt" );
+                Assert.AreEqual( "TestInt", globalVar.Name );
+                Assert.AreSame( module.Context.Int32Type.CreatePointerType(), globalVar.NativeType );
+            }
         }
 
         [TestMethod]
         public void AddGlobalTest1( )
         {
-            Assert.Inconclusive( );
+            using( var module = new NativeModule( TestModuleName ) )
+            {
+                // unnamed global
+                module.AddGlobal( module.Context.Int32Type, true, Linkage.WeakODR, module.Context.CreateConstant( 0x12345678 ) );
+                var globalVar = module.Globals.First( ) as GlobalVariable;
+                Assert.IsNotNull( globalVar );
+                Assert.IsTrue( string.IsNullOrWhiteSpace( globalVar.Name ) );
+                Assert.AreSame( module.Context.Int32Type.CreatePointerType(), globalVar.NativeType );
+                Assert.AreSame( module.Context.Int32Type, globalVar.Initializer.NativeType );
+                Assert.AreEqual( Linkage.WeakODR, globalVar.Linkage );
+                Assert.IsTrue( globalVar.IsConstant );
+                Assert.IsInstanceOfType( globalVar.Initializer, typeof( ConstantInt ) );
+                var constInt = ( ConstantInt )globalVar.Initializer;
+                Assert.AreEqual( ( long )0x12345678, constInt.SignExtendedValue );
+            }
         }
 
         [TestMethod]
         public void AddGlobalTest2( )
         {
-            Assert.Inconclusive( );
+            using( var module = new NativeModule( TestModuleName ) )
+            {
+                module.AddGlobal( module.Context.Int32Type, true, Linkage.WeakODR, module.Context.CreateConstant( 0x12345678 ), "TestInt" );
+                GlobalVariable globalVar = module.GetNamedGlobal( "TestInt" );
+                Assert.AreEqual( "TestInt", globalVar.Name );
+                Assert.AreSame( module.Context.Int32Type.CreatePointerType(), globalVar.NativeType );
+                Assert.AreSame( module.Context.Int32Type, globalVar.Initializer.NativeType );
+                Assert.AreEqual( Linkage.WeakODR, globalVar.Linkage );
+                Assert.IsTrue( globalVar.IsConstant );
+                Assert.IsInstanceOfType( globalVar.Initializer, typeof( ConstantInt ) );
+                var constInt = ( ConstantInt )globalVar.Initializer;
+                Assert.AreEqual( ( long )0x12345678, constInt.SignExtendedValue );
+            }
         }
 
         [TestMethod]
         public void GetTypeByNameTest( )
         {
-            Assert.Inconclusive( );
-        }
-
-        [TestMethod]
-        public void GetNamedGlobalTest( )
-        {
-            Assert.Inconclusive( );
+            using( var module = new NativeModule( TestModuleName ) )
+            {
+                // while GetTypeByName is exposed on the module it isn't really specific to the module
+                // That is, the type belongs to the context and GetTypeByName() is just a convenience
+                // wrapper to access types for a module.
+                var type = module.GetTypeByName( StructTestName );
+                Assert.IsNull( type );
+                var expectedType = module.Context.CreateStructType( StructTestName );
+                var actualType = module.GetTypeByName( StructTestName );
+                Assert.AreSame( expectedType, actualType );
+            }
         }
 
         [TestMethod]
         public void AddModuleFlagTest( )
         {
-            Assert.Inconclusive( );
+            using( var module = new NativeModule( TestModuleName ) )
+            {
+                module.AddModuleFlag( ModuleFlagBehavior.Warning, NativeModule.DwarfVersionValue, 4 );
+                module.AddModuleFlag( ModuleFlagBehavior.Warning, NativeModule.DebugVersionValue, NativeModule.DebugMetadataVersion );
+                module.AddModuleFlag( ModuleFlagBehavior.Error, "wchar_size", 4 );
+                module.AddModuleFlag( ModuleFlagBehavior.Error, "min_enum_size", 4 );
+                module.AddVersionIdentMetadata( "unit-tests 1.0" );
+                // currently no exposed means to get module level flags...
+                // so at this point as long as adding the flags doesn't throw an exception
+                // assume things are OK.
+            }
         }
 
         [TestMethod]

@@ -35,6 +35,35 @@ namespace Llvm.NET.Values
             }
         }
 
+        public static bool CheckAttributeUsage( this AttributeKind kind, FunctionAttributeIndex index, Function function )
+        {
+            Debug.Assert( kind >= AttributeKind.None && kind < AttributeKind.EndAttrKinds );
+            FunctionIndexKinds allowedindices = kind.GetAllowedindices( );
+            switch( index )
+            {
+            case FunctionAttributeIndex.Function:
+                if( !allowedindices.HasFlag( FunctionIndexKinds.Function ) )
+                    return false;
+                break;
+
+            case FunctionAttributeIndex.ReturnType:
+                if( !allowedindices.HasFlag( FunctionIndexKinds.Return ) )
+                    return false;
+                break;
+
+            //case FunctionAttributeIndex.Parameter0:
+            default:
+                if( !allowedindices.HasFlag( FunctionIndexKinds.Parameter ) )
+                    return false;
+
+                var paramIndex = index - FunctionAttributeIndex.Parameter0;
+                if( paramIndex >= function.Parameters.Count )
+                    return false;
+                break;
+            }
+            return true;
+        }
+
         public static void VerifyAttributeUsage( this AttributeKind kind, FunctionAttributeIndex index )
         {
             Debug.Assert( kind >= AttributeKind.None && kind < AttributeKind.EndAttrKinds );
