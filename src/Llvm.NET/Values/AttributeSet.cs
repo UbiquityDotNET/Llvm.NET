@@ -14,14 +14,9 @@ namespace Llvm.NET.Values
     /// will handle cleaning it up on <see cref="NET.Context.Dispose()"/>.
     /// </remarks>
     [System.Diagnostics.CodeAnalysis.SuppressMessage( "Microsoft.Design", "CA1049:TypesThatOwnNativeResourcesShouldBeDisposable", Justification = "LLVM Context owns the attribute set")]
-    public class AttributeSet
+    public struct AttributeSet
         : IEquatable<AttributeSet>
     {
-        public AttributeSet( )
-            : this( NativeMethods.CreateEmptyAttributeSet( ) )
-        {
-        }
-
         public AttributeSet( Context context, FunctionAttributeIndex index, AttributeBuilder bldr )
         {
             context.VerifyAsArg( nameof( context ) );
@@ -76,7 +71,7 @@ namespace Llvm.NET.Values
             {
                 // explicitly check Context so that getter method doesn't throw an exception
                 if( Context == null || Context.IsDisposed || !HasAny( index ) )
-                    return null;
+                    return new AttributeSet();
 
                 return new AttributeSet( NativeMethods.AttributeGetAttributes( NativeAttributeSet, ( uint )index ) );
             }
@@ -110,13 +105,11 @@ namespace Llvm.NET.Values
         public AttributeSet ParameterAttributes( int paramIndex )
         {
             Context.VerifyOperation();
+            // prevent overflow on offset addition below
             if( paramIndex > int.MaxValue - (int)FunctionAttributeIndex.Parameter0 )
                 throw new ArgumentOutOfRangeException( nameof( paramIndex ) );
 
             var index = FunctionAttributeIndex.Parameter0 + paramIndex;
-            if( !HasAny( index ) )
-                return null;
-
             return new AttributeSet( NativeMethods.AttributeGetAttributes( NativeAttributeSet, ( uint )index ) );
         }
 

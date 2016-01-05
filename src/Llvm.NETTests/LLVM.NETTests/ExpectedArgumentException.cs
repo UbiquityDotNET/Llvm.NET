@@ -3,6 +3,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace Llvm.NETTests
 {
+    /// <summary>Attribute to mark a method as expecting an argument exception with optional parameter name and exception message validation</summary>
     public sealed class ExpectedArgumentExceptionAttribute
         : ExpectedExceptionBaseAttribute
     {

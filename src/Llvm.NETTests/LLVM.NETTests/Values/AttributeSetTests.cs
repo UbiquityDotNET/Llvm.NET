@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using Llvm.NET;
 using Llvm.NET.Values;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -32,6 +33,27 @@ namespace Llvm.NETTests
                 Assert.AreEqual( "inreg", paramAttributes.AsString( FunctionAttributeIndex.Parameter0 ) );
                 Assert.AreEqual( string.Empty, paramAttributes.AsString( FunctionAttributeIndex.Function ) );
                 Assert.AreEqual( string.Empty, paramAttributes.AsString( FunctionAttributeIndex.ReturnType ) );
+            }
+        }
+
+        [TestMethod]
+        public void GetParameterWhenNoAttributessetForParameterTest( )
+        {
+            using( var module = new NativeModule( "test" ) )
+            {
+                var sig = module.Context.GetFunctionType( module.Context.Int8Type.CreatePointerType(), module.Context.Int32Type, module.Context.Int32Type );
+                var function = module.AddFunction( "test", sig );
+                // add attributes to all indices of the function
+                var attributes = function.Attributes.Add( FunctionAttributeIndex.Function, AttributeKind.AlwaysInline, AttributeKind.OptimizeNone )
+                                                    .Add( FunctionAttributeIndex.ReturnType, AttributeKind.NonNull )
+                                                    .Add( FunctionAttributeIndex.Parameter0, AttributeKind.InReg );
+
+                var paramAttributes = attributes.ParameterAttributes( 0 );
+                Assert.AreNotSame( attributes, paramAttributes );
+                // parameterAttributes should only have attributes on the parameter index (e.g. ParameterAttributes(0) should filter them)
+                Assert.AreEqual( "inreg", paramAttributes.AsString( FunctionAttributeIndex.Parameter0 ) );
+                var shouldBeEmptyAttributes = attributes.ParameterAttributes( 1 );
+                Assert.IsFalse( shouldBeEmptyAttributes.AllAttributes.Any( ) );
             }
         }
 
