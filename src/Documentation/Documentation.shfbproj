@@ -16,7 +16,7 @@
     <Name>Documentation</Name>
     <!-- SHFB properties -->
     <FrameworkVersion>.NET Framework 4.5</FrameworkVersion>
-    <OutputPath>$(BaseOutputPath)Documentation</OutputPath>
+    <OutputPath>..\..\Docs\</OutputPath>
     <HtmlHelpName>Llvm.NET</HtmlHelpName>
     <Language>en-US</Language>
     <TransformComponentArguments>
