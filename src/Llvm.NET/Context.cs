@@ -673,6 +673,7 @@ namespace Llvm.NET
 
         internal LLVMContextRef ContextHandle { get; private set; }
 
+        [System.Diagnostics.CodeAnalysis.SuppressMessage( "Microsoft.Performance", "CA1822:MarkMembersAsStatic", Justification = "Conditional attribute makes this an empty method in release builds" )]
         [Conditional("DEBUG")]
         internal void AssertValueNotInterned( LLVMValueRef valueRef )
         {
@@ -724,6 +725,7 @@ namespace Llvm.NET
             return retVal;
         }
 
+        [System.Diagnostics.CodeAnalysis.SuppressMessage( "Microsoft.Performance", "CA1822:MarkMembersAsStatic", Justification = "Conditional attribute makes this an empty method in release builds" )]
         [Conditional("DEBUG")]
         internal void AssertTypeNotInterned( LLVMTypeRef typeRef )
         {
