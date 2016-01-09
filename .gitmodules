@@ -1,0 +1,4 @@
+[submodule "Docs"]
+	path = Docs
+	url = https://github.com/NETMF/Llvm.NET.git
+	branch = gh-pages
