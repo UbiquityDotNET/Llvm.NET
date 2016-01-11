@@ -1,26 +1,45 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Dictionary>
-      <Words>
-         <Unrecognized>
+    <Words>
+        <Unrecognized>
             <Word></Word>
-         </Unrecognized>
-         <Recognized>
+        </Unrecognized>
+        <Recognized>
             <Word>AttributeSet</Word>
-             <Word>alloca</Word>
-         </Recognized>
-         <Deprecated>
+            <Word>alloca</Word>
+            <Word>Cmp</Word>
+            <Word>Xchg</Word>
+            <Word>llvm</Word>
+            <word>Typedef</word>
+            <Word>inlined</Word>
+            <Word>LValue</Word>
+            <Word>RValue</Word>
+            <Word>Mips</Word>
+            <Word>pointee</Word>
+            <Word>Subrange</Word>
+        </Recognized>
+        <Deprecated>
             <Term PreferredAlternate=""></Term>
-         </Deprecated>
-         <Compound>
+        </Deprecated>
+        <Compound>
             <Term CompoundAlternate=""></Term>
-         </Compound>
-         <DiscreteExceptions>
-            <Term></Term>
-         </DiscreteExceptions>
-      </Words>
-      <Acronyms>
-         <CasingExceptions>
-            <Acronym></Acronym>
-         </CasingExceptions>
-      </Acronyms>
-   </Dictionary>
+        </Compound>
+        <DiscreteExceptions>
+            <Term>AttributeSet</Term>
+            <Term>Subrange</Term>
+            <Term>Typedef</Term>
+        </DiscreteExceptions>
+    </Words>
+    <Acronyms>
+        <CasingExceptions>
+            <Acronym>RMW</Acronym>
+            <Acronym>LLVM</Acronym>
+            <Acronym>C</Acronym>
+            <Acronym>PLI</Acronym>
+            <Acronym>UPC</Acronym>
+            <Acronym>OCaml</Acronym>
+            <Acronym>MIPS</Acronym>
+            <Acronym>NET</Acronym>
+        </CasingExceptions>
+    </Acronyms>
+</Dictionary>

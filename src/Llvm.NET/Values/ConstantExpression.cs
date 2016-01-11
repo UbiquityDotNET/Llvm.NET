@@ -7,7 +7,7 @@ namespace Llvm.NET.Values
     public class ConstantExpression
         : Constant
     {
-        public OpCode Opcode => ( OpCode )NativeMethods.GetConstOpcode( ValueHandle );
+        public OpCode OpCode => ( OpCode )NativeMethods.GetConstOpcode( ValueHandle );
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage( "Microsoft.Design", "CA1011:ConsiderPassingBaseTypesAsParameters", Justification = "Specific type required by interop call" )]
         public static Constant IntToPtrExpression( Constant value, ITypeRef type )

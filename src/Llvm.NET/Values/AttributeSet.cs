@@ -17,16 +17,16 @@ namespace Llvm.NET.Values
     public struct AttributeSet
         : IEquatable<AttributeSet>
     {
-        public AttributeSet( Context context, FunctionAttributeIndex index, AttributeBuilder bldr )
+        public AttributeSet( Context context, FunctionAttributeIndex index, AttributeBuilder builder )
         {
             if( context == null )
                 throw new ArgumentNullException( nameof( context ) );
 
-            if( bldr == null )
-                throw new ArgumentNullException( nameof( bldr ) );
+            if( builder == null )
+                throw new ArgumentNullException( nameof( builder ) );
 
             context.VerifyAsArg( nameof( context ) );
-            NativeAttributeSet = NativeMethods.CreateAttributeSetFromBuilder( context.ContextHandle, ( uint )index, bldr.BuilderHandle );
+            NativeAttributeSet = NativeMethods.CreateAttributeSetFromBuilder( context.ContextHandle, ( uint )index, builder.BuilderHandle );
         }
 
         #region IEquatable
@@ -48,8 +48,8 @@ namespace Llvm.NET.Values
 
         public bool Equals( AttributeSet other ) => NativeAttributeSet == other.NativeAttributeSet;
 
-        public static bool operator ==( AttributeSet lhs, AttributeSet rhs ) => lhs.Equals( rhs );
-        public static bool operator !=( AttributeSet lhs, AttributeSet rhs ) => !lhs.Equals( rhs );
+        public static bool operator ==( AttributeSet left, AttributeSet right ) => left.Equals( right );
+        public static bool operator !=( AttributeSet left, AttributeSet right ) => !left.Equals( right );
         #endregion
 
         /// <summary>Context used to intern this <see cref="AttributeSet"/></summary>
@@ -84,7 +84,7 @@ namespace Llvm.NET.Values
         }
 
         /// <summary>Enumerates the <see cref="FunctionAttributeIndex"/> values that have attributes associated in this <see cref="AttributeSet"/></summary>
-        public IEnumerable<FunctionAttributeIndex> Indices
+        public IEnumerable<FunctionAttributeIndex> Indexes
         {
             get
             {
@@ -105,17 +105,17 @@ namespace Llvm.NET.Values
         public AttributeSet FunctionAttributes => this[ FunctionAttributeIndex.Function ];
 
         /// <summary>Gets the attributes for a function parameter</summary>
-        /// <param name="paramIndex">Parameter index [ 0 based ]</param>
+        /// <param name="parameterIndex">Parameter index [ 0 based ]</param>
         /// <returns><see cref="AttributeSet"/>filtered for the specified parameter</returns>
         [System.Diagnostics.CodeAnalysis.SuppressMessage( "Microsoft.Naming", "CA2204:Literals should be spelled correctly", MessageId = "AttributeSet" )]
-        public AttributeSet ParameterAttributes( int paramIndex )
+        public AttributeSet ParameterAttributes( int parameterIndex )
         {
             Context.VerifyOperation( );
             // prevent overflow on offset addition below
-            if( paramIndex > int.MaxValue - ( int )FunctionAttributeIndex.Parameter0 )
-                throw new ArgumentOutOfRangeException( nameof( paramIndex ) );
+            if( parameterIndex > int.MaxValue - ( int )FunctionAttributeIndex.Parameter0 )
+                throw new ArgumentOutOfRangeException( nameof( parameterIndex ) );
 
-            var index = FunctionAttributeIndex.Parameter0 + paramIndex;
+            var index = FunctionAttributeIndex.Parameter0 + parameterIndex;
             return new AttributeSet( NativeMethods.AttributeGetAttributes( NativeAttributeSet, ( uint )index ) );
         }
 

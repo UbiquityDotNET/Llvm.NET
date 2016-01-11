@@ -101,12 +101,12 @@ namespace Llvm.NET.DebugInfo
                            , uint line
                            , DebugInfoFlags debugFlags
                            , IEnumerable<ITypeRef> nativeElements
-                           , IEnumerable<DebugMemberInfo> debugelements
+                           , IEnumerable<DebugMemberInfo> debugElements
                            , uint? bitSize = null
                            , uint? bitAlignment = null
                            )
         {
-            DebugMembers = new ReadOnlyCollection<DebugMemberInfo>( debugelements as IList<DebugMemberInfo> ?? debugelements.ToList( ) );
+            DebugMembers = new ReadOnlyCollection<DebugMemberInfo>( debugElements as IList<DebugMemberInfo> ?? debugElements.ToList( ) );
             SetBody( packed, nativeElements.ToArray() );
             var memberTypes = from memberInfo in DebugMembers
                               select CreateMemberType( module, memberInfo );

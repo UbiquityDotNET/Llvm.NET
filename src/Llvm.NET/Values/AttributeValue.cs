@@ -43,14 +43,14 @@ namespace Llvm.NET.Values
             return Value.GetHashCode( ) ^ Index.GetHashCode( );
         }
         
-        public static bool operator==( IndexedAttributeValue lhs, IndexedAttributeValue rhs )
+        public static bool operator==( IndexedAttributeValue left, IndexedAttributeValue right )
         {
-            return lhs.Equals( rhs );
+            return left.Equals( right );
         }
 
-        public static bool operator!=( IndexedAttributeValue lhs, IndexedAttributeValue rhs )
+        public static bool operator!=( IndexedAttributeValue left, IndexedAttributeValue right )
         {
-            return lhs.Equals( rhs );
+            return left.Equals( right );
         }
         #endregion
     }
@@ -79,10 +79,10 @@ namespace Llvm.NET.Values
         }
 
         /// <summary>Creates a simple boolean attribute</summary>
-        /// <param name="ctx">Context for creating the attribute</param>
+        /// <param name="context">Context for creating the attribute</param>
         /// <param name="kind">Kind of attribute</param>
-        public AttributeValue( Context ctx, AttributeKind kind )
-            : this( ctx, kind, 0ul )
+        public AttributeValue( Context context, AttributeKind kind )
+            : this( context, kind, 0ul )
         {
             if( kind.RequiresIntValue() )
                 throw new ArgumentException( $"Attribute {kind} requires a value", nameof( kind ) );
@@ -109,7 +109,7 @@ namespace Llvm.NET.Values
         }
 
         /// <summary>Creates an attribute with an integer value parameter</summary>
-        /// <param name="ctx">Context used for interning attributes</param>
+        /// <param name="context">Context used for interning attributes</param>
         /// <param name="kind">The kind of attribute</param>
         /// <param name="value">Value for the attribute</param>
         /// <remarks>
@@ -124,8 +124,12 @@ namespace Llvm.NET.Values
         /// <item><term><see cref="AttributeKind.DereferenceableOrNull"/></term><term>64</term></item>
         /// </list>
         /// </remarks>
-        public AttributeValue( Context ctx, AttributeKind kind, UInt64 value )
-            : this( NativeMethods.CreateAttribute( ctx.VerifyAsArg( nameof( ctx ) ).ContextHandle, ( LLVMAttrKind )kind, value ) )
+        public AttributeValue( Context context, AttributeKind kind, UInt64 value )
+            : this( NativeMethods.CreateAttribute( context.VerifyAsArg( nameof( context ) ).ContextHandle
+                                                 , ( LLVMAttrKind )kind
+                                                 , value
+                                                 )
+                  )
         {
         }
 
@@ -137,10 +141,10 @@ namespace Llvm.NET.Values
         }
 
         /// <summary>Adds a valueless named attribute</summary>
-        /// <param name="ctx">Context to use for interning attributes</param>
+        /// <param name="context">Context to use for interning attributes</param>
         /// <param name="name">Attribute name</param>
-        public AttributeValue( Context ctx, string name )
-            : this( ctx, name, string.Empty )
+        public AttributeValue( Context context, string name )
+            : this( context, name, string.Empty )
         {
         }
 
@@ -153,17 +157,17 @@ namespace Llvm.NET.Values
         }
 
         /// <summary>Adds a Target specific named attribute with value</summary>
-        /// <param name="ctx">Context to use for interning attributes</param>
+        /// <param name="context">Context to use for interning attributes</param>
         /// <param name="name">Name of the attribute</param>
         /// <param name="value">Value of the attribute</param>
         [SuppressMessage( "Microsoft.Design", "CA1062:Validate arguments of public methods", MessageId = "0" )]
-        public AttributeValue( Context ctx, string name, string value )
+        public AttributeValue( Context context, string name, string value )
         {
-            ctx.VerifyAsArg( nameof( ctx ) );
+            context.VerifyAsArg( nameof( context ) );
             if( string.IsNullOrWhiteSpace( name ) )
                 throw new ArgumentException( "AttributeValue name cannot be null, Empty or all whitespace" );
 
-            NativeAttribute = NativeMethods.CreateTargetDependentAttribute( ctx.ContextHandle, name, value );
+            NativeAttribute = NativeMethods.CreateTargetDependentAttribute( context.ContextHandle, name, value );
         }
 
         internal AttributeValue( UIntPtr nativeValue )
@@ -187,8 +191,8 @@ namespace Llvm.NET.Values
 
         public bool Equals( AttributeValue other ) => NativeAttribute == other.NativeAttribute;
         
-        public static bool operator ==( AttributeValue lhs, AttributeValue rhs ) => lhs.Equals( rhs );
-        public static bool operator !=( AttributeValue lhs, AttributeValue rhs ) => !lhs.Equals( rhs );
+        public static bool operator ==( AttributeValue left, AttributeValue right ) => left.Equals( right );
+        public static bool operator !=( AttributeValue left, AttributeValue right ) => !left.Equals( right );
         #endregion
 
         /// <summary>Kind of the attribute, or null for target specif named attributes</summary>

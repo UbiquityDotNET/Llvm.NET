@@ -544,8 +544,8 @@ namespace Llvm.NET
                                                  , debugFlags: debugFlags
                                                  , isOptimized: isOptimized
                                                  , function: func
-                                                 , TParam: tParam
-                                                 , Decl: decl
+                                                 , typeParameter: tParam
+                                                 , declaration: decl
                                                  );
             Debug.Assert( diFunc.Describes( func ) );
             func.DISubProgram = diFunc;

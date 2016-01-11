@@ -38,7 +38,7 @@ namespace Llvm.NET.Values
         public static bool CheckAttributeUsage( this AttributeKind kind, FunctionAttributeIndex index, Function function )
         {
             Debug.Assert( kind >= AttributeKind.None && kind < AttributeKind.EndAttrKinds );
-            FunctionIndexKinds allowedindices = kind.GetAllowedindices( );
+            FunctionIndexKinds allowedindices = kind.GetAllowedIndexes( );
             switch( index )
             {
             case FunctionAttributeIndex.Function:
@@ -70,7 +70,7 @@ namespace Llvm.NET.Values
         public static void VerifyAttributeUsage( this AttributeKind kind, FunctionAttributeIndex index )
         {
             Debug.Assert( kind >= AttributeKind.None && kind < AttributeKind.EndAttrKinds );
-            FunctionIndexKinds allowedindices = kind.GetAllowedindices( );
+            FunctionIndexKinds allowedindices = kind.GetAllowedIndexes( );
             switch( index )
             {
             case FunctionAttributeIndex.Function:
@@ -124,7 +124,7 @@ namespace Llvm.NET.Values
             }
         }
 
-        public static FunctionIndexKinds GetAllowedindices( this AttributeKind kind )
+        public static FunctionIndexKinds GetAllowedIndexes( this AttributeKind kind )
         {
             Debug.Assert( kind >= AttributeKind.None && kind < AttributeKind.EndAttrKinds );
             switch( kind )

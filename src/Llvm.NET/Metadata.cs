@@ -106,7 +106,7 @@ namespace Llvm.NET
                 return new GenericDINode( handle );
 
             case MetadataKind.DISubrange:
-                return new DISubrange( handle );
+                return new DISubRange( handle );
 
             case MetadataKind.DIEnumerator:
                 return new DIEnumerator( handle );

@@ -67,7 +67,7 @@ namespace Llvm.NET.Tests
 
                 Assert.AreSame( intType.DIType, mdnode.BaseType );
                 Assert.AreEqual( 1, mdnode.Elements.Count );
-                var subRange = mdnode.Elements[ 0 ] as DISubrange;
+                var subRange = mdnode.Elements[ 0 ] as DISubRange;
                 Assert.IsNotNull( subRange );
             }
         }
