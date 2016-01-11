@@ -22,7 +22,7 @@ namespace Llvm.NET.Values.Tests
         }
 
         [TestMethod]
-        [ExpectedArgumentException("ctx", ExpectedExceptionMessage = "Provided context cannot be null or disposed")]
+        [ExpectedArgumentException("context", ExpectedExceptionMessage = "Provided context cannot be null or disposed")]
         public void AttributeValueConstructorNoContextTest( )
         {
             var value = new AttributeValue( AttributeKind.AlwaysInline );
