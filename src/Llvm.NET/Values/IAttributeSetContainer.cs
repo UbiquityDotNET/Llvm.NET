@@ -35,6 +35,9 @@ namespace Llvm.NET.Values
         public static T AddAttribute<T>( this T self, FunctionAttributeIndex index, AttributeKind[] values )
             where T : IAttributeSetContainer
         {
+            if(values == null)
+                throw new ArgumentNullException( nameof( values ) );
+
             using( var bldr = new AttributeBuilder( self.Attributes, index ) )
             {
                 foreach( var kind in values )
@@ -70,6 +73,9 @@ namespace Llvm.NET.Values
         /// </remarks>
         public static Function AddAttributes( this Function self, params AttributeValue[] attributes)
         {
+            if(self == null)
+                throw new ArgumentNullException( nameof( self ) );
+
             self.Attributes = self.Attributes.Add( FunctionAttributeIndex.Function, attributes );
             return self;
         }
@@ -85,6 +91,9 @@ namespace Llvm.NET.Values
         /// </remarks>
         public static Function AddAttributes( this Function self, IEnumerable<AttributeValue> attributes)
         {
+            if(self == null)
+                throw new ArgumentNullException( nameof( self ) );
+
             self.Attributes = self.Attributes.Add( FunctionAttributeIndex.Function, attributes );
             return self;
         }
@@ -100,6 +109,9 @@ namespace Llvm.NET.Values
         /// </remarks>
         public static Function RemoveAttribute( this Function self, AttributeKind kind )
         {
+            if(self == null)
+                throw new ArgumentNullException( nameof( self ) );
+
             self.Attributes = self.Attributes.Remove( FunctionAttributeIndex.Function, kind );
             return self;
         }
@@ -115,6 +127,9 @@ namespace Llvm.NET.Values
         /// </remarks>
         public static Function RemoveAttribute( this Function self, string name )
         {
+            if(self == null)
+                throw new ArgumentNullException( nameof( self ) );
+
             self.Attributes = self.Attributes.Remove( FunctionAttributeIndex.Function, name );
             return self;
         }

@@ -13,12 +13,18 @@ namespace Llvm.NET.Values
     /// the LLVM AttributeSet class. All data allocated for an AttributeSet is owned by a <see cref="NET.Context"/>, which
     /// will handle cleaning it up on <see cref="NET.Context.Dispose()"/>.
     /// </remarks>
-    [System.Diagnostics.CodeAnalysis.SuppressMessage( "Microsoft.Design", "CA1049:TypesThatOwnNativeResourcesShouldBeDisposable", Justification = "LLVM Context owns the attribute set")]
+    [System.Diagnostics.CodeAnalysis.SuppressMessage( "Microsoft.Design", "CA1049:TypesThatOwnNativeResourcesShouldBeDisposable", Justification = "LLVM Context owns the attribute set" )]
     public struct AttributeSet
         : IEquatable<AttributeSet>
     {
         public AttributeSet( Context context, FunctionAttributeIndex index, AttributeBuilder bldr )
         {
+            if( context == null )
+                throw new ArgumentNullException( nameof( context ) );
+
+            if( bldr == null )
+                throw new ArgumentNullException( nameof( bldr ) );
+
             context.VerifyAsArg( nameof( context ) );
             NativeAttributeSet = NativeMethods.CreateAttributeSetFromBuilder( context.ContextHandle, ( uint )index, bldr.BuilderHandle );
         }
@@ -71,7 +77,7 @@ namespace Llvm.NET.Values
             {
                 // explicitly check Context so that getter method doesn't throw an exception
                 if( Context == null || Context.IsDisposed || !HasAny( index ) )
-                    return new AttributeSet();
+                    return new AttributeSet( );
 
                 return new AttributeSet( NativeMethods.AttributeGetAttributes( NativeAttributeSet, ( uint )index ) );
             }
@@ -104,9 +110,9 @@ namespace Llvm.NET.Values
         [System.Diagnostics.CodeAnalysis.SuppressMessage( "Microsoft.Naming", "CA2204:Literals should be spelled correctly", MessageId = "AttributeSet" )]
         public AttributeSet ParameterAttributes( int paramIndex )
         {
-            Context.VerifyOperation();
+            Context.VerifyOperation( );
             // prevent overflow on offset addition below
-            if( paramIndex > int.MaxValue - (int)FunctionAttributeIndex.Parameter0 )
+            if( paramIndex > int.MaxValue - ( int )FunctionAttributeIndex.Parameter0 )
                 throw new ArgumentOutOfRangeException( nameof( paramIndex ) );
 
             var index = FunctionAttributeIndex.Parameter0 + paramIndex;
@@ -118,7 +124,7 @@ namespace Llvm.NET.Values
         /// <returns>Formatted string for the specified attribute index</returns>
         public string AsString( FunctionAttributeIndex index )
         {
-            Context.VerifyOperation();
+            Context.VerifyOperation( );
             var msgPtr = NativeMethods.AttributeSetToString( NativeAttributeSet, ( uint )index, false );
             return NativeMethods.MarshalMsg( msgPtr );
         }
@@ -128,9 +134,9 @@ namespace Llvm.NET.Values
             get
             {
                 var numSlots = NativeMethods.AttributeSetGetNumSlots( NativeAttributeSet );
-                for( uint slot = 0; slot< numSlots; ++slot )
+                for( uint slot = 0; slot < numSlots; ++slot )
                 {
-                    var index = (FunctionAttributeIndex)NativeMethods.AttributeSetGetSlotIndex( NativeAttributeSet, slot );
+                    var index = ( FunctionAttributeIndex )NativeMethods.AttributeSetGetSlotIndex( NativeAttributeSet, slot );
                     UIntPtr token = NativeMethods.AttributeSetGetIteratorStartToken( NativeAttributeSet, slot );
                     UIntPtr attr = UIntPtr.Zero;
                     do
@@ -149,7 +155,7 @@ namespace Llvm.NET.Values
         /// <returns>Formatted string representation of the <see cref="AttributeSet"/></returns>
         public override string ToString( )
         {
-            Context.VerifyOperation();
+            Context.VerifyOperation( );
             var bldr = new StringBuilder( );
             var indexGroups = from attribute in AllAttributes
                               group attribute.Value.ToString( ) by attribute.Index;
@@ -160,7 +166,7 @@ namespace Llvm.NET.Values
                 if( group.Key < FunctionAttributeIndex.Parameter0 )
                     bldr.AppendFormat( "[{0}: {1}]", group.Key, values );
                 else
-                    bldr.AppendFormat("[Parameter{0}: {1}]", group.Key - FunctionAttributeIndex.Parameter0, values );
+                    bldr.AppendFormat( "[Parameter{0}: {1}]", group.Key - FunctionAttributeIndex.Parameter0, values );
             }
 
             return bldr.ToString( );
@@ -180,7 +186,10 @@ namespace Llvm.NET.Values
         /// <returns>Newly created <see cref="AttributeSet"/>with the new attributes added</returns>
         public AttributeSet Add( FunctionAttributeIndex index, IEnumerable<AttributeValue> attributes )
         {
-            Context.VerifyOperation();
+            if( attributes == null )
+                throw new ArgumentNullException( nameof( attributes ) );
+
+            Context.VerifyOperation( );
             using( var bldr = new AttributeBuilder( ) )
             {
                 foreach( var attribute in attributes )
@@ -195,7 +204,7 @@ namespace Llvm.NET.Values
         /// <param name="attribute"><see cref="AttributeValue"/> kind to add</param>
         public AttributeSet Add( FunctionAttributeIndex index, AttributeValue attribute )
         {
-            Context.VerifyOperation();
+            Context.VerifyOperation( );
             using( var bldr = new AttributeBuilder( ) )
             {
                 bldr.Add( attribute );
@@ -210,7 +219,7 @@ namespace Llvm.NET.Values
         ///  attributes from <paramref name="attributes"/> along the specified <paramref name="index"/></returns>
         public AttributeSet Add( FunctionAttributeIndex index, AttributeSet attributes )
         {
-            Context.VerifyOperation();
+            Context.VerifyOperation( );
             var nativeSet = NativeMethods.AttributeSetAddAttributes( NativeAttributeSet, Context.ContextHandle, ( uint )index, attributes.NativeAttributeSet );
             return new AttributeSet( nativeSet );
         }
@@ -218,14 +227,17 @@ namespace Llvm.NET.Values
         /// <summary>Removes the specified attribute from the attribute set</summary>
         public AttributeSet Remove( FunctionAttributeIndex index, AttributeKind kind )
         {
-            Context.VerifyOperation();
+            Context.VerifyOperation( );
             var nativeSet = NativeMethods.AttributeSetRemoveAttributeKind( NativeAttributeSet, ( uint )index, ( LLVMAttrKind )kind );
             return new AttributeSet( nativeSet );
         }
 
         public AttributeSet Remove( FunctionAttributeIndex index, AttributeBuilder builder )
         {
-            Context.VerifyOperation();
+            if( builder == null )
+                throw new ArgumentNullException( nameof( builder ) );
+
+            Context.VerifyOperation( );
             var nativeSet = NativeMethods.AttributeSetRemoveAttributeBuilder( NativeAttributeSet, Context.ContextHandle, ( uint )index, builder.BuilderHandle );
             return new AttributeSet( nativeSet );
         }
@@ -235,7 +247,7 @@ namespace Llvm.NET.Values
         /// <param name="name">Name of the attribute</param>
         public AttributeSet Remove( FunctionAttributeIndex index, string name )
         {
-            Context.VerifyOperation();
+            Context.VerifyOperation( );
             using( var bldr = new AttributeBuilder( ) )
             {
                 bldr.Add( name );
@@ -254,7 +266,7 @@ namespace Llvm.NET.Values
         /// </remarks>
         public UInt64 GetAttributeValue( FunctionAttributeIndex index, AttributeKind kind )
         {
-            Context.VerifyOperation();
+            Context.VerifyOperation( );
             kind.VerifyIntAttributeUsage( index, 0 );
             var value = new AttributeValue( NativeMethods.AttributeSetGetAttributeByKind( NativeAttributeSet, ( uint )index, ( LLVMAttrKind )kind ) );
             Debug.Assert( value.IntegerValue.HasValue );
@@ -265,7 +277,7 @@ namespace Llvm.NET.Values
         /// <param name="index">Index for the attribute</param>
         public bool HasAny( FunctionAttributeIndex index )
         {
-            Context.VerifyOperation();
+            Context.VerifyOperation( );
             return NativeMethods.AttributeSetHasAttributes( NativeAttributeSet, ( uint )index );
         }
 
@@ -275,7 +287,7 @@ namespace Llvm.NET.Values
         /// <returns>true if the AttributeValue exists or false if not</returns>
         public bool Has( FunctionAttributeIndex index, AttributeKind kind )
         {
-            Context.VerifyOperation();
+            Context.VerifyOperation( );
             return NativeMethods.AttributeSetHasAttributeKind( NativeAttributeSet, ( uint )index, ( LLVMAttrKind )kind );
         }
 
@@ -285,7 +297,7 @@ namespace Llvm.NET.Values
         /// <returns>true if the attribute exists or false if not</returns>
         public bool Has( FunctionAttributeIndex index, string name )
         {
-            Context.VerifyOperation();
+            Context.VerifyOperation( );
             return NativeMethods.AttributeSetHasStringAttribute( NativeAttributeSet, ( uint )index, name );
         }
 

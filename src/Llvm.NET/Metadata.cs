@@ -58,6 +58,9 @@ namespace Llvm.NET
         /// <param name="other">New descriptor to replace this one with</param>
         public virtual void ReplaceAllUsesWith( LlvmMetadata other )
         {
+            if( other == null )
+                throw new ArgumentNullException( nameof( other ) );
+
             if( MetadataHandle.Pointer == IntPtr.Zero )
                 throw new InvalidOperationException( "Cannot Replace all uses of a null descriptor" );
 
@@ -82,7 +85,7 @@ namespace Llvm.NET
             if( handle == LLVMMetadataRef.Zero )
                 return null;
 
-            return (T)context.GetNodeFor( handle, StaticFactory );
+            return ( T )context.GetNodeFor( handle, StaticFactory );
         }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage( "Microsoft.Maintainability", "CA1506:AvoidExcessiveClassCoupling", Justification = "Static factory method" )]
@@ -90,7 +93,7 @@ namespace Llvm.NET
         private static LlvmMetadata StaticFactory( LLVMMetadataRef handle )
         {   // use the native kind value to determine the managed type
             // that should wrap this particular handle
-            var kind = (MetadataKind)NativeMethods.GetMetadataID( handle );
+            var kind = ( MetadataKind )NativeMethods.GetMetadataID( handle );
             switch( kind )
             {
             case MetadataKind.MDTuple:
@@ -177,7 +180,7 @@ namespace Llvm.NET
         }
     }
 
-    public class ValueAsMetadata 
+    public class ValueAsMetadata
         : LlvmMetadata
     {
         internal ValueAsMetadata( LLVMMetadataRef handle )
@@ -206,11 +209,6 @@ namespace Llvm.NET
 
     public class MetadataAsValue : Value
     {
-        internal MetadataAsValue( LLVMValueRef valueRef )
-            : this( valueRef, false )
-        {
-        }
-
         internal MetadataAsValue( LLVMValueRef valueRef, bool preValidated )
             : base( preValidated ? valueRef : ValidateConversion( valueRef, IsAMetadataAsValue ) )
         {
@@ -221,7 +219,7 @@ namespace Llvm.NET
             if( value.Pointer == IntPtr.Zero )
                 return value;
 
-            return NativeMethods.GetValueKind( value ) == ValueKind.MetadataAsValue ? value : default(LLVMValueRef);
+            return NativeMethods.GetValueKind( value ) == ValueKind.MetadataAsValue ? value : default( LLVMValueRef );
         }
 
         //public static implicit operator Metadata( MetadataAsValue self )
@@ -275,8 +273,11 @@ namespace Llvm.NET
         [System.Diagnostics.CodeAnalysis.SuppressMessage( "Microsoft.Naming", "CA2204:Literals should be spelled correctly", MessageId = "MDNode" )]
         public override void ReplaceAllUsesWith( LlvmMetadata other )
         {
+            if( other == null )
+                throw new ArgumentNullException( nameof( other ) );
+
             if( !IsTemporary || IsResolved )
-                throw new InvalidOperationException( "Cannot replace non temporary or resolved  MDNode" );
+                throw new InvalidOperationException( "Cannot replace non temporary or resolved MDNode" );
 
             if( MetadataHandle.Pointer == IntPtr.Zero )
                 throw new InvalidOperationException( "Cannot Replace all uses of a null descriptor" );
@@ -308,7 +309,7 @@ namespace Llvm.NET
         {
             uint len;
             var ptr = NativeMethods.GetMDStringText( MetadataHandle, out len );
-            return NativeMethods.NormalizeLineEndings( ptr, (int)len );
+            return NativeMethods.NormalizeLineEndings( ptr, ( int )len );
         }
-    } 
+    }
 }

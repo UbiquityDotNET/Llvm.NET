@@ -6,6 +6,7 @@
          </Unrecognized>
          <Recognized>
             <Word>AttributeSet</Word>
+             <Word>alloca</Word>
          </Recognized>
          <Deprecated>
             <Term PreferredAlternate=""></Term>

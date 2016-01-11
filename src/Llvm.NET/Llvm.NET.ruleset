@@ -57,6 +57,7 @@
     <Rule Id="CA1059" Action="Warning" />
     <Rule Id="CA1060" Action="Warning" />
     <Rule Id="CA1061" Action="Warning" />
+    <Rule Id="CA1062" Action="Error" />
     <Rule Id="CA1063" Action="Warning" />
     <Rule Id="CA1064" Action="Warning" />
     <Rule Id="CA1065" Action="Warning" />
@@ -100,7 +101,6 @@
     <Rule Id="CA1712" Action="Warning" />
     <Rule Id="CA1713" Action="Warning" />
     <Rule Id="CA1714" Action="Warning" />
-    <Rule Id="CA1716" Action="Warning" />
     <Rule Id="CA1717" Action="Warning" />
     <Rule Id="CA1719" Action="Warning" />
     <Rule Id="CA1720" Action="Warning" />
@@ -223,5 +223,14 @@
   </Rules>
   <Rules AnalyzerId="Microsoft.CodeAnalysis.CSharp.Features" RuleNamespace="Microsoft.CodeAnalysis.CSharp.Features">
     <Rule Id="IDE0001" Action="None" />
+    <Rule Id="IDE0002" Action="Info" />
+    <Rule Id="IDE0003" Action="Info" />
+    <Rule Id="IDE0004" Action="Info" />
+    <Rule Id="IDE0005" Action="Info" />
+  </Rules>
+  <Rules AnalyzerId="RefactoringEssentials" RuleNamespace="RefactoringEssentials">
+    <Rule Id="RECS0070" Action="None" />
+    <Rule Id="RECS0129" Action="None" />
+    <Rule Id="RECS0145" Action="None" />
   </Rules>
 </RuleSet>

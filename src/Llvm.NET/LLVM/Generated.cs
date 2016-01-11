@@ -11,12 +11,12 @@
 //    Heap Corruption. [Reason unknown] Calling these functions requires calling
 //    Marshal.PtrToAnsi( x ) manually, which is handled by the OO wrappers. 
 //  - made Value field of LLVMBool private to help prevent confusion on use the Value. For status
-//    code values the Success/Failure properties (added to partial implementation) and implicit
-//    casts to/from bool for actual boolean. Unfortunately nothing in LLVM or the value of a LLVMBool
-//    can help in identifying which form one should use. The only way to know at this point is to
-//    read the LLVM-C API documentation. In the Future it may be good to Create an LLVMStatusResult
-//    type for those function returning a status and use standard marshaling techniques for actual
-//    boolean values...
+//    code values code should use the Success/Failure properties (added to partial implementation)
+//    and implicit  casts to/from bool for actual boolean. Unfortunately nothing in LLVM or the
+//    value of a LLVMBool can help in identifying which form one should use. The only way to know
+//    at this point is to read the LLVM-C API documentation. In the Future it may be good to Create
+//    an LLVMStatusResult type for those function returning a status and use standard marshaling
+//    techniques for actual boolean values...
 //  - manually updated to 3.7.0 APIs
  
 using System;
@@ -394,48 +394,48 @@ namespace Llvm.NET
     [UnmanagedFunctionPointer(System.Runtime.InteropServices.CallingConvention.Cdecl, BestFitMapping = false, ThrowOnUnmappableChar = true)]
     internal delegate void LLVMMemoryManagerDestroyCallback(IntPtr @Opaque);
 
-    internal struct llvm_lto_t
-    {
-        public llvm_lto_t(IntPtr pointer)
-        {
-            this.Pointer = pointer;
-        }
+    //internal struct llvm_lto_t
+    //{
+    //    public llvm_lto_t(IntPtr pointer)
+    //    {
+    //        this.Pointer = pointer;
+    //    }
 
-        public IntPtr Pointer;
-    }
+    //    public IntPtr Pointer;
+    //}
 
-    internal struct lto_bool_t
-    {
-        public lto_bool_t(bool value)
-        {
-            this.Value = value;
-        }
+    //internal struct lto_bool_t
+    //{
+    //    public lto_bool_t(bool value)
+    //    {
+    //        this.Value = value;
+    //    }
 
-        public bool Value;
-    }
+    //    public bool Value;
+    //}
 
-    internal struct lto_module_t
-    {
-        public lto_module_t(IntPtr pointer)
-        {
-            this.Pointer = pointer;
-        }
+    //internal struct lto_module_t
+    //{
+    //    public lto_module_t(IntPtr pointer)
+    //    {
+    //        this.Pointer = pointer;
+    //    }
 
-        public IntPtr Pointer;
-    }
+    //    public IntPtr Pointer;
+    //}
 
-    internal struct lto_code_gen_t
-    {
-        public lto_code_gen_t(IntPtr pointer)
-        {
-            this.Pointer = pointer;
-        }
+    //internal struct lto_code_gen_t
+    //{
+    //    public lto_code_gen_t(IntPtr pointer)
+    //    {
+    //        this.Pointer = pointer;
+    //    }
 
-        public IntPtr Pointer;
-    }
+    //    public IntPtr Pointer;
+    //}
 
-    [UnmanagedFunctionPointer(System.Runtime.InteropServices.CallingConvention.Cdecl, BestFitMapping = false, ThrowOnUnmappableChar = true)]
-    internal delegate void lto_diagnostic_handler_t(lto_codegen_diagnostic_severity_t @severity, [MarshalAs(UnmanagedType.LPStr)] string @diag, IntPtr @ctxt);
+    //[UnmanagedFunctionPointer(System.Runtime.InteropServices.CallingConvention.Cdecl, BestFitMapping = false, ThrowOnUnmappableChar = true)]
+    //internal delegate void lto_diagnostic_handler_t(lto_codegen_diagnostic_severity_t @severity, [MarshalAs(UnmanagedType.LPStr)] string @diag, IntPtr @ctxt);
 
     internal struct LLVMObjectFileRef
     {

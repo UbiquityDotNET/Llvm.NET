@@ -53,6 +53,9 @@ namespace Llvm.NET.Values
 
             //case FunctionAttributeIndex.Parameter0:
             default:
+                if(function == null)
+                    throw new ArgumentNullException( nameof( function ) );
+
                 if( !allowedindices.HasFlag( FunctionIndexKinds.Parameter ) )
                     return false;
 

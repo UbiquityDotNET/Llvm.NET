@@ -45,6 +45,7 @@ namespace Llvm.NET
         {
         }
 
+        [System.Diagnostics.CodeAnalysis.SuppressMessage( "Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode", Justification = "Required for marshaling support (used via reflection)" )]
         internal AttributeBuilderHandle( IntPtr handle )
             : base( true )
         {

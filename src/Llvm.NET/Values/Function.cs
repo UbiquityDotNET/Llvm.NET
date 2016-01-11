@@ -9,7 +9,6 @@ using Llvm.NET.DebugInfo;
 namespace Llvm.NET.Values
 {
     /// <summary>LLVM Function definition</summary>
-    [System.Diagnostics.CodeAnalysis.SuppressMessage( "Microsoft.Naming", "CA1716:IdentifiersShouldNotMatchKeywords", MessageId = "Function" )]
     public class Function
         : GlobalObject
         , IAttributeSetContainer
@@ -79,7 +78,7 @@ namespace Llvm.NET.Values
             }
             set
             {
-                if( !value.Describes( this ) )
+                if( ( value != null ) && !value.Describes( this ) )
                     throw new ArgumentException( "Subprogram does not describe this Function" );
 
                 DISubProgram_ = value;
@@ -103,17 +102,17 @@ namespace Llvm.NET.Values
         }
 
         /// <summary>Verifies the function is valid and all blocks properly terminated</summary>
-        public void Verify()
+        public void Verify( )
         {
             IntPtr errMsgPtr;
             var status = NativeMethods.VerifyFunctionEx( ValueHandle, LLVMVerifierFailureAction.LLVMReturnStatusAction, out errMsgPtr );
             if( status )
-                throw new InternalCodeGeneratorException( NativeMethods.MarshalMsg( errMsgPtr) );
+                throw new InternalCodeGeneratorException( NativeMethods.MarshalMsg( errMsgPtr ) );
         }
 
         public AttributeSet Attributes
         {
-            get 
+            get
             {
                 return new AttributeSet( NativeMethods.GetFunctionAttributeSet( ValueHandle ) );
             }
@@ -170,13 +169,7 @@ namespace Llvm.NET.Values
             return retVal;
         }
 
-
-        internal Function( LLVMValueRef valueRef ) 
-            : this( valueRef, false )
-        {
-        }
-
-        internal Function( LLVMValueRef valueRef, bool preValidated ) 
+        internal Function( LLVMValueRef valueRef, bool preValidated )
             : base( preValidated ? valueRef : ValidateConversion( valueRef, NativeMethods.IsAFunction ) )
         {
         }

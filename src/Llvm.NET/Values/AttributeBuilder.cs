@@ -92,6 +92,9 @@ namespace Llvm.NET.Values
 
         public AttributeBuilder Merge( AttributeBuilder other )
         {
+            if(other == null)
+                throw new ArgumentNullException( nameof( other ) );
+
             if( BuilderHandle.IsClosed )
                 throw new ObjectDisposedException( nameof( AttributeBuilder ) );
 
@@ -101,6 +104,9 @@ namespace Llvm.NET.Values
 
         public AttributeBuilder Remove( AttributeBuilder other )
         {
+            if(other == null)
+                throw new ArgumentNullException( nameof( other ) );
+
             if( BuilderHandle.IsClosed )
                 throw new ObjectDisposedException( nameof( AttributeBuilder ) );
 
@@ -110,8 +116,12 @@ namespace Llvm.NET.Values
 
         public bool Overlaps( AttributeBuilder other )
         {
+            if(other == null)
+                throw new ArgumentNullException( nameof( other ) );
+
             if( BuilderHandle.IsClosed )
                 throw new ObjectDisposedException( nameof( AttributeBuilder ) );
+
             return NativeMethods.AttributeBuilderOverlaps( BuilderHandle, other.BuilderHandle );
         }
 

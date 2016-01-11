@@ -156,6 +156,7 @@ namespace Llvm.NET.Values
         /// <param name="ctx">Context to use for interning attributes</param>
         /// <param name="name">Name of the attribute</param>
         /// <param name="value">Value of the attribute</param>
+        [SuppressMessage( "Microsoft.Design", "CA1062:Validate arguments of public methods", MessageId = "0" )]
         public AttributeValue( Context ctx, string name, string value )
         {
             ctx.VerifyAsArg( nameof( ctx ) );
