@@ -10,7 +10,7 @@ namespace Llvm.NET.DebugInfo
     /// type. However, at the source language level it is common to have named primitive types that map 
     /// to the same underlying LLVM. For example, in C and C++ char maps to i8 but so does unsigned char
     /// (LLVM integral types don't have signed vs unsigned). This class is designed to handle this sort
-    /// of one to nanny mapping of the lower level LLVM types to source level debugging types. Each
+    /// of one to many mapping of the lower level LLVM types to source level debugging types. Each
     /// instance of this class represents a source level basic type and the corresponding representation
     /// for LLVM.
     /// </remarks>

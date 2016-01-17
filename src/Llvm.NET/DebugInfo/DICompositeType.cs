@@ -12,8 +12,8 @@ namespace Llvm.NET.DebugInfo
 
         public DIType BaseType => Operands[ 3 ].Metadata as DIType;
         public IReadOnlyList<DINode> Elements => new TupleTypedArrayWrapper<DINode>( Operands[ 4 ].Metadata as MDTuple );
-        // TODO: VTableHolder   [5]
-        // TODO: TemplateParams [6]
-        // TODO: Identifier     [7]
+        // TODO: VTableHolder   Operands[5]
+        // TODO: TemplateParams Operands[6]
+        // TODO: Identifier     Operands[7]
     }
 }

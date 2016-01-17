@@ -92,6 +92,7 @@ LLVMDITypeGetName
 LLVMMDNodeGetNumOperands
 LLVMMDNodeGetOperand
 LLVMGetOperandNode
+LLVMDILocalScopeGetSubProgram
 
 ; AttributeSet manipulation
 LLVMCreateEmptyAttributeSet

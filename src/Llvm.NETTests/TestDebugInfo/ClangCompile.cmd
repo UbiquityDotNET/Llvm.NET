@@ -15,7 +15,7 @@ goto :EOF
 @REM - %2 = Source File (C/C++)
 @REM - %3 = Output files base name 
 :GenerateCode
-clang -c -g -emit-llvm --target=%1 %2
+clang -c -g -emit-llvm -fexceptions --target=%1 %2
 if EXIST %3.bc del %3.bc
 ren %~n2.bc %3.bc
 llvm-dis %3.bc

@@ -725,5 +725,8 @@ namespace Llvm.NET
 
         [DllImport( libraryPath, EntryPoint = "LLVMAttributeBuilderHasTargetDependentAttrs", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl, BestFitMapping = false, ThrowOnUnmappableChar = true )]
         internal static extern LLVMBool AttributeBuilderHasTargetDependentAttrs( AttributeBuilderHandle bldr );
+
+        [DllImport(libraryPath, EntryPoint = "LLVMDILocalScopeGetSubProgram", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl, BestFitMapping = false, ThrowOnUnmappableChar = true)]
+        internal static extern LLVMMetadataRef DILocalScopeGetSubProgram(LLVMMetadataRef /*DILocalScope*/ localScope);
     }
 }

@@ -1,5 +1,6 @@
 ﻿using System;
 using Llvm.NET.Types;
+using System.Collections.Generic;
 
 namespace Llvm.NET.Values
 {
@@ -32,6 +33,14 @@ namespace Llvm.NET.Values
 
             var handle = NativeMethods.ConstBitCast( value.ValueHandle, toType.GetTypeRef( ) );
             return FromHandle<Constant>( handle );
+        }
+
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1011:ConsiderPassingBaseTypesAsParameters", Justification = "Specific type required by interop call")]
+        public static Constant GetElementPtr(Constant value, IEnumerable<Constant> args)
+        {
+            var llvmArgs = InstructionBuilder.GetValidatedGEPArgs(value, args);
+            var handle = NativeMethods.ConstGEP(value.ValueHandle, out llvmArgs[0], (uint)llvmArgs.Length);
+            return FromHandle<Constant>(handle);
         }
 
         internal ConstantExpression( LLVMValueRef valueRef, bool preValidated )
