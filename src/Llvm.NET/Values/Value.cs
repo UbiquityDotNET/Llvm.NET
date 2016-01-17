@@ -378,8 +378,20 @@ namespace Llvm.NET.Values
         public static T SetDebugLocation<T>( this T value, DILocation location )
             where T : Value
         {
-            if( value is Instructions.Instruction && location != null )
+            if( value == null )
+                throw new ArgumentNullException( nameof( value ) );
+
+            if( location == null )
+                return value;
+
+            var instruction = value as Instructions.Instruction;
+            if( instruction != null )
+            {
+                if( !location.Scope.SubProgram.Describes( instruction.ContainingBlock.ContainingFunction ) )
+                    throw new ArgumentException( "Location does not describe the function containing the provided instruction", nameof( location ) );
+
                 NativeMethods.SetDILocation( value.ValueHandle, location.MetadataHandle );
+            }
 
             return value;
         }
@@ -417,6 +429,9 @@ namespace Llvm.NET.Values
             var instruction = value as Instructions.Instruction;
             if( instruction != null )
             {
+                if( !scope.SubProgram.Describes( instruction.ContainingBlock.ContainingFunction ) )
+                    throw new ArgumentException( "scope does not describe the function containing the provided instruction", nameof( scope ) );
+
                 NativeMethods.SetDebugLoc( value.ValueHandle, line, column, scope.MetadataHandle );
             }
 
