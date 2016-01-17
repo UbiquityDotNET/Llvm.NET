@@ -1,18 +1,17 @@
 ###############################################################################
-# Set default behavior for command prompt diff.
-#
-# This is need for earlier builds of msysgit that does not have it on by
-# default for csharp files.
-# Note: This is only used by command line
-###############################################################################
-*.cs text eol=crlf diff=csharp
-*.h text eol=crlf
-*.cpp text eol=crlf
-*.s text eol=crlf
-*.ll text eol=crlf
-*.cmd text eol=crlf
-*.props text eol=crlf
-*.def text eol=crlf
+# Set default behavior for various source code file types
+##############################################################################
+*.cs text diff=csharp
+*.h text
+*.c text
+*.cpp text
+*.s text
+*.ll text
+*.cmd text
+*.bat text
+*.props text
+*.def text
+*.md text
 
 ###############################################################################
 # Set the merge driver for project and solution files
@@ -35,6 +34,8 @@
 *.jpg   binary
 *.png   binary
 *.gif   binary
+*.exe   binary
+*.dll   binary
 
 ###############################################################################
 # diff behavior for common document formats
