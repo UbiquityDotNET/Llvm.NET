@@ -285,6 +285,9 @@ namespace Llvm.NET
         [DllImport( libraryPath, EntryPoint = "LLVMGetDILocationInlinedAt", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl, BestFitMapping = false, ThrowOnUnmappableChar = true )]
         internal static extern LLVMMetadataRef /*DILocation*/ GetDILocationInlinedAt( LLVMMetadataRef /*DILocation*/ location );
 
+        [DllImport( libraryPath, EntryPoint = "LLVMDILocationGetInlinedAtScope", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl, BestFitMapping = false, ThrowOnUnmappableChar = true )]
+        internal static extern LLVMMetadataRef /*DILocalScope*/ DILocationGetInlinedAtScope( LLVMMetadataRef /*DILocation*/ location );
+
         [DllImport(libraryPath, EntryPoint = "LLVMVerifyFunctionEx", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl, BestFitMapping = false, ThrowOnUnmappableChar = true)]
         internal static extern LLVMBool VerifyFunctionEx(LLVMValueRef @Fn, LLVMVerifierFailureAction @Action, out IntPtr @OutMessages);
 

@@ -1,3 +1,5 @@
+@echo off
+
 @REM -- Generate bitcode for x86 from test.c
 Call :GenerateCode x86_64-pc-windows-msvc18.0.0 test.c test_x86
 
@@ -15,6 +17,7 @@ goto :EOF
 @REM - %2 = Source File (C/C++)
 @REM - %3 = Output files base name 
 :GenerateCode
+@echo Compiling '%2' for %1
 clang -c -g -emit-llvm --target=%1 %2
 if EXIST %3.bc del %3.bc
 ren %~n2.bc %3.bc

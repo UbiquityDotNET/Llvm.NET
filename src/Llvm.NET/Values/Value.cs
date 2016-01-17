@@ -408,11 +408,17 @@ namespace Llvm.NET.Values
         /// before trying to add it.</para>
         /// </remarks>
         [System.Diagnostics.CodeAnalysis.SuppressMessage( "Microsoft.Design", "CA1011:ConsiderPassingBaseTypesAsParameters", Justification = "Specific type required by interop call" )]
-        public static T SetDebugLocation<T>( this T value, uint line, uint column, DebugInfo.DIScope scope )
+        public static T SetDebugLocation<T>( this T value, uint line, uint column, DebugInfo.DILocalScope scope )
             where T : Value
         {
-            if( value is Instructions.Instruction && scope != null )
+            if( scope == null )
+                return value;
+
+            var instruction = value as Instructions.Instruction;
+            if( instruction != null )
+            {
                 NativeMethods.SetDebugLoc( value.ValueHandle, line, column, scope.MetadataHandle );
+            }
 
             return value;
         }

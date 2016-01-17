@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace Llvm.NET.DebugInfo
+﻿namespace Llvm.NET.DebugInfo
 {
     public class DILocation : MDNode
     {
@@ -20,7 +18,7 @@ namespace Llvm.NET.DebugInfo
         {
         }
 
-        public DILocalScope Scope => DINode.FromHandle< DILocalScope >( NativeMethods.GetDILocationScope( MetadataHandle ) );
+        public DILocalScope Scope => FromHandle< DILocalScope >( NativeMethods.GetDILocationScope( MetadataHandle ) );
 
         public uint Line => NativeMethods.GetDILocationLine( MetadataHandle );
 
@@ -31,10 +29,16 @@ namespace Llvm.NET.DebugInfo
             get
             {
                 var handle = NativeMethods.GetDILocationInlinedAt( MetadataHandle );
-                if( handle.Pointer == IntPtr.Zero )
-                    return null;
+                return FromHandle<DILocation>( handle );
+            }
+        }
 
-                return new DILocation( handle );
+        public DILocalScope InlinedAtScope
+        {
+            get
+            {
+                var handle = NativeMethods.DILocationGetInlinedAtScope( MetadataHandle );
+                return FromHandle<DILocalScope>( handle );
             }
         }
 

@@ -57,6 +57,12 @@ extern "C"
         return wrap( loc->getInlinedAt() );
     }
 
+    LLVMMetadataRef /*DILocalScope*/ LLVMDILocationGetInlinedAtScope( LLVMMetadataRef /*DILocation*/ location )
+    {
+        DILocation* loc = unwrap<DILocation>( location );
+        return wrap( loc->getInlinedAtScope( ) );
+    }
+
     char const* LLVMGetDIFileName( LLVMMetadataRef /*DIFile*/ file )
     {
         DIFile* pFile = unwrap<DIFile>( file );

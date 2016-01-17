@@ -150,6 +150,7 @@ extern "C" {
     unsigned LLVMGetDILocationLine( LLVMMetadataRef /*DILocation*/ location );
     unsigned LLVMGetDILocationColumn( LLVMMetadataRef /*DILocation*/ location );
     LLVMMetadataRef /*DILocation*/ LLVMGetDILocationInlinedAt( LLVMMetadataRef /*DILocation*/ location );
+    LLVMMetadataRef /*DILocalScope*/ LLVMDILocationGetInlinedAtScope( LLVMMetadataRef /*DILocation*/ location );
 
     LLVMDIBuilderRef LLVMNewDIBuilder( LLVMModuleRef m, LLVMBool allowUnresolved );
 
