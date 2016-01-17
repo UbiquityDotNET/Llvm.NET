@@ -142,6 +142,12 @@ namespace Llvm.NET
 
         public Invoke Invoke( Value func, IReadOnlyList<Value> args, BasicBlock then, BasicBlock catchBlock )
         {
+            if( then == null )
+                throw new ArgumentNullException( nameof( then ) );
+
+            if( catchBlock == null )
+                throw new ArgumentNullException( nameof( catchBlock ) );
+
             ValidateCallArgs( func, args );
 
             LLVMValueRef[] llvmArgs = args.Select( v => v.ValueHandle ).ToArray();
@@ -177,6 +183,9 @@ namespace Llvm.NET
 
         public ResumeInstruction Resume( Value exception )
         {
+            if( exception == null )
+                throw new ArgumentNullException( nameof( exception ) );
+
             LLVMValueRef resume = NativeMethods.BuildResume( BuilderHandle, exception.ValueHandle );
             return Value.FromHandle<ResumeInstruction>( resume );
         }
