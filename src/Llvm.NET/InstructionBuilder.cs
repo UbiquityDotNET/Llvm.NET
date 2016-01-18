@@ -153,7 +153,7 @@ namespace Llvm.NET
             LLVMValueRef[] llvmArgs = args.Select( v => v.ValueHandle ).ToArray();
             int argCount = llvmArgs.Length;
 
-            // Must always provide at least one element for succesful marshaling/interop, but tell LLVM there are none.
+            // Must always provide at least one element for successful marshaling/interop, but tell LLVM there are none.
             if( argCount == 0 )
             {
                 llvmArgs = new LLVMValueRef[1];

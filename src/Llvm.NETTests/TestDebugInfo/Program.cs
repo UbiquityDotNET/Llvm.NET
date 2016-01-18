@@ -12,43 +12,52 @@ namespace TestDebugInfo
     /// <summary>Program to test/demonstrate Aspects of debug information generation with Llvm.NET</summary>
     class Program
     {
+        static AttributeSet TargetDependentAttributes { get; set; }
+
 #if TARGET_X86
         const string ModuleName = "test_x86.bc";
         const string Triple = "x86_64-pc-windows-msvc18.0.0";
         const string Cpu = "x86-64";
         const string Features = "+sse,+sse2";
-        static readonly AttributeValue[] TargetDependentAttributes =
+
+        static AttributeSet BuildTargetDependentAttributes(Context ctx )
         {
-            new AttributeValue( "disable-tail-calls", "false" ),
-            new AttributeValue( "less-precise-fpmad", "false" ),
-            new AttributeValue( "no-frame-pointer-elim", "false" ),
-            new AttributeValue( "no-infs-fp-math", "false" ),
-            new AttributeValue( "no-nans-fp-math", "false" ),
-            new AttributeValue( "stack-protector-buffer-size", "8" ),
-            new AttributeValue( "target-cpu", Cpu ),
-            new AttributeValue( "target-features", Features ),
-            new AttributeValue( "unsafe-fp-math", "false" ),
-            new AttributeValue( "use-soft-float", "false" )
+            var bldr = new AttributeBuilder();
+            
+            bldr.Add( "disable-tail-calls", "false" );
+            bldr.Add( "less-precise-fpmad", "false" );
+            bldr.Add( "no-frame-pointer-elim", "false" );
+            bldr.Add( "no-infs-fp-math", "false" );
+            bldr.Add( "no-nans-fp-math", "false" );
+            bldr.Add( "stack-protector-buffer-size", "8" );
+            bldr.Add( "target-cpu", Cpu );
+            bldr.Add( "target-features", Features );
+            bldr.Add( "unsafe-fp-math", "false" );
+            bldr.Add( "use-soft-float", "false" );
         };
 #elif TARGET_CORTEX_M3
         const string ModuleName = "test_M3.bc";
         const string Triple = "thumbv7m-none--eabi";
         const string Cpu = "cortex-m3";
         const string Features = "+hwdiv";
-        static readonly AttributeValue[] TargetDependentAttributes =
+
+        static AttributeSet BuildTargetDependentAttributes(Context ctx )
         {
-            new AttributeValue( "disable-tail-calls", "false" ),
-            new AttributeValue( "less-precise-fpmad", "false" ),
-            new AttributeValue( "no-frame-pointer-elim", "true" ),
-            new AttributeValue( "no-frame-pointer-elim-non-leaf" ),
-            new AttributeValue( "no-infs-fp-math", "false" ),
-            new AttributeValue( "no-nans-fp-math", "false" ),
-            new AttributeValue( "stack-protector-buffer-size", "8" ),
-            new AttributeValue( "target-cpu", Cpu ),
-            new AttributeValue( "target-features", Features ),
-            new AttributeValue( "unsafe-fp-math", "false" ),
-            new AttributeValue( "use-soft-float", "false" )
-        };
+            var bldr = new AttributeBuilder();
+            
+            bldr.Add( "disable-tail-calls", "false" );
+            bldr.Add( "less-precise-fpmad", "false" );
+            bldr.Add( "no-frame-pointer-elim", "true" );
+            bldr.Add( "no-frame-pointer-elim-non-leaf" );
+            bldr.Add( "no-infs-fp-math", "false" );
+            bldr.Add( "no-nans-fp-math", "false" );
+            bldr.Add( "stack-protector-buffer-size", "8" );
+            bldr.Add( "target-cpu", Cpu );
+            bldr.Add( "target-features", Features );
+            bldr.Add( "unsafe-fp-math", "false" );
+            bldr.Add( "use-soft-float", "false" );
+            return bldr.ToAttributeSet( FunctionAttributeIndex.Function, ctx );
+        }
 #endif
         // obviously this is not clang but using an identical name helps in diff with actual clang output
         const string VersionIdentString = "clang version 3.7.0 (tags/RELEASE_370/final)";
@@ -74,6 +83,7 @@ namespace TestDebugInfo
             using( var targetMachine = target.CreateTargetMachine( context, Triple, Cpu, Features, CodeGenOpt.Aggressive, Reloc.Default, CodeModel.Small ) )
             using( var module = new NativeModule( ModuleName, context ) )
             {
+                TargetDependentAttributes = BuildTargetDependentAttributes( context );
                 var targetData = targetMachine.TargetData;
 
                 module.TargetTriple = targetMachine.Triple;
@@ -187,7 +197,7 @@ namespace TestDebugInfo
 #if TARGET_X86
                                                    .AddAttributes( AttributeKind.UWTable )
 #endif
-                                                   .AddAttributes( TargetDependentAttributes );
+                                                   .AddAttributes(FunctionAttributeIndex.Function, TargetDependentAttributes );
             return doCopyFunc;
         }
 
@@ -228,7 +238,7 @@ namespace TestDebugInfo
 #if TARGET_X86
                                                  .AddAttributes( AttributeKind.UWTable )
 #endif
-                                                 .AddAttributes( TargetDependentAttributes );
+                                                 .AddAttributes( FunctionAttributeIndex.Function, TargetDependentAttributes );
 
             // ByVal pointers indicate by value semantics. The actual semantics are along the lines of
             // "pass the arg as copy on the arguments stack and set parameter implicitly to that copy's address"
@@ -263,7 +273,7 @@ namespace TestDebugInfo
         }
 
         private static void CreateCopyFunctionBody( NativeModule module
-                                                  , TargetData layout
+                                                  , DataLayout layout
                                                   , Function copyFunc
                                                   , DIFile diFile
                                                   , ITypeRef foo
@@ -352,7 +362,7 @@ namespace TestDebugInfo
         }
 
         private static void CreateDoCopyFunctionBody( NativeModule module
-                                                    , TargetData layout
+                                                    , DataLayout layout
                                                     , Function doCopyFunc
                                                     , IStructType foo
                                                     , GlobalVariable bar
