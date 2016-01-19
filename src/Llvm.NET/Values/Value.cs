@@ -62,6 +62,8 @@ namespace Llvm.NET.Values
             return NativeMethods.MarshalMsg( ptr );
         }
 
+        /// <summary>Replace all uses of a <see cref="Value"/> with another one</summary>
+        /// <param name="other">New value</param>
         public void ReplaceAllUsesWith( Value other )
         {
             if( other == null )
@@ -70,7 +72,10 @@ namespace Llvm.NET.Values
             NativeMethods.ReplaceAllUsesWith( ValueHandle, other.ValueHandle );
         }
 
+        /// <inheritdoc/>
         public bool TryGetExtendedPropertyValue<T>( string id, out T value ) => ExtensibleProperties.TryGetExtendedPropertyValue<T>( id, out value );
+
+        /// <inheritdoc/>
         public void AddExtendedPropertyValue( string id, object value ) => ExtensibleProperties.AddExtendedPropertyValue( id, value );
 
         internal Value( LLVMValueRef valueRef )

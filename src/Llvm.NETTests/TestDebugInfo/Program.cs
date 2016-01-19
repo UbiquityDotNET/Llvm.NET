@@ -1,5 +1,4 @@
-﻿#define TARGET_CORTEX_M3
-using Llvm.NET;
+﻿using Llvm.NET;
 using Llvm.NET.DebugInfo;
 using Llvm.NET.Instructions;
 using Llvm.NET.Types;
@@ -12,44 +11,10 @@ namespace TestDebugInfo
     /// <summary>Program to test/demonstrate Aspects of debug information generation with Llvm.NET</summary>
     class Program
     {
-#if TARGET_X86
-        const string ModuleName = "test_x86.bc";
-        const string Triple = "x86_64-pc-windows-msvc18.0.0";
-        const string Cpu = "x86-64";
-        const string Features = "+sse,+sse2";
-        static readonly AttributeValue[] TargetDependentAttributes =
-        {
-            new AttributeValue( "disable-tail-calls", "false" ),
-            new AttributeValue( "less-precise-fpmad", "false" ),
-            new AttributeValue( "no-frame-pointer-elim", "false" ),
-            new AttributeValue( "no-infs-fp-math", "false" ),
-            new AttributeValue( "no-nans-fp-math", "false" ),
-            new AttributeValue( "stack-protector-buffer-size", "8" ),
-            new AttributeValue( "target-cpu", Cpu ),
-            new AttributeValue( "target-features", Features ),
-            new AttributeValue( "unsafe-fp-math", "false" ),
-            new AttributeValue( "use-soft-float", "false" )
-        };
-#elif TARGET_CORTEX_M3
-        const string ModuleName = "test_M3.bc";
-        const string Triple = "thumbv7m-none--eabi";
-        const string Cpu = "cortex-m3";
-        const string Features = "+hwdiv";
-        static readonly AttributeValue[] TargetDependentAttributes =
-        {
-            new AttributeValue( "disable-tail-calls", "false" ),
-            new AttributeValue( "less-precise-fpmad", "false" ),
-            new AttributeValue( "no-frame-pointer-elim", "true" ),
-            new AttributeValue( "no-frame-pointer-elim-non-leaf" ),
-            new AttributeValue( "no-infs-fp-math", "false" ),
-            new AttributeValue( "no-nans-fp-math", "false" ),
-            new AttributeValue( "stack-protector-buffer-size", "8" ),
-            new AttributeValue( "target-cpu", Cpu ),
-            new AttributeValue( "target-features", Features ),
-            new AttributeValue( "unsafe-fp-math", "false" ),
-            new AttributeValue( "use-soft-float", "false" )
-        };
-#endif
+        static ITargetDependentDetails TargetDetails;
+
+        static AttributeSet TargetDependentAttributes { get; set; }
+
         // obviously this is not clang but using an identical name helps in diff with actual clang output
         const string VersionIdentString = "clang version 3.7.0 (tags/RELEASE_370/final)";
 
@@ -60,7 +25,8 @@ namespace TestDebugInfo
         /// </remarks>
         static void Main( string[ ] args )
         {
-            var srcPath = args[0];
+            TargetDetails = new CortexM3Details();
+            var srcPath = args[ 0 ];
             if( !File.Exists( srcPath ) )
             {
                 Console.Error.WriteLine( "Src file not found: '{0}'", srcPath );
@@ -68,12 +34,15 @@ namespace TestDebugInfo
             }
             srcPath = Path.GetFullPath( srcPath );
 
+            var moduleName = $"Test_{TargetDetails.ShortName}.bc";
+
             StaticState.RegisterAll( );
-            var target = Target.FromTriple( Triple );
+            var target = Target.FromTriple( TargetDetails.Triple );
             using( var context = new Context( ) )
-            using( var targetMachine = target.CreateTargetMachine( context, Triple, Cpu, Features, CodeGenOpt.Aggressive, Reloc.Default, CodeModel.Small ) )
-            using( var module = new NativeModule( ModuleName, context ) )
+            using( var targetMachine = target.CreateTargetMachine( context, TargetDetails.Triple, TargetDetails.Cpu, TargetDetails.Features, CodeGenOpt.Aggressive, Reloc.Default, CodeModel.Small ) )
+            using( var module = new NativeModule( moduleName, context ) )
             {
+                TargetDependentAttributes = TargetDetails.BuildTargetDependentFunctionAttributes( context );
                 var targetData = targetMachine.TargetData;
 
                 module.TargetTriple = targetMachine.Triple;
@@ -184,10 +153,7 @@ namespace TestDebugInfo
                                                   , debugFlags: DebugInfoFlags.None
                                                   , isOptimized: false
                                                   ).AddAttributes( AttributeKind.NoUnwind )
-#if TARGET_X86
-                                                   .AddAttributes( AttributeKind.UWTable )
-#endif
-                                                   .AddAttributes( TargetDependentAttributes );
+                                                   .AddAttributes( FunctionAttributeIndex.Function, TargetDependentAttributes );
             return doCopyFunc;
         }
 
@@ -225,26 +191,9 @@ namespace TestDebugInfo
                                                 , isOptimized: false
                                                 ).Linkage( Linkage.Internal ) // static function
                                                  .AddAttributes( AttributeKind.NoUnwind, AttributeKind.InlineHint )
-#if TARGET_X86
-                                                 .AddAttributes( AttributeKind.UWTable )
-#endif
-                                                 .AddAttributes( TargetDependentAttributes );
+                                                 .AddAttributes( FunctionAttributeIndex.Function, TargetDependentAttributes );
 
-            // ByVal pointers indicate by value semantics. The actual semantics are along the lines of
-            // "pass the arg as copy on the arguments stack and set parameter implicitly to that copy's address"
-            // (src: https://github.com/ldc-developers/ldc/issues/937 )
-            //
-            // LLVM recognizes this pattern and has a pass to map to an efficient register usage whenever plausible.
-            // Though it seems Clang doesn't apply the attribute in all cases, for x86 it doesn't appear to ever use
-            // it, for Cortex-Mx it seems to use it only for larger structs, otherwise it uses an [ n x i32]. Thus,
-            // on cortex-m the function parameters are handled quite differently by clang, which seems odd...
-#if TARGET_CORTEX_M3            
-            copyFunc.AddAttributes( FunctionAttributeIndex.Parameter0
-                                  , AttributeKind.ByVal
-                                  , new AttributeValue(AttributeKind.Alignment, module.Layout.AbiAlignmentOf( fooPtr.ElementType ) )
-                                  );
-#endif
-
+            TargetDetails.AddABIAttributesForByValueStructure( copyFunc, 0 );
             return copyFunc;
         }
 
@@ -252,18 +201,12 @@ namespace TestDebugInfo
         {
             module.AddModuleFlag( ModuleFlagBehavior.Warning, NativeModule.DwarfVersionValue, 4 );
             module.AddModuleFlag( ModuleFlagBehavior.Warning, NativeModule.DebugVersionValue, NativeModule.DebugMetadataVersion );
-#if TARGET_X86
-                module.AddModuleFlag( ModuleFlagBehavior.Error, "PIC Level", 2 );
-#elif TARGET_CORTEX_M3
-            // Specify ABI const sizes so linker can detect mismatches
-            module.AddModuleFlag( ModuleFlagBehavior.Error, "wchar_size", 4 );
-            module.AddModuleFlag( ModuleFlagBehavior.Error, "min_enum_size", 4 );
-#endif
+            TargetDetails.AddModuleFlags( module );
             module.AddVersionIdentMetadata( VersionIdentString );
         }
 
         private static void CreateCopyFunctionBody( NativeModule module
-                                                  , TargetData layout
+                                                  , DataLayout layout
                                                   , Function copyFunc
                                                   , DIFile diFile
                                                   , ITypeRef foo
@@ -288,36 +231,40 @@ namespace TestDebugInfo
             var paramDst = diBuilder.CreateArgument( copyFunc.DISubProgram, "pDst", diFile, 12, fooPtr.DIType, false, 0, 2 );
 
             var ptrAlign = layout.CallFrameAlignmentOf( fooPtr );
-            
+
             // create Locals
             // NOTE: There's no debug location attached to these instructions.
             //       The debug info will come from the declare intrinsic below.
             var dstAddr = instBuilder.Alloca( fooPtr )
                                      .RegisterName( "pDst.addr" )
                                      .Alignment( ptrAlign );
-#if TARGET_CORTEX_M3
-            diBuilder.InsertDeclare( copyFunc.Parameters[ 0 ]
-                                   , paramSrc
-                                   , new DILocation( module.Context, 11, 43, copyFunc.DISubProgram )
-                                   , blk
-                                   );
-#endif
-            instBuilder.Store( copyFunc.Parameters[ 1 ], dstAddr)
+
+            var param0ByVal = copyFunc.Attributes.Has( FunctionAttributeIndex.Parameter0, AttributeKind.ByVal );
+            if( param0ByVal )
+            {
+                diBuilder.InsertDeclare( copyFunc.Parameters[ 0 ]
+                                       , paramSrc
+                                       , new DILocation( module.Context, 11, 43, copyFunc.DISubProgram )
+                                       , blk
+                                       );
+            }
+            instBuilder.Store( copyFunc.Parameters[ 1 ], dstAddr )
                        .Alignment( ptrAlign );
 
             // insert declare pseudo instruction to attach debug info to the local declarations
             diBuilder.InsertDeclare( dstAddr, paramDst, new DILocation( module.Context, 12, 38, copyFunc.DISubProgram ), blk );
 
-#if TARGET_X86
-            // since the function's LLVM signature uses a pointer, which is copied locally
-            // inform the debugger to treat it as the value by dereferencing the pointer
-            diBuilder.InsertDeclare( copyFunc.Parameters[ 0 ]
-                                   , paramSrc
-                                   , diBuilder.CreateExpression( ExpressionOp.deref )
-                                   , new DILocation( module.Context, 11, 43, copyFunc.DISubProgram )
-                                   , blk
-                                   );
-#endif
+            if( !param0ByVal )
+            {
+                // since the function's LLVM signature uses a pointer, which is copied locally
+                // inform the debugger to treat it as the value by dereferencing the pointer
+                diBuilder.InsertDeclare( copyFunc.Parameters[ 0 ]
+                                       , paramSrc
+                                       , diBuilder.CreateExpression( ExpressionOp.deref )
+                                       , new DILocation( module.Context, 11, 43, copyFunc.DISubProgram )
+                                       , blk
+                                       );
+            }
 
             var loadedDst = instBuilder.Load( dstAddr )
                                        .Alignment( ptrAlign )
@@ -329,30 +276,21 @@ namespace TestDebugInfo
             var srcPtr = instBuilder.BitCast( copyFunc.Parameters[ 0 ], module.Context.Int8Type.CreatePointerType( ) )
                                     .SetDebugLocation( 15, 13, copyFunc.DISubProgram );
 
-#if TARGET_X86
+            var pointerSize = layout.IntPtrType( ).IntegerBitWidth;
             instBuilder.MemCpy( module
                               , dstPtr
                               , srcPtr
-                              , module.Context.CreateConstant( layout.ByteSizeOf( foo ) )
+                              , module.Context.CreateConstant( pointerSize, layout.ByteSizeOf( foo ), false )
                               , ( int )layout.AbiAlignmentOf( foo )
                               , false
                               ).SetDebugLocation( 15, 13, copyFunc.DISubProgram );
-#elif TARGET_CORTEX_M3
-            // Cortex-M uses 32bit count parameter (constant for parameter 3)
-            instBuilder.MemCpy( module
-                              , dstPtr
-                              , srcPtr
-                              , module.Context.CreateConstant( (int)layout.ByteSizeOf( foo ) )
-                              , ( int )layout.AbiAlignmentOf( foo )
-                              , false
-                              ).SetDebugLocation( 15, 13, copyFunc.DISubProgram );
-#endif
+
             instBuilder.Return( )
                        .SetDebugLocation( 16, 1, copyFunc.DISubProgram );
         }
 
         private static void CreateDoCopyFunctionBody( NativeModule module
-                                                    , TargetData layout
+                                                    , DataLayout layout
                                                     , Function doCopyFunc
                                                     , IStructType foo
                                                     , GlobalVariable bar
@@ -368,33 +306,37 @@ namespace TestDebugInfo
             // create instruction builder to build the body
             var instBuilder = new InstructionBuilder( blk );
 
-#if TARGET_x86
-            // create a temp local copy of the global structure
-            var dstAddr = instBuilder.Alloca( foo )
-                                     .RegisterName( "agg.tmp" )
-                                     .Alignment( layout.CallFrameAlignmentOf( foo ) );
+            var param0ByVal = copyFunc.Attributes.Has( FunctionAttributeIndex.Parameter0, AttributeKind.ByVal );
+            if( !param0ByVal )
+            {
+                // create a temp local copy of the global structure
+                var dstAddr = instBuilder.Alloca( foo )
+                                         .RegisterName( "agg.tmp" )
+                                         .Alignment( layout.CallFrameAlignmentOf( foo ) );
 
-            var bitCastDst = instBuilder.BitCast( dstAddr, bytePtrType )
-                                        .SetDebugLocation( 25, 11, doCopyFunc.DISubProgram );
+                var bitCastDst = instBuilder.BitCast( dstAddr, bytePtrType )
+                                            .SetDebugLocation( 25, 11, doCopyFunc.DISubProgram );
 
-            var bitCastSrc = instBuilder.BitCast( bar, bytePtrType )
-                                        .SetDebugLocation( 25, 11, doCopyFunc.DISubProgram );
+                var bitCastSrc = instBuilder.BitCast( bar, bytePtrType )
+                                            .SetDebugLocation( 25, 11, doCopyFunc.DISubProgram );
 
-            instBuilder.MemCpy( module
-                              , bitCastDst
-                              , bitCastSrc
-                              , module.Context.CreateConstant( layout.ByteSizeOf( foo ) )
-                              , ( int )layout.CallFrameAlignmentOf( foo )
-                              , false
-                              ).SetDebugLocation( 25, 11, doCopyFunc.DISubProgram );
+                instBuilder.MemCpy( module
+                                  , bitCastDst
+                                  , bitCastSrc
+                                  , module.Context.CreateConstant( layout.ByteSizeOf( foo ) )
+                                  , ( int )layout.CallFrameAlignmentOf( foo )
+                                  , false
+                                  ).SetDebugLocation( 25, 11, doCopyFunc.DISubProgram );
 
-            instBuilder.Call( copyFunc, dstAddr, baz )
-                       .SetDebugLocation( 25, 5, doCopyFunc.DISubProgram );
-#elif TARGET_CORTEX_M3
-            instBuilder.Call( copyFunc, bar, baz )
-                       .SetDebugLocation( 25, 5, doCopyFunc.DISubProgram )
-                       .AddAttributes( FunctionAttributeIndex.Parameter0, copyFunc.Attributes.ParameterAttributes( 0 ) );
-#endif
+                instBuilder.Call( copyFunc, dstAddr, baz )
+                           .SetDebugLocation( 25, 5, doCopyFunc.DISubProgram );
+            }
+            else
+            {
+                instBuilder.Call( copyFunc, bar, baz )
+                           .SetDebugLocation( 25, 5, doCopyFunc.DISubProgram )
+                           .AddAttributes( FunctionAttributeIndex.Parameter0, copyFunc.Attributes.ParameterAttributes( 0 ) );
+            }
             instBuilder.Return( )
                        .SetDebugLocation( 26, 1, doCopyFunc.DISubProgram );
         }
