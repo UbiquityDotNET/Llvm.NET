@@ -59,6 +59,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
+    <None Include="ClangCompile.cmd" />
     <None Include="test.c" />
   </ItemGroup>
   <ItemGroup>
@@ -78,6 +79,8 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="test2.cpp" />
+    <Content Include="TestInline.cpp" />
+    <Content Include="TestInline.h" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

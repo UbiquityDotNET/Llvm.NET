@@ -648,13 +648,16 @@ extern "C"
 
     LLVMMetadataRef LLVMDILocation( LLVMContextRef context, unsigned Line, unsigned Column, LLVMMetadataRef scope, LLVMMetadataRef InlinedAt )
     {
-        DILocation* pLoc = DILocation::get( *unwrap( context )
-                                          , Line
-                                          , Column
-                                          , unwrap<DILocalScope>( scope )
-                                          , InlinedAt ? unwrap<DILocation>( InlinedAt ) : nullptr
-                                          );
-        return wrap( pLoc );
+        DILocation* inlinedAtLocation = InlinedAt ? unwrap<DILocation>( InlinedAt ) : nullptr;
+        DILocation* pRetVal;
+        pRetVal = DILocation::get( *unwrap( context )
+                                    , Line
+                                    , Column
+                                    , unwrap<DILocalScope>( scope )
+                                    , inlinedAtLocation
+                                    );
+
+        return wrap( pRetVal );
     }
 
     LLVMBool LLVMSubProgramDescribes( LLVMMetadataRef subProgram, LLVMValueRef /*const Function **/F )
@@ -702,5 +705,11 @@ extern "C"
     {
         DILocalScope* pScope = unwrap<DILocalScope>( localScope );
         return wrap( pScope->getSubprogram( ) );
+    }
+
+    /*Function*/ LLVMValueRef LLVMDISubProgramGetFunction( LLVMMetadataRef /*DISubProgram*/ subProgram )
+    {
+        DISubprogram* pSub = unwrap<DISubprogram>( subProgram );
+        return wrap( pSub->getFunction( ) );
     }
 }

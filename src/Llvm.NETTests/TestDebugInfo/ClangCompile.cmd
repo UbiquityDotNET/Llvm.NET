@@ -11,6 +11,10 @@ Call :GenerateCode x86_64-pc-windows-msvc18.0.0 test2.cpp test2_x86
 
 @REM -- Generate bitcode for Cortex-M3 from test2.cpp
 Call :GenerateCode thumbv7m-none-eabi test2.cpp test2_M3
+
+@REM -- Generate bitcode for Cortex-M3 from TestInline.cpp
+Call :GenerateCode thumbv7m-none-eabi TestInline.cpp TestInline_M3 
+
 goto :EOF
 
 @REM - %1 = Triple (i.e. x86_64-pc-windows-msvc18.0.0,thumbv7m-none-eabi) 

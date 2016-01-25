@@ -731,5 +731,8 @@ namespace Llvm.NET
 
         [DllImport(libraryPath, EntryPoint = "LLVMDILocalScopeGetSubProgram", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl, BestFitMapping = false, ThrowOnUnmappableChar = true)]
         internal static extern LLVMMetadataRef DILocalScopeGetSubProgram(LLVMMetadataRef /*DILocalScope*/ localScope);
+
+        [DllImport(libraryPath, EntryPoint = "LLVMDISubProgramGetFunction", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl, BestFitMapping = false, ThrowOnUnmappableChar = true)]
+        internal static extern /*Function*/ LLVMValueRef DISubProgramGetFunction(LLVMMetadataRef /*DISubProgram*/ subProgram);
     }
 }
