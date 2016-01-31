@@ -1,4 +1,6 @@
 ﻿
+using Llvm.NET.Native;
+
 namespace Llvm.NET.Instructions
 {
     public class ZeroExtend

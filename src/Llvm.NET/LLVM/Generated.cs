@@ -25,7 +25,7 @@ using System.Runtime.InteropServices;
 //warning CS0649: Field 'xxx' is never assigned to, and will always have its default value 0
 #pragma warning disable 649
 
-namespace Llvm.NET
+namespace Llvm.NET.Native
 {
     internal struct LLVMOpaqueMemoryBuffer
     {

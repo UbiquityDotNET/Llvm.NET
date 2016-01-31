@@ -132,8 +132,16 @@
     <Compile Include="Instructions\UserOp2.cs" />
     <Compile Include="Instructions\VaArg.cs" />
     <Compile Include="LLVM\LlvmHandles.cs" />
+    <Compile Include="Metadata\ConstantAsMetadata.cs" />
+    <Compile Include="Metadata\LocalAsMetadata.cs" />
+    <Compile Include="Metadata\MDNode.cs" />
+    <Compile Include="Metadata\MDOperand.cs" />
+    <Compile Include="Metadata\MDString.cs" />
+    <Compile Include="Metadata\MDTuple.cs" />
     <Compile Include="Metadata\Metadata.cs" />
-    <Compile Include="NamedMDNode.cs" />
+    <Compile Include="Metadata\MetadataAsValue.cs" />
+    <Compile Include="Metadata\ValueAsMetadata.cs" />
+    <Compile Include="Metadata\NamedMDNode.cs" />
     <Compile Include="ScalarEnumerable.cs" />
     <Compile Include="DebugInfo\DebugBasicType.cs" />
     <Compile Include="DebugInfo\DebugFunctionType.cs" />
@@ -171,7 +179,7 @@
     <Compile Include="Values\GlobalValue.cs" />
     <Compile Include="Values\GlobalVariable.cs" />
     <Compile Include="IExtensiblePropertyContainer.cs" />
-    <Compile Include="InstructionBuilder.cs" />
+    <Compile Include="Instructions\InstructionBuilder.cs" />
     <Compile Include="Instructions\InsertValue.cs" />
     <Compile Include="Instructions\Switch.cs" />
     <Compile Include="InternalCodeGeneratorException.cs" />
@@ -220,7 +228,7 @@
     <Compile Include="Types\StructType.cs" />
     <Compile Include="Target.cs" />
     <Compile Include="TargetMachine.cs" />
-    <Compile Include="TargetData.cs" />
+    <Compile Include="DataLayout.cs" />
     <Compile Include="Types\TypeRef.cs" />
     <Compile Include="Values\AttributeSet.cs" />
     <Compile Include="Values\IAttributeSetContainer.cs" />

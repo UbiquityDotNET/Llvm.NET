@@ -1,4 +1,6 @@
-﻿namespace Llvm.NET.Values
+﻿using Llvm.NET.Native;
+
+namespace Llvm.NET.Values
 {
     /// <summary>Floating point constant value in LLVM</summary>
     public class ConstantFP : Constant

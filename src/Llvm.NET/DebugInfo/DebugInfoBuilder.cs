@@ -5,6 +5,7 @@ using Llvm.NET.Values;
 using Llvm.NET.Instructions;
 using System.IO;
 using System.Text;
+using Llvm.NET.Native;
 
 namespace Llvm.NET.DebugInfo
 {

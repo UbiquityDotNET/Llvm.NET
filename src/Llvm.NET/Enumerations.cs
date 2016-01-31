@@ -3,6 +3,8 @@
 // This also keeping the lower level interop namespace internal to prevent mis-use or
 // violations of uniqueness rules
 
+using Llvm.NET.Native;
+
 namespace Llvm.NET
 {
     /// See Module::ModFlagBehavior
@@ -20,7 +22,9 @@ namespace Llvm.NET
     };
 
     /// <summary>LLVM Instruction opcodes</summary>
-    /// <remarks>These are based on the "C" API and therefore more stable as changes in the underlying instruction ids are remapped in the C API layer</remarks>
+    /// <remarks>
+    /// These are based on the "C" API and therefore more stable as changes in the underlying instruction ids are remapped in the C API layer
+    /// </remarks>
     [System.Diagnostics.CodeAnalysis.SuppressMessage( "Microsoft.Design", "CA1028:EnumStorageShouldBeInt32" )]
     [System.Diagnostics.CodeAnalysis.SuppressMessage( "Microsoft.Design", "CA1027:MarkEnumsWithFlags", Justification = "Not actually flags" )]
     public enum OpCode : uint
@@ -316,110 +320,17 @@ namespace Llvm.NET
         PreserveSource = LLVMLinkerMode.LLVMLinkerPreserveSource
     }
 
-    internal enum ValueKind : uint
-    {
-        Argument              = LLVMValueKind.LLVMValueKindArgumentVal,             // This is an instance of Argument
-        BasicBlock            = LLVMValueKind.LLVMValueKindBasicBlockVal,           // This is an instance of BasicBlock
-        Function              = LLVMValueKind.LLVMValueKindFunctionVal,             // This is an instance of Function
-        GlobalAlias           = LLVMValueKind.LLVMValueKindGlobalAliasVal,          // This is an instance of GlobalAlias
-        GlobalVariable        = LLVMValueKind.LLVMValueKindGlobalVariableVal,       // This is an instance of GlobalVariable
-        UndefValue            = LLVMValueKind.LLVMValueKindUndefValueVal,           // This is an instance of UndefValue
-        BlockAddress          = LLVMValueKind.LLVMValueKindBlockAddressVal,         // This is an instance of BlockAddress
-        ConstantExpr          = LLVMValueKind.LLVMValueKindConstantExprVal,         // This is an instance of ConstantExpr
-        ConstantAggregateZero = LLVMValueKind.LLVMValueKindConstantAggregateZeroVal,// This is an instance of ConstantAggregateZero
-        ConstantDataArray     = LLVMValueKind.LLVMValueKindConstantDataArrayVal,    // This is an instance of ConstantDataArray
-        ConstantDataVector    = LLVMValueKind.LLVMValueKindConstantDataVectorVal,   // This is an instance of ConstantDataVector
-        ConstantInt           = LLVMValueKind.LLVMValueKindConstantIntVal,          // This is an instance of ConstantInt
-        ConstantFP            = LLVMValueKind.LLVMValueKindConstantFPVal,           // This is an instance of ConstantFP
-        ConstantArray         = LLVMValueKind.LLVMValueKindConstantArrayVal,        // This is an instance of ConstantArray
-        ConstantStruct        = LLVMValueKind.LLVMValueKindConstantStructVal,       // This is an instance of ConstantStruct
-        ConstantVector        = LLVMValueKind.LLVMValueKindConstantVectorVal,       // This is an instance of ConstantVector
-        ConstantPointerNull   = LLVMValueKind.LLVMValueKindConstantPointerNullVal,  // This is an instance of ConstantPointerNull
-        ConstantTokenNone     = LLVMValueKind.LLVMValueKindConstantTokenNoneVal,    // This is an instance of ConstantTokenNone
-        MetadataAsValue       = LLVMValueKind.LLVMValueKindMetadataAsValueVal,      // This is an instance of MetadataAsValue
-        InlineAsm             = LLVMValueKind.LLVMValueKindInlineAsmVal,            // This is an instance of InlineAsm
-        Instruction           = LLVMValueKind.LLVMValueKindInstructionVal,          // This is an instance of Instruction
-                                                                                    // Enum values starting at InstructionVal are used for Instructions;
-
-        // instruction values come directly from LLVM Instruction.def which is different from the "stable"
-        // LLVM-C API, therefore they are less "stable" and bound to the C++ implementation version and
-        // subject to change from version to version.
-        Return         = 1 + Instruction, // Terminators
-        Branch         = 2 + Instruction,
-        Switch         = 3 + Instruction,
-        IndirectBranch = 4 + Instruction,
-        Invoke         = 5 + Instruction,
-        Resume         = 6 + Instruction,
-        Unreachable    = 7 + Instruction,
-        CleanUpReturn  = 8 + Instruction,
-        CatchReturn    = 9 + Instruction,
-        CatchSwitch    = 10 + Instruction,
-
-        Add            = 11 + Instruction, // binary operators
-        FAdd           = 12 + Instruction,
-        Sub            = 13 + Instruction,
-        FSub           = 14 + Instruction,
-        Mul            = 15 + Instruction,
-        FMul           = 16 + Instruction,
-        UDiv           = 17 + Instruction,
-        SDiv           = 18 + Instruction,
-        FDiv           = 19 + Instruction,
-        URem           = 20 + Instruction,
-        SRem           = 21 + Instruction,
-        FRem           = 22 + Instruction,
-
-        Shl            = 23 + Instruction, // Logical Operators
-        LShr           = 24 + Instruction,
-        AShr           = 25 + Instruction,
-        And            = 26 + Instruction,
-        Or             = 27 + Instruction,
-        Xor            = 28 + Instruction,
-
-        Alloca         = 29 + Instruction, // Memory Operators
-        Load           = 30 + Instruction,
-        Store          = 31 + Instruction,
-        GetElementPtr  = 32 + Instruction,
-        Fence          = 33 + Instruction,
-        AtomicCmpXchg  = 34 + Instruction,
-        AtomicRMW      = 35 + Instruction,
-
-        Trunc          = 36 + Instruction, // cast/conversion operators
-        ZeroExtend     = 37 + Instruction,
-        SignExtend     = 38 + Instruction,
-        FPToUI         = 39 + Instruction,
-        FPToSI         = 40 + Instruction,
-        UIToFP         = 41 + Instruction,
-        SIToFP         = 42 + Instruction,
-        FPTrunc        = 43 + Instruction,
-        FPExt          = 44 + Instruction,
-        PtrToInt       = 45 + Instruction,
-        IntToPtr       = 46 + Instruction,
-        BitCast        = 47 + Instruction,
-        AddrSpaceCast  = 48 + Instruction,
-
-        CleanupPad     = 49 + Instruction, // New Exception pads
-        CatchPad       = 50 + Instruction,
-
-        ICmp           = 51 + Instruction,
-        FCmp           = 52 + Instruction,
-        Phi            = 53 + Instruction,
-        Call           = 54 + Instruction,
-        Select         = 55 + Instruction,
-        UserOp1        = 56 + Instruction,
-        UserOp2        = 57 + Instruction,
-        VaArg          = 58 + Instruction,
-        ExtractElement = 59 + Instruction,
-        InsertElement  = 60 + Instruction,
-        ShuffleVector  = 61 + Instruction,
-        ExtractValue   = 62 + Instruction,
-        InsertValue    = 63 + Instruction,
-        LandingPad     = 64 + Instruction,
-
-        // Markers:
-        ConstantFirstVal = Function,
-        ConstantLastVal = ConstantPointerNull
-    }
-
+    /// <summary>Enumeration for well known attribute kinds</summary>
+    /// <remarks>
+    /// The numeric value of the members of this enumeration are subject
+    /// to change from version to version. Therefore code must never
+    /// rely on the actual underlying value and use only the symbolic name
+    /// </remarks>
+    /// <Implementation>
+    /// For details on what the values should be see attributes.def in 
+    /// the LLVM source. This was added in v3.8.0 along with a change in
+    /// the numerical values.
+    /// </Implementation>
     public enum AttributeKind
     {
         None                        = LLVMAttrKind.None,

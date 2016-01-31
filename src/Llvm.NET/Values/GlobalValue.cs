@@ -1,4 +1,6 @@
-﻿namespace Llvm.NET.Values
+﻿using Llvm.NET.Native;
+
+namespace Llvm.NET.Values
 {
     /// <summary>LLVM Global value </summary>
     public class GlobalValue

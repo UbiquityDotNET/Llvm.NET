@@ -2,11 +2,11 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
-using Llvm.NET.Instructions;
+using Llvm.NET.Native;
 using Llvm.NET.Types;
 using Llvm.NET.Values;
 
-namespace Llvm.NET
+namespace Llvm.NET.Instructions
 {
     ///<summary>LLVM Instruction builder allowing managed code to generate IR instructions</summary>
     public class InstructionBuilder

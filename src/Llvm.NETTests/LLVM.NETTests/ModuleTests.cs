@@ -1,5 +1,6 @@
 ﻿using System.IO;
 using System.Linq;
+using Llvm.NET.Instructions;
 using Llvm.NET.Values;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 

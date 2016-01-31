@@ -16,7 +16,7 @@
 using System;
 using System.Runtime.InteropServices;
 
-namespace Llvm.NET
+namespace Llvm.NET.Native
 {
     internal partial struct LLVMMetadataRef
     {

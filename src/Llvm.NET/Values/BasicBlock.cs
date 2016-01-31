@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using Llvm.NET.Instructions;
+using Llvm.NET.Native;
 
 namespace Llvm.NET.Values
 {

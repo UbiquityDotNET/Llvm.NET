@@ -1,41 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
 using Llvm.NET.DebugInfo;
-using Llvm.NET.Values;
+using Llvm.NET.Native;
 
 namespace Llvm.NET
 {
-    /// <summary>Enumeration to define debug information metadata nodes</summary>
-    internal enum MetadataKind : uint
-    {
-        MDTuple,
-        DILocation,
-        GenericDINode,
-        DISubrange,
-        DIEnumerator,
-        DIBasicType,
-        DIDerivedType,
-        DICompositeType,
-        DISubroutineType,
-        DIFile,
-        DICompileUnit,
-        DISubprogram,
-        DILexicalBlock,
-        DILexicalBlockFile,
-        DINamespace,
-        DIModule,
-        DITemplateTypeParameter,
-        DITemplateValueParameter,
-        DIGlobalVariable,
-        DILocalVariable,
-        DIExpression,
-        DIObjCProperty,
-        DIImportedEntity,
-        ConstantAsMetadata,
-        LocalAsMetadata,
-        MDString
-    }
-
     /// <summary>Root of the LLVM Metadata hierarchy</summary>
     /// <remarks>In LLVM this is just "Metadata" however that name has the potential
     /// to conflict with the .NET runtime namespace of the same name, so the name
@@ -86,6 +54,36 @@ namespace Llvm.NET
                 return null;
 
             return ( T )context.GetNodeFor( handle, StaticFactory );
+        }
+        /// <summary>Enumeration to define debug information metadata nodes</summary>
+        private enum MetadataKind : uint
+        {
+            MDTuple,
+            DILocation,
+            GenericDINode,
+            DISubrange,
+            DIEnumerator,
+            DIBasicType,
+            DIDerivedType,
+            DICompositeType,
+            DISubroutineType,
+            DIFile,
+            DICompileUnit,
+            DISubprogram,
+            DILexicalBlock,
+            DILexicalBlockFile,
+            DINamespace,
+            DIModule,
+            DITemplateTypeParameter,
+            DITemplateValueParameter,
+            DIGlobalVariable,
+            DILocalVariable,
+            DIExpression,
+            DIObjCProperty,
+            DIImportedEntity,
+            ConstantAsMetadata,
+            LocalAsMetadata,
+            MDString
         }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage( "Microsoft.Maintainability", "CA1506:AvoidExcessiveClassCoupling", Justification = "Static factory method" )]
@@ -180,146 +178,4 @@ namespace Llvm.NET
         }
     }
 
-    public class ValueAsMetadata
-        : LlvmMetadata
-    {
-        internal ValueAsMetadata( LLVMMetadataRef handle )
-            : base( handle )
-        {
-        }
-    }
-
-    public class ConstantAsMetadata
-        : ValueAsMetadata
-    {
-        internal ConstantAsMetadata( LLVMMetadataRef handle )
-            : base( handle )
-        {
-        }
-    }
-
-    public class LocalAsMetadata
-        : ValueAsMetadata
-    {
-        internal LocalAsMetadata( LLVMMetadataRef handle )
-            : base( handle )
-        {
-        }
-    }
-
-    public class MetadataAsValue : Value
-    {
-        internal MetadataAsValue( LLVMValueRef valueRef )
-            : base( valueRef )
-        {
-        }
-
-        internal static LLVMValueRef IsAMetadataAsValue( LLVMValueRef value )
-        {
-            if( value.Pointer == IntPtr.Zero )
-                return value;
-
-            return NativeMethods.GetValueKind( value ) == ValueKind.MetadataAsValue ? value : default( LLVMValueRef );
-        }
-
-        //public static implicit operator Metadata( MetadataAsValue self )
-        //{
-        //    // TODO: Add support to get the metadata ref from the value...
-        //    // e.g. call C++ MetadataAsValue.getMetadata()
-        //    throw new NotImplementedException();
-        //}
-    }
-
-    public class MDOperand
-    {
-        public MDNode OwningNode { get; }
-        public LlvmMetadata Metadata => LlvmMetadata.FromHandle<LlvmMetadata>( OwningNode.Context, NativeMethods.GetOperandNode( OperandHandle ) );
-
-        internal MDOperand( MDNode owningNode, LLVMMDOperandRef handle )
-        {
-            if( handle.Pointer == IntPtr.Zero )
-                throw new ArgumentNullException( nameof( handle ) );
-
-            OperandHandle = handle;
-            OwningNode = owningNode;
-        }
-
-        internal static MDOperand FromHandle( MDNode owningNode, LLVMMDOperandRef handle )
-        {
-            return owningNode.Context.GetOperandFor( owningNode, handle );
-        }
-
-        private readonly LLVMMDOperandRef OperandHandle;
-    }
-
-    public class MDNode : LlvmMetadata
-    {
-        internal MDNode( LLVMMetadataRef handle )
-            : base( handle )
-        {
-            Operands = new MDNodeOperandList( this );
-        }
-
-        public Context Context => Context.GetContextFor( MetadataHandle );
-        public bool IsDeleted => MetadataHandle == LLVMMetadataRef.Zero;
-        public bool IsTemporary => NativeMethods.IsTemporary( MetadataHandle );
-        public bool IsResolved => NativeMethods.IsResolved( MetadataHandle );
-        public bool IsUniqued => NativeMethods.IsUniqued( MetadataHandle );
-        public bool IsDistinct => NativeMethods.IsDistinct( MetadataHandle );
-        public IReadOnlyList<MDOperand> Operands { get; }
-
-        public void ResolveCycles( ) => NativeMethods.MDNodeResolveCycles( MetadataHandle );
-
-        [System.Diagnostics.CodeAnalysis.SuppressMessage( "Microsoft.Naming", "CA2204:Literals should be spelled correctly", MessageId = "MDNode" )]
-        public override void ReplaceAllUsesWith( LlvmMetadata other )
-        {
-            if( other == null )
-                throw new ArgumentNullException( nameof( other ) );
-
-            if( !IsTemporary || IsResolved )
-                throw new InvalidOperationException( "Cannot replace non temporary or resolved MDNode" );
-
-            if( MetadataHandle.Pointer == IntPtr.Zero )
-                throw new InvalidOperationException( "Cannot Replace all uses of a null descriptor" );
-
-            NativeMethods.MDNodeReplaceAllUsesWith( MetadataHandle, other.MetadataHandle );
-            // remove current node mapping from the context.
-            // It won't be valid for use after clearing the handle
-            Context.RemoveDeletedNode( this );
-            MetadataHandle = LLVMMetadataRef.Zero;
-        }
-
-        internal static T FromHandle<T>( LLVMMetadataRef handle )
-            where T : MDNode
-        {
-            if( handle.Pointer.IsNull( ) )
-                return null;
-
-            var context = Context.GetContextFor( handle );
-            return FromHandle<T>( context, handle );
-        }
-    }
-
-    public class MDTuple : MDNode
-    {
-        internal MDTuple( LLVMMetadataRef handle )
-            : base( handle )
-        {
-        }
-    }
-
-    public class MDString : LlvmMetadata
-    {
-        internal MDString( LLVMMetadataRef handle )
-            : base( handle )
-        {
-        }
-
-        public override string ToString( )
-        {
-            uint len;
-            var ptr = NativeMethods.GetMDStringText( MetadataHandle, out len );
-            return NativeMethods.NormalizeLineEndings( ptr, ( int )len );
-        }
-    }
 }

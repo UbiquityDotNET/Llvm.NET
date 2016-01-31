@@ -5,6 +5,7 @@ using System.Diagnostics;
 using System.Runtime.InteropServices;
 using Llvm.NET.Types;
 using Llvm.NET.DebugInfo;
+using Llvm.NET.Native;
 
 namespace Llvm.NET.Values
 {
@@ -81,7 +82,7 @@ namespace Llvm.NET.Values
                 if( ( value != null ) && !value.Describes( this ) )
                     throw new ArgumentException( "Subprogram does not describe this Function" );
 
-                NativeMethods.FunctionSetSubprogram( ValueHandle, value.MetadataHandle );
+                NativeMethods.FunctionSetSubprogram( ValueHandle, value?.MetadataHandle ?? LLVMMetadataRef.Zero );
             }
         }
 

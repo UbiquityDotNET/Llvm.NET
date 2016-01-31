@@ -2,6 +2,8 @@
 using System.Diagnostics;
 using System.Runtime.InteropServices;
 using Llvm.NET.DebugInfo;
+using Llvm.NET.Instructions;
+using Llvm.NET.Native;
 using Llvm.NET.Types;
 
 namespace Llvm.NET.Values

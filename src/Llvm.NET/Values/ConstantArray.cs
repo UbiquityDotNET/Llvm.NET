@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System;
 using Llvm.NET.Types;
+using Llvm.NET.Native;
 
 namespace Llvm.NET.Values
 {
