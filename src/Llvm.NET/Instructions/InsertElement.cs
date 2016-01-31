@@ -3,8 +3,8 @@
     public class InsertElement
         : Instruction
     {
-        internal InsertElement( LLVMValueRef valueRef, bool preValidated )
-            : base( preValidated ? valueRef : ValidateConversion( valueRef, NativeMethods.IsAExtractElementInst ) )
+        internal InsertElement( LLVMValueRef valueRef )
+            : base( valueRef )
         {
         }
     }

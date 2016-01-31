@@ -4,7 +4,7 @@
         : Instruction
     {
         internal UnaryInstruction( LLVMValueRef valueRef )
-            : base( ValidateConversion( valueRef, NativeMethods.IsAUnaryInstruction ) )
+            : base( valueRef )
         {
         }
     }

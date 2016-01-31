@@ -209,8 +209,8 @@ namespace Llvm.NET
 
     public class MetadataAsValue : Value
     {
-        internal MetadataAsValue( LLVMValueRef valueRef, bool preValidated )
-            : base( preValidated ? valueRef : ValidateConversion( valueRef, IsAMetadataAsValue ) )
+        internal MetadataAsValue( LLVMValueRef valueRef )
+            : base( valueRef )
         {
         }
 

@@ -233,7 +233,6 @@ namespace Llvm.NET.DebugInfo
                                                               , scopeLine
                                                               , ( uint )debugFlags
                                                               , isOptimized ? 1 : 0
-                                                              , function.ValueHandle
                                                               , typeParameter?.MetadataHandle ?? LLVMMetadataRef.Zero
                                                               , declaration?.MetadataHandle ?? LLVMMetadataRef.Zero
                                                               );
@@ -291,13 +290,13 @@ namespace Llvm.NET.DebugInfo
                                                                          , scopeLine
                                                                          , ( uint )debugFlags
                                                                          , isOptimized ? 1 : 0
-                                                                         , LLVMValueRef.Zero
                                                                          , LLVMMetadataRef.Zero
                                                                          , LLVMMetadataRef.Zero
                                                                          );
             return MDNode.FromHandle<DISubProgram>( handle );
         }
 
+        [System.Diagnostics.CodeAnalysis.SuppressMessage( "Microsoft.Design", "CA1011:ConsiderPassingBaseTypesAsParameters" )]
         public DILocalVariable CreateLocalVariable( DIScope scope
                                                   , string name
                                                   , DIFile file
@@ -305,10 +304,24 @@ namespace Llvm.NET.DebugInfo
                                                   , DIType type
                                                   , bool alwaysPreserve
                                                   , DebugInfoFlags debugFlags
-                                                  , uint argNo
                                                   )
         {
-            return CreateLocalVariable( Tag.AutoVariable, scope, name, file, line, type, alwaysPreserve, ( uint )debugFlags, argNo );
+            if( scope == null )
+                throw new ArgumentNullException( nameof( scope ) );
+
+            if( type == null )
+                throw new ArgumentNullException( nameof( type ) );
+
+            var handle = NativeMethods.DIBuilderCreateAutoVariable( BuilderHandle
+                                                                  , scope.MetadataHandle
+                                                                  , name
+                                                                  , file?.MetadataHandle ?? LLVMMetadataRef.Zero
+                                                                  , line
+                                                                  , type.MetadataHandle
+                                                                  , alwaysPreserve ? 1 : 0
+                                                                  , ( uint )debugFlags
+                                                                  );
+            return MDNode.FromHandle<DILocalVariable>( handle );
         }
 
         /// <summary>Creates an argument for a function as a <see cref="DILocalVariable"/></summary>
@@ -321,6 +334,7 @@ namespace Llvm.NET.DebugInfo
         /// <param name="debugFlags"><see cref="DebugInfoFlags"/> for this argument</param>
         /// <param name="argNo">One based argument index on the method (e.g the first argument is 1 not 0 )</param>
         /// <returns><see cref="DILocalVariable"/> representing the function argument</returns>
+        [System.Diagnostics.CodeAnalysis.SuppressMessage( "Microsoft.Design", "CA1011:ConsiderPassingBaseTypesAsParameters" )]
         public DILocalVariable CreateArgument( DIScope scope
                                              , string name
                                              , DIFile file
@@ -331,7 +345,23 @@ namespace Llvm.NET.DebugInfo
                                              , uint argNo
                                              )
         {
-            return CreateLocalVariable( Tag.ArgVariable, scope, name, file, line, type, alwaysPreserve, ( uint )debugFlags, argNo );
+            if( scope == null )
+                throw new ArgumentNullException( nameof( scope ) );
+
+            if( type == null )
+                throw new ArgumentNullException( nameof( type ) );
+
+            var handle = NativeMethods.DIBuilderCreateParameterVariable( BuilderHandle
+                                                                       , scope.MetadataHandle
+                                                                       , name
+                                                                       , argNo
+                                                                       , file?.MetadataHandle ?? LLVMMetadataRef.Zero
+                                                                       , line
+                                                                       , type.MetadataHandle
+                                                                       , alwaysPreserve ? 1 : 0
+                                                                       , ( uint )debugFlags
+                                                                       );
+            return MDNode.FromHandle<DILocalVariable>( handle );
         }
 
         /// <summary>Construct debug information for a basic type (a.k.a. primitive type)</summary>
@@ -387,12 +417,7 @@ namespace Llvm.NET.DebugInfo
             if( types == null )
                 throw new ArgumentNullException( nameof( types ) );
 
-            // NOTE:
-            // LLVM API has a "DIFile" as the first argument, however it is ignored as
-            // DISubroutineType doesn't have any scope/file information attached.
-            // Thus, the file argument here is always null.
             var handle = NativeMethods.DIBuilderCreateSubroutineType( BuilderHandle
-                                                                    , LLVMMetadataRef.Zero
                                                                     , types.MetadataHandle
                                                                     , ( uint )debugFlags
                                                                     );
@@ -713,8 +738,8 @@ namespace Llvm.NET.DebugInfo
             if( insertAtEnd == null )
                 throw new ArgumentNullException( nameof( insertAtEnd ) );
 
-            if (location.Scope.SubProgram != varInfo.Scope.SubProgram)
-                throw new ArgumentException("Mismatched scopes for location and variable");
+            if( location.Scope.SubProgram != varInfo.Scope.SubProgram )
+                throw new ArgumentException( "Mismatched scopes for location and variable" );
 
             var handle = NativeMethods.DIBuilderInsertDeclareAtEnd( BuilderHandle
                                                                   , storage.ValueHandle
@@ -860,7 +885,7 @@ namespace Llvm.NET.DebugInfo
                                                                               , lang
                                                                               , sizeInBits
                                                                               , alignBits
-                                                                              , (uint)flags
+                                                                              , ( uint )flags
                                                                               );
             return MDNode.FromHandle<DICompositeType>( handle );
         }
@@ -888,31 +913,6 @@ namespace Llvm.NET.DebugInfo
 
             BuilderHandle = NativeMethods.NewDIBuilder( owningModule.ModuleHandle, allowUnresolved );
             OwningModule = owningModule;
-        }
-
-        private DILocalVariable CreateLocalVariable( Tag dwarfTag
-                                                   , DIScope scope
-                                                   , string name
-                                                   , DIFile file
-                                                   , uint line
-                                                   , DIType type
-                                                   , bool alwaysPreserve
-                                                   , uint flags
-                                                   , uint argNo
-                                                   )
-        {
-            var handle = NativeMethods.DIBuilderCreateLocalVariable( BuilderHandle
-                                                                   , ( uint )dwarfTag
-                                                                   , scope.MetadataHandle
-                                                                   , name
-                                                                   , file?.MetadataHandle ?? LLVMMetadataRef.Zero
-                                                                   , line
-                                                                   , type.MetadataHandle
-                                                                   , alwaysPreserve ? 1 : 0
-                                                                   , flags
-                                                                   , argNo
-                                                                   );
-            return MDNode.FromHandle<DILocalVariable>( handle );
         }
 
         private readonly NativeModule OwningModule;

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace Llvm.NET.Values
 {
-    /// <summary>Support class to provide readonly list semantics to the parameters of a method</summary>
+    /// <summary>Support class to provide read only list semantics to the parameters of a method</summary>
     internal class FunctionParameterList
         : IReadOnlyList<Argument>
     {

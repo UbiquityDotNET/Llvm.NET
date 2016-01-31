@@ -1,9 +1,9 @@
 ﻿namespace Llvm.NET.Instructions
 {
-    public class BinaryOperator
+    public class CatchSwitch
         : Instruction
     {
-        internal BinaryOperator( LLVMValueRef valueRef )
+        internal CatchSwitch( LLVMValueRef valueRef )
             : base( valueRef )
         {
         }

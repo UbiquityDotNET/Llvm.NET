@@ -3,8 +3,8 @@
     public class GetElementPtr
         : Instruction
     {
-        internal GetElementPtr( LLVMValueRef valueRef, bool preValidated )
-            : base( preValidated ? valueRef : ValidateConversion( valueRef, NativeMethods.IsAGetElementPtrInst ) )
+        internal GetElementPtr( LLVMValueRef valueRef )
+            : base( valueRef )
         {
         }
     }

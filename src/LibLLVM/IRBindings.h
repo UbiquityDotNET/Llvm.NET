@@ -53,6 +53,9 @@ char const* LLVMGetDIFileDirectory( LLVMMetadataRef /*DIFile*/ file );
 
 LLVMValueRef LLVMBuildAtomicCmpXchg( LLVMBuilderRef B, LLVMValueRef Ptr, LLVMValueRef Cmp, LLVMValueRef New, LLVMAtomicOrdering successOrdering, LLVMAtomicOrdering failureOrdering, LLVMBool singleThread );
 
+LLVMMetadataRef LLVMFunctionGetSubprogram( LLVMValueRef function );
+void LLVMFunctionSetSubprogram( LLVMValueRef function, LLVMMetadataRef subprogram );
+
 #ifdef __cplusplus
 }
 

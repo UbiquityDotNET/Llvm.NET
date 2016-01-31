@@ -53,9 +53,11 @@
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="CortexM3Details.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TargetDependentDetails.cs" />
+    <Compile Include="X64Details.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />

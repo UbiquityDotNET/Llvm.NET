@@ -4,8 +4,8 @@ namespace Llvm.NET.Instructions
     public class ZeroExtend
         : Cast
     {
-        internal ZeroExtend( LLVMValueRef valueRef, bool preValidated )
-            : base( preValidated ? valueRef : ValidateConversion( valueRef, NativeMethods.IsAZExtInst ) )
+        internal ZeroExtend( LLVMValueRef valueRef )
+            : base( valueRef )
         {
         }
     }

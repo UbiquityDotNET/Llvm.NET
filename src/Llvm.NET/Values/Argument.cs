@@ -34,8 +34,8 @@ namespace Llvm.NET.Values
             }
         }
 
-        internal Argument( LLVMValueRef valueRef, bool preValidated )
-            : base( preValidated ? valueRef : ValidateConversion( valueRef, NativeMethods.IsAArgument ) )
+        internal Argument( LLVMValueRef valueRef )
+            : base( valueRef )
         {
         }
     }

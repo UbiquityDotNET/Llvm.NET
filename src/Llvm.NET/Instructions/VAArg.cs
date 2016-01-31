@@ -2,8 +2,8 @@
 {
     class VaArg : UnaryInstruction
     {
-        internal VaArg( LLVMValueRef valueRef, bool preValidated )
-            : base( preValidated ? valueRef : ValidateConversion( valueRef, NativeMethods.IsABranchInst ) )
+        internal VaArg( LLVMValueRef valueRef )
+            : base( valueRef )
         {
         }
     }

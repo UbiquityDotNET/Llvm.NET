@@ -1,9 +1,9 @@
 ﻿namespace Llvm.NET.Instructions
 {
-    public class IndirectBranch
+    public class CatchReturn
         : Terminator
     {
-        internal IndirectBranch( LLVMValueRef valueRef )
+        internal CatchReturn( LLVMValueRef valueRef )
             : base( valueRef )
         {
         }

@@ -2,8 +2,8 @@
 {
     public class UndefValue : Constant
     {
-        internal UndefValue( LLVMValueRef valueRef, bool preValidated )
-            : base( preValidated ? valueRef : ValidateConversion( valueRef, NativeMethods.IsAUndefValue ) )
+        internal UndefValue( LLVMValueRef valueRef )
+            : base( valueRef )
         {
         }
     }

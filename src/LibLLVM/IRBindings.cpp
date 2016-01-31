@@ -20,6 +20,7 @@
 #include "llvm/IR/LLVMContext.h"
 #include "llvm/IR/Module.h"
 #include "llvm/IR/CallSite.h"
+#include "llvm/IR/DebugInfoMetadata.h"
 #include <type_traits>
 
 using namespace llvm;
@@ -139,6 +140,18 @@ extern "C"
             return;
 
         pNode->resolveCycles( );
+    }
+
+    LLVMMetadataRef LLVMFunctionGetSubprogram( LLVMValueRef function )
+    {
+        Function* pFunction = unwrap<Function>( function );
+        return wrap( pFunction->getSubprogram( ) );
+    }
+
+    void LLVMFunctionSetSubprogram( LLVMValueRef function, LLVMMetadataRef subprogram )
+    {
+        Function* pFunction = unwrap<Function>( function );
+        pFunction->setSubprogram( unwrap<DISubprogram>( subprogram ) );
     }
 
     static AtomicOrdering mapFromLLVMOrdering( LLVMAtomicOrdering Ordering )

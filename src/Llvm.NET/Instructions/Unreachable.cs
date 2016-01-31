@@ -3,8 +3,8 @@
     public class Unreachable
         : Terminator
     {
-        internal Unreachable( LLVMValueRef valueRef, bool preValidated )
-            : base( preValidated ? valueRef : ValidateConversion( valueRef, NativeMethods.IsABranchInst ) )
+        internal Unreachable( LLVMValueRef valueRef )
+            : base( valueRef )
         {
         }
     }

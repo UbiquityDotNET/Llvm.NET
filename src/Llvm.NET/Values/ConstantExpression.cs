@@ -43,8 +43,8 @@ namespace Llvm.NET.Values
             return FromHandle<Constant>(handle);
         }
 
-        internal ConstantExpression( LLVMValueRef valueRef, bool preValidated )
-            : base( preValidated ? valueRef : ValidateConversion( valueRef, NativeMethods.IsAConstantExpr ) )
+        internal ConstantExpression( LLVMValueRef valueRef )
+            : base( valueRef )
         {
         }
     }

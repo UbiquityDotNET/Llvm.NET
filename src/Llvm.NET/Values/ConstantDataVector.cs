@@ -2,8 +2,8 @@
 {
     public class ConstantDataVector : ConstantDataSequential
     {
-        internal ConstantDataVector( LLVMValueRef valueRef, bool preValidated )
-            : base( preValidated ? valueRef : ValidateConversion( valueRef, NativeMethods.IsAConstantDataVector ) )
+        internal ConstantDataVector( LLVMValueRef valueRef )
+            : base( valueRef )
         {
         }
     }

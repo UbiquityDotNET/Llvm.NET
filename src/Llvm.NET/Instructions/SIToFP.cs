@@ -2,8 +2,8 @@
 {
     class SIToFP : Cast
     {
-        internal SIToFP( LLVMValueRef valueRef, bool preValidated )
-            : base( preValidated ? valueRef : ValidateConversion( valueRef, NativeMethods.IsABranchInst ) )
+        internal SIToFP( LLVMValueRef valueRef )
+            : base( valueRef )
         {
         }
     }

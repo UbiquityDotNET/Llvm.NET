@@ -72,8 +72,8 @@ namespace Llvm.NET.Values
             NativeMethods.RemoveGlobalFromParent( ValueHandle );
         }
 
-        internal GlobalVariable( LLVMValueRef valueRef, bool preValidated )
-            : base( preValidated ? valueRef : ValidateConversion( valueRef, NativeMethods.IsAGlobalVariable ) )
+        internal GlobalVariable( LLVMValueRef valueRef )
+            : base( valueRef )
         {
         }
     }

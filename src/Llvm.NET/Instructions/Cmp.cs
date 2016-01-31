@@ -4,7 +4,7 @@
         : Instruction
     {
         internal Cmp( LLVMValueRef valueRef )
-            : base( ValidateConversion( valueRef, NativeMethods.IsACmpInst ) )
+            : base( valueRef )
         {
         }
 

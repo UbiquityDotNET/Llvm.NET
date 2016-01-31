@@ -519,7 +519,7 @@ namespace Llvm.NET
 
     internal enum LLVMOpcode : uint
     {
-        @LLVMRet = 1,
+        @LLVMRet = 1, // terminators
         @LLVMBr = 2,
         @LLVMSwitch = 3,
         @LLVMIndirectBr = 4,
@@ -578,6 +578,12 @@ namespace Llvm.NET
         @LLVMAtomicRMW = 57,
         @LLVMResume = 58,
         @LLVMLandingPad = 59,
+        // Gap = 60
+        @LLVMCleanupReg = 61,
+        @LLVMCatchRet = 62,
+        @LLVMCatchPad = 63,
+        @LLVMCleandupPad = 64,
+        @LLVMCatchSwitch = 65
     }
 
     internal enum LLVMTypeKind : uint
@@ -598,6 +604,7 @@ namespace Llvm.NET
         @LLVMVectorTypeKind = 13,
         @LLVMMetadataTypeKind = 14,
         @LLVMX86_MMXTypeKind = 15,
+        @LLVMTokenTypeKind = 16,
     }
 
     internal enum LLVMLinkage : uint
@@ -2232,6 +2239,12 @@ namespace Llvm.NET
         [DllImport(libraryPath, EntryPoint = "LLVMSetVolatile", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl, BestFitMapping = false, ThrowOnUnmappableChar = true)]
         internal static extern void SetVolatile(LLVMValueRef @MemoryAccessInst, LLVMBool @IsVolatile);
 
+        [DllImport( libraryPath, EntryPoint = "LLVMGetOrdering", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl, BestFitMapping = false, ThrowOnUnmappableChar = true )]
+        internal static extern LLVMAtomicOrdering GetOrdering( LLVMValueRef @MemoryAccessInst );
+
+        [DllImport( libraryPath, EntryPoint = "LLVMSetOrdering", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl, BestFitMapping = false, ThrowOnUnmappableChar = true )]
+        internal static extern void SetOrdering( LLVMValueRef @MemoryAccessInst, LLVMAtomicOrdering @Ordering );
+
         [DllImport(libraryPath, EntryPoint = "LLVMBuildTrunc", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl, BestFitMapping = false, ThrowOnUnmappableChar = true)]
         internal static extern LLVMValueRef BuildTrunc(LLVMBuilderRef @param0, LLVMValueRef @Val, LLVMTypeRef @DestTy, [MarshalAs(UnmanagedType.LPStr)] string @Name);
 
@@ -2426,12 +2439,6 @@ namespace Llvm.NET
 
         [DllImport(libraryPath, EntryPoint = "LLVMGetBitcodeModule", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl, BestFitMapping = false, ThrowOnUnmappableChar = true)]
         internal static extern LLVMBool GetBitcodeModule(LLVMMemoryBufferRef @MemBuf, out LLVMModuleRef @OutM, out IntPtr @OutMessage);
-
-        [DllImport(libraryPath, EntryPoint = "LLVMGetBitcodeModuleProviderInContext", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl, BestFitMapping = false, ThrowOnUnmappableChar = true)]
-        internal static extern LLVMBool GetBitcodeModuleProviderInContext(LLVMContextRef @ContextRef, LLVMMemoryBufferRef @MemBuf, out LLVMModuleProviderRef @OutMP, out IntPtr @OutMessage);
-
-        [DllImport(libraryPath, EntryPoint = "LLVMGetBitcodeModuleProvider", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl, BestFitMapping = false, ThrowOnUnmappableChar = true)]
-        internal static extern LLVMBool GetBitcodeModuleProvider(LLVMMemoryBufferRef @MemBuf, out LLVMModuleProviderRef @OutMP, out IntPtr @OutMessage);
 
         [DllImport(libraryPath, EntryPoint = "LLVMWriteBitcodeToFile", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl, BestFitMapping = false, ThrowOnUnmappableChar = true)]
         internal static extern int WriteBitcodeToFile(LLVMModuleRef @M, [MarshalAs(UnmanagedType.LPStr)] string @Path);
@@ -2868,15 +2875,6 @@ namespace Llvm.NET
         [DllImport(libraryPath, EntryPoint = "LLVMCreateMCJITCompilerForModule", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl, BestFitMapping = false, ThrowOnUnmappableChar = true)]
         internal static extern LLVMBool CreateMCJITCompilerForModule(out LLVMExecutionEngineRef @OutJIT, LLVMModuleRef @M, out LLVMMCJITCompilerOptions @Options, int @SizeOfOptions, out IntPtr @OutError);
 
-        [DllImport(libraryPath, EntryPoint = "LLVMCreateExecutionEngine", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl, BestFitMapping = false, ThrowOnUnmappableChar = true)]
-        internal static extern LLVMBool CreateExecutionEngine(out LLVMExecutionEngineRef @OutEE, LLVMModuleProviderRef @MP, out IntPtr @OutError);
-
-        [DllImport(libraryPath, EntryPoint = "LLVMCreateInterpreter", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl, BestFitMapping = false, ThrowOnUnmappableChar = true)]
-        internal static extern LLVMBool CreateInterpreter(out LLVMExecutionEngineRef @OutInterp, LLVMModuleProviderRef @MP, out IntPtr @OutError);
-
-        [DllImport(libraryPath, EntryPoint = "LLVMCreateJITCompiler", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl, BestFitMapping = false, ThrowOnUnmappableChar = true)]
-        internal static extern LLVMBool CreateJITCompiler(out LLVMExecutionEngineRef @OutJIT, LLVMModuleProviderRef @MP, uint @OptLevel, out IntPtr @OutError);
-
         [DllImport(libraryPath, EntryPoint = "LLVMDisposeExecutionEngine", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl, BestFitMapping = false, ThrowOnUnmappableChar = true)]
         internal static extern void DisposeExecutionEngine(LLVMExecutionEngineRef @EE);
 
@@ -2898,14 +2896,8 @@ namespace Llvm.NET
         [DllImport(libraryPath, EntryPoint = "LLVMAddModule", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl, BestFitMapping = false, ThrowOnUnmappableChar = true)]
         internal static extern void AddModule(LLVMExecutionEngineRef @EE, LLVMModuleRef @M);
 
-        [DllImport(libraryPath, EntryPoint = "LLVMAddModuleProvider", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl, BestFitMapping = false, ThrowOnUnmappableChar = true)]
-        internal static extern void AddModuleProvider(LLVMExecutionEngineRef @EE, LLVMModuleProviderRef @MP);
-
         [DllImport(libraryPath, EntryPoint = "LLVMRemoveModule", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl, BestFitMapping = false, ThrowOnUnmappableChar = true)]
         internal static extern LLVMBool RemoveModule(LLVMExecutionEngineRef @EE, LLVMModuleRef @M, out LLVMModuleRef @OutMod, out IntPtr @OutError);
-
-        [DllImport(libraryPath, EntryPoint = "LLVMRemoveModuleProvider", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl, BestFitMapping = false, ThrowOnUnmappableChar = true)]
-        internal static extern LLVMBool RemoveModuleProvider(LLVMExecutionEngineRef @EE, LLVMModuleProviderRef @MP, out LLVMModuleRef @OutMod, out IntPtr @OutError);
 
         [DllImport(libraryPath, EntryPoint = "LLVMFindFunction", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl, BestFitMapping = false, ThrowOnUnmappableChar = true)]
         internal static extern LLVMBool FindFunction(LLVMExecutionEngineRef @EE, [MarshalAs(UnmanagedType.LPStr)] string @Name, out LLVMValueRef @OutFn);

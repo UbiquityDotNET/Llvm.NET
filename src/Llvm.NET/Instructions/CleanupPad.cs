@@ -1,8 +1,9 @@
 ﻿namespace Llvm.NET.Instructions
 {
-    class FPToSI : Cast
+    public class CleanupPad
+        : FuncletPad
     {
-        internal FPToSI( LLVMValueRef valueRef )
+        internal CleanupPad( LLVMValueRef valueRef )
             : base( valueRef )
         {
         }

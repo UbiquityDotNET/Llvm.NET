@@ -29,12 +29,7 @@ namespace Llvm.NET.Values
         }
 
         internal ConstantDataSequential( LLVMValueRef valueRef )
-            : this( valueRef, false )
-        {
-        }
-
-        internal ConstantDataSequential( LLVMValueRef valueRef, bool preValidated )
-            : base( preValidated ? valueRef : ValidateConversion( valueRef, NativeMethods.IsAConstantDataSequential ) )
+            : base( valueRef )
         {
         }
     }

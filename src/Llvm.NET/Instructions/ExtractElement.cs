@@ -3,8 +3,8 @@
     public class ExtractElement
         : Instruction
     {
-        internal ExtractElement( LLVMValueRef valueRef, bool preValidated )
-            : base( preValidated ? valueRef : ValidateConversion( valueRef, NativeMethods.IsAExtractElementInst ) )
+        internal ExtractElement( LLVMValueRef valueRef )
+            : base( valueRef )
         {
         }
     }

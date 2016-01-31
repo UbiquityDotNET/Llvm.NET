@@ -2,8 +2,8 @@
 {
     public class ConstantStruct : Constant
     {
-        internal ConstantStruct( LLVMValueRef valueRef, bool preValidated )
-            : base( preValidated ? valueRef : ValidateConversion( valueRef, NativeMethods.IsAConstantStruct ) )
+        internal ConstantStruct( LLVMValueRef valueRef )
+            : base( valueRef )
         {
         }
     }

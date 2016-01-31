@@ -3,8 +3,8 @@
     public class AtomicRMW
         : Instruction
     {
-        internal AtomicRMW( LLVMValueRef valueRef, bool preValidated )
-            : base( preValidated ? valueRef : ValidateConversion( valueRef, NativeMethods.IsAExtractElementInst ) )
+        internal AtomicRMW( LLVMValueRef valueRef )
+            : base( valueRef )
         {
         }
     }

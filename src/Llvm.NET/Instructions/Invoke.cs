@@ -35,8 +35,8 @@ namespace Llvm.NET.Instructions
             }
         }
 
-        internal Invoke( LLVMValueRef valueRef, bool preValidated )
-            : base( preValidated ? valueRef : ValidateConversion( valueRef, NativeMethods.IsABranchInst ) )
+        internal Invoke( LLVMValueRef valueRef )
+            : base( valueRef )
         {
         }
     }

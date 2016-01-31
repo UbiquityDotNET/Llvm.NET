@@ -31,6 +31,8 @@ LLVMGetAliasee
 LLVMMDNodeResolveCycles
 LLVMGetArgumentIndex
 LLVMDIScopeGetFile
+LLVMFunctionGetSubprogram
+LLVMFunctionSetSubprogram
 
 ; Debug info functions not part of standard LLVM-C API
 LLVMGetMetadataID
@@ -53,7 +55,8 @@ LLVMDIBuilderCreateLexicalBlock
 LLVMDIBuilderCreateLexicalBlockFile
 LLVMDIBuilderCreateFunction
 LLVMDIBuilderCreateTempFunctionFwdDecl
-LLVMDIBuilderCreateLocalVariable
+LLVMDIBuilderCreateAutoVariable
+LLVMDIBuilderCreateParameterVariable
 LLVMDIBuilderCreateBasicType
 LLVMDIBuilderCreatePointerType
 LLVMDIBuilderCreateQualifiedType
@@ -241,7 +244,9 @@ LLVMInitializeNativeDisassembler  = LLVMInitializeNativeDisassemblerExport
 ;lto_codegen_debug_options
 ;lto_initialize_disassembler
 
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ; standard LLVM-C API exports
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 LLVMInitializeAArch64AsmParser
 LLVMInitializeAArch64AsmPrinter
 LLVMInitializeAArch64Target
@@ -261,8 +266,6 @@ LLVMInitializeARMDisassembler
 LLVMInitializeARMTargetInfo
 LLVMGetBitcodeModule
 LLVMGetBitcodeModuleInContext
-LLVMGetBitcodeModuleProvider
-LLVMGetBitcodeModuleProviderInContext
 LLVMParseBitcode
 LLVMParseBitcodeInContext
 LLVMWriteBitcodeToFD
@@ -592,6 +595,7 @@ LLVMGetValueName
 LLVMGetVectorSize
 LLVMGetVisibility
 LLVMGetVolatile
+LLVMGetOrdering
 LLVMHalfType
 LLVMHalfTypeInContext
 LLVMHasMetadata
@@ -612,6 +616,8 @@ LLVMInt32Type
 LLVMInt32TypeInContext
 LLVMInt64Type
 LLVMInt64TypeInContext
+LLVMInt128Type
+LLVMInt128TypeInContext
 LLVMInt8Type
 LLVMInt8TypeInContext
 LLVMIntType
@@ -757,6 +763,7 @@ LLVMSetUnnamedAddr
 LLVMSetValueName
 LLVMSetVisibility
 LLVMSetVolatile
+LLVMSetOrdering
 LLVMShutdown
 LLVMSizeOf
 LLVMStartMultithreaded
@@ -781,15 +788,11 @@ LLVMInitializeCppBackendTargetInfo
 LLVMInitializeCppBackendTargetMC
 LLVMAddGlobalMapping
 LLVMAddModule
-LLVMAddModuleProvider
-LLVMCreateExecutionEngine
 LLVMCreateExecutionEngineForModule
 LLVMCreateGenericValueOfFloat
 LLVMCreateGenericValueOfInt
 LLVMCreateGenericValueOfPointer
-LLVMCreateInterpreter
 LLVMCreateInterpreterForModule
-LLVMCreateJITCompiler
 LLVMCreateJITCompilerForModule
 LLVMCreateMCJITCompilerForModule
 LLVMCreateSimpleMCJITMemoryManager
@@ -810,7 +813,6 @@ LLVMGetPointerToGlobal
 LLVMInitializeMCJITCompilerOptions
 LLVMRecompileAndRelinkFunction
 LLVMRemoveModule
-LLVMRemoveModuleProvider
 LLVMRunFunction
 LLVMRunFunctionAsMain
 LLVMRunStaticConstructors

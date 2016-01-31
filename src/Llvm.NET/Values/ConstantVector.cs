@@ -2,8 +2,8 @@
 {
     public class ConstantVector : Constant
     {
-        internal ConstantVector( LLVMValueRef valueRef, bool preValidated )
-            : base( preValidated ? valueRef : ValidateConversion( valueRef, NativeMethods.IsAConstantVector ) )
+        internal ConstantVector( LLVMValueRef valueRef )
+            : base( valueRef )
         {
         }
     }

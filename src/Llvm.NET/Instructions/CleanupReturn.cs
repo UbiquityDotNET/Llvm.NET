@@ -1,9 +1,9 @@
 ﻿namespace Llvm.NET.Instructions
 {
-    public class IndirectBranch
+    public class CleanupReturn
         : Terminator
     {
-        internal IndirectBranch( LLVMValueRef valueRef )
+        internal CleanupReturn( LLVMValueRef valueRef )
             : base( valueRef )
         {
         }

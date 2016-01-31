@@ -2,8 +2,8 @@
 {
     class FPTrunc : Cast
     {
-        internal FPTrunc( LLVMValueRef valueRef, bool preValidated )
-            : base( preValidated ? valueRef : ValidateConversion( valueRef, NativeMethods.IsABranchInst ) )
+        internal FPTrunc( LLVMValueRef valueRef )
+            : base( valueRef )
         {
         }
     }

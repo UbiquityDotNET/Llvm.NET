@@ -4,7 +4,7 @@
         : UnaryInstruction
     {
         internal Cast( LLVMValueRef valueRef )
-            : base( ValidateConversion( valueRef, NativeMethods.IsACastInst ) )
+            : base( valueRef )
         {
         }
     }

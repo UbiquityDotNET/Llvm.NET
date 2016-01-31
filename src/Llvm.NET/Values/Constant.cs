@@ -44,12 +44,7 @@ namespace Llvm.NET.Values
         public static Constant ConstPointerToNullFor( ITypeRef typeRef ) => FromHandle<Constant>( NativeMethods.ConstPointerNull( typeRef.GetTypeRef( ) ) );
 
         internal Constant( LLVMValueRef valueRef )
-            : this( valueRef, false )
-        {
-        }
-
-        internal Constant( LLVMValueRef valueRef, bool preValidated )
-            : base( preValidated ? valueRef : ValidateConversion( valueRef, NativeMethods.IsAConstant ) )
+            : base( valueRef )
         {
         }
     }

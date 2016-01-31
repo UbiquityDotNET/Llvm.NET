@@ -1,9 +1,9 @@
 ﻿namespace Llvm.NET.Instructions
 {
-    public class BinaryOperator
+    public class FuncletPad
         : Instruction
     {
-        internal BinaryOperator( LLVMValueRef valueRef )
+        internal FuncletPad( LLVMValueRef valueRef )
             : base( valueRef )
         {
         }

@@ -57,8 +57,8 @@ namespace Llvm.NET.Values
             return FromHandle<Constant>( handle );
         }
 
-        internal ConstantArray( LLVMValueRef valueRef, bool preValidated )
-            : base( preValidated ? valueRef : ValidateConversion( valueRef, NativeMethods.IsAConstantArray ) )
+        internal ConstantArray( LLVMValueRef valueRef )
+            : base( valueRef )
         {
         }
 

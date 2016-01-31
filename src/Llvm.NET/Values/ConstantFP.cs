@@ -21,8 +21,8 @@
             return retVal;
         }
 
-        internal ConstantFP( LLVMValueRef valueRef, bool preValidated )
-            : base( preValidated ? valueRef : ValidateConversion( valueRef, NativeMethods.IsAConstantFP ) )
+        internal ConstantFP( LLVMValueRef valueRef )
+            : base( valueRef )
         {
         }
     }

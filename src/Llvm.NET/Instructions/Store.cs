@@ -9,8 +9,8 @@
             set { NativeMethods.SetVolatile( ValueHandle, value ); }
         }
 
-        internal Store( LLVMValueRef valueRef, bool preValidated )
-            : base( preValidated ? valueRef : ValidateConversion( valueRef, NativeMethods.IsAStoreInst ) )
+        internal Store( LLVMValueRef valueRef )
+            : base( valueRef )
         {
         }
     }

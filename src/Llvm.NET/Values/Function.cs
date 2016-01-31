@@ -74,17 +74,16 @@ namespace Llvm.NET.Values
         {
             get
             {
-                return DISubProgram_;
+                return MDNode.FromHandle<DISubProgram>( NativeMethods.FunctionGetSubprogram( ValueHandle ) );
             }
             set
             {
                 if( ( value != null ) && !value.Describes( this ) )
                     throw new ArgumentException( "Subprogram does not describe this Function" );
 
-                DISubProgram_ = value;
+                NativeMethods.FunctionSetSubprogram( ValueHandle, value.MetadataHandle );
             }
         }
-        private DISubProgram DISubProgram_;
 
         /// <summary>Garbage collection engine name that this function is generated to work with</summary>
         /// <remarks>For details on GC support in LLVM see: http://llvm.org/docs/GarbageCollection.html </remarks>
@@ -169,8 +168,8 @@ namespace Llvm.NET.Values
             return retVal;
         }
 
-        internal Function( LLVMValueRef valueRef, bool preValidated )
-            : base( preValidated ? valueRef : ValidateConversion( valueRef, NativeMethods.IsAFunction ) )
+        internal Function( LLVMValueRef valueRef )
+            : base( valueRef )
         {
         }
     }

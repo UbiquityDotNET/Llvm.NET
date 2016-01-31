@@ -2,8 +2,8 @@
 {
     class UserOp1 : Instruction
     {
-        internal UserOp1( LLVMValueRef valueRef, bool preValidated )
-            : base( preValidated ? valueRef : ValidateConversion( valueRef, NativeMethods.IsABranchInst ) )
+        internal UserOp1( LLVMValueRef valueRef )
+            : base( valueRef )
         {
         }
     }

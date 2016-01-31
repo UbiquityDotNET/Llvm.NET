@@ -16,7 +16,7 @@ namespace TestDebugInfo
         static AttributeSet TargetDependentAttributes { get; set; }
 
         // obviously this is not clang but using an identical name helps in diff with actual clang output
-        const string VersionIdentString = "clang version 3.7.0 (tags/RELEASE_370/final)";
+        const string VersionIdentString = "clang version 3.8.0 (branches/release_38)";
 
         /// <summary>Creates a test LLVM module with debug information</summary>
         /// <param name="args">ignored</param>
@@ -34,7 +34,7 @@ namespace TestDebugInfo
             }
             srcPath = Path.GetFullPath( srcPath );
 
-            var moduleName = $"Test_{TargetDetails.ShortName}.bc";
+            var moduleName = $"test_{TargetDetails.ShortName}.bc";
 
             StaticState.RegisterAll( );
             var target = Target.FromTriple( TargetDetails.Triple );
@@ -103,8 +103,11 @@ namespace TestDebugInfo
                 var constFoo = module.DIBuilder.CreateQualifiedType( fooType.DIType, QualifiedTypeTag.Const );
                 var fooPtr = new DebugPointerType( fooType, module );
 
+                // Create the functions
+                // NOTE: The declaration ordering is reversed from that of the sample code file (test.c)
+                //       However, this is what Clang ends up doing for some reason so it is
+                //       replicated here to aid in comparing the generated LL files.
                 Function doCopyFunc = DeclareDoCopyFunc( module, diFile, voidType );
-
                 Function copyFunc = DeclareCopyFunc( module, diFile, voidType, constFoo, fooPtr );
 
                 CreateCopyFunctionBody( module, targetData, copyFunc, diFile, fooType, fooPtr, constFoo );
@@ -137,10 +140,6 @@ namespace TestDebugInfo
         {
             var doCopySig = module.Context.CreateFunctionType( module.DIBuilder, voidType );
 
-            // Create the functions
-            // NOTE: The declaration ordering is reversed from that of the sample code file (test.c)
-            //       However, this is what Clang ends up doing for some reason so it is
-            //       replicated here to aid in comparing the generated LL files.
             var doCopyFunc = module.CreateFunction( scope: diFile
                                                   , name: "DoCopy"
                                                   , linkageName: null

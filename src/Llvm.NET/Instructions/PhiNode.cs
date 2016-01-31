@@ -32,8 +32,8 @@ namespace Llvm.NET.Instructions
             NativeMethods.AddIncoming( ValueHandle, out llvmValues[ 0 ], out llvmBlocks[ 0 ], ( uint )llvmValues.Length );
         }
 
-        internal PhiNode( LLVMValueRef valueRef, bool preValidated )
-            : base( preValidated ? valueRef : ValidateConversion( valueRef, NativeMethods.IsAPHINode ) )
+        internal PhiNode( LLVMValueRef valueRef )
+            : base( valueRef )
         {
         }
     }

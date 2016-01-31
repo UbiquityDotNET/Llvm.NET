@@ -6,7 +6,7 @@ namespace Llvm.NET.Values
         : GlobalValue
     {
         internal GlobalObject( LLVMValueRef valueRef )
-            : base( ValidateConversion( valueRef, NativeMethods.IsAGlobalObject ) )
+            : base( valueRef )
         {
         }
 

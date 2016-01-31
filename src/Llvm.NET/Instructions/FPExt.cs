@@ -2,8 +2,8 @@
 {
     class FPExt : Cast
     {
-        internal FPExt( LLVMValueRef valueRef, bool preValidated )
-            : base( preValidated ? valueRef : ValidateConversion( valueRef, NativeMethods.IsABranchInst ) )
+        internal FPExt( LLVMValueRef valueRef )
+            : base( valueRef )
         {
         }
     }

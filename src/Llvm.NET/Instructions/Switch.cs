@@ -22,8 +22,8 @@ namespace Llvm.NET.Instructions
             NativeMethods.AddCase( ValueHandle, onVal.ValueHandle, destination.BlockHandle );
         }
 
-        internal Switch( LLVMValueRef valueRef, bool preValidated )
-            : base( preValidated ? valueRef : ValidateConversion( valueRef, NativeMethods.IsASwitchInst ) )
+        internal Switch( LLVMValueRef valueRef )
+            : base( valueRef )
         {
         }
 

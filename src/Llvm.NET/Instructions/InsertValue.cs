@@ -3,8 +3,8 @@
     public class InsertValue
         : Instruction
     {
-        internal InsertValue( LLVMValueRef valueRef, bool preValidated )
-            : base( preValidated ? valueRef : ValidateConversion( valueRef, NativeMethods.IsAInsertValueInst ) )
+        internal InsertValue( LLVMValueRef valueRef )
+            : base( valueRef )
         {
         }
     }

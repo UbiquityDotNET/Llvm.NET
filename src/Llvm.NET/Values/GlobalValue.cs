@@ -1,7 +1,8 @@
 ﻿namespace Llvm.NET.Values
 {
     /// <summary>LLVM Global value </summary>
-    public class GlobalValue : Constant
+    public class GlobalValue
+        : Constant
     {
         /// <summary>Visibility of this global value</summary>
         public Visibility Visibility
@@ -49,7 +50,7 @@
         public NativeModule ParentModule => NativeType.Context.GetModuleFor( NativeMethods.GetGlobalParent( ValueHandle ) );
 
         internal GlobalValue( LLVMValueRef valueRef )
-            : base( ValidateConversion( valueRef, NativeMethods.IsAGlobalValue ) )
+            : base( valueRef )
         {
         }
     }

@@ -107,11 +107,17 @@
     <Compile Include="Instructions\AddressSpaceCast.cs" />
     <Compile Include="Instructions\AtomicCmpXchg.cs" />
     <Compile Include="Instructions\AtomicRMW.cs" />
+    <Compile Include="Instructions\CatchPad.cs" />
+    <Compile Include="Instructions\CatchReturn.cs" />
+    <Compile Include="Instructions\CatchSwitch.cs" />
+    <Compile Include="Instructions\CleanupPad.cs" />
+    <Compile Include="Instructions\CleanupReturn.cs" />
     <Compile Include="Instructions\Fence.cs" />
     <Compile Include="Instructions\FPExt.cs" />
     <Compile Include="Instructions\FPToSI.cs" />
     <Compile Include="Instructions\FPToUI.cs" />
     <Compile Include="Instructions\FPTrunc.cs" />
+    <Compile Include="Instructions\FuncletPad.cs" />
     <Compile Include="Instructions\IndirectBranch.cs" />
     <Compile Include="Instructions\InsertElement.cs" />
     <Compile Include="Instructions\Invoke.cs" />
@@ -136,6 +142,7 @@
     <Compile Include="Types\ArrayType.cs" />
     <Compile Include="Values\AttributeBuilder.cs" />
     <Compile Include="Values\AttributeKindExtensions.cs" />
+    <Compile Include="Values\AttributeSetContainer.cs" />
     <Compile Include="Values\AttributeValue.cs" />
     <Compile Include="Values\BasicBlock.cs" />
     <Compile Include="Values\BlockAddress.cs" />
@@ -149,6 +156,7 @@
     <Compile Include="Values\ConstantFP.cs" />
     <Compile Include="Values\ConstantInt.cs" />
     <Compile Include="Values\ConstantStruct.cs" />
+    <Compile Include="Values\ConstantTokenNone.cs" />
     <Compile Include="Values\ConstantVector.cs" />
     <Compile Include="Values\ConstPointerNull.cs" />
     <Compile Include="Context.cs" />
@@ -218,6 +226,7 @@
     <Compile Include="Values\IAttributeSetContainer.cs" />
     <Compile Include="Values\InlineAsm.cs" />
     <Compile Include="Values\UndefValue.cs" />
+    <Compile Include="Values\Use.cs" />
     <Compile Include="Values\User.cs" />
     <Compile Include="Values\UserOperandList.cs" />
     <Compile Include="Values\Value.cs" />

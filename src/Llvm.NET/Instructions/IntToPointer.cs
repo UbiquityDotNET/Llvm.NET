@@ -3,8 +3,8 @@
     public class IntToPointer
         : Cast
     {
-        internal IntToPointer( LLVMValueRef valueRef, bool preValidated )
-            : base( preValidated ? valueRef : ValidateConversion( valueRef, NativeMethods.IsAIntToPtrInst ) )
+        internal IntToPointer( LLVMValueRef valueRef )
+            : base( valueRef )
         {
         }
     }
