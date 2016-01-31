@@ -843,16 +843,5 @@ namespace Llvm.NET
         private readonly Dictionary< LLVMMDOperandRef, MDOperand > MDOperandCache = new Dictionary< LLVMMDOperandRef, MDOperand >( );
 
         private static Dictionary<LLVMContextRef, Context> ContextCache = new Dictionary<LLVMContextRef, Context>( );
-
-        // TODO: move fatal error handling to a static method of NativeMethods as it is not really tied to the context
-        static void FatalErrorHandler( string Reason )
-        {
-            Trace.TraceError( Reason );
-            throw new InternalCodeGeneratorException( Reason );
-        }
-
-        // lazy initialized singleton unmanaged delegate so it is never collected
-        //private static Lazy<LLVMFatalErrorHandler> FatalErrorHandlerDelegate 
-        //    = new Lazy<LLVMFatalErrorHandler>( ( ) => FatalErrorHandler, LazyThreadSafetyMode.PublicationOnly );
     }
 }

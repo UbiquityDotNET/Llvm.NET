@@ -1,8 +1,10 @@
 ﻿using System;
+using System.Diagnostics;
 using System.IO;
 using System.Reflection;
 using System.Runtime.InteropServices;
 using System.Text.RegularExpressions;
+using System.Threading;
 
 namespace Llvm.NET
 {
@@ -45,6 +47,12 @@ namespace Llvm.NET
     internal static partial class NativeMethods
     {
         internal static ValueKind GetValueKind( LLVMValueRef valueRef ) => ( ValueKind )GetValueID( valueRef );
+
+        static void FatalErrorHandler( string Reason )
+        {
+            Trace.TraceError( Reason );
+            // LLVM will call exit() upon return from this function
+        }
 
         /// <summary>This method is used to marshal a string when NativeMethods.DisposeMessage() is required on the string allocated from native code</summary>
         /// <param name="msg">POinter to the native code allocated string</param>
@@ -93,6 +101,8 @@ namespace Llvm.NET
 
             // initialize the static fields
             LineEndingNormalizingRegEx = new Regex( "(\r\n|\n\r|\r|\n)" );
+            FatalErrorHandlerDelegate = new Lazy<LLVMFatalErrorHandler>( ( ) => FatalErrorHandler, LazyThreadSafetyMode.PublicationOnly );
+            InstallFatalErrorHandler( FatalErrorHandlerDelegate.Value );
         }
 
         // LLVM doesn't honor environment/OS specific default line endings, so this will
@@ -125,6 +135,8 @@ namespace Llvm.NET
             return LineEndingNormalizingRegEx.Replace( txt, Environment.NewLine );
         }
 
+        // lazy initialized singleton unmanaged delegate so it is never collected
+        private static Lazy<LLVMFatalErrorHandler> FatalErrorHandlerDelegate;
         private static readonly Regex LineEndingNormalizingRegEx;
     }
 }

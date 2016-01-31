@@ -579,7 +579,7 @@ namespace Llvm.NET
         @LLVMResume = 58,
         @LLVMLandingPad = 59,
         // Gap = 60
-        @LLVMCleanupReg = 61,
+        @LLVMCleanupRet = 61,
         @LLVMCatchRet = 62,
         @LLVMCatchPad = 63,
         @LLVMCleandupPad = 64,

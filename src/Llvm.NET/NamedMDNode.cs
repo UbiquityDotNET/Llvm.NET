@@ -21,6 +21,7 @@ namespace Llvm.NET
 
         private LLVMNamedMDNodeRef NativeHandle;
 
+        // internal iterator for Metadata operands
         private class OperandIterator
             : IReadOnlyList<MDNode>
         {

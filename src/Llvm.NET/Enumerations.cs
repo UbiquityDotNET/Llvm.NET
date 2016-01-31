@@ -1,6 +1,6 @@
 ﻿// This file maps the lower level internal LLVM enumeration names to something
-// more compatible with the styles, patterns and conventions familiar to .NET Developers
-// and also keeping the lower level interop namespace internal to prevent mis-use or
+// more compatible with the styles, patterns and conventions familiar to .NET Developers.
+// This also keeping the lower level interop namespace internal to prevent mis-use or
 // violations of uniqueness rules
 
 namespace Llvm.NET
@@ -20,6 +20,7 @@ namespace Llvm.NET
     };
 
     /// <summary>LLVM Instruction opcodes</summary>
+    /// <remarks>These are based on the "C" API and therefore more stable as changes in the underlying instruction ids are remapped in the C API layer</remarks>
     [System.Diagnostics.CodeAnalysis.SuppressMessage( "Microsoft.Design", "CA1028:EnumStorageShouldBeInt32" )]
     [System.Diagnostics.CodeAnalysis.SuppressMessage( "Microsoft.Design", "CA1027:MarkEnumsWithFlags", Justification = "Not actually flags" )]
     public enum OpCode : uint
@@ -98,7 +99,12 @@ namespace Llvm.NET
 
         /* Exception Handling Operators */
         Resume = LLVMOpcode.LLVMResume,
-        LandingPad = LLVMOpcode.LLVMLandingPad
+        LandingPad = LLVMOpcode.LLVMLandingPad,
+        CleanupRet = LLVMOpcode.LLVMCleanupRet,
+        CatchRet = LLVMOpcode.LLVMCatchRet,
+        CatchPad = LLVMOpcode.LLVMCatchPad,
+        CleanupPad = LLVMOpcode.LLVMCleandupPad,
+        CatchSwitch = LLVMOpcode.LLVMCatchSwitch
     }
 
     /// <summary>Basic kind of a type</summary>
@@ -121,7 +127,7 @@ namespace Llvm.NET
         Vector = LLVMTypeKind.LLVMVectorTypeKind,       // SIMD 'packed' format, or other vector type
         Metadata = LLVMTypeKind.LLVMMetadataTypeKind,   // Metadata
         X86MMX = LLVMTypeKind.LLVMX86_MMXTypeKind,      // X86 MMX
-        Token = LLVMTypeKind.LLVMTokenTypeKind          // Tokens 
+        Token = LLVMTypeKind.LLVMTokenTypeKind          // Exception handler Tokens 
     }
 
     /// <summary>Calling Convention for functions</summary>
