@@ -112,6 +112,22 @@ namespace Llvm.NET.Native
         ConstantFirstVal = Function,
         ConstantLastVal = ConstantPointerNull
     }
+    
+    internal partial struct LLVMVersionInfo
+    {
+        public override string ToString()
+        {
+            if( VersionString == IntPtr.Zero )
+                return null;
+
+            return Marshal.PtrToStringAnsi( VersionString );
+        }
+
+        public static implicit operator Version( LLVMVersionInfo versionInfo )
+        {
+            return new Version(versionInfo.Major, versionInfo.Minor, versionInfo.Patch);
+        }
+    }
 
     // add implicit conversions to/from C# bool for convenience
     internal partial struct LLVMBool
@@ -119,6 +135,7 @@ namespace Llvm.NET.Native
         // sometimes LLVMBool values are actually success/failure codes
         // and thus a zero value actually means success and not false or failure.
         public bool Succeeded => Value == 0;
+
         public bool Failed => !Succeeded;
 
         public static implicit operator LLVMBool( bool value ) => new LLVMBool( value ? 1 : 0 );
@@ -206,6 +223,15 @@ namespace Llvm.NET.Native
 
             // initialize the static fields
             LineEndingNormalizingRegEx = new Regex( "(\r\n|\n\r|\r|\n)" );
+            LLVMVersionInfo versionInfo = new LLVMVersionInfo();
+            GetVersionInfo(ref versionInfo);
+            if( versionInfo.Major != VersionMajor
+             || versionInfo.Minor != VersionMinor
+             || versionInfo.Patch != VersionPatch
+              )
+            {
+                throw new BadImageFormatException("Mismatched LibLLVM version");
+            }
             FatalErrorHandlerDelegate = new Lazy<LLVMFatalErrorHandler>( ( ) => FatalErrorHandler, LazyThreadSafetyMode.PublicationOnly );
             InstallFatalErrorHandler( FatalErrorHandlerDelegate.Value );
         }
@@ -243,5 +269,10 @@ namespace Llvm.NET.Native
         // lazy initialized singleton unmanaged delegate so it is never collected
         private static Lazy<LLVMFatalErrorHandler> FatalErrorHandlerDelegate;
         private static readonly Regex LineEndingNormalizingRegEx;
+
+        // version info for verification of matched LibLLVM
+        private const int VersionMajor = 3;
+        private const int VersionMinor = 8;
+        private const int VersionPatch = 0;
     }
 }

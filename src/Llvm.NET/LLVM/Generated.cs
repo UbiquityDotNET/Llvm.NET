@@ -2084,7 +2084,7 @@ namespace Llvm.NET.Native
         internal static extern LLVMValueRef BuildInvoke(LLVMBuilderRef @param0, LLVMValueRef @Fn, out LLVMValueRef @Args, uint @NumArgs, LLVMBasicBlockRef @Then, LLVMBasicBlockRef @Catch, [MarshalAs(UnmanagedType.LPStr)] string @Name);
 
         [DllImport(libraryPath, EntryPoint = "LLVMBuildLandingPad", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl, BestFitMapping = false, ThrowOnUnmappableChar = true)]
-        internal static extern LLVMValueRef BuildLandingPad(LLVMBuilderRef @B, LLVMTypeRef @Ty, LLVMValueRef @PersFn, uint @NumClauses, [MarshalAs(UnmanagedType.LPStr)] string @Name);
+        internal static extern LLVMValueRef BuildLandingPad(LLVMBuilderRef @B, LLVMTypeRef @Ty, uint @NumClauses, [MarshalAs(UnmanagedType.LPStr)] string @Name);
 
         [DllImport(libraryPath, EntryPoint = "LLVMBuildResume", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl, BestFitMapping = false, ThrowOnUnmappableChar = true)]
         internal static extern LLVMValueRef BuildResume(LLVMBuilderRef @B, LLVMValueRef @Exn);
@@ -3246,6 +3246,11 @@ namespace Llvm.NET.Native
 
         [DllImport(libraryPath, EntryPoint = "LLVMAddSLPVectorizePass", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl, BestFitMapping = false, ThrowOnUnmappableChar = true)]
         internal static extern void AddSLPVectorizePass(LLVMPassManagerRef @PM);
+
+        [DllImport(libraryPath, EntryPoint = "LLVMGetPersonalityFn", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl, BestFitMapping = false, ThrowOnUnmappableChar = true)]
+        internal static extern LLVMValueRef GetPersonalityFunction(LLVMValueRef function);
+
+        [DllImport(libraryPath, EntryPoint = "LLVMSetPersonalityFn", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl, BestFitMapping = false, ThrowOnUnmappableChar = true)]
+        internal static extern void SetPersonalityFunction(LLVMValueRef function, LLVMValueRef personalityFunction);
     }
 }
-

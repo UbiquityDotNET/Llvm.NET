@@ -30,11 +30,12 @@ LLVMGetGlobalAlias
 LLVMGetAliasee
 LLVMMDNodeResolveCycles
 LLVMGetArgumentIndex
+LLVMGetVersionInfo
+
+; Debug info functions not part of standard LLVM-C API
 LLVMDIScopeGetFile
 LLVMFunctionGetSubprogram
 LLVMFunctionSetSubprogram
-
-; Debug info functions not part of standard LLVM-C API
 LLVMGetMetadataID
 LLVMGetNodeContext
 LLVMGetDIFileName
@@ -571,6 +572,7 @@ LLVMGetParam
 LLVMGetParamParent
 LLVMGetParamTypes
 LLVMGetParams
+LLVMGetPersonalityFn
 LLVMGetPointerAddressSpace
 LLVMGetPreviousBasicBlock
 LLVMGetPreviousFunction
@@ -753,6 +755,7 @@ LLVMSetMetadata
 LLVMSetModuleInlineAsm
 LLVMSetOperand
 LLVMSetParamAlignment
+LLVMSetPersonalityFn
 LLVMSetSection
 LLVMSetSuccessor
 LLVMSetTailCall

@@ -70,6 +70,19 @@ namespace Llvm.NET.Values
         /// <summary>Return type of the function</summary>
         public ITypeRef ReturnType => Signature.ReturnType;
 
+        public Function PersonalityFunction
+        {
+            get
+            {
+                return FromHandle<Function>( NativeMethods.GetPersonalityFunction( ValueHandle ) );
+            }
+
+            set
+            {
+                NativeMethods.SetPersonalityFunction( ValueHandle, value?.ValueHandle ?? LLVMValueRef.Zero );
+            }
+        }
+
         /// <summary>Debug information for this function</summary>
         public DISubProgram DISubProgram
         {

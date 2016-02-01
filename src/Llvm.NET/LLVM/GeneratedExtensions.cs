@@ -58,6 +58,14 @@ namespace Llvm.NET.Native
         internal readonly IntPtr Pointer;
     }
 
+    internal partial struct LLVMVersionInfo
+    {
+        internal readonly int Major;
+        internal readonly int Minor;
+        internal readonly int Patch;
+        readonly IntPtr VersionString;
+    }
+
     internal enum LLVMModFlagBehavior
     {
         @Error = 1,
@@ -265,6 +273,9 @@ namespace Llvm.NET.Native
 
     internal static partial class NativeMethods
     {
+        [DllImport(libraryPath, EntryPoint = "LLVMGetVersionInfo", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl, BestFitMapping = false, ThrowOnUnmappableChar = true)]
+        public static extern void GetVersionInfo(ref LLVMVersionInfo pVersionInfo);
+
         [DllImport( libraryPath, EntryPoint = "LLVMGetValueID", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl, BestFitMapping = false, ThrowOnUnmappableChar = true)]
         public static extern int GetValueID( LLVMValueRef @val );
 

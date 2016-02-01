@@ -174,7 +174,6 @@ namespace Llvm.NET.Instructions
         {
             LLVMValueRef landingPad = NativeMethods.BuildLandingPad( BuilderHandle
                                                                    , resultType.GetTypeRef()
-                                                                   , LLVMValueRef.Zero
                                                                    , 0
                                                                    , string.Empty
                                                                    );

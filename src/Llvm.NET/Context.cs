@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Text;
-using System.Threading;
 using Llvm.NET.DebugInfo;
 using Llvm.NET.Native;
 using Llvm.NET.Types;
@@ -520,7 +519,7 @@ namespace Llvm.NET
         [System.Diagnostics.CodeAnalysis.SuppressMessage( "Language", "CSE0003:Use expression-bodied members", Justification = "Readability" )]
         public Constant CreateConstant( UInt16 constValue )
         {
-            var handle = NativeMethods.ConstInt( Int16Type.GetTypeRef( ), ( ulong )constValue, new LLVMBool( 0 ) );
+            var handle = NativeMethods.ConstInt( Int16Type.GetTypeRef( ), constValue, new LLVMBool( 0 ) );
             return Value.FromHandle<Constant>( handle );
         }
 

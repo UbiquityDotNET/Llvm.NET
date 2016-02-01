@@ -26,6 +26,16 @@
 extern "C" {
 #endif
 
+typedef struct LLVMVersionInfo
+{
+    int Major;
+    int Minor;
+    int Patch;
+    char const* VersionString;
+}LLVMVersionInfo;
+
+void LLVMGetVersionInfo( LLVMVersionInfo* pVersionInfo );
+
 typedef struct LLVMOpaqueMetadata* LLVMMetadataRef;
 typedef struct LLVMOpaqueMDOperand* LLVMMDOperandRef;
 
