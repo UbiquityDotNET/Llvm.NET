@@ -45,11 +45,11 @@ if NOT EXIST %LLVM_ROOT%CMakeLists.txt (
 
 @REM - Execution 
 if %GENERATE%==1 (
-	where cmake | findstr "cmake.exe"
-	if %ERRORLEVEL% GTR 0 (
-		@echo cmake.exe not found, you must have cmake 3.2.3 installed and available on your PATH variable
-		goto :exit
-	)
+    where cmake | findstr "cmake.exe"
+    if %ERRORLEVEL% GTR 0 (
+        @echo cmake.exe not found, you must have cmake 3.2.3 installed and available on your PATH variable
+        goto :exit
+    )
     call :CongigureLLVMBuild "Visual Studio 14 2015 Win64" x64
     if %ERRORLEVEL% GTR 0 goto :exit
     
@@ -67,10 +67,10 @@ if %REGISTER%==1 (
     @echo registering LLVM path in registry
     reg add HKCU\Software\LLVM\%LlvmVersion% /v SrcRoot /d %LLVM_ROOT% /f
     echo Setting per machine rigistry path
-	echo NOTE: Administrator permissions required to set per machine registry settings.
-	echo       If you get 'ERROR: Access is denied.' the per machine registration is not available
-	reg add HKLM\Software\LLVM\%LlvmVersion% /v SrcRoot /d %LLVM_ROOT% /f
-	@REM - Sadly, despite documentation to the contrary, reg won't set ERRORLEVEL on failure...
+    echo NOTE: Administrator permissions required to set per machine registry settings.
+    echo       If you get 'ERROR: Access is denied.' the per machine registration is not available
+    reg add HKLM\Software\LLVM\%LlvmVersion% /v SrcRoot /d %LLVM_ROOT% /f
+    @REM - Sadly, despite documentation to the contrary, reg won't set ERRORLEVEL on failure...
 )
 goto :exit
 
@@ -105,7 +105,7 @@ goto :exit
     @echo __--== Generating build configuration of LLVM For %2 ==--__    
     if NOT EXIST "build\%2" md build\%2
     pushd build\%2
-	@rem - NOTE: Enabling RTTI allows for extended C API projections to use RTTI even on classes where the LLVM custom RTTI support isn't defined
+    @rem - NOTE: Enabling RTTI allows for extended C API projections to use RTTI even on classes where the LLVM custom RTTI support isn't defined
     cmake -G"%~1" -DLLVM_ENABLE_RTTI=1 -DCMAKE_INSTALL_PREFIX=Install ..\..
     popd
     if %ERRORLEVEL% GTR 0 exit /B %ERRORLEVEL%

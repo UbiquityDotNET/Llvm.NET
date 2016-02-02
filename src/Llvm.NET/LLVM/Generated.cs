@@ -519,7 +519,7 @@ namespace Llvm.NET.Native
 
     internal enum LLVMOpcode : uint
     {
-        @LLVMRet = 1, // terminators
+        @LLVMRet = 1,
         @LLVMBr = 2,
         @LLVMSwitch = 3,
         @LLVMIndirectBr = 4,

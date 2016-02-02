@@ -553,6 +553,16 @@ namespace Llvm.NET
             return func;
         }
 
+        public Function CreateFunction( string name
+                                      , bool isVarArg
+                                      , IDebugType<ITypeRef, DIType> returnType
+                                      , params IDebugType<ITypeRef, DIType>[] argumentTypes
+                                      )
+        {
+            IFunctionType signature =  Context.CreateFunctionType( DIBuilder, isVarArg, returnType, argumentTypes );
+            return AddFunction( name, signature );
+        }
+
         /// <inheritdoc/>
         bool IExtensiblePropertyContainer.TryGetExtendedPropertyValue<T>( string id, out T value )
         {

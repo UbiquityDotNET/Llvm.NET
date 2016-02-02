@@ -1,4 +1,5 @@
 ﻿using Llvm.NET.Native;
+using Llvm.NET.Values;
 
 namespace Llvm.NET.DebugInfo
 {
@@ -47,6 +48,13 @@ namespace Llvm.NET.DebugInfo
         public override string ToString( )
         {
             return $"{Scope.File}({Line},{Column})";
+        }
+
+        public bool Describes( Function function )
+        {
+            return Scope.SubProgram.Describes( function )
+                || InlinedAtScope.SubProgram.Describes( function );
+
         }
 
         internal DILocation( LLVMMetadataRef handle )
