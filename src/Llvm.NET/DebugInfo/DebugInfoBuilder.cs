@@ -809,8 +809,19 @@ namespace Llvm.NET.DebugInfo
             return InsertValue( value, offset, varInfo, null, location, insertAtEnd );
         }
 
-        [System.Diagnostics.CodeAnalysis.SuppressMessage( "Microsoft.Design", "CA1011:ConsiderPassingBaseTypesAsParameters" )]
-        public CallInstruction InsertValue( Value value
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1011:ConsiderPassingBaseTypesAsParameters")]
+        public CallInstruction InsertValue(Value value
+                                          , DILocalVariable varInfo
+                                          , DIExpression expression
+                                          , DILocation location
+                                          , BasicBlock insertAtEnd
+                                          )
+        {
+            return InsertValue(value, 0, varInfo, expression, location, insertAtEnd);
+        }
+
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1011:ConsiderPassingBaseTypesAsParameters")]
+        public CallInstruction InsertValue(Value value
                                           , UInt64 offset
                                           , DILocalVariable varInfo
                                           , DIExpression expression
@@ -836,7 +847,10 @@ namespace Llvm.NET.DebugInfo
             if( location.Scope != varInfo.Scope )
                 throw new ArgumentException( "mismatched scopes" );
 
-            var handle = NativeMethods.DIBuilderInsertValueAtEnd( BuilderHandle
+            if( !location.Describes(insertAtEnd.ContainingFunction ) )
+                throw new ArgumentException( "location does not describe the specified block's containing function" );
+
+            var handle = NativeMethods.DIBuilderInsertValueAtEnd(BuilderHandle
                                                                  , value.ValueHandle
                                                                  , offset
                                                                  , varInfo.MetadataHandle
@@ -844,6 +858,7 @@ namespace Llvm.NET.DebugInfo
                                                                  , location.MetadataHandle
                                                                  , insertAtEnd.BlockHandle
                                                                  );
+
             var retVal = Value.FromHandle<CallInstruction>( handle );
             retVal.IsTailCall = true;
             return retVal;

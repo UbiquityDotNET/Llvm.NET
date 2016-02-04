@@ -755,5 +755,8 @@ namespace Llvm.NET.Native
 
         [DllImport( libraryPath, EntryPoint = "LLVMFunctionSetSubprogram", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl, BestFitMapping = false, ThrowOnUnmappableChar = true )]
         internal static extern void FunctionSetSubprogram( LLVMValueRef function, LLVMMetadataRef subprogram );
+
+        [DllImport(libraryPath, EntryPoint = "LLVMFunctionHasPersonalityFunction", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl, BestFitMapping = false, ThrowOnUnmappableChar = true)]
+        internal static extern LLVMBool FunctionHasPersonalityFunction( LLVMValueRef function );
     }
 }

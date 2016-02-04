@@ -17,7 +17,7 @@
 //    at this point is to read the LLVM-C API documentation. In the Future it may be good to Create
 //    an LLVMStatusResult type for those function returning a status and use standard marshaling
 //    techniques for actual boolean values...
-//  - manually updated to 3.7.0 APIs
+//  - manually updated to 3.8.0 APIs
  
 using System;
 using System.Runtime.InteropServices;
@@ -2084,7 +2084,7 @@ namespace Llvm.NET.Native
         internal static extern LLVMValueRef BuildInvoke(LLVMBuilderRef @param0, LLVMValueRef @Fn, out LLVMValueRef @Args, uint @NumArgs, LLVMBasicBlockRef @Then, LLVMBasicBlockRef @Catch, [MarshalAs(UnmanagedType.LPStr)] string @Name);
 
         [DllImport(libraryPath, EntryPoint = "LLVMBuildLandingPad", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl, BestFitMapping = false, ThrowOnUnmappableChar = true)]
-        internal static extern LLVMValueRef BuildLandingPad(LLVMBuilderRef @B, LLVMTypeRef @Ty, uint @NumClauses, [MarshalAs(UnmanagedType.LPStr)] string @Name);
+        internal static extern LLVMValueRef BuildLandingPad(LLVMBuilderRef @B, LLVMTypeRef @Ty, LLVMValueRef PersFn, uint @NumClauses, [MarshalAs(UnmanagedType.LPStr)] string @Name);
 
         [DllImport(libraryPath, EntryPoint = "LLVMBuildResume", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl, BestFitMapping = false, ThrowOnUnmappableChar = true)]
         internal static extern LLVMValueRef BuildResume(LLVMBuilderRef @B, LLVMValueRef @Exn);

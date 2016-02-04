@@ -204,4 +204,9 @@ extern "C"
         return wrap( cmpxchg );
     }
 
+    LLVMBool LLVMFunctionHasPersonalityFunction( LLVMValueRef function )
+    {
+        Function* pFunc = unwrap<Function>( function );
+        return pFunc->hasPersonalityFn( );
+    }
 }

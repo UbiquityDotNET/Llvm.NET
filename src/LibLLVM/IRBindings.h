@@ -65,6 +65,7 @@ LLVMValueRef LLVMBuildAtomicCmpXchg( LLVMBuilderRef B, LLVMValueRef Ptr, LLVMVal
 
 LLVMMetadataRef LLVMFunctionGetSubprogram( LLVMValueRef function );
 void LLVMFunctionSetSubprogram( LLVMValueRef function, LLVMMetadataRef subprogram );
+LLVMBool LLVMFunctionHasPersonalityFunction( LLVMValueRef function );
 
 #ifdef __cplusplus
 }

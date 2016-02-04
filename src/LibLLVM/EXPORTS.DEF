@@ -31,6 +31,7 @@ LLVMGetAliasee
 LLVMMDNodeResolveCycles
 LLVMGetArgumentIndex
 LLVMGetVersionInfo
+LLVMFunctionHasPersonalityFunction
 
 ; Debug info functions not part of standard LLVM-C API
 LLVMDIScopeGetFile

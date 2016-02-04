@@ -74,6 +74,9 @@ namespace Llvm.NET.Values
         {
             get
             {
+                if( !NativeMethods.FunctionHasPersonalityFunction( ValueHandle ) )
+                    return null;
+
                 return FromHandle<Function>( NativeMethods.GetPersonalityFunction( ValueHandle ) );
             }
 
