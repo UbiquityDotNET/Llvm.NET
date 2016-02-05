@@ -205,3 +205,4 @@ FakesAssemblies/
 # VS2015 support file
 *.opendb
 /src/.tools
+/src/LibLLVM/generatedversioninfo.h
