@@ -11,7 +11,7 @@
 //
 //===----------------------------------------------------------------------===//
 
-// This file was adapted from the GO language bindings provided in standard LLVM Distribution 
+// This file was adapted from the GO language bindings provided in standard LLVM Distribution
 
 #ifndef LLVM_BINDINGS_LLVM_DIBUILDERBINDINGS_H
 #define LLVM_BINDINGS_LLVM_DIBUILDERBINDINGS_H
@@ -457,7 +457,6 @@ extern "C" {
     LLVMMDOperandRef LLVMMDNodeGetOperand( LLVMMetadataRef /*MDNode*/ node, uint32_t index );
     LLVMMetadataRef LLVMGetOperandNode( LLVMMDOperandRef operand );
     /*DISubProgram*/ LLVMMetadataRef LLVMDILocalScopeGetSubProgram( LLVMMetadataRef /*DILocalScope*/ localScope );
-    /*Function*/ LLVMValueRef LLVMDISubProgramGetFunction( LLVMMetadataRef /*DISubProgram*/ subProgram );
 
 #ifdef __cplusplus
 } // extern "C"
