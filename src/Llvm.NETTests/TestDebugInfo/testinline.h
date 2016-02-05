@@ -1,3 +1,5 @@
+extern "C" int Random();
+
 inline int InlineDepth2( int inlineDepth2Arg1, int inlineDepth2Arg2 )
 {
     int xFactor = Random( );
