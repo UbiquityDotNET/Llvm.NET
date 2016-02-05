@@ -17,6 +17,7 @@
             <Word>Mips</Word>
             <Word>pointee</Word>
             <Word>Subrange</Word>
+            <Word>LibLLVM</Word>
         </Recognized>
         <Deprecated>
             <Term PreferredAlternate=""></Term>

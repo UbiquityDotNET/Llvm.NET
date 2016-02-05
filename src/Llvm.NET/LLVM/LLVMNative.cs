@@ -201,6 +201,7 @@ namespace Llvm.NET.Native
         }
 
         /// <summary>Static constructor for NativeMethods</summary>
+        [System.Diagnostics.CodeAnalysis.SuppressMessage( "Microsoft.Design", "CA1065:DoNotRaiseExceptionsInUnexpectedLocations" )]
         [System.Diagnostics.CodeAnalysis.SuppressMessage( "Microsoft.Performance", "CA1810:InitializeReferenceTypeStaticFieldsInline" )]
         static NativeMethods()
         {

@@ -35,9 +35,9 @@
         <ItemGroup>
             <VersionInfoGeneratedLine Include='#define FILE_VERSION_MAJOR $(FileVersionMajor)'/>
             <VersionInfoGeneratedLine Include='#define FILE_VERSION_MINOR $(FileVersionMinor)'/>
-            <VersionInfoGeneratedLine Include='#define FILE_VERSION_BUILD $(FileVersionBuild)'/>
-            <VersionInfoGeneratedLine Include='#define FILE_VERSION_REVISION $(LlvmApplicationBuildNumber)'/>
-            <VersionInfoGeneratedLine Include='#define FILE_VERSION_STRING "$(FileVersionMajor).$(FileVersionMinor).$(FileVersionBuild).$(LlvmApplicationBuildNumber)"'/>
+            <VersionInfoGeneratedLine Include='#define FILE_VERSION_BUILD $(LlvmApplicationBuildNumber)'/>
+            <VersionInfoGeneratedLine Include='#define FILE_VERSION_REVISION $(LlvmApplicationBuildRevision)'/>
+            <VersionInfoGeneratedLine Include='#define FILE_VERSION_STRING "$(FileVersionMajor).$(FileVersionMinor).$(LlvmApplicationBuildNumber).$(LlvmApplicationBuildRevision)"'/>
             <VersionInfoGeneratedLine Include=' '/>
             <VersionInfoGeneratedLine Include='#define PRODUCT_VERSION_MAJOR $(ProductVersionMajor)'/>
             <VersionInfoGeneratedLine Include='#define PRODUCT_VERSION_MINOR $(ProductVersionMinor)'/>
