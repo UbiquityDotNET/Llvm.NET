@@ -408,8 +408,8 @@ namespace Llvm.NET.Values
             var instruction = value as Instructions.Instruction;
             if( instruction != null )
             {
-                if( !location.Scope.SubProgram.Describes( instruction.ContainingBlock.ContainingFunction ) )
-                    throw new ArgumentException( "Location does not describe the function containing the provided instruction", nameof( location ) );
+                if( !location.Describes( instruction.ContainingBlock.ContainingFunction ) )
+                    throw new ArgumentException("Location does not describe the function containing the provided instruction", nameof(location));
 
                 NativeMethods.SetDILocation( value.ValueHandle, location.MetadataHandle );
             }

@@ -35,8 +35,7 @@ LLVMFunctionHasPersonalityFunction
 
 ; Debug info functions not part of standard LLVM-C API
 LLVMDIScopeGetFile
-LLVMFunctionGetSubprogram
-LLVMFunctionSetSubprogram
+LLVMDISubProgramGetFunction
 LLVMGetMetadataID
 LLVMGetNodeContext
 LLVMGetDIFileName
