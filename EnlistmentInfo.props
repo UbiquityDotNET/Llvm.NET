@@ -1,9 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+    <!--
+    Description:
+        This property file is imported by the projects in this repository to set global locations
+        common to all of the projects for a consistent build.
+    -->
     <PropertyGroup>
+        <!-- Default to x64 | Debug build if not otherwise specified -->
         <Platform Condition="'$(Platform)'==''">x64</Platform>
         <Configuration Condition="'$(Configuration)'==''">Debug</Configuration>
+        
+        <!-- Use the location of this file (at the top of the build tree) to define the root directory -->
         <BuildRootDir Condition="'$(BuildRootDir)'==''">$(MSBuildThisFileDirectory)</BuildRootDir>
+        
+        <!-- Put build output and intermediate output files into a well known location outseide of the source tree -->
         <BaseOutputPath Condition="'$(BaseOutputPath)'==''">$(BuildRootDir)BuildOutput\</BaseOutputPath>
         <BaseIntermediateOutputPath Condition="'$(BaseIntermediateOutputPath)'==''" >$(BuildRootDir)IntermediateOutput\$(MSBuildProjectName)\</BaseIntermediateOutputPath>
         <OutputPath Condition="'$(OutputPath)'==''">$(BaseOutputPath)$(Platform)\$(Configuration)\</OutputPath>

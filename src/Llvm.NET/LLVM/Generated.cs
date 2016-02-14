@@ -645,12 +645,39 @@ namespace Llvm.NET.Native
     internal enum LLVMCallConv : uint
     {
         @LLVMCCallConv = 0,
+        // [gap]
         @LLVMFastCallConv = 8,
         @LLVMColdCallConv = 9,
+        @LLVMGHCCallConv = 10,
+        @LLVMHiPECallConv = 11,
         @LLVMWebKitJSCallConv = 12,
         @LLVMAnyRegCallConv = 13,
+        @LLVMPreserveMostCallConv = 14,
+        @LLVMPreserveAllCallConv = 15,
+        @LLVMPreserveSwiftCallConv = 16,
+        @LLVMCxxFasTlsCallConv = 17,
+        // [gap]
+        @LLVMFirstTargetCallConv = 64,
         @LLVMX86StdcallCallConv = 64,
         @LLVMX86FastcallCallConv = 65,
+        @LLVMArmAPCSCallConv = 66,
+        @LLVMArmAAPCSCallConv = 67,
+        @LLVMArmAAPCSVfpCallConv = 68,
+        @LLVMMSP430IntrCallConv = 69,
+        @LLVMx86ThisCallConv = 70,
+        @LLVMPTXKernelCallConv = 71,
+        @LLVMPTXDeviceCallConv = 72,
+        // [gap]
+        @LLVMSpirFuncCallConv = 75,
+        @LLVMSpirKernelCallConv = 76,
+        @LLVMIntelOCLBICallConv = 77,
+        @LLVMx86_64SysVCallConv = 78,
+        @LLVMx86_64Win64CallConv = 79,
+        @LLVMx86_VectorCallCallConv = 80,
+        @LLVM_HHVMCallConv = 81,
+        @LLVM_HHVM_C_CallConv = 82,
+        @LLVMx86IntrCallConv = 83,
+        @LLVM_MaxIDCallConv = 1023,
     }
 
     internal enum LLVMIntPredicate : uint

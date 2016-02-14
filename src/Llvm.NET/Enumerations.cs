@@ -7,17 +7,30 @@ using Llvm.NET.Native;
 
 namespace Llvm.NET
 {
-    /// See Module::ModFlagBehavior
+    /// <summary>Enumeration to indicate the behavior of module level flags metadata sharing the same name in a <see cref="NativeModule"/></summary>
     [System.Diagnostics.CodeAnalysis.SuppressMessage( "Microsoft.Design", "CA1028:EnumStorageShouldBeInt32" )]
     [System.Diagnostics.CodeAnalysis.SuppressMessage( "Microsoft.Naming", "CA1726:UsePreferredTerms", MessageId = "Flag" )]
     public enum ModuleFlagBehavior : uint
     {
+        /// <summary>Invalid value (default value for this enumeration)</summary>
         Invalid = 0,
+        /// <summary>Emits an error if two values disagree, otherwise the resulting value is that of the operands</summary>
         Error = LLVMModFlagBehavior.Error,
+        /// <summary>Emits a warning if two values disagree. The result will be the operand for the flag from the first module being linked</summary>
         Warning = LLVMModFlagBehavior.Warning,
+        /// <summary>Adds a requirement that another module flag be present and have a specified value after linking is performed</summary>
+        /// <remarks>
+        /// The value must be a metadata pair, where the first element of the pair is the ID of the module flag to be restricted, and the
+        /// second element of the pair is the value the module flag should be restricted to. This behavior can be used to restrict the
+        /// allowable results (via triggering of an error) of linking IDs with the <see cref="Override"/> behavior
+        /// </remarks>
         Require = LLVMModFlagBehavior.Require,
+        /// <summary>Uses the specified value, regardless of the behavior or value of the other module</summary>
+        /// <remarks>If both modules specify Override, but the values differ, and error will be emitted</remarks>
         Override = LLVMModFlagBehavior.Override,
+        /// <summary>Appends the two values, which are required to be metadata nodes</summary>
         Append = LLVMModFlagBehavior.Append,
+        /// <summary>Appends the two values, which are required to be metadata nodes dropping duplicate entries in the second list</summary>
         AppendUnique = LLVMModFlagBehavior.AppendUnique
     };
 
@@ -115,23 +128,40 @@ namespace Llvm.NET
     [System.Diagnostics.CodeAnalysis.SuppressMessage( "Microsoft.Design", "CA1028:EnumStorageShouldBeInt32" )]
     public enum TypeKind : uint
     {
-        Void = LLVMTypeKind.LLVMVoidTypeKind,           // type with no size
-        Float16 = LLVMTypeKind.LLVMHalfTypeKind,        // 16 bit floating point type
-        Float32 = LLVMTypeKind.LLVMFloatTypeKind,       // 32 bit floating point type
-        Float64 = LLVMTypeKind.LLVMDoubleTypeKind,      // 64 bit floating point type
-        X86Float80 = LLVMTypeKind.LLVMX86_FP80TypeKind, // 80 bit floating point type (X87)
-        Float128m112 = LLVMTypeKind.LLVMFP128TypeKind,  // 128 bit floating point type (112-bit mantissa)
-        Float128 = LLVMTypeKind.LLVMPPC_FP128TypeKind,  // 128 bit floating point type (two 64-bits)
-        Label = LLVMTypeKind.LLVMLabelTypeKind,         // Labels
-        Integer = LLVMTypeKind.LLVMIntegerTypeKind,     // Arbitrary bit width integers
-        Function = LLVMTypeKind.LLVMFunctionTypeKind,   // Functions
-        Struct = LLVMTypeKind.LLVMStructTypeKind,       // Structures
-        Array = LLVMTypeKind.LLVMArrayTypeKind,         // Arrays
-        Pointer = LLVMTypeKind.LLVMPointerTypeKind,     // Pointers
-        Vector = LLVMTypeKind.LLVMVectorTypeKind,       // SIMD 'packed' format, or other vector type
-        Metadata = LLVMTypeKind.LLVMMetadataTypeKind,   // Metadata
-        X86MMX = LLVMTypeKind.LLVMX86_MMXTypeKind,      // X86 MMX
-        Token = LLVMTypeKind.LLVMTokenTypeKind          // Exception handler Tokens 
+        /// <summary>Type with no size</summary>
+        Void = LLVMTypeKind.LLVMVoidTypeKind,
+        /// <summary>16 bit floating point type</summary>
+        Float16 = LLVMTypeKind.LLVMHalfTypeKind,
+        /// <summary>32 bit floating point type</summary>
+        Float32 = LLVMTypeKind.LLVMFloatTypeKind,
+        /// <summary>64 bit floating point type</summary>
+        Float64 = LLVMTypeKind.LLVMDoubleTypeKind,
+        /// <summary>80 bit floating point type (X87)</summary>
+        X86Float80 = LLVMTypeKind.LLVMX86_FP80TypeKind,
+        /// <summary>128 bit floating point type (112-bit mantissa)</summary>
+        Float128m112 = LLVMTypeKind.LLVMFP128TypeKind,
+        /// <summary>128 bit floating point type (two 64-bits)</summary>
+        Float128 = LLVMTypeKind.LLVMPPC_FP128TypeKind,
+        /// <summary><see cref="Llvm.NET.Values.BasicBlock"/> instruction label</summary>
+        Label = LLVMTypeKind.LLVMLabelTypeKind,
+        /// <summary>Arbitrary bit width integers</summary>
+        Integer = LLVMTypeKind.LLVMIntegerTypeKind,
+        /// <summary><see cref="Llvm.NET.Types.IFunctionType"/></summary>
+        Function = LLVMTypeKind.LLVMFunctionTypeKind,
+        /// <summary><see cref="Llvm.NET.Types.IStructType"/></summary>
+        Struct = LLVMTypeKind.LLVMStructTypeKind,
+        /// <summary><see cref="Llvm.NET.Types.IArrayType"/></summary>
+        Array = LLVMTypeKind.LLVMArrayTypeKind,
+        /// <summary><see cref="Llvm.NET.Types.IPointerType"/></summary>
+        Pointer = LLVMTypeKind.LLVMPointerTypeKind,
+        /// <summary>SIMD 'packed' format, or other <see cref="Llvm.NET.Types.IVectorType"/> implementation</summary>
+        Vector = LLVMTypeKind.LLVMVectorTypeKind,
+        /// <summary><see cref="Llvm.NET.LlvmMetadata"/></summary>
+        Metadata = LLVMTypeKind.LLVMMetadataTypeKind,
+        /// <summary>x86 MMX data type</summary>
+        X86MMX = LLVMTypeKind.LLVMX86_MMXTypeKind,
+        /// <summary>Exception handler token</summary>
+        Token = LLVMTypeKind.LLVMTokenTypeKind
     }
 
     /// <summary>Calling Convention for functions</summary>
@@ -141,10 +171,33 @@ namespace Llvm.NET
         C = LLVMCallConv.LLVMCCallConv,
         FastCall = LLVMCallConv.LLVMFastCallConv,
         ColdCall = LLVMCallConv.LLVMColdCallConv,
+        GlasgowHaskellCompiler = LLVMCallConv.LLVMGHCCallConv,
+        HiPE = LLVMCallConv.LLVMHiPECallConv,
         WebKitJS = LLVMCallConv.LLVMWebKitJSCallConv,
         AnyReg = LLVMCallConv.LLVMAnyRegCallConv,
-        x86StdCall = LLVMCallConv.LLVMX86StdcallCallConv,
-        x86FastCall = LLVMCallConv.LLVMX86FastcallCallConv
+        PreserveMost = LLVMCallConv.LLVMPreserveMostCallConv,
+        PreserveSwift = LLVMCallConv.LLVMPreserveSwiftCallConv,
+        CxxFastTls = LLVMCallConv.LLVMCxxFasTlsCallConv,
+        FirstTargetSPecific = LLVMCallConv.LLVMFirstTargetCallConv,
+        X86StdCall = LLVMCallConv.LLVMX86StdcallCallConv,
+        X86FastCall = LLVMCallConv.LLVMX86FastcallCallConv,
+        ArmAPCS = LLVMCallConv.LLVMArmAPCSCallConv,
+        ArmAAPCS = LLVMCallConv.LLVMArmAAPCSCallConv,
+        ArmAAPCSVfp = LLVMCallConv.LLVMArmAAPCSVfpCallConv,
+        MPS430Interrupt = LLVMCallConv.LLVMMSP430IntrCallConv,
+        X86ThisCall = LLVMCallConv.LLVMx86ThisCallConv,
+        PtxKernel = LLVMCallConv.LLVMPTXKernelCallConv,
+        PtxDevice = LLVMCallConv.LLVMPTXDeviceCallConv,
+        SpirFunction = LLVMCallConv.LLVMSpirFuncCallConv,
+        SpirKernel = LLVMCallConv.LLVMSpirKernelCallConv,
+        IntelOpenCLBuiltIn = LLVMCallConv.LLVMIntelOCLBICallConv,
+        X86x64SysV = LLVMCallConv.LLVMx86_64SysVCallConv,
+        X86x64Win64 = LLVMCallConv.LLVMx86_64Win64CallConv,
+        X86VectorCall = LLVMCallConv.LLVMx86_VectorCallCallConv,
+        HHVM = LLVMCallConv.LLVM_HHVMCallConv,
+        HHVMCCall = LLVMCallConv.LLVM_HHVM_C_CallConv,
+        X86Interrupt = LLVMCallConv.LLVMx86IntrCallConv,
+        MaxCallingConvention = LLVMCallConv.LLVM_MaxIDCallConv
     }
 
     /// <summary>Linkage specification for functions and globals</summary>
@@ -404,5 +457,4 @@ namespace Llvm.NET
         /// </remarks>
         Parameter0 = 1 
     }
-
 }

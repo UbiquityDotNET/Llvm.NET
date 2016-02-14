@@ -6,7 +6,6 @@ using Llvm.NET.Values;
 
 namespace Llvm.NET
 {
-    // TODO: rename this to DataLayout to match underlying LLVM
     // TODO: update this to reflect the deprecation of retrieving a pointer to the layout in 3.7.0
     //       (e.g. the layout should be copy constructed, rather than holding a pointer/handle)
 

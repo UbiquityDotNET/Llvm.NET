@@ -13,14 +13,9 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestDebugInfo", "Llvm.NETTe
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{07FDA2D2-771E-44F4-8862-2E6FCB0E722E}"
 	ProjectSection(SolutionItems) = preProject
-		..\buildall.proj = ..\buildall.proj
 		CustomDictionary.xml = CustomDictionary.xml
 		..\EnlistmentInfo.props = ..\EnlistmentInfo.props
-		..\localpublishnuget.ps1 = ..\localpublishnuget.ps1
 		..\NuGet.config = ..\NuGet.config
-		..\NugetRestore.common.props = ..\NugetRestore.common.props
-		..\NugetRestore.common.targets = ..\NugetRestore.common.targets
-		..\NugetRestore.proj = ..\NugetRestore.proj
 		..\README.md = ..\README.md
 		..\VsoUpdateVersion.ps1 = ..\VsoUpdateVersion.ps1
 		win32.runsettings = win32.runsettings

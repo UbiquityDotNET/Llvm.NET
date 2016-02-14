@@ -46,10 +46,10 @@ namespace Llvm.NET
                 throw new ArgumentNullException( nameof( module ) );
 
             if( string.IsNullOrWhiteSpace( path ) )
-                throw new ArgumentException( "Null or empty paths ar not valid", nameof( path ) );
+                throw new ArgumentException( "Null or empty paths are not valid", nameof( path ) );
 
             if( module.TargetTriple != null && Triple != module.TargetTriple )
-                throw new ArgumentException( "Triple specifed for the module doesn't match target machine", nameof( module ) );
+                throw new ArgumentException( "Triple specified for the module doesn't match target machine", nameof( module ) );
 
             IntPtr errMsg;
             if( 0 != NativeMethods.TargetMachineEmitToFile( TargetMachineHandle, module.ModuleHandle, path, (LLVMCodeGenFileType)fileType, out errMsg ).Value )
@@ -59,6 +59,7 @@ namespace Llvm.NET
             }
         }
 
+        /// <summary><see cref="Context"/>This machine is associated with</summary>
         public Context Context { get; }
 
         internal TargetMachine( Context context, LLVMTargetMachineRef targetMachineHandle )

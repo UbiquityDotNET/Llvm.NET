@@ -177,7 +177,7 @@ namespace Llvm.NET.Native
         }
 
         /// <summary>This method is used to marshal a string when NativeMethods.DisposeMessage() is required on the string allocated from native code</summary>
-        /// <param name="msg">POinter to the native code allocated string</param>
+        /// <param name="msg">Pointer to the native code allocated string</param>
         /// <returns>Managed code string marshaled from the native content</returns>
         /// <remarks>
         /// This method will, construct a new managed string containing the test of the string from native code, normalizing
@@ -222,17 +222,19 @@ namespace Llvm.NET.Native
                 LoadWin32Library( libraryPath, null );
             }
 
-            // initialize the static fields
-            LineEndingNormalizingRegEx = new Regex( "(\r\n|\n\r|\r|\n)" );
-            LLVMVersionInfo versionInfo = new LLVMVersionInfo();
-            GetVersionInfo(ref versionInfo);
+            // Verify the version of LLVM in LibLLVM
+            LLVMVersionInfo versionInfo = new LLVMVersionInfo( );
+            GetVersionInfo( ref versionInfo );
             if( versionInfo.Major != VersionMajor
              || versionInfo.Minor != VersionMinor
              || versionInfo.Patch != VersionPatch
               )
             {
-                throw new BadImageFormatException("Mismatched LibLLVM version");
+                throw new BadImageFormatException( "Mismatched LibLLVM version" );
             }
+
+            // initialize the static fields
+            LineEndingNormalizingRegEx = new Regex( "(\r\n|\n\r|\r|\n)" );
             FatalErrorHandlerDelegate = new Lazy<LLVMFatalErrorHandler>( ( ) => FatalErrorHandler, LazyThreadSafetyMode.PublicationOnly );
             InstallFatalErrorHandler( FatalErrorHandlerDelegate.Value );
         }
