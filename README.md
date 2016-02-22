@@ -13,12 +13,12 @@ Documentation for the Llvm.NET class library is located at [http://netmf.github.
 
 ### Why Llvm.NET?
 Llvm.NET was developed as a means to leverage LLVM as the back-end for an Ahead-Of-Time (AOT) compilation tool for .NET applications targeting micro controllers
-(e.g. An AOT compiler for the [.NET Micro Framework](http://www.netmf.com) ). THe initial proof of concept built on Llvm.NET was successful in delivering on a
+(e.g. An AOT compiler for the [.NET Micro Framework](http://www.netmf.com) ). The initial proof of concept built on Llvm.NET was successful in delivering on a
 basic application that could implement the micro controller equivalent of the classic "Hello World!" application (e.g. Blinky - an app that blinks an LED) using
-LLVM as the back-end code generator. This led to the revival of a former project doing AOT with its own code generator toed to the ARMv4 Instruction set and the
-[Llilum](https://www.github.com/netmf/Llilum) project was born. Llvm.NET has continued to evolve and improve along with Llilum, though it remains a distinct project
-as it has no dependencies on Llilum or any of its components. Llvm.NET is viable for any .NET applications wishing to leverage the functionality of the LLVM libraries
-from .NET applications.
+LLVM as the back-end code generator. This led to the revival of a former project doing AOT with its own code generator that was tied to the ARMv4 Instruction set.
+Thus the [Llilum](https://www.github.com/netmf/Llilum) project was born. Llvm.NET has continued to evolve and improve along with Llilum, though it remains a distinct
+project as it has no dependencies on Llilum or any of its components. Llvm.NET is viable for any .NET applications wishing to leverage the functionality of the LLVM
+libraries from .NET applications.
 
 ### Brief History
 Llvm.NET began with LLVM 3.4 as a C++/CLI wrapper which enabled a closer binding to the original C++ object model then the official LLVM-C API supported.

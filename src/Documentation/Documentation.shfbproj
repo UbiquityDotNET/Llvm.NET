@@ -30,7 +30,7 @@
       <Argument Key="defaultLanguage" Value="cs" />
     </TransformComponentArguments>
     <DocumentationSources>
-      <DocumentationSource sourceFile="..\Llvm.NET\Llvm.NET.csproj" xmlns="" platform="x64" />
+      <DocumentationSource sourceFile="..\Llvm.NET\Llvm.NET.csproj" xmlns="" platform="x64" configuration="Debug" />
     </DocumentationSources>
     <BuildAssemblerVerbosity>OnlyWarningsAndErrors</BuildAssemblerVerbosity>
     <HelpFileFormat>Website</HelpFileFormat>
@@ -51,7 +51,7 @@
     <ContentPlacement>AboveNamespaces</ContentPlacement>
     <NamespaceSummaries>
       <NamespaceSummaryItem name="Llvm.NET" isDocumented="True" xmlns="">Core namespace for all LLVM.NET types and data</NamespaceSummaryItem>
-      <NamespaceSummaryItem name="Llvm.NET.DebugInfo" isDocumented="True" xmlns="">Contaisn types for generating Debug Information in the final output binary for us in symbolic/source level debugging.</NamespaceSummaryItem>
+      <NamespaceSummaryItem name="Llvm.NET.DebugInfo" isDocumented="True" xmlns="">Contains types for generating Debug Information in the final output binary for use in symbolic/source level debugging.</NamespaceSummaryItem>
       <NamespaceSummaryItem name="Llvm.NET.Instructions" isDocumented="True" xmlns="">Contains support for LLVM bit code IR instructions</NamespaceSummaryItem>
       <NamespaceSummaryItem name="Llvm.NET.Types" isDocumented="True" xmlns="">Contains classes representing data types in LLVM</NamespaceSummaryItem>
       <NamespaceSummaryItem name="Llvm.NET.Values" isDocumented="True" xmlns="">Contains classes representing LLVM Values</NamespaceSummaryItem>

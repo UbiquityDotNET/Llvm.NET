@@ -69,5 +69,4 @@
       <AdditionalDependencies>$(AllLlvmStaticLibs);$(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
-  <Import Project="$(MSBuildThisFileDirectory)LlvmApplication.targets"/>
 </Project>

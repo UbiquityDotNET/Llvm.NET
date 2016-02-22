@@ -13,8 +13,11 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestDebugInfo", "Llvm.NETTe
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{07FDA2D2-771E-44F4-8862-2E6FCB0E722E}"
 	ProjectSection(SolutionItems) = preProject
+		..\BuildAll.proj = ..\BuildAll.proj
 		CustomDictionary.xml = CustomDictionary.xml
+		..\EnlistmentBuildVersion.targets = ..\EnlistmentBuildVersion.targets
 		..\EnlistmentInfo.props = ..\EnlistmentInfo.props
+		..\InlineBuildTasks.targets = ..\InlineBuildTasks.targets
 		..\NuGet.config = ..\NuGet.config
 		..\README.md = ..\README.md
 		..\VsoUpdateVersion.ps1 = ..\VsoUpdateVersion.ps1

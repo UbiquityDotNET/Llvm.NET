@@ -1,0 +1,130 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+    <!--
+    Project for building the Llvm.NET source tree.
+    -->
+    <Import Project="EnlistmentInfo.props"/>
+
+    <ItemGroup>
+        <NativeProject Include="src\LibLLVM\LibLLVM.vcxproj">
+            <TargetOutput>LibLLVM.dll</TargetOutput>
+        </NativeProject>
+        <ManagedProject Include="src\Llvm.NET\Llvm.NET.csproj"/>
+    </ItemGroup>
+    <ItemGroup>
+        <NuSpecFile Include="src\NugetPkg\NugetPkg\Llvm.NET.nuspec" />
+    </ItemGroup>
+    
+    <Import Project="EnlistmentBuildVersion.targets"/>
+
+    <Target Name="ParseFullBuildNumber">
+        <ParseBuildVersion FullBuildNumber="$(FullBuildNumber)">
+            <Output PropertyName="BuildMajor" TaskParameter="BuildMajor" />
+            <Output PropertyName="BuildMinor" TaskParameter="BuildMinor" />
+            <Output PropertyName="BuildNumber" TaskParameter="BuildNumber" />
+            <Output PropertyName="BuildRevision" TaskParameter="BuildRevision" />
+            <Output PropertyName="BuildSuffix" TaskParameter="BuildSuffix"/>
+        </ParseBuildVersion>
+    </Target>
+    
+    <Target Name="EnsureBuildNumbers">
+        <!-- If the FullNumber is provided, parse it, otherwise create the build and revision numbers -->
+        <CallTarget Condition="'$(FullBuildNumber)'==''" Targets="CreateBuildNumbers"/>
+        <CallTarget Condition="'$(FullBuildNumber)'!=''" Targets="ParseFullBuildNumber"/>
+    </Target>
+
+    <Target Name="BuildContentBinaries" DependsOnTargets="EnsureBuildNumbers">
+        <!-- Build the child projects in Debug/release + Win32/x64/AnyCPU -->
+        <Message Importance="high" Text="++Building Win32|Debug..."/>
+        <MSBuild Projects="@(NativeProject)"
+                 Targets="Rebuild"
+                 Properties="Platform=Win32;Configuration=Debug;BuildMajor=$(BuildMajor);BuildMinor=$(BuildMinor);BuildNumber=$(BuildNumber);BuildRevision=$(BuildRevision)"
+                 >
+        </MSBuild>
+        <Message Importance="high" Text="++Building x64|Debug..."/>
+        <MSBuild Projects="@(NativeProject)"
+                 Targets="Rebuild"
+                 Properties="Platform=x64;Configuration=Debug;BuildMajor=$(BuildMajor);BuildMinor=$(BuildMinor);BuildNumber=$(BuildNumber);BuildRevision=$(BuildRevision)"
+                 >
+        </MSBuild>
+        <Message Importance="high" Text="++Building Win32|Release..."/>
+        <MSBuild Projects="@(NativeProject)"
+                 Targets="Rebuild"
+                 Properties="Platform=Win32;Configuration=Release;BuildMajor=$(BuildMajor);BuildMinor=$(BuildMinor);BuildNumber=$(BuildNumber);BuildRevision=$(BuildRevision)"
+                 >
+        </MSBuild>
+        <Message Importance="high" Text="++Building x64|Release..."/>
+        <MSBuild Projects="@(NativeProject)"
+                 Targets="Rebuild"
+                 Properties="Platform=x64;Configuration=Release;BuildMajor=$(BuildMajor);BuildMinor=$(BuildMinor);BuildNumber=$(BuildNumber);BuildRevision=$(BuildRevision)"
+                 >
+        </MSBuild>
+        <Message Importance="high" Text="++Building AnyCPU|Debug..."/>
+        <MSBuild Projects="@(ManagedProject)"
+                 Targets="Rebuild"
+                 Properties="Platform=AnyCPU;Configuration=Debug;BuildMajor=$(BuildMajor);BuildMinor=$(BuildMinor);BuildNumber=$(BuildNumber);BuildRevision=$(BuildRevision)"
+                 >
+            <Output ItemName="UnsignedAnyCPUDebugBinary" TaskParameter="TargetOutputs"/>
+        </MSBuild>
+        <Message Importance="high" Text="++Building AnyCPU|Release..."/>
+        <MSBuild Projects="@(ManagedProject)"
+                 Targets="Rebuild"
+                 Properties="Platform=AnyCPU;Configuration=Release;BuildMajor=$(BuildMajor);BuildMinor=$(BuildMinor);BuildNumber=$(BuildNumber);BuildRevision=$(BuildRevision)"
+                 >
+            <Output ItemName="UnsignedAnyCPUReleaseBinary" TaskParameter="TargetOutputs"/>
+        </MSBuild>
+        <ItemGroup>
+            <!--
+            Native VCXPROJ projects don't set the TargetOutputs so use the item metadata set for the project
+            above to build a complete list of binaries to sign.
+            -->
+            <UnsignedWin32DebugBinary Include="@(NativeProject->'$(BuildRootDir)BuildOutput\Win32\Debug\%(TargetOutput)')" />
+            <UnsignedWin32ReleaseBinary Include="@(NativeProject->'$(BuildRootDir)BuildOutput\Win32\Release\%(TargetOutput)')" />
+            <Unsigned64DebugBinary Include="@(NativeProject->'$(BuildRootDir)BuildOutput\x64\Debug\%(TargetOutput)')" />
+            <Unsigned64ReleaseBinary Include="@(NativeProject->'$(BuildRootDir)BuildOutput\x64\Release\%(TargetOutput)')" />
+        </ItemGroup>
+    </Target>
+
+    <Target Name="SignContent">
+        <Message Importance="high" Text="++Signing content files..." />
+
+        <!-- For now just copy the binaries to "fake" signing until fully signed builds enabled -->
+        <Copy DestinationFolder="$(BaseSignedOutputPath)\x64\Debug\"
+              SourceFiles="@(Unsigned64DebugBinary->'%(FullPath)')"
+              />
+        <Copy DestinationFolder="$(BaseSignedOutputPath)\Win32\Debug\"
+              SourceFiles="@(UnsignedWin32DebugBinary->'%(FullPath)')"
+              />
+        <Copy DestinationFolder="$(BaseSignedOutputPath)\x64\Release\"
+              SourceFiles="@(Unsigned64ReleaseBinary->'%(FullPath)')"
+              />
+        <Copy DestinationFolder="$(BaseSignedOutputPath)\Win32\Release\"
+              SourceFiles="@(UnsignedWin32ReleaseBinary->'%(FullPath)')"
+              />
+        <Copy DestinationFolder="$(BaseSignedOutputPath)\AnyCPU\Debug\"
+              SourceFiles="@(UnsignedAnyCPUDebugBinary->'%(FullPath)')"
+              />
+        <Copy DestinationFolder="$(BaseSignedOutputPath)\AnyCPU\Release\"
+              SourceFiles="@(UnsignedAnyCPUReleaseBinary->'%(FullPath)')"
+              />
+    </Target>
+
+    <Target Name="DownloadNugetExe" >
+        <PropertyGroup>
+            <NugetExePath>$(BaseOutputPath)nuget.exe</NugetExePath>
+        </PropertyGroup>
+        <DownloadFile SourceUrl="https://dist.nuget.org/win-x86-commandline/v3.3.0/nuget.exe"
+                      DestinationPath="$(NugetExePath)"
+                      />
+    </Target>
+
+    <Target Name="PackageContent" DependsOnTargets="DownloadNugetExe" >
+        <Message Importance="high" Text="++Building Nuget Package..."/>
+        <Exec Command='"$(NugetExePath)" pack %(NuspecFile.FullPath) -OutputDirectory $(BaseSignedOutputPath)Nuget\ -Properties configuration=Release;buildoutput=$(BaseSignedOutputPath);buildversion=$(FullBuildNumber) -NoPackageAnalysis' />
+    </Target>
+
+    <!-- Nuget packages don't have a signature, so this is empty -->
+    <Target Name="SignPackage" />
+
+    <Target Name="Build" DependsOnTargets="BuildContentBinaries;SignContent;PackageContent;SignPackage"/>
+</Project>
