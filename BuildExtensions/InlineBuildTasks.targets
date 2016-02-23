@@ -33,8 +33,7 @@
                     else
                        BuildSuffix = string.Empty;
                     
-                    var msg = string.Format( "FullVersion: {0}.{1}.{2}.{3}{4}", BuildMajor, BuildMinor, BuildNumber, BuildRevision, BuildSuffix );
-                    Log.LogMessage( msg, MessageImportance.High );
+                    Log.LogMessage( MessageImportance.High, "FullVersion: {0}.{1}.{2}.{3}{4}", BuildMajor, BuildMinor, BuildNumber, BuildRevision, BuildSuffix );
                 }
                 catch
                 {
@@ -210,7 +209,9 @@
                         foreach( byte value in fileHash )
                             bldr.AppendFormat( "{0:X02}", value );
                         
-                        File.WriteAllText( fullPath + ".sha256", bldr.ToString() );
+                        var hashFileName = fullPath + ".sha256";
+                        File.WriteAllText( hashFileName, bldr.ToString() );
+                        Log.LogMessage( MessageImportance.High, "Generated: {0}", hashFileName );
                     }
                 }
             }
