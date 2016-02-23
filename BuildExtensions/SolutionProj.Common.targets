@@ -1,18 +1,38 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="14.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
     <!--
-    This targets file is imported by a sln.rpoj to implement standard sln proj build behavior.
-    The standard slnproj behavior goes well beyond what a normal Visual Studio Solution does
-    as it is designed and targeted to automated build scenarios. Rather than relying on the
-    particular automated build system (Jenkins, VSO build ttasks, TFS XAML build definitions
-    , etc...) to do most of the work of a build the solution proj does the bulk of a build so
-    that it is more easily re-hosted, and more importantly reproduced on a developer's machine
-    for testing. 
+    This targets file is imported by a .slnproj to implement standard solution project build
+    behavior. The standard slnproj functionality goes well beyond what a normal Visual Studio
+    Solution does as it is designed and targeted to automated build scenarios. Rather than
+    relying on the particular automated build system (Jenkins, VSO build ttasks, TFS XAML build
+    definitions, etc...) to do most of the work of a build the solution proj does the bulk of a
+    build so that it is more easily re-hosted, and more importantly reproduced on a developer's
+    machine for testing.
     
     All targets with a name begining with '_' are internal targets subject to change over time.
     slnproj files should not reference or depend on them in anyway. 
     -->
     <Import Project="EnlistmentBuildVersion.targets"/>
+
+    <!--
+    Use Choose to set the dependencies of the EnsureBuildNumbers target to the correct dependency.
+    The EnsureBuildNumbers target does nothing and instead the work is done in one of the two
+    targets selected here. The actual target used depends on whther FullBuildNumber is already set
+    or not. In an automated build the build server will set the FullBuildNumber (Usually as a global
+    property to the msbuild command line that started this project)
+    -->
+    <Choose>
+        <When Condition="'$(FullBuildNumber)'==''">
+            <PropertyGroup>
+                <EnsureBuildNumbersDependsOn>CreateBuildNumbers</EnsureBuildNumbersDependsOn>
+            </PropertyGroup>
+        </When>
+        <Otherwise>
+            <PropertyGroup>
+                <EnsureBuildNumbersDependsOn>_ParseFullBuildNumber</EnsureBuildNumbersDependsOn>
+            </PropertyGroup>
+        </Otherwise>
+    </Choose>
 
     <!-- This target parses the FullBuidNumber property to extract the component elements-->
     <Target Name="_ParseFullBuildNumber">
@@ -29,7 +49,7 @@
          ensuring that BuildMajor, BuildMinor, BuildNumber, BuildRevision, and, optionally,
          BuildSuffix are set. 
          This task itself does nothing more than print the result to the log(s), the 
-         EnsureBuildNumbersDependsOn is set from SolutionProj.common.props based on whether
+         EnsureBuildNumbersDependsOn is set from the Choose element above based on whether
          FullBuildNumber is already set or not.
     -->
     <Target Name="EnsureBuildNumbers" DependsOnTargets="$(EnsureBuildNumbersDependsOn)">
@@ -51,6 +71,7 @@
         <MSBuild Projects="@(_MultiConfigBuildProjects)"
                  Targets="Build"
                  Properties="BuildMajor=$(BuildMajor);BuildMinor=$(BuildMinor);BuildNumber=$(BuildNumber);BuildRevision=$(BuildRevision)"
+                 BuildInParallel="true"
                  >
         </MSBuild>
     </Target>
@@ -64,7 +85,7 @@
     </Target>
 
     <!--
-    This target performs singing of binaries supporting signatures (Authenticode, StrongName, etc...)
+    This target performs signing of binaries supporting signatures (Authenticode, StrongName, etc...)
     For the moment, there is no official signing key so this just copies the files to the digned location
     However, when signing is available, only this target needs to change as everything is already set up
     to handle the signed binares in a distinct location.
@@ -75,6 +96,8 @@
         <Copy DestinationFolder="$(BaseSignedOutputPath)%(ReleaseProjects.Platform)\%(ReleaseProjects.Configuration)\"
               SourceFiles="$(BaseOutputPath)%(ReleaseProjects.Platform)\%(ReleaseProjects.Configuration)\%(ReleaseProjects.TargetOutput)"
               />
+        <!-- generate Sha256 hash so that builds can at least be verified -->
+        <GenerateSha256File Files="$(BaseSignedOutputPath)%(ReleaseProjects.Platform)\%(ReleaseProjects.Configuration)\%(ReleaseProjects.TargetOutput)"/>
     </Target>
     
     <!--
@@ -122,8 +145,15 @@
               Command='"$(NugetExePath)" restore %(NugetRestorePackage.FullPath) -NonInteractive -PackagesDirectory %(NugetRestorePackage.PackagesDirectory) -SolutionDirectory %(NugetRestorePackage.SolutionDirectory) -MSBuildVersion %(NugetRestorePackage.MSBuildVersion)' />
     </Target>
     
-    <!-- For now this is empty, once real signing is available this will handle signing any package formats that support signing -->
-    <Target Name="SignPackage" />
+    <!--
+    For now this just generates a SHA256 hash for NUGET packages,
+    once real signing is available this will handle signing any
+    package formats that support signing.
+    -->
+    <Target Name="SignPackage">
+        <!-- generate Sha256 hash so that builds can at least be verified -->
+        <GenerateSha256File Files="$(BaseSignedOutputPath)Nuget\%(NugetPackage.FileName).$(FullBuildNumber).nupkg"/>
+    </Target>
 
     <Target Name="Build" DependsOnTargets="$(BuildDependsOn)"/>
 </Project>

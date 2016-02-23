@@ -46,26 +46,6 @@
         <NugetExePath Condition="'$(NugetExePath)'==''">$(BaseBuildOutputPath)\Tools\nuget.exe</NugetExePath>
     </PropertyGroup>
     
-    <!--
-    Use Choose to set the dependencies of the EnsureBuildNumbers target to the correct dependency.
-    The EnsureBuildNumbers target does nothing and instead the work is done in one of the two
-    targets selected here. The actual target used depends on whther FullBuildNumber is already set
-    or not. In an automated build the build server will set the FullBuildNumber (Usually as a global
-    property to the msbuild command line that started this project)
-    -->
-    <Choose>
-        <When Condition="'$(FullBuildNumber)'==''">
-            <PropertyGroup>
-                <EnsureBuildNumbersDependsOn>CreateBuildNumbers</EnsureBuildNumbersDependsOn>
-            </PropertyGroup>
-        </When>
-        <Otherwise>
-            <PropertyGroup>
-                <EnsureBuildNumbersDependsOn>_ParseFullBuildNumber</EnsureBuildNumbersDependsOn>
-            </PropertyGroup>
-        </Otherwise>
-    </Choose>
-
     <ItemDefinitionGroup>
         <!-- Default settings for a Multi-configuration project. Thses may be overridden on a per project basis -->
         <BuildProject>

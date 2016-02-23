@@ -188,4 +188,34 @@
             </Code>
         </Task>
     </UsingTask>
+    
+    <UsingTask TaskName="GenerateSha256File" TaskFactory="CodeTaskFactory" AssemblyFile="$(MSBuildToolsPath)\Microsoft.Build.Tasks.v4.0.dll">
+        <ParameterGroup>
+            <Files ParameterType="Microsoft.Build.Framework.ITaskItem[]" Required="true" />
+        </ParameterGroup>
+        <Task>
+            <Using Namespace="System.IO" />
+            <Using Namespace="System.Security.Cryptography" />
+            <Code Type="Fragment" Language="cs">
+            <![CDATA[
+            using( var algo = SHA256.Create() )
+            {                
+                foreach( var item in Files )
+                {
+                    var fullPath = item.GetMetadata( "FullPath" );
+                    using( var stream = new FileStream( fullPath, FileMode.Open ) )
+                    {
+                        var fileHash = algo.ComputeHash( stream );
+                        var bldr = new StringBuilder();
+                        foreach( byte value in fileHash )
+                            bldr.AppendFormat( "{0:X02}", value );
+                        
+                        File.WriteAllText( fullPath + ".sha256", bldr.ToString() );
+                    }
+                }
+            }
+            ]]>
+            </Code>
+        </Task>
+    </UsingTask>
 </Project>
