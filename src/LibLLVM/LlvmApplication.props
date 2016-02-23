@@ -68,5 +68,8 @@
     <Link>
       <AdditionalDependencies>$(AllLlvmStaticLibs);$(AdditionalDependencies)</AdditionalDependencies>
     </Link>
+      <ResourceCompile>
+          <AdditionalIncludeDirectories>$(IntermediateOutputPath);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      </ResourceCompile>
   </ItemDefinitionGroup>
 </Project>

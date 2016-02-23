@@ -23,7 +23,7 @@
             <VersionInfoGeneratedLine Include='#define PRODUCT_VERSION_STRING "$(BuildMajor).$(BuildMinor).$(BuildNumber).$(BuildRevision)"'/>
         </ItemGroup>
         <Message Importance="high" Text="Generating $(GeneratedVersionInfoHeader)" />
-        <WriteLinesToFile File="$(GeneratedVersionInfoHeader)" Overwrite="true" Lines="@(VersionInfoGeneratedLine)" />
+        <WriteLinesToFile File="$(IntermediateOutputPath)$(GeneratedVersionInfoHeader)" Overwrite="true" Lines="@(VersionInfoGeneratedLine)" />
     </Target>
     
     <!-- Generate a C# source file with Assembly and file version attributes and include it in the compilation -->
