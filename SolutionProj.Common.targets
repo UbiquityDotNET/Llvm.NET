@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="14.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+    <Import Project="EnlistmentBuildVersion.targets"/>
+
+    <!-- This target parses the FullBuidNumber property to extract the component elements-->
+    <Target Name="ParseFullBuildNumber">
+        <ParseBuildVersion FullBuildNumber="$(FullBuildNumber)">
+            <Output PropertyName="BuildMajor" TaskParameter="BuildMajor" />
+            <Output PropertyName="BuildMinor" TaskParameter="BuildMinor" />
+            <Output PropertyName="BuildNumber" TaskParameter="BuildNumber" />
+            <Output PropertyName="BuildRevision" TaskParameter="BuildRevision" />
+            <Output PropertyName="BuildSuffix" TaskParameter="BuildSuffix"/>
+        </ParseBuildVersion>
+    </Target>
+    
+    <!-- This task, rather its dependencies ensure that FullBuildNumber is set as well as
+         ensuring that BuildMajor, BuildMinor, BuildNumber, BuildRevision, and, optionally,
+         BuildSuffix are set. 
+         This task itself does nothing more than print the result to the log(s), the 
+         EnsureBuildNumbersDependsOn is set from SolutionProj.common.props based on whether
+         FullBuildNumber is already set or not.
+    -->
+    <Target Name="EnsureBuildNumbers" DependsOnTargets="$(EnsureBuildNumbersDependsOn)">
+        <Message Importance="high" Text="FullBuildNumber=$(FullBuildNumber)"/>
+    </Target>
+
+    <!-- Builds all of the various configuration options for the BuildProject items -->
+    <Target Name="BuildContentBinaries"
+            DependsOnTargets="EnsureBuildNumbers"
+            >
+        <!-- Build the child projects -->
+        <MSBuild Projects="@(BuildProject)"
+                 Targets="Rebuild"
+                 Properties="BuildMajor=$(BuildMajor);BuildMinor=$(BuildMinor);BuildNumber=$(BuildNumber);BuildRevision=$(BuildRevision)"
+                 >
+        </MSBuild>
+    </Target>
+
+    <!-- Internal build target to Filter the BuildProject item list to a new list containing only release configurations -->
+    <Target Name="_CreateReleaseProjectItems">
+        <!-- Filter the project list to find the ones where Configuration==Release -->
+        <FilterReleaseProjects Projects="@(BuildProject)">
+            <Output ItemName="ReleaseProjects" TaskParameter="ReleaseProjects"/>
+        </FilterReleaseProjects>
+    </Target>
+    
+    <Target Name="SignContent" DependsOnTargets="_CreateReleaseProjectItems">
+        <Message Importance="high" Text="Copying Files to signed location... (Actual signing not yet supported)" />
+        <!-- For now just copy the release binaries to "fake" signing until fully signed builds enabled -->
+        <Copy DestinationFolder="$(BaseSignedOutputPath)%(ReleaseProjects.Platform)\%(ReleaseProjects.Configuration)\"
+              SourceFiles="$(BaseOutputPath)%(ReleaseProjects.Platform)\%(ReleaseProjects.Configuration)\%(ReleaseProjects.TargetOutput)"
+              UseHardlinksIfPossible="true"
+              />
+    </Target>
+
+    <!-- Download the nuget.exe if it isn't found-->
+    <Target Name="DownloadNugetExe" >
+        <PropertyGroup>
+            <NugetExePath>$(BaseOutputPath)nuget.exe</NugetExePath>
+        </PropertyGroup>
+        <DownloadFile Condition="!EXISTS('$(NugetExePath)')"
+                      SourceUrl="https://dist.nuget.org/win-x86-commandline/v3.3.0/nuget.exe"
+                      DestinationPath="$(NugetExePath)"
+                      />
+    </Target>
+
+    <!-- Create nuget packages for all NuSpec Items -->
+    <Target Name="PackageContent" DependsOnTargets="EnsureBuildNumbers;DownloadNugetExe" >
+        <MakeDir Directories="$(BaseSignedOutputPath)Nuget\" Condition="!EXISTS('$(BaseSignedOutputPath)Nuget\')" />
+        <Message Importance="high" Text="++Building Nuget Package..."/>
+        <Exec Command='"$(NugetExePath)" pack %(NugetPackage.FullPath) -OutputDirectory $(BaseSignedOutputPath)Nuget\ -Properties configuration=Release;buildoutput=$(BaseSignedOutputPath);buildversion=$(FullBuildNumber) -NoPackageAnalysis' />
+    </Target>
+
+    <!-- For now this is empty, once real signing is available this will handle signing any package formats that support signing -->
+    <Target Name="SignPackage" />
+
+    <Target Name="Build" DependsOnTargets="$(BuildDependsOn)"/>
+</Project>

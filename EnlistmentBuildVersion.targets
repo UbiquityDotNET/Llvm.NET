@@ -73,6 +73,6 @@
         <PropertyGroup>
             <FullBuildNumber Condition="'$(FullBuildNumber)'==''">$(BuildMajor).$(BuildMinor).$(BuildNumber).$(BuildRevision)$(BuildSuffix)</FullBuildNumber>
         </PropertyGroup>
-        <Message Importance="high" Text="Version=$(BuildMajor).$(BuildMinor).$(BuildNumber).$(BuildRevision)"/>
+        <Message Importance="high" Text="GeneratedVersion=$(BuildNumber).$(BuildRevision)"/>
     </Target>
 </Project>

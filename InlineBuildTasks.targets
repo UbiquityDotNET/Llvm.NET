@@ -63,6 +63,27 @@
             </Code>
         </Task>
     </UsingTask>
+
+    <UsingTask TaskName="FilterReleaseProjects"
+               TaskFactory="CodeTaskFactory"
+               AssemblyFile="$(MSBuildToolsPath)\Microsoft.Build.Tasks.v4.0.dll"
+               >
+        <ParameterGroup>
+            <Projects ParameterType="Microsoft.Build.Framework.ITaskItem[]" Required="true" />
+            <ReleaseProjects ParameterType="Microsoft.Build.Framework.ITaskItem[]" Output="true" />
+        </ParameterGroup>
+        <Task>
+            <Using Namespace="System.Net"/>
+            <Code Type="Fragment" Language="cs">
+              <![CDATA[
+              ReleaseProjects = ( from item in Projects
+                                  where item.GetMetadata("Configuration") == "Release"
+                                  select item
+                                ).ToArray();
+              ]]>
+            </Code>
+        </Task>
+    </UsingTask>
     
     <!--
     In-line task to set the buildNumber for use in creating an MSBuild property

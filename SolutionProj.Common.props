@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="14.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+    <Import Project="EnlistmentInfo.props"/>
+    <PropertyGroup>
+        <BuildDependsOn>
+            EnsureBuildNumbers;
+            BuildContentBinaries;
+            SignContent;
+            PackageContent;
+            SignPackage
+        </BuildDependsOn>
+    </PropertyGroup>
+    <!--
+    Use Choose to set the dependencies of the EnsureBuildNumbers target to the correct dependency.
+    The EnsureBuildNumbers target does nothing and instead the work is done in one of the two
+    targets selected here. Which one depends on whther FullBuildNumber is already set or not. In
+    an automated build the build server will set the FullBuildNumber (Usually as a global property
+    to the msbuild command line that started this project)
+    -->
+    <Choose>
+        <When Condition="'$(FullBuildNumber)'==''">
+            <PropertyGroup>
+                <EnsureBuildNumbersDependsOn>CreateBuildNumbers</EnsureBuildNumbersDependsOn>
+            </PropertyGroup>
+        </When>
+        <Otherwise>
+            <PropertyGroup>
+                <EnsureBuildNumbersDependsOn>ParseFullBuildNumber</EnsureBuildNumbersDependsOn>
+            </PropertyGroup>
+        </Otherwise>
+    </Choose>
+
+</Project>
