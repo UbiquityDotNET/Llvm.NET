@@ -1,21 +1,58 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="14.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+    <!--
+    This props file is imported by a slnproj to implement standard sln proj build behavior.
+    The standard slnproj behavior goes well beyond what a normal Visual Studio Solution does
+    as it is designed and targeted to automated build scenarios. Rather than relying on the
+    particular automated build system (Jenkins, VSO build ttasks, TFS XAML build definitions
+    , etc...) to do most of the work of a build the solution proj does the bulk of a build so
+    that it is more easily re-hosted, and more importantly reproduced on a developer's machine
+    for testing.
+    
+    The basic steps implemented for a slnproj are:
+        EnsureBuildNumbers   - This ensures that FullBuildNumber property contains a valid
+                               version number if one was not provided by the automated build
+        CleanOutputFolders   - This will clean all files and folders from the common BuildOutput
+                               location. 
+        CreateOutputFolders  - Creates the BuildOutput and sub folders that are not auto created
+                               by various targets in the build
+        NugetRestore         - Runs nuget restore for all NugetPackageRestore Items
+        BuildContentBinaries - Runs msbuild on each of the platorm+configuration combinations of
+                               Multi-configuration BuildProject Items. This is done as a single
+                               MSBuild Task to leverage maximum parallelization and dependency
+                               analysis from MSBuild.
+        SignContent          - Sings the Release configuration of the binaires generated.
+        PackageContent       - Packages content into a common packaging format. (Currently only
+                               NugetPackaging is supported, though this could be enhanced to
+                               support other forms in the future)
+        SignPackage          - Signs the package so it is ready for publication
+    -->
     <Import Project="EnlistmentInfo.props"/>
     <PropertyGroup>
+        <!-- Default list of targets to run in sequence for a build -->
         <BuildDependsOn>
             EnsureBuildNumbers;
+            CleanOutputFolders;
+            CreateOutputFolders;
+            NugetRestore;
             BuildContentBinaries;
             SignContent;
             PackageContent;
             SignPackage
         </BuildDependsOn>
     </PropertyGroup>
+
+    <PropertyGroup>
+        <!-- Default path to Nuget.exe -->
+        <NugetExePath Condition="'$(NugetExePath)'==''">$(BaseBuildOutputPath)\Tools\nuget.exe</NugetExePath>
+    </PropertyGroup>
+    
     <!--
     Use Choose to set the dependencies of the EnsureBuildNumbers target to the correct dependency.
     The EnsureBuildNumbers target does nothing and instead the work is done in one of the two
-    targets selected here. Which one depends on whther FullBuildNumber is already set or not. In
-    an automated build the build server will set the FullBuildNumber (Usually as a global property
-    to the msbuild command line that started this project)
+    targets selected here. The actual target used depends on whther FullBuildNumber is already set
+    or not. In an automated build the build server will set the FullBuildNumber (Usually as a global
+    property to the msbuild command line that started this project)
     -->
     <Choose>
         <When Condition="'$(FullBuildNumber)'==''">
@@ -25,9 +62,27 @@
         </When>
         <Otherwise>
             <PropertyGroup>
-                <EnsureBuildNumbersDependsOn>ParseFullBuildNumber</EnsureBuildNumbersDependsOn>
+                <EnsureBuildNumbersDependsOn>_ParseFullBuildNumber</EnsureBuildNumbersDependsOn>
             </PropertyGroup>
         </Otherwise>
     </Choose>
 
+    <ItemDefinitionGroup>
+        <!-- Default settings for a Multi-configuration project. Thses may be overridden on a per project basis -->
+        <BuildProject>
+            <Platforms>x64;Win32</Platforms>
+            <Configurations>Debug;Release</Configurations>
+        </BuildProject>
+        
+        <!--
+        Default settigns for NugetRestore. This assumes a repository with a 'src' folder
+        acting as the Nuget 'SolutionDirectory'. Furthermore it assumes the location of the 
+        packages folder is in the $(BaseBuildOutputPath)\packages path.
+        -->
+        <NugetRestorePackage>
+            <MSBuildVersion>14</MSBuildVersion>
+            <PackagesDirectory>$(BaseBuildOutputPath)\packages\</PackagesDirectory>
+            <SolutionDirectory>src\</SolutionDirectory>
+        </NugetRestorePackage>
+    </ItemDefinitionGroup>
 </Project>

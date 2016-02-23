@@ -45,6 +45,7 @@
         </Task>
     </UsingTask>
 
+    <!-- Custom task to download a file from a web URL -->
     <UsingTask TaskName="DownloadFile"
                TaskFactory="CodeTaskFactory"
                AssemblyFile="$(MSBuildToolsPath)\Microsoft.Build.Tasks.v4.0.dll"
@@ -63,7 +64,8 @@
             </Code>
         </Task>
     </UsingTask>
-
+    
+    <!-- Custom task to filter a single configuration project item list to include only the release configurations -->
     <UsingTask TaskName="FilterReleaseProjects"
                TaskFactory="CodeTaskFactory"
                AssemblyFile="$(MSBuildToolsPath)\Microsoft.Build.Tasks.v4.0.dll"
@@ -85,6 +87,78 @@
         </Task>
     </UsingTask>
     
+    <!--
+    Custom task to create single configuration projects from a simpler multi-configuration project list.
+    MultiConfiguration projects contain a "Platforms" and "Configurations" Item Metadata that are a semicolon
+    delimited list of platforms and configurations the project should build for. This task takes a list of such
+    projects and creates a new one that rolls out the Platforms and COnfigurations for each item in the input list.
+    That is the output list contains a new item for every platform+configuration combination in each item of the
+    input list. The output item contains all the metadata of the original except the "Platforms" and "Configurations"
+    list and additionally includes new "Platform" and "Configuration", and "AdditionalPreoperties" metadata.
+    -->
+    <UsingTask TaskName="CreateMultiConfigProjectList"
+               TaskFactory="CodeTaskFactory"
+               AssemblyFile="$(MSBuildToolsPath)\Microsoft.Build.Tasks.v4.0.dll"
+               >
+        <ParameterGroup>
+            <Projects ParameterType="Microsoft.Build.Framework.ITaskItem[]" Required="true" />
+            <Result ParameterType="Microsoft.Build.Framework.ITaskItem[]" Output="true" />
+        </ParameterGroup>
+        <Task>
+            <Code Type="Class" Language="cs">
+            <![CDATA[
+            using Microsoft.Build.Framework;
+            using Microsoft.Build.Utilities;
+            using System.Linq;
+            using System.Collections.Generic;
+            using System;
+            
+            public class CreateMultiConfigProjectList : Microsoft.Build.Utilities.Task
+            {
+                [Microsoft.Build.Framework.Required]
+                public Microsoft.Build.Framework.ITaskItem[] Projects { get; set; }
+                
+                [Microsoft.Build.Framework.Output]
+                public Microsoft.Build.Framework.ITaskItem[] Result { get; set; }
+                
+                public override bool Execute()
+                {
+                    Result = ( from item in Projects
+                               from platform in SplitArgs( item.GetMetadata("Platforms") )
+                               from configuration in SplitArgs( item.GetMetadata("Configurations") )
+                               select CreateMultiConfigItem( item, platform, configuration )
+                             ).ToArray();
+
+                    return true;
+                }
+                
+                ITaskItem CreateMultiConfigItem( ITaskItem project, string platform, string configuration )
+                {
+                    var retVal = new TaskItem( project );
+                    retVal.RemoveMetadata( "Platforms" );
+                    retVal.SetMetadata( "Platform", platform );
+                    
+                    retVal.RemoveMetadata( "Configurations" );
+                    retVal.SetMetadata("Configuration", configuration );
+                    
+                    retVal.SetMetadata("AdditionalProperties", string.Format("Platform={0};Configuration={1}", platform, configuration ) );
+                    return retVal;
+                }
+                
+                IEnumerable<string> SplitArgs( string inputList )
+                {
+                    
+                    if( string.IsNullOrWhiteSpace( inputList ) )
+                        return Enumerable.Empty<string>();
+                    
+                    return inputList.Split( ';' );
+                }
+            }
+            ]]>
+            </Code>
+        </Task>
+    </UsingTask>
+
     <!--
     In-line task to set the buildNumber for use in creating an MSBuild property
     to use in generating version info source files for the build.

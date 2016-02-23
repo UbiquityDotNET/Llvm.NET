@@ -1,9 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="14.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+    <!--
+    This targets file is imported by a sln.rpoj to implement standard sln proj build behavior.
+    The standard slnproj behavior goes well beyond what a normal Visual Studio Solution does
+    as it is designed and targeted to automated build scenarios. Rather than relying on the
+    particular automated build system (Jenkins, VSO build ttasks, TFS XAML build definitions
+    , etc...) to do most of the work of a build the solution proj does the bulk of a build so
+    that it is more easily re-hosted, and more importantly reproduced on a developer's machine
+    for testing. 
+    
+    All targets with a name begining with '_' are internal targets subject to change over time.
+    slnproj files should not reference or depend on them in anyway. 
+    -->
     <Import Project="EnlistmentBuildVersion.targets"/>
 
     <!-- This target parses the FullBuidNumber property to extract the component elements-->
-    <Target Name="ParseFullBuildNumber">
+    <Target Name="_ParseFullBuildNumber">
         <ParseBuildVersion FullBuildNumber="$(FullBuildNumber)">
             <Output PropertyName="BuildMajor" TaskParameter="BuildMajor" />
             <Output PropertyName="BuildMinor" TaskParameter="BuildMinor" />
@@ -13,7 +25,7 @@
         </ParseBuildVersion>
     </Target>
     
-    <!-- This task, rather its dependencies ensure that FullBuildNumber is set as well as
+    <!-- This task, rather its dependencies, ensure that FullBuildNumber is set as well as
          ensuring that BuildMajor, BuildMinor, BuildNumber, BuildRevision, and, optionally,
          BuildSuffix are set. 
          This task itself does nothing more than print the result to the log(s), the 
@@ -24,40 +36,73 @@
         <Message Importance="high" Text="FullBuildNumber=$(FullBuildNumber)"/>
     </Target>
 
+    <!-- Internal target to build a single configuration project list from a multi-configuration project list -->
+    <Target Name="_CreateMultiConfigProjectList">
+        <CreateMultiConfigProjectList Projects="@(BuildProject)">
+            <Output ItemName="_MultiConfigBuildProjects" TaskParameter="Result"/>
+        </CreateMultiConfigProjectList>
+    </Target>
+    
     <!-- Builds all of the various configuration options for the BuildProject items -->
     <Target Name="BuildContentBinaries"
-            DependsOnTargets="EnsureBuildNumbers"
+            DependsOnTargets="EnsureBuildNumbers;_CreateMultiConfigProjectList"
             >
         <!-- Build the child projects -->
-        <MSBuild Projects="@(BuildProject)"
-                 Targets="Rebuild"
+        <MSBuild Projects="@(_MultiConfigBuildProjects)"
+                 Targets="Build"
                  Properties="BuildMajor=$(BuildMajor);BuildMinor=$(BuildMinor);BuildNumber=$(BuildNumber);BuildRevision=$(BuildRevision)"
                  >
         </MSBuild>
     </Target>
 
     <!-- Internal build target to Filter the BuildProject item list to a new list containing only release configurations -->
-    <Target Name="_CreateReleaseProjectItems">
+    <Target Name="_CreateReleaseProjectItems" DependsOnTargets="_CreateMultiConfigProjectList">
         <!-- Filter the project list to find the ones where Configuration==Release -->
-        <FilterReleaseProjects Projects="@(BuildProject)">
+        <FilterReleaseProjects Projects="@(_MultiConfigBuildProjects)">
             <Output ItemName="ReleaseProjects" TaskParameter="ReleaseProjects"/>
         </FilterReleaseProjects>
     </Target>
-    
+
+    <!--
+    This target performs singing of binaries supporting signatures (Authenticode, StrongName, etc...)
+    For the moment, there is no official signing key so this just copies the files to the digned location
+    However, when signing is available, only this target needs to change as everything is already set up
+    to handle the signed binares in a distinct location.
+    -->
     <Target Name="SignContent" DependsOnTargets="_CreateReleaseProjectItems">
         <Message Importance="high" Text="Copying Files to signed location... (Actual signing not yet supported)" />
         <!-- For now just copy the release binaries to "fake" signing until fully signed builds enabled -->
         <Copy DestinationFolder="$(BaseSignedOutputPath)%(ReleaseProjects.Platform)\%(ReleaseProjects.Configuration)\"
               SourceFiles="$(BaseOutputPath)%(ReleaseProjects.Platform)\%(ReleaseProjects.Configuration)\%(ReleaseProjects.TargetOutput)"
-              UseHardlinksIfPossible="true"
               />
     </Target>
+    
+    <!--
+    Creates core output folders that tasks require. Not all folders are explicitly created here
+    as most of the tasks can create the folder if they don't exist. Some, like the nuget tasks,
+    however, cannot.
+    -->
+    <Target Name="CreateOutputFolders">
+        <MakeDir Condition="!EXISTS('$(BaseBuildOutputPath)')" Directories="$(BaseBuildOutputPath)" />
+        <MakeDir Condition="!EXISTS('$(BaseBuildOutputPath)\tools')" Directories="$(BaseBuildOutputPath)\tools"/>
+        <MakeDir Condition="!EXISTS('$(BaseOutputPath)')" Directories="$(BaseOutputPath)"/>
+        <MakeDir Condition="!EXISTS('$(BaseSignedOutputPath)')" Directories="$(BaseSignedOutputPath)"/>
+    </Target>
 
+    <!-- Cleans the common build output folder -->
+    <Target Name="CleanOutputFolders">
+        <ItemGroup>
+            <_FilesToClean Include="$(BaseBuildOutputPath)\**\*" />
+        </ItemGroup>
+        <ItemGroup>
+            <_FoldersToClean Include="@(_FilesToClean->'%(RootDir)%(Directory)')"/>
+        </ItemGroup>
+        <Delete Files="@(_FilesToClean)" />
+        <RemoveDir Directories="$(BaseBuildOutputPath)" />
+    </Target>
+    
     <!-- Download the nuget.exe if it isn't found-->
-    <Target Name="DownloadNugetExe" >
-        <PropertyGroup>
-            <NugetExePath>$(BaseOutputPath)nuget.exe</NugetExePath>
-        </PropertyGroup>
+    <Target Name="_DownloadNugetExe" >
         <DownloadFile Condition="!EXISTS('$(NugetExePath)')"
                       SourceUrl="https://dist.nuget.org/win-x86-commandline/v3.3.0/nuget.exe"
                       DestinationPath="$(NugetExePath)"
@@ -65,12 +110,18 @@
     </Target>
 
     <!-- Create nuget packages for all NuSpec Items -->
-    <Target Name="PackageContent" DependsOnTargets="EnsureBuildNumbers;DownloadNugetExe" >
+    <Target Name="PackageContent" DependsOnTargets="EnsureBuildNumbers;_DownloadNugetExe" >
         <MakeDir Directories="$(BaseSignedOutputPath)Nuget\" Condition="!EXISTS('$(BaseSignedOutputPath)Nuget\')" />
         <Message Importance="high" Text="++Building Nuget Package..."/>
         <Exec Command='"$(NugetExePath)" pack %(NugetPackage.FullPath) -OutputDirectory $(BaseSignedOutputPath)Nuget\ -Properties configuration=Release;buildoutput=$(BaseSignedOutputPath);buildversion=$(FullBuildNumber) -NoPackageAnalysis' />
     </Target>
 
+    <!-- Restores nuget packages for projects listed in the NugetRestorePackage item list -->
+    <Target Name="NugetRestore" DependsOnTargets="_DownloadNugetExe" >
+        <Exec Condition="EXISTS('%(NugetRestorePackage.FullPath)')" 
+              Command='"$(NugetExePath)" restore %(NugetRestorePackage.FullPath) -NonInteractive -PackagesDirectory %(NugetRestorePackage.PackagesDirectory) -SolutionDirectory %(NugetRestorePackage.SolutionDirectory) -MSBuildVersion %(NugetRestorePackage.MSBuildVersion)' />
+    </Target>
+    
     <!-- For now this is empty, once real signing is available this will handle signing any package formats that support signing -->
     <Target Name="SignPackage" />
 

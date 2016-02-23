@@ -2,47 +2,32 @@
 <Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
     <!-- Solution Project for building the Llvm.NET source tree. -->
     <Import Project="SolutionProj.common.props"/>
-
+    
     <ItemGroup>
-        <BuildProject Include="src\LibLLVM\LibLLVM.vcxproj">
-            <TargetOutput>LibLLVM.dll</TargetOutput>
-            <Configuration>Release</Configuration>
-            <Platform>x64</Platform>
-            <AdditionalProperties>Platform=$(Platform);Configuration=%(Configuration);%(AdditionalProperties)</AdditionalProperties>
-        </BuildProject>
-        <BuildProject Include="src\LibLLVM\LibLLVM.vcxproj">
-            <TargetOutput>LibLLVM.dll</TargetOutput>
-            <Configuration>Debug</Configuration>
-            <Platform>x64</Platform>
-            <AdditionalProperties>Platform=$(Platform);Configuration=%(Configuration);%(AdditionalProperties)</AdditionalProperties>
-        </BuildProject>
-        <BuildProject Include="src\LibLLVM\LibLLVM.vcxproj">
-            <TargetOutput>LibLLVM.dll</TargetOutput>
-            <Configuration>Release</Configuration>
-            <Platform>Win32</Platform>
-            <AdditionalProperties>Platform=$(Platform);Configuration=%(Configuration);%(AdditionalProperties)</AdditionalProperties>
-        </BuildProject>
-        <BuildProject Include="src\LibLLVM\LibLLVM.vcxproj">
-            <TargetOutput>LibLLVM.dll</TargetOutput>
-            <Configuration>Debug</Configuration>
-            <Platform>Win32</Platform>
-            <AdditionalProperties>Platform=$(Platform);Configuration=%(Configuration);%(AdditionalProperties)</AdditionalProperties>
-        </BuildProject>
-        <BuildProject Include="src\Llvm.NET\Llvm.NET.csproj">
-            <TargetOutput>Llvm.NET.dll</TargetOutput>
-            <Configuration>Release</Configuration>
-            <Platform>AnyCPU</Platform>
-            <AdditionalProperties>Platform=$(Platform);Configuration=%(Configuration);%(AdditionalProperties)</AdditionalProperties>
-        </BuildProject>
-        <BuildProject Include="src\Llvm.NET\Llvm.NET.csproj">
-            <TargetOutput>Llvm.NET.dll</TargetOutput>
-            <Configuration>Debug</Configuration>
-            <Platform>AnyCPU</Platform>
-            <AdditionalProperties>Platform=$(Platform);Configuration=%(Configuration);%(AdditionalProperties)</AdditionalProperties>
-        </BuildProject>
-        <NuGetPackage Include="src\NugetPkg\Llvm.NET.nuspec" />
+        <!-- Projects needing nuget restore -->
+        <!--
+        <NugetRestorePackage Include="src\NugetConsumer\NugetConsumer.csproj"/>
+        ...
+        -->
     </ItemGroup>
     
+    <ItemGroup>
+        <!-- LibLLVM -->
+        <BuildProject Include="src\LibLLVM\LibLLVM.vcxproj">
+            <TargetOutput>LibLLVM.dll</TargetOutput>
+        </BuildProject>
+        <!-- Llvm.NET -->
+        <BuildProject Include="src\Llvm.NET\Llvm.NET.csproj">
+            <TargetOutput>Llvm.NET.dll</TargetOutput>
+        </BuildProject>
+        <!-- Unit tests -->
+        <BuildProject Include="src\Llvm.NETTests\LLVM.NETTests\LLVM.NETTests.csproj">
+            <TargetOutput>Llvm.NETTests.dll</TargetOutput>
+        </BuildProject>
+
+        <NuGetPackage Include="src\NugetPkg\Llvm.NET.nuspec" />
+    </ItemGroup>
+
     <Import Project="SolutionProj.common.targets"/>
 
 </Project>

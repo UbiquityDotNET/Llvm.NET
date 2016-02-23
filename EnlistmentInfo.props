@@ -15,17 +15,19 @@
         <BuildRootDir Condition="!HasTrailingSlash('$(BuildRootDir)')">$(BuildRootDir)\</BuildRootDir>
         
         <!-- Put build output and intermediate output files into a well known location outside of the source tree -->
-        
-        <BaseIntermediateOutputPath Condition="'$(BaseIntermediateOutputPath)'==''" >$(BuildRootDir)IntermediateOutput\$(MSBuildProjectName)\</BaseIntermediateOutputPath>
-        <IntDir Condition="'$(IntDir)'==''">$(BaseIntermediateOutputPath)$(Platform)\$(Configuration)\</IntDir>
+        <BaseBuildOutputPath Condition="'$(BaseBuildOutputPath)'==''">$(BuildRootDir)BuildOutput</BaseBuildOutputPath>
+        <BaseBuildOutputPath Condition="!HasTrailingSlash('$(BaseBuildOutputPath)')">$(BaseBuildOutputPath)\</BaseBuildOutputPath>
 
-        <BaseOutputPath Condition="'$(BaseOutputPath)'==''">$(BuildRootDir)BuildOutput\</BaseOutputPath>
+        <BaseIntermediateOutputPath Condition="'$(BaseIntermediateOutputPath)'==''" >$(BaseBuildOutputPath)Intermediate\$(MSBuildProjectName)\</BaseIntermediateOutputPath>
+        <IntDir Condition="'$(IntDir)'==''">$(BaseIntermediateOutputPath)$(Platform)\$(Configuration)\</IntDir>
+        
+        <BaseOutputPath Condition="'$(BaseOutputPath)'==''">$(BaseBuildOutputPath)Unsigned\</BaseOutputPath>
         <OutputPath Condition="'$(OutputPath)'==''">$(BaseOutputPath)$(Platform)\$(Configuration)\</OutputPath>
         <OutputPath Condition="!HasTrailingSlash('$(OutputPath)')">$(OutputPath)\</OutputPath>
         
         <OutDir Condition="'$(OutDir)'==''">$(OutputPath)</OutDir>
 
-        <BaseSignedOutputPath Condition="'$(SignedOutputPath)'==''">$(BuildRootDir)SignedBuildOutput\</BaseSignedOutputPath>
+        <BaseSignedOutputPath Condition="'$(SignedOutputPath)'==''">$(BaseBuildOutputPath)Signed\</BaseSignedOutputPath>
         <SignedOutputPath Condition="'$(SignedOutputPath)'==''">$(BaseSignedOutputPath)$(Platform)\$(Configuration)\</SignedOutputPath>
         <SignedOutputPath Condition="!HasTrailingSlash('$(SignedOutputPath)')">$(SignedOutputPath)\</SignedOutputPath>
         
