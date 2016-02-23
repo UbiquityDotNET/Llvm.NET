@@ -188,6 +188,12 @@
         </Task>
     </UsingTask>
     
+    <!--
+    This taks will generate a SHA256 HASH for a set of input files.
+    THe hash is saved as a text file in the common ASCII HEX form with
+    the same FullPath as the original Item with an added ".sha256"
+    extension.
+    -->
     <UsingTask TaskName="GenerateSha256File" TaskFactory="CodeTaskFactory" AssemblyFile="$(MSBuildToolsPath)\Microsoft.Build.Tasks.v4.0.dll">
         <ParameterGroup>
             <Files ParameterType="Microsoft.Build.Framework.ITaskItem[]" Required="true" />
