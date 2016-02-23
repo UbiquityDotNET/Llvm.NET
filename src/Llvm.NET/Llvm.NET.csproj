@@ -258,8 +258,8 @@
     </CodeAnalysisDictionary>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
-  <Import Project="$([MSBuild]::GetDirectoryNameOfFileAbove($(MSBuildThisFileDirectory), EnlistmentBuildVersion.targets))\EnlistmentBuildVersion.targets" Condition="'$([MSBuild]::GetDirectoryNameOfFileAbove($(MSBuildThisFileDirectory), EnlistmentBuildVersion.targets))' != '' " />
-  <PropertyGroup>
+    <Import Project="$(SolutionBuildExtensionsDir)EnlistmentBuildVersion.targets" />
+    <PropertyGroup>
     <PostBuildEvent>
     </PostBuildEvent>
   </PropertyGroup>

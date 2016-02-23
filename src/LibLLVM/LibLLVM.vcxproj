@@ -286,7 +286,7 @@
     <ResourceCompile Include="Resource.rc" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
-  <Import Project="$([MSBuild]::GetDirectoryNameOfFileAbove($(MSBuildThisFileDirectory), EnlistmentBuildVersion.targets))\EnlistmentBuildVersion.targets" Condition="'$([MSBuild]::GetDirectoryNameOfFileAbove($(MSBuildThisFileDirectory), EnlistmentBuildVersion.targets))' != '' " />
+  <Import Project="$(SolutionBuildExtensionsDir)EnlistmentBuildVersion.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
 </Project>

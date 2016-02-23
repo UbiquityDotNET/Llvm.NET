@@ -27,7 +27,6 @@
                                support other forms in the future)
         SignPackage          - Signs the package so it is ready for publication
     -->
-    <Import Project="EnlistmentInfo.props"/>
     <PropertyGroup>
         <!-- Default list of targets to run in sequence for a build -->
         <BuildDependsOn>
