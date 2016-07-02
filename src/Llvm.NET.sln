@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
-VisualStudioVersion = 14.0.24720.0
+VisualStudioVersion = 14.0.25123.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "LibLLVM", "LibLLVM\LibLLVM.vcxproj", "{6C77A7DE-D464-430F-96A9-A64768763B5F}"
 EndProject
@@ -13,16 +13,23 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestDebugInfo", "Llvm.NETTe
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{07FDA2D2-771E-44F4-8862-2E6FCB0E722E}"
 	ProjectSection(SolutionItems) = preProject
-		..\BuildAll.proj = ..\BuildAll.proj
+		..\BuildAll.slnproj = ..\BuildAll.slnproj
+		..\BuildEnv.props = ..\BuildEnv.props
 		CustomDictionary.xml = CustomDictionary.xml
-		..\EnlistmentBuildVersion.targets = ..\EnlistmentBuildVersion.targets
-		..\EnlistmentInfo.props = ..\EnlistmentInfo.props
-		..\InlineBuildTasks.targets = ..\InlineBuildTasks.targets
+		..\LICENSE = ..\LICENSE
 		..\NuGet.config = ..\NuGet.config
 		..\README.md = ..\README.md
 		..\VsoUpdateVersion.ps1 = ..\VsoUpdateVersion.ps1
 		win32.runsettings = win32.runsettings
 		x64.runsettings = x64.runsettings
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "BuildExtensions", "BuildExtensions", "{7B7EC2B9-EA80-4F8D-9654-E63C91158B28}"
+	ProjectSection(SolutionItems) = preProject
+		..\BuildExtensions\EnlistmentBuildVersion.targets = ..\BuildExtensions\EnlistmentBuildVersion.targets
+		..\BuildExtensions\InlineBuildTasks.targets = ..\BuildExtensions\InlineBuildTasks.targets
+		..\BuildExtensions\SolutionProj.Common.props = ..\BuildExtensions\SolutionProj.Common.props
+		..\BuildExtensions\SolutionProj.Common.targets = ..\BuildExtensions\SolutionProj.Common.targets
 	EndProjectSection
 EndProject
 Global
@@ -104,5 +111,8 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{7B7EC2B9-EA80-4F8D-9654-E63C91158B28} = {07FDA2D2-771E-44F4-8862-2E6FCB0E722E}
 	EndGlobalSection
 EndGlobal

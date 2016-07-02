@@ -189,7 +189,7 @@
     </UsingTask>
     
     <!--
-    This taks will generate a SHA256 HASH for a set of input files.
+    This task will generate a SHA256 HASH for a set of input files.
     THe hash is saved as a text file in the common ASCII HEX form with
     the same FullPath as the original Item with an added ".sha256"
     extension.

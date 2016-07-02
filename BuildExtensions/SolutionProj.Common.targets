@@ -4,12 +4,12 @@
     This targets file is imported by a .slnproj to implement standard solution project build
     behavior. The standard slnproj functionality goes well beyond what a normal Visual Studio
     Solution does as it is designed and targeted to automated build scenarios. Rather than
-    relying on the particular automated build system (Jenkins, VSO build ttasks, TFS XAML build
+    relying on the particular automated build system (Jenkins, VSO build tasks, TFS XAML build
     definitions, etc...) to do most of the work of a build the solution proj does the bulk of a
     build so that it is more easily re-hosted, and more importantly reproduced on a developer's
     machine for testing.
     
-    All targets with a name begining with '_' are internal targets subject to change over time.
+    All targets with a name beginning with '_' are internal targets subject to change over time.
     slnproj files should not reference or depend on them in anyway. 
     -->
     <Import Project="EnlistmentBuildVersion.targets"/>
@@ -17,7 +17,7 @@
     <!--
     Use Choose to set the dependencies of the EnsureBuildNumbers target to the correct dependency.
     The EnsureBuildNumbers target does nothing and instead the work is done in one of the two
-    targets selected here. The actual target used depends on whther FullBuildNumber is already set
+    targets selected here. The actual target used depends on whether FullBuildNumber is already set
     or not. In an automated build the build server will set the FullBuildNumber (Usually as a global
     property to the msbuild command line that started this project)
     -->
@@ -86,9 +86,9 @@
 
     <!--
     This target performs signing of binaries supporting signatures (Authenticode, StrongName, etc...)
-    For the moment, there is no official signing key so this just copies the files to the digned location
+    For the moment, there is no official signing key so this just copies the files to the signed location
     However, when signing is available, only this target needs to change as everything is already set up
-    to handle the signed binares in a distinct location.
+    to handle the signed binaries in a distinct location.
     -->
     <Target Name="SignContent" DependsOnTargets="_CreateReleaseProjectItems">
         <Message Importance="high" Text="Copying Files to signed location... (Actual signing not yet supported)" />

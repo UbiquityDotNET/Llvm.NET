@@ -205,3 +205,4 @@ FakesAssemblies/
 *.opendb
 /src/.tools
 /src/LibLLVM/generatedversioninfo.h
+*.db
