@@ -49,7 +49,7 @@ namespace Llvm.NET.Tests
             new TargetInfo( "mipsel", "Mipsel", true, true, true ),
             new TargetInfo( "mips", "Mips", true, true, true ),
             new TargetInfo( "hexagon", "Hexagon", true, false, true ),
-            new TargetInfo( "cpp", "C++ backend", false, false, true ),
+            //new TargetInfo( "cpp", "C++ backend", false, false, true ),
             new TargetInfo( "bpfeb", "BPF (big endian)", true, true, true ),
             new TargetInfo( "bpfel", "BPF (little endian)", true, true, true ),
             new TargetInfo( "bpf", "BPF (host endian)", true, true, true ),

@@ -11,22 +11,6 @@ using namespace llvm;
 
 DEFINE_SIMPLE_CONVERSION_FUNCTIONS( AttrBuilder, LLVMAttributeBuilderRef )
 
-// Validate assumptions regarding the attribute classes made in this code
-// in order to project the types to other languages
-static_assert( sizeof( std::uintptr_t ) == sizeof( Attribute ), "ERROR: Size mismatch on Attribute" );
-static_assert( std::is_trivially_copy_constructible<Attribute>::value, "ERROR: Attribute cannot be trivially copy constructed" );
-static_assert( std::is_standard_layout<Attribute>::value, "ERROR: Attribute is not a 'C' compatible standard layout" );
-
-LLVMAttributeValue wrap( Attribute attribute )
-{
-    return *reinterpret_cast< LLVMAttributeValue* >( &attribute );
-}
-
-Attribute AsAttribute( LLVMAttributeValue attribute )
-{
-    return *reinterpret_cast< Attribute* >( &attribute );
-}
-
 static_assert( sizeof( std::uintptr_t ) == sizeof( AttributeSet ), "ERROR: Size mismatch on AttributeSet" );
 static_assert( std::is_trivially_copy_constructible<AttributeSet>::value, "ERROR: AttributeSet cannot be trivially copy constructed" );
 static_assert( std::is_standard_layout<AttributeSet>::value, "ERROR: AttributeSet is not a 'C' compatible standard layout" );
@@ -169,13 +153,13 @@ extern "C"
         return attributes.hasAttrSomewhere( ( Attribute::AttrKind )kind );
     }
 
-    LLVMAttributeValue LLVMAttributeSetGetAttributeByKind( LLVMAttributeSet attributeSet, unsigned index, LLVMAttrKind kind )
+    LLVMAttributeRef LLVMAttributeSetGetAttributeByKind( LLVMAttributeSet attributeSet, unsigned index, LLVMAttrKind kind )
     {
         auto attributes = AsAttributeSet( attributeSet );
         return wrap( attributes.getAttribute( index, ( Attribute::AttrKind )kind ) );
     }
 
-    LLVMAttributeValue LLVMAttributeSetGetAttributeByName( LLVMAttributeSet attributeSet, unsigned index, char const* name )
+    LLVMAttributeRef LLVMAttributeSetGetAttributeByName( LLVMAttributeSet attributeSet, unsigned index, char const* name )
     {
         auto attributes = AsAttributeSet( attributeSet );
         return wrap( attributes.getAttribute( index, name ) );
@@ -236,7 +220,7 @@ extern "C"
         return reinterpret_cast<uintptr_t>( attributes.begin( slot ) );
     }
 
-    LLVMAttributeValue LLVMAttributeSetIteratorGetNext( LLVMAttributeSet attributeSet, unsigned slot, uintptr_t* pToken )
+    LLVMAttributeRef LLVMAttributeSetIteratorGetNext( LLVMAttributeSet attributeSet, unsigned slot, uintptr_t* pToken )
     {
         auto attributes = AsAttributeSet( attributeSet );
         auto it = *reinterpret_cast< Attribute**>( pToken );
@@ -249,63 +233,52 @@ extern "C"
     }
 
     //--- Attribute Wrappers
-
-    LLVMBool LLVMIsEnumAttribute( LLVMAttributeValue attribute )
+    LLVMBool LLVMIsIntAttribute( LLVMAttributeRef attribute )
     {
-        return AsAttribute( attribute ).isEnumAttribute( );
+        return unwrap( attribute ).isIntAttribute( );
     }
 
-    LLVMBool LLVMIsIntAttribute( LLVMAttributeValue attribute )
+    LLVMBool LLVMHasAttributeKind( LLVMAttributeRef attribute, LLVMAttrKind kind )
     {
-        return AsAttribute( attribute ).isIntAttribute( );
+        return unwrap( attribute ).hasAttribute( ( llvm::Attribute::AttrKind )kind );
     }
 
-    LLVMBool LLVMIsStringAttribute( LLVMAttributeValue attribute )
+    LLVMBool LLVMHasAttributeString( LLVMAttributeRef attribute, char const* name )
     {
-        return AsAttribute( attribute ).isStringAttribute( );
+        return unwrap( attribute ).hasAttribute( name );
     }
 
-    LLVMBool LLVMHasAttributeKind( LLVMAttributeValue attribute, LLVMAttrKind kind )
+    LLVMAttrKind LLVMGetAttributeKind( LLVMAttributeRef attribute )
     {
-        return AsAttribute( attribute ).hasAttribute( ( llvm::Attribute::AttrKind )kind );
+        return ( LLVMAttrKind )unwrap( attribute ).getKindAsEnum( );
     }
 
-    LLVMBool LLVMHasAttributeString( LLVMAttributeValue attribute, char const* name )
+    uint64_t LLVMGetAttributeValue( LLVMAttributeRef attribute )
     {
-        return AsAttribute( attribute ).hasAttribute( name );
+        return unwrap( attribute ).getValueAsInt( );
     }
 
-    LLVMAttrKind LLVMGetAttributeKind( LLVMAttributeValue attribute )
+    char const* LLVMGetAttributeName( LLVMAttributeRef attribute )
     {
-        return ( LLVMAttrKind )AsAttribute( attribute ).getKindAsEnum( );
+        return unwrap( attribute ).getKindAsString( ).data();
     }
 
-    uint64_t LLVMGetAttributeValue( LLVMAttributeValue attribute )
+    char const* LLVMGetAttributeStringValue( LLVMAttributeRef attribute )
     {
-        return AsAttribute( attribute ).getValueAsInt( );
+        return unwrap( attribute ).getValueAsString( ).data();
     }
 
-    char const* LLVMGetAttributeName( LLVMAttributeValue attribute )
+    char const* LLVMAttributeToString( LLVMAttributeRef attribute )
     {
-        return AsAttribute( attribute ).getKindAsString( ).data();
+        return LLVMCreateMessage( unwrap( attribute ).getAsString( ).c_str( ) );
     }
 
-    char const* LLVMGetAttributeStringValue( LLVMAttributeValue attribute )
-    {
-        return AsAttribute( attribute ).getValueAsString( ).data();
-    }
-
-    char const* LLVMAttributeToString( LLVMAttributeValue attribute )
-    {
-        return LLVMCreateMessage( AsAttribute( attribute ).getAsString( ).c_str( ) );
-    }
-
-    LLVMAttributeValue LLVMCreateAttribute( LLVMContextRef ctx, LLVMAttrKind kind, uint64_t value )
+    LLVMAttributeRef LLVMCreateAttribute( LLVMContextRef ctx, LLVMAttrKind kind, uint64_t value )
     {
         return wrap( llvm::Attribute::get( *unwrap( ctx ), ( llvm::Attribute::AttrKind )kind, value ) );
     }
 
-    LLVMAttributeValue LVMCreateTargetDependentAttribute( LLVMContextRef ctx, char const* name, char const* value )
+    LLVMAttributeRef LVMCreateTargetDependentAttribute( LLVMContextRef ctx, char const* name, char const* value )
     {
         return wrap( llvm::Attribute::get( *unwrap( ctx ), name, value ) );
     }
@@ -317,9 +290,9 @@ extern "C"
         return wrap( new AttrBuilder( ) );
     }
 
-    LLVMAttributeBuilderRef LLVMCreateAttributeBuilder2( LLVMAttributeValue value )
+    LLVMAttributeBuilderRef LLVMCreateAttributeBuilder2( LLVMAttributeRef value )
     {
-        return wrap( new AttrBuilder( AsAttribute( value ) ) );
+        return wrap( new AttrBuilder( unwrap( value ) ) );
     }
 
     LLVMAttributeBuilderRef LLVMCreateAttributeBuilder3( LLVMAttributeSet attributeSet, unsigned index )
@@ -342,9 +315,9 @@ extern "C"
         unwrap( bldr )->addAttribute( ( Attribute::AttrKind )kind );
     }
 
-    void LLVMAttributeBuilderAddAttribute( LLVMAttributeBuilderRef bldr, LLVMAttributeValue value )
+    void LLVMAttributeBuilderAddAttribute( LLVMAttributeBuilderRef bldr, LLVMAttributeRef value )
     {
-        unwrap( bldr )->addAttribute( AsAttribute( value ) );
+        unwrap( bldr )->addAttribute( unwrap( value ) );
     }
 
     void LLVMAttributeBuilderAddStringAttribute( LLVMAttributeBuilderRef bldr, char const* name, char const* value )

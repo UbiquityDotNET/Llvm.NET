@@ -5,34 +5,41 @@ using System.Reflection;
 using System.Runtime.InteropServices;
 using System.Text.RegularExpressions;
 using System.Threading;
-using Llvm.NET.Values;
 
 namespace Llvm.NET.Native
 {
     internal enum ValueKind : uint
     {
-        Argument              = LLVMValueKind.LLVMValueKindArgumentVal,             // This is an instance of Argument
-        BasicBlock            = LLVMValueKind.LLVMValueKindBasicBlockVal,           // This is an instance of BasicBlock
-        Function              = LLVMValueKind.LLVMValueKindFunctionVal,             // This is an instance of Function
-        GlobalAlias           = LLVMValueKind.LLVMValueKindGlobalAliasVal,          // This is an instance of GlobalAlias
-        GlobalVariable        = LLVMValueKind.LLVMValueKindGlobalVariableVal,       // This is an instance of GlobalVariable
-        UndefValue            = LLVMValueKind.LLVMValueKindUndefValueVal,           // This is an instance of UndefValue
-        BlockAddress          = LLVMValueKind.LLVMValueKindBlockAddressVal,         // This is an instance of BlockAddress
-        ConstantExpr          = LLVMValueKind.LLVMValueKindConstantExprVal,         // This is an instance of ConstantExpr
-        ConstantAggregateZero = LLVMValueKind.LLVMValueKindConstantAggregateZeroVal,// This is an instance of ConstantAggregateZero
-        ConstantDataArray     = LLVMValueKind.LLVMValueKindConstantDataArrayVal,    // This is an instance of ConstantDataArray
-        ConstantDataVector    = LLVMValueKind.LLVMValueKindConstantDataVectorVal,   // This is an instance of ConstantDataVector
-        ConstantInt           = LLVMValueKind.LLVMValueKindConstantIntVal,          // This is an instance of ConstantInt
-        ConstantFP            = LLVMValueKind.LLVMValueKindConstantFPVal,           // This is an instance of ConstantFP
-        ConstantArray         = LLVMValueKind.LLVMValueKindConstantArrayVal,        // This is an instance of ConstantArray
-        ConstantStruct        = LLVMValueKind.LLVMValueKindConstantStructVal,       // This is an instance of ConstantStruct
-        ConstantVector        = LLVMValueKind.LLVMValueKindConstantVectorVal,       // This is an instance of ConstantVector
-        ConstantPointerNull   = LLVMValueKind.LLVMValueKindConstantPointerNullVal,  // This is an instance of ConstantPointerNull
-        ConstantTokenNone     = LLVMValueKind.LLVMValueKindConstantTokenNoneVal,    // This is an instance of ConstantTokenNone
-        MetadataAsValue       = LLVMValueKind.LLVMValueKindMetadataAsValueVal,      // This is an instance of MetadataAsValue
-        InlineAsm             = LLVMValueKind.LLVMValueKindInlineAsmVal,            // This is an instance of InlineAsm
-        Instruction           = LLVMValueKind.LLVMValueKindInstructionVal,          // This is an instance of Instruction
-                                                                                    // Enum values starting at InstructionVal are used for Instructions;
+        Argument              = LLVMValueKind.LLVMArgumentValueKind,              // This is an instance of Argument
+        BasicBlock            = LLVMValueKind.LLVMBasicBlockValueKind,            // This is an instance of BasicBlock
+        MemoryUse             = LLVMValueKind.LLVMMemoryUseValueKind,             // ???
+        MemoryDef             = LLVMValueKind.LLVMMemoryDefValueKind,             // ???
+        MemoryPhi             = LLVMValueKind.LLVMMemoryPhiValueKind,             // ???
+
+        Function              = LLVMValueKind.LLVMFunctionValueKind,              // This is an instance of Function
+        GlobalAlias           = LLVMValueKind.LLVMGlobalAliasValueKind,           // This is an instance of GlobalAlias
+        GlobalIFunc           = LLVMValueKind.LLVMGlobalIFuncValueKind,           // ???
+        GlobalVariable        = LLVMValueKind.LLVMGlobalVariableValueKind,        // This is an instance of GlobalVariable
+        BlockAddress          = LLVMValueKind.LLVMBlockAddressValueKind,          // This is an instance of BlockAddress
+        ConstantExpr          = LLVMValueKind.LLVMConstantExprValueKind,          // This is an instance of ConstantExpr
+        ConstantArray         = LLVMValueKind.LLVMConstantArrayValueKind,         // This is an instance of ConstantArray
+        ConstantStruct        = LLVMValueKind.LLVMConstantStructValueKind,        // This is an instance of ConstantStruct
+        ConstantVector        = LLVMValueKind.LLVMConstantVectorValueKind,        // This is an instance of ConstantVector
+
+        UndefValue            = LLVMValueKind.LLVMUndefValueValueKind,            // This is an instance of UndefValue
+        ConstantAggregateZero = LLVMValueKind.LLVMConstantAggregateZeroValueKind, // This is an instance of ConstantAggregateZero
+        ConstantDataArray     = LLVMValueKind.LLVMConstantDataArrayValueKind,     // This is an instance of ConstantDataArray
+        ConstantDataVector    = LLVMValueKind.LLVMConstantDataVectorValueKind,    // This is an instance of ConstantDataVector
+        ConstantInt           = LLVMValueKind.LLVMConstantIntValueKind,           // This is an instance of ConstantInt
+        ConstantFP            = LLVMValueKind.LLVMConstantFPValueKind,            // This is an instance of ConstantFP
+        ConstantPointerNull   = LLVMValueKind.LLVMConstantPointerNullValueKind,   // This is an instance of ConstantPointerNull
+        ConstantTokenNone     = LLVMValueKind.LLVMConstantTokenNoneValueKind,     // This is an instance of ConstantTokenNone
+
+        MetadataAsValue       = LLVMValueKind.LLVMMetadataAsValueValueKind,       // This is an instance of MetadataAsValue
+        InlineAsm             = LLVMValueKind.LLVMInlineAsmValueKind,             // This is an instance of InlineAsm
+
+        Instruction           = LLVMValueKind.LLVMInstructionValueKind,           // This is an instance of Instruction
+                                                                                  // Enum values starting at InstructionVal are used for Instructions;
 
         // instruction values come directly from LLVM Instruction.def which is different from the "stable"
         // LLVM-C API, therefore they are less "stable" and bound to the C++ implementation version and
@@ -110,7 +117,12 @@ namespace Llvm.NET.Native
 
         // Markers:
         ConstantFirstVal = Function,
-        ConstantLastVal = ConstantPointerNull
+        ConstantLastVal = ConstantTokenNone,
+
+        ConstantDataFirstVal = UndefValue,
+        ConstantDataLastVal = ConstantTokenNone,
+        ConstantAggregateFirstVal = ConstantArray,
+        ConstantAggregateLastVal = ConstantVector,
     }
 
     internal partial struct LLVMVersionInfo
@@ -275,7 +287,7 @@ namespace Llvm.NET.Native
 
         // version info for verification of matched LibLLVM
         private const int VersionMajor = 3;
-        private const int VersionMinor = 8;
+        private const int VersionMinor = 9;
         private const int VersionPatch = 0;
     }
 }

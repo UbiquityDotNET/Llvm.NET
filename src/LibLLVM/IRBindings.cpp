@@ -164,44 +164,22 @@ extern "C"
         switch( Ordering )
         {
         case LLVMAtomicOrderingNotAtomic:
-            return NotAtomic;
+            return AtomicOrdering::NotAtomic;
         case LLVMAtomicOrderingUnordered:
-            return Unordered;
+            return AtomicOrdering::Unordered;
         case LLVMAtomicOrderingMonotonic:
-            return Monotonic;
+            return AtomicOrdering::Monotonic;
         case LLVMAtomicOrderingAcquire:
-            return Acquire;
+            return AtomicOrdering::Acquire;
         case LLVMAtomicOrderingRelease:
-            return Release;
+            return AtomicOrdering::Release;
         case LLVMAtomicOrderingAcquireRelease:
-            return AcquireRelease;
+            return AtomicOrdering::AcquireRelease;
         case LLVMAtomicOrderingSequentiallyConsistent:
-            return SequentiallyConsistent;
+            return AtomicOrdering::SequentiallyConsistent;
         }
 
         llvm_unreachable( "Invalid LLVMAtomicOrdering value!" );
-    }
-
-    LLVMValueRef LLVMBuildAtomicCmpXchg( LLVMBuilderRef B
-                                         , LLVMValueRef Ptr
-                                         , LLVMValueRef Cmp
-                                         , LLVMValueRef New
-                                         , LLVMAtomicOrdering successOrdering
-                                         , LLVMAtomicOrdering failureOrdering
-                                         , LLVMBool singleThread
-                                         )
-    {
-        auto builder = unwrap(B);
-        auto cmpxchg = builder->CreateAtomicCmpXchg( unwrap( Ptr )
-                                                     , unwrap( Cmp )
-                                                     , unwrap( New )
-                                                     , mapFromLLVMOrdering( successOrdering )
-                                                     , mapFromLLVMOrdering( failureOrdering )
-                                                     , singleThread ? SingleThread : CrossThread
-                                                     );
-
-
-        return wrap( cmpxchg );
     }
 
     LLVMBool LLVMFunctionHasPersonalityFunction( LLVMValueRef function )

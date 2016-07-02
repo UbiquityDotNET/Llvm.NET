@@ -787,9 +787,9 @@ LLVMX86FP80Type
 LLVMX86FP80TypeInContext
 LLVMX86MMXType
 LLVMX86MMXTypeInContext
-LLVMInitializeCppBackendTarget
-LLVMInitializeCppBackendTargetInfo
-LLVMInitializeCppBackendTargetMC
+;LLVMInitializeCppBackendTarget
+;LLVMInitializeCppBackendTargetInfo
+;LLVMInitializeCppBackendTargetMC
 LLVMAddGlobalMapping
 LLVMAddModule
 LLVMCreateExecutionEngineForModule
@@ -857,7 +857,7 @@ LLVMPassManagerBuilderSetOptLevel
 LLVMPassManagerBuilderSetSizeLevel
 LLVMPassManagerBuilderUseInlinerWithThreshold
 LLVMParseIRInContext
-LLVMLinkModules
+LLVMLinkModules2 ; Previous version was deprecated in 3.8 and replaced, 3.90 removes it
 LLVMCreateDisasm
 LLVMCreateDisasmCPU
 LLVMCreateDisasmCPUFeatures
@@ -976,7 +976,7 @@ LLVMInitializeSystemZDisassembler
 LLVMInitializeSystemZTargetInfo
 LLVMABIAlignmentOfType
 LLVMABISizeOfType
-LLVMAddTargetData
+;LLVMAddTargetData ; removed in 3.9.0
 LLVMAddTargetLibraryInfo
 LLVMByteOrder
 LLVMCallFrameAlignmentOfType
@@ -1006,7 +1006,7 @@ LLVMGetTargetDescription
 LLVMGetTargetFromName
 LLVMGetTargetFromTriple
 LLVMGetTargetMachineCPU
-LLVMGetTargetMachineData
+LLVMCreateTargetDataLayout; LLVMGetTargetMachineData - renamed in 3.9.0
 LLVMGetTargetMachineFeatureString
 LLVMGetTargetMachineTarget
 LLVMGetTargetMachineTriple

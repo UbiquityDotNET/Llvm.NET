@@ -365,14 +365,6 @@ namespace Llvm.NET
         BigEndian = LLVMByteOrdering.LLVMBigEndian
     }
 
-    /// <summary>LLVM module linker mode</summary>
-    [System.Diagnostics.CodeAnalysis.SuppressMessage( "Microsoft.Design", "CA1028:EnumStorageShouldBeInt32" )]
-    public enum LinkerMode : uint
-    {
-        DestroySource = LLVMLinkerMode.LLVMLinkerDestroySource,
-        PreserveSource = LLVMLinkerMode.LLVMLinkerPreserveSource
-    }
-
     /// <summary>Enumeration for well known attribute kinds</summary>
     /// <remarks>
     /// The numeric value of the members of this enumeration are subject
@@ -385,7 +377,7 @@ namespace Llvm.NET
     /// the numerical values.
     /// </Implementation>
     public enum AttributeKind
-    {
+    {  // TODO: update for attributes added in 3.9.0...
         None                        = LLVMAttrKind.None,
         Alignment                   = LLVMAttrKind.Alignment,
         AlwaysInline                = LLVMAttrKind.AlwaysInline,

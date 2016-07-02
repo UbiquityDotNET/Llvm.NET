@@ -865,12 +865,6 @@ namespace Llvm.NET.Native
         @LTO_DS_NOTE = 2,
     }
 
-    internal enum LLVMLinkerMode : uint
-    {
-        @LLVMLinkerDestroySource = 0, /* Allow source module to be destroyed. */
-        @LLVMLinkerPreserveSource = 1 /* Preserve the source module. */
-    }
-
     internal static partial class NativeMethods
     {
         private const string libraryPath = "LibLlvm.dll";
@@ -2509,8 +2503,8 @@ namespace Llvm.NET.Native
         [DllImport(libraryPath, EntryPoint = "LLVMInitializeNVPTXTargetInfo", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl, BestFitMapping = false, ThrowOnUnmappableChar = true)]
         internal static extern void InitializeNVPTXTargetInfo();
 
-        [DllImport(libraryPath, EntryPoint = "LLVMInitializeCppBackendTargetInfo", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl, BestFitMapping = false, ThrowOnUnmappableChar = true)]
-        internal static extern void InitializeCppBackendTargetInfo();
+        //[DllImport(libraryPath, EntryPoint = "LLVMInitializeCppBackendTargetInfo", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl, BestFitMapping = false, ThrowOnUnmappableChar = true)]
+        //internal static extern void InitializeCppBackendTargetInfo();
 
         [DllImport(libraryPath, EntryPoint = "LLVMInitializeMSP430TargetInfo", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl, BestFitMapping = false, ThrowOnUnmappableChar = true)]
         internal static extern void InitializeMSP430TargetInfo();
@@ -2548,8 +2542,8 @@ namespace Llvm.NET.Native
         [DllImport(libraryPath, EntryPoint = "LLVMInitializeNVPTXTarget", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl, BestFitMapping = false, ThrowOnUnmappableChar = true)]
         internal static extern void InitializeNVPTXTarget();
 
-        [DllImport(libraryPath, EntryPoint = "LLVMInitializeCppBackendTarget", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl, BestFitMapping = false, ThrowOnUnmappableChar = true)]
-        internal static extern void InitializeCppBackendTarget();
+        //[DllImport(libraryPath, EntryPoint = "LLVMInitializeCppBackendTarget", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl, BestFitMapping = false, ThrowOnUnmappableChar = true)]
+        //internal static extern void InitializeCppBackendTarget();
 
         [DllImport(libraryPath, EntryPoint = "LLVMInitializeMSP430Target", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl, BestFitMapping = false, ThrowOnUnmappableChar = true)]
         internal static extern void InitializeMSP430Target();
@@ -2587,8 +2581,8 @@ namespace Llvm.NET.Native
         [DllImport(libraryPath, EntryPoint = "LLVMInitializeNVPTXTargetMC", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl, BestFitMapping = false, ThrowOnUnmappableChar = true)]
         internal static extern void InitializeNVPTXTargetMC();
 
-        [DllImport(libraryPath, EntryPoint = "LLVMInitializeCppBackendTargetMC", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl, BestFitMapping = false, ThrowOnUnmappableChar = true)]
-        internal static extern void InitializeCppBackendTargetMC();
+        //[DllImport(libraryPath, EntryPoint = "LLVMInitializeCppBackendTargetMC", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl, BestFitMapping = false, ThrowOnUnmappableChar = true)]
+        //internal static extern void InitializeCppBackendTargetMC();
 
         [DllImport(libraryPath, EntryPoint = "LLVMInitializeMSP430TargetMC", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl, BestFitMapping = false, ThrowOnUnmappableChar = true)]
         internal static extern void InitializeMSP430TargetMC();
@@ -2734,8 +2728,8 @@ namespace Llvm.NET.Native
         [DllImport(libraryPath, EntryPoint = "LLVMCreateTargetData", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl, BestFitMapping = false, ThrowOnUnmappableChar = true)]
         internal static extern LLVMTargetDataRef CreateTargetData([MarshalAs(UnmanagedType.LPStr)] string @StringRep);
 
-        [DllImport(libraryPath, EntryPoint = "LLVMAddTargetData", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl, BestFitMapping = false, ThrowOnUnmappableChar = true)]
-        internal static extern void AddTargetData(LLVMTargetDataRef @TD, LLVMPassManagerRef @PM);
+        //[DllImport(libraryPath, EntryPoint = "LLVMAddTargetData", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl, BestFitMapping = false, ThrowOnUnmappableChar = true)]
+        //internal static extern void AddTargetData(LLVMTargetDataRef @TD, LLVMPassManagerRef @PM);
 
         [DllImport(libraryPath, EntryPoint = "LLVMAddTargetLibraryInfo", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl, BestFitMapping = false, ThrowOnUnmappableChar = true)]
         internal static extern void AddTargetLibraryInfo(LLVMTargetLibraryInfoRef @TLI, LLVMPassManagerRef @PM);
@@ -2839,8 +2833,8 @@ namespace Llvm.NET.Native
         [DllImport(libraryPath, EntryPoint = "LLVMGetTargetMachineFeatureString", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl, BestFitMapping = false, ThrowOnUnmappableChar = true)]
         internal static extern IntPtr GetTargetMachineFeatureString(LLVMTargetMachineRef @T);
 
-        [DllImport(libraryPath, EntryPoint = "LLVMGetTargetMachineData", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl, BestFitMapping = false, ThrowOnUnmappableChar = true)]
-        internal static extern LLVMTargetDataRef GetTargetMachineData(LLVMTargetMachineRef @T);
+        [DllImport(libraryPath, EntryPoint = "LLVMCreateTargetDataLayout", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl, BestFitMapping = false, ThrowOnUnmappableChar = true)]
+        internal static extern LLVMTargetDataRef CreateTargetDataLayout(LLVMTargetMachineRef @T);
 
         [DllImport(libraryPath, EntryPoint = "LLVMSetTargetMachineAsmVerbosity", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl, BestFitMapping = false, ThrowOnUnmappableChar = true)]
         internal static extern void SetTargetMachineAsmVerbosity(LLVMTargetMachineRef @T, LLVMBool @VerboseAsm);
@@ -2992,8 +2986,8 @@ namespace Llvm.NET.Native
         [DllImport(libraryPath, EntryPoint = "LLVMParseIRInContext", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl, BestFitMapping = false, ThrowOnUnmappableChar = true)]
         internal static extern LLVMBool ParseIRInContext(LLVMContextRef @ContextRef, LLVMMemoryBufferRef @MemBuf, out LLVMModuleRef @OutM, out IntPtr @OutMessage);
 
-        [DllImport(libraryPath, EntryPoint = "LLVMLinkModules", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl, BestFitMapping = false, ThrowOnUnmappableChar = true)]
-        internal static extern LLVMBool LinkModules(LLVMModuleRef @Dest, LLVMModuleRef @Src, LLVMLinkerMode @Mode, out IntPtr @OutMessage);
+        [DllImport(libraryPath, EntryPoint = "LLVMLinkModules2", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl, BestFitMapping = false, ThrowOnUnmappableChar = true)]
+        internal static extern LLVMBool LinkModules(LLVMModuleRef @Dest, LLVMModuleRef @Src );
 
         [DllImport(libraryPath, EntryPoint = "LLVMCreateObjectFile", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl, BestFitMapping = false, ThrowOnUnmappableChar = true)]
         internal static extern LLVMObjectFileRef CreateObjectFile(LLVMMemoryBufferRef @MemBuf);

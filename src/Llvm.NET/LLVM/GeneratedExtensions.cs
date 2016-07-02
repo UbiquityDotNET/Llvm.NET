@@ -78,35 +78,38 @@ namespace Llvm.NET.Native
         @ModFlagBehaviorLastVal = AppendUnique
     }
 
-    internal enum LLVMValueKind : int
+    internal enum LLVMValueKind
     {
-        @LLVMValueKindArgumentVal,              // This is an instance of Argument
-        @LLVMValueKindBasicBlockVal,            // This is an instance of BasicBlock
-        @LLVMValueKindFunctionVal,              // This is an instance of Function
-        @LLVMValueKindGlobalAliasVal,           // This is an instance of GlobalAlias
-        @LLVMValueKindGlobalVariableVal,        // This is an instance of GlobalVariable
-        @LLVMValueKindUndefValueVal,            // This is an instance of UndefValue
-        @LLVMValueKindBlockAddressVal,          // This is an instance of BlockAddress
-        @LLVMValueKindConstantExprVal,          // This is an instance of ConstantExpr
-        @LLVMValueKindConstantAggregateZeroVal, // This is an instance of ConstantAggregateZero
-        @LLVMValueKindConstantDataArrayVal,     // This is an instance of ConstantDataArray
-        @LLVMValueKindConstantDataVectorVal,    // This is an instance of ConstantDataVector
-        @LLVMValueKindConstantIntVal,           // This is an instance of ConstantInt
-        @LLVMValueKindConstantFPVal,            // This is an instance of ConstantFP
-        @LLVMValueKindConstantArrayVal,         // This is an instance of ConstantArray
-        @LLVMValueKindConstantStructVal,        // This is an instance of ConstantStruct
-        @LLVMValueKindConstantVectorVal,        // This is an instance of ConstantVector
-        @LLVMValueKindConstantPointerNullVal,   // This is an instance of ConstantPointerNull
-        @LLVMValueKindConstantTokenNoneVal,     // This is an instance of ConstantTokenNull
-        @LLVMValueKindMetadataAsValueVal,       // This is an instance of MetadataAsValue
-        @LLVMValueKindInlineAsmVal,             // This is an instance of InlineAsm
-        @LLVMValueKindInstructionVal,           // This is an instance of Instruction
-                                                // Enum values starting at InstructionVal are used for Instructions;
+        LLVMArgumentValueKind,
+        LLVMBasicBlockValueKind,
+        LLVMMemoryUseValueKind,
+        LLVMMemoryDefValueKind,
+        LLVMMemoryPhiValueKind,
 
-        // Markers:
-        @LLVMValueKindConstantFirstVal = LLVMValueKindFunctionVal,
-        @LLVMValueKindConstantLastVal = LLVMValueKindConstantPointerNullVal
-    };
+        LLVMFunctionValueKind,
+        LLVMGlobalAliasValueKind,
+        LLVMGlobalIFuncValueKind,
+        LLVMGlobalVariableValueKind,
+        LLVMBlockAddressValueKind,
+        LLVMConstantExprValueKind,
+        LLVMConstantArrayValueKind,
+        LLVMConstantStructValueKind,
+        LLVMConstantVectorValueKind,
+
+        LLVMUndefValueValueKind,
+        LLVMConstantAggregateZeroValueKind,
+        LLVMConstantDataArrayValueKind,
+        LLVMConstantDataVectorValueKind,
+        LLVMConstantIntValueKind,
+        LLVMConstantFPValueKind,
+        LLVMConstantPointerNullValueKind,
+        LLVMConstantTokenNoneValueKind,
+
+        LLVMMetadataAsValueValueKind,
+        LLVMInlineAsmValueKind,
+
+        LLVMInstructionValueKind,
+    }
 
     enum LLVMDwarfTag : ushort
     {
@@ -187,11 +190,14 @@ namespace Llvm.NET.Native
         LLVMDwarfTagAppleProperty = 0x4200,
         LLVMDwarfTagHiUser = 0xffff
     };
-
+    
+    // values and ordering extracted from LLVM's Attributes.inc
+    // which is used to construct the Attribute::AttributeKind enumeration
     internal enum LLVMAttrKind
     {
         None,
         Alignment,
+        AllocSize,
         AlwaysInline,
         ArgMemOnly,
         Builtin,
@@ -237,6 +243,8 @@ namespace Llvm.NET.Native
         StackProtectReq,
         StackProtectStrong,
         StructRet,
+        SwiftError,
+        SwiftSelf,
         UWTable,
         ZExt,
     };
