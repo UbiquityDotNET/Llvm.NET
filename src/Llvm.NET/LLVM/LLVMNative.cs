@@ -227,7 +227,7 @@ namespace Llvm.NET.Native
             GetVersionInfo( ref versionInfo );
             if( versionInfo.Major != VersionMajor
              || versionInfo.Minor != VersionMinor
-             || versionInfo.Patch != VersionPatch
+             || versionInfo.Patch < VersionPatch
               )
             {
                 throw new BadImageFormatException( "Mismatched LibLLVM version" );
