@@ -35,11 +35,11 @@ has other needs that require a specific platform target, then LlVM.NET can still
 
 ### Building Llvm.NET
 #### Pre-requsites
-* Download [LLVM source for 3.8.0 ](http://llvm.org/releases/3.8.0/llvm-3.8.0.src.tar.xz) (At this time LLVM is 3.8.0 )
-  * You will need a tool to extract files from that archive format on Windows the recommended tool is [7zip](http://7-zip.org/)
+* Download [LLVM source for 3.8.1 ](http://llvm.org/releases/3.8.1/llvm-3.8.1.src.tar.xz) (At this time LLVM is 3.8.1 )
+  * You will need a tool to extract files from that archive format. On Windows the recommended tool is [7zip](http://7-zip.org/)
 * Build of LLVM libraries  
 To Build the LLVM libraries you can use the [BuildLlvmWithVS](https://github.com/NETMF/Llvm.NET/blob/dev/src/LibLLVM/BuildLlvmWithVS.cmd) command script provided.
-This script should be placed into the root of your LLVM 3.8 source tree. Run BuildLlvmWithVS from an elevated command prompt to build the required LLVM libraries and
+This script should be placed into the root of your LLVM source tree. Run BuildLlvmWithVS from an elevated command prompt to build the required LLVM libraries and
 create a registry entry so that the Llvm.NET projects can find the pre-built libraries. (NOTE: On a typical developer machines the full LLVM build takes approximately 6
 hours so letting it run overnight or when you are otherwise away from your computer is usually a good idea. Fortunately this only needs to be done once for a given release
 of LLVM.)
