@@ -1,17 +1,17 @@
 ###############################################################################
 # Set default behavior for various source code file types
 ##############################################################################
-*.cs text diff=csharp
-*.h text
-*.c text
-*.cpp text
-*.s text
-*.ll text
-*.cmd text
-*.bat text
-*.props text
-*.def text
-*.md text
+*.cs text eol=crlf diff=csharp
+*.h text eol=crlf
+*.c text eol=crlf
+*.cpp text eol=crlf
+*.s text eol=crlf
+*.ll text eol=crlf
+*.cmd text eol=crlf
+*.bat text eol=crlf
+*.props text eol=crlf
+*.def text eol=crlf
+*.md text eol=crlf
 
 ###############################################################################
 # Set the merge driver for project and solution files
