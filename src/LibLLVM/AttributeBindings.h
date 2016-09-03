@@ -15,6 +15,8 @@
 #define LLVM_BINDINGS_LLVM_ATTRIBUTEBINDINGS_H
 
 #include "llvm-c/Core.h"
+#include "llvm-c/Types.h"
+
 #include <stdint.h>
 
 #ifdef __cplusplus
@@ -24,62 +26,59 @@ extern "C" {
     enum LLVMAttrKind
     {
         // IR-Level Attributes
-        LLVMAttrKindNone,                  ///< No attributes have been set
-        LLVMAttrKindAlignment,             ///< Alignment of parameter (5 bits)
-                                           ///< stored as log2 of alignment with +1 bias
-                                           ///< 0 means unaligned (different from align(1))
-        LLVMAttrKindAlwaysInline,          ///< inline=always
-        LLVMAttrKindBuiltin,               ///< Callee is recognized as a builtin, despite
-                                           ///< nobuiltin attribute on its declaration.
-        LLVMAttrKindByVal,                 ///< Pass structure by value
-        LLVMAttrKindInAlloca,              ///< Pass structure in an alloca
-        LLVMAttrKindCold,                  ///< Marks function as being in a cold path.
-        LLVMAttrKindConvergent,            ///< Can only be moved to control-equivalent blocks
-        LLVMAttrKindInlineHint,            ///< Source said inlining was desirable
-        LLVMAttrKindInReg,                 ///< Force argument to be passed in register
-        LLVMAttrKindJumpTable,             ///< Build jump-instruction tables and replace refs.
-        LLVMAttrKindMinSize,               ///< Function must be optimized for size first
-        LLVMAttrKindNaked,                 ///< Naked function
-        LLVMAttrKindNest,                  ///< Nested function static chain
-        LLVMAttrKindNoAlias,               ///< Considered to not alias after call
-        LLVMAttrKindNoBuiltin,             ///< Callee isn't recognized as a builtin
-        LLVMAttrKindNoCapture,             ///< Function creates no aliases of pointer
-        LLVMAttrKindNoDuplicate,           ///< Call cannot be duplicated
-        LLVMAttrKindNoImplicitFloat,       ///< Disable implicit floating point insts
-        LLVMAttrKindNoInline,              ///< inline=never
-        LLVMAttrKindNonLazyBind,           ///< Function is called early and/or
-                                           ///< often, so lazy binding isn't worthwhile
-        LLVMAttrKindNonNull,               ///< Pointer is known to be not null
-        LLVMAttrKindDereferenceable,       ///< Pointer is known to be dereferenceable
-        LLVMAttrKindDereferenceableOrNull, ///< Pointer is either null or dereferenceable
-        LLVMAttrKindNoRedZone,             ///< Disable redzone
-        LLVMAttrKindNoReturn,              ///< Mark the function as not returning
-        LLVMAttrKindNoUnwind,              ///< Function doesn't unwind stack
-        LLVMAttrKindOptimizeForSize,       ///< opt_size
-        LLVMAttrKindOptimizeNone,          ///< Function must not be optimized.
-        LLVMAttrKindReadNone,              ///< Function does not access memory
-        LLVMAttrKindReadOnly,              ///< Function only reads from memory
-        LLVMAttrKindArgMemOnly,            ///< Funciton can access memory only using pointers
-                                           ///< based on its arguments.
-        LLVMAttrKindReturned,              ///< Return value is always equal to this argument
-        LLVMAttrKindReturnsTwice,          ///< Function can return twice
-        LLVMAttrKindSExt,                  ///< Sign extended before/after call
-        LLVMAttrKindStackAlignment,        ///< Alignment of stack for function (3 bits)
-                                           ///< stored as log2 of alignment with +1 bias 0
-                                           ///< means unaligned (different from
-                                           ///< alignstack=(1))
-        LLVMAttrKindStackProtect,          ///< Stack protection.
-        LLVMAttrKindStackProtectReq,       ///< Stack protection required.
-        LLVMAttrKindStackProtectStrong,    ///< Strong Stack protection.
-        LLVMAttrKindSafeStack,             ///< Safe Stack protection.
-        LLVMAttrKindStructRet,             ///< Hidden pointer to structure to return
-        LLVMAttrKindSanitizeAddress,       ///< AddressSanitizer is on.
-        LLVMAttrKindSanitizeThread,        ///< ThreadSanitizer is on.
-        LLVMAttrKindSanitizeMemory,        ///< MemorySanitizer is on.
-        LLVMAttrKindUWTable,               ///< Function must be in a unwind table
-        LLVMAttrKindZExt,                  ///< Zero extended before/after call
-
-        EndAttrKinds           ///< Sentinal value useful for loops
+        LLVMAttrKindNone,
+        LLVMAttrKindAlignment,
+        LLVMAttrKindAllocSize,
+        LLVMAttrKindAlwaysInline,
+        LLVMAttrKindArgMemOnly,
+        LLVMAttrKindBuiltin,
+        LLVMAttrKindByVal,
+        LLVMAttrKindCold,
+        LLVMAttrKindConvergent,
+        LLVMAttrKindDereferenceable,
+        LLVMAttrKindDereferenceableOrNull,
+        LLVMAttrKindInAlloca,
+        LLVMAttrKindInReg,
+        LLVMAttrKindInaccessibleMemOnly,
+        LLVMAttrKindInaccessibleMemOrArgMemOnly,
+        LLVMAttrKindInlineHint,
+        LLVMAttrKindJumpTable,
+        LLVMAttrKindMinSize,
+        LLVMAttrKindNaked,
+        LLVMAttrKindNest,
+        LLVMAttrKindNoAlias,
+        LLVMAttrKindNoBuiltin,
+        LLVMAttrKindNoCapture,
+        LLVMAttrKindNoDuplicate,
+        LLVMAttrKindNoImplicitFloat,
+        LLVMAttrKindNoInline,
+        LLVMAttrKindNoRecurse,
+        LLVMAttrKindNoRedZone,
+        LLVMAttrKindNoReturn,
+        LLVMAttrKindNoUnwind,
+        LLVMAttrKindNonLazyBind,
+        LLVMAttrKindNonNull,
+        LLVMAttrKindOptimizeForSize,
+        LLVMAttrKindOptimizeNone,
+        LLVMAttrKindReadNone,
+        LLVMAttrKindReadOnly,
+        LLVMAttrKindReturned,
+        LLVMAttrKindReturnsTwice,
+        LLVMAttrKindSExt,
+        LLVMAttrKindSafeStack,
+        LLVMAttrKindSanitizeAddress,
+        LLVMAttrKindSanitizeMemory,
+        LLVMAttrKindSanitizeThread,
+        LLVMAttrKindStackAlignment,
+        LLVMAttrKindStackProtect,
+        LLVMAttrKindStackProtectReq,
+        LLVMAttrKindStackProtectStrong,
+        LLVMAttrKindStructRet,
+        LLVMAttrKindSwiftError,
+        LLVMAttrKindSwiftSelf,
+        LLVMAttrKindUWTable,
+        LLVMAttrKindZExt,
+        EndAttrKinds           /// Sentinal value useful for loops
     };
 
     // These functions replace the LLVM*FunctionAttr functions in the stable C API
@@ -113,7 +112,6 @@ extern "C" {
     * @{
     */
     typedef uintptr_t LLVMAttributeSet;
-    typedef uintptr_t LLVMAttributeValue;
     typedef struct LLVMOpaqueAttributeBuilder* LLVMAttributeBuilderRef;
 
     /** @name AttributeSet 
@@ -140,8 +138,8 @@ extern "C" {
     LLVMBool LLVMAttributeSetHasAttributes( LLVMAttributeSet attributeSet, unsigned index );
     LLVMBool LLVMAttributeSetHasAttributeSomewhere( LLVMAttributeSet attributeSet, LLVMAttrKind kind );
 
-    LLVMAttributeValue LLVMAttributeSetGetAttributeByKind( LLVMAttributeSet attributeSet, unsigned index, LLVMAttrKind kind );
-    LLVMAttributeValue LLVMAttributeSetGetAttributeByName( LLVMAttributeSet attributeSet, unsigned index, char const* name );
+    LLVMAttributeRef LLVMAttributeSetGetAttributeByKind( LLVMAttributeSet attributeSet, unsigned index, LLVMAttrKind kind );
+    LLVMAttributeRef LLVMAttributeSetGetAttributeByName( LLVMAttributeSet attributeSet, unsigned index, char const* name );
     char const* LLVMAttributeSetToString( LLVMAttributeSet attributeSet, unsigned index, LLVMBool inGroup );
 
     unsigned LLVMAttributeSetGetNumSlots( LLVMAttributeSet attributeSet );
@@ -154,7 +152,7 @@ extern "C" {
     void LLVMSetCallSiteAttributeSet( LLVMValueRef /*Instruction*/ instruction, LLVMAttributeSet attributeSet );
 
     uintptr_t LLVMAttributeSetGetIteratorStartToken( LLVMAttributeSet attributeSet, unsigned slot );
-    LLVMAttributeValue LLVMAttributeSetIteratorGetNext( LLVMAttributeSet attributeSet, unsigned slot, uintptr_t* pToken );
+    LLVMAttributeRef LLVMAttributeSetIteratorGetNext( LLVMAttributeSet attributeSet, unsigned slot, uintptr_t* pToken );
 
     /**
     * @}
@@ -163,19 +161,19 @@ extern "C" {
     /** @name Attribute
     * @{
     */
-    LLVMBool LLVMIsEnumAttribute( LLVMAttributeValue attribute );
-    LLVMBool LLVMIsIntAttribute( LLVMAttributeValue attribute );
-    LLVMBool LLVMIsStringAttribute( LLVMAttributeValue attribute );
-    LLVMBool LLVMHasAttributeKind( LLVMAttributeValue attribute, LLVMAttrKind kind );
-    LLVMBool LLVMHasAttributeString( LLVMAttributeValue attribute, char const* name );
-    LLVMAttrKind LLVMGetAttributeKind( LLVMAttributeValue attribute );
-    uint64_t LLVMGetAttributeValue( LLVMAttributeValue attribute );
-    char const* LLVMGetAttributeName( LLVMAttributeValue attribute );
-    char const* LLVMGetAttributeStringValue( LLVMAttributeValue attribute );
-    char const* LLVMAttributeToString( LLVMAttributeValue attribute );
+    LLVMBool LLVMIsEnumAttribute( LLVMAttributeRef attribute );
+    LLVMBool LLVMIsIntAttribute( LLVMAttributeRef attribute );
+    LLVMBool LLVMIsStringAttribute( LLVMAttributeRef attribute );
+    LLVMBool LLVMHasAttributeKind( LLVMAttributeRef attribute, LLVMAttrKind kind );
+    LLVMBool LLVMHasAttributeString( LLVMAttributeRef attribute, char const* name );
+    LLVMAttrKind LLVMGetAttributeKind( LLVMAttributeRef attribute );
+    uint64_t LLVMGetAttributeValue( LLVMAttributeRef attribute );
+    char const* LLVMGetAttributeName( LLVMAttributeRef attribute );
+    char const* LLVMGetAttributeStringValue( LLVMAttributeRef attribute );
+    char const* LLVMAttributeToString( LLVMAttributeRef attribute );
 
-    LLVMAttributeValue LLVMCreateAttribute( LLVMContextRef ctx, LLVMAttrKind kind, uint64_t value );
-    LLVMAttributeValue LVMCreateTargetDependentAttribute( LLVMContextRef ctx, char const* name, char const* value );
+    LLVMAttributeRef LLVMCreateAttribute( LLVMContextRef ctx, LLVMAttrKind kind, uint64_t value );
+    LLVMAttributeRef LVMCreateTargetDependentAttribute( LLVMContextRef ctx, char const* name, char const* value );
     /**
     * @}
     */
@@ -184,14 +182,14 @@ extern "C" {
     * @{
     */
     LLVMAttributeBuilderRef LLVMCreateAttributeBuilder( );
-    LLVMAttributeBuilderRef LLVMCreateAttributeBuilder2( LLVMAttributeValue value );
+    LLVMAttributeBuilderRef LLVMCreateAttributeBuilder2( LLVMAttributeRef value );
     LLVMAttributeBuilderRef LLVMCreateAttributeBuilder3( LLVMAttributeSet attributeSet, unsigned index );
     void LLVMAttributeBuilderDispose( LLVMAttributeBuilderRef bldr );
 
     void LLVMAttributeBuilderClear( LLVMAttributeBuilderRef bldr );
 
     void LLVMAttributeBuilderAddEnum( LLVMAttributeBuilderRef bldr, LLVMAttrKind kind );
-    void LLVMAttributeBuilderAddAttribute( LLVMAttributeBuilderRef bldr, LLVMAttributeValue value );
+    void LLVMAttributeBuilderAddAttribute( LLVMAttributeBuilderRef bldr, LLVMAttributeRef value );
     void LLVMAttributeBuilderAddStringAttribute( LLVMAttributeBuilderRef bldr, char const* name, char const* value );
     void LLVMAttributeBuilderRemoveEnum( LLVMAttributeBuilderRef bldr, LLVMAttrKind kind );
     void LLVMAttributeBuilderRemoveAttributes( LLVMAttributeBuilderRef bldr, LLVMAttributeSet attributeSet, unsigned index );

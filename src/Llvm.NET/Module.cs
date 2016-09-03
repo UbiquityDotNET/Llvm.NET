@@ -280,19 +280,20 @@ namespace Llvm.NET
             }
         }
 
-        /// <summary>Link another bit-code module into the current module</summary>
-        /// <param name="otherModule">Module to merge into this one</param>
-        /// <param name="linkMode">Linker mode to use when merging</param>
-        public void Link( NativeModule otherModule, LinkerMode linkMode )
+        public void Link( NativeModule otherModule )
         {
             if( otherModule == null )
                 throw new ArgumentNullException( nameof( otherModule ) );
 
-            IntPtr errMsgPtr;
-            if( 0 != NativeMethods.LinkModules( ModuleHandle, otherModule.ModuleHandle, ( LLVMLinkerMode )linkMode, out errMsgPtr ).Value )
+            // TODO: need to hook up context error diagnostic reporting mechanism
+            // as underlying LLVM functionality now uses that instead of providing
+            // error messages as an out parameter.
+
+            //IntPtr errMsgPtr;
+            if( !NativeMethods.LinkModules( ModuleHandle, otherModule.ModuleHandle ).Succeeded )
             {
-                var errMsg = NativeMethods.MarshalMsg( errMsgPtr );
-                throw new InternalCodeGeneratorException( errMsg );
+                //var errMsg = NativeMethods.MarshalMsg( errMsgPtr );
+                throw new InternalCodeGeneratorException( "Module link error" );
             }
         }
 

@@ -18,17 +18,12 @@ namespace Llvm.NET
         /// <summary>CPU specific features for this machine</summary>
         public string Features => NativeMethods.MarshalMsg( NativeMethods.GetTargetMachineFeatureString( TargetMachineHandle ) );
 
-        /// <summary>Layout information for this machine</summary>
-        /// <remarks>
-        /// <note type="warning">This property is currently planned for removal in LLVM v4.0.
-        /// Though it is unclear what the replacement will be as there is no other way to get
-        /// the layout information if it isn't already known.</note>
-        /// </remarks>
+        /// <summary>Gets Layout information for this machine</summary>
         public DataLayout TargetData
         {
             get
             {
-                var handle = NativeMethods.GetTargetMachineData( TargetMachineHandle );
+                var handle = NativeMethods.CreateTargetDataLayout( TargetMachineHandle );
                 if( handle.Pointer == IntPtr.Zero )
                     return null;
 

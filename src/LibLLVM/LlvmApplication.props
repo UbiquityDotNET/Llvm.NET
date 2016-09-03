@@ -8,12 +8,12 @@
               Therefore, these are all done in an unlabeled group that precedes the UserMacros group visible in the IDE
         -->
     <LlvmVersionMajor Condition="'$(LlvmVersionMajor)'==''">3</LlvmVersionMajor>
-    <llvmVersionMinor Condition="'$(llvmVersionMinor)'==''">8</llvmVersionMinor>
-    <LlvmVersionBuild Condition="'$(LlvmVersionBuild)'==''">1</LlvmVersionBuild>
+    <llvmVersionMinor Condition="'$(llvmVersionMinor)'==''">9</llvmVersionMinor>
+    <LlvmVersionBuild Condition="'$(LlvmVersionBuild)'==''">0</LlvmVersionBuild>
     <LLVM_VERSION Condition="'$(LLVM_VERSION)'==''">$(LlvmVersionMajor).$(llvmVersionMinor).$(LlvmVersionBuild)</LLVM_VERSION>
     <!-- Source ROOT Dir contains the full source of LLVM. To support both developer and automated build service
-             scenarios try user registry, then HKLM-64 and HKLM-32 in that order
-        -->
+         scenarios try user registry, then HKLM-64 and HKLM-32 in that order
+    -->
     <LLVM_SRCROOT_DIR Condition="'$(LLVM_SRCROOT_DIR)'==''">$([MSBuild]::GetRegistryValue(`HKEY_CURRENT_USER\Software\LLVM\$(LLVM_VERSION)\`, `SrcRoot`))</LLVM_SRCROOT_DIR>
     <LLVM_SRCROOT_DIR Condition="'$(LLVM_SRCROOT_DIR)'==''">$([MSBuild]::GetRegistryValueFromView(`HKEY_LOCAL_MACHINE\Software\LLVM\$(LLVM_VERSION)\`, `SrcRoot`, null, RegistryView.Registry64, RegistryView.Registry32))</LLVM_SRCROOT_DIR>
     <LLVM_SRCROOT_DIR Condition="'$(LLVM_SRCROOT_DIR)'!='' AND !HasTrailingSlash('$(LLVM_SRCROOT_DIR)')">$(LLVM_SRCROOT_DIR)\</LLVM_SRCROOT_DIR>
@@ -40,9 +40,9 @@
     <LLVM_INCLUDE>$(LLVM_SRCROOT_DIR)Include</LLVM_INCLUDE>
     <!-- Build is assumed to contain the following sub directories -->
     <!-- CMake doesn't support generating unified solutions/projects for multiple platforms
-             Therefore, the Build folder should contain a sub folder for each targeted platform
-             where CMAKe has generated all the project and solution files for that platform.
-        -->
+         Therefore, the Build folder should contain a sub folder for each targeted platform
+         where CMAKe has generated all the project and solution files for that platform.
+    -->
     <LLVM_PLATFORM_DIR>$(LLVM_BUILD_DIR)$(Platform)\</LLVM_PLATFORM_DIR>
     <!-- Config Directory contains the output of the build for a given configuration (e.g. Debug, Release, RelWithDebInfo) -->
     <LLVM_CONFIG_DIR>$(LLVM_PLATFORM_DIR)$(Configuration)\</LLVM_CONFIG_DIR>
@@ -63,7 +63,7 @@
     <ClCompile>
       <AdditionalOptions>$(AdditionalOptions) /Zc:sizedDealloc-</AdditionalOptions>
       <AdditionalIncludeDirectories>$(LLVM_CONFIG_INCLUDE);$(LLVM_INCLUDE);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <DisableSpecificWarnings>4141;4267;4244;4800;4291;4996;4624</DisableSpecificWarnings>
+      <DisableSpecificWarnings>4141;4146;4267;4244;4800;4291;4996;4624</DisableSpecificWarnings>
     </ClCompile>
     <Link>
       <AdditionalDependencies>$(AllLlvmStaticLibs);$(AdditionalDependencies)</AdditionalDependencies>

@@ -56,7 +56,7 @@ namespace Llvm.NET.Values.Tests
                 Assert.IsFalse( value.IsString );
                 Assert.IsNull( value.Name );
                 Assert.IsNull( value.StringValue );
-                Assert.IsFalse( value.IsEnum );
+                Assert.IsTrue( value.IsEnum );
                 Assert.IsTrue( value.Kind.HasValue );
                 Assert.AreEqual( AttributeKind.DereferenceableOrNull, value.Kind.Value );
                 Assert.AreEqual( value.IntegerValue, 1234ul );

@@ -55,35 +55,49 @@ namespace Llvm.NET
 
             return ( T )context.GetNodeFor( handle, StaticFactory );
         }
+
         /// <summary>Enumeration to define debug information metadata nodes</summary>
         private enum MetadataKind : uint
         {
-            MDTuple,
-            DILocation,
-            GenericDINode,
-            DISubrange,
-            DIEnumerator,
-            DIBasicType,
-            DIDerivedType,
-            DICompositeType,
-            DISubroutineType,
-            DIFile,
-            DICompileUnit,
-            DISubprogram,
-            DILexicalBlock,
-            DILexicalBlockFile,
-            DINamespace,
-            DIModule,
-            DITemplateTypeParameter,
-            DITemplateValueParameter,
-            DIGlobalVariable,
-            DILocalVariable,
-            DIExpression,
-            DIObjCProperty,
-            DIImportedEntity,
-            ConstantAsMetadata,
-            LocalAsMetadata,
-            MDString
+            MDString,                     // HANDLE_METADATA_LEAF(MDString)
+            //ValueAsMetadata,            // HANDLE_METADATA_BRANCH(ValueAsMetadata)
+            ConstantAsMetadata,           // HANDLE_METADATA_LEAF(ConstantAsMetadata)
+            LocalAsMetadata,              // HANDLE_METADATA_LEAF(LocalAsMetadata)
+            DistinctMDOperandPlaceholder, // HANDLE_METADATA_LEAF(DistinctMDOperandPlaceholder)
+            //MDNode,                     // HANDLE_MDNODE_BRANCH(MDNode)
+            MDTuple,                      // HANDLE_MDNODE_LEAF_UNIQUABLE(MDTuple)
+            DILocation,                   // HANDLE_SPECIALIZED_MDNODE_LEAF_UNIQUABLE(DILocation)
+            DIExpression,                 // HANDLE_SPECIALIZED_MDNODE_LEAF_UNIQUABLE(DIExpression)
+            //DINode,                     // HANDLE_SPECIALIZED_MDNODE_BRANCH(DINode)
+            GenericDINode,                // HANDLE_SPECIALIZED_MDNODE_LEAF_UNIQUABLE(GenericDINode)
+            DISubrange,                   // HANDLE_SPECIALIZED_MDNODE_LEAF_UNIQUABLE(DISubrange)
+            DIEnumerator,                 // HANDLE_SPECIALIZED_MDNODE_LEAF_UNIQUABLE(DIEnumerator)
+            //DIScope,                    // HANDLE_SPECIALIZED_MDNODE_BRANCH(DIScope)
+            //DIType,                     // HANDLE_SPECIALIZED_MDNODE_BRANCH(DIType)
+            DIBasicType,                  // HANDLE_SPECIALIZED_MDNODE_LEAF_UNIQUABLE(DIBasicType)
+            DIDerivedType,                // HANDLE_SPECIALIZED_MDNODE_LEAF_UNIQUABLE(DIDerivedType)
+            DICompositeType,              // HANDLE_SPECIALIZED_MDNODE_LEAF_UNIQUABLE(DICompositeType)
+            DISubroutineType,             // HANDLE_SPECIALIZED_MDNODE_LEAF_UNIQUABLE(DISubroutineType)
+            DIFile,                       // HANDLE_SPECIALIZED_MDNODE_LEAF_UNIQUABLE(DIFile)
+            DICompileUnit,                // HANDLE_SPECIALIZED_MDNODE_LEAF(DICompileUnit)
+            //DILocalScope,               // HANDLE_SPECIALIZED_MDNODE_BRANCH(DILocalScope)
+            DISubprogram,                 // HANDLE_SPECIALIZED_MDNODE_LEAF_UNIQUABLE(DISubprogram)
+            //DILexicalBlockBase,         // HANDLE_SPECIALIZED_MDNODE_BRANCH(DILexicalBlockBase)
+            DILexicalBlock,               // HANDLE_SPECIALIZED_MDNODE_LEAF_UNIQUABLE(DILexicalBlock)
+            DILexicalBlockFile,           // HANDLE_SPECIALIZED_MDNODE_LEAF_UNIQUABLE(DILexicalBlockFile)
+            DINamespace,                  // HANDLE_SPECIALIZED_MDNODE_LEAF_UNIQUABLE(DINamespace)
+            DIModule,                     // HANDLE_SPECIALIZED_MDNODE_LEAF_UNIQUABLE(DIModule)
+            //DITemplateParameter,        // HANDLE_SPECIALIZED_MDNODE_BRANCH(DITemplateParameter)
+            DITemplateTypeParameter,      // HANDLE_SPECIALIZED_MDNODE_LEAF_UNIQUABLE(DITemplateTypeParameter)
+            DITemplateValueParameter,     // HANDLE_SPECIALIZED_MDNODE_LEAF_UNIQUABLE(DITemplateValueParameter)
+            //DIVariable,                 // HANDLE_SPECIALIZED_MDNODE_BRANCH(DIVariable)
+            DIGlobalVariable,             // HANDLE_SPECIALIZED_MDNODE_LEAF_UNIQUABLE(DIGlobalVariable)
+            DILocalVariable,              // HANDLE_SPECIALIZED_MDNODE_LEAF_UNIQUABLE(DILocalVariable)
+            DIObjCProperty,               // HANDLE_SPECIALIZED_MDNODE_LEAF_UNIQUABLE(DIObjCProperty)
+            DIImportedEntity,             // HANDLE_SPECIALIZED_MDNODE_LEAF_UNIQUABLE(DIImportedEntity)
+            //DIMacroNode,                // HANDLE_SPECIALIZED_MDNODE_BRANCH(DIMacroNode)
+            DIMacro,                      // HANDLE_SPECIALIZED_MDNODE_LEAF_UNIQUABLE(DIMacro)
+            DIMacroFile,                  // HANDLE_SPECIALIZED_MDNODE_LEAF_UNIQUABLE(DIMacroFile)
         }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage( "Microsoft.Maintainability", "CA1506:AvoidExcessiveClassCoupling", Justification = "Static factory method" )]

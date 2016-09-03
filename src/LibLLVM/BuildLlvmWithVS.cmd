@@ -14,7 +14,7 @@ set LLVM_ROOT=%~d0%~p0
 set GENERATE=1
 set BUILD=1
 set REGISTER=1
-set LlvmVersion=3.8.1
+set LlvmVersion=3.9.0
 
 @REM - Allow overriding default version and disabling any of the stages via parameters
 :arg_loop
@@ -90,7 +90,7 @@ goto :exit
 @echo     -g- disables the cmake project generation phase
 @echo     -b- disables the code build phase 
 @echo     -r- disables the registry update
-@echo     -v ^<LlvmVersion^> sets the LLVM version number used for the registry entry (Default is 3.8.1)
+@echo     -v ^<LlvmVersion^> sets the LLVM version number used for the registry entry (Default is 3.9.0)
 @echo.
 @echo The registry entry is used by the LlvmApplication.props Propertysheet for VC projects to locate the various
 @echo LLVM headers and libs. Alternatively, if LLVM_SRCROOT_DIR is provided either as an environment variable

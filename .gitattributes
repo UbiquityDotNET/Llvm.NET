@@ -23,8 +23,8 @@
 # these files as binary and thus will always conflict and require user
 # intervention with every merge. To do so, just uncomment the entries below
 ###############################################################################
-*.sln text eol=crlf merge=binary
-*.*proj text eol=crlf merge=binary
+*.sln text merge=binary
+*.*proj text merge=binary
 
 ###############################################################################
 # behavior for image files
