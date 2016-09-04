@@ -119,9 +119,9 @@ goto :exit
     cmake --build build\%1. --config Release 
     if %ERRORLEVEL% GTR 0 exit /B %ERRORLEVEL%
 
-    @echo __--== Building Checked configuration For %1 ==--__
-    cmake --build build\%1 --config RelWithDebInfo 
-    if %ERRORLEVEL% GTR 0 exit /B %ERRORLEVEL%
+@REM    @echo __--== Building Checked configuration For %1 ==--__
+@REM    cmake --build build\%1 --config RelWithDebInfo 
+@REM    if %ERRORLEVEL% GTR 0 exit /B %ERRORLEVEL%
 
     @echo __--== Building Debug configuration For %1 ==--__
     cmake --build build\%1 --config Debug 
