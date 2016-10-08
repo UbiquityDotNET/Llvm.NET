@@ -152,7 +152,7 @@ namespace Llvm.NET.Instructions
             if( retType.IsVoid )
                 throw new ArgumentException( "Return instruction for void function must not have a value", nameof( value ) );
 
-            if( retType == value.NativeType )
+            if( retType != value.NativeType )
                 throw new ArgumentException( "Value for return must match the function signature's return type", nameof( value ) );
 
             var handle = NativeMethods.BuildRet( BuilderHandle, value.ValueHandle );
