@@ -219,22 +219,30 @@ namespace Llvm.NET
 
             var nativeArgTypes = new List<ITypeRef>( );
             var debugArgTypes = new List<DIType>( );
-            var msg = new StringBuilder( "One or more parameter types do not include debug information:\n" );
-            var missingDebugInfo = false;
+            var msg = new StringBuilder( "One or more parameter types ar not valid:\n" );
+            var hasParamErrors = false;
 
             foreach( var indexedPair in argTypes.Select( ( t, i ) => new { Type = t, Index = i } ) )
             {
-                nativeArgTypes.Add( indexedPair.Type.NativeType );
-                debugArgTypes.Add( indexedPair.Type.DIType );
-                if( indexedPair.Type.HasDebugInfo( ) )
-                    continue;
+                if( indexedPair.Type == null )
+                {
+                    msg.AppendFormat( "\tArgument {0} is null", indexedPair.Index );
+                    hasParamErrors = true;
+                }
+                else
+                {
+                    nativeArgTypes.Add( indexedPair.Type.NativeType );
+                    debugArgTypes.Add( indexedPair.Type.DIType );
+                    if( indexedPair.Type.HasDebugInfo( ) )
+                        continue;
 
-                msg.AppendFormat( "\tArgument {0} does not contain debug type information", indexedPair.Index );
-                missingDebugInfo = true;
+                    msg.AppendFormat( "\tArgument {0} does not contain debug type information", indexedPair.Index );
+                    hasParamErrors = true;
+                }
             }
 
-            // if any parameters don't have a valid DIType yet, then provide a hopefully helpful message indicating which one(s)
-            if( missingDebugInfo )
+            // if any parameters don't have errors, then provide a hopefully helpful message indicating which one(s)
+            if( hasParamErrors )
                 throw new ArgumentException( msg.ToString( ), nameof( argTypes ) );
 
             var llvmType = GetFunctionType( retType.NativeType, nativeArgTypes, isVarArg );

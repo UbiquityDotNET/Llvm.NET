@@ -34,6 +34,14 @@ namespace Llvm.NET.Instructions
         /// <summary>Gets the context this builder is creating instructions for</summary>
         public Context Context { get; }
 
+        public BasicBlock InsertBlock
+        {
+            get
+            {
+                return BasicBlock.FromHandle( NativeMethods.GetInsertBlock( BuilderHandle ) );
+            } 
+        }
+
         /// <summary>Positions the builder at the end of a given <see cref="BasicBlock"/></summary>
         /// <param name="basicBlock"></param>
         public void PositionAtEnd( BasicBlock basicBlock )
@@ -123,12 +131,25 @@ namespace Llvm.NET.Instructions
             return Value.FromHandle<Alloca>( instHandle );
         }
 
-        public ReturnInstruction Return( ) => Value.FromHandle<ReturnInstruction>( NativeMethods.BuildRetVoid( BuilderHandle ) );
+        public ReturnInstruction Return( )
+        {
+            if( !InsertBlock.ContainingFunction.ReturnType.IsVoid )
+                throw new ArgumentException( "Return instruction for non-void function must have a value" );
+
+            return Value.FromHandle<ReturnInstruction>( NativeMethods.BuildRetVoid( BuilderHandle ) );
+        }
 
         public ReturnInstruction Return( Value value )
         {
             if( value == null )
                 throw new ArgumentNullException( nameof( value ) );
+
+            var retType = InsertBlock.ContainingFunction.ReturnType;
+            if( retType.IsVoid )
+                throw new ArgumentException( "Return instruction for void function must not have a value", nameof( value ) );
+
+            if( retType == value.NativeType )
+                throw new ArgumentException( "Value for return must match the function signature's return type", nameof( value ) );
 
             var handle = NativeMethods.BuildRet( BuilderHandle, value.ValueHandle );
             return Value.FromHandle<ReturnInstruction>( handle );
@@ -1158,6 +1179,9 @@ namespace Llvm.NET.Instructions
                                 , Value rhs
                                 )
         {
+            if( lhs.NativeType != rhs.NativeType )
+                throw new ArgumentException( "Types of binary operators must be identical" );
+
             var valueRef = opFactory( BuilderHandle, lhs.ValueHandle, rhs.ValueHandle, string.Empty );
             return Value.FromHandle( valueRef );
         }
