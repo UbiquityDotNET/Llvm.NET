@@ -38,6 +38,10 @@ namespace Llvm.NET.Instructions
         {
             get
             {
+                var handle = NativeMethods.GetInsertBlock( BuilderHandle );
+                if( handle.Pointer.IsNull( ) )
+                    return null;
+
                 return BasicBlock.FromHandle( NativeMethods.GetInsertBlock( BuilderHandle ) );
             } 
         }
