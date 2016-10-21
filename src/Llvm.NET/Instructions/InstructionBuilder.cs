@@ -329,6 +329,9 @@ namespace Llvm.NET.Instructions
             if( !elementStructType.IsSized && index > 0 )
                 throw new ArgumentException( "Cannot get element of unsized/opaque structures" );
 
+            if( index >= elementStructType.Members.Count )
+                throw new ArgumentException( "Index exceeds number of members in the type", nameof( index ) );
+
             var handle = NativeMethods.BuildStructGEP( BuilderHandle, pointer.ValueHandle, index, string.Empty );
             return Value.FromHandle( handle );
         }
