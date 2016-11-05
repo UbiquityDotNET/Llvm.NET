@@ -564,6 +564,13 @@ namespace Llvm.NET
             return AddFunction( name, signature );
         }
 
+        /// <summary>Clones the current module and returns the clone</summary>
+        /// <returns>cloned module</returns>
+        public NativeModule Clone( )
+        {
+            return new NativeModule( NativeMethods.CloneModule( ModuleHandle ) );
+        }
+
         /// <inheritdoc/>
         bool IExtensiblePropertyContainer.TryGetExtendedPropertyValue<T>( string id, out T value )
         {
