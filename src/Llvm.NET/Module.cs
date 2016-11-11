@@ -176,6 +176,15 @@ namespace Llvm.NET
             }
         }
 
+        public NamedMDNode ModuleFlags
+        {
+            get
+            {
+                var handle = NativeMethods.ModuleGetModuleFlagsMetadata( ModuleHandle );
+                return new NamedMDNode( handle );
+            }
+        }
+
         /// <summary><see cref="DebugInfoBuilder"/> to create debug information for this module</summary>
         public DebugInfoBuilder DIBuilder => DIBuilder_.Value;
 
