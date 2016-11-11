@@ -17,6 +17,15 @@ extern "C"
         unwrap( M )->addModuleFlag( (Module::ModFlagBehavior)behavior, name, value );
     }
 
+    void LLVMAddModuleFlagMetadata( LLVMModuleRef M
+                                   , LLVMModFlagBehavior behavior
+                                   , const char *name
+                                   , LLVMMetadataRef metadataRef
+                                   )
+    {
+        unwrap( M )->addModuleFlag( ( Module::ModFlagBehavior )behavior, name, unwrap( metadataRef ) );
+    }
+
     LLVMValueRef LLVMGetOrInsertFunction( LLVMModuleRef module, const char* name, LLVMTypeRef functionType )
     {
         auto pModule = unwrap( module );

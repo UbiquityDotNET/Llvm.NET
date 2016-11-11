@@ -28,9 +28,6 @@
     <ClCompile Include="DIBuilderBindings.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="InstrumentationBindings.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="IRBindings.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -49,12 +46,12 @@
     <ClCompile Include="AttributeBindings.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="PassManagerBindings.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="DIBuilderBindings.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="InstrumentationBindings.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="IRBindings.h">
@@ -79,6 +76,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="resource.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="PassManagerBindings.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

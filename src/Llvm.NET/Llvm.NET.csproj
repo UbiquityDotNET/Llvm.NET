@@ -175,7 +175,7 @@
     <Compile Include="Types\FunctionType.cs" />
     <Compile Include="Values\GlobalAlias.cs" />
     <Compile Include="Values\GlobalObject.cs" />
-    <Compile Include="GlobalPassRegistry.cs" />
+    <Compile Include="PassRegistry.cs" />
     <Compile Include="Values\GlobalValue.cs" />
     <Compile Include="Values\GlobalVariable.cs" />
     <Compile Include="IExtensiblePropertyContainer.cs" />
@@ -258,8 +258,8 @@
     </CodeAnalysisDictionary>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
-    <Import Project="$(SolutionBuildExtensionsDir)EnlistmentBuildVersion.targets" />
-    <PropertyGroup>
+  <Import Project="$(SolutionBuildExtensionsDir)EnlistmentBuildVersion.targets" />
+  <PropertyGroup>
     <PostBuildEvent>
     </PostBuildEvent>
   </PropertyGroup>

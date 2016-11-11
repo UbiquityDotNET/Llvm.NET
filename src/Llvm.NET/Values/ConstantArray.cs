@@ -25,7 +25,7 @@ namespace Llvm.NET.Values
             return From( elementType, ( IList<Constant> )values );
         }
 
-        /// <summary>Create a constant arra of values of a given type with a fixed size, zero filling any un-specified values</summary>
+        /// <summary>Create a constant array of values of a given type with a fixed size, zero filling any un-specified values</summary>
         /// <param name="elementType">Type of elements in the array</param>
         /// <param name="len">Length of the array</param>
         /// <param name="values">Values to initialize the array</param>

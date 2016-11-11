@@ -374,10 +374,10 @@ namespace Llvm.NET
     /// <Implementation>
     /// For details on what the values should be see attributes.def in 
     /// the LLVM source. This was added in v3.8.0 along with a change in
-    /// the numerical values.
+    /// the numerical values. (in V3.9.0 it is Attributes.inc)
     /// </Implementation>
     public enum AttributeKind
-    {  // TODO: update for attributes added in 3.9.0...
+    {  
         None                        = LLVMAttrKind.None,
         Alignment                   = LLVMAttrKind.Alignment,
         AlwaysInline                = LLVMAttrKind.AlwaysInline,
@@ -425,6 +425,8 @@ namespace Llvm.NET
         StackProtectReq             = LLVMAttrKind.StackProtectReq,
         StackProtectStrong          = LLVMAttrKind.StackProtectStrong,
         StructRet                   = LLVMAttrKind.StructRet,
+        SwiftError                  = LLVMAttrKind.SwiftError,
+        SwiftSelf                   = LLVMAttrKind.SwiftSelf,
         UWTable                     = LLVMAttrKind.UWTable,
         ZExt                        = LLVMAttrKind.ZExt,
         EndAttrKinds           // Sentinel value useful for loops

@@ -6,6 +6,7 @@ using Llvm.NET.DebugInfo;
 using Llvm.NET.Native;
 using Llvm.NET.Types;
 using Llvm.NET.Values;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Llvm.NET
 {
@@ -334,7 +335,8 @@ namespace Llvm.NET
         /// the same name exists with a different signature an exception is thrown as LLVM does
         /// not perform any function overloading.
         /// </remarks>
-        [System.Diagnostics.CodeAnalysis.SuppressMessage( "Microsoft.Design", "CA1011:ConsiderPassingBaseTypesAsParameters", Justification = "Specific type required by interop call" )]
+        [SuppressMessage( "Microsoft.Design", "CA1011:ConsiderPassingBaseTypesAsParameters", Justification = "Specific type required by interop call" )]
+        [SuppressMessage( "Language", "CSE0003:Use expression-bodied members", Justification = "Line too long" )]
         public Function AddFunction( string name, IFunctionType signature )
         {
             return Value.FromHandle<Function>( NativeMethods.GetOrInsertFunction( ModuleHandle, name, signature.GetTypeRef( ) ) );
@@ -377,10 +379,7 @@ namespace Llvm.NET
         /// an extremely long time (up to many seconds depending on complexity
         /// of the module) which is bad for the debugger.
         /// </remarks>
-        public string AsString( )
-        {
-            return NativeMethods.MarshalMsg( NativeMethods.PrintModuleToString( ModuleHandle ) );
-        }
+        public string AsString( ) => NativeMethods.MarshalMsg( NativeMethods.PrintModuleToString( ModuleHandle ) );
 
         /// <summary>Add an alias to the module</summary>
         /// <param name="aliasee">Value being aliased</param>
@@ -423,6 +422,7 @@ namespace Llvm.NET
         /// <param name="linkage">Linkage type for this global</param>
         /// <param name="constVal">Initial value for the global</param>
         /// <returns>New global variable</returns>
+        [SuppressMessage( "Language", "CSE0003:Use expression-bodied members", Justification = "Line too long" )]
         public GlobalVariable AddGlobal( ITypeRef typeRef, bool isConst, Linkage linkage, Constant constVal )
         {
             return AddGlobal( typeRef, isConst, linkage, constVal, string.Empty );
@@ -473,6 +473,19 @@ namespace Llvm.NET
         {
             // AddModuleFlag comes from custom LLVMDebug-C API
             NativeMethods.AddModuleFlag( ModuleHandle, ( LLVMModFlagBehavior )behavior, name, value );
+        }
+
+        /// <summary>Adds a module flag to the module</summary>
+        /// <param name="behavior">Module flag behavior for this flag</param>
+        /// <param name="name">Name of the flag</param>
+        /// <param name="value">Value of the flag</param>
+        public void AddModuleFlag( ModuleFlagBehavior behavior, string name, LlvmMetadata value )
+        {
+            if( value == null )
+                throw new ArgumentNullException( nameof( value ) );
+
+            // AddModuleFlag comes from custom LLVMDebug-C API
+            NativeMethods.AddModuleFlag( ModuleHandle, ( LLVMModFlagBehavior )behavior, name, value.MetadataHandle );
         }
 
         /// <summary>Adds operand value to named metadata</summary>
@@ -565,6 +578,7 @@ namespace Llvm.NET
         }
 
         /// <inheritdoc/>
+        [SuppressMessage( "Language", "CSE0003:Use expression-bodied members", Justification = "Line too long" )]
         bool IExtensiblePropertyContainer.TryGetExtendedPropertyValue<T>( string id, out T value )
         {
             return PropertyBag.TryGetExtendedPropertyValue( id, out value );

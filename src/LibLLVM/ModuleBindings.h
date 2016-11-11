@@ -28,6 +28,12 @@ extern "C" {
                             , uint32_t value
                             );
 
+    void LLVMAddModuleFlagMetadata( LLVMModuleRef M
+                                    , LLVMModFlagBehavior behavior
+                                    , const char *name
+                                    , LLVMMetadataRef metadataRef
+                                    );
+
     LLVMValueRef LLVMGetOrInsertFunction( LLVMModuleRef module, const char* name, LLVMTypeRef functionType );
     char const* LLVMGetModuleName( LLVMModuleRef module );
     LLVMValueRef LLVMGetGlobalAlias( LLVMModuleRef module, char const* name );

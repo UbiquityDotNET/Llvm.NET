@@ -332,6 +332,9 @@ namespace Llvm.NET.Native
         [DllImport(libraryPath, EntryPoint = "LLVMAddModuleFlag", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl, BestFitMapping = false, ThrowOnUnmappableChar = true)]
         internal static extern void AddModuleFlag(LLVMModuleRef @M, LLVMModFlagBehavior behavior, [MarshalAs(UnmanagedType.LPStr)] string @name, uint @value);
 
+        [DllImport( libraryPath, EntryPoint = "LLVMAddModuleFlagMetadata", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl, BestFitMapping = false, ThrowOnUnmappableChar = true )]
+        internal static extern void AddModuleFlag( LLVMModuleRef @M, LLVMModFlagBehavior behavior, [MarshalAs( UnmanagedType.LPStr )] string @name, LLVMMetadataRef @value );
+
         [DllImport(libraryPath, EntryPoint = "LLVMModuleGetModuleFlagsMetadata", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl, BestFitMapping = false, ThrowOnUnmappableChar = true)]
         internal static extern LLVMNamedMDNodeRef ModuleGetModuleFlagsMetadata( LLVMModuleRef module );
 
@@ -766,5 +769,11 @@ namespace Llvm.NET.Native
 
         [DllImport(libraryPath, EntryPoint = "LLVMFunctionHasPersonalityFunction", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl, BestFitMapping = false, ThrowOnUnmappableChar = true)]
         internal static extern LLVMBool FunctionHasPersonalityFunction( LLVMValueRef function );
+
+        [DllImport( libraryPath, EntryPoint = "LLVMCreatePassRegistry", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl, BestFitMapping = false, ThrowOnUnmappableChar = true )]
+        internal static extern IntPtr CreatePassRegistry( );
+
+        [DllImport( libraryPath, EntryPoint = "LLVMPassRegistryDispose", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl, BestFitMapping = false, ThrowOnUnmappableChar = true )]
+        internal static extern void PassRegistryDispose( PassRegistryHandle hPassRegistry );
     }
 }

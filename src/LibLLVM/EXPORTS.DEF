@@ -1,6 +1,9 @@
 EXPORTS
 ; extensions to standard LLVM-C API
+LLVMCreatePassRegistry
+LLVMPassRegistryDispose
 LLVMAddModuleFlag
+LLVMAddModuleFlagMetadata
 LLVMModuleGetModuleFlagsMetadata
 LLVMNamedMDNodeGetNumOperands
 LLVMNamedMDNodeGetOperand

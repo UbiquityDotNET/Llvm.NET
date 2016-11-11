@@ -7,6 +7,7 @@ using Llvm.NET.DebugInfo;
 using Llvm.NET.Native;
 using Llvm.NET.Types;
 using Llvm.NET.Values;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Llvm.NET
 {
@@ -120,6 +121,7 @@ namespace Llvm.NET
         /// <param name="returnType">Return type of the function</param>
         /// <param name="args">Optional set of function argument types</param>
         /// <returns>Signature type for the specified signature</returns>
+        [SuppressMessage( "Language", "CSE0003:Use expression-bodied members", Justification = "Line too long" )]
         public IFunctionType GetFunctionType( ITypeRef returnType, params ITypeRef[ ] args )
         {
             return GetFunctionType( returnType, args, false );
@@ -129,6 +131,7 @@ namespace Llvm.NET
         /// <param name="returnType">Return type of the function</param>
         /// <param name="args">Potentially empty set of function argument types</param>
         /// <returns>Signature type for the specified signature</returns>
+        [SuppressMessage( "Language", "CSE0003:Use expression-bodied members", Justification = "Line too long" )]
         public IFunctionType GetFunctionType( ITypeRef returnType, IEnumerable<ITypeRef> args )
         {
             return GetFunctionType( returnType, args, false );
@@ -163,6 +166,7 @@ namespace Llvm.NET
         /// <param name="retType">Return type of the function</param>
         /// <param name="argTypes">Argument types of the function</param>
         /// <returns>Function signature</returns>
+        [SuppressMessage( "Language", "CSE0003:Use expression-bodied members", Justification = "Line too long" )]
         public DebugFunctionType CreateFunctionType( DebugInfoBuilder diBuilder
                                                    , IDebugType<ITypeRef, DIType> retType
                                                    , params IDebugType<ITypeRef, DIType>[ ] argTypes
@@ -176,6 +180,7 @@ namespace Llvm.NET
         /// <param name="retType">Return type of the function</param>
         /// <param name="argTypes">Argument types of the function</param>
         /// <returns>Function signature</returns>
+        [SuppressMessage( "Language", "CSE0003:Use expression-bodied members", Justification = "Line too long" )]
         public DebugFunctionType CreateFunctionType( DebugInfoBuilder diBuilder
                                                    , IDebugType<ITypeRef, DIType> retType
                                                    , IEnumerable<IDebugType<ITypeRef, DIType>> argTypes
@@ -190,6 +195,7 @@ namespace Llvm.NET
         /// <param name="retType">Return type of the function</param>
         /// <param name="argTypes">Argument types of the function</param>
         /// <returns>Function signature</returns>
+        [SuppressMessage( "Language", "CSE0003:Use expression-bodied members", Justification = "Line too long" )]
         public DebugFunctionType CreateFunctionType( DebugInfoBuilder diBuilder
                                                    , bool isVarArg
                                                    , IDebugType<ITypeRef, DIType> retType
@@ -269,6 +275,7 @@ namespace Llvm.NET
         /// </list>
         /// </note>
         /// </remarks>
+        [SuppressMessage( "Language", "CSE0003:Use expression-bodied members", Justification = "Line too long" )]
         public Constant CreateConstantStruct( bool packed, params Constant[ ] values )
         {
             return CreateConstantStruct( packed, ( IEnumerable<Constant> )values );
@@ -316,6 +323,7 @@ namespace Llvm.NET
         /// </list>
         /// </note>
         /// </remarks>
+        [SuppressMessage( "Language", "CSE0003:Use expression-bodied members", Justification = "Line too long" )]
         public Constant CreateNamedConstantStruct( IStructType type, params Constant[ ] values )
         {
             return CreateNamedConstantStruct( type, ( IEnumerable<Constant> )values );
@@ -524,7 +532,6 @@ namespace Llvm.NET
         /// <summary>Creates a new <see cref="ConstantInt"/> with a bit length of 16</summary>
         /// <param name="constValue">Value for the constant</param>
         /// <returns><see cref="ConstantInt"/> representing the value</returns>
-        [System.Diagnostics.CodeAnalysis.SuppressMessage( "Language", "CSE0003:Use expression-bodied members", Justification = "Readability" )]
         public Constant CreateConstant( UInt16 constValue )
         {
             var handle = NativeMethods.ConstInt( Int16Type.GetTypeRef( ), constValue, new LLVMBool( 0 ) );
@@ -561,7 +568,6 @@ namespace Llvm.NET
         /// <summary>Creates a new <see cref="ConstantInt"/> with a bit length of 64</summary>
         /// <param name="constValue">Value for the constant</param>
         /// <returns><see cref="ConstantInt"/> representing the value</returns>
-        [System.Diagnostics.CodeAnalysis.SuppressMessage( "Language", "CSE0003:Use expression-bodied members", Justification = "Readability" )]
         public Constant CreateConstant( UInt64 constValue )
         {
             var handle = NativeMethods.ConstInt( Int64Type.GetTypeRef( ), constValue, new LLVMBool( 0 ) );
@@ -601,6 +607,7 @@ namespace Llvm.NET
         /// <summary>Creates a constant floating point value for a given value</summary>
         /// <param name="constValue">Value to make into a <see cref="ConstantFP"/></param>
         /// <returns>Constant value</returns>
+        [SuppressMessage( "Language", "CSE0003:Use expression-bodied members", Justification = "Line too long" )]
         public ConstantFP CreateConstant( float constValue )
         {
             return Value.FromHandle<ConstantFP>( NativeMethods.ConstReal( FloatType.GetTypeRef( ), constValue ) );
@@ -609,6 +616,7 @@ namespace Llvm.NET
         /// <summary>Creates a constant floating point value for a given value</summary>
         /// <param name="constValue">Value to make into a <see cref="ConstantFP"/></param>
         /// <returns>Constant value</returns>
+        [SuppressMessage( "Language", "CSE0003:Use expression-bodied members", Justification = "Line too long" )]
         public ConstantFP CreateConstant( double constValue )
         {
             return Value.FromHandle<ConstantFP>( NativeMethods.ConstReal( DoubleType.GetTypeRef( ), constValue ) );

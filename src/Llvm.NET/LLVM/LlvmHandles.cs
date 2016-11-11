@@ -55,7 +55,36 @@ namespace Llvm.NET.Native
         [SecurityCritical]
         protected override bool ReleaseHandle( )
         {
-            NativeMethods.AttributeBuilderDispose( this.handle );
+            NativeMethods.AttributeBuilderDispose( handle );
+            return true;
+        }
+    }
+
+    [SecurityCritical]
+    internal class PassRegistryHandle
+        : SafeHandleNullIsInvalid
+    {
+        internal PassRegistryHandle( )
+            : base( true )
+        {
+        }
+
+        internal PassRegistryHandle( IntPtr handle, bool owner )
+            : base( owner )
+        {
+            SetHandle( handle );
+        }
+
+        [System.Diagnostics.CodeAnalysis.SuppressMessage( "Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode", Justification = "Required for marshaling support (used via reflection)" )]
+        internal PassRegistryHandle( IntPtr handle )
+            : this( handle, false )
+        {
+        }
+
+        [SecurityCritical]
+        protected override bool ReleaseHandle( )
+        {
+            NativeMethods.PassRegistryDispose( this );
             return true;
         }
     }

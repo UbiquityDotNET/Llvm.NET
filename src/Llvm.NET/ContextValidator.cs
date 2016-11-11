@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Llvm.NET
 {
@@ -27,6 +28,7 @@ namespace Llvm.NET
         /// <summary>Throw an <see cref="InvalidOperationException"/> if the <see cref="Context"/> is <see langword="null"/> or is disposed</summary>
         /// <param name="context"><see cref="Context"/>to test</param>
         /// <param name="message">Error message for the exception</param>
+        [SuppressMessage( "Language", "CSE0003:Use expression-bodied members", Justification = "Line too long" )]
         public static Context VerifyOperation( this Context context, string message )
         {
             return Verify( context, null, message, ThrowInvalidOperationException );

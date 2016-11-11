@@ -88,7 +88,7 @@ namespace Llvm.NET.Values
                 throw new ArgumentNullException( nameof( valueRef ) );
 
 #if DEBUG
-            var context = Llvm.NET.Context.GetContextFor( valueRef );
+            var context = Context.GetContextFor( valueRef );
             context.AssertValueNotInterned( valueRef );
 #endif
             ValueHandle = valueRef;

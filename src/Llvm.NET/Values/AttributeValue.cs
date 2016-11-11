@@ -22,7 +22,7 @@ namespace Llvm.NET.Values
             if( Index < FunctionAttributeIndex.Parameter0 )
                 return $"{Index}: {Value}";
 
-            return $"Parameter{( int )(Index - FunctionAttributeIndex.Parameter0)}: {Value}";
+            return $"Parameter{Index - FunctionAttributeIndex.Parameter0}: {Value}";
         }
         #region Equality operators
         public bool Equals( IndexedAttributeValue other )
@@ -39,20 +39,11 @@ namespace Llvm.NET.Values
             return Equals( ( IndexedAttributeValue )obj );
         }
 
-        public override int GetHashCode( )
-        {
-            return Value.GetHashCode( ) ^ Index.GetHashCode( );
-        }
-        
-        public static bool operator==( IndexedAttributeValue left, IndexedAttributeValue right )
-        {
-            return left.Equals( right );
-        }
+        public override int GetHashCode( ) => Value.GetHashCode( ) ^ Index.GetHashCode( );
 
-        public static bool operator!=( IndexedAttributeValue left, IndexedAttributeValue right )
-        {
-            return left.Equals( right );
-        }
+        public static bool operator ==( IndexedAttributeValue left, IndexedAttributeValue right ) => left.Equals( right );
+
+        public static bool operator !=( IndexedAttributeValue left, IndexedAttributeValue right ) => left.Equals( right );
         #endregion
     }
 

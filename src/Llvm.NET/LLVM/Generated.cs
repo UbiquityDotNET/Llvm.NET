@@ -159,7 +159,7 @@ namespace Llvm.NET.Native
     {
         public LLVMBool(int value)
         {
-            this.Value = value;
+            Value = value;
         }
 
         internal int Value;
@@ -169,7 +169,7 @@ namespace Llvm.NET.Native
     {
         public LLVMMemoryBufferRef(IntPtr pointer)
         {
-            this.Pointer = pointer;
+            Pointer = pointer;
         }
 
         public IntPtr Pointer;
@@ -179,7 +179,7 @@ namespace Llvm.NET.Native
     {
         public LLVMContextRef(IntPtr pointer)
         {
-            this.Pointer = pointer;
+            Pointer = pointer;
         }
 
         public IntPtr Pointer;
@@ -189,7 +189,7 @@ namespace Llvm.NET.Native
     {
         public LLVMModuleRef(IntPtr pointer)
         {
-            this.Pointer = pointer;
+            Pointer = pointer;
         }
 
         public IntPtr Pointer;
@@ -199,7 +199,7 @@ namespace Llvm.NET.Native
     {
         public LLVMTypeRef(IntPtr pointer)
         {
-            this.Pointer = pointer;
+            Pointer = pointer;
         }
 
         public IntPtr Pointer;
@@ -209,7 +209,7 @@ namespace Llvm.NET.Native
     {
         public LLVMValueRef(IntPtr pointer)
         {
-            this.Pointer = pointer;
+            Pointer = pointer;
         }
 
         public IntPtr Pointer { get; }
@@ -221,7 +221,7 @@ namespace Llvm.NET.Native
     {
         public LLVMBasicBlockRef(IntPtr pointer)
         {
-            this.Pointer = pointer;
+            Pointer = pointer;
         }
 
         public IntPtr Pointer;
@@ -231,7 +231,7 @@ namespace Llvm.NET.Native
     {
         public LLVMBuilderRef(IntPtr pointer)
         {
-            this.Pointer = pointer;
+            Pointer = pointer;
         }
 
         public IntPtr Pointer;
@@ -241,7 +241,7 @@ namespace Llvm.NET.Native
     {
         public LLVMModuleProviderRef(IntPtr pointer)
         {
-            this.Pointer = pointer;
+            Pointer = pointer;
         }
 
         public IntPtr Pointer;
@@ -251,17 +251,7 @@ namespace Llvm.NET.Native
     {
         public LLVMPassManagerRef(IntPtr pointer)
         {
-            this.Pointer = pointer;
-        }
-
-        public IntPtr Pointer;
-    }
-
-    internal struct LLVMPassRegistryRef
-    {
-        public LLVMPassRegistryRef(IntPtr pointer)
-        {
-            this.Pointer = pointer;
+            Pointer = pointer;
         }
 
         public IntPtr Pointer;
@@ -271,7 +261,7 @@ namespace Llvm.NET.Native
     {
         public LLVMUseRef(IntPtr pointer)
         {
-            this.Pointer = pointer;
+            Pointer = pointer;
         }
 
         public IntPtr Pointer;
@@ -281,7 +271,7 @@ namespace Llvm.NET.Native
     {
         public LLVMDiagnosticInfoRef(IntPtr pointer)
         {
-            this.Pointer = pointer;
+            Pointer = pointer;
         }
 
         public IntPtr Pointer;
@@ -300,7 +290,7 @@ namespace Llvm.NET.Native
     {
         public LLVMDisasmContextRef(IntPtr pointer)
         {
-            this.Pointer = pointer;
+            Pointer = pointer;
         }
 
         public IntPtr Pointer;
@@ -316,7 +306,7 @@ namespace Llvm.NET.Native
     {
         public LLVMTargetDataRef(IntPtr pointer)
         {
-            this.Pointer = pointer;
+            Pointer = pointer;
         }
 
         public IntPtr Pointer;
@@ -326,7 +316,7 @@ namespace Llvm.NET.Native
     {
         public LLVMTargetLibraryInfoRef(IntPtr pointer)
         {
-            this.Pointer = pointer;
+            Pointer = pointer;
         }
 
         public IntPtr Pointer;
@@ -336,7 +326,7 @@ namespace Llvm.NET.Native
     {
         public LLVMTargetMachineRef(IntPtr pointer)
         {
-            this.Pointer = pointer;
+            Pointer = pointer;
         }
 
         public IntPtr Pointer;
@@ -346,7 +336,7 @@ namespace Llvm.NET.Native
     {
         public LLVMTargetRef(IntPtr pointer)
         {
-            this.Pointer = pointer;
+            Pointer = pointer;
         }
 
         public IntPtr Pointer;
@@ -356,7 +346,7 @@ namespace Llvm.NET.Native
     {
         public LLVMGenericValueRef(IntPtr pointer)
         {
-            this.Pointer = pointer;
+            Pointer = pointer;
         }
 
         public IntPtr Pointer;
@@ -366,7 +356,7 @@ namespace Llvm.NET.Native
     {
         public LLVMExecutionEngineRef(IntPtr pointer)
         {
-            this.Pointer = pointer;
+            Pointer = pointer;
         }
 
         public IntPtr Pointer;
@@ -376,7 +366,7 @@ namespace Llvm.NET.Native
     {
         public LLVMMCJITMemoryManagerRef(IntPtr pointer)
         {
-            this.Pointer = pointer;
+            Pointer = pointer;
         }
 
         public IntPtr Pointer;
@@ -441,7 +431,7 @@ namespace Llvm.NET.Native
     {
         public LLVMObjectFileRef(IntPtr pointer)
         {
-            this.Pointer = pointer;
+            Pointer = pointer;
         }
 
         public IntPtr Pointer;
@@ -451,7 +441,7 @@ namespace Llvm.NET.Native
     {
         public LLVMSectionIteratorRef(IntPtr pointer)
         {
-            this.Pointer = pointer;
+            Pointer = pointer;
         }
 
         public IntPtr Pointer;
@@ -461,7 +451,7 @@ namespace Llvm.NET.Native
     {
         public LLVMSymbolIteratorRef(IntPtr pointer)
         {
-            this.Pointer = pointer;
+            Pointer = pointer;
         }
 
         public IntPtr Pointer;
@@ -471,7 +461,7 @@ namespace Llvm.NET.Native
     {
         public LLVMRelocationIteratorRef(IntPtr pointer)
         {
-            this.Pointer = pointer;
+            Pointer = pointer;
         }
 
         public IntPtr Pointer;
@@ -481,7 +471,7 @@ namespace Llvm.NET.Native
     {
         public LLVMPassManagerBuilderRef(IntPtr pointer)
         {
-            this.Pointer = pointer;
+            Pointer = pointer;
         }
 
         public IntPtr Pointer;
@@ -876,7 +866,7 @@ namespace Llvm.NET.Native
         internal static extern void ParseCommandLineOptions(int @argc, string[] @argv, [MarshalAs(UnmanagedType.LPStr)] string @Overview);
 
         [DllImport(libraryPath, EntryPoint = "LLVMInitializeCore", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl, BestFitMapping = false, ThrowOnUnmappableChar = true)]
-        internal static extern void InitializeCore(LLVMPassRegistryRef @R);
+        internal static extern void InitializeCore(PassRegistryHandle @R);
 
         [DllImport(libraryPath, EntryPoint = "LLVMShutdown", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl, BestFitMapping = false, ThrowOnUnmappableChar = true)]
         internal static extern void Shutdown();
@@ -2402,7 +2392,7 @@ namespace Llvm.NET.Native
         internal static extern void DisposeMemoryBuffer(LLVMMemoryBufferRef @MemBuf);
 
         [DllImport(libraryPath, EntryPoint = "LLVMGetGlobalPassRegistry", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl, BestFitMapping = false, ThrowOnUnmappableChar = true)]
-        internal static extern LLVMPassRegistryRef GetGlobalPassRegistry();
+        internal static extern PassRegistryHandle GetGlobalPassRegistry();
 
         [DllImport(libraryPath, EntryPoint = "LLVMCreatePassManager", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl, BestFitMapping = false, ThrowOnUnmappableChar = true)]
         internal static extern LLVMPassManagerRef CreatePassManager();
@@ -2951,37 +2941,37 @@ namespace Llvm.NET.Native
         internal static extern void DisposeMCJITMemoryManager(LLVMMCJITMemoryManagerRef @MM);
 
         [DllImport(libraryPath, EntryPoint = "LLVMInitializeTransformUtils", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl, BestFitMapping = false, ThrowOnUnmappableChar = true)]
-        internal static extern void InitializeTransformUtils(LLVMPassRegistryRef @R);
+        internal static extern void InitializeTransformUtils(PassRegistryHandle @R);
 
         [DllImport(libraryPath, EntryPoint = "LLVMInitializeScalarOpts", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl, BestFitMapping = false, ThrowOnUnmappableChar = true)]
-        internal static extern void InitializeScalarOpts(LLVMPassRegistryRef @R);
+        internal static extern void InitializeScalarOpts(PassRegistryHandle @R);
 
         [DllImport(libraryPath, EntryPoint = "LLVMInitializeObjCARCOpts", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl, BestFitMapping = false, ThrowOnUnmappableChar = true)]
-        internal static extern void InitializeObjCARCOpts(LLVMPassRegistryRef @R);
+        internal static extern void InitializeObjCARCOpts(PassRegistryHandle @R);
 
         [DllImport(libraryPath, EntryPoint = "LLVMInitializeVectorization", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl, BestFitMapping = false, ThrowOnUnmappableChar = true)]
-        internal static extern void InitializeVectorization(LLVMPassRegistryRef @R);
+        internal static extern void InitializeVectorization(PassRegistryHandle @R);
 
         [DllImport(libraryPath, EntryPoint = "LLVMInitializeInstCombine", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl, BestFitMapping = false, ThrowOnUnmappableChar = true)]
-        internal static extern void InitializeInstCombine(LLVMPassRegistryRef @R);
+        internal static extern void InitializeInstCombine(PassRegistryHandle @R);
 
         [DllImport(libraryPath, EntryPoint = "LLVMInitializeIPO", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl, BestFitMapping = false, ThrowOnUnmappableChar = true)]
-        internal static extern void InitializeIPO(LLVMPassRegistryRef @R);
+        internal static extern void InitializeIPO(PassRegistryHandle @R);
 
         [DllImport(libraryPath, EntryPoint = "LLVMInitializeInstrumentation", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl, BestFitMapping = false, ThrowOnUnmappableChar = true)]
-        internal static extern void InitializeInstrumentation(LLVMPassRegistryRef @R);
+        internal static extern void InitializeInstrumentation(PassRegistryHandle @R);
 
         [DllImport(libraryPath, EntryPoint = "LLVMInitializeAnalysis", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl, BestFitMapping = false, ThrowOnUnmappableChar = true)]
-        internal static extern void InitializeAnalysis(LLVMPassRegistryRef @R);
+        internal static extern void InitializeAnalysis(PassRegistryHandle @R);
 
         [DllImport(libraryPath, EntryPoint = "LLVMInitializeIPA", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl, BestFitMapping = false, ThrowOnUnmappableChar = true)]
-        internal static extern void InitializeIPA(LLVMPassRegistryRef @R);
+        internal static extern void InitializeIPA(PassRegistryHandle @R);
 
         [DllImport(libraryPath, EntryPoint = "LLVMInitializeCodeGen", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl, BestFitMapping = false, ThrowOnUnmappableChar = true)]
-        internal static extern void InitializeCodeGen(LLVMPassRegistryRef @R);
+        internal static extern void InitializeCodeGen(PassRegistryHandle @R);
 
         [DllImport(libraryPath, EntryPoint = "LLVMInitializeTarget", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl, BestFitMapping = false, ThrowOnUnmappableChar = true)]
-        internal static extern void InitializeTarget(LLVMPassRegistryRef @R);
+        internal static extern void InitializeTarget(PassRegistryHandle @R);
 
         [DllImport(libraryPath, EntryPoint = "LLVMParseIRInContext", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl, BestFitMapping = false, ThrowOnUnmappableChar = true)]
         internal static extern LLVMBool ParseIRInContext(LLVMContextRef @ContextRef, LLVMMemoryBufferRef @MemBuf, out LLVMModuleRef @OutM, out IntPtr @OutMessage);
