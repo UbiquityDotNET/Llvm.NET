@@ -509,9 +509,18 @@ namespace Llvm.NET
         /// <param name="version">version information to place in the llvm.ident metadata</param>
         public void AddVersionIdentMetadata( string version )
         {
-            var elements = new LLVMMetadataRef[ ] { NativeMethods.MDString2( Context.ContextHandle, version, ( uint )( version?.Length ?? 0 ) ) };
-            var hNode = NativeMethods.MDNode2( Context.ContextHandle, out elements[ 0 ], 1 );
-            NativeMethods.AddNamedMetadataOperand2( ModuleHandle, "llvm.ident", hNode );
+            var stringNode = CreateMDNode( version );
+            NativeMethods.AddNamedMetadataOperand2( ModuleHandle, "llvm.ident", stringNode.MetadataHandle );
+        }
+
+        /// <summary>Create an <see cref="MDNode"/> from a string</summary>
+        /// <param name="value">String value</param>
+        /// <returns>New node with the string as <see cref="MDNode.Operands"/>[0] (as an MDString)</returns>
+        public MDNode CreateMDNode( string value )
+        {
+            var elements = new LLVMMetadataRef[ ] { NativeMethods.MDString2( Context.ContextHandle, value, ( uint )(value?.Length ?? 0 ) ) };
+            var hNode = NativeMethods.MDNode2( Context.ContextHandle, out elements[ 0 ], ( uint )elements.Length );
+            return MDNode.FromHandle<MDNode>( hNode );
         }
 
         /// <summary>Creates a Function definition with Debug information</summary>
@@ -579,10 +588,10 @@ namespace Llvm.NET
         public Function CreateFunction( string name
                                       , bool isVarArg
                                       , IDebugType<ITypeRef, DIType> returnType
-                                      , params IDebugType<ITypeRef, DIType>[] argumentTypes
+                                      , params IDebugType<ITypeRef, DIType>[ ] argumentTypes
                                       )
         {
-            IFunctionType signature =  Context.CreateFunctionType( DIBuilder, isVarArg, returnType, argumentTypes );
+            IFunctionType signature = Context.CreateFunctionType( DIBuilder, isVarArg, returnType, argumentTypes );
             return AddFunction( name, signature );
         }
 

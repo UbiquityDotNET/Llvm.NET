@@ -206,3 +206,7 @@ FakesAssemblies/
 /src/.tools
 /src/LibLLVM/generatedversioninfo.h
 *.db
+/src/Llvm.NETTests/TestDebugInfo/test.s
+/src/Llvm.NETTests/TestDebugInfo/test.o
+/src/Llvm.NETTests/TestDebugInfo/test.ll
+/src/Llvm.NETTests/TestDebugInfo/test.bc
