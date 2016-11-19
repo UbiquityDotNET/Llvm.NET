@@ -55,5 +55,10 @@ The [TestDebugInfo](https://github.com/NETMF/Llvm.NET/tree/dev/src/Llvm.NETTests
 LLVM Bit code equivalent to what the Clang compiler generates for a [simple C language file](https://github.com/NETMF/Llvm.NET/blob/dev/src/Llvm.NETTests/TestDebugInfo/test.c).
 TestDebugInfo doesn't actually parse the source, instead it is a manually constructed and documented example of how to use Llvm.NET to accomplish the bit-code generation. 
 
+#### Code of Conduct
+This project has adopted the code of conduct defined by the [Contributor Covenant](http://contributor-covenant.org/)
+to clarify expected behavior in our community. For more information, see the
+[.NET Foundation Code of Conduct.](http://www.dotnetfoundation.org/code-of-conduct)
+
  
 
