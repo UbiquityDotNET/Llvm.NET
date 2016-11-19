@@ -143,6 +143,9 @@ namespace Llvm.NET
             // in the native LLVM layer.
             if( disposing && ModuleHandle.Pointer != IntPtr.Zero )
             {
+                // remove the module handle from the module cache.
+                Context.RemoveModule( this );
+
                 // if this module created the context then just dispose
                 // the context as that will clean up the module as well.
                 if( OwnsContext )

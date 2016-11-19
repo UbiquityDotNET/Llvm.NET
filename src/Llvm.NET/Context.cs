@@ -646,6 +646,11 @@ namespace Llvm.NET
             ModuleCache.Add( module.ModuleHandle.Pointer, module );
         }
 
+        internal void RemoveModule( NativeModule module )
+        {
+            ModuleCache.Remove( module.ModuleHandle.Pointer );
+        }
+
         internal NativeModule GetModuleFor( LLVMModuleRef moduleRef )
         {
             if( moduleRef.Pointer == IntPtr.Zero )
