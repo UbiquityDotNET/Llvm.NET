@@ -135,6 +135,7 @@
   <ItemGroup>
     <None Include="Content\HowToCreateStructTypes.aml" />
     <None Include="Content\VersionHistory\v3.7.0-alpha.aml" />
+    <None Include="Content\VersionHistory\v3.9.0-pre.aml" />
     <None Include="Content\VersionHistory\VersionHistory.aml" />
     <None Include="Content\Welcome.aml" />
   </ItemGroup>

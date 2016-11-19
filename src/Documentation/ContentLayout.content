@@ -9,9 +9,14 @@
     <HelpKeywords>
       <HelpKeyword index="K" term="version, history" />
     </HelpKeywords>
-    <Topic id="bb78087b-db18-4024-9357-2694f1ff1497" visible="True" isSelected="true" title="Version 3.7.0-alpha">
+    <Topic id="bb78087b-db18-4024-9357-2694f1ff1497" visible="True" title="Version 3.7.0-alpha">
       <HelpKeywords>
         <HelpKeyword index="K" term="version, 3.7.0-alpha" />
+      </HelpKeywords>
+    </Topic>
+    <Topic id="a38bf610-943a-4761-af52-ff244b46fb5c" visible="True" isSelected="true" title="Version 3.9.0-pre">
+      <HelpKeywords>
+        <HelpKeyword index="K" term="version,3.9.0-pre" />
       </HelpKeywords>
     </Topic>
   </Topic>

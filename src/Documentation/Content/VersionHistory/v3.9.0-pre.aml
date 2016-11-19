@@ -1,0 +1,32 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<topic id="a38bf610-943a-4761-af52-ff244b46fb5c" revisionNumber="1">
+  <developerConceptualDocument
+    xmlns="http://ddue.schemas.microsoft.com/authoring/2003/5"
+    xmlns:xlink="http://www.w3.org/1999/xlink">
+
+
+    <introduction>
+
+      <para>LLvm.NET 3.9.0-pre</para>
+    </introduction>
+
+        <section>
+            <title>Changes in This Release</title>
+            <content>
+                <list class="bullet">
+                    <listItem>
+                        <para>Updated to LLVM 3.9.0 libraries</para>
+                    </listItem>
+                    <listItem>
+                        <para>Significant overhaul of attribute handling to allow full use of attributes in a manner consistent with the underlying LLVM support</para>
+                    </listItem>
+                </list>
+            </content>
+        </section>
+
+        <relatedTopics>
+            <link xlink:href="f28bb6c8-7b27-413a-823c-1f1dcaf578de" />
+        </relatedTopics>
+
+    </developerConceptualDocument>
+</topic>
