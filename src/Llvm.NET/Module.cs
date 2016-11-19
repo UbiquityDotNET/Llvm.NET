@@ -595,6 +595,13 @@ namespace Llvm.NET
             return AddFunction( name, signature );
         }
 
+        /// <summary>Clones the current module and returns the clone</summary>
+        /// <returns>cloned module</returns>
+        public NativeModule Clone( )
+        {
+            return new NativeModule( NativeMethods.CloneModule( ModuleHandle ) );
+        }
+
         /// <inheritdoc/>
         [SuppressMessage( "Language", "CSE0003:Use expression-bodied members", Justification = "Line too long" )]
         bool IExtensiblePropertyContainer.TryGetExtendedPropertyValue<T>( string id, out T value )
