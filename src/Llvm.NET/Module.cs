@@ -415,6 +415,51 @@ namespace Llvm.NET
             return Value.FromHandle<GlobalAlias>( handle );
         }
 
+
+        /// <summary>Adds a global to this module with a specific address space</summary>
+        /// <param name="addressSpace"></param>
+        /// <param name="typeRef">Type of the global's value</param>
+        /// <param name="name">Name of the global</param>
+        /// <returns>The new <see cref="GlobalVariable"/></returns>
+        /// <openissues>
+        /// - What does LLVM do if creating a second Global with the same name (return null, throw, crash??,...)
+        /// </openissues>
+        public GlobalVariable AddGlobalInAddressSpace( uint addressSpace, ITypeRef typeRef, string name )
+        {
+            var handle = NativeMethods.AddGlobalInAddressSpace( ModuleHandle, typeRef.GetTypeRef( ), name, addressSpace );
+            return Value.FromHandle<GlobalVariable>( handle );
+        }
+
+        /// <summary>Adds a global to this module</summary>
+        /// <param name="addressSpace"></param>
+        /// <param name="typeRef">Type of the global's value</param>
+        /// <param name="isConst">Flag to indicate if this global is a constant</param>
+        /// <param name="linkage">Linkage type for this global</param>
+        /// <param name="constVal">Initial value for the global</param>
+        /// <returns>New global variable</returns>
+        [SuppressMessage( "Language", "CSE0003:Use expression-bodied members", Justification = "Line too long" )]
+        public GlobalVariable AddGlobalInAddressSpace( uint addressSpace, ITypeRef typeRef, bool isConst, Linkage linkage, Constant constVal )
+        {
+            return AddGlobalInAddressSpace( addressSpace, typeRef, isConst, linkage, constVal, string.Empty );
+        }
+
+        /// <summary>Adds a global to this module</summary>
+        /// <param name="addressSpace"></param>
+        /// <param name="typeRef">Type of the global's value</param>
+        /// <param name="isConst">Flag to indicate if this global is a constant</param>
+        /// <param name="linkage">Linkage type for this global</param>
+        /// <param name="constVal">Initial value for the global</param>
+        /// <param name="name">Name of the variable</param>
+        /// <returns>New global variable</returns>
+        public GlobalVariable AddGlobalInAddressSpace( uint addressSpace, ITypeRef typeRef, bool isConst, Linkage linkage, Constant constVal, string name )
+        {
+            var retVal = AddGlobalInAddressSpace( addressSpace, typeRef, name );
+            retVal.IsConstant = isConst;
+            retVal.Linkage = linkage;
+            retVal.Initializer = constVal;
+            return retVal;
+        }
+
         /// <summary>Adds a global to this module</summary>
         /// <param name="typeRef">Type of the global's value</param>
         /// <param name="name">Name of the global</param>
