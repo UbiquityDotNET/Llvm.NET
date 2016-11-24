@@ -19,6 +19,9 @@ namespace Llvm.NET.DebugInfo
     /// </remarks>
     public sealed class DebugInfoBuilder : IDisposable
     {
+        /// <summary>Module that owns this builder</summary>
+        public NativeModule OwningModule { get; }
+
         /// <summary>Creates a new <see cref="DICompileUnit"/></summary>
         /// <param name="language"><see cref="SourceLanguage"/> for the compilation unit</param>
         /// <param name="sourceFilePath">Full path to the source file of this compilation unit</param>
@@ -931,7 +934,6 @@ namespace Llvm.NET.DebugInfo
             OwningModule = owningModule;
         }
 
-        private readonly NativeModule OwningModule;
         private bool IsFinished;
         internal LLVMDIBuilderRef BuilderHandle { get; private set; }
     }
