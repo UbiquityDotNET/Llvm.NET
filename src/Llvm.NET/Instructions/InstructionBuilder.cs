@@ -876,6 +876,14 @@ namespace Llvm.NET.Instructions
             return Value.FromHandle<Instructions.Switch>( handle );
         }
 
+        public Value DoNothing( )
+        {
+            var module = InsertBlock?.ContainingFunction?.ParentModule;
+            if( module == null )
+                throw new InvalidOperationException( "Cannot insert when no block/module is available" );
+            return DoNothing( module );
+        }
+
         public Value DoNothing( NativeModule module )
         {
             if( module == null )
@@ -891,6 +899,15 @@ namespace Llvm.NET.Instructions
 
             var hCall = BuildCall( func );
             return Value.FromHandle( hCall );
+        }
+
+        public Value DebugTrap( )
+        {
+            var module = InsertBlock?.ContainingFunction?.ParentModule;
+            if( module == null )
+                throw new InvalidOperationException( "Cannot insert when no block/module is available" );
+
+            return DebugTrap( module );
         }
 
         public Value DebugTrap( NativeModule module )
@@ -910,6 +927,26 @@ namespace Llvm.NET.Instructions
             var hCall = NativeMethods.BuildCall( BuilderHandle, func.ValueHandle, out args, 0U, string.Empty );
             return Value.FromHandle( hCall );
         }
+        /// <summary>Builds a memcpy intrinsic call</summary>
+        /// <param name="destination">Destination pointer of the memcpy</param>
+        /// <param name="source">Source pointer of the memcpy</param>
+        /// <param name="len">length of the data to copy</param>
+        /// <param name="align">Alignment of the data for the copy</param>
+        /// <param name="isVolatile">Flag to indicate if the copy involves volatile data such as physical registers</param>
+        /// <returns><see cref="Intrinsic"/> call for the memcpy</returns>
+        /// <remarks>
+        /// LLVM has many overloaded variants of the memcpy intrinsic, this implementation will deduce the types from
+        /// the provided values and generate a more specific call without the need to provide overloaded forms of this
+        /// method and otherwise complicating the calling code.
+        /// </remarks>
+        public Value MemCpy( Value destination, Value source, Value len, Int32 align, bool isVolatile )
+        {
+            var module = InsertBlock?.ContainingFunction?.ParentModule;
+            if( module == null )
+                throw new InvalidOperationException( "Cannot insert when no block/module is available" );
+
+            return MemCpy( module, destination, source, len, align, isVolatile );
+        }
 
         /// <summary>Builds a memcpy intrinsic call</summary>
         /// <param name="module">Module to add the declaration of the intrinsic to if it doesn't already exist</param>
@@ -924,7 +961,6 @@ namespace Llvm.NET.Instructions
         /// the provided values and generate a more specific call without the need to provide overloaded forms of this
         /// method and otherwise complicating the calling code.
         /// </remarks>
-        [System.Diagnostics.CodeAnalysis.SuppressMessage( "Microsoft.Naming", "CA2204:Literals should be spelled correctly", MessageId = "MemCopy" )]
         public Value MemCpy( NativeModule module, Value destination, Value source, Value len, Int32 align, bool isVolatile )
         {
             if( module == null )
@@ -994,6 +1030,29 @@ namespace Llvm.NET.Instructions
         }
 
         /// <summary>Builds a memmov intrinsic call</summary>
+        /// <param name="destination">Destination pointer of the memcpy</param>
+        /// <param name="source">Source pointer of the memcpy</param>
+        /// <param name="len">length of the data to copy</param>
+        /// <param name="align">Alignment of the data for the copy</param>
+        /// <param name="isVolatile">Flag to indicate if the copy involves volatile data such as physical registers</param>
+        /// <returns><see cref="Intrinsic"/> call for the memcpy</returns>
+        /// <remarks>
+        /// LLVM has many overloaded variants of the memmov intrinsic, this implementation currently assumes the 
+        /// single form defined by <see cref="Intrinsic.MemMoveName"/>, which matches the classic "C" style memmov
+        /// function. However future implementations should be able to deduce the types from the provided values
+        /// and generate a more specific call without changing any caller code (as is done with 
+        /// <see cref="MemCpy(NativeModule, Value, Value, Value, int, bool)"/>.)
+        /// </remarks>
+        public Value MemMove( Value destination, Value source, Value len, Int32 align, bool isVolatile )
+        {
+            var module = InsertBlock?.ContainingFunction?.ParentModule;
+            if( module == null )
+                throw new InvalidOperationException( "Cannot insert when no block/module is available" );
+
+            return MemMove( module, destination, source, len, align, isVolatile );
+        }
+
+        /// <summary>Builds a memmov intrinsic call</summary>
         /// <param name="module">Module to add the declaration of the intrinsic to if it doesn't already exist</param>
         /// <param name="destination">Destination pointer of the memcpy</param>
         /// <param name="source">Source pointer of the memcpy</param>
@@ -1005,7 +1064,8 @@ namespace Llvm.NET.Instructions
         /// LLVM has many overloaded variants of the memmov intrinsic, this implementation currently assumes the 
         /// single form defined by <see cref="Intrinsic.MemMoveName"/>, which matches the classic "C" style memmov
         /// function. However future implementations should be able to deduce the types from the provided values
-        /// and generate a more specific call without changing any caller code (as is done with <see cref="MemCpy(NativeModule, Value, Value, Value, int, bool)"/>. 
+        /// and generate a more specific call without changing any caller code (as is done with 
+        /// <see cref="MemCpy(NativeModule, Value, Value, Value, int, bool)"/>.)
         /// </remarks>
         public Value MemMove( NativeModule module, Value destination, Value source, Value len, Int32 align, bool isVolatile )
         {
@@ -1054,6 +1114,29 @@ namespace Llvm.NET.Instructions
         }
 
         /// <summary>Builds a memset intrinsic call</summary>
+        /// <param name="destination">Destination pointer of the memset</param>
+        /// <param name="value">fill value for the memset</param>
+        /// <param name="len">length of the data to fill</param>
+        /// <param name="align">ALignment of the data for the fill</param>
+        /// <param name="isVolatile">Flag to indicate if the fill involves volatile data such as physical registers</param>
+        /// <returns><see cref="Intrinsic"/> call for the memcpy</returns>
+        /// <remarks>
+        /// LLVM has many overloaded variants of the memcpy intrinsic, this implementation currently assumes the 
+        /// single form defined by <see cref="Intrinsic.MemSetName"/>, which matches the classic "C" style memcpy
+        /// function. However future implementations should be able to deduce the types from the provided values
+        /// and generate a more specific call without changing any caller code (as is done with
+        /// <see cref="MemCpy(NativeModule, Value, Value, Value, int, bool)"/>.)
+        /// </remarks>
+        public Value MemSet( Value destination, Value value, Value len, Int32 align, bool isVolatile )
+        {
+            var module = InsertBlock?.ContainingFunction?.ParentModule;
+            if( module == null )
+                throw new InvalidOperationException( "Cannot insert when no block/module is available" );
+
+            return MemSet( module, destination, value, len, align, isVolatile );
+        }
+
+        /// <summary>Builds a memset intrinsic call</summary>
         /// <param name="module">Module to add the declaration of the intrinsic to if it doesn't already exist</param>
         /// <param name="destination">Destination pointer of the memset</param>
         /// <param name="value">fill value for the memset</param>
@@ -1065,7 +1148,8 @@ namespace Llvm.NET.Instructions
         /// LLVM has many overloaded variants of the memcpy intrinsic, this implementation currently assumes the 
         /// single form defined by <see cref="Intrinsic.MemSetName"/>, which matches the classic "C" style memcpy
         /// function. However future implementations should be able to deduce the types from the provided values
-        /// and generate a more specific call without changing any caller code (as is done with <see cref="MemCpy(NativeModule, Value, Value, Value, int, bool)"/>. 
+        /// and generate a more specific call without changing any caller code (as is done with
+        /// <see cref="MemCpy(NativeModule, Value, Value, Value, int, bool)"/>.)
         /// </remarks>
         public Value MemSet( NativeModule module, Value destination, Value value, Value len, Int32 align, bool isVolatile )
         {
