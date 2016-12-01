@@ -1,5 +1,7 @@
 EXPORTS
 ; extensions to standard LLVM-C API
+LLVMRunPassPipeline
+LLVMInitializeCodeGenForOpt
 LLVMCreatePassRegistry
 LLVMPassRegistryDispose
 LLVMAddModuleFlag

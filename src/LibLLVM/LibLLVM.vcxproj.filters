@@ -49,6 +49,9 @@
     <ClCompile Include="PassManagerBindings.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="NewOptPassDriver.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="DIBuilderBindings.h">
@@ -79,6 +82,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="PassManagerBindings.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="NewOptPassDriver.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

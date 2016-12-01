@@ -9,7 +9,7 @@ namespace Llvm.NET
     {
         public PassRegistry( )
         {
-            PassRegistryHandle = new PassRegistryHandle( NativeMethods.CreatePassRegistry( ), true );
+            PassRegistryHandle = NativeMethods.CreatePassRegistry( );
         }
 
         private PassRegistry( PassRegistryHandle hRegistry )
@@ -17,43 +17,49 @@ namespace Llvm.NET
             PassRegistryHandle = hRegistry;
         }
 
-        public void InitializeAll()
+        public void InitializeAll( )
         {
-           InitializeCore( );
-           InitializeTransformUtils( );
-           InitializeScalarOpts( );
-           InitializeObjCARCOpts( );
-           InitializeVectorization( );
-           InitializeInstCombine( );
-           InitializeIPO( );
-           InitializeInstrumentation( );
-           InitializeAnalysis( );
-           InitializeIPA( );
-           InitializeCodeGen( );
-           InitializeTarget( );
+            InitializeCore( );
+            InitializeTransformUtils( );
+            InitializeScalarOpts( );
+            InitializeObjCARCOpts( );
+            InitializeVectorization( );
+            InitializeIPO( );
+            InitializeAnalysis( );
+            InitializeTransformUtils( );
+            InitializeInstCombine( );
+            InitializeInstrumentation( );
+            InitializeIPA( );
+            InitializeTarget( );
+            InitializeCodeGenForOpt( );
+
+        }
+        public void InitializeCodeGenForOpt()
+        {
+            NativeMethods.InitializeCodeGenForOpt( PassRegistryHandle );
         }
 
-        public void InitializeCore()
+        public void InitializeCore( )
         {
             NativeMethods.InitializeCore( PassRegistryHandle );
         }
 
-        public void InitializeTransformUtils()
+        public void InitializeTransformUtils( )
         {
             NativeMethods.InitializeTransformUtils( PassRegistryHandle );
         }
 
-        public void InitializeScalarOpts()
+        public void InitializeScalarOpts( )
         {
             NativeMethods.InitializeScalarOpts( PassRegistryHandle );
         }
 
-        public void InitializeObjCARCOpts()
+        public void InitializeObjCARCOpts( )
         {
             NativeMethods.InitializeObjCARCOpts( PassRegistryHandle );
         }
 
-        public void InitializeVectorization()
+        public void InitializeVectorization( )
         {
             NativeMethods.InitializeVectorization( PassRegistryHandle );
         }
@@ -103,7 +109,7 @@ namespace Llvm.NET
                     // TODO: dispose managed state (managed objects).
                 }
 
-                PassRegistryHandle.Dispose();
+                PassRegistryHandle.Dispose( );
             }
         }
 
@@ -126,7 +132,7 @@ namespace Llvm.NET
 
         public static PassRegistry GlobalRegistry => LazyGlobalPassRegistry.Value;
 
-        private static Lazy<PassRegistry> LazyGlobalPassRegistry 
+        private static Lazy<PassRegistry> LazyGlobalPassRegistry
             = new Lazy<PassRegistry>( ( ) => new PassRegistry( NativeMethods.GetGlobalPassRegistry( ) )
                                     , LazyThreadSafetyMode.ExecutionAndPublication
                                     );

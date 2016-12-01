@@ -58,6 +58,16 @@ namespace Llvm.NET.Native
         internal readonly IntPtr Pointer;
     }
 
+    internal partial struct LLVMPassRegistryRef
+    {
+        internal LLVMPassRegistryRef(IntPtr pointer)
+        {
+            Pointer = pointer;
+        }
+
+        internal readonly IntPtr Pointer;
+    }
+
     internal partial struct LLVMVersionInfo
     {
         internal readonly int Major;
@@ -277,6 +287,13 @@ namespace Llvm.NET.Native
         LLVMMetadaKindConstantAsMetadata,
         LLVMMetadaKindLocalAsMetadata,
         LLVMMetadaKindMDString
+    };
+
+    internal enum LLVMOptVerifierKind
+    {
+        LLVMOptVerifierKindNone,
+        LLVMOptVerifierKindVerifyInAndOut,
+        LLVMOptVerifierKindVerifyEachPass
     };
 
     internal static partial class NativeMethods
@@ -771,9 +788,15 @@ namespace Llvm.NET.Native
         internal static extern LLVMBool FunctionHasPersonalityFunction( LLVMValueRef function );
 
         [DllImport( libraryPath, EntryPoint = "LLVMCreatePassRegistry", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl, BestFitMapping = false, ThrowOnUnmappableChar = true )]
-        internal static extern IntPtr CreatePassRegistry( );
+        internal static extern PassRegistryHandle CreatePassRegistry( );
 
         [DllImport( libraryPath, EntryPoint = "LLVMPassRegistryDispose", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl, BestFitMapping = false, ThrowOnUnmappableChar = true )]
         internal static extern void PassRegistryDispose( PassRegistryHandle hPassRegistry );
+
+        [DllImport( libraryPath, EntryPoint = "LLVMRunPassPipeline", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl, BestFitMapping = false, ThrowOnUnmappableChar = true )]
+        internal static extern LLVMBool RunPassPipeline( LLVMContextRef context, LLVMModuleRef M, LLVMTargetMachineRef TM, [MarshalAs( UnmanagedType.LPStr )] string passPipeline, LLVMOptVerifierKind VK, bool ShouldPreserveAssemblyUseListOrder, bool ShouldPreserveBitcodeUseListOrder );
+
+        [DllImport( libraryPath, EntryPoint = "LLVMInitializeCodeGenForOpt", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl, BestFitMapping = false, ThrowOnUnmappableChar = true )]
+        internal static extern void InitializeCodeGenForOpt( PassRegistryHandle R );
     }
 }

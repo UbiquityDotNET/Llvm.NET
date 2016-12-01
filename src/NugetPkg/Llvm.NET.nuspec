@@ -5,7 +5,7 @@
         <version>$buildversion$</version>
         <authors>Microsoft Corporation,LLVM.org</authors>
         <requireLicenseAcceptance>false</requireLicenseAcceptance>
-        <description>.NET Bindings for LLVM 3.8.0</description>
+        <description>.NET Bindings for LLVM 3.9.0</description>
         <tags>LLVM</tags>
     </metadata>
     <files>
