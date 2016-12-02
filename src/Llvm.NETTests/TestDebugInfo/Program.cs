@@ -127,9 +127,13 @@ namespace TestDebugInfo
                 }
                 else
                 {
-                    StaticState.ParseCommandLineOptions( new string[ ] { "TestDebugInfo.exe", "-O3" }, "Test Application" );
-                    var modForOpt = module.Clone( );
-                    modForOpt.Optimize( targetMachine );
+                    //test optimization works,but don't save it as that makes it harder to do a diff with official clang builds
+                    {// force a GC to verify callback delegate for diagnostics is still valid
+                        GC.Collect( GC.MaxGeneration );
+                        StaticState.ParseCommandLineOptions( new string[ ] { "TestDebugInfo.exe", "-O3" }, "Test Application" );
+                        var modForOpt = module.Clone( );
+                        modForOpt.Optimize( targetMachine );
+                    }
 
                     // Module is good, so generate the output files
                     module.WriteToFile( "test.bc" );

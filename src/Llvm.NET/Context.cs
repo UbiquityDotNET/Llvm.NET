@@ -8,6 +8,7 @@ using Llvm.NET.Native;
 using Llvm.NET.Types;
 using Llvm.NET.Values;
 using System.Diagnostics.CodeAnalysis;
+using System.Runtime.InteropServices;
 
 namespace Llvm.NET
 {
@@ -809,6 +810,9 @@ namespace Llvm.NET
         {
             if( ContextHandle.Pointer != IntPtr.Zero )
             {
+                NativeMethods.ContextSetDiagnosticHandler( ContextHandle, IntPtr.Zero, IntPtr.Zero );
+                ActiveHandler.Dispose( );
+
                 // allow creating another context after this one is disposed
                 if( CurrentThreadContext == this )
                     CurrentThreadContext = null;
@@ -845,11 +849,16 @@ namespace Llvm.NET
             {
                 ContextCache.Add( contextRef, this );
             }
-            NativeMethods.ContextSetDiagnosticHandler( ContextHandle, DiagnosticHandler, IntPtr.Zero );
+
+            ActiveHandler = new WrappedNativeCallback( new LLVMDiagnosticHandler( DiagnosticHandler ) );
+            NativeMethods.ContextSetDiagnosticHandler( ContextHandle, ActiveHandler.GetFuncPointer( ), IntPtr.Zero );
             CurrentThreadContext = this;
         }
 
-        [ThreadStatic]
+        WrappedNativeCallback ActiveHandler;
+
+
+        [ ThreadStatic]
         private static Context CurrentThreadContext;
 
         private void DiagnosticHandler( LLVMDiagnosticInfoRef param0, IntPtr param1 )

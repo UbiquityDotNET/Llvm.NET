@@ -893,7 +893,7 @@ namespace Llvm.NET.Native
         internal static extern LLVMContextRef GetGlobalContext();
 
         [DllImport(libraryPath, EntryPoint = "LLVMContextSetDiagnosticHandler", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl, BestFitMapping = false, ThrowOnUnmappableChar = true)]
-        internal static extern void ContextSetDiagnosticHandler(LLVMContextRef @C, LLVMDiagnosticHandler @Handler, IntPtr @DiagnosticContext);
+        internal static extern void ContextSetDiagnosticHandler(LLVMContextRef @C, IntPtr @Handler, IntPtr @DiagnosticContext);
 
         [DllImport(libraryPath, EntryPoint = "LLVMContextSetYieldCallback", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl, BestFitMapping = false, ThrowOnUnmappableChar = true)]
         internal static extern void ContextSetYieldCallback(LLVMContextRef @C, LLVMYieldCallback @Callback, IntPtr @OpaqueHandle);

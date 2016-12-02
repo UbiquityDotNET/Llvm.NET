@@ -132,6 +132,7 @@
     <Compile Include="Instructions\UserOp2.cs" />
     <Compile Include="Instructions\VaArg.cs" />
     <Compile Include="LLVM\LlvmHandles.cs" />
+    <Compile Include="LLVM\WrappedNativeCallback.cs" />
     <Compile Include="Metadata\ConstantAsMetadata.cs" />
     <Compile Include="Metadata\LocalAsMetadata.cs" />
     <Compile Include="Metadata\MDNode.cs" />
