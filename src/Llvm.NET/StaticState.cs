@@ -38,6 +38,11 @@ namespace Llvm.NET
             NativeMethods.ParseCommandLineOptions( args.Length, args, overview );
         }
 
+        public static void InitializeOptimization()
+        {
+            NativeMethods.InitializePassesForLegacyOpt( );
+        }
+
         // basic pattern to follow for any new targets in the future
         //public static void RegisterXXX( TargetRegistrations registrations = TargetRegistration.All )
         //{

@@ -5,6 +5,7 @@ namespace Llvm.NET
 {
     /// <summary>Provides a wrapper around an LLVM Pass Manager</summary>
     /// <remarks>This class is still in the experimental stage as there is a lack of full support from the C API</remarks>
+    [Obsolete("Direct use of legacy pass manager support will not carry forward")]
     public sealed class PassManagerBuilder
         : IDisposable
     {

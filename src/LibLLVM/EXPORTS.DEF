@@ -1,5 +1,7 @@
 EXPORTS
 ; extensions to standard LLVM-C API
+LLVMInitializePassesForLegacyOpt
+LLVMRunLegacyOptimizer
 LLVMRunPassPipeline
 LLVMInitializeCodeGenForOpt
 LLVMCreatePassRegistry

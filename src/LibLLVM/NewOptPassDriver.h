@@ -16,9 +16,7 @@
 /// one function call optimization.
 ///
 //===----------------------------------------------------------------------===//
-
-#ifndef LLVM_TOOLS_OPT_NEWPMDRIVER_H
-#define LLVM_TOOLS_OPT_NEWPMDRIVER_H
+#pragma once
 
 #include "llvm-c\Core.h"
 #include "llvm-c\TargetMachine.h"
@@ -40,6 +38,3 @@ LLVMBool LLVMRunPassPipeline( LLVMContextRef context
                             , bool ShouldPreserveAssemblyUseListOrder
                             , bool ShouldPreserveBitcodeUseListOrder
                             );
-
-#endif
-

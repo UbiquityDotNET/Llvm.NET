@@ -852,9 +852,12 @@ namespace Llvm.NET
         [ThreadStatic]
         private static Context CurrentThreadContext;
 
-        private void DiagnosticHandler( out LLVMOpaqueDiagnosticInfo param0, IntPtr param1 )
+        private void DiagnosticHandler( LLVMDiagnosticInfoRef param0, IntPtr param1 )
         {
-            Debug.Assert( false );
+            var msg = NativeMethods.MarshalMsg( NativeMethods.GetDiagInfoDescription( param0 ) );
+            var level = NativeMethods.GetDiagInfoSeverity( param0 );
+            Debug.WriteLine( "{0}: {1}", level, msg );
+            Debug.Assert( level != LLVMDiagnosticSeverity.LLVMDSError );
         }
 
         private readonly Dictionary< IntPtr, Value > ValueCache = new Dictionary< IntPtr, Value >( );

@@ -52,6 +52,9 @@
     <ClCompile Include="NewOptPassDriver.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="LegacyPassManagerOpt.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="DIBuilderBindings.h">
@@ -85,6 +88,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="NewOptPassDriver.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="LegacyPassManagerOpt.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

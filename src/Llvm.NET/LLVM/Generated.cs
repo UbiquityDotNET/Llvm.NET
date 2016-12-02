@@ -281,10 +281,10 @@ namespace Llvm.NET.Native
     internal delegate void LLVMFatalErrorHandler([MarshalAs(UnmanagedType.LPStr)] string @Reason);
 
     [UnmanagedFunctionPointer(System.Runtime.InteropServices.CallingConvention.Cdecl, BestFitMapping = false, ThrowOnUnmappableChar = true)]
-    internal delegate void LLVMDiagnosticHandler(out LLVMOpaqueDiagnosticInfo @param0, IntPtr @param1);
+    internal delegate void LLVMDiagnosticHandler( LLVMDiagnosticInfoRef @param0, IntPtr @param1);
 
     [UnmanagedFunctionPointer(System.Runtime.InteropServices.CallingConvention.Cdecl, BestFitMapping = false, ThrowOnUnmappableChar = true)]
-    internal delegate void LLVMYieldCallback(out LLVMOpaqueContext @param0, IntPtr @param1);
+    internal delegate void LLVMYieldCallback(LLVMContextRef @param0, IntPtr @param1);
 
     internal struct LLVMDisasmContextRef
     {
@@ -2400,6 +2400,7 @@ namespace Llvm.NET.Native
         [DllImport(libraryPath, EntryPoint = "LLVMCreateFunctionPassManagerForModule", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl, BestFitMapping = false, ThrowOnUnmappableChar = true)]
         internal static extern LLVMPassManagerRef CreateFunctionPassManagerForModule(LLVMModuleRef @M);
 
+        [Obsolete( "Use CreateFunctionPassManagerForModule instead", true)]
         [DllImport(libraryPath, EntryPoint = "LLVMCreateFunctionPassManager", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl, BestFitMapping = false, ThrowOnUnmappableChar = true)]
         internal static extern LLVMPassManagerRef CreateFunctionPassManager(LLVMModuleProviderRef @MP);
 

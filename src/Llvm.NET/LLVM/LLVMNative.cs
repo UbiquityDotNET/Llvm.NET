@@ -136,9 +136,7 @@ namespace Llvm.NET.Native
         }
 
         public static implicit operator Version( LLVMVersionInfo versionInfo )
-        {
-            return new Version(versionInfo.Major, versionInfo.Minor, versionInfo.Patch);
-        }
+            => new Version( versionInfo.Major, versionInfo.Minor, versionInfo.Patch );
     }
 
     // add implicit conversions to/from C# bool for convenience

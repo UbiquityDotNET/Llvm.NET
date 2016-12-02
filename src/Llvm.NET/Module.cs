@@ -310,6 +310,23 @@ namespace Llvm.NET
             }
         }
 
+        /// <summary>Run optimization passes on the module</summary>
+        /// <param name="targetMachine"><see cref="TargetMachine"/> for use during optimizations</param>
+        /// <remarks>
+        /// Options configuring optimization are provided by calling <see cref="StaticState.ParseCommandLineOptions(string[], string)"/>.
+        /// The current implementation uses the legacy pass manager architecture, thus the options for controlling passes
+        /// are the same as used for the LLVM 'opt' tool. Once LLVM stablizes on the new pass manager support this
+        /// will be obsoleted in favor of a new method that takes a string representation of the optimizations in a manner
+        /// consistent with the support in the 'opt' tool.
+        /// </remarks>
+        public void Optimize( TargetMachine targetMachine )
+        {
+            if( targetMachine == null )
+                throw new ArgumentNullException( nameof( targetMachine ) );
+
+            NativeMethods.RunLegacyOptimizer( ModuleHandle, targetMachine.TargetMachineHandle );
+        }
+
         /// <summary>Verifies a bit-code module</summary>
         /// <param name="errmsg">Error messages describing any issues found in the bit-code</param>
         /// <returns>true if the verification succeeded and false if not.</returns>
@@ -643,12 +660,9 @@ namespace Llvm.NET
             return AddFunction( name, signature );
         }
 
-        /// <summary>Clones the current module and returns the clone</summary>
-        /// <returns>cloned module</returns>
-        public NativeModule Clone( )
-        {
-            return new NativeModule( NativeMethods.CloneModule( ModuleHandle ) );
-        }
+        /// <summary>Clones the current module</summary>
+        /// <returns>Cloned module</returns>
+        public NativeModule Clone( ) => new NativeModule( NativeMethods.CloneModule( ModuleHandle ) );
 
         /// <inheritdoc/>
         [SuppressMessage( "Language", "CSE0003:Use expression-bodied members", Justification = "Line too long" )]

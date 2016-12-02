@@ -127,6 +127,10 @@ namespace TestDebugInfo
                 }
                 else
                 {
+                    StaticState.ParseCommandLineOptions( new string[ ] { "TestDebugInfo.exe", "-O3" }, "Test Application" );
+                    var modForOpt = module.Clone( );
+                    modForOpt.Optimize( targetMachine );
+
                     // Module is good, so generate the output files
                     module.WriteToFile( "test.bc" );
                     File.WriteAllText( "test.ll", module.AsString( ) );

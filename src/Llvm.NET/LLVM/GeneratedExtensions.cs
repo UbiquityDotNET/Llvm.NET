@@ -296,6 +296,7 @@ namespace Llvm.NET.Native
         LLVMOptVerifierKindVerifyEachPass
     };
 
+    [System.Diagnostics.CodeAnalysis.SuppressMessage( "Microsoft.Maintainability", "CA1506:AvoidExcessiveClassCoupling" )]
     internal static partial class NativeMethods
     {
         [DllImport(libraryPath, EntryPoint = "LLVMGetVersionInfo", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl, BestFitMapping = false, ThrowOnUnmappableChar = true)]
@@ -794,9 +795,15 @@ namespace Llvm.NET.Native
         internal static extern void PassRegistryDispose( PassRegistryHandle hPassRegistry );
 
         [DllImport( libraryPath, EntryPoint = "LLVMRunPassPipeline", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl, BestFitMapping = false, ThrowOnUnmappableChar = true )]
-        internal static extern LLVMBool RunPassPipeline( LLVMContextRef context, LLVMModuleRef M, LLVMTargetMachineRef TM, [MarshalAs( UnmanagedType.LPStr )] string passPipeline, LLVMOptVerifierKind VK, bool ShouldPreserveAssemblyUseListOrder, bool ShouldPreserveBitcodeUseListOrder );
+        internal static extern LLVMBool RunPassPipeline( LLVMContextRef context, LLVMModuleRef M, LLVMTargetMachineRef TM, [MarshalAs( UnmanagedType.LPStr )] string passPipeline, LLVMOptVerifierKind VK, [MarshalAs(UnmanagedType.Bool)] bool ShouldPreserveAssemblyUseListOrder, [MarshalAs( UnmanagedType.Bool )] bool ShouldPreserveBitcodeUseListOrder );
 
         [DllImport( libraryPath, EntryPoint = "LLVMInitializeCodeGenForOpt", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl, BestFitMapping = false, ThrowOnUnmappableChar = true )]
         internal static extern void InitializeCodeGenForOpt( PassRegistryHandle R );
+
+        [DllImport( libraryPath, EntryPoint = "LLVMInitializePassesForLegacyOpt", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl, BestFitMapping = false, ThrowOnUnmappableChar = true )]
+        internal static extern void InitializePassesForLegacyOpt( );
+
+        [DllImport( libraryPath, EntryPoint = "LLVMRunLegacyOptimizer", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl, BestFitMapping = false, ThrowOnUnmappableChar = true )]
+        internal static extern void RunLegacyOptimizer( LLVMModuleRef Mref, LLVMTargetMachineRef TMref );
     }
 }

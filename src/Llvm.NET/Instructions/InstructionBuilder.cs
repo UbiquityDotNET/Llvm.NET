@@ -976,7 +976,7 @@ namespace Llvm.NET.Instructions
                 throw new ArgumentNullException( nameof( len ) );
 
             if( destination == source )
-                throw new InvalidOperationException( "Source and destination arguments for MemCopy are the same value" );
+                throw new InvalidOperationException( "Source and destination arguments are the same value" );
 
             var dstPtrType = destination.NativeType as IPointerType;
             if( dstPtrType == null )
