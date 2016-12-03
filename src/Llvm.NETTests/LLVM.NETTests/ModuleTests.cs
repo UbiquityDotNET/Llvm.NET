@@ -101,10 +101,12 @@ namespace Llvm.NET.Tests
         public void BasicLinkTest( )
         {
             // verifies link with respect to module disposal
-            using( var module = new NativeModule( TestModuleName ) )
-            using( var otherModule = new NativeModule( "Other" ) )
+            using( var ctx = new Context( ) )
+            using( var module = new NativeModule( TestModuleName, ctx ) )
+            using( var otherModule = new NativeModule( "Other", ctx ) )
             {
                 module.Link( otherModule );
+                Assert.IsNull( otherModule.Context );
             }
         }
 
