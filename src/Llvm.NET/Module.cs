@@ -308,6 +308,7 @@ namespace Llvm.NET
                 //var errMsg = NativeMethods.MarshalMsg( errMsgPtr );
                 throw new InternalCodeGeneratorException( "Module link error" );
             }
+            otherModule.Dispose( );
         }
 
         /// <summary>Run optimization passes on the module</summary>

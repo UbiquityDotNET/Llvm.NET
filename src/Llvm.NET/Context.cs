@@ -841,9 +841,6 @@ namespace Llvm.NET
 
         private Context( LLVMContextRef contextRef )
         {
-            if( CurrentThreadContext != null )
-                throw new InvalidOperationException( "Context already exists for this thread" );
-
             ContextHandle = contextRef;
             lock ( ContextCache )
             {
@@ -852,7 +849,10 @@ namespace Llvm.NET
 
             ActiveHandler = new WrappedNativeCallback( new LLVMDiagnosticHandler( DiagnosticHandler ) );
             NativeMethods.ContextSetDiagnosticHandler( ContextHandle, ActiveHandler.GetFuncPointer( ), IntPtr.Zero );
-            CurrentThreadContext = this;
+            if( CurrentThreadContext == null )
+            {
+                CurrentThreadContext = this;
+            }
         }
 
         WrappedNativeCallback ActiveHandler;
