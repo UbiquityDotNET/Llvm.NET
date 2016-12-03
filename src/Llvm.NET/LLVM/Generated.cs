@@ -172,7 +172,7 @@ namespace Llvm.NET.Native
             Pointer = pointer;
         }
 
-        public IntPtr Pointer;
+        public IntPtr Pointer { get; }
     }
 
     internal struct LLVMContextRef
@@ -182,7 +182,7 @@ namespace Llvm.NET.Native
             Pointer = pointer;
         }
 
-        public IntPtr Pointer;
+        public IntPtr Pointer { get; }
     }
 
     internal struct LLVMModuleRef
@@ -192,7 +192,8 @@ namespace Llvm.NET.Native
             Pointer = pointer;
         }
 
-        public IntPtr Pointer;
+        public IntPtr Pointer { get; }
+        public readonly static LLVMModuleRef Zero = new LLVMModuleRef( IntPtr.Zero );
     }
 
     internal struct LLVMTypeRef
@@ -202,7 +203,7 @@ namespace Llvm.NET.Native
             Pointer = pointer;
         }
 
-        public IntPtr Pointer;
+        public IntPtr Pointer { get; }
     }
 
     internal struct LLVMValueRef
@@ -224,7 +225,7 @@ namespace Llvm.NET.Native
             Pointer = pointer;
         }
 
-        public IntPtr Pointer;
+        public IntPtr Pointer { get; }
     }
 
     internal struct LLVMBuilderRef
@@ -234,7 +235,7 @@ namespace Llvm.NET.Native
             Pointer = pointer;
         }
 
-        public IntPtr Pointer;
+        public IntPtr Pointer { get; }
     }
 
     internal struct LLVMModuleProviderRef
@@ -244,7 +245,7 @@ namespace Llvm.NET.Native
             Pointer = pointer;
         }
 
-        public IntPtr Pointer;
+        public IntPtr Pointer { get; }
     }
 
     internal struct LLVMPassManagerRef
@@ -254,7 +255,7 @@ namespace Llvm.NET.Native
             Pointer = pointer;
         }
 
-        public IntPtr Pointer;
+        public IntPtr Pointer { get; }
     }
 
     internal struct LLVMUseRef
@@ -264,7 +265,7 @@ namespace Llvm.NET.Native
             Pointer = pointer;
         }
 
-        public IntPtr Pointer;
+        public IntPtr Pointer { get; }
     }
 
     internal struct LLVMDiagnosticInfoRef
@@ -274,7 +275,7 @@ namespace Llvm.NET.Native
             Pointer = pointer;
         }
 
-        public IntPtr Pointer;
+        public IntPtr Pointer { get; }
     }
 
     [UnmanagedFunctionPointer(System.Runtime.InteropServices.CallingConvention.Cdecl, BestFitMapping = false, ThrowOnUnmappableChar = true)]

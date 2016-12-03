@@ -98,9 +98,14 @@ namespace Llvm.NET.Tests
         }
 
         [TestMethod]
-        public void LinkTest( )
+        public void BasicLinkTest( )
         {
-            Assert.Inconclusive( );
+            // verifies link with respect to module disposal
+            using( var module = new NativeModule( TestModuleName ) )
+            using( var otherModule = new NativeModule( "Other" ) )
+            {
+                module.Link( otherModule );
+            }
         }
 
         [TestMethod]
