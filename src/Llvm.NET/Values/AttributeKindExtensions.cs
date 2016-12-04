@@ -115,7 +115,7 @@ namespace Llvm.NET.Values
                 if( value > UInt32.MaxValue )
                     throw new ArgumentOutOfRangeException( nameof( value ), "Expected a 32 bit value for stack alignment" );
 
-                if( !IsPowerOfTwo( value ) )
+                if( value != 0 && !IsPowerOfTwo( value ) )
                     throw new ArgumentException( "Stack alignment value must be a power of 2", nameof( value ) );
 
                 break;
