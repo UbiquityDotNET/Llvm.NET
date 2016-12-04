@@ -8,7 +8,6 @@ using Llvm.NET.Native;
 using Llvm.NET.Types;
 using Llvm.NET.Values;
 using System.Diagnostics.CodeAnalysis;
-using System.Runtime.InteropServices;
 
 namespace Llvm.NET
 {
@@ -623,20 +622,6 @@ namespace Llvm.NET
             return Value.FromHandle<ConstantFP>( NativeMethods.ConstReal( DoubleType.GetTypeRef( ), constValue ) );
         }
 
-        /// <summary>Current context for the current thread</summary>
-        /// <remarks>
-        /// While most LLVM types contain the ability to retrieve their owning <see cref="Context"/>
-        /// it is not always possible. For example, in LLVM, an empty <see cref="AttributeSet"/> doesn't 
-        /// actually have a Context so adding attributes to an empty <see cref="AttributeSet"/> requires
-        /// a <see cref="Context"/> but adding attributes to a non-empty set does not. Thus, without some
-        /// other means of getting a default <see cref="Context"/> multiple overloads for the Add operation
-        /// would need to exist. Furthermore, calling code would need to manage dealing with deciding which
-        /// variation of the overloaded methods to call at runtime. All of that and other similar cases are
-        /// eliminated by having a thread static property to access whenever a <see cref="Context"/> instance
-        /// is required but otherwise not conveniently available. 
-        /// </remarks>
-        public static Context CurrentContext => CurrentThreadContext;
-
         // These methods provide unique mapping between the .NET wrappers and the underlying LLVM instances
         // The mapping ensures that any LibLLVM handle is always re-mappable to a exactly one wrapper instance.
         // This helps reduce the number of wrapper instances created and also allows reference equality to work
@@ -813,10 +798,6 @@ namespace Llvm.NET
                 NativeMethods.ContextSetDiagnosticHandler( ContextHandle, IntPtr.Zero, IntPtr.Zero );
                 ActiveHandler.Dispose( );
 
-                // allow creating another context after this one is disposed
-                if( CurrentThreadContext == this )
-                    CurrentThreadContext = null;
-
                 lock ( ContextCache )
                 {
                     ContextCache.Remove( ContextHandle );
@@ -841,9 +822,6 @@ namespace Llvm.NET
 
         private Context( LLVMContextRef contextRef )
         {
-            if( CurrentThreadContext != null )
-                throw new InvalidOperationException( "Context already exists for this thread" );
-
             ContextHandle = contextRef;
             lock( ContextCache )
             {
@@ -852,14 +830,10 @@ namespace Llvm.NET
 
             ActiveHandler = new WrappedNativeCallback( new LLVMDiagnosticHandler( DiagnosticHandler ) );
             NativeMethods.ContextSetDiagnosticHandler( ContextHandle, ActiveHandler.GetFuncPointer( ), IntPtr.Zero );
-            CurrentThreadContext = this;
         }
 
         WrappedNativeCallback ActiveHandler;
 
-
-        [ ThreadStatic]
-        private static Context CurrentThreadContext;
 
         private void DiagnosticHandler( LLVMDiagnosticInfoRef param0, IntPtr param1 )
         {

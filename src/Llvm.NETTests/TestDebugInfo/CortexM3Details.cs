@@ -31,8 +31,8 @@ namespace TestDebugInfo
 
             var layout = function.ParentModule.Layout;
             function.AddAttributes( FunctionAttributeIndex.Parameter0 + paramIndex
-                                  , AttributeKind.ByVal
-                                  , new AttributeValue( AttributeKind.Alignment, layout.AbiAlignmentOf( argType.ElementType ) )
+                                  , AttributeKind.ByVal.ToAttributeValue( function.Context )
+                                  , new AttributeValue( function.Context, AttributeKind.Alignment, layout.AbiAlignmentOf( argType.ElementType ) )
                                   );
         }
 

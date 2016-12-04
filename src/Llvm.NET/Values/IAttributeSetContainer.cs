@@ -12,5 +12,8 @@
     {
         /// <summary>Attributes for this container</summary>
         AttributeSet Attributes { get; set; }
+
+        /// <summary>Context for the Attributes</summary>
+        Context Context { get; }
     }
 }

@@ -19,7 +19,7 @@ namespace Llvm.NET.Values
     /// </remarks>
     public static class AttributeSetContainer
     {
-        public static T AddAttribute<T>( this T self, FunctionAttributeIndex index, AttributeKind[ ] values )
+        public static T AddAttributes<T>( this T self, FunctionAttributeIndex index, AttributeKind[ ] values )
         where T : IAttributeSetContainer
         {
             if( values == null )
@@ -30,7 +30,7 @@ namespace Llvm.NET.Values
                 foreach( var kind in values )
                     bldr.Add( kind );
 
-                self.Attributes = self.Attributes.Add( index, bldr.ToAttributeSet( index ) );
+                self.Attributes = self.Attributes.Add( self.Context, index, bldr.ToAttributeSet( index, self.Context ) );
                 return self;
             }
         }
@@ -38,14 +38,14 @@ namespace Llvm.NET.Values
         public static T AddAttribute<T>( this T self, FunctionAttributeIndex index, AttributeKind value )
         where T : IAttributeSetContainer
         {
-            self.Attributes = self.Attributes.Add( index, new AttributeValue( self.Attributes.Context, value ) );
+            self.Attributes = self.Attributes.Add( self.Context, index, new AttributeValue( self.Context, value ) );
             return self;
         }
 
         public static T AddAttribute<T>( this T self, FunctionAttributeIndex index, AttributeValue value )
         where T : IAttributeSetContainer
         {
-            self.Attributes = self.Attributes.Add( index, value );
+            self.Attributes = self.Attributes.Add( self.Context, index, value );
             return self;
         }
 
@@ -63,9 +63,48 @@ namespace Llvm.NET.Values
             if( self == null )
                 throw new ArgumentNullException( nameof( self ) );
 
-            self.Attributes = self.Attributes.Add( FunctionAttributeIndex.Function, attributes );
+            self.Attributes = self.Attributes.Add( self.Context, FunctionAttributeIndex.Function, attributes );
             return self;
         }
+
+        /// <summary>Compatibility extension method to handle migrating code from older attribute handling</summary>
+        /// <param name="self">Function to add attributes to</param>
+        /// <param name="attributes">Attributes to add</param>
+        /// <returns>The function itself</returns>
+        /// <remarks>
+        /// Adds attributes to a given function itself (as opposed to the return or one of the function's parameters)
+        /// This is equivalent to calling <see cref="AddAttributes{T}(T, FunctionAttributeIndex, AttributeValue[])"/>
+        /// with <see cref="FunctionAttributeIndex.Function"/> as the first parameter
+        /// </remarks>
+        public static Function AddAttributes( this Function self, params AttributeKind[ ] attributes )
+        {
+            if( self == null )
+                throw new ArgumentNullException( nameof( self ) );
+
+            var attribValues = attributes.Select( a => a.ToAttributeValue( self.Context ) ).ToArray( );
+            self.Attributes = self.Attributes.Add( self.Context, FunctionAttributeIndex.Function, attribValues );
+            return self;
+        }
+
+        /// <summary>Compatibility extension method to handle migrating code from older attribute handling</summary>
+        /// <param name="self">Function to add attributes to</param>
+        /// <param name="attributes">Attributes to add</param>
+        /// <returns>The function itself</returns>
+        /// <remarks>
+        /// Adds attributes to a given function itself (as opposed to the return or one of the function's parameters)
+        /// This is equivalent to calling <see cref="AddAttributes{T}(T, FunctionAttributeIndex, IEnumerable{AttributeValue})"/>
+        /// with <see cref="FunctionAttributeIndex.Function"/> as the first parameter
+        /// </remarks>
+        public static Function AddAttributes( this Function self, IEnumerable<AttributeKind> attributes )
+        {
+            if( self == null )
+                throw new ArgumentNullException( nameof( self ) );
+
+            var attribValues = attributes.Select( a => a.ToAttributeValue( self.Context ) );
+            self.Attributes = self.Attributes.Add( self.Context, FunctionAttributeIndex.Function, attribValues );
+            return self;
+        }
+
 
         /// <summary>Compatibility extension method to handle migrating code from older attribute handling</summary>
         /// <param name="self">Function to add attributes to</param>
@@ -81,7 +120,7 @@ namespace Llvm.NET.Values
             if( self == null )
                 throw new ArgumentNullException( nameof( self ) );
 
-            self.Attributes = self.Attributes.Add( FunctionAttributeIndex.Function, attributes );
+            self.Attributes = self.Attributes.Add( self.Context, FunctionAttributeIndex.Function, attributes );
             return self;
         }
 
@@ -117,28 +156,28 @@ namespace Llvm.NET.Values
             if( self == null )
                 throw new ArgumentNullException( nameof( self ) );
 
-            self.Attributes = self.Attributes.Remove( FunctionAttributeIndex.Function, name );
+            self.Attributes = self.Attributes.Remove( self.Context, FunctionAttributeIndex.Function, name );
             return self;
         }
 
         public static T AddAttributes<T>( this T self, FunctionAttributeIndex index, params AttributeValue[ ] attributes )
         where T : IAttributeSetContainer
         {
-            self.Attributes = self.Attributes.Add( index, attributes );
+            self.Attributes = self.Attributes.Add( self.Context, index, attributes );
             return self;
         }
 
         public static T AddAttributes<T>( this T self, FunctionAttributeIndex index, AttributeSet attributes )
         where T : IAttributeSetContainer
         {
-            self.Attributes = self.Attributes.Add( index, attributes[ index ] );
+            self.Attributes = self.Attributes.Add( self.Context, index, attributes[ index ] );
             return self;
         }
 
         public static T AddAttributes<T>( this T self, FunctionAttributeIndex index, IEnumerable<AttributeValue> attributes )
         where T : IAttributeSetContainer
         {
-            self.Attributes = self.Attributes.Add( index, attributes );
+            self.Attributes = self.Attributes.Add( self.Context, index, attributes );
             return self;
         }
 
@@ -152,7 +191,7 @@ namespace Llvm.NET.Values
         public static T RemoveAttribute<T>( this T self, FunctionAttributeIndex index, string name )
         where T : IAttributeSetContainer
         {
-            self.Attributes = self.Attributes.Remove( index, name );
+            self.Attributes = self.Attributes.Remove( self.Context, index, name );
             return self;
         }
     }

@@ -4,11 +4,12 @@ using Llvm.NET.Instructions;
 using Llvm.NET.Values;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Threading.Tasks;
+using Llvm.NETTests;
 
 namespace Llvm.NET.Tests
 {
     [TestClass]
-    [DeploymentItem("LibLLVM.dll")]
+    [DeploymentItem( "LibLLVM.dll" )]
     public class ModuleTests
     {
         private const string StructTestName = "struct.Test";
@@ -29,7 +30,7 @@ namespace Llvm.NET.Tests
 
                 // until explicitly created DICompileUnit should be null
                 Assert.IsNull( module.DICompileUnit );
-                
+
                 // Functions collection should be valid but empty
                 Assert.IsNotNull( module.Functions );
                 Assert.IsFalse( module.Functions.Any( ) );
@@ -55,7 +56,7 @@ namespace Llvm.NET.Tests
 
                 // until explicitly created DICompileUnit should be null
                 Assert.IsNull( module.DICompileUnit );
-                
+
                 // Functions collection should be valid but empty
                 Assert.IsNotNull( module.Functions );
                 Assert.IsFalse( module.Functions.Any( ) );
@@ -79,7 +80,7 @@ namespace Llvm.NET.Tests
                 Assert.AreSame( string.Empty, module.TargetTriple );
                 Assert.IsNotNull( module.DIBuilder );
                 Assert.IsNotNull( module.DICompileUnit );
-                
+
                 // Functions collection should be valid but empty
                 Assert.IsNotNull( module.Functions );
                 Assert.IsFalse( module.Functions.Any( ) );
@@ -112,32 +113,25 @@ namespace Llvm.NET.Tests
         }
 
         [TestMethod]
+        [ExpectedArgumentException( "otherModule", ExpectedExceptionMessage = "Linking modules with different contexts is not allowed" )]
         public void MultiContextLinkTest( )
         {
-            var t1 = Task.Run( ( ) => CreateSimpleModule( "module1" ) );
-            var t2 = Task.Run( ( ) => CreateSimpleModule( "module2" ) );
-            Task.WaitAll( t1, t2 );
-            Assert.AreNotSame( t1.Result, t2.Result );
-            Assert.AreNotSame( t1.Result.Context, t2.Result.Context );
-            using( var mergedMod = new NativeModule( ) )
-            using( t2.Result )
-            using( t1.Result )
+            using( var ctx = new Context( ) )
             {
-                Assert.AreNotSame( mergedMod.Context, t1.Result.Context );
-                Assert.AreNotSame( mergedMod.Context, t2.Result.Context );
-                mergedMod.Link( t1.Result );
-                Assert.IsNull( t1.Result.Context );
-                Assert.AreEqual( 1, mergedMod.Functions.Count( ) );
-
-                mergedMod.Link( t2.Result );
-                Assert.IsNull( t2.Result.Context );
-                Assert.AreEqual( 2, mergedMod.Functions.Count( ) );
+                using( var mergedMod = new NativeModule( ) )
+                using( var m1 = CreateSimpleModule( "module1" ) )
+                using( var m2 = CreateSimpleModule( "module2" ) )
+                {
+                    Assert.AreNotSame( mergedMod.Context, m1.Context );
+                    Assert.AreNotSame( mergedMod.Context, m2.Context );
+                    mergedMod.Link( m1 ); // exception expected here.
+                }
             }
         }
 
-        private NativeModule CreateSimpleModule(string name)
+        private NativeModule CreateSimpleModule( string name, Context ctx = null )
         {
-            var retVal = new NativeModule( name );
+            var retVal = new NativeModule( name, ctx );
             CreateSimpleVoidNopTestFunction( retVal, name );
             return retVal;
         }
@@ -199,7 +193,7 @@ namespace Llvm.NET.Tests
         }
 
         [TestMethod]
-        [DeploymentItem("TestModuleAsString.ll")]
+        [DeploymentItem( "TestModuleAsString.ll" )]
         public void AsStringTest( )
         {
             using( var module = new NativeModule( TestModuleName ) )
@@ -247,7 +241,7 @@ namespace Llvm.NET.Tests
                 module.AddGlobal( module.Context.Int32Type, "TestInt" );
                 GlobalVariable globalVar = module.GetNamedGlobal( "TestInt" );
                 Assert.AreEqual( "TestInt", globalVar.Name );
-                Assert.AreSame( module.Context.Int32Type.CreatePointerType(), globalVar.NativeType );
+                Assert.AreSame( module.Context.Int32Type.CreatePointerType( ), globalVar.NativeType );
             }
         }
 
@@ -261,7 +255,7 @@ namespace Llvm.NET.Tests
                 var globalVar = module.Globals.First( ) as GlobalVariable;
                 Assert.IsNotNull( globalVar );
                 Assert.IsTrue( string.IsNullOrWhiteSpace( globalVar.Name ) );
-                Assert.AreSame( module.Context.Int32Type.CreatePointerType(), globalVar.NativeType );
+                Assert.AreSame( module.Context.Int32Type.CreatePointerType( ), globalVar.NativeType );
                 Assert.AreSame( module.Context.Int32Type, globalVar.Initializer.NativeType );
                 Assert.AreEqual( Linkage.WeakODR, globalVar.Linkage );
                 Assert.IsTrue( globalVar.IsConstant );
@@ -279,7 +273,7 @@ namespace Llvm.NET.Tests
                 module.AddGlobal( module.Context.Int32Type, true, Linkage.WeakODR, module.Context.CreateConstant( 0x12345678 ), "TestInt" );
                 GlobalVariable globalVar = module.GetNamedGlobal( "TestInt" );
                 Assert.AreEqual( "TestInt", globalVar.Name );
-                Assert.AreSame( module.Context.Int32Type.CreatePointerType(), globalVar.NativeType );
+                Assert.AreSame( module.Context.Int32Type.CreatePointerType( ), globalVar.NativeType );
                 Assert.AreSame( module.Context.Int32Type, globalVar.Initializer.NativeType );
                 Assert.AreEqual( Linkage.WeakODR, globalVar.Linkage );
                 Assert.IsTrue( globalVar.IsConstant );

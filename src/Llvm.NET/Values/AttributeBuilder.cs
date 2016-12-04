@@ -14,14 +14,14 @@ namespace Llvm.NET.Values
     /// It is important to keep in mind that an AttributeBuilder is dimensionless, that is,
     /// AttributeSet does not contain or store a <see cref="FunctionAttributeIndex"/> value.
     /// The index is applied only when creating the <see cref="AttributeSet"/> in
-    /// <see cref="ToAttributeSet(FunctionAttributeIndex)"/>
+    /// <see cref="ToAttributeSet(FunctionAttributeIndex,Context)"/>
     /// </note>
     /// </remarks>
     public sealed class AttributeBuilder
         : IDisposable
     {
         /// <summary>Creates a new empty <see cref="AttributeBuilder"/> instance</summary>
-        public AttributeBuilder()
+        public AttributeBuilder( )
         {
             BuilderHandle = NativeMethods.CreateAttributeBuilder( );
         }
@@ -38,6 +38,9 @@ namespace Llvm.NET.Values
         /// <param name="index"><see cref="FunctionAttributeIndex"/> to take from <paramref name="attributes"/></param>
         public AttributeBuilder( AttributeSet attributes, FunctionAttributeIndex index )
         {
+            if( attributes == null )
+                throw new ArgumentNullException( nameof( attributes ) );
+
             BuilderHandle = NativeMethods.CreateAttributeBuilder3( attributes.NativeAttributeSet, ( uint )index );
         }
 
@@ -129,10 +132,13 @@ namespace Llvm.NET.Values
         /// <returns></returns>
         public AttributeBuilder Remove( AttributeSet attributes, FunctionAttributeIndex index )
         {
+            if( attributes == null )
+                throw new ArgumentNullException( nameof( attributes ) );
+
             if( BuilderHandle.IsClosed )
                 throw new ObjectDisposedException( nameof( AttributeBuilder ) );
 
-            NativeMethods.AttributeBuilderRemoveAttributes( BuilderHandle, attributes.NativeAttributeSet, (uint)index );
+            NativeMethods.AttributeBuilderRemoveAttributes( BuilderHandle, attributes.NativeAttributeSet, ( uint )index );
             return this;
         }
 
@@ -153,7 +159,7 @@ namespace Llvm.NET.Values
         /// <returns>This builder for fluent style programming</returns>
         public AttributeBuilder Merge( AttributeBuilder other )
         {
-            if(other == null)
+            if( other == null )
                 throw new ArgumentNullException( nameof( other ) );
 
             if( BuilderHandle.IsClosed )
@@ -168,7 +174,7 @@ namespace Llvm.NET.Values
         /// <returns>This builder for fluent style programming</returns>
         public AttributeBuilder Remove( AttributeBuilder other )
         {
-            if(other == null)
+            if( other == null )
                 throw new ArgumentNullException( nameof( other ) );
 
             if( BuilderHandle.IsClosed )
@@ -183,7 +189,7 @@ namespace Llvm.NET.Values
         /// <returns><see langword="true"/> if this builder overlaps <paramref name="other"/></returns>
         public bool Overlaps( AttributeBuilder other )
         {
-            if(other == null)
+            if( other == null )
                 throw new ArgumentNullException( nameof( other ) );
 
             if( BuilderHandle.IsClosed )
@@ -220,19 +226,14 @@ namespace Llvm.NET.Values
         /// <returns><see langword="true"/> if any of the attributes in the specified index of <paramref name="attributes"/> exists in this builder</returns>
         public bool HasAttributes( AttributeSet attributes, FunctionAttributeIndex index )
         {
+            if( attributes == null )
+                throw new ArgumentNullException( nameof( attributes ) );
+
             if( BuilderHandle.IsClosed )
                 throw new ObjectDisposedException( nameof( AttributeBuilder ) );
 
             return NativeMethods.AttributeBuilderHasAttributes( BuilderHandle, attributes.NativeAttributeSet, ( uint )index );
         }
-
-        /// <summary>Converts the contents of this builder to an immutable <see cref="AttributeSet"/></summary>
-        /// <param name="index">Index for the attributes in the new AttributeSet</param>
-        /// <returns>New <see cref="AttributeSet"/> containing the attributes from this builder in the specified index</returns>
-        /// <remarks>
-        /// This overload uses <see cref="Context.CurrentContext"/> to build the <see cref="AttributeSet"/>
-        /// </remarks>
-        public AttributeSet ToAttributeSet( FunctionAttributeIndex index ) => ToAttributeSet( index, Context.CurrentContext );
 
         /// <summary>Converts the contents of this builder to an immutable <see cref="AttributeSet"/></summary>
         /// <param name="index">Index for the attributes in the new AttributeSet</param>

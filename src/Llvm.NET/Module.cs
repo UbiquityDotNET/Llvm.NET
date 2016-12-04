@@ -298,23 +298,14 @@ namespace Llvm.NET
             if( otherModule == null )
                 throw new ArgumentNullException( nameof( otherModule ) );
 
-            var otherContext = otherModule.Context;
+            if( otherModule.Context != Context )
+                throw new ArgumentException( "Linking modules with different contexts is not allowed", nameof( otherModule ) );
 
-            // TODO: need to hook up context error diagnostic reporting mechanism
-            // as underlying LLVM functionality now uses that instead of providing
-            // error messages as an out parameter.
-
-            //IntPtr errMsgPtr;
             if( !NativeMethods.LinkModules( ModuleHandle, otherModule.ModuleHandle ).Succeeded )
             {
-                //var errMsg = NativeMethods.MarshalMsg( errMsgPtr );
                 throw new InternalCodeGeneratorException( "Module link error" );
             }
-            // can't just call otherModule.Dispose() here as that will attempt to retrieve the
-            // context from the module handle, however the module is invalid at this point so the
-            // native handle retrieved will be null (or 0xDDDDDDDDD in a debug build)
-            // by setting the module to null that is prevented and the module is considered disposed
-            otherContext.RemoveModule( otherModule );
+
             otherModule.ModuleHandle = LLVMModuleRef.Zero;
         }
 

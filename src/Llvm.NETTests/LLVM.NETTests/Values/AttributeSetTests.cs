@@ -20,12 +20,13 @@ namespace Llvm.NETTests
         {
             using( var module = new NativeModule( "test" ) )
             {
-                var sig = module.Context.GetFunctionType( module.Context.Int8Type.CreatePointerType(), module.Context.Int32Type );
+                var ctx = module.Context;
+                var sig = ctx.GetFunctionType( module.Context.Int8Type.CreatePointerType(), module.Context.Int32Type );
                 var function = module.AddFunction( "test", sig );
                 // add attributes to all indices of the function
-                var attributes = function.Attributes.Add( FunctionAttributeIndex.Function, AttributeKind.AlwaysInline, AttributeKind.OptimizeNone );
-                attributes = attributes.Add( FunctionAttributeIndex.ReturnType, AttributeKind.NonNull );
-                attributes = attributes.Add( FunctionAttributeIndex.Parameter0, AttributeKind.InReg );
+                var attributes = function.Attributes.Add( ctx, FunctionAttributeIndex.Function, AttributeKind.AlwaysInline, AttributeKind.OptimizeNone );
+                attributes = attributes.Add( ctx, FunctionAttributeIndex.ReturnType, AttributeKind.NonNull );
+                attributes = attributes.Add( ctx, FunctionAttributeIndex.Parameter0, AttributeKind.InReg );
 
                 var paramAttributes = attributes.ParameterAttributes( 0 );
                 Assert.AreNotSame( attributes, paramAttributes );
@@ -41,12 +42,13 @@ namespace Llvm.NETTests
         {
             using( var module = new NativeModule( "test" ) )
             {
-                var sig = module.Context.GetFunctionType( module.Context.Int8Type.CreatePointerType(), module.Context.Int32Type, module.Context.Int32Type );
+                var ctx = module.Context;
+                var sig = ctx.GetFunctionType( module.Context.Int8Type.CreatePointerType(), module.Context.Int32Type, module.Context.Int32Type );
                 var function = module.AddFunction( "test", sig );
                 // add attributes to all indices of the function
-                var attributes = function.Attributes.Add( FunctionAttributeIndex.Function, AttributeKind.AlwaysInline, AttributeKind.OptimizeNone )
-                                                    .Add( FunctionAttributeIndex.ReturnType, AttributeKind.NonNull )
-                                                    .Add( FunctionAttributeIndex.Parameter0, AttributeKind.InReg );
+                var attributes = function.Attributes.Add( ctx, FunctionAttributeIndex.Function, AttributeKind.AlwaysInline, AttributeKind.OptimizeNone )
+                                                    .Add( ctx, FunctionAttributeIndex.ReturnType, AttributeKind.NonNull )
+                                                    .Add( ctx, FunctionAttributeIndex.Parameter0, AttributeKind.InReg );
 
                 var paramAttributes = attributes.ParameterAttributes( 0 );
                 Assert.AreNotSame( attributes, paramAttributes );
@@ -104,11 +106,12 @@ namespace Llvm.NETTests
         {
             using( var module = new NativeModule( "test" ) )
             {
-                var sig = module.Context.GetFunctionType( module.Context.Int8Type.CreatePointerType(), module.Context.Int32Type );
+                var ctx = module.Context;
+                var sig = ctx.GetFunctionType( module.Context.Int8Type.CreatePointerType(), module.Context.Int32Type );
                 var function = module.AddFunction( "test", sig );
-                var funcAttributes = function.Attributes.Add( FunctionAttributeIndex.Function, AttributeKind.NoInline, AttributeKind.OptimizeNone );
-                var retAttributes = funcAttributes.Add( FunctionAttributeIndex.ReturnType, AttributeKind.NonNull );
-                var paramAttributes = retAttributes.Add( FunctionAttributeIndex.Parameter0, AttributeKind.InReg );
+                var funcAttributes = function.Attributes.Add( ctx, FunctionAttributeIndex.Function, AttributeKind.NoInline, AttributeKind.OptimizeNone );
+                var retAttributes = funcAttributes.Add( ctx, FunctionAttributeIndex.ReturnType, AttributeKind.NonNull );
+                var paramAttributes = retAttributes.Add( ctx, FunctionAttributeIndex.Parameter0, AttributeKind.InReg );
 
                 // None of the attributeSets returned should be the same instance they started from
                 Assert.AreNotSame( function.Attributes, funcAttributes );
@@ -148,8 +151,8 @@ namespace Llvm.NETTests
                 var sig = module.Context.GetFunctionType( module.Context.Int8Type.CreatePointerType(), module.Context.Int32Type );
                 var function = module.AddFunction( "test", sig );
                 function.AddAttributes( AttributeKind.AlwaysInline, AttributeKind.OptimizeNone );
-                function.AddAttributes( FunctionAttributeIndex.ReturnType, AttributeKind.NonNull );
-                function.AddAttributes( FunctionAttributeIndex.Parameter0, AttributeKind.InReg );
+                function.AddAttribute( FunctionAttributeIndex.ReturnType, AttributeKind.NonNull );
+                function.AddAttribute( FunctionAttributeIndex.Parameter0, AttributeKind.InReg );
                 Assert.AreEqual( "alwaysinline optnone", function.Attributes.AsString( FunctionAttributeIndex.Function ) );
                 Assert.AreEqual( "nonnull", function.Attributes.AsString( FunctionAttributeIndex.ReturnType ) );
                 Assert.AreEqual( "inreg", function.Attributes.AsString( FunctionAttributeIndex.Parameter0 ) );
@@ -170,14 +173,14 @@ namespace Llvm.NETTests
                 // shouldn't be created with any attributes
                 Assert.IsFalse( originalAttributes.HasAny( FunctionAttributeIndex.Function ) );
 
-                var newAttribs = func.Attributes.Add( FunctionAttributeIndex.Function, AttributeKind.AlwaysInline );
+                var newAttribs = func.Attributes.Add( ctx, FunctionAttributeIndex.Function, AttributeKind.AlwaysInline );
                 // creating the new AttributeSet shouldn't modify the original
                 Assert.IsFalse( originalAttributes.Has( FunctionAttributeIndex.Function, AttributeKind.AlwaysInline ) );
 
                 Assert.IsTrue( newAttribs.Has( FunctionAttributeIndex.Function, AttributeKind.AlwaysInline ) );
 
                 // Add another attribute
-                var additionalAttributes = newAttribs.Add( FunctionAttributeIndex.Function, AttributeKind.NoUnwind );
+                var additionalAttributes = newAttribs.Add( ctx, FunctionAttributeIndex.Function, AttributeKind.NoUnwind );
                 Assert.IsTrue( additionalAttributes.Has( FunctionAttributeIndex.Function, AttributeKind.NoUnwind ) );
 
                 // function should still have the previous attributes, but not the new ones
@@ -201,14 +204,14 @@ namespace Llvm.NETTests
                 // shouldn't be created with any attributes
                 Assert.IsFalse( originalAttributes.HasAny( FunctionAttributeIndex.Function ) );
 
-                var newAttribs = func.Attributes.Add( FunctionAttributeIndex.Function, AttributeKind.AlwaysInline );
+                var newAttribs = func.Attributes.Add( ctx, FunctionAttributeIndex.Function, AttributeKind.AlwaysInline );
                 // creating the new AttributeSet shouldn't modify the original
                 Assert.IsFalse( originalAttributes.Has( FunctionAttributeIndex.Function, AttributeKind.AlwaysInline ) );
 
                 Assert.IsTrue( newAttribs.Has( FunctionAttributeIndex.Function, AttributeKind.AlwaysInline ) );
 
                 // Add another attribute
-                var additionalAttributes = newAttribs.Add( FunctionAttributeIndex.Function, AttributeKind.NoUnwind );
+                var additionalAttributes = newAttribs.Add( ctx, FunctionAttributeIndex.Function, AttributeKind.NoUnwind );
                 Assert.IsTrue( additionalAttributes.Has( FunctionAttributeIndex.Function, AttributeKind.NoUnwind ) );
 
                 // function should still have the previous attributes, but not the new ones
@@ -295,9 +298,10 @@ namespace Llvm.NETTests
         {
             using( var module = new NativeModule( "test" ) )
             {
-                var sig = module.Context.GetFunctionType( module.Context.Int8Type.CreatePointerType(), module.Context.Int32Type );
+                var ctx = module.Context;
+                var sig = ctx.GetFunctionType( ctx.Int8Type.CreatePointerType(), ctx.Int32Type );
                 var function = module.AddFunction( "test", sig );
-                var attributes = function.Attributes.Add( FunctionAttributeIndex.Parameter0, new AttributeValue(AttributeKind.Alignment, 64) );
+                var attributes = function.Attributes.Add( ctx, FunctionAttributeIndex.Parameter0, new AttributeValue( ctx, AttributeKind.Alignment, 64) );
                 var actual = attributes.GetAttributeValue( FunctionAttributeIndex.Parameter0, AttributeKind.Alignment );
                 Assert.AreEqual( 64ul, actual );
             }
@@ -308,9 +312,10 @@ namespace Llvm.NETTests
         {
             using( var module = new NativeModule( "test" ) )
             {
-                var sig = module.Context.GetFunctionType( module.Context.Int8Type.CreatePointerType(), module.Context.Int32Type );
+                var ctx = module.Context;
+                var sig = ctx.GetFunctionType( ctx.Int8Type.CreatePointerType(), ctx.Int32Type );
                 var function = module.AddFunction( "test", sig );
-                var attributes = function.Attributes.Add( FunctionAttributeIndex.Parameter0, new AttributeValue(AttributeKind.Dereferenceable, 64) );
+                var attributes = function.Attributes.Add( ctx, FunctionAttributeIndex.Parameter0, new AttributeValue( ctx, AttributeKind.Dereferenceable, 64) );
                 var actual = attributes.GetAttributeValue( FunctionAttributeIndex.Parameter0, AttributeKind.Dereferenceable );
                 Assert.AreEqual( 64ul, actual );
             }
@@ -321,9 +326,10 @@ namespace Llvm.NETTests
         {
             using( var module = new NativeModule( "test" ) )
             {
-                var sig = module.Context.GetFunctionType( module.Context.Int8Type.CreatePointerType(), module.Context.Int32Type );
+                var ctx = module.Context;
+                var sig = ctx.GetFunctionType( ctx.Int8Type.CreatePointerType(), ctx.Int32Type );
                 var function = module.AddFunction( "test", sig );
-                var attributes = function.Attributes.Add( FunctionAttributeIndex.Parameter0, new AttributeValue(AttributeKind.DereferenceableOrNull, 64) );
+                var attributes = function.Attributes.Add( ctx, FunctionAttributeIndex.Parameter0, new AttributeValue( ctx, AttributeKind.DereferenceableOrNull, 64) );
                 var actual = attributes.GetAttributeValue( FunctionAttributeIndex.Parameter0, AttributeKind.DereferenceableOrNull );
                 Assert.AreEqual( 64ul, actual );
             }
@@ -334,9 +340,10 @@ namespace Llvm.NETTests
         {
             using( var module = new NativeModule( "test" ) )
             {
-                var sig = module.Context.GetFunctionType( module.Context.Int8Type.CreatePointerType(), module.Context.Int32Type );
+                var ctx = module.Context;
+                var sig = module.Context.GetFunctionType( ctx.Int8Type.CreatePointerType(), ctx.Int32Type );
                 var function = module.AddFunction( "test", sig );
-                var attributes = function.Attributes.Add( FunctionAttributeIndex.Function, new AttributeValue(AttributeKind.StackAlignment, 64) );
+                var attributes = function.Attributes.Add( ctx, FunctionAttributeIndex.Function, new AttributeValue( ctx, AttributeKind.StackAlignment, 64) );
                 var actual = attributes.GetAttributeValue( FunctionAttributeIndex.Function, AttributeKind.StackAlignment );
                 Assert.AreEqual( 64ul, actual );
             }
@@ -353,11 +360,12 @@ namespace Llvm.NETTests
         {
             using( var module = new NativeModule( "test" ) )
             {
+                var ctx = module.Context;
                 var sig = module.Context.GetFunctionType( module.Context.Int8Type.CreatePointerType(), module.Context.Int32Type );
                 var function = module.AddFunction( "test", sig );
-                var attributes = function.Attributes.Add( FunctionAttributeIndex.Function, AttributeKind.AlwaysInline, AttributeKind.OptimizeNone );
-                attributes = attributes.Add( FunctionAttributeIndex.ReturnType, AttributeKind.NonNull );
-                attributes = attributes.Add( FunctionAttributeIndex.Parameter0, AttributeKind.InReg );
+                var attributes = function.Attributes.Add( ctx, FunctionAttributeIndex.Function, AttributeKind.AlwaysInline, AttributeKind.OptimizeNone );
+                attributes = attributes.Add( ctx, FunctionAttributeIndex.ReturnType, AttributeKind.NonNull );
+                attributes = attributes.Add( ctx, FunctionAttributeIndex.Parameter0, AttributeKind.InReg );
 
                 // verify all the expected attributes are present before trying to remove one
                 Assert.IsTrue( attributes.Has( FunctionAttributeIndex.ReturnType, AttributeKind.NonNull ) );
@@ -378,12 +386,13 @@ namespace Llvm.NETTests
         {
             using( var module = new NativeModule( "test" ) )
             {
-                var sig = module.Context.GetFunctionType( module.Context.Int8Type.CreatePointerType(), module.Context.Int32Type );
+                var ctx = module.Context;
+                var sig = ctx.GetFunctionType( module.Context.Int8Type.CreatePointerType(), module.Context.Int32Type );
                 var function = module.AddFunction( "test", sig );
-                var attributes = function.Attributes.Add( FunctionAttributeIndex.Function, AttributeKind.AlwaysInline );
-                attributes = attributes.Add( FunctionAttributeIndex.Function, "testattr" );
-                attributes = attributes.Add( FunctionAttributeIndex.ReturnType, AttributeKind.NonNull );
-                attributes = attributes.Add( FunctionAttributeIndex.Parameter0, AttributeKind.InReg );
+                var attributes = function.Attributes.Add( ctx, FunctionAttributeIndex.Function, AttributeKind.AlwaysInline );
+                attributes = attributes.Add( ctx, FunctionAttributeIndex.Function, new AttributeValue( module.Context, "testattr" ) );
+                attributes = attributes.Add( ctx, FunctionAttributeIndex.ReturnType, AttributeKind.NonNull );
+                attributes = attributes.Add( ctx, FunctionAttributeIndex.Parameter0, AttributeKind.InReg );
 
                 // verify all the expected attributes are present before trying to remove one
                 Assert.IsTrue( attributes.Has( FunctionAttributeIndex.ReturnType, AttributeKind.NonNull ) );
@@ -391,7 +400,7 @@ namespace Llvm.NETTests
                 Assert.IsTrue( attributes.Has( FunctionAttributeIndex.Function, AttributeKind.AlwaysInline ) );
                 Assert.IsTrue( attributes.Has( FunctionAttributeIndex.Function, "testattr" ) );
 
-                attributes = attributes.Remove( FunctionAttributeIndex.Function, "testattr" );
+                attributes = attributes.Remove( ctx, FunctionAttributeIndex.Function, "testattr" );
                 Assert.IsTrue( attributes.Has( FunctionAttributeIndex.ReturnType, AttributeKind.NonNull ) );
                 Assert.IsTrue( attributes.Has( FunctionAttributeIndex.Parameter0, AttributeKind.InReg ) );
                 Assert.IsTrue( attributes.Has( FunctionAttributeIndex.Function, AttributeKind.AlwaysInline ) );
@@ -410,10 +419,10 @@ namespace Llvm.NETTests
                 Assert.IsFalse( attributes.HasAny( FunctionAttributeIndex.Parameter0 ) );
                 Assert.IsFalse( attributes.HasAny( FunctionAttributeIndex.Parameter0 + 1 ) );
 
-                attributes = attributes.Add( FunctionAttributeIndex.Function, AttributeKind.AlwaysInline, AttributeKind.Builtin )
-                                       .Add( FunctionAttributeIndex.ReturnType, new AttributeValue( AttributeKind.DereferenceableOrNull, 1 ) )
-                                       .Add( FunctionAttributeIndex.Parameter0, AttributeKind.ByVal )
-                                       .Add( FunctionAttributeIndex.Parameter0 + 1, "TestCustom" );
+                attributes = attributes.Add( ctx, FunctionAttributeIndex.Function, AttributeKind.AlwaysInline, AttributeKind.Builtin )
+                                       .Add( ctx, FunctionAttributeIndex.ReturnType, new AttributeValue( ctx, AttributeKind.DereferenceableOrNull, 1 ) )
+                                       .Add( ctx, FunctionAttributeIndex.Parameter0, AttributeKind.ByVal )
+                                       .Add( ctx, FunctionAttributeIndex.Parameter0 + 1, new AttributeValue( ctx, "TestCustom" ) );
 
                 Assert.IsTrue( attributes.HasAny( FunctionAttributeIndex.Function ) );
                 Assert.IsTrue( attributes.HasAny( FunctionAttributeIndex.ReturnType ) );
@@ -435,10 +444,10 @@ namespace Llvm.NETTests
                 Assert.IsFalse( attributes.Has( FunctionAttributeIndex.Parameter0, AttributeKind.ByVal ) );
                 Assert.IsFalse( attributes.Has( FunctionAttributeIndex.Parameter0 + 1, "TestCustom" ) );
 
-                attributes = attributes.Add( FunctionAttributeIndex.Function, AttributeKind.AlwaysInline, AttributeKind.Builtin )
-                                       .Add( FunctionAttributeIndex.ReturnType, new AttributeValue( AttributeKind.DereferenceableOrNull, 1 ) )
-                                       .Add( FunctionAttributeIndex.Parameter0, AttributeKind.ByVal )
-                                       .Add( FunctionAttributeIndex.Parameter0 + 1, "TestCustom" );
+                attributes = attributes.Add( ctx, FunctionAttributeIndex.Function, AttributeKind.AlwaysInline, AttributeKind.Builtin )
+                                       .Add( ctx, FunctionAttributeIndex.ReturnType, new AttributeValue( ctx, AttributeKind.DereferenceableOrNull, 1 ) )
+                                       .Add( ctx, FunctionAttributeIndex.Parameter0, AttributeKind.ByVal )
+                                       .Add( ctx, FunctionAttributeIndex.Parameter0 + 1, new AttributeValue( ctx, "TestCustom" ) );
 
                 Assert.IsTrue( attributes.Has( FunctionAttributeIndex.Function, AttributeKind.AlwaysInline ) );
                 Assert.IsTrue( attributes.Has( FunctionAttributeIndex.Function, AttributeKind.Builtin ) );
@@ -506,17 +515,17 @@ namespace Llvm.NETTests
         {
             using( var ctx = new Context( ) )
             {
-                var attributes = new AttributeSet( ).Add( FunctionAttributeIndex.Function, AttributeKind.AlwaysInline, AttributeKind.Builtin )
-                                                    .Add( FunctionAttributeIndex.ReturnType, new AttributeValue( AttributeKind.DereferenceableOrNull, 1 ) )
-                                                    .Add( FunctionAttributeIndex.Parameter0, AttributeKind.ByVal )
-                                                    .Add( FunctionAttributeIndex.Parameter0 + 1, "TestCustom" );
+                var attributes = new AttributeSet( ).Add( ctx, FunctionAttributeIndex.Function, AttributeKind.AlwaysInline, AttributeKind.Builtin )
+                                                    .Add( ctx, FunctionAttributeIndex.ReturnType, new AttributeValue( ctx, AttributeKind.DereferenceableOrNull, 1 ) )
+                                                    .Add( ctx, FunctionAttributeIndex.Parameter0, AttributeKind.ByVal )
+                                                    .Add( ctx, FunctionAttributeIndex.Parameter0 + 1, "TestCustom".ToAttributeValue( ctx ) );
 
                 var expectedSet = new HashSet<IndexedAttributeValue>
-                    { new IndexedAttributeValue( FunctionAttributeIndex.Function, AttributeKind.AlwaysInline )
-                    , new IndexedAttributeValue( FunctionAttributeIndex.Function, AttributeKind.Builtin )
-                    , new IndexedAttributeValue( FunctionAttributeIndex.ReturnType, new AttributeValue(AttributeKind.DereferenceableOrNull, 1 ) )
-                    , new IndexedAttributeValue( FunctionAttributeIndex.Parameter0, AttributeKind.ByVal )
-                    , new IndexedAttributeValue( FunctionAttributeIndex.Parameter0 + 1, "TestCustom" )
+                    { new IndexedAttributeValue( FunctionAttributeIndex.Function, AttributeKind.AlwaysInline.ToAttributeValue( ctx ) )
+                    , new IndexedAttributeValue( FunctionAttributeIndex.Function, AttributeKind.Builtin.ToAttributeValue( ctx ) )
+                    , new IndexedAttributeValue( FunctionAttributeIndex.ReturnType, new AttributeValue( ctx, AttributeKind.DereferenceableOrNull, 1 ) )
+                    , new IndexedAttributeValue( FunctionAttributeIndex.Parameter0, AttributeKind.ByVal.ToAttributeValue( ctx ) )
+                    , new IndexedAttributeValue( FunctionAttributeIndex.Parameter0 + 1, new AttributeValue( ctx, "TestCustom" ) )
                     };
 
                 Assert.IsTrue( expectedSet.SetEquals( attributes.AllAttributes ) );

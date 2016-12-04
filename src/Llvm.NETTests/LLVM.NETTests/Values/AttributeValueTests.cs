@@ -25,7 +25,7 @@ namespace Llvm.NET.Values.Tests
         [ExpectedArgumentException("context", ExpectedExceptionMessage = "Provided context cannot be null or disposed")]
         public void AttributeValueConstructorNoContextTest( )
         {
-            var value = new AttributeValue( AttributeKind.AlwaysInline );
+            var value = new AttributeValue( null, AttributeKind.AlwaysInline );
         }
 
         [TestMethod]
@@ -33,7 +33,7 @@ namespace Llvm.NET.Values.Tests
         {
             using( var ctx = new Context( ) )
             {
-                var value = new AttributeValue( AttributeKind.AlwaysInline );
+                var value = new AttributeValue(ctx, AttributeKind.AlwaysInline );
                 Assert.IsFalse( value.IntegerValue.HasValue );
                 Assert.IsFalse( value.IsInt );
                 Assert.IsFalse( value.IsString );
@@ -50,7 +50,7 @@ namespace Llvm.NET.Values.Tests
         {
             using( var ctx = new Context( ) )
             {
-                var value = new AttributeValue( AttributeKind.DereferenceableOrNull, 1234ul );
+                var value = new AttributeValue(ctx, AttributeKind.DereferenceableOrNull, 1234ul );
                 Assert.IsTrue( value.IntegerValue.HasValue );
                 Assert.IsTrue( value.IsInt );
                 Assert.IsFalse( value.IsString );
@@ -68,7 +68,7 @@ namespace Llvm.NET.Values.Tests
         {
             using( var ctx = new Context( ) )
             {
-                var value = new AttributeValue( TestTargetDependentAttributeName );
+                var value = new AttributeValue( ctx, TestTargetDependentAttributeName );
                 Assert.IsFalse( value.IntegerValue.HasValue );
                 Assert.IsFalse( value.IsInt );
                 Assert.IsTrue( value.IsString );
@@ -84,7 +84,7 @@ namespace Llvm.NET.Values.Tests
         {
             using( var ctx = new Context( ) )
             {
-                AttributeValue value = AttributeKind.NoInline;
+                AttributeValue value = AttributeKind.NoInline.ToAttributeValue( ctx );
                 Assert.IsFalse( value.IntegerValue.HasValue );
                 Assert.IsFalse( value.IsInt );
                 Assert.IsFalse( value.IsString );
@@ -101,7 +101,7 @@ namespace Llvm.NET.Values.Tests
         {
             using( var ctx = new Context( ) )
             {
-                AttributeValue value = TestTargetDependentAttributeName;
+                AttributeValue value = TestTargetDependentAttributeName.ToAttributeValue( ctx );
                 Assert.IsFalse( value.IntegerValue.HasValue );
                 Assert.IsFalse( value.IsInt );
                 Assert.IsTrue( value.IsString );

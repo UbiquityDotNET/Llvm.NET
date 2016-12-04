@@ -26,7 +26,6 @@ namespace Llvm.NET.Values
             if( builder == null )
                 throw new ArgumentNullException( nameof( builder ) );
 
-            context.VerifyAsArg( nameof( context ) );
             NativeAttributeSet = NativeMethods.CreateAttributeSetFromBuilder( context.ContextHandle, ( uint )index, builder.BuilderHandle );
         }
 
@@ -49,25 +48,12 @@ namespace Llvm.NET.Values
 
         public bool Equals( AttributeSet other ) => NativeAttributeSet == other.NativeAttributeSet;
 
+
         public static bool operator ==( AttributeSet left, AttributeSet right ) => left.Equals( right );
         public static bool operator !=( AttributeSet left, AttributeSet right ) => !left.Equals( right );
         #endregion
 
-        /// <summary>Context used to intern this <see cref="AttributeSet"/></summary>
-        /// <remarks>
-        /// The Context returned will be <see cref="Context.CurrentThreadContext"/> if this <see cref="AttributeSet"/> is empty.
-        /// This ensures that there is always a context available for creating new AttributeSets
-        /// </remarks>
-        public Context Context
-        {
-            get
-            {
-                if( NativeAttributeSet.IsNull( ) )
-                    return Context.CurrentContext;
-
-                return Context.GetContextFor( NativeMethods.AttributeSetGetContext( NativeAttributeSet ) );
-            }
-        }
+        public bool IsEmpty => NativeAttributeSet.IsNull( );
 
         /// <summary>Retrieves an attributeSet filtered by the specified function index</summary>
         /// <param name="index">Index to filter on</param>
@@ -77,7 +63,7 @@ namespace Llvm.NET.Values
             get
             {
                 // explicitly check Context so that getter method doesn't throw an exception
-                if( Context == null || Context.IsDisposed || !HasAny( index ) )
+                if( IsEmpty || !HasAny( index ) )
                     return new AttributeSet( );
 
                 return new AttributeSet( NativeMethods.AttributeGetAttributes( NativeAttributeSet, ( uint )index ) );
@@ -90,7 +76,7 @@ namespace Llvm.NET.Values
             get
             {
                 // explicitly check Context so that getter method doesn't throw an exception
-                if( Context == null || Context.IsDisposed )
+                if( IsEmpty )
                     yield break;
 
                 var numIndices = NativeMethods.AttributeSetGetNumSlots( NativeAttributeSet );
@@ -111,7 +97,6 @@ namespace Llvm.NET.Values
         [System.Diagnostics.CodeAnalysis.SuppressMessage( "Microsoft.Naming", "CA2204:Literals should be spelled correctly", MessageId = "AttributeSet" )]
         public AttributeSet ParameterAttributes( int parameterIndex )
         {
-            Context.VerifyOperation( );
             // prevent overflow on offset addition below
             if( parameterIndex > int.MaxValue - ( int )FunctionAttributeIndex.Parameter0 )
                 throw new ArgumentOutOfRangeException( nameof( parameterIndex ) );
@@ -125,7 +110,6 @@ namespace Llvm.NET.Values
         /// <returns>Formatted string for the specified attribute index</returns>
         public string AsString( FunctionAttributeIndex index )
         {
-            Context.VerifyOperation( );
             var msgPtr = NativeMethods.AttributeSetToString( NativeAttributeSet, ( uint )index, false );
             return NativeMethods.MarshalMsg( msgPtr );
         }
@@ -156,7 +140,6 @@ namespace Llvm.NET.Values
         /// <returns>Formatted string representation of the <see cref="AttributeSet"/></returns>
         public override string ToString( )
         {
-            Context.VerifyOperation( );
             var bldr = new StringBuilder( );
             var indexGroups = from attribute in AllAttributes
                               group attribute.Value.ToString( ) by attribute.Index;
@@ -176,83 +159,99 @@ namespace Llvm.NET.Values
         /// <summary>Adds a set of attributes</summary>
         /// <param name="index">Index for the attribute</param>
         /// <param name="attributes">Attributes to add</param>
-        public AttributeSet Add( FunctionAttributeIndex index, params AttributeValue[ ] attributes )
-        {
-            return Add( index, ( IEnumerable<AttributeValue> )attributes );
-        }
+        /// <param name="ctx">Context for construction of the resulting <see cref="AttributeSet"/></param>
+        public AttributeSet Add(Context ctx, FunctionAttributeIndex index, params AttributeValue[ ] attributes )
+            => Add( ctx, index, ( IEnumerable<AttributeValue> )attributes );
+
+        /// <summary>Adds a set of attributes</summary>
+        /// <param name="index">Index for the attribute</param>
+        /// <param name="attributes">Attributes to add</param>
+        /// <param name="ctx">Context for construction of the resulting <see cref="AttributeSet"/></param>
+        public AttributeSet Add( Context ctx, FunctionAttributeIndex index, params AttributeKind[ ] attributes )
+            => Add( ctx, index, attributes.Select( a => a.ToAttributeValue( ctx ) ) );
 
         /// <summary>Produces a new <see cref="AttributeSet"/> that includes the attributes from this set along with additional attributes provided</summary>
         /// <param name="index"><see cref="FunctionAttributeIndex"/> to use for the new attributes</param>
         /// <param name="attributes">Collection of attributes to add</param>
+        /// <param name="ctx">Context for construction of the resulting <see cref="AttributeSet"/></param>
         /// <returns>Newly created <see cref="AttributeSet"/>with the new attributes added</returns>
-        public AttributeSet Add( FunctionAttributeIndex index, IEnumerable<AttributeValue> attributes )
+        public AttributeSet Add( Context ctx, FunctionAttributeIndex index, IEnumerable<AttributeValue> attributes )
         {
+            if( ctx == null )
+                throw new ArgumentNullException( nameof( ctx ) );
+
             if( attributes == null )
                 throw new ArgumentNullException( nameof( attributes ) );
 
-            Context.VerifyOperation( );
             using( var bldr = new AttributeBuilder( ) )
             {
                 foreach( var attribute in attributes )
                     bldr.Add( attribute );
 
-                return Add( index, bldr.ToAttributeSet( index, Context ) );
+                return Add( ctx, index, bldr.ToAttributeSet( index, ctx ) );
             }
         }
 
         /// <summary>Adds a single attribute</summary>
         /// <param name="index">Index for the attribute</param>
         /// <param name="attribute"><see cref="AttributeValue"/> kind to add</param>
-        public AttributeSet Add( FunctionAttributeIndex index, AttributeValue attribute )
+        /// <param name="ctx">Context for construction of the resulting <see cref="AttributeSet"/></param>
+        public AttributeSet Add( Context ctx, FunctionAttributeIndex index, AttributeValue attribute )
         {
-            Context.VerifyOperation( );
             using( var bldr = new AttributeBuilder( ) )
             {
                 bldr.Add( attribute );
-                return Add( index, bldr.ToAttributeSet( index, Context ) );
+                return Add( ctx, index, bldr.ToAttributeSet( index, ctx ) );
             }
         }
 
         /// <summary>Adds Attributes from another attribute set along a given index</summary>
         /// <param name="index">Index to add attributes to and from</param>
         /// <param name="attributes"><see cref="AttributeSet"/> to add the attributes from</param>
+        /// <param name="ctx">Context for construction of the resulting <see cref="AttributeSet"/></param>
         /// <returns>New <see cref="AttributeSet"/>Containing all attributes of this set plus any
         ///  attributes from <paramref name="attributes"/> along the specified <paramref name="index"/></returns>
-        public AttributeSet Add( FunctionAttributeIndex index, AttributeSet attributes )
+        public AttributeSet Add( Context ctx, FunctionAttributeIndex index, AttributeSet attributes )
         {
-            Context.VerifyOperation( );
-            var nativeSet = NativeMethods.AttributeSetAddAttributes( NativeAttributeSet, Context.ContextHandle, ( uint )index, attributes.NativeAttributeSet );
+            if( ctx == null )
+                throw new ArgumentNullException( nameof( ctx ) );
+
+            var nativeSet = NativeMethods.AttributeSetAddAttributes( NativeAttributeSet, ctx.ContextHandle, ( uint )index, attributes.NativeAttributeSet );
             return new AttributeSet( nativeSet );
         }
 
         /// <summary>Removes the specified attribute from the attribute set</summary>
         public AttributeSet Remove( FunctionAttributeIndex index, AttributeKind kind )
         {
-            Context.VerifyOperation( );
+            if( IsEmpty )
+                return this;
+
             var nativeSet = NativeMethods.AttributeSetRemoveAttributeKind( NativeAttributeSet, ( uint )index, ( LLVMAttrKind )kind );
             return new AttributeSet( nativeSet );
         }
 
-        public AttributeSet Remove( FunctionAttributeIndex index, AttributeBuilder builder )
+        public AttributeSet Remove( Context ctx, FunctionAttributeIndex index, AttributeBuilder builder )
         {
+            if( ctx == null )
+                throw new ArgumentNullException( nameof( ctx ) );
+
             if( builder == null )
                 throw new ArgumentNullException( nameof( builder ) );
 
-            Context.VerifyOperation( );
-            var nativeSet = NativeMethods.AttributeSetRemoveAttributeBuilder( NativeAttributeSet, Context.ContextHandle, ( uint )index, builder.BuilderHandle );
+            var nativeSet = NativeMethods.AttributeSetRemoveAttributeBuilder( NativeAttributeSet, ctx.ContextHandle, ( uint )index, builder.BuilderHandle );
             return new AttributeSet( nativeSet );
         }
 
         /// <summary>Remove a target specific attribute</summary>
         /// <param name="index">Index for the attribute</param>
         /// <param name="name">Name of the attribute</param>
-        public AttributeSet Remove( FunctionAttributeIndex index, string name )
+        /// <param name="ctx">Context for construction of the resulting <see cref="AttributeSet"/></param>
+        public AttributeSet Remove( Context ctx, FunctionAttributeIndex index, string name )
         {
-            Context.VerifyOperation( );
             using( var bldr = new AttributeBuilder( ) )
             {
                 bldr.Add( name );
-                return Remove( index, bldr );
+                return Remove( ctx, index, bldr );
             }
         }
 
@@ -267,7 +266,6 @@ namespace Llvm.NET.Values
         /// </remarks>
         public UInt64 GetAttributeValue( FunctionAttributeIndex index, AttributeKind kind )
         {
-            Context.VerifyOperation( );
             kind.VerifyIntAttributeUsage( index, 0 );
             var value = new AttributeValue( NativeMethods.AttributeSetGetAttributeByKind( NativeAttributeSet, ( uint )index, ( LLVMAttrKind )kind ) );
             Debug.Assert( value.IntegerValue.HasValue );
@@ -278,7 +276,9 @@ namespace Llvm.NET.Values
         /// <param name="index">Index for the attribute</param>
         public bool HasAny( FunctionAttributeIndex index )
         {
-            Context.VerifyOperation( );
+            if( IsEmpty )
+                return false;
+
             return NativeMethods.AttributeSetHasAttributes( NativeAttributeSet, ( uint )index );
         }
 
@@ -288,7 +288,9 @@ namespace Llvm.NET.Values
         /// <returns>true if the AttributeValue exists or false if not</returns>
         public bool Has( FunctionAttributeIndex index, AttributeKind kind )
         {
-            Context.VerifyOperation( );
+            if( IsEmpty )
+                return false;
+
             return NativeMethods.AttributeSetHasAttributeKind( NativeAttributeSet, ( uint )index, ( LLVMAttrKind )kind );
         }
 
@@ -298,7 +300,9 @@ namespace Llvm.NET.Values
         /// <returns>true if the attribute exists or false if not</returns>
         public bool Has( FunctionAttributeIndex index, string name )
         {
-            Context.VerifyOperation( );
+            if( IsEmpty )
+                return false;
+
             return NativeMethods.AttributeSetHasStringAttribute( NativeAttributeSet, ( uint )index, name );
         }
 

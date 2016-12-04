@@ -5,6 +5,7 @@ using Llvm.NET.Native;
 
 namespace Llvm.NET.Values
 {
+    // TODO: Consider removing this in favor of C#7 Tuple support
     public struct IndexedAttributeValue 
         : IEquatable<IndexedAttributeValue>
     {
@@ -26,10 +27,8 @@ namespace Llvm.NET.Values
         }
         #region Equality operators
         public bool Equals( IndexedAttributeValue other )
-        {
-            return other.Index == Index
-                && other.Value == Value;
-        }
+            => other.Index == Index
+            && other.Value == Value;
 
         public override bool Equals( object obj )
         {
@@ -62,15 +61,6 @@ namespace Llvm.NET.Values
     public struct AttributeValue
     {
         /// <summary>Creates a simple boolean attribute</summary>
-        /// <param name="kind">Kind of attribute</param>
-        public AttributeValue( AttributeKind kind )
-            : this( Context.CurrentContext, kind, 0ul )
-        {
-            if( kind.RequiresIntValue() )
-                throw new ArgumentException( $"Attribute {kind} requires a value", nameof( kind ) );
-        }
-
-        /// <summary>Creates a simple boolean attribute</summary>
         /// <param name="context">Context for creating the attribute</param>
         /// <param name="kind">Kind of attribute</param>
         public AttributeValue( Context context, AttributeKind kind )
@@ -78,26 +68,6 @@ namespace Llvm.NET.Values
         {
             if( kind.RequiresIntValue() )
                 throw new ArgumentException( $"Attribute {kind} requires a value", nameof( kind ) );
-        }
-
-        /// <summary>Creates an attribute with an integer value parameter</summary>
-        /// <param name="kind">The kind of attribute</param>
-        /// <param name="value">Value for the attribute</param>
-        /// <remarks>
-        /// <para>Not all attributes support a value and those that do don't all support
-        /// a full 64bit value. The following table provides the kinds of attributes
-        /// accepting a value and the allowed size of the values.</para>
-        /// <list type="table">
-        /// <listheader><term><see cref="AttributeKind"/></term><term>Bit Length</term></listheader>
-        /// <item><term><see cref="AttributeKind.Alignment"/></term><term>32</term></item>
-        /// <item><term><see cref="AttributeKind.StackAlignment"/></term><term>32</term></item>
-        /// <item><term><see cref="AttributeKind.Dereferenceable"/></term><term>64</term></item>
-        /// <item><term><see cref="AttributeKind.DereferenceableOrNull"/></term><term>64</term></item>
-        /// </list>
-        /// </remarks>
-        public AttributeValue( AttributeKind kind, UInt64 value )
-            : this( Context.CurrentContext, kind, value )
-        {
         }
 
         /// <summary>Creates an attribute with an integer value parameter</summary>
@@ -126,30 +96,10 @@ namespace Llvm.NET.Values
         }
 
         /// <summary>Adds a valueless named attribute</summary>
-        /// <param name="name">Attribute name</param>
-        public AttributeValue( string name )
-            : this( Context.CurrentContext, name, string.Empty )
-        {
-        }
-
-        /// <summary>Adds a valueless named attribute</summary>
         /// <param name="context">Context to use for interning attributes</param>
         /// <param name="name">Attribute name</param>
         public AttributeValue( Context context, string name )
             : this( context, name, string.Empty )
-        {
-        }
-
-        /// <summary>Adds a Target specific named attribute with value</summary>
-        /// <param name="name">Name of the attribute</param>
-        /// <param name="value">Value of the attribute</param>
-        /// <remarks>Since a valid <see cref="Context"/> is required to create an attribute value
-        /// this requires that <see cref="Context.CurrentContext"/> is not <see langword="null"/>.
-        /// In other words a Context must have already been created for the current thread by the
-        /// time this is called so it cannot be used to initialize static instances.
-        /// </remarks>
-        public AttributeValue( string name, string value )
-            : this( Context.CurrentContext, name, value )
         {
         }
 
@@ -263,16 +213,18 @@ namespace Llvm.NET.Values
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage( "Microsoft.Reliability", "CA2006:UseSafeHandleToEncapsulateNativeResources" )]
         internal readonly UIntPtr NativeAttribute;
+    }
 
+    public static class AttributeValueMixins
+    {
         /// <summary>Implicitly cast an <see cref="AttributeKind"/> to an <see cref="AttributeValue"/></summary>
         /// <param name="kind">Kind of attribute to create</param>
-        [SuppressMessage( "Microsoft.Usage", "CA2225:OperatorOverloadsHaveNamedAlternates", Justification = "Available via constructor, this is for convenience" )]
-        public static implicit operator AttributeValue( AttributeKind kind ) => new AttributeValue( kind );
+        /// <param name="ctx">Context that should own the attribute value</param>
+        public static AttributeValue ToAttributeValue( this AttributeKind kind, Context ctx ) => new AttributeValue( ctx, kind );
 
         /// <summary>Implicitly cast a string to an named <see cref="AttributeValue"/></summary>
         /// <param name="kind">Attribute name</param>
-        [SuppressMessage( "Microsoft.Usage", "CA2225:OperatorOverloadsHaveNamedAlternates", Justification = "Available via constructor, this is for convenience" )]
-        public static implicit operator AttributeValue( string kind ) => new AttributeValue( kind );
-
+        /// <param name="ctx">Context that should own the attribute value</param>
+        public static AttributeValue ToAttributeValue( this string kind, Context ctx ) => new AttributeValue( ctx, kind );
     }
 }

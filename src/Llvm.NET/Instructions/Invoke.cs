@@ -12,7 +12,7 @@ namespace Llvm.NET.Instructions
             get 
             {
                 if( TargetFunction == null )
-                    return new AttributeSet();
+                    return new AttributeSet( );
 
                 return new AttributeSet( NativeMethods.GetCallSiteAttributeSet( ValueHandle ));
             }

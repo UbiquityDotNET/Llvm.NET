@@ -13,19 +13,6 @@ namespace Llvm.NET.Tests
     public class ContextTests
     {
         [TestMethod]
-        public void CurrentThreadContextTest( )
-        {
-            Assert.IsNull( Context.CurrentContext );
-            using( var context = new Context() )
-            {
-                Assert.AreSame( context, Context.CurrentContext );
-                var other = Task.Run( ( ) => Context.CurrentContext ).Result;
-                Assert.IsNull( other );
-            }
-            Assert.IsNull( Context.CurrentContext );
-        }
-
-        [TestMethod]
         public void SimpleConstructorDisposeTest( )
         {
             var context = new Context( );
