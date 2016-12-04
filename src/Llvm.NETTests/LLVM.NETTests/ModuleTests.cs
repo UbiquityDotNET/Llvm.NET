@@ -5,6 +5,7 @@ using Llvm.NET.Values;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Threading.Tasks;
 using Llvm.NETTests;
+using System;
 
 namespace Llvm.NET.Tests
 {
@@ -150,11 +151,14 @@ namespace Llvm.NET.Tests
                 Assert.AreNotSame( mergedMod.Context, m2.Context );
                 var clone1 = m1.Clone( mergedMod.Context );
                 var clone2 = m2.Clone( mergedMod.Context );
+                GC.Collect( GC.MaxGeneration, GCCollectionMode.Forced, true );
                 mergedMod.Link( clone1 );
+                GC.Collect( GC.MaxGeneration, GCCollectionMode.Forced, true );
                 string errMsg;
                 Assert.IsTrue( mergedMod.Verify( out errMsg), errMsg );
                 Assert.AreEqual( 1, mergedMod.Functions.Count( ) );
                 mergedMod.Link( clone2 );
+                GC.Collect( GC.MaxGeneration, GCCollectionMode.Forced, true );
                 Assert.IsTrue( mergedMod.Verify( out errMsg ), errMsg );
                 Assert.AreEqual( 2, mergedMod.Functions.Count( ) );
             }

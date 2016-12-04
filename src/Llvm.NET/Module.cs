@@ -305,7 +305,7 @@ namespace Llvm.NET
             {
                 throw new InternalCodeGeneratorException( "Module link error" );
             }
-
+            Context.RemoveModule( otherModule );
             otherModule.ModuleHandle = LLVMModuleRef.Zero;
         }
 
@@ -675,10 +675,12 @@ namespace Llvm.NET
                 throw new ArgumentNullException( nameof( targetContext ) );
             }
 
+            var clone = Clone( );
             if( targetContext == Context )
-                return Clone( );
+                return clone;
 
-            using( var buffer = WriteToBuffer( ) )
+            using( clone )
+            using( var buffer = clone.WriteToBuffer( ) )
             {
                 var retVal = LoadFrom( buffer, targetContext );
                 Debug.Assert( retVal.Context == targetContext );
