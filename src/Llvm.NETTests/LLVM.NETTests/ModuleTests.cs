@@ -3,6 +3,7 @@ using System.Linq;
 using Llvm.NET.Instructions;
 using Llvm.NET.Values;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System.Threading.Tasks;
 
 namespace Llvm.NET.Tests
 {
@@ -108,6 +109,37 @@ namespace Llvm.NET.Tests
                 module.Link( otherModule );
                 Assert.IsNull( otherModule.Context );
             }
+        }
+
+        [TestMethod]
+        public void MultiContextLinkTest( )
+        {
+            var t1 = Task.Run( ( ) => CreateSimpleModule( "module1" ) );
+            var t2 = Task.Run( ( ) => CreateSimpleModule( "module2" ) );
+            Task.WaitAll( t1, t2 );
+            Assert.AreNotSame( t1.Result, t2.Result );
+            Assert.AreNotSame( t1.Result.Context, t2.Result.Context );
+            using( var mergedMod = new NativeModule( ) )
+            using( t2.Result )
+            using( t1.Result )
+            {
+                Assert.AreNotSame( mergedMod.Context, t1.Result.Context );
+                Assert.AreNotSame( mergedMod.Context, t2.Result.Context );
+                mergedMod.Link( t1.Result );
+                Assert.IsNull( t1.Result.Context );
+                Assert.AreEqual( 1, mergedMod.Functions.Count( ) );
+
+                mergedMod.Link( t2.Result );
+                Assert.IsNull( t2.Result.Context );
+                Assert.AreEqual( 2, mergedMod.Functions.Count( ) );
+            }
+        }
+
+        private NativeModule CreateSimpleModule(string name)
+        {
+            var retVal = new NativeModule( name );
+            CreateSimpleVoidNopTestFunction( retVal, name );
+            return retVal;
         }
 
         [TestMethod]
