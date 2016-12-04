@@ -392,7 +392,7 @@ namespace Llvm.NET
         {
             errMsg = string.Empty;
             IntPtr msg;
-            if( NativeMethods.PrintModuleToFile( ModuleHandle, path, out msg ) )
+            if( NativeMethods.PrintModuleToFile( ModuleHandle, path, out msg ).Succeeded )
                 return true;
 
             errMsg = NativeMethods.MarshalMsg( msg );
@@ -680,7 +680,9 @@ namespace Llvm.NET
 
             using( var buffer = WriteToBuffer( ) )
             {
-                return LoadFrom( buffer, targetContext );
+                var retVal = LoadFrom( buffer, targetContext );
+                Debug.Assert( retVal.Context == targetContext );
+                return retVal;
             }
         }
 
