@@ -1,5 +1,6 @@
 ﻿using System;
 using Llvm.NET.Native;
+using System.Runtime.InteropServices;
 
 namespace Llvm.NET
 {
@@ -37,6 +38,19 @@ namespace Llvm.NET
                 NativeMethods.DisposeMemoryBuffer( BufferHandle );
                 BufferHandle_ = default(LLVMMemoryBufferRef);
             }
+        }
+
+        public byte[] ToArray()
+        {
+            var bufferStart = NativeMethods.GetBufferStart( BufferHandle );
+            var retVal = new byte[ Size ];
+            Marshal.Copy( bufferStart, retVal, 0, Size );
+            return retVal;
+        }
+
+        internal MemoryBuffer( LLVMMemoryBufferRef bufferHandle )
+        {
+            BufferHandle_ = bufferHandle;
         }
 
         internal LLVMMemoryBufferRef BufferHandle => BufferHandle_;

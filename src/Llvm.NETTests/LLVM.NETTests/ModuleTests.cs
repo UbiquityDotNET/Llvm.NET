@@ -102,7 +102,7 @@ namespace Llvm.NET.Tests
         [TestMethod]
         public void BasicLinkTest( )
         {
-            // verifies link with respect to module disposal
+            // verifies linked modules can be disposed
             using( var ctx = new Context( ) )
             using( var module = new NativeModule( TestModuleName, ctx ) )
             using( var otherModule = new NativeModule( "Other", ctx ) )
@@ -116,16 +116,47 @@ namespace Llvm.NET.Tests
         [ExpectedArgumentException( "otherModule", ExpectedExceptionMessage = "Linking modules with different contexts is not allowed" )]
         public void MultiContextLinkTest( )
         {
-            using( var ctx = new Context( ) )
+            using( var mergedMod = new NativeModule( ) )
+            using( var m1 = CreateSimpleModule( "module1" ) )
+            using( var m2 = CreateSimpleModule( "module2" ) )
             {
-                using( var mergedMod = new NativeModule( ) )
-                using( var m1 = CreateSimpleModule( "module1" ) )
-                using( var m2 = CreateSimpleModule( "module2" ) )
-                {
-                    Assert.AreNotSame( mergedMod.Context, m1.Context );
-                    Assert.AreNotSame( mergedMod.Context, m2.Context );
-                    mergedMod.Link( m1 ); // exception expected here.
-                }
+                Assert.AreNotSame( mergedMod.Context, m1.Context );
+                Assert.AreNotSame( mergedMod.Context, m2.Context );
+                mergedMod.Link( m1 ); // exception expected here.
+            }
+        }
+
+        [TestMethod]
+        public void ModuleCloneInContextTest( )
+        {
+            var m1 = CreateSimpleModule( "module1" );
+            using( var context = new Context( ) )
+            {
+                var m2 = m1.Clone( context );
+                Assert.AreNotSame( context, m1 );
+                Assert.IsNotNull( m2 );
+                Assert.AreSame( context, m2.Context );
+            }
+        }
+
+        [TestMethod]
+        public void MultiContextCloneLinkTest( )
+        {
+            using( var mergedMod = new NativeModule( ) )
+            using( var m1 = CreateSimpleModule( "module1" ) )
+            using( var m2 = CreateSimpleModule( "module2" ) )
+            {
+                Assert.AreNotSame( mergedMod.Context, m1.Context );
+                Assert.AreNotSame( mergedMod.Context, m2.Context );
+                var clone1 = m1.Clone( mergedMod.Context );
+                var clone2 = m2.Clone( mergedMod.Context );
+                mergedMod.Link( clone1 );
+                string errMsg;
+                Assert.IsTrue( mergedMod.Verify( out errMsg), errMsg );
+                Assert.AreEqual( 1, mergedMod.Functions.Count( ) );
+                mergedMod.Link( clone2 );
+                Assert.IsTrue( mergedMod.Verify( out errMsg ), errMsg );
+                Assert.AreEqual( 2, mergedMod.Functions.Count( ) );
             }
         }
 
@@ -201,7 +232,7 @@ namespace Llvm.NET.Tests
                 Function testFunc = CreateSimpleVoidNopTestFunction( module, "foo" );
                 // verify basics
                 Assert.IsNotNull( testFunc );
-                var txt = module.AsString( );
+                var txt = module.WriteToString( );
                 Assert.IsFalse( string.IsNullOrWhiteSpace( txt ) );
                 var expectedText = File.ReadAllText( "TestModuleAsString.ll" );
                 Assert.AreEqual( expectedText, txt );

@@ -407,7 +407,12 @@ namespace Llvm.NET
         /// an extremely long time (up to many seconds depending on complexity
         /// of the module) which is bad for the debugger.
         /// </remarks>
-        public string AsString( ) => NativeMethods.MarshalMsg( NativeMethods.PrintModuleToString( ModuleHandle ) );
+        public string WriteToString( ) => NativeMethods.MarshalMsg( NativeMethods.PrintModuleToString( ModuleHandle ) );
+
+        public MemoryBuffer WriteToBuffer()
+        {
+            return new MemoryBuffer( NativeMethods.WriteBitcodeToMemoryBuffer( ModuleHandle ) );
+        }
 
         /// <summary>Add an alias to the module</summary>
         /// <param name="aliasee">Value being aliased</param>
@@ -663,6 +668,22 @@ namespace Llvm.NET
         /// <returns>Cloned module</returns>
         public NativeModule Clone( ) => new NativeModule( NativeMethods.CloneModule( ModuleHandle ) );
 
+        public NativeModule Clone( Context targetContext )
+        {
+            if( targetContext == null )
+            {
+                throw new ArgumentNullException( nameof( targetContext ) );
+            }
+
+            if( targetContext == Context )
+                return Clone( );
+
+            using( var buffer = WriteToBuffer( ) )
+            {
+                return LoadFrom( buffer, targetContext );
+            }
+        }
+
         /// <inheritdoc/>
         [SuppressMessage( "Language", "CSE0003:Use expression-bodied members", Justification = "Line too long" )]
         bool IExtensiblePropertyContainer.TryGetExtendedPropertyValue<T>( string id, out T value )
@@ -699,15 +720,37 @@ namespace Llvm.NET
 
             using( var buffer = new MemoryBuffer( path ) )
             {
-                LLVMModuleRef modRef;
-                IntPtr errMsgPtr;
-                if( NativeMethods.ParseBitcodeInContext( context.ContextHandle, buffer.BufferHandle, out modRef, out errMsgPtr ).Failed )
-                {
-                    var errMsg = NativeMethods.MarshalMsg( errMsgPtr );
-                    throw new InternalCodeGeneratorException( errMsg );
-                }
-                return context.GetModuleFor( modRef );
+                return LoadFrom( buffer, context );
             }
+        }
+
+        /// <summary>Load bit code from a memory buffer</summary>
+        /// <param name="buffer">Buffer to load from</param>
+        /// <param name="context">Context to load the module into</param>
+        /// <returns>Loaded <see cref="NativeModule"/></returns>
+        /// <remarks>
+        /// This along with <see cref="WriteToBuffer"/> are useful for "cloning"
+        /// a module from one context to another. This allows creation of multiple
+        /// modules on different threads and contexts and later moving them to a
+        /// single context in order to link them into a single final module for
+        /// optimization.
+        /// </remarks>
+        public static NativeModule LoadFrom( MemoryBuffer buffer, Context context )
+        {
+            if( buffer == null )
+                throw new ArgumentNullException( nameof( buffer ) );
+
+            if( context == null )
+                throw new ArgumentNullException( nameof( buffer ) );
+
+            LLVMModuleRef modRef;
+            IntPtr errMsgPtr;
+            if( NativeMethods.ParseBitcodeInContext( context.ContextHandle, buffer.BufferHandle, out modRef, out errMsgPtr ).Failed )
+            {
+                var errMsg = NativeMethods.MarshalMsg( errMsgPtr );
+                throw new InternalCodeGeneratorException( errMsg );
+            }
+            return context.GetModuleFor( modRef );
         }
 
         internal LLVMModuleRef ModuleHandle { get; private set; }

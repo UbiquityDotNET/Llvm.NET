@@ -47,11 +47,43 @@ namespace Llvm.NET
                 throw new ArgumentException( "Triple specified for the module doesn't match target machine", nameof( module ) );
 
             IntPtr errMsg;
-            if( 0 != NativeMethods.TargetMachineEmitToFile( TargetMachineHandle, module.ModuleHandle, path, (LLVMCodeGenFileType)fileType, out errMsg ).Value )
+            var status = NativeMethods.TargetMachineEmitToFile( TargetMachineHandle
+                                                              , module.ModuleHandle
+                                                              , path
+                                                              , ( LLVMCodeGenFileType )fileType
+                                                              , out errMsg
+                                                              );
+            if( status.Failed )
             {
                 var errTxt = NativeMethods.MarshalMsg( errMsg );
                 throw new InternalCodeGeneratorException( errTxt );
             }
+        }
+
+        public MemoryBuffer EmitToBuffer( NativeModule module, CodeGenFileType fileType )
+        {
+            if( module == null )
+                throw new ArgumentNullException( nameof( module ) );
+
+            if( module.TargetTriple != null && Triple != module.TargetTriple )
+                throw new ArgumentException( "Triple specified for the module doesn't match target machine", nameof( module ) );
+
+            IntPtr errMsg;
+            LLVMMemoryBufferRef bufferHandle;
+            var status = NativeMethods.TargetMachineEmitToMemoryBuffer( TargetMachineHandle
+                                                                      , module.ModuleHandle
+                                                                      , ( LLVMCodeGenFileType )fileType
+                                                                      , out errMsg
+                                                                      , out bufferHandle
+                                                                      );
+
+            if( status.Failed )
+            {
+                var errTxt = NativeMethods.MarshalMsg( errMsg );
+                throw new InternalCodeGeneratorException( errTxt );
+            }
+
+            return new MemoryBuffer( bufferHandle );
         }
 
         /// <summary><see cref="Context"/>This machine is associated with</summary>

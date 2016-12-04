@@ -114,6 +114,10 @@ namespace Llvm.NET.Values
             case AttributeKind.StackAlignment:
                 if( value > UInt32.MaxValue )
                     throw new ArgumentOutOfRangeException( nameof( value ), "Expected a 32 bit value for stack alignment" );
+
+                if( !IsPowerOfTwo( value ) )
+                    throw new ArgumentException( "Stack alignment value must be a power of 2", nameof( value ) );
+
                 break;
 
             case AttributeKind.Dereferenceable:
@@ -123,6 +127,12 @@ namespace Llvm.NET.Values
             default:
                 throw new ArgumentException( $"Attribute '{kind}' does not support an argument", nameof( kind ) );
             }
+        }
+
+        static bool IsPowerOfTwo( ulong x )
+        {
+            // use complement and compare technique for efficiency
+            return ( ( x != 0 ) && ( ( x & ( ~x + 1 ) ) == x ) );
         }
 
         public static FunctionIndexKinds GetAllowedIndexes( this AttributeKind kind )

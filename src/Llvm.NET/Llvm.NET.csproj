@@ -16,7 +16,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'">
     <DebugSymbols>true</DebugSymbols>
     <DefineConstants>TRACE;DEBUG</DefineConstants>
-    <AllowUnsafeBlocks>false</AllowUnsafeBlocks>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <DocumentationFile>$(OutputPath)\Llvm.NET.XML</DocumentationFile>
     <NoWarn>1591</NoWarn>
     <DebugType>full</DebugType>
@@ -26,7 +26,7 @@
     <RunCodeAnalysis>true</RunCodeAnalysis>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">
-    <AllowUnsafeBlocks>false</AllowUnsafeBlocks>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <DocumentationFile>$(OutputPath)\Llvm.NET.XML</DocumentationFile>
     <Optimize>true</Optimize>
     <NoWarn>1591</NoWarn>
@@ -39,7 +39,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|Win32'">
     <DebugSymbols>true</DebugSymbols>
     <DefineConstants>TRACE;DEBUG</DefineConstants>
-    <AllowUnsafeBlocks>false</AllowUnsafeBlocks>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <DocumentationFile>$(OutputPath)\Llvm.NET.XML</DocumentationFile>
     <NoWarn>1591</NoWarn>
     <DebugType>full</DebugType>
@@ -49,7 +49,7 @@
     <RunCodeAnalysis>true</RunCodeAnalysis>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|Win32'">
-    <AllowUnsafeBlocks>false</AllowUnsafeBlocks>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <DocumentationFile>$(OutputPath)\Llvm.NET.XML</DocumentationFile>
     <Optimize>true</Optimize>
     <NoWarn>1591</NoWarn>

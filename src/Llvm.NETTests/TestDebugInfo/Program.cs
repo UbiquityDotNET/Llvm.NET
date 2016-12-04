@@ -137,7 +137,7 @@ namespace TestDebugInfo
 
                     // Module is good, so generate the output files
                     module.WriteToFile( "test.bc" );
-                    File.WriteAllText( "test.ll", module.AsString( ) );
+                    File.WriteAllText( "test.ll", module.WriteToString( ) );
                     targetMachine.EmitToFile( module, "test.o", CodeGenFileType.ObjectFile );
                     targetMachine.EmitToFile( module, "test.s", CodeGenFileType.AssemblySource );
                 }
