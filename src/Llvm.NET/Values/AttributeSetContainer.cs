@@ -19,7 +19,7 @@ namespace Llvm.NET.Values
     /// </remarks>
     public static class AttributeSetContainer
     {
-        public static T AddAttributes<T>( this T self, FunctionAttributeIndex index, AttributeKind[ ] values )
+        public static T AddAttributes<T>( this T self, FunctionAttributeIndex index, params AttributeKind[ ] values )
         where T : IAttributeSetContainer
         {
             if( values == null )
