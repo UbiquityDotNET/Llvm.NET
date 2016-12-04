@@ -675,12 +675,10 @@ namespace Llvm.NET
                 throw new ArgumentNullException( nameof( targetContext ) );
             }
 
-            var clone = Clone( );
             if( targetContext == Context )
-                return clone;
+                return Clone( );
 
-            using( clone )
-            using( var buffer = clone.WriteToBuffer( ) )
+            using( var buffer = WriteToBuffer( ) )
             {
                 var retVal = LoadFrom( buffer, targetContext );
                 Debug.Assert( retVal.Context == targetContext );
