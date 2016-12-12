@@ -1,5 +1,24 @@
 EXPORTS
 ; extensions to standard LLVM-C API
+LLVMParseTriple
+LLVMDisposeTriple
+LLVMTripleOpEqual
+LLVMTripleGetArchType
+LLVMTripleGetSubArchType
+LLVMTripleGetVendorType
+LLVMTripleGetOsType
+LLVMTripleHasEnvironment
+LLVMTripleGetEnvironmentType
+LLVMTripleGetEnvironmentVersion
+LLVMTripleGetObjectFormatType
+LLVMTripleAsString
+LLVMTripleGetArchTypeName
+LLVMTripleGetSubArchTypeName
+LLVMTripleGetVendorTypeName
+LLVMTripleGetOsTypeName
+LLVMTripleGetEnvironmentTypeName
+LLVMTripleGetObjectFormatTypeName
+
 LLVMInitializePassesForLegacyOpt
 LLVMRunLegacyOptimizer
 LLVMRunPassPipeline

@@ -3,7 +3,6 @@ using System.Linq;
 using Llvm.NET.Instructions;
 using Llvm.NET.Values;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System.Threading.Tasks;
 using Llvm.NETTests;
 using System;
 

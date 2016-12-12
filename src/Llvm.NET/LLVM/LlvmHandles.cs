@@ -84,7 +84,37 @@ namespace Llvm.NET.Native
         [SecurityCritical]
         protected override bool ReleaseHandle( )
         {
-            NativeMethods.PassRegistryDispose( this );
+            NativeMethods.PassRegistryDispose( handle );
+            return true;
+        }
+    }
+
+    // typedef struct LLVMOpaqueTriple* LLVMTripleRef;
+    [SecurityCritical]
+    internal class TripleHandle
+        : SafeHandleNullIsInvalid
+    {
+        internal TripleHandle( )
+            : base( true )
+        {
+        }
+
+        internal TripleHandle( IntPtr handle, bool owner )
+            : base( owner )
+        {
+            SetHandle( handle );
+        }
+
+        [System.Diagnostics.CodeAnalysis.SuppressMessage( "Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode", Justification = "Required for marshaling support (used via reflection)" )]
+        internal TripleHandle( IntPtr handle )
+            : this( handle, false )
+        {
+        }
+
+        [SecurityCritical]
+        protected override bool ReleaseHandle( )
+        {
+            NativeMethods.DisposeTriple( handle );
             return true;
         }
     }

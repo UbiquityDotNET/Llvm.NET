@@ -436,7 +436,7 @@ namespace Llvm.NET.DebugInfo
 
         public DISubroutineType CreateSubroutineType( DebugInfoFlags debugFlags, DIType returnType, IEnumerable<DIType> types )
         {
-            var typeArray = GetOrCreateTypeArray( ScalarEnumerable.Combine( returnType, types ) );
+            var typeArray = GetOrCreateTypeArray( types.Prepend( returnType ) );
             return CreateSubroutineType( debugFlags, typeArray );
         }
 

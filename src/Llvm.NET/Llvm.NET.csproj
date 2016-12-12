@@ -10,8 +10,9 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Llvm.NET</RootNamespace>
     <AssemblyName>Llvm.NET</AssemblyName>
-    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.6.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'">
     <DebugSymbols>true</DebugSymbols>
@@ -104,6 +105,7 @@
     <Compile Include="DebugInfo\GenericDINode.cs" />
     <Compile Include="DebugInfo\DebugType.cs" />
     <Compile Include="DebugInfo\MDNodeOperandList.cs" />
+    <Compile Include="EnumerableExtensions.cs" />
     <Compile Include="Instructions\AddressSpaceCast.cs" />
     <Compile Include="Instructions\AtomicCmpXchg.cs" />
     <Compile Include="Instructions\AtomicRMW.cs" />
@@ -143,9 +145,9 @@
     <Compile Include="Metadata\MetadataAsValue.cs" />
     <Compile Include="Metadata\ValueAsMetadata.cs" />
     <Compile Include="Metadata\NamedMDNode.cs" />
-    <Compile Include="ScalarEnumerable.cs" />
     <Compile Include="DebugInfo\DebugBasicType.cs" />
     <Compile Include="DebugInfo\DebugFunctionType.cs" />
+    <Compile Include="Triple.cs" />
     <Compile Include="Types\ITypeRef.cs" />
     <Compile Include="Values\Argument.cs" />
     <Compile Include="Types\ArrayType.cs" />

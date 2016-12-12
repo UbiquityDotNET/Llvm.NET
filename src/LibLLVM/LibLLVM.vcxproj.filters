@@ -55,6 +55,9 @@
     <ClCompile Include="LegacyPassManagerOpt.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="TripleBindings.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="DIBuilderBindings.h">
@@ -91,6 +94,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="LegacyPassManagerOpt.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="TripleBindings.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

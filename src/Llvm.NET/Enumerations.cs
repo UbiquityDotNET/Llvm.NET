@@ -1,7 +1,8 @@
 ﻿// This file maps the lower level internal LLVM enumeration names to something
 // more compatible with the styles, patterns and conventions familiar to .NET Developers.
 // This also keeping the lower level interop namespace internal to prevent mis-use or
-// violations of uniqueness rules
+// violations of uniqueness rules. Furthermore, this helps insulate the managed code
+// realm insulated from the sometimes fluid nature of the underlying LLVM changes.
 
 using Llvm.NET.Native;
 
@@ -451,4 +452,251 @@ namespace Llvm.NET
         /// </remarks>
         Parameter0 = 1 
     }
+
+    public enum TripleArchType
+    {
+        UnknownArch = LLVMTripleArchType.LlvmTripleArchType_UnknownArch,
+
+        // ARM (little endian): arm, armv.*, xscale
+        arm = LLVMTripleArchType.LlvmTripleArchType_arm,
+        
+        // ARM (big endian): armeb
+        armeb = LLVMTripleArchType.LlvmTripleArchType_armeb,
+        
+        // AArch64 (little endian): aarch64
+        aarch64 = LLVMTripleArchType.LlvmTripleArchType_aarch64,
+        
+        // AArch64 (big endian): aarch64_be
+        aarch64_be = LLVMTripleArchType.LlvmTripleArchType_aarch64_be,
+        
+        // AVR: Atmel AVR microcontroller
+        avr = LLVMTripleArchType.LlvmTripleArchType_avr,
+
+        // eBPF or extended BPF or 64-bit BPF (little endian)
+        bpfel = LLVMTripleArchType.LlvmTripleArchType_bpfel,
+
+        // eBPF or extended BPF or 64-bit BPF (big endian)
+        bpfeb = LLVMTripleArchType.LlvmTripleArchType_bpfeb,
+        
+        // Hexagon: hexagon
+        hexagon = LLVMTripleArchType.LlvmTripleArchType_hexagon,
+        
+        // MIPS: mips, mipsallegrex
+        mips = LLVMTripleArchType.LlvmTripleArchType_mips,
+        
+        // MIPSEL: mipsel, mipsallegrexel
+        mipsel = LLVMTripleArchType.LlvmTripleArchType_mipsel,
+        
+        // MIPS64: mips64
+        mips64 = LLVMTripleArchType.LlvmTripleArchType_mips64,
+
+        // MIPS64EL: mips64el
+        mips64el = LLVMTripleArchType.LlvmTripleArchType_mips64el,
+
+        // MSP430: msp430
+        msp430 = LLVMTripleArchType.LlvmTripleArchType_msp430,
+        
+        // PPC: powerpc
+        ppc = LLVMTripleArchType.LlvmTripleArchType_ppc,
+
+        // PPC64: powerpc64, ppu
+        ppc64 = LLVMTripleArchType.LlvmTripleArchType_ppc64,
+
+        // PPC64LE: powerpc64le
+        ppc64le = LLVMTripleArchType.LlvmTripleArchType_ppc64le,
+
+        // R600: AMD GPUs HD2XXX - HD6XXX
+        r600 = LLVMTripleArchType.LlvmTripleArchType_r600,
+
+        // AMDGCN: AMD GCN GPUs
+        amdgcn = LLVMTripleArchType.LlvmTripleArchType_amdgcn,
+
+        // Sparc: sparc
+        sparc = LLVMTripleArchType.LlvmTripleArchType_sparc,
+
+        // Sparcv9: Sparcv9
+        sparcv9 = LLVMTripleArchType.LlvmTripleArchType_sparcv9,
+
+        // Sparc: (endianness = little). NB: 'Sparcle' is a CPU variant
+        sparcel = LLVMTripleArchType.LlvmTripleArchType_sparcel,
+
+        // SystemZ: s390x
+        systemz = LLVMTripleArchType.LlvmTripleArchType_systemz,
+
+        // TCE (http://tce.cs.tut.fi/): tce
+        tce = LLVMTripleArchType.LlvmTripleArchType_tce,
+
+        // Thumb (little endian): thumb, thumbv.*
+        thumb = LLVMTripleArchType.LlvmTripleArchType_thumb,
+
+        // Thumb (big endian): thumbeb
+        thumbeb = LLVMTripleArchType.LlvmTripleArchType_thumbeb,
+
+        // X86: i[3-9]86
+        x86 = LLVMTripleArchType.LlvmTripleArchType_x86,
+
+        // X86-64: amd64, x86_64
+        x86_64 = LLVMTripleArchType.LlvmTripleArchType_x86_64,
+
+        // XCore: xcore
+        xcore = LLVMTripleArchType.LlvmTripleArchType_xcore,
+
+        // NVPTX: 32-bit
+        nvptx = LLVMTripleArchType.LlvmTripleArchType_nvptx,
+
+        // NVPTX: 64-bit
+        nvptx64 = LLVMTripleArchType.LlvmTripleArchType_nvptx64,
+
+        // le32: generic little-endian 32-bit CPU (PNaCl)
+        le32 = LLVMTripleArchType.LlvmTripleArchType_le32,
+
+        // le64: generic little-endian 64-bit CPU (PNaCl)
+        le64 = LLVMTripleArchType.LlvmTripleArchType_le64,
+
+        // AMDIL
+        amdil = LLVMTripleArchType.LlvmTripleArchType_amdil,
+
+        // AMDIL with 64-bit pointers
+        amdil64 = LLVMTripleArchType.LlvmTripleArchType_amdil64,
+
+        // AMD HSAIL
+        hsail = LLVMTripleArchType.LlvmTripleArchType_hsail,
+
+        // AMD HSAIL with 64-bit pointers
+        hsail64 = LLVMTripleArchType.LlvmTripleArchType_hsail64,
+
+        // SPIR: standard portable IR for OpenCL 32-bit version
+        spir = LLVMTripleArchType.LlvmTripleArchType_spir,
+
+        // SPIR: standard portable IR for OpenCL 64-bit version
+        spir64 = LLVMTripleArchType.LlvmTripleArchType_spir64,
+
+        // Kalimba: generic kalimba
+        kalimba = LLVMTripleArchType.LlvmTripleArchType_kalimba,
+
+        // SHAVE: Movidius vector VLIW processors
+        shave = LLVMTripleArchType.LlvmTripleArchType_shave,
+
+        // Lanai: Lanai 32-bit
+        lanai = LLVMTripleArchType.LlvmTripleArchType_lanai,
+
+        // WebAssembly with 32-bit pointers
+        wasm32 = LLVMTripleArchType.LlvmTripleArchType_wasm32,
+
+        // WebAssembly with 64-bit pointers
+        wasm64 = LLVMTripleArchType.LlvmTripleArchType_wasm64,
+
+        // 32-bit RenderScript
+        renderscript32 = LLVMTripleArchType.LlvmTripleArchType_renderscript32,
+
+        // 64-bit RenderScript
+        renderscript64 = LLVMTripleArchType.LlvmTripleArchType_renderscript64,
+    };
+
+    public enum TripleSubArchType
+    {
+        NoSubArch                = LLVMTripleSubArchType.LlvmTripleSubArchType_NoSubArch,
+        ARMSubArch_v8_2a         = LLVMTripleSubArchType.LlvmTripleSubArchType_ARMSubArch_v8_2a,
+        ARMSubArch_v8_1a         = LLVMTripleSubArchType.LlvmTripleSubArchType_ARMSubArch_v8_1a,
+        ARMSubArch_v8            = LLVMTripleSubArchType.LlvmTripleSubArchType_ARMSubArch_v8,
+        ARMSubArch_v8m_baseline  = LLVMTripleSubArchType.LlvmTripleSubArchType_ARMSubArch_v8m_baseline,
+        ARMSubArch_v8m_mainline  = LLVMTripleSubArchType.LlvmTripleSubArchType_ARMSubArch_v8m_mainline,
+        ARMSubArch_v7            = LLVMTripleSubArchType.LlvmTripleSubArchType_ARMSubArch_v7,
+        ARMSubArch_v7em          = LLVMTripleSubArchType.LlvmTripleSubArchType_ARMSubArch_v7em,
+        ARMSubArch_v7m           = LLVMTripleSubArchType.LlvmTripleSubArchType_ARMSubArch_v7m,
+        ARMSubArch_v7s           = LLVMTripleSubArchType.LlvmTripleSubArchType_ARMSubArch_v7s,
+        ARMSubArch_v7k           = LLVMTripleSubArchType.LlvmTripleSubArchType_ARMSubArch_v7k,
+        ARMSubArch_v6            = LLVMTripleSubArchType.LlvmTripleSubArchType_ARMSubArch_v6,
+        ARMSubArch_v6m           = LLVMTripleSubArchType.LlvmTripleSubArchType_ARMSubArch_v6m,
+        ARMSubArch_v6k           = LLVMTripleSubArchType.LlvmTripleSubArchType_ARMSubArch_v6k,
+        ARMSubArch_v6t2          = LLVMTripleSubArchType.LlvmTripleSubArchType_ARMSubArch_v6t2,
+        ARMSubArch_v5            = LLVMTripleSubArchType.LlvmTripleSubArchType_ARMSubArch_v5,
+        ARMSubArch_v5te          = LLVMTripleSubArchType.LlvmTripleSubArchType_ARMSubArch_v5te,
+        ARMSubArch_v4t           = LLVMTripleSubArchType.LlvmTripleSubArchType_ARMSubArch_v4t,
+        KalimbaSubArch_v3        = LLVMTripleSubArchType.LlvmTripleSubArchType_KalimbaSubArch_v3,
+        KalimbaSubArch_v4        = LLVMTripleSubArchType.LlvmTripleSubArchType_KalimbaSubArch_v4,
+        KalimbaSubArch_v5        = LLVMTripleSubArchType.LlvmTripleSubArchType_KalimbaSubArch_v5
+    };
+
+    public enum TripleVendorType
+    {
+        UnknownVendor            = LLVMTripleVendorType.LlvmTripleVendorType_UnknownVendor,
+        Apple                    = LLVMTripleVendorType.LlvmTripleVendorType_Apple,
+        PC                       = LLVMTripleVendorType.LlvmTripleVendorType_PC,
+        SCEI                     = LLVMTripleVendorType.LlvmTripleVendorType_SCEI,
+        BGP                      = LLVMTripleVendorType.LlvmTripleVendorType_BGP,
+        BGQ                      = LLVMTripleVendorType.LlvmTripleVendorType_BGQ,
+        Freescale                = LLVMTripleVendorType.LlvmTripleVendorType_Freescale,
+        IBM                      = LLVMTripleVendorType.LlvmTripleVendorType_IBM,
+        ImaginationTechnologies  = LLVMTripleVendorType.LlvmTripleVendorType_ImaginationTechnologies,
+        MipsTechnologies         = LLVMTripleVendorType.LlvmTripleVendorType_MipsTechnologies,
+        NVIDIA                   = LLVMTripleVendorType.LlvmTripleVendorType_NVIDIA,
+        CSR                      = LLVMTripleVendorType.LlvmTripleVendorType_CSR,
+        Myriad                   = LLVMTripleVendorType.LlvmTripleVendorType_Myriad,
+        AMD                      = LLVMTripleVendorType.LlvmTripleVendorType_AMD,
+        Mesa                     = LLVMTripleVendorType.LlvmTripleVendorType_Mesa,
+    };
+
+    public enum TripleOSType
+    {
+        UnknownOS  = LLVMTripleOSType.LlvmTripleOSType_UnknownOS,
+        CloudABI   = LLVMTripleOSType.LlvmTripleOSType_CloudABI,
+        Darwin     = LLVMTripleOSType.LlvmTripleOSType_Darwin,
+        DragonFly  = LLVMTripleOSType.LlvmTripleOSType_DragonFly,
+        FreeBSD    = LLVMTripleOSType.LlvmTripleOSType_FreeBSD,
+        IOS        = LLVMTripleOSType.LlvmTripleOSType_IOS,
+        KFreeBSD   = LLVMTripleOSType.LlvmTripleOSType_KFreeBSD,
+        Linux      = LLVMTripleOSType.LlvmTripleOSType_Linux,
+        Lv2        = LLVMTripleOSType.LlvmTripleOSType_Lv2,
+        MacOSX     = LLVMTripleOSType.LlvmTripleOSType_MacOSX,
+        NetBSD     = LLVMTripleOSType.LlvmTripleOSType_NetBSD,
+        OpenBSD    = LLVMTripleOSType.LlvmTripleOSType_OpenBSD,
+        Solaris    = LLVMTripleOSType.LlvmTripleOSType_Solaris,
+        Win32      = LLVMTripleOSType.LlvmTripleOSType_Win32,
+        Haiku      = LLVMTripleOSType.LlvmTripleOSType_Haiku,
+        Minix      = LLVMTripleOSType.LlvmTripleOSType_Minix,
+        RTEMS      = LLVMTripleOSType.LlvmTripleOSType_RTEMS,
+        NaCl       = LLVMTripleOSType.LlvmTripleOSType_NaCl,
+        CNK        = LLVMTripleOSType.LlvmTripleOSType_CNK,
+        Bitrig     = LLVMTripleOSType.LlvmTripleOSType_Bitrig,
+        AIX        = LLVMTripleOSType.LlvmTripleOSType_AIX,
+        CUDA       = LLVMTripleOSType.LlvmTripleOSType_CUDA,
+        NVCL       = LLVMTripleOSType.LlvmTripleOSType_NVCL,
+        AMDHSA     = LLVMTripleOSType.LlvmTripleOSType_AMDHSA,
+        PS4        = LLVMTripleOSType.LlvmTripleOSType_PS4,
+        ELFIAMCU   = LLVMTripleOSType.LlvmTripleOSType_ELFIAMCU,
+        TvOS       = LLVMTripleOSType.LlvmTripleOSType_TvOS,
+        WatchOS    = LLVMTripleOSType.LlvmTripleOSType_WatchOS,
+        Mesa3D     = LLVMTripleOSType.LlvmTripleOSType_Mesa3D,
+    };
+
+    public enum TripleEnvironmentType
+    {
+        UnknownEnvironment  = LLVMTripleEnvironmentType.LlvmTripleEnvironmentType_UnknownEnvironment,
+        GNU                 = LLVMTripleEnvironmentType.LlvmTripleEnvironmentType_GNU,
+        GNUABI64            = LLVMTripleEnvironmentType.LlvmTripleEnvironmentType_GNUABI64,
+        GNUEABI             = LLVMTripleEnvironmentType.LlvmTripleEnvironmentType_GNUEABI,
+        GNUEABIHF           = LLVMTripleEnvironmentType.LlvmTripleEnvironmentType_GNUEABIHF,
+        GNUX32              = LLVMTripleEnvironmentType.LlvmTripleEnvironmentType_GNUX32,
+        CODE16              = LLVMTripleEnvironmentType.LlvmTripleEnvironmentType_CODE16,
+        EABI                = LLVMTripleEnvironmentType.LlvmTripleEnvironmentType_EABI,
+        EABIHF              = LLVMTripleEnvironmentType.LlvmTripleEnvironmentType_EABIHF,
+        Android             = LLVMTripleEnvironmentType.LlvmTripleEnvironmentType_Android,
+        Musl                = LLVMTripleEnvironmentType.LlvmTripleEnvironmentType_Musl,
+        MuslEABI            = LLVMTripleEnvironmentType.LlvmTripleEnvironmentType_MuslEABI,
+        MuslEABIHF          = LLVMTripleEnvironmentType.LlvmTripleEnvironmentType_MuslEABIHF,
+        MSVC                = LLVMTripleEnvironmentType.LlvmTripleEnvironmentType_MSVC,
+        Itanium             = LLVMTripleEnvironmentType.LlvmTripleEnvironmentType_Itanium,
+        Cygnus              = LLVMTripleEnvironmentType.LlvmTripleEnvironmentType_Cygnus,
+        AMDOpenCL           = LLVMTripleEnvironmentType.LlvmTripleEnvironmentType_AMDOpenCL,
+        CoreCLR             = LLVMTripleEnvironmentType.LlvmTripleEnvironmentType_CoreCLR,
+    };
+
+    public enum TripleObjectFormatType
+    {
+        UnknownObjectFormat  = LLVMTripleObjectFormatType.LlvmTripleObjectFormatType_UnknownObjectFormat,
+        COFF                 = LLVMTripleObjectFormatType.LlvmTripleObjectFormatType_COFF,
+        ELF                  = LLVMTripleObjectFormatType.LlvmTripleObjectFormatType_ELF,
+        MachO                = LLVMTripleObjectFormatType.LlvmTripleObjectFormatType_MachO,
+    };
 }

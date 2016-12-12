@@ -4,7 +4,6 @@ using Llvm.NET.DebugInfo;
 using Llvm.NET.Types;
 using Llvm.NET.Values;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System.Threading.Tasks;
 
 namespace Llvm.NET.Tests
 {

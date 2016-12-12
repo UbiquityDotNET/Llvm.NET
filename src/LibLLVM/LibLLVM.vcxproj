@@ -270,6 +270,7 @@
     <ClCompile Include="PassManagerBindings.cpp" />
     <ClCompile Include="IRBindings.cpp" />
     <ClCompile Include="ModuleBindings.cpp" />
+    <ClCompile Include="TripleBindings.cpp" />
     <ClCompile Include="ValueBindings.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -284,6 +285,7 @@
     <ClInclude Include="IRBindings.h" />
     <ClInclude Include="ModuleBindings.h" />
     <ClInclude Include="resource.h" />
+    <ClInclude Include="TripleBindings.h" />
     <ClInclude Include="ValueBindings.h" />
   </ItemGroup>
   <ItemGroup>
