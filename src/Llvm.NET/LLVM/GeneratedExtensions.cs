@@ -1010,5 +1010,8 @@ namespace Llvm.NET.Native
 
         [DllImport( libraryPath, EntryPoint = "LLVMTripleGetObjectFormatTypeName", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl, BestFitMapping = false, ThrowOnUnmappableChar = true )]
         internal static extern IntPtr TripleGetObjectFormatTypeName( LLVMTripleObjectFormatType environmentType );
+
+        [DllImport( libraryPath, EntryPoint = "LLVMNormalizeTriple", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl, BestFitMapping = false, ThrowOnUnmappableChar = true )]
+        internal static extern IntPtr NormalizeTriple( [MarshalAs( UnmanagedType.LPStr )] string triple );
     }
 }

@@ -18,6 +18,7 @@ LLVMTripleGetVendorTypeName
 LLVMTripleGetOsTypeName
 LLVMTripleGetEnvironmentTypeName
 LLVMTripleGetObjectFormatTypeName
+LLVMNormalizeTriple
 
 LLVMInitializePassesForLegacyOpt
 LLVMRunLegacyOptimizer

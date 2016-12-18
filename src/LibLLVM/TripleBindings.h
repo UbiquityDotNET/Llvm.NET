@@ -187,4 +187,5 @@ char const* LLVMTripleGetVendorTypeName( LLVMTripleVendorType vendor );
 char const* LLVMTripleGetOsTypeName( LLVMTripleOSType osType );
 char const* LLVMTripleGetEnvironmentTypeName( LLVMTripleEnvironmentType environmentType );
 char const* LLVMTripleGetObjectFormatTypeName( LLVMTripleObjectFormatType objectFormatType );
+char const* LLVMNormalizeTriple( char const* triple );
 #endif

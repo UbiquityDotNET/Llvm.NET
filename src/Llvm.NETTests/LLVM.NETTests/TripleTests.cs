@@ -26,7 +26,7 @@ namespace Llvm.NET.Tests
         {
             // constructor should parse and normalize the triple
             // so that ToString() retrieves the normalized form
-            var triple = new Triple( "thumbv7m-eabi" );
+            var triple = new Triple( "thumbv7m-none-eabi" );
             var str = triple.ToString( );
             Assert.AreEqual( "thumbv7m---eabi", str );
         }

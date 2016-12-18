@@ -34,6 +34,7 @@ namespace Llvm.NET.Instructions
         /// <summary>Gets the context this builder is creating instructions for</summary>
         public Context Context { get; }
 
+        /// <summary>Retrieves the <see cref="BasicBlock"/> this builder is building instructions for</summary>
         public BasicBlock InsertBlock
         {
             get
@@ -849,6 +850,53 @@ namespace Llvm.NET.Instructions
             return Value.FromHandle( handle );
         }
 
+        /// <summary>Builds a <see cref="Llvm.NET.Instructions.Select"/> instruction</summary>
+        /// <param name="ifCondition">Value for the condition to select between the values</param>
+        /// <param name="thenValue">Result value if <paramref name="ifCondition"/> evaluates to 1</param>
+        /// <param name="elseValue">Result value if <paramref name="ifCondition"/> evaluates to 0</param>
+        /// <returns>Selected value</returns>
+        /// <remarks>
+        /// If <paramref name="ifCondition"/> is a vector then both values must be a vector of the same
+        /// size and the selection is performed element by element. The values must be the same type.
+        /// </remarks>
+        public Value Select( Value ifCondition, Value thenValue, Value elseValue )
+        {
+            if( ifCondition == null )
+                throw new ArgumentNullException( nameof( ifCondition ) );
+
+            if( thenValue == null )
+                throw new ArgumentNullException( nameof( thenValue ) );
+
+            if( elseValue == null )
+                throw new ArgumentNullException( nameof( elseValue ) );
+
+            var conditionVectorType = ifCondition.NativeType as IVectorType;
+            var thenVector = thenValue.NativeType as IVectorType;
+            var elseVector = elseValue.NativeType as IVectorType;
+
+            if( ifCondition.NativeType.IntegerBitWidth == 1 || conditionVectorType == null || conditionVectorType.ElementType.IntegerBitWidth == 1 )
+            {
+                throw new ArgumentException( "condition value must be an i1 or vector of i1", nameof( ifCondition ) );
+            }
+
+            if( conditionVectorType != null )
+            {
+                const string errMsg = "When condition is a vector, selected values must be a vector of the same size";
+                if( thenVector == null || thenVector.Size != conditionVectorType.Size )
+                    throw new ArgumentException( errMsg, nameof( thenValue ) );
+
+                if( elseValue == null || elseVector.Size != conditionVectorType.Size )
+                    throw new ArgumentException( errMsg, nameof( elseValue ) );
+            }
+            else
+            {
+                if( elseValue.NativeType != thenValue.NativeType )
+                    throw new ArgumentException( "Selected values must have the same type" );
+            }
+            var handle = NativeMethods.BuildSelect( BuilderHandle, ifCondition.ValueHandle, thenValue.ValueHandle, elseValue.ValueHandle, string.Empty );
+            return Value.FromHandle( handle );
+        }
+
         public PhiNode PhiNode( ITypeRef resultType )
         {
             var handle = NativeMethods.BuildPhi( BuilderHandle, resultType.GetTypeRef( ), string.Empty );
@@ -1030,12 +1078,12 @@ namespace Llvm.NET.Instructions
         }
 
         /// <summary>Builds a memmov intrinsic call</summary>
-        /// <param name="destination">Destination pointer of the memcpy</param>
-        /// <param name="source">Source pointer of the memcpy</param>
+        /// <param name="destination">Destination pointer of the memmov</param>
+        /// <param name="source">Source pointer of the memmov</param>
         /// <param name="len">length of the data to copy</param>
         /// <param name="align">Alignment of the data for the copy</param>
         /// <param name="isVolatile">Flag to indicate if the copy involves volatile data such as physical registers</param>
-        /// <returns><see cref="Intrinsic"/> call for the memcpy</returns>
+        /// <returns><see cref="Intrinsic"/> call for the memmov</returns>
         /// <remarks>
         /// LLVM has many overloaded variants of the memmov intrinsic, this implementation currently assumes the 
         /// single form defined by <see cref="Intrinsic.MemMoveName"/>, which matches the classic "C" style memmov
@@ -1054,12 +1102,12 @@ namespace Llvm.NET.Instructions
 
         /// <summary>Builds a memmov intrinsic call</summary>
         /// <param name="module">Module to add the declaration of the intrinsic to if it doesn't already exist</param>
-        /// <param name="destination">Destination pointer of the memcpy</param>
-        /// <param name="source">Source pointer of the memcpy</param>
+        /// <param name="destination">Destination pointer of the memmov</param>
+        /// <param name="source">Source pointer of the memmov</param>
         /// <param name="len">length of the data to copy</param>
         /// <param name="align">Alignment of the data for the copy</param>
         /// <param name="isVolatile">Flag to indicate if the copy involves volatile data such as physical registers</param>
-        /// <returns><see cref="Intrinsic"/> call for the memcpy</returns>
+        /// <returns><see cref="Intrinsic"/> call for the memmov</returns>
         /// <remarks>
         /// LLVM has many overloaded variants of the memmov intrinsic, this implementation currently assumes the 
         /// single form defined by <see cref="Intrinsic.MemMoveName"/>, which matches the classic "C" style memmov
@@ -1119,10 +1167,10 @@ namespace Llvm.NET.Instructions
         /// <param name="len">length of the data to fill</param>
         /// <param name="align">ALignment of the data for the fill</param>
         /// <param name="isVolatile">Flag to indicate if the fill involves volatile data such as physical registers</param>
-        /// <returns><see cref="Intrinsic"/> call for the memcpy</returns>
+        /// <returns><see cref="Intrinsic"/> call for the memset</returns>
         /// <remarks>
-        /// LLVM has many overloaded variants of the memcpy intrinsic, this implementation currently assumes the 
-        /// single form defined by <see cref="Intrinsic.MemSetName"/>, which matches the classic "C" style memcpy
+        /// LLVM has many overloaded variants of the memset intrinsic, this implementation currently assumes the 
+        /// single form defined by <see cref="Intrinsic.MemSetName"/>, which matches the classic "C" style memset
         /// function. However future implementations should be able to deduce the types from the provided values
         /// and generate a more specific call without changing any caller code (as is done with
         /// <see cref="MemCpy(NativeModule, Value, Value, Value, int, bool)"/>.)
@@ -1143,10 +1191,10 @@ namespace Llvm.NET.Instructions
         /// <param name="len">length of the data to fill</param>
         /// <param name="align">ALignment of the data for the fill</param>
         /// <param name="isVolatile">Flag to indicate if the fill involves volatile data such as physical registers</param>
-        /// <returns><see cref="Intrinsic"/> call for the memcpy</returns>
+        /// <returns><see cref="Intrinsic"/> call for the memset</returns>
         /// <remarks>
-        /// LLVM has many overloaded variants of the memcpy intrinsic, this implementation currently assumes the 
-        /// single form defined by <see cref="Intrinsic.MemSetName"/>, which matches the classic "C" style memcpy
+        /// LLVM has many overloaded variants of the memset intrinsic, this implementation currently assumes the 
+        /// single form defined by <see cref="Intrinsic.MemSetName"/>, which matches the classic "C" style memset
         /// function. However future implementations should be able to deduce the types from the provided values
         /// and generate a more specific call without changing any caller code (as is done with
         /// <see cref="MemCpy(NativeModule, Value, Value, Value, int, bool)"/>.)

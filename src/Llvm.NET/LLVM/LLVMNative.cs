@@ -190,7 +190,7 @@ namespace Llvm.NET.Native
         /// <param name="msg">Pointer to the native code allocated string</param>
         /// <returns>Managed code string marshaled from the native content</returns>
         /// <remarks>
-        /// This method will, construct a new managed string containing the test of the string from native code, normalizing
+        /// This method will, construct a new managed string containing the text of the string from native code, normalizing
         /// the line endings to the current execution environments line endings (See: <see cref="Environment.NewLine"/>).
         /// </remarks>
         internal static string MarshalMsg( IntPtr msg )
