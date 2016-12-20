@@ -44,9 +44,10 @@
         
         <!-- Fix Major and minor build numbers to match LLVM so it's easier to relate to the LLVM version -->
         <BuildMajor Condition="'$(BuildMajor)'=='' AND '$(FullBuildNumber)'==''">3</BuildMajor>
-        <BuildMinor Condition="'$(BuildMinor)'=='' AND '$(FullBuildNumber)'==''">8</BuildMinor>
+        <BuildMinor Condition="'$(BuildMinor)'=='' AND '$(FullBuildNumber)'==''">9</BuildMinor>
 
         <SolutionBuildExtensionsDir Condition="'$(SolutionBuildExtensionsDir)'==''">$(BuildRootDir)BuildExtensions\</SolutionBuildExtensionsDir>
         <SolutionBuildExtensionsDir Condition="!HasTrailingSlash('$(SolutionBuildExtensionsDir)')">$(SolutionBuildExtensionsDir)</SolutionBuildExtensionsDir>
+        <BuildOutputPackagesDir>$(BaseBuildOutputPath)\packages\</BuildOutputPackagesDir>
     </PropertyGroup>
 </Project>

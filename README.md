@@ -38,9 +38,18 @@ has other needs that require a specific platform target, then LlVM.NET can still
 * Download [LLVM source for 3.9.0 ](http://llvm.org/releases/3.9.0/llvm-3.9.0.src.tar.xz) (At this time LLVM is 3.9.0 )
   * You will need a tool to extract files from that archive format. On Windows the recommended tool is [7zip](http://7-zip.org/)
 * Build of LLVM libraries  
-To Build the LLVM libraries you can use the [BuildLlvmWithVS](https://github.com/NETMF/Llvm.NET/blob/dev/src/LibLLVM/BuildLlvmWithVS.cmd) command script provided.
-This script should be placed into the root of your LLVM source tree. Run BuildLlvmWithVS from an elevated command prompt to build the required LLVM libraries and
-create a registry entry so that the Llvm.NET projects can find the pre-built libraries. (_NOTE: On a typical developer machines the full LLVM build takes approximately 6 hours so letting it run overnight or when you are otherwise away from your computer is usually a good idea. Fortunately this only needs to be done once for a given release of LLVM._)
+To Build the LLVM libraries you can use the [Build-LlvmWithVS](https://github.com/NETMF/Llvm.NET/blob/dev/src/LibLLVM/Build-LlvmWithVS.ps1) PowerShell script provided.
+For more information on using the script open a PowerShell command prompt in the Llvm.NET source directory and run `PS> Get-Help .\Build-LlvmWithVs.ps1`. 
+
+_NOTE: On a typical developer machines the LLVM library build takes approximately 1.5 hours so letting it run overnight or when you are otherwise away from your computer
+is usually a good idea. Fortunately this only needs to be done once for a given release of LLVM._
+
+If you have
+Visual Studio 2017 RC (or RTM when available) with the [Visual C++ Tools for CMake](https://blogs.msdn.microsoft.com/vcblog/2016/10/05/cmake-support-in-visual-studio/),
+you can build the LLVM libs in VS. However, the default behavior is to build everything, which can take upwards of 6 hours on most typical machines. Instead of doing a
+full build you can use the [Build-LlvmWithVS](https://github.com/NETMF/Llvm.NET/blob/dev/src/LibLLVM/Build-LlvmWithVS.ps1) PowerShell script with the `-CreateSettingsJson`
+to create the [CMakeSettings.json](https://blogs.msdn.microsoft.com/vcblog/2016/10/05/cmake-support-in-visual-studio/#configure-cmake) file that VS will use to configure
+VS to reduce what is built to just the libraries needed for Llvm.NET.
 
 #### Using Visual Studio
 The repository contains a Visual Studio solution file that allows building Llvm.NET and LibLLVM for a single platform configuration, as well as running the available

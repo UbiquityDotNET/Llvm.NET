@@ -90,7 +90,7 @@
     Custom task to create single configuration projects from a simpler multi-configuration project list.
     MultiConfiguration projects contain a "Platforms" and "Configurations" Item Metadata that are a semicolon
     delimited list of platforms and configurations the project should build for. This task takes a list of such
-    projects and creates a new one that rolls out the Platforms and COnfigurations for each item in the input list.
+    projects and creates a new one that rolls out the Platforms and Configurations for each item in the input list.
     That is the output list contains a new item for every platform+configuration combination in each item of the
     input list. The output item contains all the metadata of the original except the "Platforms" and "Configurations"
     list and additionally includes new "Platform" and "Configuration", and "AdditionalPreoperties" metadata.

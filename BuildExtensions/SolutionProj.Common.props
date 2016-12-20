@@ -56,11 +56,11 @@
         <!--
         Default settings for NugetRestore. This assumes a repository with a 'src' folder
         acting as the Nuget 'SolutionDirectory'. Furthermore it assumes the location of the 
-        packages folder is in the $(BaseBuildOutputPath)\packages path.
+        packages folder is in the $(BuildOutputPackagesDir) path.
         -->
         <NugetRestorePackage>
             <MSBuildVersion>14</MSBuildVersion>
-            <PackagesDirectory>$(BaseBuildOutputPath)\packages\</PackagesDirectory>
+            <PackagesDirectory>$(BuildOutputPackagesDir)</PackagesDirectory>
             <SolutionDirectory>src\</SolutionDirectory>
         </NugetRestorePackage>
     </ItemDefinitionGroup>
