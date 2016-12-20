@@ -41,6 +41,13 @@
     In order to properly support MSI based installers it is important to ensure that the file version
     is unique for each build, therefore, the file build and revision numbers are auto generated.
     -->
+    <!--
+    Classic VS installations don't have an "x86" platform - the official name of the platform is Win32,
+    However, the default VS 2017 CMake support uses x86 as a platform name. So this adapts and adjusts
+    to allow for compatibility across VS tool versions.
+    -->
+    <LLVM_PLATFORM>$(Platform)</LLVM_PLATFORM>
+    <LLVM_PLATFORM Condition="'$(LLVM_PLATFORM)'=='Win32'">x86</LLVM_PLATFORM>
   </PropertyGroup>
   <PropertyGroup Label="UserMacros">
     <!-- Standard LLVM common Include path-->
@@ -53,7 +60,7 @@
         this is consistent with how the VC++ Tools for CMake work with CMake based projects
     -->
     <!-- Config Directory contains the output of the build for a given configuration (e.g. Debug, Release, RelWithDebInfo) -->
-    <LLVM_CONFIG_DIR>$(LLVM_BUILD_DIR)$(Platform)-$(Configuration)\</LLVM_CONFIG_DIR>
+    <LLVM_CONFIG_DIR>$(LLVM_BUILD_DIR)$(LLVM_PLATFORM)-$(Configuration)\</LLVM_CONFIG_DIR>
     
     <!-- CMAKE generated headers containing configuration settings and defines for a given target platform -->
     <LLVM_CONFIG_INCLUDE>$(LLVM_CONFIG_DIR)Include\</LLVM_CONFIG_INCLUDE>

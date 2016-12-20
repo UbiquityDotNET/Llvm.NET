@@ -40,9 +40,6 @@ Global
 		Release|Any CPU = Release|Any CPU
 		Release|Win32 = Release|Win32
 		Release|x64 = Release|x64
-		RelWithDebInfo|Any CPU = RelWithDebInfo|Any CPU
-		RelWithDebInfo|Win32 = RelWithDebInfo|Win32
-		RelWithDebInfo|x64 = RelWithDebInfo|x64
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{6C77A7DE-D464-430F-96A9-A64768763B5F}.Debug|Any CPU.ActiveCfg = Debug|Win32
@@ -55,11 +52,6 @@ Global
 		{6C77A7DE-D464-430F-96A9-A64768763B5F}.Release|Win32.Build.0 = Release|Win32
 		{6C77A7DE-D464-430F-96A9-A64768763B5F}.Release|x64.ActiveCfg = Release|x64
 		{6C77A7DE-D464-430F-96A9-A64768763B5F}.Release|x64.Build.0 = Release|x64
-		{6C77A7DE-D464-430F-96A9-A64768763B5F}.RelWithDebInfo|Any CPU.ActiveCfg = RelWithDebInfo|Win32
-		{6C77A7DE-D464-430F-96A9-A64768763B5F}.RelWithDebInfo|Win32.ActiveCfg = RelWithDebInfo|Win32
-		{6C77A7DE-D464-430F-96A9-A64768763B5F}.RelWithDebInfo|Win32.Build.0 = RelWithDebInfo|Win32
-		{6C77A7DE-D464-430F-96A9-A64768763B5F}.RelWithDebInfo|x64.ActiveCfg = RelWithDebInfo|x64
-		{6C77A7DE-D464-430F-96A9-A64768763B5F}.RelWithDebInfo|x64.Build.0 = RelWithDebInfo|x64
 		{0162C8CE-6641-4922-8664-F8A44356FBF7}.Debug|Any CPU.ActiveCfg = Debug|Win32
 		{0162C8CE-6641-4922-8664-F8A44356FBF7}.Debug|Win32.ActiveCfg = Debug|Win32
 		{0162C8CE-6641-4922-8664-F8A44356FBF7}.Debug|Win32.Build.0 = Debug|Win32
@@ -70,12 +62,6 @@ Global
 		{0162C8CE-6641-4922-8664-F8A44356FBF7}.Release|Win32.Build.0 = Release|Win32
 		{0162C8CE-6641-4922-8664-F8A44356FBF7}.Release|x64.ActiveCfg = Release|x64
 		{0162C8CE-6641-4922-8664-F8A44356FBF7}.Release|x64.Build.0 = Release|x64
-		{0162C8CE-6641-4922-8664-F8A44356FBF7}.RelWithDebInfo|Any CPU.ActiveCfg = Release|x64
-		{0162C8CE-6641-4922-8664-F8A44356FBF7}.RelWithDebInfo|Any CPU.Build.0 = Release|x64
-		{0162C8CE-6641-4922-8664-F8A44356FBF7}.RelWithDebInfo|Win32.ActiveCfg = Release|Win32
-		{0162C8CE-6641-4922-8664-F8A44356FBF7}.RelWithDebInfo|Win32.Build.0 = Release|Win32
-		{0162C8CE-6641-4922-8664-F8A44356FBF7}.RelWithDebInfo|x64.ActiveCfg = Release|x64
-		{0162C8CE-6641-4922-8664-F8A44356FBF7}.RelWithDebInfo|x64.Build.0 = Release|x64
 		{826ADB1C-4BDC-4A89-836B-87088E511D6A}.Debug|Any CPU.ActiveCfg = Debug|Win32
 		{826ADB1C-4BDC-4A89-836B-87088E511D6A}.Debug|Win32.ActiveCfg = Debug|Win32
 		{826ADB1C-4BDC-4A89-836B-87088E511D6A}.Debug|Win32.Build.0 = Debug|Win32
@@ -86,12 +72,6 @@ Global
 		{826ADB1C-4BDC-4A89-836B-87088E511D6A}.Release|Win32.Build.0 = Release|Win32
 		{826ADB1C-4BDC-4A89-836B-87088E511D6A}.Release|x64.ActiveCfg = Release|x64
 		{826ADB1C-4BDC-4A89-836B-87088E511D6A}.Release|x64.Build.0 = Release|x64
-		{826ADB1C-4BDC-4A89-836B-87088E511D6A}.RelWithDebInfo|Any CPU.ActiveCfg = Release|x64
-		{826ADB1C-4BDC-4A89-836B-87088E511D6A}.RelWithDebInfo|Any CPU.Build.0 = Release|x64
-		{826ADB1C-4BDC-4A89-836B-87088E511D6A}.RelWithDebInfo|Win32.ActiveCfg = Release|Win32
-		{826ADB1C-4BDC-4A89-836B-87088E511D6A}.RelWithDebInfo|Win32.Build.0 = Release|Win32
-		{826ADB1C-4BDC-4A89-836B-87088E511D6A}.RelWithDebInfo|x64.ActiveCfg = Release|x64
-		{826ADB1C-4BDC-4A89-836B-87088E511D6A}.RelWithDebInfo|x64.Build.0 = Release|x64
 		{F9914A60-2E4B-472F-B1F3-BD08FD23CA92}.Debug|Any CPU.ActiveCfg = Debug|Win32
 		{F9914A60-2E4B-472F-B1F3-BD08FD23CA92}.Debug|Win32.ActiveCfg = Debug|Win32
 		{F9914A60-2E4B-472F-B1F3-BD08FD23CA92}.Debug|Win32.Build.0 = Debug|Win32
@@ -102,12 +82,6 @@ Global
 		{F9914A60-2E4B-472F-B1F3-BD08FD23CA92}.Release|Win32.Build.0 = Release|Win32
 		{F9914A60-2E4B-472F-B1F3-BD08FD23CA92}.Release|x64.ActiveCfg = Release|x64
 		{F9914A60-2E4B-472F-B1F3-BD08FD23CA92}.Release|x64.Build.0 = Release|x64
-		{F9914A60-2E4B-472F-B1F3-BD08FD23CA92}.RelWithDebInfo|Any CPU.ActiveCfg = Release|x64
-		{F9914A60-2E4B-472F-B1F3-BD08FD23CA92}.RelWithDebInfo|Any CPU.Build.0 = Release|x64
-		{F9914A60-2E4B-472F-B1F3-BD08FD23CA92}.RelWithDebInfo|Win32.ActiveCfg = Release|Win32
-		{F9914A60-2E4B-472F-B1F3-BD08FD23CA92}.RelWithDebInfo|Win32.Build.0 = Release|Win32
-		{F9914A60-2E4B-472F-B1F3-BD08FD23CA92}.RelWithDebInfo|x64.ActiveCfg = Release|x64
-		{F9914A60-2E4B-472F-B1F3-BD08FD23CA92}.RelWithDebInfo|x64.Build.0 = Release|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
