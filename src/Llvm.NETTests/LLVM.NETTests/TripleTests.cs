@@ -28,7 +28,7 @@ namespace Llvm.NET.Tests
             // so that ToString() retrieves the normalized form
             var triple = new Triple( "thumbv7m-none-eabi" );
             var str = triple.ToString( );
-            Assert.AreEqual( "thumbv7m---eabi", str );
+            Assert.AreEqual( "thumbv7m-none--eabi", str );
         }
 
         [TestMethod]
