@@ -874,7 +874,7 @@ namespace Llvm.NET.Instructions
             var thenVector = thenValue.NativeType as IVectorType;
             var elseVector = elseValue.NativeType as IVectorType;
 
-            if( ifCondition.NativeType.IntegerBitWidth == 1 || conditionVectorType == null || conditionVectorType.ElementType.IntegerBitWidth == 1 )
+            if( ifCondition.NativeType.IntegerBitWidth != 1 && conditionVectorType != null && conditionVectorType.ElementType.IntegerBitWidth != 1 )
             {
                 throw new ArgumentException( "condition value must be an i1 or vector of i1", nameof( ifCondition ) );
             }
