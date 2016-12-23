@@ -9,8 +9,7 @@ using Llvm.NET.Values;
 namespace Llvm.NET.Instructions
 {
     ///<summary>LLVM Instruction builder allowing managed code to generate IR instructions</summary>
-    public class InstructionBuilder
-        : IDisposable
+    public sealed class InstructionBuilder
     {
         /// <summary>Creates an <see cref="InstructionBuilder"/> for a given context</summary>
         /// <param name="context">Context used for creating instructions</param>
@@ -1259,23 +1258,10 @@ namespace Llvm.NET.Instructions
             return Value.FromHandle( handle );
         }
 
-        #region Disposable Pattern
-        public void Dispose( )
-        {
-            Dispose( true );
-            GC.SuppressFinalize( this );
-        }
-
-        protected virtual void Dispose( bool disposing )
-        {
-            NativeMethods.DisposeBuilder( BuilderHandle );
-        }
-
         ~InstructionBuilder( )
         {
-            Dispose( false );
+            BuilderHandle.Close( );
         }
-        #endregion
 
         internal static LLVMValueRef[ ] GetValidatedGEPArgs( Value pointer, IEnumerable<Value> args )
         {
@@ -1297,12 +1283,12 @@ namespace Llvm.NET.Instructions
             return llvmArgs;
         }
 
-        internal LLVMBuilderRef BuilderHandle { get; }
+        internal InstructionBuilderHandle BuilderHandle { get; }
 
         // LLVM will automatically perform constant folding, thus the result of applying
         // a unary operator instruction may actually be a constant value and not an instruction
         // this deals with that to produce a correct managed wrapper type
-        private Value BuildUnaryOp( Func<LLVMBuilderRef, LLVMValueRef, string, LLVMValueRef> opFactory
+        private Value BuildUnaryOp( Func<InstructionBuilderHandle, LLVMValueRef, string, LLVMValueRef> opFactory
                                   , Value operand
                                   )
         {
@@ -1313,7 +1299,7 @@ namespace Llvm.NET.Instructions
         // LLVM will automatically perform constant folding, thus the result of applying
         // a binary operator instruction may actually be a constant value and not an instruction
         // this deals with that to produce a correct managed wrapper type
-        private Value BuildBinOp( Func<LLVMBuilderRef, LLVMValueRef, LLVMValueRef, string, LLVMValueRef> opFactory
+        private Value BuildBinOp( Func<InstructionBuilderHandle, LLVMValueRef, LLVMValueRef, string, LLVMValueRef> opFactory
                                 , Value lhs
                                 , Value rhs
                                 )

@@ -118,4 +118,33 @@ namespace Llvm.NET.Native
             return true;
         }
     }
+
+    [SecurityCritical]
+    internal class InstructionBuilderHandle
+        : SafeHandleNullIsInvalid
+    {
+        internal InstructionBuilderHandle( )
+            : base( true )
+        {
+        }
+
+        internal InstructionBuilderHandle( IntPtr handle, bool owner )
+            : base( owner )
+        {
+            SetHandle( handle );
+        }
+
+        [System.Diagnostics.CodeAnalysis.SuppressMessage( "Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode", Justification = "Required for marshaling support (used via reflection)" )]
+        internal InstructionBuilderHandle( IntPtr handle )
+            : this( handle, false )
+        {
+        }
+
+        [SecurityCritical]
+        protected override bool ReleaseHandle( )
+        {
+            NativeMethods.DisposeBuilder( handle );
+            return true;
+        }
+    }
 }

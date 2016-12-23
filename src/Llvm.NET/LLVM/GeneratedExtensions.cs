@@ -457,7 +457,7 @@ namespace Llvm.NET.Native
         public static extern int GetValueID( LLVMValueRef @val );
 
         [ DllImport( libraryPath, EntryPoint = "LLVMBuildIntCast2", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl, BestFitMapping = false, ThrowOnUnmappableChar = true)]
-        public static extern LLVMValueRef BuildIntCast( LLVMBuilderRef @param0, LLVMValueRef @Val, LLVMTypeRef @DestTy, LLVMBool isSigned, [MarshalAs( UnmanagedType.LPStr )] string @Name );
+        public static extern LLVMValueRef BuildIntCast( InstructionBuilderHandle @param0, LLVMValueRef @Val, LLVMTypeRef @DestTy, LLVMBool isSigned, [MarshalAs( UnmanagedType.LPStr )] string @Name );
 
         [DllImport( libraryPath, EntryPoint = "LLVMSetDebugLoc", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl, BestFitMapping = false, ThrowOnUnmappableChar = true)]
         internal static extern void SetDebugLoc( LLVMValueRef inst, uint line, uint column, LLVMMetadataRef scope );
@@ -547,7 +547,7 @@ namespace Llvm.NET.Native
         internal static extern void MetadataReplaceAllUsesWith(LLVMMetadataRef @MD, LLVMMetadataRef @New);
 
         [DllImport(libraryPath, EntryPoint = "LLVMSetCurrentDebugLocation2", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl, BestFitMapping = false, ThrowOnUnmappableChar = true)]
-        internal static extern void SetCurrentDebugLocation2( LLVMBuilderRef @Bref, uint @Line, uint @Col, LLVMMetadataRef @Scope, LLVMMetadataRef @InlinedAt);
+        internal static extern void SetCurrentDebugLocation2( InstructionBuilderHandle @Bref, uint @Line, uint @Col, LLVMMetadataRef @Scope, LLVMMetadataRef @InlinedAt);
 
         [DllImport(libraryPath, EntryPoint = "LLVMNewDIBuilder", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl, BestFitMapping = false, ThrowOnUnmappableChar = true)]
         internal static extern LLVMDIBuilderRef NewDIBuilder( LLVMModuleRef @m, LLVMBool allowUnresolved );
@@ -727,7 +727,7 @@ namespace Llvm.NET.Native
         internal static extern IntPtr GetDIFileDirectory( LLVMMetadataRef /*DIFile*/ file );
 
         [DllImport( libraryPath, EntryPoint = "LLVMBuildAtomicCmpXchg", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl, BestFitMapping = false, ThrowOnUnmappableChar = true )]
-        internal static extern LLVMValueRef BuildAtomicCmpXchg( LLVMBuilderRef @B, LLVMValueRef @Ptr, LLVMValueRef @Cmp, LLVMValueRef @New, LLVMAtomicOrdering @successOrdering, LLVMAtomicOrdering @failureOrdering, LLVMBool @singleThread );
+        internal static extern LLVMValueRef BuildAtomicCmpXchg( InstructionBuilderHandle @B, LLVMValueRef @Ptr, LLVMValueRef @Cmp, LLVMValueRef @New, LLVMAtomicOrdering @successOrdering, LLVMAtomicOrdering @failureOrdering, LLVMBool @singleThread );
 
         [DllImport( libraryPath, EntryPoint = "LLVMGetNodeContext", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl, BestFitMapping = false, ThrowOnUnmappableChar = true )]
         internal static extern LLVMContextRef GetNodeContext( LLVMMetadataRef /*MDNode*/ node );

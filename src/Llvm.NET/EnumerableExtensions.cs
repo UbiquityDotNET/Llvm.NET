@@ -5,7 +5,7 @@ namespace Llvm.NET
 {
     /// <summary>This is an internal duplicate of Extensions added to CoreFx.</summary>
     /// <remarks>
-    /// This is duped here to enable use in downlevel runtimes. Furthermore, it uses a different
+    /// This is duped here to enable use in down-level runtimes. Furthermore, it uses a different
     /// name and is marked internal to prevent conflicts with the official implementation when
     /// built for runtimes supporting that. (See: https://github.com/dotnet/corefx/pull/5947)
     /// </remarks>

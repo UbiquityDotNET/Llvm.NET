@@ -274,7 +274,7 @@ namespace Llvm.NET
 
         ~Triple()
         {
-            TripleHandle.Dispose( );
+            TripleHandle.Close( );
         }
 
         Llvm.NET.Native.TripleHandle TripleHandle;
