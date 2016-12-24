@@ -156,6 +156,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <None Include="Build-LlvmWithVs.ps1" />
     <None Include="EXPORTS.DEF" />
     <None Include="BuildLlvmWithVS.cmd">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>

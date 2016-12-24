@@ -14,10 +14,6 @@
 .PARAMETER Register
     Add Registry entries for the location of binaries built and the LLVM header files so that projects using the libraries generated can locate them
 
-.PARAMETER LlvmVersion
-    Specifies the LLVM Version, which is used in registering the location of the lib and headers in the registry. The default value is the currently
-    supported version of LLVM. However, when working to support a new release of LLVM it is useful to force a different version number.
-
 .PARAMETER LlvmRoot
     This specifies the root of the LLVM source tree to build. The default value is the folder containing this script, but if the script is not placed
     into the LLVM source tree the path must be specified.
@@ -46,10 +42,6 @@ param( [Parameter(Mandatory)]
 
        [switch]
        $CreateSettingsJson,
-
-       [ValidateNotNullOrEmpty()]
-       [string]
-       $LlvmVersion="3.9.0",
 
        [ValidateNotNullOrEmpty()]
        [string]$LlvmRoot=$PSScriptRoot,
@@ -208,18 +200,26 @@ function Normalize-Path([string]$path )
     return [System.IO.Path]::GetFullPath($path)
 }
 
+function Get-LlvmVersion( [string] $cmakeListPath )
+{
+    $props = @{}
+    $matches = Select-String -Path $cmakeListPath -Pattern "set\(LLVM_VERSION_(MAJOR|MINOR|PATCH) ([0-9])+\)" | %{$_.Matches}
+    foreach( $match in $matches )
+    {  
+        $props = $props + @{$match.Groups[1].Value = [Convert]::ToInt32($match.Groups[2].Value)}
+    }
+    $versionObj = [PsCustomObject]($props)
+    "{0}.{1}.{2}" -f($versionObj.MAJOR,$versionObj.Minor,$versionObj.Patch)
+}
+
 #--- Main Script Body
 
 # Force absolute paths for input params dealing in paths
 $Script:LlvmRoot = Normalize-Path $Script:LlvmRoot
 $Script:BuildOutputPath = Normalize-Path $Script:BuildOutputPath
 
-# Construct array of configurations to deal with
-$configurations = ( (New-CmakeConfig x86 "Release" $BaseVsGenerator $Script:BuildOutputPath),
-                    (New-CmakeConfig x86 "Debug" $BaseVsGenerator $Script:BuildOutputPath),
-                    (New-CmakeConfig x64 "Release" $BaseVsGenerator $Script:BuildOutputPath),
-                    (New-CmakeConfig x64 "Debug" $BaseVsGenerator $Script:BuildOutputPath)
-                  )
+# Verify Cmake version info
+$CmakeInfo = Get-CmakeInfo 3 7 1
 
 Write-Information "LLVM Source Root: $Script:LlvmRoot"
 $cmakeListPath = Join-Path $Script:LlvmRoot CMakeLists.txt
@@ -228,8 +228,12 @@ if( !( Test-Path -PathType Leaf $cmakeListPath ) )
     throw "'$cmakeListPath' is missing, the current directory does not appear to be a valid source directory"
 }
 
-# Verify Cmake version info
-$CmakeInfo = Get-CmakeInfo 3 7 1
+# Construct array of configurations to deal with
+$configurations = ( (New-CmakeConfig x86 "Release" $BaseVsGenerator $Script:BuildOutputPath),
+                    (New-CmakeConfig x86 "Debug" $BaseVsGenerator $Script:BuildOutputPath),
+                    (New-CmakeConfig x64 "Release" $BaseVsGenerator $Script:BuildOutputPath),
+                    (New-CmakeConfig x64 "Debug" $BaseVsGenerator $Script:BuildOutputPath)
+                  )
 
 if( $Generate )
 {
@@ -267,7 +271,8 @@ if( $Build )
 
 if( $Register )
 {
-    Register-Llvm $Script:LlvmVersion $Script:LlvmRoot $Script:BuildOutputPath
+    $llvmVersion = Get-LlvmVersion $Script:cmakeListPath
+    Register-Llvm $llvmVersion $Script:LlvmRoot $Script:BuildOutputPath
 }
 
 if( $CreateSettingsJson )
