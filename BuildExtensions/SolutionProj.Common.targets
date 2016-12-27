@@ -136,7 +136,7 @@
     <Target Name="PackageContent" DependsOnTargets="EnsureBuildNumbers;_DownloadNugetExe" >
         <MakeDir Directories="$(BaseSignedOutputPath)Nuget\" Condition="!EXISTS('$(BaseSignedOutputPath)Nuget\')" />
         <Message Importance="high" Text="++Building Nuget Package..."/>
-        <Exec Command='"$(NugetExePath)" pack %(NugetPackage.FullPath) -OutputDirectory $(BaseSignedOutputPath)Nuget\ -Properties configuration=Release;buildoutput=$(BaseSignedOutputPath);buildversion=$(FullBuildNumber) -NoPackageAnalysis' />
+        <Exec Command='"$(NugetExePath)" pack %(NugetPackage.FullPath) -OutputDirectory $(BaseSignedOutputPath)Nuget\ -Properties configuration=Release;buildbinoutput=$(BaseSignedOutputPath);buildcontentoutput=$(BaseOutputPath);buildversion=$(FullBuildNumber) -NoPackageAnalysis' />
     </Target>
 
     <!-- Restores nuget packages for projects listed in the NugetRestorePackage item list -->

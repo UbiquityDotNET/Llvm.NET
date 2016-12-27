@@ -182,8 +182,8 @@ namespace Llvm.NET.Native
 
         static void FatalErrorHandler( string Reason )
         {
-            Trace.TraceError( Reason );
-            // LLVM will call exit() upon return from this function
+            Trace.TraceError( "LLVM Fatal Error: '{0}'; Application exiting.", Reason );
+            // LLVM will call exit() upon return from this function and there's no way to stop it
         }
 
         /// <summary>This method is used to marshal a string when NativeMethods.DisposeMessage() is required on the string allocated from native code</summary>

@@ -254,6 +254,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Llvm.NET.ruleset" />
+    <None Include="project.json" />
   </ItemGroup>
   <ItemGroup>
     <CodeAnalysisDictionary Include="..\CustomDictionary.xml">

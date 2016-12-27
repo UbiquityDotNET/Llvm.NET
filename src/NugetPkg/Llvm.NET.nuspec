@@ -10,8 +10,10 @@
     </metadata>
     <files>
         <file src="build\Llvm.NET.targets" target="build\Llvm.NET.targets" />
-        <file src="$buildoutput$x64\$configuration$\LibLLVM.dll" target="build\LibLLVM\x64\LibLLVM.dll" />
-        <file src="$buildoutput$Win32\$configuration$\LibLLVM.dll" target="build\LibLLVM\x86\LibLLVM.dll" />
-        <file src="$buildoutput$x64\$configuration$\Llvm.NET.dll" target="lib\net45\Llvm.NET.dll" />
+        <file src="$buildbinoutput$x64\$configuration$\LibLLVM.dll" target="build\LibLLVM\x64\LibLLVM.dll" />
+        <file src="$buildbinoutput$Win32\$configuration$\LibLLVM.dll" target="build\LibLLVM\x86\LibLLVM.dll" />
+        <file src="$buildbinoutput$x64\$configuration$\Llvm.NET.dll" target="lib\net45\Llvm.NET.dll" />
+        <file src="$buildcontentoutput$x64\$configuration$\Llvm.NET.pdb" target="lib\net45\Llvm.NET.pdb" />
+        <file src="$buildcontentoutput$x64\$configuration$\Llvm.NET.xml" target="lib\net45\Llvm.NET.xml" />
     </files>
 </package>
