@@ -171,7 +171,8 @@ namespace Llvm.NET
         /// <param name="context"><see cref="Context"/> for types created by the new <see cref="DataLayout"/></param>
         /// <param name="layout">string to parse</param>
         /// <returns>Parsed target data</returns>
-        /// <remarks>For full details on the syntax of the string see <a href="http://llvm.org/releases/3.7.0/docs/LangRef.html#data-layout">http://llvm.org/releases/3.7.0/docs/LangRef.html#data-layout</a></remarks>
+        /// <remarks>For full details on the syntax of the string see <a href="http://llvm.org/releases/3.9.1/docs/LangRef.html#data-layout">http://llvm.org/releases/3.9.1/docs/LangRef.html#data-layout</a></remarks>
+        [Obsolete("To ensure correctness of the layout information retrieve the layout data from TargetMachine.TargetData instead of parsing an arbitrary string")]
         public static DataLayout Parse( Context context, string layout )
         {
             var handle = NativeMethods.CreateTargetData( layout );

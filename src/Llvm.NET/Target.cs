@@ -34,17 +34,17 @@ namespace Llvm.NET
         /// <returns><see cref="TargetMachine"/> based on the specified parameters</returns>
         public TargetMachine CreateTargetMachine( Context context
                                                 , string triple
-                                                , string cpu
-                                                , string features
-                                                , CodeGenOpt optLevel
-                                                , Reloc relocationMode
-                                                , CodeModel codeModel
+                                                , string cpu = null
+                                                , string features = null
+                                                , CodeGenOpt optLevel = CodeGenOpt.Default
+                                                , Reloc relocationMode = Reloc.Default
+                                                , CodeModel codeModel = CodeModel.Default
                                                 )
         {
             var targetMachineHandle = NativeMethods.CreateTargetMachine( TargetHandle
                                                                        , triple
-                                                                       , cpu
-                                                                       , features
+                                                                       , cpu ?? string.Empty
+                                                                       , features ?? string.Empty
                                                                        , ( LLVMCodeGenOptLevel )optLevel
                                                                        , ( LLVMRelocMode )relocationMode
                                                                        , ( LLVMCodeModel )codeModel
