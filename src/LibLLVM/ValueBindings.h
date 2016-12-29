@@ -3,6 +3,7 @@
 
 #include "llvm-c/Core.h"
 #include "DIBuilderBindings.h"
+#include "ModuleBindings.h"
 
 #ifdef __cplusplus
 extern "C" {
@@ -17,6 +18,9 @@ extern "C" {
     LLVMValueRef LLVMGetAliasee( LLVMValueRef Val );
     uint32_t LLVMGetArgumentIndex( LLVMValueRef Val);
 
+    // use: LLVMDisposeMessage() on return
+    LLVMComdatRef LLVMGlobalObjectGetComdat( LLVMValueRef Val );
+    void LLVMGlobalObjectSetComdat( LLVMValueRef Val, LLVMComdatRef comdatRef );
 
 #ifdef __cplusplus
 }

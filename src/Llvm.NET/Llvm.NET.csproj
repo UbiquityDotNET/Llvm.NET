@@ -67,6 +67,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ArgValidationExtensions.cs" />
+    <Compile Include="Comdat.cs" />
+    <Compile Include="ComdatCollection.cs" />
     <Compile Include="ContextValidator.cs" />
     <Compile Include="DebugInfo\DebugArrayType.cs" />
     <Compile Include="DebugInfo\DebugMemberInfo.cs" />

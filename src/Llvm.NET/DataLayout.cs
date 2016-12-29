@@ -6,9 +6,6 @@ using Llvm.NET.Values;
 
 namespace Llvm.NET
 {
-    // TODO: update this to reflect the deprecation of retrieving a pointer to the layout in 3.7.0
-    //       (e.g. the layout should be copy constructed, rather than holding a pointer/handle)
-
     /// <summary>Provides access to LLVM target data layout information</summary>
     /// <remarks>
     /// <para>There is a distinction between various sizes and alignment for a given type

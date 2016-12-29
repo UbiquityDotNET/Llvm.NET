@@ -10,7 +10,7 @@ using System.Diagnostics.CodeAnalysis;
 
 namespace Llvm.NET
 {
-    /// <summary>LLVM Bit code module</summary>
+    /// <summary>LLVM Bitcode module</summary>
     /// <remarks>
     /// A module is the basic unit for containing code in LLVM. Modules are an in memory
     /// representation of the LLVM bit-code. 
@@ -24,6 +24,7 @@ namespace Llvm.NET
             ModuleHandle = handle;
             DIBuilder_ = new Lazy<DebugInfoBuilder>( ( ) => new DebugInfoBuilder( this ) );
             Context.AddModule( this );
+            Comdats = new ComdatCollection( this );
         }
 
         /// <summary>Creates an unnamed module without debug information</summary>
@@ -60,6 +61,7 @@ namespace Llvm.NET
 
             DIBuilder_ = new Lazy<DebugInfoBuilder>( ( ) => new DebugInfoBuilder( this ) );
             Context.AddModule( this );
+            Comdats = new ComdatCollection( this );
         }
 
         /// <summary>Creates a named module with a root <see cref="DICompileUnit"/> to contain debugging information</summary>
@@ -120,6 +122,8 @@ namespace Llvm.NET
         }
 
         #region IDisposable Pattern
+        public bool IsDisposed => ModuleHandle.Pointer.IsNull();
+
         public void Dispose( )
         {
             Dispose( true );
@@ -167,6 +171,9 @@ namespace Llvm.NET
         /// <summary>Version of the Debug information Metadata</summary>
         public const UInt32 DebugMetadataVersion = 3; /* DEBUG_METADATA_VERSION (for LLVM v3.7.0) */
 
+        /// <summary>Comdats for this module</summary>
+        public ComdatCollection Comdats { get; }
+
         /// <summary><see cref="Context"/> this module belongs to</summary>
         public Context Context
         {
@@ -199,20 +206,15 @@ namespace Llvm.NET
         /// Note the data layout string doesn't do what seems obvious.
         /// That is, it doesn't force the target back-end to generate code
         /// or types with a particular layout. Rather, the layout string has
-        /// to match the implicit layout of the target. The layout string
-        /// provides hints to the optimization passes about the target at
-        /// the expense of making the bit code and front-end a bit target
-        /// dependent.
+        /// to match the implicit layout of the target. Thus it should only
+        /// come from the actual <see cref="TargetMachine"/> the code is
+        /// targeting.
         /// </remarks>
         public string DataLayoutString
         {
             get
             {
                 return Layout?.ToString( ) ?? string.Empty;
-            }
-            set
-            {
-                Layout = DataLayout.Parse( Context, value );
             }
         }
 
@@ -221,7 +223,7 @@ namespace Llvm.NET
         /// therefore this property changes anytime the <see cref="DataLayoutString"/> is 
         /// set. Furthermore, setting this property will change the value of <see cref="DataLayoutString"/>.
         /// In other words, Layout and <see cref="DataLayoutString"/> are two different views
-        /// of the same information and setting either one updates the other. 
+        /// of the same information.
         /// </remarks>
         public DataLayout Layout
         {
@@ -280,7 +282,6 @@ namespace Llvm.NET
         }
 
         // TODO: Add enumerator for GlobalAlias(s)
-        // TODO: Add enumerator for Comdat(s)
         // TODO: Add enumerator for NamedMDNode(s)
 
         /// <summary>Name of the module</summary>
@@ -314,7 +315,7 @@ namespace Llvm.NET
         /// <remarks>
         /// Options configuring optimization are provided by calling <see cref="StaticState.ParseCommandLineOptions(string[], string)"/>.
         /// The current implementation uses the legacy pass manager architecture, thus the options for controlling passes
-        /// are the same as used for the LLVM 'opt' tool. Once LLVM stablizes on the new pass manager support this
+        /// are the same as used for the LLVM 'opt' tool. Once LLVM stabilizes on the new pass manager support this
         /// will be obsoleted in favor of a new method that takes a string representation of the optimizations in a manner
         /// consistent with the support in the 'opt' tool.
         /// </remarks>

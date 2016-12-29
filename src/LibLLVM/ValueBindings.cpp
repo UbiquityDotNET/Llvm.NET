@@ -1,6 +1,9 @@
 #include "ValueBindings.h"
 #include <llvm\IR\Constant.h>
+#include <llvm\IR\Comdat.h>
+#include <llvm\IR\Module.h>
 #include <llvm\IR\GlobalVariable.h>
+#include <llvm\IR\GlobalObject.h>
 #include <llvm\IR\GlobalAlias.h>
 #include <llvm\IR\IRBuilder.h>
 
@@ -8,6 +11,18 @@ using namespace llvm;
 
 extern "C"
 {
+    LLVMComdatRef LLVMGlobalObjectGetComdat( LLVMValueRef Val )
+    {
+        auto pGlobalObj = dyn_cast< GlobalObject >( unwrap( Val ) );
+        return wrap( pGlobalObj->getComdat( ) );
+    }
+
+    void LLVMGlobalObjectSetComdat( LLVMValueRef Val, LLVMComdatRef comdatRef )
+    {
+        auto pGlobalObj = dyn_cast< GlobalObject >( unwrap( Val ) );
+        pGlobalObj->setComdat( unwrap( comdatRef ) );
+    }
+
     uint32_t LLVMGetArgumentIndex( LLVMValueRef valueRef )
     {
         auto pArgument = unwrap<Argument>( valueRef );

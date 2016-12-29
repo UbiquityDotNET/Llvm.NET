@@ -1,3 +1,4 @@
+#include <type_traits>
 #include <llvm/IR/Module.h>
 #include "ModuleBindings.h"
 #include "IRBindings.h"
@@ -70,5 +71,54 @@ extern "C"
     {
         auto pMDNode = unwrap( namedMDNode );
         return wrap( pMDNode->getParent( ) );
+    }
+
+    LLVMComdatRef LLVMModuleInsertOrUpdateComdat( LLVMModuleRef module, char const* name, LLVMComdatSelectionKind kind )
+    {
+        auto pModule = unwrap( module );
+        auto pComdat = pModule->getOrInsertComdat( name );
+        pComdat->setSelectionKind( ( Comdat::SelectionKind ) kind );
+        return wrap( pComdat );
+    }
+
+    void LLVMModuleEnumerateComdats( LLVMModuleRef module, LLVMComdatIteratorCallback callback )
+    {
+        auto pModule = unwrap( module );
+        for( auto&& entry : pModule->getComdatSymbolTable( ) )
+        {
+            if( !callback( wrap( &entry.second ) ) )
+                break;
+        }
+    }
+
+    void LLVMModuleComdatRemove( LLVMModuleRef module, LLVMComdatRef comdatRef )
+    {
+        auto pModule = unwrap( module );
+        auto pComdat = unwrap( comdatRef );
+        pModule->getComdatSymbolTable( ).erase( pComdat->getName( ) );
+    }
+
+    void LLVMModuleComdatClear( LLVMModuleRef module )
+    {
+        auto pModule = unwrap( module );
+        pModule->getComdatSymbolTable( ).clear( );
+    }
+
+    LLVMComdatSelectionKind LLVMComdatGetKind( LLVMComdatRef comdatRef )
+    {
+        Comdat const& comdat = *unwrap( comdatRef );
+        return ( LLVMComdatSelectionKind )comdat.getSelectionKind( );
+    }
+
+    void LLVMComdatSetKind( LLVMComdatRef comdatRef, LLVMComdatSelectionKind kind )
+    {
+        Comdat& comdat = *unwrap( comdatRef );
+        comdat.setSelectionKind( ( Comdat::SelectionKind )kind );
+    }
+
+    char const* LLVMComdatGetName( LLVMComdatRef comdatRef )
+    {
+        Comdat const& comdat = *unwrap( comdatRef );
+        return LLVMCreateMessage( comdat.getName( ).str( ).c_str( ) );
     }
 }

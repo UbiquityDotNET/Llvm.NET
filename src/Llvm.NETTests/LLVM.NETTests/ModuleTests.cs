@@ -163,13 +163,6 @@ namespace Llvm.NET.Tests
             }
         }
 
-        private NativeModule CreateSimpleModule( string name, Context ctx = null )
-        {
-            var retVal = new NativeModule( name, ctx );
-            CreateSimpleVoidNopTestFunction( retVal, name );
-            return retVal;
-        }
-
         [TestMethod]
         public void VerifyValidModuleTest( )
         {
@@ -221,9 +214,34 @@ namespace Llvm.NET.Tests
         }
 
         [TestMethod]
+        [DeploymentItem( "TestModuleAsString.ll" )]
         public void WriteToFileTest( )
         {
-            Assert.Inconclusive( );
+            var path = Path.GetTempFileName( );
+            try
+            {
+                using( var module = new NativeModule( TestModuleName ) )
+                {
+                    Function testFunc = CreateSimpleVoidNopTestFunction( module, "foo" );
+                    module.WriteToFile( path );
+                }
+
+                using( var ctx = new Context( ) )
+                using( var module2 = NativeModule.LoadFrom( path, ctx ) )
+                {
+                    Function testFunc = module2.GetFunction( "foo" );
+                    // verify basics
+                    Assert.IsNotNull( testFunc );
+                    var txt = module2.WriteToString( );
+                    Assert.IsFalse( string.IsNullOrWhiteSpace( txt ) );
+                    //var expectedText = File.ReadAllText( "TestModuleAsString.ll" );
+                    //Assert.AreEqual( expectedText, txt );
+                }
+            }
+            finally
+            {
+                File.Delete( path );
+            }
         }
 
         [TestMethod]
@@ -365,6 +383,83 @@ namespace Llvm.NET.Tests
         public void LoadFromTest( )
         {
             Assert.Inconclusive( );
+        }
+
+        [TestMethod]
+        public void ComdatDataTest( )
+        {
+            using( var module = new NativeModule( TestModuleName ) )
+            {
+                const string comdatName = "testcomdat";
+                const string globalName = "globalwithcomdat";
+
+                module.Comdats.Add( comdatName, ComdatKind.SameSize );
+                Assert.AreEqual( 1, module.Comdats.Count );
+                module.AddGlobal( module.Context.Int32Type, globalName )
+                      .Linkage( Linkage.LinkOnceAny )
+                      .Comdat( globalName );
+
+                Assert.AreEqual( 2, module.Comdats.Count, "Unsaved module should have all comdats even if unused" );
+                Assert.IsTrue( module.Comdats.Contains( comdatName ) );
+                Assert.IsTrue( module.Comdats.Contains( globalName ) );
+                Assert.AreEqual( comdatName, module.Comdats[ comdatName ].Name );
+                Assert.AreEqual( globalName, module.Comdats[ globalName ].Name );
+                Assert.AreEqual( ComdatKind.SameSize, module.Comdats[ comdatName ].Kind );
+                Assert.AreEqual( ComdatKind.Any, module.Comdats[ globalName ].Kind );
+
+                using( var context2 = new Context( ) )
+                {
+                    var clone = module.Clone( context2 );
+                    Assert.AreEqual( 1, clone.Comdats.Count, "Comdat count should contain the one and only referenced comdat after save/clone" );
+                    Assert.IsTrue( clone.Comdats.Contains( globalName ), "Cloned module should have the referenced comdat" );
+                    var clonedGlobal = clone.GetNamedGlobal( globalName );
+                    Assert.AreEqual( globalName, clonedGlobal.Comdat.Name, "Name of the comdat on the cloned global should match the one set in the original module" );
+                    Assert.AreEqual( ComdatKind.Any, module.Comdats[ globalName ].Kind );
+                }
+            }
+        }
+
+        [TestMethod]
+        public void ComdatFunctionTest( )
+        {
+            using( var module = new NativeModule( TestModuleName ) )
+            {
+                const string comdatName = "testcomdat";
+                const string globalName = "globalwithcomdat";
+
+                Comdat comdat = module.Comdats.Add( comdatName, ComdatKind.SameSize );
+                Assert.AreEqual( comdatName, comdat.Name );
+                Assert.AreEqual( ComdatKind.SameSize, comdat.Kind );
+                Assert.AreEqual( 1, module.Comdats.Count );
+                CreateSimpleVoidNopTestFunction( module, globalName )
+                    .Linkage( Linkage.LinkOnceODR )
+                    .Comdat( globalName );
+
+                Assert.AreEqual( 2, module.Comdats.Count, "Unsaved module should have all comdats even if unused" );
+                Assert.IsTrue( module.Comdats.Contains( comdatName ) );
+                Assert.IsTrue( module.Comdats.Contains( globalName ) );
+                Assert.AreEqual( comdatName, module.Comdats[ comdatName ].Name );
+                Assert.AreEqual( globalName, module.Comdats[ globalName ].Name );
+                Assert.AreEqual( ComdatKind.SameSize, module.Comdats[ comdatName ].Kind );
+                Assert.AreEqual( ComdatKind.Any, module.Comdats[ globalName ].Kind );
+
+                using( var context2 = new Context( ) )
+                {
+                    var clone = module.Clone( context2 );
+                    Assert.AreEqual( 1, clone.Comdats.Count, "Comdat count should contain the one and only referenced comdat after save/clone" );
+                    Assert.IsTrue( clone.Comdats.Contains( globalName ), "Cloned module should have the referenced comdat" );
+                    var clonedGlobal = clone.GetFunction( globalName );
+                    Assert.AreEqual( globalName, clonedGlobal.Comdat.Name, "Name of the comdat on the cloned global should match the one set in the original module" );
+                    Assert.AreEqual( ComdatKind.Any, module.Comdats[ globalName ].Kind );
+                }
+            }
+        }
+
+        private NativeModule CreateSimpleModule( string name, Context ctx = null )
+        {
+            var retVal = new NativeModule( name, ctx );
+            CreateSimpleVoidNopTestFunction( retVal, name );
+            return retVal;
         }
 
         private static Function CreateSimpleVoidNopTestFunction( NativeModule module, string name )

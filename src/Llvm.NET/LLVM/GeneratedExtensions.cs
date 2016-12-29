@@ -58,6 +58,16 @@ namespace Llvm.NET.Native
         internal readonly IntPtr Pointer;
     }
 
+    internal partial struct LLVMComdatRef
+    {
+        internal LLVMComdatRef( IntPtr pointer )
+        {
+            Pointer = pointer;
+        }
+
+        internal readonly IntPtr Pointer;
+    }
+
     internal partial struct LLVMVersionInfo
     {
         internal readonly int Major;
@@ -445,6 +455,15 @@ namespace Llvm.NET.Native
         LlvmTripleObjectFormatType_COFF,
         LlvmTripleObjectFormatType_ELF,
         LlvmTripleObjectFormatType_MachO,
+    };
+
+    enum LLVMComdatSelectionKind
+    {
+        COMDAT_ANY,
+        COMDAT_EXACTMATCH,
+        COMDAT_LARGEST,
+        COMDAT_NODUPLICATES,
+        COMDAT_SAMESIZE
     };
 
     [System.Diagnostics.CodeAnalysis.SuppressMessage( "Microsoft.Maintainability", "CA1506:AvoidExcessiveClassCoupling" )]
@@ -1013,5 +1032,36 @@ namespace Llvm.NET.Native
 
         [DllImport( libraryPath, EntryPoint = "LLVMNormalizeTriple", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl, BestFitMapping = false, ThrowOnUnmappableChar = true )]
         internal static extern IntPtr NormalizeTriple( [MarshalAs( UnmanagedType.LPStr )] string triple );
+
+        [UnmanagedFunctionPointer( System.Runtime.InteropServices.CallingConvention.Cdecl, BestFitMapping = false, ThrowOnUnmappableChar = true )]
+        [return: MarshalAs(UnmanagedType.Bool)]
+        internal delegate bool ComdatIteratorCallback( LLVMComdatRef comdatRef );
+
+        [DllImport( libraryPath, EntryPoint = "LLVMModuleEnumerateComdats", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl, BestFitMapping = false, ThrowOnUnmappableChar = true )]
+        internal static extern void ModuleEnumerateComdats( LLVMModuleRef module, ComdatIteratorCallback callback );
+
+        [DllImport( libraryPath, EntryPoint = "LLVMModuleInsertOrUpdateComdat", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl, BestFitMapping = false, ThrowOnUnmappableChar = true )]
+        internal static extern LLVMComdatRef ModuleInsertOrUpdateComdat( LLVMModuleRef module, [MarshalAs( UnmanagedType.LPStr )] string name, LLVMComdatSelectionKind kind );
+
+        [DllImport( libraryPath, EntryPoint = "LLVMModuleComdatRemove", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl, BestFitMapping = false, ThrowOnUnmappableChar = true )]
+        internal static extern void ModuleComdatRemove( LLVMModuleRef module, LLVMComdatRef comdatRef );
+
+        [DllImport( libraryPath, EntryPoint = "LLVMModuleComdatClear", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl, BestFitMapping = false, ThrowOnUnmappableChar = true )]
+        internal static extern void ModuleComdatClear( LLVMModuleRef module );
+
+        [DllImport( libraryPath, EntryPoint = "LLVMGlobalObjectGetComdat", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl, BestFitMapping = false, ThrowOnUnmappableChar = true )]
+        internal static extern LLVMComdatRef GlobalObjectGetComdat( LLVMValueRef Val );
+
+        [DllImport( libraryPath, EntryPoint = "LLVMGlobalObjectSetComdat", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl, BestFitMapping = false, ThrowOnUnmappableChar = true )]
+        internal static extern void GlobalObjectSetComdat( LLVMValueRef Val, LLVMComdatRef comdatRef );
+
+        [DllImport( libraryPath, EntryPoint = "LLVMComdatGetKind", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl, BestFitMapping = false, ThrowOnUnmappableChar = true )]
+        internal static extern LLVMComdatSelectionKind ComdatGetKind( LLVMComdatRef comdatRef );
+
+        [DllImport( libraryPath, EntryPoint = "LLVMComdatSetKind", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl, BestFitMapping = false, ThrowOnUnmappableChar = true )]
+        internal static extern void ComdatSetKind( LLVMComdatRef comdatRef, LLVMComdatSelectionKind kind );
+
+        [DllImport( libraryPath, EntryPoint = "LLVMComdatGetName", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl, BestFitMapping = false, ThrowOnUnmappableChar = true )]
+        internal static extern IntPtr ComdatGetName( LLVMComdatRef comdatRef );
     }
 }

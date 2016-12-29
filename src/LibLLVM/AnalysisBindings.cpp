@@ -13,7 +13,7 @@ extern "C"
     // The standard LLVMVerifyFunction (unlike LLVMVerifyModule) doesn't provide
     // a way to capture error message strings (only success/fail or print to
     // stderr is available). This provides a version that matches the general
-    // patern established by LLVMVerifyModule(). 
+    // pattern established by LLVMVerifyModule(). 
     LLVMBool LLVMVerifyFunctionEx( LLVMValueRef Fn
                                    , LLVMVerifierFailureAction Action
                                    , char **OutMessages

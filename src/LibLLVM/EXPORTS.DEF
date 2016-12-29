@@ -20,6 +20,16 @@ LLVMTripleGetEnvironmentTypeName
 LLVMTripleGetObjectFormatTypeName
 LLVMNormalizeTriple
 
+LLVMModuleEnumerateComdats
+LLVMModuleInsertOrUpdateComdat
+LLVMModuleComdatRemove
+LLVMModuleComdatClear
+LLVMComdatGetKind
+LLVMComdatSetKind
+LLVMComdatGetName
+LLVMGlobalObjectGetComdat
+LLVMGlobalObjectSetComdat
+
 LLVMInitializePassesForLegacyOpt
 LLVMRunLegacyOptimizer
 LLVMRunPassPipeline

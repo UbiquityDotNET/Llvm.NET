@@ -46,7 +46,7 @@ namespace TestDebugInfo
                 var targetData = targetMachine.TargetData;
 
                 module.TargetTriple = targetMachine.Triple;
-                module.DataLayoutString = targetMachine.TargetData.ToString( );
+                module.Layout = targetMachine.TargetData;
 
                 // create compile unit and file as the top level scope for everything
                 var cu = module.DIBuilder.CreateCompileUnit( SourceLanguage.C99

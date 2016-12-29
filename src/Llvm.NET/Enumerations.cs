@@ -699,4 +699,13 @@ namespace Llvm.NET
         ELF                  = LLVMTripleObjectFormatType.LlvmTripleObjectFormatType_ELF,
         MachO                = LLVMTripleObjectFormatType.LlvmTripleObjectFormatType_MachO,
     };
+
+    public enum ComdatKind
+    {
+        Any = LLVMComdatSelectionKind.COMDAT_ANY,
+        ExactMatch = LLVMComdatSelectionKind.COMDAT_EXACTMATCH,
+        Largest = LLVMComdatSelectionKind.COMDAT_LARGEST,
+        NoDuplicates = LLVMComdatSelectionKind.COMDAT_NODUPLICATES,
+        SameSize = LLVMComdatSelectionKind.COMDAT_SAMESIZE
+    };
 }
