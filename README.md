@@ -35,7 +35,7 @@ has other needs that require a specific platform target, then LlVM.NET can still
 
 ### Building Llvm.NET
 #### Pre-requsites
-* Download [LLVM source for 3.9.0 ](http://llvm.org/releases/3.9.0/llvm-3.9.0.src.tar.xz) (At this time LLVM is 3.9.0 )
+* Download [LLVM source for 3.9.1 ](http://llvm.org/releases/3.9.1/llvm-3.9.1.src.tar.xz) (At this time LLVM is 3.9.1 )
   * You will need a tool to extract files from that archive format. On Windows the recommended tool is [7zip](http://7-zip.org/)
 * Build of LLVM libraries  
 To Build the LLVM libraries you can use the [Build-LlvmWithVS](https://github.com/NETMF/Llvm.NET/blob/dev/src/LibLLVM/Build-LlvmWithVS.ps1) PowerShell script provided.
