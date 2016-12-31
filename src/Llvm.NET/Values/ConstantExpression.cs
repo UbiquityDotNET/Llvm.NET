@@ -37,6 +37,9 @@ namespace Llvm.NET.Values
             return FromHandle<Constant>( handle );
         }
 
+        public static Constant GetElementPtr( Constant value, params Constant[ ] args ) 
+            => GetElementPtr( value, ( IEnumerable<Constant> )args );
+
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1011:ConsiderPassingBaseTypesAsParameters", Justification = "Specific type required by interop call")]
         public static Constant GetElementPtr(Constant value, IEnumerable<Constant> args)
         {
