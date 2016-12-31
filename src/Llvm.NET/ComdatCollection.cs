@@ -76,7 +76,7 @@ namespace Llvm.NET
                                   where gv.Comdat.Name == name
                                   select gv;
 
-            foreach( var gv in ModuleGlobalObjects( ) )
+            foreach( var gv in matchingGlobals )
             {
                 gv.Comdat = null;
             }

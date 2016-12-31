@@ -82,7 +82,10 @@ namespace Llvm.NET.Values
             {
                 comdat = self.ParentModule.Comdats.Add( name, kind );
             }
-            NativeMethods.GlobalObjectSetComdat( self.ValueHandle, comdat.ComdatHandle );
+            else
+                comdat.Kind = kind;
+
+            self.Comdat = comdat;
             return self;
         }
 
@@ -94,12 +97,12 @@ namespace Llvm.NET.Values
             self.Section = name;
         }
 
-        public static void Alignment( this GlobalObject self, uint alignment )
+        public static void Alignment( this GlobalObject self, uint value )
         {
             if( self == null )
                 throw new ArgumentNullException( nameof( self ) );
 
-            self.Alignment = alignment;
+            self.Alignment = value;
         }
     }
 }
