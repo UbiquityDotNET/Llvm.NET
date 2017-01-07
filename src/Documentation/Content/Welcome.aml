@@ -2,7 +2,7 @@
 <topic id="47ec5af0-5c1c-443e-b2b3-158a100dc594" revisionNumber="1">
     <developerConceptualDocument xmlns="http://ddue.schemas.microsoft.com/authoring/2003/5" xmlns:xlink="http://www.w3.org/1999/xlink">
         <introduction>
-            <para>Llvm.NET is a managed wrapper around an extended LLVM-C API including an Object Oriented model that closesly matches 
+            <para>Llvm.NET is a managed wrapper around an extended LLVM-C API including an Object Oriented model that closely matches 
             the underlying LLVM internal object model. This allows for building code generation and other utilities
             leveraging LLVM from .NET applications.
             </para>
@@ -19,6 +19,7 @@
                     <listItem><para>Creating Types</para></listItem>
                     <listItem><para>Creating Functions</para></listItem>
                     <listItem><para>Saving modules</para></listItem>
+                    <listItem><para>Optimizing modules</para></listItem>
                     <listItem><para>Generating LLVM IR textual (ll) files</para></listItem>
                     <listItem><para>Generating target object files</para></listItem>
                     <listItem><para>Generating target assembly files</para></listItem>
