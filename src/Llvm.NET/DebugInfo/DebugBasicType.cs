@@ -23,16 +23,15 @@ namespace Llvm.NET.DebugInfo
         /// <param name="name">Source language name of the type</param>
         /// <param name="encoding">Encoding for the type</param>
         public DebugBasicType( ITypeRef llvmType, NativeModule module, string name, DiTypeKind encoding )
-            : base( ValidateType( llvmType )
-                  , module.VerifyArgNotNull( nameof(module) )
-                          .DIBuilder
-                          .CreateBasicType( name
-                                          , module.VerifyArgNotNull( nameof( module ) ).Layout.BitSizeOf( llvmType )
-                                          , module.VerifyArgNotNull( nameof( module ) ).Layout.AbiBitAlignmentOf( llvmType )
-                                          , encoding
-                                          )
-                  )
+            : base( ValidateType( llvmType ) )
         {
+            DIType = module.VerifyArgNotNull( nameof( module ) )
+                           .DIBuilder
+                           .CreateBasicType( name
+                                           , module.VerifyArgNotNull( nameof( module ) ).Layout.BitSizeOf( llvmType )
+                                           , module.VerifyArgNotNull( nameof( module ) ).Layout.AbiBitAlignmentOf( llvmType )
+                                           , encoding
+                                           );
         }
 
         // Fluent style argument validator to verify arguments before passing to base class.

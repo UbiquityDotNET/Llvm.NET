@@ -29,7 +29,11 @@ namespace Llvm.NET.DebugInfo
         /// <param name="addressSpace">Target address space for the pointer [Default: 0]</param>
         /// <param name="name">Name of the type [Default: null]</param>
         public DebugPointerType( ITypeRef llvmElementType, NativeModule module, DIType elementType, uint addressSpace = 0, string name = null )
-            : this( llvmElementType.VerifyArgNotNull( nameof( llvmElementType ) ).CreatePointerType( addressSpace ), module, elementType, name )
+            : this( llvmElementType.VerifyArgNotNull( nameof( llvmElementType ) ).CreatePointerType( addressSpace )
+                  , module
+                  , elementType
+                  , name
+                  )
         {
         }
 
@@ -39,16 +43,15 @@ namespace Llvm.NET.DebugInfo
         /// <param name="elementType">Debug type of the pointee</param>
         /// <param name="name">Name of the type [Default: null]</param>
         public DebugPointerType( IPointerType llvmPtrType, NativeModule module, DIType elementType, string name = null )
-            : this( llvmPtrType
-                  , module.VerifyArgNotNull( nameof( module ) )
-                          .DIBuilder
-                          .CreatePointerType( elementType
-                                            , name
-                                            , module.VerifyArgNotNull( nameof( module ) ).Layout.BitSizeOf( llvmPtrType )
-                                            , module.VerifyArgNotNull( nameof( module ) ).Layout.AbiBitAlignmentOf( llvmPtrType )
-                                            )
-                  )
+            : base( llvmPtrType )
         {
+            DIType = module.VerifyArgNotNull( nameof( module ) )
+                           .DIBuilder
+                           .CreatePointerType( elementType
+                                             , name
+                                             , module.VerifyArgNotNull( nameof( module ) ).Layout.BitSizeOf( llvmPtrType )
+                                             , module.VerifyArgNotNull( nameof( module ) ).Layout.AbiBitAlignmentOf( llvmPtrType )
+                                             );
         }
 
         /// <summary>Constructs a new <see cref="DebugPointerType"/></summary>
@@ -62,8 +65,9 @@ namespace Llvm.NET.DebugInfo
         /// namespace)
         /// </remarks>
         public DebugPointerType( IPointerType llvmPtrType, DIDerivedType debugType )
-            : base( llvmPtrType, debugType )
+            : base( llvmPtrType )
         {
+            DIType = debugType;
         }
 
         /// <inheritdoc/>

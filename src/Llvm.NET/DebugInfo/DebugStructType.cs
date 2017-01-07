@@ -19,21 +19,20 @@ namespace Llvm.NET.DebugInfo
                               , DIType derivedFrom
                               , IEnumerable<DIType> elements
                               )
-            : base( llvmType
-                  , module.VerifyArgNotNull( nameof( module ) )
-                          .DIBuilder
-                          .CreateStructType( scope
-                                           , name
-                                           , file
-                                           , line
-                                           , module.VerifyArgNotNull( nameof( module ) ).Layout.BitSizeOf( llvmType )
-                                           , module.VerifyArgNotNull( nameof( module ) ).Layout.AbiBitAlignmentOf( llvmType )
-                                           , debugFlags
-                                           , derivedFrom
-                                           , elements
-                                           )
-                  )
+            : base( llvmType )
         {
+            DIType = module.VerifyArgNotNull( nameof( module ) )
+                           .DIBuilder
+                           .CreateStructType( scope
+                                            , name
+                                            , file
+                                            , line
+                                            , module.VerifyArgNotNull( nameof( module ) ).Layout.BitSizeOf( llvmType )
+                                            , module.VerifyArgNotNull( nameof( module ) ).Layout.AbiBitAlignmentOf( llvmType )
+                                            , debugFlags
+                                            , derivedFrom
+                                            , elements
+                                            );
         }
 
         public DebugStructType( IStructType llvmType
@@ -43,17 +42,16 @@ namespace Llvm.NET.DebugInfo
                               , DIFile file
                               , uint line
                               )
-            : base( llvmType
-                  , module.VerifyArgNotNull( nameof( module ) )
-                          .DIBuilder
-                          .CreateReplaceableCompositeType( Tag.StructureType
-                                                         , name
-                                                         , scope
-                                                         , file
-                                                         , line
-                                                         )
-                  )
+            : base( llvmType )
         {
+            DIType = module.VerifyArgNotNull( nameof( module ) )
+                           .DIBuilder
+                           .CreateReplaceableCompositeType( Tag.StructureType
+                                                          , name
+                                                          , scope
+                                                          , file
+                                                          , line
+                                                          );
         }
 
         public DebugStructType( NativeModule module
@@ -63,7 +61,13 @@ namespace Llvm.NET.DebugInfo
                               , DIFile file = null
                               , uint line = 0
                               )
-            : this( module.VerifyArgNotNull( nameof( module ) ).Context.CreateStructType( nativeName ), module, scope, name, file, line )
+            : this( module.VerifyArgNotNull( nameof( module ) ).Context.CreateStructType( nativeName )
+                  , module
+                  , scope
+                  , name
+                  , file
+                  , line
+                  )
         {
         }
 

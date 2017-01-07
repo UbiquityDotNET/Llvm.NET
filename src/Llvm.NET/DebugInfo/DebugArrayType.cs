@@ -20,9 +20,7 @@ namespace Llvm.NET.DebugInfo
                              , uint count
                              , uint lowerBound = 0
                              )
-            : base( llvmType
-                  , CreateDebugInfoForArray( llvmType, elementType, module, count, lowerBound )
-                  )
+            : base( llvmType )
         {
             if( llvmType == null )
                 throw new ArgumentNullException( nameof( llvmType ) );
@@ -33,6 +31,7 @@ namespace Llvm.NET.DebugInfo
             if( llvmType.ElementType.TypeHandle != elementType.TypeHandle )
                 throw new ArgumentException( "elementType doesn't match array element type" );
 
+            DIType = CreateDebugInfoForArray( llvmType, elementType, module, count, lowerBound );
             DebugElementType = elementType;
         }
 

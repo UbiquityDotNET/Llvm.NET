@@ -39,10 +39,9 @@ namespace Llvm.NET.DebugInfo
         where TNative : ITypeRef
         where TDebug : DIType
     {
-        internal DebugType( TNative llvmType, TDebug diType )
+        internal DebugType( TNative llvmType )
         {
             NativeType = llvmType;
-            DIType = diType;
         }
 
         [SuppressMessage( "Microsoft.Naming", "CA2204:Literals should be spelled correctly", MessageId = "DIType" )]
@@ -158,7 +157,7 @@ namespace Llvm.NET.DebugInfo
             where TNative : ITypeRef
             where TDebug : DIType
         {
-            return new DebugType<TNative, TDebug>( nativeType, debugType );
+            return new DebugType<TNative, TDebug>( nativeType ) { DIType = debugType };
         }
 
         /// <summary>Convenience extensions for determining if the <see cref="DIType"/> property is valid</summary>
