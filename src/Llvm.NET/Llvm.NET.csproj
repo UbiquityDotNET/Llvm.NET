@@ -74,6 +74,7 @@
     <Compile Include="DebugInfo\DebugMemberInfo.cs" />
     <Compile Include="DebugInfo\DebugPointerType.cs" />
     <Compile Include="DebugInfo\DebugStructType.cs" />
+    <Compile Include="DebugInfo\DebugUnionType.cs" />
     <Compile Include="DebugInfo\DINodeArray.cs" />
     <Compile Include="DebugInfo\DIBasicType.cs" />
     <Compile Include="DebugInfo\DICompileUnit.cs" />

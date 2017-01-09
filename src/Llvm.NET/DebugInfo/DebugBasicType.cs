@@ -14,7 +14,7 @@ namespace Llvm.NET.DebugInfo
     /// instance of this class represents a source level basic type and the corresponding representation
     /// for LLVM.
     /// </remarks>
-    public class DebugBasicType 
+    public class DebugBasicType
         : DebugType<ITypeRef, DIBasicType>
     {
         /// <summary>Create a debug type for a basic type</summary>
@@ -23,13 +23,40 @@ namespace Llvm.NET.DebugInfo
         /// <param name="name">Source language name of the type</param>
         /// <param name="encoding">Encoding for the type</param>
         public DebugBasicType( ITypeRef llvmType, NativeModule module, string name, DiTypeKind encoding )
-            : base( ValidateType( llvmType ) )
         {
-            DIType = module.VerifyArgNotNull( nameof( module ) )
-                           .DIBuilder
+            if( llvmType == null )
+                throw new ArgumentNullException( nameof( llvmType ) );
+
+            if( module == null )
+                throw new ArgumentNullException( nameof( module ) );
+
+            if( string.IsNullOrWhiteSpace(name) )
+                throw new ArgumentException("non-null non-empty string required", nameof( name ) );
+
+            if( module.Layout == null )
+                throw new ArgumentException( "Module needs Layout to build basic types", nameof( module ) );
+
+            switch( llvmType.Kind )
+            {
+            case TypeKind.Void:
+            case TypeKind.Float16:
+            case TypeKind.Float32:
+            case TypeKind.Float64:
+            case TypeKind.X86Float80:
+            case TypeKind.Float128m112:
+            case TypeKind.Float128:
+            case TypeKind.Integer:
+                break;
+
+            default:
+                throw new ArgumentException( "Expected a primitive type", nameof( llvmType ) );
+            }
+
+            NativeType = llvmType;
+            DIType = module.DIBuilder
                            .CreateBasicType( name
-                                           , module.VerifyArgNotNull( nameof( module ) ).Layout.BitSizeOf( llvmType )
-                                           , module.VerifyArgNotNull( nameof( module ) ).Layout.AbiBitAlignmentOf( llvmType )
+                                           , module.Layout.BitSizeOf( llvmType )
+                                           , module.Layout.AbiBitAlignmentOf( llvmType )
                                            , encoding
                                            );
         }

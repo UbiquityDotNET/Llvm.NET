@@ -355,6 +355,30 @@ extern "C"
         return wrap( CT );
     }
 
+    LLVMMetadataRef LLVMDIBuilderCreateUnionType( LLVMDIBuilderRef Dref
+                                                  , LLVMMetadataRef Scope
+                                                  , const char *Name
+                                                  , LLVMMetadataRef File
+                                                  , unsigned Line
+                                                  , uint64_t SizeInBits
+                                                  , uint64_t AlignInBits
+                                                  , unsigned Flags
+                                                  , LLVMMetadataRef ElementTypes
+                                                  )
+    {
+        DIBuilder *D = unwrap( Dref );
+        DICompositeType* CT = D->createUnionType( unwrap<DIScope>( Scope )
+                                                  , Name
+                                                  , File ? unwrap<DIFile>( File ) : nullptr
+                                                  , Line
+                                                  , SizeInBits
+                                                  , AlignInBits
+                                                  , Flags
+                                                  , ElementTypes ? DINodeArray( unwrap<MDTuple>( ElementTypes ) ) : nullptr
+                                                  );
+        return wrap( CT );
+    }
+
     LLVMMetadataRef LLVMDIBuilderCreateReplaceableCompositeType( LLVMDIBuilderRef Dref
                                                                  , unsigned Tag
                                                                  , const char *Name

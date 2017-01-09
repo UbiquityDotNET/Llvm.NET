@@ -36,11 +36,18 @@ namespace Llvm.NET.DebugInfo
     public class DebugType<TNative, TDebug>
         : IDebugType<TNative, TDebug>
         , ITypeRef
-        where TNative : ITypeRef
+        where TNative : class, ITypeRef
         where TDebug : DIType
     {
+        internal DebugType()
+        {
+        }
+
         internal DebugType( TNative llvmType )
         {
+            if( llvmType == null )
+                throw new ArgumentNullException( nameof( llvmType ) );
+
             NativeType = llvmType;
         }
 
@@ -68,7 +75,21 @@ namespace Llvm.NET.DebugInfo
         }
         private TDebug DIType_;
 
-        public TNative NativeType { get; }
+        public TNative NativeType
+        {
+            get
+            {
+                return NativeType_;
+            }
+
+            protected set
+            {
+                if( NativeType_ != null )
+                    throw new InvalidOperationException( "Once the native type is set it cannot be changed" );
+                NativeType_ = value;
+            }
+        }
+        private TNative NativeType_;
 
         public IntPtr TypeHandle => NativeType.TypeHandle;
 
@@ -154,7 +175,7 @@ namespace Llvm.NET.DebugInfo
         public static IDebugType<TNative, TDebug> Create<TNative, TDebug>( TNative nativeType
                                                                          , TDebug debugType
                                                                          )
-            where TNative : ITypeRef
+            where TNative : class, ITypeRef
             where TDebug : DIType
         {
             return new DebugType<TNative, TDebug>( nativeType ) { DIType = debugType };

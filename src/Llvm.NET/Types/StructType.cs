@@ -5,8 +5,9 @@ using Llvm.NET.Native;
 
 namespace Llvm.NET.Types
 {
-    /// <summary>Interface for an LLVM structure type</summary>
-    public interface IStructType
+    /// <summary>Interface for a named type with members</summary>
+    /// <remarks>This is a common interface for structures and unions</remarks>
+    public interface INamedStructuralType
         : ITypeRef
     {
         /// <summary>Name of the structure</summary>
@@ -15,11 +16,16 @@ namespace Llvm.NET.Types
         /// <summary>Indicates if the structure is opaque (e.g. has no body defined yet)</summary>
         bool IsOpaque { get; }
 
-        /// <summary>Indicates if the structure is packed (e.g. no automatic alignment padding between elements)</summary>
-        bool IsPacked { get; }
-
         /// <summary>List of types for all member elements of the structure</summary>
         IReadOnlyList<ITypeRef> Members { get; }
+    }
+
+    /// <summary>Interface for an LLVM structure type</summary>
+    public interface IStructType
+        : INamedStructuralType
+    {
+        /// <summary>Indicates if the structure is packed (e.g. no automatic alignment padding between elements)</summary>
+        bool IsPacked { get; }
 
         /// <summary>Sets the body of the structure</summary>
         /// <param name="packed">Flag to indicate if the body elements are packed (e.g. no padding)</param>

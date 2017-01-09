@@ -274,6 +274,17 @@ extern "C" {
                                                    , LLVMMetadataRef ElementTypes
                                                    );
 
+    LLVMMetadataRef LLVMDIBuilderCreateUnionType( LLVMDIBuilderRef Dref
+                                                  , LLVMMetadataRef Scope
+                                                  , const char *Name
+                                                  , LLVMMetadataRef File
+                                                  , unsigned Line
+                                                  , uint64_t SizeInBits
+                                                  , uint64_t AlignInBits
+                                                  , unsigned Flags
+                                                  , LLVMMetadataRef ElementTypes
+                                                  );
+
     LLVMMetadataRef LLVMDIBuilderCreateReplaceableCompositeType( LLVMDIBuilderRef D
                                                                  , unsigned Tag
                                                                  , const char *Name

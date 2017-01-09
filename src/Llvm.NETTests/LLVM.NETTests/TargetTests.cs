@@ -135,32 +135,28 @@ namespace Llvm.NET.Tests
         internal const string DefaultTargetTriple = "thumbv7m-none--eabi";
         internal const string DefaultTargetCpu = "cortex-m3";
         internal const string DefaultTargetFeatures = "";
-        // total number of registered targets supported
-        // as of LLVM 3.7.0 this is 31 targets, but this
-        // may change in future versions...
-        internal const int NumTargets = 31;
 
-        internal string GenerateExpectedTargets()
-        {
-            var bldr = new StringBuilder( "public static TargetInfo[ ] ExpectedTargets = {" );
-            bldr.AppendLine( );
-            var targets = Target.AvailableTargets.ToList( );
-            for( int i = 0; i < targets.Count; ++i )
-            {
-                var target = targets[ i ];
-                bldr.AppendFormat( "    new TargetInfo( \"{0}\", \"{1}\", {2}, {3}, {4} )"
-                                 , target.Name
-                                 , target.Description
-                                 , target.HasAsmBackEnd.ToString().ToLowerInvariant()
-                                 , target.HasJIT.ToString().ToLowerInvariant()
-                                 , target.HasTargetMachine.ToString().ToLowerInvariant()
-                                 );
-                var lastEntry = i == targets.Count - 1;
-                bldr.AppendLine( lastEntry ? string.Empty : "," );
-            }
+        //internal string GenerateExpectedTargets()
+        //{
+        //    var bldr = new StringBuilder( "public static TargetInfo[ ] ExpectedTargets = {" );
+        //    bldr.AppendLine( );
+        //    var targets = Target.AvailableTargets.ToList( );
+        //    for( int i = 0; i < targets.Count; ++i )
+        //    {
+        //        var target = targets[ i ];
+        //        bldr.AppendFormat( "    new TargetInfo( \"{0}\", \"{1}\", {2}, {3}, {4} )"
+        //                         , target.Name
+        //                         , target.Description
+        //                         , target.HasAsmBackEnd.ToString().ToLowerInvariant()
+        //                         , target.HasJIT.ToString().ToLowerInvariant()
+        //                         , target.HasTargetMachine.ToString().ToLowerInvariant()
+        //                         );
+        //        var lastEntry = i == targets.Count - 1;
+        //        bldr.AppendLine( lastEntry ? string.Empty : "," );
+        //    }
 
-            bldr.AppendLine( "};" );
-            return bldr.ToString( );
-        }
+        //    bldr.AppendLine( "};" );
+        //    return bldr.ToString( );
+        //}
     }
 }

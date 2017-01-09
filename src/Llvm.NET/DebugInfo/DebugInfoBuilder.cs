@@ -501,6 +501,62 @@ namespace Llvm.NET.DebugInfo
         }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage( "Microsoft.Design", "CA1011:ConsiderPassingBaseTypesAsParameters", Justification = "Specific type required by interop call" )]
+        public DICompositeType CreateUnionType( DIScope scope
+                                              , string name
+                                              , DIFile file
+                                              , uint line
+                                              , ulong bitSize
+                                              , ulong bitAlign
+                                              , uint flags
+                                              , DINodeArray elements
+                                              )
+        {
+            if( scope == null )
+                throw new ArgumentNullException( nameof( scope ) );
+
+            if( elements == null )
+                throw new ArgumentNullException( nameof( elements ) );
+
+            var handle = NativeMethods.DIBuilderCreateUnionType( BuilderHandle
+                                                               , scope.MetadataHandle
+                                                               , name
+                                                               , file?.MetadataHandle ?? LLVMMetadataRef.Zero
+                                                               , line
+                                                               , bitSize
+                                                               , bitAlign
+                                                               , flags
+                                                               , elements.Tuple.MetadataHandle
+                                                               );
+            return MDNode.FromHandle<DICompositeType>( handle );
+        }
+
+        public DICompositeType CreateUnionType( DIScope scope
+                                               , string name
+                                               , DIFile file
+                                               , uint line
+                                               , ulong bitSize
+                                               , ulong bitAlign
+                                               , DebugInfoFlags debugFlags
+                                               , params DINode[ ] elements
+                                               )
+        {
+            return CreateUnionType( scope, name, file, line, bitSize, bitAlign, ( uint )debugFlags, GetOrCreateArray( elements ) );
+        }
+
+        public DICompositeType CreateUnionType( DIScope scope
+                                               , string name
+                                               , DIFile file
+                                               , uint line
+                                               , ulong bitSize
+                                               , ulong bitAlign
+                                               , DebugInfoFlags debugFlags
+                                               , IEnumerable<DINode> elements
+                                               )
+        {
+            return CreateUnionType( scope, name, file, line, bitSize, bitAlign, ( uint )debugFlags, GetOrCreateArray( elements ) );
+        }
+
+        [System.Diagnostics.CodeAnalysis.SuppressMessage( "Microsoft.Design", "CA1011:ConsiderPassingBaseTypesAsParameters", Justification = "Specific type required by interop call" )]
         public DIDerivedType CreateMemberType( DIScope scope
                                              , string name
                                              , DIFile file
@@ -892,13 +948,10 @@ namespace Llvm.NET.DebugInfo
                                                              , DebugInfoFlags flags = DebugInfoFlags.None
                                                              )
         {
-            if( scope == null )
-                throw new ArgumentNullException( nameof( scope ) );
-
             var handle = NativeMethods.DIBuilderCreateReplaceableCompositeType( BuilderHandle
                                                                               , ( uint )tag
                                                                               , name
-                                                                              , scope.MetadataHandle
+                                                                              , scope?.MetadataHandle ?? LLVMMetadataRef.Zero
                                                                               , file?.MetadataHandle ?? LLVMMetadataRef.Zero
                                                                               , line
                                                                               , lang
