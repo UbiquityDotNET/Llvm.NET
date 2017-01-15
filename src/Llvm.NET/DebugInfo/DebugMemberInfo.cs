@@ -15,7 +15,7 @@ namespace Llvm.NET.DebugInfo
         /// <param name="bitSize">Size of the member in bits</param>
         /// <param name="bitAlignment">Alignment of the member in bits</param>
         /// <param name="bitOffset">Offset of the member in bits</param>
-        public DebugMemberLayout( uint bitSize, uint bitAlignment, ulong bitOffset )
+        public DebugMemberLayout( ulong bitSize, uint bitAlignment, ulong bitOffset )
         {
             BitSize = bitSize;
             BitAlignment = bitAlignment;
@@ -23,7 +23,7 @@ namespace Llvm.NET.DebugInfo
         }
 
         /// <summary>Bit size for the field</summary>
-        public uint BitSize { get; }
+        public ulong BitSize { get; }
 
         /// <summary>Bit alignment for the field</summary>
         public uint BitAlignment { get; }

@@ -21,17 +21,23 @@ namespace Llvm.NET.DebugInfo.Tests
             {
                 const string nativeUnionName = "union.testUnion";
                 const string unionSymbolName = "testUnion";
+                var testFile = module.DIBuilder.CreateFile( "test" );
 
-                var union = new DebugUnionType( module, nativeUnionName,null, unionSymbolName );
+                var union = new DebugUnionType( module, nativeUnionName, null, unionSymbolName, module.DIBuilder.CreateFile("test") );
                 Assert.IsNotNull( union );
+
+                string errMsg;
+                Assert.IsTrue( module.Verify( out errMsg ), errMsg );
+
                 Assert.IsNotNull( union.DIType );
                 Assert.IsNotNull( union.NativeType );
+                
                 Assert.AreEqual( Tag.UnionType, union.DIType.Tag );
                 Assert.AreEqual( nativeUnionName, union.Name );
                 Assert.AreEqual( nativeUnionName, union.NativeType.Name );
                 Assert.AreEqual( unionSymbolName, union.DIType.Name );
                 Assert.IsNull( union.DIType.Scope );
-                Assert.IsNull( union.DIType.File );
+                Assert.AreEqual( testFile, union.DIType.File );
                 Assert.AreEqual( 0U, union.DIType.Line );
 
                 Assert.IsFalse( union.DIType.IsPrivate );
@@ -106,7 +112,7 @@ namespace Llvm.NET.DebugInfo.Tests
                     };
 
                 var llvmType = module.Context.CreateStructType( nativeUnionName );
-                var union = new DebugUnionType( llvmType, module, diCompileUnit, unionSymbolName, null, 0, DebugInfoFlags.None, members );
+                var union = new DebugUnionType( llvmType, module, diCompileUnit, unionSymbolName, diFile, 0, DebugInfoFlags.None, members );
                 Assert.IsNotNull( union );
                 Assert.IsNotNull( union.DIType );
                 Assert.IsNotNull( union.NativeType );
@@ -115,7 +121,7 @@ namespace Llvm.NET.DebugInfo.Tests
                 Assert.AreEqual( nativeUnionName, union.NativeType.Name );
                 Assert.AreEqual( unionSymbolName, union.DIType.Name );
                 Assert.IsNull( union.DIType.Scope );
-                Assert.IsNull( union.DIType.File );
+                Assert.AreEqual( diFile, union.DIType.File );
                 Assert.AreEqual( 0U, union.DIType.Line );
 
                 Assert.IsFalse( union.DIType.IsPrivate );

@@ -24,13 +24,16 @@ namespace Llvm.NET.DebugInfo
             : base( llvmType )
         {
             if( llvmType == null )
-                throw new ArgumentNullException( nameof( module ) );
+                throw new ArgumentNullException( nameof( llvmType ) );
 
             if( module == null )
                 throw new ArgumentNullException( nameof( module ) );
 
             if( scope == null )
                 throw new ArgumentNullException( nameof( scope ) );
+
+            if( file == null )
+                throw new ArgumentNullException( nameof( file ) );
 
             if( !llvmType.IsOpaque )
                 throw new ArgumentException( "Struct type used as basis for a union must not have a body", nameof( llvmType ) );
@@ -49,12 +52,15 @@ namespace Llvm.NET.DebugInfo
                              , string nativeName
                              , DIScope scope
                              , string name
-                             , DIFile file = null
+                             , DIFile file
                              , uint line = 0
                              )
         {
             if( module == null )
                 throw new ArgumentNullException( nameof( module ) );
+
+            if( file == null )
+                throw new ArgumentNullException( nameof( file ) );
 
             NativeType = module.Context.CreateStructType( nativeName );
             DIType = module.DIBuilder
