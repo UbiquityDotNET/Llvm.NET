@@ -1,6 +1,7 @@
 ﻿using System;
-using Llvm.NET.Native;
+using System.Diagnostics.CodeAnalysis;
 using System.Runtime.InteropServices;
+using Llvm.NET.Native;
 
 namespace Llvm.NET
 {
@@ -12,11 +13,12 @@ namespace Llvm.NET
         /// <param name="path">Path of the file to load into a <see cref="MemoryBuffer"/></param>
         public MemoryBuffer( string path )
         {
-            IntPtr msg;
-            if( NativeMethods.CreateMemoryBufferWithContentsOfFile( path, out BufferHandle_, out msg ).Succeeded )
+            if( NativeMethods.CreateMemoryBufferWithContentsOfFile( path, out BufferHandle_, out string msg ).Succeeded )
+            {
                 return;
+            }
 
-            throw new InternalCodeGeneratorException( NativeMethods.MarshalMsg( msg ) );
+            throw new InternalCodeGeneratorException( msg );
         }
 
         /// <summary>Size of the buffer</summary>
@@ -25,9 +27,11 @@ namespace Llvm.NET
             get
             {
                 if( BufferHandle.Pointer == IntPtr.Zero )
+                {
                     return 0;
+                }
 
-                return NativeMethods.GetBufferSize( BufferHandle );
+                return NativeMethods.GetBufferSize( BufferHandle ).Pointer.ToInt32();
             }
         }
 
@@ -54,8 +58,14 @@ namespace Llvm.NET
         }
 
         internal LLVMMemoryBufferRef BufferHandle => BufferHandle_;
-        
+
         // keep as a private field so this is usable as an out parameter in constructor
+        // do not write to it directly, treat it as readonly.
+        [SuppressMessage( "StyleCop.CSharp.NamingRules"
+                        , "SA1310:Field names must not contain underscore"
+                        , Justification = "Trailing _ indicates should not be written to directly even internally"
+                        )
+        ]
         private LLVMMemoryBufferRef BufferHandle_;
     }
 }

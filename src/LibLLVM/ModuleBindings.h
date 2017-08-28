@@ -67,7 +67,7 @@ extern "C" {
     LLVMComdatRef LLVMModuleInsertOrUpdateComdat( LLVMModuleRef module, char const* name, LLVMComdatSelectionKind kind );
     void LLVMModuleComdatRemove( LLVMModuleRef module, LLVMComdatRef comdatRef );
     void LLVMModuleComdatClear( LLVMModuleRef module );
-    
+
     // Comdat accessors
     LLVMComdatSelectionKind LLVMComdatGetKind( LLVMComdatRef comdatRef );
     void LLVMComdatSetKind( LLVMComdatRef comdatRef, LLVMComdatSelectionKind kind );

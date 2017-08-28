@@ -18,7 +18,9 @@ namespace Llvm.NET.Values
             get
             {
                 if( index >= Count || index < 0 )
+                {
                     throw new ArgumentOutOfRangeException( nameof( index ) );
+                }
 
                 return Value.FromHandle<Argument>( NativeMethods.GetParam( OwningFunction.ValueHandle, ( uint )index ) );
             }
@@ -39,7 +41,9 @@ namespace Llvm.NET.Values
             {
                 LLVMValueRef val = NativeMethods.GetParam( OwningFunction.ValueHandle, i );
                 if( val.Pointer == IntPtr.Zero )
+                {
                     yield break;
+                }
 
                 yield return Value.FromHandle<Argument>( val );
             }

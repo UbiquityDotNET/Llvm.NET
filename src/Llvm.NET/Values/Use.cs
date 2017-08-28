@@ -14,7 +14,9 @@ namespace Llvm.NET.Values
         }
 
         public User User => Value.FromHandle<User>( NativeMethods.GetUser( OpaqueHandle ) );
+
         public Value Value => Value.FromHandle( NativeMethods.GetUsedValue( OpaqueHandle ) );
+
         private LLVMUseRef OpaqueHandle;
     }
 }

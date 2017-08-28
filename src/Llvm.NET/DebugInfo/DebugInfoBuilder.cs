@@ -1,11 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using Llvm.NET.Values;
-using Llvm.NET.Instructions;
+using System.Diagnostics.CodeAnalysis;
 using System.IO;
+using System.Linq;
 using System.Text;
+using Llvm.NET.Instructions;
 using Llvm.NET.Native;
+using Llvm.NET.Values;
 
 namespace Llvm.NET.DebugInfo
 {
@@ -57,7 +58,7 @@ namespace Llvm.NET.DebugInfo
         /// <param name="compilationFlags">Additional tool specific flags</param>
         /// <param name="runtimeVersion">Runtime version</param>
         /// <returns><see cref="DICompileUnit"/></returns>
-        [System.Diagnostics.CodeAnalysis.SuppressMessage( "Microsoft.Naming", "CA2204:Literals should be spelled correctly", MessageId = "DICompileUnit" )]
+        [SuppressMessage( "Microsoft.Naming", "CA2204:Literals should be spelled correctly", MessageId = "DICompileUnit", Justification = "It is spelled correctly 8^)" )]
         public DICompileUnit CreateCompileUnit( SourceLanguage language
                                               , string fileName
                                               , string fileDirectory
@@ -68,7 +69,9 @@ namespace Llvm.NET.DebugInfo
                                               )
         {
             if( OwningModule.DICompileUnit != null )
+            {
                 throw new InvalidOperationException( "LLVM only allows one DICompileUnit per module" );
+            }
 
             var handle = NativeMethods.DIBuilderCreateCompileUnit( BuilderHandle
                                                                  , ( uint )language
@@ -87,20 +90,20 @@ namespace Llvm.NET.DebugInfo
         /// <summary>Creates a <see cref="DINamespace"/></summary>
         /// <param name="scope">Containing scope for the namespace or null if the namespace is a global one</param>
         /// <param name="name">Name of the namespace</param>
-        /// <param name="file">Source file containing the declaration (may be null if more than one or not known)</param>
-        /// <param name="line">Line number of the namespace declaration</param>
+        /// <param name="exportSymbols">export symbols</param>
         /// <returns></returns>
         [System.Diagnostics.CodeAnalysis.SuppressMessage( "Microsoft.Design", "CA1011:ConsiderPassingBaseTypesAsParameters", Justification = "Specific type required by interop call" )]
-        public DINamespace CreateNamespace( DIScope scope, string name, DIFile file, uint line )
+        public DINamespace CreateNamespace( DIScope scope, string name, bool exportSymbols )
         {
             if( string.IsNullOrWhiteSpace( name ) )
+            {
                 throw new ArgumentException( "name cannot be null or empty", nameof( name ) );
+            }
 
             var handle = NativeMethods.DIBuilderCreateNamespace( BuilderHandle
                                                                , scope?.MetadataHandle ?? LLVMMetadataRef.Zero
                                                                , name
-                                                               , file?.MetadataHandle ?? LLVMMetadataRef.Zero
-                                                               , line
+                                                               , exportSymbols
                                                                );
             return MDNode.FromHandle<DINamespace>( handle );
         }
@@ -114,7 +117,9 @@ namespace Llvm.NET.DebugInfo
         public DIFile CreateFile( string path )
         {
             if( string.IsNullOrWhiteSpace( path ) )
+            {
                 return null;
+            }
 
             return CreateFile( Path.GetFileName( path ), Path.GetDirectoryName( path ) );
         }
@@ -129,7 +134,9 @@ namespace Llvm.NET.DebugInfo
         public DIFile CreateFile( string fileName, string directory )
         {
             if( string.IsNullOrWhiteSpace( fileName ) )
+            {
                 return null;
+            }
 
             var handle = NativeMethods.DIBuilderCreateFile( BuilderHandle, fileName, directory ?? string.Empty );
             return MDNode.FromHandle<DIFile>( handle );
@@ -147,7 +154,9 @@ namespace Llvm.NET.DebugInfo
         public DILexicalBlock CreateLexicalBlock( DIScope scope, DIFile file, uint line, uint column )
         {
             if( scope == null )
+            {
                 throw new ArgumentNullException( nameof( scope ) );
+            }
 
             var handle = NativeMethods.DIBuilderCreateLexicalBlock( BuilderHandle
                                                                   , scope.MetadataHandle
@@ -169,10 +178,14 @@ namespace Llvm.NET.DebugInfo
         public DILexicalBlockFile CreateLexicalBlockFile( DIScope scope, DIFile file, uint discriminator )
         {
             if( scope == null )
+            {
                 throw new ArgumentNullException( nameof( scope ) );
+            }
 
             if( file == null )
+            {
                 throw new ArgumentNullException( nameof( file ) );
+            }
 
             var handle = NativeMethods.DIBuilderCreateLexicalBlockFile( BuilderHandle, scope.MetadataHandle, file.MetadataHandle, discriminator );
             return MDNode.FromHandle<DILexicalBlockFile>( handle );
@@ -211,19 +224,29 @@ namespace Llvm.NET.DebugInfo
                                           )
         {
             if( scope == null )
+            {
                 throw new ArgumentNullException( nameof( scope ) );
+            }
 
             if( string.IsNullOrWhiteSpace( name ) )
+            {
                 name = string.Empty;
+            }
 
             if( string.IsNullOrWhiteSpace( mangledName ) )
+            {
                 mangledName = string.Empty;
+            }
 
             if( signatureType == null )
+            {
                 throw new ArgumentNullException( nameof( signatureType ) );
+            }
 
             if( function == null )
+            {
                 throw new ArgumentNullException( nameof( function ) );
+            }
 
             var handle = NativeMethods.DIBuilderCreateFunction( BuilderHandle
                                                               , scope.MetadataHandle
@@ -271,16 +294,24 @@ namespace Llvm.NET.DebugInfo
                                                   )
         {
             if( scope == null )
+            {
                 throw new ArgumentNullException( nameof( scope ) );
+            }
 
             if( subroutineType == null )
+            {
                 throw new ArgumentNullException( nameof( subroutineType ) );
+            }
 
             if( string.IsNullOrWhiteSpace( name ) )
+            {
                 name = string.Empty;
+            }
 
             if( string.IsNullOrWhiteSpace( mangledName ) )
+            {
                 mangledName = string.Empty;
+            }
 
             var handle = NativeMethods.DIBuilderCreateTempFunctionFwdDecl( BuilderHandle
                                                                          , scope.MetadataHandle
@@ -300,7 +331,7 @@ namespace Llvm.NET.DebugInfo
             return MDNode.FromHandle<DISubProgram>( handle );
         }
 
-        [System.Diagnostics.CodeAnalysis.SuppressMessage( "Microsoft.Design", "CA1011:ConsiderPassingBaseTypesAsParameters" )]
+        [System.Diagnostics.CodeAnalysis.SuppressMessage( "Microsoft.Design", "CA1011:ConsiderPassingBaseTypesAsParameters", Justification = "Specific type required by interop call" )]
         public DILocalVariable CreateLocalVariable( DIScope scope
                                                   , string name
                                                   , DIFile file
@@ -311,10 +342,14 @@ namespace Llvm.NET.DebugInfo
                                                   )
         {
             if( scope == null )
+            {
                 throw new ArgumentNullException( nameof( scope ) );
+            }
 
             if( type == null )
+            {
                 throw new ArgumentNullException( nameof( type ) );
+            }
 
             var handle = NativeMethods.DIBuilderCreateAutoVariable( BuilderHandle
                                                                   , scope.MetadataHandle
@@ -338,7 +373,7 @@ namespace Llvm.NET.DebugInfo
         /// <param name="debugFlags"><see cref="DebugInfoFlags"/> for this argument</param>
         /// <param name="argNo">One based argument index on the method (e.g the first argument is 1 not 0 )</param>
         /// <returns><see cref="DILocalVariable"/> representing the function argument</returns>
-        [System.Diagnostics.CodeAnalysis.SuppressMessage( "Microsoft.Design", "CA1011:ConsiderPassingBaseTypesAsParameters" )]
+        [SuppressMessage( "Microsoft.Design", "CA1011:ConsiderPassingBaseTypesAsParameters", Justification = "Specific type required by interop call" )]
         public DILocalVariable CreateArgument( DIScope scope
                                              , string name
                                              , DIFile file
@@ -350,10 +385,14 @@ namespace Llvm.NET.DebugInfo
                                              )
         {
             if( scope == null )
+            {
                 throw new ArgumentNullException( nameof( scope ) );
+            }
 
             if( type == null )
+            {
                 throw new ArgumentNullException( nameof( type ) );
+            }
 
             var handle = NativeMethods.DIBuilderCreateParameterVariable( BuilderHandle
                                                                        , scope.MetadataHandle
@@ -371,17 +410,16 @@ namespace Llvm.NET.DebugInfo
         /// <summary>Construct debug information for a basic type (a.k.a. primitive type)</summary>
         /// <param name="name">Name of the type</param>
         /// <param name="bitSize">Bit size for the type</param>
-        /// <param name="bitAlign">Bit alignment for the type</param>
         /// <param name="encoding"><see cref="DiTypeKind"/> encoding for the type</param>
         /// <returns></returns>
-        public DIBasicType CreateBasicType( string name, ulong bitSize, ulong bitAlign, DiTypeKind encoding )
+        public DIBasicType CreateBasicType( string name, UInt64 bitSize, DiTypeKind encoding )
         {
-            var handle = NativeMethods.DIBuilderCreateBasicType( BuilderHandle, name, bitSize, bitAlign, ( uint )encoding );
+            var handle = NativeMethods.DIBuilderCreateBasicType( BuilderHandle, name, bitSize, ( uint )encoding );
             return MDNode.FromHandle<DIBasicType>( handle );
         }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage( "Microsoft.Design", "CA1011:ConsiderPassingBaseTypesAsParameters", Justification = "Specific type required by interop call" )]
-        public DIDerivedType CreatePointerType( DIType pointeeType, string name, ulong bitSize, ulong bitAlign )
+        public DIDerivedType CreatePointerType( DIType pointeeType, string name, UInt64 bitSize, UInt32 bitAlign = 0 )
         {
             var handle = NativeMethods.DIBuilderCreatePointerType( BuilderHandle
                                                                  , pointeeType?.MetadataHandle ?? LLVMMetadataRef.Zero // null == void
@@ -396,7 +434,9 @@ namespace Llvm.NET.DebugInfo
         public DIDerivedType CreateQualifiedType( DIType baseType, QualifiedTypeTag tag )
         {
             if( baseType == null )
+            {
                 throw new ArgumentNullException( nameof( baseType ) );
+            }
 
             var handle = NativeMethods.DIBuilderCreateQualifiedType( BuilderHandle, ( uint )tag, baseType.MetadataHandle );
             return MDNode.FromHandle<DIDerivedType>( handle );
@@ -407,11 +447,13 @@ namespace Llvm.NET.DebugInfo
         public DITypeArray CreateTypeArray( IEnumerable<DIType> types )
         {
             var handles = types.Select( t => t.MetadataHandle ).ToArray( );
-            var count = handles.LongLength;
+            long count = handles.LongLength;
             if( count == 0 )
+            {
                 handles = new[ ] { default( LLVMMetadataRef ) };
+            }
 
-            var handle = NativeMethods.DIBuilderGetOrCreateTypeArray( BuilderHandle, out handles[ 0 ], ( ulong )count );
+            var handle = NativeMethods.DIBuilderGetOrCreateTypeArray( BuilderHandle, out handles[ 0 ], ( UInt64 )count );
             return new DITypeArray( handle );
         }
 
@@ -419,7 +461,9 @@ namespace Llvm.NET.DebugInfo
         public DISubroutineType CreateSubroutineType( DebugInfoFlags debugFlags, DITypeArray types )
         {
             if( types == null )
+            {
                 throw new ArgumentNullException( nameof( types ) );
+            }
 
             var handle = NativeMethods.DIBuilderCreateSubroutineType( BuilderHandle
                                                                     , types.MetadataHandle
@@ -445,18 +489,22 @@ namespace Llvm.NET.DebugInfo
                                                , string name
                                                , DIFile file
                                                , uint line
-                                               , ulong bitSize
-                                               , ulong bitAlign
+                                               , UInt64 bitSize
+                                               , UInt32 bitAlign
                                                , uint flags
                                                , DIType derivedFrom
                                                , DINodeArray elements
                                                )
         {
             if( scope == null )
+            {
                 throw new ArgumentNullException( nameof( scope ) );
+            }
 
             if( elements == null )
+            {
                 throw new ArgumentNullException( nameof( elements ) );
+            }
 
             var handle = NativeMethods.DIBuilderCreateStructType( BuilderHandle
                                                                 , scope.MetadataHandle
@@ -476,8 +524,8 @@ namespace Llvm.NET.DebugInfo
                                                , string name
                                                , DIFile file
                                                , uint line
-                                               , ulong bitSize
-                                               , ulong bitAlign
+                                               , UInt64 bitSize
+                                               , UInt32 bitAlign
                                                , DebugInfoFlags debugFlags
                                                , DIType derivedFrom
                                                , params DINode[ ] elements
@@ -490,8 +538,8 @@ namespace Llvm.NET.DebugInfo
                                                , string name
                                                , DIFile file
                                                , uint line
-                                               , ulong bitSize
-                                               , ulong bitAlign
+                                               , UInt64 bitSize
+                                               , UInt32 bitAlign
                                                , DebugInfoFlags debugFlags
                                                , DIType derivedFrom
                                                , IEnumerable<DINode> elements
@@ -505,17 +553,21 @@ namespace Llvm.NET.DebugInfo
                                               , string name
                                               , DIFile file
                                               , uint line
-                                              , ulong bitSize
-                                              , ulong bitAlign
+                                              , UInt64 bitSize
+                                              , UInt32 bitAlign
                                               , uint flags
                                               , DINodeArray elements
                                               )
         {
             if( scope == null )
+            {
                 throw new ArgumentNullException( nameof( scope ) );
+            }
 
             if( elements == null )
+            {
                 throw new ArgumentNullException( nameof( elements ) );
+            }
 
             var handle = NativeMethods.DIBuilderCreateUnionType( BuilderHandle
                                                                , scope.MetadataHandle
@@ -534,8 +586,8 @@ namespace Llvm.NET.DebugInfo
                                                , string name
                                                , DIFile file
                                                , uint line
-                                               , ulong bitSize
-                                               , ulong bitAlign
+                                               , UInt64 bitSize
+                                               , UInt32 bitAlign
                                                , DebugInfoFlags debugFlags
                                                , params DINode[ ] elements
                                                )
@@ -547,8 +599,8 @@ namespace Llvm.NET.DebugInfo
                                                , string name
                                                , DIFile file
                                                , uint line
-                                               , ulong bitSize
-                                               , ulong bitAlign
+                                               , UInt64 bitSize
+                                               , UInt32 bitAlign
                                                , DebugInfoFlags debugFlags
                                                , IEnumerable<DINode> elements
                                                )
@@ -561,18 +613,22 @@ namespace Llvm.NET.DebugInfo
                                              , string name
                                              , DIFile file
                                              , uint line
-                                             , ulong bitSize
-                                             , ulong bitAlign
-                                             , ulong bitOffset
+                                             , UInt64 bitSize
+                                             , UInt32 bitAlign
+                                             , UInt64 bitOffset
                                              , DebugInfoFlags debugFlags
                                              , DIType type
                                              )
         {
             if( scope == null )
+            {
                 throw new ArgumentNullException( nameof( scope ) );
+            }
 
             if( type == null )
+            {
                 throw new ArgumentNullException( nameof( type ) );
+            }
 
             var handle = NativeMethods.DIBuilderCreateMemberType( BuilderHandle
                                                                 , scope.MetadataHandle
@@ -589,19 +645,23 @@ namespace Llvm.NET.DebugInfo
         }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage( "Microsoft.Design", "CA1011:ConsiderPassingBaseTypesAsParameters", Justification = "Specific type required by interop call" )]
-        public DICompositeType CreateArrayType( ulong bitSize, ulong bitAlign, DIType elementType, DINodeArray subscripts )
+        public DICompositeType CreateArrayType( UInt64 bitSize, UInt32 bitAlign, DIType elementType, DINodeArray subscripts )
         {
             if( elementType == null )
+            {
                 throw new ArgumentNullException( nameof( elementType ) );
+            }
 
             if( subscripts == null )
+            {
                 throw new ArgumentNullException( nameof( subscripts ) );
+            }
 
             var handle = NativeMethods.DIBuilderCreateArrayType( BuilderHandle, bitSize, bitAlign, elementType.MetadataHandle, subscripts.Tuple.MetadataHandle );
             return MDNode.FromHandle<DICompositeType>( handle );
         }
 
-        public DICompositeType CreateArrayType( ulong bitSize, ulong bitAlign, DIType elementType, params DINode[ ] subscripts )
+        public DICompositeType CreateArrayType( UInt64 bitSize, UInt32 bitAlign, DIType elementType, params DINode[ ] subscripts )
         {
             return CreateArrayType( bitSize, bitAlign, elementType, GetOrCreateArray( subscripts ) );
         }
@@ -628,20 +688,24 @@ namespace Llvm.NET.DebugInfo
         public DINodeArray GetOrCreateArray( IEnumerable<DINode> elements )
         {
             var buf = elements.Select( d => d?.MetadataHandle ?? LLVMMetadataRef.Zero ).ToArray( );
-            var actualLen = buf.LongLength;
+            long actualLen = buf.LongLength;
+
             // for the out parameter trick to work - need to have a valid array with at least one element
             if( buf.LongLength == 0 )
+            {
                 buf = new LLVMMetadataRef[ 1 ];
+            }
 
-            var handle = NativeMethods.DIBuilderGetOrCreateArray( BuilderHandle, out buf[ 0 ], ( ulong )actualLen );
+            var handle = NativeMethods.DIBuilderGetOrCreateArray( BuilderHandle, out buf[ 0 ], ( UInt64 )actualLen );
             return new DINodeArray( LlvmMetadata.FromHandle<MDTuple>( OwningModule.Context, handle ) );
         }
 
         public DITypeArray GetOrCreateTypeArray( params DIType[ ] types ) => GetOrCreateTypeArray( ( IEnumerable<DIType> )types );
+
         public DITypeArray GetOrCreateTypeArray( IEnumerable<DIType> types )
         {
             var buf = types.Select( t => t?.MetadataHandle ?? LLVMMetadataRef.Zero ).ToArray( );
-            var handle = NativeMethods.DIBuilderGetOrCreateTypeArray( BuilderHandle, out buf[ 0 ], ( ulong )buf.LongLength );
+            var handle = NativeMethods.DIBuilderGetOrCreateTypeArray( BuilderHandle, out buf[ 0 ], ( UInt64 )buf.LongLength );
             return new DITypeArray( handle );
         }
 
@@ -656,21 +720,25 @@ namespace Llvm.NET.DebugInfo
                                                     , string name
                                                     , DIFile file
                                                     , uint lineNumber
-                                                    , ulong sizeInBits
-                                                    , ulong alignInBits
+                                                    , UInt64 sizeInBits
+                                                    , UInt32 alignInBits
                                                     , IEnumerable<DIEnumerator> elements
                                                     , DIType underlyingType
                                                     , string uniqueId = ""
                                                     )
         {
             if( scope == null )
+            {
                 throw new ArgumentNullException( nameof( scope ) );
+            }
 
             if( underlyingType == null )
+            {
                 throw new ArgumentNullException( nameof( underlyingType ) );
+            }
 
             var elementHandles = elements.Select( e => e.MetadataHandle ).ToArray( );
-            var elementArray = NativeMethods.DIBuilderGetOrCreateArray( BuilderHandle, out elementHandles[ 0 ], ( ulong )elementHandles.LongLength );
+            var elementArray = NativeMethods.DIBuilderGetOrCreateArray( BuilderHandle, out elementHandles[ 0 ], ( UInt64 )elementHandles.LongLength );
             var handle = NativeMethods.DIBuilderCreateEnumerationType( BuilderHandle
                                                                      , scope.MetadataHandle
                                                                      , name
@@ -686,38 +754,41 @@ namespace Llvm.NET.DebugInfo
         }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage( "Microsoft.Design", "CA1011:ConsiderPassingBaseTypesAsParameters", Justification = "Specific type required by interop call" )]
-        public DIGlobalVariable CreateGlobalVariable( DINode scope
-                                                    , string name
-                                                    , string linkageName
-                                                    , DIFile file
-                                                    , uint lineNo
-                                                    , DIType type
-                                                    , bool isLocalToUnit
-                                                    , Value value
-                                                    , DINode declaration = null
-                                                    )
+        public DIGlobalVariableExpression CreateGlobalVariableExpression( DINode scope
+                                                                        , string name
+                                                                        , string linkageName
+                                                                        , DIFile file
+                                                                        , uint lineNo
+                                                                        , DIType type
+                                                                        , bool isLocalToUnit
+                                                                        , DIExpression value
+                                                                        , DINode declaration = null
+                                                                        , UInt32 bitAlign = 0
+                                                                        )
         {
             if( scope == null )
+            {
                 throw new ArgumentNullException( nameof( scope ) );
+            }
 
             if( type == null )
+            {
                 throw new ArgumentNullException( nameof( type ) );
+            }
 
-            if( value == null )
-                throw new ArgumentNullException( nameof( value ) );
-
-            var handle = NativeMethods.DIBuilderCreateGlobalVariable( BuilderHandle
-                                                                    , scope.MetadataHandle
-                                                                    , name
-                                                                    , linkageName
-                                                                    , file?.MetadataHandle ?? LLVMMetadataRef.Zero
-                                                                    , lineNo
-                                                                    , type.MetadataHandle
-                                                                    , isLocalToUnit
-                                                                    , value.ValueHandle
-                                                                    , declaration?.MetadataHandle ?? LLVMMetadataRef.Zero
-                                                                    );
-            return MDNode.FromHandle<DIGlobalVariable>( handle );
+            var handle = NativeMethods.DIBuilderCreateGlobalVariableExpression( BuilderHandle
+                                                                              , scope.MetadataHandle
+                                                                              , name
+                                                                              , linkageName
+                                                                              , file?.MetadataHandle ?? LLVMMetadataRef.Zero
+                                                                              , lineNo
+                                                                              , type.MetadataHandle
+                                                                              , isLocalToUnit
+                                                                              , value?.MetadataHandle ?? LLVMMetadataRef.Zero
+                                                                              , declaration?.MetadataHandle ?? LLVMMetadataRef.Zero
+                                                                              , bitAlign
+                                                                              );
+            return MDNode.FromHandle<DIGlobalVariableExpression>( handle );
         }
 
         public void Finish( )
@@ -732,7 +803,9 @@ namespace Llvm.NET.DebugInfo
                 {
                     var bldr = new StringBuilder( "Temporaries must be resolved before finalizing debug information:\n" );
                     foreach( var node in unresolvedTemps )
+                    {
                         bldr.AppendFormat( "\t{0}\n", node.ToString( ) );
+                    }
 
                     throw new InvalidOperationException( bldr.ToString( ) );
                 }
@@ -751,19 +824,29 @@ namespace Llvm.NET.DebugInfo
         public Instruction InsertDeclare( Value storage, DILocalVariable varInfo, DIExpression expression, DILocation location, Instruction insertBefore )
         {
             if( storage == null )
+            {
                 throw new ArgumentNullException( nameof( storage ) );
+            }
 
             if( varInfo == null )
+            {
                 throw new ArgumentNullException( nameof( varInfo ) );
+            }
 
             if( expression == null )
+            {
                 throw new ArgumentNullException( nameof( expression ) );
+            }
 
             if( location == null )
+            {
                 throw new ArgumentNullException( nameof( location ) );
+            }
 
             if( insertBefore == null )
+            {
                 throw new ArgumentNullException( nameof( insertBefore ) );
+            }
 
             var handle = NativeMethods.DIBuilderInsertDeclareBefore( BuilderHandle
                                                                    , storage.ValueHandle
@@ -784,22 +867,34 @@ namespace Llvm.NET.DebugInfo
         public CallInstruction InsertDeclare( Value storage, DILocalVariable varInfo, DIExpression espression, DILocation location, BasicBlock insertAtEnd )
         {
             if( storage == null )
+            {
                 throw new ArgumentNullException( nameof( storage ) );
+            }
 
             if( varInfo == null )
+            {
                 throw new ArgumentNullException( nameof( varInfo ) );
+            }
 
             if( espression == null )
+            {
                 throw new ArgumentNullException( nameof( espression ) );
+            }
 
             if( location == null )
+            {
                 throw new ArgumentNullException( nameof( location ) );
+            }
 
             if( insertAtEnd == null )
+            {
                 throw new ArgumentNullException( nameof( insertAtEnd ) );
+            }
 
             if( location.Scope.SubProgram != varInfo.Scope.SubProgram )
+            {
                 throw new ArgumentException( "Mismatched scopes for location and variable" );
+            }
 
             var handle = NativeMethods.DIBuilderInsertDeclareAtEnd( BuilderHandle
                                                                   , storage.ValueHandle
@@ -821,7 +916,7 @@ namespace Llvm.NET.DebugInfo
             return InsertValue( value, offset, varInfo, null, location, insertBefore );
         }
 
-        [System.Diagnostics.CodeAnalysis.SuppressMessage( "Microsoft.Design", "CA1011:ConsiderPassingBaseTypesAsParameters" )]
+        [SuppressMessage( "Microsoft.Design", "CA1011:ConsiderPassingBaseTypesAsParameters", Justification = "Interop API requires specific derived type" )]
         public CallInstruction InsertValue( Value value
                                           , UInt64 offset
                                           , DILocalVariable varInfo
@@ -831,19 +926,29 @@ namespace Llvm.NET.DebugInfo
                                           )
         {
             if( value == null )
+            {
                 throw new ArgumentNullException( nameof( value ) );
+            }
 
             if( varInfo == null )
+            {
                 throw new ArgumentNullException( nameof( varInfo ) );
+            }
 
             if( expression == null )
+            {
                 throw new ArgumentNullException( nameof( expression ) );
+            }
 
             if( location == null )
+            {
                 throw new ArgumentNullException( nameof( location ) );
+            }
 
             if( insertBefore == null )
+            {
                 throw new ArgumentNullException( nameof( insertBefore ) );
+            }
 
             var handle = NativeMethods.DIBuilderInsertValueBefore( BuilderHandle
                                                                  , value.ValueHandle
@@ -868,7 +973,7 @@ namespace Llvm.NET.DebugInfo
             return InsertValue( value, offset, varInfo, null, location, insertAtEnd );
         }
 
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1011:ConsiderPassingBaseTypesAsParameters")]
+        [SuppressMessage("Microsoft.Design", "CA1011:ConsiderPassingBaseTypesAsParameters", Justification = "Interop API requires specific derived type" )]
         public CallInstruction InsertValue(Value value
                                           , DILocalVariable varInfo
                                           , DIExpression expression
@@ -879,7 +984,7 @@ namespace Llvm.NET.DebugInfo
             return InsertValue(value, 0, varInfo, expression, location, insertAtEnd);
         }
 
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1011:ConsiderPassingBaseTypesAsParameters")]
+        [SuppressMessage("Microsoft.Design", "CA1011:ConsiderPassingBaseTypesAsParameters", Justification = "Interop API requires specific derived type" )]
         public CallInstruction InsertValue( Value value
                                           , UInt64 offset
                                           , DILocalVariable varInfo
@@ -889,25 +994,39 @@ namespace Llvm.NET.DebugInfo
                                           )
         {
             if( value == null )
+            {
                 throw new ArgumentNullException( nameof( value ) );
+            }
 
             if( varInfo == null )
+            {
                 throw new ArgumentNullException( nameof( varInfo ) );
+            }
 
             if( expression == null )
+            {
                 throw new ArgumentNullException( nameof( expression ) );
+            }
 
             if( location == null )
+            {
                 throw new ArgumentNullException( nameof( location ) );
+            }
 
             if( insertAtEnd == null )
+            {
                 throw new ArgumentNullException( nameof( insertAtEnd ) );
+            }
 
             if( location.Scope != varInfo.Scope )
+            {
                 throw new ArgumentException( "mismatched scopes" );
+            }
 
             if( !location.Describes(insertAtEnd.ContainingFunction ) )
+            {
                 throw new ArgumentException( "location does not describe the specified block's containing function" );
+            }
 
             var handle = NativeMethods.DIBuilderInsertValueAtEnd( BuilderHandle
                                                                 , value.ValueHandle
@@ -928,23 +1047,25 @@ namespace Llvm.NET.DebugInfo
         public DIExpression CreateExpression( IEnumerable<ExpressionOp> operations )
         {
             var args = operations.Cast<long>( ).ToArray( );
-            var actualCount = args.LongLength;
+            long actualCount = args.LongLength;
             if( args.Length == 0 )
+            {
                 args = new long[ 1 ];
+            }
 
-            var handle = NativeMethods.DIBuilderCreateExpression( BuilderHandle, out args[ 0 ], ( ulong )actualCount );
+            var handle = NativeMethods.DIBuilderCreateExpression( BuilderHandle, out args[ 0 ], ( UInt64 )actualCount );
             return new DIExpression( handle );
         }
 
-        [System.Diagnostics.CodeAnalysis.SuppressMessage( "Microsoft.Design", "CA1011:ConsiderPassingBaseTypesAsParameters", Justification = "Specific type required by interop call" )]
+        [SuppressMessage( "Microsoft.Design", "CA1011:ConsiderPassingBaseTypesAsParameters", Justification = "Specific type required by interop call" )]
         public DICompositeType CreateReplaceableCompositeType( Tag tag
                                                              , string name
                                                              , DINode scope
                                                              , DIFile file
                                                              , uint line
                                                              , uint lang = 0
-                                                             , ulong sizeInBits = 0
-                                                             , ulong alignBits = 0
+                                                             , UInt64 sizeInBits = 0
+                                                             , UInt64 alignBits = 0
                                                              , DebugInfoFlags flags = DebugInfoFlags.None
                                                              )
         {
@@ -981,13 +1102,16 @@ namespace Llvm.NET.DebugInfo
         private DebugInfoBuilder( NativeModule owningModule, bool allowUnresolved )
         {
             if( owningModule == null )
+            {
                 throw new ArgumentNullException( nameof( owningModule ) );
+            }
 
             BuilderHandle = NativeMethods.NewDIBuilder( owningModule.ModuleHandle, allowUnresolved );
             OwningModule = owningModule;
         }
 
         private bool IsFinished;
+
         internal LLVMDIBuilderRef BuilderHandle { get; private set; }
     }
 }

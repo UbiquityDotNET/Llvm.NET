@@ -9,14 +9,13 @@ namespace Llvm.NET.DebugInfo
             : base( handle )
         {
         }
-        
+
         // operannds:
         //    0 - File
         //    1 - Scope
         //    2 - Name
         //    3 - Base Type
         //    4 - Extra data
-
         public DIType BaseType => Operands[ 3 ].Metadata as DIType;
     }
 }

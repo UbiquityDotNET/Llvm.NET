@@ -1,0 +1,7 @@
+﻿<Project TreatAsLocalProperty="_TaskFolder">
+    <PropertyGroup>
+        <_TaskFolder Condition="'$(MSBuildRunTimeType)'=='Core'">netstandard2.0</_TaskFolder>
+        <_TaskFolder Condition="'$(MSBuildRunTimeType)'!='Core'">net47</_TaskFolder>
+        <LlvmNETBuildTasksAssembly>$([MSBuild]::NormalizePath("$(MSBuildThisFileDirectory)", "..", "tasks", "$(_TaskFolder)", "Llvm.NET.BuildTasks.dll"))</LlvmNETBuildTasksAssembly>
+    </PropertyGroup>
+</Project>

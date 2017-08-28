@@ -1,16 +1,16 @@
-#include "llvm-c/Target.h"
+#include <llvm-c/Target.h>
 
 extern "C"
 {
     // exportable wrappers around static in-lined functions
     // EXPORTS.DEF uses aliasing to export these as the standard name
-    // (e.g. dropping the trailing "Export" from the name.) This 
+    // (e.g. dropping the trailing "Export" from the name.) This
     // mechanism is needed since the in-lined functions are marked static
     // and therefore the linker doesn't see them as externally visible
-    // so it can't export them. 
+    // so it can't export them.
 
     /** LLVMInitializeAllTargetInfos - The main program should call this function if
-    it wants access to all available targets that LLVM is configured to
+    it wants access to initialize all available targets that LLVM is configured to
     support. */
     void LLVMInitializeAllTargetInfosExport( void )
     {

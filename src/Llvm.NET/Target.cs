@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Runtime.InteropServices;
 using Llvm.NET.Native;
 
 namespace Llvm.NET
@@ -9,19 +8,19 @@ namespace Llvm.NET
     public class Target
     {
         /// <summary>Name of this target</summary>
-        public string Name => Marshal.PtrToStringAnsi( NativeMethods.GetTargetName( TargetHandle ) );
+        public string Name => NativeMethods.GetTargetName( TargetHandle );
 
         /// <summary>Description of this target</summary>
-        public string Description => NativeMethods.NormalizeLineEndings( NativeMethods.GetTargetDescription( TargetHandle ) );
+        public string Description => NativeMethods.GetTargetDescription( TargetHandle );
 
         /// <summary>Flag indicating if this target has JIT support</summary>
-        public bool HasJIT => 0 != NativeMethods.TargetHasJIT( TargetHandle ).Value;
+        public bool HasJIT => NativeMethods.TargetHasJIT( TargetHandle );
 
         /// <summary>Flag indicating if this target has a TargetMachine initialized</summary>
-        public bool HasTargetMachine => 0 != NativeMethods.TargetHasTargetMachine( TargetHandle ).Value;
+        public bool HasTargetMachine => NativeMethods.TargetHasTargetMachine( TargetHandle );
 
         /// <summary>Flag indicating if this target has an Assembly code generating back end initialized</summary>
-        public bool HasAsmBackEnd => 0 != NativeMethods.TargetHasAsmBackend( TargetHandle ).Value;
+        public bool HasAsmBackEnd => NativeMethods.TargetHasAsmBackend( TargetHandle );
 
         /// <summary>Creates a <see cref="TargetMachine"/> for the target and specified parameters</summary>
         /// <param name="context">Context to use for LLVM objects created by this machine</param>
@@ -71,12 +70,9 @@ namespace Llvm.NET
         /// <returns>Target for the given triple</returns>
         public static Target FromTriple( string targetTriple )
         {
-            LLVMTargetRef targetHandle;
-            IntPtr msgPtr;
-            if( 0 != NativeMethods.GetTargetFromTriple( targetTriple, out targetHandle, out msgPtr ).Value )
+            if( !NativeMethods.GetTargetFromTriple( targetTriple, out LLVMTargetRef targetHandle, out string errorMessag ) )
             {
-                var msg = NativeMethods.MarshalMsg( msgPtr );
-                throw new InternalCodeGeneratorException( msg );
+                throw new InternalCodeGeneratorException( errorMessag );
             }
 
             return FromHandle( targetHandle );
@@ -93,9 +89,10 @@ namespace Llvm.NET
         {
             lock( TargetMap )
             {
-                Target retVal;
-                if( TargetMap.TryGetValue( targetHandle.Pointer, out retVal ) )
+                if( TargetMap.TryGetValue( targetHandle.Pointer, out Target retVal ) )
+                {
                     return retVal;
+                }
 
                 retVal = new Target( targetHandle );
                 TargetMap.Add( targetHandle.Pointer, retVal );
@@ -103,6 +100,6 @@ namespace Llvm.NET
             }
         }
 
-        static Dictionary<IntPtr, Target> TargetMap = new Dictionary<IntPtr, Target>( );
+        private static readonly Dictionary<IntPtr, Target> TargetMap = new Dictionary<IntPtr, Target>();
     }
 }

@@ -16,7 +16,9 @@ namespace Llvm.NET.DebugInfo
             {
                 var handle = NativeMethods.DIScopeGetFile( MetadataHandle );
                 if( handle == LLVMMetadataRef.Zero )
+                {
                     return null;
+                }
 
                 return MDNode.FromHandle<DIFile>( handle );
             }

@@ -13,14 +13,22 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="Build">
+      <UniqueIdentifier>{d424e6d7-8fc8-40b0-b029-d66974c207a1}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <None Include="EXPORTS.DEF">
       <Filter>Source Files</Filter>
     </None>
     <None Include="LlvmApplication.props" />
-    <None Include="BuildLlvmWithVS.cmd" />
-    <None Include="Build-LlvmWithVs.ps1" />
+    <None Include="build\LibLlvm.NET.props">
+      <Filter>Build</Filter>
+    </None>
+    <None Include="build\LibLlvm.NET.targets">
+      <Filter>Build</Filter>
+    </None>
+    <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="InlinedExports.cpp">
@@ -44,9 +52,6 @@
     <ClCompile Include="DITypeBindings.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="AttributeBindings.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="PassManagerBindings.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -57,6 +62,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="TripleBindings.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="AttributeBindings.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -82,9 +90,6 @@
     <ClInclude Include="DITypeBindings.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="AttributeBindings.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="resource.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -98,6 +103,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="TripleBindings.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="AttributeBindings.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

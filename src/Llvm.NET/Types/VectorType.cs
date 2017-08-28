@@ -19,7 +19,9 @@ namespace Llvm.NET.Types
             : base( typeRef )
         {
             if( NativeMethods.GetTypeKind( typeRef ) != LLVMTypeKind.LLVMVectorTypeKind )
+            {
                 throw new ArgumentException( "Vector type reference expected", nameof( typeRef ) );
+            }
         }
     }
 }

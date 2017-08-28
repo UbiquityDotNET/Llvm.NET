@@ -1,8 +1,8 @@
-﻿using Llvm.NET.Types;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
+using Llvm.NET.Types;
 
 namespace Llvm.NET.DebugInfo
 {
@@ -24,19 +24,29 @@ namespace Llvm.NET.DebugInfo
             : base( llvmType )
         {
             if( llvmType == null )
+            {
                 throw new ArgumentNullException( nameof( llvmType ) );
+            }
 
             if( module == null )
+            {
                 throw new ArgumentNullException( nameof( module ) );
+            }
 
             if( scope == null )
+            {
                 throw new ArgumentNullException( nameof( scope ) );
+            }
 
             if( file == null )
+            {
                 throw new ArgumentNullException( nameof( file ) );
+            }
 
             if( !llvmType.IsOpaque )
+            {
                 throw new ArgumentException( "Struct type used as basis for a union must not have a body", nameof( llvmType ) );
+            }
 
             DIType = module.DIBuilder
                            .CreateReplaceableCompositeType( Tag.UnionType
@@ -57,10 +67,14 @@ namespace Llvm.NET.DebugInfo
                              )
         {
             if( module == null )
+            {
                 throw new ArgumentNullException( nameof( module ) );
+            }
 
             if( file == null )
+            {
                 throw new ArgumentNullException( nameof( file ) );
+            }
 
             NativeType = module.Context.CreateStructType( nativeName );
             DIType = module.DIBuilder
@@ -70,7 +84,6 @@ namespace Llvm.NET.DebugInfo
                                                           , file
                                                           , line
                                                           );
-
         }
 
         public bool IsOpaque => NativeType.IsOpaque;
@@ -90,25 +103,35 @@ namespace Llvm.NET.DebugInfo
                            )
         {
             if( module == null )
+            {
                 throw new ArgumentNullException( nameof( module ) );
+            }
 
             if( scope == null )
+            {
                 throw new ArgumentNullException( nameof( scope ) );
+            }
 
             if( debugElements == null )
+            {
                 throw new ArgumentNullException( nameof( debugElements ) );
+            }
 
             if( module.Layout == null )
+            {
                 throw new ArgumentException( "Module needs Layout to build basic types", nameof( module ) );
+            }
 
             // Native body is a single element of a type with the largest size
-            var maxSize = 0UL;
+            ulong maxSize = 0UL;
             ITypeRef[ ] nativeMembers = { null };
             foreach( var elem in debugElements )
             {
                 var bitSize = elem.ExplicitLayout?.BitSize ?? module.Layout?.BitSizeOf( elem.DebugType );
                 if( !bitSize.HasValue )
+                {
                     throw new ArgumentException( "Cannot determine layout for element; The element must have an explicit layout or the module has a layout to use", nameof( debugElements ) );
+                }
 
                 if( maxSize < bitSize.Value )
                 {
@@ -128,7 +151,7 @@ namespace Llvm.NET.DebugInfo
                                                                       , file: memberInfo.File
                                                                       , line: memberInfo.Line
                                                                       , bitSize: ( memberInfo.ExplicitLayout?.BitSize ?? module.Layout?.BitSizeOf( memberInfo.DebugType ) ).Value
-                                                                      , bitAlign: ( memberInfo.ExplicitLayout?.BitAlignment ?? module.Layout?.AbiBitAlignmentOf( memberInfo.DebugType ) ).Value
+                                                                      , bitAlign: memberInfo.ExplicitLayout?.BitAlignment ?? 0
                                                                       , bitOffset: 0
                                                                       , debugFlags: memberInfo.DebugInfoFlags
                                                                       , type: memberInfo.DebugType.DIType

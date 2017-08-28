@@ -2,7 +2,7 @@
 
 namespace Llvm.NET.Instructions
 {
-    class FPToSI : Cast
+    public class FPToSI : Cast
     {
         internal FPToSI( LLVMValueRef valueRef )
             : base( valueRef )

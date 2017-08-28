@@ -36,7 +36,6 @@ namespace Llvm.NET.Values
             }
         }
 
-
         private UserOperandList OperandList;
     }
 }

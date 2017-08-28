@@ -20,7 +20,9 @@ namespace Llvm.NET
             where T : class
         {
             if( self == null )
+            {
                 throw new ArgumentNullException( name );
+            }
 
             return self;
         }

@@ -114,8 +114,7 @@ extern "C"
     {
         DIBuilder *D = unwrap( Dref );
         DICompileUnit* CU = D->createCompileUnit( Lang
-                                                  , File
-                                                  , Dir
+                                                  , D->createFile(File, Dir )
                                                   , Producer
                                                   , Optimized
                                                   , Flags
@@ -190,7 +189,7 @@ extern "C"
                                               , IsLocalToUnit
                                               , IsDefinition
                                               , ScopeLine
-                                              , Flags
+                                              , static_cast<DINode::DIFlags>( Flags )
                                               , IsOptimized
                                               , TParams ? DITemplateParameterArray( unwrap<MDTuple>( TParams ) ) : nullptr
                                               , Decl ? unwrap<DISubprogram>( Decl ) : nullptr
@@ -224,7 +223,7 @@ extern "C"
                                                          , isLocalToUnit
                                                          , isDefinition
                                                          , ScopeLine
-                                                         , Flags
+                                                         , static_cast<DINode::DIFlags>( Flags )
                                                          , isOptimized
                                                          , TParams ? DITemplateParameterArray( unwrap<MDTuple>( TParams ) ) : nullptr
                                                          , Decl ? unwrap<DISubprogram>( Decl ) : nullptr
@@ -249,7 +248,7 @@ extern "C"
                                                , Line
                                                , unwrap<DIType>( Ty )
                                                , AlwaysPreserve
-                                               , Flags
+                                               , static_cast<DINode::DIFlags>( Flags )
                                                );
         return wrap( V );
     }
@@ -273,7 +272,7 @@ extern "C"
                                                     , Line
                                                     , unwrap<DIType>( Ty )
                                                     , AlwaysPreserve
-                                                    , Flags
+                                                    , static_cast<DINode::DIFlags>( Flags )
                                                     );
         return wrap( V );
     }
@@ -281,19 +280,18 @@ extern "C"
     LLVMMetadataRef LLVMDIBuilderCreateBasicType( LLVMDIBuilderRef Dref
                                                   , const char *Name
                                                   , uint64_t SizeInBits
-                                                  , uint64_t AlignInBits
                                                   , unsigned Encoding
                                                   )
     {
         DIBuilder *D = unwrap( Dref );
-        DIBasicType* T = D->createBasicType( Name, SizeInBits, AlignInBits, Encoding );
+        DIBasicType* T = D->createBasicType( Name, SizeInBits, Encoding );
         return wrap( T );
     }
 
     LLVMMetadataRef LLVMDIBuilderCreatePointerType( LLVMDIBuilderRef Dref
                                                     , LLVMMetadataRef PointeeType
                                                     , uint64_t SizeInBits
-                                                    , uint64_t AlignInBits
+                                                    , uint32_t AlignInBits
                                                     , const char *Name
                                                     )
     {
@@ -324,7 +322,7 @@ extern "C"
     {
         DIBuilder *D = unwrap( Dref );
         DISubroutineType* sub = D->createSubroutineType( DITypeRefArray( unwrap<MDTuple>( ParameterTypes ) )
-                                                         , Flags
+                                                         , static_cast<DINode::DIFlags>( Flags )
                                                          );
         return wrap( sub );
     }
@@ -335,7 +333,7 @@ extern "C"
                                                    , LLVMMetadataRef File
                                                    , unsigned Line
                                                    , uint64_t SizeInBits
-                                                   , uint64_t AlignInBits
+                                                   , uint32_t AlignInBits
                                                    , unsigned Flags
                                                    , LLVMMetadataRef DerivedFrom
                                                    , LLVMMetadataRef ElementTypes
@@ -348,7 +346,7 @@ extern "C"
                                                    , Line
                                                    , SizeInBits
                                                    , AlignInBits
-                                                   , Flags
+                                                   , static_cast<DINode::DIFlags>( Flags )
                                                    , DerivedFrom ? unwrap<DIType>( DerivedFrom ) : nullptr
                                                    , ElementTypes ? DINodeArray( unwrap<MDTuple>( ElementTypes ) ) : nullptr
                                                    );
@@ -361,7 +359,7 @@ extern "C"
                                                   , LLVMMetadataRef File
                                                   , unsigned Line
                                                   , uint64_t SizeInBits
-                                                  , uint64_t AlignInBits
+                                                  , uint32_t AlignInBits
                                                   , unsigned Flags
                                                   , LLVMMetadataRef ElementTypes
                                                   )
@@ -373,7 +371,7 @@ extern "C"
                                                   , Line
                                                   , SizeInBits
                                                   , AlignInBits
-                                                  , Flags
+                                                  , static_cast<DINode::DIFlags>( Flags )
                                                   , ElementTypes ? DINodeArray( unwrap<MDTuple>( ElementTypes ) ) : nullptr
                                                   );
         return wrap( CT );
@@ -387,7 +385,7 @@ extern "C"
                                                                  , unsigned Line
                                                                  , unsigned RuntimeLang
                                                                  , uint64_t SizeInBits
-                                                                 , uint64_t AlignInBits
+                                                                 , uint32_t AlignInBits
                                                                  , unsigned Flags
                                                                  )
     {
@@ -400,7 +398,7 @@ extern "C"
                                                                    , RuntimeLang
                                                                    , SizeInBits
                                                                    , AlignInBits
-                                                                   , Flags
+                                                                   , static_cast<DINode::DIFlags>( Flags )
                                                                    );
         return wrap( type );
     }
@@ -411,7 +409,7 @@ extern "C"
                                                    , LLVMMetadataRef File
                                                    , unsigned Line
                                                    , uint64_t SizeInBits
-                                                   , uint64_t AlignInBits
+                                                   , uint32_t AlignInBits
                                                    , uint64_t OffsetInBits
                                                    , unsigned Flags
                                                    , LLVMMetadataRef Ty
@@ -425,7 +423,7 @@ extern "C"
                                                  , SizeInBits
                                                  , AlignInBits
                                                  , OffsetInBits
-                                                 , Flags
+                                                 , static_cast<DINode::DIFlags>( Flags )
                                                  , unwrap<DIType>( Ty )
                                                  );
         return wrap( DT );
@@ -433,7 +431,7 @@ extern "C"
 
     LLVMMetadataRef LLVMDIBuilderCreateArrayType( LLVMDIBuilderRef Dref
                                                   , uint64_t SizeInBits
-                                                  , uint64_t AlignInBits
+                                                  , uint32_t AlignInBits
                                                   , LLVMMetadataRef ElementType
                                                   , LLVMMetadataRef Subscripts
                                                   )
@@ -449,7 +447,7 @@ extern "C"
 
     LLVMMetadataRef LLVMDIBuilderCreateVectorType( LLVMDIBuilderRef Dref
                                                    , uint64_t SizeInBits
-                                                   , uint64_t AlignInBits
+                                                   , uint32_t AlignInBits
                                                    , LLVMMetadataRef ElementType
                                                    , LLVMMetadataRef Subscripts
                                                    )
@@ -569,7 +567,7 @@ extern "C"
                                                         , LLVMMetadataRef File           // DIFile
                                                         , unsigned LineNumber
                                                         , uint64_t SizeInBits
-                                                        , uint64_t AlignInBits
+                                                        , uint32_t AlignInBits
                                                         , LLVMMetadataRef Elements       // DINodeArray
                                                         , LLVMMetadataRef UnderlyingType // DIType
                                                         , char const* UniqueId
@@ -604,28 +602,30 @@ extern "C"
         return ( LLVMDwarfTag )desc->getTag( );
     }
 
-    LLVMMetadataRef LLVMDIBuilderCreateGlobalVariable( LLVMDIBuilderRef Dref
-                                                       , LLVMMetadataRef Context
-                                                       , char const* Name
-                                                       , char const* LinkageName
-                                                       , LLVMMetadataRef File  // DIFile
-                                                       , unsigned LineNo
-                                                       , LLVMMetadataRef Ty    //DITypeRef
-                                                       , LLVMBool isLocalToUnit
-                                                       , LLVMValueRef Val
-                                                       , LLVMMetadataRef Decl // = nullptr
-                                                       )
+    LLVMMetadataRef LLVMDIBuilderCreateGlobalVariableExpression( LLVMDIBuilderRef Dref
+                                                               , LLVMMetadataRef Context //DIScope
+                                                               , char const* Name
+                                                               , char const* LinkageName
+                                                               , LLVMMetadataRef File  // DIFile
+                                                               , unsigned LineNo
+                                                               , LLVMMetadataRef Ty    //DIType
+                                                               , LLVMBool isLocalToUnit
+                                                               , LLVMMetadataRef expression // DIExpression
+                                                               , LLVMMetadataRef Decl // MDNode = nullptr
+                                                               , uint32_t AlignInBits
+                                                               )
     {
         DIBuilder* D = unwrap( Dref );
-        DIGlobalVariable* globalVar = D->createGlobalVariable( unwrap<DIScope>( Context )
+        auto globalVar = D->createGlobalVariableExpression( unwrap<DIScope>( Context )
                                                                , Name
                                                                , LinkageName
                                                                , File ? unwrap<DIFile>( File ) : nullptr
                                                                , LineNo
                                                                , unwrap<DIType>( Ty )
                                                                , isLocalToUnit
-                                                               , unwrap<Constant>( Val )
+                                                               , expression ? unwrap<DIExpression>( expression ) : nullptr
                                                                , Decl ? unwrap<MDNode>( Decl ) : nullptr
+                                                               , AlignInBits
                                                                );
         return wrap( globalVar );
     }
@@ -701,13 +701,14 @@ extern "C"
         return pSub->describes( unwrap<Function>( F ) );
     }
 
-    LLVMMetadataRef LLVMDIBuilderCreateNamespace( LLVMDIBuilderRef Dref, LLVMMetadataRef scope, char const* name, LLVMMetadataRef file, unsigned line )
+    LLVMMetadataRef LLVMDIBuilderCreateNamespace( LLVMDIBuilderRef Dref, LLVMMetadataRef scope, char const* name, LLVMBool exportSymbols)
     {
         DIBuilder* D = unwrap( Dref );
         DINamespace* pNamespace = D->createNameSpace( scope ? unwrap<DIScope>( scope ) : nullptr
                                                       , name
-                                                      , file ? unwrap<DIFile>( file ) : nullptr
-                                                      , line
+                                                      , nullptr
+                                                      , 0
+                                                      , exportSymbols
                                                       );
         return wrap( pNamespace );
     }

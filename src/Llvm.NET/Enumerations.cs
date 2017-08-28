@@ -1,24 +1,27 @@
-﻿// This file maps the lower level internal LLVM enumeration names to something
+﻿// This file maps the lower level LLVM.NET.Native.LLVM enumeration names to something
 // more compatible with the styles, patterns and conventions familiar to .NET Developers.
-// This also keeping the lower level interop namespace internal to prevent mis-use or
-// violations of uniqueness rules. Furthermore, this helps insulate the managed code
-// realm insulated from the sometimes fluid nature of the underlying LLVM changes.
 
+using System.Diagnostics.CodeAnalysis;
 using Llvm.NET.Native;
 
 namespace Llvm.NET
 {
     /// <summary>Enumeration to indicate the behavior of module level flags metadata sharing the same name in a <see cref="NativeModule"/></summary>
-    [System.Diagnostics.CodeAnalysis.SuppressMessage( "Microsoft.Design", "CA1028:EnumStorageShouldBeInt32" )]
-    [System.Diagnostics.CodeAnalysis.SuppressMessage( "Microsoft.Naming", "CA1726:UsePreferredTerms", MessageId = "Flag" )]
-    public enum ModuleFlagBehavior : uint
+    [SuppressMessage( "Microsoft.Naming"
+                    , "CA1726:UsePreferredTerms"
+                    , MessageId = "Flag"
+                    , Justification = "Enum for the behavior of the LLVM ModuleFlag (Flag in middle doesn't imply the enum is Bit Flags)" )]
+    public enum ModuleFlagBehavior
     {
         /// <summary>Invalid value (default value for this enumeration)</summary>
         Invalid = 0,
+
         /// <summary>Emits an error if two values disagree, otherwise the resulting value is that of the operands</summary>
         Error = LLVMModFlagBehavior.Error,
+
         /// <summary>Emits a warning if two values disagree. The result will be the operand for the flag from the first module being linked</summary>
         Warning = LLVMModFlagBehavior.Warning,
+
         /// <summary>Adds a requirement that another module flag be present and have a specified value after linking is performed</summary>
         /// <remarks>
         /// The value must be a metadata pair, where the first element of the pair is the ID of the module flag to be restricted, and the
@@ -26,22 +29,27 @@ namespace Llvm.NET
         /// allowable results (via triggering of an error) of linking IDs with the <see cref="Override"/> behavior
         /// </remarks>
         Require = LLVMModFlagBehavior.Require,
+
         /// <summary>Uses the specified value, regardless of the behavior or value of the other module</summary>
         /// <remarks>If both modules specify Override, but the values differ, and error will be emitted</remarks>
         Override = LLVMModFlagBehavior.Override,
+
         /// <summary>Appends the two values, which are required to be metadata nodes</summary>
         Append = LLVMModFlagBehavior.Append,
+
         /// <summary>Appends the two values, which are required to be metadata nodes dropping duplicate entries in the second list</summary>
-        AppendUnique = LLVMModFlagBehavior.AppendUnique
-    };
+        AppendUnique = LLVMModFlagBehavior.AppendUnique,
+
+        /// <summary>Takes the max of the two values, which are required to be integers</summary>
+        Max = 7 /*LLVMModFlagBehavior.Max*/
+    }
 
     /// <summary>LLVM Instruction opcodes</summary>
     /// <remarks>
     /// These are based on the "C" API and therefore more stable as changes in the underlying instruction ids are remapped in the C API layer
     /// </remarks>
-    [System.Diagnostics.CodeAnalysis.SuppressMessage( "Microsoft.Design", "CA1028:EnumStorageShouldBeInt32" )]
-    [System.Diagnostics.CodeAnalysis.SuppressMessage( "Microsoft.Design", "CA1027:MarkEnumsWithFlags", Justification = "Not actually flags" )]
-    public enum OpCode : uint
+    [SuppressMessage( "Microsoft.Design", "CA1027:MarkEnumsWithFlags", Justification = "Not actually flags" )]
+    public enum OpCode
     {
         Invalid = 0,
         /* Terminator Instructions */
@@ -121,95 +129,130 @@ namespace Llvm.NET
         CleanupRet = LLVMOpcode.LLVMCleanupRet,
         CatchRet = LLVMOpcode.LLVMCatchRet,
         CatchPad = LLVMOpcode.LLVMCatchPad,
-        CleanupPad = LLVMOpcode.LLVMCleandupPad,
+        CleanupPad = LLVMOpcode.LLVMCleanupPad,
         CatchSwitch = LLVMOpcode.LLVMCatchSwitch
     }
 
     /// <summary>Basic kind of a type</summary>
-    [System.Diagnostics.CodeAnalysis.SuppressMessage( "Microsoft.Design", "CA1028:EnumStorageShouldBeInt32" )]
-    public enum TypeKind : uint
+    public enum TypeKind
     {
         /// <summary>Type with no size</summary>
         Void = LLVMTypeKind.LLVMVoidTypeKind,
+
         /// <summary>16 bit floating point type</summary>
         Float16 = LLVMTypeKind.LLVMHalfTypeKind,
+
         /// <summary>32 bit floating point type</summary>
         Float32 = LLVMTypeKind.LLVMFloatTypeKind,
+
         /// <summary>64 bit floating point type</summary>
         Float64 = LLVMTypeKind.LLVMDoubleTypeKind,
+
         /// <summary>80 bit floating point type (X87)</summary>
         X86Float80 = LLVMTypeKind.LLVMX86_FP80TypeKind,
+
         /// <summary>128 bit floating point type (112-bit mantissa)</summary>
         Float128m112 = LLVMTypeKind.LLVMFP128TypeKind,
+
         /// <summary>128 bit floating point type (two 64-bits)</summary>
         Float128 = LLVMTypeKind.LLVMPPC_FP128TypeKind,
+
         /// <summary><see cref="Llvm.NET.Values.BasicBlock"/> instruction label</summary>
         Label = LLVMTypeKind.LLVMLabelTypeKind,
+
         /// <summary>Arbitrary bit width integers</summary>
         Integer = LLVMTypeKind.LLVMIntegerTypeKind,
+
         /// <summary><see cref="Llvm.NET.Types.IFunctionType"/></summary>
         Function = LLVMTypeKind.LLVMFunctionTypeKind,
+
         /// <summary><see cref="Llvm.NET.Types.IStructType"/></summary>
         Struct = LLVMTypeKind.LLVMStructTypeKind,
+
         /// <summary><see cref="Llvm.NET.Types.IArrayType"/></summary>
         Array = LLVMTypeKind.LLVMArrayTypeKind,
+
         /// <summary><see cref="Llvm.NET.Types.IPointerType"/></summary>
         Pointer = LLVMTypeKind.LLVMPointerTypeKind,
+
         /// <summary>SIMD 'packed' format, or other <see cref="Llvm.NET.Types.IVectorType"/> implementation</summary>
         Vector = LLVMTypeKind.LLVMVectorTypeKind,
+
         /// <summary><see cref="Llvm.NET.LlvmMetadata"/></summary>
         Metadata = LLVMTypeKind.LLVMMetadataTypeKind,
+
         /// <summary>x86 MMX data type</summary>
         X86MMX = LLVMTypeKind.LLVMX86_MMXTypeKind,
+
         /// <summary>Exception handler token</summary>
         Token = LLVMTypeKind.LLVMTokenTypeKind
     }
 
+    /* valuse for this enum come directly from LLVM's CallingConv.h
+    // rather then the mapped C API version as the C version is not
+    // a complete set.
+    */
+
     /// <summary>Calling Convention for functions</summary>
-    [System.Diagnostics.CodeAnalysis.SuppressMessage( "Microsoft.Design", "CA1028:EnumStorageShouldBeInt32" )]
-    public enum CallingConvention : uint
+    public enum LlvmCallingConvention
     {
-        C = LLVMCallConv.LLVMCCallConv,
-        FastCall = LLVMCallConv.LLVMFastCallConv,
-        ColdCall = LLVMCallConv.LLVMColdCallConv,
-        GlasgowHaskellCompiler = LLVMCallConv.LLVMGHCCallConv,
-        HiPE = LLVMCallConv.LLVMHiPECallConv,
-        WebKitJS = LLVMCallConv.LLVMWebKitJSCallConv,
-        AnyReg = LLVMCallConv.LLVMAnyRegCallConv,
-        PreserveMost = LLVMCallConv.LLVMPreserveMostCallConv,
-        PreserveSwift = LLVMCallConv.LLVMPreserveSwiftCallConv,
-        CxxFastTls = LLVMCallConv.LLVMCxxFasTlsCallConv,
-        FirstTargetSPecific = LLVMCallConv.LLVMFirstTargetCallConv,
-        X86StdCall = LLVMCallConv.LLVMX86StdcallCallConv,
-        X86FastCall = LLVMCallConv.LLVMX86FastcallCallConv,
-        ArmAPCS = LLVMCallConv.LLVMArmAPCSCallConv,
-        ArmAAPCS = LLVMCallConv.LLVMArmAAPCSCallConv,
-        ArmAAPCSVfp = LLVMCallConv.LLVMArmAAPCSVfpCallConv,
-        MPS430Interrupt = LLVMCallConv.LLVMMSP430IntrCallConv,
-        X86ThisCall = LLVMCallConv.LLVMx86ThisCallConv,
-        PtxKernel = LLVMCallConv.LLVMPTXKernelCallConv,
-        PtxDevice = LLVMCallConv.LLVMPTXDeviceCallConv,
-        SpirFunction = LLVMCallConv.LLVMSpirFuncCallConv,
-        SpirKernel = LLVMCallConv.LLVMSpirKernelCallConv,
-        IntelOpenCLBuiltIn = LLVMCallConv.LLVMIntelOCLBICallConv,
-        X86x64SysV = LLVMCallConv.LLVMx86_64SysVCallConv,
-        X86x64Win64 = LLVMCallConv.LLVMx86_64Win64CallConv,
-        X86VectorCall = LLVMCallConv.LLVMx86_VectorCallCallConv,
-        HHVM = LLVMCallConv.LLVM_HHVMCallConv,
-        HHVMCCall = LLVMCallConv.LLVM_HHVM_C_CallConv,
-        X86Interrupt = LLVMCallConv.LLVMx86IntrCallConv,
-        MaxCallingConvention = LLVMCallConv.LLVM_MaxIDCallConv
+        C = 0,
+
+        // [gap]
+        FastCall = 8,
+        ColdCall = 9,
+        GlasgowHaskellCompiler = 10,
+        HiPE = 11,
+        WebKitJS = 12,
+        AnyReg = 13,
+        PreserveMost = 14,
+        PreserveAll = 15,
+        Swift = 16,
+        CxxFastTls = 17,
+
+        // [Gap]
+        FirstTargetSPecific = 64, // [marker]
+        X86StdCall = 64,
+        X86FastCall = 65,
+        ArmAPCS = 66, // Generally considered obsolete but some older targets use this
+        ArmAAPCS = 67,
+        ArmAAPCSVfp = 68,
+        MSP430Interrupt = 69,
+        X86ThisCall = 70,
+        PtxKernel = 71,
+        PtxDevice = 72,
+        SpirFunction = 75,
+        SpirKernel = 76,
+        IntelOpenCLBuiltIn = 77,
+        X86x64SysV = 78,
+        X86x64Win64 = 79,
+        X86VectorCall = 80,
+        HHVM = 81,
+        HHVMCCall = 82,
+        X86Interrupt = 83,
+        AVRInterrupt = 84,
+        AVRSignal = 85,
+        AVRBuiltIn = 86,
+        AMDGpuVetexShader = 87,
+        AMDGpuGeometryShader = 88,
+        AMDGpuPixelShader = 89,
+        AMDGpuComputeShader = 90,
+        AMDGpuKernel = 91,
+        X86RegCall = 92,
+        AMDGpuHullShader = 93,
+        MSP430BuiltIn = 94,
+        MaxCallingConvention = 1023
     }
 
     /// <summary>Linkage specification for functions and globals</summary>
-    [System.Diagnostics.CodeAnalysis.SuppressMessage( "Microsoft.Design", "CA1028:EnumStorageShouldBeInt32" )]
-    public enum Linkage : uint
+    public enum Linkage
     {
         External = LLVMLinkage.LLVMExternalLinkage,    /*< Externally visible function */
         AvailableExternally = LLVMLinkage.LLVMAvailableExternallyLinkage,
         LinkOnceAny = LLVMLinkage.LLVMLinkOnceAnyLinkage, /*< Keep one copy of function when linking (inline)*/
         LinkOnceODR = LLVMLinkage.LLVMLinkOnceODRLinkage, /*< Same, but only replaced by something equivalent. */
-        //LLVMLinkage.LLVMLinkOnceODRAutoHideLinkage, /**< Obsolete */
+
+        // LLVMLinkage.LLVMLinkOnceODRAutoHideLinkage, /**< Obsolete */
         Weak = LLVMLinkage.LLVMWeakAnyLinkage,     /*< Keep one copy of function when linking (weak) */
         WeakODR = LLVMLinkage.LLVMWeakODRLinkage,     /*< Same, but only replaced by something equivalent. */
         Append = LLVMLinkage.LLVMAppendingLinkage,   /*< Special purpose, only applies to global arrays */
@@ -218,15 +261,15 @@ namespace Llvm.NET
         DllImport = LLVMLinkage.LLVMDLLImportLinkage,   /*< Function to be imported from DLL */
         DllExport = LLVMLinkage.LLVMDLLExportLinkage,   /*< Function to be accessible from DLL */
         ExternalWeak = LLVMLinkage.LLVMExternalWeakLinkage,/*< ExternalWeak linkage description */
-        //LLVMLinkage.LLVMGhostLinkage,       /*< Obsolete */
+
+        // LLVMLinkage.LLVMGhostLinkage,       /*< Obsolete */
         Common = LLVMLinkage.LLVMCommonLinkage,      /*< Tentative definitions */
         LinkerPrivate = LLVMLinkage.LLVMLinkerPrivateLinkage, /*< Like Private, but linker removes. */
         LinkerPrivateWeak = LLVMLinkage.LLVMLinkerPrivateWeakLinkage /*< Like LinkerPrivate, but is weak. */
     }
 
-    ///<summary>Enumeration for the visibility of a global value</summary>
-    [System.Diagnostics.CodeAnalysis.SuppressMessage( "Microsoft.Design", "CA1028:EnumStorageShouldBeInt32" )]
-    public enum Visibility : uint
+    /// <summary>Enumeration for the visibility of a global value</summary>
+    public enum Visibility
     {
         Default = LLVMVisibility.LLVMDefaultVisibility,  /*< The GV is visible */
         Hidden = LLVMVisibility.LLVMHiddenVisibility,   /*< The GV is hidden */
@@ -238,9 +281,8 @@ namespace Llvm.NET
     /// Underneath the C API this is what LLVM uses. For some reason the C API
     /// split it into the integer and float predicate enumerations.
     /// </remarks>
-    [System.Diagnostics.CodeAnalysis.SuppressMessage( "Microsoft.Design", "CA1028:EnumStorageShouldBeInt32" )]
-    [System.Diagnostics.CodeAnalysis.SuppressMessage( "Microsoft.Design", "CA1027:MarkEnumsWithFlags" )]
-    public enum Predicate : uint
+    [SuppressMessage( "Microsoft.Design", "CA1027:MarkEnumsWithFlags", Justification = "Not flags and shouldn't be marked as such" )]
+    public enum Predicate
     {
         False = LLVMRealPredicate.LLVMRealPredicateFalse,
         OrderedAndEqual = LLVMRealPredicate.LLVMRealOEQ,
@@ -260,6 +302,7 @@ namespace Llvm.NET
         True = LLVMRealPredicate.LLVMRealPredicateTrue,
         FirstFcmpPredicate = False,
         LastFcmpPredicate = True,
+
         /// <summary>Any value Greater than or equal to this is not valid for Fcmp operations</summary>
         BadFcmpPredicate = LastFcmpPredicate + 1,
 
@@ -275,13 +318,13 @@ namespace Llvm.NET
         SignedLessOrEqual = LLVMIntPredicate.LLVMIntSLE,
         FirstIcmpPredicate = Equal,
         LastIcmpPredicate = SignedLessOrEqual,
+
         /// <summary>Any value Greater than or equal to this is not valid for Icmp operations</summary>
         BadIcmpPredicate = LastIcmpPredicate + 1
     }
 
-    ///<summary>Predicate enumeration for integer comparison</summary>
-    [System.Diagnostics.CodeAnalysis.SuppressMessage( "Microsoft.Design", "CA1028:EnumStorageShouldBeInt32" )]
-    public enum IntPredicate : uint
+    /// <summary>Predicate enumeration for integer comparison</summary>
+    public enum IntPredicate
     {
         False = LLVMRealPredicate.LLVMRealPredicateFalse,
         Equal = LLVMIntPredicate.LLVMIntEQ,
@@ -296,9 +339,8 @@ namespace Llvm.NET
         SignedLessOrEqual = LLVMIntPredicate.LLVMIntSLE
     }
 
-    ///<summary>Predicate enumeration for integer comparison</summary>
-    [System.Diagnostics.CodeAnalysis.SuppressMessage( "Microsoft.Design", "CA1028:EnumStorageShouldBeInt32" )]
-    public enum RealPredicate : uint
+    /// <summary>Predicate enumeration for integer comparison</summary>
+    public enum RealPredicate
     {
         False = LLVMRealPredicate.LLVMRealPredicateFalse,
         OrderedAndEqual = LLVMRealPredicate.LLVMRealOEQ,
@@ -319,8 +361,7 @@ namespace Llvm.NET
     }
 
     /// <summary>Optimization level for target code generation</summary>
-    [System.Diagnostics.CodeAnalysis.SuppressMessage( "Microsoft.Design", "CA1028:EnumStorageShouldBeInt32" )]
-    public enum CodeGenOpt : uint
+    public enum CodeGenOpt
     {
         None = LLVMCodeGenOptLevel.LLVMCodeGenLevelNone,
         Less = LLVMCodeGenOptLevel.LLVMCodeGenLevelLess,
@@ -329,8 +370,7 @@ namespace Llvm.NET
     }
 
     /// <summary>Relocation type for target code generation</summary>
-    [System.Diagnostics.CodeAnalysis.SuppressMessage( "Microsoft.Design", "CA1028:EnumStorageShouldBeInt32" )]
-    public enum Reloc : uint
+    public enum Reloc
     {
         Default = LLVMRelocMode.LLVMRelocDefault,
         Static = LLVMRelocMode.LLVMRelocStatic,
@@ -339,8 +379,7 @@ namespace Llvm.NET
     }
 
     /// <summary>Code model to use for target code generation</summary>
-    [System.Diagnostics.CodeAnalysis.SuppressMessage( "Microsoft.Design", "CA1028:EnumStorageShouldBeInt32" )]
-    public enum CodeModel : uint
+    public enum CodeModel
     {
         Default = LLVMCodeModel.LLVMCodeModelDefault,
         JitDefault = LLVMCodeModel.LLVMCodeModelJITDefault,
@@ -351,361 +390,213 @@ namespace Llvm.NET
     }
 
     /// <summary>Output file type for target code generation</summary>
-    [System.Diagnostics.CodeAnalysis.SuppressMessage( "Microsoft.Design", "CA1028:EnumStorageShouldBeInt32" )]
-    public enum CodeGenFileType : uint
+    public enum CodeGenFileType
     {
         AssemblySource = LLVMCodeGenFileType.LLVMAssemblyFile,
         ObjectFile = LLVMCodeGenFileType.LLVMObjectFile
     }
 
     /// <summary>Byte ordering for target code generation and data type layout</summary>
-    [System.Diagnostics.CodeAnalysis.SuppressMessage( "Microsoft.Design", "CA1028:EnumStorageShouldBeInt32" )]
-    public enum ByteOrdering : uint
+    public enum ByteOrdering
     {
         LittleEndian = LLVMByteOrdering.LLVMLittleEndian,
         BigEndian = LLVMByteOrdering.LLVMBigEndian
     }
 
-    /// <summary>Enumeration for well known attribute kinds</summary>
-    /// <remarks>
-    /// The numeric value of the members of this enumeration are subject
-    /// to change from version to version. Therefore code must never
-    /// rely on the actual underlying value and use only the symbolic name
-    /// </remarks>
-    /// <Implementation>
-    /// For details on what the values should be see attributes.def in 
-    /// the LLVM source. This was added in v3.8.0 along with a change in
-    /// the numerical values. (in V3.9.0 it is Attributes.inc)
-    /// </Implementation>
-    public enum AttributeKind
-    {  
-        None                        = LLVMAttrKind.None,
-        Alignment                   = LLVMAttrKind.Alignment,
-        AlwaysInline                = LLVMAttrKind.AlwaysInline,
-        ArgMemOnly                  = LLVMAttrKind.ArgMemOnly,
-        Builtin                     = LLVMAttrKind.Builtin,
-        ByVal                       = LLVMAttrKind.ByVal,
-        Cold                        = LLVMAttrKind.Cold,
-        Convergent                  = LLVMAttrKind.Convergent,
-        Dereferenceable             = LLVMAttrKind.Dereferenceable,
-        DereferenceableOrNull       = LLVMAttrKind.DereferenceableOrNull,
-        InAlloca                    = LLVMAttrKind.InAlloca,
-        InReg                       = LLVMAttrKind.InReg,
-        InaccessibleMemOnly         = LLVMAttrKind.InaccessibleMemOnly,
-        InaccessibleMemOrArgMemOnly = LLVMAttrKind.InaccessibleMemOrArgMemOnly,
-        InlineHint                  = LLVMAttrKind.InlineHint,
-        JumpTable                   = LLVMAttrKind.JumpTable,
-        MinSize                     = LLVMAttrKind.MinSize,
-        Naked                       = LLVMAttrKind.Naked,
-        Nest                        = LLVMAttrKind.Nest,
-        NoAlias                     = LLVMAttrKind.NoAlias,
-        NoBuiltin                   = LLVMAttrKind.NoBuiltin,
-        NoCapture                   = LLVMAttrKind.NoCapture,
-        NoDuplicate                 = LLVMAttrKind.NoDuplicate,
-        NoImplicitFloat             = LLVMAttrKind.NoImplicitFloat,
-        NoInline                    = LLVMAttrKind.NoInline,
-        NoRecurse                   = LLVMAttrKind.NoRecurse,
-        NoRedZone                   = LLVMAttrKind.NoRedZone,
-        NoReturn                    = LLVMAttrKind.NoReturn,
-        NoUnwind                    = LLVMAttrKind.NoUnwind,
-        NonLazyBind                 = LLVMAttrKind.NonLazyBind,
-        NonNull                     = LLVMAttrKind.NonNull,
-        OptimizeForSize             = LLVMAttrKind.OptimizeForSize,
-        OptimizeNone                = LLVMAttrKind.OptimizeNone,
-        ReadNone                    = LLVMAttrKind.ReadNone,
-        ReadOnly                    = LLVMAttrKind.ReadOnly,
-        Returned                    = LLVMAttrKind.Returned,
-        ReturnsTwice                = LLVMAttrKind.ReturnsTwice,
-        SExt                        = LLVMAttrKind.SExt,
-        SafeStack                   = LLVMAttrKind.SafeStack,
-        SanitizeAddress             = LLVMAttrKind.SanitizeAddress,
-        SanitizeMemory              = LLVMAttrKind.SanitizeMemory,
-        SanitizeThread              = LLVMAttrKind.SanitizeThread,
-        StackAlignment              = LLVMAttrKind.StackAlignment,
-        StackProtect                = LLVMAttrKind.StackProtect,
-        StackProtectReq             = LLVMAttrKind.StackProtectReq,
-        StackProtectStrong          = LLVMAttrKind.StackProtectStrong,
-        StructRet                   = LLVMAttrKind.StructRet,
-        SwiftError                  = LLVMAttrKind.SwiftError,
-        SwiftSelf                   = LLVMAttrKind.SwiftSelf,
-        UWTable                     = LLVMAttrKind.UWTable,
-        ZExt                        = LLVMAttrKind.ZExt,
-        EndAttrKinds           // Sentinel value useful for loops
-    };
-
     /// <summary>Function index for attributes</summary>
     /// <remarks>
     /// Attributes on functions apply to the function itself, the return type
-    /// or one of the function's parameters. This enumeration is used to 
+    /// or one of the function's parameters. This enumeration is used to
     /// identify where the attribute applies.
     /// </remarks>
     public enum FunctionAttributeIndex
     {
         /// <summary>The attribute applies to the function itself</summary>
         Function = -1,
+
         /// <summary>The attribute applies to the return type of the function</summary>
         ReturnType = 0,
+
         /// <summary>The attribute applies to the first parameter of the function</summary>
         /// <remarks>
         /// Additional parameters can identified by simply adding an integer value to
         /// this value. (i.e. FunctionAttributeIndex.Parameter0 + 1 )
         /// </remarks>
-        Parameter0 = 1 
+        Parameter0 = 1
     }
 
+    [SuppressMessage( "Microsoft.Design", "CA1027:MarkEnumsWithFlags", Justification = "Not actually flags" )]
     public enum TripleArchType
     {
-        UnknownArch = LLVMTripleArchType.LlvmTripleArchType_UnknownArch,
-
-        // ARM (little endian): arm, armv.*, xscale
-        arm = LLVMTripleArchType.LlvmTripleArchType_arm,
-        
-        // ARM (big endian): armeb
-        armeb = LLVMTripleArchType.LlvmTripleArchType_armeb,
-        
-        // AArch64 (little endian): aarch64
-        aarch64 = LLVMTripleArchType.LlvmTripleArchType_aarch64,
-        
-        // AArch64 (big endian): aarch64_be
-        aarch64_be = LLVMTripleArchType.LlvmTripleArchType_aarch64_be,
-        
-        // AVR: Atmel AVR microcontroller
-        avr = LLVMTripleArchType.LlvmTripleArchType_avr,
-
-        // eBPF or extended BPF or 64-bit BPF (little endian)
-        bpfel = LLVMTripleArchType.LlvmTripleArchType_bpfel,
-
-        // eBPF or extended BPF or 64-bit BPF (big endian)
-        bpfeb = LLVMTripleArchType.LlvmTripleArchType_bpfeb,
-        
-        // Hexagon: hexagon
-        hexagon = LLVMTripleArchType.LlvmTripleArchType_hexagon,
-        
-        // MIPS: mips, mipsallegrex
-        mips = LLVMTripleArchType.LlvmTripleArchType_mips,
-        
-        // MIPSEL: mipsel, mipsallegrexel
-        mipsel = LLVMTripleArchType.LlvmTripleArchType_mipsel,
-        
-        // MIPS64: mips64
-        mips64 = LLVMTripleArchType.LlvmTripleArchType_mips64,
-
-        // MIPS64EL: mips64el
-        mips64el = LLVMTripleArchType.LlvmTripleArchType_mips64el,
-
-        // MSP430: msp430
-        msp430 = LLVMTripleArchType.LlvmTripleArchType_msp430,
-        
-        // PPC: powerpc
-        ppc = LLVMTripleArchType.LlvmTripleArchType_ppc,
-
-        // PPC64: powerpc64, ppu
-        ppc64 = LLVMTripleArchType.LlvmTripleArchType_ppc64,
-
-        // PPC64LE: powerpc64le
-        ppc64le = LLVMTripleArchType.LlvmTripleArchType_ppc64le,
-
-        // R600: AMD GPUs HD2XXX - HD6XXX
-        r600 = LLVMTripleArchType.LlvmTripleArchType_r600,
-
-        // AMDGCN: AMD GCN GPUs
-        amdgcn = LLVMTripleArchType.LlvmTripleArchType_amdgcn,
-
-        // Sparc: sparc
-        sparc = LLVMTripleArchType.LlvmTripleArchType_sparc,
-
-        // Sparcv9: Sparcv9
-        sparcv9 = LLVMTripleArchType.LlvmTripleArchType_sparcv9,
-
-        // Sparc: (endianness = little). NB: 'Sparcle' is a CPU variant
-        sparcel = LLVMTripleArchType.LlvmTripleArchType_sparcel,
-
-        // SystemZ: s390x
-        systemz = LLVMTripleArchType.LlvmTripleArchType_systemz,
-
-        // TCE (http://tce.cs.tut.fi/): tce
-        tce = LLVMTripleArchType.LlvmTripleArchType_tce,
-
-        // Thumb (little endian): thumb, thumbv.*
-        thumb = LLVMTripleArchType.LlvmTripleArchType_thumb,
-
-        // Thumb (big endian): thumbeb
-        thumbeb = LLVMTripleArchType.LlvmTripleArchType_thumbeb,
-
-        // X86: i[3-9]86
-        x86 = LLVMTripleArchType.LlvmTripleArchType_x86,
-
-        // X86-64: amd64, x86_64
-        x86_64 = LLVMTripleArchType.LlvmTripleArchType_x86_64,
-
-        // XCore: xcore
-        xcore = LLVMTripleArchType.LlvmTripleArchType_xcore,
-
-        // NVPTX: 32-bit
-        nvptx = LLVMTripleArchType.LlvmTripleArchType_nvptx,
-
-        // NVPTX: 64-bit
-        nvptx64 = LLVMTripleArchType.LlvmTripleArchType_nvptx64,
-
-        // le32: generic little-endian 32-bit CPU (PNaCl)
-        le32 = LLVMTripleArchType.LlvmTripleArchType_le32,
-
-        // le64: generic little-endian 64-bit CPU (PNaCl)
-        le64 = LLVMTripleArchType.LlvmTripleArchType_le64,
-
-        // AMDIL
-        amdil = LLVMTripleArchType.LlvmTripleArchType_amdil,
-
-        // AMDIL with 64-bit pointers
-        amdil64 = LLVMTripleArchType.LlvmTripleArchType_amdil64,
-
-        // AMD HSAIL
-        hsail = LLVMTripleArchType.LlvmTripleArchType_hsail,
-
-        // AMD HSAIL with 64-bit pointers
-        hsail64 = LLVMTripleArchType.LlvmTripleArchType_hsail64,
-
-        // SPIR: standard portable IR for OpenCL 32-bit version
-        spir = LLVMTripleArchType.LlvmTripleArchType_spir,
-
-        // SPIR: standard portable IR for OpenCL 64-bit version
-        spir64 = LLVMTripleArchType.LlvmTripleArchType_spir64,
-
-        // Kalimba: generic kalimba
-        kalimba = LLVMTripleArchType.LlvmTripleArchType_kalimba,
-
-        // SHAVE: Movidius vector VLIW processors
-        shave = LLVMTripleArchType.LlvmTripleArchType_shave,
-
-        // Lanai: Lanai 32-bit
-        lanai = LLVMTripleArchType.LlvmTripleArchType_lanai,
-
-        // WebAssembly with 32-bit pointers
-        wasm32 = LLVMTripleArchType.LlvmTripleArchType_wasm32,
-
-        // WebAssembly with 64-bit pointers
-        wasm64 = LLVMTripleArchType.LlvmTripleArchType_wasm64,
-
-        // 32-bit RenderScript
-        renderscript32 = LLVMTripleArchType.LlvmTripleArchType_renderscript32,
-
-        // 64-bit RenderScript
-        renderscript64 = LLVMTripleArchType.LlvmTripleArchType_renderscript64,
-    };
+       UnknownArch     = LLVMTripleArchType.UnknownArch,
+       Arm             = LLVMTripleArchType.arm,            // ARM (little endian): arm, armv.*, xscale
+       Armeb           = LLVMTripleArchType.armeb,          // ARM (big endian): armeb
+       Aarch64         = LLVMTripleArchType.aarch64,        // AArch64 (little endian): aarch64
+       Aarch64_be      = LLVMTripleArchType.aarch64_be,     // AArch64 (big endian): aarch64_be
+       Avr             = LLVMTripleArchType.avr,            // AVR: Atmel AVR microcontroller
+       BPFel           = LLVMTripleArchType.bpfel,          // eBPF or extended BPF or 64-bit BPF (little endian)
+       BPFeb           = LLVMTripleArchType.bpfeb,          // eBPF or extended BPF or 64-bit BPF (big endian)
+       Hexagon         = LLVMTripleArchType.hexagon,        // Hexagon: hexagon
+       MIPS            = LLVMTripleArchType.mips,           // MIPS: mips, mipsallegrex
+       MIPSel          = LLVMTripleArchType.mipsel,         // MIPSEL: mipsel, mipsallegrexel
+       MIPS64          = LLVMTripleArchType.mips64,         // MIPS64: mips64
+       MIPS64el        = LLVMTripleArchType.mips64el,       // MIPS64EL: mips64el
+       MSP430          = LLVMTripleArchType.msp430,         // MSP430: msp430
+       PPC             = LLVMTripleArchType.ppc,            // PPC: powerpc
+       PPC64           = LLVMTripleArchType.ppc64,          // PPC64: powerpc64, ppu
+       PPC64le         = LLVMTripleArchType.ppc64le,        // PPC64LE: powerpc64le
+       R600            = LLVMTripleArchType.r600,           // R600: AMD GPUs HD2XXX - HD6XXX
+       AMDGCN          = LLVMTripleArchType.amdgcn,         // AMDGCN: AMD GCN GPUs
+       RiscV32         = LLVMTripleArchType.riscV32,        // RISC-V (32-bit): riscv32
+       RiscV64         = LLVMTripleArchType.riscV64,        // RISC-V (64-bit): riscv64
+       Sparc           = LLVMTripleArchType.sparc,          // Sparc: sparc
+       Sparcv9         = LLVMTripleArchType.sparcv9,        // Sparcv9: Sparcv9
+       Sparcel         = LLVMTripleArchType.sparcel,        // Sparc: (endianness = little). NB: 'Sparcle' is a CPU variant
+       SystemZ         = LLVMTripleArchType.systemz,        // SystemZ: s390x
+       TCE             = LLVMTripleArchType.tce,            // TCE (http://tce.cs.tut.fi/): tce
+       TCEle           = LLVMTripleArchType.tcele,          // TCE little endian (http://tce.cs.tut.fi/): tcele
+       Thumb           = LLVMTripleArchType.thumb,          // Thumb (little endian): thumb, thumbv.*
+       Thumbeb         = LLVMTripleArchType.thumbeb,        // Thumb (big endian): thumbeb
+       X86             = LLVMTripleArchType.x86,            // X86: i[3-9]86
+       X86_64          = LLVMTripleArchType.x86_64,         // X86-64: amd64, x86_64
+       Xcore           = LLVMTripleArchType.xcore,          // XCore: xcore
+       Nvptx           = LLVMTripleArchType.nvptx,          // NVPTX: 32-bit
+       Nvptx64         = LLVMTripleArchType.nvptx64,        // NVPTX: 64-bit
+       Le32            = LLVMTripleArchType.le32,           // le32: generic little-endian 32-bit CPU (PNaCl)
+       Le64            = LLVMTripleArchType.le64,           // le64: generic little-endian 64-bit CPU (PNaCl)
+       Amdil           = LLVMTripleArchType.amdil,          // AMDIL
+       Amdil64         = LLVMTripleArchType.amdil64,        // AMDIL with 64-bit pointers
+       Hsail           = LLVMTripleArchType.hsail,          // AMD HSAIL
+       Hsail64         = LLVMTripleArchType.hsail64,        // AMD HSAIL with 64-bit pointers
+       Spir            = LLVMTripleArchType.spir,           // SPIR: standard portable IR for OpenCL 32-bit version
+       Spir64          = LLVMTripleArchType.spir64,         // SPIR: standard portable IR for OpenCL 64-bit version
+       Kalimba         = LLVMTripleArchType.kalimba,        // Kalimba: generic kalimba
+       Shave           = LLVMTripleArchType.shave,          // SHAVE: Movidius vector VLIW processors
+       Lanai           = LLVMTripleArchType.lanai,          // Lanai: Lanai 32-bit
+       Wasm32          = LLVMTripleArchType.wasm32,         // WebAssembly with 32-bit pointers
+       Wasm64          = LLVMTripleArchType.wasm64,         // WebAssembly with 64-bit pointers
+       Renderscript32  = LLVMTripleArchType.renderscript32, // 32-bit RenderScript
+       Renderscript64  = LLVMTripleArchType.renderscript64, // 64-bit RenderScript
+       LastArchType    = Renderscript64
+    }
 
     public enum TripleSubArchType
     {
-        NoSubArch                = LLVMTripleSubArchType.LlvmTripleSubArchType_NoSubArch,
-        ARMSubArch_v8_2a         = LLVMTripleSubArchType.LlvmTripleSubArchType_ARMSubArch_v8_2a,
-        ARMSubArch_v8_1a         = LLVMTripleSubArchType.LlvmTripleSubArchType_ARMSubArch_v8_1a,
-        ARMSubArch_v8            = LLVMTripleSubArchType.LlvmTripleSubArchType_ARMSubArch_v8,
-        ARMSubArch_v8m_baseline  = LLVMTripleSubArchType.LlvmTripleSubArchType_ARMSubArch_v8m_baseline,
-        ARMSubArch_v8m_mainline  = LLVMTripleSubArchType.LlvmTripleSubArchType_ARMSubArch_v8m_mainline,
-        ARMSubArch_v7            = LLVMTripleSubArchType.LlvmTripleSubArchType_ARMSubArch_v7,
-        ARMSubArch_v7em          = LLVMTripleSubArchType.LlvmTripleSubArchType_ARMSubArch_v7em,
-        ARMSubArch_v7m           = LLVMTripleSubArchType.LlvmTripleSubArchType_ARMSubArch_v7m,
-        ARMSubArch_v7s           = LLVMTripleSubArchType.LlvmTripleSubArchType_ARMSubArch_v7s,
-        ARMSubArch_v7k           = LLVMTripleSubArchType.LlvmTripleSubArchType_ARMSubArch_v7k,
-        ARMSubArch_v6            = LLVMTripleSubArchType.LlvmTripleSubArchType_ARMSubArch_v6,
-        ARMSubArch_v6m           = LLVMTripleSubArchType.LlvmTripleSubArchType_ARMSubArch_v6m,
-        ARMSubArch_v6k           = LLVMTripleSubArchType.LlvmTripleSubArchType_ARMSubArch_v6k,
-        ARMSubArch_v6t2          = LLVMTripleSubArchType.LlvmTripleSubArchType_ARMSubArch_v6t2,
-        ARMSubArch_v5            = LLVMTripleSubArchType.LlvmTripleSubArchType_ARMSubArch_v5,
-        ARMSubArch_v5te          = LLVMTripleSubArchType.LlvmTripleSubArchType_ARMSubArch_v5te,
-        ARMSubArch_v4t           = LLVMTripleSubArchType.LlvmTripleSubArchType_ARMSubArch_v4t,
-        KalimbaSubArch_v3        = LLVMTripleSubArchType.LlvmTripleSubArchType_KalimbaSubArch_v3,
-        KalimbaSubArch_v4        = LLVMTripleSubArchType.LlvmTripleSubArchType_KalimbaSubArch_v4,
-        KalimbaSubArch_v5        = LLVMTripleSubArchType.LlvmTripleSubArchType_KalimbaSubArch_v5
-    };
+        NoSubArch                = LLVMTripleSubArchType.NoSubArch,
+        ARMSubArch_v8_2a         = LLVMTripleSubArchType.ARMSubArch_v8_2a,
+        ARMSubArch_v8_1a         = LLVMTripleSubArchType.ARMSubArch_v8_1a,
+        ARMSubArch_v8            = LLVMTripleSubArchType.ARMSubArch_v8,
+        ARMSubArch_v8r           = LLVMTripleSubArchType.ARMSubArch_v8r,
+        ARMSubArch_v8m_baseline  = LLVMTripleSubArchType.ARMSubArch_v8m_baseline,
+        ARMSubArch_v8m_mainline  = LLVMTripleSubArchType.ARMSubArch_v8m_mainline,
+        ARMSubArch_v7            = LLVMTripleSubArchType.ARMSubArch_v7,
+        ARMSubArch_v7em          = LLVMTripleSubArchType.ARMSubArch_v7em,
+        ARMSubArch_v7m           = LLVMTripleSubArchType.ARMSubArch_v7m,
+        ARMSubArch_v7s           = LLVMTripleSubArchType.ARMSubArch_v7s,
+        ARMSubArch_v7k           = LLVMTripleSubArchType.ARMSubArch_v7k,
+        ARMSubArch_v6            = LLVMTripleSubArchType.ARMSubArch_v6,
+        ARMSubArch_v6m           = LLVMTripleSubArchType.ARMSubArch_v6m,
+        ARMSubArch_v6k           = LLVMTripleSubArchType.ARMSubArch_v6k,
+        ARMSubArch_v6t2          = LLVMTripleSubArchType.ARMSubArch_v6t2,
+        ARMSubArch_v5            = LLVMTripleSubArchType.ARMSubArch_v5,
+        ARMSubArch_v5te          = LLVMTripleSubArchType.ARMSubArch_v5te,
+        ARMSubArch_v4t           = LLVMTripleSubArchType.ARMSubArch_v4t,
+        KalimbaSubArch_v3        = LLVMTripleSubArchType.KalimbaSubArch_v3,
+        KalimbaSubArch_v4        = LLVMTripleSubArchType.KalimbaSubArch_v4,
+        KalimbaSubArch_v5        = LLVMTripleSubArchType.KalimbaSubArch_v5
+    }
 
     public enum TripleVendorType
     {
-        UnknownVendor            = LLVMTripleVendorType.LlvmTripleVendorType_UnknownVendor,
-        Apple                    = LLVMTripleVendorType.LlvmTripleVendorType_Apple,
-        PC                       = LLVMTripleVendorType.LlvmTripleVendorType_PC,
-        SCEI                     = LLVMTripleVendorType.LlvmTripleVendorType_SCEI,
-        BGP                      = LLVMTripleVendorType.LlvmTripleVendorType_BGP,
-        BGQ                      = LLVMTripleVendorType.LlvmTripleVendorType_BGQ,
-        Freescale                = LLVMTripleVendorType.LlvmTripleVendorType_Freescale,
-        IBM                      = LLVMTripleVendorType.LlvmTripleVendorType_IBM,
-        ImaginationTechnologies  = LLVMTripleVendorType.LlvmTripleVendorType_ImaginationTechnologies,
-        MipsTechnologies         = LLVMTripleVendorType.LlvmTripleVendorType_MipsTechnologies,
-        NVIDIA                   = LLVMTripleVendorType.LlvmTripleVendorType_NVIDIA,
-        CSR                      = LLVMTripleVendorType.LlvmTripleVendorType_CSR,
-        Myriad                   = LLVMTripleVendorType.LlvmTripleVendorType_Myriad,
-        AMD                      = LLVMTripleVendorType.LlvmTripleVendorType_AMD,
-        Mesa                     = LLVMTripleVendorType.LlvmTripleVendorType_Mesa,
-    };
+        UnknownVendor            = LLVMTripleVendorType.UnknownVendor,
+        Apple                    = LLVMTripleVendorType.Apple,
+        PC                       = LLVMTripleVendorType.PC,
+        SCEI                     = LLVMTripleVendorType.SCEI,
+        BGP                      = LLVMTripleVendorType.BGP,
+        BGQ                      = LLVMTripleVendorType.BGQ,
+        Freescale                = LLVMTripleVendorType.Freescale,
+        IBM                      = LLVMTripleVendorType.IBM,
+        ImaginationTechnologies  = LLVMTripleVendorType.ImaginationTechnologies,
+        MipsTechnologies         = LLVMTripleVendorType.MipsTechnologies,
+        NVIDIA                   = LLVMTripleVendorType.NVIDIA,
+        CSR                      = LLVMTripleVendorType.CSR,
+        Myriad                   = LLVMTripleVendorType.Myriad,
+        AMD                      = LLVMTripleVendorType.AMD,
+        Mesa                     = LLVMTripleVendorType.Mesa,
+    }
 
     public enum TripleOSType
     {
-        UnknownOS  = LLVMTripleOSType.LlvmTripleOSType_UnknownOS,
-        CloudABI   = LLVMTripleOSType.LlvmTripleOSType_CloudABI,
-        Darwin     = LLVMTripleOSType.LlvmTripleOSType_Darwin,
-        DragonFly  = LLVMTripleOSType.LlvmTripleOSType_DragonFly,
-        FreeBSD    = LLVMTripleOSType.LlvmTripleOSType_FreeBSD,
-        IOS        = LLVMTripleOSType.LlvmTripleOSType_IOS,
-        KFreeBSD   = LLVMTripleOSType.LlvmTripleOSType_KFreeBSD,
-        Linux      = LLVMTripleOSType.LlvmTripleOSType_Linux,
-        Lv2        = LLVMTripleOSType.LlvmTripleOSType_Lv2,
-        MacOSX     = LLVMTripleOSType.LlvmTripleOSType_MacOSX,
-        NetBSD     = LLVMTripleOSType.LlvmTripleOSType_NetBSD,
-        OpenBSD    = LLVMTripleOSType.LlvmTripleOSType_OpenBSD,
-        Solaris    = LLVMTripleOSType.LlvmTripleOSType_Solaris,
-        Win32      = LLVMTripleOSType.LlvmTripleOSType_Win32,
-        Haiku      = LLVMTripleOSType.LlvmTripleOSType_Haiku,
-        Minix      = LLVMTripleOSType.LlvmTripleOSType_Minix,
-        RTEMS      = LLVMTripleOSType.LlvmTripleOSType_RTEMS,
-        NaCl       = LLVMTripleOSType.LlvmTripleOSType_NaCl,
-        CNK        = LLVMTripleOSType.LlvmTripleOSType_CNK,
-        Bitrig     = LLVMTripleOSType.LlvmTripleOSType_Bitrig,
-        AIX        = LLVMTripleOSType.LlvmTripleOSType_AIX,
-        CUDA       = LLVMTripleOSType.LlvmTripleOSType_CUDA,
-        NVCL       = LLVMTripleOSType.LlvmTripleOSType_NVCL,
-        AMDHSA     = LLVMTripleOSType.LlvmTripleOSType_AMDHSA,
-        PS4        = LLVMTripleOSType.LlvmTripleOSType_PS4,
-        ELFIAMCU   = LLVMTripleOSType.LlvmTripleOSType_ELFIAMCU,
-        TvOS       = LLVMTripleOSType.LlvmTripleOSType_TvOS,
-        WatchOS    = LLVMTripleOSType.LlvmTripleOSType_WatchOS,
-        Mesa3D     = LLVMTripleOSType.LlvmTripleOSType_Mesa3D,
-    };
+        UnknownOS  = LLVMTripleOSType.UnknownOS,
+        CloudABI   = LLVMTripleOSType.CloudABI,
+        Darwin     = LLVMTripleOSType.Darwin,
+        DragonFly  = LLVMTripleOSType.DragonFly,
+        FreeBSD    = LLVMTripleOSType.FreeBSD,
+        Fuchsia    = LLVMTripleOSType.Fuchsia,
+        IOS        = LLVMTripleOSType.IOS,
+        KFreeBSD   = LLVMTripleOSType.KFreeBSD,
+        Linux      = LLVMTripleOSType.Linux,
+        Lv2        = LLVMTripleOSType.Lv2,
+        MacOSX     = LLVMTripleOSType.MacOSX,
+        NetBSD     = LLVMTripleOSType.NetBSD,
+        OpenBSD    = LLVMTripleOSType.OpenBSD,
+        Solaris    = LLVMTripleOSType.Solaris,
+        Win32      = LLVMTripleOSType.Win32,
+        Haiku      = LLVMTripleOSType.Haiku,
+        Minix      = LLVMTripleOSType.Minix,
+        RTEMS      = LLVMTripleOSType.RTEMS,
+        NaCl       = LLVMTripleOSType.NaCl,
+        CNK        = LLVMTripleOSType.CNK,
+        Bitrig     = LLVMTripleOSType.Bitrig,
+        AIX        = LLVMTripleOSType.AIX,
+        CUDA       = LLVMTripleOSType.CUDA,
+        NVCL       = LLVMTripleOSType.NVCL,
+        AMDHSA     = LLVMTripleOSType.AMDHSA,
+        PS4        = LLVMTripleOSType.PS4,
+        ELFIAMCU   = LLVMTripleOSType.ELFIAMCU,
+        TvOS       = LLVMTripleOSType.TvOS,
+        WatchOS    = LLVMTripleOSType.WatchOS,
+        Mesa3D     = LLVMTripleOSType.Mesa3D,
+        Contiki    = LLVMTripleOSType.Contiki,
+    }
 
     public enum TripleEnvironmentType
     {
-        UnknownEnvironment  = LLVMTripleEnvironmentType.LlvmTripleEnvironmentType_UnknownEnvironment,
-        GNU                 = LLVMTripleEnvironmentType.LlvmTripleEnvironmentType_GNU,
-        GNUABI64            = LLVMTripleEnvironmentType.LlvmTripleEnvironmentType_GNUABI64,
-        GNUEABI             = LLVMTripleEnvironmentType.LlvmTripleEnvironmentType_GNUEABI,
-        GNUEABIHF           = LLVMTripleEnvironmentType.LlvmTripleEnvironmentType_GNUEABIHF,
-        GNUX32              = LLVMTripleEnvironmentType.LlvmTripleEnvironmentType_GNUX32,
-        CODE16              = LLVMTripleEnvironmentType.LlvmTripleEnvironmentType_CODE16,
-        EABI                = LLVMTripleEnvironmentType.LlvmTripleEnvironmentType_EABI,
-        EABIHF              = LLVMTripleEnvironmentType.LlvmTripleEnvironmentType_EABIHF,
-        Android             = LLVMTripleEnvironmentType.LlvmTripleEnvironmentType_Android,
-        Musl                = LLVMTripleEnvironmentType.LlvmTripleEnvironmentType_Musl,
-        MuslEABI            = LLVMTripleEnvironmentType.LlvmTripleEnvironmentType_MuslEABI,
-        MuslEABIHF          = LLVMTripleEnvironmentType.LlvmTripleEnvironmentType_MuslEABIHF,
-        MSVC                = LLVMTripleEnvironmentType.LlvmTripleEnvironmentType_MSVC,
-        Itanium             = LLVMTripleEnvironmentType.LlvmTripleEnvironmentType_Itanium,
-        Cygnus              = LLVMTripleEnvironmentType.LlvmTripleEnvironmentType_Cygnus,
-        AMDOpenCL           = LLVMTripleEnvironmentType.LlvmTripleEnvironmentType_AMDOpenCL,
-        CoreCLR             = LLVMTripleEnvironmentType.LlvmTripleEnvironmentType_CoreCLR,
-    };
+        UnknownEnvironment  = LLVMTripleEnvironmentType.UnknownEnvironment,
+        GNU                 = LLVMTripleEnvironmentType.GNU,
+        GNUABI64            = LLVMTripleEnvironmentType.GNUABI64,
+        GNUEABI             = LLVMTripleEnvironmentType.GNUEABI,
+        GNUEABIHF           = LLVMTripleEnvironmentType.GNUEABIHF,
+        GNUX32              = LLVMTripleEnvironmentType.GNUX32,
+        CODE16              = LLVMTripleEnvironmentType.CODE16,
+        EABI                = LLVMTripleEnvironmentType.EABI,
+        EABIHF              = LLVMTripleEnvironmentType.EABIHF,
+        Android             = LLVMTripleEnvironmentType.Android,
+        Musl                = LLVMTripleEnvironmentType.Musl,
+        MuslEABI            = LLVMTripleEnvironmentType.MuslEABI,
+        MuslEABIHF          = LLVMTripleEnvironmentType.MuslEABIHF,
+        MSVC                = LLVMTripleEnvironmentType.MSVC,
+        Itanium             = LLVMTripleEnvironmentType.Itanium,
+        Cygnus              = LLVMTripleEnvironmentType.Cygnus,
+        AMDOpenCL           = LLVMTripleEnvironmentType.AMDOpenCL,
+        CoreCLR             = LLVMTripleEnvironmentType.CoreCLR,
+        OpenCL              = LLVMTripleEnvironmentType.OpenCL,
+    }
 
     public enum TripleObjectFormatType
     {
-        UnknownObjectFormat  = LLVMTripleObjectFormatType.LlvmTripleObjectFormatType_UnknownObjectFormat,
-        COFF                 = LLVMTripleObjectFormatType.LlvmTripleObjectFormatType_COFF,
-        ELF                  = LLVMTripleObjectFormatType.LlvmTripleObjectFormatType_ELF,
-        MachO                = LLVMTripleObjectFormatType.LlvmTripleObjectFormatType_MachO,
-    };
+        UnknownObjectFormat  = LLVMTripleObjectFormatType.UnknownObjectFormat,
+        COFF                 = LLVMTripleObjectFormatType.COFF,
+        ELF                  = LLVMTripleObjectFormatType.ELF,
+        MachO                = LLVMTripleObjectFormatType.MachO,
+    }
 
     public enum ComdatKind
     {
-        Any = LLVMComdatSelectionKind.COMDAT_ANY,
-        ExactMatch = LLVMComdatSelectionKind.COMDAT_EXACTMATCH,
-        Largest = LLVMComdatSelectionKind.COMDAT_LARGEST,
-        NoDuplicates = LLVMComdatSelectionKind.COMDAT_NODUPLICATES,
-        SameSize = LLVMComdatSelectionKind.COMDAT_SAMESIZE
-    };
+        Any = LLVMComdatSelectionKind.ANY,
+        ExactMatch = LLVMComdatSelectionKind.EXACTMATCH,
+        Largest = LLVMComdatSelectionKind.LARGEST,
+        NoDuplicates = LLVMComdatSelectionKind.NODUPLICATES,
+        SameSize = LLVMComdatSelectionKind.SAMESIZE
+    }
 }

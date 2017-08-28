@@ -238,17 +238,16 @@ extern "C" {
                                                           , unsigned Flags
                                                           );
 
-    LLVMMetadataRef LLVMDIBuilderCreateBasicType( LLVMDIBuilderRef D
+    LLVMMetadataRef LLVMDIBuilderCreateBasicType( LLVMDIBuilderRef Dref
                                                   , const char *Name
                                                   , uint64_t SizeInBits
-                                                  , uint64_t AlignInBits
                                                   , unsigned Encoding
                                                   );
 
-    LLVMMetadataRef LLVMDIBuilderCreatePointerType( LLVMDIBuilderRef D
+    LLVMMetadataRef LLVMDIBuilderCreatePointerType( LLVMDIBuilderRef Dref
                                                     , LLVMMetadataRef PointeeType
                                                     , uint64_t SizeInBits
-                                                    , uint64_t AlignInBits
+                                                    , uint32_t AlignInBits
                                                     , const char *Name
                                                     );
 
@@ -268,7 +267,7 @@ extern "C" {
                                                    , LLVMMetadataRef File
                                                    , unsigned Line
                                                    , uint64_t SizeInBits
-                                                   , uint64_t AlignInBits
+                                                   , uint32_t AlignInBits
                                                    , unsigned Flags
                                                    , LLVMMetadataRef DerivedFrom
                                                    , LLVMMetadataRef ElementTypes
@@ -280,7 +279,7 @@ extern "C" {
                                                   , LLVMMetadataRef File
                                                   , unsigned Line
                                                   , uint64_t SizeInBits
-                                                  , uint64_t AlignInBits
+                                                  , uint32_t AlignInBits
                                                   , unsigned Flags
                                                   , LLVMMetadataRef ElementTypes
                                                   );
@@ -293,7 +292,7 @@ extern "C" {
                                                                  , unsigned Line
                                                                  , unsigned RuntimeLang
                                                                  , uint64_t SizeInBits
-                                                                 , uint64_t AlignInBits
+                                                                 , uint32_t AlignInBits
                                                                  , unsigned Flags
                                                                  );
 
@@ -303,7 +302,7 @@ extern "C" {
                                                    , LLVMMetadataRef File
                                                    , unsigned Line
                                                    , uint64_t SizeInBits
-                                                   , uint64_t AlignInBits
+                                                   , uint32_t AlignInBits
                                                    , uint64_t OffsetInBits
                                                    , unsigned Flags
                                                    , LLVMMetadataRef Ty
@@ -311,14 +310,14 @@ extern "C" {
 
     LLVMMetadataRef LLVMDIBuilderCreateArrayType( LLVMDIBuilderRef D
                                                   , uint64_t SizeInBits
-                                                  , uint64_t AlignInBits
+                                                  , uint32_t AlignInBits
                                                   , LLVMMetadataRef ElementType
                                                   , LLVMMetadataRef Subscripts
                                                   );
 
     LLVMMetadataRef LLVMDIBuilderCreateVectorType( LLVMDIBuilderRef D
                                                    , uint64_t SizeInBits
-                                                   , uint64_t AlignInBits
+                                                   , uint32_t AlignInBits
                                                    , LLVMMetadataRef ElementType
                                                    , LLVMMetadataRef Subscripts
                                                    );
@@ -385,7 +384,7 @@ extern "C" {
                                                         , LLVMMetadataRef File           // DIFile
                                                         , unsigned LineNumber
                                                         , uint64_t SizeInBits
-                                                        , uint64_t AlignInBits
+                                                        , uint32_t AlignInBits
                                                         , LLVMMetadataRef Elements       // DIArray
                                                         , LLVMMetadataRef UnderlyingType // DIType
                                                         , char const*
@@ -460,7 +459,7 @@ extern "C" {
 
     LLVMMetadataRef LLVMDILocation( LLVMContextRef context, unsigned Line, unsigned Column, LLVMMetadataRef scope, LLVMMetadataRef InlinedAt );
     LLVMBool LLVMSubProgramDescribes( LLVMMetadataRef subProgram, LLVMValueRef /*const Function **/F );
-    LLVMMetadataRef LLVMDIBuilderCreateNamespace( LLVMDIBuilderRef Dref, LLVMMetadataRef scope, char const* name, LLVMMetadataRef file, unsigned line );
+    LLVMMetadataRef LLVMDIBuilderCreateNamespace( LLVMDIBuilderRef Dref, LLVMMetadataRef scope, char const* name, LLVMBool exportSymbols );
     LLVMContextRef LLVMGetNodeContext( LLVMMetadataRef /*MDNode*/ node );
     LLVMMetadataKind LLVMGetMetadataID( LLVMMetadataRef /*Metadata*/ md );
 

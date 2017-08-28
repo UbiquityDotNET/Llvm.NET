@@ -1,0 +1,10 @@
+{
+  "profiles": {
+    "Llvm.NET.BuildTasks": {
+      "commandName": "Executable",
+      "executablePath": "C:\\Program Files (x86)\\Microsoft Visual Studio\\Preview\\Community\\MSBuild\\15.0\\bin\\msbuild.exe",
+      "commandLineArgs": "/t:GetRepositoryInfo src\\LibLLVM\\LibLLVM.vcxproj",
+      "workingDirectory": "D:\\GitHub\\NETMF\\Llvm.NET"
+    }
+  }
+}

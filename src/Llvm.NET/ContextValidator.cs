@@ -46,12 +46,15 @@ namespace Llvm.NET
         public static Context Verify( this Context context, string name, string message, Action<string, string> failAction )
         {
             if( failAction == null )
+            {
                 throw new ArgumentNullException( nameof( failAction ) );
+            }
 
             if( context == null || context.IsDisposed )
             {
                 failAction( name, message );
             }
+
             return context;
         }
 

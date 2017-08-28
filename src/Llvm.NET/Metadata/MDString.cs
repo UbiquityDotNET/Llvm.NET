@@ -12,9 +12,7 @@ namespace Llvm.NET
 
         public override string ToString( )
         {
-            uint len;
-            var ptr = NativeMethods.GetMDStringText( MetadataHandle, out len );
-            return NativeMethods.NormalizeLineEndings( ptr, ( int )len );
+            return NativeMethods.GetMDStringText( MetadataHandle, out uint len );
         }
     }
 }

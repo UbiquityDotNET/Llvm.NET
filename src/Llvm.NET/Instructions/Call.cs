@@ -1,56 +1,81 @@
-﻿using Llvm.NET.Native;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using Llvm.NET.Native;
 using Llvm.NET.Values;
 
 namespace Llvm.NET.Instructions
 {
     public class CallInstruction
         : Instruction
-        , IAttributeSetContainer
+        , IAttributeAccessor
     {
-        public AttributeSet Attributes
+        public Function TargetFunction => FromHandle<Function>( NativeMethods.GetCalledValue( ValueHandle ) );
+
+        public bool IsTailCall
         {
-            get 
-            {
-                if( TargetFunction == null )
-                    return new AttributeSet( );
-
-                return new AttributeSet( NativeMethods.GetCallSiteAttributeSet( ValueHandle ) );
-            }
-
-            set
-            {
-                NativeMethods.SetCallSiteAttributeSet( ValueHandle, value.NativeAttributeSet );
-            }
+            get => NativeMethods.IsTailCall( ValueHandle );
+            set => NativeMethods.SetTailCall( ValueHandle, value );
         }
 
-        public Function TargetFunction
-        {
-            get
-            {
-                if( Operands.Count < 1 )
-                    return null;
+        public IAttributeDictionary Attributes { get; }
 
-                // last Operand is the target function
-                return Operands[ Operands.Count - 1 ] as Function;
-            }
+        public void AddAttributeAtIndex( FunctionAttributeIndex index, AttributeValue attrib )
+        {
+            attrib.VerifyValidOn( index, this );
+            NativeMethods.AddCallSiteAttribute( ValueHandle, ( LLVMAttributeIndex )index, attrib.NativeAttribute );
         }
 
-        public bool IsTailCall 
+        public uint GetAttributeCountAtIndex( FunctionAttributeIndex index )
         {
-            get
+            return NativeMethods.GetCallSiteAttributeCount( ValueHandle, ( LLVMAttributeIndex )index );
+        }
+
+        public IEnumerable<AttributeValue> GetAttributesAtIndex( FunctionAttributeIndex index )
+        {
+            uint count = GetAttributeCountAtIndex( index );
+            if( count == 0 )
             {
-                return NativeMethods.IsTailCall( ValueHandle );
+                return Enumerable.Empty<AttributeValue>();
             }
 
-            set
+            var buffer = new LLVMAttributeRef[ count ];
+            NativeMethods.GetCallSiteAttributes( ValueHandle, ( LLVMAttributeIndex )index, out buffer[ 0 ] );
+            return from attribRef in buffer
+                   select AttributeValue.FromHandle( Context, attribRef );
+        }
+
+        public AttributeValue GetAttributeAtIndex( FunctionAttributeIndex index, AttributeKind kind )
+        {
+            var handle = NativeMethods.GetCallSiteEnumAttribute( ValueHandle, ( LLVMAttributeIndex )index, kind.GetEnumAttributeId( ) );
+            return AttributeValue.FromHandle( Context, handle );
+        }
+
+        public AttributeValue GetAttributeAtIndex( FunctionAttributeIndex index, string name )
+        {
+            if( string.IsNullOrWhiteSpace( name ) )
             {
-                NativeMethods.SetTailCall( ValueHandle, value );
+                throw new ArgumentException( "name cannot be null or empty", nameof( name ) );
             }
+
+            var handle = NativeMethods.GetCallSiteStringAttribute( ValueHandle, ( LLVMAttributeIndex )index, name, ( uint )name.Length );
+            return AttributeValue.FromHandle( Context, handle );
+        }
+
+        public void RemoveAttributeAtIndex( FunctionAttributeIndex index, AttributeKind kind )
+        {
+            NativeMethods.RemoveCallSiteEnumAttribute( ValueHandle, ( LLVMAttributeIndex )index, kind.GetEnumAttributeId( ) );
+        }
+
+        public void RemoveAttributeAtIndex( FunctionAttributeIndex index, string name )
+        {
+            NativeMethods.RemoveCallSiteStringAttribute( ValueHandle, ( LLVMAttributeIndex )index, name, ( uint )name.Length );
         }
 
         internal CallInstruction( LLVMValueRef valueRef )
             : base( valueRef )
         {
+            Attributes = new ValueAttributeDictionary( this, ()=>TargetFunction );
         }
     }
 }

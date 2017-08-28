@@ -128,7 +128,7 @@ publish/
 # Publish Web Output
 *.[Pp]ublish.xml
 *.azurePubxml
-# TODO: Comment the next line if you want to checkin your web deploy settings 
+# TODO: Comment the next line if you want to checkin your web deploy settings
 # but database connection strings (with potential passwords) will be unencrypted
 *.pubxml
 *.publishproj
@@ -203,10 +203,10 @@ FakesAssemblies/
 
 # VS2015 support file
 *.opendb
-/src/.tools
 /src/LibLLVM/generatedversioninfo.h
 *.db
-/src/Llvm.NETTests/TestDebugInfo/test.s
-/src/Llvm.NETTests/TestDebugInfo/test.o
-/src/Llvm.NETTests/TestDebugInfo/test.ll
-/src/Llvm.NETTests/TestDebugInfo/test.bc
+*.exe
+**/launchSettings.json
+*.bc
+*.o
+*.s

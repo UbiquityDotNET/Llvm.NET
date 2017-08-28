@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <!--
+  Project Configuration list keeps VS happy but the Platform part is otherwise ignored here.
+  Configuration, is used to build multiple platforms for a given Configuration.
+  -->
+  <Import Project="..\..\BuildOutput\packages\Llvm.NET.BuildTasks.1.0.0\build\Llvm.NET.BuildTasks.props" Condition="Exists('..\..\BuildOutput\packages\Llvm.NET.BuildTasks.1.0.0\build\Llvm.NET.BuildTasks.props')" />
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <VCProjectVersion>15.0</VCProjectVersion>
+    <ProjectGuid>{C182D24F-0A4C-4A60-B6F5-CFD8D99329AC}</ProjectGuid>
+    <Keyword>Win32Proj</Keyword>
+    <ConfigurationType>Makefile</ConfigurationType>
+    <PlatformToolset>v141</PlatformToolset>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ItemGroup>
+    <MultiTargetProject Include="LibLLVM.vcxproj">
+      <Platform>x86</Platform>
+    </MultiTargetProject>
+    <MultiTargetProject Include="LibLLVM.vcxproj">
+      <Platform>x64</Platform>
+    </MultiTargetProject>
+    <NugetPackage Include="NuGetPkg\LibLLVM.NET.nuspec"/>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <!--
+  Override standard VS Make file targets to perform multitarget actions on this project file.
+  The MultiTarget* targets come from the Llvm.NET.BuildTasks NUGET package.
+  -->
+  <Target Name="Build">
+    <MSBuild Targets="MultiTargetBuild" Projects="$(MSBuildThisFile)" Properties="Configuration=$(Configuration)" />
+  </Target>
+  <Target Name="Rebuild">
+    <MSBuild Targets="MultiTargetRebuild" Projects="$(MSBuildThisFile)" Properties="Configuration=$(Configuration)" />
+  </Target>
+  <Target Name="CoreClean">
+    <MSBuild Targets="MultiTargetClean" Projects="$(MSBuildThisFile)" Properties="Configuration=$(Configuration)" />
+  </Target>
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('..\..\BuildOutput\packages\Llvm.NET.BuildTasks.1.0.0\build\Llvm.NET.BuildTasks.props')" Text="$([System.String]::Format('$(ErrorText)', '..\..\BuildOutput\packages\Llvm.NET.BuildTasks.1.0.0\build\Llvm.NET.BuildTasks.props'))" />
+    <Error Condition="!Exists('..\..\BuildOutput\packages\Llvm.NET.BuildTasks.1.0.0\build\Llvm.NET.BuildTasks.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\BuildOutput\packages\Llvm.NET.BuildTasks.1.0.0\build\Llvm.NET.BuildTasks.targets'))" />
+  </Target>
+  <Import Project="..\..\BuildOutput\packages\Llvm.NET.BuildTasks.1.0.0\build\Llvm.NET.BuildTasks.targets" Condition="Exists('..\..\BuildOutput\packages\Llvm.NET.BuildTasks.1.0.0\build\Llvm.NET.BuildTasks.targets')" />
+</Project>

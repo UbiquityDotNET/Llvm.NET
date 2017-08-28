@@ -14,10 +14,12 @@ namespace Llvm.NET
             Operands = new OperandIterator( this );
         }
 
-        // TODO: Enable retrieving the name from LibLLVM
-        //public string Name { get; }
+        /* TODO: Enable retrieving the name from LibLLVM
+        // public string Name { get; }
+        */
 
         public IReadOnlyList<MDNode> Operands { get; }
+
         public NativeModule ParentModule => NativeModule.FromHandle( NativeMethods.NamedMDNodeGetParentModule( NativeHandle ) );
 
         private LLVMNamedMDNodeRef NativeHandle;
@@ -45,13 +47,12 @@ namespace Llvm.NET
             public IEnumerator<MDNode> GetEnumerator( )
             {
                 for( int i = 0; i < Count; ++i )
+                {
                     yield return this[ i ];
+                }
             }
 
-            IEnumerator IEnumerable.GetEnumerator( )
-            {
-                return GetEnumerator( );
-            }
+            IEnumerator IEnumerable.GetEnumerator( ) => GetEnumerator( );
 
             private NamedMDNode OwningNode;
         }

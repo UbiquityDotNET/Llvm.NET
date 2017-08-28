@@ -1,8 +1,8 @@
 #ifndef _ANALYSIS_BINDINGS_H_
 #define _ANALYSIS_BINDINGS_H_
 
-#include "llvm-c/Core.h"
-#include "llvm-c/Analysis.h"
+#include <llvm-c/Core.h>
+#include <llvm-c/Analysis.h>
 
 #ifdef __cplusplus
 extern "C" {

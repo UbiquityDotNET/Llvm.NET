@@ -15,10 +15,14 @@ namespace Llvm.NET.Instructions
         public void AddCase( Value onVal, BasicBlock destination )
         {
             if( onVal == null )
+            {
                 throw new System.ArgumentNullException( nameof( onVal ) );
+            }
 
             if( destination == null )
+            {
                 throw new System.ArgumentNullException( nameof( destination ) );
+            }
 
             NativeMethods.AddCase( ValueHandle, onVal.ValueHandle, destination.BlockHandle );
         }
@@ -27,6 +31,5 @@ namespace Llvm.NET.Instructions
             : base( valueRef )
         {
         }
-
     }
 }

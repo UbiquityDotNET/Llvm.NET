@@ -9,40 +9,22 @@ namespace Llvm.NET.Values
         /// <summary>Visibility of this global value</summary>
         public Visibility Visibility
         {
-            get
-            {
-                return ( Visibility )NativeMethods.GetVisibility( ValueHandle );
-            }
-            set
-            {
-                NativeMethods.SetVisibility( ValueHandle, ( LLVMVisibility )value );
-            }
+            get => ( Visibility )NativeMethods.GetVisibility( ValueHandle );
+            set => NativeMethods.SetVisibility( ValueHandle, ( LLVMVisibility )value );
         }
 
         /// <summary>Linkage specification for this symbol</summary>
         public Linkage Linkage
         {
-            get
-            {
-                return ( Linkage )NativeMethods.GetLinkage( ValueHandle );
-            }
-            set
-            {
-                NativeMethods.SetLinkage( ValueHandle, ( LLVMLinkage )value );
-            }
+            get => ( Linkage )NativeMethods.GetLinkage( ValueHandle );
+            set => NativeMethods.SetLinkage( ValueHandle, ( LLVMLinkage )value );
         }
 
         /// <summary>Flag to indicate if this is an Unnamed address</summary>
         public bool UnnamedAddress
         {
-            get
-            {
-                return NativeMethods.HasUnnamedAddr( ValueHandle );
-            }
-            set
-            {
-                NativeMethods.SetUnnamedAddr( ValueHandle, value );
-            }
+            get => NativeMethods.HasUnnamedAddr( ValueHandle );
+            set => NativeMethods.SetUnnamedAddr( ValueHandle, value );
         }
 
         /// <summary>Flag to indicate if this is a declaration</summary>
@@ -54,33 +36,6 @@ namespace Llvm.NET.Values
         internal GlobalValue( LLVMValueRef valueRef )
             : base( valueRef )
         {
-        }
-    }
-
-    /// <summary>Fluent style extensions for modifying properties of a <see cref="GlobalValue"/></summary>
-    public static class GlobalValueExtensions
-    {
-        /// <summary>Visibility of this global value</summary>
-        public static T Visibility<T>( this T self, Visibility value )
-            where T : GlobalValue
-        {
-            self.Visibility = value;
-            return self;
-        }
-
-        /// <summary>Linkage specification for this symbol</summary>
-        public static T Linkage<T>( this T self, Linkage value )
-            where T : GlobalValue
-        {
-            self.Linkage = value;
-            return self;
-        }
-
-        public static T UnnamedAddress<T>( this T self, bool value )
-            where T : GlobalValue
-        {
-            self.UnnamedAddress = value;
-            return self;
         }
     }
 }

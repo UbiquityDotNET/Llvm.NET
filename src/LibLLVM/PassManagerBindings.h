@@ -14,7 +14,7 @@
 #ifndef LLVM_BINDINGS_LLVM_INSTRUMENTATIONBINDINGS_H
 #define LLVM_BINDINGS_LLVM_INSTRUMENTATIONBINDINGS_H
 
-#include "llvm-c/Core.h"
+#include <llvm-c/Core.h>
 
 #ifdef __cplusplus
 extern "C" {

@@ -159,32 +159,9 @@ extern "C"
         pFunction->setSubprogram( unwrap<DISubprogram>( subprogram ) );
     }
 
-    static AtomicOrdering mapFromLLVMOrdering( LLVMAtomicOrdering Ordering )
+    LLVMMetadataRef LLVMDIGlobalVarExpGetVariable( LLVMMetadataRef metadataHandle )
     {
-        switch( Ordering )
-        {
-        case LLVMAtomicOrderingNotAtomic:
-            return AtomicOrdering::NotAtomic;
-        case LLVMAtomicOrderingUnordered:
-            return AtomicOrdering::Unordered;
-        case LLVMAtomicOrderingMonotonic:
-            return AtomicOrdering::Monotonic;
-        case LLVMAtomicOrderingAcquire:
-            return AtomicOrdering::Acquire;
-        case LLVMAtomicOrderingRelease:
-            return AtomicOrdering::Release;
-        case LLVMAtomicOrderingAcquireRelease:
-            return AtomicOrdering::AcquireRelease;
-        case LLVMAtomicOrderingSequentiallyConsistent:
-            return AtomicOrdering::SequentiallyConsistent;
-        }
-
-        llvm_unreachable( "Invalid LLVMAtomicOrdering value!" );
-    }
-
-    LLVMBool LLVMFunctionHasPersonalityFunction( LLVMValueRef function )
-    {
-        Function* pFunc = unwrap<Function>( function );
-        return pFunc->hasPersonalityFn( );
+        auto pExp = unwrap<DIGlobalVariableExpression>( metadataHandle );
+        return wrap( pExp->getVariable( ) );
     }
 }

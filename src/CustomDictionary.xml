@@ -18,6 +18,7 @@
             <Word>pointee</Word>
             <Word>Subrange</Word>
             <Word>LibLLVM</Word>
+            <Word>bitcode</Word>
         </Recognized>
         <Deprecated>
             <Term PreferredAlternate=""></Term>

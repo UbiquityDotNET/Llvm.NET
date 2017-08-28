@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using Llvm.NET.Native;
 using Llvm.NET.Types;
 using Llvm.NET.Values;
@@ -37,6 +38,20 @@ namespace Llvm.NET
     public class DataLayout
         : IDisposable
     {
+        ~DataLayout( )
+        {
+            // Do not change this code. Put cleanup code in Dispose(bool disposing) above.
+            Dispose( false );
+        }
+
+        // This code added to correctly implement the disposable pattern.
+        public void Dispose( )
+        {
+            // Do not change this code. Put cleanup code in Dispose(bool disposing) above.
+            Dispose( true );
+            GC.SuppressFinalize( this );
+        }
+
         /// <summary>Context used for this data (in particular, for retrieving pointer types)</summary>
         public Context Context { get; }
 
@@ -72,7 +87,7 @@ namespace Llvm.NET
         /// <para>This method determines the bit size of a type (e.g. the minimum number of
         /// bits required to represent any value of the given type.) This is distinct from the storage
         /// and stack size due to various target alignment requirements.</para>
-        ///</remarks>
+        /// </remarks>
         public ulong BitSizeOf( ITypeRef typeRef )
         {
             VerifySized( typeRef, nameof( typeRef ) );
@@ -130,31 +145,29 @@ namespace Llvm.NET
         public uint PreferredAlignmentOf( Value value )
         {
             if( value == null )
+            {
                 throw new ArgumentNullException( nameof( value ) );
+            }
 
             VerifySized( value.NativeType, nameof( value ) );
             return NativeMethods.PreferredAlignmentOfGlobal( DataLayoutHandle, value.ValueHandle );
         }
 
-        [System.Diagnostics.CodeAnalysis.SuppressMessage( "Microsoft.Design", "CA1011:ConsiderPassingBaseTypesAsParameters", Justification = "Specific type required by interop call" )]
+        [SuppressMessage( "Microsoft.Design", "CA1011:ConsiderPassingBaseTypesAsParameters", Justification = "Specific type required by interop call" )]
         public uint ElementAtOffset( IStructType structType, ulong offset )
         {
             VerifySized( structType, nameof( structType ) );
             return NativeMethods.ElementAtOffset( DataLayoutHandle, structType.GetTypeRef( ), offset );
         }
 
-        [System.Diagnostics.CodeAnalysis.SuppressMessage( "Microsoft.Design", "CA1011:ConsiderPassingBaseTypesAsParameters", Justification = "Specific type required by interop call" )]
+        [SuppressMessage( "Microsoft.Design", "CA1011:ConsiderPassingBaseTypesAsParameters", Justification = "Specific type required by interop call" )]
         public ulong OffsetOfElement( IStructType structType, uint element )
         {
             VerifySized( structType, nameof( structType ) );
             return NativeMethods.OffsetOfElement( DataLayoutHandle, structType.GetTypeRef( ), element );
         }
 
-        public override string ToString( )
-        {
-            IntPtr msgPtr = NativeMethods.CopyStringRepOfTargetData( DataLayoutHandle );
-            return NativeMethods.MarshalMsg( msgPtr );
-        }
+        public override string ToString( ) => NativeMethods.CopyStringRepOfTargetData( DataLayoutHandle );
 
         public ulong ByteSizeOf( ITypeRef llvmType ) => BitSizeOf( llvmType ) / 8u;
 
@@ -176,9 +189,6 @@ namespace Llvm.NET
             return FromHandle( context, handle, true );
         }
 
-        #region IDisposable Support
-        private readonly bool IsDisposable;
-
         protected virtual void Dispose( bool disposing )
         {
             if( DataLayoutHandle.Pointer != IntPtr.Zero && IsDisposable )
@@ -187,21 +197,6 @@ namespace Llvm.NET
                 DataLayoutHandle = default( LLVMTargetDataRef );
             }
         }
-
-        ~DataLayout( )
-        {
-            // Do not change this code. Put cleanup code in Dispose(bool disposing) above.
-            Dispose( false );
-        }
-
-        // This code added to correctly implement the disposable pattern.
-        public void Dispose( )
-        {
-            // Do not change this code. Put cleanup code in Dispose(bool disposing) above.
-            Dispose( true );
-            GC.SuppressFinalize( this );
-        }
-        #endregion
 
         internal DataLayout( Context context, LLVMTargetDataRef targetDataHandle, bool isDisposable )
         {
@@ -214,12 +209,27 @@ namespace Llvm.NET
         {
             lock ( TargetDataMap )
             {
-                DataLayout retVal;
-                if( TargetDataMap.TryGetValue( targetDataRef.Pointer, out retVal ) )
+                if( TargetDataMap.TryGetValue( targetDataRef.Pointer, out DataLayout retVal ) )
+                {
                     return retVal;
+                }
 
                 retVal = new DataLayout( context, targetDataRef, isDisposable );
-                TargetDataMap.Add( targetDataRef.Pointer, retVal );
+                Func<bool> cleanOnException = ( ) =>
+                    {
+                        retVal.Dispose( );
+                        return true;
+                    };
+
+                try
+                {
+                    TargetDataMap.Add( targetDataRef.Pointer, retVal );
+                }
+                catch when (cleanOnException())
+                {
+                    // NOP
+                }
+
                 return retVal;
             }
         }
@@ -229,9 +239,13 @@ namespace Llvm.NET
         private static void VerifySized( ITypeRef type, string name )
         {
             if( !type.IsSized )
+            {
                 throw new ArgumentException( "Type must be sized to get target size information", name );
+            }
         }
 
+        // inidcates if this instance is disposable
+        private readonly bool IsDisposable;
         private static readonly Dictionary<IntPtr, DataLayout> TargetDataMap = new Dictionary<IntPtr, DataLayout>( );
     }
 }

@@ -17,12 +17,16 @@ namespace Llvm.NET.Values
         public static Constant NullValueFor( ITypeRef typeRef )
         {
             if( typeRef == null )
+            {
                 throw new ArgumentNullException( nameof( typeRef ) );
+            }
 
             var kind = typeRef.Kind;
             var structType = typeRef as StructType;
             if( kind == TypeKind.Label || kind == TypeKind.Function || ( structType != null && structType.IsOpaque ) )
+            {
                 throw new ArgumentException( "Cannot get a Null value for labels, functions and opaque types" );
+            }
 
             return FromHandle<Constant>( NativeMethods.ConstNull( typeRef.GetTypeRef( ) ) );
         }

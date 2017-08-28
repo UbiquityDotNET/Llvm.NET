@@ -1,44 +1,76 @@
-﻿using Llvm.NET.Native;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using Llvm.NET.Native;
 using Llvm.NET.Values;
 
 namespace Llvm.NET.Instructions
 {
     public class Invoke
         : Terminator
-        , IAttributeSetContainer
+        , IAttributeAccessor
     {
-        public AttributeSet Attributes
+        public Function TargetFunction => FromHandle<Function>( NativeMethods.GetCalledValue( ValueHandle ) );
+
+        public IAttributeDictionary Attributes { get; }
+
+        public void AddAttributeAtIndex( FunctionAttributeIndex index, AttributeValue attrib )
         {
-            get 
-            {
-                if( TargetFunction == null )
-                    return new AttributeSet( );
+            attrib.VerifyValidOn( index, this );
 
-                return new AttributeSet( NativeMethods.GetCallSiteAttributeSet( ValueHandle ));
-            }
-
-            set
-            {
-                // TODO: Verify the attributeSet doesn't contain any parameter indices not supported by the TargetFunction
-                NativeMethods.SetCallSiteAttributeSet( ValueHandle, value.NativeAttributeSet );
-            }
+            NativeMethods.AddCallSiteAttribute( ValueHandle, ( LLVMAttributeIndex )index, attrib.NativeAttribute );
         }
 
-        public Function TargetFunction
+        public uint GetAttributeCountAtIndex( FunctionAttributeIndex index )
         {
-            get
-            {
-                if( Operands.Count < 1 )
-                    return null;
+            return NativeMethods.GetCallSiteAttributeCount( ValueHandle, ( LLVMAttributeIndex )index );
+        }
 
-                // last Operand of the instruction is the target function
-                return Operands[ Operands.Count - 1 ] as Function;
+        public IEnumerable<AttributeValue> GetAttributesAtIndex( FunctionAttributeIndex index )
+        {
+            uint count = GetAttributeCountAtIndex( index );
+            if( count == 0 )
+            {
+                return Enumerable.Empty<AttributeValue>( );
             }
+
+            var buffer = new LLVMAttributeRef[ count ];
+            NativeMethods.GetCallSiteAttributes( ValueHandle, ( LLVMAttributeIndex )index, out buffer[ 0 ] );
+            return from attribRef in buffer
+                   select AttributeValue.FromHandle( Context, attribRef );
+        }
+
+        public AttributeValue GetAttributeAtIndex( FunctionAttributeIndex index, AttributeKind kind )
+        {
+            var handle = NativeMethods.GetCallSiteEnumAttribute( ValueHandle, ( LLVMAttributeIndex )index, kind.GetEnumAttributeId( ) );
+            return AttributeValue.FromHandle( Context, handle );
+        }
+
+        public AttributeValue GetAttributeAtIndex( FunctionAttributeIndex index, string name )
+        {
+            if( string.IsNullOrWhiteSpace( name ) )
+            {
+                throw new ArgumentException( "name cannot be null or empty", nameof( name ) );
+            }
+
+            var handle = NativeMethods.GetCallSiteStringAttribute( ValueHandle, ( LLVMAttributeIndex )index, name, ( uint )name.Length );
+            return AttributeValue.FromHandle( Context, handle );
+        }
+
+        public void RemoveAttributeAtIndex( FunctionAttributeIndex index, AttributeKind kind )
+        {
+            NativeMethods.RemoveCallSiteEnumAttribute( ValueHandle, ( LLVMAttributeIndex )index, kind.GetEnumAttributeId( ) );
+        }
+
+        public void RemoveAttributeAtIndex( FunctionAttributeIndex index, string name )
+        {
+            NativeMethods.RemoveCallSiteStringAttribute( ValueHandle, ( LLVMAttributeIndex )index, name, ( uint )name.Length );
         }
 
         internal Invoke( LLVMValueRef valueRef )
             : base( valueRef )
         {
+            Attributes = new ValueAttributeDictionary( this, ()=>TargetFunction );
         }
     }
 }

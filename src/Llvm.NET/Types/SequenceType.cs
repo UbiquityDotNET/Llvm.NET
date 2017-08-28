@@ -26,7 +26,9 @@ namespace Llvm.NET.Types
             {
                 var typeRef = NativeMethods.GetElementType( this.GetTypeRef() );
                 if( typeRef.Pointer == IntPtr.Zero )
+                {
                     return null;
+                }
 
                 return FromHandle( typeRef );
             }
@@ -36,7 +38,9 @@ namespace Llvm.NET.Types
             : base( typeRef )
         {
             if( !IsSequenceTypeRef( typeRef ) )
+            {
                 throw new ArgumentException( "Expected a sequence type", nameof( typeRef ) );
+            }
         }
 
         internal static bool IsSequenceTypeRef( LLVMTypeRef typeRef )

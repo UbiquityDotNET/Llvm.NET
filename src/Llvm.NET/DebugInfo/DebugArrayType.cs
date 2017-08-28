@@ -14,24 +14,32 @@ namespace Llvm.NET.DebugInfo
         /// <param name="module">module to use for creating debug information</param>
         /// <param name="count">Number of elements in the array</param>
         /// <param name="lowerBound">Lower bound of the array [default = 0]</param>
+        /// <param name="alignment">Alignment for the type</param>
         public DebugArrayType( IArrayType llvmType
                              , IDebugType<ITypeRef, DIType> elementType
                              , NativeModule module
                              , uint count
                              , uint lowerBound = 0
+                             , uint alignment = 0
                              )
             : base( llvmType )
         {
             if( llvmType == null )
+            {
                 throw new ArgumentNullException( nameof( llvmType ) );
+            }
 
             if( elementType == null )
+            {
                 throw new ArgumentNullException( nameof( elementType ) );
+            }
 
             if( llvmType.ElementType.TypeHandle != elementType.TypeHandle )
+            {
                 throw new ArgumentException( "elementType doesn't match array element type" );
+            }
 
-            DIType = CreateDebugInfoForArray( llvmType, elementType, module, count, lowerBound );
+            DIType = CreateDebugInfoForArray( llvmType, elementType, module, count, lowerBound, alignment );
             DebugElementType = elementType;
         }
 
@@ -67,7 +75,7 @@ namespace Llvm.NET.DebugInfo
         /// <inheritdoc/>
         public ITypeRef ElementType => DebugElementType;
 
-        ///<inheritdoc/>
+        /// <inheritdoc/>
         public uint Length => NativeType.Length;
 
         /// <summary>Lower bound of the array, usually but not always zero</summary>
@@ -79,10 +87,14 @@ namespace Llvm.NET.DebugInfo
         public void ResolveTemporary( DataLayout layout, DebugInfoBuilder diBuilder )
         {
             if( layout == null )
+            {
                 throw new ArgumentNullException( nameof( layout ) );
+            }
 
             if( diBuilder == null )
+            {
                 throw new ArgumentNullException( nameof( diBuilder ) );
+            }
 
             if( DIType.IsTemporary && !DIType.IsResolved )
             {
@@ -99,12 +111,13 @@ namespace Llvm.NET.DebugInfo
                                                               , NativeModule module
                                                               , uint count
                                                               , uint lowerBound
+                                                              , uint alignment
                                                               )
         {
             if( llvmType.IsSized )
             {
                 return module.DIBuilder.CreateArrayType( module.Layout.BitSizeOf( llvmType )
-                                                       , module.Layout.AbiBitAlignmentOf( llvmType )
+                                                       , alignment
                                                        , elementType.DIType
                                                        , module.DIBuilder.CreateSubRange( lowerBound, count )
                                                        );

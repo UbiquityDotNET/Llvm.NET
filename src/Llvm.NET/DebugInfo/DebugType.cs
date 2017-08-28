@@ -12,13 +12,13 @@ namespace Llvm.NET.DebugInfo
     /// type. (e.g. unsigned char, char, byte and signed byte might all be 8 bit integer values as far
     /// as LLVM is concerned. Also, when using the pointer+alloca+memcpy pattern to pass by value the
     /// actual source debug info type is different than the LLVM function signature. This class is used
-    /// to construct native type and debug info pairing to allow applications to maintain a link from 
+    /// to construct native type and debug info pairing to allow applications to maintain a link from
     /// their AST or IR types into the LLVM native type and debug information.
     /// </para>
     /// <note type="note">
     /// It is important to note that the relationship between the <see cref="DIType"/> to it's <see cref="NativeType"/>
     /// properties is strictly one way. That is, there is no way to take an arbitrary <see cref="ITypeRef"/> and re-associate
-    /// it with the DIType or an implementation of this interface as there may be many such mappings to choose from. 
+    /// it with the DIType or an implementation of this interface as there may be many such mappings to choose from.
     /// </note>
     /// </remarks>
     public interface IDebugType<out TNative, out TDebug>
@@ -33,6 +33,7 @@ namespace Llvm.NET.DebugInfo
         TDebug DIType { get; }
     }
 
+    [SuppressMessage( "StyleCop.CSharp.MaintainabilityRules", "SA1402:File may only contain a single class", Justification = "Interface, Generic type and static extension methods form a common type interface" )]
     public class DebugType<TNative, TDebug>
         : IDebugType<TNative, TDebug>
         , ITypeRef
@@ -45,16 +46,14 @@ namespace Llvm.NET.DebugInfo
 
         internal DebugType( TNative llvmType )
         {
-            if( llvmType == null )
-                throw new ArgumentNullException( nameof( llvmType ) );
-
-            NativeType = llvmType;
+            NativeType = llvmType ?? throw new ArgumentNullException( nameof( llvmType ) );
         }
 
-        [SuppressMessage( "Microsoft.Naming", "CA2204:Literals should be spelled correctly", MessageId = "DIType" )]
+        // Re-assignment will perform RAUW on the current value
+        [SuppressMessage( "Microsoft.Naming", "CA2204:Literals should be spelled correctly", MessageId = "DIType", Justification = "It is spelled correctly 8^)" )]
         public TDebug DIType
         {
-            get { return DIType_; }
+            get => DIType_;
             set
             {
                 if( DIType_ == null )
@@ -64,31 +63,47 @@ namespace Llvm.NET.DebugInfo
                 else if( DIType_.IsTemporary )
                 {
                     if( value.IsTemporary )
+                    {
                         throw new InvalidOperationException( "Cannot replace a temporary with another temporary" );
+                    }
 
                     DIType_.ReplaceAllUsesWith( value );
                     DIType_ = value;
                 }
                 else
+                {
                     throw new InvalidOperationException( "Cannot replace non temporary DIType with a new Type" );
+                }
             }
         }
+
+        [SuppressMessage( "StyleCop.CSharp.NamingRules"
+                        , "SA1310:Field names must not contain underscore"
+                        , Justification = "Trailing _ indicates value MUST NOT be written to directly, even internally"
+                        )
+        ]
         private TDebug DIType_;
 
         public TNative NativeType
         {
-            get
-            {
-                return NativeType_;
-            }
+            get => NativeType_;
 
             protected set
             {
                 if( NativeType_ != null )
+                {
                     throw new InvalidOperationException( "Once the native type is set it cannot be changed" );
+                }
+
                 NativeType_ = value;
             }
         }
+
+        [SuppressMessage( "StyleCop.CSharp.NamingRules"
+                        , "SA1310:Field names must not contain underscore"
+                        , Justification = "Trailing _ indicates value MUST NOT be written to directly, even internally"
+                        )
+        ]
         private TNative NativeType_;
 
         public IntPtr TypeHandle => NativeType.TypeHandle;
@@ -130,7 +145,9 @@ namespace Llvm.NET.DebugInfo
         public DebugPointerType CreatePointerType( NativeModule module, uint addressSpace )
         {
             if( DIType == null )
+            {
                 throw new ArgumentException( "Type does not have associated Debug type from which to construct a pointer type" );
+            }
 
             var nativePointer = NativeType.CreatePointerType( addressSpace );
             return new DebugPointerType( nativePointer, module, DIType, string.Empty );
@@ -139,7 +156,9 @@ namespace Llvm.NET.DebugInfo
         public DebugArrayType CreateArrayType( NativeModule module, uint lowerBound, uint count )
         {
             if( DIType == null )
+            {
                 throw new ArgumentException( "Type does not have associated Debug type from which to construct an array type" );
+            }
 
             var llvmArray = NativeType.CreateArrayType( count );
             return new DebugArrayType( llvmArray, module, DIType, count, lowerBound );
@@ -148,7 +167,9 @@ namespace Llvm.NET.DebugInfo
         public bool TryGetExtendedPropertyValue<TProperty>( string id, out TProperty value )
         {
             if( PropertyContainer.TryGetExtendedPropertyValue( id, out value ) )
+            {
                 return true;
+            }
 
             return NativeType.TryGetExtendedPropertyValue( id, out value );
         }
@@ -185,13 +206,15 @@ namespace Llvm.NET.DebugInfo
         /// <param name="debugType"></param>
         /// <remarks>In LLVM Debug information a <see langword="null"/> <see cref="Llvm.NET.DebugInfo.DIType"/> is
         /// used to represent the void type. Thus, looking only at the <see cref="DIType"/> property is
-        /// insufficient to distinguish between a type with no debug information and one representing the void 
-        /// type. This property is used to disambiguate the two possibilities. 
+        /// insufficient to distinguish between a type with no debug information and one representing the void
+        /// type. This property is used to disambiguate the two possibilities.
         /// </remarks>
         public static bool HasDebugInfo( this IDebugType<ITypeRef, DIType> debugType )
         {
             if( debugType == null )
+            {
                 throw new ArgumentNullException( nameof( debugType ) );
+            }
 
             return debugType.DIType != null || debugType.NativeType.IsVoid;
         }

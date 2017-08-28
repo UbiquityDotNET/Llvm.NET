@@ -1,0 +1,89 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <!-- Ideally this should support netstandard2.0 but libGit2Sharp doesn't support that yet -->
+    <TargetFramework>net47</TargetFramework>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <DevelopmentDependency>true</DevelopmentDependency>
+    <!-- Silence warning that assembly isn't in lib folder (It's a task so it goes in the task folder - Duh!)-->
+    <NoPackageAnalysis>true</NoPackageAnalysis>
+    <BuildOutputTargetFolder>tasks</BuildOutputTargetFolder>
+  </PropertyGroup>
+    <ItemGroup>
+        <None Remove="**" />
+    </ItemGroup>
+  <ItemGroup>
+      <!-- pack the build support files -->
+      <Content Include="build\Llvm.NET.BuildTasks.props" PackagePath="build\" />
+      <Content Include="build\Llvm.NET.BuildTasks.targets" PackagePath="build\" />
+      <Content Include="buildMultiTargeting\Llvm.NET.BuildTasks.props" PackagePath="buildMultiTargeting\" />
+      <Content Include="buildMultiTargeting\Llvm.NET.BuildTasks.targets" PackagePath="buildMultiTargeting\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Include="BuildVersionData.cs" />
+    <Compile Include="DownloadFile.cs" />
+    <Compile Include="GenerateSha256File.cs" />
+    <Compile Include="GetRepositoryVersionInfo.cs" />
+    <Compile Include="RepositoryExtensions.cs" />
+    <Compile Include="Validators.cs" />
+    <Compile Include="Versioning\CIPreReleaseVersion.cs" />
+    <Compile Include="Versioning\CSemVer.cs" />
+    <Compile Include="Versioning\CSemVerCI.cs" />
+    <Compile Include="Versioning\IPrereleaseVersion.cs" />
+    <Compile Include="Versioning\OfficialPreRelease.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+      <PackageReference Include="JetBrains.Annotations" Version="11.0.0" PrivateAssets="all" />
+      <PackageReference Include="LibGit2Sharp" Version="0.24.0" PrivateAssets="all" />
+      <PackageReference Include="Microsoft.Build.Utilities.Core" Version="15.3.409" PrivateAssets="all" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="buildMultiTargeting" />
+    <Folder Include="build" />
+  </ItemGroup>
+
+  <!--
+  Inline task and custom target to transform the native LibGit2Sharp dependencies into content files for this
+  package. Since the dependencies are all private assets they are not applied to projects that depend on this
+  package (which is good, as they aren't applicable in most cases). However, the binaries are not development
+  only files for this package, they are runtime required. Currently the MSbuild NUGet Pack target has no support
+  for a development only package with package references that should not flow to the parent package. This,
+  articular hack works for dependent packages that list their binaries as none items (Which LibGit2Sharp does
+  for all the native binaries)
+  -->
+  <UsingTask TaskName="MakeContentItems" TaskFactory="CodeTaskFactory" AssemblyFile="$(MSBuildToolsPath)\Microsoft.Build.Tasks.v4.0.dll">
+      <ParameterGroup>
+          <Items ParameterType="Microsoft.Build.Framework.ITaskItem[]" Required="true" />
+          <Result ParameterType="Microsoft.Build.Framework.ITaskItem[]" Output="true" />
+      </ParameterGroup>
+      <Task>
+          <Using Namespace="System" />
+          <Using Namespace="System.IO" />
+          <Code Type="Fragment" Language="cs">
+              <![CDATA[
+              Result = new ITaskItem[ Items.Length ];
+              for( int i = 0; i< Items.Length; ++i )
+              {
+                Result[i] = new TaskItem( Items[i].ItemSpec );
+                Result[i].SetMetadata( "PackagePath", Path.Combine( "tasks", "net47", Path.GetDirectoryName( Items[i].GetMetadata( "Link" ) ) ) );
+              }
+              ]]>
+          </Code>
+      </Task>
+  </UsingTask>
+  <Target Name="PackageLibGit2SharpNativeBinaries" BeforeTargets="_LoadPackInputItems" DependsOnTargets="ResolveAssemblyReferences">
+      <ItemGroup>
+          <__PackNone Include="@(None)" Condition="'%(None.CopyToOutputDirectory)' == 'PreserveNewest'" />
+          <None Remove="@(__PackNone)" />
+      </ItemGroup>
+      <!-- Add the LibGit2Sharp package references as content -->
+      <ItemGroup>
+          <Content Condition="'%(ReferencePath.PackageName)'=='LibGit2Sharp'" Include="%(ReferencePath.Identity)" PackagePath="tasks\net47" />
+      </ItemGroup>
+      <MakeContentItems Items="@(__PackNone)">
+          <Output TaskParameter="Result" ItemName="Content" />
+      </MakeContentItems>
+  </Target>
+</Project>

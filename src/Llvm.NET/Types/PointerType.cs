@@ -23,7 +23,9 @@ namespace Llvm.NET.Types
             : base( typeRef )
         {
             if( NativeMethods.GetTypeKind( typeRef ) != LLVMTypeKind.LLVMPointerTypeKind )
+            {
                 throw new ArgumentException( "Pointer type reference expected", nameof( typeRef ) );
+            }
         }
     }
 }

@@ -1,0 +1,185 @@
+﻿<Project>
+    <UsingTask TaskName="GetRepositoryVersionInfo" AssemblyFile="$(LlvmNETBuildTasksAssembly)" />
+    <UsingTask TaskName="GenerateSha256File" AssemblyFile="$(LlvmNETBuildTasksAssembly)" />
+    <UsingTask TaskName="DownloadFile" AssemblyFile="$(LlvmNETBuildTasksAssembly)" />
+
+    <Target Name="PrepareVersioningForBuild"
+            BeforeTargets="PrepareForBuild;Restore;_IntermediatePack"
+            DependsOnTargets="GetRepositoryInfo;VerifyProvidedBuildVersion;SetVersionDependentProperties;"
+            />
+
+    <Target Name="MultiTargetBuild" DependsOnTargets="PrepareVersioningForBuild;NativeMultiTargetBuild;NuGetPack" />
+    <Target Name="MultiTargetRebuild" DependsOnTargets="PrepareVersioningForBuild;NativeMultiTargetRebuild;NuGetPack"/>
+
+    <Target Name="NativeMultiTargetBuild">
+        <ItemGroup>
+            <MultiTargetProperty Include="FullBuildNumber=$(FullBuildNumber)"/>
+            <MultiTargetProperty Include="PackageVersion=$(PackageVersion)"/>
+            <MultiTargetProperty Include="FileVersionMajor=$(FileVersionMajor)"/>
+            <MultiTargetProperty Include="FileVersionMinor=$(FileVersionMinor)"/>
+            <MultiTargetProperty Include="FileVersionBuild=$(FileVersionBuild)"/>
+            <MultiTargetProperty Include="FileVersionRevision=$(FileVersionRevision)"/>
+            <MultiTargetProperty Include="LlvmVersion=$(LlvmVersion)"/>
+        </ItemGroup>
+        <MSBuild Projects="@(MultiTargetProject)"
+                 Targets="Build"
+                 Properties="Platform=%(MultiTargetProject.Platform);@(MultiTargetProperty)"
+                 BuildInParallel="true"
+                 />
+    </Target>
+
+    <Target Name="MultiTargetClean">
+        <MSBuild Projects="@(MultiTargetProject)"
+                 Targets="Clean"
+                 Properties="Platform=%(MultiTargetProject.Platform)"
+                 BuildInParallel="true"
+                 />
+    </Target>
+
+    <Target Name="NativeMultiTargetRebuild">
+        <ItemGroup>
+            <MultiTargetProperty Include="FullBuildNumber=$(FullBuildNumber)"/>
+            <MultiTargetProperty Include="PackageVersion=$(PackageVersion)"/>
+            <MultiTargetProperty Include="FileVersionMajor=$(FileVersionMajor)"/>
+            <MultiTargetProperty Include="FileVersionMinor=$(FileVersionMinor)"/>
+            <MultiTargetProperty Include="FileVersionBuild=$(FileVersionBuild)"/>
+            <MultiTargetProperty Include="FileVersionRevision=$(FileVersionRevision)"/>
+            <MultiTargetProperty Include="LlvmVersion=$(LlvmVersion)"/>
+        </ItemGroup>
+        <MSBuild Projects="@(MultiTargetProject)"
+                 Targets="Rebuild"
+                 Properties="Platform=%(MultiTargetProject.Platform);@(MultiTargetProperty)"
+                 BuildInParallel="true"
+                 />
+    </Target>
+
+    <Target Name="GetRepositoryInfo"
+            Condition="'$(MSBuildProjectName)'!='Llvm.NET.BuildTasks'"
+            >
+        <GetRepositoryVersionInfo BuildVersionXmlFile="$(BuildVersionXmlFile)"
+                                    IsAutomatedBuild="$(IsAutomatedBuild)"
+                                    IsPullRequestBuild="$(IsPullRequestBuild)"
+                                    >
+            <Output TaskParameter="SemVer" PropertyName="_FullBuildNumber" />
+            <Output TaskParameter="NuGetVersion" PropertyName="_PackageVersion" />
+            <Output TaskParameter="FileVersionMajor" PropertyName="_FileVersionMajor" />
+            <Output TaskParameter="FileVersionMinor" PropertyName="_FileVersionMinor" />
+            <Output TaskParameter="FileVersionBuild" PropertyName="_FileVersionBuild" />
+            <Output TaskParameter="FileVersionRevision" PropertyName="_FileVersionRevision" />
+            <Output TaskParameter="ExtraProperties" ItemName="_ExtraProperties" />
+        </GetRepositoryVersionInfo>
+        <!-- If FullBuildNumber not provided then use all of the generated version numbers/parts -->
+        <PropertyGroup Condition="'$(FullBuildNumber)'==''">
+            <FullBuildNumber>$(_FullBuildNumber)</FullBuildNumber>
+            <PackageVersion>$(_PackageVersion)</PackageVersion>
+            <FileVersionMajor>$(_FileVersionMajor)</FileVersionMajor>
+            <FileVersionMinor>$(_FileVersionMinor)</FileVersionMinor>
+            <FileVersionBuild>$(_FileVersionBuild)</FileVersionBuild>
+            <FileVersionRevision>$(_FileVersionRevision)</FileVersionRevision>
+        </PropertyGroup>
+        <!--
+        Generate MSBuild properties for the extra properties read from BuildVersionXmlFile
+        These are unconditional, as they are not expected to be passed around as properties.
+        -->
+        <CreateProperty Value="%(_ExtraProperties.Value)">
+            <Output TaskParameter="Value" PropertyName="%(_ExtraProperties.Name)"/>
+        </CreateProperty>
+    </Target>
+
+    <Target Name="SetVersionDependentProperties">
+        <PropertyGroup>
+            <LlvmVersion Condition="'$(LlvmVersion)'==''">$(LlvmVersionMajor).$(LlvmVersionMinor).$(LlvmVersionPatch)</LlvmVersion>
+            <FileVersion Condition="'$(FileVersion)'==''">$(FileVersionMajor).$(FileVersionMinor).$(FileVersionBuild).$(FileVersionRevision)</FileVersion>
+            <AssemblyVersion>$(FileVersion)</AssemblyVersion>
+            <InformationalVersion>$(FullBuildNumber)</InformationalVersion>
+            <NuspecProperties>version=$(PackageVersion);llvmversion=$(LlvmVersion);buildbinoutput=$(BaseOutputPath);configuration=$(Configuration);$(NuspecProperties)</NuspecProperties>
+        </PropertyGroup>
+    </Target>
+
+    <Target Name="VerifyProvidedBuildVersion"
+            Condition="'$(MSBuildProjectName)'!='Llvm.NET.BuildTasks' AND '$(FullBuildNumber)'!=''"
+            >
+        <Error Condition="'$(FileVersionMajor)'==''" Text="FileVersionMajor property not found"/>
+        <Error Condition="'$(FileVersionMinor)'==''" Text="FileVersionMinor property not found"/>
+        <Error Condition="'$(FileVersionRevision)'==''" Text="FileVersionRevision property not found"/>
+        <Error Condition="'$(PackageVersion)'==''" Text="PackageVersion property not found"/>
+        <Error Condition="'$(LlvmVersion)'=='' and '$(LlvmVersionMajor)'==''" Text="LlvmVersionMajor property not found"/>
+        <Error Condition="'$(LlvmVersion)'=='' and '$(LlvmVersionMinor)'==''" Text="LlvmVersionMinor property not found"/>
+        <Error Condition="'$(LlvmVersion)'=='' and '$(LlvmVersionPatch)'==''" Text="LlvmVersionPatch property not found"/>
+    </Target>
+
+    <!-- Generates include header for native code Win32 Resource (.RC) -->
+    <Target Name="GenerateVesionInfoHeader"
+            Condition="'$(MSBuildProjectExtension)'=='.vcxproj'"
+            BeforeTargets="ResourceCompile"
+            >
+        <ItemGroup>
+            <VersionInfoGeneratedLine Include='#define FILE_VERSION_MAJOR $(FileVersionMajor)'/>
+            <VersionInfoGeneratedLine Include='#define FILE_VERSION_MINOR $(FileVersionMinor)'/>
+            <VersionInfoGeneratedLine Include='#define FILE_VERSION_BUILD $(FileVersionBuild)'/>
+            <VersionInfoGeneratedLine Include='#define FILE_VERSION_REVISION $(FileVersionRevision)'/>
+            <VersionInfoGeneratedLine Include='#define FILE_VERSION_STRING "$(FileVersion)"'/>
+            <VersionInfoGeneratedLine Include=' '/>
+            <VersionInfoGeneratedLine Include='#define PRODUCT_VERSION_MAJOR $(FileVersionMajor)'/>
+            <VersionInfoGeneratedLine Include='#define PRODUCT_VERSION_MINOR $(FileVersionMinor)'/>
+            <VersionInfoGeneratedLine Include='#define PRODUCT_VERSION_BUILD $(FileVersionBuild)'/>
+            <VersionInfoGeneratedLine Include='#define PRODUCT_VERSION_REVISION $(FileVersionRevision)'/>
+            <VersionInfoGeneratedLine Include='#define PRODUCT_VERSION_STRING "$(FileVersion)"'/>
+        </ItemGroup>
+        <Message Importance="high" Text="Generating $(GeneratedVersionInfoHeader)" />
+        <WriteLinesToFile File="$(IntermediateOutputPath)$(GeneratedVersionInfoHeader)" Overwrite="true" Lines="@(VersionInfoGeneratedLine)" />
+    </Target>
+
+    <!-- Generate a C# source file with Assembly and file version attributes and include it in the compilation -->
+    <!-- For legacy projects only, this functionality is built into the new CPS based CSproj files -->
+    <Target Name="GenerateAssemblyVersionInfoCS"
+            Condition="'$(MSBuildProjectExtension)'=='.csproj' AND '$(GenerateAssemblyInfo)'==''"
+            BeforeTargets="CoreCompile"
+            >
+        <ItemGroup>
+            <AssemblyVersionInfoGeneratedLine Include="using System.Reflection%3B"/>
+            <AssemblyVersionInfoGeneratedLine Include='[assembly: AssemblyVersion("$(FileVersionMajor).$(FileVersionMinor).$(FileVersionBuild).$(FileVersionRevision)")]'/>
+            <AssemblyVersionInfoGeneratedLine Include='[assembly: AssemblyFileVersion("$(FileVersionMajor).$(FileVersionMinor).$(FileVersionBuild).$(FileVersionRevision)")]'/>
+            <AssemblyVersionInfoGeneratedLine Include='[assembly: AssemblyInformationalVersion("$(FullBuildNumber)")]'/>
+        </ItemGroup>
+        <Message Importance="high" Text="Generating: $(IntermediateOutputPath)AssemblyVersionInfo.cs" />
+        <WriteLinesToFile File="$(IntermediateOutputPath)AssemblyVersionInfo.cs" Overwrite="true" Lines="@(AssemblyVersionInfoGeneratedLine)" />
+        <ItemGroup>
+            <Compile Include="$(IntermediateOutputPath)AssemblyVersionInfo.cs"/>
+        </ItemGroup>
+    </Target>
+
+    <Target Name="SignBuiltBinaries"
+            Condition="'$(MSBuildProjectName)'!='Llvm.NET.BuildTasks' AND EXISTS('$(TargetPath)')"
+            AfterTargets="Build">
+        <GenerateSha256File Files="$(TargetPath)"/>
+    </Target>
+
+    <!-- Download nuget.exe if it isn't found-->
+    <Target Name="_DownloadNugetExe" >
+        <MakeDir Directories="$(PackageOutputPath)" Condition="!EXISTS('$(PackageOutputPath')" />
+        <DownloadFile Condition="!EXISTS('$(PackageOutputPath)\NuGet.exe')"
+                      SourceUrl="https://dist.nuget.org/win-x86-commandline/latest/nuget.exe"
+                      DestinationPath="$(PackageOutputPath)\NuGet.exe"
+                      />
+    </Target>
+
+    <!-- Create NuGet packages for all NuSpec Items -->
+    <Target Name="NuGetPack" DependsOnTargets="_DownloadNugetExe" >
+        <Exec
+            Condition="exists('%(NugetPackage.FullPath)')"
+            Command='"$(PackageOutputPath)NuGet.exe" pack %(NugetPackage.FullPath) -OutputDirectory $(PackageOutputPath) -Properties $(NuspecProperties);%(NugetPackage.NuspecProperties) -NoPackageAnalysis' />
+    </Target>
+
+    <Target Name="ShowBuildParams" BeforeTargets="Build;Pack">
+        <Message Importance="normal" Text="              BuildRootDir: $(BuildRootDir)" />
+        <Message Importance="normal" Text="       BaseBuildOutputPath: $(BaseBuildOutputPath)" />
+        <Message Importance="normal" Text="BaseIntermediateOutputPath: $(BaseIntermediateOutputPath)" />
+        <Message Importance="normal" Text="                    IntDir: $(IntDir)" />
+        <Message Importance="normal" Text="            BaseOutputPath: $(BaseOutputPath)" />
+        <Message Importance="normal" Text="           FullBuildNumber: $(FullBuildNumber)"/>
+        <Message Importance="normal" Text="            PackageVersion: $(PackageVersion)"/>
+        <Message Importance="normal" Text="               FileVersion: $(FileVersion)"/>
+        <Message Importance="normal" Text="               LlvmVersion: $(LlvmVersion)"/>
+    </Target>
+</Project>

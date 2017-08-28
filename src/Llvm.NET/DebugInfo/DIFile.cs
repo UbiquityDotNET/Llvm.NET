@@ -1,11 +1,9 @@
-﻿using System;
-using System.Runtime.InteropServices;
-using Llvm.NET.Native;
+﻿using Llvm.NET.Native;
 
 namespace Llvm.NET.DebugInfo
 {
     /// <summary>see <a href="http://llvm.org/docs/LangRef.html#difile"/></summary>
-    public class DIFile 
+    public class DIFile
         : DIScope
     {
         internal DIFile( LLVMMetadataRef handle )
@@ -13,23 +11,9 @@ namespace Llvm.NET.DebugInfo
         {
         }
 
-        public string FileName
-        {
-            get
-            {
-                IntPtr name = NativeMethods.GetDIFileName( MetadataHandle );
-                return Marshal.PtrToStringAnsi( name );
-            }
-        }
+        public string FileName => NativeMethods.GetDIFileName( MetadataHandle );
 
-        public string Directory
-        {
-            get
-            {
-                IntPtr dir = NativeMethods.GetDIFileDirectory( MetadataHandle );
-                return Marshal.PtrToStringAnsi( dir );
-            }
-        }
+        public string Directory => NativeMethods.GetDIFileDirectory( MetadataHandle );
 
         public string Path => System.IO.Path.Combine( Directory, FileName );
     }

@@ -1,5 +1,5 @@
-﻿
-using System;
+﻿using System;
+using System.Diagnostics.CodeAnalysis;
 using Llvm.NET.Native;
 
 namespace Llvm.NET.DebugInfo
@@ -7,6 +7,7 @@ namespace Llvm.NET.DebugInfo
     public enum SourceLanguage
     {
         Invalid = 0,
+
         // Language names
         C89 = 0x0001,
         C = 0x0002,
@@ -45,75 +46,75 @@ namespace Llvm.NET.DebugInfo
         UserMax = 0xffff
     }
 
-    [System.Diagnostics.CodeAnalysis.SuppressMessage( "Microsoft.Design", "CA1028:EnumStorageShouldBeInt32" )]
+    [SuppressMessage( "Microsoft.Design", "CA1028:EnumStorageShouldBeInt32", Justification = "matches interop type from native code" )]
     public enum Tag : ushort
     {
         Invalid = 0,
-        ArrayType = LLVMDwarfTag.LLVMDwarfTagArrayType,
-        ClassType= LLVMDwarfTag.LLVMDwarfTagClassType,
-        EntryPoint= LLVMDwarfTag.LLVMDwarfTagEntryPoint,
-        EnumerationType= LLVMDwarfTag.LLVMDwarfTagEnumerationType,
-        FormalParameter= LLVMDwarfTag.LLVMDwarfTagFormalParameter,
-        ImportedDeclaration= LLVMDwarfTag.LLVMDwarfTagImportedDeclaration,
-        Label= LLVMDwarfTag.LLVMDwarfTagLabel,
-        LexicalBlock= LLVMDwarfTag.LLVMDwarfTagLexicalBlock,
-        Member= LLVMDwarfTag.LLVMDwarfTagMember,
-        PointerType= LLVMDwarfTag.LLVMDwarfTagPointerType,
-        ReferenceType= LLVMDwarfTag.LLVMDwarfTagReferenceType,
-        CompileUnit= LLVMDwarfTag.LLVMDwarfTagCompileUnit,
-        StringType= LLVMDwarfTag.LLVMDwarfTagStringType,
-        StructureType= LLVMDwarfTag.LLVMDwarfTagStructureType,
-        SubroutineType= LLVMDwarfTag.LLVMDwarfTagSubroutineType,
-        TypeDef= LLVMDwarfTag.LLVMDwarfTagTypeDef,
-        UnionType= LLVMDwarfTag.LLVMDwarfTagUnionType,
-        UnspecifiedParameters= LLVMDwarfTag.LLVMDwarfTagUnspecifiedParameters,
-        Variant= LLVMDwarfTag.LLVMDwarfTagVariant,
-        CommonBlock= LLVMDwarfTag.LLVMDwarfTagCommonBlock,
-        CommonInclusion= LLVMDwarfTag.LLVMDwarfTagCommonInclusion,
-        Inheritance= LLVMDwarfTag.LLVMDwarfTagInheritance,
-        InlinedSubroutine= LLVMDwarfTag.LLVMDwarfTagInlinedSubroutine,
-        Module= LLVMDwarfTag.LLVMDwarfTagModule,
-        PtrToMemberType= LLVMDwarfTag.LLVMDwarfTagPtrToMemberType,
-        SetType= LLVMDwarfTag.LLVMDwarfTagSetType,
-        SubrangeType= LLVMDwarfTag.LLVMDwarfTagSubrangeType,
-        WithStatement= LLVMDwarfTag.LLVMDwarfTagWithStatement,
-        AccessDeclaration= LLVMDwarfTag.LLVMDwarfTagAccessDeclaration,
-        BaseType= LLVMDwarfTag.LLVMDwarfTagBaseType,
-        CatchBlock= LLVMDwarfTag.LLVMDwarfTagCatchBlock,
-        ConstType= LLVMDwarfTag.LLVMDwarfTagConstType,
-        Constant= LLVMDwarfTag.LLVMDwarfTagConstant,
-        Enumerator= LLVMDwarfTag.LLVMDwarfTagEnumerator,
-        FileType= LLVMDwarfTag.LLVMDwarfTagFileType,
-        Friend= LLVMDwarfTag.LLVMDwarfTagFriend,
-        NameList= LLVMDwarfTag.LLVMDwarfTagNameList,
-        NameListItem= LLVMDwarfTag.LLVMDwarfTagNameListItem,
-        PackedType= LLVMDwarfTag.LLVMDwarfTagPackedType,
-        SubProgram = LLVMDwarfTag.LLVMDwarfTagSubProgram,
-        TemplateTypeParameter= LLVMDwarfTag.LLVMDwarfTagTemplateTypeParameter,
-        TemplateValueParameter= LLVMDwarfTag.LLVMDwarfTagTemplateValueParameter,
-        ThrownType= LLVMDwarfTag.LLVMDwarfTagThrownType,
-        TryBlock= LLVMDwarfTag.LLVMDwarfTagTryBlock,
-        VariantPart= LLVMDwarfTag.LLVMDwarfTagVariantPart,
-        Variable= LLVMDwarfTag.LLVMDwarfTagVariable,
-        VolatileType= LLVMDwarfTag.LLVMDwarfTagVolatileType,
-        DwarfProcedure= LLVMDwarfTag.LLVMDwarfTagDwarfProcedure,
-        RestrictType= LLVMDwarfTag.LLVMDwarfTagRestrictType,
-        InterfaceType= LLVMDwarfTag.LLVMDwarfTagInterfaceType,
-        Namespace= LLVMDwarfTag.LLVMDwarfTagNamespace,
-        ImportedModule= LLVMDwarfTag.LLVMDwarfTagImportedModule,
-        UnspecifiedType= LLVMDwarfTag.LLVMDwarfTagUnspecifiedType,
-        PartialUnit= LLVMDwarfTag.LLVMDwarfTagPartialUnit,
-        ImportedUnit= LLVMDwarfTag.LLVMDwarfTagImportedUnit,
-        Condition= LLVMDwarfTag.LLVMDwarfTagCondition,
-        SharedType= LLVMDwarfTag.LLVMDwarfTagSharedType,
-        TypeUnit= LLVMDwarfTag.LLVMDwarfTagTypeUnit,
-        RValueReferenceType= LLVMDwarfTag.LLVMDwarfTagRValueReferenceType,
-        TemplateAlias= LLVMDwarfTag.LLVMDwarfTagTemplateAlias,
-         
+        ArrayType = LLVMDwarfTag.ArrayType,
+        ClassType= LLVMDwarfTag.ClassType,
+        EntryPoint= LLVMDwarfTag.EntryPoint,
+        EnumerationType= LLVMDwarfTag.EnumerationType,
+        FormalParameter= LLVMDwarfTag.FormalParameter,
+        ImportedDeclaration= LLVMDwarfTag.ImportedDeclaration,
+        Label= LLVMDwarfTag.Label,
+        LexicalBlock= LLVMDwarfTag.LexicalBlock,
+        Member= LLVMDwarfTag.Member,
+        PointerType= LLVMDwarfTag.PointerType,
+        ReferenceType= LLVMDwarfTag.ReferenceType,
+        CompileUnit= LLVMDwarfTag.CompileUnit,
+        StringType= LLVMDwarfTag.StringType,
+        StructureType= LLVMDwarfTag.StructureType,
+        SubroutineType= LLVMDwarfTag.SubroutineType,
+        TypeDef= LLVMDwarfTag.TypeDef,
+        UnionType= LLVMDwarfTag.UnionType,
+        UnspecifiedParameters= LLVMDwarfTag.UnspecifiedParameters,
+        Variant= LLVMDwarfTag.Variant,
+        CommonBlock= LLVMDwarfTag.CommonBlock,
+        CommonInclusion= LLVMDwarfTag.CommonInclusion,
+        Inheritance= LLVMDwarfTag.Inheritance,
+        InlinedSubroutine= LLVMDwarfTag.InlinedSubroutine,
+        Module= LLVMDwarfTag.Module,
+        PtrToMemberType= LLVMDwarfTag.PtrToMemberType,
+        SetType= LLVMDwarfTag.SetType,
+        SubrangeType= LLVMDwarfTag.SubrangeType,
+        WithStatement= LLVMDwarfTag.WithStatement,
+        AccessDeclaration= LLVMDwarfTag.AccessDeclaration,
+        BaseType= LLVMDwarfTag.BaseType,
+        CatchBlock= LLVMDwarfTag.CatchBlock,
+        ConstType= LLVMDwarfTag.ConstType,
+        Constant= LLVMDwarfTag.Constant,
+        Enumerator= LLVMDwarfTag.Enumerator,
+        FileType= LLVMDwarfTag.FileType,
+        Friend= LLVMDwarfTag.Friend,
+        NameList= LLVMDwarfTag.NameList,
+        NameListItem= LLVMDwarfTag.NameListItem,
+        PackedType= LLVMDwarfTag.PackedType,
+        SubProgram = LLVMDwarfTag.SubProgram,
+        TemplateTypeParameter= LLVMDwarfTag.TemplateTypeParameter,
+        TemplateValueParameter= LLVMDwarfTag.TemplateValueParameter,
+        ThrownType= LLVMDwarfTag.ThrownType,
+        TryBlock= LLVMDwarfTag.TryBlock,
+        VariantPart= LLVMDwarfTag.VariantPart,
+        Variable= LLVMDwarfTag.Variable,
+        VolatileType= LLVMDwarfTag.VolatileType,
+        DwarfProcedure= LLVMDwarfTag.DwarfProcedure,
+        RestrictType= LLVMDwarfTag.RestrictType,
+        InterfaceType= LLVMDwarfTag.InterfaceType,
+        Namespace= LLVMDwarfTag.Namespace,
+        ImportedModule= LLVMDwarfTag.ImportedModule,
+        UnspecifiedType= LLVMDwarfTag.UnspecifiedType,
+        PartialUnit= LLVMDwarfTag.PartialUnit,
+        ImportedUnit= LLVMDwarfTag.ImportedUnit,
+        Condition= LLVMDwarfTag.Condition,
+        SharedType= LLVMDwarfTag.SharedType,
+        TypeUnit= LLVMDwarfTag.TypeUnit,
+        RValueReferenceType= LLVMDwarfTag.RValueReferenceType,
+        TemplateAlias= LLVMDwarfTag.TemplateAlias,
+
         // New in DWARF 5: // New in DWARF 5:
-        CoArrayType= LLVMDwarfTag.LLVMDwarfTagCoArrayType,
-        GenericSubrange= LLVMDwarfTag.LLVMDwarfTagGenericSubrange,
-        DynamicType= LLVMDwarfTag.LLVMDwarfTagDynamicType,
+        CoArrayType= LLVMDwarfTag.CoArrayType,
+        GenericSubrange= LLVMDwarfTag.GenericSubrange,
+        DynamicType= LLVMDwarfTag.DynamicType,
 
         // LLVM Custom constants
         AutoVariable = 0x100, // Tag for local (auto) variables.
@@ -122,16 +123,16 @@ namespace Llvm.NET.DebugInfo
 
         UserBase = 0x1000, // Recommended base for user tags.
 
-        MipsLoop = LLVMDwarfTag.LLVMDwarfTagMipsLoop,
-        FormatLabel= LLVMDwarfTag.LLVMDwarfTagFormatLabel,
-        FunctionTemplate= LLVMDwarfTag.LLVMDwarfTagFunctionTemplate,
-        ClassTemplate= LLVMDwarfTag.LLVMDwarfTagClassTemplate,
-        GnuTemplateTemplateParameter = LLVMDwarfTag.LLVMDwarfTagGnuTemplateTemplateParam,
-        GnuTemplateParameterPack= LLVMDwarfTag.LLVMDwarfTagGnuTemplateParameterPack,
-        GnuFormalParameterPack= LLVMDwarfTag.LLVMDwarfTagGnuFormalParameterPack,
-        LoUser= LLVMDwarfTag.LLVMDwarfTagLoUser,
-        AppleProperty= LLVMDwarfTag.LLVMDwarfTagAppleProperty,
-        HiUser = LLVMDwarfTag.LLVMDwarfTagHiUser
+        MipsLoop = LLVMDwarfTag.MipsLoop,
+        FormatLabel= LLVMDwarfTag.FormatLabel,
+        FunctionTemplate= LLVMDwarfTag.FunctionTemplate,
+        ClassTemplate= LLVMDwarfTag.ClassTemplate,
+        GnuTemplateTemplateParameter = LLVMDwarfTag.GnuTemplateTemplateParam,
+        GnuTemplateParameterPack= LLVMDwarfTag.GnuTemplateParameterPack,
+        GnuFormalParameterPack= LLVMDwarfTag.GnuFormalParameterPack,
+        LoUser= LLVMDwarfTag.LoUser,
+        AppleProperty= LLVMDwarfTag.AppleProperty,
+        HiUser = LLVMDwarfTag.HiUser
     }
 
     public enum QualifiedTypeTag
@@ -141,10 +142,10 @@ namespace Llvm.NET.DebugInfo
         Volatile = Tag.VolatileType,
     }
 
-    [System.Diagnostics.CodeAnalysis.SuppressMessage( "Microsoft.Design", "CA1028:EnumStorageShouldBeInt32" )]
-    public enum DiTypeKind : uint
+    public enum DiTypeKind
     {
         Invalid = 0,
+
         // Encoding attribute values
         Address = 0x01,
         Boolean = 0x02,
@@ -171,7 +172,7 @@ namespace Llvm.NET.DebugInfo
     /// The three accessibility flags are mutually exclusive and rolled together
     /// in the first two bits.
     /// </remarks>
-    [System.Diagnostics.CodeAnalysis.SuppressMessage( "Microsoft.Naming", "CA1726:UsePreferredTerms", MessageId = "Flags" )]
+    [SuppressMessage( "Microsoft.Naming", "CA1726:UsePreferredTerms", MessageId = "Flags", Justification = "Matches the undelying wrapped API" )]
     [Flags]
     public enum DebugInfoFlags
     {
@@ -197,7 +198,8 @@ namespace Llvm.NET.DebugInfo
         RValueReference = 1 << 15
     }
 
-    [System.Diagnostics.CodeAnalysis.SuppressMessage( "Microsoft.Design", "CA1028:EnumStorageShouldBeInt32" )]
+#pragma warning disable SA1300 // Element must begin with upper-case letter
+    [SuppressMessage( "Microsoft.Design", "CA1028:EnumStorageShouldBeInt32", Justification = "Mathces underlying interop type" )]
     public enum ExpressionOp : long
     {
         Invalid = 0,
@@ -363,4 +365,5 @@ namespace Llvm.NET.DebugInfo
         GNU_addr_index = 0xfb,
         GNU_const_index = 0xfc,
     }
+#pragma warning restore SA1300 // Element must begin with upper-case letter
 }

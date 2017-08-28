@@ -69,5 +69,10 @@ extern "C"
         auto pAlias = unwrap<GlobalAlias>( Val );
         return wrap( pAlias->getAliasee( ) );
     }
-}
 
+    void LLVMGlobalVariableAddDebugExpression( LLVMValueRef /*GlobalVariable*/ globalVar, LLVMMetadataRef exp )
+    {
+        auto gv = unwrap<GlobalVariable>( globalVar );
+        gv->addDebugInfo( unwrap<DIGlobalVariableExpression>( exp ));
+    }
+}

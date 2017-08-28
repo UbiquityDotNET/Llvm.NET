@@ -1,19 +1,20 @@
-﻿using Llvm.NET.Values;
-using System;
+﻿using System;
+using System.Diagnostics.CodeAnalysis;
 using Llvm.NET.Native;
+using Llvm.NET.Values;
 
 namespace Llvm.NET.Types
 {
     /// <summary>Interface for a Type in LLVM</summary>
-    public interface ITypeRef 
+    public interface ITypeRef
         : IExtensiblePropertyContainer
     {
         /// <summary>LibLLVM handle for the type</summary>
-        IntPtr TypeHandle { get; }
+        IntPtr TypeHandle { get; } // TODO: move this to an internal interface so that low level internals not exposed in public API
 
         /// <summary>Flag to indicate if the type is sized</summary>
         bool IsSized { get; }
-        
+
         /// <summary>LLVM Type kind for this type</summary>
         TypeKind Kind { get; }
 
@@ -48,7 +49,7 @@ namespace Llvm.NET.Types
         Context Context { get; }
 
         /// <summary>Integer bit width of this type or 0 for non integer types</summary>
-        [System.Diagnostics.CodeAnalysis.SuppressMessage( "Microsoft.Naming", "CA1720:IdentifiersShouldNotContainTypeNames", MessageId = "integer" )]
+        [SuppressMessage( "Microsoft.Naming", "CA1720:IdentifiersShouldNotContainTypeNames", Justification = "Value is the bitwidth of an integer, name is appropriate" )]
         uint IntegerBitWidth { get; }
 
         /// <summary>Gets a null value (e.g. all bits == 0 ) for the type</summary>
@@ -56,7 +57,7 @@ namespace Llvm.NET.Types
         /// This is a getter function instead of a property as it can throw exceptions
         /// for types that don't support such a thing (i.e. void )
         /// </remarks>
-        [System.Diagnostics.CodeAnalysis.SuppressMessage( "Microsoft.Design", "CA1024:UsePropertiesWhereAppropriate" )]
+        [SuppressMessage( "Microsoft.Design", "CA1024:UsePropertiesWhereAppropriate", Justification = "See comment remarks" )]
         Constant GetNullValue( );
 
         /// <summary>Array type factory for an array with elements of this type</summary>

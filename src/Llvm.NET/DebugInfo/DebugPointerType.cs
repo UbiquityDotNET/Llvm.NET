@@ -1,4 +1,5 @@
-﻿using Llvm.NET.Types;
+﻿using System.Diagnostics.CodeAnalysis;
+using Llvm.NET.Types;
 
 namespace Llvm.NET.DebugInfo
 {
@@ -12,12 +13,14 @@ namespace Llvm.NET.DebugInfo
         /// <param name="module"><see cref="NativeModule"/> used for creating the pointer type and debug information</param>
         /// <param name="addressSpace">Target address space for the pointer [Default: 0]</param>
         /// <param name="name">Name of the type [Default: null]</param>
-        public DebugPointerType( IDebugType<ITypeRef, DIType> debugElementType, NativeModule module, uint addressSpace = 0, string name = null )
+        /// <param name="alignment">Alignment on pointer</param>
+        public DebugPointerType( IDebugType<ITypeRef, DIType> debugElementType, NativeModule module, uint addressSpace = 0, string name = null, uint alignment = 0 )
             : this( debugElementType.VerifyArgNotNull( nameof( debugElementType ) ).NativeType
                   , module
                   , debugElementType.VerifyArgNotNull( nameof( debugElementType ) ).DIType
                   , addressSpace
                   , name
+                  , alignment
                   )
         {
         }
@@ -28,11 +31,13 @@ namespace Llvm.NET.DebugInfo
         /// <param name="elementType">Debug type of the pointee</param>
         /// <param name="addressSpace">Target address space for the pointer [Default: 0]</param>
         /// <param name="name">Name of the type [Default: null]</param>
-        public DebugPointerType( ITypeRef llvmElementType, NativeModule module, DIType elementType, uint addressSpace = 0, string name = null )
+        /// <param name="alignment">Alignment of pointer</param>
+        public DebugPointerType( ITypeRef llvmElementType, NativeModule module, DIType elementType, uint addressSpace = 0, string name = null, uint alignment = 0 )
             : this( llvmElementType.VerifyArgNotNull( nameof( llvmElementType ) ).CreatePointerType( addressSpace )
                   , module
                   , elementType
                   , name
+                  , alignment
                   )
         {
         }
@@ -42,15 +47,17 @@ namespace Llvm.NET.DebugInfo
         /// <param name="module"><see cref="NativeModule"/> used for creating the pointer type and debug information</param>
         /// <param name="elementType">Debug type of the pointee</param>
         /// <param name="name">Name of the type [Default: null]</param>
-        public DebugPointerType( IPointerType llvmPtrType, NativeModule module, DIType elementType, string name = null )
+        /// <param name="alignment">Alignment for pointer type</param>
+        [SuppressMessage( "Microsoft.Design", "CA1062:Validate arguments of public methods", MessageId = "1", Justification = "VerifyArgNotNull" )]
+        public DebugPointerType( IPointerType llvmPtrType, NativeModule module, DIType elementType, string name = null, uint alignment = 0 )
             : base( llvmPtrType )
         {
-            DIType = module.VerifyArgNotNull( nameof( module ) )
-                           .DIBuilder
+            module.VerifyArgNotNull( nameof( module ) );
+            DIType = module.DIBuilder
                            .CreatePointerType( elementType
                                              , name
-                                             , module.VerifyArgNotNull( nameof( module ) ).Layout.BitSizeOf( llvmPtrType )
-                                             , module.VerifyArgNotNull( nameof( module ) ).Layout.AbiBitAlignmentOf( llvmPtrType )
+                                             , module.Layout.BitSizeOf( llvmPtrType )
+                                             , alignment
                                              );
         }
 

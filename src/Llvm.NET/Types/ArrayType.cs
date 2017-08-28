@@ -26,7 +26,9 @@ namespace Llvm.NET.Types
             : base( typeRef )
         {
             if( NativeMethods.GetTypeKind( typeRef ) != LLVMTypeKind.LLVMArrayTypeKind )
+            {
                 throw new ArgumentException( "Array type reference expected", nameof( typeRef ) );
+            }
         }
     }
 }

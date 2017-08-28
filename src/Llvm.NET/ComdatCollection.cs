@@ -1,8 +1,8 @@
-﻿using Llvm.NET.Native;
-using Llvm.NET.Values;
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using Llvm.NET.Native;
+using Llvm.NET.Values;
 
 namespace Llvm.NET
 {
@@ -15,32 +15,28 @@ namespace Llvm.NET
             NativeMethods.ModuleEnumerateComdats( Module.ModuleHandle, AddComdat );
         }
 
-        public Comdat this[ string key ]
-        {
-            get
-            {
-                return InternalComdatMap[ key ];
-            }
-        }
+        public Comdat this[ string key ] => InternalComdatMap[ key ];
 
         public int Count => InternalComdatMap.Count;
 
         public Comdat Add( string key, ComdatKind kind )
         {
             LLVMComdatRef comdatRef = NativeMethods.ModuleInsertOrUpdateComdat( Module.ModuleHandle, key, ( LLVMComdatSelectionKind )kind );
-            Comdat retVal;
-            if( !InternalComdatMap.TryGetValue( key, out retVal ) )
+            if(!InternalComdatMap.TryGetValue( key, out Comdat retVal ))
             {
                 retVal = new Comdat( Module, comdatRef );
                 InternalComdatMap.Add( retVal.Name, retVal );
             }
+
             return retVal;
         }
 
         public void Clear( )
         {
-            foreach( var obj in ModuleGlobalObjects() )
+            foreach( var obj in GetModuleGlobalObjects() )
+            {
                 obj.Comdat = null;
+            }
 
             InternalComdatMap.Clear( );
             NativeMethods.ModuleComdatClear( Module.ModuleHandle );
@@ -49,30 +45,44 @@ namespace Llvm.NET
         public bool Contains( string key ) => InternalComdatMap.ContainsKey( key );
 
         public IEnumerator<Comdat> GetEnumerator( ) => InternalComdatMap.Values.GetEnumerator( );
+
         IEnumerator IEnumerable.GetEnumerator( ) => InternalComdatMap.Values.GetEnumerator( );
 
         public bool Remove( string key )
         {
-            Comdat value;
-            if( !InternalComdatMap.TryGetValue( key, out value ) )
+            if(!InternalComdatMap.TryGetValue( key, out Comdat value ))
             {
                 return false;
             }
 
-            var retVal = InternalComdatMap.Remove( key );
+            bool retVal = InternalComdatMap.Remove( key );
             if( retVal )
             {
                 ClearComdatFromGlobals( key );
                 NativeMethods.ModuleComdatRemove( Module.ModuleHandle, value.ComdatHandle );
             }
+
             return retVal;
         }
 
         public bool TryGetValue( string key, out Comdat value ) => InternalComdatMap.TryGetValue( key, out value );
 
+        private IEnumerable<GlobalObject> GetModuleGlobalObjects()
+        {
+            foreach( var gv in Module.Globals.OfType<GlobalObject>( ) )
+            {
+                yield return gv;
+            }
+
+            foreach( var func in Module.Functions )
+            {
+                yield return func;
+            }
+        }
+
         private void ClearComdatFromGlobals( string name )
         {
-            var matchingGlobals = from gv in ModuleGlobalObjects( )
+            var matchingGlobals = from gv in GetModuleGlobalObjects()
                                   where gv.Comdat.Name == name
                                   select gv;
 
@@ -87,15 +97,6 @@ namespace Llvm.NET
             var comdat = new Comdat( Module, comdatRef );
             InternalComdatMap.Add( comdat.Name, comdat );
             return true;
-        }
-
-        IEnumerable<GlobalObject> ModuleGlobalObjects()
-        {
-            foreach( var gv in Module.Globals.OfType<GlobalObject>( ) )
-                yield return gv;
-
-            foreach( var func in Module.Functions )
-                yield return func;
         }
 
         private NativeModule Module;

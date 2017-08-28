@@ -18,15 +18,17 @@ namespace Llvm.NET
             Module = module;
             ComdatHandle = comdatRef;
         }
-        
+
         public string Name
         {
             get
             {
                 if( Module.IsDisposed )
+                {
                     return string.Empty;
-                else
-                    return NativeMethods.MarshalMsg( NativeMethods.ComdatGetName( ComdatHandle ) );
+                }
+
+                return NativeMethods.ComdatGetName( ComdatHandle );
             }
         }
 
@@ -35,21 +37,26 @@ namespace Llvm.NET
             get
             {
                 if( Module.IsDisposed )
+                {
                     return default( ComdatKind );
-                else
-                    return (ComdatKind)NativeMethods.ComdatGetKind( ComdatHandle );
+                }
+
+                return ( ComdatKind )NativeMethods.ComdatGetKind( ComdatHandle );
             }
 
             set
             {
                 if( Module.IsDisposed )
+                {
                     return;
+                }
 
                 NativeMethods.ComdatSetKind( ComdatHandle, ( LLVMComdatSelectionKind )value );
             }
         }
 
-        internal readonly LLVMComdatRef ComdatHandle;
-        internal readonly NativeModule Module;
+        internal LLVMComdatRef ComdatHandle { get; }
+
+        internal NativeModule Module { get; }
     }
 }

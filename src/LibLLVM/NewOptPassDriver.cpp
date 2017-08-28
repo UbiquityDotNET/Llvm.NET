@@ -17,7 +17,7 @@
 #include "llvm/ADT/StringRef.h"
 #include "llvm/Analysis/AliasAnalysis.h"
 #include "llvm/Analysis/CGSCCPassManager.h"
-#include "llvm/Analysis/LoopPassManager.h"
+#include "llvm/Transforms/Scalar/LoopPassManager.h"
 #include "llvm/Bitcode/BitcodeWriterPass.h"
 #include "llvm/IR/Dominators.h"
 #include "llvm/IR/IRPrintingPasses.h"

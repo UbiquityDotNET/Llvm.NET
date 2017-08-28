@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using System.Runtime.InteropServices;
 using Llvm.NET.Native;
 
 namespace Llvm.NET.Types
@@ -47,22 +46,19 @@ namespace Llvm.NET.Types
 
             // To interop correctly, we need to have an array of at least size one.
             if ( argsLength == 0 )
+            {
                 llvmArgs = new LLVMTypeRef[ 1 ];
+            }
 
             NativeMethods.StructSetBody( TypeHandle_, out llvmArgs[ 0 ], argsLength, packed );
         }
 
-        public string Name
-        {
-            get
-            {
-                var ptr =  NativeMethods.GetStructName( TypeHandle_ );
-                return Marshal.PtrToStringAnsi( ptr );
-            }
-        }
+        public string Name => NativeMethods.GetStructName( TypeHandle_ );
 
         public bool IsOpaque => NativeMethods.IsOpaqueStruct( TypeHandle_ );
+
         public bool IsPacked => NativeMethods.IsPackedStruct( TypeHandle_ );
+
         public IReadOnlyList<ITypeRef> Members
         {
             get

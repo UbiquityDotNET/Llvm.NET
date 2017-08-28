@@ -1,6 +1,6 @@
-﻿using Llvm.NET.Native;
-using System;
+﻿using System;
 using System.Threading;
+using Llvm.NET.Native;
 
 namespace Llvm.NET
 {
@@ -13,9 +13,23 @@ namespace Llvm.NET
             PassRegistryHandle = NativeMethods.CreatePassRegistry( );
         }
 
-        private PassRegistry( PassRegistryHandle hRegistry )
+        private PassRegistry( LLVMPassRegistryRef hRegistry )
         {
             PassRegistryHandle = hRegistry;
+        }
+
+        ~PassRegistry( )
+        {
+            // Do not change this code. Put cleanup code in Dispose(bool disposing) above.
+            Dispose( false );
+        }
+
+        // This code added to correctly implement the disposable pattern.
+        public void Dispose( )
+        {
+            // Do not change this code. Put cleanup code in Dispose(bool disposing) above.
+            Dispose( true );
+            GC.SuppressFinalize( this );
         }
 
         public void InitializeAll( )
@@ -33,8 +47,8 @@ namespace Llvm.NET
             InitializeIPA( );
             InitializeTarget( );
             InitializeCodeGenForOpt( );
-
         }
+
         public void InitializeCodeGenForOpt()
         {
             NativeMethods.InitializeCodeGenForOpt( PassRegistryHandle );
@@ -100,8 +114,7 @@ namespace Llvm.NET
             NativeMethods.InitializeTarget( PassRegistryHandle );
         }
 
-        #region IDisposable Support
-        void Dispose( bool disposing )
+        private void Dispose( bool disposing )
         {
             if( !PassRegistryHandle.IsClosed )
             {
@@ -114,27 +127,12 @@ namespace Llvm.NET
             }
         }
 
-        ~PassRegistry( )
-        {
-            // Do not change this code. Put cleanup code in Dispose(bool disposing) above.
-            Dispose( false );
-        }
-
-        // This code added to correctly implement the disposable pattern.
-        public void Dispose( )
-        {
-            // Do not change this code. Put cleanup code in Dispose(bool disposing) above.
-            Dispose( true );
-            GC.SuppressFinalize( this );
-        }
-        #endregion
-
-        PassRegistryHandle PassRegistryHandle;
+        private LLVMPassRegistryRef PassRegistryHandle;
 
         public static PassRegistry GlobalRegistry => LazyGlobalPassRegistry.Value;
 
-        private static Lazy<PassRegistry> LazyGlobalPassRegistry
-            = new Lazy<PassRegistry>( ( ) => new PassRegistry( NativeMethods.GetGlobalPassRegistry( ) )
+        private static readonly Lazy<PassRegistry> LazyGlobalPassRegistry
+            = new Lazy<PassRegistry>( () => new PassRegistry( NativeMethods.GetGlobalPassRegistry() )
                                     , LazyThreadSafetyMode.ExecutionAndPublication
                                     );
     }

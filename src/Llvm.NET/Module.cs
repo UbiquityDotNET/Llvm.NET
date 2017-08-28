@@ -1,32 +1,24 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using Llvm.NET.DebugInfo;
 using Llvm.NET.Native;
 using Llvm.NET.Types;
 using Llvm.NET.Values;
-using System.Diagnostics.CodeAnalysis;
 
 namespace Llvm.NET
 {
     /// <summary>LLVM Bitcode module</summary>
     /// <remarks>
     /// A module is the basic unit for containing code in LLVM. Modules are an in memory
-    /// representation of the LLVM bit-code. 
+    /// representation of the LLVM bit-code.
     /// </remarks>
     public sealed class NativeModule
         : IDisposable
         , IExtensiblePropertyContainer
     {
-        internal NativeModule( LLVMModuleRef handle )
-        {
-            ModuleHandle = handle;
-            DIBuilder_ = new Lazy<DebugInfoBuilder>( ( ) => new DebugInfoBuilder( this ) );
-            Context.AddModule( this );
-            Comdats = new ComdatCollection( this );
-        }
-
         /// <summary>Creates an unnamed module without debug information</summary>
         public NativeModule( )
             : this( string.Empty, null )
@@ -43,11 +35,12 @@ namespace Llvm.NET
         /// <summary>Creates an named module in a given context</summary>
         /// <param name="moduleId">Module's ID</param>
         /// <param name="context">Context for the module</param>
-        [System.Diagnostics.CodeAnalysis.SuppressMessage( "Microsoft.Reliability", "CA2000:Dispose objects before losing scope" )]
         public NativeModule( string moduleId, Context context )
         {
             if( moduleId == null )
+            {
                 moduleId = string.Empty;
+            }
 
             if( context == null )
             {
@@ -55,13 +48,32 @@ namespace Llvm.NET
                 OwnsContext = true;
             }
 
-            ModuleHandle = NativeMethods.ModuleCreateWithNameInContext( moduleId, context.ContextHandle );
-            if( ModuleHandle.Pointer == IntPtr.Zero )
-                throw new InternalCodeGeneratorException( "Could not create module in context" );
+            Func<bool> onException = ( ) =>
+            {
+                if( OwnsContext && context != null )
+                {
+                    context.Dispose( );
+                }
 
-            DIBuilder_ = new Lazy<DebugInfoBuilder>( ( ) => new DebugInfoBuilder( this ) );
-            Context.AddModule( this );
-            Comdats = new ComdatCollection( this );
+                return false;
+            };
+
+            try
+            {
+                ModuleHandle = NativeMethods.ModuleCreateWithNameInContext( moduleId, context.ContextHandle );
+                if( ModuleHandle.Pointer == IntPtr.Zero )
+                {
+                    throw new InternalCodeGeneratorException( "Could not create module in context" );
+                }
+
+                LazyDiBuilder = new Lazy<DebugInfoBuilder>( ( ) => new DebugInfoBuilder( this ) );
+                Context.AddModule( this );
+                Comdats = new ComdatCollection( this );
+            }
+            catch when ( onException() )
+            {
+                // NOP
+            }
         }
 
         /// <summary>Creates a named module with a root <see cref="DICompileUnit"/> to contain debugging information</summary>
@@ -121,7 +133,6 @@ namespace Llvm.NET
                                                        );
         }
 
-        #region IDisposable Pattern
         public bool IsDisposed => ModuleHandle.Pointer.IsNull();
 
         public void Dispose( )
@@ -134,33 +145,6 @@ namespace Llvm.NET
         {
             Dispose( false );
         }
-
-        void Dispose( bool disposing )
-        {
-            // if not already disposed, dispose the module
-            // Do this only on dispose. The containing context
-            // will clean up the module when it is disposed or
-            // finalized. Since finalization order isn't
-            // deterministic it is possible that the module is
-            // finalized after the context has already run its
-            // finalizer, which would cause an access violation
-            // in the native LLVM layer.
-            if( disposing && ModuleHandle.Pointer != IntPtr.Zero )
-            {
-                // remove the module handle from the module cache.
-                Context.RemoveModule( this );
-
-                // if this module created the context then just dispose
-                // the context as that will clean up the module as well.
-                if( OwnsContext )
-                    Context.Dispose( );
-                else
-                    NativeMethods.DisposeModule( ModuleHandle );
-
-                ModuleHandle = default( LLVMModuleRef );
-            }
-        }
-        #endregion
 
         /// <summary>Name of the Debug Version information module flag</summary>
         public const string DebugVersionValue = "Debug Info Version";
@@ -180,7 +164,9 @@ namespace Llvm.NET
             get
             {
                 if( ModuleHandle.Pointer == IntPtr.Zero )
+                {
                     return null;
+                }
 
                 return Context.GetContextFor( ModuleHandle );
             }
@@ -196,7 +182,7 @@ namespace Llvm.NET
         }
 
         /// <summary><see cref="DebugInfoBuilder"/> to create debug information for this module</summary>
-        public DebugInfoBuilder DIBuilder => DIBuilder_.Value;
+        public DebugInfoBuilder DIBuilder => LazyDiBuilder.Value;
 
         /// <summary>Debug Compile unit for this module</summary>
         public DICompileUnit DICompileUnit { get; internal set; }
@@ -210,47 +196,43 @@ namespace Llvm.NET
         /// come from the actual <see cref="TargetMachine"/> the code is
         /// targeting.
         /// </remarks>
-        public string DataLayoutString
-        {
-            get
-            {
-                return Layout?.ToString( ) ?? string.Empty;
-            }
-        }
+        public string DataLayoutString => Layout?.ToString( ) ?? string.Empty;
 
         /// <summary>Target data layout for this module</summary>
         /// <remarks>The layout is produced by parsing the <see cref="DataLayoutString"/>
-        /// therefore this property changes anytime the <see cref="DataLayoutString"/> is 
+        /// therefore this property changes anytime the <see cref="DataLayoutString"/> is
         /// set. Furthermore, setting this property will change the value of <see cref="DataLayoutString"/>.
         /// In other words, Layout and <see cref="DataLayoutString"/> are two different views
         /// of the same information.
         /// </remarks>
         public DataLayout Layout
         {
-            get { return Layout_; }
+            get => Layout_;
+
             set
             {
                 if( Layout_ != null )
+                {
                     Layout_.Dispose( );
+                }
 
                 Layout_ = value;
                 NativeMethods.SetDataLayout( ModuleHandle, value?.ToString( ) ?? string.Empty );
             }
         }
+
+        [SuppressMessage( "StyleCop.CSharp.NamingRules"
+                        , "SA1310:Field names must not contain underscore"
+                        , Justification = "Trailing _ indicates it must not be written to directly even directly"
+                        )
+        ]
         private DataLayout Layout_;
 
         /// <summary>Target Triple describing the target, ABI and OS</summary>
         public string TargetTriple
         {
-            get
-            {
-                var ptr = NativeMethods.GetTarget( ModuleHandle );
-                return NativeMethods.NormalizeLineEndings( ptr );
-            }
-            set
-            {
-                NativeMethods.SetTarget( ModuleHandle, value );
-            }
+            get => NativeMethods.GetTarget( ModuleHandle );
+            set => NativeMethods.SetTarget( ModuleHandle, value );
         }
 
         /// <summary>Globals contained by this module</summary>
@@ -285,29 +267,27 @@ namespace Llvm.NET
         // TODO: Add enumerator for NamedMDNode(s)
 
         /// <summary>Name of the module</summary>
-        public string Name
-        {
-            get
-            {
-                var ptr = NativeMethods.GetModuleName( ModuleHandle );
-                return NativeMethods.NormalizeLineEndings( ptr );
-            }
-        }
+        public string Name => NativeMethods.GetModuleName( ModuleHandle );
 
         public void Link( NativeModule otherModule )
         {
             if( otherModule == null )
+            {
                 throw new ArgumentNullException( nameof( otherModule ) );
+            }
 
             if( otherModule.Context != Context )
+            {
                 throw new ArgumentException( "Linking modules with different contexts is not allowed", nameof( otherModule ) );
+            }
 
-            if( !NativeMethods.LinkModules( ModuleHandle, otherModule.ModuleHandle ).Succeeded )
+            if( !NativeMethods.LinkModules2( ModuleHandle, otherModule.ModuleHandle ).Succeeded )
             {
                 throw new InternalCodeGeneratorException( "Module link error" );
             }
+
             Context.RemoveModule( otherModule );
-            otherModule.ModuleHandle = LLVMModuleRef.Zero;
+            otherModule.ModuleHandle = new LLVMModuleRef( IntPtr.Zero );
         }
 
         /// <summary>Run optimization passes on the module</summary>
@@ -322,7 +302,9 @@ namespace Llvm.NET
         public void Optimize( TargetMachine targetMachine )
         {
             if( targetMachine == null )
+            {
                 throw new ArgumentNullException( nameof( targetMachine ) );
+            }
 
             NativeMethods.RunLegacyOptimizer( ModuleHandle, targetMachine.TargetMachineHandle );
         }
@@ -332,14 +314,7 @@ namespace Llvm.NET
         /// <returns>true if the verification succeeded and false if not.</returns>
         public bool Verify( out string errmsg )
         {
-            errmsg = null;
-            IntPtr msgPtr;
-            LLVMBool result = NativeMethods.VerifyModule( ModuleHandle, LLVMVerifierFailureAction.LLVMReturnStatusAction, out msgPtr );
-            if( result.Succeeded )
-                return true;
-
-            errmsg = NativeMethods.MarshalMsg( msgPtr );
-            return false;
+            return NativeMethods.VerifyModule( ModuleHandle, LLVMVerifierFailureAction.LLVMReturnStatusAction, out errmsg );
         }
 
         /// <summary>Gets a function by name from this module</summary>
@@ -349,7 +324,9 @@ namespace Llvm.NET
         {
             var funcRef = NativeMethods.GetNamedFunction( ModuleHandle, name );
             if( funcRef.Pointer == IntPtr.Zero )
+            {
                 return null;
+            }
 
             return Value.FromHandle<Function>( funcRef );
         }
@@ -380,9 +357,11 @@ namespace Llvm.NET
         /// </remarks>
         public void WriteToFile( string path )
         {
-            var err = NativeMethods.WriteBitcodeToFile( ModuleHandle, path );
-            if( err < 0 )
-                throw new IOException( );
+            LLVMStatus status = NativeMethods.WriteBitcodeToFile( ModuleHandle, path );
+            if( status.Failed )
+            {
+                throw new IOException( $"Error reading bitcode file '{path}'", status.ErrorCode );
+            }
         }
 
         /// <summary>Writes this module as LLVM IR source to a file</summary>
@@ -391,13 +370,7 @@ namespace Llvm.NET
         /// <returns><see langword="true"/> if successful or <see langword="false"/> if not</returns>
         public bool WriteToTextFile( string path, out string errMsg )
         {
-            errMsg = string.Empty;
-            IntPtr msg;
-            if( NativeMethods.PrintModuleToFile( ModuleHandle, path, out msg ).Succeeded )
-                return true;
-
-            errMsg = NativeMethods.MarshalMsg( msg );
-            return false;
+            return NativeMethods.PrintModuleToFile( ModuleHandle, path, out errMsg );
         }
 
         /// <summary>Creates a string representation of the module</summary>
@@ -408,7 +381,7 @@ namespace Llvm.NET
         /// an extremely long time (up to many seconds depending on complexity
         /// of the module) which is bad for the debugger.
         /// </remarks>
-        public string WriteToString( ) => NativeMethods.MarshalMsg( NativeMethods.PrintModuleToString( ModuleHandle ) );
+        public string WriteToString( ) => NativeMethods.PrintModuleToString( ModuleHandle );
 
         public MemoryBuffer WriteToBuffer()
         {
@@ -422,7 +395,9 @@ namespace Llvm.NET
         public GlobalAlias AddAlias( Value aliasee, string aliasName )
         {
             if( aliasee == null )
+            {
                 throw new ArgumentNullException( nameof( aliasee ) );
+            }
 
             var handle = NativeMethods.AddAlias( ModuleHandle, aliasee.NativeType.GetTypeRef( ), aliasee.ValueHandle, aliasName );
             return Value.FromHandle<GlobalAlias>( handle );
@@ -436,7 +411,6 @@ namespace Llvm.NET
             var handle = NativeMethods.GetGlobalAlias( ModuleHandle, name );
             return Value.FromHandle<GlobalAlias>( handle );
         }
-
 
         /// <summary>Adds a global to this module with a specific address space</summary>
         /// <param name="addressSpace"></param>
@@ -539,7 +513,9 @@ namespace Llvm.NET
         {
             var hGlobal = NativeMethods.GetNamedGlobal( ModuleHandle, name );
             if( hGlobal.Pointer == IntPtr.Zero )
+            {
                 return null;
+            }
 
             return Value.FromHandle<GlobalVariable>( hGlobal );
         }
@@ -561,7 +537,9 @@ namespace Llvm.NET
         public void AddModuleFlag( ModuleFlagBehavior behavior, string name, LlvmMetadata value )
         {
             if( value == null )
+            {
                 throw new ArgumentNullException( nameof( value ) );
+            }
 
             // AddModuleFlag comes from custom LLVMDebug-C API
             NativeMethods.AddModuleFlag( ModuleHandle, ( LLVMModFlagBehavior )behavior, name, value.MetadataHandle );
@@ -588,7 +566,7 @@ namespace Llvm.NET
         /// <returns>New node with the string as <see cref="MDNode.Operands"/>[0] (as an MDString)</returns>
         public MDNode CreateMDNode( string value )
         {
-            var elements = new LLVMMetadataRef[ ] { NativeMethods.MDString2( Context.ContextHandle, value, ( uint )(value?.Length ?? 0 ) ) };
+            var elements = new LLVMMetadataRef[ ] { NativeMethods.MDString2( Context.ContextHandle, value, ( uint )( value?.Length ?? 0 ) ) };
             var hNode = NativeMethods.MDNode2( Context.ContextHandle, out elements[ 0 ], ( uint )elements.Length );
             return MDNode.FromHandle<MDNode>( hNode );
         }
@@ -624,13 +602,19 @@ namespace Llvm.NET
                                       )
         {
             if( scope == null )
+            {
                 throw new ArgumentNullException( nameof( scope ) );
+            }
 
             if( string.IsNullOrWhiteSpace( name ) )
+            {
                 throw new ArgumentException( "Name cannot be null, empty or whitespace", nameof( name ) );
+            }
 
             if( signature == null )
+            {
                 throw new ArgumentNullException( nameof( signature ) );
+            }
 
             var func = AddFunction( linkageName ?? name, signature );
             var diSignature = signature.DIType;
@@ -677,7 +661,9 @@ namespace Llvm.NET
             }
 
             if( targetContext == Context )
+            {
                 return Clone( );
+            }
 
             using( var buffer = WriteToBuffer( ) )
             {
@@ -700,12 +686,6 @@ namespace Llvm.NET
             PropertyBag.AddExtendedPropertyValue( id, value );
         }
 
-        internal static NativeModule FromHandle( LLVMModuleRef nativeHandle )
-        {
-            var context = Context.GetContextFor( nativeHandle );
-            return context.GetModuleFor( nativeHandle );
-        }
-
         /// <summary>Load a bit-code module from a given file</summary>
         /// <param name="path">path of the file to load</param>
         /// <param name="context">Context to use for creating the module</param>
@@ -713,13 +693,19 @@ namespace Llvm.NET
         public static NativeModule LoadFrom( string path, Context context )
         {
             if( string.IsNullOrWhiteSpace( path ) )
+            {
                 throw new ArgumentException( "path cannot be null or an empty string", nameof( path ) );
+            }
 
             if( context == null )
+            {
                 throw new ArgumentNullException( nameof( context ) );
+            }
 
             if( !File.Exists( path ) )
+            {
                 throw new FileNotFoundException( "Specified bit-code file does not exist", path );
+            }
 
             using( var buffer = new MemoryBuffer( path ) )
             {
@@ -741,25 +727,71 @@ namespace Llvm.NET
         public static NativeModule LoadFrom( MemoryBuffer buffer, Context context )
         {
             if( buffer == null )
+            {
                 throw new ArgumentNullException( nameof( buffer ) );
+            }
 
             if( context == null )
-                throw new ArgumentNullException( nameof( buffer ) );
-
-            LLVMModuleRef modRef;
-            IntPtr errMsgPtr;
-            if( NativeMethods.ParseBitcodeInContext( context.ContextHandle, buffer.BufferHandle, out modRef, out errMsgPtr ).Failed )
             {
-                var errMsg = NativeMethods.MarshalMsg( errMsgPtr );
+                throw new ArgumentNullException( nameof( buffer ) );
+            }
+
+            if( NativeMethods.ParseBitcodeInContext( context.ContextHandle, buffer.BufferHandle, out LLVMModuleRef modRef, out string errMsg ).Failed )
+            {
                 throw new InternalCodeGeneratorException( errMsg );
             }
+
             return context.GetModuleFor( modRef );
+        }
+
+        internal NativeModule( LLVMModuleRef handle )
+        {
+            ModuleHandle = handle;
+            LazyDiBuilder = new Lazy<DebugInfoBuilder>( ( ) => new DebugInfoBuilder( this ) );
+            Context.AddModule( this );
+            Comdats = new ComdatCollection( this );
+        }
+
+        internal static NativeModule FromHandle( LLVMModuleRef nativeHandle )
+        {
+            var context = Context.GetContextFor( nativeHandle );
+            return context.GetModuleFor( nativeHandle );
+        }
+
+        private void Dispose( bool disposing )
+        {
+            // if not already disposed, dispose the module
+            // Do this only on dispose. The containing context
+            // will clean up the module when it is disposed or
+            // finalized. Since finalization order isn't
+            // deterministic it is possible that the module is
+            // finalized after the context has already run its
+            // finalizer, which would cause an access violation
+            // in the native LLVM layer.
+            if( disposing && ModuleHandle.Pointer != IntPtr.Zero )
+            {
+                // remove the module handle from the module cache.
+                Context.RemoveModule( this );
+
+                // if this module created the context then just dispose
+                // the context as that will clean up the module as well.
+                if( OwnsContext )
+                {
+                    Context.Dispose( );
+                }
+                else
+                {
+                    NativeMethods.DisposeModule( ModuleHandle );
+                }
+
+                ModuleHandle = default( LLVMModuleRef );
+            }
         }
 
         internal LLVMModuleRef ModuleHandle { get; private set; }
 
         private readonly ExtensiblePropertyContainer PropertyBag = new ExtensiblePropertyContainer( );
-        private readonly Lazy<DebugInfoBuilder> DIBuilder_;
+        private readonly Lazy<DebugInfoBuilder> LazyDiBuilder;
         private readonly bool OwnsContext;
     }
 }

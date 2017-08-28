@@ -12,7 +12,9 @@ namespace Llvm.NET.DebugInfo
             get
             {
                 if( MetadataHandle.Pointer == IntPtr.Zero )
-                    return (Tag)(ushort.MaxValue);
+                {
+                    return (Tag)ushort.MaxValue;
+                }
 
                 return ( Tag )NativeMethods.DIDescriptorGetTag( MetadataHandle );
             }

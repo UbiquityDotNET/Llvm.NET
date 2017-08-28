@@ -16,44 +16,48 @@
 // ported and modified from opt.cpp in LLVM to allow for use as an API instead of trying to expose all of
 // the legacy pass manager support, since the pass management is undergoing a significant transition
 // it is best not to build out projectionts to depend on the legacy variant.
-#include "llvm/ADT/Triple.h"
-#include "llvm/Analysis/CallGraph.h"
-#include "llvm/Analysis/CallGraphSCCPass.h"
-#include "llvm/Analysis/LoopPass.h"
-#include "llvm/Analysis/RegionPass.h"
-#include "llvm/Analysis/TargetLibraryInfo.h"
-#include "llvm/Analysis/TargetTransformInfo.h"
-#include "llvm/Bitcode/BitcodeWriterPass.h"
-#include "llvm/CodeGen/CommandFlags.h"
-#include "llvm/IR/DataLayout.h"
-#include "llvm/IR/DebugInfo.h"
-#include "llvm/IR/IRPrintingPasses.h"
-#include "llvm/IR/LLVMContext.h"
-#include "llvm/IR/LegacyPassManager.h"
-#include "llvm/IR/LegacyPassNameParser.h"
-#include "llvm/IR/Module.h"
-#include "llvm/IR/Verifier.h"
-#include "llvm/IRReader/IRReader.h"
-#include "llvm/InitializePasses.h"
-#include "llvm/LinkAllIR.h"
-#include "llvm/LinkAllPasses.h"
-#include "llvm/MC/SubtargetFeature.h"
-#include "llvm/Support/Debug.h"
-#include "llvm/Support/FileSystem.h"
-#include "llvm/Support/Host.h"
-#include "llvm/Support/ManagedStatic.h"
-#include "llvm/Support/PluginLoader.h"
-#include "llvm/Support/PrettyStackTrace.h"
-#include "llvm/Support/Signals.h"
-#include "llvm/Support/SourceMgr.h"
-#include "llvm/Support/SystemUtils.h"
-#include "llvm/Support/TargetRegistry.h"
-#include "llvm/Support/TargetSelect.h"
-#include "llvm/Support/ToolOutputFile.h"
-#include "llvm/Target/TargetMachine.h"
-#include "llvm/Transforms/IPO/PassManagerBuilder.h"
-#include "llvm/Transforms/Utils/Cloning.h"
-#include "llvm-c\TargetMachine.h"
+#include <llvm/ADT/Triple.h>
+#include <llvm/Analysis/CallGraph.h>
+#include <llvm/Analysis/CallGraphSCCPass.h>
+#include <llvm/Analysis/LoopPass.h>
+#include <llvm/Analysis/RegionPass.h>
+#include <llvm/Analysis/TargetLibraryInfo.h>
+#include <llvm/Analysis/TargetTransformInfo.h>
+#include <llvm/Bitcode/BitcodeWriterPass.h>
+#include <llvm/CodeGen/CommandFlags.h>
+#include <llvm/IR/DataLayout.h>
+#include <llvm/IR/DebugInfo.h>
+#include <llvm/IR/IRPrintingPasses.h>
+#include <llvm/IR/LLVMContext.h>
+#include <llvm/IR/LegacyPassManager.h>
+#include <llvm/IR/LegacyPassNameParser.h>
+#include <llvm/IR/Module.h>
+#include <llvm/IR/Verifier.h>
+#include <llvm/IRReader/IRReader.h>
+#include <llvm/InitializePasses.h>
+#include <llvm/LinkAllIR.h>
+#include <llvm/LinkAllPasses.h>
+#include <llvm/MC/SubtargetFeature.h>
+#include <llvm/Support/Debug.h>
+#include <llvm/Support/FileSystem.h>
+#include <llvm/Support/Host.h>
+#include <llvm/Support/ManagedStatic.h>
+#include <llvm/Support/PluginLoader.h>
+#include <llvm/Support/PrettyStackTrace.h>
+#include <llvm/Support/Signals.h>
+#include <llvm/Support/SourceMgr.h>
+#include <llvm/Support/SystemUtils.h>
+#include <llvm/Support/TargetRegistry.h>
+#include <llvm/Support/TargetSelect.h>
+#include <llvm/Support/ToolOutputFile.h>
+#include <llvm/Support/YAMLTraits.h>
+#include <llvm/Target/TargetMachine.h>
+#include <llvm/Transforms/Coroutines.h>
+#include <llvm/Transforms/IPO/AlwaysInliner.h>
+#include <llvm/Transforms/IPO/PassManagerBuilder.h>
+#include <llvm/Transforms/Utils/Cloning.h>
+
+#include <llvm-c/TargetMachine.h>
 #include <algorithm>
 #include <memory>
 using namespace llvm;
@@ -152,6 +156,11 @@ static cl::opt<bool> DiscardValueNames(
     cl::desc( "Discard names from Value (other than GlobalValue)." ),
     cl::init( false ), cl::Hidden );
 
+static cl::opt<bool> Coroutines(
+    "enable-coroutines",
+    cl::desc( "Enable coroutine passes." ),
+    cl::init( false ), cl::Hidden );
+
 static cl::opt<bool> PassRemarksWithHotness(
     "pass-remarks-with-hotness",
     cl::desc( "With PGO, include profile count in optimization remarks" ),
@@ -165,16 +174,21 @@ static void AddOptimizationPasses( legacy::PassManagerBase &MPM,
     legacy::FunctionPassManager &FPM,
     TargetMachine *TM, unsigned OptLevel,
     unsigned SizeLevel ) {
+    //if( !NoVerify || VerifyEach )
+    //    FPM.add( createVerifierPass( ) ); // Verify that input is correct
 
     PassManagerBuilder Builder;
     Builder.OptLevel = OptLevel;
     Builder.SizeLevel = SizeLevel;
 
-    if( OptLevel > 1 ) {
+    /*if( DisableInline ) {
+        // No inlining pass
+    }
+    else*/ if( OptLevel > 1 ) {
         Builder.Inliner = createFunctionInliningPass( OptLevel, SizeLevel );
     }
     else {
-        Builder.Inliner = createAlwaysInlinerPass( );
+        Builder.Inliner = createAlwaysInlinerLegacyPass( );
     }
     Builder.DisableUnitAtATime = !UnitAtATime;
     Builder.DisableUnrollLoops = ( DisableLoopUnrolling.getNumOccurrences( ) > 0 ) ?
@@ -199,9 +213,13 @@ static void AddOptimizationPasses( legacy::PassManagerBase &MPM,
         TM->addEarlyAsPossiblePasses( PM );
     } );
 
+    if( Coroutines )
+        addCoroutinePassesToExtensionPoints( Builder );
+
     Builder.populateFunctionPassManager( FPM );
     Builder.populateModulePassManager( MPM );
 }
+
 
 static void AddStandardLinkPasses( legacy::PassManagerBase &PM ) {
     PassManagerBuilder Builder;
@@ -215,6 +233,7 @@ void LLVMInitializePassesForLegacyOpt( )
 {
     PassRegistry &Registry = *PassRegistry::getPassRegistry( );
     initializeCore( Registry );
+    initializeCoroutines( Registry );
     initializeScalarOpts( Registry );
     initializeObjCARCOpts( Registry );
     initializeVectorization( Registry );
@@ -228,7 +247,7 @@ void LLVMInitializePassesForLegacyOpt( )
     // supported.
     initializeCodeGenPreparePass( Registry );
     initializeAtomicExpandPass( Registry );
-    initializeRewriteSymbolsPass( Registry );
+    initializeRewriteSymbolsLegacyPassPass( Registry );
     initializeWinEHPreparePass( Registry );
     initializeDwarfEHPreparePass( Registry );
     initializeSafeStackPass( Registry );
@@ -236,10 +255,11 @@ void LLVMInitializePassesForLegacyOpt( )
     initializePreISelIntrinsicLoweringLegacyPassPass( Registry );
     initializeGlobalMergePass( Registry );
     initializeInterleavedAccessPass( Registry );
+    initializeCountingFunctionInserterPass( Registry );
     initializeUnreachableBlockElimLegacyPassPass( Registry );
 }
 
-void LLVMRunLegacyOptimizer( LLVMModuleRef Mref, LLVMTargetMachineRef TMref) {
+void LLVMRunLegacyOptimizer( LLVMModuleRef Mref, LLVMTargetMachineRef TMref ) {
 
     SMDiagnostic Err;
     LLVMContext Context;

@@ -10,7 +10,7 @@ namespace Llvm.NET.Types
     {
         /// <summary>Flag to indicate if this signature is for a variadic function</summary>
         bool IsVarArg { get; }
-        
+
         /// <summary>Return type of the function</summary>
         ITypeRef ReturnType { get; }
 
@@ -39,9 +39,11 @@ namespace Llvm.NET.Types
         {
             get
             {
-                var paramCount = NativeMethods.CountParamTypes( TypeHandle_ );
+                uint paramCount = NativeMethods.CountParamTypes( TypeHandle_ );
                 if( paramCount == 0 )
+                {
                     return new List<TypeRef>().AsReadOnly();
+                }
 
                 var paramTypes = new LLVMTypeRef[ paramCount ];
                 NativeMethods.GetParamTypes( TypeHandle_, out paramTypes[ 0 ] );

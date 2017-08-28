@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using Llvm.NET.Instructions;
 using Llvm.NET.Native;
-using System.Diagnostics.CodeAnalysis;
 
 namespace Llvm.NET.Values
 {
@@ -12,17 +12,19 @@ namespace Llvm.NET.Values
     /// and a single exit. The exit point must be a <see cref="Terminator"/>
     /// instruction or the block is not (yet) well-formed.
     /// </remarks>
-    public class BasicBlock 
+    public class BasicBlock
         : Value
     {
-        /// <summary>Function containing the block</summary>
+        /// <summary>Gets the function containing the block</summary>
         public Function ContainingFunction
         {
             get
             {
                 var parent = NativeMethods.GetBasicBlockParent( BlockHandle );
                 if( parent.Pointer == IntPtr.Zero )
+                {
                     return null;
+                }
 
                 // cache functions and use lookups to ensure
                 // identity/interning remains consistent with actual
@@ -38,7 +40,9 @@ namespace Llvm.NET.Values
             {
                 var firstInst = NativeMethods.GetFirstInstruction( BlockHandle );
                 if( firstInst.Pointer == IntPtr.Zero )
+                {
                     return null;
+                }
 
                 return FromHandle<Instruction>( firstInst );
             }
@@ -51,7 +55,9 @@ namespace Llvm.NET.Values
             {
                 var lastInst = NativeMethods.GetLastInstruction( BlockHandle );
                 if( lastInst.Pointer == IntPtr.Zero)
+                {
                     return null;
+                }
 
                 return FromHandle<Instruction>( lastInst );
             }
@@ -67,7 +73,9 @@ namespace Llvm.NET.Values
             {
                 var terminator = NativeMethods.GetBasicBlockTerminator( BlockHandle );
                 if( terminator.Pointer == IntPtr.Zero)
+                {
                     return null;
+                }
 
                 return FromHandle<Instruction>( terminator );
             }
@@ -94,10 +102,14 @@ namespace Llvm.NET.Values
         public Instruction GetNextInstruction( Instruction instruction )
         {
             if( instruction == null )
+            {
                 throw new ArgumentNullException( nameof( instruction ) );
+            }
 
             if( instruction.ContainingBlock != this )
+            {
                 throw new ArgumentException( "Instruction is from a different block", nameof( instruction ) );
+            }
 
             var hInst = NativeMethods.GetNextInstruction( instruction.ValueHandle );
             return hInst.Pointer == IntPtr.Zero ? null : FromHandle<Instruction>( hInst );

@@ -8,10 +8,10 @@ extern "C" {
 #endif
     // exportable wrappers around static inlined functions
     // EXPORTS.DEF uses aliasing to export these as the standard name
-    // (e.g. dropping the trailing "Export" from the name.) This 
+    // (e.g. dropping the trailing "Export" from the name.) This
     // mechanism is needed since the inlined functions are marked static
     // and therefore the linker doesn't see them as externally visible
-    // so it can't export them. 
+    // so it can't export them.
 
     /** LLVMInitializeAllTargetInfos - The main program should call this function if
     it wants access to all available targets that LLVM is configured to

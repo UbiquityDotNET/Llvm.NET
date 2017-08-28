@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Project DefaultTargets="Build" ToolsVersion="14.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <Import Project="$([MSBuild]::GetDirectoryNameOfFileAbove($(MSBuildThisFileDirectory), BuildEnv.props))\BuildEnv.props" Condition=" '$([MSBuild]::GetDirectoryNameOfFileAbove($(MSBuildThisFileDirectory), BuildEnv.props))' != '' " />
+<Project DefaultTargets="Build" ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="..\..\BuildOutput\packages\Llvm.NET.BuildTasks.1.0.0\build\Llvm.NET.BuildTasks.props" Condition="Exists('..\..\BuildOutput\packages\Llvm.NET.BuildTasks.1.0.0\build\Llvm.NET.BuildTasks.props')" />
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Debug|Win32">
       <Configuration>Debug</Configuration>
@@ -27,36 +27,51 @@
     <TargetPlatformVersion>8.1</TargetPlatformVersion>
     <AdditionalDependencies>@(AllLlvmLibs);$(AdditionalDependencies)</AdditionalDependencies>
     <GenerateVersionInfoHeader>true</GenerateVersionInfoHeader>
+    <WindowsTargetPlatformVersion>8.1</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <Import Project="..\..\BuildOutput\packages\Llvm.Libs.4.0.1\build\native\Llvm.Libs.props" Condition="Exists('..\..\BuildOutput\packages\Llvm.Libs.4.0.1\build\native\Llvm.Libs.props')" />
+  <Import Project="..\..\BuildOutput\packages\Llvm.Libs.targets.x86-Release.4.0.1\build\native\Llvm.Libs.targets.x86-Release.props" Condition="Exists('..\..\BuildOutput\packages\Llvm.Libs.targets.x86-Release.4.0.1\build\native\Llvm.Libs.targets.x86-Release.props')" />
+  <Import Project="..\..\BuildOutput\packages\Llvm.Libs.targets.x86-Debug.4.0.1\build\native\Llvm.Libs.targets.x86-Debug.props" Condition="Exists('..\..\BuildOutput\packages\Llvm.Libs.targets.x86-Debug.4.0.1\build\native\Llvm.Libs.targets.x86-Debug.props')" />
+  <Import Project="..\..\BuildOutput\packages\Llvm.Libs.targets.x64-Release.4.0.1\build\native\Llvm.Libs.targets.x64-Release.props" Condition="Exists('..\..\BuildOutput\packages\Llvm.Libs.targets.x64-Release.4.0.1\build\native\Llvm.Libs.targets.x64-Release.props')" />
+  <Import Project="..\..\BuildOutput\packages\Llvm.Libs.targets.x64-Debug.4.0.1\build\native\Llvm.Libs.targets.x64-Debug.props" Condition="Exists('..\..\BuildOutput\packages\Llvm.Libs.targets.x64-Debug.4.0.1\build\native\Llvm.Libs.targets.x64-Debug.props')" />
+  <Import Project="..\..\BuildOutput\packages\Llvm.Libs.core.x86-Release.4.0.1\build\native\Llvm.Libs.core.x86-Release.props" Condition="Exists('..\..\BuildOutput\packages\Llvm.Libs.core.x86-Release.4.0.1\build\native\Llvm.Libs.core.x86-Release.props')" />
+  <Import Project="..\..\BuildOutput\packages\Llvm.Libs.core.x86-Debug.4.0.1\build\native\Llvm.Libs.core.x86-Debug.props" Condition="Exists('..\..\BuildOutput\packages\Llvm.Libs.core.x86-Debug.4.0.1\build\native\Llvm.Libs.core.x86-Debug.props')" />
+  <Import Project="..\..\BuildOutput\packages\Llvm.Libs.core.x64-Release.4.0.1\build\native\Llvm.Libs.core.x64-Release.props" Condition="Exists('..\..\BuildOutput\packages\Llvm.Libs.core.x64-Release.4.0.1\build\native\Llvm.Libs.core.x64-Release.props')" />
+  <Import Project="..\..\BuildOutput\packages\Llvm.Libs.core.x64-Debug.4.0.1\build\native\Llvm.Libs.core.x64-Debug.props" Condition="Exists('..\..\BuildOutput\packages\Llvm.Libs.core.x64-Debug.4.0.1\build\native\Llvm.Libs.core.x64-Debug.props')" />
+  <Import Project="..\..\BuildOutput\packages\Llvm.Libs.core.pdbs.x86-Debug.4.0.1\build\native\Llvm.Libs.core.pdbs.x86-Debug.props" Condition="Exists('..\..\BuildOutput\packages\Llvm.Libs.core.pdbs.x86-Debug.4.0.1\build\native\Llvm.Libs.core.pdbs.x86-Debug.props')" />
+  <Import Project="..\..\BuildOutput\packages\Llvm.Libs.core.pdbs.x64-Debug.4.0.1\build\native\Llvm.Libs.core.pdbs.x64-Debug.props" Condition="Exists('..\..\BuildOutput\packages\Llvm.Libs.core.pdbs.x64-Debug.4.0.1\build\native\Llvm.Libs.core.pdbs.x64-Debug.props')" />
+  <Import Project="..\..\BuildOutput\packages\PdbGit.3.0.41\build\PdbGit.props" Condition="Exists('..\..\BuildOutput\packages\PdbGit.3.0.41\build\PdbGit.props')" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
     <ConfigurationType>DynamicLibrary</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
-    <PlatformToolset>v140</PlatformToolset>
+    <PlatformToolset>v141</PlatformToolset>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
     <ConfigurationType>DynamicLibrary</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
-    <PlatformToolset>v140</PlatformToolset>
+    <PlatformToolset>v141</PlatformToolset>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
     <ConfigurationType>DynamicLibrary</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
-    <PlatformToolset>v140</PlatformToolset>
+    <PlatformToolset>v141</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
     <ConfigurationType>DynamicLibrary</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
-    <PlatformToolset>v140</PlatformToolset>
+    <PlatformToolset>v141</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
   <ImportGroup Label="ExtensionSettings">
+    <Import Project="..\..\BuildOutput\packages\PdbGit.3.0.41\build\PdbGit.targets" Condition="Exists('..\..\BuildOutput\packages\PdbGit.3.0.41\build\PdbGit.targets')" />
+    <Import Project="..\..\BuildOutput\packages\Llvm.NET.BuildTasks.1.0.0\build\Llvm.NET.BuildTasks.targets" Condition="Exists('..\..\BuildOutput\packages\Llvm.NET.BuildTasks.1.0.0\build\Llvm.NET.BuildTasks.targets')" />
   </ImportGroup>
   <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="PropertySheets">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
@@ -93,13 +108,11 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;_USRDLL;LIBLLVM_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <ModuleDefinitionFile>EXPORTS.DEF</ModuleDefinitionFile>
-      <AdditionalDependencies>$(AllLlvmStaticLibs);%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
@@ -108,13 +121,11 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;_USRDLL;LIBLLVM_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <ModuleDefinitionFile>EXPORTS.DEF</ModuleDefinitionFile>
-      <AdditionalDependencies>$(AllLlvmStaticLibs);%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -125,7 +136,6 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;_USRDLL;LIBLLVM_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -133,7 +143,6 @@
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <ModuleDefinitionFile>EXPORTS.DEF</ModuleDefinitionFile>
-      <AdditionalDependencies>$(AllLlvmStaticLibs);%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -144,7 +153,6 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;_USRDLL;LIBLLVM_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -152,32 +160,15 @@
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <ModuleDefinitionFile>EXPORTS.DEF</ModuleDefinitionFile>
-      <AdditionalDependencies>$(AllLlvmStaticLibs);%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <None Include="Build-LlvmWithVs.ps1" />
+    <None Include="build\LibLlvm.NET.props" />
+    <None Include="build\LibLlvm.NET.targets" />
     <None Include="EXPORTS.DEF" />
-    <None Include="BuildLlvmWithVS.cmd">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
-      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</DeploymentContent>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
-      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</DeploymentContent>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
-      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</DeploymentContent>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
-      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</DeploymentContent>
-    </None>
-    <None Include="LlvmApplication.props">
+    <None Include="LlvmApplication.props" />
+    <None Include="packages.config">
       <SubType>Designer</SubType>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
-      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</DeploymentContent>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
-      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</DeploymentContent>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
-      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</DeploymentContent>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
-      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</DeploymentContent>
     </None>
   </ItemGroup>
   <ItemGroup>
@@ -210,10 +201,32 @@
     <ClInclude Include="ValueBindings.h" />
   </ItemGroup>
   <ItemGroup>
-    <ResourceCompile Include="Resource.rc" />
+    <ResourceCompile Include="Resource.rc">
+      <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(IntermediateOutputPath);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(IntermediateOutputPath);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(IntermediateOutputPath);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(IntermediateOutputPath);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ResourceCompile>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
-  <Import Project="$(SolutionBuildExtensionsDir)EnlistmentBuildVersion.targets" />
-  <ImportGroup Label="ExtensionTargets">
-  </ImportGroup>
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('..\..\BuildOutput\packages\PdbGit.3.0.41\build\PdbGit.props')" Text="$([System.String]::Format('$(ErrorText)', '..\..\BuildOutput\packages\PdbGit.3.0.41\build\PdbGit.props'))" />
+    <Error Condition="!Exists('..\..\BuildOutput\packages\PdbGit.3.0.41\build\PdbGit.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\BuildOutput\packages\PdbGit.3.0.41\build\PdbGit.targets'))" />
+    <Error Condition="!Exists('..\..\BuildOutput\packages\Llvm.Libs.core.pdbs.x64-Debug.4.0.1\build\native\Llvm.Libs.core.pdbs.x64-Debug.props')" Text="$([System.String]::Format('$(ErrorText)', '..\..\BuildOutput\packages\Llvm.Libs.core.pdbs.x64-Debug.4.0.1\build\native\Llvm.Libs.core.pdbs.x64-Debug.props'))" />
+    <Error Condition="!Exists('..\..\BuildOutput\packages\Llvm.Libs.core.pdbs.x86-Debug.4.0.1\build\native\Llvm.Libs.core.pdbs.x86-Debug.props')" Text="$([System.String]::Format('$(ErrorText)', '..\..\BuildOutput\packages\Llvm.Libs.core.pdbs.x86-Debug.4.0.1\build\native\Llvm.Libs.core.pdbs.x86-Debug.props'))" />
+    <Error Condition="!Exists('..\..\BuildOutput\packages\Llvm.Libs.core.x64-Debug.4.0.1\build\native\Llvm.Libs.core.x64-Debug.props')" Text="$([System.String]::Format('$(ErrorText)', '..\..\BuildOutput\packages\Llvm.Libs.core.x64-Debug.4.0.1\build\native\Llvm.Libs.core.x64-Debug.props'))" />
+    <Error Condition="!Exists('..\..\BuildOutput\packages\Llvm.Libs.core.x64-Release.4.0.1\build\native\Llvm.Libs.core.x64-Release.props')" Text="$([System.String]::Format('$(ErrorText)', '..\..\BuildOutput\packages\Llvm.Libs.core.x64-Release.4.0.1\build\native\Llvm.Libs.core.x64-Release.props'))" />
+    <Error Condition="!Exists('..\..\BuildOutput\packages\Llvm.Libs.core.x86-Debug.4.0.1\build\native\Llvm.Libs.core.x86-Debug.props')" Text="$([System.String]::Format('$(ErrorText)', '..\..\BuildOutput\packages\Llvm.Libs.core.x86-Debug.4.0.1\build\native\Llvm.Libs.core.x86-Debug.props'))" />
+    <Error Condition="!Exists('..\..\BuildOutput\packages\Llvm.Libs.core.x86-Release.4.0.1\build\native\Llvm.Libs.core.x86-Release.props')" Text="$([System.String]::Format('$(ErrorText)', '..\..\BuildOutput\packages\Llvm.Libs.core.x86-Release.4.0.1\build\native\Llvm.Libs.core.x86-Release.props'))" />
+    <Error Condition="!Exists('..\..\BuildOutput\packages\Llvm.Libs.targets.x64-Debug.4.0.1\build\native\Llvm.Libs.targets.x64-Debug.props')" Text="$([System.String]::Format('$(ErrorText)', '..\..\BuildOutput\packages\Llvm.Libs.targets.x64-Debug.4.0.1\build\native\Llvm.Libs.targets.x64-Debug.props'))" />
+    <Error Condition="!Exists('..\..\BuildOutput\packages\Llvm.Libs.targets.x64-Release.4.0.1\build\native\Llvm.Libs.targets.x64-Release.props')" Text="$([System.String]::Format('$(ErrorText)', '..\..\BuildOutput\packages\Llvm.Libs.targets.x64-Release.4.0.1\build\native\Llvm.Libs.targets.x64-Release.props'))" />
+    <Error Condition="!Exists('..\..\BuildOutput\packages\Llvm.Libs.targets.x86-Debug.4.0.1\build\native\Llvm.Libs.targets.x86-Debug.props')" Text="$([System.String]::Format('$(ErrorText)', '..\..\BuildOutput\packages\Llvm.Libs.targets.x86-Debug.4.0.1\build\native\Llvm.Libs.targets.x86-Debug.props'))" />
+    <Error Condition="!Exists('..\..\BuildOutput\packages\Llvm.Libs.targets.x86-Release.4.0.1\build\native\Llvm.Libs.targets.x86-Release.props')" Text="$([System.String]::Format('$(ErrorText)', '..\..\BuildOutput\packages\Llvm.Libs.targets.x86-Release.4.0.1\build\native\Llvm.Libs.targets.x86-Release.props'))" />
+    <Error Condition="!Exists('..\..\BuildOutput\packages\Llvm.Libs.4.0.1\build\native\Llvm.Libs.props')" Text="$([System.String]::Format('$(ErrorText)', '..\..\BuildOutput\packages\Llvm.Libs.4.0.1\build\native\Llvm.Libs.props'))" />
+    <Error Condition="!Exists('..\..\BuildOutput\packages\Llvm.NET.BuildTasks.1.0.0\build\Llvm.NET.BuildTasks.props')" Text="$([System.String]::Format('$(ErrorText)', '..\..\BuildOutput\packages\Llvm.NET.BuildTasks.1.0.0\build\Llvm.NET.BuildTasks.props'))" />
+    <Error Condition="!Exists('..\..\BuildOutput\packages\Llvm.NET.BuildTasks.1.0.0\build\Llvm.NET.BuildTasks.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\BuildOutput\packages\Llvm.NET.BuildTasks.1.0.0\build\Llvm.NET.BuildTasks.targets'))" />
+  </Target>
 </Project>

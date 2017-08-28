@@ -1,14 +1,14 @@
-﻿using Llvm.NET.Native;
-using System;
+﻿using System;
+using Llvm.NET.Native;
 
 namespace Llvm.NET
 {
     /// <summary>Triple to describe a target</summary>
     /// <remarks>
     /// <para>The term 'Triple' is a bit of a misnomer. At some point in the past it
-    /// actually consisted of only three parts, but that has changed over the 
-    /// years without the name itself changing. The triple is normally represented
-    /// as a string of 4 components delimited by '-'. Some of the components have
+    /// actually consisted of only three parts, but that has changed over the years
+    /// without the name itself changing. The triple is normally represented as a
+    /// string of 4 components delimited by '-'. Some of the components have
     /// sub components as part of the content. The canonical form of a triple is:
     /// <c>{Architecture}{SubArchitecture}-{Vendor}-{OS}-{Environment}{ObjectFormat}</c></para>
     /// <para>
@@ -38,27 +38,32 @@ namespace Llvm.NET
             TripleHandle = NativeMethods.ParseTriple( tripleTxt );
         }
 
+        ~Triple( )
+        {
+            TripleHandle.Close( );
+        }
+
         /// <summary>Retrieves the final string form of the triple</summary>
         /// <returns>Normalized Triple string</returns>
-        public override string ToString( ) => NativeMethods.MarshalMsg( NativeMethods.TripleAsString( TripleHandle, true ) );
+        public override string ToString( ) => NativeMethods.TripleAsString( TripleHandle, true );
 
         /// <summary>Architecture of the triple</summary>
         public TripleArchType ArchitectureType => ( TripleArchType )NativeMethods.TripleGetArchType( TripleHandle );
 
         /// <summary>Sub Architecture type</summary>
-        public TripleSubArchType SubArchitecture => ( TripleSubArchType)NativeMethods.TripleGetSubArchType( TripleHandle );
+        public TripleSubArchType SubArchitecture => ( TripleSubArchType )NativeMethods.TripleGetSubArchType( TripleHandle );
 
         /// <summary>Vendor component of the triple</summary>
-        public TripleVendorType VendorType => ( TripleVendorType ) NativeMethods.TripleGetVendorType( TripleHandle );
+        public TripleVendorType VendorType => ( TripleVendorType )NativeMethods.TripleGetVendorType( TripleHandle );
 
         /// <summary>OS Type for the triple</summary>
-        public TripleOSType OSType => ( TripleOSType ) NativeMethods.TripleGetOsType( TripleHandle );
+        public TripleOSType OSType => ( TripleOSType )NativeMethods.TripleGetOsType( TripleHandle );
 
         /// <summary>Environment type for the triple</summary>
-        public TripleEnvironmentType EnvironmentType => ( TripleEnvironmentType ) NativeMethods.TripleGetEnvironmentType( TripleHandle );
+        public TripleEnvironmentType EnvironmentType => ( TripleEnvironmentType )NativeMethods.TripleGetEnvironmentType( TripleHandle );
 
         /// <summary>Object format type for the triple</summary>
-        public TripleObjectFormatType ObjectFormatType => ( TripleObjectFormatType ) NativeMethods.TripleGetObjectFormatType( TripleHandle );
+        public TripleObjectFormatType ObjectFormatType => ( TripleObjectFormatType )NativeMethods.TripleGetObjectFormatType( TripleHandle );
 
         /// <summary>Retrieves the canonical name for an architecture type</summary>
         /// <param name="archType">Architecture type</param>
@@ -70,38 +75,37 @@ namespace Llvm.NET
         /// such triple components used in a normalized triple.
         /// </overloads>
         public static string GetCanonicalName( TripleArchType archType )
-            => NativeMethods.MarshalMsg( NativeMethods.TripleGetArchTypeName( ( LLVMTripleArchType )archType ) );
+            => NativeMethods.TripleGetArchTypeName( ( LLVMTripleArchType )archType ) ?? string.Empty;
 
         /// <summary>Retrieves the canonical name for an architecture sub type</summary>
         /// <param name="subArchType">Architecture sub type</param>
         /// <returns>String name for the architecture sub type</returns>
         public static string GetCanonicalName( TripleSubArchType subArchType )
-            => NativeMethods.MarshalMsg( NativeMethods.TripleGetSubArchTypeName( ( LLVMTripleSubArchType )subArchType ) );
+            => NativeMethods.TripleGetSubArchTypeName( ( LLVMTripleSubArchType )subArchType ) ?? string.Empty;
 
         /// <summary>Retrieves the canonical name for the vendor component of a triple</summary>
         /// <param name="vendorType">Vendor type</param>
         /// <returns>String name for the vendor</returns>
         public static string GetCanonicalName( TripleVendorType vendorType )
-            => NativeMethods.MarshalMsg( NativeMethods.TripleGetVendorTypeName( ( LLVMTripleVendorType )vendorType ) );
+            => NativeMethods.TripleGetVendorTypeName( ( LLVMTripleVendorType )vendorType ) ?? string.Empty;
 
         /// <summary>Retrieves the canonical name for the OS component of a triple</summary>
         /// <param name="osType">OS type</param>
         /// <returns>String name for the OS</returns>
         public static string GetCanonicalName( TripleOSType osType )
-            => NativeMethods.MarshalMsg( NativeMethods.TripleGetOsTypeName( ( LLVMTripleOSType )osType ) );
-
+            => NativeMethods.TripleGetOsTypeName( ( LLVMTripleOSType )osType ) ?? string.Empty;
 
         /// <summary>Retrieves the canonical name for the environment component of a triple</summary>
         /// <param name="envType">Environment type</param>
         /// <returns>String name for the environment component</returns>
         public static string GetCanonicalName( TripleEnvironmentType envType )
-            => NativeMethods.MarshalMsg( NativeMethods.TripleGetEnvironmentTypeName( (LLVMTripleEnvironmentType)envType ) );
+            => NativeMethods.TripleGetEnvironmentTypeName( ( LLVMTripleEnvironmentType )envType ) ?? string.Empty;
 
         /// <summary>Retrieves the canonical name for the object component of a triple</summary>
         /// <param name="objFormatType">Object type</param>
         /// <returns>String name for the object component</returns>
         public static string GetCanonicalName( TripleObjectFormatType objFormatType )
-            => NativeMethods.MarshalMsg( NativeMethods.TripleGetObjectFormatTypeName( ( LLVMTripleObjectFormatType )objFormatType ) );
+            => NativeMethods.TripleGetObjectFormatTypeName( ( LLVMTripleObjectFormatType )objFormatType ) ?? string.Empty;
 
         /// <summary>Equality test for a triple</summary>
         /// <param name="other">triple to compare this triple to</param>
@@ -109,10 +113,14 @@ namespace Llvm.NET
         public bool Equals( Triple other )
         {
             if( other == null )
+            {
                 return false;
+            }
 
             if( ReferenceEquals( this, other ) )
+            {
                 return true;
+            }
 
             return NativeMethods.TripleOpEqual( TripleHandle, other.TripleHandle );
         }
@@ -136,7 +144,7 @@ namespace Llvm.NET
         /// <returns>Normalized string</returns>
         public static string Normalize( string unNormalizedTriple )
         {
-            return NativeMethods.MarshalMsg( NativeMethods.NormalizeTriple( unNormalizedTriple ) );
+            return NativeMethods.NormalizeTriple( unNormalizedTriple );
         }
 
         /// <summary>Gets the default <see cref="TripleObjectFormatType"/> for a given <see cref="TripleArchType"/> and <see cref="TripleOSType"/></summary>
@@ -148,61 +156,69 @@ namespace Llvm.NET
             switch( arch )
             {
             case TripleArchType.UnknownArch:
-            case TripleArchType.aarch64:
-            case TripleArchType.arm:
-            case TripleArchType.thumb:
-            case TripleArchType.x86:
-            case TripleArchType.x86_64:
+            case TripleArchType.Aarch64:
+            case TripleArchType.Arm:
+            case TripleArchType.Thumb:
+            case TripleArchType.X86:
+            case TripleArchType.X86_64:
                 if( IsOsDarwin( os ) )
+                {
                     return TripleObjectFormatType.MachO;
-                else if( os == TripleOSType.Win32 )
+                }
+
+                if( os == TripleOSType.Win32 )
+                {
                     return TripleObjectFormatType.COFF;
+                }
+
                 return TripleObjectFormatType.ELF;
 
-            case TripleArchType.aarch64_be:
-            case TripleArchType.amdgcn:
-            case TripleArchType.amdil:
-            case TripleArchType.amdil64:
-            case TripleArchType.armeb:
-            case TripleArchType.avr:
-            case TripleArchType.bpfeb:
-            case TripleArchType.bpfel:
-            case TripleArchType.hexagon:
-            case TripleArchType.lanai:
-            case TripleArchType.hsail:
-            case TripleArchType.hsail64:
-            case TripleArchType.kalimba:
-            case TripleArchType.le32:
-            case TripleArchType.le64:
-            case TripleArchType.mips:
-            case TripleArchType.mips64:
-            case TripleArchType.mips64el:
-            case TripleArchType.mipsel:
-            case TripleArchType.msp430:
-            case TripleArchType.nvptx:
-            case TripleArchType.nvptx64:
-            case TripleArchType.ppc64le:
-            case TripleArchType.r600:
-            case TripleArchType.renderscript32:
-            case TripleArchType.renderscript64:
-            case TripleArchType.shave:
-            case TripleArchType.sparc:
-            case TripleArchType.sparcel:
-            case TripleArchType.sparcv9:
-            case TripleArchType.spir:
-            case TripleArchType.spir64:
-            case TripleArchType.systemz:
-            case TripleArchType.tce:
-            case TripleArchType.thumbeb:
-            case TripleArchType.wasm32:
-            case TripleArchType.wasm64:
-            case TripleArchType.xcore:
+            case TripleArchType.Aarch64_be:
+            case TripleArchType.AMDGCN:
+            case TripleArchType.Amdil:
+            case TripleArchType.Amdil64:
+            case TripleArchType.Armeb:
+            case TripleArchType.Avr:
+            case TripleArchType.BPFeb:
+            case TripleArchType.BPFel:
+            case TripleArchType.Hexagon:
+            case TripleArchType.Lanai:
+            case TripleArchType.Hsail:
+            case TripleArchType.Hsail64:
+            case TripleArchType.Kalimba:
+            case TripleArchType.Le32:
+            case TripleArchType.Le64:
+            case TripleArchType.MIPS:
+            case TripleArchType.MIPS64:
+            case TripleArchType.MIPS64el:
+            case TripleArchType.MIPSel:
+            case TripleArchType.MSP430:
+            case TripleArchType.Nvptx:
+            case TripleArchType.Nvptx64:
+            case TripleArchType.PPC64le:
+            case TripleArchType.R600:
+            case TripleArchType.Renderscript32:
+            case TripleArchType.Renderscript64:
+            case TripleArchType.Shave:
+            case TripleArchType.Sparc:
+            case TripleArchType.Sparcel:
+            case TripleArchType.Sparcv9:
+            case TripleArchType.Spir:
+            case TripleArchType.Spir64:
+            case TripleArchType.SystemZ:
+            case TripleArchType.TCE:
+            case TripleArchType.Thumbeb:
+            case TripleArchType.Wasm32:
+            case TripleArchType.Wasm64:
+            case TripleArchType.Xcore:
                 return TripleObjectFormatType.ELF;
 
-            case TripleArchType.ppc:
-            case TripleArchType.ppc64:
+            case TripleArchType.PPC:
+            case TripleArchType.PPC64:
                 if( IsOsDarwin( os ) )
+                {
                     return TripleObjectFormatType.MachO;
+                }
 
                 return TripleObjectFormatType.ELF;
 
@@ -217,32 +233,33 @@ namespace Llvm.NET
         /// <returns>Canonical <see cref="TripleArchType"/></returns>
         /// <remarks>
         /// Some architectures, particularly ARM variants, have multiple sub-architecture types that
-        /// have a canonical form (i.e. Arch=<see cref="TripleArchType.arm"/>; SubArch=<see cref="TripleSubArchType.ARMSubArch_v7m"/>;
-        /// has the Canonical Arch of <see cref="TripleArchType.thumb"/>). This method retrieves the canonical Arch
+        /// have a canonical form (i.e. Arch=<see cref="TripleArchType.Arm"/>; SubArch=<see cref="TripleSubArchType.ARMSubArch_v7m"/>;
+        /// has the Canonical Arch of <see cref="TripleArchType.Thumb"/>). This method retrieves the canonical Arch
         /// for a given architecture,SubArchitecture pair.
         /// </remarks>
         public static TripleArchType GetCanonicalArchForSubArch( TripleArchType archType, TripleSubArchType subArch )
         {
             switch( archType )
             {
-            case TripleArchType.kalimba:
+            case TripleArchType.Kalimba:
                 switch( subArch )
                 {
                 case TripleSubArchType.NoSubArch:
                 case TripleSubArchType.KalimbaSubArch_v3:
                 case TripleSubArchType.KalimbaSubArch_v4:
                 case TripleSubArchType.KalimbaSubArch_v5:
-                    return TripleArchType.kalimba;
+                    return TripleArchType.Kalimba;
 
                 default:
                     return TripleArchType.UnknownArch;
                 }
-            case TripleArchType.arm:
-            case TripleArchType.armeb:
+
+            case TripleArchType.Arm:
+            case TripleArchType.Armeb:
                 switch( subArch )
                 {
                 case TripleSubArchType.ARMSubArch_v6m:
-                    return archType == TripleArchType.armeb ? TripleArchType.thumbeb : TripleArchType.thumb;
+                    return archType == TripleArchType.Armeb ? TripleArchType.Thumbeb : TripleArchType.Thumb;
                 case TripleSubArchType.KalimbaSubArch_v3:
                 case TripleSubArchType.KalimbaSubArch_v4:
                 case TripleSubArchType.KalimbaSubArch_v5:
@@ -251,6 +268,7 @@ namespace Llvm.NET
                 default:
                     return archType;
                 }
+
             default:
                 return archType;
             }
@@ -272,11 +290,6 @@ namespace Llvm.NET
             }
         }
 
-        ~Triple()
-        {
-            TripleHandle.Close( );
-        }
-
-        Llvm.NET.Native.TripleHandle TripleHandle;
+        private LLVMTripleRef TripleHandle;
     }
 }

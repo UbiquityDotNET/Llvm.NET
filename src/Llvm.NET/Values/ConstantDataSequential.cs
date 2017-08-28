@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics.CodeAnalysis;
 using Llvm.NET.Native;
 
 namespace Llvm.NET.Values
@@ -17,15 +18,14 @@ namespace Llvm.NET.Values
     {
         public bool IsString => NativeMethods.IsConstantString( ValueHandle );
 
-        [System.Diagnostics.CodeAnalysis.SuppressMessage( "Microsoft.Naming", "CA2204:Literals should be spelled correctly", MessageId = "ConstantDataSequential" )]
         public string ExtractAsString()
         {
             if( !IsString )
-                throw new InvalidOperationException( "ConstantDataSequential is not a string" );
+            {
+                throw new InvalidOperationException( "Value is not a string" );
+            }
 
-            int len;
-            var strPtr = NativeMethods.GetAsString( ValueHandle, out len );
-            return NativeMethods.NormalizeLineEndings( strPtr, len );
+            return NativeMethods.GetAsString( ValueHandle, out size_t len );
         }
 
         internal ConstantDataSequential( LLVMValueRef valueRef )

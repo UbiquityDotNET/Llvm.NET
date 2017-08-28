@@ -2,7 +2,7 @@
 
 namespace Llvm.NET.Instructions
 {
-    class FPTrunc : Cast
+    public class FPTrunc : Cast
     {
         internal FPTrunc( LLVMValueRef valueRef )
             : base( valueRef )

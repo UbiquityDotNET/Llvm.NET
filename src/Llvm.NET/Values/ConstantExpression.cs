@@ -1,8 +1,9 @@
 ﻿using System;
-using Llvm.NET.Types;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using Llvm.NET.Instructions;
 using Llvm.NET.Native;
+using Llvm.NET.Types;
 
 namespace Llvm.NET.Values
 {
@@ -16,13 +17,19 @@ namespace Llvm.NET.Values
         public static Constant IntToPtrExpression( Constant value, ITypeRef type )
         {
             if( value == null )
+            {
                 throw new ArgumentNullException( nameof( value ) );
+            }
 
             if( value.NativeType.Kind != TypeKind.Integer )
+            {
                 throw new ArgumentException( "Integer Type expected", nameof( value ) );
+            }
 
             if( !( type is IPointerType ) )
+            {
                 throw new ArgumentException( "pointer type expected", nameof( type ) );
+            }
 
             return FromHandle<Constant>( NativeMethods.ConstIntToPtr( value.ValueHandle, type.GetTypeRef( ) ) );
         }
@@ -31,20 +38,22 @@ namespace Llvm.NET.Values
         public static Constant BitCast( Constant value, ITypeRef toType )
         {
             if( value == null )
+            {
                 throw new ArgumentNullException( nameof( value ) );
+            }
 
             var handle = NativeMethods.ConstBitCast( value.ValueHandle, toType.GetTypeRef( ) );
             return FromHandle<Constant>( handle );
         }
 
-        public static Constant GetElementPtr( Constant value, params Constant[ ] args ) 
+        public static Constant GetElementPtr( Constant value, params Constant[ ] args )
             => GetElementPtr( value, ( IEnumerable<Constant> )args );
 
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1011:ConsiderPassingBaseTypesAsParameters", Justification = "Specific type required by interop call")]
+        [SuppressMessage("Microsoft.Design", "CA1011:ConsiderPassingBaseTypesAsParameters", Justification = "Specific type required by interop call")]
         public static Constant GetElementPtr(Constant value, IEnumerable<Constant> args)
         {
             var llvmArgs = InstructionBuilder.GetValidatedGEPArgs(value, args);
-            var handle = NativeMethods.ConstGEP(value.ValueHandle, out llvmArgs[0], (uint)llvmArgs.Length);
+            var handle = NativeMethods.ConstGEP( value.ValueHandle, out llvmArgs[0], (uint)llvmArgs.Length);
             return FromHandle<Constant>(handle);
         }
 

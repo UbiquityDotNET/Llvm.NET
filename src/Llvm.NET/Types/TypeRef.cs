@@ -1,11 +1,12 @@
 ﻿using System;
+using System.Diagnostics.CodeAnalysis;
 using Llvm.NET.Native;
 using Llvm.NET.Values;
 
 namespace Llvm.NET.Types
 {
     /// <summary>LLVM Type</summary>
-    internal class TypeRef 
+    internal class TypeRef
         : ITypeRef
     {
         public IntPtr TypeHandle => TypeHandle_.Pointer;
@@ -16,7 +17,9 @@ namespace Llvm.NET.Types
             get
             {
                 if( Kind == TypeKind.Function )
+                {
                     return false;
+                }
 
                 return NativeMethods.TypeIsSized( TypeHandle_ );
             }
@@ -24,6 +27,7 @@ namespace Llvm.NET.Types
 
         /// <summary>LLVM Type kind for this type</summary>
         public TypeKind Kind => ( TypeKind )NativeMethods.GetTypeKind( TypeHandle_ );
+
         public bool IsInteger=> Kind == TypeKind.Integer;
 
         // Return true if value is 'float', a 32-bit IEEE fp type.
@@ -79,7 +83,9 @@ namespace Llvm.NET.Types
             get
             {
                 if( Kind != TypeKind.Integer )
+                {
                     return 0;
+                }
 
                 return NativeMethods.GetIntTypeWidth( TypeHandle_ );
             }
@@ -88,33 +94,6 @@ namespace Llvm.NET.Types
         /// <summary>Gets a null value (e.g. all bits = 0 ) for the type</summary>
         /// <remarks>This is a getter function instead of a property as it can throw exceptions</remarks>
         public Constant GetNullValue() => Constant.NullValueFor( this );
-
-        /// <summary>Retrieves an expression that results in the size of the type</summary>
-        [Obsolete("Use TargetData layout information to compute size and create a constant from that")]
-        public Constant GetSizeOfExpression( int pointerSize )
-        {
-            if( !IsSized
-                || Kind == TypeKind.Void
-                || Kind == TypeKind.Function
-                || ( Kind == TypeKind.Struct && ( NativeMethods.IsOpaqueStruct( TypeHandle_ ) ) )
-                )
-            {
-                return Context.CreateConstant( 0 );
-            }
-
-            var hSize = NativeMethods.SizeOf( TypeHandle_ );
-
-            // LLVM uses an expression to construct Sizeof, however it is hard coded to
-            // use an i64 as the type for the size, which isn't valid for 32 bit systems
-            var sizeOfBitWidth = NativeMethods.GetIntTypeWidth( NativeMethods.TypeOf( hSize ) );
-            var hIntPtr = new LLVMTypeRef( Context.GetIntType( ( uint )pointerSize ).TypeHandle );
-            if( sizeOfBitWidth > pointerSize )
-                hSize = NativeMethods.ConstTrunc( hSize, hIntPtr );
-            else if( sizeOfBitWidth < pointerSize )
-                hSize = NativeMethods.ConstZExt( hSize, hIntPtr );
-
-            return Value.FromHandle<Constant>( hSize );
-        }
 
         /// <summary>Array type factory for an array with elements of this type</summary>
         /// <param name="count">Number of elements in the array</param>
@@ -131,30 +110,31 @@ namespace Llvm.NET.Types
         public IPointerType CreatePointerType( uint addressSpace )
         {
             if( IsVoid )
+            {
                 throw new InvalidOperationException( "Cannot create pointer to void in LLVM, use i8* instead" );
+            }
 
             return FromHandle<IPointerType>( NativeMethods.PointerType( TypeHandle_, addressSpace ) );
         }
 
         public bool TryGetExtendedPropertyValue<T>( string id, out T value ) => ExtensibleProperties.TryGetExtendedPropertyValue<T>( id, out value );
+
         public void AddExtendedPropertyValue( string id, object value ) => ExtensibleProperties.AddExtendedPropertyValue( id, value );
 
         /// <summary>Builds a string representation for this type in LLVM assembly language form</summary>
         /// <returns>Formatted string for this type</returns>
-        public override string ToString( )
-        {
-            var msgString = NativeMethods.PrintTypeToString( TypeHandle_ );
-            return NativeMethods.MarshalMsg( msgString );
-        }
+        public override string ToString( ) => NativeMethods.PrintTypeToString( TypeHandle_ );
 
         internal TypeRef( LLVMTypeRef typeRef )
         {
             TypeHandle_ = typeRef;
             if( typeRef.Pointer == IntPtr.Zero )
+            {
                 throw new ArgumentNullException( nameof( typeRef ) );
+            }
 
 #if DEBUG
-            var ctx = Llvm.NET.Context.GetContextFor( typeRef );
+            var ctx = Context.GetContextFor( typeRef );
             ctx.AssertTypeNotInterned( typeRef );
 #endif
         }
@@ -163,10 +143,11 @@ namespace Llvm.NET.Types
 
         internal static T FromHandle<T>( LLVMTypeRef typeRef )
             where T : class, ITypeRef
-
         {
             if( typeRef.Pointer == IntPtr.Zero )
+            {
                 return null;
+            }
 
             var ctx = Context.GetContextFor( typeRef );
             return ( T )ctx.GetTypeFor( typeRef, StaticFactory );
@@ -174,7 +155,7 @@ namespace Llvm.NET.Types
 
         private static ITypeRef StaticFactory( LLVMTypeRef typeRef )
         {
-            var kind = (TypeKind)NativeMethods.GetTypeKind( typeRef );
+            var kind = ( TypeKind )NativeMethods.GetTypeKind( typeRef );
             switch( kind )
             {
             case TypeKind.Struct:
@@ -210,7 +191,14 @@ namespace Llvm.NET.Types
             }
         }
 
-        internal readonly LLVMTypeRef TypeHandle_;
+        // field required to allow use as an out param in constructor
+        [SuppressMessage( "StyleCop.CSharp.NamingRules"
+                        , "SA1310:Field names must not contain underscore"
+                        , Justification = "Trailing _ indicates code must not write to it directly"
+                        )
+        ]
+        protected LLVMTypeRef TypeHandle_ { get; }
+
         private readonly ExtensiblePropertyContainer ExtensibleProperties = new ExtensiblePropertyContainer( );
     }
 }

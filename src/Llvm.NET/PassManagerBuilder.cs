@@ -3,9 +3,8 @@ using Llvm.NET.Native;
 
 namespace Llvm.NET
 {
-    /// <summary>Provides a wrapper around an LLVM Pass Manager</summary>
+    /// <summary>Provides a wrapper around the LLVM PassManagerBuilder</summary>
     /// <remarks>This class is still in the experimental stage as there is a lack of full support from the C API</remarks>
-    [Obsolete("Direct use of legacy pass manager support will not carry forward")]
     public sealed class PassManagerBuilder
         : IDisposable
     {
@@ -39,25 +38,26 @@ namespace Llvm.NET
             NativeMethods.PassManagerBuilderSetDisableSimplifyLibCalls( PassManagerBuilderHandle, value );
         }
 
-        //public void PopulateFunctionPassManager( PassManager passManager )
-        //{
-        //    LLVMNative.PassManagerBuilderPopulateFunctionPassManager( PassManagerBuilderHandle, passManager.PassManagerHandle );
-        //}
+        /*
+        public void PopulateFunctionPassManager( PassManager passManager )
+        {
+            NativeMethods.PassManagerBuilderPopulateFunctionPassManager( PassManagerBuilderHandle, passManager.PassManagerHandle );
+        }
 
-        //public void PopulateModulePassManager( PassManager passManager )
-        //{
-        //    LLVMNative.PassManagerBuilderPopulateModulePassManager( PassManagerBuilderHandle, passManager.PassManagerHandle );
-        //}
+        public void PopulateModulePassManager( PassManager passManager )
+        {
+            NativeMethods.PassManagerBuilderPopulateModulePassManager( PassManagerBuilderHandle, passManager.PassManagerHandle );
+        }
 
-        //public void PopulateLTOPassManager( PassManager passManager, bool internalize, bool runInliner )
-        //{
-        //    LLVMNative.PassManagerBuilderPopulateLTOPassManager( PassManagerBuilderHandle
-        //                                                       , passManager.PassManagerHandle
-        //                                                       , internalize
-        //                                                       , runInliner
-        //                                                       );
-        //}
-
+        public void PopulateLTOPassManager( PassManager passManager, bool internalize, bool runInliner )
+        {
+            NativeMethods.PassManagerBuilderPopulateLTOPassManager( PassManagerBuilderHandle
+                                                                  , passManager.PassManagerHandle
+                                                                  , internalize
+                                                                  , runInliner
+                                                                  );
+        }
+        */
         public void Dispose( )
         {
             if( PassManagerBuilderHandle.Pointer != IntPtr.Zero )
@@ -67,6 +67,6 @@ namespace Llvm.NET
             }
         }
 
-        LLVMPassManagerBuilderRef PassManagerBuilderHandle;
+        private LLVMPassManagerBuilderRef PassManagerBuilderHandle;
     }
 }

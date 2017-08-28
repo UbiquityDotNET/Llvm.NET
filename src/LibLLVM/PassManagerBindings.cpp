@@ -56,12 +56,12 @@ extern "C"
     void LLVMAddDataFlowSanitizerPass( LLVMPassManagerRef PM, int ABIListFilesNum, const char **ABIListFiles )
     {
         std::vector<std::string> ABIListFilesVec;
-        for (int i = 0; i != ABIListFilesNum; ++i)
+        for( int i = 0; i != ABIListFilesNum; ++i )
         {
-            ABIListFilesVec.push_back(ABIListFiles[i]);
+            ABIListFilesVec.push_back( ABIListFiles[ i ] );
         }
 
-        unwrap(PM)->add(createDataFlowSanitizerPass(ABIListFilesVec));
+        unwrap( PM )->add( createDataFlowSanitizerPass( ABIListFilesVec ) );
     }
 
     // For codegen passes, only passes that do IR to IR transformation are
@@ -69,9 +69,22 @@ extern "C"
     void LLVMInitializeCodeGenForOpt( LLVMPassRegistryRef R )
     {
         PassRegistry& Registry = *unwrap( R );
+        initializeCore( Registry );
+        initializeCoroutines( Registry );
+        initializeScalarOpts( Registry );
+        initializeObjCARCOpts( Registry );
+        initializeVectorization( Registry );
+        initializeIPO( Registry );
+        initializeAnalysis( Registry );
+        initializeTransformUtils( Registry );
+        initializeInstCombine( Registry );
+        initializeInstrumentation( Registry );
+        initializeTarget( Registry );
+        // For codegen passes, only passes that do IR to IR transformation are
+        // supported.
         initializeCodeGenPreparePass( Registry );
         initializeAtomicExpandPass( Registry );
-        initializeRewriteSymbolsPass( Registry );
+        initializeRewriteSymbolsLegacyPassPass( Registry );
         initializeWinEHPreparePass( Registry );
         initializeDwarfEHPreparePass( Registry );
         initializeSafeStackPass( Registry );
@@ -79,6 +92,7 @@ extern "C"
         initializePreISelIntrinsicLoweringLegacyPassPass( Registry );
         initializeGlobalMergePass( Registry );
         initializeInterleavedAccessPass( Registry );
+        initializeCountingFunctionInserterPass( Registry );
         initializeUnreachableBlockElimLegacyPassPass( Registry );
     }
 }

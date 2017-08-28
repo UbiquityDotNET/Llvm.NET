@@ -1,0 +1,5 @@
+<Project>
+    <PropertyGroup>
+        <LlvmNetPackageRoot>$([MSBuild]::NormalizeDirectory('$(MSBuildThisFileDirectory)', '..')</LlvmNetPackageRoot>
+    </PropertyGroup>
+</Project>

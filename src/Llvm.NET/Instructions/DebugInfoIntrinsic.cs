@@ -7,7 +7,7 @@ namespace Llvm.NET.Instructions
     {
         internal DebugInfoIntrinsic( LLVMValueRef valueRef )
             : base( valueRef )
-        { 
+        {
         }
     }
 }

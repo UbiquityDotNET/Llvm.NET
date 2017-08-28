@@ -2,7 +2,7 @@
 
 namespace Llvm.NET.Instructions
 {
-    class UIToFP : Cast
+    public class UIToFP : Cast
     {
         internal UIToFP( LLVMValueRef valueRef )
             : base( valueRef )

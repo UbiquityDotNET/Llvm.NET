@@ -1,5 +1,4 @@
-﻿
-using Llvm.NET.Native;
+﻿using Llvm.NET.Native;
 
 namespace Llvm.NET.Instructions
 {
