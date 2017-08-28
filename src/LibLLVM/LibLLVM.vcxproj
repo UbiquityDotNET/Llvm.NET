@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <Import Project="..\..\BuildOutput\packages\Llvm.NET.BuildTasks.1.0.0\build\Llvm.NET.BuildTasks.props" Condition="Exists('..\..\BuildOutput\packages\Llvm.NET.BuildTasks.1.0.0\build\Llvm.NET.BuildTasks.props')" />
+  <Import Project="..\..\BuildOutput\packages\LlvmNETBuildTasks.1.0.0\build\LlvmNETBuildTasks.props" Condition="Exists('..\..\BuildOutput\packages\LlvmNETBuildTasks.1.0.0\build\LlvmNETBuildTasks.props')" />
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Debug|Win32">
       <Configuration>Debug</Configuration>
@@ -71,7 +71,7 @@
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
   <ImportGroup Label="ExtensionSettings">
     <Import Project="..\..\BuildOutput\packages\PdbGit.3.0.41\build\PdbGit.targets" Condition="Exists('..\..\BuildOutput\packages\PdbGit.3.0.41\build\PdbGit.targets')" />
-    <Import Project="..\..\BuildOutput\packages\Llvm.NET.BuildTasks.1.0.0\build\Llvm.NET.BuildTasks.targets" Condition="Exists('..\..\BuildOutput\packages\Llvm.NET.BuildTasks.1.0.0\build\Llvm.NET.BuildTasks.targets')" />
+    <Import Project="..\..\BuildOutput\packages\LlvmNETBuildTasks.1.0.0\build\LlvmNETBuildTasks.targets" Condition="Exists('..\..\BuildOutput\packages\LlvmNETBuildTasks.1.0.0\build\LlvmNETBuildTasks.targets')" />
   </ImportGroup>
   <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="PropertySheets">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
@@ -226,7 +226,7 @@
     <Error Condition="!Exists('..\..\BuildOutput\packages\Llvm.Libs.targets.x86-Debug.4.0.1\build\native\Llvm.Libs.targets.x86-Debug.props')" Text="$([System.String]::Format('$(ErrorText)', '..\..\BuildOutput\packages\Llvm.Libs.targets.x86-Debug.4.0.1\build\native\Llvm.Libs.targets.x86-Debug.props'))" />
     <Error Condition="!Exists('..\..\BuildOutput\packages\Llvm.Libs.targets.x86-Release.4.0.1\build\native\Llvm.Libs.targets.x86-Release.props')" Text="$([System.String]::Format('$(ErrorText)', '..\..\BuildOutput\packages\Llvm.Libs.targets.x86-Release.4.0.1\build\native\Llvm.Libs.targets.x86-Release.props'))" />
     <Error Condition="!Exists('..\..\BuildOutput\packages\Llvm.Libs.4.0.1\build\native\Llvm.Libs.props')" Text="$([System.String]::Format('$(ErrorText)', '..\..\BuildOutput\packages\Llvm.Libs.4.0.1\build\native\Llvm.Libs.props'))" />
-    <Error Condition="!Exists('..\..\BuildOutput\packages\Llvm.NET.BuildTasks.1.0.0\build\Llvm.NET.BuildTasks.props')" Text="$([System.String]::Format('$(ErrorText)', '..\..\BuildOutput\packages\Llvm.NET.BuildTasks.1.0.0\build\Llvm.NET.BuildTasks.props'))" />
-    <Error Condition="!Exists('..\..\BuildOutput\packages\Llvm.NET.BuildTasks.1.0.0\build\Llvm.NET.BuildTasks.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\BuildOutput\packages\Llvm.NET.BuildTasks.1.0.0\build\Llvm.NET.BuildTasks.targets'))" />
+    <Error Condition="!Exists('..\..\BuildOutput\packages\LlvmNETBuildTasks.1.0.0\build\LlvmNETBuildTasks.props')" Text="$([System.String]::Format('$(ErrorText)', '..\..\BuildOutput\packages\LlvmNETBuildTasks.1.0.0\build\LlvmNETBuildTasks.props'))" />
+    <Error Condition="!Exists('..\..\BuildOutput\packages\LlvmNETBuildTasks.1.0.0\build\LlvmNETBuildTasks.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\BuildOutput\packages\LlvmNETBuildTasks.1.0.0\build\LlvmNETBuildTasks.targets'))" />
   </Target>
 </Project>

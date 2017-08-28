@@ -4,7 +4,7 @@
   Project Configuration list keeps VS happy but the Platform part is otherwise ignored here.
   Configuration, is used to build multiple platforms for a given Configuration.
   -->
-  <Import Project="..\..\BuildOutput\packages\Llvm.NET.BuildTasks.1.0.0\build\Llvm.NET.BuildTasks.props" Condition="Exists('..\..\BuildOutput\packages\Llvm.NET.BuildTasks.1.0.0\build\Llvm.NET.BuildTasks.props')" />
+  <Import Project="..\..\BuildOutput\packages\LlvmNETBuildTasks.1.0.0\build\LlvmNETBuildTasks.props" Condition="Exists('..\..\BuildOutput\packages\LlvmNETBuildTasks.1.0.0\build\LlvmNETBuildTasks.props')" />
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Debug|Win32">
       <Configuration>Debug</Configuration>
@@ -47,7 +47,7 @@
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <!--
   Override standard VS Make file targets to perform multitarget actions on this project file.
-  The MultiTarget* targets come from the Llvm.NET.BuildTasks NUGET package.
+  The MultiTarget* targets come from the LlvmNETBuildTasks NUGET package.
   -->
   <Target Name="Build">
     <MSBuild Targets="MultiTargetBuild" Projects="$(MSBuildThisFile)" Properties="Configuration=$(Configuration)" />
@@ -62,8 +62,8 @@
     <PropertyGroup>
       <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
     </PropertyGroup>
-    <Error Condition="!Exists('..\..\BuildOutput\packages\Llvm.NET.BuildTasks.1.0.0\build\Llvm.NET.BuildTasks.props')" Text="$([System.String]::Format('$(ErrorText)', '..\..\BuildOutput\packages\Llvm.NET.BuildTasks.1.0.0\build\Llvm.NET.BuildTasks.props'))" />
-    <Error Condition="!Exists('..\..\BuildOutput\packages\Llvm.NET.BuildTasks.1.0.0\build\Llvm.NET.BuildTasks.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\BuildOutput\packages\Llvm.NET.BuildTasks.1.0.0\build\Llvm.NET.BuildTasks.targets'))" />
+    <Error Condition="!Exists('..\..\BuildOutput\packages\LlvmNETBuildTasks.1.0.0\build\LlvmNETBuildTasks.props')" Text="$([System.String]::Format('$(ErrorText)', '..\..\BuildOutput\packages\LlvmNETBuildTasks.1.0.0\build\LlvmNETBuildTasks.props'))" />
+    <Error Condition="!Exists('..\..\BuildOutput\packages\LlvmNETBuildTasks.1.0.0\build\LlvmNETBuildTasks.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\BuildOutput\packages\LlvmNETBuildTasks.1.0.0\build\LlvmNETBuildTasks.targets'))" />
   </Target>
-  <Import Project="..\..\BuildOutput\packages\Llvm.NET.BuildTasks.1.0.0\build\Llvm.NET.BuildTasks.targets" Condition="Exists('..\..\BuildOutput\packages\Llvm.NET.BuildTasks.1.0.0\build\Llvm.NET.BuildTasks.targets')" />
+  <Import Project="..\..\BuildOutput\packages\LlvmNETBuildTasks.1.0.0\build\LlvmNETBuildTasks.targets" Condition="Exists('..\..\BuildOutput\packages\LlvmNETBuildTasks.1.0.0\build\LlvmNETBuildTasks.targets')" />
 </Project>

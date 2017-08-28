@@ -1,0 +1,6 @@
+﻿<Project TreatAsLocalProperty="_ThisPackageRoot">
+    <PropertyGroup>
+        <_ThisPackageRoot>$([MSBuild]::NormalizeDirectory("$(MSBuildThisFileDirectory)",".."))</_ThisPackageRoot>
+    </PropertyGroup>
+    <Import Project="$(_ThisPackageRoot)\build\$(MSBuildThisFile)"/>
+</Project>

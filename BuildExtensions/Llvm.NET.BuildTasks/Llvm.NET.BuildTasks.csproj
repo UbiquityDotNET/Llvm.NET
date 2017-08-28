@@ -7,16 +7,17 @@
     <!-- Silence warning that assembly isn't in lib folder (It's a task so it goes in the task folder - Duh!)-->
     <NoPackageAnalysis>true</NoPackageAnalysis>
     <BuildOutputTargetFolder>tasks</BuildOutputTargetFolder>
+    <PackageId>LlvmNetBuildTasks</PackageId>
   </PropertyGroup>
     <ItemGroup>
         <None Remove="**" />
     </ItemGroup>
   <ItemGroup>
       <!-- pack the build support files -->
-      <Content Include="build\Llvm.NET.BuildTasks.props" PackagePath="build\" />
-      <Content Include="build\Llvm.NET.BuildTasks.targets" PackagePath="build\" />
-      <Content Include="buildMultiTargeting\Llvm.NET.BuildTasks.props" PackagePath="buildMultiTargeting\" />
-      <Content Include="buildMultiTargeting\Llvm.NET.BuildTasks.targets" PackagePath="buildMultiTargeting\" />
+      <Content Include="build\$(PackageId).props" PackagePath="build\" />
+      <Content Include="build\$(PackageId).targets" PackagePath="build\" />
+      <Content Include="buildMultiTargeting\$(PackageId).props" PackagePath="buildMultiTargeting\" />
+      <Content Include="buildMultiTargeting\$(PackageId).targets" PackagePath="buildMultiTargeting\" />
   </ItemGroup>
 
   <ItemGroup>
@@ -50,7 +51,7 @@
   package (which is good, as they aren't applicable in most cases). However, the binaries are not development
   only files for this package, they are runtime required. Currently the MSbuild NUGet Pack target has no support
   for a development only package with package references that should not flow to the parent package. This,
-  articular hack works for dependent packages that list their binaries as none items (Which LibGit2Sharp does
+  particular hack works for dependent packages that list their binaries as none items (Which LibGit2Sharp does
   for all the native binaries)
   -->
   <UsingTask TaskName="MakeContentItems" TaskFactory="CodeTaskFactory" AssemblyFile="$(MSBuildToolsPath)\Microsoft.Build.Tasks.v4.0.dll">

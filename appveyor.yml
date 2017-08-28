@@ -5,7 +5,8 @@ pull_requests:
 
 branches:
   only:
-  - LLVM_4_0_1
+  - dev
+  - master
 
 image: Visual Studio 2017
 
@@ -22,4 +23,5 @@ build_script:
   - ps: .\BuildAll.ps1
 
 artifacts:
-  - path: .\BuildOutput\Nuget\*.nupkg
+  - path: .\BuildOutput\Nuget\LLvm.NET.*.nupkg
+  - path: .\BuildOutput\Nuget\LibLLVM.NET.*.nupkg

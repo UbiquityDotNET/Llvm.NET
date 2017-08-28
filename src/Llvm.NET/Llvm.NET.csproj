@@ -217,7 +217,7 @@
         </CodeAnalysisDictionary>
     </ItemGroup>
     <ItemGroup>
-      <PackageReference Include="Llvm.NET.BuildTasks" Version="1.0.0" />
+      <PackageReference Include="LlvmNetBuildTasks" Version="1.0.0" />
     </ItemGroup>
     <Choose>
         <!--

@@ -2,12 +2,13 @@
     <PropertyGroup>
         <_ThisPackageRoot>$([MSBuild]::NormalizeDirectory("$(MSBuildThisFileDirectory)",".."))</_ThisPackageRoot>
     </PropertyGroup>
+
     <!--
     Must import this directly in Multitargeting builds to ensure that PackageVersion is set based on the generated build number.
     The cross targeting build will only import Directory.Build.props when building for a single Platform+configuration combination
     but the NuGet pack target is only executed in the outer multitargeting project case so this ensures the import occurs correctly.
     For more info see: https://github.com/NuGet/Home/issues/4790
     -->
-    <Import Project="$([MSBuild]::GetPathOfFileAbove(Directory.Build.props))" Condition="exists($([MSBuild]::GetPathOfFileAbove(Directory.Build.props)))" />
-    <Import Project="$(_ThisPackageRoot)\build\Llvm.NET.BuildTasks.props"/>
+    <Import Project="$([MSBuild]::GetPathOfFileAbove(Directory.Build.targets))" Condition="exists($([MSBuild]::GetPathOfFileAbove(Directory.Build.targets)))" />
+    <Import Project="$(_ThisPackageRoot)\build\$(MSBuildThisFile)"/>
 </Project>
