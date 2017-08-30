@@ -1,24 +1,24 @@
-using System;
 using System.Collections.Generic;
 using System.Linq;
+using Ubiquity.ArgValidators;
 
 namespace Llvm.NET.Values
 {
     // Provides a layer of simplicity and backwards compatibility for manipulating attributes on Values
     public static class AttributesMixins
     {
-        public static bool Contains( this IAttributeCollection self, AttributeKind kind )
+        public static bool Contains( [ValidatedNotNull] this IAttributeCollection self, AttributeKind kind )
         {
+            self.ValidateNotNull( nameof( self ) );
+            kind.ValidateDefined( nameof( kind ) );
+
             return self.Any( a => a.Kind == kind );
         }
 
-        public static T AddAttributes<T>( this T self, FunctionAttributeIndex index, params AttributeKind[ ] values )
+        public static T AddAttributes<T>( [ValidatedNotNull] this T self, FunctionAttributeIndex index, params AttributeKind[ ] values )
             where T : class, IAttributeContainer
         {
-            if( self == null )
-            {
-                throw new ArgumentNullException( nameof( self ) );
-            }
+            self.ValidateNotNull( nameof( self ) );
 
             if( values != null )
             {
@@ -42,10 +42,7 @@ namespace Llvm.NET.Values
         public static T AddAttribute<T>( this T self, FunctionAttributeIndex index, AttributeKind kind )
             where T : class, IAttributeContainer
         {
-            if( self == null )
-            {
-                throw new ArgumentNullException( nameof( self ) );
-            }
+            self.ValidateNotNull( nameof( self ) );
 
             AttributeValue attrib = self.Context.CreateAttribute( kind );
             if( self is IAttributeAccessor container )
@@ -63,10 +60,7 @@ namespace Llvm.NET.Values
         public static T AddAttribute<T>( this T self, FunctionAttributeIndex index, AttributeValue attrib )
             where T : class, IAttributeContainer
         {
-            if( self == null )
-            {
-                throw new ArgumentNullException( nameof( self ) );
-            }
+            self.ValidateNotNull( nameof( self ) );
 
             if( self is IAttributeAccessor container )
             {
@@ -89,10 +83,7 @@ namespace Llvm.NET.Values
         public static T AddAttributes<T>( this T self, FunctionAttributeIndex index, IEnumerable<AttributeValue> attributes )
             where T : class, IAttributeContainer
         {
-            if( self == null )
-            {
-                throw new ArgumentNullException( nameof( self ) );
-            }
+            self.ValidateNotNull( nameof( self ) );
 
             if( attributes != null )
             {
@@ -115,10 +106,8 @@ namespace Llvm.NET.Values
         public static T AddAttributes<T>( this T self, FunctionAttributeIndex index, IAttributeDictionary attributes )
             where T : class, IAttributeContainer
         {
-            if( attributes == null )
-            {
-                return self;
-            }
+            self.ValidateNotNull( nameof( self ) );
+            attributes.ValidateNotNull( nameof( attributes ) );
 
             return AddAttributes( self, index, attributes[ index ] );
         }
@@ -126,10 +115,7 @@ namespace Llvm.NET.Values
         public static T RemoveAttribute<T>( this T self, FunctionAttributeIndex index, AttributeKind kind )
             where T : class, IAttributeContainer
         {
-            if( self == null )
-            {
-                throw new ArgumentNullException( nameof( self ) );
-            }
+            self.ValidateNotNull( nameof( self ) );
 
             if( kind == AttributeKind.None )
             {
@@ -156,10 +142,7 @@ namespace Llvm.NET.Values
         public static T RemoveAttribute<T>( this T self, FunctionAttributeIndex index, string name )
             where T : class, IAttributeContainer
         {
-            if( self == null )
-            {
-                throw new ArgumentNullException( nameof( self ) );
-            }
+            self.ValidateNotNull( nameof( self ) );
 
             if( self is IAttributeAccessor container )
             {

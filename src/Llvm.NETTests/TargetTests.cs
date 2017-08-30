@@ -38,6 +38,8 @@ namespace Llvm.NET.Tests
         [TestMethod]
         public void AvailableTargetsTest()
         {
+            /* string expTargets = GenerateExpectedTargets( ); */
+
             Assert.IsNotNull( Target.AvailableTargets );
             int foundTargets = 0;
             foreach( var target in Target.AvailableTargets )
@@ -113,8 +115,6 @@ namespace Llvm.NET.Tests
                 new TargetInfo( "sparcel", "Sparc LE", true, true, true ),
                 new TargetInfo( "sparcv9", "Sparc V9", true, true, true ),
                 new TargetInfo( "sparc", "Sparc", true, true, true ),
-                new TargetInfo( "riscv64", "64-bit RISC-V", true, false, true ),
-                new TargetInfo( "riscv32", "32-bit RISC-V", true, false, true ),
                 new TargetInfo( "ppc64le", "PowerPC 64 LE", true, true, true ),
                 new TargetInfo( "ppc64", "PowerPC 64", true, true, true ),
                 new TargetInfo( "ppc32", "PowerPC 32", true, true, true ),
@@ -142,7 +142,12 @@ namespace Llvm.NET.Tests
             };
         }
 
-        /*internal string GenerateExpectedTargets( )
+        /*
+        // This is useful for generating the list of expected targets
+        // Obviously since it uses the API being tested the results require verification
+        // before updating the list of ExpectedTargets above, but it helps eliminate tedious
+        // typing
+        internal string GenerateExpectedTargets( )
         {
             var bldr = new System.Text.StringBuilder( "public static TargetInfoCollection ExpectedTargets = new TargetInfoCollection {" );
             bldr.AppendLine( );
@@ -157,8 +162,8 @@ namespace Llvm.NET.Tests
                                  , target.HasJIT.ToString( ).ToLowerInvariant( )
                                  , target.HasTargetMachine.ToString( ).ToLowerInvariant( )
                                  );
-                var lastEntry = i == targets.Count - 1;
-                bldr.AppendLine( lastEntry ? string.Empty : "," );
+
+                bldr.AppendLine( i == targets.Count - 1 ? string.Empty : "," );
             }
 
             bldr.AppendLine( "};" );

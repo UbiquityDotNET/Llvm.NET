@@ -1,11 +1,12 @@
 ﻿using Llvm.NET.Native;
+using Ubiquity.ArgValidators;
 
 namespace Llvm.NET
 {
     /// <summary>Comdat entry for a module</summary>
     /// <remarks>
     /// A COMDAT is a named kind pair to ensure that, within
-    /// a given module there are no two named COMDATs with a
+    /// a given module there are no two named COMDATs with
     /// different kinds. Ultimately, Comdat is 'owned' by the
     /// module, if the module is disposed the Comdats it owns
     /// are invalidated. Using a Comdat instance after the
@@ -15,6 +16,9 @@ namespace Llvm.NET
     {
         internal Comdat( NativeModule module, LLVMComdatRef comdatRef )
         {
+            module.ValidateNotNull( nameof( module ) );
+            comdatRef.Pointer.ValidateNotNull( nameof( comdatRef ) );
+
             Module = module;
             ComdatHandle = comdatRef;
         }

@@ -2,6 +2,7 @@
 using System.Diagnostics.CodeAnalysis;
 using System.Runtime.InteropServices;
 using Llvm.NET.Native;
+using Ubiquity.ArgValidators;
 
 namespace Llvm.NET
 {
@@ -13,6 +14,8 @@ namespace Llvm.NET
         /// <param name="path">Path of the file to load into a <see cref="MemoryBuffer"/></param>
         public MemoryBuffer( string path )
         {
+            path.ValidateNotNullOrWhiteSpace( nameof( path ) );
+
             if( NativeMethods.CreateMemoryBufferWithContentsOfFile( path, out BufferHandle_, out string msg ).Succeeded )
             {
                 return;
@@ -54,6 +57,8 @@ namespace Llvm.NET
 
         internal MemoryBuffer( LLVMMemoryBufferRef bufferHandle )
         {
+            bufferHandle.Pointer.ValidateNotNull( nameof( bufferHandle ) );
+
             BufferHandle_ = bufferHandle;
         }
 

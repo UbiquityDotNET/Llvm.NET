@@ -11,7 +11,7 @@ namespace TestDebugInfo
     {
         public string Cpu => "cortex-m3";
 
-        public string Features => "+hwdiv,+strict-align";
+        public string Features => "+hwdiv,+strict-align,+thumb-mode";
 
         public string ShortName => "M3";
 

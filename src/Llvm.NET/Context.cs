@@ -4,10 +4,12 @@ using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Text;
+using JetBrains.Annotations;
 using Llvm.NET.DebugInfo;
 using Llvm.NET.Native;
 using Llvm.NET.Types;
 using Llvm.NET.Values;
+using Ubiquity.ArgValidators;
 
 #pragma warning disable SA1124 // DoNotUseRegions
 
@@ -94,10 +96,7 @@ namespace Llvm.NET
         /// <returns><see cref="IPointerType"/> for a pointer that references a value of type <paramref name="elementType"/></returns>
         public IPointerType GetPointerTypeFor( ITypeRef elementType )
         {
-            if( elementType == null )
-            {
-                throw new ArgumentNullException( nameof( elementType ) );
-            }
+            elementType.ValidateNotNull( nameof( elementType ) );
 
             if( elementType.Context != this )
             {
@@ -142,21 +141,15 @@ namespace Llvm.NET
         /// <param name="returnType">Return type of the function</param>
         /// <param name="args">Optional set of function argument types</param>
         /// <returns>Signature type for the specified signature</returns>
-        [SuppressMessage( "Language", "CSE0003:Use expression-bodied members", Justification = "Line too long" )]
         public IFunctionType GetFunctionType( ITypeRef returnType, params ITypeRef[ ] args )
-        {
-            return GetFunctionType( returnType, args, false );
-        }
+            => GetFunctionType( returnType, args, false );
 
         /// <summary>Get an LLVM Function type (e.g. signature)</summary>
         /// <param name="returnType">Return type of the function</param>
         /// <param name="args">Potentially empty set of function argument types</param>
         /// <returns>Signature type for the specified signature</returns>
-        [SuppressMessage( "Language", "CSE0003:Use expression-bodied members", Justification = "Line too long" )]
         public IFunctionType GetFunctionType( ITypeRef returnType, IEnumerable<ITypeRef> args )
-        {
-            return GetFunctionType( returnType, args, false );
-        }
+            => GetFunctionType( returnType, args, false );
 
         /// <summary>Get an LLVM Function type (e.g. signature)</summary>
         /// <param name="returnType">Return type of the function</param>
@@ -165,10 +158,8 @@ namespace Llvm.NET
         /// <returns>Signature type for the specified signature</returns>
         public IFunctionType GetFunctionType( ITypeRef returnType, IEnumerable<ITypeRef> args, bool isVarArgs )
         {
-            if( returnType == null )
-            {
-                throw new ArgumentNullException( nameof( returnType ) );
-            }
+            returnType.ValidateNotNull( nameof( returnType ) );
+            args.ValidateNotNull( nameof( args ) );
 
             if( ContextHandle.Pointer != returnType.Context.ContextHandle.Pointer )
             {
@@ -194,44 +185,22 @@ namespace Llvm.NET
         /// <param name="retType">Return type of the function</param>
         /// <param name="argTypes">Argument types of the function</param>
         /// <returns>Function signature</returns>
-        [SuppressMessage( "Language", "CSE0003:Use expression-bodied members", Justification = "Line too long" )]
         public DebugFunctionType CreateFunctionType( DebugInfoBuilder diBuilder
                                                    , IDebugType<ITypeRef, DIType> retType
                                                    , params IDebugType<ITypeRef, DIType>[ ] argTypes
                                                    )
-        {
-            return CreateFunctionType( diBuilder, false, retType, argTypes );
-        }
+            => CreateFunctionType( diBuilder, false, retType, argTypes );
 
         /// <summary>Creates a FunctionType with Debug information</summary>
         /// <param name="diBuilder"><see cref="DebugInfoBuilder"/>to use to create the debug information</param>
         /// <param name="retType">Return type of the function</param>
         /// <param name="argTypes">Argument types of the function</param>
         /// <returns>Function signature</returns>
-        [SuppressMessage( "Language", "CSE0003:Use expression-bodied members", Justification = "Line too long" )]
         public DebugFunctionType CreateFunctionType( DebugInfoBuilder diBuilder
                                                    , IDebugType<ITypeRef, DIType> retType
                                                    , IEnumerable<IDebugType<ITypeRef, DIType>> argTypes
                                                    )
-        {
-            return CreateFunctionType( diBuilder, false, retType, argTypes );
-        }
-
-        /// <summary>Creates a FunctionType with Debug information</summary>
-        /// <param name="diBuilder"><see cref="DebugInfoBuilder"/>to use to create the debug information</param>
-        /// <param name="isVarArg">Flag to indicate if this function is variadic</param>
-        /// <param name="retType">Return type of the function</param>
-        /// <param name="argTypes">Argument types of the function</param>
-        /// <returns>Function signature</returns>
-        [SuppressMessage( "Language", "CSE0003:Use expression-bodied members", Justification = "Line too long" )]
-        public DebugFunctionType CreateFunctionType( DebugInfoBuilder diBuilder
-                                                   , bool isVarArg
-                                                   , IDebugType<ITypeRef, DIType> retType
-                                                   , params IDebugType<ITypeRef, DIType>[ ] argTypes
-                                                   )
-        {
-            return CreateFunctionType( diBuilder, isVarArg, retType, ( IEnumerable<IDebugType<ITypeRef, DIType>> )argTypes );
-        }
+            => CreateFunctionType( diBuilder, false, retType, argTypes );
 
         /// <summary>Creates a FunctionType with Debug information</summary>
         /// <param name="diBuilder"><see cref="DebugInfoBuilder"/>to use to create the debug information</param>
@@ -242,13 +211,25 @@ namespace Llvm.NET
         public DebugFunctionType CreateFunctionType( DebugInfoBuilder diBuilder
                                                    , bool isVarArg
                                                    , IDebugType<ITypeRef, DIType> retType
-                                                   , IEnumerable<IDebugType<ITypeRef, DIType>> argTypes
+                                                   , params IDebugType<ITypeRef, DIType>[ ] argTypes
+                                                   )
+            => CreateFunctionType( diBuilder, isVarArg, retType, ( IEnumerable<IDebugType<ITypeRef, DIType>> )argTypes );
+
+        /// <summary>Creates a FunctionType with Debug information</summary>
+        /// <param name="diBuilder"><see cref="DebugInfoBuilder"/>to use to create the debug information</param>
+        /// <param name="isVarArg">Flag to indicate if this function is variadic</param>
+        /// <param name="retType">Return type of the function</param>
+        /// <param name="argTypes">Argument types of the function</param>
+        /// <returns>Function signature</returns>
+        public DebugFunctionType CreateFunctionType( DebugInfoBuilder diBuilder
+                                                   , bool isVarArg
+                                                   , [ValidatedNotNull] IDebugType<ITypeRef, DIType> retType
+                                                   , [ValidatedNotNull] IEnumerable<IDebugType<ITypeRef, DIType>> argTypes
                                                    )
         {
-            if( diBuilder == null )
-            {
-                throw new ArgumentNullException( nameof( diBuilder ) );
-            }
+            diBuilder.ValidateNotNull( nameof( diBuilder ) );
+            retType.ValidateNotNull( nameof( retType ) );
+            argTypes.ValidateNotNull( nameof( retType ) );
 
             if( !retType.HasDebugInfo( ) )
             {
@@ -257,7 +238,7 @@ namespace Llvm.NET
 
             var nativeArgTypes = new List<ITypeRef>( );
             var debugArgTypes = new List<DIType>( );
-            var msg = new StringBuilder( "One or more parameter types ar not valid:\n" );
+            var msg = new StringBuilder( "One or more parameter types are not valid:\n" );
             bool hasParamErrors = false;
 
             foreach( var indexedPair in argTypes.Select( ( t, i ) => new { Type = t, Index = i } ) )
@@ -312,9 +293,7 @@ namespace Llvm.NET
         /// </note>
         /// </remarks>
         public Constant CreateConstantStruct( bool packed, params Constant[ ] values )
-        {
-            return CreateConstantStruct( packed, ( IEnumerable<Constant> )values );
-        }
+            => CreateConstantStruct( packed, ( IEnumerable<Constant> )values );
 
         /// <summary>Creates a constant structure from a set of values</summary>
         /// <param name="values">Set of values to use in forming the structure</param>
@@ -334,6 +313,8 @@ namespace Llvm.NET
         /// </remarks>
         public Constant CreateConstantStruct( bool packed, IEnumerable<Constant> values )
         {
+            values.ValidateNotNull( nameof( values ) );
+
             var valueHandles = values.Select( v => v.ValueHandle ).ToArray( );
             if( valueHandles.Length == 0 )
             {
@@ -383,10 +364,8 @@ namespace Llvm.NET
         /// </remarks>
         public Constant CreateNamedConstantStruct( IStructType type, IEnumerable<Constant> values )
         {
-            if( type == null )
-            {
-                throw new ArgumentNullException( nameof( type ) );
-            }
+            type.ValidateNotNull( nameof( type ) );
+            values.ValidateNotNull( nameof( values ) );
 
             if( type.Context != this )
             {
@@ -436,11 +415,7 @@ namespace Llvm.NET
         /// <returns>New type</returns>
         public IStructType CreateStructType( string name )
         {
-            if( string.IsNullOrWhiteSpace( name ) )
-            {
-                throw new ArgumentNullException( nameof( name ) );
-            }
-
+            name.ValidateNotNullOrWhiteSpace( nameof( name ) );
             var handle = NativeMethods.StructCreateNamed( ContextHandle, name );
             return TypeRef.FromHandle<IStructType>( handle );
         }
@@ -452,12 +427,10 @@ namespace Llvm.NET
         /// <returns>
         /// <see cref="IStructType"/> with the specified body defined.
         /// </returns>
-        public IStructType CreateStructType( bool packed, ITypeRef element0, params ITypeRef[ ] elements )
+        public IStructType CreateStructType( bool packed, [ValidatedNotNull] ITypeRef element0, params ITypeRef[ ] elements )
         {
-            if( elements == null )
-            {
-                throw new ArgumentNullException( nameof( elements ) );
-            }
+            element0.ValidateNotNull( nameof( element0 ) );
+            elements.ValidateNotNull( nameof( elements ) );
 
             LLVMTypeRef[ ] llvmArgs = new LLVMTypeRef[ elements.Length + 1 ];
             llvmArgs[ 0 ] = element0.GetTypeRef( );
@@ -485,10 +458,8 @@ namespace Llvm.NET
         /// </remarks>
         public IStructType CreateStructType( string name, bool packed, params ITypeRef[ ] elements )
         {
-            if( elements == null )
-            {
-                throw new ArgumentNullException( nameof( elements ) );
-            }
+            name.ValidateNotNullOrWhiteSpace( nameof( name ) );
+            elements.ValidateNotNull( nameof( elements ) );
 
             var retVal = TypeRef.FromHandle<IStructType>( NativeMethods.StructCreateNamed( ContextHandle, name ) );
             if( elements.Length > 0 )
@@ -502,7 +473,7 @@ namespace Llvm.NET
         /// <summary>Creates a metadata string from the given string</summary>
         /// <param name="value">string to create as metadata</param>
         /// <returns>new metadata string</returns>
-        public MDString CreateMetadataString( string value )
+        public MDString CreateMetadataString( [CanBeNull] string value )
         {
             value = value ?? string.Empty;
             var handle = NativeMethods.MDString2( ContextHandle, value, ( uint )value.Length );
@@ -518,10 +489,7 @@ namespace Llvm.NET
         /// </remarks>
         public ConstantDataArray CreateConstantString( string value )
         {
-            if( value == null )
-            {
-                throw new ArgumentNullException( nameof( value ) );
-            }
+            value.ValidateNotNull( nameof( value ) );
 
             var handle = NativeMethods.ConstStringInContext( ContextHandle, value, ( uint )value.Length, true );
             return Value.FromHandle<ConstantDataArray>( handle );
@@ -537,11 +505,7 @@ namespace Llvm.NET
         /// </remarks>
         public ConstantDataArray CreateConstantString( string value, bool nullTerminate )
         {
-            if( value == null )
-            {
-                throw new ArgumentNullException( nameof( value ) );
-            }
-
+            value.ValidateNotNull( nameof( value ) );
             var handle = NativeMethods.ConstStringInContext( ContextHandle, value, ( uint )value.Length, !nullTerminate );
             return Value.FromHandle<ConstantDataArray>( handle );
         }
@@ -648,10 +612,7 @@ namespace Llvm.NET
         /// <returns>Constant for the specified value</returns>
         public Constant CreateConstant( ITypeRef intType, UInt64 constValue, bool signExtend )
         {
-            if( intType == null )
-            {
-                throw new ArgumentNullException( nameof( intType ) );
-            }
+            intType.ValidateNotNull( nameof( intType ) );
 
             if( intType.Context != this )
             {
@@ -669,31 +630,30 @@ namespace Llvm.NET
         /// <summary>Creates a constant floating point value for a given value</summary>
         /// <param name="constValue">Value to make into a <see cref="ConstantFP"/></param>
         /// <returns>Constant value</returns>
-        [SuppressMessage( "Language", "CSE0003:Use expression-bodied members", Justification = "Line too long" )]
         public ConstantFP CreateConstant( float constValue )
-        {
-            return Value.FromHandle<ConstantFP>( NativeMethods.ConstReal( FloatType.GetTypeRef( ), constValue ) );
-        }
+            => Value.FromHandle<ConstantFP>( NativeMethods.ConstReal( FloatType.GetTypeRef( ), constValue ) );
 
         /// <summary>Creates a constant floating point value for a given value</summary>
         /// <param name="constValue">Value to make into a <see cref="ConstantFP"/></param>
         /// <returns>Constant value</returns>
-        [SuppressMessage( "Language", "CSE0003:Use expression-bodied members", Justification = "Line too long" )]
         public ConstantFP CreateConstant( double constValue )
-        {
-            return Value.FromHandle<ConstantFP>( NativeMethods.ConstReal( DoubleType.GetTypeRef( ), constValue ) );
-        }
+            => Value.FromHandle<ConstantFP>( NativeMethods.ConstReal( DoubleType.GetTypeRef( ), constValue ) );
 
         /// <summary>Creates a simple boolean attribute</summary>
         /// <param name="kind">Kind of attribute</param>
         public AttributeValue CreateAttribute( AttributeKind kind )
         {
+            kind.ValidateDefined( nameof( kind ) );
             if( kind.RequiresIntValue( ) )
             {
                 throw new ArgumentException( $"Attribute {kind} requires a value", nameof( kind ) );
             }
 
-            return CreateAttribute( kind, 0ul );
+            var handle = NativeMethods.CreateEnumAttribute( ContextHandle
+                                                          , kind.GetEnumAttributeId( )
+                                                          , 0ul
+                                                          );
+            return AttributeValue.FromHandle( this, handle );
         }
 
         /// <summary>Creates an attribute with an integer value parameter</summary>
@@ -713,6 +673,12 @@ namespace Llvm.NET
         /// </remarks>
         public AttributeValue CreateAttribute( AttributeKind kind, UInt64 value )
         {
+            kind.ValidateDefined( nameof( kind ) );
+            if( !kind.RequiresIntValue( ) )
+            {
+                throw new ArgumentException( $"Attribute {kind} does not support a value", nameof( kind ) );
+            }
+
             var handle = NativeMethods.CreateEnumAttribute( ContextHandle
                                                           , kind.GetEnumAttributeId( )
                                                           , value
@@ -729,21 +695,20 @@ namespace Llvm.NET
         /// <param name="value">Value of the attribute</param>
         public AttributeValue CreateAttribute( string name, string value )
         {
-            if(string.IsNullOrEmpty(name))
-            {
-                throw new ArgumentException( "Cannot be null or empty", nameof( name ) );
-            }
+            name.ValidateNotNullOrWhiteSpace( nameof( name ) );
+            value.ValidateNotNull( nameof( value ) );
 
-            var handle = NativeMethods.CreateStringAttribute( ContextHandle, name, ( uint )name.Length, value, ( uint )( value?.Length ?? 0 ) );
+            var handle = NativeMethods.CreateStringAttribute( ContextHandle, name, ( uint )name.Length, value, ( uint )value.Length );
             return AttributeValue.FromHandle(this, handle );
         }
 
-        // looks up an attribute by it's handle, if none is found a new manaeged wrapper is created
+        // looks up an attribute by it's handle, if none is found a new managed wrapper is created
         // The factory as a Func<> allows for the constructor to remain private so that the only
         // way to create an AttributeValue is via the containing context. This ensures that the
         // proper ownership is maintained. (LLVM has no method of retrieving the context that owns an attribute)
         internal AttributeValue GetAttributeFor( LLVMAttributeRef handle, Func<Context, LLVMAttributeRef, AttributeValue> factory )
         {
+            factory.ValidateNotNull( nameof( factory ) );
             if( handle.Pointer.IsNull( ) )
             {
                 return default( AttributeValue );
@@ -764,7 +729,7 @@ namespace Llvm.NET
         // This helps reduce the number of wrapper instances created and also allows reference equality to work
         // as expected for managed types.
         // TODO: Refactor the interning to class dedicated to managing the mappings, this can allow looking up the
-        // context from handles where ther isn't any APIs to retrieve the Context.
+        // context from handles where there isn't any APIs to retrieve the Context.
         #region LLVM handle Interning
 
         internal static Context GetContextFor( LLVMContextRef contextRef )

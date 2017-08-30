@@ -22,7 +22,6 @@
 
 using namespace llvm;
 
-DEFINE_SIMPLE_CONVERSION_FUNCTIONS( DIBuilder, LLVMDIBuilderRef )
 DEFINE_SIMPLE_CONVERSION_FUNCTIONS( MDOperand, LLVMMDOperandRef )
 
 extern "C"
@@ -299,6 +298,7 @@ extern "C"
         DIDerivedType* T = D->createPointerType( PointeeType ? unwrap<DIType>( PointeeType ) : nullptr // nullptr == void
                                                  , SizeInBits
                                                  , AlignInBits
+                                                 , None
                                                  , Name
                                                  );
         return wrap( T );
@@ -706,8 +706,6 @@ extern "C"
         DIBuilder* D = unwrap( Dref );
         DINamespace* pNamespace = D->createNameSpace( scope ? unwrap<DIScope>( scope ) : nullptr
                                                       , name
-                                                      , nullptr
-                                                      , 0
                                                       , exportSymbols
                                                       );
         return wrap( pNamespace );

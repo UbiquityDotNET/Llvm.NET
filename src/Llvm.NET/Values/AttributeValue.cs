@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Diagnostics.CodeAnalysis;
 using Llvm.NET.Native;
+using Ubiquity.ArgValidators;
 
 namespace Llvm.NET.Values
 {
@@ -125,7 +126,7 @@ namespace Llvm.NET.Values
             // TODO: Attributes on globals??
             if( !( value.IsCallSite || value.IsFunction ) )
             {
-                throw new ArgumentException( "Attributes only allowed on functions and callsites" );
+                throw new ArgumentException( "Attributes only allowed on functions and call sites" );
             }
 
             // for now all string attributes are valid everywhere as they are target dependent
@@ -154,7 +155,7 @@ namespace Llvm.NET.Values
 
         private AttributeValue( Context context, LLVMAttributeRef nativeValue )
         {
-            context.VerifyAsArg( nameof( context ) );
+            context.ValidateNotNull( nameof( context ) );
             Context = context;
             NativeAttribute = nativeValue;
         }

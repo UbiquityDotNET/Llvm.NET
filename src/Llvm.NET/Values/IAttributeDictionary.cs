@@ -1,11 +1,36 @@
 ﻿using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
+using System.Linq;
 
 namespace Llvm.NET.Values
 {
     public interface IAttributeCollection
         : ICollection<AttributeValue>
     {
+    }
+
+    public static class AttributeCollectionExtensions
+    {
+        public static bool Remove( this IAttributeCollection set, AttributeKind kind)
+        {
+            return Remove( set, kind.GetAttributeName( ) );
+        }
+
+        public static bool Remove( this IAttributeCollection set, string name )
+        {
+            var attr = ( from a in set
+                         where a.Name == name
+                         select a
+                       ).FirstOrDefault( );
+
+            if( attr == default( AttributeValue ) )
+            {
+                return false;
+            }
+
+            set.Remove( attr );
+            return true;
+        }
     }
 
     /// <summary>Interface to an Attribute Dictionary</summary>

@@ -30,108 +30,111 @@ namespace TestDebugInfo
             srcPath = Path.GetFullPath( srcPath );
 
             string moduleName = $"test_{TargetDetails.ShortName}.bc";
-
-            StaticState.RegisterAll( );
-            var target = Target.FromTriple( TargetDetails.Triple );
-            using( var context = new Context( ) )
-            using( var targetMachine = target.CreateTargetMachine( context, TargetDetails.Triple, TargetDetails.Cpu, TargetDetails.Features, CodeGenOpt.Aggressive, Reloc.Default, CodeModel.Small ) )
-            using( var module = new NativeModule( moduleName, context ) )
+            using( StaticState.InitializeLLVM() )
             {
-                TargetDependentAttributes = TargetDetails.BuildTargetDependentFunctionAttributes( context );
-                var targetData = targetMachine.TargetData;
-
-                module.TargetTriple = targetMachine.Triple;
-                module.Layout = targetMachine.TargetData;
-
-                // create compile unit and file as the top level scope for everything
-                var cu = module.DIBuilder.CreateCompileUnit( SourceLanguage.C99
-                                                           , Path.GetFileName( srcPath )
-                                                           , Path.GetDirectoryName( srcPath )
-                                                           , VersionIdentString
-                                                           , false
-                                                           , string.Empty
-                                                           , 0
-                                                           );
-                var diFile = module.DIBuilder.CreateFile( srcPath );
-
-                // Create basic types used in this compilation
-                var i32 = new DebugBasicType( module.Context.Int32Type, module, "int", DiTypeKind.Signed );
-                var f32 = new DebugBasicType( module.Context.FloatType, module, "float", DiTypeKind.Float );
-                var voidType = DebugType.Create( module.Context.VoidType, ( DIType )null );
-                var i32Array_0_32 = i32.CreateArrayType( module, 0, 32 );
-
-                // create the LLVM structure type and body with full debug information
-#pragma warning disable SA1500 // "Warning SA1500  Braces for multi - line statements must not share line" (simple table format)
-                var fooBody = new[ ]
-                    { new DebugMemberInfo { File = diFile, Line = 3, Name = "a", DebugType = i32, Index = 0 }
-                    , new DebugMemberInfo { File = diFile, Line = 4, Name = "b", DebugType = f32, Index = 1 }
-                    , new DebugMemberInfo { File = diFile, Line = 5, Name = "c", DebugType = i32Array_0_32, Index = 2 }
-                    };
-#pragma warning restore
-                var fooType = new DebugStructType( module, "struct.foo", cu, "foo", diFile, 1, DebugInfoFlags.None, fooBody );
-
-                // add global variables and constants
-                var constArray = ConstantArray.From( i32, 32, module.Context.CreateConstant( 3 ), module.Context.CreateConstant( 4 ) );
-                var barValue = module.Context.CreateNamedConstantStruct( fooType
-                                                                       , module.Context.CreateConstant( 1 )
-                                                                       , module.Context.CreateConstant( 2.0f )
-                                                                       , constArray
-                                                                       );
-
-                var bar = module.AddGlobal( fooType, false, 0, barValue, "bar" );
-                bar.Alignment = targetData.AbiAlignmentOf( fooType );
-                bar.AddDebugInfo( module.DIBuilder.CreateGlobalVariableExpression( cu, "bar", string.Empty, diFile, 8, fooType.DIType, false, null ) );
-
-                var baz = module.AddGlobal( fooType, false, Linkage.Common, Constant.NullValueFor( fooType ), "baz" );
-                baz.Alignment = targetData.AbiAlignmentOf( fooType );
-                baz.AddDebugInfo( module.DIBuilder.CreateGlobalVariableExpression( cu, "baz", string.Empty, diFile, 9, fooType.DIType, false, null ) );
-
-                // add module flags and compiler identifiers...
-                // this can technically occur at any point, though placing it here makes
-                // comparing against clang generated files easier
-                AddModuleFlags( module );
-
-                // create types for function args
-                var constFoo = module.DIBuilder.CreateQualifiedType( fooType.DIType, QualifiedTypeTag.Const );
-                var fooPtr = new DebugPointerType( fooType, module );
-
-                // Create the functions
-                // NOTE: The declaration ordering is reversed from that of the sample code file (test.c)
-                //       However, this is what Clang ends up doing for some reason so it is
-                //       replicated here to aid in comparing the generated LL files.
-                Function doCopyFunc = DeclareDoCopyFunc( module, diFile, voidType );
-                Function copyFunc = DeclareCopyFunc( module, diFile, voidType, constFoo, fooPtr );
-
-                CreateCopyFunctionBody( module, targetData, copyFunc, diFile, fooType, fooPtr, constFoo );
-                CreateDoCopyFunctionBody( module, targetData, doCopyFunc, fooType, bar, baz, copyFunc );
-
-                // finalize the debug information
-                // all temporaries must be replaced by now, this resolves any remaining
-                // forward declarations and marks the builder to prevent adding any
-                // nodes that are not completely resolved.
-                module.DIBuilder.Finish( );
-
-                // verify the module is still good and print any errors found
-                if( !module.Verify( out string msg ) )
+                StaticState.RegisterAll( );
+                var target = Target.FromTriple( TargetDetails.Triple );
+                using( var context = new Context( ) )
+                using( var targetMachine = target.CreateTargetMachine( context, TargetDetails.Triple, TargetDetails.Cpu, TargetDetails.Features, CodeGenOpt.Aggressive, Reloc.Default, CodeModel.Small ) )
+                using( var module = new NativeModule( moduleName, context ) )
                 {
-                    Console.Error.WriteLine( "ERROR: {0}", msg );
-                }
-                else
-                {
-                    // test optimization works, but don't save it as that makes it harder to do a diff with official clang builds
-                    {// force a GC to verify callback delegate for diagnostics is still valid, this is for test only and wouldn't
-                     // normally be done in production code.
-                        GC.Collect( GC.MaxGeneration );
-                        StaticState.ParseCommandLineOptions( new string[ ] { "TestDebugInfo.exe", "-O3" }, "Test Application" );
-                        var modForOpt = module.Clone( );
-                        modForOpt.Optimize( targetMachine );
+                    module.SourceFileName = Path.GetFileName( srcPath );
+                    TargetDependentAttributes = TargetDetails.BuildTargetDependentFunctionAttributes( context );
+                    var targetData = targetMachine.TargetData;
+
+                    module.TargetTriple = targetMachine.Triple;
+                    module.Layout = targetMachine.TargetData;
+
+                    // create compile unit and file as the top level scope for everything
+                    var cu = module.DIBuilder.CreateCompileUnit( SourceLanguage.C99
+                                                               , Path.GetFileName( srcPath )
+                                                               , Path.GetDirectoryName( srcPath )
+                                                               , VersionIdentString
+                                                               , false
+                                                               , string.Empty
+                                                               , 0
+                                                               );
+                    var diFile = module.DIBuilder.CreateFile( srcPath );
+
+                    // Create basic types used in this compilation
+                    var i32 = new DebugBasicType( module.Context.Int32Type, module, "int", DiTypeKind.Signed );
+                    var f32 = new DebugBasicType( module.Context.FloatType, module, "float", DiTypeKind.Float );
+                    var voidType = DebugType.Create( module.Context.VoidType, ( DIType )null );
+                    var i32Array_0_32 = i32.CreateArrayType( module, 0, 32 );
+
+                    // create the LLVM structure type and body with full debug information
+    #pragma warning disable SA1500 // "Warning SA1500  Braces for multi - line statements must not share line" (simple table format)
+                    var fooBody = new[ ]
+                        { new DebugMemberInfo { File = diFile, Line = 3, Name = "a", DebugType = i32, Index = 0 }
+                        , new DebugMemberInfo { File = diFile, Line = 4, Name = "b", DebugType = f32, Index = 1 }
+                        , new DebugMemberInfo { File = diFile, Line = 5, Name = "c", DebugType = i32Array_0_32, Index = 2 }
+                        };
+    #pragma warning restore
+                    var fooType = new DebugStructType( module, "struct.foo", cu, "foo", diFile, 1, DebugInfoFlags.None, fooBody );
+
+                    // add global variables and constants
+                    var constArray = ConstantArray.From( i32, 32, module.Context.CreateConstant( 3 ), module.Context.CreateConstant( 4 ) );
+                    var barValue = module.Context.CreateNamedConstantStruct( fooType
+                                                                           , module.Context.CreateConstant( 1 )
+                                                                           , module.Context.CreateConstant( 2.0f )
+                                                                           , constArray
+                                                                           );
+
+                    var bar = module.AddGlobal( fooType, false, 0, barValue, "bar" );
+                    bar.Alignment = targetData.AbiAlignmentOf( fooType );
+                    bar.AddDebugInfo( module.DIBuilder.CreateGlobalVariableExpression( cu, "bar", string.Empty, diFile, 8, fooType.DIType, false, null ) );
+
+                    var baz = module.AddGlobal( fooType, false, Linkage.Common, Constant.NullValueFor( fooType ), "baz" );
+                    baz.Alignment = targetData.AbiAlignmentOf( fooType );
+                    baz.AddDebugInfo( module.DIBuilder.CreateGlobalVariableExpression( cu, "baz", string.Empty, diFile, 9, fooType.DIType, false, null ) );
+
+                    // add module flags and compiler identifiers...
+                    // this can technically occur at any point, though placing it here makes
+                    // comparing against clang generated files easier
+                    AddModuleFlags( module );
+
+                    // create types for function args
+                    var constFoo = module.DIBuilder.CreateQualifiedType( fooType.DIType, QualifiedTypeTag.Const );
+                    var fooPtr = new DebugPointerType( fooType, module );
+
+                    // Create the functions
+                    // NOTE: The declaration ordering is reversed from that of the sample code file (test.c)
+                    //       However, this is what Clang ends up doing for some reason so it is
+                    //       replicated here to aid in comparing the generated LL files.
+                    Function doCopyFunc = DeclareDoCopyFunc( module, diFile, voidType );
+                    Function copyFunc = DeclareCopyFunc( module, diFile, voidType, constFoo, fooPtr );
+
+                    CreateCopyFunctionBody( module, targetData, copyFunc, diFile, fooType, fooPtr, constFoo );
+                    CreateDoCopyFunctionBody( module, targetData, doCopyFunc, fooType, bar, baz, copyFunc );
+
+                    // finalize the debug information
+                    // all temporaries must be replaced by now, this resolves any remaining
+                    // forward declarations and marks the builder to prevent adding any
+                    // nodes that are not completely resolved.
+                    module.DIBuilder.Finish( );
+
+                    // verify the module is still good and print any errors found
+                    if( !module.Verify( out string msg ) )
+                    {
+                        Console.Error.WriteLine( "ERROR: {0}", msg );
                     }
+                    else
+                    {
+                        // test optimization works, but don't save it as that makes it harder to do a diff with official clang builds
+                        {// force a GC to verify callback delegate for diagnostics is still valid, this is for test only and wouldn't
+                         // normally be done in production code.
+                            GC.Collect( GC.MaxGeneration );
+                            StaticState.ParseCommandLineOptions( new string[ ] { "TestDebugInfo.exe", "-O3" }, "Test Application" );
+                            var modForOpt = module.Clone( );
+                            modForOpt.Optimize( targetMachine );
+                        }
 
-                    // Module is good, so generate the output files
-                    module.WriteToFile( "test.bc" );
-                    File.WriteAllText( "test.ll", module.WriteToString( ) );
-                    targetMachine.EmitToFile( module, "test.o", CodeGenFileType.ObjectFile );
-                    targetMachine.EmitToFile( module, "test.s", CodeGenFileType.AssemblySource );
+                        // Module is good, so generate the output files
+                        module.WriteToFile( "test.bc" );
+                        File.WriteAllText( "test.ll", module.WriteToString( ) );
+                        targetMachine.EmitToFile( module, "test.o", CodeGenFileType.ObjectFile );
+                        targetMachine.EmitToFile( module, "test.s", CodeGenFileType.AssemblySource );
+                    }
                 }
             }
         }
@@ -151,7 +154,7 @@ namespace TestDebugInfo
                                                   , scopeLine: 24
                                                   , debugFlags: DebugInfoFlags.None
                                                   , isOptimized: false
-                                                  ).AddAttributes( FunctionAttributeIndex.Function, AttributeKind.NoInline,  AttributeKind.NoUnwind )
+                                                  ).AddAttributes( FunctionAttributeIndex.Function, AttributeKind.NoInline, AttributeKind.NoUnwind, AttributeKind.OptimizeNone )
                                                    .AddAttributes( FunctionAttributeIndex.Function, TargetDependentAttributes );
             return doCopyFunc;
         }
@@ -189,7 +192,7 @@ namespace TestDebugInfo
                                                 , debugFlags: DebugInfoFlags.Prototyped
                                                 , isOptimized: false
                                                 ).Linkage( Linkage.Internal ) // static function
-                                                 .AddAttributes( FunctionAttributeIndex.Function, AttributeKind.NoUnwind, AttributeKind.NoInline )
+                                                 .AddAttributes( FunctionAttributeIndex.Function, AttributeKind.NoUnwind, AttributeKind.NoInline, AttributeKind.OptimizeNone )
                                                  .AddAttributes( FunctionAttributeIndex.Function, TargetDependentAttributes );
 
             TargetDetails.AddABIAttributesForByValueStructure( copyFunc, 0 );
@@ -343,7 +346,7 @@ namespace TestDebugInfo
         }
 
         // obviously this is not clang but using an identical name helps in diff with actual clang output
-        private const string VersionIdentString = "clang version 4.0.1 (tags/RELEASE_401/final)";
+        private const string VersionIdentString = "clang version 5.0.0 (tags/RELEASE_500/rc4)";
 
         private static ITargetDependentDetails TargetDetails;
 

@@ -357,7 +357,7 @@ namespace Llvm.NET
         UnorderedOrLessThan = LLVMRealPredicate.LLVMRealULT,
         UnorderedOrLessThanOrEqual = LLVMRealPredicate.LLVMRealULE,
         UnorderedOrNotEqual = LLVMRealPredicate.LLVMRealUNE,
-        True = LLVMRealPredicate.LLVMRealPredicateTrue,
+        True = LLVMRealPredicate.LLVMRealPredicateTrue
     }
 
     /// <summary>Optimization level for target code generation</summary>
@@ -494,6 +494,7 @@ namespace Llvm.NET
         ARMSubArch_v7m           = LLVMTripleSubArchType.ARMSubArch_v7m,
         ARMSubArch_v7s           = LLVMTripleSubArchType.ARMSubArch_v7s,
         ARMSubArch_v7k           = LLVMTripleSubArchType.ARMSubArch_v7k,
+        ARMSubArch_v7ve          = LLVMTripleSubArchType.ARMSubArch_v7ve,
         ARMSubArch_v6            = LLVMTripleSubArchType.ARMSubArch_v6,
         ARMSubArch_v6m           = LLVMTripleSubArchType.ARMSubArch_v6m,
         ARMSubArch_v6k           = LLVMTripleSubArchType.ARMSubArch_v6k,
@@ -522,12 +523,13 @@ namespace Llvm.NET
         CSR                      = LLVMTripleVendorType.CSR,
         Myriad                   = LLVMTripleVendorType.Myriad,
         AMD                      = LLVMTripleVendorType.AMD,
-        Mesa                     = LLVMTripleVendorType.Mesa,
+        Mesa                     = LLVMTripleVendorType.Mesa
     }
 
     public enum TripleOSType
     {
         UnknownOS  = LLVMTripleOSType.UnknownOS,
+        Ananas     = LLVMTripleOSType.Ananas,
         CloudABI   = LLVMTripleOSType.CloudABI,
         Darwin     = LLVMTripleOSType.Darwin,
         DragonFly  = LLVMTripleOSType.DragonFly,
@@ -557,7 +559,7 @@ namespace Llvm.NET
         TvOS       = LLVMTripleOSType.TvOS,
         WatchOS    = LLVMTripleOSType.WatchOS,
         Mesa3D     = LLVMTripleOSType.Mesa3D,
-        Contiki    = LLVMTripleOSType.Contiki,
+        Contiki    = LLVMTripleOSType.Contiki
     }
 
     public enum TripleEnvironmentType
@@ -580,7 +582,7 @@ namespace Llvm.NET
         Cygnus              = LLVMTripleEnvironmentType.Cygnus,
         AMDOpenCL           = LLVMTripleEnvironmentType.AMDOpenCL,
         CoreCLR             = LLVMTripleEnvironmentType.CoreCLR,
-        OpenCL              = LLVMTripleEnvironmentType.OpenCL,
+        OpenCL              = LLVMTripleEnvironmentType.OpenCL
     }
 
     public enum TripleObjectFormatType
@@ -589,6 +591,7 @@ namespace Llvm.NET
         COFF                 = LLVMTripleObjectFormatType.COFF,
         ELF                  = LLVMTripleObjectFormatType.ELF,
         MachO                = LLVMTripleObjectFormatType.MachO,
+        Wasm                 = LLVMTripleObjectFormatType.Wasm
     }
 
     public enum ComdatKind

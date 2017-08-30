@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using Llvm.NET.Types;
+using Ubiquity.ArgValidators;
 
 namespace Llvm.NET.DebugInfo
 {
@@ -24,7 +25,7 @@ namespace Llvm.NET.DebugInfo
                               , uint bitAlignment = 0
                               )
         {
-            module.VerifyArgNotNull( nameof( module ) );
+            module.ValidateNotNull( nameof( module ) );
             DebugMembers = new ReadOnlyCollection<DebugMemberInfo>( debugElements as IList<DebugMemberInfo> ?? debugElements.ToList( ) );
 
             NativeType = module.Context.CreateStructType( nativeName, packed, debugElements.Select( e => e.DebugType ).ToArray( ) );
@@ -53,7 +54,7 @@ namespace Llvm.NET.DebugInfo
             DIType = concreteType;
         }
 
-        [System.Diagnostics.CodeAnalysis.SuppressMessage( "Microsoft.Design", "CA1062:Validate arguments of public methods", MessageId = "1", Justification = "VerifyArgNotNull" )]
+        [System.Diagnostics.CodeAnalysis.SuppressMessage( "Microsoft.Design", "CA1062:Validate arguments of public methods", MessageId = "1", Justification = "ValidateNotNull" )]
         public DebugStructType( IStructType llvmType
                               , NativeModule module
                               , DIScope scope
@@ -67,7 +68,7 @@ namespace Llvm.NET.DebugInfo
                               )
             : base( llvmType )
         {
-            module.VerifyArgNotNull( nameof( module ) );
+            module.ValidateNotNull( nameof( module ) );
             DIType = module.DIBuilder
                            .CreateStructType( scope
                                             , name
@@ -90,7 +91,7 @@ namespace Llvm.NET.DebugInfo
                               )
             : base( llvmType )
         {
-            DIType = module.VerifyArgNotNull( nameof( module ) )
+            DIType = module.ValidateNotNull( nameof( module ) )
                            .DIBuilder
                            .CreateReplaceableCompositeType( Tag.StructureType
                                                           , name
@@ -107,7 +108,7 @@ namespace Llvm.NET.DebugInfo
                               , DIFile file = null
                               , uint line = 0
                               )
-            : this( module.VerifyArgNotNull( nameof( module ) ).Context.CreateStructType( nativeName )
+            : this( module.ValidateNotNull( nameof( module ) ).Context.CreateStructType( nativeName )
                   , module
                   , scope
                   , name

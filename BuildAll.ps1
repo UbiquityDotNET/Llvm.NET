@@ -1,23 +1,39 @@
-# invokes nuget.exe, handles downloading it to the script root if it isn't already on the path
-function Invoke-Nuget
+function Find-OnPath
 {
-    #update system search path to include the directory of this script for nuget.exe
+    [CmdletBinding()]
+    Param( [Parameter(Mandatory=$True,Position=0)][string]$exeName)
+    $path = where.exe $exeName 2>$null
+    if(!$path)
+    {
+        Write-Verbose "'$exeName' not found on PATH"
+    }
+    else
+    {
+        Write-Verbose "Found: '$path'"
+    }
+    return $path
+}
+
+# invokes NuGet.exe, handles downloading it to the script root if it isn't already on the path
+function Invoke-NuGet
+{
+    #update system search path to include the directory of this script for NuGet.exe
     $oldPath = $env:Path
     $env:Path = "$PSScriptRoot;$env:Path"
     try
     {
-        $nugetPaths = where.exe nuget.exe 2>$null
-        if( !$nugetPaths )
+        $NuGetPaths = Find-OnPath NuGet.exe -ErrorAction Continue
+        if( !$NuGetPaths )
         {
-            # Download it from official nuget release location
-            Invoke-WebRequest -UseBasicParsing -Uri https://dist.nuget.org/win-x86-commandline/latest/nuget.exe -OutFile "$PSScriptRoot\nuget.exe"
+            # Download it from official NuGet release location
+            Invoke-WebRequest -UseBasicParsing -Uri https://dist.NuGet.org/win-x86-commandline/latest/NuGet.exe -OutFile "$PSScriptRoot\NuGet.exe"
         }
-        Write-Information "nuget $args"
-        nuget $args
+        Write-Information "NuGet $args"
+        NuGet $args
         $err = $LASTEXITCODE
         if($err -ne 0)
         {
-            throw "Error running nuget: $err"
+            throw "Error running NuGet: $err"
         }
     }
     finally
@@ -26,18 +42,64 @@ function Invoke-Nuget
     }
 }
 
-function Invoke-msbuild([string]$project, [hashtable]$properties, [string[]]$targets, [string[]]$loggerArgs=@(),  [string[]]$additionalArgs=@())
-{ 
-    $msbuildArgs = @($project) + $loggerArgs + $additionalArgs + @("/t:$($targets -join ';')")
-    if( $properties )
+function Find-VSInstance
+{
+    Install-Module VSSetup -Scope CurrentUser | Out-Null
+    return Get-VSSetupInstance -All | select -First 1
+}
+
+function Find-MSBuild
+{
+    $foundOnPath = $true
+    $msBuildPath = Find-OnPath msbuild.exe -ErrorAction Continue
+    if( !$msBuildPath )
     {
-        $msbuildArgs += @( "/p:$(ConvertTo-PropertyList $properties)" ) 
+        Write-Verbose "MSBuild not found attempting to locate VS installation"
+        $vsInstall = Find-VSInstance
+        if( !$vsInstall )
+        {
+            throw "MSBuild not found on PATH and No instances of VS found to use"
+        }
+
+        Write-Verbose "VS installation found: $vsInstall"
+        $msBuildPath = [System.IO.Path]::Combine( $vsInstall.InstallationPath, 'MSBuild', '15.0', 'bin', 'MSBuild.exe')
+        $foundOnPath = $false
     }
-    Write-Information "msbuild $($msbuildArgs -join ' ')"
-    msbuild $msbuildArgs
-    if($LASTEXITCODE -ne 0)
+
+    if( !(Test-Path -PathType Leaf $msBuildPath ) )
     {
-        throw "Error running msbuild: $LASTEXITCODE"
+        Write-Verbose 'MSBuild not found'
+        return $null
+    }
+
+    Write-Verbose "MSBuild Found at: $msBuildPath"
+    return @{ FullPath=$msBuildPath
+              BinPath=[System.IO.Path]::GetDirectoryName( $msBuildPath )
+              FoundOnPath=$foundOnPath
+            }
+}
+
+function Invoke-msbuild([string]$project, [hashtable]$properties, [string[]]$targets, [string[]]$loggerArgs=@(), [string[]]$additionalArgs=@())
+{ 
+    $oldPath = $env:Path
+    try
+    {
+        $msbuildArgs = @($project, "/t:$($targets -join ';')") + $loggerArgs + $additionalArgs
+        if( $properties )
+        {
+            $msbuildArgs += @( "/p:$(ConvertTo-PropertyList $properties)" ) 
+        }
+
+        Write-Information "msbuild $($msbuildArgs -join ' ')"
+        msbuild $msbuildArgs
+        if($LASTEXITCODE -ne 0)
+        {
+            throw "Error running msbuild: $LASTEXITCODE"
+        }
+    }
+    finally
+    {
+        $env:Path = $oldPath
     }
 }
 
@@ -51,46 +113,39 @@ function Normalize-Path([string]$path)
     return $path
 }
 
-function Get-BuildPaths( [string]$repoRoot)
+function Get-BuildPaths([string]$repoRoot)
 {
     $buildPaths =  @{}
     $buildPaths.RepoRoot = $repoRoot
     $buildPaths.BuildOutputPath = Normalize-Path (Join-Path $repoRoot 'BuildOutput')
-    $buildPaths.NugetRepositoryPath = Normalize-Path (Join-Path $buildPaths.BuildOutputPath 'packages')
-    $buildPaths.NugetOutputPath = Normalize-Path (Join-Path $buildPaths.BuildOutputPath 'Nuget')
+    $buildPaths.NuGetRepositoryPath = Normalize-Path (Join-Path $buildPaths.BuildOutputPath 'packages')
+    $buildPaths.NuGetOutputPath = Normalize-Path (Join-Path $buildPaths.BuildOutputPath 'NuGet')
     $buildPaths.SrcRoot = Normalize-Path (Join-Path $repoRoot 'src')
     $buildPaths.LibLLVMSrcRoot = Normalize-Path (Join-Path $buildPaths.SrcRoot 'LibLLVM')
-    $buildPaths.BuildTaskProjRoot = ([IO.Path]::Combine( $repoRoot, 'BuildExtensions', 'Llvm.NET.BuildTasks') )
-    $buildPaths.BuildTaskProj = ([IO.Path]::Combine( $buildPaths.BuildTaskProjRoot, 'Llvm.NET.BuildTasks.csproj') )
-    $buildPaths.BuildTaskBin = ([IO.Path]::Combine( $repoRoot, 'BuildOutput', 'bin', 'Release', 'net47', 'Llvm.NET.BuildTasks.dll') )
+    $buildPaths.BuildExtensionsRoot = ([IO.Path]::Combine( $repoRoot, 'BuildExtensions') )
+    $buildPaths.GenerateVersionProj = ([IO.Path]::Combine( $buildPaths.BuildExtensionsRoot, 'CommonVersion.csproj') )
     return $buildPaths
 }
 
-function Get-BuildInformation($buildPaths) 
+function Get-BuildInformation($buildPaths)
 {
-    Write-Information "Computing Build information"
-    # Run as distinct job to control 32 bit context and to unload the DLL on completion
-    # this prevents it from remaining loaded in the current session, which would prevent
-    # rebuild or deletes.
-    Start-Job -RunAs32 -ScriptBlock {
-        Write-Information "Computing Build information"
-        $buildPaths = $args[0]
+    Write-Information "Restoring NuGet for $buildPaths.GenerateVersionProj"
+    invoke-msbuild -Targets Restore -Project $buildPaths.GenerateVersionProj -LoggerArgs $msbuildLoggerArgs
 
-        Add-Type -Path $buildPaths.BuildTaskBin
-        $buildVersionData = [Llvm.NET.BuildTasks.BuildVersionData]::Load( (Join-Path $buildPaths.RepoRoot BuildVersion.xml ) )
-        $semver = $buildVersionData.CreateSemVer(!!$env:APPVEYOR, !!$env:APPVEYOR_PULL_REQUEST_NUMBER, [DateTime]::UtcNow)
-        
-        return @{
-            FullBuildNumber = $semVer.ToString($true)
-            PackageVersion = $semVer.ToString($false)
-            FileVersionMajor = $semVer.FileVersion.Major
-            FileVersionMinor = $semVer.FileVersion.Minor
-            FileVersionBuild = $semVer.FileVersion.Build
-            FileVersionRevision = $semver.FileVersion.Revision
-            FileVersion= "$($semVer.FileVersion.Major).$($semVer.FileVersion.Minor).$($semVer.FileVersion.Build).$($semVer.FileVersion.Revision)"
-            LlvmVersion = "$($buildVersionData.AdditionalProperties['LlvmVersionMajor']).$($buildVersionData.AdditionalProperties['LlvmVersionMinor']).$($buildVersionData.AdditionalProperties['LlvmVersionPatch'])"
-        }
-    } -ArgumentList @($buildPaths) | Receive-Job -Wait -AutoRemoveJob
+    Write-Information "Computing Build information"
+    Invoke-MSBuild -Targets GenerateVersionJson -Project $buildPaths.GenerateVersionProj -LoggerArgs $msbuildLoggerArgs
+    
+    $semVer = get-content (Join-Path $buildPaths.BuildOutputPath GeneratedVersion.json) | ConvertFrom-Json
+
+    return @{ FullBuildNumber = $semVer.FullBuildNumber
+              PackageVersion = $semVer.FullBuildNumber
+              FileVersionMajor = $semVer.FileVersionMajor
+              FileVersionMinor = $semVer.FileVersionMinor
+              FileVersionBuild = $semVer.FileVersionBuild
+              FileVersionRevision = $semver.FileVersionRevision
+              FileVersion= "$($semVer.FileVersionMajor).$($semVer.FileVersionMinor).$($semVer.FileVersionBuild).$($semVer.FileVersionRevision)"
+              LlvmVersion = "5.0.0"
+            }
 }
 
 function ConvertTo-PropertyList([hashtable]$table)
@@ -101,8 +156,22 @@ function ConvertTo-PropertyList([hashtable]$table)
 # Main Script entry point -----------
 
 pushd $PSScriptRoot
+$oldPath = $env:Path
+$ErrorActionPreference = "Stop"
+$InformationPreference = "Continue"
 try
 {
+    $msbuild = Find-MSBuild
+    if( !$msbuild )
+    {
+        throw "MSBuild not found"
+    }
+
+    if( !$msbuild.FoundOnPath )
+    {
+        $env:Path = "$env:Path;$($msbuild.BinPath)"
+    }
+
     # setup standard MSBuild logging for this build
     $msbuildLoggerArgs = @('/clp:Verbosity=Minimal')
 
@@ -124,58 +193,63 @@ try
 
     md BuildOutput\NuGet\ | Out-Null
 
-    Write-Information "Restoring NUGET for internal build task"
-    invoke-msbuild -Targets Restore -Project $buildPaths.BuildTaskProj -LoggerArgs $msbuildLoggerArgs
-
-    Write-Information "Building internal build task and NuGetPackage"
-    Invoke-MSBuild -Targets Build -Properties @{Configuration='Release';} -Project $buildPaths.BuildTaskProj -LoggerArgs $msbuildLoggerArgs
-
     $BuildInfo = Get-BuildInformation $buildPaths
     if($env:APPVEYOR)
     {
         Update-AppVeyorBuild -Version $BuildInfo.FullBuildNumber
     }
                                 
-    $packProperties = @{ version=$($BuildInfo.PackageVersion);
-                            llvmversion=$($BuildInfo.LlvmVersion);
-                            buildbinoutput=(normalize-path (Join-path $($buildPaths.BuildOutputPath) 'bin'));
-                            configuration='Release'
-                        }
+    $packProperties = @{ version=$($BuildInfo.PackageVersion)
+                         llvmversion=$($BuildInfo.LlvmVersion)
+                         buildbinoutput=(normalize-path (Join-path $($buildPaths.BuildOutputPath) 'bin'))
+                         configuration='Release'
+                       }
 
-    $msBuildProperties = @{ Configuration = 'Release';
-                            FullBuildNumber = $BuildInfo.FullBuildNumber;
-                            PackageVersion = $BuildInfo.PackageVersion;
-                            FileVersionMajor = $BuildInfo.FileVersionMajor;
-                            FileVersionMinor = $BuildInfo.FileVersionMinor;
-                            FileVersionBuild = $BuildInfo.FileVersionBuild;
-                            FileVersionRevision = $BuildInfo.FileVersionRevision;
-                            FileVersion = $BuildInfo.FileVersion;
-                            LlvmVersion = $BuildInfo.LlvmVersion;
-                            }
+    $msBuildProperties = @{ Configuration = 'Release'
+                            FullBuildNumber = $BuildInfo.FullBuildNumber
+                            PackageVersion = $BuildInfo.PackageVersion
+                            FileVersionMajor = $BuildInfo.FileVersionMajor
+                            FileVersionMinor = $BuildInfo.FileVersionMinor
+                            FileVersionBuild = $BuildInfo.FileVersionBuild
+                            FileVersionRevision = $BuildInfo.FileVersionRevision
+                            FileVersion = $BuildInfo.FileVersion
+                            LlvmVersion = $BuildInfo.LlvmVersion
+                          }
 
     Write-Information "Build Parameters:"
     Write-Information ($BuildInfo | Format-Table | Out-String)
 
-    # Need to invoke NuGet directly for restore of vcxproj as there is no /t:Restore target support
-    Write-Information "Restoring Nuget Packages for LibLLVM.vcxproj"
+    # Need to invoke NuGet directly for restore of vcxproj as /t:Restore target doesn't support packages.config
+    # and PackageReference isn't supported for native projects
+    Write-Information "Restoring NuGet Packages for LibLLVM.vcxproj"
     Invoke-NuGet restore src\LibLLVM\LibLLVM.vcxproj -PackagesDirectory $buildPaths.NuGetRepositoryPath
 
     Write-Information "Building LibLLVM"
     Invoke-MSBuild -Targets Build -Project src\LibLLVM\MultiPlatformBuild.vcxproj -Properties $msBuildProperties -LoggerArgs $msbuildLoggerArgs
 
-    Write-Information "Restoring Nuget Packages for Llvm.NET"
+    Write-Information "Building LibLLVM"
+    Invoke-MSBuild -Targets Pack -Project src\LibLLVM\LibLLVM.vcxproj -Properties $msBuildProperties -LoggerArgs $msbuildLoggerArgs
+
+    Write-Information "Restoring NuGet Packages for Llvm.NET"
     Invoke-MSBuild -Targets Restore -Project src\Llvm.NET\Llvm.NET.csproj -Properties $msBuildProperties -LoggerArgs $msbuildLoggerArgs
 
     Write-Information "Building Llvm.NET"
     Invoke-MSBuild -Targets Build -Project src\Llvm.NET\Llvm.NET.csproj -Properties $msBuildProperties -LoggerArgs $msbuildLoggerArgs
 
-    Write-Information "Running Nuget Restore for Llvm.NET Tests"
+    Write-Information "Running NuGet Restore for Llvm.NET Tests"
     Invoke-MSBuild -Targets Restore -Project src\Llvm.NETTests\LLVM.NETTests.csproj -Properties $msBuildProperties -LoggerArgs $msbuildLoggerArgs
 
     Write-Information "Building Llvm.NET Tests"
     Invoke-MSBuild -Targets Build -Project src\Llvm.NETTests\LLVM.NETTests.csproj -Properties $msBuildProperties -LoggerArgs $msbuildLoggerArgs
+
+    Write-Information "Restoring NuGet Packages for Samples"
+    Invoke-MSBuild -Targets Restore -Project Samples\Samples.sln -Properties $msBuildProperties -LoggerArgs $msbuildLoggerArgs
+
+    Write-Information "Building Samples"
+    Invoke-MSBuild -Targets Build -Project Samples\Samples.sln -Properties $msBuildProperties -LoggerArgs $msbuildLoggerArgs -AdditionalArgs @("/m")
 }
 finally
 {
     popd
+    $env:Path = $oldPath
 }

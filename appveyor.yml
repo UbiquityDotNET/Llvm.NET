@@ -1,4 +1,4 @@
-version: 4.0.1.{build}
+version: 5.0.0.{build}
 
 pull_requests:
   do_not_increment_build_number: true
@@ -6,7 +6,8 @@ pull_requests:
 branches:
   only:
   - master
-
+  - LLVM_5_0
+  
 image: Visual Studio 2017
 
 skip_commits:
@@ -20,6 +21,9 @@ nuget:
 
 build_script:
   - ps: .\BuildAll.ps1
+
+test_script:
+  - ps: .\Invoke-UnitTests.ps1
 
 artifacts:
   - path: .\BuildOutput\Nuget\LLvm.NET.*.nupkg

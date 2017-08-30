@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Llvm.NET.Native;
 using Llvm.NET.Values;
+using Ubiquity.ArgValidators;
 
 namespace Llvm.NET
 {
@@ -11,6 +12,8 @@ namespace Llvm.NET
     {
         internal ComdatCollection( NativeModule module )
         {
+            module.ValidateNotNull( nameof( module ) );
+
             Module = module;
             NativeMethods.ModuleEnumerateComdats( Module.ModuleHandle, AddComdat );
         }
@@ -21,6 +24,9 @@ namespace Llvm.NET
 
         public Comdat Add( string key, ComdatKind kind )
         {
+            key.ValidateNotNullOrWhiteSpace( nameof( key ) );
+            kind.ValidateDefined( nameof( kind ) );
+
             LLVMComdatRef comdatRef = NativeMethods.ModuleInsertOrUpdateComdat( Module.ModuleHandle, key, ( LLVMComdatSelectionKind )kind );
             if(!InternalComdatMap.TryGetValue( key, out Comdat retVal ))
             {
@@ -50,6 +56,8 @@ namespace Llvm.NET
 
         public bool Remove( string key )
         {
+            key.ValidateNotNullOrWhiteSpace( nameof( key ) );
+
             if(!InternalComdatMap.TryGetValue( key, out Comdat value ))
             {
                 return false;
@@ -65,7 +73,11 @@ namespace Llvm.NET
             return retVal;
         }
 
-        public bool TryGetValue( string key, out Comdat value ) => InternalComdatMap.TryGetValue( key, out value );
+        public bool TryGetValue( string key, out Comdat value )
+        {
+            key.ValidateNotNullOrWhiteSpace( nameof( key ) );
+            return InternalComdatMap.TryGetValue( key, out value );
+        }
 
         private IEnumerable<GlobalObject> GetModuleGlobalObjects()
         {
@@ -94,6 +106,7 @@ namespace Llvm.NET
 
         private bool AddComdat( LLVMComdatRef comdatRef )
         {
+            comdatRef.Pointer.ValidateNotNull( nameof( comdatRef ) );
             var comdat = new Comdat( Module, comdatRef );
             InternalComdatMap.Add( comdat.Name, comdat );
             return true;

@@ -1,48 +1,7 @@
-<!--
-NOTES on Versioning
-GENERAL:
-NUGET Packages use a CSemVer/CSemVer-CI Versioning scheme (see http://csemver.org)
-File and AssemblyVersions are computed based on the CSemVer "Ordered version", which
-is a 64 bit value that maps to a standard windows FILEVERSION Quad with each part
-consuming 16 bits. This ensures a strong relationship between the  assembly/file versions
-and the packages as well as ensures that CI builds can function properly.
-
-The Major, Minor and Patch versions are only updated in the master branch at the time
-of a release.
-
-The CSemVer format constructs NuGet compatible SemVer values that allow for CI builds
-to maintain a higher sort order than the last released build. (e.g. The CI builds are
-pre-release with respect to vNext but post release with respect to vCurrent)
-
-LLVM:
-The build version doesn't match the LLVM version. This is due to the fact that it is
-plausible that a breaking change is needed to enable some new functionality without
-updating the LLVM version, thus requiring a new major version for this library. To
-help users, the packages should always include the LLVM version they support in the
-description and summary of the package so it is clear what version is used underneath.
-
-This allows the use of CSemVer-CI for CI builds as the LLVM version is a full SemVer
-on it's own thus there isn't any way to include it along with something distinct for
-this library. The version Major version for this pattern above started with 4 to ensure
-it always overrides any previous 3.x builds that tried to match LLVM and included the 4th
-build field in the version.
-
-There are multiple general patterns that are used to produce a valid build number. The
-following is a list of the version formats in descending order of precedence:
-          Local build  - {BuildMajor}.{BuildMinor}.{BuildPatch}{double dash}zz-DEV-{UTCTIME of build in hex}
-          Pull Request - {BuildMajor}.{BuildMinor}.{BuildPatch}{double dash}pr-PRQ-{UTCTIME of PR Commit}+{COMMIT ID}
-    Official CI builds - {BuildMajor}.{BuildMinor}.{BuildPatch}{double dash}ci-BLD-{UTCTIME of HEAD Commit}+{COMMIT ID}
-   Official PreRelease - {BuildMajor}.{BuildMinor}.{BuildPatch}{single dash}{PreReleaseName}[.PreReleaseNumber][.PreReleaseFix]+{COMMIT ID}
-      Official Release - {BuildMajor}.{BuildMinor}.{BuildPatch}+{COMMIT ID}
--->
 <BuildVersionData
     ReleaseBranch="master"
-    BuildMajor = "4"
+    BuildMajor = "5"
     BuildMinor = "0"
     BuildPatch = "0"
     PreReleaseName = "alpha"
-
-    LlvmVersionMajor ="4"
-    LlvmVersionMinor ="0"
-    LlvmVersionPatch ="1"
 />

@@ -50,12 +50,10 @@ for applications.
 
 ### Building Llvm.NET
 #### Pre-requsites
-* Download LLVM [4.0.1](http://releases.llvm.org/4.0.1/llvm-4.0.1.src.tar.xz)
-  * You will need a tool to extract files from that archive format. On Windows the recommended tool is [7zip](http://7-zip.org/)
+* Download LLVM 5.0.0 (Head of current release_50 branch from http://llvm.org/git/llvm.git)
 * Build of LLVM libraries  
-To Build the LLVM libraries you can use the [Build-LlvmWithVS](https://github.com/NETMF/Llvm.NET/tree/LLVM_4_0_1/src/NugetPkg/LLVM)
-PowerShell script provided. For more information on using the script open a PowerShell command prompt in the Llvm.NET
-source directory and run `PS> Get-Help .\Build-LlvmWithVs.ps1`.
+To Build the LLVM libraries you can use the [Build-Llvm](https://github.com/NETMF/Llvm.NET/tree/Llvm.Libs) or just get the NuGet
+packages from Nuget (once LLVM 5 officially releases) or from the [Llvm.NET CI Nuget gallery](https://ci.appveyor.com/nuget/llvm.net)
 
 _NOTE: On a typical developer machines the LLVM library build takes approximately 1.5 hours so letting it run overnight
 or when you are otherwise away from your computer is usually a good idea. Fortunately this only needs to be done once
