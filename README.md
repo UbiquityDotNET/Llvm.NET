@@ -2,7 +2,7 @@
 
 Build Status:  
 
-|--- Build ---|--- Status ---|
+| Build | Status |
 |-------------|--------------|
 | Master | [![Build status](https://ci.appveyor.com/api/projects/status/0xh262rwvbardsrm/branch/master?svg=true)](https://ci.appveyor.com/project/StevenMaillet/llvm-net/branch/master) |
 | Llvm.Libs | [![Build status](https://ci.appveyor.com/api/projects/status/2oqp15olqxna55jj/branch/Llvm.Libs?svg=true)](https://ci.appveyor.com/project/StevenMaillet/llvm-net-3dmy2/branch/Llvm.Libs) |
