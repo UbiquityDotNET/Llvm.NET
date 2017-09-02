@@ -1,7 +1,11 @@
 ## Llvm.NET
 
 Build Status:  
-[![Build status](https://ci.appveyor.com/api/projects/status/0xh262rwvbardsrm/branch/master?svg=true)](https://ci.appveyor.com/project/StevenMaillet/llvm-net/branch/master)
+
+|--- Build ---|--- Status ---|
+|-------------|--------------|
+| Master | [![Build status](https://ci.appveyor.com/api/projects/status/0xh262rwvbardsrm/branch/master?svg=true)](https://ci.appveyor.com/project/StevenMaillet/llvm-net/branch/master) |
+| Llvm.Libs | [![Build status](https://ci.appveyor.com/api/projects/status/2oqp15olqxna55jj/branch/Llvm.Libs?svg=true)](https://ci.appveyor.com/project/StevenMaillet/llvm-net-3dmy2/branch/Llvm.Libs) |
 
 ### Welcome to Llvm.NET!
 Llvm.NET provides LLVM language and runtime bindings for .NET based applications. Llvm.NET's goal is to provide
