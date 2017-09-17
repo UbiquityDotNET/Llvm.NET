@@ -4,7 +4,7 @@ Build Status:
 
 | Build | Status |
 |-------------|--------------|
-| Master | [![Build status](https://ci.appveyor.com/api/projects/status/0xh262rwvbardsrm/branch/master?svg=true)](https://ci.appveyor.com/project/StevenMaillet/llvm-net/branch/master) |
+| Master | [![Build status](https://ci.appveyor.com/api/projects/status/9v403g6n18335rej/branch/master?svg=true)](https://ci.appveyor.com/project/StevenMaillet/llvm-net/branch/master) |
 
 ### Welcome to Llvm.NET!
 Llvm.NET provides LLVM language and runtime bindings for .NET based applications. Llvm.NET's goal is to provide
@@ -16,9 +16,6 @@ The goal is to match the original class model as closely as possible, while prov
 applications that feels familiar and consistent with common styles and patterns in .NET Framework applications.
 Thus, while class, method and enumeration names are similar to their counterparts in LLVM, they are not always
 identical.
-
-### Documentation 
-Documentation for using the Llvm.NET class library is located at [http://netmf.github.io/Llvm.NET](http://netmf.github.io/Llvm.NET)
 
 ### Why Llvm.NET?
 Llvm.NET was initially developed as a means to leverage LLVM as the back-end for an Ahead-Of-Time (AOT) compilation
@@ -49,22 +46,9 @@ for applications.
 
 ### Building Llvm.NET
 #### Pre-requsites
-* Download LLVM [4.0.1](http://releases.llvm.org/4.0.1/llvm-4.0.1.src.tar.xz)
-  * You will need a tool to extract files from that archive format. On Windows the recommended tool is [7zip](http://7-zip.org/)
-* Build of LLVM libraries  
-To Build the LLVM libraries you can use the [Build-LlvmWithVS](https://github.com/NETMF/Llvm.NET/tree/LLVM_4_0_1/src/NugetPkg/LLVM)
-PowerShell script provided. For more information on using the script open a PowerShell command prompt in the Llvm.NET
-source directory and run `PS> Get-Help .\Build-LlvmWithVs.ps1`.
-
-_NOTE: On a typical developer machines the LLVM library build takes approximately 1.5 hours so letting it run overnight
-or when you are otherwise away from your computer is usually a good idea. Fortunately this only needs to be done once
-for a given release of LLVM._
-
-If you have Visual Studio 2017 RC (or RTM when available) with the [Visual C++ Tools for CMake](https://blogs.msdn.microsoft.com/vcblog/2016/10/05/cmake-support-in-visual-studio/),
-you can build the LLVM libs in VS. However, the default behavior is to build everything, which can take upwards of 6
-hours on most typical machines. Instead of doing a full build you can use the [Build-LlvmWithVS](https://github.com/NETMF/Llvm.NET/blob/dev/src/LibLLVM/Build-LlvmWithVS.ps1)
-PowerShell script with the `-CreateSettingsJson` to create the [CMakeSettings.json](https://blogs.msdn.microsoft.com/vcblog/2016/10/05/cmake-support-in-visual-studio/#configure-cmake)
-file that VS will use to configure VS to reduce what is built to just the libraries needed for Llvm.NET.
+* Visual Studio 2017 (15.3+)
+* Llvm.Libs Nuget Package
+  - To build the Llvm.Libs nuget package locally you can use the build support from the [Llvm.Libs ](https://github.com/UbiquityDotNET/Llvm.Libs) repository
 
 #### Using Visual Studio
 The repository contains a Visual Studio solution files that allow building the components individually for modifying
@@ -77,9 +61,9 @@ The Automated build support for Llvm.NET uses BuildAll.ps1 powershell script to 
 from a powershell command prompt with msbuild tools on the system search path.
 
 #### Sample Application
-The [CodeGenWithDebugInfo](https://github.com/NETMF/Llvm.NET/tree/LLVM_4_0_1/Samples/CodeGenWithDebugInfo) sample application provides an example of using Llvm.NET to generate
-LLVM Bit code equivalent to what the Clang compiler generates for a [simple C language file](https://github.com/NETMF/Llvm.NET/tree/LLVM_4_0_1/Samples/CodeGenWithDebugInfo/Support%20Files/test.c).
-TestDebugInfo doesn't actually parse the source, instead it is a manually constructed and documented example of how to use Llvm.NET to accomplish the bit-code generation. 
+The [CodeGenWithDebugInfo](https://github.com/UbiquityDotNET/Llvm.Net/tree/master/Samples/CodeGenWithDebugInfo) sample application provides an example of using Llvm.NET to generate
+LLVM Bit code equivalent to what the Clang compiler generates for a [simple C language file](https://github.com/UbiquityDotNET/Llvm.Net/blob/master/Samples/CodeGenWithDebugInfo/Support%20Files/test.c).
+The sample applictation doesn't actually parse the source, instead it is a manually constructed and documented example of how to use Llvm.NET to accomplish the bit-code generation. 
 
 #### Code of Conduct
 This project has adopted the code of conduct defined by the [Contributor Covenant](http://contributor-covenant.org/)
