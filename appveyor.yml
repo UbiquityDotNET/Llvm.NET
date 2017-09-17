@@ -6,8 +6,7 @@ pull_requests:
 branches:
   only:
   - master
-  - LLVM_5_0
-  
+
 image: Visual Studio 2017
 
 skip_commits:
