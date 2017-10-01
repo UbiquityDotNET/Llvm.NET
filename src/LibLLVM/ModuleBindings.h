@@ -48,6 +48,8 @@ extern "C" {
                                     );
 
     LLVMValueRef LLVMGetOrInsertFunction( LLVMModuleRef module, const char* name, LLVMTypeRef functionType );
+    char const* LLVMGetModuleSourceFileName( LLVMModuleRef module );
+    void LLVMSetModuleSourceFileName( LLVMModuleRef module, char const* name );
     char const* LLVMGetModuleName( LLVMModuleRef module );
     LLVMValueRef LLVMGetGlobalAlias( LLVMModuleRef module, char const* name );
 
@@ -60,7 +62,7 @@ extern "C" {
     // the Comdat class doesn't have any sort of "Next" method and the iterator
     // for stringmap isn't something that is easily marshaled in a portable manner.
     // Thus, a callback is used to provide the caller with all the elements without
-    // requiring the use of unsafe constructs.
+    // requiring the use of unsafe and difficult to project constructs.
     // if the callback returns false the enumeration stops
     typedef LLVMBool( *LLVMComdatIteratorCallback )( LLVMComdatRef comdatRef );
     void LLVMModuleEnumerateComdats( LLVMModuleRef module, LLVMComdatIteratorCallback callback );

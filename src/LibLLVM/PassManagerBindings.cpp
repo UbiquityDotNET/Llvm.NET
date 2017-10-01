@@ -77,6 +77,7 @@ extern "C"
         initializeIPO( Registry );
         initializeAnalysis( Registry );
         initializeTransformUtils( Registry );
+        initializeScalarizeMaskedMemIntrinPass( Registry );
         initializeInstCombine( Registry );
         initializeInstrumentation( Registry );
         initializeTarget( Registry );
@@ -87,12 +88,13 @@ extern "C"
         initializeRewriteSymbolsLegacyPassPass( Registry );
         initializeWinEHPreparePass( Registry );
         initializeDwarfEHPreparePass( Registry );
-        initializeSafeStackPass( Registry );
+        initializeSafeStackLegacyPassPass( Registry );
         initializeSjLjEHPreparePass( Registry );
         initializePreISelIntrinsicLoweringLegacyPassPass( Registry );
         initializeGlobalMergePass( Registry );
         initializeInterleavedAccessPass( Registry );
         initializeCountingFunctionInserterPass( Registry );
         initializeUnreachableBlockElimLegacyPassPass( Registry );
+        initializeExpandReductionsPass( Registry );
     }
 }

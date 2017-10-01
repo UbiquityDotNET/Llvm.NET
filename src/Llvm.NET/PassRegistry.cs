@@ -4,7 +4,6 @@ using Llvm.NET.Native;
 
 namespace Llvm.NET
 {
-    [Obsolete( "Direct use of legacy pass manager support will not carry forward" )]
     public sealed class PassRegistry
         : IDisposable
     {

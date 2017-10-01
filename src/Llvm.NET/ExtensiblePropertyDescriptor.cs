@@ -1,4 +1,5 @@
 ﻿using System;
+using Ubiquity.ArgValidators;
 
 namespace Llvm.NET
 {
@@ -19,6 +20,7 @@ namespace Llvm.NET
         /// <param name="name">Name of the extended property</param>
         public ExtensiblePropertyDescriptor( string name )
         {
+            name.ValidateNotNullOrWhiteSpace( nameof( name ) );
             Name = name;
         }
 
@@ -45,17 +47,10 @@ namespace Llvm.NET
         /// <param name="lazyDefaultFactory">default value factory delegate to create the default value if the value is not yet present as an extended property</param>
         /// <returns>Value retrieved from the property or default value created by <paramref name="lazyDefaultFactory"/> if it wasn't found</returns>
         /// <remarks>If the value didn't exist a new value created by calling with <paramref name="lazyDefaultFactory"/> is added to the container</remarks>
-        public T GetValueFrom( IExtensiblePropertyContainer container, Func<T> lazyDefaultFactory )
+        public T GetValueFrom( [ValidatedNotNull] IExtensiblePropertyContainer container, Func<T> lazyDefaultFactory )
         {
-            if( container == null )
-            {
-                throw new ArgumentNullException( nameof( container ) );
-            }
-
-            if( lazyDefaultFactory == null )
-            {
-                throw new ArgumentNullException( nameof( lazyDefaultFactory ) );
-            }
+            container.ValidateNotNull( nameof( container ) );
+            lazyDefaultFactory.ValidateNotNull( nameof( lazyDefaultFactory ) );
 
             if( container.TryGetExtendedPropertyValue( Name, out T retVal ) )
             {
@@ -70,13 +65,9 @@ namespace Llvm.NET
         /// <summary>Sets the value of an extended property in a container</summary>
         /// <param name="container">Container to set the value in</param>
         /// <param name="value">value of the property</param>
-        public void SetValueIn( IExtensiblePropertyContainer container, T value )
+        public void SetValueIn( [ValidatedNotNull] IExtensiblePropertyContainer container, T value )
         {
-            if( container == null )
-            {
-                throw new ArgumentNullException( nameof( container ) );
-            }
-
+            container.ValidateNotNull( nameof( container ) );
             container.AddExtendedPropertyValue( Name, value );
         }
 

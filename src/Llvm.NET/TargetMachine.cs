@@ -1,5 +1,6 @@
 ﻿using System;
 using Llvm.NET.Native;
+using Ubiquity.ArgValidators;
 
 namespace Llvm.NET
 {
@@ -9,14 +10,14 @@ namespace Llvm.NET
     {
         ~TargetMachine( )
         {
-            // Do not change this code. Put cleanup code in Dispose(bool disposing).
+            // Do not change this code. Put cleanup code in Dispose (bool disposing ).
             DisposeTargetMachine( false );
         }
 
-        // This code added to correctly implement the disposable pattern.
+        /// <inheritdoc/>
         public void Dispose( )
         {
-            // Do not change this code. Put cleanup code in Dispose(bool disposing)
+            // Do not change this code. Put cleanup code in Dispose( bool disposing )
             DisposeTargetMachine( true );
             GC.SuppressFinalize( this );
         }
@@ -54,15 +55,9 @@ namespace Llvm.NET
         /// <param name="fileType">Type of file to emit</param>
         public void EmitToFile( NativeModule module, string path, CodeGenFileType fileType )
         {
-            if( module == null )
-            {
-                throw new ArgumentNullException( nameof( module ) );
-            }
-
-            if( string.IsNullOrWhiteSpace( path ) )
-            {
-                throw new ArgumentException( "Null or empty paths are not valid", nameof( path ) );
-            }
+            module.ValidateNotNull( nameof( module ) );
+            path.ValidateNotNullOrWhiteSpace( nameof( path ) );
+            fileType.ValidateDefined( nameof( path ) );
 
             if( module.TargetTriple != null && Triple != module.TargetTriple )
             {
@@ -70,23 +65,29 @@ namespace Llvm.NET
             }
 
             var status = NativeMethods.TargetMachineEmitToFile( TargetMachineHandle
-                                                     , module.ModuleHandle
-                                                     , path
-                                                     , ( LLVMCodeGenFileType )fileType
-                                                     , out string errTxt
-                                                     );
+                                                              , module.ModuleHandle
+                                                              , path
+                                                              , ( LLVMCodeGenFileType )fileType
+                                                              , out string errTxt
+                                                              );
             if( status.Failed )
             {
                 throw new InternalCodeGeneratorException( errTxt );
             }
         }
 
+        /// <summary>Emits the module for the target machine to a <see cref="MemoryBuffer"/></summary>
+        /// <param name="module">Module to emit to the buffer</param>
+        /// <param name="fileType">Type of file to generate into the buffer</param>
+        /// <returns><see cref="MemoryBuffer"/> containing the generated code</returns>
+        /// <remarks>
+        /// The <see cref="NativeModule.TargetTriple"/> must match the <see cref="Triple"/> for this
+        /// target.
+        /// </remarks>
         public MemoryBuffer EmitToBuffer( NativeModule module, CodeGenFileType fileType )
         {
-            if( module == null )
-            {
-                throw new ArgumentNullException( nameof( module ) );
-            }
+            module.ValidateNotNull( nameof( module ) );
+            fileType.ValidateDefined( nameof( fileType ) );
 
             if( module.TargetTriple != null && Triple != module.TargetTriple )
             {
@@ -113,6 +114,9 @@ namespace Llvm.NET
 
         internal TargetMachine( Context context, LLVMTargetMachineRef targetMachineHandle )
         {
+            context.ValidateNotNull( nameof( context ) );
+            targetMachineHandle.Pointer.ValidateNotNull( nameof( targetMachineHandle ) );
+
             TargetMachineHandle = targetMachineHandle;
             Context = context;
         }

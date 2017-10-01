@@ -1,5 +1,6 @@
 ﻿using System.Diagnostics.CodeAnalysis;
 using Llvm.NET.Types;
+using Ubiquity.ArgValidators;
 
 namespace Llvm.NET.DebugInfo
 {
@@ -15,9 +16,9 @@ namespace Llvm.NET.DebugInfo
         /// <param name="name">Name of the type [Default: null]</param>
         /// <param name="alignment">Alignment on pointer</param>
         public DebugPointerType( IDebugType<ITypeRef, DIType> debugElementType, NativeModule module, uint addressSpace = 0, string name = null, uint alignment = 0 )
-            : this( debugElementType.VerifyArgNotNull( nameof( debugElementType ) ).NativeType
+            : this( debugElementType.ValidateNotNull( nameof( debugElementType ) ).NativeType
                   , module
-                  , debugElementType.VerifyArgNotNull( nameof( debugElementType ) ).DIType
+                  , debugElementType.ValidateNotNull( nameof( debugElementType ) ).DIType
                   , addressSpace
                   , name
                   , alignment
@@ -33,7 +34,7 @@ namespace Llvm.NET.DebugInfo
         /// <param name="name">Name of the type [Default: null]</param>
         /// <param name="alignment">Alignment of pointer</param>
         public DebugPointerType( ITypeRef llvmElementType, NativeModule module, DIType elementType, uint addressSpace = 0, string name = null, uint alignment = 0 )
-            : this( llvmElementType.VerifyArgNotNull( nameof( llvmElementType ) ).CreatePointerType( addressSpace )
+            : this( llvmElementType.ValidateNotNull( nameof( llvmElementType ) ).CreatePointerType( addressSpace )
                   , module
                   , elementType
                   , name
@@ -48,11 +49,11 @@ namespace Llvm.NET.DebugInfo
         /// <param name="elementType">Debug type of the pointee</param>
         /// <param name="name">Name of the type [Default: null]</param>
         /// <param name="alignment">Alignment for pointer type</param>
-        [SuppressMessage( "Microsoft.Design", "CA1062:Validate arguments of public methods", MessageId = "1", Justification = "VerifyArgNotNull" )]
+        [SuppressMessage( "Microsoft.Design", "CA1062:Validate arguments of public methods", MessageId = "1", Justification = "ValidateNotNull" )]
         public DebugPointerType( IPointerType llvmPtrType, NativeModule module, DIType elementType, string name = null, uint alignment = 0 )
             : base( llvmPtrType )
         {
-            module.VerifyArgNotNull( nameof( module ) );
+            module.ValidateNotNull( nameof( module ) );
             DIType = module.DIBuilder
                            .CreatePointerType( elementType
                                              , name

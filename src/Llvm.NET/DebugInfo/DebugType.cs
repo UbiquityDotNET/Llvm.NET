@@ -2,6 +2,7 @@
 using System.Diagnostics.CodeAnalysis;
 using Llvm.NET.Types;
 using Llvm.NET.Values;
+using Ubiquity.ArgValidators;
 
 namespace Llvm.NET.DebugInfo
 {
@@ -180,7 +181,7 @@ namespace Llvm.NET.DebugInfo
         }
 
         [SuppressMessage( "Microsoft.Usage", "CA2225:OperatorOverloadsHaveNamedAlternates", Justification = "Available as a property, this is for convenience" )]
-        public static implicit operator TDebug( DebugType<TNative, TDebug> self ) => self.VerifyArgNotNull(nameof(self)).DIType;
+        public static implicit operator TDebug( DebugType<TNative, TDebug> self ) => self.ValidateNotNull(nameof(self)).DIType;
 
         private readonly ExtensiblePropertyContainer PropertyContainer = new ExtensiblePropertyContainer( );
     }

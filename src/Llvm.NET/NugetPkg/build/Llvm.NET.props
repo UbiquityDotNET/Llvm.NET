@@ -1,5 +1,29 @@
 <Project>
     <PropertyGroup>
-        <LlvmNetPackageRoot>$([MSBuild]::NormalizeDirectory('$(MSBuildThisFileDirectory)', '..')</LlvmNetPackageRoot>
+        <LlvmNetPackageRoot>$([MSBuild]::NormalizeDirectory("$(MSBuildThisFileDirectory)", ".."))</LlvmNetPackageRoot>
     </PropertyGroup>
+
+    <!-- Ensure these flow through to consumers so they are available in packages (or unit tests referencing this package) -->
+    <ItemGroup>
+        <Content Include="$(LlvmNetPackageRoot)runtimes\win-x64\native\LibLLVM.dll">
+            <Link>runtimes\win-x64\native\LibLLVM.dll</Link>
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+            <PackagePath>runtimes\win-x64\native\LibLLVM.dll</PackagePath>
+        </Content>
+        <Content Include="$(LlvmNetPackageRoot)runtimes\win-x64\native\LibLLVM.pdb">
+            <Link>runtimes\win-x64\native\LibLLVM.pdb</Link>
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+            <PackagePath>runtimes\win-x64\native\LibLLVM.pdb</PackagePath>
+        </Content>
+        <Content Include="$(LlvmNetPackageRoot)runtimes\win-x86\native\LibLLVM.dll">
+            <Link>runtimes\win-x86\native\LibLLVM.dll</Link>
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+            <PackagePath>runtimes\win-x86\native\LibLLVM.dll</PackagePath>
+        </Content>
+        <Content Include="$(LlvmNetPackageRoot)runtimes\win-x86\native\LibLLVM.pdb">
+            <Link>runtimes\win-x86\native\LibLLVM.pdb</Link>
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+            <PackagePath>runtimes\win-x86\native\LibLLVM.pdb</PackagePath>
+        </Content>
+    </ItemGroup>
 </Project>

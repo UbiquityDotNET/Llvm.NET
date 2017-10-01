@@ -6,6 +6,7 @@ using System.Linq;
 using Llvm.NET.Native;
 using Llvm.NET.Types;
 using Llvm.NET.Values;
+using Ubiquity.ArgValidators;
 
 namespace Llvm.NET.Instructions
 {
@@ -23,7 +24,7 @@ namespace Llvm.NET.Instructions
         /// <summary>Initializes a new instance of the <see cref="InstructionBuilder"/> class for a <see cref="BasicBlock"/></summary>
         /// <param name="block">Block this builder is initially attached to</param>
         public InstructionBuilder( BasicBlock block )
-            : this( block.VerifyArgNotNull( nameof( block ) ).ContainingFunction.ParentModule.Context )
+            : this( block.ValidateNotNull( nameof( block ) ).ContainingFunction.ParentModule.Context )
         {
             PositionAtEnd( block );
         }
@@ -595,7 +596,7 @@ namespace Llvm.NET.Instructions
         }
 
         public Branch Branch( BasicBlock target )
-            => Value.FromHandle<Branch>( NativeMethods.BuildBr( BuilderHandle, target.VerifyArgNotNull( nameof( target ) ).BlockHandle ) );
+            => Value.FromHandle<Branch>( NativeMethods.BuildBr( BuilderHandle, target.ValidateNotNull( nameof( target ) ).BlockHandle ) );
 
         public Branch Branch( Value ifCondition, BasicBlock thenTarget, BasicBlock elseTarget )
         {
@@ -1601,6 +1602,8 @@ namespace Llvm.NET.Instructions
             return llvmArgs;
         }
 
+        internal LLVMBuilderRef BuilderHandle { get; }
+
         // LLVM will automatically perform constant folding, thus the result of applying
         // a unary operator instruction may actually be a constant value and not an instruction
         // this deals with that to produce a correct managed wrapper type
@@ -1700,8 +1703,6 @@ namespace Llvm.NET.Instructions
 
             return NativeMethods.BuildCall( BuilderHandle, func.ValueHandle, out llvmArgs[ 0 ], ( uint )argCount, string.Empty );
         }
-
-        internal LLVMBuilderRef BuilderHandle { get; }
 
         private const string IncompatibleTypeMsgFmt = "Incompatible types: destination pointer must be of the same type as the value stored.\n"
                                             + "Types are:\n"

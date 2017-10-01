@@ -4,19 +4,23 @@
         <RuntimeIdentifiers>win-x64;win-x86</RuntimeIdentifiers>
         <DebugType>full</DebugType>
         <DebugSymbols>True</DebugSymbols>
-        <DocumentationFile>Llvm.NET.xml</DocumentationFile>
+        <DocumentationFile>$(BaseIntermediateOutputPath)Llvm.NET.xml</DocumentationFile>
         <SignAssembly>False</SignAssembly>
         <NoWarn>1701;1702;1705;1591</NoWarn>
         <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-        <NuspecFile>NugetPkg\Llvm.NET.nuspec</NuspecFile>
-        <NuspecProperties>configuration=$(Configuration);buildbinoutput=$(BaseOutputPath)</NuspecProperties>
+        <MinClientVersion>4.0</MinClientVersion>
+        <Authors>.NET Foundation,LLVM.org</Authors>
+        <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
+        <Description>.NET Bindings for LLVM</Description>
+        <PackageTags>LLVM,Compiler,JIT</PackageTags>
         <NoPackageAnalysis>true</NoPackageAnalysis>
     </PropertyGroup>
     <ItemGroup>
-        <Compile Include="ArgValidationExtensions.cs" />
+        <Content Include="NugetPkg\build\Llvm.NET.props" PackagePath="build" />
+    </ItemGroup>
+    <ItemGroup>
         <Compile Include="Comdat.cs" />
         <Compile Include="ComdatCollection.cs" />
-        <Compile Include="ContextValidator.cs" />
         <Compile Include="DebugInfo\DebugArrayType.cs" />
         <Compile Include="DebugInfo\DebugMemberInfo.cs" />
         <Compile Include="DebugInfo\DebugMemberLayout.cs" />
@@ -57,6 +61,7 @@
         <Compile Include="DebugInfo\GenericDINode.cs" />
         <Compile Include="DebugInfo\DebugType.cs" />
         <Compile Include="DebugInfo\TupleTypedArrayWrapper.cs" />
+        <Compile Include="DisposableAction.cs" />
         <Compile Include="ExtensiblePropertyContainer.cs" />
         <Compile Include="ExtensiblePropertyDescriptor.cs" />
         <Compile Include="Instructions\InstructionExtensions.cs" />
@@ -89,6 +94,7 @@
         <Compile Include="Instructions\UserOp1.cs" />
         <Compile Include="Instructions\UserOp2.cs" />
         <Compile Include="Instructions\VaArg.cs" />
+        <Compile Include="Native\GeneratedCodeExtensions.cs" />
         <Compile Include="Native\IntPtrExtensions.cs" />
         <Compile Include="Native\LLVMBuilderRef.cs" />
         <Compile Include="Native\LLVMMetadataRef.cs" />
@@ -97,7 +103,6 @@
         <Compile Include="Native\LLVMVersionInfo.cs" />
         <Compile Include="Native\SafeHandleNullIsInvalid.cs" />
         <Compile Include="Native\StringMarshaler.cs" />
-        <Compile Include="Native\GeneratedCodeExtensions.cs" />
         <Compile Include="Native\ValueKind.cs" />
         <Compile Include="Native\WrappedNativeCallback.cs" />
         <Compile Include="Metadata\ConstantAsMetadata.cs" />
@@ -217,7 +222,8 @@
         </CodeAnalysisDictionary>
     </ItemGroup>
     <ItemGroup>
-      <PackageReference Include="LlvmNetBuildTasks" Version="1.0.0" />
+        <PackageReference Include="CSemVer.Build.Tasks" Version="1.0.0-alpha.2--ci-REL.194F4984" />
+        <PackageReference Include="Ubiquity.ArgValidators" Version="0.3.0-alpha--ci-REL.424565984" />
     </ItemGroup>
     <Choose>
         <!--
@@ -226,7 +232,7 @@
         -->
         <When Condition="'$(BuildingInsideVisualStudio)'=='true'">
             <ItemGroup>
-                <PackageReference Include="LibLLVM.NET" Version="[4.0.0-*,5)" />
+                <PackageReference Include="LibLLVM.NET" Version="[5.0.0-*,6)" />
             </ItemGroup>
         </When>
         <Otherwise>
@@ -239,10 +245,14 @@
     <!--
     Version numbers are computed at build time after any declarative properties are evaluated
     so this is needed to update the NuSpec properties with the dynamically generated values
+    NOTE: This can't use NuPecProperties as that is only applicable when using a NuSpec file.
+          Worse, it will cause a NullReferenceException (See: https://github.com/NuGet/Home/issues/4649 )
     -->
     <Target Name="_SetNuSpecPropertiesWithBuildInfo" BeforeTargets="GenerateNuspec">
         <PropertyGroup>
-            <NuspecProperties>version=$(PackageVersion);llvmversion=$(LlvmVersion);$(NuspecProperties)</NuspecProperties>
+            <Description>$(Description) $(llvmVersion)</Description>
         </PropertyGroup>
+        <Error Condition="'$(LibLlvmPkgRoot)'==''" Text="DOH!" />
+        <Message Condition="'$(LibLlvmPkgRoot)'!=''" Text="LibLlvmPkgRoot=$(LibLlvmPkgRoot)" />
     </Target>
 </Project>

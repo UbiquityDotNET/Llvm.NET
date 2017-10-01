@@ -57,6 +57,8 @@ LLVMGetOrInsertFunction
 LLVMBuildIntCast2
 LLVMGetValueID
 LLVMMetadataAsValue
+LLVMGetModuleSourceFileName
+LLVMSetModuleSourceFileName
 LLVMGetModuleName
 LLVMIsTemporary
 LLVMIsResolved
@@ -431,9 +433,9 @@ LLVMDisposeModuleProvider
 LLVMDisposePassManager
 LLVMDoubleType
 LLVMDoubleTypeInContext
-LLVMDumpModule
-LLVMDumpType
-LLVMDumpValue
+;LLVMDumpModule
+;LLVMDumpType
+;LLVMDumpValue
 LLVMFP128Type
 LLVMFP128TypeInContext
 LLVMFinalizeFunctionPassManager
@@ -470,8 +472,8 @@ LLVMGetDiagInfoDescription
 LLVMGetDiagInfoSeverity
 LLVMGetElementAsConstant
 LLVMGetElementType
-;LLVMGetSubtypes
-;LLVMGetNumContainedTypes
+LLVMGetSubtypes
+LLVMGetNumContainedTypes
 LLVMGetEntryBasicBlock
 LLVMGetEnumAttributeAtIndex
 LLVMGetEnumAttributeKind
@@ -773,7 +775,7 @@ LLVMStructTypeInContext
 LLVMTypeIsSized
 LLVMTypeOf
 LLVMValueAsBasicBlock
-;LLVMValueAsMetadata
+LLVMValueAsMetadata
 LLVMValueIsBasicBlock
 LLVMVectorType
 LLVMVoidType
@@ -910,10 +912,10 @@ LLVMOrcDisposeMangledSymbol
 LLVMOrcGetErrorMsg
 LLVMOrcGetMangledSymbol
 LLVMOrcGetSymbolAddress
-;LLVMOrcMakeSharedModule
-;LLVMOrcDisposeSharedModuleRef
-;LLVMOrcMakeSharedObjectBuffer
-;LLVMOrcDisposeSharedObjectBufferRef
+LLVMOrcMakeSharedModule
+LLVMOrcDisposeSharedModuleRef
+LLVMOrcMakeSharedObjectBuffer
+LLVMOrcDisposeSharedObjectBufferRef
 LLVMOrcRemoveModule
 LLVMOrcSetIndirectStubPointer
 LLVMLinkInOrcMCJITReplacement
@@ -928,7 +930,7 @@ LLVMAddAlignmentFromAssumptionsPass
 LLVMAddBasicAliasAnalysisPass
 LLVMAddBitTrackingDCEPass
 LLVMAddCFGSimplificationPass
-;LLVMAddLateCFGSimplificationPass
+LLVMAddLateCFGSimplificationPass
 LLVMAddConstantPropagationPass
 LLVMAddCorrelatedValuePropagationPass
 LLVMAddDeadStoreEliminationPass

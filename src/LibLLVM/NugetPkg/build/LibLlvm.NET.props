@@ -7,20 +7,24 @@
 
     <ItemGroup>
         <Content Include="$(LibLlvmPkgRoot)runtimes\win-x64\native\LibLLVM.dll">
-            <Link>LibLLVM\x64\LibLLVM.dll</Link>
+            <Link>runtimes\win-x64\native\LibLLVM.dll</Link>
             <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+            <PackagePath>runtimes\win-x64\native\LibLLVM.dll</PackagePath>
         </Content>
         <Content Include="$(LibLlvmPkgRoot)runtimes\win-x64\native\LibLLVM.pdb">
-            <Link>LibLLVM\x64\LibLLVM.pdb</Link>
+            <Link>runtimes\win-x64\native\LibLLVM.pdb</Link>
             <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+            <PackagePath>runtimes\win-x64\native\LibLLVM.pdb</PackagePath>
         </Content>
         <Content Include="$(LibLlvmPkgRoot)runtimes\win-x86\native\LibLLVM.dll">
-            <Link>LibLLVM\x86\LibLLVM.dll</Link>
+            <Link>runtimes\win-x86\native\LibLLVM.dll</Link>
             <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+            <PackagePath>runtimes\win-x86\native\LibLLVM.dll</PackagePath>
         </Content>
         <Content Include="$(LibLlvmPkgRoot)runtimes\win-x86\native\LibLLVM.pdb">
-            <Link>LibLLVM\x86\LibLLVM.pdb</Link>
+            <Link>runtimes\win-x86\native\LibLLVM.pdb</Link>
             <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+            <PackagePath>runtimes\win-x86\native\LibLLVM.pdb</PackagePath>
         </Content>
     </ItemGroup>
 </Project>

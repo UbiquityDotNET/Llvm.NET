@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using Llvm.NET.Types;
+using Ubiquity.ArgValidators;
 
 namespace Llvm.NET.DebugInfo
 {
@@ -44,12 +45,12 @@ namespace Llvm.NET.DebugInfo
                                 , DebugType<ITypeRef,DIType> retType
                                 , params DebugType<ITypeRef, DIType>[ ] argTypes
                                 )
-            : base( llvmType.VerifyArgNotNull( nameof( llvmType ) ) )
+            : base( llvmType.ValidateNotNull( nameof( llvmType ) ) )
         {
-            DIType = module.VerifyArgNotNull( nameof( module ) )
+            DIType = module.ValidateNotNull( nameof( module ) )
                            .DIBuilder
                            .CreateSubroutineType( debugFlags
-                                                , retType.VerifyArgNotNull( nameof( retType ) ).DIType
+                                                , retType.ValidateNotNull( nameof( retType ) ).DIType
                                                 , argTypes.Select( t => t.DIType )
                                                 );
         }

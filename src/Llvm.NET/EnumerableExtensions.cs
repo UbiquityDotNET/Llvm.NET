@@ -1,13 +1,17 @@
-﻿using System;
+﻿// despite claims from MS to the contrary net47 isn't fully netstandard2.0 compliant
+// in particular it does not provide the Append or Prepend Enumerable extension methods
+// see: https://developercommunity.visualstudio.com/content/problem/123356/enumerableappend-extension-method-is-missing-in-ne.html
+#if NET47
+using System;
 using System.Collections.Generic;
 
 namespace Llvm.NET
 {
     /// <summary>This is an internal duplicate of Extensions added to CoreFx.</summary>
     /// <remarks>
-    /// This is duped here to enable use in down-level runtimes. Furthermore, it uses a different
+    /// This is duped here to enable use in down-level run-times. Furthermore, it uses a different
     /// name and is marked internal to prevent conflicts with the official implementation when
-    /// built for runtimes supporting that. (See: https://github.com/dotnet/corefx/pull/5947)
+    /// built for run-times supporting that. (See: https://github.com/dotnet/corefx/pull/5947)
     /// </remarks>
     internal static class EnumerableExtensions
     {
@@ -52,3 +56,4 @@ namespace Llvm.NET
         }
     }
 }
+#endif

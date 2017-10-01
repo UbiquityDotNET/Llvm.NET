@@ -1,5 +1,6 @@
 ﻿using System;
 using Llvm.NET.Native;
+using Ubiquity.ArgValidators;
 
 namespace Llvm.NET
 {
@@ -144,6 +145,8 @@ namespace Llvm.NET
         /// <returns>Normalized string</returns>
         public static string Normalize( string unNormalizedTriple )
         {
+            unNormalizedTriple.ValidateNotNullOrWhiteSpace( nameof( unNormalizedTriple ) );
+
             return NativeMethods.NormalizeTriple( unNormalizedTriple );
         }
 
@@ -153,6 +156,9 @@ namespace Llvm.NET
         /// <returns>Default object format</returns>
         public static TripleObjectFormatType GetDefaultObjectFormat( TripleArchType arch, TripleOSType os )
         {
+            arch.ValidateDefined( nameof( arch ) );
+            os.ValidateDefined( nameof( os ) );
+
             switch( arch )
             {
             case TripleArchType.UnknownArch:
@@ -223,7 +229,7 @@ namespace Llvm.NET
                 return TripleObjectFormatType.ELF;
 
             default:
-                throw new ArgumentException("Unsupported Architecture", nameof( arch ) );
+                throw new ArgumentException( "Unsupported Architecture", nameof( arch ) );
             }
         }
 
@@ -239,6 +245,8 @@ namespace Llvm.NET
         /// </remarks>
         public static TripleArchType GetCanonicalArchForSubArch( TripleArchType archType, TripleSubArchType subArch )
         {
+            archType.ValidateDefined( nameof( archType ) );
+            subArch.ValidateDefined( nameof( subArch ) );
             switch( archType )
             {
             case TripleArchType.Kalimba:
@@ -276,6 +284,7 @@ namespace Llvm.NET
 
         private static bool IsOsDarwin( TripleOSType osType )
         {
+            osType.ValidateDefined( nameof( osType ) );
             switch( osType )
             {
             case TripleOSType.Darwin:

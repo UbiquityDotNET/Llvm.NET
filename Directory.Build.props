@@ -34,7 +34,7 @@
 
         <BaseIntermediateOutputPath Condition="'$(BaseIntermediateOutputPath)'==''" >$([MSBuild]::NormalizeDirectory("$(BaseBuildOutputPath)", "Intermediate", "$(MSBuildProjectName)"))</BaseIntermediateOutputPath>
         <IntDir Condition="'$(IntDir)'==''">$([MSBuild]::NormalizeDirectory("$(BaseIntermediateOutputPath)", "$(UnifiedPlatformPathName)", "$(Configuration)"))</IntDir>
-        <BaseOutputPath Condition="'$(BaseOutputPath)'==''">$([MSBuild]::NormalizeDirectory("$(BaseBuildOutputPath)","bin"))</BaseOutputPath>
+        <BaseOutputPath Condition="'$(BaseOutputPath)'==''">$([MSBuild]::NormalizeDirectory("$(BaseBuildOutputPath)","bin", "$(MSBuildProjectName)"))</BaseOutputPath>
         <PackageOutputPath Condition="'$(PackageOutputPath)'==''">$([MSBuild]::NormalizeDirectory("$(BaseBuildOutputPath)","NuGet"))</PackageOutputPath>
 
         <BuildOutputPackagesDir Condition="'$(BuildOutputPackagesDir)'==''">$(BaseBuildOutputPath)packages\</BuildOutputPackagesDir>
@@ -45,37 +45,42 @@
 
         <IsPullRequestBuild Condition="'$(IsPullRequestBuild)'=='' AND '$(APPVEYOR_PULL_REQUEST_NUMBER)'!=''">true</IsPullRequestBuild>
         <IsPullRequestBuild Condition="'$(IsPullRequestBuild)'==''">false</IsPullRequestBuild>
+
+        <IsReleaseBuild Condition="'$(IsReleaseBuild)'=='' AND '$(APPVEYOR_REPO_TAG)'=='true' AND '$(APPVEYOR_PULL_REQUEST_NUMBER)'=='' AND '$(APPVEYOR_BRANCH)'=='master'">true</IsReleaseBuild>
+        <IsReleaseBuild Condition="'$(IsReleaseBuild)'==''">false</IsReleaseBuild>
+        <BuildVersionXml>$(MSBuildThisFileDirectory)BuildVersion.xml</BuildVersionXml>
+        <CiBuildName Condition="'$(CiBuildName)'=='' AND '$(IsPullRequestBuild)'=='true'">PRQ</CiBuildName>
+        <CiBuildName Condition="'$(CiBuildName)'=='' AND '$(IsAutomatedBuild)'=='true'">REL</CiBuildName>
+        <CiBuildName Condition="'$(CiBuildName)'==''">DEV</CiBuildName>
+        <BuildTimeStamp Condition="'$(BuildTimeStamp)'=='' AND '$(APPVEYOR_REPO_COMMIT_TIMESTAMP)'!=''">$(APPVEYOR_REPO_COMMIT_TIMESTAMP)</BuildTimeStamp>
+        <BuildTimeStamp Condition="'$(BuildTimeStamp)'==''">$([System.DateTime]::UtcNow)</BuildTimeStamp>
     </PropertyGroup>
     <Choose>
         <!-- Apply standard analyzers and rule sets for all C# projects -->
         <When Condition="'$(MSBuildProjectExtension)'=='.csproj'">
             <PropertyGroup>
-                <CodeAnalysisRuleSet>$(MSBuildThisFileDirectory)Llvm.NET.ruleset</CodeAnalysisRuleSet>
-                <EnableDefaultCompileItems>false</EnableDefaultCompileItems>
+                <CodeAnalysisRuleSet>$(MSBuildThisFileDirectory)Ubiquity.NET.ruleset</CodeAnalysisRuleSet>
+                <EnableDefaultItems>false</EnableDefaultItems>
+                <EnableDefaultNoneItems>false</EnableDefaultNoneItems>
                 <Determenistic>true</Determenistic>
+                <IsTestProject>$(MSBuildProjectName.Contains('Test'))</IsTestProject>
             </PropertyGroup>
-            <ItemGroup>
+            <ItemGroup Condition="'$(NoCommonAnalyzers)'!='true' and '$(IsTestProject)' != 'true' and '$(SourceLinkEnabled)' != 'false'">
+                <PackageReference Include="SourceLink.Create.CommandLine" Version="2.1.0" PrivateAssets="All" />
+            </ItemGroup>
+            <ItemGroup Condition="'$(NoCommonAnalyzers)'!='true'">
                 <PackageReference Include="Microsoft.AnalyzerPowerPack" Version="1.1.0" PrivateAssets="All" />
                 <PackageReference Include="RefactoringEssentials" Version="5.2.0" PrivateAssets="All" />
                 <PackageReference Include="StyleCop.Analyzers" Version="1.0.2" PrivateAssets="All" />
             </ItemGroup>
             <ItemGroup>
-                <None Include="$(MSBuildThisFileDirectory)Llvm.NET.ruleset" Link="Llvm.NET.ruleset" />
-            </ItemGroup>
-            <ItemGroup>
-                <!--
-                  When using EnableDefaultCompileItems=false this is needed to prevent the IDE from
-                  showing all files via the default "none glob". See: https://github.com/dotnet/sdk/issues/1157
-                  Why anyone would want a project system that pulled in all files implicitly instead
-                  of an explicit model is beyond me.
-                -->
-                <None Remove="**" />
+                <None Include="$(MSBuildThisFileDirectory)Ubiquity.NET.ruleset" Link="Ubiquity.NET.ruleset" />
             </ItemGroup>
         </When>
         <When Condition="'$(MSBuildProjectExtension)'=='.vcxproj'">
             <!-- vcxproj uses a different pattern for output paths -->
             <PropertyGroup>
-                <OutputPath Condition="'$(OutputPath)'==''">$([MSBuild]::NormalizeDirectory("$(BaseOutputPath)", "$(Configuration)", "native", "$(UnifiedPlatformPathName)"))</OutputPath>
+                <OutputPath Condition="'$(OutputPath)'==''">$([MSBuild]::NormalizeDirectory("$(BaseOutputPath)", "$(Configuration)", "$(UnifiedPlatformPathName)"))</OutputPath>
                 <OutputPath>$([MSBuild]::EnsureTrailingSlash("$(OutputPath)"))</OutputPath>
                 <OutDir Condition="'$(OutDir)'==''">$(OutputPath)</OutDir>
             </PropertyGroup>

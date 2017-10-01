@@ -20,6 +20,7 @@ namespace Llvm.NET.Tests
             using( var module = new NativeModule( ) )
             {
                 Assert.AreSame( string.Empty, module.Name );
+                Assert.AreSame( string.Empty, module.SourceFileName );
                 Assert.IsNotNull( module );
                 Assert.IsNotNull( module.Context );
                 Assert.AreSame( string.Empty, module.DataLayoutString );
@@ -46,6 +47,7 @@ namespace Llvm.NET.Tests
             using( var module = new NativeModule( TestModuleName ) )
             {
                 Assert.AreEqual( TestModuleName, module.Name );
+                Assert.AreEqual( TestModuleName, module.SourceFileName );
                 Assert.IsNotNull( module );
                 Assert.IsNotNull( module.Context );
                 Assert.AreSame( string.Empty, module.DataLayoutString );
@@ -72,6 +74,7 @@ namespace Llvm.NET.Tests
             using( var module = new NativeModule( TestModuleName, DebugInfo.SourceLanguage.C99, "test.c", "unitTest", false, string.Empty, 0 ) )
             {
                 Assert.AreEqual( TestModuleName, module.Name );
+                Assert.AreEqual( "test.c", module.SourceFileName );
                 Assert.IsNotNull( module );
                 Assert.IsNotNull( module.Context );
                 Assert.AreSame( string.Empty, module.DataLayoutString );
@@ -112,7 +115,7 @@ namespace Llvm.NET.Tests
         }
 
         [TestMethod]
-        [ExpectedArgumentException( "otherModule", ExpectedExceptionMessage = "Linking modules with different contexts is not allowed" )]
+        [ExpectedArgumentException( "otherModule", ExpectedExceptionMessage = "Linking modules from different contexts is not allowed" )]
         public void MultiContextLinkTest( )
         {
             using( var mergedMod = new NativeModule( ) )

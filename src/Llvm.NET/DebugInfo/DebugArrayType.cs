@@ -1,5 +1,6 @@
 ﻿using System;
 using Llvm.NET.Types;
+using Ubiquity.ArgValidators;
 
 namespace Llvm.NET.DebugInfo
 {
@@ -49,7 +50,7 @@ namespace Llvm.NET.DebugInfo
         /// <param name="count">Number of elements in the array</param>
         /// <param name="lowerBound"><see cref="LowerBound"/> value for the array indices [Default: 0]</param>
         public DebugArrayType( IDebugType<ITypeRef, DIType> elementType, NativeModule module, uint count, uint lowerBound = 0 )
-            : this( elementType.VerifyArgNotNull( nameof( elementType ) ).CreateArrayType( count )
+            : this( elementType.ValidateNotNull( nameof( elementType ) ).CreateArrayType( count )
                   , elementType
                   , module
                   , count
@@ -65,7 +66,7 @@ namespace Llvm.NET.DebugInfo
         /// <param name="count">Number of elements in the array</param>
         /// <param name="lowerBound"><see cref="LowerBound"/> value for the array indices [Default: 0]</param>
         public DebugArrayType( IArrayType llvmType, NativeModule module, DIType elementType, uint count, uint lowerBound = 0 )
-            : this( DebugType.Create( llvmType.VerifyArgNotNull( nameof( llvmType ) ).ElementType, elementType ), module, count, lowerBound )
+            : this( DebugType.Create( llvmType.ValidateNotNull( nameof( llvmType ) ).ElementType, elementType ), module, count, lowerBound )
         {
         }
 
@@ -122,10 +123,8 @@ namespace Llvm.NET.DebugInfo
                                                        , module.DIBuilder.CreateSubRange( lowerBound, count )
                                                        );
             }
-            else
-            {
-                return module.DIBuilder.CreateReplaceableCompositeType( Tag.ArrayType, string.Empty, module.DICompileUnit, null, 0 );
-            }
+
+            return module.DIBuilder.CreateReplaceableCompositeType( Tag.ArrayType, string.Empty, module.DICompileUnit, null, 0 );
         }
     }
 }

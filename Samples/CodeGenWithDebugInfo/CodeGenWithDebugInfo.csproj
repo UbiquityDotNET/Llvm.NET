@@ -2,23 +2,12 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <AssemblyVersion>0.0.1.0</AssemblyVersion>
-    <TargetFrameworks>net47;netstandard2.0</TargetFrameworks>
-    <EnableDefaultCompileItems>false</EnableDefaultCompileItems>
+    <TargetFrameworks>net47;netcoreapp2.0</TargetFrameworks>
     <OutputType>exe</OutputType>
     <OutputTypeEx>exe</OutputTypeEx>
     <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
-    <OutDir>bin\$(Configuration)\$(TargetFramework)\$(Platform)</OutDir>
   </PropertyGroup>
 
-  <ItemGroup>
-      <!--
-      When using EnableDefaultCompileItems=false this is needed to prevent the IDE from
-      showing all files via the default "none glob". See: https://github.com/dotnet/sdk/issues/1157
-      Why anyone would want a project system that pulled in all files implicitly instead
-      of an explicit model is beyond me.
-      -->
-      <None Remove="**" />
-  </ItemGroup>
   <ItemGroup>
     <Compile Include="CortexM3Details.cs" />
     <Compile Include="Program.cs" />
@@ -29,13 +18,13 @@
   <ItemGroup>
     <None Include="app.config" />
     <None Include="Support Files\ClangCompile.cmd">
-      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="Support Files\test.c">
-      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="Llvm.NET" Version="[4.0.0-*,5)" />
+    <PackageReference Include="Llvm.NET" Version="[5.0.0-*,6)" />
   </ItemGroup>
 </Project>

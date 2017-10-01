@@ -1,5 +1,6 @@
 ﻿using Llvm.NET.Native;
 using Llvm.NET.Values;
+using Ubiquity.ArgValidators;
 
 namespace Llvm.NET.DebugInfo
 {
@@ -11,10 +12,10 @@ namespace Llvm.NET.DebugInfo
         }
 
         public DILocation( Context context, uint line, uint column, DILocalScope scope, DILocation inlinedAt )
-            : base( NativeMethods.DILocation( context.VerifyArgNotNull( nameof( context ) ).ContextHandle
+            : base( NativeMethods.DILocation( context.ValidateNotNull( nameof( context ) ).ContextHandle
                                             , line
                                             , column
-                                            , scope.VerifyArgNotNull(nameof(scope)).MetadataHandle
+                                            , scope.ValidateNotNull(nameof(scope)).MetadataHandle
                                             , inlinedAt?.MetadataHandle ?? LLVMMetadataRef.Zero
                                             )
                   )
