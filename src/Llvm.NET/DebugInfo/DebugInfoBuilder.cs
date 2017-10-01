@@ -4,6 +4,7 @@ using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Linq;
 using System.Text;
+using JetBrains.Annotations;
 using Llvm.NET.Instructions;
 using Llvm.NET.Native;
 using Llvm.NET.Values;
@@ -208,9 +209,9 @@ namespace Llvm.NET.DebugInfo
         /// <param name="declaration">Template declarations [default = null]</param>
         [System.Diagnostics.CodeAnalysis.SuppressMessage( "Microsoft.Design", "CA1011:ConsiderPassingBaseTypesAsParameters", Justification = "Specific type required by interop call" )]
         public DISubProgram CreateFunction( DIScope scope
-                                          , string name
-                                          , string mangledName
-                                          , DIFile file
+                                          , [CanBeNull] string name
+                                          , [CanBeNull] string mangledName
+                                          , [CanBeNull] DIFile file
                                           , uint line
                                           , DISubroutineType signatureType
                                           , bool isLocalToUnit
@@ -219,8 +220,8 @@ namespace Llvm.NET.DebugInfo
                                           , DebugInfoFlags debugFlags
                                           , bool isOptimized
                                           , Function function
-                                          , MDNode typeParameter = null
-                                          , MDNode declaration = null
+                                          , [CanBeNull] MDNode typeParameter = null
+                                          , [CanBeNull] MDNode declaration = null
                                           )
         {
             if( scope == null )
@@ -331,7 +332,7 @@ namespace Llvm.NET.DebugInfo
             return MDNode.FromHandle<DISubProgram>( handle );
         }
 
-        [System.Diagnostics.CodeAnalysis.SuppressMessage( "Microsoft.Design", "CA1011:ConsiderPassingBaseTypesAsParameters", Justification = "Specific type required by interop call" )]
+        [SuppressMessage( "Microsoft.Design", "CA1011:ConsiderPassingBaseTypesAsParameters", Justification = "Specific type required by interop call" )]
         public DILocalVariable CreateLocalVariable( DIScope scope
                                                   , string name
                                                   , DIFile file

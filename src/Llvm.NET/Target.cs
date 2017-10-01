@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using Llvm.NET.Native;
+using Ubiquity.ArgValidators;
 
 namespace Llvm.NET
 {
@@ -40,6 +41,12 @@ namespace Llvm.NET
                                                 , CodeModel codeModel = CodeModel.Default
                                                 )
         {
+            context.ValidateNotNull( nameof( context ) );
+            triple.ValidateNotNullOrWhiteSpace( nameof( triple ) );
+            optLevel.ValidateDefined( nameof( optLevel ) );
+            relocationMode.ValidateDefined( nameof( relocationMode ) );
+            codeModel.ValidateDefined( nameof( codeModel ) );
+
             var targetMachineHandle = NativeMethods.CreateTargetMachine( TargetHandle
                                                                        , triple
                                                                        , cpu ?? string.Empty
@@ -70,6 +77,8 @@ namespace Llvm.NET
         /// <returns>Target for the given triple</returns>
         public static Target FromTriple( string targetTriple )
         {
+            targetTriple.ValidateNotNullOrWhiteSpace( nameof( targetTriple ) );
+
             if( !NativeMethods.GetTargetFromTriple( targetTriple, out LLVMTargetRef targetHandle, out string errorMessag ) )
             {
                 throw new InternalCodeGeneratorException( errorMessag );
@@ -80,6 +89,8 @@ namespace Llvm.NET
 
         internal Target( LLVMTargetRef targetHandle )
         {
+            targetHandle.Pointer.ValidateNotNull( nameof( targetHandle ) );
+
             TargetHandle = targetHandle;
         }
 
@@ -87,6 +98,7 @@ namespace Llvm.NET
 
         internal static Target FromHandle( LLVMTargetRef targetHandle )
         {
+            targetHandle.Pointer.ValidateNotNull( nameof( targetHandle ) );
             lock( TargetMap )
             {
                 if( TargetMap.TryGetValue( targetHandle.Pointer, out Target retVal ) )

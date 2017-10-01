@@ -34,6 +34,18 @@ extern "C"
         return wrap( pModule->getOrInsertFunction( name, pSignature ) );
     }
 
+    char const* LLVMGetModuleSourceFileName( LLVMModuleRef module )
+    {
+        auto pModule = unwrap( module );
+        return pModule->getSourceFileName( ).c_str( );
+    }
+
+    void LLVMSetModuleSourceFileName( LLVMModuleRef module, char const* name )
+    {
+        auto pModule = unwrap( module );
+        pModule->setSourceFileName( name );
+    }
+
     char const* LLVMGetModuleName( LLVMModuleRef module )
     {
         auto pModule = unwrap( module );

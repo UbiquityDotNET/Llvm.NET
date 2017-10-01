@@ -1,0 +1,26 @@
+<Project Sdk="Microsoft.NET.Sdk">
+    <!--
+    This Project is used by the build scripts in automated builds to generate version information used
+    for all projects in the build.
+    -->
+    <PropertyGroup>
+        <TargetFramework>netstandard1.3</TargetFramework>
+        <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+        <NoCommonAnalyzers>true</NoCommonAnalyzers>
+    </PropertyGroup>
+    <ItemGroup>
+        <PackageReference Include="CSemVer.Build.Tasks" Version="1.0.0-alpha.2--ci-REL.194F4984" />
+    </ItemGroup>
+    <Target Name="GenerateVersionJson" DependsOnTargets="PrepareVersioningForBuild">
+        <ItemGroup>
+            <JsonLines Include="{"/>
+            <JsonLines Include='  "FullBuildNumber": "$(FullBuildNumber)",'/>
+            <JsonLines Include='  "FileVersionMajor": "$(FileVersionMajor)",'/>
+            <JsonLines Include='  "FileVersionMinor": "$(FileVersionMinor)",'/>
+            <JsonLines Include='  "FileVersionBuild": "$(FileVersionBuild)",'/>
+            <JsonLines Include='  "FileVersionRevision": "$(FileVersionRevision)"'/>
+            <JsonLines Include="}"/>
+        </ItemGroup>
+        <WriteLinesToFile File="$(BaseBuildOutputPath)GeneratedVersion.json" Overwrite="true" Lines="@(JsonLines)" />
+    </Target>
+</Project>

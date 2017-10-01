@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
+using JetBrains.Annotations;
 using Llvm.NET.Native;
 using Llvm.NET.Types;
 using Llvm.NET.Values;
+using Ubiquity.ArgValidators;
 
 namespace Llvm.NET
 {
@@ -31,7 +33,7 @@ namespace Llvm.NET
     ///   <item><term>X86_FP80</term>   <term>80</term>  <term>80</term>  <term>96</term></item>
     /// </list>
     /// <note type="note">
-    /// The alloc size depends on the alignment, and thus on the target.
+    /// The allocation size depends on the alignment, and thus on the target.
     /// The values in the example table are for x86-32-linux.
     /// </note>
     /// </remarks>
@@ -177,18 +179,6 @@ namespace Llvm.NET
 
         public ulong BitOffsetOfElement( IStructType llvmType, uint element ) => OffsetOfElement( llvmType, element ) * 8;
 
-        /// <summary>Parses an LLVM target layout string</summary>
-        /// <param name="context"><see cref="Context"/> for types created by the new <see cref="DataLayout"/></param>
-        /// <param name="layout">string to parse</param>
-        /// <returns>Parsed target data</returns>
-        /// <remarks>For full details on the syntax of the string see <a href="http://llvm.org/releases/3.9.1/docs/LangRef.html#data-layout">http://llvm.org/releases/3.9.1/docs/LangRef.html#data-layout</a></remarks>
-        [Obsolete("To ensure correctness of the layout information retrieve the layout data from TargetMachine.TargetData instead of parsing an arbitrary string")]
-        public static DataLayout Parse( Context context, string layout )
-        {
-            var handle = NativeMethods.CreateTargetData( layout );
-            return FromHandle( context, handle, true );
-        }
-
         protected virtual void Dispose( bool disposing )
         {
             if( DataLayoutHandle.Pointer != IntPtr.Zero && IsDisposable )
@@ -214,6 +204,8 @@ namespace Llvm.NET
                     return retVal;
                 }
 
+                // exception filter function to ensure that the native resource
+                // is released on exception from adding it to the map
                 retVal = new DataLayout( context, targetDataRef, isDisposable );
                 Func<bool> cleanOnException = ( ) =>
                     {
@@ -236,15 +228,20 @@ namespace Llvm.NET
 
         internal LLVMTargetDataRef DataLayoutHandle { get; private set; }
 
-        private static void VerifySized( ITypeRef type, string name )
+        private static void VerifySized( [ValidatedNotNull] ITypeRef type, [InvokerParameterName] string name )
         {
+            if( type == null )
+            {
+                throw new ArgumentNullException( name );
+            }
+
             if( !type.IsSized )
             {
                 throw new ArgumentException( "Type must be sized to get target size information", name );
             }
         }
 
-        // inidcates if this instance is disposable
+        // indicates if this instance is disposable
         private readonly bool IsDisposable;
         private static readonly Dictionary<IntPtr, DataLayout> TargetDataMap = new Dictionary<IntPtr, DataLayout>( );
     }

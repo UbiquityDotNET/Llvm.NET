@@ -3,14 +3,16 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
+using JetBrains.Annotations;
 using Llvm.NET.DebugInfo;
 using Llvm.NET.Native;
 using Llvm.NET.Types;
 using Llvm.NET.Values;
+using Ubiquity.ArgValidators;
 
 namespace Llvm.NET
 {
-    /// <summary>LLVM Bitcode module</summary>
+    /// <summary>LLVM Bit-code module</summary>
     /// <remarks>
     /// A module is the basic unit for containing code in LLVM. Modules are an in memory
     /// representation of the LLVM bit-code.
@@ -35,7 +37,7 @@ namespace Llvm.NET
         /// <summary>Creates an named module in a given context</summary>
         /// <param name="moduleId">Module's ID</param>
         /// <param name="context">Context for the module</param>
-        public NativeModule( string moduleId, Context context )
+        public NativeModule( [CanBeNull] string moduleId, [CanBeNull] Context context )
         {
             if( moduleId == null )
             {
@@ -48,6 +50,7 @@ namespace Llvm.NET
                 OwnsContext = true;
             }
 
+            // exception filter function to ensure native resource is disposed on exception in construction
             Func<bool> onException = ( ) =>
             {
                 if( OwnsContext && context != null )
@@ -131,6 +134,8 @@ namespace Llvm.NET
                                                        , compilationFlags
                                                        , runtimeVersion
                                                        );
+
+            SourceFileName = Path.GetFileName( srcFilePath );
         }
 
         public bool IsDisposed => ModuleHandle.Pointer.IsNull();
@@ -144,6 +149,12 @@ namespace Llvm.NET
         ~NativeModule( )
         {
             Dispose( false );
+        }
+
+        public string SourceFileName
+        {
+            get => NativeMethods.GetModuleSourceFileName( ModuleHandle );
+            set => NativeMethods.SetModuleSourceFileName( ModuleHandle, value );
         }
 
         /// <summary>Name of the Debug Version information module flag</summary>
@@ -271,14 +282,11 @@ namespace Llvm.NET
 
         public void Link( NativeModule otherModule )
         {
-            if( otherModule == null )
-            {
-                throw new ArgumentNullException( nameof( otherModule ) );
-            }
+            otherModule.ValidateNotNull( nameof( otherModule ) );
 
             if( otherModule.Context != Context )
             {
-                throw new ArgumentException( "Linking modules with different contexts is not allowed", nameof( otherModule ) );
+                throw new ArgumentException( "Linking modules from different contexts is not allowed", nameof( otherModule ) );
             }
 
             if( !NativeMethods.LinkModules2( ModuleHandle, otherModule.ModuleHandle ).Succeeded )
@@ -301,11 +309,7 @@ namespace Llvm.NET
         /// </remarks>
         public void Optimize( TargetMachine targetMachine )
         {
-            if( targetMachine == null )
-            {
-                throw new ArgumentNullException( nameof( targetMachine ) );
-            }
-
+            targetMachine.ValidateNotNull( nameof( targetMachine ) );
             NativeMethods.RunLegacyOptimizer( ModuleHandle, targetMachine.TargetMachineHandle );
         }
 
@@ -322,6 +326,8 @@ namespace Llvm.NET
         /// <returns>The function or null if not found</returns>
         public Function GetFunction( string name )
         {
+            name.ValidateNotNullOrWhiteSpace( nameof( name ) );
+
             var funcRef = NativeMethods.GetNamedFunction( ModuleHandle, name );
             if( funcRef.Pointer == IntPtr.Zero )
             {
@@ -342,9 +348,11 @@ namespace Llvm.NET
         /// not perform any function overloading.
         /// </remarks>
         [SuppressMessage( "Microsoft.Design", "CA1011:ConsiderPassingBaseTypesAsParameters", Justification = "Specific type required by interop call" )]
-        [SuppressMessage( "Language", "CSE0003:Use expression-bodied members", Justification = "Line too long" )]
         public Function AddFunction( string name, IFunctionType signature )
         {
+            name.ValidateNotNullOrWhiteSpace( nameof( name ) );
+            signature.ValidateNotNull( nameof( signature ) );
+
             return Value.FromHandle<Function>( NativeMethods.GetOrInsertFunction( ModuleHandle, name, signature.GetTypeRef( ) ) );
         }
 
@@ -357,10 +365,12 @@ namespace Llvm.NET
         /// </remarks>
         public void WriteToFile( string path )
         {
+            path.ValidateNotNullOrWhiteSpace( nameof( path ) );
+
             LLVMStatus status = NativeMethods.WriteBitcodeToFile( ModuleHandle, path );
             if( status.Failed )
             {
-                throw new IOException( $"Error reading bitcode file '{path}'", status.ErrorCode );
+                throw new IOException( $"Error writing bit-code file '{path}'", status.ErrorCode );
             }
         }
 
@@ -370,6 +380,8 @@ namespace Llvm.NET
         /// <returns><see langword="true"/> if successful or <see langword="false"/> if not</returns>
         public bool WriteToTextFile( string path, out string errMsg )
         {
+            path.ValidateNotNullOrWhiteSpace( nameof( path ) );
+
             return NativeMethods.PrintModuleToFile( ModuleHandle, path, out errMsg );
         }
 
@@ -394,10 +406,8 @@ namespace Llvm.NET
         /// <returns><see cref="GlobalAlias"/> for the alias</returns>
         public GlobalAlias AddAlias( Value aliasee, string aliasName )
         {
-            if( aliasee == null )
-            {
-                throw new ArgumentNullException( nameof( aliasee ) );
-            }
+            aliasee.ValidateNotNull( nameof( aliasee ) );
+            aliasName.ValidateNotNullOrWhiteSpace( nameof( aliasName ) );
 
             var handle = NativeMethods.AddAlias( ModuleHandle, aliasee.NativeType.GetTypeRef( ), aliasee.ValueHandle, aliasName );
             return Value.FromHandle<GlobalAlias>( handle );
@@ -408,6 +418,8 @@ namespace Llvm.NET
         /// <returns>Alias matching <paramref name="name"/> or null if no such alias exists</returns>
         public GlobalAlias GetAlias( string name )
         {
+            name.ValidateNotNullOrWhiteSpace( nameof( name ) );
+
             var handle = NativeMethods.GetGlobalAlias( ModuleHandle, name );
             return Value.FromHandle<GlobalAlias>( handle );
         }
@@ -422,6 +434,9 @@ namespace Llvm.NET
         /// </openissues>
         public GlobalVariable AddGlobalInAddressSpace( uint addressSpace, ITypeRef typeRef, string name )
         {
+            typeRef.ValidateNotNull( nameof( typeRef ) );
+            name.ValidateNotNullOrWhiteSpace( nameof( name ) );
+
             var handle = NativeMethods.AddGlobalInAddressSpace( ModuleHandle, typeRef.GetTypeRef( ), name, addressSpace );
             return Value.FromHandle<GlobalVariable>( handle );
         }
@@ -433,9 +448,12 @@ namespace Llvm.NET
         /// <param name="linkage">Linkage type for this global</param>
         /// <param name="constVal">Initial value for the global</param>
         /// <returns>New global variable</returns>
-        [SuppressMessage( "Language", "CSE0003:Use expression-bodied members", Justification = "Line too long" )]
         public GlobalVariable AddGlobalInAddressSpace( uint addressSpace, ITypeRef typeRef, bool isConst, Linkage linkage, Constant constVal )
         {
+            typeRef.ValidateNotNull( nameof( typeRef ) );
+            linkage.ValidateDefined( nameof( linkage ) );
+            constVal.ValidateNotNull( nameof( constVal ) );
+
             return AddGlobalInAddressSpace( addressSpace, typeRef, isConst, linkage, constVal, string.Empty );
         }
 
@@ -449,6 +467,11 @@ namespace Llvm.NET
         /// <returns>New global variable</returns>
         public GlobalVariable AddGlobalInAddressSpace( uint addressSpace, ITypeRef typeRef, bool isConst, Linkage linkage, Constant constVal, string name )
         {
+            typeRef.ValidateNotNull( nameof( typeRef ) );
+            linkage.ValidateDefined( nameof( linkage ) );
+            constVal.ValidateNotNull( nameof( constVal ) );
+            name.ValidateNotNullOrWhiteSpace( nameof( name ) );
+
             var retVal = AddGlobalInAddressSpace( addressSpace, typeRef, name );
             retVal.IsConstant = isConst;
             retVal.Linkage = linkage;
@@ -465,6 +488,9 @@ namespace Llvm.NET
         /// </openissues>
         public GlobalVariable AddGlobal( ITypeRef typeRef, string name )
         {
+            typeRef.ValidateNotNull( nameof( typeRef ) );
+            name.ValidateNotNull( nameof( name ) );
+
             var handle = NativeMethods.AddGlobal( ModuleHandle, typeRef.GetTypeRef( ), name );
             return Value.FromHandle<GlobalVariable>( handle );
         }
@@ -475,9 +501,12 @@ namespace Llvm.NET
         /// <param name="linkage">Linkage type for this global</param>
         /// <param name="constVal">Initial value for the global</param>
         /// <returns>New global variable</returns>
-        [SuppressMessage( "Language", "CSE0003:Use expression-bodied members", Justification = "Line too long" )]
         public GlobalVariable AddGlobal( ITypeRef typeRef, bool isConst, Linkage linkage, Constant constVal )
         {
+            typeRef.ValidateNotNull( nameof( typeRef ) );
+            linkage.ValidateDefined( nameof( linkage ) );
+            constVal.ValidateNotNull( nameof( constVal ) );
+
             return AddGlobal( typeRef, isConst, linkage, constVal, string.Empty );
         }
 
@@ -490,6 +519,11 @@ namespace Llvm.NET
         /// <returns>New global variable</returns>
         public GlobalVariable AddGlobal( ITypeRef typeRef, bool isConst, Linkage linkage, Constant constVal, string name )
         {
+            typeRef.ValidateNotNull( nameof( typeRef ) );
+            linkage.ValidateDefined( nameof( linkage ) );
+            constVal.ValidateNotNull( nameof( constVal ) );
+            name.ValidateNotNull( nameof( name ) );
+
             var retVal = AddGlobal( typeRef, name );
             retVal.IsConstant = isConst;
             retVal.Linkage = linkage;
@@ -502,6 +536,8 @@ namespace Llvm.NET
         /// <returns>The type or null if no type with the specified name exists in the module</returns>
         public ITypeRef GetTypeByName( string name )
         {
+            name.ValidateNotNullOrWhiteSpace( nameof( name ) );
+
             var hType = NativeMethods.GetTypeByName( ModuleHandle, name );
             return hType.Pointer == IntPtr.Zero ? null : TypeRef.FromHandle( hType );
         }
@@ -511,6 +547,8 @@ namespace Llvm.NET
         /// <returns></returns>
         public GlobalVariable GetNamedGlobal( string name )
         {
+            name.ValidateNotNullOrWhiteSpace( nameof( name ) );
+
             var hGlobal = NativeMethods.GetNamedGlobal( ModuleHandle, name );
             if( hGlobal.Pointer == IntPtr.Zero )
             {
@@ -526,6 +564,9 @@ namespace Llvm.NET
         /// <param name="value">Value of the flag</param>
         public void AddModuleFlag( ModuleFlagBehavior behavior, string name, UInt32 value )
         {
+            behavior.ValidateDefined( nameof( behavior ) );
+            name.ValidateNotNullOrWhiteSpace( nameof( name ) );
+
             // AddModuleFlag comes from custom LLVMDebug-C API
             NativeMethods.AddModuleFlag( ModuleHandle, ( LLVMModFlagBehavior )behavior, name, value );
         }
@@ -536,10 +577,9 @@ namespace Llvm.NET
         /// <param name="value">Value of the flag</param>
         public void AddModuleFlag( ModuleFlagBehavior behavior, string name, LlvmMetadata value )
         {
-            if( value == null )
-            {
-                throw new ArgumentNullException( nameof( value ) );
-            }
+            behavior.ValidateDefined( nameof( behavior ) );
+            value.ValidateNotNull( nameof( value ) );
+            name.ValidateNotNullOrWhiteSpace( nameof( name ) );
 
             // AddModuleFlag comes from custom LLVMDebug-C API
             NativeMethods.AddModuleFlag( ModuleHandle, ( LLVMModFlagBehavior )behavior, name, value.MetadataHandle );
@@ -550,6 +590,9 @@ namespace Llvm.NET
         /// <param name="value">operand value</param>
         public void AddNamedMetadataOperand( string name, LlvmMetadata value )
         {
+            value.ValidateNotNull( nameof( value ) );
+            name.ValidateNotNullOrWhiteSpace( nameof( name ) );
+
             NativeMethods.AddNamedMetadataOperand2( ModuleHandle, name, value?.MetadataHandle ?? LLVMMetadataRef.Zero );
         }
 
@@ -557,6 +600,8 @@ namespace Llvm.NET
         /// <param name="version">version information to place in the llvm.ident metadata</param>
         public void AddVersionIdentMetadata( string version )
         {
+            version.ValidateNotNullOrWhiteSpace( nameof( version ) );
+
             var stringNode = CreateMDNode( version );
             NativeMethods.AddNamedMetadataOperand2( ModuleHandle, "llvm.ident", stringNode.MetadataHandle );
         }
@@ -597,24 +642,13 @@ namespace Llvm.NET
                                       , uint scopeLine
                                       , DebugInfoFlags debugFlags
                                       , bool isOptimized
-                                      , MDNode tParam = null
-                                      , MDNode decl = null
+                                      , [CanBeNull] MDNode tParam = null
+                                      , [CanBeNull] MDNode decl = null
                                       )
         {
-            if( scope == null )
-            {
-                throw new ArgumentNullException( nameof( scope ) );
-            }
-
-            if( string.IsNullOrWhiteSpace( name ) )
-            {
-                throw new ArgumentException( "Name cannot be null, empty or whitespace", nameof( name ) );
-            }
-
-            if( signature == null )
-            {
-                throw new ArgumentNullException( nameof( signature ) );
-            }
+            scope.ValidateNotNull( nameof( scope ) );
+            name.ValidateNotNullOrWhiteSpace( nameof( name ) );
+            signature.ValidateNotNull( nameof( signature ) );
 
             var func = AddFunction( linkageName ?? name, signature );
             var diSignature = signature.DIType;
@@ -655,10 +689,7 @@ namespace Llvm.NET
 
         public NativeModule Clone( Context targetContext )
         {
-            if( targetContext == null )
-            {
-                throw new ArgumentNullException( nameof( targetContext ) );
-            }
+            targetContext.ValidateNotNull( nameof( targetContext ) );
 
             if( targetContext == Context )
             {
@@ -674,17 +705,12 @@ namespace Llvm.NET
         }
 
         /// <inheritdoc/>
-        [SuppressMessage( "Language", "CSE0003:Use expression-bodied members", Justification = "Line too long" )]
         bool IExtensiblePropertyContainer.TryGetExtendedPropertyValue<T>( string id, out T value )
-        {
-            return PropertyBag.TryGetExtendedPropertyValue( id, out value );
-        }
+            => PropertyBag.TryGetExtendedPropertyValue( id, out value );
 
         /// <inheritdoc/>
         void IExtensiblePropertyContainer.AddExtendedPropertyValue( string id, object value )
-        {
-            PropertyBag.AddExtendedPropertyValue( id, value );
-        }
+            => PropertyBag.AddExtendedPropertyValue( id, value );
 
         /// <summary>Load a bit-code module from a given file</summary>
         /// <param name="path">path of the file to load</param>
@@ -692,15 +718,8 @@ namespace Llvm.NET
         /// <returns>Loaded <see cref="NativeModule"/></returns>
         public static NativeModule LoadFrom( string path, Context context )
         {
-            if( string.IsNullOrWhiteSpace( path ) )
-            {
-                throw new ArgumentException( "path cannot be null or an empty string", nameof( path ) );
-            }
-
-            if( context == null )
-            {
-                throw new ArgumentNullException( nameof( context ) );
-            }
+            path.ValidateNotNullOrWhiteSpace( nameof( path ) );
+            context.ValidateNotNull( nameof( context ) );
 
             if( !File.Exists( path ) )
             {
@@ -726,15 +745,8 @@ namespace Llvm.NET
         /// </remarks>
         public static NativeModule LoadFrom( MemoryBuffer buffer, Context context )
         {
-            if( buffer == null )
-            {
-                throw new ArgumentNullException( nameof( buffer ) );
-            }
-
-            if( context == null )
-            {
-                throw new ArgumentNullException( nameof( buffer ) );
-            }
+            buffer.ValidateNotNull( nameof( buffer ) );
+            context.ValidateNotNull( nameof( context ) );
 
             if( NativeMethods.ParseBitcodeInContext( context.ContextHandle, buffer.BufferHandle, out LLVMModuleRef modRef, out string errMsg ).Failed )
             {
@@ -746,6 +758,8 @@ namespace Llvm.NET
 
         internal NativeModule( LLVMModuleRef handle )
         {
+            handle.Pointer.ValidateNotNull( nameof( handle ) );
+
             ModuleHandle = handle;
             LazyDiBuilder = new Lazy<DebugInfoBuilder>( ( ) => new DebugInfoBuilder( this ) );
             Context.AddModule( this );
@@ -754,6 +768,8 @@ namespace Llvm.NET
 
         internal static NativeModule FromHandle( LLVMModuleRef nativeHandle )
         {
+            nativeHandle.Pointer.ValidateNotNull( nameof( nativeHandle ) );
+
             var context = Context.GetContextFor( nativeHandle );
             return context.GetModuleFor( nativeHandle );
         }

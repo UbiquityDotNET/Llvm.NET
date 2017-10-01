@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<RuleSet Name="Analysis and refactoring rules for Llvm.NET" Description="Code analysis rules for Llvm.NET.csproj." ToolsVersion="15.0">
+<RuleSet Name="Analysis and refactoring rules for Llvm.NET" Description="Code analysis rules for Ubiquity.NET projects" ToolsVersion="15.0">
   <Rules AnalyzerId="CSharpEssentials" RuleNamespace="CSharpEssentials">
     <Rule Id="FadedToken" Action="None" />
   </Rules>
@@ -15,7 +15,7 @@
     <Rule Id="CA1009" Action="Warning" />
     <Rule Id="CA1010" Action="Warning" />
     <Rule Id="CA1011" Action="Warning" />
-    <Rule Id="CA1012" Action="Warning" />
+    <Rule Id="CA1012" Action="Error" />
     <Rule Id="CA1013" Action="Warning" />
     <Rule Id="CA1014" Action="Warning" />
     <Rule Id="CA1016" Action="Warning" />
@@ -65,7 +65,9 @@
     <Rule Id="CA1300" Action="Warning" />
     <Rule Id="CA1301" Action="Warning" />
     <Rule Id="CA1302" Action="Warning" />
+    <Rule Id="CA1303" Action="Warning" />
     <Rule Id="CA1304" Action="Warning" />
+    <Rule Id="CA1305" Action="Warning" />
     <Rule Id="CA1306" Action="Warning" />
     <Rule Id="CA1307" Action="Warning" />
     <Rule Id="CA1308" Action="Warning" />
@@ -609,7 +611,7 @@
     <Rule Id="SA1021" Action="None" />
     <Rule Id="SA1025" Action="None" />
     <Rule Id="SA1028" Action="Error" />
-    <Rule Id="SA1101" Action="None" />
+    <Rule Id="SA1101" Action="Hidden" />
     <Rule Id="SA1111" Action="None" />
     <Rule Id="SA1113" Action="None" />
     <Rule Id="SA1116" Action="None" />
@@ -664,5 +666,8 @@
     <Rule Id="SA1649" Action="None" />
     <Rule Id="SA1651" Action="None" />
     <Rule Id="SA1652" Action="None" />
+    <Rule Id="SA1027" Action="Error" />
+    <Rule Id="SA1100" Action="Error" />
+    <Rule Id="SA1123" Action="Error" />
   </Rules>
 </RuleSet>

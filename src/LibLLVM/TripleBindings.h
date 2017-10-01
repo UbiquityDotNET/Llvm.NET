@@ -67,6 +67,7 @@ enum LLVMTripleSubArchType
     LlvmTripleSubArchType_ARMSubArch_v7m,
     LlvmTripleSubArchType_ARMSubArch_v7s,
     LlvmTripleSubArchType_ARMSubArch_v7k,
+    LlvmTripleSubArchType_ARMSubArch_v7ve,
     LlvmTripleSubArchType_ARMSubArch_v6,
     LlvmTripleSubArchType_ARMSubArch_v6m,
     LlvmTripleSubArchType_ARMSubArch_v6k,

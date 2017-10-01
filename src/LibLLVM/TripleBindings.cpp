@@ -97,6 +97,9 @@ ARM::ArchKind MapEnum( LLVMTripleSubArchType from )
     case LlvmTripleSubArchType_ARMSubArch_v7k:
         return ARM::ArchKind::AK_ARMV7K;
 
+    case LlvmTripleSubArchType_ARMSubArch_v7ve:
+        return ARM::ArchKind::AK_ARMV7VE;
+
     case LlvmTripleSubArchType_ARMSubArch_v6:
         return ARM::ArchKind::AK_ARMV6;
 

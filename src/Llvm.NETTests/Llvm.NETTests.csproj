@@ -19,31 +19,13 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
-  <Choose>
-    <!--
-        For VS developer builds allow range, including pre-release builds to simplify development.
-        Local dev builds are generated with a version that has a higher precedence then other builds
-        -->
-    <When Condition="'$(BuildingInsideVisualStudio)'=='true'">
-      <ItemGroup>
-        <PackageReference Include="LLVM.NET" Version="[4.0.0-*,5)" />
-      </ItemGroup>
-      <ItemGroup>
-          <ProjectReference Include="$(BuildRootDir)src\Llvm.NET\Llvm.NET.csproj">
-              <Name>Llvm.NET</Name>
-              <Private>false</Private>
-              <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
-          </ProjectReference>
-      </ItemGroup>
-    </When>
-    <Otherwise>
-      <ItemGroup>
-        <PackageReference Include="LLVM.NET" Version="[$(PackageVersion)]" />
-      </ItemGroup>
-    </Otherwise>
-  </Choose>
   <ItemGroup>
-    <PackageReference Include="LlvmNetBuildTasks" Version="1.0.0" />
+    <ProjectReference Include="$(BuildRootDir)src\Llvm.NET\Llvm.NET.csproj">
+        <Name>Llvm.NET</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="CSemVer.Build.Tasks" Version="1.0.0-alpha.2--ci-REL.194F4984" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="15.3.0" />
     <PackageReference Include="MSTest.TestAdapter" Version="1.1.18" />
     <PackageReference Include="MSTest.TestFramework" Version="1.1.18" />
