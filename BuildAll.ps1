@@ -157,7 +157,7 @@ function ConvertTo-PropertyList([hashtable]$table)
 
 pushd $PSScriptRoot
 $oldPath = $env:Path
-$ErrorActionPreference = "Stop"
+$ErrorActionPreference = "Continue"
 $InformationPreference = "Continue"
 try
 {
@@ -247,6 +247,10 @@ try
 
     Write-Information "Building Samples"
     Invoke-MSBuild -Targets Build -Project Samples\Samples.sln -Properties $msBuildProperties -LoggerArgs $msbuildLoggerArgs -AdditionalArgs @("/m")
+}
+catch
+{
+    $Error
 }
 finally
 {
