@@ -45,7 +45,7 @@ function Invoke-NuGet
 function Find-VSInstance
 {
     Install-Module VSSetup -Scope CurrentUser | Out-Null
-    return Get-VSSetupInstance -All | select -First 1
+    return Get-VSSetupInstance -All -Force | select -First 1
 }
 
 function Find-MSBuild
