@@ -2,7 +2,7 @@
 
 namespace Llvm.NET.DebugInfo
 {
-    /// <summary>Array of see <a href="Type"/> nodes for use with see <a href="DebugInfoBuilder"/> methods</summary>
+    /// <summary>Array of <see cref="DIType"/> nodes for use with see <see cref="DebugInfoBuilder"/> methods</summary>
     public class DITypeArray
     {
         internal DITypeArray( LLVMMetadataRef handle )

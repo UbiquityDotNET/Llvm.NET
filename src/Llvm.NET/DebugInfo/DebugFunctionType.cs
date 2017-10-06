@@ -27,7 +27,7 @@ namespace Llvm.NET.DebugInfo
     /// <note type="note">It is important to keep in mind that signatures are only concerned
     /// with types. That is, they do not include names of parameters. Parameter information is
     /// provided by <see cref="DebugInfoBuilder.CreateArgument(DIScope, string, DIFile, uint, DIType, bool, DebugInfoFlags, ushort)"/>
-    /// and <see cref="O:Llvm.NET.DebugInfo.DebugInfoBuilder.InsertDeclare"/></note>
+    /// and [DebugInfoBuilder.InsertDeclare](xref:Llvm.NET.DebugInfo.DebugInfoBuilder.InsertDeclare*)</note>
     /// </remarks>
     public class DebugFunctionType
         : DebugType<IFunctionType, DISubroutineType>
