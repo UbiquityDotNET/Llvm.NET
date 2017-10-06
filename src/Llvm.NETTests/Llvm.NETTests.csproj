@@ -13,13 +13,6 @@
     <Compile Include="TargetTests.cs" />
     <Compile Include="TripleTests.cs" />
     <Compile Include="Values\AttributeValueTests.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="TestModuleAsString.ll">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-  </ItemGroup>
-  <ItemGroup>
     <ProjectReference Include="$(BuildRootDir)src\Llvm.NET\Llvm.NET.csproj">
         <Name>Llvm.NET</Name>
     </ProjectReference>

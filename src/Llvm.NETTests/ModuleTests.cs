@@ -14,6 +14,20 @@ namespace Llvm.NET.Tests
         private const string StructTestName = "struct.Test";
         private const string TestModuleName = "test";
 
+        // To validate transformation to correct newline formatting
+        // this must explicitly setup the string, using a file source
+        // would cause git line ending transforms to impact the results
+        // In order to have consistent indexed source symbols the automated
+        // builds standardize on the single LineFeed character so the test
+        // file would end up containing incorrect line endings for the test
+        private const string TestModuleTemplate = "; ModuleID = '{1}'{0}"
+                                                + "source_filename = \"test\"{0}"
+                                                + "{0}"
+                                                + "define void @foo() {{{0}"
+                                                + "entry:{0}"
+                                                + "  ret void{0}"
+                                                + "}}{0}";
+
         [TestMethod]
         public void DefaultConstructorTest( )
         {
@@ -237,8 +251,7 @@ namespace Llvm.NET.Tests
                     Assert.IsNotNull( testFunc );
                     string txt = module2.WriteToString( );
                     Assert.IsFalse( string.IsNullOrWhiteSpace( txt ) );
-                    string expectedText = File.ReadAllText( "TestModuleAsString.ll" )
-                                              .Replace( "; ModuleID = 'test'", $"; ModuleID = '{path}'" );
+                    string expectedText = string.Format( TestModuleTemplate, Environment.NewLine, path );
                     Assert.AreEqual( expectedText, txt );
                 }
             }
@@ -259,7 +272,7 @@ namespace Llvm.NET.Tests
                 Assert.IsNotNull( testFunc );
                 string txt = module.WriteToString( );
                 Assert.IsFalse( string.IsNullOrWhiteSpace( txt ) );
-                string expectedText = File.ReadAllText( "TestModuleAsString.ll" );
+                string expectedText = string.Format( TestModuleTemplate, Environment.NewLine, "test" );
                 Assert.AreEqual( expectedText, txt );
             }
         }
