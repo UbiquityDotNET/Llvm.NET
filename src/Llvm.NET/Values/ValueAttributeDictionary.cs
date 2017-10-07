@@ -20,7 +20,7 @@ namespace Llvm.NET.Values
 
         public Context Context => Container.Context;
 
-        public IAttributeCollection this[ FunctionAttributeIndex key ]
+        public ICollection<AttributeValue> this[ FunctionAttributeIndex key ]
         {
             get
             {
@@ -36,21 +36,21 @@ namespace Llvm.NET.Values
         public IEnumerable<FunctionAttributeIndex> Keys
             => new ReadOnlyCollection<FunctionAttributeIndex>( GetValidKeys( ).ToList( ) );
 
-        public IEnumerable<IAttributeCollection> Values
-            => new ReadOnlyCollection<IAttributeCollection>( this.Select( kvp => kvp.Value ).ToList( ) );
+        public IEnumerable<ICollection<AttributeValue>> Values
+            => new ReadOnlyCollection<ICollection<AttributeValue>>( this.Select( kvp => kvp.Value ).ToList( ) );
 
         public int Count => GetValidKeys( ).Count( );
 
         public bool ContainsKey( FunctionAttributeIndex key ) => GetValidKeys( ).Any( k => k == key );
 
-        public IEnumerator<KeyValuePair<FunctionAttributeIndex, IAttributeCollection>> GetEnumerator( )
+        public IEnumerator<KeyValuePair<FunctionAttributeIndex, ICollection<AttributeValue>>> GetEnumerator( )
         {
             return ( from key in GetValidKeys( )
-                     select new KeyValuePair<FunctionAttributeIndex, IAttributeCollection>( key, this[ key ] )
+                     select new KeyValuePair<FunctionAttributeIndex, ICollection<AttributeValue>>( key, this[ key ] )
                    ).GetEnumerator( );
         }
 
-        public bool TryGetValue( FunctionAttributeIndex key, out IAttributeCollection value )
+        public bool TryGetValue( FunctionAttributeIndex key, out ICollection<AttributeValue> value )
         {
             value = null;
             if( ContainsKey( key ) )

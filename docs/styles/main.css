@@ -20,7 +20,6 @@
 body .toc,
 .sidefilter,
 .sidetoggle { 
-  background-color: ; 
 }
 
 .sidenav,
@@ -134,7 +133,6 @@ article h4 {
 
 /* all links */
 .affix ul > li > a {
-  color: darkslateblue;
   border-left: 2px solid transparent;
   padding: 4px 20px;
   font-size: 13px;
@@ -215,12 +213,13 @@ article h4 {
 .navbar-inverse .navbar-nav > .active > a:hover,
 .navbar-inverse .navbar-nav > .active > a:focus {
   color: #ecdbff;
+  background-color: #02735f;
 }
 .navbar-inverse .navbar-nav > .open > a,
 .navbar-inverse .navbar-nav > .open > a:hover,
 .navbar-inverse .navbar-nav > .open > a:focus {
   color: #ecdbff;
-  background-color: 02735f;
+  background-color: #02735f;
 }
 .navbar-inverse .navbar-toggle {
   border-color: #02735f;

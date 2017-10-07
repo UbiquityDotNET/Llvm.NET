@@ -50,6 +50,12 @@
                   <li class="active">
                     <a href="../api/index.html" title="Api Documentation" class="active">Api Documentation</a>
                   </li>
+                  <li class="">
+                    <a href="http://LLVM.org" title="LLVM.org" class="">LLVM.org</a>
+                  </li>
+                  <li class="">
+                    <a href="http://releases.llvm.org/5.0.0/docs/index.html" title="LLVM Docs" class="">LLVM Docs</a>
+                  </li>
                 </ul>
             </div>
           </div>
@@ -159,9 +165,6 @@
                               
                               <ul class="nav level3">
                                 <li class="">
-                                  <a href="Llvm.NET.ComdatCollection.Add.html" title="Add" class="">Add</a>
-                                </li>
-                                <li class="">
                                   <a href="Llvm.NET.ComdatCollection.Clear.html" title="Clear" class="">Clear</a>
                                 </li>
                                 <li class="">
@@ -172,6 +175,9 @@
                                 </li>
                                 <li class="">
                                   <a href="Llvm.NET.ComdatCollection.GetEnumerator.html" title="GetEnumerator" class="">GetEnumerator</a>
+                                </li>
+                                <li class="">
+                                  <a href="Llvm.NET.ComdatCollection.InsertOrUpdate.html" title="InsertOrUpdate" class="">InsertOrUpdate</a>
                                 </li>
                                 <li class="">
                                   <a href="Llvm.NET.ComdatCollection.Item.html" title="Item" class="">Item</a>
@@ -5080,9 +5086,6 @@
                                 </li>
                               </ul>  </li>
                           <li class="">
-                            <a href="Llvm.NET.Values.IAttributeCollection.html" title="IAttributeCollection" class="">IAttributeCollection</a>
-                          </li>
-                          <li class="">
                             <span class="expand-stub"></span>
                             <a href="Llvm.NET.Values.IAttributeContainer.html" title="IAttributeContainer" class="">IAttributeContainer</a>
                               
@@ -5198,35 +5201,40 @@
   <div class="markdown level0 conceptual"></div>
   
   <div class="inheritance">
-    <h5>Inheritance</h5>
-    <div class="level0"><a class="xref" href="https://msdn.microsoft.com/en-us/library/system.object(v=vs.110).aspx">Object</a></div>
-    <div class="level1"><span class="xref">DataLayout</span></div>
+    <h5 id="inheritance-Llvm_NET_DataLayout"><a href="#collapsible-inheritance-Llvm_NET_DataLayout" class="expander collapsed" data-toggle="collapse" aria-expanded="false">Inheritance</a></h5>
+    <div id="collapsible-inheritance-Llvm_NET_DataLayout" class="collapse collapsed" aria-expanded="false">
+      <div class="level0"><a class="xref" href="https://msdn.microsoft.com/en-us/library/system.object(v=vs.110).aspx">Object</a></div>
+      <div class="level1"><span class="xref">DataLayout</span></div>
+    </div>
   </div>
-  
   
   <div class="inheritedMembers">
-    <h5>Inherited Members</h5>
-    <div>
-      <a class="xref" href="https://msdn.microsoft.com/en-us/library/bsc2ak47(v=vs.110).aspx">Object.Equals(Object)</a>
-    </div>
-    <div>
-      <a class="xref" href="https://msdn.microsoft.com/en-us/library/w4hkze5k(v=vs.110).aspx">Object.Equals(Object, Object)</a>
-    </div>
-    <div>
-      <a class="xref" href="https://msdn.microsoft.com/en-us/library/hz2a0b8x(v=vs.110).aspx">Object.ReferenceEquals(Object, Object)</a>
-    </div>
-    <div>
-      <a class="xref" href="https://msdn.microsoft.com/en-us/library/zdee4b3y(v=vs.110).aspx">Object.GetHashCode()</a>
-    </div>
-    <div>
-      <a class="xref" href="https://msdn.microsoft.com/en-us/library/dfwy45w9(v=vs.110).aspx">Object.GetType()</a>
-    </div>
-    <div>
-      <a class="xref" href="https://msdn.microsoft.com/en-us/library/57ctke0a(v=vs.110).aspx">Object.MemberwiseClone()</a>
-    </div>
+      <h5 id="inheritedMembers-Llvm_NET_DataLayout">
+          <a href="#collapsible-inheritedMembers-Llvm_NET_DataLayout" class="expander collapsed" data-toggle="collapse" aria-expanded="false">Inherited Members</a>
+      </h5>
+      <div id="collapsible-inheritedMembers-Llvm_NET_DataLayout" class="collapse collapsed" aria-expanded="false">
+          <div>
+              <a class="xref" href="https://msdn.microsoft.com/en-us/library/bsc2ak47(v=vs.110).aspx">Object.Equals(Object)</a>
+          </div>
+          <div>
+              <a class="xref" href="https://msdn.microsoft.com/en-us/library/w4hkze5k(v=vs.110).aspx">Object.Equals(Object, Object)</a>
+          </div>
+          <div>
+              <a class="xref" href="https://msdn.microsoft.com/en-us/library/hz2a0b8x(v=vs.110).aspx">Object.ReferenceEquals(Object, Object)</a>
+          </div>
+          <div>
+              <a class="xref" href="https://msdn.microsoft.com/en-us/library/zdee4b3y(v=vs.110).aspx">Object.GetHashCode()</a>
+          </div>
+          <div>
+              <a class="xref" href="https://msdn.microsoft.com/en-us/library/dfwy45w9(v=vs.110).aspx">Object.GetType()</a>
+          </div>
+          <div>
+              <a class="xref" href="https://msdn.microsoft.com/en-us/library/57ctke0a(v=vs.110).aspx">Object.MemberwiseClone()</a>
+          </div>
+      </div>
   </div>
   
-  <h6><strong>Namespace</strong>: System.Dynamic.ExpandoObject</h6>
+  <h6><strong>Namespace</strong>: <a class="xref" href="Llvm.NET.html">Llvm.NET</a></h6>
   <h6><strong>Assembly</strong>: Llvm.NET.dll</h6>
   
   <h5 id="Llvm_NET_DataLayout_syntax">Syntax</h5>
@@ -5241,12 +5249,77 @@
   <div class="markdown level0 remarks"><p><p>There is a distinction between various sizes and alignment for a given type
 that are target dependent.</p>
 <p>The following table illustrates the differences in sizes and their meaning
- for a sample set of types.</p>
-<table><thead><tr><th>TypeSizeInBitsStoreSizeInBitsAllocSizeInBits</th><th></th></tr></thead><tbody><tr><td>i1188</td><td></td></tr><tr><td>i8888</td><td></td></tr><tr><td>i19192432</td><td></td></tr><tr><td>i32323232</td><td></td></tr><tr><td>i100100104128</td><td></td></tr><tr><td>i128128128128</td><td></td></tr><tr><td>Float323232</td><td></td></tr><tr><td>Double646464</td><td></td></tr><tr><td>X86_FP80808096</td><td></td></tr></tbody></table>
+ for a sample set of types.</p></p>
+<table>
+<thead>
+<tr>
+<th>Type</th>
+<th>SizeInBits</th>
+<th>StoreSizeInBits</th>
+<th>AllocSizeInBits</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>i1</td>
+<td>1</td>
+<td>8</td>
+<td>8</td>
+</tr>
+<tr>
+<td>i8</td>
+<td>8</td>
+<td>8</td>
+<td>8</td>
+</tr>
+<tr>
+<td>i19</td>
+<td>19</td>
+<td>24</td>
+<td>32</td>
+</tr>
+<tr>
+<td>i32</td>
+<td>32</td>
+<td>32</td>
+<td>32</td>
+</tr>
+<tr>
+<td>i10</td>
+<td>100</td>
+<td>104</td>
+<td>128</td>
+</tr>
+<tr>
+<td>i128</td>
+<td>128</td>
+<td>128</td>
+<td>128</td>
+</tr>
+<tr>
+<td>Float</td>
+<td>32</td>
+<td>32</td>
+<td>32</td>
+</tr>
+<tr>
+<td>Double</td>
+<td>64</td>
+<td>64</td>
+<td>64</td>
+</tr>
+<tr>
+<td>X86_FP80</td>
+<td>80</td>
+<td>80</td>
+<td>96</td>
+</tr>
+</tbody>
+</table>
 <div class="NOTE"><h5>note</h5><p>
 The allocation size depends on the alignment, and thus on the target.
 The values in the example table are for x86-32-linux.
-</p></div></p>
+</p></div>
 </div>
   
   <h3 id="properties">Properties
@@ -5428,7 +5501,7 @@ a pointer for the given address space of the target</p>
           </div>
           <div class="contribution-panel mobile-hide">
               <a href="https://github.com/smaillet/Llvm.NET/new/docfx/apiSpec/new?filename=Llvm_NET_DataLayout.md&amp;value=---%0Auid%3A%20Llvm.NET.DataLayout%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A" title="Improve this Doc" class="fab btn-warning pull-right"><i class="glyphicon glyphicon-pencil"></i></a>
-              <a href="https://github.com/smaillet/Llvm.NET/blob/docfx/src/Llvm.NET/DataLayout.cs/#L40" title="View Source" class="fab btn-info pull-right"><i class="fa fa-code"></i></a>
+              <a href="https://github.com/smaillet/Llvm.NET/blob/docfx/src/Llvm.NET/DataLayout.cs/#L35" title="View Source" class="fab btn-info pull-right"><i class="fa fa-code"></i></a>
           </div>
           
           <div class="hidden-sm col-md-2" role="complementary">

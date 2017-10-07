@@ -4,37 +4,47 @@
 
 {{#inClass}}
 <div class="inheritance">
-  <h5>{{__global.inheritance}}</h5>
-  {{#inheritance}}
-  <div class="level{{index}}">{{{specName.0.value}}}</div>
-  {{/inheritance}}
-  <div class="level{{level}}"><span class="xref">{{name.0.value}}</span></div>
+  <h5 id="inheritance-{{id}}"><a href="#collapsible-inheritance-{{id}}" class="expander collapsed" data-toggle="collapse" aria-expanded="false">{{__global.inheritance}}</a></h5>
+  <div id="collapsible-inheritance-{{id}}" class="collapse collapsed" aria-expanded="false">
+    {{#inheritance}}
+    <div class="level{{index}}">{{{specName.0.value}}}</div>
+    {{/inheritance}}
+    <div class="level{{level}}"><span class="xref">{{name.0.value}}</span></div>
+  </div>
+  {{#derivedClasses.0}}
+  <h5 id="derivedClasses-{{id}}"><a href="#collapsible-derivedClasses-{{id}}" class="expander collapsed" data-toggle="collapse" aria-expanded="false">Derived Classes</a></h5>
+  <div id="collapsible-derivedClasses-{{id}}" class="collapse collapsed" aria-expanded="false">
+      {{#derivedClasses}}
+      <div class="level{{index}}">{{{specName.0.value}}}</div>
+      {{/derivedClasses}}
+  </div>
+  {{/derivedClasses.0}}
 </div>
 {{/inClass}}
 
-{{#derivedClasses}}
-    <div class="level{{index}}">{{{specName.0.value}}}</div>
-{{/derivedClasses}}
-
 {{#inheritedMembers.0}}
 <div class="inheritedMembers">
-  <h5>{{__global.inheritedMembers}}</h5>
-{{/inheritedMembers.0}}
-{{#inheritedMembers}}
-  <div>
-  {{#definition}}
-    <xref uid="{{definition}}" text="{{nameWithType.0.value}}" alt="{{fullName.0.value}}"/>
-  {{/definition}}
-  {{^definition}}
-    <xref uid="{{uid}}" text="{{nameWithType.0.value}}" alt="{{fullName.0.value}}"/>
-  {{/definition}}
-  </div>
-{{/inheritedMembers}}
-{{#inheritedMembers.0}}
+    <h5 id="inheritedMembers-{{id}}">
+        <a href="#collapsible-inheritedMembers-{{id}}" class="expander collapsed" data-toggle="collapse" aria-expanded="false">{{__global.inheritedMembers}}</a>
+    </h5>
+    <div id="collapsible-inheritedMembers-{{id}}" class="collapse collapsed" aria-expanded="false">
+        {{/inheritedMembers.0}}
+        {{#inheritedMembers}}
+        <div>
+            {{#definition}}
+            <xref uid="{{definition}}" text="{{nameWithType.0.value}}" alt="{{fullName.0.value}}"/>
+            {{/definition}}
+            {{^definition}}
+            <xref uid="{{uid}}" text="{{nameWithType.0.value}}" alt="{{fullName.0.value}}"/>
+            {{/definition}}
+        </div>
+        {{/inheritedMembers}}
+        {{#inheritedMembers.0}}
+    </div>
 </div>
 {{/inheritedMembers.0}}
 
-<h6><strong>{{__global.namespace}}</strong>: {{namespace}}</h6>
+<h6><strong>{{__global.namespace}}</strong>: {{{namespace.specName.0.value}}}</h6>
 <h6><strong>{{__global.assembly}}</strong>: {{assemblies.0}}.dll</h6>
 
 <h5 id="{{id}}_syntax">{{__global.syntax}}</h5>

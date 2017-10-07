@@ -5,10 +5,10 @@
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-    <title>Method ResolveCyclesTest
+    <title>Method InsertOrUpdate
    | Llvm.NET </title>
     <meta name="viewport" content="width=device-width">
-    <meta name="title" content="Method ResolveCyclesTest
+    <meta name="title" content="Method InsertOrUpdate
    | Llvm.NET ">
     <meta name="generator" content="docfx 2.24.0.0">
     
@@ -49,6 +49,12 @@
                 <ul class="nav level1 navbar-nav">
                   <li class="active">
                     <a href="../api/index.html" title="Api Documentation" class="active">Api Documentation</a>
+                  </li>
+                  <li class="">
+                    <a href="http://LLVM.org" title="LLVM.org" class="">LLVM.org</a>
+                  </li>
+                  <li class="">
+                    <a href="http://releases.llvm.org/5.0.0/docs/index.html" title="LLVM Docs" class="">LLVM Docs</a>
                   </li>
                 </ul>
             </div>
@@ -159,9 +165,6 @@
                               
                               <ul class="nav level3">
                                 <li class="">
-                                  <a href="Llvm.NET.ComdatCollection.Add.html" title="Add" class="">Add</a>
-                                </li>
-                                <li class="">
                                   <a href="Llvm.NET.ComdatCollection.Clear.html" title="Clear" class="">Clear</a>
                                 </li>
                                 <li class="">
@@ -172,6 +175,9 @@
                                 </li>
                                 <li class="">
                                   <a href="Llvm.NET.ComdatCollection.GetEnumerator.html" title="GetEnumerator" class="">GetEnumerator</a>
+                                </li>
+                                <li class="active">
+                                  <a href="Llvm.NET.ComdatCollection.InsertOrUpdate.html" title="InsertOrUpdate" class="active">InsertOrUpdate</a>
                                 </li>
                                 <li class="">
                                   <a href="Llvm.NET.ComdatCollection.Item.html" title="Item" class="">Item</a>
@@ -3741,24 +3747,6 @@
                         </ul>  </li>
                     <li class="">
                       <span class="expand-stub"></span>
-                      <a href="Llvm.NET.DebugInfo.Tests.html" title="Llvm.NET.DebugInfo.Tests" class="">Llvm.NET.DebugInfo.Tests</a>
-                        
-                        <ul class="nav level2">
-                          <li class="">
-                            <span class="expand-stub"></span>
-                            <a href="Llvm.NET.DebugInfo.Tests.DebugUnionTypeTests.html" title="DebugUnionTypeTests" class="">DebugUnionTypeTests</a>
-                              
-                              <ul class="nav level3">
-                                <li class="">
-                                  <a href="Llvm.NET.DebugInfo.Tests.DebugUnionTypeTests.DebugUnionTypeTest.html" title="DebugUnionTypeTest" class="">DebugUnionTypeTest</a>
-                                </li>
-                                <li class="">
-                                  <a href="Llvm.NET.DebugInfo.Tests.DebugUnionTypeTests.DebugUnionTypeTest2.html" title="DebugUnionTypeTest2" class="">DebugUnionTypeTest2</a>
-                                </li>
-                              </ul>  </li>
-                        </ul>  </li>
-                    <li class="">
-                      <span class="expand-stub"></span>
                       <a href="Llvm.NET.Instructions.html" title="Llvm.NET.Instructions" class="">Llvm.NET.Instructions</a>
                         
                         <ul class="nav level2">
@@ -4308,258 +4296,6 @@
                           <li class="">
                             <a href="Llvm.NET.Instructions.ZeroExtend.html" title="ZeroExtend" class="">ZeroExtend</a>
                           </li>
-                        </ul>  </li>
-                    <li class="">
-                      <span class="expand-stub"></span>
-                      <a href="Llvm.NET.Tests.html" title="Llvm.NET.Tests" class="">Llvm.NET.Tests</a>
-                        
-                        <ul class="nav level2">
-                          <li class="">
-                            <span class="expand-stub"></span>
-                            <a href="Llvm.NET.Tests.ContextTests.html" title="ContextTests" class="">ContextTests</a>
-                              
-                              <ul class="nav level3">
-                                <li class="">
-                                  <a href="Llvm.NET.Tests.ContextTests.CreateAnonymousConstantNestedStructTest.html" title="CreateAnonymousConstantNestedStructTest" class="">CreateAnonymousConstantNestedStructTest</a>
-                                </li>
-                                <li class="">
-                                  <a href="Llvm.NET.Tests.ContextTests.CreateAnonymousPackedConstantStructUsingEnumerableTest.html" title="CreateAnonymousPackedConstantStructUsingEnumerableTest" class="">CreateAnonymousPackedConstantStructUsingEnumerableTest</a>
-                                </li>
-                                <li class="">
-                                  <a href="Llvm.NET.Tests.ContextTests.CreateAnonymousPackedConstantStructUsingParamsTest.html" title="CreateAnonymousPackedConstantStructUsingParamsTest" class="">CreateAnonymousPackedConstantStructUsingParamsTest</a>
-                                </li>
-                                <li class="">
-                                  <a href="Llvm.NET.Tests.ContextTests.CreateAnonymousStructTypeTestWithMultipleMembersPacked.html" title="CreateAnonymousStructTypeTestWithMultipleMembersPacked" class="">CreateAnonymousStructTypeTestWithMultipleMembersPacked</a>
-                                </li>
-                                <li class="">
-                                  <a href="Llvm.NET.Tests.ContextTests.CreateAnonymousStructTypeTestWithMultipleMembersUnpacked.html" title="CreateAnonymousStructTypeTestWithMultipleMembersUnpacked" class="">CreateAnonymousStructTypeTestWithMultipleMembersUnpacked</a>
-                                </li>
-                                <li class="">
-                                  <a href="Llvm.NET.Tests.ContextTests.CreateAnonymousStructTypeTestWithOneMemberPacked.html" title="CreateAnonymousStructTypeTestWithOneMemberPacked" class="">CreateAnonymousStructTypeTestWithOneMemberPacked</a>
-                                </li>
-                                <li class="">
-                                  <a href="Llvm.NET.Tests.ContextTests.CreateAnonymousStructTypeTestWithOneMemberUnpacked.html" title="CreateAnonymousStructTypeTestWithOneMemberUnpacked" class="">CreateAnonymousStructTypeTestWithOneMemberUnpacked</a>
-                                </li>
-                                <li class="">
-                                  <a href="Llvm.NET.Tests.ContextTests.CreateAnonymousUnpackedConstantStructUsingEnumerableTest.html" title="CreateAnonymousUnpackedConstantStructUsingEnumerableTest" class="">CreateAnonymousUnpackedConstantStructUsingEnumerableTest</a>
-                                </li>
-                                <li class="">
-                                  <a href="Llvm.NET.Tests.ContextTests.CreateAnonymousUnpackedConstantStructUsingParamsTest.html" title="CreateAnonymousUnpackedConstantStructUsingParamsTest" class="">CreateAnonymousUnpackedConstantStructUsingParamsTest</a>
-                                </li>
-                                <li class="">
-                                  <a href="Llvm.NET.Tests.ContextTests.CreateConstantStringTest.html" title="CreateConstantStringTest" class="">CreateConstantStringTest</a>
-                                </li>
-                                <li class="">
-                                  <a href="Llvm.NET.Tests.ContextTests.CreateFunctionTypeTest.html" title="CreateFunctionTypeTest" class="">CreateFunctionTypeTest</a>
-                                </li>
-                                <li class="">
-                                  <a href="Llvm.NET.Tests.ContextTests.CreateMetadataStringTest.html" title="CreateMetadataStringTest" class="">CreateMetadataStringTest</a>
-                                </li>
-                                <li class="">
-                                  <a href="Llvm.NET.Tests.ContextTests.CreateMetadataStringWithEmptyArgTest.html" title="CreateMetadataStringWithEmptyArgTest" class="">CreateMetadataStringWithEmptyArgTest</a>
-                                </li>
-                                <li class="">
-                                  <a href="Llvm.NET.Tests.ContextTests.CreateMetadataStringWithNullArgTest.html" title="CreateMetadataStringWithNullArgTest" class="">CreateMetadataStringWithNullArgTest</a>
-                                </li>
-                                <li class="">
-                                  <a href="Llvm.NET.Tests.ContextTests.CreateNamedConstantPackedStructTestUsingEnumerable.html" title="CreateNamedConstantPackedStructTestUsingEnumerable" class="">CreateNamedConstantPackedStructTestUsingEnumerable</a>
-                                </li>
-                                <li class="">
-                                  <a href="Llvm.NET.Tests.ContextTests.CreateNamedConstantPackedStructTestUsingParams.html" title="CreateNamedConstantPackedStructTestUsingParams" class="">CreateNamedConstantPackedStructTestUsingParams</a>
-                                </li>
-                                <li class="">
-                                  <a href="Llvm.NET.Tests.ContextTests.CreateNamedConstantUnpackedStructTestUsingEnumerable.html" title="CreateNamedConstantUnpackedStructTestUsingEnumerable" class="">CreateNamedConstantUnpackedStructTestUsingEnumerable</a>
-                                </li>
-                                <li class="">
-                                  <a href="Llvm.NET.Tests.ContextTests.CreateNamedConstantUnpackedStructTestUsingParams.html" title="CreateNamedConstantUnpackedStructTestUsingParams" class="">CreateNamedConstantUnpackedStructTestUsingParams</a>
-                                </li>
-                                <li class="">
-                                  <a href="Llvm.NET.Tests.ContextTests.CreateNamedStructTypeTestWithMultipleMembersPacked.html" title="CreateNamedStructTypeTestWithMultipleMembersPacked" class="">CreateNamedStructTypeTestWithMultipleMembersPacked</a>
-                                </li>
-                                <li class="">
-                                  <a href="Llvm.NET.Tests.ContextTests.CreateNamedStructTypeTestWithMultipleMembersUnpacked.html" title="CreateNamedStructTypeTestWithMultipleMembersUnpacked" class="">CreateNamedStructTypeTestWithMultipleMembersUnpacked</a>
-                                </li>
-                                <li class="">
-                                  <a href="Llvm.NET.Tests.ContextTests.CreateNamedStructTypeTestWithOneMemberPacked.html" title="CreateNamedStructTypeTestWithOneMemberPacked" class="">CreateNamedStructTypeTestWithOneMemberPacked</a>
-                                </li>
-                                <li class="">
-                                  <a href="Llvm.NET.Tests.ContextTests.CreateNamedStructTypeTestWithOneMemberUnpacked.html" title="CreateNamedStructTypeTestWithOneMemberUnpacked" class="">CreateNamedStructTypeTestWithOneMemberUnpacked</a>
-                                </li>
-                                <li class="">
-                                  <a href="Llvm.NET.Tests.ContextTests.CreateStructTypeTest.html" title="CreateStructTypeTest" class="">CreateStructTypeTest</a>
-                                </li>
-                                <li class="">
-                                  <a href="Llvm.NET.Tests.ContextTests.GetFunctionTypeTest.html" title="GetFunctionTypeTest" class="">GetFunctionTypeTest</a>
-                                </li>
-                                <li class="">
-                                  <a href="Llvm.NET.Tests.ContextTests.GetFunctionTypeTest1.html" title="GetFunctionTypeTest1" class="">GetFunctionTypeTest1</a>
-                                </li>
-                                <li class="">
-                                  <a href="Llvm.NET.Tests.ContextTests.GetFunctionTypeTest2.html" title="GetFunctionTypeTest2" class="">GetFunctionTypeTest2</a>
-                                </li>
-                                <li class="">
-                                  <a href="Llvm.NET.Tests.ContextTests.GetIntTypeTest.html" title="GetIntTypeTest" class="">GetIntTypeTest</a>
-                                </li>
-                                <li class="">
-                                  <a href="Llvm.NET.Tests.ContextTests.GetPointerTypeForTest.html" title="GetPointerTypeForTest" class="">GetPointerTypeForTest</a>
-                                </li>
-                                <li class="">
-                                  <a href="Llvm.NET.Tests.ContextTests.IntegerTypePropertiesTest.html" title="IntegerTypePropertiesTest" class="">IntegerTypePropertiesTest</a>
-                                </li>
-                                <li class="">
-                                  <a href="Llvm.NET.Tests.ContextTests.SimpleConstructorDisposeTest.html" title="SimpleConstructorDisposeTest" class="">SimpleConstructorDisposeTest</a>
-                                </li>
-                                <li class="">
-                                  <a href="Llvm.NET.Tests.ContextTests.VerifyCreateFunctionTypeWithSameSigIsSameInstanceTest.html" title="VerifyCreateFunctionTypeWithSameSigIsSameInstanceTest" class="">VerifyCreateFunctionTypeWithSameSigIsSameInstanceTest</a>
-                                </li>
-                                <li class="">
-                                  <a href="Llvm.NET.Tests.ContextTests.VerifySameFunctionSigRetrievesTheSameType.html" title="VerifySameFunctionSigRetrievesTheSameType" class="">VerifySameFunctionSigRetrievesTheSameType</a>
-                                </li>
-                                <li class="">
-                                  <a href="Llvm.NET.Tests.ContextTests.VoidTypePropertyTest.html" title="VoidTypePropertyTest" class="">VoidTypePropertyTest</a>
-                                </li>
-                              </ul>  </li>
-                          <li class="">
-                            <span class="expand-stub"></span>
-                            <a href="Llvm.NET.Tests.MDNodeTests.html" title="MDNodeTests" class="">MDNodeTests</a>
-                              
-                              <ul class="nav level3">
-                                <li class="">
-                                  <a href="Llvm.NET.Tests.MDNodeTests.OperandsAreAccessibleTest.html" title="OperandsAreAccessibleTest" class="">OperandsAreAccessibleTest</a>
-                                </li>
-                                <li class="">
-                                  <a href="Llvm.NET.Tests.MDNodeTests.ReplaceAllUsesWithTest.html" title="ReplaceAllUsesWithTest" class="">ReplaceAllUsesWithTest</a>
-                                </li>
-                                <li class="active">
-                                  <a href="Llvm.NET.Tests.MDNodeTests.ResolveCyclesTest.html" title="ResolveCyclesTest" class="active">ResolveCyclesTest</a>
-                                </li>
-                              </ul>  </li>
-                          <li class="">
-                            <span class="expand-stub"></span>
-                            <a href="Llvm.NET.Tests.ModuleTests.html" title="ModuleTests" class="">ModuleTests</a>
-                              
-                              <ul class="nav level3">
-                                <li class="">
-                                  <a href="Llvm.NET.Tests.ModuleTests.AddAliasGetAliasTest.html" title="AddAliasGetAliasTest" class="">AddAliasGetAliasTest</a>
-                                </li>
-                                <li class="">
-                                  <a href="Llvm.NET.Tests.ModuleTests.AddFunctionGetFunctionTest.html" title="AddFunctionGetFunctionTest" class="">AddFunctionGetFunctionTest</a>
-                                </li>
-                                <li class="">
-                                  <a href="Llvm.NET.Tests.ModuleTests.AddGlobalTest.html" title="AddGlobalTest" class="">AddGlobalTest</a>
-                                </li>
-                                <li class="">
-                                  <a href="Llvm.NET.Tests.ModuleTests.AddGlobalTest1.html" title="AddGlobalTest1" class="">AddGlobalTest1</a>
-                                </li>
-                                <li class="">
-                                  <a href="Llvm.NET.Tests.ModuleTests.AddGlobalTest2.html" title="AddGlobalTest2" class="">AddGlobalTest2</a>
-                                </li>
-                                <li class="">
-                                  <a href="Llvm.NET.Tests.ModuleTests.AddModuleFlagTest.html" title="AddModuleFlagTest" class="">AddModuleFlagTest</a>
-                                </li>
-                                <li class="">
-                                  <a href="Llvm.NET.Tests.ModuleTests.AddNamedMetadataOperandTest.html" title="AddNamedMetadataOperandTest" class="">AddNamedMetadataOperandTest</a>
-                                </li>
-                                <li class="">
-                                  <a href="Llvm.NET.Tests.ModuleTests.AddVersionIdentMetadataTest.html" title="AddVersionIdentMetadataTest" class="">AddVersionIdentMetadataTest</a>
-                                </li>
-                                <li class="">
-                                  <a href="Llvm.NET.Tests.ModuleTests.AsStringTest.html" title="AsStringTest" class="">AsStringTest</a>
-                                </li>
-                                <li class="">
-                                  <a href="Llvm.NET.Tests.ModuleTests.BasicLinkTest.html" title="BasicLinkTest" class="">BasicLinkTest</a>
-                                </li>
-                                <li class="">
-                                  <a href="Llvm.NET.Tests.ModuleTests.ComdatDataTest.html" title="ComdatDataTest" class="">ComdatDataTest</a>
-                                </li>
-                                <li class="">
-                                  <a href="Llvm.NET.Tests.ModuleTests.ComdatFunctionTest.html" title="ComdatFunctionTest" class="">ComdatFunctionTest</a>
-                                </li>
-                                <li class="">
-                                  <a href="Llvm.NET.Tests.ModuleTests.ConstructorTestWithName.html" title="ConstructorTestWithName" class="">ConstructorTestWithName</a>
-                                </li>
-                                <li class="">
-                                  <a href="Llvm.NET.Tests.ModuleTests.ConstructorTestWithNameAndCompileUnit.html" title="ConstructorTestWithNameAndCompileUnit" class="">ConstructorTestWithNameAndCompileUnit</a>
-                                </li>
-                                <li class="">
-                                  <a href="Llvm.NET.Tests.ModuleTests.DefaultConstructorTest.html" title="DefaultConstructorTest" class="">DefaultConstructorTest</a>
-                                </li>
-                                <li class="">
-                                  <a href="Llvm.NET.Tests.ModuleTests.DisposeTest.html" title="DisposeTest" class="">DisposeTest</a>
-                                </li>
-                                <li class="">
-                                  <a href="Llvm.NET.Tests.ModuleTests.GetTypeByNameTest.html" title="GetTypeByNameTest" class="">GetTypeByNameTest</a>
-                                </li>
-                                <li class="">
-                                  <a href="Llvm.NET.Tests.ModuleTests.LoadFromTest.html" title="LoadFromTest" class="">LoadFromTest</a>
-                                </li>
-                                <li class="">
-                                  <a href="Llvm.NET.Tests.ModuleTests.ModuleCloneInContextTest.html" title="ModuleCloneInContextTest" class="">ModuleCloneInContextTest</a>
-                                </li>
-                                <li class="">
-                                  <a href="Llvm.NET.Tests.ModuleTests.MultiContextCloneLinkTest.html" title="MultiContextCloneLinkTest" class="">MultiContextCloneLinkTest</a>
-                                </li>
-                                <li class="">
-                                  <a href="Llvm.NET.Tests.ModuleTests.MultiContextLinkTest.html" title="MultiContextLinkTest" class="">MultiContextLinkTest</a>
-                                </li>
-                                <li class="">
-                                  <a href="Llvm.NET.Tests.ModuleTests.VerifyInvalidModuleTest.html" title="VerifyInvalidModuleTest" class="">VerifyInvalidModuleTest</a>
-                                </li>
-                                <li class="">
-                                  <a href="Llvm.NET.Tests.ModuleTests.VerifyValidModuleTest.html" title="VerifyValidModuleTest" class="">VerifyValidModuleTest</a>
-                                </li>
-                                <li class="">
-                                  <a href="Llvm.NET.Tests.ModuleTests.WriteToFileTest.html" title="WriteToFileTest" class="">WriteToFileTest</a>
-                                </li>
-                              </ul>  </li>
-                          <li class="">
-                            <span class="expand-stub"></span>
-                            <a href="Llvm.NET.Tests.TargetTests.html" title="TargetTests" class="">TargetTests</a>
-                              
-                              <ul class="nav level3">
-                                <li class="">
-                                  <a href="Llvm.NET.Tests.TargetTests.AvailableTargetsTest.html" title="AvailableTargetsTest" class="">AvailableTargetsTest</a>
-                                </li>
-                                <li class="">
-                                  <a href="Llvm.NET.Tests.TargetTests.CreateTargetMachineTest.html" title="CreateTargetMachineTest" class="">CreateTargetMachineTest</a>
-                                </li>
-                                <li class="">
-                                  <a href="Llvm.NET.Tests.TargetTests.FromTripleTest.html" title="FromTripleTest" class="">FromTripleTest</a>
-                                </li>
-                              </ul>  </li>
-                          <li class="">
-                            <span class="expand-stub"></span>
-                            <a href="Llvm.NET.Tests.TripleTests.html" title="TripleTests" class="">TripleTests</a>
-                              
-                              <ul class="nav level3">
-                                <li class="">
-                                  <a href="Llvm.NET.Tests.TripleTests.GetArchTypeNameTest.html" title="GetArchTypeNameTest" class="">GetArchTypeNameTest</a>
-                                </li>
-                                <li class="">
-                                  <a href="Llvm.NET.Tests.TripleTests.GetEnvironmentTypeNameTest.html" title="GetEnvironmentTypeNameTest" class="">GetEnvironmentTypeNameTest</a>
-                                </li>
-                                <li class="">
-                                  <a href="Llvm.NET.Tests.TripleTests.GetObjFormatTypeNameTest.html" title="GetObjFormatTypeNameTest" class="">GetObjFormatTypeNameTest</a>
-                                </li>
-                                <li class="">
-                                  <a href="Llvm.NET.Tests.TripleTests.GetOsTypeNameTest.html" title="GetOsTypeNameTest" class="">GetOsTypeNameTest</a>
-                                </li>
-                                <li class="">
-                                  <a href="Llvm.NET.Tests.TripleTests.GetSubArchTypeNameTest.html" title="GetSubArchTypeNameTest" class="">GetSubArchTypeNameTest</a>
-                                </li>
-                                <li class="">
-                                  <a href="Llvm.NET.Tests.TripleTests.GetVendorTypeNameTest.html" title="GetVendorTypeNameTest" class="">GetVendorTypeNameTest</a>
-                                </li>
-                                <li class="">
-                                  <a href="Llvm.NET.Tests.TripleTests.OpEqualsTest.html" title="OpEqualsTest" class="">OpEqualsTest</a>
-                                </li>
-                                <li class="">
-                                  <a href="Llvm.NET.Tests.TripleTests.ToStringTest.html" title="ToStringTest" class="">ToStringTest</a>
-                                </li>
-                                <li class="">
-                                  <a href="Llvm.NET.Tests.TripleTests.TripleTest.html" title="TripleTest" class="">TripleTest</a>
-                                </li>
-                              </ul>  </li>
                         </ul>  </li>
                     <li class="">
                       <span class="expand-stub"></span>
@@ -5350,9 +5086,6 @@
                                 </li>
                               </ul>  </li>
                           <li class="">
-                            <a href="Llvm.NET.Values.IAttributeCollection.html" title="IAttributeCollection" class="">IAttributeCollection</a>
-                          </li>
-                          <li class="">
                             <span class="expand-stub"></span>
                             <a href="Llvm.NET.Values.IAttributeContainer.html" title="IAttributeContainer" class="">IAttributeContainer</a>
                               
@@ -5452,69 +5185,6 @@
                                 </li>
                               </ul>  </li>
                         </ul>  </li>
-                    <li class="">
-                      <span class="expand-stub"></span>
-                      <a href="Llvm.NET.Values.Tests.html" title="Llvm.NET.Values.Tests" class="">Llvm.NET.Values.Tests</a>
-                        
-                        <ul class="nav level2">
-                          <li class="">
-                            <span class="expand-stub"></span>
-                            <a href="Llvm.NET.Values.Tests.AttributeValueTests.html" title="AttributeValueTests" class="">AttributeValueTests</a>
-                              
-                              <ul class="nav level3">
-                                <li class="">
-                                  <a href="Llvm.NET.Values.Tests.AttributeValueTests.AttributeValueEnumInt.html" title="AttributeValueEnumInt" class="">AttributeValueEnumInt</a>
-                                </li>
-                                <li class="">
-                                  <a href="Llvm.NET.Values.Tests.AttributeValueTests.AttributeValueEnumString.html" title="AttributeValueEnumString" class="">AttributeValueEnumString</a>
-                                </li>
-                                <li class="">
-                                  <a href="Llvm.NET.Values.Tests.AttributeValueTests.AttributeValueTestEnum.html" title="AttributeValueTestEnum" class="">AttributeValueTestEnum</a>
-                                </li>
-                                <li class="">
-                                  <a href="Llvm.NET.Values.Tests.AttributeValueTests.ImplicitCastAttributeKindToAttributeValueTest.html" title="ImplicitCastAttributeKindToAttributeValueTest" class="">ImplicitCastAttributeKindToAttributeValueTest</a>
-                                </li>
-                                <li class="">
-                                  <a href="Llvm.NET.Values.Tests.AttributeValueTests.ImplicitCastStringToAttributeValueTest.html" title="ImplicitCastStringToAttributeValueTest" class="">ImplicitCastStringToAttributeValueTest</a>
-                                </li>
-                              </ul>  </li>
-                        </ul>  </li>
-                    <li class="">
-                      <span class="expand-stub"></span>
-                      <a href="Llvm.NETTests.html" title="Llvm.NETTests" class="">Llvm.NETTests</a>
-                        
-                        <ul class="nav level2">
-                          <li class="">
-                            <span class="expand-stub"></span>
-                            <a href="Llvm.NETTests.AssemblyInitialize.html" title="AssemblyInitialize" class="">AssemblyInitialize</a>
-                              
-                              <ul class="nav level3">
-                                <li class="">
-                                  <a href="Llvm.NETTests.AssemblyInitialize.InitializeAssembly.html" title="InitializeAssembly" class="">InitializeAssembly</a>
-                                </li>
-                                <li class="">
-                                  <a href="Llvm.NETTests.AssemblyInitialize.UninitializeAssembly.html" title="UninitializeAssembly" class="">UninitializeAssembly</a>
-                                </li>
-                              </ul>  </li>
-                          <li class="">
-                            <span class="expand-stub"></span>
-                            <a href="Llvm.NETTests.ExpectedArgumentExceptionAttribute.html" title="ExpectedArgumentExceptionAttribute" class="">ExpectedArgumentExceptionAttribute</a>
-                              
-                              <ul class="nav level3">
-                                <li class="">
-                                  <a href="Llvm.NETTests.ExpectedArgumentExceptionAttribute.-ctor.html" title="ExpectedArgumentExceptionAttribute" class="">ExpectedArgumentExceptionAttribute</a>
-                                </li>
-                                <li class="">
-                                  <a href="Llvm.NETTests.ExpectedArgumentExceptionAttribute.ExpectedExceptionMessage.html" title="ExpectedExceptionMessage" class="">ExpectedExceptionMessage</a>
-                                </li>
-                                <li class="">
-                                  <a href="Llvm.NETTests.ExpectedArgumentExceptionAttribute.Verify.html" title="Verify" class="">Verify</a>
-                                </li>
-                                <li class="">
-                                  <a href="Llvm.NETTests.ExpectedArgumentExceptionAttribute.WrongExceptionMessage.html" title="WrongExceptionMessage" class="">WrongExceptionMessage</a>
-                                </li>
-                              </ul>  </li>
-                        </ul>  </li>
                   </ul>        </div>
               </div>
             </div>
@@ -5522,33 +5192,74 @@
         </div>
         <div class="article row grid-right">
           <div class="col-md-10">
-            <article class="content wrap" id="_content" data-uid="Llvm.NET.Tests.MDNodeTests.ResolveCyclesTest*">
+            <article class="content wrap" id="_content" data-uid="Llvm.NET.ComdatCollection.InsertOrUpdate*">
 
-<h1 id="Llvm_NET_Tests_MDNodeTests_ResolveCyclesTest_" data-uid="Llvm.NET.Tests.MDNodeTests.ResolveCyclesTest*">Method ResolveCyclesTest
+<h1 id="Llvm_NET_ComdatCollection_InsertOrUpdate_" data-uid="Llvm.NET.ComdatCollection.InsertOrUpdate*">Method InsertOrUpdate
 </h1>
 <div class="markdown level0 summary"></div>
 <div class="markdown level0 conceptual"></div>
 
 <span class="small pull-right mobile-hide">
   <span class="divider">|</span>
-  <a href="https://github.com/smaillet/Llvm.NET/new/docfx/apiSpec/new?filename=Llvm_NET_Tests_MDNodeTests_ResolveCyclesTest.md&amp;value=---%0Auid%3A%20Llvm.NET.Tests.MDNodeTests.ResolveCyclesTest%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  <a href="https://github.com/smaillet/Llvm.NET/new/docfx/apiSpec/new?filename=Llvm_NET_ComdatCollection_InsertOrUpdate_System_String_Llvm_NET_ComdatKind_.md&amp;value=---%0Auid%3A%20Llvm.NET.ComdatCollection.InsertOrUpdate(System.String%2CLlvm.NET.ComdatKind)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
 </span>
 <span class="small pull-right mobile-hide">
-  <a href="https://github.com/smaillet/Llvm.NET/blob/docfx/src/Llvm.NETTests/MDNodeTests.cs/#L9">View Source</a>
+  <a href="https://github.com/smaillet/Llvm.NET/blob/docfx/src/Llvm.NET/ComdatCollection.cs/#L41">View Source</a>
 </span>
-<a id="Llvm_NET_Tests_MDNodeTests_ResolveCyclesTest_" data-uid="Llvm.NET.Tests.MDNodeTests.ResolveCyclesTest*"></a>
-<h4 id="Llvm_NET_Tests_MDNodeTests_ResolveCyclesTest" data-uid="Llvm.NET.Tests.MDNodeTests.ResolveCyclesTest">ResolveCyclesTest()</h4>
-<div class="markdown level1 summary"></div>
+<a id="Llvm_NET_ComdatCollection_InsertOrUpdate_" data-uid="Llvm.NET.ComdatCollection.InsertOrUpdate*"></a>
+<h4 id="Llvm_NET_ComdatCollection_InsertOrUpdate_System_String_Llvm_NET_ComdatKind_" data-uid="Llvm.NET.ComdatCollection.InsertOrUpdate(System.String,Llvm.NET.ComdatKind)">InsertOrUpdate(String, ComdatKind)</h4>
+<div class="markdown level1 summary"><p>Inserts or updates a <a class="xref" href="Llvm.NET.Comdat.html">Comdat</a> entry</p>
+</div>
 <div class="markdown level1 conceptual"></div>
 <h5 class="decalaration">Declaration</h5>
 <div class="codewrapper">
-  <pre><code class="lang-csharp hljs">public void ResolveCyclesTest()</code></pre>
+  <pre><code class="lang-csharp hljs">public Comdat InsertOrUpdate(string key, ComdatKind kind)</code></pre>
 </div>
+<h5 class="parameters">Parameters</h5>
+<table class="table table-bordered table-striped table-condensed">
+  <thead>
+    <tr>
+      <th>Type</th>
+      <th>Name</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><a class="xref" href="https://msdn.microsoft.com/en-us/library/system.string(v=vs.110).aspx">String</a></td>
+      <td><span class="parametername">key</span></td>
+      <td><p>Name of the <a class="xref" href="Llvm.NET.Comdat.html">Comdat</a></p>
+</td>
+    </tr>
+    <tr>
+      <td><a class="xref" href="Llvm.NET.ComdatKind.html">ComdatKind</a></td>
+      <td><span class="parametername">kind</span></td>
+      <td><p><a class="xref" href="Llvm.NET.ComdatKind.html">ComdatKind</a> for the entry</p>
+</td>
+    </tr>
+  </tbody>
+</table>
+<h5 class="returns">Returns</h5>
+<table class="table table-bordered table-striped table-condensed">
+  <thead>
+    <tr>
+      <th>Type</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><a class="xref" href="Llvm.NET.Comdat.html">Comdat</a></td>
+      <td><p>New or updated <a class="xref" href="Llvm.NET.Comdat.html">Comdat</a></p>
+</td>
+    </tr>
+  </tbody>
+</table>
 </article>
           </div>
           <div class="contribution-panel mobile-hide">
-              <a href="https://github.com/smaillet/Llvm.NET/new/docfx/apiSpec/new?filename=Llvm_NET_Tests_MDNodeTests_ResolveCyclesTest_.md&amp;value=---%0Auid%3A%20Llvm.NET.Tests.MDNodeTests.ResolveCyclesTest*%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A" title="Improve this Doc" class="fab btn-warning pull-right"><i class="glyphicon glyphicon-pencil"></i></a>
-              <a href="https://github.com/smaillet/Llvm.NET/blob/docfx/src/Llvm.NETTests/MDNodeTests.cs/#L9" title="View Source" class="fab btn-info pull-right"><i class="fa fa-code"></i></a>
+              <a href="https://github.com/smaillet/Llvm.NET/new/docfx/apiSpec/new?filename=Llvm_NET_ComdatCollection_InsertOrUpdate_.md&amp;value=---%0Auid%3A%20Llvm.NET.ComdatCollection.InsertOrUpdate*%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A" title="Improve this Doc" class="fab btn-warning pull-right"><i class="glyphicon glyphicon-pencil"></i></a>
+              <a href="https://github.com/smaillet/Llvm.NET/blob/docfx/src/Llvm.NET/ComdatCollection.cs/#L41" title="View Source" class="fab btn-info pull-right"><i class="fa fa-code"></i></a>
           </div>
           
           <div class="hidden-sm col-md-2" role="complementary">

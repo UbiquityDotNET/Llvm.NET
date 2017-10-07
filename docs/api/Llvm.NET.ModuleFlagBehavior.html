@@ -50,6 +50,12 @@
                   <li class="active">
                     <a href="../api/index.html" title="Api Documentation" class="active">Api Documentation</a>
                   </li>
+                  <li class="">
+                    <a href="http://LLVM.org" title="LLVM.org" class="">LLVM.org</a>
+                  </li>
+                  <li class="">
+                    <a href="http://releases.llvm.org/5.0.0/docs/index.html" title="LLVM Docs" class="">LLVM Docs</a>
+                  </li>
                 </ul>
             </div>
           </div>
@@ -159,9 +165,6 @@
                               
                               <ul class="nav level3">
                                 <li class="">
-                                  <a href="Llvm.NET.ComdatCollection.Add.html" title="Add" class="">Add</a>
-                                </li>
-                                <li class="">
                                   <a href="Llvm.NET.ComdatCollection.Clear.html" title="Clear" class="">Clear</a>
                                 </li>
                                 <li class="">
@@ -172,6 +175,9 @@
                                 </li>
                                 <li class="">
                                   <a href="Llvm.NET.ComdatCollection.GetEnumerator.html" title="GetEnumerator" class="">GetEnumerator</a>
+                                </li>
+                                <li class="">
+                                  <a href="Llvm.NET.ComdatCollection.InsertOrUpdate.html" title="InsertOrUpdate" class="">InsertOrUpdate</a>
                                 </li>
                                 <li class="">
                                   <a href="Llvm.NET.ComdatCollection.Item.html" title="Item" class="">Item</a>
@@ -5080,9 +5086,6 @@
                                 </li>
                               </ul>  </li>
                           <li class="">
-                            <a href="Llvm.NET.Values.IAttributeCollection.html" title="IAttributeCollection" class="">IAttributeCollection</a>
-                          </li>
-                          <li class="">
                             <span class="expand-stub"></span>
                             <a href="Llvm.NET.Values.IAttributeContainer.html" title="IAttributeContainer" class="">IAttributeContainer</a>
                               
@@ -5190,6 +5193,7 @@
         <div class="article row grid-right">
           <div class="col-md-10">
             <article class="content wrap" id="_content" data-uid="Llvm.NET.ModuleFlagBehavior">
+  
   <h1 id="Llvm_NET_ModuleFlagBehavior" data-uid="Llvm.NET.ModuleFlagBehavior">Enum ModuleFlagBehavior
   </h1>
   <div class="markdown level0 summary"><p>Enumeration to indicate the behavior of module level flags metadata sharing the same name in a <a class="xref" href="Llvm.NET.NativeModule.html">NativeModule</a></p>
@@ -5198,8 +5202,7 @@
   
   
   
-  
-  <h6><strong>Namespace</strong>: System.Dynamic.ExpandoObject</h6>
+  <h6><strong>Namespace</strong>: <a class="xref" href="Llvm.NET.html">Llvm.NET</a></h6>
   <h6><strong>Assembly</strong>: Llvm.NET.dll</h6>
   
   <h5 id="Llvm_NET_ModuleFlagBehavior_syntax">Syntax</h5>
@@ -5211,55 +5214,58 @@
   
   
   
-      <h4 id="Llvm_NET_ModuleFlagBehavior_Append"><a href="#collapsible-Llvm_NET_ModuleFlagBehavior_Append" class="expander" data-toggle="collapse">Append</a></h4>
-  
-      <div id="collapsible-Llvm_NET_ModuleFlagBehavior_Append" class="collapse in">
-        <p><p>Appends the two values, which are required to be metadata nodes</p>
-</p>
-      </div>
-      <h4 id="Llvm_NET_ModuleFlagBehavior_AppendUnique"><a href="#collapsible-Llvm_NET_ModuleFlagBehavior_AppendUnique" class="expander" data-toggle="collapse">AppendUnique</a></h4>
-  
-      <div id="collapsible-Llvm_NET_ModuleFlagBehavior_AppendUnique" class="collapse in">
-        <p><p>Appends the two values, which are required to be metadata nodes dropping duplicate entries in the second list</p>
-</p>
-      </div>
-      <h4 id="Llvm_NET_ModuleFlagBehavior_Error"><a href="#collapsible-Llvm_NET_ModuleFlagBehavior_Error" class="expander" data-toggle="collapse">Error</a></h4>
-  
-      <div id="collapsible-Llvm_NET_ModuleFlagBehavior_Error" class="collapse in">
-        <p><p>Emits an error if two values disagree, otherwise the resulting value is that of the operands</p>
-</p>
-      </div>
-      <h4 id="Llvm_NET_ModuleFlagBehavior_Invalid"><a href="#collapsible-Llvm_NET_ModuleFlagBehavior_Invalid" class="expander" data-toggle="collapse">Invalid</a></h4>
-  
-      <div id="collapsible-Llvm_NET_ModuleFlagBehavior_Invalid" class="collapse in">
-        <p><p>Invalid value (default value for this enumeration)</p>
-</p>
-      </div>
-      <h4 id="Llvm_NET_ModuleFlagBehavior_Max"><a href="#collapsible-Llvm_NET_ModuleFlagBehavior_Max" class="expander" data-toggle="collapse">Max</a></h4>
-  
-      <div id="collapsible-Llvm_NET_ModuleFlagBehavior_Max" class="collapse in">
-        <p><p>Takes the max of the two values, which are required to be integers</p>
-</p>
-      </div>
-      <h4 id="Llvm_NET_ModuleFlagBehavior_Override"><a href="#collapsible-Llvm_NET_ModuleFlagBehavior_Override" class="expander" data-toggle="collapse">ModuleFlagBehavior</a></h4>
-  
-      <div id="collapsible-Llvm_NET_ModuleFlagBehavior_Override" class="collapse in">
-        <p><p>Uses the specified value, regardless of the behavior or value of the other module</p>
-</p>
-      </div>
-      <h4 id="Llvm_NET_ModuleFlagBehavior_Require"><a href="#collapsible-Llvm_NET_ModuleFlagBehavior_Require" class="expander" data-toggle="collapse">Require</a></h4>
-  
-      <div id="collapsible-Llvm_NET_ModuleFlagBehavior_Require" class="collapse in">
-        <p><p>Adds a requirement that another module flag be present and have a specified value after linking is performed</p>
-</p>
-      </div>
-      <h4 id="Llvm_NET_ModuleFlagBehavior_Warning"><a href="#collapsible-Llvm_NET_ModuleFlagBehavior_Warning" class="expander" data-toggle="collapse">Warning</a></h4>
-  
-      <div id="collapsible-Llvm_NET_ModuleFlagBehavior_Warning" class="collapse in">
-        <p><p>Emits a warning if two values disagree. The result will be the operand for the flag from the first module being linked</p>
-</p>
-      </div>
-  
+  <h3 id="fields">Fields
+  </h3>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    <thead>
+    <tbody>
+      <tr>
+        <td id="Llvm_NET_ModuleFlagBehavior_Append">Append</td>
+        <td><p>Appends the two values, which are required to be metadata nodes</p>
+</td>
+      </tr>
+      <tr>
+        <td id="Llvm_NET_ModuleFlagBehavior_AppendUnique">AppendUnique</td>
+        <td><p>Appends the two values, which are required to be metadata nodes dropping duplicate entries in the second list</p>
+</td>
+      </tr>
+      <tr>
+        <td id="Llvm_NET_ModuleFlagBehavior_Error">Error</td>
+        <td><p>Emits an error if two values disagree, otherwise the resulting value is that of the operands</p>
+</td>
+      </tr>
+      <tr>
+        <td id="Llvm_NET_ModuleFlagBehavior_Invalid">Invalid</td>
+        <td><p>Invalid value (default value for this enumeration)</p>
+</td>
+      </tr>
+      <tr>
+        <td id="Llvm_NET_ModuleFlagBehavior_Max">Max</td>
+        <td><p>Takes the max of the two values, which are required to be integers</p>
+</td>
+      </tr>
+      <tr>
+        <td id="Llvm_NET_ModuleFlagBehavior_Override">ModuleFlagBehavior</td>
+        <td><p>Uses the specified value, regardless of the behavior or value of the other module</p>
+</td>
+      </tr>
+      <tr>
+        <td id="Llvm_NET_ModuleFlagBehavior_Require">Require</td>
+        <td><p>Adds a requirement that another module flag be present and have a specified value after linking is performed</p>
+</td>
+      </tr>
+      <tr>
+        <td id="Llvm_NET_ModuleFlagBehavior_Warning">Warning</td>
+        <td><p>Emits a warning if two values disagree. The result will be the operand for the flag from the first module being linked</p>
+</td>
+      </tr>
+    </tbody>
+  </thead></thead></table>
 </article>
           </div>
           <div class="contribution-panel mobile-hide">

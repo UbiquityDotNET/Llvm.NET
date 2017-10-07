@@ -50,6 +50,12 @@
                   <li class="active">
                     <a href="../api/index.html" title="Api Documentation" class="active">Api Documentation</a>
                   </li>
+                  <li class="">
+                    <a href="http://LLVM.org" title="LLVM.org" class="">LLVM.org</a>
+                  </li>
+                  <li class="">
+                    <a href="http://releases.llvm.org/5.0.0/docs/index.html" title="LLVM Docs" class="">LLVM Docs</a>
+                  </li>
                 </ul>
             </div>
           </div>
@@ -159,9 +165,6 @@
                               
                               <ul class="nav level3">
                                 <li class="">
-                                  <a href="Llvm.NET.ComdatCollection.Add.html" title="Add" class="">Add</a>
-                                </li>
-                                <li class="">
                                   <a href="Llvm.NET.ComdatCollection.Clear.html" title="Clear" class="">Clear</a>
                                 </li>
                                 <li class="">
@@ -172,6 +175,9 @@
                                 </li>
                                 <li class="">
                                   <a href="Llvm.NET.ComdatCollection.GetEnumerator.html" title="GetEnumerator" class="">GetEnumerator</a>
+                                </li>
+                                <li class="">
+                                  <a href="Llvm.NET.ComdatCollection.InsertOrUpdate.html" title="InsertOrUpdate" class="">InsertOrUpdate</a>
                                 </li>
                                 <li class="">
                                   <a href="Llvm.NET.ComdatCollection.Item.html" title="Item" class="">Item</a>
@@ -5080,9 +5086,6 @@
                                 </li>
                               </ul>  </li>
                           <li class="">
-                            <a href="Llvm.NET.Values.IAttributeCollection.html" title="IAttributeCollection" class="">IAttributeCollection</a>
-                          </li>
-                          <li class="">
                             <span class="expand-stub"></span>
                             <a href="Llvm.NET.Values.IAttributeContainer.html" title="IAttributeContainer" class="">IAttributeContainer</a>
                               
@@ -5190,6 +5193,7 @@
         <div class="article row grid-right">
           <div class="col-md-10">
             <article class="content wrap" id="_content" data-uid="Llvm.NET.Values.AttributeKind">
+  
   <h1 id="Llvm_NET_Values_AttributeKind" data-uid="Llvm.NET.Values.AttributeKind">Enum AttributeKind
   </h1>
   <div class="markdown level0 summary"><p>Enumeration for the known LLVM attributes</p>
@@ -5198,8 +5202,7 @@
   
   
   
-  
-  <h6><strong>Namespace</strong>: System.Dynamic.ExpandoObject</h6>
+  <h6><strong>Namespace</strong>: <a class="xref" href="Llvm.NET.Values.html">Llvm.NET.Values</a></h6>
   <h6><strong>Assembly</strong>: Llvm.NET.dll</h6>
   
   <h5 id="Llvm_NET_Values_AttributeKind_syntax">Syntax</h5>
@@ -5228,282 +5231,238 @@ and by design so that any changes in LLVM naming will break at
 compile time instead of at runtime.</p>
 </div>
   
-      <h4 id="Llvm_NET_Values_AttributeKind_Alignment"><a href="#collapsible-Llvm_NET_Values_AttributeKind_Alignment" class="expander" data-toggle="collapse">Alignment</a></h4>
-  
-      <div id="collapsible-Llvm_NET_Values_AttributeKind_Alignment" class="collapse in">
-        <p>
-      </div>
-      <h4 id="Llvm_NET_Values_AttributeKind_AllocSize"><a href="#collapsible-Llvm_NET_Values_AttributeKind_AllocSize" class="expander" data-toggle="collapse">AllocSize</a></h4>
-  
-      <div id="collapsible-Llvm_NET_Values_AttributeKind_AllocSize" class="collapse in">
-        <p>
-      </div>
-      <h4 id="Llvm_NET_Values_AttributeKind_AlwaysInline"><a href="#collapsible-Llvm_NET_Values_AttributeKind_AlwaysInline" class="expander" data-toggle="collapse">AlwaysInline</a></h4>
-  
-      <div id="collapsible-Llvm_NET_Values_AttributeKind_AlwaysInline" class="collapse in">
-        <p>
-      </div>
-      <h4 id="Llvm_NET_Values_AttributeKind_ArgMemOnly"><a href="#collapsible-Llvm_NET_Values_AttributeKind_ArgMemOnly" class="expander" data-toggle="collapse">ArgMemOnly</a></h4>
-  
-      <div id="collapsible-Llvm_NET_Values_AttributeKind_ArgMemOnly" class="collapse in">
-        <p>
-      </div>
-      <h4 id="Llvm_NET_Values_AttributeKind_Builtin"><a href="#collapsible-Llvm_NET_Values_AttributeKind_Builtin" class="expander" data-toggle="collapse">Builtin</a></h4>
-  
-      <div id="collapsible-Llvm_NET_Values_AttributeKind_Builtin" class="collapse in">
-        <p>
-      </div>
-      <h4 id="Llvm_NET_Values_AttributeKind_ByVal"><a href="#collapsible-Llvm_NET_Values_AttributeKind_ByVal" class="expander" data-toggle="collapse">ByVal</a></h4>
-  
-      <div id="collapsible-Llvm_NET_Values_AttributeKind_ByVal" class="collapse in">
-        <p>
-      </div>
-      <h4 id="Llvm_NET_Values_AttributeKind_Cold"><a href="#collapsible-Llvm_NET_Values_AttributeKind_Cold" class="expander" data-toggle="collapse">Cold</a></h4>
-  
-      <div id="collapsible-Llvm_NET_Values_AttributeKind_Cold" class="collapse in">
-        <p>
-      </div>
-      <h4 id="Llvm_NET_Values_AttributeKind_Convergent"><a href="#collapsible-Llvm_NET_Values_AttributeKind_Convergent" class="expander" data-toggle="collapse">Convergent</a></h4>
-  
-      <div id="collapsible-Llvm_NET_Values_AttributeKind_Convergent" class="collapse in">
-        <p>
-      </div>
-      <h4 id="Llvm_NET_Values_AttributeKind_Dereferenceable"><a href="#collapsible-Llvm_NET_Values_AttributeKind_Dereferenceable" class="expander" data-toggle="collapse">Dereferenceable</a></h4>
-  
-      <div id="collapsible-Llvm_NET_Values_AttributeKind_Dereferenceable" class="collapse in">
-        <p>
-      </div>
-      <h4 id="Llvm_NET_Values_AttributeKind_DereferenceableOrNull"><a href="#collapsible-Llvm_NET_Values_AttributeKind_DereferenceableOrNull" class="expander" data-toggle="collapse">DereferenceableOrNull</a></h4>
-  
-      <div id="collapsible-Llvm_NET_Values_AttributeKind_DereferenceableOrNull" class="collapse in">
-        <p>
-      </div>
-      <h4 id="Llvm_NET_Values_AttributeKind_EndAttrKinds"><a href="#collapsible-Llvm_NET_Values_AttributeKind_EndAttrKinds" class="expander" data-toggle="collapse">EndAttrKinds</a></h4>
-  
-      <div id="collapsible-Llvm_NET_Values_AttributeKind_EndAttrKinds" class="collapse in">
-        <p>
-      </div>
-      <h4 id="Llvm_NET_Values_AttributeKind_InaccessibleMemOnly"><a href="#collapsible-Llvm_NET_Values_AttributeKind_InaccessibleMemOnly" class="expander" data-toggle="collapse">InaccessibleMemOnly</a></h4>
-  
-      <div id="collapsible-Llvm_NET_Values_AttributeKind_InaccessibleMemOnly" class="collapse in">
-        <p>
-      </div>
-      <h4 id="Llvm_NET_Values_AttributeKind_InaccessibleMemOrArgMemOnly"><a href="#collapsible-Llvm_NET_Values_AttributeKind_InaccessibleMemOrArgMemOnly" class="expander" data-toggle="collapse">InaccessibleMemOrArgMemOnly</a></h4>
-  
-      <div id="collapsible-Llvm_NET_Values_AttributeKind_InaccessibleMemOrArgMemOnly" class="collapse in">
-        <p>
-      </div>
-      <h4 id="Llvm_NET_Values_AttributeKind_InAlloca"><a href="#collapsible-Llvm_NET_Values_AttributeKind_InAlloca" class="expander" data-toggle="collapse">InAlloca</a></h4>
-  
-      <div id="collapsible-Llvm_NET_Values_AttributeKind_InAlloca" class="collapse in">
-        <p>
-      </div>
-      <h4 id="Llvm_NET_Values_AttributeKind_InlineHint"><a href="#collapsible-Llvm_NET_Values_AttributeKind_InlineHint" class="expander" data-toggle="collapse">InlineHint</a></h4>
-  
-      <div id="collapsible-Llvm_NET_Values_AttributeKind_InlineHint" class="collapse in">
-        <p>
-      </div>
-      <h4 id="Llvm_NET_Values_AttributeKind_InReg"><a href="#collapsible-Llvm_NET_Values_AttributeKind_InReg" class="expander" data-toggle="collapse">InReg</a></h4>
-  
-      <div id="collapsible-Llvm_NET_Values_AttributeKind_InReg" class="collapse in">
-        <p>
-      </div>
-      <h4 id="Llvm_NET_Values_AttributeKind_JumpTable"><a href="#collapsible-Llvm_NET_Values_AttributeKind_JumpTable" class="expander" data-toggle="collapse">JumpTable</a></h4>
-  
-      <div id="collapsible-Llvm_NET_Values_AttributeKind_JumpTable" class="collapse in">
-        <p>
-      </div>
-      <h4 id="Llvm_NET_Values_AttributeKind_MinSize"><a href="#collapsible-Llvm_NET_Values_AttributeKind_MinSize" class="expander" data-toggle="collapse">MinSize</a></h4>
-  
-      <div id="collapsible-Llvm_NET_Values_AttributeKind_MinSize" class="collapse in">
-        <p>
-      </div>
-      <h4 id="Llvm_NET_Values_AttributeKind_Naked"><a href="#collapsible-Llvm_NET_Values_AttributeKind_Naked" class="expander" data-toggle="collapse">Naked</a></h4>
-  
-      <div id="collapsible-Llvm_NET_Values_AttributeKind_Naked" class="collapse in">
-        <p>
-      </div>
-      <h4 id="Llvm_NET_Values_AttributeKind_Nest"><a href="#collapsible-Llvm_NET_Values_AttributeKind_Nest" class="expander" data-toggle="collapse">Nest</a></h4>
-  
-      <div id="collapsible-Llvm_NET_Values_AttributeKind_Nest" class="collapse in">
-        <p>
-      </div>
-      <h4 id="Llvm_NET_Values_AttributeKind_NoAlias"><a href="#collapsible-Llvm_NET_Values_AttributeKind_NoAlias" class="expander" data-toggle="collapse">NoAlias</a></h4>
-  
-      <div id="collapsible-Llvm_NET_Values_AttributeKind_NoAlias" class="collapse in">
-        <p>
-      </div>
-      <h4 id="Llvm_NET_Values_AttributeKind_NoBuiltin"><a href="#collapsible-Llvm_NET_Values_AttributeKind_NoBuiltin" class="expander" data-toggle="collapse">NoBuiltin</a></h4>
-  
-      <div id="collapsible-Llvm_NET_Values_AttributeKind_NoBuiltin" class="collapse in">
-        <p>
-      </div>
-      <h4 id="Llvm_NET_Values_AttributeKind_NoCapture"><a href="#collapsible-Llvm_NET_Values_AttributeKind_NoCapture" class="expander" data-toggle="collapse">NoCapture</a></h4>
-  
-      <div id="collapsible-Llvm_NET_Values_AttributeKind_NoCapture" class="collapse in">
-        <p>
-      </div>
-      <h4 id="Llvm_NET_Values_AttributeKind_NoDuplicate"><a href="#collapsible-Llvm_NET_Values_AttributeKind_NoDuplicate" class="expander" data-toggle="collapse">NoDuplicate</a></h4>
-  
-      <div id="collapsible-Llvm_NET_Values_AttributeKind_NoDuplicate" class="collapse in">
-        <p>
-      </div>
-      <h4 id="Llvm_NET_Values_AttributeKind_NoImplicitFloat"><a href="#collapsible-Llvm_NET_Values_AttributeKind_NoImplicitFloat" class="expander" data-toggle="collapse">NoImplicitFloat</a></h4>
-  
-      <div id="collapsible-Llvm_NET_Values_AttributeKind_NoImplicitFloat" class="collapse in">
-        <p>
-      </div>
-      <h4 id="Llvm_NET_Values_AttributeKind_NoInline"><a href="#collapsible-Llvm_NET_Values_AttributeKind_NoInline" class="expander" data-toggle="collapse">NoInline</a></h4>
-  
-      <div id="collapsible-Llvm_NET_Values_AttributeKind_NoInline" class="collapse in">
-        <p>
-      </div>
-      <h4 id="Llvm_NET_Values_AttributeKind_None"><a href="#collapsible-Llvm_NET_Values_AttributeKind_None" class="expander" data-toggle="collapse">None</a></h4>
-  
-      <div id="collapsible-Llvm_NET_Values_AttributeKind_None" class="collapse in">
-        <p>
-      </div>
-      <h4 id="Llvm_NET_Values_AttributeKind_NonLazyBind"><a href="#collapsible-Llvm_NET_Values_AttributeKind_NonLazyBind" class="expander" data-toggle="collapse">NonLazyBind</a></h4>
-  
-      <div id="collapsible-Llvm_NET_Values_AttributeKind_NonLazyBind" class="collapse in">
-        <p>
-      </div>
-      <h4 id="Llvm_NET_Values_AttributeKind_NonNull"><a href="#collapsible-Llvm_NET_Values_AttributeKind_NonNull" class="expander" data-toggle="collapse">NonNull</a></h4>
-  
-      <div id="collapsible-Llvm_NET_Values_AttributeKind_NonNull" class="collapse in">
-        <p>
-      </div>
-      <h4 id="Llvm_NET_Values_AttributeKind_NoRecurse"><a href="#collapsible-Llvm_NET_Values_AttributeKind_NoRecurse" class="expander" data-toggle="collapse">NoRecurse</a></h4>
-  
-      <div id="collapsible-Llvm_NET_Values_AttributeKind_NoRecurse" class="collapse in">
-        <p>
-      </div>
-      <h4 id="Llvm_NET_Values_AttributeKind_NoRedZone"><a href="#collapsible-Llvm_NET_Values_AttributeKind_NoRedZone" class="expander" data-toggle="collapse">NoRedZone</a></h4>
-  
-      <div id="collapsible-Llvm_NET_Values_AttributeKind_NoRedZone" class="collapse in">
-        <p>
-      </div>
-      <h4 id="Llvm_NET_Values_AttributeKind_NoReturn"><a href="#collapsible-Llvm_NET_Values_AttributeKind_NoReturn" class="expander" data-toggle="collapse">NoReturn</a></h4>
-  
-      <div id="collapsible-Llvm_NET_Values_AttributeKind_NoReturn" class="collapse in">
-        <p>
-      </div>
-      <h4 id="Llvm_NET_Values_AttributeKind_NoUnwind"><a href="#collapsible-Llvm_NET_Values_AttributeKind_NoUnwind" class="expander" data-toggle="collapse">NoUnwind</a></h4>
-  
-      <div id="collapsible-Llvm_NET_Values_AttributeKind_NoUnwind" class="collapse in">
-        <p>
-      </div>
-      <h4 id="Llvm_NET_Values_AttributeKind_OptimizeForSize"><a href="#collapsible-Llvm_NET_Values_AttributeKind_OptimizeForSize" class="expander" data-toggle="collapse">OptimizeForSize</a></h4>
-  
-      <div id="collapsible-Llvm_NET_Values_AttributeKind_OptimizeForSize" class="collapse in">
-        <p>
-      </div>
-      <h4 id="Llvm_NET_Values_AttributeKind_OptimizeNone"><a href="#collapsible-Llvm_NET_Values_AttributeKind_OptimizeNone" class="expander" data-toggle="collapse">OptimizeNone</a></h4>
-  
-      <div id="collapsible-Llvm_NET_Values_AttributeKind_OptimizeNone" class="collapse in">
-        <p>
-      </div>
-      <h4 id="Llvm_NET_Values_AttributeKind_ReadNone"><a href="#collapsible-Llvm_NET_Values_AttributeKind_ReadNone" class="expander" data-toggle="collapse">ReadNone</a></h4>
-  
-      <div id="collapsible-Llvm_NET_Values_AttributeKind_ReadNone" class="collapse in">
-        <p>
-      </div>
-      <h4 id="Llvm_NET_Values_AttributeKind_ReadOnly"><a href="#collapsible-Llvm_NET_Values_AttributeKind_ReadOnly" class="expander" data-toggle="collapse">ReadOnly</a></h4>
-  
-      <div id="collapsible-Llvm_NET_Values_AttributeKind_ReadOnly" class="collapse in">
-        <p>
-      </div>
-      <h4 id="Llvm_NET_Values_AttributeKind_Returned"><a href="#collapsible-Llvm_NET_Values_AttributeKind_Returned" class="expander" data-toggle="collapse">Returned</a></h4>
-  
-      <div id="collapsible-Llvm_NET_Values_AttributeKind_Returned" class="collapse in">
-        <p>
-      </div>
-      <h4 id="Llvm_NET_Values_AttributeKind_ReturnsTwice"><a href="#collapsible-Llvm_NET_Values_AttributeKind_ReturnsTwice" class="expander" data-toggle="collapse">ReturnsTwice</a></h4>
-  
-      <div id="collapsible-Llvm_NET_Values_AttributeKind_ReturnsTwice" class="collapse in">
-        <p>
-      </div>
-      <h4 id="Llvm_NET_Values_AttributeKind_SafeStack"><a href="#collapsible-Llvm_NET_Values_AttributeKind_SafeStack" class="expander" data-toggle="collapse">SafeStack</a></h4>
-  
-      <div id="collapsible-Llvm_NET_Values_AttributeKind_SafeStack" class="collapse in">
-        <p>
-      </div>
-      <h4 id="Llvm_NET_Values_AttributeKind_SanitizeAddress"><a href="#collapsible-Llvm_NET_Values_AttributeKind_SanitizeAddress" class="expander" data-toggle="collapse">SanitizeAddress</a></h4>
-  
-      <div id="collapsible-Llvm_NET_Values_AttributeKind_SanitizeAddress" class="collapse in">
-        <p>
-      </div>
-      <h4 id="Llvm_NET_Values_AttributeKind_SanitizeMemory"><a href="#collapsible-Llvm_NET_Values_AttributeKind_SanitizeMemory" class="expander" data-toggle="collapse">SanitizeMemory</a></h4>
-  
-      <div id="collapsible-Llvm_NET_Values_AttributeKind_SanitizeMemory" class="collapse in">
-        <p>
-      </div>
-      <h4 id="Llvm_NET_Values_AttributeKind_SanitizeThread"><a href="#collapsible-Llvm_NET_Values_AttributeKind_SanitizeThread" class="expander" data-toggle="collapse">SanitizeThread</a></h4>
-  
-      <div id="collapsible-Llvm_NET_Values_AttributeKind_SanitizeThread" class="collapse in">
-        <p>
-      </div>
-      <h4 id="Llvm_NET_Values_AttributeKind_SExt"><a href="#collapsible-Llvm_NET_Values_AttributeKind_SExt" class="expander" data-toggle="collapse">SExt</a></h4>
-  
-      <div id="collapsible-Llvm_NET_Values_AttributeKind_SExt" class="collapse in">
-        <p>
-      </div>
-      <h4 id="Llvm_NET_Values_AttributeKind_Speculatable"><a href="#collapsible-Llvm_NET_Values_AttributeKind_Speculatable" class="expander" data-toggle="collapse">Speculatable</a></h4>
-  
-      <div id="collapsible-Llvm_NET_Values_AttributeKind_Speculatable" class="collapse in">
-        <p>
-      </div>
-      <h4 id="Llvm_NET_Values_AttributeKind_StackAlignment"><a href="#collapsible-Llvm_NET_Values_AttributeKind_StackAlignment" class="expander" data-toggle="collapse">StackAlignment</a></h4>
-  
-      <div id="collapsible-Llvm_NET_Values_AttributeKind_StackAlignment" class="collapse in">
-        <p>
-      </div>
-      <h4 id="Llvm_NET_Values_AttributeKind_StackProtect"><a href="#collapsible-Llvm_NET_Values_AttributeKind_StackProtect" class="expander" data-toggle="collapse">StackProtect</a></h4>
-  
-      <div id="collapsible-Llvm_NET_Values_AttributeKind_StackProtect" class="collapse in">
-        <p>
-      </div>
-      <h4 id="Llvm_NET_Values_AttributeKind_StackProtectReq"><a href="#collapsible-Llvm_NET_Values_AttributeKind_StackProtectReq" class="expander" data-toggle="collapse">StackProtectReq</a></h4>
-  
-      <div id="collapsible-Llvm_NET_Values_AttributeKind_StackProtectReq" class="collapse in">
-        <p>
-      </div>
-      <h4 id="Llvm_NET_Values_AttributeKind_StackProtectStrong"><a href="#collapsible-Llvm_NET_Values_AttributeKind_StackProtectStrong" class="expander" data-toggle="collapse">StackProtectStrong</a></h4>
-  
-      <div id="collapsible-Llvm_NET_Values_AttributeKind_StackProtectStrong" class="collapse in">
-        <p>
-      </div>
-      <h4 id="Llvm_NET_Values_AttributeKind_StructRet"><a href="#collapsible-Llvm_NET_Values_AttributeKind_StructRet" class="expander" data-toggle="collapse">StructRet</a></h4>
-  
-      <div id="collapsible-Llvm_NET_Values_AttributeKind_StructRet" class="collapse in">
-        <p>
-      </div>
-      <h4 id="Llvm_NET_Values_AttributeKind_SwiftError"><a href="#collapsible-Llvm_NET_Values_AttributeKind_SwiftError" class="expander" data-toggle="collapse">SwiftError</a></h4>
-  
-      <div id="collapsible-Llvm_NET_Values_AttributeKind_SwiftError" class="collapse in">
-        <p>
-      </div>
-      <h4 id="Llvm_NET_Values_AttributeKind_SwiftSelf"><a href="#collapsible-Llvm_NET_Values_AttributeKind_SwiftSelf" class="expander" data-toggle="collapse">SwiftSelf</a></h4>
-  
-      <div id="collapsible-Llvm_NET_Values_AttributeKind_SwiftSelf" class="collapse in">
-        <p>
-      </div>
-      <h4 id="Llvm_NET_Values_AttributeKind_UWTable"><a href="#collapsible-Llvm_NET_Values_AttributeKind_UWTable" class="expander" data-toggle="collapse">UWTable</a></h4>
-  
-      <div id="collapsible-Llvm_NET_Values_AttributeKind_UWTable" class="collapse in">
-        <p>
-      </div>
-      <h4 id="Llvm_NET_Values_AttributeKind_WriteOnly"><a href="#collapsible-Llvm_NET_Values_AttributeKind_WriteOnly" class="expander" data-toggle="collapse">WriteOnly</a></h4>
-  
-      <div id="collapsible-Llvm_NET_Values_AttributeKind_WriteOnly" class="collapse in">
-        <p>
-      </div>
-      <h4 id="Llvm_NET_Values_AttributeKind_ZExt"><a href="#collapsible-Llvm_NET_Values_AttributeKind_ZExt" class="expander" data-toggle="collapse">ZExt</a></h4>
-  
-      <div id="collapsible-Llvm_NET_Values_AttributeKind_ZExt" class="collapse in">
-        <p>
-      </div>
-  
+  <h3 id="fields">Fields
+  </h3>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    <thead>
+    <tbody>
+      <tr>
+        <td id="Llvm_NET_Values_AttributeKind_Alignment">Alignment</td>
+        <td></td>
+      </tr>
+      <tr>
+        <td id="Llvm_NET_Values_AttributeKind_AllocSize">AllocSize</td>
+        <td></td>
+      </tr>
+      <tr>
+        <td id="Llvm_NET_Values_AttributeKind_AlwaysInline">AlwaysInline</td>
+        <td></td>
+      </tr>
+      <tr>
+        <td id="Llvm_NET_Values_AttributeKind_ArgMemOnly">ArgMemOnly</td>
+        <td></td>
+      </tr>
+      <tr>
+        <td id="Llvm_NET_Values_AttributeKind_Builtin">Builtin</td>
+        <td></td>
+      </tr>
+      <tr>
+        <td id="Llvm_NET_Values_AttributeKind_ByVal">ByVal</td>
+        <td></td>
+      </tr>
+      <tr>
+        <td id="Llvm_NET_Values_AttributeKind_Cold">Cold</td>
+        <td></td>
+      </tr>
+      <tr>
+        <td id="Llvm_NET_Values_AttributeKind_Convergent">Convergent</td>
+        <td></td>
+      </tr>
+      <tr>
+        <td id="Llvm_NET_Values_AttributeKind_Dereferenceable">Dereferenceable</td>
+        <td></td>
+      </tr>
+      <tr>
+        <td id="Llvm_NET_Values_AttributeKind_DereferenceableOrNull">DereferenceableOrNull</td>
+        <td></td>
+      </tr>
+      <tr>
+        <td id="Llvm_NET_Values_AttributeKind_EndAttrKinds">EndAttrKinds</td>
+        <td></td>
+      </tr>
+      <tr>
+        <td id="Llvm_NET_Values_AttributeKind_InaccessibleMemOnly">InaccessibleMemOnly</td>
+        <td></td>
+      </tr>
+      <tr>
+        <td id="Llvm_NET_Values_AttributeKind_InaccessibleMemOrArgMemOnly">InaccessibleMemOrArgMemOnly</td>
+        <td></td>
+      </tr>
+      <tr>
+        <td id="Llvm_NET_Values_AttributeKind_InAlloca">InAlloca</td>
+        <td></td>
+      </tr>
+      <tr>
+        <td id="Llvm_NET_Values_AttributeKind_InlineHint">InlineHint</td>
+        <td></td>
+      </tr>
+      <tr>
+        <td id="Llvm_NET_Values_AttributeKind_InReg">InReg</td>
+        <td></td>
+      </tr>
+      <tr>
+        <td id="Llvm_NET_Values_AttributeKind_JumpTable">JumpTable</td>
+        <td></td>
+      </tr>
+      <tr>
+        <td id="Llvm_NET_Values_AttributeKind_MinSize">MinSize</td>
+        <td></td>
+      </tr>
+      <tr>
+        <td id="Llvm_NET_Values_AttributeKind_Naked">Naked</td>
+        <td></td>
+      </tr>
+      <tr>
+        <td id="Llvm_NET_Values_AttributeKind_Nest">Nest</td>
+        <td></td>
+      </tr>
+      <tr>
+        <td id="Llvm_NET_Values_AttributeKind_NoAlias">NoAlias</td>
+        <td></td>
+      </tr>
+      <tr>
+        <td id="Llvm_NET_Values_AttributeKind_NoBuiltin">NoBuiltin</td>
+        <td></td>
+      </tr>
+      <tr>
+        <td id="Llvm_NET_Values_AttributeKind_NoCapture">NoCapture</td>
+        <td></td>
+      </tr>
+      <tr>
+        <td id="Llvm_NET_Values_AttributeKind_NoDuplicate">NoDuplicate</td>
+        <td></td>
+      </tr>
+      <tr>
+        <td id="Llvm_NET_Values_AttributeKind_NoImplicitFloat">NoImplicitFloat</td>
+        <td></td>
+      </tr>
+      <tr>
+        <td id="Llvm_NET_Values_AttributeKind_NoInline">NoInline</td>
+        <td></td>
+      </tr>
+      <tr>
+        <td id="Llvm_NET_Values_AttributeKind_None">None</td>
+        <td></td>
+      </tr>
+      <tr>
+        <td id="Llvm_NET_Values_AttributeKind_NonLazyBind">NonLazyBind</td>
+        <td></td>
+      </tr>
+      <tr>
+        <td id="Llvm_NET_Values_AttributeKind_NonNull">NonNull</td>
+        <td></td>
+      </tr>
+      <tr>
+        <td id="Llvm_NET_Values_AttributeKind_NoRecurse">NoRecurse</td>
+        <td></td>
+      </tr>
+      <tr>
+        <td id="Llvm_NET_Values_AttributeKind_NoRedZone">NoRedZone</td>
+        <td></td>
+      </tr>
+      <tr>
+        <td id="Llvm_NET_Values_AttributeKind_NoReturn">NoReturn</td>
+        <td></td>
+      </tr>
+      <tr>
+        <td id="Llvm_NET_Values_AttributeKind_NoUnwind">NoUnwind</td>
+        <td></td>
+      </tr>
+      <tr>
+        <td id="Llvm_NET_Values_AttributeKind_OptimizeForSize">OptimizeForSize</td>
+        <td></td>
+      </tr>
+      <tr>
+        <td id="Llvm_NET_Values_AttributeKind_OptimizeNone">OptimizeNone</td>
+        <td></td>
+      </tr>
+      <tr>
+        <td id="Llvm_NET_Values_AttributeKind_ReadNone">ReadNone</td>
+        <td></td>
+      </tr>
+      <tr>
+        <td id="Llvm_NET_Values_AttributeKind_ReadOnly">ReadOnly</td>
+        <td></td>
+      </tr>
+      <tr>
+        <td id="Llvm_NET_Values_AttributeKind_Returned">Returned</td>
+        <td></td>
+      </tr>
+      <tr>
+        <td id="Llvm_NET_Values_AttributeKind_ReturnsTwice">ReturnsTwice</td>
+        <td></td>
+      </tr>
+      <tr>
+        <td id="Llvm_NET_Values_AttributeKind_SafeStack">SafeStack</td>
+        <td></td>
+      </tr>
+      <tr>
+        <td id="Llvm_NET_Values_AttributeKind_SanitizeAddress">SanitizeAddress</td>
+        <td></td>
+      </tr>
+      <tr>
+        <td id="Llvm_NET_Values_AttributeKind_SanitizeMemory">SanitizeMemory</td>
+        <td></td>
+      </tr>
+      <tr>
+        <td id="Llvm_NET_Values_AttributeKind_SanitizeThread">SanitizeThread</td>
+        <td></td>
+      </tr>
+      <tr>
+        <td id="Llvm_NET_Values_AttributeKind_SExt">SExt</td>
+        <td></td>
+      </tr>
+      <tr>
+        <td id="Llvm_NET_Values_AttributeKind_Speculatable">Speculatable</td>
+        <td></td>
+      </tr>
+      <tr>
+        <td id="Llvm_NET_Values_AttributeKind_StackAlignment">StackAlignment</td>
+        <td></td>
+      </tr>
+      <tr>
+        <td id="Llvm_NET_Values_AttributeKind_StackProtect">StackProtect</td>
+        <td></td>
+      </tr>
+      <tr>
+        <td id="Llvm_NET_Values_AttributeKind_StackProtectReq">StackProtectReq</td>
+        <td></td>
+      </tr>
+      <tr>
+        <td id="Llvm_NET_Values_AttributeKind_StackProtectStrong">StackProtectStrong</td>
+        <td></td>
+      </tr>
+      <tr>
+        <td id="Llvm_NET_Values_AttributeKind_StructRet">StructRet</td>
+        <td></td>
+      </tr>
+      <tr>
+        <td id="Llvm_NET_Values_AttributeKind_SwiftError">SwiftError</td>
+        <td></td>
+      </tr>
+      <tr>
+        <td id="Llvm_NET_Values_AttributeKind_SwiftSelf">SwiftSelf</td>
+        <td></td>
+      </tr>
+      <tr>
+        <td id="Llvm_NET_Values_AttributeKind_UWTable">UWTable</td>
+        <td></td>
+      </tr>
+      <tr>
+        <td id="Llvm_NET_Values_AttributeKind_WriteOnly">WriteOnly</td>
+        <td></td>
+      </tr>
+      <tr>
+        <td id="Llvm_NET_Values_AttributeKind_ZExt">ZExt</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </thead></thead></table>
   <h3 id="extensionmethods">Extension Methods</h3>
   <div>
       <a class="xref" href="Llvm.NET.Values.AttributeKindExtensions.GetAttributeName.html#Llvm_NET_Values_AttributeKindExtensions_GetAttributeName_Llvm_NET_Values_AttributeKind_">AttributeKindExtensions.GetAttributeName()</a>

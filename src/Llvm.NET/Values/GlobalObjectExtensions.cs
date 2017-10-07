@@ -16,7 +16,7 @@ namespace Llvm.NET.Values
 
             if(!self.ParentModule.Comdats.TryGetValue( name, out Comdat comdat ))
             {
-                comdat = self.ParentModule.Comdats.Add( name, kind );
+                comdat = self.ParentModule.Comdats.InsertOrUpdate( name, kind );
             }
             else
             {

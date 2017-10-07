@@ -50,6 +50,12 @@
                   <li class="active">
                     <a href="../api/index.html" title="Api Documentation" class="active">Api Documentation</a>
                   </li>
+                  <li class="">
+                    <a href="http://LLVM.org" title="LLVM.org" class="">LLVM.org</a>
+                  </li>
+                  <li class="">
+                    <a href="http://releases.llvm.org/5.0.0/docs/index.html" title="LLVM Docs" class="">LLVM Docs</a>
+                  </li>
                 </ul>
             </div>
           </div>
@@ -159,9 +165,6 @@
                               
                               <ul class="nav level3">
                                 <li class="">
-                                  <a href="Llvm.NET.ComdatCollection.Add.html" title="Add" class="">Add</a>
-                                </li>
-                                <li class="">
                                   <a href="Llvm.NET.ComdatCollection.Clear.html" title="Clear" class="">Clear</a>
                                 </li>
                                 <li class="">
@@ -172,6 +175,9 @@
                                 </li>
                                 <li class="">
                                   <a href="Llvm.NET.ComdatCollection.GetEnumerator.html" title="GetEnumerator" class="">GetEnumerator</a>
+                                </li>
+                                <li class="">
+                                  <a href="Llvm.NET.ComdatCollection.InsertOrUpdate.html" title="InsertOrUpdate" class="">InsertOrUpdate</a>
                                 </li>
                                 <li class="">
                                   <a href="Llvm.NET.ComdatCollection.Item.html" title="Item" class="">Item</a>
@@ -5080,9 +5086,6 @@
                                 </li>
                               </ul>  </li>
                           <li class="">
-                            <a href="Llvm.NET.Values.IAttributeCollection.html" title="IAttributeCollection" class="">IAttributeCollection</a>
-                          </li>
-                          <li class="">
                             <span class="expand-stub"></span>
                             <a href="Llvm.NET.Values.IAttributeContainer.html" title="IAttributeContainer" class="">IAttributeContainer</a>
                               
@@ -5198,72 +5201,75 @@
   <div class="markdown level0 conceptual"></div>
   
   
-  
   <div class="inheritedMembers">
-    <h5>Inherited Members</h5>
-    <div>
-      <a class="xref" href="Llvm.NET.Types.ITypeRef.TypeHandle.html#Llvm_NET_Types_ITypeRef_TypeHandle">ITypeRef.TypeHandle</a>
-    </div>
-    <div>
-      <a class="xref" href="Llvm.NET.Types.ITypeRef.IsSized.html#Llvm_NET_Types_ITypeRef_IsSized">ITypeRef.IsSized</a>
-    </div>
-    <div>
-      <a class="xref" href="Llvm.NET.Types.ITypeRef.Kind.html#Llvm_NET_Types_ITypeRef_Kind">ITypeRef.Kind</a>
-    </div>
-    <div>
-      <a class="xref" href="Llvm.NET.Types.ITypeRef.IsInteger.html#Llvm_NET_Types_ITypeRef_IsInteger">ITypeRef.IsInteger</a>
-    </div>
-    <div>
-      <a class="xref" href="Llvm.NET.Types.ITypeRef.IsFloat.html#Llvm_NET_Types_ITypeRef_IsFloat">ITypeRef.IsFloat</a>
-    </div>
-    <div>
-      <a class="xref" href="Llvm.NET.Types.ITypeRef.IsDouble.html#Llvm_NET_Types_ITypeRef_IsDouble">ITypeRef.IsDouble</a>
-    </div>
-    <div>
-      <a class="xref" href="Llvm.NET.Types.ITypeRef.IsVoid.html#Llvm_NET_Types_ITypeRef_IsVoid">ITypeRef.IsVoid</a>
-    </div>
-    <div>
-      <a class="xref" href="Llvm.NET.Types.ITypeRef.IsStruct.html#Llvm_NET_Types_ITypeRef_IsStruct">ITypeRef.IsStruct</a>
-    </div>
-    <div>
-      <a class="xref" href="Llvm.NET.Types.ITypeRef.IsPointer.html#Llvm_NET_Types_ITypeRef_IsPointer">ITypeRef.IsPointer</a>
-    </div>
-    <div>
-      <a class="xref" href="Llvm.NET.Types.ITypeRef.IsSequence.html#Llvm_NET_Types_ITypeRef_IsSequence">ITypeRef.IsSequence</a>
-    </div>
-    <div>
-      <a class="xref" href="Llvm.NET.Types.ITypeRef.IsFloatingPoint.html#Llvm_NET_Types_ITypeRef_IsFloatingPoint">ITypeRef.IsFloatingPoint</a>
-    </div>
-    <div>
-      <a class="xref" href="Llvm.NET.Types.ITypeRef.IsPointerPointer.html#Llvm_NET_Types_ITypeRef_IsPointerPointer">ITypeRef.IsPointerPointer</a>
-    </div>
-    <div>
-      <a class="xref" href="Llvm.NET.Types.ITypeRef.Context.html#Llvm_NET_Types_ITypeRef_Context">ITypeRef.Context</a>
-    </div>
-    <div>
-      <a class="xref" href="Llvm.NET.Types.ITypeRef.IntegerBitWidth.html#Llvm_NET_Types_ITypeRef_IntegerBitWidth">ITypeRef.IntegerBitWidth</a>
-    </div>
-    <div>
-      <a class="xref" href="Llvm.NET.Types.ITypeRef.GetNullValue.html#Llvm_NET_Types_ITypeRef_GetNullValue">ITypeRef.GetNullValue()</a>
-    </div>
-    <div>
-      <a class="xref" href="Llvm.NET.Types.ITypeRef.CreateArrayType.html#Llvm_NET_Types_ITypeRef_CreateArrayType_System_UInt32_">ITypeRef.CreateArrayType(UInt32)</a>
-    </div>
-    <div>
-      <a class="xref" href="Llvm.NET.Types.ITypeRef.CreatePointerType.html#Llvm_NET_Types_ITypeRef_CreatePointerType">ITypeRef.CreatePointerType()</a>
-    </div>
-    <div>
-      <a class="xref" href="Llvm.NET.Types.ITypeRef.CreatePointerType.html#Llvm_NET_Types_ITypeRef_CreatePointerType_System_UInt32_">ITypeRef.CreatePointerType(UInt32)</a>
-    </div>
-    <div>
-      <a class="xref" href="Llvm.NET.IExtensiblePropertyContainer.TryGetExtendedPropertyValue.html#Llvm_NET_IExtensiblePropertyContainer_TryGetExtendedPropertyValue__1_System_String___0__">IExtensiblePropertyContainer.TryGetExtendedPropertyValue&lt;T&gt;(String, T)</a>
-    </div>
-    <div>
-      <a class="xref" href="Llvm.NET.IExtensiblePropertyContainer.AddExtendedPropertyValue.html#Llvm_NET_IExtensiblePropertyContainer_AddExtendedPropertyValue_System_String_System_Object_">IExtensiblePropertyContainer.AddExtendedPropertyValue(String, Object)</a>
-    </div>
+      <h5 id="inheritedMembers-Llvm_NET_Types_IFunctionType">
+          <a href="#collapsible-inheritedMembers-Llvm_NET_Types_IFunctionType" class="expander collapsed" data-toggle="collapse" aria-expanded="false">Inherited Members</a>
+      </h5>
+      <div id="collapsible-inheritedMembers-Llvm_NET_Types_IFunctionType" class="collapse collapsed" aria-expanded="false">
+          <div>
+              <a class="xref" href="Llvm.NET.Types.ITypeRef.TypeHandle.html#Llvm_NET_Types_ITypeRef_TypeHandle">ITypeRef.TypeHandle</a>
+          </div>
+          <div>
+              <a class="xref" href="Llvm.NET.Types.ITypeRef.IsSized.html#Llvm_NET_Types_ITypeRef_IsSized">ITypeRef.IsSized</a>
+          </div>
+          <div>
+              <a class="xref" href="Llvm.NET.Types.ITypeRef.Kind.html#Llvm_NET_Types_ITypeRef_Kind">ITypeRef.Kind</a>
+          </div>
+          <div>
+              <a class="xref" href="Llvm.NET.Types.ITypeRef.IsInteger.html#Llvm_NET_Types_ITypeRef_IsInteger">ITypeRef.IsInteger</a>
+          </div>
+          <div>
+              <a class="xref" href="Llvm.NET.Types.ITypeRef.IsFloat.html#Llvm_NET_Types_ITypeRef_IsFloat">ITypeRef.IsFloat</a>
+          </div>
+          <div>
+              <a class="xref" href="Llvm.NET.Types.ITypeRef.IsDouble.html#Llvm_NET_Types_ITypeRef_IsDouble">ITypeRef.IsDouble</a>
+          </div>
+          <div>
+              <a class="xref" href="Llvm.NET.Types.ITypeRef.IsVoid.html#Llvm_NET_Types_ITypeRef_IsVoid">ITypeRef.IsVoid</a>
+          </div>
+          <div>
+              <a class="xref" href="Llvm.NET.Types.ITypeRef.IsStruct.html#Llvm_NET_Types_ITypeRef_IsStruct">ITypeRef.IsStruct</a>
+          </div>
+          <div>
+              <a class="xref" href="Llvm.NET.Types.ITypeRef.IsPointer.html#Llvm_NET_Types_ITypeRef_IsPointer">ITypeRef.IsPointer</a>
+          </div>
+          <div>
+              <a class="xref" href="Llvm.NET.Types.ITypeRef.IsSequence.html#Llvm_NET_Types_ITypeRef_IsSequence">ITypeRef.IsSequence</a>
+          </div>
+          <div>
+              <a class="xref" href="Llvm.NET.Types.ITypeRef.IsFloatingPoint.html#Llvm_NET_Types_ITypeRef_IsFloatingPoint">ITypeRef.IsFloatingPoint</a>
+          </div>
+          <div>
+              <a class="xref" href="Llvm.NET.Types.ITypeRef.IsPointerPointer.html#Llvm_NET_Types_ITypeRef_IsPointerPointer">ITypeRef.IsPointerPointer</a>
+          </div>
+          <div>
+              <a class="xref" href="Llvm.NET.Types.ITypeRef.Context.html#Llvm_NET_Types_ITypeRef_Context">ITypeRef.Context</a>
+          </div>
+          <div>
+              <a class="xref" href="Llvm.NET.Types.ITypeRef.IntegerBitWidth.html#Llvm_NET_Types_ITypeRef_IntegerBitWidth">ITypeRef.IntegerBitWidth</a>
+          </div>
+          <div>
+              <a class="xref" href="Llvm.NET.Types.ITypeRef.GetNullValue.html#Llvm_NET_Types_ITypeRef_GetNullValue">ITypeRef.GetNullValue()</a>
+          </div>
+          <div>
+              <a class="xref" href="Llvm.NET.Types.ITypeRef.CreateArrayType.html#Llvm_NET_Types_ITypeRef_CreateArrayType_System_UInt32_">ITypeRef.CreateArrayType(UInt32)</a>
+          </div>
+          <div>
+              <a class="xref" href="Llvm.NET.Types.ITypeRef.CreatePointerType.html#Llvm_NET_Types_ITypeRef_CreatePointerType">ITypeRef.CreatePointerType()</a>
+          </div>
+          <div>
+              <a class="xref" href="Llvm.NET.Types.ITypeRef.CreatePointerType.html#Llvm_NET_Types_ITypeRef_CreatePointerType_System_UInt32_">ITypeRef.CreatePointerType(UInt32)</a>
+          </div>
+          <div>
+              <a class="xref" href="Llvm.NET.IExtensiblePropertyContainer.TryGetExtendedPropertyValue.html#Llvm_NET_IExtensiblePropertyContainer_TryGetExtendedPropertyValue__1_System_String___0__">IExtensiblePropertyContainer.TryGetExtendedPropertyValue&lt;T&gt;(String, T)</a>
+          </div>
+          <div>
+              <a class="xref" href="Llvm.NET.IExtensiblePropertyContainer.AddExtendedPropertyValue.html#Llvm_NET_IExtensiblePropertyContainer_AddExtendedPropertyValue_System_String_System_Object_">IExtensiblePropertyContainer.AddExtendedPropertyValue(String, Object)</a>
+          </div>
+      </div>
   </div>
   
-  <h6><strong>Namespace</strong>: System.Dynamic.ExpandoObject</h6>
+  <h6><strong>Namespace</strong>: <a class="xref" href="Llvm.NET.Types.html">Llvm.NET.Types</a></h6>
   <h6><strong>Assembly</strong>: Llvm.NET.dll</h6>
   
   <h5 id="Llvm_NET_Types_IFunctionType_syntax">Syntax</h5>

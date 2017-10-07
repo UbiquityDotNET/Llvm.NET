@@ -5,7 +5,7 @@ using System.Linq;
 namespace Llvm.NET.Values
 {
     internal class ValueAttributeCollection
-        : IAttributeCollection
+        : ICollection<AttributeValue>
     {
         public ValueAttributeCollection(IAttributeAccessor container, FunctionAttributeIndex index )
         {

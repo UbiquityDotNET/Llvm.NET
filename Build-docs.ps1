@@ -153,16 +153,15 @@ if(!(Test-Path 'tools\memberpage\content' -PathType Container))
     Invoke-NuGet install memberpage -ExcludeVersion -OutputDirectory tools
 }
 
-if(!$env:DOCFXTOOL)
+$docfxPath = Find-OnPath docfx.exe -ErrorAction Continue
+if(!$docfxPath)
 {
-    $docfxPath = Find-OnPath docfx.exe -ErrorAction Continue
-    if(!$docfxPath)
+    $docfxPath = Join-Path $PSScriptRoot 'tools'
+    Invoke-NuGet install docfx.console -Verbosity quiet -ExcludeVersion -OutputDirectory $docfxPath
+    $docfxPath = Join-Path $docfxPath 'docfx.console\tools'
+    if( ( $env:Path -split ';' ) -inotcontains $docfxPath )
     {
-        $docfxPath = Join-Path $PSScriptRoot 'tools'
-        Invoke-NuGet install docfx.console -Verbosity quiet -ExcludeVersion -OutputDirectory $docfxPath
-        $docfxPath = Join-Path $docfxPath 'docfx.console\tools'
         $env:Path = "$env:Path;$docfxPath"
-        $env:DOCFXTOOL=Join-Path $docfxPath 'docfx.exe'
     }
 }
 
@@ -177,7 +176,7 @@ Write-Information "Generating docs"
 pushd docfx
 try
 {
-    docfx docfx.json -t 'statictoc,templates\Ubiquity,..\tools\memberpage\content'
+    docfx
 }
 finally
 {

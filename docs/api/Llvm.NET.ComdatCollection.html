@@ -50,6 +50,12 @@
                   <li class="active">
                     <a href="../api/index.html" title="Api Documentation" class="active">Api Documentation</a>
                   </li>
+                  <li class="">
+                    <a href="http://LLVM.org" title="LLVM.org" class="">LLVM.org</a>
+                  </li>
+                  <li class="">
+                    <a href="http://releases.llvm.org/5.0.0/docs/index.html" title="LLVM Docs" class="">LLVM Docs</a>
+                  </li>
                 </ul>
             </div>
           </div>
@@ -159,9 +165,6 @@
                               
                               <ul class="nav level3">
                                 <li class="">
-                                  <a href="Llvm.NET.ComdatCollection.Add.html" title="Add" class="">Add</a>
-                                </li>
-                                <li class="">
                                   <a href="Llvm.NET.ComdatCollection.Clear.html" title="Clear" class="">Clear</a>
                                 </li>
                                 <li class="">
@@ -172,6 +175,9 @@
                                 </li>
                                 <li class="">
                                   <a href="Llvm.NET.ComdatCollection.GetEnumerator.html" title="GetEnumerator" class="">GetEnumerator</a>
+                                </li>
+                                <li class="">
+                                  <a href="Llvm.NET.ComdatCollection.InsertOrUpdate.html" title="InsertOrUpdate" class="">InsertOrUpdate</a>
                                 </li>
                                 <li class="">
                                   <a href="Llvm.NET.ComdatCollection.Item.html" title="Item" class="">Item</a>
@@ -5080,9 +5086,6 @@
                                 </li>
                               </ul>  </li>
                           <li class="">
-                            <a href="Llvm.NET.Values.IAttributeCollection.html" title="IAttributeCollection" class="">IAttributeCollection</a>
-                          </li>
-                          <li class="">
                             <span class="expand-stub"></span>
                             <a href="Llvm.NET.Values.IAttributeContainer.html" title="IAttributeContainer" class="">IAttributeContainer</a>
                               
@@ -5193,42 +5196,48 @@
   
   <h1 id="Llvm_NET_ComdatCollection" data-uid="Llvm.NET.ComdatCollection">Class ComdatCollection
   </h1>
-  <div class="markdown level0 summary"></div>
+  <div class="markdown level0 summary"><p>Collection of <a class="xref" href="Llvm.NET.Comdat.html">Comdat</a> entries for a module</p>
+</div>
   <div class="markdown level0 conceptual"></div>
   
   <div class="inheritance">
-    <h5>Inheritance</h5>
-    <div class="level0"><a class="xref" href="https://msdn.microsoft.com/en-us/library/system.object(v=vs.110).aspx">Object</a></div>
-    <div class="level1"><span class="xref">ComdatCollection</span></div>
+    <h5 id="inheritance-Llvm_NET_ComdatCollection"><a href="#collapsible-inheritance-Llvm_NET_ComdatCollection" class="expander collapsed" data-toggle="collapse" aria-expanded="false">Inheritance</a></h5>
+    <div id="collapsible-inheritance-Llvm_NET_ComdatCollection" class="collapse collapsed" aria-expanded="false">
+      <div class="level0"><a class="xref" href="https://msdn.microsoft.com/en-us/library/system.object(v=vs.110).aspx">Object</a></div>
+      <div class="level1"><span class="xref">ComdatCollection</span></div>
+    </div>
   </div>
-  
   
   <div class="inheritedMembers">
-    <h5>Inherited Members</h5>
-    <div>
-      <a class="xref" href="https://msdn.microsoft.com/en-us/library/7bxwbwt2(v=vs.110).aspx">Object.ToString()</a>
-    </div>
-    <div>
-      <a class="xref" href="https://msdn.microsoft.com/en-us/library/bsc2ak47(v=vs.110).aspx">Object.Equals(Object)</a>
-    </div>
-    <div>
-      <a class="xref" href="https://msdn.microsoft.com/en-us/library/w4hkze5k(v=vs.110).aspx">Object.Equals(Object, Object)</a>
-    </div>
-    <div>
-      <a class="xref" href="https://msdn.microsoft.com/en-us/library/hz2a0b8x(v=vs.110).aspx">Object.ReferenceEquals(Object, Object)</a>
-    </div>
-    <div>
-      <a class="xref" href="https://msdn.microsoft.com/en-us/library/zdee4b3y(v=vs.110).aspx">Object.GetHashCode()</a>
-    </div>
-    <div>
-      <a class="xref" href="https://msdn.microsoft.com/en-us/library/dfwy45w9(v=vs.110).aspx">Object.GetType()</a>
-    </div>
-    <div>
-      <a class="xref" href="https://msdn.microsoft.com/en-us/library/57ctke0a(v=vs.110).aspx">Object.MemberwiseClone()</a>
-    </div>
+      <h5 id="inheritedMembers-Llvm_NET_ComdatCollection">
+          <a href="#collapsible-inheritedMembers-Llvm_NET_ComdatCollection" class="expander collapsed" data-toggle="collapse" aria-expanded="false">Inherited Members</a>
+      </h5>
+      <div id="collapsible-inheritedMembers-Llvm_NET_ComdatCollection" class="collapse collapsed" aria-expanded="false">
+          <div>
+              <a class="xref" href="https://msdn.microsoft.com/en-us/library/7bxwbwt2(v=vs.110).aspx">Object.ToString()</a>
+          </div>
+          <div>
+              <a class="xref" href="https://msdn.microsoft.com/en-us/library/bsc2ak47(v=vs.110).aspx">Object.Equals(Object)</a>
+          </div>
+          <div>
+              <a class="xref" href="https://msdn.microsoft.com/en-us/library/w4hkze5k(v=vs.110).aspx">Object.Equals(Object, Object)</a>
+          </div>
+          <div>
+              <a class="xref" href="https://msdn.microsoft.com/en-us/library/hz2a0b8x(v=vs.110).aspx">Object.ReferenceEquals(Object, Object)</a>
+          </div>
+          <div>
+              <a class="xref" href="https://msdn.microsoft.com/en-us/library/zdee4b3y(v=vs.110).aspx">Object.GetHashCode()</a>
+          </div>
+          <div>
+              <a class="xref" href="https://msdn.microsoft.com/en-us/library/dfwy45w9(v=vs.110).aspx">Object.GetType()</a>
+          </div>
+          <div>
+              <a class="xref" href="https://msdn.microsoft.com/en-us/library/57ctke0a(v=vs.110).aspx">Object.MemberwiseClone()</a>
+          </div>
+      </div>
   </div>
   
-  <h6><strong>Namespace</strong>: System.Dynamic.ExpandoObject</h6>
+  <h6><strong>Namespace</strong>: <a class="xref" href="Llvm.NET.html">Llvm.NET</a></h6>
   <h6><strong>Assembly</strong>: Llvm.NET.dll</h6>
   
   <h5 id="Llvm_NET_ComdatCollection_syntax">Syntax</h5>
@@ -5239,6 +5248,10 @@
   
   
   
+  <h5 id="Llvm_NET_ComdatCollection_remarks"><strong>Remarks</strong></h5>
+  <div class="markdown level0 remarks"><p>This type is used to provide enumeration and manipulation of <a class="xref" href="Llvm.NET.Comdat.html">Comdat</a>s
+in the module.</p>
+</div>
   
   <h3 id="properties">Properties
   </h3>
@@ -5254,13 +5267,15 @@
         <td id="Llvm_NET_ComdatCollection_Count" data-uid="Llvm.NET.ComdatCollection.Count">
           <a class="xref" href="Llvm.NET.ComdatCollection.Count.html#Llvm_NET_ComdatCollection_Count">Count</a>
         </td>
-        <td class="markdown level1 summary"></td>
+        <td class="markdown level1 summary"><p>Number of items in the collection</p>
+</td>
       </tr>
       <tr>
         <td id="Llvm_NET_ComdatCollection_Item_System_String_" data-uid="Llvm.NET.ComdatCollection.Item(System.String)">
           <a class="xref" href="Llvm.NET.ComdatCollection.Item.html#Llvm_NET_ComdatCollection_Item_System_String_">Item[String]</a>
         </td>
-        <td class="markdown level1 summary"></td>
+        <td class="markdown level1 summary"><p>Retrieves <a class="xref" href="Llvm.NET.Comdat.html">Comdat</a> by its name</p>
+</td>
       </tr>
     </tbody>
   </table>
@@ -5275,16 +5290,11 @@
     </thead>
     <tbody>
       <tr>
-        <td id="Llvm_NET_ComdatCollection_Add_System_String_Llvm_NET_ComdatKind_" data-uid="Llvm.NET.ComdatCollection.Add(System.String,Llvm.NET.ComdatKind)">
-          <a class="xref" href="Llvm.NET.ComdatCollection.Add.html#Llvm_NET_ComdatCollection_Add_System_String_Llvm_NET_ComdatKind_">Add(String, ComdatKind)</a>
-        </td>
-        <td class="markdown level1 summary"></td>
-      </tr>
-      <tr>
         <td id="Llvm_NET_ComdatCollection_Clear" data-uid="Llvm.NET.ComdatCollection.Clear">
           <a class="xref" href="Llvm.NET.ComdatCollection.Clear.html#Llvm_NET_ComdatCollection_Clear">Clear()</a>
         </td>
-        <td class="markdown level1 summary"></td>
+        <td class="markdown level1 summary"><p>Removes all the <a class="xref" href="Llvm.NET.Comdat.html">Comdat</a> entries from the module</p>
+</td>
       </tr>
       <tr>
         <td id="Llvm_NET_ComdatCollection_Contains_System_String_" data-uid="Llvm.NET.ComdatCollection.Contains(System.String)">
@@ -5299,16 +5309,25 @@
         <td class="markdown level1 summary"></td>
       </tr>
       <tr>
+        <td id="Llvm_NET_ComdatCollection_InsertOrUpdate_System_String_Llvm_NET_ComdatKind_" data-uid="Llvm.NET.ComdatCollection.InsertOrUpdate(System.String,Llvm.NET.ComdatKind)">
+          <a class="xref" href="Llvm.NET.ComdatCollection.InsertOrUpdate.html#Llvm_NET_ComdatCollection_InsertOrUpdate_System_String_Llvm_NET_ComdatKind_">InsertOrUpdate(String, ComdatKind)</a>
+        </td>
+        <td class="markdown level1 summary"><p>Inserts or updates a <a class="xref" href="Llvm.NET.Comdat.html">Comdat</a> entry</p>
+</td>
+      </tr>
+      <tr>
         <td id="Llvm_NET_ComdatCollection_Remove_System_String_" data-uid="Llvm.NET.ComdatCollection.Remove(System.String)">
           <a class="xref" href="Llvm.NET.ComdatCollection.Remove.html#Llvm_NET_ComdatCollection_Remove_System_String_">Remove(String)</a>
         </td>
-        <td class="markdown level1 summary"></td>
+        <td class="markdown level1 summary"><p>Removes a <a class="xref" href="Llvm.NET.Comdat.html">Comdat</a> entry from the module</p>
+</td>
       </tr>
       <tr>
         <td id="Llvm_NET_ComdatCollection_TryGetValue_System_String_Llvm_NET_Comdat__" data-uid="Llvm.NET.ComdatCollection.TryGetValue(System.String,Llvm.NET.Comdat@)">
           <a class="xref" href="Llvm.NET.ComdatCollection.TryGetValue.html#Llvm_NET_ComdatCollection_TryGetValue_System_String_Llvm_NET_Comdat__">TryGetValue(String, out Comdat)</a>
         </td>
-        <td class="markdown level1 summary"></td>
+        <td class="markdown level1 summary"><p>Gets a value form the collection if it exists</p>
+</td>
       </tr>
     </tbody>
   </table>
@@ -5334,7 +5353,7 @@
           </div>
           <div class="contribution-panel mobile-hide">
               <a href="https://github.com/smaillet/Llvm.NET/new/docfx/apiSpec/new?filename=Llvm_NET_ComdatCollection.md&amp;value=---%0Auid%3A%20Llvm.NET.ComdatCollection%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A" title="Improve this Doc" class="fab btn-warning pull-right"><i class="glyphicon glyphicon-pencil"></i></a>
-              <a href="https://github.com/smaillet/Llvm.NET/blob/docfx/src/Llvm.NET/ComdatCollection.cs/#L10" title="View Source" class="fab btn-info pull-right"><i class="fa fa-code"></i></a>
+              <a href="https://github.com/smaillet/Llvm.NET/blob/docfx/src/Llvm.NET/ComdatCollection.cs/#L16" title="View Source" class="fab btn-info pull-right"><i class="fa fa-code"></i></a>
           </div>
           
           <div class="hidden-sm col-md-2" role="complementary">

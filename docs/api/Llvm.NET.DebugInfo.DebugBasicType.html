@@ -50,6 +50,12 @@
                   <li class="active">
                     <a href="../api/index.html" title="Api Documentation" class="active">Api Documentation</a>
                   </li>
+                  <li class="">
+                    <a href="http://LLVM.org" title="LLVM.org" class="">LLVM.org</a>
+                  </li>
+                  <li class="">
+                    <a href="http://releases.llvm.org/5.0.0/docs/index.html" title="LLVM Docs" class="">LLVM Docs</a>
+                  </li>
                 </ul>
             </div>
           </div>
@@ -159,9 +165,6 @@
                               
                               <ul class="nav level3">
                                 <li class="">
-                                  <a href="Llvm.NET.ComdatCollection.Add.html" title="Add" class="">Add</a>
-                                </li>
-                                <li class="">
                                   <a href="Llvm.NET.ComdatCollection.Clear.html" title="Clear" class="">Clear</a>
                                 </li>
                                 <li class="">
@@ -172,6 +175,9 @@
                                 </li>
                                 <li class="">
                                   <a href="Llvm.NET.ComdatCollection.GetEnumerator.html" title="GetEnumerator" class="">GetEnumerator</a>
+                                </li>
+                                <li class="">
+                                  <a href="Llvm.NET.ComdatCollection.InsertOrUpdate.html" title="InsertOrUpdate" class="">InsertOrUpdate</a>
                                 </li>
                                 <li class="">
                                   <a href="Llvm.NET.ComdatCollection.Item.html" title="Item" class="">Item</a>
@@ -5080,9 +5086,6 @@
                                 </li>
                               </ul>  </li>
                           <li class="">
-                            <a href="Llvm.NET.Values.IAttributeCollection.html" title="IAttributeCollection" class="">IAttributeCollection</a>
-                          </li>
-                          <li class="">
                             <span class="expand-stub"></span>
                             <a href="Llvm.NET.Values.IAttributeContainer.html" title="IAttributeContainer" class="">IAttributeContainer</a>
                               
@@ -5198,111 +5201,116 @@
   <div class="markdown level0 conceptual"></div>
   
   <div class="inheritance">
-    <h5>Inheritance</h5>
-    <div class="level0"><a class="xref" href="https://msdn.microsoft.com/en-us/library/system.object(v=vs.110).aspx">Object</a></div>
-    <div class="level1"><a class="xref" href="Llvm.NET.DebugInfo.DebugType-2.html">DebugType</a>&lt;<a class="xref" href="Llvm.NET.Types.ITypeRef.html">ITypeRef</a>, <a class="xref" href="Llvm.NET.DebugInfo.DIBasicType.html">DIBasicType</a>&gt;</div>
-    <div class="level2"><span class="xref">DebugBasicType</span></div>
+    <h5 id="inheritance-Llvm_NET_DebugInfo_DebugBasicType"><a href="#collapsible-inheritance-Llvm_NET_DebugInfo_DebugBasicType" class="expander collapsed" data-toggle="collapse" aria-expanded="false">Inheritance</a></h5>
+    <div id="collapsible-inheritance-Llvm_NET_DebugInfo_DebugBasicType" class="collapse collapsed" aria-expanded="false">
+      <div class="level0"><a class="xref" href="https://msdn.microsoft.com/en-us/library/system.object(v=vs.110).aspx">Object</a></div>
+      <div class="level1"><a class="xref" href="Llvm.NET.DebugInfo.DebugType-2.html">DebugType</a>&lt;<a class="xref" href="Llvm.NET.Types.ITypeRef.html">ITypeRef</a>, <a class="xref" href="Llvm.NET.DebugInfo.DIBasicType.html">DIBasicType</a>&gt;</div>
+      <div class="level2"><span class="xref">DebugBasicType</span></div>
+    </div>
   </div>
-  
   
   <div class="inheritedMembers">
-    <h5>Inherited Members</h5>
-    <div>
-      <a class="xref" href="Llvm.NET.DebugInfo.DebugType-2.DIType.html#Llvm_NET_DebugInfo_DebugType_2_DIType">DebugType&lt;ITypeRef, DIBasicType&gt;.DIType</a>
-    </div>
-    <div>
-      <a class="xref" href="Llvm.NET.DebugInfo.DebugType-2.NativeType.html#Llvm_NET_DebugInfo_DebugType_2_NativeType">DebugType&lt;ITypeRef, DIBasicType&gt;.NativeType</a>
-    </div>
-    <div>
-      <a class="xref" href="Llvm.NET.DebugInfo.DebugType-2.TypeHandle.html#Llvm_NET_DebugInfo_DebugType_2_TypeHandle">DebugType&lt;ITypeRef, DIBasicType&gt;.TypeHandle</a>
-    </div>
-    <div>
-      <a class="xref" href="Llvm.NET.DebugInfo.DebugType-2.IsSized.html#Llvm_NET_DebugInfo_DebugType_2_IsSized">DebugType&lt;ITypeRef, DIBasicType&gt;.IsSized</a>
-    </div>
-    <div>
-      <a class="xref" href="Llvm.NET.DebugInfo.DebugType-2.Kind.html#Llvm_NET_DebugInfo_DebugType_2_Kind">DebugType&lt;ITypeRef, DIBasicType&gt;.Kind</a>
-    </div>
-    <div>
-      <a class="xref" href="Llvm.NET.DebugInfo.DebugType-2.Context.html#Llvm_NET_DebugInfo_DebugType_2_Context">DebugType&lt;ITypeRef, DIBasicType&gt;.Context</a>
-    </div>
-    <div>
-      <a class="xref" href="Llvm.NET.DebugInfo.DebugType-2.IntegerBitWidth.html#Llvm_NET_DebugInfo_DebugType_2_IntegerBitWidth">DebugType&lt;ITypeRef, DIBasicType&gt;.IntegerBitWidth</a>
-    </div>
-    <div>
-      <a class="xref" href="Llvm.NET.DebugInfo.DebugType-2.IsInteger.html#Llvm_NET_DebugInfo_DebugType_2_IsInteger">DebugType&lt;ITypeRef, DIBasicType&gt;.IsInteger</a>
-    </div>
-    <div>
-      <a class="xref" href="Llvm.NET.DebugInfo.DebugType-2.IsFloat.html#Llvm_NET_DebugInfo_DebugType_2_IsFloat">DebugType&lt;ITypeRef, DIBasicType&gt;.IsFloat</a>
-    </div>
-    <div>
-      <a class="xref" href="Llvm.NET.DebugInfo.DebugType-2.IsDouble.html#Llvm_NET_DebugInfo_DebugType_2_IsDouble">DebugType&lt;ITypeRef, DIBasicType&gt;.IsDouble</a>
-    </div>
-    <div>
-      <a class="xref" href="Llvm.NET.DebugInfo.DebugType-2.IsVoid.html#Llvm_NET_DebugInfo_DebugType_2_IsVoid">DebugType&lt;ITypeRef, DIBasicType&gt;.IsVoid</a>
-    </div>
-    <div>
-      <a class="xref" href="Llvm.NET.DebugInfo.DebugType-2.IsStruct.html#Llvm_NET_DebugInfo_DebugType_2_IsStruct">DebugType&lt;ITypeRef, DIBasicType&gt;.IsStruct</a>
-    </div>
-    <div>
-      <a class="xref" href="Llvm.NET.DebugInfo.DebugType-2.IsPointer.html#Llvm_NET_DebugInfo_DebugType_2_IsPointer">DebugType&lt;ITypeRef, DIBasicType&gt;.IsPointer</a>
-    </div>
-    <div>
-      <a class="xref" href="Llvm.NET.DebugInfo.DebugType-2.IsSequence.html#Llvm_NET_DebugInfo_DebugType_2_IsSequence">DebugType&lt;ITypeRef, DIBasicType&gt;.IsSequence</a>
-    </div>
-    <div>
-      <a class="xref" href="Llvm.NET.DebugInfo.DebugType-2.IsFloatingPoint.html#Llvm_NET_DebugInfo_DebugType_2_IsFloatingPoint">DebugType&lt;ITypeRef, DIBasicType&gt;.IsFloatingPoint</a>
-    </div>
-    <div>
-      <a class="xref" href="Llvm.NET.DebugInfo.DebugType-2.IsPointerPointer.html#Llvm_NET_DebugInfo_DebugType_2_IsPointerPointer">DebugType&lt;ITypeRef, DIBasicType&gt;.IsPointerPointer</a>
-    </div>
-    <div>
-      <a class="xref" href="Llvm.NET.DebugInfo.DebugType-2.GetNullValue.html#Llvm_NET_DebugInfo_DebugType_2_GetNullValue">DebugType&lt;ITypeRef, DIBasicType&gt;.GetNullValue()</a>
-    </div>
-    <div>
-      <a class="xref" href="Llvm.NET.DebugInfo.DebugType-2.CreateArrayType.html#Llvm_NET_DebugInfo_DebugType_2_CreateArrayType_System_UInt32_">DebugType&lt;ITypeRef, DIBasicType&gt;.CreateArrayType(UInt32)</a>
-    </div>
-    <div>
-      <a class="xref" href="Llvm.NET.DebugInfo.DebugType-2.CreatePointerType.html#Llvm_NET_DebugInfo_DebugType_2_CreatePointerType">DebugType&lt;ITypeRef, DIBasicType&gt;.CreatePointerType()</a>
-    </div>
-    <div>
-      <a class="xref" href="Llvm.NET.DebugInfo.DebugType-2.CreatePointerType.html#Llvm_NET_DebugInfo_DebugType_2_CreatePointerType_System_UInt32_">DebugType&lt;ITypeRef, DIBasicType&gt;.CreatePointerType(UInt32)</a>
-    </div>
-    <div>
-      <a class="xref" href="Llvm.NET.DebugInfo.DebugType-2.CreatePointerType.html#Llvm_NET_DebugInfo_DebugType_2_CreatePointerType_Llvm_NET_NativeModule_System_UInt32_">DebugType&lt;ITypeRef, DIBasicType&gt;.CreatePointerType(NativeModule, UInt32)</a>
-    </div>
-    <div>
-      <a class="xref" href="Llvm.NET.DebugInfo.DebugType-2.CreateArrayType.html#Llvm_NET_DebugInfo_DebugType_2_CreateArrayType_Llvm_NET_NativeModule_System_UInt32_System_UInt32_">DebugType&lt;ITypeRef, DIBasicType&gt;.CreateArrayType(NativeModule, UInt32, UInt32)</a>
-    </div>
-    <div>
-      <a class="xref" href="Llvm.NET.DebugInfo.DebugType-2.TryGetExtendedPropertyValue.html#Llvm_NET_DebugInfo_DebugType_2_TryGetExtendedPropertyValue__1_System_String___0__">DebugType&lt;ITypeRef, DIBasicType&gt;.TryGetExtendedPropertyValue&lt;TProperty&gt;(String, TProperty)</a>
-    </div>
-    <div>
-      <a class="xref" href="Llvm.NET.DebugInfo.DebugType-2.AddExtendedPropertyValue.html#Llvm_NET_DebugInfo_DebugType_2_AddExtendedPropertyValue_System_String_System_Object_">DebugType&lt;ITypeRef, DIBasicType&gt;.AddExtendedPropertyValue(String, Object)</a>
-    </div>
-    <div>
-      <a class="xref" href="https://msdn.microsoft.com/en-us/library/7bxwbwt2(v=vs.110).aspx">Object.ToString()</a>
-    </div>
-    <div>
-      <a class="xref" href="https://msdn.microsoft.com/en-us/library/bsc2ak47(v=vs.110).aspx">Object.Equals(Object)</a>
-    </div>
-    <div>
-      <a class="xref" href="https://msdn.microsoft.com/en-us/library/w4hkze5k(v=vs.110).aspx">Object.Equals(Object, Object)</a>
-    </div>
-    <div>
-      <a class="xref" href="https://msdn.microsoft.com/en-us/library/hz2a0b8x(v=vs.110).aspx">Object.ReferenceEquals(Object, Object)</a>
-    </div>
-    <div>
-      <a class="xref" href="https://msdn.microsoft.com/en-us/library/zdee4b3y(v=vs.110).aspx">Object.GetHashCode()</a>
-    </div>
-    <div>
-      <a class="xref" href="https://msdn.microsoft.com/en-us/library/dfwy45w9(v=vs.110).aspx">Object.GetType()</a>
-    </div>
-    <div>
-      <a class="xref" href="https://msdn.microsoft.com/en-us/library/57ctke0a(v=vs.110).aspx">Object.MemberwiseClone()</a>
-    </div>
+      <h5 id="inheritedMembers-Llvm_NET_DebugInfo_DebugBasicType">
+          <a href="#collapsible-inheritedMembers-Llvm_NET_DebugInfo_DebugBasicType" class="expander collapsed" data-toggle="collapse" aria-expanded="false">Inherited Members</a>
+      </h5>
+      <div id="collapsible-inheritedMembers-Llvm_NET_DebugInfo_DebugBasicType" class="collapse collapsed" aria-expanded="false">
+          <div>
+              <a class="xref" href="Llvm.NET.DebugInfo.DebugType-2.DIType.html#Llvm_NET_DebugInfo_DebugType_2_DIType">DebugType&lt;ITypeRef, DIBasicType&gt;.DIType</a>
+          </div>
+          <div>
+              <a class="xref" href="Llvm.NET.DebugInfo.DebugType-2.NativeType.html#Llvm_NET_DebugInfo_DebugType_2_NativeType">DebugType&lt;ITypeRef, DIBasicType&gt;.NativeType</a>
+          </div>
+          <div>
+              <a class="xref" href="Llvm.NET.DebugInfo.DebugType-2.TypeHandle.html#Llvm_NET_DebugInfo_DebugType_2_TypeHandle">DebugType&lt;ITypeRef, DIBasicType&gt;.TypeHandle</a>
+          </div>
+          <div>
+              <a class="xref" href="Llvm.NET.DebugInfo.DebugType-2.IsSized.html#Llvm_NET_DebugInfo_DebugType_2_IsSized">DebugType&lt;ITypeRef, DIBasicType&gt;.IsSized</a>
+          </div>
+          <div>
+              <a class="xref" href="Llvm.NET.DebugInfo.DebugType-2.Kind.html#Llvm_NET_DebugInfo_DebugType_2_Kind">DebugType&lt;ITypeRef, DIBasicType&gt;.Kind</a>
+          </div>
+          <div>
+              <a class="xref" href="Llvm.NET.DebugInfo.DebugType-2.Context.html#Llvm_NET_DebugInfo_DebugType_2_Context">DebugType&lt;ITypeRef, DIBasicType&gt;.Context</a>
+          </div>
+          <div>
+              <a class="xref" href="Llvm.NET.DebugInfo.DebugType-2.IntegerBitWidth.html#Llvm_NET_DebugInfo_DebugType_2_IntegerBitWidth">DebugType&lt;ITypeRef, DIBasicType&gt;.IntegerBitWidth</a>
+          </div>
+          <div>
+              <a class="xref" href="Llvm.NET.DebugInfo.DebugType-2.IsInteger.html#Llvm_NET_DebugInfo_DebugType_2_IsInteger">DebugType&lt;ITypeRef, DIBasicType&gt;.IsInteger</a>
+          </div>
+          <div>
+              <a class="xref" href="Llvm.NET.DebugInfo.DebugType-2.IsFloat.html#Llvm_NET_DebugInfo_DebugType_2_IsFloat">DebugType&lt;ITypeRef, DIBasicType&gt;.IsFloat</a>
+          </div>
+          <div>
+              <a class="xref" href="Llvm.NET.DebugInfo.DebugType-2.IsDouble.html#Llvm_NET_DebugInfo_DebugType_2_IsDouble">DebugType&lt;ITypeRef, DIBasicType&gt;.IsDouble</a>
+          </div>
+          <div>
+              <a class="xref" href="Llvm.NET.DebugInfo.DebugType-2.IsVoid.html#Llvm_NET_DebugInfo_DebugType_2_IsVoid">DebugType&lt;ITypeRef, DIBasicType&gt;.IsVoid</a>
+          </div>
+          <div>
+              <a class="xref" href="Llvm.NET.DebugInfo.DebugType-2.IsStruct.html#Llvm_NET_DebugInfo_DebugType_2_IsStruct">DebugType&lt;ITypeRef, DIBasicType&gt;.IsStruct</a>
+          </div>
+          <div>
+              <a class="xref" href="Llvm.NET.DebugInfo.DebugType-2.IsPointer.html#Llvm_NET_DebugInfo_DebugType_2_IsPointer">DebugType&lt;ITypeRef, DIBasicType&gt;.IsPointer</a>
+          </div>
+          <div>
+              <a class="xref" href="Llvm.NET.DebugInfo.DebugType-2.IsSequence.html#Llvm_NET_DebugInfo_DebugType_2_IsSequence">DebugType&lt;ITypeRef, DIBasicType&gt;.IsSequence</a>
+          </div>
+          <div>
+              <a class="xref" href="Llvm.NET.DebugInfo.DebugType-2.IsFloatingPoint.html#Llvm_NET_DebugInfo_DebugType_2_IsFloatingPoint">DebugType&lt;ITypeRef, DIBasicType&gt;.IsFloatingPoint</a>
+          </div>
+          <div>
+              <a class="xref" href="Llvm.NET.DebugInfo.DebugType-2.IsPointerPointer.html#Llvm_NET_DebugInfo_DebugType_2_IsPointerPointer">DebugType&lt;ITypeRef, DIBasicType&gt;.IsPointerPointer</a>
+          </div>
+          <div>
+              <a class="xref" href="Llvm.NET.DebugInfo.DebugType-2.GetNullValue.html#Llvm_NET_DebugInfo_DebugType_2_GetNullValue">DebugType&lt;ITypeRef, DIBasicType&gt;.GetNullValue()</a>
+          </div>
+          <div>
+              <a class="xref" href="Llvm.NET.DebugInfo.DebugType-2.CreateArrayType.html#Llvm_NET_DebugInfo_DebugType_2_CreateArrayType_System_UInt32_">DebugType&lt;ITypeRef, DIBasicType&gt;.CreateArrayType(UInt32)</a>
+          </div>
+          <div>
+              <a class="xref" href="Llvm.NET.DebugInfo.DebugType-2.CreatePointerType.html#Llvm_NET_DebugInfo_DebugType_2_CreatePointerType">DebugType&lt;ITypeRef, DIBasicType&gt;.CreatePointerType()</a>
+          </div>
+          <div>
+              <a class="xref" href="Llvm.NET.DebugInfo.DebugType-2.CreatePointerType.html#Llvm_NET_DebugInfo_DebugType_2_CreatePointerType_System_UInt32_">DebugType&lt;ITypeRef, DIBasicType&gt;.CreatePointerType(UInt32)</a>
+          </div>
+          <div>
+              <a class="xref" href="Llvm.NET.DebugInfo.DebugType-2.CreatePointerType.html#Llvm_NET_DebugInfo_DebugType_2_CreatePointerType_Llvm_NET_NativeModule_System_UInt32_">DebugType&lt;ITypeRef, DIBasicType&gt;.CreatePointerType(NativeModule, UInt32)</a>
+          </div>
+          <div>
+              <a class="xref" href="Llvm.NET.DebugInfo.DebugType-2.CreateArrayType.html#Llvm_NET_DebugInfo_DebugType_2_CreateArrayType_Llvm_NET_NativeModule_System_UInt32_System_UInt32_">DebugType&lt;ITypeRef, DIBasicType&gt;.CreateArrayType(NativeModule, UInt32, UInt32)</a>
+          </div>
+          <div>
+              <a class="xref" href="Llvm.NET.DebugInfo.DebugType-2.TryGetExtendedPropertyValue.html#Llvm_NET_DebugInfo_DebugType_2_TryGetExtendedPropertyValue__1_System_String___0__">DebugType&lt;ITypeRef, DIBasicType&gt;.TryGetExtendedPropertyValue&lt;TProperty&gt;(String, TProperty)</a>
+          </div>
+          <div>
+              <a class="xref" href="Llvm.NET.DebugInfo.DebugType-2.AddExtendedPropertyValue.html#Llvm_NET_DebugInfo_DebugType_2_AddExtendedPropertyValue_System_String_System_Object_">DebugType&lt;ITypeRef, DIBasicType&gt;.AddExtendedPropertyValue(String, Object)</a>
+          </div>
+          <div>
+              <a class="xref" href="https://msdn.microsoft.com/en-us/library/7bxwbwt2(v=vs.110).aspx">Object.ToString()</a>
+          </div>
+          <div>
+              <a class="xref" href="https://msdn.microsoft.com/en-us/library/bsc2ak47(v=vs.110).aspx">Object.Equals(Object)</a>
+          </div>
+          <div>
+              <a class="xref" href="https://msdn.microsoft.com/en-us/library/w4hkze5k(v=vs.110).aspx">Object.Equals(Object, Object)</a>
+          </div>
+          <div>
+              <a class="xref" href="https://msdn.microsoft.com/en-us/library/hz2a0b8x(v=vs.110).aspx">Object.ReferenceEquals(Object, Object)</a>
+          </div>
+          <div>
+              <a class="xref" href="https://msdn.microsoft.com/en-us/library/zdee4b3y(v=vs.110).aspx">Object.GetHashCode()</a>
+          </div>
+          <div>
+              <a class="xref" href="https://msdn.microsoft.com/en-us/library/dfwy45w9(v=vs.110).aspx">Object.GetType()</a>
+          </div>
+          <div>
+              <a class="xref" href="https://msdn.microsoft.com/en-us/library/57ctke0a(v=vs.110).aspx">Object.MemberwiseClone()</a>
+          </div>
+      </div>
   </div>
   
-  <h6><strong>Namespace</strong>: System.Dynamic.ExpandoObject</h6>
+  <h6><strong>Namespace</strong>: <a class="xref" href="Llvm.NET.DebugInfo.html">Llvm.NET.DebugInfo</a></h6>
   <h6><strong>Assembly</strong>: Llvm.NET.dll</h6>
   
   <h5 id="Llvm_NET_DebugInfo_DebugBasicType_syntax">Syntax</h5>

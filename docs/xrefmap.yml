@@ -151,18 +151,6 @@ references:
   commentId: T:Llvm.NET.ComdatCollection
   fullName: Llvm.NET.ComdatCollection
   nameWithType: ComdatCollection
-- uid: Llvm.NET.ComdatCollection.Add(System.String,Llvm.NET.ComdatKind)
-  name: Add(String, ComdatKind)
-  href: api/Llvm.NET.ComdatCollection.Add.html#Llvm_NET_ComdatCollection_Add_System_String_Llvm_NET_ComdatKind_
-  commentId: M:Llvm.NET.ComdatCollection.Add(System.String,Llvm.NET.ComdatKind)
-  fullName: Llvm.NET.ComdatCollection.Add(System.String, Llvm.NET.ComdatKind)
-  nameWithType: ComdatCollection.Add(String, ComdatKind)
-- uid: Llvm.NET.ComdatCollection.Add*
-  name: Add
-  href: api/Llvm.NET.ComdatCollection.Add.html
-  commentId: Overload:Llvm.NET.ComdatCollection.Add
-  fullName: Llvm.NET.ComdatCollection.Add
-  nameWithType: ComdatCollection.Add
 - uid: Llvm.NET.ComdatCollection.Clear
   name: Clear()
   href: api/Llvm.NET.ComdatCollection.Clear.html#Llvm_NET_ComdatCollection_Clear
@@ -211,6 +199,18 @@ references:
   commentId: Overload:Llvm.NET.ComdatCollection.GetEnumerator
   fullName: Llvm.NET.ComdatCollection.GetEnumerator
   nameWithType: ComdatCollection.GetEnumerator
+- uid: Llvm.NET.ComdatCollection.InsertOrUpdate(System.String,Llvm.NET.ComdatKind)
+  name: InsertOrUpdate(String, ComdatKind)
+  href: api/Llvm.NET.ComdatCollection.InsertOrUpdate.html#Llvm_NET_ComdatCollection_InsertOrUpdate_System_String_Llvm_NET_ComdatKind_
+  commentId: M:Llvm.NET.ComdatCollection.InsertOrUpdate(System.String,Llvm.NET.ComdatKind)
+  fullName: Llvm.NET.ComdatCollection.InsertOrUpdate(System.String, Llvm.NET.ComdatKind)
+  nameWithType: ComdatCollection.InsertOrUpdate(String, ComdatKind)
+- uid: Llvm.NET.ComdatCollection.InsertOrUpdate*
+  name: InsertOrUpdate
+  href: api/Llvm.NET.ComdatCollection.InsertOrUpdate.html
+  commentId: Overload:Llvm.NET.ComdatCollection.InsertOrUpdate
+  fullName: Llvm.NET.ComdatCollection.InsertOrUpdate
+  nameWithType: ComdatCollection.InsertOrUpdate
 - uid: Llvm.NET.ComdatCollection.Item(System.String)
   name: Item[String]
   href: api/Llvm.NET.ComdatCollection.Item.html#Llvm_NET_ComdatCollection_Item_System_String_
@@ -12185,18 +12185,24 @@ references:
   commentId: T:Llvm.NET.Values.AttributeCollectionExtensions
   fullName: Llvm.NET.Values.AttributeCollectionExtensions
   nameWithType: AttributeCollectionExtensions
-- uid: Llvm.NET.Values.AttributeCollectionExtensions.Remove(Llvm.NET.Values.IAttributeCollection,Llvm.NET.Values.AttributeKind)
-  name: Remove(IAttributeCollection, AttributeKind)
-  href: api/Llvm.NET.Values.AttributeCollectionExtensions.Remove.html#Llvm_NET_Values_AttributeCollectionExtensions_Remove_Llvm_NET_Values_IAttributeCollection_Llvm_NET_Values_AttributeKind_
-  commentId: M:Llvm.NET.Values.AttributeCollectionExtensions.Remove(Llvm.NET.Values.IAttributeCollection,Llvm.NET.Values.AttributeKind)
-  fullName: Llvm.NET.Values.AttributeCollectionExtensions.Remove(Llvm.NET.Values.IAttributeCollection, Llvm.NET.Values.AttributeKind)
-  nameWithType: AttributeCollectionExtensions.Remove(IAttributeCollection, AttributeKind)
-- uid: Llvm.NET.Values.AttributeCollectionExtensions.Remove(Llvm.NET.Values.IAttributeCollection,System.String)
-  name: Remove(IAttributeCollection, String)
-  href: api/Llvm.NET.Values.AttributeCollectionExtensions.Remove.html#Llvm_NET_Values_AttributeCollectionExtensions_Remove_Llvm_NET_Values_IAttributeCollection_System_String_
-  commentId: M:Llvm.NET.Values.AttributeCollectionExtensions.Remove(Llvm.NET.Values.IAttributeCollection,System.String)
-  fullName: Llvm.NET.Values.AttributeCollectionExtensions.Remove(Llvm.NET.Values.IAttributeCollection, System.String)
-  nameWithType: AttributeCollectionExtensions.Remove(IAttributeCollection, String)
+- uid: Llvm.NET.Values.AttributeCollectionExtensions.Remove(System.Collections.Generic.ICollection{Llvm.NET.Values.AttributeValue},Llvm.NET.Values.AttributeKind)
+  name: Remove(ICollection<AttributeValue>, AttributeKind)
+  href: api/Llvm.NET.Values.AttributeCollectionExtensions.Remove.html#Llvm_NET_Values_AttributeCollectionExtensions_Remove_System_Collections_Generic_ICollection_Llvm_NET_Values_AttributeValue__Llvm_NET_Values_AttributeKind_
+  commentId: M:Llvm.NET.Values.AttributeCollectionExtensions.Remove(System.Collections.Generic.ICollection{Llvm.NET.Values.AttributeValue},Llvm.NET.Values.AttributeKind)
+  name.vb: Remove(ICollection(Of AttributeValue), AttributeKind)
+  fullName: Llvm.NET.Values.AttributeCollectionExtensions.Remove(System.Collections.Generic.ICollection<Llvm.NET.Values.AttributeValue>, Llvm.NET.Values.AttributeKind)
+  fullName.vb: Llvm.NET.Values.AttributeCollectionExtensions.Remove(System.Collections.Generic.ICollection(Of Llvm.NET.Values.AttributeValue), Llvm.NET.Values.AttributeKind)
+  nameWithType: AttributeCollectionExtensions.Remove(ICollection<AttributeValue>, AttributeKind)
+  nameWithType.vb: AttributeCollectionExtensions.Remove(ICollection(Of AttributeValue), AttributeKind)
+- uid: Llvm.NET.Values.AttributeCollectionExtensions.Remove(System.Collections.Generic.ICollection{Llvm.NET.Values.AttributeValue},System.String)
+  name: Remove(ICollection<AttributeValue>, String)
+  href: api/Llvm.NET.Values.AttributeCollectionExtensions.Remove.html#Llvm_NET_Values_AttributeCollectionExtensions_Remove_System_Collections_Generic_ICollection_Llvm_NET_Values_AttributeValue__System_String_
+  commentId: M:Llvm.NET.Values.AttributeCollectionExtensions.Remove(System.Collections.Generic.ICollection{Llvm.NET.Values.AttributeValue},System.String)
+  name.vb: Remove(ICollection(Of AttributeValue), String)
+  fullName: Llvm.NET.Values.AttributeCollectionExtensions.Remove(System.Collections.Generic.ICollection<Llvm.NET.Values.AttributeValue>, System.String)
+  fullName.vb: Llvm.NET.Values.AttributeCollectionExtensions.Remove(System.Collections.Generic.ICollection(Of Llvm.NET.Values.AttributeValue), System.String)
+  nameWithType: AttributeCollectionExtensions.Remove(ICollection<AttributeValue>, String)
+  nameWithType.vb: AttributeCollectionExtensions.Remove(ICollection(Of AttributeValue), String)
 - uid: Llvm.NET.Values.AttributeCollectionExtensions.Remove*
   name: Remove
   href: api/Llvm.NET.Values.AttributeCollectionExtensions.Remove.html
@@ -12653,12 +12659,15 @@ references:
   fullName.vb: Llvm.NET.Values.AttributesMixins.AddAttributes(Of T)(T, Llvm.NET.FunctionAttributeIndex, System.Collections.Generic.IEnumerable(Of Llvm.NET.Values.AttributeValue))
   nameWithType: AttributesMixins.AddAttributes<T>(T, FunctionAttributeIndex, IEnumerable<AttributeValue>)
   nameWithType.vb: AttributesMixins.AddAttributes(Of T)(T, FunctionAttributeIndex, IEnumerable(Of AttributeValue))
-- uid: Llvm.NET.Values.AttributesMixins.Contains(Llvm.NET.Values.IAttributeCollection,Llvm.NET.Values.AttributeKind)
-  name: Contains(IAttributeCollection, AttributeKind)
-  href: api/Llvm.NET.Values.AttributesMixins.Contains.html#Llvm_NET_Values_AttributesMixins_Contains_Llvm_NET_Values_IAttributeCollection_Llvm_NET_Values_AttributeKind_
-  commentId: M:Llvm.NET.Values.AttributesMixins.Contains(Llvm.NET.Values.IAttributeCollection,Llvm.NET.Values.AttributeKind)
-  fullName: Llvm.NET.Values.AttributesMixins.Contains(Llvm.NET.Values.IAttributeCollection, Llvm.NET.Values.AttributeKind)
-  nameWithType: AttributesMixins.Contains(IAttributeCollection, AttributeKind)
+- uid: Llvm.NET.Values.AttributesMixins.Contains(System.Collections.Generic.ICollection{Llvm.NET.Values.AttributeValue},Llvm.NET.Values.AttributeKind)
+  name: Contains(ICollection<AttributeValue>, AttributeKind)
+  href: api/Llvm.NET.Values.AttributesMixins.Contains.html#Llvm_NET_Values_AttributesMixins_Contains_System_Collections_Generic_ICollection_Llvm_NET_Values_AttributeValue__Llvm_NET_Values_AttributeKind_
+  commentId: M:Llvm.NET.Values.AttributesMixins.Contains(System.Collections.Generic.ICollection{Llvm.NET.Values.AttributeValue},Llvm.NET.Values.AttributeKind)
+  name.vb: Contains(ICollection(Of AttributeValue), AttributeKind)
+  fullName: Llvm.NET.Values.AttributesMixins.Contains(System.Collections.Generic.ICollection<Llvm.NET.Values.AttributeValue>, Llvm.NET.Values.AttributeKind)
+  fullName.vb: Llvm.NET.Values.AttributesMixins.Contains(System.Collections.Generic.ICollection(Of Llvm.NET.Values.AttributeValue), Llvm.NET.Values.AttributeKind)
+  nameWithType: AttributesMixins.Contains(ICollection<AttributeValue>, AttributeKind)
+  nameWithType.vb: AttributesMixins.Contains(ICollection(Of AttributeValue), AttributeKind)
 - uid: Llvm.NET.Values.AttributesMixins.Contains*
   name: Contains
   href: api/Llvm.NET.Values.AttributesMixins.Contains.html
@@ -13910,12 +13919,6 @@ references:
   commentId: Overload:Llvm.NET.Values.GlobalVariable.RemoveFromParent
   fullName: Llvm.NET.Values.GlobalVariable.RemoveFromParent
   nameWithType: GlobalVariable.RemoveFromParent
-- uid: Llvm.NET.Values.IAttributeCollection
-  name: IAttributeCollection
-  href: api/Llvm.NET.Values.IAttributeCollection.html
-  commentId: T:Llvm.NET.Values.IAttributeCollection
-  fullName: Llvm.NET.Values.IAttributeCollection
-  nameWithType: IAttributeCollection
 - uid: Llvm.NET.Values.IAttributeContainer
   name: IAttributeContainer
   href: api/Llvm.NET.Values.IAttributeContainer.html

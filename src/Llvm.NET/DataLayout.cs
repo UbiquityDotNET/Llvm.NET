@@ -15,23 +15,18 @@ namespace Llvm.NET
     /// that are target dependent.</para>
     /// <para>The following table illustrates the differences in sizes and their meaning
     ///  for a sample set of types.</para>
-    /// <list type="table">
-    ///   <listheader>
-    ///   <term>Type</term>
-    ///   <term>SizeInBits</term>
-    ///   <term>StoreSizeInBits</term>
-    ///   <term>AllocSizeInBits</term>
-    ///   </listheader>
-    ///   <item><term>i1</term>         <term>1</term>   <term>8</term>   <term>8</term></item>
-    ///   <item><term>i8</term>         <term>8</term>   <term>8</term>   <term>8</term></item>
-    ///   <item><term>i19</term>        <term>19</term>  <term>24</term>  <term>32</term></item>
-    ///   <item><term>i32</term>        <term>32</term>  <term>32</term>  <term>32</term></item>
-    ///   <item><term>i100</term>       <term>100</term> <term>104</term> <term>128</term></item>
-    ///   <item><term>i128</term>       <term>128</term> <term>128</term> <term>128</term></item>
-    ///   <item><term>Float</term>      <term>32</term>  <term>32</term>  <term>32</term></item>
-    ///   <item><term>Double</term>     <term>64</term>  <term>64</term>  <term>64</term></item>
-    ///   <item><term>X86_FP80</term>   <term>80</term>  <term>80</term>  <term>96</term></item>
-    /// </list>
+    /// |   Type  | SizeInBits | StoreSizeInBits |AllocSizeInBits|
+    /// |---------|------------|-----------------|---------------|
+    /// | i1      | 1          | 8               | 8             |
+    /// | i8      | 8          | 8               | 8             |
+    /// | i19     | 19         | 24              | 32            |
+    /// | i32     | 32         | 32              | 32            |
+    /// | i10     | 100        | 104             | 128           |
+    /// | i128    | 128        | 128             | 128           |
+    /// | Float   | 32         | 32              | 32            |
+    /// | Double  | 64         | 64              | 64            |
+    /// | X86_FP80| 80         | 80              | 96            |
+    ///
     /// <note type="note">
     /// The allocation size depends on the alignment, and thus on the target.
     /// The values in the example table are for x86-32-linux.
@@ -46,7 +41,7 @@ namespace Llvm.NET
             Dispose( false );
         }
 
-        // This code added to correctly implement the disposable pattern.
+        /// <inheritdoc/>
         public void Dispose( )
         {
             // Do not change this code. Put cleanup code in Dispose(bool disposing) above.

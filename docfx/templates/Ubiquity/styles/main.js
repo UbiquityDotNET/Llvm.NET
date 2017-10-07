@@ -32,7 +32,7 @@ $(function () {
         var link = item.children('a');
 
         var text = link.text();
-        
+
         for (var i = 0; i < level; ++i) {
             text = '&nbsp;&nbsp;' + text;
         }
