@@ -10,8 +10,10 @@ branches:
 image: Visual Studio 2017
 
 environment:
+  docspush_email: 32618965+cibuild-telliam@users.noreply.github.com
+  docspush_username: cibuild-telliam
   docspush_access_token:
-    secure: 6t7PwcuHrKWC8CH0N44cg2HQNS+0phTlVFFoD3Cs0nwH/3Hmiblqucs1XR1B7wec
+    secure: QqWCIyFM6uBBbkW1jnlVGsMQWy+9aPY9rhD56oNT2L/0Cmw2bynROEsrUrOPpBrk
 
 skip_commits:
   files:
