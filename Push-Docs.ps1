@@ -13,4 +13,4 @@ if($env:APPVEYOR)
 
 git add docs/**
 git commit -m "[skip ci] CI Docs Update"
-git push
+git push origin HEAD:master
