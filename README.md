@@ -1,9 +1,9 @@
 ## Llvm.NET
 
-Build Status:  
+Status:  
 
-[![Build status](https://ci.appveyor.com/api/projects/status/koeo742sx10waikc?svg=true)](https://ci.appveyor.com/project/UbiquityDotNet/llvm-net)
-
+![Build Status](https://img.shields.io/appveyor/ci/UbiquityDotNet/Llvm-NET/master.svg?style=flat-square)
+![Test Status](https://img.shields.io/appveyor/tests/UbiquityDotNet/Llvm-NET/master.svg?style=flat-square)
 
 ### Welcome to Llvm.NET!
 Llvm.NET provides LLVM language and runtime bindings for .NET based applications. Llvm.NET's goal is to provide
