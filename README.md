@@ -2,8 +2,8 @@
 
 Status:  
 
-![Build Status](https://img.shields.io/appveyor/ci/UbiquityDotNet/Llvm-NET/master.svg?style=flat-square)
-![Test Status](https://img.shields.io/appveyor/tests/UbiquityDotNet/Llvm-NET/master.svg?style=flat-square)
+[![Build Status](https://img.shields.io/appveyor/ci/UbiquityDotNet/Llvm-NET/master.svg?style=flat-square)](https://ci.appveyor.com/project/UbiquityDotNet/llvm-net)
+[![Test Status](https://img.shields.io/appveyor/tests/UbiquityDotNet/Llvm-NET/master.svg?style=flat-square)](https://ci.appveyor.com/project/UbiquityDotNet/llvm-net/build/tests)
 
 ### Welcome to Llvm.NET!
 Llvm.NET provides LLVM language and runtime bindings for .NET based applications. Llvm.NET's goal is to provide
