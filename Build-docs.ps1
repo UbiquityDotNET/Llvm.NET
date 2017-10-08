@@ -180,7 +180,7 @@ if( !(Test-Path ".\BuildOutput\docs\.git" -PathType Container))
     {
         git clone https://github.com/UbiquityDotNET/Llvm.NET.git -b gh-pages docs -q
     }
-    catch
+    finally
     {
         popd
     }
