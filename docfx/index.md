@@ -1,3 +1,5 @@
+![Logo](DragonSharp.png)
+
 # Llvm.NET
 Llvm.NET is a managed wrapper around an extended LLVM-C API including an Object Oriented model that closely matches 
 the underlying LLVM internal object model. This allows for building code generation and other utilities
@@ -5,8 +7,7 @@ leveraging LLVM from .NET applications.
 
 For more details see the full [API documentation](api/index.md)
 
-## General Design Notes for Llvm.NET
-### Guiding principles
+## Guiding principles
 
   1. Mirror the underlying LLVM model as much as possible while 
   providing a well behaved .NET projection including:
@@ -14,14 +15,14 @@ For more details see the full [API documentation](api/index.md)
      2. Object identity and reference equality
      3. [Fluent](https://en.wikipedia.org/wiki/Fluent_interface) APIs when plausible and appropriate
   2. Hide low-level interop details and the raw LLVM-C API.  
-  The native model for LLVM is a C++ class hierarchy and not the LLVM-C API.
-  Llvm.NET is designed to provide an OO model that faithfully reflects the
+  The native model for LLVM is a C++ class hierarchy and not the LLVM-C API used for most
+  language/runtime bindings. Llvm.NET is designed to provide an OO model that faithfully reflects the
   underlying LLVM model while fitting naturally into .NET programming patterns.
-  3. FxCop Clean
-  4. Leverage existing LLVM-C APIs underneath whenever possible
+  3. Leverage existing LLVM-C APIs underneath whenever possible
      1. Extend only when needed with custom wrappers
+  4. FxCop/Code Analysis Clean
   
-## Interning
+### Interning
 Many of the underlying object instances in LLVM are interned/Uniqued. That is,
 there will only be one instance of a type with a given value within some scope.
 

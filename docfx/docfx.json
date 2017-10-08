@@ -51,10 +51,16 @@
     "noLangKeyword": false,
     "keepFileLink": false,
     "cleanupCacheHistory": false,
+    "resource": [
+        {
+            "files": ["favicon.ico", "DragonSharp48x48.png", "DragonSharp.png"]
+        }
+    ],
     "globalMetadata" :
     {
       "_appTitle" : "Llvm.NET",
       "_appFooter" : "Copyright (C) 2017, Dot NET Foundation",
+      "_appLogoPath": "DragonSharp48x48.png",
       "_disableBreadcrumb" : true
     },
     "template": ["statictoc","../tools/memberpage/content","templates/Ubiquity"]
