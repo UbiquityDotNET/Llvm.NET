@@ -11,16 +11,19 @@
     {{/inheritance}}
     <div class="level{{level}}"><span class="xref">{{name.0.value}}</span></div>
   </div>
-  {{#derivedClasses.0}}
-  <h5 id="derivedClasses-{{id}}"><a href="#collapsible-derivedClasses-{{id}}" class="expander collapsed" data-toggle="collapse" aria-expanded="false">Derived Classes</a></h5>
-  <div id="collapsible-derivedClasses-{{id}}" class="collapse collapsed" aria-expanded="false">
-      {{#derivedClasses}}
-      <div class="level{{index}}">{{{specName.0.value}}}</div>
-      {{/derivedClasses}}
-  </div>
-  {{/derivedClasses.0}}
 </div>
 {{/inClass}}
+
+{{#derivedClasses.0}}
+<h5 id="derivedClasses-{{id}}">
+    <a href="#collapsible-derivedClasses-{{id}}" class="expander collapsed" data-toggle="collapse" aria-expanded="false">Derived Types</a>
+</h5>
+<div id="collapsible-derivedClasses-{{id}}" class="collapse collapsed" aria-expanded="false">
+    {{#derivedClasses}}
+    <div class="level{{index}}">{{{specName.0.value}}}</div>
+    {{/derivedClasses}}
+</div>
+{{/derivedClasses.0}}
 
 {{#inheritedMembers.0}}
 <div class="inheritedMembers">

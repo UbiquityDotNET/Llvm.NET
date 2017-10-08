@@ -35,7 +35,7 @@
               </button>
               
               <a class="navbar-brand" href="index.html">
-                <img id="logo" class="svg" src="logo.svg" alt="">
+                <img id="logo" class="svg" src="DragonSharp48x48.png" alt="">
               </a>
             </div>
             <div class="collapse navbar-collapse" id="navbar">
@@ -63,14 +63,14 @@
         <div class="article row grid">
           <div class="col-md-10">
             <article class="content wrap" id="_content" data-uid="">
-<h1 id="llvmnet">Llvm.NET</h1>
 
+<p><img src="DragonSharp.png" alt="Logo"></p>
+<h1 id="llvmnet">Llvm.NET</h1>
 <p>Llvm.NET is a managed wrapper around an extended LLVM-C API including an Object Oriented model that closely matches 
 the underlying LLVM internal object model. This allows for building code generation and other utilities
 leveraging LLVM from .NET applications.</p>
 <p>For more details see the full <a href="api/index.html">API documentation</a></p>
-<h2 id="general-design-notes-for-llvmnet">General Design Notes for Llvm.NET</h2>
-<h3 id="guiding-principles">Guiding principles</h3>
+<h2 id="guiding-principles">Guiding principles</h2>
 <ol>
 <li>Mirror the underlying LLVM model as much as possible while 
 providing a well behaved .NET projection including:<ol>
@@ -79,16 +79,16 @@ providing a well behaved .NET projection including:<ol>
 <li><a href="https://en.wikipedia.org/wiki/Fluent_interface">Fluent</a> APIs when plausible and appropriate</li>
 </ol>
 </li>
-<li>Hide low-level interop details and the raw LLVM-C API.<br>The native model for LLVM is a C++ class hierarchy and not the LLVM-C API.
-Llvm.NET is designed to provide an OO model that faithfully reflects the
+<li>Hide low-level interop details and the raw LLVM-C API.<br>The native model for LLVM is a C++ class hierarchy and not the LLVM-C API used for most
+language/runtime bindings. Llvm.NET is designed to provide an OO model that faithfully reflects the
 underlying LLVM model while fitting naturally into .NET programming patterns.</li>
-<li>FxCop Clean</li>
 <li>Leverage existing LLVM-C APIs underneath whenever possible<ol>
 <li>Extend only when needed with custom wrappers</li>
 </ol>
 </li>
+<li>FxCop/Code Analysis Clean</li>
 </ol>
-<h2 id="interning">Interning</h2>
+<h3 id="interning">Interning</h3>
 <p>Many of the underlying object instances in LLVM are interned/Uniqued. That is,
 there will only be one instance of a type with a given value within some scope.</p>
 <p>In LLVM the most common scope for uniqueing is the <a class="xref" href="api/Llvm.NET.Context.html">Context</a> type.
