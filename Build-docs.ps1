@@ -114,7 +114,7 @@ function Merge-Environment( [hashtable]$OtherEnv, [string[]]$IgnoreNames )
 
 function Find-VSInstance([switch]$PreRelease)
 {
-    Install-Module VSSetup -Scope CurrentUser | Out-Null
+    Install-Module VSSetup -Scope CurrentUser -Force | Out-Null
     Get-VSSetupInstance -Prerelease:$PreRelease |
         Select-VSSetupInstance -Require 'Microsoft.Component.MSBuild' |
         select -First 1
