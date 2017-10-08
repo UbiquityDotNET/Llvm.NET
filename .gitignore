@@ -21,6 +21,9 @@ bld/
 [Bb]in/
 [Oo]bj/
 
+# Docs updated only by CI builds for GitHub Pages
+[Dd]ocs/
+
 # Visual Studo 2015 cache/options directory
 .vs/
 

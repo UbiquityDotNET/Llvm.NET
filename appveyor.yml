@@ -6,8 +6,7 @@ pull_requests:
 branches:
   only:
   - master
-  - LLVM_5_0
-  
+
 image: Visual Studio 2017
 
 skip_commits:
@@ -20,6 +19,7 @@ nuget:
   project_feed: true
 
 build_script:
+  - ps: .\Build-Docs.ps1
   - ps: .\BuildAll.ps1
 
 test_script:
@@ -28,3 +28,6 @@ test_script:
 artifacts:
   - path: .\BuildOutput\Nuget\LLvm.NET.*.nupkg
   - path: .\BuildOutput\Nuget\LibLLVM.NET.*.nupkg
+
+on_success:
+  - ps: .\Push-Docs.ps1
