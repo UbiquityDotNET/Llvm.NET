@@ -18,8 +18,8 @@ skip_commits:
     - 'docs\**'
 
 install:
-  - git core.safecrlf false
-  - git core.autocrlf input
+  - git config core.safecrlf false
+  - git config core.autocrlf input
 
 nuget:
   disable_publish_on_pr: true
