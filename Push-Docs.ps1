@@ -20,7 +20,7 @@ if($env:APPVEYOR)
     git config --global user.name "$env:docspush_username"
 }
 
-pushd .\BuildOutput\docs
+pushd .\BuildOutput\docs -ErrorAction Stop
 try
 {
     # prevent line ending conversions

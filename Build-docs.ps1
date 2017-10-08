@@ -139,6 +139,11 @@ function Initialize-VCVars($vsInstance = (Find-VSInstance))
 
 #--- Start of main script
 
+if($env:APPVEYOR)
+{
+    $InformationPreference='Continue'
+}
+
 if( !( Test-Path -PathType Container tools ) )
 {
     md tools | out-null
@@ -150,7 +155,7 @@ Initialize-VCVars
 if(!(Test-Path 'tools\memberpage\content' -PathType Container))
 {
     Write-Information "Fetching memberpage plugin and content"
-    Invoke-NuGet install memberpage -ExcludeVersion -OutputDirectory tools
+    Invoke-NuGet install memberpage -Verbosity quiet -ExcludeVersion -OutputDirectory tools
 }
 
 $docfxPath = Find-OnPath docfx.exe -ErrorAction Continue
@@ -170,7 +175,15 @@ Invoke-Nuget Install msdn.4.5.2 -ExcludeVersion -PreRelease -OutputDirectory too
 if( !(Test-Path ".\BuildOutput\docs\.git" -PathType Container))
 {
     Write-Information "Cloning Docs repo"
-    git clone https://github.com/UbiquityDotNET/Llvm.NET.git -b gh-pages BuildOutput\docs -q
+    pushd BuildOutput -ErrorAction Stop
+    try
+    {
+        git clone https://github.com/UbiquityDotNET/Llvm.NET.git -b gh-pages docs -q
+    }
+    catch
+    {
+        popd
+    }
 }
 
 # DOCFX is inconsistent on relative paths in the docfx.json file
