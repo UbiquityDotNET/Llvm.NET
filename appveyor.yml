@@ -29,8 +29,10 @@ nuget:
   project_feed: true
 
 build_script:
-  - ps: .\Build-Docs.ps1
   - ps: .\BuildAll.ps1
+
+after_build:
+  - ps: .\Build-Docs.ps1
 
 test_script:
   - ps: .\Invoke-UnitTests.ps1
