@@ -167,7 +167,12 @@ if(!$docfxPath)
 
 Invoke-Nuget Install msdn.4.5.2 -ExcludeVersion -PreRelease -OutputDirectory tools -Verbosity quiet
 
-Write-Information "Generating docs"
+if( !(Test-Path ".\BuildOutput\docs\.git" -PathType Container))
+{
+    Write-Information "Cloning Docs repo"
+    git clone https://github.com/UbiquityDotNET/Llvm.NET.git -b gh-pages BuildOutput\docs -q
+}
+
 # DOCFX is inconsistent on relative paths in the docfx.json file
 # (i.e. Metadata[x].src[y].src is relative to the docfx.json file
 # but Metadata[x].dest is relative to the current directory.) So,
@@ -176,6 +181,7 @@ Write-Information "Generating docs"
 pushd docfx
 try
 {
+    Write-Information "Generating docs"
     docfx
 }
 finally
