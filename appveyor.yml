@@ -9,9 +9,17 @@ branches:
 
 image: Visual Studio 2017
 
+environment:
+  docspush_access_token:
+    secure: 6t7PwcuHrKWC8CH0N44cg2HQNS+0phTlVFFoD3Cs0nwH/3Hmiblqucs1XR1B7wec
+
 skip_commits:
   files:
-    - '**\*.md'
+    - 'docs\**'
+
+install:
+  - git core.safecrlf false
+  - git core.autocrlf input
 
 nuget:
   disable_publish_on_pr: true

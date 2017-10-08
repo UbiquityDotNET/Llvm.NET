@@ -7,8 +7,8 @@ if($env:APPVEYOR)
 {
     git config --global credential.helper store
     Add-Content "$env:USERPROFILE\.git-credentials" "https://$($env:docspush_access_token):x-oauth-basic@github.com`n"
-    git config --global user.email "Your email"
-    git config --global user.name "Your Name"
+    git config --global user.email "smaillet@users.noreply.github.com"
+    git config --global user.name "smaillet"
 }
 
 git add docs/**
