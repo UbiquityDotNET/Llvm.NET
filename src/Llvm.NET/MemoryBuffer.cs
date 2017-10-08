@@ -16,12 +16,10 @@ namespace Llvm.NET
         {
             path.ValidateNotNullOrWhiteSpace( nameof( path ) );
 
-            if( NativeMethods.CreateMemoryBufferWithContentsOfFile( path, out BufferHandle_, out string msg ).Succeeded )
+            if( !NativeMethods.CreateMemoryBufferWithContentsOfFile( path, out BufferHandle_, out string msg ).Succeeded )
             {
-                return;
+                throw new InternalCodeGeneratorException( msg );
             }
-
-            throw new InternalCodeGeneratorException( msg );
         }
 
         /// <summary>Size of the buffer</summary>

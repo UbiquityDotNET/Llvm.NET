@@ -151,6 +151,7 @@ namespace Llvm.NET
             Dispose( false );
         }
 
+        /// <summary>Name of the source file generating this module</summary>
         public string SourceFileName
         {
             get => NativeMethods.GetModuleSourceFileName( ModuleHandle );
@@ -183,6 +184,7 @@ namespace Llvm.NET
             }
         }
 
+        /// <summary>Metadata for module level flags</summary>
         public NamedMDNode ModuleFlags
         {
             get
@@ -280,6 +282,14 @@ namespace Llvm.NET
         /// <summary>Name of the module</summary>
         public string Name => NativeMethods.GetModuleName( ModuleHandle );
 
+        /// <summary>Link another module into this one</summary>
+        /// <param name="otherModule">module to link into this one</param>
+        /// <remarks>
+        /// <note type="warning">
+        /// <paramref name="otherModule"/> is destroyed by this process and no longer usable
+        /// when this method returns.
+        /// </note>
+        /// </remarks>
         public void Link( NativeModule otherModule )
         {
             otherModule.ValidateNotNull( nameof( otherModule ) );
@@ -608,7 +618,7 @@ namespace Llvm.NET
 
         /// <summary>Create an <see cref="MDNode"/> from a string</summary>
         /// <param name="value">String value</param>
-        /// <returns>New node with the string as <see cref="MDNode.Operands"/>[0] (as an MDString)</returns>
+        /// <returns>New node with the string as the first element of the <see cref="MDNode.Operands"/> property (as an MDString)</returns>
         public MDNode CreateMDNode( string value )
         {
             var elements = new LLVMMetadataRef[ ] { NativeMethods.MDString2( Context.ContextHandle, value, ( uint )( value?.Length ?? 0 ) ) };
@@ -673,6 +683,15 @@ namespace Llvm.NET
             return func;
         }
 
+        /// <summary>Creates a function</summary>
+        /// <param name="name">Name of the function</param>
+        /// <param name="isVarArg">Flag indicating if the function supports a variadic argument list</param>
+        /// <param name="returnType">Return type of the function</param>
+        /// <param name="argumentTypes">Arguments for the function</param>
+        /// <returns>
+        /// Function, matching the signature specified. This may be a previously declared or defined
+        /// function or a new function if none matching the name and signature is already present.
+        /// </returns>
         public Function CreateFunction( string name
                                       , bool isVarArg
                                       , IDebugType<ITypeRef, DIType> returnType

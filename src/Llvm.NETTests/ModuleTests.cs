@@ -411,7 +411,7 @@ namespace Llvm.NET.Tests
                 const string comdatName = "testcomdat";
                 const string globalName = "globalwithcomdat";
 
-                module.Comdats.Add( comdatName, ComdatKind.SameSize );
+                module.Comdats.InsertOrUpdate( comdatName, ComdatKind.SameSize );
                 Assert.AreEqual( 1, module.Comdats.Count );
                 module.AddGlobal( module.Context.Int32Type, globalName )
                       .Linkage( Linkage.LinkOnceAny )
@@ -445,7 +445,7 @@ namespace Llvm.NET.Tests
                 const string comdatName = "testcomdat";
                 const string globalName = "globalwithcomdat";
 
-                Comdat comdat = module.Comdats.Add( comdatName, ComdatKind.SameSize );
+                Comdat comdat = module.Comdats.InsertOrUpdate( comdatName, ComdatKind.SameSize );
                 Assert.AreEqual( comdatName, comdat.Name );
                 Assert.AreEqual( ComdatKind.SameSize, comdat.Kind );
                 Assert.AreEqual( 1, module.Comdats.Count );

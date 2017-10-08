@@ -18,7 +18,7 @@ underlying LLVM model while fitting naturally into .NET programming patterns.
 Many if the underlying object instances in LLVM are interned/Uniqued. That is,
 there will only be one instance of a type with a given value within some scope.
 
-In LLVM the most common scope for uniquing is the LLVMContext type. In essence
+In LLVM the most common scope for uniqueing is the LLVMContext type. In essence
 this class is an interning class factory for the LLVM IR system for a given thread.
 Most object instances are ultimately owned by the context. LLVM-C APIs provide use
 opaque pointers for LLVM objects. This is projected to the low level Llvm.NET.Native

@@ -1,0 +1,62 @@
+{
+  "metadata":
+  [
+    {
+      "src":
+      [
+        {
+          "files": [ "src/**.csproj"  ],
+          "exclude": [ "**/obj/**", "**/bin/**", "**/*Tests/**" ],
+          "src":".."
+        }
+      ],
+      "dest": "api",
+      "properties":
+      {
+          "TargetFramework": "net47"
+      }
+    }
+  ],
+  "build":
+  {
+    "xref": [ "../tools/msdn.4.5.2/content/msdn.4.5.2.zip", "../tools/msdn.4.5.2/content/namespaces.4.5.2.zip"],
+    "content":
+    [
+      {
+        "files": [ "api/**.yml", "api/index.md" ]
+      },
+      {
+        "files": [ "toc.yml", "*.md" ],
+        "exclude": [ "obj/**" ]
+      }
+    ],
+    "resource":
+    [
+      {
+        "files": [ "images/**" ],
+        "exclude": [ "obj/**" ]
+      }
+    ],
+    "overwrite":
+    [
+      {
+        "files": [ "apidoc/**.md" ],
+        "exclude": [ "obj/**" ]
+      }
+    ],
+    "dest": "../docs",
+    "globalMetadataFiles": [],
+    "fileMetadataFiles": [],
+    "postProcessors": [],
+    "noLangKeyword": false,
+    "keepFileLink": false,
+    "cleanupCacheHistory": false,
+    "globalMetadata" :
+    {
+      "_appTitle" : "Llvm.NET",
+      "_appFooter" : "Copyright (C) 2017, Dot NET Foundation",
+      "_disableBreadcrumb" : true
+    },
+    "template": ["statictoc","../tools/memberpage/content","templates/Ubiquity"]
+  }
+}

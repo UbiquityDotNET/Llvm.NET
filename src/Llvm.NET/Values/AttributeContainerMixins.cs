@@ -7,7 +7,7 @@ namespace Llvm.NET.Values
     // Provides a layer of simplicity and backwards compatibility for manipulating attributes on Values
     public static class AttributesMixins
     {
-        public static bool Contains( [ValidatedNotNull] this IAttributeCollection self, AttributeKind kind )
+        public static bool Contains( [ValidatedNotNull] this ICollection<AttributeValue> self, AttributeKind kind )
         {
             self.ValidateNotNull( nameof( self ) );
             kind.ValidateDefined( nameof( kind ) );
@@ -128,7 +128,7 @@ namespace Llvm.NET.Values
             }
             else
             {
-                IAttributeCollection attributes = self.Attributes[ index ];
+                ICollection<AttributeValue> attributes = self.Attributes[ index ];
                 AttributeValue attrib = attributes.FirstOrDefault( a => a.Kind == kind );
                 if( attrib != default( AttributeValue ) )
                 {
@@ -150,7 +150,7 @@ namespace Llvm.NET.Values
             }
             else
             {
-                IAttributeCollection attributes = self.Attributes[ index ];
+                ICollection<AttributeValue> attributes = self.Attributes[ index ];
                 AttributeValue attrib = attributes.FirstOrDefault( a => a.Name == name );
                 if( attrib != default( AttributeValue ) )
                 {

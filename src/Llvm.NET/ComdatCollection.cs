@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using Llvm.NET.Native;
@@ -7,6 +8,11 @@ using Ubiquity.ArgValidators;
 
 namespace Llvm.NET
 {
+    /// <summary>Collection of <see cref="Comdat"/> entries for a module</summary>
+    /// <remarks>
+    /// This type is used to provide enumeration and manipulation of <see cref="Comdat"/>s
+    /// in the module.
+    /// </remarks>
     public class ComdatCollection
         : IEnumerable<Comdat>
     {
@@ -18,11 +24,21 @@ namespace Llvm.NET
             NativeMethods.ModuleEnumerateComdats( Module.ModuleHandle, AddComdat );
         }
 
+        /// <summary>Retrieves <see cref="Comdat"/> by its name</summary>
+        /// <param name="key">Name of the <see cref="Comdat"/></param>
+        /// <returns><see cref="Comdat"/> or <see langword="null"/></returns>
+        /// <exception cref="ArgumentNullException">Key is null</exception>
+        /// <exception cref="KeyNotFoundException">Key does not exist in the collection</exception>
         public Comdat this[ string key ] => InternalComdatMap[ key ];
 
+        /// <summary>Number of items in the collection</summary>
         public int Count => InternalComdatMap.Count;
 
-        public Comdat Add( string key, ComdatKind kind )
+        /// <summary>Inserts or updates a <see cref="Comdat"/> entry</summary>
+        /// <param name="key">Name of the <see cref="Comdat"/></param>
+        /// <param name="kind"><see cref="ComdatKind"/> for the entry</param>
+        /// <returns>New or updated <see cref="Comdat"/></returns>
+        public Comdat InsertOrUpdate( string key, ComdatKind kind )
         {
             key.ValidateNotNullOrWhiteSpace( nameof( key ) );
             kind.ValidateDefined( nameof( kind ) );
@@ -37,6 +53,7 @@ namespace Llvm.NET
             return retVal;
         }
 
+        /// <summary>Removes all the <see cref="Comdat"/> entries from the module</summary>
         public void Clear( )
         {
             foreach( var obj in GetModuleGlobalObjects() )
@@ -50,10 +67,18 @@ namespace Llvm.NET
 
         public bool Contains( string key ) => InternalComdatMap.ContainsKey( key );
 
+        /// <inheritdoc/>
         public IEnumerator<Comdat> GetEnumerator( ) => InternalComdatMap.Values.GetEnumerator( );
 
+        /// <inheritdoc/>
         IEnumerator IEnumerable.GetEnumerator( ) => InternalComdatMap.Values.GetEnumerator( );
 
+        /// <summary>Removes a <see cref="Comdat"/> entry from the module</summary>
+        /// <param name="key">Name of the <see cref="Comdat"/></param>
+        /// <returns>
+        /// <see langword="true"/> if the value was in the list or
+        /// <see langword="false"/> otherwise
+        /// </returns>
         public bool Remove( string key )
         {
             key.ValidateNotNullOrWhiteSpace( nameof( key ) );
@@ -73,6 +98,13 @@ namespace Llvm.NET
             return retVal;
         }
 
+        /// <summary>Gets a value form the collection if it exists</summary>
+        /// <param name="key">Name of the item to retrieve</param>
+        /// <param name="value">Value of the item if found or <see langword="null"/> if not found</param>
+        /// <returns>
+        /// <see langword="true"/> if the value was found
+        /// the list or <see langword="false"/> otherwise.
+        /// </returns>
         public bool TryGetValue( string key, out Comdat value )
         {
             key.ValidateNotNullOrWhiteSpace( nameof( key ) );

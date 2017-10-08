@@ -27,7 +27,7 @@ namespace Llvm.NET.Values
             return this;
         }
 
-        public IAttributeCollection Attributes => new ValueAttributeCollection( ContainingFunction, FunctionAttributeIndex.Parameter0 + ( int )Index );
+        public ICollection<AttributeValue> Attributes => new ValueAttributeCollection( ContainingFunction, FunctionAttributeIndex.Parameter0 + ( int )Index );
 
         internal Argument( LLVMValueRef valueRef )
             : base( valueRef )
