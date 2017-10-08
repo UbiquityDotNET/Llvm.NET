@@ -5213,7 +5213,7 @@
 <div class="markdown level1 conceptual"></div>
 <h5 class="decalaration">Declaration</h5>
 <div class="codewrapper">
-  <pre><code class="lang-csharp hljs">public DISubProgram CreateFunction(DIScope scope, string name, string mangledName, DIFile file, uint line, DISubroutineType signatureType, bool isLocalToUnit, bool isDefinition, uint scopeLine, DebugInfoFlags debugFlags, bool isOptimized, Function function, MDNode typeParameter = null, MDNode declaration = null)</code></pre>
+  <pre><code class="lang-csharp hljs">public DISubProgram CreateFunction(DIScope scope, [CanBeNull] string name, [CanBeNull] string mangledName, [CanBeNull] DIFile file, uint line, DISubroutineType signatureType, bool isLocalToUnit, bool isDefinition, uint scopeLine, DebugInfoFlags debugFlags, bool isOptimized, Function function, [CanBeNull] MDNode typeParameter = null, [CanBeNull] MDNode declaration = null)</code></pre>
 </div>
 <h5 class="parameters">Parameters</h5>
 <table class="table table-bordered table-striped table-condensed">

@@ -5208,7 +5208,8 @@
 </span>
 <a id="Llvm_NET_Values_Value_AddExtendedPropertyValue_" data-uid="Llvm.NET.Values.Value.AddExtendedPropertyValue*"></a>
 <h4 id="Llvm_NET_Values_Value_AddExtendedPropertyValue_System_String_System_Object_" data-uid="Llvm.NET.Values.Value.AddExtendedPropertyValue(System.String,System.Object)">AddExtendedPropertyValue(String, Object)</h4>
-<div class="markdown level1 summary"></div>
+<div class="markdown level1 summary"><p>Adds a value to the container</p>
+</div>
 <div class="markdown level1 conceptual"></div>
 <h5 class="decalaration">Declaration</h5>
 <div class="codewrapper">
@@ -5227,17 +5228,25 @@
     <tr>
       <td><a class="xref" href="https://msdn.microsoft.com/en-us/library/system.string(v=vs.110).aspx">String</a></td>
       <td><span class="parametername">id</span></td>
-      <td></td>
+      <td><p>Id of the value</p>
+</td>
     </tr>
     <tr>
       <td><a class="xref" href="https://msdn.microsoft.com/en-us/library/system.object(v=vs.110).aspx">Object</a></td>
       <td><span class="parametername">value</span></td>
-      <td></td>
+      <td><p>value to add</p>
+</td>
     </tr>
   </tbody>
 </table>
 <h5 class="implements">Implements</h5>
     <div><a class="xref" href="Llvm.NET.IExtensiblePropertyContainer.AddExtendedPropertyValue.html#Llvm_NET_IExtensiblePropertyContainer_AddExtendedPropertyValue_System_String_System_Object_">IExtensiblePropertyContainer.AddExtendedPropertyValue(String, Object)</a></div>
+<h5 id="Llvm_NET_Values_Value_AddExtendedPropertyValue_System_String_System_Object__remarks">Remarks</h5>
+<div class="markdown level1 remarks"><p>Adds the value with the specified id. If a value with the same id
+already exists and its type is the same as <code data-dev-comment-type="paramref" class="paramref">value</code>
+it is replaced. If the existing value is of a different type, then
+an ArgumentException is thrown.</p>
+</div>
 </article>
           </div>
           <div class="contribution-panel mobile-hide">
