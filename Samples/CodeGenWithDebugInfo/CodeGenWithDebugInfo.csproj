@@ -15,6 +15,10 @@
     <Compile Include="TargetDependentDetails.cs" />
     <Compile Include="X64Details.cs" />
   </ItemGroup>
+
+  <ItemGroup>
+    <AdditionalFiles Include="..\..\src\stylecop.json" Link="stylecop.json" />
+  </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
     <None Include="Support Files\ClangCompile.cmd">
