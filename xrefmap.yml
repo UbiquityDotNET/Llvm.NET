@@ -133,6 +133,18 @@ references:
   commentId: Overload:Llvm.NET.Comdat.Kind
   fullName: Llvm.NET.Comdat.Kind
   nameWithType: Comdat.Kind
+- uid: Llvm.NET.Comdat.Module
+  name: Module
+  href: api/Llvm.NET.Comdat.Module.html#Llvm_NET_Comdat_Module
+  commentId: P:Llvm.NET.Comdat.Module
+  fullName: Llvm.NET.Comdat.Module
+  nameWithType: Comdat.Module
+- uid: Llvm.NET.Comdat.Module*
+  name: Module
+  href: api/Llvm.NET.Comdat.Module.html
+  commentId: Overload:Llvm.NET.Comdat.Module
+  fullName: Llvm.NET.Comdat.Module
+  nameWithType: Comdat.Module
 - uid: Llvm.NET.Comdat.Name
   name: Name
   href: api/Llvm.NET.Comdat.Name.html#Llvm_NET_Comdat_Name
@@ -12890,30 +12902,6 @@ references:
   commentId: Overload:Llvm.NET.Values.AttributeValue.VerifyValidOn
   fullName: Llvm.NET.Values.AttributeValue.VerifyValidOn
   nameWithType: AttributeValue.VerifyValidOn
-- uid: Llvm.NET.Values.AttributeValueMixins
-  name: AttributeValueMixins
-  href: api/Llvm.NET.Values.AttributeValueMixins.html
-  commentId: T:Llvm.NET.Values.AttributeValueMixins
-  fullName: Llvm.NET.Values.AttributeValueMixins
-  nameWithType: AttributeValueMixins
-- uid: Llvm.NET.Values.AttributeValueMixins.ToAttributeValue(Llvm.NET.Values.AttributeKind,Llvm.NET.Context)
-  name: ToAttributeValue(AttributeKind, Context)
-  href: api/Llvm.NET.Values.AttributeValueMixins.ToAttributeValue.html#Llvm_NET_Values_AttributeValueMixins_ToAttributeValue_Llvm_NET_Values_AttributeKind_Llvm_NET_Context_
-  commentId: M:Llvm.NET.Values.AttributeValueMixins.ToAttributeValue(Llvm.NET.Values.AttributeKind,Llvm.NET.Context)
-  fullName: Llvm.NET.Values.AttributeValueMixins.ToAttributeValue(Llvm.NET.Values.AttributeKind, Llvm.NET.Context)
-  nameWithType: AttributeValueMixins.ToAttributeValue(AttributeKind, Context)
-- uid: Llvm.NET.Values.AttributeValueMixins.ToAttributeValue(System.String,Llvm.NET.Context)
-  name: ToAttributeValue(String, Context)
-  href: api/Llvm.NET.Values.AttributeValueMixins.ToAttributeValue.html#Llvm_NET_Values_AttributeValueMixins_ToAttributeValue_System_String_Llvm_NET_Context_
-  commentId: M:Llvm.NET.Values.AttributeValueMixins.ToAttributeValue(System.String,Llvm.NET.Context)
-  fullName: Llvm.NET.Values.AttributeValueMixins.ToAttributeValue(System.String, Llvm.NET.Context)
-  nameWithType: AttributeValueMixins.ToAttributeValue(String, Context)
-- uid: Llvm.NET.Values.AttributeValueMixins.ToAttributeValue*
-  name: ToAttributeValue
-  href: api/Llvm.NET.Values.AttributeValueMixins.ToAttributeValue.html
-  commentId: Overload:Llvm.NET.Values.AttributeValueMixins.ToAttributeValue
-  fullName: Llvm.NET.Values.AttributeValueMixins.ToAttributeValue
-  nameWithType: AttributeValueMixins.ToAttributeValue
 - uid: Llvm.NET.Values.BasicBlock
   name: BasicBlock
   href: api/Llvm.NET.Values.BasicBlock.html
