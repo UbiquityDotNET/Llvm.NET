@@ -1,10 +1,15 @@
-﻿using System.Diagnostics.CodeAnalysis;
+﻿// <copyright file="DebugPointerType.cs" company=".NET Foundation">
+// Copyright (c) .NET Foundation. All rights reserved.
+// </copyright>
+
+using System.Diagnostics.CodeAnalysis;
 using Llvm.NET.Types;
 using Ubiquity.ArgValidators;
 
 namespace Llvm.NET.DebugInfo
 {
     /// <summary>Binding between a <see cref="DIDerivedType"/> and an <see cref="IPointerType"/></summary>
+    /// <seealso href="xref:llvm_langref#diderivedtype">LLVM DIDerivedType</seealso>
     public class DebugPointerType
         : DebugType<IPointerType, DIDerivedType>
         , IPointerType

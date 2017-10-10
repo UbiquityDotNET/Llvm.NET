@@ -1,5 +1,6 @@
-﻿// This file maps the lower level LLVM.NET.Native.LLVM enumeration names to something
-// more compatible with the styles, patterns and conventions familiar to .NET Developers.
+﻿// <copyright file="Enumerations.cs" company=".NET Foundation">
+// Copyright (c) .NET Foundation. All rights reserved.
+// </copyright>
 
 using System.Diagnostics.CodeAnalysis;
 using Llvm.NET.Native;

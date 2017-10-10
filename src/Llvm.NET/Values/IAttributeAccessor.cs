@@ -1,4 +1,8 @@
-﻿using System.Collections.Generic;
+﻿// <copyright file="IAttributeAccessor.cs" company=".NET Foundation">
+// Copyright (c) .NET Foundation. All rights reserved.
+// </copyright>
+
+using System.Collections.Generic;
 
 namespace Llvm.NET.Values
 {

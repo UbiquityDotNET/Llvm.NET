@@ -1,4 +1,8 @@
-﻿using System;
+﻿// <copyright file="AssemblyInitialize.cs" company="PlaceholderCompany">
+// Copyright (c) PlaceholderCompany. All rights reserved.
+// </copyright>
+
+using System;
 using System.Diagnostics.CodeAnalysis;
 using Llvm.NET;
 using Microsoft.VisualStudio.TestTools.UnitTesting;

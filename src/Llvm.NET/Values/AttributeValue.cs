@@ -1,4 +1,8 @@
-﻿using System;
+﻿// <copyright file="AttributeValue.cs" company=".NET Foundation">
+// Copyright (c) .NET Foundation. All rights reserved.
+// </copyright>
+
+using System;
 using System.Diagnostics.CodeAnalysis;
 using Llvm.NET.Native;
 using Ubiquity.ArgValidators;
@@ -153,31 +157,13 @@ namespace Llvm.NET.Values
             return context.GetAttributeFor( handle, (c,h)=>new AttributeValue(c, h) );
         }
 
+        internal LLVMAttributeRef NativeAttribute { get; }
+
         private AttributeValue( Context context, LLVMAttributeRef nativeValue )
         {
             context.ValidateNotNull( nameof( context ) );
             Context = context;
             NativeAttribute = nativeValue;
         }
-
-        internal LLVMAttributeRef NativeAttribute { get; }
-    }
-
-    [SuppressMessage( "StyleCop.CSharp.MaintainabilityRules", "SA1402:FileMayOnlyContainASingleClass", Justification = "Legacy support to be removed but doesn't warrant it's own file" )]
-    public static class AttributeValueMixins
-    {
-        /// <summary>Implicitly cast an <see cref="AttributeKind"/> to an <see cref="AttributeValue"/></summary>
-        /// <param name="kind">Kind of attribute to create</param>
-        /// <param name="ctx">Context that should own the attribute value</param>
-        [Obsolete("Use Context.CreateAttribute() instead")]
-        public static AttributeValue ToAttributeValue( this AttributeKind kind, Context ctx )
-            => ctx?.CreateAttribute( kind ) ?? throw new ArgumentNullException(nameof(ctx));
-
-        /// <summary>Implicitly cast a string to an named <see cref="AttributeValue"/></summary>
-        /// <param name="kind">Attribute name</param>
-        /// <param name="ctx">Context that should own the attribute value</param>
-        [Obsolete( "Use Context.CreateAttribute() instead" )]
-        public static AttributeValue ToAttributeValue( this string kind, Context ctx )
-            => ctx?.CreateAttribute( kind ) ?? throw new ArgumentNullException( nameof( ctx ) );
     }
 }

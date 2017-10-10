@@ -1,4 +1,8 @@
-﻿using System.Collections;
+﻿// <copyright file="ValuAttributeCollection.cs" company=".NET Foundation">
+// Copyright (c) .NET Foundation. All rights reserved.
+// </copyright>
+
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 

@@ -1,4 +1,8 @@
-﻿using System;
+﻿// <copyright file="ValueAttributeDictionary.cs" company=".NET Foundation">
+// Copyright (c) .NET Foundation. All rights reserved.
+// </copyright>
+
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -6,18 +10,14 @@ using System.Linq;
 
 namespace Llvm.NET.Values
 {
-    // re-usable implementation of IAttributeDictionary for containers that implement IAttributeAccessor
-    // This uses the lowlevel methods of IAttributeAccessor to abastract out the differences in the
-    // LLVM-C API for attributes on CallSites vs. Functions
+    /// <summary>re-usable implementation of IAttributeDictionary for containers that implement IAttributeAccessor</summary>
+    /// <remarks>
+    /// This uses the lowlevel methods of IAttributeAccessor to abstract out the differences in the
+    /// LLVM-C API for attributes on CallSites vs. Functions
+    /// </remarks>
     internal class ValueAttributeDictionary
         : IAttributeDictionary
     {
-        internal ValueAttributeDictionary( IAttributeAccessor container, Func<Function> functionFetcher )
-        {
-            Container = container;
-            FunctionFetcher = functionFetcher;
-        }
-
         public Context Context => Container.Context;
 
         public ICollection<AttributeValue> this[ FunctionAttributeIndex key ]
@@ -63,6 +63,12 @@ namespace Llvm.NET.Values
         }
 
         IEnumerator IEnumerable.GetEnumerator( ) => GetEnumerator( );
+
+        internal ValueAttributeDictionary( IAttributeAccessor container, Func<Function> functionFetcher )
+        {
+            Container = container;
+            FunctionFetcher = functionFetcher;
+        }
 
         private IEnumerable<FunctionAttributeIndex> GetValidKeys()
         {

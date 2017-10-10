@@ -1,4 +1,8 @@
-﻿namespace Llvm.NET.Values
+﻿// <copyright file="GlobalValueExtensions.cs" company=".NET Foundation">
+// Copyright (c) .NET Foundation. All rights reserved.
+// </copyright>
+
+namespace Llvm.NET.Values
 {
     /// <summary>Fluent style extensions for modifying properties of a <see cref="GlobalValue"/></summary>
     public static class GlobalValueExtensions

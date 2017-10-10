@@ -1,15 +1,14 @@
-﻿using Llvm.NET.Native;
+﻿// <copyright file="Cmp.cs" company=".NET Foundation">
+// Copyright (c) .NET Foundation. All rights reserved.
+// </copyright>
+
+using Llvm.NET.Native;
 
 namespace Llvm.NET.Instructions
 {
     public class Cmp
         : Instruction
     {
-        internal Cmp( LLVMValueRef valueRef )
-            : base( valueRef )
-        {
-        }
-
         public Predicate Predicate
         {
             get
@@ -26,6 +25,11 @@ namespace Llvm.NET.Instructions
                     return Predicate.BadFcmpPredicate;
                 }
             }
+        }
+
+        internal Cmp( LLVMValueRef valueRef )
+            : base( valueRef )
+        {
         }
     }
 }

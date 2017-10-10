@@ -1,4 +1,8 @@
-﻿using System;
+﻿// <copyright file="UserOperandList.cs" company=".NET Foundation">
+// Copyright (c) .NET Foundation. All rights reserved.
+// </copyright>
+
+using System;
 using System.Collections.Generic;
 using Llvm.NET.Native;
 
@@ -8,11 +12,6 @@ namespace Llvm.NET.Values
     internal class UserOperandList
         : IReadOnlyList<Value>
     {
-        internal UserOperandList( User owner )
-        {
-            Owner = owner;
-        }
-
         public Value this[ int index ]
         {
             get
@@ -50,6 +49,11 @@ namespace Llvm.NET.Values
         }
 
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator( ) => GetEnumerator( );
+
+        internal UserOperandList( User owner )
+        {
+            Owner = owner;
+        }
 
         private User Owner;
     }

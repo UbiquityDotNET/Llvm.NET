@@ -1,3 +1,7 @@
+// <copyright file="Use.cs" company=".NET Foundation">
+// Copyright (c) .NET Foundation. All rights reserved.
+// </copyright>
+
 using Llvm.NET.Native;
 
 namespace Llvm.NET.Values
@@ -8,14 +12,18 @@ namespace Llvm.NET.Values
     /// </remarks>
     public class Use
     {
+        /// <summary>Gets the <see cref="User"/> of this <see cref="Use"/></summary>
+        public User User => Value.FromHandle<User>( NativeMethods.GetUser( OpaqueHandle ) );
+
+        /// <summary>Gets the <see cref="Value"/> used</summary>
+        public Value Value => Value.FromHandle( NativeMethods.GetUsedValue( OpaqueHandle ) );
+
+        /// <summary>Creates a new <see cref="Use"/> from  low level LLVM <see cref="LLVMUseRef"/></summary>
+        /// <param name="useRef">LLVM raw reference</param>
         internal Use( LLVMUseRef useRef )
         {
             OpaqueHandle = useRef;
         }
-
-        public User User => Value.FromHandle<User>( NativeMethods.GetUser( OpaqueHandle ) );
-
-        public Value Value => Value.FromHandle( NativeMethods.GetUsedValue( OpaqueHandle ) );
 
         private LLVMUseRef OpaqueHandle;
     }

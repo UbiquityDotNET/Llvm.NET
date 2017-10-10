@@ -1,4 +1,8 @@
-﻿using System;
+﻿// <copyright file="Call.cs" company=".NET Foundation">
+// Copyright (c) .NET Foundation. All rights reserved.
+// </copyright>
+
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using Llvm.NET.Native;

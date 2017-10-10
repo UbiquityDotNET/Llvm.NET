@@ -1,4 +1,8 @@
-﻿using System;
+﻿// <copyright file="ComdatCollection.cs" company=".NET Foundation">
+// Copyright (c) .NET Foundation. All rights reserved.
+// </copyright>
+
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,14 +20,6 @@ namespace Llvm.NET
     public class ComdatCollection
         : IEnumerable<Comdat>
     {
-        internal ComdatCollection( NativeModule module )
-        {
-            module.ValidateNotNull( nameof( module ) );
-
-            Module = module;
-            NativeMethods.ModuleEnumerateComdats( Module.ModuleHandle, AddComdat );
-        }
-
         /// <summary>Retrieves <see cref="Comdat"/> by its name</summary>
         /// <param name="key">Name of the <see cref="Comdat"/></param>
         /// <returns><see cref="Comdat"/> or <see langword="null"/></returns>
@@ -31,7 +27,7 @@ namespace Llvm.NET
         /// <exception cref="KeyNotFoundException">Key does not exist in the collection</exception>
         public Comdat this[ string key ] => InternalComdatMap[ key ];
 
-        /// <summary>Number of items in the collection</summary>
+        /// <summary>Gets the number of items in the collection</summary>
         public int Count => InternalComdatMap.Count;
 
         /// <summary>Inserts or updates a <see cref="Comdat"/> entry</summary>
@@ -65,6 +61,9 @@ namespace Llvm.NET
             NativeMethods.ModuleComdatClear( Module.ModuleHandle );
         }
 
+        /// <summary>Gets a value that indicates if a <see cref="Comdat"/> with a given name exists in the collection</summary>
+        /// <param name="key">Name of the <see cref="Comdat"/> to test for</param>
+        /// <returns><see langword="true"/> if the entry is present and <see langword="false"/> if not</returns>
         public bool Contains( string key ) => InternalComdatMap.ContainsKey( key );
 
         /// <inheritdoc/>
@@ -109,6 +108,16 @@ namespace Llvm.NET
         {
             key.ValidateNotNullOrWhiteSpace( nameof( key ) );
             return InternalComdatMap.TryGetValue( key, out value );
+        }
+
+        /// <summary>Creates an enumerating collection of <see cref="Comdat"/> entries for a module</summary>
+        /// <param name="module">Module the comdats are enumerated from</param>
+        internal ComdatCollection( NativeModule module )
+        {
+            module.ValidateNotNull( nameof( module ) );
+
+            Module = module;
+            NativeMethods.ModuleEnumerateComdats( Module.ModuleHandle, AddComdat );
         }
 
         private IEnumerable<GlobalObject> GetModuleGlobalObjects()

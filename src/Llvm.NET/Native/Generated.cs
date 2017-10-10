@@ -1,9 +1,16 @@
-﻿using System;
+﻿// <copyright file="Generated.cs" company=".NET Foundation">
+// Copyright (c) .NET Foundation. All rights reserved.
+// </copyright>
+
+using System;
 using System.Diagnostics.CodeAnalysis;
 using System.Runtime.InteropServices;
 
 // warning CS0649: Field 'xxx' is never assigned to, and will always have its default value 0
 #pragma warning disable 649
+
+// Mostly generated code, but all pure interop, documentation is in native code
+#pragma warning disable SA1600 // Elements must be documented
 
 namespace Llvm.NET.Native
 {
@@ -3770,3 +3777,5 @@ namespace Llvm.NET.Native
         internal static extern void AddSLPVectorizePass( LLVMPassManagerRef @PM );
     }
 }
+
+#pragma warning restore SA1600 // Elements must be documented

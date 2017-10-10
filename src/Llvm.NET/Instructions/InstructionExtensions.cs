@@ -1,4 +1,8 @@
-﻿namespace Llvm.NET.Instructions
+﻿// <copyright file="InstructionExtensions.cs" company=".NET Foundation">
+// Copyright (c) .NET Foundation. All rights reserved.
+// </copyright>
+
+namespace Llvm.NET.Instructions
 {
     /// <summary>Provides extension methods to <see cref="Instruction"/> that cannot be achieved as members of the class</summary>
     /// <remarks>

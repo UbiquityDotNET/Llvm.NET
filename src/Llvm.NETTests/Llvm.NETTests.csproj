@@ -13,6 +13,7 @@
     <Compile Include="TargetTests.cs" />
     <Compile Include="TripleTests.cs" />
     <Compile Include="Values\AttributeValueTests.cs" />
+    <AdditionalFiles Include="..\stylecop.json" Link="stylecop.json" />
     <ProjectReference Include="$(BuildRootDir)src\Llvm.NET\Llvm.NET.csproj">
         <Name>Llvm.NET</Name>
     </ProjectReference>

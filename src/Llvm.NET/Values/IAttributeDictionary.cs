@@ -1,4 +1,8 @@
-﻿using System.Collections.Generic;
+﻿// <copyright file="IAttributeDictionary.cs" company=".NET Foundation">
+// Copyright (c) .NET Foundation. All rights reserved.
+// </copyright>
+
+using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 
@@ -51,10 +55,10 @@ namespace Llvm.NET.Values
     /// <summary>Interface for objects that contain Attributes</summary>
     public interface IAttributeContainer
     {
-        /// <summary><see cref="Llvm.NET.Context"/> that owns these attributes </summary>
+        /// <summary>Gets the <see cref="Llvm.NET.Context"/> that owns these attributes </summary>
         Context Context { get; }
 
-        /// <summary>Full set of Attributes keyed by <see cref="FunctionAttributeIndex"/></summary>
+        /// <summary>Gets the full set of Attributes keyed by <see cref="FunctionAttributeIndex"/></summary>
         IAttributeDictionary Attributes { get; }
     }
 }

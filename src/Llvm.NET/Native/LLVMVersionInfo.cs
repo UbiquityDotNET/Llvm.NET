@@ -1,4 +1,8 @@
-﻿using System;
+﻿// <copyright file="LLVMVersionInfo.cs" company=".NET Foundation">
+// Copyright (c) .NET Foundation. All rights reserved.
+// </copyright>
+
+using System;
 using System.Runtime.InteropServices;
 
 namespace Llvm.NET.Native
@@ -8,7 +12,6 @@ namespace Llvm.NET.Native
         public readonly int Major;
         public readonly int Minor;
         public readonly int Patch;
-        private readonly IntPtr VersionStringPtr;
 
         public override string ToString( )
         {
@@ -17,5 +20,7 @@ namespace Llvm.NET.Native
 
         public static implicit operator Version( LLVMVersionInfo versionInfo )
             => new Version( versionInfo.Major, versionInfo.Minor, versionInfo.Patch );
+
+        private readonly IntPtr VersionStringPtr;
     }
 }

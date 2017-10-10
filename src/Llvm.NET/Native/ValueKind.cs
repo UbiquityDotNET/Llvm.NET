@@ -1,4 +1,8 @@
-﻿namespace Llvm.NET.Native
+﻿// <copyright file="ValueKind.cs" company=".NET Foundation">
+// Copyright (c) .NET Foundation. All rights reserved.
+// </copyright>
+
+namespace Llvm.NET.Native
 {
     internal enum ValueKind : uint
     {

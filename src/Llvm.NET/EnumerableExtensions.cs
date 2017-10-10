@@ -1,6 +1,7 @@
-﻿// despite claims from MS to the contrary net47 isn't fully netstandard2.0 compliant
-// in particular it does not provide the Append or Prepend Enumerable extension methods
-// see: https://developercommunity.visualstudio.com/content/problem/123356/enumerableappend-extension-method-is-missing-in-ne.html
+﻿// <copyright file="EnumerableExtensions.cs" company=".NET Foundation">
+// Copyright (c) .NET Foundation. All rights reserved.
+// </copyright>
+
 #if NET47
 using System;
 using System.Collections.Generic;

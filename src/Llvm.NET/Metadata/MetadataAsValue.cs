@@ -1,3 +1,7 @@
+// <copyright file="MetadataAsValue.cs" company=".NET Foundation">
+// Copyright (c) .NET Foundation. All rights reserved.
+// </copyright>
+
 using System;
 using Llvm.NET.Native;
 using Llvm.NET.Values;

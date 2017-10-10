@@ -1,4 +1,8 @@
-﻿using System;
+﻿// <copyright file="DebugType.cs" company=".NET Foundation">
+// Copyright (c) .NET Foundation. All rights reserved.
+// </copyright>
+
+using System;
 using System.Diagnostics.CodeAnalysis;
 using Llvm.NET.Types;
 using Llvm.NET.Values;
@@ -7,6 +11,8 @@ using Ubiquity.ArgValidators;
 namespace Llvm.NET.DebugInfo
 {
     /// <summary>Provides pairing of a <see cref="ITypeRef"/> with a <see cref="DIType"/> for function signatures</summary>
+    /// <typeparam name="TNative">Native LLVM type</typeparam>
+    /// <typeparam name="TDebug">Debug type description for the type</typeparam>
     /// <remarks>
     /// <para>Primitive types and function signature types are all interned in LLVM, thus there won't be a
     /// strict one to one relationship between an LLVM type and corresponding language specific debug
@@ -41,15 +47,6 @@ namespace Llvm.NET.DebugInfo
         where TNative : class, ITypeRef
         where TDebug : DIType
     {
-        internal DebugType()
-        {
-        }
-
-        internal DebugType( TNative llvmType )
-        {
-            NativeType = llvmType ?? throw new ArgumentNullException( nameof( llvmType ) );
-        }
-
         // Re-assignment will perform RAUW on the current value
         [SuppressMessage( "Microsoft.Naming", "CA2204:Literals should be spelled correctly", MessageId = "DIType", Justification = "It is spelled correctly 8^)" )]
         public TDebug DIType
@@ -78,13 +75,6 @@ namespace Llvm.NET.DebugInfo
             }
         }
 
-        [SuppressMessage( "StyleCop.CSharp.NamingRules"
-                        , "SA1310:Field names must not contain underscore"
-                        , Justification = "Trailing _ indicates value MUST NOT be written to directly, even internally"
-                        )
-        ]
-        private TDebug DIType_;
-
         public TNative NativeType
         {
             get => NativeType_;
@@ -99,13 +89,6 @@ namespace Llvm.NET.DebugInfo
                 NativeType_ = value;
             }
         }
-
-        [SuppressMessage( "StyleCop.CSharp.NamingRules"
-                        , "SA1310:Field names must not contain underscore"
-                        , Justification = "Trailing _ indicates value MUST NOT be written to directly, even internally"
-                        )
-        ]
-        private TNative NativeType_;
 
         public IntPtr TypeHandle => NativeType.TypeHandle;
 
@@ -183,6 +166,29 @@ namespace Llvm.NET.DebugInfo
         [SuppressMessage( "Microsoft.Usage", "CA2225:OperatorOverloadsHaveNamedAlternates", Justification = "Available as a property, this is for convenience" )]
         public static implicit operator TDebug( DebugType<TNative, TDebug> self ) => self.ValidateNotNull(nameof(self)).DIType;
 
+        internal DebugType( )
+        {
+        }
+
+        internal DebugType( TNative llvmType )
+        {
+            NativeType = llvmType ?? throw new ArgumentNullException( nameof( llvmType ) );
+        }
+
+        [SuppressMessage( "StyleCop.CSharp.NamingRules"
+                        , "SA1310:Field names must not contain underscore"
+                        , Justification = "Trailing _ indicates value MUST NOT be written to directly, even internally"
+                        )
+        ]
+        private TNative NativeType_;
+
+        [SuppressMessage( "StyleCop.CSharp.NamingRules"
+                        , "SA1310:Field names must not contain underscore"
+                        , Justification = "Trailing _ indicates value MUST NOT be written to directly, even internally"
+                        )
+        ]
+        private TDebug DIType_;
+
         private readonly ExtensiblePropertyContainer PropertyContainer = new ExtensiblePropertyContainer( );
     }
 
@@ -204,12 +210,13 @@ namespace Llvm.NET.DebugInfo
         }
 
         /// <summary>Convenience extensions for determining if the <see cref="DIType"/> property is valid</summary>
-        /// <param name="debugType"></param>
+        /// <param name="debugType">Debug type to test for valid Debug information</param>
         /// <remarks>In LLVM Debug information a <see langword="null"/> <see cref="Llvm.NET.DebugInfo.DIType"/> is
         /// used to represent the void type. Thus, looking only at the <see cref="DIType"/> property is
         /// insufficient to distinguish between a type with no debug information and one representing the void
         /// type. This property is used to disambiguate the two possibilities.
         /// </remarks>
+        /// <returns><see langword="true"/> if the type has debug information</returns>
         public static bool HasDebugInfo( this IDebugType<ITypeRef, DIType> debugType )
         {
             if( debugType == null )

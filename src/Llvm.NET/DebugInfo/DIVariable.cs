@@ -1,15 +1,15 @@
-﻿using System.Diagnostics.CodeAnalysis;
+﻿// <copyright file="DIVariable.cs" company=".NET Foundation">
+// Copyright (c) .NET Foundation. All rights reserved.
+// </copyright>
+
+using System.Diagnostics.CodeAnalysis;
 using Llvm.NET.Native;
 
 namespace Llvm.NET.DebugInfo
 {
-    public class DIVariable : DINode
+    public class DIVariable
+        : DINode
     {
-        internal DIVariable( LLVMMetadataRef handle )
-            : base( handle )
-        {
-        }
-
         /* TODO: UInt32 Line => NativeMethods.DIVariableGetLine( MetadataHandle ); */
 
         public DIScope Scope => Operands[ 0 ]?.Metadata as DIScope;
@@ -20,5 +20,10 @@ namespace Llvm.NET.DebugInfo
 
         [SuppressMessage( "Microsoft.Naming", "CA1721:PropertyNamesShouldNotMatchGetMethods", Justification = "There isn't a better name" )]
         public DIType Type => Operands[ 3 ]?.Metadata as DIType;
+
+        internal DIVariable( LLVMMetadataRef handle )
+            : base( handle )
+        {
+        }
     }
 }

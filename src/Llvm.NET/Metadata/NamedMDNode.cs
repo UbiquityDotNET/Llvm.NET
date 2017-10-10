@@ -1,4 +1,8 @@
-﻿using System.Collections;
+﻿// <copyright file="NamedMDNode.cs" company=".NET Foundation">
+// Copyright (c) .NET Foundation. All rights reserved.
+// </copyright>
+
+using System.Collections;
 using System.Collections.Generic;
 using Llvm.NET.Native;
 
@@ -8,12 +12,6 @@ namespace Llvm.NET
     /// <remarks>Despite its name a NamedMDNode is not itself an MDNode.</remarks>
     public class NamedMDNode
     {
-        internal NamedMDNode( LLVMNamedMDNodeRef nativeNode )
-        {
-            NativeHandle = nativeNode;
-            Operands = new OperandIterator( this );
-        }
-
         /* TODO: Enable retrieving the name from LibLLVM
         // public string Name { get; }
         */
@@ -22,17 +20,18 @@ namespace Llvm.NET
 
         public NativeModule ParentModule => NativeModule.FromHandle( NativeMethods.NamedMDNodeGetParentModule( NativeHandle ) );
 
+        internal NamedMDNode( LLVMNamedMDNodeRef nativeNode )
+        {
+            NativeHandle = nativeNode;
+            Operands = new OperandIterator( this );
+        }
+
         private LLVMNamedMDNodeRef NativeHandle;
 
         // internal iterator for Metadata operands
         private class OperandIterator
             : IReadOnlyList<MDNode>
         {
-            internal OperandIterator( NamedMDNode owner )
-            {
-                OwningNode = owner;
-            }
-
             public MDNode this[ int index ]
             {
                 get
@@ -53,6 +52,11 @@ namespace Llvm.NET
             }
 
             IEnumerator IEnumerable.GetEnumerator( ) => GetEnumerator( );
+
+            internal OperandIterator( NamedMDNode owner )
+            {
+                OwningNode = owner;
+            }
 
             private NamedMDNode OwningNode;
         }

@@ -1,4 +1,8 @@
-﻿using Llvm.NET.Native;
+﻿// <copyright file="Comdat.cs" company=".NET Foundation">
+// Copyright (c) .NET Foundation. All rights reserved.
+// </copyright>
+
+using Llvm.NET.Native;
 using Ubiquity.ArgValidators;
 
 namespace Llvm.NET
@@ -14,15 +18,7 @@ namespace Llvm.NET
     /// </remarks>
     public class Comdat
     {
-        internal Comdat( NativeModule module, LLVMComdatRef comdatRef )
-        {
-            module.ValidateNotNull( nameof( module ) );
-            comdatRef.Pointer.ValidateNotNull( nameof( comdatRef ) );
-
-            Module = module;
-            ComdatHandle = comdatRef;
-        }
-
+        /// <summary>Gets the name of the <see cref="Comdat"/></summary>
         public string Name
         {
             get
@@ -36,6 +32,7 @@ namespace Llvm.NET
             }
         }
 
+        /// <summary>Gets or sets the <see cref="ComdatKind"/> for this <see cref="Comdat"/></summary>
         public ComdatKind Kind
         {
             get
@@ -59,8 +56,22 @@ namespace Llvm.NET
             }
         }
 
-        internal LLVMComdatRef ComdatHandle { get; }
+        /// <summary>Gets the module the <see cref="Comdat"/> belongs to</summary>
+        public NativeModule Module { get; }
 
-        internal NativeModule Module { get; }
+        /// <summary>Creates a <see cref="Comdat"/> from an LLVM module and reference</summary>
+        /// <param name="module">Owning module for the comdat</param>
+        /// <param name="comdatRef">LLVM-C API handle for the comdat</param>
+        internal Comdat( NativeModule module, LLVMComdatRef comdatRef )
+        {
+            module.ValidateNotNull( nameof( module ) );
+            comdatRef.Pointer.ValidateNotNull( nameof( comdatRef ) );
+
+            Module = module;
+            ComdatHandle = comdatRef;
+        }
+
+        /// <summary>Gets the wrapped <see cref="LLVMComdatRef"/></summary>
+        internal LLVMComdatRef ComdatHandle { get; }
     }
 }

@@ -1,0 +1,7 @@
+references:
+  - uid: llvm_langref
+    name: LLVM Language reference
+    href: http://releases.llvm.org/5.0.0/docs/LangRef.html
+  - uid: llvm_sourceleveldebugging
+    name: LLVM Documentation
+    href: http://releases.llvm.org/5.0.0/docs/SourceLevelDebugging.html

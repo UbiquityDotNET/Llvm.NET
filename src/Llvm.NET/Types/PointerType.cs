@@ -1,4 +1,8 @@
-﻿using System;
+﻿// <copyright file="PointerType.cs" company=".NET Foundation">
+// Copyright (c) .NET Foundation. All rights reserved.
+// </copyright>
+
+using System;
 using Llvm.NET.Native;
 
 namespace Llvm.NET.Types
@@ -17,7 +21,7 @@ namespace Llvm.NET.Types
         , IPointerType
     {
         /// <summary>Address space the pointer refers to</summary>
-        public uint AddressSpace => NativeMethods.GetPointerAddressSpace( TypeHandle_ );
+        public uint AddressSpace => NativeMethods.GetPointerAddressSpace( TypeRefHandle );
 
         internal PointerType( LLVMTypeRef typeRef )
             : base( typeRef )

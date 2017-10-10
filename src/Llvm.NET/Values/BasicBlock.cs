@@ -1,4 +1,8 @@
-﻿using System;
+﻿// <copyright file="BasicBlock.cs" company=".NET Foundation">
+// Copyright (c) .NET Foundation. All rights reserved.
+// </copyright>
+
+using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using Llvm.NET.Instructions;

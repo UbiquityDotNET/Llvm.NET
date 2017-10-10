@@ -16,6 +16,7 @@
         <NoPackageAnalysis>true</NoPackageAnalysis>
     </PropertyGroup>
     <ItemGroup>
+        <AdditionalFiles Include="..\stylecop.json" Link="stylecop.json" />
         <Content Include="NugetPkg\build\Llvm.NET.props" PackagePath="build" />
     </ItemGroup>
     <ItemGroup>

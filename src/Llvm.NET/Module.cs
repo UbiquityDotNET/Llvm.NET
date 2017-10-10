@@ -1,4 +1,8 @@
-﻿using System;
+﻿// <copyright file="Module.cs" company=".NET Foundation">
+// Copyright (c) .NET Foundation. All rights reserved.
+// </copyright>
+
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
@@ -234,13 +238,6 @@ namespace Llvm.NET
             }
         }
 
-        [SuppressMessage( "StyleCop.CSharp.NamingRules"
-                        , "SA1310:Field names must not contain underscore"
-                        , Justification = "Trailing _ indicates it must not be written to directly even directly"
-                        )
-        ]
-        private DataLayout Layout_;
-
         /// <summary>Target Triple describing the target, ABI and OS</summary>
         public string TargetTriple
         {
@@ -435,7 +432,7 @@ namespace Llvm.NET
         }
 
         /// <summary>Adds a global to this module with a specific address space</summary>
-        /// <param name="addressSpace"></param>
+        /// <param name="addressSpace">Address space to add the global to</param>
         /// <param name="typeRef">Type of the global's value</param>
         /// <param name="name">Name of the global</param>
         /// <returns>The new <see cref="GlobalVariable"/></returns>
@@ -452,7 +449,7 @@ namespace Llvm.NET
         }
 
         /// <summary>Adds a global to this module</summary>
-        /// <param name="addressSpace"></param>
+        /// <param name="addressSpace">Address space to add the global to</param>
         /// <param name="typeRef">Type of the global's value</param>
         /// <param name="isConst">Flag to indicate if this global is a constant</param>
         /// <param name="linkage">Linkage type for this global</param>
@@ -468,7 +465,7 @@ namespace Llvm.NET
         }
 
         /// <summary>Adds a global to this module</summary>
-        /// <param name="addressSpace"></param>
+        /// <param name="addressSpace">Address space to add the global to</param>
         /// <param name="typeRef">Type of the global's value</param>
         /// <param name="isConst">Flag to indicate if this global is a constant</param>
         /// <param name="linkage">Linkage type for this global</param>
@@ -553,8 +550,8 @@ namespace Llvm.NET
         }
 
         /// <summary>Retrieves a named global from the module</summary>
-        /// <param name="name"></param>
-        /// <returns></returns>
+        /// <param name="name">Name of the global</param>
+        /// <returns><see cref="GlobalVariable"/> or <see langword="null"/> if not found</returns>
         public GlobalVariable GetNamedGlobal( string name )
         {
             name.ValidateNotNullOrWhiteSpace( nameof( name ) );
@@ -638,8 +635,8 @@ namespace Llvm.NET
         /// <param name="scopeLine">First line of the function's outermost scope, this may not be the same as the first line of the function definition due to source formatting</param>
         /// <param name="debugFlags">Additional flags describing this function</param>
         /// <param name="isOptimized">Flag to indicate if this function is optimized</param>
-        /// <param name="tParam"></param>
-        /// <param name="decl"></param>
+        /// <param name="tParam">Param Metadata node</param>
+        /// <param name="decl">Declaration Metadata node</param>
         /// <returns>Function described by the arguments</returns>
         public Function CreateFunction( DIScope scope
                                       , string name
@@ -785,6 +782,8 @@ namespace Llvm.NET
             Comdats = new ComdatCollection( this );
         }
 
+        internal LLVMModuleRef ModuleHandle { get; private set; }
+
         internal static NativeModule FromHandle( LLVMModuleRef nativeHandle )
         {
             nativeHandle.Pointer.ValidateNotNull( nameof( nativeHandle ) );
@@ -823,7 +822,12 @@ namespace Llvm.NET
             }
         }
 
-        internal LLVMModuleRef ModuleHandle { get; private set; }
+        [SuppressMessage( "StyleCop.CSharp.NamingRules"
+                        , "SA1310:Field names must not contain underscore"
+                        , Justification = "Trailing _ indicates it must not be written to directly even directly"
+                        )
+        ]
+        private DataLayout Layout_;
 
         private readonly ExtensiblePropertyContainer PropertyBag = new ExtensiblePropertyContainer( );
         private readonly Lazy<DebugInfoBuilder> LazyDiBuilder;

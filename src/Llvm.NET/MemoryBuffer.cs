@@ -1,4 +1,8 @@
-﻿using System;
+﻿// <copyright file="MemoryBuffer.cs" company=".NET Foundation">
+// Copyright (c) .NET Foundation. All rights reserved.
+// </copyright>
+
+using System;
 using System.Diagnostics.CodeAnalysis;
 using System.Runtime.InteropServices;
 using Llvm.NET.Native;
@@ -22,7 +26,7 @@ namespace Llvm.NET
             }
         }
 
-        /// <summary>Size of the buffer</summary>
+        /// <summary>Gets the size of the buffer</summary>
         public int Size
         {
             get

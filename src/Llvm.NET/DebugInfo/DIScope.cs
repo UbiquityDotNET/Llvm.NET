@@ -1,15 +1,14 @@
-﻿using Llvm.NET.Native;
+﻿// <copyright file="DIScope.cs" company=".NET Foundation">
+// Copyright (c) .NET Foundation. All rights reserved.
+// </copyright>
+
+using Llvm.NET.Native;
 
 namespace Llvm.NET.DebugInfo
 {
     /// <summary>Base class for all Debug info scopes</summary>
     public class DIScope : DINode
     {
-        internal DIScope( LLVMMetadataRef handle )
-            : base( handle )
-        {
-        }
-
         public DIFile File
         {
             get
@@ -20,8 +19,13 @@ namespace Llvm.NET.DebugInfo
                     return null;
                 }
 
-                return MDNode.FromHandle<DIFile>( handle );
+                return FromHandle<DIFile>( handle );
             }
+        }
+
+        internal DIScope( LLVMMetadataRef handle )
+            : base( handle )
+        {
         }
     }
 }

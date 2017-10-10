@@ -1,4 +1,8 @@
-﻿using System;
+﻿// <copyright file="DisposableAction.cs" company=".NET Foundation">
+// Copyright (c) .NET Foundation. All rights reserved.
+// </copyright>
+
+using System;
 
 namespace Llvm.NET
 {

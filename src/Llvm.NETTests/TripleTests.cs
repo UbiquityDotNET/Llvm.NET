@@ -1,4 +1,8 @@
-﻿using System.Collections.Generic;
+﻿// <copyright file="TripleTests.cs" company="PlaceholderCompany">
+// Copyright (c) PlaceholderCompany. All rights reserved.
+// </copyright>
+
+using System.Collections.Generic;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace Llvm.NET.Tests

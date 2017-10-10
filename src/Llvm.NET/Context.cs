@@ -1,4 +1,8 @@
-﻿using System;
+﻿// <copyright file="Context.cs" company=".NET Foundation">
+// Copyright (c) .NET Foundation. All rights reserved.
+// </copyright>
+
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
@@ -107,12 +111,14 @@ namespace Llvm.NET
         }
 
         /// <summary>Get's an LLVM integer type of arbitrary bit width</summary>
+        /// <param name="bitWidth">Width of the integer type in bits</param>
         /// <remarks>
         /// For standard integer bit widths (e.g. 1,8,16,32,64) this will return
         /// the same type as the corresponding specialized property.
         /// (e.g. GetIntType(1) is the same as <see cref="BoolType"/>,
         ///  GetIntType(16) is the same as <see cref="Int16Type"/>, etc... )
         /// </remarks>
+        /// <returns>Integer <see cref="ITypeRef"/> for the specified width</returns>
         public ITypeRef GetIntType( uint bitWidth )
         {
             if( bitWidth == 0 )
@@ -296,8 +302,8 @@ namespace Llvm.NET
             => CreateConstantStruct( packed, ( IEnumerable<Constant> )values );
 
         /// <summary>Creates a constant structure from a set of values</summary>
-        /// <param name="values">Set of values to use in forming the structure</param>
         /// <param name="packed">Flag to indicate if the structure is packed and no alignment should be applied to the members</param>
+        /// <param name="values">Set of values to use in forming the structure</param>
         /// <returns>Newly created <see cref="Constant"/></returns>
         /// <remarks>
         /// <note type="note">The actual concrete return type depends on the parameters provided and will be one of the following:
@@ -724,6 +730,8 @@ namespace Llvm.NET
             return retVal;
         }
 
+        internal LLVMContextRef ContextHandle { get; private set; }
+
         // These interning methods provide unique mapping between the .NET wrappers and the underlying LLVM instances
         // The mapping ensures that any LibLLVM handle is always re-mappable to a exactly one wrapper instance.
         // This helps reduce the number of wrapper instances created and also allows reference equality to work
@@ -958,8 +966,6 @@ namespace Llvm.NET
             Debug.WriteLine( "{0}: {1}", level, msg );
             Debug.Assert( level != LLVMDiagnosticSeverity.LLVMDSError );
         }
-
-        internal LLVMContextRef ContextHandle { get; private set; }
 
         private WrappedNativeCallback ActiveHandler;
 

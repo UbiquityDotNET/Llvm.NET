@@ -1,4 +1,8 @@
-﻿using System;
+﻿// <copyright file="StringMarshaler.cs" company=".NET Foundation">
+// Copyright (c) .NET Foundation. All rights reserved.
+// </copyright>
+
+using System;
 using System.Diagnostics.CodeAnalysis;
 using System.Runtime.InteropServices;
 using System.Text.RegularExpressions;
@@ -19,11 +23,7 @@ namespace Llvm.NET.Native
     internal class StringMarshaler
         : ICustomMarshaler
     {
-        internal StringMarshaler( Action<IntPtr> nativeDisposer )
-        {
-            NativeDisposer = nativeDisposer;
-        }
-
+        /// <inheritdoc/>
         public void CleanUpManagedData( object ManagedObj )
         {
         }
@@ -39,6 +39,28 @@ namespace Llvm.NET.Native
 
         public object MarshalNativeToManaged( IntPtr pNativeData )
             => NormalizeLineEndings( pNativeData );
+
+        public static ICustomMarshaler GetInstance( string cookie )
+        {
+            switch( cookie.ToUpperInvariant( ) )
+            {
+            case null:
+            case "":
+            case "NONE":
+                return new StringMarshaler( null );
+
+            case "DISPOSEMESSAGE":
+                return new StringMarshaler( NativeMethods.DisposeMessage );
+
+            default:
+                throw new ArgumentException( $"'{cookie}' is not a valid option", nameof( cookie ) );
+            }
+        }
+
+        internal StringMarshaler( Action<IntPtr> nativeDisposer )
+        {
+            NativeDisposer = nativeDisposer;
+        }
 
         private Action<IntPtr> NativeDisposer;
 
@@ -68,20 +90,5 @@ namespace Llvm.NET.Native
         }
 
         private static readonly Regex LineEndingNormalizingRegEx = new Regex( "(\r\n|\n\r|\r|\n)" );
-
-        public static ICustomMarshaler GetInstance( string cookie )
-        {
-            switch(cookie.ToUpperInvariant())
-            {
-            case null:
-            case "":
-            case "NONE":
-                return new StringMarshaler( null );
-            case "DISPOSEMESSAGE":
-                return new StringMarshaler( NativeMethods.DisposeMessage );
-            default:
-                throw new ArgumentException( $"'{cookie}' is not a valid option", nameof( cookie ) );
-            }
-        }
     }
 }

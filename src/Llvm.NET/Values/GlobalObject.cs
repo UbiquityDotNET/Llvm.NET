@@ -1,4 +1,8 @@
-﻿using System;
+﻿// <copyright file="GlobalObject.cs" company=".NET Foundation">
+// Copyright (c) .NET Foundation. All rights reserved.
+// </copyright>
+
+using System;
 using Llvm.NET.Native;
 
 namespace Llvm.NET.Values
@@ -6,11 +10,6 @@ namespace Llvm.NET.Values
     public class GlobalObject
         : GlobalValue
     {
-        internal GlobalObject( LLVMValueRef valueRef )
-            : base( valueRef )
-        {
-        }
-
         /// <summary>Alignment requirements for this object</summary>
         public uint Alignment
         {
@@ -53,6 +52,11 @@ namespace Llvm.NET.Values
 
                 NativeMethods.GlobalObjectSetComdat( ValueHandle, value?.ComdatHandle?? new LLVMComdatRef( IntPtr.Zero ) );
             }
+        }
+
+        internal GlobalObject( LLVMValueRef valueRef )
+            : base( valueRef )
+        {
         }
     }
 }

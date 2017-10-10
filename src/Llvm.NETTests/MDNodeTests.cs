@@ -1,4 +1,8 @@
-﻿using Llvm.NET.DebugInfo;
+﻿// <copyright file="MDNodeTests.cs" company="PlaceholderCompany">
+// Copyright (c) PlaceholderCompany. All rights reserved.
+// </copyright>
+
+using Llvm.NET.DebugInfo;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace Llvm.NET.Tests

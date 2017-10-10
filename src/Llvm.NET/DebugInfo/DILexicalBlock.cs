@@ -1,9 +1,15 @@
-﻿using Llvm.NET.Native;
+﻿// <copyright file="DILexicalBlock.cs" company=".NET Foundation">
+// Copyright (c) .NET Foundation. All rights reserved.
+// </copyright>
+
+using Llvm.NET.Native;
 
 namespace Llvm.NET.DebugInfo
 {
-    /// <summary>see <a href="http://llvm.org/docs/LangRef.html#dilexicalblock"/></summary>
-    public class DILexicalBlock : DILexicalBlockBase
+    /// <summary>Debug information for a Lexical block</summary>
+    /// <seealso href="xref:llvm_langref#dilexicalblock">LLVM DILexicalBlock</seealso>
+    public class DILexicalBlock
+        : DILexicalBlockBase
     {
         internal DILexicalBlock( LLVMMetadataRef handle )
             : base( handle )

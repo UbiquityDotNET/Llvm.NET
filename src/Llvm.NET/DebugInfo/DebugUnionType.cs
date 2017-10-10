@@ -1,4 +1,8 @@
-﻿using System;
+﻿// <copyright file="DebugUnionType.cs" company=".NET Foundation">
+// Copyright (c) .NET Foundation. All rights reserved.
+// </copyright>
+
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
@@ -8,6 +12,7 @@ namespace Llvm.NET.DebugInfo
 {
     /// <summary>Debug representation of a union type</summary>
     /// <remarks>The underlying native LLVM type is a structure with a single member</remarks>
+    /// <seealso href="xref:llvm_langref#dicompositetype">LLVM DICompositeType</seealso>
     public class DebugUnionType
         : DebugType<INamedStructuralType, DICompositeType>
         , INamedStructuralType

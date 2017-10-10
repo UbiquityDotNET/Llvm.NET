@@ -1,4 +1,8 @@
-﻿using System.Collections.Generic;
+﻿// <copyright file="FunctionType.cs" company=".NET Foundation">
+// Copyright (c) .NET Foundation. All rights reserved.
+// </copyright>
+
+using System.Collections.Generic;
 using System.Linq;
 using Llvm.NET.Native;
 
@@ -23,34 +27,34 @@ namespace Llvm.NET.Types
         : TypeRef
         , IFunctionType
     {
-        internal FunctionType( LLVMTypeRef typeRef )
-            : base( typeRef )
-        {
-        }
+        /// <inheritdoc/>
+        public bool IsVarArg => NativeMethods.IsFunctionVarArg( TypeRefHandle );
 
         /// <inheritdoc/>
-        public bool IsVarArg => NativeMethods.IsFunctionVarArg( TypeHandle_ );
-
-        /// <inheritdoc/>
-        public ITypeRef ReturnType => FromHandle<ITypeRef>( NativeMethods.GetReturnType( TypeHandle_ ) );
+        public ITypeRef ReturnType => FromHandle<ITypeRef>( NativeMethods.GetReturnType( TypeRefHandle ) );
 
         /// <inheritdoc/>
         public IReadOnlyList<ITypeRef> ParameterTypes
         {
             get
             {
-                uint paramCount = NativeMethods.CountParamTypes( TypeHandle_ );
+                uint paramCount = NativeMethods.CountParamTypes( TypeRefHandle );
                 if( paramCount == 0 )
                 {
                     return new List<TypeRef>().AsReadOnly();
                 }
 
                 var paramTypes = new LLVMTypeRef[ paramCount ];
-                NativeMethods.GetParamTypes( TypeHandle_, out paramTypes[ 0 ] );
+                NativeMethods.GetParamTypes( TypeRefHandle, out paramTypes[ 0 ] );
                 return paramTypes.Select( FromHandle<TypeRef> )
                                  .ToList( )
                                  .AsReadOnly( );
             }
+        }
+
+        internal FunctionType( LLVMTypeRef typeRef )
+            : base( typeRef )
+        {
         }
     }
 }

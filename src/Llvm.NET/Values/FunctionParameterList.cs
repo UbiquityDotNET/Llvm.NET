@@ -1,4 +1,8 @@
-﻿using System;
+﻿// <copyright file="FunctionParameterList.cs" company=".NET Foundation">
+// Copyright (c) .NET Foundation. All rights reserved.
+// </copyright>
+
+using System;
 using System.Collections.Generic;
 using Llvm.NET.Native;
 
@@ -8,11 +12,6 @@ namespace Llvm.NET.Values
     internal class FunctionParameterList
         : IReadOnlyList<Argument>
     {
-        internal FunctionParameterList( Function owningFunction )
-        {
-            OwningFunction = owningFunction;
-        }
-
         public Argument this[ int index ]
         {
             get
@@ -50,6 +49,11 @@ namespace Llvm.NET.Values
         }
 
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator( ) => GetEnumerator( );
+
+        internal FunctionParameterList( Function owningFunction )
+        {
+            OwningFunction = owningFunction;
+        }
 
         private Function OwningFunction;
     }

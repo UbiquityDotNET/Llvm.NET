@@ -19,7 +19,7 @@
   ],
   "build":
   {
-    "xref": [ "../tools/msdn.4.5.2/content/msdn.4.5.2.zip", "../tools/msdn.4.5.2/content/namespaces.4.5.2.zip"],
+    "xref": [ "llvm-xref.yml", "../tools/msdn.4.5.2/content/msdn.4.5.2.zip", "../tools/msdn.4.5.2/content/namespaces.4.5.2.zip"],
     "content":
     [
       {
@@ -33,8 +33,7 @@
     "resource":
     [
       {
-        "files": [ "images/**" ],
-        "exclude": [ "obj/**" ]
+        "files": ["favicon.ico", "DragonSharp48x48.png", "DragonSharp.png"]
       }
     ],
     "overwrite":
@@ -49,19 +48,13 @@
     "fileMetadataFiles": [],
     "postProcessors": [],
     "noLangKeyword": false,
-    "keepFileLink": false,
-    "cleanupCacheHistory": true,
-    "resource": [
-        {
-            "files": ["favicon.ico", "DragonSharp48x48.png", "DragonSharp.png"]
-        }
-    ],
-    "globalMetadata" :
+    "globalMetadata":
     {
       "_appTitle" : "Llvm.NET",
       "_appFooter" : "Copyright (C) 2017, Dot NET Foundation",
       "_appLogoPath": "DragonSharp48x48.png",
-      "_disableBreadcrumb" : true
+      "_disableBreadcrumb" : true,
+      "llvmVersion": "5.0.0"
     },
     "template": ["statictoc","../tools/memberpage/content","templates/Ubiquity"]
   }

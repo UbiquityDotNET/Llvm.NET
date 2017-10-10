@@ -1,4 +1,8 @@
-﻿using System;
+﻿// <copyright file="ModuleTests.cs" company="PlaceholderCompany">
+// Copyright (c) PlaceholderCompany. All rights reserved.
+// </copyright>
+
+using System;
 using System.IO;
 using System.Linq;
 using Llvm.NET.Instructions;

@@ -1,4 +1,8 @@
-﻿namespace Llvm.NET
+﻿// <copyright file="IExtensiblePropertyContainer.cs" company=".NET Foundation">
+// Copyright (c) .NET Foundation. All rights reserved.
+// </copyright>
+
+namespace Llvm.NET
 {
     /// <summary>Interface to allow adding arbitrary named data items to an object</summary>
     /// <remarks>

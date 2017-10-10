@@ -1,4 +1,8 @@
-﻿using Llvm.NET.Native;
+﻿// <copyright file="Switch.cs" company=".NET Foundation">
+// Copyright (c) .NET Foundation. All rights reserved.
+// </copyright>
+
+using Llvm.NET.Native;
 using Llvm.NET.Values;
 
 namespace Llvm.NET.Instructions

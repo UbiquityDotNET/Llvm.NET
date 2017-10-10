@@ -1,3 +1,7 @@
+// <copyright file="MDNode.cs" company=".NET Foundation">
+// Copyright (c) .NET Foundation. All rights reserved.
+// </copyright>
+
 using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
@@ -7,12 +11,6 @@ namespace Llvm.NET
 {
     public class MDNode : LlvmMetadata
     {
-        internal MDNode( LLVMMetadataRef handle )
-            : base( handle )
-        {
-            Operands = new MDNodeOperandList( this );
-        }
-
         public Context Context => Context.GetContextFor( MetadataHandle );
 
         public bool IsDeleted => MetadataHandle == LLVMMetadataRef.Zero;
@@ -53,6 +51,12 @@ namespace Llvm.NET
             // It won't be valid for use after clearing the handle
             Context.RemoveDeletedNode( this );
             MetadataHandle = LLVMMetadataRef.Zero;
+        }
+
+        internal MDNode( LLVMMetadataRef handle )
+            : base( handle )
+        {
+            Operands = new MDNodeOperandList( this );
         }
 
         internal static T FromHandle<T>( LLVMMetadataRef handle )

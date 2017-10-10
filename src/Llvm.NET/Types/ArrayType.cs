@@ -1,4 +1,8 @@
-﻿using System;
+﻿// <copyright file="ArrayType.cs" company=".NET Foundation">
+// Copyright (c) .NET Foundation. All rights reserved.
+// </copyright>
+
+using System;
 using Llvm.NET.Native;
 
 namespace Llvm.NET.Types
@@ -7,7 +11,7 @@ namespace Llvm.NET.Types
     public interface IArrayType
         : ISequenceType
     {
-        /// <summary>Length of the array</summary>
+        /// <summary>Gets the length of the array</summary>
         uint Length { get; }
     }
 
@@ -19,8 +23,8 @@ namespace Llvm.NET.Types
         : SequenceType
         , IArrayType
     {
-        /// <summary>Length of the array</summary>
-        public uint Length => NativeMethods.GetArrayLength( TypeHandle_ );
+        /// <inheritdoc/>
+        public uint Length => NativeMethods.GetArrayLength( TypeRefHandle );
 
         internal ArrayType( LLVMTypeRef typeRef )
             : base( typeRef )

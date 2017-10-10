@@ -1,4 +1,8 @@
-﻿using System;
+﻿// <copyright file="ConstantInt.cs" company=".NET Foundation">
+// Copyright (c) .NET Foundation. All rights reserved.
+// </copyright>
+
+using System;
 using Llvm.NET.Native;
 
 namespace Llvm.NET.Values

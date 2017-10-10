@@ -1,4 +1,8 @@
-﻿using System;
+﻿// <copyright file="PassRegistry.cs" company=".NET Foundation">
+// Copyright (c) .NET Foundation. All rights reserved.
+// </copyright>
+
+using System;
 using System.Threading;
 using Llvm.NET.Native;
 
@@ -12,18 +16,13 @@ namespace Llvm.NET
             PassRegistryHandle = NativeMethods.CreatePassRegistry( );
         }
 
-        private PassRegistry( LLVMPassRegistryRef hRegistry )
-        {
-            PassRegistryHandle = hRegistry;
-        }
-
         ~PassRegistry( )
         {
             // Do not change this code. Put cleanup code in Dispose(bool disposing) above.
             Dispose( false );
         }
 
-        // This code added to correctly implement the disposable pattern.
+        /// <inheritdocs/>
         public void Dispose( )
         {
             // Do not change this code. Put cleanup code in Dispose(bool disposing) above.
@@ -113,6 +112,13 @@ namespace Llvm.NET
             NativeMethods.InitializeTarget( PassRegistryHandle );
         }
 
+        public static PassRegistry GlobalRegistry => LazyGlobalPassRegistry.Value;
+
+        private PassRegistry( LLVMPassRegistryRef hRegistry )
+        {
+            PassRegistryHandle = hRegistry;
+        }
+
         private void Dispose( bool disposing )
         {
             if( !PassRegistryHandle.IsClosed )
@@ -127,8 +133,6 @@ namespace Llvm.NET
         }
 
         private LLVMPassRegistryRef PassRegistryHandle;
-
-        public static PassRegistry GlobalRegistry => LazyGlobalPassRegistry.Value;
 
         private static readonly Lazy<PassRegistry> LazyGlobalPassRegistry
             = new Lazy<PassRegistry>( () => new PassRegistry( NativeMethods.GetGlobalPassRegistry() )

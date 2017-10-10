@@ -1,4 +1,8 @@
-﻿using System;
+﻿// <copyright file="IntPtrExtensions.cs" company=".NET Foundation">
+// Copyright (c) .NET Foundation. All rights reserved.
+// </copyright>
+
+using System;
 
 namespace Llvm.NET.Native
 {

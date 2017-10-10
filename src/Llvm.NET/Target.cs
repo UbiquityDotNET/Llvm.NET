@@ -1,4 +1,8 @@
-﻿using System;
+﻿// <copyright file="Target.cs" company=".NET Foundation">
+// Copyright (c) .NET Foundation. All rights reserved.
+// </copyright>
+
+using System;
 using System.Collections.Generic;
 using Llvm.NET.Native;
 using Ubiquity.ArgValidators;

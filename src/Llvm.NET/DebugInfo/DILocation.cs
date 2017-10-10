@@ -1,4 +1,8 @@
-﻿using Llvm.NET.Native;
+﻿// <copyright file="DILocation.cs" company=".NET Foundation">
+// Copyright (c) .NET Foundation. All rights reserved.
+// </copyright>
+
+using Llvm.NET.Native;
 using Llvm.NET.Values;
 using Ubiquity.ArgValidators;
 

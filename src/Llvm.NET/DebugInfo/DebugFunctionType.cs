@@ -1,4 +1,8 @@
-﻿using System.Collections.Generic;
+﻿// <copyright file="DebugFunctionType.cs" company=".NET Foundation">
+// Copyright (c) .NET Foundation. All rights reserved.
+// </copyright>
+
+using System.Collections.Generic;
 using System.Linq;
 using Llvm.NET.Types;
 using Ubiquity.ArgValidators;
@@ -11,7 +15,7 @@ namespace Llvm.NET.DebugInfo
     /// <remarks>
     /// <para>Function signatures are unnamed interned types in LLVM. While there is usually a one
     /// to one mapping between an LLVM function signature type and the source language debug
-    /// signature type that isn't always true. In particular, when passing data by value. In
+    /// signature type - that isn't always true. In particular, when passing data by value. In
     /// cases where the address of a by value structure is needed a common pattern is to use
     /// a pointer to the structure in the signature, then perform an Alloca + memcpy. The
     /// actual approach taken depends on the calling conventions of the target. In these cases
@@ -29,6 +33,7 @@ namespace Llvm.NET.DebugInfo
     /// provided by <see cref="DebugInfoBuilder.CreateArgument(DIScope, string, DIFile, uint, DIType, bool, DebugInfoFlags, ushort)"/>
     /// and [DebugInfoBuilder.InsertDeclare](xref:Llvm.NET.DebugInfo.DebugInfoBuilder.InsertDeclare*)</note>
     /// </remarks>
+    /// <seealso href="xref:llvm_langref#disubroutinetype">LLVM DISubroutineType</seealso>
     public class DebugFunctionType
         : DebugType<IFunctionType, DISubroutineType>
         , IFunctionType
@@ -64,6 +69,9 @@ namespace Llvm.NET.DebugInfo
         /// <inheritdoc/>
         public IReadOnlyList<ITypeRef> ParameterTypes => NativeType.ParameterTypes;
 
+        /// <summary>Creates a new <see cref="DebugFunctionType"/> from an LLVM type and <see cref="DISubroutineType"/></summary>
+        /// <param name="rawType">Raw native type</param>
+        /// <param name="sub">Debug information to bind with the native type</param>
         internal DebugFunctionType( IFunctionType rawType, DISubroutineType sub )
             : base( rawType )
         {

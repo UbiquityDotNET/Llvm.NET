@@ -1,4 +1,8 @@
-﻿using System;
+﻿// <copyright file="DataLayout.cs" company=".NET Foundation">
+// Copyright (c) .NET Foundation. All rights reserved.
+// </copyright>
+
+using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using JetBrains.Annotations;
@@ -71,6 +75,7 @@ namespace Llvm.NET
 
         /// <summary>Retrieves an LLVM integer type with the same bit width as
         /// a pointer for the given address space of the target</summary>
+        /// <param name="addressSpace">Address space for the pointer</param>
         /// <returns>Integer type matching the bit width of a native pointer in the target's address space</returns>
         public ITypeRef IntPtrType( uint addressSpace )
         {
@@ -174,15 +179,6 @@ namespace Llvm.NET
 
         public ulong BitOffsetOfElement( IStructType llvmType, uint element ) => OffsetOfElement( llvmType, element ) * 8;
 
-        protected virtual void Dispose( bool disposing )
-        {
-            if( DataLayoutHandle.Pointer != IntPtr.Zero && IsDisposable )
-            {
-                NativeMethods.DisposeTargetData( DataLayoutHandle );
-                DataLayoutHandle = default( LLVMTargetDataRef );
-            }
-        }
-
         internal DataLayout( Context context, LLVMTargetDataRef targetDataHandle, bool isDisposable )
         {
             DataLayoutHandle = targetDataHandle;
@@ -192,7 +188,7 @@ namespace Llvm.NET
 
         internal static DataLayout FromHandle( Context context, LLVMTargetDataRef targetDataRef, bool isDisposable )
         {
-            lock ( TargetDataMap )
+            lock( TargetDataMap )
             {
                 if( TargetDataMap.TryGetValue( targetDataRef.Pointer, out DataLayout retVal ) )
                 {
@@ -203,16 +199,16 @@ namespace Llvm.NET
                 // is released on exception from adding it to the map
                 retVal = new DataLayout( context, targetDataRef, isDisposable );
                 Func<bool> cleanOnException = ( ) =>
-                    {
-                        retVal.Dispose( );
-                        return true;
-                    };
+                {
+                    retVal.Dispose( );
+                    return true;
+                };
 
                 try
                 {
                     TargetDataMap.Add( targetDataRef.Pointer, retVal );
                 }
-                catch when (cleanOnException())
+                catch when( cleanOnException( ) )
                 {
                     // NOP
                 }
@@ -222,6 +218,15 @@ namespace Llvm.NET
         }
 
         internal LLVMTargetDataRef DataLayoutHandle { get; private set; }
+
+        protected virtual void Dispose( bool disposing )
+        {
+            if( DataLayoutHandle.Pointer != IntPtr.Zero && IsDisposable )
+            {
+                NativeMethods.DisposeTargetData( DataLayoutHandle );
+                DataLayoutHandle = default( LLVMTargetDataRef );
+            }
+        }
 
         private static void VerifySized( [ValidatedNotNull] ITypeRef type, [InvokerParameterName] string name )
         {

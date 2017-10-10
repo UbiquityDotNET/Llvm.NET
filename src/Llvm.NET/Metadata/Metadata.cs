@@ -1,4 +1,8 @@
-﻿using System;
+﻿// <copyright file="Metadata.cs" company=".NET Foundation">
+// Copyright (c) .NET Foundation. All rights reserved.
+// </copyright>
+
+using System;
 using System.Diagnostics.CodeAnalysis;
 using Llvm.NET.DebugInfo;
 using Llvm.NET.Native;
@@ -11,20 +15,6 @@ namespace Llvm.NET
     /// is changed in the .NET bindings to avoid the conflict.</remarks>
     public abstract class LlvmMetadata
     {
-        // ideally this would be protected + internal but C#
-        // doesn't have any syntax to allow such a thing so it
-        // is internal and internal code should ensure it is
-        // only ever used by derived type constructors
-        internal /*protected*/ LlvmMetadata( LLVMMetadataRef handle )
-        {
-            if( handle == LLVMMetadataRef.Zero )
-            {
-                throw new ArgumentNullException( nameof( handle ) );
-            }
-
-            MetadataHandle = handle;
-        }
-
         /// <summary>Replace all uses of this descriptor with another</summary>
         /// <param name="other">New descriptor to replace this one with</param>
         public virtual void ReplaceAllUsesWith( LlvmMetadata other )
@@ -55,6 +45,20 @@ namespace Llvm.NET
         }
 
         internal LLVMMetadataRef MetadataHandle { get; /*protected*/ set; }
+
+        // ideally this would be protected AND internal but C#
+        // doesn't have any syntax to allow such a thing so it
+        // is internal and internal code should ensure it is
+        // only ever used by derived type constructors
+        /*protected*/ internal LlvmMetadata( LLVMMetadataRef handle )
+        {
+            if( handle == LLVMMetadataRef.Zero )
+            {
+                throw new ArgumentNullException( nameof( handle ) );
+            }
+
+            MetadataHandle = handle;
+        }
 
         internal static T FromHandle<T>( Context context, LLVMMetadataRef handle )
             where T : LlvmMetadata

@@ -1,4 +1,8 @@
-﻿using System;
+﻿// <copyright file="TargetMachine.cs" company=".NET Foundation">
+// Copyright (c) .NET Foundation. All rights reserved.
+// </copyright>
+
+using System;
 using Llvm.NET.Native;
 using Ubiquity.ArgValidators;
 
@@ -8,6 +12,7 @@ namespace Llvm.NET
     public sealed class TargetMachine
         : IDisposable
     {
+        /// <summary>Disposes the target machine on finalization if not already disposed</summary>
         ~TargetMachine( )
         {
             // Do not change this code. Put cleanup code in Dispose (bool disposing ).
@@ -22,16 +27,16 @@ namespace Llvm.NET
             GC.SuppressFinalize( this );
         }
 
-        /// <summary>Retrieves the Target that owns this <see cref="TargetMachine"/></summary>
+        /// <summary>Gets the target that owns this <see cref="TargetMachine"/></summary>
         public Target Target => Target.FromHandle( NativeMethods.GetTargetMachineTarget( TargetMachineHandle ) );
 
-        /// <summary>Target triple describing this machine</summary>
+        /// <summary>Gets the target triple describing this machine</summary>
         public string Triple => NativeMethods.GetTargetMachineTriple( TargetMachineHandle );
 
-        /// <summary>CPU Type for this machine</summary>
+        /// <summary>Gets the CPU Type for this machine</summary>
         public string Cpu => NativeMethods.GetTargetMachineCPU( TargetMachineHandle );
 
-        /// <summary>CPU specific features for this machine</summary>
+        /// <summary>Gets the CPU specific features for this machine</summary>
         public string Features => NativeMethods.GetTargetMachineFeatureString( TargetMachineHandle );
 
         /// <summary>Gets Layout information for this machine</summary>
@@ -109,7 +114,7 @@ namespace Llvm.NET
             return new MemoryBuffer( bufferHandle );
         }
 
-        /// <summary><see cref="Context"/>This machine is associated with</summary>
+        /// <summary>Gets the <see cref="Context"/> this machine is associated with</summary>
         public Context Context { get; }
 
         internal TargetMachine( Context context, LLVMTargetMachineRef targetMachineHandle )
@@ -120,6 +125,8 @@ namespace Llvm.NET
             TargetMachineHandle = targetMachineHandle;
             Context = context;
         }
+
+        internal LLVMTargetMachineRef TargetMachineHandle { get; private set; }
 
         private bool IsDisposed => TargetMachineHandle.Pointer == IntPtr.Zero;
 
@@ -136,7 +143,5 @@ namespace Llvm.NET
                 TargetMachineHandle = default( LLVMTargetMachineRef );
             }
         }
-
-        internal LLVMTargetMachineRef TargetMachineHandle { get; private set; }
     }
 }

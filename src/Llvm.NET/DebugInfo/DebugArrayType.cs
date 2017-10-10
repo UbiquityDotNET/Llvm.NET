@@ -1,10 +1,15 @@
-﻿using System;
+﻿// <copyright file="DebugArrayType.cs" company=".NET Foundation">
+// Copyright (c) .NET Foundation. All rights reserved.
+// </copyright>
+
+using System;
 using Llvm.NET.Types;
 using Ubiquity.ArgValidators;
 
 namespace Llvm.NET.DebugInfo
 {
     /// <summary>Provides debug information binding between an <see cref="IArrayType"/>and a <see cref="DICompositeType"/></summary>
+    /// <seealso href="xref:llvm_langref#dicompositetype">DICompositeType</seealso>
     public class DebugArrayType
         : DebugType<IArrayType, DICompositeType>
         , IArrayType

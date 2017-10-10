@@ -1,4 +1,8 @@
-﻿using System;
+﻿// <copyright file="TypeRef.cs" company=".NET Foundation">
+// Copyright (c) .NET Foundation. All rights reserved.
+// </copyright>
+
+using System;
 using System.Diagnostics.CodeAnalysis;
 using Llvm.NET.Native;
 using Llvm.NET.Values;
@@ -9,7 +13,7 @@ namespace Llvm.NET.Types
     internal class TypeRef
         : ITypeRef
     {
-        public IntPtr TypeHandle => TypeHandle_.Pointer;
+        public IntPtr TypeHandle => TypeRefHandle.Pointer;
 
         /// <summary>Flag to indicate if the type is sized</summary>
         public bool IsSized
@@ -21,12 +25,12 @@ namespace Llvm.NET.Types
                     return false;
                 }
 
-                return NativeMethods.TypeIsSized( TypeHandle_ );
+                return NativeMethods.TypeIsSized( TypeRefHandle );
             }
         }
 
         /// <summary>LLVM Type kind for this type</summary>
-        public TypeKind Kind => ( TypeKind )NativeMethods.GetTypeKind( TypeHandle_ );
+        public TypeKind Kind => ( TypeKind )NativeMethods.GetTypeKind( TypeRefHandle );
 
         public bool IsInteger=> Kind == TypeKind.Integer;
 
@@ -75,7 +79,7 @@ namespace Llvm.NET.Types
         }
 
         /// <summary>Context that owns this type</summary>
-        public Context Context => Context.GetContextFor( TypeHandle_ );
+        public Context Context => Context.GetContextFor( TypeRefHandle );
 
         /// <summary>Integer bid width of this type or 0 for non integer types</summary>
         public uint IntegerBitWidth
@@ -87,18 +91,19 @@ namespace Llvm.NET.Types
                     return 0;
                 }
 
-                return NativeMethods.GetIntTypeWidth( TypeHandle_ );
+                return NativeMethods.GetIntTypeWidth( TypeRefHandle );
             }
         }
 
         /// <summary>Gets a null value (e.g. all bits = 0 ) for the type</summary>
         /// <remarks>This is a getter function instead of a property as it can throw exceptions</remarks>
+        /// <returns><see cref="Constant"/> zero value for the type</returns>
         public Constant GetNullValue() => Constant.NullValueFor( this );
 
         /// <summary>Array type factory for an array with elements of this type</summary>
         /// <param name="count">Number of elements in the array</param>
         /// <returns><see cref="IArrayType"/> for the array</returns>
-        public IArrayType CreateArrayType( uint count ) => FromHandle<IArrayType>( NativeMethods.ArrayType( TypeHandle_, count ) );
+        public IArrayType CreateArrayType( uint count ) => FromHandle<IArrayType>( NativeMethods.ArrayType( TypeRefHandle, count ) );
 
         /// <summary>Get a <see cref="IPointerType"/> for a type that points to elements of this type in the default (0) address space</summary>
         /// <returns><see cref="IPointerType"/>corresponding to the type of a pointer that referns to elements of this type</returns>
@@ -114,7 +119,7 @@ namespace Llvm.NET.Types
                 throw new InvalidOperationException( "Cannot create pointer to void in LLVM, use i8* instead" );
             }
 
-            return FromHandle<IPointerType>( NativeMethods.PointerType( TypeHandle_, addressSpace ) );
+            return FromHandle<IPointerType>( NativeMethods.PointerType( TypeRefHandle, addressSpace ) );
         }
 
         public bool TryGetExtendedPropertyValue<T>( string id, out T value ) => ExtensibleProperties.TryGetExtendedPropertyValue<T>( id, out value );
@@ -123,11 +128,11 @@ namespace Llvm.NET.Types
 
         /// <summary>Builds a string representation for this type in LLVM assembly language form</summary>
         /// <returns>Formatted string for this type</returns>
-        public override string ToString( ) => NativeMethods.PrintTypeToString( TypeHandle_ );
+        public override string ToString( ) => NativeMethods.PrintTypeToString( TypeRefHandle );
 
         internal TypeRef( LLVMTypeRef typeRef )
         {
-            TypeHandle_ = typeRef;
+            TypeRefHandle = typeRef;
             if( typeRef.Pointer == IntPtr.Zero )
             {
                 throw new ArgumentNullException( nameof( typeRef ) );
@@ -152,6 +157,8 @@ namespace Llvm.NET.Types
             var ctx = Context.GetContextFor( typeRef );
             return ( T )ctx.GetTypeFor( typeRef, StaticFactory );
         }
+
+        protected LLVMTypeRef TypeRefHandle { get; }
 
         private static ITypeRef StaticFactory( LLVMTypeRef typeRef )
         {
@@ -190,14 +197,6 @@ namespace Llvm.NET.Types
                 return new TypeRef( typeRef );
             }
         }
-
-        // field required to allow use as an out param in constructor
-        [SuppressMessage( "StyleCop.CSharp.NamingRules"
-                        , "SA1310:Field names must not contain underscore"
-                        , Justification = "Trailing _ indicates code must not write to it directly"
-                        )
-        ]
-        protected LLVMTypeRef TypeHandle_ { get; }
 
         private readonly ExtensiblePropertyContainer ExtensibleProperties = new ExtensiblePropertyContainer( );
     }

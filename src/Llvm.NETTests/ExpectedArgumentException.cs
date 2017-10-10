@@ -1,4 +1,8 @@
-﻿using System;
+﻿// <copyright file="ExpectedArgumentException.cs" company="PlaceholderCompany">
+// Copyright (c) PlaceholderCompany. All rights reserved.
+// </copyright>
+
+using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace Llvm.NETTests

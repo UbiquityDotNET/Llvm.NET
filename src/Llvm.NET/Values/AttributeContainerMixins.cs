@@ -1,3 +1,7 @@
+// <copyright file="AttributeContainerMixins.cs" company=".NET Foundation">
+// Copyright (c) .NET Foundation. All rights reserved.
+// </copyright>
+
 using System.Collections.Generic;
 using System.Linq;
 using Ubiquity.ArgValidators;

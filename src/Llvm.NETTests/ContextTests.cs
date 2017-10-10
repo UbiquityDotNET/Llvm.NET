@@ -1,4 +1,8 @@
-﻿using System;
+﻿// <copyright file="ContextTests.cs" company="PlaceholderCompany">
+// Copyright (c) PlaceholderCompany. All rights reserved.
+// </copyright>
+
+using System;
 using System.Collections.Generic;
 using Llvm.NET.DebugInfo;
 using Llvm.NET.Types;

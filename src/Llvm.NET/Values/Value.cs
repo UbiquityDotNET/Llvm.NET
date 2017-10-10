@@ -1,4 +1,8 @@
-﻿using System;
+﻿// <copyright file="Value.cs" company=".NET Foundation">
+// Copyright (c) .NET Foundation. All rights reserved.
+// </copyright>
+
+using System;
 using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using Llvm.NET.Native;

@@ -1,4 +1,8 @@
-﻿using System;
+﻿// <copyright file="DIType.cs" company=".NET Foundation">
+// Copyright (c) .NET Foundation. All rights reserved.
+// </copyright>
+
+using System;
 using Llvm.NET.Native;
 
 namespace Llvm.NET.DebugInfo
@@ -6,11 +10,6 @@ namespace Llvm.NET.DebugInfo
     /// <summary>Base class for Debug info types</summary>
     public class DIType : DIScope
     {
-        internal DIType( LLVMMetadataRef handle )
-            : base( handle )
-        {
-        }
-
         public DebugInfoFlags DebugInfoFlags
         {
             get
@@ -75,5 +74,10 @@ namespace Llvm.NET.DebugInfo
         public bool IsRvalueReference => DebugInfoFlags.HasFlag( DebugInfoFlags.RValueReference );
 
         public string Name => NativeMethods.DITypeGetName( MetadataHandle );
+
+        internal DIType( LLVMMetadataRef handle )
+            : base( handle )
+        {
+        }
     }
 }

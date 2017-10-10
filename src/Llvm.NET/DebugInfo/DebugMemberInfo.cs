@@ -1,4 +1,9 @@
-﻿using Llvm.NET.Types;
+﻿// <copyright file="DebugMemberInfo.cs" company=".NET Foundation">
+// Copyright (c) .NET Foundation. All rights reserved.
+// </copyright>
+
+using System;
+using Llvm.NET.Types;
 
 namespace Llvm.NET.DebugInfo
 {
@@ -6,7 +11,7 @@ namespace Llvm.NET.DebugInfo
     /// <summary>Describes a member/field of a type for creating debug information</summary>
     /// <remarks>
     /// <para>This class is used with <see cref="DebugStructType"/> to provide debug information for a type.</para>
-    /// <para>In order to support explicit layout structures the members relating to layout are all <see cref="System.Nullable{T}"/>.
+    /// <para>In order to support explicit layout structures the members relating to layout are all <see cref="Nullable{T}"/>.
     /// When they are null then modules <see cref="NativeModule.Layout"/> target specific layout information is used to determine
     /// layout details. Setting the layout members of this class to non-null will override that behavior to define explicit
     /// layout details.</para>
@@ -14,25 +19,25 @@ namespace Llvm.NET.DebugInfo
 #pragma warning restore RECS0013
     public class DebugMemberInfo
     {
-        /// <summary>LLVM structure element index this descriptor describes</summary>
+        /// <summary>Gets the LLVM structure element index this descriptor describes</summary>
         public uint Index { get; set; }
 
-        /// <summary>Name of the field</summary>
+        /// <summary>Gets the name of the field</summary>
         public string Name { get; set; }
 
-        /// <summary>File the field is declared in</summary>
+        /// <summary>Gets the file the field is declared in</summary>
         public DIFile File { get; set; }
 
-        /// <summary>Line the field is declared on</summary>
+        /// <summary>Gets the source line the field is declared on</summary>
         public uint Line { get; set; }
 
-        /// <summary>flags for the field declaration</summary>
+        /// <summary>Gets the flags for the field declaration</summary>
         public DebugInfoFlags DebugInfoFlags { get; set; }
 
-        /// <summary>Debug type information for this field</summary>
+        /// <summary>Gets the debug type information for this field</summary>
         public IDebugType<ITypeRef, DIType> DebugType { get; set; }
 
-        /// <summary>Provides explicit layout information for this member</summary>
+        /// <summary>Gets the explicit layout information for this member</summary>
         /// <remarks>If this is null then <see cref="DebugStructType.SetBody(bool, NativeModule, DIScope, DIFile, uint, DebugInfoFlags, System.Collections.Generic.IEnumerable{DebugMemberInfo})"/>
         /// will default to using <see cref="NativeModule.Layout"/> to determine the size using the module's target specific layout.
         /// <note type="note">

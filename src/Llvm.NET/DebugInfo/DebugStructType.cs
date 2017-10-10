@@ -1,4 +1,8 @@
-﻿using System;
+﻿// <copyright file="DebugStructType.cs" company=".NET Foundation">
+// Copyright (c) .NET Foundation. All rights reserved.
+// </copyright>
+
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
@@ -7,6 +11,8 @@ using Ubiquity.ArgValidators;
 
 namespace Llvm.NET.DebugInfo
 {
+    /// <summary>Debug information for a structure type</summary>
+    /// <seealso href="xref:llvm_langref#dicompositetype">LLVM DICompositeType</seealso>
     public class DebugStructType
         : DebugType<IStructType, DICompositeType>
         , IStructType
@@ -176,6 +182,8 @@ namespace Llvm.NET.DebugInfo
             DIType = concreteType;
         }
 
+        public IReadOnlyList<DebugMemberInfo> DebugMembers { get; private set; }
+
         private DIDerivedType CreateMemberType( NativeModule module, DebugMemberInfo memberInfo )
         {
             UInt64 bitSize;
@@ -208,7 +216,5 @@ namespace Llvm.NET.DebugInfo
                                                     , type: memberInfo.DebugType.DIType
                                                     );
         }
-
-        public IReadOnlyList<DebugMemberInfo> DebugMembers { get; private set; }
     }
 }

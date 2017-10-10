@@ -1,4 +1,8 @@
-﻿using System;
+﻿// <copyright file="MDNodeOperandList.cs" company=".NET Foundation">
+// Copyright (c) .NET Foundation. All rights reserved.
+// </copyright>
+
+using System;
 using System.Collections.Generic;
 using Llvm.NET.Native;
 
@@ -8,11 +12,6 @@ namespace Llvm.NET
     internal class MDNodeOperandList
         : IReadOnlyList<MDOperand>
     {
-        internal MDNodeOperandList( MDNode owningNode )
-        {
-            OwningNode = owningNode;
-        }
-
         public MDOperand this[ int index ]
         {
             get
@@ -51,6 +50,11 @@ namespace Llvm.NET
         }
 
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator( ) => GetEnumerator( );
+
+        internal MDNodeOperandList( MDNode owningNode )
+        {
+            OwningNode = owningNode;
+        }
 
         private MDNode OwningNode;
     }

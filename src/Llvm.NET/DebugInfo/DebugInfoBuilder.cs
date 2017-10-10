@@ -1,4 +1,8 @@
-﻿using System;
+﻿// <copyright file="DebugInfoBuilder.cs" company=".NET Foundation">
+// Copyright (c) .NET Foundation. All rights reserved.
+// </copyright>
+
+using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
@@ -19,9 +23,11 @@ namespace Llvm.NET.DebugInfo
     /// method to resolve and finalize the metadata. After this point only fully resolved nodes may
     /// be added to ensure that the data remains valid.
     /// </remarks>
-    public sealed class DebugInfoBuilder : IDisposable
+    /// <seealso href="xref:llvm_sourceleveldebugging">LLVM Source Level Debugging</seealso>
+    public sealed class DebugInfoBuilder
+        : IDisposable
     {
-        /// <summary>Module that owns this builder</summary>
+        /// <summary>Gets the module that owns this builder</summary>
         public NativeModule OwningModule { get; }
 
         /// <summary>Creates a new <see cref="DICompileUnit"/></summary>
@@ -92,7 +98,7 @@ namespace Llvm.NET.DebugInfo
         /// <param name="scope">Containing scope for the namespace or null if the namespace is a global one</param>
         /// <param name="name">Name of the namespace</param>
         /// <param name="exportSymbols">export symbols</param>
-        /// <returns></returns>
+        /// <returns>Debug namespace</returns>
         [System.Diagnostics.CodeAnalysis.SuppressMessage( "Microsoft.Design", "CA1011:ConsiderPassingBaseTypesAsParameters", Justification = "Specific type required by interop call" )]
         public DINamespace CreateNamespace( DIScope scope, string name, bool exportSymbols )
         {
@@ -279,7 +285,7 @@ namespace Llvm.NET.DebugInfo
         /// <param name="scopeLine">Line of the first scope block</param>
         /// <param name="debugFlags"><see cref="DebugInfoFlags"/> for the function</param>
         /// <param name="isOptimized">Flag to indicate if the function is optimized</param>
-        /// <returns></returns>
+        /// <returns>Subprogram as a forward declaration</returns>
         [System.Diagnostics.CodeAnalysis.SuppressMessage( "Microsoft.Design", "CA1011:ConsiderPassingBaseTypesAsParameters", Justification = "Specific type required by interop call" )]
         public DISubProgram ForwardDeclareFunction( DIScope scope
                                                   , string name
@@ -412,7 +418,7 @@ namespace Llvm.NET.DebugInfo
         /// <param name="name">Name of the type</param>
         /// <param name="bitSize">Bit size for the type</param>
         /// <param name="encoding"><see cref="DiTypeKind"/> encoding for the type</param>
-        /// <returns></returns>
+        /// <returns>Basic type debugging information</returns>
         public DIBasicType CreateBasicType( string name, UInt64 bitSize, DiTypeKind encoding )
         {
             var handle = NativeMethods.DIBuilderCreateBasicType( BuilderHandle, name, bitSize, ( uint )encoding );
@@ -1098,6 +1104,8 @@ namespace Llvm.NET.DebugInfo
         {
         }
 
+        internal LLVMDIBuilderRef BuilderHandle { get; private set; }
+
         // keeping this private for now as there doesn't seem to be a good reason to support
         // allowUnresolved == false
         private DebugInfoBuilder( NativeModule owningModule, bool allowUnresolved )
@@ -1112,7 +1120,5 @@ namespace Llvm.NET.DebugInfo
         }
 
         private bool IsFinished;
-
-        internal LLVMDIBuilderRef BuilderHandle { get; private set; }
     }
 }

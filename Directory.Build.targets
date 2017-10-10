@@ -19,6 +19,14 @@
     </Task>
   </UsingTask>
 
+  <!--
+  Since Nuget.config is configured to include the build output location this
+  will ensure the folder exists during restore so that it won't fail.
+  -->
+  <Target Name="CreateBuildOutputNuget" BeforeTargets="Restore;Build;Rebuild">
+      <MakeDir Directories="$(MSBuildThisFileDirectory)BuildOutput\NuGet" />
+  </Target>
+
   <Target Name="SetProjectSpecficVersionDependentProperties" AfterTargets="SetVersionDependentProperties">
     <PropertyGroup>
       <LlvmVersion Condition="'$(LlvmVersion)'==''">$(LlvmVersionMajor).$(LlvmVersionMinor).$(LlvmVersionPatch)</LlvmVersion>
@@ -26,10 +34,12 @@
     </PropertyGroup>
 
   </Target>
-    <Target Name="MultiTargetBuild" DependsOnTargets="PrepareVersioningForBuild;NativeMultiTargetBuild;Pack" />
-    <Target Name="MultiTargetRebuild" DependsOnTargets="PrepareVersioningForBuild;NativeMultiTargetRebuild;Pack"/>
 
-    <Target Name="NativeMultiTargetBuild">
+  <Target Name="MultiTargetBuild" DependsOnTargets="PrepareVersioningForBuild;NativeMultiTargetBuild;Pack" />
+
+  <Target Name="MultiTargetRebuild" DependsOnTargets="PrepareVersioningForBuild;NativeMultiTargetRebuild;Pack"/>
+
+  <Target Name="NativeMultiTargetBuild">
         <ItemGroup>
             <MultiTargetProperty Include="FullBuildNumber=$(FullBuildNumber)"/>
             <MultiTargetProperty Include="PackageVersion=$(PackageVersion)"/>
@@ -46,7 +56,7 @@
                  />
     </Target>
 
-    <Target Name="MultiTargetClean">
+  <Target Name="MultiTargetClean">
         <MSBuild Projects="@(MultiTargetProject)"
                  Targets="Clean"
                  Properties="Platform=%(MultiTargetProject.Platform)"
@@ -54,7 +64,7 @@
                  />
     </Target>
 
-    <Target Name="NativeMultiTargetRebuild">
+  <Target Name="NativeMultiTargetRebuild">
         <ItemGroup>
             <MultiTargetProperty Include="FullBuildNumber=$(FullBuildNumber)"/>
             <MultiTargetProperty Include="PackageVersion=$(PackageVersion)"/>
@@ -71,8 +81,8 @@
                  />
     </Target>
 
-    <!-- Download nuget.exe if it isn't found-->
-    <Target Name="_DownloadNugetExe" >
+  <!-- Download nuget.exe if it isn't found-->
+  <Target Name="_DownloadNugetExe" >
         <MakeDir Directories="$(PackageOutputPath)" Condition="!EXISTS('$(PackageOutputPath')" />
         <DownloadFile Condition="!EXISTS('$(PackageOutputPath)\NuGet.exe')"
                       SourceUrl="https://dist.nuget.org/win-x86-commandline/latest/nuget.exe"
@@ -80,14 +90,14 @@
                       />
     </Target>
 
-    <!-- Create NuGet packages for all NuSpec Items -->
-    <Target Name="Pack" DependsOnTargets="_DownloadNugetExe" Condition="'$(MSBuildProjectExtension)'=='.vcxproj'" >
+  <!-- Create NuGet packages for all NuSpec Items -->
+  <Target Name="Pack" DependsOnTargets="_DownloadNugetExe" Condition="'$(MSBuildProjectExtension)'=='.vcxproj'" >
         <Exec
             Condition="exists('$(NuSpecFile)')"
             Command='"$(PackageOutputPath)NuGet.exe" pack $(NuSpecFile) -OutputDirectory $(PackageOutputPath) -Properties $(NuspecProperties) -NoPackageAnalysis' />
     </Target>
 
-    <Target Name="ShowBuildParams" BeforeTargets="Build;Pack">
+  <Target Name="ShowBuildParams" BeforeTargets="Build;Pack">
         <Message Importance="normal" Text="              BuildRootDir: $(BuildRootDir)" />
         <Message Importance="normal" Text="       BaseBuildOutputPath: $(BaseBuildOutputPath)" />
         <Message Importance="normal" Text="BaseIntermediateOutputPath: $(BaseIntermediateOutputPath)" />

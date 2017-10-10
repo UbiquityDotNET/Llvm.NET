@@ -1,4 +1,8 @@
-﻿using Llvm.NET.Types;
+﻿// <copyright file="DebugMemberLayout.cs" company=".NET Foundation">
+// Copyright (c) .NET Foundation. All rights reserved.
+// </copyright>
+
+using Llvm.NET.Types;
 
 namespace Llvm.NET.DebugInfo
 {

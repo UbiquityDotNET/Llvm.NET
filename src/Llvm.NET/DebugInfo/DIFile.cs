@@ -1,20 +1,25 @@
-﻿using Llvm.NET.Native;
+﻿// <copyright file="DIFile.cs" company=".NET Foundation">
+// Copyright (c) .NET Foundation. All rights reserved.
+// </copyright>
+
+using Llvm.NET.Native;
 
 namespace Llvm.NET.DebugInfo
 {
-    /// <summary>see <a href="http://llvm.org/docs/LangRef.html#difile"/></summary>
+    /// <summary>Debug information for a source file</summary>
+    /// <seealso href="xref:llvm_langref#difile">LLVM DIFile</seealso>
     public class DIFile
         : DIScope
     {
-        internal DIFile( LLVMMetadataRef handle )
-            : base( handle )
-        {
-        }
-
         public string FileName => NativeMethods.GetDIFileName( MetadataHandle );
 
         public string Directory => NativeMethods.GetDIFileDirectory( MetadataHandle );
 
         public string Path => System.IO.Path.Combine( Directory, FileName );
+
+        internal DIFile( LLVMMetadataRef handle )
+            : base( handle )
+        {
+        }
     }
 }

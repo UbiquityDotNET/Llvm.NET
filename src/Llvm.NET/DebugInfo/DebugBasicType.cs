@@ -1,4 +1,8 @@
-﻿using System;
+﻿// <copyright file="DebugBasicType.cs" company=".NET Foundation">
+// Copyright (c) .NET Foundation. All rights reserved.
+// </copyright>
+
+using System;
 using Llvm.NET.Types;
 
 namespace Llvm.NET.DebugInfo
@@ -14,6 +18,7 @@ namespace Llvm.NET.DebugInfo
     /// instance of this class represents a source level basic type and the corresponding representation
     /// for LLVM.
     /// </remarks>
+    /// <seealso href="xref:llvm_langref#dibasictype">LLVM DIBasicType</seealso>
     public class DebugBasicType
         : DebugType<ITypeRef, DIBasicType>
     {

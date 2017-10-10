@@ -1,4 +1,8 @@
-﻿using System;
+﻿// <copyright file="User.cs" company=".NET Foundation">
+// Copyright (c) .NET Foundation. All rights reserved.
+// </copyright>
+
+using System;
 using System.Collections.Generic;
 using Llvm.NET.Native;
 
@@ -12,12 +16,6 @@ namespace Llvm.NET.Values
     /// </remarks>
     public class User : Value
     {
-        internal User( LLVMValueRef userRef )
-            : base( userRef )
-        {
-            OperandList = new UserOperandList( this );
-        }
-
         /// <summary>Collection of operands</summary>
         public IReadOnlyList<Value> Operands => OperandList;
 
@@ -34,6 +32,12 @@ namespace Llvm.NET.Values
                     current = NativeMethods.GetNextUse( current );
                 }
             }
+        }
+
+        internal User( LLVMValueRef userRef )
+            : base( userRef )
+        {
+            OperandList = new UserOperandList( this );
         }
 
         private UserOperandList OperandList;

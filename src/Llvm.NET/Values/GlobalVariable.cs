@@ -1,4 +1,8 @@
-﻿using System;
+﻿// <copyright file="GlobalVariable.cs" company=".NET Foundation">
+// Copyright (c) .NET Foundation. All rights reserved.
+// </copyright>
+
+using System;
 using System.Diagnostics.CodeAnalysis;
 using Llvm.NET.DebugInfo;
 using Llvm.NET.Native;
@@ -10,28 +14,28 @@ namespace Llvm.NET.Values
     public class GlobalVariable
         : GlobalObject
     {
-        /// <summary>Flag to indicate if this variable is initialized in an external module</summary>
+        /// <summary>Gets or sets a value indicating whether this variable is initialized in an external module</summary>
         public bool IsExternallyInitialized
         {
             get => NativeMethods.IsExternallyInitialized( ValueHandle );
             set => NativeMethods.SetExternallyInitialized( ValueHandle, value );
         }
 
-        /// <summary>Gets or sets if this global is a Constant</summary>
+        /// <summary>Gets or sets a value indicating whether this global is a Constant</summary>
         public bool IsConstant
         {
             get => NativeMethods.IsGlobalConstant( ValueHandle );
             set => NativeMethods.SetGlobalConstant( ValueHandle, value );
         }
 
-        /// <summary>Flag to indicate if this global is stored per thread</summary>
+        /// <summary>Gets or sets a value indicating whether this global is stored per thread</summary>
         public bool IsThreadLocal
         {
             get => NativeMethods.IsThreadLocal( ValueHandle );
             set => NativeMethods.SetThreadLocal( ValueHandle, value );
         }
 
-        /// <summary>Initial value for the variable</summary>
+        /// <summary>Gets or sets the initial value for the variable</summary>
         public Constant Initializer
         {
             get

@@ -1,4 +1,8 @@
-﻿using System.Diagnostics;
+﻿// <copyright file="MemCpy.cs" company=".NET Foundation">
+// Copyright (c) .NET Foundation. All rights reserved.
+// </copyright>
+
+using System.Diagnostics;
 using Llvm.NET.Native;
 using Llvm.NET.Types;
 

@@ -1,8 +1,13 @@
-﻿using Llvm.NET.Native;
+﻿// <copyright file="DIExpression.cs" company=".NET Foundation">
+// Copyright (c) .NET Foundation. All rights reserved.
+// </copyright>
+
+using Llvm.NET.Native;
 
 namespace Llvm.NET.DebugInfo
 {
-    /// <summary>see <a href="http://llvm.org/docs/LangRef.html#diexpression"/></summary>
+    /// <summary>Debug information expression</summary>
+    /// <seealso href="xref:llvm_langref#diexpression">LLVM DIExpression</seealso>
     public class DIExpression : MDNode
     {
         internal DIExpression( LLVMMetadataRef handle )
