@@ -603,7 +603,6 @@ namespace Llvm.NET
             Trace.TraceError( "LLVM Fatal Error: '{0}'; Application exiting.", reason );
         }
 
-        /// <summary>Static constructor for NativeMethods</summary>
         private static IDisposable InternalInitializeLLVM( )
         {
             // force loading the appropriate architecture specific

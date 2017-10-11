@@ -198,7 +198,7 @@ namespace Llvm.NET.DebugInfo
             return MDNode.FromHandle<DILexicalBlockFile>( handle );
         }
 
-        /// <summary>Create a <see cref="DISubProgram"/> with debug information</summary>
+        /// <summary>Factory method to create a <see cref="DISubProgram"/> with debug information</summary>
         /// <param name="scope"><see cref="DIScope"/> for the function</param>
         /// <param name="name">Name of the function as it appears in the source language</param>
         /// <param name="mangledName">Linkage (mangled) name of the function</param>
@@ -213,7 +213,8 @@ namespace Llvm.NET.DebugInfo
         /// <param name="function">Underlying LLVM <see cref="Function"/> to attach debug info to</param>
         /// <param name="typeParameter">Template parameter [default = null]</param>
         /// <param name="declaration">Template declarations [default = null]</param>
-        [System.Diagnostics.CodeAnalysis.SuppressMessage( "Microsoft.Design", "CA1011:ConsiderPassingBaseTypesAsParameters", Justification = "Specific type required by interop call" )]
+        /// <returns><see cref="DISubProgram"/> created based on the input parameters</returns>
+        [SuppressMessage( "Microsoft.Design", "CA1011:ConsiderPassingBaseTypesAsParameters", Justification = "Specific type required by interop call" )]
         public DISubProgram CreateFunction( DIScope scope
                                           , [CanBeNull] string name
                                           , [CanBeNull] string mangledName

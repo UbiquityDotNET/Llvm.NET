@@ -114,7 +114,10 @@ function Merge-Environment( [hashtable]$OtherEnv, [string[]]$IgnoreNames )
 
 function Find-VSInstance([switch]$PreRelease)
 {
-    Install-Module VSSetup -Scope CurrentUser -Force | Out-Null
+    if( !(Get-Module -ListAvailable VSSetup))
+    {
+        Install-Module VSSetup -Scope CurrentUser -Force | Out-Null
+    }
     Get-VSSetupInstance -Prerelease:$PreRelease |
         Select-VSSetupInstance -Require 'Microsoft.Component.MSBuild' |
         select -First 1
@@ -147,6 +150,11 @@ if($env:APPVEYOR)
 if( !( Test-Path -PathType Container tools ) )
 {
     md tools | out-null
+}
+
+if( !( Test-Path -PathType Container BuildOutput ) )
+{
+    md BuildOutput | out-null
 }
 
 Write-Information "Initializing VsEnv"

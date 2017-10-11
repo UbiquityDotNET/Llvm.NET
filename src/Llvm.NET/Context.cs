@@ -647,6 +647,7 @@ namespace Llvm.NET
 
         /// <summary>Creates a simple boolean attribute</summary>
         /// <param name="kind">Kind of attribute</param>
+        /// <returns><see cref="AttributeValue"/> with the specified Kind set</returns>
         public AttributeValue CreateAttribute( AttributeKind kind )
         {
             kind.ValidateDefined( nameof( kind ) );
@@ -677,6 +678,7 @@ namespace Llvm.NET
         /// <item><term><see cref="AttributeKind.DereferenceableOrNull"/></term><term>64</term></item>
         /// </list>
         /// </remarks>
+        /// <returns><see cref="AttributeValue"/> with the specified kind and value</returns>
         public AttributeValue CreateAttribute( AttributeKind kind, UInt64 value )
         {
             kind.ValidateDefined( nameof( kind ) );
@@ -694,11 +696,13 @@ namespace Llvm.NET
 
         /// <summary>Adds a valueless named attribute</summary>
         /// <param name="name">Attribute name</param>
+        /// <returns><see cref="AttributeValue"/> with the specified name</returns>
         public AttributeValue CreateAttribute( string name ) => CreateAttribute( name, string.Empty);
 
         /// <summary>Adds a Target specific named attribute with value</summary>
         /// <param name="name">Name of the attribute</param>
         /// <param name="value">Value of the attribute</param>
+        /// <returns><see cref="AttributeValue"/> with the specified name and value</returns>
         public AttributeValue CreateAttribute( string name, string value )
         {
             name.ValidateNotNullOrWhiteSpace( nameof( name ) );
@@ -712,6 +716,7 @@ namespace Llvm.NET
         // The factory as a Func<> allows for the constructor to remain private so that the only
         // way to create an AttributeValue is via the containing context. This ensures that the
         // proper ownership is maintained. (LLVM has no method of retrieving the context that owns an attribute)
+        // TODO: move this to an attribute interning factory bound to the context
         internal AttributeValue GetAttributeFor( LLVMAttributeRef handle, Func<Context, LLVMAttributeRef, AttributeValue> factory )
         {
             factory.ValidateNotNull( nameof( factory ) );

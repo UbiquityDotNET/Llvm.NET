@@ -14,6 +14,7 @@
         <Description>.NET Bindings for LLVM</Description>
         <PackageTags>LLVM,Compiler,JIT</PackageTags>
         <NoPackageAnalysis>true</NoPackageAnalysis>
+        <LangVersion>7.1</LangVersion>
     </PropertyGroup>
     <ItemGroup>
         <AdditionalFiles Include="..\stylecop.json" Link="stylecop.json" />
@@ -100,6 +101,8 @@
         <Compile Include="Native\LLVMBuilderRef.cs" />
         <Compile Include="Native\LLVMMetadataRef.cs" />
         <Compile Include="Native\LLVMPassRegistryRef.cs" />
+        <Compile Include="Native\LLVMSharedModuleRef.cs" />
+        <Compile Include="Native\LLVMSharedObjectBufferRef.cs" />
         <Compile Include="Native\LLVMTripleRef.cs" />
         <Compile Include="Native\LLVMVersionInfo.cs" />
         <Compile Include="Native\SafeHandleNullIsInvalid.cs" />
@@ -148,7 +151,6 @@
         <Compile Include="Types\FunctionType.cs" />
         <Compile Include="Values\GlobalAlias.cs" />
         <Compile Include="Values\GlobalObject.cs" />
-        <Compile Include="PassRegistry.cs" />
         <Compile Include="Values\GlobalObjectExtensions.cs" />
         <Compile Include="Values\GlobalValue.cs" />
         <Compile Include="Values\GlobalValueExtensions.cs" />
@@ -194,7 +196,6 @@
         <Compile Include="MemoryBuffer.cs" />
         <Compile Include="Module.cs" />
         <Compile Include="Values\FunctionParameterList.cs" />
-        <Compile Include="PassManagerBuilder.cs" />
         <Compile Include="Properties\AssemblyInfo.cs" />
         <Compile Include="Types\SequenceType.cs" />
         <Compile Include="StaticState.cs" />

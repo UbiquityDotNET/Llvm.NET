@@ -2,6 +2,14 @@
 // Copyright (c) .NET Foundation. All rights reserved.
 // </copyright>
 
+/* NOTE: While this code was originally generated from Clang based tool parsing the LLVM headers
+// it was modified extensively since then to use more correct marsahlling attributes as well as
+// custom marshalling for the specially allocated strings used by LLVM. This is not auto generated.
+// This represents a low level interop P/Invoke of the standard LLVM-C API. Additional C-APIs are
+// added by the LibLlvm project and those are declared in the CustomGenerated. (Which is also
+// maintained manually now)
+*/
+
 using System;
 using System.Diagnostics.CodeAnalysis;
 using System.Runtime.InteropServices;
@@ -11,6 +19,7 @@ using System.Runtime.InteropServices;
 
 // Mostly generated code, but all pure interop, documentation is in native code
 #pragma warning disable SA1600 // Elements must be documented
+#pragma warning disable SA1124 // Do not use regions
 
 namespace Llvm.NET.Native
 {
@@ -147,8 +156,10 @@ namespace Llvm.NET.Native
     {
     }
 
-    // hand added to help clarify use when the value
-    // is not really a bool but a status where (0==SUCCESS)
+    // maps to LLVMBool in LLVM-C for methods that return
+    // 0 on success. This was hand added to help clarify use
+    // when a return value is not really a bool but a status
+    // where (0==SUCCESS)
     internal partial struct LLVMStatus
     {
         public LLVMStatus( int value )
@@ -246,6 +257,7 @@ namespace Llvm.NET.Native
     }
 
     /* replaced with SafeHandle Variant to ensure release
+       as it isn't owned by any other object in LLVM
     internal partial struct LLVMBuilderRef
     {
         internal LLVMBuilderRef(IntPtr pointer)
@@ -511,26 +523,6 @@ namespace Llvm.NET.Native
     internal partial struct LLVMRelocationIteratorRef
     {
         internal LLVMRelocationIteratorRef( IntPtr pointer )
-        {
-            Pointer = pointer;
-        }
-
-        internal IntPtr Pointer { get; }
-    }
-
-    internal partial struct LLVMSharedModuleRef
-    {
-        internal LLVMSharedModuleRef( IntPtr pointer )
-        {
-            Pointer = pointer;
-        }
-
-        internal IntPtr Pointer { get; }
-    }
-
-    internal partial struct LLVMSharedObjectBufferRef
-    {
-        internal LLVMSharedObjectBufferRef( IntPtr pointer )
         {
             Pointer = pointer;
         }
@@ -3504,17 +3496,18 @@ namespace Llvm.NET.Native
         [DllImport( LibraryPath, EntryPoint = "LLVMGetRelocationValueString", CallingConvention = CallingConvention.Cdecl )]
         internal static extern IntPtr GetRelocationValueString( LLVMRelocationIteratorRef @RI );
 
+        #region ORC JIT C Interface (officially experimental and unstable)
         [DllImport( LibraryPath, EntryPoint = "LLVMOrcMakeSharedModule", CallingConvention = CallingConvention.Cdecl )]
         internal static extern LLVMSharedModuleRef OrcMakeSharedModule( LLVMModuleRef Mod );
 
         [DllImport( LibraryPath, EntryPoint = "LLVMOrcDisposeSharedModuleRef", CallingConvention = CallingConvention.Cdecl )]
-        internal static extern void OrcDisposeSharedModuleRef( LLVMSharedModuleRef SharedMod );
+        internal static extern void OrcDisposeSharedModuleRef( IntPtr SharedMod );
 
         [DllImport( LibraryPath, EntryPoint = "LLVMOrcMakeSharedObjectBuffer", CallingConvention = CallingConvention.Cdecl )]
         internal static extern LLVMSharedObjectBufferRef OrcMakeSharedObjectBuffer( LLVMMemoryBufferRef ObjBuffer );
 
         [DllImport( LibraryPath, EntryPoint = "LLVMOrcDisposeSharedObjectBufferRef", CallingConvention = CallingConvention.Cdecl )]
-        internal static extern void OrcDisposeSharedObjectBufferRef( LLVMSharedObjectBufferRef SharedObjBuffer );
+        internal static extern void OrcDisposeSharedObjectBufferRef( IntPtr SharedObjBuffer );
 
         [DllImport( LibraryPath, EntryPoint = "LLVMOrcCreateInstance", CallingConvention = CallingConvention.Cdecl )]
         internal static extern LLVMOrcJITStackRef OrcCreateInstance( LLVMTargetMachineRef @TM );
@@ -3529,7 +3522,7 @@ namespace Llvm.NET.Native
         internal static extern void OrcDisposeMangledSymbol( IntPtr @MangledSymbol );
 
         [DllImport( LibraryPath, EntryPoint = "LLVMOrcCreateLazyCompileCallback", CallingConvention = CallingConvention.Cdecl )]
-        internal static extern LLVMOrcTargetAddress OrcCreateLazyCompileCallback( LLVMOrcJITStackRef @JITStack, LLVMOrcLazyCompileCallbackFn @Callback, IntPtr @CallbackCtx );
+        internal static extern LLVMOrcErrorCode OrcCreateLazyCompileCallback( LLVMOrcJITStackRef @JITStack, out LLVMOrcTargetAddress retAddr, LLVMOrcLazyCompileCallbackFn @Callback, IntPtr @CallbackCtx );
 
         [DllImport( LibraryPath, EntryPoint = "LLVMOrcCreateIndirectStub", CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi, ThrowOnUnmappableChar = true, BestFitMapping = false )]
         internal static extern LLVMOrcErrorCode OrcCreateIndirectStub( LLVMOrcJITStackRef @JITStack, [MarshalAs( UnmanagedType.LPStr )] string @StubName, LLVMOrcTargetAddress @InitAddr );
@@ -3538,22 +3531,23 @@ namespace Llvm.NET.Native
         internal static extern LLVMOrcErrorCode OrcSetIndirectStubPointer( LLVMOrcJITStackRef @JITStack, [MarshalAs( UnmanagedType.LPStr )] string @StubName, LLVMOrcTargetAddress @NewAddr );
 
         [DllImport( LibraryPath, EntryPoint = "LLVMOrcAddEagerlyCompiledIR", CallingConvention = CallingConvention.Cdecl )]
-        internal static extern LLVMOrcModuleHandle OrcAddEagerlyCompiledIR( LLVMOrcJITStackRef @JITStack, LLVMSharedModuleRef @Mod, LLVMOrcSymbolResolverFn @SymbolResolver, IntPtr @SymbolResolverCtx );
+        internal static extern LLVMOrcErrorCode OrcAddEagerlyCompiledIR( LLVMOrcJITStackRef @JITStack, out LLVMOrcModuleHandle retHandle, LLVMSharedModuleRef @Mod, LLVMOrcSymbolResolverFn @SymbolResolver, IntPtr @SymbolResolverCtx );
 
         [DllImport( LibraryPath, EntryPoint = "LLVMOrcAddLazilyCompiledIR", CallingConvention = CallingConvention.Cdecl )]
-        internal static extern LLVMOrcModuleHandle OrcAddLazilyCompiledIR( LLVMOrcJITStackRef @JITStack, LLVMSharedModuleRef @Mod, LLVMOrcSymbolResolverFn @SymbolResolver, IntPtr @SymbolResolverCtx );
+        internal static extern LLVMOrcErrorCode OrcAddLazilyCompiledIR( LLVMOrcJITStackRef @JITStack, out LLVMOrcModuleHandle retHandle, LLVMSharedModuleRef @Mod, LLVMOrcSymbolResolverFn @SymbolResolver, IntPtr @SymbolResolverCtx );
 
         [DllImport( LibraryPath, EntryPoint = "LLVMOrcAddObjectFile", CallingConvention = CallingConvention.Cdecl )]
-        internal static extern LLVMOrcModuleHandle OrcAddObjectFile( LLVMOrcJITStackRef @JITStack, LLVMSharedObjectBufferRef @Obj, LLVMOrcSymbolResolverFn @SymbolResolver, IntPtr @SymbolResolverCtx );
+        internal static extern LLVMOrcErrorCode OrcAddObjectFile( LLVMOrcJITStackRef @JITStack, out LLVMOrcModuleHandle retHandle, LLVMSharedObjectBufferRef @Obj, LLVMOrcSymbolResolverFn @SymbolResolver, IntPtr @SymbolResolverCtx );
 
         [DllImport( LibraryPath, EntryPoint = "LLVMOrcRemoveModule", CallingConvention = CallingConvention.Cdecl )]
-        internal static extern void OrcRemoveModule( LLVMOrcJITStackRef @JITStack, LLVMOrcModuleHandle @H );
+        internal static extern LLVMOrcErrorCode OrcRemoveModule( LLVMOrcJITStackRef @JITStack, LLVMOrcModuleHandle @H );
 
         [DllImport( LibraryPath, EntryPoint = "LLVMOrcGetSymbolAddress", CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi, ThrowOnUnmappableChar = true, BestFitMapping = false )]
-        internal static extern LLVMOrcTargetAddress OrcGetSymbolAddress( LLVMOrcJITStackRef @JITStack, [MarshalAs( UnmanagedType.LPStr )] string @SymbolName );
+        internal static extern LLVMOrcErrorCode OrcGetSymbolAddress( LLVMOrcJITStackRef @JITStack, out LLVMOrcTargetAddress retAddr, [MarshalAs( UnmanagedType.LPStr )] string @SymbolName );
 
         [DllImport( LibraryPath, EntryPoint = "LLVMOrcDisposeInstance", CallingConvention = CallingConvention.Cdecl )]
-        internal static extern void OrcDisposeInstance( LLVMOrcJITStackRef @JITStack );
+        internal static extern LLVMOrcErrorCode OrcDisposeInstance( LLVMOrcJITStackRef @JITStack );
+        #endregion
 
         [DllImport( LibraryPath, EntryPoint = "LLVMLoadLibraryPermanently", CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi, ThrowOnUnmappableChar = true, BestFitMapping = false )]
         [return: MarshalAs( UnmanagedType.Bool )]

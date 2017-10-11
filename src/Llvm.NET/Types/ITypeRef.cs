@@ -16,43 +16,43 @@ namespace Llvm.NET.Types
         /// <summary>LibLLVM handle for the type</summary>
         IntPtr TypeHandle { get; } // TODO: move this to an internal interface so that low level internals not exposed in public API
 
-        /// <summary>Flag to indicate if the type is sized</summary>
+        /// <summary>Gets a flag to indicate if the type is sized</summary>
         bool IsSized { get; }
 
-        /// <summary>LLVM Type kind for this type</summary>
+        /// <summary>Gets the LLVM Type kind for this type</summary>
         TypeKind Kind { get; }
 
-        /// <summary>Flag to indicate if this type is an integer</summary>
+        /// <summary>Gets a flag to indicate if this type is an integer</summary>
         bool IsInteger { get; }
 
-        // Return true if value is 'float', a 32-bit IEEE floating point type.
+        /// <summary>Gets a flag that inidcates if the type is a 32-bit IEEE floating point type</summary>
         bool IsFloat { get; }
 
-        // Return true if this is 'double', a 64-bit IEEE floating point type
+        /// <summary>Gets a flag that indicates if the type is a 64-bit IEEE floating point type</summary>
         bool IsDouble { get; }
 
-        /// <summary>Flag to indicate if this type represents the void type</summary>
+        /// <summary>Gets a flag to indicate if this type represents the void type</summary>
         bool IsVoid { get; }
 
-        /// <summary>Flag to indicate if this type is a structure type</summary>
+        /// <summary>Gets a flag to indicate if this type is a structure type</summary>
         bool IsStruct { get; }
 
-        /// <summary>Flag to indicate if this type is a pointer</summary>
+        /// <summary>Gets a flag to indicate if this type is a pointer</summary>
         bool IsPointer { get; }
 
-        /// <summary>Flag to indicate if this type is a sequence type</summary>
+        /// <summary>Gets a flag to indicate if this type is a sequence type</summary>
         bool IsSequence { get; }
 
-        /// <summary>Flag to indicate if this type is a floating point type</summary>
+        /// <summary>Gets a flag to indicate if this type is a floating point type</summary>
         bool IsFloatingPoint { get; }
 
-        /// <summary>FLag to indicate if this type is a pointer to a pointer</summary>
+        /// <summary>Gets a flag to indicate if this type is a pointer to a pointer</summary>
         bool IsPointerPointer { get; }
 
-        /// <summary>Context that owns this type</summary>
+        /// <summary>Gets the Context that owns this type</summary>
         Context Context { get; }
 
-        /// <summary>Integer bit width of this type or 0 for non integer types</summary>
+        /// <summary>Gets the integer bit width of this type or 0 for non integer types</summary>
         [SuppressMessage( "Microsoft.Naming", "CA1720:IdentifiersShouldNotContainTypeNames", Justification = "Value is the bitwidth of an integer, name is appropriate" )]
         uint IntegerBitWidth { get; }
 
@@ -61,6 +61,7 @@ namespace Llvm.NET.Types
         /// This is a getter function instead of a property as it can throw exceptions
         /// for types that don't support such a thing (i.e. void )
         /// </remarks>
+        /// <returns><see cref="Constant"/> that represents a null (0) value of this type</returns>
         [SuppressMessage( "Microsoft.Design", "CA1024:UsePropertiesWhereAppropriate", Justification = "See comment remarks" )]
         Constant GetNullValue( );
 

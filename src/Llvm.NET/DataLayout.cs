@@ -90,6 +90,7 @@ namespace Llvm.NET
         /// bits required to represent any value of the given type.) This is distinct from the storage
         /// and stack size due to various target alignment requirements.</para>
         /// </remarks>
+        /// <returns>Size of the type in bits</returns>
         public ulong BitSizeOf( ITypeRef typeRef )
         {
             VerifySized( typeRef, nameof( typeRef ) );
