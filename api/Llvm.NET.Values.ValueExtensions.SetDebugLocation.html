@@ -1115,93 +1115,6 @@
                               </ul>  </li>
                           <li class="">
                             <span class="expand-stub"></span>
-                            <a href="Llvm.NET.PassManagerBuilder.html" title="PassManagerBuilder" class="">PassManagerBuilder</a>
-                              
-                              <ul class="nav level3">
-                                <li class="">
-                                  <a href="Llvm.NET.PassManagerBuilder.Dispose.html" title="Dispose" class="">Dispose</a>
-                                </li>
-                                <li class="">
-                                  <a href="Llvm.NET.PassManagerBuilder.-ctor.html" title="PassManagerBuilder" class="">PassManagerBuilder</a>
-                                </li>
-                                <li class="">
-                                  <a href="Llvm.NET.PassManagerBuilder.SetDisableSimplifyLibCalls.html" title="SetDisableSimplifyLibCalls" class="">SetDisableSimplifyLibCalls</a>
-                                </li>
-                                <li class="">
-                                  <a href="Llvm.NET.PassManagerBuilder.SetDisableUnitAtATime.html" title="SetDisableUnitAtATime" class="">SetDisableUnitAtATime</a>
-                                </li>
-                                <li class="">
-                                  <a href="Llvm.NET.PassManagerBuilder.SetDisableUnrollLoops.html" title="SetDisableUnrollLoops" class="">SetDisableUnrollLoops</a>
-                                </li>
-                                <li class="">
-                                  <a href="Llvm.NET.PassManagerBuilder.SetOptLevel.html" title="SetOptLevel" class="">SetOptLevel</a>
-                                </li>
-                                <li class="">
-                                  <a href="Llvm.NET.PassManagerBuilder.SetSizeLevel.html" title="SetSizeLevel" class="">SetSizeLevel</a>
-                                </li>
-                              </ul>  </li>
-                          <li class="">
-                            <span class="expand-stub"></span>
-                            <a href="Llvm.NET.PassRegistry.html" title="PassRegistry" class="">PassRegistry</a>
-                              
-                              <ul class="nav level3">
-                                <li class="">
-                                  <a href="Llvm.NET.PassRegistry.Dispose.html" title="Dispose" class="">Dispose</a>
-                                </li>
-                                <li class="">
-                                  <a href="Llvm.NET.PassRegistry.Finalize.html" title="Finalize" class="">Finalize</a>
-                                </li>
-                                <li class="">
-                                  <a href="Llvm.NET.PassRegistry.GlobalRegistry.html" title="GlobalRegistry" class="">GlobalRegistry</a>
-                                </li>
-                                <li class="">
-                                  <a href="Llvm.NET.PassRegistry.InitializeAll.html" title="InitializeAll" class="">InitializeAll</a>
-                                </li>
-                                <li class="">
-                                  <a href="Llvm.NET.PassRegistry.InitializeAnalysis.html" title="InitializeAnalysis" class="">InitializeAnalysis</a>
-                                </li>
-                                <li class="">
-                                  <a href="Llvm.NET.PassRegistry.InitializeCodeGen.html" title="InitializeCodeGen" class="">InitializeCodeGen</a>
-                                </li>
-                                <li class="">
-                                  <a href="Llvm.NET.PassRegistry.InitializeCodeGenForOpt.html" title="InitializeCodeGenForOpt" class="">InitializeCodeGenForOpt</a>
-                                </li>
-                                <li class="">
-                                  <a href="Llvm.NET.PassRegistry.InitializeCore.html" title="InitializeCore" class="">InitializeCore</a>
-                                </li>
-                                <li class="">
-                                  <a href="Llvm.NET.PassRegistry.InitializeInstCombine.html" title="InitializeInstCombine" class="">InitializeInstCombine</a>
-                                </li>
-                                <li class="">
-                                  <a href="Llvm.NET.PassRegistry.InitializeInstrumentation.html" title="InitializeInstrumentation" class="">InitializeInstrumentation</a>
-                                </li>
-                                <li class="">
-                                  <a href="Llvm.NET.PassRegistry.InitializeIPA.html" title="InitializeIPA" class="">InitializeIPA</a>
-                                </li>
-                                <li class="">
-                                  <a href="Llvm.NET.PassRegistry.InitializeIPO.html" title="InitializeIPO" class="">InitializeIPO</a>
-                                </li>
-                                <li class="">
-                                  <a href="Llvm.NET.PassRegistry.InitializeObjCARCOpts.html" title="InitializeObjCARCOpts" class="">InitializeObjCARCOpts</a>
-                                </li>
-                                <li class="">
-                                  <a href="Llvm.NET.PassRegistry.InitializeScalarOpts.html" title="InitializeScalarOpts" class="">InitializeScalarOpts</a>
-                                </li>
-                                <li class="">
-                                  <a href="Llvm.NET.PassRegistry.InitializeTarget.html" title="InitializeTarget" class="">InitializeTarget</a>
-                                </li>
-                                <li class="">
-                                  <a href="Llvm.NET.PassRegistry.InitializeTransformUtils.html" title="InitializeTransformUtils" class="">InitializeTransformUtils</a>
-                                </li>
-                                <li class="">
-                                  <a href="Llvm.NET.PassRegistry.InitializeVectorization.html" title="InitializeVectorization" class="">InitializeVectorization</a>
-                                </li>
-                                <li class="">
-                                  <a href="Llvm.NET.PassRegistry.-ctor.html" title="PassRegistry" class="">PassRegistry</a>
-                                </li>
-                              </ul>  </li>
-                          <li class="">
-                            <span class="expand-stub"></span>
                             <a href="Llvm.NET.Predicate.html" title="Predicate" class="">Predicate</a>
                               
                               <ul class="nav level3">
@@ -5244,7 +5157,8 @@
   <tbody>
     <tr>
       <td><span class="xref">T</span></td>
-      <td></td>
+      <td><p><code data-dev-comment-type="paramref" class="paramref">value</code> for fluent usage</p>
+</td>
     </tr>
   </tbody>
 </table>
@@ -5268,18 +5182,18 @@
 <div class="markdown level1 remarks"><p>Technically speaking only an <a class="xref" href="Llvm.NET.Instructions.Instruction.html">Instruction</a> can have debug location
 information. However, since LLVM will perform constant folding in the <a class="xref" href="Llvm.NET.Instructions.InstructionBuilder.html">InstructionBuilder</a>
 most of the methods in <a class="xref" href="Llvm.NET.Instructions.InstructionBuilder.html">InstructionBuilder</a> return a <a class="xref" href="Llvm.NET.Values.Value.html">Value</a> rather than a
-more specific <a class="xref" href="Llvm.NET.Instructions.Instruction.html">Instruction</a>. Thus, without this extension method here,
-code would need to know ahead of time that an actual instruction would be produced then cast the result
-to an <a class="xref" href="Llvm.NET.Instructions.Instruction.html">Instruction</a> and then set the debug location. This makes the code rather
-ugly and tedious to manage. Placing this as a generic extension method ensures that the return type matches
+more specific <a class="xref" href="Llvm.NET.Instructions.Instruction.html">Instruction</a>. Thus, without this extension method, calling code
+would need to know ahead of time that an actual instruction would be produced then cast the result to an
+<a class="xref" href="Llvm.NET.Instructions.Instruction.html">Instruction</a> and then set the debug location. This makes the code rather ugly
+and tedious to manage. Placing this as a generic extension method ensures that the return type matches
 the original and no additional casting is needed, which would defeat the purpose of doing this. For
 <a class="xref" href="Llvm.NET.Values.Value.html">Value</a> types that are not instructions this does nothing. This allows for a simpler fluent
 style of programming where the actual type is retained even in cases where an <a class="xref" href="Llvm.NET.Instructions.InstructionBuilder.html">InstructionBuilder</a>
 method will always return an actual instruction.</p>
 <p>In order to help simplify code generation for cases where not all of the source information is
-available this is a NOP if <code data-dev-comment-type="paramref" class="paramref">location</code> is null. Thus, it is safe to call even when debugging
-information isn&apos;t actually available. This helps to avoid cluttering calling code with test for debug info
-before trying to add it.</p>
+available this is a NOP if <code data-dev-comment-type="paramref" class="paramref">location</code> is null. Thus, it is safe to call even when
+debugging information isn&apos;t actually available. This helps to avoid cluttering calling code with test
+for debug info before trying to add it.</p>
 </div>
 <span class="small pull-right mobile-hide">
   <span class="divider">|</span>
@@ -5344,7 +5258,8 @@ before trying to add it.</p>
   <tbody>
     <tr>
       <td><span class="xref">T</span></td>
-      <td></td>
+      <td><p><code data-dev-comment-type="paramref" class="paramref">value</code> for fluent usage</p>
+</td>
     </tr>
   </tbody>
 </table>
