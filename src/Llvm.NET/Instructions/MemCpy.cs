@@ -18,9 +18,9 @@ namespace Llvm.NET.Instructions
 
         internal static string GetIntrinsicNameForArgs( IPointerType dst, IPointerType src, ITypeRef len )
         {
-            Debug.Assert( dst != null && dst.ElementType.IsInteger && dst.ElementType.IntegerBitWidth > 0 );
-            Debug.Assert( src != null && src.ElementType.IsInteger && src.ElementType.IntegerBitWidth > 0 );
-            Debug.Assert( len.IsInteger && len.IntegerBitWidth > 0 );
+            Debug.Assert( dst != null && dst.ElementType.IsInteger && dst.ElementType.IntegerBitWidth > 0, "Invalid dst" );
+            Debug.Assert( src != null && src.ElementType.IsInteger && src.ElementType.IntegerBitWidth > 0, "Invalid src" );
+            Debug.Assert( len.IsInteger && len.IntegerBitWidth > 0, "Invalid len" );
             return $"llvm.memcpy.p{dst.AddressSpace}i{dst.ElementType.IntegerBitWidth}.p{src.AddressSpace}i{src.ElementType.IntegerBitWidth}.i{len.IntegerBitWidth}";
         }
     }

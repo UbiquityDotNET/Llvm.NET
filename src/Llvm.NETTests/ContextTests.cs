@@ -1,5 +1,5 @@
-﻿// <copyright file="ContextTests.cs" company="PlaceholderCompany">
-// Copyright (c) PlaceholderCompany. All rights reserved.
+﻿// <copyright file="ContextTests.cs" company=".NET Foundation">
+// Copyright (c) .NET Foundation. All rights reserved.
 // </copyright>
 
 using System;
@@ -50,7 +50,6 @@ namespace Llvm.NET.Tests
             using( var context = new Context( ) )
             {
                 var voidType = context.VoidType;
-                Assert.AreNotEqual( IntPtr.Zero, voidType.TypeHandle );
                 Assert.AreEqual( TypeKind.Void, voidType.Kind );
                 Assert.IsFalse( voidType.IsDouble );
                 Assert.IsFalse( voidType.IsFloat );
@@ -1006,7 +1005,6 @@ namespace Llvm.NET.Tests
 
         private static void VerifyIntegerType( ITypeRef integerType, uint bitWidth )
         {
-            Assert.AreNotEqual( IntPtr.Zero, integerType.TypeHandle );
             Assert.AreEqual( TypeKind.Integer, integerType.Kind );
             Assert.IsFalse( integerType.IsDouble );
             Assert.IsFalse( integerType.IsFloat );

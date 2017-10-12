@@ -5,3 +5,6 @@ references:
   - uid: llvm_sourceleveldebugging
     name: LLVM Documentation
     href: http://releases.llvm.org/5.0.0/docs/SourceLevelDebugging.html
+  - uid: llvm_docs_garbagecollection
+    name: LLVM Documentation
+    href: http://llvm.org/5.0.0/docs/GarbageCollection.html

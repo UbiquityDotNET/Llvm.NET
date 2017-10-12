@@ -1,5 +1,5 @@
-﻿// <copyright file="AssemblyInitialize.cs" company="PlaceholderCompany">
-// Copyright (c) PlaceholderCompany. All rights reserved.
+﻿// <copyright file="AssemblyInitialize.cs" company=".NET Foundation">
+// Copyright (c) .NET Foundation. All rights reserved.
 // </copyright>
 
 using System;

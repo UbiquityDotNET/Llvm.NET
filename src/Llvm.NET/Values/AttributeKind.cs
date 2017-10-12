@@ -4,29 +4,29 @@
 
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
 using Llvm.NET.Native;
+using Ubiquity.ArgValidators;
 
 namespace Llvm.NET.Values
 {
     /// <summary>Enumeration for the known LLVM attributes</summary>
     /// <remarks>
-    /// <para>It is important to note that the integer values of this enum
-    /// do NOT necessarily correlate to the attribute IDs. LLVM has
-    /// moved away from using an enum Flags model as the number of
-    /// attributes reached the limit of available bits. Thus, the
-    /// enum was dropped as of V5.0. Instead, strings are used to
-    /// identify attributes. However, for maximum compatibility and
-    /// ease of use for this library the enum is retained and the
-    /// provided attribute manipulation classes will map the enum
-    /// to the associated string.</para>
-    /// <para>Also note that as a reult of the changes in LLVM this
+    /// <para>It is important to note that the integer values of this
+    /// enum do NOT necessarily correlate to the attribute IDs. LLVM
+    /// has moved away from using an enum Flags model as the number of
+    /// attributes reached the limit of available bits. Thus, the enum
+    /// was dropped. Instead, strings are used to identify attributes.
+    /// However, for maximum compatibility and ease of use for this
+    /// library the enum is retained and the provided attribute
+    /// manipulation classes will map the enum to the associated string.
+    /// </para>
+    /// <note type="warning">As a result of the changes in LLVM this
     /// set of attributes is fluid and subject to change from version
     /// to version. Thus, code using any attributes that have changed
     /// or were removed will produce compile time errors. That is useful
     /// and by design so that any changes in LLVM naming will break at
-    /// compile time instead of at runtime.</para>
+    /// compile time instead of at runtime.</note>
     /// </remarks>
     public enum AttributeKind
     {
@@ -84,7 +84,6 @@ namespace Llvm.NET.Values
         UWTable,
         WriteOnly,
         ZExt,
-        EndAttrKinds// always last
     }
 
     /// <summary>Enumeration flags to indicate which attribute set index an attribute may apply to</summary>
@@ -114,7 +113,8 @@ namespace Llvm.NET.Values
 
         public static bool RequiresIntValue( this AttributeKind kind )
         {
-            Debug.Assert( kind >= AttributeKind.None && kind < AttributeKind.EndAttrKinds );
+            kind.ValidateDefined( nameof( kind ) );
+
             switch( kind )
             {
             case AttributeKind.Alignment:
@@ -150,7 +150,8 @@ namespace Llvm.NET.Values
 
         internal static bool CheckAttributeUsage( this AttributeKind kind, FunctionAttributeIndex index, Value value )
         {
-            Debug.Assert( kind >= AttributeKind.None && kind < AttributeKind.EndAttrKinds );
+            kind.ValidateDefined( nameof( kind ) );
+
             FunctionIndexKinds allowedindices = kind.GetAllowedIndexes( );
             switch( index )
             {
@@ -227,7 +228,6 @@ namespace Llvm.NET.Values
 
         internal static void VerifyAttributeUsage( this AttributeKind kind, FunctionAttributeIndex index, Value value )
         {
-            Debug.Assert( kind >= AttributeKind.None && kind < AttributeKind.EndAttrKinds );
             VerifyAttributeUsage( kind, index );
 
             if( index >= FunctionAttributeIndex.Parameter0 )
@@ -271,7 +271,8 @@ namespace Llvm.NET.Values
 
         internal static void VerifyAttributeUsage( this AttributeKind kind, FunctionAttributeIndex index )
         {
-            Debug.Assert( kind >= AttributeKind.None && kind < AttributeKind.EndAttrKinds );
+            kind.ValidateDefined( nameof( kind ) );
+
             FunctionIndexKinds allowedindices = kind.GetAllowedIndexes( );
             switch( index )
             {
@@ -311,7 +312,7 @@ namespace Llvm.NET.Values
 
         internal static void RangeCheckValue( this AttributeKind kind, ulong value )
         {
-            Debug.Assert( kind >= AttributeKind.None && kind < AttributeKind.EndAttrKinds );
+            kind.ValidateDefined( nameof( kind ) );
 
             // To prevent native asserts or crashes - validate parameters before passing down to native code
             switch( kind )
@@ -348,7 +349,8 @@ namespace Llvm.NET.Values
 
         internal static FunctionIndexKinds GetAllowedIndexes( this AttributeKind kind )
         {
-            Debug.Assert( kind >= AttributeKind.None && kind < AttributeKind.EndAttrKinds );
+            kind.ValidateDefined( nameof( kind ) );
+
             switch( kind )
             {
             default:
@@ -447,7 +449,6 @@ namespace Llvm.NET.Values
         private static Dictionary<uint, AttributeKind> BuildAttribIdToKindMap( )
         {
             return ( from kind in Enum.GetValues( typeof( AttributeKind ) ).Cast<AttributeKind>( ).Skip( 1 )
-                     where kind != AttributeKind.EndAttrKinds
                      let name = kind.GetAttributeName( )
                      select new KeyValuePair<uint, AttributeKind>( NativeMethods.GetEnumAttributeKindForName( name, ( size_t )name.Length ), kind )
                    ).ToDictionary( ( KeyValuePair<uint, AttributeKind> kvp ) => kvp.Key, ( KeyValuePair<uint, AttributeKind> kvp ) => kvp.Value );

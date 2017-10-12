@@ -1,5 +1,5 @@
-﻿// <copyright file="AttributeValueTests.cs" company="PlaceholderCompany">
-// Copyright (c) PlaceholderCompany. All rights reserved.
+﻿// <copyright file="AttributeValueTests.cs" company=".NET Foundation">
+// Copyright (c) .NET Foundation. All rights reserved.
 // </copyright>
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;

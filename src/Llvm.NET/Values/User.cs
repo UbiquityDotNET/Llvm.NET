@@ -14,12 +14,13 @@ namespace Llvm.NET.Values
     /// conveyed by the LLVM value model. A User can contain
     /// references (e.g. uses) of other values.
     /// </remarks>
-    public class User : Value
+    public class User
+        : Value
     {
-        /// <summary>Collection of operands</summary>
+        /// <summary>Gets a collection of operands for this <see cref="User"/></summary>
         public IReadOnlyList<Value> Operands => OperandList;
 
-        /// <summary>Enumerable collection of <see cref="Use"/>s</summary>
+        /// <summary>Gets a collection of <see cref="Use"/>s used by this User</summary>
         public IEnumerable<Use> Uses
         {
             get

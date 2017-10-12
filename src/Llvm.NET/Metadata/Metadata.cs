@@ -119,7 +119,8 @@ namespace Llvm.NET
         [SuppressMessage( "Microsoft.Maintainability", "CA1506:AvoidExcessiveClassCoupling", Justification = "Static factory method" )]
         [SuppressMessage( "Microsoft.Maintainability", "CA1502:AvoidExcessiveComplexity", Justification = "Static factory method" )]
         private static LlvmMetadata StaticFactory( LLVMMetadataRef handle )
-        {   // use the native kind value to determine the managed type
+        {
+            // use the native kind value to determine the managed type
             // that should wrap this particular handle
             var kind = ( MetadataKind )NativeMethods.GetMetadataID( handle );
             switch( kind )

@@ -53,13 +53,13 @@ namespace Llvm.NET
             GC.SuppressFinalize( this );
         }
 
-        /// <summary>Context used for this data (in particular, for retrieving pointer types)</summary>
+        /// <summary>Gets the <see cref="Context"/> used for this layout (in particular, for retrieving pointer types)</summary>
         public Context Context { get; }
 
-        /// <summary>Retrieves the byte ordering for this target</summary>
+        /// <summary>Gets the byte ordering for this target</summary>
         public ByteOrdering Endianess => ( ByteOrdering )NativeMethods.ByteOrder( DataLayoutHandle );
 
-        /// <summary>Retrieves the size of a pointer for the default address space of the target</summary>
+        /// <summary>Gets the size of a pointer for the default address space of the target</summary>
         /// <returns>Size of a pointer to the default address space</returns>
         public uint PointerSize( ) => NativeMethods.PointerSize( DataLayoutHandle );
 

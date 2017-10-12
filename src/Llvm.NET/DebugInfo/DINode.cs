@@ -8,9 +8,10 @@ using Llvm.NET.Native;
 namespace Llvm.NET.DebugInfo
 {
     /// <summary>Root of the object hierarchy for Debug information metadata nodes</summary>
-    public class DINode : MDNode
+    public class DINode
+        : MDNode
     {
-        /// <summary>Dwarf tag for the descriptor</summary>
+        /// <summary>Gets the Dwarf tag for the descriptor</summary>
         public Tag Tag
         {
             get

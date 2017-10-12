@@ -2,7 +2,6 @@
 // Copyright (c) .NET Foundation. All rights reserved.
 // </copyright>
 
-using System;
 using System.Diagnostics.CodeAnalysis;
 using Llvm.NET.Native;
 using Llvm.NET.Values;
@@ -13,40 +12,37 @@ namespace Llvm.NET.Types
     public interface ITypeRef
         : IExtensiblePropertyContainer
     {
-        /// <summary>LibLLVM handle for the type</summary>
-        IntPtr TypeHandle { get; } // TODO: move this to an internal interface so that low level internals not exposed in public API
-
-        /// <summary>Gets a flag to indicate if the type is sized</summary>
+        /// <summary>Gets a value indicating whether the type is sized</summary>
         bool IsSized { get; }
 
         /// <summary>Gets the LLVM Type kind for this type</summary>
         TypeKind Kind { get; }
 
-        /// <summary>Gets a flag to indicate if this type is an integer</summary>
+        /// <summary>Gets a value indicating whether this type is an integer</summary>
         bool IsInteger { get; }
 
-        /// <summary>Gets a flag that inidcates if the type is a 32-bit IEEE floating point type</summary>
+        /// <summary>Gets a value indicating whether the type is a 32-bit IEEE floating point type</summary>
         bool IsFloat { get; }
 
-        /// <summary>Gets a flag that indicates if the type is a 64-bit IEEE floating point type</summary>
+        /// <summary>Gets a value indicating whether the type is a 64-bit IEEE floating point type</summary>
         bool IsDouble { get; }
 
-        /// <summary>Gets a flag to indicate if this type represents the void type</summary>
+        /// <summary>Gets a value indicating whether this type represents the void type</summary>
         bool IsVoid { get; }
 
-        /// <summary>Gets a flag to indicate if this type is a structure type</summary>
+        /// <summary>Gets a value indicating whether this type is a structure type</summary>
         bool IsStruct { get; }
 
-        /// <summary>Gets a flag to indicate if this type is a pointer</summary>
+        /// <summary>Gets a value indicating whether this type is a pointer</summary>
         bool IsPointer { get; }
 
-        /// <summary>Gets a flag to indicate if this type is a sequence type</summary>
+        /// <summary>Gets a value indicating whether this type is a sequence type</summary>
         bool IsSequence { get; }
 
-        /// <summary>Gets a flag to indicate if this type is a floating point type</summary>
+        /// <summary>Gets a value indicating whether this type is a floating point type</summary>
         bool IsFloatingPoint { get; }
 
-        /// <summary>Gets a flag to indicate if this type is a pointer to a pointer</summary>
+        /// <summary>Gets a value indicating whether this type is a pointer to a pointer</summary>
         bool IsPointerPointer { get; }
 
         /// <summary>Gets the Context that owns this type</summary>
@@ -80,8 +76,17 @@ namespace Llvm.NET.Types
         IPointerType CreatePointerType( uint addressSpace );
     }
 
+    internal interface ITypeHandleOwner
+    {
+        // Gets the LibLLVM handle for the type
+        LLVMTypeRef TypeHandle { get; }
+    }
+
     internal static class TypeRefExtensions
     {
-        internal static LLVMTypeRef GetTypeRef( this ITypeRef self ) => new LLVMTypeRef( self.TypeHandle );
+        internal static LLVMTypeRef GetTypeRef( this ITypeRef self )
+        {
+            return ( ( ITypeHandleOwner )self ).TypeHandle;
+        }
     }
 }

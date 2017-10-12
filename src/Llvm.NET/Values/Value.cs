@@ -3,7 +3,6 @@
 // </copyright>
 
 using System;
-using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using Llvm.NET.Native;
 using Llvm.NET.Types;
@@ -30,25 +29,18 @@ namespace Llvm.NET.Values
         : IExtensiblePropertyContainer
     {
         /// <summary>Gets or sets name of the value (if any)</summary>
+        /// <remarks>
+        /// <note type="note">
+        /// LLVM will add a numeric suffix to the name set if a
+        /// valaue with the name already exists. Thus, the name
+        /// read from this property may not match what is set.
+        /// </note>
+        /// </remarks>
         public string Name
         {
-            get
-            {
-                if( Context.IsDisposed )
-                {
-                    return string.Empty;
-                }
+            get => Context.IsDisposed ? string.Empty : NativeMethods.GetValueName( ValueHandle );
 
-                return NativeMethods.GetValueName( ValueHandle );
-            }
-
-            set
-            {
-                NativeMethods.SetValueName( ValueHandle, value );
-
-                // LLVM auto adds a numeric suffix if a register with the same name already exists
-                Debug.Assert( Name.StartsWith( value, StringComparison.Ordinal ) );
-            }
+            set => NativeMethods.SetValueName( ValueHandle, value );
         }
 
         /// <summary>Gets a value indicating whether this value is Undefined</summary>

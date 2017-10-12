@@ -75,7 +75,7 @@ namespace Llvm.NET
             container.AddExtendedPropertyValue( Name, value );
         }
 
-        /// <summary>Name of the property</summary>
+        /// <summary>Gets the name of the property</summary>
         public string Name { get; }
     }
 }

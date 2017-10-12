@@ -14,7 +14,7 @@ namespace Llvm.NET.DebugInfo
         : DebugType<IPointerType, DIDerivedType>
         , IPointerType
     {
-        /// <summary>Constructs a new <see cref="DebugPointerType"/></summary>
+        /// <summary>Initializes a new instance of the <see cref="DebugPointerType"/> class.</summary>
         /// <param name="debugElementType">Debug type of the pointee</param>
         /// <param name="module"><see cref="NativeModule"/> used for creating the pointer type and debug information</param>
         /// <param name="addressSpace">Target address space for the pointer [Default: 0]</param>
@@ -31,7 +31,7 @@ namespace Llvm.NET.DebugInfo
         {
         }
 
-        /// <summary>Constructs a new <see cref="DebugPointerType"/></summary>
+        /// <summary>Initializes a new instance of the <see cref="DebugPointerType"/> class.</summary>
         /// <param name="llvmElementType">Native type of the pointee</param>
         /// <param name="module"><see cref="NativeModule"/> used for creating the pointer type and debug information</param>
         /// <param name="elementType">Debug type of the pointee</param>
@@ -48,7 +48,7 @@ namespace Llvm.NET.DebugInfo
         {
         }
 
-        /// <summary>Constructs a new <see cref="DebugPointerType"/></summary>
+        /// <summary>Initializes a new instance of the <see cref="DebugPointerType"/> class.</summary>
         /// <param name="llvmPtrType">Native type of the pointer</param>
         /// <param name="module"><see cref="NativeModule"/> used for creating the pointer type and debug information</param>
         /// <param name="elementType">Debug type of the pointee</param>
@@ -67,7 +67,7 @@ namespace Llvm.NET.DebugInfo
                                              );
         }
 
-        /// <summary>Constructs a new <see cref="DebugPointerType"/></summary>
+        /// <summary>Initializes a new instance of the <see cref="DebugPointerType"/> class.</summary>
         /// <param name="llvmPtrType">Native type of the pointer</param>
         /// <param name="debugType">Debug type for the pointer</param>
         /// <remarks>

@@ -14,7 +14,7 @@ namespace Llvm.NET.DebugInfo
         : DebugType<IArrayType, DICompositeType>
         , IArrayType
     {
-        /// <summary>Creates a new <see cref="DebugArrayType"/></summary>
+        /// <summary>Initializes a new instance of the <see cref="DebugArrayType"/> class</summary>
         /// <param name="llvmType">Underlying LLVM array type to bind debug info to</param>
         /// <param name="elementType">Array element type with debug information</param>
         /// <param name="module">module to use for creating debug information</param>
@@ -30,17 +30,10 @@ namespace Llvm.NET.DebugInfo
                              )
             : base( llvmType )
         {
-            if( llvmType == null )
-            {
-                throw new ArgumentNullException( nameof( llvmType ) );
-            }
+            llvmType.ValidateNotNull( nameof( llvmType ) );
+            elementType.ValidateNotNull( nameof( elementType ) );
 
-            if( elementType == null )
-            {
-                throw new ArgumentNullException( nameof( elementType ) );
-            }
-
-            if( llvmType.ElementType.TypeHandle != elementType.TypeHandle )
+            if( llvmType.ElementType.GetTypeRef().Pointer != elementType.GetTypeRef().Pointer )
             {
                 throw new ArgumentException( "elementType doesn't match array element type" );
             }
@@ -49,7 +42,7 @@ namespace Llvm.NET.DebugInfo
             DebugElementType = elementType;
         }
 
-        /// <summary>Constructs a new <see cref="DebugArrayType"/></summary>
+        /// <summary>Initializes a new instance of the <see cref="DebugArrayType"/> class.</summary>
         /// <param name="elementType">Type of elements in the array</param>
         /// <param name="module"><see cref="NativeModule"/> to use for the context of the debug information</param>
         /// <param name="count">Number of elements in the array</param>
@@ -64,7 +57,7 @@ namespace Llvm.NET.DebugInfo
         {
         }
 
-        /// <summary>Constructs a new <see cref="DebugArrayType"/></summary>
+        /// <summary>Initializes a new instance of the <see cref="DebugArrayType"/> class.</summary>
         /// <param name="llvmType">Native LLVM type for the elements</param>
         /// <param name="module"><see cref="NativeModule"/> to use for the context of the debug information</param>
         /// <param name="elementType">Debug type of the array elements</param>
@@ -75,7 +68,7 @@ namespace Llvm.NET.DebugInfo
         {
         }
 
-        /// <summary>Full <see cref="IDebugType{NativeT, DebugT}"/> type for the elements</summary>
+        /// <summary>Gets the full <see cref="IDebugType{NativeT, DebugT}"/> type for the elements</summary>
         public IDebugType<ITypeRef, DIType> DebugElementType { get; }
 
         /// <inheritdoc/>
@@ -84,7 +77,7 @@ namespace Llvm.NET.DebugInfo
         /// <inheritdoc/>
         public uint Length => NativeType.Length;
 
-        /// <summary>Lower bound of the array, usually but not always zero</summary>
+        /// <summary>Gets the lower bound of the array - usually, but not always, zero</summary>
         public uint LowerBound { get; }
 
         /// <summary>Resolves a temporary metadata node for the array if full size information wasn't available at creation time</summary>

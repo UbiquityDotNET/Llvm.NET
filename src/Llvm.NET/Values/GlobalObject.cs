@@ -7,17 +7,18 @@ using Llvm.NET.Native;
 
 namespace Llvm.NET.Values
 {
+    /// <summary>Base class for Global objects in an LLVM Module</summary>
     public class GlobalObject
         : GlobalValue
     {
-        /// <summary>Alignment requirements for this object</summary>
+        /// <summary>Gets or sets the alignment requirements for this object</summary>
         public uint Alignment
         {
             get => NativeMethods.GetAlignment( ValueHandle );
             set => NativeMethods.SetAlignment( ValueHandle, value );
         }
 
-        /// <summary>Linker section this object belongs to</summary>
+        /// <summary>Gets or sets the linker section this object belongs to</summary>
         public string Section
         {
             get => NativeMethods.GetSection( ValueHandle );

@@ -3,7 +3,6 @@
 // </copyright>
 
 using System;
-using System.Diagnostics.CodeAnalysis;
 using Llvm.NET.Native;
 using Ubiquity.ArgValidators;
 
@@ -18,10 +17,13 @@ namespace Llvm.NET.Values
     public struct AttributeValue
         : IEquatable<AttributeValue>
     {
+        /// <summary>Gets the context that owns this <see cref="AttributeValue"/></summary>
         public Context Context { get; }
 
+        /// <inheritdoc/>
         public override int GetHashCode( ) => NativeAttribute.GetHashCode( );
 
+        /// <inheritdoc/>
         public override bool Equals( object obj )
         {
             if( obj is AttributeValue attrib )
@@ -37,17 +39,14 @@ namespace Llvm.NET.Values
             return false;
         }
 
+        /// <inheritdoc/>
         public bool Equals( AttributeValue other )
         {
-            if( ReferenceEquals( other, null ) )
-            {
-                return false;
-            }
-
             return NativeAttribute.Pointer == other.NativeAttribute.Pointer;
         }
 
-        /// <summary>Kind of the attribute, <see cref="AttributeKind.None"/> for target specific named attributes</summary>
+        /// <summary>Gets the kind of the attribute</summary>
+        /// <value>The <see cref="AttributeKind"/> or <see cref="AttributeKind.None"/> for named attributes</value>
         public AttributeKind Kind
         {
             get
@@ -61,7 +60,7 @@ namespace Llvm.NET.Values
             }
         }
 
-        /// <summary>Name of a named attribute or null for other kinds of attributes</summary>
+        /// <summary>Gets the Name of the attribute</summary>
         public string Name
         {
             get
@@ -70,14 +69,13 @@ namespace Llvm.NET.Values
                 {
                     return NativeMethods.GetStringAttributeKind( NativeAttribute, out uint length );
                 }
-                else
-                {
-                    return AttributeKindExtensions.LookupId( NativeMethods.GetEnumAttributeKind( NativeAttribute ) ).GetAttributeName( );
-                }
+
+                return AttributeKindExtensions.LookupId( NativeMethods.GetEnumAttributeKind( NativeAttribute ) ).GetAttributeName( );
             }
         }
 
-        /// <summary>StringValue for named attributes with values</summary>
+        /// <summary>Gets the value for named attributes with values</summary>
+        /// <value>The value as a string or <see lang="null"/> if the attribute has no value</value>
         public string StringValue
         {
             get
@@ -91,18 +89,22 @@ namespace Llvm.NET.Values
             }
         }
 
-        /// <summary>Integer value of the attribute or null if the attribute doesn't have a value</summary>
+        /// <summary>Gets the Integer value of the attribute or <see lang="null"/> if the attribute doesn't have a value</summary>
         public UInt64? IntegerValue => IsInt ? NativeMethods.GetEnumAttributeValue( NativeAttribute ) : ( UInt64? )null;
 
-        /// <summary>Flag to indicate if this attribute is a target specific string value</summary>
+        /// <summary>Gets a value indicating whether this attribute is a target specific string value</summary>
         public bool IsString => NativeMethods.IsStringAttribute( NativeAttribute );
 
-        /// <summary>Flag to indicate if this attribute has an integer attribute</summary>
+        /// <summary>Gets a value indicating whether this attribute has an integer attribute</summary>
         public bool IsInt => Kind.RequiresIntValue( );
 
-        /// <summary>Flag to indicate if this attribute is a simple enumeration value</summary>
+        /// <summary>Gets a value indicating whether this attribute is a simple enumeration value</summary>
         public bool IsEnum => NativeMethods.IsEnumAttribute( NativeAttribute );
 
+        /// <summary>Tests if the attribute is valid for a <see cref="Value"/> on a given <see cref="FunctionAttributeIndex"/></summary>
+        /// <param name="index">Attribute index to test if the attribute is valid on</param>
+        /// <param name="value"><see cref="Value"/> </param>
+        /// <returns><see lang="true"/> if the attribute is valid on the specified <paramref name="index"/> of the given <paramref name="value"/></returns>
         public bool IsValidOn( FunctionAttributeIndex index, Value value )
         {
             if( value == null )
@@ -120,6 +122,10 @@ namespace Llvm.NET.Values
             return Kind.CheckAttributeUsage( index, value );
         }
 
+        /// <summary>Verifies the attribute is valid for a <see cref="Value"/> on a given <see cref="FunctionAttributeIndex"/></summary>
+        /// <param name="index">Index to verify</param>
+        /// <param name="value">Value to check this attribute on</param>
+        /// <exception cref="ArgumentException">The attribute is not valid on <paramref name="value"/> for the <paramref name="index"/></exception>
         public void VerifyValidOn( FunctionAttributeIndex index, Value value)
         {
             if( value == null )
@@ -143,13 +149,23 @@ namespace Llvm.NET.Values
             Kind.VerifyAttributeUsage( index, value );
         }
 
+        /// <summary>Gets a string representation of the attribute</summary>
+        /// <returns>Attribute as a string</returns>
         public override string ToString( )
         {
             return NativeMethods.AttributeToString( NativeAttribute );
         }
 
+        /// <summary>Tests attributes for equality</summary>
+        /// <param name="left">Left side of the comparison</param>
+        /// <param name="right">Right side of the comparison</param>
+        /// <returns><see lang="true"/> if the attributes are equal</returns>
         public static bool operator ==( AttributeValue left, AttributeValue right ) => Equals( left, right );
 
+        /// <summary>Tests attributes for inequality</summary>
+        /// <param name="left">Left side of the comparison</param>
+        /// <param name="right">Right side of the comparison</param>
+        /// <returns><see lang="true"/> if the attributes are not equal</returns>
         public static bool operator !=( AttributeValue left, AttributeValue right ) => !Equals( left, right );
 
         internal static AttributeValue FromHandle( Context context, LLVMAttributeRef handle)

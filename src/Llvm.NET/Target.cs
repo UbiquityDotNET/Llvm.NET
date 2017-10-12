@@ -12,19 +12,19 @@ namespace Llvm.NET
     /// <summary>LLVM Target Instruction Set Architecture</summary>
     public class Target
     {
-        /// <summary>Name of this target</summary>
+        /// <summary>Gets the name of this target</summary>
         public string Name => NativeMethods.GetTargetName( TargetHandle );
 
-        /// <summary>Description of this target</summary>
+        /// <summary>Gets the description of this target</summary>
         public string Description => NativeMethods.GetTargetDescription( TargetHandle );
 
-        /// <summary>Flag indicating if this target has JIT support</summary>
+        /// <summary>Gets a value indicating whether this target has JIT support</summary>
         public bool HasJIT => NativeMethods.TargetHasJIT( TargetHandle );
 
-        /// <summary>Flag indicating if this target has a TargetMachine initialized</summary>
+        /// <summary>Gets a value indicating whether this target has a TargetMachine initialized</summary>
         public bool HasTargetMachine => NativeMethods.TargetHasTargetMachine( TargetHandle );
 
-        /// <summary>Flag indicating if this target has an Assembly code generating back end initialized</summary>
+        /// <summary>Gets a value indicating whether this target has an Assembly code generating back end initialized</summary>
         public bool HasAsmBackEnd => NativeMethods.TargetHasAsmBackend( TargetHandle );
 
         /// <summary>Creates a <see cref="TargetMachine"/> for the target and specified parameters</summary>
@@ -62,7 +62,7 @@ namespace Llvm.NET
             return new TargetMachine( context, targetMachineHandle );
         }
 
-        /// <summary>Retrieves an enumerable collection of the available targets built into this library</summary>
+        /// <summary>Gets an enumerable collection of the available targets built into this library</summary>
         public static IEnumerable<Target> AvailableTargets
         {
             get

@@ -11,7 +11,7 @@ namespace Llvm.NET.Types
     public interface IPointerType
         : ISequenceType
     {
-        /// <summary>Address space the pointer refers to</summary>
+        /// <summary>Gets the address space the pointer refers to</summary>
         uint AddressSpace { get; }
     }
 
@@ -20,7 +20,7 @@ namespace Llvm.NET.Types
         : SequenceType
         , IPointerType
     {
-        /// <summary>Address space the pointer refers to</summary>
+        /// <summary>Gets the address space the pointer refers to</summary>
         public uint AddressSpace => NativeMethods.GetPointerAddressSpace( TypeRefHandle );
 
         internal PointerType( LLVMTypeRef typeRef )

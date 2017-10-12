@@ -44,7 +44,7 @@ namespace Llvm.NET
     public sealed class Context
         : IDisposable
     {
-        /// <summary>Creates a new context</summary>
+        /// <summary>Initializes a new instance of the <see cref="Context"/> class.Creates a new context</summary>
         public Context( )
             : this( NativeMethods.ContextCreate( ) )
         {
@@ -55,41 +55,41 @@ namespace Llvm.NET
             DisposeContext( );
         }
 
-        // This code added to correctly implement the disposable pattern.
+        /// <inheritdoc/>
         public void Dispose( )
         {
             DisposeContext( );
             GC.SuppressFinalize( this );
         }
 
-        /// <summary>Flag to indicate if this instance is still valid</summary>
+        /// <summary>Gets a value indicating whether this instance is still valid</summary>
         public bool IsDisposed => ContextHandle.Pointer == IntPtr.Zero;
 
-        /// <summary>Get's the LLVM void type for this context</summary>
+        /// <summary>Gets the LLVM void type for this context</summary>
         public ITypeRef VoidType => TypeRef.FromHandle( NativeMethods.VoidTypeInContext( ContextHandle ) );
 
-        /// <summary>Get's the LLVM boolean type for this context</summary>
+        /// <summary>Gets the LLVM boolean type for this context</summary>
         public ITypeRef BoolType => TypeRef.FromHandle( NativeMethods.Int1TypeInContext( ContextHandle ) );
 
-        /// <summary>Get's the LLVM 8 bit integer type for this context</summary>
+        /// <summary>Gets the LLVM 8 bit integer type for this context</summary>
         public ITypeRef Int8Type => TypeRef.FromHandle( NativeMethods.Int8TypeInContext( ContextHandle ) );
 
-        /// <summary>Get's the LLVM 16 bit integer type for this context</summary>
+        /// <summary>Gets the LLVM 16 bit integer type for this context</summary>
         public ITypeRef Int16Type => TypeRef.FromHandle( NativeMethods.Int16TypeInContext( ContextHandle ) );
 
-        /// <summary>Get's the LLVM 32 bit integer type for this context</summary>
+        /// <summary>Gets the LLVM 32 bit integer type for this context</summary>
         public ITypeRef Int32Type => TypeRef.FromHandle( NativeMethods.Int32TypeInContext( ContextHandle ) );
 
-        /// <summary>Get's the LLVM 64 bit integer type for this context</summary>
+        /// <summary>Gets the LLVM 64 bit integer type for this context</summary>
         public ITypeRef Int64Type => TypeRef.FromHandle( NativeMethods.Int64TypeInContext( ContextHandle ) );
 
-        /// <summary>Get's the LLVM half precision floating point type for this context</summary>
+        /// <summary>Gets the LLVM half precision floating point type for this context</summary>
         public ITypeRef HalfFloatType => TypeRef.FromHandle( NativeMethods.HalfTypeInContext( ContextHandle ) );
 
-        /// <summary>Get's the LLVM single precision floating point type for this context</summary>
+        /// <summary>Gets the LLVM single precision floating point type for this context</summary>
         public ITypeRef FloatType => TypeRef.FromHandle( NativeMethods.FloatTypeInContext( ContextHandle ) );
 
-        /// <summary>Get's the LLVM double precision floating point type for this context</summary>
+        /// <summary>Gets the LLVM double precision floating point type for this context</summary>
         public ITypeRef DoubleType => TypeRef.FromHandle( NativeMethods.DoubleTypeInContext( ContextHandle ) );
 
         /// <summary>Gets an enumerable collection of all the metadata created in this context</summary>
@@ -277,7 +277,7 @@ namespace Llvm.NET
             var llvmType = GetFunctionType( retType.NativeType, nativeArgTypes, isVarArg );
 
             var diType = diBuilder.CreateSubroutineType( 0, retType.DIType, debugArgTypes );
-            Debug.Assert( diType != null && !diType.IsTemporary );
+            Debug.Assert( diType != null && !diType.IsTemporary, "Should have a valid non temp type by now");
 
             return new DebugFunctionType( llvmType, diType );
         }
@@ -771,7 +771,7 @@ namespace Llvm.NET
             }
 
             var hContext = NativeMethods.GetModuleContext( moduleRef );
-            Debug.Assert( hContext.Pointer != IntPtr.Zero );
+            Debug.Assert( hContext.Pointer != IntPtr.Zero, "Should not get a null pointer from LLVM" );
             return GetContextFor( hContext );
         }
 
@@ -783,7 +783,7 @@ namespace Llvm.NET
             }
 
             var hType = NativeMethods.TypeOf( valueRef );
-            Debug.Assert( hType.Pointer != IntPtr.Zero );
+            Debug.Assert( hType.Pointer != IntPtr.Zero, "Should not get a null pointer from LLVM" );
             return GetContextFor( hType );
         }
 
@@ -795,7 +795,7 @@ namespace Llvm.NET
             }
 
             var hContext = NativeMethods.GetTypeContext( typeRef );
-            Debug.Assert( hContext.Pointer != IntPtr.Zero );
+            Debug.Assert( hContext.Pointer != IntPtr.Zero, "Should not get a null pointer from LLVM" );
             return GetContextFor( hContext );
         }
 
@@ -807,7 +807,7 @@ namespace Llvm.NET
             }
 
             var hContext = NativeMethods.GetNodeContext( handle );
-            Debug.Assert( hContext.Pointer != IntPtr.Zero );
+            Debug.Assert( hContext.Pointer != IntPtr.Zero, "Should not get a null pointer from LLVM" );
             return GetContextFor( hContext );
         }
 
@@ -851,7 +851,7 @@ namespace Llvm.NET
         [Conditional( "DEBUG" )]
         internal void AssertValueNotInterned( LLVMValueRef valueRef )
         {
-            Debug.Assert( !ValueCache.ContainsKey( valueRef.Pointer ) );
+            Debug.Assert( !ValueCache.ContainsKey( valueRef.Pointer ), "Value should not be interned already" );
         }
 
         internal Value GetValueFor( LLVMValueRef valueRef, Func<LLVMValueRef, Value> constructor )
@@ -914,7 +914,7 @@ namespace Llvm.NET
         [Conditional( "DEBUG" )]
         internal void AssertTypeNotInterned( LLVMTypeRef typeRef )
         {
-            Debug.Assert( !TypeCache.ContainsKey( typeRef.Pointer ) );
+            Debug.Assert( !TypeCache.ContainsKey( typeRef.Pointer ), "TYpe should not be interened" );
         }
 
         internal ITypeRef GetTypeFor( LLVMTypeRef valueRef, Func<LLVMTypeRef, ITypeRef> constructor )
@@ -969,7 +969,7 @@ namespace Llvm.NET
             string msg = NativeMethods.GetDiagInfoDescription( param0 );
             var level = NativeMethods.GetDiagInfoSeverity( param0 );
             Debug.WriteLine( "{0}: {1}", level, msg );
-            Debug.Assert( level != LLVMDiagnosticSeverity.LLVMDSError );
+            Debug.Assert( level != LLVMDiagnosticSeverity.LLVMDSError, "Unexpected Debug state" );
         }
 
         private WrappedNativeCallback ActiveHandler;

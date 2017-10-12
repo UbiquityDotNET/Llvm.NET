@@ -52,22 +52,22 @@ namespace Llvm.NET
         /// <returns>Normalized Triple string</returns>
         public override string ToString( ) => NativeMethods.TripleAsString( TripleHandle, true );
 
-        /// <summary>Architecture of the triple</summary>
+        /// <summary>Gets the Architecture of the triple</summary>
         public TripleArchType ArchitectureType => ( TripleArchType )NativeMethods.TripleGetArchType( TripleHandle );
 
-        /// <summary>Sub Architecture type</summary>
+        /// <summary>Gets the Sub Architecture type</summary>
         public TripleSubArchType SubArchitecture => ( TripleSubArchType )NativeMethods.TripleGetSubArchType( TripleHandle );
 
-        /// <summary>Vendor component of the triple</summary>
+        /// <summary>Gets the Vendor component of the triple</summary>
         public TripleVendorType VendorType => ( TripleVendorType )NativeMethods.TripleGetVendorType( TripleHandle );
 
-        /// <summary>OS Type for the triple</summary>
+        /// <summary>Gets the OS Type for the triple</summary>
         public TripleOSType OSType => ( TripleOSType )NativeMethods.TripleGetOsType( TripleHandle );
 
-        /// <summary>Environment type for the triple</summary>
+        /// <summary>Gets the environment type for the triple</summary>
         public TripleEnvironmentType EnvironmentType => ( TripleEnvironmentType )NativeMethods.TripleGetEnvironmentType( TripleHandle );
 
-        /// <summary>Object format type for the triple</summary>
+        /// <summary>Gets the object format type for the triple</summary>
         public TripleObjectFormatType ObjectFormatType => ( TripleObjectFormatType )NativeMethods.TripleGetObjectFormatType( TripleHandle );
 
         /// <summary>Retrieves the canonical name for an architecture type</summary>

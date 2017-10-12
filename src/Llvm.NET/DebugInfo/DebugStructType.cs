@@ -35,12 +35,12 @@ namespace Llvm.NET.DebugInfo
             DebugMembers = new ReadOnlyCollection<DebugMemberInfo>( debugElements as IList<DebugMemberInfo> ?? debugElements.ToList( ) );
 
             NativeType = module.Context.CreateStructType( nativeName, packed, debugElements.Select( e => e.DebugType ).ToArray( ) );
-            DIType =  module.DIBuilder.CreateReplaceableCompositeType( Tag.StructureType
-                                                                     , name
-                                                                     , scope
-                                                                     , diFile
-                                                                     , line
-                                                                     );
+            DIType = module.DIBuilder.CreateReplaceableCompositeType( Tag.StructureType
+                                                                    , name
+                                                                    , scope
+                                                                    , diFile
+                                                                    , line
+                                                                    );
 
             var memberTypes = from memberInfo in DebugMembers
                               select CreateMemberType( module, memberInfo );

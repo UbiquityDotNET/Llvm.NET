@@ -12,13 +12,13 @@ namespace Llvm.NET.Types
     public interface IFunctionType
         : ITypeRef
     {
-        /// <summary>Flag to indicate if this signature is for a variadic function</summary>
+        /// <summary>Gets a value indicating whether this signature is for a variadic function</summary>
         bool IsVarArg { get; }
 
-        /// <summary>Return type of the function</summary>
+        /// <summary>Gets the return type of the function</summary>
         ITypeRef ReturnType { get; }
 
-        /// <summary>Collection of types of the parameters for the function</summary>
+        /// <summary>Gets the types of the parameters for the function</summary>
         IReadOnlyList<ITypeRef> ParameterTypes { get; }
     }
 

@@ -1,5 +1,5 @@
-﻿// <copyright file="TripleTests.cs" company="PlaceholderCompany">
-// Copyright (c) PlaceholderCompany. All rights reserved.
+﻿// <copyright file="TripleTests.cs" company=".NET Foundation">
+// Copyright (c) .NET Foundation. All rights reserved.
 // </copyright>
 
 using System.Collections.Generic;
@@ -255,7 +255,7 @@ namespace Llvm.NET.Tests
             var values = new Dictionary<TripleObjectFormatType, string>
             {
                 { TripleObjectFormatType.COFF, "coff" },
-                { TripleObjectFormatType.ELF,  "elf"  },
+                { TripleObjectFormatType.ELF,  "elf" },
                 { TripleObjectFormatType.MachO, "macho" }
             };
 

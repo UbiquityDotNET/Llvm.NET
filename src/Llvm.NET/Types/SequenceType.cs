@@ -16,7 +16,7 @@ namespace Llvm.NET.Types
     public interface ISequenceType
         : ITypeRef
     {
-        /// <summary>Type of elements in the sequence</summary>
+        /// <summary>Gets the types of the elements in the sequence</summary>
         ITypeRef ElementType { get; }
     }
 

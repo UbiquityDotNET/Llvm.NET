@@ -3,7 +3,6 @@
 // </copyright>
 
 using System;
-using System.Diagnostics.CodeAnalysis;
 using Llvm.NET.Native;
 
 namespace Llvm.NET.Values

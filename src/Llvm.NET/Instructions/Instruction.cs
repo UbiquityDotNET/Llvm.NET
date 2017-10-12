@@ -12,13 +12,13 @@ namespace Llvm.NET.Instructions
     public class Instruction
         : User
     {
-        /// <summary>Block that contains this instruction</summary>
+        /// <summary>Gets the <see cref="BasicBlock"/> that contains this instruction</summary>
         public BasicBlock ContainingBlock => BasicBlock.FromHandle( NativeMethods.GetInstructionParent( ValueHandle ) );
 
         /// <summary>Gets the LLVM opcode for the instruction</summary>
         public OpCode Opcode => ( OpCode )NativeMethods.GetInstructionOpcode( ValueHandle );
 
-        /// <summary>Flag to indicate if the opcode is for a memory access <see cref="Alloca"/>, <see cref="Load"/>, <see cref="Store"/></summary>
+        /// <summary>Gets a value indicating whether the opcode is for a memory access (<see cref="Alloca"/>, <see cref="Load"/>, <see cref="Store"/>)</summary>
         public bool IsMemoryAccess
         {
             get
@@ -30,11 +30,12 @@ namespace Llvm.NET.Instructions
             }
         }
 
-        /// <summary>Alignment for the instruction</summary>
+        /// <summary>Gets or sets the alignment for the instruction</summary>
         /// <remarks>
-        /// The alignment is always 0 for instructions other than Alloca, Load, and Store
-        /// that deal with memory accesses. Setting the alignment for other instructions
-        /// results in an InvalidOperationException()
+        /// The alignment is always 0 for instructions other than <see cref="Alloca"/>,
+        /// <see cref="Load"/>, <see cref="Store"/> that deal with memory accesses.
+        /// Setting the alignment for other instructions results in an
+        /// <see cref="InvalidOperationException"/>
         /// </remarks>
         public uint Alignment
         {

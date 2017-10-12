@@ -28,7 +28,7 @@ namespace Llvm.NET
             OnDispose( );
         }
 
-        /// <summary>Default disposable action that does nothing</summary>
+        /// <summary>Gets a Default disposable action that does nothing</summary>
         public static DisposableAction Nop => new DisposableAction( ()=> { } );
 
         private readonly Action OnDispose;
