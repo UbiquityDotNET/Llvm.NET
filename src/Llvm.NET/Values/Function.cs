@@ -18,10 +18,10 @@ namespace Llvm.NET.Values
         : GlobalObject
         , IAttributeAccessor
     {
-        /// <summary>Signature type of the function</summary>
+        /// <summary>Gets the signature type of the function</summary>
         public IFunctionType Signature => TypeRef.FromHandle<IFunctionType>( NativeMethods.GetElementType( NativeMethods.TypeOf( ValueHandle ) ) );
 
-        /// <summary>Entry block for this function</summary>
+        /// <summary>Gets the Entry block for this function</summary>
         public BasicBlock EntryBlock
         {
             get
@@ -35,7 +35,7 @@ namespace Llvm.NET.Values
             }
         }
 
-        /// <summary>Basic Blocks for the function</summary>
+        /// <summary>Gets the basic blocks for the function</summary>
         public IReadOnlyList<BasicBlock> BasicBlocks
         {
             get
@@ -53,25 +53,26 @@ namespace Llvm.NET.Values
             }
         }
 
-        /// <summary>Parameters for the function including any method definition specific attributes (i.e. ByVal)</summary>
+        /// <summary>Gets the parameters for the function including any method definition specific attributes (i.e. ByVal)</summary>
         public IReadOnlyList<Argument> Parameters => new FunctionParameterList( this );
 
-        /// <summary>Calling convention for the method</summary>
+        /// <summary>Gets or sets the Calling convention for the method</summary>
         public CallingConvention CallingConvention
         {
             get => ( CallingConvention )NativeMethods.GetFunctionCallConv( ValueHandle );
             set => NativeMethods.SetFunctionCallConv( ValueHandle, ( uint )value );
         }
 
-        /// <summary>LLVM instrinsicID for the method</summary>
+        /// <summary>Gets the LLVM instrinsicID for the method</summary>
         public uint IntrinsicId => NativeMethods.GetIntrinsicID( ValueHandle );
 
-        /// <summary>Flag to indicate if the method signature accepts variable arguments</summary>
+        /// <summary>Gets a value indicating whether the method signature accepts variable arguments</summary>
         public bool IsVarArg => Signature.IsVarArg;
 
-        /// <summary>Return type of the function</summary>
+        /// <summary>Gets the return type of the function</summary>
         public ITypeRef ReturnType => Signature.ReturnType;
 
+        /// <summary>Gets or sets the personality function for exception handling in this function</summary>
         public Function PersonalityFunction
         {
             get
@@ -87,7 +88,7 @@ namespace Llvm.NET.Values
             set => NativeMethods.SetPersonalityFn( ValueHandle, value?.ValueHandle ?? new LLVMValueRef( IntPtr.Zero ) );
         }
 
-        /// <summary>Debug information for this function</summary>
+        /// <summary>Gets or sets the debug information for this function</summary>
         public DISubProgram DISubProgram
         {
             get => MDNode.FromHandle<DISubProgram>( NativeMethods.FunctionGetSubprogram( ValueHandle ) );
@@ -103,8 +104,9 @@ namespace Llvm.NET.Values
             }
         }
 
-        /// <summary>Garbage collection engine name that this function is generated to work with</summary>
+        /// <summary>Gets or sets the Garbage collection engine name that this function is generated to work with</summary>
         /// <remarks>For details on GC support in LLVM see: http://llvm.org/docs/GarbageCollection.html </remarks>
+        /// <seealso href="xref:llvm_doc_garbagecollection"/>
         public string GcName
         {
             get => NativeMethods.GetGC( ValueHandle );
@@ -162,12 +164,12 @@ namespace Llvm.NET.Values
         public BasicBlock FindOrCreateNamedBlock( string name )
         {
             var retVal = BasicBlocks.FirstOrDefault( b => b.Name == name );
-            if( ReferenceEquals( retVal, null ) )
+            if( retVal is null )
             {
                 retVal = AppendBasicBlock( name );
             }
 
-            Debug.Assert( retVal.ContainingFunction.ValueHandle.Pointer == ValueHandle.Pointer );
+            Debug.Assert( retVal.ContainingFunction.ValueHandle.Pointer == ValueHandle.Pointer, "Expected block parented to this function" );
             return retVal;
         }
 

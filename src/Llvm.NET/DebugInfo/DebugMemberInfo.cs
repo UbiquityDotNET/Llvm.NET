@@ -19,26 +19,27 @@ namespace Llvm.NET.DebugInfo
 #pragma warning restore RECS0013
     public class DebugMemberInfo
     {
-        /// <summary>Gets the LLVM structure element index this descriptor describes</summary>
+        /// <summary>Gets or sets the LLVM structure element index this descriptor describes</summary>
         public uint Index { get; set; }
 
-        /// <summary>Gets the name of the field</summary>
+        /// <summary>Gets or sets the name of the field</summary>
         public string Name { get; set; }
 
-        /// <summary>Gets the file the field is declared in</summary>
+        /// <summary>Gets or sets the file the field is declared in</summary>
         public DIFile File { get; set; }
 
-        /// <summary>Gets the source line the field is declared on</summary>
+        /// <summary>Gets or sets the source line the field is declared on</summary>
         public uint Line { get; set; }
 
-        /// <summary>Gets the flags for the field declaration</summary>
+        /// <summary>Gets or sets the flags for the field declaration</summary>
         public DebugInfoFlags DebugInfoFlags { get; set; }
 
-        /// <summary>Gets the debug type information for this field</summary>
+        /// <summary>Gets or sets the debug type information for this field</summary>
         public IDebugType<ITypeRef, DIType> DebugType { get; set; }
 
-        /// <summary>Gets the explicit layout information for this member</summary>
-        /// <remarks>If this is null then <see cref="DebugStructType.SetBody(bool, NativeModule, DIScope, DIFile, uint, DebugInfoFlags, System.Collections.Generic.IEnumerable{DebugMemberInfo})"/>
+        /// <summary>Gets or sets the explicit layout information for this member</summary>
+        /// <remarks>If this is null then
+        /// <see cref="DebugStructType.SetBody(bool, NativeModule, DIScope, DIFile, uint, DebugInfoFlags, System.Collections.Generic.IEnumerable{DebugMemberInfo})"/>
         /// will default to using <see cref="NativeModule.Layout"/> to determine the size using the module's target specific layout.
         /// <note type="note">
         /// If this property is provided (e.g. is not <see langword="null"/>) for any member of a type, then

@@ -155,7 +155,7 @@ namespace Llvm.NET
             Dispose( false );
         }
 
-        /// <summary>Name of the source file generating this module</summary>
+        /// <summary>Gets or sets the name of the source file generating this module</summary>
         public string SourceFileName
         {
             get => NativeMethods.GetModuleSourceFileName( ModuleHandle );
@@ -171,10 +171,10 @@ namespace Llvm.NET
         /// <summary>Version of the Debug information Metadata</summary>
         public const UInt32 DebugMetadataVersion = 3; /* DEBUG_METADATA_VERSION (for LLVM v3.7.0) */
 
-        /// <summary>Comdats for this module</summary>
+        /// <summary>Gets the Comdats for this module</summary>
         public ComdatCollection Comdats { get; }
 
-        /// <summary><see cref="Context"/> this module belongs to</summary>
+        /// <summary>Gets the <see cref="Context"/> this module belongs to</summary>
         public Context Context
         {
             get
@@ -188,7 +188,7 @@ namespace Llvm.NET
             }
         }
 
-        /// <summary>Metadata for module level flags</summary>
+        /// <summary>Gets the Metadata for module level flags</summary>
         public NamedMDNode ModuleFlags
         {
             get
@@ -198,30 +198,24 @@ namespace Llvm.NET
             }
         }
 
-        /// <summary><see cref="DebugInfoBuilder"/> to create debug information for this module</summary>
+        /// <summary>Gets the <see cref="DebugInfoBuilder"/> used to create debug information for this module</summary>
         public DebugInfoBuilder DIBuilder => LazyDiBuilder.Value;
 
-        /// <summary>Debug Compile unit for this module</summary>
+        /// <summary>Gets the Debug Compile unit for this module</summary>
         public DICompileUnit DICompileUnit { get; internal set; }
 
-        /// <summary>Data layout string</summary>
+        /// <summary>Gets the Data layout string for this module</summary>
         /// <remarks>
-        /// Note the data layout string doesn't do what seems obvious.
+        /// <note type="note">The data layout string doesn't do what seems obvious.
         /// That is, it doesn't force the target back-end to generate code
         /// or types with a particular layout. Rather, the layout string has
         /// to match the implicit layout of the target. Thus it should only
         /// come from the actual <see cref="TargetMachine"/> the code is
-        /// targeting.
+        /// targeting.</note>
         /// </remarks>
         public string DataLayoutString => Layout?.ToString( ) ?? string.Empty;
 
-        /// <summary>Target data layout for this module</summary>
-        /// <remarks>The layout is produced by parsing the <see cref="DataLayoutString"/>
-        /// therefore this property changes anytime the <see cref="DataLayoutString"/> is
-        /// set. Furthermore, setting this property will change the value of <see cref="DataLayoutString"/>.
-        /// In other words, Layout and <see cref="DataLayoutString"/> are two different views
-        /// of the same information.
-        /// </remarks>
+        /// <summary>Gets or sets the target data layout for this module</summary>
         public DataLayout Layout
         {
             get => Layout_;
@@ -238,14 +232,14 @@ namespace Llvm.NET
             }
         }
 
-        /// <summary>Target Triple describing the target, ABI and OS</summary>
+        /// <summary>Gets or sets the Target Triple describing the target, ABI and OS</summary>
         public string TargetTriple
         {
             get => NativeMethods.GetTarget( ModuleHandle );
             set => NativeMethods.SetTarget( ModuleHandle, value );
         }
 
-        /// <summary>Globals contained by this module</summary>
+        /// <summary>Gets the Globals contained by this module</summary>
         public IEnumerable<Value> Globals
         {
             get
@@ -259,7 +253,7 @@ namespace Llvm.NET
             }
         }
 
-        /// <summary>Enumerable collection of functions contained in this module</summary>
+        /// <summary>Gets the functions contained in this module</summary>
         public IEnumerable<Function> Functions
         {
             get
@@ -276,7 +270,7 @@ namespace Llvm.NET
         // TODO: Add enumerator for GlobalAlias(s)
         // TODO: Add enumerator for NamedMDNode(s)
 
-        /// <summary>Name of the module</summary>
+        /// <summary>Gets the name of the module</summary>
         public string Name => NativeMethods.GetModuleName( ModuleHandle );
 
         /// <summary>Link another module into this one</summary>
@@ -656,10 +650,13 @@ namespace Llvm.NET
             scope.ValidateNotNull( nameof( scope ) );
             name.ValidateNotNullOrWhiteSpace( nameof( name ) );
             signature.ValidateNotNull( nameof( signature ) );
+            if( signature.DIType == null )
+            {
+                throw new ArgumentException( "Signature requires debug type information", nameof( signature ) );
+            }
 
             var func = AddFunction( linkageName ?? name, signature );
             var diSignature = signature.DIType;
-            Debug.Assert( diSignature != null );
             var diFunc = DIBuilder.CreateFunction( scope: scope
                                                  , name: name
                                                  , mangledName: linkageName
@@ -675,7 +672,7 @@ namespace Llvm.NET
                                                  , typeParameter: tParam
                                                  , declaration: decl
                                                  );
-            Debug.Assert( diFunc.Describes( func ) );
+            Debug.Assert( diFunc.Describes( func ), "Expected to get a debug function that describes the provided function" );
             func.DISubProgram = diFunc;
             return func;
         }
@@ -715,7 +712,7 @@ namespace Llvm.NET
             using( var buffer = WriteToBuffer( ) )
             {
                 var retVal = LoadFrom( buffer, targetContext );
-                Debug.Assert( retVal.Context == targetContext );
+                Debug.Assert( retVal.Context == targetContext, "Expected to get a module bound to the specified context" );
                 return retVal;
             }
         }

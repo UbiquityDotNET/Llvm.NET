@@ -19,7 +19,7 @@ namespace Llvm.NET.DebugInfo
         // TODO: TemplateParams Operands[6]
         // TODO: Identifier     Operands[7]
 
-        /// <summary>Creates a new <see cref="DICompositeType"/> from an LLVM-C API Metadata handle</summary>
+        /// <summary>Initializes a new instance of the <see cref="DICompositeType"/> class from an LLVM-C API Metadata handle</summary>
         /// <param name="handle">LLVM handle to wrap</param>
         internal DICompositeType( LLVMMetadataRef handle )
             : base( handle )

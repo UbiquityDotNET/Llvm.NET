@@ -2,8 +2,6 @@
 // Copyright (c) .NET Foundation. All rights reserved.
 // </copyright>
 
-using Llvm.NET.Types;
-
 namespace Llvm.NET.DebugInfo
 {
     /// <summary>DebugMemberLayout is used to define custom layout information for structure members</summary>
@@ -15,7 +13,7 @@ namespace Llvm.NET.DebugInfo
     /// </remarks>
     public class DebugMemberLayout
     {
-        /// <summary>Constructs a new <see cref="DebugMemberLayout"/></summary>
+        /// <summary>Initializes a new instance of the <see cref="DebugMemberLayout"/> class.</summary>
         /// <param name="bitSize">Size of the member in bits</param>
         /// <param name="bitAlignment">Alignment of the member in bits</param>
         /// <param name="bitOffset">Offset of the member in bits</param>
@@ -26,13 +24,13 @@ namespace Llvm.NET.DebugInfo
             BitOffset = bitOffset;
         }
 
-        /// <summary>Bit size for the field</summary>
+        /// <summary>Gets the bit size for the field</summary>
         public ulong BitSize { get; }
 
-        /// <summary>Bit alignment for the field</summary>
+        /// <summary>Gets the bit alignment for the field</summary>
         public uint BitAlignment { get; }
 
-        /// <summary>Bit offset for the field in it's containing type</summary>
+        /// <summary>Gets the bit offset for the field in it's containing type</summary>
         public ulong BitOffset { get; }
     }
 }

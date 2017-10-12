@@ -13,13 +13,13 @@ namespace Llvm.NET.Types
     public interface INamedStructuralType
         : ITypeRef
     {
-        /// <summary>Name of the structure</summary>
+        /// <summary>Gets the name of the structure</summary>
         string Name { get; }
 
-        /// <summary>Indicates if the structure is opaque (e.g. has no body defined yet)</summary>
+        /// <summary>Gets a value indicating whether the structure is opaque (e.g. has no body defined yet)</summary>
         bool IsOpaque { get; }
 
-        /// <summary>List of types for all member elements of the structure</summary>
+        /// <summary>Gets a list of types for all member elements of the structure</summary>
         IReadOnlyList<ITypeRef> Members { get; }
     }
 
@@ -27,7 +27,7 @@ namespace Llvm.NET.Types
     public interface IStructType
         : INamedStructuralType
     {
-        /// <summary>Indicates if the structure is packed (e.g. no automatic alignment padding between elements)</summary>
+        /// <summary>Gets a value indicating whether the structure is packed (e.g. no automatic alignment padding between elements)</summary>
         bool IsPacked { get; }
 
         /// <summary>Sets the body of the structure</summary>

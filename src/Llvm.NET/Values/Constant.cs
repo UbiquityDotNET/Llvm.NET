@@ -12,7 +12,7 @@ namespace Llvm.NET.Values
     public class Constant
         : User
     {
-        /// <summary>Indicates if the constant is a Zero value for the its type</summary>
+        /// <summary>Gets a value indicating whether the constant is a Zero value for the its type</summary>
         public bool IsZeroValue => NativeMethods.IsConstantZeroValue( ValueHandle );
 
         /// <summary>Create a NULL pointer for a given type</summary>

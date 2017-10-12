@@ -22,7 +22,7 @@ namespace Llvm.NET.DebugInfo
     public class DebugBasicType
         : DebugType<ITypeRef, DIBasicType>
     {
-        /// <summary>Create a debug type for a basic type</summary>
+        /// <summary>Initializes a new instance of the <see cref="DebugBasicType"/> class.</summary>
         /// <param name="llvmType">Type to wrap debug information for</param>
         /// <param name="module">Module to use when constructing the debug information</param>
         /// <param name="name">Source language name of the type</param>

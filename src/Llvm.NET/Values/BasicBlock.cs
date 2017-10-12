@@ -37,7 +37,7 @@ namespace Llvm.NET.Values
             }
         }
 
-        /// <summary>First instruction in the block</summary>
+        /// <summary>Gets the first instruction in the block</summary>
         public Instruction FirstInstruction
         {
             get
@@ -52,7 +52,7 @@ namespace Llvm.NET.Values
             }
         }
 
-        /// <summary>Last instruction in the block</summary>
+        /// <summary>Gets the last instruction in the block</summary>
         public Instruction LastInstruction
         {
             get
@@ -67,9 +67,10 @@ namespace Llvm.NET.Values
             }
         }
 
-        /// <summary>Terminator instruction for the block</summary>
-        /// <remarks>May be null if the block is not yet well-formed
-        ///  as is commonly the case while generating code for a new block
+        /// <summary>Gets the terminator instruction for the block</summary>
+        /// <remarks>
+        /// May be null if the block is not yet well-formed
+        /// as is commonly the case while generating code for a new block
         /// </remarks>
         public Instruction Terminator
         {
@@ -85,7 +86,7 @@ namespace Llvm.NET.Values
             }
         }
 
-        /// <summary>Enumerable collection of all instructions in the block</summary>
+        /// <summary>Gets all instructions in the block</summary>
         public IEnumerable<Instruction> Instructions
         {
             get

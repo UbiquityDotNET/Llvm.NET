@@ -4,6 +4,7 @@
 
 using System;
 using System.Diagnostics.CodeAnalysis;
+using Llvm.NET.Native;
 using Llvm.NET.Types;
 using Llvm.NET.Values;
 using Ubiquity.ArgValidators;
@@ -33,10 +34,10 @@ namespace Llvm.NET.DebugInfo
         where TNative : ITypeRef
         where TDebug : DIType
     {
-        /// <summary>LLVM NativeType this interface is associating with debug info in <see cref="DIType"/></summary>
+        /// <summary>Gets the LLVM NativeType this interface is associating with debug info in <see cref="DIType"/></summary>
         TNative NativeType { get; }
 
-        /// <summary>Debug information type this interface is associating with <see cref="NativeType"/></summary>
+        /// <summary>Gets the debug information type this interface is associating with <see cref="NativeType"/></summary>
         TDebug DIType { get; }
     }
 
@@ -44,6 +45,7 @@ namespace Llvm.NET.DebugInfo
     public class DebugType<TNative, TDebug>
         : IDebugType<TNative, TDebug>
         , ITypeRef
+        , ITypeHandleOwner
         where TNative : class, ITypeRef
         where TDebug : DIType
     {
@@ -90,7 +92,7 @@ namespace Llvm.NET.DebugInfo
             }
         }
 
-        public IntPtr TypeHandle => NativeType.TypeHandle;
+        LLVMTypeRef ITypeHandleOwner.TypeHandle => NativeType.GetTypeRef( );
 
         public bool IsSized => NativeType.IsSized;
 

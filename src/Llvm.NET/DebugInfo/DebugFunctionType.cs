@@ -38,7 +38,7 @@ namespace Llvm.NET.DebugInfo
         : DebugType<IFunctionType, DISubroutineType>
         , IFunctionType
     {
-        /// <summary>Constructs a new <see cref="DebugFunctionType"/></summary>
+        /// <summary>Initializes a new instance of the <see cref="DebugFunctionType"/> class.</summary>
         /// <param name="llvmType">Native LLVM function signature</param>
         /// <param name="module"><see cref="NativeModule"/> to use when construction debug information</param>
         /// <param name="debugFlags"><see cref="DebugInfoFlags"/> for this signature</param>
@@ -69,7 +69,8 @@ namespace Llvm.NET.DebugInfo
         /// <inheritdoc/>
         public IReadOnlyList<ITypeRef> ParameterTypes => NativeType.ParameterTypes;
 
-        /// <summary>Creates a new <see cref="DebugFunctionType"/> from an LLVM type and <see cref="DISubroutineType"/></summary>
+        /// <summary>
+        /// Initializes a new instance of the <see cref="DebugFunctionType"/> class from an LLVM type and <see cref="DISubroutineType"/></summary>
         /// <param name="rawType">Raw native type</param>
         /// <param name="sub">Debug information to bind with the native type</param>
         internal DebugFunctionType( IFunctionType rawType, DISubroutineType sub )

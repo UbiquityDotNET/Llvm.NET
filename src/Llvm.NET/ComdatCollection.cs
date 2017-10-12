@@ -110,7 +110,7 @@ namespace Llvm.NET
             return InternalComdatMap.TryGetValue( key, out value );
         }
 
-        /// <summary>Creates an enumerating collection of <see cref="Comdat"/> entries for a module</summary>
+        /// <summary>Initializes a new instance of the <see cref="ComdatCollection"/> class for a module</summary>
         /// <param name="module">Module the comdats are enumerated from</param>
         internal ComdatCollection( NativeModule module )
         {

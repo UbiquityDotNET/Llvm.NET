@@ -3,7 +3,6 @@
 // </copyright>
 
 using System;
-using System.Diagnostics.CodeAnalysis;
 using Llvm.NET.Native;
 using Llvm.NET.Values;
 
@@ -12,10 +11,12 @@ namespace Llvm.NET.Types
     /// <summary>LLVM Type</summary>
     internal class TypeRef
         : ITypeRef
+        , ITypeHandleOwner
     {
-        public IntPtr TypeHandle => TypeRefHandle.Pointer;
+        /// <inheritdoc/>
+        public LLVMTypeRef TypeHandle => TypeRefHandle;
 
-        /// <summary>Flag to indicate if the type is sized</summary>
+        /// <inheritdoc/>
         public bool IsSized
         {
             get
@@ -29,26 +30,31 @@ namespace Llvm.NET.Types
             }
         }
 
-        /// <summary>LLVM Type kind for this type</summary>
+        /// <inheritdoc/>
         public TypeKind Kind => ( TypeKind )NativeMethods.GetTypeKind( TypeRefHandle );
 
+        /// <inheritdoc/>
         public bool IsInteger=> Kind == TypeKind.Integer;
 
-        // Return true if value is 'float', a 32-bit IEEE fp type.
+        /// <inheritdoc/>
         public bool IsFloat => Kind == TypeKind.Float32;
 
-        // Return true if this is 'double', a 64-bit IEEE fp type
+        /// <inheritdoc/>
         public bool IsDouble => Kind == TypeKind.Float64;
 
+        /// <inheritdoc/>
         public bool IsVoid => Kind == TypeKind.Void;
 
+        /// <inheritdoc/>
         public bool IsStruct => Kind == TypeKind.Struct;
 
+        /// <inheritdoc/>
         public bool IsPointer => Kind == TypeKind.Pointer;
 
-        /// <summary>Flag to indicate if the type is a sequence type</summary>
+        /// <inheritdoc/>
         public bool IsSequence => Kind == TypeKind.Array || Kind == TypeKind.Vector || Kind == TypeKind.Pointer;
 
+        /// <inheritdoc/>
         public bool IsFloatingPoint
         {
             get
@@ -69,6 +75,7 @@ namespace Llvm.NET.Types
             }
         }
 
+        /// <inheritdoc/>
         public bool IsPointerPointer
         {
             get
@@ -78,10 +85,10 @@ namespace Llvm.NET.Types
             }
         }
 
-        /// <summary>Context that owns this type</summary>
+        /// <inheritdoc/>
         public Context Context => Context.GetContextFor( TypeRefHandle );
 
-        /// <summary>Integer bid width of this type or 0 for non integer types</summary>
+        /// <inheritdoc/>
         public uint IntegerBitWidth
         {
             get
@@ -95,23 +102,16 @@ namespace Llvm.NET.Types
             }
         }
 
-        /// <summary>Gets a null value (e.g. all bits = 0 ) for the type</summary>
-        /// <remarks>This is a getter function instead of a property as it can throw exceptions</remarks>
-        /// <returns><see cref="Constant"/> zero value for the type</returns>
+        /// <inheritdoc/>
         public Constant GetNullValue() => Constant.NullValueFor( this );
 
-        /// <summary>Array type factory for an array with elements of this type</summary>
-        /// <param name="count">Number of elements in the array</param>
-        /// <returns><see cref="IArrayType"/> for the array</returns>
+        /// <inheritdoc/>
         public IArrayType CreateArrayType( uint count ) => FromHandle<IArrayType>( NativeMethods.ArrayType( TypeRefHandle, count ) );
 
-        /// <summary>Get a <see cref="IPointerType"/> for a type that points to elements of this type in the default (0) address space</summary>
-        /// <returns><see cref="IPointerType"/>corresponding to the type of a pointer that referns to elements of this type</returns>
+        /// <inheritdoc/>
         public IPointerType CreatePointerType( ) => CreatePointerType( 0 );
 
-        /// <summary>Get a <see cref="IPointerType"/> for a type that points to elements of this type in the specified address space</summary>
-        /// <param name="addressSpace">Address space for the pointer</param>
-        /// <returns><see cref="IPointerType"/>corresponding to the type of a pointer that referns to elements of this type</returns>
+        /// <inheritdoc/>
         public IPointerType CreatePointerType( uint addressSpace )
         {
             if( IsVoid )

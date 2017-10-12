@@ -1,8 +1,7 @@
-﻿// <copyright file="AssemblyInfo.cs" company="PlaceholderCompany">
-// Copyright (c) PlaceholderCompany. All rights reserved.
+﻿// <copyright file="AssemblyInfo.cs" company=".NET Foundation">
+// Copyright (c) .NET Foundation. All rights reserved.
 // </copyright>
 
-using System.Reflection;
 using System.Runtime.InteropServices;
 
 // Setting ComVisible to false makes the types in this assembly not visible

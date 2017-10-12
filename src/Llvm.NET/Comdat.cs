@@ -59,7 +59,7 @@ namespace Llvm.NET
         /// <summary>Gets the module the <see cref="Comdat"/> belongs to</summary>
         public NativeModule Module { get; }
 
-        /// <summary>Creates a <see cref="Comdat"/> from an LLVM module and reference</summary>
+        /// <summary>Initializes a new instance of the <see cref="Comdat"/> class from an LLVM module and reference</summary>
         /// <param name="module">Owning module for the comdat</param>
         /// <param name="comdatRef">LLVM-C API handle for the comdat</param>
         internal Comdat( NativeModule module, LLVMComdatRef comdatRef )

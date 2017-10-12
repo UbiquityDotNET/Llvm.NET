@@ -1,5 +1,5 @@
-﻿// <copyright file="ExpectedArgumentException.cs" company="PlaceholderCompany">
-// Copyright (c) PlaceholderCompany. All rights reserved.
+﻿// <copyright file="ExpectedArgumentException.cs" company=".NET Foundation">
+// Copyright (c) .NET Foundation. All rights reserved.
 // </copyright>
 
 using System;
@@ -45,8 +45,7 @@ namespace Llvm.NETTests
             }
         }
 
-        private readonly string ExpectedName;
-
-        private const string DefautWrongExceptionMessage = "The exception that was thrown does not derive from System.ArgumentException.";
+       private const string DefautWrongExceptionMessage = "The exception that was thrown does not derive from System.ArgumentException.";
+       private readonly string ExpectedName;
     }
 }

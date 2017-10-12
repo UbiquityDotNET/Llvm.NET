@@ -10,7 +10,7 @@ namespace Llvm.NET.Instructions
     public class Switch
         : Terminator
     {
-        /// <summary>Default <see cref="BasicBlock"/>for the switch</summary>
+        /// <summary>Gets the default <see cref="BasicBlock"/> for the switch</summary>
         public BasicBlock Default => BasicBlock.FromHandle( NativeMethods.GetSwitchDefaultDest( ValueHandle ) );
 
         /// <summary>Adds a new case to the <see cref="Switch"/> instruction</summary>

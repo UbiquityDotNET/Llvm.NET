@@ -1,5 +1,5 @@
-﻿// <copyright file="MDNodeTests.cs" company="PlaceholderCompany">
-// Copyright (c) PlaceholderCompany. All rights reserved.
+﻿// <copyright file="MDNodeTests.cs" company=".NET Foundation">
+// Copyright (c) .NET Foundation. All rights reserved.
 // </copyright>
 
 using Llvm.NET.DebugInfo;

@@ -1342,12 +1342,12 @@ namespace Llvm.NET.Instructions
             var func = module.GetFunction( intrinsicName );
             if( func == null )
             {
-                var signature = module.Context.GetFunctionType( module.Context.VoidType  // return
+                var signature = module.Context.GetFunctionType( module.Context.VoidType
                                                               , dstPtrType
                                                               , srcPtrType
                                                               , len.NativeType
-                                                              , module.Context.Int32Type // alignment
-                                                              , module.Context.BoolType  // isVolatile
+                                                              , module.Context.Int32Type
+                                                              , module.Context.BoolType
                                                               );
                 func = module.AddFunction( intrinsicName, signature );
             }
