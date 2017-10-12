@@ -2426,9 +2426,6 @@
                                 <li class="">
                                   <a href="Llvm.NET.DebugInfo.DebugType-2.TryGetExtendedPropertyValue.html" title="TryGetExtendedPropertyValue" class="">TryGetExtendedPropertyValue</a>
                                 </li>
-                                <li class="">
-                                  <a href="Llvm.NET.DebugInfo.DebugType-2.TypeHandle.html" title="TypeHandle" class="">TypeHandle</a>
-                                </li>
                               </ul>  </li>
                           <li class="">
                             <span class="expand-stub"></span>
@@ -4340,9 +4337,6 @@
                                 <li class="">
                                   <a href="Llvm.NET.Types.ITypeRef.Kind.html" title="Kind" class="">Kind</a>
                                 </li>
-                                <li class="">
-                                  <a href="Llvm.NET.Types.ITypeRef.TypeHandle.html" title="TypeHandle" class="">TypeHandle</a>
-                                </li>
                               </ul>  </li>
                           <li class="">
                             <span class="expand-stub"></span>
@@ -4447,9 +4441,6 @@
                                 </li>
                                 <li class="">
                                   <a href="Llvm.NET.Values.AttributeKind.DereferenceableOrNull.html#Llvm_NET_Values_AttributeKind_DereferenceableOrNull" title="DereferenceableOrNull" class="">DereferenceableOrNull</a>
-                                </li>
-                                <li class="">
-                                  <a href="Llvm.NET.Values.AttributeKind.EndAttrKinds.html#Llvm_NET_Values_AttributeKind_EndAttrKinds" title="EndAttrKinds" class="">EndAttrKinds</a>
                                 </li>
                                 <li class="">
                                   <a href="Llvm.NET.Values.AttributeKind.InaccessibleMemOnly.html#Llvm_NET_Values_AttributeKind_InaccessibleMemOnly" title="InaccessibleMemOnly" class="">InaccessibleMemOnly</a>
@@ -5115,7 +5106,7 @@
 </span>
 <a id="Llvm_NET_NativeModule_DataLayoutString_" data-uid="Llvm.NET.NativeModule.DataLayoutString*"></a>
 <h4 id="Llvm_NET_NativeModule_DataLayoutString" data-uid="Llvm.NET.NativeModule.DataLayoutString">DataLayoutString</h4>
-<div class="markdown level1 summary"><p>Data layout string</p>
+<div class="markdown level1 summary"><p>Gets the Data layout string for this module</p>
 </div>
 <div class="markdown level1 conceptual"></div>
 <h5 class="decalaration">Declaration</h5>
@@ -5138,12 +5129,12 @@
   </tbody>
 </table>
 <h5 id="Llvm_NET_NativeModule_DataLayoutString_remarks">Remarks</h5>
-<div class="markdown level1 remarks"><p>Note the data layout string doesn&apos;t do what seems obvious.
+<div class="markdown level1 remarks"><div class="NOTE"><h5>note</h5><p>The data layout string doesn&apos;t do what seems obvious.
 That is, it doesn&apos;t force the target back-end to generate code
 or types with a particular layout. Rather, the layout string has
 to match the implicit layout of the target. Thus it should only
 come from the actual <a class="xref" href="Llvm.NET.TargetMachine.html">TargetMachine</a> the code is
-targeting.</p>
+targeting.</p></div>
 </div>
 </article>
           </div>

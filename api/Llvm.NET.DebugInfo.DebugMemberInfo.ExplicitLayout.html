@@ -2426,9 +2426,6 @@
                                 <li class="">
                                   <a href="Llvm.NET.DebugInfo.DebugType-2.TryGetExtendedPropertyValue.html" title="TryGetExtendedPropertyValue" class="">TryGetExtendedPropertyValue</a>
                                 </li>
-                                <li class="">
-                                  <a href="Llvm.NET.DebugInfo.DebugType-2.TypeHandle.html" title="TypeHandle" class="">TypeHandle</a>
-                                </li>
                               </ul>  </li>
                           <li class="">
                             <span class="expand-stub"></span>
@@ -4340,9 +4337,6 @@
                                 <li class="">
                                   <a href="Llvm.NET.Types.ITypeRef.Kind.html" title="Kind" class="">Kind</a>
                                 </li>
-                                <li class="">
-                                  <a href="Llvm.NET.Types.ITypeRef.TypeHandle.html" title="TypeHandle" class="">TypeHandle</a>
-                                </li>
                               </ul>  </li>
                           <li class="">
                             <span class="expand-stub"></span>
@@ -4447,9 +4441,6 @@
                                 </li>
                                 <li class="">
                                   <a href="Llvm.NET.Values.AttributeKind.DereferenceableOrNull.html#Llvm_NET_Values_AttributeKind_DereferenceableOrNull" title="DereferenceableOrNull" class="">DereferenceableOrNull</a>
-                                </li>
-                                <li class="">
-                                  <a href="Llvm.NET.Values.AttributeKind.EndAttrKinds.html#Llvm_NET_Values_AttributeKind_EndAttrKinds" title="EndAttrKinds" class="">EndAttrKinds</a>
                                 </li>
                                 <li class="">
                                   <a href="Llvm.NET.Values.AttributeKind.InaccessibleMemOnly.html#Llvm_NET_Values_AttributeKind_InaccessibleMemOnly" title="InaccessibleMemOnly" class="">InaccessibleMemOnly</a>
@@ -5111,11 +5102,11 @@
   <a href="https://github.com/UbiquityDotNET/Llvm.NET/new/master/apiSpec/new?filename=Llvm_NET_DebugInfo_DebugMemberInfo_ExplicitLayout.md&amp;value=---%0Auid%3A%20Llvm.NET.DebugInfo.DebugMemberInfo.ExplicitLayout%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
 </span>
 <span class="small pull-right mobile-hide">
-  <a href="https://github.com/UbiquityDotNET/Llvm.NET/blob/master/src/Llvm.NET/DebugInfo/DebugMemberInfo.cs/#L50">View Source</a>
+  <a href="https://github.com/UbiquityDotNET/Llvm.NET/blob/master/src/Llvm.NET/DebugInfo/DebugMemberInfo.cs/#L51">View Source</a>
 </span>
 <a id="Llvm_NET_DebugInfo_DebugMemberInfo_ExplicitLayout_" data-uid="Llvm.NET.DebugInfo.DebugMemberInfo.ExplicitLayout*"></a>
 <h4 id="Llvm_NET_DebugInfo_DebugMemberInfo_ExplicitLayout" data-uid="Llvm.NET.DebugInfo.DebugMemberInfo.ExplicitLayout">ExplicitLayout</h4>
-<div class="markdown level1 summary"><p>Gets the explicit layout information for this member</p>
+<div class="markdown level1 summary"><p>Gets or sets the explicit layout information for this member</p>
 </div>
 <div class="markdown level1 conceptual"></div>
 <h5 class="decalaration">Declaration</h5>
@@ -5138,7 +5129,8 @@
   </tbody>
 </table>
 <h5 id="Llvm_NET_DebugInfo_DebugMemberInfo_ExplicitLayout_remarks">Remarks</h5>
-<div class="markdown level1 remarks"><p>If this is null then <a class="xref" href="Llvm.NET.DebugInfo.DebugStructType.SetBody.html#Llvm_NET_DebugInfo_DebugStructType_SetBody_System_Boolean_Llvm_NET_NativeModule_Llvm_NET_DebugInfo_DIScope_Llvm_NET_DebugInfo_DIFile_System_UInt32_Llvm_NET_DebugInfo_DebugInfoFlags_System_Collections_Generic_IEnumerable_Llvm_NET_DebugInfo_DebugMemberInfo__">SetBody(Boolean, NativeModule, DIScope, DIFile, UInt32, DebugInfoFlags, IEnumerable&lt;DebugMemberInfo&gt;)</a>
+<div class="markdown level1 remarks"><p>If this is null then
+<a class="xref" href="Llvm.NET.DebugInfo.DebugStructType.SetBody.html#Llvm_NET_DebugInfo_DebugStructType_SetBody_System_Boolean_Llvm_NET_NativeModule_Llvm_NET_DebugInfo_DIScope_Llvm_NET_DebugInfo_DIFile_System_UInt32_Llvm_NET_DebugInfo_DebugInfoFlags_System_Collections_Generic_IEnumerable_Llvm_NET_DebugInfo_DebugMemberInfo__">SetBody(Boolean, NativeModule, DIScope, DIFile, UInt32, DebugInfoFlags, IEnumerable&lt;DebugMemberInfo&gt;)</a>
 will default to using <a class="xref" href="Llvm.NET.NativeModule.Layout.html#Llvm_NET_NativeModule_Layout">Layout</a> to determine the size using the module&apos;s target specific layout.
 <div class="NOTE"><h5>note</h5><p>
 If this property is provided (e.g. is not <span class="xref">null</span>) for any member of a type, then
@@ -5151,7 +5143,7 @@ include the &quot;packed&quot; modifier.
           </div>
           <div class="contribution-panel mobile-hide">
               <a href="https://github.com/UbiquityDotNET/Llvm.NET/new/master/apiSpec/new?filename=Llvm_NET_DebugInfo_DebugMemberInfo_ExplicitLayout_.md&amp;value=---%0Auid%3A%20Llvm.NET.DebugInfo.DebugMemberInfo.ExplicitLayout*%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A" title="Improve this Doc" class="fab btn-warning pull-right"><i class="glyphicon glyphicon-pencil"></i></a>
-              <a href="https://github.com/UbiquityDotNET/Llvm.NET/blob/master/src/Llvm.NET/DebugInfo/DebugMemberInfo.cs/#L50" title="View Source" class="fab btn-info pull-right"><i class="fa fa-code"></i></a>
+              <a href="https://github.com/UbiquityDotNET/Llvm.NET/blob/master/src/Llvm.NET/DebugInfo/DebugMemberInfo.cs/#L51" title="View Source" class="fab btn-info pull-right"><i class="fa fa-code"></i></a>
           </div>
           
           <div class="hidden-sm col-md-2" role="complementary">

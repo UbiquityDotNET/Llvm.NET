@@ -2669,22 +2669,6 @@ references:
   fullName.vb: Llvm.NET.DebugInfo.DebugType(Of TNative, TDebug).TryGetExtendedPropertyValue(Of TProperty)(System.String, ByRef TProperty)
   nameWithType: DebugType<TNative, TDebug>.TryGetExtendedPropertyValue<TProperty>(String, out TProperty)
   nameWithType.vb: DebugType(Of TNative, TDebug).TryGetExtendedPropertyValue(Of TProperty)(String, ByRef TProperty)
-- uid: Llvm.NET.DebugInfo.DebugType`2.TypeHandle
-  name: TypeHandle
-  href: api/Llvm.NET.DebugInfo.DebugType-2.TypeHandle.html#Llvm_NET_DebugInfo_DebugType_2_TypeHandle
-  commentId: P:Llvm.NET.DebugInfo.DebugType`2.TypeHandle
-  fullName: Llvm.NET.DebugInfo.DebugType<TNative, TDebug>.TypeHandle
-  fullName.vb: Llvm.NET.DebugInfo.DebugType(Of TNative, TDebug).TypeHandle
-  nameWithType: DebugType<TNative, TDebug>.TypeHandle
-  nameWithType.vb: DebugType(Of TNative, TDebug).TypeHandle
-- uid: Llvm.NET.DebugInfo.DebugType`2.TypeHandle*
-  name: TypeHandle
-  href: api/Llvm.NET.DebugInfo.DebugType-2.TypeHandle.html
-  commentId: Overload:Llvm.NET.DebugInfo.DebugType`2.TypeHandle
-  fullName: Llvm.NET.DebugInfo.DebugType<TNative, TDebug>.TypeHandle
-  fullName.vb: Llvm.NET.DebugInfo.DebugType(Of TNative, TDebug).TypeHandle
-  nameWithType: DebugType<TNative, TDebug>.TypeHandle
-  nameWithType.vb: DebugType(Of TNative, TDebug).TypeHandle
 - uid: Llvm.NET.DebugInfo.DebugUnionType
   name: DebugUnionType
   href: api/Llvm.NET.DebugInfo.DebugUnionType.html
@@ -11690,18 +11674,6 @@ references:
   commentId: Overload:Llvm.NET.Types.ITypeRef.Kind
   fullName: Llvm.NET.Types.ITypeRef.Kind
   nameWithType: ITypeRef.Kind
-- uid: Llvm.NET.Types.ITypeRef.TypeHandle
-  name: TypeHandle
-  href: api/Llvm.NET.Types.ITypeRef.TypeHandle.html#Llvm_NET_Types_ITypeRef_TypeHandle
-  commentId: P:Llvm.NET.Types.ITypeRef.TypeHandle
-  fullName: Llvm.NET.Types.ITypeRef.TypeHandle
-  nameWithType: ITypeRef.TypeHandle
-- uid: Llvm.NET.Types.ITypeRef.TypeHandle*
-  name: TypeHandle
-  href: api/Llvm.NET.Types.ITypeRef.TypeHandle.html
-  commentId: Overload:Llvm.NET.Types.ITypeRef.TypeHandle
-  fullName: Llvm.NET.Types.ITypeRef.TypeHandle
-  nameWithType: ITypeRef.TypeHandle
 - uid: Llvm.NET.Types.IVectorType
   name: IVectorType
   href: api/Llvm.NET.Types.IVectorType.html
@@ -11975,12 +11947,6 @@ references:
   commentId: F:Llvm.NET.Values.AttributeKind.DereferenceableOrNull
   fullName: Llvm.NET.Values.AttributeKind.DereferenceableOrNull
   nameWithType: AttributeKind.DereferenceableOrNull
-- uid: Llvm.NET.Values.AttributeKind.EndAttrKinds
-  name: EndAttrKinds
-  href: api/Llvm.NET.Values.AttributeKind.EndAttrKinds.html#Llvm_NET_Values_AttributeKind_EndAttrKinds
-  commentId: F:Llvm.NET.Values.AttributeKind.EndAttrKinds
-  fullName: Llvm.NET.Values.AttributeKind.EndAttrKinds
-  nameWithType: AttributeKind.EndAttrKinds
 - uid: Llvm.NET.Values.AttributeKind.InaccessibleMemOnly
   name: InaccessibleMemOnly
   href: api/Llvm.NET.Values.AttributeKind.InaccessibleMemOnly.html#Llvm_NET_Values_AttributeKind_InaccessibleMemOnly

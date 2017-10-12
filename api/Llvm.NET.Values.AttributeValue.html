@@ -2426,9 +2426,6 @@
                                 <li class="">
                                   <a href="Llvm.NET.DebugInfo.DebugType-2.TryGetExtendedPropertyValue.html" title="TryGetExtendedPropertyValue" class="">TryGetExtendedPropertyValue</a>
                                 </li>
-                                <li class="">
-                                  <a href="Llvm.NET.DebugInfo.DebugType-2.TypeHandle.html" title="TypeHandle" class="">TypeHandle</a>
-                                </li>
                               </ul>  </li>
                           <li class="">
                             <span class="expand-stub"></span>
@@ -4340,9 +4337,6 @@
                                 <li class="">
                                   <a href="Llvm.NET.Types.ITypeRef.Kind.html" title="Kind" class="">Kind</a>
                                 </li>
-                                <li class="">
-                                  <a href="Llvm.NET.Types.ITypeRef.TypeHandle.html" title="TypeHandle" class="">TypeHandle</a>
-                                </li>
                               </ul>  </li>
                           <li class="">
                             <span class="expand-stub"></span>
@@ -4447,9 +4441,6 @@
                                 </li>
                                 <li class="">
                                   <a href="Llvm.NET.Values.AttributeKind.DereferenceableOrNull.html#Llvm_NET_Values_AttributeKind_DereferenceableOrNull" title="DereferenceableOrNull" class="">DereferenceableOrNull</a>
-                                </li>
-                                <li class="">
-                                  <a href="Llvm.NET.Values.AttributeKind.EndAttrKinds.html#Llvm_NET_Values_AttributeKind_EndAttrKinds" title="EndAttrKinds" class="">EndAttrKinds</a>
                                 </li>
                                 <li class="">
                                   <a href="Llvm.NET.Values.AttributeKind.InaccessibleMemOnly.html#Llvm_NET_Values_AttributeKind_InaccessibleMemOnly" title="InaccessibleMemOnly" class="">InaccessibleMemOnly</a>
@@ -5157,55 +5148,56 @@ that is used throughout .NET libraries.</p>
         <td id="Llvm_NET_Values_AttributeValue_Context" data-uid="Llvm.NET.Values.AttributeValue.Context">
           <a class="xref" href="Llvm.NET.Values.AttributeValue.Context.html#Llvm_NET_Values_AttributeValue_Context">Context</a>
         </td>
-        <td class="markdown level1 summary"></td>
+        <td class="markdown level1 summary"><p>Gets the context that owns this <a class="xref" href="Llvm.NET.Values.AttributeValue.html">AttributeValue</a></p>
+</td>
       </tr>
       <tr>
         <td id="Llvm_NET_Values_AttributeValue_IntegerValue" data-uid="Llvm.NET.Values.AttributeValue.IntegerValue">
           <a class="xref" href="Llvm.NET.Values.AttributeValue.IntegerValue.html#Llvm_NET_Values_AttributeValue_IntegerValue">IntegerValue</a>
         </td>
-        <td class="markdown level1 summary"><p>Integer value of the attribute or null if the attribute doesn&apos;t have a value</p>
+        <td class="markdown level1 summary"><p>Gets the Integer value of the attribute or <see lang="null"></see> if the attribute doesn&apos;t have a value</p>
 </td>
       </tr>
       <tr>
         <td id="Llvm_NET_Values_AttributeValue_IsEnum" data-uid="Llvm.NET.Values.AttributeValue.IsEnum">
           <a class="xref" href="Llvm.NET.Values.AttributeValue.IsEnum.html#Llvm_NET_Values_AttributeValue_IsEnum">IsEnum</a>
         </td>
-        <td class="markdown level1 summary"><p>Flag to indicate if this attribute is a simple enumeration value</p>
+        <td class="markdown level1 summary"><p>Gets a value indicating whether this attribute is a simple enumeration value</p>
 </td>
       </tr>
       <tr>
         <td id="Llvm_NET_Values_AttributeValue_IsInt" data-uid="Llvm.NET.Values.AttributeValue.IsInt">
           <a class="xref" href="Llvm.NET.Values.AttributeValue.IsInt.html#Llvm_NET_Values_AttributeValue_IsInt">IsInt</a>
         </td>
-        <td class="markdown level1 summary"><p>Flag to indicate if this attribute has an integer attribute</p>
+        <td class="markdown level1 summary"><p>Gets a value indicating whether this attribute has an integer attribute</p>
 </td>
       </tr>
       <tr>
         <td id="Llvm_NET_Values_AttributeValue_IsString" data-uid="Llvm.NET.Values.AttributeValue.IsString">
           <a class="xref" href="Llvm.NET.Values.AttributeValue.IsString.html#Llvm_NET_Values_AttributeValue_IsString">IsString</a>
         </td>
-        <td class="markdown level1 summary"><p>Flag to indicate if this attribute is a target specific string value</p>
+        <td class="markdown level1 summary"><p>Gets a value indicating whether this attribute is a target specific string value</p>
 </td>
       </tr>
       <tr>
         <td id="Llvm_NET_Values_AttributeValue_Kind" data-uid="Llvm.NET.Values.AttributeValue.Kind">
           <a class="xref" href="Llvm.NET.Values.AttributeValue.Kind.html#Llvm_NET_Values_AttributeValue_Kind">Kind</a>
         </td>
-        <td class="markdown level1 summary"><p>Kind of the attribute, <a class="xref" href="Llvm.NET.Values.AttributeKind.None.html#Llvm_NET_Values_AttributeKind_None">None</a> for target specific named attributes</p>
+        <td class="markdown level1 summary"><p>Gets the kind of the attribute</p>
 </td>
       </tr>
       <tr>
         <td id="Llvm_NET_Values_AttributeValue_Name" data-uid="Llvm.NET.Values.AttributeValue.Name">
           <a class="xref" href="Llvm.NET.Values.AttributeValue.Name.html#Llvm_NET_Values_AttributeValue_Name">Name</a>
         </td>
-        <td class="markdown level1 summary"><p>Name of a named attribute or null for other kinds of attributes</p>
+        <td class="markdown level1 summary"><p>Gets the Name of the attribute</p>
 </td>
       </tr>
       <tr>
         <td id="Llvm_NET_Values_AttributeValue_StringValue" data-uid="Llvm.NET.Values.AttributeValue.StringValue">
           <a class="xref" href="Llvm.NET.Values.AttributeValue.StringValue.html#Llvm_NET_Values_AttributeValue_StringValue">StringValue</a>
         </td>
-        <td class="markdown level1 summary"><p>StringValue for named attributes with values</p>
+        <td class="markdown level1 summary"><p>Gets the value for named attributes with values</p>
 </td>
       </tr>
     </tbody>
@@ -5242,19 +5234,22 @@ that is used throughout .NET libraries.</p>
         <td id="Llvm_NET_Values_AttributeValue_IsValidOn_Llvm_NET_FunctionAttributeIndex_Llvm_NET_Values_Value_" data-uid="Llvm.NET.Values.AttributeValue.IsValidOn(Llvm.NET.FunctionAttributeIndex,Llvm.NET.Values.Value)">
           <a class="xref" href="Llvm.NET.Values.AttributeValue.IsValidOn.html#Llvm_NET_Values_AttributeValue_IsValidOn_Llvm_NET_FunctionAttributeIndex_Llvm_NET_Values_Value_">IsValidOn(FunctionAttributeIndex, Value)</a>
         </td>
-        <td class="markdown level1 summary"></td>
+        <td class="markdown level1 summary"><p>Tests if the attribute is valid for a <a class="xref" href="Llvm.NET.Values.Value.html">Value</a> on a given <a class="xref" href="Llvm.NET.FunctionAttributeIndex.html">FunctionAttributeIndex</a></p>
+</td>
       </tr>
       <tr>
         <td id="Llvm_NET_Values_AttributeValue_ToString" data-uid="Llvm.NET.Values.AttributeValue.ToString">
           <a class="xref" href="Llvm.NET.Values.AttributeValue.ToString.html#Llvm_NET_Values_AttributeValue_ToString">ToString()</a>
         </td>
-        <td class="markdown level1 summary"></td>
+        <td class="markdown level1 summary"><p>Gets a string representation of the attribute</p>
+</td>
       </tr>
       <tr>
         <td id="Llvm_NET_Values_AttributeValue_VerifyValidOn_Llvm_NET_FunctionAttributeIndex_Llvm_NET_Values_Value_" data-uid="Llvm.NET.Values.AttributeValue.VerifyValidOn(Llvm.NET.FunctionAttributeIndex,Llvm.NET.Values.Value)">
           <a class="xref" href="Llvm.NET.Values.AttributeValue.VerifyValidOn.html#Llvm_NET_Values_AttributeValue_VerifyValidOn_Llvm_NET_FunctionAttributeIndex_Llvm_NET_Values_Value_">VerifyValidOn(FunctionAttributeIndex, Value)</a>
         </td>
-        <td class="markdown level1 summary"></td>
+        <td class="markdown level1 summary"><p>Verifies the attribute is valid for a <a class="xref" href="Llvm.NET.Values.Value.html">Value</a> on a given <a class="xref" href="Llvm.NET.FunctionAttributeIndex.html">FunctionAttributeIndex</a></p>
+</td>
       </tr>
     </tbody>
   </table>
@@ -5272,13 +5267,15 @@ that is used throughout .NET libraries.</p>
         <td id="Llvm_NET_Values_AttributeValue_op_Equality_Llvm_NET_Values_AttributeValue_Llvm_NET_Values_AttributeValue_" data-uid="Llvm.NET.Values.AttributeValue.op_Equality(Llvm.NET.Values.AttributeValue,Llvm.NET.Values.AttributeValue)">
           <a class="xref" href="Llvm.NET.Values.AttributeValue.op_Equality.html#Llvm_NET_Values_AttributeValue_op_Equality_Llvm_NET_Values_AttributeValue_Llvm_NET_Values_AttributeValue_">Equality(AttributeValue, AttributeValue)</a>
         </td>
-        <td class="markdown level1 summary"></td>
+        <td class="markdown level1 summary"><p>Tests attributes for equality</p>
+</td>
       </tr>
       <tr>
         <td id="Llvm_NET_Values_AttributeValue_op_Inequality_Llvm_NET_Values_AttributeValue_Llvm_NET_Values_AttributeValue_" data-uid="Llvm.NET.Values.AttributeValue.op_Inequality(Llvm.NET.Values.AttributeValue,Llvm.NET.Values.AttributeValue)">
           <a class="xref" href="Llvm.NET.Values.AttributeValue.op_Inequality.html#Llvm_NET_Values_AttributeValue_op_Inequality_Llvm_NET_Values_AttributeValue_Llvm_NET_Values_AttributeValue_">Inequality(AttributeValue, AttributeValue)</a>
         </td>
-        <td class="markdown level1 summary"></td>
+        <td class="markdown level1 summary"><p>Tests attributes for inequality</p>
+</td>
       </tr>
     </tbody>
   </table>
@@ -5286,7 +5283,7 @@ that is used throughout .NET libraries.</p>
           </div>
           <div class="contribution-panel mobile-hide">
               <a href="https://github.com/UbiquityDotNET/Llvm.NET/new/master/apiSpec/new?filename=Llvm_NET_Values_AttributeValue.md&amp;value=---%0Auid%3A%20Llvm.NET.Values.AttributeValue%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A" title="Improve this Doc" class="fab btn-warning pull-right"><i class="glyphicon glyphicon-pencil"></i></a>
-              <a href="https://github.com/UbiquityDotNET/Llvm.NET/blob/master/src/Llvm.NET/Values/AttributeValue.cs/#L18" title="View Source" class="fab btn-info pull-right"><i class="fa fa-code"></i></a>
+              <a href="https://github.com/UbiquityDotNET/Llvm.NET/blob/master/src/Llvm.NET/Values/AttributeValue.cs/#L17" title="View Source" class="fab btn-info pull-right"><i class="fa fa-code"></i></a>
           </div>
           
           <div class="hidden-sm col-md-2" role="complementary">

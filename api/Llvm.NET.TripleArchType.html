@@ -2426,9 +2426,6 @@
                                 <li class="">
                                   <a href="Llvm.NET.DebugInfo.DebugType-2.TryGetExtendedPropertyValue.html" title="TryGetExtendedPropertyValue" class="">TryGetExtendedPropertyValue</a>
                                 </li>
-                                <li class="">
-                                  <a href="Llvm.NET.DebugInfo.DebugType-2.TypeHandle.html" title="TypeHandle" class="">TypeHandle</a>
-                                </li>
                               </ul>  </li>
                           <li class="">
                             <span class="expand-stub"></span>
@@ -4340,9 +4337,6 @@
                                 <li class="">
                                   <a href="Llvm.NET.Types.ITypeRef.Kind.html" title="Kind" class="">Kind</a>
                                 </li>
-                                <li class="">
-                                  <a href="Llvm.NET.Types.ITypeRef.TypeHandle.html" title="TypeHandle" class="">TypeHandle</a>
-                                </li>
                               </ul>  </li>
                           <li class="">
                             <span class="expand-stub"></span>
@@ -4447,9 +4441,6 @@
                                 </li>
                                 <li class="">
                                   <a href="Llvm.NET.Values.AttributeKind.DereferenceableOrNull.html#Llvm_NET_Values_AttributeKind_DereferenceableOrNull" title="DereferenceableOrNull" class="">DereferenceableOrNull</a>
-                                </li>
-                                <li class="">
-                                  <a href="Llvm.NET.Values.AttributeKind.EndAttrKinds.html#Llvm_NET_Values_AttributeKind_EndAttrKinds" title="EndAttrKinds" class="">EndAttrKinds</a>
                                 </li>
                                 <li class="">
                                   <a href="Llvm.NET.Values.AttributeKind.InaccessibleMemOnly.html#Llvm_NET_Values_AttributeKind_InaccessibleMemOnly" title="InaccessibleMemOnly" class="">InaccessibleMemOnly</a>
@@ -5103,7 +5094,8 @@
   
   <h1 id="Llvm_NET_TripleArchType" data-uid="Llvm.NET.TripleArchType">Enum TripleArchType
   </h1>
-  <div class="markdown level0 summary"></div>
+  <div class="markdown level0 summary"><p>Enumeration for the Architecture portion of a target triple</p>
+</div>
   <div class="markdown level0 conceptual"></div>
 
   
@@ -5133,11 +5125,13 @@
     <tbody>
       <tr>
         <td id="Llvm_NET_TripleArchType_Aarch64">Aarch64</td>
-        <td></td>
+        <td><p>AArch64 (little endian): aarch64</p>
+</td>
       </tr>
       <tr>
         <td id="Llvm_NET_TripleArchType_Aarch64_be">Aarch64_be</td>
-        <td></td>
+        <td><p>AArch64 (big endian): aarch64_be</p>
+</td>
       </tr>
       <tr>
         <td id="Llvm_NET_TripleArchType_AMDGCN">AMDGCN</td>
@@ -5153,27 +5147,33 @@
       </tr>
       <tr>
         <td id="Llvm_NET_TripleArchType_Arm">Arm</td>
-        <td></td>
+        <td><p>ARM (little endian): arm, armv.*, xscale</p>
+</td>
       </tr>
       <tr>
         <td id="Llvm_NET_TripleArchType_Armeb">Armeb</td>
-        <td></td>
+        <td><p>ARM (big endian): armeb</p>
+</td>
       </tr>
       <tr>
         <td id="Llvm_NET_TripleArchType_Avr">Avr</td>
-        <td></td>
+        <td><p>AVR: Atmel AVR microcontroller</p>
+</td>
       </tr>
       <tr>
         <td id="Llvm_NET_TripleArchType_BPFeb">BPFeb</td>
-        <td></td>
+        <td><p>eBPF or extended BPF or 64-bit BPF (big endian)</p>
+</td>
       </tr>
       <tr>
         <td id="Llvm_NET_TripleArchType_BPFel">BPFel</td>
-        <td></td>
+        <td><p>eBPF or extended BPF or 64-bit BPF (little endian)</p>
+</td>
       </tr>
       <tr>
         <td id="Llvm_NET_TripleArchType_Hexagon">Hexagon</td>
-        <td></td>
+        <td><p>Hexagon processor</p>
+</td>
       </tr>
       <tr>
         <td id="Llvm_NET_TripleArchType_Hsail">Hsail</td>
@@ -5205,7 +5205,8 @@
       </tr>
       <tr>
         <td id="Llvm_NET_TripleArchType_MIPS">MIPS</td>
-        <td></td>
+        <td><p>MIPS: mips, mipsallegrex</p>
+</td>
       </tr>
       <tr>
         <td id="Llvm_NET_TripleArchType_MIPS64">MIPS64</td>
@@ -5217,7 +5218,8 @@
       </tr>
       <tr>
         <td id="Llvm_NET_TripleArchType_MIPSel">MIPSel</td>
-        <td></td>
+        <td><p>MIPSEL: mipsel, mipsallegrexel</p>
+</td>
       </tr>
       <tr>
         <td id="Llvm_NET_TripleArchType_MSP430">MSP430</td>
@@ -5309,7 +5311,8 @@
       </tr>
       <tr>
         <td id="Llvm_NET_TripleArchType_UnknownArch">UnknownArch</td>
-        <td></td>
+        <td><p>Invalid or unknown architecture</p>
+</td>
       </tr>
       <tr>
         <td id="Llvm_NET_TripleArchType_Wasm32">Wasm32</td>
@@ -5337,7 +5340,7 @@
           </div>
           <div class="contribution-panel mobile-hide">
               <a href="https://github.com/UbiquityDotNET/Llvm.NET/new/master/apiSpec/new?filename=Llvm_NET_TripleArchType.md&amp;value=---%0Auid%3A%20Llvm.NET.TripleArchType%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A" title="Improve this Doc" class="fab btn-warning pull-right"><i class="glyphicon glyphicon-pencil"></i></a>
-              <a href="https://github.com/UbiquityDotNET/Llvm.NET/blob/master/src/Llvm.NET/Enumerations.cs/#L429" title="View Source" class="fab btn-info pull-right"><i class="fa fa-code"></i></a>
+              <a href="https://github.com/UbiquityDotNET/Llvm.NET/blob/master/src/Llvm.NET/Enumerations.cs/#L430" title="View Source" class="fab btn-info pull-right"><i class="fa fa-code"></i></a>
           </div>
           
           <div class="hidden-sm col-md-2" role="complementary">

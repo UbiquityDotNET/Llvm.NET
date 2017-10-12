@@ -2426,9 +2426,6 @@
                                 <li class="">
                                   <a href="Llvm.NET.DebugInfo.DebugType-2.TryGetExtendedPropertyValue.html" title="TryGetExtendedPropertyValue" class="">TryGetExtendedPropertyValue</a>
                                 </li>
-                                <li class="">
-                                  <a href="Llvm.NET.DebugInfo.DebugType-2.TypeHandle.html" title="TypeHandle" class="">TypeHandle</a>
-                                </li>
                               </ul>  </li>
                           <li class="">
                             <span class="expand-stub"></span>
@@ -4340,9 +4337,6 @@
                                 <li class="">
                                   <a href="Llvm.NET.Types.ITypeRef.Kind.html" title="Kind" class="">Kind</a>
                                 </li>
-                                <li class="">
-                                  <a href="Llvm.NET.Types.ITypeRef.TypeHandle.html" title="TypeHandle" class="">TypeHandle</a>
-                                </li>
                               </ul>  </li>
                           <li class="">
                             <span class="expand-stub"></span>
@@ -4447,9 +4441,6 @@
                                 </li>
                                 <li class="">
                                   <a href="Llvm.NET.Values.AttributeKind.DereferenceableOrNull.html#Llvm_NET_Values_AttributeKind_DereferenceableOrNull" title="DereferenceableOrNull" class="">DereferenceableOrNull</a>
-                                </li>
-                                <li class="">
-                                  <a href="Llvm.NET.Values.AttributeKind.EndAttrKinds.html#Llvm_NET_Values_AttributeKind_EndAttrKinds" title="EndAttrKinds" class="">EndAttrKinds</a>
                                 </li>
                                 <li class="">
                                   <a href="Llvm.NET.Values.AttributeKind.InaccessibleMemOnly.html#Llvm_NET_Values_AttributeKind_InaccessibleMemOnly" title="InaccessibleMemOnly" class="">InaccessibleMemOnly</a>
@@ -5130,9 +5121,6 @@ and a <a class="xref" href="Llvm.NET.DebugInfo.DISubroutineType.html">DISubrouti
               <a class="xref" href="Llvm.NET.DebugInfo.DebugType-2.NativeType.html#Llvm_NET_DebugInfo_DebugType_2_NativeType">DebugType&lt;IFunctionType, DISubroutineType&gt;.NativeType</a>
           </div>
           <div>
-              <a class="xref" href="Llvm.NET.DebugInfo.DebugType-2.TypeHandle.html#Llvm_NET_DebugInfo_DebugType_2_TypeHandle">DebugType&lt;IFunctionType, DISubroutineType&gt;.TypeHandle</a>
-          </div>
-          <div>
               <a class="xref" href="Llvm.NET.DebugInfo.DebugType-2.IsSized.html#Llvm_NET_DebugInfo_DebugType_2_IsSized">DebugType&lt;IFunctionType, DISubroutineType&gt;.IsSized</a>
           </div>
           <div>
@@ -5224,7 +5212,7 @@ and a <a class="xref" href="Llvm.NET.DebugInfo.DISubroutineType.html">DISubrouti
   
   <h5 id="Llvm_NET_DebugInfo_DebugFunctionType_syntax">Syntax</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public class DebugFunctionType : DebugType&lt;IFunctionType, DISubroutineType&gt;, IDebugType&lt;IFunctionType, DISubroutineType&gt;, IFunctionType, ITypeRef, IExtensiblePropertyContainer</code></pre>
+    <pre><code class="lang-csharp hljs">public class DebugFunctionType : DebugType&lt;IFunctionType, DISubroutineType&gt;, IDebugType&lt;IFunctionType, DISubroutineType&gt;, ITypeHandleOwner, IFunctionType, ITypeRef, IExtensiblePropertyContainer</code></pre>
   </div>
 
   
@@ -5266,7 +5254,7 @@ and <a class="xref" href="Llvm.NET.DebugInfo.DebugInfoBuilder.InsertDeclare.html
         <td id="Llvm_NET_DebugInfo_DebugFunctionType__ctor_Llvm_NET_Types_IFunctionType_Llvm_NET_NativeModule_Llvm_NET_DebugInfo_DebugInfoFlags_Llvm_NET_DebugInfo_DebugType_Llvm_NET_Types_ITypeRef_Llvm_NET_DebugInfo_DIType__Llvm_NET_DebugInfo_DebugType_Llvm_NET_Types_ITypeRef_Llvm_NET_DebugInfo_DIType____" data-uid="Llvm.NET.DebugInfo.DebugFunctionType.#ctor(Llvm.NET.Types.IFunctionType,Llvm.NET.NativeModule,Llvm.NET.DebugInfo.DebugInfoFlags,Llvm.NET.DebugInfo.DebugType{Llvm.NET.Types.ITypeRef,Llvm.NET.DebugInfo.DIType},Llvm.NET.DebugInfo.DebugType{Llvm.NET.Types.ITypeRef,Llvm.NET.DebugInfo.DIType}[])">
           <a class="xref" href="Llvm.NET.DebugInfo.DebugFunctionType.-ctor.html#Llvm_NET_DebugInfo_DebugFunctionType__ctor_Llvm_NET_Types_IFunctionType_Llvm_NET_NativeModule_Llvm_NET_DebugInfo_DebugInfoFlags_Llvm_NET_DebugInfo_DebugType_Llvm_NET_Types_ITypeRef_Llvm_NET_DebugInfo_DIType__Llvm_NET_DebugInfo_DebugType_Llvm_NET_Types_ITypeRef_Llvm_NET_DebugInfo_DIType____">DebugFunctionType(IFunctionType, NativeModule, DebugInfoFlags, DebugType&lt;ITypeRef, DIType&gt;, DebugType&lt;ITypeRef, DIType&gt;[])</a>
         </td>
-        <td class="markdown level1 summary"><p>Constructs a new <a class="xref" href="Llvm.NET.DebugInfo.DebugFunctionType.html">DebugFunctionType</a></p>
+        <td class="markdown level1 summary"><p>Initializes a new instance of the <a class="xref" href="Llvm.NET.DebugInfo.DebugFunctionType.html">DebugFunctionType</a> class.</p>
 </td>
       </tr>
     </tbody>
@@ -5285,21 +5273,21 @@ and <a class="xref" href="Llvm.NET.DebugInfo.DebugInfoBuilder.InsertDeclare.html
         <td id="Llvm_NET_DebugInfo_DebugFunctionType_IsVarArg" data-uid="Llvm.NET.DebugInfo.DebugFunctionType.IsVarArg">
           <a class="xref" href="Llvm.NET.DebugInfo.DebugFunctionType.IsVarArg.html#Llvm_NET_DebugInfo_DebugFunctionType_IsVarArg">IsVarArg</a>
         </td>
-        <td class="markdown level1 summary"><p>Flag to indicate if this signature is for a variadic function</p>
+        <td class="markdown level1 summary"><p>Gets a value indicating whether this signature is for a variadic function</p>
 </td>
       </tr>
       <tr>
         <td id="Llvm_NET_DebugInfo_DebugFunctionType_ParameterTypes" data-uid="Llvm.NET.DebugInfo.DebugFunctionType.ParameterTypes">
           <a class="xref" href="Llvm.NET.DebugInfo.DebugFunctionType.ParameterTypes.html#Llvm_NET_DebugInfo_DebugFunctionType_ParameterTypes">ParameterTypes</a>
         </td>
-        <td class="markdown level1 summary"><p>Collection of types of the parameters for the function</p>
+        <td class="markdown level1 summary"><p>Gets the types of the parameters for the function</p>
 </td>
       </tr>
       <tr>
         <td id="Llvm_NET_DebugInfo_DebugFunctionType_ReturnType" data-uid="Llvm.NET.DebugInfo.DebugFunctionType.ReturnType">
           <a class="xref" href="Llvm.NET.DebugInfo.DebugFunctionType.ReturnType.html#Llvm_NET_DebugInfo_DebugFunctionType_ReturnType">ReturnType</a>
         </td>
-        <td class="markdown level1 summary"><p>Return type of the function</p>
+        <td class="markdown level1 summary"><p>Gets the return type of the function</p>
 </td>
       </tr>
     </tbody>

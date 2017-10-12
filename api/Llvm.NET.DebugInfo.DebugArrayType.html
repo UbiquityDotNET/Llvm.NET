@@ -2426,9 +2426,6 @@
                                 <li class="">
                                   <a href="Llvm.NET.DebugInfo.DebugType-2.TryGetExtendedPropertyValue.html" title="TryGetExtendedPropertyValue" class="">TryGetExtendedPropertyValue</a>
                                 </li>
-                                <li class="">
-                                  <a href="Llvm.NET.DebugInfo.DebugType-2.TypeHandle.html" title="TypeHandle" class="">TypeHandle</a>
-                                </li>
                               </ul>  </li>
                           <li class="">
                             <span class="expand-stub"></span>
@@ -4340,9 +4337,6 @@
                                 <li class="">
                                   <a href="Llvm.NET.Types.ITypeRef.Kind.html" title="Kind" class="">Kind</a>
                                 </li>
-                                <li class="">
-                                  <a href="Llvm.NET.Types.ITypeRef.TypeHandle.html" title="TypeHandle" class="">TypeHandle</a>
-                                </li>
                               </ul>  </li>
                           <li class="">
                             <span class="expand-stub"></span>
@@ -4447,9 +4441,6 @@
                                 </li>
                                 <li class="">
                                   <a href="Llvm.NET.Values.AttributeKind.DereferenceableOrNull.html#Llvm_NET_Values_AttributeKind_DereferenceableOrNull" title="DereferenceableOrNull" class="">DereferenceableOrNull</a>
-                                </li>
-                                <li class="">
-                                  <a href="Llvm.NET.Values.AttributeKind.EndAttrKinds.html#Llvm_NET_Values_AttributeKind_EndAttrKinds" title="EndAttrKinds" class="">EndAttrKinds</a>
                                 </li>
                                 <li class="">
                                   <a href="Llvm.NET.Values.AttributeKind.InaccessibleMemOnly.html#Llvm_NET_Values_AttributeKind_InaccessibleMemOnly" title="InaccessibleMemOnly" class="">InaccessibleMemOnly</a>
@@ -5129,9 +5120,6 @@
               <a class="xref" href="Llvm.NET.DebugInfo.DebugType-2.NativeType.html#Llvm_NET_DebugInfo_DebugType_2_NativeType">DebugType&lt;IArrayType, DICompositeType&gt;.NativeType</a>
           </div>
           <div>
-              <a class="xref" href="Llvm.NET.DebugInfo.DebugType-2.TypeHandle.html#Llvm_NET_DebugInfo_DebugType_2_TypeHandle">DebugType&lt;IArrayType, DICompositeType&gt;.TypeHandle</a>
-          </div>
-          <div>
               <a class="xref" href="Llvm.NET.DebugInfo.DebugType-2.IsSized.html#Llvm_NET_DebugInfo_DebugType_2_IsSized">DebugType&lt;IArrayType, DICompositeType&gt;.IsSized</a>
           </div>
           <div>
@@ -5223,7 +5211,7 @@
   
   <h5 id="Llvm_NET_DebugInfo_DebugArrayType_syntax">Syntax</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public class DebugArrayType : DebugType&lt;IArrayType, DICompositeType&gt;, IDebugType&lt;IArrayType, DICompositeType&gt;, IArrayType, ISequenceType, ITypeRef, IExtensiblePropertyContainer</code></pre>
+    <pre><code class="lang-csharp hljs">public class DebugArrayType : DebugType&lt;IArrayType, DICompositeType&gt;, IDebugType&lt;IArrayType, DICompositeType&gt;, ITypeHandleOwner, IArrayType, ISequenceType, ITypeRef, IExtensiblePropertyContainer</code></pre>
   </div>
 
   
@@ -5244,21 +5232,21 @@
         <td id="Llvm_NET_DebugInfo_DebugArrayType__ctor_Llvm_NET_DebugInfo_IDebugType_Llvm_NET_Types_ITypeRef_Llvm_NET_DebugInfo_DIType__Llvm_NET_NativeModule_System_UInt32_System_UInt32_" data-uid="Llvm.NET.DebugInfo.DebugArrayType.#ctor(Llvm.NET.DebugInfo.IDebugType{Llvm.NET.Types.ITypeRef,Llvm.NET.DebugInfo.DIType},Llvm.NET.NativeModule,System.UInt32,System.UInt32)">
           <a class="xref" href="Llvm.NET.DebugInfo.DebugArrayType.-ctor.html#Llvm_NET_DebugInfo_DebugArrayType__ctor_Llvm_NET_DebugInfo_IDebugType_Llvm_NET_Types_ITypeRef_Llvm_NET_DebugInfo_DIType__Llvm_NET_NativeModule_System_UInt32_System_UInt32_">DebugArrayType(IDebugType&lt;ITypeRef, DIType&gt;, NativeModule, UInt32, UInt32)</a>
         </td>
-        <td class="markdown level1 summary"><p>Constructs a new <a class="xref" href="Llvm.NET.DebugInfo.DebugArrayType.html">DebugArrayType</a></p>
+        <td class="markdown level1 summary"><p>Initializes a new instance of the <a class="xref" href="Llvm.NET.DebugInfo.DebugArrayType.html">DebugArrayType</a> class.</p>
 </td>
       </tr>
       <tr>
         <td id="Llvm_NET_DebugInfo_DebugArrayType__ctor_Llvm_NET_Types_IArrayType_Llvm_NET_DebugInfo_IDebugType_Llvm_NET_Types_ITypeRef_Llvm_NET_DebugInfo_DIType__Llvm_NET_NativeModule_System_UInt32_System_UInt32_System_UInt32_" data-uid="Llvm.NET.DebugInfo.DebugArrayType.#ctor(Llvm.NET.Types.IArrayType,Llvm.NET.DebugInfo.IDebugType{Llvm.NET.Types.ITypeRef,Llvm.NET.DebugInfo.DIType},Llvm.NET.NativeModule,System.UInt32,System.UInt32,System.UInt32)">
           <a class="xref" href="Llvm.NET.DebugInfo.DebugArrayType.-ctor.html#Llvm_NET_DebugInfo_DebugArrayType__ctor_Llvm_NET_Types_IArrayType_Llvm_NET_DebugInfo_IDebugType_Llvm_NET_Types_ITypeRef_Llvm_NET_DebugInfo_DIType__Llvm_NET_NativeModule_System_UInt32_System_UInt32_System_UInt32_">DebugArrayType(IArrayType, IDebugType&lt;ITypeRef, DIType&gt;, NativeModule, UInt32, UInt32, UInt32)</a>
         </td>
-        <td class="markdown level1 summary"><p>Creates a new <a class="xref" href="Llvm.NET.DebugInfo.DebugArrayType.html">DebugArrayType</a></p>
+        <td class="markdown level1 summary"><p>Initializes a new instance of the <a class="xref" href="Llvm.NET.DebugInfo.DebugArrayType.html">DebugArrayType</a> class</p>
 </td>
       </tr>
       <tr>
         <td id="Llvm_NET_DebugInfo_DebugArrayType__ctor_Llvm_NET_Types_IArrayType_Llvm_NET_NativeModule_Llvm_NET_DebugInfo_DIType_System_UInt32_System_UInt32_" data-uid="Llvm.NET.DebugInfo.DebugArrayType.#ctor(Llvm.NET.Types.IArrayType,Llvm.NET.NativeModule,Llvm.NET.DebugInfo.DIType,System.UInt32,System.UInt32)">
           <a class="xref" href="Llvm.NET.DebugInfo.DebugArrayType.-ctor.html#Llvm_NET_DebugInfo_DebugArrayType__ctor_Llvm_NET_Types_IArrayType_Llvm_NET_NativeModule_Llvm_NET_DebugInfo_DIType_System_UInt32_System_UInt32_">DebugArrayType(IArrayType, NativeModule, DIType, UInt32, UInt32)</a>
         </td>
-        <td class="markdown level1 summary"><p>Constructs a new <a class="xref" href="Llvm.NET.DebugInfo.DebugArrayType.html">DebugArrayType</a></p>
+        <td class="markdown level1 summary"><p>Initializes a new instance of the <a class="xref" href="Llvm.NET.DebugInfo.DebugArrayType.html">DebugArrayType</a> class.</p>
 </td>
       </tr>
     </tbody>
@@ -5277,14 +5265,14 @@
         <td id="Llvm_NET_DebugInfo_DebugArrayType_DebugElementType" data-uid="Llvm.NET.DebugInfo.DebugArrayType.DebugElementType">
           <a class="xref" href="Llvm.NET.DebugInfo.DebugArrayType.DebugElementType.html#Llvm_NET_DebugInfo_DebugArrayType_DebugElementType">DebugElementType</a>
         </td>
-        <td class="markdown level1 summary"><p>Full <a class="xref" href="Llvm.NET.DebugInfo.IDebugType-2.html">IDebugType&lt;TNative, TDebug&gt;</a> type for the elements</p>
+        <td class="markdown level1 summary"><p>Gets the full <a class="xref" href="Llvm.NET.DebugInfo.IDebugType-2.html">IDebugType&lt;TNative, TDebug&gt;</a> type for the elements</p>
 </td>
       </tr>
       <tr>
         <td id="Llvm_NET_DebugInfo_DebugArrayType_ElementType" data-uid="Llvm.NET.DebugInfo.DebugArrayType.ElementType">
           <a class="xref" href="Llvm.NET.DebugInfo.DebugArrayType.ElementType.html#Llvm_NET_DebugInfo_DebugArrayType_ElementType">ElementType</a>
         </td>
-        <td class="markdown level1 summary"><p>Type of elements in the sequence</p>
+        <td class="markdown level1 summary"><p>Gets the types of the elements in the sequence</p>
 </td>
       </tr>
       <tr>
@@ -5298,7 +5286,7 @@
         <td id="Llvm_NET_DebugInfo_DebugArrayType_LowerBound" data-uid="Llvm.NET.DebugInfo.DebugArrayType.LowerBound">
           <a class="xref" href="Llvm.NET.DebugInfo.DebugArrayType.LowerBound.html#Llvm_NET_DebugInfo_DebugArrayType_LowerBound">LowerBound</a>
         </td>
-        <td class="markdown level1 summary"><p>Lower bound of the array, usually but not always zero</p>
+        <td class="markdown level1 summary"><p>Gets the lower bound of the array - usually, but not always, zero</p>
 </td>
       </tr>
     </tbody>

@@ -2426,9 +2426,6 @@
                                 <li class="">
                                   <a href="Llvm.NET.DebugInfo.DebugType-2.TryGetExtendedPropertyValue.html" title="TryGetExtendedPropertyValue" class="">TryGetExtendedPropertyValue</a>
                                 </li>
-                                <li class="">
-                                  <a href="Llvm.NET.DebugInfo.DebugType-2.TypeHandle.html" title="TypeHandle" class="">TypeHandle</a>
-                                </li>
                               </ul>  </li>
                           <li class="">
                             <span class="expand-stub"></span>
@@ -4340,9 +4337,6 @@
                                 <li class="">
                                   <a href="Llvm.NET.Types.ITypeRef.Kind.html" title="Kind" class="">Kind</a>
                                 </li>
-                                <li class="">
-                                  <a href="Llvm.NET.Types.ITypeRef.TypeHandle.html" title="TypeHandle" class="">TypeHandle</a>
-                                </li>
                               </ul>  </li>
                           <li class="">
                             <span class="expand-stub"></span>
@@ -4447,9 +4441,6 @@
                                 </li>
                                 <li class="">
                                   <a href="Llvm.NET.Values.AttributeKind.DereferenceableOrNull.html#Llvm_NET_Values_AttributeKind_DereferenceableOrNull" title="DereferenceableOrNull" class="">DereferenceableOrNull</a>
-                                </li>
-                                <li class="">
-                                  <a href="Llvm.NET.Values.AttributeKind.EndAttrKinds.html#Llvm_NET_Values_AttributeKind_EndAttrKinds" title="EndAttrKinds" class="">EndAttrKinds</a>
                                 </li>
                                 <li class="">
                                   <a href="Llvm.NET.Values.AttributeKind.InaccessibleMemOnly.html#Llvm_NET_Values_AttributeKind_InaccessibleMemOnly" title="InaccessibleMemOnly" class="">InaccessibleMemOnly</a>
@@ -5122,21 +5113,21 @@
   
   
   <h5 id="Llvm_NET_Values_AttributeKind_remarks"><strong>Remarks</strong></h5>
-  <div class="markdown level0 remarks"><p>It is important to note that the integer values of this enum
-do NOT necessarily correlate to the attribute IDs. LLVM has
-moved away from using an enum Flags model as the number of
-attributes reached the limit of available bits. Thus, the
-enum was dropped as of V5.0. Instead, strings are used to
-identify attributes. However, for maximum compatibility and
-ease of use for this library the enum is retained and the
-provided attribute manipulation classes will map the enum
-to the associated string.</p>
-<p>Also note that as a reult of the changes in LLVM this
+  <div class="markdown level0 remarks"><p><p>It is important to note that the integer values of this
+enum do NOT necessarily correlate to the attribute IDs. LLVM
+has moved away from using an enum Flags model as the number of
+attributes reached the limit of available bits. Thus, the enum
+was dropped. Instead, strings are used to identify attributes.
+However, for maximum compatibility and ease of use for this
+library the enum is retained and the provided attribute
+manipulation classes will map the enum to the associated string.
+</p>
+<div class="WARNING"><h5>warning</h5><p>As a result of the changes in LLVM this
 set of attributes is fluid and subject to change from version
 to version. Thus, code using any attributes that have changed
 or were removed will produce compile time errors. That is useful
 and by design so that any changes in LLVM naming will break at
-compile time instead of at runtime.</p>
+compile time instead of at runtime.</p></div></p>
 </div>
   
   <h3 id="fields">Fields
@@ -5187,10 +5178,6 @@ compile time instead of at runtime.</p>
       </tr>
       <tr>
         <td id="Llvm_NET_Values_AttributeKind_DereferenceableOrNull">DereferenceableOrNull</td>
-        <td></td>
-      </tr>
-      <tr>
-        <td id="Llvm_NET_Values_AttributeKind_EndAttrKinds">EndAttrKinds</td>
         <td></td>
       </tr>
       <tr>
