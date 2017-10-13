@@ -35,13 +35,11 @@ namespace Llvm.NETTests
             RethrowIfAssertException(exception);
 
             Assert.IsInstanceOfType(exception, typeof(ArgumentException), WrongExceptionMessage );
-            Assert.AreEqual( ExpectedName, ( ( ArgumentException )exception ).ParamName );
+            var argException = ( ArgumentException )exception;
+            Assert.AreEqual( ExpectedName, argException.ParamName );
             if( !string.IsNullOrWhiteSpace( ExpectedExceptionMessage ) )
             {
-                Assert.AreEqual( $"{ExpectedExceptionMessage}\r\nParameter name: {ExpectedName}"
-                               , exception.Message
-                               , "Could not verify the exception message."
-                               );
+                Assert.IsTrue( exception.Message.StartsWith( ExpectedExceptionMessage, StringComparison.Ordinal ), "Could not verify the exception message." );
             }
         }
 

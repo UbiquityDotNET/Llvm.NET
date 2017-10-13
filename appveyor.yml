@@ -36,6 +36,7 @@ after_build:
 
 test_script:
   - ps: .\Invoke-UnitTests.ps1
+  - ps: { Set-Culture fr-FR; .\Invoke-UnitTests.ps1 }
 
 artifacts:
   - path: .\BuildOutput\Nuget\LLvm.NET.*.nupkg
