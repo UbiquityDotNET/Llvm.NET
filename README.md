@@ -7,7 +7,7 @@ Status:
 
 ### Welcome to Llvm.NET!
 Llvm.NET provides LLVM language and runtime bindings for .NET based applications. Llvm.NET's goal is to provide
-as robust Class library thataccurately reflects the underlying LLVM C++ model. This is done through an extend
+a robust Class library that accurately reflects the underlying LLVM C++ model. This is done through an extended
 LLVM-C API bundled as a native windows DLL (LibLLVM.DLL). Llvm.NET uses the support of LibLLVM to gain access
 to the LLVM class library and project it into a .NET managed library that reflects the original class library
 design.  
