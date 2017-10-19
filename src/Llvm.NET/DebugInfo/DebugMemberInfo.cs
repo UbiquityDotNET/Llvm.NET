@@ -12,7 +12,7 @@ namespace Llvm.NET.DebugInfo
     /// <remarks>
     /// <para>This class is used with <see cref="DebugStructType"/> to provide debug information for a type.</para>
     /// <para>In order to support explicit layout structures the members relating to layout are all <see cref="Nullable{T}"/>.
-    /// When they are null then modules <see cref="NativeModule.Layout"/> target specific layout information is used to determine
+    /// When they are null then modules <see cref="BitcodeModule.Layout"/> target specific layout information is used to determine
     /// layout details. Setting the layout members of this class to non-null will override that behavior to define explicit
     /// layout details.</para>
     /// </remarks>
@@ -39,8 +39,8 @@ namespace Llvm.NET.DebugInfo
 
         /// <summary>Gets or sets the explicit layout information for this member</summary>
         /// <remarks>If this is null then
-        /// <see cref="DebugStructType.SetBody(bool, NativeModule, DIScope, DIFile, uint, DebugInfoFlags, System.Collections.Generic.IEnumerable{DebugMemberInfo})"/>
-        /// will default to using <see cref="NativeModule.Layout"/> to determine the size using the module's target specific layout.
+        /// <see cref="DebugStructType.SetBody(bool, BitcodeModule, DIScope, DIFile, uint, DebugInfoFlags, System.Collections.Generic.IEnumerable{DebugMemberInfo})"/>
+        /// will default to using <see cref="BitcodeModule.Layout"/> to determine the size using the module's target specific layout.
         /// <note type="note">
         /// If this property is provided (e.g. is not <see langword="null"/>) for any member of a type, then
         /// it must be set for all members. In other words explicit layout must be defined for all members

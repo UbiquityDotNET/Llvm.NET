@@ -21,19 +21,19 @@ namespace Llvm.NET
     /// A module is the basic unit for containing code in LLVM. Modules are an in memory
     /// representation of the LLVM bit-code.
     /// </remarks>
-    public sealed class NativeModule
+    public sealed class BitcodeModule
         : IDisposable
         , IExtensiblePropertyContainer
     {
         /// <summary>Creates an unnamed module without debug information</summary>
-        public NativeModule( )
+        public BitcodeModule( )
             : this( string.Empty, null )
         {
         }
 
         /// <summary>Creates a new module with the specified id in a new context</summary>
         /// <param name="moduleId">Module's ID</param>
-        public NativeModule( string moduleId )
+        public BitcodeModule( string moduleId )
             : this( moduleId, null )
         {
         }
@@ -41,7 +41,7 @@ namespace Llvm.NET
         /// <summary>Creates an named module in a given context</summary>
         /// <param name="moduleId">Module's ID</param>
         /// <param name="context">Context for the module</param>
-        public NativeModule( [CanBeNull] string moduleId, [CanBeNull] Context context )
+        public BitcodeModule( [CanBeNull] string moduleId, [CanBeNull] Context context )
         {
             if( moduleId == null )
             {
@@ -91,7 +91,7 @@ namespace Llvm.NET
         /// <param name="optimized">Flag to indicate if the module is optimized</param>
         /// <param name="flags">Additional flags</param>
         /// <param name="runtimeVersion">Runtime version if any (use 0 if the runtime version has no meaning)</param>
-        public NativeModule( string moduleId
+        public BitcodeModule( string moduleId
                            , SourceLanguage language
                            , string srcFilePath
                            , string producer
@@ -120,7 +120,7 @@ namespace Llvm.NET
         /// <param name="optimized">Flag to indicate if the module is optimized</param>
         /// <param name="compilationFlags">Additional flags</param>
         /// <param name="runtimeVersion">Runtime version if any (use 0 if the runtime version has no meaning)</param>
-        public NativeModule( string moduleId
+        public BitcodeModule( string moduleId
                            , Context context
                            , SourceLanguage language
                            , string srcFilePath
@@ -150,7 +150,7 @@ namespace Llvm.NET
             GC.SuppressFinalize( this );
         }
 
-        ~NativeModule( )
+        ~BitcodeModule( )
         {
             Dispose( false );
         }
@@ -281,7 +281,7 @@ namespace Llvm.NET
         /// when this method returns.
         /// </note>
         /// </remarks>
-        public void Link( NativeModule otherModule )
+        public void Link( BitcodeModule otherModule )
         {
             otherModule.ValidateNotNull( nameof( otherModule ) );
 
@@ -319,7 +319,7 @@ namespace Llvm.NET
         /// <returns>true if the verification succeeded and false if not.</returns>
         public bool Verify( out string errmsg )
         {
-            return NativeMethods.VerifyModule( ModuleHandle, LLVMVerifierFailureAction.LLVMReturnStatusAction, out errmsg );
+            return NativeMethods.VerifyModule( ModuleHandle, LLVMVerifierFailureAction.LLVMReturnStatusAction, out errmsg ).Succeeded;
         }
 
         /// <summary>Gets a function by name from this module</summary>
@@ -383,7 +383,7 @@ namespace Llvm.NET
         {
             path.ValidateNotNullOrWhiteSpace( nameof( path ) );
 
-            return NativeMethods.PrintModuleToFile( ModuleHandle, path, out errMsg );
+            return NativeMethods.PrintModuleToFile( ModuleHandle, path, out errMsg ).Succeeded;
         }
 
         /// <summary>Creates a string representation of the module</summary>
@@ -698,9 +698,9 @@ namespace Llvm.NET
 
         /// <summary>Clones the current module</summary>
         /// <returns>Cloned module</returns>
-        public NativeModule Clone( ) => new NativeModule( NativeMethods.CloneModule( ModuleHandle ) );
+        public BitcodeModule Clone( ) => new BitcodeModule( NativeMethods.CloneModule( ModuleHandle ) );
 
-        public NativeModule Clone( Context targetContext )
+        public BitcodeModule Clone( Context targetContext )
         {
             targetContext.ValidateNotNull( nameof( targetContext ) );
 
@@ -728,8 +728,8 @@ namespace Llvm.NET
         /// <summary>Load a bit-code module from a given file</summary>
         /// <param name="path">path of the file to load</param>
         /// <param name="context">Context to use for creating the module</param>
-        /// <returns>Loaded <see cref="NativeModule"/></returns>
-        public static NativeModule LoadFrom( string path, Context context )
+        /// <returns>Loaded <see cref="BitcodeModule"/></returns>
+        public static BitcodeModule LoadFrom( string path, Context context )
         {
             path.ValidateNotNullOrWhiteSpace( nameof( path ) );
             context.ValidateNotNull( nameof( context ) );
@@ -748,7 +748,7 @@ namespace Llvm.NET
         /// <summary>Load bit code from a memory buffer</summary>
         /// <param name="buffer">Buffer to load from</param>
         /// <param name="context">Context to load the module into</param>
-        /// <returns>Loaded <see cref="NativeModule"/></returns>
+        /// <returns>Loaded <see cref="BitcodeModule"/></returns>
         /// <remarks>
         /// This along with <see cref="WriteToBuffer"/> are useful for "cloning"
         /// a module from one context to another. This allows creation of multiple
@@ -756,7 +756,7 @@ namespace Llvm.NET
         /// single context in order to link them into a single final module for
         /// optimization.
         /// </remarks>
-        public static NativeModule LoadFrom( MemoryBuffer buffer, Context context )
+        public static BitcodeModule LoadFrom( MemoryBuffer buffer, Context context )
         {
             buffer.ValidateNotNull( nameof( buffer ) );
             context.ValidateNotNull( nameof( context ) );
@@ -769,7 +769,7 @@ namespace Llvm.NET
             return context.GetModuleFor( modRef );
         }
 
-        internal NativeModule( LLVMModuleRef handle )
+        internal BitcodeModule( LLVMModuleRef handle )
         {
             handle.Pointer.ValidateNotNull( nameof( handle ) );
 
@@ -781,7 +781,7 @@ namespace Llvm.NET
 
         internal LLVMModuleRef ModuleHandle { get; private set; }
 
-        internal static NativeModule FromHandle( LLVMModuleRef nativeHandle )
+        internal static BitcodeModule FromHandle( LLVMModuleRef nativeHandle )
         {
             nativeHandle.Pointer.ValidateNotNull( nameof( nativeHandle ) );
 

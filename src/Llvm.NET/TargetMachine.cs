@@ -55,10 +55,10 @@ namespace Llvm.NET
         }
 
         /// <summary>Generate code for the target machine from a module</summary>
-        /// <param name="module"><see cref="NativeModule"/> to generate the code from</param>
+        /// <param name="module"><see cref="BitcodeModule"/> to generate the code from</param>
         /// <param name="path">Path to the output file</param>
         /// <param name="fileType">Type of file to emit</param>
-        public void EmitToFile( NativeModule module, string path, CodeGenFileType fileType )
+        public void EmitToFile( BitcodeModule module, string path, CodeGenFileType fileType )
         {
             module.ValidateNotNull( nameof( module ) );
             path.ValidateNotNullOrWhiteSpace( nameof( path ) );
@@ -86,10 +86,10 @@ namespace Llvm.NET
         /// <param name="fileType">Type of file to generate into the buffer</param>
         /// <returns><see cref="MemoryBuffer"/> containing the generated code</returns>
         /// <remarks>
-        /// The <see cref="NativeModule.TargetTriple"/> must match the <see cref="Triple"/> for this
+        /// The <see cref="BitcodeModule.TargetTriple"/> must match the <see cref="Triple"/> for this
         /// target.
         /// </remarks>
-        public MemoryBuffer EmitToBuffer( NativeModule module, CodeGenFileType fileType )
+        public MemoryBuffer EmitToBuffer( BitcodeModule module, CodeGenFileType fileType )
         {
             module.ValidateNotNull( nameof( module ) );
             fileType.ValidateDefined( nameof( fileType ) );

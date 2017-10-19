@@ -80,7 +80,7 @@ function Find-MSBuild
 }
 
 function Invoke-msbuild([string]$project, [hashtable]$properties, [string[]]$targets, [string[]]$loggerArgs=@(), [string[]]$additionalArgs=@())
-{ 
+{
     $oldPath = $env:Path
     try
     {
@@ -134,7 +134,7 @@ function Get-BuildInformation($buildPaths)
 
     Write-Information "Computing Build information"
     Invoke-MSBuild -Targets GenerateVersionJson -Project $buildPaths.GenerateVersionProj -LoggerArgs $msbuildLoggerArgs
-    
+
     $semVer = get-content (Join-Path $buildPaths.BuildOutputPath GeneratedVersion.json) | ConvertFrom-Json
 
     return @{ FullBuildNumber = $semVer.FullBuildNumber
@@ -186,9 +186,9 @@ try
     Write-Information ($buildPaths | Format-Table | Out-String)
 
     if( Test-Path -PathType Container $buildPaths.BuildOutputPath )
-    { 
+    {
         Write-Information "Cleaning output folder from previous builds"
-        rd -Recurse -Force -Path $buildPaths.BuildOutputPath    
+        rd -Recurse -Force -Path $buildPaths.BuildOutputPath
     }
 
     md BuildOutput\NuGet\ | Out-Null
@@ -198,7 +198,7 @@ try
     {
         Update-AppVeyorBuild -Version $BuildInfo.FullBuildNumber
     }
-                                
+
     $packProperties = @{ version=$($BuildInfo.PackageVersion)
                          llvmversion=$($BuildInfo.LlvmVersion)
                          buildbinoutput=(normalize-path (Join-path $($buildPaths.BuildOutputPath) 'bin'))
@@ -226,9 +226,6 @@ try
 
     Write-Information "Building LibLLVM"
     Invoke-MSBuild -Targets Build -Project src\LibLLVM\MultiPlatformBuild.vcxproj -Properties $msBuildProperties -LoggerArgs $msbuildLoggerArgs
-
-    Write-Information "Building LibLLVM"
-    Invoke-MSBuild -Targets Pack -Project src\LibLLVM\LibLLVM.vcxproj -Properties $msBuildProperties -LoggerArgs $msbuildLoggerArgs
 
     Write-Information "Restoring NuGet Packages for Llvm.NET"
     Invoke-MSBuild -Targets Restore -Project src\Llvm.NET\Llvm.NET.csproj -Properties $msBuildProperties -LoggerArgs $msbuildLoggerArgs

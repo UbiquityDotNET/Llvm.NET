@@ -17,7 +17,7 @@ environment:
 
 skip_commits:
   files:
-    - 'docs\**'
+    - '**\*.md'
 
 init:
   - git config --global core.safecrlf false

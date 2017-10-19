@@ -18,7 +18,7 @@ namespace Llvm.NET.DebugInfo
         , INamedStructuralType
     {
         public DebugUnionType( IStructType llvmType
-                             , NativeModule module
+                             , BitcodeModule module
                              , DIScope scope
                              , string name
                              , DIFile file
@@ -63,7 +63,7 @@ namespace Llvm.NET.DebugInfo
             SetBody( module, scope, file, line, debugFlags, elements );
         }
 
-        public DebugUnionType( NativeModule module
+        public DebugUnionType( BitcodeModule module
                              , string nativeName
                              , DIScope scope
                              , string name
@@ -99,7 +99,7 @@ namespace Llvm.NET.DebugInfo
 
         public IReadOnlyList<DebugMemberInfo> DebugMembers { get; private set; }
 
-        public void SetBody( NativeModule module
+        public void SetBody( BitcodeModule module
                            , DIScope scope
                            , DIFile diFile
                            , uint line

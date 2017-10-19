@@ -17,7 +17,7 @@ namespace Llvm.NET.DebugInfo
         : DebugType<IStructType, DICompositeType>
         , IStructType
     {
-        public DebugStructType( NativeModule module
+        public DebugStructType( BitcodeModule module
                               , string nativeName
                               , DIScope scope
                               , string name
@@ -62,7 +62,7 @@ namespace Llvm.NET.DebugInfo
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage( "Microsoft.Design", "CA1062:Validate arguments of public methods", MessageId = "1", Justification = "ValidateNotNull" )]
         public DebugStructType( IStructType llvmType
-                              , NativeModule module
+                              , BitcodeModule module
                               , DIScope scope
                               , string name
                               , DIFile file
@@ -89,7 +89,7 @@ namespace Llvm.NET.DebugInfo
         }
 
         public DebugStructType( IStructType llvmType
-                              , NativeModule module
+                              , BitcodeModule module
                               , DIScope scope
                               , string name
                               , DIFile file
@@ -107,7 +107,7 @@ namespace Llvm.NET.DebugInfo
                                                           );
         }
 
-        public DebugStructType( NativeModule module
+        public DebugStructType( BitcodeModule module
                               , string nativeName
                               , DIScope scope
                               , string name
@@ -138,7 +138,7 @@ namespace Llvm.NET.DebugInfo
         }
 
         public void SetBody( bool packed
-                           , NativeModule module
+                           , BitcodeModule module
                            , DIScope scope
                            , DIFile diFile
                            , uint line
@@ -152,7 +152,7 @@ namespace Llvm.NET.DebugInfo
         }
 
         public void SetBody( bool packed
-                           , NativeModule module
+                           , BitcodeModule module
                            , DIScope scope
                            , DIFile diFile
                            , uint line
@@ -184,7 +184,7 @@ namespace Llvm.NET.DebugInfo
 
         public IReadOnlyList<DebugMemberInfo> DebugMembers { get; private set; }
 
-        private DIDerivedType CreateMemberType( NativeModule module, DebugMemberInfo memberInfo )
+        private DIDerivedType CreateMemberType( BitcodeModule module, DebugMemberInfo memberInfo )
         {
             UInt64 bitSize;
             UInt32 bitAlign;

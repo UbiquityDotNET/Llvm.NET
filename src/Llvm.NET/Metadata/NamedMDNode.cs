@@ -12,13 +12,14 @@ namespace Llvm.NET
     /// <remarks>Despite its name a NamedMDNode is not itself an MDNode.</remarks>
     public class NamedMDNode
     {
-        /* TODO: Enable retrieving the name from LibLLVM
-        // public string Name { get; }
+        /* TODO:
+        public string Name { get; }
+        public void AddOperand(MDNode node) {...}
         */
 
         public IReadOnlyList<MDNode> Operands { get; }
 
-        public NativeModule ParentModule => NativeModule.FromHandle( NativeMethods.NamedMDNodeGetParentModule( NativeHandle ) );
+        public BitcodeModule ParentModule => BitcodeModule.FromHandle( NativeMethods.NamedMDNodeGetParentModule( NativeHandle ) );
 
         internal NamedMDNode( LLVMNamedMDNodeRef nativeNode )
         {
@@ -39,6 +40,13 @@ namespace Llvm.NET
                     var nodeHanlde = NativeMethods.NamedMDNodeGetOperand( OwningNode.NativeHandle, (uint)index );
                     return LlvmMetadata.FromHandle<MDNode>( OwningNode.ParentModule.Context, nodeHanlde );
                 }
+
+                /* TODO:
+                set
+                {   index.VerifyRange(0, Count, nameof(index));
+                    NativeMethods.NamedMDNodeSetOperand( index, value.NativeHandle );
+                }
+                */
             }
 
             public int Count => (int)NativeMethods.NamedMDNodeGetNumOperands( OwningNode.NativeHandle );

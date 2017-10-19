@@ -13,5 +13,10 @@ namespace Llvm.NET
             : base( handle )
         {
         }
+
+        /*
+        public Context Context { get; }
+        public Value Value { get; }
+        */
     }
 }

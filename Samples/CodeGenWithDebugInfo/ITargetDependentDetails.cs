@@ -22,6 +22,6 @@ namespace TestDebugInfo
 
         void AddABIAttributesForByValueStructure( Function function, int paramIndex );
 
-        void AddModuleFlags( NativeModule module );
+        void AddModuleFlags( BitcodeModule module );
     }
 }

@@ -7,7 +7,7 @@ using Llvm.NET.Native;
 
 namespace Llvm.NET
 {
-    /// <summary>Enumeration to indicate the behavior of module level flags metadata sharing the same name in a <see cref="NativeModule"/></summary>
+    /// <summary>Enumeration to indicate the behavior of module level flags metadata sharing the same name in a <see cref="BitcodeModule"/></summary>
     [SuppressMessage( "Microsoft.Naming"
                     , "CA1726:UsePreferredTerms"
                     , MessageId = "Flag"

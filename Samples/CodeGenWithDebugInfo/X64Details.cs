@@ -30,7 +30,7 @@ namespace TestDebugInfo
             }
         }
 
-        public void AddModuleFlags( NativeModule module )
+        public void AddModuleFlags( BitcodeModule module )
         {
             module.AddModuleFlag( ModuleFlagBehavior.Error, "PIC Level", 2 );
         }

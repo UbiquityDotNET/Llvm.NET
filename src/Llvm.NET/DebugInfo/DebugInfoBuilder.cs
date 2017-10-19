@@ -16,7 +16,7 @@ using Llvm.NET.Values;
 namespace Llvm.NET.DebugInfo
 {
     /// <summary>DebugInfoBuilder is a factory class for creating DebugInformation for an LLVM
-    /// <see cref="NativeModule"/></summary>
+    /// <see cref="BitcodeModule"/></summary>
     /// <remarks>
     /// Many Debug information metadata nodes are created with unresolved references to additional
     /// metadata. To ensure such metadata is resolved applications should call the <see cref="Finish"/>
@@ -28,7 +28,7 @@ namespace Llvm.NET.DebugInfo
         : IDisposable
     {
         /// <summary>Gets the module that owns this builder</summary>
-        public NativeModule OwningModule { get; }
+        public BitcodeModule OwningModule { get; }
 
         /// <summary>Creates a new <see cref="DICompileUnit"/></summary>
         /// <param name="language"><see cref="SourceLanguage"/> for the compilation unit</param>
@@ -1100,7 +1100,7 @@ namespace Llvm.NET.DebugInfo
             }
         }
 
-        internal DebugInfoBuilder( NativeModule owningModule )
+        internal DebugInfoBuilder( BitcodeModule owningModule )
             : this( owningModule, true )
         {
         }
@@ -1109,7 +1109,7 @@ namespace Llvm.NET.DebugInfo
 
         // keeping this private for now as there doesn't seem to be a good reason to support
         // allowUnresolved == false
-        private DebugInfoBuilder( NativeModule owningModule, bool allowUnresolved )
+        private DebugInfoBuilder( BitcodeModule owningModule, bool allowUnresolved )
         {
             if( owningModule == null )
             {

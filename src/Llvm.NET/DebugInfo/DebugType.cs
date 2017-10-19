@@ -9,6 +9,8 @@ using Llvm.NET.Types;
 using Llvm.NET.Values;
 using Ubiquity.ArgValidators;
 
+#pragma warning disable SA1649 // File name must match first type ( Interface + Impl )
+
 namespace Llvm.NET.DebugInfo
 {
     /// <summary>Provides pairing of a <see cref="ITypeRef"/> with a <see cref="DIType"/> for function signatures</summary>
@@ -128,7 +130,7 @@ namespace Llvm.NET.DebugInfo
 
         public IPointerType CreatePointerType( uint addressSpace ) => NativeType.CreatePointerType( addressSpace );
 
-        public DebugPointerType CreatePointerType( NativeModule module, uint addressSpace )
+        public DebugPointerType CreatePointerType( BitcodeModule module, uint addressSpace )
         {
             if( DIType == null )
             {
@@ -139,7 +141,7 @@ namespace Llvm.NET.DebugInfo
             return new DebugPointerType( nativePointer, module, DIType, string.Empty );
         }
 
-        public DebugArrayType CreateArrayType( NativeModule module, uint lowerBound, uint count )
+        public DebugArrayType CreateArrayType( BitcodeModule module, uint lowerBound, uint count )
         {
             if( DIType == null )
             {

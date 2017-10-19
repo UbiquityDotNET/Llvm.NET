@@ -83,7 +83,7 @@ namespace Llvm.NET
         {
             targetTriple.ValidateNotNullOrWhiteSpace( nameof( targetTriple ) );
 
-            if( !NativeMethods.GetTargetFromTriple( targetTriple, out LLVMTargetRef targetHandle, out string errorMessag ) )
+            if( NativeMethods.GetTargetFromTriple( targetTriple, out LLVMTargetRef targetHandle, out string errorMessag ).Failed )
             {
                 throw new InternalCodeGeneratorException( errorMessag );
             }

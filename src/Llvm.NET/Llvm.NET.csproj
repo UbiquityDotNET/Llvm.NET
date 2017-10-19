@@ -67,6 +67,7 @@
         <Compile Include="ExtensiblePropertyContainer.cs" />
         <Compile Include="ExtensiblePropertyDescriptor.cs" />
         <Compile Include="Instructions\InstructionExtensions.cs" />
+        <Compile Include="Metadata\LlvmMetadata.cs" />
         <Compile Include="Metadata\MDNodeOperandList.cs" />
         <Compile Include="EnumerableExtensions.cs" />
         <Compile Include="Instructions\AddressSpaceCast.cs" />
@@ -87,7 +88,7 @@
         <Compile Include="Instructions\InsertElement.cs" />
         <Compile Include="Instructions\Invoke.cs" />
         <Compile Include="Instructions\LandingPad.cs" />
-        <Compile Include="Instructions\Resume.cs" />
+        <Compile Include="Instructions\ResumeInstruction.cs" />
         <Compile Include="Instructions\Select.cs" />
         <Compile Include="Instructions\ShuffleVector.cs" />
         <Compile Include="Instructions\SIToFP.cs" />
@@ -115,7 +116,6 @@
         <Compile Include="Metadata\MDOperand.cs" />
         <Compile Include="Metadata\MDString.cs" />
         <Compile Include="Metadata\MDTuple.cs" />
-        <Compile Include="Metadata\Metadata.cs" />
         <Compile Include="Metadata\MetadataAsValue.cs" />
         <Compile Include="Metadata\ValueAsMetadata.cs" />
         <Compile Include="Metadata\NamedMDNode.cs" />
@@ -125,7 +125,7 @@
         <Compile Include="Types\ITypeRef.cs" />
         <Compile Include="Values\Argument.cs" />
         <Compile Include="Types\ArrayType.cs" />
-        <Compile Include="Values\AttributeKind.cs" />
+        <Compile Include="Values\AttributeKindExtensions.cs" />
         <Compile Include="Values\AttributeContainerMixins.cs" />
         <Compile Include="Values\AttributeValue.cs" />
         <Compile Include="Values\BasicBlock.cs" />
@@ -142,7 +142,7 @@
         <Compile Include="Values\ConstantStruct.cs" />
         <Compile Include="Values\ConstantTokenNone.cs" />
         <Compile Include="Values\ConstantVector.cs" />
-        <Compile Include="Values\ConstPointerNull.cs" />
+        <Compile Include="Values\ConstantPointerNull.cs" />
         <Compile Include="Context.cs" />
         <Compile Include="DebugInfo\DebugInfoBuilder.cs" />
         <Compile Include="DebugInfo\DwarfEnumerations.cs" />
@@ -164,7 +164,7 @@
         <Compile Include="Instructions\BinaryOperator.cs" />
         <Compile Include="Instructions\BitCast.cs" />
         <Compile Include="Instructions\Branch.cs" />
-        <Compile Include="Instructions\Call.cs" />
+        <Compile Include="Instructions\CallInstruction.cs" />
         <Compile Include="Instructions\Cast.cs" />
         <Compile Include="Instructions\Cmp.cs" />
         <Compile Include="Instructions\DebugDeclare.cs" />
@@ -184,7 +184,7 @@
         <Compile Include="Instructions\MemSet.cs" />
         <Compile Include="Instructions\PhiNode.cs" />
         <Compile Include="Instructions\PointerToInt.cs" />
-        <Compile Include="Instructions\Return.cs" />
+        <Compile Include="Instructions\ReturnInstruction.cs" />
         <Compile Include="Instructions\SignExtend.cs" />
         <Compile Include="Instructions\Store.cs" />
         <Compile Include="Instructions\Terminator.cs" />
@@ -194,7 +194,7 @@
         <Compile Include="Native\Generated.cs" />
         <Compile Include="Native\CustomGenerated.cs" />
         <Compile Include="MemoryBuffer.cs" />
-        <Compile Include="Module.cs" />
+        <Compile Include="BitcodeModule.cs" />
         <Compile Include="Values\FunctionParameterList.cs" />
         <Compile Include="Properties\AssemblyInfo.cs" />
         <Compile Include="Types\SequenceType.cs" />
@@ -204,14 +204,14 @@
         <Compile Include="TargetMachine.cs" />
         <Compile Include="DataLayout.cs" />
         <Compile Include="Types\TypeRef.cs" />
-        <Compile Include="Values\IAttributeDictionary.cs" />
+        <Compile Include="Values\AttributeCollectionExtensions.cs" />
         <Compile Include="Values\InlineAsm.cs" />
         <Compile Include="Values\IAttributeAccessor.cs" />
         <Compile Include="Values\UndefValue.cs" />
         <Compile Include="Values\Use.cs" />
         <Compile Include="Values\User.cs" />
         <Compile Include="Values\UserOperandList.cs" />
-        <Compile Include="Values\ValuAttributeCollection.cs" />
+        <Compile Include="Values\ValueAttributeCollection.cs" />
         <Compile Include="Values\Value.cs" />
         <Compile Include="Types\PointerType.cs" />
         <Compile Include="Types\VectorType.cs" />
