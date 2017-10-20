@@ -7,6 +7,600 @@ references:
   commentId: N:Llvm.NET
   fullName: Llvm.NET
   nameWithType: Llvm.NET
+- uid: Llvm.NET.BitcodeModule
+  name: BitcodeModule
+  href: api/Llvm.NET.BitcodeModule.html
+  commentId: T:Llvm.NET.BitcodeModule
+  fullName: Llvm.NET.BitcodeModule
+  nameWithType: BitcodeModule
+- uid: Llvm.NET.BitcodeModule.#ctor
+  name: BitcodeModule()
+  href: api/Llvm.NET.BitcodeModule.-ctor.html#Llvm_NET_BitcodeModule__ctor
+  commentId: M:Llvm.NET.BitcodeModule.#ctor
+  fullName: Llvm.NET.BitcodeModule.BitcodeModule()
+  nameWithType: BitcodeModule.BitcodeModule()
+- uid: Llvm.NET.BitcodeModule.#ctor(System.String)
+  name: BitcodeModule(String)
+  href: api/Llvm.NET.BitcodeModule.-ctor.html#Llvm_NET_BitcodeModule__ctor_System_String_
+  commentId: M:Llvm.NET.BitcodeModule.#ctor(System.String)
+  fullName: Llvm.NET.BitcodeModule.BitcodeModule(System.String)
+  nameWithType: BitcodeModule.BitcodeModule(String)
+- uid: Llvm.NET.BitcodeModule.#ctor(System.String,Llvm.NET.Context)
+  name: BitcodeModule(String, Context)
+  href: api/Llvm.NET.BitcodeModule.-ctor.html#Llvm_NET_BitcodeModule__ctor_System_String_Llvm_NET_Context_
+  commentId: M:Llvm.NET.BitcodeModule.#ctor(System.String,Llvm.NET.Context)
+  fullName: Llvm.NET.BitcodeModule.BitcodeModule(System.String, Llvm.NET.Context)
+  nameWithType: BitcodeModule.BitcodeModule(String, Context)
+- uid: Llvm.NET.BitcodeModule.#ctor(System.String,Llvm.NET.Context,Llvm.NET.DebugInfo.SourceLanguage,System.String,System.String,System.Boolean,System.String,System.UInt32)
+  name: BitcodeModule(String, Context, SourceLanguage, String, String, Boolean, String, UInt32)
+  href: api/Llvm.NET.BitcodeModule.-ctor.html#Llvm_NET_BitcodeModule__ctor_System_String_Llvm_NET_Context_Llvm_NET_DebugInfo_SourceLanguage_System_String_System_String_System_Boolean_System_String_System_UInt32_
+  commentId: M:Llvm.NET.BitcodeModule.#ctor(System.String,Llvm.NET.Context,Llvm.NET.DebugInfo.SourceLanguage,System.String,System.String,System.Boolean,System.String,System.UInt32)
+  fullName: Llvm.NET.BitcodeModule.BitcodeModule(System.String, Llvm.NET.Context, Llvm.NET.DebugInfo.SourceLanguage, System.String, System.String, System.Boolean, System.String, System.UInt32)
+  nameWithType: BitcodeModule.BitcodeModule(String, Context, SourceLanguage, String, String, Boolean, String, UInt32)
+- uid: Llvm.NET.BitcodeModule.#ctor(System.String,Llvm.NET.DebugInfo.SourceLanguage,System.String,System.String,System.Boolean,System.String,System.UInt32)
+  name: BitcodeModule(String, SourceLanguage, String, String, Boolean, String, UInt32)
+  href: api/Llvm.NET.BitcodeModule.-ctor.html#Llvm_NET_BitcodeModule__ctor_System_String_Llvm_NET_DebugInfo_SourceLanguage_System_String_System_String_System_Boolean_System_String_System_UInt32_
+  commentId: M:Llvm.NET.BitcodeModule.#ctor(System.String,Llvm.NET.DebugInfo.SourceLanguage,System.String,System.String,System.Boolean,System.String,System.UInt32)
+  fullName: Llvm.NET.BitcodeModule.BitcodeModule(System.String, Llvm.NET.DebugInfo.SourceLanguage, System.String, System.String, System.Boolean, System.String, System.UInt32)
+  nameWithType: BitcodeModule.BitcodeModule(String, SourceLanguage, String, String, Boolean, String, UInt32)
+- uid: Llvm.NET.BitcodeModule.#ctor*
+  name: BitcodeModule
+  href: api/Llvm.NET.BitcodeModule.-ctor.html
+  commentId: Overload:Llvm.NET.BitcodeModule.#ctor
+  fullName: Llvm.NET.BitcodeModule.BitcodeModule
+  nameWithType: BitcodeModule.BitcodeModule
+- uid: Llvm.NET.BitcodeModule.AddAlias(Llvm.NET.Values.Value,System.String)
+  name: AddAlias(Value, String)
+  href: api/Llvm.NET.BitcodeModule.AddAlias.html#Llvm_NET_BitcodeModule_AddAlias_Llvm_NET_Values_Value_System_String_
+  commentId: M:Llvm.NET.BitcodeModule.AddAlias(Llvm.NET.Values.Value,System.String)
+  fullName: Llvm.NET.BitcodeModule.AddAlias(Llvm.NET.Values.Value, System.String)
+  nameWithType: BitcodeModule.AddAlias(Value, String)
+- uid: Llvm.NET.BitcodeModule.AddAlias*
+  name: AddAlias
+  href: api/Llvm.NET.BitcodeModule.AddAlias.html
+  commentId: Overload:Llvm.NET.BitcodeModule.AddAlias
+  fullName: Llvm.NET.BitcodeModule.AddAlias
+  nameWithType: BitcodeModule.AddAlias
+- uid: Llvm.NET.BitcodeModule.AddFunction(System.String,Llvm.NET.Types.IFunctionType)
+  name: AddFunction(String, IFunctionType)
+  href: api/Llvm.NET.BitcodeModule.AddFunction.html#Llvm_NET_BitcodeModule_AddFunction_System_String_Llvm_NET_Types_IFunctionType_
+  commentId: M:Llvm.NET.BitcodeModule.AddFunction(System.String,Llvm.NET.Types.IFunctionType)
+  fullName: Llvm.NET.BitcodeModule.AddFunction(System.String, Llvm.NET.Types.IFunctionType)
+  nameWithType: BitcodeModule.AddFunction(String, IFunctionType)
+- uid: Llvm.NET.BitcodeModule.AddFunction*
+  name: AddFunction
+  href: api/Llvm.NET.BitcodeModule.AddFunction.html
+  commentId: Overload:Llvm.NET.BitcodeModule.AddFunction
+  fullName: Llvm.NET.BitcodeModule.AddFunction
+  nameWithType: BitcodeModule.AddFunction
+- uid: Llvm.NET.BitcodeModule.AddGlobal(Llvm.NET.Types.ITypeRef,System.Boolean,Llvm.NET.Linkage,Llvm.NET.Values.Constant)
+  name: AddGlobal(ITypeRef, Boolean, Linkage, Constant)
+  href: api/Llvm.NET.BitcodeModule.AddGlobal.html#Llvm_NET_BitcodeModule_AddGlobal_Llvm_NET_Types_ITypeRef_System_Boolean_Llvm_NET_Linkage_Llvm_NET_Values_Constant_
+  commentId: M:Llvm.NET.BitcodeModule.AddGlobal(Llvm.NET.Types.ITypeRef,System.Boolean,Llvm.NET.Linkage,Llvm.NET.Values.Constant)
+  fullName: Llvm.NET.BitcodeModule.AddGlobal(Llvm.NET.Types.ITypeRef, System.Boolean, Llvm.NET.Linkage, Llvm.NET.Values.Constant)
+  nameWithType: BitcodeModule.AddGlobal(ITypeRef, Boolean, Linkage, Constant)
+- uid: Llvm.NET.BitcodeModule.AddGlobal(Llvm.NET.Types.ITypeRef,System.Boolean,Llvm.NET.Linkage,Llvm.NET.Values.Constant,System.String)
+  name: AddGlobal(ITypeRef, Boolean, Linkage, Constant, String)
+  href: api/Llvm.NET.BitcodeModule.AddGlobal.html#Llvm_NET_BitcodeModule_AddGlobal_Llvm_NET_Types_ITypeRef_System_Boolean_Llvm_NET_Linkage_Llvm_NET_Values_Constant_System_String_
+  commentId: M:Llvm.NET.BitcodeModule.AddGlobal(Llvm.NET.Types.ITypeRef,System.Boolean,Llvm.NET.Linkage,Llvm.NET.Values.Constant,System.String)
+  fullName: Llvm.NET.BitcodeModule.AddGlobal(Llvm.NET.Types.ITypeRef, System.Boolean, Llvm.NET.Linkage, Llvm.NET.Values.Constant, System.String)
+  nameWithType: BitcodeModule.AddGlobal(ITypeRef, Boolean, Linkage, Constant, String)
+- uid: Llvm.NET.BitcodeModule.AddGlobal(Llvm.NET.Types.ITypeRef,System.String)
+  name: AddGlobal(ITypeRef, String)
+  href: api/Llvm.NET.BitcodeModule.AddGlobal.html#Llvm_NET_BitcodeModule_AddGlobal_Llvm_NET_Types_ITypeRef_System_String_
+  commentId: M:Llvm.NET.BitcodeModule.AddGlobal(Llvm.NET.Types.ITypeRef,System.String)
+  fullName: Llvm.NET.BitcodeModule.AddGlobal(Llvm.NET.Types.ITypeRef, System.String)
+  nameWithType: BitcodeModule.AddGlobal(ITypeRef, String)
+- uid: Llvm.NET.BitcodeModule.AddGlobal*
+  name: AddGlobal
+  href: api/Llvm.NET.BitcodeModule.AddGlobal.html
+  commentId: Overload:Llvm.NET.BitcodeModule.AddGlobal
+  fullName: Llvm.NET.BitcodeModule.AddGlobal
+  nameWithType: BitcodeModule.AddGlobal
+- uid: Llvm.NET.BitcodeModule.AddGlobalInAddressSpace(System.UInt32,Llvm.NET.Types.ITypeRef,System.Boolean,Llvm.NET.Linkage,Llvm.NET.Values.Constant)
+  name: AddGlobalInAddressSpace(UInt32, ITypeRef, Boolean, Linkage, Constant)
+  href: api/Llvm.NET.BitcodeModule.AddGlobalInAddressSpace.html#Llvm_NET_BitcodeModule_AddGlobalInAddressSpace_System_UInt32_Llvm_NET_Types_ITypeRef_System_Boolean_Llvm_NET_Linkage_Llvm_NET_Values_Constant_
+  commentId: M:Llvm.NET.BitcodeModule.AddGlobalInAddressSpace(System.UInt32,Llvm.NET.Types.ITypeRef,System.Boolean,Llvm.NET.Linkage,Llvm.NET.Values.Constant)
+  fullName: Llvm.NET.BitcodeModule.AddGlobalInAddressSpace(System.UInt32, Llvm.NET.Types.ITypeRef, System.Boolean, Llvm.NET.Linkage, Llvm.NET.Values.Constant)
+  nameWithType: BitcodeModule.AddGlobalInAddressSpace(UInt32, ITypeRef, Boolean, Linkage, Constant)
+- uid: Llvm.NET.BitcodeModule.AddGlobalInAddressSpace(System.UInt32,Llvm.NET.Types.ITypeRef,System.Boolean,Llvm.NET.Linkage,Llvm.NET.Values.Constant,System.String)
+  name: AddGlobalInAddressSpace(UInt32, ITypeRef, Boolean, Linkage, Constant, String)
+  href: api/Llvm.NET.BitcodeModule.AddGlobalInAddressSpace.html#Llvm_NET_BitcodeModule_AddGlobalInAddressSpace_System_UInt32_Llvm_NET_Types_ITypeRef_System_Boolean_Llvm_NET_Linkage_Llvm_NET_Values_Constant_System_String_
+  commentId: M:Llvm.NET.BitcodeModule.AddGlobalInAddressSpace(System.UInt32,Llvm.NET.Types.ITypeRef,System.Boolean,Llvm.NET.Linkage,Llvm.NET.Values.Constant,System.String)
+  fullName: Llvm.NET.BitcodeModule.AddGlobalInAddressSpace(System.UInt32, Llvm.NET.Types.ITypeRef, System.Boolean, Llvm.NET.Linkage, Llvm.NET.Values.Constant, System.String)
+  nameWithType: BitcodeModule.AddGlobalInAddressSpace(UInt32, ITypeRef, Boolean, Linkage, Constant, String)
+- uid: Llvm.NET.BitcodeModule.AddGlobalInAddressSpace(System.UInt32,Llvm.NET.Types.ITypeRef,System.String)
+  name: AddGlobalInAddressSpace(UInt32, ITypeRef, String)
+  href: api/Llvm.NET.BitcodeModule.AddGlobalInAddressSpace.html#Llvm_NET_BitcodeModule_AddGlobalInAddressSpace_System_UInt32_Llvm_NET_Types_ITypeRef_System_String_
+  commentId: M:Llvm.NET.BitcodeModule.AddGlobalInAddressSpace(System.UInt32,Llvm.NET.Types.ITypeRef,System.String)
+  fullName: Llvm.NET.BitcodeModule.AddGlobalInAddressSpace(System.UInt32, Llvm.NET.Types.ITypeRef, System.String)
+  nameWithType: BitcodeModule.AddGlobalInAddressSpace(UInt32, ITypeRef, String)
+- uid: Llvm.NET.BitcodeModule.AddGlobalInAddressSpace*
+  name: AddGlobalInAddressSpace
+  href: api/Llvm.NET.BitcodeModule.AddGlobalInAddressSpace.html
+  commentId: Overload:Llvm.NET.BitcodeModule.AddGlobalInAddressSpace
+  fullName: Llvm.NET.BitcodeModule.AddGlobalInAddressSpace
+  nameWithType: BitcodeModule.AddGlobalInAddressSpace
+- uid: Llvm.NET.BitcodeModule.AddModuleFlag(Llvm.NET.ModuleFlagBehavior,System.String,Llvm.NET.LlvmMetadata)
+  name: AddModuleFlag(ModuleFlagBehavior, String, LlvmMetadata)
+  href: api/Llvm.NET.BitcodeModule.AddModuleFlag.html#Llvm_NET_BitcodeModule_AddModuleFlag_Llvm_NET_ModuleFlagBehavior_System_String_Llvm_NET_LlvmMetadata_
+  commentId: M:Llvm.NET.BitcodeModule.AddModuleFlag(Llvm.NET.ModuleFlagBehavior,System.String,Llvm.NET.LlvmMetadata)
+  fullName: Llvm.NET.BitcodeModule.AddModuleFlag(Llvm.NET.ModuleFlagBehavior, System.String, Llvm.NET.LlvmMetadata)
+  nameWithType: BitcodeModule.AddModuleFlag(ModuleFlagBehavior, String, LlvmMetadata)
+- uid: Llvm.NET.BitcodeModule.AddModuleFlag(Llvm.NET.ModuleFlagBehavior,System.String,System.UInt32)
+  name: AddModuleFlag(ModuleFlagBehavior, String, UInt32)
+  href: api/Llvm.NET.BitcodeModule.AddModuleFlag.html#Llvm_NET_BitcodeModule_AddModuleFlag_Llvm_NET_ModuleFlagBehavior_System_String_System_UInt32_
+  commentId: M:Llvm.NET.BitcodeModule.AddModuleFlag(Llvm.NET.ModuleFlagBehavior,System.String,System.UInt32)
+  fullName: Llvm.NET.BitcodeModule.AddModuleFlag(Llvm.NET.ModuleFlagBehavior, System.String, System.UInt32)
+  nameWithType: BitcodeModule.AddModuleFlag(ModuleFlagBehavior, String, UInt32)
+- uid: Llvm.NET.BitcodeModule.AddModuleFlag*
+  name: AddModuleFlag
+  href: api/Llvm.NET.BitcodeModule.AddModuleFlag.html
+  commentId: Overload:Llvm.NET.BitcodeModule.AddModuleFlag
+  fullName: Llvm.NET.BitcodeModule.AddModuleFlag
+  nameWithType: BitcodeModule.AddModuleFlag
+- uid: Llvm.NET.BitcodeModule.AddNamedMetadataOperand(System.String,Llvm.NET.LlvmMetadata)
+  name: AddNamedMetadataOperand(String, LlvmMetadata)
+  href: api/Llvm.NET.BitcodeModule.AddNamedMetadataOperand.html#Llvm_NET_BitcodeModule_AddNamedMetadataOperand_System_String_Llvm_NET_LlvmMetadata_
+  commentId: M:Llvm.NET.BitcodeModule.AddNamedMetadataOperand(System.String,Llvm.NET.LlvmMetadata)
+  fullName: Llvm.NET.BitcodeModule.AddNamedMetadataOperand(System.String, Llvm.NET.LlvmMetadata)
+  nameWithType: BitcodeModule.AddNamedMetadataOperand(String, LlvmMetadata)
+- uid: Llvm.NET.BitcodeModule.AddNamedMetadataOperand*
+  name: AddNamedMetadataOperand
+  href: api/Llvm.NET.BitcodeModule.AddNamedMetadataOperand.html
+  commentId: Overload:Llvm.NET.BitcodeModule.AddNamedMetadataOperand
+  fullName: Llvm.NET.BitcodeModule.AddNamedMetadataOperand
+  nameWithType: BitcodeModule.AddNamedMetadataOperand
+- uid: Llvm.NET.BitcodeModule.AddVersionIdentMetadata(System.String)
+  name: AddVersionIdentMetadata(String)
+  href: api/Llvm.NET.BitcodeModule.AddVersionIdentMetadata.html#Llvm_NET_BitcodeModule_AddVersionIdentMetadata_System_String_
+  commentId: M:Llvm.NET.BitcodeModule.AddVersionIdentMetadata(System.String)
+  fullName: Llvm.NET.BitcodeModule.AddVersionIdentMetadata(System.String)
+  nameWithType: BitcodeModule.AddVersionIdentMetadata(String)
+- uid: Llvm.NET.BitcodeModule.AddVersionIdentMetadata*
+  name: AddVersionIdentMetadata
+  href: api/Llvm.NET.BitcodeModule.AddVersionIdentMetadata.html
+  commentId: Overload:Llvm.NET.BitcodeModule.AddVersionIdentMetadata
+  fullName: Llvm.NET.BitcodeModule.AddVersionIdentMetadata
+  nameWithType: BitcodeModule.AddVersionIdentMetadata
+- uid: Llvm.NET.BitcodeModule.Clone
+  name: Clone()
+  href: api/Llvm.NET.BitcodeModule.Clone.html#Llvm_NET_BitcodeModule_Clone
+  commentId: M:Llvm.NET.BitcodeModule.Clone
+  fullName: Llvm.NET.BitcodeModule.Clone()
+  nameWithType: BitcodeModule.Clone()
+- uid: Llvm.NET.BitcodeModule.Clone(Llvm.NET.Context)
+  name: Clone(Context)
+  href: api/Llvm.NET.BitcodeModule.Clone.html#Llvm_NET_BitcodeModule_Clone_Llvm_NET_Context_
+  commentId: M:Llvm.NET.BitcodeModule.Clone(Llvm.NET.Context)
+  fullName: Llvm.NET.BitcodeModule.Clone(Llvm.NET.Context)
+  nameWithType: BitcodeModule.Clone(Context)
+- uid: Llvm.NET.BitcodeModule.Clone*
+  name: Clone
+  href: api/Llvm.NET.BitcodeModule.Clone.html
+  commentId: Overload:Llvm.NET.BitcodeModule.Clone
+  fullName: Llvm.NET.BitcodeModule.Clone
+  nameWithType: BitcodeModule.Clone
+- uid: Llvm.NET.BitcodeModule.Comdats
+  name: Comdats
+  href: api/Llvm.NET.BitcodeModule.Comdats.html#Llvm_NET_BitcodeModule_Comdats
+  commentId: P:Llvm.NET.BitcodeModule.Comdats
+  fullName: Llvm.NET.BitcodeModule.Comdats
+  nameWithType: BitcodeModule.Comdats
+- uid: Llvm.NET.BitcodeModule.Comdats*
+  name: Comdats
+  href: api/Llvm.NET.BitcodeModule.Comdats.html
+  commentId: Overload:Llvm.NET.BitcodeModule.Comdats
+  fullName: Llvm.NET.BitcodeModule.Comdats
+  nameWithType: BitcodeModule.Comdats
+- uid: Llvm.NET.BitcodeModule.Context
+  name: Context
+  href: api/Llvm.NET.BitcodeModule.Context.html#Llvm_NET_BitcodeModule_Context
+  commentId: P:Llvm.NET.BitcodeModule.Context
+  fullName: Llvm.NET.BitcodeModule.Context
+  nameWithType: BitcodeModule.Context
+- uid: Llvm.NET.BitcodeModule.Context*
+  name: Context
+  href: api/Llvm.NET.BitcodeModule.Context.html
+  commentId: Overload:Llvm.NET.BitcodeModule.Context
+  fullName: Llvm.NET.BitcodeModule.Context
+  nameWithType: BitcodeModule.Context
+- uid: Llvm.NET.BitcodeModule.CreateFunction(Llvm.NET.DebugInfo.DIScope,System.String,System.String,Llvm.NET.DebugInfo.DIFile,System.UInt32,Llvm.NET.DebugInfo.DebugFunctionType,System.Boolean,System.Boolean,System.UInt32,Llvm.NET.DebugInfo.DebugInfoFlags,System.Boolean,Llvm.NET.MDNode,Llvm.NET.MDNode)
+  name: CreateFunction(DIScope, String, String, DIFile, UInt32, DebugFunctionType, Boolean, Boolean, UInt32, DebugInfoFlags, Boolean, MDNode, MDNode)
+  href: api/Llvm.NET.BitcodeModule.CreateFunction.html#Llvm_NET_BitcodeModule_CreateFunction_Llvm_NET_DebugInfo_DIScope_System_String_System_String_Llvm_NET_DebugInfo_DIFile_System_UInt32_Llvm_NET_DebugInfo_DebugFunctionType_System_Boolean_System_Boolean_System_UInt32_Llvm_NET_DebugInfo_DebugInfoFlags_System_Boolean_Llvm_NET_MDNode_Llvm_NET_MDNode_
+  commentId: M:Llvm.NET.BitcodeModule.CreateFunction(Llvm.NET.DebugInfo.DIScope,System.String,System.String,Llvm.NET.DebugInfo.DIFile,System.UInt32,Llvm.NET.DebugInfo.DebugFunctionType,System.Boolean,System.Boolean,System.UInt32,Llvm.NET.DebugInfo.DebugInfoFlags,System.Boolean,Llvm.NET.MDNode,Llvm.NET.MDNode)
+  fullName: Llvm.NET.BitcodeModule.CreateFunction(Llvm.NET.DebugInfo.DIScope, System.String, System.String, Llvm.NET.DebugInfo.DIFile, System.UInt32, Llvm.NET.DebugInfo.DebugFunctionType, System.Boolean, System.Boolean, System.UInt32, Llvm.NET.DebugInfo.DebugInfoFlags, System.Boolean, Llvm.NET.MDNode, Llvm.NET.MDNode)
+  nameWithType: BitcodeModule.CreateFunction(DIScope, String, String, DIFile, UInt32, DebugFunctionType, Boolean, Boolean, UInt32, DebugInfoFlags, Boolean, MDNode, MDNode)
+- uid: Llvm.NET.BitcodeModule.CreateFunction(System.String,System.Boolean,Llvm.NET.DebugInfo.IDebugType{Llvm.NET.Types.ITypeRef,Llvm.NET.DebugInfo.DIType},Llvm.NET.DebugInfo.IDebugType{Llvm.NET.Types.ITypeRef,Llvm.NET.DebugInfo.DIType}[])
+  name: CreateFunction(String, Boolean, IDebugType<ITypeRef, DIType>, IDebugType<ITypeRef, DIType>[])
+  href: api/Llvm.NET.BitcodeModule.CreateFunction.html#Llvm_NET_BitcodeModule_CreateFunction_System_String_System_Boolean_Llvm_NET_DebugInfo_IDebugType_Llvm_NET_Types_ITypeRef_Llvm_NET_DebugInfo_DIType__Llvm_NET_DebugInfo_IDebugType_Llvm_NET_Types_ITypeRef_Llvm_NET_DebugInfo_DIType____
+  commentId: M:Llvm.NET.BitcodeModule.CreateFunction(System.String,System.Boolean,Llvm.NET.DebugInfo.IDebugType{Llvm.NET.Types.ITypeRef,Llvm.NET.DebugInfo.DIType},Llvm.NET.DebugInfo.IDebugType{Llvm.NET.Types.ITypeRef,Llvm.NET.DebugInfo.DIType}[])
+  name.vb: CreateFunction(String, Boolean, IDebugType(Of ITypeRef, DIType), IDebugType(Of ITypeRef, DIType)())
+  fullName: Llvm.NET.BitcodeModule.CreateFunction(System.String, System.Boolean, Llvm.NET.DebugInfo.IDebugType<Llvm.NET.Types.ITypeRef, Llvm.NET.DebugInfo.DIType>, Llvm.NET.DebugInfo.IDebugType<Llvm.NET.Types.ITypeRef, Llvm.NET.DebugInfo.DIType>[])
+  fullName.vb: Llvm.NET.BitcodeModule.CreateFunction(System.String, System.Boolean, Llvm.NET.DebugInfo.IDebugType(Of Llvm.NET.Types.ITypeRef, Llvm.NET.DebugInfo.DIType), Llvm.NET.DebugInfo.IDebugType(Of Llvm.NET.Types.ITypeRef, Llvm.NET.DebugInfo.DIType)())
+  nameWithType: BitcodeModule.CreateFunction(String, Boolean, IDebugType<ITypeRef, DIType>, IDebugType<ITypeRef, DIType>[])
+  nameWithType.vb: BitcodeModule.CreateFunction(String, Boolean, IDebugType(Of ITypeRef, DIType), IDebugType(Of ITypeRef, DIType)())
+- uid: Llvm.NET.BitcodeModule.CreateFunction*
+  name: CreateFunction
+  href: api/Llvm.NET.BitcodeModule.CreateFunction.html
+  commentId: Overload:Llvm.NET.BitcodeModule.CreateFunction
+  fullName: Llvm.NET.BitcodeModule.CreateFunction
+  nameWithType: BitcodeModule.CreateFunction
+- uid: Llvm.NET.BitcodeModule.CreateMDNode(System.String)
+  name: CreateMDNode(String)
+  href: api/Llvm.NET.BitcodeModule.CreateMDNode.html#Llvm_NET_BitcodeModule_CreateMDNode_System_String_
+  commentId: M:Llvm.NET.BitcodeModule.CreateMDNode(System.String)
+  fullName: Llvm.NET.BitcodeModule.CreateMDNode(System.String)
+  nameWithType: BitcodeModule.CreateMDNode(String)
+- uid: Llvm.NET.BitcodeModule.CreateMDNode*
+  name: CreateMDNode
+  href: api/Llvm.NET.BitcodeModule.CreateMDNode.html
+  commentId: Overload:Llvm.NET.BitcodeModule.CreateMDNode
+  fullName: Llvm.NET.BitcodeModule.CreateMDNode
+  nameWithType: BitcodeModule.CreateMDNode
+- uid: Llvm.NET.BitcodeModule.DataLayoutString
+  name: DataLayoutString
+  href: api/Llvm.NET.BitcodeModule.DataLayoutString.html#Llvm_NET_BitcodeModule_DataLayoutString
+  commentId: P:Llvm.NET.BitcodeModule.DataLayoutString
+  fullName: Llvm.NET.BitcodeModule.DataLayoutString
+  nameWithType: BitcodeModule.DataLayoutString
+- uid: Llvm.NET.BitcodeModule.DataLayoutString*
+  name: DataLayoutString
+  href: api/Llvm.NET.BitcodeModule.DataLayoutString.html
+  commentId: Overload:Llvm.NET.BitcodeModule.DataLayoutString
+  fullName: Llvm.NET.BitcodeModule.DataLayoutString
+  nameWithType: BitcodeModule.DataLayoutString
+- uid: Llvm.NET.BitcodeModule.DebugMetadataVersion
+  name: DebugMetadataVersion
+  href: api/Llvm.NET.BitcodeModule.DebugMetadataVersion.html#Llvm_NET_BitcodeModule_DebugMetadataVersion
+  commentId: F:Llvm.NET.BitcodeModule.DebugMetadataVersion
+  fullName: Llvm.NET.BitcodeModule.DebugMetadataVersion
+  nameWithType: BitcodeModule.DebugMetadataVersion
+- uid: Llvm.NET.BitcodeModule.DebugVersionValue
+  name: DebugVersionValue
+  href: api/Llvm.NET.BitcodeModule.DebugVersionValue.html#Llvm_NET_BitcodeModule_DebugVersionValue
+  commentId: F:Llvm.NET.BitcodeModule.DebugVersionValue
+  fullName: Llvm.NET.BitcodeModule.DebugVersionValue
+  nameWithType: BitcodeModule.DebugVersionValue
+- uid: Llvm.NET.BitcodeModule.DIBuilder
+  name: DIBuilder
+  href: api/Llvm.NET.BitcodeModule.DIBuilder.html#Llvm_NET_BitcodeModule_DIBuilder
+  commentId: P:Llvm.NET.BitcodeModule.DIBuilder
+  fullName: Llvm.NET.BitcodeModule.DIBuilder
+  nameWithType: BitcodeModule.DIBuilder
+- uid: Llvm.NET.BitcodeModule.DIBuilder*
+  name: DIBuilder
+  href: api/Llvm.NET.BitcodeModule.DIBuilder.html
+  commentId: Overload:Llvm.NET.BitcodeModule.DIBuilder
+  fullName: Llvm.NET.BitcodeModule.DIBuilder
+  nameWithType: BitcodeModule.DIBuilder
+- uid: Llvm.NET.BitcodeModule.DICompileUnit
+  name: DICompileUnit
+  href: api/Llvm.NET.BitcodeModule.DICompileUnit.html#Llvm_NET_BitcodeModule_DICompileUnit
+  commentId: P:Llvm.NET.BitcodeModule.DICompileUnit
+  fullName: Llvm.NET.BitcodeModule.DICompileUnit
+  nameWithType: BitcodeModule.DICompileUnit
+- uid: Llvm.NET.BitcodeModule.DICompileUnit*
+  name: DICompileUnit
+  href: api/Llvm.NET.BitcodeModule.DICompileUnit.html
+  commentId: Overload:Llvm.NET.BitcodeModule.DICompileUnit
+  fullName: Llvm.NET.BitcodeModule.DICompileUnit
+  nameWithType: BitcodeModule.DICompileUnit
+- uid: Llvm.NET.BitcodeModule.Dispose
+  name: Dispose()
+  href: api/Llvm.NET.BitcodeModule.Dispose.html#Llvm_NET_BitcodeModule_Dispose
+  commentId: M:Llvm.NET.BitcodeModule.Dispose
+  fullName: Llvm.NET.BitcodeModule.Dispose()
+  nameWithType: BitcodeModule.Dispose()
+- uid: Llvm.NET.BitcodeModule.Dispose*
+  name: Dispose
+  href: api/Llvm.NET.BitcodeModule.Dispose.html
+  commentId: Overload:Llvm.NET.BitcodeModule.Dispose
+  fullName: Llvm.NET.BitcodeModule.Dispose
+  nameWithType: BitcodeModule.Dispose
+- uid: Llvm.NET.BitcodeModule.DwarfVersionValue
+  name: DwarfVersionValue
+  href: api/Llvm.NET.BitcodeModule.DwarfVersionValue.html#Llvm_NET_BitcodeModule_DwarfVersionValue
+  commentId: F:Llvm.NET.BitcodeModule.DwarfVersionValue
+  fullName: Llvm.NET.BitcodeModule.DwarfVersionValue
+  nameWithType: BitcodeModule.DwarfVersionValue
+- uid: Llvm.NET.BitcodeModule.Finalize
+  name: Finalize()
+  href: api/Llvm.NET.BitcodeModule.Finalize.html#Llvm_NET_BitcodeModule_Finalize
+  commentId: M:Llvm.NET.BitcodeModule.Finalize
+  fullName: Llvm.NET.BitcodeModule.Finalize()
+  nameWithType: BitcodeModule.Finalize()
+- uid: Llvm.NET.BitcodeModule.Finalize*
+  name: Finalize
+  href: api/Llvm.NET.BitcodeModule.Finalize.html
+  commentId: Overload:Llvm.NET.BitcodeModule.Finalize
+  fullName: Llvm.NET.BitcodeModule.Finalize
+  nameWithType: BitcodeModule.Finalize
+- uid: Llvm.NET.BitcodeModule.Functions
+  name: Functions
+  href: api/Llvm.NET.BitcodeModule.Functions.html#Llvm_NET_BitcodeModule_Functions
+  commentId: P:Llvm.NET.BitcodeModule.Functions
+  fullName: Llvm.NET.BitcodeModule.Functions
+  nameWithType: BitcodeModule.Functions
+- uid: Llvm.NET.BitcodeModule.Functions*
+  name: Functions
+  href: api/Llvm.NET.BitcodeModule.Functions.html
+  commentId: Overload:Llvm.NET.BitcodeModule.Functions
+  fullName: Llvm.NET.BitcodeModule.Functions
+  nameWithType: BitcodeModule.Functions
+- uid: Llvm.NET.BitcodeModule.GetAlias(System.String)
+  name: GetAlias(String)
+  href: api/Llvm.NET.BitcodeModule.GetAlias.html#Llvm_NET_BitcodeModule_GetAlias_System_String_
+  commentId: M:Llvm.NET.BitcodeModule.GetAlias(System.String)
+  fullName: Llvm.NET.BitcodeModule.GetAlias(System.String)
+  nameWithType: BitcodeModule.GetAlias(String)
+- uid: Llvm.NET.BitcodeModule.GetAlias*
+  name: GetAlias
+  href: api/Llvm.NET.BitcodeModule.GetAlias.html
+  commentId: Overload:Llvm.NET.BitcodeModule.GetAlias
+  fullName: Llvm.NET.BitcodeModule.GetAlias
+  nameWithType: BitcodeModule.GetAlias
+- uid: Llvm.NET.BitcodeModule.GetFunction(System.String)
+  name: GetFunction(String)
+  href: api/Llvm.NET.BitcodeModule.GetFunction.html#Llvm_NET_BitcodeModule_GetFunction_System_String_
+  commentId: M:Llvm.NET.BitcodeModule.GetFunction(System.String)
+  fullName: Llvm.NET.BitcodeModule.GetFunction(System.String)
+  nameWithType: BitcodeModule.GetFunction(String)
+- uid: Llvm.NET.BitcodeModule.GetFunction*
+  name: GetFunction
+  href: api/Llvm.NET.BitcodeModule.GetFunction.html
+  commentId: Overload:Llvm.NET.BitcodeModule.GetFunction
+  fullName: Llvm.NET.BitcodeModule.GetFunction
+  nameWithType: BitcodeModule.GetFunction
+- uid: Llvm.NET.BitcodeModule.GetNamedGlobal(System.String)
+  name: GetNamedGlobal(String)
+  href: api/Llvm.NET.BitcodeModule.GetNamedGlobal.html#Llvm_NET_BitcodeModule_GetNamedGlobal_System_String_
+  commentId: M:Llvm.NET.BitcodeModule.GetNamedGlobal(System.String)
+  fullName: Llvm.NET.BitcodeModule.GetNamedGlobal(System.String)
+  nameWithType: BitcodeModule.GetNamedGlobal(String)
+- uid: Llvm.NET.BitcodeModule.GetNamedGlobal*
+  name: GetNamedGlobal
+  href: api/Llvm.NET.BitcodeModule.GetNamedGlobal.html
+  commentId: Overload:Llvm.NET.BitcodeModule.GetNamedGlobal
+  fullName: Llvm.NET.BitcodeModule.GetNamedGlobal
+  nameWithType: BitcodeModule.GetNamedGlobal
+- uid: Llvm.NET.BitcodeModule.GetTypeByName(System.String)
+  name: GetTypeByName(String)
+  href: api/Llvm.NET.BitcodeModule.GetTypeByName.html#Llvm_NET_BitcodeModule_GetTypeByName_System_String_
+  commentId: M:Llvm.NET.BitcodeModule.GetTypeByName(System.String)
+  fullName: Llvm.NET.BitcodeModule.GetTypeByName(System.String)
+  nameWithType: BitcodeModule.GetTypeByName(String)
+- uid: Llvm.NET.BitcodeModule.GetTypeByName*
+  name: GetTypeByName
+  href: api/Llvm.NET.BitcodeModule.GetTypeByName.html
+  commentId: Overload:Llvm.NET.BitcodeModule.GetTypeByName
+  fullName: Llvm.NET.BitcodeModule.GetTypeByName
+  nameWithType: BitcodeModule.GetTypeByName
+- uid: Llvm.NET.BitcodeModule.Globals
+  name: Globals
+  href: api/Llvm.NET.BitcodeModule.Globals.html#Llvm_NET_BitcodeModule_Globals
+  commentId: P:Llvm.NET.BitcodeModule.Globals
+  fullName: Llvm.NET.BitcodeModule.Globals
+  nameWithType: BitcodeModule.Globals
+- uid: Llvm.NET.BitcodeModule.Globals*
+  name: Globals
+  href: api/Llvm.NET.BitcodeModule.Globals.html
+  commentId: Overload:Llvm.NET.BitcodeModule.Globals
+  fullName: Llvm.NET.BitcodeModule.Globals
+  nameWithType: BitcodeModule.Globals
+- uid: Llvm.NET.BitcodeModule.IsDisposed
+  name: IsDisposed
+  href: api/Llvm.NET.BitcodeModule.IsDisposed.html#Llvm_NET_BitcodeModule_IsDisposed
+  commentId: P:Llvm.NET.BitcodeModule.IsDisposed
+  fullName: Llvm.NET.BitcodeModule.IsDisposed
+  nameWithType: BitcodeModule.IsDisposed
+- uid: Llvm.NET.BitcodeModule.IsDisposed*
+  name: IsDisposed
+  href: api/Llvm.NET.BitcodeModule.IsDisposed.html
+  commentId: Overload:Llvm.NET.BitcodeModule.IsDisposed
+  fullName: Llvm.NET.BitcodeModule.IsDisposed
+  nameWithType: BitcodeModule.IsDisposed
+- uid: Llvm.NET.BitcodeModule.Layout
+  name: Layout
+  href: api/Llvm.NET.BitcodeModule.Layout.html#Llvm_NET_BitcodeModule_Layout
+  commentId: P:Llvm.NET.BitcodeModule.Layout
+  fullName: Llvm.NET.BitcodeModule.Layout
+  nameWithType: BitcodeModule.Layout
+- uid: Llvm.NET.BitcodeModule.Layout*
+  name: Layout
+  href: api/Llvm.NET.BitcodeModule.Layout.html
+  commentId: Overload:Llvm.NET.BitcodeModule.Layout
+  fullName: Llvm.NET.BitcodeModule.Layout
+  nameWithType: BitcodeModule.Layout
+- uid: Llvm.NET.BitcodeModule.Link(Llvm.NET.BitcodeModule)
+  name: Link(BitcodeModule)
+  href: api/Llvm.NET.BitcodeModule.Link.html#Llvm_NET_BitcodeModule_Link_Llvm_NET_BitcodeModule_
+  commentId: M:Llvm.NET.BitcodeModule.Link(Llvm.NET.BitcodeModule)
+  fullName: Llvm.NET.BitcodeModule.Link(Llvm.NET.BitcodeModule)
+  nameWithType: BitcodeModule.Link(BitcodeModule)
+- uid: Llvm.NET.BitcodeModule.Link*
+  name: Link
+  href: api/Llvm.NET.BitcodeModule.Link.html
+  commentId: Overload:Llvm.NET.BitcodeModule.Link
+  fullName: Llvm.NET.BitcodeModule.Link
+  nameWithType: BitcodeModule.Link
+- uid: Llvm.NET.BitcodeModule.Llvm#NET#IExtensiblePropertyContainer#AddExtendedPropertyValue(System.String,System.Object)
+  name: IExtensiblePropertyContainer.AddExtendedPropertyValue(String, Object)
+  href: api/Llvm.NET.BitcodeModule.Llvm-NET-IExtensiblePropertyContainer-AddExtendedPropertyValue.html#Llvm_NET_BitcodeModule_Llvm_NET_IExtensiblePropertyContainer_AddExtendedPropertyValue_System_String_System_Object_
+  commentId: M:Llvm.NET.BitcodeModule.Llvm#NET#IExtensiblePropertyContainer#AddExtendedPropertyValue(System.String,System.Object)
+  name.vb: Llvm.NET.IExtensiblePropertyContainer.AddExtendedPropertyValue(String, Object)
+  fullName: Llvm.NET.BitcodeModule.Llvm.NET.IExtensiblePropertyContainer.AddExtendedPropertyValue(System.String, System.Object)
+  nameWithType: BitcodeModule.IExtensiblePropertyContainer.AddExtendedPropertyValue(String, Object)
+  nameWithType.vb: BitcodeModule.Llvm.NET.IExtensiblePropertyContainer.AddExtendedPropertyValue(String, Object)
+- uid: Llvm.NET.BitcodeModule.Llvm#NET#IExtensiblePropertyContainer#AddExtendedPropertyValue*
+  name: IExtensiblePropertyContainer.AddExtendedPropertyValue
+  href: api/Llvm.NET.BitcodeModule.Llvm-NET-IExtensiblePropertyContainer-AddExtendedPropertyValue.html
+  commentId: Overload:Llvm.NET.BitcodeModule.Llvm#NET#IExtensiblePropertyContainer#AddExtendedPropertyValue
+  name.vb: Llvm.NET.IExtensiblePropertyContainer.AddExtendedPropertyValue
+  fullName: Llvm.NET.BitcodeModule.Llvm.NET.IExtensiblePropertyContainer.AddExtendedPropertyValue
+  nameWithType: BitcodeModule.IExtensiblePropertyContainer.AddExtendedPropertyValue
+  nameWithType.vb: BitcodeModule.Llvm.NET.IExtensiblePropertyContainer.AddExtendedPropertyValue
+- uid: Llvm.NET.BitcodeModule.Llvm#NET#IExtensiblePropertyContainer#TryGetExtendedPropertyValue*
+  name: IExtensiblePropertyContainer.TryGetExtendedPropertyValue
+  href: api/Llvm.NET.BitcodeModule.Llvm-NET-IExtensiblePropertyContainer-TryGetExtendedPropertyValue.html
+  commentId: Overload:Llvm.NET.BitcodeModule.Llvm#NET#IExtensiblePropertyContainer#TryGetExtendedPropertyValue
+  name.vb: Llvm.NET.IExtensiblePropertyContainer.TryGetExtendedPropertyValue
+  fullName: Llvm.NET.BitcodeModule.Llvm.NET.IExtensiblePropertyContainer.TryGetExtendedPropertyValue
+  nameWithType: BitcodeModule.IExtensiblePropertyContainer.TryGetExtendedPropertyValue
+  nameWithType.vb: BitcodeModule.Llvm.NET.IExtensiblePropertyContainer.TryGetExtendedPropertyValue
+- uid: Llvm.NET.BitcodeModule.Llvm#NET#IExtensiblePropertyContainer#TryGetExtendedPropertyValue``1(System.String,``0@)
+  name: IExtensiblePropertyContainer.TryGetExtendedPropertyValue<T>(String, out T)
+  href: api/Llvm.NET.BitcodeModule.Llvm-NET-IExtensiblePropertyContainer-TryGetExtendedPropertyValue.html#Llvm_NET_BitcodeModule_Llvm_NET_IExtensiblePropertyContainer_TryGetExtendedPropertyValue__1_System_String___0__
+  commentId: M:Llvm.NET.BitcodeModule.Llvm#NET#IExtensiblePropertyContainer#TryGetExtendedPropertyValue``1(System.String,``0@)
+  name.vb: Llvm.NET.IExtensiblePropertyContainer.TryGetExtendedPropertyValue(Of T)(String, ByRef T)
+  fullName: Llvm.NET.BitcodeModule.Llvm.NET.IExtensiblePropertyContainer.TryGetExtendedPropertyValue<T>(System.String, out T)
+  fullName.vb: Llvm.NET.BitcodeModule.Llvm.NET.IExtensiblePropertyContainer.TryGetExtendedPropertyValue(Of T)(System.String, ByRef T)
+  nameWithType: BitcodeModule.IExtensiblePropertyContainer.TryGetExtendedPropertyValue<T>(String, out T)
+  nameWithType.vb: BitcodeModule.Llvm.NET.IExtensiblePropertyContainer.TryGetExtendedPropertyValue(Of T)(String, ByRef T)
+- uid: Llvm.NET.BitcodeModule.LoadFrom(Llvm.NET.MemoryBuffer,Llvm.NET.Context)
+  name: LoadFrom(MemoryBuffer, Context)
+  href: api/Llvm.NET.BitcodeModule.LoadFrom.html#Llvm_NET_BitcodeModule_LoadFrom_Llvm_NET_MemoryBuffer_Llvm_NET_Context_
+  commentId: M:Llvm.NET.BitcodeModule.LoadFrom(Llvm.NET.MemoryBuffer,Llvm.NET.Context)
+  fullName: Llvm.NET.BitcodeModule.LoadFrom(Llvm.NET.MemoryBuffer, Llvm.NET.Context)
+  nameWithType: BitcodeModule.LoadFrom(MemoryBuffer, Context)
+- uid: Llvm.NET.BitcodeModule.LoadFrom(System.String,Llvm.NET.Context)
+  name: LoadFrom(String, Context)
+  href: api/Llvm.NET.BitcodeModule.LoadFrom.html#Llvm_NET_BitcodeModule_LoadFrom_System_String_Llvm_NET_Context_
+  commentId: M:Llvm.NET.BitcodeModule.LoadFrom(System.String,Llvm.NET.Context)
+  fullName: Llvm.NET.BitcodeModule.LoadFrom(System.String, Llvm.NET.Context)
+  nameWithType: BitcodeModule.LoadFrom(String, Context)
+- uid: Llvm.NET.BitcodeModule.LoadFrom*
+  name: LoadFrom
+  href: api/Llvm.NET.BitcodeModule.LoadFrom.html
+  commentId: Overload:Llvm.NET.BitcodeModule.LoadFrom
+  fullName: Llvm.NET.BitcodeModule.LoadFrom
+  nameWithType: BitcodeModule.LoadFrom
+- uid: Llvm.NET.BitcodeModule.ModuleFlags
+  name: ModuleFlags
+  href: api/Llvm.NET.BitcodeModule.ModuleFlags.html#Llvm_NET_BitcodeModule_ModuleFlags
+  commentId: P:Llvm.NET.BitcodeModule.ModuleFlags
+  fullName: Llvm.NET.BitcodeModule.ModuleFlags
+  nameWithType: BitcodeModule.ModuleFlags
+- uid: Llvm.NET.BitcodeModule.ModuleFlags*
+  name: ModuleFlags
+  href: api/Llvm.NET.BitcodeModule.ModuleFlags.html
+  commentId: Overload:Llvm.NET.BitcodeModule.ModuleFlags
+  fullName: Llvm.NET.BitcodeModule.ModuleFlags
+  nameWithType: BitcodeModule.ModuleFlags
+- uid: Llvm.NET.BitcodeModule.Name
+  name: Name
+  href: api/Llvm.NET.BitcodeModule.Name.html#Llvm_NET_BitcodeModule_Name
+  commentId: P:Llvm.NET.BitcodeModule.Name
+  fullName: Llvm.NET.BitcodeModule.Name
+  nameWithType: BitcodeModule.Name
+- uid: Llvm.NET.BitcodeModule.Name*
+  name: Name
+  href: api/Llvm.NET.BitcodeModule.Name.html
+  commentId: Overload:Llvm.NET.BitcodeModule.Name
+  fullName: Llvm.NET.BitcodeModule.Name
+  nameWithType: BitcodeModule.Name
+- uid: Llvm.NET.BitcodeModule.Optimize(Llvm.NET.TargetMachine)
+  name: Optimize(TargetMachine)
+  href: api/Llvm.NET.BitcodeModule.Optimize.html#Llvm_NET_BitcodeModule_Optimize_Llvm_NET_TargetMachine_
+  commentId: M:Llvm.NET.BitcodeModule.Optimize(Llvm.NET.TargetMachine)
+  fullName: Llvm.NET.BitcodeModule.Optimize(Llvm.NET.TargetMachine)
+  nameWithType: BitcodeModule.Optimize(TargetMachine)
+- uid: Llvm.NET.BitcodeModule.Optimize*
+  name: Optimize
+  href: api/Llvm.NET.BitcodeModule.Optimize.html
+  commentId: Overload:Llvm.NET.BitcodeModule.Optimize
+  fullName: Llvm.NET.BitcodeModule.Optimize
+  nameWithType: BitcodeModule.Optimize
+- uid: Llvm.NET.BitcodeModule.SourceFileName
+  name: SourceFileName
+  href: api/Llvm.NET.BitcodeModule.SourceFileName.html#Llvm_NET_BitcodeModule_SourceFileName
+  commentId: P:Llvm.NET.BitcodeModule.SourceFileName
+  fullName: Llvm.NET.BitcodeModule.SourceFileName
+  nameWithType: BitcodeModule.SourceFileName
+- uid: Llvm.NET.BitcodeModule.SourceFileName*
+  name: SourceFileName
+  href: api/Llvm.NET.BitcodeModule.SourceFileName.html
+  commentId: Overload:Llvm.NET.BitcodeModule.SourceFileName
+  fullName: Llvm.NET.BitcodeModule.SourceFileName
+  nameWithType: BitcodeModule.SourceFileName
+- uid: Llvm.NET.BitcodeModule.TargetTriple
+  name: TargetTriple
+  href: api/Llvm.NET.BitcodeModule.TargetTriple.html#Llvm_NET_BitcodeModule_TargetTriple
+  commentId: P:Llvm.NET.BitcodeModule.TargetTriple
+  fullName: Llvm.NET.BitcodeModule.TargetTriple
+  nameWithType: BitcodeModule.TargetTriple
+- uid: Llvm.NET.BitcodeModule.TargetTriple*
+  name: TargetTriple
+  href: api/Llvm.NET.BitcodeModule.TargetTriple.html
+  commentId: Overload:Llvm.NET.BitcodeModule.TargetTriple
+  fullName: Llvm.NET.BitcodeModule.TargetTriple
+  nameWithType: BitcodeModule.TargetTriple
+- uid: Llvm.NET.BitcodeModule.Verify(System.String@)
+  name: Verify(out String)
+  href: api/Llvm.NET.BitcodeModule.Verify.html#Llvm_NET_BitcodeModule_Verify_System_String__
+  commentId: M:Llvm.NET.BitcodeModule.Verify(System.String@)
+  name.vb: Verify(ByRef String)
+  fullName: Llvm.NET.BitcodeModule.Verify(out System.String)
+  fullName.vb: Llvm.NET.BitcodeModule.Verify(ByRef System.String)
+  nameWithType: BitcodeModule.Verify(out String)
+  nameWithType.vb: BitcodeModule.Verify(ByRef String)
+- uid: Llvm.NET.BitcodeModule.Verify*
+  name: Verify
+  href: api/Llvm.NET.BitcodeModule.Verify.html
+  commentId: Overload:Llvm.NET.BitcodeModule.Verify
+  fullName: Llvm.NET.BitcodeModule.Verify
+  nameWithType: BitcodeModule.Verify
+- uid: Llvm.NET.BitcodeModule.WriteToBuffer
+  name: WriteToBuffer()
+  href: api/Llvm.NET.BitcodeModule.WriteToBuffer.html#Llvm_NET_BitcodeModule_WriteToBuffer
+  commentId: M:Llvm.NET.BitcodeModule.WriteToBuffer
+  fullName: Llvm.NET.BitcodeModule.WriteToBuffer()
+  nameWithType: BitcodeModule.WriteToBuffer()
+- uid: Llvm.NET.BitcodeModule.WriteToBuffer*
+  name: WriteToBuffer
+  href: api/Llvm.NET.BitcodeModule.WriteToBuffer.html
+  commentId: Overload:Llvm.NET.BitcodeModule.WriteToBuffer
+  fullName: Llvm.NET.BitcodeModule.WriteToBuffer
+  nameWithType: BitcodeModule.WriteToBuffer
+- uid: Llvm.NET.BitcodeModule.WriteToFile(System.String)
+  name: WriteToFile(String)
+  href: api/Llvm.NET.BitcodeModule.WriteToFile.html#Llvm_NET_BitcodeModule_WriteToFile_System_String_
+  commentId: M:Llvm.NET.BitcodeModule.WriteToFile(System.String)
+  fullName: Llvm.NET.BitcodeModule.WriteToFile(System.String)
+  nameWithType: BitcodeModule.WriteToFile(String)
+- uid: Llvm.NET.BitcodeModule.WriteToFile*
+  name: WriteToFile
+  href: api/Llvm.NET.BitcodeModule.WriteToFile.html
+  commentId: Overload:Llvm.NET.BitcodeModule.WriteToFile
+  fullName: Llvm.NET.BitcodeModule.WriteToFile
+  nameWithType: BitcodeModule.WriteToFile
+- uid: Llvm.NET.BitcodeModule.WriteToString
+  name: WriteToString()
+  href: api/Llvm.NET.BitcodeModule.WriteToString.html#Llvm_NET_BitcodeModule_WriteToString
+  commentId: M:Llvm.NET.BitcodeModule.WriteToString
+  fullName: Llvm.NET.BitcodeModule.WriteToString()
+  nameWithType: BitcodeModule.WriteToString()
+- uid: Llvm.NET.BitcodeModule.WriteToString*
+  name: WriteToString
+  href: api/Llvm.NET.BitcodeModule.WriteToString.html
+  commentId: Overload:Llvm.NET.BitcodeModule.WriteToString
+  fullName: Llvm.NET.BitcodeModule.WriteToString
+  nameWithType: BitcodeModule.WriteToString
+- uid: Llvm.NET.BitcodeModule.WriteToTextFile(System.String,System.String@)
+  name: WriteToTextFile(String, out String)
+  href: api/Llvm.NET.BitcodeModule.WriteToTextFile.html#Llvm_NET_BitcodeModule_WriteToTextFile_System_String_System_String__
+  commentId: M:Llvm.NET.BitcodeModule.WriteToTextFile(System.String,System.String@)
+  name.vb: WriteToTextFile(String, ByRef String)
+  fullName: Llvm.NET.BitcodeModule.WriteToTextFile(System.String, out System.String)
+  fullName.vb: Llvm.NET.BitcodeModule.WriteToTextFile(System.String, ByRef System.String)
+  nameWithType: BitcodeModule.WriteToTextFile(String, out String)
+  nameWithType.vb: BitcodeModule.WriteToTextFile(String, ByRef String)
+- uid: Llvm.NET.BitcodeModule.WriteToTextFile*
+  name: WriteToTextFile
+  href: api/Llvm.NET.BitcodeModule.WriteToTextFile.html
+  commentId: Overload:Llvm.NET.BitcodeModule.WriteToTextFile
+  fullName: Llvm.NET.BitcodeModule.WriteToTextFile
+  nameWithType: BitcodeModule.WriteToTextFile
 - uid: Llvm.NET.ByteOrdering
   name: ByteOrdering
   href: api/Llvm.NET.ByteOrdering.html
@@ -1088,30 +1682,30 @@ references:
   commentId: T:Llvm.NET.DebugInfo.DebugArrayType
   fullName: Llvm.NET.DebugInfo.DebugArrayType
   nameWithType: DebugArrayType
-- uid: Llvm.NET.DebugInfo.DebugArrayType.#ctor(Llvm.NET.DebugInfo.IDebugType{Llvm.NET.Types.ITypeRef,Llvm.NET.DebugInfo.DIType},Llvm.NET.NativeModule,System.UInt32,System.UInt32)
-  name: DebugArrayType(IDebugType<ITypeRef, DIType>, NativeModule, UInt32, UInt32)
-  href: api/Llvm.NET.DebugInfo.DebugArrayType.-ctor.html#Llvm_NET_DebugInfo_DebugArrayType__ctor_Llvm_NET_DebugInfo_IDebugType_Llvm_NET_Types_ITypeRef_Llvm_NET_DebugInfo_DIType__Llvm_NET_NativeModule_System_UInt32_System_UInt32_
-  commentId: M:Llvm.NET.DebugInfo.DebugArrayType.#ctor(Llvm.NET.DebugInfo.IDebugType{Llvm.NET.Types.ITypeRef,Llvm.NET.DebugInfo.DIType},Llvm.NET.NativeModule,System.UInt32,System.UInt32)
-  name.vb: DebugArrayType(IDebugType(Of ITypeRef, DIType), NativeModule, UInt32, UInt32)
-  fullName: Llvm.NET.DebugInfo.DebugArrayType.DebugArrayType(Llvm.NET.DebugInfo.IDebugType<Llvm.NET.Types.ITypeRef, Llvm.NET.DebugInfo.DIType>, Llvm.NET.NativeModule, System.UInt32, System.UInt32)
-  fullName.vb: Llvm.NET.DebugInfo.DebugArrayType.DebugArrayType(Llvm.NET.DebugInfo.IDebugType(Of Llvm.NET.Types.ITypeRef, Llvm.NET.DebugInfo.DIType), Llvm.NET.NativeModule, System.UInt32, System.UInt32)
-  nameWithType: DebugArrayType.DebugArrayType(IDebugType<ITypeRef, DIType>, NativeModule, UInt32, UInt32)
-  nameWithType.vb: DebugArrayType.DebugArrayType(IDebugType(Of ITypeRef, DIType), NativeModule, UInt32, UInt32)
-- uid: Llvm.NET.DebugInfo.DebugArrayType.#ctor(Llvm.NET.Types.IArrayType,Llvm.NET.DebugInfo.IDebugType{Llvm.NET.Types.ITypeRef,Llvm.NET.DebugInfo.DIType},Llvm.NET.NativeModule,System.UInt32,System.UInt32,System.UInt32)
-  name: DebugArrayType(IArrayType, IDebugType<ITypeRef, DIType>, NativeModule, UInt32, UInt32, UInt32)
-  href: api/Llvm.NET.DebugInfo.DebugArrayType.-ctor.html#Llvm_NET_DebugInfo_DebugArrayType__ctor_Llvm_NET_Types_IArrayType_Llvm_NET_DebugInfo_IDebugType_Llvm_NET_Types_ITypeRef_Llvm_NET_DebugInfo_DIType__Llvm_NET_NativeModule_System_UInt32_System_UInt32_System_UInt32_
-  commentId: M:Llvm.NET.DebugInfo.DebugArrayType.#ctor(Llvm.NET.Types.IArrayType,Llvm.NET.DebugInfo.IDebugType{Llvm.NET.Types.ITypeRef,Llvm.NET.DebugInfo.DIType},Llvm.NET.NativeModule,System.UInt32,System.UInt32,System.UInt32)
-  name.vb: DebugArrayType(IArrayType, IDebugType(Of ITypeRef, DIType), NativeModule, UInt32, UInt32, UInt32)
-  fullName: Llvm.NET.DebugInfo.DebugArrayType.DebugArrayType(Llvm.NET.Types.IArrayType, Llvm.NET.DebugInfo.IDebugType<Llvm.NET.Types.ITypeRef, Llvm.NET.DebugInfo.DIType>, Llvm.NET.NativeModule, System.UInt32, System.UInt32, System.UInt32)
-  fullName.vb: Llvm.NET.DebugInfo.DebugArrayType.DebugArrayType(Llvm.NET.Types.IArrayType, Llvm.NET.DebugInfo.IDebugType(Of Llvm.NET.Types.ITypeRef, Llvm.NET.DebugInfo.DIType), Llvm.NET.NativeModule, System.UInt32, System.UInt32, System.UInt32)
-  nameWithType: DebugArrayType.DebugArrayType(IArrayType, IDebugType<ITypeRef, DIType>, NativeModule, UInt32, UInt32, UInt32)
-  nameWithType.vb: DebugArrayType.DebugArrayType(IArrayType, IDebugType(Of ITypeRef, DIType), NativeModule, UInt32, UInt32, UInt32)
-- uid: Llvm.NET.DebugInfo.DebugArrayType.#ctor(Llvm.NET.Types.IArrayType,Llvm.NET.NativeModule,Llvm.NET.DebugInfo.DIType,System.UInt32,System.UInt32)
-  name: DebugArrayType(IArrayType, NativeModule, DIType, UInt32, UInt32)
-  href: api/Llvm.NET.DebugInfo.DebugArrayType.-ctor.html#Llvm_NET_DebugInfo_DebugArrayType__ctor_Llvm_NET_Types_IArrayType_Llvm_NET_NativeModule_Llvm_NET_DebugInfo_DIType_System_UInt32_System_UInt32_
-  commentId: M:Llvm.NET.DebugInfo.DebugArrayType.#ctor(Llvm.NET.Types.IArrayType,Llvm.NET.NativeModule,Llvm.NET.DebugInfo.DIType,System.UInt32,System.UInt32)
-  fullName: Llvm.NET.DebugInfo.DebugArrayType.DebugArrayType(Llvm.NET.Types.IArrayType, Llvm.NET.NativeModule, Llvm.NET.DebugInfo.DIType, System.UInt32, System.UInt32)
-  nameWithType: DebugArrayType.DebugArrayType(IArrayType, NativeModule, DIType, UInt32, UInt32)
+- uid: Llvm.NET.DebugInfo.DebugArrayType.#ctor(Llvm.NET.DebugInfo.IDebugType{Llvm.NET.Types.ITypeRef,Llvm.NET.DebugInfo.DIType},Llvm.NET.BitcodeModule,System.UInt32,System.UInt32)
+  name: DebugArrayType(IDebugType<ITypeRef, DIType>, BitcodeModule, UInt32, UInt32)
+  href: api/Llvm.NET.DebugInfo.DebugArrayType.-ctor.html#Llvm_NET_DebugInfo_DebugArrayType__ctor_Llvm_NET_DebugInfo_IDebugType_Llvm_NET_Types_ITypeRef_Llvm_NET_DebugInfo_DIType__Llvm_NET_BitcodeModule_System_UInt32_System_UInt32_
+  commentId: M:Llvm.NET.DebugInfo.DebugArrayType.#ctor(Llvm.NET.DebugInfo.IDebugType{Llvm.NET.Types.ITypeRef,Llvm.NET.DebugInfo.DIType},Llvm.NET.BitcodeModule,System.UInt32,System.UInt32)
+  name.vb: DebugArrayType(IDebugType(Of ITypeRef, DIType), BitcodeModule, UInt32, UInt32)
+  fullName: Llvm.NET.DebugInfo.DebugArrayType.DebugArrayType(Llvm.NET.DebugInfo.IDebugType<Llvm.NET.Types.ITypeRef, Llvm.NET.DebugInfo.DIType>, Llvm.NET.BitcodeModule, System.UInt32, System.UInt32)
+  fullName.vb: Llvm.NET.DebugInfo.DebugArrayType.DebugArrayType(Llvm.NET.DebugInfo.IDebugType(Of Llvm.NET.Types.ITypeRef, Llvm.NET.DebugInfo.DIType), Llvm.NET.BitcodeModule, System.UInt32, System.UInt32)
+  nameWithType: DebugArrayType.DebugArrayType(IDebugType<ITypeRef, DIType>, BitcodeModule, UInt32, UInt32)
+  nameWithType.vb: DebugArrayType.DebugArrayType(IDebugType(Of ITypeRef, DIType), BitcodeModule, UInt32, UInt32)
+- uid: Llvm.NET.DebugInfo.DebugArrayType.#ctor(Llvm.NET.Types.IArrayType,Llvm.NET.BitcodeModule,Llvm.NET.DebugInfo.DIType,System.UInt32,System.UInt32)
+  name: DebugArrayType(IArrayType, BitcodeModule, DIType, UInt32, UInt32)
+  href: api/Llvm.NET.DebugInfo.DebugArrayType.-ctor.html#Llvm_NET_DebugInfo_DebugArrayType__ctor_Llvm_NET_Types_IArrayType_Llvm_NET_BitcodeModule_Llvm_NET_DebugInfo_DIType_System_UInt32_System_UInt32_
+  commentId: M:Llvm.NET.DebugInfo.DebugArrayType.#ctor(Llvm.NET.Types.IArrayType,Llvm.NET.BitcodeModule,Llvm.NET.DebugInfo.DIType,System.UInt32,System.UInt32)
+  fullName: Llvm.NET.DebugInfo.DebugArrayType.DebugArrayType(Llvm.NET.Types.IArrayType, Llvm.NET.BitcodeModule, Llvm.NET.DebugInfo.DIType, System.UInt32, System.UInt32)
+  nameWithType: DebugArrayType.DebugArrayType(IArrayType, BitcodeModule, DIType, UInt32, UInt32)
+- uid: Llvm.NET.DebugInfo.DebugArrayType.#ctor(Llvm.NET.Types.IArrayType,Llvm.NET.DebugInfo.IDebugType{Llvm.NET.Types.ITypeRef,Llvm.NET.DebugInfo.DIType},Llvm.NET.BitcodeModule,System.UInt32,System.UInt32,System.UInt32)
+  name: DebugArrayType(IArrayType, IDebugType<ITypeRef, DIType>, BitcodeModule, UInt32, UInt32, UInt32)
+  href: api/Llvm.NET.DebugInfo.DebugArrayType.-ctor.html#Llvm_NET_DebugInfo_DebugArrayType__ctor_Llvm_NET_Types_IArrayType_Llvm_NET_DebugInfo_IDebugType_Llvm_NET_Types_ITypeRef_Llvm_NET_DebugInfo_DIType__Llvm_NET_BitcodeModule_System_UInt32_System_UInt32_System_UInt32_
+  commentId: M:Llvm.NET.DebugInfo.DebugArrayType.#ctor(Llvm.NET.Types.IArrayType,Llvm.NET.DebugInfo.IDebugType{Llvm.NET.Types.ITypeRef,Llvm.NET.DebugInfo.DIType},Llvm.NET.BitcodeModule,System.UInt32,System.UInt32,System.UInt32)
+  name.vb: DebugArrayType(IArrayType, IDebugType(Of ITypeRef, DIType), BitcodeModule, UInt32, UInt32, UInt32)
+  fullName: Llvm.NET.DebugInfo.DebugArrayType.DebugArrayType(Llvm.NET.Types.IArrayType, Llvm.NET.DebugInfo.IDebugType<Llvm.NET.Types.ITypeRef, Llvm.NET.DebugInfo.DIType>, Llvm.NET.BitcodeModule, System.UInt32, System.UInt32, System.UInt32)
+  fullName.vb: Llvm.NET.DebugInfo.DebugArrayType.DebugArrayType(Llvm.NET.Types.IArrayType, Llvm.NET.DebugInfo.IDebugType(Of Llvm.NET.Types.ITypeRef, Llvm.NET.DebugInfo.DIType), Llvm.NET.BitcodeModule, System.UInt32, System.UInt32, System.UInt32)
+  nameWithType: DebugArrayType.DebugArrayType(IArrayType, IDebugType<ITypeRef, DIType>, BitcodeModule, UInt32, UInt32, UInt32)
+  nameWithType.vb: DebugArrayType.DebugArrayType(IArrayType, IDebugType(Of ITypeRef, DIType), BitcodeModule, UInt32, UInt32, UInt32)
 - uid: Llvm.NET.DebugInfo.DebugArrayType.#ctor*
   name: DebugArrayType
   href: api/Llvm.NET.DebugInfo.DebugArrayType.-ctor.html
@@ -1184,12 +1778,12 @@ references:
   commentId: T:Llvm.NET.DebugInfo.DebugBasicType
   fullName: Llvm.NET.DebugInfo.DebugBasicType
   nameWithType: DebugBasicType
-- uid: Llvm.NET.DebugInfo.DebugBasicType.#ctor(Llvm.NET.Types.ITypeRef,Llvm.NET.NativeModule,System.String,Llvm.NET.DebugInfo.DiTypeKind)
-  name: DebugBasicType(ITypeRef, NativeModule, String, DiTypeKind)
-  href: api/Llvm.NET.DebugInfo.DebugBasicType.-ctor.html#Llvm_NET_DebugInfo_DebugBasicType__ctor_Llvm_NET_Types_ITypeRef_Llvm_NET_NativeModule_System_String_Llvm_NET_DebugInfo_DiTypeKind_
-  commentId: M:Llvm.NET.DebugInfo.DebugBasicType.#ctor(Llvm.NET.Types.ITypeRef,Llvm.NET.NativeModule,System.String,Llvm.NET.DebugInfo.DiTypeKind)
-  fullName: Llvm.NET.DebugInfo.DebugBasicType.DebugBasicType(Llvm.NET.Types.ITypeRef, Llvm.NET.NativeModule, System.String, Llvm.NET.DebugInfo.DiTypeKind)
-  nameWithType: DebugBasicType.DebugBasicType(ITypeRef, NativeModule, String, DiTypeKind)
+- uid: Llvm.NET.DebugInfo.DebugBasicType.#ctor(Llvm.NET.Types.ITypeRef,Llvm.NET.BitcodeModule,System.String,Llvm.NET.DebugInfo.DiTypeKind)
+  name: DebugBasicType(ITypeRef, BitcodeModule, String, DiTypeKind)
+  href: api/Llvm.NET.DebugInfo.DebugBasicType.-ctor.html#Llvm_NET_DebugInfo_DebugBasicType__ctor_Llvm_NET_Types_ITypeRef_Llvm_NET_BitcodeModule_System_String_Llvm_NET_DebugInfo_DiTypeKind_
+  commentId: M:Llvm.NET.DebugInfo.DebugBasicType.#ctor(Llvm.NET.Types.ITypeRef,Llvm.NET.BitcodeModule,System.String,Llvm.NET.DebugInfo.DiTypeKind)
+  fullName: Llvm.NET.DebugInfo.DebugBasicType.DebugBasicType(Llvm.NET.Types.ITypeRef, Llvm.NET.BitcodeModule, System.String, Llvm.NET.DebugInfo.DiTypeKind)
+  nameWithType: DebugBasicType.DebugBasicType(ITypeRef, BitcodeModule, String, DiTypeKind)
 - uid: Llvm.NET.DebugInfo.DebugBasicType.#ctor*
   name: DebugBasicType
   href: api/Llvm.NET.DebugInfo.DebugBasicType.-ctor.html
@@ -1202,15 +1796,15 @@ references:
   commentId: T:Llvm.NET.DebugInfo.DebugFunctionType
   fullName: Llvm.NET.DebugInfo.DebugFunctionType
   nameWithType: DebugFunctionType
-- uid: Llvm.NET.DebugInfo.DebugFunctionType.#ctor(Llvm.NET.Types.IFunctionType,Llvm.NET.NativeModule,Llvm.NET.DebugInfo.DebugInfoFlags,Llvm.NET.DebugInfo.DebugType{Llvm.NET.Types.ITypeRef,Llvm.NET.DebugInfo.DIType},Llvm.NET.DebugInfo.DebugType{Llvm.NET.Types.ITypeRef,Llvm.NET.DebugInfo.DIType}[])
-  name: DebugFunctionType(IFunctionType, NativeModule, DebugInfoFlags, DebugType<ITypeRef, DIType>, DebugType<ITypeRef, DIType>[])
-  href: api/Llvm.NET.DebugInfo.DebugFunctionType.-ctor.html#Llvm_NET_DebugInfo_DebugFunctionType__ctor_Llvm_NET_Types_IFunctionType_Llvm_NET_NativeModule_Llvm_NET_DebugInfo_DebugInfoFlags_Llvm_NET_DebugInfo_DebugType_Llvm_NET_Types_ITypeRef_Llvm_NET_DebugInfo_DIType__Llvm_NET_DebugInfo_DebugType_Llvm_NET_Types_ITypeRef_Llvm_NET_DebugInfo_DIType____
-  commentId: M:Llvm.NET.DebugInfo.DebugFunctionType.#ctor(Llvm.NET.Types.IFunctionType,Llvm.NET.NativeModule,Llvm.NET.DebugInfo.DebugInfoFlags,Llvm.NET.DebugInfo.DebugType{Llvm.NET.Types.ITypeRef,Llvm.NET.DebugInfo.DIType},Llvm.NET.DebugInfo.DebugType{Llvm.NET.Types.ITypeRef,Llvm.NET.DebugInfo.DIType}[])
-  name.vb: DebugFunctionType(IFunctionType, NativeModule, DebugInfoFlags, DebugType(Of ITypeRef, DIType), DebugType(Of ITypeRef, DIType)())
-  fullName: Llvm.NET.DebugInfo.DebugFunctionType.DebugFunctionType(Llvm.NET.Types.IFunctionType, Llvm.NET.NativeModule, Llvm.NET.DebugInfo.DebugInfoFlags, Llvm.NET.DebugInfo.DebugType<Llvm.NET.Types.ITypeRef, Llvm.NET.DebugInfo.DIType>, Llvm.NET.DebugInfo.DebugType<Llvm.NET.Types.ITypeRef, Llvm.NET.DebugInfo.DIType>[])
-  fullName.vb: Llvm.NET.DebugInfo.DebugFunctionType.DebugFunctionType(Llvm.NET.Types.IFunctionType, Llvm.NET.NativeModule, Llvm.NET.DebugInfo.DebugInfoFlags, Llvm.NET.DebugInfo.DebugType(Of Llvm.NET.Types.ITypeRef, Llvm.NET.DebugInfo.DIType), Llvm.NET.DebugInfo.DebugType(Of Llvm.NET.Types.ITypeRef, Llvm.NET.DebugInfo.DIType)())
-  nameWithType: DebugFunctionType.DebugFunctionType(IFunctionType, NativeModule, DebugInfoFlags, DebugType<ITypeRef, DIType>, DebugType<ITypeRef, DIType>[])
-  nameWithType.vb: DebugFunctionType.DebugFunctionType(IFunctionType, NativeModule, DebugInfoFlags, DebugType(Of ITypeRef, DIType), DebugType(Of ITypeRef, DIType)())
+- uid: Llvm.NET.DebugInfo.DebugFunctionType.#ctor(Llvm.NET.Types.IFunctionType,Llvm.NET.BitcodeModule,Llvm.NET.DebugInfo.DebugInfoFlags,Llvm.NET.DebugInfo.DebugType{Llvm.NET.Types.ITypeRef,Llvm.NET.DebugInfo.DIType},Llvm.NET.DebugInfo.DebugType{Llvm.NET.Types.ITypeRef,Llvm.NET.DebugInfo.DIType}[])
+  name: DebugFunctionType(IFunctionType, BitcodeModule, DebugInfoFlags, DebugType<ITypeRef, DIType>, DebugType<ITypeRef, DIType>[])
+  href: api/Llvm.NET.DebugInfo.DebugFunctionType.-ctor.html#Llvm_NET_DebugInfo_DebugFunctionType__ctor_Llvm_NET_Types_IFunctionType_Llvm_NET_BitcodeModule_Llvm_NET_DebugInfo_DebugInfoFlags_Llvm_NET_DebugInfo_DebugType_Llvm_NET_Types_ITypeRef_Llvm_NET_DebugInfo_DIType__Llvm_NET_DebugInfo_DebugType_Llvm_NET_Types_ITypeRef_Llvm_NET_DebugInfo_DIType____
+  commentId: M:Llvm.NET.DebugInfo.DebugFunctionType.#ctor(Llvm.NET.Types.IFunctionType,Llvm.NET.BitcodeModule,Llvm.NET.DebugInfo.DebugInfoFlags,Llvm.NET.DebugInfo.DebugType{Llvm.NET.Types.ITypeRef,Llvm.NET.DebugInfo.DIType},Llvm.NET.DebugInfo.DebugType{Llvm.NET.Types.ITypeRef,Llvm.NET.DebugInfo.DIType}[])
+  name.vb: DebugFunctionType(IFunctionType, BitcodeModule, DebugInfoFlags, DebugType(Of ITypeRef, DIType), DebugType(Of ITypeRef, DIType)())
+  fullName: Llvm.NET.DebugInfo.DebugFunctionType.DebugFunctionType(Llvm.NET.Types.IFunctionType, Llvm.NET.BitcodeModule, Llvm.NET.DebugInfo.DebugInfoFlags, Llvm.NET.DebugInfo.DebugType<Llvm.NET.Types.ITypeRef, Llvm.NET.DebugInfo.DIType>, Llvm.NET.DebugInfo.DebugType<Llvm.NET.Types.ITypeRef, Llvm.NET.DebugInfo.DIType>[])
+  fullName.vb: Llvm.NET.DebugInfo.DebugFunctionType.DebugFunctionType(Llvm.NET.Types.IFunctionType, Llvm.NET.BitcodeModule, Llvm.NET.DebugInfo.DebugInfoFlags, Llvm.NET.DebugInfo.DebugType(Of Llvm.NET.Types.ITypeRef, Llvm.NET.DebugInfo.DIType), Llvm.NET.DebugInfo.DebugType(Of Llvm.NET.Types.ITypeRef, Llvm.NET.DebugInfo.DIType)())
+  nameWithType: DebugFunctionType.DebugFunctionType(IFunctionType, BitcodeModule, DebugInfoFlags, DebugType<ITypeRef, DIType>, DebugType<ITypeRef, DIType>[])
+  nameWithType.vb: DebugFunctionType.DebugFunctionType(IFunctionType, BitcodeModule, DebugInfoFlags, DebugType(Of ITypeRef, DIType), DebugType(Of ITypeRef, DIType)())
 - uid: Llvm.NET.DebugInfo.DebugFunctionType.#ctor*
   name: DebugFunctionType
   href: api/Llvm.NET.DebugInfo.DebugFunctionType.-ctor.html
@@ -2069,33 +2663,33 @@ references:
   commentId: T:Llvm.NET.DebugInfo.DebugPointerType
   fullName: Llvm.NET.DebugInfo.DebugPointerType
   nameWithType: DebugPointerType
-- uid: Llvm.NET.DebugInfo.DebugPointerType.#ctor(Llvm.NET.DebugInfo.IDebugType{Llvm.NET.Types.ITypeRef,Llvm.NET.DebugInfo.DIType},Llvm.NET.NativeModule,System.UInt32,System.String,System.UInt32)
-  name: DebugPointerType(IDebugType<ITypeRef, DIType>, NativeModule, UInt32, String, UInt32)
-  href: api/Llvm.NET.DebugInfo.DebugPointerType.-ctor.html#Llvm_NET_DebugInfo_DebugPointerType__ctor_Llvm_NET_DebugInfo_IDebugType_Llvm_NET_Types_ITypeRef_Llvm_NET_DebugInfo_DIType__Llvm_NET_NativeModule_System_UInt32_System_String_System_UInt32_
-  commentId: M:Llvm.NET.DebugInfo.DebugPointerType.#ctor(Llvm.NET.DebugInfo.IDebugType{Llvm.NET.Types.ITypeRef,Llvm.NET.DebugInfo.DIType},Llvm.NET.NativeModule,System.UInt32,System.String,System.UInt32)
-  name.vb: DebugPointerType(IDebugType(Of ITypeRef, DIType), NativeModule, UInt32, String, UInt32)
-  fullName: Llvm.NET.DebugInfo.DebugPointerType.DebugPointerType(Llvm.NET.DebugInfo.IDebugType<Llvm.NET.Types.ITypeRef, Llvm.NET.DebugInfo.DIType>, Llvm.NET.NativeModule, System.UInt32, System.String, System.UInt32)
-  fullName.vb: Llvm.NET.DebugInfo.DebugPointerType.DebugPointerType(Llvm.NET.DebugInfo.IDebugType(Of Llvm.NET.Types.ITypeRef, Llvm.NET.DebugInfo.DIType), Llvm.NET.NativeModule, System.UInt32, System.String, System.UInt32)
-  nameWithType: DebugPointerType.DebugPointerType(IDebugType<ITypeRef, DIType>, NativeModule, UInt32, String, UInt32)
-  nameWithType.vb: DebugPointerType.DebugPointerType(IDebugType(Of ITypeRef, DIType), NativeModule, UInt32, String, UInt32)
+- uid: Llvm.NET.DebugInfo.DebugPointerType.#ctor(Llvm.NET.DebugInfo.IDebugType{Llvm.NET.Types.ITypeRef,Llvm.NET.DebugInfo.DIType},Llvm.NET.BitcodeModule,System.UInt32,System.String,System.UInt32)
+  name: DebugPointerType(IDebugType<ITypeRef, DIType>, BitcodeModule, UInt32, String, UInt32)
+  href: api/Llvm.NET.DebugInfo.DebugPointerType.-ctor.html#Llvm_NET_DebugInfo_DebugPointerType__ctor_Llvm_NET_DebugInfo_IDebugType_Llvm_NET_Types_ITypeRef_Llvm_NET_DebugInfo_DIType__Llvm_NET_BitcodeModule_System_UInt32_System_String_System_UInt32_
+  commentId: M:Llvm.NET.DebugInfo.DebugPointerType.#ctor(Llvm.NET.DebugInfo.IDebugType{Llvm.NET.Types.ITypeRef,Llvm.NET.DebugInfo.DIType},Llvm.NET.BitcodeModule,System.UInt32,System.String,System.UInt32)
+  name.vb: DebugPointerType(IDebugType(Of ITypeRef, DIType), BitcodeModule, UInt32, String, UInt32)
+  fullName: Llvm.NET.DebugInfo.DebugPointerType.DebugPointerType(Llvm.NET.DebugInfo.IDebugType<Llvm.NET.Types.ITypeRef, Llvm.NET.DebugInfo.DIType>, Llvm.NET.BitcodeModule, System.UInt32, System.String, System.UInt32)
+  fullName.vb: Llvm.NET.DebugInfo.DebugPointerType.DebugPointerType(Llvm.NET.DebugInfo.IDebugType(Of Llvm.NET.Types.ITypeRef, Llvm.NET.DebugInfo.DIType), Llvm.NET.BitcodeModule, System.UInt32, System.String, System.UInt32)
+  nameWithType: DebugPointerType.DebugPointerType(IDebugType<ITypeRef, DIType>, BitcodeModule, UInt32, String, UInt32)
+  nameWithType.vb: DebugPointerType.DebugPointerType(IDebugType(Of ITypeRef, DIType), BitcodeModule, UInt32, String, UInt32)
+- uid: Llvm.NET.DebugInfo.DebugPointerType.#ctor(Llvm.NET.Types.IPointerType,Llvm.NET.BitcodeModule,Llvm.NET.DebugInfo.DIType,System.String,System.UInt32)
+  name: DebugPointerType(IPointerType, BitcodeModule, DIType, String, UInt32)
+  href: api/Llvm.NET.DebugInfo.DebugPointerType.-ctor.html#Llvm_NET_DebugInfo_DebugPointerType__ctor_Llvm_NET_Types_IPointerType_Llvm_NET_BitcodeModule_Llvm_NET_DebugInfo_DIType_System_String_System_UInt32_
+  commentId: M:Llvm.NET.DebugInfo.DebugPointerType.#ctor(Llvm.NET.Types.IPointerType,Llvm.NET.BitcodeModule,Llvm.NET.DebugInfo.DIType,System.String,System.UInt32)
+  fullName: Llvm.NET.DebugInfo.DebugPointerType.DebugPointerType(Llvm.NET.Types.IPointerType, Llvm.NET.BitcodeModule, Llvm.NET.DebugInfo.DIType, System.String, System.UInt32)
+  nameWithType: DebugPointerType.DebugPointerType(IPointerType, BitcodeModule, DIType, String, UInt32)
 - uid: Llvm.NET.DebugInfo.DebugPointerType.#ctor(Llvm.NET.Types.IPointerType,Llvm.NET.DebugInfo.DIDerivedType)
   name: DebugPointerType(IPointerType, DIDerivedType)
   href: api/Llvm.NET.DebugInfo.DebugPointerType.-ctor.html#Llvm_NET_DebugInfo_DebugPointerType__ctor_Llvm_NET_Types_IPointerType_Llvm_NET_DebugInfo_DIDerivedType_
   commentId: M:Llvm.NET.DebugInfo.DebugPointerType.#ctor(Llvm.NET.Types.IPointerType,Llvm.NET.DebugInfo.DIDerivedType)
   fullName: Llvm.NET.DebugInfo.DebugPointerType.DebugPointerType(Llvm.NET.Types.IPointerType, Llvm.NET.DebugInfo.DIDerivedType)
   nameWithType: DebugPointerType.DebugPointerType(IPointerType, DIDerivedType)
-- uid: Llvm.NET.DebugInfo.DebugPointerType.#ctor(Llvm.NET.Types.IPointerType,Llvm.NET.NativeModule,Llvm.NET.DebugInfo.DIType,System.String,System.UInt32)
-  name: DebugPointerType(IPointerType, NativeModule, DIType, String, UInt32)
-  href: api/Llvm.NET.DebugInfo.DebugPointerType.-ctor.html#Llvm_NET_DebugInfo_DebugPointerType__ctor_Llvm_NET_Types_IPointerType_Llvm_NET_NativeModule_Llvm_NET_DebugInfo_DIType_System_String_System_UInt32_
-  commentId: M:Llvm.NET.DebugInfo.DebugPointerType.#ctor(Llvm.NET.Types.IPointerType,Llvm.NET.NativeModule,Llvm.NET.DebugInfo.DIType,System.String,System.UInt32)
-  fullName: Llvm.NET.DebugInfo.DebugPointerType.DebugPointerType(Llvm.NET.Types.IPointerType, Llvm.NET.NativeModule, Llvm.NET.DebugInfo.DIType, System.String, System.UInt32)
-  nameWithType: DebugPointerType.DebugPointerType(IPointerType, NativeModule, DIType, String, UInt32)
-- uid: Llvm.NET.DebugInfo.DebugPointerType.#ctor(Llvm.NET.Types.ITypeRef,Llvm.NET.NativeModule,Llvm.NET.DebugInfo.DIType,System.UInt32,System.String,System.UInt32)
-  name: DebugPointerType(ITypeRef, NativeModule, DIType, UInt32, String, UInt32)
-  href: api/Llvm.NET.DebugInfo.DebugPointerType.-ctor.html#Llvm_NET_DebugInfo_DebugPointerType__ctor_Llvm_NET_Types_ITypeRef_Llvm_NET_NativeModule_Llvm_NET_DebugInfo_DIType_System_UInt32_System_String_System_UInt32_
-  commentId: M:Llvm.NET.DebugInfo.DebugPointerType.#ctor(Llvm.NET.Types.ITypeRef,Llvm.NET.NativeModule,Llvm.NET.DebugInfo.DIType,System.UInt32,System.String,System.UInt32)
-  fullName: Llvm.NET.DebugInfo.DebugPointerType.DebugPointerType(Llvm.NET.Types.ITypeRef, Llvm.NET.NativeModule, Llvm.NET.DebugInfo.DIType, System.UInt32, System.String, System.UInt32)
-  nameWithType: DebugPointerType.DebugPointerType(ITypeRef, NativeModule, DIType, UInt32, String, UInt32)
+- uid: Llvm.NET.DebugInfo.DebugPointerType.#ctor(Llvm.NET.Types.ITypeRef,Llvm.NET.BitcodeModule,Llvm.NET.DebugInfo.DIType,System.UInt32,System.String,System.UInt32)
+  name: DebugPointerType(ITypeRef, BitcodeModule, DIType, UInt32, String, UInt32)
+  href: api/Llvm.NET.DebugInfo.DebugPointerType.-ctor.html#Llvm_NET_DebugInfo_DebugPointerType__ctor_Llvm_NET_Types_ITypeRef_Llvm_NET_BitcodeModule_Llvm_NET_DebugInfo_DIType_System_UInt32_System_String_System_UInt32_
+  commentId: M:Llvm.NET.DebugInfo.DebugPointerType.#ctor(Llvm.NET.Types.ITypeRef,Llvm.NET.BitcodeModule,Llvm.NET.DebugInfo.DIType,System.UInt32,System.String,System.UInt32)
+  fullName: Llvm.NET.DebugInfo.DebugPointerType.DebugPointerType(Llvm.NET.Types.ITypeRef, Llvm.NET.BitcodeModule, Llvm.NET.DebugInfo.DIType, System.UInt32, System.String, System.UInt32)
+  nameWithType: DebugPointerType.DebugPointerType(ITypeRef, BitcodeModule, DIType, UInt32, String, UInt32)
 - uid: Llvm.NET.DebugInfo.DebugPointerType.#ctor*
   name: DebugPointerType
   href: api/Llvm.NET.DebugInfo.DebugPointerType.-ctor.html
@@ -2132,36 +2726,36 @@ references:
   commentId: T:Llvm.NET.DebugInfo.DebugStructType
   fullName: Llvm.NET.DebugInfo.DebugStructType
   nameWithType: DebugStructType
-- uid: Llvm.NET.DebugInfo.DebugStructType.#ctor(Llvm.NET.NativeModule,System.String,Llvm.NET.DebugInfo.DIScope,System.String,Llvm.NET.DebugInfo.DIFile,System.UInt32)
-  name: DebugStructType(NativeModule, String, DIScope, String, DIFile, UInt32)
-  href: api/Llvm.NET.DebugInfo.DebugStructType.-ctor.html#Llvm_NET_DebugInfo_DebugStructType__ctor_Llvm_NET_NativeModule_System_String_Llvm_NET_DebugInfo_DIScope_System_String_Llvm_NET_DebugInfo_DIFile_System_UInt32_
-  commentId: M:Llvm.NET.DebugInfo.DebugStructType.#ctor(Llvm.NET.NativeModule,System.String,Llvm.NET.DebugInfo.DIScope,System.String,Llvm.NET.DebugInfo.DIFile,System.UInt32)
-  fullName: Llvm.NET.DebugInfo.DebugStructType.DebugStructType(Llvm.NET.NativeModule, System.String, Llvm.NET.DebugInfo.DIScope, System.String, Llvm.NET.DebugInfo.DIFile, System.UInt32)
-  nameWithType: DebugStructType.DebugStructType(NativeModule, String, DIScope, String, DIFile, UInt32)
-- uid: Llvm.NET.DebugInfo.DebugStructType.#ctor(Llvm.NET.NativeModule,System.String,Llvm.NET.DebugInfo.DIScope,System.String,Llvm.NET.DebugInfo.DIFile,System.UInt32,Llvm.NET.DebugInfo.DebugInfoFlags,System.Collections.Generic.IEnumerable{Llvm.NET.DebugInfo.DebugMemberInfo},Llvm.NET.DebugInfo.DIType,System.Boolean,System.Nullable{System.UInt32},System.UInt32)
-  name: DebugStructType(NativeModule, String, DIScope, String, DIFile, UInt32, DebugInfoFlags, IEnumerable<DebugMemberInfo>, DIType, Boolean, Nullable<UInt32>, UInt32)
-  href: api/Llvm.NET.DebugInfo.DebugStructType.-ctor.html#Llvm_NET_DebugInfo_DebugStructType__ctor_Llvm_NET_NativeModule_System_String_Llvm_NET_DebugInfo_DIScope_System_String_Llvm_NET_DebugInfo_DIFile_System_UInt32_Llvm_NET_DebugInfo_DebugInfoFlags_System_Collections_Generic_IEnumerable_Llvm_NET_DebugInfo_DebugMemberInfo__Llvm_NET_DebugInfo_DIType_System_Boolean_System_Nullable_System_UInt32__System_UInt32_
-  commentId: M:Llvm.NET.DebugInfo.DebugStructType.#ctor(Llvm.NET.NativeModule,System.String,Llvm.NET.DebugInfo.DIScope,System.String,Llvm.NET.DebugInfo.DIFile,System.UInt32,Llvm.NET.DebugInfo.DebugInfoFlags,System.Collections.Generic.IEnumerable{Llvm.NET.DebugInfo.DebugMemberInfo},Llvm.NET.DebugInfo.DIType,System.Boolean,System.Nullable{System.UInt32},System.UInt32)
-  name.vb: DebugStructType(NativeModule, String, DIScope, String, DIFile, UInt32, DebugInfoFlags, IEnumerable(Of DebugMemberInfo), DIType, Boolean, Nullable(Of UInt32), UInt32)
-  fullName: Llvm.NET.DebugInfo.DebugStructType.DebugStructType(Llvm.NET.NativeModule, System.String, Llvm.NET.DebugInfo.DIScope, System.String, Llvm.NET.DebugInfo.DIFile, System.UInt32, Llvm.NET.DebugInfo.DebugInfoFlags, System.Collections.Generic.IEnumerable<Llvm.NET.DebugInfo.DebugMemberInfo>, Llvm.NET.DebugInfo.DIType, System.Boolean, System.Nullable<System.UInt32>, System.UInt32)
-  fullName.vb: Llvm.NET.DebugInfo.DebugStructType.DebugStructType(Llvm.NET.NativeModule, System.String, Llvm.NET.DebugInfo.DIScope, System.String, Llvm.NET.DebugInfo.DIFile, System.UInt32, Llvm.NET.DebugInfo.DebugInfoFlags, System.Collections.Generic.IEnumerable(Of Llvm.NET.DebugInfo.DebugMemberInfo), Llvm.NET.DebugInfo.DIType, System.Boolean, System.Nullable(Of System.UInt32), System.UInt32)
-  nameWithType: DebugStructType.DebugStructType(NativeModule, String, DIScope, String, DIFile, UInt32, DebugInfoFlags, IEnumerable<DebugMemberInfo>, DIType, Boolean, Nullable<UInt32>, UInt32)
-  nameWithType.vb: DebugStructType.DebugStructType(NativeModule, String, DIScope, String, DIFile, UInt32, DebugInfoFlags, IEnumerable(Of DebugMemberInfo), DIType, Boolean, Nullable(Of UInt32), UInt32)
-- uid: Llvm.NET.DebugInfo.DebugStructType.#ctor(Llvm.NET.Types.IStructType,Llvm.NET.NativeModule,Llvm.NET.DebugInfo.DIScope,System.String,Llvm.NET.DebugInfo.DIFile,System.UInt32)
-  name: DebugStructType(IStructType, NativeModule, DIScope, String, DIFile, UInt32)
-  href: api/Llvm.NET.DebugInfo.DebugStructType.-ctor.html#Llvm_NET_DebugInfo_DebugStructType__ctor_Llvm_NET_Types_IStructType_Llvm_NET_NativeModule_Llvm_NET_DebugInfo_DIScope_System_String_Llvm_NET_DebugInfo_DIFile_System_UInt32_
-  commentId: M:Llvm.NET.DebugInfo.DebugStructType.#ctor(Llvm.NET.Types.IStructType,Llvm.NET.NativeModule,Llvm.NET.DebugInfo.DIScope,System.String,Llvm.NET.DebugInfo.DIFile,System.UInt32)
-  fullName: Llvm.NET.DebugInfo.DebugStructType.DebugStructType(Llvm.NET.Types.IStructType, Llvm.NET.NativeModule, Llvm.NET.DebugInfo.DIScope, System.String, Llvm.NET.DebugInfo.DIFile, System.UInt32)
-  nameWithType: DebugStructType.DebugStructType(IStructType, NativeModule, DIScope, String, DIFile, UInt32)
-- uid: Llvm.NET.DebugInfo.DebugStructType.#ctor(Llvm.NET.Types.IStructType,Llvm.NET.NativeModule,Llvm.NET.DebugInfo.DIScope,System.String,Llvm.NET.DebugInfo.DIFile,System.UInt32,Llvm.NET.DebugInfo.DebugInfoFlags,Llvm.NET.DebugInfo.DIType,System.Collections.Generic.IEnumerable{Llvm.NET.DebugInfo.DIType},System.UInt32)
-  name: DebugStructType(IStructType, NativeModule, DIScope, String, DIFile, UInt32, DebugInfoFlags, DIType, IEnumerable<DIType>, UInt32)
-  href: api/Llvm.NET.DebugInfo.DebugStructType.-ctor.html#Llvm_NET_DebugInfo_DebugStructType__ctor_Llvm_NET_Types_IStructType_Llvm_NET_NativeModule_Llvm_NET_DebugInfo_DIScope_System_String_Llvm_NET_DebugInfo_DIFile_System_UInt32_Llvm_NET_DebugInfo_DebugInfoFlags_Llvm_NET_DebugInfo_DIType_System_Collections_Generic_IEnumerable_Llvm_NET_DebugInfo_DIType__System_UInt32_
-  commentId: M:Llvm.NET.DebugInfo.DebugStructType.#ctor(Llvm.NET.Types.IStructType,Llvm.NET.NativeModule,Llvm.NET.DebugInfo.DIScope,System.String,Llvm.NET.DebugInfo.DIFile,System.UInt32,Llvm.NET.DebugInfo.DebugInfoFlags,Llvm.NET.DebugInfo.DIType,System.Collections.Generic.IEnumerable{Llvm.NET.DebugInfo.DIType},System.UInt32)
-  name.vb: DebugStructType(IStructType, NativeModule, DIScope, String, DIFile, UInt32, DebugInfoFlags, DIType, IEnumerable(Of DIType), UInt32)
-  fullName: Llvm.NET.DebugInfo.DebugStructType.DebugStructType(Llvm.NET.Types.IStructType, Llvm.NET.NativeModule, Llvm.NET.DebugInfo.DIScope, System.String, Llvm.NET.DebugInfo.DIFile, System.UInt32, Llvm.NET.DebugInfo.DebugInfoFlags, Llvm.NET.DebugInfo.DIType, System.Collections.Generic.IEnumerable<Llvm.NET.DebugInfo.DIType>, System.UInt32)
-  fullName.vb: Llvm.NET.DebugInfo.DebugStructType.DebugStructType(Llvm.NET.Types.IStructType, Llvm.NET.NativeModule, Llvm.NET.DebugInfo.DIScope, System.String, Llvm.NET.DebugInfo.DIFile, System.UInt32, Llvm.NET.DebugInfo.DebugInfoFlags, Llvm.NET.DebugInfo.DIType, System.Collections.Generic.IEnumerable(Of Llvm.NET.DebugInfo.DIType), System.UInt32)
-  nameWithType: DebugStructType.DebugStructType(IStructType, NativeModule, DIScope, String, DIFile, UInt32, DebugInfoFlags, DIType, IEnumerable<DIType>, UInt32)
-  nameWithType.vb: DebugStructType.DebugStructType(IStructType, NativeModule, DIScope, String, DIFile, UInt32, DebugInfoFlags, DIType, IEnumerable(Of DIType), UInt32)
+- uid: Llvm.NET.DebugInfo.DebugStructType.#ctor(Llvm.NET.BitcodeModule,System.String,Llvm.NET.DebugInfo.DIScope,System.String,Llvm.NET.DebugInfo.DIFile,System.UInt32)
+  name: DebugStructType(BitcodeModule, String, DIScope, String, DIFile, UInt32)
+  href: api/Llvm.NET.DebugInfo.DebugStructType.-ctor.html#Llvm_NET_DebugInfo_DebugStructType__ctor_Llvm_NET_BitcodeModule_System_String_Llvm_NET_DebugInfo_DIScope_System_String_Llvm_NET_DebugInfo_DIFile_System_UInt32_
+  commentId: M:Llvm.NET.DebugInfo.DebugStructType.#ctor(Llvm.NET.BitcodeModule,System.String,Llvm.NET.DebugInfo.DIScope,System.String,Llvm.NET.DebugInfo.DIFile,System.UInt32)
+  fullName: Llvm.NET.DebugInfo.DebugStructType.DebugStructType(Llvm.NET.BitcodeModule, System.String, Llvm.NET.DebugInfo.DIScope, System.String, Llvm.NET.DebugInfo.DIFile, System.UInt32)
+  nameWithType: DebugStructType.DebugStructType(BitcodeModule, String, DIScope, String, DIFile, UInt32)
+- uid: Llvm.NET.DebugInfo.DebugStructType.#ctor(Llvm.NET.BitcodeModule,System.String,Llvm.NET.DebugInfo.DIScope,System.String,Llvm.NET.DebugInfo.DIFile,System.UInt32,Llvm.NET.DebugInfo.DebugInfoFlags,System.Collections.Generic.IEnumerable{Llvm.NET.DebugInfo.DebugMemberInfo},Llvm.NET.DebugInfo.DIType,System.Boolean,System.Nullable{System.UInt32},System.UInt32)
+  name: DebugStructType(BitcodeModule, String, DIScope, String, DIFile, UInt32, DebugInfoFlags, IEnumerable<DebugMemberInfo>, DIType, Boolean, Nullable<UInt32>, UInt32)
+  href: api/Llvm.NET.DebugInfo.DebugStructType.-ctor.html#Llvm_NET_DebugInfo_DebugStructType__ctor_Llvm_NET_BitcodeModule_System_String_Llvm_NET_DebugInfo_DIScope_System_String_Llvm_NET_DebugInfo_DIFile_System_UInt32_Llvm_NET_DebugInfo_DebugInfoFlags_System_Collections_Generic_IEnumerable_Llvm_NET_DebugInfo_DebugMemberInfo__Llvm_NET_DebugInfo_DIType_System_Boolean_System_Nullable_System_UInt32__System_UInt32_
+  commentId: M:Llvm.NET.DebugInfo.DebugStructType.#ctor(Llvm.NET.BitcodeModule,System.String,Llvm.NET.DebugInfo.DIScope,System.String,Llvm.NET.DebugInfo.DIFile,System.UInt32,Llvm.NET.DebugInfo.DebugInfoFlags,System.Collections.Generic.IEnumerable{Llvm.NET.DebugInfo.DebugMemberInfo},Llvm.NET.DebugInfo.DIType,System.Boolean,System.Nullable{System.UInt32},System.UInt32)
+  name.vb: DebugStructType(BitcodeModule, String, DIScope, String, DIFile, UInt32, DebugInfoFlags, IEnumerable(Of DebugMemberInfo), DIType, Boolean, Nullable(Of UInt32), UInt32)
+  fullName: Llvm.NET.DebugInfo.DebugStructType.DebugStructType(Llvm.NET.BitcodeModule, System.String, Llvm.NET.DebugInfo.DIScope, System.String, Llvm.NET.DebugInfo.DIFile, System.UInt32, Llvm.NET.DebugInfo.DebugInfoFlags, System.Collections.Generic.IEnumerable<Llvm.NET.DebugInfo.DebugMemberInfo>, Llvm.NET.DebugInfo.DIType, System.Boolean, System.Nullable<System.UInt32>, System.UInt32)
+  fullName.vb: Llvm.NET.DebugInfo.DebugStructType.DebugStructType(Llvm.NET.BitcodeModule, System.String, Llvm.NET.DebugInfo.DIScope, System.String, Llvm.NET.DebugInfo.DIFile, System.UInt32, Llvm.NET.DebugInfo.DebugInfoFlags, System.Collections.Generic.IEnumerable(Of Llvm.NET.DebugInfo.DebugMemberInfo), Llvm.NET.DebugInfo.DIType, System.Boolean, System.Nullable(Of System.UInt32), System.UInt32)
+  nameWithType: DebugStructType.DebugStructType(BitcodeModule, String, DIScope, String, DIFile, UInt32, DebugInfoFlags, IEnumerable<DebugMemberInfo>, DIType, Boolean, Nullable<UInt32>, UInt32)
+  nameWithType.vb: DebugStructType.DebugStructType(BitcodeModule, String, DIScope, String, DIFile, UInt32, DebugInfoFlags, IEnumerable(Of DebugMemberInfo), DIType, Boolean, Nullable(Of UInt32), UInt32)
+- uid: Llvm.NET.DebugInfo.DebugStructType.#ctor(Llvm.NET.Types.IStructType,Llvm.NET.BitcodeModule,Llvm.NET.DebugInfo.DIScope,System.String,Llvm.NET.DebugInfo.DIFile,System.UInt32)
+  name: DebugStructType(IStructType, BitcodeModule, DIScope, String, DIFile, UInt32)
+  href: api/Llvm.NET.DebugInfo.DebugStructType.-ctor.html#Llvm_NET_DebugInfo_DebugStructType__ctor_Llvm_NET_Types_IStructType_Llvm_NET_BitcodeModule_Llvm_NET_DebugInfo_DIScope_System_String_Llvm_NET_DebugInfo_DIFile_System_UInt32_
+  commentId: M:Llvm.NET.DebugInfo.DebugStructType.#ctor(Llvm.NET.Types.IStructType,Llvm.NET.BitcodeModule,Llvm.NET.DebugInfo.DIScope,System.String,Llvm.NET.DebugInfo.DIFile,System.UInt32)
+  fullName: Llvm.NET.DebugInfo.DebugStructType.DebugStructType(Llvm.NET.Types.IStructType, Llvm.NET.BitcodeModule, Llvm.NET.DebugInfo.DIScope, System.String, Llvm.NET.DebugInfo.DIFile, System.UInt32)
+  nameWithType: DebugStructType.DebugStructType(IStructType, BitcodeModule, DIScope, String, DIFile, UInt32)
+- uid: Llvm.NET.DebugInfo.DebugStructType.#ctor(Llvm.NET.Types.IStructType,Llvm.NET.BitcodeModule,Llvm.NET.DebugInfo.DIScope,System.String,Llvm.NET.DebugInfo.DIFile,System.UInt32,Llvm.NET.DebugInfo.DebugInfoFlags,Llvm.NET.DebugInfo.DIType,System.Collections.Generic.IEnumerable{Llvm.NET.DebugInfo.DIType},System.UInt32)
+  name: DebugStructType(IStructType, BitcodeModule, DIScope, String, DIFile, UInt32, DebugInfoFlags, DIType, IEnumerable<DIType>, UInt32)
+  href: api/Llvm.NET.DebugInfo.DebugStructType.-ctor.html#Llvm_NET_DebugInfo_DebugStructType__ctor_Llvm_NET_Types_IStructType_Llvm_NET_BitcodeModule_Llvm_NET_DebugInfo_DIScope_System_String_Llvm_NET_DebugInfo_DIFile_System_UInt32_Llvm_NET_DebugInfo_DebugInfoFlags_Llvm_NET_DebugInfo_DIType_System_Collections_Generic_IEnumerable_Llvm_NET_DebugInfo_DIType__System_UInt32_
+  commentId: M:Llvm.NET.DebugInfo.DebugStructType.#ctor(Llvm.NET.Types.IStructType,Llvm.NET.BitcodeModule,Llvm.NET.DebugInfo.DIScope,System.String,Llvm.NET.DebugInfo.DIFile,System.UInt32,Llvm.NET.DebugInfo.DebugInfoFlags,Llvm.NET.DebugInfo.DIType,System.Collections.Generic.IEnumerable{Llvm.NET.DebugInfo.DIType},System.UInt32)
+  name.vb: DebugStructType(IStructType, BitcodeModule, DIScope, String, DIFile, UInt32, DebugInfoFlags, DIType, IEnumerable(Of DIType), UInt32)
+  fullName: Llvm.NET.DebugInfo.DebugStructType.DebugStructType(Llvm.NET.Types.IStructType, Llvm.NET.BitcodeModule, Llvm.NET.DebugInfo.DIScope, System.String, Llvm.NET.DebugInfo.DIFile, System.UInt32, Llvm.NET.DebugInfo.DebugInfoFlags, Llvm.NET.DebugInfo.DIType, System.Collections.Generic.IEnumerable<Llvm.NET.DebugInfo.DIType>, System.UInt32)
+  fullName.vb: Llvm.NET.DebugInfo.DebugStructType.DebugStructType(Llvm.NET.Types.IStructType, Llvm.NET.BitcodeModule, Llvm.NET.DebugInfo.DIScope, System.String, Llvm.NET.DebugInfo.DIFile, System.UInt32, Llvm.NET.DebugInfo.DebugInfoFlags, Llvm.NET.DebugInfo.DIType, System.Collections.Generic.IEnumerable(Of Llvm.NET.DebugInfo.DIType), System.UInt32)
+  nameWithType: DebugStructType.DebugStructType(IStructType, BitcodeModule, DIScope, String, DIFile, UInt32, DebugInfoFlags, DIType, IEnumerable<DIType>, UInt32)
+  nameWithType.vb: DebugStructType.DebugStructType(IStructType, BitcodeModule, DIScope, String, DIFile, UInt32, DebugInfoFlags, DIType, IEnumerable(Of DIType), UInt32)
 - uid: Llvm.NET.DebugInfo.DebugStructType.#ctor*
   name: DebugStructType
   href: api/Llvm.NET.DebugInfo.DebugStructType.-ctor.html
@@ -2228,24 +2822,24 @@ references:
   commentId: Overload:Llvm.NET.DebugInfo.DebugStructType.Name
   fullName: Llvm.NET.DebugInfo.DebugStructType.Name
   nameWithType: DebugStructType.Name
-- uid: Llvm.NET.DebugInfo.DebugStructType.SetBody(System.Boolean,Llvm.NET.NativeModule,Llvm.NET.DebugInfo.DIScope,Llvm.NET.DebugInfo.DIFile,System.UInt32,Llvm.NET.DebugInfo.DebugInfoFlags,System.Collections.Generic.IEnumerable{Llvm.NET.DebugInfo.DebugMemberInfo})
-  name: SetBody(Boolean, NativeModule, DIScope, DIFile, UInt32, DebugInfoFlags, IEnumerable<DebugMemberInfo>)
-  href: api/Llvm.NET.DebugInfo.DebugStructType.SetBody.html#Llvm_NET_DebugInfo_DebugStructType_SetBody_System_Boolean_Llvm_NET_NativeModule_Llvm_NET_DebugInfo_DIScope_Llvm_NET_DebugInfo_DIFile_System_UInt32_Llvm_NET_DebugInfo_DebugInfoFlags_System_Collections_Generic_IEnumerable_Llvm_NET_DebugInfo_DebugMemberInfo__
-  commentId: M:Llvm.NET.DebugInfo.DebugStructType.SetBody(System.Boolean,Llvm.NET.NativeModule,Llvm.NET.DebugInfo.DIScope,Llvm.NET.DebugInfo.DIFile,System.UInt32,Llvm.NET.DebugInfo.DebugInfoFlags,System.Collections.Generic.IEnumerable{Llvm.NET.DebugInfo.DebugMemberInfo})
-  name.vb: SetBody(Boolean, NativeModule, DIScope, DIFile, UInt32, DebugInfoFlags, IEnumerable(Of DebugMemberInfo))
-  fullName: Llvm.NET.DebugInfo.DebugStructType.SetBody(System.Boolean, Llvm.NET.NativeModule, Llvm.NET.DebugInfo.DIScope, Llvm.NET.DebugInfo.DIFile, System.UInt32, Llvm.NET.DebugInfo.DebugInfoFlags, System.Collections.Generic.IEnumerable<Llvm.NET.DebugInfo.DebugMemberInfo>)
-  fullName.vb: Llvm.NET.DebugInfo.DebugStructType.SetBody(System.Boolean, Llvm.NET.NativeModule, Llvm.NET.DebugInfo.DIScope, Llvm.NET.DebugInfo.DIFile, System.UInt32, Llvm.NET.DebugInfo.DebugInfoFlags, System.Collections.Generic.IEnumerable(Of Llvm.NET.DebugInfo.DebugMemberInfo))
-  nameWithType: DebugStructType.SetBody(Boolean, NativeModule, DIScope, DIFile, UInt32, DebugInfoFlags, IEnumerable<DebugMemberInfo>)
-  nameWithType.vb: DebugStructType.SetBody(Boolean, NativeModule, DIScope, DIFile, UInt32, DebugInfoFlags, IEnumerable(Of DebugMemberInfo))
-- uid: Llvm.NET.DebugInfo.DebugStructType.SetBody(System.Boolean,Llvm.NET.NativeModule,Llvm.NET.DebugInfo.DIScope,Llvm.NET.DebugInfo.DIFile,System.UInt32,Llvm.NET.DebugInfo.DebugInfoFlags,System.Collections.Generic.IEnumerable{Llvm.NET.Types.ITypeRef},System.Collections.Generic.IEnumerable{Llvm.NET.DebugInfo.DebugMemberInfo},Llvm.NET.DebugInfo.DIType,System.Nullable{System.UInt32},System.UInt32)
-  name: SetBody(Boolean, NativeModule, DIScope, DIFile, UInt32, DebugInfoFlags, IEnumerable<ITypeRef>, IEnumerable<DebugMemberInfo>, DIType, Nullable<UInt32>, UInt32)
-  href: api/Llvm.NET.DebugInfo.DebugStructType.SetBody.html#Llvm_NET_DebugInfo_DebugStructType_SetBody_System_Boolean_Llvm_NET_NativeModule_Llvm_NET_DebugInfo_DIScope_Llvm_NET_DebugInfo_DIFile_System_UInt32_Llvm_NET_DebugInfo_DebugInfoFlags_System_Collections_Generic_IEnumerable_Llvm_NET_Types_ITypeRef__System_Collections_Generic_IEnumerable_Llvm_NET_DebugInfo_DebugMemberInfo__Llvm_NET_DebugInfo_DIType_System_Nullable_System_UInt32__System_UInt32_
-  commentId: M:Llvm.NET.DebugInfo.DebugStructType.SetBody(System.Boolean,Llvm.NET.NativeModule,Llvm.NET.DebugInfo.DIScope,Llvm.NET.DebugInfo.DIFile,System.UInt32,Llvm.NET.DebugInfo.DebugInfoFlags,System.Collections.Generic.IEnumerable{Llvm.NET.Types.ITypeRef},System.Collections.Generic.IEnumerable{Llvm.NET.DebugInfo.DebugMemberInfo},Llvm.NET.DebugInfo.DIType,System.Nullable{System.UInt32},System.UInt32)
-  name.vb: SetBody(Boolean, NativeModule, DIScope, DIFile, UInt32, DebugInfoFlags, IEnumerable(Of ITypeRef), IEnumerable(Of DebugMemberInfo), DIType, Nullable(Of UInt32), UInt32)
-  fullName: Llvm.NET.DebugInfo.DebugStructType.SetBody(System.Boolean, Llvm.NET.NativeModule, Llvm.NET.DebugInfo.DIScope, Llvm.NET.DebugInfo.DIFile, System.UInt32, Llvm.NET.DebugInfo.DebugInfoFlags, System.Collections.Generic.IEnumerable<Llvm.NET.Types.ITypeRef>, System.Collections.Generic.IEnumerable<Llvm.NET.DebugInfo.DebugMemberInfo>, Llvm.NET.DebugInfo.DIType, System.Nullable<System.UInt32>, System.UInt32)
-  fullName.vb: Llvm.NET.DebugInfo.DebugStructType.SetBody(System.Boolean, Llvm.NET.NativeModule, Llvm.NET.DebugInfo.DIScope, Llvm.NET.DebugInfo.DIFile, System.UInt32, Llvm.NET.DebugInfo.DebugInfoFlags, System.Collections.Generic.IEnumerable(Of Llvm.NET.Types.ITypeRef), System.Collections.Generic.IEnumerable(Of Llvm.NET.DebugInfo.DebugMemberInfo), Llvm.NET.DebugInfo.DIType, System.Nullable(Of System.UInt32), System.UInt32)
-  nameWithType: DebugStructType.SetBody(Boolean, NativeModule, DIScope, DIFile, UInt32, DebugInfoFlags, IEnumerable<ITypeRef>, IEnumerable<DebugMemberInfo>, DIType, Nullable<UInt32>, UInt32)
-  nameWithType.vb: DebugStructType.SetBody(Boolean, NativeModule, DIScope, DIFile, UInt32, DebugInfoFlags, IEnumerable(Of ITypeRef), IEnumerable(Of DebugMemberInfo), DIType, Nullable(Of UInt32), UInt32)
+- uid: Llvm.NET.DebugInfo.DebugStructType.SetBody(System.Boolean,Llvm.NET.BitcodeModule,Llvm.NET.DebugInfo.DIScope,Llvm.NET.DebugInfo.DIFile,System.UInt32,Llvm.NET.DebugInfo.DebugInfoFlags,System.Collections.Generic.IEnumerable{Llvm.NET.DebugInfo.DebugMemberInfo})
+  name: SetBody(Boolean, BitcodeModule, DIScope, DIFile, UInt32, DebugInfoFlags, IEnumerable<DebugMemberInfo>)
+  href: api/Llvm.NET.DebugInfo.DebugStructType.SetBody.html#Llvm_NET_DebugInfo_DebugStructType_SetBody_System_Boolean_Llvm_NET_BitcodeModule_Llvm_NET_DebugInfo_DIScope_Llvm_NET_DebugInfo_DIFile_System_UInt32_Llvm_NET_DebugInfo_DebugInfoFlags_System_Collections_Generic_IEnumerable_Llvm_NET_DebugInfo_DebugMemberInfo__
+  commentId: M:Llvm.NET.DebugInfo.DebugStructType.SetBody(System.Boolean,Llvm.NET.BitcodeModule,Llvm.NET.DebugInfo.DIScope,Llvm.NET.DebugInfo.DIFile,System.UInt32,Llvm.NET.DebugInfo.DebugInfoFlags,System.Collections.Generic.IEnumerable{Llvm.NET.DebugInfo.DebugMemberInfo})
+  name.vb: SetBody(Boolean, BitcodeModule, DIScope, DIFile, UInt32, DebugInfoFlags, IEnumerable(Of DebugMemberInfo))
+  fullName: Llvm.NET.DebugInfo.DebugStructType.SetBody(System.Boolean, Llvm.NET.BitcodeModule, Llvm.NET.DebugInfo.DIScope, Llvm.NET.DebugInfo.DIFile, System.UInt32, Llvm.NET.DebugInfo.DebugInfoFlags, System.Collections.Generic.IEnumerable<Llvm.NET.DebugInfo.DebugMemberInfo>)
+  fullName.vb: Llvm.NET.DebugInfo.DebugStructType.SetBody(System.Boolean, Llvm.NET.BitcodeModule, Llvm.NET.DebugInfo.DIScope, Llvm.NET.DebugInfo.DIFile, System.UInt32, Llvm.NET.DebugInfo.DebugInfoFlags, System.Collections.Generic.IEnumerable(Of Llvm.NET.DebugInfo.DebugMemberInfo))
+  nameWithType: DebugStructType.SetBody(Boolean, BitcodeModule, DIScope, DIFile, UInt32, DebugInfoFlags, IEnumerable<DebugMemberInfo>)
+  nameWithType.vb: DebugStructType.SetBody(Boolean, BitcodeModule, DIScope, DIFile, UInt32, DebugInfoFlags, IEnumerable(Of DebugMemberInfo))
+- uid: Llvm.NET.DebugInfo.DebugStructType.SetBody(System.Boolean,Llvm.NET.BitcodeModule,Llvm.NET.DebugInfo.DIScope,Llvm.NET.DebugInfo.DIFile,System.UInt32,Llvm.NET.DebugInfo.DebugInfoFlags,System.Collections.Generic.IEnumerable{Llvm.NET.Types.ITypeRef},System.Collections.Generic.IEnumerable{Llvm.NET.DebugInfo.DebugMemberInfo},Llvm.NET.DebugInfo.DIType,System.Nullable{System.UInt32},System.UInt32)
+  name: SetBody(Boolean, BitcodeModule, DIScope, DIFile, UInt32, DebugInfoFlags, IEnumerable<ITypeRef>, IEnumerable<DebugMemberInfo>, DIType, Nullable<UInt32>, UInt32)
+  href: api/Llvm.NET.DebugInfo.DebugStructType.SetBody.html#Llvm_NET_DebugInfo_DebugStructType_SetBody_System_Boolean_Llvm_NET_BitcodeModule_Llvm_NET_DebugInfo_DIScope_Llvm_NET_DebugInfo_DIFile_System_UInt32_Llvm_NET_DebugInfo_DebugInfoFlags_System_Collections_Generic_IEnumerable_Llvm_NET_Types_ITypeRef__System_Collections_Generic_IEnumerable_Llvm_NET_DebugInfo_DebugMemberInfo__Llvm_NET_DebugInfo_DIType_System_Nullable_System_UInt32__System_UInt32_
+  commentId: M:Llvm.NET.DebugInfo.DebugStructType.SetBody(System.Boolean,Llvm.NET.BitcodeModule,Llvm.NET.DebugInfo.DIScope,Llvm.NET.DebugInfo.DIFile,System.UInt32,Llvm.NET.DebugInfo.DebugInfoFlags,System.Collections.Generic.IEnumerable{Llvm.NET.Types.ITypeRef},System.Collections.Generic.IEnumerable{Llvm.NET.DebugInfo.DebugMemberInfo},Llvm.NET.DebugInfo.DIType,System.Nullable{System.UInt32},System.UInt32)
+  name.vb: SetBody(Boolean, BitcodeModule, DIScope, DIFile, UInt32, DebugInfoFlags, IEnumerable(Of ITypeRef), IEnumerable(Of DebugMemberInfo), DIType, Nullable(Of UInt32), UInt32)
+  fullName: Llvm.NET.DebugInfo.DebugStructType.SetBody(System.Boolean, Llvm.NET.BitcodeModule, Llvm.NET.DebugInfo.DIScope, Llvm.NET.DebugInfo.DIFile, System.UInt32, Llvm.NET.DebugInfo.DebugInfoFlags, System.Collections.Generic.IEnumerable<Llvm.NET.Types.ITypeRef>, System.Collections.Generic.IEnumerable<Llvm.NET.DebugInfo.DebugMemberInfo>, Llvm.NET.DebugInfo.DIType, System.Nullable<System.UInt32>, System.UInt32)
+  fullName.vb: Llvm.NET.DebugInfo.DebugStructType.SetBody(System.Boolean, Llvm.NET.BitcodeModule, Llvm.NET.DebugInfo.DIScope, Llvm.NET.DebugInfo.DIFile, System.UInt32, Llvm.NET.DebugInfo.DebugInfoFlags, System.Collections.Generic.IEnumerable(Of Llvm.NET.Types.ITypeRef), System.Collections.Generic.IEnumerable(Of Llvm.NET.DebugInfo.DebugMemberInfo), Llvm.NET.DebugInfo.DIType, System.Nullable(Of System.UInt32), System.UInt32)
+  nameWithType: DebugStructType.SetBody(Boolean, BitcodeModule, DIScope, DIFile, UInt32, DebugInfoFlags, IEnumerable<ITypeRef>, IEnumerable<DebugMemberInfo>, DIType, Nullable<UInt32>, UInt32)
+  nameWithType.vb: DebugStructType.SetBody(Boolean, BitcodeModule, DIScope, DIFile, UInt32, DebugInfoFlags, IEnumerable(Of ITypeRef), IEnumerable(Of DebugMemberInfo), DIType, Nullable(Of UInt32), UInt32)
 - uid: Llvm.NET.DebugInfo.DebugStructType.SetBody(System.Boolean,Llvm.NET.Types.ITypeRef[])
   name: SetBody(Boolean, ITypeRef[])
   href: api/Llvm.NET.DebugInfo.DebugStructType.SetBody.html#Llvm_NET_DebugInfo_DebugStructType_SetBody_System_Boolean_Llvm_NET_Types_ITypeRef___
@@ -2338,14 +2932,14 @@ references:
   fullName.vb: Llvm.NET.DebugInfo.DebugType(Of TNative, TDebug).Context
   nameWithType: DebugType<TNative, TDebug>.Context
   nameWithType.vb: DebugType(Of TNative, TDebug).Context
-- uid: Llvm.NET.DebugInfo.DebugType`2.CreateArrayType(Llvm.NET.NativeModule,System.UInt32,System.UInt32)
-  name: CreateArrayType(NativeModule, UInt32, UInt32)
-  href: api/Llvm.NET.DebugInfo.DebugType-2.CreateArrayType.html#Llvm_NET_DebugInfo_DebugType_2_CreateArrayType_Llvm_NET_NativeModule_System_UInt32_System_UInt32_
-  commentId: M:Llvm.NET.DebugInfo.DebugType`2.CreateArrayType(Llvm.NET.NativeModule,System.UInt32,System.UInt32)
-  fullName: Llvm.NET.DebugInfo.DebugType<TNative, TDebug>.CreateArrayType(Llvm.NET.NativeModule, System.UInt32, System.UInt32)
-  fullName.vb: Llvm.NET.DebugInfo.DebugType(Of TNative, TDebug).CreateArrayType(Llvm.NET.NativeModule, System.UInt32, System.UInt32)
-  nameWithType: DebugType<TNative, TDebug>.CreateArrayType(NativeModule, UInt32, UInt32)
-  nameWithType.vb: DebugType(Of TNative, TDebug).CreateArrayType(NativeModule, UInt32, UInt32)
+- uid: Llvm.NET.DebugInfo.DebugType`2.CreateArrayType(Llvm.NET.BitcodeModule,System.UInt32,System.UInt32)
+  name: CreateArrayType(BitcodeModule, UInt32, UInt32)
+  href: api/Llvm.NET.DebugInfo.DebugType-2.CreateArrayType.html#Llvm_NET_DebugInfo_DebugType_2_CreateArrayType_Llvm_NET_BitcodeModule_System_UInt32_System_UInt32_
+  commentId: M:Llvm.NET.DebugInfo.DebugType`2.CreateArrayType(Llvm.NET.BitcodeModule,System.UInt32,System.UInt32)
+  fullName: Llvm.NET.DebugInfo.DebugType<TNative, TDebug>.CreateArrayType(Llvm.NET.BitcodeModule, System.UInt32, System.UInt32)
+  fullName.vb: Llvm.NET.DebugInfo.DebugType(Of TNative, TDebug).CreateArrayType(Llvm.NET.BitcodeModule, System.UInt32, System.UInt32)
+  nameWithType: DebugType<TNative, TDebug>.CreateArrayType(BitcodeModule, UInt32, UInt32)
+  nameWithType.vb: DebugType(Of TNative, TDebug).CreateArrayType(BitcodeModule, UInt32, UInt32)
 - uid: Llvm.NET.DebugInfo.DebugType`2.CreateArrayType(System.UInt32)
   name: CreateArrayType(UInt32)
   href: api/Llvm.NET.DebugInfo.DebugType-2.CreateArrayType.html#Llvm_NET_DebugInfo_DebugType_2_CreateArrayType_System_UInt32_
@@ -2370,14 +2964,14 @@ references:
   fullName.vb: Llvm.NET.DebugInfo.DebugType(Of TNative, TDebug).CreatePointerType()
   nameWithType: DebugType<TNative, TDebug>.CreatePointerType()
   nameWithType.vb: DebugType(Of TNative, TDebug).CreatePointerType()
-- uid: Llvm.NET.DebugInfo.DebugType`2.CreatePointerType(Llvm.NET.NativeModule,System.UInt32)
-  name: CreatePointerType(NativeModule, UInt32)
-  href: api/Llvm.NET.DebugInfo.DebugType-2.CreatePointerType.html#Llvm_NET_DebugInfo_DebugType_2_CreatePointerType_Llvm_NET_NativeModule_System_UInt32_
-  commentId: M:Llvm.NET.DebugInfo.DebugType`2.CreatePointerType(Llvm.NET.NativeModule,System.UInt32)
-  fullName: Llvm.NET.DebugInfo.DebugType<TNative, TDebug>.CreatePointerType(Llvm.NET.NativeModule, System.UInt32)
-  fullName.vb: Llvm.NET.DebugInfo.DebugType(Of TNative, TDebug).CreatePointerType(Llvm.NET.NativeModule, System.UInt32)
-  nameWithType: DebugType<TNative, TDebug>.CreatePointerType(NativeModule, UInt32)
-  nameWithType.vb: DebugType(Of TNative, TDebug).CreatePointerType(NativeModule, UInt32)
+- uid: Llvm.NET.DebugInfo.DebugType`2.CreatePointerType(Llvm.NET.BitcodeModule,System.UInt32)
+  name: CreatePointerType(BitcodeModule, UInt32)
+  href: api/Llvm.NET.DebugInfo.DebugType-2.CreatePointerType.html#Llvm_NET_DebugInfo_DebugType_2_CreatePointerType_Llvm_NET_BitcodeModule_System_UInt32_
+  commentId: M:Llvm.NET.DebugInfo.DebugType`2.CreatePointerType(Llvm.NET.BitcodeModule,System.UInt32)
+  fullName: Llvm.NET.DebugInfo.DebugType<TNative, TDebug>.CreatePointerType(Llvm.NET.BitcodeModule, System.UInt32)
+  fullName.vb: Llvm.NET.DebugInfo.DebugType(Of TNative, TDebug).CreatePointerType(Llvm.NET.BitcodeModule, System.UInt32)
+  nameWithType: DebugType<TNative, TDebug>.CreatePointerType(BitcodeModule, UInt32)
+  nameWithType.vb: DebugType(Of TNative, TDebug).CreatePointerType(BitcodeModule, UInt32)
 - uid: Llvm.NET.DebugInfo.DebugType`2.CreatePointerType(System.UInt32)
   name: CreatePointerType(UInt32)
   href: api/Llvm.NET.DebugInfo.DebugType-2.CreatePointerType.html#Llvm_NET_DebugInfo_DebugType_2_CreatePointerType_System_UInt32_
@@ -2675,21 +3269,21 @@ references:
   commentId: T:Llvm.NET.DebugInfo.DebugUnionType
   fullName: Llvm.NET.DebugInfo.DebugUnionType
   nameWithType: DebugUnionType
-- uid: Llvm.NET.DebugInfo.DebugUnionType.#ctor(Llvm.NET.NativeModule,System.String,Llvm.NET.DebugInfo.DIScope,System.String,Llvm.NET.DebugInfo.DIFile,System.UInt32)
-  name: DebugUnionType(NativeModule, String, DIScope, String, DIFile, UInt32)
-  href: api/Llvm.NET.DebugInfo.DebugUnionType.-ctor.html#Llvm_NET_DebugInfo_DebugUnionType__ctor_Llvm_NET_NativeModule_System_String_Llvm_NET_DebugInfo_DIScope_System_String_Llvm_NET_DebugInfo_DIFile_System_UInt32_
-  commentId: M:Llvm.NET.DebugInfo.DebugUnionType.#ctor(Llvm.NET.NativeModule,System.String,Llvm.NET.DebugInfo.DIScope,System.String,Llvm.NET.DebugInfo.DIFile,System.UInt32)
-  fullName: Llvm.NET.DebugInfo.DebugUnionType.DebugUnionType(Llvm.NET.NativeModule, System.String, Llvm.NET.DebugInfo.DIScope, System.String, Llvm.NET.DebugInfo.DIFile, System.UInt32)
-  nameWithType: DebugUnionType.DebugUnionType(NativeModule, String, DIScope, String, DIFile, UInt32)
-- uid: Llvm.NET.DebugInfo.DebugUnionType.#ctor(Llvm.NET.Types.IStructType,Llvm.NET.NativeModule,Llvm.NET.DebugInfo.DIScope,System.String,Llvm.NET.DebugInfo.DIFile,System.UInt32,Llvm.NET.DebugInfo.DebugInfoFlags,System.Collections.Generic.IEnumerable{Llvm.NET.DebugInfo.DebugMemberInfo})
-  name: DebugUnionType(IStructType, NativeModule, DIScope, String, DIFile, UInt32, DebugInfoFlags, IEnumerable<DebugMemberInfo>)
-  href: api/Llvm.NET.DebugInfo.DebugUnionType.-ctor.html#Llvm_NET_DebugInfo_DebugUnionType__ctor_Llvm_NET_Types_IStructType_Llvm_NET_NativeModule_Llvm_NET_DebugInfo_DIScope_System_String_Llvm_NET_DebugInfo_DIFile_System_UInt32_Llvm_NET_DebugInfo_DebugInfoFlags_System_Collections_Generic_IEnumerable_Llvm_NET_DebugInfo_DebugMemberInfo__
-  commentId: M:Llvm.NET.DebugInfo.DebugUnionType.#ctor(Llvm.NET.Types.IStructType,Llvm.NET.NativeModule,Llvm.NET.DebugInfo.DIScope,System.String,Llvm.NET.DebugInfo.DIFile,System.UInt32,Llvm.NET.DebugInfo.DebugInfoFlags,System.Collections.Generic.IEnumerable{Llvm.NET.DebugInfo.DebugMemberInfo})
-  name.vb: DebugUnionType(IStructType, NativeModule, DIScope, String, DIFile, UInt32, DebugInfoFlags, IEnumerable(Of DebugMemberInfo))
-  fullName: Llvm.NET.DebugInfo.DebugUnionType.DebugUnionType(Llvm.NET.Types.IStructType, Llvm.NET.NativeModule, Llvm.NET.DebugInfo.DIScope, System.String, Llvm.NET.DebugInfo.DIFile, System.UInt32, Llvm.NET.DebugInfo.DebugInfoFlags, System.Collections.Generic.IEnumerable<Llvm.NET.DebugInfo.DebugMemberInfo>)
-  fullName.vb: Llvm.NET.DebugInfo.DebugUnionType.DebugUnionType(Llvm.NET.Types.IStructType, Llvm.NET.NativeModule, Llvm.NET.DebugInfo.DIScope, System.String, Llvm.NET.DebugInfo.DIFile, System.UInt32, Llvm.NET.DebugInfo.DebugInfoFlags, System.Collections.Generic.IEnumerable(Of Llvm.NET.DebugInfo.DebugMemberInfo))
-  nameWithType: DebugUnionType.DebugUnionType(IStructType, NativeModule, DIScope, String, DIFile, UInt32, DebugInfoFlags, IEnumerable<DebugMemberInfo>)
-  nameWithType.vb: DebugUnionType.DebugUnionType(IStructType, NativeModule, DIScope, String, DIFile, UInt32, DebugInfoFlags, IEnumerable(Of DebugMemberInfo))
+- uid: Llvm.NET.DebugInfo.DebugUnionType.#ctor(Llvm.NET.BitcodeModule,System.String,Llvm.NET.DebugInfo.DIScope,System.String,Llvm.NET.DebugInfo.DIFile,System.UInt32)
+  name: DebugUnionType(BitcodeModule, String, DIScope, String, DIFile, UInt32)
+  href: api/Llvm.NET.DebugInfo.DebugUnionType.-ctor.html#Llvm_NET_DebugInfo_DebugUnionType__ctor_Llvm_NET_BitcodeModule_System_String_Llvm_NET_DebugInfo_DIScope_System_String_Llvm_NET_DebugInfo_DIFile_System_UInt32_
+  commentId: M:Llvm.NET.DebugInfo.DebugUnionType.#ctor(Llvm.NET.BitcodeModule,System.String,Llvm.NET.DebugInfo.DIScope,System.String,Llvm.NET.DebugInfo.DIFile,System.UInt32)
+  fullName: Llvm.NET.DebugInfo.DebugUnionType.DebugUnionType(Llvm.NET.BitcodeModule, System.String, Llvm.NET.DebugInfo.DIScope, System.String, Llvm.NET.DebugInfo.DIFile, System.UInt32)
+  nameWithType: DebugUnionType.DebugUnionType(BitcodeModule, String, DIScope, String, DIFile, UInt32)
+- uid: Llvm.NET.DebugInfo.DebugUnionType.#ctor(Llvm.NET.Types.IStructType,Llvm.NET.BitcodeModule,Llvm.NET.DebugInfo.DIScope,System.String,Llvm.NET.DebugInfo.DIFile,System.UInt32,Llvm.NET.DebugInfo.DebugInfoFlags,System.Collections.Generic.IEnumerable{Llvm.NET.DebugInfo.DebugMemberInfo})
+  name: DebugUnionType(IStructType, BitcodeModule, DIScope, String, DIFile, UInt32, DebugInfoFlags, IEnumerable<DebugMemberInfo>)
+  href: api/Llvm.NET.DebugInfo.DebugUnionType.-ctor.html#Llvm_NET_DebugInfo_DebugUnionType__ctor_Llvm_NET_Types_IStructType_Llvm_NET_BitcodeModule_Llvm_NET_DebugInfo_DIScope_System_String_Llvm_NET_DebugInfo_DIFile_System_UInt32_Llvm_NET_DebugInfo_DebugInfoFlags_System_Collections_Generic_IEnumerable_Llvm_NET_DebugInfo_DebugMemberInfo__
+  commentId: M:Llvm.NET.DebugInfo.DebugUnionType.#ctor(Llvm.NET.Types.IStructType,Llvm.NET.BitcodeModule,Llvm.NET.DebugInfo.DIScope,System.String,Llvm.NET.DebugInfo.DIFile,System.UInt32,Llvm.NET.DebugInfo.DebugInfoFlags,System.Collections.Generic.IEnumerable{Llvm.NET.DebugInfo.DebugMemberInfo})
+  name.vb: DebugUnionType(IStructType, BitcodeModule, DIScope, String, DIFile, UInt32, DebugInfoFlags, IEnumerable(Of DebugMemberInfo))
+  fullName: Llvm.NET.DebugInfo.DebugUnionType.DebugUnionType(Llvm.NET.Types.IStructType, Llvm.NET.BitcodeModule, Llvm.NET.DebugInfo.DIScope, System.String, Llvm.NET.DebugInfo.DIFile, System.UInt32, Llvm.NET.DebugInfo.DebugInfoFlags, System.Collections.Generic.IEnumerable<Llvm.NET.DebugInfo.DebugMemberInfo>)
+  fullName.vb: Llvm.NET.DebugInfo.DebugUnionType.DebugUnionType(Llvm.NET.Types.IStructType, Llvm.NET.BitcodeModule, Llvm.NET.DebugInfo.DIScope, System.String, Llvm.NET.DebugInfo.DIFile, System.UInt32, Llvm.NET.DebugInfo.DebugInfoFlags, System.Collections.Generic.IEnumerable(Of Llvm.NET.DebugInfo.DebugMemberInfo))
+  nameWithType: DebugUnionType.DebugUnionType(IStructType, BitcodeModule, DIScope, String, DIFile, UInt32, DebugInfoFlags, IEnumerable<DebugMemberInfo>)
+  nameWithType.vb: DebugUnionType.DebugUnionType(IStructType, BitcodeModule, DIScope, String, DIFile, UInt32, DebugInfoFlags, IEnumerable(Of DebugMemberInfo))
 - uid: Llvm.NET.DebugInfo.DebugUnionType.#ctor*
   name: DebugUnionType
   href: api/Llvm.NET.DebugInfo.DebugUnionType.-ctor.html
@@ -2744,15 +3338,15 @@ references:
   commentId: Overload:Llvm.NET.DebugInfo.DebugUnionType.Name
   fullName: Llvm.NET.DebugInfo.DebugUnionType.Name
   nameWithType: DebugUnionType.Name
-- uid: Llvm.NET.DebugInfo.DebugUnionType.SetBody(Llvm.NET.NativeModule,Llvm.NET.DebugInfo.DIScope,Llvm.NET.DebugInfo.DIFile,System.UInt32,Llvm.NET.DebugInfo.DebugInfoFlags,System.Collections.Generic.IEnumerable{Llvm.NET.DebugInfo.DebugMemberInfo})
-  name: SetBody(NativeModule, DIScope, DIFile, UInt32, DebugInfoFlags, IEnumerable<DebugMemberInfo>)
-  href: api/Llvm.NET.DebugInfo.DebugUnionType.SetBody.html#Llvm_NET_DebugInfo_DebugUnionType_SetBody_Llvm_NET_NativeModule_Llvm_NET_DebugInfo_DIScope_Llvm_NET_DebugInfo_DIFile_System_UInt32_Llvm_NET_DebugInfo_DebugInfoFlags_System_Collections_Generic_IEnumerable_Llvm_NET_DebugInfo_DebugMemberInfo__
-  commentId: M:Llvm.NET.DebugInfo.DebugUnionType.SetBody(Llvm.NET.NativeModule,Llvm.NET.DebugInfo.DIScope,Llvm.NET.DebugInfo.DIFile,System.UInt32,Llvm.NET.DebugInfo.DebugInfoFlags,System.Collections.Generic.IEnumerable{Llvm.NET.DebugInfo.DebugMemberInfo})
-  name.vb: SetBody(NativeModule, DIScope, DIFile, UInt32, DebugInfoFlags, IEnumerable(Of DebugMemberInfo))
-  fullName: Llvm.NET.DebugInfo.DebugUnionType.SetBody(Llvm.NET.NativeModule, Llvm.NET.DebugInfo.DIScope, Llvm.NET.DebugInfo.DIFile, System.UInt32, Llvm.NET.DebugInfo.DebugInfoFlags, System.Collections.Generic.IEnumerable<Llvm.NET.DebugInfo.DebugMemberInfo>)
-  fullName.vb: Llvm.NET.DebugInfo.DebugUnionType.SetBody(Llvm.NET.NativeModule, Llvm.NET.DebugInfo.DIScope, Llvm.NET.DebugInfo.DIFile, System.UInt32, Llvm.NET.DebugInfo.DebugInfoFlags, System.Collections.Generic.IEnumerable(Of Llvm.NET.DebugInfo.DebugMemberInfo))
-  nameWithType: DebugUnionType.SetBody(NativeModule, DIScope, DIFile, UInt32, DebugInfoFlags, IEnumerable<DebugMemberInfo>)
-  nameWithType.vb: DebugUnionType.SetBody(NativeModule, DIScope, DIFile, UInt32, DebugInfoFlags, IEnumerable(Of DebugMemberInfo))
+- uid: Llvm.NET.DebugInfo.DebugUnionType.SetBody(Llvm.NET.BitcodeModule,Llvm.NET.DebugInfo.DIScope,Llvm.NET.DebugInfo.DIFile,System.UInt32,Llvm.NET.DebugInfo.DebugInfoFlags,System.Collections.Generic.IEnumerable{Llvm.NET.DebugInfo.DebugMemberInfo})
+  name: SetBody(BitcodeModule, DIScope, DIFile, UInt32, DebugInfoFlags, IEnumerable<DebugMemberInfo>)
+  href: api/Llvm.NET.DebugInfo.DebugUnionType.SetBody.html#Llvm_NET_DebugInfo_DebugUnionType_SetBody_Llvm_NET_BitcodeModule_Llvm_NET_DebugInfo_DIScope_Llvm_NET_DebugInfo_DIFile_System_UInt32_Llvm_NET_DebugInfo_DebugInfoFlags_System_Collections_Generic_IEnumerable_Llvm_NET_DebugInfo_DebugMemberInfo__
+  commentId: M:Llvm.NET.DebugInfo.DebugUnionType.SetBody(Llvm.NET.BitcodeModule,Llvm.NET.DebugInfo.DIScope,Llvm.NET.DebugInfo.DIFile,System.UInt32,Llvm.NET.DebugInfo.DebugInfoFlags,System.Collections.Generic.IEnumerable{Llvm.NET.DebugInfo.DebugMemberInfo})
+  name.vb: SetBody(BitcodeModule, DIScope, DIFile, UInt32, DebugInfoFlags, IEnumerable(Of DebugMemberInfo))
+  fullName: Llvm.NET.DebugInfo.DebugUnionType.SetBody(Llvm.NET.BitcodeModule, Llvm.NET.DebugInfo.DIScope, Llvm.NET.DebugInfo.DIFile, System.UInt32, Llvm.NET.DebugInfo.DebugInfoFlags, System.Collections.Generic.IEnumerable<Llvm.NET.DebugInfo.DebugMemberInfo>)
+  fullName.vb: Llvm.NET.DebugInfo.DebugUnionType.SetBody(Llvm.NET.BitcodeModule, Llvm.NET.DebugInfo.DIScope, Llvm.NET.DebugInfo.DIFile, System.UInt32, Llvm.NET.DebugInfo.DebugInfoFlags, System.Collections.Generic.IEnumerable(Of Llvm.NET.DebugInfo.DebugMemberInfo))
+  nameWithType: DebugUnionType.SetBody(BitcodeModule, DIScope, DIFile, UInt32, DebugInfoFlags, IEnumerable<DebugMemberInfo>)
+  nameWithType.vb: DebugUnionType.SetBody(BitcodeModule, DIScope, DIFile, UInt32, DebugInfoFlags, IEnumerable(Of DebugMemberInfo))
 - uid: Llvm.NET.DebugInfo.DebugUnionType.SetBody*
   name: SetBody
   href: api/Llvm.NET.DebugInfo.DebugUnionType.SetBody.html
@@ -6307,12 +6901,12 @@ references:
   commentId: M:Llvm.NET.Instructions.InstructionBuilder.DebugTrap
   fullName: Llvm.NET.Instructions.InstructionBuilder.DebugTrap()
   nameWithType: InstructionBuilder.DebugTrap()
-- uid: Llvm.NET.Instructions.InstructionBuilder.DebugTrap(Llvm.NET.NativeModule)
-  name: DebugTrap(NativeModule)
-  href: api/Llvm.NET.Instructions.InstructionBuilder.DebugTrap.html#Llvm_NET_Instructions_InstructionBuilder_DebugTrap_Llvm_NET_NativeModule_
-  commentId: M:Llvm.NET.Instructions.InstructionBuilder.DebugTrap(Llvm.NET.NativeModule)
-  fullName: Llvm.NET.Instructions.InstructionBuilder.DebugTrap(Llvm.NET.NativeModule)
-  nameWithType: InstructionBuilder.DebugTrap(NativeModule)
+- uid: Llvm.NET.Instructions.InstructionBuilder.DebugTrap(Llvm.NET.BitcodeModule)
+  name: DebugTrap(BitcodeModule)
+  href: api/Llvm.NET.Instructions.InstructionBuilder.DebugTrap.html#Llvm_NET_Instructions_InstructionBuilder_DebugTrap_Llvm_NET_BitcodeModule_
+  commentId: M:Llvm.NET.Instructions.InstructionBuilder.DebugTrap(Llvm.NET.BitcodeModule)
+  fullName: Llvm.NET.Instructions.InstructionBuilder.DebugTrap(Llvm.NET.BitcodeModule)
+  nameWithType: InstructionBuilder.DebugTrap(BitcodeModule)
 - uid: Llvm.NET.Instructions.InstructionBuilder.DebugTrap*
   name: DebugTrap
   href: api/Llvm.NET.Instructions.InstructionBuilder.DebugTrap.html
@@ -6325,12 +6919,12 @@ references:
   commentId: M:Llvm.NET.Instructions.InstructionBuilder.DoNothing
   fullName: Llvm.NET.Instructions.InstructionBuilder.DoNothing()
   nameWithType: InstructionBuilder.DoNothing()
-- uid: Llvm.NET.Instructions.InstructionBuilder.DoNothing(Llvm.NET.NativeModule)
-  name: DoNothing(NativeModule)
-  href: api/Llvm.NET.Instructions.InstructionBuilder.DoNothing.html#Llvm_NET_Instructions_InstructionBuilder_DoNothing_Llvm_NET_NativeModule_
-  commentId: M:Llvm.NET.Instructions.InstructionBuilder.DoNothing(Llvm.NET.NativeModule)
-  fullName: Llvm.NET.Instructions.InstructionBuilder.DoNothing(Llvm.NET.NativeModule)
-  nameWithType: InstructionBuilder.DoNothing(NativeModule)
+- uid: Llvm.NET.Instructions.InstructionBuilder.DoNothing(Llvm.NET.BitcodeModule)
+  name: DoNothing(BitcodeModule)
+  href: api/Llvm.NET.Instructions.InstructionBuilder.DoNothing.html#Llvm_NET_Instructions_InstructionBuilder_DoNothing_Llvm_NET_BitcodeModule_
+  commentId: M:Llvm.NET.Instructions.InstructionBuilder.DoNothing(Llvm.NET.BitcodeModule)
+  fullName: Llvm.NET.Instructions.InstructionBuilder.DoNothing(Llvm.NET.BitcodeModule)
+  nameWithType: InstructionBuilder.DoNothing(BitcodeModule)
 - uid: Llvm.NET.Instructions.InstructionBuilder.DoNothing*
   name: DoNothing
   href: api/Llvm.NET.Instructions.InstructionBuilder.DoNothing.html
@@ -6631,12 +7225,12 @@ references:
   commentId: Overload:Llvm.NET.Instructions.InstructionBuilder.LogicalShiftRight
   fullName: Llvm.NET.Instructions.InstructionBuilder.LogicalShiftRight
   nameWithType: InstructionBuilder.LogicalShiftRight
-- uid: Llvm.NET.Instructions.InstructionBuilder.MemCpy(Llvm.NET.NativeModule,Llvm.NET.Values.Value,Llvm.NET.Values.Value,Llvm.NET.Values.Value,System.Int32,System.Boolean)
-  name: MemCpy(NativeModule, Value, Value, Value, Int32, Boolean)
-  href: api/Llvm.NET.Instructions.InstructionBuilder.MemCpy.html#Llvm_NET_Instructions_InstructionBuilder_MemCpy_Llvm_NET_NativeModule_Llvm_NET_Values_Value_Llvm_NET_Values_Value_Llvm_NET_Values_Value_System_Int32_System_Boolean_
-  commentId: M:Llvm.NET.Instructions.InstructionBuilder.MemCpy(Llvm.NET.NativeModule,Llvm.NET.Values.Value,Llvm.NET.Values.Value,Llvm.NET.Values.Value,System.Int32,System.Boolean)
-  fullName: Llvm.NET.Instructions.InstructionBuilder.MemCpy(Llvm.NET.NativeModule, Llvm.NET.Values.Value, Llvm.NET.Values.Value, Llvm.NET.Values.Value, System.Int32, System.Boolean)
-  nameWithType: InstructionBuilder.MemCpy(NativeModule, Value, Value, Value, Int32, Boolean)
+- uid: Llvm.NET.Instructions.InstructionBuilder.MemCpy(Llvm.NET.BitcodeModule,Llvm.NET.Values.Value,Llvm.NET.Values.Value,Llvm.NET.Values.Value,System.Int32,System.Boolean)
+  name: MemCpy(BitcodeModule, Value, Value, Value, Int32, Boolean)
+  href: api/Llvm.NET.Instructions.InstructionBuilder.MemCpy.html#Llvm_NET_Instructions_InstructionBuilder_MemCpy_Llvm_NET_BitcodeModule_Llvm_NET_Values_Value_Llvm_NET_Values_Value_Llvm_NET_Values_Value_System_Int32_System_Boolean_
+  commentId: M:Llvm.NET.Instructions.InstructionBuilder.MemCpy(Llvm.NET.BitcodeModule,Llvm.NET.Values.Value,Llvm.NET.Values.Value,Llvm.NET.Values.Value,System.Int32,System.Boolean)
+  fullName: Llvm.NET.Instructions.InstructionBuilder.MemCpy(Llvm.NET.BitcodeModule, Llvm.NET.Values.Value, Llvm.NET.Values.Value, Llvm.NET.Values.Value, System.Int32, System.Boolean)
+  nameWithType: InstructionBuilder.MemCpy(BitcodeModule, Value, Value, Value, Int32, Boolean)
 - uid: Llvm.NET.Instructions.InstructionBuilder.MemCpy(Llvm.NET.Values.Value,Llvm.NET.Values.Value,Llvm.NET.Values.Value,System.Int32,System.Boolean)
   name: MemCpy(Value, Value, Value, Int32, Boolean)
   href: api/Llvm.NET.Instructions.InstructionBuilder.MemCpy.html#Llvm_NET_Instructions_InstructionBuilder_MemCpy_Llvm_NET_Values_Value_Llvm_NET_Values_Value_Llvm_NET_Values_Value_System_Int32_System_Boolean_
@@ -6649,12 +7243,12 @@ references:
   commentId: Overload:Llvm.NET.Instructions.InstructionBuilder.MemCpy
   fullName: Llvm.NET.Instructions.InstructionBuilder.MemCpy
   nameWithType: InstructionBuilder.MemCpy
-- uid: Llvm.NET.Instructions.InstructionBuilder.MemMove(Llvm.NET.NativeModule,Llvm.NET.Values.Value,Llvm.NET.Values.Value,Llvm.NET.Values.Value,System.Int32,System.Boolean)
-  name: MemMove(NativeModule, Value, Value, Value, Int32, Boolean)
-  href: api/Llvm.NET.Instructions.InstructionBuilder.MemMove.html#Llvm_NET_Instructions_InstructionBuilder_MemMove_Llvm_NET_NativeModule_Llvm_NET_Values_Value_Llvm_NET_Values_Value_Llvm_NET_Values_Value_System_Int32_System_Boolean_
-  commentId: M:Llvm.NET.Instructions.InstructionBuilder.MemMove(Llvm.NET.NativeModule,Llvm.NET.Values.Value,Llvm.NET.Values.Value,Llvm.NET.Values.Value,System.Int32,System.Boolean)
-  fullName: Llvm.NET.Instructions.InstructionBuilder.MemMove(Llvm.NET.NativeModule, Llvm.NET.Values.Value, Llvm.NET.Values.Value, Llvm.NET.Values.Value, System.Int32, System.Boolean)
-  nameWithType: InstructionBuilder.MemMove(NativeModule, Value, Value, Value, Int32, Boolean)
+- uid: Llvm.NET.Instructions.InstructionBuilder.MemMove(Llvm.NET.BitcodeModule,Llvm.NET.Values.Value,Llvm.NET.Values.Value,Llvm.NET.Values.Value,System.Int32,System.Boolean)
+  name: MemMove(BitcodeModule, Value, Value, Value, Int32, Boolean)
+  href: api/Llvm.NET.Instructions.InstructionBuilder.MemMove.html#Llvm_NET_Instructions_InstructionBuilder_MemMove_Llvm_NET_BitcodeModule_Llvm_NET_Values_Value_Llvm_NET_Values_Value_Llvm_NET_Values_Value_System_Int32_System_Boolean_
+  commentId: M:Llvm.NET.Instructions.InstructionBuilder.MemMove(Llvm.NET.BitcodeModule,Llvm.NET.Values.Value,Llvm.NET.Values.Value,Llvm.NET.Values.Value,System.Int32,System.Boolean)
+  fullName: Llvm.NET.Instructions.InstructionBuilder.MemMove(Llvm.NET.BitcodeModule, Llvm.NET.Values.Value, Llvm.NET.Values.Value, Llvm.NET.Values.Value, System.Int32, System.Boolean)
+  nameWithType: InstructionBuilder.MemMove(BitcodeModule, Value, Value, Value, Int32, Boolean)
 - uid: Llvm.NET.Instructions.InstructionBuilder.MemMove(Llvm.NET.Values.Value,Llvm.NET.Values.Value,Llvm.NET.Values.Value,System.Int32,System.Boolean)
   name: MemMove(Value, Value, Value, Int32, Boolean)
   href: api/Llvm.NET.Instructions.InstructionBuilder.MemMove.html#Llvm_NET_Instructions_InstructionBuilder_MemMove_Llvm_NET_Values_Value_Llvm_NET_Values_Value_Llvm_NET_Values_Value_System_Int32_System_Boolean_
@@ -6667,12 +7261,12 @@ references:
   commentId: Overload:Llvm.NET.Instructions.InstructionBuilder.MemMove
   fullName: Llvm.NET.Instructions.InstructionBuilder.MemMove
   nameWithType: InstructionBuilder.MemMove
-- uid: Llvm.NET.Instructions.InstructionBuilder.MemSet(Llvm.NET.NativeModule,Llvm.NET.Values.Value,Llvm.NET.Values.Value,Llvm.NET.Values.Value,System.Int32,System.Boolean)
-  name: MemSet(NativeModule, Value, Value, Value, Int32, Boolean)
-  href: api/Llvm.NET.Instructions.InstructionBuilder.MemSet.html#Llvm_NET_Instructions_InstructionBuilder_MemSet_Llvm_NET_NativeModule_Llvm_NET_Values_Value_Llvm_NET_Values_Value_Llvm_NET_Values_Value_System_Int32_System_Boolean_
-  commentId: M:Llvm.NET.Instructions.InstructionBuilder.MemSet(Llvm.NET.NativeModule,Llvm.NET.Values.Value,Llvm.NET.Values.Value,Llvm.NET.Values.Value,System.Int32,System.Boolean)
-  fullName: Llvm.NET.Instructions.InstructionBuilder.MemSet(Llvm.NET.NativeModule, Llvm.NET.Values.Value, Llvm.NET.Values.Value, Llvm.NET.Values.Value, System.Int32, System.Boolean)
-  nameWithType: InstructionBuilder.MemSet(NativeModule, Value, Value, Value, Int32, Boolean)
+- uid: Llvm.NET.Instructions.InstructionBuilder.MemSet(Llvm.NET.BitcodeModule,Llvm.NET.Values.Value,Llvm.NET.Values.Value,Llvm.NET.Values.Value,System.Int32,System.Boolean)
+  name: MemSet(BitcodeModule, Value, Value, Value, Int32, Boolean)
+  href: api/Llvm.NET.Instructions.InstructionBuilder.MemSet.html#Llvm_NET_Instructions_InstructionBuilder_MemSet_Llvm_NET_BitcodeModule_Llvm_NET_Values_Value_Llvm_NET_Values_Value_Llvm_NET_Values_Value_System_Int32_System_Boolean_
+  commentId: M:Llvm.NET.Instructions.InstructionBuilder.MemSet(Llvm.NET.BitcodeModule,Llvm.NET.Values.Value,Llvm.NET.Values.Value,Llvm.NET.Values.Value,System.Int32,System.Boolean)
+  fullName: Llvm.NET.Instructions.InstructionBuilder.MemSet(Llvm.NET.BitcodeModule, Llvm.NET.Values.Value, Llvm.NET.Values.Value, Llvm.NET.Values.Value, System.Int32, System.Boolean)
+  nameWithType: InstructionBuilder.MemSet(BitcodeModule, Value, Value, Value, Int32, Boolean)
 - uid: Llvm.NET.Instructions.InstructionBuilder.MemSet(Llvm.NET.Values.Value,Llvm.NET.Values.Value,Llvm.NET.Values.Value,System.Int32,System.Boolean)
   name: MemSet(Value, Value, Value, Int32, Boolean)
   href: api/Llvm.NET.Instructions.InstructionBuilder.MemSet.html#Llvm_NET_Instructions_InstructionBuilder_MemSet_Llvm_NET_Values_Value_Llvm_NET_Values_Value_Llvm_NET_Values_Value_System_Int32_System_Boolean_
@@ -8242,600 +8836,6 @@ references:
   commentId: Overload:Llvm.NET.NamedMDNode.ParentModule
   fullName: Llvm.NET.NamedMDNode.ParentModule
   nameWithType: NamedMDNode.ParentModule
-- uid: Llvm.NET.NativeModule
-  name: NativeModule
-  href: api/Llvm.NET.NativeModule.html
-  commentId: T:Llvm.NET.NativeModule
-  fullName: Llvm.NET.NativeModule
-  nameWithType: NativeModule
-- uid: Llvm.NET.NativeModule.#ctor
-  name: NativeModule()
-  href: api/Llvm.NET.NativeModule.-ctor.html#Llvm_NET_NativeModule__ctor
-  commentId: M:Llvm.NET.NativeModule.#ctor
-  fullName: Llvm.NET.NativeModule.NativeModule()
-  nameWithType: NativeModule.NativeModule()
-- uid: Llvm.NET.NativeModule.#ctor(System.String)
-  name: NativeModule(String)
-  href: api/Llvm.NET.NativeModule.-ctor.html#Llvm_NET_NativeModule__ctor_System_String_
-  commentId: M:Llvm.NET.NativeModule.#ctor(System.String)
-  fullName: Llvm.NET.NativeModule.NativeModule(System.String)
-  nameWithType: NativeModule.NativeModule(String)
-- uid: Llvm.NET.NativeModule.#ctor(System.String,Llvm.NET.Context)
-  name: NativeModule(String, Context)
-  href: api/Llvm.NET.NativeModule.-ctor.html#Llvm_NET_NativeModule__ctor_System_String_Llvm_NET_Context_
-  commentId: M:Llvm.NET.NativeModule.#ctor(System.String,Llvm.NET.Context)
-  fullName: Llvm.NET.NativeModule.NativeModule(System.String, Llvm.NET.Context)
-  nameWithType: NativeModule.NativeModule(String, Context)
-- uid: Llvm.NET.NativeModule.#ctor(System.String,Llvm.NET.Context,Llvm.NET.DebugInfo.SourceLanguage,System.String,System.String,System.Boolean,System.String,System.UInt32)
-  name: NativeModule(String, Context, SourceLanguage, String, String, Boolean, String, UInt32)
-  href: api/Llvm.NET.NativeModule.-ctor.html#Llvm_NET_NativeModule__ctor_System_String_Llvm_NET_Context_Llvm_NET_DebugInfo_SourceLanguage_System_String_System_String_System_Boolean_System_String_System_UInt32_
-  commentId: M:Llvm.NET.NativeModule.#ctor(System.String,Llvm.NET.Context,Llvm.NET.DebugInfo.SourceLanguage,System.String,System.String,System.Boolean,System.String,System.UInt32)
-  fullName: Llvm.NET.NativeModule.NativeModule(System.String, Llvm.NET.Context, Llvm.NET.DebugInfo.SourceLanguage, System.String, System.String, System.Boolean, System.String, System.UInt32)
-  nameWithType: NativeModule.NativeModule(String, Context, SourceLanguage, String, String, Boolean, String, UInt32)
-- uid: Llvm.NET.NativeModule.#ctor(System.String,Llvm.NET.DebugInfo.SourceLanguage,System.String,System.String,System.Boolean,System.String,System.UInt32)
-  name: NativeModule(String, SourceLanguage, String, String, Boolean, String, UInt32)
-  href: api/Llvm.NET.NativeModule.-ctor.html#Llvm_NET_NativeModule__ctor_System_String_Llvm_NET_DebugInfo_SourceLanguage_System_String_System_String_System_Boolean_System_String_System_UInt32_
-  commentId: M:Llvm.NET.NativeModule.#ctor(System.String,Llvm.NET.DebugInfo.SourceLanguage,System.String,System.String,System.Boolean,System.String,System.UInt32)
-  fullName: Llvm.NET.NativeModule.NativeModule(System.String, Llvm.NET.DebugInfo.SourceLanguage, System.String, System.String, System.Boolean, System.String, System.UInt32)
-  nameWithType: NativeModule.NativeModule(String, SourceLanguage, String, String, Boolean, String, UInt32)
-- uid: Llvm.NET.NativeModule.#ctor*
-  name: NativeModule
-  href: api/Llvm.NET.NativeModule.-ctor.html
-  commentId: Overload:Llvm.NET.NativeModule.#ctor
-  fullName: Llvm.NET.NativeModule.NativeModule
-  nameWithType: NativeModule.NativeModule
-- uid: Llvm.NET.NativeModule.AddAlias(Llvm.NET.Values.Value,System.String)
-  name: AddAlias(Value, String)
-  href: api/Llvm.NET.NativeModule.AddAlias.html#Llvm_NET_NativeModule_AddAlias_Llvm_NET_Values_Value_System_String_
-  commentId: M:Llvm.NET.NativeModule.AddAlias(Llvm.NET.Values.Value,System.String)
-  fullName: Llvm.NET.NativeModule.AddAlias(Llvm.NET.Values.Value, System.String)
-  nameWithType: NativeModule.AddAlias(Value, String)
-- uid: Llvm.NET.NativeModule.AddAlias*
-  name: AddAlias
-  href: api/Llvm.NET.NativeModule.AddAlias.html
-  commentId: Overload:Llvm.NET.NativeModule.AddAlias
-  fullName: Llvm.NET.NativeModule.AddAlias
-  nameWithType: NativeModule.AddAlias
-- uid: Llvm.NET.NativeModule.AddFunction(System.String,Llvm.NET.Types.IFunctionType)
-  name: AddFunction(String, IFunctionType)
-  href: api/Llvm.NET.NativeModule.AddFunction.html#Llvm_NET_NativeModule_AddFunction_System_String_Llvm_NET_Types_IFunctionType_
-  commentId: M:Llvm.NET.NativeModule.AddFunction(System.String,Llvm.NET.Types.IFunctionType)
-  fullName: Llvm.NET.NativeModule.AddFunction(System.String, Llvm.NET.Types.IFunctionType)
-  nameWithType: NativeModule.AddFunction(String, IFunctionType)
-- uid: Llvm.NET.NativeModule.AddFunction*
-  name: AddFunction
-  href: api/Llvm.NET.NativeModule.AddFunction.html
-  commentId: Overload:Llvm.NET.NativeModule.AddFunction
-  fullName: Llvm.NET.NativeModule.AddFunction
-  nameWithType: NativeModule.AddFunction
-- uid: Llvm.NET.NativeModule.AddGlobal(Llvm.NET.Types.ITypeRef,System.Boolean,Llvm.NET.Linkage,Llvm.NET.Values.Constant)
-  name: AddGlobal(ITypeRef, Boolean, Linkage, Constant)
-  href: api/Llvm.NET.NativeModule.AddGlobal.html#Llvm_NET_NativeModule_AddGlobal_Llvm_NET_Types_ITypeRef_System_Boolean_Llvm_NET_Linkage_Llvm_NET_Values_Constant_
-  commentId: M:Llvm.NET.NativeModule.AddGlobal(Llvm.NET.Types.ITypeRef,System.Boolean,Llvm.NET.Linkage,Llvm.NET.Values.Constant)
-  fullName: Llvm.NET.NativeModule.AddGlobal(Llvm.NET.Types.ITypeRef, System.Boolean, Llvm.NET.Linkage, Llvm.NET.Values.Constant)
-  nameWithType: NativeModule.AddGlobal(ITypeRef, Boolean, Linkage, Constant)
-- uid: Llvm.NET.NativeModule.AddGlobal(Llvm.NET.Types.ITypeRef,System.Boolean,Llvm.NET.Linkage,Llvm.NET.Values.Constant,System.String)
-  name: AddGlobal(ITypeRef, Boolean, Linkage, Constant, String)
-  href: api/Llvm.NET.NativeModule.AddGlobal.html#Llvm_NET_NativeModule_AddGlobal_Llvm_NET_Types_ITypeRef_System_Boolean_Llvm_NET_Linkage_Llvm_NET_Values_Constant_System_String_
-  commentId: M:Llvm.NET.NativeModule.AddGlobal(Llvm.NET.Types.ITypeRef,System.Boolean,Llvm.NET.Linkage,Llvm.NET.Values.Constant,System.String)
-  fullName: Llvm.NET.NativeModule.AddGlobal(Llvm.NET.Types.ITypeRef, System.Boolean, Llvm.NET.Linkage, Llvm.NET.Values.Constant, System.String)
-  nameWithType: NativeModule.AddGlobal(ITypeRef, Boolean, Linkage, Constant, String)
-- uid: Llvm.NET.NativeModule.AddGlobal(Llvm.NET.Types.ITypeRef,System.String)
-  name: AddGlobal(ITypeRef, String)
-  href: api/Llvm.NET.NativeModule.AddGlobal.html#Llvm_NET_NativeModule_AddGlobal_Llvm_NET_Types_ITypeRef_System_String_
-  commentId: M:Llvm.NET.NativeModule.AddGlobal(Llvm.NET.Types.ITypeRef,System.String)
-  fullName: Llvm.NET.NativeModule.AddGlobal(Llvm.NET.Types.ITypeRef, System.String)
-  nameWithType: NativeModule.AddGlobal(ITypeRef, String)
-- uid: Llvm.NET.NativeModule.AddGlobal*
-  name: AddGlobal
-  href: api/Llvm.NET.NativeModule.AddGlobal.html
-  commentId: Overload:Llvm.NET.NativeModule.AddGlobal
-  fullName: Llvm.NET.NativeModule.AddGlobal
-  nameWithType: NativeModule.AddGlobal
-- uid: Llvm.NET.NativeModule.AddGlobalInAddressSpace(System.UInt32,Llvm.NET.Types.ITypeRef,System.Boolean,Llvm.NET.Linkage,Llvm.NET.Values.Constant)
-  name: AddGlobalInAddressSpace(UInt32, ITypeRef, Boolean, Linkage, Constant)
-  href: api/Llvm.NET.NativeModule.AddGlobalInAddressSpace.html#Llvm_NET_NativeModule_AddGlobalInAddressSpace_System_UInt32_Llvm_NET_Types_ITypeRef_System_Boolean_Llvm_NET_Linkage_Llvm_NET_Values_Constant_
-  commentId: M:Llvm.NET.NativeModule.AddGlobalInAddressSpace(System.UInt32,Llvm.NET.Types.ITypeRef,System.Boolean,Llvm.NET.Linkage,Llvm.NET.Values.Constant)
-  fullName: Llvm.NET.NativeModule.AddGlobalInAddressSpace(System.UInt32, Llvm.NET.Types.ITypeRef, System.Boolean, Llvm.NET.Linkage, Llvm.NET.Values.Constant)
-  nameWithType: NativeModule.AddGlobalInAddressSpace(UInt32, ITypeRef, Boolean, Linkage, Constant)
-- uid: Llvm.NET.NativeModule.AddGlobalInAddressSpace(System.UInt32,Llvm.NET.Types.ITypeRef,System.Boolean,Llvm.NET.Linkage,Llvm.NET.Values.Constant,System.String)
-  name: AddGlobalInAddressSpace(UInt32, ITypeRef, Boolean, Linkage, Constant, String)
-  href: api/Llvm.NET.NativeModule.AddGlobalInAddressSpace.html#Llvm_NET_NativeModule_AddGlobalInAddressSpace_System_UInt32_Llvm_NET_Types_ITypeRef_System_Boolean_Llvm_NET_Linkage_Llvm_NET_Values_Constant_System_String_
-  commentId: M:Llvm.NET.NativeModule.AddGlobalInAddressSpace(System.UInt32,Llvm.NET.Types.ITypeRef,System.Boolean,Llvm.NET.Linkage,Llvm.NET.Values.Constant,System.String)
-  fullName: Llvm.NET.NativeModule.AddGlobalInAddressSpace(System.UInt32, Llvm.NET.Types.ITypeRef, System.Boolean, Llvm.NET.Linkage, Llvm.NET.Values.Constant, System.String)
-  nameWithType: NativeModule.AddGlobalInAddressSpace(UInt32, ITypeRef, Boolean, Linkage, Constant, String)
-- uid: Llvm.NET.NativeModule.AddGlobalInAddressSpace(System.UInt32,Llvm.NET.Types.ITypeRef,System.String)
-  name: AddGlobalInAddressSpace(UInt32, ITypeRef, String)
-  href: api/Llvm.NET.NativeModule.AddGlobalInAddressSpace.html#Llvm_NET_NativeModule_AddGlobalInAddressSpace_System_UInt32_Llvm_NET_Types_ITypeRef_System_String_
-  commentId: M:Llvm.NET.NativeModule.AddGlobalInAddressSpace(System.UInt32,Llvm.NET.Types.ITypeRef,System.String)
-  fullName: Llvm.NET.NativeModule.AddGlobalInAddressSpace(System.UInt32, Llvm.NET.Types.ITypeRef, System.String)
-  nameWithType: NativeModule.AddGlobalInAddressSpace(UInt32, ITypeRef, String)
-- uid: Llvm.NET.NativeModule.AddGlobalInAddressSpace*
-  name: AddGlobalInAddressSpace
-  href: api/Llvm.NET.NativeModule.AddGlobalInAddressSpace.html
-  commentId: Overload:Llvm.NET.NativeModule.AddGlobalInAddressSpace
-  fullName: Llvm.NET.NativeModule.AddGlobalInAddressSpace
-  nameWithType: NativeModule.AddGlobalInAddressSpace
-- uid: Llvm.NET.NativeModule.AddModuleFlag(Llvm.NET.ModuleFlagBehavior,System.String,Llvm.NET.LlvmMetadata)
-  name: AddModuleFlag(ModuleFlagBehavior, String, LlvmMetadata)
-  href: api/Llvm.NET.NativeModule.AddModuleFlag.html#Llvm_NET_NativeModule_AddModuleFlag_Llvm_NET_ModuleFlagBehavior_System_String_Llvm_NET_LlvmMetadata_
-  commentId: M:Llvm.NET.NativeModule.AddModuleFlag(Llvm.NET.ModuleFlagBehavior,System.String,Llvm.NET.LlvmMetadata)
-  fullName: Llvm.NET.NativeModule.AddModuleFlag(Llvm.NET.ModuleFlagBehavior, System.String, Llvm.NET.LlvmMetadata)
-  nameWithType: NativeModule.AddModuleFlag(ModuleFlagBehavior, String, LlvmMetadata)
-- uid: Llvm.NET.NativeModule.AddModuleFlag(Llvm.NET.ModuleFlagBehavior,System.String,System.UInt32)
-  name: AddModuleFlag(ModuleFlagBehavior, String, UInt32)
-  href: api/Llvm.NET.NativeModule.AddModuleFlag.html#Llvm_NET_NativeModule_AddModuleFlag_Llvm_NET_ModuleFlagBehavior_System_String_System_UInt32_
-  commentId: M:Llvm.NET.NativeModule.AddModuleFlag(Llvm.NET.ModuleFlagBehavior,System.String,System.UInt32)
-  fullName: Llvm.NET.NativeModule.AddModuleFlag(Llvm.NET.ModuleFlagBehavior, System.String, System.UInt32)
-  nameWithType: NativeModule.AddModuleFlag(ModuleFlagBehavior, String, UInt32)
-- uid: Llvm.NET.NativeModule.AddModuleFlag*
-  name: AddModuleFlag
-  href: api/Llvm.NET.NativeModule.AddModuleFlag.html
-  commentId: Overload:Llvm.NET.NativeModule.AddModuleFlag
-  fullName: Llvm.NET.NativeModule.AddModuleFlag
-  nameWithType: NativeModule.AddModuleFlag
-- uid: Llvm.NET.NativeModule.AddNamedMetadataOperand(System.String,Llvm.NET.LlvmMetadata)
-  name: AddNamedMetadataOperand(String, LlvmMetadata)
-  href: api/Llvm.NET.NativeModule.AddNamedMetadataOperand.html#Llvm_NET_NativeModule_AddNamedMetadataOperand_System_String_Llvm_NET_LlvmMetadata_
-  commentId: M:Llvm.NET.NativeModule.AddNamedMetadataOperand(System.String,Llvm.NET.LlvmMetadata)
-  fullName: Llvm.NET.NativeModule.AddNamedMetadataOperand(System.String, Llvm.NET.LlvmMetadata)
-  nameWithType: NativeModule.AddNamedMetadataOperand(String, LlvmMetadata)
-- uid: Llvm.NET.NativeModule.AddNamedMetadataOperand*
-  name: AddNamedMetadataOperand
-  href: api/Llvm.NET.NativeModule.AddNamedMetadataOperand.html
-  commentId: Overload:Llvm.NET.NativeModule.AddNamedMetadataOperand
-  fullName: Llvm.NET.NativeModule.AddNamedMetadataOperand
-  nameWithType: NativeModule.AddNamedMetadataOperand
-- uid: Llvm.NET.NativeModule.AddVersionIdentMetadata(System.String)
-  name: AddVersionIdentMetadata(String)
-  href: api/Llvm.NET.NativeModule.AddVersionIdentMetadata.html#Llvm_NET_NativeModule_AddVersionIdentMetadata_System_String_
-  commentId: M:Llvm.NET.NativeModule.AddVersionIdentMetadata(System.String)
-  fullName: Llvm.NET.NativeModule.AddVersionIdentMetadata(System.String)
-  nameWithType: NativeModule.AddVersionIdentMetadata(String)
-- uid: Llvm.NET.NativeModule.AddVersionIdentMetadata*
-  name: AddVersionIdentMetadata
-  href: api/Llvm.NET.NativeModule.AddVersionIdentMetadata.html
-  commentId: Overload:Llvm.NET.NativeModule.AddVersionIdentMetadata
-  fullName: Llvm.NET.NativeModule.AddVersionIdentMetadata
-  nameWithType: NativeModule.AddVersionIdentMetadata
-- uid: Llvm.NET.NativeModule.Clone
-  name: Clone()
-  href: api/Llvm.NET.NativeModule.Clone.html#Llvm_NET_NativeModule_Clone
-  commentId: M:Llvm.NET.NativeModule.Clone
-  fullName: Llvm.NET.NativeModule.Clone()
-  nameWithType: NativeModule.Clone()
-- uid: Llvm.NET.NativeModule.Clone(Llvm.NET.Context)
-  name: Clone(Context)
-  href: api/Llvm.NET.NativeModule.Clone.html#Llvm_NET_NativeModule_Clone_Llvm_NET_Context_
-  commentId: M:Llvm.NET.NativeModule.Clone(Llvm.NET.Context)
-  fullName: Llvm.NET.NativeModule.Clone(Llvm.NET.Context)
-  nameWithType: NativeModule.Clone(Context)
-- uid: Llvm.NET.NativeModule.Clone*
-  name: Clone
-  href: api/Llvm.NET.NativeModule.Clone.html
-  commentId: Overload:Llvm.NET.NativeModule.Clone
-  fullName: Llvm.NET.NativeModule.Clone
-  nameWithType: NativeModule.Clone
-- uid: Llvm.NET.NativeModule.Comdats
-  name: Comdats
-  href: api/Llvm.NET.NativeModule.Comdats.html#Llvm_NET_NativeModule_Comdats
-  commentId: P:Llvm.NET.NativeModule.Comdats
-  fullName: Llvm.NET.NativeModule.Comdats
-  nameWithType: NativeModule.Comdats
-- uid: Llvm.NET.NativeModule.Comdats*
-  name: Comdats
-  href: api/Llvm.NET.NativeModule.Comdats.html
-  commentId: Overload:Llvm.NET.NativeModule.Comdats
-  fullName: Llvm.NET.NativeModule.Comdats
-  nameWithType: NativeModule.Comdats
-- uid: Llvm.NET.NativeModule.Context
-  name: Context
-  href: api/Llvm.NET.NativeModule.Context.html#Llvm_NET_NativeModule_Context
-  commentId: P:Llvm.NET.NativeModule.Context
-  fullName: Llvm.NET.NativeModule.Context
-  nameWithType: NativeModule.Context
-- uid: Llvm.NET.NativeModule.Context*
-  name: Context
-  href: api/Llvm.NET.NativeModule.Context.html
-  commentId: Overload:Llvm.NET.NativeModule.Context
-  fullName: Llvm.NET.NativeModule.Context
-  nameWithType: NativeModule.Context
-- uid: Llvm.NET.NativeModule.CreateFunction(Llvm.NET.DebugInfo.DIScope,System.String,System.String,Llvm.NET.DebugInfo.DIFile,System.UInt32,Llvm.NET.DebugInfo.DebugFunctionType,System.Boolean,System.Boolean,System.UInt32,Llvm.NET.DebugInfo.DebugInfoFlags,System.Boolean,Llvm.NET.MDNode,Llvm.NET.MDNode)
-  name: CreateFunction(DIScope, String, String, DIFile, UInt32, DebugFunctionType, Boolean, Boolean, UInt32, DebugInfoFlags, Boolean, MDNode, MDNode)
-  href: api/Llvm.NET.NativeModule.CreateFunction.html#Llvm_NET_NativeModule_CreateFunction_Llvm_NET_DebugInfo_DIScope_System_String_System_String_Llvm_NET_DebugInfo_DIFile_System_UInt32_Llvm_NET_DebugInfo_DebugFunctionType_System_Boolean_System_Boolean_System_UInt32_Llvm_NET_DebugInfo_DebugInfoFlags_System_Boolean_Llvm_NET_MDNode_Llvm_NET_MDNode_
-  commentId: M:Llvm.NET.NativeModule.CreateFunction(Llvm.NET.DebugInfo.DIScope,System.String,System.String,Llvm.NET.DebugInfo.DIFile,System.UInt32,Llvm.NET.DebugInfo.DebugFunctionType,System.Boolean,System.Boolean,System.UInt32,Llvm.NET.DebugInfo.DebugInfoFlags,System.Boolean,Llvm.NET.MDNode,Llvm.NET.MDNode)
-  fullName: Llvm.NET.NativeModule.CreateFunction(Llvm.NET.DebugInfo.DIScope, System.String, System.String, Llvm.NET.DebugInfo.DIFile, System.UInt32, Llvm.NET.DebugInfo.DebugFunctionType, System.Boolean, System.Boolean, System.UInt32, Llvm.NET.DebugInfo.DebugInfoFlags, System.Boolean, Llvm.NET.MDNode, Llvm.NET.MDNode)
-  nameWithType: NativeModule.CreateFunction(DIScope, String, String, DIFile, UInt32, DebugFunctionType, Boolean, Boolean, UInt32, DebugInfoFlags, Boolean, MDNode, MDNode)
-- uid: Llvm.NET.NativeModule.CreateFunction(System.String,System.Boolean,Llvm.NET.DebugInfo.IDebugType{Llvm.NET.Types.ITypeRef,Llvm.NET.DebugInfo.DIType},Llvm.NET.DebugInfo.IDebugType{Llvm.NET.Types.ITypeRef,Llvm.NET.DebugInfo.DIType}[])
-  name: CreateFunction(String, Boolean, IDebugType<ITypeRef, DIType>, IDebugType<ITypeRef, DIType>[])
-  href: api/Llvm.NET.NativeModule.CreateFunction.html#Llvm_NET_NativeModule_CreateFunction_System_String_System_Boolean_Llvm_NET_DebugInfo_IDebugType_Llvm_NET_Types_ITypeRef_Llvm_NET_DebugInfo_DIType__Llvm_NET_DebugInfo_IDebugType_Llvm_NET_Types_ITypeRef_Llvm_NET_DebugInfo_DIType____
-  commentId: M:Llvm.NET.NativeModule.CreateFunction(System.String,System.Boolean,Llvm.NET.DebugInfo.IDebugType{Llvm.NET.Types.ITypeRef,Llvm.NET.DebugInfo.DIType},Llvm.NET.DebugInfo.IDebugType{Llvm.NET.Types.ITypeRef,Llvm.NET.DebugInfo.DIType}[])
-  name.vb: CreateFunction(String, Boolean, IDebugType(Of ITypeRef, DIType), IDebugType(Of ITypeRef, DIType)())
-  fullName: Llvm.NET.NativeModule.CreateFunction(System.String, System.Boolean, Llvm.NET.DebugInfo.IDebugType<Llvm.NET.Types.ITypeRef, Llvm.NET.DebugInfo.DIType>, Llvm.NET.DebugInfo.IDebugType<Llvm.NET.Types.ITypeRef, Llvm.NET.DebugInfo.DIType>[])
-  fullName.vb: Llvm.NET.NativeModule.CreateFunction(System.String, System.Boolean, Llvm.NET.DebugInfo.IDebugType(Of Llvm.NET.Types.ITypeRef, Llvm.NET.DebugInfo.DIType), Llvm.NET.DebugInfo.IDebugType(Of Llvm.NET.Types.ITypeRef, Llvm.NET.DebugInfo.DIType)())
-  nameWithType: NativeModule.CreateFunction(String, Boolean, IDebugType<ITypeRef, DIType>, IDebugType<ITypeRef, DIType>[])
-  nameWithType.vb: NativeModule.CreateFunction(String, Boolean, IDebugType(Of ITypeRef, DIType), IDebugType(Of ITypeRef, DIType)())
-- uid: Llvm.NET.NativeModule.CreateFunction*
-  name: CreateFunction
-  href: api/Llvm.NET.NativeModule.CreateFunction.html
-  commentId: Overload:Llvm.NET.NativeModule.CreateFunction
-  fullName: Llvm.NET.NativeModule.CreateFunction
-  nameWithType: NativeModule.CreateFunction
-- uid: Llvm.NET.NativeModule.CreateMDNode(System.String)
-  name: CreateMDNode(String)
-  href: api/Llvm.NET.NativeModule.CreateMDNode.html#Llvm_NET_NativeModule_CreateMDNode_System_String_
-  commentId: M:Llvm.NET.NativeModule.CreateMDNode(System.String)
-  fullName: Llvm.NET.NativeModule.CreateMDNode(System.String)
-  nameWithType: NativeModule.CreateMDNode(String)
-- uid: Llvm.NET.NativeModule.CreateMDNode*
-  name: CreateMDNode
-  href: api/Llvm.NET.NativeModule.CreateMDNode.html
-  commentId: Overload:Llvm.NET.NativeModule.CreateMDNode
-  fullName: Llvm.NET.NativeModule.CreateMDNode
-  nameWithType: NativeModule.CreateMDNode
-- uid: Llvm.NET.NativeModule.DataLayoutString
-  name: DataLayoutString
-  href: api/Llvm.NET.NativeModule.DataLayoutString.html#Llvm_NET_NativeModule_DataLayoutString
-  commentId: P:Llvm.NET.NativeModule.DataLayoutString
-  fullName: Llvm.NET.NativeModule.DataLayoutString
-  nameWithType: NativeModule.DataLayoutString
-- uid: Llvm.NET.NativeModule.DataLayoutString*
-  name: DataLayoutString
-  href: api/Llvm.NET.NativeModule.DataLayoutString.html
-  commentId: Overload:Llvm.NET.NativeModule.DataLayoutString
-  fullName: Llvm.NET.NativeModule.DataLayoutString
-  nameWithType: NativeModule.DataLayoutString
-- uid: Llvm.NET.NativeModule.DebugMetadataVersion
-  name: DebugMetadataVersion
-  href: api/Llvm.NET.NativeModule.DebugMetadataVersion.html#Llvm_NET_NativeModule_DebugMetadataVersion
-  commentId: F:Llvm.NET.NativeModule.DebugMetadataVersion
-  fullName: Llvm.NET.NativeModule.DebugMetadataVersion
-  nameWithType: NativeModule.DebugMetadataVersion
-- uid: Llvm.NET.NativeModule.DebugVersionValue
-  name: DebugVersionValue
-  href: api/Llvm.NET.NativeModule.DebugVersionValue.html#Llvm_NET_NativeModule_DebugVersionValue
-  commentId: F:Llvm.NET.NativeModule.DebugVersionValue
-  fullName: Llvm.NET.NativeModule.DebugVersionValue
-  nameWithType: NativeModule.DebugVersionValue
-- uid: Llvm.NET.NativeModule.DIBuilder
-  name: DIBuilder
-  href: api/Llvm.NET.NativeModule.DIBuilder.html#Llvm_NET_NativeModule_DIBuilder
-  commentId: P:Llvm.NET.NativeModule.DIBuilder
-  fullName: Llvm.NET.NativeModule.DIBuilder
-  nameWithType: NativeModule.DIBuilder
-- uid: Llvm.NET.NativeModule.DIBuilder*
-  name: DIBuilder
-  href: api/Llvm.NET.NativeModule.DIBuilder.html
-  commentId: Overload:Llvm.NET.NativeModule.DIBuilder
-  fullName: Llvm.NET.NativeModule.DIBuilder
-  nameWithType: NativeModule.DIBuilder
-- uid: Llvm.NET.NativeModule.DICompileUnit
-  name: DICompileUnit
-  href: api/Llvm.NET.NativeModule.DICompileUnit.html#Llvm_NET_NativeModule_DICompileUnit
-  commentId: P:Llvm.NET.NativeModule.DICompileUnit
-  fullName: Llvm.NET.NativeModule.DICompileUnit
-  nameWithType: NativeModule.DICompileUnit
-- uid: Llvm.NET.NativeModule.DICompileUnit*
-  name: DICompileUnit
-  href: api/Llvm.NET.NativeModule.DICompileUnit.html
-  commentId: Overload:Llvm.NET.NativeModule.DICompileUnit
-  fullName: Llvm.NET.NativeModule.DICompileUnit
-  nameWithType: NativeModule.DICompileUnit
-- uid: Llvm.NET.NativeModule.Dispose
-  name: Dispose()
-  href: api/Llvm.NET.NativeModule.Dispose.html#Llvm_NET_NativeModule_Dispose
-  commentId: M:Llvm.NET.NativeModule.Dispose
-  fullName: Llvm.NET.NativeModule.Dispose()
-  nameWithType: NativeModule.Dispose()
-- uid: Llvm.NET.NativeModule.Dispose*
-  name: Dispose
-  href: api/Llvm.NET.NativeModule.Dispose.html
-  commentId: Overload:Llvm.NET.NativeModule.Dispose
-  fullName: Llvm.NET.NativeModule.Dispose
-  nameWithType: NativeModule.Dispose
-- uid: Llvm.NET.NativeModule.DwarfVersionValue
-  name: DwarfVersionValue
-  href: api/Llvm.NET.NativeModule.DwarfVersionValue.html#Llvm_NET_NativeModule_DwarfVersionValue
-  commentId: F:Llvm.NET.NativeModule.DwarfVersionValue
-  fullName: Llvm.NET.NativeModule.DwarfVersionValue
-  nameWithType: NativeModule.DwarfVersionValue
-- uid: Llvm.NET.NativeModule.Finalize
-  name: Finalize()
-  href: api/Llvm.NET.NativeModule.Finalize.html#Llvm_NET_NativeModule_Finalize
-  commentId: M:Llvm.NET.NativeModule.Finalize
-  fullName: Llvm.NET.NativeModule.Finalize()
-  nameWithType: NativeModule.Finalize()
-- uid: Llvm.NET.NativeModule.Finalize*
-  name: Finalize
-  href: api/Llvm.NET.NativeModule.Finalize.html
-  commentId: Overload:Llvm.NET.NativeModule.Finalize
-  fullName: Llvm.NET.NativeModule.Finalize
-  nameWithType: NativeModule.Finalize
-- uid: Llvm.NET.NativeModule.Functions
-  name: Functions
-  href: api/Llvm.NET.NativeModule.Functions.html#Llvm_NET_NativeModule_Functions
-  commentId: P:Llvm.NET.NativeModule.Functions
-  fullName: Llvm.NET.NativeModule.Functions
-  nameWithType: NativeModule.Functions
-- uid: Llvm.NET.NativeModule.Functions*
-  name: Functions
-  href: api/Llvm.NET.NativeModule.Functions.html
-  commentId: Overload:Llvm.NET.NativeModule.Functions
-  fullName: Llvm.NET.NativeModule.Functions
-  nameWithType: NativeModule.Functions
-- uid: Llvm.NET.NativeModule.GetAlias(System.String)
-  name: GetAlias(String)
-  href: api/Llvm.NET.NativeModule.GetAlias.html#Llvm_NET_NativeModule_GetAlias_System_String_
-  commentId: M:Llvm.NET.NativeModule.GetAlias(System.String)
-  fullName: Llvm.NET.NativeModule.GetAlias(System.String)
-  nameWithType: NativeModule.GetAlias(String)
-- uid: Llvm.NET.NativeModule.GetAlias*
-  name: GetAlias
-  href: api/Llvm.NET.NativeModule.GetAlias.html
-  commentId: Overload:Llvm.NET.NativeModule.GetAlias
-  fullName: Llvm.NET.NativeModule.GetAlias
-  nameWithType: NativeModule.GetAlias
-- uid: Llvm.NET.NativeModule.GetFunction(System.String)
-  name: GetFunction(String)
-  href: api/Llvm.NET.NativeModule.GetFunction.html#Llvm_NET_NativeModule_GetFunction_System_String_
-  commentId: M:Llvm.NET.NativeModule.GetFunction(System.String)
-  fullName: Llvm.NET.NativeModule.GetFunction(System.String)
-  nameWithType: NativeModule.GetFunction(String)
-- uid: Llvm.NET.NativeModule.GetFunction*
-  name: GetFunction
-  href: api/Llvm.NET.NativeModule.GetFunction.html
-  commentId: Overload:Llvm.NET.NativeModule.GetFunction
-  fullName: Llvm.NET.NativeModule.GetFunction
-  nameWithType: NativeModule.GetFunction
-- uid: Llvm.NET.NativeModule.GetNamedGlobal(System.String)
-  name: GetNamedGlobal(String)
-  href: api/Llvm.NET.NativeModule.GetNamedGlobal.html#Llvm_NET_NativeModule_GetNamedGlobal_System_String_
-  commentId: M:Llvm.NET.NativeModule.GetNamedGlobal(System.String)
-  fullName: Llvm.NET.NativeModule.GetNamedGlobal(System.String)
-  nameWithType: NativeModule.GetNamedGlobal(String)
-- uid: Llvm.NET.NativeModule.GetNamedGlobal*
-  name: GetNamedGlobal
-  href: api/Llvm.NET.NativeModule.GetNamedGlobal.html
-  commentId: Overload:Llvm.NET.NativeModule.GetNamedGlobal
-  fullName: Llvm.NET.NativeModule.GetNamedGlobal
-  nameWithType: NativeModule.GetNamedGlobal
-- uid: Llvm.NET.NativeModule.GetTypeByName(System.String)
-  name: GetTypeByName(String)
-  href: api/Llvm.NET.NativeModule.GetTypeByName.html#Llvm_NET_NativeModule_GetTypeByName_System_String_
-  commentId: M:Llvm.NET.NativeModule.GetTypeByName(System.String)
-  fullName: Llvm.NET.NativeModule.GetTypeByName(System.String)
-  nameWithType: NativeModule.GetTypeByName(String)
-- uid: Llvm.NET.NativeModule.GetTypeByName*
-  name: GetTypeByName
-  href: api/Llvm.NET.NativeModule.GetTypeByName.html
-  commentId: Overload:Llvm.NET.NativeModule.GetTypeByName
-  fullName: Llvm.NET.NativeModule.GetTypeByName
-  nameWithType: NativeModule.GetTypeByName
-- uid: Llvm.NET.NativeModule.Globals
-  name: Globals
-  href: api/Llvm.NET.NativeModule.Globals.html#Llvm_NET_NativeModule_Globals
-  commentId: P:Llvm.NET.NativeModule.Globals
-  fullName: Llvm.NET.NativeModule.Globals
-  nameWithType: NativeModule.Globals
-- uid: Llvm.NET.NativeModule.Globals*
-  name: Globals
-  href: api/Llvm.NET.NativeModule.Globals.html
-  commentId: Overload:Llvm.NET.NativeModule.Globals
-  fullName: Llvm.NET.NativeModule.Globals
-  nameWithType: NativeModule.Globals
-- uid: Llvm.NET.NativeModule.IsDisposed
-  name: IsDisposed
-  href: api/Llvm.NET.NativeModule.IsDisposed.html#Llvm_NET_NativeModule_IsDisposed
-  commentId: P:Llvm.NET.NativeModule.IsDisposed
-  fullName: Llvm.NET.NativeModule.IsDisposed
-  nameWithType: NativeModule.IsDisposed
-- uid: Llvm.NET.NativeModule.IsDisposed*
-  name: IsDisposed
-  href: api/Llvm.NET.NativeModule.IsDisposed.html
-  commentId: Overload:Llvm.NET.NativeModule.IsDisposed
-  fullName: Llvm.NET.NativeModule.IsDisposed
-  nameWithType: NativeModule.IsDisposed
-- uid: Llvm.NET.NativeModule.Layout
-  name: Layout
-  href: api/Llvm.NET.NativeModule.Layout.html#Llvm_NET_NativeModule_Layout
-  commentId: P:Llvm.NET.NativeModule.Layout
-  fullName: Llvm.NET.NativeModule.Layout
-  nameWithType: NativeModule.Layout
-- uid: Llvm.NET.NativeModule.Layout*
-  name: Layout
-  href: api/Llvm.NET.NativeModule.Layout.html
-  commentId: Overload:Llvm.NET.NativeModule.Layout
-  fullName: Llvm.NET.NativeModule.Layout
-  nameWithType: NativeModule.Layout
-- uid: Llvm.NET.NativeModule.Link(Llvm.NET.NativeModule)
-  name: Link(NativeModule)
-  href: api/Llvm.NET.NativeModule.Link.html#Llvm_NET_NativeModule_Link_Llvm_NET_NativeModule_
-  commentId: M:Llvm.NET.NativeModule.Link(Llvm.NET.NativeModule)
-  fullName: Llvm.NET.NativeModule.Link(Llvm.NET.NativeModule)
-  nameWithType: NativeModule.Link(NativeModule)
-- uid: Llvm.NET.NativeModule.Link*
-  name: Link
-  href: api/Llvm.NET.NativeModule.Link.html
-  commentId: Overload:Llvm.NET.NativeModule.Link
-  fullName: Llvm.NET.NativeModule.Link
-  nameWithType: NativeModule.Link
-- uid: Llvm.NET.NativeModule.Llvm#NET#IExtensiblePropertyContainer#AddExtendedPropertyValue(System.String,System.Object)
-  name: IExtensiblePropertyContainer.AddExtendedPropertyValue(String, Object)
-  href: api/Llvm.NET.NativeModule.Llvm-NET-IExtensiblePropertyContainer-AddExtendedPropertyValue.html#Llvm_NET_NativeModule_Llvm_NET_IExtensiblePropertyContainer_AddExtendedPropertyValue_System_String_System_Object_
-  commentId: M:Llvm.NET.NativeModule.Llvm#NET#IExtensiblePropertyContainer#AddExtendedPropertyValue(System.String,System.Object)
-  name.vb: Llvm.NET.IExtensiblePropertyContainer.AddExtendedPropertyValue(String, Object)
-  fullName: Llvm.NET.NativeModule.Llvm.NET.IExtensiblePropertyContainer.AddExtendedPropertyValue(System.String, System.Object)
-  nameWithType: NativeModule.IExtensiblePropertyContainer.AddExtendedPropertyValue(String, Object)
-  nameWithType.vb: NativeModule.Llvm.NET.IExtensiblePropertyContainer.AddExtendedPropertyValue(String, Object)
-- uid: Llvm.NET.NativeModule.Llvm#NET#IExtensiblePropertyContainer#AddExtendedPropertyValue*
-  name: IExtensiblePropertyContainer.AddExtendedPropertyValue
-  href: api/Llvm.NET.NativeModule.Llvm-NET-IExtensiblePropertyContainer-AddExtendedPropertyValue.html
-  commentId: Overload:Llvm.NET.NativeModule.Llvm#NET#IExtensiblePropertyContainer#AddExtendedPropertyValue
-  name.vb: Llvm.NET.IExtensiblePropertyContainer.AddExtendedPropertyValue
-  fullName: Llvm.NET.NativeModule.Llvm.NET.IExtensiblePropertyContainer.AddExtendedPropertyValue
-  nameWithType: NativeModule.IExtensiblePropertyContainer.AddExtendedPropertyValue
-  nameWithType.vb: NativeModule.Llvm.NET.IExtensiblePropertyContainer.AddExtendedPropertyValue
-- uid: Llvm.NET.NativeModule.Llvm#NET#IExtensiblePropertyContainer#TryGetExtendedPropertyValue*
-  name: IExtensiblePropertyContainer.TryGetExtendedPropertyValue
-  href: api/Llvm.NET.NativeModule.Llvm-NET-IExtensiblePropertyContainer-TryGetExtendedPropertyValue.html
-  commentId: Overload:Llvm.NET.NativeModule.Llvm#NET#IExtensiblePropertyContainer#TryGetExtendedPropertyValue
-  name.vb: Llvm.NET.IExtensiblePropertyContainer.TryGetExtendedPropertyValue
-  fullName: Llvm.NET.NativeModule.Llvm.NET.IExtensiblePropertyContainer.TryGetExtendedPropertyValue
-  nameWithType: NativeModule.IExtensiblePropertyContainer.TryGetExtendedPropertyValue
-  nameWithType.vb: NativeModule.Llvm.NET.IExtensiblePropertyContainer.TryGetExtendedPropertyValue
-- uid: Llvm.NET.NativeModule.Llvm#NET#IExtensiblePropertyContainer#TryGetExtendedPropertyValue``1(System.String,``0@)
-  name: IExtensiblePropertyContainer.TryGetExtendedPropertyValue<T>(String, out T)
-  href: api/Llvm.NET.NativeModule.Llvm-NET-IExtensiblePropertyContainer-TryGetExtendedPropertyValue.html#Llvm_NET_NativeModule_Llvm_NET_IExtensiblePropertyContainer_TryGetExtendedPropertyValue__1_System_String___0__
-  commentId: M:Llvm.NET.NativeModule.Llvm#NET#IExtensiblePropertyContainer#TryGetExtendedPropertyValue``1(System.String,``0@)
-  name.vb: Llvm.NET.IExtensiblePropertyContainer.TryGetExtendedPropertyValue(Of T)(String, ByRef T)
-  fullName: Llvm.NET.NativeModule.Llvm.NET.IExtensiblePropertyContainer.TryGetExtendedPropertyValue<T>(System.String, out T)
-  fullName.vb: Llvm.NET.NativeModule.Llvm.NET.IExtensiblePropertyContainer.TryGetExtendedPropertyValue(Of T)(System.String, ByRef T)
-  nameWithType: NativeModule.IExtensiblePropertyContainer.TryGetExtendedPropertyValue<T>(String, out T)
-  nameWithType.vb: NativeModule.Llvm.NET.IExtensiblePropertyContainer.TryGetExtendedPropertyValue(Of T)(String, ByRef T)
-- uid: Llvm.NET.NativeModule.LoadFrom(Llvm.NET.MemoryBuffer,Llvm.NET.Context)
-  name: LoadFrom(MemoryBuffer, Context)
-  href: api/Llvm.NET.NativeModule.LoadFrom.html#Llvm_NET_NativeModule_LoadFrom_Llvm_NET_MemoryBuffer_Llvm_NET_Context_
-  commentId: M:Llvm.NET.NativeModule.LoadFrom(Llvm.NET.MemoryBuffer,Llvm.NET.Context)
-  fullName: Llvm.NET.NativeModule.LoadFrom(Llvm.NET.MemoryBuffer, Llvm.NET.Context)
-  nameWithType: NativeModule.LoadFrom(MemoryBuffer, Context)
-- uid: Llvm.NET.NativeModule.LoadFrom(System.String,Llvm.NET.Context)
-  name: LoadFrom(String, Context)
-  href: api/Llvm.NET.NativeModule.LoadFrom.html#Llvm_NET_NativeModule_LoadFrom_System_String_Llvm_NET_Context_
-  commentId: M:Llvm.NET.NativeModule.LoadFrom(System.String,Llvm.NET.Context)
-  fullName: Llvm.NET.NativeModule.LoadFrom(System.String, Llvm.NET.Context)
-  nameWithType: NativeModule.LoadFrom(String, Context)
-- uid: Llvm.NET.NativeModule.LoadFrom*
-  name: LoadFrom
-  href: api/Llvm.NET.NativeModule.LoadFrom.html
-  commentId: Overload:Llvm.NET.NativeModule.LoadFrom
-  fullName: Llvm.NET.NativeModule.LoadFrom
-  nameWithType: NativeModule.LoadFrom
-- uid: Llvm.NET.NativeModule.ModuleFlags
-  name: ModuleFlags
-  href: api/Llvm.NET.NativeModule.ModuleFlags.html#Llvm_NET_NativeModule_ModuleFlags
-  commentId: P:Llvm.NET.NativeModule.ModuleFlags
-  fullName: Llvm.NET.NativeModule.ModuleFlags
-  nameWithType: NativeModule.ModuleFlags
-- uid: Llvm.NET.NativeModule.ModuleFlags*
-  name: ModuleFlags
-  href: api/Llvm.NET.NativeModule.ModuleFlags.html
-  commentId: Overload:Llvm.NET.NativeModule.ModuleFlags
-  fullName: Llvm.NET.NativeModule.ModuleFlags
-  nameWithType: NativeModule.ModuleFlags
-- uid: Llvm.NET.NativeModule.Name
-  name: Name
-  href: api/Llvm.NET.NativeModule.Name.html#Llvm_NET_NativeModule_Name
-  commentId: P:Llvm.NET.NativeModule.Name
-  fullName: Llvm.NET.NativeModule.Name
-  nameWithType: NativeModule.Name
-- uid: Llvm.NET.NativeModule.Name*
-  name: Name
-  href: api/Llvm.NET.NativeModule.Name.html
-  commentId: Overload:Llvm.NET.NativeModule.Name
-  fullName: Llvm.NET.NativeModule.Name
-  nameWithType: NativeModule.Name
-- uid: Llvm.NET.NativeModule.Optimize(Llvm.NET.TargetMachine)
-  name: Optimize(TargetMachine)
-  href: api/Llvm.NET.NativeModule.Optimize.html#Llvm_NET_NativeModule_Optimize_Llvm_NET_TargetMachine_
-  commentId: M:Llvm.NET.NativeModule.Optimize(Llvm.NET.TargetMachine)
-  fullName: Llvm.NET.NativeModule.Optimize(Llvm.NET.TargetMachine)
-  nameWithType: NativeModule.Optimize(TargetMachine)
-- uid: Llvm.NET.NativeModule.Optimize*
-  name: Optimize
-  href: api/Llvm.NET.NativeModule.Optimize.html
-  commentId: Overload:Llvm.NET.NativeModule.Optimize
-  fullName: Llvm.NET.NativeModule.Optimize
-  nameWithType: NativeModule.Optimize
-- uid: Llvm.NET.NativeModule.SourceFileName
-  name: SourceFileName
-  href: api/Llvm.NET.NativeModule.SourceFileName.html#Llvm_NET_NativeModule_SourceFileName
-  commentId: P:Llvm.NET.NativeModule.SourceFileName
-  fullName: Llvm.NET.NativeModule.SourceFileName
-  nameWithType: NativeModule.SourceFileName
-- uid: Llvm.NET.NativeModule.SourceFileName*
-  name: SourceFileName
-  href: api/Llvm.NET.NativeModule.SourceFileName.html
-  commentId: Overload:Llvm.NET.NativeModule.SourceFileName
-  fullName: Llvm.NET.NativeModule.SourceFileName
-  nameWithType: NativeModule.SourceFileName
-- uid: Llvm.NET.NativeModule.TargetTriple
-  name: TargetTriple
-  href: api/Llvm.NET.NativeModule.TargetTriple.html#Llvm_NET_NativeModule_TargetTriple
-  commentId: P:Llvm.NET.NativeModule.TargetTriple
-  fullName: Llvm.NET.NativeModule.TargetTriple
-  nameWithType: NativeModule.TargetTriple
-- uid: Llvm.NET.NativeModule.TargetTriple*
-  name: TargetTriple
-  href: api/Llvm.NET.NativeModule.TargetTriple.html
-  commentId: Overload:Llvm.NET.NativeModule.TargetTriple
-  fullName: Llvm.NET.NativeModule.TargetTriple
-  nameWithType: NativeModule.TargetTriple
-- uid: Llvm.NET.NativeModule.Verify(System.String@)
-  name: Verify(out String)
-  href: api/Llvm.NET.NativeModule.Verify.html#Llvm_NET_NativeModule_Verify_System_String__
-  commentId: M:Llvm.NET.NativeModule.Verify(System.String@)
-  name.vb: Verify(ByRef String)
-  fullName: Llvm.NET.NativeModule.Verify(out System.String)
-  fullName.vb: Llvm.NET.NativeModule.Verify(ByRef System.String)
-  nameWithType: NativeModule.Verify(out String)
-  nameWithType.vb: NativeModule.Verify(ByRef String)
-- uid: Llvm.NET.NativeModule.Verify*
-  name: Verify
-  href: api/Llvm.NET.NativeModule.Verify.html
-  commentId: Overload:Llvm.NET.NativeModule.Verify
-  fullName: Llvm.NET.NativeModule.Verify
-  nameWithType: NativeModule.Verify
-- uid: Llvm.NET.NativeModule.WriteToBuffer
-  name: WriteToBuffer()
-  href: api/Llvm.NET.NativeModule.WriteToBuffer.html#Llvm_NET_NativeModule_WriteToBuffer
-  commentId: M:Llvm.NET.NativeModule.WriteToBuffer
-  fullName: Llvm.NET.NativeModule.WriteToBuffer()
-  nameWithType: NativeModule.WriteToBuffer()
-- uid: Llvm.NET.NativeModule.WriteToBuffer*
-  name: WriteToBuffer
-  href: api/Llvm.NET.NativeModule.WriteToBuffer.html
-  commentId: Overload:Llvm.NET.NativeModule.WriteToBuffer
-  fullName: Llvm.NET.NativeModule.WriteToBuffer
-  nameWithType: NativeModule.WriteToBuffer
-- uid: Llvm.NET.NativeModule.WriteToFile(System.String)
-  name: WriteToFile(String)
-  href: api/Llvm.NET.NativeModule.WriteToFile.html#Llvm_NET_NativeModule_WriteToFile_System_String_
-  commentId: M:Llvm.NET.NativeModule.WriteToFile(System.String)
-  fullName: Llvm.NET.NativeModule.WriteToFile(System.String)
-  nameWithType: NativeModule.WriteToFile(String)
-- uid: Llvm.NET.NativeModule.WriteToFile*
-  name: WriteToFile
-  href: api/Llvm.NET.NativeModule.WriteToFile.html
-  commentId: Overload:Llvm.NET.NativeModule.WriteToFile
-  fullName: Llvm.NET.NativeModule.WriteToFile
-  nameWithType: NativeModule.WriteToFile
-- uid: Llvm.NET.NativeModule.WriteToString
-  name: WriteToString()
-  href: api/Llvm.NET.NativeModule.WriteToString.html#Llvm_NET_NativeModule_WriteToString
-  commentId: M:Llvm.NET.NativeModule.WriteToString
-  fullName: Llvm.NET.NativeModule.WriteToString()
-  nameWithType: NativeModule.WriteToString()
-- uid: Llvm.NET.NativeModule.WriteToString*
-  name: WriteToString
-  href: api/Llvm.NET.NativeModule.WriteToString.html
-  commentId: Overload:Llvm.NET.NativeModule.WriteToString
-  fullName: Llvm.NET.NativeModule.WriteToString
-  nameWithType: NativeModule.WriteToString
-- uid: Llvm.NET.NativeModule.WriteToTextFile(System.String,System.String@)
-  name: WriteToTextFile(String, out String)
-  href: api/Llvm.NET.NativeModule.WriteToTextFile.html#Llvm_NET_NativeModule_WriteToTextFile_System_String_System_String__
-  commentId: M:Llvm.NET.NativeModule.WriteToTextFile(System.String,System.String@)
-  name.vb: WriteToTextFile(String, ByRef String)
-  fullName: Llvm.NET.NativeModule.WriteToTextFile(System.String, out System.String)
-  fullName.vb: Llvm.NET.NativeModule.WriteToTextFile(System.String, ByRef System.String)
-  nameWithType: NativeModule.WriteToTextFile(String, out String)
-  nameWithType.vb: NativeModule.WriteToTextFile(String, ByRef String)
-- uid: Llvm.NET.NativeModule.WriteToTextFile*
-  name: WriteToTextFile
-  href: api/Llvm.NET.NativeModule.WriteToTextFile.html
-  commentId: Overload:Llvm.NET.NativeModule.WriteToTextFile
-  fullName: Llvm.NET.NativeModule.WriteToTextFile
-  nameWithType: NativeModule.WriteToTextFile
 - uid: Llvm.NET.OpCode
   name: OpCode
   href: api/Llvm.NET.OpCode.html
@@ -9919,24 +9919,24 @@ references:
   commentId: Overload:Llvm.NET.TargetMachine.Dispose
   fullName: Llvm.NET.TargetMachine.Dispose
   nameWithType: TargetMachine.Dispose
-- uid: Llvm.NET.TargetMachine.EmitToBuffer(Llvm.NET.NativeModule,Llvm.NET.CodeGenFileType)
-  name: EmitToBuffer(NativeModule, CodeGenFileType)
-  href: api/Llvm.NET.TargetMachine.EmitToBuffer.html#Llvm_NET_TargetMachine_EmitToBuffer_Llvm_NET_NativeModule_Llvm_NET_CodeGenFileType_
-  commentId: M:Llvm.NET.TargetMachine.EmitToBuffer(Llvm.NET.NativeModule,Llvm.NET.CodeGenFileType)
-  fullName: Llvm.NET.TargetMachine.EmitToBuffer(Llvm.NET.NativeModule, Llvm.NET.CodeGenFileType)
-  nameWithType: TargetMachine.EmitToBuffer(NativeModule, CodeGenFileType)
+- uid: Llvm.NET.TargetMachine.EmitToBuffer(Llvm.NET.BitcodeModule,Llvm.NET.CodeGenFileType)
+  name: EmitToBuffer(BitcodeModule, CodeGenFileType)
+  href: api/Llvm.NET.TargetMachine.EmitToBuffer.html#Llvm_NET_TargetMachine_EmitToBuffer_Llvm_NET_BitcodeModule_Llvm_NET_CodeGenFileType_
+  commentId: M:Llvm.NET.TargetMachine.EmitToBuffer(Llvm.NET.BitcodeModule,Llvm.NET.CodeGenFileType)
+  fullName: Llvm.NET.TargetMachine.EmitToBuffer(Llvm.NET.BitcodeModule, Llvm.NET.CodeGenFileType)
+  nameWithType: TargetMachine.EmitToBuffer(BitcodeModule, CodeGenFileType)
 - uid: Llvm.NET.TargetMachine.EmitToBuffer*
   name: EmitToBuffer
   href: api/Llvm.NET.TargetMachine.EmitToBuffer.html
   commentId: Overload:Llvm.NET.TargetMachine.EmitToBuffer
   fullName: Llvm.NET.TargetMachine.EmitToBuffer
   nameWithType: TargetMachine.EmitToBuffer
-- uid: Llvm.NET.TargetMachine.EmitToFile(Llvm.NET.NativeModule,System.String,Llvm.NET.CodeGenFileType)
-  name: EmitToFile(NativeModule, String, CodeGenFileType)
-  href: api/Llvm.NET.TargetMachine.EmitToFile.html#Llvm_NET_TargetMachine_EmitToFile_Llvm_NET_NativeModule_System_String_Llvm_NET_CodeGenFileType_
-  commentId: M:Llvm.NET.TargetMachine.EmitToFile(Llvm.NET.NativeModule,System.String,Llvm.NET.CodeGenFileType)
-  fullName: Llvm.NET.TargetMachine.EmitToFile(Llvm.NET.NativeModule, System.String, Llvm.NET.CodeGenFileType)
-  nameWithType: TargetMachine.EmitToFile(NativeModule, String, CodeGenFileType)
+- uid: Llvm.NET.TargetMachine.EmitToFile(Llvm.NET.BitcodeModule,System.String,Llvm.NET.CodeGenFileType)
+  name: EmitToFile(BitcodeModule, String, CodeGenFileType)
+  href: api/Llvm.NET.TargetMachine.EmitToFile.html#Llvm_NET_TargetMachine_EmitToFile_Llvm_NET_BitcodeModule_System_String_Llvm_NET_CodeGenFileType_
+  commentId: M:Llvm.NET.TargetMachine.EmitToFile(Llvm.NET.BitcodeModule,System.String,Llvm.NET.CodeGenFileType)
+  fullName: Llvm.NET.TargetMachine.EmitToFile(Llvm.NET.BitcodeModule, System.String, Llvm.NET.CodeGenFileType)
+  nameWithType: TargetMachine.EmitToFile(BitcodeModule, String, CodeGenFileType)
 - uid: Llvm.NET.TargetMachine.EmitToFile*
   name: EmitToFile
   href: api/Llvm.NET.TargetMachine.EmitToFile.html
@@ -11881,6 +11881,117 @@ references:
   commentId: Overload:Llvm.NET.Values.AttributeCollectionExtensions.Remove
   fullName: Llvm.NET.Values.AttributeCollectionExtensions.Remove
   nameWithType: AttributeCollectionExtensions.Remove
+- uid: Llvm.NET.Values.AttributeContainerMixins
+  name: AttributeContainerMixins
+  href: api/Llvm.NET.Values.AttributeContainerMixins.html
+  commentId: T:Llvm.NET.Values.AttributeContainerMixins
+  fullName: Llvm.NET.Values.AttributeContainerMixins
+  nameWithType: AttributeContainerMixins
+- uid: Llvm.NET.Values.AttributeContainerMixins.AddAttribute*
+  name: AddAttribute
+  href: api/Llvm.NET.Values.AttributeContainerMixins.AddAttribute.html
+  commentId: Overload:Llvm.NET.Values.AttributeContainerMixins.AddAttribute
+  fullName: Llvm.NET.Values.AttributeContainerMixins.AddAttribute
+  nameWithType: AttributeContainerMixins.AddAttribute
+- uid: Llvm.NET.Values.AttributeContainerMixins.AddAttribute``1(``0,Llvm.NET.FunctionAttributeIndex,Llvm.NET.Values.AttributeKind)
+  name: AddAttribute<T>(T, FunctionAttributeIndex, AttributeKind)
+  href: api/Llvm.NET.Values.AttributeContainerMixins.AddAttribute.html#Llvm_NET_Values_AttributeContainerMixins_AddAttribute__1___0_Llvm_NET_FunctionAttributeIndex_Llvm_NET_Values_AttributeKind_
+  commentId: M:Llvm.NET.Values.AttributeContainerMixins.AddAttribute``1(``0,Llvm.NET.FunctionAttributeIndex,Llvm.NET.Values.AttributeKind)
+  name.vb: AddAttribute(Of T)(T, FunctionAttributeIndex, AttributeKind)
+  fullName: Llvm.NET.Values.AttributeContainerMixins.AddAttribute<T>(T, Llvm.NET.FunctionAttributeIndex, Llvm.NET.Values.AttributeKind)
+  fullName.vb: Llvm.NET.Values.AttributeContainerMixins.AddAttribute(Of T)(T, Llvm.NET.FunctionAttributeIndex, Llvm.NET.Values.AttributeKind)
+  nameWithType: AttributeContainerMixins.AddAttribute<T>(T, FunctionAttributeIndex, AttributeKind)
+  nameWithType.vb: AttributeContainerMixins.AddAttribute(Of T)(T, FunctionAttributeIndex, AttributeKind)
+- uid: Llvm.NET.Values.AttributeContainerMixins.AddAttribute``1(``0,Llvm.NET.FunctionAttributeIndex,Llvm.NET.Values.AttributeValue)
+  name: AddAttribute<T>(T, FunctionAttributeIndex, AttributeValue)
+  href: api/Llvm.NET.Values.AttributeContainerMixins.AddAttribute.html#Llvm_NET_Values_AttributeContainerMixins_AddAttribute__1___0_Llvm_NET_FunctionAttributeIndex_Llvm_NET_Values_AttributeValue_
+  commentId: M:Llvm.NET.Values.AttributeContainerMixins.AddAttribute``1(``0,Llvm.NET.FunctionAttributeIndex,Llvm.NET.Values.AttributeValue)
+  name.vb: AddAttribute(Of T)(T, FunctionAttributeIndex, AttributeValue)
+  fullName: Llvm.NET.Values.AttributeContainerMixins.AddAttribute<T>(T, Llvm.NET.FunctionAttributeIndex, Llvm.NET.Values.AttributeValue)
+  fullName.vb: Llvm.NET.Values.AttributeContainerMixins.AddAttribute(Of T)(T, Llvm.NET.FunctionAttributeIndex, Llvm.NET.Values.AttributeValue)
+  nameWithType: AttributeContainerMixins.AddAttribute<T>(T, FunctionAttributeIndex, AttributeValue)
+  nameWithType.vb: AttributeContainerMixins.AddAttribute(Of T)(T, FunctionAttributeIndex, AttributeValue)
+- uid: Llvm.NET.Values.AttributeContainerMixins.AddAttributes*
+  name: AddAttributes
+  href: api/Llvm.NET.Values.AttributeContainerMixins.AddAttributes.html
+  commentId: Overload:Llvm.NET.Values.AttributeContainerMixins.AddAttributes
+  fullName: Llvm.NET.Values.AttributeContainerMixins.AddAttributes
+  nameWithType: AttributeContainerMixins.AddAttributes
+- uid: Llvm.NET.Values.AttributeContainerMixins.AddAttributes``1(``0,Llvm.NET.FunctionAttributeIndex,Llvm.NET.Values.AttributeKind[])
+  name: AddAttributes<T>(T, FunctionAttributeIndex, AttributeKind[])
+  href: api/Llvm.NET.Values.AttributeContainerMixins.AddAttributes.html#Llvm_NET_Values_AttributeContainerMixins_AddAttributes__1___0_Llvm_NET_FunctionAttributeIndex_Llvm_NET_Values_AttributeKind___
+  commentId: M:Llvm.NET.Values.AttributeContainerMixins.AddAttributes``1(``0,Llvm.NET.FunctionAttributeIndex,Llvm.NET.Values.AttributeKind[])
+  name.vb: AddAttributes(Of T)(T, FunctionAttributeIndex, AttributeKind())
+  fullName: Llvm.NET.Values.AttributeContainerMixins.AddAttributes<T>(T, Llvm.NET.FunctionAttributeIndex, Llvm.NET.Values.AttributeKind[])
+  fullName.vb: Llvm.NET.Values.AttributeContainerMixins.AddAttributes(Of T)(T, Llvm.NET.FunctionAttributeIndex, Llvm.NET.Values.AttributeKind())
+  nameWithType: AttributeContainerMixins.AddAttributes<T>(T, FunctionAttributeIndex, AttributeKind[])
+  nameWithType.vb: AttributeContainerMixins.AddAttributes(Of T)(T, FunctionAttributeIndex, AttributeKind())
+- uid: Llvm.NET.Values.AttributeContainerMixins.AddAttributes``1(``0,Llvm.NET.FunctionAttributeIndex,Llvm.NET.Values.AttributeValue[])
+  name: AddAttributes<T>(T, FunctionAttributeIndex, AttributeValue[])
+  href: api/Llvm.NET.Values.AttributeContainerMixins.AddAttributes.html#Llvm_NET_Values_AttributeContainerMixins_AddAttributes__1___0_Llvm_NET_FunctionAttributeIndex_Llvm_NET_Values_AttributeValue___
+  commentId: M:Llvm.NET.Values.AttributeContainerMixins.AddAttributes``1(``0,Llvm.NET.FunctionAttributeIndex,Llvm.NET.Values.AttributeValue[])
+  name.vb: AddAttributes(Of T)(T, FunctionAttributeIndex, AttributeValue())
+  fullName: Llvm.NET.Values.AttributeContainerMixins.AddAttributes<T>(T, Llvm.NET.FunctionAttributeIndex, Llvm.NET.Values.AttributeValue[])
+  fullName.vb: Llvm.NET.Values.AttributeContainerMixins.AddAttributes(Of T)(T, Llvm.NET.FunctionAttributeIndex, Llvm.NET.Values.AttributeValue())
+  nameWithType: AttributeContainerMixins.AddAttributes<T>(T, FunctionAttributeIndex, AttributeValue[])
+  nameWithType.vb: AttributeContainerMixins.AddAttributes(Of T)(T, FunctionAttributeIndex, AttributeValue())
+- uid: Llvm.NET.Values.AttributeContainerMixins.AddAttributes``1(``0,Llvm.NET.FunctionAttributeIndex,Llvm.NET.Values.IAttributeDictionary)
+  name: AddAttributes<T>(T, FunctionAttributeIndex, IAttributeDictionary)
+  href: api/Llvm.NET.Values.AttributeContainerMixins.AddAttributes.html#Llvm_NET_Values_AttributeContainerMixins_AddAttributes__1___0_Llvm_NET_FunctionAttributeIndex_Llvm_NET_Values_IAttributeDictionary_
+  commentId: M:Llvm.NET.Values.AttributeContainerMixins.AddAttributes``1(``0,Llvm.NET.FunctionAttributeIndex,Llvm.NET.Values.IAttributeDictionary)
+  name.vb: AddAttributes(Of T)(T, FunctionAttributeIndex, IAttributeDictionary)
+  fullName: Llvm.NET.Values.AttributeContainerMixins.AddAttributes<T>(T, Llvm.NET.FunctionAttributeIndex, Llvm.NET.Values.IAttributeDictionary)
+  fullName.vb: Llvm.NET.Values.AttributeContainerMixins.AddAttributes(Of T)(T, Llvm.NET.FunctionAttributeIndex, Llvm.NET.Values.IAttributeDictionary)
+  nameWithType: AttributeContainerMixins.AddAttributes<T>(T, FunctionAttributeIndex, IAttributeDictionary)
+  nameWithType.vb: AttributeContainerMixins.AddAttributes(Of T)(T, FunctionAttributeIndex, IAttributeDictionary)
+- uid: Llvm.NET.Values.AttributeContainerMixins.AddAttributes``1(``0,Llvm.NET.FunctionAttributeIndex,System.Collections.Generic.IEnumerable{Llvm.NET.Values.AttributeValue})
+  name: AddAttributes<T>(T, FunctionAttributeIndex, IEnumerable<AttributeValue>)
+  href: api/Llvm.NET.Values.AttributeContainerMixins.AddAttributes.html#Llvm_NET_Values_AttributeContainerMixins_AddAttributes__1___0_Llvm_NET_FunctionAttributeIndex_System_Collections_Generic_IEnumerable_Llvm_NET_Values_AttributeValue__
+  commentId: M:Llvm.NET.Values.AttributeContainerMixins.AddAttributes``1(``0,Llvm.NET.FunctionAttributeIndex,System.Collections.Generic.IEnumerable{Llvm.NET.Values.AttributeValue})
+  name.vb: AddAttributes(Of T)(T, FunctionAttributeIndex, IEnumerable(Of AttributeValue))
+  fullName: Llvm.NET.Values.AttributeContainerMixins.AddAttributes<T>(T, Llvm.NET.FunctionAttributeIndex, System.Collections.Generic.IEnumerable<Llvm.NET.Values.AttributeValue>)
+  fullName.vb: Llvm.NET.Values.AttributeContainerMixins.AddAttributes(Of T)(T, Llvm.NET.FunctionAttributeIndex, System.Collections.Generic.IEnumerable(Of Llvm.NET.Values.AttributeValue))
+  nameWithType: AttributeContainerMixins.AddAttributes<T>(T, FunctionAttributeIndex, IEnumerable<AttributeValue>)
+  nameWithType.vb: AttributeContainerMixins.AddAttributes(Of T)(T, FunctionAttributeIndex, IEnumerable(Of AttributeValue))
+- uid: Llvm.NET.Values.AttributeContainerMixins.Contains(System.Collections.Generic.ICollection{Llvm.NET.Values.AttributeValue},Llvm.NET.Values.AttributeKind)
+  name: Contains(ICollection<AttributeValue>, AttributeKind)
+  href: api/Llvm.NET.Values.AttributeContainerMixins.Contains.html#Llvm_NET_Values_AttributeContainerMixins_Contains_System_Collections_Generic_ICollection_Llvm_NET_Values_AttributeValue__Llvm_NET_Values_AttributeKind_
+  commentId: M:Llvm.NET.Values.AttributeContainerMixins.Contains(System.Collections.Generic.ICollection{Llvm.NET.Values.AttributeValue},Llvm.NET.Values.AttributeKind)
+  name.vb: Contains(ICollection(Of AttributeValue), AttributeKind)
+  fullName: Llvm.NET.Values.AttributeContainerMixins.Contains(System.Collections.Generic.ICollection<Llvm.NET.Values.AttributeValue>, Llvm.NET.Values.AttributeKind)
+  fullName.vb: Llvm.NET.Values.AttributeContainerMixins.Contains(System.Collections.Generic.ICollection(Of Llvm.NET.Values.AttributeValue), Llvm.NET.Values.AttributeKind)
+  nameWithType: AttributeContainerMixins.Contains(ICollection<AttributeValue>, AttributeKind)
+  nameWithType.vb: AttributeContainerMixins.Contains(ICollection(Of AttributeValue), AttributeKind)
+- uid: Llvm.NET.Values.AttributeContainerMixins.Contains*
+  name: Contains
+  href: api/Llvm.NET.Values.AttributeContainerMixins.Contains.html
+  commentId: Overload:Llvm.NET.Values.AttributeContainerMixins.Contains
+  fullName: Llvm.NET.Values.AttributeContainerMixins.Contains
+  nameWithType: AttributeContainerMixins.Contains
+- uid: Llvm.NET.Values.AttributeContainerMixins.RemoveAttribute*
+  name: RemoveAttribute
+  href: api/Llvm.NET.Values.AttributeContainerMixins.RemoveAttribute.html
+  commentId: Overload:Llvm.NET.Values.AttributeContainerMixins.RemoveAttribute
+  fullName: Llvm.NET.Values.AttributeContainerMixins.RemoveAttribute
+  nameWithType: AttributeContainerMixins.RemoveAttribute
+- uid: Llvm.NET.Values.AttributeContainerMixins.RemoveAttribute``1(``0,Llvm.NET.FunctionAttributeIndex,Llvm.NET.Values.AttributeKind)
+  name: RemoveAttribute<T>(T, FunctionAttributeIndex, AttributeKind)
+  href: api/Llvm.NET.Values.AttributeContainerMixins.RemoveAttribute.html#Llvm_NET_Values_AttributeContainerMixins_RemoveAttribute__1___0_Llvm_NET_FunctionAttributeIndex_Llvm_NET_Values_AttributeKind_
+  commentId: M:Llvm.NET.Values.AttributeContainerMixins.RemoveAttribute``1(``0,Llvm.NET.FunctionAttributeIndex,Llvm.NET.Values.AttributeKind)
+  name.vb: RemoveAttribute(Of T)(T, FunctionAttributeIndex, AttributeKind)
+  fullName: Llvm.NET.Values.AttributeContainerMixins.RemoveAttribute<T>(T, Llvm.NET.FunctionAttributeIndex, Llvm.NET.Values.AttributeKind)
+  fullName.vb: Llvm.NET.Values.AttributeContainerMixins.RemoveAttribute(Of T)(T, Llvm.NET.FunctionAttributeIndex, Llvm.NET.Values.AttributeKind)
+  nameWithType: AttributeContainerMixins.RemoveAttribute<T>(T, FunctionAttributeIndex, AttributeKind)
+  nameWithType.vb: AttributeContainerMixins.RemoveAttribute(Of T)(T, FunctionAttributeIndex, AttributeKind)
+- uid: Llvm.NET.Values.AttributeContainerMixins.RemoveAttribute``1(``0,Llvm.NET.FunctionAttributeIndex,System.String)
+  name: RemoveAttribute<T>(T, FunctionAttributeIndex, String)
+  href: api/Llvm.NET.Values.AttributeContainerMixins.RemoveAttribute.html#Llvm_NET_Values_AttributeContainerMixins_RemoveAttribute__1___0_Llvm_NET_FunctionAttributeIndex_System_String_
+  commentId: M:Llvm.NET.Values.AttributeContainerMixins.RemoveAttribute``1(``0,Llvm.NET.FunctionAttributeIndex,System.String)
+  name.vb: RemoveAttribute(Of T)(T, FunctionAttributeIndex, String)
+  fullName: Llvm.NET.Values.AttributeContainerMixins.RemoveAttribute<T>(T, Llvm.NET.FunctionAttributeIndex, System.String)
+  fullName.vb: Llvm.NET.Values.AttributeContainerMixins.RemoveAttribute(Of T)(T, Llvm.NET.FunctionAttributeIndex, System.String)
+  nameWithType: AttributeContainerMixins.RemoveAttribute<T>(T, FunctionAttributeIndex, String)
+  nameWithType.vb: AttributeContainerMixins.RemoveAttribute(Of T)(T, FunctionAttributeIndex, String)
 - uid: Llvm.NET.Values.AttributeKind
   name: AttributeKind
   href: api/Llvm.NET.Values.AttributeKind.html
@@ -12253,117 +12364,6 @@ references:
   commentId: Overload:Llvm.NET.Values.AttributeKindExtensions.RequiresIntValue
   fullName: Llvm.NET.Values.AttributeKindExtensions.RequiresIntValue
   nameWithType: AttributeKindExtensions.RequiresIntValue
-- uid: Llvm.NET.Values.AttributesMixins
-  name: AttributesMixins
-  href: api/Llvm.NET.Values.AttributesMixins.html
-  commentId: T:Llvm.NET.Values.AttributesMixins
-  fullName: Llvm.NET.Values.AttributesMixins
-  nameWithType: AttributesMixins
-- uid: Llvm.NET.Values.AttributesMixins.AddAttribute*
-  name: AddAttribute
-  href: api/Llvm.NET.Values.AttributesMixins.AddAttribute.html
-  commentId: Overload:Llvm.NET.Values.AttributesMixins.AddAttribute
-  fullName: Llvm.NET.Values.AttributesMixins.AddAttribute
-  nameWithType: AttributesMixins.AddAttribute
-- uid: Llvm.NET.Values.AttributesMixins.AddAttribute``1(``0,Llvm.NET.FunctionAttributeIndex,Llvm.NET.Values.AttributeKind)
-  name: AddAttribute<T>(T, FunctionAttributeIndex, AttributeKind)
-  href: api/Llvm.NET.Values.AttributesMixins.AddAttribute.html#Llvm_NET_Values_AttributesMixins_AddAttribute__1___0_Llvm_NET_FunctionAttributeIndex_Llvm_NET_Values_AttributeKind_
-  commentId: M:Llvm.NET.Values.AttributesMixins.AddAttribute``1(``0,Llvm.NET.FunctionAttributeIndex,Llvm.NET.Values.AttributeKind)
-  name.vb: AddAttribute(Of T)(T, FunctionAttributeIndex, AttributeKind)
-  fullName: Llvm.NET.Values.AttributesMixins.AddAttribute<T>(T, Llvm.NET.FunctionAttributeIndex, Llvm.NET.Values.AttributeKind)
-  fullName.vb: Llvm.NET.Values.AttributesMixins.AddAttribute(Of T)(T, Llvm.NET.FunctionAttributeIndex, Llvm.NET.Values.AttributeKind)
-  nameWithType: AttributesMixins.AddAttribute<T>(T, FunctionAttributeIndex, AttributeKind)
-  nameWithType.vb: AttributesMixins.AddAttribute(Of T)(T, FunctionAttributeIndex, AttributeKind)
-- uid: Llvm.NET.Values.AttributesMixins.AddAttribute``1(``0,Llvm.NET.FunctionAttributeIndex,Llvm.NET.Values.AttributeValue)
-  name: AddAttribute<T>(T, FunctionAttributeIndex, AttributeValue)
-  href: api/Llvm.NET.Values.AttributesMixins.AddAttribute.html#Llvm_NET_Values_AttributesMixins_AddAttribute__1___0_Llvm_NET_FunctionAttributeIndex_Llvm_NET_Values_AttributeValue_
-  commentId: M:Llvm.NET.Values.AttributesMixins.AddAttribute``1(``0,Llvm.NET.FunctionAttributeIndex,Llvm.NET.Values.AttributeValue)
-  name.vb: AddAttribute(Of T)(T, FunctionAttributeIndex, AttributeValue)
-  fullName: Llvm.NET.Values.AttributesMixins.AddAttribute<T>(T, Llvm.NET.FunctionAttributeIndex, Llvm.NET.Values.AttributeValue)
-  fullName.vb: Llvm.NET.Values.AttributesMixins.AddAttribute(Of T)(T, Llvm.NET.FunctionAttributeIndex, Llvm.NET.Values.AttributeValue)
-  nameWithType: AttributesMixins.AddAttribute<T>(T, FunctionAttributeIndex, AttributeValue)
-  nameWithType.vb: AttributesMixins.AddAttribute(Of T)(T, FunctionAttributeIndex, AttributeValue)
-- uid: Llvm.NET.Values.AttributesMixins.AddAttributes*
-  name: AddAttributes
-  href: api/Llvm.NET.Values.AttributesMixins.AddAttributes.html
-  commentId: Overload:Llvm.NET.Values.AttributesMixins.AddAttributes
-  fullName: Llvm.NET.Values.AttributesMixins.AddAttributes
-  nameWithType: AttributesMixins.AddAttributes
-- uid: Llvm.NET.Values.AttributesMixins.AddAttributes``1(``0,Llvm.NET.FunctionAttributeIndex,Llvm.NET.Values.AttributeKind[])
-  name: AddAttributes<T>(T, FunctionAttributeIndex, AttributeKind[])
-  href: api/Llvm.NET.Values.AttributesMixins.AddAttributes.html#Llvm_NET_Values_AttributesMixins_AddAttributes__1___0_Llvm_NET_FunctionAttributeIndex_Llvm_NET_Values_AttributeKind___
-  commentId: M:Llvm.NET.Values.AttributesMixins.AddAttributes``1(``0,Llvm.NET.FunctionAttributeIndex,Llvm.NET.Values.AttributeKind[])
-  name.vb: AddAttributes(Of T)(T, FunctionAttributeIndex, AttributeKind())
-  fullName: Llvm.NET.Values.AttributesMixins.AddAttributes<T>(T, Llvm.NET.FunctionAttributeIndex, Llvm.NET.Values.AttributeKind[])
-  fullName.vb: Llvm.NET.Values.AttributesMixins.AddAttributes(Of T)(T, Llvm.NET.FunctionAttributeIndex, Llvm.NET.Values.AttributeKind())
-  nameWithType: AttributesMixins.AddAttributes<T>(T, FunctionAttributeIndex, AttributeKind[])
-  nameWithType.vb: AttributesMixins.AddAttributes(Of T)(T, FunctionAttributeIndex, AttributeKind())
-- uid: Llvm.NET.Values.AttributesMixins.AddAttributes``1(``0,Llvm.NET.FunctionAttributeIndex,Llvm.NET.Values.AttributeValue[])
-  name: AddAttributes<T>(T, FunctionAttributeIndex, AttributeValue[])
-  href: api/Llvm.NET.Values.AttributesMixins.AddAttributes.html#Llvm_NET_Values_AttributesMixins_AddAttributes__1___0_Llvm_NET_FunctionAttributeIndex_Llvm_NET_Values_AttributeValue___
-  commentId: M:Llvm.NET.Values.AttributesMixins.AddAttributes``1(``0,Llvm.NET.FunctionAttributeIndex,Llvm.NET.Values.AttributeValue[])
-  name.vb: AddAttributes(Of T)(T, FunctionAttributeIndex, AttributeValue())
-  fullName: Llvm.NET.Values.AttributesMixins.AddAttributes<T>(T, Llvm.NET.FunctionAttributeIndex, Llvm.NET.Values.AttributeValue[])
-  fullName.vb: Llvm.NET.Values.AttributesMixins.AddAttributes(Of T)(T, Llvm.NET.FunctionAttributeIndex, Llvm.NET.Values.AttributeValue())
-  nameWithType: AttributesMixins.AddAttributes<T>(T, FunctionAttributeIndex, AttributeValue[])
-  nameWithType.vb: AttributesMixins.AddAttributes(Of T)(T, FunctionAttributeIndex, AttributeValue())
-- uid: Llvm.NET.Values.AttributesMixins.AddAttributes``1(``0,Llvm.NET.FunctionAttributeIndex,Llvm.NET.Values.IAttributeDictionary)
-  name: AddAttributes<T>(T, FunctionAttributeIndex, IAttributeDictionary)
-  href: api/Llvm.NET.Values.AttributesMixins.AddAttributes.html#Llvm_NET_Values_AttributesMixins_AddAttributes__1___0_Llvm_NET_FunctionAttributeIndex_Llvm_NET_Values_IAttributeDictionary_
-  commentId: M:Llvm.NET.Values.AttributesMixins.AddAttributes``1(``0,Llvm.NET.FunctionAttributeIndex,Llvm.NET.Values.IAttributeDictionary)
-  name.vb: AddAttributes(Of T)(T, FunctionAttributeIndex, IAttributeDictionary)
-  fullName: Llvm.NET.Values.AttributesMixins.AddAttributes<T>(T, Llvm.NET.FunctionAttributeIndex, Llvm.NET.Values.IAttributeDictionary)
-  fullName.vb: Llvm.NET.Values.AttributesMixins.AddAttributes(Of T)(T, Llvm.NET.FunctionAttributeIndex, Llvm.NET.Values.IAttributeDictionary)
-  nameWithType: AttributesMixins.AddAttributes<T>(T, FunctionAttributeIndex, IAttributeDictionary)
-  nameWithType.vb: AttributesMixins.AddAttributes(Of T)(T, FunctionAttributeIndex, IAttributeDictionary)
-- uid: Llvm.NET.Values.AttributesMixins.AddAttributes``1(``0,Llvm.NET.FunctionAttributeIndex,System.Collections.Generic.IEnumerable{Llvm.NET.Values.AttributeValue})
-  name: AddAttributes<T>(T, FunctionAttributeIndex, IEnumerable<AttributeValue>)
-  href: api/Llvm.NET.Values.AttributesMixins.AddAttributes.html#Llvm_NET_Values_AttributesMixins_AddAttributes__1___0_Llvm_NET_FunctionAttributeIndex_System_Collections_Generic_IEnumerable_Llvm_NET_Values_AttributeValue__
-  commentId: M:Llvm.NET.Values.AttributesMixins.AddAttributes``1(``0,Llvm.NET.FunctionAttributeIndex,System.Collections.Generic.IEnumerable{Llvm.NET.Values.AttributeValue})
-  name.vb: AddAttributes(Of T)(T, FunctionAttributeIndex, IEnumerable(Of AttributeValue))
-  fullName: Llvm.NET.Values.AttributesMixins.AddAttributes<T>(T, Llvm.NET.FunctionAttributeIndex, System.Collections.Generic.IEnumerable<Llvm.NET.Values.AttributeValue>)
-  fullName.vb: Llvm.NET.Values.AttributesMixins.AddAttributes(Of T)(T, Llvm.NET.FunctionAttributeIndex, System.Collections.Generic.IEnumerable(Of Llvm.NET.Values.AttributeValue))
-  nameWithType: AttributesMixins.AddAttributes<T>(T, FunctionAttributeIndex, IEnumerable<AttributeValue>)
-  nameWithType.vb: AttributesMixins.AddAttributes(Of T)(T, FunctionAttributeIndex, IEnumerable(Of AttributeValue))
-- uid: Llvm.NET.Values.AttributesMixins.Contains(System.Collections.Generic.ICollection{Llvm.NET.Values.AttributeValue},Llvm.NET.Values.AttributeKind)
-  name: Contains(ICollection<AttributeValue>, AttributeKind)
-  href: api/Llvm.NET.Values.AttributesMixins.Contains.html#Llvm_NET_Values_AttributesMixins_Contains_System_Collections_Generic_ICollection_Llvm_NET_Values_AttributeValue__Llvm_NET_Values_AttributeKind_
-  commentId: M:Llvm.NET.Values.AttributesMixins.Contains(System.Collections.Generic.ICollection{Llvm.NET.Values.AttributeValue},Llvm.NET.Values.AttributeKind)
-  name.vb: Contains(ICollection(Of AttributeValue), AttributeKind)
-  fullName: Llvm.NET.Values.AttributesMixins.Contains(System.Collections.Generic.ICollection<Llvm.NET.Values.AttributeValue>, Llvm.NET.Values.AttributeKind)
-  fullName.vb: Llvm.NET.Values.AttributesMixins.Contains(System.Collections.Generic.ICollection(Of Llvm.NET.Values.AttributeValue), Llvm.NET.Values.AttributeKind)
-  nameWithType: AttributesMixins.Contains(ICollection<AttributeValue>, AttributeKind)
-  nameWithType.vb: AttributesMixins.Contains(ICollection(Of AttributeValue), AttributeKind)
-- uid: Llvm.NET.Values.AttributesMixins.Contains*
-  name: Contains
-  href: api/Llvm.NET.Values.AttributesMixins.Contains.html
-  commentId: Overload:Llvm.NET.Values.AttributesMixins.Contains
-  fullName: Llvm.NET.Values.AttributesMixins.Contains
-  nameWithType: AttributesMixins.Contains
-- uid: Llvm.NET.Values.AttributesMixins.RemoveAttribute*
-  name: RemoveAttribute
-  href: api/Llvm.NET.Values.AttributesMixins.RemoveAttribute.html
-  commentId: Overload:Llvm.NET.Values.AttributesMixins.RemoveAttribute
-  fullName: Llvm.NET.Values.AttributesMixins.RemoveAttribute
-  nameWithType: AttributesMixins.RemoveAttribute
-- uid: Llvm.NET.Values.AttributesMixins.RemoveAttribute``1(``0,Llvm.NET.FunctionAttributeIndex,Llvm.NET.Values.AttributeKind)
-  name: RemoveAttribute<T>(T, FunctionAttributeIndex, AttributeKind)
-  href: api/Llvm.NET.Values.AttributesMixins.RemoveAttribute.html#Llvm_NET_Values_AttributesMixins_RemoveAttribute__1___0_Llvm_NET_FunctionAttributeIndex_Llvm_NET_Values_AttributeKind_
-  commentId: M:Llvm.NET.Values.AttributesMixins.RemoveAttribute``1(``0,Llvm.NET.FunctionAttributeIndex,Llvm.NET.Values.AttributeKind)
-  name.vb: RemoveAttribute(Of T)(T, FunctionAttributeIndex, AttributeKind)
-  fullName: Llvm.NET.Values.AttributesMixins.RemoveAttribute<T>(T, Llvm.NET.FunctionAttributeIndex, Llvm.NET.Values.AttributeKind)
-  fullName.vb: Llvm.NET.Values.AttributesMixins.RemoveAttribute(Of T)(T, Llvm.NET.FunctionAttributeIndex, Llvm.NET.Values.AttributeKind)
-  nameWithType: AttributesMixins.RemoveAttribute<T>(T, FunctionAttributeIndex, AttributeKind)
-  nameWithType.vb: AttributesMixins.RemoveAttribute(Of T)(T, FunctionAttributeIndex, AttributeKind)
-- uid: Llvm.NET.Values.AttributesMixins.RemoveAttribute``1(``0,Llvm.NET.FunctionAttributeIndex,System.String)
-  name: RemoveAttribute<T>(T, FunctionAttributeIndex, String)
-  href: api/Llvm.NET.Values.AttributesMixins.RemoveAttribute.html#Llvm_NET_Values_AttributesMixins_RemoveAttribute__1___0_Llvm_NET_FunctionAttributeIndex_System_String_
-  commentId: M:Llvm.NET.Values.AttributesMixins.RemoveAttribute``1(``0,Llvm.NET.FunctionAttributeIndex,System.String)
-  name.vb: RemoveAttribute(Of T)(T, FunctionAttributeIndex, String)
-  fullName: Llvm.NET.Values.AttributesMixins.RemoveAttribute<T>(T, Llvm.NET.FunctionAttributeIndex, System.String)
-  fullName.vb: Llvm.NET.Values.AttributesMixins.RemoveAttribute(Of T)(T, Llvm.NET.FunctionAttributeIndex, System.String)
-  nameWithType: AttributesMixins.RemoveAttribute<T>(T, FunctionAttributeIndex, String)
-  nameWithType.vb: AttributesMixins.RemoveAttribute(Of T)(T, FunctionAttributeIndex, String)
 - uid: Llvm.NET.Values.AttributeValue
   name: AttributeValue
   href: api/Llvm.NET.Values.AttributeValue.html
