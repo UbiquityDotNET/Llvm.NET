@@ -23,7 +23,7 @@ namespace Llvm.NET.DebugInfo
         /// <param name="alignment">Alignment for the type</param>
         public DebugArrayType( IArrayType llvmType
                              , IDebugType<ITypeRef, DIType> elementType
-                             , NativeModule module
+                             , BitcodeModule module
                              , uint count
                              , uint lowerBound = 0
                              , uint alignment = 0
@@ -44,10 +44,10 @@ namespace Llvm.NET.DebugInfo
 
         /// <summary>Initializes a new instance of the <see cref="DebugArrayType"/> class.</summary>
         /// <param name="elementType">Type of elements in the array</param>
-        /// <param name="module"><see cref="NativeModule"/> to use for the context of the debug information</param>
+        /// <param name="module"><see cref="BitcodeModule"/> to use for the context of the debug information</param>
         /// <param name="count">Number of elements in the array</param>
         /// <param name="lowerBound"><see cref="LowerBound"/> value for the array indices [Default: 0]</param>
-        public DebugArrayType( IDebugType<ITypeRef, DIType> elementType, NativeModule module, uint count, uint lowerBound = 0 )
+        public DebugArrayType( IDebugType<ITypeRef, DIType> elementType, BitcodeModule module, uint count, uint lowerBound = 0 )
             : this( elementType.ValidateNotNull( nameof( elementType ) ).CreateArrayType( count )
                   , elementType
                   , module
@@ -59,11 +59,11 @@ namespace Llvm.NET.DebugInfo
 
         /// <summary>Initializes a new instance of the <see cref="DebugArrayType"/> class.</summary>
         /// <param name="llvmType">Native LLVM type for the elements</param>
-        /// <param name="module"><see cref="NativeModule"/> to use for the context of the debug information</param>
+        /// <param name="module"><see cref="BitcodeModule"/> to use for the context of the debug information</param>
         /// <param name="elementType">Debug type of the array elements</param>
         /// <param name="count">Number of elements in the array</param>
         /// <param name="lowerBound"><see cref="LowerBound"/> value for the array indices [Default: 0]</param>
-        public DebugArrayType( IArrayType llvmType, NativeModule module, DIType elementType, uint count, uint lowerBound = 0 )
+        public DebugArrayType( IArrayType llvmType, BitcodeModule module, DIType elementType, uint count, uint lowerBound = 0 )
             : this( DebugType.Create( llvmType.ValidateNotNull( nameof( llvmType ) ).ElementType, elementType ), module, count, lowerBound )
         {
         }
@@ -107,7 +107,7 @@ namespace Llvm.NET.DebugInfo
 
         private static DICompositeType CreateDebugInfoForArray( IArrayType llvmType
                                                               , IDebugType<ITypeRef, DIType> elementType
-                                                              , NativeModule module
+                                                              , BitcodeModule module
                                                               , uint count
                                                               , uint lowerBound
                                                               , uint alignment

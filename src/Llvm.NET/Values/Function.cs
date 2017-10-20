@@ -118,8 +118,7 @@ namespace Llvm.NET.Values
         /// <summary>Verifies the function is valid and all blocks properly terminated</summary>
         public void Verify( )
         {
-            var status = NativeMethods.VerifyFunctionEx( ValueHandle, LLVMVerifierFailureAction.LLVMReturnStatusAction, out string errMsg );
-            if( status )
+            if( NativeMethods.VerifyFunctionEx( ValueHandle, LLVMVerifierFailureAction.LLVMReturnStatusAction, out string errMsg ).Failed )
             {
                 throw new InternalCodeGeneratorException( errMsg );
             }

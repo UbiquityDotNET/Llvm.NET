@@ -15,6 +15,11 @@ namespace Llvm.NET
     /// is changed in the .NET bindings to avoid the conflict.</remarks>
     public abstract class LlvmMetadata
     {
+        /*TODO:
+        MetadataKind Kind { get; }
+
+        */
+
         /// <summary>Replace all uses of this descriptor with another</summary>
         /// <param name="other">New descriptor to replace this one with</param>
         public virtual void ReplaceAllUsesWith( LlvmMetadata other )
@@ -47,8 +52,8 @@ namespace Llvm.NET
         internal LLVMMetadataRef MetadataHandle { get; /*protected*/ set; }
 
         // ideally this would be protected AND internal but C#
-        // doesn't have any syntax to allow such a thing so it
-        // is internal and internal code should ensure it is
+        // doesn't have any syntax to allow such a thing on a constructor
+        // so it is internal and internal code should ensure it is
         // only ever used by derived type constructors
         /*protected*/ internal LlvmMetadata( LLVMMetadataRef handle )
         {

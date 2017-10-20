@@ -40,12 +40,12 @@ namespace Llvm.NET.DebugInfo
     {
         /// <summary>Initializes a new instance of the <see cref="DebugFunctionType"/> class.</summary>
         /// <param name="llvmType">Native LLVM function signature</param>
-        /// <param name="module"><see cref="NativeModule"/> to use when construction debug information</param>
+        /// <param name="module"><see cref="BitcodeModule"/> to use when construction debug information</param>
         /// <param name="debugFlags"><see cref="DebugInfoFlags"/> for this signature</param>
         /// <param name="retType">Return type for the function</param>
         /// <param name="argTypes">Potentially empty set of argument types for the signature</param>
         public DebugFunctionType( IFunctionType llvmType
-                                , NativeModule module
+                                , BitcodeModule module
                                 , DebugInfoFlags debugFlags
                                 , DebugType<ITypeRef,DIType> retType
                                 , params DebugType<ITypeRef, DIType>[ ] argTypes

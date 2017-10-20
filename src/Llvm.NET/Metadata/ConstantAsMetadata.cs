@@ -3,9 +3,11 @@
 // </copyright>
 
 using Llvm.NET.Native;
+using Llvm.NET.Values;
 
 namespace Llvm.NET
 {
+    /// <summary>Constant <see cref="Value"/> as metadata</summary>
     public class ConstantAsMetadata
         : ValueAsMetadata
     {
@@ -13,5 +15,12 @@ namespace Llvm.NET
             : base( handle )
         {
         }
+
+        /*
+        public Constant Constant { get; }
+
+        static public ConstantAsMetadata GetIfExists(Constant const);
+        static public ConstantAsMetadata Create(Constant const);
+        */
     }
 }

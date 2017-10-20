@@ -5,11 +5,16 @@
 using System;
 using Llvm.NET.Native;
 
+// Interface+interal type matches file name
+#pragma warning disable SA1649
+
 namespace Llvm.NET.Types
 {
+    /// <summary>Interface for an LLVM vector type</summary>
     public interface IVectorType
         : ISequenceType
     {
+        /// <summary>Gets the number of elements in the vector</summary>
         uint Size { get; }
     }
 

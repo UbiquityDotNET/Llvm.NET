@@ -55,6 +55,16 @@ namespace Llvm.NET.Values
             }
         }
 
+        /* TODO:
+        public MDNode GetMetadata(unsigned kindID) {...}
+        public MDNode GetMetadata(string kind) {...}
+
+        public MDNode GetMetadata(unsigned kindID, IEnumerable<MDNode> nodes) {...}
+        public MDNode GetMetadata(string kind, IEnumerable<MDNode> nodes) {...}
+
+        public MDNode SetMetadata(unsigned kindID, MDNode node) {...}
+        public MDNode SetMetadata(string kind, MDNode node) {...}
+        */
         internal GlobalObject( LLVMValueRef valueRef )
             : base( valueRef )
         {

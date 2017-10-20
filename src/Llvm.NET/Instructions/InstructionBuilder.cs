@@ -1191,7 +1191,7 @@ namespace Llvm.NET.Instructions
             return DoNothing( module );
         }
 
-        public Value DoNothing( NativeModule module )
+        public Value DoNothing( BitcodeModule module )
         {
             if( module == null )
             {
@@ -1221,7 +1221,7 @@ namespace Llvm.NET.Instructions
             return DebugTrap( module );
         }
 
-        public Value DebugTrap( NativeModule module )
+        public Value DebugTrap( BitcodeModule module )
         {
             if( module == null )
             {
@@ -1276,7 +1276,7 @@ namespace Llvm.NET.Instructions
         /// the provided values and generate a more specific call without the need to provide overloaded forms of this
         /// method and otherwise complicating the calling code.
         /// </remarks>
-        public Value MemCpy( NativeModule module, Value destination, Value source, Value len, Int32 align, bool isVolatile )
+        public Value MemCpy( BitcodeModule module, Value destination, Value source, Value len, Int32 align, bool isVolatile )
         {
             if( module == null )
             {
@@ -1374,7 +1374,7 @@ namespace Llvm.NET.Instructions
         /// single form defined by <see cref="Intrinsic.MemMoveName"/>, which matches the classic "C" style memmov
         /// function. However future implementations should be able to deduce the types from the provided values
         /// and generate a more specific call without changing any caller code (as is done with
-        /// <see cref="MemCpy(NativeModule, Value, Value, Value, int, bool)"/>.)
+        /// <see cref="MemCpy(BitcodeModule, Value, Value, Value, int, bool)"/>.)
         /// </remarks>
         public Value MemMove( Value destination, Value source, Value len, Int32 align, bool isVolatile )
         {
@@ -1400,9 +1400,9 @@ namespace Llvm.NET.Instructions
         /// single form defined by <see cref="Intrinsic.MemMoveName"/>, which matches the classic "C" style memmov
         /// function. However future implementations should be able to deduce the types from the provided values
         /// and generate a more specific call without changing any caller code (as is done with
-        /// <see cref="MemCpy(NativeModule, Value, Value, Value, int, bool)"/>.)
+        /// <see cref="MemCpy(BitcodeModule, Value, Value, Value, int, bool)"/>.)
         /// </remarks>
-        public Value MemMove( NativeModule module, Value destination, Value source, Value len, Int32 align, bool isVolatile )
+        public Value MemMove( BitcodeModule module, Value destination, Value source, Value len, Int32 align, bool isVolatile )
         {
             if( module == null )
             {
@@ -1474,7 +1474,7 @@ namespace Llvm.NET.Instructions
         /// single form defined by <see cref="Intrinsic.MemSetName"/>, which matches the classic "C" style memset
         /// function. However future implementations should be able to deduce the types from the provided values
         /// and generate a more specific call without changing any caller code (as is done with
-        /// <see cref="MemCpy(NativeModule, Value, Value, Value, int, bool)"/>.)
+        /// <see cref="MemCpy(BitcodeModule, Value, Value, Value, int, bool)"/>.)
         /// </remarks>
         public Value MemSet( Value destination, Value value, Value len, Int32 align, bool isVolatile )
         {
@@ -1500,9 +1500,9 @@ namespace Llvm.NET.Instructions
         /// single form defined by <see cref="Intrinsic.MemSetName"/>, which matches the classic "C" style memset
         /// function. However future implementations should be able to deduce the types from the provided values
         /// and generate a more specific call without changing any caller code (as is done with
-        /// <see cref="MemCpy(NativeModule, Value, Value, Value, int, bool)"/>.)
+        /// <see cref="MemCpy(BitcodeModule, Value, Value, Value, int, bool)"/>.)
         /// </remarks>
-        public Value MemSet( NativeModule module, Value destination, Value value, Value len, Int32 align, bool isVolatile )
+        public Value MemSet( BitcodeModule module, Value destination, Value value, Value len, Int32 align, bool isVolatile )
         {
             if( module == null )
             {

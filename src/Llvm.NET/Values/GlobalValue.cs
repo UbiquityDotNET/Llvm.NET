@@ -35,7 +35,7 @@ namespace Llvm.NET.Values
         public bool IsDeclaration => NativeMethods.IsDeclaration( ValueHandle );
 
         /// <summary>Gets the Module containing this global value</summary>
-        public NativeModule ParentModule => NativeType.Context.GetModuleFor( NativeMethods.GetGlobalParent( ValueHandle ) );
+        public BitcodeModule ParentModule => NativeType.Context.GetModuleFor( NativeMethods.GetGlobalParent( ValueHandle ) );
 
         internal GlobalValue( LLVMValueRef valueRef )
             : base( valueRef )

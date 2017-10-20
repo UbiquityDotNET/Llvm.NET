@@ -112,7 +112,7 @@ namespace Llvm.NET
 
         /// <summary>Initializes a new instance of the <see cref="ComdatCollection"/> class for a module</summary>
         /// <param name="module">Module the comdats are enumerated from</param>
-        internal ComdatCollection( NativeModule module )
+        internal ComdatCollection( BitcodeModule module )
         {
             module.ValidateNotNull( nameof( module ) );
 
@@ -153,7 +153,7 @@ namespace Llvm.NET
             return true;
         }
 
-        private NativeModule Module;
+        private BitcodeModule Module;
         private Dictionary<string, Comdat> InternalComdatMap = new Dictionary<string, Comdat>( );
     }
 }

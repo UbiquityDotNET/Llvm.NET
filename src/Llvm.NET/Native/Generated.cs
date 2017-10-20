@@ -171,8 +171,6 @@ namespace Llvm.NET.Native
 
         public bool Failed => !Succeeded;
 
-        public static implicit operator bool( LLVMStatus value ) => value.Succeeded;
-
         public int ErrorCode { get; }
     }
 

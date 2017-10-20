@@ -13,5 +13,10 @@ namespace Llvm.NET
             : base( handle )
         {
         }
+
+        /*
+        static public LocalAsMetadata GetIfExists(Value local);
+        static public LocalAsMetadata Create(Value local);
+        */
     }
 }

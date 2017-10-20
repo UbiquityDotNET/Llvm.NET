@@ -40,7 +40,7 @@ namespace TestDebugInfo
                 var target = Target.FromTriple( TargetDetails.Triple );
                 using( var context = new Context( ) )
                 using( var targetMachine = target.CreateTargetMachine( context, TargetDetails.Triple, TargetDetails.Cpu, TargetDetails.Features, CodeGenOpt.Aggressive, Reloc.Default, CodeModel.Small ) )
-                using( var module = new NativeModule( moduleName, context ) )
+                using( var module = new BitcodeModule( moduleName, context ) )
                 {
                     module.SourceFileName = Path.GetFileName( srcPath );
                     TargetDependentAttributes = TargetDetails.BuildTargetDependentFunctionAttributes( context );
@@ -143,7 +143,7 @@ namespace TestDebugInfo
             }
         }
 
-        private static Function DeclareDoCopyFunc( NativeModule module, DIFile diFile, IDebugType<ITypeRef, DIType> voidType )
+        private static Function DeclareDoCopyFunc( BitcodeModule module, DIFile diFile, IDebugType<ITypeRef, DIType> voidType )
         {
             var doCopySig = module.Context.CreateFunctionType( module.DIBuilder, voidType );
 
@@ -163,7 +163,7 @@ namespace TestDebugInfo
             return doCopyFunc;
         }
 
-        private static Function DeclareCopyFunc( NativeModule module
+        private static Function DeclareCopyFunc( BitcodeModule module
                                                , DIFile diFile
                                                , IDebugType<ITypeRef, DIType> voidType
                                                , DIDerivedType constFoo
@@ -203,15 +203,15 @@ namespace TestDebugInfo
             return copyFunc;
         }
 
-        private static void AddModuleFlags( NativeModule module )
+        private static void AddModuleFlags( BitcodeModule module )
         {
-            module.AddModuleFlag( ModuleFlagBehavior.Warning, NativeModule.DwarfVersionValue, 4 );
-            module.AddModuleFlag( ModuleFlagBehavior.Warning, NativeModule.DebugVersionValue, NativeModule.DebugMetadataVersion );
+            module.AddModuleFlag( ModuleFlagBehavior.Warning, BitcodeModule.DwarfVersionValue, 4 );
+            module.AddModuleFlag( ModuleFlagBehavior.Warning, BitcodeModule.DebugVersionValue, BitcodeModule.DebugMetadataVersion );
             TargetDetails.AddModuleFlags( module );
             module.AddVersionIdentMetadata( VersionIdentString );
         }
 
-        private static void CreateCopyFunctionBody( NativeModule module
+        private static void CreateCopyFunctionBody( BitcodeModule module
                                                   , DataLayout layout
                                                   , Function copyFunc
                                                   , DIFile diFile
@@ -296,7 +296,7 @@ namespace TestDebugInfo
                        .SetDebugLocation( 16, 1, copyFunc.DISubProgram );
         }
 
-        private static void CreateDoCopyFunctionBody( NativeModule module
+        private static void CreateDoCopyFunctionBody( BitcodeModule module
                                                     , DataLayout layout
                                                     , Function doCopyFunc
                                                     , IStructType foo

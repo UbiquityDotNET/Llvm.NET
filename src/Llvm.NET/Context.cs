@@ -30,7 +30,7 @@ namespace Llvm.NET
     /// </para>
     /// <para>LLVM Debug information is ultimately all parented to a top level
     /// <see cref="DICompileUnit"/> as the scope, and a compilation
-    /// unit is bound to a <see cref="NativeModule"/>, even though, technically
+    /// unit is bound to a <see cref="BitcodeModule"/>, even though, technically
     /// the types are owned by a Context. Thus to keep things simpler and help
     /// make working with debug information easier. Lllvm.NET encapsulates the
     /// native type and the debug type in separate classes that are instances
@@ -287,7 +287,7 @@ namespace Llvm.NET
         /// <param name="values">Set of values to use in forming the structure</param>
         /// <returns>Newly created <see cref="Constant"/></returns>
         /// <remarks>
-        /// <note type="note">The actual concrete return type depends on the parameters provided and will be one of the following:
+        /// The actual concrete return type depends on the parameters provided and will be one of the following:
         /// <list type="table">
         /// <listheader>
         /// <term><see cref="Constant"/> derived type</term><description>Description</description>
@@ -296,7 +296,6 @@ namespace Llvm.NET
         /// <item><term>UndefValue</term><description>If all the member values are UndefValue</description></item>
         /// <item><term>ConstantStruct</term><description>All other cases</description></item>
         /// </list>
-        /// </note>
         /// </remarks>
         public Constant CreateConstantStruct( bool packed, params Constant[ ] values )
             => CreateConstantStruct( packed, ( IEnumerable<Constant> )values );
@@ -712,6 +711,18 @@ namespace Llvm.NET
             return AttributeValue.FromHandle(this, handle );
         }
 
+        /*TODO:
+        public unsigned GetMDKindId(string name) {...}
+        public IEnumerable<string> MDKindNames { get; }
+
+        public unsigned GetOperandBundleTagId(string name) {...}
+        public IEnumerable<string> OperandBundleTagIds { get; }
+
+        public bool ODRUniqueDebugTypes { get; set; }
+
+        public OptBisect OptBisec { get; set; }
+        */
+
         // looks up an attribute by it's handle, if none is found a new managed wrapper is created
         // The factory as a Func<> allows for the constructor to remain private so that the only
         // way to create an AttributeValue is via the containing context. This ensures that the
@@ -811,17 +822,17 @@ namespace Llvm.NET
             return GetContextFor( hContext );
         }
 
-        internal void AddModule( NativeModule module )
+        internal void AddModule( BitcodeModule module )
         {
             ModuleCache.Add( module.ModuleHandle.Pointer, module );
         }
 
-        internal void RemoveModule( NativeModule module )
+        internal void RemoveModule( BitcodeModule module )
         {
             ModuleCache.Remove( module.ModuleHandle.Pointer );
         }
 
-        internal NativeModule GetModuleFor( LLVMModuleRef moduleRef )
+        internal BitcodeModule GetModuleFor( LLVMModuleRef moduleRef )
         {
             if( moduleRef.Pointer == IntPtr.Zero )
             {
@@ -834,9 +845,9 @@ namespace Llvm.NET
                 throw new ArgumentException( "Incorrect context for module" );
             }
 
-            if( !ModuleCache.TryGetValue( moduleRef.Pointer, out NativeModule retVal ) )
+            if( !ModuleCache.TryGetValue( moduleRef.Pointer, out BitcodeModule retVal ) )
             {
-                retVal = new NativeModule( moduleRef );
+                retVal = new BitcodeModule( moduleRef );
             }
 
             return retVal;
@@ -978,7 +989,7 @@ namespace Llvm.NET
 
         private readonly Dictionary< IntPtr, ITypeRef > TypeCache = new Dictionary< IntPtr, ITypeRef >( );
 
-        private readonly Dictionary< IntPtr, NativeModule > ModuleCache = new Dictionary< IntPtr, NativeModule >( );
+        private readonly Dictionary< IntPtr, BitcodeModule > ModuleCache = new Dictionary< IntPtr, BitcodeModule >( );
 
         private readonly Dictionary<IntPtr, AttributeValue> AttributeValueCache = new Dictionary<IntPtr, AttributeValue>( );
 

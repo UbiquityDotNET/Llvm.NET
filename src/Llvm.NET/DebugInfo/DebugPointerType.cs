@@ -16,11 +16,11 @@ namespace Llvm.NET.DebugInfo
     {
         /// <summary>Initializes a new instance of the <see cref="DebugPointerType"/> class.</summary>
         /// <param name="debugElementType">Debug type of the pointee</param>
-        /// <param name="module"><see cref="NativeModule"/> used for creating the pointer type and debug information</param>
+        /// <param name="module"><see cref="BitcodeModule"/> used for creating the pointer type and debug information</param>
         /// <param name="addressSpace">Target address space for the pointer [Default: 0]</param>
         /// <param name="name">Name of the type [Default: null]</param>
         /// <param name="alignment">Alignment on pointer</param>
-        public DebugPointerType( IDebugType<ITypeRef, DIType> debugElementType, NativeModule module, uint addressSpace = 0, string name = null, uint alignment = 0 )
+        public DebugPointerType( IDebugType<ITypeRef, DIType> debugElementType, BitcodeModule module, uint addressSpace = 0, string name = null, uint alignment = 0 )
             : this( debugElementType.ValidateNotNull( nameof( debugElementType ) ).NativeType
                   , module
                   , debugElementType.ValidateNotNull( nameof( debugElementType ) ).DIType
@@ -33,12 +33,12 @@ namespace Llvm.NET.DebugInfo
 
         /// <summary>Initializes a new instance of the <see cref="DebugPointerType"/> class.</summary>
         /// <param name="llvmElementType">Native type of the pointee</param>
-        /// <param name="module"><see cref="NativeModule"/> used for creating the pointer type and debug information</param>
+        /// <param name="module"><see cref="BitcodeModule"/> used for creating the pointer type and debug information</param>
         /// <param name="elementType">Debug type of the pointee</param>
         /// <param name="addressSpace">Target address space for the pointer [Default: 0]</param>
         /// <param name="name">Name of the type [Default: null]</param>
         /// <param name="alignment">Alignment of pointer</param>
-        public DebugPointerType( ITypeRef llvmElementType, NativeModule module, DIType elementType, uint addressSpace = 0, string name = null, uint alignment = 0 )
+        public DebugPointerType( ITypeRef llvmElementType, BitcodeModule module, DIType elementType, uint addressSpace = 0, string name = null, uint alignment = 0 )
             : this( llvmElementType.ValidateNotNull( nameof( llvmElementType ) ).CreatePointerType( addressSpace )
                   , module
                   , elementType
@@ -50,12 +50,12 @@ namespace Llvm.NET.DebugInfo
 
         /// <summary>Initializes a new instance of the <see cref="DebugPointerType"/> class.</summary>
         /// <param name="llvmPtrType">Native type of the pointer</param>
-        /// <param name="module"><see cref="NativeModule"/> used for creating the pointer type and debug information</param>
+        /// <param name="module"><see cref="BitcodeModule"/> used for creating the pointer type and debug information</param>
         /// <param name="elementType">Debug type of the pointee</param>
         /// <param name="name">Name of the type [Default: null]</param>
         /// <param name="alignment">Alignment for pointer type</param>
         [SuppressMessage( "Microsoft.Design", "CA1062:Validate arguments of public methods", MessageId = "1", Justification = "ValidateNotNull" )]
-        public DebugPointerType( IPointerType llvmPtrType, NativeModule module, DIType elementType, string name = null, uint alignment = 0 )
+        public DebugPointerType( IPointerType llvmPtrType, BitcodeModule module, DIType elementType, string name = null, uint alignment = 0 )
             : base( llvmPtrType )
         {
             module.ValidateNotNull( nameof( module ) );

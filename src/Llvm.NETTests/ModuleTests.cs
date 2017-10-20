@@ -35,7 +35,7 @@ namespace Llvm.NET.Tests
         [TestMethod]
         public void DefaultConstructorTest( )
         {
-            using( var module = new NativeModule( ) )
+            using( var module = new BitcodeModule( ) )
             {
                 Assert.AreSame( string.Empty, module.Name );
                 Assert.AreSame( string.Empty, module.SourceFileName );
@@ -62,7 +62,7 @@ namespace Llvm.NET.Tests
         [TestMethod]
         public void ConstructorTestWithName( )
         {
-            using( var module = new NativeModule( TestModuleName ) )
+            using( var module = new BitcodeModule( TestModuleName ) )
             {
                 Assert.AreEqual( TestModuleName, module.Name );
                 Assert.AreEqual( TestModuleName, module.SourceFileName );
@@ -89,7 +89,7 @@ namespace Llvm.NET.Tests
         [TestMethod]
         public void ConstructorTestWithNameAndCompileUnit( )
         {
-            using( var module = new NativeModule( TestModuleName, DebugInfo.SourceLanguage.C99, "test.c", "unitTest", false, string.Empty, 0 ) )
+            using( var module = new BitcodeModule( TestModuleName, DebugInfo.SourceLanguage.C99, "test.c", "unitTest", false, string.Empty, 0 ) )
             {
                 Assert.AreEqual( TestModuleName, module.Name );
                 Assert.AreEqual( "test.c", module.SourceFileName );
@@ -114,7 +114,7 @@ namespace Llvm.NET.Tests
         [TestMethod]
         public void DisposeTest( )
         {
-            using( var module = new NativeModule( TestModuleName ) )
+            using( var module = new BitcodeModule( TestModuleName ) )
             {
             }
         }
@@ -124,8 +124,8 @@ namespace Llvm.NET.Tests
         {
             // verifies linked modules can be disposed
             using( var ctx = new Context( ) )
-            using( var module = new NativeModule( TestModuleName, ctx ) )
-            using( var otherModule = new NativeModule( "Other", ctx ) )
+            using( var module = new BitcodeModule( TestModuleName, ctx ) )
+            using( var otherModule = new BitcodeModule( "Other", ctx ) )
             {
                 module.Link( otherModule );
                 Assert.IsNull( otherModule.Context );
@@ -136,7 +136,7 @@ namespace Llvm.NET.Tests
         [ExpectedArgumentException( "otherModule", ExpectedExceptionMessage = "Linking modules from different contexts is not allowed" )]
         public void MultiContextLinkTest( )
         {
-            using( var mergedMod = new NativeModule( ) )
+            using( var mergedMod = new BitcodeModule( ) )
             using( var m1 = CreateSimpleModule( "module1" ) )
             using( var m2 = CreateSimpleModule( "module2" ) )
             {
@@ -162,7 +162,7 @@ namespace Llvm.NET.Tests
         [TestMethod]
         public void MultiContextCloneLinkTest( )
         {
-            using( var mergedMod = new NativeModule( ) )
+            using( var mergedMod = new BitcodeModule( ) )
             using( var m1 = CreateSimpleModule( "module1" ) )
             using( var m2 = CreateSimpleModule( "module2" ) )
             {
@@ -185,7 +185,7 @@ namespace Llvm.NET.Tests
         [TestMethod]
         public void VerifyValidModuleTest( )
         {
-            using( var module = new NativeModule( TestModuleName ) )
+            using( var module = new BitcodeModule( TestModuleName ) )
             {
                 Function testFunc = CreateSimpleVoidNopTestFunction( module, "foo" );
 
@@ -200,7 +200,7 @@ namespace Llvm.NET.Tests
         [TestMethod]
         public void VerifyInvalidModuleTest( )
         {
-            using( var module = new NativeModule( TestModuleName ) )
+            using( var module = new BitcodeModule( TestModuleName ) )
             {
                 Function testFunc = CreateInvalidFunction( module, "badfunc" );
 
@@ -219,7 +219,7 @@ namespace Llvm.NET.Tests
         [TestMethod]
         public void AddFunctionGetFunctionTest( )
         {
-            using( var module = new NativeModule( TestModuleName ) )
+            using( var module = new BitcodeModule( TestModuleName ) )
             {
                 Function testFunc = CreateSimpleVoidNopTestFunction( module, "foo" );
 
@@ -240,14 +240,14 @@ namespace Llvm.NET.Tests
             string path = Path.GetTempFileName( );
             try
             {
-                using( var module = new NativeModule( TestModuleName ) )
+                using( var module = new BitcodeModule( TestModuleName ) )
                 {
                     Function testFunc = CreateSimpleVoidNopTestFunction( module, "foo" );
                     module.WriteToFile( path );
                 }
 
                 using( var ctx = new Context( ) )
-                using( var module2 = NativeModule.LoadFrom( path, ctx ) )
+                using( var module2 = BitcodeModule.LoadFrom( path, ctx ) )
                 {
                     Function testFunc = module2.GetFunction( "foo" );
 
@@ -268,7 +268,7 @@ namespace Llvm.NET.Tests
         [TestMethod]
         public void AsStringTest( )
         {
-            using( var module = new NativeModule( TestModuleName ) )
+            using( var module = new BitcodeModule( TestModuleName ) )
             {
                 Function testFunc = CreateSimpleVoidNopTestFunction( module, "foo" );
 
@@ -284,7 +284,7 @@ namespace Llvm.NET.Tests
         [TestMethod]
         public void AddAliasGetAliasTest( )
         {
-            using( var module = new NativeModule( TestModuleName ) )
+            using( var module = new BitcodeModule( TestModuleName ) )
             {
                 Function testFunc = CreateSimpleVoidNopTestFunction( module, "_test" );
 
@@ -309,7 +309,7 @@ namespace Llvm.NET.Tests
         [TestMethod]
         public void AddGlobalTest( )
         {
-            using( var module = new NativeModule( TestModuleName ) )
+            using( var module = new BitcodeModule( TestModuleName ) )
             {
                 module.AddGlobal( module.Context.Int32Type, "TestInt" );
                 GlobalVariable globalVar = module.GetNamedGlobal( "TestInt" );
@@ -321,7 +321,7 @@ namespace Llvm.NET.Tests
         [TestMethod]
         public void AddGlobalTest1( )
         {
-            using( var module = new NativeModule( TestModuleName ) )
+            using( var module = new BitcodeModule( TestModuleName ) )
             {
                 // unnamed global
                 module.AddGlobal( module.Context.Int32Type, true, Linkage.WeakODR, module.Context.CreateConstant( 0x12345678 ) );
@@ -341,7 +341,7 @@ namespace Llvm.NET.Tests
         [TestMethod]
         public void AddGlobalTest2( )
         {
-            using( var module = new NativeModule( TestModuleName ) )
+            using( var module = new BitcodeModule( TestModuleName ) )
             {
                 module.AddGlobal( module.Context.Int32Type, true, Linkage.WeakODR, module.Context.CreateConstant( 0x12345678 ), "TestInt" );
                 GlobalVariable globalVar = module.GetNamedGlobal( "TestInt" );
@@ -359,7 +359,7 @@ namespace Llvm.NET.Tests
         [TestMethod]
         public void GetTypeByNameTest( )
         {
-            using( var module = new NativeModule( TestModuleName ) )
+            using( var module = new BitcodeModule( TestModuleName ) )
             {
                 // while GetTypeByName is exposed on the module it isn't really specific to the module
                 // That is, the type belongs to the context and GetTypeByName() is just a convenience
@@ -375,10 +375,10 @@ namespace Llvm.NET.Tests
         [TestMethod]
         public void AddModuleFlagTest( )
         {
-            using( var module = new NativeModule( TestModuleName ) )
+            using( var module = new BitcodeModule( TestModuleName ) )
             {
-                module.AddModuleFlag( ModuleFlagBehavior.Warning, NativeModule.DwarfVersionValue, 4 );
-                module.AddModuleFlag( ModuleFlagBehavior.Warning, NativeModule.DebugVersionValue, NativeModule.DebugMetadataVersion );
+                module.AddModuleFlag( ModuleFlagBehavior.Warning, BitcodeModule.DwarfVersionValue, 4 );
+                module.AddModuleFlag( ModuleFlagBehavior.Warning, BitcodeModule.DebugVersionValue, BitcodeModule.DebugMetadataVersion );
                 module.AddModuleFlag( ModuleFlagBehavior.Error, "wchar_size", 4 );
                 module.AddModuleFlag( ModuleFlagBehavior.Error, "min_enum_size", 4 );
                 module.AddVersionIdentMetadata( "unit-tests 1.0" );
@@ -410,7 +410,7 @@ namespace Llvm.NET.Tests
         [TestMethod]
         public void ComdatDataTest( )
         {
-            using( var module = new NativeModule( TestModuleName ) )
+            using( var module = new BitcodeModule( TestModuleName ) )
             {
                 const string comdatName = "testcomdat";
                 const string globalName = "globalwithcomdat";
@@ -444,7 +444,7 @@ namespace Llvm.NET.Tests
         [TestMethod]
         public void ComdatFunctionTest( )
         {
-            using( var module = new NativeModule( TestModuleName ) )
+            using( var module = new BitcodeModule( TestModuleName ) )
             {
                 const string comdatName = "testcomdat";
                 const string globalName = "globalwithcomdat";
@@ -477,14 +477,14 @@ namespace Llvm.NET.Tests
             }
         }
 
-        private NativeModule CreateSimpleModule( string name, Context ctx = null )
+        private BitcodeModule CreateSimpleModule( string name, Context ctx = null )
         {
-            var retVal = new NativeModule( name, ctx );
+            var retVal = new BitcodeModule( name, ctx );
             CreateSimpleVoidNopTestFunction( retVal, name );
             return retVal;
         }
 
-        private static Function CreateSimpleVoidNopTestFunction( NativeModule module, string name )
+        private static Function CreateSimpleVoidNopTestFunction( BitcodeModule module, string name )
         {
             var ctx = module.Context;
             Assert.IsNotNull( ctx );
@@ -495,7 +495,7 @@ namespace Llvm.NET.Tests
             return testFunc;
         }
 
-        private static Function CreateInvalidFunction( NativeModule module, string name )
+        private static Function CreateInvalidFunction( BitcodeModule module, string name )
         {
             var ctx = module.Context;
 

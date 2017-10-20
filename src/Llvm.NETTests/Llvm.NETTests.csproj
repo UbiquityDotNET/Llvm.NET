@@ -6,7 +6,7 @@
     <Compile Include="AssemblyInitialize.cs" />
     <Compile Include="ContextTests.cs" />
     <Compile Include="DebugInfo\DebugUnionTypeTests.cs" />
-    <Compile Include="ExpectedArgumentException.cs" />
+    <Compile Include="ExpectedArgumentExceptionAttribute.cs" />
     <Compile Include="MDNodeTests.cs" />
     <Compile Include="ModuleTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

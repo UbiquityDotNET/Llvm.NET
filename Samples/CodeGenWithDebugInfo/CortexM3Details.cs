@@ -45,7 +45,7 @@ namespace TestDebugInfo
                                   );
         }
 
-        public void AddModuleFlags( NativeModule module )
+        public void AddModuleFlags( BitcodeModule module )
         {
             // Specify ABI const sizes so linker can detect mismatches
             module.AddModuleFlag( ModuleFlagBehavior.Error, "wchar_size", 4 );
