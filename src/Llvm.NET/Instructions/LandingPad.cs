@@ -6,6 +6,8 @@ using System;
 using Llvm.NET.Native;
 using Llvm.NET.Values;
 
+using static Llvm.NET.Native.NativeMethods;
+
 namespace Llvm.NET.Instructions
 {
     public class LandingPad
@@ -18,10 +20,10 @@ namespace Llvm.NET.Instructions
                 throw new ArgumentNullException( nameof( clause ) );
             }
 
-            NativeMethods.AddClause( ValueHandle, clause.ValueHandle);
+            LLVMAddClause( ValueHandle, clause.ValueHandle);
         }
 
-        public void SetCleanup( bool value ) => NativeMethods.SetCleanup( ValueHandle, value );
+        public void SetCleanup( bool value ) => LLVMSetCleanup( ValueHandle, value );
 
         internal LandingPad( LLVMValueRef valueRef )
             : base( valueRef )

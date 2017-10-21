@@ -57,14 +57,14 @@ namespace Llvm.NET.Types
                 llvmArgs = new LLVMTypeRef[ 1 ];
             }
 
-            NativeMethods.StructSetBody( TypeRefHandle, out llvmArgs[ 0 ], argsLength, packed );
+            NativeMethods.LLVMStructSetBody( TypeRefHandle, out llvmArgs[ 0 ], argsLength, packed );
         }
 
-        public string Name => NativeMethods.GetStructName( TypeRefHandle );
+        public string Name => NativeMethods.LLVMGetStructName( TypeRefHandle );
 
-        public bool IsOpaque => NativeMethods.IsOpaqueStruct( TypeRefHandle );
+        public bool IsOpaque => NativeMethods.LLVMIsOpaqueStruct( TypeRefHandle );
 
-        public bool IsPacked => NativeMethods.IsPackedStruct( TypeRefHandle );
+        public bool IsPacked => NativeMethods.LLVMIsPackedStruct( TypeRefHandle );
 
         public IReadOnlyList<ITypeRef> Members
         {
@@ -73,11 +73,11 @@ namespace Llvm.NET.Types
                 var members = new List<ITypeRef>( );
                 if( Kind == TypeKind.Struct && !IsOpaque )
                 {
-                    uint count = NativeMethods.CountStructElementTypes( TypeRefHandle );
+                    uint count = NativeMethods.LLVMCountStructElementTypes( TypeRefHandle );
                     if (count > 0)
                     {
                         LLVMTypeRef[] structElements = new LLVMTypeRef[ count ];
-                        NativeMethods.GetStructElementTypes( TypeRefHandle, out structElements[ 0 ] );
+                        NativeMethods.LLVMGetStructElementTypes( TypeRefHandle, out structElements[ 0 ] );
                         members.AddRange( structElements.Select( h => FromHandle<ITypeRef>( h ) ) );
                     }
                 }

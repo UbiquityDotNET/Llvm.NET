@@ -32,7 +32,7 @@ namespace Llvm.NET.Native
         [SecurityCritical]
         protected override bool ReleaseHandle( )
         {
-            NativeMethods.OrcDisposeSharedObjectBufferRef( handle );
+            NativeMethods.LLVMOrcDisposeSharedObjectBufferRef( handle );
             return true;
         }
     }

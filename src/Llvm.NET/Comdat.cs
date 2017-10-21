@@ -28,7 +28,7 @@ namespace Llvm.NET
                     return string.Empty;
                 }
 
-                return NativeMethods.ComdatGetName( ComdatHandle );
+                return NativeMethods.LLVMComdatGetName( ComdatHandle );
             }
         }
 
@@ -42,7 +42,7 @@ namespace Llvm.NET
                     return default( ComdatKind );
                 }
 
-                return ( ComdatKind )NativeMethods.ComdatGetKind( ComdatHandle );
+                return ( ComdatKind )NativeMethods.LLVMComdatGetKind( ComdatHandle );
             }
 
             set
@@ -52,7 +52,7 @@ namespace Llvm.NET
                     return;
                 }
 
-                NativeMethods.ComdatSetKind( ComdatHandle, ( LLVMComdatSelectionKind )value );
+                NativeMethods.LLVMComdatSetKind( ComdatHandle, ( LLVMComdatSelectionKind )value );
             }
         }
 

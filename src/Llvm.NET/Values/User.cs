@@ -25,12 +25,12 @@ namespace Llvm.NET.Values
         {
             get
             {
-                LLVMUseRef current = NativeMethods.GetFirstUse( ValueHandle );
+                LLVMUseRef current = NativeMethods.LLVMGetFirstUse( ValueHandle );
                 while( current.Pointer != IntPtr.Zero )
                 {
                     // TODO: intern the use instances?
                     yield return new Use( current );
-                    current = NativeMethods.GetNextUse( current );
+                    current = NativeMethods.LLVMGetNextUse( current );
                 }
             }
         }

@@ -39,7 +39,7 @@ namespace Llvm.NET
             key.ValidateNotNullOrWhiteSpace( nameof( key ) );
             kind.ValidateDefined( nameof( kind ) );
 
-            LLVMComdatRef comdatRef = NativeMethods.ModuleInsertOrUpdateComdat( Module.ModuleHandle, key, ( LLVMComdatSelectionKind )kind );
+            LLVMComdatRef comdatRef = NativeMethods.LLVMModuleInsertOrUpdateComdat( Module.ModuleHandle, key, ( LLVMComdatSelectionKind )kind );
             if(!InternalComdatMap.TryGetValue( key, out Comdat retVal ))
             {
                 retVal = new Comdat( Module, comdatRef );
@@ -58,7 +58,7 @@ namespace Llvm.NET
             }
 
             InternalComdatMap.Clear( );
-            NativeMethods.ModuleComdatClear( Module.ModuleHandle );
+            NativeMethods.LLVMModuleComdatClear( Module.ModuleHandle );
         }
 
         /// <summary>Gets a value that indicates if a <see cref="Comdat"/> with a given name exists in the collection</summary>
@@ -91,7 +91,7 @@ namespace Llvm.NET
             if( retVal )
             {
                 ClearComdatFromGlobals( key );
-                NativeMethods.ModuleComdatRemove( Module.ModuleHandle, value.ComdatHandle );
+                NativeMethods.LLVMModuleComdatRemove( Module.ModuleHandle, value.ComdatHandle );
             }
 
             return retVal;
@@ -117,7 +117,7 @@ namespace Llvm.NET
             module.ValidateNotNull( nameof( module ) );
 
             Module = module;
-            NativeMethods.ModuleEnumerateComdats( Module.ModuleHandle, AddComdat );
+            NativeMethods.LLVMModuleEnumerateComdats( Module.ModuleHandle, AddComdat );
         }
 
         private IEnumerable<GlobalObject> GetModuleGlobalObjects()

@@ -6,6 +6,8 @@ using System;
 using Llvm.NET.Native;
 using Llvm.NET.Values;
 
+using static Llvm.NET.Native.NativeMethods;
+
 namespace Llvm.NET.Instructions
 {
     /// <summary>Exposes an LLVM Instruction</summary>
@@ -13,10 +15,10 @@ namespace Llvm.NET.Instructions
         : User
     {
         /// <summary>Gets the <see cref="BasicBlock"/> that contains this instruction</summary>
-        public BasicBlock ContainingBlock => BasicBlock.FromHandle( NativeMethods.GetInstructionParent( ValueHandle ) );
+        public BasicBlock ContainingBlock => BasicBlock.FromHandle( LLVMGetInstructionParent( ValueHandle ) );
 
         /// <summary>Gets the LLVM opcode for the instruction</summary>
-        public OpCode Opcode => ( OpCode )NativeMethods.GetInstructionOpcode( ValueHandle );
+        public OpCode Opcode => ( OpCode )LLVMGetInstructionOpcode( ValueHandle );
 
         /// <summary>Gets a value indicating whether the opcode is for a memory access (<see cref="Alloca"/>, <see cref="Load"/>, <see cref="Store"/>)</summary>
         public bool IsMemoryAccess
@@ -39,7 +41,7 @@ namespace Llvm.NET.Instructions
         /// </remarks>
         public uint Alignment
         {
-            get => IsMemoryAccess ? NativeMethods.GetAlignment( ValueHandle ) : 0;
+            get => IsMemoryAccess ? LLVMGetAlignment( ValueHandle ) : 0;
 
             set
             {
@@ -48,7 +50,7 @@ namespace Llvm.NET.Instructions
                     throw new InvalidOperationException( "Alignment can only be set for instructions dealing with memory read/write (alloca, load, store)" );
                 }
 
-                NativeMethods.SetAlignment( ValueHandle, value );
+                LLVMSetAlignment( ValueHandle, value );
             }
         }
 

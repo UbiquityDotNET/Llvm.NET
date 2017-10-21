@@ -10,7 +10,7 @@ namespace Llvm.NET.DebugInfo
     public class DIVariable
         : DINode
     {
-        /* TODO: UInt32 Line => NativeMethods.DIVariableGetLine( MetadataHandle ); */
+        /* TODO: UInt32 Line => NativeMethods.LLVMDIVariableGetLine( MetadataHandle ); */
 
         public DIScope Scope => Operands[ 0 ]?.Metadata as DIScope;
 

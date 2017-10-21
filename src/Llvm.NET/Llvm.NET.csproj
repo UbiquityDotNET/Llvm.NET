@@ -100,7 +100,9 @@
         <Compile Include="Native\GeneratedCodeExtensions.cs" />
         <Compile Include="Native\IntPtrExtensions.cs" />
         <Compile Include="Native\LLVMBuilderRef.cs" />
+        <Compile Include="Native\LLVMMCJITMemoryManagerRef.cs" />
         <Compile Include="Native\LLVMMetadataRef.cs" />
+        <Compile Include="Native\LLVMPassManagerRef.cs" />
         <Compile Include="Native\LLVMPassRegistryRef.cs" />
         <Compile Include="Native\LLVMSharedModuleRef.cs" />
         <Compile Include="Native\LLVMSharedObjectBufferRef.cs" />
@@ -121,6 +123,7 @@
         <Compile Include="Metadata\NamedMDNode.cs" />
         <Compile Include="DebugInfo\DebugBasicType.cs" />
         <Compile Include="DebugInfo\DebugFunctionType.cs" />
+        <Compile Include="PassManager.cs" />
         <Compile Include="Triple.cs" />
         <Compile Include="Types\ITypeRef.cs" />
         <Compile Include="Values\Argument.cs" />
@@ -226,6 +229,9 @@
     <ItemGroup>
         <PackageReference Include="CSemVer.Build.Tasks" Version="1.0.0-alpha.2--ci-REL.194F4984" />
         <PackageReference Include="Ubiquity.ArgValidators" Version="0.3.0-alpha--ci-REL.424565984" />
+    </ItemGroup>
+    <ItemGroup>
+      <Folder Include="ExecutionEngine\" />
     </ItemGroup>
     <Choose>
         <!--

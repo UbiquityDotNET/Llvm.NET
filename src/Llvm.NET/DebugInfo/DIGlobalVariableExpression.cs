@@ -13,7 +13,7 @@ namespace Llvm.NET.DebugInfo
         {
             get
             {
-                LLVMMetadataRef handle = NativeMethods.DIGlobalVarExpGetVariable( MetadataHandle );
+                LLVMMetadataRef handle = NativeMethods.LLVMDIGlobalVarExpGetVariable( MetadataHandle );
                 if( handle.Pointer.IsNull( ) )
                 {
                     return null;

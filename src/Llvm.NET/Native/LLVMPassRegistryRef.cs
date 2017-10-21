@@ -31,7 +31,7 @@ namespace Llvm.NET.Native
         [SecurityCritical]
         protected override bool ReleaseHandle( )
         {
-            NativeMethods.PassRegistryDispose( handle );
+            NativeMethods.LLVMPassRegistryDispose( handle );
             return true;
         }
     }

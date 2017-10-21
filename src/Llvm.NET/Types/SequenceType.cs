@@ -31,7 +31,7 @@ namespace Llvm.NET.Types
         {
             get
             {
-                var typeRef = NativeMethods.GetElementType( this.GetTypeRef() );
+                var typeRef = NativeMethods.LLVMGetElementType( this.GetTypeRef() );
                 if( typeRef.Pointer == IntPtr.Zero )
                 {
                     return null;
@@ -52,7 +52,7 @@ namespace Llvm.NET.Types
 
         internal static bool IsSequenceTypeRef( LLVMTypeRef typeRef )
         {
-            var kind = ( TypeKind )NativeMethods.GetTypeKind( typeRef );
+            var kind = ( TypeKind )NativeMethods.LLVMGetTypeKind( typeRef );
             return kind == TypeKind.Array
                 || kind == TypeKind.Vector
                 || kind == TypeKind.Pointer;

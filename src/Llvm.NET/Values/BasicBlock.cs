@@ -24,7 +24,7 @@ namespace Llvm.NET.Values
         {
             get
             {
-                var parent = NativeMethods.GetBasicBlockParent( BlockHandle );
+                var parent = NativeMethods.LLVMGetBasicBlockParent( BlockHandle );
                 if( parent.Pointer == IntPtr.Zero )
                 {
                     return null;
@@ -42,7 +42,7 @@ namespace Llvm.NET.Values
         {
             get
             {
-                var firstInst = NativeMethods.GetFirstInstruction( BlockHandle );
+                var firstInst = NativeMethods.LLVMGetFirstInstruction( BlockHandle );
                 if( firstInst.Pointer == IntPtr.Zero )
                 {
                     return null;
@@ -57,7 +57,7 @@ namespace Llvm.NET.Values
         {
             get
             {
-                var lastInst = NativeMethods.GetLastInstruction( BlockHandle );
+                var lastInst = NativeMethods.LLVMGetLastInstruction( BlockHandle );
                 if( lastInst.Pointer == IntPtr.Zero)
                 {
                     return null;
@@ -76,7 +76,7 @@ namespace Llvm.NET.Values
         {
             get
             {
-                var terminator = NativeMethods.GetBasicBlockTerminator( BlockHandle );
+                var terminator = NativeMethods.LLVMGetBasicBlockTerminator( BlockHandle );
                 if( terminator.Pointer == IntPtr.Zero)
                 {
                     return null;
@@ -116,7 +116,7 @@ namespace Llvm.NET.Values
                 throw new ArgumentException( "Instruction is from a different block", nameof( instruction ) );
             }
 
-            var hInst = NativeMethods.GetNextInstruction( instruction.ValueHandle );
+            var hInst = NativeMethods.LLVMGetNextInstruction( instruction.ValueHandle );
             return hInst.Pointer == IntPtr.Zero ? null : FromHandle<Instruction>( hInst );
         }
 
@@ -125,12 +125,12 @@ namespace Llvm.NET.Values
         {
         }
 
-        internal LLVMBasicBlockRef BlockHandle => NativeMethods.ValueAsBasicBlock( ValueHandle );
+        internal LLVMBasicBlockRef BlockHandle => NativeMethods.LLVMValueAsBasicBlock( ValueHandle );
 
         [SuppressMessage( "Language", "CSE0003:Use expression-bodied members", Justification = "Line too long" )]
         internal static BasicBlock FromHandle( LLVMBasicBlockRef basicBlockRef )
         {
-            return FromHandle<BasicBlock>( NativeMethods.BasicBlockAsValue( basicBlockRef ) );
+            return FromHandle<BasicBlock>( NativeMethods.LLVMBasicBlockAsValue( basicBlockRef ) );
         }
     }
 }

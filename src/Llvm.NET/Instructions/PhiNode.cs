@@ -6,6 +6,8 @@ using System;
 using Llvm.NET.Native;
 using Llvm.NET.Values;
 
+using static Llvm.NET.Native.NativeMethods;
+
 namespace Llvm.NET.Instructions
 {
     public class PhiNode
@@ -42,7 +44,7 @@ namespace Llvm.NET.Instructions
                 llvmBlocks[ i + i ] = additionalIncoming[ i ].Item2.BlockHandle;
             }
 
-            NativeMethods.AddIncoming( ValueHandle, out llvmValues[ 0 ], out llvmBlocks[ 0 ], ( uint )llvmValues.Length );
+            LLVMAddIncoming( ValueHandle, out llvmValues[ 0 ], out llvmBlocks[ 0 ], ( uint )llvmValues.Length );
         }
 
         internal PhiNode( LLVMValueRef valueRef )

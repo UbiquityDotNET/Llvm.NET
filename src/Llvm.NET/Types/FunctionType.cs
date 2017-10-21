@@ -31,24 +31,24 @@ namespace Llvm.NET.Types
         , IFunctionType
     {
         /// <inheritdoc/>
-        public bool IsVarArg => NativeMethods.IsFunctionVarArg( TypeRefHandle );
+        public bool IsVarArg => NativeMethods.LLVMIsFunctionVarArg( TypeRefHandle );
 
         /// <inheritdoc/>
-        public ITypeRef ReturnType => FromHandle<ITypeRef>( NativeMethods.GetReturnType( TypeRefHandle ) );
+        public ITypeRef ReturnType => FromHandle<ITypeRef>( NativeMethods.LLVMGetReturnType( TypeRefHandle ) );
 
         /// <inheritdoc/>
         public IReadOnlyList<ITypeRef> ParameterTypes
         {
             get
             {
-                uint paramCount = NativeMethods.CountParamTypes( TypeRefHandle );
+                uint paramCount = NativeMethods.LLVMCountParamTypes( TypeRefHandle );
                 if( paramCount == 0 )
                 {
                     return new List<TypeRef>().AsReadOnly();
                 }
 
                 var paramTypes = new LLVMTypeRef[ paramCount ];
-                NativeMethods.GetParamTypes( TypeRefHandle, out paramTypes[ 0 ] );
+                NativeMethods.LLVMGetParamTypes( TypeRefHandle, out paramTypes[ 0 ] );
                 return paramTypes.Select( FromHandle<TypeRef> )
                                  .ToList( )
                                  .AsReadOnly( );

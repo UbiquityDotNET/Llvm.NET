@@ -13,7 +13,7 @@ namespace Llvm.NET.Values
 
         public double GetValueWithLoss( out bool loosesInfo )
         {
-            return NativeMethods.ConstRealGetDouble( ValueHandle, out loosesInfo );
+            return NativeMethods.LLVMConstRealGetDouble( ValueHandle, out loosesInfo );
         }
 
         internal ConstantFP( LLVMValueRef valueRef )

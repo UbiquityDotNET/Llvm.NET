@@ -4,6 +4,8 @@
 
 using Llvm.NET.Native;
 
+using static Llvm.NET.Native.NativeMethods;
+
 namespace Llvm.NET.Instructions
 {
     public class Store
@@ -11,8 +13,8 @@ namespace Llvm.NET.Instructions
     {
         public bool IsVolatile
         {
-            get { return NativeMethods.GetVolatile( ValueHandle ); }
-            set { NativeMethods.SetVolatile( ValueHandle, value ); }
+            get { return LLVMGetVolatile( ValueHandle ); }
+            set { LLVMSetVolatile( ValueHandle, value ); }
         }
 
         internal Store( LLVMValueRef valueRef )

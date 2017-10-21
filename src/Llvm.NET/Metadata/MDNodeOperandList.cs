@@ -21,7 +21,7 @@ namespace Llvm.NET
                     throw new ArgumentOutOfRangeException( nameof( index ) );
                 }
 
-                var handle = NativeMethods.MDNodeGetOperand( OwningNode.MetadataHandle, ( uint )index );
+                var handle = NativeMethods.LLVMMDNodeGetOperand( OwningNode.MetadataHandle, ( uint )index );
                 return MDOperand.FromHandle( OwningNode, handle );
             }
         }
@@ -30,7 +30,7 @@ namespace Llvm.NET
         {
             get
             {
-                uint count = NativeMethods.MDNodeGetNumOperands( OwningNode.MetadataHandle );
+                uint count = NativeMethods.LLVMMDNodeGetNumOperands( OwningNode.MetadataHandle );
                 return ( int )Math.Min( count, int.MaxValue );
             }
         }
@@ -39,7 +39,7 @@ namespace Llvm.NET
         {
             for( uint i = 0; i < Count; ++i )
             {
-                LLVMMDOperandRef handle = NativeMethods.MDNodeGetOperand( OwningNode.MetadataHandle, i );
+                LLVMMDOperandRef handle = NativeMethods.LLVMMDNodeGetOperand( OwningNode.MetadataHandle, i );
                 if( handle.Pointer == IntPtr.Zero )
                 {
                     yield break;

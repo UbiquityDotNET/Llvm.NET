@@ -21,7 +21,7 @@ namespace Llvm.NET.DebugInfo
                     return (Tag)ushort.MaxValue;
                 }
 
-                return ( Tag )NativeMethods.DIDescriptorGetTag( MetadataHandle );
+                return ( Tag )NativeMethods.LLVMDIDescriptorGetTag( MetadataHandle );
             }
         }
 

@@ -29,12 +29,12 @@ namespace Llvm.NET.Types
                     return false;
                 }
 
-                return NativeMethods.TypeIsSized( TypeRefHandle );
+                return NativeMethods.LLVMTypeIsSized( TypeRefHandle );
             }
         }
 
         /// <inheritdoc/>
-        public TypeKind Kind => ( TypeKind )NativeMethods.GetTypeKind( TypeRefHandle );
+        public TypeKind Kind => ( TypeKind )NativeMethods.LLVMGetTypeKind( TypeRefHandle );
 
         /// <inheritdoc/>
         public bool IsInteger=> Kind == TypeKind.Integer;
@@ -101,7 +101,7 @@ namespace Llvm.NET.Types
                     return 0;
                 }
 
-                return NativeMethods.GetIntTypeWidth( TypeRefHandle );
+                return NativeMethods.LLVMGetIntTypeWidth( TypeRefHandle );
             }
         }
 
@@ -109,7 +109,7 @@ namespace Llvm.NET.Types
         public Constant GetNullValue() => Constant.NullValueFor( this );
 
         /// <inheritdoc/>
-        public IArrayType CreateArrayType( uint count ) => FromHandle<IArrayType>( NativeMethods.ArrayType( TypeRefHandle, count ) );
+        public IArrayType CreateArrayType( uint count ) => FromHandle<IArrayType>( NativeMethods.LLVMArrayType( TypeRefHandle, count ) );
 
         /// <inheritdoc/>
         public IPointerType CreatePointerType( ) => CreatePointerType( 0 );
@@ -122,7 +122,7 @@ namespace Llvm.NET.Types
                 throw new InvalidOperationException( "Cannot create pointer to void in LLVM, use i8* instead" );
             }
 
-            return FromHandle<IPointerType>( NativeMethods.PointerType( TypeRefHandle, addressSpace ) );
+            return FromHandle<IPointerType>( NativeMethods.LLVMPointerType( TypeRefHandle, addressSpace ) );
         }
 
         public bool TryGetExtendedPropertyValue<T>( string id, out T value ) => ExtensibleProperties.TryGetExtendedPropertyValue<T>( id, out value );
@@ -131,7 +131,7 @@ namespace Llvm.NET.Types
 
         /// <summary>Builds a string representation for this type in LLVM assembly language form</summary>
         /// <returns>Formatted string for this type</returns>
-        public override string ToString( ) => NativeMethods.PrintTypeToString( TypeRefHandle );
+        public override string ToString( ) => NativeMethods.LLVMPrintTypeToString( TypeRefHandle );
 
         internal TypeRef( LLVMTypeRef typeRef )
         {
@@ -165,7 +165,7 @@ namespace Llvm.NET.Types
 
         private static ITypeRef StaticFactory( LLVMTypeRef typeRef )
         {
-            var kind = ( TypeKind )NativeMethods.GetTypeKind( typeRef );
+            var kind = ( TypeKind )NativeMethods.LLVMGetTypeKind( typeRef );
             switch( kind )
             {
             case TypeKind.Struct:

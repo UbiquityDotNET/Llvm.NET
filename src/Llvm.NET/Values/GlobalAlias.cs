@@ -20,7 +20,7 @@ namespace Llvm.NET.Values
                     return null;
                 }
 
-                var handle = NativeMethods.GetAliasee( ValueHandle );
+                var handle = NativeMethods.LLVMGetAliasee( ValueHandle );
                 if( handle.Pointer == IntPtr.Zero )
                 {
                     return null;

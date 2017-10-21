@@ -62,7 +62,7 @@ namespace Llvm.NET.Values
                 valueHandles = new LLVMValueRef[ 1 ];
             }
 
-            var handle = NativeMethods.ConstArray( elementType.GetTypeRef(), out valueHandles[ 0 ], (uint)argCount );
+            var handle = NativeMethods.LLVMConstArray( elementType.GetTypeRef(), out valueHandles[ 0 ], (uint)argCount );
             return FromHandle<Constant>( handle );
         }
 

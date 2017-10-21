@@ -7,6 +7,8 @@ using System.Diagnostics.CodeAnalysis;
 using Llvm.NET.Native;
 using Llvm.NET.Types;
 
+using static Llvm.NET.Native.NativeMethods;
+
 namespace Llvm.NET.Values
 {
     /// <summary>LLVM Value</summary>
@@ -38,38 +40,38 @@ namespace Llvm.NET.Values
         /// </remarks>
         public string Name
         {
-            get => Context.IsDisposed ? string.Empty : NativeMethods.GetValueName( ValueHandle );
+            get => Context.IsDisposed ? string.Empty : LLVMGetValueName( ValueHandle );
 
-            set => NativeMethods.SetValueName( ValueHandle, value );
+            set => LLVMSetValueName( ValueHandle, value );
         }
 
         /// <summary>Gets a value indicating whether this value is Undefined</summary>
-        public bool IsUndefined => NativeMethods.IsUndef( ValueHandle );
+        public bool IsUndefined => LLVMIsUndef( ValueHandle );
 
         /// <summary>Gets a value indicating whether the Value represents the NULL value for the values type</summary>
-        public bool IsNull => NativeMethods.IsNull( ValueHandle );
+        public bool IsNull => LLVMIsNull( ValueHandle );
 
         /// <summary>Gets the type of the value</summary>
-        public ITypeRef NativeType => TypeRef.FromHandle( NativeMethods.TypeOf( ValueHandle ) );
+        public ITypeRef NativeType => TypeRef.FromHandle( LLVMTypeOf( ValueHandle ) );
 
         public Context Context => NativeType.Context;
 
-        public bool IsInstruction => NativeMethods.GetValueIdAsKind( ValueHandle ) > ValueKind.Instruction;
+        public bool IsInstruction => LLVMGetValueIdAsKind( ValueHandle ) > ValueKind.Instruction;
 
-        public bool IsFunction => NativeMethods.GetValueIdAsKind( ValueHandle ) == ValueKind.Function;
+        public bool IsFunction => LLVMGetValueIdAsKind( ValueHandle ) == ValueKind.Function;
 
         public bool IsCallSite
         {
             get
             {
-                var kind = NativeMethods.GetValueIdAsKind( ValueHandle );
+                var kind = LLVMGetValueIdAsKind( ValueHandle );
                 return (kind == ValueKind.Call) || (kind == ValueKind.Invoke);
             }
         }
 
         /// <summary>Generates a string representing the LLVM syntax of the value</summary>
         /// <returns>string version of the value formatted by LLVM</returns>
-        public override string ToString( ) => NativeMethods.PrintValueToString( ValueHandle );
+        public override string ToString( ) => LLVMPrintValueToString( ValueHandle );
 
         /// <summary>Replace all uses of a <see cref="Value"/> with another one</summary>
         /// <param name="other">New value</param>
@@ -80,7 +82,7 @@ namespace Llvm.NET.Values
                 throw new ArgumentNullException( nameof( other ) );
             }
 
-            NativeMethods.ReplaceAllUsesWith( ValueHandle, other.ValueHandle );
+            LLVMReplaceAllUsesWith( ValueHandle, other.ValueHandle );
         }
 
         /// <inheritdoc/>
@@ -143,7 +145,7 @@ namespace Llvm.NET.Values
         [SuppressMessage( "Microsoft.Maintainability", "CA1502:AvoidExcessiveComplexity", Justification = "Factory that maps wrappers with underlying types" )]
         private static Value StaticFactory( LLVMValueRef h )
         {
-            var kind = NativeMethods.GetValueIdAsKind( h );
+            var kind = LLVMGetValueIdAsKind( h );
             switch( kind )
             {
             case ValueKind.Argument:

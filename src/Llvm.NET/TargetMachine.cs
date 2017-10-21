@@ -6,6 +6,8 @@ using System;
 using Llvm.NET.Native;
 using Ubiquity.ArgValidators;
 
+using static Llvm.NET.Native.NativeMethods;
+
 namespace Llvm.NET
 {
     /// <summary>Target specific code generation information</summary>
@@ -28,23 +30,23 @@ namespace Llvm.NET
         }
 
         /// <summary>Gets the target that owns this <see cref="TargetMachine"/></summary>
-        public Target Target => Target.FromHandle( NativeMethods.GetTargetMachineTarget( TargetMachineHandle ) );
+        public Target Target => Target.FromHandle( LLVMGetTargetMachineTarget( TargetMachineHandle ) );
 
         /// <summary>Gets the target triple describing this machine</summary>
-        public string Triple => NativeMethods.GetTargetMachineTriple( TargetMachineHandle );
+        public string Triple => LLVMGetTargetMachineTriple( TargetMachineHandle );
 
         /// <summary>Gets the CPU Type for this machine</summary>
-        public string Cpu => NativeMethods.GetTargetMachineCPU( TargetMachineHandle );
+        public string Cpu => LLVMGetTargetMachineCPU( TargetMachineHandle );
 
         /// <summary>Gets the CPU specific features for this machine</summary>
-        public string Features => NativeMethods.GetTargetMachineFeatureString( TargetMachineHandle );
+        public string Features => LLVMGetTargetMachineFeatureString( TargetMachineHandle );
 
         /// <summary>Gets Layout information for this machine</summary>
         public DataLayout TargetData
         {
             get
             {
-                var handle = NativeMethods.CreateTargetDataLayout( TargetMachineHandle );
+                var handle = LLVMCreateTargetDataLayout( TargetMachineHandle );
                 if( handle.Pointer == IntPtr.Zero )
                 {
                     return null;
@@ -69,12 +71,12 @@ namespace Llvm.NET
                 throw new ArgumentException( "Triple specified for the module doesn't match target machine", nameof( module ) );
             }
 
-            var status = NativeMethods.TargetMachineEmitToFile( TargetMachineHandle
-                                                              , module.ModuleHandle
-                                                              , path
-                                                              , ( LLVMCodeGenFileType )fileType
-                                                              , out string errTxt
-                                                              );
+            var status = LLVMTargetMachineEmitToFile( TargetMachineHandle
+                                                    , module.ModuleHandle
+                                                    , path
+                                                    , ( LLVMCodeGenFileType )fileType
+                                                    , out string errTxt
+                                                    );
             if( status.Failed )
             {
                 throw new InternalCodeGeneratorException( errTxt );
@@ -99,12 +101,12 @@ namespace Llvm.NET
                 throw new ArgumentException( "Triple specified for the module doesn't match target machine", nameof( module ) );
             }
 
-            var status = NativeMethods.TargetMachineEmitToMemoryBuffer( TargetMachineHandle
-                                                                      , module.ModuleHandle
-                                                                      , ( LLVMCodeGenFileType )fileType
-                                                                      , out string errTxt
-                                                                      , out LLVMMemoryBufferRef bufferHandle
-                                                                      );
+            var status = LLVMTargetMachineEmitToMemoryBuffer( TargetMachineHandle
+                                                            , module.ModuleHandle
+                                                            , ( LLVMCodeGenFileType )fileType
+                                                            , out string errTxt
+                                                            , out LLVMMemoryBufferRef bufferHandle
+                                                            );
 
             if( status.Failed )
             {
@@ -139,7 +141,7 @@ namespace Llvm.NET
                     // dispose any managed resources
                 }
 
-                NativeMethods.DisposeTargetMachine( TargetMachineHandle );
+                LLVMDisposeTargetMachine( TargetMachineHandle );
                 TargetMachineHandle = default( LLVMTargetMachineRef );
             }
         }

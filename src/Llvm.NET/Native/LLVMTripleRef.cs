@@ -32,7 +32,7 @@ namespace Llvm.NET.Native
         [SecurityCritical]
         protected override bool ReleaseHandle( )
         {
-            NativeMethods.DisposeTriple( handle );
+            NativeMethods.LLVMDisposeTriple( handle );
             return true;
         }
     }

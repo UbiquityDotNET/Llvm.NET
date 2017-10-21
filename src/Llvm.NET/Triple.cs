@@ -6,6 +6,8 @@ using System;
 using Llvm.NET.Native;
 using Ubiquity.ArgValidators;
 
+using static Llvm.NET.Native.NativeMethods;
+
 namespace Llvm.NET
 {
     /// <summary>Triple to describe a target</summary>
@@ -40,7 +42,7 @@ namespace Llvm.NET
         /// </remarks>
         public Triple( string tripleTxt )
         {
-            TripleHandle = NativeMethods.ParseTriple( tripleTxt );
+            TripleHandle = LLVMParseTriple( tripleTxt );
         }
 
         ~Triple( )
@@ -50,25 +52,25 @@ namespace Llvm.NET
 
         /// <summary>Retrieves the final string form of the triple</summary>
         /// <returns>Normalized Triple string</returns>
-        public override string ToString( ) => NativeMethods.TripleAsString( TripleHandle, true );
+        public override string ToString( ) => LLVMTripleAsString( TripleHandle, true );
 
         /// <summary>Gets the Architecture of the triple</summary>
-        public TripleArchType ArchitectureType => ( TripleArchType )NativeMethods.TripleGetArchType( TripleHandle );
+        public TripleArchType ArchitectureType => ( TripleArchType )LLVMTripleGetArchType( TripleHandle );
 
         /// <summary>Gets the Sub Architecture type</summary>
-        public TripleSubArchType SubArchitecture => ( TripleSubArchType )NativeMethods.TripleGetSubArchType( TripleHandle );
+        public TripleSubArchType SubArchitecture => ( TripleSubArchType )LLVMTripleGetSubArchType( TripleHandle );
 
         /// <summary>Gets the Vendor component of the triple</summary>
-        public TripleVendorType VendorType => ( TripleVendorType )NativeMethods.TripleGetVendorType( TripleHandle );
+        public TripleVendorType VendorType => ( TripleVendorType )LLVMTripleGetVendorType( TripleHandle );
 
         /// <summary>Gets the OS Type for the triple</summary>
-        public TripleOSType OSType => ( TripleOSType )NativeMethods.TripleGetOsType( TripleHandle );
+        public TripleOSType OSType => ( TripleOSType )LLVMTripleGetOsType( TripleHandle );
 
         /// <summary>Gets the environment type for the triple</summary>
-        public TripleEnvironmentType EnvironmentType => ( TripleEnvironmentType )NativeMethods.TripleGetEnvironmentType( TripleHandle );
+        public TripleEnvironmentType EnvironmentType => ( TripleEnvironmentType )LLVMTripleGetEnvironmentType( TripleHandle );
 
         /// <summary>Gets the object format type for the triple</summary>
-        public TripleObjectFormatType ObjectFormatType => ( TripleObjectFormatType )NativeMethods.TripleGetObjectFormatType( TripleHandle );
+        public TripleObjectFormatType ObjectFormatType => ( TripleObjectFormatType )LLVMTripleGetObjectFormatType( TripleHandle );
 
         /// <summary>Retrieves the canonical name for an architecture type</summary>
         /// <param name="archType">Architecture type</param>
@@ -80,37 +82,37 @@ namespace Llvm.NET
         /// such triple components used in a normalized triple.
         /// </overloads>
         public static string GetCanonicalName( TripleArchType archType )
-            => NativeMethods.TripleGetArchTypeName( ( LLVMTripleArchType )archType ) ?? string.Empty;
+            => LLVMTripleGetArchTypeName( ( LLVMTripleArchType )archType ) ?? string.Empty;
 
         /// <summary>Retrieves the canonical name for an architecture sub type</summary>
         /// <param name="subArchType">Architecture sub type</param>
         /// <returns>String name for the architecture sub type</returns>
         public static string GetCanonicalName( TripleSubArchType subArchType )
-            => NativeMethods.TripleGetSubArchTypeName( ( LLVMTripleSubArchType )subArchType ) ?? string.Empty;
+            => LLVMTripleGetSubArchTypeName( ( LLVMTripleSubArchType )subArchType ) ?? string.Empty;
 
         /// <summary>Retrieves the canonical name for the vendor component of a triple</summary>
         /// <param name="vendorType">Vendor type</param>
         /// <returns>String name for the vendor</returns>
         public static string GetCanonicalName( TripleVendorType vendorType )
-            => NativeMethods.TripleGetVendorTypeName( ( LLVMTripleVendorType )vendorType ) ?? string.Empty;
+            => LLVMTripleGetVendorTypeName( ( LLVMTripleVendorType )vendorType ) ?? string.Empty;
 
         /// <summary>Retrieves the canonical name for the OS component of a triple</summary>
         /// <param name="osType">OS type</param>
         /// <returns>String name for the OS</returns>
         public static string GetCanonicalName( TripleOSType osType )
-            => NativeMethods.TripleGetOsTypeName( ( LLVMTripleOSType )osType ) ?? string.Empty;
+            => LLVMTripleGetOsTypeName( ( LLVMTripleOSType )osType ) ?? string.Empty;
 
         /// <summary>Retrieves the canonical name for the environment component of a triple</summary>
         /// <param name="envType">Environment type</param>
         /// <returns>String name for the environment component</returns>
         public static string GetCanonicalName( TripleEnvironmentType envType )
-            => NativeMethods.TripleGetEnvironmentTypeName( ( LLVMTripleEnvironmentType )envType ) ?? string.Empty;
+            => LLVMTripleGetEnvironmentTypeName( ( LLVMTripleEnvironmentType )envType ) ?? string.Empty;
 
         /// <summary>Retrieves the canonical name for the object component of a triple</summary>
         /// <param name="objFormatType">Object type</param>
         /// <returns>String name for the object component</returns>
         public static string GetCanonicalName( TripleObjectFormatType objFormatType )
-            => NativeMethods.TripleGetObjectFormatTypeName( ( LLVMTripleObjectFormatType )objFormatType ) ?? string.Empty;
+            => LLVMTripleGetObjectFormatTypeName( ( LLVMTripleObjectFormatType )objFormatType ) ?? string.Empty;
 
         /// <summary>Equality test for a triple</summary>
         /// <param name="other">triple to compare this triple to</param>
@@ -127,7 +129,7 @@ namespace Llvm.NET
                 return true;
             }
 
-            return NativeMethods.TripleOpEqual( TripleHandle, other.TripleHandle );
+            return LLVMTripleOpEqual( TripleHandle, other.TripleHandle );
         }
 
         /// <summary>Equality test for a triple</summary>
@@ -151,7 +153,7 @@ namespace Llvm.NET
         {
             unNormalizedTriple.ValidateNotNullOrWhiteSpace( nameof( unNormalizedTriple ) );
 
-            return NativeMethods.NormalizeTriple( unNormalizedTriple );
+            return LLVMNormalizeTriple( unNormalizedTriple );
         }
 
         /// <summary>Gets the default <see cref="TripleObjectFormatType"/> for a given <see cref="TripleArchType"/> and <see cref="TripleOSType"/></summary>

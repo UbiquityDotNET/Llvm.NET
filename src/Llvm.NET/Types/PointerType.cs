@@ -24,12 +24,12 @@ namespace Llvm.NET.Types
         , IPointerType
     {
         /// <summary>Gets the address space the pointer refers to</summary>
-        public uint AddressSpace => NativeMethods.GetPointerAddressSpace( TypeRefHandle );
+        public uint AddressSpace => NativeMethods.LLVMGetPointerAddressSpace( TypeRefHandle );
 
         internal PointerType( LLVMTypeRef typeRef )
             : base( typeRef )
         {
-            if( NativeMethods.GetTypeKind( typeRef ) != LLVMTypeKind.LLVMPointerTypeKind )
+            if( NativeMethods.LLVMGetTypeKind( typeRef ) != LLVMTypeKind.LLVMPointerTypeKind )
             {
                 throw new ArgumentException( "Pointer type reference expected", nameof( typeRef ) );
             }

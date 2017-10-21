@@ -13,7 +13,7 @@ namespace Llvm.NET.Values
         : User
     {
         /// <summary>Gets a value indicating whether the constant is a Zero value for the its type</summary>
-        public bool IsZeroValue => NativeMethods.IsConstantZeroValue( ValueHandle );
+        public bool IsZeroValue => NativeMethods.LLVMIsConstantZeroValue( ValueHandle );
 
         /// <summary>Create a NULL pointer for a given type</summary>
         /// <param name="typeRef">Type of pointer to create a null vale for</param>
@@ -32,25 +32,25 @@ namespace Llvm.NET.Values
                 throw new ArgumentException( "Cannot get a Null value for labels, functions and opaque types" );
             }
 
-            return FromHandle<Constant>( NativeMethods.ConstNull( typeRef.GetTypeRef( ) ) );
+            return FromHandle<Constant>( NativeMethods.LLVMConstNull( typeRef.GetTypeRef( ) ) );
         }
 
         /// <summary>Creates a constant instance of <paramref name="typeRef"/> with all bits in the instance set to 1</summary>
         /// <param name="typeRef">Type of value to create</param>
         /// <returns>Constant for the type with all instance bits set to 1</returns>
-        public static Constant AllOnesValueFor( ITypeRef typeRef ) => FromHandle<Constant>( NativeMethods.ConstAllOnes( typeRef.GetTypeRef( ) ) );
+        public static Constant AllOnesValueFor( ITypeRef typeRef ) => FromHandle<Constant>( NativeMethods.LLVMConstAllOnes( typeRef.GetTypeRef( ) ) );
 
         /// <summary>Creates an <see cref="Constant"/> representing an undefined value for <paramref name="typeRef"/></summary>
         /// <param name="typeRef">Type to create the undefined value for</param>
         /// <returns>
         /// <see cref="Constant"/> representing an undefined value of <paramref name="typeRef"/>
         /// </returns>
-        public static Constant UndefinedValueFor( ITypeRef typeRef ) => FromHandle<Constant>( NativeMethods.GetUndef( typeRef.GetTypeRef( ) ) );
+        public static Constant UndefinedValueFor( ITypeRef typeRef ) => FromHandle<Constant>( NativeMethods.LLVMGetUndef( typeRef.GetTypeRef( ) ) );
 
         /// <summary>Create a constant NULL pointer for a given type</summary>
         /// <param name="typeRef">Type of pointer to create a null value for</param>
         /// <returns>Constant NULL pointer of the specified type</returns>
-        public static Constant ConstPointerToNullFor( ITypeRef typeRef ) => FromHandle<Constant>( NativeMethods.ConstPointerNull( typeRef.GetTypeRef( ) ) );
+        public static Constant ConstPointerToNullFor( ITypeRef typeRef ) => FromHandle<Constant>( NativeMethods.LLVMConstPointerNull( typeRef.GetTypeRef( ) ) );
 
         internal Constant( LLVMValueRef valueRef )
             : base( valueRef )

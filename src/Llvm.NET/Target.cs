@@ -7,25 +7,27 @@ using System.Collections.Generic;
 using Llvm.NET.Native;
 using Ubiquity.ArgValidators;
 
+using static Llvm.NET.Native.NativeMethods;
+
 namespace Llvm.NET
 {
     /// <summary>LLVM Target Instruction Set Architecture</summary>
     public class Target
     {
         /// <summary>Gets the name of this target</summary>
-        public string Name => NativeMethods.GetTargetName( TargetHandle );
+        public string Name => LLVMGetTargetName( TargetHandle );
 
         /// <summary>Gets the description of this target</summary>
-        public string Description => NativeMethods.GetTargetDescription( TargetHandle );
+        public string Description => LLVMGetTargetDescription( TargetHandle );
 
         /// <summary>Gets a value indicating whether this target has JIT support</summary>
-        public bool HasJIT => NativeMethods.TargetHasJIT( TargetHandle );
+        public bool HasJIT => LLVMTargetHasJIT( TargetHandle );
 
         /// <summary>Gets a value indicating whether this target has a TargetMachine initialized</summary>
-        public bool HasTargetMachine => NativeMethods.TargetHasTargetMachine( TargetHandle );
+        public bool HasTargetMachine => LLVMTargetHasTargetMachine( TargetHandle );
 
         /// <summary>Gets a value indicating whether this target has an Assembly code generating back end initialized</summary>
-        public bool HasAsmBackEnd => NativeMethods.TargetHasAsmBackend( TargetHandle );
+        public bool HasAsmBackEnd => LLVMTargetHasAsmBackend( TargetHandle );
 
         /// <summary>Creates a <see cref="TargetMachine"/> for the target and specified parameters</summary>
         /// <param name="context">Context to use for LLVM objects created by this machine</param>
@@ -51,14 +53,14 @@ namespace Llvm.NET
             relocationMode.ValidateDefined( nameof( relocationMode ) );
             codeModel.ValidateDefined( nameof( codeModel ) );
 
-            var targetMachineHandle = NativeMethods.CreateTargetMachine( TargetHandle
-                                                                       , triple
-                                                                       , cpu ?? string.Empty
-                                                                       , features ?? string.Empty
-                                                                       , ( LLVMCodeGenOptLevel )optLevel
-                                                                       , ( LLVMRelocMode )relocationMode
-                                                                       , ( LLVMCodeModel )codeModel
-                                                                       );
+            var targetMachineHandle = LLVMCreateTargetMachine( TargetHandle
+                                                             , triple
+                                                             , cpu ?? string.Empty
+                                                             , features ?? string.Empty
+                                                             , ( LLVMCodeGenOptLevel )optLevel
+                                                             , ( LLVMRelocMode )relocationMode
+                                                             , ( LLVMCodeModel )codeModel
+                                                             );
             return new TargetMachine( context, targetMachineHandle );
         }
 
@@ -67,11 +69,11 @@ namespace Llvm.NET
         {
             get
             {
-                var current = NativeMethods.GetFirstTarget( );
+                var current = LLVMGetFirstTarget( );
                 while( current.Pointer != IntPtr.Zero )
                 {
                     yield return FromHandle( current );
-                    current = NativeMethods.GetNextTarget( current );
+                    current = LLVMGetNextTarget( current );
                 }
             }
         }
@@ -83,7 +85,7 @@ namespace Llvm.NET
         {
             targetTriple.ValidateNotNullOrWhiteSpace( nameof( targetTriple ) );
 
-            if( NativeMethods.GetTargetFromTriple( targetTriple, out LLVMTargetRef targetHandle, out string errorMessag ).Failed )
+            if( LLVMGetTargetFromTriple( targetTriple, out LLVMTargetRef targetHandle, out string errorMessag ).Failed )
             {
                 throw new InternalCodeGeneratorException( errorMessag );
             }

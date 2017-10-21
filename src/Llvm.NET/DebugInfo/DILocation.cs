@@ -6,6 +6,8 @@ using Llvm.NET.Native;
 using Llvm.NET.Values;
 using Ubiquity.ArgValidators;
 
+using static Llvm.NET.Native.NativeMethods;
+
 namespace Llvm.NET.DebugInfo
 {
     public class DILocation : MDNode
@@ -16,27 +18,27 @@ namespace Llvm.NET.DebugInfo
         }
 
         public DILocation( Context context, uint line, uint column, DILocalScope scope, DILocation inlinedAt )
-            : base( NativeMethods.DILocation( context.ValidateNotNull( nameof( context ) ).ContextHandle
-                                            , line
-                                            , column
-                                            , scope.ValidateNotNull(nameof(scope)).MetadataHandle
-                                            , inlinedAt?.MetadataHandle ?? LLVMMetadataRef.Zero
-                                            )
+            : base( LLVMDILocation( context.ValidateNotNull( nameof( context ) ).ContextHandle
+                                  , line
+                                  , column
+                                  , scope.ValidateNotNull(nameof(scope)).MetadataHandle
+                                  , inlinedAt?.MetadataHandle ?? LLVMMetadataRef.Zero
+                                  )
                   )
         {
         }
 
-        public DILocalScope Scope => FromHandle<DILocalScope>( NativeMethods.GetDILocationScope( MetadataHandle ) );
+        public DILocalScope Scope => FromHandle<DILocalScope>( LLVMGetDILocationScope( MetadataHandle ) );
 
-        public uint Line => NativeMethods.GetDILocationLine( MetadataHandle );
+        public uint Line => LLVMGetDILocationLine( MetadataHandle );
 
-        public uint Column => NativeMethods.GetDILocationColumn( MetadataHandle );
+        public uint Column => LLVMGetDILocationColumn( MetadataHandle );
 
         public DILocation InlinedAt
         {
             get
             {
-                var handle = NativeMethods.GetDILocationInlinedAt( MetadataHandle );
+                var handle = LLVMGetDILocationInlinedAt( MetadataHandle );
                 return FromHandle<DILocation>( handle );
             }
         }
@@ -45,7 +47,7 @@ namespace Llvm.NET.DebugInfo
         {
             get
             {
-                var handle = NativeMethods.DILocationGetInlinedAtScope( MetadataHandle );
+                var handle = LLVMDILocationGetInlinedAtScope( MetadataHandle );
                 return FromHandle<DILocalScope>( handle );
             }
         }

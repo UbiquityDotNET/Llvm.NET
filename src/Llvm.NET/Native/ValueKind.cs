@@ -129,6 +129,6 @@ namespace Llvm.NET.Native
         // the instruction codes, they don't actually match the underlying C++ kind and
         // actually overlap it in incompatible ways. So, this uses the underlying enum to
         // build up the correct .NET types for a given LLVMValueRef.
-        internal static ValueKind GetValueIdAsKind( LLVMValueRef valueRef ) => ( ValueKind )GetValueID( valueRef );
+        internal static ValueKind LLVMGetValueIdAsKind( LLVMValueRef valueRef ) => ( ValueKind )LLVMGetValueID( valueRef );
     }
 }

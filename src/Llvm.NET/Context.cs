@@ -15,6 +15,8 @@ using Llvm.NET.Types;
 using Llvm.NET.Values;
 using Ubiquity.ArgValidators;
 
+using static Llvm.NET.Native.NativeMethods;
+
 #pragma warning disable SA1124 // DoNotUseRegions
 
 namespace Llvm.NET
@@ -46,7 +48,7 @@ namespace Llvm.NET
     {
         /// <summary>Initializes a new instance of the <see cref="Context"/> class.Creates a new context</summary>
         public Context( )
-            : this( NativeMethods.ContextCreate( ) )
+            : this( LLVMContextCreate( ) )
         {
         }
 
@@ -66,31 +68,31 @@ namespace Llvm.NET
         public bool IsDisposed => ContextHandle.Pointer == IntPtr.Zero;
 
         /// <summary>Gets the LLVM void type for this context</summary>
-        public ITypeRef VoidType => TypeRef.FromHandle( NativeMethods.VoidTypeInContext( ContextHandle ) );
+        public ITypeRef VoidType => TypeRef.FromHandle( LLVMVoidTypeInContext( ContextHandle ) );
 
         /// <summary>Gets the LLVM boolean type for this context</summary>
-        public ITypeRef BoolType => TypeRef.FromHandle( NativeMethods.Int1TypeInContext( ContextHandle ) );
+        public ITypeRef BoolType => TypeRef.FromHandle( LLVMInt1TypeInContext( ContextHandle ) );
 
         /// <summary>Gets the LLVM 8 bit integer type for this context</summary>
-        public ITypeRef Int8Type => TypeRef.FromHandle( NativeMethods.Int8TypeInContext( ContextHandle ) );
+        public ITypeRef Int8Type => TypeRef.FromHandle( LLVMInt8TypeInContext( ContextHandle ) );
 
         /// <summary>Gets the LLVM 16 bit integer type for this context</summary>
-        public ITypeRef Int16Type => TypeRef.FromHandle( NativeMethods.Int16TypeInContext( ContextHandle ) );
+        public ITypeRef Int16Type => TypeRef.FromHandle( LLVMInt16TypeInContext( ContextHandle ) );
 
         /// <summary>Gets the LLVM 32 bit integer type for this context</summary>
-        public ITypeRef Int32Type => TypeRef.FromHandle( NativeMethods.Int32TypeInContext( ContextHandle ) );
+        public ITypeRef Int32Type => TypeRef.FromHandle( LLVMInt32TypeInContext( ContextHandle ) );
 
         /// <summary>Gets the LLVM 64 bit integer type for this context</summary>
-        public ITypeRef Int64Type => TypeRef.FromHandle( NativeMethods.Int64TypeInContext( ContextHandle ) );
+        public ITypeRef Int64Type => TypeRef.FromHandle( LLVMInt64TypeInContext( ContextHandle ) );
 
         /// <summary>Gets the LLVM half precision floating point type for this context</summary>
-        public ITypeRef HalfFloatType => TypeRef.FromHandle( NativeMethods.HalfTypeInContext( ContextHandle ) );
+        public ITypeRef HalfFloatType => TypeRef.FromHandle( LLVMHalfTypeInContext( ContextHandle ) );
 
         /// <summary>Gets the LLVM single precision floating point type for this context</summary>
-        public ITypeRef FloatType => TypeRef.FromHandle( NativeMethods.FloatTypeInContext( ContextHandle ) );
+        public ITypeRef FloatType => TypeRef.FromHandle( LLVMFloatTypeInContext( ContextHandle ) );
 
         /// <summary>Gets the LLVM double precision floating point type for this context</summary>
-        public ITypeRef DoubleType => TypeRef.FromHandle( NativeMethods.DoubleTypeInContext( ContextHandle ) );
+        public ITypeRef DoubleType => TypeRef.FromHandle( LLVMDoubleTypeInContext( ContextHandle ) );
 
         /// <summary>Gets an enumerable collection of all the metadata created in this context</summary>
         public IEnumerable<LlvmMetadata> Metadata => MetadataCache.Values;
@@ -107,7 +109,7 @@ namespace Llvm.NET
                 throw new ArgumentException( "Cannot mix types from different contexts", nameof( elementType ) );
             }
 
-            return TypeRef.FromHandle<IPointerType>( NativeMethods.PointerType( elementType.GetTypeRef( ), 0 ) );
+            return TypeRef.FromHandle<IPointerType>( LLVMPointerType( elementType.GetTypeRef( ), 0 ) );
         }
 
         /// <summary>Get's an LLVM integer type of arbitrary bit width</summary>
@@ -139,7 +141,7 @@ namespace Llvm.NET
             case 64:
                 return Int64Type;
             default:
-                return TypeRef.FromHandle( NativeMethods.IntTypeInContext( ContextHandle, bitWidth ) );
+                return TypeRef.FromHandle( LLVMIntTypeInContext( ContextHandle, bitWidth ) );
             }
         }
 
@@ -182,7 +184,7 @@ namespace Llvm.NET
                 llvmArgs = new LLVMTypeRef[ 1 ];
             }
 
-            var signature = NativeMethods.FunctionType( returnType.GetTypeRef( ), out llvmArgs[ 0 ], ( uint )argCount, isVarArgs );
+            var signature = LLVMFunctionType( returnType.GetTypeRef( ), out llvmArgs[ 0 ], ( uint )argCount, isVarArgs );
             return TypeRef.FromHandle<IFunctionType>( signature );
         }
 
@@ -326,7 +328,7 @@ namespace Llvm.NET
                 throw new ArgumentException( "structure must have at least one element", nameof( values ) );
             }
 
-            var handle = NativeMethods.ConstStructInContext( ContextHandle, out valueHandles[ 0 ], ( uint )valueHandles.Length, packed );
+            var handle = LLVMConstStructInContext( ContextHandle, out valueHandles[ 0 ], ( uint )valueHandles.Length, packed );
             return Value.FromHandle<Constant>( handle );
         }
 
@@ -411,7 +413,7 @@ namespace Llvm.NET
                 valueHandles = new LLVMValueRef[1];
             }
 
-            var handle = NativeMethods.ConstNamedStruct( type.GetTypeRef( ), out valueHandles[ 0 ], valuesLength );
+            var handle = LLVMConstNamedStruct( type.GetTypeRef( ), out valueHandles[ 0 ], valuesLength );
             return Value.FromHandle<Constant>( handle );
         }
 
@@ -421,7 +423,7 @@ namespace Llvm.NET
         public IStructType CreateStructType( string name )
         {
             name.ValidateNotNullOrWhiteSpace( nameof( name ) );
-            var handle = NativeMethods.StructCreateNamed( ContextHandle, name );
+            var handle = LLVMStructCreateNamed( ContextHandle, name );
             return TypeRef.FromHandle<IStructType>( handle );
         }
 
@@ -444,7 +446,7 @@ namespace Llvm.NET
                 llvmArgs[ i ] = elements[ i - 1 ].GetTypeRef( );
             }
 
-            var handle = NativeMethods.StructTypeInContext( ContextHandle, out llvmArgs[ 0 ], ( uint )llvmArgs.Length, packed );
+            var handle = LLVMStructTypeInContext( ContextHandle, out llvmArgs[ 0 ], ( uint )llvmArgs.Length, packed );
             return TypeRef.FromHandle<IStructType>( handle );
         }
 
@@ -466,7 +468,7 @@ namespace Llvm.NET
             name.ValidateNotNullOrWhiteSpace( nameof( name ) );
             elements.ValidateNotNull( nameof( elements ) );
 
-            var retVal = TypeRef.FromHandle<IStructType>( NativeMethods.StructCreateNamed( ContextHandle, name ) );
+            var retVal = TypeRef.FromHandle<IStructType>( LLVMStructCreateNamed( ContextHandle, name ) );
             if( elements.Length > 0 )
             {
                 retVal.SetBody( packed, elements );
@@ -481,7 +483,7 @@ namespace Llvm.NET
         public MDString CreateMetadataString( [CanBeNull] string value )
         {
             value = value ?? string.Empty;
-            var handle = NativeMethods.MDString2( ContextHandle, value, ( uint )value.Length );
+            var handle = LLVMMDString2( ContextHandle, value, ( uint )value.Length );
             return new MDString( handle );
         }
 
@@ -496,7 +498,7 @@ namespace Llvm.NET
         {
             value.ValidateNotNull( nameof( value ) );
 
-            var handle = NativeMethods.ConstStringInContext( ContextHandle, value, ( uint )value.Length, true );
+            var handle = LLVMConstStringInContext( ContextHandle, value, ( uint )value.Length, true );
             return Value.FromHandle<ConstantDataArray>( handle );
         }
 
@@ -511,7 +513,7 @@ namespace Llvm.NET
         public ConstantDataArray CreateConstantString( string value, bool nullTerminate )
         {
             value.ValidateNotNull( nameof( value ) );
-            var handle = NativeMethods.ConstStringInContext( ContextHandle, value, ( uint )value.Length, !nullTerminate );
+            var handle = LLVMConstStringInContext( ContextHandle, value, ( uint )value.Length, !nullTerminate );
             return Value.FromHandle<ConstantDataArray>( handle );
         }
 
@@ -520,7 +522,7 @@ namespace Llvm.NET
         /// <returns><see cref="ConstantInt"/> representing the value</returns>
         public Constant CreateConstant( bool constValue )
         {
-            var handle = NativeMethods.ConstInt( BoolType.GetTypeRef( )
+            var handle = LLVMConstInt( BoolType.GetTypeRef( )
                                                , ( ulong )( constValue ? 1 : 0 )
                                                , false
                                                );
@@ -532,7 +534,7 @@ namespace Llvm.NET
         /// <returns><see cref="ConstantInt"/> representing the value</returns>
         public Constant CreateConstant( byte constValue )
         {
-            var handle = NativeMethods.ConstInt( Int8Type.GetTypeRef( ), constValue, false );
+            var handle = LLVMConstInt( Int8Type.GetTypeRef( ), constValue, false );
             return Value.FromHandle<Constant>( handle );
         }
 
@@ -541,7 +543,7 @@ namespace Llvm.NET
         /// <returns><see cref="ConstantInt"/> representing the value</returns>
         public Constant CreateConstant( sbyte constValue )
         {
-            var handle = NativeMethods.ConstInt( Int8Type.GetTypeRef( ), ( ulong )constValue, true );
+            var handle = LLVMConstInt( Int8Type.GetTypeRef( ), ( ulong )constValue, true );
             return Value.FromHandle<Constant>( handle );
         }
 
@@ -550,7 +552,7 @@ namespace Llvm.NET
         /// <returns><see cref="ConstantInt"/> representing the value</returns>
         public Constant CreateConstant( Int16 constValue )
         {
-            var handle = NativeMethods.ConstInt( Int16Type.GetTypeRef( ), ( ulong )constValue, true );
+            var handle = LLVMConstInt( Int16Type.GetTypeRef( ), ( ulong )constValue, true );
             return Value.FromHandle<Constant>( handle );
         }
 
@@ -559,7 +561,7 @@ namespace Llvm.NET
         /// <returns><see cref="ConstantInt"/> representing the value</returns>
         public Constant CreateConstant( UInt16 constValue )
         {
-            var handle = NativeMethods.ConstInt( Int16Type.GetTypeRef( ), constValue, false );
+            var handle = LLVMConstInt( Int16Type.GetTypeRef( ), constValue, false );
             return Value.FromHandle<Constant>( handle );
         }
 
@@ -568,7 +570,7 @@ namespace Llvm.NET
         /// <returns><see cref="ConstantInt"/> representing the value</returns>
         public Constant CreateConstant( Int32 constValue )
         {
-            var handle = NativeMethods.ConstInt( Int32Type.GetTypeRef( ), ( ulong )constValue, true );
+            var handle = LLVMConstInt( Int32Type.GetTypeRef( ), ( ulong )constValue, true );
             return Value.FromHandle<Constant>( handle );
         }
 
@@ -577,7 +579,7 @@ namespace Llvm.NET
         /// <returns><see cref="ConstantInt"/> representing the value</returns>
         public Constant CreateConstant( UInt32 constValue )
         {
-            var handle = NativeMethods.ConstInt( Int32Type.GetTypeRef( ), constValue, false );
+            var handle = LLVMConstInt( Int32Type.GetTypeRef( ), constValue, false );
             return Value.FromHandle<Constant>( handle );
         }
 
@@ -586,7 +588,7 @@ namespace Llvm.NET
         /// <returns><see cref="ConstantInt"/> representing the value</returns>
         public Constant CreateConstant( Int64 constValue )
         {
-            var handle = NativeMethods.ConstInt( Int64Type.GetTypeRef( ), ( ulong )constValue, true );
+            var handle = LLVMConstInt( Int64Type.GetTypeRef( ), ( ulong )constValue, true );
             return Value.FromHandle<Constant>( handle );
         }
 
@@ -595,7 +597,7 @@ namespace Llvm.NET
         /// <returns><see cref="ConstantInt"/> representing the value</returns>
         public Constant CreateConstant( UInt64 constValue )
         {
-            var handle = NativeMethods.ConstInt( Int64Type.GetTypeRef( ), constValue, false );
+            var handle = LLVMConstInt( Int64Type.GetTypeRef( ), constValue, false );
             return Value.FromHandle<Constant>( handle );
         }
 
@@ -629,20 +631,20 @@ namespace Llvm.NET
                 throw new ArgumentException( "Integer type required", nameof( intType ) );
             }
 
-            return Value.FromHandle<Constant>( NativeMethods.ConstInt( intType.GetTypeRef( ), constValue, signExtend ) );
+            return Value.FromHandle<Constant>( LLVMConstInt( intType.GetTypeRef( ), constValue, signExtend ) );
         }
 
         /// <summary>Creates a constant floating point value for a given value</summary>
         /// <param name="constValue">Value to make into a <see cref="ConstantFP"/></param>
         /// <returns>Constant value</returns>
         public ConstantFP CreateConstant( float constValue )
-            => Value.FromHandle<ConstantFP>( NativeMethods.ConstReal( FloatType.GetTypeRef( ), constValue ) );
+            => Value.FromHandle<ConstantFP>( LLVMConstReal( FloatType.GetTypeRef( ), constValue ) );
 
         /// <summary>Creates a constant floating point value for a given value</summary>
         /// <param name="constValue">Value to make into a <see cref="ConstantFP"/></param>
         /// <returns>Constant value</returns>
         public ConstantFP CreateConstant( double constValue )
-            => Value.FromHandle<ConstantFP>( NativeMethods.ConstReal( DoubleType.GetTypeRef( ), constValue ) );
+            => Value.FromHandle<ConstantFP>( LLVMConstReal( DoubleType.GetTypeRef( ), constValue ) );
 
         /// <summary>Creates a simple boolean attribute</summary>
         /// <param name="kind">Kind of attribute</param>
@@ -655,7 +657,7 @@ namespace Llvm.NET
                 throw new ArgumentException( $"Attribute {kind} requires a value", nameof( kind ) );
             }
 
-            var handle = NativeMethods.CreateEnumAttribute( ContextHandle
+            var handle = LLVMCreateEnumAttribute( ContextHandle
                                                           , kind.GetEnumAttributeId( )
                                                           , 0ul
                                                           );
@@ -686,7 +688,7 @@ namespace Llvm.NET
                 throw new ArgumentException( $"Attribute {kind} does not support a value", nameof( kind ) );
             }
 
-            var handle = NativeMethods.CreateEnumAttribute( ContextHandle
+            var handle = LLVMCreateEnumAttribute( ContextHandle
                                                           , kind.GetEnumAttributeId( )
                                                           , value
                                                           );
@@ -707,7 +709,7 @@ namespace Llvm.NET
             name.ValidateNotNullOrWhiteSpace( nameof( name ) );
             value.ValidateNotNull( nameof( value ) );
 
-            var handle = NativeMethods.CreateStringAttribute( ContextHandle, name, ( uint )name.Length, value, ( uint )value.Length );
+            var handle = LLVMCreateStringAttribute( ContextHandle, name, ( uint )name.Length, value, ( uint )value.Length );
             return AttributeValue.FromHandle(this, handle );
         }
 
@@ -781,7 +783,7 @@ namespace Llvm.NET
                 return null;
             }
 
-            var hContext = NativeMethods.GetModuleContext( moduleRef );
+            var hContext = LLVMGetModuleContext( moduleRef );
             Debug.Assert( hContext.Pointer != IntPtr.Zero, "Should not get a null pointer from LLVM" );
             return GetContextFor( hContext );
         }
@@ -793,7 +795,7 @@ namespace Llvm.NET
                 return null;
             }
 
-            var hType = NativeMethods.TypeOf( valueRef );
+            var hType = LLVMTypeOf( valueRef );
             Debug.Assert( hType.Pointer != IntPtr.Zero, "Should not get a null pointer from LLVM" );
             return GetContextFor( hType );
         }
@@ -805,7 +807,7 @@ namespace Llvm.NET
                 return null;
             }
 
-            var hContext = NativeMethods.GetTypeContext( typeRef );
+            var hContext = LLVMGetTypeContext( typeRef );
             Debug.Assert( hContext.Pointer != IntPtr.Zero, "Should not get a null pointer from LLVM" );
             return GetContextFor( hContext );
         }
@@ -817,7 +819,7 @@ namespace Llvm.NET
                 return null;
             }
 
-            var hContext = NativeMethods.GetNodeContext( handle );
+            var hContext = LLVMGetNodeContext( handle );
             Debug.Assert( hContext.Pointer != IntPtr.Zero, "Should not get a null pointer from LLVM" );
             return GetContextFor( hContext );
         }
@@ -839,7 +841,7 @@ namespace Llvm.NET
                 throw new ArgumentNullException( nameof( moduleRef ) );
             }
 
-            var hModuleContext = NativeMethods.GetModuleContext( moduleRef );
+            var hModuleContext = LLVMGetModuleContext( moduleRef );
             if( hModuleContext.Pointer != ContextHandle.Pointer )
             {
                 throw new ArgumentException( "Incorrect context for module" );
@@ -950,7 +952,7 @@ namespace Llvm.NET
         {
             if( !ContextHandle.Pointer.IsNull() )
             {
-                NativeMethods.ContextSetDiagnosticHandler( ContextHandle, IntPtr.Zero, IntPtr.Zero );
+                LLVMContextSetDiagnosticHandler( ContextHandle, IntPtr.Zero, IntPtr.Zero );
                 ActiveHandler.Dispose( );
 
                 lock ( ContextCache )
@@ -958,8 +960,8 @@ namespace Llvm.NET
                     ContextCache.Remove( ContextHandle );
                 }
 
-                NativeMethods.ContextDispose( ContextHandle );
-                ContextHandle = default( LLVMContextRef );
+                LLVMContextDispose( ContextHandle );
+                ContextHandle = default;
             }
         }
 
@@ -972,13 +974,13 @@ namespace Llvm.NET
             }
 
             ActiveHandler = new WrappedNativeCallback( new LLVMDiagnosticHandler( DiagnosticHandler ) );
-            NativeMethods.ContextSetDiagnosticHandler( ContextHandle, ActiveHandler.GetFuncPointer( ), IntPtr.Zero );
+            LLVMContextSetDiagnosticHandler( ContextHandle, ActiveHandler.GetFuncPointer( ), IntPtr.Zero );
         }
 
         private void DiagnosticHandler( LLVMDiagnosticInfoRef param0, IntPtr param1 )
         {
-            string msg = NativeMethods.GetDiagInfoDescription( param0 );
-            var level = NativeMethods.GetDiagInfoSeverity( param0 );
+            string msg = LLVMGetDiagInfoDescription( param0 );
+            var level = LLVMGetDiagInfoSeverity( param0 );
             Debug.WriteLine( "{0}: {1}", level, msg );
             Debug.Assert( level != LLVMDiagnosticSeverity.LLVMDSError, "Unexpected Debug state" );
         }

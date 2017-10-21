@@ -27,17 +27,17 @@ namespace Llvm.NET
 
         public bool IsDeleted => MetadataHandle == LLVMMetadataRef.Zero;
 
-        public bool IsTemporary => NativeMethods.IsTemporary( MetadataHandle );
+        public bool IsTemporary => NativeMethods.LLVMIsTemporary( MetadataHandle );
 
-        public bool IsResolved => NativeMethods.IsResolved( MetadataHandle );
+        public bool IsResolved => NativeMethods.LLVMIsResolved( MetadataHandle );
 
-        public bool IsUniqued => NativeMethods.IsUniqued( MetadataHandle );
+        public bool IsUniqued => NativeMethods.LLVMIsUniqued( MetadataHandle );
 
-        public bool IsDistinct => NativeMethods.IsDistinct( MetadataHandle );
+        public bool IsDistinct => NativeMethods.LLVMIsDistinct( MetadataHandle );
 
         public IReadOnlyList<MDOperand> Operands { get; }
 
-        public void ResolveCycles( ) => NativeMethods.MDNodeResolveCycles( MetadataHandle );
+        public void ResolveCycles( ) => NativeMethods.LLVMMDNodeResolveCycles( MetadataHandle );
 
         public override void ReplaceAllUsesWith( LlvmMetadata other )
         {
@@ -56,7 +56,7 @@ namespace Llvm.NET
                 throw new InvalidOperationException( "Cannot Replace all uses of a null descriptor" );
             }
 
-            NativeMethods.MDNodeReplaceAllUsesWith( MetadataHandle, other.MetadataHandle );
+            NativeMethods.LLVMMDNodeReplaceAllUsesWith( MetadataHandle, other.MetadataHandle );
 
             // remove current node mapping from the context.
             // It won't be valid for use after clearing the handle
