@@ -24,6 +24,11 @@ using System.Runtime.InteropServices;
 
 namespace Llvm.NET.Native
 {
+    internal interface ILlvmHandle
+    {
+        IntPtr Handle { get; }
+    }
+
     internal struct LLVMOpInfoSymbol1
     {
         internal int @Present;
@@ -40,7 +45,7 @@ namespace Llvm.NET.Native
         internal int @VariantKind;
     }
 
-    internal partial struct LLVMMCJITCompilerOptions
+    internal struct LLVMMCJITCompilerOptions
     {
         internal uint @OptLevel;
         internal LLVMCodeModel @CodeModel;
@@ -53,7 +58,7 @@ namespace Llvm.NET.Native
     // 0 on success. This was hand added to help clarify use
     // when a return value is not really a bool but a status
     // where (0==SUCCESS)
-    internal partial struct LLVMStatus
+    internal struct LLVMStatus
     {
         public LLVMStatus( int value )
         {
@@ -67,163 +72,6 @@ namespace Llvm.NET.Native
         public int ErrorCode { get; }
     }
 
-    internal partial struct LLVMMemoryBufferRef
-    {
-        internal LLVMMemoryBufferRef( IntPtr pointer )
-        {
-            Pointer = pointer;
-        }
-
-        internal IntPtr Pointer { get; }
-    }
-
-    internal partial struct LLVMContextRef
-    {
-        internal LLVMContextRef( IntPtr pointer )
-        {
-            Pointer = pointer;
-        }
-
-        internal IntPtr Pointer { get; }
-    }
-
-    internal partial struct LLVMModuleRef
-    {
-        internal LLVMModuleRef( IntPtr pointer )
-        {
-            Pointer = pointer;
-        }
-
-        internal IntPtr Pointer { get; }
-    }
-
-    internal partial struct LLVMTypeRef
-    {
-        internal LLVMTypeRef( IntPtr pointer )
-        {
-            Pointer = pointer;
-        }
-
-        internal IntPtr Pointer { get; }
-    }
-
-    internal partial struct LLVMValueRef
-    {
-        internal LLVMValueRef( IntPtr pointer )
-        {
-            Pointer = pointer;
-        }
-
-        internal IntPtr Pointer { get; }
-    }
-
-    internal partial struct LLVMBasicBlockRef
-    {
-        internal LLVMBasicBlockRef( IntPtr pointer )
-        {
-            Pointer = pointer;
-        }
-
-        internal IntPtr Pointer { get; }
-    }
-
-    internal partial struct LLVMMetadataRef
-    {
-        internal LLVMMetadataRef( IntPtr pointer )
-        {
-            Pointer = pointer;
-        }
-
-        internal readonly IntPtr Pointer;
-    }
-
-    internal partial struct LLVMDIBuilderRef
-    {
-        internal LLVMDIBuilderRef( IntPtr pointer )
-        {
-            Pointer = pointer;
-        }
-
-        internal readonly IntPtr Pointer;
-    }
-
-    /* replaced with SafeHandle Variant to ensure release
-       as it isn't owned by any other object in LLVM
-    internal partial struct LLVMBuilderRef
-    {
-        internal LLVMBuilderRef(IntPtr pointer)
-        {
-            this.Pointer = pointer;
-        }
-
-        internal IntPtr Pointer { get; }
-    }
-    */
-
-    internal partial struct LLVMModuleProviderRef
-    {
-        internal LLVMModuleProviderRef( IntPtr pointer )
-        {
-            Pointer = pointer;
-        }
-
-        internal IntPtr Pointer { get; }
-    }
-
-    /* replaced with SafeHandle Variant to ensure release
-    internal partial struct LLVMPassManagerRef
-    {
-        internal LLVMPassManagerRef( IntPtr pointer )
-        {
-            Pointer = pointer;
-        }
-
-        internal IntPtr Pointer { get; }
-    }
-    */
-
-    /* replaced with SafeHandle Variant to ensure release
-    internal partial struct LLVMPassRegistryRef
-    {
-        internal LLVMPassRegistryRef(IntPtr pointer)
-        {
-            this.Pointer = pointer;
-        }
-
-        internal IntPtr Pointer { get; }
-    }
-    */
-
-    internal partial struct LLVMUseRef
-    {
-        internal LLVMUseRef( IntPtr pointer )
-        {
-            Pointer = pointer;
-        }
-
-        internal IntPtr Pointer { get; }
-    }
-
-    internal partial struct LLVMAttributeRef
-    {
-        internal LLVMAttributeRef( IntPtr pointer )
-        {
-            Pointer = pointer;
-        }
-
-        internal IntPtr Pointer { get; }
-    }
-
-    internal partial struct LLVMDiagnosticInfoRef
-    {
-        internal LLVMDiagnosticInfoRef( IntPtr pointer )
-        {
-            Pointer = pointer;
-        }
-
-        internal IntPtr Pointer { get; }
-    }
-
     [UnmanagedFunctionPointer( CallingConvention.Cdecl )]
     internal delegate void LLVMFatalErrorHandler( [MarshalAs( UnmanagedType.LPStr )] string reason );
 
@@ -233,92 +81,11 @@ namespace Llvm.NET.Native
     [UnmanagedFunctionPointer( CallingConvention.Cdecl )]
     internal delegate void LLVMYieldCallback( LLVMContextRef @param0, IntPtr @param1 );
 
-    internal partial struct LLVMDisasmContextRef
-    {
-        internal LLVMDisasmContextRef( IntPtr pointer )
-        {
-            Pointer = pointer;
-        }
-
-        internal IntPtr Pointer { get; }
-    }
-
     [UnmanagedFunctionPointer( CallingConvention.Cdecl )]
     internal delegate int LLVMOpInfoCallback( IntPtr disInfo, int pC, int offset, int size, int tagType, IntPtr tagBuf );
 
     [UnmanagedFunctionPointer( CallingConvention.Cdecl )]
     internal delegate string LLVMSymbolLookupCallback( IntPtr disInfo, int referenceValue, out int referenceType, int referencePC, out IntPtr referenceName );
-
-    internal partial struct LLVMTargetDataRef
-    {
-        internal LLVMTargetDataRef( IntPtr pointer )
-        {
-            Pointer = pointer;
-        }
-
-        internal IntPtr Pointer { get; }
-    }
-
-    internal partial struct LLVMTargetLibraryInfoRef
-    {
-        internal LLVMTargetLibraryInfoRef( IntPtr pointer )
-        {
-            Pointer = pointer;
-        }
-
-        internal IntPtr Pointer { get; }
-    }
-
-    internal partial struct LLVMTargetMachineRef
-    {
-        internal LLVMTargetMachineRef( IntPtr pointer )
-        {
-            Pointer = pointer;
-        }
-
-        internal IntPtr Pointer { get; }
-    }
-
-    internal partial struct LLVMTargetRef
-    {
-        internal LLVMTargetRef( IntPtr pointer )
-        {
-            Pointer = pointer;
-        }
-
-        internal IntPtr Pointer { get; }
-    }
-
-    internal partial struct LLVMGenericValueRef
-    {
-        internal LLVMGenericValueRef( IntPtr pointer )
-        {
-            Pointer = pointer;
-        }
-
-        internal IntPtr Pointer { get; }
-    }
-
-    internal partial struct LLVMExecutionEngineRef
-    {
-        internal LLVMExecutionEngineRef( IntPtr pointer )
-        {
-            Pointer = pointer;
-        }
-
-        internal IntPtr Pointer { get; }
-    }
-
-    /* internal partial struct LLVMMCJITMemoryManagerRef
-    {
-        internal LLVMMCJITMemoryManagerRef( IntPtr pointer )
-        {
-            Pointer = pointer;
-        }
-
-        internal IntPtr Pointer { get; }
-    }
-    */
 
     [UnmanagedFunctionPointer( CallingConvention.Cdecl )]
     internal delegate IntPtr LLVMMemoryManagerAllocateCodeSectionCallback( IntPtr opaque, int size, uint alignment, uint sectionID, [MarshalAs( UnmanagedType.LPStr )] string sectionName );
@@ -334,7 +101,7 @@ namespace Llvm.NET.Native
 
     [SuppressMessage( "Style", "IDE1006:Naming Styles", Justification = "Low level Interop API matching" )]
     [SuppressMessage( "StyleCop.CSharp.NamingRules", "SA1300:Element must begin with upper-case letter", Justification = "Matches interop type")]
-    internal partial struct llvm_lto_t
+    internal struct llvm_lto_t
     {
         internal llvm_lto_t( IntPtr pointer )
         {
@@ -346,7 +113,7 @@ namespace Llvm.NET.Native
 
     [SuppressMessage( "Style", "IDE1006:Naming Styles", Justification = "Low level Interop API matching" )]
     [SuppressMessage( "StyleCop.CSharp.NamingRules", "SA1300:Element must begin with upper-case letter", Justification = "Matches interop type" )]
-    internal partial struct lto_bool_t
+    internal struct lto_bool_t
     {
         internal lto_bool_t( bool value )
         {
@@ -358,7 +125,7 @@ namespace Llvm.NET.Native
 
     [SuppressMessage( "Style", "IDE1006:Naming Styles", Justification = "Low level Interop API matching" )]
     [SuppressMessage( "StyleCop.CSharp.NamingRules", "SA1300:Element must begin with upper-case letter", Justification = "Matches interop type" )]
-    internal partial struct lto_module_t
+    internal struct lto_module_t
     {
         internal lto_module_t( IntPtr pointer )
         {
@@ -370,7 +137,7 @@ namespace Llvm.NET.Native
 
     [SuppressMessage( "Style", "IDE1006:Naming Styles", Justification = "Low level Interop API matching" )]
     [SuppressMessage( "StyleCop.CSharp.NamingRules", "SA1300:Element must begin with upper-case letter", Justification = "Matches interop type" )]
-    internal partial struct lto_code_gen_t
+    internal struct lto_code_gen_t
     {
         internal lto_code_gen_t( IntPtr pointer )
         {
@@ -384,91 +151,11 @@ namespace Llvm.NET.Native
     [SuppressMessage( "StyleCop.CSharp.NamingRules", "SA1300:Element must begin with upper-case letter", Justification = "Matches interop type" )]
     internal delegate void lto_diagnostic_handler_t( lto_codegen_diagnostic_severity_t @severity, [MarshalAs( UnmanagedType.LPStr )] string @diag, IntPtr @ctxt );
 
-    internal partial struct LLVMObjectFileRef
-    {
-        internal LLVMObjectFileRef( IntPtr pointer )
-        {
-            Pointer = pointer;
-        }
-
-        internal IntPtr Pointer { get; }
-    }
-
-    internal partial struct LLVMSectionIteratorRef
-    {
-        internal LLVMSectionIteratorRef( IntPtr pointer )
-        {
-            Pointer = pointer;
-        }
-
-        internal IntPtr Pointer { get; }
-    }
-
-    internal partial struct LLVMSymbolIteratorRef
-    {
-        internal LLVMSymbolIteratorRef( IntPtr pointer )
-        {
-            Pointer = pointer;
-        }
-
-        internal IntPtr Pointer { get; }
-    }
-
-    internal partial struct LLVMRelocationIteratorRef
-    {
-        internal LLVMRelocationIteratorRef( IntPtr pointer )
-        {
-            Pointer = pointer;
-        }
-
-        internal IntPtr Pointer { get; }
-    }
-
-    internal partial struct LLVMOrcJITStackRef
-    {
-        internal LLVMOrcJITStackRef( IntPtr pointer )
-        {
-            Pointer = pointer;
-        }
-
-        internal IntPtr Pointer { get; }
-    }
-
-    internal partial struct LLVMOrcModuleHandle
-    {
-        internal LLVMOrcModuleHandle( int value )
-        {
-            Value = value;
-        }
-
-        internal int Value { get; }
-    }
-
-    internal partial struct LLVMOrcTargetAddress
-    {
-        internal LLVMOrcTargetAddress( ulong value )
-        {
-            Value = value;
-        }
-
-        internal ulong Value { get; }
-    }
-
     [UnmanagedFunctionPointer( CallingConvention.Cdecl )]
     internal delegate ulong LLVMOrcSymbolResolverFn( [MarshalAs( UnmanagedType.LPStr )] string name, IntPtr lookupCtx );
 
     [UnmanagedFunctionPointer( CallingConvention.Cdecl )]
     internal delegate ulong LLVMOrcLazyCompileCallbackFn( LLVMOrcJITStackRef jITStack, IntPtr callbackCtx );
-
-    internal partial struct LLVMPassManagerBuilderRef
-    {
-        internal LLVMPassManagerBuilderRef( IntPtr pointer )
-        {
-            Pointer = pointer;
-        }
-
-        internal IntPtr Pointer { get; }
-    }
 
     internal enum LLVMVerifierFailureAction
     {
@@ -3205,22 +2892,22 @@ namespace Llvm.NET.Native
         internal static extern double LLVMGenericValueToFloat( LLVMTypeRef @TyRef, LLVMGenericValueRef @GenVal );
 
         [DllImport( LibraryPath, EntryPoint = "LLVMDisposeGenericValue", CallingConvention = CallingConvention.Cdecl )]
-        internal static extern void LLVMDisposeGenericValue( LLVMGenericValueRef @GenVal );
+        internal static extern void LLVMDisposeGenericValue( IntPtr @GenVal );
 
         [DllImport( LibraryPath, EntryPoint = "LLVMCreateExecutionEngineForModule", CallingConvention = CallingConvention.Cdecl )]
-        internal static extern LLVMStatus LLVMCreateExecutionEngineForModule( out LLVMExecutionEngineRef @OutEE, LLVMModuleRef @M, out IntPtr @OutError );
+        internal static extern LLVMStatus LLVMCreateExecutionEngineForModule( out LLVMExecutionEngineRef @OutEE, LLVMModuleRef @M, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( StringMarshaler ), MarshalCookie = "DisposeMessage" )] out string @OutError );
 
         [DllImport( LibraryPath, EntryPoint = "LLVMCreateInterpreterForModule", CallingConvention = CallingConvention.Cdecl )]
-        internal static extern LLVMStatus LLVMCreateInterpreterForModule( out LLVMExecutionEngineRef @OutInterp, LLVMModuleRef @M, out IntPtr @OutError );
+        internal static extern LLVMStatus LLVMCreateInterpreterForModule( out LLVMExecutionEngineRef @OutInterp, LLVMModuleRef @M, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( StringMarshaler ), MarshalCookie = "DisposeMessage" )] out string @OutError );
 
         [DllImport( LibraryPath, EntryPoint = "LLVMCreateJITCompilerForModule", CallingConvention = CallingConvention.Cdecl )]
-        internal static extern LLVMStatus LLVMCreateJITCompilerForModule( out LLVMExecutionEngineRef @OutJIT, LLVMModuleRef @M, uint @OptLevel, out IntPtr @OutError );
+        internal static extern LLVMStatus LLVMCreateJITCompilerForModule( out LLVMExecutionEngineRef @OutJIT, LLVMModuleRef @M, uint @OptLevel, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( StringMarshaler ), MarshalCookie = "DisposeMessage" )] out string @OutError );
 
         [DllImport( LibraryPath, EntryPoint = "LLVMInitializeMCJITCompilerOptions", CallingConvention = CallingConvention.Cdecl )]
         internal static extern void LLVMInitializeMCJITCompilerOptions( out LLVMMCJITCompilerOptions @Options, size_t @SizeOfOptions );
 
         [DllImport( LibraryPath, EntryPoint = "LLVMCreateMCJITCompilerForModule", CallingConvention = CallingConvention.Cdecl )]
-        internal static extern LLVMStatus LLVMCreateMCJITCompilerForModule( out LLVMExecutionEngineRef @OutJIT, LLVMModuleRef @M, out LLVMMCJITCompilerOptions @Options, size_t @SizeOfOptions, out IntPtr @OutError );
+        internal static extern LLVMStatus LLVMCreateMCJITCompilerForModule( out LLVMExecutionEngineRef @OutJIT, LLVMModuleRef @M, out LLVMMCJITCompilerOptions @Options, size_t @SizeOfOptions, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( StringMarshaler ), MarshalCookie = "DisposeMessage" )] out string @OutError );
 
         [DllImport( LibraryPath, EntryPoint = "LLVMDisposeExecutionEngine", CallingConvention = CallingConvention.Cdecl )]
         internal static extern void LLVMDisposeExecutionEngine( LLVMExecutionEngineRef @EE );
@@ -3237,14 +2924,16 @@ namespace Llvm.NET.Native
         [DllImport( LibraryPath, EntryPoint = "LLVMRunFunction", CallingConvention = CallingConvention.Cdecl )]
         internal static extern LLVMGenericValueRef LLVMRunFunction( LLVMExecutionEngineRef @EE, LLVMValueRef @F, uint @NumArgs, out LLVMGenericValueRef @Args );
 
-        [DllImport( LibraryPath, EntryPoint = "LLVMFreeMachineCodeForFunction", CallingConvention = CallingConvention.Cdecl )]
-        internal static extern void LLVMFreeMachineCodeForFunction( LLVMExecutionEngineRef @EE, LLVMValueRef @F );
+        /* As of LLVM 5, at least this is an empty function in the LLVM-C API
+        //[DllImport( LibraryPath, EntryPoint = "LLVMFreeMachineCodeForFunction", CallingConvention = CallingConvention.Cdecl )]
+        //internal static extern void LLVMFreeMachineCodeForFunction( LLVMExecutionEngineRef @EE, LLVMValueRef @F );
+        */
 
         [DllImport( LibraryPath, EntryPoint = "LLVMAddModule", CallingConvention = CallingConvention.Cdecl )]
         internal static extern void LLVMAddModule( LLVMExecutionEngineRef @EE, LLVMModuleRef @M );
 
         [DllImport( LibraryPath, EntryPoint = "LLVMRemoveModule", CallingConvention = CallingConvention.Cdecl )]
-        internal static extern LLVMStatus LLVMRemoveModule( LLVMExecutionEngineRef @EE, LLVMModuleRef @M, out LLVMModuleRef @OutMod, out IntPtr @OutError );
+        internal static extern LLVMStatus LLVMRemoveModule( LLVMExecutionEngineRef @EE, LLVMModuleRef @M, out LLVMModuleRef @OutMod, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( StringMarshaler ), MarshalCookie = "DisposeMessage" )] out string @OutError );
 
         [DllImport( LibraryPath, EntryPoint = "LLVMFindFunction", CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi, ThrowOnUnmappableChar = true, BestFitMapping = false )]
         internal static extern LLVMStatus LLVMFindFunction( LLVMExecutionEngineRef @EE, [MarshalAs( UnmanagedType.LPStr )] string @Name, out LLVMValueRef @OutFn );
@@ -3267,10 +2956,10 @@ namespace Llvm.NET.Native
         internal static extern IntPtr LLVMGetPointerToGlobal( LLVMExecutionEngineRef @EE, LLVMValueRef @Global );
 
         [DllImport( LibraryPath, EntryPoint = "LLVMGetGlobalValueAddress", CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi, ThrowOnUnmappableChar = true, BestFitMapping = false )]
-        internal static extern int LLVMGetGlobalValueAddress( LLVMExecutionEngineRef @EE, [MarshalAs( UnmanagedType.LPStr )] string @Name );
+        internal static extern UInt64 LLVMGetGlobalValueAddress( LLVMExecutionEngineRef @EE, [MarshalAs( UnmanagedType.LPStr )] string @Name );
 
         [DllImport( LibraryPath, EntryPoint = "LLVMGetFunctionAddress", CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi, ThrowOnUnmappableChar = true, BestFitMapping = false )]
-        internal static extern int LLVMGetFunctionAddress( LLVMExecutionEngineRef @EE, [MarshalAs( UnmanagedType.LPStr )] string @Name );
+        internal static extern UInt64 LLVMGetFunctionAddress( LLVMExecutionEngineRef @EE, [MarshalAs( UnmanagedType.LPStr )] string @Name );
 
         [DllImport( LibraryPath, EntryPoint = "LLVMCreateSimpleMCJITMemoryManager", CallingConvention = CallingConvention.Cdecl )]
         internal static extern LLVMMCJITMemoryManagerRef LLVMCreateSimpleMCJITMemoryManager( IntPtr @Opaque, LLVMMemoryManagerAllocateCodeSectionCallback @AllocateCodeSection, LLVMMemoryManagerAllocateDataSectionCallback @AllocateDataSection, LLVMMemoryManagerFinalizeMemoryCallback @FinalizeMemory, LLVMMemoryManagerDestroyCallback @Destroy );
@@ -3426,8 +3115,8 @@ namespace Llvm.NET.Native
         [DllImport( LibraryPath, EntryPoint = "LLVMOrcGetMangledSymbol", CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi, ThrowOnUnmappableChar = true, BestFitMapping = false )]
         internal static extern void LLVMOrcGetMangledSymbol( LLVMOrcJITStackRef @JITStack, out IntPtr @MangledSymbol, [MarshalAs( UnmanagedType.LPStr )] string @Symbol );
 
-        [DllImport( LibraryPath, EntryPoint = "LLVMOrcDisposeMangledSymbol", CallingConvention = CallingConvention.Cdecl )]
-        internal static extern void LLVMOrcDisposeMangledSymbol( IntPtr @MangledSymbol );
+        [DllImport( LibraryPath, EntryPoint = "LLVMOrcDisposeMangledSymbol", CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi, ThrowOnUnmappableChar = true, BestFitMapping = false )]
+        internal static extern void LLVMOrcDisposeMangledSymbol( [MarshalAs( UnmanagedType.LPStr )] string @MangledSymbol );
 
         [DllImport( LibraryPath, EntryPoint = "LLVMOrcCreateLazyCompileCallback", CallingConvention = CallingConvention.Cdecl )]
         internal static extern LLVMOrcErrorCode LLVMOrcCreateLazyCompileCallback( LLVMOrcJITStackRef @JITStack, out LLVMOrcTargetAddress retAddr, LLVMOrcLazyCompileCallbackFn @Callback, IntPtr @CallbackCtx );
@@ -3492,7 +3181,7 @@ namespace Llvm.NET.Native
         internal static extern void LLVMAddIPSCCPPass( LLVMPassManagerRef @PM );
 
         [DllImport( LibraryPath, EntryPoint = "LLVMAddInternalizePass", CallingConvention = CallingConvention.Cdecl )]
-        internal static extern void LLVMAddInternalizePass( LLVMPassManagerRef @param0, uint @AllButMain );
+        internal static extern void LLVMAddInternalizePass( LLVMPassManagerRef @param0, [MarshalAs( UnmanagedType.Bool )]bool @AllButMain );
 
         [DllImport( LibraryPath, EntryPoint = "LLVMAddStripDeadPrototypesPass", CallingConvention = CallingConvention.Cdecl )]
         internal static extern void LLVMAddStripDeadPrototypesPass( LLVMPassManagerRef @PM );

@@ -29,7 +29,7 @@ namespace Llvm.NET
                 throw new ArgumentNullException( nameof( other ) );
             }
 
-            if( MetadataHandle.Pointer == IntPtr.Zero )
+            if( MetadataHandle.Handle == IntPtr.Zero )
             {
                 throw new InvalidOperationException( "Cannot Replace all uses of a null descriptor" );
             }
@@ -41,7 +41,7 @@ namespace Llvm.NET
         /// <inheritdoc/>
         public override string ToString( )
         {
-            if( MetadataHandle.Pointer == IntPtr.Zero )
+            if( MetadataHandle.Handle == IntPtr.Zero )
             {
                 return string.Empty;
             }

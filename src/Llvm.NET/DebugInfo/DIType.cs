@@ -14,7 +14,7 @@ namespace Llvm.NET.DebugInfo
         {
             get
             {
-                if( MetadataHandle.Pointer == IntPtr.Zero )
+                if( MetadataHandle.Handle == IntPtr.Zero )
                 {
                     return 0;
                 }
@@ -28,7 +28,7 @@ namespace Llvm.NET.DebugInfo
             get
             {
                 var handle = NativeMethods.LLVMDITypeGetScope( MetadataHandle );
-                if( handle.Pointer == IntPtr.Zero )
+                if( handle.Handle == IntPtr.Zero )
                 {
                     return null;
                 }

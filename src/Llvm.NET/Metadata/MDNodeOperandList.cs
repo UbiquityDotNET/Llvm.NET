@@ -40,7 +40,7 @@ namespace Llvm.NET
             for( uint i = 0; i < Count; ++i )
             {
                 LLVMMDOperandRef handle = NativeMethods.LLVMMDNodeGetOperand( OwningNode.MetadataHandle, i );
-                if( handle.Pointer == IntPtr.Zero )
+                if( handle.Handle == IntPtr.Zero )
                 {
                     yield break;
                 }

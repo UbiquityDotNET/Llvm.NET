@@ -147,7 +147,7 @@ namespace Llvm.NET
 
         private bool AddComdat( LLVMComdatRef comdatRef )
         {
-            comdatRef.Pointer.ValidateNotNull( nameof( comdatRef ) );
+            comdatRef.Handle.ValidateNotNull( nameof( comdatRef ) );
             var comdat = new Comdat( Module, comdatRef );
             InternalComdatMap.Add( comdat.Name, comdat );
             return true;

@@ -39,7 +39,7 @@ namespace Llvm.NET.Values
             for( uint i = 0; i < Count; ++i )
             {
                 LLVMValueRef val = NativeMethods.LLVMGetParam( OwningFunction.ValueHandle, i );
-                if( val.Pointer == IntPtr.Zero )
+                if( val.Handle == IntPtr.Zero )
                 {
                     yield break;
                 }

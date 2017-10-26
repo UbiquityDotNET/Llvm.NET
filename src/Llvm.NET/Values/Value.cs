@@ -93,15 +93,11 @@ namespace Llvm.NET.Values
 
         internal Value( LLVMValueRef valueRef )
         {
-            if( valueRef.Pointer == IntPtr.Zero )
+            if( valueRef.Handle == IntPtr.Zero )
             {
                 throw new ArgumentNullException( nameof( valueRef ) );
             }
 
-#if DEBUG
-            var context = Context.GetContextFor( valueRef );
-            context.AssertValueNotInterned( valueRef );
-#endif
             ValueHandle = valueRef;
         }
 
@@ -130,8 +126,13 @@ namespace Llvm.NET.Values
         internal static T FromHandle<T>( LLVMValueRef valueRef )
             where T : Value
         {
-            var context = Context.GetContextFor( valueRef );
-            return ( T )context.GetValueFor( valueRef, StaticFactory );
+            var context = valueRef.GetContextFor( );
+            return ( T )context.GetValueFor( valueRef );
+        }
+
+        internal static IHandleInterning<LLVMValueRef, Value> CreateInterningFactory()
+        {
+            return new HandleInterningMap<LLVMValueRef, Value>( ( h, c ) => StaticFactory( h ) );
         }
 
         /// <summary>Central factory for creating instances of <see cref="Value"/> and all derived types</summary>

@@ -2,11 +2,12 @@
     <PropertyGroup>
         <TargetFrameworks>net47;netstandard2.0</TargetFrameworks>
         <RuntimeIdentifiers>win-x64;win-x86</RuntimeIdentifiers>
-        <DebugType>full</DebugType>
-        <DebugSymbols>True</DebugSymbols>
+        <DebugType>portable</DebugType>
+        <DebugSymbols>true</DebugSymbols>
         <DocumentationFile>$(BaseIntermediateOutputPath)Llvm.NET.xml</DocumentationFile>
         <SignAssembly>False</SignAssembly>
-        <NoWarn>1701;1702;1705;1591</NoWarn>
+        <!-- warning CS1591: Missing XML comment for publicly visible type or member -->
+        <NoWarn>1591</NoWarn>
         <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
         <MinClientVersion>4.0</MinClientVersion>
         <Authors>.NET Foundation,LLVM.org</Authors>
@@ -19,6 +20,8 @@
     <ItemGroup>
         <AdditionalFiles Include="..\stylecop.json" Link="stylecop.json" />
         <Content Include="NugetPkg\build\Llvm.NET.props" PackagePath="build" />
+        <Content Include="$(OutputPath)net47\Llvm.Net.pdb" PackagePath="lib\net47" InProject="false" />
+        <Content Include="$(OutputPath)netstandard2.0\Llvm.Net.pdb" PackagePath="lib\netstandard2.0" InProject="false" />
     </ItemGroup>
     <ItemGroup>
         <Compile Include="Comdat.cs" />
@@ -66,6 +69,41 @@
         <Compile Include="DisposableAction.cs" />
         <Compile Include="ExtensiblePropertyContainer.cs" />
         <Compile Include="ExtensiblePropertyDescriptor.cs" />
+        <Compile Include="HandleInterningMap.cs" />
+        <Compile Include="JIT\ExecutionEngine.cs" />
+        <Compile Include="JIT\GenericValue.cs" />
+        <Compile Include="Native\ContextCache.cs" />
+        <Compile Include="Native\Handles\HandleExtensions.cs" />
+        <Compile Include="Native\Handles\LLVMGenericValueRef.cs" />
+        <Compile Include="Native\Handles\LLVMModuleRef.cs" />
+        <Compile Include="Native\Handles\LLVMAttributeRef.cs" />
+        <Compile Include="Native\Handles\LLVMBasicBlockRef.cs" />
+        <Compile Include="Native\Handles\LLVMContextRef.cs" />
+        <Compile Include="Native\Handles\LLVMDIBuilderRef.cs" />
+        <Compile Include="Native\Handles\LLVMMemoryBufferRef.cs" />
+        <Compile Include="Native\Handles\LLVMModuleProviderRef.cs" />
+        <Compile Include="Native\Handles\LLVMTypeRef.cs" />
+        <Compile Include="Native\Handles\LLVMUseRef.cs" />
+        <Compile Include="Native\Handles\LLVMValueRef.cs" />
+        <Compile Include="Native\Handles\LLVMDiagnosticInfoRef.cs" />
+        <Compile Include="Native\Handles\LLVMDisasmContextRef.cs" />
+        <Compile Include="Native\Handles\LLVMTargetDataRef.cs" />
+        <Compile Include="Native\Handles\LLVMTargetLibraryInfoRef.cs" />
+        <Compile Include="Native\Handles\LLVMTargetMachineRef.cs" />
+        <Compile Include="Native\Handles\LLVMTargetRef.cs" />
+        <Compile Include="Native\Handles\LLVMExecutionEngineRef.cs" />
+        <Compile Include="Native\Handles\LLVMObjectFileRef.cs" />
+        <Compile Include="Native\Handles\LLVMOrcJITStackRef.cs" />
+        <Compile Include="Native\Handles\LLVMComdatRef.cs" />
+        <Compile Include="Native\Handles\LLVMMDOperandRef.cs" />
+        <Compile Include="Native\Handles\LLVMNamedMDNodeRef.cs" />
+        <Compile Include="Native\Handles\LLVMOrcModuleHandle.cs" />
+        <Compile Include="Native\Handles\LLVMOrcTargetAddress.cs" />
+        <Compile Include="Native\Handles\LLVMPassManagerBuilderRef.cs" />
+        <Compile Include="Native\Handles\LLVMRelocationIteratorRef.cs" />
+        <Compile Include="Native\Handles\LLVMSectionIteratorRef.cs" />
+        <Compile Include="Native\Handles\LLVMSymbolIteratorRef.cs" />
+        <Compile Include="Transforms\FunctionPassManager.cs" />
         <Compile Include="Instructions\InstructionExtensions.cs" />
         <Compile Include="Metadata\LlvmMetadata.cs" />
         <Compile Include="Metadata\MDNodeOperandList.cs" />
@@ -97,18 +135,20 @@
         <Compile Include="Instructions\UserOp1.cs" />
         <Compile Include="Instructions\UserOp2.cs" />
         <Compile Include="Instructions\VaArg.cs" />
+        <Compile Include="Transforms\InterproceduralTransforms.cs" />
+        <Compile Include="Transforms\ModulePassManager.cs" />
         <Compile Include="Native\GeneratedCodeExtensions.cs" />
         <Compile Include="Native\IntPtrExtensions.cs" />
-        <Compile Include="Native\LLVMBuilderRef.cs" />
-        <Compile Include="Native\LLVMMCJITMemoryManagerRef.cs" />
-        <Compile Include="Native\LLVMMetadataRef.cs" />
-        <Compile Include="Native\LLVMPassManagerRef.cs" />
-        <Compile Include="Native\LLVMPassRegistryRef.cs" />
-        <Compile Include="Native\LLVMSharedModuleRef.cs" />
-        <Compile Include="Native\LLVMSharedObjectBufferRef.cs" />
-        <Compile Include="Native\LLVMTripleRef.cs" />
+        <Compile Include="Native\Handles\LLVMBuilderRef.cs" />
+        <Compile Include="Native\Handles\LLVMMCJITMemoryManagerRef.cs" />
+        <Compile Include="Native\Handles\LLVMMetadataRef.cs" />
+        <Compile Include="Native\Handles\LLVMPassManagerRef.cs" />
+        <Compile Include="Native\Handles\LLVMPassRegistryRef.cs" />
+        <Compile Include="Native\Handles\LLVMSharedModuleRef.cs" />
+        <Compile Include="Native\Handles\LLVMSharedObjectBufferRef.cs" />
+        <Compile Include="Native\Handles\LLVMTripleRef.cs" />
         <Compile Include="Native\LLVMVersionInfo.cs" />
-        <Compile Include="Native\SafeHandleNullIsInvalid.cs" />
+        <Compile Include="Native\Handles\SafeHandleNullIsInvalid.cs" />
         <Compile Include="Native\StringMarshaler.cs" />
         <Compile Include="Native\ValueKind.cs" />
         <Compile Include="Native\WrappedNativeCallback.cs" />
@@ -123,7 +163,9 @@
         <Compile Include="Metadata\NamedMDNode.cs" />
         <Compile Include="DebugInfo\DebugBasicType.cs" />
         <Compile Include="DebugInfo\DebugFunctionType.cs" />
-        <Compile Include="PassManager.cs" />
+        <Compile Include="Transforms\PassManager.cs" />
+        <Compile Include="Transforms\ScalarTransforms.cs" />
+        <Compile Include="Transforms\VectorTransforms.cs" />
         <Compile Include="Triple.cs" />
         <Compile Include="Types\ITypeRef.cs" />
         <Compile Include="Values\Argument.cs" />
@@ -227,11 +269,11 @@
         </CodeAnalysisDictionary>
     </ItemGroup>
     <ItemGroup>
-        <PackageReference Include="CSemVer.Build.Tasks" Version="1.0.0-alpha.2--ci-REL.194F4984" />
-        <PackageReference Include="Ubiquity.ArgValidators" Version="0.3.0-alpha--ci-REL.424565984" />
+      <None Include="Native\readme.md" />
     </ItemGroup>
     <ItemGroup>
-      <Folder Include="ExecutionEngine\" />
+        <PackageReference Include="CSemVer.Build.Tasks" Version="1.0.0-alpha.2--ci-REL.194F4984" />
+        <PackageReference Include="Ubiquity.ArgValidators" Version="0.3.0-alpha--ci-REL.424565984" />
     </ItemGroup>
     <Choose>
         <!--

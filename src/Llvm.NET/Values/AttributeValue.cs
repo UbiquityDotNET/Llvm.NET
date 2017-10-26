@@ -42,7 +42,7 @@ namespace Llvm.NET.Values
         /// <inheritdoc/>
         public bool Equals( AttributeValue other )
         {
-            return NativeAttribute.Pointer == other.NativeAttribute.Pointer;
+            return NativeAttribute.Handle == other.NativeAttribute.Handle;
         }
 
         /// <summary>Gets the kind of the attribute</summary>

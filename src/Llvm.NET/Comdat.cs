@@ -65,7 +65,7 @@ namespace Llvm.NET
         internal Comdat( BitcodeModule module, LLVMComdatRef comdatRef )
         {
             module.ValidateNotNull( nameof( module ) );
-            comdatRef.Pointer.ValidateNotNull( nameof( comdatRef ) );
+            comdatRef.Handle.ValidateNotNull( nameof( comdatRef ) );
 
             Module = module;
             ComdatHandle = comdatRef;

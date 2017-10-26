@@ -142,7 +142,7 @@ namespace Llvm.NET.Tests
         public void CreateFunctionTypeTest( )
         {
             using( var context = new Context( ) )
-            using( var targetMachine = TargetTests.GetTargetMachine( context ) )
+            using( var targetMachine = TargetTests.GetTargetMachine( ) )
             {
                 var module = new BitcodeModule( "test.bc", context, SourceLanguage.CSharp, "test.cs", "unittests" );
                 Assert.IsNotNull( module );
@@ -192,7 +192,7 @@ namespace Llvm.NET.Tests
         public void VerifyCreateFunctionTypeWithSameSigIsSameInstanceTest( )
         {
             using( var context = new Context( ) )
-            using( var targetMachine = TargetTests.GetTargetMachine( context ) )
+            using( var targetMachine = TargetTests.GetTargetMachine( ) )
             {
                 var module = new BitcodeModule( "test.bc", context, SourceLanguage.CSharp, "test.cs", "unittests" );
                 Assert.IsNotNull( module );

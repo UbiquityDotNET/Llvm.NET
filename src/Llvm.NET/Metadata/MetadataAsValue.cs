@@ -19,7 +19,7 @@ namespace Llvm.NET
 
         internal static LLVMValueRef IsAMetadataAsValue( LLVMValueRef value )
         {
-            if( value.Pointer == IntPtr.Zero )
+            if( value.Handle == IntPtr.Zero )
             {
                 return value;
             }

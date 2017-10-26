@@ -55,9 +55,6 @@ namespace Llvm.NET
             GC.SuppressFinalize( this );
         }
 
-        /// <summary>Gets the <see cref="Context"/> used for this layout (in particular, for retrieving pointer types)</summary>
-        public Context Context { get; }
-
         /// <summary>Gets the byte ordering for this target</summary>
         public ByteOrdering Endianess => ( ByteOrdering )LLVMByteOrder( DataLayoutHandle );
 
@@ -70,18 +67,37 @@ namespace Llvm.NET
         /// <returns>Size of a pointer</returns>
         public uint PointerSize( uint addressSpace ) => LLVMPointerSizeForAS( DataLayoutHandle, addressSpace );
 
-        /// <summary>Retrieves an LLVM integer type with the same bit width as
-        /// a pointer for the default address space of the target</summary>
+        /// <summary>Retrieves an LLVM integer type with the same bit width as a pointer for the default address space of the target</summary>
+        /// <param name="context">LLVM <see cref="Context"/> that owns the definition of the pointer type to retrieve</param>
         /// <returns>Integer type matching the bit width of a native pointer in the target's default address space</returns>
-        public ITypeRef IntPtrType( ) => TypeRef.FromHandle( LLVMIntPtrTypeInContext( Context.ContextHandle, DataLayoutHandle ) );
+        public ITypeRef IntPtrType( Context context ) => TypeRef.FromHandle( LLVMIntPtrTypeInContext( context.ContextHandle, DataLayoutHandle ) );
+
+        /* TODO:
+        bool IsLegalIntegerWidth(UInt64 width);
+        bool ExceedsNaturalStackAlignment(UInt64 width);
+        UInt32 StackAlignment { get; }
+        UInt32 AllocaAddrSpace { get; }
+        bool HasMicrosoftFastStdCallMangling { get; }
+        string LinkerPrivateGlobalPrefix { get; }
+        char GlobalPrefix { get; }
+        string PrivateGlobalPrefix { get; }
+        ImmutableList<UInt32> NonIntegralAddressSpaces { get; }
+        bool IsNonIntegralPointerType( IPointerType t );
+        ITypeRef GetSmallestLegalIntType( Context context, UInt32 width );
+        ITypeRef GetLargestLegalIntType( Context context, UInt32 width );
+        UInt32 GetLargestLegalIntTypeSizeInBits();
+        UInt64 GetIndexedOffsetInType(ITypeRef t, Value index0, param Value[] indices);
+        StructLayout GetStructLayout(IStructType t);
+        */
 
         /// <summary>Retrieves an LLVM integer type with the same bit width as
         /// a pointer for the given address space of the target</summary>
+        /// <param name="context">LLVM <see cref="Context"/> that owns the definition of the pointer type to retrieve</param>
         /// <param name="addressSpace">Address space for the pointer</param>
         /// <returns>Integer type matching the bit width of a native pointer in the target's address space</returns>
-        public ITypeRef IntPtrType( uint addressSpace )
+        public ITypeRef IntPtrType( Context context, uint addressSpace )
         {
-            var typeHandle = LLVMIntPtrTypeForASInContext( Context.ContextHandle, DataLayoutHandle, addressSpace );
+            var typeHandle = LLVMIntPtrTypeForASInContext( context.ContextHandle, DataLayoutHandle, addressSpace );
             return TypeRef.FromHandle( typeHandle );
         }
 
@@ -182,25 +198,24 @@ namespace Llvm.NET
 
         public ulong BitOffsetOfElement( IStructType llvmType, uint element ) => OffsetOfElement( llvmType, element ) * 8;
 
-        internal DataLayout( Context context, LLVMTargetDataRef targetDataHandle, bool isDisposable )
+        internal DataLayout( LLVMTargetDataRef targetDataHandle, bool isDisposable )
         {
             DataLayoutHandle = targetDataHandle;
             IsDisposable = isDisposable;
-            Context = context;
         }
 
-        internal static DataLayout FromHandle( Context context, LLVMTargetDataRef targetDataRef, bool isDisposable )
+        internal static DataLayout FromHandle( LLVMTargetDataRef targetDataRef, bool isDisposable )
         {
             lock( TargetDataMap )
             {
-                if( TargetDataMap.TryGetValue( targetDataRef.Pointer, out DataLayout retVal ) )
+                if( TargetDataMap.TryGetValue( targetDataRef.Handle, out DataLayout retVal ) )
                 {
                     return retVal;
                 }
 
                 // exception filter function to ensure that the native resource
                 // is released on exception from adding it to the map
-                retVal = new DataLayout( context, targetDataRef, isDisposable );
+                retVal = new DataLayout( targetDataRef, isDisposable );
                 bool cleanOnException( )
                 {
                     retVal.Dispose( );
@@ -209,7 +224,7 @@ namespace Llvm.NET
 
                 try
                 {
-                    TargetDataMap.Add( targetDataRef.Pointer, retVal );
+                    TargetDataMap.Add( targetDataRef.Handle, retVal );
                 }
                 catch when( cleanOnException( ) )
                 {
@@ -224,7 +239,7 @@ namespace Llvm.NET
 
         protected virtual void Dispose( bool disposing )
         {
-            if( DataLayoutHandle.Pointer != IntPtr.Zero && IsDisposable )
+            if( DataLayoutHandle.Handle != IntPtr.Zero && IsDisposable )
             {
                 LLVMDisposeTargetData( DataLayoutHandle );
                 DataLayoutHandle = default;

@@ -15,7 +15,7 @@ namespace Llvm.NET
 
         internal MDOperand( MDNode owningNode, LLVMMDOperandRef handle )
         {
-            if( handle.Pointer == IntPtr.Zero )
+            if( handle.Handle == IntPtr.Zero )
             {
                 throw new ArgumentNullException( nameof( handle ) );
             }

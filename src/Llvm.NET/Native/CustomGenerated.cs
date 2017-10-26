@@ -34,36 +34,6 @@ namespace Llvm.NET.Native
         internal IntPtr Pointer { get; }
     }
 
-    internal partial struct LLVMMDOperandRef
-    {
-        internal LLVMMDOperandRef(IntPtr pointer)
-        {
-            Pointer = pointer;
-        }
-
-        internal readonly IntPtr Pointer;
-    }
-
-    internal partial struct LLVMNamedMDNodeRef
-    {
-        internal LLVMNamedMDNodeRef(IntPtr pointer)
-        {
-            Pointer = pointer;
-        }
-
-        internal readonly IntPtr Pointer;
-    }
-
-    internal partial struct LLVMComdatRef
-    {
-        internal LLVMComdatRef( IntPtr pointer )
-        {
-            Pointer = pointer;
-        }
-
-        internal readonly IntPtr Pointer;
-    }
-
 #pragma warning disable CA1008 // Enums should have zero value.
     internal enum LLVMModFlagBehavior
     {
@@ -826,5 +796,8 @@ namespace Llvm.NET.Native
 
         [DllImport( LibraryPath, CallingConvention = CallingConvention.Cdecl )]
         internal static extern void LLVMGlobalVariableAddDebugExpression( LLVMValueRef variable, LLVMMetadataRef metadataHandle );
+
+        [DllImport( LibraryPath, CallingConvention = CallingConvention.Cdecl )]
+        internal static extern void LLVMExecutionEngineClearGlobalMappingsFromModule( LLVMExecutionEngineRef ee, LLVMModuleRef m );
     }
 }

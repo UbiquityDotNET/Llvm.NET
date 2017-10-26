@@ -130,7 +130,7 @@ namespace Llvm.NET.Values
         {
             LLVMBasicBlockRef firstBlock = NativeMethods.LLVMGetFirstBasicBlock( ValueHandle );
             BasicBlock retVal;
-            if( firstBlock.Pointer == IntPtr.Zero )
+            if( firstBlock.Handle == IntPtr.Zero )
             {
                 retVal = AppendBasicBlock( name );
             }
@@ -167,7 +167,7 @@ namespace Llvm.NET.Values
                 retVal = AppendBasicBlock( name );
             }
 
-            Debug.Assert( retVal.ContainingFunction.ValueHandle.Pointer == ValueHandle.Pointer, "Expected block parented to this function" );
+            Debug.Assert( retVal.ContainingFunction.ValueHandle.Handle == ValueHandle.Handle, "Expected block parented to this function" );
             return retVal;
         }
 

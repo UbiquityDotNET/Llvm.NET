@@ -1095,7 +1095,7 @@ namespace Llvm.NET.DebugInfo
 
         public void Dispose( )
         {
-            if( BuilderHandle.Pointer != IntPtr.Zero )
+            if( BuilderHandle.Handle != IntPtr.Zero )
             {
                 LLVMDIBuilderDestroy( BuilderHandle );
                 BuilderHandle = default;

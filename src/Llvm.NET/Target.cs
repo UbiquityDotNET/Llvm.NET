@@ -30,7 +30,6 @@ namespace Llvm.NET
         public bool HasAsmBackEnd => LLVMTargetHasAsmBackend( TargetHandle );
 
         /// <summary>Creates a <see cref="TargetMachine"/> for the target and specified parameters</summary>
-        /// <param name="context">Context to use for LLVM objects created by this machine</param>
         /// <param name="triple">Target triple for this machine (e.g. -mtriple)</param>
         /// <param name="cpu">CPU for this machine (e.g. -mcpu)</param>
         /// <param name="features">Features for this machine (e.g. -mattr...)</param>
@@ -38,8 +37,7 @@ namespace Llvm.NET
         /// <param name="relocationMode">Relocation mode for generated code</param>
         /// <param name="codeModel"><see cref="CodeModel"/> to use for generated code</param>
         /// <returns><see cref="TargetMachine"/> based on the specified parameters</returns>
-        public TargetMachine CreateTargetMachine( Context context
-                                                , string triple
+        public TargetMachine CreateTargetMachine( string triple
                                                 , string cpu = null
                                                 , string features = null
                                                 , CodeGenOpt optLevel = CodeGenOpt.Default
@@ -47,7 +45,6 @@ namespace Llvm.NET
                                                 , CodeModel codeModel = CodeModel.Default
                                                 )
         {
-            context.ValidateNotNull( nameof( context ) );
             triple.ValidateNotNullOrWhiteSpace( nameof( triple ) );
             optLevel.ValidateDefined( nameof( optLevel ) );
             relocationMode.ValidateDefined( nameof( relocationMode ) );
@@ -61,7 +58,7 @@ namespace Llvm.NET
                                                              , ( LLVMRelocMode )relocationMode
                                                              , ( LLVMCodeModel )codeModel
                                                              );
-            return new TargetMachine( context, targetMachineHandle );
+            return new TargetMachine( targetMachineHandle );
         }
 
         /// <summary>Gets an enumerable collection of the available targets built into this library</summary>
@@ -70,7 +67,7 @@ namespace Llvm.NET
             get
             {
                 var current = LLVMGetFirstTarget( );
-                while( current.Pointer != IntPtr.Zero )
+                while( current.Handle != IntPtr.Zero )
                 {
                     yield return FromHandle( current );
                     current = LLVMGetNextTarget( current );
@@ -95,7 +92,7 @@ namespace Llvm.NET
 
         internal Target( LLVMTargetRef targetHandle )
         {
-            targetHandle.Pointer.ValidateNotNull( nameof( targetHandle ) );
+            targetHandle.Handle.ValidateNotNull( nameof( targetHandle ) );
 
             TargetHandle = targetHandle;
         }
@@ -104,16 +101,16 @@ namespace Llvm.NET
 
         internal static Target FromHandle( LLVMTargetRef targetHandle )
         {
-            targetHandle.Pointer.ValidateNotNull( nameof( targetHandle ) );
+            targetHandle.Handle.ValidateNotNull( nameof( targetHandle ) );
             lock( TargetMap )
             {
-                if( TargetMap.TryGetValue( targetHandle.Pointer, out Target retVal ) )
+                if( TargetMap.TryGetValue( targetHandle.Handle, out Target retVal ) )
                 {
                     return retVal;
                 }
 
                 retVal = new Target( targetHandle );
-                TargetMap.Add( targetHandle.Pointer, retVal );
+                TargetMap.Add( targetHandle.Handle, retVal );
                 return retVal;
             }
         }

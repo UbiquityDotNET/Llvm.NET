@@ -33,7 +33,7 @@ namespace Llvm.NET
         {
             get
             {
-                if( BufferHandle.Pointer == IntPtr.Zero )
+                if( BufferHandle.Handle == IntPtr.Zero )
                 {
                     return 0;
                 }
@@ -44,7 +44,7 @@ namespace Llvm.NET
 
         public void Dispose( )
         {
-            if( BufferHandle.Pointer != IntPtr.Zero )
+            if( BufferHandle.Handle != IntPtr.Zero )
             {
                 LLVMDisposeMemoryBuffer( BufferHandle );
                 BufferHandle_ = default;
@@ -61,7 +61,7 @@ namespace Llvm.NET
 
         internal MemoryBuffer( LLVMMemoryBufferRef bufferHandle )
         {
-            bufferHandle.Pointer.ValidateNotNull( nameof( bufferHandle ) );
+            bufferHandle.Handle.ValidateNotNull( nameof( bufferHandle ) );
 
             BufferHandle_ = bufferHandle;
         }

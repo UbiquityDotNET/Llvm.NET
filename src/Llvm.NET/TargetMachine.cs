@@ -47,12 +47,12 @@ namespace Llvm.NET
             get
             {
                 var handle = LLVMCreateTargetDataLayout( TargetMachineHandle );
-                if( handle.Pointer == IntPtr.Zero )
+                if( handle.Handle == IntPtr.Zero )
                 {
                     return null;
                 }
 
-                return DataLayout.FromHandle( Context, handle, isDisposable: false );
+                return DataLayout.FromHandle( handle, isDisposable: false );
             }
         }
 
@@ -116,21 +116,19 @@ namespace Llvm.NET
             return new MemoryBuffer( bufferHandle );
         }
 
-        /// <summary>Gets the <see cref="Context"/> this machine is associated with</summary>
-        public Context Context { get; }
-
-        internal TargetMachine( Context context, LLVMTargetMachineRef targetMachineHandle )
+        internal TargetMachine( LLVMTargetMachineRef targetMachineHandle, bool ownsHandle = true )
         {
-            context.ValidateNotNull( nameof( context ) );
-            targetMachineHandle.Pointer.ValidateNotNull( nameof( targetMachineHandle ) );
+            targetMachineHandle.Handle.ValidateNotNull( nameof( targetMachineHandle ) );
 
             TargetMachineHandle = targetMachineHandle;
-            Context = context;
+            OwnsHandle = ownsHandle;
         }
 
         internal LLVMTargetMachineRef TargetMachineHandle { get; private set; }
 
-        private bool IsDisposed => TargetMachineHandle.Pointer == IntPtr.Zero;
+        private bool IsDisposed => TargetMachineHandle.Handle == IntPtr.Zero;
+
+        private bool OwnsHandle { get; }
 
         private void DisposeTargetMachine( bool disposing )
         {
@@ -141,8 +139,12 @@ namespace Llvm.NET
                     // dispose any managed resources
                 }
 
-                LLVMDisposeTargetMachine( TargetMachineHandle );
-                TargetMachineHandle = default( LLVMTargetMachineRef );
+                if( OwnsHandle )
+                {
+                    LLVMDisposeTargetMachine( TargetMachineHandle );
+                }
+
+                TargetMachineHandle = default;
             }
         }
     }

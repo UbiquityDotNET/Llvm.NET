@@ -10,6 +10,7 @@ using System.Linq;
 using System.Text;
 using JetBrains.Annotations;
 using Llvm.NET.DebugInfo;
+using Llvm.NET.JIT;
 using Llvm.NET.Native;
 using Llvm.NET.Types;
 using Llvm.NET.Values;
@@ -65,7 +66,7 @@ namespace Llvm.NET
         }
 
         /// <summary>Gets a value indicating whether this instance is still valid</summary>
-        public bool IsDisposed => ContextHandle.Pointer == IntPtr.Zero;
+        public bool IsDisposed => ContextHandle.Handle == IntPtr.Zero;
 
         /// <summary>Gets the LLVM void type for this context</summary>
         public ITypeRef VoidType => TypeRef.FromHandle( LLVMVoidTypeInContext( ContextHandle ) );
@@ -169,7 +170,7 @@ namespace Llvm.NET
             returnType.ValidateNotNull( nameof( returnType ) );
             args.ValidateNotNull( nameof( args ) );
 
-            if( ContextHandle.Pointer != returnType.Context.ContextHandle.Pointer )
+            if( ContextHandle.Handle != returnType.Context.ContextHandle.Handle )
             {
                 throw new ArgumentException( "Mismatched context", nameof( returnType ) );
             }
@@ -733,18 +734,18 @@ namespace Llvm.NET
         internal AttributeValue GetAttributeFor( LLVMAttributeRef handle, Func<Context, LLVMAttributeRef, AttributeValue> factory )
         {
             factory.ValidateNotNull( nameof( factory ) );
-            if( handle.Pointer.IsNull( ) )
+            if( handle.Handle.IsNull( ) )
             {
                 return default( AttributeValue );
             }
 
-            if( AttributeValueCache.TryGetValue( handle.Pointer, out AttributeValue retVal ) )
+            if( AttributeValueCache.TryGetValue( handle.Handle, out AttributeValue retVal ) )
             {
                 return retVal;
             }
 
             retVal = factory( this, handle );
-            AttributeValueCache.Add( handle.Pointer, retVal );
+            AttributeValueCache.Add( handle.Handle, retVal );
             return retVal;
         }
 
@@ -758,96 +759,30 @@ namespace Llvm.NET
         // context from handles where there isn't any APIs to retrieve the Context.
         #region LLVM handle Interning
 
-        internal static Context GetContextFor( LLVMContextRef contextRef )
-        {
-            if( contextRef.Pointer == IntPtr.Zero )
-            {
-                return null;
-            }
-
-            lock( ContextCache )
-            {
-                if( ContextCache.TryGetValue( contextRef, out Context retVal ) )
-                {
-                    return retVal;
-                }
-
-                return new Context( contextRef );
-            }
-        }
-
-        internal static Context GetContextFor( LLVMModuleRef moduleRef )
-        {
-            if( moduleRef.Pointer == IntPtr.Zero )
-            {
-                return null;
-            }
-
-            var hContext = LLVMGetModuleContext( moduleRef );
-            Debug.Assert( hContext.Pointer != IntPtr.Zero, "Should not get a null pointer from LLVM" );
-            return GetContextFor( hContext );
-        }
-
-        internal static Context GetContextFor( LLVMValueRef valueRef )
-        {
-            if( valueRef.Pointer == IntPtr.Zero )
-            {
-                return null;
-            }
-
-            var hType = LLVMTypeOf( valueRef );
-            Debug.Assert( hType.Pointer != IntPtr.Zero, "Should not get a null pointer from LLVM" );
-            return GetContextFor( hType );
-        }
-
-        internal static Context GetContextFor( LLVMTypeRef typeRef )
-        {
-            if( typeRef.Pointer == IntPtr.Zero )
-            {
-                return null;
-            }
-
-            var hContext = LLVMGetTypeContext( typeRef );
-            Debug.Assert( hContext.Pointer != IntPtr.Zero, "Should not get a null pointer from LLVM" );
-            return GetContextFor( hContext );
-        }
-
-        internal static Context GetContextFor( LLVMMetadataRef handle )
-        {
-            if( handle == LLVMMetadataRef.Zero )
-            {
-                return null;
-            }
-
-            var hContext = LLVMGetNodeContext( handle );
-            Debug.Assert( hContext.Pointer != IntPtr.Zero, "Should not get a null pointer from LLVM" );
-            return GetContextFor( hContext );
-        }
-
         internal void AddModule( BitcodeModule module )
         {
-            ModuleCache.Add( module.ModuleHandle.Pointer, module );
+            ModuleCache.Add( module.ModuleHandle.Handle, module );
         }
 
         internal void RemoveModule( BitcodeModule module )
         {
-            ModuleCache.Remove( module.ModuleHandle.Pointer );
+            ModuleCache.Remove( module.ModuleHandle.Handle );
         }
 
         internal BitcodeModule GetModuleFor( LLVMModuleRef moduleRef )
         {
-            if( moduleRef.Pointer == IntPtr.Zero )
+            if( moduleRef.Handle == IntPtr.Zero )
             {
                 throw new ArgumentNullException( nameof( moduleRef ) );
             }
 
             var hModuleContext = LLVMGetModuleContext( moduleRef );
-            if( hModuleContext.Pointer != ContextHandle.Pointer )
+            if( hModuleContext.Handle != ContextHandle.Handle )
             {
                 throw new ArgumentException( "Incorrect context for module" );
             }
 
-            if( !ModuleCache.TryGetValue( moduleRef.Pointer, out BitcodeModule retVal ) )
+            if( !ModuleCache.TryGetValue( moduleRef.Handle, out BitcodeModule retVal ) )
             {
                 retVal = new BitcodeModule( moduleRef );
             }
@@ -860,28 +795,24 @@ namespace Llvm.NET
             MetadataCache.Remove( node.MetadataHandle );
         }
 
-        [SuppressMessage( "Microsoft.Performance", "CA1822:MarkMembersAsStatic", Justification = "Conditional attribute makes this an empty method in release builds" )]
-        [Conditional( "DEBUG" )]
-        internal void AssertValueNotInterned( LLVMValueRef valueRef )
+        internal Value GetValueFor( LLVMValueRef valueRef )
         {
-            Debug.Assert( !ValueCache.ContainsKey( valueRef.Pointer ), "Value should not be interned already" );
-        }
-
-        internal Value GetValueFor( LLVMValueRef valueRef, Func<LLVMValueRef, Value> constructor )
-        {
-            if( valueRef.Pointer == IntPtr.Zero )
+            if( valueRef.IsNull( ) )
             {
                 throw new ArgumentNullException( nameof( valueRef ) );
             }
 
-            if( ValueCache.TryGetValue( valueRef.Pointer, out Value retVal ) )
+            return ValueCache.GetItemFor( valueRef, this );
+        }
+
+        internal ExecutionEngine GetEngineFor( LLVMExecutionEngineRef h )
+        {
+            if( h.IsNull( ) )
             {
-                return retVal;
+                throw new ArgumentNullException( nameof( h ) );
             }
 
-            retVal = constructor( valueRef );
-            ValueCache.Add( valueRef.Pointer, retVal );
-            return retVal;
+            return EngineCache.GetItemFor( h, this );
         }
 
         internal LlvmMetadata GetNodeFor( LLVMMetadataRef handle, Func<LLVMMetadataRef, LlvmMetadata> staticFactory )
@@ -908,7 +839,7 @@ namespace Llvm.NET
                 throw new ArgumentException( "Cannot get operand for a node from a different context", nameof( owningNode ) );
             }
 
-            if( handle.Pointer == IntPtr.Zero )
+            if( handle.Handle == IntPtr.Zero )
             {
                 throw new ArgumentNullException( nameof( handle ) );
             }
@@ -923,58 +854,49 @@ namespace Llvm.NET
             return retVal;
         }
 
-        [SuppressMessage( "Microsoft.Performance", "CA1822:MarkMembersAsStatic", Justification = "Conditional attribute makes this an empty method in release builds" )]
-        [Conditional( "DEBUG" )]
-        internal void AssertTypeNotInterned( LLVMTypeRef typeRef )
-        {
-            Debug.Assert( !TypeCache.ContainsKey( typeRef.Pointer ), "TYpe should not be interened" );
-        }
-
         internal ITypeRef GetTypeFor( LLVMTypeRef valueRef, Func<LLVMTypeRef, ITypeRef> constructor )
         {
-            if( valueRef.Pointer == IntPtr.Zero )
+            if( valueRef.Handle == IntPtr.Zero )
             {
                 throw new ArgumentNullException( nameof( valueRef ) );
             }
 
-            if( TypeCache.TryGetValue( valueRef.Pointer, out ITypeRef retVal ) )
+            if( TypeCache.TryGetValue( valueRef.Handle, out ITypeRef retVal ) )
             {
                 return retVal;
             }
 
             retVal = constructor( valueRef );
-            TypeCache.Add( valueRef.Pointer, retVal );
+            TypeCache.Add( valueRef.Handle, retVal );
             return retVal;
         }
         #endregion
 
+        internal Context( LLVMContextRef contextRef )
+        {
+            ContextHandle = contextRef;
+            ContextCache.Add( this );
+            ActiveHandler = new WrappedNativeCallback( new LLVMDiagnosticHandler( DiagnosticHandler ) );
+            LLVMContextSetDiagnosticHandler( ContextHandle, ActiveHandler.GetFuncPointer( ), IntPtr.Zero );
+        }
+
         private void DisposeContext( )
         {
-            if( !ContextHandle.Pointer.IsNull() )
+            if( !ContextHandle.Handle.IsNull() )
             {
+                // make sure engines are disposed before disposing the context
+                // as they hold on to all owned Modules, which are ultimately destroyed
+                // when the context is, so when the GC finalizes the execution engine
+                // the modules are already destroyed triggering a double free.
+                EngineCache.Clear( );
                 LLVMContextSetDiagnosticHandler( ContextHandle, IntPtr.Zero, IntPtr.Zero );
                 ActiveHandler.Dispose( );
 
-                lock ( ContextCache )
-                {
-                    ContextCache.Remove( ContextHandle );
-                }
+                ContextCache.Remove( ContextHandle );
 
                 LLVMContextDispose( ContextHandle );
                 ContextHandle = default;
             }
-        }
-
-        private Context( LLVMContextRef contextRef )
-        {
-            ContextHandle = contextRef;
-            lock( ContextCache )
-            {
-                ContextCache.Add( contextRef, this );
-            }
-
-            ActiveHandler = new WrappedNativeCallback( new LLVMDiagnosticHandler( DiagnosticHandler ) );
-            LLVMContextSetDiagnosticHandler( ContextHandle, ActiveHandler.GetFuncPointer( ), IntPtr.Zero );
         }
 
         private void DiagnosticHandler( LLVMDiagnosticInfoRef param0, IntPtr param1 )
@@ -987,7 +909,9 @@ namespace Llvm.NET
 
         private WrappedNativeCallback ActiveHandler;
 
-        private readonly Dictionary< IntPtr, Value > ValueCache = new Dictionary< IntPtr, Value >( );
+        private readonly IHandleInterning<LLVMValueRef, Value> ValueCache = Value.CreateInterningFactory();
+
+        private readonly IHandleInterning<LLVMExecutionEngineRef, ExecutionEngine> EngineCache = ExecutionEngine.CreateInterningFactory();
 
         private readonly Dictionary< IntPtr, ITypeRef > TypeCache = new Dictionary< IntPtr, ITypeRef >( );
 
@@ -998,7 +922,5 @@ namespace Llvm.NET
         private readonly Dictionary< LLVMMetadataRef, LlvmMetadata > MetadataCache = new Dictionary< LLVMMetadataRef, LlvmMetadata >( );
 
         private readonly Dictionary< LLVMMDOperandRef, MDOperand > MDOperandCache = new Dictionary< LLVMMDOperandRef, MDOperand >( );
-
-        private static Dictionary<LLVMContextRef, Context> ContextCache = new Dictionary<LLVMContextRef, Context>( );
     }
 }

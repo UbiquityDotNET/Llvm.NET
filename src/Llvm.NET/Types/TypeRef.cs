@@ -89,7 +89,7 @@ namespace Llvm.NET.Types
         }
 
         /// <inheritdoc/>
-        public Context Context => Context.GetContextFor( TypeRefHandle );
+        public Context Context => TypeRefHandle.GetContextFor( );
 
         /// <inheritdoc/>
         public uint IntegerBitWidth
@@ -136,15 +136,10 @@ namespace Llvm.NET.Types
         internal TypeRef( LLVMTypeRef typeRef )
         {
             TypeRefHandle = typeRef;
-            if( typeRef.Pointer == IntPtr.Zero )
+            if( typeRef.Handle == IntPtr.Zero )
             {
                 throw new ArgumentNullException( nameof( typeRef ) );
             }
-
-#if DEBUG
-            var ctx = Context.GetContextFor( typeRef );
-            ctx.AssertTypeNotInterned( typeRef );
-#endif
         }
 
         internal static TypeRef FromHandle( LLVMTypeRef typeRef ) => FromHandle<TypeRef>( typeRef );
@@ -152,12 +147,12 @@ namespace Llvm.NET.Types
         internal static T FromHandle<T>( LLVMTypeRef typeRef )
             where T : class, ITypeRef
         {
-            if( typeRef.Pointer == IntPtr.Zero )
+            if( typeRef.Handle == IntPtr.Zero )
             {
                 return null;
             }
 
-            var ctx = Context.GetContextFor( typeRef );
+            var ctx = typeRef.GetContextFor( );
             return ( T )ctx.GetTypeFor( typeRef, StaticFactory );
         }
 

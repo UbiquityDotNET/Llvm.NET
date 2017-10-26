@@ -23,7 +23,7 @@ namespace Llvm.NET
     public class MDNode
         : LlvmMetadata
     {
-        public Context Context => Context.GetContextFor( MetadataHandle );
+        public Context Context => MetadataHandle.GetContextFor( );
 
         public bool IsDeleted => MetadataHandle == LLVMMetadataRef.Zero;
 
@@ -51,7 +51,7 @@ namespace Llvm.NET
                 throw new InvalidOperationException( "Cannot replace non temporary or resolved MDNode" );
             }
 
-            if( MetadataHandle.Pointer == IntPtr.Zero )
+            if( MetadataHandle.Handle == IntPtr.Zero )
             {
                 throw new InvalidOperationException( "Cannot Replace all uses of a null descriptor" );
             }
@@ -93,12 +93,12 @@ namespace Llvm.NET
         internal static T FromHandle<T>( LLVMMetadataRef handle )
         where T : MDNode
         {
-            if( handle.Pointer.IsNull( ) )
+            if( handle.Handle.IsNull( ) )
             {
                 return null;
             }
 
-            var context = Context.GetContextFor( handle );
+            var context = handle.GetContextFor( );
             return FromHandle<T>( context, handle );
         }
     }
