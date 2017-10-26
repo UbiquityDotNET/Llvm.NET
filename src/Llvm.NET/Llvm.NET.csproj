@@ -287,7 +287,6 @@
         </When>
         <Otherwise>
             <ItemGroup>
-                <PackageReference Include="PdbGit" Version="3.0.41" PrivateAssets="All" />
                 <PackageReference Include="LibLLVM.NET" Version="[$(PackageVersion)]" />
             </ItemGroup>
         </Otherwise>

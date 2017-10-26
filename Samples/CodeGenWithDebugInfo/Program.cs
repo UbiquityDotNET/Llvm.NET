@@ -39,7 +39,7 @@ namespace TestDebugInfo
                 StaticState.RegisterAll( );
                 var target = Target.FromTriple( TargetDetails.Triple );
                 using( var context = new Context( ) )
-                using( var targetMachine = target.CreateTargetMachine( context, TargetDetails.Triple, TargetDetails.Cpu, TargetDetails.Features, CodeGenOpt.Aggressive, Reloc.Default, CodeModel.Small ) )
+                using( var targetMachine = target.CreateTargetMachine( TargetDetails.Triple, TargetDetails.Cpu, TargetDetails.Features, CodeGenOpt.Aggressive, Reloc.Default, CodeModel.Small ) )
                 using( var module = new BitcodeModule( moduleName, context ) )
                 {
                     module.SourceFileName = Path.GetFileName( srcPath );
@@ -283,7 +283,7 @@ namespace TestDebugInfo
             var srcPtr = instBuilder.BitCast( copyFunc.Parameters[ 0 ], module.Context.Int8Type.CreatePointerType( ) )
                                     .SetDebugLocation( 15, 13, copyFunc.DISubProgram );
 
-            uint pointerSize = layout.IntPtrType( ).IntegerBitWidth;
+            uint pointerSize = layout.IntPtrType( module.Context ).IntegerBitWidth;
             instBuilder.MemCpy( module
                               , dstPtr
                               , srcPtr

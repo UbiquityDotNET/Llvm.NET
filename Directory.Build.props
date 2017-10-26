@@ -66,11 +66,11 @@
                 <IsTestProject>$(MSBuildProjectName.Contains('Test'))</IsTestProject>
             </PropertyGroup>
             <ItemGroup Condition="'$(NoCommonAnalyzers)'!='true' and '$(IsTestProject)' != 'true' and '$(SourceLinkEnabled)' != 'false'">
-                <PackageReference Include="SourceLink.Create.CommandLine" Version="2.1.0" PrivateAssets="All" />
+                <PackageReference Include="SourceLink.Create.CommandLine" Version="2.5.0" PrivateAssets="All" />
             </ItemGroup>
             <ItemGroup Condition="'$(NoCommonAnalyzers)'!='true'">
                 <PackageReference Include="Microsoft.AnalyzerPowerPack" Version="1.1.0" PrivateAssets="All" />
-                <PackageReference Include="RefactoringEssentials" Version="5.2.0" PrivateAssets="All" />
+                <PackageReference Include="RefactoringEssentials" Version="5.4.0" PrivateAssets="All" />
                 <PackageReference Include="StyleCop.Analyzers" Version="1.0.2" PrivateAssets="All" />
             </ItemGroup>
             <ItemGroup>
