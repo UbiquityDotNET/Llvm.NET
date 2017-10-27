@@ -171,6 +171,9 @@
                                   <a href="Llvm.NET.BitcodeModule.IsDisposed.html" title="IsDisposed" class="">IsDisposed</a>
                                 </li>
                                 <li class="">
+                                  <a href="Llvm.NET.BitcodeModule.IsShared.html" title="IsShared" class="">IsShared</a>
+                                </li>
+                                <li class="">
                                   <a href="Llvm.NET.BitcodeModule.Layout.html" title="Layout" class="">Layout</a>
                                 </li>
                                 <li class="">
@@ -178,6 +181,9 @@
                                 </li>
                                 <li class="">
                                   <a href="Llvm.NET.BitcodeModule.LoadFrom.html" title="LoadFrom" class="">LoadFrom</a>
+                                </li>
+                                <li class="">
+                                  <a href="Llvm.NET.BitcodeModule.MakeShared.html" title="MakeShared" class="">MakeShared</a>
                                 </li>
                                 <li class="">
                                   <a href="Llvm.NET.BitcodeModule.ModuleFlags.html" title="ModuleFlags" class="">ModuleFlags</a>
@@ -5472,36 +5478,22 @@ representation of the LLVM bit-code.</p>
     </thead>
     <tbody>
       <tr>
-        <td id="Llvm_NET_BitcodeModule__ctor" data-uid="Llvm.NET.BitcodeModule.#ctor">
-          <a class="xref" href="Llvm.NET.BitcodeModule.-ctor.html#Llvm_NET_BitcodeModule__ctor">BitcodeModule()</a>
+        <td id="Llvm_NET_BitcodeModule__ctor_Llvm_NET_Context_" data-uid="Llvm.NET.BitcodeModule.#ctor(Llvm.NET.Context)">
+          <a class="xref" href="Llvm.NET.BitcodeModule.-ctor.html#Llvm_NET_BitcodeModule__ctor_Llvm_NET_Context_">BitcodeModule(Context)</a>
         </td>
-        <td class="markdown level1 summary"><p>Creates an unnamed module without debug information</p>
+        <td class="markdown level1 summary"><p>Initializes a new instance of the <a class="xref" href="Llvm.NET.BitcodeModule.html">BitcodeModule</a> class in a given context</p>
 </td>
       </tr>
       <tr>
-        <td id="Llvm_NET_BitcodeModule__ctor_System_String_" data-uid="Llvm.NET.BitcodeModule.#ctor(System.String)">
-          <a class="xref" href="Llvm.NET.BitcodeModule.-ctor.html#Llvm_NET_BitcodeModule__ctor_System_String_">BitcodeModule(String)</a>
+        <td id="Llvm_NET_BitcodeModule__ctor_Llvm_NET_Context_System_String_" data-uid="Llvm.NET.BitcodeModule.#ctor(Llvm.NET.Context,System.String)">
+          <a class="xref" href="Llvm.NET.BitcodeModule.-ctor.html#Llvm_NET_BitcodeModule__ctor_Llvm_NET_Context_System_String_">BitcodeModule(Context, String)</a>
         </td>
-        <td class="markdown level1 summary"><p>Creates a new module with the specified id in a new context</p>
+        <td class="markdown level1 summary"><p>Initializes a new instance of the <a class="xref" href="Llvm.NET.BitcodeModule.html">BitcodeModule</a> class in a given context</p>
 </td>
       </tr>
       <tr>
-        <td id="Llvm_NET_BitcodeModule__ctor_System_String_Llvm_NET_Context_" data-uid="Llvm.NET.BitcodeModule.#ctor(System.String,Llvm.NET.Context)">
-          <a class="xref" href="Llvm.NET.BitcodeModule.-ctor.html#Llvm_NET_BitcodeModule__ctor_System_String_Llvm_NET_Context_">BitcodeModule(String, Context)</a>
-        </td>
-        <td class="markdown level1 summary"><p>Creates an named module in a given context</p>
-</td>
-      </tr>
-      <tr>
-        <td id="Llvm_NET_BitcodeModule__ctor_System_String_Llvm_NET_Context_Llvm_NET_DebugInfo_SourceLanguage_System_String_System_String_System_Boolean_System_String_System_UInt32_" data-uid="Llvm.NET.BitcodeModule.#ctor(System.String,Llvm.NET.Context,Llvm.NET.DebugInfo.SourceLanguage,System.String,System.String,System.Boolean,System.String,System.UInt32)">
-          <a class="xref" href="Llvm.NET.BitcodeModule.-ctor.html#Llvm_NET_BitcodeModule__ctor_System_String_Llvm_NET_Context_Llvm_NET_DebugInfo_SourceLanguage_System_String_System_String_System_Boolean_System_String_System_UInt32_">BitcodeModule(String, Context, SourceLanguage, String, String, Boolean, String, UInt32)</a>
-        </td>
-        <td class="markdown level1 summary"><p>Creates a named module with a root <a class="xref" href="Llvm.NET.BitcodeModule.DICompileUnit.html#Llvm_NET_BitcodeModule_DICompileUnit">DICompileUnit</a> to contain debugging information</p>
-</td>
-      </tr>
-      <tr>
-        <td id="Llvm_NET_BitcodeModule__ctor_System_String_Llvm_NET_DebugInfo_SourceLanguage_System_String_System_String_System_Boolean_System_String_System_UInt32_" data-uid="Llvm.NET.BitcodeModule.#ctor(System.String,Llvm.NET.DebugInfo.SourceLanguage,System.String,System.String,System.Boolean,System.String,System.UInt32)">
-          <a class="xref" href="Llvm.NET.BitcodeModule.-ctor.html#Llvm_NET_BitcodeModule__ctor_System_String_Llvm_NET_DebugInfo_SourceLanguage_System_String_System_String_System_Boolean_System_String_System_UInt32_">BitcodeModule(String, SourceLanguage, String, String, Boolean, String, UInt32)</a>
+        <td id="Llvm_NET_BitcodeModule__ctor_Llvm_NET_Context_System_String_Llvm_NET_DebugInfo_SourceLanguage_System_String_System_String_System_Boolean_System_String_System_UInt32_" data-uid="Llvm.NET.BitcodeModule.#ctor(Llvm.NET.Context,System.String,Llvm.NET.DebugInfo.SourceLanguage,System.String,System.String,System.Boolean,System.String,System.UInt32)">
+          <a class="xref" href="Llvm.NET.BitcodeModule.-ctor.html#Llvm_NET_BitcodeModule__ctor_Llvm_NET_Context_System_String_Llvm_NET_DebugInfo_SourceLanguage_System_String_System_String_System_Boolean_System_String_System_UInt32_">BitcodeModule(Context, String, SourceLanguage, String, String, Boolean, String, UInt32)</a>
         </td>
         <td class="markdown level1 summary"><p>Creates a named module with a root <a class="xref" href="Llvm.NET.BitcodeModule.DICompileUnit.html#Llvm_NET_BitcodeModule_DICompileUnit">DICompileUnit</a> to contain debugging information</p>
 </td>
@@ -5605,6 +5597,13 @@ representation of the LLVM bit-code.</p>
           <a class="xref" href="Llvm.NET.BitcodeModule.IsDisposed.html#Llvm_NET_BitcodeModule_IsDisposed">IsDisposed</a>
         </td>
         <td class="markdown level1 summary"></td>
+      </tr>
+      <tr>
+        <td id="Llvm_NET_BitcodeModule_IsShared" data-uid="Llvm.NET.BitcodeModule.IsShared">
+          <a class="xref" href="Llvm.NET.BitcodeModule.IsShared.html#Llvm_NET_BitcodeModule_IsShared">IsShared</a>
+        </td>
+        <td class="markdown level1 summary"><p>Gets a value indicating whether this module is shared with a JIT engine</p>
+</td>
       </tr>
       <tr>
         <td id="Llvm_NET_BitcodeModule_Layout" data-uid="Llvm.NET.BitcodeModule.Layout">
@@ -5830,6 +5829,13 @@ representation of the LLVM bit-code.</p>
           <a class="xref" href="Llvm.NET.BitcodeModule.LoadFrom.html#Llvm_NET_BitcodeModule_LoadFrom_System_String_Llvm_NET_Context_">LoadFrom(String, Context)</a>
         </td>
         <td class="markdown level1 summary"><p>Load a bit-code module from a given file</p>
+</td>
+      </tr>
+      <tr>
+        <td id="Llvm_NET_BitcodeModule_MakeShared" data-uid="Llvm.NET.BitcodeModule.MakeShared">
+          <a class="xref" href="Llvm.NET.BitcodeModule.MakeShared.html#Llvm_NET_BitcodeModule_MakeShared">MakeShared()</a>
+        </td>
+        <td class="markdown level1 summary"><p>Makes this module a shared module if it isn&apos;t already</p>
 </td>
       </tr>
       <tr>

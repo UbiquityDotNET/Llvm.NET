@@ -171,6 +171,9 @@
                                   <a href="Llvm.NET.BitcodeModule.IsDisposed.html" title="IsDisposed" class="">IsDisposed</a>
                                 </li>
                                 <li class="">
+                                  <a href="Llvm.NET.BitcodeModule.IsShared.html" title="IsShared" class="">IsShared</a>
+                                </li>
+                                <li class="">
                                   <a href="Llvm.NET.BitcodeModule.Layout.html" title="Layout" class="">Layout</a>
                                 </li>
                                 <li class="">
@@ -178,6 +181,9 @@
                                 </li>
                                 <li class="">
                                   <a href="Llvm.NET.BitcodeModule.LoadFrom.html" title="LoadFrom" class="">LoadFrom</a>
+                                </li>
+                                <li class="">
+                                  <a href="Llvm.NET.BitcodeModule.MakeShared.html" title="MakeShared" class="">MakeShared</a>
                                 </li>
                                 <li class="">
                                   <a href="Llvm.NET.BitcodeModule.ModuleFlags.html" title="ModuleFlags" class="">ModuleFlags</a>
@@ -5408,35 +5414,19 @@
 
 <span class="small pull-right mobile-hide">
   <span class="divider">|</span>
-  <a href="https://github.com/UbiquityDotNET/Llvm.NET/new/master/apiSpec/new?filename=Llvm_NET_BitcodeModule__ctor.md&amp;value=---%0Auid%3A%20Llvm.NET.BitcodeModule.%23ctor%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  <a href="https://github.com/UbiquityDotNET/Llvm.NET/new/master/apiSpec/new?filename=Llvm_NET_BitcodeModule__ctor_Llvm_NET_Context_.md&amp;value=---%0Auid%3A%20Llvm.NET.BitcodeModule.%23ctor(Llvm.NET.Context)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
 </span>
 <span class="small pull-right mobile-hide">
-  <a href="https://github.com/UbiquityDotNET/Llvm.NET/blob/master/src/Llvm.NET/BitcodeModule.cs/#L31">View Source</a>
+  <a href="https://github.com/UbiquityDotNET/Llvm.NET/blob/master/src/Llvm.NET/BitcodeModule.cs/#L32">View Source</a>
 </span>
 <a id="Llvm_NET_BitcodeModule__ctor_" data-uid="Llvm.NET.BitcodeModule.#ctor*"></a>
-<h4 id="Llvm_NET_BitcodeModule__ctor" data-uid="Llvm.NET.BitcodeModule.#ctor">BitcodeModule()</h4>
-<div class="markdown level1 summary"><p>Creates an unnamed module without debug information</p>
+<h4 id="Llvm_NET_BitcodeModule__ctor_Llvm_NET_Context_" data-uid="Llvm.NET.BitcodeModule.#ctor(Llvm.NET.Context)">BitcodeModule(Context)</h4>
+<div class="markdown level1 summary"><p>Initializes a new instance of the <a class="xref" href="Llvm.NET.BitcodeModule.html">BitcodeModule</a> class in a given context</p>
 </div>
 <div class="markdown level1 conceptual"></div>
 <h5 class="decalaration">Declaration</h5>
 <div class="codewrapper">
-  <pre><code class="lang-csharp hljs">public BitcodeModule()</code></pre>
-</div>
-<span class="small pull-right mobile-hide">
-  <span class="divider">|</span>
-  <a href="https://github.com/UbiquityDotNET/Llvm.NET/new/master/apiSpec/new?filename=Llvm_NET_BitcodeModule__ctor_System_String_.md&amp;value=---%0Auid%3A%20Llvm.NET.BitcodeModule.%23ctor(System.String)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
-</span>
-<span class="small pull-right mobile-hide">
-  <a href="https://github.com/UbiquityDotNET/Llvm.NET/blob/master/src/Llvm.NET/BitcodeModule.cs/#L38">View Source</a>
-</span>
-<a id="Llvm_NET_BitcodeModule__ctor_" data-uid="Llvm.NET.BitcodeModule.#ctor*"></a>
-<h4 id="Llvm_NET_BitcodeModule__ctor_System_String_" data-uid="Llvm.NET.BitcodeModule.#ctor(System.String)">BitcodeModule(String)</h4>
-<div class="markdown level1 summary"><p>Creates a new module with the specified id in a new context</p>
-</div>
-<div class="markdown level1 conceptual"></div>
-<h5 class="decalaration">Declaration</h5>
-<div class="codewrapper">
-  <pre><code class="lang-csharp hljs">public BitcodeModule(string moduleId)</code></pre>
+  <pre><code class="lang-csharp hljs">public BitcodeModule([NotNull] Context context)</code></pre>
 </div>
 <h5 class="parameters">Parameters</h5>
 <table class="table table-bordered table-striped table-condensed">
@@ -5448,46 +5438,6 @@
     </tr>
   </thead>
   <tbody>
-    <tr>
-      <td><a class="xref" href="https://msdn.microsoft.com/en-us/library/system.string(v=vs.110).aspx">String</a></td>
-      <td><span class="parametername">moduleId</span></td>
-      <td><p>Module&apos;s ID</p>
-</td>
-    </tr>
-  </tbody>
-</table>
-<span class="small pull-right mobile-hide">
-  <span class="divider">|</span>
-  <a href="https://github.com/UbiquityDotNET/Llvm.NET/new/master/apiSpec/new?filename=Llvm_NET_BitcodeModule__ctor_System_String_Llvm_NET_Context_.md&amp;value=---%0Auid%3A%20Llvm.NET.BitcodeModule.%23ctor(System.String%2CLlvm.NET.Context)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
-</span>
-<span class="small pull-right mobile-hide">
-  <a href="https://github.com/UbiquityDotNET/Llvm.NET/blob/master/src/Llvm.NET/BitcodeModule.cs/#L46">View Source</a>
-</span>
-<a id="Llvm_NET_BitcodeModule__ctor_" data-uid="Llvm.NET.BitcodeModule.#ctor*"></a>
-<h4 id="Llvm_NET_BitcodeModule__ctor_System_String_Llvm_NET_Context_" data-uid="Llvm.NET.BitcodeModule.#ctor(System.String,Llvm.NET.Context)">BitcodeModule(String, Context)</h4>
-<div class="markdown level1 summary"><p>Creates an named module in a given context</p>
-</div>
-<div class="markdown level1 conceptual"></div>
-<h5 class="decalaration">Declaration</h5>
-<div class="codewrapper">
-  <pre><code class="lang-csharp hljs">public BitcodeModule([CanBeNull] string moduleId, [CanBeNull] Context context)</code></pre>
-</div>
-<h5 class="parameters">Parameters</h5>
-<table class="table table-bordered table-striped table-condensed">
-  <thead>
-    <tr>
-      <th>Type</th>
-      <th>Name</th>
-      <th>Description</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td><a class="xref" href="https://msdn.microsoft.com/en-us/library/system.string(v=vs.110).aspx">String</a></td>
-      <td><span class="parametername">moduleId</span></td>
-      <td><p>Module&apos;s ID</p>
-</td>
-    </tr>
     <tr>
       <td><a class="xref" href="Llvm.NET.Context.html">Context</a></td>
       <td><span class="parametername">context</span></td>
@@ -5498,19 +5448,19 @@
 </table>
 <span class="small pull-right mobile-hide">
   <span class="divider">|</span>
-  <a href="https://github.com/UbiquityDotNET/Llvm.NET/new/master/apiSpec/new?filename=Llvm_NET_BitcodeModule__ctor_System_String_Llvm_NET_DebugInfo_SourceLanguage_System_String_System_String_System_Boolean_System_String_System_UInt32_.md&amp;value=---%0Auid%3A%20Llvm.NET.BitcodeModule.%23ctor(System.String%2CLlvm.NET.DebugInfo.SourceLanguage%2CSystem.String%2CSystem.String%2CSystem.Boolean%2CSystem.String%2CSystem.UInt32)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  <a href="https://github.com/UbiquityDotNET/Llvm.NET/new/master/apiSpec/new?filename=Llvm_NET_BitcodeModule__ctor_Llvm_NET_Context_System_String_.md&amp;value=---%0Auid%3A%20Llvm.NET.BitcodeModule.%23ctor(Llvm.NET.Context%2CSystem.String)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
 </span>
 <span class="small pull-right mobile-hide">
-  <a href="https://github.com/UbiquityDotNET/Llvm.NET/blob/master/src/Llvm.NET/BitcodeModule.cs/#L96">View Source</a>
+  <a href="https://github.com/UbiquityDotNET/Llvm.NET/blob/master/src/Llvm.NET/BitcodeModule.cs/#L40">View Source</a>
 </span>
 <a id="Llvm_NET_BitcodeModule__ctor_" data-uid="Llvm.NET.BitcodeModule.#ctor*"></a>
-<h4 id="Llvm_NET_BitcodeModule__ctor_System_String_Llvm_NET_DebugInfo_SourceLanguage_System_String_System_String_System_Boolean_System_String_System_UInt32_" data-uid="Llvm.NET.BitcodeModule.#ctor(System.String,Llvm.NET.DebugInfo.SourceLanguage,System.String,System.String,System.Boolean,System.String,System.UInt32)">BitcodeModule(String, SourceLanguage, String, String, Boolean, String, UInt32)</h4>
-<div class="markdown level1 summary"><p>Creates a named module with a root <a class="xref" href="Llvm.NET.BitcodeModule.DICompileUnit.html#Llvm_NET_BitcodeModule_DICompileUnit">DICompileUnit</a> to contain debugging information</p>
+<h4 id="Llvm_NET_BitcodeModule__ctor_Llvm_NET_Context_System_String_" data-uid="Llvm.NET.BitcodeModule.#ctor(Llvm.NET.Context,System.String)">BitcodeModule(Context, String)</h4>
+<div class="markdown level1 summary"><p>Initializes a new instance of the <a class="xref" href="Llvm.NET.BitcodeModule.html">BitcodeModule</a> class in a given context</p>
 </div>
 <div class="markdown level1 conceptual"></div>
 <h5 class="decalaration">Declaration</h5>
 <div class="codewrapper">
-  <pre><code class="lang-csharp hljs">public BitcodeModule(string moduleId, SourceLanguage language, string srcFilePath, string producer, bool optimized = false, string flags = &quot;&quot;, uint runtimeVersion = 0U)</code></pre>
+  <pre><code class="lang-csharp hljs">public BitcodeModule([NotNull] Context context, string moduleId)</code></pre>
 </div>
 <h5 class="parameters">Parameters</h5>
 <table class="table table-bordered table-striped table-condensed">
@@ -5523,64 +5473,34 @@
   </thead>
   <tbody>
     <tr>
+      <td><a class="xref" href="Llvm.NET.Context.html">Context</a></td>
+      <td><span class="parametername">context</span></td>
+      <td><p>Context for the module</p>
+</td>
+    </tr>
+    <tr>
       <td><a class="xref" href="https://msdn.microsoft.com/en-us/library/system.string(v=vs.110).aspx">String</a></td>
       <td><span class="parametername">moduleId</span></td>
-      <td><p>Module name</p>
-</td>
-    </tr>
-    <tr>
-      <td><a class="xref" href="Llvm.NET.DebugInfo.SourceLanguage.html">SourceLanguage</a></td>
-      <td><span class="parametername">language</span></td>
-      <td><p>Language to store in the debugging information</p>
-</td>
-    </tr>
-    <tr>
-      <td><a class="xref" href="https://msdn.microsoft.com/en-us/library/system.string(v=vs.110).aspx">String</a></td>
-      <td><span class="parametername">srcFilePath</span></td>
-      <td><p>path of source file to set for the compilation unit</p>
-</td>
-    </tr>
-    <tr>
-      <td><a class="xref" href="https://msdn.microsoft.com/en-us/library/system.string(v=vs.110).aspx">String</a></td>
-      <td><span class="parametername">producer</span></td>
-      <td><p>Name of the application producing this module</p>
-</td>
-    </tr>
-    <tr>
-      <td><a class="xref" href="https://msdn.microsoft.com/en-us/library/system.boolean(v=vs.110).aspx">Boolean</a></td>
-      <td><span class="parametername">optimized</span></td>
-      <td><p>Flag to indicate if the module is optimized</p>
-</td>
-    </tr>
-    <tr>
-      <td><a class="xref" href="https://msdn.microsoft.com/en-us/library/system.string(v=vs.110).aspx">String</a></td>
-      <td><span class="parametername">flags</span></td>
-      <td><p>Additional flags</p>
-</td>
-    </tr>
-    <tr>
-      <td><a class="xref" href="https://msdn.microsoft.com/en-us/library/system.uint32(v=vs.110).aspx">UInt32</a></td>
-      <td><span class="parametername">runtimeVersion</span></td>
-      <td><p>Runtime version if any (use 0 if the runtime version has no meaning)</p>
+      <td><p>Module&apos;s ID</p>
 </td>
     </tr>
   </tbody>
 </table>
 <span class="small pull-right mobile-hide">
   <span class="divider">|</span>
-  <a href="https://github.com/UbiquityDotNET/Llvm.NET/new/master/apiSpec/new?filename=Llvm_NET_BitcodeModule__ctor_System_String_Llvm_NET_Context_Llvm_NET_DebugInfo_SourceLanguage_System_String_System_String_System_Boolean_System_String_System_UInt32_.md&amp;value=---%0Auid%3A%20Llvm.NET.BitcodeModule.%23ctor(System.String%2CLlvm.NET.Context%2CLlvm.NET.DebugInfo.SourceLanguage%2CSystem.String%2CSystem.String%2CSystem.Boolean%2CSystem.String%2CSystem.UInt32)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  <a href="https://github.com/UbiquityDotNET/Llvm.NET/new/master/apiSpec/new?filename=Llvm_NET_BitcodeModule__ctor_Llvm_NET_Context_System_String_Llvm_NET_DebugInfo_SourceLanguage_System_String_System_String_System_Boolean_System_String_System_UInt32_.md&amp;value=---%0Auid%3A%20Llvm.NET.BitcodeModule.%23ctor(Llvm.NET.Context%2CSystem.String%2CLlvm.NET.DebugInfo.SourceLanguage%2CSystem.String%2CSystem.String%2CSystem.Boolean%2CSystem.String%2CSystem.UInt32)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
 </span>
 <span class="small pull-right mobile-hide">
-  <a href="https://github.com/UbiquityDotNET/Llvm.NET/blob/master/src/Llvm.NET/BitcodeModule.cs/#L125">View Source</a>
+  <a href="https://github.com/UbiquityDotNET/Llvm.NET/blob/master/src/Llvm.NET/BitcodeModule.cs/#L63">View Source</a>
 </span>
 <a id="Llvm_NET_BitcodeModule__ctor_" data-uid="Llvm.NET.BitcodeModule.#ctor*"></a>
-<h4 id="Llvm_NET_BitcodeModule__ctor_System_String_Llvm_NET_Context_Llvm_NET_DebugInfo_SourceLanguage_System_String_System_String_System_Boolean_System_String_System_UInt32_" data-uid="Llvm.NET.BitcodeModule.#ctor(System.String,Llvm.NET.Context,Llvm.NET.DebugInfo.SourceLanguage,System.String,System.String,System.Boolean,System.String,System.UInt32)">BitcodeModule(String, Context, SourceLanguage, String, String, Boolean, String, UInt32)</h4>
+<h4 id="Llvm_NET_BitcodeModule__ctor_Llvm_NET_Context_System_String_Llvm_NET_DebugInfo_SourceLanguage_System_String_System_String_System_Boolean_System_String_System_UInt32_" data-uid="Llvm.NET.BitcodeModule.#ctor(Llvm.NET.Context,System.String,Llvm.NET.DebugInfo.SourceLanguage,System.String,System.String,System.Boolean,System.String,System.UInt32)">BitcodeModule(Context, String, SourceLanguage, String, String, Boolean, String, UInt32)</h4>
 <div class="markdown level1 summary"><p>Creates a named module with a root <a class="xref" href="Llvm.NET.BitcodeModule.DICompileUnit.html#Llvm_NET_BitcodeModule_DICompileUnit">DICompileUnit</a> to contain debugging information</p>
 </div>
 <div class="markdown level1 conceptual"></div>
 <h5 class="decalaration">Declaration</h5>
 <div class="codewrapper">
-  <pre><code class="lang-csharp hljs">public BitcodeModule(string moduleId, Context context, SourceLanguage language, string srcFilePath, string producer, bool optimized = false, string compilationFlags = &quot;&quot;, uint runtimeVersion = 0U)</code></pre>
+  <pre><code class="lang-csharp hljs">public BitcodeModule(Context context, string moduleId, SourceLanguage language, string srcFilePath, string producer, bool optimized = false, string compilationFlags = &quot;&quot;, uint runtimeVersion = 0U)</code></pre>
 </div>
 <h5 class="parameters">Parameters</h5>
 <table class="table table-bordered table-striped table-condensed">
@@ -5593,15 +5513,15 @@
   </thead>
   <tbody>
     <tr>
-      <td><a class="xref" href="https://msdn.microsoft.com/en-us/library/system.string(v=vs.110).aspx">String</a></td>
-      <td><span class="parametername">moduleId</span></td>
-      <td><p>Module name</p>
-</td>
-    </tr>
-    <tr>
       <td><a class="xref" href="Llvm.NET.Context.html">Context</a></td>
       <td><span class="parametername">context</span></td>
       <td><p>Context for the module</p>
+</td>
+    </tr>
+    <tr>
+      <td><a class="xref" href="https://msdn.microsoft.com/en-us/library/system.string(v=vs.110).aspx">String</a></td>
+      <td><span class="parametername">moduleId</span></td>
+      <td><p>Module name</p>
 </td>
     </tr>
     <tr>
@@ -5646,7 +5566,7 @@
           </div>
           <div class="contribution-panel mobile-hide">
               <a href="https://github.com/UbiquityDotNET/Llvm.NET/new/master/apiSpec/new?filename=Llvm_NET_BitcodeModule__ctor_.md&amp;value=---%0Auid%3A%20Llvm.NET.BitcodeModule.%23ctor*%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A" title="Improve this Doc" class="fab btn-warning pull-right"><i class="glyphicon glyphicon-pencil"></i></a>
-              <a href="https://github.com/UbiquityDotNET/Llvm.NET/blob/master/src/Llvm.NET/BitcodeModule.cs/#L31" title="View Source" class="fab btn-info pull-right"><i class="fa fa-code"></i></a>
+              <a href="https://github.com/UbiquityDotNET/Llvm.NET/blob/master/src/Llvm.NET/BitcodeModule.cs/#L32" title="View Source" class="fab btn-info pull-right"><i class="fa fa-code"></i></a>
           </div>
           
           <div class="hidden-sm col-md-2" role="complementary">

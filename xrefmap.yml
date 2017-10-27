@@ -13,36 +13,24 @@ references:
   commentId: T:Llvm.NET.BitcodeModule
   fullName: Llvm.NET.BitcodeModule
   nameWithType: BitcodeModule
-- uid: Llvm.NET.BitcodeModule.#ctor
-  name: BitcodeModule()
-  href: api/Llvm.NET.BitcodeModule.-ctor.html#Llvm_NET_BitcodeModule__ctor
-  commentId: M:Llvm.NET.BitcodeModule.#ctor
-  fullName: Llvm.NET.BitcodeModule.BitcodeModule()
-  nameWithType: BitcodeModule.BitcodeModule()
-- uid: Llvm.NET.BitcodeModule.#ctor(System.String)
-  name: BitcodeModule(String)
-  href: api/Llvm.NET.BitcodeModule.-ctor.html#Llvm_NET_BitcodeModule__ctor_System_String_
-  commentId: M:Llvm.NET.BitcodeModule.#ctor(System.String)
-  fullName: Llvm.NET.BitcodeModule.BitcodeModule(System.String)
-  nameWithType: BitcodeModule.BitcodeModule(String)
-- uid: Llvm.NET.BitcodeModule.#ctor(System.String,Llvm.NET.Context)
-  name: BitcodeModule(String, Context)
-  href: api/Llvm.NET.BitcodeModule.-ctor.html#Llvm_NET_BitcodeModule__ctor_System_String_Llvm_NET_Context_
-  commentId: M:Llvm.NET.BitcodeModule.#ctor(System.String,Llvm.NET.Context)
-  fullName: Llvm.NET.BitcodeModule.BitcodeModule(System.String, Llvm.NET.Context)
-  nameWithType: BitcodeModule.BitcodeModule(String, Context)
-- uid: Llvm.NET.BitcodeModule.#ctor(System.String,Llvm.NET.Context,Llvm.NET.DebugInfo.SourceLanguage,System.String,System.String,System.Boolean,System.String,System.UInt32)
-  name: BitcodeModule(String, Context, SourceLanguage, String, String, Boolean, String, UInt32)
-  href: api/Llvm.NET.BitcodeModule.-ctor.html#Llvm_NET_BitcodeModule__ctor_System_String_Llvm_NET_Context_Llvm_NET_DebugInfo_SourceLanguage_System_String_System_String_System_Boolean_System_String_System_UInt32_
-  commentId: M:Llvm.NET.BitcodeModule.#ctor(System.String,Llvm.NET.Context,Llvm.NET.DebugInfo.SourceLanguage,System.String,System.String,System.Boolean,System.String,System.UInt32)
-  fullName: Llvm.NET.BitcodeModule.BitcodeModule(System.String, Llvm.NET.Context, Llvm.NET.DebugInfo.SourceLanguage, System.String, System.String, System.Boolean, System.String, System.UInt32)
-  nameWithType: BitcodeModule.BitcodeModule(String, Context, SourceLanguage, String, String, Boolean, String, UInt32)
-- uid: Llvm.NET.BitcodeModule.#ctor(System.String,Llvm.NET.DebugInfo.SourceLanguage,System.String,System.String,System.Boolean,System.String,System.UInt32)
-  name: BitcodeModule(String, SourceLanguage, String, String, Boolean, String, UInt32)
-  href: api/Llvm.NET.BitcodeModule.-ctor.html#Llvm_NET_BitcodeModule__ctor_System_String_Llvm_NET_DebugInfo_SourceLanguage_System_String_System_String_System_Boolean_System_String_System_UInt32_
-  commentId: M:Llvm.NET.BitcodeModule.#ctor(System.String,Llvm.NET.DebugInfo.SourceLanguage,System.String,System.String,System.Boolean,System.String,System.UInt32)
-  fullName: Llvm.NET.BitcodeModule.BitcodeModule(System.String, Llvm.NET.DebugInfo.SourceLanguage, System.String, System.String, System.Boolean, System.String, System.UInt32)
-  nameWithType: BitcodeModule.BitcodeModule(String, SourceLanguage, String, String, Boolean, String, UInt32)
+- uid: Llvm.NET.BitcodeModule.#ctor(Llvm.NET.Context)
+  name: BitcodeModule(Context)
+  href: api/Llvm.NET.BitcodeModule.-ctor.html#Llvm_NET_BitcodeModule__ctor_Llvm_NET_Context_
+  commentId: M:Llvm.NET.BitcodeModule.#ctor(Llvm.NET.Context)
+  fullName: Llvm.NET.BitcodeModule.BitcodeModule(Llvm.NET.Context)
+  nameWithType: BitcodeModule.BitcodeModule(Context)
+- uid: Llvm.NET.BitcodeModule.#ctor(Llvm.NET.Context,System.String)
+  name: BitcodeModule(Context, String)
+  href: api/Llvm.NET.BitcodeModule.-ctor.html#Llvm_NET_BitcodeModule__ctor_Llvm_NET_Context_System_String_
+  commentId: M:Llvm.NET.BitcodeModule.#ctor(Llvm.NET.Context,System.String)
+  fullName: Llvm.NET.BitcodeModule.BitcodeModule(Llvm.NET.Context, System.String)
+  nameWithType: BitcodeModule.BitcodeModule(Context, String)
+- uid: Llvm.NET.BitcodeModule.#ctor(Llvm.NET.Context,System.String,Llvm.NET.DebugInfo.SourceLanguage,System.String,System.String,System.Boolean,System.String,System.UInt32)
+  name: BitcodeModule(Context, String, SourceLanguage, String, String, Boolean, String, UInt32)
+  href: api/Llvm.NET.BitcodeModule.-ctor.html#Llvm_NET_BitcodeModule__ctor_Llvm_NET_Context_System_String_Llvm_NET_DebugInfo_SourceLanguage_System_String_System_String_System_Boolean_System_String_System_UInt32_
+  commentId: M:Llvm.NET.BitcodeModule.#ctor(Llvm.NET.Context,System.String,Llvm.NET.DebugInfo.SourceLanguage,System.String,System.String,System.Boolean,System.String,System.UInt32)
+  fullName: Llvm.NET.BitcodeModule.BitcodeModule(Llvm.NET.Context, System.String, Llvm.NET.DebugInfo.SourceLanguage, System.String, System.String, System.Boolean, System.String, System.UInt32)
+  nameWithType: BitcodeModule.BitcodeModule(Context, String, SourceLanguage, String, String, Boolean, String, UInt32)
 - uid: Llvm.NET.BitcodeModule.#ctor*
   name: BitcodeModule
   href: api/Llvm.NET.BitcodeModule.-ctor.html
@@ -400,6 +388,18 @@ references:
   commentId: Overload:Llvm.NET.BitcodeModule.IsDisposed
   fullName: Llvm.NET.BitcodeModule.IsDisposed
   nameWithType: BitcodeModule.IsDisposed
+- uid: Llvm.NET.BitcodeModule.IsShared
+  name: IsShared
+  href: api/Llvm.NET.BitcodeModule.IsShared.html#Llvm_NET_BitcodeModule_IsShared
+  commentId: P:Llvm.NET.BitcodeModule.IsShared
+  fullName: Llvm.NET.BitcodeModule.IsShared
+  nameWithType: BitcodeModule.IsShared
+- uid: Llvm.NET.BitcodeModule.IsShared*
+  name: IsShared
+  href: api/Llvm.NET.BitcodeModule.IsShared.html
+  commentId: Overload:Llvm.NET.BitcodeModule.IsShared
+  fullName: Llvm.NET.BitcodeModule.IsShared
+  nameWithType: BitcodeModule.IsShared
 - uid: Llvm.NET.BitcodeModule.Layout
   name: Layout
   href: api/Llvm.NET.BitcodeModule.Layout.html#Llvm_NET_BitcodeModule_Layout
@@ -475,6 +475,18 @@ references:
   commentId: Overload:Llvm.NET.BitcodeModule.LoadFrom
   fullName: Llvm.NET.BitcodeModule.LoadFrom
   nameWithType: BitcodeModule.LoadFrom
+- uid: Llvm.NET.BitcodeModule.MakeShared
+  name: MakeShared()
+  href: api/Llvm.NET.BitcodeModule.MakeShared.html#Llvm_NET_BitcodeModule_MakeShared
+  commentId: M:Llvm.NET.BitcodeModule.MakeShared
+  fullName: Llvm.NET.BitcodeModule.MakeShared()
+  nameWithType: BitcodeModule.MakeShared()
+- uid: Llvm.NET.BitcodeModule.MakeShared*
+  name: MakeShared
+  href: api/Llvm.NET.BitcodeModule.MakeShared.html
+  commentId: Overload:Llvm.NET.BitcodeModule.MakeShared
+  fullName: Llvm.NET.BitcodeModule.MakeShared
+  nameWithType: BitcodeModule.MakeShared
 - uid: Llvm.NET.BitcodeModule.ModuleFlags
   name: ModuleFlags
   href: api/Llvm.NET.BitcodeModule.ModuleFlags.html#Llvm_NET_BitcodeModule_ModuleFlags
