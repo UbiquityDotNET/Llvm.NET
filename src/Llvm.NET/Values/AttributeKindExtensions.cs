@@ -450,7 +450,7 @@ namespace Llvm.NET.Values
         {
             return ( from kind in Enum.GetValues( typeof( AttributeKind ) ).Cast<AttributeKind>( ).Skip( 1 )
                      let name = kind.GetAttributeName( )
-                     select new KeyValuePair<uint, AttributeKind>( NativeMethods.GetEnumAttributeKindForName( name, ( size_t )name.Length ), kind )
+                     select new KeyValuePair<uint, AttributeKind>( NativeMethods.LLVMGetEnumAttributeKindForName( name, ( size_t )name.Length ), kind )
                    ).ToDictionary( ( KeyValuePair<uint, AttributeKind> kvp ) => kvp.Key, ( KeyValuePair<uint, AttributeKind> kvp ) => kvp.Value );
         }
 

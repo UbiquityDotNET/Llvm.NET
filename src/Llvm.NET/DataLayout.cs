@@ -11,6 +11,8 @@ using Llvm.NET.Types;
 using Llvm.NET.Values;
 using Ubiquity.ArgValidators;
 
+using static Llvm.NET.Native.NativeMethods;
+
 namespace Llvm.NET
 {
     /// <summary>Provides access to LLVM target data layout information</summary>
@@ -53,33 +55,49 @@ namespace Llvm.NET
             GC.SuppressFinalize( this );
         }
 
-        /// <summary>Gets the <see cref="Context"/> used for this layout (in particular, for retrieving pointer types)</summary>
-        public Context Context { get; }
-
         /// <summary>Gets the byte ordering for this target</summary>
-        public ByteOrdering Endianess => ( ByteOrdering )NativeMethods.ByteOrder( DataLayoutHandle );
+        public ByteOrdering Endianess => ( ByteOrdering )LLVMByteOrder( DataLayoutHandle );
 
         /// <summary>Gets the size of a pointer for the default address space of the target</summary>
         /// <returns>Size of a pointer to the default address space</returns>
-        public uint PointerSize( ) => NativeMethods.PointerSize( DataLayoutHandle );
+        public uint PointerSize( ) => LLVMPointerSize( DataLayoutHandle );
 
         /// <summary>Retrieves the size of a pointer for a given address space of the target</summary>
         /// <param name="addressSpace">Address space for the pointer</param>
         /// <returns>Size of a pointer</returns>
-        public uint PointerSize( uint addressSpace ) => NativeMethods.PointerSizeForAS( DataLayoutHandle, addressSpace );
+        public uint PointerSize( uint addressSpace ) => LLVMPointerSizeForAS( DataLayoutHandle, addressSpace );
 
-        /// <summary>Retrieves an LLVM integer type with the same bit width as
-        /// a pointer for the default address space of the target</summary>
+        /// <summary>Retrieves an LLVM integer type with the same bit width as a pointer for the default address space of the target</summary>
+        /// <param name="context">LLVM <see cref="Context"/> that owns the definition of the pointer type to retrieve</param>
         /// <returns>Integer type matching the bit width of a native pointer in the target's default address space</returns>
-        public ITypeRef IntPtrType( ) => TypeRef.FromHandle( NativeMethods.IntPtrTypeInContext( Context.ContextHandle, DataLayoutHandle ) );
+        public ITypeRef IntPtrType( Context context ) => TypeRef.FromHandle( LLVMIntPtrTypeInContext( context.ContextHandle, DataLayoutHandle ) );
+
+        /* TODO:
+        bool IsLegalIntegerWidth(UInt64 width);
+        bool ExceedsNaturalStackAlignment(UInt64 width);
+        UInt32 StackAlignment { get; }
+        UInt32 AllocaAddrSpace { get; }
+        bool HasMicrosoftFastStdCallMangling { get; }
+        string LinkerPrivateGlobalPrefix { get; }
+        char GlobalPrefix { get; }
+        string PrivateGlobalPrefix { get; }
+        ImmutableList<UInt32> NonIntegralAddressSpaces { get; }
+        bool IsNonIntegralPointerType( IPointerType t );
+        ITypeRef GetSmallestLegalIntType( Context context, UInt32 width );
+        ITypeRef GetLargestLegalIntType( Context context, UInt32 width );
+        UInt32 GetLargestLegalIntTypeSizeInBits();
+        UInt64 GetIndexedOffsetInType(ITypeRef t, Value index0, param Value[] indices);
+        StructLayout GetStructLayout(IStructType t);
+        */
 
         /// <summary>Retrieves an LLVM integer type with the same bit width as
         /// a pointer for the given address space of the target</summary>
+        /// <param name="context">LLVM <see cref="Context"/> that owns the definition of the pointer type to retrieve</param>
         /// <param name="addressSpace">Address space for the pointer</param>
         /// <returns>Integer type matching the bit width of a native pointer in the target's address space</returns>
-        public ITypeRef IntPtrType( uint addressSpace )
+        public ITypeRef IntPtrType( Context context, uint addressSpace )
         {
-            var typeHandle = NativeMethods.IntPtrTypeForASInContext( Context.ContextHandle, DataLayoutHandle, addressSpace );
+            var typeHandle = LLVMIntPtrTypeForASInContext( context.ContextHandle, DataLayoutHandle, addressSpace );
             return TypeRef.FromHandle( typeHandle );
         }
 
@@ -94,7 +112,7 @@ namespace Llvm.NET
         public ulong BitSizeOf( ITypeRef typeRef )
         {
             VerifySized( typeRef, nameof( typeRef ) );
-            return NativeMethods.SizeOfTypeInBits( DataLayoutHandle, typeRef.GetTypeRef( ) );
+            return LLVMSizeOfTypeInBits( DataLayoutHandle, typeRef.GetTypeRef( ) );
         }
 
         /// <summary>Retrieves the number of bits required to store a value of the given type</summary>
@@ -109,7 +127,7 @@ namespace Llvm.NET
         public ulong StoreSizeOf( ITypeRef typeRef )
         {
             VerifySized( typeRef, nameof( typeRef ) );
-            return NativeMethods.StoreSizeOfType( DataLayoutHandle, typeRef.GetTypeRef( ) );
+            return LLVMStoreSizeOfType( DataLayoutHandle, typeRef.GetTypeRef( ) );
         }
 
         /// <summary>Retrieves the ABI specified size of the given type</summary>
@@ -118,7 +136,7 @@ namespace Llvm.NET
         public ulong AbiSizeOf( ITypeRef typeRef )
         {
             VerifySized( typeRef, nameof( typeRef ) );
-            return NativeMethods.ABISizeOfType( DataLayoutHandle, typeRef.GetTypeRef( ) );
+            return LLVMABISizeOfType( DataLayoutHandle, typeRef.GetTypeRef( ) );
         }
 
         /// <summary>Retrieves the ABI specified alignment, in bytes, for a specified type</summary>
@@ -127,7 +145,7 @@ namespace Llvm.NET
         public uint AbiAlignmentOf( ITypeRef typeRef )
         {
             VerifySized( typeRef, nameof( typeRef ) );
-            return NativeMethods.ABIAlignmentOfType( DataLayoutHandle, typeRef.GetTypeRef( ) );
+            return LLVMABIAlignmentOfType( DataLayoutHandle, typeRef.GetTypeRef( ) );
         }
 
         /// <summary>Retrieves the call frame alignment for a given type</summary>
@@ -136,13 +154,13 @@ namespace Llvm.NET
         public uint CallFrameAlignmentOf( ITypeRef typeRef )
         {
             VerifySized( typeRef, nameof( typeRef ) );
-            return NativeMethods.CallFrameAlignmentOfType( DataLayoutHandle, typeRef.GetTypeRef( ) );
+            return LLVMCallFrameAlignmentOfType( DataLayoutHandle, typeRef.GetTypeRef( ) );
         }
 
         public uint PreferredAlignmentOf( ITypeRef typeRef )
         {
             VerifySized( typeRef, nameof( typeRef ) );
-            return NativeMethods.PreferredAlignmentOfType( DataLayoutHandle, typeRef.GetTypeRef( ) );
+            return LLVMPreferredAlignmentOfType( DataLayoutHandle, typeRef.GetTypeRef( ) );
         }
 
         public uint PreferredAlignmentOf( Value value )
@@ -153,24 +171,24 @@ namespace Llvm.NET
             }
 
             VerifySized( value.NativeType, nameof( value ) );
-            return NativeMethods.PreferredAlignmentOfGlobal( DataLayoutHandle, value.ValueHandle );
+            return LLVMPreferredAlignmentOfGlobal( DataLayoutHandle, value.ValueHandle );
         }
 
         [SuppressMessage( "Microsoft.Design", "CA1011:ConsiderPassingBaseTypesAsParameters", Justification = "Specific type required by interop call" )]
         public uint ElementAtOffset( IStructType structType, ulong offset )
         {
             VerifySized( structType, nameof( structType ) );
-            return NativeMethods.ElementAtOffset( DataLayoutHandle, structType.GetTypeRef( ), offset );
+            return LLVMElementAtOffset( DataLayoutHandle, structType.GetTypeRef( ), offset );
         }
 
         [SuppressMessage( "Microsoft.Design", "CA1011:ConsiderPassingBaseTypesAsParameters", Justification = "Specific type required by interop call" )]
         public ulong OffsetOfElement( IStructType structType, uint element )
         {
             VerifySized( structType, nameof( structType ) );
-            return NativeMethods.OffsetOfElement( DataLayoutHandle, structType.GetTypeRef( ), element );
+            return LLVMOffsetOfElement( DataLayoutHandle, structType.GetTypeRef( ), element );
         }
 
-        public override string ToString( ) => NativeMethods.CopyStringRepOfTargetData( DataLayoutHandle );
+        public override string ToString( ) => LLVMCopyStringRepOfTargetData( DataLayoutHandle );
 
         public ulong ByteSizeOf( ITypeRef llvmType ) => BitSizeOf( llvmType ) / 8u;
 
@@ -180,34 +198,33 @@ namespace Llvm.NET
 
         public ulong BitOffsetOfElement( IStructType llvmType, uint element ) => OffsetOfElement( llvmType, element ) * 8;
 
-        internal DataLayout( Context context, LLVMTargetDataRef targetDataHandle, bool isDisposable )
+        internal DataLayout( LLVMTargetDataRef targetDataHandle, bool isDisposable )
         {
             DataLayoutHandle = targetDataHandle;
             IsDisposable = isDisposable;
-            Context = context;
         }
 
-        internal static DataLayout FromHandle( Context context, LLVMTargetDataRef targetDataRef, bool isDisposable )
+        internal static DataLayout FromHandle( LLVMTargetDataRef targetDataRef, bool isDisposable )
         {
             lock( TargetDataMap )
             {
-                if( TargetDataMap.TryGetValue( targetDataRef.Pointer, out DataLayout retVal ) )
+                if( TargetDataMap.TryGetValue( targetDataRef.Handle, out DataLayout retVal ) )
                 {
                     return retVal;
                 }
 
                 // exception filter function to ensure that the native resource
                 // is released on exception from adding it to the map
-                retVal = new DataLayout( context, targetDataRef, isDisposable );
-                Func<bool> cleanOnException = ( ) =>
+                retVal = new DataLayout( targetDataRef, isDisposable );
+                bool cleanOnException( )
                 {
                     retVal.Dispose( );
                     return true;
-                };
+                }
 
                 try
                 {
-                    TargetDataMap.Add( targetDataRef.Pointer, retVal );
+                    TargetDataMap.Add( targetDataRef.Handle, retVal );
                 }
                 catch when( cleanOnException( ) )
                 {
@@ -222,10 +239,10 @@ namespace Llvm.NET
 
         protected virtual void Dispose( bool disposing )
         {
-            if( DataLayoutHandle.Pointer != IntPtr.Zero && IsDisposable )
+            if( DataLayoutHandle.Handle != IntPtr.Zero && IsDisposable )
             {
-                NativeMethods.DisposeTargetData( DataLayoutHandle );
-                DataLayoutHandle = default( LLVMTargetDataRef );
+                LLVMDisposeTargetData( DataLayoutHandle );
+                DataLayoutHandle = default;
             }
         }
 

@@ -42,7 +42,7 @@ namespace Llvm.NET.Values
         /// <inheritdoc/>
         public bool Equals( AttributeValue other )
         {
-            return NativeAttribute.Pointer == other.NativeAttribute.Pointer;
+            return NativeAttribute.Handle == other.NativeAttribute.Handle;
         }
 
         /// <summary>Gets the kind of the attribute</summary>
@@ -51,12 +51,12 @@ namespace Llvm.NET.Values
         {
             get
             {
-                if( !NativeMethods.IsEnumAttribute( NativeAttribute ) )
+                if( !NativeMethods.LLVMIsEnumAttribute( NativeAttribute ) )
                 {
                     return AttributeKind.None;
                 }
 
-                return AttributeKindExtensions.LookupId( NativeMethods.GetEnumAttributeKind( NativeAttribute ) );
+                return AttributeKindExtensions.LookupId( NativeMethods.LLVMGetEnumAttributeKind( NativeAttribute ) );
             }
         }
 
@@ -67,10 +67,10 @@ namespace Llvm.NET.Values
             {
                 if( IsString )
                 {
-                    return NativeMethods.GetStringAttributeKind( NativeAttribute, out uint length );
+                    return NativeMethods.LLVMGetStringAttributeKind( NativeAttribute, out uint length );
                 }
 
-                return AttributeKindExtensions.LookupId( NativeMethods.GetEnumAttributeKind( NativeAttribute ) ).GetAttributeName( );
+                return AttributeKindExtensions.LookupId( NativeMethods.LLVMGetEnumAttributeKind( NativeAttribute ) ).GetAttributeName( );
             }
         }
 
@@ -85,21 +85,21 @@ namespace Llvm.NET.Values
                     return null;
                 }
 
-                return NativeMethods.GetStringAttributeValue( NativeAttribute, out uint len );
+                return NativeMethods.LLVMGetStringAttributeValue( NativeAttribute, out uint len );
             }
         }
 
         /// <summary>Gets the Integer value of the attribute or <see lang="null"/> if the attribute doesn't have a value</summary>
-        public UInt64? IntegerValue => IsInt ? NativeMethods.GetEnumAttributeValue( NativeAttribute ) : ( UInt64? )null;
+        public UInt64? IntegerValue => IsInt ? NativeMethods.LLVMGetEnumAttributeValue( NativeAttribute ) : ( UInt64? )null;
 
         /// <summary>Gets a value indicating whether this attribute is a target specific string value</summary>
-        public bool IsString => NativeMethods.IsStringAttribute( NativeAttribute );
+        public bool IsString => NativeMethods.LLVMIsStringAttribute( NativeAttribute );
 
         /// <summary>Gets a value indicating whether this attribute has an integer attribute</summary>
         public bool IsInt => Kind.RequiresIntValue( );
 
         /// <summary>Gets a value indicating whether this attribute is a simple enumeration value</summary>
-        public bool IsEnum => NativeMethods.IsEnumAttribute( NativeAttribute );
+        public bool IsEnum => NativeMethods.LLVMIsEnumAttribute( NativeAttribute );
 
         /// <summary>Tests if the attribute is valid for a <see cref="Value"/> on a given <see cref="FunctionAttributeIndex"/></summary>
         /// <param name="index">Attribute index to test if the attribute is valid on</param>
@@ -153,7 +153,7 @@ namespace Llvm.NET.Values
         /// <returns>Attribute as a string</returns>
         public override string ToString( )
         {
-            return NativeMethods.AttributeToString( NativeAttribute );
+            return NativeMethods.LLVMAttributeToString( NativeAttribute );
         }
 
         /// <summary>Tests attributes for equality</summary>

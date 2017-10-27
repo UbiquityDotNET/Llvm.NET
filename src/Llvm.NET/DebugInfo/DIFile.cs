@@ -11,9 +11,9 @@ namespace Llvm.NET.DebugInfo
     public class DIFile
         : DIScope
     {
-        public string FileName => NativeMethods.GetDIFileName( MetadataHandle );
+        public string FileName => NativeMethods.LLVMGetDIFileName( MetadataHandle );
 
-        public string Directory => NativeMethods.GetDIFileDirectory( MetadataHandle );
+        public string Directory => NativeMethods.LLVMGetDIFileDirectory( MetadataHandle );
 
         public string Path => System.IO.Path.Combine( Directory, FileName );
 

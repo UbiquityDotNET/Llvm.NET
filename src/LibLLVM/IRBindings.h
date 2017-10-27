@@ -15,6 +15,8 @@
 #define LLVM_BINDINGS_LLVM_IRBINDINGS_H
 
 #include <llvm-c/Core.h>
+#include <llvm-c/ExecutionEngine.h>
+
 #ifdef __cplusplus
 #include <llvm/IR/Metadata.h>
 #include <llvm/Support/CBindingWrapping.h>
@@ -63,6 +65,7 @@ extern "C" {
     void LLVMFunctionSetSubprogram( LLVMValueRef function, LLVMMetadataRef subprogram );
 
     LLVMMetadataRef LLVMDIGlobalVarExpGetVariable( LLVMMetadataRef /*DIGlobalVariableExpression*/ metadataHandle );
+    void LLVMExecutionEngineClearGlobalMappingsFromModule( LLVMExecutionEngineRef ee, LLVMModuleRef m );
 #ifdef __cplusplus
 }
 #endif

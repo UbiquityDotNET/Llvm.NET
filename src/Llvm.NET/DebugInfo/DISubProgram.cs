@@ -15,7 +15,7 @@ namespace Llvm.NET.DebugInfo
     {
         [SuppressMessage( "Microsoft.Design", "CA1011:ConsiderPassingBaseTypesAsParameters", Justification = "Specific type required by interop call" )]
         public bool Describes( Function function )
-            => NativeMethods.SubProgramDescribes( MetadataHandle, function.ValidateNotNull( nameof( function )).ValueHandle );
+            => NativeMethods.LLVMSubProgramDescribes( MetadataHandle, function.ValidateNotNull( nameof( function )).ValueHandle );
 
         internal DISubProgram( LLVMMetadataRef handle )
             : base( handle )

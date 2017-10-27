@@ -6,6 +6,8 @@ using System;
 using Llvm.NET.Native;
 using Llvm.NET.Values;
 
+using static Llvm.NET.Native.NativeMethods;
+
 namespace Llvm.NET
 {
     public class MetadataAsValue : Value
@@ -17,12 +19,12 @@ namespace Llvm.NET
 
         internal static LLVMValueRef IsAMetadataAsValue( LLVMValueRef value )
         {
-            if( value.Pointer == IntPtr.Zero )
+            if( value.Handle == IntPtr.Zero )
             {
                 return value;
             }
 
-            return NativeMethods.GetValueIdAsKind( value ) == ValueKind.MetadataAsValue ? value : default( LLVMValueRef );
+            return LLVMGetValueIdAsKind( value ) == ValueKind.MetadataAsValue ? value : default;
         }
 
         /*

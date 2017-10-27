@@ -26,7 +26,7 @@ namespace Llvm.NET.Tests
         public void OperandsAreAccessibleTest()
         {
             using( var module = new BitcodeModule( "test.bc", SourceLanguage.CSharp, "test.cs", "unittests" ) )
-            using( var targetMachine = TargetTests.GetTargetMachine( module.Context ) )
+            using( var targetMachine = TargetTests.GetTargetMachine( ) )
             {
                 module.Layout = targetMachine.TargetData;
                 var intType = new DebugBasicType( module.Context.Int32Type, module, "int", DiTypeKind.Signed );

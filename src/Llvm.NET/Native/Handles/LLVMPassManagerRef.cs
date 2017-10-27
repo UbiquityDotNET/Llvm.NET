@@ -1,4 +1,4 @@
-﻿// <copyright file="LLVMBuilderRef.cs" company=".NET Foundation">
+﻿// <copyright file="LLVMPassRegistryRef.cs" company=".NET Foundation">
 // Copyright (c) .NET Foundation. All rights reserved.
 // </copyright>
 
@@ -8,22 +8,22 @@ using System.Security;
 namespace Llvm.NET.Native
 {
     [SecurityCritical]
-    internal class LLVMBuilderRef
+    internal class LLVMPassManagerRef
         : SafeHandleNullIsInvalid
     {
-        internal LLVMBuilderRef( )
+        internal LLVMPassManagerRef( )
             : base( true )
         {
         }
 
-        internal LLVMBuilderRef( IntPtr handle, bool owner )
+        internal LLVMPassManagerRef( IntPtr handle, bool owner )
             : base( owner )
         {
             SetHandle( handle );
         }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage( "Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode", Justification = "Required for marshaling support (used via reflection)" )]
-        internal LLVMBuilderRef( IntPtr handle )
+        internal LLVMPassManagerRef( IntPtr handle )
             : this( handle, false )
         {
         }
@@ -31,7 +31,7 @@ namespace Llvm.NET.Native
         [SecurityCritical]
         protected override bool ReleaseHandle( )
         {
-            NativeMethods.DisposeBuilder( handle );
+            NativeMethods.LLVMDisposePassManager( handle );
             return true;
         }
     }

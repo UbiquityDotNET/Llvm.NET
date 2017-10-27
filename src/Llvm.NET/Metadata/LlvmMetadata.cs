@@ -29,24 +29,24 @@ namespace Llvm.NET
                 throw new ArgumentNullException( nameof( other ) );
             }
 
-            if( MetadataHandle.Pointer == IntPtr.Zero )
+            if( MetadataHandle.Handle == IntPtr.Zero )
             {
                 throw new InvalidOperationException( "Cannot Replace all uses of a null descriptor" );
             }
 
-            NativeMethods.MetadataReplaceAllUsesWith( MetadataHandle, other.MetadataHandle );
+            NativeMethods.LLVMMetadataReplaceAllUsesWith( MetadataHandle, other.MetadataHandle );
             MetadataHandle = LLVMMetadataRef.Zero;
         }
 
         /// <inheritdoc/>
         public override string ToString( )
         {
-            if( MetadataHandle.Pointer == IntPtr.Zero )
+            if( MetadataHandle.Handle == IntPtr.Zero )
             {
                 return string.Empty;
             }
 
-            return NativeMethods.MetadataAsString( MetadataHandle );
+            return NativeMethods.LLVMMetadataAsString( MetadataHandle );
         }
 
         internal LLVMMetadataRef MetadataHandle { get; /*protected*/ set; }
@@ -127,7 +127,7 @@ namespace Llvm.NET
         {
             // use the native kind value to determine the managed type
             // that should wrap this particular handle
-            var kind = ( MetadataKind )NativeMethods.GetMetadataID( handle );
+            var kind = ( MetadataKind )NativeMethods.LLVMGetMetadataID( handle );
             switch( kind )
             {
             case MetadataKind.MDTuple:

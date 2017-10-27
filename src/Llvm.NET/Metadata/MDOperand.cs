@@ -11,11 +11,11 @@ namespace Llvm.NET
     {
         public MDNode OwningNode { get; }
 
-        public LlvmMetadata Metadata => LlvmMetadata.FromHandle<LlvmMetadata>( OwningNode.Context, NativeMethods.GetOperandNode( OperandHandle ) );
+        public LlvmMetadata Metadata => LlvmMetadata.FromHandle<LlvmMetadata>( OwningNode.Context, NativeMethods.LLVMGetOperandNode( OperandHandle ) );
 
         internal MDOperand( MDNode owningNode, LLVMMDOperandRef handle )
         {
-            if( handle.Pointer == IntPtr.Zero )
+            if( handle.Handle == IntPtr.Zero )
             {
                 throw new ArgumentNullException( nameof( handle ) );
             }

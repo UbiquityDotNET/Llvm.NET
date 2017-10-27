@@ -12,6 +12,8 @@ using Llvm.NET.Types;
 using Llvm.NET.Values;
 using Ubiquity.ArgValidators;
 
+using static Llvm.NET.Native.NativeMethods;
+
 namespace Llvm.NET.Instructions
 {
     /// <summary>LLVM Instruction builder allowing managed code to generate IR instructions</summary>
@@ -22,7 +24,7 @@ namespace Llvm.NET.Instructions
         public InstructionBuilder( Context context )
         {
             Context = context ?? throw new ArgumentNullException( nameof( context ) );
-            BuilderHandle = NativeMethods.CreateBuilderInContext( context.ContextHandle );
+            BuilderHandle = LLVMCreateBuilderInContext( context.ContextHandle );
         }
 
         /// <summary>Initializes a new instance of the <see cref="InstructionBuilder"/> class for a <see cref="BasicBlock"/></summary>
@@ -46,13 +48,13 @@ namespace Llvm.NET.Instructions
         {
             get
             {
-                var handle = NativeMethods.GetInsertBlock( BuilderHandle );
-                if( handle.Pointer.IsNull( ) )
+                var handle = LLVMGetInsertBlock( BuilderHandle );
+                if( handle.Handle.IsNull( ) )
                 {
                     return null;
                 }
 
-                return BasicBlock.FromHandle( NativeMethods.GetInsertBlock( BuilderHandle ) );
+                return BasicBlock.FromHandle( LLVMGetInsertBlock( BuilderHandle ) );
             }
         }
 
@@ -65,7 +67,7 @@ namespace Llvm.NET.Instructions
                 throw new ArgumentNullException( nameof( basicBlock ) );
             }
 
-            NativeMethods.PositionBuilderAtEnd( BuilderHandle, basicBlock.BlockHandle );
+            LLVMPositionBuilderAtEnd( BuilderHandle, basicBlock.BlockHandle );
         }
 
         /// <summary>Positions the builder before the given instruction</summary>
@@ -85,54 +87,54 @@ namespace Llvm.NET.Instructions
                 throw new ArgumentNullException( nameof( instr ) );
             }
 
-            NativeMethods.PositionBuilderBefore( BuilderHandle, instr.ValueHandle );
+            LLVMPositionBuilderBefore( BuilderHandle, instr.ValueHandle );
         }
 
-        public Value FNeg( Value value ) => BuildUnaryOp( NativeMethods.BuildFNeg, value );
+        public Value FNeg( Value value ) => BuildUnaryOp( LLVMBuildFNeg, value );
 
-        public Value FAdd( Value lhs, Value rhs ) => BuildBinOp( NativeMethods.BuildFAdd, lhs, rhs );
+        public Value FAdd( Value lhs, Value rhs ) => BuildBinOp( LLVMBuildFAdd, lhs, rhs );
 
-        public Value FSub( Value lhs, Value rhs ) => BuildBinOp( NativeMethods.BuildFSub, lhs, rhs );
+        public Value FSub( Value lhs, Value rhs ) => BuildBinOp( LLVMBuildFSub, lhs, rhs );
 
-        public Value FMul( Value lhs, Value rhs ) => BuildBinOp( NativeMethods.BuildFMul, lhs, rhs );
+        public Value FMul( Value lhs, Value rhs ) => BuildBinOp( LLVMBuildFMul, lhs, rhs );
 
-        public Value FDiv( Value lhs, Value rhs ) => BuildBinOp( NativeMethods.BuildFDiv, lhs, rhs );
+        public Value FDiv( Value lhs, Value rhs ) => BuildBinOp( LLVMBuildFDiv, lhs, rhs );
 
-        public Value FRem( Value lhs, Value rhs ) => BuildBinOp( NativeMethods.BuildFRem, lhs, rhs );
+        public Value FRem( Value lhs, Value rhs ) => BuildBinOp( LLVMBuildFRem, lhs, rhs );
 
-        public Value Neg( Value value ) => BuildUnaryOp( NativeMethods.BuildNeg, value );
+        public Value Neg( Value value ) => BuildUnaryOp( LLVMBuildNeg, value );
 
-        public Value Not( Value value ) => BuildUnaryOp( NativeMethods.BuildNot, value );
+        public Value Not( Value value ) => BuildUnaryOp( LLVMBuildNot, value );
 
-        public Value Add( Value lhs, Value rhs ) => BuildBinOp( NativeMethods.BuildAdd, lhs, rhs );
+        public Value Add( Value lhs, Value rhs ) => BuildBinOp( LLVMBuildAdd, lhs, rhs );
 
-        public Value And( Value lhs, Value rhs ) => BuildBinOp( NativeMethods.BuildAnd, lhs, rhs );
+        public Value And( Value lhs, Value rhs ) => BuildBinOp( LLVMBuildAnd, lhs, rhs );
 
-        public Value Sub( Value lhs, Value rhs ) => BuildBinOp( NativeMethods.BuildSub, lhs, rhs );
+        public Value Sub( Value lhs, Value rhs ) => BuildBinOp( LLVMBuildSub, lhs, rhs );
 
-        public Value Mul( Value lhs, Value rhs ) => BuildBinOp( NativeMethods.BuildMul, lhs, rhs );
+        public Value Mul( Value lhs, Value rhs ) => BuildBinOp( LLVMBuildMul, lhs, rhs );
 
-        public Value ShiftLeft( Value lhs, Value rhs ) => BuildBinOp( NativeMethods.BuildShl, lhs, rhs );
+        public Value ShiftLeft( Value lhs, Value rhs ) => BuildBinOp( LLVMBuildShl, lhs, rhs );
 
-        public Value ArithmeticShiftRight( Value lhs, Value rhs ) => BuildBinOp( NativeMethods.BuildAShr, lhs, rhs );
+        public Value ArithmeticShiftRight( Value lhs, Value rhs ) => BuildBinOp( LLVMBuildAShr, lhs, rhs );
 
-        public Value LogicalShiftRight( Value lhs, Value rhs ) => BuildBinOp( NativeMethods.BuildLShr, lhs, rhs );
+        public Value LogicalShiftRight( Value lhs, Value rhs ) => BuildBinOp( LLVMBuildLShr, lhs, rhs );
 
-        public Value UDiv( Value lhs, Value rhs ) => BuildBinOp( NativeMethods.BuildUDiv, lhs, rhs );
+        public Value UDiv( Value lhs, Value rhs ) => BuildBinOp( LLVMBuildUDiv, lhs, rhs );
 
-        public Value SDiv( Value lhs, Value rhs ) => BuildBinOp( NativeMethods.BuildUDiv, lhs, rhs );
+        public Value SDiv( Value lhs, Value rhs ) => BuildBinOp( LLVMBuildUDiv, lhs, rhs );
 
-        public Value URem( Value lhs, Value rhs ) => BuildBinOp( NativeMethods.BuildURem, lhs, rhs );
+        public Value URem( Value lhs, Value rhs ) => BuildBinOp( LLVMBuildURem, lhs, rhs );
 
-        public Value SRem( Value lhs, Value rhs ) => BuildBinOp( NativeMethods.BuildSRem, lhs, rhs );
+        public Value SRem( Value lhs, Value rhs ) => BuildBinOp( LLVMBuildSRem, lhs, rhs );
 
-        public Value Xor( Value lhs, Value rhs ) => BuildBinOp( NativeMethods.BuildXor, lhs, rhs );
+        public Value Xor( Value lhs, Value rhs ) => BuildBinOp( LLVMBuildXor, lhs, rhs );
 
-        public Value Or( Value lhs, Value rhs ) => BuildBinOp( NativeMethods.BuildOr, lhs, rhs );
+        public Value Or( Value lhs, Value rhs ) => BuildBinOp( LLVMBuildOr, lhs, rhs );
 
         public Alloca Alloca( ITypeRef typeRef )
         {
-            var handle = NativeMethods.BuildAlloca( BuilderHandle, typeRef.GetTypeRef( ), string.Empty );
+            var handle = LLVMBuildAlloca( BuilderHandle, typeRef.GetTypeRef( ), string.Empty );
             return Value.FromHandle<Alloca>( handle );
         }
 
@@ -149,7 +151,7 @@ namespace Llvm.NET.Instructions
                 throw new ArgumentNullException( nameof( elements ) );
             }
 
-            var instHandle = NativeMethods.BuildArrayAlloca( BuilderHandle, typeRef.GetTypeRef( ), elements.ValueHandle, string.Empty );
+            var instHandle = LLVMBuildArrayAlloca( BuilderHandle, typeRef.GetTypeRef( ), elements.ValueHandle, string.Empty );
             return Value.FromHandle<Alloca>( instHandle );
         }
 
@@ -160,7 +162,7 @@ namespace Llvm.NET.Instructions
                 throw new ArgumentException( "Return instruction for non-void function must have a value" );
             }
 
-            return Value.FromHandle<ReturnInstruction>( NativeMethods.BuildRetVoid( BuilderHandle ) );
+            return Value.FromHandle<ReturnInstruction>( LLVMBuildRetVoid( BuilderHandle ) );
         }
 
         public ReturnInstruction Return( Value value )
@@ -181,7 +183,7 @@ namespace Llvm.NET.Instructions
                 throw new ArgumentException( "Value for return must match the function signature's return type", nameof( value ) );
             }
 
-            var handle = NativeMethods.BuildRet( BuilderHandle, value.ValueHandle );
+            var handle = LLVMBuildRet( BuilderHandle, value.ValueHandle );
             return Value.FromHandle<ReturnInstruction>( handle );
         }
 
@@ -217,26 +219,26 @@ namespace Llvm.NET.Instructions
                 llvmArgs = new LLVMValueRef[1];
             }
 
-            LLVMValueRef invoke = NativeMethods.BuildInvoke( BuilderHandle
-                                                           , func.ValueHandle
-                                                           , out llvmArgs[0]
-                                                           , (uint)argCount
-                                                           , then.BlockHandle
-                                                           , catchBlock.BlockHandle
-                                                           , string.Empty
-                                                           );
+            LLVMValueRef invoke = LLVMBuildInvoke( BuilderHandle
+                                                 , func.ValueHandle
+                                                 , out llvmArgs[0]
+                                                 , (uint)argCount
+                                                 , then.BlockHandle
+                                                 , catchBlock.BlockHandle
+                                                 , string.Empty
+                                                 );
 
             return Value.FromHandle<Invoke>( invoke );
         }
 
         public LandingPad LandingPad( ITypeRef resultType )
         {
-            LLVMValueRef landingPad = NativeMethods.BuildLandingPad( BuilderHandle
-                                                                   , resultType.GetTypeRef()
-                                                                   , new LLVMValueRef( IntPtr.Zero ) // personality function no longer part of instruction
-                                                                   , 0
-                                                                   , string.Empty
-                                                                   );
+            LLVMValueRef landingPad = LLVMBuildLandingPad( BuilderHandle
+                                                         , resultType.GetTypeRef()
+                                                         , new LLVMValueRef( IntPtr.Zero ) // personality function no longer part of instruction
+                                                         , 0
+                                                         , string.Empty
+                                                         );
 
             return Value.FromHandle<LandingPad>( landingPad );
         }
@@ -248,7 +250,7 @@ namespace Llvm.NET.Instructions
                 throw new ArgumentNullException( nameof( exception ) );
             }
 
-            LLVMValueRef resume = NativeMethods.BuildResume( BuilderHandle, exception.ValueHandle );
+            LLVMValueRef resume = LLVMBuildResume( BuilderHandle, exception.ValueHandle );
             return Value.FromHandle<ResumeInstruction>( resume );
         }
 
@@ -287,7 +289,7 @@ namespace Llvm.NET.Instructions
                 throw new ArgumentException( string.Format( IncompatibleTypeMsgFmt, ptrType.ElementType, value.NativeType ) );
             }
 
-            return Value.FromHandle<Store>( NativeMethods.BuildStore( BuilderHandle, value.ValueHandle, destination.ValueHandle ) );
+            return Value.FromHandle<Store>( LLVMBuildStore( BuilderHandle, value.ValueHandle, destination.ValueHandle ) );
         }
 
         public Load Load( Value sourcePtr )
@@ -297,7 +299,7 @@ namespace Llvm.NET.Instructions
                 throw new ArgumentNullException( nameof( sourcePtr ) );
             }
 
-            var handle = NativeMethods.BuildLoad( BuilderHandle, sourcePtr.ValueHandle, string.Empty );
+            var handle = LLVMBuildLoad( BuilderHandle, sourcePtr.ValueHandle, string.Empty );
             return Value.FromHandle<Load>( handle );
         }
 
@@ -356,14 +358,14 @@ namespace Llvm.NET.Instructions
                 throw new ArgumentException( string.Format( IncompatibleTypeMsgFmt, ptrType.ElementType, value.NativeType ) );
             }
 
-            var handle = NativeMethods.BuildAtomicCmpXchg( BuilderHandle
-                                                         , ptr.ValueHandle
-                                                         , cmp.ValueHandle
-                                                         , value.ValueHandle
-                                                         , LLVMAtomicOrdering.LLVMAtomicOrderingSequentiallyConsistent
-                                                         , LLVMAtomicOrdering.LLVMAtomicOrderingSequentiallyConsistent
-                                                         , false
-                                                         );
+            var handle = LLVMBuildAtomicCmpXchg( BuilderHandle
+                                               , ptr.ValueHandle
+                                               , cmp.ValueHandle
+                                               , value.ValueHandle
+                                               , LLVMAtomicOrdering.LLVMAtomicOrderingSequentiallyConsistent
+                                               , LLVMAtomicOrdering.LLVMAtomicOrderingSequentiallyConsistent
+                                               , false
+                                               );
             return Value.FromHandle( handle );
         }
 
@@ -407,7 +409,7 @@ namespace Llvm.NET.Instructions
                 throw new ArgumentException( "Index exceeds number of members in the type", nameof( index ) );
             }
 
-            var handle = NativeMethods.BuildStructGEP( BuilderHandle, pointer.ValueHandle, index, string.Empty );
+            var handle = LLVMBuildStructGEP( BuilderHandle, pointer.ValueHandle, index, string.Empty );
             return Value.FromHandle( handle );
         }
 
@@ -435,12 +437,12 @@ namespace Llvm.NET.Instructions
         public Value GetElementPtr( Value pointer, IEnumerable<Value> args )
         {
             var llvmArgs = GetValidatedGEPArgs( pointer, args );
-            var handle = NativeMethods.BuildGEP( BuilderHandle
-                                               , pointer.ValueHandle
-                                               , out llvmArgs[ 0 ]
-                                               , ( uint )llvmArgs.Length
-                                               , string.Empty
-                                               );
+            var handle = LLVMBuildGEP( BuilderHandle
+                                     , pointer.ValueHandle
+                                     , out llvmArgs[ 0 ]
+                                     , ( uint )llvmArgs.Length
+                                     , string.Empty
+                                     );
             return Value.FromHandle( handle );
         }
 
@@ -491,12 +493,12 @@ namespace Llvm.NET.Instructions
         public Value GetElementPtrInBounds( Value pointer, IEnumerable<Value> args )
         {
             var llvmArgs = GetValidatedGEPArgs( pointer, args );
-            var hRetVal = NativeMethods.BuildInBoundsGEP( BuilderHandle
-                                                        , pointer.ValueHandle
-                                                        , out llvmArgs[ 0 ]
-                                                        , ( uint )llvmArgs.Length
-                                                        , string.Empty
-                                                        );
+            var hRetVal = LLVMBuildInBoundsGEP( BuilderHandle
+                                              , pointer.ValueHandle
+                                              , out llvmArgs[ 0 ]
+                                              , ( uint )llvmArgs.Length
+                                              , string.Empty
+                                              );
             return Value.FromHandle( hRetVal );
         }
 
@@ -524,7 +526,7 @@ namespace Llvm.NET.Instructions
         public static Value ConstGetElementPtrInBounds( Value pointer, params Value[ ] args )
         {
             var llvmArgs = GetValidatedGEPArgs( pointer, args );
-            var handle = NativeMethods.ConstInBoundsGEP( pointer.ValueHandle, out llvmArgs[ 0 ], ( uint )llvmArgs.Length );
+            var handle = LLVMConstInBoundsGEP( pointer.ValueHandle, out llvmArgs[ 0 ], ( uint )llvmArgs.Length );
             return Value.FromHandle( handle );
         }
 
@@ -552,10 +554,10 @@ namespace Llvm.NET.Instructions
 
             if( intValue is Constant )
             {
-                return Value.FromHandle( NativeMethods.ConstIntToPtr( intValue.ValueHandle, ptrType.GetTypeRef( ) ) );
+                return Value.FromHandle( LLVMConstIntToPtr( intValue.ValueHandle, ptrType.GetTypeRef( ) ) );
             }
 
-            var handle = NativeMethods.BuildIntToPtr( BuilderHandle, intValue.ValueHandle, ptrType.GetTypeRef( ), string.Empty );
+            var handle = LLVMBuildIntToPtr( BuilderHandle, intValue.ValueHandle, ptrType.GetTypeRef( ), string.Empty );
             return Value.FromHandle( handle );
         }
 
@@ -592,15 +594,15 @@ namespace Llvm.NET.Instructions
 
             if( ptrValue is Constant )
             {
-                return Value.FromHandle( NativeMethods.ConstPtrToInt( ptrValue.ValueHandle, intType.GetTypeRef( ) ) );
+                return Value.FromHandle( LLVMConstPtrToInt( ptrValue.ValueHandle, intType.GetTypeRef( ) ) );
             }
 
-            var handle = NativeMethods.BuildPtrToInt( BuilderHandle, ptrValue.ValueHandle, intType.GetTypeRef( ), string.Empty );
+            var handle = LLVMBuildPtrToInt( BuilderHandle, ptrValue.ValueHandle, intType.GetTypeRef( ), string.Empty );
             return Value.FromHandle( handle );
         }
 
         public Branch Branch( BasicBlock target )
-            => Value.FromHandle<Branch>( NativeMethods.BuildBr( BuilderHandle, target.ValidateNotNull( nameof( target ) ).BlockHandle ) );
+            => Value.FromHandle<Branch>( LLVMBuildBr( BuilderHandle, target.ValidateNotNull( nameof( target ) ).BlockHandle ) );
 
         public Branch Branch( Value ifCondition, BasicBlock thenTarget, BasicBlock elseTarget )
         {
@@ -619,16 +621,16 @@ namespace Llvm.NET.Instructions
                 throw new ArgumentNullException( nameof( elseTarget ) );
             }
 
-            var handle = NativeMethods.BuildCondBr( BuilderHandle
-                                                  , ifCondition.ValueHandle
-                                                  , thenTarget.BlockHandle
-                                                  , elseTarget.BlockHandle
-                                                  );
+            var handle = LLVMBuildCondBr( BuilderHandle
+                                        , ifCondition.ValueHandle
+                                        , thenTarget.BlockHandle
+                                        , elseTarget.BlockHandle
+                                        );
 
             return Value.FromHandle<Branch>( handle );
         }
 
-        public Unreachable Unreachable( ) => Value.FromHandle<Unreachable>( NativeMethods.BuildUnreachable( BuilderHandle ) );
+        public Unreachable Unreachable( ) => Value.FromHandle<Unreachable>( LLVMBuildUnreachable( BuilderHandle ) );
 
         /// <summary>Builds an Integer compare instruction</summary>
         /// <param name="predicate">Integer predicate for the comparison</param>
@@ -657,7 +659,7 @@ namespace Llvm.NET.Instructions
                 throw new ArgumentException( "Expecting an integer or pointer type", nameof( rhs ) );
             }
 
-            var handle = NativeMethods.BuildICmp( BuilderHandle, ( LLVMIntPredicate )predicate, lhs.ValueHandle, rhs.ValueHandle, string.Empty );
+            var handle = LLVMBuildICmp( BuilderHandle, ( LLVMIntPredicate )predicate, lhs.ValueHandle, rhs.ValueHandle, string.Empty );
             return Value.FromHandle( handle );
         }
 
@@ -688,12 +690,12 @@ namespace Llvm.NET.Instructions
                 throw new ArgumentException( "Expecting an integer type", nameof( rhs ) );
             }
 
-            var handle = NativeMethods.BuildFCmp( BuilderHandle
-                                                , ( LLVMRealPredicate )predicate
-                                                , lhs.ValueHandle
-                                                , rhs.ValueHandle
-                                                , string.Empty
-                                                );
+            var handle = LLVMBuildFCmp( BuilderHandle
+                                      , ( LLVMRealPredicate )predicate
+                                      , lhs.ValueHandle
+                                      , rhs.ValueHandle
+                                      , string.Empty
+                                      );
             return Value.FromHandle( handle );
         }
 
@@ -738,11 +740,11 @@ namespace Llvm.NET.Instructions
             LLVMValueRef handle;
             if( valueRef is Constant )
             {
-                handle = NativeMethods.ConstZExtOrBitCast( valueRef.ValueHandle, targetType.GetTypeRef( ) );
+                handle = LLVMConstZExtOrBitCast( valueRef.ValueHandle, targetType.GetTypeRef( ) );
             }
             else
             {
-                handle = NativeMethods.BuildZExtOrBitCast( BuilderHandle, valueRef.ValueHandle, targetType.GetTypeRef( ), string.Empty );
+                handle = LLVMBuildZExtOrBitCast( BuilderHandle, valueRef.ValueHandle, targetType.GetTypeRef( ), string.Empty );
             }
 
             return Value.FromHandle( handle );
@@ -769,11 +771,11 @@ namespace Llvm.NET.Instructions
             LLVMValueRef handle;
             if( valueRef is Constant )
             {
-                handle = NativeMethods.ConstSExtOrBitCast( valueRef.ValueHandle, targetType.GetTypeRef( ) );
+                handle = LLVMConstSExtOrBitCast( valueRef.ValueHandle, targetType.GetTypeRef( ) );
             }
             else
             {
-                handle = NativeMethods.BuildSExtOrBitCast( BuilderHandle, valueRef.ValueHandle, targetType.GetTypeRef( ), string.Empty );
+                handle = LLVMBuildSExtOrBitCast( BuilderHandle, valueRef.ValueHandle, targetType.GetTypeRef( ), string.Empty );
             }
 
             return Value.FromHandle( handle );
@@ -800,11 +802,11 @@ namespace Llvm.NET.Instructions
             LLVMValueRef handle;
             if( valueRef is Constant )
             {
-                handle = NativeMethods.ConstTruncOrBitCast( valueRef.ValueHandle, targetType.GetTypeRef( ) );
+                handle = LLVMConstTruncOrBitCast( valueRef.ValueHandle, targetType.GetTypeRef( ) );
             }
             else
             {
-                handle = NativeMethods.BuildTruncOrBitCast( BuilderHandle, valueRef.ValueHandle, targetType.GetTypeRef( ), string.Empty );
+                handle = LLVMBuildTruncOrBitCast( BuilderHandle, valueRef.ValueHandle, targetType.GetTypeRef( ), string.Empty );
             }
 
             return Value.FromHandle( handle );
@@ -825,11 +827,11 @@ namespace Llvm.NET.Instructions
             LLVMValueRef handle;
             if( valueRef is Constant )
             {
-                handle = NativeMethods.ConstZExt( valueRef.ValueHandle, targetType.GetTypeRef( ) );
+                handle = LLVMConstZExt( valueRef.ValueHandle, targetType.GetTypeRef( ) );
             }
             else
             {
-                handle = NativeMethods.BuildZExt( BuilderHandle, valueRef.ValueHandle, targetType.GetTypeRef( ), string.Empty );
+                handle = LLVMBuildZExt( BuilderHandle, valueRef.ValueHandle, targetType.GetTypeRef( ), string.Empty );
             }
 
             return Value.FromHandle( handle );
@@ -849,10 +851,10 @@ namespace Llvm.NET.Instructions
 
             if( valueRef is Constant )
             {
-                return Value.FromHandle( NativeMethods.ConstSExt( valueRef.ValueHandle, targetType.GetTypeRef( ) ) );
+                return Value.FromHandle( LLVMConstSExt( valueRef.ValueHandle, targetType.GetTypeRef( ) ) );
             }
 
-            var retValueRef = NativeMethods.BuildSExt( BuilderHandle, valueRef.ValueHandle, targetType.GetTypeRef( ), string.Empty );
+            var retValueRef = LLVMBuildSExt( BuilderHandle, valueRef.ValueHandle, targetType.GetTypeRef( ), string.Empty );
             return Value.FromHandle( retValueRef );
         }
 
@@ -877,11 +879,11 @@ namespace Llvm.NET.Instructions
             LLVMValueRef handle;
             if( valueRef is Constant )
             {
-                handle = NativeMethods.ConstBitCast( valueRef.ValueHandle, targetType.GetTypeRef( ) );
+                handle = LLVMConstBitCast( valueRef.ValueHandle, targetType.GetTypeRef( ) );
             }
             else
             {
-                handle = NativeMethods.BuildBitCast( BuilderHandle, valueRef.ValueHandle, targetType.GetTypeRef( ), string.Empty );
+                handle = LLVMBuildBitCast( BuilderHandle, valueRef.ValueHandle, targetType.GetTypeRef( ), string.Empty );
             }
 
             return Value.FromHandle( handle );
@@ -902,11 +904,11 @@ namespace Llvm.NET.Instructions
             LLVMValueRef handle;
             if( valueRef is Constant )
             {
-                handle = NativeMethods.ConstIntCast( valueRef.ValueHandle, targetType.GetTypeRef( ), isSigned );
+                handle = LLVMConstIntCast( valueRef.ValueHandle, targetType.GetTypeRef( ), isSigned );
             }
             else
             {
-                handle = NativeMethods.BuildIntCast( BuilderHandle, valueRef.ValueHandle, targetType.GetTypeRef( ), string.Empty );
+                handle = LLVMBuildIntCast( BuilderHandle, valueRef.ValueHandle, targetType.GetTypeRef( ), string.Empty );
             }
 
             return Value.FromHandle( handle );
@@ -926,10 +928,10 @@ namespace Llvm.NET.Instructions
 
             if( valueRef is Constant )
             {
-                return Value.FromHandle( NativeMethods.ConstTrunc( valueRef.ValueHandle, targetType.GetTypeRef( ) ) );
+                return Value.FromHandle( LLVMConstTrunc( valueRef.ValueHandle, targetType.GetTypeRef( ) ) );
             }
 
-            return Value.FromHandle( NativeMethods.BuildTrunc( BuilderHandle, valueRef.ValueHandle, targetType.GetTypeRef( ), string.Empty ) );
+            return Value.FromHandle( LLVMBuildTrunc( BuilderHandle, valueRef.ValueHandle, targetType.GetTypeRef( ), string.Empty ) );
         }
 
         public Value SIToFPCast( Value valueRef, ITypeRef targetType )
@@ -947,11 +949,11 @@ namespace Llvm.NET.Instructions
             LLVMValueRef handle;
             if( valueRef is Constant )
             {
-                handle = NativeMethods.ConstSIToFP( valueRef.ValueHandle, targetType.GetTypeRef( ) );
+                handle = LLVMConstSIToFP( valueRef.ValueHandle, targetType.GetTypeRef( ) );
             }
             else
             {
-                handle = NativeMethods.BuildSIToFP( BuilderHandle, valueRef.ValueHandle, targetType.GetTypeRef( ), string.Empty );
+                handle = LLVMBuildSIToFP( BuilderHandle, valueRef.ValueHandle, targetType.GetTypeRef( ), string.Empty );
             }
 
             return Value.FromHandle( handle );
@@ -972,11 +974,11 @@ namespace Llvm.NET.Instructions
             LLVMValueRef handle;
             if( valueRef is Constant )
             {
-                handle = NativeMethods.ConstUIToFP( valueRef.ValueHandle, targetType.GetTypeRef( ) );
+                handle = LLVMConstUIToFP( valueRef.ValueHandle, targetType.GetTypeRef( ) );
             }
             else
             {
-                handle = NativeMethods.BuildUIToFP( BuilderHandle, valueRef.ValueHandle, targetType.GetTypeRef( ), string.Empty );
+                handle = LLVMBuildUIToFP( BuilderHandle, valueRef.ValueHandle, targetType.GetTypeRef( ), string.Empty );
             }
 
             return Value.FromHandle( handle );
@@ -997,11 +999,11 @@ namespace Llvm.NET.Instructions
             LLVMValueRef handle;
             if( valueRef is Constant )
             {
-                handle = NativeMethods.ConstFPToUI( valueRef.ValueHandle, targetType.GetTypeRef( ) );
+                handle = LLVMConstFPToUI( valueRef.ValueHandle, targetType.GetTypeRef( ) );
             }
             else
             {
-                handle = NativeMethods.BuildFPToUI( BuilderHandle, valueRef.ValueHandle, targetType.GetTypeRef( ), string.Empty );
+                handle = LLVMBuildFPToUI( BuilderHandle, valueRef.ValueHandle, targetType.GetTypeRef( ), string.Empty );
             }
 
             return Value.FromHandle( handle );
@@ -1022,11 +1024,11 @@ namespace Llvm.NET.Instructions
             LLVMValueRef handle;
             if( valueRef is Constant )
             {
-                handle = NativeMethods.ConstFPToSI( valueRef.ValueHandle, targetType.GetTypeRef( ) );
+                handle = LLVMConstFPToSI( valueRef.ValueHandle, targetType.GetTypeRef( ) );
             }
             else
             {
-                handle = NativeMethods.BuildFPToSI( BuilderHandle, valueRef.ValueHandle, targetType.GetTypeRef( ), string.Empty );
+                handle = LLVMBuildFPToSI( BuilderHandle, valueRef.ValueHandle, targetType.GetTypeRef( ), string.Empty );
             }
 
             return Value.FromHandle( handle );
@@ -1047,11 +1049,11 @@ namespace Llvm.NET.Instructions
             LLVMValueRef handle;
             if( valueRef is Constant )
             {
-                handle = NativeMethods.ConstFPExt( valueRef.ValueHandle, toType.GetTypeRef( ) );
+                handle = LLVMConstFPExt( valueRef.ValueHandle, toType.GetTypeRef( ) );
             }
             else
             {
-                handle = NativeMethods.BuildFPExt( BuilderHandle, valueRef.ValueHandle, toType.GetTypeRef( ), string.Empty );
+                handle = LLVMBuildFPExt( BuilderHandle, valueRef.ValueHandle, toType.GetTypeRef( ), string.Empty );
             }
 
             return Value.FromHandle( handle );
@@ -1072,11 +1074,11 @@ namespace Llvm.NET.Instructions
             LLVMValueRef handle;
             if( valueRef is Constant )
             {
-                handle = NativeMethods.ConstFPTrunc( valueRef.ValueHandle, toType.GetTypeRef( ) );
+                handle = LLVMConstFPTrunc( valueRef.ValueHandle, toType.GetTypeRef( ) );
             }
             else
             {
-                handle = NativeMethods.BuildFPTrunc( BuilderHandle, valueRef.ValueHandle, toType.GetTypeRef( ), string.Empty );
+                handle = LLVMBuildFPTrunc( BuilderHandle, valueRef.ValueHandle, toType.GetTypeRef( ), string.Empty );
             }
 
             return Value.FromHandle( handle );
@@ -1138,18 +1140,18 @@ namespace Llvm.NET.Instructions
                 }
             }
 
-            var handle = NativeMethods.BuildSelect( BuilderHandle
-                                                  , ifCondition.ValueHandle
-                                                  , thenValue.ValueHandle
-                                                  , elseValue.ValueHandle
-                                                  , string.Empty
-                                                  );
+            var handle = LLVMBuildSelect( BuilderHandle
+                                        , ifCondition.ValueHandle
+                                        , thenValue.ValueHandle
+                                        , elseValue.ValueHandle
+                                        , string.Empty
+                                        );
             return Value.FromHandle( handle );
         }
 
         public PhiNode PhiNode( ITypeRef resultType )
         {
-            var handle = NativeMethods.BuildPhi( BuilderHandle, resultType.GetTypeRef( ), string.Empty );
+            var handle = LLVMBuildPhi( BuilderHandle, resultType.GetTypeRef( ), string.Empty );
             return Value.FromHandle<PhiNode>( handle );
         }
 
@@ -1160,7 +1162,7 @@ namespace Llvm.NET.Instructions
                 throw new ArgumentNullException( nameof( instance ) );
             }
 
-            var handle = NativeMethods.BuildExtractValue( BuilderHandle, instance.ValueHandle, index, string.Empty );
+            var handle = LLVMBuildExtractValue( BuilderHandle, instance.ValueHandle, index, string.Empty );
             return Value.FromHandle( handle );
         }
 
@@ -1176,7 +1178,7 @@ namespace Llvm.NET.Instructions
                 throw new ArgumentNullException( nameof( defaultCase ) );
             }
 
-            var handle = NativeMethods.BuildSwitch( BuilderHandle, value.ValueHandle, defaultCase.BlockHandle, numCases );
+            var handle = LLVMBuildSwitch( BuilderHandle, value.ValueHandle, defaultCase.BlockHandle, numCases );
             return Value.FromHandle<Instructions.Switch>( handle );
         }
 
@@ -1236,7 +1238,7 @@ namespace Llvm.NET.Instructions
                 func = module.AddFunction( Intrinsic.DebugTrapName, signature );
             }
 
-            var hCall = NativeMethods.BuildCall( BuilderHandle, func.ValueHandle, out LLVMValueRef args, 0U, string.Empty );
+            var hCall = LLVMBuildCall( BuilderHandle, func.ValueHandle, out LLVMValueRef args, 0U, string.Empty );
             return Value.FromHandle( hCall );
         }
 
@@ -1574,7 +1576,7 @@ namespace Llvm.NET.Instructions
                 throw new ArgumentNullException( nameof( elementValue ) );
             }
 
-            var handle = NativeMethods.BuildInsertValue( BuilderHandle, aggValue.ValueHandle, elementValue.ValueHandle, index, string.Empty );
+            var handle = LLVMBuildInsertValue( BuilderHandle, aggValue.ValueHandle, elementValue.ValueHandle, index, string.Empty );
             return Value.FromHandle( handle );
         }
 
@@ -1649,7 +1651,7 @@ namespace Llvm.NET.Instructions
                 throw new ArgumentException( string.Format( IncompatibleTypeMsgFmt, ptrType.ElementType, val.NativeType ) );
             }
 
-            var handle = NativeMethods.BuildAtomicRMW( BuilderHandle, op, ptr.ValueHandle, val.ValueHandle, LLVMAtomicOrdering.LLVMAtomicOrderingSequentiallyConsistent, false );
+            var handle = LLVMBuildAtomicRMW( BuilderHandle, op, ptr.ValueHandle, val.ValueHandle, LLVMAtomicOrdering.LLVMAtomicOrderingSequentiallyConsistent, false );
             return Value.FromHandle( handle );
         }
 
@@ -1705,7 +1707,7 @@ namespace Llvm.NET.Instructions
                 llvmArgs = new LLVMValueRef[ 1 ];
             }
 
-            return NativeMethods.BuildCall( BuilderHandle, func.ValueHandle, out llvmArgs[ 0 ], ( uint )argCount, string.Empty );
+            return LLVMBuildCall( BuilderHandle, func.ValueHandle, out llvmArgs[ 0 ], ( uint )argCount, string.Empty );
         }
 
         private const string IncompatibleTypeMsgFmt = "Incompatible types: destination pointer must be of the same type as the value stored.\n"

@@ -1,3 +1,7 @@
+Param(
+    [string]$Configuration="Release"
+)
+
 function Find-OnPath
 {
     [CmdletBinding()]
@@ -202,10 +206,10 @@ try
     $packProperties = @{ version=$($BuildInfo.PackageVersion)
                          llvmversion=$($BuildInfo.LlvmVersion)
                          buildbinoutput=(normalize-path (Join-path $($buildPaths.BuildOutputPath) 'bin'))
-                         configuration='Release'
+                         configuration=$Configuration
                        }
 
-    $msBuildProperties = @{ Configuration = 'Release'
+    $msBuildProperties = @{ Configuration = $Configuration
                             FullBuildNumber = $BuildInfo.FullBuildNumber
                             PackageVersion = $BuildInfo.PackageVersion
                             FileVersionMajor = $BuildInfo.FileVersionMajor

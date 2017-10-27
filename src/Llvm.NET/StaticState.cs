@@ -10,6 +10,8 @@ using System.Reflection;
 using System.Threading;
 using Llvm.NET.Native;
 
+using static Llvm.NET.Native.NativeMethods;
+
 namespace Llvm.NET
 {
     /// <summary>Target tools to register/enable</summary>
@@ -72,12 +74,12 @@ namespace Llvm.NET
                 throw new ArgumentNullException( nameof( args ) );
             }
 
-            NativeMethods.ParseCommandLineOptions( args.Length, args, overview );
+            LLVMParseCommandLineOptions( args.Length, args, overview );
         }
 
         public static void InitializeOptimization()
         {
-            NativeMethods.InitializePassesForLegacyOpt( );
+            LLVMInitializePassesForLegacyOpt( );
         }
 
         // basic pattern to follow for any new targets in the future
@@ -110,32 +112,32 @@ namespace Llvm.NET
         {
             if( registrations.HasFlag( TargetRegistrations.Target ) )
             {
-                NativeMethods.InitializeAllTargets( );
+                LLVMInitializeAllTargets( );
             }
 
             if( registrations.HasFlag( TargetRegistrations.TargetInfo ) )
             {
-                NativeMethods.InitializeAllTargetInfos( );
+                LLVMInitializeAllTargetInfos( );
             }
 
             if( registrations.HasFlag( TargetRegistrations.TargetMachine ) )
             {
-                NativeMethods.InitializeAllTargetMCs( );
+                LLVMInitializeAllTargetMCs( );
             }
 
             if( registrations.HasFlag( TargetRegistrations.AsmPrinter ) )
             {
-                NativeMethods.InitializeAllAsmPrinters( );
+                LLVMInitializeAllAsmPrinters( );
             }
 
             if( registrations.HasFlag( TargetRegistrations.Disassembler ) )
             {
-                NativeMethods.InitializeAllDisassemblers( );
+                LLVMInitializeAllDisassemblers( );
             }
 
             if( registrations.HasFlag( TargetRegistrations.AsmParser ) )
             {
-                NativeMethods.InitializeAllAsmParsers( );
+                LLVMInitializeAllAsmParsers( );
             }
         }
 
@@ -145,7 +147,7 @@ namespace Llvm.NET
         {
             if( registrations.HasFlag( TargetRegistrations.Target ) )
             {
-                NativeMethods.InitializeNativeTarget( );
+                LLVMInitializeNativeTarget( );
             }
 
             /* Not supported on this platform
@@ -158,17 +160,17 @@ namespace Llvm.NET
 
             if( registrations.HasFlag( TargetRegistrations.AsmPrinter ) )
             {
-                NativeMethods.InitializeNativeAsmPrinter( );
+                LLVMInitializeNativeAsmPrinter( );
             }
 
             if( registrations.HasFlag( TargetRegistrations.Disassembler ) )
             {
-                NativeMethods.InitializeNativeDisassembler( );
+                LLVMInitializeNativeDisassembler( );
             }
 
             if( registrations.HasFlag( TargetRegistrations.AsmParser ) )
             {
-                NativeMethods.InitializeNativeAsmParser( );
+                LLVMInitializeNativeAsmParser( );
             }
         }
 
@@ -178,32 +180,32 @@ namespace Llvm.NET
         {
             if( registrations.HasFlag( TargetRegistrations.Target ) )
             {
-                NativeMethods.InitializeAArch64Target( );
+                LLVMInitializeAArch64Target( );
             }
 
             if( registrations.HasFlag( TargetRegistrations.TargetInfo ) )
             {
-                NativeMethods.InitializeAArch64TargetInfo( );
+                LLVMInitializeAArch64TargetInfo( );
             }
 
             if( registrations.HasFlag( TargetRegistrations.TargetMachine ) )
             {
-                NativeMethods.InitializeAArch64TargetMC( );
+                LLVMInitializeAArch64TargetMC( );
             }
 
             if( registrations.HasFlag( TargetRegistrations.AsmPrinter ) )
             {
-                NativeMethods.InitializeAArch64AsmPrinter( );
+                LLVMInitializeAArch64AsmPrinter( );
             }
 
             if( registrations.HasFlag( TargetRegistrations.Disassembler ) )
             {
-                NativeMethods.InitializeAArch64Disassembler( );
+                LLVMInitializeAArch64Disassembler( );
             }
 
             if( registrations.HasFlag( TargetRegistrations.AsmParser ) )
             {
-                NativeMethods.InitializeAArch64AsmParser( );
+                LLVMInitializeAArch64AsmParser( );
             }
         }
 
@@ -213,32 +215,32 @@ namespace Llvm.NET
         {
             if( registrations.HasFlag( TargetRegistrations.Target ) )
             {
-                NativeMethods.InitializeARMTarget( );
+                LLVMInitializeARMTarget( );
             }
 
             if( registrations.HasFlag( TargetRegistrations.TargetInfo ) )
             {
-                NativeMethods.InitializeARMTargetInfo( );
+                LLVMInitializeARMTargetInfo( );
             }
 
             if( registrations.HasFlag( TargetRegistrations.TargetMachine ) )
             {
-                NativeMethods.InitializeARMTargetMC( );
+                LLVMInitializeARMTargetMC( );
             }
 
             if( registrations.HasFlag( TargetRegistrations.AsmPrinter ) )
             {
-                NativeMethods.InitializeARMAsmPrinter( );
+                LLVMInitializeARMAsmPrinter( );
             }
 
             if( registrations.HasFlag( TargetRegistrations.Disassembler ) )
             {
-                NativeMethods.InitializeARMDisassembler( );
+                LLVMInitializeARMDisassembler( );
             }
 
             if( registrations.HasFlag( TargetRegistrations.AsmParser ) )
             {
-                NativeMethods.InitializeARMAsmParser( );
+                LLVMInitializeARMAsmParser( );
             }
         }
 
@@ -248,27 +250,27 @@ namespace Llvm.NET
         {
             if( registrations.HasFlag( TargetRegistrations.Target ) )
             {
-                NativeMethods.InitializeHexagonTarget( );
+                LLVMInitializeHexagonTarget( );
             }
 
             if( registrations.HasFlag( TargetRegistrations.TargetInfo ) )
             {
-                NativeMethods.InitializeHexagonTargetInfo( );
+                LLVMInitializeHexagonTargetInfo( );
             }
 
             if( registrations.HasFlag( TargetRegistrations.TargetMachine ) )
             {
-                NativeMethods.InitializeHexagonTargetMC( );
+                LLVMInitializeHexagonTargetMC( );
             }
 
             if( registrations.HasFlag( TargetRegistrations.AsmPrinter ) )
             {
-                NativeMethods.InitializeHexagonAsmPrinter( );
+                LLVMInitializeHexagonAsmPrinter( );
             }
 
             if( registrations.HasFlag( TargetRegistrations.Disassembler ) )
             {
-                NativeMethods.InitializeHexagonDisassembler( );
+                LLVMInitializeHexagonDisassembler( );
             }
 
             /*
@@ -283,32 +285,32 @@ namespace Llvm.NET
         {
             if( registrations.HasFlag( TargetRegistrations.Target ) )
             {
-                NativeMethods.InitializeMipsTarget( );
+                LLVMInitializeMipsTarget( );
             }
 
             if( registrations.HasFlag( TargetRegistrations.TargetInfo ) )
             {
-                NativeMethods.InitializeMipsTargetInfo( );
+                LLVMInitializeMipsTargetInfo( );
             }
 
             if( registrations.HasFlag( TargetRegistrations.TargetMachine ) )
             {
-                NativeMethods.InitializeMipsTargetMC( );
+                LLVMInitializeMipsTargetMC( );
             }
 
             if( registrations.HasFlag( TargetRegistrations.AsmPrinter ) )
             {
-                NativeMethods.InitializeMipsAsmPrinter( );
+                LLVMInitializeMipsAsmPrinter( );
             }
 
             if( registrations.HasFlag( TargetRegistrations.Disassembler ) )
             {
-                NativeMethods.InitializeMipsDisassembler( );
+                LLVMInitializeMipsDisassembler( );
             }
 
             if( registrations.HasFlag( TargetRegistrations.AsmParser ) )
             {
-                NativeMethods.InitializeMipsAsmParser( );
+                LLVMInitializeMipsAsmParser( );
             }
         }
 
@@ -318,22 +320,22 @@ namespace Llvm.NET
         {
             if( registrations.HasFlag( TargetRegistrations.Target ) )
             {
-                NativeMethods.InitializeMSP430Target( );
+                LLVMInitializeMSP430Target( );
             }
 
             if( registrations.HasFlag( TargetRegistrations.TargetInfo ) )
             {
-                NativeMethods.InitializeMSP430TargetInfo( );
+                LLVMInitializeMSP430TargetInfo( );
             }
 
             if( registrations.HasFlag( TargetRegistrations.TargetMachine ) )
             {
-                NativeMethods.InitializeMSP430TargetMC( );
+                LLVMInitializeMSP430TargetMC( );
             }
 
             if( registrations.HasFlag( TargetRegistrations.AsmPrinter ) )
             {
-                NativeMethods.InitializeMSP430AsmPrinter( );
+                LLVMInitializeMSP430AsmPrinter( );
             }
 
             /*
@@ -351,22 +353,22 @@ namespace Llvm.NET
         {
             if( registrations.HasFlag( TargetRegistrations.Target ) )
             {
-                NativeMethods.InitializeNVPTXTarget( );
+                LLVMInitializeNVPTXTarget( );
             }
 
             if( registrations.HasFlag( TargetRegistrations.TargetInfo ) )
             {
-                NativeMethods.InitializeNVPTXTargetInfo( );
+                LLVMInitializeNVPTXTargetInfo( );
             }
 
             if( registrations.HasFlag( TargetRegistrations.TargetMachine ) )
             {
-                NativeMethods.InitializeNVPTXTargetMC( );
+                LLVMInitializeNVPTXTargetMC( );
             }
 
             if( registrations.HasFlag( TargetRegistrations.AsmPrinter ) )
             {
-                NativeMethods.InitializeNVPTXAsmPrinter( );
+                LLVMInitializeNVPTXAsmPrinter( );
             }
 
             /*
@@ -384,32 +386,32 @@ namespace Llvm.NET
         {
             if( registrations.HasFlag( TargetRegistrations.Target ) )
             {
-                NativeMethods.InitializePowerPCTarget( );
+                LLVMInitializePowerPCTarget( );
             }
 
             if( registrations.HasFlag( TargetRegistrations.TargetInfo ) )
             {
-                NativeMethods.InitializePowerPCTargetInfo( );
+                LLVMInitializePowerPCTargetInfo( );
             }
 
             if( registrations.HasFlag( TargetRegistrations.TargetMachine ) )
             {
-                NativeMethods.InitializePowerPCTargetMC( );
+                LLVMInitializePowerPCTargetMC( );
             }
 
             if( registrations.HasFlag( TargetRegistrations.AsmPrinter ) )
             {
-                NativeMethods.InitializePowerPCAsmPrinter( );
+                LLVMInitializePowerPCAsmPrinter( );
             }
 
             if( registrations.HasFlag( TargetRegistrations.Disassembler ) )
             {
-                NativeMethods.InitializePowerPCDisassembler( );
+                LLVMInitializePowerPCDisassembler( );
             }
 
             if( registrations.HasFlag( TargetRegistrations.AsmParser ) )
             {
-                NativeMethods.InitializePowerPCAsmParser( );
+                LLVMInitializePowerPCAsmParser( );
             }
         }
 
@@ -419,22 +421,22 @@ namespace Llvm.NET
         {
             if( registrations.HasFlag( TargetRegistrations.Target ) )
             {
-                NativeMethods.InitializeAMDGPUTarget( );
+                LLVMInitializeAMDGPUTarget( );
             }
 
             if( registrations.HasFlag( TargetRegistrations.TargetInfo ) )
             {
-                NativeMethods.InitializeAMDGPUTargetInfo( );
+                LLVMInitializeAMDGPUTargetInfo( );
             }
 
             if( registrations.HasFlag( TargetRegistrations.TargetMachine ) )
             {
-                NativeMethods.InitializeAMDGPUTargetMC( );
+                LLVMInitializeAMDGPUTargetMC( );
             }
 
             if( registrations.HasFlag( TargetRegistrations.AsmPrinter ) )
             {
-                NativeMethods.InitializeAMDGPUAsmPrinter( );
+                LLVMInitializeAMDGPUAsmPrinter( );
             }
 
             /*
@@ -444,7 +446,7 @@ namespace Llvm.NET
 
             if( registrations.HasFlag( TargetRegistrations.AsmParser ) )
             {
-                NativeMethods.InitializeAMDGPUAsmParser( );
+                LLVMInitializeAMDGPUAsmParser( );
             }
         }
 
@@ -454,32 +456,32 @@ namespace Llvm.NET
         {
             if( registrations.HasFlag( TargetRegistrations.Target ) )
             {
-                NativeMethods.InitializeSparcTarget( );
+                LLVMInitializeSparcTarget( );
             }
 
             if( registrations.HasFlag( TargetRegistrations.TargetInfo ) )
             {
-                NativeMethods.InitializeSparcTargetInfo( );
+                LLVMInitializeSparcTargetInfo( );
             }
 
             if( registrations.HasFlag( TargetRegistrations.TargetMachine ) )
             {
-                NativeMethods.InitializeSparcTargetMC( );
+                LLVMInitializeSparcTargetMC( );
             }
 
             if( registrations.HasFlag( TargetRegistrations.AsmPrinter ) )
             {
-                NativeMethods.InitializeSparcAsmPrinter( );
+                LLVMInitializeSparcAsmPrinter( );
             }
 
             if( registrations.HasFlag( TargetRegistrations.Disassembler ) )
             {
-                NativeMethods.InitializeSparcDisassembler( );
+                LLVMInitializeSparcDisassembler( );
             }
 
             if( registrations.HasFlag( TargetRegistrations.AsmParser ) )
             {
-                NativeMethods.InitializeSparcAsmParser( );
+                LLVMInitializeSparcAsmParser( );
             }
         }
 
@@ -489,32 +491,32 @@ namespace Llvm.NET
         {
             if( registrations.HasFlag( TargetRegistrations.Target ) )
             {
-                NativeMethods.InitializeSystemZTarget( );
+                LLVMInitializeSystemZTarget( );
             }
 
             if( registrations.HasFlag( TargetRegistrations.TargetInfo ) )
             {
-                NativeMethods.InitializeSystemZTargetInfo( );
+                LLVMInitializeSystemZTargetInfo( );
             }
 
             if( registrations.HasFlag( TargetRegistrations.TargetMachine ) )
             {
-                NativeMethods.InitializeSystemZTargetMC( );
+                LLVMInitializeSystemZTargetMC( );
             }
 
             if( registrations.HasFlag( TargetRegistrations.AsmPrinter ) )
             {
-                NativeMethods.InitializeSystemZAsmPrinter( );
+                LLVMInitializeSystemZAsmPrinter( );
             }
 
             if( registrations.HasFlag( TargetRegistrations.Disassembler ) )
             {
-                NativeMethods.InitializeSystemZDisassembler( );
+                LLVMInitializeSystemZDisassembler( );
             }
 
             if( registrations.HasFlag( TargetRegistrations.AsmParser ) )
             {
-                NativeMethods.InitializeSystemZAsmParser( );
+                LLVMInitializeSystemZAsmParser( );
             }
         }
 
@@ -524,32 +526,32 @@ namespace Llvm.NET
         {
             if( registrations.HasFlag( TargetRegistrations.Target ) )
             {
-                NativeMethods.InitializeX86Target( );
+                LLVMInitializeX86Target( );
             }
 
             if( registrations.HasFlag( TargetRegistrations.TargetInfo ) )
             {
-                NativeMethods.InitializeX86TargetInfo( );
+                LLVMInitializeX86TargetInfo( );
             }
 
             if( registrations.HasFlag( TargetRegistrations.TargetMachine ) )
             {
-                NativeMethods.InitializeX86TargetMC( );
+                LLVMInitializeX86TargetMC( );
             }
 
             if( registrations.HasFlag( TargetRegistrations.AsmPrinter ) )
             {
-                NativeMethods.InitializeX86AsmPrinter( );
+                LLVMInitializeX86AsmPrinter( );
             }
 
             if( registrations.HasFlag( TargetRegistrations.Disassembler ) )
             {
-                NativeMethods.InitializeX86Disassembler( );
+                LLVMInitializeX86Disassembler( );
             }
 
             if( registrations.HasFlag( TargetRegistrations.AsmParser ) )
             {
-                NativeMethods.InitializeX86AsmParser( );
+                LLVMInitializeX86AsmParser( );
             }
         }
 
@@ -559,27 +561,27 @@ namespace Llvm.NET
         {
             if( registrations.HasFlag( TargetRegistrations.Target ) )
             {
-                NativeMethods.InitializeXCoreTarget( );
+                LLVMInitializeXCoreTarget( );
             }
 
             if( registrations.HasFlag( TargetRegistrations.TargetInfo ) )
             {
-                NativeMethods.InitializeXCoreTargetInfo( );
+                LLVMInitializeXCoreTargetInfo( );
             }
 
             if( registrations.HasFlag( TargetRegistrations.TargetMachine ) )
             {
-                NativeMethods.InitializeXCoreTargetMC( );
+                LLVMInitializeXCoreTargetMC( );
             }
 
             if( registrations.HasFlag( TargetRegistrations.AsmPrinter ) )
             {
-                NativeMethods.InitializeXCoreAsmPrinter( );
+                LLVMInitializeXCoreAsmPrinter( );
             }
 
             if( registrations.HasFlag( TargetRegistrations.Disassembler ) )
             {
-                NativeMethods.InitializeXCoreDisassembler( );
+                LLVMInitializeXCoreDisassembler( );
             }
 
             /*
@@ -619,10 +621,10 @@ namespace Llvm.NET
             // but full framework apps (including unit tests will have CopyLocal applied)
             paths.Add( Path.Combine( packageRoot, runTimePath ) );
             paths.Add( Path.Combine( thisModulePath, runTimePath ) );
-            IntPtr hLibLLVM = NativeMethods.LoadWin32Library( "LibLlvm.dll", paths );
+            IntPtr hLibLLVM = LoadWin32Library( "LibLlvm.dll", paths );
 
             // Verify the version of LLVM in LibLLVM
-            NativeMethods.GetVersionInfo( out LLVMVersionInfo versionInfo );
+            LLVMGetVersionInfo( out LLVMVersionInfo versionInfo );
             if( versionInfo.Major != VersionMajor
              || versionInfo.Minor != VersionMinor
              || versionInfo.Patch < VersionPatch
@@ -633,7 +635,7 @@ namespace Llvm.NET
 
             // initialize the static fields
             FatalErrorHandlerDelegate = new Lazy<LLVMFatalErrorHandler>( ( ) => FatalErrorHandler, LazyThreadSafetyMode.PublicationOnly );
-            NativeMethods.InstallFatalErrorHandler( FatalErrorHandlerDelegate.Value );
+            LLVMInstallFatalErrorHandler( FatalErrorHandlerDelegate.Value );
             return new DisposableAction( ( ) => InternalShutdownLLVM( hLibLLVM ) );
         }
 
@@ -643,10 +645,10 @@ namespace Llvm.NET
             {
                 LlvmInitializationState = null;
                 LlvmStateInitialized = false;
-                NativeMethods.Shutdown( );
+                LLVMShutdown( );
                 if( !hLibLLVM.IsNull( ) )
                 {
-                    NativeMethods.FreeLibrary( hLibLLVM );
+                    FreeLibrary( hLibLLVM );
                 }
             }
         }

@@ -15,10 +15,10 @@ namespace Llvm.NET.Values
         : Value
     {
         /// <summary>Gets the function this argument belongs to</summary>
-        public Function ContainingFunction => FromHandle<Function>( NativeMethods.GetParamParent( ValueHandle ) );
+        public Function ContainingFunction => FromHandle<Function>( NativeMethods.LLVMGetParamParent( ValueHandle ) );
 
         /// <summary>Gets the zero based index of the argument</summary>
-        public uint Index => NativeMethods.GetArgumentIndex( ValueHandle );
+        public uint Index => NativeMethods.LLVMGetArgumentIndex( ValueHandle );
 
         /// <summary>Sets the alignment for the argument</summary>
         /// <param name="value">Alignment value for this argument</param>

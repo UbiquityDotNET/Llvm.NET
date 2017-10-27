@@ -1,4 +1,4 @@
-﻿// <copyright file="LLVMTripleRef.cs" company=".NET Foundation">
+﻿// <copyright file="LLVMPassRegistryRef.cs" company=".NET Foundation">
 // Copyright (c) .NET Foundation. All rights reserved.
 // </copyright>
 
@@ -7,24 +7,23 @@ using System.Security;
 
 namespace Llvm.NET.Native
 {
-    // typedef struct LLVMOpaqueTriple* LLVMTripleRef;
     [SecurityCritical]
-    internal class LLVMTripleRef
+    internal class LLVMMCJITMemoryManagerRef
         : SafeHandleNullIsInvalid
     {
-        internal LLVMTripleRef( )
+        internal LLVMMCJITMemoryManagerRef( )
             : base( true )
         {
         }
 
-        internal LLVMTripleRef( IntPtr handle, bool owner )
+        internal LLVMMCJITMemoryManagerRef( IntPtr handle, bool owner )
             : base( owner )
         {
             SetHandle( handle );
         }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage( "Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode", Justification = "Required for marshaling support (used via reflection)" )]
-        internal LLVMTripleRef( IntPtr handle )
+        internal LLVMMCJITMemoryManagerRef( IntPtr handle )
             : this( handle, false )
         {
         }
@@ -32,7 +31,7 @@ namespace Llvm.NET.Native
         [SecurityCritical]
         protected override bool ReleaseHandle( )
         {
-            NativeMethods.DisposeTriple( handle );
+            NativeMethods.LLVMDisposeMCJITMemoryManager( handle );
             return true;
         }
     }

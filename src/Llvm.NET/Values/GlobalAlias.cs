@@ -15,13 +15,13 @@ namespace Llvm.NET.Values
         {
             get
             {
-                if( ValueHandle.Pointer == IntPtr.Zero )
+                if( ValueHandle.Handle == IntPtr.Zero )
                 {
                     return null;
                 }
 
-                var handle = NativeMethods.GetAliasee( ValueHandle );
-                if( handle.Pointer == IntPtr.Zero )
+                var handle = NativeMethods.LLVMGetAliasee( ValueHandle );
+                if( handle.Handle == IntPtr.Zero )
                 {
                     return null;
                 }

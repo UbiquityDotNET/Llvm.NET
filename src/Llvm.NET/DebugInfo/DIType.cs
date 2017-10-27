@@ -14,12 +14,12 @@ namespace Llvm.NET.DebugInfo
         {
             get
             {
-                if( MetadataHandle.Pointer == IntPtr.Zero )
+                if( MetadataHandle.Handle == IntPtr.Zero )
                 {
                     return 0;
                 }
 
-                return ( DebugInfoFlags )NativeMethods.DITypeGetFlags( MetadataHandle );
+                return ( DebugInfoFlags )NativeMethods.LLVMDITypeGetFlags( MetadataHandle );
             }
         }
 
@@ -27,8 +27,8 @@ namespace Llvm.NET.DebugInfo
         {
             get
             {
-                var handle = NativeMethods.DITypeGetScope( MetadataHandle );
-                if( handle.Pointer == IntPtr.Zero )
+                var handle = NativeMethods.LLVMDITypeGetScope( MetadataHandle );
+                if( handle.Handle == IntPtr.Zero )
                 {
                     return null;
                 }
@@ -37,13 +37,13 @@ namespace Llvm.NET.DebugInfo
             }
         }
 
-        public UInt32 Line => NativeMethods.DITypeGetLine( MetadataHandle );
+        public UInt32 Line => NativeMethods.LLVMDITypeGetLine( MetadataHandle );
 
-        public UInt64 BitSize => NativeMethods.DITypeGetSizeInBits( MetadataHandle );
+        public UInt64 BitSize => NativeMethods.LLVMDITypeGetSizeInBits( MetadataHandle );
 
-        public UInt64 BitAlignment => NativeMethods.DITypeGetAlignInBits( MetadataHandle );
+        public UInt64 BitAlignment => NativeMethods.LLVMDITypeGetAlignInBits( MetadataHandle );
 
-        public UInt64 BitOffset => NativeMethods.DITypeGetOffsetInBits( MetadataHandle );
+        public UInt64 BitOffset => NativeMethods.LLVMDITypeGetOffsetInBits( MetadataHandle );
 
         public bool IsPrivate => ( DebugInfoFlags & DebugInfoFlags.AccessibilityMask ) == DebugInfoFlags.Private;
 
@@ -73,7 +73,7 @@ namespace Llvm.NET.DebugInfo
 
         public bool IsRvalueReference => DebugInfoFlags.HasFlag( DebugInfoFlags.RValueReference );
 
-        public string Name => NativeMethods.DITypeGetName( MetadataHandle );
+        public string Name => NativeMethods.LLVMDITypeGetName( MetadataHandle );
 
         internal DIType( LLVMMetadataRef handle )
             : base( handle )

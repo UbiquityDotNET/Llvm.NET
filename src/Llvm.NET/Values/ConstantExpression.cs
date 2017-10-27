@@ -15,7 +15,7 @@ namespace Llvm.NET.Values
     public class ConstantExpression
         : Constant
     {
-        public OpCode OpCode => ( OpCode )NativeMethods.GetConstOpcode( ValueHandle );
+        public OpCode OpCode => ( OpCode )NativeMethods.LLVMGetConstOpcode( ValueHandle );
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage( "Microsoft.Design", "CA1011:ConsiderPassingBaseTypesAsParameters", Justification = "Specific type required by interop call" )]
         public static Constant IntToPtrExpression( Constant value, ITypeRef type )
@@ -35,7 +35,7 @@ namespace Llvm.NET.Values
                 throw new ArgumentException( "pointer type expected", nameof( type ) );
             }
 
-            return FromHandle<Constant>( NativeMethods.ConstIntToPtr( value.ValueHandle, type.GetTypeRef( ) ) );
+            return FromHandle<Constant>( NativeMethods.LLVMConstIntToPtr( value.ValueHandle, type.GetTypeRef( ) ) );
         }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage( "Microsoft.Design", "CA1011:ConsiderPassingBaseTypesAsParameters", Justification = "Specific type required by interop call" )]
@@ -46,7 +46,7 @@ namespace Llvm.NET.Values
                 throw new ArgumentNullException( nameof( value ) );
             }
 
-            var handle = NativeMethods.ConstBitCast( value.ValueHandle, toType.GetTypeRef( ) );
+            var handle = NativeMethods.LLVMConstBitCast( value.ValueHandle, toType.GetTypeRef( ) );
             return FromHandle<Constant>( handle );
         }
 
@@ -57,7 +57,7 @@ namespace Llvm.NET.Values
         public static Constant GetElementPtr(Constant value, IEnumerable<Constant> args)
         {
             var llvmArgs = InstructionBuilder.GetValidatedGEPArgs(value, args);
-            var handle = NativeMethods.ConstGEP( value.ValueHandle, out llvmArgs[0], (uint)llvmArgs.Length);
+            var handle = NativeMethods.LLVMConstGEP( value.ValueHandle, out llvmArgs[0], (uint)llvmArgs.Length);
             return FromHandle<Constant>(handle);
         }
 

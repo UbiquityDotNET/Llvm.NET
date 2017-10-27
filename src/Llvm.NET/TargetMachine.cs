@@ -6,6 +6,8 @@ using System;
 using Llvm.NET.Native;
 using Ubiquity.ArgValidators;
 
+using static Llvm.NET.Native.NativeMethods;
+
 namespace Llvm.NET
 {
     /// <summary>Target specific code generation information</summary>
@@ -28,29 +30,29 @@ namespace Llvm.NET
         }
 
         /// <summary>Gets the target that owns this <see cref="TargetMachine"/></summary>
-        public Target Target => Target.FromHandle( NativeMethods.GetTargetMachineTarget( TargetMachineHandle ) );
+        public Target Target => Target.FromHandle( LLVMGetTargetMachineTarget( TargetMachineHandle ) );
 
         /// <summary>Gets the target triple describing this machine</summary>
-        public string Triple => NativeMethods.GetTargetMachineTriple( TargetMachineHandle );
+        public string Triple => LLVMGetTargetMachineTriple( TargetMachineHandle );
 
         /// <summary>Gets the CPU Type for this machine</summary>
-        public string Cpu => NativeMethods.GetTargetMachineCPU( TargetMachineHandle );
+        public string Cpu => LLVMGetTargetMachineCPU( TargetMachineHandle );
 
         /// <summary>Gets the CPU specific features for this machine</summary>
-        public string Features => NativeMethods.GetTargetMachineFeatureString( TargetMachineHandle );
+        public string Features => LLVMGetTargetMachineFeatureString( TargetMachineHandle );
 
         /// <summary>Gets Layout information for this machine</summary>
         public DataLayout TargetData
         {
             get
             {
-                var handle = NativeMethods.CreateTargetDataLayout( TargetMachineHandle );
-                if( handle.Pointer == IntPtr.Zero )
+                var handle = LLVMCreateTargetDataLayout( TargetMachineHandle );
+                if( handle.Handle == IntPtr.Zero )
                 {
                     return null;
                 }
 
-                return DataLayout.FromHandle( Context, handle, isDisposable: false );
+                return DataLayout.FromHandle( handle, isDisposable: false );
             }
         }
 
@@ -69,12 +71,12 @@ namespace Llvm.NET
                 throw new ArgumentException( "Triple specified for the module doesn't match target machine", nameof( module ) );
             }
 
-            var status = NativeMethods.TargetMachineEmitToFile( TargetMachineHandle
-                                                              , module.ModuleHandle
-                                                              , path
-                                                              , ( LLVMCodeGenFileType )fileType
-                                                              , out string errTxt
-                                                              );
+            var status = LLVMTargetMachineEmitToFile( TargetMachineHandle
+                                                    , module.ModuleHandle
+                                                    , path
+                                                    , ( LLVMCodeGenFileType )fileType
+                                                    , out string errTxt
+                                                    );
             if( status.Failed )
             {
                 throw new InternalCodeGeneratorException( errTxt );
@@ -99,12 +101,12 @@ namespace Llvm.NET
                 throw new ArgumentException( "Triple specified for the module doesn't match target machine", nameof( module ) );
             }
 
-            var status = NativeMethods.TargetMachineEmitToMemoryBuffer( TargetMachineHandle
-                                                                      , module.ModuleHandle
-                                                                      , ( LLVMCodeGenFileType )fileType
-                                                                      , out string errTxt
-                                                                      , out LLVMMemoryBufferRef bufferHandle
-                                                                      );
+            var status = LLVMTargetMachineEmitToMemoryBuffer( TargetMachineHandle
+                                                            , module.ModuleHandle
+                                                            , ( LLVMCodeGenFileType )fileType
+                                                            , out string errTxt
+                                                            , out LLVMMemoryBufferRef bufferHandle
+                                                            );
 
             if( status.Failed )
             {
@@ -114,21 +116,19 @@ namespace Llvm.NET
             return new MemoryBuffer( bufferHandle );
         }
 
-        /// <summary>Gets the <see cref="Context"/> this machine is associated with</summary>
-        public Context Context { get; }
-
-        internal TargetMachine( Context context, LLVMTargetMachineRef targetMachineHandle )
+        internal TargetMachine( LLVMTargetMachineRef targetMachineHandle, bool ownsHandle = true )
         {
-            context.ValidateNotNull( nameof( context ) );
-            targetMachineHandle.Pointer.ValidateNotNull( nameof( targetMachineHandle ) );
+            targetMachineHandle.Handle.ValidateNotNull( nameof( targetMachineHandle ) );
 
             TargetMachineHandle = targetMachineHandle;
-            Context = context;
+            OwnsHandle = ownsHandle;
         }
 
         internal LLVMTargetMachineRef TargetMachineHandle { get; private set; }
 
-        private bool IsDisposed => TargetMachineHandle.Pointer == IntPtr.Zero;
+        private bool IsDisposed => TargetMachineHandle.Handle == IntPtr.Zero;
+
+        private bool OwnsHandle { get; }
 
         private void DisposeTargetMachine( bool disposing )
         {
@@ -139,8 +139,12 @@ namespace Llvm.NET
                     // dispose any managed resources
                 }
 
-                NativeMethods.DisposeTargetMachine( TargetMachineHandle );
-                TargetMachineHandle = default( LLVMTargetMachineRef );
+                if( OwnsHandle )
+                {
+                    LLVMDisposeTargetMachine( TargetMachineHandle );
+                }
+
+                TargetMachineHandle = default;
             }
         }
     }

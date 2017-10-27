@@ -8,18 +8,20 @@ using System.Linq;
 using Llvm.NET.Native;
 using Llvm.NET.Values;
 
+using static Llvm.NET.Native.NativeMethods;
+
 namespace Llvm.NET.Instructions
 {
     public class CallInstruction
         : Instruction
         , IAttributeAccessor
     {
-        public Function TargetFunction => FromHandle<Function>( NativeMethods.GetCalledValue( ValueHandle ) );
+        public Function TargetFunction => FromHandle<Function>( LLVMGetCalledValue( ValueHandle ) );
 
         public bool IsTailCall
         {
-            get => NativeMethods.IsTailCall( ValueHandle );
-            set => NativeMethods.SetTailCall( ValueHandle, value );
+            get => LLVMIsTailCall( ValueHandle );
+            set => LLVMSetTailCall( ValueHandle, value );
         }
 
         public IAttributeDictionary Attributes { get; }
@@ -27,12 +29,12 @@ namespace Llvm.NET.Instructions
         public void AddAttributeAtIndex( FunctionAttributeIndex index, AttributeValue attrib )
         {
             attrib.VerifyValidOn( index, this );
-            NativeMethods.AddCallSiteAttribute( ValueHandle, ( LLVMAttributeIndex )index, attrib.NativeAttribute );
+            LLVMAddCallSiteAttribute( ValueHandle, ( LLVMAttributeIndex )index, attrib.NativeAttribute );
         }
 
         public uint GetAttributeCountAtIndex( FunctionAttributeIndex index )
         {
-            return NativeMethods.GetCallSiteAttributeCount( ValueHandle, ( LLVMAttributeIndex )index );
+            return LLVMGetCallSiteAttributeCount( ValueHandle, ( LLVMAttributeIndex )index );
         }
 
         public IEnumerable<AttributeValue> GetAttributesAtIndex( FunctionAttributeIndex index )
@@ -44,14 +46,14 @@ namespace Llvm.NET.Instructions
             }
 
             var buffer = new LLVMAttributeRef[ count ];
-            NativeMethods.GetCallSiteAttributes( ValueHandle, ( LLVMAttributeIndex )index, out buffer[ 0 ] );
+            LLVMGetCallSiteAttributes( ValueHandle, ( LLVMAttributeIndex )index, out buffer[ 0 ] );
             return from attribRef in buffer
                    select AttributeValue.FromHandle( Context, attribRef );
         }
 
         public AttributeValue GetAttributeAtIndex( FunctionAttributeIndex index, AttributeKind kind )
         {
-            var handle = NativeMethods.GetCallSiteEnumAttribute( ValueHandle, ( LLVMAttributeIndex )index, kind.GetEnumAttributeId( ) );
+            var handle = LLVMGetCallSiteEnumAttribute( ValueHandle, ( LLVMAttributeIndex )index, kind.GetEnumAttributeId( ) );
             return AttributeValue.FromHandle( Context, handle );
         }
 
@@ -62,18 +64,18 @@ namespace Llvm.NET.Instructions
                 throw new ArgumentException( "name cannot be null or empty", nameof( name ) );
             }
 
-            var handle = NativeMethods.GetCallSiteStringAttribute( ValueHandle, ( LLVMAttributeIndex )index, name, ( uint )name.Length );
+            var handle = LLVMGetCallSiteStringAttribute( ValueHandle, ( LLVMAttributeIndex )index, name, ( uint )name.Length );
             return AttributeValue.FromHandle( Context, handle );
         }
 
         public void RemoveAttributeAtIndex( FunctionAttributeIndex index, AttributeKind kind )
         {
-            NativeMethods.RemoveCallSiteEnumAttribute( ValueHandle, ( LLVMAttributeIndex )index, kind.GetEnumAttributeId( ) );
+            LLVMRemoveCallSiteEnumAttribute( ValueHandle, ( LLVMAttributeIndex )index, kind.GetEnumAttributeId( ) );
         }
 
         public void RemoveAttributeAtIndex( FunctionAttributeIndex index, string name )
         {
-            NativeMethods.RemoveCallSiteStringAttribute( ValueHandle, ( LLVMAttributeIndex )index, name, ( uint )name.Length );
+            LLVMRemoveCallSiteStringAttribute( ValueHandle, ( LLVMAttributeIndex )index, name, ( uint )name.Length );
         }
 
         internal CallInstruction( LLVMValueRef valueRef )

@@ -128,7 +128,7 @@ namespace Llvm.NET.Tests
             using( var otherModule = new BitcodeModule( "Other", ctx ) )
             {
                 module.Link( otherModule );
-                Assert.IsNull( otherModule.Context );
+                Assert.IsTrue( otherModule.IsDisposed );
             }
         }
 

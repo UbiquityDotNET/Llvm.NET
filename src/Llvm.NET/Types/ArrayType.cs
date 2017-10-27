@@ -27,12 +27,12 @@ namespace Llvm.NET.Types
         , IArrayType
     {
         /// <inheritdoc/>
-        public uint Length => NativeMethods.GetArrayLength( TypeRefHandle );
+        public uint Length => NativeMethods.LLVMGetArrayLength( TypeRefHandle );
 
         internal ArrayType( LLVMTypeRef typeRef )
             : base( typeRef )
         {
-            if( NativeMethods.GetTypeKind( typeRef ) != LLVMTypeKind.LLVMArrayTypeKind )
+            if( NativeMethods.LLVMGetTypeKind( typeRef ) != LLVMTypeKind.LLVMArrayTypeKind )
             {
                 throw new ArgumentException( "Array type reference expected", nameof( typeRef ) );
             }

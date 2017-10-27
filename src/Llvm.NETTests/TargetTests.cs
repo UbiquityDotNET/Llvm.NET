@@ -13,18 +13,14 @@ namespace Llvm.NET.Tests
         [TestMethod]
         public void CreateTargetMachineTest( )
         {
-            using( var context = new Context( ) )
-            {
-                var target = Target.FromTriple( DefaultTargetTriple );
-                var machine = GetTargetMachine( context, target );
-                Assert.IsNotNull( machine );
-                Assert.AreSame( context, machine.Context );
-                Assert.AreSame( target, machine.Target );
-                Assert.AreEqual( DefaultTargetTriple, machine.Triple );
-                Assert.AreEqual( DefaultTargetCpu, machine.Cpu );
-                Assert.AreEqual( DefaultTargetFeatures, machine.Features );
-                Assert.IsNotNull( machine.TargetData );
-            }
+            var target = Target.FromTriple( DefaultTargetTriple );
+            var machine = GetTargetMachine( target );
+            Assert.IsNotNull( machine );
+            Assert.AreSame( target, machine.Target );
+            Assert.AreEqual( DefaultTargetTriple, machine.Triple );
+            Assert.AreEqual( DefaultTargetCpu, machine.Cpu );
+            Assert.AreEqual( DefaultTargetFeatures, machine.Features );
+            Assert.IsNotNull( machine.TargetData );
         }
 
         [TestMethod]
@@ -61,16 +57,15 @@ namespace Llvm.NET.Tests
             Assert.AreEqual( TargetInfo.ExpectedTargets.Count, foundTargets );
         }
 
-        internal static TargetMachine GetTargetMachine( Context context )
+        internal static TargetMachine GetTargetMachine( )
         {
             var target = Target.FromTriple( DefaultTargetTriple );
-            return GetTargetMachine( context, target );
+            return GetTargetMachine( target );
         }
 
-        internal static TargetMachine GetTargetMachine( Context context, Target target )
+        internal static TargetMachine GetTargetMachine( Target target )
         {
-            return target.CreateTargetMachine( context
-                                             , DefaultTargetTriple
+            return target.CreateTargetMachine( DefaultTargetTriple
                                              , DefaultTargetCpu
                                              , string.Empty
                                              , CodeGenOpt.Aggressive

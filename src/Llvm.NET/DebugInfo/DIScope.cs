@@ -13,7 +13,7 @@ namespace Llvm.NET.DebugInfo
         {
             get
             {
-                var handle = NativeMethods.DIScopeGetFile( MetadataHandle );
+                var handle = NativeMethods.LLVMDIScopeGetFile( MetadataHandle );
                 if( handle == LLVMMetadataRef.Zero )
                 {
                     return null;

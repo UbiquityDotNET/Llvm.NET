@@ -14,15 +14,15 @@ namespace Llvm.NET.Values
         /// <summary>Gets or sets the alignment requirements for this object</summary>
         public uint Alignment
         {
-            get => NativeMethods.GetAlignment( ValueHandle );
-            set => NativeMethods.SetAlignment( ValueHandle, value );
+            get => NativeMethods.LLVMGetAlignment( ValueHandle );
+            set => NativeMethods.LLVMSetAlignment( ValueHandle, value );
         }
 
         /// <summary>Gets or sets the linker section this object belongs to</summary>
         public string Section
         {
-            get => NativeMethods.GetSection( ValueHandle );
-            set => NativeMethods.SetSection( ValueHandle, value );
+            get => NativeMethods.LLVMGetSection( ValueHandle );
+            set => NativeMethods.LLVMSetSection( ValueHandle, value );
         }
 
         /// <summary>Gets or sets the comdat attached to this object, if any</summary>
@@ -35,8 +35,8 @@ namespace Llvm.NET.Values
         {
             get
             {
-                LLVMComdatRef comdatRef = NativeMethods.GlobalObjectGetComdat( ValueHandle );
-                if( comdatRef.Pointer.IsNull( ) )
+                LLVMComdatRef comdatRef = NativeMethods.LLVMGlobalObjectGetComdat( ValueHandle );
+                if( comdatRef.Handle.IsNull( ) )
                 {
                     return null;
                 }
@@ -51,7 +51,7 @@ namespace Llvm.NET.Values
                     throw new ArgumentException( "Mismatched modules for Comdat", nameof( value ) );
                 }
 
-                NativeMethods.GlobalObjectSetComdat( ValueHandle, value?.ComdatHandle?? new LLVMComdatRef( IntPtr.Zero ) );
+                NativeMethods.LLVMGlobalObjectSetComdat( ValueHandle, value?.ComdatHandle?? new LLVMComdatRef( IntPtr.Zero ) );
             }
         }
 

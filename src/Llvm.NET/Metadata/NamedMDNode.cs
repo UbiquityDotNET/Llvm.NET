@@ -6,6 +6,8 @@ using System.Collections;
 using System.Collections.Generic;
 using Llvm.NET.Native;
 
+using static Llvm.NET.Native.NativeMethods;
+
 namespace Llvm.NET
 {
     /// <summary>Wraps an LLVM NamedMDNode</summary>
@@ -19,7 +21,7 @@ namespace Llvm.NET
 
         public IReadOnlyList<MDNode> Operands { get; }
 
-        public BitcodeModule ParentModule => BitcodeModule.FromHandle( NativeMethods.NamedMDNodeGetParentModule( NativeHandle ) );
+        public BitcodeModule ParentModule => BitcodeModule.FromHandle( LLVMNamedMDNodeGetParentModule( NativeHandle ) );
 
         internal NamedMDNode( LLVMNamedMDNodeRef nativeNode )
         {
@@ -37,19 +39,19 @@ namespace Llvm.NET
             {
                 get
                 {
-                    var nodeHanlde = NativeMethods.NamedMDNodeGetOperand( OwningNode.NativeHandle, (uint)index );
+                    var nodeHanlde = LLVMNamedMDNodeGetOperand( OwningNode.NativeHandle, (uint)index );
                     return LlvmMetadata.FromHandle<MDNode>( OwningNode.ParentModule.Context, nodeHanlde );
                 }
 
                 /* TODO:
                 set
                 {   index.VerifyRange(0, Count, nameof(index));
-                    NativeMethods.NamedMDNodeSetOperand( index, value.NativeHandle );
+                    LLVMNamedMDNodeSetOperand( index, value.NativeHandle );
                 }
                 */
             }
 
-            public int Count => (int)NativeMethods.NamedMDNodeGetNumOperands( OwningNode.NativeHandle );
+            public int Count => (int)LLVMNamedMDNodeGetNumOperands( OwningNode.NativeHandle );
 
             public IEnumerator<MDNode> GetEnumerator( )
             {

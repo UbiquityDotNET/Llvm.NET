@@ -19,7 +19,7 @@ namespace Llvm.NET.Values
     /// </remarks>
     public class ConstantDataSequential : Constant
     {
-        public bool IsString => NativeMethods.IsConstantString( ValueHandle );
+        public bool IsString => NativeMethods.LLVMIsConstantString( ValueHandle );
 
         public string ExtractAsString()
         {
@@ -28,7 +28,7 @@ namespace Llvm.NET.Values
                 throw new InvalidOperationException( "Value is not a string" );
             }
 
-            return NativeMethods.GetAsString( ValueHandle, out size_t len );
+            return NativeMethods.LLVMGetAsString( ValueHandle, out size_t len );
         }
 
         internal ConstantDataSequential( LLVMValueRef valueRef )

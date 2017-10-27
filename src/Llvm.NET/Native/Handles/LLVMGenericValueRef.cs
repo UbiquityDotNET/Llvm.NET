@@ -1,4 +1,4 @@
-﻿// <copyright file="LLVMSharedModuleRef.cs" company=".NET Foundation">
+﻿// <copyright file="LLVMPassRegistryRef.cs" company=".NET Foundation">
 // Copyright (c) .NET Foundation. All rights reserved.
 // </copyright>
 
@@ -9,22 +9,22 @@ using System.Security;
 namespace Llvm.NET.Native
 {
     [SecurityCritical]
-    internal class LLVMSharedModuleRef
+    internal class LLVMGenericValueRef
         : SafeHandleNullIsInvalid
     {
-        internal LLVMSharedModuleRef( )
+        internal LLVMGenericValueRef( )
             : base( true )
         {
         }
 
-        internal LLVMSharedModuleRef( IntPtr handle, bool owner )
+        internal LLVMGenericValueRef( IntPtr handle, bool owner )
             : base( owner )
         {
             SetHandle( handle );
         }
 
         [SuppressMessage( "Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode", Justification = "Required for marshaling support (used via reflection)" )]
-        internal LLVMSharedModuleRef( IntPtr handle )
+        internal LLVMGenericValueRef( IntPtr handle )
             : this( handle, false )
         {
         }
@@ -32,7 +32,7 @@ namespace Llvm.NET.Native
         [SecurityCritical]
         protected override bool ReleaseHandle( )
         {
-            NativeMethods.OrcDisposeSharedModuleRef( handle );
+            NativeMethods.LLVMDisposeGenericValue( handle );
             return true;
         }
     }

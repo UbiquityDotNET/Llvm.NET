@@ -3,6 +3,7 @@
 // </copyright>
 
 using System;
+using System.Runtime.InteropServices;
 
 namespace Llvm.NET.Native
 {
@@ -15,10 +16,10 @@ namespace Llvm.NET.Native
     // see: https://msdn.microsoft.com/en-us/library/367eeye0.aspx
     internal class WrappedNativeCallback
     {
-        public WrappedNativeCallback( System.Delegate d )
+        public WrappedNativeCallback( Delegate d )
         {
             UnpinnedDelegate = d;
-            Handle = System.Runtime.InteropServices.GCHandle.Alloc( UnpinnedDelegate );
+            Handle = GCHandle.Alloc( UnpinnedDelegate );
         }
 
         public void Dispose( )
@@ -29,10 +30,10 @@ namespace Llvm.NET.Native
 
         public IntPtr GetFuncPointer( )
         {
-            return System.Runtime.InteropServices.Marshal.GetFunctionPointerForDelegate( UnpinnedDelegate );
+            return Marshal.GetFunctionPointerForDelegate( UnpinnedDelegate );
         }
 
-        private System.Delegate UnpinnedDelegate;
-        private System.Runtime.InteropServices.GCHandle Handle;
+        private Delegate UnpinnedDelegate;
+        private GCHandle Handle;
     }
 }

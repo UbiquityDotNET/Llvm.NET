@@ -16,12 +16,12 @@ namespace Llvm.NET.DebugInfo
         {
             get
             {
-                if( MetadataHandle.Pointer == IntPtr.Zero )
+                if( MetadataHandle.Handle == IntPtr.Zero )
                 {
                     return (Tag)ushort.MaxValue;
                 }
 
-                return ( Tag )NativeMethods.DIDescriptorGetTag( MetadataHandle );
+                return ( Tag )NativeMethods.LLVMDIDescriptorGetTag( MetadataHandle );
             }
         }
 

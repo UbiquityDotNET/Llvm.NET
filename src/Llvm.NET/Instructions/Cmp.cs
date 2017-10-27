@@ -4,6 +4,8 @@
 
 using Llvm.NET.Native;
 
+using static Llvm.NET.Native.NativeMethods;
+
 namespace Llvm.NET.Instructions
 {
     public class Cmp
@@ -16,10 +18,10 @@ namespace Llvm.NET.Instructions
                 switch( Opcode )
                 {
                 case OpCode.ICmp:
-                    return ( Predicate )NativeMethods.GetICmpPredicate( ValueHandle );
+                    return ( Predicate )LLVMGetICmpPredicate( ValueHandle );
 
                 case OpCode.FCmp:
-                    return ( Predicate )NativeMethods.GetFCmpPredicate( ValueHandle );
+                    return ( Predicate )LLVMGetFCmpPredicate( ValueHandle );
 
                 default:
                     return Predicate.BadFcmpPredicate;

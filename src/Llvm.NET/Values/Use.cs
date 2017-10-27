@@ -13,10 +13,10 @@ namespace Llvm.NET.Values
     public class Use
     {
         /// <summary>Gets the <see cref="User"/> of this <see cref="Use"/></summary>
-        public User User => Value.FromHandle<User>( NativeMethods.GetUser( OpaqueHandle ) );
+        public User User => Value.FromHandle<User>( NativeMethods.LLVMGetUser( OpaqueHandle ) );
 
         /// <summary>Gets the <see cref="Value"/> used</summary>
-        public Value Value => Value.FromHandle( NativeMethods.GetUsedValue( OpaqueHandle ) );
+        public Value Value => Value.FromHandle( NativeMethods.LLVMGetUsedValue( OpaqueHandle ) );
 
         /// <summary>Creates a new <see cref="Use"/> from  low level LLVM <see cref="LLVMUseRef"/></summary>
         /// <param name="useRef">LLVM raw reference</param>

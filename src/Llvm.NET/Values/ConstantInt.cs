@@ -17,10 +17,10 @@ namespace Llvm.NET.Values
         : Constant
     {
         /// <summary>Gets the value of the constant zero extended to a 64 bit value</summary>
-        public UInt64 ZeroExtendedValue => NativeMethods.ConstIntGetZExtValue( ValueHandle );
+        public UInt64 ZeroExtendedValue => NativeMethods.LLVMConstIntGetZExtValue( ValueHandle );
 
         /// <summary>Gets the value of the constant sign extended to a 64 bit value</summary>
-        public Int64 SignExtendedValue => NativeMethods.ConstIntGetSExtValue( ValueHandle );
+        public Int64 SignExtendedValue => NativeMethods.LLVMConstIntGetSExtValue( ValueHandle );
 
         internal ConstantInt( LLVMValueRef valueRef )
             : base( valueRef )

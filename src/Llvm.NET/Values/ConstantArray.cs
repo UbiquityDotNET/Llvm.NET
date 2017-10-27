@@ -50,7 +50,7 @@ namespace Llvm.NET.Values
         /// <returns>Constant representing the array</returns>
         public static Constant From( ITypeRef elementType, IList<Constant> values )
         {
-            if( values.Any( v => v.NativeType.GetTypeRef().Pointer != elementType.GetTypeRef( ).Pointer ) )
+            if( values.Any( v => v.NativeType.GetTypeRef().Handle != elementType.GetTypeRef( ).Handle ) )
             {
                 throw new ArgumentException( "One or more value(s) types do not match specified array element type" );
             }
@@ -62,7 +62,7 @@ namespace Llvm.NET.Values
                 valueHandles = new LLVMValueRef[ 1 ];
             }
 
-            var handle = NativeMethods.ConstArray( elementType.GetTypeRef(), out valueHandles[ 0 ], (uint)argCount );
+            var handle = NativeMethods.LLVMConstArray( elementType.GetTypeRef(), out valueHandles[ 0 ], (uint)argCount );
             return FromHandle<Constant>( handle );
         }
 

@@ -50,7 +50,7 @@ namespace Llvm.NET.Native
                 return new StringMarshaler( null );
 
             case "DISPOSEMESSAGE":
-                return new StringMarshaler( NativeMethods.DisposeMessage );
+                return new StringMarshaler( NativeMethods.LLVMDisposeMessage );
 
             default:
                 throw new ArgumentException( $"'{cookie}' is not a valid option", nameof( cookie ) );

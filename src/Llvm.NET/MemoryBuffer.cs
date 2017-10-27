@@ -8,6 +8,8 @@ using System.Runtime.InteropServices;
 using Llvm.NET.Native;
 using Ubiquity.ArgValidators;
 
+using static Llvm.NET.Native.NativeMethods;
+
 namespace Llvm.NET
 {
     /// <summary>LLVM MemoryBuffer</summary>
@@ -20,7 +22,7 @@ namespace Llvm.NET
         {
             path.ValidateNotNullOrWhiteSpace( nameof( path ) );
 
-            if( !NativeMethods.CreateMemoryBufferWithContentsOfFile( path, out BufferHandle_, out string msg ).Succeeded )
+            if( LLVMCreateMemoryBufferWithContentsOfFile( path, out BufferHandle_, out string msg ).Failed )
             {
                 throw new InternalCodeGeneratorException( msg );
             }
@@ -31,27 +33,27 @@ namespace Llvm.NET
         {
             get
             {
-                if( BufferHandle.Pointer == IntPtr.Zero )
+                if( BufferHandle.Handle == IntPtr.Zero )
                 {
                     return 0;
                 }
 
-                return NativeMethods.GetBufferSize( BufferHandle ).Pointer.ToInt32();
+                return LLVMGetBufferSize( BufferHandle ).Pointer.ToInt32();
             }
         }
 
         public void Dispose( )
         {
-            if( BufferHandle.Pointer != IntPtr.Zero )
+            if( BufferHandle.Handle != IntPtr.Zero )
             {
-                NativeMethods.DisposeMemoryBuffer( BufferHandle );
-                BufferHandle_ = default(LLVMMemoryBufferRef);
+                LLVMDisposeMemoryBuffer( BufferHandle );
+                BufferHandle_ = default;
             }
         }
 
         public byte[] ToArray()
         {
-            var bufferStart = NativeMethods.GetBufferStart( BufferHandle );
+            var bufferStart = LLVMGetBufferStart( BufferHandle );
             var retVal = new byte[ Size ];
             Marshal.Copy( bufferStart, retVal, 0, Size );
             return retVal;
@@ -59,7 +61,7 @@ namespace Llvm.NET
 
         internal MemoryBuffer( LLVMMemoryBufferRef bufferHandle )
         {
-            bufferHandle.Pointer.ValidateNotNull( nameof( bufferHandle ) );
+            bufferHandle.Handle.ValidateNotNull( nameof( bufferHandle ) );
 
             BufferHandle_ = bufferHandle;
         }

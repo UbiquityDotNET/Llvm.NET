@@ -5,13 +5,15 @@
 using Llvm.NET.Native;
 using Llvm.NET.Values;
 
+using static Llvm.NET.Native.NativeMethods;
+
 namespace Llvm.NET.Instructions
 {
     public class Switch
         : Terminator
     {
         /// <summary>Gets the default <see cref="BasicBlock"/> for the switch</summary>
-        public BasicBlock Default => BasicBlock.FromHandle( NativeMethods.GetSwitchDefaultDest( ValueHandle ) );
+        public BasicBlock Default => BasicBlock.FromHandle( NativeMethods.LLVMGetSwitchDefaultDest( ValueHandle ) );
 
         /// <summary>Adds a new case to the <see cref="Switch"/> instruction</summary>
         /// <param name="onVal">Value for the case to match</param>
@@ -28,7 +30,7 @@ namespace Llvm.NET.Instructions
                 throw new System.ArgumentNullException( nameof( destination ) );
             }
 
-            NativeMethods.AddCase( ValueHandle, onVal.ValueHandle, destination.BlockHandle );
+            LLVMAddCase( ValueHandle, onVal.ValueHandle, destination.BlockHandle );
         }
 
         internal Switch( LLVMValueRef valueRef )

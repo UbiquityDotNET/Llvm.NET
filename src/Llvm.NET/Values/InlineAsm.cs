@@ -26,7 +26,7 @@ namespace Llvm.NET.Values
         {
         }
 
-        // bool HasSideEffects => NativeMethods.HasSideEffects( ValueHandle );
+        // bool HasSideEffects => NativeMethods.LLVMHasSideEffects( ValueHandle );
         // bool IsAlignStack => LLVMNative.IsAlignStack( ValueHandle );
         // AsmDialect Dialect => LLVMNative.GetAsmDialect( ValueHandle );
     }

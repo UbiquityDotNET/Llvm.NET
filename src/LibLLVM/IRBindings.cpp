@@ -12,7 +12,8 @@
 //===----------------------------------------------------------------------===//
 
 #include "IRBindings.h"
-
+#include "llvm-c/ExecutionEngine.h"
+#include "llvm/ExecutionEngine/ExecutionEngine.h"
 #include "llvm/IR/Attributes.h"
 #include "llvm/IR/DebugLoc.h"
 #include "llvm/IR/Function.h"
@@ -163,5 +164,10 @@ extern "C"
     {
         auto pExp = unwrap<DIGlobalVariableExpression>( metadataHandle );
         return wrap( pExp->getVariable( ) );
+    }
+
+    void LLVMExecutionEngineClearGlobalMappingsFromModule( LLVMExecutionEngineRef ee, LLVMModuleRef m )
+    {
+        unwrap( ee )->clearGlobalMappingsFromModule( unwrap( m ) );
     }
 }

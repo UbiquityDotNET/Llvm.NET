@@ -89,7 +89,7 @@ namespace Llvm.NET.DebugInfo.Tests
             const string testTriple = "thumbv7m-none--eabi";
             var target = Target.FromTriple( testTriple );
             using( var ctx = new Context( ) )
-            using( var targetMachine = target.CreateTargetMachine( ctx, testTriple ) )
+            using( var targetMachine = target.CreateTargetMachine( testTriple ) )
             using( var module = new BitcodeModule( "testModule", ctx ) { Layout= targetMachine.TargetData } )
             {
                 const string nativeUnionName = "union.testUnion";

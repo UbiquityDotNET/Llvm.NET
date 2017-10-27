@@ -6,12 +6,15 @@ using System;
 
 namespace Llvm.NET.Native
 {
-    internal partial struct LLVMMetadataRef
+    internal struct LLVMMetadataRef
         : IEquatable<LLVMMetadataRef>
+        , ILlvmHandle
     {
+        public IntPtr Handle { get; }
+
         public static LLVMMetadataRef Zero = new LLVMMetadataRef( IntPtr.Zero );
 
-        public override int GetHashCode( ) => Pointer.GetHashCode( );
+        public override int GetHashCode( ) => Handle.GetHashCode( );
 
         public override bool Equals( object obj )
         {
@@ -22,16 +25,21 @@ namespace Llvm.NET.Native
 
             if( obj is IntPtr )
             {
-                return Pointer.Equals( obj );
+                return Handle.Equals( obj );
             }
 
             return base.Equals( obj );
         }
 
-        public bool Equals( LLVMMetadataRef other ) => Pointer == other.Pointer;
+        public bool Equals( LLVMMetadataRef other ) => Handle == other.Handle;
 
         public static bool operator ==( LLVMMetadataRef lhs, LLVMMetadataRef rhs ) => lhs.Equals( rhs );
 
         public static bool operator !=( LLVMMetadataRef lhs, LLVMMetadataRef rhs ) => !lhs.Equals( rhs );
+
+        internal LLVMMetadataRef( IntPtr pointer )
+        {
+            Handle = pointer;
+        }
     }
 }
