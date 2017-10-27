@@ -27,103 +27,41 @@ namespace Llvm.NET
         : IDisposable
         , IExtensiblePropertyContainer
     {
-        /// <summary>Creates an unnamed module without debug information</summary>
-        public BitcodeModule( )
-            : this( string.Empty, null )
+        /// <summary>Initializes a new instance of the <see cref="BitcodeModule"/> class in a given context</summary>
+        /// <param name="context">Context for the module</param>
+        public BitcodeModule( [NotNull] Context context )
+            : this( context, string.Empty )
         {
         }
 
-        /// <summary>Creates a new module with the specified id in a new context</summary>
-        /// <param name="moduleId">Module's ID</param>
-        public BitcodeModule( string moduleId )
-            : this( moduleId, null )
-        {
-        }
-
-        /// <summary>Creates an named module in a given context</summary>
+        /// <summary>Initializes a new instance of the <see cref="BitcodeModule"/> class in a given context</summary>
         /// <param name="moduleId">Module's ID</param>
         /// <param name="context">Context for the module</param>
-        public BitcodeModule( [CanBeNull] string moduleId, [CanBeNull] Context context )
+        public BitcodeModule( [NotNull] Context context, string moduleId )
         {
-            if( moduleId == null )
+            moduleId.ValidateNotNull( nameof(moduleId) );
+            ModuleHandle = LLVMModuleCreateWithNameInContext( moduleId, context.ContextHandle );
+            if( ModuleHandle.Handle == IntPtr.Zero )
             {
-                moduleId = string.Empty;
+                throw new InternalCodeGeneratorException( "Could not create module in context" );
             }
 
-            if( context == null )
-            {
-                context = new Context( );
-                OwnsContext = true;
-            }
-
-            // exception filter function to ensure native resource is disposed on exception in construction
-            Func<bool> onException = ( ) =>
-            {
-                if( OwnsContext && context != null )
-                {
-                    context.Dispose( );
-                }
-
-                return false;
-            };
-
-            try
-            {
-                ModuleHandle = LLVMModuleCreateWithNameInContext( moduleId, context.ContextHandle );
-                if( ModuleHandle.Handle == IntPtr.Zero )
-                {
-                    throw new InternalCodeGeneratorException( "Could not create module in context" );
-                }
-
-                LazyDiBuilder = new Lazy<DebugInfoBuilder>( ( ) => new DebugInfoBuilder( this ) );
-                Context.AddModule( this );
-                Comdats = new ComdatCollection( this );
-            }
-            catch when( onException( ) )
-            {
-                // NOP
-            }
+            LazyDiBuilder = new Lazy<DebugInfoBuilder>( ( ) => new DebugInfoBuilder( this ) );
+            Context.AddModule( this );
+            Comdats = new ComdatCollection( this );
         }
 
         /// <summary>Creates a named module with a root <see cref="DICompileUnit"/> to contain debugging information</summary>
-        /// <param name="moduleId">Module name</param>
-        /// <param name="language">Language to store in the debugging information</param>
-        /// <param name="srcFilePath">path of source file to set for the compilation unit</param>
-        /// <param name="producer">Name of the application producing this module</param>
-        /// <param name="optimized">Flag to indicate if the module is optimized</param>
-        /// <param name="flags">Additional flags</param>
-        /// <param name="runtimeVersion">Runtime version if any (use 0 if the runtime version has no meaning)</param>
-        public BitcodeModule( string moduleId
-                            , SourceLanguage language
-                            , string srcFilePath
-                            , string producer
-                            , bool optimized = false
-                            , string flags = ""
-                            , uint runtimeVersion = 0
-                            )
-            : this( moduleId
-                  , null
-                  , language
-                  , srcFilePath
-                  , producer
-                  , optimized
-                  , flags
-                  , runtimeVersion
-                  )
-        {
-        }
-
-        /// <summary>Creates a named module with a root <see cref="DICompileUnit"/> to contain debugging information</summary>
-        /// <param name="moduleId">Module name</param>
         /// <param name="context">Context for the module</param>
+        /// <param name="moduleId">Module name</param>
         /// <param name="language">Language to store in the debugging information</param>
         /// <param name="srcFilePath">path of source file to set for the compilation unit</param>
         /// <param name="producer">Name of the application producing this module</param>
         /// <param name="optimized">Flag to indicate if the module is optimized</param>
         /// <param name="compilationFlags">Additional flags</param>
         /// <param name="runtimeVersion">Runtime version if any (use 0 if the runtime version has no meaning)</param>
-        public BitcodeModule( string moduleId
-                            , Context context
+        public BitcodeModule( Context context
+                            , string moduleId
                             , SourceLanguage language
                             , string srcFilePath
                             , string producer
@@ -131,7 +69,7 @@ namespace Llvm.NET
                             , string compilationFlags = ""
                             , uint runtimeVersion = 0
                             )
-            : this( moduleId, context )
+            : this( context, moduleId )
         {
             DICompileUnit = DIBuilder.CreateCompileUnit( language
                                                        , srcFilePath
@@ -317,6 +255,25 @@ namespace Llvm.NET
             }
         }
 
+        /// <summary>Gets a value indicating whether this module is shared with a JIT engine</summary>
+        public bool IsShared => SharedModuleRef != null;
+
+        /// <summary>Makes this module a shared module if it isn't already</summary>
+        /// <remarks>
+        /// Normally, this is called automatically when adding a module to a JIT engine that needs shared modules.
+        /// Shared modules are reference counted so they aren't completely disposed until the reference count
+        /// is decremented to 0. Calling <see cref="Dispose()"/> on a shared module will mark the module as disposed
+        /// and decrement the share count.
+        /// </remarks>
+        public void MakeShared( )
+        {
+            if( !IsShared )
+            {
+                SharedModuleRef = LLVMOrcMakeSharedModule( ModuleHandle );
+            }
+        }
+
+        /// <inheritdoc/>
         public void Dispose( )
         {
             Dispose( true );
@@ -902,11 +859,12 @@ namespace Llvm.NET
                 // remove the module handle from the module cache.
                 Context.RemoveModule( this );
 
-                // if this module created the context then just dispose
-                // the context as that will clean up the module as well.
-                if( OwnsContext )
+                // if this module was shared with a JIT, just release
+                // the refcount but don't dispose the actual module
+                if( IsShared )
                 {
-                    Context.Dispose( );
+                    SharedModuleRef.Close( );
+                    SharedModuleRef = default;
                 }
                 else
                 {
@@ -926,6 +884,6 @@ namespace Llvm.NET
 
         private readonly ExtensiblePropertyContainer PropertyBag = new ExtensiblePropertyContainer( );
         private readonly Lazy<DebugInfoBuilder> LazyDiBuilder;
-        private readonly bool OwnsContext;
+        private LLVMSharedModuleRef SharedModuleRef;
     }
 }

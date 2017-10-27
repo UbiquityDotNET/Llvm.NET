@@ -16,7 +16,8 @@ namespace Llvm.NET.DebugInfo.Tests
         [TestMethod]
         public void DebugUnionTypeTest( )
         {
-            using( var module = new BitcodeModule( ) )
+            using( var context = new Context( ) )
+            using( var module = new BitcodeModule( context ) )
             {
                 const string nativeUnionName = "union.testUnion";
                 const string unionSymbolName = "testUnion";
@@ -90,7 +91,7 @@ namespace Llvm.NET.DebugInfo.Tests
             var target = Target.FromTriple( testTriple );
             using( var ctx = new Context( ) )
             using( var targetMachine = target.CreateTargetMachine( testTriple ) )
-            using( var module = new BitcodeModule( "testModule", ctx ) { Layout= targetMachine.TargetData } )
+            using( var module = new BitcodeModule( ctx, "testModule" ) { Layout= targetMachine.TargetData } )
             {
                 const string nativeUnionName = "union.testUnion";
                 const string unionSymbolName = "testUnion";
