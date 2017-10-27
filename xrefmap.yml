@@ -1502,18 +1502,6 @@ references:
   commentId: Overload:Llvm.NET.DataLayout.CallFrameAlignmentOf
   fullName: Llvm.NET.DataLayout.CallFrameAlignmentOf
   nameWithType: DataLayout.CallFrameAlignmentOf
-- uid: Llvm.NET.DataLayout.Context
-  name: Context
-  href: api/Llvm.NET.DataLayout.Context.html#Llvm_NET_DataLayout_Context
-  commentId: P:Llvm.NET.DataLayout.Context
-  fullName: Llvm.NET.DataLayout.Context
-  nameWithType: DataLayout.Context
-- uid: Llvm.NET.DataLayout.Context*
-  name: Context
-  href: api/Llvm.NET.DataLayout.Context.html
-  commentId: Overload:Llvm.NET.DataLayout.Context
-  fullName: Llvm.NET.DataLayout.Context
-  nameWithType: DataLayout.Context
 - uid: Llvm.NET.DataLayout.Dispose
   name: Dispose()
   href: api/Llvm.NET.DataLayout.Dispose.html#Llvm_NET_DataLayout_Dispose
@@ -1568,18 +1556,18 @@ references:
   commentId: Overload:Llvm.NET.DataLayout.Finalize
   fullName: Llvm.NET.DataLayout.Finalize
   nameWithType: DataLayout.Finalize
-- uid: Llvm.NET.DataLayout.IntPtrType
-  name: IntPtrType()
-  href: api/Llvm.NET.DataLayout.IntPtrType.html#Llvm_NET_DataLayout_IntPtrType
-  commentId: M:Llvm.NET.DataLayout.IntPtrType
-  fullName: Llvm.NET.DataLayout.IntPtrType()
-  nameWithType: DataLayout.IntPtrType()
-- uid: Llvm.NET.DataLayout.IntPtrType(System.UInt32)
-  name: IntPtrType(UInt32)
-  href: api/Llvm.NET.DataLayout.IntPtrType.html#Llvm_NET_DataLayout_IntPtrType_System_UInt32_
-  commentId: M:Llvm.NET.DataLayout.IntPtrType(System.UInt32)
-  fullName: Llvm.NET.DataLayout.IntPtrType(System.UInt32)
-  nameWithType: DataLayout.IntPtrType(UInt32)
+- uid: Llvm.NET.DataLayout.IntPtrType(Llvm.NET.Context)
+  name: IntPtrType(Context)
+  href: api/Llvm.NET.DataLayout.IntPtrType.html#Llvm_NET_DataLayout_IntPtrType_Llvm_NET_Context_
+  commentId: M:Llvm.NET.DataLayout.IntPtrType(Llvm.NET.Context)
+  fullName: Llvm.NET.DataLayout.IntPtrType(Llvm.NET.Context)
+  nameWithType: DataLayout.IntPtrType(Context)
+- uid: Llvm.NET.DataLayout.IntPtrType(Llvm.NET.Context,System.UInt32)
+  name: IntPtrType(Context, UInt32)
+  href: api/Llvm.NET.DataLayout.IntPtrType.html#Llvm_NET_DataLayout_IntPtrType_Llvm_NET_Context_System_UInt32_
+  commentId: M:Llvm.NET.DataLayout.IntPtrType(Llvm.NET.Context,System.UInt32)
+  fullName: Llvm.NET.DataLayout.IntPtrType(Llvm.NET.Context, System.UInt32)
+  nameWithType: DataLayout.IntPtrType(Context, UInt32)
 - uid: Llvm.NET.DataLayout.IntPtrType*
   name: IntPtrType
   href: api/Llvm.NET.DataLayout.IntPtrType.html
@@ -8134,6 +8122,282 @@ references:
   commentId: F:Llvm.NET.IntPredicate.UnsignedLessOrEqual
   fullName: Llvm.NET.IntPredicate.UnsignedLessOrEqual
   nameWithType: IntPredicate.UnsignedLessOrEqual
+- uid: Llvm.NET.JIT
+  name: Llvm.NET.JIT
+  href: api/Llvm.NET.JIT.html
+  commentId: N:Llvm.NET.JIT
+  fullName: Llvm.NET.JIT
+  nameWithType: Llvm.NET.JIT
+- uid: Llvm.NET.JIT.EngineKind
+  name: EngineKind
+  href: api/Llvm.NET.JIT.EngineKind.html
+  commentId: T:Llvm.NET.JIT.EngineKind
+  fullName: Llvm.NET.JIT.EngineKind
+  nameWithType: EngineKind
+- uid: Llvm.NET.JIT.EngineKind.Either
+  name: Either
+  href: api/Llvm.NET.JIT.EngineKind.Either.html#Llvm_NET_JIT_EngineKind_Either
+  commentId: F:Llvm.NET.JIT.EngineKind.Either
+  fullName: Llvm.NET.JIT.EngineKind.Either
+  nameWithType: EngineKind.Either
+- uid: Llvm.NET.JIT.EngineKind.Interpreter
+  name: Interpreter
+  href: api/Llvm.NET.JIT.EngineKind.Interpreter.html#Llvm_NET_JIT_EngineKind_Interpreter
+  commentId: F:Llvm.NET.JIT.EngineKind.Interpreter
+  fullName: Llvm.NET.JIT.EngineKind.Interpreter
+  nameWithType: EngineKind.Interpreter
+- uid: Llvm.NET.JIT.EngineKind.Jit
+  name: Jit
+  href: api/Llvm.NET.JIT.EngineKind.Jit.html#Llvm_NET_JIT_EngineKind_Jit
+  commentId: F:Llvm.NET.JIT.EngineKind.Jit
+  fullName: Llvm.NET.JIT.EngineKind.Jit
+  nameWithType: EngineKind.Jit
+- uid: Llvm.NET.JIT.ExecutionEngine
+  name: ExecutionEngine
+  href: api/Llvm.NET.JIT.ExecutionEngine.html
+  commentId: T:Llvm.NET.JIT.ExecutionEngine
+  fullName: Llvm.NET.JIT.ExecutionEngine
+  nameWithType: ExecutionEngine
+- uid: Llvm.NET.JIT.ExecutionEngine.#ctor(Llvm.NET.BitcodeModule,Llvm.NET.JIT.EngineKind)
+  name: ExecutionEngine(BitcodeModule, EngineKind)
+  href: api/Llvm.NET.JIT.ExecutionEngine.-ctor.html#Llvm_NET_JIT_ExecutionEngine__ctor_Llvm_NET_BitcodeModule_Llvm_NET_JIT_EngineKind_
+  commentId: M:Llvm.NET.JIT.ExecutionEngine.#ctor(Llvm.NET.BitcodeModule,Llvm.NET.JIT.EngineKind)
+  fullName: Llvm.NET.JIT.ExecutionEngine.ExecutionEngine(Llvm.NET.BitcodeModule, Llvm.NET.JIT.EngineKind)
+  nameWithType: ExecutionEngine.ExecutionEngine(BitcodeModule, EngineKind)
+- uid: Llvm.NET.JIT.ExecutionEngine.#ctor(Llvm.NET.BitcodeModule,Llvm.NET.JIT.EngineKind,Llvm.NET.CodeGenOpt)
+  name: ExecutionEngine(BitcodeModule, EngineKind, CodeGenOpt)
+  href: api/Llvm.NET.JIT.ExecutionEngine.-ctor.html#Llvm_NET_JIT_ExecutionEngine__ctor_Llvm_NET_BitcodeModule_Llvm_NET_JIT_EngineKind_Llvm_NET_CodeGenOpt_
+  commentId: M:Llvm.NET.JIT.ExecutionEngine.#ctor(Llvm.NET.BitcodeModule,Llvm.NET.JIT.EngineKind,Llvm.NET.CodeGenOpt)
+  fullName: Llvm.NET.JIT.ExecutionEngine.ExecutionEngine(Llvm.NET.BitcodeModule, Llvm.NET.JIT.EngineKind, Llvm.NET.CodeGenOpt)
+  nameWithType: ExecutionEngine.ExecutionEngine(BitcodeModule, EngineKind, CodeGenOpt)
+- uid: Llvm.NET.JIT.ExecutionEngine.#ctor*
+  name: ExecutionEngine
+  href: api/Llvm.NET.JIT.ExecutionEngine.-ctor.html
+  commentId: Overload:Llvm.NET.JIT.ExecutionEngine.#ctor
+  fullName: Llvm.NET.JIT.ExecutionEngine.ExecutionEngine
+  nameWithType: ExecutionEngine.ExecutionEngine
+- uid: Llvm.NET.JIT.ExecutionEngine.AddModule(Llvm.NET.BitcodeModule)
+  name: AddModule(BitcodeModule)
+  href: api/Llvm.NET.JIT.ExecutionEngine.AddModule.html#Llvm_NET_JIT_ExecutionEngine_AddModule_Llvm_NET_BitcodeModule_
+  commentId: M:Llvm.NET.JIT.ExecutionEngine.AddModule(Llvm.NET.BitcodeModule)
+  fullName: Llvm.NET.JIT.ExecutionEngine.AddModule(Llvm.NET.BitcodeModule)
+  nameWithType: ExecutionEngine.AddModule(BitcodeModule)
+- uid: Llvm.NET.JIT.ExecutionEngine.AddModule*
+  name: AddModule
+  href: api/Llvm.NET.JIT.ExecutionEngine.AddModule.html
+  commentId: Overload:Llvm.NET.JIT.ExecutionEngine.AddModule
+  fullName: Llvm.NET.JIT.ExecutionEngine.AddModule
+  nameWithType: ExecutionEngine.AddModule
+- uid: Llvm.NET.JIT.ExecutionEngine.Context
+  name: Context
+  href: api/Llvm.NET.JIT.ExecutionEngine.Context.html#Llvm_NET_JIT_ExecutionEngine_Context
+  commentId: P:Llvm.NET.JIT.ExecutionEngine.Context
+  fullName: Llvm.NET.JIT.ExecutionEngine.Context
+  nameWithType: ExecutionEngine.Context
+- uid: Llvm.NET.JIT.ExecutionEngine.Context*
+  name: Context
+  href: api/Llvm.NET.JIT.ExecutionEngine.Context.html
+  commentId: Overload:Llvm.NET.JIT.ExecutionEngine.Context
+  fullName: Llvm.NET.JIT.ExecutionEngine.Context
+  nameWithType: ExecutionEngine.Context
+- uid: Llvm.NET.JIT.ExecutionEngine.Dispose
+  name: Dispose()
+  href: api/Llvm.NET.JIT.ExecutionEngine.Dispose.html#Llvm_NET_JIT_ExecutionEngine_Dispose
+  commentId: M:Llvm.NET.JIT.ExecutionEngine.Dispose
+  fullName: Llvm.NET.JIT.ExecutionEngine.Dispose()
+  nameWithType: ExecutionEngine.Dispose()
+- uid: Llvm.NET.JIT.ExecutionEngine.Dispose*
+  name: Dispose
+  href: api/Llvm.NET.JIT.ExecutionEngine.Dispose.html
+  commentId: Overload:Llvm.NET.JIT.ExecutionEngine.Dispose
+  fullName: Llvm.NET.JIT.ExecutionEngine.Dispose
+  nameWithType: ExecutionEngine.Dispose
+- uid: Llvm.NET.JIT.ExecutionEngine.GetFunctionDelegate*
+  name: GetFunctionDelegate
+  href: api/Llvm.NET.JIT.ExecutionEngine.GetFunctionDelegate.html
+  commentId: Overload:Llvm.NET.JIT.ExecutionEngine.GetFunctionDelegate
+  fullName: Llvm.NET.JIT.ExecutionEngine.GetFunctionDelegate
+  nameWithType: ExecutionEngine.GetFunctionDelegate
+- uid: Llvm.NET.JIT.ExecutionEngine.GetFunctionDelegate``1(System.String)
+  name: GetFunctionDelegate<T>(String)
+  href: api/Llvm.NET.JIT.ExecutionEngine.GetFunctionDelegate.html#Llvm_NET_JIT_ExecutionEngine_GetFunctionDelegate__1_System_String_
+  commentId: M:Llvm.NET.JIT.ExecutionEngine.GetFunctionDelegate``1(System.String)
+  name.vb: GetFunctionDelegate(Of T)(String)
+  fullName: Llvm.NET.JIT.ExecutionEngine.GetFunctionDelegate<T>(System.String)
+  fullName.vb: Llvm.NET.JIT.ExecutionEngine.GetFunctionDelegate(Of T)(System.String)
+  nameWithType: ExecutionEngine.GetFunctionDelegate<T>(String)
+  nameWithType.vb: ExecutionEngine.GetFunctionDelegate(Of T)(String)
+- uid: Llvm.NET.JIT.ExecutionEngine.RemoveModule(Llvm.NET.BitcodeModule)
+  name: RemoveModule(BitcodeModule)
+  href: api/Llvm.NET.JIT.ExecutionEngine.RemoveModule.html#Llvm_NET_JIT_ExecutionEngine_RemoveModule_Llvm_NET_BitcodeModule_
+  commentId: M:Llvm.NET.JIT.ExecutionEngine.RemoveModule(Llvm.NET.BitcodeModule)
+  fullName: Llvm.NET.JIT.ExecutionEngine.RemoveModule(Llvm.NET.BitcodeModule)
+  nameWithType: ExecutionEngine.RemoveModule(BitcodeModule)
+- uid: Llvm.NET.JIT.ExecutionEngine.RemoveModule*
+  name: RemoveModule
+  href: api/Llvm.NET.JIT.ExecutionEngine.RemoveModule.html
+  commentId: Overload:Llvm.NET.JIT.ExecutionEngine.RemoveModule
+  fullName: Llvm.NET.JIT.ExecutionEngine.RemoveModule
+  nameWithType: ExecutionEngine.RemoveModule
+- uid: Llvm.NET.JIT.ExecutionEngine.RunStaticConstructors
+  name: RunStaticConstructors()
+  href: api/Llvm.NET.JIT.ExecutionEngine.RunStaticConstructors.html#Llvm_NET_JIT_ExecutionEngine_RunStaticConstructors
+  commentId: M:Llvm.NET.JIT.ExecutionEngine.RunStaticConstructors
+  fullName: Llvm.NET.JIT.ExecutionEngine.RunStaticConstructors()
+  nameWithType: ExecutionEngine.RunStaticConstructors()
+- uid: Llvm.NET.JIT.ExecutionEngine.RunStaticConstructors*
+  name: RunStaticConstructors
+  href: api/Llvm.NET.JIT.ExecutionEngine.RunStaticConstructors.html
+  commentId: Overload:Llvm.NET.JIT.ExecutionEngine.RunStaticConstructors
+  fullName: Llvm.NET.JIT.ExecutionEngine.RunStaticConstructors
+  nameWithType: ExecutionEngine.RunStaticConstructors
+- uid: Llvm.NET.JIT.ExecutionEngine.RunStaticDestructors
+  name: RunStaticDestructors()
+  href: api/Llvm.NET.JIT.ExecutionEngine.RunStaticDestructors.html#Llvm_NET_JIT_ExecutionEngine_RunStaticDestructors
+  commentId: M:Llvm.NET.JIT.ExecutionEngine.RunStaticDestructors
+  fullName: Llvm.NET.JIT.ExecutionEngine.RunStaticDestructors()
+  nameWithType: ExecutionEngine.RunStaticDestructors()
+- uid: Llvm.NET.JIT.ExecutionEngine.RunStaticDestructors*
+  name: RunStaticDestructors
+  href: api/Llvm.NET.JIT.ExecutionEngine.RunStaticDestructors.html
+  commentId: Overload:Llvm.NET.JIT.ExecutionEngine.RunStaticDestructors
+  fullName: Llvm.NET.JIT.ExecutionEngine.RunStaticDestructors
+  nameWithType: ExecutionEngine.RunStaticDestructors
+- uid: Llvm.NET.JIT.ExecutionEngine.TargetData
+  name: TargetData
+  href: api/Llvm.NET.JIT.ExecutionEngine.TargetData.html#Llvm_NET_JIT_ExecutionEngine_TargetData
+  commentId: P:Llvm.NET.JIT.ExecutionEngine.TargetData
+  fullName: Llvm.NET.JIT.ExecutionEngine.TargetData
+  nameWithType: ExecutionEngine.TargetData
+- uid: Llvm.NET.JIT.ExecutionEngine.TargetData*
+  name: TargetData
+  href: api/Llvm.NET.JIT.ExecutionEngine.TargetData.html
+  commentId: Overload:Llvm.NET.JIT.ExecutionEngine.TargetData
+  fullName: Llvm.NET.JIT.ExecutionEngine.TargetData
+  nameWithType: ExecutionEngine.TargetData
+- uid: Llvm.NET.JIT.ExecutionEngine.TargetMachine
+  name: TargetMachine
+  href: api/Llvm.NET.JIT.ExecutionEngine.TargetMachine.html#Llvm_NET_JIT_ExecutionEngine_TargetMachine
+  commentId: P:Llvm.NET.JIT.ExecutionEngine.TargetMachine
+  fullName: Llvm.NET.JIT.ExecutionEngine.TargetMachine
+  nameWithType: ExecutionEngine.TargetMachine
+- uid: Llvm.NET.JIT.ExecutionEngine.TargetMachine*
+  name: TargetMachine
+  href: api/Llvm.NET.JIT.ExecutionEngine.TargetMachine.html
+  commentId: Overload:Llvm.NET.JIT.ExecutionEngine.TargetMachine
+  fullName: Llvm.NET.JIT.ExecutionEngine.TargetMachine
+  nameWithType: ExecutionEngine.TargetMachine
+- uid: Llvm.NET.JIT.ExecutionEngine.TryGetFunction(System.String,Llvm.NET.Values.Function@)
+  name: TryGetFunction(String, out Function)
+  href: api/Llvm.NET.JIT.ExecutionEngine.TryGetFunction.html#Llvm_NET_JIT_ExecutionEngine_TryGetFunction_System_String_Llvm_NET_Values_Function__
+  commentId: M:Llvm.NET.JIT.ExecutionEngine.TryGetFunction(System.String,Llvm.NET.Values.Function@)
+  name.vb: TryGetFunction(String, ByRef Function)
+  fullName: Llvm.NET.JIT.ExecutionEngine.TryGetFunction(System.String, out Llvm.NET.Values.Function)
+  fullName.vb: Llvm.NET.JIT.ExecutionEngine.TryGetFunction(System.String, ByRef Llvm.NET.Values.Function)
+  nameWithType: ExecutionEngine.TryGetFunction(String, out Function)
+  nameWithType.vb: ExecutionEngine.TryGetFunction(String, ByRef Function)
+- uid: Llvm.NET.JIT.ExecutionEngine.TryGetFunction*
+  name: TryGetFunction
+  href: api/Llvm.NET.JIT.ExecutionEngine.TryGetFunction.html
+  commentId: Overload:Llvm.NET.JIT.ExecutionEngine.TryGetFunction
+  fullName: Llvm.NET.JIT.ExecutionEngine.TryGetFunction
+  nameWithType: ExecutionEngine.TryGetFunction
+- uid: Llvm.NET.JIT.GenericValue
+  name: GenericValue
+  href: api/Llvm.NET.JIT.GenericValue.html
+  commentId: T:Llvm.NET.JIT.GenericValue
+  fullName: Llvm.NET.JIT.GenericValue
+  nameWithType: GenericValue
+- uid: Llvm.NET.JIT.GenericValue.#ctor(Llvm.NET.Types.ITypeRef,System.Double)
+  name: GenericValue(ITypeRef, Double)
+  href: api/Llvm.NET.JIT.GenericValue.-ctor.html#Llvm_NET_JIT_GenericValue__ctor_Llvm_NET_Types_ITypeRef_System_Double_
+  commentId: M:Llvm.NET.JIT.GenericValue.#ctor(Llvm.NET.Types.ITypeRef,System.Double)
+  fullName: Llvm.NET.JIT.GenericValue.GenericValue(Llvm.NET.Types.ITypeRef, System.Double)
+  nameWithType: GenericValue.GenericValue(ITypeRef, Double)
+- uid: Llvm.NET.JIT.GenericValue.#ctor(Llvm.NET.Types.ITypeRef,System.UInt64,System.Boolean)
+  name: GenericValue(ITypeRef, UInt64, Boolean)
+  href: api/Llvm.NET.JIT.GenericValue.-ctor.html#Llvm_NET_JIT_GenericValue__ctor_Llvm_NET_Types_ITypeRef_System_UInt64_System_Boolean_
+  commentId: M:Llvm.NET.JIT.GenericValue.#ctor(Llvm.NET.Types.ITypeRef,System.UInt64,System.Boolean)
+  fullName: Llvm.NET.JIT.GenericValue.GenericValue(Llvm.NET.Types.ITypeRef, System.UInt64, System.Boolean)
+  nameWithType: GenericValue.GenericValue(ITypeRef, UInt64, Boolean)
+- uid: Llvm.NET.JIT.GenericValue.#ctor*
+  name: GenericValue
+  href: api/Llvm.NET.JIT.GenericValue.-ctor.html
+  commentId: Overload:Llvm.NET.JIT.GenericValue.#ctor
+  fullName: Llvm.NET.JIT.GenericValue.GenericValue
+  nameWithType: GenericValue.GenericValue
+- uid: Llvm.NET.JIT.GenericValue.Dispose
+  name: Dispose()
+  href: api/Llvm.NET.JIT.GenericValue.Dispose.html#Llvm_NET_JIT_GenericValue_Dispose
+  commentId: M:Llvm.NET.JIT.GenericValue.Dispose
+  fullName: Llvm.NET.JIT.GenericValue.Dispose()
+  nameWithType: GenericValue.Dispose()
+- uid: Llvm.NET.JIT.GenericValue.Dispose*
+  name: Dispose
+  href: api/Llvm.NET.JIT.GenericValue.Dispose.html
+  commentId: Overload:Llvm.NET.JIT.GenericValue.Dispose
+  fullName: Llvm.NET.JIT.GenericValue.Dispose
+  nameWithType: GenericValue.Dispose
+- uid: Llvm.NET.JIT.GenericValue.IntegerBitWidth
+  name: IntegerBitWidth
+  href: api/Llvm.NET.JIT.GenericValue.IntegerBitWidth.html#Llvm_NET_JIT_GenericValue_IntegerBitWidth
+  commentId: P:Llvm.NET.JIT.GenericValue.IntegerBitWidth
+  fullName: Llvm.NET.JIT.GenericValue.IntegerBitWidth
+  nameWithType: GenericValue.IntegerBitWidth
+- uid: Llvm.NET.JIT.GenericValue.IntegerBitWidth*
+  name: IntegerBitWidth
+  href: api/Llvm.NET.JIT.GenericValue.IntegerBitWidth.html
+  commentId: Overload:Llvm.NET.JIT.GenericValue.IntegerBitWidth
+  fullName: Llvm.NET.JIT.GenericValue.IntegerBitWidth
+  nameWithType: GenericValue.IntegerBitWidth
+- uid: Llvm.NET.JIT.GenericValue.ToDouble(Llvm.NET.Context)
+  name: ToDouble(Context)
+  href: api/Llvm.NET.JIT.GenericValue.ToDouble.html#Llvm_NET_JIT_GenericValue_ToDouble_Llvm_NET_Context_
+  commentId: M:Llvm.NET.JIT.GenericValue.ToDouble(Llvm.NET.Context)
+  fullName: Llvm.NET.JIT.GenericValue.ToDouble(Llvm.NET.Context)
+  nameWithType: GenericValue.ToDouble(Context)
+- uid: Llvm.NET.JIT.GenericValue.ToDouble*
+  name: ToDouble
+  href: api/Llvm.NET.JIT.GenericValue.ToDouble.html
+  commentId: Overload:Llvm.NET.JIT.GenericValue.ToDouble
+  fullName: Llvm.NET.JIT.GenericValue.ToDouble
+  nameWithType: GenericValue.ToDouble
+- uid: Llvm.NET.JIT.GenericValue.ToFloat(Llvm.NET.Context)
+  name: ToFloat(Context)
+  href: api/Llvm.NET.JIT.GenericValue.ToFloat.html#Llvm_NET_JIT_GenericValue_ToFloat_Llvm_NET_Context_
+  commentId: M:Llvm.NET.JIT.GenericValue.ToFloat(Llvm.NET.Context)
+  fullName: Llvm.NET.JIT.GenericValue.ToFloat(Llvm.NET.Context)
+  nameWithType: GenericValue.ToFloat(Context)
+- uid: Llvm.NET.JIT.GenericValue.ToFloat*
+  name: ToFloat
+  href: api/Llvm.NET.JIT.GenericValue.ToFloat.html
+  commentId: Overload:Llvm.NET.JIT.GenericValue.ToFloat
+  fullName: Llvm.NET.JIT.GenericValue.ToFloat
+  nameWithType: GenericValue.ToFloat
+- uid: Llvm.NET.JIT.GenericValue.ToInt32
+  name: ToInt32
+  href: api/Llvm.NET.JIT.GenericValue.ToInt32.html#Llvm_NET_JIT_GenericValue_ToInt32
+  commentId: P:Llvm.NET.JIT.GenericValue.ToInt32
+  fullName: Llvm.NET.JIT.GenericValue.ToInt32
+  nameWithType: GenericValue.ToInt32
+- uid: Llvm.NET.JIT.GenericValue.ToInt32*
+  name: ToInt32
+  href: api/Llvm.NET.JIT.GenericValue.ToInt32.html
+  commentId: Overload:Llvm.NET.JIT.GenericValue.ToInt32
+  fullName: Llvm.NET.JIT.GenericValue.ToInt32
+  nameWithType: GenericValue.ToInt32
+- uid: Llvm.NET.JIT.GenericValue.ToUInt32
+  name: ToUInt32
+  href: api/Llvm.NET.JIT.GenericValue.ToUInt32.html#Llvm_NET_JIT_GenericValue_ToUInt32
+  commentId: P:Llvm.NET.JIT.GenericValue.ToUInt32
+  fullName: Llvm.NET.JIT.GenericValue.ToUInt32
+  nameWithType: GenericValue.ToUInt32
+- uid: Llvm.NET.JIT.GenericValue.ToUInt32*
+  name: ToUInt32
+  href: api/Llvm.NET.JIT.GenericValue.ToUInt32.html
+  commentId: Overload:Llvm.NET.JIT.GenericValue.ToUInt32
+  fullName: Llvm.NET.JIT.GenericValue.ToUInt32
+  nameWithType: GenericValue.ToUInt32
 - uid: Llvm.NET.Linkage
   name: Linkage
   href: api/Llvm.NET.Linkage.html
@@ -9793,12 +10057,12 @@ references:
   commentId: Overload:Llvm.NET.Target.AvailableTargets
   fullName: Llvm.NET.Target.AvailableTargets
   nameWithType: Target.AvailableTargets
-- uid: Llvm.NET.Target.CreateTargetMachine(Llvm.NET.Context,System.String,System.String,System.String,Llvm.NET.CodeGenOpt,Llvm.NET.Reloc,Llvm.NET.CodeModel)
-  name: CreateTargetMachine(Context, String, String, String, CodeGenOpt, Reloc, CodeModel)
-  href: api/Llvm.NET.Target.CreateTargetMachine.html#Llvm_NET_Target_CreateTargetMachine_Llvm_NET_Context_System_String_System_String_System_String_Llvm_NET_CodeGenOpt_Llvm_NET_Reloc_Llvm_NET_CodeModel_
-  commentId: M:Llvm.NET.Target.CreateTargetMachine(Llvm.NET.Context,System.String,System.String,System.String,Llvm.NET.CodeGenOpt,Llvm.NET.Reloc,Llvm.NET.CodeModel)
-  fullName: Llvm.NET.Target.CreateTargetMachine(Llvm.NET.Context, System.String, System.String, System.String, Llvm.NET.CodeGenOpt, Llvm.NET.Reloc, Llvm.NET.CodeModel)
-  nameWithType: Target.CreateTargetMachine(Context, String, String, String, CodeGenOpt, Reloc, CodeModel)
+- uid: Llvm.NET.Target.CreateTargetMachine(System.String,System.String,System.String,Llvm.NET.CodeGenOpt,Llvm.NET.Reloc,Llvm.NET.CodeModel)
+  name: CreateTargetMachine(String, String, String, CodeGenOpt, Reloc, CodeModel)
+  href: api/Llvm.NET.Target.CreateTargetMachine.html#Llvm_NET_Target_CreateTargetMachine_System_String_System_String_System_String_Llvm_NET_CodeGenOpt_Llvm_NET_Reloc_Llvm_NET_CodeModel_
+  commentId: M:Llvm.NET.Target.CreateTargetMachine(System.String,System.String,System.String,Llvm.NET.CodeGenOpt,Llvm.NET.Reloc,Llvm.NET.CodeModel)
+  fullName: Llvm.NET.Target.CreateTargetMachine(System.String, System.String, System.String, Llvm.NET.CodeGenOpt, Llvm.NET.Reloc, Llvm.NET.CodeModel)
+  nameWithType: Target.CreateTargetMachine(String, String, String, CodeGenOpt, Reloc, CodeModel)
 - uid: Llvm.NET.Target.CreateTargetMachine*
   name: CreateTargetMachine
   href: api/Llvm.NET.Target.CreateTargetMachine.html
@@ -9883,18 +10147,6 @@ references:
   commentId: T:Llvm.NET.TargetMachine
   fullName: Llvm.NET.TargetMachine
   nameWithType: TargetMachine
-- uid: Llvm.NET.TargetMachine.Context
-  name: Context
-  href: api/Llvm.NET.TargetMachine.Context.html#Llvm_NET_TargetMachine_Context
-  commentId: P:Llvm.NET.TargetMachine.Context
-  fullName: Llvm.NET.TargetMachine.Context
-  nameWithType: TargetMachine.Context
-- uid: Llvm.NET.TargetMachine.Context*
-  name: Context
-  href: api/Llvm.NET.TargetMachine.Context.html
-  commentId: Overload:Llvm.NET.TargetMachine.Context
-  fullName: Llvm.NET.TargetMachine.Context
-  nameWithType: TargetMachine.Context
 - uid: Llvm.NET.TargetMachine.Cpu
   name: Cpu
   href: api/Llvm.NET.TargetMachine.Cpu.html#Llvm_NET_TargetMachine_Cpu
@@ -10063,6 +10315,975 @@ references:
   commentId: F:Llvm.NET.TargetRegistrations.TargetMachine
   fullName: Llvm.NET.TargetRegistrations.TargetMachine
   nameWithType: TargetRegistrations.TargetMachine
+- uid: Llvm.NET.Transforms
+  name: Llvm.NET.Transforms
+  href: api/Llvm.NET.Transforms.html
+  commentId: N:Llvm.NET.Transforms
+  fullName: Llvm.NET.Transforms
+  nameWithType: Llvm.NET.Transforms
+- uid: Llvm.NET.Transforms.FunctionPassManager
+  name: FunctionPassManager
+  href: api/Llvm.NET.Transforms.FunctionPassManager.html
+  commentId: T:Llvm.NET.Transforms.FunctionPassManager
+  fullName: Llvm.NET.Transforms.FunctionPassManager
+  nameWithType: FunctionPassManager
+- uid: Llvm.NET.Transforms.FunctionPassManager.#ctor(Llvm.NET.BitcodeModule)
+  name: FunctionPassManager(BitcodeModule)
+  href: api/Llvm.NET.Transforms.FunctionPassManager.-ctor.html#Llvm_NET_Transforms_FunctionPassManager__ctor_Llvm_NET_BitcodeModule_
+  commentId: M:Llvm.NET.Transforms.FunctionPassManager.#ctor(Llvm.NET.BitcodeModule)
+  fullName: Llvm.NET.Transforms.FunctionPassManager.FunctionPassManager(Llvm.NET.BitcodeModule)
+  nameWithType: FunctionPassManager.FunctionPassManager(BitcodeModule)
+- uid: Llvm.NET.Transforms.FunctionPassManager.#ctor*
+  name: FunctionPassManager
+  href: api/Llvm.NET.Transforms.FunctionPassManager.-ctor.html
+  commentId: Overload:Llvm.NET.Transforms.FunctionPassManager.#ctor
+  fullName: Llvm.NET.Transforms.FunctionPassManager.FunctionPassManager
+  nameWithType: FunctionPassManager.FunctionPassManager
+- uid: Llvm.NET.Transforms.FunctionPassManager.Finish
+  name: Finish()
+  href: api/Llvm.NET.Transforms.FunctionPassManager.Finish.html#Llvm_NET_Transforms_FunctionPassManager_Finish
+  commentId: M:Llvm.NET.Transforms.FunctionPassManager.Finish
+  fullName: Llvm.NET.Transforms.FunctionPassManager.Finish()
+  nameWithType: FunctionPassManager.Finish()
+- uid: Llvm.NET.Transforms.FunctionPassManager.Finish*
+  name: Finish
+  href: api/Llvm.NET.Transforms.FunctionPassManager.Finish.html
+  commentId: Overload:Llvm.NET.Transforms.FunctionPassManager.Finish
+  fullName: Llvm.NET.Transforms.FunctionPassManager.Finish
+  nameWithType: FunctionPassManager.Finish
+- uid: Llvm.NET.Transforms.FunctionPassManager.Initialize
+  name: Initialize()
+  href: api/Llvm.NET.Transforms.FunctionPassManager.Initialize.html#Llvm_NET_Transforms_FunctionPassManager_Initialize
+  commentId: M:Llvm.NET.Transforms.FunctionPassManager.Initialize
+  fullName: Llvm.NET.Transforms.FunctionPassManager.Initialize()
+  nameWithType: FunctionPassManager.Initialize()
+- uid: Llvm.NET.Transforms.FunctionPassManager.Initialize*
+  name: Initialize
+  href: api/Llvm.NET.Transforms.FunctionPassManager.Initialize.html
+  commentId: Overload:Llvm.NET.Transforms.FunctionPassManager.Initialize
+  fullName: Llvm.NET.Transforms.FunctionPassManager.Initialize
+  nameWithType: FunctionPassManager.Initialize
+- uid: Llvm.NET.Transforms.FunctionPassManager.Run(Llvm.NET.Values.Function)
+  name: Run(Function)
+  href: api/Llvm.NET.Transforms.FunctionPassManager.Run.html#Llvm_NET_Transforms_FunctionPassManager_Run_Llvm_NET_Values_Function_
+  commentId: M:Llvm.NET.Transforms.FunctionPassManager.Run(Llvm.NET.Values.Function)
+  fullName: Llvm.NET.Transforms.FunctionPassManager.Run(Llvm.NET.Values.Function)
+  nameWithType: FunctionPassManager.Run(Function)
+- uid: Llvm.NET.Transforms.FunctionPassManager.Run*
+  name: Run
+  href: api/Llvm.NET.Transforms.FunctionPassManager.Run.html
+  commentId: Overload:Llvm.NET.Transforms.FunctionPassManager.Run
+  fullName: Llvm.NET.Transforms.FunctionPassManager.Run
+  nameWithType: FunctionPassManager.Run
+- uid: Llvm.NET.Transforms.InterproceduralTransforms
+  name: InterproceduralTransforms
+  href: api/Llvm.NET.Transforms.InterproceduralTransforms.html
+  commentId: T:Llvm.NET.Transforms.InterproceduralTransforms
+  fullName: Llvm.NET.Transforms.InterproceduralTransforms
+  nameWithType: InterproceduralTransforms
+- uid: Llvm.NET.Transforms.InterproceduralTransforms.AddAlwaysInlinerPass*
+  name: AddAlwaysInlinerPass
+  href: api/Llvm.NET.Transforms.InterproceduralTransforms.AddAlwaysInlinerPass.html
+  commentId: Overload:Llvm.NET.Transforms.InterproceduralTransforms.AddAlwaysInlinerPass
+  fullName: Llvm.NET.Transforms.InterproceduralTransforms.AddAlwaysInlinerPass
+  nameWithType: InterproceduralTransforms.AddAlwaysInlinerPass
+- uid: Llvm.NET.Transforms.InterproceduralTransforms.AddAlwaysInlinerPass``1(``0)
+  name: AddAlwaysInlinerPass<T>(T)
+  href: api/Llvm.NET.Transforms.InterproceduralTransforms.AddAlwaysInlinerPass.html#Llvm_NET_Transforms_InterproceduralTransforms_AddAlwaysInlinerPass__1___0_
+  commentId: M:Llvm.NET.Transforms.InterproceduralTransforms.AddAlwaysInlinerPass``1(``0)
+  name.vb: AddAlwaysInlinerPass(Of T)(T)
+  fullName: Llvm.NET.Transforms.InterproceduralTransforms.AddAlwaysInlinerPass<T>(T)
+  fullName.vb: Llvm.NET.Transforms.InterproceduralTransforms.AddAlwaysInlinerPass(Of T)(T)
+  nameWithType: InterproceduralTransforms.AddAlwaysInlinerPass<T>(T)
+  nameWithType.vb: InterproceduralTransforms.AddAlwaysInlinerPass(Of T)(T)
+- uid: Llvm.NET.Transforms.InterproceduralTransforms.AddArgumentPromotionPass*
+  name: AddArgumentPromotionPass
+  href: api/Llvm.NET.Transforms.InterproceduralTransforms.AddArgumentPromotionPass.html
+  commentId: Overload:Llvm.NET.Transforms.InterproceduralTransforms.AddArgumentPromotionPass
+  fullName: Llvm.NET.Transforms.InterproceduralTransforms.AddArgumentPromotionPass
+  nameWithType: InterproceduralTransforms.AddArgumentPromotionPass
+- uid: Llvm.NET.Transforms.InterproceduralTransforms.AddArgumentPromotionPass``1(``0)
+  name: AddArgumentPromotionPass<T>(T)
+  href: api/Llvm.NET.Transforms.InterproceduralTransforms.AddArgumentPromotionPass.html#Llvm_NET_Transforms_InterproceduralTransforms_AddArgumentPromotionPass__1___0_
+  commentId: M:Llvm.NET.Transforms.InterproceduralTransforms.AddArgumentPromotionPass``1(``0)
+  name.vb: AddArgumentPromotionPass(Of T)(T)
+  fullName: Llvm.NET.Transforms.InterproceduralTransforms.AddArgumentPromotionPass<T>(T)
+  fullName.vb: Llvm.NET.Transforms.InterproceduralTransforms.AddArgumentPromotionPass(Of T)(T)
+  nameWithType: InterproceduralTransforms.AddArgumentPromotionPass<T>(T)
+  nameWithType.vb: InterproceduralTransforms.AddArgumentPromotionPass(Of T)(T)
+- uid: Llvm.NET.Transforms.InterproceduralTransforms.AddConstantMergePass*
+  name: AddConstantMergePass
+  href: api/Llvm.NET.Transforms.InterproceduralTransforms.AddConstantMergePass.html
+  commentId: Overload:Llvm.NET.Transforms.InterproceduralTransforms.AddConstantMergePass
+  fullName: Llvm.NET.Transforms.InterproceduralTransforms.AddConstantMergePass
+  nameWithType: InterproceduralTransforms.AddConstantMergePass
+- uid: Llvm.NET.Transforms.InterproceduralTransforms.AddConstantMergePass``1(``0)
+  name: AddConstantMergePass<T>(T)
+  href: api/Llvm.NET.Transforms.InterproceduralTransforms.AddConstantMergePass.html#Llvm_NET_Transforms_InterproceduralTransforms_AddConstantMergePass__1___0_
+  commentId: M:Llvm.NET.Transforms.InterproceduralTransforms.AddConstantMergePass``1(``0)
+  name.vb: AddConstantMergePass(Of T)(T)
+  fullName: Llvm.NET.Transforms.InterproceduralTransforms.AddConstantMergePass<T>(T)
+  fullName.vb: Llvm.NET.Transforms.InterproceduralTransforms.AddConstantMergePass(Of T)(T)
+  nameWithType: InterproceduralTransforms.AddConstantMergePass<T>(T)
+  nameWithType.vb: InterproceduralTransforms.AddConstantMergePass(Of T)(T)
+- uid: Llvm.NET.Transforms.InterproceduralTransforms.AddDeadArgEliminationPass*
+  name: AddDeadArgEliminationPass
+  href: api/Llvm.NET.Transforms.InterproceduralTransforms.AddDeadArgEliminationPass.html
+  commentId: Overload:Llvm.NET.Transforms.InterproceduralTransforms.AddDeadArgEliminationPass
+  fullName: Llvm.NET.Transforms.InterproceduralTransforms.AddDeadArgEliminationPass
+  nameWithType: InterproceduralTransforms.AddDeadArgEliminationPass
+- uid: Llvm.NET.Transforms.InterproceduralTransforms.AddDeadArgEliminationPass``1(``0)
+  name: AddDeadArgEliminationPass<T>(T)
+  href: api/Llvm.NET.Transforms.InterproceduralTransforms.AddDeadArgEliminationPass.html#Llvm_NET_Transforms_InterproceduralTransforms_AddDeadArgEliminationPass__1___0_
+  commentId: M:Llvm.NET.Transforms.InterproceduralTransforms.AddDeadArgEliminationPass``1(``0)
+  name.vb: AddDeadArgEliminationPass(Of T)(T)
+  fullName: Llvm.NET.Transforms.InterproceduralTransforms.AddDeadArgEliminationPass<T>(T)
+  fullName.vb: Llvm.NET.Transforms.InterproceduralTransforms.AddDeadArgEliminationPass(Of T)(T)
+  nameWithType: InterproceduralTransforms.AddDeadArgEliminationPass<T>(T)
+  nameWithType.vb: InterproceduralTransforms.AddDeadArgEliminationPass(Of T)(T)
+- uid: Llvm.NET.Transforms.InterproceduralTransforms.AddFunctionAttrsPass*
+  name: AddFunctionAttrsPass
+  href: api/Llvm.NET.Transforms.InterproceduralTransforms.AddFunctionAttrsPass.html
+  commentId: Overload:Llvm.NET.Transforms.InterproceduralTransforms.AddFunctionAttrsPass
+  fullName: Llvm.NET.Transforms.InterproceduralTransforms.AddFunctionAttrsPass
+  nameWithType: InterproceduralTransforms.AddFunctionAttrsPass
+- uid: Llvm.NET.Transforms.InterproceduralTransforms.AddFunctionAttrsPass``1(``0)
+  name: AddFunctionAttrsPass<T>(T)
+  href: api/Llvm.NET.Transforms.InterproceduralTransforms.AddFunctionAttrsPass.html#Llvm_NET_Transforms_InterproceduralTransforms_AddFunctionAttrsPass__1___0_
+  commentId: M:Llvm.NET.Transforms.InterproceduralTransforms.AddFunctionAttrsPass``1(``0)
+  name.vb: AddFunctionAttrsPass(Of T)(T)
+  fullName: Llvm.NET.Transforms.InterproceduralTransforms.AddFunctionAttrsPass<T>(T)
+  fullName.vb: Llvm.NET.Transforms.InterproceduralTransforms.AddFunctionAttrsPass(Of T)(T)
+  nameWithType: InterproceduralTransforms.AddFunctionAttrsPass<T>(T)
+  nameWithType.vb: InterproceduralTransforms.AddFunctionAttrsPass(Of T)(T)
+- uid: Llvm.NET.Transforms.InterproceduralTransforms.AddFunctionInliningPass*
+  name: AddFunctionInliningPass
+  href: api/Llvm.NET.Transforms.InterproceduralTransforms.AddFunctionInliningPass.html
+  commentId: Overload:Llvm.NET.Transforms.InterproceduralTransforms.AddFunctionInliningPass
+  fullName: Llvm.NET.Transforms.InterproceduralTransforms.AddFunctionInliningPass
+  nameWithType: InterproceduralTransforms.AddFunctionInliningPass
+- uid: Llvm.NET.Transforms.InterproceduralTransforms.AddFunctionInliningPass``1(``0)
+  name: AddFunctionInliningPass<T>(T)
+  href: api/Llvm.NET.Transforms.InterproceduralTransforms.AddFunctionInliningPass.html#Llvm_NET_Transforms_InterproceduralTransforms_AddFunctionInliningPass__1___0_
+  commentId: M:Llvm.NET.Transforms.InterproceduralTransforms.AddFunctionInliningPass``1(``0)
+  name.vb: AddFunctionInliningPass(Of T)(T)
+  fullName: Llvm.NET.Transforms.InterproceduralTransforms.AddFunctionInliningPass<T>(T)
+  fullName.vb: Llvm.NET.Transforms.InterproceduralTransforms.AddFunctionInliningPass(Of T)(T)
+  nameWithType: InterproceduralTransforms.AddFunctionInliningPass<T>(T)
+  nameWithType.vb: InterproceduralTransforms.AddFunctionInliningPass(Of T)(T)
+- uid: Llvm.NET.Transforms.InterproceduralTransforms.AddGlobalDCEPass*
+  name: AddGlobalDCEPass
+  href: api/Llvm.NET.Transforms.InterproceduralTransforms.AddGlobalDCEPass.html
+  commentId: Overload:Llvm.NET.Transforms.InterproceduralTransforms.AddGlobalDCEPass
+  fullName: Llvm.NET.Transforms.InterproceduralTransforms.AddGlobalDCEPass
+  nameWithType: InterproceduralTransforms.AddGlobalDCEPass
+- uid: Llvm.NET.Transforms.InterproceduralTransforms.AddGlobalDCEPass``1(``0)
+  name: AddGlobalDCEPass<T>(T)
+  href: api/Llvm.NET.Transforms.InterproceduralTransforms.AddGlobalDCEPass.html#Llvm_NET_Transforms_InterproceduralTransforms_AddGlobalDCEPass__1___0_
+  commentId: M:Llvm.NET.Transforms.InterproceduralTransforms.AddGlobalDCEPass``1(``0)
+  name.vb: AddGlobalDCEPass(Of T)(T)
+  fullName: Llvm.NET.Transforms.InterproceduralTransforms.AddGlobalDCEPass<T>(T)
+  fullName.vb: Llvm.NET.Transforms.InterproceduralTransforms.AddGlobalDCEPass(Of T)(T)
+  nameWithType: InterproceduralTransforms.AddGlobalDCEPass<T>(T)
+  nameWithType.vb: InterproceduralTransforms.AddGlobalDCEPass(Of T)(T)
+- uid: Llvm.NET.Transforms.InterproceduralTransforms.AddGlobalOptimizerPass*
+  name: AddGlobalOptimizerPass
+  href: api/Llvm.NET.Transforms.InterproceduralTransforms.AddGlobalOptimizerPass.html
+  commentId: Overload:Llvm.NET.Transforms.InterproceduralTransforms.AddGlobalOptimizerPass
+  fullName: Llvm.NET.Transforms.InterproceduralTransforms.AddGlobalOptimizerPass
+  nameWithType: InterproceduralTransforms.AddGlobalOptimizerPass
+- uid: Llvm.NET.Transforms.InterproceduralTransforms.AddGlobalOptimizerPass``1(``0)
+  name: AddGlobalOptimizerPass<T>(T)
+  href: api/Llvm.NET.Transforms.InterproceduralTransforms.AddGlobalOptimizerPass.html#Llvm_NET_Transforms_InterproceduralTransforms_AddGlobalOptimizerPass__1___0_
+  commentId: M:Llvm.NET.Transforms.InterproceduralTransforms.AddGlobalOptimizerPass``1(``0)
+  name.vb: AddGlobalOptimizerPass(Of T)(T)
+  fullName: Llvm.NET.Transforms.InterproceduralTransforms.AddGlobalOptimizerPass<T>(T)
+  fullName.vb: Llvm.NET.Transforms.InterproceduralTransforms.AddGlobalOptimizerPass(Of T)(T)
+  nameWithType: InterproceduralTransforms.AddGlobalOptimizerPass<T>(T)
+  nameWithType.vb: InterproceduralTransforms.AddGlobalOptimizerPass(Of T)(T)
+- uid: Llvm.NET.Transforms.InterproceduralTransforms.AddInternalizePass*
+  name: AddInternalizePass
+  href: api/Llvm.NET.Transforms.InterproceduralTransforms.AddInternalizePass.html
+  commentId: Overload:Llvm.NET.Transforms.InterproceduralTransforms.AddInternalizePass
+  fullName: Llvm.NET.Transforms.InterproceduralTransforms.AddInternalizePass
+  nameWithType: InterproceduralTransforms.AddInternalizePass
+- uid: Llvm.NET.Transforms.InterproceduralTransforms.AddInternalizePass``1(``0,System.Boolean)
+  name: AddInternalizePass<T>(T, Boolean)
+  href: api/Llvm.NET.Transforms.InterproceduralTransforms.AddInternalizePass.html#Llvm_NET_Transforms_InterproceduralTransforms_AddInternalizePass__1___0_System_Boolean_
+  commentId: M:Llvm.NET.Transforms.InterproceduralTransforms.AddInternalizePass``1(``0,System.Boolean)
+  name.vb: AddInternalizePass(Of T)(T, Boolean)
+  fullName: Llvm.NET.Transforms.InterproceduralTransforms.AddInternalizePass<T>(T, System.Boolean)
+  fullName.vb: Llvm.NET.Transforms.InterproceduralTransforms.AddInternalizePass(Of T)(T, System.Boolean)
+  nameWithType: InterproceduralTransforms.AddInternalizePass<T>(T, Boolean)
+  nameWithType.vb: InterproceduralTransforms.AddInternalizePass(Of T)(T, Boolean)
+- uid: Llvm.NET.Transforms.InterproceduralTransforms.AddIPConstantPropagationPass*
+  name: AddIPConstantPropagationPass
+  href: api/Llvm.NET.Transforms.InterproceduralTransforms.AddIPConstantPropagationPass.html
+  commentId: Overload:Llvm.NET.Transforms.InterproceduralTransforms.AddIPConstantPropagationPass
+  fullName: Llvm.NET.Transforms.InterproceduralTransforms.AddIPConstantPropagationPass
+  nameWithType: InterproceduralTransforms.AddIPConstantPropagationPass
+- uid: Llvm.NET.Transforms.InterproceduralTransforms.AddIPConstantPropagationPass``1(``0)
+  name: AddIPConstantPropagationPass<T>(T)
+  href: api/Llvm.NET.Transforms.InterproceduralTransforms.AddIPConstantPropagationPass.html#Llvm_NET_Transforms_InterproceduralTransforms_AddIPConstantPropagationPass__1___0_
+  commentId: M:Llvm.NET.Transforms.InterproceduralTransforms.AddIPConstantPropagationPass``1(``0)
+  name.vb: AddIPConstantPropagationPass(Of T)(T)
+  fullName: Llvm.NET.Transforms.InterproceduralTransforms.AddIPConstantPropagationPass<T>(T)
+  fullName.vb: Llvm.NET.Transforms.InterproceduralTransforms.AddIPConstantPropagationPass(Of T)(T)
+  nameWithType: InterproceduralTransforms.AddIPConstantPropagationPass<T>(T)
+  nameWithType.vb: InterproceduralTransforms.AddIPConstantPropagationPass(Of T)(T)
+- uid: Llvm.NET.Transforms.InterproceduralTransforms.AddIPSCCPPass*
+  name: AddIPSCCPPass
+  href: api/Llvm.NET.Transforms.InterproceduralTransforms.AddIPSCCPPass.html
+  commentId: Overload:Llvm.NET.Transforms.InterproceduralTransforms.AddIPSCCPPass
+  fullName: Llvm.NET.Transforms.InterproceduralTransforms.AddIPSCCPPass
+  nameWithType: InterproceduralTransforms.AddIPSCCPPass
+- uid: Llvm.NET.Transforms.InterproceduralTransforms.AddIPSCCPPass``1(``0)
+  name: AddIPSCCPPass<T>(T)
+  href: api/Llvm.NET.Transforms.InterproceduralTransforms.AddIPSCCPPass.html#Llvm_NET_Transforms_InterproceduralTransforms_AddIPSCCPPass__1___0_
+  commentId: M:Llvm.NET.Transforms.InterproceduralTransforms.AddIPSCCPPass``1(``0)
+  name.vb: AddIPSCCPPass(Of T)(T)
+  fullName: Llvm.NET.Transforms.InterproceduralTransforms.AddIPSCCPPass<T>(T)
+  fullName.vb: Llvm.NET.Transforms.InterproceduralTransforms.AddIPSCCPPass(Of T)(T)
+  nameWithType: InterproceduralTransforms.AddIPSCCPPass<T>(T)
+  nameWithType.vb: InterproceduralTransforms.AddIPSCCPPass(Of T)(T)
+- uid: Llvm.NET.Transforms.InterproceduralTransforms.AddPruneEHPass*
+  name: AddPruneEHPass
+  href: api/Llvm.NET.Transforms.InterproceduralTransforms.AddPruneEHPass.html
+  commentId: Overload:Llvm.NET.Transforms.InterproceduralTransforms.AddPruneEHPass
+  fullName: Llvm.NET.Transforms.InterproceduralTransforms.AddPruneEHPass
+  nameWithType: InterproceduralTransforms.AddPruneEHPass
+- uid: Llvm.NET.Transforms.InterproceduralTransforms.AddPruneEHPass``1(``0)
+  name: AddPruneEHPass<T>(T)
+  href: api/Llvm.NET.Transforms.InterproceduralTransforms.AddPruneEHPass.html#Llvm_NET_Transforms_InterproceduralTransforms_AddPruneEHPass__1___0_
+  commentId: M:Llvm.NET.Transforms.InterproceduralTransforms.AddPruneEHPass``1(``0)
+  name.vb: AddPruneEHPass(Of T)(T)
+  fullName: Llvm.NET.Transforms.InterproceduralTransforms.AddPruneEHPass<T>(T)
+  fullName.vb: Llvm.NET.Transforms.InterproceduralTransforms.AddPruneEHPass(Of T)(T)
+  nameWithType: InterproceduralTransforms.AddPruneEHPass<T>(T)
+  nameWithType.vb: InterproceduralTransforms.AddPruneEHPass(Of T)(T)
+- uid: Llvm.NET.Transforms.InterproceduralTransforms.AddStripDeadPrototypesPass*
+  name: AddStripDeadPrototypesPass
+  href: api/Llvm.NET.Transforms.InterproceduralTransforms.AddStripDeadPrototypesPass.html
+  commentId: Overload:Llvm.NET.Transforms.InterproceduralTransforms.AddStripDeadPrototypesPass
+  fullName: Llvm.NET.Transforms.InterproceduralTransforms.AddStripDeadPrototypesPass
+  nameWithType: InterproceduralTransforms.AddStripDeadPrototypesPass
+- uid: Llvm.NET.Transforms.InterproceduralTransforms.AddStripDeadPrototypesPass``1(``0)
+  name: AddStripDeadPrototypesPass<T>(T)
+  href: api/Llvm.NET.Transforms.InterproceduralTransforms.AddStripDeadPrototypesPass.html#Llvm_NET_Transforms_InterproceduralTransforms_AddStripDeadPrototypesPass__1___0_
+  commentId: M:Llvm.NET.Transforms.InterproceduralTransforms.AddStripDeadPrototypesPass``1(``0)
+  name.vb: AddStripDeadPrototypesPass(Of T)(T)
+  fullName: Llvm.NET.Transforms.InterproceduralTransforms.AddStripDeadPrototypesPass<T>(T)
+  fullName.vb: Llvm.NET.Transforms.InterproceduralTransforms.AddStripDeadPrototypesPass(Of T)(T)
+  nameWithType: InterproceduralTransforms.AddStripDeadPrototypesPass<T>(T)
+  nameWithType.vb: InterproceduralTransforms.AddStripDeadPrototypesPass(Of T)(T)
+- uid: Llvm.NET.Transforms.InterproceduralTransforms.AddStripSymbolsPass*
+  name: AddStripSymbolsPass
+  href: api/Llvm.NET.Transforms.InterproceduralTransforms.AddStripSymbolsPass.html
+  commentId: Overload:Llvm.NET.Transforms.InterproceduralTransforms.AddStripSymbolsPass
+  fullName: Llvm.NET.Transforms.InterproceduralTransforms.AddStripSymbolsPass
+  nameWithType: InterproceduralTransforms.AddStripSymbolsPass
+- uid: Llvm.NET.Transforms.InterproceduralTransforms.AddStripSymbolsPass``1(``0)
+  name: AddStripSymbolsPass<T>(T)
+  href: api/Llvm.NET.Transforms.InterproceduralTransforms.AddStripSymbolsPass.html#Llvm_NET_Transforms_InterproceduralTransforms_AddStripSymbolsPass__1___0_
+  commentId: M:Llvm.NET.Transforms.InterproceduralTransforms.AddStripSymbolsPass``1(``0)
+  name.vb: AddStripSymbolsPass(Of T)(T)
+  fullName: Llvm.NET.Transforms.InterproceduralTransforms.AddStripSymbolsPass<T>(T)
+  fullName.vb: Llvm.NET.Transforms.InterproceduralTransforms.AddStripSymbolsPass(Of T)(T)
+  nameWithType: InterproceduralTransforms.AddStripSymbolsPass<T>(T)
+  nameWithType.vb: InterproceduralTransforms.AddStripSymbolsPass(Of T)(T)
+- uid: Llvm.NET.Transforms.PassManager
+  name: PassManager
+  href: api/Llvm.NET.Transforms.PassManager.html
+  commentId: T:Llvm.NET.Transforms.PassManager
+  fullName: Llvm.NET.Transforms.PassManager
+  nameWithType: PassManager
+- uid: Llvm.NET.Transforms.PassManager.Dispose
+  name: Dispose()
+  href: api/Llvm.NET.Transforms.PassManager.Dispose.html#Llvm_NET_Transforms_PassManager_Dispose
+  commentId: M:Llvm.NET.Transforms.PassManager.Dispose
+  fullName: Llvm.NET.Transforms.PassManager.Dispose()
+  nameWithType: PassManager.Dispose()
+- uid: Llvm.NET.Transforms.PassManager.Dispose(System.Boolean)
+  name: Dispose(Boolean)
+  href: api/Llvm.NET.Transforms.PassManager.Dispose.html#Llvm_NET_Transforms_PassManager_Dispose_System_Boolean_
+  commentId: M:Llvm.NET.Transforms.PassManager.Dispose(System.Boolean)
+  fullName: Llvm.NET.Transforms.PassManager.Dispose(System.Boolean)
+  nameWithType: PassManager.Dispose(Boolean)
+- uid: Llvm.NET.Transforms.PassManager.Dispose*
+  name: Dispose
+  href: api/Llvm.NET.Transforms.PassManager.Dispose.html
+  commentId: Overload:Llvm.NET.Transforms.PassManager.Dispose
+  fullName: Llvm.NET.Transforms.PassManager.Dispose
+  nameWithType: PassManager.Dispose
+- uid: Llvm.NET.Transforms.PassManager.Finalize
+  name: Finalize()
+  href: api/Llvm.NET.Transforms.PassManager.Finalize.html#Llvm_NET_Transforms_PassManager_Finalize
+  commentId: M:Llvm.NET.Transforms.PassManager.Finalize
+  fullName: Llvm.NET.Transforms.PassManager.Finalize()
+  nameWithType: PassManager.Finalize()
+- uid: Llvm.NET.Transforms.PassManager.Finalize*
+  name: Finalize
+  href: api/Llvm.NET.Transforms.PassManager.Finalize.html
+  commentId: Overload:Llvm.NET.Transforms.PassManager.Finalize
+  fullName: Llvm.NET.Transforms.PassManager.Finalize
+  nameWithType: PassManager.Finalize
+- uid: Llvm.NET.Transforms.ScalarTransforms
+  name: ScalarTransforms
+  href: api/Llvm.NET.Transforms.ScalarTransforms.html
+  commentId: T:Llvm.NET.Transforms.ScalarTransforms
+  fullName: Llvm.NET.Transforms.ScalarTransforms
+  nameWithType: ScalarTransforms
+- uid: Llvm.NET.Transforms.ScalarTransforms.AddAggressiveDCEPass*
+  name: AddAggressiveDCEPass
+  href: api/Llvm.NET.Transforms.ScalarTransforms.AddAggressiveDCEPass.html
+  commentId: Overload:Llvm.NET.Transforms.ScalarTransforms.AddAggressiveDCEPass
+  fullName: Llvm.NET.Transforms.ScalarTransforms.AddAggressiveDCEPass
+  nameWithType: ScalarTransforms.AddAggressiveDCEPass
+- uid: Llvm.NET.Transforms.ScalarTransforms.AddAggressiveDCEPass``1(``0)
+  name: AddAggressiveDCEPass<T>(T)
+  href: api/Llvm.NET.Transforms.ScalarTransforms.AddAggressiveDCEPass.html#Llvm_NET_Transforms_ScalarTransforms_AddAggressiveDCEPass__1___0_
+  commentId: M:Llvm.NET.Transforms.ScalarTransforms.AddAggressiveDCEPass``1(``0)
+  name.vb: AddAggressiveDCEPass(Of T)(T)
+  fullName: Llvm.NET.Transforms.ScalarTransforms.AddAggressiveDCEPass<T>(T)
+  fullName.vb: Llvm.NET.Transforms.ScalarTransforms.AddAggressiveDCEPass(Of T)(T)
+  nameWithType: ScalarTransforms.AddAggressiveDCEPass<T>(T)
+  nameWithType.vb: ScalarTransforms.AddAggressiveDCEPass(Of T)(T)
+- uid: Llvm.NET.Transforms.ScalarTransforms.AddAlignmentFromAssumptionsPass*
+  name: AddAlignmentFromAssumptionsPass
+  href: api/Llvm.NET.Transforms.ScalarTransforms.AddAlignmentFromAssumptionsPass.html
+  commentId: Overload:Llvm.NET.Transforms.ScalarTransforms.AddAlignmentFromAssumptionsPass
+  fullName: Llvm.NET.Transforms.ScalarTransforms.AddAlignmentFromAssumptionsPass
+  nameWithType: ScalarTransforms.AddAlignmentFromAssumptionsPass
+- uid: Llvm.NET.Transforms.ScalarTransforms.AddAlignmentFromAssumptionsPass``1(``0)
+  name: AddAlignmentFromAssumptionsPass<T>(T)
+  href: api/Llvm.NET.Transforms.ScalarTransforms.AddAlignmentFromAssumptionsPass.html#Llvm_NET_Transforms_ScalarTransforms_AddAlignmentFromAssumptionsPass__1___0_
+  commentId: M:Llvm.NET.Transforms.ScalarTransforms.AddAlignmentFromAssumptionsPass``1(``0)
+  name.vb: AddAlignmentFromAssumptionsPass(Of T)(T)
+  fullName: Llvm.NET.Transforms.ScalarTransforms.AddAlignmentFromAssumptionsPass<T>(T)
+  fullName.vb: Llvm.NET.Transforms.ScalarTransforms.AddAlignmentFromAssumptionsPass(Of T)(T)
+  nameWithType: ScalarTransforms.AddAlignmentFromAssumptionsPass<T>(T)
+  nameWithType.vb: ScalarTransforms.AddAlignmentFromAssumptionsPass(Of T)(T)
+- uid: Llvm.NET.Transforms.ScalarTransforms.AddBasicAliasAnalysisPass*
+  name: AddBasicAliasAnalysisPass
+  href: api/Llvm.NET.Transforms.ScalarTransforms.AddBasicAliasAnalysisPass.html
+  commentId: Overload:Llvm.NET.Transforms.ScalarTransforms.AddBasicAliasAnalysisPass
+  fullName: Llvm.NET.Transforms.ScalarTransforms.AddBasicAliasAnalysisPass
+  nameWithType: ScalarTransforms.AddBasicAliasAnalysisPass
+- uid: Llvm.NET.Transforms.ScalarTransforms.AddBasicAliasAnalysisPass``1(``0)
+  name: AddBasicAliasAnalysisPass<T>(T)
+  href: api/Llvm.NET.Transforms.ScalarTransforms.AddBasicAliasAnalysisPass.html#Llvm_NET_Transforms_ScalarTransforms_AddBasicAliasAnalysisPass__1___0_
+  commentId: M:Llvm.NET.Transforms.ScalarTransforms.AddBasicAliasAnalysisPass``1(``0)
+  name.vb: AddBasicAliasAnalysisPass(Of T)(T)
+  fullName: Llvm.NET.Transforms.ScalarTransforms.AddBasicAliasAnalysisPass<T>(T)
+  fullName.vb: Llvm.NET.Transforms.ScalarTransforms.AddBasicAliasAnalysisPass(Of T)(T)
+  nameWithType: ScalarTransforms.AddBasicAliasAnalysisPass<T>(T)
+  nameWithType.vb: ScalarTransforms.AddBasicAliasAnalysisPass(Of T)(T)
+- uid: Llvm.NET.Transforms.ScalarTransforms.AddBitTrackingDCEPass*
+  name: AddBitTrackingDCEPass
+  href: api/Llvm.NET.Transforms.ScalarTransforms.AddBitTrackingDCEPass.html
+  commentId: Overload:Llvm.NET.Transforms.ScalarTransforms.AddBitTrackingDCEPass
+  fullName: Llvm.NET.Transforms.ScalarTransforms.AddBitTrackingDCEPass
+  nameWithType: ScalarTransforms.AddBitTrackingDCEPass
+- uid: Llvm.NET.Transforms.ScalarTransforms.AddBitTrackingDCEPass``1(``0)
+  name: AddBitTrackingDCEPass<T>(T)
+  href: api/Llvm.NET.Transforms.ScalarTransforms.AddBitTrackingDCEPass.html#Llvm_NET_Transforms_ScalarTransforms_AddBitTrackingDCEPass__1___0_
+  commentId: M:Llvm.NET.Transforms.ScalarTransforms.AddBitTrackingDCEPass``1(``0)
+  name.vb: AddBitTrackingDCEPass(Of T)(T)
+  fullName: Llvm.NET.Transforms.ScalarTransforms.AddBitTrackingDCEPass<T>(T)
+  fullName.vb: Llvm.NET.Transforms.ScalarTransforms.AddBitTrackingDCEPass(Of T)(T)
+  nameWithType: ScalarTransforms.AddBitTrackingDCEPass<T>(T)
+  nameWithType.vb: ScalarTransforms.AddBitTrackingDCEPass(Of T)(T)
+- uid: Llvm.NET.Transforms.ScalarTransforms.AddCFGSimplificationPass*
+  name: AddCFGSimplificationPass
+  href: api/Llvm.NET.Transforms.ScalarTransforms.AddCFGSimplificationPass.html
+  commentId: Overload:Llvm.NET.Transforms.ScalarTransforms.AddCFGSimplificationPass
+  fullName: Llvm.NET.Transforms.ScalarTransforms.AddCFGSimplificationPass
+  nameWithType: ScalarTransforms.AddCFGSimplificationPass
+- uid: Llvm.NET.Transforms.ScalarTransforms.AddCFGSimplificationPass``1(``0)
+  name: AddCFGSimplificationPass<T>(T)
+  href: api/Llvm.NET.Transforms.ScalarTransforms.AddCFGSimplificationPass.html#Llvm_NET_Transforms_ScalarTransforms_AddCFGSimplificationPass__1___0_
+  commentId: M:Llvm.NET.Transforms.ScalarTransforms.AddCFGSimplificationPass``1(``0)
+  name.vb: AddCFGSimplificationPass(Of T)(T)
+  fullName: Llvm.NET.Transforms.ScalarTransforms.AddCFGSimplificationPass<T>(T)
+  fullName.vb: Llvm.NET.Transforms.ScalarTransforms.AddCFGSimplificationPass(Of T)(T)
+  nameWithType: ScalarTransforms.AddCFGSimplificationPass<T>(T)
+  nameWithType.vb: ScalarTransforms.AddCFGSimplificationPass(Of T)(T)
+- uid: Llvm.NET.Transforms.ScalarTransforms.AddConstantPropagationPass*
+  name: AddConstantPropagationPass
+  href: api/Llvm.NET.Transforms.ScalarTransforms.AddConstantPropagationPass.html
+  commentId: Overload:Llvm.NET.Transforms.ScalarTransforms.AddConstantPropagationPass
+  fullName: Llvm.NET.Transforms.ScalarTransforms.AddConstantPropagationPass
+  nameWithType: ScalarTransforms.AddConstantPropagationPass
+- uid: Llvm.NET.Transforms.ScalarTransforms.AddConstantPropagationPass``1(``0)
+  name: AddConstantPropagationPass<T>(T)
+  href: api/Llvm.NET.Transforms.ScalarTransforms.AddConstantPropagationPass.html#Llvm_NET_Transforms_ScalarTransforms_AddConstantPropagationPass__1___0_
+  commentId: M:Llvm.NET.Transforms.ScalarTransforms.AddConstantPropagationPass``1(``0)
+  name.vb: AddConstantPropagationPass(Of T)(T)
+  fullName: Llvm.NET.Transforms.ScalarTransforms.AddConstantPropagationPass<T>(T)
+  fullName.vb: Llvm.NET.Transforms.ScalarTransforms.AddConstantPropagationPass(Of T)(T)
+  nameWithType: ScalarTransforms.AddConstantPropagationPass<T>(T)
+  nameWithType.vb: ScalarTransforms.AddConstantPropagationPass(Of T)(T)
+- uid: Llvm.NET.Transforms.ScalarTransforms.AddCorrelatedValuePropagationPass*
+  name: AddCorrelatedValuePropagationPass
+  href: api/Llvm.NET.Transforms.ScalarTransforms.AddCorrelatedValuePropagationPass.html
+  commentId: Overload:Llvm.NET.Transforms.ScalarTransforms.AddCorrelatedValuePropagationPass
+  fullName: Llvm.NET.Transforms.ScalarTransforms.AddCorrelatedValuePropagationPass
+  nameWithType: ScalarTransforms.AddCorrelatedValuePropagationPass
+- uid: Llvm.NET.Transforms.ScalarTransforms.AddCorrelatedValuePropagationPass``1(``0)
+  name: AddCorrelatedValuePropagationPass<T>(T)
+  href: api/Llvm.NET.Transforms.ScalarTransforms.AddCorrelatedValuePropagationPass.html#Llvm_NET_Transforms_ScalarTransforms_AddCorrelatedValuePropagationPass__1___0_
+  commentId: M:Llvm.NET.Transforms.ScalarTransforms.AddCorrelatedValuePropagationPass``1(``0)
+  name.vb: AddCorrelatedValuePropagationPass(Of T)(T)
+  fullName: Llvm.NET.Transforms.ScalarTransforms.AddCorrelatedValuePropagationPass<T>(T)
+  fullName.vb: Llvm.NET.Transforms.ScalarTransforms.AddCorrelatedValuePropagationPass(Of T)(T)
+  nameWithType: ScalarTransforms.AddCorrelatedValuePropagationPass<T>(T)
+  nameWithType.vb: ScalarTransforms.AddCorrelatedValuePropagationPass(Of T)(T)
+- uid: Llvm.NET.Transforms.ScalarTransforms.AddDeadStoreEliminationPass*
+  name: AddDeadStoreEliminationPass
+  href: api/Llvm.NET.Transforms.ScalarTransforms.AddDeadStoreEliminationPass.html
+  commentId: Overload:Llvm.NET.Transforms.ScalarTransforms.AddDeadStoreEliminationPass
+  fullName: Llvm.NET.Transforms.ScalarTransforms.AddDeadStoreEliminationPass
+  nameWithType: ScalarTransforms.AddDeadStoreEliminationPass
+- uid: Llvm.NET.Transforms.ScalarTransforms.AddDeadStoreEliminationPass``1(``0)
+  name: AddDeadStoreEliminationPass<T>(T)
+  href: api/Llvm.NET.Transforms.ScalarTransforms.AddDeadStoreEliminationPass.html#Llvm_NET_Transforms_ScalarTransforms_AddDeadStoreEliminationPass__1___0_
+  commentId: M:Llvm.NET.Transforms.ScalarTransforms.AddDeadStoreEliminationPass``1(``0)
+  name.vb: AddDeadStoreEliminationPass(Of T)(T)
+  fullName: Llvm.NET.Transforms.ScalarTransforms.AddDeadStoreEliminationPass<T>(T)
+  fullName.vb: Llvm.NET.Transforms.ScalarTransforms.AddDeadStoreEliminationPass(Of T)(T)
+  nameWithType: ScalarTransforms.AddDeadStoreEliminationPass<T>(T)
+  nameWithType.vb: ScalarTransforms.AddDeadStoreEliminationPass(Of T)(T)
+- uid: Llvm.NET.Transforms.ScalarTransforms.AddDemoteMemoryToRegisterPass*
+  name: AddDemoteMemoryToRegisterPass
+  href: api/Llvm.NET.Transforms.ScalarTransforms.AddDemoteMemoryToRegisterPass.html
+  commentId: Overload:Llvm.NET.Transforms.ScalarTransforms.AddDemoteMemoryToRegisterPass
+  fullName: Llvm.NET.Transforms.ScalarTransforms.AddDemoteMemoryToRegisterPass
+  nameWithType: ScalarTransforms.AddDemoteMemoryToRegisterPass
+- uid: Llvm.NET.Transforms.ScalarTransforms.AddDemoteMemoryToRegisterPass``1(``0)
+  name: AddDemoteMemoryToRegisterPass<T>(T)
+  href: api/Llvm.NET.Transforms.ScalarTransforms.AddDemoteMemoryToRegisterPass.html#Llvm_NET_Transforms_ScalarTransforms_AddDemoteMemoryToRegisterPass__1___0_
+  commentId: M:Llvm.NET.Transforms.ScalarTransforms.AddDemoteMemoryToRegisterPass``1(``0)
+  name.vb: AddDemoteMemoryToRegisterPass(Of T)(T)
+  fullName: Llvm.NET.Transforms.ScalarTransforms.AddDemoteMemoryToRegisterPass<T>(T)
+  fullName.vb: Llvm.NET.Transforms.ScalarTransforms.AddDemoteMemoryToRegisterPass(Of T)(T)
+  nameWithType: ScalarTransforms.AddDemoteMemoryToRegisterPass<T>(T)
+  nameWithType.vb: ScalarTransforms.AddDemoteMemoryToRegisterPass(Of T)(T)
+- uid: Llvm.NET.Transforms.ScalarTransforms.AddEarlyCSEMemSSAPass*
+  name: AddEarlyCSEMemSSAPass
+  href: api/Llvm.NET.Transforms.ScalarTransforms.AddEarlyCSEMemSSAPass.html
+  commentId: Overload:Llvm.NET.Transforms.ScalarTransforms.AddEarlyCSEMemSSAPass
+  fullName: Llvm.NET.Transforms.ScalarTransforms.AddEarlyCSEMemSSAPass
+  nameWithType: ScalarTransforms.AddEarlyCSEMemSSAPass
+- uid: Llvm.NET.Transforms.ScalarTransforms.AddEarlyCSEMemSSAPass``1(``0)
+  name: AddEarlyCSEMemSSAPass<T>(T)
+  href: api/Llvm.NET.Transforms.ScalarTransforms.AddEarlyCSEMemSSAPass.html#Llvm_NET_Transforms_ScalarTransforms_AddEarlyCSEMemSSAPass__1___0_
+  commentId: M:Llvm.NET.Transforms.ScalarTransforms.AddEarlyCSEMemSSAPass``1(``0)
+  name.vb: AddEarlyCSEMemSSAPass(Of T)(T)
+  fullName: Llvm.NET.Transforms.ScalarTransforms.AddEarlyCSEMemSSAPass<T>(T)
+  fullName.vb: Llvm.NET.Transforms.ScalarTransforms.AddEarlyCSEMemSSAPass(Of T)(T)
+  nameWithType: ScalarTransforms.AddEarlyCSEMemSSAPass<T>(T)
+  nameWithType.vb: ScalarTransforms.AddEarlyCSEMemSSAPass(Of T)(T)
+- uid: Llvm.NET.Transforms.ScalarTransforms.AddEarlyCSEPass*
+  name: AddEarlyCSEPass
+  href: api/Llvm.NET.Transforms.ScalarTransforms.AddEarlyCSEPass.html
+  commentId: Overload:Llvm.NET.Transforms.ScalarTransforms.AddEarlyCSEPass
+  fullName: Llvm.NET.Transforms.ScalarTransforms.AddEarlyCSEPass
+  nameWithType: ScalarTransforms.AddEarlyCSEPass
+- uid: Llvm.NET.Transforms.ScalarTransforms.AddEarlyCSEPass``1(``0)
+  name: AddEarlyCSEPass<T>(T)
+  href: api/Llvm.NET.Transforms.ScalarTransforms.AddEarlyCSEPass.html#Llvm_NET_Transforms_ScalarTransforms_AddEarlyCSEPass__1___0_
+  commentId: M:Llvm.NET.Transforms.ScalarTransforms.AddEarlyCSEPass``1(``0)
+  name.vb: AddEarlyCSEPass(Of T)(T)
+  fullName: Llvm.NET.Transforms.ScalarTransforms.AddEarlyCSEPass<T>(T)
+  fullName.vb: Llvm.NET.Transforms.ScalarTransforms.AddEarlyCSEPass(Of T)(T)
+  nameWithType: ScalarTransforms.AddEarlyCSEPass<T>(T)
+  nameWithType.vb: ScalarTransforms.AddEarlyCSEPass(Of T)(T)
+- uid: Llvm.NET.Transforms.ScalarTransforms.AddGVNPass*
+  name: AddGVNPass
+  href: api/Llvm.NET.Transforms.ScalarTransforms.AddGVNPass.html
+  commentId: Overload:Llvm.NET.Transforms.ScalarTransforms.AddGVNPass
+  fullName: Llvm.NET.Transforms.ScalarTransforms.AddGVNPass
+  nameWithType: ScalarTransforms.AddGVNPass
+- uid: Llvm.NET.Transforms.ScalarTransforms.AddGVNPass``1(``0)
+  name: AddGVNPass<T>(T)
+  href: api/Llvm.NET.Transforms.ScalarTransforms.AddGVNPass.html#Llvm_NET_Transforms_ScalarTransforms_AddGVNPass__1___0_
+  commentId: M:Llvm.NET.Transforms.ScalarTransforms.AddGVNPass``1(``0)
+  name.vb: AddGVNPass(Of T)(T)
+  fullName: Llvm.NET.Transforms.ScalarTransforms.AddGVNPass<T>(T)
+  fullName.vb: Llvm.NET.Transforms.ScalarTransforms.AddGVNPass(Of T)(T)
+  nameWithType: ScalarTransforms.AddGVNPass<T>(T)
+  nameWithType.vb: ScalarTransforms.AddGVNPass(Of T)(T)
+- uid: Llvm.NET.Transforms.ScalarTransforms.AddIndVarSimplifyPass*
+  name: AddIndVarSimplifyPass
+  href: api/Llvm.NET.Transforms.ScalarTransforms.AddIndVarSimplifyPass.html
+  commentId: Overload:Llvm.NET.Transforms.ScalarTransforms.AddIndVarSimplifyPass
+  fullName: Llvm.NET.Transforms.ScalarTransforms.AddIndVarSimplifyPass
+  nameWithType: ScalarTransforms.AddIndVarSimplifyPass
+- uid: Llvm.NET.Transforms.ScalarTransforms.AddIndVarSimplifyPass``1(``0)
+  name: AddIndVarSimplifyPass<T>(T)
+  href: api/Llvm.NET.Transforms.ScalarTransforms.AddIndVarSimplifyPass.html#Llvm_NET_Transforms_ScalarTransforms_AddIndVarSimplifyPass__1___0_
+  commentId: M:Llvm.NET.Transforms.ScalarTransforms.AddIndVarSimplifyPass``1(``0)
+  name.vb: AddIndVarSimplifyPass(Of T)(T)
+  fullName: Llvm.NET.Transforms.ScalarTransforms.AddIndVarSimplifyPass<T>(T)
+  fullName.vb: Llvm.NET.Transforms.ScalarTransforms.AddIndVarSimplifyPass(Of T)(T)
+  nameWithType: ScalarTransforms.AddIndVarSimplifyPass<T>(T)
+  nameWithType.vb: ScalarTransforms.AddIndVarSimplifyPass(Of T)(T)
+- uid: Llvm.NET.Transforms.ScalarTransforms.AddInstructionCombiningPass*
+  name: AddInstructionCombiningPass
+  href: api/Llvm.NET.Transforms.ScalarTransforms.AddInstructionCombiningPass.html
+  commentId: Overload:Llvm.NET.Transforms.ScalarTransforms.AddInstructionCombiningPass
+  fullName: Llvm.NET.Transforms.ScalarTransforms.AddInstructionCombiningPass
+  nameWithType: ScalarTransforms.AddInstructionCombiningPass
+- uid: Llvm.NET.Transforms.ScalarTransforms.AddInstructionCombiningPass``1(``0)
+  name: AddInstructionCombiningPass<T>(T)
+  href: api/Llvm.NET.Transforms.ScalarTransforms.AddInstructionCombiningPass.html#Llvm_NET_Transforms_ScalarTransforms_AddInstructionCombiningPass__1___0_
+  commentId: M:Llvm.NET.Transforms.ScalarTransforms.AddInstructionCombiningPass``1(``0)
+  name.vb: AddInstructionCombiningPass(Of T)(T)
+  fullName: Llvm.NET.Transforms.ScalarTransforms.AddInstructionCombiningPass<T>(T)
+  fullName.vb: Llvm.NET.Transforms.ScalarTransforms.AddInstructionCombiningPass(Of T)(T)
+  nameWithType: ScalarTransforms.AddInstructionCombiningPass<T>(T)
+  nameWithType.vb: ScalarTransforms.AddInstructionCombiningPass(Of T)(T)
+- uid: Llvm.NET.Transforms.ScalarTransforms.AddJumpThreadingPass*
+  name: AddJumpThreadingPass
+  href: api/Llvm.NET.Transforms.ScalarTransforms.AddJumpThreadingPass.html
+  commentId: Overload:Llvm.NET.Transforms.ScalarTransforms.AddJumpThreadingPass
+  fullName: Llvm.NET.Transforms.ScalarTransforms.AddJumpThreadingPass
+  nameWithType: ScalarTransforms.AddJumpThreadingPass
+- uid: Llvm.NET.Transforms.ScalarTransforms.AddJumpThreadingPass``1(``0)
+  name: AddJumpThreadingPass<T>(T)
+  href: api/Llvm.NET.Transforms.ScalarTransforms.AddJumpThreadingPass.html#Llvm_NET_Transforms_ScalarTransforms_AddJumpThreadingPass__1___0_
+  commentId: M:Llvm.NET.Transforms.ScalarTransforms.AddJumpThreadingPass``1(``0)
+  name.vb: AddJumpThreadingPass(Of T)(T)
+  fullName: Llvm.NET.Transforms.ScalarTransforms.AddJumpThreadingPass<T>(T)
+  fullName.vb: Llvm.NET.Transforms.ScalarTransforms.AddJumpThreadingPass(Of T)(T)
+  nameWithType: ScalarTransforms.AddJumpThreadingPass<T>(T)
+  nameWithType.vb: ScalarTransforms.AddJumpThreadingPass(Of T)(T)
+- uid: Llvm.NET.Transforms.ScalarTransforms.AddLateCFGSimplificationPass*
+  name: AddLateCFGSimplificationPass
+  href: api/Llvm.NET.Transforms.ScalarTransforms.AddLateCFGSimplificationPass.html
+  commentId: Overload:Llvm.NET.Transforms.ScalarTransforms.AddLateCFGSimplificationPass
+  fullName: Llvm.NET.Transforms.ScalarTransforms.AddLateCFGSimplificationPass
+  nameWithType: ScalarTransforms.AddLateCFGSimplificationPass
+- uid: Llvm.NET.Transforms.ScalarTransforms.AddLateCFGSimplificationPass``1(``0)
+  name: AddLateCFGSimplificationPass<T>(T)
+  href: api/Llvm.NET.Transforms.ScalarTransforms.AddLateCFGSimplificationPass.html#Llvm_NET_Transforms_ScalarTransforms_AddLateCFGSimplificationPass__1___0_
+  commentId: M:Llvm.NET.Transforms.ScalarTransforms.AddLateCFGSimplificationPass``1(``0)
+  name.vb: AddLateCFGSimplificationPass(Of T)(T)
+  fullName: Llvm.NET.Transforms.ScalarTransforms.AddLateCFGSimplificationPass<T>(T)
+  fullName.vb: Llvm.NET.Transforms.ScalarTransforms.AddLateCFGSimplificationPass(Of T)(T)
+  nameWithType: ScalarTransforms.AddLateCFGSimplificationPass<T>(T)
+  nameWithType.vb: ScalarTransforms.AddLateCFGSimplificationPass(Of T)(T)
+- uid: Llvm.NET.Transforms.ScalarTransforms.AddLICMPass*
+  name: AddLICMPass
+  href: api/Llvm.NET.Transforms.ScalarTransforms.AddLICMPass.html
+  commentId: Overload:Llvm.NET.Transforms.ScalarTransforms.AddLICMPass
+  fullName: Llvm.NET.Transforms.ScalarTransforms.AddLICMPass
+  nameWithType: ScalarTransforms.AddLICMPass
+- uid: Llvm.NET.Transforms.ScalarTransforms.AddLICMPass``1(``0)
+  name: AddLICMPass<T>(T)
+  href: api/Llvm.NET.Transforms.ScalarTransforms.AddLICMPass.html#Llvm_NET_Transforms_ScalarTransforms_AddLICMPass__1___0_
+  commentId: M:Llvm.NET.Transforms.ScalarTransforms.AddLICMPass``1(``0)
+  name.vb: AddLICMPass(Of T)(T)
+  fullName: Llvm.NET.Transforms.ScalarTransforms.AddLICMPass<T>(T)
+  fullName.vb: Llvm.NET.Transforms.ScalarTransforms.AddLICMPass(Of T)(T)
+  nameWithType: ScalarTransforms.AddLICMPass<T>(T)
+  nameWithType.vb: ScalarTransforms.AddLICMPass(Of T)(T)
+- uid: Llvm.NET.Transforms.ScalarTransforms.AddLoopDeletionPass*
+  name: AddLoopDeletionPass
+  href: api/Llvm.NET.Transforms.ScalarTransforms.AddLoopDeletionPass.html
+  commentId: Overload:Llvm.NET.Transforms.ScalarTransforms.AddLoopDeletionPass
+  fullName: Llvm.NET.Transforms.ScalarTransforms.AddLoopDeletionPass
+  nameWithType: ScalarTransforms.AddLoopDeletionPass
+- uid: Llvm.NET.Transforms.ScalarTransforms.AddLoopDeletionPass``1(``0)
+  name: AddLoopDeletionPass<T>(T)
+  href: api/Llvm.NET.Transforms.ScalarTransforms.AddLoopDeletionPass.html#Llvm_NET_Transforms_ScalarTransforms_AddLoopDeletionPass__1___0_
+  commentId: M:Llvm.NET.Transforms.ScalarTransforms.AddLoopDeletionPass``1(``0)
+  name.vb: AddLoopDeletionPass(Of T)(T)
+  fullName: Llvm.NET.Transforms.ScalarTransforms.AddLoopDeletionPass<T>(T)
+  fullName.vb: Llvm.NET.Transforms.ScalarTransforms.AddLoopDeletionPass(Of T)(T)
+  nameWithType: ScalarTransforms.AddLoopDeletionPass<T>(T)
+  nameWithType.vb: ScalarTransforms.AddLoopDeletionPass(Of T)(T)
+- uid: Llvm.NET.Transforms.ScalarTransforms.AddLoopIdiomPass*
+  name: AddLoopIdiomPass
+  href: api/Llvm.NET.Transforms.ScalarTransforms.AddLoopIdiomPass.html
+  commentId: Overload:Llvm.NET.Transforms.ScalarTransforms.AddLoopIdiomPass
+  fullName: Llvm.NET.Transforms.ScalarTransforms.AddLoopIdiomPass
+  nameWithType: ScalarTransforms.AddLoopIdiomPass
+- uid: Llvm.NET.Transforms.ScalarTransforms.AddLoopIdiomPass``1(``0)
+  name: AddLoopIdiomPass<T>(T)
+  href: api/Llvm.NET.Transforms.ScalarTransforms.AddLoopIdiomPass.html#Llvm_NET_Transforms_ScalarTransforms_AddLoopIdiomPass__1___0_
+  commentId: M:Llvm.NET.Transforms.ScalarTransforms.AddLoopIdiomPass``1(``0)
+  name.vb: AddLoopIdiomPass(Of T)(T)
+  fullName: Llvm.NET.Transforms.ScalarTransforms.AddLoopIdiomPass<T>(T)
+  fullName.vb: Llvm.NET.Transforms.ScalarTransforms.AddLoopIdiomPass(Of T)(T)
+  nameWithType: ScalarTransforms.AddLoopIdiomPass<T>(T)
+  nameWithType.vb: ScalarTransforms.AddLoopIdiomPass(Of T)(T)
+- uid: Llvm.NET.Transforms.ScalarTransforms.AddLoopRerollPass*
+  name: AddLoopRerollPass
+  href: api/Llvm.NET.Transforms.ScalarTransforms.AddLoopRerollPass.html
+  commentId: Overload:Llvm.NET.Transforms.ScalarTransforms.AddLoopRerollPass
+  fullName: Llvm.NET.Transforms.ScalarTransforms.AddLoopRerollPass
+  nameWithType: ScalarTransforms.AddLoopRerollPass
+- uid: Llvm.NET.Transforms.ScalarTransforms.AddLoopRerollPass``1(``0)
+  name: AddLoopRerollPass<T>(T)
+  href: api/Llvm.NET.Transforms.ScalarTransforms.AddLoopRerollPass.html#Llvm_NET_Transforms_ScalarTransforms_AddLoopRerollPass__1___0_
+  commentId: M:Llvm.NET.Transforms.ScalarTransforms.AddLoopRerollPass``1(``0)
+  name.vb: AddLoopRerollPass(Of T)(T)
+  fullName: Llvm.NET.Transforms.ScalarTransforms.AddLoopRerollPass<T>(T)
+  fullName.vb: Llvm.NET.Transforms.ScalarTransforms.AddLoopRerollPass(Of T)(T)
+  nameWithType: ScalarTransforms.AddLoopRerollPass<T>(T)
+  nameWithType.vb: ScalarTransforms.AddLoopRerollPass(Of T)(T)
+- uid: Llvm.NET.Transforms.ScalarTransforms.AddLoopRotatePass*
+  name: AddLoopRotatePass
+  href: api/Llvm.NET.Transforms.ScalarTransforms.AddLoopRotatePass.html
+  commentId: Overload:Llvm.NET.Transforms.ScalarTransforms.AddLoopRotatePass
+  fullName: Llvm.NET.Transforms.ScalarTransforms.AddLoopRotatePass
+  nameWithType: ScalarTransforms.AddLoopRotatePass
+- uid: Llvm.NET.Transforms.ScalarTransforms.AddLoopRotatePass``1(``0)
+  name: AddLoopRotatePass<T>(T)
+  href: api/Llvm.NET.Transforms.ScalarTransforms.AddLoopRotatePass.html#Llvm_NET_Transforms_ScalarTransforms_AddLoopRotatePass__1___0_
+  commentId: M:Llvm.NET.Transforms.ScalarTransforms.AddLoopRotatePass``1(``0)
+  name.vb: AddLoopRotatePass(Of T)(T)
+  fullName: Llvm.NET.Transforms.ScalarTransforms.AddLoopRotatePass<T>(T)
+  fullName.vb: Llvm.NET.Transforms.ScalarTransforms.AddLoopRotatePass(Of T)(T)
+  nameWithType: ScalarTransforms.AddLoopRotatePass<T>(T)
+  nameWithType.vb: ScalarTransforms.AddLoopRotatePass(Of T)(T)
+- uid: Llvm.NET.Transforms.ScalarTransforms.AddLoopUnrollPass*
+  name: AddLoopUnrollPass
+  href: api/Llvm.NET.Transforms.ScalarTransforms.AddLoopUnrollPass.html
+  commentId: Overload:Llvm.NET.Transforms.ScalarTransforms.AddLoopUnrollPass
+  fullName: Llvm.NET.Transforms.ScalarTransforms.AddLoopUnrollPass
+  nameWithType: ScalarTransforms.AddLoopUnrollPass
+- uid: Llvm.NET.Transforms.ScalarTransforms.AddLoopUnrollPass``1(``0)
+  name: AddLoopUnrollPass<T>(T)
+  href: api/Llvm.NET.Transforms.ScalarTransforms.AddLoopUnrollPass.html#Llvm_NET_Transforms_ScalarTransforms_AddLoopUnrollPass__1___0_
+  commentId: M:Llvm.NET.Transforms.ScalarTransforms.AddLoopUnrollPass``1(``0)
+  name.vb: AddLoopUnrollPass(Of T)(T)
+  fullName: Llvm.NET.Transforms.ScalarTransforms.AddLoopUnrollPass<T>(T)
+  fullName.vb: Llvm.NET.Transforms.ScalarTransforms.AddLoopUnrollPass(Of T)(T)
+  nameWithType: ScalarTransforms.AddLoopUnrollPass<T>(T)
+  nameWithType.vb: ScalarTransforms.AddLoopUnrollPass(Of T)(T)
+- uid: Llvm.NET.Transforms.ScalarTransforms.AddLoopUnswitchPass*
+  name: AddLoopUnswitchPass
+  href: api/Llvm.NET.Transforms.ScalarTransforms.AddLoopUnswitchPass.html
+  commentId: Overload:Llvm.NET.Transforms.ScalarTransforms.AddLoopUnswitchPass
+  fullName: Llvm.NET.Transforms.ScalarTransforms.AddLoopUnswitchPass
+  nameWithType: ScalarTransforms.AddLoopUnswitchPass
+- uid: Llvm.NET.Transforms.ScalarTransforms.AddLoopUnswitchPass``1(``0)
+  name: AddLoopUnswitchPass<T>(T)
+  href: api/Llvm.NET.Transforms.ScalarTransforms.AddLoopUnswitchPass.html#Llvm_NET_Transforms_ScalarTransforms_AddLoopUnswitchPass__1___0_
+  commentId: M:Llvm.NET.Transforms.ScalarTransforms.AddLoopUnswitchPass``1(``0)
+  name.vb: AddLoopUnswitchPass(Of T)(T)
+  fullName: Llvm.NET.Transforms.ScalarTransforms.AddLoopUnswitchPass<T>(T)
+  fullName.vb: Llvm.NET.Transforms.ScalarTransforms.AddLoopUnswitchPass(Of T)(T)
+  nameWithType: ScalarTransforms.AddLoopUnswitchPass<T>(T)
+  nameWithType.vb: ScalarTransforms.AddLoopUnswitchPass(Of T)(T)
+- uid: Llvm.NET.Transforms.ScalarTransforms.AddLowerExpectIntrinsicPass*
+  name: AddLowerExpectIntrinsicPass
+  href: api/Llvm.NET.Transforms.ScalarTransforms.AddLowerExpectIntrinsicPass.html
+  commentId: Overload:Llvm.NET.Transforms.ScalarTransforms.AddLowerExpectIntrinsicPass
+  fullName: Llvm.NET.Transforms.ScalarTransforms.AddLowerExpectIntrinsicPass
+  nameWithType: ScalarTransforms.AddLowerExpectIntrinsicPass
+- uid: Llvm.NET.Transforms.ScalarTransforms.AddLowerExpectIntrinsicPass``1(``0)
+  name: AddLowerExpectIntrinsicPass<T>(T)
+  href: api/Llvm.NET.Transforms.ScalarTransforms.AddLowerExpectIntrinsicPass.html#Llvm_NET_Transforms_ScalarTransforms_AddLowerExpectIntrinsicPass__1___0_
+  commentId: M:Llvm.NET.Transforms.ScalarTransforms.AddLowerExpectIntrinsicPass``1(``0)
+  name.vb: AddLowerExpectIntrinsicPass(Of T)(T)
+  fullName: Llvm.NET.Transforms.ScalarTransforms.AddLowerExpectIntrinsicPass<T>(T)
+  fullName.vb: Llvm.NET.Transforms.ScalarTransforms.AddLowerExpectIntrinsicPass(Of T)(T)
+  nameWithType: ScalarTransforms.AddLowerExpectIntrinsicPass<T>(T)
+  nameWithType.vb: ScalarTransforms.AddLowerExpectIntrinsicPass(Of T)(T)
+- uid: Llvm.NET.Transforms.ScalarTransforms.AddLowerSwitchPass*
+  name: AddLowerSwitchPass
+  href: api/Llvm.NET.Transforms.ScalarTransforms.AddLowerSwitchPass.html
+  commentId: Overload:Llvm.NET.Transforms.ScalarTransforms.AddLowerSwitchPass
+  fullName: Llvm.NET.Transforms.ScalarTransforms.AddLowerSwitchPass
+  nameWithType: ScalarTransforms.AddLowerSwitchPass
+- uid: Llvm.NET.Transforms.ScalarTransforms.AddLowerSwitchPass``1(``0)
+  name: AddLowerSwitchPass<T>(T)
+  href: api/Llvm.NET.Transforms.ScalarTransforms.AddLowerSwitchPass.html#Llvm_NET_Transforms_ScalarTransforms_AddLowerSwitchPass__1___0_
+  commentId: M:Llvm.NET.Transforms.ScalarTransforms.AddLowerSwitchPass``1(``0)
+  name.vb: AddLowerSwitchPass(Of T)(T)
+  fullName: Llvm.NET.Transforms.ScalarTransforms.AddLowerSwitchPass<T>(T)
+  fullName.vb: Llvm.NET.Transforms.ScalarTransforms.AddLowerSwitchPass(Of T)(T)
+  nameWithType: ScalarTransforms.AddLowerSwitchPass<T>(T)
+  nameWithType.vb: ScalarTransforms.AddLowerSwitchPass(Of T)(T)
+- uid: Llvm.NET.Transforms.ScalarTransforms.AddMemCpyOptPass*
+  name: AddMemCpyOptPass
+  href: api/Llvm.NET.Transforms.ScalarTransforms.AddMemCpyOptPass.html
+  commentId: Overload:Llvm.NET.Transforms.ScalarTransforms.AddMemCpyOptPass
+  fullName: Llvm.NET.Transforms.ScalarTransforms.AddMemCpyOptPass
+  nameWithType: ScalarTransforms.AddMemCpyOptPass
+- uid: Llvm.NET.Transforms.ScalarTransforms.AddMemCpyOptPass``1(``0)
+  name: AddMemCpyOptPass<T>(T)
+  href: api/Llvm.NET.Transforms.ScalarTransforms.AddMemCpyOptPass.html#Llvm_NET_Transforms_ScalarTransforms_AddMemCpyOptPass__1___0_
+  commentId: M:Llvm.NET.Transforms.ScalarTransforms.AddMemCpyOptPass``1(``0)
+  name.vb: AddMemCpyOptPass(Of T)(T)
+  fullName: Llvm.NET.Transforms.ScalarTransforms.AddMemCpyOptPass<T>(T)
+  fullName.vb: Llvm.NET.Transforms.ScalarTransforms.AddMemCpyOptPass(Of T)(T)
+  nameWithType: ScalarTransforms.AddMemCpyOptPass<T>(T)
+  nameWithType.vb: ScalarTransforms.AddMemCpyOptPass(Of T)(T)
+- uid: Llvm.NET.Transforms.ScalarTransforms.AddMergedLoadStoreMotionPass*
+  name: AddMergedLoadStoreMotionPass
+  href: api/Llvm.NET.Transforms.ScalarTransforms.AddMergedLoadStoreMotionPass.html
+  commentId: Overload:Llvm.NET.Transforms.ScalarTransforms.AddMergedLoadStoreMotionPass
+  fullName: Llvm.NET.Transforms.ScalarTransforms.AddMergedLoadStoreMotionPass
+  nameWithType: ScalarTransforms.AddMergedLoadStoreMotionPass
+- uid: Llvm.NET.Transforms.ScalarTransforms.AddMergedLoadStoreMotionPass``1(``0)
+  name: AddMergedLoadStoreMotionPass<T>(T)
+  href: api/Llvm.NET.Transforms.ScalarTransforms.AddMergedLoadStoreMotionPass.html#Llvm_NET_Transforms_ScalarTransforms_AddMergedLoadStoreMotionPass__1___0_
+  commentId: M:Llvm.NET.Transforms.ScalarTransforms.AddMergedLoadStoreMotionPass``1(``0)
+  name.vb: AddMergedLoadStoreMotionPass(Of T)(T)
+  fullName: Llvm.NET.Transforms.ScalarTransforms.AddMergedLoadStoreMotionPass<T>(T)
+  fullName.vb: Llvm.NET.Transforms.ScalarTransforms.AddMergedLoadStoreMotionPass(Of T)(T)
+  nameWithType: ScalarTransforms.AddMergedLoadStoreMotionPass<T>(T)
+  nameWithType.vb: ScalarTransforms.AddMergedLoadStoreMotionPass(Of T)(T)
+- uid: Llvm.NET.Transforms.ScalarTransforms.AddNewGVNPass*
+  name: AddNewGVNPass
+  href: api/Llvm.NET.Transforms.ScalarTransforms.AddNewGVNPass.html
+  commentId: Overload:Llvm.NET.Transforms.ScalarTransforms.AddNewGVNPass
+  fullName: Llvm.NET.Transforms.ScalarTransforms.AddNewGVNPass
+  nameWithType: ScalarTransforms.AddNewGVNPass
+- uid: Llvm.NET.Transforms.ScalarTransforms.AddNewGVNPass``1(``0)
+  name: AddNewGVNPass<T>(T)
+  href: api/Llvm.NET.Transforms.ScalarTransforms.AddNewGVNPass.html#Llvm_NET_Transforms_ScalarTransforms_AddNewGVNPass__1___0_
+  commentId: M:Llvm.NET.Transforms.ScalarTransforms.AddNewGVNPass``1(``0)
+  name.vb: AddNewGVNPass(Of T)(T)
+  fullName: Llvm.NET.Transforms.ScalarTransforms.AddNewGVNPass<T>(T)
+  fullName.vb: Llvm.NET.Transforms.ScalarTransforms.AddNewGVNPass(Of T)(T)
+  nameWithType: ScalarTransforms.AddNewGVNPass<T>(T)
+  nameWithType.vb: ScalarTransforms.AddNewGVNPass(Of T)(T)
+- uid: Llvm.NET.Transforms.ScalarTransforms.AddPartiallyInlineLibCallsPass*
+  name: AddPartiallyInlineLibCallsPass
+  href: api/Llvm.NET.Transforms.ScalarTransforms.AddPartiallyInlineLibCallsPass.html
+  commentId: Overload:Llvm.NET.Transforms.ScalarTransforms.AddPartiallyInlineLibCallsPass
+  fullName: Llvm.NET.Transforms.ScalarTransforms.AddPartiallyInlineLibCallsPass
+  nameWithType: ScalarTransforms.AddPartiallyInlineLibCallsPass
+- uid: Llvm.NET.Transforms.ScalarTransforms.AddPartiallyInlineLibCallsPass``1(``0)
+  name: AddPartiallyInlineLibCallsPass<T>(T)
+  href: api/Llvm.NET.Transforms.ScalarTransforms.AddPartiallyInlineLibCallsPass.html#Llvm_NET_Transforms_ScalarTransforms_AddPartiallyInlineLibCallsPass__1___0_
+  commentId: M:Llvm.NET.Transforms.ScalarTransforms.AddPartiallyInlineLibCallsPass``1(``0)
+  name.vb: AddPartiallyInlineLibCallsPass(Of T)(T)
+  fullName: Llvm.NET.Transforms.ScalarTransforms.AddPartiallyInlineLibCallsPass<T>(T)
+  fullName.vb: Llvm.NET.Transforms.ScalarTransforms.AddPartiallyInlineLibCallsPass(Of T)(T)
+  nameWithType: ScalarTransforms.AddPartiallyInlineLibCallsPass<T>(T)
+  nameWithType.vb: ScalarTransforms.AddPartiallyInlineLibCallsPass(Of T)(T)
+- uid: Llvm.NET.Transforms.ScalarTransforms.AddPromoteMemoryToRegisterPass*
+  name: AddPromoteMemoryToRegisterPass
+  href: api/Llvm.NET.Transforms.ScalarTransforms.AddPromoteMemoryToRegisterPass.html
+  commentId: Overload:Llvm.NET.Transforms.ScalarTransforms.AddPromoteMemoryToRegisterPass
+  fullName: Llvm.NET.Transforms.ScalarTransforms.AddPromoteMemoryToRegisterPass
+  nameWithType: ScalarTransforms.AddPromoteMemoryToRegisterPass
+- uid: Llvm.NET.Transforms.ScalarTransforms.AddPromoteMemoryToRegisterPass``1(``0)
+  name: AddPromoteMemoryToRegisterPass<T>(T)
+  href: api/Llvm.NET.Transforms.ScalarTransforms.AddPromoteMemoryToRegisterPass.html#Llvm_NET_Transforms_ScalarTransforms_AddPromoteMemoryToRegisterPass__1___0_
+  commentId: M:Llvm.NET.Transforms.ScalarTransforms.AddPromoteMemoryToRegisterPass``1(``0)
+  name.vb: AddPromoteMemoryToRegisterPass(Of T)(T)
+  fullName: Llvm.NET.Transforms.ScalarTransforms.AddPromoteMemoryToRegisterPass<T>(T)
+  fullName.vb: Llvm.NET.Transforms.ScalarTransforms.AddPromoteMemoryToRegisterPass(Of T)(T)
+  nameWithType: ScalarTransforms.AddPromoteMemoryToRegisterPass<T>(T)
+  nameWithType.vb: ScalarTransforms.AddPromoteMemoryToRegisterPass(Of T)(T)
+- uid: Llvm.NET.Transforms.ScalarTransforms.AddReassociatePass*
+  name: AddReassociatePass
+  href: api/Llvm.NET.Transforms.ScalarTransforms.AddReassociatePass.html
+  commentId: Overload:Llvm.NET.Transforms.ScalarTransforms.AddReassociatePass
+  fullName: Llvm.NET.Transforms.ScalarTransforms.AddReassociatePass
+  nameWithType: ScalarTransforms.AddReassociatePass
+- uid: Llvm.NET.Transforms.ScalarTransforms.AddReassociatePass``1(``0)
+  name: AddReassociatePass<T>(T)
+  href: api/Llvm.NET.Transforms.ScalarTransforms.AddReassociatePass.html#Llvm_NET_Transforms_ScalarTransforms_AddReassociatePass__1___0_
+  commentId: M:Llvm.NET.Transforms.ScalarTransforms.AddReassociatePass``1(``0)
+  name.vb: AddReassociatePass(Of T)(T)
+  fullName: Llvm.NET.Transforms.ScalarTransforms.AddReassociatePass<T>(T)
+  fullName.vb: Llvm.NET.Transforms.ScalarTransforms.AddReassociatePass(Of T)(T)
+  nameWithType: ScalarTransforms.AddReassociatePass<T>(T)
+  nameWithType.vb: ScalarTransforms.AddReassociatePass(Of T)(T)
+- uid: Llvm.NET.Transforms.ScalarTransforms.AddScalarizerPass*
+  name: AddScalarizerPass
+  href: api/Llvm.NET.Transforms.ScalarTransforms.AddScalarizerPass.html
+  commentId: Overload:Llvm.NET.Transforms.ScalarTransforms.AddScalarizerPass
+  fullName: Llvm.NET.Transforms.ScalarTransforms.AddScalarizerPass
+  nameWithType: ScalarTransforms.AddScalarizerPass
+- uid: Llvm.NET.Transforms.ScalarTransforms.AddScalarizerPass``1(``0)
+  name: AddScalarizerPass<T>(T)
+  href: api/Llvm.NET.Transforms.ScalarTransforms.AddScalarizerPass.html#Llvm_NET_Transforms_ScalarTransforms_AddScalarizerPass__1___0_
+  commentId: M:Llvm.NET.Transforms.ScalarTransforms.AddScalarizerPass``1(``0)
+  name.vb: AddScalarizerPass(Of T)(T)
+  fullName: Llvm.NET.Transforms.ScalarTransforms.AddScalarizerPass<T>(T)
+  fullName.vb: Llvm.NET.Transforms.ScalarTransforms.AddScalarizerPass(Of T)(T)
+  nameWithType: ScalarTransforms.AddScalarizerPass<T>(T)
+  nameWithType.vb: ScalarTransforms.AddScalarizerPass(Of T)(T)
+- uid: Llvm.NET.Transforms.ScalarTransforms.AddScalarReplAggregatesPass*
+  name: AddScalarReplAggregatesPass
+  href: api/Llvm.NET.Transforms.ScalarTransforms.AddScalarReplAggregatesPass.html
+  commentId: Overload:Llvm.NET.Transforms.ScalarTransforms.AddScalarReplAggregatesPass
+  fullName: Llvm.NET.Transforms.ScalarTransforms.AddScalarReplAggregatesPass
+  nameWithType: ScalarTransforms.AddScalarReplAggregatesPass
+- uid: Llvm.NET.Transforms.ScalarTransforms.AddScalarReplAggregatesPass``1(``0)
+  name: AddScalarReplAggregatesPass<T>(T)
+  href: api/Llvm.NET.Transforms.ScalarTransforms.AddScalarReplAggregatesPass.html#Llvm_NET_Transforms_ScalarTransforms_AddScalarReplAggregatesPass__1___0_
+  commentId: M:Llvm.NET.Transforms.ScalarTransforms.AddScalarReplAggregatesPass``1(``0)
+  name.vb: AddScalarReplAggregatesPass(Of T)(T)
+  fullName: Llvm.NET.Transforms.ScalarTransforms.AddScalarReplAggregatesPass<T>(T)
+  fullName.vb: Llvm.NET.Transforms.ScalarTransforms.AddScalarReplAggregatesPass(Of T)(T)
+  nameWithType: ScalarTransforms.AddScalarReplAggregatesPass<T>(T)
+  nameWithType.vb: ScalarTransforms.AddScalarReplAggregatesPass(Of T)(T)
+- uid: Llvm.NET.Transforms.ScalarTransforms.AddScalarReplAggregatesPassSSA*
+  name: AddScalarReplAggregatesPassSSA
+  href: api/Llvm.NET.Transforms.ScalarTransforms.AddScalarReplAggregatesPassSSA.html
+  commentId: Overload:Llvm.NET.Transforms.ScalarTransforms.AddScalarReplAggregatesPassSSA
+  fullName: Llvm.NET.Transforms.ScalarTransforms.AddScalarReplAggregatesPassSSA
+  nameWithType: ScalarTransforms.AddScalarReplAggregatesPassSSA
+- uid: Llvm.NET.Transforms.ScalarTransforms.AddScalarReplAggregatesPassSSA``1(``0)
+  name: AddScalarReplAggregatesPassSSA<T>(T)
+  href: api/Llvm.NET.Transforms.ScalarTransforms.AddScalarReplAggregatesPassSSA.html#Llvm_NET_Transforms_ScalarTransforms_AddScalarReplAggregatesPassSSA__1___0_
+  commentId: M:Llvm.NET.Transforms.ScalarTransforms.AddScalarReplAggregatesPassSSA``1(``0)
+  name.vb: AddScalarReplAggregatesPassSSA(Of T)(T)
+  fullName: Llvm.NET.Transforms.ScalarTransforms.AddScalarReplAggregatesPassSSA<T>(T)
+  fullName.vb: Llvm.NET.Transforms.ScalarTransforms.AddScalarReplAggregatesPassSSA(Of T)(T)
+  nameWithType: ScalarTransforms.AddScalarReplAggregatesPassSSA<T>(T)
+  nameWithType.vb: ScalarTransforms.AddScalarReplAggregatesPassSSA(Of T)(T)
+- uid: Llvm.NET.Transforms.ScalarTransforms.AddScalarReplAggregatesPassWithThreshold*
+  name: AddScalarReplAggregatesPassWithThreshold
+  href: api/Llvm.NET.Transforms.ScalarTransforms.AddScalarReplAggregatesPassWithThreshold.html
+  commentId: Overload:Llvm.NET.Transforms.ScalarTransforms.AddScalarReplAggregatesPassWithThreshold
+  fullName: Llvm.NET.Transforms.ScalarTransforms.AddScalarReplAggregatesPassWithThreshold
+  nameWithType: ScalarTransforms.AddScalarReplAggregatesPassWithThreshold
+- uid: Llvm.NET.Transforms.ScalarTransforms.AddScalarReplAggregatesPassWithThreshold``1(``0,System.Int32)
+  name: AddScalarReplAggregatesPassWithThreshold<T>(T, Int32)
+  href: api/Llvm.NET.Transforms.ScalarTransforms.AddScalarReplAggregatesPassWithThreshold.html#Llvm_NET_Transforms_ScalarTransforms_AddScalarReplAggregatesPassWithThreshold__1___0_System_Int32_
+  commentId: M:Llvm.NET.Transforms.ScalarTransforms.AddScalarReplAggregatesPassWithThreshold``1(``0,System.Int32)
+  name.vb: AddScalarReplAggregatesPassWithThreshold(Of T)(T, Int32)
+  fullName: Llvm.NET.Transforms.ScalarTransforms.AddScalarReplAggregatesPassWithThreshold<T>(T, System.Int32)
+  fullName.vb: Llvm.NET.Transforms.ScalarTransforms.AddScalarReplAggregatesPassWithThreshold(Of T)(T, System.Int32)
+  nameWithType: ScalarTransforms.AddScalarReplAggregatesPassWithThreshold<T>(T, Int32)
+  nameWithType.vb: ScalarTransforms.AddScalarReplAggregatesPassWithThreshold(Of T)(T, Int32)
+- uid: Llvm.NET.Transforms.ScalarTransforms.AddSCCPPass*
+  name: AddSCCPPass
+  href: api/Llvm.NET.Transforms.ScalarTransforms.AddSCCPPass.html
+  commentId: Overload:Llvm.NET.Transforms.ScalarTransforms.AddSCCPPass
+  fullName: Llvm.NET.Transforms.ScalarTransforms.AddSCCPPass
+  nameWithType: ScalarTransforms.AddSCCPPass
+- uid: Llvm.NET.Transforms.ScalarTransforms.AddSCCPPass``1(``0)
+  name: AddSCCPPass<T>(T)
+  href: api/Llvm.NET.Transforms.ScalarTransforms.AddSCCPPass.html#Llvm_NET_Transforms_ScalarTransforms_AddSCCPPass__1___0_
+  commentId: M:Llvm.NET.Transforms.ScalarTransforms.AddSCCPPass``1(``0)
+  name.vb: AddSCCPPass(Of T)(T)
+  fullName: Llvm.NET.Transforms.ScalarTransforms.AddSCCPPass<T>(T)
+  fullName.vb: Llvm.NET.Transforms.ScalarTransforms.AddSCCPPass(Of T)(T)
+  nameWithType: ScalarTransforms.AddSCCPPass<T>(T)
+  nameWithType.vb: ScalarTransforms.AddSCCPPass(Of T)(T)
+- uid: Llvm.NET.Transforms.ScalarTransforms.AddScopedNoAliasAAPass*
+  name: AddScopedNoAliasAAPass
+  href: api/Llvm.NET.Transforms.ScalarTransforms.AddScopedNoAliasAAPass.html
+  commentId: Overload:Llvm.NET.Transforms.ScalarTransforms.AddScopedNoAliasAAPass
+  fullName: Llvm.NET.Transforms.ScalarTransforms.AddScopedNoAliasAAPass
+  nameWithType: ScalarTransforms.AddScopedNoAliasAAPass
+- uid: Llvm.NET.Transforms.ScalarTransforms.AddScopedNoAliasAAPass``1(``0)
+  name: AddScopedNoAliasAAPass<T>(T)
+  href: api/Llvm.NET.Transforms.ScalarTransforms.AddScopedNoAliasAAPass.html#Llvm_NET_Transforms_ScalarTransforms_AddScopedNoAliasAAPass__1___0_
+  commentId: M:Llvm.NET.Transforms.ScalarTransforms.AddScopedNoAliasAAPass``1(``0)
+  name.vb: AddScopedNoAliasAAPass(Of T)(T)
+  fullName: Llvm.NET.Transforms.ScalarTransforms.AddScopedNoAliasAAPass<T>(T)
+  fullName.vb: Llvm.NET.Transforms.ScalarTransforms.AddScopedNoAliasAAPass(Of T)(T)
+  nameWithType: ScalarTransforms.AddScopedNoAliasAAPass<T>(T)
+  nameWithType.vb: ScalarTransforms.AddScopedNoAliasAAPass(Of T)(T)
+- uid: Llvm.NET.Transforms.ScalarTransforms.AddSimplifyLibCallsPass*
+  name: AddSimplifyLibCallsPass
+  href: api/Llvm.NET.Transforms.ScalarTransforms.AddSimplifyLibCallsPass.html
+  commentId: Overload:Llvm.NET.Transforms.ScalarTransforms.AddSimplifyLibCallsPass
+  fullName: Llvm.NET.Transforms.ScalarTransforms.AddSimplifyLibCallsPass
+  nameWithType: ScalarTransforms.AddSimplifyLibCallsPass
+- uid: Llvm.NET.Transforms.ScalarTransforms.AddSimplifyLibCallsPass``1(``0)
+  name: AddSimplifyLibCallsPass<T>(T)
+  href: api/Llvm.NET.Transforms.ScalarTransforms.AddSimplifyLibCallsPass.html#Llvm_NET_Transforms_ScalarTransforms_AddSimplifyLibCallsPass__1___0_
+  commentId: M:Llvm.NET.Transforms.ScalarTransforms.AddSimplifyLibCallsPass``1(``0)
+  name.vb: AddSimplifyLibCallsPass(Of T)(T)
+  fullName: Llvm.NET.Transforms.ScalarTransforms.AddSimplifyLibCallsPass<T>(T)
+  fullName.vb: Llvm.NET.Transforms.ScalarTransforms.AddSimplifyLibCallsPass(Of T)(T)
+  nameWithType: ScalarTransforms.AddSimplifyLibCallsPass<T>(T)
+  nameWithType.vb: ScalarTransforms.AddSimplifyLibCallsPass(Of T)(T)
+- uid: Llvm.NET.Transforms.ScalarTransforms.AddTailCallEliminationPass*
+  name: AddTailCallEliminationPass
+  href: api/Llvm.NET.Transforms.ScalarTransforms.AddTailCallEliminationPass.html
+  commentId: Overload:Llvm.NET.Transforms.ScalarTransforms.AddTailCallEliminationPass
+  fullName: Llvm.NET.Transforms.ScalarTransforms.AddTailCallEliminationPass
+  nameWithType: ScalarTransforms.AddTailCallEliminationPass
+- uid: Llvm.NET.Transforms.ScalarTransforms.AddTailCallEliminationPass``1(``0)
+  name: AddTailCallEliminationPass<T>(T)
+  href: api/Llvm.NET.Transforms.ScalarTransforms.AddTailCallEliminationPass.html#Llvm_NET_Transforms_ScalarTransforms_AddTailCallEliminationPass__1___0_
+  commentId: M:Llvm.NET.Transforms.ScalarTransforms.AddTailCallEliminationPass``1(``0)
+  name.vb: AddTailCallEliminationPass(Of T)(T)
+  fullName: Llvm.NET.Transforms.ScalarTransforms.AddTailCallEliminationPass<T>(T)
+  fullName.vb: Llvm.NET.Transforms.ScalarTransforms.AddTailCallEliminationPass(Of T)(T)
+  nameWithType: ScalarTransforms.AddTailCallEliminationPass<T>(T)
+  nameWithType.vb: ScalarTransforms.AddTailCallEliminationPass(Of T)(T)
+- uid: Llvm.NET.Transforms.ScalarTransforms.AddTypeBasedAliasAnalysisPass*
+  name: AddTypeBasedAliasAnalysisPass
+  href: api/Llvm.NET.Transforms.ScalarTransforms.AddTypeBasedAliasAnalysisPass.html
+  commentId: Overload:Llvm.NET.Transforms.ScalarTransforms.AddTypeBasedAliasAnalysisPass
+  fullName: Llvm.NET.Transforms.ScalarTransforms.AddTypeBasedAliasAnalysisPass
+  nameWithType: ScalarTransforms.AddTypeBasedAliasAnalysisPass
+- uid: Llvm.NET.Transforms.ScalarTransforms.AddTypeBasedAliasAnalysisPass``1(``0)
+  name: AddTypeBasedAliasAnalysisPass<T>(T)
+  href: api/Llvm.NET.Transforms.ScalarTransforms.AddTypeBasedAliasAnalysisPass.html#Llvm_NET_Transforms_ScalarTransforms_AddTypeBasedAliasAnalysisPass__1___0_
+  commentId: M:Llvm.NET.Transforms.ScalarTransforms.AddTypeBasedAliasAnalysisPass``1(``0)
+  name.vb: AddTypeBasedAliasAnalysisPass(Of T)(T)
+  fullName: Llvm.NET.Transforms.ScalarTransforms.AddTypeBasedAliasAnalysisPass<T>(T)
+  fullName.vb: Llvm.NET.Transforms.ScalarTransforms.AddTypeBasedAliasAnalysisPass(Of T)(T)
+  nameWithType: ScalarTransforms.AddTypeBasedAliasAnalysisPass<T>(T)
+  nameWithType.vb: ScalarTransforms.AddTypeBasedAliasAnalysisPass(Of T)(T)
+- uid: Llvm.NET.Transforms.ScalarTransforms.AddVerifierPass*
+  name: AddVerifierPass
+  href: api/Llvm.NET.Transforms.ScalarTransforms.AddVerifierPass.html
+  commentId: Overload:Llvm.NET.Transforms.ScalarTransforms.AddVerifierPass
+  fullName: Llvm.NET.Transforms.ScalarTransforms.AddVerifierPass
+  nameWithType: ScalarTransforms.AddVerifierPass
+- uid: Llvm.NET.Transforms.ScalarTransforms.AddVerifierPass``1(``0)
+  name: AddVerifierPass<T>(T)
+  href: api/Llvm.NET.Transforms.ScalarTransforms.AddVerifierPass.html#Llvm_NET_Transforms_ScalarTransforms_AddVerifierPass__1___0_
+  commentId: M:Llvm.NET.Transforms.ScalarTransforms.AddVerifierPass``1(``0)
+  name.vb: AddVerifierPass(Of T)(T)
+  fullName: Llvm.NET.Transforms.ScalarTransforms.AddVerifierPass<T>(T)
+  fullName.vb: Llvm.NET.Transforms.ScalarTransforms.AddVerifierPass(Of T)(T)
+  nameWithType: ScalarTransforms.AddVerifierPass<T>(T)
+  nameWithType.vb: ScalarTransforms.AddVerifierPass(Of T)(T)
+- uid: Llvm.NET.Transforms.VectorTransforms
+  name: VectorTransforms
+  href: api/Llvm.NET.Transforms.VectorTransforms.html
+  commentId: T:Llvm.NET.Transforms.VectorTransforms
+  fullName: Llvm.NET.Transforms.VectorTransforms
+  nameWithType: VectorTransforms
+- uid: Llvm.NET.Transforms.VectorTransforms.AddLoopVectorizePass*
+  name: AddLoopVectorizePass
+  href: api/Llvm.NET.Transforms.VectorTransforms.AddLoopVectorizePass.html
+  commentId: Overload:Llvm.NET.Transforms.VectorTransforms.AddLoopVectorizePass
+  fullName: Llvm.NET.Transforms.VectorTransforms.AddLoopVectorizePass
+  nameWithType: VectorTransforms.AddLoopVectorizePass
+- uid: Llvm.NET.Transforms.VectorTransforms.AddLoopVectorizePass``1(``0)
+  name: AddLoopVectorizePass<T>(T)
+  href: api/Llvm.NET.Transforms.VectorTransforms.AddLoopVectorizePass.html#Llvm_NET_Transforms_VectorTransforms_AddLoopVectorizePass__1___0_
+  commentId: M:Llvm.NET.Transforms.VectorTransforms.AddLoopVectorizePass``1(``0)
+  name.vb: AddLoopVectorizePass(Of T)(T)
+  fullName: Llvm.NET.Transforms.VectorTransforms.AddLoopVectorizePass<T>(T)
+  fullName.vb: Llvm.NET.Transforms.VectorTransforms.AddLoopVectorizePass(Of T)(T)
+  nameWithType: VectorTransforms.AddLoopVectorizePass<T>(T)
+  nameWithType.vb: VectorTransforms.AddLoopVectorizePass(Of T)(T)
+- uid: Llvm.NET.Transforms.VectorTransforms.AddSLPVectorizePass*
+  name: AddSLPVectorizePass
+  href: api/Llvm.NET.Transforms.VectorTransforms.AddSLPVectorizePass.html
+  commentId: Overload:Llvm.NET.Transforms.VectorTransforms.AddSLPVectorizePass
+  fullName: Llvm.NET.Transforms.VectorTransforms.AddSLPVectorizePass
+  nameWithType: VectorTransforms.AddSLPVectorizePass
+- uid: Llvm.NET.Transforms.VectorTransforms.AddSLPVectorizePass``1(``0)
+  name: AddSLPVectorizePass<T>(T)
+  href: api/Llvm.NET.Transforms.VectorTransforms.AddSLPVectorizePass.html#Llvm_NET_Transforms_VectorTransforms_AddSLPVectorizePass__1___0_
+  commentId: M:Llvm.NET.Transforms.VectorTransforms.AddSLPVectorizePass``1(``0)
+  name.vb: AddSLPVectorizePass(Of T)(T)
+  fullName: Llvm.NET.Transforms.VectorTransforms.AddSLPVectorizePass<T>(T)
+  fullName.vb: Llvm.NET.Transforms.VectorTransforms.AddSLPVectorizePass(Of T)(T)
+  nameWithType: VectorTransforms.AddSLPVectorizePass<T>(T)
+  nameWithType.vb: VectorTransforms.AddSLPVectorizePass(Of T)(T)
 - uid: Llvm.NET.Triple
   name: Triple
   href: api/Llvm.NET.Triple.html
@@ -13048,6 +14269,18 @@ references:
   commentId: Overload:Llvm.NET.Values.Function.EntryBlock
   fullName: Llvm.NET.Values.Function.EntryBlock
   nameWithType: Function.EntryBlock
+- uid: Llvm.NET.Values.Function.EraseFromParent
+  name: EraseFromParent()
+  href: api/Llvm.NET.Values.Function.EraseFromParent.html#Llvm_NET_Values_Function_EraseFromParent
+  commentId: M:Llvm.NET.Values.Function.EraseFromParent
+  fullName: Llvm.NET.Values.Function.EraseFromParent()
+  nameWithType: Function.EraseFromParent()
+- uid: Llvm.NET.Values.Function.EraseFromParent*
+  name: EraseFromParent
+  href: api/Llvm.NET.Values.Function.EraseFromParent.html
+  commentId: Overload:Llvm.NET.Values.Function.EraseFromParent
+  fullName: Llvm.NET.Values.Function.EraseFromParent
+  nameWithType: Function.EraseFromParent
 - uid: Llvm.NET.Values.Function.FindOrCreateNamedBlock(System.String)
   name: FindOrCreateNamedBlock(String)
   href: api/Llvm.NET.Values.Function.FindOrCreateNamedBlock.html#Llvm_NET_Values_Function_FindOrCreateNamedBlock_System_String_
