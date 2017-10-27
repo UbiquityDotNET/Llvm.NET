@@ -40,7 +40,7 @@ namespace TestDebugInfo
                 var target = Target.FromTriple( TargetDetails.Triple );
                 using( var context = new Context( ) )
                 using( var targetMachine = target.CreateTargetMachine( TargetDetails.Triple, TargetDetails.Cpu, TargetDetails.Features, CodeGenOpt.Aggressive, Reloc.Default, CodeModel.Small ) )
-                using( var module = new BitcodeModule( moduleName, context ) )
+                using( var module = new BitcodeModule( context, moduleName ) )
                 {
                     module.SourceFileName = Path.GetFileName( srcPath );
                     TargetDependentAttributes = TargetDetails.BuildTargetDependentFunctionAttributes( context );
