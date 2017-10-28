@@ -3,42 +3,29 @@
 // </copyright>
 
 using System;
+using System.Collections.Generic;
 
 namespace Llvm.NET.Native
 {
     internal struct LLVMModuleProviderRef
-        : ILlvmHandle
+        : IEquatable<LLVMModuleProviderRef>
     {
-        public IntPtr Handle { get; }
-
-        public static LLVMModuleProviderRef Zero = new LLVMModuleProviderRef( IntPtr.Zero );
-
         public override int GetHashCode( ) => Handle.GetHashCode( );
 
-        public override bool Equals( object obj )
-        {
-            if( obj is LLVMModuleProviderRef )
-            {
-                return Equals( ( LLVMModuleProviderRef )obj );
-            }
-
-            if( obj is IntPtr )
-            {
-                return Handle.Equals( obj );
-            }
-
-            return base.Equals( obj );
-        }
+        public override bool Equals( object obj ) => !( obj is null ) && ( obj is LLVMModuleProviderRef r ) && r.Handle == Handle;
 
         public bool Equals( LLVMModuleProviderRef other ) => Handle == other.Handle;
 
-        public static bool operator ==( LLVMModuleProviderRef lhs, LLVMModuleProviderRef rhs ) => lhs.Equals( rhs );
+        public static bool operator ==( LLVMModuleProviderRef lhs, LLVMModuleProviderRef rhs )
+            => EqualityComparer<LLVMModuleProviderRef>.Default.Equals( lhs, rhs );
 
-        public static bool operator !=( LLVMModuleProviderRef lhs, LLVMModuleProviderRef rhs ) => !lhs.Equals( rhs );
+        public static bool operator !=( LLVMModuleProviderRef lhs, LLVMModuleProviderRef rhs ) => !( lhs == rhs );
 
         internal LLVMModuleProviderRef( IntPtr pointer )
         {
             Handle = pointer;
         }
+
+        private readonly IntPtr Handle;
     }
 }

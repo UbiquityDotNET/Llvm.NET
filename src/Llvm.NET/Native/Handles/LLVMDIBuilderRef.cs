@@ -3,42 +3,29 @@
 // </copyright>
 
 using System;
+using System.Collections.Generic;
 
 namespace Llvm.NET.Native
 {
     internal struct LLVMDIBuilderRef
-        : ILlvmHandle
+        : IEquatable<LLVMDIBuilderRef>
     {
-        public IntPtr Handle { get; }
-
-        public static LLVMDIBuilderRef Zero = new LLVMDIBuilderRef( IntPtr.Zero );
-
         public override int GetHashCode( ) => Handle.GetHashCode( );
 
-        public override bool Equals( object obj )
-        {
-            if( obj is LLVMDIBuilderRef )
-            {
-                return Equals( ( LLVMDIBuilderRef )obj );
-            }
-
-            if( obj is IntPtr )
-            {
-                return Handle.Equals( obj );
-            }
-
-            return base.Equals( obj );
-        }
+        public override bool Equals( object obj ) => !( obj is null ) && ( obj is LLVMDIBuilderRef r ) && r.Handle == Handle;
 
         public bool Equals( LLVMDIBuilderRef other ) => Handle == other.Handle;
 
-        public static bool operator ==( LLVMDIBuilderRef lhs, LLVMDIBuilderRef rhs ) => lhs.Equals( rhs );
+        public static bool operator ==( LLVMDIBuilderRef lhs, LLVMDIBuilderRef rhs )
+            => EqualityComparer<LLVMDIBuilderRef>.Default.Equals( lhs, rhs );
 
-        public static bool operator !=( LLVMDIBuilderRef lhs, LLVMDIBuilderRef rhs ) => !lhs.Equals( rhs );
+        public static bool operator !=( LLVMDIBuilderRef lhs, LLVMDIBuilderRef rhs ) => !( lhs == rhs );
 
         internal LLVMDIBuilderRef( IntPtr pointer )
         {
             Handle = pointer;
         }
+
+        private readonly IntPtr Handle;
     }
 }

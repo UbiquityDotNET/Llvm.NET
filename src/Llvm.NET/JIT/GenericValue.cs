@@ -66,9 +66,9 @@ namespace Llvm.NET.JIT
         /// <inheritdoc/>
         public void Dispose( )
         {
-            ( ( IDisposable )Handle ).Dispose( );
+            Handle.Dispose( );
         }
 
-        private LLVMGenericValueRef Handle;
+        private readonly LLVMGenericValueRef Handle;
     }
 }

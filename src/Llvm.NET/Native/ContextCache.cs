@@ -30,7 +30,7 @@ namespace Llvm.NET.Native
 
         private static IDictionary<LLVMContextRef, Context> CreateInstance()
         {
-            return new ConcurrentDictionary<LLVMContextRef, Context>( );
+            return new ConcurrentDictionary<LLVMContextRef, Context>( EqualityComparer<LLVMContextRef>.Default );
         }
 
         private static Lazy<IDictionary<LLVMContextRef, Context>> Instance

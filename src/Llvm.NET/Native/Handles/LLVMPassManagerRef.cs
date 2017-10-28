@@ -9,23 +9,12 @@ namespace Llvm.NET.Native
 {
     [SecurityCritical]
     internal class LLVMPassManagerRef
-        : SafeHandleNullIsInvalid
+        : LlvmObjectRef
     {
-        internal LLVMPassManagerRef( )
-            : base( true )
-        {
-        }
-
         internal LLVMPassManagerRef( IntPtr handle, bool owner )
             : base( owner )
         {
             SetHandle( handle );
-        }
-
-        [System.Diagnostics.CodeAnalysis.SuppressMessage( "Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode", Justification = "Required for marshaling support (used via reflection)" )]
-        internal LLVMPassManagerRef( IntPtr handle )
-            : this( handle, false )
-        {
         }
 
         [SecurityCritical]
@@ -33,6 +22,11 @@ namespace Llvm.NET.Native
         {
             NativeMethods.LLVMDisposePassManager( handle );
             return true;
+        }
+
+        private LLVMPassManagerRef( )
+            : base( true )
+        {
         }
     }
 }

@@ -3,42 +3,57 @@
 // </copyright>
 
 using System;
+using System.Runtime.InteropServices;
 
 namespace Llvm.NET.Native
 {
-    internal struct LLVMContextRef
-        : ILlvmHandle
+    internal class LLVMContextRef
+        : LlvmObjectRef
     {
-        public IntPtr Handle { get; }
-
-        public static LLVMContextRef Zero = new LLVMContextRef( IntPtr.Zero );
-
-        public override int GetHashCode( ) => Handle.GetHashCode( );
-
-        public override bool Equals( object obj )
+        public static explicit operator Context( LLVMContextRef contextRef )
         {
-            if( obj is LLVMContextRef )
+            if( contextRef == default )
             {
-                return Equals( ( LLVMContextRef )obj );
+                return null;
             }
 
-            if( obj is IntPtr )
+            if( ContextCache.TryGetValue( contextRef, out Context retVal ) )
             {
-                return Handle.Equals( obj );
+                return retVal;
             }
 
-            return base.Equals( obj );
+            return new Context( contextRef );
         }
 
-        public bool Equals( LLVMContextRef other ) => Handle == other.Handle;
-
-        public static bool operator ==( LLVMContextRef lhs, LLVMContextRef rhs ) => lhs.Equals( rhs );
-
-        public static bool operator !=( LLVMContextRef lhs, LLVMContextRef rhs ) => !lhs.Equals( rhs );
-
-        internal LLVMContextRef( IntPtr pointer )
+        internal LLVMContextRef( IntPtr handle, bool owner )
+            : base( owner )
         {
-            Handle = pointer;
+            SetHandle( handle );
+        }
+
+        protected override bool ReleaseHandle( )
+        {
+            LLVMContextDispose( handle );
+            return true;
+        }
+
+        private LLVMContextRef( )
+            : base( true )
+        {
+        }
+
+        [DllImport( NativeMethods.LibraryPath, EntryPoint = "LLVMContextDispose", CallingConvention = CallingConvention.Cdecl )]
+        private static extern void LLVMContextDispose( IntPtr @C );
+    }
+
+    #pragma warning disable SA1402
+
+    internal class LLVMContextAlias
+        : LLVMContextRef
+    {
+        private LLVMContextAlias()
+            : base( IntPtr.Zero, false )
+        {
         }
     }
 }

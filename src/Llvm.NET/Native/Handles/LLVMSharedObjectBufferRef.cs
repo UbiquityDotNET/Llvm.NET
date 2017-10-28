@@ -3,30 +3,18 @@
 // </copyright>
 
 using System;
-using System.Diagnostics.CodeAnalysis;
 using System.Security;
 
 namespace Llvm.NET.Native
 {
     [SecurityCritical]
     internal class LLVMSharedObjectBufferRef
-        : SafeHandleNullIsInvalid
+        : LlvmObjectRef
     {
-        internal LLVMSharedObjectBufferRef( )
-            : base( true )
-        {
-        }
-
         internal LLVMSharedObjectBufferRef( IntPtr handle, bool owner )
             : base( owner )
         {
             SetHandle( handle );
-        }
-
-        [SuppressMessage( "Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode", Justification = "Required for marshaling support (used via reflection)" )]
-        internal LLVMSharedObjectBufferRef( IntPtr handle )
-            : this( handle, false )
-        {
         }
 
         [SecurityCritical]
@@ -34,6 +22,11 @@ namespace Llvm.NET.Native
         {
             NativeMethods.LLVMOrcDisposeSharedObjectBufferRef( handle );
             return true;
+        }
+
+        private LLVMSharedObjectBufferRef( )
+            : base( true )
+        {
         }
     }
 }

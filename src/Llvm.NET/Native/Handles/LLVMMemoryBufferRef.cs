@@ -3,42 +3,29 @@
 // </copyright>
 
 using System;
+using System.Collections.Generic;
 
 namespace Llvm.NET.Native
 {
     internal struct LLVMMemoryBufferRef
-        : ILlvmHandle
+        : IEquatable<LLVMMemoryBufferRef>
     {
-        public IntPtr Handle { get; }
-
-        public static LLVMMemoryBufferRef Zero = new LLVMMemoryBufferRef( IntPtr.Zero );
-
         public override int GetHashCode( ) => Handle.GetHashCode( );
 
-        public override bool Equals( object obj )
-        {
-            if( obj is LLVMMemoryBufferRef )
-            {
-                return Equals( ( LLVMMemoryBufferRef )obj );
-            }
-
-            if( obj is IntPtr )
-            {
-                return Handle.Equals( obj );
-            }
-
-            return base.Equals( obj );
-        }
+        public override bool Equals( object obj ) => !( obj is null ) && ( obj is LLVMMemoryBufferRef r ) && r.Handle == Handle;
 
         public bool Equals( LLVMMemoryBufferRef other ) => Handle == other.Handle;
 
-        public static bool operator ==( LLVMMemoryBufferRef lhs, LLVMMemoryBufferRef rhs ) => lhs.Equals( rhs );
+        public static bool operator ==( LLVMMemoryBufferRef lhs, LLVMMemoryBufferRef rhs )
+            => EqualityComparer<LLVMMemoryBufferRef>.Default.Equals( lhs, rhs );
 
-        public static bool operator !=( LLVMMemoryBufferRef lhs, LLVMMemoryBufferRef rhs ) => !lhs.Equals( rhs );
+        public static bool operator !=( LLVMMemoryBufferRef lhs, LLVMMemoryBufferRef rhs ) => !( lhs == rhs );
 
         internal LLVMMemoryBufferRef( IntPtr pointer )
         {
             Handle = pointer;
         }
+
+        private readonly IntPtr Handle;
     }
 }

@@ -93,7 +93,7 @@ namespace Llvm.NET.Values
 
         internal Value( LLVMValueRef valueRef )
         {
-            if( valueRef.Handle == IntPtr.Zero )
+            if( valueRef == default )
             {
                 throw new ArgumentNullException( nameof( valueRef ) );
             }
@@ -126,7 +126,7 @@ namespace Llvm.NET.Values
         internal static T FromHandle<T>( LLVMValueRef valueRef )
             where T : Value
         {
-            var context = valueRef.GetContextFor( );
+            var context = valueRef.Context;
             return ( T )context.GetValueFor( valueRef );
         }
 

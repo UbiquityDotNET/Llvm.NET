@@ -5,6 +5,7 @@
 using System;
 using System.Collections.Generic;
 using Llvm.NET.Native;
+using Llvm.NET.Native.Handles;
 using Ubiquity.ArgValidators;
 
 using static Llvm.NET.Native.NativeMethods;
@@ -67,7 +68,7 @@ namespace Llvm.NET
             get
             {
                 var current = LLVMGetFirstTarget( );
-                while( current.Handle != IntPtr.Zero )
+                while( current != default )
                 {
                     yield return FromHandle( current );
                     current = LLVMGetNextTarget( current );
@@ -92,7 +93,7 @@ namespace Llvm.NET
 
         internal Target( LLVMTargetRef targetHandle )
         {
-            targetHandle.Handle.ValidateNotNull( nameof( targetHandle ) );
+            targetHandle.ValidateNotDefault( nameof( targetHandle ) );
 
             TargetHandle = targetHandle;
         }
@@ -101,20 +102,20 @@ namespace Llvm.NET
 
         internal static Target FromHandle( LLVMTargetRef targetHandle )
         {
-            targetHandle.Handle.ValidateNotNull( nameof( targetHandle ) );
+            targetHandle.ValidateNotDefault( nameof( targetHandle ) );
             lock( TargetMap )
             {
-                if( TargetMap.TryGetValue( targetHandle.Handle, out Target retVal ) )
+                if( TargetMap.TryGetValue( targetHandle, out Target retVal ) )
                 {
                     return retVal;
                 }
 
                 retVal = new Target( targetHandle );
-                TargetMap.Add( targetHandle.Handle, retVal );
+                TargetMap.Add( targetHandle, retVal );
                 return retVal;
             }
         }
 
-        private static readonly Dictionary<IntPtr, Target> TargetMap = new Dictionary<IntPtr, Target>();
+        private static readonly Dictionary<LLVMTargetRef, Target> TargetMap = new Dictionary<LLVMTargetRef, Target>();
     }
 }

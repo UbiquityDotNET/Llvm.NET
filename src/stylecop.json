@@ -10,8 +10,8 @@
         },
         "namingRules":
         {
-            "allowCommonHungarianPrefixes": true,
-            "allowedHungarianPrefixes": ["h", "di", "op", "os", "ir"]
+            "allowCommonHungarianPrefixes": false,
+            "allowedHungarianPrefixes": ["h", "di", "op", "os", "ir", "is", "do"]
         },
         "orderingRules":
         {

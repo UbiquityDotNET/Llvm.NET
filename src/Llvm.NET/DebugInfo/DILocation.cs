@@ -22,7 +22,7 @@ namespace Llvm.NET.DebugInfo
                                   , line
                                   , column
                                   , scope.ValidateNotNull(nameof(scope)).MetadataHandle
-                                  , inlinedAt?.MetadataHandle ?? LLVMMetadataRef.Zero
+                                  , inlinedAt?.MetadataHandle ?? default
                                   )
                   )
         {

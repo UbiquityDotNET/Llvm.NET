@@ -16,7 +16,7 @@ namespace Llvm.NET.DebugInfo
         {
             get
             {
-                if( MetadataHandle.Handle == IntPtr.Zero )
+                if( MetadataHandle == default )
                 {
                     return (Tag)ushort.MaxValue;
                 }

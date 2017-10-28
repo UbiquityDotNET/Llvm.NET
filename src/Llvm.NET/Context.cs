@@ -5,20 +5,18 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Text;
 using JetBrains.Annotations;
 using Llvm.NET.DebugInfo;
 using Llvm.NET.JIT;
 using Llvm.NET.Native;
+using Llvm.NET.Native.Handles;
 using Llvm.NET.Types;
 using Llvm.NET.Values;
 using Ubiquity.ArgValidators;
 
 using static Llvm.NET.Native.NativeMethods;
-
-#pragma warning disable SA1124 // DoNotUseRegions
 
 namespace Llvm.NET
 {
@@ -45,7 +43,7 @@ namespace Llvm.NET
     /// state and any number of other undefined issues.</note>
     /// </remarks>
     public sealed class Context
-        : IDisposable
+        : DisposableObject
     {
         /// <summary>Initializes a new instance of the <see cref="Context"/> class.Creates a new context</summary>
         public Context( )
@@ -53,20 +51,8 @@ namespace Llvm.NET
         {
         }
 
-        ~Context( )
-        {
-            DisposeContext( );
-        }
-
         /// <inheritdoc/>
-        public void Dispose( )
-        {
-            DisposeContext( );
-            GC.SuppressFinalize( this );
-        }
-
-        /// <summary>Gets a value indicating whether this instance is still valid</summary>
-        public bool IsDisposed => ContextHandle.Handle == IntPtr.Zero;
+        public override bool IsDisposed => ContextHandle.IsClosed;
 
         /// <summary>Gets the LLVM void type for this context</summary>
         public ITypeRef VoidType => TypeRef.FromHandle( LLVMVoidTypeInContext( ContextHandle ) );
@@ -170,7 +156,7 @@ namespace Llvm.NET
             returnType.ValidateNotNull( nameof( returnType ) );
             args.ValidateNotNull( nameof( args ) );
 
-            if( ContextHandle.Handle != returnType.Context.ContextHandle.Handle )
+            if( ContextHandle != returnType.Context.ContextHandle )
             {
                 throw new ArgumentException( "Mismatched context", nameof( returnType ) );
             }
@@ -734,55 +720,55 @@ namespace Llvm.NET
         internal AttributeValue GetAttributeFor( LLVMAttributeRef handle, Func<Context, LLVMAttributeRef, AttributeValue> factory )
         {
             factory.ValidateNotNull( nameof( factory ) );
-            if( handle.Handle.IsNull( ) )
+            if( handle == default )
             {
-                return default( AttributeValue );
+                return default;
             }
 
-            if( AttributeValueCache.TryGetValue( handle.Handle, out AttributeValue retVal ) )
+            if( AttributeValueCache.TryGetValue( handle, out AttributeValue retVal ) )
             {
                 return retVal;
             }
 
             retVal = factory( this, handle );
-            AttributeValueCache.Add( handle.Handle, retVal );
+            AttributeValueCache.Add( handle, retVal );
             return retVal;
         }
 
         internal LLVMContextRef ContextHandle { get; private set; }
 
-        // These interning methods provide unique mapping between the .NET wrappers and the underlying LLVM instances
+        /* These interning methods provide unique mapping between the .NET wrappers and the underlying LLVM instances
         // The mapping ensures that any LibLLVM handle is always re-mappable to a exactly one wrapper instance.
         // This helps reduce the number of wrapper instances created and also allows reference equality to work
         // as expected for managed types.
         // TODO: Refactor the interning to class dedicated to managing the mappings, this can allow looking up the
         // context from handles where there isn't any APIs to retrieve the Context.
-        #region LLVM handle Interning
+        */
 
         internal void AddModule( BitcodeModule module )
         {
-            ModuleCache.Add( module.ModuleHandle.Handle, module );
+            ModuleCache.Add( module.ModuleHandle, module );
         }
 
         internal void RemoveModule( BitcodeModule module )
         {
-            ModuleCache.Remove( module.ModuleHandle.Handle );
+            ModuleCache.Remove( module.ModuleHandle );
         }
 
         internal BitcodeModule GetModuleFor( LLVMModuleRef moduleRef )
         {
-            if( moduleRef.Handle == IntPtr.Zero )
+            if( moduleRef == default )
             {
                 throw new ArgumentNullException( nameof( moduleRef ) );
             }
 
             var hModuleContext = LLVMGetModuleContext( moduleRef );
-            if( hModuleContext.Handle != ContextHandle.Handle )
+            if( hModuleContext != ContextHandle )
             {
                 throw new ArgumentException( "Incorrect context for module" );
             }
 
-            if( !ModuleCache.TryGetValue( moduleRef.Handle, out BitcodeModule retVal ) )
+            if( !ModuleCache.TryGetValue( moduleRef, out BitcodeModule retVal ) )
             {
                 retVal = new BitcodeModule( moduleRef );
             }
@@ -797,27 +783,20 @@ namespace Llvm.NET
 
         internal Value GetValueFor( LLVMValueRef valueRef )
         {
-            if( valueRef.IsNull( ) )
-            {
-                throw new ArgumentNullException( nameof( valueRef ) );
-            }
+            valueRef.ValidateNotDefault( nameof( valueRef ) );
 
             return ValueCache.GetItemFor( valueRef, this );
         }
 
-        internal ExecutionEngine GetEngineFor( LLVMExecutionEngineRef h )
+        internal LegacyExecutionEngine GetEngineFor( LLVMExecutionEngineRef h )
         {
-            if( h.IsNull( ) )
-            {
-                throw new ArgumentNullException( nameof( h ) );
-            }
-
+            h.ValidateNotDefault( nameof( h ) );
             return EngineCache.GetItemFor( h, this );
         }
 
         internal LlvmMetadata GetNodeFor( LLVMMetadataRef handle, Func<LLVMMetadataRef, LlvmMetadata> staticFactory )
         {
-            if( handle == LLVMMetadataRef.Zero )
+            if( handle == default )
             {
                 throw new ArgumentNullException( nameof( handle ) );
             }
@@ -839,7 +818,7 @@ namespace Llvm.NET
                 throw new ArgumentException( "Cannot get operand for a node from a different context", nameof( owningNode ) );
             }
 
-            if( handle.Handle == IntPtr.Zero )
+            if( handle == default )
             {
                 throw new ArgumentNullException( nameof( handle ) );
             }
@@ -856,21 +835,20 @@ namespace Llvm.NET
 
         internal ITypeRef GetTypeFor( LLVMTypeRef valueRef, Func<LLVMTypeRef, ITypeRef> constructor )
         {
-            if( valueRef.Handle == IntPtr.Zero )
+            if( valueRef == default )
             {
                 throw new ArgumentNullException( nameof( valueRef ) );
             }
 
-            if( TypeCache.TryGetValue( valueRef.Handle, out ITypeRef retVal ) )
+            if( TypeCache.TryGetValue( valueRef, out ITypeRef retVal ) )
             {
                 return retVal;
             }
 
             retVal = constructor( valueRef );
-            TypeCache.Add( valueRef.Handle, retVal );
+            TypeCache.Add( valueRef, retVal );
             return retVal;
         }
-        #endregion
 
         internal Context( LLVMContextRef contextRef )
         {
@@ -880,23 +858,19 @@ namespace Llvm.NET
             LLVMContextSetDiagnosticHandler( ContextHandle, ActiveHandler.GetFuncPointer( ), IntPtr.Zero );
         }
 
-        private void DisposeContext( )
+        protected override void InternalDispose( bool disposing )
         {
-            if( !ContextHandle.Handle.IsNull() )
-            {
-                // make sure engines are disposed before disposing the context
-                // as they hold on to all owned Modules, which are ultimately destroyed
-                // when the context is, so when the GC finalizes the execution engine
-                // the modules are already destroyed triggering a double free.
-                EngineCache.Clear( );
-                LLVMContextSetDiagnosticHandler( ContextHandle, IntPtr.Zero, IntPtr.Zero );
-                ActiveHandler.Dispose( );
+            // make sure engines are disposed before disposing the context
+            // as they hold on to all owned Modules, which are ultimately destroyed
+            // when the context is, so when the GC finalizes the execution engine
+            // the modules are already destroyed triggering a double free.
+            EngineCache.Clear( );
+            LLVMContextSetDiagnosticHandler( ContextHandle, IntPtr.Zero, IntPtr.Zero );
+            ActiveHandler.Dispose( );
 
-                ContextCache.Remove( ContextHandle );
+            ContextCache.Remove( ContextHandle );
 
-                LLVMContextDispose( ContextHandle );
-                ContextHandle = default;
-            }
+            ContextHandle.Dispose( );
         }
 
         private void DiagnosticHandler( LLVMDiagnosticInfoRef param0, IntPtr param1 )
@@ -911,13 +885,13 @@ namespace Llvm.NET
 
         private readonly IHandleInterning<LLVMValueRef, Value> ValueCache = Value.CreateInterningFactory();
 
-        private readonly IHandleInterning<LLVMExecutionEngineRef, ExecutionEngine> EngineCache = ExecutionEngine.CreateInterningFactory();
+        private readonly IHandleInterning<LLVMExecutionEngineRef, LegacyExecutionEngine> EngineCache = LegacyExecutionEngine.CreateInterningFactory();
 
-        private readonly Dictionary< IntPtr, ITypeRef > TypeCache = new Dictionary< IntPtr, ITypeRef >( );
+        private readonly Dictionary< LLVMTypeRef, ITypeRef > TypeCache = new Dictionary< LLVMTypeRef, ITypeRef >( );
 
-        private readonly Dictionary< IntPtr, BitcodeModule > ModuleCache = new Dictionary< IntPtr, BitcodeModule >( );
+        private readonly Dictionary< LLVMModuleRef, BitcodeModule > ModuleCache = new Dictionary< LLVMModuleRef, BitcodeModule >( );
 
-        private readonly Dictionary<IntPtr, AttributeValue> AttributeValueCache = new Dictionary<IntPtr, AttributeValue>( );
+        private readonly Dictionary< LLVMAttributeRef, AttributeValue> AttributeValueCache = new Dictionary<LLVMAttributeRef, AttributeValue>( );
 
         private readonly Dictionary< LLVMMetadataRef, LlvmMetadata > MetadataCache = new Dictionary< LLVMMetadataRef, LlvmMetadata >( );
 

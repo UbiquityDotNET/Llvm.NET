@@ -35,7 +35,7 @@ namespace Llvm.NET
         /// <inheritdoc/>
         public bool TryGetExtendedPropertyValue<T>( string id, out T value )
         {
-            value = default( T );
+            value = default;
             object item;
             lock ( Items )
             {

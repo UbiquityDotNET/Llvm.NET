@@ -29,19 +29,19 @@ namespace Llvm.NET
                 throw new ArgumentNullException( nameof( other ) );
             }
 
-            if( MetadataHandle.Handle == IntPtr.Zero )
+            if( MetadataHandle == default )
             {
                 throw new InvalidOperationException( "Cannot Replace all uses of a null descriptor" );
             }
 
             NativeMethods.LLVMMetadataReplaceAllUsesWith( MetadataHandle, other.MetadataHandle );
-            MetadataHandle = LLVMMetadataRef.Zero;
+            MetadataHandle = default;
         }
 
         /// <inheritdoc/>
         public override string ToString( )
         {
-            if( MetadataHandle.Handle == IntPtr.Zero )
+            if( MetadataHandle == default )
             {
                 return string.Empty;
             }
@@ -57,7 +57,7 @@ namespace Llvm.NET
         // only ever used by derived type constructors
         /*protected*/ internal LlvmMetadata( LLVMMetadataRef handle )
         {
-            if( handle == LLVMMetadataRef.Zero )
+            if( handle == default )
             {
                 throw new ArgumentNullException( nameof( handle ) );
             }
@@ -68,7 +68,7 @@ namespace Llvm.NET
         internal static T FromHandle<T>( Context context, LLVMMetadataRef handle )
             where T : LlvmMetadata
         {
-            if( handle == LLVMMetadataRef.Zero )
+            if( handle == default )
             {
                 return null;
             }

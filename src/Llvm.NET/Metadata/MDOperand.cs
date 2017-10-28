@@ -2,8 +2,8 @@
 // Copyright (c) .NET Foundation. All rights reserved.
 // </copyright>
 
-using System;
 using Llvm.NET.Native;
+using Llvm.NET.Native.Handles;
 
 namespace Llvm.NET
 {
@@ -15,10 +15,7 @@ namespace Llvm.NET
 
         internal MDOperand( MDNode owningNode, LLVMMDOperandRef handle )
         {
-            if( handle.Handle == IntPtr.Zero )
-            {
-                throw new ArgumentNullException( nameof( handle ) );
-            }
+            handle.ValidateNotDefault( nameof( handle ) );
 
             OperandHandle = handle;
             OwningNode = owningNode;

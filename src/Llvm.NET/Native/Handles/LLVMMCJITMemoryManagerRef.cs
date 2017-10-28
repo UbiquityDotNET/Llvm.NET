@@ -3,29 +3,19 @@
 // </copyright>
 
 using System;
+using System.Collections.Generic;
 using System.Security;
 
 namespace Llvm.NET.Native
 {
     [SecurityCritical]
     internal class LLVMMCJITMemoryManagerRef
-        : SafeHandleNullIsInvalid
+        : LlvmObjectRef
     {
-        internal LLVMMCJITMemoryManagerRef( )
-            : base( true )
-        {
-        }
-
         internal LLVMMCJITMemoryManagerRef( IntPtr handle, bool owner )
             : base( owner )
         {
             SetHandle( handle );
-        }
-
-        [System.Diagnostics.CodeAnalysis.SuppressMessage( "Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode", Justification = "Required for marshaling support (used via reflection)" )]
-        internal LLVMMCJITMemoryManagerRef( IntPtr handle )
-            : this( handle, false )
-        {
         }
 
         [SecurityCritical]
@@ -33,6 +23,11 @@ namespace Llvm.NET.Native
         {
             NativeMethods.LLVMDisposeMCJITMemoryManager( handle );
             return true;
+        }
+
+        private LLVMMCJITMemoryManagerRef( )
+            : base( true )
+        {
         }
     }
 }

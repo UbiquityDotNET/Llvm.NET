@@ -646,9 +646,6 @@ namespace Llvm.NET.Native
         internal static extern string LLVMGetDIFileDirectory( LLVMMetadataRef /*DIFile*/ file );
 
         [DllImport( LibraryPath, CallingConvention = CallingConvention.Cdecl, BestFitMapping = false, ThrowOnUnmappableChar = true )]
-        internal static extern LLVMContextRef LLVMGetNodeContext( LLVMMetadataRef /*MDNode*/ node );
-
-        [DllImport( LibraryPath, CallingConvention = CallingConvention.Cdecl, BestFitMapping = false, ThrowOnUnmappableChar = true )]
         internal static extern LLVMMetadataKind LLVMGetMetadataID( LLVMMetadataRef /*Metadata*/ md );
 
         [DllImport( LibraryPath, CallingConvention = CallingConvention.Cdecl, BestFitMapping = false, ThrowOnUnmappableChar = true )]

@@ -24,11 +24,6 @@ using System.Runtime.InteropServices;
 
 namespace Llvm.NET.Native
 {
-    internal interface ILlvmHandle
-    {
-        IntPtr Handle { get; }
-    }
-
     internal struct LLVMOpInfoSymbol1
     {
         internal int @Present;
@@ -614,7 +609,7 @@ namespace Llvm.NET.Native
         internal static extern LLVMContextRef LLVMContextCreate( );
 
         [DllImport( LibraryPath, EntryPoint = "LLVMGetGlobalContext", CallingConvention = CallingConvention.Cdecl )]
-        internal static extern LLVMContextRef LLVMGetGlobalContext( );
+        internal static extern LLVMContextAlias LLVMGetGlobalContext( );
 
         [DllImport( LibraryPath, EntryPoint = "LLVMContextSetDiagnosticHandler", CallingConvention = CallingConvention.Cdecl )]
         internal static extern void LLVMContextSetDiagnosticHandler( LLVMContextRef @C, IntPtr @Handler, IntPtr @DiagnosticContext );
@@ -627,9 +622,6 @@ namespace Llvm.NET.Native
 
         [DllImport( LibraryPath, EntryPoint = "LLVMContextSetYieldCallback", CallingConvention = CallingConvention.Cdecl )]
         internal static extern void LLVMContextSetYieldCallback( LLVMContextRef @C, LLVMYieldCallback @Callback, IntPtr @OpaqueHandle );
-
-        [DllImport( LibraryPath, EntryPoint = "LLVMContextDispose", CallingConvention = CallingConvention.Cdecl )]
-        internal static extern void LLVMContextDispose( LLVMContextRef @C );
 
         [DllImport( LibraryPath, EntryPoint = "LLVMGetMDKindIDInContext", CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi, ThrowOnUnmappableChar = true, BestFitMapping = false )]
         internal static extern uint LLVMGetMDKindIDInContext( LLVMContextRef @C, [MarshalAs( UnmanagedType.LPStr )] string @Name, uint @SLen );
@@ -726,7 +718,7 @@ namespace Llvm.NET.Native
         internal static extern void LLVMSetModuleInlineAsm( LLVMModuleRef @M, [MarshalAs( UnmanagedType.LPStr )] string @Asm );
 
         [DllImport( LibraryPath, EntryPoint = "LLVMGetModuleContext", CallingConvention = CallingConvention.Cdecl )]
-        internal static extern LLVMContextRef LLVMGetModuleContext( LLVMModuleRef @M );
+        internal static extern LLVMContextAlias LLVMGetModuleContext( LLVMModuleRef @M );
 
         [DllImport( LibraryPath, EntryPoint = "LLVMGetTypeByName", CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi, ThrowOnUnmappableChar = true, BestFitMapping = false )]
         internal static extern LLVMTypeRef LLVMGetTypeByName( LLVMModuleRef @M, [MarshalAs( UnmanagedType.LPStr )] string @Name );
@@ -799,9 +791,6 @@ namespace Llvm.NET.Native
         [DllImport( LibraryPath, EntryPoint = "LLVMTypeIsSized", CallingConvention = CallingConvention.Cdecl )]
         [return: MarshalAs( UnmanagedType.Bool )]
         internal static extern bool LLVMTypeIsSized( LLVMTypeRef @Ty );
-
-        [DllImport( LibraryPath, EntryPoint = "LLVMGetTypeContext", CallingConvention = CallingConvention.Cdecl )]
-        internal static extern LLVMContextRef LLVMGetTypeContext( LLVMTypeRef @Ty );
 
         [DllImport( LibraryPath, EntryPoint = "LLVMDumpType", CallingConvention = CallingConvention.Cdecl )]
         internal static extern void LLVMDumpType( LLVMTypeRef @Val );
@@ -3116,7 +3105,7 @@ namespace Llvm.NET.Native
         internal static extern void LLVMOrcGetMangledSymbol( LLVMOrcJITStackRef @JITStack, out IntPtr @MangledSymbol, [MarshalAs( UnmanagedType.LPStr )] string @Symbol );
 
         [DllImport( LibraryPath, EntryPoint = "LLVMOrcDisposeMangledSymbol", CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi, ThrowOnUnmappableChar = true, BestFitMapping = false )]
-        internal static extern void LLVMOrcDisposeMangledSymbol( [MarshalAs( UnmanagedType.LPStr )] string @MangledSymbol );
+        internal static extern void LLVMOrcDisposeMangledSymbol( IntPtr @MangledSymbol );
 
         [DllImport( LibraryPath, EntryPoint = "LLVMOrcCreateLazyCompileCallback", CallingConvention = CallingConvention.Cdecl )]
         internal static extern LLVMOrcErrorCode LLVMOrcCreateLazyCompileCallback( LLVMOrcJITStackRef @JITStack, out LLVMOrcTargetAddress retAddr, LLVMOrcLazyCompileCallbackFn @Callback, IntPtr @CallbackCtx );

@@ -32,7 +32,7 @@ namespace Llvm.NET.Types
             get
             {
                 var typeRef = NativeMethods.LLVMGetElementType( this.GetTypeRef() );
-                if( typeRef.Handle == IntPtr.Zero )
+                if( typeRef == default )
                 {
                     return null;
                 }

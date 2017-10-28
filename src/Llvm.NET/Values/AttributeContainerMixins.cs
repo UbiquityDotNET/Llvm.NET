@@ -134,7 +134,7 @@ namespace Llvm.NET.Values
             {
                 ICollection<AttributeValue> attributes = self.Attributes[ index ];
                 AttributeValue attrib = attributes.FirstOrDefault( a => a.Kind == kind );
-                if( attrib != default( AttributeValue ) )
+                if( attrib != default )
                 {
                     attributes.Remove( attrib );
                 }
@@ -156,7 +156,7 @@ namespace Llvm.NET.Values
             {
                 ICollection<AttributeValue> attributes = self.Attributes[ index ];
                 AttributeValue attrib = attributes.FirstOrDefault( a => a.Name == name );
-                if( attrib != default( AttributeValue ) )
+                if( attrib != default )
                 {
                     attributes.Remove( attrib );
                 }

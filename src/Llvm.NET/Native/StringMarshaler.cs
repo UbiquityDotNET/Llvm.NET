@@ -7,18 +7,14 @@ using System.Diagnostics.CodeAnalysis;
 using System.Runtime.InteropServices;
 using System.Text.RegularExpressions;
 
+using static Llvm.NET.Native.NativeMethods;
+
 namespace Llvm.NET.Native
 {
-    internal enum NativeStringCleanup
-    {
-        None,
-        DisposeMessage,
-    }
-
     // use with:
     //   [MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef=typeof(StringMarshaler))]
-    // or
     //   [MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef=typeof(StringMarshaler), MarshalCookie="DisposeMessage")]
+    //   [MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef=typeof(StringMarshaler), MarshalCookie="MangledSymbol")]
     [SuppressMessage( "Microsoft.Performance", "CA1812:AvoidUninstantiatedInternalClasses", Justification = "Instantiated via CustomMarshaling" )]
     internal class StringMarshaler
         : ICustomMarshaler
@@ -50,7 +46,10 @@ namespace Llvm.NET.Native
                 return new StringMarshaler( null );
 
             case "DISPOSEMESSAGE":
-                return new StringMarshaler( NativeMethods.LLVMDisposeMessage );
+                return new StringMarshaler( LLVMDisposeMessage );
+
+            case "MANGLEDSYMBOL":
+                return new StringMarshaler( LLVMOrcDisposeMangledSymbol );
 
             default:
                 throw new ArgumentException( $"'{cookie}' is not a valid option", nameof( cookie ) );

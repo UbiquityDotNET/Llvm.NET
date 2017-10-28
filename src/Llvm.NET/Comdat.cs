@@ -3,6 +3,7 @@
 // </copyright>
 
 using Llvm.NET.Native;
+using Llvm.NET.Native.Handles;
 using Ubiquity.ArgValidators;
 
 namespace Llvm.NET
@@ -39,7 +40,7 @@ namespace Llvm.NET
             {
                 if( Module.IsDisposed )
                 {
-                    return default( ComdatKind );
+                    return default;
                 }
 
                 return ( ComdatKind )NativeMethods.LLVMComdatGetKind( ComdatHandle );
@@ -65,7 +66,7 @@ namespace Llvm.NET
         internal Comdat( BitcodeModule module, LLVMComdatRef comdatRef )
         {
             module.ValidateNotNull( nameof( module ) );
-            comdatRef.Handle.ValidateNotNull( nameof( comdatRef ) );
+            comdatRef.ValidateNotDefault( nameof( comdatRef ) );
 
             Module = module;
             ComdatHandle = comdatRef;

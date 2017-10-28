@@ -3,42 +3,29 @@
 // </copyright>
 
 using System;
+using System.Collections.Generic;
 
 namespace Llvm.NET.Native
 {
     internal struct LLVMSymbolIteratorRef
-        : ILlvmHandle
+        : IEquatable<LLVMSymbolIteratorRef>
     {
-        public IntPtr Handle { get; }
-
-        public static LLVMSymbolIteratorRef Zero = new LLVMSymbolIteratorRef( IntPtr.Zero );
-
         public override int GetHashCode( ) => Handle.GetHashCode( );
 
-        public override bool Equals( object obj )
-        {
-            if( obj is LLVMSymbolIteratorRef )
-            {
-                return Equals( ( LLVMSymbolIteratorRef )obj );
-            }
-
-            if( obj is IntPtr )
-            {
-                return Handle.Equals( obj );
-            }
-
-            return base.Equals( obj );
-        }
+        public override bool Equals( object obj ) => !( obj is null ) && ( obj is LLVMSymbolIteratorRef r ) && r.Handle == Handle;
 
         public bool Equals( LLVMSymbolIteratorRef other ) => Handle == other.Handle;
 
-        public static bool operator ==( LLVMSymbolIteratorRef lhs, LLVMSymbolIteratorRef rhs ) => lhs.Equals( rhs );
+        public static bool operator ==( LLVMSymbolIteratorRef lhs, LLVMSymbolIteratorRef rhs )
+            => EqualityComparer<LLVMSymbolIteratorRef>.Default.Equals( lhs, rhs );
 
-        public static bool operator !=( LLVMSymbolIteratorRef lhs, LLVMSymbolIteratorRef rhs ) => !lhs.Equals( rhs );
+        public static bool operator !=( LLVMSymbolIteratorRef lhs, LLVMSymbolIteratorRef rhs ) => !( lhs == rhs );
 
         internal LLVMSymbolIteratorRef( IntPtr pointer )
         {
             Handle = pointer;
         }
+
+        private readonly IntPtr Handle;
     }
 }

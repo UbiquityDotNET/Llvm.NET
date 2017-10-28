@@ -7,6 +7,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using Llvm.NET.Native;
+using Llvm.NET.Native.Handles;
 using Llvm.NET.Values;
 using Ubiquity.ArgValidators;
 
@@ -147,7 +148,7 @@ namespace Llvm.NET
 
         private bool AddComdat( LLVMComdatRef comdatRef )
         {
-            comdatRef.Handle.ValidateNotNull( nameof( comdatRef ) );
+            comdatRef.ValidateNotDefault( nameof( comdatRef ) );
             var comdat = new Comdat( Module, comdatRef );
             InternalComdatMap.Add( comdat.Name, comdat );
             return true;

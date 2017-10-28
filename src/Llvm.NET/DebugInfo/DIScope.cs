@@ -14,7 +14,7 @@ namespace Llvm.NET.DebugInfo
             get
             {
                 var handle = NativeMethods.LLVMDIScopeGetFile( MetadataHandle );
-                if( handle == LLVMMetadataRef.Zero )
+                if( handle == default )
                 {
                     return null;
                 }

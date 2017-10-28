@@ -100,7 +100,7 @@ namespace Llvm.NET.Values
                     throw new ArgumentException( "Subprogram does not describe this Function" );
                 }
 
-                NativeMethods.LLVMFunctionSetSubprogram( ValueHandle, value?.MetadataHandle ?? LLVMMetadataRef.Zero );
+                NativeMethods.LLVMFunctionSetSubprogram( ValueHandle, value?.MetadataHandle ?? default );
             }
         }
 
@@ -130,7 +130,7 @@ namespace Llvm.NET.Values
         {
             LLVMBasicBlockRef firstBlock = NativeMethods.LLVMGetFirstBasicBlock( ValueHandle );
             BasicBlock retVal;
-            if( firstBlock.Handle == IntPtr.Zero )
+            if( firstBlock == default )
             {
                 retVal = AppendBasicBlock( name );
             }
@@ -167,7 +167,7 @@ namespace Llvm.NET.Values
                 retVal = AppendBasicBlock( name );
             }
 
-            Debug.Assert( retVal.ContainingFunction.ValueHandle.Handle == ValueHandle.Handle, "Expected block parented to this function" );
+            Debug.Assert( retVal.ContainingFunction.ValueHandle == ValueHandle, "Expected block parented to this function" );
             return retVal;
         }
 
