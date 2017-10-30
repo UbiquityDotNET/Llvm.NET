@@ -1223,18 +1223,6 @@ references:
   commentId: Overload:Llvm.NET.Context.CreateStructType
   fullName: Llvm.NET.Context.CreateStructType
   nameWithType: Context.CreateStructType
-- uid: Llvm.NET.Context.Dispose
-  name: Dispose()
-  href: api/Llvm.NET.Context.Dispose.html#Llvm_NET_Context_Dispose
-  commentId: M:Llvm.NET.Context.Dispose
-  fullName: Llvm.NET.Context.Dispose()
-  nameWithType: Context.Dispose()
-- uid: Llvm.NET.Context.Dispose*
-  name: Dispose
-  href: api/Llvm.NET.Context.Dispose.html
-  commentId: Overload:Llvm.NET.Context.Dispose
-  fullName: Llvm.NET.Context.Dispose
-  nameWithType: Context.Dispose
 - uid: Llvm.NET.Context.DoubleType
   name: DoubleType
   href: api/Llvm.NET.Context.DoubleType.html#Llvm_NET_Context_DoubleType
@@ -1247,18 +1235,6 @@ references:
   commentId: Overload:Llvm.NET.Context.DoubleType
   fullName: Llvm.NET.Context.DoubleType
   nameWithType: Context.DoubleType
-- uid: Llvm.NET.Context.Finalize
-  name: Finalize()
-  href: api/Llvm.NET.Context.Finalize.html#Llvm_NET_Context_Finalize
-  commentId: M:Llvm.NET.Context.Finalize
-  fullName: Llvm.NET.Context.Finalize()
-  nameWithType: Context.Finalize()
-- uid: Llvm.NET.Context.Finalize*
-  name: Finalize
-  href: api/Llvm.NET.Context.Finalize.html
-  commentId: Overload:Llvm.NET.Context.Finalize
-  fullName: Llvm.NET.Context.Finalize
-  nameWithType: Context.Finalize
 - uid: Llvm.NET.Context.FloatType
   name: FloatType
   href: api/Llvm.NET.Context.FloatType.html#Llvm_NET_Context_FloatType
@@ -1388,6 +1364,18 @@ references:
   commentId: Overload:Llvm.NET.Context.Int8Type
   fullName: Llvm.NET.Context.Int8Type
   nameWithType: Context.Int8Type
+- uid: Llvm.NET.Context.InternalDispose(System.Boolean)
+  name: InternalDispose(Boolean)
+  href: api/Llvm.NET.Context.InternalDispose.html#Llvm_NET_Context_InternalDispose_System_Boolean_
+  commentId: M:Llvm.NET.Context.InternalDispose(System.Boolean)
+  fullName: Llvm.NET.Context.InternalDispose(System.Boolean)
+  nameWithType: Context.InternalDispose(Boolean)
+- uid: Llvm.NET.Context.InternalDispose*
+  name: InternalDispose
+  href: api/Llvm.NET.Context.InternalDispose.html
+  commentId: Overload:Llvm.NET.Context.InternalDispose
+  fullName: Llvm.NET.Context.InternalDispose
+  nameWithType: Context.InternalDispose
 - uid: Llvm.NET.Context.IsDisposed
   name: IsDisposed
   href: api/Llvm.NET.Context.IsDisposed.html#Llvm_NET_Context_IsDisposed
@@ -6028,6 +6016,60 @@ references:
   fullName.vb: Llvm.NET.DebugInfo.TupleTypedArrayWrapper(Of T).Tuple
   nameWithType: TupleTypedArrayWrapper<T>.Tuple
   nameWithType.vb: TupleTypedArrayWrapper(Of T).Tuple
+- uid: Llvm.NET.DisposableObject
+  name: DisposableObject
+  href: api/Llvm.NET.DisposableObject.html
+  commentId: T:Llvm.NET.DisposableObject
+  fullName: Llvm.NET.DisposableObject
+  nameWithType: DisposableObject
+- uid: Llvm.NET.DisposableObject.Dispose
+  name: Dispose()
+  href: api/Llvm.NET.DisposableObject.Dispose.html#Llvm_NET_DisposableObject_Dispose
+  commentId: M:Llvm.NET.DisposableObject.Dispose
+  fullName: Llvm.NET.DisposableObject.Dispose()
+  nameWithType: DisposableObject.Dispose()
+- uid: Llvm.NET.DisposableObject.Dispose*
+  name: Dispose
+  href: api/Llvm.NET.DisposableObject.Dispose.html
+  commentId: Overload:Llvm.NET.DisposableObject.Dispose
+  fullName: Llvm.NET.DisposableObject.Dispose
+  nameWithType: DisposableObject.Dispose
+- uid: Llvm.NET.DisposableObject.Finalize
+  name: Finalize()
+  href: api/Llvm.NET.DisposableObject.Finalize.html#Llvm_NET_DisposableObject_Finalize
+  commentId: M:Llvm.NET.DisposableObject.Finalize
+  fullName: Llvm.NET.DisposableObject.Finalize()
+  nameWithType: DisposableObject.Finalize()
+- uid: Llvm.NET.DisposableObject.Finalize*
+  name: Finalize
+  href: api/Llvm.NET.DisposableObject.Finalize.html
+  commentId: Overload:Llvm.NET.DisposableObject.Finalize
+  fullName: Llvm.NET.DisposableObject.Finalize
+  nameWithType: DisposableObject.Finalize
+- uid: Llvm.NET.DisposableObject.InternalDispose(System.Boolean)
+  name: InternalDispose(Boolean)
+  href: api/Llvm.NET.DisposableObject.InternalDispose.html#Llvm_NET_DisposableObject_InternalDispose_System_Boolean_
+  commentId: M:Llvm.NET.DisposableObject.InternalDispose(System.Boolean)
+  fullName: Llvm.NET.DisposableObject.InternalDispose(System.Boolean)
+  nameWithType: DisposableObject.InternalDispose(Boolean)
+- uid: Llvm.NET.DisposableObject.InternalDispose*
+  name: InternalDispose
+  href: api/Llvm.NET.DisposableObject.InternalDispose.html
+  commentId: Overload:Llvm.NET.DisposableObject.InternalDispose
+  fullName: Llvm.NET.DisposableObject.InternalDispose
+  nameWithType: DisposableObject.InternalDispose
+- uid: Llvm.NET.DisposableObject.IsDisposed
+  name: IsDisposed
+  href: api/Llvm.NET.DisposableObject.IsDisposed.html#Llvm_NET_DisposableObject_IsDisposed
+  commentId: P:Llvm.NET.DisposableObject.IsDisposed
+  fullName: Llvm.NET.DisposableObject.IsDisposed
+  nameWithType: DisposableObject.IsDisposed
+- uid: Llvm.NET.DisposableObject.IsDisposed*
+  name: IsDisposed
+  href: api/Llvm.NET.DisposableObject.IsDisposed.html
+  commentId: Overload:Llvm.NET.DisposableObject.IsDisposed
+  fullName: Llvm.NET.DisposableObject.IsDisposed
+  nameWithType: DisposableObject.IsDisposed
 - uid: Llvm.NET.ExtensiblePropertyContainer
   name: ExtensiblePropertyContainer
   href: api/Llvm.NET.ExtensiblePropertyContainer.html
@@ -8164,156 +8206,6 @@ references:
   commentId: F:Llvm.NET.JIT.EngineKind.Jit
   fullName: Llvm.NET.JIT.EngineKind.Jit
   nameWithType: EngineKind.Jit
-- uid: Llvm.NET.JIT.ExecutionEngine
-  name: ExecutionEngine
-  href: api/Llvm.NET.JIT.ExecutionEngine.html
-  commentId: T:Llvm.NET.JIT.ExecutionEngine
-  fullName: Llvm.NET.JIT.ExecutionEngine
-  nameWithType: ExecutionEngine
-- uid: Llvm.NET.JIT.ExecutionEngine.#ctor(Llvm.NET.BitcodeModule,Llvm.NET.JIT.EngineKind)
-  name: ExecutionEngine(BitcodeModule, EngineKind)
-  href: api/Llvm.NET.JIT.ExecutionEngine.-ctor.html#Llvm_NET_JIT_ExecutionEngine__ctor_Llvm_NET_BitcodeModule_Llvm_NET_JIT_EngineKind_
-  commentId: M:Llvm.NET.JIT.ExecutionEngine.#ctor(Llvm.NET.BitcodeModule,Llvm.NET.JIT.EngineKind)
-  fullName: Llvm.NET.JIT.ExecutionEngine.ExecutionEngine(Llvm.NET.BitcodeModule, Llvm.NET.JIT.EngineKind)
-  nameWithType: ExecutionEngine.ExecutionEngine(BitcodeModule, EngineKind)
-- uid: Llvm.NET.JIT.ExecutionEngine.#ctor(Llvm.NET.BitcodeModule,Llvm.NET.JIT.EngineKind,Llvm.NET.CodeGenOpt)
-  name: ExecutionEngine(BitcodeModule, EngineKind, CodeGenOpt)
-  href: api/Llvm.NET.JIT.ExecutionEngine.-ctor.html#Llvm_NET_JIT_ExecutionEngine__ctor_Llvm_NET_BitcodeModule_Llvm_NET_JIT_EngineKind_Llvm_NET_CodeGenOpt_
-  commentId: M:Llvm.NET.JIT.ExecutionEngine.#ctor(Llvm.NET.BitcodeModule,Llvm.NET.JIT.EngineKind,Llvm.NET.CodeGenOpt)
-  fullName: Llvm.NET.JIT.ExecutionEngine.ExecutionEngine(Llvm.NET.BitcodeModule, Llvm.NET.JIT.EngineKind, Llvm.NET.CodeGenOpt)
-  nameWithType: ExecutionEngine.ExecutionEngine(BitcodeModule, EngineKind, CodeGenOpt)
-- uid: Llvm.NET.JIT.ExecutionEngine.#ctor*
-  name: ExecutionEngine
-  href: api/Llvm.NET.JIT.ExecutionEngine.-ctor.html
-  commentId: Overload:Llvm.NET.JIT.ExecutionEngine.#ctor
-  fullName: Llvm.NET.JIT.ExecutionEngine.ExecutionEngine
-  nameWithType: ExecutionEngine.ExecutionEngine
-- uid: Llvm.NET.JIT.ExecutionEngine.AddModule(Llvm.NET.BitcodeModule)
-  name: AddModule(BitcodeModule)
-  href: api/Llvm.NET.JIT.ExecutionEngine.AddModule.html#Llvm_NET_JIT_ExecutionEngine_AddModule_Llvm_NET_BitcodeModule_
-  commentId: M:Llvm.NET.JIT.ExecutionEngine.AddModule(Llvm.NET.BitcodeModule)
-  fullName: Llvm.NET.JIT.ExecutionEngine.AddModule(Llvm.NET.BitcodeModule)
-  nameWithType: ExecutionEngine.AddModule(BitcodeModule)
-- uid: Llvm.NET.JIT.ExecutionEngine.AddModule*
-  name: AddModule
-  href: api/Llvm.NET.JIT.ExecutionEngine.AddModule.html
-  commentId: Overload:Llvm.NET.JIT.ExecutionEngine.AddModule
-  fullName: Llvm.NET.JIT.ExecutionEngine.AddModule
-  nameWithType: ExecutionEngine.AddModule
-- uid: Llvm.NET.JIT.ExecutionEngine.Context
-  name: Context
-  href: api/Llvm.NET.JIT.ExecutionEngine.Context.html#Llvm_NET_JIT_ExecutionEngine_Context
-  commentId: P:Llvm.NET.JIT.ExecutionEngine.Context
-  fullName: Llvm.NET.JIT.ExecutionEngine.Context
-  nameWithType: ExecutionEngine.Context
-- uid: Llvm.NET.JIT.ExecutionEngine.Context*
-  name: Context
-  href: api/Llvm.NET.JIT.ExecutionEngine.Context.html
-  commentId: Overload:Llvm.NET.JIT.ExecutionEngine.Context
-  fullName: Llvm.NET.JIT.ExecutionEngine.Context
-  nameWithType: ExecutionEngine.Context
-- uid: Llvm.NET.JIT.ExecutionEngine.Dispose
-  name: Dispose()
-  href: api/Llvm.NET.JIT.ExecutionEngine.Dispose.html#Llvm_NET_JIT_ExecutionEngine_Dispose
-  commentId: M:Llvm.NET.JIT.ExecutionEngine.Dispose
-  fullName: Llvm.NET.JIT.ExecutionEngine.Dispose()
-  nameWithType: ExecutionEngine.Dispose()
-- uid: Llvm.NET.JIT.ExecutionEngine.Dispose*
-  name: Dispose
-  href: api/Llvm.NET.JIT.ExecutionEngine.Dispose.html
-  commentId: Overload:Llvm.NET.JIT.ExecutionEngine.Dispose
-  fullName: Llvm.NET.JIT.ExecutionEngine.Dispose
-  nameWithType: ExecutionEngine.Dispose
-- uid: Llvm.NET.JIT.ExecutionEngine.GetFunctionDelegate*
-  name: GetFunctionDelegate
-  href: api/Llvm.NET.JIT.ExecutionEngine.GetFunctionDelegate.html
-  commentId: Overload:Llvm.NET.JIT.ExecutionEngine.GetFunctionDelegate
-  fullName: Llvm.NET.JIT.ExecutionEngine.GetFunctionDelegate
-  nameWithType: ExecutionEngine.GetFunctionDelegate
-- uid: Llvm.NET.JIT.ExecutionEngine.GetFunctionDelegate``1(System.String)
-  name: GetFunctionDelegate<T>(String)
-  href: api/Llvm.NET.JIT.ExecutionEngine.GetFunctionDelegate.html#Llvm_NET_JIT_ExecutionEngine_GetFunctionDelegate__1_System_String_
-  commentId: M:Llvm.NET.JIT.ExecutionEngine.GetFunctionDelegate``1(System.String)
-  name.vb: GetFunctionDelegate(Of T)(String)
-  fullName: Llvm.NET.JIT.ExecutionEngine.GetFunctionDelegate<T>(System.String)
-  fullName.vb: Llvm.NET.JIT.ExecutionEngine.GetFunctionDelegate(Of T)(System.String)
-  nameWithType: ExecutionEngine.GetFunctionDelegate<T>(String)
-  nameWithType.vb: ExecutionEngine.GetFunctionDelegate(Of T)(String)
-- uid: Llvm.NET.JIT.ExecutionEngine.RemoveModule(Llvm.NET.BitcodeModule)
-  name: RemoveModule(BitcodeModule)
-  href: api/Llvm.NET.JIT.ExecutionEngine.RemoveModule.html#Llvm_NET_JIT_ExecutionEngine_RemoveModule_Llvm_NET_BitcodeModule_
-  commentId: M:Llvm.NET.JIT.ExecutionEngine.RemoveModule(Llvm.NET.BitcodeModule)
-  fullName: Llvm.NET.JIT.ExecutionEngine.RemoveModule(Llvm.NET.BitcodeModule)
-  nameWithType: ExecutionEngine.RemoveModule(BitcodeModule)
-- uid: Llvm.NET.JIT.ExecutionEngine.RemoveModule*
-  name: RemoveModule
-  href: api/Llvm.NET.JIT.ExecutionEngine.RemoveModule.html
-  commentId: Overload:Llvm.NET.JIT.ExecutionEngine.RemoveModule
-  fullName: Llvm.NET.JIT.ExecutionEngine.RemoveModule
-  nameWithType: ExecutionEngine.RemoveModule
-- uid: Llvm.NET.JIT.ExecutionEngine.RunStaticConstructors
-  name: RunStaticConstructors()
-  href: api/Llvm.NET.JIT.ExecutionEngine.RunStaticConstructors.html#Llvm_NET_JIT_ExecutionEngine_RunStaticConstructors
-  commentId: M:Llvm.NET.JIT.ExecutionEngine.RunStaticConstructors
-  fullName: Llvm.NET.JIT.ExecutionEngine.RunStaticConstructors()
-  nameWithType: ExecutionEngine.RunStaticConstructors()
-- uid: Llvm.NET.JIT.ExecutionEngine.RunStaticConstructors*
-  name: RunStaticConstructors
-  href: api/Llvm.NET.JIT.ExecutionEngine.RunStaticConstructors.html
-  commentId: Overload:Llvm.NET.JIT.ExecutionEngine.RunStaticConstructors
-  fullName: Llvm.NET.JIT.ExecutionEngine.RunStaticConstructors
-  nameWithType: ExecutionEngine.RunStaticConstructors
-- uid: Llvm.NET.JIT.ExecutionEngine.RunStaticDestructors
-  name: RunStaticDestructors()
-  href: api/Llvm.NET.JIT.ExecutionEngine.RunStaticDestructors.html#Llvm_NET_JIT_ExecutionEngine_RunStaticDestructors
-  commentId: M:Llvm.NET.JIT.ExecutionEngine.RunStaticDestructors
-  fullName: Llvm.NET.JIT.ExecutionEngine.RunStaticDestructors()
-  nameWithType: ExecutionEngine.RunStaticDestructors()
-- uid: Llvm.NET.JIT.ExecutionEngine.RunStaticDestructors*
-  name: RunStaticDestructors
-  href: api/Llvm.NET.JIT.ExecutionEngine.RunStaticDestructors.html
-  commentId: Overload:Llvm.NET.JIT.ExecutionEngine.RunStaticDestructors
-  fullName: Llvm.NET.JIT.ExecutionEngine.RunStaticDestructors
-  nameWithType: ExecutionEngine.RunStaticDestructors
-- uid: Llvm.NET.JIT.ExecutionEngine.TargetData
-  name: TargetData
-  href: api/Llvm.NET.JIT.ExecutionEngine.TargetData.html#Llvm_NET_JIT_ExecutionEngine_TargetData
-  commentId: P:Llvm.NET.JIT.ExecutionEngine.TargetData
-  fullName: Llvm.NET.JIT.ExecutionEngine.TargetData
-  nameWithType: ExecutionEngine.TargetData
-- uid: Llvm.NET.JIT.ExecutionEngine.TargetData*
-  name: TargetData
-  href: api/Llvm.NET.JIT.ExecutionEngine.TargetData.html
-  commentId: Overload:Llvm.NET.JIT.ExecutionEngine.TargetData
-  fullName: Llvm.NET.JIT.ExecutionEngine.TargetData
-  nameWithType: ExecutionEngine.TargetData
-- uid: Llvm.NET.JIT.ExecutionEngine.TargetMachine
-  name: TargetMachine
-  href: api/Llvm.NET.JIT.ExecutionEngine.TargetMachine.html#Llvm_NET_JIT_ExecutionEngine_TargetMachine
-  commentId: P:Llvm.NET.JIT.ExecutionEngine.TargetMachine
-  fullName: Llvm.NET.JIT.ExecutionEngine.TargetMachine
-  nameWithType: ExecutionEngine.TargetMachine
-- uid: Llvm.NET.JIT.ExecutionEngine.TargetMachine*
-  name: TargetMachine
-  href: api/Llvm.NET.JIT.ExecutionEngine.TargetMachine.html
-  commentId: Overload:Llvm.NET.JIT.ExecutionEngine.TargetMachine
-  fullName: Llvm.NET.JIT.ExecutionEngine.TargetMachine
-  nameWithType: ExecutionEngine.TargetMachine
-- uid: Llvm.NET.JIT.ExecutionEngine.TryGetFunction(System.String,Llvm.NET.Values.Function@)
-  name: TryGetFunction(String, out Function)
-  href: api/Llvm.NET.JIT.ExecutionEngine.TryGetFunction.html#Llvm_NET_JIT_ExecutionEngine_TryGetFunction_System_String_Llvm_NET_Values_Function__
-  commentId: M:Llvm.NET.JIT.ExecutionEngine.TryGetFunction(System.String,Llvm.NET.Values.Function@)
-  name.vb: TryGetFunction(String, ByRef Function)
-  fullName: Llvm.NET.JIT.ExecutionEngine.TryGetFunction(System.String, out Llvm.NET.Values.Function)
-  fullName.vb: Llvm.NET.JIT.ExecutionEngine.TryGetFunction(System.String, ByRef Llvm.NET.Values.Function)
-  nameWithType: ExecutionEngine.TryGetFunction(String, out Function)
-  nameWithType.vb: ExecutionEngine.TryGetFunction(String, ByRef Function)
-- uid: Llvm.NET.JIT.ExecutionEngine.TryGetFunction*
-  name: TryGetFunction
-  href: api/Llvm.NET.JIT.ExecutionEngine.TryGetFunction.html
-  commentId: Overload:Llvm.NET.JIT.ExecutionEngine.TryGetFunction
-  fullName: Llvm.NET.JIT.ExecutionEngine.TryGetFunction
-  nameWithType: ExecutionEngine.TryGetFunction
 - uid: Llvm.NET.JIT.GenericValue
   name: GenericValue
   href: api/Llvm.NET.JIT.GenericValue.html
@@ -8410,6 +8302,194 @@ references:
   commentId: Overload:Llvm.NET.JIT.GenericValue.ToUInt32
   fullName: Llvm.NET.JIT.GenericValue.ToUInt32
   nameWithType: GenericValue.ToUInt32
+- uid: Llvm.NET.JIT.IExecutionEngine`1
+  name: IExecutionEngine<THandle>
+  href: api/Llvm.NET.JIT.IExecutionEngine-1.html
+  commentId: T:Llvm.NET.JIT.IExecutionEngine`1
+  name.vb: IExecutionEngine(Of THandle)
+  fullName: Llvm.NET.JIT.IExecutionEngine<THandle>
+  fullName.vb: Llvm.NET.JIT.IExecutionEngine(Of THandle)
+  nameWithType: IExecutionEngine<THandle>
+  nameWithType.vb: IExecutionEngine(Of THandle)
+- uid: Llvm.NET.JIT.IExecutionEngine`1.AddModule(Llvm.NET.BitcodeModule)
+  name: AddModule(BitcodeModule)
+  href: api/Llvm.NET.JIT.IExecutionEngine-1.AddModule.html#Llvm_NET_JIT_IExecutionEngine_1_AddModule_Llvm_NET_BitcodeModule_
+  commentId: M:Llvm.NET.JIT.IExecutionEngine`1.AddModule(Llvm.NET.BitcodeModule)
+  fullName: Llvm.NET.JIT.IExecutionEngine<THandle>.AddModule(Llvm.NET.BitcodeModule)
+  fullName.vb: Llvm.NET.JIT.IExecutionEngine(Of THandle).AddModule(Llvm.NET.BitcodeModule)
+  nameWithType: IExecutionEngine<THandle>.AddModule(BitcodeModule)
+  nameWithType.vb: IExecutionEngine(Of THandle).AddModule(BitcodeModule)
+- uid: Llvm.NET.JIT.IExecutionEngine`1.AddModule*
+  name: AddModule
+  href: api/Llvm.NET.JIT.IExecutionEngine-1.AddModule.html
+  commentId: Overload:Llvm.NET.JIT.IExecutionEngine`1.AddModule
+  fullName: Llvm.NET.JIT.IExecutionEngine<THandle>.AddModule
+  fullName.vb: Llvm.NET.JIT.IExecutionEngine(Of THandle).AddModule
+  nameWithType: IExecutionEngine<THandle>.AddModule
+  nameWithType.vb: IExecutionEngine(Of THandle).AddModule
+- uid: Llvm.NET.JIT.IExecutionEngine`1.GetFunctionDelegate*
+  name: GetFunctionDelegate
+  href: api/Llvm.NET.JIT.IExecutionEngine-1.GetFunctionDelegate.html
+  commentId: Overload:Llvm.NET.JIT.IExecutionEngine`1.GetFunctionDelegate
+  fullName: Llvm.NET.JIT.IExecutionEngine<THandle>.GetFunctionDelegate
+  fullName.vb: Llvm.NET.JIT.IExecutionEngine(Of THandle).GetFunctionDelegate
+  nameWithType: IExecutionEngine<THandle>.GetFunctionDelegate
+  nameWithType.vb: IExecutionEngine(Of THandle).GetFunctionDelegate
+- uid: Llvm.NET.JIT.IExecutionEngine`1.GetFunctionDelegate``1(System.String)
+  name: GetFunctionDelegate<T>(String)
+  href: api/Llvm.NET.JIT.IExecutionEngine-1.GetFunctionDelegate.html#Llvm_NET_JIT_IExecutionEngine_1_GetFunctionDelegate__1_System_String_
+  commentId: M:Llvm.NET.JIT.IExecutionEngine`1.GetFunctionDelegate``1(System.String)
+  name.vb: GetFunctionDelegate(Of T)(String)
+  fullName: Llvm.NET.JIT.IExecutionEngine<THandle>.GetFunctionDelegate<T>(System.String)
+  fullName.vb: Llvm.NET.JIT.IExecutionEngine(Of THandle).GetFunctionDelegate(Of T)(System.String)
+  nameWithType: IExecutionEngine<THandle>.GetFunctionDelegate<T>(String)
+  nameWithType.vb: IExecutionEngine(Of THandle).GetFunctionDelegate(Of T)(String)
+- uid: Llvm.NET.JIT.IExecutionEngine`1.RemoveModule(`0)
+  name: RemoveModule(THandle)
+  href: api/Llvm.NET.JIT.IExecutionEngine-1.RemoveModule.html#Llvm_NET_JIT_IExecutionEngine_1_RemoveModule__0_
+  commentId: M:Llvm.NET.JIT.IExecutionEngine`1.RemoveModule(`0)
+  fullName: Llvm.NET.JIT.IExecutionEngine<THandle>.RemoveModule(THandle)
+  fullName.vb: Llvm.NET.JIT.IExecutionEngine(Of THandle).RemoveModule(THandle)
+  nameWithType: IExecutionEngine<THandle>.RemoveModule(THandle)
+  nameWithType.vb: IExecutionEngine(Of THandle).RemoveModule(THandle)
+- uid: Llvm.NET.JIT.IExecutionEngine`1.RemoveModule*
+  name: RemoveModule
+  href: api/Llvm.NET.JIT.IExecutionEngine-1.RemoveModule.html
+  commentId: Overload:Llvm.NET.JIT.IExecutionEngine`1.RemoveModule
+  fullName: Llvm.NET.JIT.IExecutionEngine<THandle>.RemoveModule
+  fullName.vb: Llvm.NET.JIT.IExecutionEngine(Of THandle).RemoveModule
+  nameWithType: IExecutionEngine<THandle>.RemoveModule
+  nameWithType.vb: IExecutionEngine(Of THandle).RemoveModule
+- uid: Llvm.NET.JIT.IExecutionEngine`1.TargetMachine
+  name: TargetMachine
+  href: api/Llvm.NET.JIT.IExecutionEngine-1.TargetMachine.html#Llvm_NET_JIT_IExecutionEngine_1_TargetMachine
+  commentId: P:Llvm.NET.JIT.IExecutionEngine`1.TargetMachine
+  fullName: Llvm.NET.JIT.IExecutionEngine<THandle>.TargetMachine
+  fullName.vb: Llvm.NET.JIT.IExecutionEngine(Of THandle).TargetMachine
+  nameWithType: IExecutionEngine<THandle>.TargetMachine
+  nameWithType.vb: IExecutionEngine(Of THandle).TargetMachine
+- uid: Llvm.NET.JIT.IExecutionEngine`1.TargetMachine*
+  name: TargetMachine
+  href: api/Llvm.NET.JIT.IExecutionEngine-1.TargetMachine.html
+  commentId: Overload:Llvm.NET.JIT.IExecutionEngine`1.TargetMachine
+  fullName: Llvm.NET.JIT.IExecutionEngine<THandle>.TargetMachine
+  fullName.vb: Llvm.NET.JIT.IExecutionEngine(Of THandle).TargetMachine
+  nameWithType: IExecutionEngine<THandle>.TargetMachine
+  nameWithType.vb: IExecutionEngine(Of THandle).TargetMachine
+- uid: Llvm.NET.JIT.LegacyExecutionEngine
+  name: LegacyExecutionEngine
+  href: api/Llvm.NET.JIT.LegacyExecutionEngine.html
+  commentId: T:Llvm.NET.JIT.LegacyExecutionEngine
+  fullName: Llvm.NET.JIT.LegacyExecutionEngine
+  nameWithType: LegacyExecutionEngine
+- uid: Llvm.NET.JIT.LegacyExecutionEngine.#ctor(Llvm.NET.JIT.EngineKind)
+  name: LegacyExecutionEngine(EngineKind)
+  href: api/Llvm.NET.JIT.LegacyExecutionEngine.-ctor.html#Llvm_NET_JIT_LegacyExecutionEngine__ctor_Llvm_NET_JIT_EngineKind_
+  commentId: M:Llvm.NET.JIT.LegacyExecutionEngine.#ctor(Llvm.NET.JIT.EngineKind)
+  fullName: Llvm.NET.JIT.LegacyExecutionEngine.LegacyExecutionEngine(Llvm.NET.JIT.EngineKind)
+  nameWithType: LegacyExecutionEngine.LegacyExecutionEngine(EngineKind)
+- uid: Llvm.NET.JIT.LegacyExecutionEngine.#ctor(Llvm.NET.JIT.EngineKind,Llvm.NET.CodeGenOpt)
+  name: LegacyExecutionEngine(EngineKind, CodeGenOpt)
+  href: api/Llvm.NET.JIT.LegacyExecutionEngine.-ctor.html#Llvm_NET_JIT_LegacyExecutionEngine__ctor_Llvm_NET_JIT_EngineKind_Llvm_NET_CodeGenOpt_
+  commentId: M:Llvm.NET.JIT.LegacyExecutionEngine.#ctor(Llvm.NET.JIT.EngineKind,Llvm.NET.CodeGenOpt)
+  fullName: Llvm.NET.JIT.LegacyExecutionEngine.LegacyExecutionEngine(Llvm.NET.JIT.EngineKind, Llvm.NET.CodeGenOpt)
+  nameWithType: LegacyExecutionEngine.LegacyExecutionEngine(EngineKind, CodeGenOpt)
+- uid: Llvm.NET.JIT.LegacyExecutionEngine.#ctor*
+  name: LegacyExecutionEngine
+  href: api/Llvm.NET.JIT.LegacyExecutionEngine.-ctor.html
+  commentId: Overload:Llvm.NET.JIT.LegacyExecutionEngine.#ctor
+  fullName: Llvm.NET.JIT.LegacyExecutionEngine.LegacyExecutionEngine
+  nameWithType: LegacyExecutionEngine.LegacyExecutionEngine
+- uid: Llvm.NET.JIT.LegacyExecutionEngine.AddModule(Llvm.NET.BitcodeModule)
+  name: AddModule(BitcodeModule)
+  href: api/Llvm.NET.JIT.LegacyExecutionEngine.AddModule.html#Llvm_NET_JIT_LegacyExecutionEngine_AddModule_Llvm_NET_BitcodeModule_
+  commentId: M:Llvm.NET.JIT.LegacyExecutionEngine.AddModule(Llvm.NET.BitcodeModule)
+  fullName: Llvm.NET.JIT.LegacyExecutionEngine.AddModule(Llvm.NET.BitcodeModule)
+  nameWithType: LegacyExecutionEngine.AddModule(BitcodeModule)
+- uid: Llvm.NET.JIT.LegacyExecutionEngine.AddModule*
+  name: AddModule
+  href: api/Llvm.NET.JIT.LegacyExecutionEngine.AddModule.html
+  commentId: Overload:Llvm.NET.JIT.LegacyExecutionEngine.AddModule
+  fullName: Llvm.NET.JIT.LegacyExecutionEngine.AddModule
+  nameWithType: LegacyExecutionEngine.AddModule
+- uid: Llvm.NET.JIT.LegacyExecutionEngine.Dispose
+  name: Dispose()
+  href: api/Llvm.NET.JIT.LegacyExecutionEngine.Dispose.html#Llvm_NET_JIT_LegacyExecutionEngine_Dispose
+  commentId: M:Llvm.NET.JIT.LegacyExecutionEngine.Dispose
+  fullName: Llvm.NET.JIT.LegacyExecutionEngine.Dispose()
+  nameWithType: LegacyExecutionEngine.Dispose()
+- uid: Llvm.NET.JIT.LegacyExecutionEngine.Dispose*
+  name: Dispose
+  href: api/Llvm.NET.JIT.LegacyExecutionEngine.Dispose.html
+  commentId: Overload:Llvm.NET.JIT.LegacyExecutionEngine.Dispose
+  fullName: Llvm.NET.JIT.LegacyExecutionEngine.Dispose
+  nameWithType: LegacyExecutionEngine.Dispose
+- uid: Llvm.NET.JIT.LegacyExecutionEngine.GetFunctionDelegate*
+  name: GetFunctionDelegate
+  href: api/Llvm.NET.JIT.LegacyExecutionEngine.GetFunctionDelegate.html
+  commentId: Overload:Llvm.NET.JIT.LegacyExecutionEngine.GetFunctionDelegate
+  fullName: Llvm.NET.JIT.LegacyExecutionEngine.GetFunctionDelegate
+  nameWithType: LegacyExecutionEngine.GetFunctionDelegate
+- uid: Llvm.NET.JIT.LegacyExecutionEngine.GetFunctionDelegate``1(System.String)
+  name: GetFunctionDelegate<T>(String)
+  href: api/Llvm.NET.JIT.LegacyExecutionEngine.GetFunctionDelegate.html#Llvm_NET_JIT_LegacyExecutionEngine_GetFunctionDelegate__1_System_String_
+  commentId: M:Llvm.NET.JIT.LegacyExecutionEngine.GetFunctionDelegate``1(System.String)
+  name.vb: GetFunctionDelegate(Of T)(String)
+  fullName: Llvm.NET.JIT.LegacyExecutionEngine.GetFunctionDelegate<T>(System.String)
+  fullName.vb: Llvm.NET.JIT.LegacyExecutionEngine.GetFunctionDelegate(Of T)(System.String)
+  nameWithType: LegacyExecutionEngine.GetFunctionDelegate<T>(String)
+  nameWithType.vb: LegacyExecutionEngine.GetFunctionDelegate(Of T)(String)
+- uid: Llvm.NET.JIT.LegacyExecutionEngine.RemoveModule(System.Int32)
+  name: RemoveModule(Int32)
+  href: api/Llvm.NET.JIT.LegacyExecutionEngine.RemoveModule.html#Llvm_NET_JIT_LegacyExecutionEngine_RemoveModule_System_Int32_
+  commentId: M:Llvm.NET.JIT.LegacyExecutionEngine.RemoveModule(System.Int32)
+  fullName: Llvm.NET.JIT.LegacyExecutionEngine.RemoveModule(System.Int32)
+  nameWithType: LegacyExecutionEngine.RemoveModule(Int32)
+- uid: Llvm.NET.JIT.LegacyExecutionEngine.RemoveModule*
+  name: RemoveModule
+  href: api/Llvm.NET.JIT.LegacyExecutionEngine.RemoveModule.html
+  commentId: Overload:Llvm.NET.JIT.LegacyExecutionEngine.RemoveModule
+  fullName: Llvm.NET.JIT.LegacyExecutionEngine.RemoveModule
+  nameWithType: LegacyExecutionEngine.RemoveModule
+- uid: Llvm.NET.JIT.LegacyExecutionEngine.TargetData
+  name: TargetData
+  href: api/Llvm.NET.JIT.LegacyExecutionEngine.TargetData.html#Llvm_NET_JIT_LegacyExecutionEngine_TargetData
+  commentId: P:Llvm.NET.JIT.LegacyExecutionEngine.TargetData
+  fullName: Llvm.NET.JIT.LegacyExecutionEngine.TargetData
+  nameWithType: LegacyExecutionEngine.TargetData
+- uid: Llvm.NET.JIT.LegacyExecutionEngine.TargetData*
+  name: TargetData
+  href: api/Llvm.NET.JIT.LegacyExecutionEngine.TargetData.html
+  commentId: Overload:Llvm.NET.JIT.LegacyExecutionEngine.TargetData
+  fullName: Llvm.NET.JIT.LegacyExecutionEngine.TargetData
+  nameWithType: LegacyExecutionEngine.TargetData
+- uid: Llvm.NET.JIT.LegacyExecutionEngine.TargetMachine
+  name: TargetMachine
+  href: api/Llvm.NET.JIT.LegacyExecutionEngine.TargetMachine.html#Llvm_NET_JIT_LegacyExecutionEngine_TargetMachine
+  commentId: P:Llvm.NET.JIT.LegacyExecutionEngine.TargetMachine
+  fullName: Llvm.NET.JIT.LegacyExecutionEngine.TargetMachine
+  nameWithType: LegacyExecutionEngine.TargetMachine
+- uid: Llvm.NET.JIT.LegacyExecutionEngine.TargetMachine*
+  name: TargetMachine
+  href: api/Llvm.NET.JIT.LegacyExecutionEngine.TargetMachine.html
+  commentId: Overload:Llvm.NET.JIT.LegacyExecutionEngine.TargetMachine
+  fullName: Llvm.NET.JIT.LegacyExecutionEngine.TargetMachine
+  nameWithType: LegacyExecutionEngine.TargetMachine
+- uid: Llvm.NET.JIT.LegacyExecutionEngine.TryGetFunction(System.String,Llvm.NET.Values.Function@)
+  name: TryGetFunction(String, out Function)
+  href: api/Llvm.NET.JIT.LegacyExecutionEngine.TryGetFunction.html#Llvm_NET_JIT_LegacyExecutionEngine_TryGetFunction_System_String_Llvm_NET_Values_Function__
+  commentId: M:Llvm.NET.JIT.LegacyExecutionEngine.TryGetFunction(System.String,Llvm.NET.Values.Function@)
+  name.vb: TryGetFunction(String, ByRef Function)
+  fullName: Llvm.NET.JIT.LegacyExecutionEngine.TryGetFunction(System.String, out Llvm.NET.Values.Function)
+  fullName.vb: Llvm.NET.JIT.LegacyExecutionEngine.TryGetFunction(System.String, ByRef Llvm.NET.Values.Function)
+  nameWithType: LegacyExecutionEngine.TryGetFunction(String, out Function)
+  nameWithType.vb: LegacyExecutionEngine.TryGetFunction(String, ByRef Function)
+- uid: Llvm.NET.JIT.LegacyExecutionEngine.TryGetFunction*
+  name: TryGetFunction
+  href: api/Llvm.NET.JIT.LegacyExecutionEngine.TryGetFunction.html
+  commentId: Overload:Llvm.NET.JIT.LegacyExecutionEngine.TryGetFunction
+  fullName: Llvm.NET.JIT.LegacyExecutionEngine.TryGetFunction
+  nameWithType: LegacyExecutionEngine.TryGetFunction
 - uid: Llvm.NET.Linkage
   name: Linkage
   href: api/Llvm.NET.Linkage.html
