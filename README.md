@@ -36,16 +36,15 @@ C API with a C# adapter layer to provide the full experience .NET developers exp
 tedious one very little application code required changes.
 
 ### Platform Support
-Currently LLVM.NET supports Win32 and x64 buids targeting the full desktop framework v4.7, though it is intended
-to support .NET Standard 2.0 so that more platforms are possible in the future. To keep life simpler the Llvm.NET
-nuget package is built for the "AnyCPU" platform and references the LibLLVM.NET package to bring in the native
-binary support. Llvm.NET contains code to dynamically detect the platform it is running on and load the appropriate
-DLL. This allows applications to build for AnyCPU without creating multiple build configurations and release vehicles
-for applications.
+Currently LLVM.NET supports Win32 and x64 buids targeting the full desktop framework v4.7 and .NET standard 2.0. Idealy other platforms are possible in the future. To keep life simpler the Llvm.NET nuget package is built for the "AnyCPU" platform and references the LibLLVM.NET package to bring in the native binary support. Llvm.NET contains code to dynamically detect the platform it is running on and load the appropriate DLL. This allows applications to build for AnyCPU without creating multiple build configurations and release vehicles for applications. (Any new platforms would need to update the dynamic loading support and include the appropriate P/Invokable binaries)
+
+### CI Build Nuget Packages
+The CI Builds on AppVeyor provide a [Nuget Feed](https://ci.appveyor.com/nuget/Ubiquity.Llvm.NET
+) of the NuGet package built from the lates source in the master branch. 
 
 ### Building Llvm.NET
 #### Pre-requsites
-* Visual Studio 2017 (15.3+)
+* Visual Studio 2017 (15.4+)
 * Llvm.Libs Nuget Package
   - To build the Llvm.Libs nuget package locally you can use the build support from the [Llvm.Libs ](https://github.com/UbiquityDotNET/Llvm.Libs) repository
 
