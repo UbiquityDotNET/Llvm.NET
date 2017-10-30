@@ -3,42 +3,29 @@
 // </copyright>
 
 using System;
+using System.Collections.Generic;
 
 namespace Llvm.NET.Native
 {
     internal struct LLVMNamedMDNodeRef
-        : ILlvmHandle
+        : IEquatable<LLVMNamedMDNodeRef>
     {
-        public IntPtr Handle { get; }
-
-        public static LLVMNamedMDNodeRef Zero = new LLVMNamedMDNodeRef( IntPtr.Zero );
-
         public override int GetHashCode( ) => Handle.GetHashCode( );
 
-        public override bool Equals( object obj )
-        {
-            if( obj is LLVMNamedMDNodeRef )
-            {
-                return Equals( ( LLVMNamedMDNodeRef )obj );
-            }
-
-            if( obj is IntPtr )
-            {
-                return Handle.Equals( obj );
-            }
-
-            return base.Equals( obj );
-        }
+        public override bool Equals( object obj ) => !( obj is null ) && ( obj is LLVMNamedMDNodeRef r ) && r.Handle == Handle;
 
         public bool Equals( LLVMNamedMDNodeRef other ) => Handle == other.Handle;
 
-        public static bool operator ==( LLVMNamedMDNodeRef lhs, LLVMNamedMDNodeRef rhs ) => lhs.Equals( rhs );
+        public static bool operator ==( LLVMNamedMDNodeRef lhs, LLVMNamedMDNodeRef rhs )
+            => EqualityComparer<LLVMNamedMDNodeRef>.Default.Equals( lhs, rhs );
 
-        public static bool operator !=( LLVMNamedMDNodeRef lhs, LLVMNamedMDNodeRef rhs ) => !lhs.Equals( rhs );
+        public static bool operator !=( LLVMNamedMDNodeRef lhs, LLVMNamedMDNodeRef rhs ) => !( lhs == rhs );
 
         internal LLVMNamedMDNodeRef(IntPtr pointer)
         {
             Handle = pointer;
         }
+
+        private readonly IntPtr Handle;
     }
 }

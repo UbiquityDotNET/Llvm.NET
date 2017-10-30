@@ -1,6 +1,10 @@
 function Find-VSInstance
 {
-    Install-Module VSSetup -Scope CurrentUser -Force | Out-Null
+    $setup = Get-Module VSSetup -ListAvailable
+    if(!$setup)
+    {
+        Install-Module VSSetup -Scope CurrentUser -Force | Out-Null
+    }
     return Get-VSSetupInstance -All | select -First 1
 }
 

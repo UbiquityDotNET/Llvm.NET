@@ -587,6 +587,7 @@
     <Rule Id="IDE0003" Action="Info" />
     <Rule Id="IDE0004" Action="Info" />
     <Rule Id="IDE0005" Action="Info" />
+    <Rule Id="IDE0034" Action="Warning" />
     <Rule Id="IDE0022" Action="None" />
     <Rule Id="IDE0022WithoutSuggestion" Action="None" />
   </Rules>
@@ -597,6 +598,7 @@
     <Rule Id="RECS0070" Action="None" />
     <Rule Id="RECS0129" Action="None" />
     <Rule Id="RECS0145" Action="None" />
+    <Rule Id="RECS0083" Action="Error" />
   </Rules>
   <Rules AnalyzerId="StyleCop.Analyzers" RuleNamespace="StyleCop.Analyzers">
     <Rule Id="SA1000" Action="None" />
@@ -732,7 +734,7 @@
     <Rule Id="SA1127" Action="Error" />
     <Rule Id="SA1125" Action="Info" />
     <Rule Id="SA1120" Action="Error" />
-    <Rule Id="SA1119" Action="Error" />
+    <Rule Id="SA1119" Action="Hidden" />
     <Rule Id="SA1117" Action="Error" />
     <Rule Id="SA1114" Action="Error" />
     <Rule Id="SA1108" Action="Error" />

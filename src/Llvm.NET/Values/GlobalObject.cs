@@ -36,7 +36,7 @@ namespace Llvm.NET.Values
             get
             {
                 LLVMComdatRef comdatRef = NativeMethods.LLVMGlobalObjectGetComdat( ValueHandle );
-                if( comdatRef.Handle.IsNull( ) )
+                if( comdatRef == default )
                 {
                     return null;
                 }

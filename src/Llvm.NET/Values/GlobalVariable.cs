@@ -41,7 +41,7 @@ namespace Llvm.NET.Values
             get
             {
                 var handle = NativeMethods.LLVMGetInitializer( ValueHandle );
-                if( handle.Handle == IntPtr.Zero )
+                if( handle == default )
                 {
                     return null;
                 }

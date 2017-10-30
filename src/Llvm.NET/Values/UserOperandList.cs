@@ -39,7 +39,7 @@ namespace Llvm.NET.Values
             for( uint i = 0; i < Count; ++i )
             {
                 LLVMValueRef val = NativeMethods.LLVMGetOperand( Owner.ValueHandle, i );
-                if( val.Handle == IntPtr.Zero )
+                if( val == default )
                 {
                     yield break;
                 }
@@ -55,6 +55,6 @@ namespace Llvm.NET.Values
             Owner = owner;
         }
 
-        private User Owner;
+        private readonly User Owner;
     }
 }

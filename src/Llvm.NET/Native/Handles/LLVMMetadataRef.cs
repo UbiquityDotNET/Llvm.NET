@@ -3,43 +3,49 @@
 // </copyright>
 
 using System;
+using System.Collections.Generic;
+using System.Diagnostics;
+using System.Runtime.InteropServices;
 
 namespace Llvm.NET.Native
 {
     internal struct LLVMMetadataRef
         : IEquatable<LLVMMetadataRef>
-        , ILlvmHandle
     {
-        public IntPtr Handle { get; }
-
-        public static LLVMMetadataRef Zero = new LLVMMetadataRef( IntPtr.Zero );
-
         public override int GetHashCode( ) => Handle.GetHashCode( );
 
-        public override bool Equals( object obj )
-        {
-            if( obj is LLVMMetadataRef )
-            {
-                return Equals( ( LLVMMetadataRef )obj );
-            }
-
-            if( obj is IntPtr )
-            {
-                return Handle.Equals( obj );
-            }
-
-            return base.Equals( obj );
-        }
+        public override bool Equals( object obj ) => !( obj is null ) && ( obj is LLVMMetadataRef r ) && r.Handle == Handle;
 
         public bool Equals( LLVMMetadataRef other ) => Handle == other.Handle;
 
-        public static bool operator ==( LLVMMetadataRef lhs, LLVMMetadataRef rhs ) => lhs.Equals( rhs );
+        public static bool operator ==( LLVMMetadataRef lhs, LLVMMetadataRef rhs )
+            => EqualityComparer<LLVMMetadataRef>.Default.Equals( lhs, rhs );
 
-        public static bool operator !=( LLVMMetadataRef lhs, LLVMMetadataRef rhs ) => !lhs.Equals( rhs );
+        public static bool operator !=( LLVMMetadataRef lhs, LLVMMetadataRef rhs ) => !( lhs == rhs );
+
+        public Context Context
+        {
+            get
+            {
+                if( Handle == default )
+                {
+                    return null;
+                }
+
+                var hContext = LLVMGetNodeContext( this );
+                Debug.Assert( hContext != default, "Should not get a null pointer from LLVM" );
+                return ( Context )hContext;
+            }
+        }
 
         internal LLVMMetadataRef( IntPtr pointer )
         {
             Handle = pointer;
         }
+
+        [DllImport( NativeMethods.LibraryPath, CallingConvention = CallingConvention.Cdecl, BestFitMapping = false, ThrowOnUnmappableChar = true )]
+        private static extern LLVMContextAlias LLVMGetNodeContext( LLVMMetadataRef /*MDNode*/ node );
+
+        private readonly IntPtr Handle;
     }
 }

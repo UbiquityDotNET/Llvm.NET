@@ -6,14 +6,13 @@ using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using JetBrains.Annotations;
-using Llvm.NET.Native;
 
-#pragma warning disable SA1649
+// interface and common base implementation are a matched pair
+#pragma warning disable SA1649 // File name must match first type name
 
 namespace Llvm.NET
 {
     internal interface IHandleInterning<THandle, TMappedType>
-        where THandle : ILlvmHandle
     {
         TMappedType GetItemFor( THandle handle, Context context );
 
@@ -22,7 +21,6 @@ namespace Llvm.NET
 
     internal class HandleInterningMap<THandle, TMappedType>
         : IHandleInterning<THandle, TMappedType>
-        where THandle : ILlvmHandle
     {
         public HandleInterningMap( Func<THandle, Context, TMappedType> itemFactory, [CanBeNull] Action<TMappedType> disposer = null )
         {
@@ -32,7 +30,7 @@ namespace Llvm.NET
 
         public TMappedType GetItemFor( THandle handle, Context context )
         {
-            if( handle.Handle.IsNull() )
+            if( EqualityComparer<THandle>.Default.Equals( handle, default ) )
             {
                 return default;
             }
@@ -62,6 +60,7 @@ namespace Llvm.NET
 
         private Func<THandle, Context, TMappedType> ItemFactory;
         private Action<TMappedType> ItemDisposer;
-        private IDictionary<THandle, TMappedType> HandleMap = new ConcurrentDictionary<THandle, TMappedType>();
+        private IDictionary<THandle, TMappedType> HandleMap
+            = new ConcurrentDictionary<THandle, TMappedType>( EqualityComparer<THandle>.Default );
     }
 }

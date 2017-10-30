@@ -26,7 +26,7 @@ namespace Llvm.NET.Values
             get
             {
                 LLVMUseRef current = NativeMethods.LLVMGetFirstUse( ValueHandle );
-                while( current.Handle != IntPtr.Zero )
+                while( current != default )
                 {
                     // TODO: intern the use instances?
                     yield return new Use( current );
@@ -41,6 +41,6 @@ namespace Llvm.NET.Values
             OperandList = new UserOperandList( this );
         }
 
-        private UserOperandList OperandList;
+        private readonly UserOperandList OperandList;
     }
 }

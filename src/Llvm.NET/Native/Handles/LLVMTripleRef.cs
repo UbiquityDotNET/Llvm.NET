@@ -10,7 +10,7 @@ namespace Llvm.NET.Native
     // typedef struct LLVMOpaqueTriple* LLVMTripleRef;
     [SecurityCritical]
     internal class LLVMTripleRef
-        : SafeHandleNullIsInvalid
+        : LlvmObjectRef
     {
         internal LLVMTripleRef( )
             : base( true )
@@ -21,12 +21,6 @@ namespace Llvm.NET.Native
             : base( owner )
         {
             SetHandle( handle );
-        }
-
-        [System.Diagnostics.CodeAnalysis.SuppressMessage( "Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode", Justification = "Required for marshaling support (used via reflection)" )]
-        internal LLVMTripleRef( IntPtr handle )
-            : this( handle, false )
-        {
         }
 
         [SecurityCritical]

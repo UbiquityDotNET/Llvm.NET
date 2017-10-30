@@ -49,7 +49,7 @@ namespace Llvm.NET.Instructions
             get
             {
                 var handle = LLVMGetInsertBlock( BuilderHandle );
-                if( handle.Handle.IsNull( ) )
+                if( handle == default )
                 {
                     return null;
                 }

@@ -25,7 +25,7 @@ namespace Llvm.NET.Values
             get
             {
                 var parent = NativeMethods.LLVMGetBasicBlockParent( BlockHandle );
-                if( parent.Handle == IntPtr.Zero )
+                if( parent == default )
                 {
                     return null;
                 }
@@ -43,7 +43,7 @@ namespace Llvm.NET.Values
             get
             {
                 var firstInst = NativeMethods.LLVMGetFirstInstruction( BlockHandle );
-                if( firstInst.Handle == IntPtr.Zero )
+                if( firstInst == default )
                 {
                     return null;
                 }
@@ -58,7 +58,7 @@ namespace Llvm.NET.Values
             get
             {
                 var lastInst = NativeMethods.LLVMGetLastInstruction( BlockHandle );
-                if( lastInst.Handle == IntPtr.Zero)
+                if( lastInst == default )
                 {
                     return null;
                 }
@@ -77,7 +77,7 @@ namespace Llvm.NET.Values
             get
             {
                 var terminator = NativeMethods.LLVMGetBasicBlockTerminator( BlockHandle );
-                if( terminator.Handle == IntPtr.Zero)
+                if( terminator == default )
                 {
                     return null;
                 }
@@ -117,7 +117,7 @@ namespace Llvm.NET.Values
             }
 
             var hInst = NativeMethods.LLVMGetNextInstruction( instruction.ValueHandle );
-            return hInst.Handle == IntPtr.Zero ? null : FromHandle<Instruction>( hInst );
+            return hInst == default ? null : FromHandle<Instruction>( hInst );
         }
 
         internal BasicBlock( LLVMValueRef valueRef )

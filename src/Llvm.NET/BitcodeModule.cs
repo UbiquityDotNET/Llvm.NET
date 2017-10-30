@@ -10,6 +10,7 @@ using System.IO;
 using JetBrains.Annotations;
 using Llvm.NET.DebugInfo;
 using Llvm.NET.Native;
+using Llvm.NET.Native.Handles;
 using Llvm.NET.Types;
 using Llvm.NET.Values;
 using Ubiquity.ArgValidators;
@@ -41,7 +42,7 @@ namespace Llvm.NET
         {
             moduleId.ValidateNotNull( nameof(moduleId) );
             ModuleHandle = LLVMModuleCreateWithNameInContext( moduleId, context.ContextHandle );
-            if( ModuleHandle.Handle == IntPtr.Zero )
+            if( ModuleHandle == default )
             {
                 throw new InternalCodeGeneratorException( "Could not create module in context" );
             }
@@ -87,7 +88,7 @@ namespace Llvm.NET
             Dispose( false );
         }
 
-        public bool IsDisposed => ModuleHandle.Handle.IsNull( );
+        public bool IsDisposed => ModuleHandle == default;
 
         /// <summary>Gets or sets the name of the source file generating this module</summary>
         public string SourceFileName
@@ -123,12 +124,12 @@ namespace Llvm.NET
             get
             {
                 ValidateHandle( );
-                if( ModuleHandle.Handle == IntPtr.Zero )
+                if( ModuleHandle == default )
                 {
                     return null;
                 }
 
-                return ModuleHandle.GetContextFor( );
+                return ModuleHandle.Context;
             }
         }
 
@@ -219,7 +220,7 @@ namespace Llvm.NET
             {
                 ValidateHandle( );
                 var current = LLVMGetFirstGlobal( ModuleHandle );
-                while( current.Handle != IntPtr.Zero )
+                while( current != default )
                 {
                     yield return Value.FromHandle( current );
                     current = LLVMGetNextGlobal( current );
@@ -234,7 +235,7 @@ namespace Llvm.NET
             {
                 ValidateHandle( );
                 var current = LLVMGetFirstFunction( ModuleHandle );
-                while( current.Handle != IntPtr.Zero )
+                while( current != default )
                 {
                     yield return Value.FromHandle<Function>( current );
                     current = LLVMGetNextFunction( current );
@@ -341,7 +342,7 @@ namespace Llvm.NET
             name.ValidateNotNullOrWhiteSpace( nameof( name ) );
 
             var funcRef = LLVMGetNamedFunction( ModuleHandle, name );
-            if( funcRef.Handle == IntPtr.Zero )
+            if( funcRef == default )
             {
                 return null;
             }
@@ -568,7 +569,7 @@ namespace Llvm.NET
             name.ValidateNotNullOrWhiteSpace( nameof( name ) );
 
             var hType = LLVMGetTypeByName( ModuleHandle, name );
-            return hType.Handle == IntPtr.Zero ? null : TypeRef.FromHandle( hType );
+            return hType == default ? null : TypeRef.FromHandle( hType );
         }
 
         /// <summary>Retrieves a named global from the module</summary>
@@ -580,7 +581,7 @@ namespace Llvm.NET
             name.ValidateNotNullOrWhiteSpace( nameof( name ) );
 
             var hGlobal = LLVMGetNamedGlobal( ModuleHandle, name );
-            if( hGlobal.Handle == IntPtr.Zero )
+            if( hGlobal == default )
             {
                 return null;
             }
@@ -626,7 +627,7 @@ namespace Llvm.NET
             value.ValidateNotNull( nameof( value ) );
             name.ValidateNotNullOrWhiteSpace( nameof( name ) );
 
-            LLVMAddNamedMetadataOperand2( ModuleHandle, name, value?.MetadataHandle ?? LLVMMetadataRef.Zero );
+            LLVMAddNamedMetadataOperand2( ModuleHandle, name, value?.MetadataHandle ?? default );
         }
 
         /// <summary>Adds an llvm.ident metadata string to the module</summary>
@@ -812,7 +813,7 @@ namespace Llvm.NET
 
         internal BitcodeModule( LLVMModuleRef handle )
         {
-            handle.Handle.ValidateNotNull( nameof( handle ) );
+            handle.ValidateNotDefault( nameof( handle ) );
 
             ModuleHandle = handle;
             LazyDiBuilder = new Lazy<DebugInfoBuilder>( ( ) => new DebugInfoBuilder( this ) );
@@ -824,6 +825,7 @@ namespace Llvm.NET
 
         internal LLVMModuleRef Detach( )
         {
+            Context.RemoveModule( this );
             var retVal = ModuleHandle;
             ModuleHandle = default;
             return retVal;
@@ -831,8 +833,8 @@ namespace Llvm.NET
 
         internal static BitcodeModule FromHandle( LLVMModuleRef nativeHandle )
         {
-            nativeHandle.Handle.ValidateNotNull( nameof( nativeHandle ) );
-            var context = nativeHandle.GetContextFor( );
+            nativeHandle.ValidateNotDefault( nameof( nativeHandle ) );
+            var context = nativeHandle.Context;
             return context.GetModuleFor( nativeHandle );
         }
 
@@ -854,7 +856,7 @@ namespace Llvm.NET
             // finalized after the context has already run its
             // finalizer, which would cause an access violation
             // in the native LLVM layer.
-            if( disposing && ModuleHandle.Handle != IntPtr.Zero )
+            if( disposing && ModuleHandle != default )
             {
                 // remove the module handle from the module cache.
                 Context.RemoveModule( this );

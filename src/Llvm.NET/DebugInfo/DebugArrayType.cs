@@ -33,7 +33,7 @@ namespace Llvm.NET.DebugInfo
             llvmType.ValidateNotNull( nameof( llvmType ) );
             elementType.ValidateNotNull( nameof( elementType ) );
 
-            if( llvmType.ElementType.GetTypeRef().Handle != elementType.GetTypeRef().Handle )
+            if( llvmType.ElementType.GetTypeRef() != elementType.GetTypeRef() )
             {
                 throw new ArgumentException( "elementType doesn't match array element type" );
             }

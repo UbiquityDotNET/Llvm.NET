@@ -3,42 +3,29 @@
 // </copyright>
 
 using System;
+using System.Collections.Generic;
 
 namespace Llvm.NET.Native
 {
     internal struct LLVMRelocationIteratorRef
-        : ILlvmHandle
+        : IEquatable<LLVMRelocationIteratorRef>
     {
-        public IntPtr Handle { get; }
-
-        public static LLVMRelocationIteratorRef Zero = new LLVMRelocationIteratorRef( IntPtr.Zero );
-
         public override int GetHashCode( ) => Handle.GetHashCode( );
 
-        public override bool Equals( object obj )
-        {
-            if( obj is LLVMRelocationIteratorRef )
-            {
-                return Equals( ( LLVMRelocationIteratorRef )obj );
-            }
-
-            if( obj is IntPtr )
-            {
-                return Handle.Equals( obj );
-            }
-
-            return base.Equals( obj );
-        }
+        public override bool Equals( object obj ) => !( obj is null ) && ( obj is LLVMRelocationIteratorRef r ) && r.Handle == Handle;
 
         public bool Equals( LLVMRelocationIteratorRef other ) => Handle == other.Handle;
 
-        public static bool operator ==( LLVMRelocationIteratorRef lhs, LLVMRelocationIteratorRef rhs ) => lhs.Equals( rhs );
+        public static bool operator ==( LLVMRelocationIteratorRef lhs, LLVMRelocationIteratorRef rhs )
+            => EqualityComparer<LLVMRelocationIteratorRef>.Default.Equals( lhs, rhs );
 
-        public static bool operator !=( LLVMRelocationIteratorRef lhs, LLVMRelocationIteratorRef rhs ) => !lhs.Equals( rhs );
+        public static bool operator !=( LLVMRelocationIteratorRef lhs, LLVMRelocationIteratorRef rhs ) => !( lhs == rhs );
 
         internal LLVMRelocationIteratorRef( IntPtr pointer )
         {
             Handle = pointer;
         }
+
+        private readonly IntPtr Handle;
     }
 }

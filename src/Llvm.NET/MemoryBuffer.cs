@@ -6,6 +6,7 @@ using System;
 using System.Diagnostics.CodeAnalysis;
 using System.Runtime.InteropServices;
 using Llvm.NET.Native;
+using Llvm.NET.Native.Handles;
 using Ubiquity.ArgValidators;
 
 using static Llvm.NET.Native.NativeMethods;
@@ -33,7 +34,7 @@ namespace Llvm.NET
         {
             get
             {
-                if( BufferHandle.Handle == IntPtr.Zero )
+                if( BufferHandle == default )
                 {
                     return 0;
                 }
@@ -44,7 +45,7 @@ namespace Llvm.NET
 
         public void Dispose( )
         {
-            if( BufferHandle.Handle != IntPtr.Zero )
+            if( BufferHandle == default )
             {
                 LLVMDisposeMemoryBuffer( BufferHandle );
                 BufferHandle_ = default;
@@ -61,7 +62,7 @@ namespace Llvm.NET
 
         internal MemoryBuffer( LLVMMemoryBufferRef bufferHandle )
         {
-            bufferHandle.Handle.ValidateNotNull( nameof( bufferHandle ) );
+            bufferHandle.ValidateNotDefault( nameof( bufferHandle ) );
 
             BufferHandle_ = bufferHandle;
         }

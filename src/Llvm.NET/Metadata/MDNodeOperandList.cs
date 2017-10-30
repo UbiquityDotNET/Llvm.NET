@@ -40,7 +40,7 @@ namespace Llvm.NET
             for( uint i = 0; i < Count; ++i )
             {
                 LLVMMDOperandRef handle = NativeMethods.LLVMMDNodeGetOperand( OwningNode.MetadataHandle, i );
-                if( handle.Handle == IntPtr.Zero )
+                if( handle == default )
                 {
                     yield break;
                 }
@@ -56,6 +56,6 @@ namespace Llvm.NET
             OwningNode = owningNode;
         }
 
-        private MDNode OwningNode;
+        private readonly MDNode OwningNode;
     }
 }

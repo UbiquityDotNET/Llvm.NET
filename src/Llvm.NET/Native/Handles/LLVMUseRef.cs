@@ -3,42 +3,29 @@
 // </copyright>
 
 using System;
+using System.Collections.Generic;
 
 namespace Llvm.NET.Native
 {
     internal struct LLVMUseRef
-        : ILlvmHandle
+        : IEquatable<LLVMUseRef>
     {
-        public IntPtr Handle { get; }
-
-        public static LLVMUseRef Zero = new LLVMUseRef( IntPtr.Zero );
-
         public override int GetHashCode( ) => Handle.GetHashCode( );
 
-        public override bool Equals( object obj )
-        {
-            if( obj is LLVMUseRef )
-            {
-                return Equals( ( LLVMUseRef )obj );
-            }
-
-            if( obj is IntPtr )
-            {
-                return Handle.Equals( obj );
-            }
-
-            return base.Equals( obj );
-        }
+        public override bool Equals( object obj ) => !( obj is null ) && ( obj is LLVMUseRef r ) && r.Handle == Handle;
 
         public bool Equals( LLVMUseRef other ) => Handle == other.Handle;
 
-        public static bool operator ==( LLVMUseRef lhs, LLVMUseRef rhs ) => lhs.Equals( rhs );
+        public static bool operator ==( LLVMUseRef lhs, LLVMUseRef rhs )
+            => EqualityComparer<LLVMUseRef>.Default.Equals( lhs, rhs );
 
-        public static bool operator !=( LLVMUseRef lhs, LLVMUseRef rhs ) => !lhs.Equals( rhs );
+        public static bool operator !=( LLVMUseRef lhs, LLVMUseRef rhs ) => !( lhs == rhs );
 
         internal LLVMUseRef( IntPtr pointer )
         {
             Handle = pointer;
         }
+
+        private readonly IntPtr Handle;
     }
 }

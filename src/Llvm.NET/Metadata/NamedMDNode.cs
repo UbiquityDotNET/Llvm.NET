@@ -68,7 +68,7 @@ namespace Llvm.NET
                 OwningNode = owner;
             }
 
-            private NamedMDNode OwningNode;
+            private readonly NamedMDNode OwningNode;
         }
     }
 }

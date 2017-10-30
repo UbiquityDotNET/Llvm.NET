@@ -1,4 +1,4 @@
-﻿// <copyright file="LLVMPassRegistryRef.cs" company=".NET Foundation">
+﻿// <copyright file="LLVMPassRegistryRefRef.cs" company=".NET Foundation">
 // Copyright (c) .NET Foundation. All rights reserved.
 // </copyright>
 
@@ -9,30 +9,29 @@ namespace Llvm.NET.Native
 {
     [SecurityCritical]
     internal class LLVMPassRegistryRef
-        : SafeHandleNullIsInvalid
+        : LlvmObjectRef
     {
-        internal LLVMPassRegistryRef( )
-            : base( true )
-        {
-        }
-
         internal LLVMPassRegistryRef( IntPtr handle, bool owner )
             : base( owner )
         {
             SetHandle( handle );
         }
 
-        [System.Diagnostics.CodeAnalysis.SuppressMessage( "Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode", Justification = "Required for marshaling support (used via reflection)" )]
-        internal LLVMPassRegistryRef( IntPtr handle )
-            : this( handle, false )
-        {
-        }
-
         [SecurityCritical]
         protected override bool ReleaseHandle( )
         {
-            NativeMethods.LLVMPassRegistryDispose( handle );
+            if( !IsInvalid && !IsClosed )
+            {
+                NativeMethods.LLVMPassRegistryDispose( handle );
+                SetHandleAsInvalid( );
+            }
+
             return true;
+        }
+
+        private LLVMPassRegistryRef( )
+            : base( true )
+        {
         }
     }
 }

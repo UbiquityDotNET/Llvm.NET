@@ -3,41 +3,29 @@
 // </copyright>
 
 using System;
+using System.Collections.Generic;
 
 namespace Llvm.NET.Native
 {
     internal struct LLVMOrcTargetAddress
+        : IEquatable<LLVMOrcTargetAddress>
     {
-        public static LLVMOrcTargetAddress Zero = new LLVMOrcTargetAddress( 0 );
+        public override int GetHashCode( ) => Handle.GetHashCode( );
 
-        public override int GetHashCode( ) => Value.GetHashCode( );
+        public override bool Equals( object obj ) => !( obj is null ) && ( obj is LLVMOrcTargetAddress r ) && r.Handle == Handle;
 
-        public override bool Equals( object obj )
+        public bool Equals( LLVMOrcTargetAddress other ) => Handle == other.Handle;
+
+        public static bool operator ==( LLVMOrcTargetAddress lhs, LLVMOrcTargetAddress rhs )
+            => EqualityComparer<LLVMOrcTargetAddress>.Default.Equals( lhs, rhs );
+
+        public static bool operator !=( LLVMOrcTargetAddress lhs, LLVMOrcTargetAddress rhs ) => !( lhs == rhs );
+
+        internal LLVMOrcTargetAddress( UInt32 value )
         {
-            if( obj is LLVMOrcTargetAddress )
-            {
-                return Equals( ( LLVMOrcTargetAddress )obj );
-            }
-
-            if( obj is IntPtr )
-            {
-                return Value.Equals( obj );
-            }
-
-            return base.Equals( obj );
+            Handle = value;
         }
 
-        public bool Equals( LLVMOrcTargetAddress other ) => Value == other.Value;
-
-        public static bool operator ==( LLVMOrcTargetAddress lhs, LLVMOrcTargetAddress rhs ) => lhs.Equals( rhs );
-
-        public static bool operator !=( LLVMOrcTargetAddress lhs, LLVMOrcTargetAddress rhs ) => !lhs.Equals( rhs );
-
-        internal LLVMOrcTargetAddress( ulong value )
-        {
-            Value = value;
-        }
-
-        internal ulong Value { get; }
+        internal UInt32 Handle { get; }
     }
 }

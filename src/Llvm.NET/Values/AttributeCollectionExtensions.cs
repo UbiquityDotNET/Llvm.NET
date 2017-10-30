@@ -22,7 +22,7 @@ namespace Llvm.NET.Values
                          select a
                        ).FirstOrDefault( );
 
-            if( attr == default( AttributeValue ) )
+            if( attr == default )
             {
                 return false;
             }

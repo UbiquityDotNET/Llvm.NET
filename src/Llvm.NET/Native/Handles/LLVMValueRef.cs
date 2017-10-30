@@ -3,42 +3,47 @@
 // </copyright>
 
 using System;
+using System.Collections.Generic;
+using System.Diagnostics;
+
+using static Llvm.NET.Native.NativeMethods;
 
 namespace Llvm.NET.Native
 {
     internal struct LLVMValueRef
-        : ILlvmHandle
+        : IEquatable<LLVMValueRef>
     {
-        public IntPtr Handle { get; }
-
-        public static LLVMValueRef Zero = new LLVMValueRef( IntPtr.Zero );
-
         public override int GetHashCode( ) => Handle.GetHashCode( );
 
-        public override bool Equals( object obj )
-        {
-            if( obj is LLVMValueRef )
-            {
-                return Equals( ( LLVMValueRef )obj );
-            }
-
-            if( obj is IntPtr )
-            {
-                return Handle.Equals( obj );
-            }
-
-            return base.Equals( obj );
-        }
+        public override bool Equals( object obj ) => !( obj is null ) && ( obj is LLVMValueRef r ) && r.Handle == Handle;
 
         public bool Equals( LLVMValueRef other ) => Handle == other.Handle;
 
-        public static bool operator ==( LLVMValueRef lhs, LLVMValueRef rhs ) => lhs.Equals( rhs );
+        public static bool operator ==( LLVMValueRef lhs, LLVMValueRef rhs )
+            => EqualityComparer<LLVMValueRef>.Default.Equals( lhs, rhs );
 
-        public static bool operator !=( LLVMValueRef lhs, LLVMValueRef rhs ) => !lhs.Equals( rhs );
+        public static bool operator !=( LLVMValueRef lhs, LLVMValueRef rhs ) => !( lhs == rhs );
+
+        public Context Context
+        {
+            get
+            {
+                if( Handle.IsNull() )
+                {
+                    return null;
+                }
+
+                var hType = LLVMTypeOf( this );
+                Debug.Assert( hType != default, "Should not get a null pointer from LLVM" );
+                return hType.Context;
+            }
+        }
 
         internal LLVMValueRef( IntPtr pointer )
         {
             Handle = pointer;
         }
+
+        private readonly IntPtr Handle;
     }
 }

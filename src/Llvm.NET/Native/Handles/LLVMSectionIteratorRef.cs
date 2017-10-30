@@ -3,42 +3,29 @@
 // </copyright>
 
 using System;
+using System.Collections.Generic;
 
 namespace Llvm.NET.Native
 {
     internal struct LLVMSectionIteratorRef
-        : ILlvmHandle
+        : IEquatable<LLVMSectionIteratorRef>
     {
-        public IntPtr Handle { get; }
-
-        public static LLVMSectionIteratorRef Zero = new LLVMSectionIteratorRef( IntPtr.Zero );
-
         public override int GetHashCode( ) => Handle.GetHashCode( );
 
-        public override bool Equals( object obj )
-        {
-            if( obj is LLVMSectionIteratorRef )
-            {
-                return Equals( ( LLVMSectionIteratorRef )obj );
-            }
-
-            if( obj is IntPtr )
-            {
-                return Handle.Equals( obj );
-            }
-
-            return base.Equals( obj );
-        }
+        public override bool Equals( object obj ) => !( obj is null ) && ( obj is LLVMSectionIteratorRef r ) && r.Handle == Handle;
 
         public bool Equals( LLVMSectionIteratorRef other ) => Handle == other.Handle;
 
-        public static bool operator ==( LLVMSectionIteratorRef lhs, LLVMSectionIteratorRef rhs ) => lhs.Equals( rhs );
+        public static bool operator ==( LLVMSectionIteratorRef lhs, LLVMSectionIteratorRef rhs )
+            => EqualityComparer<LLVMSectionIteratorRef>.Default.Equals( lhs, rhs );
 
-        public static bool operator !=( LLVMSectionIteratorRef lhs, LLVMSectionIteratorRef rhs ) => !lhs.Equals( rhs );
+        public static bool operator !=( LLVMSectionIteratorRef lhs, LLVMSectionIteratorRef rhs ) => !( lhs == rhs );
 
         internal LLVMSectionIteratorRef( IntPtr pointer )
         {
             Handle = pointer;
         }
+
+        private readonly IntPtr Handle;
     }
 }

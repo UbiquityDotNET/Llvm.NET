@@ -208,7 +208,7 @@ namespace Llvm.NET
         {
             lock( TargetDataMap )
             {
-                if( TargetDataMap.TryGetValue( targetDataRef.Handle, out DataLayout retVal ) )
+                if( TargetDataMap.TryGetValue( targetDataRef, out DataLayout retVal ) )
                 {
                     return retVal;
                 }
@@ -224,7 +224,7 @@ namespace Llvm.NET
 
                 try
                 {
-                    TargetDataMap.Add( targetDataRef.Handle, retVal );
+                    TargetDataMap.Add( targetDataRef, retVal );
                 }
                 catch when( cleanOnException( ) )
                 {
@@ -239,7 +239,7 @@ namespace Llvm.NET
 
         protected virtual void Dispose( bool disposing )
         {
-            if( DataLayoutHandle.Handle != IntPtr.Zero && IsDisposable )
+            if( ( DataLayoutHandle != default ) && IsDisposable )
             {
                 LLVMDisposeTargetData( DataLayoutHandle );
                 DataLayoutHandle = default;
@@ -261,6 +261,6 @@ namespace Llvm.NET
 
         // indicates if this instance is disposable
         private readonly bool IsDisposable;
-        private static readonly Dictionary<IntPtr, DataLayout> TargetDataMap = new Dictionary<IntPtr, DataLayout>( );
+        private static readonly Dictionary<LLVMTargetDataRef, DataLayout> TargetDataMap = new Dictionary<LLVMTargetDataRef, DataLayout>( );
     }
 }

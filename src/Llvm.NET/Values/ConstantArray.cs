@@ -50,7 +50,7 @@ namespace Llvm.NET.Values
         /// <returns>Constant representing the array</returns>
         public static Constant From( ITypeRef elementType, IList<Constant> values )
         {
-            if( values.Any( v => v.NativeType.GetTypeRef().Handle != elementType.GetTypeRef( ).Handle ) )
+            if( values.Any( v => v.NativeType.GetTypeRef() != elementType.GetTypeRef( ) ) )
             {
                 throw new ArgumentException( "One or more value(s) types do not match specified array element type" );
             }

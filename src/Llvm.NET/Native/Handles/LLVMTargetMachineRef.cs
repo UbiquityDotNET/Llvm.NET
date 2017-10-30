@@ -3,42 +3,29 @@
 // </copyright>
 
 using System;
+using System.Collections.Generic;
 
 namespace Llvm.NET.Native
 {
     internal struct LLVMTargetMachineRef
-        : ILlvmHandle
+        : IEquatable<LLVMTargetMachineRef>
     {
-        public IntPtr Handle { get; }
-
-        public static LLVMTargetMachineRef Zero = new LLVMTargetMachineRef( IntPtr.Zero );
-
         public override int GetHashCode( ) => Handle.GetHashCode( );
 
-        public override bool Equals( object obj )
-        {
-            if( obj is LLVMTargetMachineRef )
-            {
-                return Equals( ( LLVMTargetMachineRef )obj );
-            }
-
-            if( obj is IntPtr )
-            {
-                return Handle.Equals( obj );
-            }
-
-            return base.Equals( obj );
-        }
+        public override bool Equals( object obj ) => !( obj is null ) && ( obj is LLVMTargetMachineRef r ) && r.Handle == Handle;
 
         public bool Equals( LLVMTargetMachineRef other ) => Handle == other.Handle;
 
-        public static bool operator ==( LLVMTargetMachineRef lhs, LLVMTargetMachineRef rhs ) => lhs.Equals( rhs );
+        public static bool operator ==( LLVMTargetMachineRef lhs, LLVMTargetMachineRef rhs )
+            => EqualityComparer<LLVMTargetMachineRef>.Default.Equals( lhs, rhs );
 
-        public static bool operator !=( LLVMTargetMachineRef lhs, LLVMTargetMachineRef rhs ) => !lhs.Equals( rhs );
+        public static bool operator !=( LLVMTargetMachineRef lhs, LLVMTargetMachineRef rhs ) => !( lhs == rhs );
 
         internal LLVMTargetMachineRef( IntPtr pointer )
         {
             Handle = pointer;
         }
+
+        private readonly IntPtr Handle;
     }
 }

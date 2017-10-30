@@ -67,13 +67,15 @@
         <Compile Include="DebugInfo\DebugType.cs" />
         <Compile Include="DebugInfo\TupleTypedArrayWrapper.cs" />
         <Compile Include="DisposableAction.cs" />
+        <Compile Include="DisposableObject.cs" />
         <Compile Include="ExtensiblePropertyContainer.cs" />
         <Compile Include="ExtensiblePropertyDescriptor.cs" />
         <Compile Include="HandleInterningMap.cs" />
-        <Compile Include="JIT\ExecutionEngine.cs" />
         <Compile Include="JIT\GenericValue.cs" />
+        <Compile Include="JIT\IExecutionEngine.cs" />
+        <Compile Include="JIT\LegacyExecutionEngine.cs" />
         <Compile Include="Native\ContextCache.cs" />
-        <Compile Include="Native\Handles\HandleExtensions.cs" />
+        <Compile Include="Native\Handles\HandleValidation.cs" />
         <Compile Include="Native\Handles\LLVMGenericValueRef.cs" />
         <Compile Include="Native\Handles\LLVMModuleRef.cs" />
         <Compile Include="Native\Handles\LLVMAttributeRef.cs" />
@@ -82,6 +84,7 @@
         <Compile Include="Native\Handles\LLVMDIBuilderRef.cs" />
         <Compile Include="Native\Handles\LLVMMemoryBufferRef.cs" />
         <Compile Include="Native\Handles\LLVMModuleProviderRef.cs" />
+        <Compile Include="Native\Handles\LlvmObjectRef.cs" />
         <Compile Include="Native\Handles\LLVMTypeRef.cs" />
         <Compile Include="Native\Handles\LLVMUseRef.cs" />
         <Compile Include="Native\Handles\LLVMValueRef.cs" />
@@ -148,7 +151,6 @@
         <Compile Include="Native\Handles\LLVMSharedObjectBufferRef.cs" />
         <Compile Include="Native\Handles\LLVMTripleRef.cs" />
         <Compile Include="Native\LLVMVersionInfo.cs" />
-        <Compile Include="Native\Handles\SafeHandleNullIsInvalid.cs" />
         <Compile Include="Native\StringMarshaler.cs" />
         <Compile Include="Native\ValueKind.cs" />
         <Compile Include="Native\WrappedNativeCallback.cs" />
@@ -304,4 +306,9 @@
         <Error Condition="'$(LibLlvmPkgRoot)'==''" Text="DOH!" />
         <Message Condition="'$(LibLlvmPkgRoot)'!=''" Text="LibLlvmPkgRoot=$(LibLlvmPkgRoot)" />
     </Target>
+
+    <Target Name="EnsureLocalNugetFolder" Condition="!EXISTS($(PackageOutputPath))" BeforeTargets="Restore">
+        <MakeDir Directories="$(PackageOutputPath)" />
+    </Target>
+
 </Project>

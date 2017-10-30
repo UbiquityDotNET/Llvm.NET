@@ -4,6 +4,7 @@
 
 using System;
 using Llvm.NET.Native;
+using Llvm.NET.Native.Handles;
 using Ubiquity.ArgValidators;
 
 using static Llvm.NET.Native.NativeMethods;
@@ -47,7 +48,7 @@ namespace Llvm.NET
             get
             {
                 var handle = LLVMCreateTargetDataLayout( TargetMachineHandle );
-                if( handle.Handle == IntPtr.Zero )
+                if( handle == default )
                 {
                     return null;
                 }
@@ -118,7 +119,7 @@ namespace Llvm.NET
 
         internal TargetMachine( LLVMTargetMachineRef targetMachineHandle, bool ownsHandle = true )
         {
-            targetMachineHandle.Handle.ValidateNotNull( nameof( targetMachineHandle ) );
+            targetMachineHandle.ValidateNotDefault( nameof( targetMachineHandle ) );
 
             TargetMachineHandle = targetMachineHandle;
             OwnsHandle = ownsHandle;
@@ -126,7 +127,7 @@ namespace Llvm.NET
 
         internal LLVMTargetMachineRef TargetMachineHandle { get; private set; }
 
-        private bool IsDisposed => TargetMachineHandle.Handle == IntPtr.Zero;
+        private bool IsDisposed => TargetMachineHandle == default;
 
         private bool OwnsHandle { get; }
 

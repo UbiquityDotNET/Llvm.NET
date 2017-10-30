@@ -35,12 +35,12 @@
         -->
         <When Condition="'$(BuildingInsideVisualStudio)'=='true'">
             <ItemGroup>
-                <PackageReference Include="Llvm.NET" Version="[5.0.0-*,6)" />
+                <PackageReference Include="Llvm.NET" Version="[5.0.0-*,6)" IncludeAssets="All" />
             </ItemGroup>
         </When>
         <Otherwise>
             <ItemGroup>
-                <PackageReference Include="Llvm.NET" Version="[$(PackageVersion)]" />
+                <PackageReference Include="Llvm.NET" Version="[$(PackageVersion)]" IncludeAssets="All"/>
             </ItemGroup>
         </Otherwise>
     </Choose>
