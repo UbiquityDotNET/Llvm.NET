@@ -1401,9 +1401,6 @@
                                   <a href="Llvm.NET.TargetMachine.Cpu.html" title="Cpu" class="">Cpu</a>
                                 </li>
                                 <li class="">
-                                  <a href="Llvm.NET.TargetMachine.Dispose.html" title="Dispose" class="">Dispose</a>
-                                </li>
-                                <li class="">
                                   <a href="Llvm.NET.TargetMachine.EmitToBuffer.html" title="EmitToBuffer" class="">EmitToBuffer</a>
                                 </li>
                                 <li class="">
@@ -1413,7 +1410,10 @@
                                   <a href="Llvm.NET.TargetMachine.Features.html" title="Features" class="">Features</a>
                                 </li>
                                 <li class="">
-                                  <a href="Llvm.NET.TargetMachine.Finalize.html" title="Finalize" class="">Finalize</a>
+                                  <a href="Llvm.NET.TargetMachine.InternalDispose.html" title="InternalDispose" class="">InternalDispose</a>
+                                </li>
+                                <li class="">
+                                  <a href="Llvm.NET.TargetMachine.IsDisposed.html" title="IsDisposed" class="">IsDisposed</a>
                                 </li>
                                 <li class="">
                                   <a href="Llvm.NET.TargetMachine.Target.html" title="Target" class="">Target</a>
@@ -1486,6 +1486,9 @@
                                 </li>
                                 <li class="">
                                   <a href="Llvm.NET.Triple.GetHashCode.html" title="GetHashCode" class="">GetHashCode</a>
+                                </li>
+                                <li class="">
+                                  <a href="Llvm.NET.Triple.HostTriple.html" title="HostTriple" class="">HostTriple</a>
                                 </li>
                                 <li class="">
                                   <a href="Llvm.NET.Triple.Normalize.html" title="Normalize" class="">Normalize</a>
@@ -5441,7 +5444,8 @@
     <h5 id="inheritance-Llvm_NET_TargetMachine"><a href="#collapsible-inheritance-Llvm_NET_TargetMachine" class="expander collapsed" data-toggle="collapse" aria-expanded="false">Inheritance</a></h5>
     <div id="collapsible-inheritance-Llvm_NET_TargetMachine" class="collapse collapsed" aria-expanded="false">
       <div class="level0"><a class="xref" href="https://msdn.microsoft.com/en-us/library/system.object(v=vs.110).aspx">Object</a></div>
-      <div class="level1"><span class="xref">TargetMachine</span></div>
+      <div class="level1"><a class="xref" href="Llvm.NET.DisposableObject.html">DisposableObject</a></div>
+      <div class="level2"><span class="xref">TargetMachine</span></div>
     </div>
   </div>
   
@@ -5451,6 +5455,9 @@
           <a href="#collapsible-inheritedMembers-Llvm_NET_TargetMachine" class="expander collapsed" data-toggle="collapse" aria-expanded="false">Inherited Members</a>
       </h5>
       <div id="collapsible-inheritedMembers-Llvm_NET_TargetMachine" class="collapse collapsed" aria-expanded="false">
+          <div>
+              <a class="xref" href="Llvm.NET.DisposableObject.Dispose.html#Llvm_NET_DisposableObject_Dispose">DisposableObject.Dispose()</a>
+          </div>
           <div>
               <a class="xref" href="https://msdn.microsoft.com/en-us/library/7bxwbwt2(v=vs.110).aspx">Object.ToString()</a>
           </div>
@@ -5480,7 +5487,7 @@
   
   <h5 id="Llvm_NET_TargetMachine_syntax">Syntax</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public sealed class TargetMachine : IDisposable</code></pre>
+    <pre><code class="lang-csharp hljs">public sealed class TargetMachine : DisposableObject, IDisposable</code></pre>
   </div>
 
   
@@ -5510,6 +5517,12 @@
         </td>
         <td class="markdown level1 summary"><p>Gets the CPU specific features for this machine</p>
 </td>
+      </tr>
+      <tr>
+        <td id="Llvm_NET_TargetMachine_IsDisposed" data-uid="Llvm.NET.TargetMachine.IsDisposed">
+          <a class="xref" href="Llvm.NET.TargetMachine.IsDisposed.html#Llvm_NET_TargetMachine_IsDisposed">IsDisposed</a>
+        </td>
+        <td class="markdown level1 summary"></td>
       </tr>
       <tr>
         <td id="Llvm_NET_TargetMachine_Target" data-uid="Llvm.NET.TargetMachine.Target">
@@ -5545,12 +5558,6 @@
     </thead>
     <tbody>
       <tr>
-        <td id="Llvm_NET_TargetMachine_Dispose" data-uid="Llvm.NET.TargetMachine.Dispose">
-          <a class="xref" href="Llvm.NET.TargetMachine.Dispose.html#Llvm_NET_TargetMachine_Dispose">Dispose()</a>
-        </td>
-        <td class="markdown level1 summary"></td>
-      </tr>
-      <tr>
         <td id="Llvm_NET_TargetMachine_EmitToBuffer_Llvm_NET_BitcodeModule_Llvm_NET_CodeGenFileType_" data-uid="Llvm.NET.TargetMachine.EmitToBuffer(Llvm.NET.BitcodeModule,Llvm.NET.CodeGenFileType)">
           <a class="xref" href="Llvm.NET.TargetMachine.EmitToBuffer.html#Llvm_NET_TargetMachine_EmitToBuffer_Llvm_NET_BitcodeModule_Llvm_NET_CodeGenFileType_">EmitToBuffer(BitcodeModule, CodeGenFileType)</a>
         </td>
@@ -5565,11 +5572,10 @@
 </td>
       </tr>
       <tr>
-        <td id="Llvm_NET_TargetMachine_Finalize" data-uid="Llvm.NET.TargetMachine.Finalize">
-          <a class="xref" href="Llvm.NET.TargetMachine.Finalize.html#Llvm_NET_TargetMachine_Finalize">Finalize()</a>
+        <td id="Llvm_NET_TargetMachine_InternalDispose_System_Boolean_" data-uid="Llvm.NET.TargetMachine.InternalDispose(System.Boolean)">
+          <a class="xref" href="Llvm.NET.TargetMachine.InternalDispose.html#Llvm_NET_TargetMachine_InternalDispose_System_Boolean_">InternalDispose(Boolean)</a>
         </td>
-        <td class="markdown level1 summary"><p>Disposes the target machine on finalization if not already disposed</p>
-</td>
+        <td class="markdown level1 summary"></td>
       </tr>
     </tbody>
   </table>

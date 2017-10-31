@@ -10251,18 +10251,6 @@ references:
   commentId: Overload:Llvm.NET.TargetMachine.Cpu
   fullName: Llvm.NET.TargetMachine.Cpu
   nameWithType: TargetMachine.Cpu
-- uid: Llvm.NET.TargetMachine.Dispose
-  name: Dispose()
-  href: api/Llvm.NET.TargetMachine.Dispose.html#Llvm_NET_TargetMachine_Dispose
-  commentId: M:Llvm.NET.TargetMachine.Dispose
-  fullName: Llvm.NET.TargetMachine.Dispose()
-  nameWithType: TargetMachine.Dispose()
-- uid: Llvm.NET.TargetMachine.Dispose*
-  name: Dispose
-  href: api/Llvm.NET.TargetMachine.Dispose.html
-  commentId: Overload:Llvm.NET.TargetMachine.Dispose
-  fullName: Llvm.NET.TargetMachine.Dispose
-  nameWithType: TargetMachine.Dispose
 - uid: Llvm.NET.TargetMachine.EmitToBuffer(Llvm.NET.BitcodeModule,Llvm.NET.CodeGenFileType)
   name: EmitToBuffer(BitcodeModule, CodeGenFileType)
   href: api/Llvm.NET.TargetMachine.EmitToBuffer.html#Llvm_NET_TargetMachine_EmitToBuffer_Llvm_NET_BitcodeModule_Llvm_NET_CodeGenFileType_
@@ -10299,18 +10287,30 @@ references:
   commentId: Overload:Llvm.NET.TargetMachine.Features
   fullName: Llvm.NET.TargetMachine.Features
   nameWithType: TargetMachine.Features
-- uid: Llvm.NET.TargetMachine.Finalize
-  name: Finalize()
-  href: api/Llvm.NET.TargetMachine.Finalize.html#Llvm_NET_TargetMachine_Finalize
-  commentId: M:Llvm.NET.TargetMachine.Finalize
-  fullName: Llvm.NET.TargetMachine.Finalize()
-  nameWithType: TargetMachine.Finalize()
-- uid: Llvm.NET.TargetMachine.Finalize*
-  name: Finalize
-  href: api/Llvm.NET.TargetMachine.Finalize.html
-  commentId: Overload:Llvm.NET.TargetMachine.Finalize
-  fullName: Llvm.NET.TargetMachine.Finalize
-  nameWithType: TargetMachine.Finalize
+- uid: Llvm.NET.TargetMachine.InternalDispose(System.Boolean)
+  name: InternalDispose(Boolean)
+  href: api/Llvm.NET.TargetMachine.InternalDispose.html#Llvm_NET_TargetMachine_InternalDispose_System_Boolean_
+  commentId: M:Llvm.NET.TargetMachine.InternalDispose(System.Boolean)
+  fullName: Llvm.NET.TargetMachine.InternalDispose(System.Boolean)
+  nameWithType: TargetMachine.InternalDispose(Boolean)
+- uid: Llvm.NET.TargetMachine.InternalDispose*
+  name: InternalDispose
+  href: api/Llvm.NET.TargetMachine.InternalDispose.html
+  commentId: Overload:Llvm.NET.TargetMachine.InternalDispose
+  fullName: Llvm.NET.TargetMachine.InternalDispose
+  nameWithType: TargetMachine.InternalDispose
+- uid: Llvm.NET.TargetMachine.IsDisposed
+  name: IsDisposed
+  href: api/Llvm.NET.TargetMachine.IsDisposed.html#Llvm_NET_TargetMachine_IsDisposed
+  commentId: P:Llvm.NET.TargetMachine.IsDisposed
+  fullName: Llvm.NET.TargetMachine.IsDisposed
+  nameWithType: TargetMachine.IsDisposed
+- uid: Llvm.NET.TargetMachine.IsDisposed*
+  name: IsDisposed
+  href: api/Llvm.NET.TargetMachine.IsDisposed.html
+  commentId: Overload:Llvm.NET.TargetMachine.IsDisposed
+  fullName: Llvm.NET.TargetMachine.IsDisposed
+  nameWithType: TargetMachine.IsDisposed
 - uid: Llvm.NET.TargetMachine.Target
   name: Target
   href: api/Llvm.NET.TargetMachine.Target.html#Llvm_NET_TargetMachine_Target
@@ -11526,6 +11526,18 @@ references:
   commentId: Overload:Llvm.NET.Triple.GetHashCode
   fullName: Llvm.NET.Triple.GetHashCode
   nameWithType: Triple.GetHashCode
+- uid: Llvm.NET.Triple.HostTriple
+  name: HostTriple
+  href: api/Llvm.NET.Triple.HostTriple.html#Llvm_NET_Triple_HostTriple
+  commentId: P:Llvm.NET.Triple.HostTriple
+  fullName: Llvm.NET.Triple.HostTriple
+  nameWithType: Triple.HostTriple
+- uid: Llvm.NET.Triple.HostTriple*
+  name: HostTriple
+  href: api/Llvm.NET.Triple.HostTriple.html
+  commentId: Overload:Llvm.NET.Triple.HostTriple
+  fullName: Llvm.NET.Triple.HostTriple
+  nameWithType: Triple.HostTriple
 - uid: Llvm.NET.Triple.Normalize(System.String)
   name: Normalize(String)
   href: api/Llvm.NET.Triple.Normalize.html#Llvm_NET_Triple_Normalize_System_String_
