@@ -3,6 +3,7 @@
 // </copyright>
 
 using System;
+using System.Runtime.InteropServices;
 using System.Security;
 
 namespace Llvm.NET.Native
@@ -20,7 +21,7 @@ namespace Llvm.NET.Native
         [SecurityCritical]
         protected override bool ReleaseHandle( )
         {
-            NativeMethods.LLVMOrcDisposeSharedModuleRef( handle );
+            LLVMOrcDisposeSharedModuleRef( handle );
             return true;
         }
 
@@ -28,5 +29,8 @@ namespace Llvm.NET.Native
             : base( true )
         {
         }
+
+        [DllImport( NativeMethods.LibraryPath, CallingConvention = CallingConvention.Cdecl )]
+        private static extern void LLVMOrcDisposeSharedModuleRef( IntPtr SharedMod );
     }
 }

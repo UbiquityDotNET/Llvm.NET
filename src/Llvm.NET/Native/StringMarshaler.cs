@@ -7,8 +7,6 @@ using System.Diagnostics.CodeAnalysis;
 using System.Runtime.InteropServices;
 using System.Text.RegularExpressions;
 
-using static Llvm.NET.Native.NativeMethods;
-
 namespace Llvm.NET.Native
 {
     // use with:
@@ -89,5 +87,11 @@ namespace Llvm.NET.Native
         }
 
         private static readonly Regex LineEndingNormalizingRegEx = new Regex( "(\r\n|\n\r|\r|\n)" );
+
+        [DllImport( NativeMethods.LibraryPath, CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi, ThrowOnUnmappableChar = true, BestFitMapping = false )]
+        private static extern void LLVMOrcDisposeMangledSymbol( IntPtr @MangledSymbol );
+
+        [DllImport( NativeMethods.LibraryPath, CallingConvention = CallingConvention.Cdecl )]
+        private static extern void LLVMDisposeMessage( IntPtr @Message );
     }
 }

@@ -3,6 +3,7 @@
 // </copyright>
 
 using System;
+using System.Runtime.InteropServices;
 using System.Security;
 
 namespace Llvm.NET.Native
@@ -26,8 +27,11 @@ namespace Llvm.NET.Native
         [SecurityCritical]
         protected override bool ReleaseHandle( )
         {
-            NativeMethods.LLVMDisposeTriple( handle );
+            LLVMDisposeTriple( handle );
             return true;
         }
+
+        [DllImport( NativeMethods.LibraryPath, CallingConvention = CallingConvention.Cdecl, BestFitMapping = false, ThrowOnUnmappableChar = true )]
+        private static extern void LLVMDisposeTriple( IntPtr triple );
     }
 }

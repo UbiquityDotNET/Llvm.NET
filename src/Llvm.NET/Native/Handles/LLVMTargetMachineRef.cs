@@ -3,29 +3,42 @@
 // </copyright>
 
 using System;
-using System.Collections.Generic;
+using System.Runtime.InteropServices;
 
 namespace Llvm.NET.Native
 {
-    internal struct LLVMTargetMachineRef
-        : IEquatable<LLVMTargetMachineRef>
+    internal class LLVMTargetMachineRef
+        : LlvmObjectRef
     {
-        public override int GetHashCode( ) => Handle.GetHashCode( );
-
-        public override bool Equals( object obj ) => !( obj is null ) && ( obj is LLVMTargetMachineRef r ) && r.Handle == Handle;
-
-        public bool Equals( LLVMTargetMachineRef other ) => Handle == other.Handle;
-
-        public static bool operator ==( LLVMTargetMachineRef lhs, LLVMTargetMachineRef rhs )
-            => EqualityComparer<LLVMTargetMachineRef>.Default.Equals( lhs, rhs );
-
-        public static bool operator !=( LLVMTargetMachineRef lhs, LLVMTargetMachineRef rhs ) => !( lhs == rhs );
-
-        internal LLVMTargetMachineRef( IntPtr pointer )
+        internal LLVMTargetMachineRef( IntPtr handle, bool owner )
+            : base( owner )
         {
-            Handle = pointer;
+            SetHandle( handle );
         }
 
-        private readonly IntPtr Handle;
+        protected override bool ReleaseHandle( )
+        {
+            LLVMDisposeTargetMachine( handle );
+            return true;
+        }
+
+        private LLVMTargetMachineRef( )
+            : base( true )
+        {
+        }
+
+        [DllImport( NativeMethods.LibraryPath, CallingConvention = CallingConvention.Cdecl )]
+        private static extern void LLVMDisposeTargetMachine( IntPtr targetMachine );
+    }
+
+#pragma warning disable SA1402
+
+    internal class LLVMTargetMachineAlias
+        : LLVMTargetMachineRef
+    {
+        private LLVMTargetMachineAlias( )
+            : base( IntPtr.Zero, false )
+        {
+        }
     }
 }

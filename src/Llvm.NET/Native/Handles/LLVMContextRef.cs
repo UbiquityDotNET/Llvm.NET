@@ -10,6 +10,7 @@ namespace Llvm.NET.Native
     internal class LLVMContextRef
         : LlvmObjectRef
     {
+        // FIXME: Move this out of here to the context as it is a layering violation
         public static explicit operator Context( LLVMContextRef contextRef )
         {
             if( contextRef == default )

@@ -169,6 +169,7 @@ typedef struct LLVMOpaqueTriple* LLVMTripleRef;
 
 LLVMTripleRef LLVMParseTriple( char const* triple );
 void LLVMDisposeTriple( LLVMTripleRef triple );
+LLVMTripleRef LLVMGetHostTriple( );
 
 LLVMBool LLVMTripleOpEqual( LLVMTripleRef lhs, LLVMTripleRef rhs );
 LLVMTripleArchType LLVMTripleGetArchType( LLVMTripleRef triple );

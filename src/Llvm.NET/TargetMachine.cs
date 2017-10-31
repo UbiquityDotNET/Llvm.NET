@@ -13,22 +13,9 @@ namespace Llvm.NET
 {
     /// <summary>Target specific code generation information</summary>
     public sealed class TargetMachine
-        : IDisposable
+        : DisposableObject
     {
-        /// <summary>Disposes the target machine on finalization if not already disposed</summary>
-        ~TargetMachine( )
-        {
-            // Do not change this code. Put cleanup code in Dispose (bool disposing ).
-            DisposeTargetMachine( false );
-        }
-
-        /// <inheritdoc/>
-        public void Dispose( )
-        {
-            // Do not change this code. Put cleanup code in Dispose( bool disposing )
-            DisposeTargetMachine( true );
-            GC.SuppressFinalize( this );
-        }
+        public override bool IsDisposed => ( TargetMachineHandle is null ) || TargetMachineHandle.IsClosed || TargetMachineHandle.IsInvalid;
 
         /// <summary>Gets the target that owns this <see cref="TargetMachine"/></summary>
         public Target Target => Target.FromHandle( LLVMGetTargetMachineTarget( TargetMachineHandle ) );
@@ -117,35 +104,20 @@ namespace Llvm.NET
             return new MemoryBuffer( bufferHandle );
         }
 
-        internal TargetMachine( LLVMTargetMachineRef targetMachineHandle, bool ownsHandle = true )
+        internal TargetMachine( LLVMTargetMachineRef targetMachineHandle )
         {
             targetMachineHandle.ValidateNotDefault( nameof( targetMachineHandle ) );
 
             TargetMachineHandle = targetMachineHandle;
-            OwnsHandle = ownsHandle;
         }
 
         internal LLVMTargetMachineRef TargetMachineHandle { get; private set; }
 
-        private bool IsDisposed => TargetMachineHandle == default;
-
-        private bool OwnsHandle { get; }
-
-        private void DisposeTargetMachine( bool disposing )
+        protected override void InternalDispose( bool disposing )
         {
-            if( !IsDisposed )
+            if( disposing )
             {
-                if( disposing )
-                {
-                    // dispose any managed resources
-                }
-
-                if( OwnsHandle )
-                {
-                    LLVMDisposeTargetMachine( TargetMachineHandle );
-                }
-
-                TargetMachineHandle = default;
+                TargetMachineHandle.Dispose( );
             }
         }
     }
