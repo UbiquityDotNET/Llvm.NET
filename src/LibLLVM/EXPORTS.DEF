@@ -2,6 +2,7 @@ EXPORTS
 ; extensions to standard LLVM-C API
 LLVMParseTriple
 LLVMDisposeTriple
+LLVMGetHostTriple
 LLVMTripleOpEqual
 LLVMTripleGetArchType
 LLVMTripleGetSubArchType

@@ -139,10 +139,10 @@ namespace Llvm.NET.JIT
         {
             get
             {
-                LLVMTargetMachineRef handle = LLVMGetExecutionEngineTargetMachine( EngineHandle );
+                var handle = LLVMGetExecutionEngineTargetMachine( EngineHandle );
 
                 // REVIEW: Consider interning the handle mapping so multiple instances aren't created
-                return new TargetMachine( handle, false );
+                return new TargetMachine( handle );
             }
         }
 

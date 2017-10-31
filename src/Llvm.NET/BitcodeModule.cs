@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
+using System.Runtime.InteropServices;
 using JetBrains.Annotations;
 using Llvm.NET.DebugInfo;
 using Llvm.NET.Native;
@@ -664,7 +665,7 @@ namespace Llvm.NET
         /// <param name="scopeLine">First line of the function's outermost scope, this may not be the same as the first line of the function definition due to source formatting</param>
         /// <param name="debugFlags">Additional flags describing this function</param>
         /// <param name="isOptimized">Flag to indicate if this function is optimized</param>
-        /// <param name="tParam">Param Metadata node</param>
+        /// <param name="tParam">Parameter Metadata node</param>
         /// <param name="decl">Declaration Metadata node</param>
         /// <returns>Function described by the arguments</returns>
         public Function CreateFunction( DIScope scope
@@ -823,6 +824,8 @@ namespace Llvm.NET
 
         internal LLVMModuleRef ModuleHandle { get; private set; }
 
+        internal LLVMSharedModuleRef SharedModuleRef { get; private set; }
+
         internal LLVMModuleRef Detach( )
         {
             Context.RemoveModule( this );
@@ -862,7 +865,7 @@ namespace Llvm.NET
                 Context.RemoveModule( this );
 
                 // if this module was shared with a JIT, just release
-                // the refcount but don't dispose the actual module
+                // the ref-count but don't dispose the actual module
                 if( IsShared )
                 {
                     SharedModuleRef.Close( );
@@ -877,6 +880,9 @@ namespace Llvm.NET
             }
         }
 
+        [DllImport( LibraryPath, CallingConvention = CallingConvention.Cdecl )]
+        private static extern LLVMSharedModuleRef LLVMOrcMakeSharedModule( LLVMModuleRef Mod );
+
         [SuppressMessage( "StyleCop.CSharp.NamingRules"
                         , "SA1310:Field names must not contain underscore"
                         , Justification = "Trailing _ indicates it must not be written to directly even directly"
@@ -886,6 +892,5 @@ namespace Llvm.NET
 
         private readonly ExtensiblePropertyContainer PropertyBag = new ExtensiblePropertyContainer( );
         private readonly Lazy<DebugInfoBuilder> LazyDiBuilder;
-        private LLVMSharedModuleRef SharedModuleRef;
     }
 }

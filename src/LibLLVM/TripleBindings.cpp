@@ -145,6 +145,11 @@ void LLVMDisposeTriple( LLVMTripleRef triple )
     delete unwrap( triple );
 }
 
+LLVMTripleRef LLVMGetHostTriple( )
+{
+    return LLVMParseTriple( LLVM_HOST_TRIPLE );
+}
+
 char const* LLVMTripleAsString( LLVMTripleRef triple, bool normalize )
 {
     Triple& llvmTriple = *unwrap( triple );
@@ -271,3 +276,4 @@ char const* LLVMTripleGetObjectFormatTypeName( LLVMTripleObjectFormatType object
         return LLVMCreateMessage( "" );
     }
 }
+
