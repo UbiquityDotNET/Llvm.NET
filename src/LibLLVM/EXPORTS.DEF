@@ -73,7 +73,9 @@ LLVMGetArgumentIndex
 LLVMGetVersionInfo
 LLVMDIGlobalVarExpGetVariable
 LLVMGlobalVariableAddDebugExpression
+LLVMFunctionAppendBasicBlock
 LLVMExecutionEngineClearGlobalMappingsFromModule
+LLVMContextCreateBasicBlock
 LLVMAttributeToString
 
 ; Debug info functions not part of standard LLVM-C API

@@ -11,6 +11,8 @@ using Llvm.NET.DebugInfo;
 using Llvm.NET.Native;
 using Llvm.NET.Types;
 
+using static Llvm.NET.Native.NativeMethods;
+
 namespace Llvm.NET.Values
 {
     /// <summary>LLVM Function definition</summary>
@@ -19,39 +21,24 @@ namespace Llvm.NET.Values
         , IAttributeAccessor
     {
         /// <summary>Gets the signature type of the function</summary>
-        public IFunctionType Signature => TypeRef.FromHandle<IFunctionType>( NativeMethods.LLVMGetElementType( NativeMethods.LLVMTypeOf( ValueHandle ) ) );
+        public IFunctionType Signature => TypeRef.FromHandle<IFunctionType>( LLVMGetElementType( LLVMTypeOf( ValueHandle ) ) );
 
         /// <summary>Gets the Entry block for this function</summary>
         public BasicBlock EntryBlock
         {
             get
             {
-                if( NativeMethods.LLVMCountBasicBlocks( ValueHandle ) == 0 )
+                if( LLVMCountBasicBlocks( ValueHandle ) == 0 )
                 {
                     return null;
                 }
 
-                return BasicBlock.FromHandle( NativeMethods.LLVMGetEntryBasicBlock( ValueHandle ) );
+                return BasicBlock.FromHandle( LLVMGetEntryBasicBlock( ValueHandle ) );
             }
         }
 
         /// <summary>Gets the basic blocks for the function</summary>
-        public IReadOnlyList<BasicBlock> BasicBlocks
-        {
-            get
-            {
-                uint count = NativeMethods.LLVMCountBasicBlocks( ValueHandle );
-                var buf = new LLVMBasicBlockRef[ count ];
-                if( count > 0 )
-                {
-                    NativeMethods.LLVMGetBasicBlocks( ValueHandle, out buf[ 0 ] );
-                }
-
-                return buf.Select( BasicBlock.FromHandle )
-                          .ToList( )
-                          .AsReadOnly( );
-            }
-        }
+        public ICollection<BasicBlock> BasicBlocks { get; }
 
         /// <summary>Gets the parameters for the function including any method definition specific attributes (i.e. ByVal)</summary>
         public IReadOnlyList<Argument> Parameters => new FunctionParameterList( this );
@@ -59,12 +46,12 @@ namespace Llvm.NET.Values
         /// <summary>Gets or sets the Calling convention for the method</summary>
         public CallingConvention CallingConvention
         {
-            get => ( CallingConvention )NativeMethods.LLVMGetFunctionCallConv( ValueHandle );
-            set => NativeMethods.LLVMSetFunctionCallConv( ValueHandle, ( uint )value );
+            get => ( CallingConvention )LLVMGetFunctionCallConv( ValueHandle );
+            set => LLVMSetFunctionCallConv( ValueHandle, ( uint )value );
         }
 
         /// <summary>Gets the LLVM instrinsicID for the method</summary>
-        public uint IntrinsicId => NativeMethods.LLVMGetIntrinsicID( ValueHandle );
+        public uint IntrinsicId => LLVMGetIntrinsicID( ValueHandle );
 
         /// <summary>Gets a value indicating whether the method signature accepts variable arguments</summary>
         public bool IsVarArg => Signature.IsVarArg;
@@ -77,21 +64,21 @@ namespace Llvm.NET.Values
         {
             get
             {
-                if( !NativeMethods.LLVMHasPersonalityFn( ValueHandle ) )
+                if( !LLVMHasPersonalityFn( ValueHandle ) )
                 {
                     return null;
                 }
 
-                return FromHandle<Function>( NativeMethods.LLVMGetPersonalityFn( ValueHandle ) );
+                return FromHandle<Function>( LLVMGetPersonalityFn( ValueHandle ) );
             }
 
-            set => NativeMethods.LLVMSetPersonalityFn( ValueHandle, value?.ValueHandle ?? new LLVMValueRef( IntPtr.Zero ) );
+            set => LLVMSetPersonalityFn( ValueHandle, value?.ValueHandle ?? new LLVMValueRef( IntPtr.Zero ) );
         }
 
         /// <summary>Gets or sets the debug information for this function</summary>
         public DISubProgram DISubProgram
         {
-            get => MDNode.FromHandle<DISubProgram>( NativeMethods.LLVMFunctionGetSubprogram( ValueHandle ) );
+            get => MDNode.FromHandle<DISubProgram>( LLVMFunctionGetSubprogram( ValueHandle ) );
 
             set
             {
@@ -100,7 +87,7 @@ namespace Llvm.NET.Values
                     throw new ArgumentException( "Subprogram does not describe this Function" );
                 }
 
-                NativeMethods.LLVMFunctionSetSubprogram( ValueHandle, value?.MetadataHandle ?? default );
+                LLVMFunctionSetSubprogram( ValueHandle, value?.MetadataHandle ?? default );
             }
         }
 
@@ -108,8 +95,8 @@ namespace Llvm.NET.Values
         /// <seealso href="xref:llvm_doc_garbagecollection"/>
         public string GcName
         {
-            get => NativeMethods.LLVMGetGC( ValueHandle );
-            set => NativeMethods.LLVMSetGC( ValueHandle, value );
+            get => LLVMGetGC( ValueHandle );
+            set => LLVMSetGC( ValueHandle, value );
         }
 
         public IAttributeDictionary Attributes { get; }
@@ -117,7 +104,7 @@ namespace Llvm.NET.Values
         /// <summary>Verifies the function is valid and all blocks properly terminated</summary>
         public void Verify( )
         {
-            if( NativeMethods.LLVMVerifyFunctionEx( ValueHandle, LLVMVerifierFailureAction.LLVMReturnStatusAction, out string errMsg ).Failed )
+            if( LLVMVerifyFunctionEx( ValueHandle, LLVMVerifierFailureAction.LLVMReturnStatusAction, out string errMsg ).Failed )
             {
                 throw new InternalCodeGeneratorException( errMsg );
             }
@@ -128,7 +115,7 @@ namespace Llvm.NET.Values
         /// <returns><see cref="BasicBlock"/> created and inserted at the beginning of the function</returns>
         public BasicBlock PrependBasicBlock( string name )
         {
-            LLVMBasicBlockRef firstBlock = NativeMethods.LLVMGetFirstBasicBlock( ValueHandle );
+            LLVMBasicBlockRef firstBlock = LLVMGetFirstBasicBlock( ValueHandle );
             BasicBlock retVal;
             if( firstBlock == default )
             {
@@ -136,7 +123,7 @@ namespace Llvm.NET.Values
             }
             else
             {
-                var blockRef = NativeMethods.LLVMInsertBasicBlockInContext( NativeType.Context.ContextHandle, firstBlock, name );
+                var blockRef = LLVMInsertBasicBlockInContext( NativeType.Context.ContextHandle, firstBlock, name );
                 retVal = BasicBlock.FromHandle( blockRef );
             }
 
@@ -148,11 +135,11 @@ namespace Llvm.NET.Values
         /// <returns><see cref="BasicBlock"/> created and inserted onto the end of the function</returns>
         public BasicBlock AppendBasicBlock( string name )
         {
-            LLVMBasicBlockRef blockRef = NativeMethods.LLVMAppendBasicBlockInContext( NativeType.Context.ContextHandle, ValueHandle, name );
+            LLVMBasicBlockRef blockRef = LLVMAppendBasicBlockInContext( NativeType.Context.ContextHandle, ValueHandle, name );
             return BasicBlock.FromHandle( blockRef );
         }
 
-        /// <summary>Retrieves or creates  block by name</summary>
+        /// <summary>Retrieves or creates block by name</summary>
         /// <param name="name">Block name (label) to look for or create</param>
         /// <returns><see cref="BasicBlock"/> If the block was created it is appended to the end of function</returns>
         /// <remarks>
@@ -175,12 +162,12 @@ namespace Llvm.NET.Values
         {
             attrib.VerifyValidOn( index, this );
 
-            NativeMethods.LLVMAddAttributeAtIndex( ValueHandle, ( LLVMAttributeIndex )index, attrib.NativeAttribute );
+            LLVMAddAttributeAtIndex( ValueHandle, ( LLVMAttributeIndex )index, attrib.NativeAttribute );
         }
 
         public uint GetAttributeCountAtIndex( FunctionAttributeIndex index )
         {
-            return NativeMethods.LLVMGetAttributeCountAtIndex( ValueHandle, ( LLVMAttributeIndex )index );
+            return LLVMGetAttributeCountAtIndex( ValueHandle, ( LLVMAttributeIndex )index );
         }
 
         public IEnumerable<AttributeValue> GetAttributesAtIndex( FunctionAttributeIndex index )
@@ -192,14 +179,14 @@ namespace Llvm.NET.Values
             }
 
             var buffer = new LLVMAttributeRef[ count ];
-            NativeMethods.LLVMGetAttributesAtIndex( ValueHandle, ( LLVMAttributeIndex )index, out buffer[0] );
+            LLVMGetAttributesAtIndex( ValueHandle, ( LLVMAttributeIndex )index, out buffer[0] );
             return from attribRef in buffer
                    select AttributeValue.FromHandle( Context, attribRef );
         }
 
         public AttributeValue GetAttributeAtIndex( FunctionAttributeIndex index, AttributeKind kind )
         {
-            var handle = NativeMethods.LLVMGetEnumAttributeAtIndex( ValueHandle, ( LLVMAttributeIndex )index, kind.GetEnumAttributeId( ) );
+            var handle = LLVMGetEnumAttributeAtIndex( ValueHandle, ( LLVMAttributeIndex )index, kind.GetEnumAttributeId( ) );
             return AttributeValue.FromHandle( Context, handle );
         }
 
@@ -210,13 +197,13 @@ namespace Llvm.NET.Values
                 throw new ArgumentException( "name cannot be null or empty", nameof( name ) );
             }
 
-            var handle = NativeMethods.LLVMGetStringAttributeAtIndex( ValueHandle, ( LLVMAttributeIndex )index, name, (uint)name.Length );
+            var handle = LLVMGetStringAttributeAtIndex( ValueHandle, ( LLVMAttributeIndex )index, name, (uint)name.Length );
             return AttributeValue.FromHandle( Context, handle );
         }
 
         public void RemoveAttributeAtIndex( FunctionAttributeIndex index, AttributeKind kind )
         {
-            NativeMethods.LLVMRemoveEnumAttributeAtIndex( ValueHandle, ( LLVMAttributeIndex )index, kind.GetEnumAttributeId( ) );
+            LLVMRemoveEnumAttributeAtIndex( ValueHandle, ( LLVMAttributeIndex )index, kind.GetEnumAttributeId( ) );
         }
 
         public void RemoveAttributeAtIndex( FunctionAttributeIndex index, string name )
@@ -226,18 +213,19 @@ namespace Llvm.NET.Values
                 throw new ArgumentException( "Name cannot be null or empty", nameof( name ) );
             }
 
-            NativeMethods.LLVMRemoveStringAttributeAtIndex( ValueHandle, ( LLVMAttributeIndex )index, name, ( uint )name.Length );
+            LLVMRemoveStringAttributeAtIndex( ValueHandle, ( LLVMAttributeIndex )index, name, ( uint )name.Length );
         }
 
         public void EraseFromParent()
         {
-            NativeMethods.LLVMDeleteFunction( ValueHandle );
+            LLVMDeleteFunction( ValueHandle );
         }
 
         internal Function( LLVMValueRef valueRef )
             : base( valueRef )
         {
             Attributes = new ValueAttributeDictionary( this, ()=>this );
+            BasicBlocks = new BasicBlockCollection( this );
         }
     }
 }

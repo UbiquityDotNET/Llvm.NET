@@ -59,7 +59,7 @@ namespace Llvm.NET.Instructions
         }
 
         /// <summary>Positions the builder at the end of a given <see cref="BasicBlock"/></summary>
-        /// <param name="basicBlock">Block to set the poition of</param>
+        /// <param name="basicBlock">Block to set the position of</param>
         public void PositionAtEnd( BasicBlock basicBlock )
         {
             if( basicBlock == null )
@@ -79,7 +79,7 @@ namespace Llvm.NET.Instructions
         /// is not required to come from the same block the instruction builder is
         /// currently referencing.</note>
         /// </remarks>
-        [System.Diagnostics.CodeAnalysis.SuppressMessage( "Microsoft.Design", "CA1011:ConsiderPassingBaseTypesAsParameters", Justification = "Specific type required by interop call" )]
+        [SuppressMessage( "Microsoft.Design", "CA1011:ConsiderPassingBaseTypesAsParameters", Justification = "Specific type required by interop call" )]
         public void PositionBefore( Instruction instr )
         {
             if( instr == null )

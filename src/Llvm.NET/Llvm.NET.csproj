@@ -176,6 +176,7 @@
         <Compile Include="Values\AttributeContainerMixins.cs" />
         <Compile Include="Values\AttributeValue.cs" />
         <Compile Include="Values\BasicBlock.cs" />
+        <Compile Include="Values\BasicBlockCollection.cs" />
         <Compile Include="Values\BlockAddress.cs" />
         <Compile Include="Values\Constant.cs" />
         <Compile Include="Values\ConstantAggregateZero.cs" />
@@ -284,7 +285,7 @@
         -->
         <When Condition="'$(BuildingInsideVisualStudio)'=='true'">
             <ItemGroup>
-                <PackageReference Include="LibLLVM.NET" Version="[5.0.0-*,6)" />
+                <PackageReference Include="LibLLVM.NET" Version="5.0.0-alpha--ci-DEV.19725F1D" />
             </ItemGroup>
         </When>
         <Otherwise>

@@ -68,4 +68,9 @@ extern "C"
         auto gv = unwrap<GlobalVariable>( globalVar );
         gv->addDebugInfo( unwrap<DIGlobalVariableExpression>( exp ));
     }
+
+    void LLVMFunctionAppendBasicBlock( LLVMValueRef /*Function*/ function, LLVMBasicBlockRef block )
+    {
+        unwrap<Function>( function )->getBasicBlockList( ).push_back( unwrap( block ) );
+    }
 }
