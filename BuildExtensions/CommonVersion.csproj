@@ -9,7 +9,7 @@
         <NoCommonAnalyzers>true</NoCommonAnalyzers>
     </PropertyGroup>
     <ItemGroup>
-        <PackageReference Include="CSemVer.Build.Tasks" Version="1.0.0-alpha.2--ci-REL.194F4984" />
+        <PackageReference Include="CSemVer.Build.Tasks" Version="1.0.2-beta--ci-BLD.427428397" />
     </ItemGroup>
     <Target Name="GenerateVersionJson" DependsOnTargets="PrepareVersioningForBuild">
         <ItemGroup>

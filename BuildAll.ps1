@@ -48,7 +48,10 @@ function Invoke-NuGet
 
 function Find-VSInstance
 {
-    Install-Module VSSetup -Scope CurrentUser -Force | Out-Null
+    if(!(get-module -ListAvailable VSSetup))
+    {
+        Install-Module VSSetup -Scope CurrentUser -Force | Out-Null
+    }
     return Get-VSSetupInstance -All | select -First 1
 }
 
@@ -133,8 +136,8 @@ function Get-BuildPaths([string]$repoRoot)
 
 function Get-BuildInformation($buildPaths)
 {
-    Write-Information "Restoring NuGet for $buildPaths.GenerateVersionProj"
-    invoke-msbuild -Targets Restore -Project $buildPaths.GenerateVersionProj -LoggerArgs $msbuildLoggerArgs
+    Write-Information "Restoring NuGet for $($buildPaths.GenerateVersionProj)"
+    Invoke-MSBuild -Targets Restore -Project $buildPaths.GenerateVersionProj -LoggerArgs $msbuildLoggerArgs
 
     Write-Information "Computing Build information"
     Invoke-MSBuild -Targets GenerateVersionJson -Project $buildPaths.GenerateVersionProj -LoggerArgs $msbuildLoggerArgs
@@ -161,7 +164,7 @@ function ConvertTo-PropertyList([hashtable]$table)
 
 pushd $PSScriptRoot
 $oldPath = $env:Path
-$ErrorActionPreference = "Continue"
+$ErrorActionPreference = "Stop"
 $InformationPreference = "Continue"
 try
 {
@@ -248,10 +251,6 @@ try
 
     Write-Information "Building Samples"
     Invoke-MSBuild -Targets Build -Project Samples\Samples.sln -Properties $msBuildProperties -LoggerArgs $msbuildLoggerArgs -AdditionalArgs @("/m")
-}
-catch
-{
-    $Error
 }
 finally
 {

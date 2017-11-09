@@ -15,6 +15,7 @@ namespace Llvm.NET.Native
     // an additional reference
     // see: https://msdn.microsoft.com/en-us/library/367eeye0.aspx
     internal class WrappedNativeCallback
+        : IDisposable
     {
         public WrappedNativeCallback( Delegate d )
         {

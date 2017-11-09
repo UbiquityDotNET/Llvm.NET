@@ -74,6 +74,7 @@
         <Compile Include="JIT\GenericValue.cs" />
         <Compile Include="JIT\IExecutionEngine.cs" />
         <Compile Include="JIT\LegacyExecutionEngine.cs" />
+        <Compile Include="JIT\OrcJit.cs" />
         <Compile Include="Native\ContextCache.cs" />
         <Compile Include="Native\Handles\HandleValidation.cs" />
         <Compile Include="Native\Handles\LLVMGenericValueRef.cs" />
@@ -275,7 +276,7 @@
       <None Include="Native\readme.md" />
     </ItemGroup>
     <ItemGroup>
-        <PackageReference Include="CSemVer.Build.Tasks" Version="1.0.0-alpha.2--ci-REL.194F4984" />
+        <PackageReference Include="CSemVer.Build.Tasks" Version="1.0.2-beta--ci-BLD.427428397" />
         <PackageReference Include="Ubiquity.ArgValidators" Version="0.3.0-alpha--ci-REL.424565984" />
     </ItemGroup>
     <Choose>

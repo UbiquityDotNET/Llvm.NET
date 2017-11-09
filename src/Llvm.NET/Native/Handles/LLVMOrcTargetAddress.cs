@@ -10,22 +10,22 @@ namespace Llvm.NET.Native
     internal struct LLVMOrcTargetAddress
         : IEquatable<LLVMOrcTargetAddress>
     {
-        public override int GetHashCode( ) => Handle.GetHashCode( );
+        public override int GetHashCode( ) => Address.GetHashCode( );
 
-        public override bool Equals( object obj ) => !( obj is null ) && ( obj is LLVMOrcTargetAddress r ) && r.Handle == Handle;
+        public override bool Equals( object obj ) => !( obj is null ) && ( obj is LLVMOrcTargetAddress r ) && r.Address == Address;
 
-        public bool Equals( LLVMOrcTargetAddress other ) => Handle == other.Handle;
+        public bool Equals( LLVMOrcTargetAddress other ) => Address == other.Address;
 
         public static bool operator ==( LLVMOrcTargetAddress lhs, LLVMOrcTargetAddress rhs )
             => EqualityComparer<LLVMOrcTargetAddress>.Default.Equals( lhs, rhs );
 
         public static bool operator !=( LLVMOrcTargetAddress lhs, LLVMOrcTargetAddress rhs ) => !( lhs == rhs );
 
-        internal LLVMOrcTargetAddress( UInt32 value )
+        internal LLVMOrcTargetAddress( UInt64 value )
         {
-            Handle = value;
+            Address = value;
         }
 
-        internal UInt32 Handle { get; }
+        internal UInt64 Address { get; }
     }
 }

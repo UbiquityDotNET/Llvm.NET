@@ -1,5 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="..\..\BuildOutput\packages\CSemVer.Build.Tasks.1.0.2-beta--ci-BLD.427428397\build\CSemVer.Build.Tasks.props" Condition="Exists('..\..\BuildOutput\packages\CSemVer.Build.Tasks.1.0.2-beta--ci-BLD.427428397\build\CSemVer.Build.Tasks.props')" />
   <Import Project="..\..\BuildOutput\packages\Llvm.Libs.5.0.0\build\native\Llvm.Libs.props" Condition="Exists('..\..\BuildOutput\packages\Llvm.Libs.5.0.0\build\native\Llvm.Libs.props')" />
   <Import Project="..\..\BuildOutput\packages\Llvm.Libs.targets.x86-Release.5.0.0\build\native\Llvm.Libs.targets.x86-Release.props" Condition="Exists('..\..\BuildOutput\packages\Llvm.Libs.targets.x86-Release.5.0.0\build\native\Llvm.Libs.targets.x86-Release.props')" />
   <Import Project="..\..\BuildOutput\packages\Llvm.Libs.targets.x86-Debug.5.0.0\build\native\Llvm.Libs.targets.x86-Debug.props" Condition="Exists('..\..\BuildOutput\packages\Llvm.Libs.targets.x86-Debug.5.0.0\build\native\Llvm.Libs.targets.x86-Debug.props')" />
@@ -11,7 +12,6 @@
   <Import Project="..\..\BuildOutput\packages\Llvm.Libs.core.x64-Debug.5.0.0\build\native\Llvm.Libs.core.x64-Debug.props" Condition="Exists('..\..\BuildOutput\packages\Llvm.Libs.core.x64-Debug.5.0.0\build\native\Llvm.Libs.core.x64-Debug.props')" />
   <Import Project="..\..\BuildOutput\packages\Llvm.Libs.core.pdbs.x86-Debug.5.0.0\build\native\Llvm.Libs.core.pdbs.x86-Debug.props" Condition="Exists('..\..\BuildOutput\packages\Llvm.Libs.core.pdbs.x86-Debug.5.0.0\build\native\Llvm.Libs.core.pdbs.x86-Debug.props')" />
   <Import Project="..\..\BuildOutput\packages\Llvm.Libs.core.pdbs.x64-Debug.5.0.0\build\native\Llvm.Libs.core.pdbs.x64-Debug.props" Condition="Exists('..\..\BuildOutput\packages\Llvm.Libs.core.pdbs.x64-Debug.5.0.0\build\native\Llvm.Libs.core.pdbs.x64-Debug.props')" />
-  <Import Project="..\..\BuildOutput\packages\CSemVer.Build.Tasks.1.0.0-alpha.2--ci-REL.194F4984\build\CSemVer.Build.Tasks.props" Condition="Exists('..\..\BuildOutput\packages\CSemVer.Build.Tasks.1.0.0-alpha.2--ci-REL.194F4984\build\CSemVer.Build.Tasks.props')" />
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Debug|Win32">
@@ -74,8 +74,8 @@
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
   <ImportGroup Label="ExtensionSettings">
     <Import Project="..\..\BuildOutput\packages\PdbGit.3.0.41\build\PdbGit.targets" Condition="Exists('..\..\BuildOutput\packages\PdbGit.3.0.41\build\PdbGit.targets')" />
-    <Import Project="..\..\BuildOutput\packages\CSemVer.Build.Tasks.1.0.0-alpha.2--ci-REL.194F4984\build\CSemVer.Build.Tasks.targets" Condition="Exists('..\..\BuildOutput\packages\CSemVer.Build.Tasks.1.0.0-alpha.2--ci-REL.194F4984\build\CSemVer.Build.Tasks.targets')" />
     <Import Project="..\..\BuildOutput\packages\Llvm.Libs.5.0.0\build\native\Llvm.Libs.targets" Condition="Exists('..\..\BuildOutput\packages\Llvm.Libs.5.0.0\build\native\Llvm.Libs.targets')" />
+    <Import Project="..\..\BuildOutput\packages\CSemVer.Build.Tasks.1.0.2-beta--ci-BLD.427428397\build\CSemVer.Build.Tasks.targets" Condition="Exists('..\..\BuildOutput\packages\CSemVer.Build.Tasks.1.0.2-beta--ci-BLD.427428397\build\CSemVer.Build.Tasks.targets')" />
   </ImportGroup>
   <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="PropertySheets">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
@@ -219,8 +219,6 @@
     </PropertyGroup>
     <Error Condition="!Exists('..\..\BuildOutput\packages\PdbGit.3.0.41\build\PdbGit.props')" Text="$([System.String]::Format('$(ErrorText)', '..\..\BuildOutput\packages\PdbGit.3.0.41\build\PdbGit.props'))" />
     <Error Condition="!Exists('..\..\BuildOutput\packages\PdbGit.3.0.41\build\PdbGit.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\BuildOutput\packages\PdbGit.3.0.41\build\PdbGit.targets'))" />
-    <Error Condition="!Exists('..\..\BuildOutput\packages\CSemVer.Build.Tasks.1.0.0-alpha.2--ci-REL.194F4984\build\CSemVer.Build.Tasks.props')" Text="$([System.String]::Format('$(ErrorText)', '..\..\BuildOutput\packages\CSemVer.Build.Tasks.1.0.0-alpha.2--ci-REL.194F4984\build\CSemVer.Build.Tasks.props'))" />
-    <Error Condition="!Exists('..\..\BuildOutput\packages\CSemVer.Build.Tasks.1.0.0-alpha.2--ci-REL.194F4984\build\CSemVer.Build.Tasks.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\BuildOutput\packages\CSemVer.Build.Tasks.1.0.0-alpha.2--ci-REL.194F4984\build\CSemVer.Build.Tasks.targets'))" />
     <Error Condition="!Exists('..\..\BuildOutput\packages\Llvm.Libs.core.pdbs.x64-Debug.5.0.0\build\native\Llvm.Libs.core.pdbs.x64-Debug.props')" Text="$([System.String]::Format('$(ErrorText)', '..\..\BuildOutput\packages\Llvm.Libs.core.pdbs.x64-Debug.5.0.0\build\native\Llvm.Libs.core.pdbs.x64-Debug.props'))" />
     <Error Condition="!Exists('..\..\BuildOutput\packages\Llvm.Libs.core.pdbs.x86-Debug.5.0.0\build\native\Llvm.Libs.core.pdbs.x86-Debug.props')" Text="$([System.String]::Format('$(ErrorText)', '..\..\BuildOutput\packages\Llvm.Libs.core.pdbs.x86-Debug.5.0.0\build\native\Llvm.Libs.core.pdbs.x86-Debug.props'))" />
     <Error Condition="!Exists('..\..\BuildOutput\packages\Llvm.Libs.core.x64-Debug.5.0.0\build\native\Llvm.Libs.core.x64-Debug.props')" Text="$([System.String]::Format('$(ErrorText)', '..\..\BuildOutput\packages\Llvm.Libs.core.x64-Debug.5.0.0\build\native\Llvm.Libs.core.x64-Debug.props'))" />
@@ -233,5 +231,7 @@
     <Error Condition="!Exists('..\..\BuildOutput\packages\Llvm.Libs.targets.x86-Release.5.0.0\build\native\Llvm.Libs.targets.x86-Release.props')" Text="$([System.String]::Format('$(ErrorText)', '..\..\BuildOutput\packages\Llvm.Libs.targets.x86-Release.5.0.0\build\native\Llvm.Libs.targets.x86-Release.props'))" />
     <Error Condition="!Exists('..\..\BuildOutput\packages\Llvm.Libs.5.0.0\build\native\Llvm.Libs.props')" Text="$([System.String]::Format('$(ErrorText)', '..\..\BuildOutput\packages\Llvm.Libs.5.0.0\build\native\Llvm.Libs.props'))" />
     <Error Condition="!Exists('..\..\BuildOutput\packages\Llvm.Libs.5.0.0\build\native\Llvm.Libs.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\BuildOutput\packages\Llvm.Libs.5.0.0\build\native\Llvm.Libs.targets'))" />
+    <Error Condition="!Exists('..\..\BuildOutput\packages\CSemVer.Build.Tasks.1.0.2-beta--ci-BLD.427428397\build\CSemVer.Build.Tasks.props')" Text="$([System.String]::Format('$(ErrorText)', '..\..\BuildOutput\packages\CSemVer.Build.Tasks.1.0.2-beta--ci-BLD.427428397\build\CSemVer.Build.Tasks.props'))" />
+    <Error Condition="!Exists('..\..\BuildOutput\packages\CSemVer.Build.Tasks.1.0.2-beta--ci-BLD.427428397\build\CSemVer.Build.Tasks.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\BuildOutput\packages\CSemVer.Build.Tasks.1.0.2-beta--ci-BLD.427428397\build\CSemVer.Build.Tasks.targets'))" />
   </Target>
 </Project>

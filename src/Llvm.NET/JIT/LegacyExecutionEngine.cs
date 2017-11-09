@@ -47,6 +47,7 @@ namespace Llvm.NET.JIT
         {
             Kind = kind;
             Optimization = optLevel;
+            OwnedModules = new Dictionary<int, LLVMModuleRef>( );
         }
 
         /// <summary>Add a module to the engine</summary>
@@ -226,7 +227,7 @@ namespace Llvm.NET.JIT
 
         private EngineKind Kind;
         private CodeGenOpt Optimization;
-        private Dictionary<int, LLVMModuleRef> OwnedModules = new Dictionary<int, LLVMModuleRef>();
+        private Dictionary<int, LLVMModuleRef> OwnedModules;
         private int NextHandleValue;
         private LLVMExecutionEngineRef EngineHandle;
     }
