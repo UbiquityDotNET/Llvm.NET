@@ -25,6 +25,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Chapter5", "..\Samples\Kale
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Chapter7", "..\Samples\Kaleidoscope\Chapter7\Chapter7.csproj", "{DFDCA901-041C-4B78-9F66-4B6F6E98E29D}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Chapter6", "..\Samples\Kaleidoscope\Chapter6\Chapter6.csproj", "{385172C5-40FB-411D-9483-7D31E9AE3CA2}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -67,6 +69,10 @@ Global
 		{DFDCA901-041C-4B78-9F66-4B6F6E98E29D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DFDCA901-041C-4B78-9F66-4B6F6E98E29D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{DFDCA901-041C-4B78-9F66-4B6F6E98E29D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{385172C5-40FB-411D-9483-7D31E9AE3CA2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{385172C5-40FB-411D-9483-7D31E9AE3CA2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{385172C5-40FB-411D-9483-7D31E9AE3CA2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{385172C5-40FB-411D-9483-7D31E9AE3CA2}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -80,6 +86,7 @@ Global
 		{07F414FF-D463-40DE-BBA6-AD352F7F1918} = {62418FA2-81F2-475F-B735-7B108EBE960D}
 		{F9630318-02EE-4BF2-8E6F-CB1025487052} = {62418FA2-81F2-475F-B735-7B108EBE960D}
 		{DFDCA901-041C-4B78-9F66-4B6F6E98E29D} = {62418FA2-81F2-475F-B735-7B108EBE960D}
+		{385172C5-40FB-411D-9483-7D31E9AE3CA2} = {62418FA2-81F2-475F-B735-7B108EBE960D}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {EF28D186-279B-4E91-9BE8-644B6E018432}
