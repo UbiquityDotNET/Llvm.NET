@@ -23,7 +23,7 @@ namespace Kaleidoscope
         : KaleidoscopeBaseVisitor<Value>
         , IDisposable
     {
-        public CodeGenerator( )
+        public CodeGenerator( LanguageLevel level )
         {
             Context = new Context( );
             InitializeModuleAndPassManager( );
@@ -31,7 +31,10 @@ namespace Kaleidoscope
             JIT = new KaleidoscopeJIT( );
             NamedValues = new Dictionary<string, Value>( );
             FunctionProtoTypes = new PrototypeCollection( );
+            ParserStack = new ReplParserStack( level );
         }
+
+        public ReplParserStack ParserStack { get; }
 
         public Context Context { get; }
 
@@ -52,7 +55,7 @@ namespace Kaleidoscope
             Context.Dispose( );
         }
 
-        public override Value VisitParenExPression( [NotNull] ParenExPressionContext context )
+        public override Value VisitParenExpression( [NotNull] ParenExpressionContext context )
         {
             return context.GetExpression( ).Accept( this );
         }

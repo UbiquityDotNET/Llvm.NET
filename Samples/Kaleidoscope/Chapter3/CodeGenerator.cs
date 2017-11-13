@@ -20,12 +20,13 @@ namespace Kaleidoscope
         : KaleidoscopeBaseVisitor<Value>
         , IDisposable
     {
-        public CodeGenerator( )
+        public CodeGenerator( LanguageLevel level )
         {
             Context = new Context( );
             Module = new BitcodeModule( Context, "Kaleidoscope" );
             InstructionBuilder = new InstructionBuilder( Context );
             NamedValues = new Dictionary<string, Value>( );
+            ParserStack = new ReplParserStack( level );
         }
 
         public Context Context { get; }
@@ -36,12 +37,14 @@ namespace Kaleidoscope
 
         public IDictionary<string, Value> NamedValues { get; }
 
+        public ReplParserStack ParserStack { get; }
+
         public void Dispose( )
         {
             Context.Dispose( );
         }
 
-        public override Value VisitParenExPression( [NotNull] ParenExPressionContext context )
+        public override Value VisitParenExpression( [NotNull] ParenExpressionContext context )
         {
             return context.GetExpression( ).Accept( this );
         }

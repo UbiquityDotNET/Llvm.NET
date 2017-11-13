@@ -46,13 +46,13 @@ initializer
 primaryExpression
     : identifier                                                                               # VariableExpression
     | Number                                                                                   # ConstExpression
-    | '(' expression ')'                                                                       # ParenExPression
+    | '(' expression ')'                                                                       # ParenExpression
     | identifier '(' (expression (',' expression)*)? ')'                                       # FunctionCallExpression
     | {FeatureMutableVars}? 'var' initializer (initializer)* 'in' expression                   # VarInExpression
     | {FeatureControlFlow}? 'if' expression 'then' expression 'else' expression                # ConditionalExpression
     | {FeatureControlFlow}? 'for' initializer ',' expression (',' expression)? 'in' expression # ForExpression
     | {FeatureMutableVars}? identifier '=' expression                                          # AssignmentExpression
-    | {IsPrefixOp(_input.Lt(1))}? LETTER expression                                            # PrefixOperator
+    | {IsPrefixOp(_input.Lt(1))}? LETTER expression                                            # UnaryOpExpression
     ;
 
 // Left-recursive expressions use ANTLR to unroll the left recursion when generating the
@@ -65,13 +65,14 @@ expression
     ;
 
 prototype
-    : identifier '(' (identifier)* ')';
+    : identifier '(' (identifier)* ')'                                              # FunctionProtoType
+    | {FeatureUserOperators}? 'binary' LETTER Number? '(' identifier identifier ')' # BinaryProtoType
+    | {FeatureUserOperators}? 'unary' LETTER Number? '(' identifier ')'             # UnaryProtoType
+    ;
 
 repl
-    : 'def' prototype expression                                                                      # FunctionDefinition
-    | {FeatureUserOperators}? 'def' 'unary' LETTER Number? '(' identifier ')' expression              # UnaryOpDefinition
-    | {FeatureUserOperators}? 'def' 'binary' LETTER Number? '(' identifier identifier ')' expression  # BinaryOpDefinition
-    | 'extern' prototype                                                                              # ExternalDeclaration
-    | expression                                                                                      # TopLevelExpression
-    | ';'                                                                                             # TopLevelSemicolon
+    : 'def' prototype expression # FunctionDefinition
+    | 'extern' prototype         # ExternalDeclaration
+    | expression                 # TopLevelExpression
+    | ';'                        # TopLevelSemicolon
     ;

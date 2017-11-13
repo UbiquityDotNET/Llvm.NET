@@ -24,15 +24,14 @@ namespace Kaleidoscope
             using( StaticState.InitializeLLVM( ) )
             {
                 StaticState.RegisterNative( );
-                using( var generator = new CodeGenerator( ) )
+                using( var generator = new CodeGenerator( LanguageLevel.ControlFlow ) )
                 {
-                    RunReplLoop( LanguageLevel.ControlFlow, generator );
+                    RunReplLoop( generator );
                 }
             }
         }
 
         /// <summary>Runs the REPL loop for the language</summary>
-        /// <param name="level">Language Level</param>
         /// <param name="generator">Generator for generating code</param>
         /// <remarks>
         /// Since ANTLR doesn't have an "interactive" input stream, this sort of fakes
@@ -41,17 +40,15 @@ namespace Kaleidoscope
         /// This is consistent with the behavior of the official LLVM C++ version and allows
         /// for full use of ANTLR4 instead of wrting a parser by hand.
         /// </remarks>
-        private static void RunReplLoop( LanguageLevel level, CodeGenerator generator )
+        private static void RunReplLoop( CodeGenerator generator )
         {
-            var parseStack = new ReplParserStack( level );
-
-            Console.WriteLine( "LLVM Kaleidoscope Interpreter - {0}", level );
+            Console.WriteLine( "LLVM Kaleidoscope Interpreter - {0}", generator.ParserStack.LanguageLevel );
             Console.Write( "Ready>" );
             foreach( var lineInfo in Console.In.ReadStatements( ) )
             {
                 if( !lineInfo.IsPartial )
                 {
-                    var parseTree = parseStack.ReplParse( lineInfo.Txt );
+                    var parseTree = generator.ParserStack.ReplParse( lineInfo.Txt );
                     Value value = generator.Visit( parseTree );
                     if( value is ConstantFP result )
                     {

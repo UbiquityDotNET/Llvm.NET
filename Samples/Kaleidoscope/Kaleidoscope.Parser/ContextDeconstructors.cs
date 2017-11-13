@@ -2,6 +2,7 @@
 // Copyright (c) .NET Foundation. All rights reserved.
 // </copyright>
 
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using static Kaleidoscope.Grammar.KaleidoscopeParser;
@@ -21,7 +22,7 @@ namespace Kaleidoscope.Grammar
             return double.Parse( context.Number().GetText() );
         }
 
-        public static ExpressionContext GetExpression( this ParenExPressionContext context )
+        public static ExpressionContext GetExpression( this ParenExpressionContext context )
         {
             return (ExpressionContext)context.GetChild( 1 );
         }
@@ -92,7 +93,7 @@ namespace Kaleidoscope.Grammar
             Value = context.expression( );
         }
 
-        public static void Deconstruct( this PrefixOperatorContext context, out char Op, out ExpressionContext Rhs )
+        public static void Deconstruct( this UnaryOpExpressionContext context, out char Op, out ExpressionContext Rhs )
         {
             Op = context.LETTER( ).GetText( )[ 0 ];
             Rhs = context.expression( );
@@ -110,6 +111,48 @@ namespace Kaleidoscope.Grammar
         }
 
         public static void Deconstruct( this PrototypeContext context
+                                      , out string Name
+                                      , out IList<string> Parameters
+                                      )
+        {
+            switch( context )
+            {
+            case UnaryProtoTypeContext unaryDef:
+                Deconstruct( unaryDef, out Name, out Parameters );
+                break;
+
+            case BinaryProtoTypeContext binaryDef:
+                Deconstruct( binaryDef, out Name, out Parameters );
+                break;
+
+            case FunctionProtoTypeContext funcDef:
+                Deconstruct( funcDef, out Name, out Parameters );
+                break;
+
+            default:
+                throw new ArgumentException( "Unknown PrototypeContext" );
+            }
+        }
+
+        public static void Deconstruct( this BinaryProtoTypeContext context
+                                      , out string Name
+                                      , out IList<string> Parameters
+                                      )
+        {
+            Name = $"$binary{context.LETTER( ).GetText( )}";
+            Parameters = context.identifier( ).Select( i => i.GetName( ) ).ToList( );
+        }
+
+        public static void Deconstruct( this UnaryProtoTypeContext context
+                                      , out string Name
+                                      , out IList<string> Parameters
+                                      )
+        {
+            Name = $"$unary{context.LETTER( ).GetText( )}";
+            Parameters = new List<string> { context.identifier( ).GetText( ) };
+        }
+
+        public static void Deconstruct( this FunctionProtoTypeContext context
                                       , out string Name
                                       , out IList<string> Parameters
                                       )
