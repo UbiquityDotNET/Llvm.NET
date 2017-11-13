@@ -170,4 +170,14 @@ extern "C"
     {
         unwrap( ee )->clearGlobalMappingsFromModule( unwrap( m ) );
     }
+
+    LLVMBasicBlockRef LLVMContextCreateBasicBlock( LLVMContextRef context, char const* name, LLVMValueRef /*Function*/ function, LLVMBasicBlockRef insertBefore )
+    {
+        return wrap( BasicBlock::Create( *unwrap( context )
+                                       , name
+                                       , function ? unwrap<Function>( function ) : nullptr
+                                       , insertBefore ? unwrap(insertBefore) : nullptr
+                                       )
+                   );
+    }
 }

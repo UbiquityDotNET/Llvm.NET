@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Text;
 using JetBrains.Annotations;
 using Llvm.NET.DebugInfo;
@@ -645,9 +646,9 @@ namespace Llvm.NET
             }
 
             var handle = LLVMCreateEnumAttribute( ContextHandle
-                                                          , kind.GetEnumAttributeId( )
-                                                          , 0ul
-                                                          );
+                                                , kind.GetEnumAttributeId( )
+                                                , 0ul
+                                                );
             return AttributeValue.FromHandle( this, handle );
         }
 
@@ -676,9 +677,9 @@ namespace Llvm.NET
             }
 
             var handle = LLVMCreateEnumAttribute( ContextHandle
-                                                          , kind.GetEnumAttributeId( )
-                                                          , value
-                                                          );
+                                                , kind.GetEnumAttributeId( )
+                                                , value
+                                                );
             return AttributeValue.FromHandle( this, handle );
         }
 
@@ -698,6 +699,21 @@ namespace Llvm.NET
 
             var handle = LLVMCreateStringAttribute( ContextHandle, name, ( uint )name.Length, value, ( uint )value.Length );
             return AttributeValue.FromHandle(this, handle );
+        }
+
+        /// <summary>Create a named <see cref="BasicBlock"/> in a given context</summary>
+        /// <param name="name">Name of the block to create</param>
+        /// <param name="parentFuntion">Parent function (or <see lang="null"/> if no parent)</param>
+        /// <param name="insertBefore">Optional block to insert the new block in front of</param>
+        /// <returns><see cref="BasicBlock"/> created</returns>
+        public BasicBlock CreateBasicBlock( string name, [CanBeNull] Function parentFuntion = null, [CanBeNull] BasicBlock insertBefore = null )
+        {
+            return BasicBlock.FromHandle( LLVMContextCreateBasicBlock( ContextHandle
+                                                                     , name
+                                                                     , parentFuntion?.ValueHandle ?? default
+                                                                     , insertBefore?.BlockHandle ?? default
+                                                                     )
+                                        );
         }
 
         /*TODO:
@@ -896,5 +912,8 @@ namespace Llvm.NET
         private readonly Dictionary< LLVMMetadataRef, LlvmMetadata > MetadataCache = new Dictionary< LLVMMetadataRef, LlvmMetadata >( );
 
         private readonly Dictionary< LLVMMDOperandRef, MDOperand > MDOperandCache = new Dictionary< LLVMMDOperandRef, MDOperand >( );
+
+        [DllImport( LibraryPath, CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi, ThrowOnUnmappableChar = true, BestFitMapping = false )]
+        private static extern LLVMBasicBlockRef LLVMContextCreateBasicBlock( LLVMContextRef context, [MarshalAs( UnmanagedType.LPStr )] string name, LLVMValueRef /*Function*/ function, LLVMBasicBlockRef insertBefore );
     }
 }

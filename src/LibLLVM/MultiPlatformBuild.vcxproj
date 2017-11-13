@@ -4,7 +4,7 @@
   Project Configuration list keeps VS happy but the Platform part is otherwise ignored here.
   Configuration, is used to build multiple platforms for a given Configuration.
   -->
-  <Import Project="..\..\BuildOutput\packages\CSemVer.Build.Tasks.1.0.0-alpha.2--ci-REL.194F4984\build\CSemVer.Build.Tasks.props" Condition="Exists('..\..\BuildOutput\packages\CSemVer.Build.Tasks.1.0.0-alpha.2--ci-REL.194F4984\build\CSemVer.Build.Tasks.props')" />
+  <Import Project="..\..\BuildOutput\packages\CSemVer.Build.Tasks.1.0.2-beta--ci-BLD.427428397\build\CSemVer.Build.Tasks.props" Condition="Exists('..\..\BuildOutput\packages\CSemVer.Build.Tasks.1.0.2-beta--ci-BLD.427428397\build\CSemVer.Build.Tasks.props')" />
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Debug|Win32">
       <Configuration>Debug</Configuration>
@@ -57,15 +57,15 @@
   <Target Name="CoreClean">
     <MSBuild Targets="MultiTargetClean" Projects="$(MSBuildThisFile)" Properties="Configuration=$(Configuration)" />
   </Target>
-    <Target Name="Pack">
-        <MSBuild Targets="Pack" Projects="LibLLVM.vcxproj" Properties="Configuration=$(Configuration);PackageVersion=$(PackageVersion);LlvmVersion=$(LlvmVersion)"/>
-    </Target>
+  <Target Name="Pack">
+    <MSBuild Targets="Pack" Projects="LibLLVM.vcxproj" Properties="Configuration=$(Configuration);PackageVersion=$(PackageVersion);LlvmVersion=$(LlvmVersion)" />
+  </Target>
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>
       <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
     </PropertyGroup>
-    <Error Condition="!Exists('..\..\BuildOutput\packages\CSemVer.Build.Tasks.1.0.0-alpha.2--ci-REL.194F4984\build\CSemVer.Build.Tasks.props')" Text="$([System.String]::Format('$(ErrorText)', '..\..\BuildOutput\packages\CSemVer.Build.Tasks.1.0.0-alpha.2--ci-REL.194F4984\build\CSemVer.Build.Tasks.props'))" />
-    <Error Condition="!Exists('..\..\BuildOutput\packages\CSemVer.Build.Tasks.1.0.0-alpha.2--ci-REL.194F4984\build\CSemVer.Build.Tasks.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\BuildOutput\packages\CSemVer.Build.Tasks.1.0.0-alpha.2--ci-REL.194F4984\build\CSemVer.Build.Tasks.targets'))" />
+    <Error Condition="!Exists('..\..\BuildOutput\packages\CSemVer.Build.Tasks.1.0.2-beta--ci-BLD.427428397\build\CSemVer.Build.Tasks.props')" Text="$([System.String]::Format('$(ErrorText)', '..\..\BuildOutput\packages\CSemVer.Build.Tasks.1.0.2-beta--ci-BLD.427428397\build\CSemVer.Build.Tasks.props'))" />
+    <Error Condition="!Exists('..\..\BuildOutput\packages\CSemVer.Build.Tasks.1.0.2-beta--ci-BLD.427428397\build\CSemVer.Build.Tasks.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\BuildOutput\packages\CSemVer.Build.Tasks.1.0.2-beta--ci-BLD.427428397\build\CSemVer.Build.Tasks.targets'))" />
   </Target>
-  <Import Project="..\..\BuildOutput\packages\CSemVer.Build.Tasks.1.0.0-alpha.2--ci-REL.194F4984\build\CSemVer.Build.Tasks.targets" Condition="Exists('..\..\BuildOutput\packages\CSemVer.Build.Tasks.1.0.0-alpha.2--ci-REL.194F4984\build\CSemVer.Build.Tasks.targets')" />
+  <Import Project="..\..\BuildOutput\packages\CSemVer.Build.Tasks.1.0.2-beta--ci-BLD.427428397\build\CSemVer.Build.Tasks.targets" Condition="Exists('..\..\BuildOutput\packages\CSemVer.Build.Tasks.1.0.2-beta--ci-BLD.427428397\build\CSemVer.Build.Tasks.targets')" />
 </Project>

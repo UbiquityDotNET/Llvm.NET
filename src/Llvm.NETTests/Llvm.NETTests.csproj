@@ -3,31 +3,17 @@
       <TargetFramework>net47</TargetFramework>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="AssemblyInitialize.cs" />
-    <Compile Include="ContextTests.cs" />
-    <Compile Include="DebugInfo\DebugUnionTypeTests.cs" />
-    <Compile Include="ExpectedArgumentExceptionAttribute.cs" />
-    <Compile Include="MDNodeTests.cs" />
-    <Compile Include="ModuleTests.cs" />
-    <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="TargetTests.cs" />
-    <Compile Include="TripleTests.cs" />
-    <Compile Include="Values\AttributeValueTests.cs" />
-    <AdditionalFiles Include="..\stylecop.json" Link="stylecop.json" />
     <ProjectReference Include="$(BuildRootDir)src\Llvm.NET\Llvm.NET.csproj">
         <Name>Llvm.NET</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="CSemVer.Build.Tasks" Version="1.0.0-alpha.2--ci-REL.194F4984" />
+    <PackageReference Include="CSemVer.Build.Tasks" Version="1.0.2-beta--ci-BLD.427428397" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="15.3.0" />
-    <PackageReference Include="MSTest.TestAdapter" Version="1.1.18" />
-    <PackageReference Include="MSTest.TestFramework" Version="1.1.18" />
+    <PackageReference Include="MSTest.TestAdapter" Version="1.2.0" />
+    <PackageReference Include="MSTest.TestFramework" Version="1.2.0" />
   </ItemGroup>
-  <Target Name="EnsureLocalNugetFolder"
-          Condition="!EXISTS($(PackageOutputPath))"
-          BeforeTargets="Restore"
-        >
-      <MakeDir Directories="$(PackageOutputPath)"/>
+  <Target Name="EnsureLocalNugetFolder" Condition="!EXISTS($(PackageOutputPath))" BeforeTargets="Restore">
+      <MakeDir Directories="$(PackageOutputPath)" />
   </Target>
 </Project>

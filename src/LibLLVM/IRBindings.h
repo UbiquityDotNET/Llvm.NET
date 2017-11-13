@@ -66,6 +66,7 @@ extern "C" {
 
     LLVMMetadataRef LLVMDIGlobalVarExpGetVariable( LLVMMetadataRef /*DIGlobalVariableExpression*/ metadataHandle );
     void LLVMExecutionEngineClearGlobalMappingsFromModule( LLVMExecutionEngineRef ee, LLVMModuleRef m );
+    LLVMBasicBlockRef LLVMContextCreateBasicBlock( LLVMContextRef context, char const* name, LLVMValueRef /*Function*/ function, LLVMBasicBlockRef insertBefore );
 #ifdef __cplusplus
 }
 #endif

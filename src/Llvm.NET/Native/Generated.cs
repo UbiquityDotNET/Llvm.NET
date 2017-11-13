@@ -147,9 +147,6 @@ namespace Llvm.NET.Native
     internal delegate void lto_diagnostic_handler_t( lto_codegen_diagnostic_severity_t @severity, [MarshalAs( UnmanagedType.LPStr )] string @diag, IntPtr @ctxt );
 
     [UnmanagedFunctionPointer( CallingConvention.Cdecl )]
-    internal delegate ulong LLVMOrcSymbolResolverFn( [MarshalAs( UnmanagedType.LPStr )] string name, IntPtr lookupCtx );
-
-    [UnmanagedFunctionPointer( CallingConvention.Cdecl )]
     internal delegate ulong LLVMOrcLazyCompileCallbackFn( LLVMOrcJITStackRef jITStack, IntPtr callbackCtx );
 
     internal enum LLVMVerifierFailureAction
@@ -2850,11 +2847,12 @@ namespace Llvm.NET.Native
         #endregion
 
         #region ExecutionEngine/JIT
-        [DllImport( LibraryPath, EntryPoint = "LLVMLinkInMCJIT", CallingConvention = CallingConvention.Cdecl )]
-        internal static extern void LLVMLinkInMCJIT( );
+        /*[DllImport( LibraryPath, EntryPoint = "LLVMLinkInMCJIT", CallingConvention = CallingConvention.Cdecl )]
+        //internal static extern void LLVMLinkInMCJIT( );
 
-        [DllImport( LibraryPath, EntryPoint = "LLVMLinkInInterpreter", CallingConvention = CallingConvention.Cdecl )]
-        internal static extern void LLVMLinkInInterpreter( );
+        //[DllImport( LibraryPath, EntryPoint = "LLVMLinkInInterpreter", CallingConvention = CallingConvention.Cdecl )]
+        //internal static extern void LLVMLinkInInterpreter( );
+        */
 
         [DllImport( LibraryPath, EntryPoint = "LLVMCreateGenericValueOfInt", CallingConvention = CallingConvention.Cdecl )]
         internal static extern LLVMGenericValueRef LLVMCreateGenericValueOfInt( LLVMTypeRef @Ty, ulong @N, [MarshalAs( UnmanagedType.Bool )]bool @IsSigned );
@@ -2989,7 +2987,7 @@ namespace Llvm.NET.Native
         internal static extern void LLVMInitializeTarget( LLVMPassRegistryRef @R );
         #endregion
 
-        #region Object Manipulation support
+        #region Object file Manipulation support
         [DllImport( LibraryPath, EntryPoint = "LLVMCreateObjectFile", CallingConvention = CallingConvention.Cdecl )]
         internal static extern LLVMObjectFileRef LLVMCreateObjectFile( LLVMMemoryBufferRef @MemBuf );
 

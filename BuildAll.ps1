@@ -48,7 +48,10 @@ function Invoke-NuGet
 
 function Find-VSInstance
 {
-    Install-Module VSSetup -Scope CurrentUser -Force | Out-Null
+    if(!(get-module -ListAvailable VSSetup))
+    {
+        Install-Module VSSetup -Scope CurrentUser -Force | Out-Null
+    }
     return Get-VSSetupInstance -All | select -First 1
 }
 
@@ -88,7 +91,7 @@ function Invoke-msbuild([string]$project, [hashtable]$properties, [string[]]$tar
     $oldPath = $env:Path
     try
     {
-        $msbuildArgs = @($project, "/t:$($targets -join ';')") + $loggerArgs + $additionalArgs
+        $msbuildArgs = @($project, "/m", "/t:$($targets -join ';')") + $loggerArgs + $additionalArgs
         if( $properties )
         {
             $msbuildArgs += @( "/p:$(ConvertTo-PropertyList $properties)" ) 
@@ -133,8 +136,8 @@ function Get-BuildPaths([string]$repoRoot)
 
 function Get-BuildInformation($buildPaths)
 {
-    Write-Information "Restoring NuGet for $buildPaths.GenerateVersionProj"
-    invoke-msbuild -Targets Restore -Project $buildPaths.GenerateVersionProj -LoggerArgs $msbuildLoggerArgs
+    Write-Information "Restoring NuGet for $($buildPaths.GenerateVersionProj)"
+    Invoke-MSBuild -Targets Restore -Project $buildPaths.GenerateVersionProj -LoggerArgs $msbuildLoggerArgs
 
     Write-Information "Computing Build information"
     Invoke-MSBuild -Targets GenerateVersionJson -Project $buildPaths.GenerateVersionProj -LoggerArgs $msbuildLoggerArgs
@@ -161,7 +164,7 @@ function ConvertTo-PropertyList([hashtable]$table)
 
 pushd $PSScriptRoot
 $oldPath = $env:Path
-$ErrorActionPreference = "Continue"
+$ErrorActionPreference = "Stop"
 $InformationPreference = "Continue"
 try
 {
@@ -232,26 +235,10 @@ try
     Invoke-MSBuild -Targets Build -Project src\LibLLVM\MultiPlatformBuild.vcxproj -Properties $msBuildProperties -LoggerArgs $msbuildLoggerArgs
 
     Write-Information "Restoring NuGet Packages for Llvm.NET"
-    Invoke-MSBuild -Targets Restore -Project src\Llvm.NET\Llvm.NET.csproj -Properties $msBuildProperties -LoggerArgs $msbuildLoggerArgs
+    Invoke-MSBuild -Targets Restore -Project src\Llvm.NET.sln -Properties $msBuildProperties -LoggerArgs $msbuildLoggerArgs
 
     Write-Information "Building Llvm.NET"
-    Invoke-MSBuild -Targets Build -Project src\Llvm.NET\Llvm.NET.csproj -Properties $msBuildProperties -LoggerArgs $msbuildLoggerArgs
-
-    Write-Information "Running NuGet Restore for Llvm.NET Tests"
-    Invoke-MSBuild -Targets Restore -Project src\Llvm.NETTests\LLVM.NETTests.csproj -Properties $msBuildProperties -LoggerArgs $msbuildLoggerArgs
-
-    Write-Information "Building Llvm.NET Tests"
-    Invoke-MSBuild -Targets Build -Project src\Llvm.NETTests\LLVM.NETTests.csproj -Properties $msBuildProperties -LoggerArgs $msbuildLoggerArgs
-
-    Write-Information "Restoring NuGet Packages for Samples"
-    Invoke-MSBuild -Targets Restore -Project Samples\Samples.sln -Properties $msBuildProperties -LoggerArgs $msbuildLoggerArgs
-
-    Write-Information "Building Samples"
-    Invoke-MSBuild -Targets Build -Project Samples\Samples.sln -Properties $msBuildProperties -LoggerArgs $msbuildLoggerArgs -AdditionalArgs @("/m")
-}
-catch
-{
-    $Error
+    Invoke-MSBuild -Targets Build -Project src\Llvm.NET.sln -Properties $msBuildProperties -LoggerArgs $msbuildLoggerArgs
 }
 finally
 {

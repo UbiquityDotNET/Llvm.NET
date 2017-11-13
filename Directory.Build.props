@@ -49,19 +49,14 @@
         <IsReleaseBuild Condition="'$(IsReleaseBuild)'=='' AND '$(APPVEYOR_REPO_TAG)'=='true' AND '$(APPVEYOR_PULL_REQUEST_NUMBER)'=='' AND '$(APPVEYOR_BRANCH)'=='master'">true</IsReleaseBuild>
         <IsReleaseBuild Condition="'$(IsReleaseBuild)'==''">false</IsReleaseBuild>
         <BuildVersionXml>$(MSBuildThisFileDirectory)BuildVersion.xml</BuildVersionXml>
-        <CiBuildName Condition="'$(CiBuildName)'=='' AND '$(IsPullRequestBuild)'=='true'">PRQ</CiBuildName>
-        <CiBuildName Condition="'$(CiBuildName)'=='' AND '$(IsAutomatedBuild)'=='true'">REL</CiBuildName>
-        <CiBuildName Condition="'$(CiBuildName)'==''">DEV</CiBuildName>
         <BuildTimeStamp Condition="'$(BuildTimeStamp)'=='' AND '$(APPVEYOR_REPO_COMMIT_TIMESTAMP)'!=''">$(APPVEYOR_REPO_COMMIT_TIMESTAMP)</BuildTimeStamp>
-        <BuildTimeStamp Condition="'$(BuildTimeStamp)'==''">$([System.DateTime]::UtcNow)</BuildTimeStamp>
     </PropertyGroup>
     <Choose>
         <!-- Apply standard analyzers and rule sets for all C# projects -->
         <When Condition="'$(MSBuildProjectExtension)'=='.csproj'">
             <PropertyGroup>
                 <CodeAnalysisRuleSet>$(MSBuildThisFileDirectory)Ubiquity.NET.ruleset</CodeAnalysisRuleSet>
-                <EnableDefaultItems>false</EnableDefaultItems>
-                <EnableDefaultNoneItems>false</EnableDefaultNoneItems>
+                <CodeAnalysisIgnoreGeneratedCode>true</CodeAnalysisIgnoreGeneratedCode>
                 <Determenistic>true</Determenistic>
                 <IsTestProject>$(MSBuildProjectName.Contains('Test'))</IsTestProject>
             </PropertyGroup>
@@ -72,6 +67,7 @@
                 <PackageReference Include="Microsoft.AnalyzerPowerPack" Version="1.1.0" PrivateAssets="All" />
                 <PackageReference Include="RefactoringEssentials" Version="5.4.0" PrivateAssets="All" />
                 <PackageReference Include="StyleCop.Analyzers" Version="1.0.2" PrivateAssets="All" />
+                <AdditionalFiles Include="$(MSBuildThisFileDirectory)stylecop.json" Link="stylecop.json" />
             </ItemGroup>
             <ItemGroup>
                 <None Include="$(MSBuildThisFileDirectory)Ubiquity.NET.ruleset" Link="Ubiquity.NET.ruleset" />

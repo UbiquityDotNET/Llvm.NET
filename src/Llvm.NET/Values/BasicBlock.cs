@@ -4,7 +4,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
 using Llvm.NET.Instructions;
 using Llvm.NET.Native;
 
@@ -127,7 +126,6 @@ namespace Llvm.NET.Values
 
         internal LLVMBasicBlockRef BlockHandle => NativeMethods.LLVMValueAsBasicBlock( ValueHandle );
 
-        [SuppressMessage( "Language", "CSE0003:Use expression-bodied members", Justification = "Line too long" )]
         internal static BasicBlock FromHandle( LLVMBasicBlockRef basicBlockRef )
         {
             return FromHandle<BasicBlock>( NativeMethods.LLVMBasicBlockAsValue( basicBlockRef ) );
