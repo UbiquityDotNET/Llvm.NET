@@ -989,6 +989,18 @@ references:
   commentId: Overload:Llvm.NET.Context.CreateAttribute
   fullName: Llvm.NET.Context.CreateAttribute
   nameWithType: Context.CreateAttribute
+- uid: Llvm.NET.Context.CreateBasicBlock(System.String,Llvm.NET.Values.Function,Llvm.NET.Values.BasicBlock)
+  name: CreateBasicBlock(String, Function, BasicBlock)
+  href: api/Llvm.NET.Context.CreateBasicBlock.html#Llvm_NET_Context_CreateBasicBlock_System_String_Llvm_NET_Values_Function_Llvm_NET_Values_BasicBlock_
+  commentId: M:Llvm.NET.Context.CreateBasicBlock(System.String,Llvm.NET.Values.Function,Llvm.NET.Values.BasicBlock)
+  fullName: Llvm.NET.Context.CreateBasicBlock(System.String, Llvm.NET.Values.Function, Llvm.NET.Values.BasicBlock)
+  nameWithType: Context.CreateBasicBlock(String, Function, BasicBlock)
+- uid: Llvm.NET.Context.CreateBasicBlock*
+  name: CreateBasicBlock
+  href: api/Llvm.NET.Context.CreateBasicBlock.html
+  commentId: Overload:Llvm.NET.Context.CreateBasicBlock
+  fullName: Llvm.NET.Context.CreateBasicBlock
+  nameWithType: Context.CreateBasicBlock
 - uid: Llvm.NET.Context.CreateConstant(Llvm.NET.Types.ITypeRef,System.UInt64,System.Boolean)
   name: CreateConstant(ITypeRef, UInt64, Boolean)
   href: api/Llvm.NET.Context.CreateConstant.html#Llvm_NET_Context_CreateConstant_Llvm_NET_Types_ITypeRef_System_UInt64_System_Boolean_
@@ -8490,6 +8502,183 @@ references:
   commentId: Overload:Llvm.NET.JIT.LegacyExecutionEngine.TryGetFunction
   fullName: Llvm.NET.JIT.LegacyExecutionEngine.TryGetFunction
   nameWithType: LegacyExecutionEngine.TryGetFunction
+- uid: Llvm.NET.JIT.OrcJit
+  name: OrcJit
+  href: api/Llvm.NET.JIT.OrcJit.html
+  commentId: T:Llvm.NET.JIT.OrcJit
+  fullName: Llvm.NET.JIT.OrcJit
+  nameWithType: OrcJit
+- uid: Llvm.NET.JIT.OrcJit.#ctor(Llvm.NET.TargetMachine)
+  name: OrcJit(TargetMachine)
+  href: api/Llvm.NET.JIT.OrcJit.-ctor.html#Llvm_NET_JIT_OrcJit__ctor_Llvm_NET_TargetMachine_
+  commentId: M:Llvm.NET.JIT.OrcJit.#ctor(Llvm.NET.TargetMachine)
+  fullName: Llvm.NET.JIT.OrcJit.OrcJit(Llvm.NET.TargetMachine)
+  nameWithType: OrcJit.OrcJit(TargetMachine)
+- uid: Llvm.NET.JIT.OrcJit.#ctor*
+  name: OrcJit
+  href: api/Llvm.NET.JIT.OrcJit.-ctor.html
+  commentId: Overload:Llvm.NET.JIT.OrcJit.#ctor
+  fullName: Llvm.NET.JIT.OrcJit.OrcJit
+  nameWithType: OrcJit.OrcJit
+- uid: Llvm.NET.JIT.OrcJit.AddModule(Llvm.NET.BitcodeModule)
+  name: AddModule(BitcodeModule)
+  href: api/Llvm.NET.JIT.OrcJit.AddModule.html#Llvm_NET_JIT_OrcJit_AddModule_Llvm_NET_BitcodeModule_
+  commentId: M:Llvm.NET.JIT.OrcJit.AddModule(Llvm.NET.BitcodeModule)
+  fullName: Llvm.NET.JIT.OrcJit.AddModule(Llvm.NET.BitcodeModule)
+  nameWithType: OrcJit.AddModule(BitcodeModule)
+- uid: Llvm.NET.JIT.OrcJit.AddModule(Llvm.NET.BitcodeModule,Llvm.NET.JIT.OrcJit.SymbolResolver)
+  name: AddModule(BitcodeModule, OrcJit.SymbolResolver)
+  href: api/Llvm.NET.JIT.OrcJit.AddModule.html#Llvm_NET_JIT_OrcJit_AddModule_Llvm_NET_BitcodeModule_Llvm_NET_JIT_OrcJit_SymbolResolver_
+  commentId: M:Llvm.NET.JIT.OrcJit.AddModule(Llvm.NET.BitcodeModule,Llvm.NET.JIT.OrcJit.SymbolResolver)
+  fullName: Llvm.NET.JIT.OrcJit.AddModule(Llvm.NET.BitcodeModule, Llvm.NET.JIT.OrcJit.SymbolResolver)
+  nameWithType: OrcJit.AddModule(BitcodeModule, OrcJit.SymbolResolver)
+- uid: Llvm.NET.JIT.OrcJit.AddModule*
+  name: AddModule
+  href: api/Llvm.NET.JIT.OrcJit.AddModule.html
+  commentId: Overload:Llvm.NET.JIT.OrcJit.AddModule
+  fullName: Llvm.NET.JIT.OrcJit.AddModule
+  nameWithType: OrcJit.AddModule
+- uid: Llvm.NET.JIT.OrcJit.DefaultSymbolResolver(System.String,System.IntPtr)
+  name: DefaultSymbolResolver(String, IntPtr)
+  href: api/Llvm.NET.JIT.OrcJit.DefaultSymbolResolver.html#Llvm_NET_JIT_OrcJit_DefaultSymbolResolver_System_String_System_IntPtr_
+  commentId: M:Llvm.NET.JIT.OrcJit.DefaultSymbolResolver(System.String,System.IntPtr)
+  fullName: Llvm.NET.JIT.OrcJit.DefaultSymbolResolver(System.String, System.IntPtr)
+  nameWithType: OrcJit.DefaultSymbolResolver(String, IntPtr)
+- uid: Llvm.NET.JIT.OrcJit.DefaultSymbolResolver*
+  name: DefaultSymbolResolver
+  href: api/Llvm.NET.JIT.OrcJit.DefaultSymbolResolver.html
+  commentId: Overload:Llvm.NET.JIT.OrcJit.DefaultSymbolResolver
+  fullName: Llvm.NET.JIT.OrcJit.DefaultSymbolResolver
+  nameWithType: OrcJit.DefaultSymbolResolver
+- uid: Llvm.NET.JIT.OrcJit.GetFunctionDelegate*
+  name: GetFunctionDelegate
+  href: api/Llvm.NET.JIT.OrcJit.GetFunctionDelegate.html
+  commentId: Overload:Llvm.NET.JIT.OrcJit.GetFunctionDelegate
+  fullName: Llvm.NET.JIT.OrcJit.GetFunctionDelegate
+  nameWithType: OrcJit.GetFunctionDelegate
+- uid: Llvm.NET.JIT.OrcJit.GetFunctionDelegate``1(System.String)
+  name: GetFunctionDelegate<T>(String)
+  href: api/Llvm.NET.JIT.OrcJit.GetFunctionDelegate.html#Llvm_NET_JIT_OrcJit_GetFunctionDelegate__1_System_String_
+  commentId: M:Llvm.NET.JIT.OrcJit.GetFunctionDelegate``1(System.String)
+  name.vb: GetFunctionDelegate(Of T)(String)
+  fullName: Llvm.NET.JIT.OrcJit.GetFunctionDelegate<T>(System.String)
+  fullName.vb: Llvm.NET.JIT.OrcJit.GetFunctionDelegate(Of T)(System.String)
+  nameWithType: OrcJit.GetFunctionDelegate<T>(String)
+  nameWithType.vb: OrcJit.GetFunctionDelegate(Of T)(String)
+- uid: Llvm.NET.JIT.OrcJit.InternalDispose(System.Boolean)
+  name: InternalDispose(Boolean)
+  href: api/Llvm.NET.JIT.OrcJit.InternalDispose.html#Llvm_NET_JIT_OrcJit_InternalDispose_System_Boolean_
+  commentId: M:Llvm.NET.JIT.OrcJit.InternalDispose(System.Boolean)
+  fullName: Llvm.NET.JIT.OrcJit.InternalDispose(System.Boolean)
+  nameWithType: OrcJit.InternalDispose(Boolean)
+- uid: Llvm.NET.JIT.OrcJit.InternalDispose*
+  name: InternalDispose
+  href: api/Llvm.NET.JIT.OrcJit.InternalDispose.html
+  commentId: Overload:Llvm.NET.JIT.OrcJit.InternalDispose
+  fullName: Llvm.NET.JIT.OrcJit.InternalDispose
+  nameWithType: OrcJit.InternalDispose
+- uid: Llvm.NET.JIT.OrcJit.IsDisposed
+  name: IsDisposed
+  href: api/Llvm.NET.JIT.OrcJit.IsDisposed.html#Llvm_NET_JIT_OrcJit_IsDisposed
+  commentId: P:Llvm.NET.JIT.OrcJit.IsDisposed
+  fullName: Llvm.NET.JIT.OrcJit.IsDisposed
+  nameWithType: OrcJit.IsDisposed
+- uid: Llvm.NET.JIT.OrcJit.IsDisposed*
+  name: IsDisposed
+  href: api/Llvm.NET.JIT.OrcJit.IsDisposed.html
+  commentId: Overload:Llvm.NET.JIT.OrcJit.IsDisposed
+  fullName: Llvm.NET.JIT.OrcJit.IsDisposed
+  nameWithType: OrcJit.IsDisposed
+- uid: Llvm.NET.JIT.OrcJit.OrcJitHandle
+  name: OrcJit.OrcJitHandle
+  href: api/Llvm.NET.JIT.OrcJit.OrcJitHandle.html
+  commentId: T:Llvm.NET.JIT.OrcJit.OrcJitHandle
+  fullName: Llvm.NET.JIT.OrcJit.OrcJitHandle
+  nameWithType: OrcJit.OrcJitHandle
+- uid: Llvm.NET.JIT.OrcJit.OrcJitHandle.Equals(Llvm.NET.JIT.OrcJit.OrcJitHandle)
+  name: Equals(OrcJit.OrcJitHandle)
+  href: api/Llvm.NET.JIT.OrcJit.OrcJitHandle.Equals.html#Llvm_NET_JIT_OrcJit_OrcJitHandle_Equals_Llvm_NET_JIT_OrcJit_OrcJitHandle_
+  commentId: M:Llvm.NET.JIT.OrcJit.OrcJitHandle.Equals(Llvm.NET.JIT.OrcJit.OrcJitHandle)
+  fullName: Llvm.NET.JIT.OrcJit.OrcJitHandle.Equals(Llvm.NET.JIT.OrcJit.OrcJitHandle)
+  nameWithType: OrcJit.OrcJitHandle.Equals(OrcJit.OrcJitHandle)
+- uid: Llvm.NET.JIT.OrcJit.OrcJitHandle.Equals(System.Object)
+  name: Equals(Object)
+  href: api/Llvm.NET.JIT.OrcJit.OrcJitHandle.Equals.html#Llvm_NET_JIT_OrcJit_OrcJitHandle_Equals_System_Object_
+  commentId: M:Llvm.NET.JIT.OrcJit.OrcJitHandle.Equals(System.Object)
+  fullName: Llvm.NET.JIT.OrcJit.OrcJitHandle.Equals(System.Object)
+  nameWithType: OrcJit.OrcJitHandle.Equals(Object)
+- uid: Llvm.NET.JIT.OrcJit.OrcJitHandle.Equals*
+  name: Equals
+  href: api/Llvm.NET.JIT.OrcJit.OrcJitHandle.Equals.html
+  commentId: Overload:Llvm.NET.JIT.OrcJit.OrcJitHandle.Equals
+  fullName: Llvm.NET.JIT.OrcJit.OrcJitHandle.Equals
+  nameWithType: OrcJit.OrcJitHandle.Equals
+- uid: Llvm.NET.JIT.OrcJit.OrcJitHandle.GetHashCode
+  name: GetHashCode()
+  href: api/Llvm.NET.JIT.OrcJit.OrcJitHandle.GetHashCode.html#Llvm_NET_JIT_OrcJit_OrcJitHandle_GetHashCode
+  commentId: M:Llvm.NET.JIT.OrcJit.OrcJitHandle.GetHashCode
+  fullName: Llvm.NET.JIT.OrcJit.OrcJitHandle.GetHashCode()
+  nameWithType: OrcJit.OrcJitHandle.GetHashCode()
+- uid: Llvm.NET.JIT.OrcJit.OrcJitHandle.GetHashCode*
+  name: GetHashCode
+  href: api/Llvm.NET.JIT.OrcJit.OrcJitHandle.GetHashCode.html
+  commentId: Overload:Llvm.NET.JIT.OrcJit.OrcJitHandle.GetHashCode
+  fullName: Llvm.NET.JIT.OrcJit.OrcJitHandle.GetHashCode
+  nameWithType: OrcJit.OrcJitHandle.GetHashCode
+- uid: Llvm.NET.JIT.OrcJit.OrcJitHandle.op_Equality(Llvm.NET.JIT.OrcJit.OrcJitHandle,Llvm.NET.JIT.OrcJit.OrcJitHandle)
+  name: Equality(OrcJit.OrcJitHandle, OrcJit.OrcJitHandle)
+  href: api/Llvm.NET.JIT.OrcJit.OrcJitHandle.op_Equality.html#Llvm_NET_JIT_OrcJit_OrcJitHandle_op_Equality_Llvm_NET_JIT_OrcJit_OrcJitHandle_Llvm_NET_JIT_OrcJit_OrcJitHandle_
+  commentId: M:Llvm.NET.JIT.OrcJit.OrcJitHandle.op_Equality(Llvm.NET.JIT.OrcJit.OrcJitHandle,Llvm.NET.JIT.OrcJit.OrcJitHandle)
+  fullName: Llvm.NET.JIT.OrcJit.OrcJitHandle.Equality(Llvm.NET.JIT.OrcJit.OrcJitHandle, Llvm.NET.JIT.OrcJit.OrcJitHandle)
+  nameWithType: OrcJit.OrcJitHandle.Equality(OrcJit.OrcJitHandle, OrcJit.OrcJitHandle)
+- uid: Llvm.NET.JIT.OrcJit.OrcJitHandle.op_Equality*
+  name: Equality
+  href: api/Llvm.NET.JIT.OrcJit.OrcJitHandle.op_Equality.html
+  commentId: Overload:Llvm.NET.JIT.OrcJit.OrcJitHandle.op_Equality
+  fullName: Llvm.NET.JIT.OrcJit.OrcJitHandle.Equality
+  nameWithType: OrcJit.OrcJitHandle.Equality
+- uid: Llvm.NET.JIT.OrcJit.OrcJitHandle.op_Inequality(Llvm.NET.JIT.OrcJit.OrcJitHandle,Llvm.NET.JIT.OrcJit.OrcJitHandle)
+  name: Inequality(OrcJit.OrcJitHandle, OrcJit.OrcJitHandle)
+  href: api/Llvm.NET.JIT.OrcJit.OrcJitHandle.op_Inequality.html#Llvm_NET_JIT_OrcJit_OrcJitHandle_op_Inequality_Llvm_NET_JIT_OrcJit_OrcJitHandle_Llvm_NET_JIT_OrcJit_OrcJitHandle_
+  commentId: M:Llvm.NET.JIT.OrcJit.OrcJitHandle.op_Inequality(Llvm.NET.JIT.OrcJit.OrcJitHandle,Llvm.NET.JIT.OrcJit.OrcJitHandle)
+  fullName: Llvm.NET.JIT.OrcJit.OrcJitHandle.Inequality(Llvm.NET.JIT.OrcJit.OrcJitHandle, Llvm.NET.JIT.OrcJit.OrcJitHandle)
+  nameWithType: OrcJit.OrcJitHandle.Inequality(OrcJit.OrcJitHandle, OrcJit.OrcJitHandle)
+- uid: Llvm.NET.JIT.OrcJit.OrcJitHandle.op_Inequality*
+  name: Inequality
+  href: api/Llvm.NET.JIT.OrcJit.OrcJitHandle.op_Inequality.html
+  commentId: Overload:Llvm.NET.JIT.OrcJit.OrcJitHandle.op_Inequality
+  fullName: Llvm.NET.JIT.OrcJit.OrcJitHandle.Inequality
+  nameWithType: OrcJit.OrcJitHandle.Inequality
+- uid: Llvm.NET.JIT.OrcJit.RemoveModule(Llvm.NET.JIT.OrcJit.OrcJitHandle)
+  name: RemoveModule(OrcJit.OrcJitHandle)
+  href: api/Llvm.NET.JIT.OrcJit.RemoveModule.html#Llvm_NET_JIT_OrcJit_RemoveModule_Llvm_NET_JIT_OrcJit_OrcJitHandle_
+  commentId: M:Llvm.NET.JIT.OrcJit.RemoveModule(Llvm.NET.JIT.OrcJit.OrcJitHandle)
+  fullName: Llvm.NET.JIT.OrcJit.RemoveModule(Llvm.NET.JIT.OrcJit.OrcJitHandle)
+  nameWithType: OrcJit.RemoveModule(OrcJit.OrcJitHandle)
+- uid: Llvm.NET.JIT.OrcJit.RemoveModule*
+  name: RemoveModule
+  href: api/Llvm.NET.JIT.OrcJit.RemoveModule.html
+  commentId: Overload:Llvm.NET.JIT.OrcJit.RemoveModule
+  fullName: Llvm.NET.JIT.OrcJit.RemoveModule
+  nameWithType: OrcJit.RemoveModule
+- uid: Llvm.NET.JIT.OrcJit.SymbolResolver
+  name: OrcJit.SymbolResolver
+  href: api/Llvm.NET.JIT.OrcJit.SymbolResolver.html
+  commentId: T:Llvm.NET.JIT.OrcJit.SymbolResolver
+  fullName: Llvm.NET.JIT.OrcJit.SymbolResolver
+  nameWithType: OrcJit.SymbolResolver
+- uid: Llvm.NET.JIT.OrcJit.TargetMachine
+  name: TargetMachine
+  href: api/Llvm.NET.JIT.OrcJit.TargetMachine.html#Llvm_NET_JIT_OrcJit_TargetMachine
+  commentId: P:Llvm.NET.JIT.OrcJit.TargetMachine
+  fullName: Llvm.NET.JIT.OrcJit.TargetMachine
+  nameWithType: OrcJit.TargetMachine
+- uid: Llvm.NET.JIT.OrcJit.TargetMachine*
+  name: TargetMachine
+  href: api/Llvm.NET.JIT.OrcJit.TargetMachine.html
+  commentId: Overload:Llvm.NET.JIT.OrcJit.TargetMachine
+  fullName: Llvm.NET.JIT.OrcJit.TargetMachine
+  nameWithType: OrcJit.TargetMachine
 - uid: Llvm.NET.Linkage
   name: Linkage
   href: api/Llvm.NET.Linkage.html
