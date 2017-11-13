@@ -147,9 +147,6 @@ namespace Llvm.NET.Native
     internal delegate void lto_diagnostic_handler_t( lto_codegen_diagnostic_severity_t @severity, [MarshalAs( UnmanagedType.LPStr )] string @diag, IntPtr @ctxt );
 
     [UnmanagedFunctionPointer( CallingConvention.Cdecl )]
-    internal delegate ulong LLVMOrcSymbolResolverFn( [MarshalAs( UnmanagedType.LPStr )] string name, IntPtr lookupCtx );
-
-    [UnmanagedFunctionPointer( CallingConvention.Cdecl )]
     internal delegate ulong LLVMOrcLazyCompileCallbackFn( LLVMOrcJITStackRef jITStack, IntPtr callbackCtx );
 
     internal enum LLVMVerifierFailureAction

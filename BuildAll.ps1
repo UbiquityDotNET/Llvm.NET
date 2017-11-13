@@ -91,7 +91,7 @@ function Invoke-msbuild([string]$project, [hashtable]$properties, [string[]]$tar
     $oldPath = $env:Path
     try
     {
-        $msbuildArgs = @($project, "/t:$($targets -join ';')") + $loggerArgs + $additionalArgs
+        $msbuildArgs = @($project, "/m", "/t:$($targets -join ';')") + $loggerArgs + $additionalArgs
         if( $properties )
         {
             $msbuildArgs += @( "/p:$(ConvertTo-PropertyList $properties)" ) 
@@ -235,22 +235,10 @@ try
     Invoke-MSBuild -Targets Build -Project src\LibLLVM\MultiPlatformBuild.vcxproj -Properties $msBuildProperties -LoggerArgs $msbuildLoggerArgs
 
     Write-Information "Restoring NuGet Packages for Llvm.NET"
-    Invoke-MSBuild -Targets Restore -Project src\Llvm.NET\Llvm.NET.csproj -Properties $msBuildProperties -LoggerArgs $msbuildLoggerArgs
+    Invoke-MSBuild -Targets Restore -Project src\Llvm.NET.sln -Properties $msBuildProperties -LoggerArgs $msbuildLoggerArgs
 
     Write-Information "Building Llvm.NET"
-    Invoke-MSBuild -Targets Build -Project src\Llvm.NET\Llvm.NET.csproj -Properties $msBuildProperties -LoggerArgs $msbuildLoggerArgs
-
-    Write-Information "Running NuGet Restore for Llvm.NET Tests"
-    Invoke-MSBuild -Targets Restore -Project src\Llvm.NETTests\LLVM.NETTests.csproj -Properties $msBuildProperties -LoggerArgs $msbuildLoggerArgs
-
-    Write-Information "Building Llvm.NET Tests"
-    Invoke-MSBuild -Targets Build -Project src\Llvm.NETTests\LLVM.NETTests.csproj -Properties $msBuildProperties -LoggerArgs $msbuildLoggerArgs
-
-    Write-Information "Restoring NuGet Packages for Samples"
-    Invoke-MSBuild -Targets Restore -Project Samples\Samples.sln -Properties $msBuildProperties -LoggerArgs $msbuildLoggerArgs
-
-    Write-Information "Building Samples"
-    Invoke-MSBuild -Targets Build -Project Samples\Samples.sln -Properties $msBuildProperties -LoggerArgs $msbuildLoggerArgs -AdditionalArgs @("/m")
+    Invoke-MSBuild -Targets Build -Project src\Llvm.NET.sln -Properties $msBuildProperties -LoggerArgs $msbuildLoggerArgs
 }
 finally
 {

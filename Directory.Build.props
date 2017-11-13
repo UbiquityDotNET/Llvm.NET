@@ -56,8 +56,7 @@
         <When Condition="'$(MSBuildProjectExtension)'=='.csproj'">
             <PropertyGroup>
                 <CodeAnalysisRuleSet>$(MSBuildThisFileDirectory)Ubiquity.NET.ruleset</CodeAnalysisRuleSet>
-                <EnableDefaultItems>false</EnableDefaultItems>
-                <EnableDefaultNoneItems>false</EnableDefaultNoneItems>
+                <CodeAnalysisIgnoreGeneratedCode>true</CodeAnalysisIgnoreGeneratedCode>
                 <Determenistic>true</Determenistic>
                 <IsTestProject>$(MSBuildProjectName.Contains('Test'))</IsTestProject>
             </PropertyGroup>
@@ -68,6 +67,7 @@
                 <PackageReference Include="Microsoft.AnalyzerPowerPack" Version="1.1.0" PrivateAssets="All" />
                 <PackageReference Include="RefactoringEssentials" Version="5.4.0" PrivateAssets="All" />
                 <PackageReference Include="StyleCop.Analyzers" Version="1.0.2" PrivateAssets="All" />
+                <AdditionalFiles Include="$(MSBuildThisFileDirectory)stylecop.json" Link="stylecop.json" />
             </ItemGroup>
             <ItemGroup>
                 <None Include="$(MSBuildThisFileDirectory)Ubiquity.NET.ruleset" Link="Ubiquity.NET.ruleset" />
