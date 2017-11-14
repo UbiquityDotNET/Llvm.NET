@@ -42,6 +42,8 @@ namespace Kaleidoscope.Grammar
 
         public LanguageLevel LanguageLevel { get; }
 
+        public KaleidoscopeParser Parser { get; }
+
         public ReplContext ReplParse( string txt )
         {
             Trace.TraceInformation( "Parsing: {0}", txt );
@@ -84,7 +86,6 @@ namespace Kaleidoscope.Grammar
 
         private CommonTokenStreamFix TokenStream;
         private KaleidoscopeLexer Lexer;
-        private KaleidoscopeParser Parser;
 
         private readonly IAntlrErrorListener<int> LexErrorListener;
         private readonly IAntlrErrorListener<IToken> ParseErrorListener;

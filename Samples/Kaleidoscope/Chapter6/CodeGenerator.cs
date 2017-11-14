@@ -78,9 +78,21 @@ namespace Kaleidoscope
 
         public override Value VisitUnaryOpExpression( [NotNull] UnaryOpExpressionContext context )
         {
-            // TODO: Lookup user defined ops to see if this operator is defined,
-            // if so, then generate a call to $unary{op}( value )
-            return base.VisitUnaryOpExpression( context );
+            var opKind = context.GetOperatorInfo( ParserStack.Parser );
+            if( opKind != OperatorKind.PreFix )
+            {
+                throw new ArgumentException( $"invalid unary operator {context.Op}", nameof( context ) );
+            }
+
+            string caleeName = $"unary{context.Op}";
+            var function = GetFunction( caleeName );
+            if( function == null )
+            {
+                throw new ArgumentException( $"Unknown function reference {caleeName}", nameof( context ) );
+            }
+
+            var arg = context.Rhs.Accept( this );
+            return InstructionBuilder.Call( function, arg ).RegisterName( "calltmp" );
         }
 
         public override Value VisitBinaryOpExpression( [NotNull] BinaryOpExpressionContext context )
@@ -131,9 +143,24 @@ namespace Kaleidoscope
                 return InstructionBuilder.FDiv( lhs, rhs ).RegisterName( "divtmp" );
 
             default:
-                // lookup the op to see if it is a user defined.
-                // if it is then generate a call to $binary{op}(lhs,rhs)
-                throw new ArgumentException( $"Invalid binary operator {context.Op}", nameof( context ) );
+                {
+                    // User defined op?
+                    var opKind = context.GetOperatorInfo( ParserStack.Parser );
+                    if( opKind != OperatorKind.InfixLeftAssociative && opKind != OperatorKind.InfixRightAssociative )
+                    {
+                        throw new ArgumentException( $"invalid binary operator {context.Op}", nameof( context ) );
+                    }
+
+                    string caleeName = $"binary{context.Op}";
+                    var function = GetFunction( caleeName );
+                    if( function == null )
+                    {
+                        throw new ArgumentException( $"Unknown function reference {caleeName}", nameof( context ) );
+                    }
+
+                    var args = context.Args.Select( a => a.Accept( this ) ).ToList( );
+                    return InstructionBuilder.Call( function, args ).RegisterName( "calltmp" );
+                }
             }
         }
 

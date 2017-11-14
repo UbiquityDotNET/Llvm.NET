@@ -108,6 +108,14 @@ namespace Kaleidoscope.Grammar
 
             public ExpressionContext Rhs => expression( );
 
+            public IEnumerable<ExpressionContext> Args
+            {
+                get
+                {
+                    yield return Rhs;
+                }
+            }
+
             public OperatorKind GetOperatorInfo( KaleidoscopeParser parser )
             {
                 if( parser.BinOpPrecedence.TryGetValue( Op, out OperatorInfo entry ) )
@@ -126,6 +134,8 @@ namespace Kaleidoscope.Grammar
             public char Op => LETTER( ).GetText( )[ 0 ];
 
             public ExpressionContext Rhs => expression( 1 );
+
+            public IEnumerable<ExpressionContext> Args => expression( );
 
             public OperatorKind GetOperatorInfo( KaleidoscopeParser parser )
             {
