@@ -46,17 +46,17 @@ namespace Kaleidoscope
 
         public override Value VisitParenExpression( [NotNull] ParenExpressionContext context )
         {
-            return context.GetExpression( ).Accept( this );
+            return context.Expression.Accept( this );
         }
 
         public override Value VisitConstExpression( [NotNull] ConstExpressionContext context )
         {
-            return Context.CreateConstant( context.GetValue() );
+            return Context.CreateConstant( context.Value );
         }
 
         public override Value VisitVariableExpression( [NotNull] VariableExpressionContext context )
         {
-            string varName = context.GetName( );
+            string varName = context.Name;
             if( NamedValues.TryGetValue( varName, out Value value ) )
             {
                 return value;
@@ -67,16 +67,14 @@ namespace Kaleidoscope
 
         public override Value VisitBinaryOpExpression( [NotNull] BinaryOpExpressionContext context )
         {
-            var (lhsExpr, op, rhsExpr) = context;
-
-            var lhs = lhsExpr.Accept( this );
-            var rhs = rhsExpr.Accept( this );
+            var lhs = context.Lhs.Accept( this );
+            var rhs = context.Rhs.Accept( this );
             if( lhs == null || rhs == null )
             {
                 return null;
             }
 
-            switch( op )
+            switch( context.Op )
             {
             case '<':
                 {
@@ -96,8 +94,8 @@ namespace Kaleidoscope
 
             case '^':
                 {
-                    var proto = CreateSyntheticProtoTypeContext( "llvm.pow.f64", "value", "power" );
-                    var pow = DeclareFunction( proto );
+                    var proto = CreateSyntheticPrototype( "llvm.pow.f64", "value", "power" );
+                    var pow = DeclareFunction( proto.Name, proto.Parameters );
                     return InstructionBuilder.Call( pow, lhs, rhs )
                                              .RegisterName( "powtmp" );
                 }
@@ -115,43 +113,39 @@ namespace Kaleidoscope
                 return InstructionBuilder.FDiv( lhs, rhs ).RegisterName( "divtmp" );
 
             default:
-                throw new ArgumentException( $"Invalid binary operator {op}", nameof( context ) );
+                throw new ArgumentException( $"Invalid binary operator {context.Op}", nameof( context ) );
             }
         }
 
         public override Value VisitFunctionCallExpression( [NotNull] FunctionCallExpressionContext context )
         {
-            var (calleeName, argExprs) = context;
-
-            var function = GetFunction( calleeName );
+            var function = GetFunction( context.CaleeName );
             if( function == null )
             {
-                throw new ArgumentException( $"Unknown function reference {calleeName}", nameof( context ) );
+                throw new ArgumentException( $"Unknown function reference {context.CaleeName}", nameof( context ) );
             }
 
-            var args = argExprs.Select( ctx => ctx.Accept( this ) ).ToArray( );
+            var args = context.Args.Select( ctx => ctx.Accept( this ) ).ToArray( );
             return InstructionBuilder.Call( function, args ).RegisterName("calltmp");
         }
 
         public override Value VisitPrototype( [NotNull] PrototypeContext context )
         {
-            var (name, parameters) = context;
-            return DeclareFunction( (name, parameters) );
+            return DeclareFunction( context );
         }
 
         public override Value VisitFunctionDefinition( [NotNull] FunctionDefinitionContext context )
         {
-            var (signature, body) = context;
-            return FunctionDefinition( signature, body );
+            return FunctionDefinition( context.Signature, context.BodyExpression);
         }
 
         public override Value VisitTopLevelExpression( [NotNull] TopLevelExpressionContext context )
         {
             string name = $"anon_expr_{AnonNameIndex++}";
-            var proto = CreateSyntheticProtoTypeContext( name );
+            var proto = CreateSyntheticPrototype( name );
 
-            var def = DeclareFunction( proto );
-            return FunctionDefinition( proto, context.expression() );
+            var def = DeclareFunction( proto.Name, proto.Parameters);
+            return FunctionDefinition( proto.Name, proto.Parameters, context.expression( ) );
         }
 
         protected override Value DefaultResult => null;
@@ -163,14 +157,11 @@ namespace Kaleidoscope
 
         private Function DeclareFunction( PrototypeContext signature )
         {
-            var (name, parameters) = signature;
-            return DeclareFunction( (name, parameters) );
+            return DeclareFunction( signature.Name, signature.Parameters );
         }
 
-        private Function DeclareFunction( (string Name, IList<string> Parameters) signature )
+        private Function DeclareFunction( string name, IReadOnlyList<string> argNames )
         {
-            var (name, argNames) = signature;
-
             var llvmSignature = Context.GetFunctionType( Context.DoubleType, argNames.Select( _ => Context.DoubleType ) );
 
             var retVal = Module.AddFunction( name, llvmSignature );
@@ -188,18 +179,15 @@ namespace Kaleidoscope
 
         private Function FunctionDefinition( PrototypeContext signature, ExpressionContext body )
         {
-            var (name, parameters) = signature;
-            return FunctionDefinition( (name, parameters), body );
+            return FunctionDefinition( signature.Name, signature.Parameters, body );
         }
 
-        private Function FunctionDefinition( (string Name, IList<string> Parameters) signature, ExpressionContext body )
+        private Function FunctionDefinition( string name, IReadOnlyList<string> argNames, ExpressionContext body )
         {
-            var (name, argNames) = signature;
-
             var function = GetFunction( name );
             if( function == null )
             {
-                function = DeclareFunction( signature );
+                function = DeclareFunction( name, argNames );
             }
 
             if( function == null )
@@ -209,7 +197,7 @@ namespace Kaleidoscope
 
             if( !function.IsDeclaration )
             {
-                throw new ArgumentException( $"Function {name} cannot be redefined", nameof( signature ) );
+                throw new ArgumentException( $"Function {name} cannot be redefined", nameof( name ) );
             }
 
             var basicBlock = function.AppendBasicBlock( "entry" );
@@ -233,7 +221,7 @@ namespace Kaleidoscope
             return function;
         }
 
-        private (string Name, IList<string> Parameters) CreateSyntheticProtoTypeContext( string name, params string[] argNames )
+        private (string Name, IReadOnlyList<string> Parameters) CreateSyntheticPrototype( string name, params string[] argNames )
         {
             return (name, argNames);
         }

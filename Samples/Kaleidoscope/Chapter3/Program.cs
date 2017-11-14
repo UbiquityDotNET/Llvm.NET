@@ -45,11 +45,11 @@ namespace Kaleidoscope
         {
             Console.WriteLine( "LLVM Kaleidoscope Generator - {0}", generator.ParserStack.LanguageLevel );
             Console.Write( "Ready>" );
-            foreach( var lineInfo in Console.In.ReadStatements( ) )
+            foreach( var (Txt, IsPartial) in Console.In.ReadStatements( ) )
             {
-                if( !lineInfo.IsPartial )
+                if( !IsPartial )
                 {
-                    var parseTree = generator.ParserStack.ReplParse( lineInfo.Txt );
+                    var parseTree = generator.ParserStack.ReplParse( Txt );
                     Value value = generator.Visit( parseTree );
                     if( value != null )
                     {
@@ -57,7 +57,7 @@ namespace Kaleidoscope
                     }
                 }
 
-                Console.Write( lineInfo.IsPartial ? ">" : "Ready>" );
+                Console.Write( IsPartial ? ">" : "Ready>" );
             }
         }
     }

@@ -57,17 +57,17 @@ namespace Kaleidoscope
 
         public override Value VisitParenExpression( [NotNull] ParenExpressionContext context )
         {
-            return context.GetExpression( ).Accept( this );
+            return context.Expression.Accept( this );
         }
 
         public override Value VisitConstExpression( [NotNull] ConstExpressionContext context )
         {
-            return Context.CreateConstant( context.GetValue() );
+            return Context.CreateConstant( context.Value );
         }
 
         public override Value VisitVariableExpression( [NotNull] VariableExpressionContext context )
         {
-            string varName = context.GetName( );
+            string varName = context.Name;
             if( !NamedValues.TryGetValue( varName, out Alloca value ) )
             {
                 throw new ArgumentException( "Unknown variable name", nameof( context ) );
@@ -77,18 +77,23 @@ namespace Kaleidoscope
                                      .RegisterName( varName );
         }
 
+        public override Value VisitUnaryOpExpression( [NotNull] UnaryOpExpressionContext context )
+        {
+            // TODO: Lookup user defined ops to see if this operator is defined,
+            // if so, then generate a call to $unary{op}( value )
+            return base.VisitUnaryOpExpression( context );
+        }
+
         public override Value VisitBinaryOpExpression( [NotNull] BinaryOpExpressionContext context )
         {
-            var (lhsExpr, op, rhsExpr) = context;
-
-            var lhs = lhsExpr.Accept( this );
-            var rhs = rhsExpr.Accept( this );
+            var lhs = context.Lhs.Accept( this );
+            var rhs = context.Rhs.Accept( this );
             if( lhs == null || rhs == null )
             {
                 return null;
             }
 
-            switch( op )
+            switch( context.Op )
             {
             case '<':
                 {
@@ -108,8 +113,8 @@ namespace Kaleidoscope
 
             case '^':
                 {
-                    var proto = CreateSyntheticProtoTypeContext( "llvm.pow.f64", "value", "power" );
-                    var pow = DeclareFunction( proto );
+                    var proto = CreateSyntheticPrototype( "llvm.pow.f64", "value", "power" );
+                    var pow = DeclareFunction( proto.Name, proto.Parameters );
                     return InstructionBuilder.Call( pow, lhs, rhs )
                                              .RegisterName( "powtmp" );
                 }
@@ -127,46 +132,44 @@ namespace Kaleidoscope
                 return InstructionBuilder.FDiv( lhs, rhs ).RegisterName( "divtmp" );
 
             default:
-                throw new ArgumentException( $"Invalid binary operator {op}", nameof( context ) );
+                // lookup the op to see if it is a user defined.
+                // if it is then generate a call to $binary{op}(lhs,rhs)
+                throw new ArgumentException( $"Invalid binary operator {context.Op}", nameof( context ) );
             }
         }
 
         public override Value VisitFunctionCallExpression( [NotNull] FunctionCallExpressionContext context )
         {
-            var (calleeName, argExprs) = context;
-
-            var function = GetFunction( calleeName );
+            var function = GetFunction( context.CaleeName );
             if( function == null )
             {
-                throw new ArgumentException( $"Unknown function reference {calleeName}", nameof( context ) );
+                throw new ArgumentException( $"Unknown function reference {context.CaleeName}", nameof( context ) );
             }
 
-            var args = argExprs.Select( ctx => ctx.Accept( this ) ).ToArray( );
+            var args = context.Args.Select( ctx => ctx.Accept( this ) ).ToArray( );
             return InstructionBuilder.Call( function, args ).RegisterName("calltmp");
         }
 
         public override Value VisitPrototype( [NotNull] PrototypeContext context )
         {
-            var (name, parameters) = context;
-            var retVal = DeclareFunction( (name, parameters) );
-            FunctionProtoTypes.AddOrReplaceItem( (name, parameters) );
+            var retVal = DeclareFunction( context );
+            FunctionProtoTypes.AddOrReplaceItem( context.Name, context.Parameters );
             return retVal;
         }
 
         public override Value VisitFunctionDefinition( [NotNull] FunctionDefinitionContext context )
         {
-            var (signature, body) = context;
-            var funcAndHandle = FunctionDefinition( signature, body );
+            var funcAndHandle = FunctionDefinition( context.Signature, context.BodyExpression );
             return funcAndHandle.Function;
         }
 
         public override Value VisitTopLevelExpression( [NotNull] TopLevelExpressionContext context )
         {
             string name = $"anon_expr_{AnonNameIndex++}";
-            var proto = CreateSyntheticProtoTypeContext( name );
+            var proto = CreateSyntheticPrototype( name );
 
-            var def = DeclareFunction( proto, persistentSymbol: false );
-            var function = FunctionDefinition( proto, context.expression() );
+            var def = DeclareFunction( proto.Name, proto.Parameters, persistentSymbol: false );
+            var function = FunctionDefinition( proto.Name, proto.Parameters, context.expression() );
 
             var nativeFunc = JIT.GetDelegateForFunction<AnonExpressionFunc>( name );
             var retVal = Context.CreateConstant( nativeFunc( ) );
@@ -176,8 +179,7 @@ namespace Kaleidoscope
 
         public override Value VisitConditionalExpression( [NotNull] ConditionalExpressionContext context )
         {
-            var (condExpr, thenExpr, elseExpr) = context;
-            var condition = condExpr.Accept( this );
+            var condition = context.Condition.Accept( this );
             if( condition == null )
             {
                 return null;
@@ -195,7 +197,7 @@ namespace Kaleidoscope
 
             // generate then block
             InstructionBuilder.PositionAtEnd( thenBlock );
-            var thenValue = thenExpr.Accept( this );
+            var thenValue = context.ThenExpression.Accept( this );
             if( thenValue == null )
             {
                 return null;
@@ -209,7 +211,7 @@ namespace Kaleidoscope
             // generate else block
             function.BasicBlocks.Add( elseBlock );
             InstructionBuilder.PositionAtEnd( elseBlock );
-            var elseValue = elseExpr.Accept( this );
+            var elseValue = context.ElseExpression.Accept( this );
             if( elseValue == null )
             {
                 return null;
@@ -248,16 +250,15 @@ namespace Kaleidoscope
         */
         public override Value VisitForExpression( [NotNull] ForExpressionContext context )
         {
-            var (startExpr, endExpr, stepExpr, bodyExpr) = context;
             var function = InstructionBuilder.InsertBlock.ContainingFunction;
-            string varName = startExpr.identifier( ).GetName( );
+            string varName = context.Initializer.Name;
             var allocaVar = CreateEntryBlockAlloca( function, varName );
 
             // Emit the start code first, without 'variable' in scope.
             Value startVal = null;
-            if( startExpr.expression( ) != null )
+            if( context.Initializer.Value != null )
             {
-                startVal = startExpr.expression().Accept( this );
+                startVal = context.Initializer.Value.Accept( this );
                 if( startVal == null )
                 {
                     return null;
@@ -296,7 +297,7 @@ namespace Kaleidoscope
             // Emit the body of the loop.  This, like any other expr, can change the
             // current BB.  Note that we ignore the value computed by the body, but don't
             // allow an error.
-            if( bodyExpr.Accept(this) == null)
+            if( context.BodyExpression.Accept(this) == null)
             {
                 return null;
             }
@@ -304,9 +305,9 @@ namespace Kaleidoscope
             Value stepValue = Context.CreateConstant( 1.0 );
 
             // DEBUG: How does ANTLR represent optional context (Null or IsEmpty == true)
-            if( stepExpr != null )
+            if( context.StepExpression != null )
             {
-                stepValue = stepExpr.Accept( this );
+                stepValue = context.StepExpression.Accept( this );
                 if( stepValue == null )
                 {
                     return null;
@@ -314,7 +315,7 @@ namespace Kaleidoscope
             }
 
             // Compute the end condition.
-            Value endCondition =endExpr.Accept( this );
+            Value endCondition =context.EndExpression.Accept( this );
             if( endCondition == null )
             {
                 return null;
@@ -357,14 +358,13 @@ namespace Kaleidoscope
 
         public override Value VisitAssignmentExpression( [NotNull] AssignmentExpressionContext context )
         {
-            var (varName, value) = context;
-            var rhs = value.Accept( this );
+            var rhs = context.Value.Accept( this );
             if( rhs == null )
             {
                 return null;
             }
 
-            if( !NamedValues.TryGetValue( varName, out Alloca varSlot ) )
+            if( !NamedValues.TryGetValue( context.VariableName, out Alloca varSlot ) )
             {
                 throw new ArgumentException( "Unknown variable name" );
             }
@@ -375,11 +375,9 @@ namespace Kaleidoscope
 
         public override Value VisitVarInExpression( [NotNull] VarInExpressionContext context )
         {
-            var (initializers, scope) = context;
-
             IList<Alloca> oldBindings = new List<Alloca>( );
             Function function = InstructionBuilder.InsertBlock.ContainingFunction;
-            foreach( var initializer in initializers )
+            foreach( var initializer in context.Initiaizers )
             {
                 Value initValue = Context.CreateConstant( 0.0 );
                 if( initializer.Value != null )
@@ -393,15 +391,15 @@ namespace Kaleidoscope
                 NamedValues[ initializer.Name ] = alloca;
             }
 
-            var bodyVal = scope.Accept( this );
+            var bodyVal = context.Scope.Accept( this );
             if( bodyVal == null )
             {
                 return null;
             }
 
-            for( int i = 0; i < initializers.Count; ++i )
+            for( int i = 0; i < context.Initiaizers.Count; ++i )
             {
-                var initializer = initializers[ i ];
+                var initializer = context.Initiaizers[ i ];
                 NamedValues[ initializer.Name ] = oldBindings[ i ];
             }
 
@@ -432,7 +430,7 @@ namespace Kaleidoscope
 
             if( FunctionProtoTypes.TryGetValue( name, out var signature ) )
             {
-                return DeclareFunction( signature );
+                return DeclareFunction( name, signature );
             }
 
             return null;
@@ -440,14 +438,11 @@ namespace Kaleidoscope
 
         private Function DeclareFunction( PrototypeContext signature, bool persistentSymbol = true )
         {
-            var (name, parameters) = signature;
-            return DeclareFunction( (name, parameters), persistentSymbol );
+            return DeclareFunction( signature.Name, signature.Parameters, persistentSymbol );
         }
 
-        private Function DeclareFunction( (string Name, IList<string> Parameters) signature, bool persistentSymbol = true )
+        private Function DeclareFunction( string name, IReadOnlyList<string> argNames, bool persistentSymbol = true )
         {
-            var (name, argNames) = signature;
-
             var llvmSignature = Context.GetFunctionType( Context.DoubleType, argNames.Select( _ => Context.DoubleType ) );
 
             var retVal = Module.AddFunction( name, llvmSignature );
@@ -462,7 +457,7 @@ namespace Kaleidoscope
 
             if( persistentSymbol )
             {
-                FunctionProtoTypes.AddOrReplaceItem( signature );
+                FunctionProtoTypes.AddOrReplaceItem( name, argNames );
             }
 
             return retVal;
@@ -470,18 +465,15 @@ namespace Kaleidoscope
 
         private (Function Function, int JitHandle) FunctionDefinition( PrototypeContext signature, ExpressionContext body )
         {
-            var (name, parameters) = signature;
-            return FunctionDefinition( (name, parameters), body );
+            return FunctionDefinition( signature.Name, signature.Parameters, body );
         }
 
-        private (Function Function, int JitHandle) FunctionDefinition( (string Name, IList<string> Parameters) signature, ExpressionContext body )
+        private (Function Function, int JitHandle) FunctionDefinition( string name, IReadOnlyList<string> argNames, ExpressionContext body )
         {
-            var (name, argNames) = signature;
-
             var function = GetFunction( name );
             if( function == null )
             {
-                function = DeclareFunction( signature );
+                function = DeclareFunction( name, argNames );
             }
 
             if( function == null )
@@ -491,7 +483,7 @@ namespace Kaleidoscope
 
             if( !function.IsDeclaration )
             {
-                throw new ArgumentException( $"Function {name} cannot be redefined", nameof( signature ) );
+                throw new ArgumentException( $"Function {name} cannot be redefined", nameof( name ) );
             }
 
             var basicBlock = function.AppendBasicBlock( "entry" );
@@ -521,7 +513,7 @@ namespace Kaleidoscope
             return (function, jitHandle);
         }
 
-        private (string Name, IList<string> Parameters) CreateSyntheticProtoTypeContext( string name, params string[] argNames )
+        private (string Name, IReadOnlyList<string> Parameters) CreateSyntheticPrototype( string name, params string[] argNames )
         {
             return (name, argNames);
         }

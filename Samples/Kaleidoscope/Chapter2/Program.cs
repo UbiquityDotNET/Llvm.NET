@@ -39,11 +39,11 @@ namespace Kaleidoscope
 
             Console.WriteLine( "LLVM Kaleidoscope Syntax Viewer - {0}", level );
             Console.Write( "Ready>" );
-            foreach( var lineInfo in Console.In.ReadStatements( ) )
+            foreach( var (Txt, IsPartial) in Console.In.ReadStatements( ) )
             {
-                if( !lineInfo.IsPartial )
+                if( !IsPartial )
                 {
-                    var parseTree = parseStack.ReplParse( lineInfo.Txt );
+                    var parseTree = parseStack.ReplParse( Txt );
 
                     // no code generation in this version.
                     // This departs a tad from the official C++ version for this "chapter"
@@ -58,7 +58,7 @@ namespace Kaleidoscope
                     Console.WriteLine( "Parsed:\n{0}", docListener.Document.ToString( ) );
                 }
 
-                Console.Write( lineInfo.IsPartial ? ">" : "Ready>" );
+                Console.Write( IsPartial ? ">" : "Ready>" );
             }
         }
     }

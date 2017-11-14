@@ -6,6 +6,7 @@ using static Llvm.NET.Native.NativeMethods;
 
 namespace Llvm.NET.Transforms
 {
+    /// <summary>Utility class for Adding Scalar transform passses to a <see cref="PassManager"/></summary>
     public static class ScalarTransforms
     {
         public static T AddAggressiveDCEPass<T>( this T passManager )

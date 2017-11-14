@@ -23,7 +23,7 @@ namespace Kaleidoscope.Grammar
 
         public override void EnterIdentifier( [NotNull] KaleidoscopeParser.IdentifierContext context )
         {
-            ActiveNode.Add( new XAttribute( "Name", context.GetName( ) ) );
+            ActiveNode.Add( new XAttribute( "Name", context.Name ) );
         }
 
         public override void EnterBinaryOpExpression( [NotNull] KaleidoscopeParser.BinaryOpExpressionContext context )

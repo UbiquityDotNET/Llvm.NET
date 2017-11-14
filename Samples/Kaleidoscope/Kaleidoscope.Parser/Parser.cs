@@ -3,7 +3,9 @@
 // </copyright>
 
 using System;
+using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
+using System.Linq;
 using Antlr4.Runtime;
 
 [assembly: CLSCompliant( false )]
@@ -32,6 +34,145 @@ namespace Kaleidoscope.Grammar
     public partial class KaleidoscopeParser
         : Parser
     {
+        public partial class IdentifierContext
+        {
+            public string Name => Identifier( ).ToString( );
+        }
+
+        public partial class VariableExpressionContext
+        {
+            public string Name => ( ( IdentifierContext )GetChild( 0 ) ).Name;
+        }
+
+        public partial class ConstExpressionContext
+        {
+            public double Value => double.Parse( Number( ).GetText( ) );
+        }
+
+        public partial class ParenExpressionContext
+        {
+            public ExpressionContext Expression => ( ExpressionContext )GetChild( 1 );
+        }
+
+        public partial class FunctionCallExpressionContext
+        {
+            public string CaleeName => ( ( IdentifierContext )GetChild( 0 ) ).Name;
+
+            public IReadOnlyList<ExpressionContext> Args => expression( );
+        }
+
+        public partial class InitializerContext
+        {
+            public string Name => identifier( ).Name;
+
+            public ExpressionContext Value => expression( );
+        }
+
+        public partial class VarInExpressionContext
+        {
+            public IReadOnlyList<InitializerContext> Initiaizers => initializer( );
+
+            public ExpressionContext Scope => GetRuleContext<ExpressionContext>( ChildCount - 1 );
+        }
+
+        public partial class ConditionalExpressionContext
+        {
+            public ExpressionContext Condition => GetRuleContext<ExpressionContext>( 1 );
+
+            public ExpressionContext ThenExpression => GetRuleContext<ExpressionContext>( 3 );
+
+            public ExpressionContext ElseExpression => GetRuleContext<ExpressionContext>( 5 );
+        }
+
+        public partial class ForExpressionContext
+        {
+            public InitializerContext Initializer => GetRuleContext<InitializerContext>( 1 );
+
+            public ExpressionContext EndExpression => expression( 0 );
+
+            public ExpressionContext StepExpression => expression( 1 );
+
+            public ExpressionContext BodyExpression => expression( 2 );
+        }
+
+        public partial class AssignmentExpressionContext
+        {
+            public string VariableName => identifier( ).Name;
+
+            public ExpressionContext Value => expression( );
+        }
+
+        public partial class UnaryOpExpressionContext
+        {
+            public char Op => LETTER( ).GetText( )[ 0 ];
+
+            public ExpressionContext Rhs => expression( );
+
+            public OperatorKind GetOperatorInfo( KaleidoscopeParser parser )
+            {
+                if( parser.BinOpPrecedence.TryGetValue( Op, out OperatorInfo entry ) )
+                {
+                    return entry.Kind;
+                }
+
+                return OperatorKind.None;
+            }
+        }
+
+        public partial class BinaryOpExpressionContext
+        {
+            public ExpressionContext Lhs => expression( 0 );
+
+            public char Op => LETTER( ).GetText( )[ 0 ];
+
+            public ExpressionContext Rhs => expression( 1 );
+
+            public OperatorKind GetOperatorInfo( KaleidoscopeParser parser )
+            {
+                if( parser.BinOpPrecedence.TryGetValue( Op, out OperatorInfo entry ) )
+                {
+                    return entry.Kind;
+                }
+
+                return OperatorKind.None;
+            }
+        }
+
+        public partial class PrototypeContext
+        {
+            public virtual string Name => string.Empty;
+
+            public virtual IReadOnlyList<string> Parameters => new List<string>( );
+        }
+
+        public partial class UnaryProtoTypeContext
+        {
+            public override string Name => $"$unary{LETTER( ).GetText( )}";
+
+            public override IReadOnlyList<string> Parameters => new List<string> { identifier( ).GetText( ) };
+        }
+
+        public partial class BinaryProtoTypeContext
+        {
+            public override string Name => $"$binary{LETTER( ).GetText( )}";
+
+            public override IReadOnlyList<string> Parameters => identifier( ).Select( i => i.Name ).ToList( );
+        }
+
+        public partial class FunctionProtoTypeContext
+        {
+            public override string Name => identifier( 0 ).Name;
+
+            public override IReadOnlyList<string> Parameters => identifier( ).Skip( 1 ).Select( i => i.Name ).ToList( );
+        }
+
+        public partial class FunctionDefinitionContext
+        {
+            public PrototypeContext Signature => prototype( );
+
+            public ExpressionContext BodyExpression => expression( );
+        }
+
         /// <summary>Gets or sets the Language level the application supports</summary>
         public LanguageLevel LanguageLevel { get; set; }
 
@@ -85,6 +226,16 @@ namespace Kaleidoscope.Grammar
         /// </remarks>
         public bool TryAddOperator( char token, OperatorKind kind, int precedence )
             => BinOpPrecedence.TryAddOrReplaceItem( new OperatorInfo( token, kind, precedence, false ) );
+
+        public OperatorKind GetOperatorKind( IToken op )
+        {
+            if( BinOpPrecedence.TryGetValue( op.Text[0], out OperatorInfo entry))
+            {
+                return entry.Kind;
+            }
+
+            return OperatorKind.None;
+        }
 
         private bool IsPrefixOp( IToken op )
         {
