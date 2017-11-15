@@ -50,10 +50,13 @@ namespace Kaleidoscope
                 if( !IsPartial )
                 {
                     var parseTree = generator.ParserStack.ReplParse( Txt );
-                    Value value = generator.Visit( parseTree );
-                    if( value != null )
+                    if( parseTree != null )
                     {
-                        Console.WriteLine( "Parsed {0}", value );
+                        Value value = generator.Visit( parseTree );
+                        if( value != null )
+                        {
+                            Console.WriteLine( "Parsed {0}", value );
+                        }
                     }
                 }
 

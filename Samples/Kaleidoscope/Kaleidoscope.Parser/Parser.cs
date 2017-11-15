@@ -77,16 +77,16 @@ namespace Kaleidoscope.Grammar
 
         public partial class ConditionalExpressionContext
         {
-            public ExpressionContext Condition => GetRuleContext<ExpressionContext>( 1 );
+            public ExpressionContext Condition => expression( 0 );
 
-            public ExpressionContext ThenExpression => GetRuleContext<ExpressionContext>( 3 );
+            public ExpressionContext ThenExpression => expression( 1 );
 
-            public ExpressionContext ElseExpression => GetRuleContext<ExpressionContext>( 5 );
+            public ExpressionContext ElseExpression => expression( 2 );
         }
 
         public partial class ForExpressionContext
         {
-            public InitializerContext Initializer => GetRuleContext<InitializerContext>( 1 );
+            public InitializerContext Initializer => initializer( );
 
             public ExpressionContext EndExpression => expression( 0 );
 
@@ -104,7 +104,7 @@ namespace Kaleidoscope.Grammar
 
         public partial class UnaryOpExpressionContext
         {
-            public char Op => LETTER( ).GetText( )[ 0 ];
+            public char Op => opsymbol( ).GetText( )[ 0 ];
 
             public ExpressionContext Rhs => expression( );
 
@@ -118,7 +118,7 @@ namespace Kaleidoscope.Grammar
 
             public OperatorKind GetOperatorInfo( KaleidoscopeParser parser )
             {
-                if( parser.BinOpPrecedence.TryGetValue( Op, out OperatorInfo entry ) )
+                if( parser.UnaryOps.TryGetValue( Op, out OperatorInfo entry ) )
                 {
                     return entry.Kind;
                 }
@@ -131,7 +131,7 @@ namespace Kaleidoscope.Grammar
         {
             public ExpressionContext Lhs => expression( 0 );
 
-            public char Op => LETTER( ).GetText( )[ 0 ];
+            public char Op => opsymbol( ).GetText( )[ 0 ];
 
             public ExpressionContext Rhs => expression( 1 );
 
@@ -157,16 +157,18 @@ namespace Kaleidoscope.Grammar
 
         public partial class UnaryProtoTypeContext
         {
-            public override string Name => $"$unary{LETTER( ).GetText( )}";
+            public char Op => opsymbol( ).GetText( )[ 0 ];
 
             public override IReadOnlyList<string> Parameters => new List<string> { identifier( ).GetText( ) };
         }
 
         public partial class BinaryProtoTypeContext
         {
-            public override string Name => $"$binary{LETTER( ).GetText( )}";
+            public char Op => opsymbol( ).GetText( )[ 0 ];
 
             public override IReadOnlyList<string> Parameters => identifier( ).Select( i => i.Name ).ToList( );
+
+            public int Precedence => ( int )double.Parse( Number( ).GetText() );
         }
 
         public partial class FunctionProtoTypeContext
@@ -235,22 +237,25 @@ namespace Kaleidoscope.Grammar
         /// will not replace the operator and will simply return <see langword="false"/>.
         /// </remarks>
         public bool TryAddOperator( char token, OperatorKind kind, int precedence )
-            => BinOpPrecedence.TryAddOrReplaceItem( new OperatorInfo( token, kind, precedence, false ) );
-
-        public OperatorKind GetOperatorKind( IToken op )
         {
-            if( BinOpPrecedence.TryGetValue( op.Text[0], out OperatorInfo entry))
+            switch( kind )
             {
-                return entry.Kind;
-            }
+            case OperatorKind.InfixLeftAssociative:
+            case OperatorKind.InfixRightAssociative:
+                return BinOpPrecedence.TryAddOrReplaceItem( new OperatorInfo( token, kind, precedence, false ) );
 
-            return OperatorKind.None;
+            case OperatorKind.PreFix:
+                return UnaryOps.TryAddOrReplaceItem( new OperatorInfo( token, kind, 0, false ) );
+
+            // case OperatorKind.None:
+            default:
+                throw new ArgumentException( "unknown kind", nameof( kind ) );
+            }
         }
 
-        private bool IsPrefixOp( IToken op )
+        public virtual bool IsPrefixOp( IToken op )
         {
-            var operatorInfo = GetPrecedence( op );
-            return operatorInfo.Kind == OperatorKind.PreFix;
+            return UnaryOps.TryGetValue( op.Text[0], out var value );
         }
 
         private bool IsFeatureEnabled( LanguageLevel feature )
@@ -279,10 +284,11 @@ namespace Kaleidoscope.Grammar
             return operatorInfo.Precedence + 1;
         }
 
+        private OperatorInfoCollection UnaryOps = new OperatorInfoCollection();
+
         private OperatorInfoCollection BinOpPrecedence = new OperatorInfoCollection()
         {
             new OperatorInfo( '<', OperatorKind.InfixLeftAssociative, 10, true),
-            new OperatorInfo( '>', OperatorKind.InfixLeftAssociative, 10, true),
             new OperatorInfo( '+', OperatorKind.InfixLeftAssociative, 20, true),
             new OperatorInfo( '-', OperatorKind.InfixLeftAssociative, 20, true),
             new OperatorInfo( '*', OperatorKind.InfixLeftAssociative, 40, true),

@@ -95,14 +95,6 @@ namespace Kaleidoscope
                                              .RegisterName( "booltmp" );
                 }
 
-            case '>':
-                {
-                    var tmp = InstructionBuilder.Compare( RealPredicate.UnorderedOrGreaterThan, lhs, rhs )
-                                                .RegisterName( "cmptmp" );
-                    return InstructionBuilder.UIToFPCast( tmp, InstructionBuilder.Context.DoubleType )
-                                             .RegisterName( "booltmp" );
-                }
-
             case '^':
                 {
                     var proto = CreateSyntheticPrototype( "llvm.pow.f64", "value", "power" );
@@ -140,7 +132,7 @@ namespace Kaleidoscope
             return InstructionBuilder.Call( function, args ).RegisterName("calltmp");
         }
 
-        public override Value VisitPrototype( [NotNull] PrototypeContext context )
+        public override Value VisitFunctionProtoType( [NotNull] FunctionProtoTypeContext context )
         {
             var retVal = DeclareFunction( context );
             FunctionProtoTypes.AddOrReplaceItem( context.Name, context.Parameters );

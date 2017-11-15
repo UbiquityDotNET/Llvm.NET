@@ -79,16 +79,16 @@ namespace Kaleidoscope
         public override Value VisitUnaryOpExpression( [NotNull] UnaryOpExpressionContext context )
         {
             var opKind = context.GetOperatorInfo( ParserStack.Parser );
-            if( opKind != OperatorKind.PreFix )
+            if( opKind == OperatorKind.None )
             {
                 throw new ArgumentException( $"invalid unary operator {context.Op}", nameof( context ) );
             }
 
-            string caleeName = $"unary{context.Op}";
-            var function = GetFunction( caleeName );
+            string calleeName = $"$unary{context.Op}";
+            var function = GetFunction( calleeName );
             if( function == null )
             {
-                throw new ArgumentException( $"Unknown function reference {caleeName}", nameof( context ) );
+                throw new ArgumentException( $"Unknown function reference {calleeName}", nameof( context ) );
             }
 
             var arg = context.Rhs.Accept( this );
@@ -109,14 +109,6 @@ namespace Kaleidoscope
             case '<':
                 {
                     var tmp = InstructionBuilder.Compare( RealPredicate.UnorderedOrLessThan, lhs, rhs )
-                                                .RegisterName( "cmptmp" );
-                    return InstructionBuilder.UIToFPCast( tmp, InstructionBuilder.Context.DoubleType )
-                                             .RegisterName( "booltmp" );
-                }
-
-            case '>':
-                {
-                    var tmp = InstructionBuilder.Compare( RealPredicate.UnorderedOrGreaterThan, lhs, rhs )
                                                 .RegisterName( "cmptmp" );
                     return InstructionBuilder.UIToFPCast( tmp, InstructionBuilder.Context.DoubleType )
                                              .RegisterName( "booltmp" );
@@ -148,14 +140,14 @@ namespace Kaleidoscope
                     var opKind = context.GetOperatorInfo( ParserStack.Parser );
                     if( opKind != OperatorKind.InfixLeftAssociative && opKind != OperatorKind.InfixRightAssociative )
                     {
-                        throw new ArgumentException( $"invalid binary operator {context.Op}", nameof( context ) );
+                        throw new ArgumentException( $"Invalid binary operator {context.Op}", nameof( context ) );
                     }
 
-                    string caleeName = $"binary{context.Op}";
-                    var function = GetFunction( caleeName );
+                    string calleeName = $"$unary{context.Op}";
+                    var function = GetFunction( calleeName );
                     if( function == null )
                     {
-                        throw new ArgumentException( $"Unknown function reference {caleeName}", nameof( context ) );
+                        throw new ArgumentException( $"Unknown function reference {calleeName}", nameof( context ) );
                     }
 
                     var args = context.Args.Select( a => a.Accept( this ) ).ToList( );
@@ -176,7 +168,32 @@ namespace Kaleidoscope
             return InstructionBuilder.Call( function, args ).RegisterName("calltmp");
         }
 
-        public override Value VisitPrototype( [NotNull] PrototypeContext context )
+        public override Value VisitBinaryProtoType( [NotNull] BinaryProtoTypeContext context )
+        {
+            if(!ParserStack.Parser.TryAddOperator( context.Op, OperatorKind.InfixLeftAssociative, context.Precedence ))
+            {
+                throw new ArgumentException( "Cannot replace built-in operators", nameof( context ) );
+            }
+
+            var retVal = DeclareFunction( $"$binary{context.Op}", context.Parameters, true );
+            FunctionProtoTypes.AddOrReplaceItem( context.Name, context.Parameters );
+            return retVal;
+        }
+
+        public override Value VisitUnaryProtoType( [NotNull] UnaryProtoTypeContext context )
+        {
+            if( !ParserStack.Parser.TryAddOperator( context.Op, OperatorKind.PreFix, 0 ) )
+            {
+                throw new ArgumentException( "Cannot replace built-in operators", nameof( context ) );
+            }
+
+            string name = $"$binary{context.Op}";
+            var retVal = DeclareFunction( name, context.Parameters, true );
+            FunctionProtoTypes.AddOrReplaceItem( name, context.Parameters );
+            return retVal;
+        }
+
+        public override Value VisitFunctionProtoType( [NotNull] FunctionProtoTypeContext context )
         {
             var retVal = DeclareFunction( context );
             FunctionProtoTypes.AddOrReplaceItem( context.Name, context.Parameters );

@@ -95,14 +95,6 @@ namespace Kaleidoscope
                                              .RegisterName( "booltmp" );
                 }
 
-            case '>':
-                {
-                    var tmp = InstructionBuilder.Compare( RealPredicate.UnorderedOrGreaterThan, lhs, rhs )
-                                                .RegisterName( "cmptmp" );
-                    return InstructionBuilder.UIToFPCast( tmp, InstructionBuilder.Context.DoubleType )
-                                             .RegisterName( "booltmp" );
-                }
-
             case '^':
                 {
                     var proto = CreateSyntheticPrototype( "llvm.pow.f64", "value", "power" );

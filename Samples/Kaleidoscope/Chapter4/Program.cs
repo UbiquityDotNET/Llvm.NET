@@ -49,10 +49,13 @@ namespace Kaleidoscope
                 if( !IsPartial )
                 {
                     var parseTree = generator.ParserStack.ReplParse( Txt );
-                    Value value = generator.Visit( parseTree );
-                    if( value is ConstantFP result )
+                    if( parseTree != null )
                     {
-                        Console.WriteLine( result.Value );
+                        Value value = generator.Visit( parseTree );
+                        if( value is ConstantFP result )
+                        {
+                            Console.WriteLine( result.Value );
+                        }
                     }
                 }
 

@@ -21,11 +21,12 @@ namespace Kaleidoscope
             // Using language level that includes the complete set
             // of language features to allow exploring and verifying
             // the parser support for the whole language.
-            RunReplLoop( LanguageLevel.MutableVariables );
+            var generator = new CodeGenerator( LanguageLevel.MutableVariables );
+            RunReplLoop( generator );
         }
 
         /// <summary>Runs the REPL loop for the language</summary>
-        /// <param name="level">Langage Level</param>
+        /// <param name="generator">Generator for generating code</param>
         /// <remarks>
         /// Since ANTLR doesn't have an "interactive" input stream, this sort of fakes
         /// it by using the <see cref="ReplLoopExtensions.ReadStatements(System.IO.TextReader)"/>
@@ -33,29 +34,32 @@ namespace Kaleidoscope
         /// This is consistent with the behavior of the official LLVM C++ version and allows
         /// for full use of ANTLR4 instead of wrting a parser by hand.
         /// </remarks>
-        private static void RunReplLoop( LanguageLevel level )
+        private static void RunReplLoop( CodeGenerator generator )
         {
-            var parseStack = new ReplParserStack( level );
-
-            Console.WriteLine( "LLVM Kaleidoscope Syntax Viewer - {0}", level );
+            Console.WriteLine( "LLVM Kaleidoscope Syntax Viewer - {0}", generator.ParserStack.LanguageLevel );
             Console.Write( "Ready>" );
             foreach( var (Txt, IsPartial) in Console.In.ReadStatements( ) )
             {
                 if( !IsPartial )
                 {
-                    var parseTree = parseStack.ReplParse( Txt );
+                    var parseTree = generator.ParserStack.ReplParse( Txt );
+                    if( parseTree != null )
+                    {
+                        // pass the tree through simplistic generator to track user defined ops so that
+                        // subsequent references parse successfully. No code generation in this version.
+                        generator.Visit( parseTree );
 
-                    // no code generation in this version.
-                    // This departs a tad from the official C++ version for this "chapter"
-                    // by printing out an XML representation of the complete parse tree
-                    // as opposed to the official version's "parsed an XYZ" message.
-                    // This provides much more detailed information about the actual parse
-                    // to help in diagnosing issues. Whenever, adding functionality to
-                    // the grammar itself it is useful to come back to this to verify what
-                    // the parser is actually producing for a given input.
-                    var docListener = new XDocumentListener( );
-                    ParseTreeWalker.Default.Walk( docListener, parseTree );
-                    Console.WriteLine( "Parsed:\n{0}", docListener.Document.ToString( ) );
+                        // This departs a tad from the official C++ version for this "chapter"
+                        // by printing out an XML representation of the complete parse tree
+                        // as opposed to the official version's "parsed an XYZ" message.
+                        // This provides much more detailed information about the actual parse
+                        // to help in diagnosing issues. Whenever, adding functionality to
+                        // the grammar itself it is useful to come back to this to verify what
+                        // the parser is actually producing for a given input.
+                        var docListener = new XDocumentListener( generator.ParserStack.Parser );
+                        ParseTreeWalker.Default.Walk( docListener, parseTree );
+                        Console.WriteLine( "Parsed:\n{0}", docListener.Document.ToString( ) );
+                    }
                 }
 
                 Console.Write( IsPartial ? ">" : "Ready>" );

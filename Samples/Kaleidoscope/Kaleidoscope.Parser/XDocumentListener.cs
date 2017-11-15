@@ -13,10 +13,11 @@ namespace Kaleidoscope.Grammar
     public class XDocumentListener
         : KaleidoscopeBaseListener
     {
-        public XDocumentListener()
+        public XDocumentListener( IRecognizer recognizer )
         {
             Document = new XDocument( );
             Push( new XElement( "Kaleidoscope" ) );
+            Recognizer = recognizer;
         }
 
         public XDocument Document { get; }
@@ -28,7 +29,12 @@ namespace Kaleidoscope.Grammar
 
         public override void EnterBinaryOpExpression( [NotNull] KaleidoscopeParser.BinaryOpExpressionContext context )
         {
-            ActiveNode.Add( new XAttribute( "Op", context.LETTER( ).GetText( ) ) );
+            ActiveNode.Add( new XAttribute( "Op", context.Op ) );
+        }
+
+        public override void EnterUnaryOpExpression( [NotNull] KaleidoscopeParser.UnaryOpExpressionContext context )
+        {
+            ActiveNode.Add( new XAttribute( "Op", context.Op ) );
         }
 
         public override void EnterEveryRule( [NotNull] ParserRuleContext context )
@@ -46,7 +52,9 @@ namespace Kaleidoscope.Grammar
         public override void ExitEveryRule( [NotNull] ParserRuleContext context )
         {
             base.ExitEveryRule( context );
-            ActiveNode.Add( new XAttribute( "Text", context.GetText( ) ) );
+            var span = context.GetCharInterval( );
+            var charStream = ( ( ITokenStream )Recognizer.InputStream ).TokenSource.InputStream;
+            ActiveNode.Add( new XAttribute( "Text", charStream.GetText(span) ) );
             ActiveNode.Add( new XAttribute( "RuleIndex", context.RuleIndex ) );
             ActiveNode.Add( new XAttribute( "SourceInterval", context.SourceInterval.ToString( ) ) );
             if( context.exception != null )
@@ -81,5 +89,6 @@ namespace Kaleidoscope.Grammar
         private const string ContextTypeNameSuffix = "Context";
 
         private XElement ActiveNode;
+        private IRecognizer Recognizer;
     }
 }
