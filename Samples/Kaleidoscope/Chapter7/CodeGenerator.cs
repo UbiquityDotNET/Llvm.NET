@@ -65,6 +65,11 @@ namespace Kaleidoscope
             return Context.CreateConstant( context.Value );
         }
 
+        public override Value VisitExternalDeclaration( [NotNull] ExternalDeclarationContext context )
+        {
+            return context.Signature.Accept( this );
+        }
+
         public override Value VisitVariableExpression( [NotNull] VariableExpressionContext context )
         {
             string varName = context.Name;
@@ -117,8 +122,8 @@ namespace Kaleidoscope
 
             case '^':
                 {
-                    var proto = CreateSyntheticPrototype( "llvm.pow.f64", "value", "power" );
-                    var pow = DeclareFunction( proto.Name, proto.Parameters );
+                    var (Name, Parameters) = CreateSyntheticPrototype( "llvm.pow.f64", "value", "power" );
+                    var pow = GetOrDeclareFunction( Name, Parameters );
                     return InstructionBuilder.Call( pow, lhs, rhs )
                                              .RegisterName( "powtmp" );
                 }
@@ -144,7 +149,7 @@ namespace Kaleidoscope
                         throw new ArgumentException( $"Invalid binary operator {context.Op}", nameof( context ) );
                     }
 
-                    string calleeName = $"$unary{context.Op}";
+                    string calleeName = $"$binary{context.Op}";
                     var function = GetFunction( calleeName );
                     if( function == null )
                     {
@@ -176,8 +181,8 @@ namespace Kaleidoscope
                 throw new ArgumentException( "Cannot replace built-in operators", nameof( context ) );
             }
 
-            var retVal = DeclareFunction( $"$binary{context.Op}", context.Parameters, true );
-            FunctionProtoTypes.AddOrReplaceItem( context.Name, context.Parameters );
+            var retVal = GetOrDeclareFunction( context, true );
+            FunctionProtoTypes.AddOrReplaceItem( GetPrototypeName( context ), context.Parameters );
             return retVal;
         }
 
@@ -188,36 +193,35 @@ namespace Kaleidoscope
                 throw new ArgumentException( "Cannot replace built-in operators", nameof( context ) );
             }
 
-            string name = $"$binary{context.Op}";
-            var retVal = DeclareFunction( name, context.Parameters, true );
-            FunctionProtoTypes.AddOrReplaceItem( name, context.Parameters );
+            var retVal = GetOrDeclareFunction( context, true );
+            FunctionProtoTypes.AddOrReplaceItem( GetPrototypeName( context ), context.Parameters );
             return retVal;
         }
 
         public override Value VisitFunctionProtoType( [NotNull] FunctionProtoTypeContext context )
         {
-            var retVal = DeclareFunction( context );
+            var retVal = GetOrDeclareFunction( context );
             FunctionProtoTypes.AddOrReplaceItem( context.Name, context.Parameters );
             return retVal;
         }
 
         public override Value VisitFunctionDefinition( [NotNull] FunctionDefinitionContext context )
         {
-            var funcAndHandle = FunctionDefinition( context.Signature, context.BodyExpression );
-            return funcAndHandle.Function;
+            var function = (Function)context.Signature.Accept( this );
+            return DefineFunction( function, context.BodyExpression ).Function;
         }
 
         public override Value VisitTopLevelExpression( [NotNull] TopLevelExpressionContext context )
         {
             string name = $"anon_expr_{AnonNameIndex++}";
-            var proto = CreateSyntheticPrototype( name );
+            var (Name, Parameters) = CreateSyntheticPrototype( name );
 
-            var def = DeclareFunction( proto.Name, proto.Parameters, persistentSymbol: false );
-            var function = FunctionDefinition( proto.Name, proto.Parameters, context.expression() );
+            var function = GetOrDeclareFunction( Name, Parameters, persistentSymbol: false );
+            var (_, jitHandle) = DefineFunction( function, context.expression() );
 
             var nativeFunc = JIT.GetDelegateForFunction<AnonExpressionFunc>( name );
             var retVal = Context.CreateConstant( nativeFunc( ) );
-            JIT.RemoveModule( function.JitHandle );
+            JIT.RemoveModule( jitHandle );
             return retVal;
         }
 
@@ -474,19 +478,25 @@ namespace Kaleidoscope
 
             if( FunctionProtoTypes.TryGetValue( name, out var signature ) )
             {
-                return DeclareFunction( name, signature );
+                return GetOrDeclareFunction( name, signature );
             }
 
             return null;
         }
 
-        private Function DeclareFunction( PrototypeContext signature, bool persistentSymbol = true )
+        private Function GetOrDeclareFunction( PrototypeContext signature, bool persistentSymbol = true )
         {
-            return DeclareFunction( signature.Name, signature.Parameters, persistentSymbol );
+            return GetOrDeclareFunction( GetPrototypeName( signature ), signature.Parameters, persistentSymbol );
         }
 
-        private Function DeclareFunction( string name, IReadOnlyList<string> argNames, bool persistentSymbol = true )
+        private Function GetOrDeclareFunction( string name, IReadOnlyList<string> argNames, bool persistentSymbol = true )
         {
+            var function = GetFunction( name );
+            if( function != null )
+            {
+                return function;
+            }
+
             var llvmSignature = Context.GetFunctionType( Context.DoubleType, argNames.Select( _ => Context.DoubleType ) );
 
             var retVal = Module.AddFunction( name, llvmSignature );
@@ -507,27 +517,16 @@ namespace Kaleidoscope
             return retVal;
         }
 
-        private (Function Function, int JitHandle) FunctionDefinition( PrototypeContext signature, ExpressionContext body )
+        private (Function Function, int JitHandle) DefineFunction( PrototypeContext signature, ExpressionContext body )
         {
-            return FunctionDefinition( signature.Name, signature.Parameters, body );
+            return DefineFunction( GetOrDeclareFunction( signature ), body );
         }
 
-        private (Function Function, int JitHandle) FunctionDefinition( string name, IReadOnlyList<string> argNames, ExpressionContext body )
+        private (Function Function, int JitHandle) DefineFunction( Function function, ExpressionContext body )
         {
-            var function = GetFunction( name );
-            if( function == null )
-            {
-                function = DeclareFunction( name, argNames );
-            }
-
-            if( function == null )
-            {
-                return (null, default);
-            }
-
             if( !function.IsDeclaration )
             {
-                throw new ArgumentException( $"Function {name} cannot be redefined", nameof( name ) );
+                throw new ArgumentException( $"Function {function.Name} cannot be redefined", nameof( function ) );
             }
 
             var basicBlock = function.AppendBasicBlock( "entry" );
@@ -557,7 +556,25 @@ namespace Kaleidoscope
             return (function, jitHandle);
         }
 
-        private (string Name, IReadOnlyList<string> Parameters) CreateSyntheticPrototype( string name, params string[] argNames )
+        private static string GetPrototypeName( PrototypeContext protoType )
+        {
+            switch( protoType )
+            {
+            case FunctionProtoTypeContext func:
+                return func.Name;
+
+            case UnaryProtoTypeContext unaryOp:
+                return $"$unary{unaryOp.Op}";
+
+            case BinaryProtoTypeContext binOp:
+                return $"$binary{binOp.Op}";
+
+            default:
+                throw new ArgumentException( "unknown prototype" );
+            }
+        }
+
+        private static (string Name, IReadOnlyList<string> Parameters) CreateSyntheticPrototype( string name, params string[] argNames )
         {
             return (name, argNames);
         }

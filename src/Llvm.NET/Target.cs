@@ -76,6 +76,11 @@ namespace Llvm.NET
         }
 
         /// <summary>Gets the target for a given target "triple" value</summary>
+        /// <param name="triple">Target <see cref="Triple"/> describing the target</param>
+        /// <returns>Target for the given triple</returns>
+        public static Target FromTriple( Triple triple ) => FromTriple( triple.ToString( ) );
+
+        /// <summary>Gets the target for a given target "triple" value</summary>
         /// <param name="targetTriple">Target triple string describing the target</param>
         /// <returns>Target for the given triple</returns>
         public static Target FromTriple( string targetTriple )

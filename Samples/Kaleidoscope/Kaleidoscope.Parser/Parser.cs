@@ -31,6 +31,8 @@ namespace Kaleidoscope.Grammar
     }
 
     // partial class customization to the ANTLR generated class
+    // This extends the individual parse tree context node types
+    // so that labels in the grammar are unnecessary.
     public partial class KaleidoscopeParser
         : Parser
     {
@@ -52,6 +54,11 @@ namespace Kaleidoscope.Grammar
         public partial class ParenExpressionContext
         {
             public ExpressionContext Expression => ( ExpressionContext )GetChild( 1 );
+        }
+
+        public partial class ExternalDeclarationContext
+        {
+            public PrototypeContext Signature => prototype( );
         }
 
         public partial class FunctionCallExpressionContext
@@ -150,8 +157,6 @@ namespace Kaleidoscope.Grammar
 
         public partial class PrototypeContext
         {
-            public virtual string Name => string.Empty;
-
             public virtual IReadOnlyList<string> Parameters => new List<string>( );
         }
 
@@ -173,7 +178,7 @@ namespace Kaleidoscope.Grammar
 
         public partial class FunctionProtoTypeContext
         {
-            public override string Name => identifier( 0 ).Name;
+            public string Name => identifier( 0 ).Name;
 
             public override IReadOnlyList<string> Parameters => identifier( ).Skip( 1 ).Select( i => i.Name ).ToList( );
         }

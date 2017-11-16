@@ -80,6 +80,7 @@ initializer
     : identifier (EQUALS expression)?
     ;
 
+// parser rule to handle the use of the Lexer EQUALS symbol having different meanings in multiple contexts
 opsymbol
     : EQUALS
     | OPSYMBOL

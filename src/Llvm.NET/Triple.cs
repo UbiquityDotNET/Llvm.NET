@@ -46,11 +46,6 @@ namespace Llvm.NET
             TripleHandle = LLVMParseTriple( tripleTxt );
         }
 
-        ~Triple( )
-        {
-            TripleHandle.Close( );
-        }
-
         /// <summary>Retrieves the final string form of the triple</summary>
         /// <returns>Normalized Triple string</returns>
         public override string ToString( ) => LLVMTripleAsString( TripleHandle, true );
@@ -291,6 +286,10 @@ namespace Llvm.NET
 
         /// <summary>Gets a triple for the host LLVM is built for</summary>
         public static Triple HostTriple => new Triple( LLVMGetHostTriple( ) );
+
+        /// <summary>Implicitly converts a triple to a string</summary>
+        /// <param name="triple"><see cref="Triple"/> to convert</param>
+        public static implicit operator string(Triple triple) => triple.ToString();
 
         private Triple( LLVMTripleRef handle )
         {
