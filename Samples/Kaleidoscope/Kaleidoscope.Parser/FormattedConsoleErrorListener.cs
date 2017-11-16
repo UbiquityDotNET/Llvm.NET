@@ -48,12 +48,6 @@ namespace Kaleidoscope.Grammar
                                , RecognitionException e
                                )
         {
-            // Don't Display incomplete statement errors for REPL mode
-            if( e != null && e.OffendingToken.Type == -1 )
-            {
-                return;
-            }
-
             Console.ForegroundColor = ConsoleColor.White;
             try
             {

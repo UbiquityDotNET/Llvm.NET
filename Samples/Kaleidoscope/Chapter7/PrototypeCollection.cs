@@ -3,33 +3,16 @@
 // </copyright>
 
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 
 namespace Kaleidoscope
 {
     internal class PrototypeCollection
-        : KeyedCollection<string, (string Name, IList<string> Parameters)>
+        : Dictionary<string, IReadOnlyList<string>>
     {
-        public void AddOrReplaceItem( (string Name, IList<string> Parameters) item )
+        public void AddOrReplaceItem( string name, IReadOnlyList<string> parameters )
         {
-            Remove( GetKeyForItem( item ) );
-            Add( item );
+            Remove( name );
+            Add( name, parameters );
         }
-
-        // .NET Core APP 2.0 defines this but .NET 4.7 and NET Standard do not, sigh...
-#if !NETCOREAPP2_0
-        public bool TryGetValue( string key, out (string Name, IList<string> Parameters) item)
-        {
-            item = default;
-            if( Dictionary == null )
-            {
-                return false;
-            }
-
-            return Dictionary.TryGetValue( key, out item );
-        }
-#endif
-
-        protected override string GetKeyForItem( (string Name, IList<string> Parameters) item ) => item.Name;
     }
 }

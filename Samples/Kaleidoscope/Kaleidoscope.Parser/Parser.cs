@@ -3,7 +3,9 @@
 // </copyright>
 
 using System;
+using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
+using System.Linq;
 using Antlr4.Runtime;
 
 [assembly: CLSCompliant( false )]
@@ -29,9 +31,165 @@ namespace Kaleidoscope.Grammar
     }
 
     // partial class customization to the ANTLR generated class
+    // This extends the individual parse tree context node types
+    // so that labels in the grammar are unnecessary.
     public partial class KaleidoscopeParser
         : Parser
     {
+        public partial class IdentifierContext
+        {
+            public string Name => Identifier( ).ToString( );
+        }
+
+        public partial class VariableExpressionContext
+        {
+            public string Name => ( ( IdentifierContext )GetChild( 0 ) ).Name;
+        }
+
+        public partial class ConstExpressionContext
+        {
+            public double Value => double.Parse( Number( ).GetText( ) );
+        }
+
+        public partial class ParenExpressionContext
+        {
+            public ExpressionContext Expression => ( ExpressionContext )GetChild( 1 );
+        }
+
+        public partial class ExternalDeclarationContext
+        {
+            public PrototypeContext Signature => prototype( );
+        }
+
+        public partial class FunctionCallExpressionContext
+        {
+            public string CaleeName => ( ( IdentifierContext )GetChild( 0 ) ).Name;
+
+            public IReadOnlyList<ExpressionContext> Args => expression( );
+        }
+
+        public partial class InitializerContext
+        {
+            public string Name => identifier( ).Name;
+
+            public ExpressionContext Value => expression( );
+        }
+
+        public partial class VarInExpressionContext
+        {
+            public IReadOnlyList<InitializerContext> Initiaizers => initializer( );
+
+            public ExpressionContext Scope => GetRuleContext<ExpressionContext>( ChildCount - 1 );
+        }
+
+        public partial class ConditionalExpressionContext
+        {
+            public ExpressionContext Condition => expression( 0 );
+
+            public ExpressionContext ThenExpression => expression( 1 );
+
+            public ExpressionContext ElseExpression => expression( 2 );
+        }
+
+        public partial class ForExpressionContext
+        {
+            public InitializerContext Initializer => initializer( );
+
+            public ExpressionContext EndExpression => expression( 0 );
+
+            public ExpressionContext StepExpression => expression( 1 );
+
+            public ExpressionContext BodyExpression => expression( 2 );
+        }
+
+        public partial class AssignmentExpressionContext
+        {
+            public string VariableName => identifier( ).Name;
+
+            public ExpressionContext Value => expression( );
+        }
+
+        public partial class UnaryOpExpressionContext
+        {
+            public char Op => opsymbol( ).GetText( )[ 0 ];
+
+            public ExpressionContext Rhs => expression( );
+
+            public IEnumerable<ExpressionContext> Args
+            {
+                get
+                {
+                    yield return Rhs;
+                }
+            }
+
+            public OperatorKind GetOperatorInfo( KaleidoscopeParser parser )
+            {
+                if( parser.UnaryOps.TryGetValue( Op, out OperatorInfo entry ) )
+                {
+                    return entry.Kind;
+                }
+
+                return OperatorKind.None;
+            }
+        }
+
+        public partial class BinaryOpExpressionContext
+        {
+            public ExpressionContext Lhs => expression( 0 );
+
+            public char Op => opsymbol( ).GetText( )[ 0 ];
+
+            public ExpressionContext Rhs => expression( 1 );
+
+            public IEnumerable<ExpressionContext> Args => expression( );
+
+            public OperatorKind GetOperatorInfo( KaleidoscopeParser parser )
+            {
+                if( parser.BinOpPrecedence.TryGetValue( Op, out OperatorInfo entry ) )
+                {
+                    return entry.Kind;
+                }
+
+                return OperatorKind.None;
+            }
+        }
+
+        public partial class PrototypeContext
+        {
+            public virtual IReadOnlyList<string> Parameters => new List<string>( );
+        }
+
+        public partial class UnaryProtoTypeContext
+        {
+            public char Op => opsymbol( ).GetText( )[ 0 ];
+
+            public override IReadOnlyList<string> Parameters => new List<string> { identifier( ).GetText( ) };
+        }
+
+        public partial class BinaryProtoTypeContext
+        {
+            public char Op => opsymbol( ).GetText( )[ 0 ];
+
+            public override IReadOnlyList<string> Parameters => identifier( ).Select( i => i.Name ).ToList( );
+
+            public int Precedence => ( int )double.Parse( Number( ).GetText() );
+        }
+
+        public partial class FunctionProtoTypeContext
+        {
+            public string Name => identifier( 0 ).Name;
+
+            public override IReadOnlyList<string> Parameters => identifier( ).Skip( 1 ).Select( i => i.Name ).ToList( );
+        }
+
+        public partial class FunctionDefinitionContext
+        {
+            public PrototypeContext Signature => prototype( );
+
+            public ExpressionContext BodyExpression => expression( );
+        }
+
         /// <summary>Gets or sets the Language level the application supports</summary>
         public LanguageLevel LanguageLevel { get; set; }
 
@@ -84,12 +242,25 @@ namespace Kaleidoscope.Grammar
         /// will not replace the operator and will simply return <see langword="false"/>.
         /// </remarks>
         public bool TryAddOperator( char token, OperatorKind kind, int precedence )
-            => BinOpPrecedence.TryAddOrReplaceItem( new OperatorInfo( token, kind, precedence, false ) );
-
-        private bool IsPrefixOp( IToken op )
         {
-            var operatorInfo = GetPrecedence( op );
-            return operatorInfo.Kind == OperatorKind.PreFix;
+            switch( kind )
+            {
+            case OperatorKind.InfixLeftAssociative:
+            case OperatorKind.InfixRightAssociative:
+                return BinOpPrecedence.TryAddOrReplaceItem( new OperatorInfo( token, kind, precedence, false ) );
+
+            case OperatorKind.PreFix:
+                return UnaryOps.TryAddOrReplaceItem( new OperatorInfo( token, kind, 0, false ) );
+
+            // case OperatorKind.None:
+            default:
+                throw new ArgumentException( "unknown kind", nameof( kind ) );
+            }
+        }
+
+        public virtual bool IsPrefixOp( IToken op )
+        {
+            return UnaryOps.TryGetValue( op.Text[0], out var value );
         }
 
         private bool IsFeatureEnabled( LanguageLevel feature )
@@ -118,10 +289,11 @@ namespace Kaleidoscope.Grammar
             return operatorInfo.Precedence + 1;
         }
 
+        private OperatorInfoCollection UnaryOps = new OperatorInfoCollection();
+
         private OperatorInfoCollection BinOpPrecedence = new OperatorInfoCollection()
         {
             new OperatorInfo( '<', OperatorKind.InfixLeftAssociative, 10, true),
-            new OperatorInfo( '>', OperatorKind.InfixLeftAssociative, 10, true),
             new OperatorInfo( '+', OperatorKind.InfixLeftAssociative, 20, true),
             new OperatorInfo( '-', OperatorKind.InfixLeftAssociative, 20, true),
             new OperatorInfo( '*', OperatorKind.InfixLeftAssociative, 40, true),

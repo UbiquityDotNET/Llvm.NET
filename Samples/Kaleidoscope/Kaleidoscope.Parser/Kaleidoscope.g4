@@ -8,19 +8,57 @@
 grammar Kaleidoscope;
 
 // Lexer Rules -------
-fragment EndOfLine : '\r'? '\n';
 fragment NonZeroDecimalDigit_: [1-9];
-fragment DecimalDigit_: '0' | NonZeroDecimalDigit_;
-fragment Digits_: DecimalDigit_+;
+fragment DecimalDigit_: [0-9];
+fragment Digits_: '0' | [1-9][0-9]*;
+fragment EndOfFile_: '\u0000' | '\u001A';
+fragment EndOfLine_
+    : ('\r' '\n')
+    | ('\r' |'\n' | '\u2028' | '\u2029')
+    | EndOfFile_
+    ;
 
-WhiteSpace : [ \t\r\n\f]+ -> skip;
-Identifier : [a-zA-Z][a-zA-Z0-9]*;
-Number: Digits_ ('.' Digits_)?;
-LETTER: '\u0000'..'\u0080';
+LineComment: '#' ~[\r\n]* -> skip;
+WhiteSpace: [ \t\r\n\f]+ -> skip;
 
+EQUALS: '=';
+LPAREN: '(';
+RPAREN: ')';
+COMMA: ',';
+SEMICOLON: ';';
+IF: 'if';
+THEN: 'then';
+ELSE: 'else';
+FOR: 'for';
+IN: 'in';
+VAR: 'var';
+UNARY: 'unary';
+BINARY: 'binary';
+DEF: 'def';
+EXTERN: 'extern';
 
-// simple line based comment
-Comment : '#' ~[\r\n]* EndOfLine -> skip;
+OPSYMBOL
+    : '!'
+    | '%'
+    | '&'
+    | '*'
+    | '+'
+    | '-'
+    | '.'
+    | '/'
+    | ':'
+    | '<'
+    | '>'
+    | '?'
+    | '@'
+    | '\\'
+    | '^'
+    | '_'
+    | '|'
+    ;
+
+Identifier: [a-zA-Z][a-zA-Z0-9]*;
+Number: Digits_ ('.' DecimalDigit_+)?;
 
 // Parser rules ------
 
@@ -28,31 +66,37 @@ Comment : '#' ~[\r\n]* EndOfLine -> skip;
 // Depending on the features enabled, certain keywords may be valid identifiers.
 identifier
     : Identifier
-    | {!FeatureControlFlow}? 'if'
-    | {!FeatureControlFlow}? 'then'
-    | {!FeatureControlFlow}? 'else'
-    | {!FeatureControlFlow}? 'for'
-    | {!FeatureControlFlow}? 'in'
-    | {!FeatureMutableVars}? 'var'
-    | {!FeatureUserOperators}? 'unary'
-    | {!FeatureUserOperators}? 'binary'
+    | {!FeatureControlFlow}? IF
+    | {!FeatureControlFlow}? THEN
+    | {!FeatureControlFlow}? ELSE
+    | {!FeatureControlFlow}? FOR
+    | {!FeatureControlFlow}? IN
+    | {!FeatureMutableVars}? VAR
+    | {!FeatureUserOperators}? UNARY
+    | {!FeatureUserOperators}? BINARY
     ;
 
 initializer
-    : identifier ('=' expression)?
+    : identifier (EQUALS expression)?
+    ;
+
+// parser rule to handle the use of the Lexer EQUALS symbol having different meanings in multiple contexts
+opsymbol
+    : EQUALS
+    | OPSYMBOL
     ;
 
 // Non Left recursive expressions
 primaryExpression
-    : identifier                                                                               # VariableExpression
-    | Number                                                                                   # ConstExpression
-    | '(' expression ')'                                                                       # ParenExPression
-    | identifier '(' (expression (',' expression)*)? ')'                                       # FunctionCallExpression
-    | {FeatureMutableVars}? 'var' initializer (initializer)* 'in' expression                   # VarInExpression
-    | {FeatureControlFlow}? 'if' expression 'then' expression 'else' expression                # ConditionalExpression
-    | {FeatureControlFlow}? 'for' initializer ',' expression (',' expression)? 'in' expression # ForExpression
-    | {FeatureMutableVars}? identifier '=' expression                                          # AssignmentExpression
-    | {IsPrefixOp(_input.Lt(1))}? LETTER expression                                            # PrefixOperator
+    : identifier                                                         # VariableExpression
+    | Number                                                             # ConstExpression
+    | LPAREN expression RPAREN                                           # ParenExpression
+    | identifier LPAREN (expression (COMMA expression)*)? RPAREN         # FunctionCallExpression
+    | VAR initializer (initializer)* IN expression                       # VarInExpression
+    | IF expression THEN expression ELSE expression                      # ConditionalExpression
+    | FOR initializer COMMA expression (COMMA expression)? IN expression # ForExpression
+    | identifier EQUALS expression                                       # AssignmentExpression
+    | {IsPrefixOp(_input.Lt(1))}? opsymbol expression                    # UnaryOpExpression
     ;
 
 // Left-recursive expressions use ANTLR to unroll the left recursion when generating the
@@ -60,18 +104,19 @@ primaryExpression
 // PrecPred methods to handle the dynamic precedence evaluation allowing this grammar to
 // remain clean and simple, yet capable of handling user defined operators and precedence
 expression
-    : primaryExpression            # AtomExpression
-    | expression LETTER expression # BinaryOpExpression
+    : primaryExpression              # AtomExpression
+    | expression opsymbol expression # BinaryOpExpression
     ;
 
 prototype
-    : identifier '(' (identifier)* ')';
+    : identifier LPAREN (identifier)* RPAREN                      # FunctionProtoType
+    | UNARY opsymbol Number? LPAREN identifier RPAREN             # UnaryProtoType
+    | BINARY opsymbol Number? LPAREN identifier identifier RPAREN # BinaryProtoType
+    ;
 
 repl
-    : 'def' prototype expression                                                                      # FunctionDefinition
-    | {FeatureUserOperators}? 'def' 'unary' LETTER Number? '(' identifier ')' expression              # UnaryOpDefinition
-    | {FeatureUserOperators}? 'def' 'binary' LETTER Number? '(' identifier identifier ')' expression  # BinaryOpDefinition
-    | 'extern' prototype                                                                              # ExternalDeclaration
-    | expression                                                                                      # TopLevelExpression
-    | ';'                                                                                             # TopLevelSemicolon
+    : DEF prototype expression # FunctionDefinition
+    | EXTERN prototype         # ExternalDeclaration
+    | expression               # TopLevelExpression
+    | SEMICOLON                # TopLevelSemicolon
     ;

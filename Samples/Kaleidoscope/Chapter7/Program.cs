@@ -24,16 +24,15 @@ namespace Kaleidoscope
             using( StaticState.InitializeLLVM( ) )
             {
                 StaticState.RegisterNative( );
-                using( var generator = new CodeGenerator( ) )
+                using( var generator = new CodeGenerator( LanguageLevel.MutableVariables ) )
                 {
-                    RunReplLoop( LanguageLevel.MutableVariables, generator );
+                    RunReplLoop( generator );
                 }
             }
         }
 
         /// <summary>Runs the REPL loop for the language</summary>
-        /// <param name="level">Language Level to run with</param>
-        /// <param name="generator">Generator to use to generate LLVM IR code</param>
+        /// <param name="generator">Generator for generating code</param>
         /// <remarks>
         /// Since ANTLR doesn't have an "interactive" input stream, this sort of fakes
         /// it by using the <see cref="ReplLoopExtensions.ReadStatements(System.IO.TextReader)"/>
@@ -41,25 +40,26 @@ namespace Kaleidoscope
         /// This is consistent with the behavior of the official LLVM C++ version and allows
         /// for full use of ANTLR4 instead of wrting a parser by hand.
         /// </remarks>
-        private static void RunReplLoop( LanguageLevel level, CodeGenerator generator )
+        private static void RunReplLoop( CodeGenerator generator )
         {
-            var parseStack = new ReplParserStack( level );
-
-            Console.WriteLine( "LLVM Kaleidoscope Interpreter - {0}", level );
+            Console.WriteLine( "LLVM Kaleidoscope Interpreter - {0}", generator.ParserStack.LanguageLevel );
             Console.Write( "Ready>" );
-            foreach( var lineInfo in Console.In.ReadStatements( ) )
+            foreach( var (Txt, IsPartial) in Console.In.ReadStatements( ) )
             {
-                if( !lineInfo.IsPartial )
+                if( !IsPartial )
                 {
-                    var parseTree = parseStack.ReplParse( lineInfo.Txt );
-                    Value value = generator.Visit( parseTree );
-                    if( value is ConstantFP result )
+                    var parseTree = generator.ParserStack.ReplParse( Txt );
+                    if( parseTree != null )
                     {
-                        Console.WriteLine( result.Value );
+                        Value value = generator.Visit( parseTree );
+                        if( value is ConstantFP result )
+                        {
+                            Console.WriteLine( result.Value );
+                        }
                     }
                 }
 
-                Console.Write( lineInfo.IsPartial ? ">" : "Ready>" );
+                Console.Write( IsPartial ? ">" : "Ready>" );
             }
         }
     }

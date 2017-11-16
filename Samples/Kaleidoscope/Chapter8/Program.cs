@@ -6,7 +6,6 @@ using System;
 using System.Diagnostics.CodeAnalysis;
 using Kaleidoscope.Grammar;
 using Llvm.NET;
-using Llvm.NET.Values;
 
 [assembly: SuppressMessage( "StyleCop.CSharp.DocumentationRules", "SA1652:Enable XML documentation output", Justification = "Sample application" )]
 
@@ -24,9 +23,16 @@ namespace Kaleidoscope
             using( StaticState.InitializeLLVM( ) )
             {
                 StaticState.RegisterNative( );
-                using( var generator = new CodeGenerator( LanguageLevel.UserDefinedOperators ) )
+                using( var generator = new CodeGenerator( LanguageLevel.MutableVariables ) )
                 {
                     RunReplLoop( generator );
+                    generator.Module.TargetTriple = Triple.HostTriple;
+                    var target = Target.FromTriple( Triple.HostTriple );
+                    using( var machine = target.CreateTargetMachine( Triple.HostTriple ) )
+                    {
+                        machine.EmitToFile( generator.Module, "kls.o", CodeGenFileType.ObjectFile );
+                        Console.WriteLine( "Wrote module to kls.o" );
+                    }
                 }
             }
         }
@@ -42,8 +48,7 @@ namespace Kaleidoscope
         /// </remarks>
         private static void RunReplLoop( CodeGenerator generator )
         {
-            Console.WriteLine( "LLVM Kaleidoscope Interpreter - {0}", generator.ParserStack.LanguageLevel );
-            Console.Write( "Ready>" );
+            Console.WriteLine( "LLVM Kaleidoscope Compiler - {0}", generator.ParserStack.LanguageLevel );
             foreach( var (Txt, IsPartial) in Console.In.ReadStatements( ) )
             {
                 if( !IsPartial )
@@ -51,15 +56,9 @@ namespace Kaleidoscope
                     var parseTree = generator.ParserStack.ReplParse( Txt );
                     if( parseTree != null )
                     {
-                        Value value = generator.Visit( parseTree );
-                        if( value is ConstantFP result )
-                        {
-                            Console.WriteLine( result.Value );
-                        }
+                        generator.Visit( parseTree );
                     }
                 }
-
-                Console.Write( IsPartial ? ">" : "Ready>" );
             }
         }
     }

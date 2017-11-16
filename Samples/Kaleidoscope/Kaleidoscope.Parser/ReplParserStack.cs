@@ -4,7 +4,7 @@
 
 using System.Diagnostics;
 using Antlr4.Runtime;
-
+using Antlr4.Runtime.Misc;
 using static Kaleidoscope.Grammar.KaleidoscopeParser;
 
 namespace Kaleidoscope.Grammar
@@ -40,20 +40,32 @@ namespace Kaleidoscope.Grammar
             InitializeParser( string.Empty );
         }
 
+        public LanguageLevel LanguageLevel { get; }
+
+        public KaleidoscopeParser Parser { get; private set; }
+
         public ReplContext ReplParse( string txt )
         {
-            Trace.TraceInformation( "Parsing: {0}", txt );
-            Lexer.SetInputStream( new AntlrInputStream( txt ) );
-            TokenStream.SetTokenSource( Lexer );
-            Parser.SetInputStream( TokenStream );
-
-            var retVal = Parser.repl( );
-            if( retVal != null )
+            try
             {
-                Trace.TraceInformation( "Matched {0} {1}", Parser.RuleNames[ retVal.RuleIndex ], retVal.GetText() );
-            }
+                Trace.TraceInformation( "Parsing: {0}", txt );
+                Lexer.SetInputStream( new AntlrInputStream( txt ) );
+                TokenStream.SetTokenSource( Lexer );
+                Parser.SetInputStream( TokenStream );
 
-            return retVal;
+                var retVal = Parser.repl( );
+                if( retVal != null )
+                {
+                    var span = retVal.GetCharInterval( );
+                    Trace.TraceInformation( "Matched {0} {1}", Parser.RuleNames[ retVal.RuleIndex ], txt.Substring( span.a, span.Length ) );
+                }
+
+                return retVal;
+            }
+            catch(ParseCanceledException)
+            {
+                return null;
+            }
         }
 
         private void InitializeParser( string txt )
@@ -73,6 +85,8 @@ namespace Kaleidoscope.Grammar
                 ErrorHandler = ErrorStrategy,
             };
 
+            Parser.AddParseListener( new DebugTraceListener( Parser ) );
+
             if( ParseErrorListener != null )
             {
                 Parser.RemoveErrorListeners( );
@@ -82,9 +96,7 @@ namespace Kaleidoscope.Grammar
 
         private CommonTokenStreamFix TokenStream;
         private KaleidoscopeLexer Lexer;
-        private KaleidoscopeParser Parser;
 
-        private readonly LanguageLevel LanguageLevel;
         private readonly IAntlrErrorListener<int> LexErrorListener;
         private readonly IAntlrErrorListener<IToken> ParseErrorListener;
         private readonly IAntlrErrorStrategy ErrorStrategy;

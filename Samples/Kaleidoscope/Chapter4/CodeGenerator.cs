@@ -23,7 +23,7 @@ namespace Kaleidoscope
         : KaleidoscopeBaseVisitor<Value>
         , IDisposable
     {
-        public CodeGenerator( )
+        public CodeGenerator( LanguageLevel level )
         {
             Context = new Context( );
             InitializeModuleAndPassManager( );
@@ -31,7 +31,10 @@ namespace Kaleidoscope
             JIT = new KaleidoscopeJIT( );
             NamedValues = new Dictionary<string, Value>( );
             FunctionProtoTypes = new PrototypeCollection( );
+            ParserStack = new ReplParserStack( level );
         }
+
+        public ReplParserStack ParserStack { get; }
 
         public Context Context { get; }
 
@@ -52,19 +55,24 @@ namespace Kaleidoscope
             Context.Dispose( );
         }
 
-        public override Value VisitParenExPression( [NotNull] ParenExPressionContext context )
+        public override Value VisitParenExpression( [NotNull] ParenExpressionContext context )
         {
-            return context.GetExpression( ).Accept( this );
+            return context.Expression.Accept( this );
         }
 
         public override Value VisitConstExpression( [NotNull] ConstExpressionContext context )
         {
-            return Context.CreateConstant( context.GetValue() );
+            return Context.CreateConstant( context.Value );
+        }
+
+        public override Value VisitExternalDeclaration( [NotNull] ExternalDeclarationContext context )
+        {
+            return context.Signature.Accept( this );
         }
 
         public override Value VisitVariableExpression( [NotNull] VariableExpressionContext context )
         {
-            string varName = context.GetName( );
+            string varName = context.Name;
             if( NamedValues.TryGetValue( varName, out Value value ) )
             {
                 return value;
@@ -75,16 +83,14 @@ namespace Kaleidoscope
 
         public override Value VisitBinaryOpExpression( [NotNull] BinaryOpExpressionContext context )
         {
-            var (lhsExpr, op, rhsExpr) = context;
-
-            var lhs = lhsExpr.Accept( this );
-            var rhs = rhsExpr.Accept( this );
+            var lhs = context.Lhs.Accept( this );
+            var rhs = context.Rhs.Accept( this );
             if( lhs == null || rhs == null )
             {
                 return null;
             }
 
-            switch( op )
+            switch( context.Op )
             {
             case '<':
                 {
@@ -94,18 +100,10 @@ namespace Kaleidoscope
                                              .RegisterName( "booltmp" );
                 }
 
-            case '>':
-                {
-                    var tmp = InstructionBuilder.Compare( RealPredicate.UnorderedOrGreaterThan, lhs, rhs )
-                                                .RegisterName( "cmptmp" );
-                    return InstructionBuilder.UIToFPCast( tmp, InstructionBuilder.Context.DoubleType )
-                                             .RegisterName( "booltmp" );
-                }
-
             case '^':
                 {
-                    var proto = CreateSyntheticProtoTypeContext( "llvm.pow.f64", "value", "power" );
-                    var pow = DeclareFunction( proto );
+                    var (Name, Parameters) = CreateSyntheticPrototype( "llvm.pow.f64", "value", "power" );
+                    var pow = GetOrDeclareFunction( Name, Parameters );
                     return InstructionBuilder.Call( pow, lhs, rhs )
                                              .RegisterName( "powtmp" );
                 }
@@ -123,50 +121,46 @@ namespace Kaleidoscope
                 return InstructionBuilder.FDiv( lhs, rhs ).RegisterName( "divtmp" );
 
             default:
-                throw new ArgumentException( $"Invalid binary operator {op}", nameof( context ) );
+                throw new ArgumentException( $"Invalid binary operator {context.Op}", nameof( context ) );
             }
         }
 
         public override Value VisitFunctionCallExpression( [NotNull] FunctionCallExpressionContext context )
         {
-            var (calleeName, argExprs) = context;
-
-            var function = GetFunction( calleeName );
+            var function = GetFunction( context.CaleeName );
             if( function == null )
             {
-                throw new ArgumentException( $"Unknown function reference {calleeName}", nameof( context ) );
+                throw new ArgumentException( $"Unknown function reference {context.CaleeName}", nameof( context ) );
             }
 
-            var args = argExprs.Select( ctx => ctx.Accept( this ) ).ToArray( );
+            var args = context.Args.Select( ctx => ctx.Accept( this ) ).ToArray( );
             return InstructionBuilder.Call( function, args ).RegisterName("calltmp");
         }
 
-        public override Value VisitPrototype( [NotNull] PrototypeContext context )
+        public override Value VisitFunctionProtoType( [NotNull] FunctionProtoTypeContext context )
         {
-            var (name, parameters) = context;
-            var retVal = DeclareFunction( (name, parameters) );
-            FunctionProtoTypes.AddOrReplaceItem( (name, parameters) );
+            var retVal = GetOrDeclareFunction( context );
+            FunctionProtoTypes.AddOrReplaceItem( context.Name, context.Parameters );
             return retVal;
         }
 
         public override Value VisitFunctionDefinition( [NotNull] FunctionDefinitionContext context )
         {
-            var (signature, body) = context;
-            var funcAndHandle = FunctionDefinition( signature, body );
-            return funcAndHandle.Function;
+            var function = (Function)context.Signature.Accept( this );
+            return DefineFunction( function, context.BodyExpression ).Function;
         }
 
         public override Value VisitTopLevelExpression( [NotNull] TopLevelExpressionContext context )
         {
             string name = $"anon_expr_{AnonNameIndex++}";
-            var proto = CreateSyntheticProtoTypeContext( name );
+            var (Name, Parameters) = CreateSyntheticPrototype( name );
 
-            var def = DeclareFunction( proto, persistentSymbol: false );
-            var function = FunctionDefinition( proto, context.expression() );
+            var function = GetOrDeclareFunction( Name, Parameters, persistentSymbol: false );
+            var (_, jitHandle) = DefineFunction( function, context.expression() );
 
             var nativeFunc = JIT.GetDelegateForFunction<AnonExpressionFunc>( name );
             var retVal = Context.CreateConstant( nativeFunc( ) );
-            JIT.RemoveModule( function.JitHandle );
+            JIT.RemoveModule( jitHandle );
             return retVal;
         }
 
@@ -193,21 +187,24 @@ namespace Kaleidoscope
 
             if( FunctionProtoTypes.TryGetValue( name, out var signature ) )
             {
-                return DeclareFunction( signature );
+                return GetOrDeclareFunction( name, signature );
             }
 
             return null;
         }
 
-        private Function DeclareFunction( PrototypeContext signature, bool persistentSymbol = true )
+        private Function GetOrDeclareFunction( PrototypeContext signature, bool persistentSymbol = true )
         {
-            var (name, parameters) = signature;
-            return DeclareFunction( (name, parameters), persistentSymbol );
+            return GetOrDeclareFunction( GetPrototypeName( signature ), signature.Parameters, persistentSymbol );
         }
 
-        private Function DeclareFunction( (string Name, IList<string> Parameters) signature, bool persistentSymbol = true )
+        private Function GetOrDeclareFunction( string name, IReadOnlyList<string> argNames, bool persistentSymbol = true )
         {
-            var (name, argNames) = signature;
+            var function = GetFunction( name );
+            if( function != null )
+            {
+                return function;
+            }
 
             var llvmSignature = Context.GetFunctionType( Context.DoubleType, argNames.Select( _ => Context.DoubleType ) );
 
@@ -223,36 +220,22 @@ namespace Kaleidoscope
 
             if( persistentSymbol )
             {
-                FunctionProtoTypes.AddOrReplaceItem( signature );
+                FunctionProtoTypes.AddOrReplaceItem( name, argNames );
             }
 
             return retVal;
         }
 
-        private (Function Function, int JitHandle) FunctionDefinition( PrototypeContext signature, ExpressionContext body )
+        private (Function Function, int JitHandle) DefineFunction( PrototypeContext signature, ExpressionContext body )
         {
-            var (name, parameters) = signature;
-            return FunctionDefinition( (name, parameters), body );
+            return DefineFunction( GetOrDeclareFunction( signature ), body );
         }
 
-        private (Function Function, int JitHandle) FunctionDefinition( (string Name, IList<string> Parameters) signature, ExpressionContext body )
+        private (Function Function, int JitHandle) DefineFunction( Function function, ExpressionContext body )
         {
-            var (name, argNames) = signature;
-
-            var function = GetFunction( name );
-            if( function == null )
-            {
-                function = DeclareFunction( signature );
-            }
-
-            if( function == null )
-            {
-                return (null, default);
-            }
-
             if( !function.IsDeclaration )
             {
-                throw new ArgumentException( $"Function {name} cannot be redefined", nameof( signature ) );
+                throw new ArgumentException( $"Function {function.Name} cannot be redefined", nameof( function ) );
             }
 
             var basicBlock = function.AppendBasicBlock( "entry" );
@@ -280,7 +263,19 @@ namespace Kaleidoscope
             return (function, jitHandle);
         }
 
-        private (string Name, IList<string> Parameters) CreateSyntheticProtoTypeContext( string name, params string[] argNames )
+        private static string GetPrototypeName( PrototypeContext protoType )
+        {
+            switch( protoType )
+            {
+            case FunctionProtoTypeContext func:
+                return func.Name;
+
+            default:
+                throw new ArgumentException( "unknown prototype" );
+            }
+        }
+
+        private static (string Name, IReadOnlyList<string> Parameters) CreateSyntheticPrototype( string name, params string[] argNames )
         {
             return (name, argNames);
         }

@@ -80,22 +80,22 @@ namespace Kaleidoscope.Grammar
 
                 foreach( string statement in statements.Take( completeStatements ) )
                 {
-                    if( bldr.Length > 0 )
+                    bldr.Append( statement );
+                    bldr.Append( ';' );
+                    bldr.AppendLine( );
+
+                    yield return (bldr.ToString( ), false );
+
+                    if( bldr.Length > statement.Length + 1 )
                     {
-                        bldr.Append( statement );
-                        yield return ( bldr.ToString( ), false );
                         bldr.Clear( );
-                    }
-                    else
-                    {
-                        yield return (bldr.ToString( ), false );
                     }
                 }
 
                 if( !wasLastTerminated )
                 {
                     string partial = statements[ statements.Length - 1 ];
-                    bldr.Append( partial );
+                    bldr.AppendLine( partial );
                     yield return ( partial, true );
                 }
             }
