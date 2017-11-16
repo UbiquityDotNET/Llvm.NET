@@ -1476,9 +1476,6 @@
                                   <a href="Llvm.NET.Triple.Equals.html" title="Equals" class="">Equals</a>
                                 </li>
                                 <li class="">
-                                  <a href="Llvm.NET.Triple.Finalize.html" title="Finalize" class="">Finalize</a>
-                                </li>
-                                <li class="">
                                   <a href="Llvm.NET.Triple.GetCanonicalArchForSubArch.html" title="GetCanonicalArchForSubArch" class="">GetCanonicalArchForSubArch</a>
                                 </li>
                                 <li class="">
@@ -1492,6 +1489,9 @@
                                 </li>
                                 <li class="">
                                   <a href="Llvm.NET.Triple.HostTriple.html" title="HostTriple" class="">HostTriple</a>
+                                </li>
+                                <li class="">
+                                  <a href="Llvm.NET.Triple.op_Implicit.html" title="Implicit" class="">Implicit</a>
                                 </li>
                                 <li class="">
                                   <a href="Llvm.NET.Triple.Normalize.html" title="Normalize" class="">Normalize</a>
@@ -5495,10 +5495,60 @@
 
 <span class="small pull-right mobile-hide">
   <span class="divider">|</span>
-  <a href="https://github.com/UbiquityDotNET/Llvm.NET/new/master/apiSpec/new?filename=Llvm_NET_Target_FromTriple_System_String_.md&amp;value=---%0Auid%3A%20Llvm.NET.Target.FromTriple(System.String)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  <a href="https://github.com/UbiquityDotNET/Llvm.NET/new/master/apiSpec/new?filename=Llvm_NET_Target_FromTriple_Llvm_NET_Triple_.md&amp;value=---%0Auid%3A%20Llvm.NET.Target.FromTriple(Llvm.NET.Triple)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
 </span>
 <span class="small pull-right mobile-hide">
   <a href="https://github.com/UbiquityDotNET/Llvm.NET/blob/master/src/Llvm.NET/Target.cs/#L81">View Source</a>
+</span>
+<a id="Llvm_NET_Target_FromTriple_" data-uid="Llvm.NET.Target.FromTriple*"></a>
+<h4 id="Llvm_NET_Target_FromTriple_Llvm_NET_Triple_" data-uid="Llvm.NET.Target.FromTriple(Llvm.NET.Triple)">FromTriple(Triple)</h4>
+<div class="markdown level1 summary"><p>Gets the target for a given target &quot;triple&quot; value</p>
+</div>
+<div class="markdown level1 conceptual"></div>
+<h5 class="decalaration">Declaration</h5>
+<div class="codewrapper">
+  <pre><code class="lang-csharp hljs">public static Target FromTriple(Triple triple)</code></pre>
+</div>
+<h5 class="parameters">Parameters</h5>
+<table class="table table-bordered table-striped table-condensed">
+  <thead>
+    <tr>
+      <th>Type</th>
+      <th>Name</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><a class="xref" href="Llvm.NET.Triple.html">Triple</a></td>
+      <td><span class="parametername">triple</span></td>
+      <td><p>Target <a class="xref" href="Llvm.NET.Triple.html">Triple</a> describing the target</p>
+</td>
+    </tr>
+  </tbody>
+</table>
+<h5 class="returns">Returns</h5>
+<table class="table table-bordered table-striped table-condensed">
+  <thead>
+    <tr>
+      <th>Type</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><a class="xref" href="Llvm.NET.Target.html">Target</a></td>
+      <td><p>Target for the given triple</p>
+</td>
+    </tr>
+  </tbody>
+</table>
+<span class="small pull-right mobile-hide">
+  <span class="divider">|</span>
+  <a href="https://github.com/UbiquityDotNET/Llvm.NET/new/master/apiSpec/new?filename=Llvm_NET_Target_FromTriple_System_String_.md&amp;value=---%0Auid%3A%20Llvm.NET.Target.FromTriple(System.String)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+</span>
+<span class="small pull-right mobile-hide">
+  <a href="https://github.com/UbiquityDotNET/Llvm.NET/blob/master/src/Llvm.NET/Target.cs/#L86">View Source</a>
 </span>
 <a id="Llvm_NET_Target_FromTriple_" data-uid="Llvm.NET.Target.FromTriple*"></a>
 <h4 id="Llvm_NET_Target_FromTriple_System_String_" data-uid="Llvm.NET.Target.FromTriple(System.String)">FromTriple(String)</h4>

@@ -10362,6 +10362,12 @@ references:
   commentId: Overload:Llvm.NET.Target.Description
   fullName: Llvm.NET.Target.Description
   nameWithType: Target.Description
+- uid: Llvm.NET.Target.FromTriple(Llvm.NET.Triple)
+  name: FromTriple(Triple)
+  href: api/Llvm.NET.Target.FromTriple.html#Llvm_NET_Target_FromTriple_Llvm_NET_Triple_
+  commentId: M:Llvm.NET.Target.FromTriple(Llvm.NET.Triple)
+  fullName: Llvm.NET.Target.FromTriple(Llvm.NET.Triple)
+  nameWithType: Target.FromTriple(Triple)
 - uid: Llvm.NET.Target.FromTriple(System.String)
   name: FromTriple(String)
   href: api/Llvm.NET.Target.FromTriple.html#Llvm_NET_Target_FromTriple_System_String_
@@ -11625,18 +11631,6 @@ references:
   commentId: Overload:Llvm.NET.Triple.Equals
   fullName: Llvm.NET.Triple.Equals
   nameWithType: Triple.Equals
-- uid: Llvm.NET.Triple.Finalize
-  name: Finalize()
-  href: api/Llvm.NET.Triple.Finalize.html#Llvm_NET_Triple_Finalize
-  commentId: M:Llvm.NET.Triple.Finalize
-  fullName: Llvm.NET.Triple.Finalize()
-  nameWithType: Triple.Finalize()
-- uid: Llvm.NET.Triple.Finalize*
-  name: Finalize
-  href: api/Llvm.NET.Triple.Finalize.html
-  commentId: Overload:Llvm.NET.Triple.Finalize
-  fullName: Llvm.NET.Triple.Finalize
-  nameWithType: Triple.Finalize
 - uid: Llvm.NET.Triple.GetCanonicalArchForSubArch(Llvm.NET.TripleArchType,Llvm.NET.TripleSubArchType)
   name: GetCanonicalArchForSubArch(TripleArchType, TripleSubArchType)
   href: api/Llvm.NET.Triple.GetCanonicalArchForSubArch.html#Llvm_NET_Triple_GetCanonicalArchForSubArch_Llvm_NET_TripleArchType_Llvm_NET_TripleSubArchType_
@@ -11751,6 +11745,24 @@ references:
   commentId: Overload:Llvm.NET.Triple.ObjectFormatType
   fullName: Llvm.NET.Triple.ObjectFormatType
   nameWithType: Triple.ObjectFormatType
+- uid: Llvm.NET.Triple.op_Implicit(Llvm.NET.Triple)~System.String
+  name: Implicit(Triple to String)
+  href: api/Llvm.NET.Triple.op_Implicit.html#Llvm_NET_Triple_op_Implicit_Llvm_NET_Triple__System_String
+  commentId: M:Llvm.NET.Triple.op_Implicit(Llvm.NET.Triple)~System.String
+  name.vb: Widening(Triple to String)
+  fullName: Llvm.NET.Triple.Implicit(Llvm.NET.Triple to System.String)
+  fullName.vb: Llvm.NET.Triple.Widening(Llvm.NET.Triple to System.String)
+  nameWithType: Triple.Implicit(Triple to String)
+  nameWithType.vb: Triple.Widening(Triple to String)
+- uid: Llvm.NET.Triple.op_Implicit*
+  name: Implicit
+  href: api/Llvm.NET.Triple.op_Implicit.html
+  commentId: Overload:Llvm.NET.Triple.op_Implicit
+  name.vb: Widening
+  fullName: Llvm.NET.Triple.Implicit
+  fullName.vb: Llvm.NET.Triple.Widening
+  nameWithType: Triple.Implicit
+  nameWithType.vb: Triple.Widening
 - uid: Llvm.NET.Triple.OSType
   name: OSType
   href: api/Llvm.NET.Triple.OSType.html#Llvm_NET_Triple_OSType
