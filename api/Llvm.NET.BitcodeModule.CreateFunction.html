@@ -822,6 +822,9 @@
                                   <a href="Llvm.NET.MDNode.Context.html" title="Context" class="">Context</a>
                                 </li>
                                 <li class="">
+                                  <a href="Llvm.NET.MDNode.GetOperand.html" title="GetOperand" class="">GetOperand</a>
+                                </li>
+                                <li class="">
                                   <a href="Llvm.NET.MDNode.IsDeleted.html" title="IsDeleted" class="">IsDeleted</a>
                                 </li>
                                 <li class="">
@@ -1411,6 +1414,9 @@
                                 </li>
                                 <li class="">
                                   <a href="Llvm.NET.TargetMachine.Features.html" title="Features" class="">Features</a>
+                                </li>
+                                <li class="">
+                                  <a href="Llvm.NET.TargetMachine.FromTriple.html" title="FromTriple" class="">FromTriple</a>
                                 </li>
                                 <li class="">
                                   <a href="Llvm.NET.TargetMachine.InternalDispose.html" title="InternalDispose" class="">InternalDispose</a>
@@ -2790,6 +2796,9 @@
                               
                               <ul class="nav level3">
                                 <li class="">
+                                  <a href="Llvm.NET.DebugInfo.DIVariable.DIType.html" title="DIType" class="">DIType</a>
+                                </li>
+                                <li class="">
                                   <a href="Llvm.NET.DebugInfo.DIVariable.File.html" title="File" class="">File</a>
                                 </li>
                                 <li class="">
@@ -2797,9 +2806,6 @@
                                 </li>
                                 <li class="">
                                   <a href="Llvm.NET.DebugInfo.DIVariable.Scope.html" title="Scope" class="">Scope</a>
-                                </li>
-                                <li class="">
-                                  <a href="Llvm.NET.DebugInfo.DIVariable.Type.html" title="Type" class="">Type</a>
                                 </li>
                               </ul>  </li>
                           <li class="">
@@ -4018,6 +4024,9 @@
                                 </li>
                                 <li class="">
                                   <a href="Llvm.NET.Instructions.InstructionBuilder.Select.html" title="Select" class="">Select</a>
+                                </li>
+                                <li class="">
+                                  <a href="Llvm.NET.Instructions.InstructionBuilder.SetDebugLocation.html" title="SetDebugLocation" class="">SetDebugLocation</a>
                                 </li>
                                 <li class="">
                                   <a href="Llvm.NET.Instructions.InstructionBuilder.ShiftLeft.html" title="ShiftLeft" class="">ShiftLeft</a>
@@ -5617,10 +5626,79 @@
 </table>
 <span class="small pull-right mobile-hide">
   <span class="divider">|</span>
-  <a href="https://github.com/UbiquityDotNET/Llvm.NET/new/master/apiSpec/new?filename=Llvm_NET_BitcodeModule_CreateFunction_System_String_System_Boolean_Llvm_NET_DebugInfo_IDebugType_Llvm_NET_Types_ITypeRef_Llvm_NET_DebugInfo_DIType__Llvm_NET_DebugInfo_IDebugType_Llvm_NET_Types_ITypeRef_Llvm_NET_DebugInfo_DIType____.md&amp;value=---%0Auid%3A%20Llvm.NET.BitcodeModule.CreateFunction(System.String%2CSystem.Boolean%2CLlvm.NET.DebugInfo.IDebugType%7BLlvm.NET.Types.ITypeRef%2CLlvm.NET.DebugInfo.DIType%7D%2CLlvm.NET.DebugInfo.IDebugType%7BLlvm.NET.Types.ITypeRef%2CLlvm.NET.DebugInfo.DIType%7D%5B%5D)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  <a href="https://github.com/UbiquityDotNET/Llvm.NET/new/master/apiSpec/new?filename=Llvm_NET_BitcodeModule_CreateFunction_System_String_System_Boolean_Llvm_NET_DebugInfo_IDebugType_Llvm_NET_Types_ITypeRef_Llvm_NET_DebugInfo_DIType__System_Collections_Generic_IEnumerable_Llvm_NET_DebugInfo_IDebugType_Llvm_NET_Types_ITypeRef_Llvm_NET_DebugInfo_DIType___.md&amp;value=---%0Auid%3A%20Llvm.NET.BitcodeModule.CreateFunction(System.String%2CSystem.Boolean%2CLlvm.NET.DebugInfo.IDebugType%7BLlvm.NET.Types.ITypeRef%2CLlvm.NET.DebugInfo.DIType%7D%2CSystem.Collections.Generic.IEnumerable%7BLlvm.NET.DebugInfo.IDebugType%7BLlvm.NET.Types.ITypeRef%2CLlvm.NET.DebugInfo.DIType%7D%7D)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
 </span>
 <span class="small pull-right mobile-hide">
   <a href="https://github.com/UbiquityDotNET/Llvm.NET/blob/master/src/Llvm.NET/BitcodeModule.cs/#L726">View Source</a>
+</span>
+<a id="Llvm_NET_BitcodeModule_CreateFunction_" data-uid="Llvm.NET.BitcodeModule.CreateFunction*"></a>
+<h4 id="Llvm_NET_BitcodeModule_CreateFunction_System_String_System_Boolean_Llvm_NET_DebugInfo_IDebugType_Llvm_NET_Types_ITypeRef_Llvm_NET_DebugInfo_DIType__System_Collections_Generic_IEnumerable_Llvm_NET_DebugInfo_IDebugType_Llvm_NET_Types_ITypeRef_Llvm_NET_DebugInfo_DIType___" data-uid="Llvm.NET.BitcodeModule.CreateFunction(System.String,System.Boolean,Llvm.NET.DebugInfo.IDebugType{Llvm.NET.Types.ITypeRef,Llvm.NET.DebugInfo.DIType},System.Collections.Generic.IEnumerable{Llvm.NET.DebugInfo.IDebugType{Llvm.NET.Types.ITypeRef,Llvm.NET.DebugInfo.DIType}})">CreateFunction(String, Boolean, IDebugType&lt;ITypeRef, DIType&gt;, IEnumerable&lt;IDebugType&lt;ITypeRef, DIType&gt;&gt;)</h4>
+<div class="markdown level1 summary"><p>Creates a function</p>
+</div>
+<div class="markdown level1 conceptual"></div>
+<h5 class="decalaration">Declaration</h5>
+<div class="codewrapper">
+  <pre><code class="lang-csharp hljs">public Function CreateFunction(string name, bool isVarArg, IDebugType&lt;ITypeRef, DIType&gt; returnType, IEnumerable&lt;IDebugType&lt;ITypeRef, DIType&gt;&gt; argumentTypes)</code></pre>
+</div>
+<h5 class="parameters">Parameters</h5>
+<table class="table table-bordered table-striped table-condensed">
+  <thead>
+    <tr>
+      <th>Type</th>
+      <th>Name</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><a class="xref" href="https://msdn.microsoft.com/en-us/library/system.string(v=vs.110).aspx">String</a></td>
+      <td><span class="parametername">name</span></td>
+      <td><p>Name of the function</p>
+</td>
+    </tr>
+    <tr>
+      <td><a class="xref" href="https://msdn.microsoft.com/en-us/library/system.boolean(v=vs.110).aspx">Boolean</a></td>
+      <td><span class="parametername">isVarArg</span></td>
+      <td><p>Flag indicating if the function supports a variadic argument list</p>
+</td>
+    </tr>
+    <tr>
+      <td><a class="xref" href="Llvm.NET.DebugInfo.IDebugType-2.html">IDebugType</a>&lt;<a class="xref" href="Llvm.NET.Types.ITypeRef.html">ITypeRef</a>, <a class="xref" href="Llvm.NET.DebugInfo.DIType.html">DIType</a>&gt;</td>
+      <td><span class="parametername">returnType</span></td>
+      <td><p>Return type of the function</p>
+</td>
+    </tr>
+    <tr>
+      <td><a class="xref" href="https://msdn.microsoft.com/en-us/library/9eekhta0(v=vs.110).aspx">IEnumerable</a>&lt;<a class="xref" href="Llvm.NET.DebugInfo.IDebugType-2.html">IDebugType</a>&lt;<a class="xref" href="Llvm.NET.Types.ITypeRef.html">ITypeRef</a>, <a class="xref" href="Llvm.NET.DebugInfo.DIType.html">DIType</a>&gt;&gt;</td>
+      <td><span class="parametername">argumentTypes</span></td>
+      <td><p>Arguments for the function</p>
+</td>
+    </tr>
+  </tbody>
+</table>
+<h5 class="returns">Returns</h5>
+<table class="table table-bordered table-striped table-condensed">
+  <thead>
+    <tr>
+      <th>Type</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><a class="xref" href="Llvm.NET.Values.Function.html">Function</a></td>
+      <td><p>Function, matching the signature specified. This may be a previously declared or defined
+function or a new function if none matching the name and signature is already present.</p>
+</td>
+    </tr>
+  </tbody>
+</table>
+<span class="small pull-right mobile-hide">
+  <span class="divider">|</span>
+  <a href="https://github.com/UbiquityDotNET/Llvm.NET/new/master/apiSpec/new?filename=Llvm_NET_BitcodeModule_CreateFunction_System_String_System_Boolean_Llvm_NET_DebugInfo_IDebugType_Llvm_NET_Types_ITypeRef_Llvm_NET_DebugInfo_DIType__Llvm_NET_DebugInfo_IDebugType_Llvm_NET_Types_ITypeRef_Llvm_NET_DebugInfo_DIType____.md&amp;value=---%0Auid%3A%20Llvm.NET.BitcodeModule.CreateFunction(System.String%2CSystem.Boolean%2CLlvm.NET.DebugInfo.IDebugType%7BLlvm.NET.Types.ITypeRef%2CLlvm.NET.DebugInfo.DIType%7D%2CLlvm.NET.DebugInfo.IDebugType%7BLlvm.NET.Types.ITypeRef%2CLlvm.NET.DebugInfo.DIType%7D%5B%5D)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+</span>
+<span class="small pull-right mobile-hide">
+  <a href="https://github.com/UbiquityDotNET/Llvm.NET/blob/master/src/Llvm.NET/BitcodeModule.cs/#L746">View Source</a>
 </span>
 <a id="Llvm_NET_BitcodeModule_CreateFunction_" data-uid="Llvm.NET.BitcodeModule.CreateFunction*"></a>
 <h4 id="Llvm_NET_BitcodeModule_CreateFunction_System_String_System_Boolean_Llvm_NET_DebugInfo_IDebugType_Llvm_NET_Types_ITypeRef_Llvm_NET_DebugInfo_DIType__Llvm_NET_DebugInfo_IDebugType_Llvm_NET_Types_ITypeRef_Llvm_NET_DebugInfo_DIType____" data-uid="Llvm.NET.BitcodeModule.CreateFunction(System.String,System.Boolean,Llvm.NET.DebugInfo.IDebugType{Llvm.NET.Types.ITypeRef,Llvm.NET.DebugInfo.DIType},Llvm.NET.DebugInfo.IDebugType{Llvm.NET.Types.ITypeRef,Llvm.NET.DebugInfo.DIType}[])">CreateFunction(String, Boolean, IDebugType&lt;ITypeRef, DIType&gt;, IDebugType&lt;ITypeRef, DIType&gt;[])</h4>

@@ -208,6 +208,15 @@ references:
   fullName.vb: Llvm.NET.BitcodeModule.CreateFunction(System.String, System.Boolean, Llvm.NET.DebugInfo.IDebugType(Of Llvm.NET.Types.ITypeRef, Llvm.NET.DebugInfo.DIType), Llvm.NET.DebugInfo.IDebugType(Of Llvm.NET.Types.ITypeRef, Llvm.NET.DebugInfo.DIType)())
   nameWithType: BitcodeModule.CreateFunction(String, Boolean, IDebugType<ITypeRef, DIType>, IDebugType<ITypeRef, DIType>[])
   nameWithType.vb: BitcodeModule.CreateFunction(String, Boolean, IDebugType(Of ITypeRef, DIType), IDebugType(Of ITypeRef, DIType)())
+- uid: Llvm.NET.BitcodeModule.CreateFunction(System.String,System.Boolean,Llvm.NET.DebugInfo.IDebugType{Llvm.NET.Types.ITypeRef,Llvm.NET.DebugInfo.DIType},System.Collections.Generic.IEnumerable{Llvm.NET.DebugInfo.IDebugType{Llvm.NET.Types.ITypeRef,Llvm.NET.DebugInfo.DIType}})
+  name: CreateFunction(String, Boolean, IDebugType<ITypeRef, DIType>, IEnumerable<IDebugType<ITypeRef, DIType>>)
+  href: api/Llvm.NET.BitcodeModule.CreateFunction.html#Llvm_NET_BitcodeModule_CreateFunction_System_String_System_Boolean_Llvm_NET_DebugInfo_IDebugType_Llvm_NET_Types_ITypeRef_Llvm_NET_DebugInfo_DIType__System_Collections_Generic_IEnumerable_Llvm_NET_DebugInfo_IDebugType_Llvm_NET_Types_ITypeRef_Llvm_NET_DebugInfo_DIType___
+  commentId: M:Llvm.NET.BitcodeModule.CreateFunction(System.String,System.Boolean,Llvm.NET.DebugInfo.IDebugType{Llvm.NET.Types.ITypeRef,Llvm.NET.DebugInfo.DIType},System.Collections.Generic.IEnumerable{Llvm.NET.DebugInfo.IDebugType{Llvm.NET.Types.ITypeRef,Llvm.NET.DebugInfo.DIType}})
+  name.vb: CreateFunction(String, Boolean, IDebugType(Of ITypeRef, DIType), IEnumerable(Of IDebugType(Of ITypeRef, DIType)))
+  fullName: Llvm.NET.BitcodeModule.CreateFunction(System.String, System.Boolean, Llvm.NET.DebugInfo.IDebugType<Llvm.NET.Types.ITypeRef, Llvm.NET.DebugInfo.DIType>, System.Collections.Generic.IEnumerable<Llvm.NET.DebugInfo.IDebugType<Llvm.NET.Types.ITypeRef, Llvm.NET.DebugInfo.DIType>>)
+  fullName.vb: Llvm.NET.BitcodeModule.CreateFunction(System.String, System.Boolean, Llvm.NET.DebugInfo.IDebugType(Of Llvm.NET.Types.ITypeRef, Llvm.NET.DebugInfo.DIType), System.Collections.Generic.IEnumerable(Of Llvm.NET.DebugInfo.IDebugType(Of Llvm.NET.Types.ITypeRef, Llvm.NET.DebugInfo.DIType)))
+  nameWithType: BitcodeModule.CreateFunction(String, Boolean, IDebugType<ITypeRef, DIType>, IEnumerable<IDebugType<ITypeRef, DIType>>)
+  nameWithType.vb: BitcodeModule.CreateFunction(String, Boolean, IDebugType(Of ITypeRef, DIType), IEnumerable(Of IDebugType(Of ITypeRef, DIType)))
 - uid: Llvm.NET.BitcodeModule.CreateFunction*
   name: CreateFunction
   href: api/Llvm.NET.BitcodeModule.CreateFunction.html
@@ -2258,6 +2267,12 @@ references:
   commentId: M:Llvm.NET.DebugInfo.DebugInfoBuilder.Finish
   fullName: Llvm.NET.DebugInfo.DebugInfoBuilder.Finish()
   nameWithType: DebugInfoBuilder.Finish()
+- uid: Llvm.NET.DebugInfo.DebugInfoBuilder.Finish(Llvm.NET.DebugInfo.DISubProgram)
+  name: Finish(DISubProgram)
+  href: api/Llvm.NET.DebugInfo.DebugInfoBuilder.Finish.html#Llvm_NET_DebugInfo_DebugInfoBuilder_Finish_Llvm_NET_DebugInfo_DISubProgram_
+  commentId: M:Llvm.NET.DebugInfo.DebugInfoBuilder.Finish(Llvm.NET.DebugInfo.DISubProgram)
+  fullName: Llvm.NET.DebugInfo.DebugInfoBuilder.Finish(Llvm.NET.DebugInfo.DISubProgram)
+  nameWithType: DebugInfoBuilder.Finish(DISubProgram)
 - uid: Llvm.NET.DebugInfo.DebugInfoBuilder.Finish*
   name: Finish
   href: api/Llvm.NET.DebugInfo.DebugInfoBuilder.Finish.html
@@ -4169,6 +4184,18 @@ references:
   commentId: T:Llvm.NET.DebugInfo.DIVariable
   fullName: Llvm.NET.DebugInfo.DIVariable
   nameWithType: DIVariable
+- uid: Llvm.NET.DebugInfo.DIVariable.DIType
+  name: DIType
+  href: api/Llvm.NET.DebugInfo.DIVariable.DIType.html#Llvm_NET_DebugInfo_DIVariable_DIType
+  commentId: P:Llvm.NET.DebugInfo.DIVariable.DIType
+  fullName: Llvm.NET.DebugInfo.DIVariable.DIType
+  nameWithType: DIVariable.DIType
+- uid: Llvm.NET.DebugInfo.DIVariable.DIType*
+  name: DIType
+  href: api/Llvm.NET.DebugInfo.DIVariable.DIType.html
+  commentId: Overload:Llvm.NET.DebugInfo.DIVariable.DIType
+  fullName: Llvm.NET.DebugInfo.DIVariable.DIType
+  nameWithType: DIVariable.DIType
 - uid: Llvm.NET.DebugInfo.DIVariable.File
   name: File
   href: api/Llvm.NET.DebugInfo.DIVariable.File.html#Llvm_NET_DebugInfo_DIVariable_File
@@ -4205,18 +4232,6 @@ references:
   commentId: Overload:Llvm.NET.DebugInfo.DIVariable.Scope
   fullName: Llvm.NET.DebugInfo.DIVariable.Scope
   nameWithType: DIVariable.Scope
-- uid: Llvm.NET.DebugInfo.DIVariable.Type
-  name: Type
-  href: api/Llvm.NET.DebugInfo.DIVariable.Type.html#Llvm_NET_DebugInfo_DIVariable_Type
-  commentId: P:Llvm.NET.DebugInfo.DIVariable.Type
-  fullName: Llvm.NET.DebugInfo.DIVariable.Type
-  nameWithType: DIVariable.Type
-- uid: Llvm.NET.DebugInfo.DIVariable.Type*
-  name: Type
-  href: api/Llvm.NET.DebugInfo.DIVariable.Type.html
-  commentId: Overload:Llvm.NET.DebugInfo.DIVariable.Type
-  fullName: Llvm.NET.DebugInfo.DIVariable.Type
-  nameWithType: DIVariable.Type
 - uid: Llvm.NET.DebugInfo.ExpressionOp
   name: ExpressionOp
   href: api/Llvm.NET.DebugInfo.ExpressionOp.html
@@ -7483,6 +7498,18 @@ references:
   commentId: Overload:Llvm.NET.Instructions.InstructionBuilder.Select
   fullName: Llvm.NET.Instructions.InstructionBuilder.Select
   nameWithType: InstructionBuilder.Select
+- uid: Llvm.NET.Instructions.InstructionBuilder.SetDebugLocation(System.UInt32,System.UInt32,Llvm.NET.DebugInfo.DIScope,Llvm.NET.DebugInfo.DIScope)
+  name: SetDebugLocation(UInt32, UInt32, DIScope, DIScope)
+  href: api/Llvm.NET.Instructions.InstructionBuilder.SetDebugLocation.html#Llvm_NET_Instructions_InstructionBuilder_SetDebugLocation_System_UInt32_System_UInt32_Llvm_NET_DebugInfo_DIScope_Llvm_NET_DebugInfo_DIScope_
+  commentId: M:Llvm.NET.Instructions.InstructionBuilder.SetDebugLocation(System.UInt32,System.UInt32,Llvm.NET.DebugInfo.DIScope,Llvm.NET.DebugInfo.DIScope)
+  fullName: Llvm.NET.Instructions.InstructionBuilder.SetDebugLocation(System.UInt32, System.UInt32, Llvm.NET.DebugInfo.DIScope, Llvm.NET.DebugInfo.DIScope)
+  nameWithType: InstructionBuilder.SetDebugLocation(UInt32, UInt32, DIScope, DIScope)
+- uid: Llvm.NET.Instructions.InstructionBuilder.SetDebugLocation*
+  name: SetDebugLocation
+  href: api/Llvm.NET.Instructions.InstructionBuilder.SetDebugLocation.html
+  commentId: Overload:Llvm.NET.Instructions.InstructionBuilder.SetDebugLocation
+  fullName: Llvm.NET.Instructions.InstructionBuilder.SetDebugLocation
+  nameWithType: InstructionBuilder.SetDebugLocation
 - uid: Llvm.NET.Instructions.InstructionBuilder.ShiftLeft(Llvm.NET.Values.Value,Llvm.NET.Values.Value)
   name: ShiftLeft(Value, Value)
   href: api/Llvm.NET.Instructions.InstructionBuilder.ShiftLeft.html#Llvm_NET_Instructions_InstructionBuilder_ShiftLeft_Llvm_NET_Values_Value_Llvm_NET_Values_Value_
@@ -9087,6 +9114,21 @@ references:
   commentId: Overload:Llvm.NET.MDNode.Context
   fullName: Llvm.NET.MDNode.Context
   nameWithType: MDNode.Context
+- uid: Llvm.NET.MDNode.GetOperand*
+  name: GetOperand
+  href: api/Llvm.NET.MDNode.GetOperand.html
+  commentId: Overload:Llvm.NET.MDNode.GetOperand
+  fullName: Llvm.NET.MDNode.GetOperand
+  nameWithType: MDNode.GetOperand
+- uid: Llvm.NET.MDNode.GetOperand``1(System.Int32)
+  name: GetOperand<T>(Int32)
+  href: api/Llvm.NET.MDNode.GetOperand.html#Llvm_NET_MDNode_GetOperand__1_System_Int32_
+  commentId: M:Llvm.NET.MDNode.GetOperand``1(System.Int32)
+  name.vb: GetOperand(Of T)(Int32)
+  fullName: Llvm.NET.MDNode.GetOperand<T>(System.Int32)
+  fullName.vb: Llvm.NET.MDNode.GetOperand(Of T)(System.Int32)
+  nameWithType: MDNode.GetOperand<T>(Int32)
+  nameWithType.vb: MDNode.GetOperand(Of T)(Int32)
 - uid: Llvm.NET.MDNode.IsDeleted
   name: IsDeleted
   href: api/Llvm.NET.MDNode.IsDeleted.html#Llvm_NET_MDNode_IsDeleted
@@ -10482,6 +10524,18 @@ references:
   commentId: Overload:Llvm.NET.TargetMachine.Features
   fullName: Llvm.NET.TargetMachine.Features
   nameWithType: TargetMachine.Features
+- uid: Llvm.NET.TargetMachine.FromTriple(Llvm.NET.Triple,System.String,System.String,Llvm.NET.CodeGenOpt,Llvm.NET.Reloc,Llvm.NET.CodeModel)
+  name: FromTriple(Triple, String, String, CodeGenOpt, Reloc, CodeModel)
+  href: api/Llvm.NET.TargetMachine.FromTriple.html#Llvm_NET_TargetMachine_FromTriple_Llvm_NET_Triple_System_String_System_String_Llvm_NET_CodeGenOpt_Llvm_NET_Reloc_Llvm_NET_CodeModel_
+  commentId: M:Llvm.NET.TargetMachine.FromTriple(Llvm.NET.Triple,System.String,System.String,Llvm.NET.CodeGenOpt,Llvm.NET.Reloc,Llvm.NET.CodeModel)
+  fullName: Llvm.NET.TargetMachine.FromTriple(Llvm.NET.Triple, System.String, System.String, Llvm.NET.CodeGenOpt, Llvm.NET.Reloc, Llvm.NET.CodeModel)
+  nameWithType: TargetMachine.FromTriple(Triple, String, String, CodeGenOpt, Reloc, CodeModel)
+- uid: Llvm.NET.TargetMachine.FromTriple*
+  name: FromTriple
+  href: api/Llvm.NET.TargetMachine.FromTriple.html
+  commentId: Overload:Llvm.NET.TargetMachine.FromTriple
+  fullName: Llvm.NET.TargetMachine.FromTriple
+  nameWithType: TargetMachine.FromTriple
 - uid: Llvm.NET.TargetMachine.InternalDispose(System.Boolean)
   name: InternalDispose(Boolean)
   href: api/Llvm.NET.TargetMachine.InternalDispose.html#Llvm_NET_TargetMachine_InternalDispose_System_Boolean_
@@ -14760,6 +14814,15 @@ references:
   commentId: M:Llvm.NET.Values.Function.Verify
   fullName: Llvm.NET.Values.Function.Verify()
   nameWithType: Function.Verify()
+- uid: Llvm.NET.Values.Function.Verify(System.String@)
+  name: Verify(out String)
+  href: api/Llvm.NET.Values.Function.Verify.html#Llvm_NET_Values_Function_Verify_System_String__
+  commentId: M:Llvm.NET.Values.Function.Verify(System.String@)
+  name.vb: Verify(ByRef String)
+  fullName: Llvm.NET.Values.Function.Verify(out System.String)
+  fullName.vb: Llvm.NET.Values.Function.Verify(ByRef System.String)
+  nameWithType: Function.Verify(out String)
+  nameWithType.vb: Function.Verify(ByRef String)
 - uid: Llvm.NET.Values.Function.Verify*
   name: Verify
   href: api/Llvm.NET.Values.Function.Verify.html

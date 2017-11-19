@@ -822,6 +822,9 @@
                                   <a href="Llvm.NET.MDNode.Context.html" title="Context" class="">Context</a>
                                 </li>
                                 <li class="">
+                                  <a href="Llvm.NET.MDNode.GetOperand.html" title="GetOperand" class="">GetOperand</a>
+                                </li>
+                                <li class="">
                                   <a href="Llvm.NET.MDNode.IsDeleted.html" title="IsDeleted" class="">IsDeleted</a>
                                 </li>
                                 <li class="">
@@ -1411,6 +1414,9 @@
                                 </li>
                                 <li class="">
                                   <a href="Llvm.NET.TargetMachine.Features.html" title="Features" class="">Features</a>
+                                </li>
+                                <li class="">
+                                  <a href="Llvm.NET.TargetMachine.FromTriple.html" title="FromTriple" class="">FromTriple</a>
                                 </li>
                                 <li class="">
                                   <a href="Llvm.NET.TargetMachine.InternalDispose.html" title="InternalDispose" class="">InternalDispose</a>
@@ -2790,6 +2796,9 @@
                               
                               <ul class="nav level3">
                                 <li class="">
+                                  <a href="Llvm.NET.DebugInfo.DIVariable.DIType.html" title="DIType" class="">DIType</a>
+                                </li>
+                                <li class="">
                                   <a href="Llvm.NET.DebugInfo.DIVariable.File.html" title="File" class="">File</a>
                                 </li>
                                 <li class="">
@@ -2797,9 +2806,6 @@
                                 </li>
                                 <li class="">
                                   <a href="Llvm.NET.DebugInfo.DIVariable.Scope.html" title="Scope" class="">Scope</a>
-                                </li>
-                                <li class="">
-                                  <a href="Llvm.NET.DebugInfo.DIVariable.Type.html" title="Type" class="">Type</a>
                                 </li>
                               </ul>  </li>
                           <li class="">
@@ -4018,6 +4024,9 @@
                                 </li>
                                 <li class="">
                                   <a href="Llvm.NET.Instructions.InstructionBuilder.Select.html" title="Select" class="">Select</a>
+                                </li>
+                                <li class="">
+                                  <a href="Llvm.NET.Instructions.InstructionBuilder.SetDebugLocation.html" title="SetDebugLocation" class="">SetDebugLocation</a>
                                 </li>
                                 <li class="">
                                   <a href="Llvm.NET.Instructions.InstructionBuilder.ShiftLeft.html" title="ShiftLeft" class="">ShiftLeft</a>
@@ -5509,6 +5518,56 @@
 <div class="codewrapper">
   <pre><code class="lang-csharp hljs">public void Verify()</code></pre>
 </div>
+<span class="small pull-right mobile-hide">
+  <span class="divider">|</span>
+  <a href="https://github.com/UbiquityDotNET/Llvm.NET/new/master/apiSpec/new?filename=Llvm_NET_Values_Function_Verify_System_String__.md&amp;value=---%0Auid%3A%20Llvm.NET.Values.Function.Verify(System.String%40)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+</span>
+<span class="small pull-right mobile-hide">
+  <a href="https://github.com/UbiquityDotNET/Llvm.NET/blob/master/src/Llvm.NET/Values/Function.cs/#L116">View Source</a>
+</span>
+<a id="Llvm_NET_Values_Function_Verify_" data-uid="Llvm.NET.Values.Function.Verify*"></a>
+<h4 id="Llvm_NET_Values_Function_Verify_System_String__" data-uid="Llvm.NET.Values.Function.Verify(System.String@)">Verify(out String)</h4>
+<div class="markdown level1 summary"><p>Verifies the function without throwing an exception</p>
+</div>
+<div class="markdown level1 conceptual"></div>
+<h5 class="decalaration">Declaration</h5>
+<div class="codewrapper">
+  <pre><code class="lang-csharp hljs">public bool Verify(out string errMsg)</code></pre>
+</div>
+<h5 class="parameters">Parameters</h5>
+<table class="table table-bordered table-striped table-condensed">
+  <thead>
+    <tr>
+      <th>Type</th>
+      <th>Name</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><a class="xref" href="https://msdn.microsoft.com/en-us/library/system.string(v=vs.110).aspx">String</a></td>
+      <td><span class="parametername">errMsg</span></td>
+      <td><p>Error message if any, or <a class="xref" href="https://msdn.microsoft.com/en-us/library/74wsya52(v=vs.110).aspx">Empty</a> if no errors detected</p>
+</td>
+    </tr>
+  </tbody>
+</table>
+<h5 class="returns">Returns</h5>
+<table class="table table-bordered table-striped table-condensed">
+  <thead>
+    <tr>
+      <th>Type</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><a class="xref" href="https://msdn.microsoft.com/en-us/library/system.boolean(v=vs.110).aspx">Boolean</a></td>
+      <td><p><span class="xref">true</span> if no errors found</p>
+</td>
+    </tr>
+  </tbody>
+</table>
 </article>
           </div>
           <div class="contribution-panel mobile-hide">
