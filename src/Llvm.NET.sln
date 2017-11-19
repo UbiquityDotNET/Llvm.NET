@@ -33,6 +33,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Chapter9", "..\Samples\Kale
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Repo Items", "Repo Items", "{BA4F7BCF-67BC-49E4-B2F9-DCED3D57619D}"
 	ProjectSection(SolutionItems) = preProject
+		..\appveyor.yml = ..\appveyor.yml
+		..\docs-appveyor.yml = ..\docs-appveyor.yml
 		..\Directory.Build.props = ..\Directory.Build.props
 		..\Directory.Build.targets = ..\Directory.Build.targets
 		..\GOVERNANCE.md = ..\GOVERNANCE.md
