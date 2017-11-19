@@ -109,9 +109,9 @@ expression
     ;
 
 prototype
-    : identifier LPAREN (identifier)* RPAREN                      # FunctionProtoType
-    | UNARY opsymbol Number? LPAREN identifier RPAREN             # UnaryProtoType
-    | BINARY opsymbol Number? LPAREN identifier identifier RPAREN # BinaryProtoType
+    : identifier LPAREN (identifier)* RPAREN                      # FunctionPrototype
+    | UNARY opsymbol Number? LPAREN identifier RPAREN             # UnaryPrototype
+    | BINARY opsymbol Number? LPAREN identifier identifier RPAREN # BinaryPrototype
     ;
 
 repl

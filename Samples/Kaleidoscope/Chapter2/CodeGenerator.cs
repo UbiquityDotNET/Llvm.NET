@@ -21,7 +21,7 @@ namespace Kaleidoscope
 
         public ReplParserStack ParserStack { get; }
 
-        public override int VisitBinaryProtoType( [NotNull] BinaryProtoTypeContext context )
+        public override int VisitBinaryPrototype( [NotNull] BinaryPrototypeContext context )
         {
             if( !ParserStack.Parser.TryAddOperator( context.Op, OperatorKind.InfixLeftAssociative, context.Precedence ) )
             {
@@ -31,7 +31,7 @@ namespace Kaleidoscope
             return 0;
         }
 
-        public override int VisitUnaryProtoType( [NotNull] UnaryProtoTypeContext context )
+        public override int VisitUnaryPrototype( [NotNull] UnaryPrototypeContext context )
         {
             if( !ParserStack.Parser.TryAddOperator( context.Op, OperatorKind.PreFix, 0 ) )
             {

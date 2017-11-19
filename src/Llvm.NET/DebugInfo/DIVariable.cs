@@ -2,7 +2,6 @@
 // Copyright (c) .NET Foundation. All rights reserved.
 // </copyright>
 
-using System.Diagnostics.CodeAnalysis;
 using Llvm.NET.Native;
 
 namespace Llvm.NET.DebugInfo
@@ -18,8 +17,7 @@ namespace Llvm.NET.DebugInfo
 
         public DIFile File => Operands[ 2 ]?.Metadata as DIFile;
 
-        [SuppressMessage( "Microsoft.Naming", "CA1721:PropertyNamesShouldNotMatchGetMethods", Justification = "There isn't a better name" )]
-        public DIType Type => Operands[ 3 ]?.Metadata as DIType;
+        public DIType DIType => Operands[ 3 ]?.Metadata as DIType;
 
         internal DIVariable( LLVMMetadataRef handle )
             : base( handle )

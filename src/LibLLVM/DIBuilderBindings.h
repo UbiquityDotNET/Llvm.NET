@@ -156,6 +156,7 @@ extern "C" {
 
     void LLVMDIBuilderDestroy( LLVMDIBuilderRef d );
     void LLVMDIBuilderFinalize( LLVMDIBuilderRef d );
+    void LLVMDIBuilderFinalizeSubProgram( LLVMDIBuilderRef dref, LLVMMetadataRef /*DISubProgram*/ subProgram );
 
     LLVMMetadataRef LLVMDIBuilderCreateCompileUnit( LLVMDIBuilderRef D
                                                     , unsigned Language

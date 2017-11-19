@@ -21,7 +21,7 @@ namespace Llvm.NET.DebugInfo
     /// <see cref="BitcodeModule"/></summary>
     /// <remarks>
     /// Many Debug information metadata nodes are created with unresolved references to additional
-    /// metadata. To ensure such metadata is resolved applications should call the <see cref="Finish"/>
+    /// metadata. To ensure such metadata is resolved applications should call the <see cref="Finish()"/>
     /// method to resolve and finalize the metadata. After this point only fully resolved nodes may
     /// be added to ensure that the data remains valid.
     /// </remarks>
@@ -799,6 +799,11 @@ namespace Llvm.NET.DebugInfo
                                                                     , bitAlign
                                                                     );
             return MDNode.FromHandle<DIGlobalVariableExpression>( handle );
+        }
+
+        public void Finish( DISubProgram subProgram )
+        {
+            LLVMDIBuilderFinalizeSubProgram( BuilderHandle, subProgram.MetadataHandle );
         }
 
         public void Finish( )

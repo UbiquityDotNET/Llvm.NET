@@ -104,6 +104,26 @@ namespace Llvm.NET
             return new MemoryBuffer( bufferHandle );
         }
 
+        /// <summary>Creates a <see cref="TargetMachine"/> for the triple and specified parameters</summary>
+        /// <param name="triple">Target triple for this machine (e.g. -mtriple)</param>
+        /// <param name="cpu">CPU for this machine (e.g. -mcpu)</param>
+        /// <param name="features">Features for this machine (e.g. -mattr...)</param>
+        /// <param name="optLevel">Optimization level</param>
+        /// <param name="relocationMode">Relocation mode for generated code</param>
+        /// <param name="codeModel"><see cref="CodeModel"/> to use for generated code</param>
+        /// <returns><see cref="TargetMachine"/> based on the specified parameters</returns>
+        public static TargetMachine FromTriple( Triple triple
+                                              , string cpu = null
+                                              , string features = null
+                                              , CodeGenOpt optLevel = CodeGenOpt.Default
+                                              , Reloc relocationMode = Reloc.Default
+                                              , CodeModel codeModel = CodeModel.Default
+                                              )
+        {
+            var target = Target.FromTriple( triple );
+            return target.CreateTargetMachine( triple, cpu, features, optLevel, relocationMode, codeModel );
+        }
+
         internal TargetMachine( LLVMTargetMachineRef targetMachineHandle )
         {
             targetMachineHandle.ValidateNotDefault( nameof( targetMachineHandle ) );

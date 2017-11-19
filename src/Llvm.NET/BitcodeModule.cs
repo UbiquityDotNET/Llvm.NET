@@ -726,12 +726,30 @@ namespace Llvm.NET
         public Function CreateFunction( string name
                                       , bool isVarArg
                                       , IDebugType<ITypeRef, DIType> returnType
-                                      , params IDebugType<ITypeRef, DIType>[ ] argumentTypes
+                                      , IEnumerable<IDebugType<ITypeRef, DIType>> argumentTypes
                                       )
         {
             ValidateHandle( );
             IFunctionType signature = Context.CreateFunctionType( DIBuilder, isVarArg, returnType, argumentTypes );
             return AddFunction( name, signature );
+        }
+
+        /// <summary>Creates a function</summary>
+        /// <param name="name">Name of the function</param>
+        /// <param name="isVarArg">Flag indicating if the function supports a variadic argument list</param>
+        /// <param name="returnType">Return type of the function</param>
+        /// <param name="argumentTypes">Arguments for the function</param>
+        /// <returns>
+        /// Function, matching the signature specified. This may be a previously declared or defined
+        /// function or a new function if none matching the name and signature is already present.
+        /// </returns>
+        public Function CreateFunction( string name
+                                      , bool isVarArg
+                                      , IDebugType<ITypeRef, DIType> returnType
+                                      , params IDebugType<ITypeRef, DIType>[ ] argumentTypes
+                                      )
+        {
+            return CreateFunction( name, isVarArg, returnType, ( IEnumerable<IDebugType<ITypeRef, DIType>> )argumentTypes );
         }
 
         /// <summary>Clones the current module</summary>

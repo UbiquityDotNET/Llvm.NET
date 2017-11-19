@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
+using Llvm.NET.DebugInfo;
 using Llvm.NET.Native;
 using Llvm.NET.Types;
 using Llvm.NET.Values;
@@ -42,6 +43,16 @@ namespace Llvm.NET.Instructions
 
         /// <summary>Gets the context this builder is creating instructions for</summary>
         public Context Context { get; }
+
+        /// <summary>Set the current debug location for this <see cref="InstructionBuilder"/></summary>
+        /// <param name="line">Source line</param>
+        /// <param name="col">Source column</param>
+        /// <param name="scope"><see cref="DIScope"/> for the location</param>
+        /// <param name="inlinedAt"><see cref="DIScope"/>the location is inlined into</param>
+        public void SetDebugLocation( uint line, uint col, DIScope scope = null, DIScope inlinedAt = null )
+        {
+            LLVMSetCurrentDebugLocation2( BuilderHandle, line, col, scope?.MetadataHandle ?? default, inlinedAt?.MetadataHandle ?? default );
+        }
 
         /// <summary>Gets the <see cref="BasicBlock"/> this builder is building instructions for</summary>
         public BasicBlock InsertBlock

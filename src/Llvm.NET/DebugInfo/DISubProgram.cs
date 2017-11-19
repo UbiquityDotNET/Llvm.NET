@@ -21,5 +21,16 @@ namespace Llvm.NET.DebugInfo
             : base( handle )
         {
         }
+
+        // TODO: Crack operands:
+        //       File, Scope, Name,
+        //       string LinagkeName (3),
+        //       DISubroutineType Type( 4 )
+        //       DICompileUnit Unit(5)
+        //       DISubProgram Declaration(6)
+        //       DILocalVariableArray Variables (7)
+        //       DITypeRef ContainingType (8) // This and all remaiining ops are Optional and may not exist - must check operand count
+        //       DITemplateParameterArray (9) TemplateParams
+        //       DITypeArray ThrownTypes (10)
     }
 }

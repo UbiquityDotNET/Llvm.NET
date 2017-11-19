@@ -8,8 +8,6 @@ using Kaleidoscope.Grammar;
 using Llvm.NET;
 using Llvm.NET.Values;
 
-[assembly: SuppressMessage( "StyleCop.CSharp.DocumentationRules", "SA1652:Enable XML documentation output", Justification = "Sample application" )]
-
 namespace Kaleidoscope
 {
     public static class Program
@@ -24,7 +22,7 @@ namespace Kaleidoscope
             using( StaticState.InitializeLLVM( ) )
             {
                 StaticState.RegisterNative( );
-                using( var generator = new CodeGenerator( LanguageLevel.MutableVariables ) )
+                using( var generator = new CodeGenerator( LanguageLevel.UserDefinedOperators ) )
                 {
                     RunReplLoop( generator );
                 }

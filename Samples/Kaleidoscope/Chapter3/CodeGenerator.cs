@@ -29,6 +29,8 @@ namespace Kaleidoscope
             ParserStack = new ReplParserStack( level );
         }
 
+        public ReplParserStack ParserStack { get; }
+
         public Context Context { get; }
 
         public BitcodeModule Module { get; }
@@ -36,8 +38,6 @@ namespace Kaleidoscope
         public InstructionBuilder InstructionBuilder { get; }
 
         public IDictionary<string, Value> NamedValues { get; }
-
-        public ReplParserStack ParserStack { get; }
 
         public void Dispose( )
         {
@@ -62,12 +62,12 @@ namespace Kaleidoscope
         public override Value VisitVariableExpression( [NotNull] VariableExpressionContext context )
         {
             string varName = context.Name;
-            if( NamedValues.TryGetValue( varName, out Value value ) )
+            if( !NamedValues.TryGetValue( varName, out Value value ) )
             {
-                return value;
+                throw new ArgumentException( "Unknown variable name", nameof( context ) );
             }
 
-            throw new ArgumentException( nameof( context ) );
+           return value;
         }
 
         public override Value VisitBinaryOpExpression( [NotNull] BinaryOpExpressionContext context )
@@ -91,8 +91,7 @@ namespace Kaleidoscope
 
             case '^':
                 {
-                    var (Name, Parameters) = CreateSyntheticPrototype( "llvm.pow.f64", "value", "power" );
-                    var pow = GetOrDeclareFunction( Name, Parameters );
+                    var pow = GetOrDeclareFunction( new Prototype( "llvm.pow.f64", "value", "power" ) );
                     return InstructionBuilder.Call( pow, lhs, rhs )
                                              .RegisterName( "powtmp" );
                 }
@@ -123,25 +122,25 @@ namespace Kaleidoscope
             }
 
             var args = context.Args.Select( ctx => ctx.Accept( this ) ).ToArray( );
-            return InstructionBuilder.Call( function, args ).RegisterName("calltmp");
+            return InstructionBuilder.Call( function, args ).RegisterName( "calltmp" );
         }
 
-        public override Value VisitPrototype( [NotNull] PrototypeContext context )
+        public override Value VisitFunctionPrototype( [NotNull] FunctionPrototypeContext context )
         {
-            return GetOrDeclareFunction( context );
+            return GetOrDeclareFunction( new Prototype( context ) );
         }
 
         public override Value VisitFunctionDefinition( [NotNull] FunctionDefinitionContext context )
         {
-            var function = (Function)context.Signature.Accept( this );
-            return DefineFunction( function, context.BodyExpression );
+            return DefineFunction( ( Function )context.Signature.Accept( this )
+                                 , context.BodyExpression
+                                 );
         }
 
         public override Value VisitTopLevelExpression( [NotNull] TopLevelExpressionContext context )
         {
-            var (Name, Parameters) = CreateSyntheticPrototype( $"anon_expr_{AnonNameIndex++}" );
+            var function = GetOrDeclareFunction( new Prototype( $"anon_expr_{AnonNameIndex++}" ) );
 
-            var function = GetOrDeclareFunction( Name, Parameters );
             return DefineFunction( function, context.expression() );
         }
 
@@ -152,37 +151,27 @@ namespace Kaleidoscope
             return Module.GetFunction( name );
         }
 
-        private Function GetOrDeclareFunction( PrototypeContext signature )
+        private Function GetOrDeclareFunction( Prototype prototype )
         {
-            return GetOrDeclareFunction( GetPrototypeName( signature ), signature.Parameters );
-        }
-
-        private Function GetOrDeclareFunction( string name, IReadOnlyList<string> argNames )
-        {
-            var function = GetFunction( name );
+            var function = GetFunction( prototype.Identifier.Name );
             if( function != null )
             {
                 return function;
             }
 
-            var llvmSignature = Context.GetFunctionType( Context.DoubleType, argNames.Select( _ => Context.DoubleType ) );
+            var llvmSignature = Context.GetFunctionType( Context.DoubleType, prototype.Parameters.Select( _ => Context.DoubleType ) );
 
-            var retVal = Module.AddFunction( name, llvmSignature );
+            var retVal = Module.AddFunction( prototype.Identifier.Name, llvmSignature );
             retVal.Linkage( Linkage.External );
 
             int index = 0;
-            foreach( string argName in argNames )
+            foreach( var argId in prototype.Parameters )
             {
-                retVal.Parameters[ index ].Name = argName;
+                retVal.Parameters[ index ].Name = argId.Name;
                 ++index;
             }
 
             return retVal;
-        }
-
-        private Function DefineFunction( PrototypeContext signature, ExpressionContext body )
-        {
-            return DefineFunction( GetOrDeclareFunction( signature ), body );
         }
 
         private Function DefineFunction( Function function, ExpressionContext body )
@@ -211,23 +200,6 @@ namespace Kaleidoscope
             function.Verify( );
 
             return function;
-        }
-
-        private static string GetPrototypeName( PrototypeContext protoType )
-        {
-            switch( protoType )
-            {
-            case FunctionProtoTypeContext func:
-                return func.Name;
-
-            default:
-                throw new ArgumentException( "unknown prototype" );
-            }
-        }
-
-        private static (string Name, IReadOnlyList<string> Parameters) CreateSyntheticPrototype( string name, params string[] argNames )
-        {
-            return (name, argNames);
         }
 
         private static int AnonNameIndex;
