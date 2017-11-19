@@ -5,6 +5,7 @@
 using System;
 using System.Collections.Generic;
 using Llvm.NET.Native;
+using Ubiquity.ArgValidators;
 
 namespace Llvm.NET
 {
@@ -62,6 +63,12 @@ namespace Llvm.NET
             // It won't be valid for use after clearing the handle
             Context.RemoveDeletedNode( this );
             MetadataHandle = default;
+        }
+
+        public T GetOperand<T>( int index )
+            where T : MDNode
+        {
+            return Operands[ index ] as T;
         }
 
         /* TODO:

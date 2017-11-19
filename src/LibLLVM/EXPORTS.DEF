@@ -96,6 +96,7 @@ LLVMSetDebugLoc
 LLVMNewDIBuilder
 LLVMDIBuilderDestroy
 LLVMDIBuilderFinalize
+LLVMDIBuilderFinalizeSubProgram
 LLVMDIBuilderCreateCompileUnit
 LLVMDIBuilderCreateFile
 LLVMDIBuilderCreateLexicalBlock

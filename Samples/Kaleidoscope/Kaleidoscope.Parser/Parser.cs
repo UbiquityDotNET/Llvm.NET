@@ -157,30 +157,35 @@ namespace Kaleidoscope.Grammar
 
         public partial class PrototypeContext
         {
-            public virtual IReadOnlyList<string> Parameters => new List<string>( );
+            public virtual IReadOnlyList<(string Name, SourceSpan Span)> Parameters
+                => new List<(string Name, SourceSpan Span)>( );
         }
 
-        public partial class UnaryProtoTypeContext
+        public partial class UnaryPrototypeContext
         {
             public char Op => opsymbol( ).GetText( )[ 0 ];
 
-            public override IReadOnlyList<string> Parameters => new List<string> { identifier( ).GetText( ) };
+            public override IReadOnlyList<(string Name, SourceSpan Span)> Parameters
+                => new List<(string Name, SourceSpan Span)>
+                    { (identifier( ).Name, identifier().GetSourceSpan()) };
         }
 
-        public partial class BinaryProtoTypeContext
+        public partial class BinaryPrototypeContext
         {
             public char Op => opsymbol( ).GetText( )[ 0 ];
 
-            public override IReadOnlyList<string> Parameters => identifier( ).Select( i => i.Name ).ToList( );
+            public override IReadOnlyList<(string Name, SourceSpan Span)> Parameters
+                => identifier( ).Select( i => (i.Name, i.GetSourceSpan() ) ).ToList( );
 
             public int Precedence => ( int )double.Parse( Number( ).GetText() );
         }
 
-        public partial class FunctionProtoTypeContext
+        public partial class FunctionPrototypeContext
         {
             public string Name => identifier( 0 ).Name;
 
-            public override IReadOnlyList<string> Parameters => identifier( ).Skip( 1 ).Select( i => i.Name ).ToList( );
+            public override IReadOnlyList<(string Name, SourceSpan Span)> Parameters
+                => identifier( ).Skip( 1 ).Select( i => (i.Name, i.GetSourceSpan( ) ) ).ToList( );
         }
 
         public partial class FunctionDefinitionContext

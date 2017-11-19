@@ -104,10 +104,19 @@ namespace Llvm.NET.Values
         /// <summary>Verifies the function is valid and all blocks properly terminated</summary>
         public void Verify( )
         {
-            if( LLVMVerifyFunctionEx( ValueHandle, LLVMVerifierFailureAction.LLVMReturnStatusAction, out string errMsg ).Failed )
+            if( !Verify(out string errMsg ) )
             {
                 throw new InternalCodeGeneratorException( errMsg );
             }
+        }
+
+        /// <summary>Verifies the function without throwing an exception</summary>
+        /// <param name="errMsg">Error message if any, or <see cref="String.Empty"/> if no errors detected</param>
+        /// <returns><see langword="true"/> if no errors found</returns>
+        public bool Verify( out string errMsg )
+        {
+            errMsg = string.Empty;
+            return LLVMVerifyFunctionEx( ValueHandle, LLVMVerifierFailureAction.LLVMReturnStatusAction, out errMsg ).Succeeded;
         }
 
         /// <summary>Add a new basic block to the beginning of a function</summary>

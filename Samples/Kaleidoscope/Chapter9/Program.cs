@@ -25,6 +25,7 @@ namespace Kaleidoscope
                 using( var generator = new CodeGenerator( LanguageLevel.MutableVariables, machine ) )
                 {
                     RunReplLoop( generator );
+                    generator.Module.DIBuilder.Finish( );
                     if( !generator.Module.Verify(out string errMsg ) )
                     {
                         Console.Error.WriteLine( errMsg );

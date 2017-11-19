@@ -102,6 +102,11 @@ extern "C"
         unwrap( dref )->finalize( );
     }
 
+    void LLVMDIBuilderFinalizeSubProgram( LLVMDIBuilderRef dref, LLVMMetadataRef /*DISubProgram*/ subProgram )
+    {
+        unwrap( dref )->finalizeSubprogram( unwrap<DISubprogram>( subProgram ) );
+    }
+
     LLVMMetadataRef LLVMDIBuilderCreateCompileUnit( LLVMDIBuilderRef Dref
                                                     , unsigned Lang
                                                     , const char *File
@@ -264,15 +269,15 @@ extern "C"
                                                           )
     {
         DIBuilder *D = unwrap( Dref );
-        DIVariable* V = D->createParameterVariable( unwrap<DIScope>( Scope )
-                                                    , Name
-                                                    , ArgNo
-                                                    , File ? unwrap<DIFile>( File ) : nullptr
-                                                    , Line
-                                                    , unwrap<DIType>( Ty )
-                                                    , AlwaysPreserve
-                                                    , static_cast<DINode::DIFlags>( Flags )
-                                                    );
+        DILocalVariable* V = D->createParameterVariable( unwrap<DIScope>( Scope )
+                                                        , Name
+                                                        , ArgNo
+                                                        , File ? unwrap<DIFile>( File ) : nullptr
+                                                        , Line
+                                                        , unwrap<DIType>( Ty )
+                                                        , AlwaysPreserve
+                                                        , static_cast<DINode::DIFlags>( Flags )
+                                                        );
         return wrap( V );
     }
 

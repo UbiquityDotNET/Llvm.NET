@@ -4,6 +4,11 @@
 
 using System;
 using System.Diagnostics;
+using System.Diagnostics.CodeAnalysis;
+
+using static Kaleidoscope.Grammar.KaleidoscopeParser;
+
+[assembly: SuppressMessage( "StyleCop.CSharp.DocumentationRules", "SA1652:Enable XML documentation output", Justification = "Sample application" )]
 
 namespace Kaleidoscope
 {
@@ -31,6 +36,24 @@ namespace Kaleidoscope
             while( !Debugger.IsAttached )
             {
                 System.Threading.Thread.Sleep( 5000 );
+            }
+        }
+
+        internal static string GetPrototypeName( this PrototypeContext prototype )
+        {
+            switch( prototype )
+            {
+            case FunctionPrototypeContext func:
+                return func.Name;
+
+            case UnaryPrototypeContext unaryOp:
+                return $"$unary{unaryOp.Op}";
+
+            case BinaryPrototypeContext binOp:
+                return $"$binary{binOp.Op}";
+
+            default:
+                throw new ArgumentException( "unknown prototype" );
             }
         }
     }
