@@ -1,0 +1,30 @@
+version: 5.0.0.{build}
+
+pull_requests:
+  do_not_increment_build_number: true
+
+branches:
+  only:
+  - master
+
+image: Visual Studio 2017
+
+environment:
+  docspush_email: 32618965+cibuild-telliam@users.noreply.github.com
+  docspush_username: cibuild-telliam
+  docspush_access_token:
+    secure: QqWCIyFM6uBBbkW1jnlVGsMQWy+9aPY9rhD56oNT2L/0Cmw2bynROEsrUrOPpBrk
+
+skip_commits:
+  files:
+    - '**\*.md'
+
+init:
+  - git config --global core.safecrlf false
+  - git config --global core.autocrlf input
+
+build_script:
+  - ps: .\Build-Docs.ps1
+
+on_success:
+  - ps: .\Push-Docs.ps1

@@ -9,12 +9,6 @@ branches:
 
 image: Visual Studio 2017
 
-environment:
-  docspush_email: 32618965+cibuild-telliam@users.noreply.github.com
-  docspush_username: cibuild-telliam
-  docspush_access_token:
-    secure: QqWCIyFM6uBBbkW1jnlVGsMQWy+9aPY9rhD56oNT2L/0Cmw2bynROEsrUrOPpBrk
-
 skip_commits:
   files:
     - '**\*.md'
@@ -31,9 +25,6 @@ nuget:
 build_script:
   - ps: .\BuildAll.ps1
 
-after_build:
-  - ps: .\Build-Docs.ps1
-
 test_script:
   - ps: .\Invoke-UnitTests.ps1
   - ps: Set-Culture fr-FR; .\Invoke-UnitTests.ps1
@@ -41,6 +32,3 @@ test_script:
 artifacts:
   - path: .\BuildOutput\Nuget\LLvm.NET.*.nupkg
   - path: .\BuildOutput\Nuget\LibLLVM.NET.*.nupkg
-
-on_success:
-  - ps: .\Push-Docs.ps1
