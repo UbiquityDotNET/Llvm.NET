@@ -3,18 +3,26 @@
 // </copyright>
 
 using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 
 namespace Llvm.NET.Values
 {
+    /// <summary>Extension methods for a collection of <see cref="AttributeValue"/></summary>
     public static class AttributeCollectionExtensions
     {
+        /// <summary>Removes an attribute from a collection</summary>
+        /// <param name="set">Attribute collection (set) to remove the attribute from</param>
+        /// <param name="kind"><see cref="AttributeKind"/> to remove</param>
+        /// <returns><see langword="true"/> if <paramref name="kind"/> was in <paramref name="set"/> before being removed</returns>
         public static bool Remove( this ICollection<AttributeValue> set, AttributeKind kind)
         {
             return Remove( set, kind.GetAttributeName( ) );
         }
 
+        /// <summary>Removes an attribute from a collection</summary>
+        /// <param name="set">Attribute collection (set) to remove the attribute from</param>
+        /// <param name="name">Name of the attribute to remove</param>
+        /// <returns><see langword="true"/> if <paramref name="name"/> was in <paramref name="set"/> before being removed</returns>
         public static bool Remove( this ICollection<AttributeValue> set, string name )
         {
             var attr = ( from a in set
@@ -45,8 +53,6 @@ namespace Llvm.NET.Values
     /// is called a Dictionary as that reflects the use here and fits
     /// the direction of LLVM</note>
     /// </remarks>
-    [SuppressMessage( "Microsoft.Naming", "CA1711:IdentifiersShouldNotHaveIncorrectSuffix", Justification = "Name is correct" )]
-    [SuppressMessage( "Microsoft.Naming", "CA1710:IdentifiersShouldHaveCorrectSuffix", Justification = "Name is correct" )]
     public interface IAttributeDictionary
         : IReadOnlyDictionary<FunctionAttributeIndex, ICollection<AttributeValue>>
     {

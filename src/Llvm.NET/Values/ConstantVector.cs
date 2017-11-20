@@ -6,11 +6,18 @@ using Llvm.NET.Native;
 
 namespace Llvm.NET.Values
 {
-    public class ConstantVector : Constant
+    /// <summary>Vector of constant values</summary>
+    public sealed class ConstantVector
+        : ConstantAggregate
     {
         internal ConstantVector( LLVMValueRef valueRef )
             : base( valueRef )
         {
         }
+
+        /* TODO:
+        Constant SplatValue { get; }
+        static ConstantVector Splat(uint numelements, Constant element);
+        */
     }
 }

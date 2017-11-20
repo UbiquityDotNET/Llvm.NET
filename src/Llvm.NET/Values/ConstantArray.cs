@@ -17,8 +17,8 @@ namespace Llvm.NET.Values
     /// instance. At the least it will produce a Constant. LLVM will determine the
     /// appropriate internal representation based on the input types and values
     /// </remarks>
-    public class ConstantArray
-        : Constant
+    public sealed class ConstantArray
+        : ConstantAggregate
     {
         /// <summary>Create a constant array of values of a given type</summary>
         /// <param name="elementType">Type of elements in the array</param>

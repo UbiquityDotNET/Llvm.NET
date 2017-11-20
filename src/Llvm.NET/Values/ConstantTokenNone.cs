@@ -6,7 +6,9 @@ using Llvm.NET.Native;
 
 namespace Llvm.NET.Values
 {
-    public class ConstantTokenNone : Constant
+    /// <summary>Constant token that is empty</summary>
+    public class ConstantTokenNone
+        : ConstantData
     {
         internal ConstantTokenNone( LLVMValueRef valueRef )
             : base( valueRef )

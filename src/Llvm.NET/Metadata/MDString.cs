@@ -6,9 +6,12 @@ using Llvm.NET.Native;
 
 namespace Llvm.NET
 {
+    /// <summary>Stores a string in Metadata</summary>
     public class MDString
         : LlvmMetadata
     {
+        /// <summary>Gets the string from the metadata node</summary>
+        /// <returns>String this node wraps</returns>
         public override string ToString( )
         {
             return NativeMethods.LLVMGetMDStringText( MetadataHandle, out uint len );

@@ -7,6 +7,7 @@ using System.Collections.Generic;
 
 namespace Llvm.NET.Native
 {
+    // TODO: CHange this to use LlvmObject as base
     internal struct LLVMTargetDataRef
         : IEquatable<LLVMTargetDataRef>
     {

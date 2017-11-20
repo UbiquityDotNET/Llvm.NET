@@ -5,6 +5,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Llvm.NET.Instructions;
 using Llvm.NET.Native;
 using Ubiquity.ArgValidators;
 
@@ -12,36 +13,106 @@ namespace Llvm.NET.Values
 {
     /// <summary>Enumeration for the known LLVM attributes</summary>
     /// <remarks>
-    /// <para>It is important to note that the integer values of this
-    /// enum do NOT necessarily correlate to the attribute IDs. LLVM
-    /// has moved away from using an enum Flags model as the number of
-    /// attributes reached the limit of available bits. Thus, the enum
-    /// was dropped. Instead, strings are used to identify attributes.
-    /// However, for maximum compatibility and ease of use for this
-    /// library the enum is retained and the provided attribute
-    /// manipulation classes will map the enum to the associated string.
-    /// </para>
-    /// <note type="warning">As a result of the changes in LLVM this
-    /// set of attributes is fluid and subject to change from version
-    /// to version. Thus, code using any attributes that have changed
-    /// or were removed will produce compile time errors. That is useful
-    /// and by design so that any changes in LLVM naming will break at
-    /// compile time instead of at runtime.</note>
+    /// <para>It is important to note that the integer values of this enum do NOT necessarily
+    /// correlate to the attribute IDs. LLVM has moved away from using an enum Flags model
+    /// as the number of attributes reached the limit of available bits. Thus, the enum was
+    /// dropped. Instead, strings are used to identify attributes. However, for maximum
+    /// compatibility and ease of use for this library the enum is retained and the provided
+    /// attribute manipulation classes will map the enum to the associated string.</para>
+    /// <note type="warning">As a result of the changes in LLVM this set of attributes is
+    /// fluid and subject to change from version to version. Thus, code using any attributes
+    /// that have changed or were removed will produce compile time errors. That is useful
+    /// and by design so that any changes in LLVM naming will break at compile time instead
+    /// of at runtime.</note>
     /// </remarks>
+    /// <seealso href="xref:llvm_langref#function-attributes">LLVM Function Attributes</seealso>
+    /// <seealso href="xref:llvm_langref#parameter-attributes">LLVM Parameter Attributes</seealso>
     public enum AttributeKind
     {
+        /// <summary>No attributes</summary>
         None,
+
+        /// <summary>This indicates that the pointer value may be assumed by the optimizer to
+        /// have the specified alignment.</summary>
+        /// <remarks>
+        /// <note type="note">
+        /// This attribute has additional semantics when combined with the byval attribute.
+        /// </note>
+        /// </remarks>
         Alignment,
+
+        /// <summary>This attribute indicates that the annotated function will always return at
+        /// least a given number of bytes (or null).</summary>
+        /// <remarks>Its arguments are zero-indexed parameter numbers; if one argument is provided,
+        /// then it’s assumed that at least CallSite.Args[EltSizeParam] bytes will be available at
+        /// the returned pointer. If two are provided, then it’s assumed that CallSite.Args[EltSizeParam]
+        /// * CallSite.Args[NumEltsParam] bytes are available. The referenced parameters must be integer
+        /// types. No assumptions are made about the contents of the returned block of memory.
+        /// </remarks>
         AllocSize,
+
+        /// <summary>is attribute indicates that the inliner should attempt to inline this function
+        /// into callers whenever possible, ignoring any active inlining size threshold for this caller.</summary>
         AlwaysInline,
+
+        /// <summary>indicates that the only memory accesses inside function are loads and stores from
+        /// objects pointed to by its pointer-typed arguments, with arbitrary offsets</summary>
+        /// <remarks>This attribute indicates that the only memory accesses inside function are loads and
+        /// stores from objects pointed to by its pointer-typed arguments, with arbitrary offsets. Or in
+        /// other words, all memory operations in the function can refer to memory only using pointers
+        /// based on its function arguments. Note that argmemonly can be used together with readonly
+        /// attribute in order to specify that function reads only from its arguments.</remarks>
         ArgMemOnly,
+
+        /// <summary>This indicates that the callee function at a call site should be recognized as a
+        /// built-in function, even though the function’s declaration uses the nobuiltin attribute.</summary>
+        /// <remarks>
+        /// This is only valid at call sites for direct calls to functions that are declared with the
+        /// nobuiltin attribute.</remarks>
         Builtin,
+
+        /// <summary>This indicates that the pointer parameter should really be passed by value to the function.</summary>
+        /// <remarks>
+        /// <para>The attribute implies that a hidden copy of the pointee is made between the caller and
+        /// the callee, so the callee is unable to modify the value in the caller. This attribute is only
+        /// valid on LLVM pointer arguments. It is generally used to pass structs and arrays by value, but
+        /// is also valid on pointers to scalars. The copy is considered to belong to the caller not the
+        /// callee (for example, readonly functions should not write to byval parameters). This is not a
+        /// valid attribute for return values.</para>
+        /// <para>The byval attribute also supports specifying an alignment with the align attribute. It
+        /// indicates the alignment of the stack slot to form and the known alignment of the pointer
+        /// specified to the call site. If the alignment is not specified, then the code generator makes
+        /// a target-specific assumption.</para>
+        /// </remarks>
         ByVal,
+
         Cold,
         Convergent,
         Dereferenceable,
         DereferenceableOrNull,
+
+        /// <summary>The inalloca argument attribute allows the caller to take the address of outgoing stack arguments.</summary>
+        /// <remarks>
+        /// <para>An inalloca argument must be a pointer to stack memory produced by an <see cref="Alloca"/>
+        /// instruction. The alloca, or argument allocation, must also be tagged with the inalloca keyword.
+        /// Only the last argument may have the inalloca attribute, and that argument is guaranteed to be
+        /// passed in memory.</para>
+        /// <para>An argument allocation may be used by a call at most once because the call may deallocate
+        /// it. The inalloca attribute cannot be used in conjunction with other attributes that affect argument
+        /// storage, like <see cref="InReg"/>, <see cref="Nest"/>, <see cref="StructRet"/>, or <see cref="ByVal"/>.
+        /// The inalloca attribute also disables LLVM’s implicit lowering of large aggregate return values,
+        /// which means that frontend authors must lower them with sret pointers.</para>
+        /// <para>When the call site is reached, the argument allocation must have been the most recent stack
+        /// allocation that is still live, or the results are undefined. It is possible to allocate additional
+        /// stack space after an argument allocation and before its call site, but it must be cleared off with
+        /// llvm.stackrestore.</para>
+        /// </remarks>
         InAlloca,
+
+        /// <summary>This indicates that this parameter or return value should be treated in a special target-dependent fashion
+        /// while emitting code for a function call or return (usually, by putting it in a register as opposed to memory, though
+        /// some targets use it to distinguish between two different kinds of registers). Use of this attribute is target-specific.
+        /// </summary>
         InReg,
         InaccessibleMemOnly,
         InaccessibleMemOrArgMemOnly,
@@ -68,7 +139,12 @@ namespace Llvm.NET.Values
         ReadOnly,
         Returned,
         ReturnsTwice,
+
+        /// <summary>This indicates to the code generator that the parameter or return value should be sign-extended to the extent
+        /// required by the target’s ABI (which is usually 32-bits) by the caller (for a parameter) or the callee (for a return value).
+        /// </summary>
         SExt,
+
         SafeStack,
         SanitizeAddress,
         SanitizeMemory,
@@ -83,6 +159,9 @@ namespace Llvm.NET.Values
         SwiftSelf,
         UWTable,
         WriteOnly,
+
+        /// <summary>This indicates to the code generator that the parameter or return value should be zero-extended to the extent
+        /// required by the target’s ABI by the caller (for a parameter) or the callee (for a return value).</summary>
         ZExt,
     }
 
@@ -106,11 +185,17 @@ namespace Llvm.NET.Values
     /// <summary>Utility class to provide extension methods for validating usage of attribute kinds</summary>
     public static class AttributeKindExtensions
     {
+        /// <summary>Gets the symbolic name of the attribute</summary>
+        /// <param name="kind"><see cref="AttributeKind"/> to get the name of</param>
+        /// <returns>Name of the attribute</returns>
         public static string GetAttributeName( this AttributeKind kind )
         {
             return KnownAttributeNames[ ( int )kind ];
         }
 
+        /// <summary>Gets a value indicating whether the attribute requires an integer parameter value</summary>
+        /// <param name="kind"><see cref="AttributeKind"/> to check</param>
+        /// <returns><see langword="true"/> if the attribute requires an integer value</returns>
         public static bool RequiresIntValue( this AttributeKind kind )
         {
             kind.ValidateDefined( nameof( kind ) );
@@ -128,6 +213,9 @@ namespace Llvm.NET.Values
             }
         }
 
+        /// <summary>Looks up the <see cref="AttributeKind"/> for an LLVM attribute id</summary>
+        /// <param name="id">LLVM attribute id</param>
+        /// <returns><see cref="AttributeKind"/> that corresponds to the LLVM id</returns>
         public static AttributeKind LookupId( uint id )
         {
             if( AttribIdToKindMap.Value.TryGetValue( id, out AttributeKind retValue ) )

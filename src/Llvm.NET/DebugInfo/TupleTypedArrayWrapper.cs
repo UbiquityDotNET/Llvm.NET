@@ -13,22 +13,22 @@ namespace Llvm.NET.DebugInfo
     /// <summary>Generic wrapper to treat an MDTuple as an array of elements of specific type</summary>
     /// <typeparam name="T">Type of elements</typeparam>
     /// <remarks>
-    /// This treats the operands of a tuple as the elements of the array
+    /// This implements a facade pattern that presents an <see cref="IReadOnlyCollection{T}"/> for the
+    /// operands of an <see cref="MDTuple"/>. This allows treating the tuple like an array of nodes of a
+    /// particular type.
     /// </remarks>
     [SuppressMessage( "Microsoft.Naming", "CA1710:IdentifiersShouldHaveCorrectSuffix", Justification = "Collection doesn't make sense for this type" )]
     public class TupleTypedArrayWrapper<T>
         : IReadOnlyList<T>
         where T : LlvmMetadata
     {
-        public TupleTypedArrayWrapper( MDTuple tuple )
-        {
-            Tuple = tuple;
-        }
-
+        /// <summary>Gets the underlying tuple for this wrapper</summary>
         public MDTuple Tuple { get; }
 
+        /// <inheritdoc />
         public int Count => Tuple.Operands.Count;
 
+        /// <inheritdoc />
         public T this[ int index ]
         {
             get
@@ -47,6 +47,7 @@ namespace Llvm.NET.DebugInfo
             }
         }
 
+        /// <inheritdoc />
         public IEnumerator<T> GetEnumerator( )
         {
             return Tuple.Operands
@@ -54,6 +55,12 @@ namespace Llvm.NET.DebugInfo
                         .GetEnumerator();
         }
 
+        /// <inheritdoc />
         IEnumerator IEnumerable.GetEnumerator( ) => GetEnumerator();
+
+        internal TupleTypedArrayWrapper( MDTuple tuple )
+        {
+            Tuple = tuple;
+        }
     }
 }

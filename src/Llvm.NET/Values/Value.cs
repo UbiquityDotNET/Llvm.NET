@@ -54,12 +54,16 @@ namespace Llvm.NET.Values
         /// <summary>Gets the type of the value</summary>
         public ITypeRef NativeType => TypeRef.FromHandle( LLVMTypeOf( ValueHandle ) );
 
+        /// <summary>Gets the context for this value</summary>
         public Context Context => NativeType.Context;
 
+        /// <summary>Gets a value indicating whether the Value is an instruction</summary>
         public bool IsInstruction => LLVMGetValueIdAsKind( ValueHandle ) > ValueKind.Instruction;
 
+        /// <summary>Gets a value indicating whether the Value is a function</summary>
         public bool IsFunction => LLVMGetValueIdAsKind( ValueHandle ) == ValueKind.Function;
 
+        /// <summary>Gets a value indicating whether the Value is a call-site</summary>
         public bool IsCallSite
         {
             get

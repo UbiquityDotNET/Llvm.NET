@@ -12,7 +12,7 @@ using JetBrains.Annotations;
 using Llvm.NET.Instructions;
 using Llvm.NET.Native;
 using Llvm.NET.Values;
-
+using Ubiquity.ArgValidators;
 using static Llvm.NET.Native.NativeMethods;
 
 namespace Llvm.NET.DebugInfo
@@ -101,19 +101,17 @@ namespace Llvm.NET.DebugInfo
         /// <param name="name">Name of the namespace</param>
         /// <param name="exportSymbols">export symbols</param>
         /// <returns>Debug namespace</returns>
-        [System.Diagnostics.CodeAnalysis.SuppressMessage( "Microsoft.Design", "CA1011:ConsiderPassingBaseTypesAsParameters", Justification = "Specific type required by interop call" )]
+        [SuppressMessage( "Microsoft.Design", "CA1011:ConsiderPassingBaseTypesAsParameters", Justification = "Specific type required by interop call" )]
         public DINamespace CreateNamespace( DIScope scope, string name, bool exportSymbols )
         {
-            if( string.IsNullOrWhiteSpace( name ) )
-            {
-                throw new ArgumentException( "name cannot be null or empty", nameof( name ) );
-            }
+            name.ValidateNotNullOrWhiteSpace( nameof( name ) );
 
             var handle = LLVMDIBuilderCreateNamespace( BuilderHandle
                                                      , scope?.MetadataHandle ?? default
                                                      , name
                                                      , exportSymbols
                                                      );
+
             return MDNode.FromHandle<DINamespace>( handle );
         }
 
@@ -159,13 +157,10 @@ namespace Llvm.NET.DebugInfo
         /// <returns>
         /// <see cref="DILexicalBlock"/> created from the parameters
         /// </returns>
-        [System.Diagnostics.CodeAnalysis.SuppressMessage( "Microsoft.Design", "CA1011:ConsiderPassingBaseTypesAsParameters", Justification = "Specific type required by interop call" )]
+        [SuppressMessage( "Microsoft.Design", "CA1011:ConsiderPassingBaseTypesAsParameters", Justification = "Specific type required by interop call" )]
         public DILexicalBlock CreateLexicalBlock( DIScope scope, DIFile file, uint line, uint column )
         {
-            if( scope == null )
-            {
-                throw new ArgumentNullException( nameof( scope ) );
-            }
+            scope.ValidateNotNull( nameof( scope ) );
 
             var handle = LLVMDIBuilderCreateLexicalBlock( BuilderHandle
                                                         , scope.MetadataHandle
@@ -173,6 +168,7 @@ namespace Llvm.NET.DebugInfo
                                                         , line
                                                         , column
                                                         );
+
             return MDNode.FromHandle<DILexicalBlock>( handle );
         }
 
@@ -183,18 +179,11 @@ namespace Llvm.NET.DebugInfo
         /// <returns>
         /// <see cref="DILexicalBlockFile"/> constructed from the parameters
         /// </returns>
-        [System.Diagnostics.CodeAnalysis.SuppressMessage( "Microsoft.Design", "CA1011:ConsiderPassingBaseTypesAsParameters", Justification = "Specific type required by interop call" )]
+        [SuppressMessage( "Microsoft.Design", "CA1011:ConsiderPassingBaseTypesAsParameters", Justification = "Specific type required by interop call" )]
         public DILexicalBlockFile CreateLexicalBlockFile( DIScope scope, DIFile file, uint discriminator )
         {
-            if( scope == null )
-            {
-                throw new ArgumentNullException( nameof( scope ) );
-            }
-
-            if( file == null )
-            {
-                throw new ArgumentNullException( nameof( file ) );
-            }
+            scope.ValidateNotNull( nameof( scope ) );
+            file.ValidateNotNull( nameof( file ) );
 
             var handle = LLVMDIBuilderCreateLexicalBlockFile( BuilderHandle, scope.MetadataHandle, file.MetadataHandle, discriminator );
             return MDNode.FromHandle<DILexicalBlockFile>( handle );
@@ -233,10 +222,9 @@ namespace Llvm.NET.DebugInfo
                                           , [CanBeNull] MDNode declaration = null
                                           )
         {
-            if( scope == null )
-            {
-                throw new ArgumentNullException( nameof( scope ) );
-            }
+            scope.ValidateNotNull( nameof( scope ) );
+            signatureType.ValidateNotNull( nameof( signatureType ) );
+            function.ValidateNotNull( nameof( function ) );
 
             if( string.IsNullOrWhiteSpace( name ) )
             {
@@ -246,16 +234,6 @@ namespace Llvm.NET.DebugInfo
             if( string.IsNullOrWhiteSpace( mangledName ) )
             {
                 mangledName = string.Empty;
-            }
-
-            if( signatureType == null )
-            {
-                throw new ArgumentNullException( nameof( signatureType ) );
-            }
-
-            if( function == null )
-            {
-                throw new ArgumentNullException( nameof( function ) );
             }
 
             var handle = LLVMDIBuilderCreateFunction( BuilderHandle
@@ -289,7 +267,7 @@ namespace Llvm.NET.DebugInfo
         /// <param name="debugFlags"><see cref="DebugInfoFlags"/> for the function</param>
         /// <param name="isOptimized">Flag to indicate if the function is optimized</param>
         /// <returns>Subprogram as a forward declaration</returns>
-        [System.Diagnostics.CodeAnalysis.SuppressMessage( "Microsoft.Design", "CA1011:ConsiderPassingBaseTypesAsParameters", Justification = "Specific type required by interop call" )]
+        [SuppressMessage( "Microsoft.Design", "CA1011:ConsiderPassingBaseTypesAsParameters", Justification = "Specific type required by interop call" )]
         public DISubProgram ForwardDeclareFunction( DIScope scope
                                                   , string name
                                                   , string mangledName
@@ -303,15 +281,8 @@ namespace Llvm.NET.DebugInfo
                                                   , bool isOptimized
                                                   )
         {
-            if( scope == null )
-            {
-                throw new ArgumentNullException( nameof( scope ) );
-            }
-
-            if( subroutineType == null )
-            {
-                throw new ArgumentNullException( nameof( subroutineType ) );
-            }
+            scope.ValidateNotNull( nameof( scope ) );
+            subroutineType.ValidateNotNull( nameof( subroutineType ) );
 
             if( string.IsNullOrWhiteSpace( name ) )
             {
@@ -351,15 +322,8 @@ namespace Llvm.NET.DebugInfo
                                                   , DebugInfoFlags debugFlags
                                                   )
         {
-            if( scope == null )
-            {
-                throw new ArgumentNullException( nameof( scope ) );
-            }
-
-            if( type == null )
-            {
-                throw new ArgumentNullException( nameof( type ) );
-            }
+            scope.ValidateNotNull( nameof( scope ) );
+            type.ValidateNotNull( nameof( type ) );
 
             var handle = LLVMDIBuilderCreateAutoVariable( BuilderHandle
                                                         , scope.MetadataHandle
@@ -394,15 +358,8 @@ namespace Llvm.NET.DebugInfo
                                              , ushort argNo
                                              )
         {
-            if( scope == null )
-            {
-                throw new ArgumentNullException( nameof( scope ) );
-            }
-
-            if( type == null )
-            {
-                throw new ArgumentNullException( nameof( type ) );
-            }
+            scope.ValidateNotNull( nameof( scope ) );
+            type.ValidateNotNull( nameof( type ) );
 
             var handle = LLVMDIBuilderCreateParameterVariable( BuilderHandle
                                                              , scope.MetadataHandle
@@ -428,7 +385,13 @@ namespace Llvm.NET.DebugInfo
             return MDNode.FromHandle<DIBasicType>( handle );
         }
 
-        [System.Diagnostics.CodeAnalysis.SuppressMessage( "Microsoft.Design", "CA1011:ConsiderPassingBaseTypesAsParameters", Justification = "Specific type required by interop call" )]
+        /// <summary>Creates a pointer type with debug information</summary>
+        /// <param name="pointeeType">base type of the pointer</param>
+        /// <param name="name">Name of the type</param>
+        /// <param name="bitSize">Bit size of the type</param>
+        /// <param name="bitAlign">But alignment of the type</param>
+        /// <returns>Pointer type</returns>
+        [SuppressMessage( "Microsoft.Design", "CA1011:ConsiderPassingBaseTypesAsParameters", Justification = "Specific type required by interop call" )]
         public DIDerivedType CreatePointerType( DIType pointeeType, string name, UInt64 bitSize, UInt32 bitAlign = 0 )
         {
             var handle = LLVMDIBuilderCreatePointerType( BuilderHandle
@@ -440,20 +403,29 @@ namespace Llvm.NET.DebugInfo
             return MDNode.FromHandle<DIDerivedType>( handle );
         }
 
-        [System.Diagnostics.CodeAnalysis.SuppressMessage( "Microsoft.Design", "CA1011:ConsiderPassingBaseTypesAsParameters", Justification = "Specific type required by interop call" )]
+        /// <summary>Creates a qualified type</summary>
+        /// <param name="baseType">Base type to add the qualifier to</param>
+        /// <param name="tag">Qualifier to apply</param>
+        /// <returns>Qualified type</returns>
+        /// <exception cref="ArgumentException"><paramref name="tag"/> is <see cref="QualifiedTypeTag.None"/></exception>
+        /// <exception cref="ArgumentNullException"><paramref name="baseType"/> is <see langword="null"/></exception>
+        [SuppressMessage( "Microsoft.Design", "CA1011:ConsiderPassingBaseTypesAsParameters", Justification = "Specific type required by interop call" )]
         public DIDerivedType CreateQualifiedType( DIType baseType, QualifiedTypeTag tag )
         {
-            if( baseType == null )
-            {
-                throw new ArgumentNullException( nameof( baseType ) );
-            }
+            baseType.ValidateNotNull( nameof( baseType ) );
 
             var handle = LLVMDIBuilderCreateQualifiedType( BuilderHandle, ( uint )tag, baseType.MetadataHandle );
             return MDNode.FromHandle<DIDerivedType>( handle );
         }
 
+        /// <summary>Create a debug metadata array of debug types</summary>
+        /// <param name="types">Types to include in the array</param>
+        /// <returns>Array containing the types</returns>
         public DITypeArray CreateTypeArray( params DIType[ ] types ) => CreateTypeArray( ( IEnumerable<DIType> )types );
 
+        /// <summary>Create a debug metadata array of debug types</summary>
+        /// <param name="types">Types to include in the array</param>
+        /// <returns>Array containing the types</returns>
         public DITypeArray CreateTypeArray( IEnumerable<DIType> types )
         {
             var handles = types.Select( t => t.MetadataHandle ).ToArray( );
@@ -464,57 +436,71 @@ namespace Llvm.NET.DebugInfo
             }
 
             var handle = LLVMDIBuilderGetOrCreateTypeArray( BuilderHandle, out handles[ 0 ], ( UInt64 )count );
-            return new DITypeArray( handle );
+            return new DITypeArray( MDNode.FromHandle<MDTuple>( handle) );
         }
 
-        [System.Diagnostics.CodeAnalysis.SuppressMessage( "Microsoft.Design", "CA1011:ConsiderPassingBaseTypesAsParameters", Justification = "Specific type required by interop call" )]
+        /// <summary>Creates a <see cref="DISubroutineType"/> to provide debug information for a function/procedure signature</summary>
+        /// <param name="debugFlags"><see cref="DebugInfoFlags"/> for this signature</param>
+        /// <param name="types">Parameter types</param>
+        /// <returns><see cref="DISubroutineType"/></returns>
+        [SuppressMessage( "Microsoft.Design", "CA1011:ConsiderPassingBaseTypesAsParameters", Justification = "Specific type required by interop call" )]
         public DISubroutineType CreateSubroutineType( DebugInfoFlags debugFlags, DITypeArray types )
         {
-            if( types == null )
-            {
-                throw new ArgumentNullException( nameof( types ) );
-            }
+            types.ValidateNotNull( nameof( types ) );
 
             var handle = LLVMDIBuilderCreateSubroutineType( BuilderHandle
-                                                          , types.MetadataHandle
+                                                          , types.Tuple.MetadataHandle
                                                           , ( uint )debugFlags
                                                           );
+
             return MDNode.FromHandle<DISubroutineType>( handle );
         }
 
+        /// <summary>Creates a <see cref="DISubroutineType"/> to provide debug information for a function/procedure signature</summary>
+        /// <param name="debugFlags"><see cref="DebugInfoFlags"/> for this signature</param>
+        /// <returns><see cref="DISubroutineType"/></returns>
         public DISubroutineType CreateSubroutineType( DebugInfoFlags debugFlags )
         {
             var typeArray = GetOrCreateTypeArray( null );
             return CreateSubroutineType( debugFlags, typeArray );
         }
 
+        /// <summary>Creates a <see cref="DISubroutineType"/> to provide debug information for a function/procedure signature</summary>
+        /// <param name="debugFlags"><see cref="DebugInfoFlags"/> for this signature</param>
+        /// <param name="returnType">Return type of the signature</param>
+        /// <param name="types">Parameters for the function</param>
+        /// <returns><see cref="DISubroutineType"/></returns>
         public DISubroutineType CreateSubroutineType( DebugInfoFlags debugFlags, DIType returnType, IEnumerable<DIType> types )
         {
             var typeArray = GetOrCreateTypeArray( types.Prepend( returnType ) );
             return CreateSubroutineType( debugFlags, typeArray );
         }
 
-        [System.Diagnostics.CodeAnalysis.SuppressMessage( "Microsoft.Design", "CA1011:ConsiderPassingBaseTypesAsParameters", Justification = "Specific type required by interop call" )]
+        /// <summary>Creates debug desription of a structure type</summary>
+        /// <param name="scope">Scope containing the structure</param>
+        /// <param name="name">Name of the type</param>
+        /// <param name="file">File containing the type</param>
+        /// <param name="line">Line of the start of the type</param>
+        /// <param name="bitSize">Size of the type in bits</param>
+        /// <param name="bitAlign">Bit alignment of the type</param>
+        /// <param name="debugFlags"><see cref="DebugInfoFlags"/> for the structure</param>
+        /// <param name="derivedFrom"><see cref="DIType"/> this type is derived from, if any</param>
+        /// <param name="elements">Node array describing the elements of the structure</param>
+        /// <returns><see cref="DICompositeType"/></returns>
+        [SuppressMessage( "Microsoft.Design", "CA1011:ConsiderPassingBaseTypesAsParameters", Justification = "Specific type required by interop call" )]
         public DICompositeType CreateStructType( DIScope scope
                                                , string name
                                                , DIFile file
                                                , uint line
                                                , UInt64 bitSize
                                                , UInt32 bitAlign
-                                               , uint flags
-                                               , DIType derivedFrom
+                                               , DebugInfoFlags debugFlags
+                                               , [CanBeNull] DIType derivedFrom
                                                , DINodeArray elements
                                                )
         {
-            if( scope == null )
-            {
-                throw new ArgumentNullException( nameof( scope ) );
-            }
-
-            if( elements == null )
-            {
-                throw new ArgumentNullException( nameof( elements ) );
-            }
+            scope.ValidateNotNull( nameof( scope ) );
+            elements.ValidateNotNull( nameof( elements ) );
 
             var handle = LLVMDIBuilderCreateStructType( BuilderHandle
                                                       , scope.MetadataHandle
@@ -523,13 +509,25 @@ namespace Llvm.NET.DebugInfo
                                                       , line
                                                       , bitSize
                                                       , bitAlign
-                                                      , flags
+                                                      , (uint)debugFlags
                                                       , derivedFrom?.MetadataHandle ?? default
                                                       , elements.Tuple.MetadataHandle
                                                       );
+
             return MDNode.FromHandle<DICompositeType>( handle );
         }
 
+        /// <summary>Creates debug desription of a structure type</summary>
+        /// <param name="scope">Scope containing the structure</param>
+        /// <param name="name">Name of the type</param>
+        /// <param name="file">File containing the type</param>
+        /// <param name="line">Line of the start of the type</param>
+        /// <param name="bitSize">Size of the type in bits</param>
+        /// <param name="bitAlign">Bit alignment of the type</param>
+        /// <param name="debugFlags"><see cref="DebugInfoFlags"/> for the structure</param>
+        /// <param name="derivedFrom"><see cref="DIType"/> this type is derived from, if any</param>
+        /// <param name="elements">Node array describing the elements of the structure</param>
+        /// <returns><see cref="DICompositeType"/></returns>
         public DICompositeType CreateStructType( DIScope scope
                                                , string name
                                                , DIFile file
@@ -541,9 +539,20 @@ namespace Llvm.NET.DebugInfo
                                                , params DINode[ ] elements
                                                )
         {
-            return CreateStructType( scope, name, file, line, bitSize, bitAlign, ( uint )debugFlags, derivedFrom, GetOrCreateArray( elements ) );
+            return CreateStructType( scope, name, file, line, bitSize, bitAlign, debugFlags, derivedFrom, GetOrCreateArray( elements ) );
         }
 
+        /// <summary>Creates debug desription of a structure type</summary>
+        /// <param name="scope">Scope containing the structure</param>
+        /// <param name="name">Name of the type</param>
+        /// <param name="file">File containing the type</param>
+        /// <param name="line">Line of the start of the type</param>
+        /// <param name="bitSize">Size of the type in bits</param>
+        /// <param name="bitAlign">Bit alignment of the type</param>
+        /// <param name="debugFlags"><see cref="DebugInfoFlags"/> for the structure</param>
+        /// <param name="derivedFrom"><see cref="DIType"/> this type is derived from, if any</param>
+        /// <param name="elements">Node array describing the elements of the structure</param>
+        /// <returns><see cref="DICompositeType"/></returns>
         public DICompositeType CreateStructType( DIScope scope
                                                , string name
                                                , DIFile file
@@ -555,29 +564,32 @@ namespace Llvm.NET.DebugInfo
                                                , IEnumerable<DINode> elements
                                                )
         {
-            return CreateStructType( scope, name, file, line, bitSize, bitAlign, ( uint )debugFlags, derivedFrom, GetOrCreateArray( elements ) );
+            return CreateStructType( scope, name, file, line, bitSize, bitAlign, debugFlags, derivedFrom, GetOrCreateArray( elements ) );
         }
 
-        [System.Diagnostics.CodeAnalysis.SuppressMessage( "Microsoft.Design", "CA1011:ConsiderPassingBaseTypesAsParameters", Justification = "Specific type required by interop call" )]
+        /// <summary>Creates debug desription of a union type</summary>
+        /// <param name="scope">Scope containing the union</param>
+        /// <param name="name">Name of the type</param>
+        /// <param name="file">File containing the union</param>
+        /// <param name="line">Line of the start of the union</param>
+        /// <param name="bitSize">Size of the union in bits</param>
+        /// <param name="bitAlign">Bit alignment of the union</param>
+        /// <param name="debugFlags"><see cref="DebugInfoFlags"/> for the union</param>
+        /// <param name="elements">Node array describing the elements of the union</param>
+        /// <returns><see cref="DICompositeType"/></returns>
+        [SuppressMessage( "Microsoft.Design", "CA1011:ConsiderPassingBaseTypesAsParameters", Justification = "Specific type required by interop call" )]
         public DICompositeType CreateUnionType( DIScope scope
                                               , string name
                                               , DIFile file
                                               , uint line
                                               , UInt64 bitSize
                                               , UInt32 bitAlign
-                                              , uint flags
+                                              , DebugInfoFlags debugFlags
                                               , DINodeArray elements
                                               )
         {
-            if( scope == null )
-            {
-                throw new ArgumentNullException( nameof( scope ) );
-            }
-
-            if( elements == null )
-            {
-                throw new ArgumentNullException( nameof( elements ) );
-            }
+            scope.ValidateNotNull( nameof( scope ) );
+            elements.ValidateNotNull( nameof( elements ) );
 
             var handle = LLVMDIBuilderCreateUnionType( BuilderHandle
                                                      , scope.MetadataHandle
@@ -586,25 +598,46 @@ namespace Llvm.NET.DebugInfo
                                                      , line
                                                      , bitSize
                                                      , bitAlign
-                                                     , flags
+                                                     , ( uint )debugFlags
                                                      , elements.Tuple.MetadataHandle
                                                      );
+
             return MDNode.FromHandle<DICompositeType>( handle );
         }
 
+        /// <summary>Creates debug desription of a union type</summary>
+        /// <param name="scope">Scope containing the union</param>
+        /// <param name="name">Name of the type</param>
+        /// <param name="file">File containing the union</param>
+        /// <param name="line">Line of the start of the union</param>
+        /// <param name="bitSize">Size of the union in bits</param>
+        /// <param name="bitAlign">Bit alignment of the union</param>
+        /// <param name="debugFlags"><see cref="DebugInfoFlags"/> for the union</param>
+        /// <param name="elements">Node array describing the elements of the union</param>
+        /// <returns><see cref="DICompositeType"/></returns>
         public DICompositeType CreateUnionType( DIScope scope
-                                               , string name
-                                               , DIFile file
-                                               , uint line
-                                               , UInt64 bitSize
-                                               , UInt32 bitAlign
-                                               , DebugInfoFlags debugFlags
-                                               , params DINode[ ] elements
-                                               )
+                                              , string name
+                                              , DIFile file
+                                              , uint line
+                                              , UInt64 bitSize
+                                              , UInt32 bitAlign
+                                              , DebugInfoFlags debugFlags
+                                              , params DINode[ ] elements
+                                              )
         {
-            return CreateUnionType( scope, name, file, line, bitSize, bitAlign, ( uint )debugFlags, GetOrCreateArray( elements ) );
+            return CreateUnionType( scope, name, file, line, bitSize, bitAlign, debugFlags, GetOrCreateArray( elements ) );
         }
 
+        /// <summary>Creates debug desription of a union type</summary>
+        /// <param name="scope">Scope containing the union</param>
+        /// <param name="name">Name of the type</param>
+        /// <param name="file">File containing the union</param>
+        /// <param name="line">Line of the start of the union</param>
+        /// <param name="bitSize">Size of the union in bits</param>
+        /// <param name="bitAlign">Bit alignment of the union</param>
+        /// <param name="debugFlags"><see cref="DebugInfoFlags"/> for the union</param>
+        /// <param name="elements">Node array describing the elements of the union</param>
+        /// <returns><see cref="DICompositeType"/></returns>
         public DICompositeType CreateUnionType( DIScope scope
                                                , string name
                                                , DIFile file
@@ -615,10 +648,10 @@ namespace Llvm.NET.DebugInfo
                                                , IEnumerable<DINode> elements
                                                )
         {
-            return CreateUnionType( scope, name, file, line, bitSize, bitAlign, ( uint )debugFlags, GetOrCreateArray( elements ) );
+            return CreateUnionType( scope, name, file, line, bitSize, bitAlign, debugFlags, GetOrCreateArray( elements ) );
         }
 
-        [System.Diagnostics.CodeAnalysis.SuppressMessage( "Microsoft.Design", "CA1011:ConsiderPassingBaseTypesAsParameters", Justification = "Specific type required by interop call" )]
+        [SuppressMessage( "Microsoft.Design", "CA1011:ConsiderPassingBaseTypesAsParameters", Justification = "Specific type required by interop call" )]
         public DIDerivedType CreateMemberType( DIScope scope
                                              , string name
                                              , DIFile file
@@ -630,15 +663,8 @@ namespace Llvm.NET.DebugInfo
                                              , DIType type
                                              )
         {
-            if( scope == null )
-            {
-                throw new ArgumentNullException( nameof( scope ) );
-            }
-
-            if( type == null )
-            {
-                throw new ArgumentNullException( nameof( type ) );
-            }
+            scope.ValidateNotNull( nameof( scope ) );
+            type.ValidateNotNull( nameof( type ) );
 
             var handle = LLVMDIBuilderCreateMemberType( BuilderHandle
                                                       , scope.MetadataHandle
@@ -654,18 +680,11 @@ namespace Llvm.NET.DebugInfo
             return MDNode.FromHandle<DIDerivedType>( handle );
         }
 
-        [System.Diagnostics.CodeAnalysis.SuppressMessage( "Microsoft.Design", "CA1011:ConsiderPassingBaseTypesAsParameters", Justification = "Specific type required by interop call" )]
+        [SuppressMessage( "Microsoft.Design", "CA1011:ConsiderPassingBaseTypesAsParameters", Justification = "Specific type required by interop call" )]
         public DICompositeType CreateArrayType( UInt64 bitSize, UInt32 bitAlign, DIType elementType, DINodeArray subscripts )
         {
-            if( elementType == null )
-            {
-                throw new ArgumentNullException( nameof( elementType ) );
-            }
-
-            if( subscripts == null )
-            {
-                throw new ArgumentNullException( nameof( subscripts ) );
-            }
+            elementType.ValidateNotNull( nameof( elementType ) );
+            subscripts.ValidateNotNull( nameof( subscripts ) );
 
             var handle = LLVMDIBuilderCreateArrayType( BuilderHandle, bitSize, bitAlign, elementType.MetadataHandle, subscripts.Tuple.MetadataHandle );
             return MDNode.FromHandle<DICompositeType>( handle );
@@ -676,7 +695,7 @@ namespace Llvm.NET.DebugInfo
             return CreateArrayType( bitSize, bitAlign, elementType, GetOrCreateArray( subscripts ) );
         }
 
-        [System.Diagnostics.CodeAnalysis.SuppressMessage( "Microsoft.Design", "CA1011:ConsiderPassingBaseTypesAsParameters", Justification = "Specific type required by interop call" )]
+        [SuppressMessage( "Microsoft.Design", "CA1011:ConsiderPassingBaseTypesAsParameters", Justification = "Specific type required by interop call" )]
         public DIDerivedType CreateTypedef( DIType type, string name, DIFile file, uint line, DINode context )
         {
             var handle = LLVMDIBuilderCreateTypedef( BuilderHandle
@@ -716,7 +735,7 @@ namespace Llvm.NET.DebugInfo
         {
             var buf = types.Select( t => t?.MetadataHandle ?? default ).ToArray( );
             var handle = LLVMDIBuilderGetOrCreateTypeArray( BuilderHandle, out buf[ 0 ], ( UInt64 )buf.LongLength );
-            return new DITypeArray( handle );
+            return new DITypeArray( MDNode.FromHandle<MDTuple>( handle ) );
         }
 
         public DIEnumerator CreateEnumeratorValue( string name, long value )
@@ -725,7 +744,7 @@ namespace Llvm.NET.DebugInfo
             return MDNode.FromHandle<DIEnumerator>( handle );
         }
 
-        [System.Diagnostics.CodeAnalysis.SuppressMessage( "Microsoft.Design", "CA1011:ConsiderPassingBaseTypesAsParameters", Justification = "Specific type required by interop call" )]
+        [SuppressMessage( "Microsoft.Design", "CA1011:ConsiderPassingBaseTypesAsParameters", Justification = "Specific type required by interop call" )]
         public DICompositeType CreateEnumerationType( DIScope scope
                                                     , string name
                                                     , DIFile file
@@ -737,15 +756,8 @@ namespace Llvm.NET.DebugInfo
                                                     , string uniqueId = ""
                                                     )
         {
-            if( scope == null )
-            {
-                throw new ArgumentNullException( nameof( scope ) );
-            }
-
-            if( underlyingType == null )
-            {
-                throw new ArgumentNullException( nameof( underlyingType ) );
-            }
+            scope.ValidateNotNull( nameof( scope ) );
+            underlyingType.ValidateNotNull( nameof( underlyingType ) );
 
             var elementHandles = elements.Select( e => e.MetadataHandle ).ToArray( );
             var elementArray = LLVMDIBuilderGetOrCreateArray( BuilderHandle, out elementHandles[ 0 ], ( UInt64 )elementHandles.LongLength );
@@ -760,10 +772,11 @@ namespace Llvm.NET.DebugInfo
                                                            , underlyingType.MetadataHandle
                                                            , uniqueId
                                                            );
+
             return MDNode.FromHandle<DICompositeType>( handle );
         }
 
-        [System.Diagnostics.CodeAnalysis.SuppressMessage( "Microsoft.Design", "CA1011:ConsiderPassingBaseTypesAsParameters", Justification = "Specific type required by interop call" )]
+        [SuppressMessage( "Microsoft.Design", "CA1011:ConsiderPassingBaseTypesAsParameters", Justification = "Specific type required by interop call" )]
         public DIGlobalVariableExpression CreateGlobalVariableExpression( DINode scope
                                                                         , string name
                                                                         , string linkageName
@@ -776,15 +789,8 @@ namespace Llvm.NET.DebugInfo
                                                                         , UInt32 bitAlign = 0
                                                                         )
         {
-            if( scope == null )
-            {
-                throw new ArgumentNullException( nameof( scope ) );
-            }
-
-            if( type == null )
-            {
-                throw new ArgumentNullException( nameof( type ) );
-            }
+            scope.ValidateNotNull( nameof( scope ) );
+            type.ValidateNotNull( nameof( type ) );
 
             var handle = LLVMDIBuilderCreateGlobalVariableExpression( BuilderHandle
                                                                     , scope.MetadataHandle
@@ -835,33 +841,14 @@ namespace Llvm.NET.DebugInfo
             return InsertDeclare( storage, varInfo, CreateExpression( ), location, insertBefore );
         }
 
-        [System.Diagnostics.CodeAnalysis.SuppressMessage( "Microsoft.Design", "CA1011:ConsiderPassingBaseTypesAsParameters", Justification = "Specific type required by interop call" )]
+        [SuppressMessage( "Microsoft.Design", "CA1011:ConsiderPassingBaseTypesAsParameters", Justification = "Specific type required by interop call" )]
         public Instruction InsertDeclare( Value storage, DILocalVariable varInfo, DIExpression expression, DILocation location, Instruction insertBefore )
         {
-            if( storage == null )
-            {
-                throw new ArgumentNullException( nameof( storage ) );
-            }
-
-            if( varInfo == null )
-            {
-                throw new ArgumentNullException( nameof( varInfo ) );
-            }
-
-            if( expression == null )
-            {
-                throw new ArgumentNullException( nameof( expression ) );
-            }
-
-            if( location == null )
-            {
-                throw new ArgumentNullException( nameof( location ) );
-            }
-
-            if( insertBefore == null )
-            {
-                throw new ArgumentNullException( nameof( insertBefore ) );
-            }
+            storage.ValidateNotNull( nameof( storage ) );
+            varInfo.ValidateNotNull( nameof( varInfo ) );
+            expression.ValidateNotNull( nameof( expression ) );
+            location.ValidateNotNull( nameof( location ) );
+            insertBefore.ValidateNotNull( nameof( insertBefore ) );
 
             var handle = LLVMDIBuilderInsertDeclareBefore( BuilderHandle
                                                          , storage.ValueHandle
@@ -870,6 +857,7 @@ namespace Llvm.NET.DebugInfo
                                                          , location.MetadataHandle
                                                          , insertBefore.ValueHandle
                                                          );
+
             return Value.FromHandle<Instruction>( handle );
         }
 
@@ -878,33 +866,14 @@ namespace Llvm.NET.DebugInfo
             return InsertDeclare( storage, varInfo, CreateExpression( ), location, insertAtEnd );
         }
 
-        [System.Diagnostics.CodeAnalysis.SuppressMessage( "Microsoft.Design", "CA1011:ConsiderPassingBaseTypesAsParameters", Justification = "Specific type required by interop call" )]
-        public CallInstruction InsertDeclare( Value storage, DILocalVariable varInfo, DIExpression espression, DILocation location, BasicBlock insertAtEnd )
+        [SuppressMessage( "Microsoft.Design", "CA1011:ConsiderPassingBaseTypesAsParameters", Justification = "Specific type required by interop call" )]
+        public CallInstruction InsertDeclare( Value storage, DILocalVariable varInfo, DIExpression expression, DILocation location, BasicBlock insertAtEnd )
         {
-            if( storage == null )
-            {
-                throw new ArgumentNullException( nameof( storage ) );
-            }
-
-            if( varInfo == null )
-            {
-                throw new ArgumentNullException( nameof( varInfo ) );
-            }
-
-            if( espression == null )
-            {
-                throw new ArgumentNullException( nameof( espression ) );
-            }
-
-            if( location == null )
-            {
-                throw new ArgumentNullException( nameof( location ) );
-            }
-
-            if( insertAtEnd == null )
-            {
-                throw new ArgumentNullException( nameof( insertAtEnd ) );
-            }
+            storage.ValidateNotNull( nameof( storage ) );
+            varInfo.ValidateNotNull( nameof( varInfo ) );
+            expression.ValidateNotNull( nameof( expression ) );
+            location.ValidateNotNull( nameof( location ) );
+            insertAtEnd.ValidateNotNull( nameof( insertAtEnd ) );
 
             if( location.Scope.SubProgram != varInfo.Scope.SubProgram )
             {
@@ -914,7 +883,7 @@ namespace Llvm.NET.DebugInfo
             var handle = LLVMDIBuilderInsertDeclareAtEnd( BuilderHandle
                                                         , storage.ValueHandle
                                                         , varInfo.MetadataHandle
-                                                        , espression.MetadataHandle
+                                                        , expression.MetadataHandle
                                                         , location.MetadataHandle
                                                         , insertAtEnd.BlockHandle
                                                         );
@@ -940,30 +909,11 @@ namespace Llvm.NET.DebugInfo
                                           , Instruction insertBefore
                                           )
         {
-            if( value == null )
-            {
-                throw new ArgumentNullException( nameof( value ) );
-            }
-
-            if( varInfo == null )
-            {
-                throw new ArgumentNullException( nameof( varInfo ) );
-            }
-
-            if( expression == null )
-            {
-                throw new ArgumentNullException( nameof( expression ) );
-            }
-
-            if( location == null )
-            {
-                throw new ArgumentNullException( nameof( location ) );
-            }
-
-            if( insertBefore == null )
-            {
-                throw new ArgumentNullException( nameof( insertBefore ) );
-            }
+            value.ValidateNotNull( nameof( value ) );
+            varInfo.ValidateNotNull( nameof( varInfo ) );
+            expression.ValidateNotNull( nameof( expression ) );
+            location.ValidateNotNull( nameof( location ) );
+            insertBefore.ValidateNotNull( nameof( insertBefore ) );
 
             var handle = LLVMDIBuilderInsertValueBefore( BuilderHandle
                                                        , value.ValueHandle
@@ -1008,30 +958,11 @@ namespace Llvm.NET.DebugInfo
                                           , BasicBlock insertAtEnd
                                           )
         {
-            if( value == null )
-            {
-                throw new ArgumentNullException( nameof( value ) );
-            }
-
-            if( varInfo == null )
-            {
-                throw new ArgumentNullException( nameof( varInfo ) );
-            }
-
-            if( expression == null )
-            {
-                throw new ArgumentNullException( nameof( expression ) );
-            }
-
-            if( location == null )
-            {
-                throw new ArgumentNullException( nameof( location ) );
-            }
-
-            if( insertAtEnd == null )
-            {
-                throw new ArgumentNullException( nameof( insertAtEnd ) );
-            }
+            value.ValidateNotNull( nameof( value ) );
+            varInfo.ValidateNotNull( nameof( varInfo ) );
+            expression.ValidateNotNull( nameof( expression ) );
+            location.ValidateNotNull( nameof( location ) );
+            insertAtEnd.ValidateNotNull( nameof( insertAtEnd ) );
 
             if( location.Scope != varInfo.Scope )
             {
@@ -1057,7 +988,8 @@ namespace Llvm.NET.DebugInfo
             return retVal;
         }
 
-        public DIExpression CreateExpression( params ExpressionOp[ ] operations ) => CreateExpression( ( IEnumerable<ExpressionOp> )operations );
+        public DIExpression CreateExpression( params ExpressionOp[ ] operations )
+            => CreateExpression( ( IEnumerable<ExpressionOp> )operations );
 
         public DIExpression CreateExpression( IEnumerable<ExpressionOp> operations )
         {

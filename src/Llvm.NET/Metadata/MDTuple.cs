@@ -6,6 +6,10 @@ using Llvm.NET.Native;
 
 namespace Llvm.NET
 {
+    /// <summary>Tuple of Metadata nodes</summary>
+    /// <remarks>
+    /// This acts as a container of nodes in the metadata heirarchy
+    /// </remarks>
     public class MDTuple : MDNode
     {
         internal MDTuple( LLVMMetadataRef handle )

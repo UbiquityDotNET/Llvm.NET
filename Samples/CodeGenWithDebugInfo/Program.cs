@@ -4,12 +4,15 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using Llvm.NET;
 using Llvm.NET.DebugInfo;
 using Llvm.NET.Instructions;
 using Llvm.NET.Types;
 using Llvm.NET.Values;
+
+[assembly: SuppressMessage( "StyleCop.CSharp.DocumentationRules", "SA1652:Enable XML documentation output", Justification = "Sample application" )]
 
 namespace TestDebugInfo
 {

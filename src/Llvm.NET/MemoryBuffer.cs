@@ -17,8 +17,8 @@ namespace Llvm.NET
     public sealed class MemoryBuffer
         : IDisposable
     {
-        /// <summary>Load a file as an LLVM Memory Buffer</summary>
-        /// <param name="path">Path of the file to load into a <see cref="MemoryBuffer"/></param>
+        /// <summary>Initializes a new instance of the <see cref="MemoryBuffer"/> class from a file</summary>
+        /// <param name="path">Path of the file to load</param>
         public MemoryBuffer( string path )
         {
             path.ValidateNotNullOrWhiteSpace( nameof( path ) );
@@ -43,6 +43,7 @@ namespace Llvm.NET
             }
         }
 
+        /// <inheritdoc/>
         public void Dispose( )
         {
             if( BufferHandle == default )
@@ -52,6 +53,8 @@ namespace Llvm.NET
             }
         }
 
+        /// <summary>Gets an array of bytes from the buffer</summary>
+        /// <returns>Array of bytes copied from the buffer</returns>
         public byte[] ToArray()
         {
             var bufferStart = LLVMGetBufferStart( BufferHandle );

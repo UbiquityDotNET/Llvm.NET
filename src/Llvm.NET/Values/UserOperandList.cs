@@ -12,6 +12,7 @@ namespace Llvm.NET.Values
     internal class UserOperandList
         : IReadOnlyList<Value>
     {
+        /// <inheritdoc/>
         public Value this[ int index ]
         {
             get
@@ -25,6 +26,7 @@ namespace Llvm.NET.Values
             }
         }
 
+        /// <inheritdoc/>
         public int Count
         {
             get
@@ -34,6 +36,7 @@ namespace Llvm.NET.Values
             }
         }
 
+        /// <inheritdoc/>
         public IEnumerator<Value> GetEnumerator( )
         {
             for( uint i = 0; i < Count; ++i )
@@ -48,6 +51,7 @@ namespace Llvm.NET.Values
             }
         }
 
+        /// <inheritdoc/>
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator( ) => GetEnumerator( );
 
         internal UserOperandList( User owner )

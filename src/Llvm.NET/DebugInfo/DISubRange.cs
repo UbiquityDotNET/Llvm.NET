@@ -6,9 +6,16 @@ using Llvm.NET.Native;
 
 namespace Llvm.NET.DebugInfo
 {
-    /// <summary>see <a href="http://llvm.org/docs/LangRef.html#disubrange"/></summary>
-    public class DISubRange : DINode
+    /// <summary>Sub range</summary>
+    /// <seealso href="xref:llvm_langref#disubrange">LLVM DISubRange</seealso>
+    public class DISubRange
+        : DINode
     {
+        /* Non-operand properties need direct API to extract...
+        public int64 LowerBound {get;}
+        public int64 Count {get;}
+        */
+
         internal DISubRange( LLVMMetadataRef handle )
             : base( handle )
         {

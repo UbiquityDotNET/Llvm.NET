@@ -10,6 +10,7 @@ namespace Llvm.NET.Values
     public class GlobalAlias
         : GlobalValue
     {
+        /// <summary>Gets the aliasee that this Alias refers to</summary>
         public Constant Aliasee
         {
             get

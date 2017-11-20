@@ -92,7 +92,7 @@ namespace Llvm.NET.Values
         }
 
         /// <summary>Gets or sets the Garbage collection engine name that this function is generated to work with</summary>
-        /// <seealso href="xref:llvm_doc_garbagecollection"/>
+        /// <seealso href="xref:llvm_docs_garbagecollection">Garbage Collection with LLVM</seealso>
         public string GcName
         {
             get => LLVMGetGC( ValueHandle );
@@ -167,6 +167,7 @@ namespace Llvm.NET.Values
             return retVal;
         }
 
+        /// <inheritdoc/>
         public void AddAttributeAtIndex( FunctionAttributeIndex index, AttributeValue attrib )
         {
             attrib.VerifyValidOn( index, this );
@@ -174,11 +175,13 @@ namespace Llvm.NET.Values
             LLVMAddAttributeAtIndex( ValueHandle, ( LLVMAttributeIndex )index, attrib.NativeAttribute );
         }
 
+        /// <inheritdoc/>
         public uint GetAttributeCountAtIndex( FunctionAttributeIndex index )
         {
             return LLVMGetAttributeCountAtIndex( ValueHandle, ( LLVMAttributeIndex )index );
         }
 
+        /// <inheritdoc/>
         public IEnumerable<AttributeValue> GetAttributesAtIndex( FunctionAttributeIndex index )
         {
             uint count = GetAttributeCountAtIndex( index );
@@ -193,12 +196,14 @@ namespace Llvm.NET.Values
                    select AttributeValue.FromHandle( Context, attribRef );
         }
 
+        /// <inheritdoc/>
         public AttributeValue GetAttributeAtIndex( FunctionAttributeIndex index, AttributeKind kind )
         {
             var handle = LLVMGetEnumAttributeAtIndex( ValueHandle, ( LLVMAttributeIndex )index, kind.GetEnumAttributeId( ) );
             return AttributeValue.FromHandle( Context, handle );
         }
 
+        /// <inheritdoc/>
         public AttributeValue GetAttributeAtIndex( FunctionAttributeIndex index, string name )
         {
             if( string.IsNullOrWhiteSpace( name ) )
@@ -210,11 +215,13 @@ namespace Llvm.NET.Values
             return AttributeValue.FromHandle( Context, handle );
         }
 
+        /// <inheritdoc/>
         public void RemoveAttributeAtIndex( FunctionAttributeIndex index, AttributeKind kind )
         {
             LLVMRemoveEnumAttributeAtIndex( ValueHandle, ( LLVMAttributeIndex )index, kind.GetEnumAttributeId( ) );
         }
 
+        /// <inheritdoc/>
         public void RemoveAttributeAtIndex( FunctionAttributeIndex index, string name )
         {
             if( string.IsNullOrWhiteSpace( name ) )
@@ -225,6 +232,7 @@ namespace Llvm.NET.Values
             LLVMRemoveStringAttributeAtIndex( ValueHandle, ( LLVMAttributeIndex )index, name, ( uint )name.Length );
         }
 
+        /// <summary>Removes this function from the parent module</summary>
         public void EraseFromParent()
         {
             LLVMDeleteFunction( ValueHandle );

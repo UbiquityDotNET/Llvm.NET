@@ -38,20 +38,20 @@ namespace Llvm.NET
     /// The values in the example table are for x86-32-linux.
     /// </note>
     /// </remarks>
-    public class DataLayout
+    public sealed class DataLayout
         : IDisposable
     {
         ~DataLayout( )
         {
             // Do not change this code. Put cleanup code in Dispose(bool disposing) above.
-            Dispose( false );
+            InternalDispose( );
         }
 
         /// <inheritdoc/>
         public void Dispose( )
         {
             // Do not change this code. Put cleanup code in Dispose(bool disposing) above.
-            Dispose( true );
+            InternalDispose( );
             GC.SuppressFinalize( this );
         }
 
@@ -157,12 +157,18 @@ namespace Llvm.NET
             return LLVMCallFrameAlignmentOfType( DataLayoutHandle, typeRef.GetTypeRef( ) );
         }
 
+        /// <summary>Gets teh preferred alignment for an LLVM type</summary>
+        /// <param name="typeRef">Type to get the alignment of</param>
+        /// <returns>Preferred alignment</returns>
         public uint PreferredAlignmentOf( ITypeRef typeRef )
         {
             VerifySized( typeRef, nameof( typeRef ) );
             return LLVMPreferredAlignmentOfType( DataLayoutHandle, typeRef.GetTypeRef( ) );
         }
 
+        /// <summary>Gets teh preferred alignment for a <see cref="Value"/></summary>
+        /// <param name="value">Value to get the alignment of</param>
+        /// <returns>Preferred alignment</returns>
         public uint PreferredAlignmentOf( Value value )
         {
             if( value == null )
@@ -174,6 +180,10 @@ namespace Llvm.NET
             return LLVMPreferredAlignmentOfGlobal( DataLayoutHandle, value.ValueHandle );
         }
 
+        /// <summary>Gets the element index for a specific offest in a given structure</summary>
+        /// <param name="structType">Type of the structure</param>
+        /// <param name="offset">Offset to determine the index of</param>
+        /// <returns>Index of the element</returns>
         [SuppressMessage( "Microsoft.Design", "CA1011:ConsiderPassingBaseTypesAsParameters", Justification = "Specific type required by interop call" )]
         public uint ElementAtOffset( IStructType structType, ulong offset )
         {
@@ -181,6 +191,10 @@ namespace Llvm.NET
             return LLVMElementAtOffset( DataLayoutHandle, structType.GetTypeRef( ), offset );
         }
 
+        /// <summary>Gets the offset of an element in a structure</summary>
+        /// <param name="structType">Type of the structure</param>
+        /// <param name="element">index of the element in the structure</param>
+        /// <returns>Offset of the element from the begining of the structure</returns>
         [SuppressMessage( "Microsoft.Design", "CA1011:ConsiderPassingBaseTypesAsParameters", Justification = "Specific type required by interop call" )]
         public ulong OffsetOfElement( IStructType structType, uint element )
         {
@@ -188,14 +202,28 @@ namespace Llvm.NET
             return LLVMOffsetOfElement( DataLayoutHandle, structType.GetTypeRef( ), element );
         }
 
+        /// <inheritdoc/>
         public override string ToString( ) => LLVMCopyStringRepOfTargetData( DataLayoutHandle );
 
+        /// <summary>Gets the byte size of a type</summary>
+        /// <param name="llvmType">Type to determine the size of</param>
+        /// <returns>Size of the type in bytes</returns>
         public ulong ByteSizeOf( ITypeRef llvmType ) => BitSizeOf( llvmType ) / 8u;
 
+        /// <summary>Gets the preferred alignment of the type in bits</summary>
+        /// <param name="llvmType">Type to get the alignment of</param>
+        /// <returns>Alignment of the type</returns>
         public uint PreferredBitAlignementOf( ITypeRef llvmType ) => PreferredAlignmentOf( llvmType ) * 8;
 
+        /// <summary>Gets the ABI alignment of the type in bits</summary>
+        /// <param name="llvmType">Type to get the alignment of</param>
+        /// <returns>Alignment of the type</returns>
         public uint AbiBitAlignmentOf( ITypeRef llvmType ) => AbiAlignmentOf( llvmType ) * 8;
 
+        /// <summary>Gets the offset of a structure element in bits</summary>
+        /// <param name="llvmType">Structure type to get the element offset of</param>
+        /// <param name="element">Index of the element in the structure</param>
+        /// <returns>Offset of the element in bits</returns>
         public ulong BitOffsetOfElement( IStructType llvmType, uint element ) => OffsetOfElement( llvmType, element ) * 8;
 
         internal DataLayout( LLVMTargetDataRef targetDataHandle, bool isDisposable )
@@ -237,7 +265,7 @@ namespace Llvm.NET
 
         internal LLVMTargetDataRef DataLayoutHandle { get; private set; }
 
-        protected virtual void Dispose( bool disposing )
+        private void InternalDispose( )
         {
             if( ( DataLayoutHandle != default ) && IsDisposable )
             {

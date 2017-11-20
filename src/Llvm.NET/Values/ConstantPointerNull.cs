@@ -7,8 +7,9 @@ using Llvm.NET.Types;
 
 namespace Llvm.NET.Values
 {
-    public class ConstantPointerNull
-        : Constant
+    /// <summary>Represents a constant Null pointer</summary>
+    public sealed class ConstantPointerNull
+        : ConstantData
     {
         /// <summary>Creates a constant null pointer to a given type</summary>
         /// <param name="type">Type of the pointer</param>

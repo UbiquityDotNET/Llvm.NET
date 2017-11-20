@@ -6,6 +6,9 @@ using System;
 using System.Diagnostics.CodeAnalysis;
 using Llvm.NET.Native;
 
+// TEMP: disable this until all values are properly doc'd
+#pragma warning disable SA1602 // Enumeration items must be documented
+
 namespace Llvm.NET.DebugInfo
 {
     public enum SourceLanguage
@@ -197,9 +200,17 @@ namespace Llvm.NET.DebugInfo
         ObjectPointer = 1 << 10,
         Vector = 1 << 11,
         StaticMember = 1 << 12,
-        IndirectVariable = 1 << 13,
-        LValueReference = 1 << 14,
-        RValueReference = 1 << 15
+        LValueReference = 1 << 13,
+        RValueReference = 1 << 14,
+        // Reserved = 1 << 15,
+        SingleInheritance = 1 << 16,
+        MultipleInheritance = 2 << 16,
+        VirtualInheritance = 3 << 16,
+        IntroducedVirtual = 1 << 18,
+        BitField = 1 << 19,
+        NoReturn = 1 << 20,
+        MainSubprogram = 1 << 21,
+        IndirectVirtualBase = ForwardDeclaration | Virtual
     }
 
 #pragma warning disable SA1300 // Element must begin with upper-case letter

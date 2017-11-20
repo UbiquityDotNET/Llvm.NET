@@ -18,6 +18,11 @@
         <LangVersion>7.1</LangVersion>
     </PropertyGroup>
     <ItemGroup>
+      <Compile Remove="obj\**" />
+      <EmbeddedResource Remove="obj\**" />
+      <None Remove="obj\**" />
+    </ItemGroup>
+    <ItemGroup>
         <Content Include="NugetPkg\build\Llvm.NET.props" PackagePath="build" />
         <Content Include="$(OutputPath)net47\Llvm.Net.pdb" PackagePath="lib\net47" InProject="false" />
         <Content Include="$(OutputPath)netstandard2.0\Llvm.Net.pdb" PackagePath="lib\netstandard2.0" InProject="false" />
@@ -26,9 +31,6 @@
         <CodeAnalysisDictionary Include="..\CustomDictionary.xml">
             <Link>CustomDictionary.xml</Link>
         </CodeAnalysisDictionary>
-    </ItemGroup>
-    <ItemGroup>
-      <None Include="Native\readme.md" />
     </ItemGroup>
     <ItemGroup>
         <PackageReference Include="CSemVer.Build.Tasks" Version="1.0.2-beta--ci-BLD.427428397" />

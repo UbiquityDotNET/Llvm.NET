@@ -67,6 +67,13 @@ namespace Llvm.NET
                                                     );
         }
 
+        /// <summary>Parse a command line string for LLVM Options</summary>
+        /// <param name="args">args to parse</param>
+        /// <param name="overview">overview of the application for help/diagnostics</param>
+        /// <remarks>
+        /// Use fo this method is discouraged as calling applications should control
+        /// options directly without reliance on particulars of the LLVM arument handling
+        /// </remarks>
         public static void ParseCommandLineOptions( string[ ] args, string overview )
         {
             if( args == null )
@@ -77,6 +84,8 @@ namespace Llvm.NET
             LLVMParseCommandLineOptions( args.Length, args, overview );
         }
 
+        /// <summary>Initialize passes for optimization</summary>
+        [Obsolete("Use the Pass Manager support in Llvm.NET.Transforms namespace for finer grained control of optimizations")]
         public static void InitializeOptimization()
         {
             LLVMInitializePassesForLegacyOpt( );

@@ -34,6 +34,16 @@ namespace Llvm.NET.Values
             }
         }
 
+        /// <summary>Gets an operand at the specified index cast to a specific type</summary>
+        /// <typeparam name="T">TYpe to cast the operand to</typeparam>
+        /// <param name="index">Index of the operand</param>
+        /// <returns>Value at the specified index cast to <typeparamref name="T"/></returns>
+        public T GetOperand<T>( int index )
+            where T : Value
+        {
+            return ( T )Operands[ index ];
+        }
+
         internal User( LLVMValueRef userRef )
             : base( userRef )
         {

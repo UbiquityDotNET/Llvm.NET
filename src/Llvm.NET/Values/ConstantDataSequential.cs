@@ -17,10 +17,15 @@ namespace Llvm.NET.Values
     /// it stores all of the elements of the constant as densely packed data, instead
     /// of as <see cref="Value"/>s
     /// </remarks>
-    public class ConstantDataSequential : Constant
+    public class ConstantDataSequential
+        : ConstantData
     {
+        /// <summary>Gets a value indicating whether this constant is a string</summary>
         public bool IsString => NativeMethods.LLVMIsConstantString( ValueHandle );
 
+        /// <summary>Extract a string value from the constant</summary>
+        /// <returns>Extracted string</returns>
+        /// <exception cref="InvalidOperationException">If the constant isn't a string</exception>
         public string ExtractAsString()
         {
             if( !IsString )
