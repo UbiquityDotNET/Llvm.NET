@@ -14,14 +14,16 @@ namespace Llvm.NET.DebugInfo
     public class DIDerivedType
         : DIType
     {
-        /// <summary>Base type of this type</summary>
+        /// <summary>Gets the base type of this type</summary>
         public DIType BaseType => GetOperand<DIType>( 3 );
 
-        /// <summary>Extra data attached to this derived type</summary>
+        /// <summary>Gets the extra data attached to this derived type</summary>
         public LlvmMetadata ExtraData => Operands[ 4 ].Metadata;
 
+        /// <summary>Gets the Class type extra data for a pointer to member type</summary>
         public DIType ClassType => Tag != Tag.PtrToMemberType ? null : GetOperand<DIType>( 4 );
 
+        /// <summary>Gets the ObjCProperty extra data</summary>
         public DIObjCProperty ObjCProperty => GetOperand<DIObjCProperty>( 4 );
 
         /*

@@ -202,7 +202,7 @@ namespace Llvm.NET.DebugInfo
         StaticMember = 1 << 12,
         LValueReference = 1 << 13,
         RValueReference = 1 << 14,
-        // Reserved = 1 << 15,
+        /* Reserved = 1 << 15,*/
         SingleInheritance = 1 << 16,
         MultipleInheritance = 2 << 16,
         VirtualInheritance = 3 << 16,
