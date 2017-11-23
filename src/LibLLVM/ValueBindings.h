@@ -23,6 +23,8 @@ extern "C" {
 
     void LLVMGlobalVariableAddDebugExpression( LLVMValueRef /*GlobalVariable*/ globalVar, LLVMMetadataRef exp );
     void LLVMFunctionAppendBasicBlock( LLVMValueRef /*Function*/ function, LLVMBasicBlockRef block );
+    LLVMValueRef LLVMValueAsMetadataGetValue( LLVMMetadataRef vmd );
+
 #ifdef __cplusplus
 }
 #endif

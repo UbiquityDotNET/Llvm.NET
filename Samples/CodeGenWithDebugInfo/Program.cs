@@ -9,6 +9,7 @@ using System.IO;
 using Llvm.NET;
 using Llvm.NET.DebugInfo;
 using Llvm.NET.Instructions;
+using Llvm.NET.Transforms;
 using Llvm.NET.Types;
 using Llvm.NET.Values;
 
@@ -131,9 +132,26 @@ namespace TestDebugInfo
                         {// force a GC to verify callback delegate for diagnostics is still valid, this is for test only and wouldn't
                          // normally be done in production code.
                             GC.Collect( GC.MaxGeneration );
-                            StaticState.ParseCommandLineOptions( new string[ ] { "TestDebugInfo.exe", "-O3" }, "Test Application" );
                             var modForOpt = module.Clone( );
-                            modForOpt.Optimize( targetMachine );
+
+                            // NOTE:
+                            // The ordering of passes can matter depending on the pass and passes may be added more than once
+                            // the caller has full control of ordering, this is just a sample of effectively randomly picked
+                            // passes and not necessarily a reflection of any particular use case.
+                            var pm = new ModulePassManager( )
+                                     .AddAlwaysInlinerPass( )
+                                     .AddAggressiveDCEPass( )
+                                     .AddArgumentPromotionPass( )
+                                     .AddBasicAliasAnalysisPass( )
+                                     .AddBitTrackingDCEPass( )
+                                     .AddCFGSimplificationPass( )
+                                     .AddConstantMergePass( )
+                                     .AddConstantPropagationPass( )
+                                     .AddFunctionInliningPass( )
+                                     .AddGlobalOptimizerPass( )
+                                     .AddInstructionCombiningPass( );
+
+                            pm.Run( modForOpt );
                         }
 
                         // Module is good, so generate the output files

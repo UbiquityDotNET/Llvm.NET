@@ -685,9 +685,6 @@ namespace Llvm.NET.Native
         [DllImport( LibraryPath, CallingConvention = CallingConvention.Cdecl, BestFitMapping = false, ThrowOnUnmappableChar = true )]
         internal static extern void LLVMInitializePassesForLegacyOpt( );
 
-        [DllImport( LibraryPath, CallingConvention = CallingConvention.Cdecl, BestFitMapping = false, ThrowOnUnmappableChar = true )]
-        internal static extern void LLVMRunLegacyOptimizer( LLVMModuleRef Mref, LLVMTargetMachineRef TMref );
-
         [UnmanagedFunctionPointer( CallingConvention.Cdecl, BestFitMapping = false, ThrowOnUnmappableChar = true )]
         [return: MarshalAs( UnmanagedType.Bool )]
         internal delegate bool ComdatIteratorCallback( LLVMComdatRef comdatRef );

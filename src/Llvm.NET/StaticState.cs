@@ -84,13 +84,6 @@ namespace Llvm.NET
             LLVMParseCommandLineOptions( args.Length, args, overview );
         }
 
-        /// <summary>Initialize passes for optimization</summary>
-        [Obsolete("Use the Pass Manager support in Llvm.NET.Transforms namespace for finer grained control of optimizations")]
-        public static void InitializeOptimization()
-        {
-            LLVMInitializePassesForLegacyOpt( );
-        }
-
         // basic pattern to follow for any new targets in the future
         /*
         public static void RegisterXXX( TargetRegistrations registrations = TargetRegistration.All )

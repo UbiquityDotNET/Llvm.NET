@@ -55,12 +55,6 @@
     <ClCompile Include="PassManagerBindings.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="NewOptPassDriver.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="LegacyPassManagerOpt.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="TripleBindings.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>

@@ -11,13 +11,12 @@ namespace Llvm.NET
     public class ConstantAsMetadata
         : ValueAsMetadata
     {
+        /// <summary>Gets the <see cref="Constant"/> this node wraps</summary>
+        public Constant Constant => Value as Constant;
+
         internal ConstantAsMetadata( LLVMMetadataRef handle )
             : base( handle )
         {
         }
-
-        /*
-        public Constant Constant => base.Value as Constant;
-        */
     }
 }

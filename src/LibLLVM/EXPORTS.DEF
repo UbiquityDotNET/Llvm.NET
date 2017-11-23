@@ -31,10 +31,6 @@ LLVMComdatGetName
 LLVMGlobalObjectGetComdat
 LLVMGlobalObjectSetComdat
 
-LLVMInitializePassesForLegacyOpt
-LLVMRunLegacyOptimizer
-LLVMRunPassPipeline
-LLVMInitializeCodeGenForOpt
 LLVMCreatePassRegistry
 LLVMPassRegistryDispose
 LLVMAddModuleFlag
@@ -74,6 +70,7 @@ LLVMGetVersionInfo
 LLVMDIGlobalVarExpGetVariable
 LLVMGlobalVariableAddDebugExpression
 LLVMFunctionAppendBasicBlock
+LLVMValueAsMetadataGetValue
 LLVMExecutionEngineClearGlobalMappingsFromModule
 LLVMContextCreateBasicBlock
 LLVMAttributeToString
