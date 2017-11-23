@@ -301,18 +301,6 @@ references:
   commentId: F:Llvm.NET.BitcodeModule.DwarfVersionValue
   fullName: Llvm.NET.BitcodeModule.DwarfVersionValue
   nameWithType: BitcodeModule.DwarfVersionValue
-- uid: Llvm.NET.BitcodeModule.Finalize
-  name: Finalize()
-  href: api/Llvm.NET.BitcodeModule.Finalize.html#Llvm_NET_BitcodeModule_Finalize
-  commentId: M:Llvm.NET.BitcodeModule.Finalize
-  fullName: Llvm.NET.BitcodeModule.Finalize()
-  nameWithType: BitcodeModule.Finalize()
-- uid: Llvm.NET.BitcodeModule.Finalize*
-  name: Finalize
-  href: api/Llvm.NET.BitcodeModule.Finalize.html
-  commentId: Overload:Llvm.NET.BitcodeModule.Finalize
-  fullName: Llvm.NET.BitcodeModule.Finalize
-  nameWithType: BitcodeModule.Finalize
 - uid: Llvm.NET.BitcodeModule.Functions
   name: Functions
   href: api/Llvm.NET.BitcodeModule.Functions.html#Llvm_NET_BitcodeModule_Functions
@@ -1529,12 +1517,6 @@ references:
   commentId: M:Llvm.NET.DataLayout.Dispose
   fullName: Llvm.NET.DataLayout.Dispose()
   nameWithType: DataLayout.Dispose()
-- uid: Llvm.NET.DataLayout.Dispose(System.Boolean)
-  name: Dispose(Boolean)
-  href: api/Llvm.NET.DataLayout.Dispose.html#Llvm_NET_DataLayout_Dispose_System_Boolean_
-  commentId: M:Llvm.NET.DataLayout.Dispose(System.Boolean)
-  fullName: Llvm.NET.DataLayout.Dispose(System.Boolean)
-  nameWithType: DataLayout.Dispose(Boolean)
 - uid: Llvm.NET.DataLayout.Dispose*
   name: Dispose
   href: api/Llvm.NET.DataLayout.Dispose.html
@@ -2123,6 +2105,12 @@ references:
   fullName.vb: Llvm.NET.DebugInfo.DebugInfoBuilder.CreateStructType(Llvm.NET.DebugInfo.DIScope, System.String, Llvm.NET.DebugInfo.DIFile, System.UInt32, System.UInt64, System.UInt32, Llvm.NET.DebugInfo.DebugInfoFlags, Llvm.NET.DebugInfo.DIType, Llvm.NET.DebugInfo.DINode())
   nameWithType: DebugInfoBuilder.CreateStructType(DIScope, String, DIFile, UInt32, UInt64, UInt32, DebugInfoFlags, DIType, DINode[])
   nameWithType.vb: DebugInfoBuilder.CreateStructType(DIScope, String, DIFile, UInt32, UInt64, UInt32, DebugInfoFlags, DIType, DINode())
+- uid: Llvm.NET.DebugInfo.DebugInfoBuilder.CreateStructType(Llvm.NET.DebugInfo.DIScope,System.String,Llvm.NET.DebugInfo.DIFile,System.UInt32,System.UInt64,System.UInt32,Llvm.NET.DebugInfo.DebugInfoFlags,Llvm.NET.DebugInfo.DIType,Llvm.NET.DebugInfo.DINodeArray)
+  name: CreateStructType(DIScope, String, DIFile, UInt32, UInt64, UInt32, DebugInfoFlags, DIType, DINodeArray)
+  href: api/Llvm.NET.DebugInfo.DebugInfoBuilder.CreateStructType.html#Llvm_NET_DebugInfo_DebugInfoBuilder_CreateStructType_Llvm_NET_DebugInfo_DIScope_System_String_Llvm_NET_DebugInfo_DIFile_System_UInt32_System_UInt64_System_UInt32_Llvm_NET_DebugInfo_DebugInfoFlags_Llvm_NET_DebugInfo_DIType_Llvm_NET_DebugInfo_DINodeArray_
+  commentId: M:Llvm.NET.DebugInfo.DebugInfoBuilder.CreateStructType(Llvm.NET.DebugInfo.DIScope,System.String,Llvm.NET.DebugInfo.DIFile,System.UInt32,System.UInt64,System.UInt32,Llvm.NET.DebugInfo.DebugInfoFlags,Llvm.NET.DebugInfo.DIType,Llvm.NET.DebugInfo.DINodeArray)
+  fullName: Llvm.NET.DebugInfo.DebugInfoBuilder.CreateStructType(Llvm.NET.DebugInfo.DIScope, System.String, Llvm.NET.DebugInfo.DIFile, System.UInt32, System.UInt64, System.UInt32, Llvm.NET.DebugInfo.DebugInfoFlags, Llvm.NET.DebugInfo.DIType, Llvm.NET.DebugInfo.DINodeArray)
+  nameWithType: DebugInfoBuilder.CreateStructType(DIScope, String, DIFile, UInt32, UInt64, UInt32, DebugInfoFlags, DIType, DINodeArray)
 - uid: Llvm.NET.DebugInfo.DebugInfoBuilder.CreateStructType(Llvm.NET.DebugInfo.DIScope,System.String,Llvm.NET.DebugInfo.DIFile,System.UInt32,System.UInt64,System.UInt32,Llvm.NET.DebugInfo.DebugInfoFlags,Llvm.NET.DebugInfo.DIType,System.Collections.Generic.IEnumerable{Llvm.NET.DebugInfo.DINode})
   name: CreateStructType(DIScope, String, DIFile, UInt32, UInt64, UInt32, DebugInfoFlags, DIType, IEnumerable<DINode>)
   href: api/Llvm.NET.DebugInfo.DebugInfoBuilder.CreateStructType.html#Llvm_NET_DebugInfo_DebugInfoBuilder_CreateStructType_Llvm_NET_DebugInfo_DIScope_System_String_Llvm_NET_DebugInfo_DIFile_System_UInt32_System_UInt64_System_UInt32_Llvm_NET_DebugInfo_DebugInfoFlags_Llvm_NET_DebugInfo_DIType_System_Collections_Generic_IEnumerable_Llvm_NET_DebugInfo_DINode__
@@ -2132,12 +2120,6 @@ references:
   fullName.vb: Llvm.NET.DebugInfo.DebugInfoBuilder.CreateStructType(Llvm.NET.DebugInfo.DIScope, System.String, Llvm.NET.DebugInfo.DIFile, System.UInt32, System.UInt64, System.UInt32, Llvm.NET.DebugInfo.DebugInfoFlags, Llvm.NET.DebugInfo.DIType, System.Collections.Generic.IEnumerable(Of Llvm.NET.DebugInfo.DINode))
   nameWithType: DebugInfoBuilder.CreateStructType(DIScope, String, DIFile, UInt32, UInt64, UInt32, DebugInfoFlags, DIType, IEnumerable<DINode>)
   nameWithType.vb: DebugInfoBuilder.CreateStructType(DIScope, String, DIFile, UInt32, UInt64, UInt32, DebugInfoFlags, DIType, IEnumerable(Of DINode))
-- uid: Llvm.NET.DebugInfo.DebugInfoBuilder.CreateStructType(Llvm.NET.DebugInfo.DIScope,System.String,Llvm.NET.DebugInfo.DIFile,System.UInt32,System.UInt64,System.UInt32,System.UInt32,Llvm.NET.DebugInfo.DIType,Llvm.NET.DebugInfo.DINodeArray)
-  name: CreateStructType(DIScope, String, DIFile, UInt32, UInt64, UInt32, UInt32, DIType, DINodeArray)
-  href: api/Llvm.NET.DebugInfo.DebugInfoBuilder.CreateStructType.html#Llvm_NET_DebugInfo_DebugInfoBuilder_CreateStructType_Llvm_NET_DebugInfo_DIScope_System_String_Llvm_NET_DebugInfo_DIFile_System_UInt32_System_UInt64_System_UInt32_System_UInt32_Llvm_NET_DebugInfo_DIType_Llvm_NET_DebugInfo_DINodeArray_
-  commentId: M:Llvm.NET.DebugInfo.DebugInfoBuilder.CreateStructType(Llvm.NET.DebugInfo.DIScope,System.String,Llvm.NET.DebugInfo.DIFile,System.UInt32,System.UInt64,System.UInt32,System.UInt32,Llvm.NET.DebugInfo.DIType,Llvm.NET.DebugInfo.DINodeArray)
-  fullName: Llvm.NET.DebugInfo.DebugInfoBuilder.CreateStructType(Llvm.NET.DebugInfo.DIScope, System.String, Llvm.NET.DebugInfo.DIFile, System.UInt32, System.UInt64, System.UInt32, System.UInt32, Llvm.NET.DebugInfo.DIType, Llvm.NET.DebugInfo.DINodeArray)
-  nameWithType: DebugInfoBuilder.CreateStructType(DIScope, String, DIFile, UInt32, UInt64, UInt32, UInt32, DIType, DINodeArray)
 - uid: Llvm.NET.DebugInfo.DebugInfoBuilder.CreateStructType*
   name: CreateStructType
   href: api/Llvm.NET.DebugInfo.DebugInfoBuilder.CreateStructType.html
@@ -2228,6 +2210,12 @@ references:
   fullName.vb: Llvm.NET.DebugInfo.DebugInfoBuilder.CreateUnionType(Llvm.NET.DebugInfo.DIScope, System.String, Llvm.NET.DebugInfo.DIFile, System.UInt32, System.UInt64, System.UInt32, Llvm.NET.DebugInfo.DebugInfoFlags, Llvm.NET.DebugInfo.DINode())
   nameWithType: DebugInfoBuilder.CreateUnionType(DIScope, String, DIFile, UInt32, UInt64, UInt32, DebugInfoFlags, DINode[])
   nameWithType.vb: DebugInfoBuilder.CreateUnionType(DIScope, String, DIFile, UInt32, UInt64, UInt32, DebugInfoFlags, DINode())
+- uid: Llvm.NET.DebugInfo.DebugInfoBuilder.CreateUnionType(Llvm.NET.DebugInfo.DIScope,System.String,Llvm.NET.DebugInfo.DIFile,System.UInt32,System.UInt64,System.UInt32,Llvm.NET.DebugInfo.DebugInfoFlags,Llvm.NET.DebugInfo.DINodeArray)
+  name: CreateUnionType(DIScope, String, DIFile, UInt32, UInt64, UInt32, DebugInfoFlags, DINodeArray)
+  href: api/Llvm.NET.DebugInfo.DebugInfoBuilder.CreateUnionType.html#Llvm_NET_DebugInfo_DebugInfoBuilder_CreateUnionType_Llvm_NET_DebugInfo_DIScope_System_String_Llvm_NET_DebugInfo_DIFile_System_UInt32_System_UInt64_System_UInt32_Llvm_NET_DebugInfo_DebugInfoFlags_Llvm_NET_DebugInfo_DINodeArray_
+  commentId: M:Llvm.NET.DebugInfo.DebugInfoBuilder.CreateUnionType(Llvm.NET.DebugInfo.DIScope,System.String,Llvm.NET.DebugInfo.DIFile,System.UInt32,System.UInt64,System.UInt32,Llvm.NET.DebugInfo.DebugInfoFlags,Llvm.NET.DebugInfo.DINodeArray)
+  fullName: Llvm.NET.DebugInfo.DebugInfoBuilder.CreateUnionType(Llvm.NET.DebugInfo.DIScope, System.String, Llvm.NET.DebugInfo.DIFile, System.UInt32, System.UInt64, System.UInt32, Llvm.NET.DebugInfo.DebugInfoFlags, Llvm.NET.DebugInfo.DINodeArray)
+  nameWithType: DebugInfoBuilder.CreateUnionType(DIScope, String, DIFile, UInt32, UInt64, UInt32, DebugInfoFlags, DINodeArray)
 - uid: Llvm.NET.DebugInfo.DebugInfoBuilder.CreateUnionType(Llvm.NET.DebugInfo.DIScope,System.String,Llvm.NET.DebugInfo.DIFile,System.UInt32,System.UInt64,System.UInt32,Llvm.NET.DebugInfo.DebugInfoFlags,System.Collections.Generic.IEnumerable{Llvm.NET.DebugInfo.DINode})
   name: CreateUnionType(DIScope, String, DIFile, UInt32, UInt64, UInt32, DebugInfoFlags, IEnumerable<DINode>)
   href: api/Llvm.NET.DebugInfo.DebugInfoBuilder.CreateUnionType.html#Llvm_NET_DebugInfo_DebugInfoBuilder_CreateUnionType_Llvm_NET_DebugInfo_DIScope_System_String_Llvm_NET_DebugInfo_DIFile_System_UInt32_System_UInt64_System_UInt32_Llvm_NET_DebugInfo_DebugInfoFlags_System_Collections_Generic_IEnumerable_Llvm_NET_DebugInfo_DINode__
@@ -2237,12 +2225,6 @@ references:
   fullName.vb: Llvm.NET.DebugInfo.DebugInfoBuilder.CreateUnionType(Llvm.NET.DebugInfo.DIScope, System.String, Llvm.NET.DebugInfo.DIFile, System.UInt32, System.UInt64, System.UInt32, Llvm.NET.DebugInfo.DebugInfoFlags, System.Collections.Generic.IEnumerable(Of Llvm.NET.DebugInfo.DINode))
   nameWithType: DebugInfoBuilder.CreateUnionType(DIScope, String, DIFile, UInt32, UInt64, UInt32, DebugInfoFlags, IEnumerable<DINode>)
   nameWithType.vb: DebugInfoBuilder.CreateUnionType(DIScope, String, DIFile, UInt32, UInt64, UInt32, DebugInfoFlags, IEnumerable(Of DINode))
-- uid: Llvm.NET.DebugInfo.DebugInfoBuilder.CreateUnionType(Llvm.NET.DebugInfo.DIScope,System.String,Llvm.NET.DebugInfo.DIFile,System.UInt32,System.UInt64,System.UInt32,System.UInt32,Llvm.NET.DebugInfo.DINodeArray)
-  name: CreateUnionType(DIScope, String, DIFile, UInt32, UInt64, UInt32, UInt32, DINodeArray)
-  href: api/Llvm.NET.DebugInfo.DebugInfoBuilder.CreateUnionType.html#Llvm_NET_DebugInfo_DebugInfoBuilder_CreateUnionType_Llvm_NET_DebugInfo_DIScope_System_String_Llvm_NET_DebugInfo_DIFile_System_UInt32_System_UInt64_System_UInt32_System_UInt32_Llvm_NET_DebugInfo_DINodeArray_
-  commentId: M:Llvm.NET.DebugInfo.DebugInfoBuilder.CreateUnionType(Llvm.NET.DebugInfo.DIScope,System.String,Llvm.NET.DebugInfo.DIFile,System.UInt32,System.UInt64,System.UInt32,System.UInt32,Llvm.NET.DebugInfo.DINodeArray)
-  fullName: Llvm.NET.DebugInfo.DebugInfoBuilder.CreateUnionType(Llvm.NET.DebugInfo.DIScope, System.String, Llvm.NET.DebugInfo.DIFile, System.UInt32, System.UInt64, System.UInt32, System.UInt32, Llvm.NET.DebugInfo.DINodeArray)
-  nameWithType: DebugInfoBuilder.CreateUnionType(DIScope, String, DIFile, UInt32, UInt64, UInt32, UInt32, DINodeArray)
 - uid: Llvm.NET.DebugInfo.DebugInfoBuilder.CreateUnionType*
   name: CreateUnionType
   href: api/Llvm.NET.DebugInfo.DebugInfoBuilder.CreateUnionType.html
@@ -2432,6 +2414,12 @@ references:
   commentId: F:Llvm.NET.DebugInfo.DebugInfoFlags.Artificial
   fullName: Llvm.NET.DebugInfo.DebugInfoFlags.Artificial
   nameWithType: DebugInfoFlags.Artificial
+- uid: Llvm.NET.DebugInfo.DebugInfoFlags.BitField
+  name: BitField
+  href: api/Llvm.NET.DebugInfo.DebugInfoFlags.BitField.html#Llvm_NET_DebugInfo_DebugInfoFlags_BitField
+  commentId: F:Llvm.NET.DebugInfo.DebugInfoFlags.BitField
+  fullName: Llvm.NET.DebugInfo.DebugInfoFlags.BitField
+  nameWithType: DebugInfoFlags.BitField
 - uid: Llvm.NET.DebugInfo.DebugInfoFlags.BlockByrefStruct
   name: BlockByrefStruct
   href: api/Llvm.NET.DebugInfo.DebugInfoFlags.BlockByrefStruct.html#Llvm_NET_DebugInfo_DebugInfoFlags_BlockByrefStruct
@@ -2450,24 +2438,48 @@ references:
   commentId: F:Llvm.NET.DebugInfo.DebugInfoFlags.ForwardDeclaration
   fullName: Llvm.NET.DebugInfo.DebugInfoFlags.ForwardDeclaration
   nameWithType: DebugInfoFlags.ForwardDeclaration
-- uid: Llvm.NET.DebugInfo.DebugInfoFlags.IndirectVariable
-  name: IndirectVariable
-  href: api/Llvm.NET.DebugInfo.DebugInfoFlags.IndirectVariable.html#Llvm_NET_DebugInfo_DebugInfoFlags_IndirectVariable
-  commentId: F:Llvm.NET.DebugInfo.DebugInfoFlags.IndirectVariable
-  fullName: Llvm.NET.DebugInfo.DebugInfoFlags.IndirectVariable
-  nameWithType: DebugInfoFlags.IndirectVariable
+- uid: Llvm.NET.DebugInfo.DebugInfoFlags.IndirectVirtualBase
+  name: IndirectVirtualBase
+  href: api/Llvm.NET.DebugInfo.DebugInfoFlags.IndirectVirtualBase.html#Llvm_NET_DebugInfo_DebugInfoFlags_IndirectVirtualBase
+  commentId: F:Llvm.NET.DebugInfo.DebugInfoFlags.IndirectVirtualBase
+  fullName: Llvm.NET.DebugInfo.DebugInfoFlags.IndirectVirtualBase
+  nameWithType: DebugInfoFlags.IndirectVirtualBase
+- uid: Llvm.NET.DebugInfo.DebugInfoFlags.IntroducedVirtual
+  name: IntroducedVirtual
+  href: api/Llvm.NET.DebugInfo.DebugInfoFlags.IntroducedVirtual.html#Llvm_NET_DebugInfo_DebugInfoFlags_IntroducedVirtual
+  commentId: F:Llvm.NET.DebugInfo.DebugInfoFlags.IntroducedVirtual
+  fullName: Llvm.NET.DebugInfo.DebugInfoFlags.IntroducedVirtual
+  nameWithType: DebugInfoFlags.IntroducedVirtual
 - uid: Llvm.NET.DebugInfo.DebugInfoFlags.LValueReference
   name: LValueReference
   href: api/Llvm.NET.DebugInfo.DebugInfoFlags.LValueReference.html#Llvm_NET_DebugInfo_DebugInfoFlags_LValueReference
   commentId: F:Llvm.NET.DebugInfo.DebugInfoFlags.LValueReference
   fullName: Llvm.NET.DebugInfo.DebugInfoFlags.LValueReference
   nameWithType: DebugInfoFlags.LValueReference
+- uid: Llvm.NET.DebugInfo.DebugInfoFlags.MainSubprogram
+  name: MainSubprogram
+  href: api/Llvm.NET.DebugInfo.DebugInfoFlags.MainSubprogram.html#Llvm_NET_DebugInfo_DebugInfoFlags_MainSubprogram
+  commentId: F:Llvm.NET.DebugInfo.DebugInfoFlags.MainSubprogram
+  fullName: Llvm.NET.DebugInfo.DebugInfoFlags.MainSubprogram
+  nameWithType: DebugInfoFlags.MainSubprogram
+- uid: Llvm.NET.DebugInfo.DebugInfoFlags.MultipleInheritance
+  name: MultipleInheritance
+  href: api/Llvm.NET.DebugInfo.DebugInfoFlags.MultipleInheritance.html#Llvm_NET_DebugInfo_DebugInfoFlags_MultipleInheritance
+  commentId: F:Llvm.NET.DebugInfo.DebugInfoFlags.MultipleInheritance
+  fullName: Llvm.NET.DebugInfo.DebugInfoFlags.MultipleInheritance
+  nameWithType: DebugInfoFlags.MultipleInheritance
 - uid: Llvm.NET.DebugInfo.DebugInfoFlags.None
   name: None
   href: api/Llvm.NET.DebugInfo.DebugInfoFlags.None.html#Llvm_NET_DebugInfo_DebugInfoFlags_None
   commentId: F:Llvm.NET.DebugInfo.DebugInfoFlags.None
   fullName: Llvm.NET.DebugInfo.DebugInfoFlags.None
   nameWithType: DebugInfoFlags.None
+- uid: Llvm.NET.DebugInfo.DebugInfoFlags.NoReturn
+  name: NoReturn
+  href: api/Llvm.NET.DebugInfo.DebugInfoFlags.NoReturn.html#Llvm_NET_DebugInfo_DebugInfoFlags_NoReturn
+  commentId: F:Llvm.NET.DebugInfo.DebugInfoFlags.NoReturn
+  fullName: Llvm.NET.DebugInfo.DebugInfoFlags.NoReturn
+  nameWithType: DebugInfoFlags.NoReturn
 - uid: Llvm.NET.DebugInfo.DebugInfoFlags.ObjcClassComplete
   name: ObjcClassComplete
   href: api/Llvm.NET.DebugInfo.DebugInfoFlags.ObjcClassComplete.html#Llvm_NET_DebugInfo_DebugInfoFlags_ObjcClassComplete
@@ -2510,6 +2522,12 @@ references:
   commentId: F:Llvm.NET.DebugInfo.DebugInfoFlags.RValueReference
   fullName: Llvm.NET.DebugInfo.DebugInfoFlags.RValueReference
   nameWithType: DebugInfoFlags.RValueReference
+- uid: Llvm.NET.DebugInfo.DebugInfoFlags.SingleInheritance
+  name: SingleInheritance
+  href: api/Llvm.NET.DebugInfo.DebugInfoFlags.SingleInheritance.html#Llvm_NET_DebugInfo_DebugInfoFlags_SingleInheritance
+  commentId: F:Llvm.NET.DebugInfo.DebugInfoFlags.SingleInheritance
+  fullName: Llvm.NET.DebugInfo.DebugInfoFlags.SingleInheritance
+  nameWithType: DebugInfoFlags.SingleInheritance
 - uid: Llvm.NET.DebugInfo.DebugInfoFlags.StaticMember
   name: StaticMember
   href: api/Llvm.NET.DebugInfo.DebugInfoFlags.StaticMember.html#Llvm_NET_DebugInfo_DebugInfoFlags_StaticMember
@@ -2528,6 +2546,12 @@ references:
   commentId: F:Llvm.NET.DebugInfo.DebugInfoFlags.Virtual
   fullName: Llvm.NET.DebugInfo.DebugInfoFlags.Virtual
   nameWithType: DebugInfoFlags.Virtual
+- uid: Llvm.NET.DebugInfo.DebugInfoFlags.VirtualInheritance
+  name: VirtualInheritance
+  href: api/Llvm.NET.DebugInfo.DebugInfoFlags.VirtualInheritance.html#Llvm_NET_DebugInfo_DebugInfoFlags_VirtualInheritance
+  commentId: F:Llvm.NET.DebugInfo.DebugInfoFlags.VirtualInheritance
+  fullName: Llvm.NET.DebugInfo.DebugInfoFlags.VirtualInheritance
+  nameWithType: DebugInfoFlags.VirtualInheritance
 - uid: Llvm.NET.DebugInfo.DebugMemberInfo
   name: DebugMemberInfo
   href: api/Llvm.NET.DebugInfo.DebugMemberInfo.html
@@ -3428,12 +3452,60 @@ references:
   commentId: Overload:Llvm.NET.DebugInfo.DIDerivedType.BaseType
   fullName: Llvm.NET.DebugInfo.DIDerivedType.BaseType
   nameWithType: DIDerivedType.BaseType
+- uid: Llvm.NET.DebugInfo.DIDerivedType.ClassType
+  name: ClassType
+  href: api/Llvm.NET.DebugInfo.DIDerivedType.ClassType.html#Llvm_NET_DebugInfo_DIDerivedType_ClassType
+  commentId: P:Llvm.NET.DebugInfo.DIDerivedType.ClassType
+  fullName: Llvm.NET.DebugInfo.DIDerivedType.ClassType
+  nameWithType: DIDerivedType.ClassType
+- uid: Llvm.NET.DebugInfo.DIDerivedType.ClassType*
+  name: ClassType
+  href: api/Llvm.NET.DebugInfo.DIDerivedType.ClassType.html
+  commentId: Overload:Llvm.NET.DebugInfo.DIDerivedType.ClassType
+  fullName: Llvm.NET.DebugInfo.DIDerivedType.ClassType
+  nameWithType: DIDerivedType.ClassType
+- uid: Llvm.NET.DebugInfo.DIDerivedType.ExtraData
+  name: ExtraData
+  href: api/Llvm.NET.DebugInfo.DIDerivedType.ExtraData.html#Llvm_NET_DebugInfo_DIDerivedType_ExtraData
+  commentId: P:Llvm.NET.DebugInfo.DIDerivedType.ExtraData
+  fullName: Llvm.NET.DebugInfo.DIDerivedType.ExtraData
+  nameWithType: DIDerivedType.ExtraData
+- uid: Llvm.NET.DebugInfo.DIDerivedType.ExtraData*
+  name: ExtraData
+  href: api/Llvm.NET.DebugInfo.DIDerivedType.ExtraData.html
+  commentId: Overload:Llvm.NET.DebugInfo.DIDerivedType.ExtraData
+  fullName: Llvm.NET.DebugInfo.DIDerivedType.ExtraData
+  nameWithType: DIDerivedType.ExtraData
+- uid: Llvm.NET.DebugInfo.DIDerivedType.ObjCProperty
+  name: ObjCProperty
+  href: api/Llvm.NET.DebugInfo.DIDerivedType.ObjCProperty.html#Llvm_NET_DebugInfo_DIDerivedType_ObjCProperty
+  commentId: P:Llvm.NET.DebugInfo.DIDerivedType.ObjCProperty
+  fullName: Llvm.NET.DebugInfo.DIDerivedType.ObjCProperty
+  nameWithType: DIDerivedType.ObjCProperty
+- uid: Llvm.NET.DebugInfo.DIDerivedType.ObjCProperty*
+  name: ObjCProperty
+  href: api/Llvm.NET.DebugInfo.DIDerivedType.ObjCProperty.html
+  commentId: Overload:Llvm.NET.DebugInfo.DIDerivedType.ObjCProperty
+  fullName: Llvm.NET.DebugInfo.DIDerivedType.ObjCProperty
+  nameWithType: DIDerivedType.ObjCProperty
 - uid: Llvm.NET.DebugInfo.DIEnumerator
   name: DIEnumerator
   href: api/Llvm.NET.DebugInfo.DIEnumerator.html
   commentId: T:Llvm.NET.DebugInfo.DIEnumerator
   fullName: Llvm.NET.DebugInfo.DIEnumerator
   nameWithType: DIEnumerator
+- uid: Llvm.NET.DebugInfo.DIEnumerator.Name
+  name: Name
+  href: api/Llvm.NET.DebugInfo.DIEnumerator.Name.html#Llvm_NET_DebugInfo_DIEnumerator_Name
+  commentId: P:Llvm.NET.DebugInfo.DIEnumerator.Name
+  fullName: Llvm.NET.DebugInfo.DIEnumerator.Name
+  nameWithType: DIEnumerator.Name
+- uid: Llvm.NET.DebugInfo.DIEnumerator.Name*
+  name: Name
+  href: api/Llvm.NET.DebugInfo.DIEnumerator.Name.html
+  commentId: Overload:Llvm.NET.DebugInfo.DIEnumerator.Name
+  fullName: Llvm.NET.DebugInfo.DIEnumerator.Name
+  nameWithType: DIEnumerator.Name
 - uid: Llvm.NET.DebugInfo.DIExpression
   name: DIExpression
   href: api/Llvm.NET.DebugInfo.DIExpression.html
@@ -3524,6 +3596,54 @@ references:
   commentId: T:Llvm.NET.DebugInfo.DIImportedEntity
   fullName: Llvm.NET.DebugInfo.DIImportedEntity
   nameWithType: DIImportedEntity
+- uid: Llvm.NET.DebugInfo.DIImportedEntity.Entity
+  name: Entity
+  href: api/Llvm.NET.DebugInfo.DIImportedEntity.Entity.html#Llvm_NET_DebugInfo_DIImportedEntity_Entity
+  commentId: P:Llvm.NET.DebugInfo.DIImportedEntity.Entity
+  fullName: Llvm.NET.DebugInfo.DIImportedEntity.Entity
+  nameWithType: DIImportedEntity.Entity
+- uid: Llvm.NET.DebugInfo.DIImportedEntity.Entity*
+  name: Entity
+  href: api/Llvm.NET.DebugInfo.DIImportedEntity.Entity.html
+  commentId: Overload:Llvm.NET.DebugInfo.DIImportedEntity.Entity
+  fullName: Llvm.NET.DebugInfo.DIImportedEntity.Entity
+  nameWithType: DIImportedEntity.Entity
+- uid: Llvm.NET.DebugInfo.DIImportedEntity.File
+  name: File
+  href: api/Llvm.NET.DebugInfo.DIImportedEntity.File.html#Llvm_NET_DebugInfo_DIImportedEntity_File
+  commentId: P:Llvm.NET.DebugInfo.DIImportedEntity.File
+  fullName: Llvm.NET.DebugInfo.DIImportedEntity.File
+  nameWithType: DIImportedEntity.File
+- uid: Llvm.NET.DebugInfo.DIImportedEntity.File*
+  name: File
+  href: api/Llvm.NET.DebugInfo.DIImportedEntity.File.html
+  commentId: Overload:Llvm.NET.DebugInfo.DIImportedEntity.File
+  fullName: Llvm.NET.DebugInfo.DIImportedEntity.File
+  nameWithType: DIImportedEntity.File
+- uid: Llvm.NET.DebugInfo.DIImportedEntity.Name
+  name: Name
+  href: api/Llvm.NET.DebugInfo.DIImportedEntity.Name.html#Llvm_NET_DebugInfo_DIImportedEntity_Name
+  commentId: P:Llvm.NET.DebugInfo.DIImportedEntity.Name
+  fullName: Llvm.NET.DebugInfo.DIImportedEntity.Name
+  nameWithType: DIImportedEntity.Name
+- uid: Llvm.NET.DebugInfo.DIImportedEntity.Name*
+  name: Name
+  href: api/Llvm.NET.DebugInfo.DIImportedEntity.Name.html
+  commentId: Overload:Llvm.NET.DebugInfo.DIImportedEntity.Name
+  fullName: Llvm.NET.DebugInfo.DIImportedEntity.Name
+  nameWithType: DIImportedEntity.Name
+- uid: Llvm.NET.DebugInfo.DIImportedEntity.Scope
+  name: Scope
+  href: api/Llvm.NET.DebugInfo.DIImportedEntity.Scope.html#Llvm_NET_DebugInfo_DIImportedEntity_Scope
+  commentId: P:Llvm.NET.DebugInfo.DIImportedEntity.Scope
+  fullName: Llvm.NET.DebugInfo.DIImportedEntity.Scope
+  nameWithType: DIImportedEntity.Scope
+- uid: Llvm.NET.DebugInfo.DIImportedEntity.Scope*
+  name: Scope
+  href: api/Llvm.NET.DebugInfo.DIImportedEntity.Scope.html
+  commentId: Overload:Llvm.NET.DebugInfo.DIImportedEntity.Scope
+  fullName: Llvm.NET.DebugInfo.DIImportedEntity.Scope
+  nameWithType: DIImportedEntity.Scope
 - uid: Llvm.NET.DebugInfo.DILexicalBlock
   name: DILexicalBlock
   href: api/Llvm.NET.DebugInfo.DILexicalBlock.html
@@ -3578,6 +3698,24 @@ references:
   commentId: Overload:Llvm.NET.DebugInfo.DILocalVariable.Scope
   fullName: Llvm.NET.DebugInfo.DILocalVariable.Scope
   nameWithType: DILocalVariable.Scope
+- uid: Llvm.NET.DebugInfo.DILocalVariableArray
+  name: DILocalVariableArray
+  href: api/Llvm.NET.DebugInfo.DILocalVariableArray.html
+  commentId: T:Llvm.NET.DebugInfo.DILocalVariableArray
+  fullName: Llvm.NET.DebugInfo.DILocalVariableArray
+  nameWithType: DILocalVariableArray
+- uid: Llvm.NET.DebugInfo.DILocalVariableArray.#ctor(Llvm.NET.MDTuple)
+  name: DILocalVariableArray(MDTuple)
+  href: api/Llvm.NET.DebugInfo.DILocalVariableArray.-ctor.html#Llvm_NET_DebugInfo_DILocalVariableArray__ctor_Llvm_NET_MDTuple_
+  commentId: M:Llvm.NET.DebugInfo.DILocalVariableArray.#ctor(Llvm.NET.MDTuple)
+  fullName: Llvm.NET.DebugInfo.DILocalVariableArray.DILocalVariableArray(Llvm.NET.MDTuple)
+  nameWithType: DILocalVariableArray.DILocalVariableArray(MDTuple)
+- uid: Llvm.NET.DebugInfo.DILocalVariableArray.#ctor*
+  name: DILocalVariableArray
+  href: api/Llvm.NET.DebugInfo.DILocalVariableArray.-ctor.html
+  commentId: Overload:Llvm.NET.DebugInfo.DILocalVariableArray.#ctor
+  fullName: Llvm.NET.DebugInfo.DILocalVariableArray.DILocalVariableArray
+  nameWithType: DILocalVariableArray.DILocalVariableArray
 - uid: Llvm.NET.DebugInfo.DILocation
   name: DILocation
   href: api/Llvm.NET.DebugInfo.DILocation.html
@@ -3728,6 +3866,66 @@ references:
   commentId: T:Llvm.NET.DebugInfo.DIObjCProperty
   fullName: Llvm.NET.DebugInfo.DIObjCProperty
   nameWithType: DIObjCProperty
+- uid: Llvm.NET.DebugInfo.DIObjCProperty.File
+  name: File
+  href: api/Llvm.NET.DebugInfo.DIObjCProperty.File.html#Llvm_NET_DebugInfo_DIObjCProperty_File
+  commentId: P:Llvm.NET.DebugInfo.DIObjCProperty.File
+  fullName: Llvm.NET.DebugInfo.DIObjCProperty.File
+  nameWithType: DIObjCProperty.File
+- uid: Llvm.NET.DebugInfo.DIObjCProperty.File*
+  name: File
+  href: api/Llvm.NET.DebugInfo.DIObjCProperty.File.html
+  commentId: Overload:Llvm.NET.DebugInfo.DIObjCProperty.File
+  fullName: Llvm.NET.DebugInfo.DIObjCProperty.File
+  nameWithType: DIObjCProperty.File
+- uid: Llvm.NET.DebugInfo.DIObjCProperty.GetterName
+  name: GetterName
+  href: api/Llvm.NET.DebugInfo.DIObjCProperty.GetterName.html#Llvm_NET_DebugInfo_DIObjCProperty_GetterName
+  commentId: P:Llvm.NET.DebugInfo.DIObjCProperty.GetterName
+  fullName: Llvm.NET.DebugInfo.DIObjCProperty.GetterName
+  nameWithType: DIObjCProperty.GetterName
+- uid: Llvm.NET.DebugInfo.DIObjCProperty.GetterName*
+  name: GetterName
+  href: api/Llvm.NET.DebugInfo.DIObjCProperty.GetterName.html
+  commentId: Overload:Llvm.NET.DebugInfo.DIObjCProperty.GetterName
+  fullName: Llvm.NET.DebugInfo.DIObjCProperty.GetterName
+  nameWithType: DIObjCProperty.GetterName
+- uid: Llvm.NET.DebugInfo.DIObjCProperty.Name
+  name: Name
+  href: api/Llvm.NET.DebugInfo.DIObjCProperty.Name.html#Llvm_NET_DebugInfo_DIObjCProperty_Name
+  commentId: P:Llvm.NET.DebugInfo.DIObjCProperty.Name
+  fullName: Llvm.NET.DebugInfo.DIObjCProperty.Name
+  nameWithType: DIObjCProperty.Name
+- uid: Llvm.NET.DebugInfo.DIObjCProperty.Name*
+  name: Name
+  href: api/Llvm.NET.DebugInfo.DIObjCProperty.Name.html
+  commentId: Overload:Llvm.NET.DebugInfo.DIObjCProperty.Name
+  fullName: Llvm.NET.DebugInfo.DIObjCProperty.Name
+  nameWithType: DIObjCProperty.Name
+- uid: Llvm.NET.DebugInfo.DIObjCProperty.SetterName
+  name: SetterName
+  href: api/Llvm.NET.DebugInfo.DIObjCProperty.SetterName.html#Llvm_NET_DebugInfo_DIObjCProperty_SetterName
+  commentId: P:Llvm.NET.DebugInfo.DIObjCProperty.SetterName
+  fullName: Llvm.NET.DebugInfo.DIObjCProperty.SetterName
+  nameWithType: DIObjCProperty.SetterName
+- uid: Llvm.NET.DebugInfo.DIObjCProperty.SetterName*
+  name: SetterName
+  href: api/Llvm.NET.DebugInfo.DIObjCProperty.SetterName.html
+  commentId: Overload:Llvm.NET.DebugInfo.DIObjCProperty.SetterName
+  fullName: Llvm.NET.DebugInfo.DIObjCProperty.SetterName
+  nameWithType: DIObjCProperty.SetterName
+- uid: Llvm.NET.DebugInfo.DIObjCProperty.Type
+  name: Type
+  href: api/Llvm.NET.DebugInfo.DIObjCProperty.Type.html#Llvm_NET_DebugInfo_DIObjCProperty_Type
+  commentId: P:Llvm.NET.DebugInfo.DIObjCProperty.Type
+  fullName: Llvm.NET.DebugInfo.DIObjCProperty.Type
+  nameWithType: DIObjCProperty.Type
+- uid: Llvm.NET.DebugInfo.DIObjCProperty.Type*
+  name: Type
+  href: api/Llvm.NET.DebugInfo.DIObjCProperty.Type.html
+  commentId: Overload:Llvm.NET.DebugInfo.DIObjCProperty.Type
+  fullName: Llvm.NET.DebugInfo.DIObjCProperty.Type
+  nameWithType: DIObjCProperty.Type
 - uid: Llvm.NET.DebugInfo.DIScope
   name: DIScope
   href: api/Llvm.NET.DebugInfo.DIScope.html
@@ -3746,12 +3944,72 @@ references:
   commentId: Overload:Llvm.NET.DebugInfo.DIScope.File
   fullName: Llvm.NET.DebugInfo.DIScope.File
   nameWithType: DIScope.File
+- uid: Llvm.NET.DebugInfo.DIScope.Name
+  name: Name
+  href: api/Llvm.NET.DebugInfo.DIScope.Name.html#Llvm_NET_DebugInfo_DIScope_Name
+  commentId: P:Llvm.NET.DebugInfo.DIScope.Name
+  fullName: Llvm.NET.DebugInfo.DIScope.Name
+  nameWithType: DIScope.Name
+- uid: Llvm.NET.DebugInfo.DIScope.Name*
+  name: Name
+  href: api/Llvm.NET.DebugInfo.DIScope.Name.html
+  commentId: Overload:Llvm.NET.DebugInfo.DIScope.Name
+  fullName: Llvm.NET.DebugInfo.DIScope.Name
+  nameWithType: DIScope.Name
+- uid: Llvm.NET.DebugInfo.DIScope.Scope
+  name: Scope
+  href: api/Llvm.NET.DebugInfo.DIScope.Scope.html#Llvm_NET_DebugInfo_DIScope_Scope
+  commentId: P:Llvm.NET.DebugInfo.DIScope.Scope
+  fullName: Llvm.NET.DebugInfo.DIScope.Scope
+  nameWithType: DIScope.Scope
+- uid: Llvm.NET.DebugInfo.DIScope.Scope*
+  name: Scope
+  href: api/Llvm.NET.DebugInfo.DIScope.Scope.html
+  commentId: Overload:Llvm.NET.DebugInfo.DIScope.Scope
+  fullName: Llvm.NET.DebugInfo.DIScope.Scope
+  nameWithType: DIScope.Scope
 - uid: Llvm.NET.DebugInfo.DISubProgram
   name: DISubProgram
   href: api/Llvm.NET.DebugInfo.DISubProgram.html
   commentId: T:Llvm.NET.DebugInfo.DISubProgram
   fullName: Llvm.NET.DebugInfo.DISubProgram
   nameWithType: DISubProgram
+- uid: Llvm.NET.DebugInfo.DISubProgram.CompileUnit
+  name: CompileUnit
+  href: api/Llvm.NET.DebugInfo.DISubProgram.CompileUnit.html#Llvm_NET_DebugInfo_DISubProgram_CompileUnit
+  commentId: P:Llvm.NET.DebugInfo.DISubProgram.CompileUnit
+  fullName: Llvm.NET.DebugInfo.DISubProgram.CompileUnit
+  nameWithType: DISubProgram.CompileUnit
+- uid: Llvm.NET.DebugInfo.DISubProgram.CompileUnit*
+  name: CompileUnit
+  href: api/Llvm.NET.DebugInfo.DISubProgram.CompileUnit.html
+  commentId: Overload:Llvm.NET.DebugInfo.DISubProgram.CompileUnit
+  fullName: Llvm.NET.DebugInfo.DISubProgram.CompileUnit
+  nameWithType: DISubProgram.CompileUnit
+- uid: Llvm.NET.DebugInfo.DISubProgram.ContainingType
+  name: ContainingType
+  href: api/Llvm.NET.DebugInfo.DISubProgram.ContainingType.html#Llvm_NET_DebugInfo_DISubProgram_ContainingType
+  commentId: P:Llvm.NET.DebugInfo.DISubProgram.ContainingType
+  fullName: Llvm.NET.DebugInfo.DISubProgram.ContainingType
+  nameWithType: DISubProgram.ContainingType
+- uid: Llvm.NET.DebugInfo.DISubProgram.ContainingType*
+  name: ContainingType
+  href: api/Llvm.NET.DebugInfo.DISubProgram.ContainingType.html
+  commentId: Overload:Llvm.NET.DebugInfo.DISubProgram.ContainingType
+  fullName: Llvm.NET.DebugInfo.DISubProgram.ContainingType
+  nameWithType: DISubProgram.ContainingType
+- uid: Llvm.NET.DebugInfo.DISubProgram.Declaration
+  name: Declaration
+  href: api/Llvm.NET.DebugInfo.DISubProgram.Declaration.html#Llvm_NET_DebugInfo_DISubProgram_Declaration
+  commentId: P:Llvm.NET.DebugInfo.DISubProgram.Declaration
+  fullName: Llvm.NET.DebugInfo.DISubProgram.Declaration
+  nameWithType: DISubProgram.Declaration
+- uid: Llvm.NET.DebugInfo.DISubProgram.Declaration*
+  name: Declaration
+  href: api/Llvm.NET.DebugInfo.DISubProgram.Declaration.html
+  commentId: Overload:Llvm.NET.DebugInfo.DISubProgram.Declaration
+  fullName: Llvm.NET.DebugInfo.DISubProgram.Declaration
+  nameWithType: DISubProgram.Declaration
 - uid: Llvm.NET.DebugInfo.DISubProgram.Describes(Llvm.NET.Values.Function)
   name: Describes(Function)
   href: api/Llvm.NET.DebugInfo.DISubProgram.Describes.html#Llvm_NET_DebugInfo_DISubProgram_Describes_Llvm_NET_Values_Function_
@@ -3764,6 +4022,90 @@ references:
   commentId: Overload:Llvm.NET.DebugInfo.DISubProgram.Describes
   fullName: Llvm.NET.DebugInfo.DISubProgram.Describes
   nameWithType: DISubProgram.Describes
+- uid: Llvm.NET.DebugInfo.DISubProgram.LinkageName
+  name: LinkageName
+  href: api/Llvm.NET.DebugInfo.DISubProgram.LinkageName.html#Llvm_NET_DebugInfo_DISubProgram_LinkageName
+  commentId: P:Llvm.NET.DebugInfo.DISubProgram.LinkageName
+  fullName: Llvm.NET.DebugInfo.DISubProgram.LinkageName
+  nameWithType: DISubProgram.LinkageName
+- uid: Llvm.NET.DebugInfo.DISubProgram.LinkageName*
+  name: LinkageName
+  href: api/Llvm.NET.DebugInfo.DISubProgram.LinkageName.html
+  commentId: Overload:Llvm.NET.DebugInfo.DISubProgram.LinkageName
+  fullName: Llvm.NET.DebugInfo.DISubProgram.LinkageName
+  nameWithType: DISubProgram.LinkageName
+- uid: Llvm.NET.DebugInfo.DISubProgram.Name
+  name: Name
+  href: api/Llvm.NET.DebugInfo.DISubProgram.Name.html#Llvm_NET_DebugInfo_DISubProgram_Name
+  commentId: P:Llvm.NET.DebugInfo.DISubProgram.Name
+  fullName: Llvm.NET.DebugInfo.DISubProgram.Name
+  nameWithType: DISubProgram.Name
+- uid: Llvm.NET.DebugInfo.DISubProgram.Name*
+  name: Name
+  href: api/Llvm.NET.DebugInfo.DISubProgram.Name.html
+  commentId: Overload:Llvm.NET.DebugInfo.DISubProgram.Name
+  fullName: Llvm.NET.DebugInfo.DISubProgram.Name
+  nameWithType: DISubProgram.Name
+- uid: Llvm.NET.DebugInfo.DISubProgram.Scope
+  name: Scope
+  href: api/Llvm.NET.DebugInfo.DISubProgram.Scope.html#Llvm_NET_DebugInfo_DISubProgram_Scope
+  commentId: P:Llvm.NET.DebugInfo.DISubProgram.Scope
+  fullName: Llvm.NET.DebugInfo.DISubProgram.Scope
+  nameWithType: DISubProgram.Scope
+- uid: Llvm.NET.DebugInfo.DISubProgram.Scope*
+  name: Scope
+  href: api/Llvm.NET.DebugInfo.DISubProgram.Scope.html
+  commentId: Overload:Llvm.NET.DebugInfo.DISubProgram.Scope
+  fullName: Llvm.NET.DebugInfo.DISubProgram.Scope
+  nameWithType: DISubProgram.Scope
+- uid: Llvm.NET.DebugInfo.DISubProgram.Signature
+  name: Signature
+  href: api/Llvm.NET.DebugInfo.DISubProgram.Signature.html#Llvm_NET_DebugInfo_DISubProgram_Signature
+  commentId: P:Llvm.NET.DebugInfo.DISubProgram.Signature
+  fullName: Llvm.NET.DebugInfo.DISubProgram.Signature
+  nameWithType: DISubProgram.Signature
+- uid: Llvm.NET.DebugInfo.DISubProgram.Signature*
+  name: Signature
+  href: api/Llvm.NET.DebugInfo.DISubProgram.Signature.html
+  commentId: Overload:Llvm.NET.DebugInfo.DISubProgram.Signature
+  fullName: Llvm.NET.DebugInfo.DISubProgram.Signature
+  nameWithType: DISubProgram.Signature
+- uid: Llvm.NET.DebugInfo.DISubProgram.TemplateParams
+  name: TemplateParams
+  href: api/Llvm.NET.DebugInfo.DISubProgram.TemplateParams.html#Llvm_NET_DebugInfo_DISubProgram_TemplateParams
+  commentId: P:Llvm.NET.DebugInfo.DISubProgram.TemplateParams
+  fullName: Llvm.NET.DebugInfo.DISubProgram.TemplateParams
+  nameWithType: DISubProgram.TemplateParams
+- uid: Llvm.NET.DebugInfo.DISubProgram.TemplateParams*
+  name: TemplateParams
+  href: api/Llvm.NET.DebugInfo.DISubProgram.TemplateParams.html
+  commentId: Overload:Llvm.NET.DebugInfo.DISubProgram.TemplateParams
+  fullName: Llvm.NET.DebugInfo.DISubProgram.TemplateParams
+  nameWithType: DISubProgram.TemplateParams
+- uid: Llvm.NET.DebugInfo.DISubProgram.ThrownTypes
+  name: ThrownTypes
+  href: api/Llvm.NET.DebugInfo.DISubProgram.ThrownTypes.html#Llvm_NET_DebugInfo_DISubProgram_ThrownTypes
+  commentId: P:Llvm.NET.DebugInfo.DISubProgram.ThrownTypes
+  fullName: Llvm.NET.DebugInfo.DISubProgram.ThrownTypes
+  nameWithType: DISubProgram.ThrownTypes
+- uid: Llvm.NET.DebugInfo.DISubProgram.ThrownTypes*
+  name: ThrownTypes
+  href: api/Llvm.NET.DebugInfo.DISubProgram.ThrownTypes.html
+  commentId: Overload:Llvm.NET.DebugInfo.DISubProgram.ThrownTypes
+  fullName: Llvm.NET.DebugInfo.DISubProgram.ThrownTypes
+  nameWithType: DISubProgram.ThrownTypes
+- uid: Llvm.NET.DebugInfo.DISubProgram.Variables
+  name: Variables
+  href: api/Llvm.NET.DebugInfo.DISubProgram.Variables.html#Llvm_NET_DebugInfo_DISubProgram_Variables
+  commentId: P:Llvm.NET.DebugInfo.DISubProgram.Variables
+  fullName: Llvm.NET.DebugInfo.DISubProgram.Variables
+  nameWithType: DISubProgram.Variables
+- uid: Llvm.NET.DebugInfo.DISubProgram.Variables*
+  name: Variables
+  href: api/Llvm.NET.DebugInfo.DISubProgram.Variables.html
+  commentId: Overload:Llvm.NET.DebugInfo.DISubProgram.Variables
+  fullName: Llvm.NET.DebugInfo.DISubProgram.Variables
+  nameWithType: DISubProgram.Variables
 - uid: Llvm.NET.DebugInfo.DISubRange
   name: DISubRange
   href: api/Llvm.NET.DebugInfo.DISubRange.html
@@ -3782,6 +4124,48 @@ references:
   commentId: T:Llvm.NET.DebugInfo.DITemplateParameter
   fullName: Llvm.NET.DebugInfo.DITemplateParameter
   nameWithType: DITemplateParameter
+- uid: Llvm.NET.DebugInfo.DITemplateParameter.Name
+  name: Name
+  href: api/Llvm.NET.DebugInfo.DITemplateParameter.Name.html#Llvm_NET_DebugInfo_DITemplateParameter_Name
+  commentId: P:Llvm.NET.DebugInfo.DITemplateParameter.Name
+  fullName: Llvm.NET.DebugInfo.DITemplateParameter.Name
+  nameWithType: DITemplateParameter.Name
+- uid: Llvm.NET.DebugInfo.DITemplateParameter.Name*
+  name: Name
+  href: api/Llvm.NET.DebugInfo.DITemplateParameter.Name.html
+  commentId: Overload:Llvm.NET.DebugInfo.DITemplateParameter.Name
+  fullName: Llvm.NET.DebugInfo.DITemplateParameter.Name
+  nameWithType: DITemplateParameter.Name
+- uid: Llvm.NET.DebugInfo.DITemplateParameter.Type
+  name: Type
+  href: api/Llvm.NET.DebugInfo.DITemplateParameter.Type.html#Llvm_NET_DebugInfo_DITemplateParameter_Type
+  commentId: P:Llvm.NET.DebugInfo.DITemplateParameter.Type
+  fullName: Llvm.NET.DebugInfo.DITemplateParameter.Type
+  nameWithType: DITemplateParameter.Type
+- uid: Llvm.NET.DebugInfo.DITemplateParameter.Type*
+  name: Type
+  href: api/Llvm.NET.DebugInfo.DITemplateParameter.Type.html
+  commentId: Overload:Llvm.NET.DebugInfo.DITemplateParameter.Type
+  fullName: Llvm.NET.DebugInfo.DITemplateParameter.Type
+  nameWithType: DITemplateParameter.Type
+- uid: Llvm.NET.DebugInfo.DITemplateParameterArray
+  name: DITemplateParameterArray
+  href: api/Llvm.NET.DebugInfo.DITemplateParameterArray.html
+  commentId: T:Llvm.NET.DebugInfo.DITemplateParameterArray
+  fullName: Llvm.NET.DebugInfo.DITemplateParameterArray
+  nameWithType: DITemplateParameterArray
+- uid: Llvm.NET.DebugInfo.DITemplateParameterArray.#ctor(Llvm.NET.MDTuple)
+  name: DITemplateParameterArray(MDTuple)
+  href: api/Llvm.NET.DebugInfo.DITemplateParameterArray.-ctor.html#Llvm_NET_DebugInfo_DITemplateParameterArray__ctor_Llvm_NET_MDTuple_
+  commentId: M:Llvm.NET.DebugInfo.DITemplateParameterArray.#ctor(Llvm.NET.MDTuple)
+  fullName: Llvm.NET.DebugInfo.DITemplateParameterArray.DITemplateParameterArray(Llvm.NET.MDTuple)
+  nameWithType: DITemplateParameterArray.DITemplateParameterArray(MDTuple)
+- uid: Llvm.NET.DebugInfo.DITemplateParameterArray.#ctor*
+  name: DITemplateParameterArray
+  href: api/Llvm.NET.DebugInfo.DITemplateParameterArray.-ctor.html
+  commentId: Overload:Llvm.NET.DebugInfo.DITemplateParameterArray.#ctor
+  fullName: Llvm.NET.DebugInfo.DITemplateParameterArray.DITemplateParameterArray
+  nameWithType: DITemplateParameterArray.DITemplateParameterArray
 - uid: Llvm.NET.DebugInfo.DITemplateTypeParameter
   name: DITemplateTypeParameter
   href: api/Llvm.NET.DebugInfo.DITemplateTypeParameter.html
@@ -3794,6 +4178,21 @@ references:
   commentId: T:Llvm.NET.DebugInfo.DITemplateValueParameter
   fullName: Llvm.NET.DebugInfo.DITemplateValueParameter
   nameWithType: DITemplateValueParameter
+- uid: Llvm.NET.DebugInfo.DITemplateValueParameter.GetValue*
+  name: GetValue
+  href: api/Llvm.NET.DebugInfo.DITemplateValueParameter.GetValue.html
+  commentId: Overload:Llvm.NET.DebugInfo.DITemplateValueParameter.GetValue
+  fullName: Llvm.NET.DebugInfo.DITemplateValueParameter.GetValue
+  nameWithType: DITemplateValueParameter.GetValue
+- uid: Llvm.NET.DebugInfo.DITemplateValueParameter.GetValue``1
+  name: GetValue<T>()
+  href: api/Llvm.NET.DebugInfo.DITemplateValueParameter.GetValue.html#Llvm_NET_DebugInfo_DITemplateValueParameter_GetValue__1
+  commentId: M:Llvm.NET.DebugInfo.DITemplateValueParameter.GetValue``1
+  name.vb: GetValue(Of T)()
+  fullName: Llvm.NET.DebugInfo.DITemplateValueParameter.GetValue<T>()
+  fullName.vb: Llvm.NET.DebugInfo.DITemplateValueParameter.GetValue(Of T)()
+  nameWithType: DITemplateValueParameter.GetValue<T>()
+  nameWithType.vb: DITemplateValueParameter.GetValue(Of T)()
 - uid: Llvm.NET.DebugInfo.DIType
   name: DIType
   href: api/Llvm.NET.DebugInfo.DIType.html
@@ -3848,174 +4247,6 @@ references:
   commentId: Overload:Llvm.NET.DebugInfo.DIType.DebugInfoFlags
   fullName: Llvm.NET.DebugInfo.DIType.DebugInfoFlags
   nameWithType: DIType.DebugInfoFlags
-- uid: Llvm.NET.DebugInfo.DIType.IsAppleBlockExtension
-  name: IsAppleBlockExtension
-  href: api/Llvm.NET.DebugInfo.DIType.IsAppleBlockExtension.html#Llvm_NET_DebugInfo_DIType_IsAppleBlockExtension
-  commentId: P:Llvm.NET.DebugInfo.DIType.IsAppleBlockExtension
-  fullName: Llvm.NET.DebugInfo.DIType.IsAppleBlockExtension
-  nameWithType: DIType.IsAppleBlockExtension
-- uid: Llvm.NET.DebugInfo.DIType.IsAppleBlockExtension*
-  name: IsAppleBlockExtension
-  href: api/Llvm.NET.DebugInfo.DIType.IsAppleBlockExtension.html
-  commentId: Overload:Llvm.NET.DebugInfo.DIType.IsAppleBlockExtension
-  fullName: Llvm.NET.DebugInfo.DIType.IsAppleBlockExtension
-  nameWithType: DIType.IsAppleBlockExtension
-- uid: Llvm.NET.DebugInfo.DIType.IsArtificial
-  name: IsArtificial
-  href: api/Llvm.NET.DebugInfo.DIType.IsArtificial.html#Llvm_NET_DebugInfo_DIType_IsArtificial
-  commentId: P:Llvm.NET.DebugInfo.DIType.IsArtificial
-  fullName: Llvm.NET.DebugInfo.DIType.IsArtificial
-  nameWithType: DIType.IsArtificial
-- uid: Llvm.NET.DebugInfo.DIType.IsArtificial*
-  name: IsArtificial
-  href: api/Llvm.NET.DebugInfo.DIType.IsArtificial.html
-  commentId: Overload:Llvm.NET.DebugInfo.DIType.IsArtificial
-  fullName: Llvm.NET.DebugInfo.DIType.IsArtificial
-  nameWithType: DIType.IsArtificial
-- uid: Llvm.NET.DebugInfo.DIType.IsBlockByRefStruct
-  name: IsBlockByRefStruct
-  href: api/Llvm.NET.DebugInfo.DIType.IsBlockByRefStruct.html#Llvm_NET_DebugInfo_DIType_IsBlockByRefStruct
-  commentId: P:Llvm.NET.DebugInfo.DIType.IsBlockByRefStruct
-  fullName: Llvm.NET.DebugInfo.DIType.IsBlockByRefStruct
-  nameWithType: DIType.IsBlockByRefStruct
-- uid: Llvm.NET.DebugInfo.DIType.IsBlockByRefStruct*
-  name: IsBlockByRefStruct
-  href: api/Llvm.NET.DebugInfo.DIType.IsBlockByRefStruct.html
-  commentId: Overload:Llvm.NET.DebugInfo.DIType.IsBlockByRefStruct
-  fullName: Llvm.NET.DebugInfo.DIType.IsBlockByRefStruct
-  nameWithType: DIType.IsBlockByRefStruct
-- uid: Llvm.NET.DebugInfo.DIType.IsForwardDeclaration
-  name: IsForwardDeclaration
-  href: api/Llvm.NET.DebugInfo.DIType.IsForwardDeclaration.html#Llvm_NET_DebugInfo_DIType_IsForwardDeclaration
-  commentId: P:Llvm.NET.DebugInfo.DIType.IsForwardDeclaration
-  fullName: Llvm.NET.DebugInfo.DIType.IsForwardDeclaration
-  nameWithType: DIType.IsForwardDeclaration
-- uid: Llvm.NET.DebugInfo.DIType.IsForwardDeclaration*
-  name: IsForwardDeclaration
-  href: api/Llvm.NET.DebugInfo.DIType.IsForwardDeclaration.html
-  commentId: Overload:Llvm.NET.DebugInfo.DIType.IsForwardDeclaration
-  fullName: Llvm.NET.DebugInfo.DIType.IsForwardDeclaration
-  nameWithType: DIType.IsForwardDeclaration
-- uid: Llvm.NET.DebugInfo.DIType.IsLvalueReference
-  name: IsLvalueReference
-  href: api/Llvm.NET.DebugInfo.DIType.IsLvalueReference.html#Llvm_NET_DebugInfo_DIType_IsLvalueReference
-  commentId: P:Llvm.NET.DebugInfo.DIType.IsLvalueReference
-  fullName: Llvm.NET.DebugInfo.DIType.IsLvalueReference
-  nameWithType: DIType.IsLvalueReference
-- uid: Llvm.NET.DebugInfo.DIType.IsLvalueReference*
-  name: IsLvalueReference
-  href: api/Llvm.NET.DebugInfo.DIType.IsLvalueReference.html
-  commentId: Overload:Llvm.NET.DebugInfo.DIType.IsLvalueReference
-  fullName: Llvm.NET.DebugInfo.DIType.IsLvalueReference
-  nameWithType: DIType.IsLvalueReference
-- uid: Llvm.NET.DebugInfo.DIType.IsObjClassComplete
-  name: IsObjClassComplete
-  href: api/Llvm.NET.DebugInfo.DIType.IsObjClassComplete.html#Llvm_NET_DebugInfo_DIType_IsObjClassComplete
-  commentId: P:Llvm.NET.DebugInfo.DIType.IsObjClassComplete
-  fullName: Llvm.NET.DebugInfo.DIType.IsObjClassComplete
-  nameWithType: DIType.IsObjClassComplete
-- uid: Llvm.NET.DebugInfo.DIType.IsObjClassComplete*
-  name: IsObjClassComplete
-  href: api/Llvm.NET.DebugInfo.DIType.IsObjClassComplete.html
-  commentId: Overload:Llvm.NET.DebugInfo.DIType.IsObjClassComplete
-  fullName: Llvm.NET.DebugInfo.DIType.IsObjClassComplete
-  nameWithType: DIType.IsObjClassComplete
-- uid: Llvm.NET.DebugInfo.DIType.IsObjectPointer
-  name: IsObjectPointer
-  href: api/Llvm.NET.DebugInfo.DIType.IsObjectPointer.html#Llvm_NET_DebugInfo_DIType_IsObjectPointer
-  commentId: P:Llvm.NET.DebugInfo.DIType.IsObjectPointer
-  fullName: Llvm.NET.DebugInfo.DIType.IsObjectPointer
-  nameWithType: DIType.IsObjectPointer
-- uid: Llvm.NET.DebugInfo.DIType.IsObjectPointer*
-  name: IsObjectPointer
-  href: api/Llvm.NET.DebugInfo.DIType.IsObjectPointer.html
-  commentId: Overload:Llvm.NET.DebugInfo.DIType.IsObjectPointer
-  fullName: Llvm.NET.DebugInfo.DIType.IsObjectPointer
-  nameWithType: DIType.IsObjectPointer
-- uid: Llvm.NET.DebugInfo.DIType.IsPrivate
-  name: IsPrivate
-  href: api/Llvm.NET.DebugInfo.DIType.IsPrivate.html#Llvm_NET_DebugInfo_DIType_IsPrivate
-  commentId: P:Llvm.NET.DebugInfo.DIType.IsPrivate
-  fullName: Llvm.NET.DebugInfo.DIType.IsPrivate
-  nameWithType: DIType.IsPrivate
-- uid: Llvm.NET.DebugInfo.DIType.IsPrivate*
-  name: IsPrivate
-  href: api/Llvm.NET.DebugInfo.DIType.IsPrivate.html
-  commentId: Overload:Llvm.NET.DebugInfo.DIType.IsPrivate
-  fullName: Llvm.NET.DebugInfo.DIType.IsPrivate
-  nameWithType: DIType.IsPrivate
-- uid: Llvm.NET.DebugInfo.DIType.IsProtected
-  name: IsProtected
-  href: api/Llvm.NET.DebugInfo.DIType.IsProtected.html#Llvm_NET_DebugInfo_DIType_IsProtected
-  commentId: P:Llvm.NET.DebugInfo.DIType.IsProtected
-  fullName: Llvm.NET.DebugInfo.DIType.IsProtected
-  nameWithType: DIType.IsProtected
-- uid: Llvm.NET.DebugInfo.DIType.IsProtected*
-  name: IsProtected
-  href: api/Llvm.NET.DebugInfo.DIType.IsProtected.html
-  commentId: Overload:Llvm.NET.DebugInfo.DIType.IsProtected
-  fullName: Llvm.NET.DebugInfo.DIType.IsProtected
-  nameWithType: DIType.IsProtected
-- uid: Llvm.NET.DebugInfo.DIType.IsPublic
-  name: IsPublic
-  href: api/Llvm.NET.DebugInfo.DIType.IsPublic.html#Llvm_NET_DebugInfo_DIType_IsPublic
-  commentId: P:Llvm.NET.DebugInfo.DIType.IsPublic
-  fullName: Llvm.NET.DebugInfo.DIType.IsPublic
-  nameWithType: DIType.IsPublic
-- uid: Llvm.NET.DebugInfo.DIType.IsPublic*
-  name: IsPublic
-  href: api/Llvm.NET.DebugInfo.DIType.IsPublic.html
-  commentId: Overload:Llvm.NET.DebugInfo.DIType.IsPublic
-  fullName: Llvm.NET.DebugInfo.DIType.IsPublic
-  nameWithType: DIType.IsPublic
-- uid: Llvm.NET.DebugInfo.DIType.IsRvalueReference
-  name: IsRvalueReference
-  href: api/Llvm.NET.DebugInfo.DIType.IsRvalueReference.html#Llvm_NET_DebugInfo_DIType_IsRvalueReference
-  commentId: P:Llvm.NET.DebugInfo.DIType.IsRvalueReference
-  fullName: Llvm.NET.DebugInfo.DIType.IsRvalueReference
-  nameWithType: DIType.IsRvalueReference
-- uid: Llvm.NET.DebugInfo.DIType.IsRvalueReference*
-  name: IsRvalueReference
-  href: api/Llvm.NET.DebugInfo.DIType.IsRvalueReference.html
-  commentId: Overload:Llvm.NET.DebugInfo.DIType.IsRvalueReference
-  fullName: Llvm.NET.DebugInfo.DIType.IsRvalueReference
-  nameWithType: DIType.IsRvalueReference
-- uid: Llvm.NET.DebugInfo.DIType.IsStaticMember
-  name: IsStaticMember
-  href: api/Llvm.NET.DebugInfo.DIType.IsStaticMember.html#Llvm_NET_DebugInfo_DIType_IsStaticMember
-  commentId: P:Llvm.NET.DebugInfo.DIType.IsStaticMember
-  fullName: Llvm.NET.DebugInfo.DIType.IsStaticMember
-  nameWithType: DIType.IsStaticMember
-- uid: Llvm.NET.DebugInfo.DIType.IsStaticMember*
-  name: IsStaticMember
-  href: api/Llvm.NET.DebugInfo.DIType.IsStaticMember.html
-  commentId: Overload:Llvm.NET.DebugInfo.DIType.IsStaticMember
-  fullName: Llvm.NET.DebugInfo.DIType.IsStaticMember
-  nameWithType: DIType.IsStaticMember
-- uid: Llvm.NET.DebugInfo.DIType.IsVector
-  name: IsVector
-  href: api/Llvm.NET.DebugInfo.DIType.IsVector.html#Llvm_NET_DebugInfo_DIType_IsVector
-  commentId: P:Llvm.NET.DebugInfo.DIType.IsVector
-  fullName: Llvm.NET.DebugInfo.DIType.IsVector
-  nameWithType: DIType.IsVector
-- uid: Llvm.NET.DebugInfo.DIType.IsVector*
-  name: IsVector
-  href: api/Llvm.NET.DebugInfo.DIType.IsVector.html
-  commentId: Overload:Llvm.NET.DebugInfo.DIType.IsVector
-  fullName: Llvm.NET.DebugInfo.DIType.IsVector
-  nameWithType: DIType.IsVector
-- uid: Llvm.NET.DebugInfo.DIType.IsVirtual
-  name: IsVirtual
-  href: api/Llvm.NET.DebugInfo.DIType.IsVirtual.html#Llvm_NET_DebugInfo_DIType_IsVirtual
-  commentId: P:Llvm.NET.DebugInfo.DIType.IsVirtual
-  fullName: Llvm.NET.DebugInfo.DIType.IsVirtual
-  nameWithType: DIType.IsVirtual
-- uid: Llvm.NET.DebugInfo.DIType.IsVirtual*
-  name: IsVirtual
-  href: api/Llvm.NET.DebugInfo.DIType.IsVirtual.html
-  commentId: Overload:Llvm.NET.DebugInfo.DIType.IsVirtual
-  fullName: Llvm.NET.DebugInfo.DIType.IsVirtual
-  nameWithType: DIType.IsVirtual
 - uid: Llvm.NET.DebugInfo.DIType.Line
   name: Line
   href: api/Llvm.NET.DebugInfo.DIType.Line.html#Llvm_NET_DebugInfo_DIType_Line
@@ -4058,6 +4289,18 @@ references:
   commentId: T:Llvm.NET.DebugInfo.DITypeArray
   fullName: Llvm.NET.DebugInfo.DITypeArray
   nameWithType: DITypeArray
+- uid: Llvm.NET.DebugInfo.DITypeArray.#ctor(Llvm.NET.MDTuple)
+  name: DITypeArray(MDTuple)
+  href: api/Llvm.NET.DebugInfo.DITypeArray.-ctor.html#Llvm_NET_DebugInfo_DITypeArray__ctor_Llvm_NET_MDTuple_
+  commentId: M:Llvm.NET.DebugInfo.DITypeArray.#ctor(Llvm.NET.MDTuple)
+  fullName: Llvm.NET.DebugInfo.DITypeArray.DITypeArray(Llvm.NET.MDTuple)
+  nameWithType: DITypeArray.DITypeArray(MDTuple)
+- uid: Llvm.NET.DebugInfo.DITypeArray.#ctor*
+  name: DITypeArray
+  href: api/Llvm.NET.DebugInfo.DITypeArray.-ctor.html
+  commentId: Overload:Llvm.NET.DebugInfo.DITypeArray.#ctor
+  fullName: Llvm.NET.DebugInfo.DITypeArray.DITypeArray
+  nameWithType: DITypeArray.DITypeArray
 - uid: Llvm.NET.DebugInfo.DiTypeKind
   name: DiTypeKind
   href: api/Llvm.NET.DebugInfo.DiTypeKind.html
@@ -5944,22 +6187,6 @@ references:
   fullName.vb: Llvm.NET.DebugInfo.TupleTypedArrayWrapper(Of T)
   nameWithType: TupleTypedArrayWrapper<T>
   nameWithType.vb: TupleTypedArrayWrapper(Of T)
-- uid: Llvm.NET.DebugInfo.TupleTypedArrayWrapper`1.#ctor(Llvm.NET.MDTuple)
-  name: TupleTypedArrayWrapper(MDTuple)
-  href: api/Llvm.NET.DebugInfo.TupleTypedArrayWrapper-1.-ctor.html#Llvm_NET_DebugInfo_TupleTypedArrayWrapper_1__ctor_Llvm_NET_MDTuple_
-  commentId: M:Llvm.NET.DebugInfo.TupleTypedArrayWrapper`1.#ctor(Llvm.NET.MDTuple)
-  fullName: Llvm.NET.DebugInfo.TupleTypedArrayWrapper<T>.TupleTypedArrayWrapper(Llvm.NET.MDTuple)
-  fullName.vb: Llvm.NET.DebugInfo.TupleTypedArrayWrapper(Of T).TupleTypedArrayWrapper(Llvm.NET.MDTuple)
-  nameWithType: TupleTypedArrayWrapper<T>.TupleTypedArrayWrapper(MDTuple)
-  nameWithType.vb: TupleTypedArrayWrapper(Of T).TupleTypedArrayWrapper(MDTuple)
-- uid: Llvm.NET.DebugInfo.TupleTypedArrayWrapper`1.#ctor*
-  name: TupleTypedArrayWrapper
-  href: api/Llvm.NET.DebugInfo.TupleTypedArrayWrapper-1.-ctor.html
-  commentId: Overload:Llvm.NET.DebugInfo.TupleTypedArrayWrapper`1.#ctor
-  fullName: Llvm.NET.DebugInfo.TupleTypedArrayWrapper<T>.TupleTypedArrayWrapper
-  fullName.vb: Llvm.NET.DebugInfo.TupleTypedArrayWrapper(Of T).TupleTypedArrayWrapper
-  nameWithType: TupleTypedArrayWrapper<T>.TupleTypedArrayWrapper
-  nameWithType.vb: TupleTypedArrayWrapper(Of T).TupleTypedArrayWrapper
 - uid: Llvm.NET.DebugInfo.TupleTypedArrayWrapper`1.Count
   name: Count
   href: api/Llvm.NET.DebugInfo.TupleTypedArrayWrapper-1.Count.html#Llvm_NET_DebugInfo_TupleTypedArrayWrapper_1_Count
@@ -10932,6 +11159,36 @@ references:
   fullName.vb: Llvm.NET.Transforms.InterproceduralTransforms.AddStripSymbolsPass(Of T)(T)
   nameWithType: InterproceduralTransforms.AddStripSymbolsPass<T>(T)
   nameWithType.vb: InterproceduralTransforms.AddStripSymbolsPass(Of T)(T)
+- uid: Llvm.NET.Transforms.ModulePassManager
+  name: ModulePassManager
+  href: api/Llvm.NET.Transforms.ModulePassManager.html
+  commentId: T:Llvm.NET.Transforms.ModulePassManager
+  fullName: Llvm.NET.Transforms.ModulePassManager
+  nameWithType: ModulePassManager
+- uid: Llvm.NET.Transforms.ModulePassManager.#ctor
+  name: ModulePassManager()
+  href: api/Llvm.NET.Transforms.ModulePassManager.-ctor.html#Llvm_NET_Transforms_ModulePassManager__ctor
+  commentId: M:Llvm.NET.Transforms.ModulePassManager.#ctor
+  fullName: Llvm.NET.Transforms.ModulePassManager.ModulePassManager()
+  nameWithType: ModulePassManager.ModulePassManager()
+- uid: Llvm.NET.Transforms.ModulePassManager.#ctor*
+  name: ModulePassManager
+  href: api/Llvm.NET.Transforms.ModulePassManager.-ctor.html
+  commentId: Overload:Llvm.NET.Transforms.ModulePassManager.#ctor
+  fullName: Llvm.NET.Transforms.ModulePassManager.ModulePassManager
+  nameWithType: ModulePassManager.ModulePassManager
+- uid: Llvm.NET.Transforms.ModulePassManager.Run(Llvm.NET.BitcodeModule)
+  name: Run(BitcodeModule)
+  href: api/Llvm.NET.Transforms.ModulePassManager.Run.html#Llvm_NET_Transforms_ModulePassManager_Run_Llvm_NET_BitcodeModule_
+  commentId: M:Llvm.NET.Transforms.ModulePassManager.Run(Llvm.NET.BitcodeModule)
+  fullName: Llvm.NET.Transforms.ModulePassManager.Run(Llvm.NET.BitcodeModule)
+  nameWithType: ModulePassManager.Run(BitcodeModule)
+- uid: Llvm.NET.Transforms.ModulePassManager.Run*
+  name: Run
+  href: api/Llvm.NET.Transforms.ModulePassManager.Run.html
+  commentId: Overload:Llvm.NET.Transforms.ModulePassManager.Run
+  fullName: Llvm.NET.Transforms.ModulePassManager.Run
+  nameWithType: ModulePassManager.Run
 - uid: Llvm.NET.Transforms.PassManager
   name: PassManager
   href: api/Llvm.NET.Transforms.PassManager.html
@@ -10956,18 +11213,6 @@ references:
   commentId: Overload:Llvm.NET.Transforms.PassManager.Dispose
   fullName: Llvm.NET.Transforms.PassManager.Dispose
   nameWithType: PassManager.Dispose
-- uid: Llvm.NET.Transforms.PassManager.Finalize
-  name: Finalize()
-  href: api/Llvm.NET.Transforms.PassManager.Finalize.html#Llvm_NET_Transforms_PassManager_Finalize
-  commentId: M:Llvm.NET.Transforms.PassManager.Finalize
-  fullName: Llvm.NET.Transforms.PassManager.Finalize()
-  nameWithType: PassManager.Finalize()
-- uid: Llvm.NET.Transforms.PassManager.Finalize*
-  name: Finalize
-  href: api/Llvm.NET.Transforms.PassManager.Finalize.html
-  commentId: Overload:Llvm.NET.Transforms.PassManager.Finalize
-  fullName: Llvm.NET.Transforms.PassManager.Finalize
-  nameWithType: PassManager.Finalize
 - uid: Llvm.NET.Transforms.ScalarTransforms
   name: ScalarTransforms
   href: api/Llvm.NET.Transforms.ScalarTransforms.html
@@ -14220,6 +14465,30 @@ references:
   commentId: T:Llvm.NET.Values.BlockAddress
   fullName: Llvm.NET.Values.BlockAddress
   nameWithType: BlockAddress
+- uid: Llvm.NET.Values.BlockAddress.BasicBlock
+  name: BasicBlock
+  href: api/Llvm.NET.Values.BlockAddress.BasicBlock.html#Llvm_NET_Values_BlockAddress_BasicBlock
+  commentId: P:Llvm.NET.Values.BlockAddress.BasicBlock
+  fullName: Llvm.NET.Values.BlockAddress.BasicBlock
+  nameWithType: BlockAddress.BasicBlock
+- uid: Llvm.NET.Values.BlockAddress.BasicBlock*
+  name: BasicBlock
+  href: api/Llvm.NET.Values.BlockAddress.BasicBlock.html
+  commentId: Overload:Llvm.NET.Values.BlockAddress.BasicBlock
+  fullName: Llvm.NET.Values.BlockAddress.BasicBlock
+  nameWithType: BlockAddress.BasicBlock
+- uid: Llvm.NET.Values.BlockAddress.Function
+  name: Function
+  href: api/Llvm.NET.Values.BlockAddress.Function.html#Llvm_NET_Values_BlockAddress_Function
+  commentId: P:Llvm.NET.Values.BlockAddress.Function
+  fullName: Llvm.NET.Values.BlockAddress.Function
+  nameWithType: BlockAddress.Function
+- uid: Llvm.NET.Values.BlockAddress.Function*
+  name: Function
+  href: api/Llvm.NET.Values.BlockAddress.Function.html
+  commentId: Overload:Llvm.NET.Values.BlockAddress.Function
+  fullName: Llvm.NET.Values.BlockAddress.Function
+  nameWithType: BlockAddress.Function
 - uid: Llvm.NET.Values.Constant
   name: Constant
   href: api/Llvm.NET.Values.Constant.html
@@ -14286,6 +14555,12 @@ references:
   commentId: Overload:Llvm.NET.Values.Constant.UndefinedValueFor
   fullName: Llvm.NET.Values.Constant.UndefinedValueFor
   nameWithType: Constant.UndefinedValueFor
+- uid: Llvm.NET.Values.ConstantAggregate
+  name: ConstantAggregate
+  href: api/Llvm.NET.Values.ConstantAggregate.html
+  commentId: T:Llvm.NET.Values.ConstantAggregate
+  fullName: Llvm.NET.Values.ConstantAggregate
+  nameWithType: ConstantAggregate
 - uid: Llvm.NET.Values.ConstantAggregateZero
   name: ConstantAggregateZero
   href: api/Llvm.NET.Values.ConstantAggregateZero.html
@@ -14331,6 +14606,12 @@ references:
   commentId: Overload:Llvm.NET.Values.ConstantArray.From
   fullName: Llvm.NET.Values.ConstantArray.From
   nameWithType: ConstantArray.From
+- uid: Llvm.NET.Values.ConstantData
+  name: ConstantData
+  href: api/Llvm.NET.Values.ConstantData.html
+  commentId: T:Llvm.NET.Values.ConstantData
+  fullName: Llvm.NET.Values.ConstantData
+  nameWithType: ConstantData
 - uid: Llvm.NET.Values.ConstantDataArray
   name: ConstantDataArray
   href: api/Llvm.NET.Values.ConstantDataArray.html
@@ -15162,6 +15443,84 @@ references:
   commentId: Overload:Llvm.NET.Values.GlobalVariable.RemoveFromParent
   fullName: Llvm.NET.Values.GlobalVariable.RemoveFromParent
   nameWithType: GlobalVariable.RemoveFromParent
+- uid: Llvm.NET.Values.IAttributeAccessor
+  name: IAttributeAccessor
+  href: api/Llvm.NET.Values.IAttributeAccessor.html
+  commentId: T:Llvm.NET.Values.IAttributeAccessor
+  fullName: Llvm.NET.Values.IAttributeAccessor
+  nameWithType: IAttributeAccessor
+- uid: Llvm.NET.Values.IAttributeAccessor.AddAttributeAtIndex(Llvm.NET.FunctionAttributeIndex,Llvm.NET.Values.AttributeValue)
+  name: AddAttributeAtIndex(FunctionAttributeIndex, AttributeValue)
+  href: api/Llvm.NET.Values.IAttributeAccessor.AddAttributeAtIndex.html#Llvm_NET_Values_IAttributeAccessor_AddAttributeAtIndex_Llvm_NET_FunctionAttributeIndex_Llvm_NET_Values_AttributeValue_
+  commentId: M:Llvm.NET.Values.IAttributeAccessor.AddAttributeAtIndex(Llvm.NET.FunctionAttributeIndex,Llvm.NET.Values.AttributeValue)
+  fullName: Llvm.NET.Values.IAttributeAccessor.AddAttributeAtIndex(Llvm.NET.FunctionAttributeIndex, Llvm.NET.Values.AttributeValue)
+  nameWithType: IAttributeAccessor.AddAttributeAtIndex(FunctionAttributeIndex, AttributeValue)
+- uid: Llvm.NET.Values.IAttributeAccessor.AddAttributeAtIndex*
+  name: AddAttributeAtIndex
+  href: api/Llvm.NET.Values.IAttributeAccessor.AddAttributeAtIndex.html
+  commentId: Overload:Llvm.NET.Values.IAttributeAccessor.AddAttributeAtIndex
+  fullName: Llvm.NET.Values.IAttributeAccessor.AddAttributeAtIndex
+  nameWithType: IAttributeAccessor.AddAttributeAtIndex
+- uid: Llvm.NET.Values.IAttributeAccessor.GetAttributeAtIndex(Llvm.NET.FunctionAttributeIndex,Llvm.NET.Values.AttributeKind)
+  name: GetAttributeAtIndex(FunctionAttributeIndex, AttributeKind)
+  href: api/Llvm.NET.Values.IAttributeAccessor.GetAttributeAtIndex.html#Llvm_NET_Values_IAttributeAccessor_GetAttributeAtIndex_Llvm_NET_FunctionAttributeIndex_Llvm_NET_Values_AttributeKind_
+  commentId: M:Llvm.NET.Values.IAttributeAccessor.GetAttributeAtIndex(Llvm.NET.FunctionAttributeIndex,Llvm.NET.Values.AttributeKind)
+  fullName: Llvm.NET.Values.IAttributeAccessor.GetAttributeAtIndex(Llvm.NET.FunctionAttributeIndex, Llvm.NET.Values.AttributeKind)
+  nameWithType: IAttributeAccessor.GetAttributeAtIndex(FunctionAttributeIndex, AttributeKind)
+- uid: Llvm.NET.Values.IAttributeAccessor.GetAttributeAtIndex(Llvm.NET.FunctionAttributeIndex,System.String)
+  name: GetAttributeAtIndex(FunctionAttributeIndex, String)
+  href: api/Llvm.NET.Values.IAttributeAccessor.GetAttributeAtIndex.html#Llvm_NET_Values_IAttributeAccessor_GetAttributeAtIndex_Llvm_NET_FunctionAttributeIndex_System_String_
+  commentId: M:Llvm.NET.Values.IAttributeAccessor.GetAttributeAtIndex(Llvm.NET.FunctionAttributeIndex,System.String)
+  fullName: Llvm.NET.Values.IAttributeAccessor.GetAttributeAtIndex(Llvm.NET.FunctionAttributeIndex, System.String)
+  nameWithType: IAttributeAccessor.GetAttributeAtIndex(FunctionAttributeIndex, String)
+- uid: Llvm.NET.Values.IAttributeAccessor.GetAttributeAtIndex*
+  name: GetAttributeAtIndex
+  href: api/Llvm.NET.Values.IAttributeAccessor.GetAttributeAtIndex.html
+  commentId: Overload:Llvm.NET.Values.IAttributeAccessor.GetAttributeAtIndex
+  fullName: Llvm.NET.Values.IAttributeAccessor.GetAttributeAtIndex
+  nameWithType: IAttributeAccessor.GetAttributeAtIndex
+- uid: Llvm.NET.Values.IAttributeAccessor.GetAttributeCountAtIndex(Llvm.NET.FunctionAttributeIndex)
+  name: GetAttributeCountAtIndex(FunctionAttributeIndex)
+  href: api/Llvm.NET.Values.IAttributeAccessor.GetAttributeCountAtIndex.html#Llvm_NET_Values_IAttributeAccessor_GetAttributeCountAtIndex_Llvm_NET_FunctionAttributeIndex_
+  commentId: M:Llvm.NET.Values.IAttributeAccessor.GetAttributeCountAtIndex(Llvm.NET.FunctionAttributeIndex)
+  fullName: Llvm.NET.Values.IAttributeAccessor.GetAttributeCountAtIndex(Llvm.NET.FunctionAttributeIndex)
+  nameWithType: IAttributeAccessor.GetAttributeCountAtIndex(FunctionAttributeIndex)
+- uid: Llvm.NET.Values.IAttributeAccessor.GetAttributeCountAtIndex*
+  name: GetAttributeCountAtIndex
+  href: api/Llvm.NET.Values.IAttributeAccessor.GetAttributeCountAtIndex.html
+  commentId: Overload:Llvm.NET.Values.IAttributeAccessor.GetAttributeCountAtIndex
+  fullName: Llvm.NET.Values.IAttributeAccessor.GetAttributeCountAtIndex
+  nameWithType: IAttributeAccessor.GetAttributeCountAtIndex
+- uid: Llvm.NET.Values.IAttributeAccessor.GetAttributesAtIndex(Llvm.NET.FunctionAttributeIndex)
+  name: GetAttributesAtIndex(FunctionAttributeIndex)
+  href: api/Llvm.NET.Values.IAttributeAccessor.GetAttributesAtIndex.html#Llvm_NET_Values_IAttributeAccessor_GetAttributesAtIndex_Llvm_NET_FunctionAttributeIndex_
+  commentId: M:Llvm.NET.Values.IAttributeAccessor.GetAttributesAtIndex(Llvm.NET.FunctionAttributeIndex)
+  fullName: Llvm.NET.Values.IAttributeAccessor.GetAttributesAtIndex(Llvm.NET.FunctionAttributeIndex)
+  nameWithType: IAttributeAccessor.GetAttributesAtIndex(FunctionAttributeIndex)
+- uid: Llvm.NET.Values.IAttributeAccessor.GetAttributesAtIndex*
+  name: GetAttributesAtIndex
+  href: api/Llvm.NET.Values.IAttributeAccessor.GetAttributesAtIndex.html
+  commentId: Overload:Llvm.NET.Values.IAttributeAccessor.GetAttributesAtIndex
+  fullName: Llvm.NET.Values.IAttributeAccessor.GetAttributesAtIndex
+  nameWithType: IAttributeAccessor.GetAttributesAtIndex
+- uid: Llvm.NET.Values.IAttributeAccessor.RemoveAttributeAtIndex(Llvm.NET.FunctionAttributeIndex,Llvm.NET.Values.AttributeKind)
+  name: RemoveAttributeAtIndex(FunctionAttributeIndex, AttributeKind)
+  href: api/Llvm.NET.Values.IAttributeAccessor.RemoveAttributeAtIndex.html#Llvm_NET_Values_IAttributeAccessor_RemoveAttributeAtIndex_Llvm_NET_FunctionAttributeIndex_Llvm_NET_Values_AttributeKind_
+  commentId: M:Llvm.NET.Values.IAttributeAccessor.RemoveAttributeAtIndex(Llvm.NET.FunctionAttributeIndex,Llvm.NET.Values.AttributeKind)
+  fullName: Llvm.NET.Values.IAttributeAccessor.RemoveAttributeAtIndex(Llvm.NET.FunctionAttributeIndex, Llvm.NET.Values.AttributeKind)
+  nameWithType: IAttributeAccessor.RemoveAttributeAtIndex(FunctionAttributeIndex, AttributeKind)
+- uid: Llvm.NET.Values.IAttributeAccessor.RemoveAttributeAtIndex(Llvm.NET.FunctionAttributeIndex,System.String)
+  name: RemoveAttributeAtIndex(FunctionAttributeIndex, String)
+  href: api/Llvm.NET.Values.IAttributeAccessor.RemoveAttributeAtIndex.html#Llvm_NET_Values_IAttributeAccessor_RemoveAttributeAtIndex_Llvm_NET_FunctionAttributeIndex_System_String_
+  commentId: M:Llvm.NET.Values.IAttributeAccessor.RemoveAttributeAtIndex(Llvm.NET.FunctionAttributeIndex,System.String)
+  fullName: Llvm.NET.Values.IAttributeAccessor.RemoveAttributeAtIndex(Llvm.NET.FunctionAttributeIndex, System.String)
+  nameWithType: IAttributeAccessor.RemoveAttributeAtIndex(FunctionAttributeIndex, String)
+- uid: Llvm.NET.Values.IAttributeAccessor.RemoveAttributeAtIndex*
+  name: RemoveAttributeAtIndex
+  href: api/Llvm.NET.Values.IAttributeAccessor.RemoveAttributeAtIndex.html
+  commentId: Overload:Llvm.NET.Values.IAttributeAccessor.RemoveAttributeAtIndex
+  fullName: Llvm.NET.Values.IAttributeAccessor.RemoveAttributeAtIndex
+  nameWithType: IAttributeAccessor.RemoveAttributeAtIndex
 - uid: Llvm.NET.Values.IAttributeContainer
   name: IAttributeContainer
   href: api/Llvm.NET.Values.IAttributeContainer.html
@@ -15246,6 +15605,21 @@ references:
   commentId: T:Llvm.NET.Values.User
   fullName: Llvm.NET.Values.User
   nameWithType: User
+- uid: Llvm.NET.Values.User.GetOperand*
+  name: GetOperand
+  href: api/Llvm.NET.Values.User.GetOperand.html
+  commentId: Overload:Llvm.NET.Values.User.GetOperand
+  fullName: Llvm.NET.Values.User.GetOperand
+  nameWithType: User.GetOperand
+- uid: Llvm.NET.Values.User.GetOperand``1(System.Int32)
+  name: GetOperand<T>(Int32)
+  href: api/Llvm.NET.Values.User.GetOperand.html#Llvm_NET_Values_User_GetOperand__1_System_Int32_
+  commentId: M:Llvm.NET.Values.User.GetOperand``1(System.Int32)
+  name.vb: GetOperand(Of T)(Int32)
+  fullName: Llvm.NET.Values.User.GetOperand<T>(System.Int32)
+  fullName.vb: Llvm.NET.Values.User.GetOperand(Of T)(System.Int32)
+  nameWithType: User.GetOperand<T>(Int32)
+  nameWithType.vb: User.GetOperand(Of T)(Int32)
 - uid: Llvm.NET.Values.User.Operands
   name: Operands
   href: api/Llvm.NET.Values.User.Operands.html#Llvm_NET_Values_User_Operands
