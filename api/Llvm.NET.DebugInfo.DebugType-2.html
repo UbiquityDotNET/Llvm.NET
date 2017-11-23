@@ -189,9 +189,6 @@
                                   <a href="Llvm.NET.BitcodeModule.Name.html" title="Name" class="">Name</a>
                                 </li>
                                 <li class="">
-                                  <a href="Llvm.NET.BitcodeModule.Optimize.html" title="Optimize" class="">Optimize</a>
-                                </li>
-                                <li class="">
                                   <a href="Llvm.NET.BitcodeModule.SourceFileName.html" title="SourceFileName" class="">SourceFileName</a>
                                 </li>
                                 <li class="">
@@ -346,8 +343,14 @@
                                 </li>
                               </ul>  </li>
                           <li class="">
+                            <span class="expand-stub"></span>
                             <a href="Llvm.NET.ConstantAsMetadata.html" title="ConstantAsMetadata" class="">ConstantAsMetadata</a>
-                          </li>
+                              
+                              <ul class="nav level3">
+                                <li class="">
+                                  <a href="Llvm.NET.ConstantAsMetadata.Constant.html" title="Constant" class="">Constant</a>
+                                </li>
+                              </ul>  </li>
                           <li class="">
                             <span class="expand-stub"></span>
                             <a href="Llvm.NET.Context.html" title="Context" class="">Context</a>
@@ -1317,9 +1320,6 @@
                                   <a href="Llvm.NET.StaticState.InitializeLLVM.html" title="InitializeLLVM" class="">InitializeLLVM</a>
                                 </li>
                                 <li class="">
-                                  <a href="Llvm.NET.StaticState.InitializeOptimization.html" title="InitializeOptimization" class="">InitializeOptimization</a>
-                                </li>
-                                <li class="">
                                   <a href="Llvm.NET.StaticState.ParseCommandLineOptions.html" title="ParseCommandLineOptions" class="">ParseCommandLineOptions</a>
                                 </li>
                                 <li class="">
@@ -2044,8 +2044,23 @@
                                 </li>
                               </ul>  </li>
                           <li class="">
+                            <span class="expand-stub"></span>
                             <a href="Llvm.NET.ValueAsMetadata.html" title="ValueAsMetadata" class="">ValueAsMetadata</a>
-                          </li>
+                              
+                              <ul class="nav level3">
+                                <li class="">
+                                  <a href="Llvm.NET.ValueAsMetadata.Context.html" title="Context" class="">Context</a>
+                                </li>
+                                <li class="">
+                                  <a href="Llvm.NET.ValueAsMetadata.op_Implicit.html" title="Implicit" class="">Implicit</a>
+                                </li>
+                                <li class="">
+                                  <a href="Llvm.NET.ValueAsMetadata.Type.html" title="Type" class="">Type</a>
+                                </li>
+                                <li class="">
+                                  <a href="Llvm.NET.ValueAsMetadata.Value.html" title="Value" class="">Value</a>
+                                </li>
+                              </ul>  </li>
                           <li class="">
                             <span class="expand-stub"></span>
                             <a href="Llvm.NET.Visibility.html" title="Visibility" class="">Visibility</a>
@@ -3395,6 +3410,12 @@
                             <a href="Llvm.NET.DebugInfo.IDebugType-2.html" title="IDebugType&lt;TNative, TDebug&gt;" class="">IDebugType&lt;TNative, TDebug&gt;</a>
                               
                               <ul class="nav level3">
+                                <li class="">
+                                  <a href="Llvm.NET.DebugInfo.IDebugType-2.CreateArrayType.html" title="CreateArrayType" class="">CreateArrayType</a>
+                                </li>
+                                <li class="">
+                                  <a href="Llvm.NET.DebugInfo.IDebugType-2.CreatePointerType.html" title="CreatePointerType" class="">CreatePointerType</a>
+                                </li>
                                 <li class="">
                                   <a href="Llvm.NET.DebugInfo.IDebugType-2.DIType.html" title="DIType" class="">DIType</a>
                                 </li>
@@ -5643,7 +5664,8 @@
   
   <h1 id="Llvm_NET_DebugInfo_DebugType_2" data-uid="Llvm.NET.DebugInfo.DebugType`2">Class DebugType&lt;TNative, TDebug&gt;
   </h1>
-  <div class="markdown level0 summary"></div>
+  <div class="markdown level0 summary"><p>Base class for Debug types bound with an LLVM type</p>
+</div>
   <div class="markdown level0 conceptual"></div>
 
   <div class="inheritance">
@@ -5710,13 +5732,15 @@
     <tr>
       <td>
         <span class="parametername">TNative</span>
-        <p>
+        <p><p>Native LLVM type</p>
+</p>
       </td>
     </tr>
     <tr>
       <td>
         <span class="parametername">TDebug</span>
-        <p>
+        <p><p>Debug type</p>
+</p>
       </td>
     </tr>
   </table>
@@ -5736,91 +5760,106 @@
         <td id="Llvm_NET_DebugInfo_DebugType_2_Context" data-uid="Llvm.NET.DebugInfo.DebugType`2.Context">
           <a class="xref" href="Llvm.NET.DebugInfo.DebugType-2.Context.html#Llvm_NET_DebugInfo_DebugType_2_Context">Context</a>
         </td>
-        <td class="markdown level1 summary"></td>
+        <td class="markdown level1 summary"><p>Gets the Context that owns this type</p>
+</td>
       </tr>
       <tr>
         <td id="Llvm_NET_DebugInfo_DebugType_2_DIType" data-uid="Llvm.NET.DebugInfo.DebugType`2.DIType">
           <a class="xref" href="Llvm.NET.DebugInfo.DebugType-2.DIType.html#Llvm_NET_DebugInfo_DebugType_2_DIType">DIType</a>
         </td>
-        <td class="markdown level1 summary"></td>
+        <td class="markdown level1 summary"><p>Gets or sets the Debug information type for this </p>
+</td>
       </tr>
       <tr>
         <td id="Llvm_NET_DebugInfo_DebugType_2_IntegerBitWidth" data-uid="Llvm.NET.DebugInfo.DebugType`2.IntegerBitWidth">
           <a class="xref" href="Llvm.NET.DebugInfo.DebugType-2.IntegerBitWidth.html#Llvm_NET_DebugInfo_DebugType_2_IntegerBitWidth">IntegerBitWidth</a>
         </td>
-        <td class="markdown level1 summary"></td>
+        <td class="markdown level1 summary"><p>Gets the integer bit width of this type or 0 for non integer types</p>
+</td>
       </tr>
       <tr>
         <td id="Llvm_NET_DebugInfo_DebugType_2_IsDouble" data-uid="Llvm.NET.DebugInfo.DebugType`2.IsDouble">
           <a class="xref" href="Llvm.NET.DebugInfo.DebugType-2.IsDouble.html#Llvm_NET_DebugInfo_DebugType_2_IsDouble">IsDouble</a>
         </td>
-        <td class="markdown level1 summary"></td>
+        <td class="markdown level1 summary"><p>Gets a value indicating whether the type is a 64-bit IEEE floating point type</p>
+</td>
       </tr>
       <tr>
         <td id="Llvm_NET_DebugInfo_DebugType_2_IsFloat" data-uid="Llvm.NET.DebugInfo.DebugType`2.IsFloat">
           <a class="xref" href="Llvm.NET.DebugInfo.DebugType-2.IsFloat.html#Llvm_NET_DebugInfo_DebugType_2_IsFloat">IsFloat</a>
         </td>
-        <td class="markdown level1 summary"></td>
+        <td class="markdown level1 summary"><p>Gets a value indicating whether the type is a 32-bit IEEE floating point type</p>
+</td>
       </tr>
       <tr>
         <td id="Llvm_NET_DebugInfo_DebugType_2_IsFloatingPoint" data-uid="Llvm.NET.DebugInfo.DebugType`2.IsFloatingPoint">
           <a class="xref" href="Llvm.NET.DebugInfo.DebugType-2.IsFloatingPoint.html#Llvm_NET_DebugInfo_DebugType_2_IsFloatingPoint">IsFloatingPoint</a>
         </td>
-        <td class="markdown level1 summary"></td>
+        <td class="markdown level1 summary"><p>Gets a value indicating whether this type is a floating point type</p>
+</td>
       </tr>
       <tr>
         <td id="Llvm_NET_DebugInfo_DebugType_2_IsInteger" data-uid="Llvm.NET.DebugInfo.DebugType`2.IsInteger">
           <a class="xref" href="Llvm.NET.DebugInfo.DebugType-2.IsInteger.html#Llvm_NET_DebugInfo_DebugType_2_IsInteger">IsInteger</a>
         </td>
-        <td class="markdown level1 summary"></td>
+        <td class="markdown level1 summary"><p>Gets a value indicating whether this type is an integer</p>
+</td>
       </tr>
       <tr>
         <td id="Llvm_NET_DebugInfo_DebugType_2_IsPointer" data-uid="Llvm.NET.DebugInfo.DebugType`2.IsPointer">
           <a class="xref" href="Llvm.NET.DebugInfo.DebugType-2.IsPointer.html#Llvm_NET_DebugInfo_DebugType_2_IsPointer">IsPointer</a>
         </td>
-        <td class="markdown level1 summary"></td>
+        <td class="markdown level1 summary"><p>Gets a value indicating whether this type is a pointer</p>
+</td>
       </tr>
       <tr>
         <td id="Llvm_NET_DebugInfo_DebugType_2_IsPointerPointer" data-uid="Llvm.NET.DebugInfo.DebugType`2.IsPointerPointer">
           <a class="xref" href="Llvm.NET.DebugInfo.DebugType-2.IsPointerPointer.html#Llvm_NET_DebugInfo_DebugType_2_IsPointerPointer">IsPointerPointer</a>
         </td>
-        <td class="markdown level1 summary"></td>
+        <td class="markdown level1 summary"><p>Gets a value indicating whether this type is a pointer to a pointer</p>
+</td>
       </tr>
       <tr>
         <td id="Llvm_NET_DebugInfo_DebugType_2_IsSequence" data-uid="Llvm.NET.DebugInfo.DebugType`2.IsSequence">
           <a class="xref" href="Llvm.NET.DebugInfo.DebugType-2.IsSequence.html#Llvm_NET_DebugInfo_DebugType_2_IsSequence">IsSequence</a>
         </td>
-        <td class="markdown level1 summary"></td>
+        <td class="markdown level1 summary"><p>Gets a value indicating whether this type is a sequence type</p>
+</td>
       </tr>
       <tr>
         <td id="Llvm_NET_DebugInfo_DebugType_2_IsSized" data-uid="Llvm.NET.DebugInfo.DebugType`2.IsSized">
           <a class="xref" href="Llvm.NET.DebugInfo.DebugType-2.IsSized.html#Llvm_NET_DebugInfo_DebugType_2_IsSized">IsSized</a>
         </td>
-        <td class="markdown level1 summary"></td>
+        <td class="markdown level1 summary"><p>Gets a value indicating whether the type is sized</p>
+</td>
       </tr>
       <tr>
         <td id="Llvm_NET_DebugInfo_DebugType_2_IsStruct" data-uid="Llvm.NET.DebugInfo.DebugType`2.IsStruct">
           <a class="xref" href="Llvm.NET.DebugInfo.DebugType-2.IsStruct.html#Llvm_NET_DebugInfo_DebugType_2_IsStruct">IsStruct</a>
         </td>
-        <td class="markdown level1 summary"></td>
+        <td class="markdown level1 summary"><p>Gets a value indicating whether this type is a structure type</p>
+</td>
       </tr>
       <tr>
         <td id="Llvm_NET_DebugInfo_DebugType_2_IsVoid" data-uid="Llvm.NET.DebugInfo.DebugType`2.IsVoid">
           <a class="xref" href="Llvm.NET.DebugInfo.DebugType-2.IsVoid.html#Llvm_NET_DebugInfo_DebugType_2_IsVoid">IsVoid</a>
         </td>
-        <td class="markdown level1 summary"></td>
+        <td class="markdown level1 summary"><p>Gets a value indicating whether this type represents the void type</p>
+</td>
       </tr>
       <tr>
         <td id="Llvm_NET_DebugInfo_DebugType_2_Kind" data-uid="Llvm.NET.DebugInfo.DebugType`2.Kind">
           <a class="xref" href="Llvm.NET.DebugInfo.DebugType-2.Kind.html#Llvm_NET_DebugInfo_DebugType_2_Kind">Kind</a>
         </td>
-        <td class="markdown level1 summary"></td>
+        <td class="markdown level1 summary"><p>Gets the LLVM Type kind for this type</p>
+</td>
       </tr>
       <tr>
         <td id="Llvm_NET_DebugInfo_DebugType_2_NativeType" data-uid="Llvm.NET.DebugInfo.DebugType`2.NativeType">
           <a class="xref" href="Llvm.NET.DebugInfo.DebugType-2.NativeType.html#Llvm_NET_DebugInfo_DebugType_2_NativeType">NativeType</a>
         </td>
-        <td class="markdown level1 summary"></td>
+        <td class="markdown level1 summary"><p>Gets or sets the native LLVM type for this debug type binding</p>
+</td>
       </tr>
     </tbody>
   </table>
@@ -5838,7 +5877,8 @@
         <td id="Llvm_NET_DebugInfo_DebugType_2_AddExtendedPropertyValue_System_String_System_Object_" data-uid="Llvm.NET.DebugInfo.DebugType`2.AddExtendedPropertyValue(System.String,System.Object)">
           <a class="xref" href="Llvm.NET.DebugInfo.DebugType-2.AddExtendedPropertyValue.html#Llvm_NET_DebugInfo_DebugType_2_AddExtendedPropertyValue_System_String_System_Object_">AddExtendedPropertyValue(String, Object)</a>
         </td>
-        <td class="markdown level1 summary"></td>
+        <td class="markdown level1 summary"><p>Adds a value to the container</p>
+</td>
       </tr>
       <tr>
         <td id="Llvm_NET_DebugInfo_DebugType_2_CreateArrayType_Llvm_NET_BitcodeModule_System_UInt32_System_UInt32_" data-uid="Llvm.NET.DebugInfo.DebugType`2.CreateArrayType(Llvm.NET.BitcodeModule,System.UInt32,System.UInt32)">
@@ -5850,13 +5890,15 @@
         <td id="Llvm_NET_DebugInfo_DebugType_2_CreateArrayType_System_UInt32_" data-uid="Llvm.NET.DebugInfo.DebugType`2.CreateArrayType(System.UInt32)">
           <a class="xref" href="Llvm.NET.DebugInfo.DebugType-2.CreateArrayType.html#Llvm_NET_DebugInfo_DebugType_2_CreateArrayType_System_UInt32_">CreateArrayType(UInt32)</a>
         </td>
-        <td class="markdown level1 summary"></td>
+        <td class="markdown level1 summary"><p>Array type factory for an array with elements of this type</p>
+</td>
       </tr>
       <tr>
         <td id="Llvm_NET_DebugInfo_DebugType_2_CreatePointerType" data-uid="Llvm.NET.DebugInfo.DebugType`2.CreatePointerType">
           <a class="xref" href="Llvm.NET.DebugInfo.DebugType-2.CreatePointerType.html#Llvm_NET_DebugInfo_DebugType_2_CreatePointerType">CreatePointerType()</a>
         </td>
-        <td class="markdown level1 summary"></td>
+        <td class="markdown level1 summary"><p>Get a <a class="xref" href="Llvm.NET.Types.IPointerType.html">IPointerType</a> for a type that points to elements of this type in the default (0) address space</p>
+</td>
       </tr>
       <tr>
         <td id="Llvm_NET_DebugInfo_DebugType_2_CreatePointerType_Llvm_NET_BitcodeModule_System_UInt32_" data-uid="Llvm.NET.DebugInfo.DebugType`2.CreatePointerType(Llvm.NET.BitcodeModule,System.UInt32)">
@@ -5868,13 +5910,15 @@
         <td id="Llvm_NET_DebugInfo_DebugType_2_CreatePointerType_System_UInt32_" data-uid="Llvm.NET.DebugInfo.DebugType`2.CreatePointerType(System.UInt32)">
           <a class="xref" href="Llvm.NET.DebugInfo.DebugType-2.CreatePointerType.html#Llvm_NET_DebugInfo_DebugType_2_CreatePointerType_System_UInt32_">CreatePointerType(UInt32)</a>
         </td>
-        <td class="markdown level1 summary"></td>
+        <td class="markdown level1 summary"><p>Get a <a class="xref" href="Llvm.NET.Types.IPointerType.html">IPointerType</a> for a type that points to elements of this type in the specified address space</p>
+</td>
       </tr>
       <tr>
         <td id="Llvm_NET_DebugInfo_DebugType_2_GetNullValue" data-uid="Llvm.NET.DebugInfo.DebugType`2.GetNullValue">
           <a class="xref" href="Llvm.NET.DebugInfo.DebugType-2.GetNullValue.html#Llvm_NET_DebugInfo_DebugType_2_GetNullValue">GetNullValue()</a>
         </td>
-        <td class="markdown level1 summary"></td>
+        <td class="markdown level1 summary"><p>Gets a null value (e.g. all bits == 0 ) for the type</p>
+</td>
       </tr>
       <tr>
         <td id="Llvm_NET_DebugInfo_DebugType_2_TryGetExtendedPropertyValue__1_System_String___0__" data-uid="Llvm.NET.DebugInfo.DebugType`2.TryGetExtendedPropertyValue``1(System.String,``0@)">
@@ -5910,7 +5954,7 @@
           </div>
           <div class="contribution-panel mobile-hide">
               <a href="https://github.com/UbiquityDotNET/Llvm.NET/new/master/apiSpec/new?filename=Llvm_NET_DebugInfo_DebugType_2.md&amp;value=---%0Auid%3A%20Llvm.NET.DebugInfo.DebugType%602%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A" title="Improve this Doc" class="fab btn-warning pull-right"><i class="glyphicon glyphicon-pencil"></i></a>
-              <a href="https://github.com/UbiquityDotNET/Llvm.NET/blob/master/src/Llvm.NET/DebugInfo/DebugType.cs/#L46" title="View Source" class="fab btn-info pull-right"><i class="fa fa-code"></i></a>
+              <a href="https://github.com/UbiquityDotNET/Llvm.NET/blob/master/src/Llvm.NET/DebugInfo/DebugType.cs/#L63" title="View Source" class="fab btn-info pull-right"><i class="fa fa-code"></i></a>
           </div>
           
           <div class="hidden-sm col-md-2" role="complementary">

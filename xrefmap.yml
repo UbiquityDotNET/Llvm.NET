@@ -508,18 +508,6 @@ references:
   commentId: Overload:Llvm.NET.BitcodeModule.Name
   fullName: Llvm.NET.BitcodeModule.Name
   nameWithType: BitcodeModule.Name
-- uid: Llvm.NET.BitcodeModule.Optimize(Llvm.NET.TargetMachine)
-  name: Optimize(TargetMachine)
-  href: api/Llvm.NET.BitcodeModule.Optimize.html#Llvm_NET_BitcodeModule_Optimize_Llvm_NET_TargetMachine_
-  commentId: M:Llvm.NET.BitcodeModule.Optimize(Llvm.NET.TargetMachine)
-  fullName: Llvm.NET.BitcodeModule.Optimize(Llvm.NET.TargetMachine)
-  nameWithType: BitcodeModule.Optimize(TargetMachine)
-- uid: Llvm.NET.BitcodeModule.Optimize*
-  name: Optimize
-  href: api/Llvm.NET.BitcodeModule.Optimize.html
-  commentId: Overload:Llvm.NET.BitcodeModule.Optimize
-  fullName: Llvm.NET.BitcodeModule.Optimize
-  nameWithType: BitcodeModule.Optimize
 - uid: Llvm.NET.BitcodeModule.SourceFileName
   name: SourceFileName
   href: api/Llvm.NET.BitcodeModule.SourceFileName.html#Llvm_NET_BitcodeModule_SourceFileName
@@ -926,6 +914,18 @@ references:
   commentId: T:Llvm.NET.ConstantAsMetadata
   fullName: Llvm.NET.ConstantAsMetadata
   nameWithType: ConstantAsMetadata
+- uid: Llvm.NET.ConstantAsMetadata.Constant
+  name: Constant
+  href: api/Llvm.NET.ConstantAsMetadata.Constant.html#Llvm_NET_ConstantAsMetadata_Constant
+  commentId: P:Llvm.NET.ConstantAsMetadata.Constant
+  fullName: Llvm.NET.ConstantAsMetadata.Constant
+  nameWithType: ConstantAsMetadata.Constant
+- uid: Llvm.NET.ConstantAsMetadata.Constant*
+  name: Constant
+  href: api/Llvm.NET.ConstantAsMetadata.Constant.html
+  commentId: Overload:Llvm.NET.ConstantAsMetadata.Constant
+  fullName: Llvm.NET.ConstantAsMetadata.Constant
+  nameWithType: ConstantAsMetadata.Constant
 - uid: Llvm.NET.Context
   name: Context
   href: api/Llvm.NET.Context.html
@@ -5444,6 +5444,38 @@ references:
   fullName.vb: Llvm.NET.DebugInfo.IDebugType(Of TNative, TDebug)
   nameWithType: IDebugType<TNative, TDebug>
   nameWithType.vb: IDebugType(Of TNative, TDebug)
+- uid: Llvm.NET.DebugInfo.IDebugType`2.CreateArrayType(Llvm.NET.BitcodeModule,System.UInt32,System.UInt32)
+  name: CreateArrayType(BitcodeModule, UInt32, UInt32)
+  href: api/Llvm.NET.DebugInfo.IDebugType-2.CreateArrayType.html#Llvm_NET_DebugInfo_IDebugType_2_CreateArrayType_Llvm_NET_BitcodeModule_System_UInt32_System_UInt32_
+  commentId: M:Llvm.NET.DebugInfo.IDebugType`2.CreateArrayType(Llvm.NET.BitcodeModule,System.UInt32,System.UInt32)
+  fullName: Llvm.NET.DebugInfo.IDebugType<TNative, TDebug>.CreateArrayType(Llvm.NET.BitcodeModule, System.UInt32, System.UInt32)
+  fullName.vb: Llvm.NET.DebugInfo.IDebugType(Of TNative, TDebug).CreateArrayType(Llvm.NET.BitcodeModule, System.UInt32, System.UInt32)
+  nameWithType: IDebugType<TNative, TDebug>.CreateArrayType(BitcodeModule, UInt32, UInt32)
+  nameWithType.vb: IDebugType(Of TNative, TDebug).CreateArrayType(BitcodeModule, UInt32, UInt32)
+- uid: Llvm.NET.DebugInfo.IDebugType`2.CreateArrayType*
+  name: CreateArrayType
+  href: api/Llvm.NET.DebugInfo.IDebugType-2.CreateArrayType.html
+  commentId: Overload:Llvm.NET.DebugInfo.IDebugType`2.CreateArrayType
+  fullName: Llvm.NET.DebugInfo.IDebugType<TNative, TDebug>.CreateArrayType
+  fullName.vb: Llvm.NET.DebugInfo.IDebugType(Of TNative, TDebug).CreateArrayType
+  nameWithType: IDebugType<TNative, TDebug>.CreateArrayType
+  nameWithType.vb: IDebugType(Of TNative, TDebug).CreateArrayType
+- uid: Llvm.NET.DebugInfo.IDebugType`2.CreatePointerType(Llvm.NET.BitcodeModule,System.UInt32)
+  name: CreatePointerType(BitcodeModule, UInt32)
+  href: api/Llvm.NET.DebugInfo.IDebugType-2.CreatePointerType.html#Llvm_NET_DebugInfo_IDebugType_2_CreatePointerType_Llvm_NET_BitcodeModule_System_UInt32_
+  commentId: M:Llvm.NET.DebugInfo.IDebugType`2.CreatePointerType(Llvm.NET.BitcodeModule,System.UInt32)
+  fullName: Llvm.NET.DebugInfo.IDebugType<TNative, TDebug>.CreatePointerType(Llvm.NET.BitcodeModule, System.UInt32)
+  fullName.vb: Llvm.NET.DebugInfo.IDebugType(Of TNative, TDebug).CreatePointerType(Llvm.NET.BitcodeModule, System.UInt32)
+  nameWithType: IDebugType<TNative, TDebug>.CreatePointerType(BitcodeModule, UInt32)
+  nameWithType.vb: IDebugType(Of TNative, TDebug).CreatePointerType(BitcodeModule, UInt32)
+- uid: Llvm.NET.DebugInfo.IDebugType`2.CreatePointerType*
+  name: CreatePointerType
+  href: api/Llvm.NET.DebugInfo.IDebugType-2.CreatePointerType.html
+  commentId: Overload:Llvm.NET.DebugInfo.IDebugType`2.CreatePointerType
+  fullName: Llvm.NET.DebugInfo.IDebugType<TNative, TDebug>.CreatePointerType
+  fullName.vb: Llvm.NET.DebugInfo.IDebugType(Of TNative, TDebug).CreatePointerType
+  nameWithType: IDebugType<TNative, TDebug>.CreatePointerType
+  nameWithType.vb: IDebugType(Of TNative, TDebug).CreatePointerType
 - uid: Llvm.NET.DebugInfo.IDebugType`2.DIType
   name: DIType
   href: api/Llvm.NET.DebugInfo.IDebugType-2.DIType.html#Llvm_NET_DebugInfo_IDebugType_2_DIType
@@ -10394,18 +10426,6 @@ references:
   commentId: Overload:Llvm.NET.StaticState.InitializeLLVM
   fullName: Llvm.NET.StaticState.InitializeLLVM
   nameWithType: StaticState.InitializeLLVM
-- uid: Llvm.NET.StaticState.InitializeOptimization
-  name: InitializeOptimization()
-  href: api/Llvm.NET.StaticState.InitializeOptimization.html#Llvm_NET_StaticState_InitializeOptimization
-  commentId: M:Llvm.NET.StaticState.InitializeOptimization
-  fullName: Llvm.NET.StaticState.InitializeOptimization()
-  nameWithType: StaticState.InitializeOptimization()
-- uid: Llvm.NET.StaticState.InitializeOptimization*
-  name: InitializeOptimization
-  href: api/Llvm.NET.StaticState.InitializeOptimization.html
-  commentId: Overload:Llvm.NET.StaticState.InitializeOptimization
-  fullName: Llvm.NET.StaticState.InitializeOptimization
-  nameWithType: StaticState.InitializeOptimization
 - uid: Llvm.NET.StaticState.ParseCommandLineOptions(System.String[],System.String)
   name: ParseCommandLineOptions(String[], String)
   href: api/Llvm.NET.StaticState.ParseCommandLineOptions.html#Llvm_NET_StaticState_ParseCommandLineOptions_System_String___System_String_
@@ -13523,6 +13543,60 @@ references:
   commentId: T:Llvm.NET.ValueAsMetadata
   fullName: Llvm.NET.ValueAsMetadata
   nameWithType: ValueAsMetadata
+- uid: Llvm.NET.ValueAsMetadata.Context
+  name: Context
+  href: api/Llvm.NET.ValueAsMetadata.Context.html#Llvm_NET_ValueAsMetadata_Context
+  commentId: P:Llvm.NET.ValueAsMetadata.Context
+  fullName: Llvm.NET.ValueAsMetadata.Context
+  nameWithType: ValueAsMetadata.Context
+- uid: Llvm.NET.ValueAsMetadata.Context*
+  name: Context
+  href: api/Llvm.NET.ValueAsMetadata.Context.html
+  commentId: Overload:Llvm.NET.ValueAsMetadata.Context
+  fullName: Llvm.NET.ValueAsMetadata.Context
+  nameWithType: ValueAsMetadata.Context
+- uid: Llvm.NET.ValueAsMetadata.op_Implicit(Llvm.NET.ValueAsMetadata)~Llvm.NET.Values.Value
+  name: Implicit(ValueAsMetadata to Value)
+  href: api/Llvm.NET.ValueAsMetadata.op_Implicit.html#Llvm_NET_ValueAsMetadata_op_Implicit_Llvm_NET_ValueAsMetadata__Llvm_NET_Values_Value
+  commentId: M:Llvm.NET.ValueAsMetadata.op_Implicit(Llvm.NET.ValueAsMetadata)~Llvm.NET.Values.Value
+  name.vb: Widening(ValueAsMetadata to Value)
+  fullName: Llvm.NET.ValueAsMetadata.Implicit(Llvm.NET.ValueAsMetadata to Llvm.NET.Values.Value)
+  fullName.vb: Llvm.NET.ValueAsMetadata.Widening(Llvm.NET.ValueAsMetadata to Llvm.NET.Values.Value)
+  nameWithType: ValueAsMetadata.Implicit(ValueAsMetadata to Value)
+  nameWithType.vb: ValueAsMetadata.Widening(ValueAsMetadata to Value)
+- uid: Llvm.NET.ValueAsMetadata.op_Implicit*
+  name: Implicit
+  href: api/Llvm.NET.ValueAsMetadata.op_Implicit.html
+  commentId: Overload:Llvm.NET.ValueAsMetadata.op_Implicit
+  name.vb: Widening
+  fullName: Llvm.NET.ValueAsMetadata.Implicit
+  fullName.vb: Llvm.NET.ValueAsMetadata.Widening
+  nameWithType: ValueAsMetadata.Implicit
+  nameWithType.vb: ValueAsMetadata.Widening
+- uid: Llvm.NET.ValueAsMetadata.Type
+  name: Type
+  href: api/Llvm.NET.ValueAsMetadata.Type.html#Llvm_NET_ValueAsMetadata_Type
+  commentId: P:Llvm.NET.ValueAsMetadata.Type
+  fullName: Llvm.NET.ValueAsMetadata.Type
+  nameWithType: ValueAsMetadata.Type
+- uid: Llvm.NET.ValueAsMetadata.Type*
+  name: Type
+  href: api/Llvm.NET.ValueAsMetadata.Type.html
+  commentId: Overload:Llvm.NET.ValueAsMetadata.Type
+  fullName: Llvm.NET.ValueAsMetadata.Type
+  nameWithType: ValueAsMetadata.Type
+- uid: Llvm.NET.ValueAsMetadata.Value
+  name: Value
+  href: api/Llvm.NET.ValueAsMetadata.Value.html#Llvm_NET_ValueAsMetadata_Value
+  commentId: P:Llvm.NET.ValueAsMetadata.Value
+  fullName: Llvm.NET.ValueAsMetadata.Value
+  nameWithType: ValueAsMetadata.Value
+- uid: Llvm.NET.ValueAsMetadata.Value*
+  name: Value
+  href: api/Llvm.NET.ValueAsMetadata.Value.html
+  commentId: Overload:Llvm.NET.ValueAsMetadata.Value
+  fullName: Llvm.NET.ValueAsMetadata.Value
+  nameWithType: ValueAsMetadata.Value
 - uid: Llvm.NET.Values
   name: Llvm.NET.Values
   href: api/Llvm.NET.Values.html
