@@ -21,14 +21,15 @@ namespace Llvm.NET.DebugInfo
     /// strict one to one relationship between an LLVM type and corresponding language specific debug
     /// type. (e.g. unsigned char, char, byte and signed byte might all be 8 bit integer values as far
     /// as LLVM is concerned. Also, when using the pointer+alloca+memcpy pattern to pass by value the
-    /// actual source debug info type is different than the LLVM function signature. This class is used
-    /// to construct native type and debug info pairing to allow applications to maintain a link from
-    /// their AST or IR types into the LLVM native type and debug information.
+    /// actual source debug info type is different than the LLVM function signature. This interface and
+    /// it's implementations is used to construct native type and debug info pairing to allow applications
+    /// to maintain a link from their AST or IR types into the LLVM native type and debug information.
     /// </para>
     /// <note type="note">
-    /// It is important to note that the relationship between the <see cref="DIType"/> to it's <see cref="NativeType"/>
-    /// properties is strictly one way. That is, there is no way to take an arbitrary <see cref="ITypeRef"/> and re-associate
-    /// it with the DIType or an implementation of this interface as there may be many such mappings to choose from.
+    /// It is important to note that the relationship from the <see cref="DIType"/> to it's <see cref="NativeType"/>
+    /// properties is strictly ***one way***. That is, there is no way to take an arbitrary <see cref="ITypeRef"/>
+    /// and re-associate it with the DIType or an implementation of this interface as there may be many such
+    /// mappings to choose from.
     /// </note>
     /// </remarks>
     public interface IDebugType<out TNative, out TDebug>
@@ -41,9 +42,25 @@ namespace Llvm.NET.DebugInfo
 
         /// <summary>Gets the debug information type this interface is associating with <see cref="NativeType"/></summary>
         TDebug DIType { get; }
+
+        /// <summary>Creates a pointer to this type for a given module and address space</summary>
+        /// <param name="module">Module the debug type information belongs to</param>
+        /// <param name="addressSpace">Address space for the pointer</param>
+        /// <returns><see cref="DebugPointerType"/></returns>
+        DebugPointerType CreatePointerType( BitcodeModule module, uint addressSpace );
+
+        /// <summary>Creates a type defining an array of elements of this type</summary>
+        /// <param name="module">Module the debug information belongs to</param>
+        /// <param name="lowerBound">Lower bound of the array</param>
+        /// <param name="count">Count of elements in the array</param>
+        /// <returns><see cref="DebugArrayType"/></returns>
+        DebugArrayType CreateArrayType( BitcodeModule module, uint lowerBound, uint count );
     }
 
-    [SuppressMessage( "StyleCop.CSharp.MaintainabilityRules", "SA1402:File may only contain a single class", Justification = "Interface, Generic type and static extension methods form a common type interface" )]
+    /// <summary>Base class for Debug types bound with an LLVM type</summary>
+    /// <typeparam name="TNative">Native LLVM type</typeparam>
+    /// <typeparam name="TDebug">Debug type</typeparam>
+    [SuppressMessage( "StyleCop.CSharp.MaintainabilityRules", "SA1402:File may only contain a single class", Justification = "Interface, Generic type and static extension methods form a common API surface" )]
     public class DebugType<TNative, TDebug>
         : IDebugType<TNative, TDebug>
         , ITypeRef
@@ -51,7 +68,13 @@ namespace Llvm.NET.DebugInfo
         where TNative : class, ITypeRef
         where TDebug : DIType
     {
-        // Re-assignment will perform RAUW on the current value
+        /// <summary>Gets or sets the Debug information type for this </summary>
+        /// <remarks>
+        /// Setting the debug type is only allowed when the deug type is null or <see cref="MDNode.IsTemporary"/>
+        /// is <see langword="true"/>. If the debug type node is a temporary seting the type will replace all uses
+        /// of the temporary type automatically, via <see cref="MDNode.ReplaceAllUsesWith(LlvmMetadata)"/>
+        /// </remarks>
+        /// <exception cref="InvalidOperationException">The type is not <see langword="null"/> or not a temporary</exception>
         [SuppressMessage( "Microsoft.Naming", "CA2204:Literals should be spelled correctly", MessageId = "DIType", Justification = "It is spelled correctly 8^)" )]
         public TDebug DIType
         {
@@ -79,6 +102,12 @@ namespace Llvm.NET.DebugInfo
             }
         }
 
+        /// <summary>Gets or sets the native LLVM type for this debug type binding</summary>
+        /// <remarks>
+        /// Once the native type is set, it cannot be reset. Attempts to change the native
+        /// type when it isn't <see langword="null"/> will result in an exception.
+        /// </remarks>
+        /// <exception cref="InvalidOperationException">The native type was already set</exception>
         public TNative NativeType
         {
             get => NativeType_;
@@ -94,42 +123,62 @@ namespace Llvm.NET.DebugInfo
             }
         }
 
+        /// <summary>Gets an intentionally undocumented value</summary>
+        /// <remarks>internal use only</remarks>
         LLVMTypeRef ITypeHandleOwner.TypeHandle => NativeType.GetTypeRef( );
 
+        /// <inheritdoc/>
         public bool IsSized => NativeType.IsSized;
 
+        /// <inheritdoc/>
         public TypeKind Kind => NativeType.Kind;
 
+        /// <inheritdoc/>
         public Context Context => NativeType.Context;
 
+        /// <inheritdoc/>
         public uint IntegerBitWidth => NativeType.IntegerBitWidth;
 
+        /// <inheritdoc/>
         public bool IsInteger => NativeType.IsInteger;
 
+        /// <inheritdoc/>
         public bool IsFloat => NativeType.IsFloat;
 
+        /// <inheritdoc/>
         public bool IsDouble => NativeType.IsDouble;
 
+        /// <inheritdoc/>
         public bool IsVoid => NativeType.IsVoid;
 
+        /// <inheritdoc/>
         public bool IsStruct => NativeType.IsStruct;
 
+        /// <inheritdoc/>
         public bool IsPointer => NativeType.IsPointer;
 
+        /// <inheritdoc/>
         public bool IsSequence => NativeType.IsSequence;
 
+        /// <inheritdoc/>
         public bool IsFloatingPoint => NativeType.IsFloatingPoint;
 
+        /// <inheritdoc/>
         public bool IsPointerPointer => NativeType.IsPointerPointer;
 
+        /// <inheritdoc/>
         public Constant GetNullValue( ) => NativeType.GetNullValue( );
 
+        /// <inheritdoc/>
         public IArrayType CreateArrayType( uint count ) => NativeType.CreateArrayType( count );
 
+        /// <inheritdoc/>
         public IPointerType CreatePointerType( ) => NativeType.CreatePointerType( );
 
+        /// <inheritdoc/>
         public IPointerType CreatePointerType( uint addressSpace ) => NativeType.CreatePointerType( addressSpace );
 
+        /// <inheritdoc/>
         public DebugPointerType CreatePointerType( BitcodeModule module, uint addressSpace )
         {
             if( DIType == null )
@@ -141,6 +190,7 @@ namespace Llvm.NET.DebugInfo
             return new DebugPointerType( nativePointer, module, DIType, string.Empty );
         }
 
+        /// <inheritdoc/>
         public DebugArrayType CreateArrayType( BitcodeModule module, uint lowerBound, uint count )
         {
             if( DIType == null )
@@ -152,6 +202,7 @@ namespace Llvm.NET.DebugInfo
             return new DebugArrayType( llvmArray, module, DIType, count, lowerBound );
         }
 
+        /// <inheritdoc/>
         public bool TryGetExtendedPropertyValue<TProperty>( string id, out TProperty value )
         {
             if( PropertyContainer.TryGetExtendedPropertyValue( id, out value ) )
@@ -162,6 +213,7 @@ namespace Llvm.NET.DebugInfo
             return NativeType.TryGetExtendedPropertyValue( id, out value );
         }
 
+        /// <inheritdoc/>
         public void AddExtendedPropertyValue( string id, object value )
         {
             PropertyContainer.AddExtendedPropertyValue( id, value );
@@ -223,10 +275,7 @@ namespace Llvm.NET.DebugInfo
         /// <returns><see langword="true"/> if the type has debug information</returns>
         public static bool HasDebugInfo( this IDebugType<ITypeRef, DIType> debugType )
         {
-            if( debugType == null )
-            {
-                throw new ArgumentNullException( nameof( debugType ) );
-            }
+            debugType.ValidateNotNull( nameof( debugType ) );
 
             return debugType.DIType != null || debugType.NativeType.IsVoid;
         }

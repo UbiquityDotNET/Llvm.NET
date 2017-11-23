@@ -181,8 +181,6 @@
     <ClCompile Include="DIBuilderBindings.cpp" />
     <ClCompile Include="DITypeBindings.cpp" />
     <ClCompile Include="InlinedExports.cpp" />
-    <ClCompile Include="LegacyPassManagerOpt.cpp" />
-    <ClCompile Include="NewOptPassDriver.cpp" />
     <ClCompile Include="PassManagerBindings.cpp" />
     <ClCompile Include="IRBindings.cpp" />
     <ClCompile Include="ModuleBindings.cpp" />

@@ -3,9 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.26730.3
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "LibLLVM", "LibLLVM\LibLLVM.vcxproj", "{6C77A7DE-D464-430F-96A9-A64768763B5F}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "LibLLVM", ".\LibLLVM.vcxproj", "{6C77A7DE-D464-430F-96A9-A64768763B5F}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "MultiPlatformBuild", "LibLLVM\MultiPlatformBuild.vcxproj", "{C182D24F-0A4C-4A60-B6F5-CFD8D99329AC}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "MultiPlatformBuild", ".\MultiPlatformBuild.vcxproj", "{C182D24F-0A4C-4A60-B6F5-CFD8D99329AC}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

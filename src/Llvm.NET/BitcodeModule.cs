@@ -305,22 +305,6 @@ namespace Llvm.NET
             otherModule.ModuleHandle = new LLVMModuleRef( IntPtr.Zero );
         }
 
-        /// <summary>Run optimization passes on the module</summary>
-        /// <param name="targetMachine"><see cref="TargetMachine"/> for use during optimizations</param>
-        /// <remarks>
-        /// Options configuring optimization are provided by calling <see cref="StaticState.ParseCommandLineOptions(string[], string)"/>.
-        /// The current implementation uses the legacy pass manager architecture, thus the options for controlling passes
-        /// are the same as used for the LLVM 'opt' tool. Once LLVM stabilizes on the new pass manager support this
-        /// will be obsoleted in favor of a new method that takes a string representation of the optimizations in a manner
-        /// consistent with the support in the 'opt' tool.
-        /// </remarks>
-        public void Optimize( TargetMachine targetMachine )
-        {
-            ValidateHandle( );
-            targetMachine.ValidateNotNull( nameof( targetMachine ) );
-            LLVMRunLegacyOptimizer( ModuleHandle, targetMachine.TargetMachineHandle );
-        }
-
         /// <summary>Verifies a bit-code module</summary>
         /// <param name="errmsg">Error messages describing any issues found in the bit-code</param>
         /// <returns>true if the verification succeeded and false if not.</returns>

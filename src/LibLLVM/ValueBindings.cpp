@@ -73,4 +73,9 @@ extern "C"
     {
         unwrap<Function>( function )->getBasicBlockList( ).push_back( unwrap( block ) );
     }
+
+    LLVMValueRef LLVMValueAsMetadataGetValue( LLVMMetadataRef vmd )
+    {
+        return wrap( unwrap<ValueAsMetadata>( vmd )->getValue( ) );
+    }
 }
