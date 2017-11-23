@@ -93,7 +93,7 @@ namespace Llvm.NET
         public T GetOperand<T>( int index )
             where T : LlvmMetadata
         {
-            return Operands[ index ] as T;
+            return Operands[ index ].Metadata as T;
         }
 
         /* TODO:
