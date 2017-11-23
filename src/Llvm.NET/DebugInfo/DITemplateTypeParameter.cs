@@ -6,7 +6,10 @@ using Llvm.NET.Native;
 
 namespace Llvm.NET.DebugInfo
 {
-    public class DITemplateTypeParameter : DITemplateParameter
+    /// <summary>Template type parameter</summary>
+    /// <seealso href="xref:llvm_langref#ditemplatetypeparameter">LLVM DITemplateTypeParameter</seealso>
+    public class DITemplateTypeParameter
+        : DITemplateParameter
     {
         internal DITemplateTypeParameter( LLVMMetadataRef handle )
             : base( handle )

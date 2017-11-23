@@ -3,8 +3,11 @@ references:
     name: LLVM Language reference
     href: http://releases.llvm.org/5.0.0/docs/LangRef.html
   - uid: llvm_sourceleveldebugging
-    name: LLVM Documentation
+    name: LLVM Source Level Debugging
     href: http://releases.llvm.org/5.0.0/docs/SourceLevelDebugging.html
   - uid: llvm_docs_garbagecollection
-    name: LLVM Documentation
-    href: http://llvm.org/5.0.0/docs/GarbageCollection.html
+    name: LLVM Garbage Collection
+    href: http://releases.llvm.org/5.0.0/docs/GarbageCollection.html
+  - uid: llvm_docs_passes
+    name: LLVM Analysis and Transform Passes
+    href: http://releases.llvm.org/5.0.0/docs/Passes.html

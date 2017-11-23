@@ -7,10 +7,13 @@ using Llvm.NET.Native.Handles;
 
 namespace Llvm.NET
 {
+    /// <summary>Operand for an <see cref="MDNode"/></summary>
     public class MDOperand
     {
+        /// <summary>Gets the node that owns this operand</summary>
         public MDNode OwningNode { get; }
 
+        /// <summary>Gets the metadata contents of the operand</summary>
         public LlvmMetadata Metadata => LlvmMetadata.FromHandle<LlvmMetadata>( OwningNode.Context, NativeMethods.LLVMGetOperandNode( OperandHandle ) );
 
         internal MDOperand( MDNode owningNode, LLVMMDOperandRef handle )

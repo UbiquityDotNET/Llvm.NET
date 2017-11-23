@@ -17,10 +17,7 @@ namespace Llvm.NET
         }
 
         /*
-        public Constant Constant { get; }
-
-        static public ConstantAsMetadata GetIfExists(Constant const);
-        static public ConstantAsMetadata Create(Constant const);
+        public Constant Constant => base.Value as Constant;
         */
     }
 }

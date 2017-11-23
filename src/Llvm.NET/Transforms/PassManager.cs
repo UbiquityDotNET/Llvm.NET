@@ -7,21 +7,14 @@ using Llvm.NET.Native;
 
 namespace Llvm.NET.Transforms
 {
+    /// <summary>Common base class for pass managers</summary>
     public class PassManager
         : IDisposable
     {
-        ~PassManager( )
-        {
-            // Do not change this code. Put cleanup code in Dispose(bool disposing) above.
-            Dispose( false );
-        }
-
         /// <inheritdoc/>
         public void Dispose( )
         {
-            // Do not change this code. Put cleanup code in Dispose(bool disposing) above.
             Dispose( true );
-            GC.SuppressFinalize( this );
         }
 
         internal PassManager( LLVMPassManagerRef handle )
@@ -33,14 +26,12 @@ namespace Llvm.NET.Transforms
 
         protected virtual void Dispose( bool disposing )
         {
-            if( !Handle.IsClosed )
+            if( disposing )
             {
-                if( disposing )
+                if( !Handle.IsClosed )
                 {
-                    // TODO: dispose managed state (managed objects).
+                    Handle.Close( );
                 }
-
-                Handle.Dispose( );
             }
         }
     }

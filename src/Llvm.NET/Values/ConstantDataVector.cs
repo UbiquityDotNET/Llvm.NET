@@ -6,7 +6,9 @@ using Llvm.NET.Native;
 
 namespace Llvm.NET.Values
 {
-    public class ConstantDataVector : ConstantDataSequential
+    /// <summary>Vector of Constant Data</summary>
+    public class ConstantDataVector
+        : ConstantDataSequential
     {
         internal ConstantDataVector( LLVMValueRef valueRef )
             : base( valueRef )

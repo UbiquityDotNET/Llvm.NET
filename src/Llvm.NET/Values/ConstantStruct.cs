@@ -6,7 +6,9 @@ using Llvm.NET.Native;
 
 namespace Llvm.NET.Values
 {
-    public class ConstantStruct : Constant
+    /// <summary>Constant Structure</summary>
+    public sealed class ConstantStruct
+        : ConstantAggregate
     {
         internal ConstantStruct( LLVMValueRef valueRef )
             : base( valueRef )

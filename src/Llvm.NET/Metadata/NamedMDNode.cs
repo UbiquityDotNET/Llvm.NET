@@ -19,8 +19,10 @@ namespace Llvm.NET
         public void AddOperand(MDNode node) {...}
         */
 
+        /// <summary>Gets the operands for the node</summary>
         public IReadOnlyList<MDNode> Operands { get; }
 
+        /// <summary>Gets the module that owns this node</summary>
         public BitcodeModule ParentModule => BitcodeModule.FromHandle( LLVMNamedMDNodeGetParentModule( NativeHandle ) );
 
         internal NamedMDNode( LLVMNamedMDNodeRef nativeNode )

@@ -84,11 +84,7 @@ namespace Llvm.NET
             SourceFileName = Path.GetFileName( srcFilePath );
         }
 
-        ~BitcodeModule( )
-        {
-            Dispose( false );
-        }
-
+        /// <summary>Gets a value indicating whether the module is diposed or not</summary>
         public bool IsDisposed => ModuleHandle == default;
 
         /// <summary>Gets or sets the name of the source file generating this module</summary>
@@ -416,6 +412,8 @@ namespace Llvm.NET
             return LLVMPrintModuleToString( ModuleHandle );
         }
 
+        /// <summary>Writes the LLVM IR bit code into a memory buffer</summary>
+        /// <returns><see cref="MemoryBuffer"/> containing the bit code module</returns>
         public MemoryBuffer WriteToBuffer( )
         {
             ValidateHandle( );
@@ -760,6 +758,9 @@ namespace Llvm.NET
             return new BitcodeModule( LLVMCloneModule( ModuleHandle ) );
         }
 
+        /// <summary>Clones the module into a new <see cref="Context"/></summary>
+        /// <param name="targetContext"><see cref="Context"/> to clone the module into</param>
+        /// <returns>Cloned copy of the module</returns>
         public BitcodeModule Clone( Context targetContext )
         {
             ValidateHandle( );

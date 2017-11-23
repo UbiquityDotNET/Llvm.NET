@@ -12,6 +12,7 @@ namespace Llvm.NET.Values
         /// <param name="self">Value to modify</param>
         /// <param name="value">New value to set</param>
         /// <returns><paramref name="self"/> for fluent usage patterns</returns>
+        /// <seealso cref="GlobalValue.Visibility"/>
         public static T Visibility<T>( this T self, Visibility value )
             where T : GlobalValue
         {
@@ -24,6 +25,7 @@ namespace Llvm.NET.Values
         /// <param name="self">Value to modify</param>
         /// <param name="value">New value to set</param>
         /// <returns><paramref name="self"/> for fluent usage patterns</returns>
+        /// <seealso cref="GlobalValue.Linkage"/>
         public static T Linkage<T>( this T self, Linkage value )
             where T : GlobalValue
         {
@@ -36,6 +38,7 @@ namespace Llvm.NET.Values
         /// <param name="self">Value to modify</param>
         /// <param name="value">New value to set</param>
         /// <returns><paramref name="self"/> for fluent usage patterns</returns>
+        /// <seealso cref="GlobalValue.UnnamedAddress"/>
         public static T UnnamedAddress<T>( this T self, bool value )
             where T : GlobalValue
         {

@@ -34,9 +34,12 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Repo Items", "Repo Items", "{BA4F7BCF-67BC-49E4-B2F9-DCED3D57619D}"
 	ProjectSection(SolutionItems) = preProject
 		..\appveyor.yml = ..\appveyor.yml
-		..\docs-appveyor.yml = ..\docs-appveyor.yml
+		..\Build-docs.ps1 = ..\Build-docs.ps1
+		..\BuildAll.ps1 = ..\BuildAll.ps1
+		buildutils.ps1 = buildutils.ps1
 		..\Directory.Build.props = ..\Directory.Build.props
 		..\Directory.Build.targets = ..\Directory.Build.targets
+		..\docs-appveyor.yml = ..\docs-appveyor.yml
 		..\GOVERNANCE.md = ..\GOVERNANCE.md
 		..\Invoke-UnitTests.ps1 = ..\Invoke-UnitTests.ps1
 		..\LICENSE.md = ..\LICENSE.md
@@ -45,6 +48,17 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Repo Items", "Repo Items", 
 		..\README.md = ..\README.md
 		..\stylecop.json = ..\stylecop.json
 		..\Ubiquity.NET.ruleset = ..\Ubiquity.NET.ruleset
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "docfx", "docfx", "{2762672E-8B94-4C84-ADCF-195FFEF5D7DD}"
+	ProjectSection(SolutionItems) = preProject
+		..\docfx\docfx.json = ..\docfx\docfx.json
+		..\docfx\DragonSharp.png = ..\docfx\DragonSharp.png
+		..\docfx\DragonSharp48x48.png = ..\docfx\DragonSharp48x48.png
+		..\docfx\favicon.ico = ..\docfx\favicon.ico
+		..\docfx\index.md = ..\docfx\index.md
+		..\docfx\llvm-xref.yml = ..\docfx\llvm-xref.yml
+		..\docfx\toc.yml = ..\docfx\toc.yml
 	EndProjectSection
 EndProject
 Global

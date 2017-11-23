@@ -52,6 +52,8 @@ namespace Llvm.NET.Values
             set => NativeMethods.LLVMSetInitializer( ValueHandle, value?.ValueHandle ?? new LLVMValueRef( IntPtr.Zero ) );
         }
 
+        /// <summary>Adds a <see cref="DIGlobalVariableExpression"/> for a <see cref="GlobalVariable"/></summary>
+        /// <param name="expression">Expression to add</param>
         [SuppressMessage( "Microsoft.Design", "CA1011:ConsiderPassingBaseTypesAsParameters", Justification = "Specific type required by interop" )]
         public void AddDebugInfo(DIGlobalVariableExpression expression)
         {

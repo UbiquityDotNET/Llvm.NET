@@ -5,7 +5,6 @@
 using System;
 using System.Collections.Generic;
 using Llvm.NET.Native;
-using Ubiquity.ArgValidators;
 
 namespace Llvm.NET
 {
@@ -24,22 +23,44 @@ namespace Llvm.NET
     public class MDNode
         : LlvmMetadata
     {
+        /// <summary>Gets the <see cref="Context"/> this node belongs to</summary>
         public Context Context => MetadataHandle.Context;
 
+        /// <summary>Gets a value indicating whether this node was deleted</summary>
         public bool IsDeleted => MetadataHandle == default;
 
+        /// <summary>Gets a value indicating whether this node is a temprorary</summary>
         public bool IsTemporary => NativeMethods.LLVMIsTemporary( MetadataHandle );
 
+        /// <summary>Gets a value indicating whether this node is resolved</summary>
+        /// <remarks>
+        /// <para>If <see cref="IsTemporary"/> is <see langword="true"/>, then this always
+        /// returns <see langword="false"/>; if <see cref="IsDistinct"/> is <see langword="true"/>,
+        /// this always returns <see langword="true"/>.</para>
+        ///
+        /// <para>If <see cref="IsUniqued"/> is <see langword="true"/> then this returns <see langword="true"/>
+        /// if this node has already dropped RAUW support (because all operands are resolved).</para>
+        ///
+        /// <para>As forward declarations are resolved, their containers should get
+        /// resolved automatically.  However, if this (or one of its operands) is
+        /// involved in a cycle, <see cref="ResolveCycles"/> needs to be called explicitly.</para>
+        /// </remarks>
         public bool IsResolved => NativeMethods.LLVMIsResolved( MetadataHandle );
 
+        /// <summary>Gets a value indicating whether this node is uniqued</summary>
         public bool IsUniqued => NativeMethods.LLVMIsUniqued( MetadataHandle );
 
+        /// <summary>Gets a value indicating whether this node is distinct</summary>
         public bool IsDistinct => NativeMethods.LLVMIsDistinct( MetadataHandle );
 
+        /// <summary>Gets the operands for this node, if any</summary>
         public IReadOnlyList<MDOperand> Operands { get; }
 
+        /// <summary>Resolves cycles from this node</summary>
         public void ResolveCycles( ) => NativeMethods.LLVMMDNodeResolveCycles( MetadataHandle );
 
+        /// <summary>Replace all uses of this node with a new node</summary>
+        /// <param name="other">Node to replace this one with</param>
         public override void ReplaceAllUsesWith( LlvmMetadata other )
         {
             if( other == null )
@@ -65,10 +86,14 @@ namespace Llvm.NET
             MetadataHandle = default;
         }
 
+        /// <summary>Gets an operand by index as a specific type</summary>
+        /// <typeparam name="T">Type of the operand</typeparam>
+        /// <param name="index">Index of the operand</param>
+        /// <returns>Operand or <see langword="null"/> if the operand isn't casable to <typeparamref name="T"/></returns>
         public T GetOperand<T>( int index )
-            where T : MDNode
+            where T : LlvmMetadata
         {
-            return Operands[ index ] as T;
+            return Operands[ index ].Metadata as T;
         }
 
         /* TODO:

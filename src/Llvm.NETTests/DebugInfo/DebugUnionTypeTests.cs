@@ -39,20 +39,20 @@ namespace Llvm.NET.DebugInfo.Tests
                 Assert.AreEqual( testFile, union.DIType.File );
                 Assert.AreEqual( 0U, union.DIType.Line );
 
-                Assert.IsFalse( union.DIType.IsPrivate );
-                Assert.IsFalse( union.DIType.IsProtected );
-                Assert.IsFalse( union.DIType.IsPublic );
-                Assert.IsFalse( union.DIType.IsForwardDeclaration );
-                Assert.IsFalse( union.DIType.IsAppleBlockExtension );
-                Assert.IsFalse( union.DIType.IsBlockByRefStruct );
-                Assert.IsFalse( union.DIType.IsVirtual );
-                Assert.IsFalse( union.DIType.IsArtificial );
-                Assert.IsFalse( union.DIType.IsObjectPointer );
-                Assert.IsFalse( union.DIType.IsObjClassComplete );
-                Assert.IsFalse( union.DIType.IsVector );
-                Assert.IsFalse( union.DIType.IsStaticMember );
-                Assert.IsFalse( union.DIType.IsLvalueReference );
-                Assert.IsFalse( union.DIType.IsRvalueReference );
+                Assert.IsFalse( union.DIType.DebugInfoFlags.HasFlag( DebugInfoFlags.Private ) );
+                Assert.IsFalse( union.DIType.DebugInfoFlags.HasFlag( DebugInfoFlags.Protected ) );
+                Assert.IsFalse( union.DIType.DebugInfoFlags.HasFlag( DebugInfoFlags.Public ) );
+                Assert.IsFalse( union.DIType.DebugInfoFlags.HasFlag( DebugInfoFlags.ForwardDeclaration ) );
+                Assert.IsFalse( union.DIType.DebugInfoFlags.HasFlag( DebugInfoFlags.AppleBlock ) );
+                Assert.IsFalse( union.DIType.DebugInfoFlags.HasFlag( DebugInfoFlags.BlockByrefStruct ) );
+                Assert.IsFalse( union.DIType.DebugInfoFlags.HasFlag( DebugInfoFlags.Virtual ) );
+                Assert.IsFalse( union.DIType.DebugInfoFlags.HasFlag( DebugInfoFlags.Artificial ) );
+                Assert.IsFalse( union.DIType.DebugInfoFlags.HasFlag( DebugInfoFlags.ObjectPointer ) );
+                Assert.IsFalse( union.DIType.DebugInfoFlags.HasFlag( DebugInfoFlags.ObjcClassComplete ) );
+                Assert.IsFalse( union.DIType.DebugInfoFlags.HasFlag( DebugInfoFlags.Vector ) );
+                Assert.IsFalse( union.DIType.DebugInfoFlags.HasFlag( DebugInfoFlags.StaticMember ) );
+                Assert.IsFalse( union.DIType.DebugInfoFlags.HasFlag( DebugInfoFlags.LValueReference ) );
+                Assert.IsFalse( union.DIType.DebugInfoFlags.HasFlag( DebugInfoFlags.RValueReference ) );
 
                 // test the wrapped native type created correctly
                 Assert.IsFalse( union.NativeType.IsSized );
@@ -123,20 +123,20 @@ namespace Llvm.NET.DebugInfo.Tests
                 Assert.AreEqual( diFile, union.DIType.File );
                 Assert.AreEqual( 0U, union.DIType.Line );
 
-                Assert.IsFalse( union.DIType.IsPrivate );
-                Assert.IsFalse( union.DIType.IsProtected );
-                Assert.IsFalse( union.DIType.IsPublic );
-                Assert.IsFalse( union.DIType.IsForwardDeclaration );
-                Assert.IsFalse( union.DIType.IsAppleBlockExtension );
-                Assert.IsFalse( union.DIType.IsBlockByRefStruct );
-                Assert.IsFalse( union.DIType.IsVirtual );
-                Assert.IsFalse( union.DIType.IsArtificial );
-                Assert.IsFalse( union.DIType.IsObjectPointer );
-                Assert.IsFalse( union.DIType.IsObjClassComplete );
-                Assert.IsFalse( union.DIType.IsVector );
-                Assert.IsFalse( union.DIType.IsStaticMember );
-                Assert.IsFalse( union.DIType.IsLvalueReference );
-                Assert.IsFalse( union.DIType.IsRvalueReference );
+                Assert.IsFalse( union.DIType.DebugInfoFlags.HasFlag( DebugInfoFlags.Private ) );
+                Assert.IsFalse( union.DIType.DebugInfoFlags.HasFlag( DebugInfoFlags.Protected ) );
+                Assert.IsFalse( union.DIType.DebugInfoFlags.HasFlag( DebugInfoFlags.Public ) );
+                Assert.IsFalse( union.DIType.DebugInfoFlags.HasFlag( DebugInfoFlags.ForwardDeclaration ) );
+                Assert.IsFalse( union.DIType.DebugInfoFlags.HasFlag( DebugInfoFlags.AppleBlock ) );
+                Assert.IsFalse( union.DIType.DebugInfoFlags.HasFlag( DebugInfoFlags.BlockByrefStruct ) );
+                Assert.IsFalse( union.DIType.DebugInfoFlags.HasFlag( DebugInfoFlags.Virtual ) );
+                Assert.IsFalse( union.DIType.DebugInfoFlags.HasFlag( DebugInfoFlags.Artificial ) );
+                Assert.IsFalse( union.DIType.DebugInfoFlags.HasFlag( DebugInfoFlags.ObjectPointer ) );
+                Assert.IsFalse( union.DIType.DebugInfoFlags.HasFlag( DebugInfoFlags.ObjcClassComplete ) );
+                Assert.IsFalse( union.DIType.DebugInfoFlags.HasFlag( DebugInfoFlags.Vector ) );
+                Assert.IsFalse( union.DIType.DebugInfoFlags.HasFlag( DebugInfoFlags.StaticMember ) );
+                Assert.IsFalse( union.DIType.DebugInfoFlags.HasFlag( DebugInfoFlags.LValueReference ) );
+                Assert.IsFalse( union.DIType.DebugInfoFlags.HasFlag( DebugInfoFlags.RValueReference ) );
 
                 // test the wrapped native type created correctly
                 Assert.IsTrue( union.NativeType.IsSized );

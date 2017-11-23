@@ -6,6 +6,7 @@ using Llvm.NET.Native;
 
 namespace Llvm.NET
 {
+    /// <summary>Contains a local Value as Metadata</summary>
     public class LocalAsMetadata
         : ValueAsMetadata
     {

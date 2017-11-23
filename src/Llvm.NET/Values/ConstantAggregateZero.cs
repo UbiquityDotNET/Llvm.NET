@@ -6,7 +6,8 @@ using Llvm.NET.Native;
 
 namespace Llvm.NET.Values
 {
-    public class ConstantAggregateZero : Constant
+    public class ConstantAggregateZero
+        : ConstantData
     {
         internal ConstantAggregateZero( LLVMValueRef valueRef )
             : base( valueRef )

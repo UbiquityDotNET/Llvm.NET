@@ -6,8 +6,16 @@ using Llvm.NET.Native;
 
 namespace Llvm.NET.Values
 {
-    public class BlockAddress : Constant
+    /// <summary>Constant address of a block</summary>
+    public class BlockAddress
+        : Constant
     {
+        /// <summary>Gets the <see cref="Function"/> that owns the block</summary>
+        public Function Function => GetOperand<Function>( 0 );
+
+        /// <summary>Gets the <see cref="BasicBlock"/> the address refers to</summary>
+        public BasicBlock BasicBlock => GetOperand<BasicBlock>( 1 );
+
         internal BlockAddress( LLVMValueRef valueRef )
             : base( valueRef )
         {

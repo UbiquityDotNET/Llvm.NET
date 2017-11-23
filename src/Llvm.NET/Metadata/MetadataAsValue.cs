@@ -9,7 +9,9 @@ using static Llvm.NET.Native.NativeMethods;
 
 namespace Llvm.NET
 {
-    public class MetadataAsValue : Value
+    /// <summary>Wraps metadata as a <see cref="Value"/></summary>
+    public class MetadataAsValue
+        : Value
     {
         internal MetadataAsValue( LLVMValueRef valueRef )
             : base( valueRef )

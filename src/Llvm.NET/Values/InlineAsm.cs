@@ -19,7 +19,7 @@ namespace Llvm.NET.Values
     /// <summary>Inline Assembly for the target</summary>
     public class InlineAsm : Value
     {
-        /// <summary>Creates a new <see cref="InlineAsm"/> instance from an <see cref="LLVMValueRef"/></summary>
+        /// <summary>Initializes a new instance of the <see cref="InlineAsm"/> class from an <see cref="LLVMValueRef"/></summary>
         /// <param name="valueRef">low level LLVM reference</param>
         internal InlineAsm( LLVMValueRef valueRef )
             : base( valueRef )

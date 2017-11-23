@@ -8,8 +8,14 @@ using Llvm.NET.Native;
 namespace Llvm.NET.DebugInfo
 {
     /// <summary>Base class for Debug info types</summary>
-    public class DIType : DIScope
+    /// <seealso href="xref:llvm_langref#ditype">LLVM DIType</seealso>
+   public class DIType
+        : DIScope
     {
+        /// <summary>Gets the name of the type</summary>
+        public override string Name => NativeMethods.LLVMDITypeGetName( MetadataHandle );
+
+        /// <summary>Gets the flags that describe the behaviors fo</summary>
         public DebugInfoFlags DebugInfoFlags
         {
             get
@@ -23,7 +29,8 @@ namespace Llvm.NET.DebugInfo
             }
         }
 
-        public DIScope Scope
+        /// <summary>Gets the containing scope for the type</summary>
+        public override DIScope Scope
         {
             get
             {
@@ -37,43 +44,17 @@ namespace Llvm.NET.DebugInfo
             }
         }
 
+        /// <summary>Gets the source line for the type</summary>
         public UInt32 Line => NativeMethods.LLVMDITypeGetLine( MetadataHandle );
 
+        /// <summary>Gets the size of the type in bits</summary>
         public UInt64 BitSize => NativeMethods.LLVMDITypeGetSizeInBits( MetadataHandle );
 
+        /// <summary>Gets the alignment of the type in bits</summary>
         public UInt64 BitAlignment => NativeMethods.LLVMDITypeGetAlignInBits( MetadataHandle );
 
+        /// <summary>Gets the offset of the type in bits</summary>
         public UInt64 BitOffset => NativeMethods.LLVMDITypeGetOffsetInBits( MetadataHandle );
-
-        public bool IsPrivate => ( DebugInfoFlags & DebugInfoFlags.AccessibilityMask ) == DebugInfoFlags.Private;
-
-        public bool IsProtected => ( DebugInfoFlags & DebugInfoFlags.AccessibilityMask ) == DebugInfoFlags.Protected;
-
-        public bool IsPublic => ( DebugInfoFlags & DebugInfoFlags.AccessibilityMask ) == DebugInfoFlags.Public;
-
-        public bool IsForwardDeclaration => DebugInfoFlags.HasFlag( DebugInfoFlags.ForwardDeclaration );
-
-        public bool IsAppleBlockExtension => DebugInfoFlags.HasFlag( DebugInfoFlags.AppleBlock );
-
-        public bool IsBlockByRefStruct => DebugInfoFlags.HasFlag( DebugInfoFlags.BlockByrefStruct );
-
-        public bool IsVirtual => DebugInfoFlags.HasFlag( DebugInfoFlags.Virtual );
-
-        public bool IsArtificial => DebugInfoFlags.HasFlag( DebugInfoFlags.Artificial );
-
-        public bool IsObjectPointer => DebugInfoFlags.HasFlag( DebugInfoFlags.ObjectPointer );
-
-        public bool IsObjClassComplete => DebugInfoFlags.HasFlag( DebugInfoFlags.ObjcClassComplete );
-
-        public bool IsVector => DebugInfoFlags.HasFlag( DebugInfoFlags.Vector );
-
-        public bool IsStaticMember => DebugInfoFlags.HasFlag( DebugInfoFlags.StaticMember );
-
-        public bool IsLvalueReference => DebugInfoFlags.HasFlag( DebugInfoFlags.LValueReference );
-
-        public bool IsRvalueReference => DebugInfoFlags.HasFlag( DebugInfoFlags.RValueReference );
-
-        public string Name => NativeMethods.LLVMDITypeGetName( MetadataHandle );
 
         internal DIType( LLVMMetadataRef handle )
             : base( handle )

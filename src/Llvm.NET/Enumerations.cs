@@ -5,6 +5,9 @@
 using System.Diagnostics.CodeAnalysis;
 using Llvm.NET.Native;
 
+// TEMP: disable this until all values are properly doc'd
+#pragma warning disable SA1602 // Enumeration items must be documented
+
 namespace Llvm.NET
 {
     /// <summary>Enumeration to indicate the behavior of module level flags metadata sharing the same name in a <see cref="BitcodeModule"/></summary>

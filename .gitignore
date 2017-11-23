@@ -135,7 +135,7 @@ FakesAssemblies/
 *.opt
 
 #build output locations
-[Bb]uild[Oo]utput/
+BuildOutput/
 IntermediateOutput/
 
 

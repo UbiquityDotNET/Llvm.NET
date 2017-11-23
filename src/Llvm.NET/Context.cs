@@ -874,6 +874,8 @@ namespace Llvm.NET
             LLVMContextSetDiagnosticHandler( ContextHandle, ActiveHandler.GetFuncPointer( ), IntPtr.Zero );
         }
 
+        /// <summary>Implements dispose pattern</summary>
+        /// <param name="disposing">Flag to indicate if this object is being disposed</param>
         protected override void InternalDispose( bool disposing )
         {
             // make sure engines are disposed before disposing the context

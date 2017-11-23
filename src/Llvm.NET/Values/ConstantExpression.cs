@@ -8,6 +8,7 @@ using System.Diagnostics.CodeAnalysis;
 using Llvm.NET.Instructions;
 using Llvm.NET.Native;
 using Llvm.NET.Types;
+using Ubiquity.ArgValidators;
 
 namespace Llvm.NET.Values
 {
@@ -15,15 +16,17 @@ namespace Llvm.NET.Values
     public class ConstantExpression
         : Constant
     {
+        /// <summary>Gets the constant instruction expression op code</summary>
         public OpCode OpCode => ( OpCode )NativeMethods.LLVMGetConstOpcode( ValueHandle );
 
-        [System.Diagnostics.CodeAnalysis.SuppressMessage( "Microsoft.Design", "CA1011:ConsiderPassingBaseTypesAsParameters", Justification = "Specific type required by interop call" )]
+        /// <summary>Gets an IntToPtr expression to convert an integral value to a pointer</summary>
+        /// <param name="value">Constant value to cast to a pointer</param>
+        /// <param name="type">Type of the pointer to cast <paramref name="value"/> to</param>
+        /// <returns>New pointer constant</returns>
+        [SuppressMessage( "Microsoft.Design", "CA1011:ConsiderPassingBaseTypesAsParameters", Justification = "Specific type required by interop call" )]
         public static Constant IntToPtrExpression( Constant value, ITypeRef type )
         {
-            if( value == null )
-            {
-                throw new ArgumentNullException( nameof( value ) );
-            }
+            value.ValidateNotNull( nameof( value ) );
 
             if( value.NativeType.Kind != TypeKind.Integer )
             {
@@ -38,21 +41,30 @@ namespace Llvm.NET.Values
             return FromHandle<Constant>( NativeMethods.LLVMConstIntToPtr( value.ValueHandle, type.GetTypeRef( ) ) );
         }
 
-        [System.Diagnostics.CodeAnalysis.SuppressMessage( "Microsoft.Design", "CA1011:ConsiderPassingBaseTypesAsParameters", Justification = "Specific type required by interop call" )]
+        /// <summary>Creates a constant bit cast expression</summary>
+        /// <param name="value">value to cast</param>
+        /// <param name="toType">Type to cast to</param>
+        /// <returns>Constant cast expression</returns>
+        [SuppressMessage( "Microsoft.Design", "CA1011:ConsiderPassingBaseTypesAsParameters", Justification = "Specific type required by interop call" )]
         public static Constant BitCast( Constant value, ITypeRef toType )
         {
-            if( value == null )
-            {
-                throw new ArgumentNullException( nameof( value ) );
-            }
+            value.ValidateNotNull( nameof( value ) );
 
             var handle = NativeMethods.LLVMConstBitCast( value.ValueHandle, toType.GetTypeRef( ) );
             return FromHandle<Constant>( handle );
         }
 
+        /// <summary>Creates a constant GetElementPtr expression</summary>
+        /// <param name="value">Constant value to get the element pointer for</param>
+        /// <param name="args">Pointer index args</param>
+        /// <returns>GetElementPtr expression</returns>
         public static Constant GetElementPtr( Constant value, params Constant[ ] args )
             => GetElementPtr( value, ( IEnumerable<Constant> )args );
 
+        /// <summary>Creates a constant GetElementPtr expression</summary>
+        /// <param name="value">Constant value to get the element pointer for</param>
+        /// <param name="args">Pointer index args</param>
+        /// <returns>GetElementPtr expression</returns>
         [SuppressMessage("Microsoft.Design", "CA1011:ConsiderPassingBaseTypesAsParameters", Justification = "Specific type required by interop call")]
         public static Constant GetElementPtr(Constant value, IEnumerable<Constant> args)
         {

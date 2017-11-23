@@ -13,8 +13,8 @@ namespace Llvm.NET.Values
     /// the integer. The distinction between them is determined entirely by the
     /// instructions used on the integer values.
     /// </remarks>
-    public class ConstantInt
-        : Constant
+    public sealed class ConstantInt
+        : ConstantData
     {
         /// <summary>Gets the value of the constant zero extended to a 64 bit value</summary>
         public UInt64 ZeroExtendedValue => NativeMethods.LLVMConstIntGetZExtValue( ValueHandle );

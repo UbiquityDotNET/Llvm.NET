@@ -6,7 +6,9 @@ using Llvm.NET.Native;
 
 namespace Llvm.NET.Values
 {
-    public class UndefValue : Constant
+    /// <summary>Represents an undefined value in LLVM IR</summary>
+    public class UndefValue
+        : ConstantData
     {
         internal UndefValue( LLVMValueRef valueRef )
             : base( valueRef )

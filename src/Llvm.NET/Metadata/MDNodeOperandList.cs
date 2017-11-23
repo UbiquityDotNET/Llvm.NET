@@ -6,6 +6,10 @@ using System;
 using System.Collections.Generic;
 using Llvm.NET.Native;
 
+using static Llvm.NET.Native.NativeMethods;
+
+/* TODO: Consider an interface that allows updating elements without growing the list */
+
 namespace Llvm.NET
 {
     /// <summary>Support class to provide readonly list semantics to the operands of an MDNode</summary>
@@ -21,7 +25,7 @@ namespace Llvm.NET
                     throw new ArgumentOutOfRangeException( nameof( index ) );
                 }
 
-                var handle = NativeMethods.LLVMMDNodeGetOperand( OwningNode.MetadataHandle, ( uint )index );
+                var handle = LLVMMDNodeGetOperand( OwningNode.MetadataHandle, ( uint )index );
                 return MDOperand.FromHandle( OwningNode, handle );
             }
         }
@@ -30,7 +34,7 @@ namespace Llvm.NET
         {
             get
             {
-                uint count = NativeMethods.LLVMMDNodeGetNumOperands( OwningNode.MetadataHandle );
+                uint count = LLVMMDNodeGetNumOperands( OwningNode.MetadataHandle );
                 return ( int )Math.Min( count, int.MaxValue );
             }
         }
@@ -39,7 +43,7 @@ namespace Llvm.NET
         {
             for( uint i = 0; i < Count; ++i )
             {
-                LLVMMDOperandRef handle = NativeMethods.LLVMMDNodeGetOperand( OwningNode.MetadataHandle, i );
+                LLVMMDOperandRef handle = LLVMMDNodeGetOperand( OwningNode.MetadataHandle, i );
                 if( handle == default )
                 {
                     yield break;
