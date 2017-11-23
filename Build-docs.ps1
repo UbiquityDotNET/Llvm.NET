@@ -35,8 +35,8 @@ try
         rd -Recurse -Force -Path src\Llvm.NET\obj\xdoc
     }
 
-    rm docfx\api\*.yml
-    rm docfx\api\.manifest
+    rm docfx\api\*.yml -ErrorAction Ignore
+    rm docfx\api\.manifest -ErrorAction Ignore
 
     if( !( Test-Path -PathType Container tools ) )
     {
