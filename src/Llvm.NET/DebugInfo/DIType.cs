@@ -12,8 +12,23 @@ namespace Llvm.NET.DebugInfo
    public class DIType
         : DIScope
     {
+        /// <summary>Gets the containing scope for the type</summary>
+        public override DIScope Scope => GetOperand<DIScope>( 1 );
+
         /// <summary>Gets the name of the type</summary>
-        public override string Name => NativeMethods.LLVMDITypeGetName( MetadataHandle );
+        public override string Name => GetOperand<MDString>( 2 ).ToString( );
+
+        /// <summary>Gets the source line for the type</summary>
+        public UInt32 Line => NativeMethods.LLVMDITypeGetLine( MetadataHandle );
+
+        /// <summary>Gets the size of the type in bits</summary>
+        public UInt64 BitSize => NativeMethods.LLVMDITypeGetSizeInBits( MetadataHandle );
+
+        /// <summary>Gets the alignment of the type in bits</summary>
+        public UInt64 BitAlignment => NativeMethods.LLVMDITypeGetAlignInBits( MetadataHandle );
+
+        /// <summary>Gets the offset of the type in bits</summary>
+        public UInt64 BitOffset => NativeMethods.LLVMDITypeGetOffsetInBits( MetadataHandle );
 
         /// <summary>Gets the flags that describe the behaviors fo</summary>
         public DebugInfoFlags DebugInfoFlags
@@ -28,33 +43,6 @@ namespace Llvm.NET.DebugInfo
                 return ( DebugInfoFlags )NativeMethods.LLVMDITypeGetFlags( MetadataHandle );
             }
         }
-
-        /// <summary>Gets the containing scope for the type</summary>
-        public override DIScope Scope
-        {
-            get
-            {
-                var handle = NativeMethods.LLVMDITypeGetScope( MetadataHandle );
-                if( handle == default )
-                {
-                    return null;
-                }
-
-                return FromHandle< DIScope >( handle );
-            }
-        }
-
-        /// <summary>Gets the source line for the type</summary>
-        public UInt32 Line => NativeMethods.LLVMDITypeGetLine( MetadataHandle );
-
-        /// <summary>Gets the size of the type in bits</summary>
-        public UInt64 BitSize => NativeMethods.LLVMDITypeGetSizeInBits( MetadataHandle );
-
-        /// <summary>Gets the alignment of the type in bits</summary>
-        public UInt64 BitAlignment => NativeMethods.LLVMDITypeGetAlignInBits( MetadataHandle );
-
-        /// <summary>Gets the offset of the type in bits</summary>
-        public UInt64 BitOffset => NativeMethods.LLVMDITypeGetOffsetInBits( MetadataHandle );
 
         internal DIType( LLVMMetadataRef handle )
             : base( handle )

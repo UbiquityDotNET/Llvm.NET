@@ -38,7 +38,7 @@ namespace Llvm.NET.DebugInfo
         public IDebugType<ITypeRef, DIType> DebugType { get; set; }
 
         /// <summary>Gets or sets the explicit layout information for this member</summary>
-        /// <remarks>If this is null then
+        /// <remarks>If this is <see langword="null"/> then
         /// <see cref="DebugStructType.SetBody(bool, BitcodeModule, DIScope, DIFile, uint, DebugInfoFlags, System.Collections.Generic.IEnumerable{DebugMemberInfo})"/>
         /// will default to using <see cref="BitcodeModule.Layout"/> to determine the size using the module's target specific layout.
         /// <note type="note">

@@ -8,7 +8,7 @@ namespace Llvm.NET.DebugInfo
     public class DITemplateParameterArray
         : TupleTypedArrayWrapper<DITemplateParameter>
     {
-        public DITemplateParameterArray( MDTuple tuple )
+        internal DITemplateParameterArray( MDTuple tuple )
             : base( tuple )
         {
         }

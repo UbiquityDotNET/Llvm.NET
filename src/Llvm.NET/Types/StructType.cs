@@ -37,7 +37,7 @@ namespace Llvm.NET.Types
         /// <param name="packed">Flag to indicate if the body elements are packed (e.g. no padding)</param>
         /// <param name="elements">Optional types of each element</param>
         /// <remarks>
-        /// To set the body , at least one element type is required. If none are provided this is a NOP.
+        /// To set the body, at least one element type is required. If none are provided this is a NOP.
         /// </remarks>
         void SetBody( bool packed, params ITypeRef[ ] elements );
     }

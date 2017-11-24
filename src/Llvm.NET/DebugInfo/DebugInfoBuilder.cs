@@ -312,6 +312,15 @@ namespace Llvm.NET.DebugInfo
             return MDNode.FromHandle<DISubProgram>( handle );
         }
 
+        /// <summary>Create a local variable</summary>
+        /// <param name="scope">Scope for the variable</param>
+        /// <param name="name">Name of the variable</param>
+        /// <param name="file">File for the variable</param>
+        /// <param name="line">Line for the variable</param>
+        /// <param name="type">Type of the variable</param>
+        /// <param name="alwaysPreserve">Flag to indicate whether the variable should always be preserved</param>
+        /// <param name="debugFlags">Flags for the variable</param>
+        /// <returns><see cref="DILocalVariable"/></returns>
         [SuppressMessage( "Microsoft.Design", "CA1011:ConsiderPassingBaseTypesAsParameters", Justification = "Specific type required by interop call" )]
         public DILocalVariable CreateLocalVariable( DIScope scope
                                                   , string name
@@ -969,7 +978,7 @@ namespace Llvm.NET.DebugInfo
                 throw new ArgumentException( "mismatched scopes" );
             }
 
-            if( !location.Describes(insertAtEnd.ContainingFunction ) )
+            if( !LocationDescribes( location, insertAtEnd.ContainingFunction ) )
             {
                 throw new ArgumentException( "location does not describe the specified block's containing function" );
             }
@@ -1060,5 +1069,11 @@ namespace Llvm.NET.DebugInfo
         }
 
         private bool IsFinished;
+
+        private static bool LocationDescribes( DILocation location, Function function )
+        {
+            return location.Scope.SubProgram.Describes( function )
+                || location.InlinedAtScope.SubProgram.Describes( function );
+        }
     }
 }

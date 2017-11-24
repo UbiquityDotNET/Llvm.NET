@@ -11,6 +11,11 @@ namespace Llvm.NET.DebugInfo
     public class DILexicalBlock
         : DILexicalBlockBase
     {
+        /* non-operand properties
+        uint Line { get; }
+        uint Coulmn { get; }
+        */
+
         internal DILexicalBlock( LLVMMetadataRef handle )
             : base( handle )
         {

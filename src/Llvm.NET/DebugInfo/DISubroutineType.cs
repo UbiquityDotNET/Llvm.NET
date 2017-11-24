@@ -6,9 +6,19 @@ using Llvm.NET.Native;
 
 namespace Llvm.NET.DebugInfo
 {
-    /// <summary>see <a href="http://llvm.org/docs/LangRef.html#disubroutinetype"/></summary>
-    public class DISubroutineType : DICompositeType
+    /// <summary>Debug information for a function signature</summary>
+    /// <seealso href="xref:llvm_langref#disubroutinetype"/>
+    public class DISubroutineType
+        : DIType
     {
+        /* non-operand properities
+            CallingConvention CallingConvention {get;}
+
+        */
+
+        /// <summary>Gets the types for the sub routine</summary>
+        public DITypeArray TypeArray => new DITypeArray( GetOperand<MDTuple>( 3 ) );
+
         internal DISubroutineType( LLVMMetadataRef handle )
             : base( handle )
         {

@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using Llvm.NET.Types;
+using Ubiquity.ArgValidators;
 
 namespace Llvm.NET.DebugInfo
 {
@@ -17,6 +18,15 @@ namespace Llvm.NET.DebugInfo
         : DebugType<INamedStructuralType, DICompositeType>
         , INamedStructuralType
     {
+        /// <summary>Initializes a new instance of the <see cref="DebugUnionType"/> class.</summary>
+        /// <param name="llvmType">Underlying native type this debug type descripbes</param>
+        /// <param name="module">Module to contain the debug metadata for this type</param>
+        /// <param name="scope">Scope containing this type</param>
+        /// <param name="name">Debug/source name of the type</param>
+        /// <param name="file">Source file containing this type</param>
+        /// <param name="line">Line number ofr this type</param>
+        /// <param name="debugFlags">Debug flags for this type</param>
+        /// <param name="elements">Descriptors for the members of the type</param>
         public DebugUnionType( IStructType llvmType
                              , BitcodeModule module
                              , DIScope scope
@@ -28,25 +38,10 @@ namespace Llvm.NET.DebugInfo
                              )
             : base( llvmType )
         {
-            if( llvmType == null )
-            {
-                throw new ArgumentNullException( nameof( llvmType ) );
-            }
-
-            if( module == null )
-            {
-                throw new ArgumentNullException( nameof( module ) );
-            }
-
-            if( scope == null )
-            {
-                throw new ArgumentNullException( nameof( scope ) );
-            }
-
-            if( file == null )
-            {
-                throw new ArgumentNullException( nameof( file ) );
-            }
+            llvmType.ValidateNotNull( nameof( llvmType ) );
+            module.ValidateNotNull( nameof( module ) );
+            scope.ValidateNotNull( nameof( scope ) );
+            file.ValidateNotNull( nameof( file ) );
 
             if( !llvmType.IsOpaque )
             {
@@ -63,6 +58,13 @@ namespace Llvm.NET.DebugInfo
             SetBody( module, scope, file, line, debugFlags, elements );
         }
 
+        /// <summary>Initializes a new instance of the <see cref="DebugUnionType"/> class.</summary>
+        /// <param name="module">Module to contain the debug metadata for this type</param>
+        /// <param name="nativeName">Native LLVM type name</param>
+        /// <param name="scope">Scope containing this type</param>
+        /// <param name="name">Debug/source name of the type</param>
+        /// <param name="file">Source file containing this type</param>
+        /// <param name="line">Line number ofr this type</param>
         public DebugUnionType( BitcodeModule module
                              , string nativeName
                              , DIScope scope
@@ -71,15 +73,8 @@ namespace Llvm.NET.DebugInfo
                              , uint line = 0
                              )
         {
-            if( module == null )
-            {
-                throw new ArgumentNullException( nameof( module ) );
-            }
-
-            if( file == null )
-            {
-                throw new ArgumentNullException( nameof( file ) );
-            }
+            module.ValidateNotNull( nameof( module ) );
+            file.ValidateNotNull( nameof( file ) );
 
             NativeType = module.Context.CreateStructType( nativeName );
             DIType = module.DIBuilder
@@ -91,36 +86,36 @@ namespace Llvm.NET.DebugInfo
                                                           );
         }
 
+        /// <inheritdoc/>
         public bool IsOpaque => NativeType.IsOpaque;
 
+        /// <inheritdoc/>
         public IReadOnlyList<ITypeRef> Members => NativeType.Members;
 
+        /// <inheritdoc/>
         public string Name => NativeType.Name;
 
+        /// <summary>Gets the description of each member of the type</summary>
         public IReadOnlyList<DebugMemberInfo> DebugMembers { get; private set; }
 
+        /// <summary>Sets the body of the union type</summary>
+        /// <param name="module">Module to contain the debug metadata</param>
+        /// <param name="scope">Scope containing this type</param>
+        /// <param name="file">File for the type</param>
+        /// <param name="line">line number for the type</param>
+        /// <param name="debugFlags">Flags for the type</param>
+        /// <param name="debugElements">Dexcriptors for each element in the type</param>
         public void SetBody( BitcodeModule module
                            , DIScope scope
-                           , DIFile diFile
+                           , DIFile file
                            , uint line
                            , DebugInfoFlags debugFlags
                            , IEnumerable<DebugMemberInfo> debugElements
                            )
         {
-            if( module == null )
-            {
-                throw new ArgumentNullException( nameof( module ) );
-            }
-
-            if( scope == null )
-            {
-                throw new ArgumentNullException( nameof( scope ) );
-            }
-
-            if( debugElements == null )
-            {
-                throw new ArgumentNullException( nameof( debugElements ) );
-            }
+            module.ValidateNotNull( nameof( module ) );
+            scope.ValidateNotNull( nameof( scope ) );
+            debugElements.ValidateNotNull( nameof( debugElements ) );
 
             if( module.Layout == null )
             {
@@ -164,7 +159,7 @@ namespace Llvm.NET.DebugInfo
 
             var concreteType = module.DIBuilder.CreateUnionType( scope: scope
                                                                , name: DIType.Name
-                                                               , file: diFile
+                                                               , file: file
                                                                , line: line
                                                                , bitSize: 0 // TODO: find largest sized member
                                                                , bitAlign: 0 // TODO: Find most restrictive alignment

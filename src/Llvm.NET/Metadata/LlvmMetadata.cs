@@ -130,6 +130,18 @@ namespace Llvm.NET
             var kind = ( MetadataKind )NativeMethods.LLVMGetMetadataID( handle );
             switch( kind )
             {
+            case MetadataKind.MDString:
+                return new MDString( handle );
+
+            case MetadataKind.ConstantAsMetadata:
+                return new ConstantAsMetadata( handle );
+
+            case MetadataKind.LocalAsMetadata:
+                return new LocalAsMetadata( handle );
+
+            case MetadataKind.DistinctMDOperandPlaceholder:
+                throw new NotSupportedException( ); // return new DistinctMDOperandPlaceHodler( handle );
+
             case MetadataKind.MDTuple:
                 return new MDTuple( handle );
 
@@ -202,14 +214,11 @@ namespace Llvm.NET
             case MetadataKind.DIImportedEntity:
                 return new DIImportedEntity( handle );
 
-            case MetadataKind.ConstantAsMetadata:
-                return new ConstantAsMetadata( handle );
+            case MetadataKind.DIMacro:
+                return new DIMacro( handle );
 
-            case MetadataKind.LocalAsMetadata:
-                return new LocalAsMetadata( handle );
-
-            case MetadataKind.MDString:
-                return new MDString( handle );
+            case MetadataKind.DIMacroFile:
+                return new DIMacroFile( handle );
 
             default:
 #pragma warning disable RECS0083 // Intentional trigger to catch changes in underlying LLVM libs

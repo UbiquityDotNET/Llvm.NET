@@ -2,22 +2,33 @@
 // Copyright (c) .NET Foundation. All rights reserved.
 // </copyright>
 
-using System.Collections.Generic;
+using JetBrains.Annotations;
 using Llvm.NET.Native;
 
 namespace Llvm.NET.DebugInfo
 {
     /// <summary>Debug information for a composite type</summary>
     /// <seealso href="xref:llvm_langref#dicompositetype">LLVM DICompositeType</seealso>
-    public class DICompositeType : DIType
+    public class DICompositeType
+        : DIType
     {
-        public DIType BaseType => Operands[ 3 ].Metadata as DIType;
+        /// <summary>Gets the base type for this type, if any</summary>
+        [property: CanBeNull]
+        public DIType BaseType => GetOperand<DIType>( 3 );
 
-        public IReadOnlyList<DINode> Elements => new TupleTypedArrayWrapper<DINode>( Operands[ 4 ].Metadata as MDTuple );
+        /// <summary>Gets the elements of this <see cref="DICompositeType"/></summary>
+        public DINodeArray Elements => new DINodeArray( GetOperand<MDTuple>( 4 ) );
 
-        // TODO: VTableHolder   Operands[5]
-        // TODO: TemplateParams Operands[6]
-        // TODO: Identifier     Operands[7]
+        /// <summary>Gets the type that holds the VTable for this type, if any</summary>
+        [property: CanBeNull]
+        public DIType VTableHolder => GetOperand<DIType>( 5 );
+
+        /// <summary>Gets the template parameters for this type, if any</summary>
+        [property: CanBeNull]
+        public DITemplateParameterArray TemplateParameters => new DITemplateParameterArray( GetOperand<MDTuple>( 6 ));
+
+        /// <summary>Gets the identifier for this type</summary>
+        public string Identifier => GetOperand<MDString>( 7 ).ToString( );
 
         /// <summary>Initializes a new instance of the <see cref="DICompositeType"/> class from an LLVM-C API Metadata handle</summary>
         /// <param name="handle">LLVM handle to wrap</param>

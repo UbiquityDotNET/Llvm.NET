@@ -745,4 +745,9 @@ extern "C"
         DILocalScope* pScope = unwrap<DILocalScope>( localScope );
         return wrap( pScope->getSubprogram( ) );
     }
+
+    unsigned int LLVMDIBasicTypeGetEncoding( LLVMMetadataRef /*DIBasicType*/ basicType )
+    {
+        return unwrap<DIBasicType>( basicType )->getEncoding( );
+    }
 }

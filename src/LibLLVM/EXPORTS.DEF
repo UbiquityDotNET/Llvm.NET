@@ -143,6 +143,7 @@ LLVMMDNodeGetNumOperands
 LLVMMDNodeGetOperand
 LLVMGetOperandNode
 LLVMDILocalScopeGetSubProgram
+LLVMDIBasicTypeGetEncoding
 
 ; Instrumentation Bindings
 LLVMAddAddressSanitizerFunctionPass
