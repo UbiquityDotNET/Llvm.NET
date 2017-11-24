@@ -4,6 +4,7 @@
 
 using System;
 using Llvm.NET.Types;
+using Ubiquity.ArgValidators;
 
 namespace Llvm.NET.DebugInfo
 {
@@ -29,20 +30,9 @@ namespace Llvm.NET.DebugInfo
         /// <param name="encoding">Encoding for the type</param>
         public DebugBasicType( ITypeRef llvmType, BitcodeModule module, string name, DiTypeKind encoding )
         {
-            if( llvmType == null )
-            {
-                throw new ArgumentNullException( nameof( llvmType ) );
-            }
-
-            if( module == null )
-            {
-                throw new ArgumentNullException( nameof( module ) );
-            }
-
-            if( string.IsNullOrWhiteSpace(name) )
-            {
-                throw new ArgumentException("non-null non-empty string required", nameof( name ) );
-            }
+            llvmType.ValidateNotNull( nameof( llvmType ) );
+            module.ValidateNotNull( nameof( module ) );
+            name.ValidateNotNullOrWhiteSpace( nameof( name ) );
 
             if( module.Layout == null )
             {
@@ -77,10 +67,7 @@ namespace Llvm.NET.DebugInfo
         // Only primitive types are supported.
         private static ITypeRef ValidateType( ITypeRef typeRef )
         {
-            if( typeRef == null )
-            {
-                throw new ArgumentNullException( nameof( typeRef ) );
-            }
+            typeRef.ValidateNotNull( nameof( typeRef ) );
 
             switch( typeRef.Kind )
             {

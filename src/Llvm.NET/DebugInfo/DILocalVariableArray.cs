@@ -8,7 +8,7 @@ namespace Llvm.NET.DebugInfo
     public class DILocalVariableArray
         : TupleTypedArrayWrapper<DILocalVariable>
     {
-        public DILocalVariableArray( MDTuple tuple )
+        internal DILocalVariableArray( MDTuple tuple )
             : base( tuple )
         {
         }

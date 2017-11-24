@@ -8,7 +8,7 @@ namespace Llvm.NET.DebugInfo
     public class DITypeArray
         : TupleTypedArrayWrapper<DIType>
     {
-        public DITypeArray( MDTuple tuple )
+        internal DITypeArray( MDTuple tuple )
             : base( tuple )
         {
         }

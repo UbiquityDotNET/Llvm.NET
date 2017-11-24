@@ -11,10 +11,20 @@ namespace Llvm.NET.DebugInfo
     public class DIFile
         : DIScope
     {
-        public string FileName => NativeMethods.LLVMGetDIFileName( MetadataHandle );
+        /* non-operand properties
+            ChecksumKind CheckSumKind {get;}
+        */
 
-        public string Directory => NativeMethods.LLVMGetDIFileDirectory( MetadataHandle );
+        /// <summary>Gets the file name for this file</summary>
+        public string FileName => GetOperand<MDString>( 0 ).ToString( );
 
+        /// <summary>Gets the Directory for this file</summary>
+        public string Directory => GetOperand<MDString>( 1 ).ToString( );
+
+        /// <summary>Gets the Checksum for this file</summary>
+        public string CheckSum => GetOperand<MDString>( 2 ).ToString( );
+
+        /// <summary>Gets the full path for this file</summary>
         public string Path => System.IO.Path.Combine( Directory, FileName );
 
         internal DIFile( LLVMMetadataRef handle )
