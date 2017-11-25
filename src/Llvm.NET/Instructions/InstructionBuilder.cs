@@ -436,8 +436,9 @@ namespace Llvm.NET.Instructions
         /// or an exception is thrown.</para>
         /// </returns>
         /// <remarks>
-        /// For details on GetElementPointer (GEP) see http://llvm.org/docs/GetElementPtr.html. The
-        /// basic gist is that the GEP instruction does not access memory, it only computes a pointer
+        /// For details on GetElementPointer (GEP) see
+        /// <see href="xref:llvm_releases_docs/GetElementPtr.html">The Often Misunderstood GEP Instruction</see>.
+        /// The basic gist is that the GEP instruction does not access memory, it only computes a pointer
         /// offset from a base. A common confusion is around the first index and what it means. For C
         /// and C++ programmers an expression like pFoo->bar seems to only have a single offset or
         /// index. However, that is only syntactic sugar where the compiler implicitly hides the first
@@ -469,8 +470,9 @@ namespace Llvm.NET.Instructions
         /// or an exception is thrown.</para>
         /// </returns>
         /// <remarks>
-        /// For details on GetElementPointer (GEP) see http://llvm.org/docs/GetElementPtr.html. The
-        /// basic gist is that the GEP instruction does not access memory, it only computes a pointer
+        /// For details on GetElementPointer (GEP) see
+        /// <see href="xref:llvm_releases_docs/GetElementPtr.html">The Often Misunderstood GEP Instruction</see>.
+        /// The basic gist is that the GEP instruction does not access memory, it only computes a pointer
         /// offset from a base. A common confusion is around the first index and what it means. For C
         /// and C++ programmers an expression like pFoo->bar seems to only have a single offset or
         /// index. However that is only syntactic sugar where the compiler implicitly hides the first
@@ -492,8 +494,9 @@ namespace Llvm.NET.Instructions
         /// or an exception is thrown.</para>
         /// </returns>
         /// <remarks>
-        /// For details on GetElementPointer (GEP) see http://llvm.org/docs/GetElementPtr.html. The
-        /// basic gist is that the GEP instruction does not access memory, it only computes a pointer
+        /// For details on GetElementPointer (GEP) see
+        /// <see href="xref:llvm_releases_docs/GetElementPtr.html">The Often Misunderstood GEP Instruction</see>.
+        /// The basic gist is that the GEP instruction does not access memory, it only computes a pointer
         /// offset from a base. A common confusion is around the first index and what it means. For C
         /// and C++ programmers an expression like pFoo->bar seems to only have a single offset or
         /// index. However, that is only syntactic sugar where the compiler implicitly hides the first
@@ -525,8 +528,9 @@ namespace Llvm.NET.Instructions
         /// or an exception is thrown.</para>
         /// </returns>
         /// <remarks>
-        /// For details on GetElementPointer (GEP) see http://llvm.org/docs/GetElementPtr.html. The
-        /// basic gist is that the GEP instruction does not access memory, it only computes a pointer
+        /// For details on GetElementPointer (GEP) see
+        /// <see href="xref:llvm_releases_docs/GetElementPtr.html">The Often Misunderstood GEP Instruction</see>.
+        /// The basic gist is that the GEP instruction does not access memory, it only computes a pointer
         /// offset from a base. A common confusion is around the first index and what it means. For C
         /// and C++ programmers an expression like pFoo->bar seems to only have a single offset or
         /// index. However that is only syntactic sugar where the compiler implicitly hides the first

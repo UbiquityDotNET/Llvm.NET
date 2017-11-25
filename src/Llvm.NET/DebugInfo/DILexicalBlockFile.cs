@@ -11,7 +11,7 @@ namespace Llvm.NET.DebugInfo
     public class DILexicalBlockFile
         : DILexicalBlockBase
     {
-        /* non-operand property
+        /* TODO: non-operand property
         unsigned Discriminator { get; }
         */
 

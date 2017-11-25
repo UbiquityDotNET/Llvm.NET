@@ -20,7 +20,7 @@ namespace Llvm.NET
     /// </remarks>
     public class ExtensiblePropertyDescriptor<T>
     {
-        /// <summary>Creates a new instance of a property descriptor</summary>
+        /// <summary>Initializes a new instance of the <see cref="ExtensiblePropertyDescriptor{T}"/> class.</summary>
         /// <param name="name">Name of the extended property</param>
         public ExtensiblePropertyDescriptor( string name )
         {

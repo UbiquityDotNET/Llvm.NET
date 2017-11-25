@@ -39,22 +39,7 @@ namespace Llvm.NET
     /// </note>
     /// </remarks>
     public sealed class DataLayout
-        : IDisposable
     {
-        ~DataLayout( )
-        {
-            // Do not change this code. Put cleanup code in Dispose(bool disposing) above.
-            InternalDispose( );
-        }
-
-        /// <inheritdoc/>
-        public void Dispose( )
-        {
-            // Do not change this code. Put cleanup code in Dispose(bool disposing) above.
-            InternalDispose( );
-            GC.SuppressFinalize( this );
-        }
-
         /// <summary>Gets the byte ordering for this target</summary>
         public ByteOrdering Endianess => ( ByteOrdering )LLVMByteOrder( DataLayoutHandle );
 
@@ -72,7 +57,7 @@ namespace Llvm.NET
         /// <returns>Integer type matching the bit width of a native pointer in the target's default address space</returns>
         public ITypeRef IntPtrType( Context context ) => TypeRef.FromHandle( LLVMIntPtrTypeInContext( context.ContextHandle, DataLayoutHandle ) );
 
-        /* TODO:
+        /* TODO: Additional properties for DataLayout
         bool IsLegalIntegerWidth(UInt64 width);
         bool ExceedsNaturalStackAlignment(UInt64 width);
         UInt32 StackAlignment { get; }
@@ -226,13 +211,12 @@ namespace Llvm.NET
         /// <returns>Offset of the element in bits</returns>
         public ulong BitOffsetOfElement( IStructType llvmType, uint element ) => OffsetOfElement( llvmType, element ) * 8;
 
-        internal DataLayout( LLVMTargetDataRef targetDataHandle, bool isDisposable )
+        internal DataLayout( LLVMTargetDataRef targetDataHandle )
         {
             DataLayoutHandle = targetDataHandle;
-            IsDisposable = isDisposable;
         }
 
-        internal static DataLayout FromHandle( LLVMTargetDataRef targetDataRef, bool isDisposable )
+        internal static DataLayout FromHandle( LLVMTargetDataRef targetDataRef )
         {
             lock( TargetDataMap )
             {
@@ -241,38 +225,14 @@ namespace Llvm.NET
                     return retVal;
                 }
 
-                // exception filter function to ensure that the native resource
-                // is released on exception from adding it to the map
-                retVal = new DataLayout( targetDataRef, isDisposable );
-                bool cleanOnException( )
-                {
-                    retVal.Dispose( );
-                    return true;
-                }
-
-                try
-                {
-                    TargetDataMap.Add( targetDataRef, retVal );
-                }
-                catch when( cleanOnException( ) )
-                {
-                    // NOP
-                }
+                retVal = new DataLayout( targetDataRef );
+                TargetDataMap.Add( targetDataRef, retVal );
 
                 return retVal;
             }
         }
 
-        internal LLVMTargetDataRef DataLayoutHandle { get; private set; }
-
-        private void InternalDispose( )
-        {
-            if( ( DataLayoutHandle != default ) && IsDisposable )
-            {
-                LLVMDisposeTargetData( DataLayoutHandle );
-                DataLayoutHandle = default;
-            }
-        }
+        internal LLVMTargetDataRef DataLayoutHandle { get; }
 
         private static void VerifySized( [ValidatedNotNull] ITypeRef type, [InvokerParameterName] string name )
         {
@@ -287,8 +247,6 @@ namespace Llvm.NET
             }
         }
 
-        // indicates if this instance is disposable
-        private readonly bool IsDisposable;
         private static readonly Dictionary<LLVMTargetDataRef, DataLayout> TargetDataMap = new Dictionary<LLVMTargetDataRef, DataLayout>( );
     }
 }

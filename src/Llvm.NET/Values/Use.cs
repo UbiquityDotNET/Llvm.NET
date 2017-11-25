@@ -18,7 +18,7 @@ namespace Llvm.NET.Values
         /// <summary>Gets the <see cref="Value"/> used</summary>
         public Value Value => Value.FromHandle( NativeMethods.LLVMGetUsedValue( OpaqueHandle ) );
 
-        /// <summary>Creates a new <see cref="Use"/> from  low level LLVM <see cref="LLVMUseRef"/></summary>
+        /// <summary>Initializes a new instance of the <see cref="Use"/> class from low level LLVM <see cref="LLVMUseRef"/></summary>
         /// <param name="useRef">LLVM raw reference</param>
         internal Use( LLVMUseRef useRef )
         {

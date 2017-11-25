@@ -11,3 +11,6 @@ references:
   - uid: llvm_docs_passes
     name: LLVM Analysis and Transform Passes
     href: http://releases.llvm.org/5.0.0/docs/Passes.html
+  - uid: llvm_releases_docs
+    name: LLVM Documentation
+    href: http://releases.llvm.org/5.0.0/docs

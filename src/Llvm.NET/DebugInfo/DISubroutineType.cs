@@ -11,9 +11,8 @@ namespace Llvm.NET.DebugInfo
     public class DISubroutineType
         : DIType
     {
-        /* non-operand properities
+        /* TODO: non-operand properities
             CallingConvention CallingConvention {get;}
-
         */
 
         /// <summary>Gets the types for the sub routine</summary>

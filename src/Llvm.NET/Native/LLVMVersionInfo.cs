@@ -7,6 +7,8 @@ using System.Runtime.InteropServices;
 
 namespace Llvm.NET.Native
 {
+    // Version information pulled from LibLLVM.dll
+    // to use in detection of mismatched components
     internal struct LLVMVersionInfo
     {
         public readonly int Major;

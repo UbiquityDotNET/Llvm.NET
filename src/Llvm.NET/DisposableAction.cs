@@ -15,7 +15,7 @@ namespace Llvm.NET
     internal sealed class DisposableAction
         : IDisposable
     {
-        /// <summary>Constructs a new <see cref="DisposableAction"/></summary>
+        /// <summary>Initializes a new instance of the <see cref="DisposableAction"/> class.</summary>
         /// <param name="onDispose">Action to run when <see cref="Dispose"/>is called.</param>
         public DisposableAction( Action onDispose )
         {

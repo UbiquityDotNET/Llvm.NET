@@ -11,7 +11,7 @@ namespace Llvm.NET.DebugInfo
     public class DICompileUnit
         : DIScope
     {
-        /* non-operand properties
+        /* TODO: non-operand properties
         SourceLanguage SourcLanguage {get;}
         bool IsOptimized {get;}
         uint RunTimeVersion {get;}

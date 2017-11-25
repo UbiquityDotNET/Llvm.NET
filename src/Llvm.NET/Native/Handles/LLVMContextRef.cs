@@ -49,6 +49,7 @@ namespace Llvm.NET.Native
 
     #pragma warning disable SA1402
 
+    // Context alias
     internal class LLVMContextAlias
         : LLVMContextRef
     {

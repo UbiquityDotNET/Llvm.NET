@@ -11,7 +11,7 @@ namespace Llvm.NET.DebugInfo
     public class DIGlobalVariable
         : DIVariable
     {
-        /* non-operand properties
+        /* TODO: non-operand properties
             bool IsLocalToUnit {get;}
             bool IsDefinition {get;}
         */
