@@ -848,7 +848,7 @@ namespace Llvm.NET.Native
         internal static extern LLVMTypeRef LLVMDoubleTypeInContext( LLVMContextRef @C );
 
         [DllImport( LibraryPath, EntryPoint = "LLVMX86FP80TypeInContext", CallingConvention = CallingConvention.Cdecl )]
-        internal static extern LLVMTypeRef LLVMX8FP80TypeInContext( LLVMContextRef @C );
+        internal static extern LLVMTypeRef LLVMX86FP80TypeInContext( LLVMContextRef @C );
 
         [DllImport( LibraryPath, EntryPoint = "LLVMFP128TypeInContext", CallingConvention = CallingConvention.Cdecl )]
         internal static extern LLVMTypeRef LLVMFP18TypeInContext( LLVMContextRef @C );
@@ -866,7 +866,7 @@ namespace Llvm.NET.Native
         internal static extern LLVMTypeRef LLVMDoubleType( );
 
         [DllImport( LibraryPath, EntryPoint = "LLVMX86FP80Type", CallingConvention = CallingConvention.Cdecl )]
-        internal static extern LLVMTypeRef LLVMX8FP80Type( );
+        internal static extern LLVMTypeRef LLVMX86FP80Type( );
 
         [DllImport( LibraryPath, EntryPoint = "LLVMFP128Type", CallingConvention = CallingConvention.Cdecl )]
         internal static extern LLVMTypeRef LLVMFP18Type( );
@@ -959,7 +959,7 @@ namespace Llvm.NET.Native
         internal static extern LLVMTypeRef LLVMLabelTypeInContext( LLVMContextRef @C );
 
         [DllImport( LibraryPath, EntryPoint = "LLVMX86MMXTypeInContext", CallingConvention = CallingConvention.Cdecl )]
-        internal static extern LLVMTypeRef LLVMX8MMXTypeInContext( LLVMContextRef @C );
+        internal static extern LLVMTypeRef LLVMX86MMXTypeInContext( LLVMContextRef @C );
 
         [DllImport( LibraryPath, EntryPoint = "LLVMVoidType", CallingConvention = CallingConvention.Cdecl )]
         internal static extern LLVMTypeRef LLVMVoidType( );
@@ -968,7 +968,7 @@ namespace Llvm.NET.Native
         internal static extern LLVMTypeRef LLVMLabelType( );
 
         [DllImport( LibraryPath, EntryPoint = "LLVMX86MMXType", CallingConvention = CallingConvention.Cdecl )]
-        internal static extern LLVMTypeRef LLVMX8MMXType( );
+        internal static extern LLVMTypeRef LLVMX86MMXType( );
 
         [DllImport( LibraryPath, EntryPoint = "LLVMTypeOf", CallingConvention = CallingConvention.Cdecl )]
         internal static extern LLVMTypeRef LLVMTypeOf( LLVMValueRef @Val );
