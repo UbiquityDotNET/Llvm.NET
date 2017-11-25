@@ -194,15 +194,15 @@ namespace Kaleidoscope
 
         private Function GetOrDeclareFunction( Prototype prototype, bool isAnonymous = false )
         {
-            var function = GetFunction( prototype.Identifier.Name );
-            if( function != null )
+            Function retVal = Module.GetFunction( prototype.Identifier.Name );
+            if(retVal != null)
             {
-                return function;
+                return retVal;
             }
 
             var llvmSignature = Context.GetFunctionType( Context.DoubleType, prototype.Parameters.Select( _ => Context.DoubleType ) );
 
-            var retVal = Module.AddFunction( prototype.Identifier.Name, llvmSignature );
+            retVal = Module.AddFunction( prototype.Identifier.Name, llvmSignature );
             retVal.Linkage( Linkage.External );
 
             int index = 0;
