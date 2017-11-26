@@ -8,7 +8,7 @@ namespace Llvm.NET.Values
 {
     /// <summary>Interface for raw attribute access</summary>
     /// <remarks>
-    /// As of v3.9x and later, Functions and call sites use distinct LLVM-C API sets for
+    /// As of LLVM v3.9x and later, Functions and call sites use distinct LLVM-C API sets for
     /// manipulating attributes. Fortunately they have consistent signatures so these
     /// are used to abstract the difference via derived types specialized for each case.
     /// Going forward this is the simplest and most direct way to manipulate attributes

@@ -11,7 +11,7 @@ namespace Llvm.NET.DebugInfo
     public class DIFile
         : DIScope
     {
-        /* non-operand properties
+        /* TODO: non-operand properties
             ChecksumKind CheckSumKind {get;}
         */
 

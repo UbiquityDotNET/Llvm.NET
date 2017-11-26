@@ -11,7 +11,7 @@ namespace Llvm.NET.DebugInfo
     public class DISubRange
         : DINode
     {
-        /* Non-operand properties need direct API to extract...
+        /* TODO: non-operand properties need direct API to extract...
         public int64 LowerBound {get;}
         public int64 Count {get;}
         */

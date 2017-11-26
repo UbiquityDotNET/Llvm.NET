@@ -11,7 +11,7 @@ namespace Llvm.NET.DebugInfo
     public class DILexicalBlock
         : DILexicalBlockBase
     {
-        /* non-operand properties
+        /* TODO: non-operand properties
         uint Line { get; }
         uint Coulmn { get; }
         */

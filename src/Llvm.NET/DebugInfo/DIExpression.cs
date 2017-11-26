@@ -11,7 +11,7 @@ namespace Llvm.NET.DebugInfo
     public class DIExpression
         : MDNode
     {
-        /* non-operand properties
+        /* TODO: non-operand properties
         // pretty much all of the LLVM DIExpression implementation.
         // most of the focus is on a sequence of expression operands
         */

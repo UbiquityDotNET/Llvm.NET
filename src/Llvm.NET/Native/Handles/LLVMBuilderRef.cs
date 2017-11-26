@@ -3,7 +3,10 @@
 // </copyright>
 
 using System;
+using System.Runtime.InteropServices;
 using System.Security;
+
+using static Llvm.NET.Native.NativeMethods;
 
 namespace Llvm.NET.Native
 {
@@ -20,7 +23,7 @@ namespace Llvm.NET.Native
         [SecurityCritical]
         protected override bool ReleaseHandle( )
         {
-            NativeMethods.LLVMDisposeBuilder( handle );
+            LLVMDisposeBuilder( handle );
             return true;
         }
 
@@ -28,5 +31,8 @@ namespace Llvm.NET.Native
             : base( true )
         {
         }
+
+        [DllImport( LibraryPath, CallingConvention = CallingConvention.Cdecl )]
+        private static extern void LLVMDisposeBuilder( IntPtr @Builder );
     }
 }

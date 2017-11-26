@@ -10,7 +10,7 @@ namespace Llvm.NET.DebugInfo
     public class DIMacro
         : DIMacroNode
     {
-        /* non-operand property
+        /* TODO: non-operand property
         public uint Line { get; }
         */
 

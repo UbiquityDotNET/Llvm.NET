@@ -35,7 +35,7 @@ namespace Llvm.NET
     public sealed class Triple
         : IEquatable<Triple>
     {
-        /// <summary>Constructs a new <see cref="Triple"/> instance from a triple string</summary>
+        /// <summary>Initializes a new instance of the <see cref="Triple"/> class from a triple string</summary>
         /// <param name="tripleTxt">Triple string to parse</param>
         /// <remarks>
         /// The <paramref name="tripleTxt"/> string is normalized before parsing to allow for

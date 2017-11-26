@@ -3,30 +3,48 @@
 // </copyright>
 
 using System;
-using System.Collections.Generic;
+using System.Runtime.InteropServices;
+using System.Security;
+
+using static Llvm.NET.Native.NativeMethods;
 
 namespace Llvm.NET.Native
 {
-    // TODO: CHange this to use LlvmObject as base
-    internal struct LLVMTargetDataRef
-        : IEquatable<LLVMTargetDataRef>
+    [SecurityCritical]
+    internal class LLVMTargetDataRef
+        : LlvmObjectRef
     {
-        public override int GetHashCode( ) => Handle.GetHashCode( );
-
-        public override bool Equals( object obj ) => !( obj is null ) && ( obj is LLVMTargetDataRef r ) && r.Handle == Handle;
-
-        public bool Equals( LLVMTargetDataRef other ) => Handle == other.Handle;
-
-        public static bool operator ==( LLVMTargetDataRef lhs, LLVMTargetDataRef rhs )
-            => EqualityComparer<LLVMTargetDataRef>.Default.Equals( lhs, rhs );
-
-        public static bool operator !=( LLVMTargetDataRef lhs, LLVMTargetDataRef rhs ) => !( lhs == rhs );
-
-        internal LLVMTargetDataRef( IntPtr pointer )
+        public LLVMTargetDataRef( IntPtr handle, bool owner )
+            : base( owner )
         {
-            Handle = pointer;
+            SetHandle( handle );
         }
 
-        private readonly IntPtr Handle;
+        [SecurityCritical]
+        protected override bool ReleaseHandle( )
+        {
+            LLVMDisposeTargetData( handle );
+            return true;
+        }
+
+        private LLVMTargetDataRef( )
+            : base( true )
+        {
+        }
+
+        [DllImport( LibraryPath, CallingConvention = CallingConvention.Cdecl )]
+        private static extern void LLVMDisposeTargetData( IntPtr @TargetData );
+    }
+
+#pragma warning disable SA1402
+
+    // TargetData alias
+    internal class LLVMTargetDataAlias
+        : LLVMTargetDataRef
+    {
+        private LLVMTargetDataAlias( )
+            : base( IntPtr.Zero, false )
+        {
+        }
     }
 }

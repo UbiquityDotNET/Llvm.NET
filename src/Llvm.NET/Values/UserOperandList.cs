@@ -4,7 +4,16 @@
 
 using System;
 using System.Collections.Generic;
+using System.Runtime.InteropServices;
 using Llvm.NET.Native;
+using Ubiquity.ArgValidators;
+
+using static Llvm.NET.Native.NativeMethods;
+
+/* TODO: Consider an interface that allows updating elements without growing the list */
+/* TODO: Consider a generic implementation of this as it is mosly a duplicate of the Metadata operand list support
+         (core difference is the GetOperand() and GetNumOperands calls)
+*/
 
 namespace Llvm.NET.Values
 {
@@ -17,12 +26,9 @@ namespace Llvm.NET.Values
         {
             get
             {
-                if( index >= Count || index < 0 )
-                {
-                    throw new ArgumentOutOfRangeException( nameof( index ) );
-                }
+                index.ValidateRange( 0, Count - 1, nameof( index ) );
 
-                return Value.FromHandle( NativeMethods.LLVMGetOperand( Owner.ValueHandle, ( uint )index ) );
+                return GetElement( index );
             }
         }
 
@@ -31,23 +37,23 @@ namespace Llvm.NET.Values
         {
             get
             {
-                int count = NativeMethods.LLVMGetNumOperands( Owner.ValueHandle );
-                return Math.Min( count, int.MaxValue );
+                long count = LLVMGetNumOperands( Owner.ValueHandle ) - Offset;
+                return ( int )Math.Min( count, int.MaxValue );
             }
         }
 
         /// <inheritdoc/>
         public IEnumerator<Value> GetEnumerator( )
         {
-            for( uint i = 0; i < Count; ++i )
+            for( int i = 0; i < Count; ++i )
             {
-                LLVMValueRef val = NativeMethods.LLVMGetOperand( Owner.ValueHandle, i );
-                if( val == default )
+                var element = GetElement( i );
+                if( element == null )
                 {
                     yield break;
                 }
 
-                yield return Value.FromHandle( val );
+                yield return element;
             }
         }
 
@@ -55,10 +61,37 @@ namespace Llvm.NET.Values
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator( ) => GetEnumerator( );
 
         internal UserOperandList( User owner )
+            : this( owner, 0 )
         {
+        }
+
+        internal UserOperandList( User owner, int offset )
+        {
+            Offset = offset;
             Owner = owner;
         }
 
+        private Value GetElement( int index )
+        {
+            var handle = LLVMGetOperand( Owner.ValueHandle, checked(( uint )( index + Offset ) ) );
+            if( handle == default )
+            {
+                return null;
+            }
+
+            return Value.FromHandle( handle );
+        }
+
+        private int Offset;
         private readonly User Owner;
+
+        [DllImport( LibraryPath, CallingConvention = CallingConvention.Cdecl )]
+        private static extern LLVMValueRef LLVMGetOperand( LLVMValueRef @Val, uint @Index );
+
+        [DllImport( LibraryPath, CallingConvention = CallingConvention.Cdecl )]
+        private static extern void LLVMSetOperand( LLVMValueRef @User, uint @Index, LLVMValueRef @Val );
+
+        [DllImport( LibraryPath, EntryPoint = "LLVMGetNumOperands", CallingConvention = CallingConvention.Cdecl )]
+        private static extern int LLVMGetNumOperands( LLVMValueRef @Val );
     }
 }

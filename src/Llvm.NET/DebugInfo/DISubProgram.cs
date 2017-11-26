@@ -9,7 +9,8 @@ using Ubiquity.ArgValidators;
 
 namespace Llvm.NET.DebugInfo
 {
-    /// <summary>see <a href="http://llvm.org/docs/LangRef.html#disubprogram"/></summary>
+    /// <summary>Debug information for a SubProgram</summary>
+    /// <seealso href="xref:llvm_langref#disubprogram"/>
     [SuppressMessage( "Microsoft.Naming", "CA1702:CompoundWordsShouldBeCasedCorrectly", Justification = "It is already correct 8^)" )]
     public class DISubProgram
         : DILocalScope

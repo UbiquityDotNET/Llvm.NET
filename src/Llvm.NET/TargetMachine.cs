@@ -40,7 +40,7 @@ namespace Llvm.NET
                     return null;
                 }
 
-                return DataLayout.FromHandle( handle, isDisposable: false );
+                return DataLayout.FromHandle( handle );
             }
         }
 

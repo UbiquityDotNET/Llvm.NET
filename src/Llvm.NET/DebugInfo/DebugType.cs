@@ -9,7 +9,7 @@ using Llvm.NET.Types;
 using Llvm.NET.Values;
 using Ubiquity.ArgValidators;
 
-#pragma warning disable SA1649 // File name must match first type ( Justification -  Interface + Impl )
+#pragma warning disable SA1649 // File name must match first type ( Justification -  Interface + internal Impl + public extensions )
 
 namespace Llvm.NET.DebugInfo
 {
@@ -231,6 +231,7 @@ namespace Llvm.NET.DebugInfo
             NativeType = llvmType ?? throw new ArgumentNullException( nameof( llvmType ) );
         }
 
+        // this can't be an auto property as the setter needs Enforce Set Once semantics
         [SuppressMessage( "StyleCop.CSharp.NamingRules"
                         , "SA1310:Field names must not contain underscore"
                         , Justification = "Trailing _ indicates value MUST NOT be written to directly, even internally"
@@ -238,6 +239,7 @@ namespace Llvm.NET.DebugInfo
         ]
         private TNative NativeType_;
 
+        // this can't be an auto property as the setter needs Enforce Set Once semantics
         [SuppressMessage( "StyleCop.CSharp.NamingRules"
                         , "SA1310:Field names must not contain underscore"
                         , Justification = "Trailing _ indicates value MUST NOT be written to directly, even internally"
@@ -248,6 +250,7 @@ namespace Llvm.NET.DebugInfo
         private readonly ExtensiblePropertyContainer PropertyContainer = new ExtensiblePropertyContainer( );
     }
 
+    /// <summary>Utility class to provide mix-in type extensions and support for Debug Types</summary>
     public static class DebugType
     {
         /// <summary>Creates a new <see cref="DebugType"/>instance inferring the generic arguments from the parameters</summary>

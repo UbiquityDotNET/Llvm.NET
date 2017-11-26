@@ -6,8 +6,8 @@ using System;
 using System.Diagnostics.CodeAnalysis;
 using Llvm.NET.Native;
 
-// TEMP: disable this until all values are properly doc'd
-#pragma warning disable SA1602 // Enumeration items must be documented
+// TEMP: Disable these until all values are properly doc'd
+#pragma warning disable SA1600, SA1602 // Enumeration items must be documented
 
 namespace Llvm.NET.DebugInfo
 {

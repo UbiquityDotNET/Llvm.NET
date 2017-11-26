@@ -6,6 +6,7 @@ using Llvm.NET.Native;
 
 namespace Llvm.NET.Instructions
 {
+    /// <summary>This class represents a no-op cast from one type to another</summary>
     public class BitCast
         : Cast
     {

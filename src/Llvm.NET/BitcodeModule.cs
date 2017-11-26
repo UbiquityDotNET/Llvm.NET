@@ -53,7 +53,7 @@ namespace Llvm.NET
             Comdats = new ComdatCollection( this );
         }
 
-        /// <summary>Creates a named module with a root <see cref="DICompileUnit"/> to contain debugging information</summary>
+        /// <summary>Initializes a new instance of the <see cref="BitcodeModule"/> class with a root <see cref="DICompileUnit"/> to contain debugging information</summary>
         /// <param name="context">Context for the module</param>
         /// <param name="moduleId">Module name</param>
         /// <param name="language">Language to store in the debugging information</param>
@@ -184,10 +184,6 @@ namespace Llvm.NET
             set
             {
                 ValidateHandle( );
-                if( Layout_ != null )
-                {
-                    Layout_.Dispose( );
-                }
 
                 Layout_ = value;
                 LLVMSetDataLayout( ModuleHandle, value?.ToString( ) ?? string.Empty );

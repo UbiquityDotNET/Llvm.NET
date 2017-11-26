@@ -6,12 +6,12 @@ using Llvm.NET.Native;
 
 namespace Llvm.NET.DebugInfo
 {
-    /// <summary>see <a href="http://llvm.org/docs/LangRef.html#dilocalvariable"/></summary>
+    /// <summary>Debug information for a local variable</summary>
     /// <seealso href="xref:llvm_langref#dilocalvariable">LLVM DILocalVariable</seealso>
     public class DILocalVariable
         : DIVariable
     {
-        /* non-operand properties
+        /* TODO: non-operand properties
         public DebugInfoFlags => LLVMDILocalVariableGetFlags( MetadataHandle );
         public UInt16 ArgIndex => LLVMDILocalVariableGetArg( MetadataHandle );
         public bool IsParameter => ArgIndex != 0;
