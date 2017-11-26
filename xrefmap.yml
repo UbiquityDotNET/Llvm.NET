@@ -1511,18 +1511,6 @@ references:
   commentId: Overload:Llvm.NET.DataLayout.CallFrameAlignmentOf
   fullName: Llvm.NET.DataLayout.CallFrameAlignmentOf
   nameWithType: DataLayout.CallFrameAlignmentOf
-- uid: Llvm.NET.DataLayout.Dispose
-  name: Dispose()
-  href: api/Llvm.NET.DataLayout.Dispose.html#Llvm_NET_DataLayout_Dispose
-  commentId: M:Llvm.NET.DataLayout.Dispose
-  fullName: Llvm.NET.DataLayout.Dispose()
-  nameWithType: DataLayout.Dispose()
-- uid: Llvm.NET.DataLayout.Dispose*
-  name: Dispose
-  href: api/Llvm.NET.DataLayout.Dispose.html
-  commentId: Overload:Llvm.NET.DataLayout.Dispose
-  fullName: Llvm.NET.DataLayout.Dispose
-  nameWithType: DataLayout.Dispose
 - uid: Llvm.NET.DataLayout.ElementAtOffset(Llvm.NET.Types.IStructType,System.UInt64)
   name: ElementAtOffset(IStructType, UInt64)
   href: api/Llvm.NET.DataLayout.ElementAtOffset.html#Llvm_NET_DataLayout_ElementAtOffset_Llvm_NET_Types_IStructType_System_UInt64_
@@ -1547,18 +1535,6 @@ references:
   commentId: Overload:Llvm.NET.DataLayout.Endianess
   fullName: Llvm.NET.DataLayout.Endianess
   nameWithType: DataLayout.Endianess
-- uid: Llvm.NET.DataLayout.Finalize
-  name: Finalize()
-  href: api/Llvm.NET.DataLayout.Finalize.html#Llvm_NET_DataLayout_Finalize
-  commentId: M:Llvm.NET.DataLayout.Finalize
-  fullName: Llvm.NET.DataLayout.Finalize()
-  nameWithType: DataLayout.Finalize()
-- uid: Llvm.NET.DataLayout.Finalize*
-  name: Finalize
-  href: api/Llvm.NET.DataLayout.Finalize.html
-  commentId: Overload:Llvm.NET.DataLayout.Finalize
-  fullName: Llvm.NET.DataLayout.Finalize
-  nameWithType: DataLayout.Finalize
 - uid: Llvm.NET.DataLayout.IntPtrType(Llvm.NET.Context)
   name: IntPtrType(Context)
   href: api/Llvm.NET.DataLayout.IntPtrType.html#Llvm_NET_DataLayout_IntPtrType_Llvm_NET_Context_
@@ -5831,6 +5807,18 @@ references:
   commentId: T:Llvm.NET.DebugInfo.GenericDINode
   fullName: Llvm.NET.DebugInfo.GenericDINode
   nameWithType: GenericDINode
+- uid: Llvm.NET.DebugInfo.GenericDINode.Header
+  name: Header
+  href: api/Llvm.NET.DebugInfo.GenericDINode.Header.html#Llvm_NET_DebugInfo_GenericDINode_Header
+  commentId: P:Llvm.NET.DebugInfo.GenericDINode.Header
+  fullName: Llvm.NET.DebugInfo.GenericDINode.Header
+  nameWithType: GenericDINode.Header
+- uid: Llvm.NET.DebugInfo.GenericDINode.Header*
+  name: Header
+  href: api/Llvm.NET.DebugInfo.GenericDINode.Header.html
+  commentId: Overload:Llvm.NET.DebugInfo.GenericDINode.Header
+  fullName: Llvm.NET.DebugInfo.GenericDINode.Header
+  nameWithType: GenericDINode.Header
 - uid: Llvm.NET.DebugInfo.IDebugType`2
   name: IDebugType<TNative, TDebug>
   href: api/Llvm.NET.DebugInfo.IDebugType-2.html
@@ -6980,6 +6968,54 @@ references:
   commentId: T:Llvm.NET.Instructions.Branch
   fullName: Llvm.NET.Instructions.Branch
   nameWithType: Branch
+- uid: Llvm.NET.Instructions.Branch.Condition
+  name: Condition
+  href: api/Llvm.NET.Instructions.Branch.Condition.html#Llvm_NET_Instructions_Branch_Condition
+  commentId: P:Llvm.NET.Instructions.Branch.Condition
+  fullName: Llvm.NET.Instructions.Branch.Condition
+  nameWithType: Branch.Condition
+- uid: Llvm.NET.Instructions.Branch.Condition*
+  name: Condition
+  href: api/Llvm.NET.Instructions.Branch.Condition.html
+  commentId: Overload:Llvm.NET.Instructions.Branch.Condition
+  fullName: Llvm.NET.Instructions.Branch.Condition
+  nameWithType: Branch.Condition
+- uid: Llvm.NET.Instructions.Branch.IsConditional
+  name: IsConditional
+  href: api/Llvm.NET.Instructions.Branch.IsConditional.html#Llvm_NET_Instructions_Branch_IsConditional
+  commentId: P:Llvm.NET.Instructions.Branch.IsConditional
+  fullName: Llvm.NET.Instructions.Branch.IsConditional
+  nameWithType: Branch.IsConditional
+- uid: Llvm.NET.Instructions.Branch.IsConditional*
+  name: IsConditional
+  href: api/Llvm.NET.Instructions.Branch.IsConditional.html
+  commentId: Overload:Llvm.NET.Instructions.Branch.IsConditional
+  fullName: Llvm.NET.Instructions.Branch.IsConditional
+  nameWithType: Branch.IsConditional
+- uid: Llvm.NET.Instructions.Branch.IsUnconitional
+  name: IsUnconitional
+  href: api/Llvm.NET.Instructions.Branch.IsUnconitional.html#Llvm_NET_Instructions_Branch_IsUnconitional
+  commentId: P:Llvm.NET.Instructions.Branch.IsUnconitional
+  fullName: Llvm.NET.Instructions.Branch.IsUnconitional
+  nameWithType: Branch.IsUnconitional
+- uid: Llvm.NET.Instructions.Branch.IsUnconitional*
+  name: IsUnconitional
+  href: api/Llvm.NET.Instructions.Branch.IsUnconitional.html
+  commentId: Overload:Llvm.NET.Instructions.Branch.IsUnconitional
+  fullName: Llvm.NET.Instructions.Branch.IsUnconitional
+  nameWithType: Branch.IsUnconitional
+- uid: Llvm.NET.Instructions.Branch.Successors
+  name: Successors
+  href: api/Llvm.NET.Instructions.Branch.Successors.html#Llvm_NET_Instructions_Branch_Successors
+  commentId: P:Llvm.NET.Instructions.Branch.Successors
+  fullName: Llvm.NET.Instructions.Branch.Successors
+  nameWithType: Branch.Successors
+- uid: Llvm.NET.Instructions.Branch.Successors*
+  name: Successors
+  href: api/Llvm.NET.Instructions.Branch.Successors.html
+  commentId: Overload:Llvm.NET.Instructions.Branch.Successors
+  fullName: Llvm.NET.Instructions.Branch.Successors
+  nameWithType: Branch.Successors
 - uid: Llvm.NET.Instructions.CallInstruction
   name: CallInstruction
   href: api/Llvm.NET.Instructions.CallInstruction.html
@@ -7100,24 +7136,108 @@ references:
   commentId: T:Llvm.NET.Instructions.Cast
   fullName: Llvm.NET.Instructions.Cast
   nameWithType: Cast
+- uid: Llvm.NET.Instructions.Cast.FromType
+  name: FromType
+  href: api/Llvm.NET.Instructions.Cast.FromType.html#Llvm_NET_Instructions_Cast_FromType
+  commentId: P:Llvm.NET.Instructions.Cast.FromType
+  fullName: Llvm.NET.Instructions.Cast.FromType
+  nameWithType: Cast.FromType
+- uid: Llvm.NET.Instructions.Cast.FromType*
+  name: FromType
+  href: api/Llvm.NET.Instructions.Cast.FromType.html
+  commentId: Overload:Llvm.NET.Instructions.Cast.FromType
+  fullName: Llvm.NET.Instructions.Cast.FromType
+  nameWithType: Cast.FromType
+- uid: Llvm.NET.Instructions.Cast.ToType
+  name: ToType
+  href: api/Llvm.NET.Instructions.Cast.ToType.html#Llvm_NET_Instructions_Cast_ToType
+  commentId: P:Llvm.NET.Instructions.Cast.ToType
+  fullName: Llvm.NET.Instructions.Cast.ToType
+  nameWithType: Cast.ToType
+- uid: Llvm.NET.Instructions.Cast.ToType*
+  name: ToType
+  href: api/Llvm.NET.Instructions.Cast.ToType.html
+  commentId: Overload:Llvm.NET.Instructions.Cast.ToType
+  fullName: Llvm.NET.Instructions.Cast.ToType
+  nameWithType: Cast.ToType
 - uid: Llvm.NET.Instructions.CatchPad
   name: CatchPad
   href: api/Llvm.NET.Instructions.CatchPad.html
   commentId: T:Llvm.NET.Instructions.CatchPad
   fullName: Llvm.NET.Instructions.CatchPad
   nameWithType: CatchPad
+- uid: Llvm.NET.Instructions.CatchPad.CatchSwitch
+  name: CatchSwitch
+  href: api/Llvm.NET.Instructions.CatchPad.CatchSwitch.html#Llvm_NET_Instructions_CatchPad_CatchSwitch
+  commentId: P:Llvm.NET.Instructions.CatchPad.CatchSwitch
+  fullName: Llvm.NET.Instructions.CatchPad.CatchSwitch
+  nameWithType: CatchPad.CatchSwitch
+- uid: Llvm.NET.Instructions.CatchPad.CatchSwitch*
+  name: CatchSwitch
+  href: api/Llvm.NET.Instructions.CatchPad.CatchSwitch.html
+  commentId: Overload:Llvm.NET.Instructions.CatchPad.CatchSwitch
+  fullName: Llvm.NET.Instructions.CatchPad.CatchSwitch
+  nameWithType: CatchPad.CatchSwitch
 - uid: Llvm.NET.Instructions.CatchReturn
   name: CatchReturn
   href: api/Llvm.NET.Instructions.CatchReturn.html
   commentId: T:Llvm.NET.Instructions.CatchReturn
   fullName: Llvm.NET.Instructions.CatchReturn
   nameWithType: CatchReturn
+- uid: Llvm.NET.Instructions.CatchReturn.CatchPad
+  name: CatchPad
+  href: api/Llvm.NET.Instructions.CatchReturn.CatchPad.html#Llvm_NET_Instructions_CatchReturn_CatchPad
+  commentId: P:Llvm.NET.Instructions.CatchReturn.CatchPad
+  fullName: Llvm.NET.Instructions.CatchReturn.CatchPad
+  nameWithType: CatchReturn.CatchPad
+- uid: Llvm.NET.Instructions.CatchReturn.CatchPad*
+  name: CatchPad
+  href: api/Llvm.NET.Instructions.CatchReturn.CatchPad.html
+  commentId: Overload:Llvm.NET.Instructions.CatchReturn.CatchPad
+  fullName: Llvm.NET.Instructions.CatchReturn.CatchPad
+  nameWithType: CatchReturn.CatchPad
+- uid: Llvm.NET.Instructions.CatchReturn.CatchSwitchParentPad
+  name: CatchSwitchParentPad
+  href: api/Llvm.NET.Instructions.CatchReturn.CatchSwitchParentPad.html#Llvm_NET_Instructions_CatchReturn_CatchSwitchParentPad
+  commentId: P:Llvm.NET.Instructions.CatchReturn.CatchSwitchParentPad
+  fullName: Llvm.NET.Instructions.CatchReturn.CatchSwitchParentPad
+  nameWithType: CatchReturn.CatchSwitchParentPad
+- uid: Llvm.NET.Instructions.CatchReturn.CatchSwitchParentPad*
+  name: CatchSwitchParentPad
+  href: api/Llvm.NET.Instructions.CatchReturn.CatchSwitchParentPad.html
+  commentId: Overload:Llvm.NET.Instructions.CatchReturn.CatchSwitchParentPad
+  fullName: Llvm.NET.Instructions.CatchReturn.CatchSwitchParentPad
+  nameWithType: CatchReturn.CatchSwitchParentPad
+- uid: Llvm.NET.Instructions.CatchReturn.Successors
+  name: Successors
+  href: api/Llvm.NET.Instructions.CatchReturn.Successors.html#Llvm_NET_Instructions_CatchReturn_Successors
+  commentId: P:Llvm.NET.Instructions.CatchReturn.Successors
+  fullName: Llvm.NET.Instructions.CatchReturn.Successors
+  nameWithType: CatchReturn.Successors
+- uid: Llvm.NET.Instructions.CatchReturn.Successors*
+  name: Successors
+  href: api/Llvm.NET.Instructions.CatchReturn.Successors.html
+  commentId: Overload:Llvm.NET.Instructions.CatchReturn.Successors
+  fullName: Llvm.NET.Instructions.CatchReturn.Successors
+  nameWithType: CatchReturn.Successors
 - uid: Llvm.NET.Instructions.CatchSwitch
   name: CatchSwitch
   href: api/Llvm.NET.Instructions.CatchSwitch.html
   commentId: T:Llvm.NET.Instructions.CatchSwitch
   fullName: Llvm.NET.Instructions.CatchSwitch
   nameWithType: CatchSwitch
+- uid: Llvm.NET.Instructions.CatchSwitch.ParentPad
+  name: ParentPad
+  href: api/Llvm.NET.Instructions.CatchSwitch.ParentPad.html#Llvm_NET_Instructions_CatchSwitch_ParentPad
+  commentId: P:Llvm.NET.Instructions.CatchSwitch.ParentPad
+  fullName: Llvm.NET.Instructions.CatchSwitch.ParentPad
+  nameWithType: CatchSwitch.ParentPad
+- uid: Llvm.NET.Instructions.CatchSwitch.ParentPad*
+  name: ParentPad
+  href: api/Llvm.NET.Instructions.CatchSwitch.ParentPad.html
+  commentId: Overload:Llvm.NET.Instructions.CatchSwitch.ParentPad
+  fullName: Llvm.NET.Instructions.CatchSwitch.ParentPad
+  nameWithType: CatchSwitch.ParentPad
 - uid: Llvm.NET.Instructions.CleanupPad
   name: CleanupPad
   href: api/Llvm.NET.Instructions.CleanupPad.html
@@ -7130,6 +7250,18 @@ references:
   commentId: T:Llvm.NET.Instructions.CleanupReturn
   fullName: Llvm.NET.Instructions.CleanupReturn
   nameWithType: CleanupReturn
+- uid: Llvm.NET.Instructions.CleanupReturn.CleanupPad
+  name: CleanupPad
+  href: api/Llvm.NET.Instructions.CleanupReturn.CleanupPad.html#Llvm_NET_Instructions_CleanupReturn_CleanupPad
+  commentId: P:Llvm.NET.Instructions.CleanupReturn.CleanupPad
+  fullName: Llvm.NET.Instructions.CleanupReturn.CleanupPad
+  nameWithType: CleanupReturn.CleanupPad
+- uid: Llvm.NET.Instructions.CleanupReturn.CleanupPad*
+  name: CleanupPad
+  href: api/Llvm.NET.Instructions.CleanupReturn.CleanupPad.html
+  commentId: Overload:Llvm.NET.Instructions.CleanupReturn.CleanupPad
+  fullName: Llvm.NET.Instructions.CleanupReturn.CleanupPad
+  nameWithType: CleanupReturn.CleanupPad
 - uid: Llvm.NET.Instructions.Cmp
   name: Cmp
   href: api/Llvm.NET.Instructions.Cmp.html
@@ -7214,6 +7346,30 @@ references:
   commentId: T:Llvm.NET.Instructions.FuncletPad
   fullName: Llvm.NET.Instructions.FuncletPad
   nameWithType: FuncletPad
+- uid: Llvm.NET.Instructions.FuncletPad.ArgOperands
+  name: ArgOperands
+  href: api/Llvm.NET.Instructions.FuncletPad.ArgOperands.html#Llvm_NET_Instructions_FuncletPad_ArgOperands
+  commentId: P:Llvm.NET.Instructions.FuncletPad.ArgOperands
+  fullName: Llvm.NET.Instructions.FuncletPad.ArgOperands
+  nameWithType: FuncletPad.ArgOperands
+- uid: Llvm.NET.Instructions.FuncletPad.ArgOperands*
+  name: ArgOperands
+  href: api/Llvm.NET.Instructions.FuncletPad.ArgOperands.html
+  commentId: Overload:Llvm.NET.Instructions.FuncletPad.ArgOperands
+  fullName: Llvm.NET.Instructions.FuncletPad.ArgOperands
+  nameWithType: FuncletPad.ArgOperands
+- uid: Llvm.NET.Instructions.FuncletPad.ParentPad
+  name: ParentPad
+  href: api/Llvm.NET.Instructions.FuncletPad.ParentPad.html#Llvm_NET_Instructions_FuncletPad_ParentPad
+  commentId: P:Llvm.NET.Instructions.FuncletPad.ParentPad
+  fullName: Llvm.NET.Instructions.FuncletPad.ParentPad
+  nameWithType: FuncletPad.ParentPad
+- uid: Llvm.NET.Instructions.FuncletPad.ParentPad*
+  name: ParentPad
+  href: api/Llvm.NET.Instructions.FuncletPad.ParentPad.html
+  commentId: Overload:Llvm.NET.Instructions.FuncletPad.ParentPad
+  fullName: Llvm.NET.Instructions.FuncletPad.ParentPad
+  nameWithType: FuncletPad.ParentPad
 - uid: Llvm.NET.Instructions.GetElementPtr
   name: GetElementPtr
   href: api/Llvm.NET.Instructions.GetElementPtr.html
