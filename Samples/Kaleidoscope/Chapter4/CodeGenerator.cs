@@ -178,15 +178,15 @@ namespace Kaleidoscope
 
         private Function GetFunction( string name )
         {
+            if( FunctionPrototypes.TryGetValue( name, out var signature ) )
+            {
+                return GetOrDeclareFunction( signature );
+            }
+
             Function retVal = Module.GetFunction( name );
             if( retVal != null )
             {
                 return retVal;
-            }
-
-            if( FunctionPrototypes.TryGetValue( name, out var signature ) )
-            {
-                return GetOrDeclareFunction( signature );
             }
 
             return null;
@@ -194,7 +194,7 @@ namespace Kaleidoscope
 
         private Function GetOrDeclareFunction( Prototype prototype, bool isAnonymous = false )
         {
-            var function = GetFunction( prototype.Identifier.Name );
+            var function = Module.GetFunction( prototype.Identifier.Name );
             if( function != null )
             {
                 return function;

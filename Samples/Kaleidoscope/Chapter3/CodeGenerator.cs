@@ -153,7 +153,7 @@ namespace Kaleidoscope
 
         private Function GetOrDeclareFunction( Prototype prototype )
         {
-            var function = GetFunction( prototype.Identifier.Name );
+            var function = Module.GetFunction( prototype.Identifier.Name );
             if( function != null )
             {
                 return function;

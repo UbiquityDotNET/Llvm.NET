@@ -18,9 +18,6 @@ fragment EndOfLine_
     | EndOfFile_
     ;
 
-LineComment: '#' ~[\r\n]* -> skip;
-WhiteSpace: [ \t\r\n\f]+ -> skip;
-
 EQUALS: '=';
 LPAREN: '(';
 RPAREN: ')';
@@ -56,6 +53,9 @@ OPSYMBOL
     | '_'
     | '|'
     ;
+
+LineComment: '#' ~[\r\n]* EndOfLine_ -> skip;
+WhiteSpace: [ \t\r\n\f]+ -> skip;
 
 Identifier: [a-zA-Z][a-zA-Z0-9]*;
 Number: Digits_ ('.' DecimalDigit_+)?;
