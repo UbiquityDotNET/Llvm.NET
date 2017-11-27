@@ -13,8 +13,8 @@ namespace Llvm.NET.Instructions
     /// in the block.
     /// </remarks>
     /// <seealso href="xref:llvm_langref#catchpad-instruction">LLVM 'catchpad' Instruction</seealso>
-    /// <seealso href="xref:llvm_releases_docs/ExceptionHandling.html">Exception Handling in LLVM</seealso>
-    /// <seealso href="xref:llvm_releases_docs/ExceptionHandle.html#wineh">Exception Handling using the Windows Runtime</seealso>
+    /// <seealso href="xref:llvm_exception_handling#exception-handling-in-llvm">Exception Handling in LLVM</seealso>
+    /// <seealso href="xref:llvm_exception_handling#wineh">Exception Handling using the Windows Runtime</seealso>
     public class CatchPad
         : FuncletPad
     {
