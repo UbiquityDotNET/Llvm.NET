@@ -7,7 +7,7 @@ using Llvm.NET.Native;
 namespace Llvm.NET.Instructions
 {
     /// <summary>Instruction to perform comparison of floating point values</summary>
-    /// <seealso href="xref:llvm_langref#fcmp-instruction">LLVM 'fcmp' Instruction</seealso>
+    /// <seealso href="xref:llvm_langref#fcmp-instruction">LLVM fcmp Instruction</seealso>
     public class FCmp
         : Cmp
     {
