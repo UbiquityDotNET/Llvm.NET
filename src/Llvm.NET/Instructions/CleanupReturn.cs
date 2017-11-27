@@ -8,8 +8,8 @@ namespace Llvm.NET.Instructions
 {
     /// <summary>Instruction that indicates to the personality function that one <see cref="CleanupPad"/> it transferred control to has ended</summary>
     /// <seealso href="xref:llvm_langref#cleanupret-instruction">LLVM 'cleanupret' instruction</seealso>
-    /// <seealso href="xref:llvm_releases_docs/ExceptionHandling.html">Exception Handling in LLVM</seealso>
-    /// <seealso href="xref:llvm_releases_docs/ExceptionHandle.html#wineh">Exception Handling using the Windows Runtime</seealso>
+    /// <seealso href="xref:llvm_exception_handling#exception-handling-in-llvm">Exception Handling in LLVM</seealso>
+    /// <seealso href="xref:llvm_exception_handling#wineh">Exception Handling using the Windows Runtime</seealso>
     public class CleanupReturn
         : Terminator
     {

@@ -8,8 +8,8 @@ using Llvm.NET.Values;
 namespace Llvm.NET.Instructions
 {
     /// <summary>Instrinsic LLVM IR instruction to declare Debug information for a <see cref="Value"/></summary>
-    /// <seealso href="xref:llvm_release_docs/SourceLevelDebugging.html#llvm-dbg-declare">llvm.dbg.declare</seealso>
-    /// <seealso href="xref:llvm_release_docs/SourceLevelDebugging.html">LLVM Source Level Debugging</seealso>
+    /// <seealso href="xref:llvm_sourcelevel_debugging#llvm-dbg-declare">llvm.dbg.declare</seealso>
+    /// <seealso href="xref:llvm_sourcelevel_debugging">LLVM Source Level Debugging</seealso>
     public class DebugDeclare
         : DebugInfoIntrinsic
     {
