@@ -2,7 +2,10 @@
 // Copyright (c) .NET Foundation. All rights reserved.
 // </copyright>
 
+using System.Runtime.InteropServices;
 using Llvm.NET.Native;
+
+using static Llvm.NET.Native.NativeMethods;
 
 namespace Llvm.NET.DebugInfo
 {
@@ -20,7 +23,7 @@ namespace Llvm.NET.DebugInfo
                     return (Tag)ushort.MaxValue;
                 }
 
-                return ( Tag )NativeMethods.LLVMDIDescriptorGetTag( MetadataHandle );
+                return ( Tag )LLVMDIDescriptorGetTag( MetadataHandle );
             }
         }
 
@@ -28,5 +31,8 @@ namespace Llvm.NET.DebugInfo
             : base( handle )
         {
         }
+
+        [DllImport( LibraryPath, CallingConvention = CallingConvention.Cdecl)]
+        private static extern LLVMDwarfTag LLVMDIDescriptorGetTag( LLVMMetadataRef descriptor );
     }
 }

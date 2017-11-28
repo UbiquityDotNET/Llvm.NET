@@ -5,8 +5,10 @@
 using System.Diagnostics.CodeAnalysis;
 using Llvm.NET.Native;
 
-// TEMP: disable this until all values are properly doc'd
-#pragma warning disable SA1602 // Enumeration items must be documented
+// TODO: Split these out to appropriate defining class as this has grown to an unwieldy size and makes finding the enums more difficult
+
+// TEMP: Disable these until all values are properly doc'd
+#pragma warning disable SA1600, SA1602 // Enumeration items must be documented
 
 namespace Llvm.NET
 {
@@ -326,6 +328,64 @@ namespace Llvm.NET
         /// <summary>Any value Greater than or equal to this is not valid for Icmp operations</summary>
         BadIcmpPredicate = LastIcmpPredicate + 1
     }
+
+    /*
+    TODO: extensions for predicate:
+      static bool isFPPredicate(Predicate P) {
+        return P >= FIRST_FCMP_PREDICATE && P <= LAST_FCMP_PREDICATE;
+      }
+
+      static bool isIntPredicate(Predicate P) {
+        return P >= FIRST_ICMP_PREDICATE && P <= LAST_ICMP_PREDICATE;
+      }
+
+      /// For example, EQ->EQ, SLE->SGE, ULT->UGT,
+      ///              OEQ->OEQ, ULE->UGE, OLT->OGT, etc.
+      /// @returns the predicate that would be the result of exchanging the two
+      /// operands of the CmpInst instruction without changing the result
+      /// produced.
+      /// @brief Return the predicate as if the operands were swapped
+      static Predicate getSwappedPredicate(Predicate pred);
+
+      /// For example, EQ -> NE, UGT -> ULE, SLT -> SGE,
+      ///              OEQ -> UNE, UGT -> OLE, OLT -> UGE, etc.
+      /// @returns the inverse predicate for predicate provided in \p pred.
+      /// @brief Return the inverse of a given predicate
+      static Predicate getInversePredicate(Predicate pred);
+
+      /// For example, ULT->SLT, ULE->SLE, UGT->SGT, UGE->SGE, SLT->Failed assert
+      /// @returns the signed version of the unsigned predicate pred.
+      /// @brief return the signed version of a predicate
+      static Predicate getSignedPredicate(Predicate pred);
+
+      /// @returns true if the predicate is unsigned, false otherwise.
+      /// @brief Determine if the predicate is an unsigned operation.
+      static bool isUnsigned(Predicate predicate);
+
+      /// @returns true if the predicate is signed, false otherwise.
+      /// @brief Determine if the predicate is an signed operation.
+      static bool isSigned(Predicate predicate);
+
+      /// @brief Determine if the predicate is an ordered operation.
+      static bool isOrdered(Predicate predicate);
+
+      /// @brief Determine if the predicate is an unordered operation.
+      static bool isUnordered(Predicate predicate);
+
+      /// Determine if the predicate is true when comparing a value with itself.
+      static bool isTrueWhenEqual(Predicate predicate);
+
+      /// Determine if the predicate is false when comparing a value with itself.
+      static bool isFalseWhenEqual(Predicate predicate);
+
+      /// Determine if Pred1 implies Pred2 is true when two compares have matching
+      /// operands.
+      static bool isImpliedTrueByMatchingCmp(Predicate Pred1, Predicate Pred2);
+
+      /// Determine if Pred1 implies Pred2 is false when two compares have matching
+      /// operands.
+      static bool isImpliedFalseByMatchingCmp(Predicate Pred1, Predicate Pred2);
+    */
 
     /// <summary>Predicate enumeration for integer comparison</summary>
     public enum IntPredicate

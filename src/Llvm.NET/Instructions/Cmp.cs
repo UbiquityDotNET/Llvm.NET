@@ -8,9 +8,11 @@ using static Llvm.NET.Native.NativeMethods;
 
 namespace Llvm.NET.Instructions
 {
+    /// <summary>Base class for compare instructions</summary>
     public class Cmp
         : Instruction
     {
+        /// <summary>Gets teh predicate for the comparison</summary>
         public Predicate Predicate
         {
             get
@@ -28,6 +30,8 @@ namespace Llvm.NET.Instructions
                 }
             }
         }
+
+        /* TODO: Predicate {set;} */
 
         internal Cmp( LLVMValueRef valueRef )
             : base( valueRef )

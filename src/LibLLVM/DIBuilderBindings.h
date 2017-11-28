@@ -453,22 +453,24 @@ extern "C" {
                                                  , /*Instruction **/ LLVMValueRef InsertBefore
                                                  );
 
-    // caller must call LLVMDisposeMessage() on the returned string
-    char const* LLVMMetadataAsString( LLVMMetadataRef descriptor );
-
-    void LLVMMDNodeReplaceAllUsesWith( LLVMMetadataRef oldDescriptor, LLVMMetadataRef newDescriptor );
-
     LLVMMetadataRef LLVMDILocation( LLVMContextRef context, unsigned Line, unsigned Column, LLVMMetadataRef scope, LLVMMetadataRef InlinedAt );
     LLVMBool LLVMSubProgramDescribes( LLVMMetadataRef subProgram, LLVMValueRef /*const Function **/F );
     LLVMMetadataRef LLVMDIBuilderCreateNamespace( LLVMDIBuilderRef Dref, LLVMMetadataRef scope, char const* name, LLVMBool exportSymbols );
+    /*DISubProgram*/ LLVMMetadataRef LLVMDILocalScopeGetSubProgram( LLVMMetadataRef /*DILocalScope*/ localScope );
+    unsigned int LLVMDIBasicTypeGetEncoding( LLVMMetadataRef /*DIBasicType*/ basicType );
+
+// TODO: Move these general Metadata manipulators to a distinct module as they aren't really DIBuilder functions
+    void LLVMMDNodeReplaceAllUsesWith( LLVMMetadataRef oldDescriptor, LLVMMetadataRef newDescriptor );
+
     LLVMContextRef LLVMGetNodeContext( LLVMMetadataRef /*MDNode*/ node );
     LLVMMetadataKind LLVMGetMetadataID( LLVMMetadataRef /*Metadata*/ md );
+
+    // caller must call LLVMDisposeMessage() on the returned string
+    char const* LLVMMetadataAsString( LLVMMetadataRef descriptor );
 
     uint32_t LLVMMDNodeGetNumOperands( LLVMMetadataRef /*MDNode*/ node );
     LLVMMDOperandRef LLVMMDNodeGetOperand( LLVMMetadataRef /*MDNode*/ node, uint32_t index );
     LLVMMetadataRef LLVMGetOperandNode( LLVMMDOperandRef operand );
-    /*DISubProgram*/ LLVMMetadataRef LLVMDILocalScopeGetSubProgram( LLVMMetadataRef /*DILocalScope*/ localScope );
-    unsigned int LLVMDIBasicTypeGetEncoding( LLVMMetadataRef /*DIBasicType*/ basicType );
 
 #ifdef __cplusplus
 } // extern "C"

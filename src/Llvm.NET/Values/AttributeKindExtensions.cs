@@ -9,6 +9,9 @@ using Llvm.NET.Instructions;
 using Llvm.NET.Native;
 using Ubiquity.ArgValidators;
 
+// TEMP: Disable these until all values are properly doc'd
+#pragma warning disable SA1600, SA1602 // Enumeration items must be documented
+
 namespace Llvm.NET.Values
 {
     /// <summary>Enumeration for the known LLVM attributes</summary>

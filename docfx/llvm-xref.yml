@@ -11,3 +11,12 @@ references:
   - uid: llvm_docs_passes
     name: LLVM Analysis and Transform Passes
     href: http://releases.llvm.org/5.0.0/docs/Passes.html
+  - uid: llvm_exception_handling
+    name: LLVM Exception Handling
+    href: http://releases.llvm.org/5.0.0/docs/ExceptionHandling.html
+  - uid: llvm_misunderstood_gep
+    name: LLVM The Misunderstood GEP Instruction
+    href: http://releases.llvm.org/5.0.0/docs/GetElementPtr.html
+  - uid: llvm_sourcelevel_debugging
+    name: LLVM Source Level Debugging
+    href: http://releases.llvm.org/5.0.0/docs/SourceLevelDebugging.html

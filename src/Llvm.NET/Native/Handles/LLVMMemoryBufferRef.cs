@@ -7,7 +7,9 @@ using System.Collections.Generic;
 
 namespace Llvm.NET.Native
 {
-    internal struct LLVMMemoryBufferRef
+     // TODO: replace with LlvmObject impl so that MemoryBuffer can remove the IDisposable interface and function like any other
+     // garbage collected type in .NET
+     internal struct LLVMMemoryBufferRef
         : IEquatable<LLVMMemoryBufferRef>
     {
         public override int GetHashCode( ) => Handle.GetHashCode( );

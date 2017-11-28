@@ -24,6 +24,7 @@ namespace Llvm.NET.Native
 
         public static bool operator !=( LLVMValueRef lhs, LLVMValueRef rhs ) => !( lhs == rhs );
 
+        // FIXME: Move this out of here to the Value as it is a layering violation
         public Context Context
         {
             get

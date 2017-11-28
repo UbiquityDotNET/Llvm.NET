@@ -1288,17 +1288,8 @@ namespace Llvm.NET.Native
         [DllImport( LibraryPath, EntryPoint = "LLVMGetUsedValue", CallingConvention = CallingConvention.Cdecl )]
         internal static extern LLVMValueRef LLVMGetUsedValue( LLVMUseRef @U );
 
-        [DllImport( LibraryPath, EntryPoint = "LLVMGetOperand", CallingConvention = CallingConvention.Cdecl )]
-        internal static extern LLVMValueRef LLVMGetOperand( LLVMValueRef @Val, uint @Index );
-
         [DllImport( LibraryPath, EntryPoint = "LLVMGetOperandUse", CallingConvention = CallingConvention.Cdecl )]
         internal static extern LLVMUseRef LLVMGetOperandUse( LLVMValueRef @Val, uint @Index );
-
-        [DllImport( LibraryPath, EntryPoint = "LLVMSetOperand", CallingConvention = CallingConvention.Cdecl )]
-        internal static extern void LLVMSetOperand( LLVMValueRef @User, uint @Index, LLVMValueRef @Val );
-
-        [DllImport( LibraryPath, EntryPoint = "LLVMGetNumOperands", CallingConvention = CallingConvention.Cdecl )]
-        internal static extern int LLVMGetNumOperands( LLVMValueRef @Val );
 
         [DllImport( LibraryPath, EntryPoint = "LLVMConstNull", CallingConvention = CallingConvention.Cdecl )]
         internal static extern LLVMValueRef LLVMConstNull( LLVMTypeRef @Ty );
@@ -1749,11 +1740,6 @@ namespace Llvm.NET.Native
         [DllImport( LibraryPath, EntryPoint = "LLVMSetGC", CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi, ThrowOnUnmappableChar = true, BestFitMapping = false )]
         internal static extern void LLVMSetGC( LLVMValueRef @Fn, [MarshalAs( UnmanagedType.LPStr )] string @Name );
 
-        /* Removed from LLVM-C APIs in LLVM 4.0.0
-        // [DllImport(libraryPath, EntryPoint = "LLVMAddFunctionAttr", CallingConvention = CallingConvention.Cdecl)]
-        // internal static extern void LLVMAddFunctionAttrLLVMValueRef( @Fn, LLVMAttribute @PA);
-        */
-
         [DllImport( LibraryPath, EntryPoint = "LLVMAddAttributeAtIndex", CallingConvention = CallingConvention.Cdecl )]
         internal static extern void LLVMAddAttributeAtIndex( LLVMValueRef @F, LLVMAttributeIndex @Idx, LLVMAttributeRef @A );
 
@@ -1774,53 +1760,6 @@ namespace Llvm.NET.Native
 
         [DllImport( LibraryPath, EntryPoint = "LLVMRemoveStringAttributeAtIndex", CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi, ThrowOnUnmappableChar = true, BestFitMapping = false )]
         internal static extern void LLVMRemoveStringAttributeAtIndex( LLVMValueRef @F, LLVMAttributeIndex @Idx, [MarshalAs( UnmanagedType.LPStr )] string @K, uint @KLen );
-
-        [DllImport( LibraryPath, EntryPoint = "LLVMAddTargetDependentFunctionAttr", CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi, ThrowOnUnmappableChar = true, BestFitMapping = false )]
-        internal static extern void LLVMAddTargetDependentFunctionAttr( LLVMValueRef @Fn, [MarshalAs( UnmanagedType.LPStr )] string @A, [MarshalAs( UnmanagedType.LPStr )] string @V );
-
-        /* Removed from LLVM-C APIs in LLVM 4.0.0
-        // [DllImport(libraryPath, EntryPoint = "LLVMGetFunctionAttr", CallingConvention = CallingConvention.Cdecl)]
-        // internal static extern LLVMAttribute LLVMGetFunctionAttrLLVMValueRef( @Fn);
-        */
-
-        /* Removed from LLVM-C APIs in LLVM 4.0.0
-        // [DllImport(libraryPath, EntryPoint = "LLVMRemoveFunctionAttr", CallingConvention = CallingConvention.Cdecl)]
-        // internal static extern void LLVMRemoveFunctionAttrLLVMValueRef( @Fn, LLVMAttribute @PA);
-        */
-        #endregion
-
-        #region Metadata
-        [DllImport( LibraryPath, EntryPoint = "LLVMGetMDKindID", CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi, ThrowOnUnmappableChar = true, BestFitMapping = false )]
-        internal static extern uint LLVMGetMDKindID( [MarshalAs( UnmanagedType.LPStr )] string @Name, uint @SLen );
-
-        [DllImport( LibraryPath, EntryPoint = "LLVMMDStringInContext", CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi, ThrowOnUnmappableChar = true, BestFitMapping = false )]
-        internal static extern LLVMValueRef LLVMMDStringInContext( LLVMContextRef @C, [MarshalAs( UnmanagedType.LPStr )] string @Str, uint @SLen );
-
-        [DllImport( LibraryPath, EntryPoint = "LLVMMDString", CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi, ThrowOnUnmappableChar = true, BestFitMapping = false )]
-        internal static extern LLVMValueRef LLVMMDString( [MarshalAs( UnmanagedType.LPStr )] string @Str, uint @SLen );
-
-        [DllImport( LibraryPath, EntryPoint = "LLVMMDNodeInContext", CallingConvention = CallingConvention.Cdecl )]
-        internal static extern LLVMValueRef LLVMMDNodeInContext( LLVMContextRef @C, out LLVMValueRef @Vals, uint @Count );
-
-        [DllImport( LibraryPath, EntryPoint = "LLVMMDNode", CallingConvention = CallingConvention.Cdecl )]
-        internal static extern LLVMValueRef LLVMMDNode( out LLVMValueRef @Vals, uint @Count );
-
-        // Added to LLVM-C API in LLVM 5.0.0
-        [DllImport( LibraryPath, EntryPoint = "LLVMMetadataAsValue", CallingConvention = CallingConvention.Cdecl )]
-        internal static extern LLVMValueRef LLVMMetadataAsValue( LLVMContextRef context, LLVMMetadataRef metadataRef );
-
-        // Added to LLVM-C API in LLVM 5.0.0
-        [DllImport( LibraryPath, EntryPoint = "LLVMValueAsMetadata", CallingConvention = CallingConvention.Cdecl )]
-        internal static extern LLVMMetadataRef LLVMValueAsMetadata( LLVMValueRef Val );
-
-        [DllImport( LibraryPath, EntryPoint = "LLVMGetMDString", CallingConvention = CallingConvention.Cdecl )]
-        internal static extern IntPtr LLVMGetMDString( LLVMValueRef @V, out uint @Length );
-
-        [DllImport( LibraryPath, EntryPoint = "LLVMGetMDNodeNumOperands", CallingConvention = CallingConvention.Cdecl )]
-        internal static extern uint LLVMGetMDNodeNumOperands( LLVMValueRef @V );
-
-        [DllImport( LibraryPath, EntryPoint = "LLVMGetMDNodeOperands", CallingConvention = CallingConvention.Cdecl )]
-        internal static extern void LLVMGetMDNodeOperands( LLVMValueRef @V, out LLVMValueRef @Dest );
         #endregion
 
         #region Basic Blocks
@@ -1932,15 +1871,6 @@ namespace Llvm.NET.Native
 
         [DllImport( LibraryPath, EntryPoint = "LLVMGetInstructionCallConv", CallingConvention = CallingConvention.Cdecl )]
         internal static extern uint LLVMGetInstructionCallConv( LLVMValueRef @Instr );
-
-        /* Removed from LLVM-C APIs in LLVM 4.0.0
-        // [DllImport(libraryPath, EntryPoint = "LLVMAddInstrAttribute", CallingConvention = CallingConvention.Cdecl)]
-        // internal static extern void LLVMAddInstrAttributeLLVMValueRef( @Instr, uint @index, LLVMAttribute @param2);
-
-        // Removed from LLVM-C APIs in LLVM 4.0.0
-        // [DllImport(libraryPath, EntryPoint = "LLVMRemoveInstrAttribute", CallingConvention = CallingConvention.Cdecl)]
-        // internal static extern void LLVMRemoveInstrAttributeLLVMValueRef( @Instr, uint @index, LLVMAttribute @param2);
-        */
 
         [DllImport( LibraryPath, EntryPoint = "LLVMSetInstrParamAlignment", CallingConvention = CallingConvention.Cdecl )]
         internal static extern void LLVMSetInstrParamAlignment( LLVMValueRef @Instr, uint @index, uint @Align );
@@ -2064,9 +1994,6 @@ namespace Llvm.NET.Native
 
         [DllImport( LibraryPath, EntryPoint = "LLVMInsertIntoBuilderWithName", CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi, ThrowOnUnmappableChar = true, BestFitMapping = false )]
         internal static extern void LLVMInsertIntoBuilderWithName( LLVMBuilderRef @Builder, LLVMValueRef @Instr, [MarshalAs( UnmanagedType.LPStr )] string @Name );
-
-        [DllImport( LibraryPath, EntryPoint = "LLVMDisposeBuilder", CallingConvention = CallingConvention.Cdecl )]
-        internal static extern void LLVMDisposeBuilder( IntPtr @Builder );
 
         [DllImport( LibraryPath, EntryPoint = "LLVMSetCurrentDebugLocation", CallingConvention = CallingConvention.Cdecl )]
         internal static extern void LLVMSetCurrentDebugLocation( LLVMBuilderRef @Builder, LLVMValueRef @L );
@@ -2716,9 +2643,6 @@ namespace Llvm.NET.Native
         [DllImport( LibraryPath, EntryPoint = "LLVMCreateTargetData", CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi, ThrowOnUnmappableChar = true, BestFitMapping = false )]
         internal static extern LLVMTargetDataRef LLVMCreateTargetData( [MarshalAs( UnmanagedType.LPStr )] string @StringRep );
 
-        [DllImport( LibraryPath, EntryPoint = "LLVMDisposeTargetData", CallingConvention = CallingConvention.Cdecl )]
-        internal static extern void LLVMDisposeTargetData( LLVMTargetDataRef @TD );
-
         [DllImport( LibraryPath, EntryPoint = "LLVMAddTargetLibraryInfo", CallingConvention = CallingConvention.Cdecl )]
         internal static extern void LLVMAddTargetLibraryInfo( LLVMTargetLibraryInfoRef @TLI, LLVMPassManagerRef @PM );
 
@@ -2928,7 +2852,7 @@ namespace Llvm.NET.Native
         */
 
         [DllImport( LibraryPath, EntryPoint = "LLVMGetExecutionEngineTargetData", CallingConvention = CallingConvention.Cdecl )]
-        internal static extern LLVMTargetDataRef LLVMGetExecutionEngineTargetData( LLVMExecutionEngineRef @EE );
+        internal static extern LLVMTargetDataAlias LLVMGetExecutionEngineTargetData( LLVMExecutionEngineRef @EE );
 
         [DllImport( LibraryPath, EntryPoint = "LLVMGetExecutionEngineTargetMachine", CallingConvention = CallingConvention.Cdecl )]
         internal static extern LLVMTargetMachineAlias LLVMGetExecutionEngineTargetMachine( LLVMExecutionEngineRef @EE );

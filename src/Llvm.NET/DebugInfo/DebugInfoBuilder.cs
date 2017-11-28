@@ -7,12 +7,14 @@ using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Text;
 using JetBrains.Annotations;
 using Llvm.NET.Instructions;
 using Llvm.NET.Native;
 using Llvm.NET.Values;
 using Ubiquity.ArgValidators;
+
 using static Llvm.NET.Native.NativeMethods;
 
 namespace Llvm.NET.DebugInfo
@@ -312,13 +314,13 @@ namespace Llvm.NET.DebugInfo
             return MDNode.FromHandle<DISubProgram>( handle );
         }
 
-        /// <summary>Create a local variable</summary>
-        /// <param name="scope">Scope for the variable</param>
+        /// <summary>Creates a <see cref="DILocalVariable"/> for a given scope</summary>
+        /// <param name="scope">Scope the variable belongs to</param>
         /// <param name="name">Name of the variable</param>
-        /// <param name="file">File for the variable</param>
-        /// <param name="line">Line for the variable</param>
+        /// <param name="file">File where the variable is declared</param>
+        /// <param name="line">Line where the variable is declared</param>
         /// <param name="type">Type of the variable</param>
-        /// <param name="alwaysPreserve">Flag to indicate whether the variable should always be preserved</param>
+        /// <param name="alwaysPreserve">Flag to indicate if this variable's debug informarion should always be preserved</param>
         /// <param name="debugFlags">Flags for the variable</param>
         /// <returns><see cref="DILocalVariable"/></returns>
         [SuppressMessage( "Microsoft.Design", "CA1011:ConsiderPassingBaseTypesAsParameters", Justification = "Specific type required by interop call" )]
@@ -660,6 +662,17 @@ namespace Llvm.NET.DebugInfo
             return CreateUnionType( scope, name, file, line, bitSize, bitAlign, debugFlags, GetOrCreateArray( elements ) );
         }
 
+        /// <summary>Creates a <see cref="DIDerivedType"/> for a member of a type</summary>
+        /// <param name="scope">Scope containing the member type</param>
+        /// <param name="name">Name of the member type</param>
+        /// <param name="file">File containing the member type</param>
+        /// <param name="line">Line of the start of the member type</param>
+        /// <param name="bitSize">Size of the member type in bits</param>
+        /// <param name="bitAlign">Bit alignment of the member</param>
+        /// <param name="bitOffset">Bit offset of the member</param>
+        /// <param name="debugFlags"><see cref="DebugInfoFlags"/> for the type</param>
+        /// <param name="type">LLVM native type for the member type</param>
+        /// <returns><see cref="DICompositeType"/></returns>
         [SuppressMessage( "Microsoft.Design", "CA1011:ConsiderPassingBaseTypesAsParameters", Justification = "Specific type required by interop call" )]
         public DIDerivedType CreateMemberType( DIScope scope
                                              , string name
@@ -689,6 +702,12 @@ namespace Llvm.NET.DebugInfo
             return MDNode.FromHandle<DIDerivedType>( handle );
         }
 
+        /// <summary>Creates debug information for an array type</summary>
+        /// <param name="bitSize">Size, in bits for the type</param>
+        /// <param name="bitAlign">Alignment in bits for the type</param>
+        /// <param name="elementType">Type of elements in the array</param>
+        /// <param name="subscripts">Dimensions for the array</param>
+        /// <returns><see cref="DICompositeType"/> for the array</returns>
         [SuppressMessage( "Microsoft.Design", "CA1011:ConsiderPassingBaseTypesAsParameters", Justification = "Specific type required by interop call" )]
         public DICompositeType CreateArrayType( UInt64 bitSize, UInt32 bitAlign, DIType elementType, DINodeArray subscripts )
         {
@@ -699,11 +718,24 @@ namespace Llvm.NET.DebugInfo
             return MDNode.FromHandle<DICompositeType>( handle );
         }
 
+        /// <summary>Creates debug information for an array type</summary>
+        /// <param name="bitSize">Size, in bits for the type</param>
+        /// <param name="bitAlign">Alignment in bits for the type</param>
+        /// <param name="elementType">Type of elements in the array</param>
+        /// <param name="subscripts">Dimensions for the array</param>
+        /// <returns><see cref="DICompositeType"/> for the array</returns>
         public DICompositeType CreateArrayType( UInt64 bitSize, UInt32 bitAlign, DIType elementType, params DINode[ ] subscripts )
         {
             return CreateArrayType( bitSize, bitAlign, elementType, GetOrCreateArray( subscripts ) );
         }
 
+        /// <summary>Creates debug information for a type definition (e.g. type alias)</summary>
+        /// <param name="type">Debug information for the aliased type</param>
+        /// <param name="name">Name of the alias</param>
+        /// <param name="file">File for the declaration of the typedef</param>
+        /// <param name="line">line for the typedef</param>
+        /// <param name="context">Context for creating the typedef</param>
+        /// <returns><see cref="DIDerivedType"/>for the alias</returns>
         [SuppressMessage( "Microsoft.Design", "CA1011:ConsiderPassingBaseTypesAsParameters", Justification = "Specific type required by interop call" )]
         public DIDerivedType CreateTypedef( DIType type, string name, DIFile file, uint line, DINode context )
         {
@@ -717,12 +749,19 @@ namespace Llvm.NET.DebugInfo
             return MDNode.FromHandle<DIDerivedType>( handle );
         }
 
+        /// <summary>Creates a new subrange</summary>
+        /// <param name="lo">Lower bounds of the subrange</param>
+        /// <param name="count">Count of elements in the sub range</param>
+        /// <returns><see cref="DISubRange"/></returns>
         public DISubRange CreateSubRange( long lo, long count )
         {
             var handle = LLVMDIBuilderGetOrCreateSubrange( BuilderHandle, lo, count );
             return MDNode.FromHandle<DISubRange>( handle );
         }
 
+        /// <summary>Gets or creates a node array with the specified elements</summary>
+        /// <param name="elements">Elements of the array</param>
+        /// <returns><see cref="DINodeArray"/></returns>
         public DINodeArray GetOrCreateArray( IEnumerable<DINode> elements )
         {
             var buf = elements.Select( d => d?.MetadataHandle ?? default ).ToArray( );
@@ -738,6 +777,9 @@ namespace Llvm.NET.DebugInfo
             return new DINodeArray( LlvmMetadata.FromHandle<MDTuple>( OwningModule.Context, handle ) );
         }
 
+        /// <summary>Gets or creates a Type array with the specified types</summary>
+        /// <param name="types">Types</param>
+        /// <returns><see cref="DITypeArray"/></returns>
         public DITypeArray GetOrCreateTypeArray( params DIType[ ] types ) => GetOrCreateTypeArray( ( IEnumerable<DIType> )types );
 
         public DITypeArray GetOrCreateTypeArray( IEnumerable<DIType> types )
@@ -747,6 +789,10 @@ namespace Llvm.NET.DebugInfo
             return new DITypeArray( MDNode.FromHandle<MDTuple>( handle ) );
         }
 
+        /// <summary>Creates a value for an enumeration</summary>
+        /// <param name="name">Name of the value</param>
+        /// <param name="value">Value of the enumerated value</param>
+        /// <returns><see cref="DIEnumerator"/> for the name, value pair</returns>
         public DIEnumerator CreateEnumeratorValue( string name, long value )
         {
             var handle = LLVMDIBuilderCreateEnumeratorValue( BuilderHandle, name, value );
@@ -823,26 +869,34 @@ namespace Llvm.NET.DebugInfo
 
         public void Finish( )
         {
-            if( !IsFinished )
+            if(IsFinished)
             {
-                var unresolvedTemps = from node in OwningModule.Context.Metadata.OfType<MDNode>( )
-                                      where node.IsTemporary && !node.IsResolved
-                                      select node;
+                return;
+            }
 
-                if( unresolvedTemps.Any( ) )
+            var bldr = new StringBuilder( );
+            var unresolvedTemps = from node in OwningModule.Context.Metadata.OfType<MDNode>( )
+                where node.IsTemporary && !node.IsResolved
+                select node;
+
+            foreach( MDNode node in unresolvedTemps )
+            {
+                if( bldr.Length == 0 )
                 {
-                    var bldr = new StringBuilder( "Temporaries must be resolved before finalizing debug information:\n" );
-                    foreach( var node in unresolvedTemps )
-                    {
-                        bldr.AppendFormat( "\t{0}\n", node.ToString( ) );
-                    }
-
-                    throw new InvalidOperationException( bldr.ToString( ) );
+                    bldr.AppendLine( "Temporaries must be resolved before finalizing debug information:" );
                 }
 
-                LLVMDIBuilderFinalize( BuilderHandle );
-                IsFinished = true;
+                bldr.AppendFormat( "\t{0}", node.ToString( ) );
+                bldr.AppendLine( );
             }
+
+            if( bldr.Length > 0 )
+            {
+                throw new InvalidOperationException( bldr.ToString( ) );
+            }
+
+            LLVMDIBuilderFinalize( BuilderHandle );
+            IsFinished = true;
         }
 
         public Instruction InsertDeclare( Value storage, DILocalVariable varInfo, DILocation location, Instruction insertBefore )
@@ -1075,5 +1129,116 @@ namespace Llvm.NET.DebugInfo
             return location.Scope.SubProgram.Describes( function )
                 || location.InlinedAtScope.SubProgram.Describes( function );
         }
+
+        #pragma warning disable SA1124 // Do not use regions
+        #region LibLLVM P/Invoke APIs
+        [DllImport( LibraryPath, CallingConvention = CallingConvention.Cdecl, BestFitMapping = false, ThrowOnUnmappableChar = true )]
+        private static extern LLVMDIBuilderRef LLVMNewDIBuilder( LLVMModuleRef @m, [MarshalAs( UnmanagedType.Bool )]bool allowUnresolved );
+
+        [DllImport( LibraryPath, CallingConvention = CallingConvention.Cdecl, BestFitMapping = false, ThrowOnUnmappableChar = true )]
+        private static extern void LLVMDIBuilderDestroy( LLVMDIBuilderRef @d );
+
+        [DllImport( LibraryPath, CallingConvention = CallingConvention.Cdecl, BestFitMapping = false, ThrowOnUnmappableChar = true )]
+        private static extern void LLVMDIBuilderFinalize( LLVMDIBuilderRef @d );
+
+        [DllImport( LibraryPath, CallingConvention = CallingConvention.Cdecl, BestFitMapping = false, ThrowOnUnmappableChar = true )]
+        private static extern void LLVMDIBuilderFinalizeSubProgram( LLVMDIBuilderRef dref, LLVMMetadataRef /*DISubProgram*/ subProgram );
+
+        [DllImport( LibraryPath, CallingConvention = CallingConvention.Cdecl, BestFitMapping = false, ThrowOnUnmappableChar = true )]
+        private static extern LLVMMetadataRef LLVMDIBuilderCreateCompileUnit( LLVMDIBuilderRef @D, UInt32 @Language, [MarshalAs( UnmanagedType.LPStr )] string @File, [MarshalAs( UnmanagedType.LPStr )] string @Dir, [MarshalAs( UnmanagedType.LPStr )] string @Producer, int @Optimized, [MarshalAs( UnmanagedType.LPStr )] string @Flags, UInt32 @RuntimeVersion );
+
+        [DllImport( LibraryPath, CallingConvention = CallingConvention.Cdecl, BestFitMapping = false, ThrowOnUnmappableChar = true )]
+        private static extern LLVMMetadataRef LLVMDIBuilderCreateFile( LLVMDIBuilderRef @D, [MarshalAs( UnmanagedType.LPStr )] string @File, [MarshalAs( UnmanagedType.LPStr )] string @Dir );
+
+        [DllImport( LibraryPath, CallingConvention = CallingConvention.Cdecl, BestFitMapping = false, ThrowOnUnmappableChar = true )]
+        private static extern LLVMMetadataRef LLVMDIBuilderCreateLexicalBlock( LLVMDIBuilderRef @D, LLVMMetadataRef @Scope, LLVMMetadataRef @File, UInt32 @Line, UInt32 @Column );
+
+        [DllImport( LibraryPath, CallingConvention = CallingConvention.Cdecl, BestFitMapping = false, ThrowOnUnmappableChar = true )]
+        private static extern LLVMMetadataRef LLVMDIBuilderCreateLexicalBlockFile( LLVMDIBuilderRef @D, LLVMMetadataRef @Scope, LLVMMetadataRef @File, UInt32 @Discriminator );
+
+        [DllImport( LibraryPath, CallingConvention = CallingConvention.Cdecl, BestFitMapping = false, ThrowOnUnmappableChar = true )]
+        private static extern LLVMMetadataRef LLVMDIBuilderCreateFunction( LLVMDIBuilderRef @D, LLVMMetadataRef @Scope, [MarshalAs( UnmanagedType.LPStr )] string @Name, [MarshalAs( UnmanagedType.LPStr )] string @LinkageName, LLVMMetadataRef @File, UInt32 @Line, LLVMMetadataRef @CompositeType, int @IsLocalToUnit, int @IsDefinition, UInt32 @ScopeLine, UInt32 @Flags, int @IsOptimized, LLVMMetadataRef TParam, LLVMMetadataRef Decl );
+
+        [DllImport( LibraryPath, CallingConvention = CallingConvention.Cdecl, BestFitMapping = false, ThrowOnUnmappableChar = true )]
+        private static extern LLVMMetadataRef LLVMDIBuilderCreateTempFunctionFwdDecl( LLVMDIBuilderRef @D, LLVMMetadataRef @Scope, [MarshalAs( UnmanagedType.LPStr )] string @Name, [MarshalAs( UnmanagedType.LPStr )] string @LinkageName, LLVMMetadataRef @File, UInt32 @Line, LLVMMetadataRef @CompositeType, int @IsLocalToUnit, int @IsDefinition, UInt32 @ScopeLine, UInt32 @Flags, int @IsOptimized, LLVMMetadataRef TParam, LLVMMetadataRef Decl );
+
+        [DllImport( LibraryPath, CallingConvention = CallingConvention.Cdecl, BestFitMapping = false, ThrowOnUnmappableChar = true )]
+        private static extern LLVMMetadataRef LLVMDIBuilderCreateAutoVariable( LLVMDIBuilderRef @D, LLVMMetadataRef @Scope, [MarshalAs( UnmanagedType.LPStr )] string @Name, LLVMMetadataRef @File, UInt32 @Line, LLVMMetadataRef @Ty, int @AlwaysPreserve, UInt32 @Flags );
+
+        [DllImport( LibraryPath, CallingConvention = CallingConvention.Cdecl, BestFitMapping = false, ThrowOnUnmappableChar = true )]
+        private static extern LLVMMetadataRef LLVMDIBuilderCreateParameterVariable( LLVMDIBuilderRef @D, LLVMMetadataRef @Scope, [MarshalAs( UnmanagedType.LPStr )] string @Name, UInt32 @ArgNo, LLVMMetadataRef @File, UInt32 @Line, LLVMMetadataRef @Ty, int @AlwaysPreserve, UInt32 @Flags );
+
+        [DllImport( LibraryPath, CallingConvention = CallingConvention.Cdecl, BestFitMapping = false, ThrowOnUnmappableChar = true )]
+        private static extern LLVMMetadataRef LLVMDIBuilderCreateBasicType( LLVMDIBuilderRef @D, [MarshalAs( UnmanagedType.LPStr )] string @Name, UInt64 @SizeInBits, UInt32 @Encoding );
+
+        [DllImport( LibraryPath, CallingConvention = CallingConvention.Cdecl, BestFitMapping = false, ThrowOnUnmappableChar = true )]
+        private static extern LLVMMetadataRef LLVMDIBuilderCreatePointerType( LLVMDIBuilderRef @D, LLVMMetadataRef @PointeeType, UInt64 @SizeInBits, UInt32 @AlignInBits, [MarshalAs( UnmanagedType.LPStr )] string @Name );
+
+        [DllImport( LibraryPath, CallingConvention = CallingConvention.Cdecl, BestFitMapping = false, ThrowOnUnmappableChar = true )]
+        private static extern LLVMMetadataRef LLVMDIBuilderCreateQualifiedType( LLVMDIBuilderRef Dref, UInt32 Tag, LLVMMetadataRef BaseType );
+
+        [DllImport( LibraryPath, CallingConvention = CallingConvention.Cdecl, BestFitMapping = false, ThrowOnUnmappableChar = true )]
+        private static extern LLVMMetadataRef LLVMDIBuilderCreateSubroutineType( LLVMDIBuilderRef @D, LLVMMetadataRef @ParameterTypes, UInt32 @Flags );
+
+        [DllImport( LibraryPath, CallingConvention = CallingConvention.Cdecl, BestFitMapping = false, ThrowOnUnmappableChar = true )]
+        private static extern LLVMMetadataRef LLVMDIBuilderCreateStructType( LLVMDIBuilderRef @D, LLVMMetadataRef @Scope, [MarshalAs( UnmanagedType.LPStr )] string @Name, LLVMMetadataRef @File, UInt32 @Line, UInt64 @SizeInBits, UInt32 @AlignInBits, UInt32 @Flags, LLVMMetadataRef @DerivedFrom, LLVMMetadataRef @ElementTypes );
+
+        [DllImport( LibraryPath, CallingConvention = CallingConvention.Cdecl, BestFitMapping = false, ThrowOnUnmappableChar = true )]
+        private static extern LLVMMetadataRef LLVMDIBuilderCreateUnionType( LLVMDIBuilderRef @D, LLVMMetadataRef @Scope, [MarshalAs( UnmanagedType.LPStr )] string @Name, LLVMMetadataRef @File, UInt32 @Line, UInt64 @SizeInBits, UInt32 @AlignInBits, UInt32 @Flags, LLVMMetadataRef @ElementTypes );
+
+        [DllImport( LibraryPath, CallingConvention = CallingConvention.Cdecl, BestFitMapping = false, ThrowOnUnmappableChar = true )]
+        private static extern LLVMMetadataRef LLVMDIBuilderCreateMemberType( LLVMDIBuilderRef @D, LLVMMetadataRef @Scope, [MarshalAs( UnmanagedType.LPStr )] string @Name, LLVMMetadataRef @File, UInt32 @Line, UInt64 @SizeInBits, UInt32 @AlignInBits, UInt64 @OffsetInBits, UInt32 @Flags, LLVMMetadataRef @Ty );
+
+        [DllImport( LibraryPath, CallingConvention = CallingConvention.Cdecl, BestFitMapping = false, ThrowOnUnmappableChar = true )]
+        private static extern LLVMMetadataRef LLVMDIBuilderCreateArrayType( LLVMDIBuilderRef @D, UInt64 @SizeInBits, UInt32 @AlignInBits, LLVMMetadataRef @ElementType, LLVMMetadataRef @Subscripts );
+
+        [DllImport( LibraryPath, CallingConvention = CallingConvention.Cdecl, BestFitMapping = false, ThrowOnUnmappableChar = true )]
+        private static extern LLVMMetadataRef LLVMDIBuilderCreateVectorType( LLVMDIBuilderRef @D, UInt64 @SizeInBits, UInt32 @AlignInBits, LLVMMetadataRef @ElementType, LLVMMetadataRef @Subscripts );
+
+        [DllImport( LibraryPath, CallingConvention = CallingConvention.Cdecl, BestFitMapping = false, ThrowOnUnmappableChar = true )]
+        private static extern LLVMMetadataRef LLVMDIBuilderCreateTypedef( LLVMDIBuilderRef @D, LLVMMetadataRef @Ty, [MarshalAs( UnmanagedType.LPStr )] string @Name, LLVMMetadataRef @File, UInt32 @Line, LLVMMetadataRef @Context );
+
+        [DllImport( LibraryPath, CallingConvention = CallingConvention.Cdecl, BestFitMapping = false, ThrowOnUnmappableChar = true )]
+        private static extern LLVMMetadataRef LLVMDIBuilderGetOrCreateSubrange( LLVMDIBuilderRef @D, Int64 @Lo, Int64 @Count );
+
+        [DllImport( LibraryPath, CallingConvention = CallingConvention.Cdecl, BestFitMapping = false, ThrowOnUnmappableChar = true )]
+        private static extern LLVMMetadataRef LLVMDIBuilderGetOrCreateArray( LLVMDIBuilderRef @D, out LLVMMetadataRef @Data, UInt64 @Length );
+
+        [DllImport( LibraryPath, CallingConvention = CallingConvention.Cdecl, BestFitMapping = false, ThrowOnUnmappableChar = true )]
+        private static extern LLVMMetadataRef LLVMDIBuilderGetOrCreateTypeArray( LLVMDIBuilderRef @D, out LLVMMetadataRef @Data, UInt64 @Length );
+
+        [DllImport( LibraryPath, CallingConvention = CallingConvention.Cdecl, BestFitMapping = false, ThrowOnUnmappableChar = true )]
+        private static extern LLVMMetadataRef LLVMDIBuilderCreateExpression( LLVMDIBuilderRef @Dref, out Int64 @Addr, UInt64 @Length );
+
+        [DllImport( LibraryPath, CallingConvention = CallingConvention.Cdecl, BestFitMapping = false, ThrowOnUnmappableChar = true )]
+        private static extern LLVMValueRef LLVMDIBuilderInsertDeclareAtEnd( LLVMDIBuilderRef @D, LLVMValueRef @Storage, LLVMMetadataRef @VarInfo, LLVMMetadataRef @Expr, LLVMMetadataRef Location, LLVMBasicBlockRef @Block );
+
+        [DllImport( LibraryPath, CallingConvention = CallingConvention.Cdecl, BestFitMapping = false, ThrowOnUnmappableChar = true )]
+        private static extern LLVMValueRef LLVMDIBuilderInsertValueAtEnd( LLVMDIBuilderRef @D, LLVMValueRef @Val, UInt64 @Offset, LLVMMetadataRef @VarInfo, LLVMMetadataRef @Expr, LLVMMetadataRef Location, LLVMBasicBlockRef @Block );
+
+        [DllImport( LibraryPath, CallingConvention = CallingConvention.Cdecl, BestFitMapping = false, ThrowOnUnmappableChar = true )]
+        private static extern LLVMMetadataRef LLVMDIBuilderCreateEnumerationType( LLVMDIBuilderRef @D, LLVMMetadataRef @Scope, [MarshalAs( UnmanagedType.LPStr )] string @Name, LLVMMetadataRef @File, UInt32 @LineNumber, UInt64 @SizeInBits, UInt32 @AlignInBits, LLVMMetadataRef @Elements, LLVMMetadataRef @UnderlyingType, [MarshalAs( UnmanagedType.LPStr )]string @UniqueId );
+
+        [DllImport( LibraryPath, CallingConvention = CallingConvention.Cdecl, BestFitMapping = false, ThrowOnUnmappableChar = true )]
+        private static extern LLVMMetadataRef LLVMDIBuilderCreateEnumeratorValue( LLVMDIBuilderRef @D, [MarshalAs( UnmanagedType.LPStr )]string @Name, Int64 @Val );
+
+        [DllImport( LibraryPath, CallingConvention = CallingConvention.Cdecl, BestFitMapping = false, ThrowOnUnmappableChar = true )]
+        private static extern LLVMDwarfTag LLVMDIDescriptorGetTag( LLVMMetadataRef descriptor );
+
+        [DllImport( LibraryPath, CallingConvention = CallingConvention.Cdecl, BestFitMapping = false, ThrowOnUnmappableChar = true )]
+        private static extern LLVMMetadataRef LLVMDIBuilderCreateGlobalVariableExpression( LLVMDIBuilderRef Dref, LLVMMetadataRef Context, [MarshalAs( UnmanagedType.LPStr )] string Name, [MarshalAs( UnmanagedType.LPStr )] string LinkageName, LLVMMetadataRef File, UInt32 LineNo, LLVMMetadataRef Ty, [MarshalAs( UnmanagedType.Bool )]bool isLocalToUnit, LLVMMetadataRef expression, LLVMMetadataRef Decl, UInt32 AlignInBits );
+
+        [DllImport( LibraryPath, CallingConvention = CallingConvention.Cdecl, BestFitMapping = false, ThrowOnUnmappableChar = true )]
+        private static extern LLVMValueRef LLVMDIBuilderInsertDeclareBefore( LLVMDIBuilderRef Dref, LLVMValueRef Storage, LLVMMetadataRef VarInfo, LLVMMetadataRef Expr, LLVMMetadataRef Location, LLVMValueRef InsertBefore );
+
+        [DllImport( LibraryPath, CallingConvention = CallingConvention.Cdecl, BestFitMapping = false, ThrowOnUnmappableChar = true )]
+        private static extern LLVMValueRef LLVMDIBuilderInsertValueBefore( LLVMDIBuilderRef Dref, /*llvm::Value **/LLVMValueRef Val, UInt64 Offset, /*DILocalVariable **/ LLVMMetadataRef VarInfo, /*DIExpression **/ LLVMMetadataRef Expr, /*const DILocation **/ LLVMMetadataRef DL, /*Instruction **/ LLVMValueRef InsertBefore );
+
+        [DllImport( LibraryPath, CallingConvention = CallingConvention.Cdecl, BestFitMapping = false, ThrowOnUnmappableChar = true )]
+        private static extern LLVMMetadataRef LLVMDIBuilderCreateReplaceableCompositeType( LLVMDIBuilderRef Dref, UInt32 Tag, [MarshalAs( UnmanagedType.LPStr )] string Name, LLVMMetadataRef Scope, LLVMMetadataRef File, UInt32 Line, UInt32 RuntimeLang, UInt64 SizeInBits, UInt64 AlignInBits, UInt32 Flags );
+
+        [DllImport( LibraryPath, CallingConvention = CallingConvention.Cdecl, BestFitMapping = false, ThrowOnUnmappableChar = true )]
+        private static extern LLVMMetadataRef LLVMDIBuilderCreateNamespace( LLVMDIBuilderRef Dref, LLVMMetadataRef scope, [MarshalAs( UnmanagedType.LPStr )] string name, [MarshalAs( UnmanagedType.Bool )]bool exportSymbols );
+        #endregion
     }
 }

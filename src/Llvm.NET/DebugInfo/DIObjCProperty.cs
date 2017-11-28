@@ -15,6 +15,7 @@ namespace Llvm.NET.DebugInfo
         public uint Attributes {get;}
         */
 
+        /// <summary>Gets teh Debug information for the file containing this property</summary>
         public DIFile File => GetOperand<DIFile>( 1 );
 
         /// <summary>Gets the name of the property</summary>

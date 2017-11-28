@@ -15,7 +15,7 @@ namespace Llvm.NET.DebugInfo
     public class DIDerivedType
         : DIType
     {
-        /* non-operand properties
+        /* TODO: non-operand properties
             uint? AddressSpace { get; }
         */
 
@@ -62,7 +62,7 @@ namespace Llvm.NET.DebugInfo
             }
         }
 
-        /// <summary>Creates a new <see cref="DIDerivedType"/> from an <see cref="LLVMMetadataRef"/></summary>
+        /// <summary>Initializes a new instance of the <see cref="DIDerivedType"/> class from an <see cref="LLVMMetadataRef"/></summary>
         /// <param name="handle">Handle to wrap</param>
         internal DIDerivedType( LLVMMetadataRef handle )
             : base( handle )
