@@ -851,10 +851,10 @@ namespace Llvm.NET.Native
         internal static extern LLVMTypeRef LLVMX86FP80TypeInContext( LLVMContextRef @C );
 
         [DllImport( LibraryPath, EntryPoint = "LLVMFP128TypeInContext", CallingConvention = CallingConvention.Cdecl )]
-        internal static extern LLVMTypeRef LLVMFP18TypeInContext( LLVMContextRef @C );
+        internal static extern LLVMTypeRef LLVMFP128TypeInContext( LLVMContextRef @C );
 
         [DllImport( LibraryPath, EntryPoint = "LLVMPPCFP128TypeInContext", CallingConvention = CallingConvention.Cdecl )]
-        internal static extern LLVMTypeRef LLVMPPCFP18TypeInContext( LLVMContextRef @C );
+        internal static extern LLVMTypeRef LLVMPPCFP128TypeInContext( LLVMContextRef @C );
 
         [DllImport( LibraryPath, EntryPoint = "LLVMHalfType", CallingConvention = CallingConvention.Cdecl )]
         internal static extern LLVMTypeRef LLVMHalfType( );
@@ -869,10 +869,10 @@ namespace Llvm.NET.Native
         internal static extern LLVMTypeRef LLVMX86FP80Type( );
 
         [DllImport( LibraryPath, EntryPoint = "LLVMFP128Type", CallingConvention = CallingConvention.Cdecl )]
-        internal static extern LLVMTypeRef LLVMFP18Type( );
+        internal static extern LLVMTypeRef LLVMFP128Type( );
 
         [DllImport( LibraryPath, EntryPoint = "LLVMPPCFP128Type", CallingConvention = CallingConvention.Cdecl )]
-        internal static extern LLVMTypeRef LLVMPPCFP18Type( );
+        internal static extern LLVMTypeRef LLVMPPCFP128Type( );
 
         [DllImport( LibraryPath, EntryPoint = "LLVMFunctionType", CallingConvention = CallingConvention.Cdecl )]
         internal static extern LLVMTypeRef LLVMFunctionType( LLVMTypeRef @ReturnType, out LLVMTypeRef @ParamTypes, uint @ParamCount, [MarshalAs( UnmanagedType.Bool )]bool @IsVarArg );
