@@ -9,6 +9,9 @@ using Llvm.NET.Native;
 using static Llvm.NET.JIT.OrcJit;
 using static Llvm.NET.Native.NativeMethods;
 
+// siable comment warnings as this is all pretty experimental at this point
+#pragma warning disable SA1600,SA1101
+
 namespace Llvm.NET.JIT
 {
     /// <summary>LLVM On Request Compilation (ORC) Just-In-Time (JIT) Engine</summary>

@@ -12,7 +12,7 @@ namespace TestDebugInfo
     {
         string ShortName { get; }
 
-        string Triple { get; }
+        Triple Triple { get; }
 
         string Cpu { get; }
 

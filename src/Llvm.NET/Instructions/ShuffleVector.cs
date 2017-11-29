@@ -6,6 +6,7 @@ using Llvm.NET.Native;
 
 namespace Llvm.NET.Instructions
 {
+    /// <summary>Instruction to shuffle the elements of a vector</summary>
     public class ShuffleVector
         : Instruction
     {

@@ -28,8 +28,6 @@ namespace Llvm.NET.Instructions
             return self;
         }
 
-#pragma warning disable IDE0019 // Use Pattern matching - doesn't work for generics (Expected in C#7.X)
-
         /// <summary>Fluent style extension method to set the Volatile property of a <see cref="Load"/> or <see cref="Store"/> instruction</summary>
         /// <typeparam name="T">Type of the instruction (usually implicitly inferred from usage)</typeparam>
         /// <param name="self">Instruction to set the Volatile property for</param>
@@ -41,15 +39,13 @@ namespace Llvm.NET.Instructions
             if( self.IsMemoryAccess )
             {
                 // only load and store instructions have the volatile property
-                var loadInst = self as Load;
-                if( loadInst != null )
+                if( self is Load loadInst )
                 {
                     loadInst.IsVolatile = value;
                 }
                 else
                 {
-                    var storeinst = self as Store;
-                    if( storeinst != null )
+                    if( self is Store storeinst )
                     {
                         storeinst.IsVolatile = value;
                     }
@@ -59,5 +55,4 @@ namespace Llvm.NET.Instructions
             return self;
         }
     }
-#pragma warning restore IDE0019 // Use Pattern matching - doesn't work for generics (Expected in C#7.X)
 }

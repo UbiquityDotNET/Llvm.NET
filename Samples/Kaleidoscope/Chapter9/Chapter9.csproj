@@ -6,6 +6,7 @@
     <RootNamespace>Kaleidoscope</RootNamespace>
     <LangVersion>latest</LangVersion>
   </PropertyGroup>
+
   <ItemGroup>
       <ProjectReference Include="$(BuildRootDir)src\Llvm.NET\Llvm.NET.csproj">
           <Name>Llvm.NET</Name>

@@ -6,6 +6,7 @@ using Llvm.NET.Native;
 
 namespace Llvm.NET.Instructions
 {
+    /// <summary>Integer truncate instruction</summary>
     public class Trunc
         : Cast
     {

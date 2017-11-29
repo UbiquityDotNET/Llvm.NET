@@ -882,6 +882,7 @@ namespace Llvm.NET
         [DllImport( LibraryPath, CallingConvention = CallingConvention.Cdecl )]
         private static extern LLVMSharedModuleRef LLVMOrcMakeSharedModule( LLVMModuleRef Mod );
 
+        // TODO: Leverage a generic WriteOnce<T> of some sort to enforce intentions in code rather than "by convention"
         [SuppressMessage( "StyleCop.CSharp.NamingRules"
                         , "SA1310:Field names must not contain underscore"
                         , Justification = "Trailing _ indicates it must not be written to directly even directly"

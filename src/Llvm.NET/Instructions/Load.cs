@@ -8,13 +8,16 @@ using static Llvm.NET.Native.NativeMethods;
 
 namespace Llvm.NET.Instructions
 {
+    /// <summary>Instruction to read from memory</summary>
+    /// <seealso href="xref:llvm_langref#load-instruction">LLVM load Instruction</seealso>
     public class Load
         : UnaryInstruction
     {
+        /// <summary>Gets or sets a value indicating whether this load is volatile</summary>
         public bool IsVolatile
         {
-            get { return LLVMGetVolatile( ValueHandle ); }
-            set { LLVMSetVolatile( ValueHandle, value ); }
+            get => LLVMGetVolatile( ValueHandle );
+            set => LLVMSetVolatile( ValueHandle, value );
         }
 
         internal Load( LLVMValueRef valueRef )

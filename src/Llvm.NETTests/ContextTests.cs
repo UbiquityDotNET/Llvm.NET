@@ -10,6 +10,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 // warning SA1500: Braces for multi-line statements must not share line
 #pragma warning disable SA1500
+
 namespace Llvm.NET.Tests
 {
     [TestClass]
@@ -141,8 +142,8 @@ namespace Llvm.NET.Tests
         [TestMethod]
         public void CreateFunctionTypeTest( )
         {
+            var targetMachine = TargetTests.GetTargetMachine( );
             using( var context = new Context( ) )
-            using( var targetMachine = TargetTests.GetTargetMachine( ) )
             {
                 var module = new BitcodeModule( context, "test.bc", SourceLanguage.CSharp, "test.cs", "unittests" );
                 Assert.IsNotNull( module );
@@ -191,8 +192,8 @@ namespace Llvm.NET.Tests
         [TestMethod]
         public void VerifyCreateFunctionTypeWithSameSigIsSameInstanceTest( )
         {
+            var targetMachine = TargetTests.GetTargetMachine( );
             using( var context = new Context( ) )
-            using( var targetMachine = TargetTests.GetTargetMachine( ) )
             {
                 var module = new BitcodeModule( context, "test.bc", SourceLanguage.CSharp, "test.cs", "unittests" );
                 Assert.IsNotNull( module );

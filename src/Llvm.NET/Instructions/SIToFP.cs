@@ -6,7 +6,9 @@ using Llvm.NET.Native;
 
 namespace Llvm.NET.Instructions
 {
-    public class SIToFP : Cast
+    /// <summary>Instruction for converting a signed integer value into a floating point value</summary>
+    public class SIToFP
+        : Cast
     {
         internal SIToFP( LLVMValueRef valueRef )
             : base( valueRef )

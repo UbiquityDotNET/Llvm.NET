@@ -1295,25 +1295,10 @@ namespace Llvm.NET.Instructions
         /// </remarks>
         public Value MemCpy( BitcodeModule module, Value destination, Value source, Value len, Int32 align, bool isVolatile )
         {
-            if( module == null )
-            {
-                throw new ArgumentNullException( nameof( module ) );
-            }
-
-            if( destination == null )
-            {
-                throw new ArgumentNullException( nameof( destination ) );
-            }
-
-            if( source == null )
-            {
-                throw new ArgumentNullException( nameof( source ) );
-            }
-
-            if( len == null )
-            {
-                throw new ArgumentNullException( nameof( len ) );
-            }
+            module.ValidateNotNull( nameof( module ) );
+            destination.ValidateNotNull( nameof( destination ) );
+            source.ValidateNotNull( nameof( source ) );
+            len.ValidateNotNull( nameof( len ) );
 
             if( destination == source )
             {
@@ -1387,11 +1372,9 @@ namespace Llvm.NET.Instructions
         /// <param name="isVolatile">Flag to indicate if the copy involves volatile data such as physical registers</param>
         /// <returns><see cref="Intrinsic"/> call for the memmov</returns>
         /// <remarks>
-        /// LLVM has many overloaded variants of the memmov intrinsic, this implementation currently assumes the
-        /// single form defined by <see cref="Intrinsic.MemMoveName"/>, which matches the classic "C" style memmov
-        /// function. However future implementations should be able to deduce the types from the provided values
-        /// and generate a more specific call without changing any caller code (as is done with
-        /// <see cref="MemCpy(BitcodeModule, Value, Value, Value, int, bool)"/>.)
+        /// LLVM has many overloaded variants of the memmove intrinsic, this implementation will deduce the types from
+        /// the provided values and generate a more specific call without the need to provide overloaded forms of this
+        /// method and otherwise complicating the calling code.
         /// </remarks>
         public Value MemMove( Value destination, Value source, Value len, Int32 align, bool isVolatile )
         {
@@ -1404,50 +1387,37 @@ namespace Llvm.NET.Instructions
             return MemMove( module, destination, source, len, align, isVolatile );
         }
 
-        /// <summary>Builds a memmov intrinsic call</summary>
+        /// <summary>Builds a memmove intrinsic call</summary>
         /// <param name="module">Module to add the declaration of the intrinsic to if it doesn't already exist</param>
-        /// <param name="destination">Destination pointer of the memmov</param>
-        /// <param name="source">Source pointer of the memmov</param>
+        /// <param name="destination">Destination pointer of the memmove</param>
+        /// <param name="source">Source pointer of the memmove</param>
         /// <param name="len">length of the data to copy</param>
         /// <param name="align">Alignment of the data for the copy</param>
         /// <param name="isVolatile">Flag to indicate if the copy involves volatile data such as physical registers</param>
-        /// <returns><see cref="Intrinsic"/> call for the memmov</returns>
+        /// <returns><see cref="Intrinsic"/> call for the memmove</returns>
         /// <remarks>
-        /// LLVM has many overloaded variants of the memmov intrinsic, this implementation currently assumes the
-        /// single form defined by <see cref="Intrinsic.MemMoveName"/>, which matches the classic "C" style memmov
-        /// function. However future implementations should be able to deduce the types from the provided values
-        /// and generate a more specific call without changing any caller code (as is done with
-        /// <see cref="MemCpy(BitcodeModule, Value, Value, Value, int, bool)"/>.)
+        /// LLVM has many overloaded variants of the memmove intrinsic, this implementation will deduce the types from
+        /// the provided values and generate a more specific call without the need to provide overloaded forms of this
+        /// method and otherwise complicating the calling code.
         /// </remarks>
         public Value MemMove( BitcodeModule module, Value destination, Value source, Value len, Int32 align, bool isVolatile )
         {
-            if( module == null )
+            module.ValidateNotNull( nameof( module ) );
+            destination.ValidateNotNull( nameof( destination ) );
+            source.ValidateNotNull( nameof( source ) );
+            len.ValidateNotNull( nameof( len ) );
+
+            if( destination == source )
             {
-                throw new ArgumentNullException( nameof( module ) );
+                throw new InvalidOperationException( "Source and destination arguments are the same value" );
             }
 
-            if( destination == null )
-            {
-                throw new ArgumentNullException( nameof( destination ) );
-            }
-
-            if( source == null )
-            {
-                throw new ArgumentNullException( nameof( source ) );
-            }
-
-            if( len == null )
-            {
-                throw new ArgumentNullException( nameof( len ) );
-            }
-
-            // TODO: make this auto select the LLVM intrinsic signature like memcpy...
-            if( !destination.NativeType.IsPointer )
+            if( !( destination.NativeType is IPointerType dstPtrType ) )
             {
                 throw new ArgumentException( "Pointer type expected", nameof( destination ) );
             }
 
-            if( !source.NativeType.IsPointer )
+            if( !( source.NativeType is IPointerType srcPtrType ) )
             {
                 throw new ArgumentException( "Pointer type expected", nameof( source ) );
             }
@@ -1457,22 +1427,36 @@ namespace Llvm.NET.Instructions
                 throw new ArgumentException( "Integer type expected", nameof( len ) );
             }
 
-            var ctx = module.Context;
+            if( Context != module.Context )
+            {
+                throw new ArgumentException( "Module and instruction builder must come from the same context" );
+            }
 
-            destination = BitCast( destination, ctx.Int8Type.CreatePointerType( ) );
-            source = BitCast( source, ctx.Int8Type.CreatePointerType( ) );
+            if( !dstPtrType.ElementType.IsInteger )
+            {
+                dstPtrType = module.Context.Int8Type.CreatePointerType( );
+                destination = BitCast( destination, dstPtrType );
+            }
 
-            var func = module.GetFunction( Intrinsic.MemMoveName );
+            if( !srcPtrType.ElementType.IsInteger )
+            {
+                srcPtrType = module.Context.Int8Type.CreatePointerType( );
+                source = BitCast( source, srcPtrType );
+            }
+
+            // find the name of the appropriate overloaded form
+            string intrinsicName = Instructions.MemMove.GetIntrinsicNameForArgs( dstPtrType, srcPtrType, len.NativeType );
+            var func = module.GetFunction( intrinsicName );
             if( func == null )
             {
-                var signature = ctx.GetFunctionType( ctx.VoidType
-                                                   , ctx.Int8Type.CreatePointerType( )
-                                                   , ctx.Int8Type.CreatePointerType( )
-                                                   , ctx.Int32Type
-                                                   , ctx.Int32Type
-                                                   , ctx.BoolType
-                                                   );
-                func = module.AddFunction( Intrinsic.MemMoveName, signature );
+                var signature = module.Context.GetFunctionType( module.Context.VoidType
+                                                              , dstPtrType
+                                                              , srcPtrType
+                                                              , len.NativeType
+                                                              , module.Context.Int32Type
+                                                              , module.Context.BoolType
+                                                              );
+                func = module.AddFunction( intrinsicName, signature );
             }
 
             var call = BuildCall( func, destination, source, len, module.Context.CreateConstant( align ), module.Context.CreateConstant( isVolatile ) );
@@ -1487,11 +1471,9 @@ namespace Llvm.NET.Instructions
         /// <param name="isVolatile">Flag to indicate if the fill involves volatile data such as physical registers</param>
         /// <returns><see cref="Intrinsic"/> call for the memset</returns>
         /// <remarks>
-        /// LLVM has many overloaded variants of the memset intrinsic, this implementation currently assumes the
-        /// single form defined by <see cref="Intrinsic.MemSetName"/>, which matches the classic "C" style memset
-        /// function. However future implementations should be able to deduce the types from the provided values
-        /// and generate a more specific call without changing any caller code (as is done with
-        /// <see cref="MemCpy(BitcodeModule, Value, Value, Value, int, bool)"/>.)
+        /// LLVM has many overloaded variants of the memset intrinsic, this implementation will deduce the types from
+        /// the provided values and generate a more specific call without the need to provide overloaded forms of this
+        /// method and otherwise complicating the calling code.
         /// </remarks>
         public Value MemSet( Value destination, Value value, Value len, Int32 align, bool isVolatile )
         {
@@ -1513,59 +1495,62 @@ namespace Llvm.NET.Instructions
         /// <param name="isVolatile">Flag to indicate if the fill involves volatile data such as physical registers</param>
         /// <returns><see cref="Intrinsic"/> call for the memset</returns>
         /// <remarks>
-        /// LLVM has many overloaded variants of the memset intrinsic, this implementation currently assumes the
-        /// single form defined by <see cref="Intrinsic.MemSetName"/>, which matches the classic "C" style memset
-        /// function. However future implementations should be able to deduce the types from the provided values
-        /// and generate a more specific call without changing any caller code (as is done with
-        /// <see cref="MemCpy(BitcodeModule, Value, Value, Value, int, bool)"/>.)
+        /// LLVM has many overloaded variants of the memset intrinsic, this implementation will deduce the types from
+        /// the provided values and generate a more specific call without the need to provide overloaded forms of this
+        /// method and otherwise complicating the calling code.
         /// </remarks>
         public Value MemSet( BitcodeModule module, Value destination, Value value, Value len, Int32 align, bool isVolatile )
         {
-            if( module == null )
-            {
-                throw new ArgumentNullException( nameof( module ) );
-            }
+            module.ValidateNotNull( nameof( module ) );
+            destination.ValidateNotNull( nameof( destination ) );
+            value.ValidateNotNull( nameof( value ) );
+            len.ValidateNotNull( nameof( len ) );
 
-            if( destination == null )
-            {
-                throw new ArgumentNullException( nameof( destination ) );
-            }
-
-            if( value == null )
-            {
-                throw new ArgumentNullException( nameof( value ) );
-            }
-
-            if( len == null )
-            {
-                throw new ArgumentNullException( nameof( len ) );
-            }
-
-            if( destination.NativeType.Kind != TypeKind.Pointer )
+            if( !( destination.NativeType is IPointerType dstPtrType ) )
             {
                 throw new ArgumentException( "Pointer type expected", nameof( destination ) );
             }
 
-            if( value.NativeType.IntegerBitWidth != 8 )
+            if( dstPtrType.ElementType != value.NativeType )
             {
-                throw new ArgumentException( "8bit value expected", nameof( value ) );
+                throw new ArgumentException( "Pointer type doesn't match the value type" );
             }
 
-            var ctx = module.Context;
+            if( !value.NativeType.IsInteger )
+            {
+                throw new ArgumentException( "Integer type expected", nameof( value ) );
+            }
 
-            destination = BitCast( destination, ctx.Int8Type.CreatePointerType( ) );
+            if( !len.NativeType.IsInteger )
+            {
+                throw new ArgumentException( "Integer type expected", nameof( len ) );
+            }
 
-            var func = module.GetFunction( Intrinsic.MemSetName );
+            if( Context != module.Context )
+            {
+                throw new ArgumentException( "Module and instruction builder must come from the same context" );
+            }
+
+            if( !dstPtrType.ElementType.IsInteger )
+            {
+                dstPtrType = module.Context.Int8Type.CreatePointerType( );
+                destination = BitCast( destination, dstPtrType );
+            }
+
+            // find the name of the appropriate overloaded form
+            string intrinsicName = Instructions.MemSet.GetIntrinsicNameForArgs( dstPtrType, value.NativeType, len.NativeType );
+            var func = module.GetFunction( intrinsicName );
             if( func == null )
             {
-                var signature = ctx.GetFunctionType( ctx.VoidType
-                                                   , ctx.Int8Type.CreatePointerType( )
-                                                   , ctx.Int8Type
-                                                   , ctx.Int32Type
-                                                   , ctx.Int32Type
-                                                   , ctx.BoolType
-                                                   );
-                func = module.AddFunction( Intrinsic.MemSetName, signature );
+                var signature = module.Context.GetFunctionType( module.Context.VoidType
+                                                              , dstPtrType
+                                                              , value.NativeType
+                                                              , len.NativeType
+                                                              , module.Context.Int32Type
+                                                              , module.Context.BoolType
+                                                              );
+
+                func = module.AddFunction( intrinsicName, signature );
             }
 
             var call = BuildCall( func
@@ -1579,17 +1564,15 @@ namespace Llvm.NET.Instructions
             return Value.FromHandle( call );
         }
 
+        /// <summary>Builds an <see cref="Llvm.NET.Instructions.InsertValue"/> instruction </summary>
+        /// <param name="aggValue">Aggergate value to insert <paramref name="elementValue"/> into</param>
+        /// <param name="elementValue">Value to insert into <paramref name="aggValue"/></param>
+        /// <param name="index">Index to insert the value into</param>
+        /// <returns>Instruction as a <see cref="Value"/></returns>
         public Value InsertValue( Value aggValue, Value elementValue, uint index )
         {
-            if( aggValue == null )
-            {
-                throw new ArgumentNullException( nameof( aggValue ) );
-            }
-
-            if( elementValue == null )
-            {
-                throw new ArgumentNullException( nameof( elementValue ) );
-            }
+            aggValue.ValidateNotNull( nameof( aggValue ) );
+            elementValue.ValidateNotNull( nameof( elementValue ) );
 
             var handle = LLVMBuildInsertValue( BuilderHandle, aggValue.ValueHandle, elementValue.ValueHandle, index, string.Empty );
             return Value.FromHandle( handle );

@@ -12,7 +12,8 @@ using static Llvm.NET.Native.NativeMethods;
 
 /* TODO: Consider an interface that allows updating elements without growing the list */
 /* TODO: Consider a generic implementation of this as it is mosly a duplicate of the Metadata operand list support
-         (core difference is the GetOperand() and GetNumOperands calls)
+         (core difference is the GetOperand() and GetNumOperands calls). This would also be re-usable for
+         the clauses of a landingpad instruction and other type specific operand variants.
 */
 
 namespace Llvm.NET.Values

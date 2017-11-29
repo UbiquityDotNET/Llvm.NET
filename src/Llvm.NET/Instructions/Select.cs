@@ -6,7 +6,9 @@ using Llvm.NET.Native;
 
 namespace Llvm.NET.Instructions
 {
-    public class Select : Instruction
+    /// <summary>Select instruction</summary>
+    public class Select
+        : Instruction
     {
         internal Select( LLVMValueRef valueRef )
             : base( valueRef )

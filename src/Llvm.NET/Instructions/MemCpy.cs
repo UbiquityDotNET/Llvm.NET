@@ -8,6 +8,7 @@ using Llvm.NET.Types;
 
 namespace Llvm.NET.Instructions
 {
+    /// <summary>Instruction for the LLVM intrinsic llvm.memcpy instruction</summary>
     public class MemCpy
         : MemIntrinsic
     {

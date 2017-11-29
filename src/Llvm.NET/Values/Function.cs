@@ -99,6 +99,7 @@ namespace Llvm.NET.Values
             set => LLVMSetGC( ValueHandle, value );
         }
 
+        /// <summary>Gets the attributes for this function</summary>
         public IAttributeDictionary Attributes { get; }
 
         /// <summary>Verifies the function is valid and all blocks properly terminated</summary>

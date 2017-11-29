@@ -6,6 +6,7 @@ using Llvm.NET.Native;
 
 namespace Llvm.NET.Instructions
 {
+    /// <summary>Base class for unary operator instructions</summary>
     public class UnaryInstruction
         : Instruction
     {

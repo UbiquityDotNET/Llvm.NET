@@ -79,9 +79,11 @@ namespace Llvm.NET.Types
         IPointerType CreatePointerType( uint addressSpace );
     }
 
+    /// <summary>Internal interface for getting access to the raw type handle internally</summary>
+    /// <remarks>This is usually implemented as an explicit interface implementation so that it isn't exposed publicly</remarks>
     internal interface ITypeHandleOwner
     {
-        // Gets the LibLLVM handle for the type
+        /// <summary>Gets the LibLLVM handle for the type</summary>
         LLVMTypeRef TypeHandle { get; }
     }
 

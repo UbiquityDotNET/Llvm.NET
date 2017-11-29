@@ -6,7 +6,10 @@ using Llvm.NET.Native;
 
 namespace Llvm.NET.Instructions
 {
-    public class FPTrunc : Cast
+    /// <summary>Instruction to truncate a floating point value to another flpating point type</summary>
+    /// <seealso href="xref:llvm_langref#fptruncto-to-instruction">LLVM fptruncto .. to Instruction</seealso>
+    public class FPTrunc
+        : Cast
     {
         internal FPTrunc( LLVMValueRef valueRef )
             : base( valueRef )

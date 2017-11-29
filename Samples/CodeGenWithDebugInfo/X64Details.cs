@@ -19,7 +19,7 @@ namespace TestDebugInfo
 
         public string ShortName => "x86";
 
-        public string Triple => "x86_64-pc-windows-msvc18.0.0";
+        public Triple Triple => new Triple( "x86_64-pc-windows-msvc18.0.0" );
 
         public void AddABIAttributesForByValueStructure( Function function, int paramIndex )
         {

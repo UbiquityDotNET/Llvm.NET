@@ -6,6 +6,7 @@ using Llvm.NET.Native;
 
 namespace Llvm.NET.Instructions
 {
+    /// <summary>Base class for memory intrinsic instructions</summary>
     public class MemIntrinsic
         : Intrinsic
     {

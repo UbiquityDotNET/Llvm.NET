@@ -8,13 +8,15 @@ using static Llvm.NET.Native.NativeMethods;
 
 namespace Llvm.NET.Instructions
 {
+    /// <summary>Instruction to store a value to memory</summary>
     public class Store
         : Instruction
     {
+        /// <summary>Gets or sets a value indicating whether the store is volatile</summary>
         public bool IsVolatile
         {
-            get { return LLVMGetVolatile( ValueHandle ); }
-            set { LLVMSetVolatile( ValueHandle, value ); }
+            get => LLVMGetVolatile( ValueHandle );
+            set => LLVMSetVolatile( ValueHandle, value );
         }
 
         internal Store( LLVMValueRef valueRef )

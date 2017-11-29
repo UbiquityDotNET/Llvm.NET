@@ -6,6 +6,7 @@ using Llvm.NET.Native;
 
 namespace Llvm.NET.Values
 {
+    /// <summary>Constant aggregate of value 0</summary>
     public class ConstantAggregateZero
         : ConstantData
     {

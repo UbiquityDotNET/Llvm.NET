@@ -4,7 +4,9 @@
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
+// warning SA1500: Braces for multi-line statements must not share line
 #pragma warning disable SA1500
+
 namespace Llvm.NET.DebugInfo.Tests
 {
     // TODO: Standard arg checks and error handling in general
@@ -87,10 +89,9 @@ namespace Llvm.NET.DebugInfo.Tests
         [TestMethod]
         public void DebugUnionTypeTest2( )
         {
-            const string testTriple = "thumbv7m-none--eabi";
-            var target = Target.FromTriple( testTriple );
+            var testTriple = new Triple( "thumbv7m-none--eabi" );
+            var targetMachine = new TargetMachine( testTriple );
             using( var ctx = new Context( ) )
-            using( var targetMachine = target.CreateTargetMachine( testTriple ) )
             using( var module = new BitcodeModule( ctx, "testModule" ) { Layout= targetMachine.TargetData } )
             {
                 const string nativeUnionName = "union.testUnion";

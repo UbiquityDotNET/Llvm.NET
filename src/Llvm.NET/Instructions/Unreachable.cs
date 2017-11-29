@@ -6,6 +6,7 @@ using Llvm.NET.Native;
 
 namespace Llvm.NET.Instructions
 {
+    /// <summary>Instruction to indicate an unreachable location</summary>
     public class Unreachable
         : Terminator
     {
