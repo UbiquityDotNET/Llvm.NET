@@ -924,6 +924,9 @@
                               
                               <ul class="nav level3">
                                 <li class="">
+                                  <a href="Llvm.NET.NamedMDNode.Name.html" title="Name" class="">Name</a>
+                                </li>
+                                <li class="">
                                   <a href="Llvm.NET.NamedMDNode.Operands.html" title="Operands" class="">Operands</a>
                                 </li>
                                 <li class="">
@@ -1410,16 +1413,13 @@
                                   <a href="Llvm.NET.TargetMachine.FromTriple.html" title="FromTriple" class="">FromTriple</a>
                                 </li>
                                 <li class="">
-                                  <a href="Llvm.NET.TargetMachine.InternalDispose.html" title="InternalDispose" class="">InternalDispose</a>
-                                </li>
-                                <li class="">
-                                  <a href="Llvm.NET.TargetMachine.IsDisposed.html" title="IsDisposed" class="">IsDisposed</a>
-                                </li>
-                                <li class="">
                                   <a href="Llvm.NET.TargetMachine.Target.html" title="Target" class="">Target</a>
                                 </li>
                                 <li class="">
                                   <a href="Llvm.NET.TargetMachine.TargetData.html" title="TargetData" class="">TargetData</a>
+                                </li>
+                                <li class="">
+                                  <a href="Llvm.NET.TargetMachine.-ctor.html" title="TargetMachine" class="">TargetMachine</a>
                                 </li>
                                 <li class="">
                                   <a href="Llvm.NET.TargetMachine.Triple.html" title="Triple" class="">Triple</a>
@@ -4443,7 +4443,7 @@
                                   <a href="Llvm.NET.Instructions.LandingPad.AddClause.html" title="AddClause" class="">AddClause</a>
                                 </li>
                                 <li class="">
-                                  <a href="Llvm.NET.Instructions.LandingPad.SetCleanup.html" title="SetCleanup" class="">SetCleanup</a>
+                                  <a href="Llvm.NET.Instructions.LandingPad.IsCleanup.html" title="IsCleanup" class="">IsCleanup</a>
                                 </li>
                               </ul>  </li>
                           <li class="">
@@ -4695,6 +4695,30 @@
                         </ul>  </li>
                     <li class="">
                       <span class="expand-stub"></span>
+                      <a href="Llvm.NET.Metadata.html" title="Llvm.NET.Metadata" class="">Llvm.NET.Metadata</a>
+                        
+                        <ul class="nav level2">
+                          <li class="">
+                            <span class="expand-stub"></span>
+                            <a href="Llvm.NET.Metadata.ModuleFlag.html" title="ModuleFlag" class="">ModuleFlag</a>
+                              
+                              <ul class="nav level3">
+                                <li class="">
+                                  <a href="Llvm.NET.Metadata.ModuleFlag.Behavior.html" title="Behavior" class="">Behavior</a>
+                                </li>
+                                <li class="">
+                                  <a href="Llvm.NET.Metadata.ModuleFlag.Metadata.html" title="Metadata" class="">Metadata</a>
+                                </li>
+                                <li class="">
+                                  <a href="Llvm.NET.Metadata.ModuleFlag.-ctor.html" title="ModuleFlag" class="">ModuleFlag</a>
+                                </li>
+                                <li class="">
+                                  <a href="Llvm.NET.Metadata.ModuleFlag.Name.html" title="Name" class="">Name</a>
+                                </li>
+                              </ul>  </li>
+                        </ul>  </li>
+                    <li class="">
+                      <span class="expand-stub"></span>
                       <a href="Llvm.NET.Transforms.html" title="Llvm.NET.Transforms" class="">Llvm.NET.Transforms</a>
                         
                         <ul class="nav level2">
@@ -4777,14 +4801,8 @@
                                 </li>
                               </ul>  </li>
                           <li class="">
-                            <span class="expand-stub"></span>
                             <a href="Llvm.NET.Transforms.PassManager.html" title="PassManager" class="">PassManager</a>
-                              
-                              <ul class="nav level3">
-                                <li class="">
-                                  <a href="Llvm.NET.Transforms.PassManager.Dispose.html" title="Dispose" class="">Dispose</a>
-                                </li>
-                              </ul>  </li>
+                          </li>
                           <li class="">
                             <span class="expand-stub"></span>
                             <a href="Llvm.NET.Transforms.ScalarTransforms.html" title="ScalarTransforms" class="">ScalarTransforms</a>
@@ -5505,6 +5523,9 @@
                               
                               <ul class="nav level3">
                                 <li class="">
+                                  <a href="Llvm.NET.Values.ConstantInt.BitWidth.html" title="BitWidth" class="">BitWidth</a>
+                                </li>
+                                <li class="">
                                   <a href="Llvm.NET.Values.ConstantInt.SignExtendedValue.html" title="SignExtendedValue" class="">SignExtendedValue</a>
                                 </li>
                                 <li class="">
@@ -5873,7 +5894,7 @@
   
   <h5 id="Llvm_NET_Values_AttributeKind_remarks"><strong>Remarks</strong></h5>
   <div class="markdown level0 remarks"><p><p>It is important to note that the integer values of this enum do NOT necessarily
-correlate to the attribute IDs. LLVM has moved away from using an enum Flags model
+correlate to the LLVM attribute IDs. LLVM has moved away from using an enum Flags model
 as the number of attributes reached the limit of available bits. Thus, the enum was
 dropped. Instead, strings are used to identify attributes. However, for maximum
 compatibility and ease of use for this library the enum is retained and the provided

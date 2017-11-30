@@ -8699,18 +8699,18 @@ references:
   commentId: Overload:Llvm.NET.Instructions.LandingPad.AddClause
   fullName: Llvm.NET.Instructions.LandingPad.AddClause
   nameWithType: LandingPad.AddClause
-- uid: Llvm.NET.Instructions.LandingPad.SetCleanup(System.Boolean)
-  name: SetCleanup(Boolean)
-  href: api/Llvm.NET.Instructions.LandingPad.SetCleanup.html#Llvm_NET_Instructions_LandingPad_SetCleanup_System_Boolean_
-  commentId: M:Llvm.NET.Instructions.LandingPad.SetCleanup(System.Boolean)
-  fullName: Llvm.NET.Instructions.LandingPad.SetCleanup(System.Boolean)
-  nameWithType: LandingPad.SetCleanup(Boolean)
-- uid: Llvm.NET.Instructions.LandingPad.SetCleanup*
-  name: SetCleanup
-  href: api/Llvm.NET.Instructions.LandingPad.SetCleanup.html
-  commentId: Overload:Llvm.NET.Instructions.LandingPad.SetCleanup
-  fullName: Llvm.NET.Instructions.LandingPad.SetCleanup
-  nameWithType: LandingPad.SetCleanup
+- uid: Llvm.NET.Instructions.LandingPad.IsCleanup
+  name: IsCleanup
+  href: api/Llvm.NET.Instructions.LandingPad.IsCleanup.html#Llvm_NET_Instructions_LandingPad_IsCleanup
+  commentId: P:Llvm.NET.Instructions.LandingPad.IsCleanup
+  fullName: Llvm.NET.Instructions.LandingPad.IsCleanup
+  nameWithType: LandingPad.IsCleanup
+- uid: Llvm.NET.Instructions.LandingPad.IsCleanup*
+  name: IsCleanup
+  href: api/Llvm.NET.Instructions.LandingPad.IsCleanup.html
+  commentId: Overload:Llvm.NET.Instructions.LandingPad.IsCleanup
+  fullName: Llvm.NET.Instructions.LandingPad.IsCleanup
+  nameWithType: LandingPad.IsCleanup
 - uid: Llvm.NET.Instructions.Load
   name: Load
   href: api/Llvm.NET.Instructions.Load.html
@@ -8765,15 +8765,15 @@ references:
   commentId: M:Llvm.NET.Instructions.PhiNode.AddIncoming(Llvm.NET.Values.Value,Llvm.NET.Values.BasicBlock)
   fullName: Llvm.NET.Instructions.PhiNode.AddIncoming(Llvm.NET.Values.Value, Llvm.NET.Values.BasicBlock)
   nameWithType: PhiNode.AddIncoming(Value, BasicBlock)
-- uid: Llvm.NET.Instructions.PhiNode.AddIncoming(System.Tuple{Llvm.NET.Values.Value,Llvm.NET.Values.BasicBlock},System.Tuple{Llvm.NET.Values.Value,Llvm.NET.Values.BasicBlock}[])
-  name: AddIncoming(Tuple<Value, BasicBlock>, Tuple<Value, BasicBlock>[])
-  href: api/Llvm.NET.Instructions.PhiNode.AddIncoming.html#Llvm_NET_Instructions_PhiNode_AddIncoming_System_Tuple_Llvm_NET_Values_Value_Llvm_NET_Values_BasicBlock__System_Tuple_Llvm_NET_Values_Value_Llvm_NET_Values_BasicBlock____
-  commentId: M:Llvm.NET.Instructions.PhiNode.AddIncoming(System.Tuple{Llvm.NET.Values.Value,Llvm.NET.Values.BasicBlock},System.Tuple{Llvm.NET.Values.Value,Llvm.NET.Values.BasicBlock}[])
-  name.vb: AddIncoming(Tuple(Of Value, BasicBlock), Tuple(Of Value, BasicBlock)())
-  fullName: Llvm.NET.Instructions.PhiNode.AddIncoming(System.Tuple<Llvm.NET.Values.Value, Llvm.NET.Values.BasicBlock>, System.Tuple<Llvm.NET.Values.Value, Llvm.NET.Values.BasicBlock>[])
-  fullName.vb: Llvm.NET.Instructions.PhiNode.AddIncoming(System.Tuple(Of Llvm.NET.Values.Value, Llvm.NET.Values.BasicBlock), System.Tuple(Of Llvm.NET.Values.Value, Llvm.NET.Values.BasicBlock)())
-  nameWithType: PhiNode.AddIncoming(Tuple<Value, BasicBlock>, Tuple<Value, BasicBlock>[])
-  nameWithType.vb: PhiNode.AddIncoming(Tuple(Of Value, BasicBlock), Tuple(Of Value, BasicBlock)())
+- uid: Llvm.NET.Instructions.PhiNode.AddIncoming(System.ValueTuple{Llvm.NET.Values.Value,Llvm.NET.Values.BasicBlock},System.ValueTuple{Llvm.NET.Values.Value,Llvm.NET.Values.BasicBlock}[])
+  name: AddIncoming(, [])
+  href: api/Llvm.NET.Instructions.PhiNode.AddIncoming.html#Llvm_NET_Instructions_PhiNode_AddIncoming_System_ValueTuple_Llvm_NET_Values_Value_Llvm_NET_Values_BasicBlock__System_ValueTuple_Llvm_NET_Values_Value_Llvm_NET_Values_BasicBlock____
+  commentId: M:Llvm.NET.Instructions.PhiNode.AddIncoming(System.ValueTuple{Llvm.NET.Values.Value,Llvm.NET.Values.BasicBlock},System.ValueTuple{Llvm.NET.Values.Value,Llvm.NET.Values.BasicBlock}[])
+  name.vb: AddIncoming(, ())
+  fullName: Llvm.NET.Instructions.PhiNode.AddIncoming(System., System.[])
+  fullName.vb: Llvm.NET.Instructions.PhiNode.AddIncoming(System., System.())
+  nameWithType: PhiNode.AddIncoming(, [])
+  nameWithType.vb: PhiNode.AddIncoming(, ())
 - uid: Llvm.NET.Instructions.PhiNode.AddIncoming*
   name: AddIncoming
   href: api/Llvm.NET.Instructions.PhiNode.AddIncoming.html
@@ -10144,6 +10144,66 @@ references:
   commentId: Overload:Llvm.NET.MemoryBuffer.ToArray
   fullName: Llvm.NET.MemoryBuffer.ToArray
   nameWithType: MemoryBuffer.ToArray
+- uid: Llvm.NET.Metadata
+  name: Llvm.NET.Metadata
+  href: api/Llvm.NET.Metadata.html
+  commentId: N:Llvm.NET.Metadata
+  fullName: Llvm.NET.Metadata
+  nameWithType: Llvm.NET.Metadata
+- uid: Llvm.NET.Metadata.ModuleFlag
+  name: ModuleFlag
+  href: api/Llvm.NET.Metadata.ModuleFlag.html
+  commentId: T:Llvm.NET.Metadata.ModuleFlag
+  fullName: Llvm.NET.Metadata.ModuleFlag
+  nameWithType: ModuleFlag
+- uid: Llvm.NET.Metadata.ModuleFlag.#ctor(Llvm.NET.ModuleFlagBehavior,System.String,Llvm.NET.LlvmMetadata)
+  name: ModuleFlag(ModuleFlagBehavior, String, LlvmMetadata)
+  href: api/Llvm.NET.Metadata.ModuleFlag.-ctor.html#Llvm_NET_Metadata_ModuleFlag__ctor_Llvm_NET_ModuleFlagBehavior_System_String_Llvm_NET_LlvmMetadata_
+  commentId: M:Llvm.NET.Metadata.ModuleFlag.#ctor(Llvm.NET.ModuleFlagBehavior,System.String,Llvm.NET.LlvmMetadata)
+  fullName: Llvm.NET.Metadata.ModuleFlag.ModuleFlag(Llvm.NET.ModuleFlagBehavior, System.String, Llvm.NET.LlvmMetadata)
+  nameWithType: ModuleFlag.ModuleFlag(ModuleFlagBehavior, String, LlvmMetadata)
+- uid: Llvm.NET.Metadata.ModuleFlag.#ctor*
+  name: ModuleFlag
+  href: api/Llvm.NET.Metadata.ModuleFlag.-ctor.html
+  commentId: Overload:Llvm.NET.Metadata.ModuleFlag.#ctor
+  fullName: Llvm.NET.Metadata.ModuleFlag.ModuleFlag
+  nameWithType: ModuleFlag.ModuleFlag
+- uid: Llvm.NET.Metadata.ModuleFlag.Behavior
+  name: Behavior
+  href: api/Llvm.NET.Metadata.ModuleFlag.Behavior.html#Llvm_NET_Metadata_ModuleFlag_Behavior
+  commentId: P:Llvm.NET.Metadata.ModuleFlag.Behavior
+  fullName: Llvm.NET.Metadata.ModuleFlag.Behavior
+  nameWithType: ModuleFlag.Behavior
+- uid: Llvm.NET.Metadata.ModuleFlag.Behavior*
+  name: Behavior
+  href: api/Llvm.NET.Metadata.ModuleFlag.Behavior.html
+  commentId: Overload:Llvm.NET.Metadata.ModuleFlag.Behavior
+  fullName: Llvm.NET.Metadata.ModuleFlag.Behavior
+  nameWithType: ModuleFlag.Behavior
+- uid: Llvm.NET.Metadata.ModuleFlag.Metadata
+  name: Metadata
+  href: api/Llvm.NET.Metadata.ModuleFlag.Metadata.html#Llvm_NET_Metadata_ModuleFlag_Metadata
+  commentId: P:Llvm.NET.Metadata.ModuleFlag.Metadata
+  fullName: Llvm.NET.Metadata.ModuleFlag.Metadata
+  nameWithType: ModuleFlag.Metadata
+- uid: Llvm.NET.Metadata.ModuleFlag.Metadata*
+  name: Metadata
+  href: api/Llvm.NET.Metadata.ModuleFlag.Metadata.html
+  commentId: Overload:Llvm.NET.Metadata.ModuleFlag.Metadata
+  fullName: Llvm.NET.Metadata.ModuleFlag.Metadata
+  nameWithType: ModuleFlag.Metadata
+- uid: Llvm.NET.Metadata.ModuleFlag.Name
+  name: Name
+  href: api/Llvm.NET.Metadata.ModuleFlag.Name.html#Llvm_NET_Metadata_ModuleFlag_Name
+  commentId: P:Llvm.NET.Metadata.ModuleFlag.Name
+  fullName: Llvm.NET.Metadata.ModuleFlag.Name
+  nameWithType: ModuleFlag.Name
+- uid: Llvm.NET.Metadata.ModuleFlag.Name*
+  name: Name
+  href: api/Llvm.NET.Metadata.ModuleFlag.Name.html
+  commentId: Overload:Llvm.NET.Metadata.ModuleFlag.Name
+  fullName: Llvm.NET.Metadata.ModuleFlag.Name
+  nameWithType: ModuleFlag.Name
 - uid: Llvm.NET.MetadataAsValue
   name: MetadataAsValue
   href: api/Llvm.NET.MetadataAsValue.html
@@ -10210,6 +10270,18 @@ references:
   commentId: T:Llvm.NET.NamedMDNode
   fullName: Llvm.NET.NamedMDNode
   nameWithType: NamedMDNode
+- uid: Llvm.NET.NamedMDNode.Name
+  name: Name
+  href: api/Llvm.NET.NamedMDNode.Name.html#Llvm_NET_NamedMDNode_Name
+  commentId: P:Llvm.NET.NamedMDNode.Name
+  fullName: Llvm.NET.NamedMDNode.Name
+  nameWithType: NamedMDNode.Name
+- uid: Llvm.NET.NamedMDNode.Name*
+  name: Name
+  href: api/Llvm.NET.NamedMDNode.Name.html
+  commentId: Overload:Llvm.NET.NamedMDNode.Name
+  fullName: Llvm.NET.NamedMDNode.Name
+  nameWithType: NamedMDNode.Name
 - uid: Llvm.NET.NamedMDNode.Operands
   name: Operands
   href: api/Llvm.NET.NamedMDNode.Operands.html#Llvm_NET_NamedMDNode_Operands
@@ -11179,6 +11251,12 @@ references:
   commentId: Overload:Llvm.NET.Target.AvailableTargets
   fullName: Llvm.NET.Target.AvailableTargets
   nameWithType: Target.AvailableTargets
+- uid: Llvm.NET.Target.CreateTargetMachine(Llvm.NET.Triple,System.String,System.String,Llvm.NET.CodeGenOpt,Llvm.NET.Reloc,Llvm.NET.CodeModel)
+  name: CreateTargetMachine(Triple, String, String, CodeGenOpt, Reloc, CodeModel)
+  href: api/Llvm.NET.Target.CreateTargetMachine.html#Llvm_NET_Target_CreateTargetMachine_Llvm_NET_Triple_System_String_System_String_Llvm_NET_CodeGenOpt_Llvm_NET_Reloc_Llvm_NET_CodeModel_
+  commentId: M:Llvm.NET.Target.CreateTargetMachine(Llvm.NET.Triple,System.String,System.String,Llvm.NET.CodeGenOpt,Llvm.NET.Reloc,Llvm.NET.CodeModel)
+  fullName: Llvm.NET.Target.CreateTargetMachine(Llvm.NET.Triple, System.String, System.String, Llvm.NET.CodeGenOpt, Llvm.NET.Reloc, Llvm.NET.CodeModel)
+  nameWithType: Target.CreateTargetMachine(Triple, String, String, CodeGenOpt, Reloc, CodeModel)
 - uid: Llvm.NET.Target.CreateTargetMachine(System.String,System.String,System.String,Llvm.NET.CodeGenOpt,Llvm.NET.Reloc,Llvm.NET.CodeModel)
   name: CreateTargetMachine(String, String, String, CodeGenOpt, Reloc, CodeModel)
   href: api/Llvm.NET.Target.CreateTargetMachine.html#Llvm_NET_Target_CreateTargetMachine_System_String_System_String_System_String_Llvm_NET_CodeGenOpt_Llvm_NET_Reloc_Llvm_NET_CodeModel_
@@ -11275,6 +11353,18 @@ references:
   commentId: T:Llvm.NET.TargetMachine
   fullName: Llvm.NET.TargetMachine
   nameWithType: TargetMachine
+- uid: Llvm.NET.TargetMachine.#ctor(Llvm.NET.Triple,System.String,System.String,Llvm.NET.CodeGenOpt,Llvm.NET.Reloc,Llvm.NET.CodeModel)
+  name: TargetMachine(Triple, String, String, CodeGenOpt, Reloc, CodeModel)
+  href: api/Llvm.NET.TargetMachine.-ctor.html#Llvm_NET_TargetMachine__ctor_Llvm_NET_Triple_System_String_System_String_Llvm_NET_CodeGenOpt_Llvm_NET_Reloc_Llvm_NET_CodeModel_
+  commentId: M:Llvm.NET.TargetMachine.#ctor(Llvm.NET.Triple,System.String,System.String,Llvm.NET.CodeGenOpt,Llvm.NET.Reloc,Llvm.NET.CodeModel)
+  fullName: Llvm.NET.TargetMachine.TargetMachine(Llvm.NET.Triple, System.String, System.String, Llvm.NET.CodeGenOpt, Llvm.NET.Reloc, Llvm.NET.CodeModel)
+  nameWithType: TargetMachine.TargetMachine(Triple, String, String, CodeGenOpt, Reloc, CodeModel)
+- uid: Llvm.NET.TargetMachine.#ctor*
+  name: TargetMachine
+  href: api/Llvm.NET.TargetMachine.-ctor.html
+  commentId: Overload:Llvm.NET.TargetMachine.#ctor
+  fullName: Llvm.NET.TargetMachine.TargetMachine
+  nameWithType: TargetMachine.TargetMachine
 - uid: Llvm.NET.TargetMachine.Cpu
   name: Cpu
   href: api/Llvm.NET.TargetMachine.Cpu.html#Llvm_NET_TargetMachine_Cpu
@@ -11335,30 +11425,6 @@ references:
   commentId: Overload:Llvm.NET.TargetMachine.FromTriple
   fullName: Llvm.NET.TargetMachine.FromTriple
   nameWithType: TargetMachine.FromTriple
-- uid: Llvm.NET.TargetMachine.InternalDispose(System.Boolean)
-  name: InternalDispose(Boolean)
-  href: api/Llvm.NET.TargetMachine.InternalDispose.html#Llvm_NET_TargetMachine_InternalDispose_System_Boolean_
-  commentId: M:Llvm.NET.TargetMachine.InternalDispose(System.Boolean)
-  fullName: Llvm.NET.TargetMachine.InternalDispose(System.Boolean)
-  nameWithType: TargetMachine.InternalDispose(Boolean)
-- uid: Llvm.NET.TargetMachine.InternalDispose*
-  name: InternalDispose
-  href: api/Llvm.NET.TargetMachine.InternalDispose.html
-  commentId: Overload:Llvm.NET.TargetMachine.InternalDispose
-  fullName: Llvm.NET.TargetMachine.InternalDispose
-  nameWithType: TargetMachine.InternalDispose
-- uid: Llvm.NET.TargetMachine.IsDisposed
-  name: IsDisposed
-  href: api/Llvm.NET.TargetMachine.IsDisposed.html#Llvm_NET_TargetMachine_IsDisposed
-  commentId: P:Llvm.NET.TargetMachine.IsDisposed
-  fullName: Llvm.NET.TargetMachine.IsDisposed
-  nameWithType: TargetMachine.IsDisposed
-- uid: Llvm.NET.TargetMachine.IsDisposed*
-  name: IsDisposed
-  href: api/Llvm.NET.TargetMachine.IsDisposed.html
-  commentId: Overload:Llvm.NET.TargetMachine.IsDisposed
-  fullName: Llvm.NET.TargetMachine.IsDisposed
-  nameWithType: TargetMachine.IsDisposed
 - uid: Llvm.NET.TargetMachine.Target
   name: Target
   href: api/Llvm.NET.TargetMachine.Target.html#Llvm_NET_TargetMachine_Target
@@ -11767,24 +11833,6 @@ references:
   commentId: T:Llvm.NET.Transforms.PassManager
   fullName: Llvm.NET.Transforms.PassManager
   nameWithType: PassManager
-- uid: Llvm.NET.Transforms.PassManager.Dispose
-  name: Dispose()
-  href: api/Llvm.NET.Transforms.PassManager.Dispose.html#Llvm_NET_Transforms_PassManager_Dispose
-  commentId: M:Llvm.NET.Transforms.PassManager.Dispose
-  fullName: Llvm.NET.Transforms.PassManager.Dispose()
-  nameWithType: PassManager.Dispose()
-- uid: Llvm.NET.Transforms.PassManager.Dispose(System.Boolean)
-  name: Dispose(Boolean)
-  href: api/Llvm.NET.Transforms.PassManager.Dispose.html#Llvm_NET_Transforms_PassManager_Dispose_System_Boolean_
-  commentId: M:Llvm.NET.Transforms.PassManager.Dispose(System.Boolean)
-  fullName: Llvm.NET.Transforms.PassManager.Dispose(System.Boolean)
-  nameWithType: PassManager.Dispose(Boolean)
-- uid: Llvm.NET.Transforms.PassManager.Dispose*
-  name: Dispose
-  href: api/Llvm.NET.Transforms.PassManager.Dispose.html
-  commentId: Overload:Llvm.NET.Transforms.PassManager.Dispose
-  fullName: Llvm.NET.Transforms.PassManager.Dispose
-  nameWithType: PassManager.Dispose
 - uid: Llvm.NET.Transforms.ScalarTransforms
   name: ScalarTransforms
   href: api/Llvm.NET.Transforms.ScalarTransforms.html
@@ -15385,6 +15433,18 @@ references:
   commentId: T:Llvm.NET.Values.ConstantInt
   fullName: Llvm.NET.Values.ConstantInt
   nameWithType: ConstantInt
+- uid: Llvm.NET.Values.ConstantInt.BitWidth
+  name: BitWidth
+  href: api/Llvm.NET.Values.ConstantInt.BitWidth.html#Llvm_NET_Values_ConstantInt_BitWidth
+  commentId: P:Llvm.NET.Values.ConstantInt.BitWidth
+  fullName: Llvm.NET.Values.ConstantInt.BitWidth
+  nameWithType: ConstantInt.BitWidth
+- uid: Llvm.NET.Values.ConstantInt.BitWidth*
+  name: BitWidth
+  href: api/Llvm.NET.Values.ConstantInt.BitWidth.html
+  commentId: Overload:Llvm.NET.Values.ConstantInt.BitWidth
+  fullName: Llvm.NET.Values.ConstantInt.BitWidth
+  nameWithType: ConstantInt.BitWidth
 - uid: Llvm.NET.Values.ConstantInt.SignExtendedValue
   name: SignExtendedValue
   href: api/Llvm.NET.Values.ConstantInt.SignExtendedValue.html#Llvm_NET_Values_ConstantInt_SignExtendedValue
