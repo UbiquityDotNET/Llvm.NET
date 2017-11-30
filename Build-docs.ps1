@@ -29,7 +29,7 @@ try
         Write-Information "Cleaning output folder from previous builds"
         rd -Recurse -Force -Path $buildPaths.BuildOutputPath
     }
-    
+
     if( Test-Path -PathType Container src\Llvm.NET\obj\xdoc )
     {
         rd -Recurse -Force -Path src\Llvm.NET\obj\xdoc

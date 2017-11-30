@@ -407,9 +407,43 @@ namespace Llvm.NET.Tests
                 module.AddModuleFlag( ModuleFlagBehavior.Error, "min_enum_size", 4 );
                 module.AddVersionIdentMetadata( "unit-tests 1.0" );
 
-                // currently no exposed means to get module level flags...
-                // so at this point as long as adding the flags doesn't throw an exception
-                // assume things are OK.
+                Assert.AreEqual( 4, module.ModuleFlags.Count );
+                Assert.IsTrue( module.ModuleFlags.ContainsKey( BitcodeModule.DwarfVersionValue ) );
+                Assert.IsTrue( module.ModuleFlags.ContainsKey( BitcodeModule.DebugVersionValue ) );
+                Assert.IsTrue( module.ModuleFlags.ContainsKey( "wchar_size" ) );
+                Assert.IsTrue( module.ModuleFlags.ContainsKey( "min_enum_size" ) );
+
+                var dwarfVerFlag = module.ModuleFlags[ BitcodeModule.DwarfVersionValue ];
+                Assert.AreEqual( ModuleFlagBehavior.Warning, dwarfVerFlag.Behavior );
+                Assert.AreEqual( BitcodeModule.DwarfVersionValue, dwarfVerFlag.Name );
+                Assert.IsInstanceOfType( dwarfVerFlag.Metadata, typeof( ConstantAsMetadata ) );
+                var dwarfVerConst = ( ( ConstantAsMetadata )dwarfVerFlag.Metadata ).Constant;
+                Assert.IsInstanceOfType( dwarfVerConst, typeof( ConstantInt ) );
+                Assert.AreEqual( 4UL, ( ( ConstantInt )dwarfVerConst ).ZeroExtendedValue );
+
+                var debugVerFlag = module.ModuleFlags[ BitcodeModule.DebugVersionValue ];
+                Assert.AreEqual( ModuleFlagBehavior.Warning, debugVerFlag.Behavior );
+                Assert.AreEqual( BitcodeModule.DebugVersionValue, debugVerFlag.Name );
+                Assert.IsInstanceOfType( debugVerFlag.Metadata, typeof( ConstantAsMetadata ) );
+                var debugVerConst = ( ( ConstantAsMetadata )debugVerFlag.Metadata ).Constant;
+                Assert.IsInstanceOfType( debugVerConst, typeof( ConstantInt ) );
+                Assert.AreEqual( BitcodeModule.DebugMetadataVersion, ( ( ConstantInt )debugVerConst ).ZeroExtendedValue );
+
+                var wcharSizeFlag = module.ModuleFlags[ "wchar_size" ];
+                Assert.AreEqual( ModuleFlagBehavior.Error, wcharSizeFlag.Behavior );
+                Assert.AreEqual( "wchar_size", wcharSizeFlag.Name );
+                Assert.IsInstanceOfType( wcharSizeFlag.Metadata, typeof( ConstantAsMetadata ) );
+                var wcharSizeConst = ( ( ConstantAsMetadata )wcharSizeFlag.Metadata ).Constant;
+                Assert.IsInstanceOfType( wcharSizeConst, typeof( ConstantInt ) );
+                Assert.AreEqual( 4UL, ( ( ConstantInt )wcharSizeConst ).ZeroExtendedValue );
+
+                var minEnumSizeFlag = module.ModuleFlags[ "wchar_size" ];
+                Assert.AreEqual( ModuleFlagBehavior.Error, minEnumSizeFlag.Behavior );
+                Assert.AreEqual( "wchar_size", minEnumSizeFlag.Name );
+                Assert.IsInstanceOfType( minEnumSizeFlag.Metadata, typeof( ConstantAsMetadata ) );
+                var minEnumSizeConst = ( ( ConstantAsMetadata )minEnumSizeFlag.Metadata ).Constant;
+                Assert.IsInstanceOfType( minEnumSizeConst, typeof( ConstantInt ) );
+                Assert.AreEqual( 4UL, ( ( ConstantInt )minEnumSizeConst ).ZeroExtendedValue );
             }
         }
 

@@ -2,8 +2,11 @@
 // Copyright (c) .NET Foundation. All rights reserved.
 // </copyright>
 
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.InteropServices;
+using Llvm.NET.Metadata;
 using Llvm.NET.Native;
 
 using static Llvm.NET.Native.NativeMethods;
@@ -11,11 +14,14 @@ using static Llvm.NET.Native.NativeMethods;
 namespace Llvm.NET
 {
     /// <summary>Wraps an LLVM NamedMDNode</summary>
-    /// <remarks>Despite its name a NamedMDNode is not itself an MDNode.</remarks>
+    /// <remarks>Despite its name a NamedMDNode is not itself an MDNode. It is owned directly by a
+    /// a <see cref="BitcodeModule"/> and contains a list of <see cref="MDNode"/> operands.</remarks>
     public class NamedMDNode
     {
+        /// <summary>Gets the name of the node</summary>
+        public string Name => LLVMNamedMDNodeGetName( NativeHandle );
+
         /* TODO:
-        public string Name { get; }
         public void AddOperand(MDNode node) {...}
         */
 
@@ -32,6 +38,19 @@ namespace Llvm.NET
         }
 
         private LLVMNamedMDNodeRef NativeHandle;
+
+        [DllImport( LibraryPath, CallingConvention = CallingConvention.Cdecl, BestFitMapping = false, ThrowOnUnmappableChar = true )]
+        [return: MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( StringMarshaler ) )]
+        private static extern string /*char const**/ LLVMNamedMDNodeGetName( LLVMNamedMDNodeRef namedMDNode );
+
+        [DllImport( LibraryPath, CallingConvention = CallingConvention.Cdecl, BestFitMapping = false, ThrowOnUnmappableChar = true )]
+        private static extern UInt32 LLVMNamedMDNodeGetNumOperands( LLVMNamedMDNodeRef namedMDNode );
+
+        [DllImport( LibraryPath, CallingConvention = CallingConvention.Cdecl, BestFitMapping = false, ThrowOnUnmappableChar = true )]
+        private static extern /*MDNode*/ LLVMMetadataRef LLVMNamedMDNodeGetOperand( LLVMNamedMDNodeRef namedMDNode, UInt32 index );
+
+        [DllImport( LibraryPath, CallingConvention = CallingConvention.Cdecl, BestFitMapping = false, ThrowOnUnmappableChar = true )]
+        private static extern LLVMModuleRef LLVMNamedMDNodeGetParentModule( LLVMNamedMDNodeRef namedMDNode );
 
         // internal iterator for Metadata operands
         private class OperandIterator

@@ -54,6 +54,7 @@ extern "C" {
     LLVMValueRef LLVMGetGlobalAlias( LLVMModuleRef module, char const* name );
 
     LLVMNamedMDNodeRef LLVMModuleGetModuleFlagsMetadata( LLVMModuleRef module );
+    char const* LLVMNamedMDNodeGetName( LLVMNamedMDNodeRef namedMDNode );
     unsigned LLVMNamedMDNodeGetNumOperands( LLVMNamedMDNodeRef namedMDNode );
     /*MDNode*/ LLVMMetadataRef LLVMNamedMDNodeGetOperand( LLVMNamedMDNodeRef namedMDNode, unsigned index );
     LLVMModuleRef LLVMNamedMDNodeGetParentModule( LLVMNamedMDNodeRef namedMDNode );

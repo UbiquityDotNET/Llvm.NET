@@ -15,11 +15,6 @@ namespace Llvm.NET
     /// is changed in the .NET bindings to avoid the conflict.</remarks>
     public abstract class LlvmMetadata
     {
-        /*TODO:
-        MetadataKind Kind { get; }
-
-        */
-
         /// <summary>Replace all uses of this descriptor with another</summary>
         /// <param name="other">New descriptor to replace this one with</param>
         public virtual void ReplaceAllUsesWith( LlvmMetadata other )
