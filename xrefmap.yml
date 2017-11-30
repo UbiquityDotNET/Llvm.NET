@@ -10144,72 +10144,66 @@ references:
   commentId: Overload:Llvm.NET.MemoryBuffer.ToArray
   fullName: Llvm.NET.MemoryBuffer.ToArray
   nameWithType: MemoryBuffer.ToArray
-- uid: Llvm.NET.Metadata
-  name: Llvm.NET.Metadata
-  href: api/Llvm.NET.Metadata.html
-  commentId: N:Llvm.NET.Metadata
-  fullName: Llvm.NET.Metadata
-  nameWithType: Llvm.NET.Metadata
-- uid: Llvm.NET.Metadata.ModuleFlag
-  name: ModuleFlag
-  href: api/Llvm.NET.Metadata.ModuleFlag.html
-  commentId: T:Llvm.NET.Metadata.ModuleFlag
-  fullName: Llvm.NET.Metadata.ModuleFlag
-  nameWithType: ModuleFlag
-- uid: Llvm.NET.Metadata.ModuleFlag.#ctor(Llvm.NET.ModuleFlagBehavior,System.String,Llvm.NET.LlvmMetadata)
-  name: ModuleFlag(ModuleFlagBehavior, String, LlvmMetadata)
-  href: api/Llvm.NET.Metadata.ModuleFlag.-ctor.html#Llvm_NET_Metadata_ModuleFlag__ctor_Llvm_NET_ModuleFlagBehavior_System_String_Llvm_NET_LlvmMetadata_
-  commentId: M:Llvm.NET.Metadata.ModuleFlag.#ctor(Llvm.NET.ModuleFlagBehavior,System.String,Llvm.NET.LlvmMetadata)
-  fullName: Llvm.NET.Metadata.ModuleFlag.ModuleFlag(Llvm.NET.ModuleFlagBehavior, System.String, Llvm.NET.LlvmMetadata)
-  nameWithType: ModuleFlag.ModuleFlag(ModuleFlagBehavior, String, LlvmMetadata)
-- uid: Llvm.NET.Metadata.ModuleFlag.#ctor*
-  name: ModuleFlag
-  href: api/Llvm.NET.Metadata.ModuleFlag.-ctor.html
-  commentId: Overload:Llvm.NET.Metadata.ModuleFlag.#ctor
-  fullName: Llvm.NET.Metadata.ModuleFlag.ModuleFlag
-  nameWithType: ModuleFlag.ModuleFlag
-- uid: Llvm.NET.Metadata.ModuleFlag.Behavior
-  name: Behavior
-  href: api/Llvm.NET.Metadata.ModuleFlag.Behavior.html#Llvm_NET_Metadata_ModuleFlag_Behavior
-  commentId: P:Llvm.NET.Metadata.ModuleFlag.Behavior
-  fullName: Llvm.NET.Metadata.ModuleFlag.Behavior
-  nameWithType: ModuleFlag.Behavior
-- uid: Llvm.NET.Metadata.ModuleFlag.Behavior*
-  name: Behavior
-  href: api/Llvm.NET.Metadata.ModuleFlag.Behavior.html
-  commentId: Overload:Llvm.NET.Metadata.ModuleFlag.Behavior
-  fullName: Llvm.NET.Metadata.ModuleFlag.Behavior
-  nameWithType: ModuleFlag.Behavior
-- uid: Llvm.NET.Metadata.ModuleFlag.Metadata
-  name: Metadata
-  href: api/Llvm.NET.Metadata.ModuleFlag.Metadata.html#Llvm_NET_Metadata_ModuleFlag_Metadata
-  commentId: P:Llvm.NET.Metadata.ModuleFlag.Metadata
-  fullName: Llvm.NET.Metadata.ModuleFlag.Metadata
-  nameWithType: ModuleFlag.Metadata
-- uid: Llvm.NET.Metadata.ModuleFlag.Metadata*
-  name: Metadata
-  href: api/Llvm.NET.Metadata.ModuleFlag.Metadata.html
-  commentId: Overload:Llvm.NET.Metadata.ModuleFlag.Metadata
-  fullName: Llvm.NET.Metadata.ModuleFlag.Metadata
-  nameWithType: ModuleFlag.Metadata
-- uid: Llvm.NET.Metadata.ModuleFlag.Name
-  name: Name
-  href: api/Llvm.NET.Metadata.ModuleFlag.Name.html#Llvm_NET_Metadata_ModuleFlag_Name
-  commentId: P:Llvm.NET.Metadata.ModuleFlag.Name
-  fullName: Llvm.NET.Metadata.ModuleFlag.Name
-  nameWithType: ModuleFlag.Name
-- uid: Llvm.NET.Metadata.ModuleFlag.Name*
-  name: Name
-  href: api/Llvm.NET.Metadata.ModuleFlag.Name.html
-  commentId: Overload:Llvm.NET.Metadata.ModuleFlag.Name
-  fullName: Llvm.NET.Metadata.ModuleFlag.Name
-  nameWithType: ModuleFlag.Name
 - uid: Llvm.NET.MetadataAsValue
   name: MetadataAsValue
   href: api/Llvm.NET.MetadataAsValue.html
   commentId: T:Llvm.NET.MetadataAsValue
   fullName: Llvm.NET.MetadataAsValue
   nameWithType: MetadataAsValue
+- uid: Llvm.NET.ModuleFlag
+  name: ModuleFlag
+  href: api/Llvm.NET.ModuleFlag.html
+  commentId: T:Llvm.NET.ModuleFlag
+  fullName: Llvm.NET.ModuleFlag
+  nameWithType: ModuleFlag
+- uid: Llvm.NET.ModuleFlag.#ctor(Llvm.NET.ModuleFlagBehavior,System.String,Llvm.NET.LlvmMetadata)
+  name: ModuleFlag(ModuleFlagBehavior, String, LlvmMetadata)
+  href: api/Llvm.NET.ModuleFlag.-ctor.html#Llvm_NET_ModuleFlag__ctor_Llvm_NET_ModuleFlagBehavior_System_String_Llvm_NET_LlvmMetadata_
+  commentId: M:Llvm.NET.ModuleFlag.#ctor(Llvm.NET.ModuleFlagBehavior,System.String,Llvm.NET.LlvmMetadata)
+  fullName: Llvm.NET.ModuleFlag.ModuleFlag(Llvm.NET.ModuleFlagBehavior, System.String, Llvm.NET.LlvmMetadata)
+  nameWithType: ModuleFlag.ModuleFlag(ModuleFlagBehavior, String, LlvmMetadata)
+- uid: Llvm.NET.ModuleFlag.#ctor*
+  name: ModuleFlag
+  href: api/Llvm.NET.ModuleFlag.-ctor.html
+  commentId: Overload:Llvm.NET.ModuleFlag.#ctor
+  fullName: Llvm.NET.ModuleFlag.ModuleFlag
+  nameWithType: ModuleFlag.ModuleFlag
+- uid: Llvm.NET.ModuleFlag.Behavior
+  name: Behavior
+  href: api/Llvm.NET.ModuleFlag.Behavior.html#Llvm_NET_ModuleFlag_Behavior
+  commentId: P:Llvm.NET.ModuleFlag.Behavior
+  fullName: Llvm.NET.ModuleFlag.Behavior
+  nameWithType: ModuleFlag.Behavior
+- uid: Llvm.NET.ModuleFlag.Behavior*
+  name: Behavior
+  href: api/Llvm.NET.ModuleFlag.Behavior.html
+  commentId: Overload:Llvm.NET.ModuleFlag.Behavior
+  fullName: Llvm.NET.ModuleFlag.Behavior
+  nameWithType: ModuleFlag.Behavior
+- uid: Llvm.NET.ModuleFlag.Metadata
+  name: Metadata
+  href: api/Llvm.NET.ModuleFlag.Metadata.html#Llvm_NET_ModuleFlag_Metadata
+  commentId: P:Llvm.NET.ModuleFlag.Metadata
+  fullName: Llvm.NET.ModuleFlag.Metadata
+  nameWithType: ModuleFlag.Metadata
+- uid: Llvm.NET.ModuleFlag.Metadata*
+  name: Metadata
+  href: api/Llvm.NET.ModuleFlag.Metadata.html
+  commentId: Overload:Llvm.NET.ModuleFlag.Metadata
+  fullName: Llvm.NET.ModuleFlag.Metadata
+  nameWithType: ModuleFlag.Metadata
+- uid: Llvm.NET.ModuleFlag.Name
+  name: Name
+  href: api/Llvm.NET.ModuleFlag.Name.html#Llvm_NET_ModuleFlag_Name
+  commentId: P:Llvm.NET.ModuleFlag.Name
+  fullName: Llvm.NET.ModuleFlag.Name
+  nameWithType: ModuleFlag.Name
+- uid: Llvm.NET.ModuleFlag.Name*
+  name: Name
+  href: api/Llvm.NET.ModuleFlag.Name.html
+  commentId: Overload:Llvm.NET.ModuleFlag.Name
+  fullName: Llvm.NET.ModuleFlag.Name
+  nameWithType: ModuleFlag.Name
 - uid: Llvm.NET.ModuleFlagBehavior
   name: ModuleFlagBehavior
   href: api/Llvm.NET.ModuleFlagBehavior.html
