@@ -64,6 +64,11 @@ extern "C"
         return wrap( pModule->getModuleFlagsMetadata( ) );
     }
 
+    char const* LLVMNamedMDNodeGetName( LLVMNamedMDNodeRef namedMDNode )
+    {
+        return unwrap( namedMDNode )->getName().data();
+    }
+
     unsigned LLVMNamedMDNodeGetNumOperands( LLVMNamedMDNodeRef namedMDNode )
     {
         auto pMDNode = unwrap( namedMDNode );

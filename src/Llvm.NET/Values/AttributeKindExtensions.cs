@@ -17,7 +17,7 @@ namespace Llvm.NET.Values
     /// <summary>Enumeration for the known LLVM attributes</summary>
     /// <remarks>
     /// <para>It is important to note that the integer values of this enum do NOT necessarily
-    /// correlate to the attribute IDs. LLVM has moved away from using an enum Flags model
+    /// correlate to the LLVM attribute IDs. LLVM has moved away from using an enum Flags model
     /// as the number of attributes reached the limit of available bits. Thus, the enum was
     /// dropped. Instead, strings are used to identify attributes. However, for maximum
     /// compatibility and ease of use for this library the enum is retained and the provided

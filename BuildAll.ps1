@@ -1,5 +1,6 @@
 Param(
-    [string]$Configuration="Release"
+    [string]$Configuration="Release",
+    [switch]$AllowVsPreReleases
 )
 
 . .\buildutils.ps1
@@ -12,7 +13,7 @@ $ErrorActionPreference = "Stop"
 $InformationPreference = "Continue"
 try
 {
-    $msbuild = Find-MSBuild
+    $msbuild = Find-MSBuild -AllowVsPrereleases:$AllowVsPreReleases
     if( !$msbuild )
     {
         throw "MSBuild not found"

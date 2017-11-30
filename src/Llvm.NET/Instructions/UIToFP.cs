@@ -6,7 +6,9 @@ using Llvm.NET.Native;
 
 namespace Llvm.NET.Instructions
 {
-    public class UIToFP : Cast
+    /// <summary>Instruction to cast an unsigned integer to a float</summary>
+    public class UIToFP
+        : Cast
     {
         internal UIToFP( LLVMValueRef valueRef )
             : base( valueRef )

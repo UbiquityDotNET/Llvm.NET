@@ -6,6 +6,8 @@ using Llvm.NET.Native;
 
 namespace Llvm.NET.Instructions
 {
+    /// <summary>Synchronization instruction to introduce "happens-before" edges between operations</summary>
+    /// <seealso href="xref:llvm_langref#fence-instruction">LLVM fence Instruction</seealso>
     public class Fence
         : Instruction
     {

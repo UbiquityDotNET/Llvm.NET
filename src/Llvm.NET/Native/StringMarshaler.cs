@@ -11,8 +11,13 @@ namespace Llvm.NET.Native
 {
     // Performs string marshalling for various forms of strings used in LLVM interop
     // use with:
+    //   // const char* owned by native LLVM, and never disposed by managed callers (just copy to managed string)
     //   [MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef=typeof(StringMarshaler))]
+    //
+    //   // const char* allocated in native LLVM, released by managed caller via LLVMDisposeMessage
     //   [MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef=typeof(StringMarshaler), MarshalCookie="DisposeMessage")]
+    //
+    //   //  const char* allocated in native LLVM, released by managed caller via LLVMDisposeMangledSymbol
     //   [MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef=typeof(StringMarshaler), MarshalCookie="MangledSymbol")]
     [SuppressMessage( "Microsoft.Performance", "CA1812:AvoidUninstantiatedInternalClasses", Justification = "Instantiated via CustomMarshaling" )]
     internal class StringMarshaler

@@ -13,9 +13,24 @@ namespace Llvm.NET
 {
     /// <summary>Target specific code generation information</summary>
     public sealed class TargetMachine
-        : DisposableObject
     {
-        public override bool IsDisposed => ( TargetMachineHandle is null ) || TargetMachineHandle.IsClosed || TargetMachineHandle.IsInvalid;
+        /// <summary>Initializes a new instance of the <see cref="TargetMachine"/> class.</summary>
+        /// <param name="triple">Triple for the target machine</param>
+        /// <param name="cpu">CPU options for the machine</param>
+        /// <param name="features">CPU features for the machine</param>
+        /// <param name="optLevel">General optimization level for machine code generation</param>
+        /// <param name="relocationMode">Relocation mode for machine code generation</param>
+        /// <param name="codeModel">Code model for machine code generation</param>
+        public TargetMachine( Triple triple
+                            , string cpu = null
+                            , string features = null
+                            , CodeGenOpt optLevel = CodeGenOpt.Default
+                            , Reloc relocationMode = Reloc.Default
+                            , CodeModel codeModel = CodeModel.Default
+                            )
+            : this( Target.InternalCreateTargetMachine( Target.FromTriple(triple), triple, cpu, features, optLevel, relocationMode, codeModel ) )
+        {
+        }
 
         /// <summary>Gets the target that owns this <see cref="TargetMachine"/></summary>
         public Target Target => Target.FromHandle( LLVMGetTargetMachineTarget( TargetMachineHandle ) );
@@ -131,14 +146,6 @@ namespace Llvm.NET
             TargetMachineHandle = targetMachineHandle;
         }
 
-        internal LLVMTargetMachineRef TargetMachineHandle { get; private set; }
-
-        protected override void InternalDispose( bool disposing )
-        {
-            if( disposing )
-            {
-                TargetMachineHandle.Dispose( );
-            }
-        }
+        internal LLVMTargetMachineRef TargetMachineHandle { get; }
     }
 }

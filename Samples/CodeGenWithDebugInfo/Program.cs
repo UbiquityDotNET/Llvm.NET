@@ -41,9 +41,14 @@ namespace TestDebugInfo
             using( StaticState.InitializeLLVM() )
             {
                 StaticState.RegisterAll( );
-                var target = Target.FromTriple( TargetDetails.Triple );
+                var targetMachine = TargetMachine.FromTriple( TargetDetails.Triple
+                                                            , TargetDetails.Cpu
+                                                            , TargetDetails.Features
+                                                            , CodeGenOpt.Aggressive
+                                                            , Reloc.Default
+                                                            , CodeModel.Small
+                                                            );
                 using( var context = new Context( ) )
-                using( var targetMachine = target.CreateTargetMachine( TargetDetails.Triple, TargetDetails.Cpu, TargetDetails.Features, CodeGenOpt.Aggressive, Reloc.Default, CodeModel.Small ) )
                 using( var module = new BitcodeModule( context, moduleName ) )
                 {
                     module.SourceFileName = Path.GetFileName( srcPath );
@@ -71,13 +76,14 @@ namespace TestDebugInfo
                     var i32Array_0_32 = i32.CreateArrayType( module, 0, 32 );
 
                     // create the LLVM structure type and body with full debug information
-    #pragma warning disable SA1500 // "Warning SA1500  Braces for multi - line statements must not share line" (simple table format)
+                    #pragma warning disable SA1500 // "Warning SA1500  Braces for multi - line statements must not share line" (simple table format)
                     var fooBody = new[ ]
                         { new DebugMemberInfo { File = diFile, Line = 3, Name = "a", DebugType = i32, Index = 0 }
                         , new DebugMemberInfo { File = diFile, Line = 4, Name = "b", DebugType = f32, Index = 1 }
                         , new DebugMemberInfo { File = diFile, Line = 5, Name = "c", DebugType = i32Array_0_32, Index = 2 }
                         };
-    #pragma warning restore
+                    #pragma warning restore
+
                     var fooType = new DebugStructType( module, "struct.foo", cu, "foo", diFile, 1, DebugInfoFlags.None, fooBody );
 
                     // add global variables and constants

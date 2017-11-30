@@ -2,47 +2,37 @@
 // Copyright (c) .NET Foundation. All rights reserved.
 // </copyright>
 
-using System;
+using System.Linq;
 using Llvm.NET.Native;
 using Llvm.NET.Values;
-
+using Ubiquity.ArgValidators;
 using static Llvm.NET.Native.NativeMethods;
 
 namespace Llvm.NET.Instructions
 {
+    /// <summary>PHI node instruction</summary>
     public class PhiNode
         : Instruction
     {
+        /// <summary>Adds an incoming value and block to this <see cref="PhiNode"/></summary>
+        /// <param name="value">Value from <paramref name="srcBlock"/></param>
+        /// <param name="srcBlock">Incoming block</param>
         public void AddIncoming( Value value, BasicBlock srcBlock )
         {
-            AddIncoming( Tuple.Create( value, srcBlock ) );
+            AddIncoming( ( value, srcBlock ) );
         }
 
-        public void AddIncoming( Tuple<Value, BasicBlock> firstIncoming, params Tuple<Value, BasicBlock>[ ] additionalIncoming )
+        /// <summary>Adds incoming blocks and values to this <see cref="PhiNode"/></summary>
+        /// <param name="firstIncoming">first incoming value and block</param>
+        /// <param name="additionalIncoming">additional values and blocks</param>
+        public void AddIncoming( (Value Value, BasicBlock Block) firstIncoming, params (Value Value, BasicBlock Block)[ ] additionalIncoming )
         {
-            if( firstIncoming == null )
-            {
-                throw new ArgumentNullException( nameof( firstIncoming ) );
-            }
+            additionalIncoming.ValidateNotNull( nameof( additionalIncoming ) );
 
-            if( additionalIncoming == null )
-            {
-                throw new ArgumentNullException( nameof( additionalIncoming ) );
-            }
+            var allIncoming = additionalIncoming.Prepend( firstIncoming );
 
-            LLVMValueRef[ ] llvmValues = new LLVMValueRef[ additionalIncoming.Length + 1 ];
-            llvmValues[ 0 ] = firstIncoming.Item1.ValueHandle;
-            for( int i = 0; i < additionalIncoming.Length; ++i )
-            {
-                llvmValues[ i + i ] = additionalIncoming[ i ].Item1.ValueHandle;
-            }
-
-            LLVMBasicBlockRef[ ] llvmBlocks = new LLVMBasicBlockRef[ additionalIncoming.Length + 1 ];
-            llvmBlocks[ 0 ] = firstIncoming.Item2.BlockHandle;
-            for( int i = 0; i < additionalIncoming.Length; ++i )
-            {
-                llvmBlocks[ i + i ] = additionalIncoming[ i ].Item2.BlockHandle;
-            }
+            LLVMValueRef[ ] llvmValues = allIncoming.Select( vb => vb.Value.ValueHandle ).ToArray( );
+            LLVMBasicBlockRef[ ] llvmBlocks = allIncoming.Select( vb => vb.Block.BlockHandle ).ToArray( );
 
             LLVMAddIncoming( ValueHandle, out llvmValues[ 0 ], out llvmBlocks[ 0 ], ( uint )llvmValues.Length );
         }

@@ -231,6 +231,7 @@ namespace Llvm.NET.DebugInfo
             NativeType = llvmType ?? throw new ArgumentNullException( nameof( llvmType ) );
         }
 
+        // TODO: Leverage a generic WriteOnce<T> of some sort to enforce intentions in code rather than "by convention"
         // this can't be an auto property as the setter needs Enforce Set Once semantics
         [SuppressMessage( "StyleCop.CSharp.NamingRules"
                         , "SA1310:Field names must not contain underscore"
@@ -239,6 +240,7 @@ namespace Llvm.NET.DebugInfo
         ]
         private TNative NativeType_;
 
+        // TODO: Leverage a generic WriteOnce<T> of some sort to enforce intentions in code rather than "by convention"
         // this can't be an auto property as the setter needs Enforce Set Once semantics
         [SuppressMessage( "StyleCop.CSharp.NamingRules"
                         , "SA1310:Field names must not contain underscore"

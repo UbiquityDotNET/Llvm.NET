@@ -6,10 +6,6 @@
     <RootNamespace>Kaleidoscope</RootNamespace>
     <LangVersion>latest</LangVersion>
   </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|netcoreapp2.0|AnyCPU'">
-    <DebugType>portable</DebugType>
-    <DebugSymbols>true</DebugSymbols>
-  </PropertyGroup>
 
   <ItemGroup>
       <ProjectReference Include="$(BuildRootDir)src\Llvm.NET\Llvm.NET.csproj">

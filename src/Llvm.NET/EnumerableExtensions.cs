@@ -2,7 +2,7 @@
 // Copyright (c) .NET Foundation. All rights reserved.
 // </copyright>
 
-#if NET47
+#if !NET_COREAPP
 using System;
 using System.Collections.Generic;
 

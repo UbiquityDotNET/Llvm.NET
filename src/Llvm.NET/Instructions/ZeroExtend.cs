@@ -6,6 +6,7 @@ using Llvm.NET.Native;
 
 namespace Llvm.NET.Instructions
 {
+    /// <summary>Instruction to zero extend a value</summary>
     public class ZeroExtend
         : Cast
     {

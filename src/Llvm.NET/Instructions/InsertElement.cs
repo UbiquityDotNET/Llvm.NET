@@ -6,6 +6,8 @@ using Llvm.NET.Native;
 
 namespace Llvm.NET.Instructions
 {
+    /// <summary>Instruction to insert an element into a vector type</summary>
+    /// <seealso href="xref:llvm_langref#insertelement-instruction">LLVM insertelement Instruction</seealso>
     public class InsertElement
         : Instruction
     {

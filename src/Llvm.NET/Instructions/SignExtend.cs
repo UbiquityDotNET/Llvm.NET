@@ -6,6 +6,7 @@ using Llvm.NET.Native;
 
 namespace Llvm.NET.Instructions
 {
+    /// <summary>Sign extension instruction</summary>
     public class SignExtend
         : Cast
     {

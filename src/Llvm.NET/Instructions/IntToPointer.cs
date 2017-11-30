@@ -6,6 +6,8 @@ using Llvm.NET.Native;
 
 namespace Llvm.NET.Instructions
 {
+    /// <summary>Instruction to convert an integer to a pointer type</summary>
+    /// <seealso href="xref:llvm_langref#inttoptr-to-instruction">LLVM inttoptr .. to Instruction</seealso>
     public class IntToPointer
         : Cast
     {

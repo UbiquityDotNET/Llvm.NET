@@ -7,9 +7,11 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
+using System.Linq;
 using System.Runtime.InteropServices;
 using JetBrains.Annotations;
 using Llvm.NET.DebugInfo;
+using Llvm.NET.Metadata;
 using Llvm.NET.Native;
 using Llvm.NET.Native.Handles;
 using Llvm.NET.Types;
@@ -131,13 +133,16 @@ namespace Llvm.NET
         }
 
         /// <summary>Gets the Metadata for module level flags</summary>
-        public NamedMDNode ModuleFlags
+        public IReadOnlyDictionary<string, ModuleFlag> ModuleFlags
         {
             get
             {
                 ValidateHandle( );
                 var handle = LLVMModuleGetModuleFlagsMetadata( ModuleHandle );
-                return new NamedMDNode( handle );
+                var namedNode = new NamedMDNode( handle );
+                return namedNode.Operands
+                                .Select( n => new ModuleFlag( n ) )
+                                .ToDictionary( f => f.Name );
             }
         }
 
@@ -882,6 +887,7 @@ namespace Llvm.NET
         [DllImport( LibraryPath, CallingConvention = CallingConvention.Cdecl )]
         private static extern LLVMSharedModuleRef LLVMOrcMakeSharedModule( LLVMModuleRef Mod );
 
+        // TODO: Leverage a generic WriteOnce<T> of some sort to enforce intentions in code rather than "by convention"
         [SuppressMessage( "StyleCop.CSharp.NamingRules"
                         , "SA1310:Field names must not contain underscore"
                         , Justification = "Trailing _ indicates it must not be written to directly even directly"

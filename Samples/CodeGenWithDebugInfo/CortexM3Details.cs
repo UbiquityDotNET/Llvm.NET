@@ -19,7 +19,7 @@ namespace TestDebugInfo
 
         public string ShortName => "M3";
 
-        public string Triple => "thumbv7m-none--eabi";
+        public Triple Triple => new Triple("thumbv7m-none--eabi");
 
         public void AddABIAttributesForByValueStructure( Function function, int paramIndex )
         {

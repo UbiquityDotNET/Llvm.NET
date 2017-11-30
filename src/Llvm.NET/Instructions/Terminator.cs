@@ -6,6 +6,7 @@ using Llvm.NET.Native;
 
 namespace Llvm.NET.Instructions
 {
+    /// <summary>Base class for all terminator instructions</summary>
     public class Terminator
         : Instruction
     {

@@ -36,6 +36,7 @@ LLVMPassRegistryDispose
 LLVMAddModuleFlag
 LLVMAddModuleFlagMetadata
 LLVMModuleGetModuleFlagsMetadata
+LLVMNamedMDNodeGetName
 LLVMNamedMDNodeGetNumOperands
 LLVMNamedMDNodeGetOperand
 LLVMNamedMDNodeGetParentModule

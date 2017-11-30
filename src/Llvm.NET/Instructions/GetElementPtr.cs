@@ -6,6 +6,8 @@ using Llvm.NET.Native;
 
 namespace Llvm.NET.Instructions
 {
+    /// <summary>Instruction to compute the address of a sub element of an aggregate data type</summary>
+    /// <seealso href="xref:llvm_langref#getelementptr-instruction">LLVM getelementptr Instruction</seealso>
     public class GetElementPtr
         : Instruction
     {

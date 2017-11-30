@@ -21,8 +21,13 @@ function Invoke-NuGet
     if( !$NuGetPath )
     {
         $nugetToolsPath = "$PSScriptRoot\Tools\NuGet.exe"
-        if( !(Test-Path $nugetToolsPath))
+        if( !(Test-Path -PathType Leaf $nugetToolsPath))
         {
+            if(!(Test-Path -PathType Container "$PSScriptRoot\Tools" ) )
+            {
+                md "$PSScriptRoot\Tools" | Out-Null 
+            }
+
             # Download it from official NuGet release location
             Write-Verbose "Downloading Nuget.exe to $nugetToolsPath"
             Invoke-WebRequest -UseBasicParsing -Uri https://dist.NuGet.org/win-x86-commandline/latest/NuGet.exe -OutFile $nugetToolsPath
@@ -131,14 +136,14 @@ function Initialize-VCVars($vsInstance = (Find-VSInstance))
     }
 }
 
-function Find-MSBuild
+function Find-MSBuild([switch]$AllowVsPreReleases)
 {
     $foundOnPath = $true
     $msBuildPath = Find-OnPath msbuild.exe -ErrorAction Continue
     if( !$msBuildPath )
     {
         Write-Verbose "MSBuild not found attempting to locate VS installation"
-        $vsInstall = Find-VSInstance
+        $vsInstall = Find-VSInstance -Prerelease:$AllowVsPreReleases
         if( !$vsInstall )
         {
             throw "MSBuild not found on PATH and No instances of VS found to use"

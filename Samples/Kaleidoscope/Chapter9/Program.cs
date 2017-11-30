@@ -21,7 +21,7 @@ namespace Kaleidoscope
             using( StaticState.InitializeLLVM( ) )
             {
                 StaticState.RegisterNative( );
-                using( var machine = TargetMachine.FromTriple( Triple.HostTriple ) )
+                var machine = new TargetMachine( Triple.HostTriple );
                 using( var generator = new CodeGenerator( LanguageLevel.MutableVariables, machine ) )
                 {
                     RunReplLoop( generator );

@@ -6,6 +6,7 @@ using Llvm.NET.Native;
 
 namespace Llvm.NET.Instructions
 {
+    /// <summary>Return instruction</summary>
     public class ReturnInstruction
         : Terminator
     {

@@ -6,7 +6,9 @@ using Llvm.NET.Native;
 
 namespace Llvm.NET.Instructions
 {
-    public class UserOp1 : Instruction
+    /// <summary>Custom operator that can be used in LLVM transform passes but should be removed before target instruction selection</summary>
+    public class UserOp1
+        : Instruction
     {
         internal UserOp1( LLVMValueRef valueRef )
             : base( valueRef )

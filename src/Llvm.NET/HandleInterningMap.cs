@@ -10,9 +10,6 @@ using JetBrains.Annotations;
 // interface and common base implementation are a matched pair
 #pragma warning disable SA1649 // File name must match first type name
 
-// These are internal and intellisene can't seem to grasp it isn't supposed to compain about internal types
-#pragma warning disable SA1600 // Elements must be documented
-
 namespace Llvm.NET
 {
     internal interface IHandleInterning<THandle, TMappedType>
