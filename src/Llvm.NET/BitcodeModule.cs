@@ -11,7 +11,6 @@ using System.Linq;
 using System.Runtime.InteropServices;
 using JetBrains.Annotations;
 using Llvm.NET.DebugInfo;
-using Llvm.NET.Metadata;
 using Llvm.NET.Native;
 using Llvm.NET.Native.Handles;
 using Llvm.NET.Types;
