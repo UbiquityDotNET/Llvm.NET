@@ -6,7 +6,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Runtime.InteropServices;
-using Llvm.NET.Metadata;
 using Llvm.NET.Native;
 
 using static Llvm.NET.Native.NativeMethods;

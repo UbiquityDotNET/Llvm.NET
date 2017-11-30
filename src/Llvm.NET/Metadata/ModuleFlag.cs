@@ -6,7 +6,7 @@ using System;
 using Llvm.NET.Values;
 using Ubiquity.ArgValidators;
 
-namespace Llvm.NET.Metadata
+namespace Llvm.NET
 {
     /// <summary>Module Flags Tuple for a module</summary>
     public class ModuleFlag
