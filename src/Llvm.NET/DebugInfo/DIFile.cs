@@ -16,13 +16,13 @@ namespace Llvm.NET.DebugInfo
         */
 
         /// <summary>Gets the file name for this file</summary>
-        public string FileName => GetOperand<MDString>( 0 ).ToString( );
+        public string FileName => GetOperandString( 0 );
 
         /// <summary>Gets the Directory for this file</summary>
-        public string Directory => GetOperand<MDString>( 1 ).ToString( );
+        public string Directory => GetOperandString( 1 );
 
         /// <summary>Gets the Checksum for this file</summary>
-        public string CheckSum => GetOperand<MDString>( 2 ).ToString( );
+        public string CheckSum => GetOperandString( 2 );
 
         /// <summary>Gets the full path for this file</summary>
         public string Path => System.IO.Path.Combine( Directory, FileName );

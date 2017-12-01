@@ -4,8 +4,11 @@
 
 using System;
 using System.Collections.Generic;
+using System.Runtime.InteropServices;
 using Llvm.NET.Native;
 using Ubiquity.ArgValidators;
+
+using static Llvm.NET.Native.NativeMethods;
 
 namespace Llvm.NET.Values
 {
@@ -17,6 +20,7 @@ namespace Llvm.NET.Values
     /// </remarks>
     public class User
         : Value
+        , IOperandContainer<Value>
     {
         /// <summary>Gets a collection of operands for this <see cref="User"/></summary>
         /// <remarks>
@@ -27,19 +31,19 @@ namespace Llvm.NET.Values
         /// properties to wrap this low level list, this property will be officially
         /// obsoleted.
         /// </remarks>
-        public IReadOnlyList<Value> Operands => OperandList;
+        public IList<Value> Operands => OperandList;
 
         /// <summary>Gets a collection of <see cref="Use"/>s used by this User</summary>
         public IEnumerable<Use> Uses
         {
             get
             {
-                LLVMUseRef current = NativeMethods.LLVMGetFirstUse( ValueHandle );
+                LLVMUseRef current = LLVMGetFirstUse( ValueHandle );
                 while( current != default )
                 {
                     // TODO: intern the use instances?
                     yield return new Use( current );
-                    current = NativeMethods.LLVMGetNextUse( current );
+                    current = LLVMGetNextUse( current );
                 }
             }
         }
@@ -66,12 +70,35 @@ namespace Llvm.NET.Values
             return ( T )Operands[ index ];
         }
 
+        long IOperandContainer<Value>.Count => LLVMGetNumOperands( ValueHandle );
+
+        Value IOperandContainer<Value>.this[ int index ]
+        {
+            get => FromHandle( LLVMGetOperand( ValueHandle, ( uint )index ) );
+            set => LLVMSetOperand( ValueHandle, ( uint )index, value.ValueHandle );
+        }
+
         internal User( LLVMValueRef userRef )
             : base( userRef )
         {
-            OperandList = new UserOperandList( this );
+            OperandList = new OperandList<Value>( this );
         }
 
-        private readonly UserOperandList OperandList;
+        private readonly OperandList<Value> OperandList;
+
+        [DllImport( LibraryPath, CallingConvention = CallingConvention.Cdecl )]
+        private static extern LLVMUseRef LLVMGetFirstUse( LLVMValueRef @Val );
+
+        [DllImport( LibraryPath, CallingConvention = CallingConvention.Cdecl )]
+        private static extern LLVMUseRef LLVMGetNextUse( LLVMUseRef @U );
+
+        [DllImport( LibraryPath, CallingConvention = CallingConvention.Cdecl )]
+        private static extern LLVMValueRef LLVMGetOperand( LLVMValueRef @Val, uint @Index );
+
+        [DllImport( LibraryPath, CallingConvention = CallingConvention.Cdecl )]
+        private static extern void LLVMSetOperand( LLVMValueRef @User, uint @Index, LLVMValueRef @Val );
+
+        [DllImport( LibraryPath, CallingConvention = CallingConvention.Cdecl )]
+        private static extern int LLVMGetNumOperands( LLVMValueRef @Val );
     }
 }

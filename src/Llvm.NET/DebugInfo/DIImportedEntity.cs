@@ -22,7 +22,7 @@ namespace Llvm.NET.DebugInfo
         public DINode Entity => GetOperand<DINode>( 1 );
 
         /// <summary>Gets the name of the node</summary>
-        public string Name => GetOperand<MDString>( 2 ).ToString( );
+        public string Name => GetOperandString( 2 );
 
         /// <summary>Gets the <see cref="DIFile"/> for the imported entity</summary>
         public DIFile File => GetOperand<DIFile>( 3 );

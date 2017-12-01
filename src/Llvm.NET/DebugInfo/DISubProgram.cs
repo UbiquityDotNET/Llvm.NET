@@ -29,10 +29,10 @@ namespace Llvm.NET.DebugInfo
         public override DIScope Scope => base.Scope;
 
         /// <summary>Gets the name of this <see cref="DISubProgram"/></summary>
-        public override string Name => GetOperand<MDString>( 2 ).ToString( );
+        public override string Name => GetOperandString( 2 );
 
         /// <summary>Gets the linkage name of this <see cref="DISubProgram"/></summary>
-        public string LinkageName => GetOperand<MDString>( 3 ).ToString( );
+        public string LinkageName => GetOperandString( 3 );
 
         /// <summary>Gets the signature of this <see cref="DISubProgram"/></summary>
         public DISubroutineType Signature => GetOperand<DISubroutineType>( 4 );

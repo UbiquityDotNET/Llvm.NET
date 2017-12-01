@@ -4,7 +4,11 @@
 
 using System;
 using System.Collections.Generic;
+using System.Runtime.InteropServices;
 using Llvm.NET.Native;
+using Ubiquity.ArgValidators;
+
+using static Llvm.NET.Native.NativeMethods;
 
 namespace Llvm.NET
 {
@@ -22,6 +26,7 @@ namespace Llvm.NET
     /// </remarks>
     public class MDNode
         : LlvmMetadata
+        , IOperandContainer<LlvmMetadata>
     {
         /// <summary>Gets the <see cref="Context"/> this node belongs to</summary>
         public Context Context => MetadataHandle.Context;
@@ -30,7 +35,7 @@ namespace Llvm.NET
         public bool IsDeleted => MetadataHandle == default;
 
         /// <summary>Gets a value indicating whether this node is a temprorary</summary>
-        public bool IsTemporary => NativeMethods.LLVMIsTemporary( MetadataHandle );
+        public bool IsTemporary => LLVMIsTemporary( MetadataHandle );
 
         /// <summary>Gets a value indicating whether this node is resolved</summary>
         /// <remarks>
@@ -45,28 +50,25 @@ namespace Llvm.NET
         /// resolved automatically.  However, if this (or one of its operands) is
         /// involved in a cycle, <see cref="ResolveCycles"/> needs to be called explicitly.</para>
         /// </remarks>
-        public bool IsResolved => NativeMethods.LLVMIsResolved( MetadataHandle );
+        public bool IsResolved => LLVMIsResolved( MetadataHandle );
 
         /// <summary>Gets a value indicating whether this node is uniqued</summary>
-        public bool IsUniqued => NativeMethods.LLVMIsUniqued( MetadataHandle );
+        public bool IsUniqued => LLVMIsUniqued( MetadataHandle );
 
         /// <summary>Gets a value indicating whether this node is distinct</summary>
-        public bool IsDistinct => NativeMethods.LLVMIsDistinct( MetadataHandle );
+        public bool IsDistinct => LLVMIsDistinct( MetadataHandle );
 
         /// <summary>Gets the operands for this node, if any</summary>
-        public IReadOnlyList<MDOperand> Operands { get; }
+        public IList<LlvmMetadata> Operands { get; }
 
         /// <summary>Resolves cycles from this node</summary>
-        public void ResolveCycles( ) => NativeMethods.LLVMMDNodeResolveCycles( MetadataHandle );
+        public void ResolveCycles( ) => LLVMMDNodeResolveCycles( MetadataHandle );
 
         /// <summary>Replace all uses of this node with a new node</summary>
         /// <param name="other">Node to replace this one with</param>
         public override void ReplaceAllUsesWith( LlvmMetadata other )
         {
-            if( other == null )
-            {
-                throw new ArgumentNullException( nameof( other ) );
-            }
+            other.ValidateNotNull( nameof( other ) );
 
             if( !IsTemporary || IsResolved )
             {
@@ -78,7 +80,7 @@ namespace Llvm.NET
                 throw new InvalidOperationException( "Cannot Replace all uses of a null descriptor" );
             }
 
-            NativeMethods.LLVMMDNodeReplaceAllUsesWith( MetadataHandle, other.MetadataHandle );
+            LLVMMDNodeReplaceAllUsesWith( MetadataHandle, other.MetadataHandle );
 
             // remove current node mapping from the context.
             // It won't be valid for use after clearing the handle
@@ -93,8 +95,14 @@ namespace Llvm.NET
         public T GetOperand<T>( int index )
             where T : LlvmMetadata
         {
-            return Operands[ index ].Metadata as T;
+            return Operands[ index ] as T;
         }
+
+        /// <summary>Gets a string operand by index</summary>
+        /// <param name="index">Index of the operand</param>
+        /// <returns>String value of the operand</returns>
+        public string GetOperandString( int index )
+            => GetOperand<MDString>( index )?.ToString( ) ?? string.Empty;
 
         /* TODO:
         public bool IsTBAAVTableAccess { get; }
@@ -116,10 +124,18 @@ namespace Llvm.NET
         public static DeleteTemporary(MDNode node) {...}
         */
 
+        long IOperandContainer<LlvmMetadata>.Count => LLVMMDNodeGetNumOperands( MetadataHandle );
+
+        LlvmMetadata IOperandContainer<LlvmMetadata>.this[ int index ]
+        {
+            get => FromHandle<LlvmMetadata>( Context, LLVMGetOperandNode( LLVMMDNodeGetOperand( MetadataHandle, ( uint )index ) ) );
+            set => LLVMMDNodeReplaceOperand( MetadataHandle, ( uint )index, value.MetadataHandle );
+        }
+
         internal MDNode( LLVMMetadataRef handle )
             : base( handle )
         {
-            Operands = new MDNodeOperandList( this );
+            Operands = new OperandList<LlvmMetadata>( this );
         }
 
         internal static T FromHandle<T>( LLVMMetadataRef handle )
@@ -133,5 +149,14 @@ namespace Llvm.NET
             var context = handle.Context;
             return FromHandle<T>( context, handle );
         }
+
+        [DllImport( LibraryPath, CallingConvention = CallingConvention.Cdecl )]
+        private static extern UInt32 LLVMMDNodeGetNumOperands( LLVMMetadataRef /*MDNode*/ node );
+
+        [DllImport( LibraryPath, CallingConvention = CallingConvention.Cdecl )]
+        private static extern LLVMMDOperandRef LLVMMDNodeGetOperand( LLVMMetadataRef /*MDNode*/ node, UInt32 index );
+
+        [DllImport( LibraryPath, CallingConvention = CallingConvention.Cdecl )]
+        private static extern void LLVMMDNodeReplaceOperand( LLVMMetadataRef /* MDNode */ node, UInt32 index, LLVMMetadataRef operand );
     }
 }

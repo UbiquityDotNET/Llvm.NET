@@ -17,10 +17,10 @@ namespace Llvm.NET.DebugInfo
         */
 
         /// <summary>Gets the display name for the variable</summary>
-        public string DisplayName => GetOperand<MDString>( 4 ).ToString( );
+        public string DisplayName => GetOperandString( 4 );
 
         /// <summary>Gets the linkage name for the variable</summary>
-        public string LinkageName => GetOperand<MDString>( 5 ).ToString( );
+        public string LinkageName => GetOperandString( 5 );
 
         /// <summary>Gets the static data member declaration for the variable</summary>
         public DIDerivedType StaticDataMemberDeclaration => GetOperand<DIDerivedType>( 6 );

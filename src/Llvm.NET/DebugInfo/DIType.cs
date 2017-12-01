@@ -16,7 +16,7 @@ namespace Llvm.NET.DebugInfo
         public override DIScope Scope => GetOperand<DIScope>( 1 );
 
         /// <summary>Gets the name of the type</summary>
-        public override string Name => GetOperand<MDString>( 2 ).ToString( );
+        public override string Name => GetOperand<MDString>( 2 )?.ToString( ) ?? string.Empty;
 
         /// <summary>Gets the source line for the type</summary>
         public UInt32 Line => NativeMethods.LLVMDITypeGetLine( MetadataHandle );

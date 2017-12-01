@@ -57,6 +57,11 @@ extern "C" {
     char const* LLVMNamedMDNodeGetName( LLVMNamedMDNodeRef namedMDNode );
     unsigned LLVMNamedMDNodeGetNumOperands( LLVMNamedMDNodeRef namedMDNode );
     /*MDNode*/ LLVMMetadataRef LLVMNamedMDNodeGetOperand( LLVMNamedMDNodeRef namedMDNode, unsigned index );
+    void LLVMNamedMDNodeSetOperand( LLVMNamedMDNodeRef namedMDNode, unsigned index, LLVMMetadataRef /*MDNode*/ node );
+    void LLVMNamedMDNodeAddOperand( LLVMNamedMDNodeRef namedMDNode, LLVMMetadataRef /*MDNode*/ node );
+    void LLVMNamedMDNodeClearOperands( LLVMNamedMDNodeRef namedMDNode );
+    void LLVMNamedMDNodeEraseFromParent( LLVMNamedMDNodeRef namedMDNode );
+
     LLVMModuleRef LLVMNamedMDNodeGetParentModule( LLVMNamedMDNodeRef namedMDNode );
 
     // iterating the Comdats is a tricky prospect with a "C" based projection as

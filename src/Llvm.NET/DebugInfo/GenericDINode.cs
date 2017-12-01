@@ -15,7 +15,7 @@ namespace Llvm.NET.DebugInfo
         /// The header is a, possibly empty, null separated string
         /// header that contains arbitrary fields.
         /// </remarks>
-        public string Header => GetOperand<MDString>( 0 ).ToString( );
+        public string Header => GetOperandString( 0 );
 
         internal GenericDINode( LLVMMetadataRef handle )
             : base( handle )

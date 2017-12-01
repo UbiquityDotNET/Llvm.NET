@@ -19,13 +19,13 @@ namespace Llvm.NET.DebugInfo
         public DIFile File => GetOperand<DIFile>( 1 );
 
         /// <summary>Gets the name of the property</summary>
-        public string Name => GetOperand<MDString>( 0 ).ToString( );
+        public string Name => GetOperandString( 0 );
 
         /// <summary>Gets the name of the getter method for the property</summary>
-        public string GetterName => GetOperand<MDString>( 2 ).ToString( );
+        public string GetterName => GetOperandString( 2 );
 
         /// <summary>Gets the name of the setter method for the property</summary>
-        public string SetterName => GetOperand<MDString>( 3 ).ToString( );
+        public string SetterName => GetOperandString( 3 );
 
         /// <summary>Gets the type of the property</summary>
         public DIType Type => GetOperand<DIType>( 4 );

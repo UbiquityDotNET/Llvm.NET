@@ -470,6 +470,7 @@ extern "C" {
 
     uint32_t LLVMMDNodeGetNumOperands( LLVMMetadataRef /*MDNode*/ node );
     LLVMMDOperandRef LLVMMDNodeGetOperand( LLVMMetadataRef /*MDNode*/ node, uint32_t index );
+    void LLVMMDNodeReplaceOperand( LLVMMetadataRef /* MDNode */ node, uint32_t index, LLVMMetadataRef operand );
     LLVMMetadataRef LLVMGetOperandNode( LLVMMDOperandRef operand );
 
 #ifdef __cplusplus
