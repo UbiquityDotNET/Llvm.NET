@@ -39,6 +39,10 @@ LLVMModuleGetModuleFlagsMetadata
 LLVMNamedMDNodeGetName
 LLVMNamedMDNodeGetNumOperands
 LLVMNamedMDNodeGetOperand
+LLVMNamedMDNodeSetOperand
+LLVMNamedMDNodeAddOperand
+LLVMNamedMDNodeClearOperands
+LLVMNamedMDNodeEraseFromParent
 LLVMNamedMDNodeGetParentModule
 LLVMVerifyFunctionEx
 LLVMConstantAsMetadata
@@ -142,6 +146,7 @@ LLVMDITypeGetName
 
 LLVMMDNodeGetNumOperands
 LLVMMDNodeGetOperand
+LLVMMDNodeReplaceOperand
 LLVMGetOperandNode
 LLVMDILocalScopeGetSubProgram
 LLVMDIBasicTypeGetEncoding

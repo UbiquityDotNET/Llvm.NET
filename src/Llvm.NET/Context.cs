@@ -258,7 +258,7 @@ namespace Llvm.NET
                 }
             }
 
-            // if any parameters don't have errors, then provide a hopefully helpful message indicating which one(s)
+            // if any parameters have errors, then provide a hopefully helpful message indicating which one(s)
             if( hasParamErrors )
             {
                 throw new ArgumentException( msg.ToString( ), nameof( argTypes ) );
@@ -827,28 +827,6 @@ namespace Llvm.NET
             return retVal;
         }
 
-        internal MDOperand GetOperandFor( MDNode owningNode, LLVMMDOperandRef handle )
-        {
-            if( owningNode.Context != this )
-            {
-                throw new ArgumentException( "Cannot get operand for a node from a different context", nameof( owningNode ) );
-            }
-
-            if( handle == default )
-            {
-                throw new ArgumentNullException( nameof( handle ) );
-            }
-
-            if( MDOperandCache.TryGetValue( handle, out MDOperand retVal ) )
-            {
-                return retVal;
-            }
-
-            retVal = new MDOperand( owningNode, handle );
-            MDOperandCache.Add( handle, retVal );
-            return retVal;
-        }
-
         internal ITypeRef GetTypeFor( LLVMTypeRef valueRef, Func<LLVMTypeRef, ITypeRef> constructor )
         {
             if( valueRef == default )
@@ -912,8 +890,6 @@ namespace Llvm.NET
         private readonly Dictionary< LLVMAttributeRef, AttributeValue> AttributeValueCache = new Dictionary<LLVMAttributeRef, AttributeValue>( );
 
         private readonly Dictionary< LLVMMetadataRef, LlvmMetadata > MetadataCache = new Dictionary< LLVMMetadataRef, LlvmMetadata >( );
-
-        private readonly Dictionary< LLVMMDOperandRef, MDOperand > MDOperandCache = new Dictionary< LLVMMDOperandRef, MDOperand >( );
 
         [DllImport( LibraryPath, CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi, ThrowOnUnmappableChar = true, BestFitMapping = false )]
         private static extern LLVMBasicBlockRef LLVMContextCreateBasicBlock( LLVMContextRef context, [MarshalAs( UnmanagedType.LPStr )] string name, LLVMValueRef /*Function*/ function, LLVMBasicBlockRef insertBefore );

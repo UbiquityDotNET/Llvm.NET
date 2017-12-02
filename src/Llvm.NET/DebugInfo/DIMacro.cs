@@ -15,10 +15,10 @@ namespace Llvm.NET.DebugInfo
         */
 
         /// <summary>Gets the name of the macro</summary>
-        public string Name => GetOperand<MDString>( 0 ).ToString( );
+        public string Name => GetOperandString( 0 );
 
         /// <summary>Gets the value of the property</summary>
-        public string Value => GetOperand<MDString>( 1 ).ToString( );
+        public string Value => GetOperandString( 1 );
 
         internal DIMacro( LLVMMetadataRef handle )
             : base( handle )

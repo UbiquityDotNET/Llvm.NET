@@ -13,7 +13,7 @@ namespace Llvm.NET.DebugInfo
         : DINode
     {
         /// <summary>Gets the name of the template parameter</summary>
-        public string Name => GetOperand<MDString>( 0 ).ToString( );
+        public string Name => GetOperandString( 0 );
 
         /// <summary>Gets the type of the template parameter</summary>
         public DIType Type => GetOperand<DIType>( 1 );

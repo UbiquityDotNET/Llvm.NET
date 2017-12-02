@@ -43,7 +43,7 @@ namespace Llvm.NET.DebugInfo
                     throw new ArgumentOutOfRangeException( nameof( index ) );
                 }
 
-                return Tuple.Operands[ index ].Metadata as T;
+                return Tuple.Operands[ index ] as T;
             }
         }
 
@@ -51,7 +51,7 @@ namespace Llvm.NET.DebugInfo
         public IEnumerator<T> GetEnumerator( )
         {
             return Tuple.Operands
-                        .Select( n => n.Metadata as T )
+                        .Cast<T>()
                         .GetEnumerator();
         }
 

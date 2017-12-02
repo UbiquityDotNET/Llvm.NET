@@ -734,6 +734,11 @@ extern "C"
         return wrap( &pNode->getOperand( index ) );
     }
 
+    void LLVMMDNodeReplaceOperand( LLVMMetadataRef /* MDNode */ node, uint32_t index, LLVMMetadataRef operand )
+    {
+        unwrap<MDNode>( node )->replaceOperandWith( index, unwrap( operand ) );
+    }
+
     LLVMMetadataRef LLVMGetOperandNode( LLVMMDOperandRef operand )
     {
         MDOperand const* pOperand = unwrap( operand );

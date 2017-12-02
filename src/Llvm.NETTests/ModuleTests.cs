@@ -315,9 +315,8 @@ namespace Llvm.NET.Tests
                 Assert.AreEqual( Linkage.External, alias.Linkage );
                 Assert.AreSame( testFunc.NativeType, alias.NativeType );
 
-                // alias.Operands[ 0 ] is just another way to get alias.Aliasee
                 Assert.AreEqual( 1, alias.Operands.Count );
-                Assert.AreSame( testFunc, alias.Operands[ 0 ] );
+                Assert.AreSame( testFunc, alias.Aliasee );
 
                 Assert.IsFalse( alias.IsNull );
                 Assert.IsFalse( alias.IsUndefined );

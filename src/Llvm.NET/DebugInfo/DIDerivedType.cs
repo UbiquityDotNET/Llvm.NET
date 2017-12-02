@@ -23,7 +23,7 @@ namespace Llvm.NET.DebugInfo
         public DIType BaseType => GetOperand<DIType>( 3 );
 
         /// <summary>Gets the extra data attached to this derived type</summary>
-        public LlvmMetadata ExtraData => Operands[ 4 ].Metadata;
+        public LlvmMetadata ExtraData => Operands[ 4 ];
 
         /// <summary>Gets the Class type extra data for a pointer to member type</summary>
         public DIType ClassType => Tag != Tag.PtrToMemberType ? null : GetOperand<DIType>( 4 );

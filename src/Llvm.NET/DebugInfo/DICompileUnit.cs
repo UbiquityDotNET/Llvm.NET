@@ -18,14 +18,14 @@ namespace Llvm.NET.DebugInfo
         ?? EmissionKind { get; }
         */
 
-        /// <summary>Gets the name of the producer of thie unit</summary>
-        public string Producer => GetOperand<MDString>( 1 ).ToString( );
+        /// <summary>Gets the name of the producer of this unit</summary>
+        public string Producer => GetOperandString( 1 );
 
         /// <summary>Gets the compliation flags for this unit</summary>
-        public string Flags => GetOperand<MDString>( 2 ).ToString( );
+        public string Flags => GetOperandString( 2 );
 
         /// <summary>Gets the split debug file name for this unit</summary>
-        public string SplitDebugFileName => GetOperand<MDString>( 3 ).ToString( );
+        public string SplitDebugFileName => GetOperandString( 3 );
 
         /// <summary>Gets the enum types in this unit</summary>
         public DICompositeTypeArray EnumTypes => new DICompositeTypeArray( GetOperand<MDTuple>(4) );

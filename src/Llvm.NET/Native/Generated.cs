@@ -1276,12 +1276,6 @@ namespace Llvm.NET.Native
         [DllImport( LibraryPath, EntryPoint = "LLVMIsAMDString", CallingConvention = CallingConvention.Cdecl )]
         internal static extern LLVMValueRef LLVMIsAMDString( LLVMValueRef @Val );
 
-        [DllImport( LibraryPath, EntryPoint = "LLVMGetFirstUse", CallingConvention = CallingConvention.Cdecl )]
-        internal static extern LLVMUseRef LLVMGetFirstUse( LLVMValueRef @Val );
-
-        [DllImport( LibraryPath, EntryPoint = "LLVMGetNextUse", CallingConvention = CallingConvention.Cdecl )]
-        internal static extern LLVMUseRef LLVMGetNextUse( LLVMUseRef @U );
-
         [DllImport( LibraryPath, EntryPoint = "LLVMGetUser", CallingConvention = CallingConvention.Cdecl )]
         internal static extern LLVMValueRef LLVMGetUser( LLVMUseRef @U );
 

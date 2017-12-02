@@ -84,10 +84,35 @@ extern "C"
         return wrap( pMDNode->getOperand( index ) );
     }
 
+    void LLVMNamedMDNodeSetOperand( LLVMNamedMDNodeRef namedMDNode, unsigned index, LLVMMetadataRef /*MDNode*/ node )
+    {
+        auto pMDNode = unwrap( namedMDNode );
+        if ( index >= pMDNode->getNumOperands( ) )
+            return;
+
+        pMDNode->setOperand( index, unwrap<MDNode>( node ) );
+    }
+
+    void LLVMNamedMDNodeAddOperand( LLVMNamedMDNodeRef namedMDNode, LLVMMetadataRef /*MDNode*/ node )
+    {
+        auto pMDNode = unwrap( namedMDNode );
+        pMDNode->addOperand( unwrap<MDNode>( node ) );
+    }
+
     LLVMModuleRef LLVMNamedMDNodeGetParentModule( LLVMNamedMDNodeRef namedMDNode )
     {
         auto pMDNode = unwrap( namedMDNode );
         return wrap( pMDNode->getParent( ) );
+    }
+
+    void LLVMNamedMDNodeClearOperands( LLVMNamedMDNodeRef namedMDNode )
+    {
+        unwrap( namedMDNode )->clearOperands( );
+    }
+
+    void LLVMNamedMDNodeEraseFromParent( LLVMNamedMDNodeRef namedMDNode )
+    {
+        unwrap( namedMDNode )->eraseFromParent( );
     }
 
     LLVMComdatRef LLVMModuleInsertOrUpdateComdat( LLVMModuleRef module, char const* name, LLVMComdatSelectionKind kind )

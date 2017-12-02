@@ -39,7 +39,7 @@ namespace Llvm.NET
                 throw new ArgumentException( "Expected node with 3 operands", nameof( node ) );
             }
 
-            if( !(node.Operands[0].Metadata is ConstantAsMetadata behavior))
+            if( !(node.Operands[0] is ConstantAsMetadata behavior))
             {
                 throw new ArgumentException( "Expected ConstantAsMetadata for first operand", nameof( node ) );
             }
@@ -49,14 +49,14 @@ namespace Llvm.NET
                 throw new ArgumentException( "Expected ConstantInt wrapped in first operand", nameof( node ) );
             }
 
-            if( !(node.Operands[1].Metadata is MDString nameMd ) )
+            if( !(node.Operands[1] is MDString nameMd ) )
             {
                 throw new ArgumentException( "Expected MDString as second operand", nameof( node ) );
             }
 
             Behavior = ( ModuleFlagBehavior )( behaviorConst.ZeroExtendedValue );
             Name = nameMd.ToString( );
-            Metadata = node.Operands[ 2 ].Metadata;
+            Metadata = node.Operands[ 2 ];
         }
     }
 }

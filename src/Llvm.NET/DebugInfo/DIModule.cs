@@ -14,16 +14,16 @@ namespace Llvm.NET.DebugInfo
         public override DIScope Scope => GetOperand<DIScope>( 0 );
 
         /// <inheritdoc/>
-        public override string Name => GetOperand<MDString>( 1 ).ToString( );
+        public override string Name => GetOperandString( 1 );
 
         /// <summary>Gets the configuration macros for the module</summary>
-        public string ConfigurationMacros => GetOperand<MDString>( 2 ).ToString( );
+        public string ConfigurationMacros => GetOperandString( 2 );
 
         /// <summary>Gets the include path for the module</summary>
-        public string IncludePath => GetOperand<MDString>( 3 ).ToString( );
+        public string IncludePath => GetOperandString( 3 );
 
         /// <summary>Gets the ISysRoot for the module</summary>
-        public string SysRoot => GetOperand<MDString>( 4 ).ToString( );
+        public string SysRoot => GetOperandString( 4 );
 
         internal DIModule( LLVMMetadataRef handle )
             : base( handle )

@@ -25,10 +25,22 @@ namespace Llvm.NET.DebugInfo
 
         /// <summary>Gets the template parameters for this type, if any</summary>
         [property: CanBeNull]
-        public DITemplateParameterArray TemplateParameters => new DITemplateParameterArray( GetOperand<MDTuple>( 6 ));
+        public DITemplateParameterArray TemplateParameters
+        {
+            get
+            {
+                MDTuple tuple = GetOperand<MDTuple>( 6 );
+                if( tuple == null )
+                {
+                    return null;
+                }
+
+                return new DITemplateParameterArray( tuple );
+            }
+        }
 
         /// <summary>Gets the identifier for this type</summary>
-        public string Identifier => GetOperand<MDString>( 7 ).ToString( );
+        public string Identifier => GetOperandString( 7 );
 
         /// <summary>Initializes a new instance of the <see cref="DICompositeType"/> class from an LLVM-C API Metadata handle</summary>
         /// <param name="handle">LLVM handle to wrap</param>
