@@ -15,6 +15,7 @@
 {{/inClass}}
 
 {{#derivedClasses.0}}
+<div class="inheritance">
 <h5 id="derivedClasses-{{id}}">
     <a href="#collapsible-derivedClasses-{{id}}" class="expander collapsed" data-toggle="collapse" aria-expanded="false">Derived Types</a>
 </h5>
@@ -22,6 +23,7 @@
     {{#derivedClasses}}
     <div class="level{{index}}">{{{specName.0.value}}}</div>
     {{/derivedClasses}}
+</div>
 </div>
 {{/derivedClasses.0}}
 
@@ -46,6 +48,19 @@
     </div>
 </div>
 {{/inheritedMembers.0}}
+
+{{#implements.0}}
+<div class="inheritance">
+<h5 id="implements-{{id}}">
+    <a href="#collapsible-implements-{{id}}" class="expander collapsed" data-toggle="collapse" aria-expanded="false">Implements</a>
+</h5>
+<div id="collapsible-implements-{{id}}" class="collapse collapsed" aria-expanded="false">
+    {{#implements}}
+    <div class="level{{index}}">{{{specName.0.value}}}</div>
+    {{/implements}}
+</div>
+</div>
+{{/implements.0}}
 
 <h6><strong>{{__global.namespace}}</strong>: {{{namespace.specName.0.value}}}</h6>
 <h6><strong>{{__global.assembly}}</strong>: {{assemblies.0}}.dll</h6>
