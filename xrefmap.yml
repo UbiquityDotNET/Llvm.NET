@@ -9940,6 +9940,18 @@ references:
   fullName.vb: Llvm.NET.MDNode.GetOperand(Of T)(System.Int32)
   nameWithType: MDNode.GetOperand<T>(Int32)
   nameWithType.vb: MDNode.GetOperand(Of T)(Int32)
+- uid: Llvm.NET.MDNode.GetOperandString(System.Int32)
+  name: GetOperandString(Int32)
+  href: api/Llvm.NET.MDNode.GetOperandString.html#Llvm_NET_MDNode_GetOperandString_System_Int32_
+  commentId: M:Llvm.NET.MDNode.GetOperandString(System.Int32)
+  fullName: Llvm.NET.MDNode.GetOperandString(System.Int32)
+  nameWithType: MDNode.GetOperandString(Int32)
+- uid: Llvm.NET.MDNode.GetOperandString*
+  name: GetOperandString
+  href: api/Llvm.NET.MDNode.GetOperandString.html
+  commentId: Overload:Llvm.NET.MDNode.GetOperandString
+  fullName: Llvm.NET.MDNode.GetOperandString
+  nameWithType: MDNode.GetOperandString
 - uid: Llvm.NET.MDNode.IsDeleted
   name: IsDeleted
   href: api/Llvm.NET.MDNode.IsDeleted.html#Llvm_NET_MDNode_IsDeleted
@@ -10036,36 +10048,6 @@ references:
   commentId: Overload:Llvm.NET.MDNode.ResolveCycles
   fullName: Llvm.NET.MDNode.ResolveCycles
   nameWithType: MDNode.ResolveCycles
-- uid: Llvm.NET.MDOperand
-  name: MDOperand
-  href: api/Llvm.NET.MDOperand.html
-  commentId: T:Llvm.NET.MDOperand
-  fullName: Llvm.NET.MDOperand
-  nameWithType: MDOperand
-- uid: Llvm.NET.MDOperand.Metadata
-  name: Metadata
-  href: api/Llvm.NET.MDOperand.Metadata.html#Llvm_NET_MDOperand_Metadata
-  commentId: P:Llvm.NET.MDOperand.Metadata
-  fullName: Llvm.NET.MDOperand.Metadata
-  nameWithType: MDOperand.Metadata
-- uid: Llvm.NET.MDOperand.Metadata*
-  name: Metadata
-  href: api/Llvm.NET.MDOperand.Metadata.html
-  commentId: Overload:Llvm.NET.MDOperand.Metadata
-  fullName: Llvm.NET.MDOperand.Metadata
-  nameWithType: MDOperand.Metadata
-- uid: Llvm.NET.MDOperand.OwningNode
-  name: OwningNode
-  href: api/Llvm.NET.MDOperand.OwningNode.html#Llvm_NET_MDOperand_OwningNode
-  commentId: P:Llvm.NET.MDOperand.OwningNode
-  fullName: Llvm.NET.MDOperand.OwningNode
-  nameWithType: MDOperand.OwningNode
-- uid: Llvm.NET.MDOperand.OwningNode*
-  name: OwningNode
-  href: api/Llvm.NET.MDOperand.OwningNode.html
-  commentId: Overload:Llvm.NET.MDOperand.OwningNode
-  fullName: Llvm.NET.MDOperand.OwningNode
-  nameWithType: MDOperand.OwningNode
 - uid: Llvm.NET.MDString
   name: MDString
   href: api/Llvm.NET.MDString.html

@@ -10,7 +10,7 @@
     <meta name="viewport" content="width=device-width">
     <meta name="title" content="Class MDNode
    | Llvm.NET ">
-    <meta name="generator" content="docfx 2.28.0.0">
+    <meta name="generator" content="docfx 2.28.1.0">
     
     <link rel="shortcut icon" href="../favicon.ico">
     <link rel="stylesheet" href="../styles/docfx.vendor.css">
@@ -819,6 +819,9 @@
                                   <a href="Llvm.NET.MDNode.GetOperand.html" title="GetOperand" class="">GetOperand</a>
                                 </li>
                                 <li class="">
+                                  <a href="Llvm.NET.MDNode.GetOperandString.html" title="GetOperandString" class="">GetOperandString</a>
+                                </li>
+                                <li class="">
                                   <a href="Llvm.NET.MDNode.IsDeleted.html" title="IsDeleted" class="">IsDeleted</a>
                                 </li>
                                 <li class="">
@@ -841,18 +844,6 @@
                                 </li>
                                 <li class="">
                                   <a href="Llvm.NET.MDNode.ResolveCycles.html" title="ResolveCycles" class="">ResolveCycles</a>
-                                </li>
-                              </ul>  </li>
-                          <li class="">
-                            <span class="expand-stub"></span>
-                            <a href="Llvm.NET.MDOperand.html" title="MDOperand" class="">MDOperand</a>
-                              
-                              <ul class="nav level3">
-                                <li class="">
-                                  <a href="Llvm.NET.MDOperand.Metadata.html" title="Metadata" class="">Metadata</a>
-                                </li>
-                                <li class="">
-                                  <a href="Llvm.NET.MDOperand.OwningNode.html" title="OwningNode" class="">OwningNode</a>
                                 </li>
                               </ul>  </li>
                           <li class="">
@@ -5927,7 +5918,7 @@
   
   <h5 id="Llvm_NET_MDNode_syntax">Syntax</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public class MDNode : LlvmMetadata</code></pre>
+    <pre><code class="lang-csharp hljs">public class MDNode : LlvmMetadata, IOperandContainer&lt;LlvmMetadata&gt;</code></pre>
   </div>
 
   
@@ -6024,6 +6015,13 @@ be called on some member of the cycle once all temporary nodes have been replace
 </td>
       </tr>
       <tr>
+        <td id="Llvm_NET_MDNode_GetOperandString_System_Int32_" data-uid="Llvm.NET.MDNode.GetOperandString(System.Int32)">
+          <a class="xref" href="Llvm.NET.MDNode.GetOperandString.html#Llvm_NET_MDNode_GetOperandString_System_Int32_">GetOperandString(Int32)</a>
+        </td>
+        <td class="markdown level1 summary"><p>Gets a string operand by index</p>
+</td>
+      </tr>
+      <tr>
         <td id="Llvm_NET_MDNode_ReplaceAllUsesWith_Llvm_NET_LlvmMetadata_" data-uid="Llvm.NET.MDNode.ReplaceAllUsesWith(Llvm.NET.LlvmMetadata)">
           <a class="xref" href="Llvm.NET.MDNode.ReplaceAllUsesWith.html#Llvm_NET_MDNode_ReplaceAllUsesWith_Llvm_NET_LlvmMetadata_">ReplaceAllUsesWith(LlvmMetadata)</a>
         </td>
@@ -6043,7 +6041,7 @@ be called on some member of the cycle once all temporary nodes have been replace
           </div>
           <div class="contribution-panel mobile-hide">
               <a href="https://github.com/UbiquityDotNET/Llvm.NET/new/master/apiSpec/new?filename=Llvm_NET_MDNode.md&amp;value=---%0Auid%3A%20Llvm.NET.MDNode%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A" title="Improve this Doc" class="fab btn-warning pull-right"><i class="glyphicon glyphicon-pencil"></i></a>
-              <a href="https://github.com/UbiquityDotNET/Llvm.NET/blob/master/src/Llvm.NET/Metadata/MDNode.cs/#L23" title="View Source" class="fab btn-info pull-right"><i class="fa fa-code"></i></a>
+              <a href="https://github.com/UbiquityDotNET/Llvm.NET/blob/master/src/Llvm.NET/Metadata/MDNode.cs/#L27" title="View Source" class="fab btn-info pull-right"><i class="fa fa-code"></i></a>
           </div>
           
           <div class="hidden-sm col-md-2" role="complementary">
