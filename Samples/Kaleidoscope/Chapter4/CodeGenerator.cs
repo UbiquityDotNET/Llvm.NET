@@ -167,7 +167,7 @@ namespace Kaleidoscope
 
         private void InitializeModuleAndPassManager( )
         {
-            Module = new BitcodeModule( Context );
+            Module = Context.CreateBitcodeModule( );
             FunctionPassManager = new FunctionPassManager( Module );
             FunctionPassManager.AddInstructionCombiningPass( )
                                .AddReassociatePass( )

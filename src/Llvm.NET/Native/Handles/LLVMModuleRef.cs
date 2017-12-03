@@ -4,9 +4,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
-
-using static Llvm.NET.Native.NativeMethods;
 
 namespace Llvm.NET.Native
 {
@@ -23,21 +20,6 @@ namespace Llvm.NET.Native
             => EqualityComparer<LLVMModuleRef>.Default.Equals( lhs, rhs );
 
         public static bool operator !=( LLVMModuleRef lhs, LLVMModuleRef rhs ) => !( lhs == rhs );
-
-        public Context Context
-        {
-            get
-            {
-                if( Handle.IsNull( ) )
-                {
-                    return null;
-                }
-
-                var hContext = LLVMGetModuleContext( this );
-                Debug.Assert( hContext != default, "Should not get a null pointer from LLVM" );
-                return ( Context )hContext;
-            }
-        }
 
         internal LLVMModuleRef( IntPtr pointer )
         {

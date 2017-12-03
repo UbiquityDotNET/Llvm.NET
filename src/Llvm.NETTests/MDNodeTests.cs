@@ -27,7 +27,7 @@ namespace Llvm.NET.Tests
         {
             var targetMachine = TargetTests.GetTargetMachine( );
             using( var ctx = new Context( ) )
-            using( var module = new BitcodeModule( ctx, "test.bc", SourceLanguage.CSharp, "test.cs", "unittests" ) )
+            using( var module = ctx.CreateBitcodeModule( "test.bc", SourceLanguage.CSharp, "test.cs", "unittests" ) )
             {
                 module.Layout = targetMachine.TargetData;
                 var intType = new DebugBasicType( module.Context.Int32Type, module, "int", DiTypeKind.Signed );

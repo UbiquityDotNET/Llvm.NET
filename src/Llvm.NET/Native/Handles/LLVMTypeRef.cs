@@ -4,8 +4,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
-using System.Runtime.InteropServices;
 
 namespace Llvm.NET.Native
 {
@@ -25,28 +23,10 @@ namespace Llvm.NET.Native
 
         public static bool operator !=( LLVMTypeRef lhs, LLVMTypeRef rhs ) => !( lhs == rhs );
 
-        public Context Context
-        {
-            get
-            {
-                if( Handle.IsNull( ) )
-                {
-                    return null;
-                }
-
-                var hContext = LLVMGetTypeContext( this );
-                Debug.Assert( hContext != default, "Should not get a null pointer from LLVM" );
-                return ( Context )hContext;
-            }
-        }
-
         internal LLVMTypeRef( IntPtr pointer )
         {
             Handle = pointer;
         }
-
-        [DllImport( NativeMethods.LibraryPath, CallingConvention = CallingConvention.Cdecl )]
-        private static extern LLVMContextAlias LLVMGetTypeContext( LLVMTypeRef @Ty );
 
         private readonly IntPtr Handle;
     }

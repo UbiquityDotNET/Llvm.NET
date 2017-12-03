@@ -4,9 +4,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
-
-using static Llvm.NET.Native.NativeMethods;
 
 namespace Llvm.NET.Native
 {
@@ -23,22 +20,6 @@ namespace Llvm.NET.Native
             => EqualityComparer<LLVMValueRef>.Default.Equals( lhs, rhs );
 
         public static bool operator !=( LLVMValueRef lhs, LLVMValueRef rhs ) => !( lhs == rhs );
-
-        // FIXME: Move this out of here to the Value as it is a layering violation
-        public Context Context
-        {
-            get
-            {
-                if( Handle.IsNull() )
-                {
-                    return null;
-                }
-
-                var hType = LLVMTypeOf( this );
-                Debug.Assert( hType != default, "Should not get a null pointer from LLVM" );
-                return hType.Context;
-            }
-        }
 
         internal LLVMValueRef( IntPtr pointer )
         {

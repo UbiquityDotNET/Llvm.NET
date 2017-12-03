@@ -34,7 +34,7 @@ namespace Llvm.NET.Native
 
                 var hContext = LLVMGetNodeContext( this );
                 Debug.Assert( hContext != default, "Should not get a null pointer from LLVM" );
-                return ( Context )hContext;
+                return ContextCache.GetContextFor( hContext );
             }
         }
 

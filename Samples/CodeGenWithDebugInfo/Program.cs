@@ -71,7 +71,7 @@ namespace TestDebugInfo
 
                 // <CreatingModule>
                 using( var context = new Context( ) )
-                using( var module = new BitcodeModule( context, moduleName ) )
+                using( var module = context.CreateBitcodeModule( moduleName ) )
                 {
                     module.SourceFileName = Path.GetFileName( srcPath );
                     module.TargetTriple = TargetDetails.TargetMachine.Triple;

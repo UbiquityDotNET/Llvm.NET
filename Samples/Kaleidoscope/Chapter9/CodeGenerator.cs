@@ -33,11 +33,9 @@ namespace Kaleidoscope
             NamedValues = new Dictionary<string, Alloca>( );
             FunctionPrototypes = new PrototypeCollection( );
             ParserStack = new ReplParserStack( level );
-            Module = new BitcodeModule( Context, "Kaleidoscope", SourceLanguage.C, "fib.ks", "Kaleidoscope Compiler" )
-            {
-                TargetTriple = machine.Triple,
-                Layout = machine.TargetData
-            };
+            Module = Context.CreateBitcodeModule( "Kaleidoscope", SourceLanguage.C, "fib.ks", "Kaleidoscope Compiler" );
+            Module.TargetTriple = machine.Triple;
+            Module.Layout = machine.TargetData;
             DoubleType = new DebugBasicType( Context.DoubleType, Module, "double", DiTypeKind.Float );
         }
 

@@ -170,10 +170,24 @@ namespace Llvm.NET.Values
 
         internal static AttributeValue FromHandle( Context context, LLVMAttributeRef handle)
         {
-            return context.GetAttributeFor( handle, (c,h)=>new AttributeValue(c, h) );
+            return context.GetAttributeFor( handle );
         }
 
         internal LLVMAttributeRef NativeAttribute { get; }
+
+        internal class InterningFactory
+            : HandleInterningMap<LLVMAttributeRef, AttributeValue>
+        {
+            internal InterningFactory( Context context)
+                : base( context )
+            {
+            }
+
+            private protected override AttributeValue ItemFactory( LLVMAttributeRef handle )
+            {
+                return new AttributeValue( Context, handle );
+            }
+        }
 
         private AttributeValue( Context context, LLVMAttributeRef nativeValue )
         {

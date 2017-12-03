@@ -45,6 +45,7 @@ namespace Llvm.NET
     /// </remarks>
     public sealed class Context
         : DisposableObject
+        , IBitcodeModuleFactory
     {
         /// <summary>Initializes a new instance of the <see cref="Context"/> class.Creates a new context</summary>
         public Context( )
@@ -83,7 +84,7 @@ namespace Llvm.NET
         public ITypeRef DoubleType => TypeRef.FromHandle( LLVMDoubleTypeInContext( ContextHandle ) );
 
         /// <summary>Gets an enumerable collection of all the metadata created in this context</summary>
-        public IEnumerable<LlvmMetadata> Metadata => MetadataCache.Values;
+        public IEnumerable<LlvmMetadata> Metadata => MetadataCache;
 
         /// <summary>Get a type that is a pointer to a value of a given type</summary>
         /// <param name="elementType">Type of value the pointer points to</param>
@@ -716,10 +717,35 @@ namespace Llvm.NET
                                         );
         }
 
-        /// <summary>Gets the modules created in this context</summary>
-        public IEnumerable<BitcodeModule> Modules => ModuleCache.Values;
+        /// <inheritdoc/>
+        public BitcodeModule CreateBitcodeModule( )
+        {
+            return ModuleCache.CreateBitcodeModule( );
+        }
 
-        /*TODO: Create interop calls to support additional properties
+        /// <inheritdoc/>
+        public BitcodeModule CreateBitcodeModule( string moduleId )
+        {
+            return ModuleCache.CreateBitcodeModule( moduleId );
+        }
+
+        /// <inheritdoc/>
+        public BitcodeModule CreateBitcodeModule( string moduleId
+                                                , SourceLanguage language
+                                                , string srcFilePath
+                                                , string producer
+                                                , bool optimized = false
+                                                , string compilationFlags = ""
+                                                , uint runtimeVersion = 0
+                                                )
+        {
+            return ModuleCache.CreateBitcodeModule( moduleId, language, srcFilePath, producer, optimized, compilationFlags, runtimeVersion );
+        }
+
+        /// <summary>Gets the modules created in this context</summary>
+        public IEnumerable<BitcodeModule> Modules => ModuleCache;
+
+        /*TODO: Create interop calls to support additional properties/methods
         public unsigned GetMDKindId(string name) {...}
         public IEnumerable<string> MDKindNames { get; }
 
@@ -729,42 +755,21 @@ namespace Llvm.NET
         public bool ODRUniqueDebugTypes { get; set; }
         */
 
-        // looks up an attribute by it's handle, if none is found a new managed wrapper is created
-        // The factory as a Func<> allows for the constructor to remain private so that the only
-        // way to create an AttributeValue is via the containing context. This ensures that the
-        // proper ownership is maintained. (LLVM has no method of retrieving the context that owns an attribute)
-        // TODO: move this to an attribute interning factory bound to the context
-        internal AttributeValue GetAttributeFor( LLVMAttributeRef handle, Func<Context, LLVMAttributeRef, AttributeValue> factory )
-        {
-            factory.ValidateNotNull( nameof( factory ) );
-            if( handle == default )
-            {
-                return default;
-            }
-
-            if( AttributeValueCache.TryGetValue( handle, out AttributeValue retVal ) )
-            {
-                return retVal;
-            }
-
-            retVal = factory( this, handle );
-            AttributeValueCache.Add( handle, retVal );
-            return retVal;
-        }
-
         internal LLVMContextRef ContextHandle { get; private set; }
 
         /* These interning methods provide unique mapping between the .NET wrappers and the underlying LLVM instances
         // The mapping ensures that any LibLLVM handle is always re-mappable to a exactly one wrapper instance.
         // This helps reduce the number of wrapper instances created and also allows reference equality to work
         // as expected for managed types.
-        //
-        // TODO: Refactor the remaining interning to use common implementation
         */
 
-        internal void AddModule( BitcodeModule module )
+        // looks up an attribute by it's handle, if none is found a new managed wrapper is created
+        // The factory contains a reference to this Context to ensure that the proper ownership is
+        // maintained. (LLVM has no method of retrieving the context that owns an attribute)
+        internal AttributeValue GetAttributeFor( LLVMAttributeRef handle )
         {
-            ModuleCache.Add( module.ModuleHandle, module );
+            handle.ValidateNotDefault( nameof( handle ) );
+            return AttributeValueCache.GetOrCreateItem( handle );
         }
 
         internal void RemoveModule( BitcodeModule module )
@@ -774,10 +779,7 @@ namespace Llvm.NET
 
         internal BitcodeModule GetModuleFor( LLVMModuleRef moduleRef )
         {
-            if( moduleRef == default )
-            {
-                throw new ArgumentNullException( nameof( moduleRef ) );
-            }
+            moduleRef.ValidateNotDefault( nameof( moduleRef ) );
 
             var hModuleContext = LLVMGetModuleContext( moduleRef );
             if( hModuleContext != ContextHandle )
@@ -785,12 +787,7 @@ namespace Llvm.NET
                 throw new ArgumentException( "Incorrect context for module" );
             }
 
-            if( !ModuleCache.TryGetValue( moduleRef, out BitcodeModule retVal ) )
-            {
-                retVal = new BitcodeModule( moduleRef );
-            }
-
-            return retVal;
+            return ModuleCache.GetOrCreateItem( moduleRef );
         }
 
         internal void RemoveDeletedNode( MDNode node )
@@ -802,47 +799,25 @@ namespace Llvm.NET
         {
             valueRef.ValidateNotDefault( nameof( valueRef ) );
 
-            return ValueCache.GetItemFor( valueRef, this );
+            return ValueCache.GetOrCreateItem( valueRef );
         }
 
         internal LegacyExecutionEngine GetEngineFor( LLVMExecutionEngineRef h )
         {
             h.ValidateNotDefault( nameof( h ) );
-            return EngineCache.GetItemFor( h, this );
+            return EngineCache.GetOrCreateItem( h );
         }
 
-        internal LlvmMetadata GetNodeFor( LLVMMetadataRef handle, Func<LLVMMetadataRef, LlvmMetadata> staticFactory )
+        internal LlvmMetadata GetNodeFor( LLVMMetadataRef handle )
         {
-            if( handle == default )
-            {
-                throw new ArgumentNullException( nameof( handle ) );
-            }
-
-            if( MetadataCache.TryGetValue( handle, out LlvmMetadata retVal ) )
-            {
-                return retVal;
-            }
-
-            retVal = staticFactory( handle );
-            MetadataCache.Add( handle, retVal );
-            return retVal;
+            handle.ValidateNotDefault( nameof( handle ) );
+            return MetadataCache.GetOrCreateItem( handle );
         }
 
-        internal ITypeRef GetTypeFor( LLVMTypeRef valueRef, Func<LLVMTypeRef, ITypeRef> constructor )
+        internal ITypeRef GetTypeFor( LLVMTypeRef typeRef )
         {
-            if( valueRef == default )
-            {
-                throw new ArgumentNullException( nameof( valueRef ) );
-            }
-
-            if( TypeCache.TryGetValue( valueRef, out ITypeRef retVal ) )
-            {
-                return retVal;
-            }
-
-            retVal = constructor( valueRef );
-            TypeCache.Add( valueRef, retVal );
-            return retVal;
+            typeRef.ValidateNotDefault( nameof( typeRef ) );
+            return TypeCache.GetOrCreateItem( typeRef );
         }
 
         internal Context( LLVMContextRef contextRef )
@@ -851,6 +826,12 @@ namespace Llvm.NET
             ContextCache.Add( this );
             ActiveHandler = new WrappedNativeCallback( new LLVMDiagnosticHandler( DiagnosticHandler ) );
             LLVMContextSetDiagnosticHandler( ContextHandle, ActiveHandler.GetFuncPointer( ), IntPtr.Zero );
+            ValueCache = new Value.InterningFactory( this );
+            EngineCache = new LegacyExecutionEngine.InterningFactory( this );
+            ModuleCache = new BitcodeModule.InterningFactory( this );
+            TypeCache = new TypeRef.InterningFactory( this );
+            AttributeValueCache = new AttributeValue.InterningFactory( this );
+            MetadataCache = new LlvmMetadata.InterningFactory( this );
         }
 
         /// <summary>Implements dispose pattern</summary>
@@ -880,19 +861,19 @@ namespace Llvm.NET
 
         private WrappedNativeCallback ActiveHandler;
 
-        private readonly IHandleInterning<LLVMValueRef, Value> ValueCache = Value.CreateInterningFactory();
-
-        private readonly IHandleInterning<LLVMExecutionEngineRef, LegacyExecutionEngine> EngineCache = LegacyExecutionEngine.CreateInterningFactory();
-
-        private readonly Dictionary< LLVMTypeRef, ITypeRef > TypeCache = new Dictionary< LLVMTypeRef, ITypeRef >( );
-
-        private readonly Dictionary< LLVMModuleRef, BitcodeModule > ModuleCache = new Dictionary< LLVMModuleRef, BitcodeModule >( );
-
-        private readonly Dictionary< LLVMAttributeRef, AttributeValue> AttributeValueCache = new Dictionary<LLVMAttributeRef, AttributeValue>( );
-
-        private readonly Dictionary< LLVMMetadataRef, LlvmMetadata > MetadataCache = new Dictionary< LLVMMetadataRef, LlvmMetadata >( );
+        // child item wrapper factories
+        private readonly Value.InterningFactory ValueCache;
+        private readonly LegacyExecutionEngine.InterningFactory EngineCache;
+        private readonly BitcodeModule.InterningFactory ModuleCache;
+        private readonly TypeRef.InterningFactory TypeCache;
+        private readonly AttributeValue.InterningFactory AttributeValueCache;
+        private readonly LlvmMetadata.InterningFactory MetadataCache;
 
         [DllImport( LibraryPath, CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl, CharSet = CharSet.Ansi, ThrowOnUnmappableChar = true, BestFitMapping = false )]
-        private static extern LLVMBasicBlockRef LLVMContextCreateBasicBlock( LLVMContextRef context, [MarshalAs( UnmanagedType.LPStr )] string name, LLVMValueRef /*Function*/ function, LLVMBasicBlockRef insertBefore );
+        private static extern LLVMBasicBlockRef LLVMContextCreateBasicBlock( LLVMContextRef context
+                                                                           , [MarshalAs( UnmanagedType.LPStr )] string name
+                                                                           , LLVMValueRef /*Function*/ function
+                                                                           , LLVMBasicBlockRef insertBefore
+                                                                           );
     }
 }
