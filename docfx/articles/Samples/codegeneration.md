@@ -137,6 +137,10 @@ forms the initialized value of `bar.c`, the source only provides const values fo
 entries of a 32 element array. The const data is created via [ConstArray](xref:Llvm.NET.Values.ConstantArray).
 The full initialized const data for bar is the created from [Context.CreateNamedConstantStruct](xref:Llvm.NET.Context.CreateNamedConstantStruct*)
 
+[!code-csharp[Main](../../../Samples/CodeGenWithDebugInfo/Program.cs#CreatingGlobalsAndMetadata)]
+
+[!code-csharp[Main](../../../Samples/CodeGenWithDebugInfo/Program.cs#AddModuleFlags)]
+
 Once the constant data is available an LLVM global is created for it with a name that matches the source name
 via [AddGlobal](xref:Llvm.NET.BitcodeModule.AddGlobal*). To ensure the linker lays out the structure
 correctly the code uses the layout information for the module to get the ABI required alignement for 

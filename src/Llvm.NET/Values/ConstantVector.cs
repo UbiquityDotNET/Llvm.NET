@@ -15,9 +15,12 @@ namespace Llvm.NET.Values
         {
         }
 
-        /* TODO:
+        /* TODO: add support for Splat to ConstantVector
+        [CanBeNull]
         Constant SplatValue { get; }
-        static ConstantVector Splat(uint numelements, Constant element);
+
+        // reult may be ConstantVector or ConstantDataVector if the splat is compatible with a ConstantDataVector
+        static Constant Splat(uint numelements, Constant element);
         */
     }
 }

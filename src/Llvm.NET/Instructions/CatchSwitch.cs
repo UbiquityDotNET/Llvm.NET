@@ -19,7 +19,7 @@ namespace Llvm.NET.Instructions
         public Value ParentPad => GetOperand<Value>( 0 );
         /* TODO: ParentPad { set; } */
 
-        /* TODO:
+        /* TODO: Enable UnwindDestination once the non-operand properties are enabled
             BasicBlock UnwindDestination
             {
                 get => HasUnwindDestination ? GetOperand<BasicBlock>( 1 );

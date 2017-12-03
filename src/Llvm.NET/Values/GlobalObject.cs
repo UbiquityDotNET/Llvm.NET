@@ -55,7 +55,7 @@ namespace Llvm.NET.Values
             }
         }
 
-        /* TODO:
+        /* TODO: Add GlobalObject metadata accessors
         public MDNode GetMetadata(unsigned kindID) {...}
         public MDNode GetMetadata(string kind) {...}
 

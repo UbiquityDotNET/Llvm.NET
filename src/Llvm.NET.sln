@@ -91,6 +91,22 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Samples", "Samples", "{D04D
 		..\docfx\articles\Samples\toc.md = ..\docfx\articles\Samples\toc.md
 	EndProjectSection
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Samples", "Samples", "{D04D960B-79E5-4FB5-9241-1509F1576A59}"
+	ProjectSection(SolutionItems) = preProject
+		..\docfx\articles\Samples\codegeneration.md = ..\docfx\articles\Samples\codegeneration.md
+		..\docfx\articles\Samples\index.md = ..\docfx\articles\Samples\index.md
+		..\docfx\articles\Samples\Kaleidoscope-ch2.md = ..\docfx\articles\Samples\Kaleidoscope-ch2.md
+		..\docfx\articles\Samples\Kaleidoscope-ch3.md = ..\docfx\articles\Samples\Kaleidoscope-ch3.md
+		..\docfx\articles\Samples\Kaleidoscope-ch4.md = ..\docfx\articles\Samples\Kaleidoscope-ch4.md
+		..\docfx\articles\Samples\Kaleidoscope-ch5.md = ..\docfx\articles\Samples\Kaleidoscope-ch5.md
+		..\docfx\articles\Samples\Kaleidoscope-ch6.md = ..\docfx\articles\Samples\Kaleidoscope-ch6.md
+		..\docfx\articles\Samples\Kaleidoscope-ch7.md = ..\docfx\articles\Samples\Kaleidoscope-ch7.md
+		..\docfx\articles\Samples\Kaleidoscope-ch8.md = ..\docfx\articles\Samples\Kaleidoscope-ch8.md
+		..\docfx\articles\Samples\Kaleidoscope-ch9.md = ..\docfx\articles\Samples\Kaleidoscope-ch9.md
+		..\docfx\articles\Samples\Kaleidoscope.md = ..\docfx\articles\Samples\Kaleidoscope.md
+		..\docfx\articles\Samples\toc.md = ..\docfx\articles\Samples\toc.md
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
