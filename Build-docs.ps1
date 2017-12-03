@@ -7,6 +7,9 @@
 # This script will manually install the packages needed to run DOCFX and the memberpage
 # plug-in used for the documentation. The script then creates a VCVARS environment to run
 # DOCFX to work around the dependency and conflict problems with DOCFX and CoreCLR projects.
+Param(
+    [switch]$Incremental=(!$env:APPVEYOR)
+)
 
 . .\buildutils.ps1
 
@@ -24,19 +27,22 @@ try
     Write-Information "Build Paths:"
     Write-Information ($buildPaths | Format-Table | Out-String)
 
-    if( Test-Path -PathType Container $buildPaths.BuildOutputPath )
+    if( !$Incremental )
     {
-        Write-Information "Cleaning output folder from previous builds"
-        rd -Recurse -Force -Path $buildPaths.BuildOutputPath
-    }
+        if( (Test-Path -PathType Container $buildPaths.BuildOutputPath) )
+        {
+            Write-Information "Cleaning output folder from previous builds"
+            rd -Recurse -Force -Path $buildPaths.BuildOutputPath
+        }
 
-    if( Test-Path -PathType Container src\Llvm.NET\obj\xdoc )
-    {
-        rd -Recurse -Force -Path src\Llvm.NET\obj\xdoc
-    }
+        if( Test-Path -PathType Container src\Llvm.NET\obj\xdoc )
+        {
+            rd -Recurse -Force -Path src\Llvm.NET\obj\xdoc
+        }
 
-    rm docfx\api\*.yml -ErrorAction Ignore
-    rm docfx\api\.manifest -ErrorAction Ignore
+        rm docfx\api\*.yml -ErrorAction Ignore
+        rm docfx\api\.manifest -ErrorAction Ignore
+    }
 
     if( !( Test-Path -PathType Container tools ) )
     {

@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.27004.2009
+VisualStudioVersion = 15.0.27004.2010
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Llvm.NET", "Llvm.NET\Llvm.NET.csproj", "{0162C8CE-6641-4922-8664-F8A44356FBF7}"
 EndProject
@@ -59,6 +59,19 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "docfx", "docfx", "{2762672E
 		..\docfx\index.md = ..\docfx\index.md
 		..\docfx\llvm-xref.yml = ..\docfx\llvm-xref.yml
 		..\docfx\toc.yml = ..\docfx\toc.yml
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "articles", "articles", "{3450A680-13CD-4703-BFFE-5617AB775ED4}"
+	ProjectSection(SolutionItems) = preProject
+		..\docfx\articles\index.md = ..\docfx\articles\index.md
+		..\docfx\articles\toc.yml = ..\docfx\articles\toc.yml
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "InternalDetails", "InternalDetails", "{DD8CA942-6EEE-4428-A1BC-D1D64993EEF9}"
+	ProjectSection(SolutionItems) = preProject
+		..\docfx\articles\InternalDetails\handleref-interning.md = ..\docfx\articles\InternalDetails\handleref-interning.md
+		..\docfx\articles\InternalDetails\index.md = ..\docfx\articles\InternalDetails\index.md
+		..\docfx\articles\InternalDetails\toc.yml = ..\docfx\articles\InternalDetails\toc.yml
 	EndProjectSection
 EndProject
 Global
@@ -131,6 +144,8 @@ Global
 		{385172C5-40FB-411D-9483-7D31E9AE3CA2} = {62418FA2-81F2-475F-B735-7B108EBE960D}
 		{091C3D70-3D54-4673-B34C-7F936B652D21} = {62418FA2-81F2-475F-B735-7B108EBE960D}
 		{88463779-D746-427C-B951-4E4FF25BC532} = {62418FA2-81F2-475F-B735-7B108EBE960D}
+		{3450A680-13CD-4703-BFFE-5617AB775ED4} = {2762672E-8B94-4C84-ADCF-195FFEF5D7DD}
+		{DD8CA942-6EEE-4428-A1BC-D1D64993EEF9} = {3450A680-13CD-4703-BFFE-5617AB775ED4}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {EF28D186-279B-4E91-9BE8-644B6E018432}

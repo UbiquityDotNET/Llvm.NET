@@ -1,6 +1,9 @@
-- name: Api Documentation
+- name: API Documentation
   href: api/
   homepage: api/index.md
+- name: Articles
+  href: articles/
+  homepage: articles/index.md
 - name: LLVM.org
   href: http://LLVM.org
 - name: LLVM Docs
