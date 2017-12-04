@@ -8,6 +8,7 @@ using Llvm.NET.Values;
 
 namespace TestDebugInfo
 {
+    // <ITargetDependentDetails>
     internal interface ITargetDependentDetails
     {
         string ShortName { get; }
@@ -20,4 +21,5 @@ namespace TestDebugInfo
 
         void AddModuleFlags( BitcodeModule module );
     }
+    // </ITargetDependentDetails>
 }

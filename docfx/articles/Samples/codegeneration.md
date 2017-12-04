@@ -14,23 +14,6 @@ code file is provided in the source tree along with a script file to compile it 
 
 This sample supports targetting two different processor types x64 and ARM Cortex-M3
 
-## Structure of the code
-The sample isolate the target specific behavior behind an interface to allow the majority
-of the code to remain target architecture ignorant. The basic flow is as follows:
-  1. [Initializing Llvm.NET](#initializing-llvmnet)
-     - [Target specific details](#target-specific-details)
-  1. [Creating the BitcodeModule](#creating-the-bitcodemodule)
-  1. [Creating the DICompileUnit](#creating-the-dicompileunit)
-  1. [Creating basic types with debug information](#creating-basic-types-with-debug-information)
-  1. [Creating structure types (user defined types)](#creating-structure-types)
-  1. [Creating module metadata and global variables](#creating-module-metadata-and-global-variables)
-  1. [Declaring the functions](#declaring-the-functions)
-  1. [Generating function bodies](#generating-function-bodies)
-     - [Entry block](#entry-block)
-       - [Arguments and debug information](#arguments-and-debug-information)
-     - [Instruction generation](#instruction-generation)
-       - [Intrinsic LLVM calls](#intrinsic-llvm-calls)
-
 ## Initializing Llvm.NET
 The underlying LLVM library requires initialization for it's internal data, furthermore Llvm.NET must load
 the actual underlying DLL specific to the current system architecture. Thus, the library as a whole requires
@@ -58,7 +41,7 @@ In this sample that is handled in the contructor of the target dependent details
 would allow command line options for the CPU target variants and feature sets. For this sample those are just
 hard coded into the target details class to keep things simple and focused on the rest of the code generation.
 
-[!code-csharp[Main](../../../Samples/CodeGenWithDebugInfo/ITargetDependentDetails.cs)]
+[!code-csharp[Main](../../../Samples/CodeGenWithDebugInfo/ITargetDependentDetails.cs#ITargetDependentDetails)]
 
 This interface isolates the rest of the code from knowing which architecture is used, and theoretically
 could include support for additional targets beyond the two in the sample source.
@@ -128,6 +111,13 @@ This constructs several basic types and assigns them to variables:
 | i32Array_0_32 | array i32[0..31]      | n/a
 a 32 bit signed inteer type called "int" in the source language
 
+## Creating qualified types
+Creating qualified (conts, volatile, etc...) and pointers is just as easy as creating the basic types.
+The sample needs a pointer to a const instance of the struct foo. A qualified type for constant foo is
+created first, then a pointer type is created for the const type.
+
+[!code-csharp[Main](../../../Samples/CodeGenWithDebugInfo/Program.cs#CreatingQualifiedTypes)]
+
 ## Creating structure types
 As previously mentioned, the LLVM types only contain basic layout information and not full source
 level debugging information. Thus, for types there are two distinct descriptions, one for the LLVM
@@ -142,8 +132,31 @@ in the example source code.
 [!code-csharp[Main](../../../Samples/CodeGenWithDebugInfo/Program.cs#CreatingStructureTypes)]
 
 ## Creating module metadata and global variables
+The sample code contains two global instances of `struct foo` `bar` and `baz`. Furthermore, bar
+is initialized with constant data. The sample starts by constructing the const array data that
+forms the initialized value of `bar.c`, the source only provides const values for the first two
+entries of a 32 element array. The const data is created via [ConstArray](xref:Llvm.NET.Values.ConstantArray).
+The full initialized const data for bar is the created from [Context.CreateNamedConstantStruct](xref:Llvm.NET.Context.CreateNamedConstantStruct*)
+
+Once the constant data is available an LLVM global is created for it with a name that matches the source name
+via [AddGlobal](xref:Llvm.NET.BitcodeModule.AddGlobal*). To ensure the linker lays out the structure
+correctly the code uses the layout information for the module to get the ABI required alignement for 
+the global and sets the [Alignment](xref:Llvm.NET.Values.GlobalObject.Alignment) property for the global.
+Finally the debug information for the gloabl is created as a [DIGlobalVariableExpression](xref:Llvm.NET.DebugInfo.DIGlobalVariableExpression)
+using [CreateGlobalVariableExpression](xref:Llvm.NET.DebugInfo.DebugInfoBuilder.CreateGlobalVariableExpression*)
+finally the added to the variable to complete the creation.
+
+For the `baz` instance the process is almost identical. The major difference is that the value of the
+structure is initialized to all zeros. That is the initialized data for the structure is created with
+[NullValueFor](xref:Llvm.NET.Values.Constant.NullValueFor*), which creates an all zero value of a type.
+
+[!code-csharp[Main](../../../Samples/CodeGenWithDebugInfo/Program.cs#CreatingGlobalsAndMetadata)]
+
+[!code-csharp[Main](../../../Samples/CodeGenWithDebugInfo/Program.cs#AddModuleFlags)]
 
 ## Declaring the functions
+
+[!code-csharp[Main](../../../Samples/CodeGenWithDebugInfo/Program.cs#FunctionDeclarations)]
 
 ## Generating function bodies
 ### Entry block

@@ -110,7 +110,7 @@ namespace TestDebugInfo
                     var fooType = new DebugStructType( module, "struct.foo", cu, "foo", diFile, 1, DebugInfoFlags.None, fooBody );
                     // </CreatingStructureTypes>
 #pragma warning restore
-
+                    // <CreatingGlobalsAndMetadata>
                     // add global variables and constants
                     var constArray = ConstantArray.From( i32, 32, module.Context.CreateConstant( 3 ), module.Context.CreateConstant( 4 ) );
                     var barValue = module.Context.CreateNamedConstantStruct( fooType
@@ -131,10 +131,13 @@ namespace TestDebugInfo
                     // this can technically occur at any point, though placing it here makes
                     // comparing against clang generated files easier
                     AddModuleFlags( module );
+                    // </CreatingGlobalsAndMetadata>
 
+                    // <CreatingQualifiedTypes>
                     // create types for function args
                     var constFoo = module.DIBuilder.CreateQualifiedType( fooType.DIType, QualifiedTypeTag.Const );
                     var fooPtr = new DebugPointerType( fooType, module );
+                    // </CreatingQualifiedTypes>
 
                     // Create the functions
                     // NOTE: The declaration ordering is reversed from that of the sample code file (test.c)
@@ -200,6 +203,7 @@ namespace TestDebugInfo
             Console.Error.WriteLine( "Usage: {0} [X64|M3] <source file path>", Path.GetFileName( System.Reflection.Assembly.GetExecutingAssembly( ).CodeBase ) );
         }
 
+        // <FunctionDeclarations>
         private static Function DeclareDoCopyFunc( BitcodeModule module, DIFile diFile, IDebugType<ITypeRef, DIType> voidType )
         {
             var doCopySig = module.Context.CreateFunctionType( module.DIBuilder, voidType );
@@ -259,7 +263,9 @@ namespace TestDebugInfo
             TargetDetails.AddABIAttributesForByValueStructure( copyFunc, 0 );
             return copyFunc;
         }
+        // </FunctionDeclarations>
 
+        // <AddModuleFlags>
         private static void AddModuleFlags( BitcodeModule module )
         {
             module.AddModuleFlag( ModuleFlagBehavior.Warning, BitcodeModule.DwarfVersionValue, 4 );
@@ -267,6 +273,7 @@ namespace TestDebugInfo
             TargetDetails.AddModuleFlags( module );
             module.AddVersionIdentMetadata( VersionIdentString );
         }
+        // </AddModuleFlags>
 
         private static void CreateCopyFunctionBody( BitcodeModule module
                                                   , Function copyFunc
