@@ -17,6 +17,8 @@ clang -c -g -emit-llvm --target=%1 %2
 if EXIST %3.bc del %3.bc
 ren %~n2.bc %3.bc
 llvm-dis %3.bc
+
+@REM - Generate an optimized version to see the results of optimized machine code
 opt -O3 %3.bc -o %3_opt.bc
 llvm-dis %3_opt.bc
 llc -filetype=asm -asm-show-inst %3_opt.bc

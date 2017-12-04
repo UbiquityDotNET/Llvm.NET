@@ -12,11 +12,7 @@ namespace TestDebugInfo
     {
         string ShortName { get; }
 
-        Triple Triple { get; }
-
-        string Cpu { get; }
-
-        string Features { get; }
+        TargetMachine TargetMachine { get; }
 
         IEnumerable<AttributeValue> BuildTargetDependentFunctionAttributes( Context ctx );
 

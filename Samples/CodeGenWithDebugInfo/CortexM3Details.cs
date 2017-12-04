@@ -8,22 +8,31 @@ using Llvm.NET;
 using Llvm.NET.Types;
 using Llvm.NET.Values;
 
+using static Llvm.NET.StaticState;
+
 namespace TestDebugInfo
 {
     internal class CortexM3Details
         : ITargetDependentDetails
     {
-        public string Cpu => "cortex-m3";
-
-        public string Features => "+hwdiv,+strict-align,+thumb-mode";
+        public CortexM3Details()
+        {
+            RegisterARM( );
+        }
 
         public string ShortName => "M3";
 
-        public Triple Triple => new Triple("thumbv7m-none--eabi");
+        public TargetMachine TargetMachine => TargetMachine.FromTriple( new Triple( TripleName )
+                                                                      , Cpu
+                                                                      , Features
+                                                                      , CodeGenOpt.Aggressive
+                                                                      , Reloc.Default
+                                                                      , CodeModel.Small
+                                                                      );
 
         public void AddABIAttributesForByValueStructure( Function function, int paramIndex )
         {
-            // ByVal pointers indicate by value semantics. The actual semantics are along the lines of
+            // ByVal pointers indicate by value semantics. The actual LLVM semantics are along the lines of
             // "pass the arg as copy on the arguments stack and set parameter implicitly to that copy's address"
             // (src: https://github.com/ldc-developers/ldc/issues/937 ) [e.g. caller copies byval args]
             //
@@ -71,5 +80,9 @@ namespace TestDebugInfo
                 ctx.CreateAttribute( "unsafe-fp-math", "false" ),
                 ctx.CreateAttribute( "use-soft-float", "false" )
             };
+
+        private static string Cpu = "cortex-m3";
+        private static string Features = "+hwdiv,+strict-align,+thumb-mode";
+        private static string TripleName = "thumbv7m-none--eabi";
     }
 }

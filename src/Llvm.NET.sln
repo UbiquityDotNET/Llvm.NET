@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.27004.2010
+VisualStudioVersion = 15.0.27128.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Llvm.NET", "Llvm.NET\Llvm.NET.csproj", "{0162C8CE-6641-4922-8664-F8A44356FBF7}"
 EndProject
@@ -72,6 +72,22 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "InternalDetails", "Internal
 		..\docfx\articles\InternalDetails\handleref-interning.md = ..\docfx\articles\InternalDetails\handleref-interning.md
 		..\docfx\articles\InternalDetails\index.md = ..\docfx\articles\InternalDetails\index.md
 		..\docfx\articles\InternalDetails\toc.yml = ..\docfx\articles\InternalDetails\toc.yml
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Samples", "Samples", "{D04D960B-79E5-4FB5-9241-1509F1576A59}"
+	ProjectSection(SolutionItems) = preProject
+		..\docfx\articles\Samples\codegeneration.md = ..\docfx\articles\Samples\codegeneration.md
+		..\docfx\articles\Samples\index.md = ..\docfx\articles\Samples\index.md
+		..\docfx\articles\Samples\Kaleidoscope-ch2.md = ..\docfx\articles\Samples\Kaleidoscope-ch2.md
+		..\docfx\articles\Samples\Kaleidoscope-ch3.md = ..\docfx\articles\Samples\Kaleidoscope-ch3.md
+		..\docfx\articles\Samples\Kaleidoscope-ch4.md = ..\docfx\articles\Samples\Kaleidoscope-ch4.md
+		..\docfx\articles\Samples\Kaleidoscope-ch5.md = ..\docfx\articles\Samples\Kaleidoscope-ch5.md
+		..\docfx\articles\Samples\Kaleidoscope-ch6.md = ..\docfx\articles\Samples\Kaleidoscope-ch6.md
+		..\docfx\articles\Samples\Kaleidoscope-ch7.md = ..\docfx\articles\Samples\Kaleidoscope-ch7.md
+		..\docfx\articles\Samples\Kaleidoscope-ch8.md = ..\docfx\articles\Samples\Kaleidoscope-ch8.md
+		..\docfx\articles\Samples\Kaleidoscope-ch9.md = ..\docfx\articles\Samples\Kaleidoscope-ch9.md
+		..\docfx\articles\Samples\Kaleidoscope.md = ..\docfx\articles\Samples\Kaleidoscope.md
+		..\docfx\articles\Samples\toc.md = ..\docfx\articles\Samples\toc.md
 	EndProjectSection
 EndProject
 Global
@@ -146,6 +162,7 @@ Global
 		{88463779-D746-427C-B951-4E4FF25BC532} = {62418FA2-81F2-475F-B735-7B108EBE960D}
 		{3450A680-13CD-4703-BFFE-5617AB775ED4} = {2762672E-8B94-4C84-ADCF-195FFEF5D7DD}
 		{DD8CA942-6EEE-4428-A1BC-D1D64993EEF9} = {3450A680-13CD-4703-BFFE-5617AB775ED4}
+		{D04D960B-79E5-4FB5-9241-1509F1576A59} = {3450A680-13CD-4703-BFFE-5617AB775ED4}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {EF28D186-279B-4E91-9BE8-644B6E018432}

@@ -8,18 +8,27 @@ using Llvm.NET;
 using Llvm.NET.Types;
 using Llvm.NET.Values;
 
+using static Llvm.NET.StaticState;
+
 namespace TestDebugInfo
 {
     internal class X64Details
         : ITargetDependentDetails
     {
-        public string Cpu => "x86-64";
-
-        public string Features => "+sse,+sse2";
+        public X64Details()
+        {
+            RegisterX86( );
+        }
 
         public string ShortName => "x86";
 
-        public Triple Triple => new Triple( "x86_64-pc-windows-msvc18.0.0" );
+        public TargetMachine TargetMachine => TargetMachine.FromTriple( new Triple( TripleName )
+                                                                      , Cpu
+                                                                      , Features
+                                                                      , CodeGenOpt.Aggressive
+                                                                      , Reloc.Default
+                                                                      , CodeModel.Small
+                                                                      );
 
         public void AddABIAttributesForByValueStructure( Function function, int paramIndex )
         {
@@ -50,5 +59,9 @@ namespace TestDebugInfo
                 ctx.CreateAttribute( "use-soft-float", "false" ),
                 ctx.CreateAttribute( AttributeKind.UWTable ),
             };
+
+        private static string Cpu = "x86-64";
+        private static string Features = "+sse,+sse2";
+        private static string TripleName = "x86_64-pc-windows-msvc18.0.0";
     }
 }

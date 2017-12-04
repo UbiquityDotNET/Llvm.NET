@@ -30,7 +30,7 @@
                    "articles/**.yml"
                  ],
         "exclude": [ "obj/**" ]
-      },
+      }
     ],
     "resource":
     [
