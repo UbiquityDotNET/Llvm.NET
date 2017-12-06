@@ -1,0 +1,298 @@
+﻿<!DOCTYPE html>
+<!--[if IE]><![endif]-->
+<html>
+  
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>Kaleidoscope Tutorial | Llvm.NET </title>
+    <meta name="viewport" content="width=device-width">
+    <meta name="title" content="Kaleidoscope Tutorial | Llvm.NET ">
+    <meta name="generator" content="docfx 2.28.1.0">
+    
+    <link rel="shortcut icon" href="../../favicon.ico">
+    <link rel="stylesheet" href="../../styles/docfx.vendor.css">
+    <link rel="stylesheet" href="../../styles/docfx.css">
+    <link rel="stylesheet" href="../../styles/main.css">
+    <meta property="docfx:navrel" content="../../toc">
+    <meta property="docfx:tocrel" content="toc">
+    
+    
+    
+  </head>
+  <body data-spy="scroll" data-target="#affix">
+    <div id="wrapper">
+      <header>
+        
+        <nav id="autocollapse" class="navbar navbar-inverse ng-scope" role="navigation">
+          <div class="container">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              
+              <a class="navbar-brand" href="../../index.html">
+                <img id="logo" class="svg" src="../../DragonSharp48x48.png" alt="">
+              </a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar">
+              <form class="navbar-form navbar-right" role="search" id="search">
+                <div class="form-group">
+                  <input type="text" class="form-control" id="search-query" placeholder="Search" autocomplete="off">
+                </div>
+              </form>
+                <ul class="nav level1 navbar-nav">
+                  <li class="">
+                    <a href="../../api/index.html" title="API Documentation" class="">API Documentation</a>
+                  </li>
+                  <li class="">
+                    <a href="../../articles/index.html" title="Articles" class="">Articles</a>
+                  </li>
+                  <li class="">
+                    <a href="http://LLVM.org" title="LLVM.org" class="">LLVM.org</a>
+                  </li>
+                  <li class="">
+                    <a href="http://releases.llvm.org/5.0.0/docs/index.html" title="LLVM Docs" class="">LLVM Docs</a>
+                  </li>
+                </ul>
+            </div>
+          </div>
+        </nav>
+      </header>
+      <div role="main" class="container body-content hide-when-search">
+        <div class="sidenav hide-when-search">
+          <a class="btn toc-toggle collapse" data-toggle="collapse" href="#sidetoggle" aria-expanded="false" aria-controls="sidetoggle">Show / Hide Table of Contents</a>
+          <div class="sidetoggle collapse" id="sidetoggle">
+            <div>
+              <div class="sidefilter">
+                <form class="toc-filter">
+                  <span class="glyphicon glyphicon-filter filter-icon"></span>
+                  <input type="text" id="toc_filter_input" placeholder="Enter here to filter..." onkeypress="if(event.keyCode==13) {return false;}">
+                </form>
+              </div>
+              <div class="sidetoc">
+                <div class="toc" id="toc">
+                  
+                  <ul class="nav level1">
+                    <li class="">
+                      <a href="codegeneration.html" title="Code Generation" class="">Code Generation</a>
+                    </li>
+                    <li class="active">
+                      <span class="expand-stub"></span>
+                      <a href="Kaleidoscope.html" title="Kaleidoscope" class="active">Kaleidoscope</a>
+                        
+                        <ul class="nav level2">
+                          <li class="">
+                            <a href="Kaleidoscope-ch2.html" title="Chapter 2" class="">Chapter 2</a>
+                          </li>
+                          <li class="">
+                            <a href="Kaleidoscope-ch3.html" title="Chapter 3" class="">Chapter 3</a>
+                          </li>
+                          <li class="">
+                            <a href="Kaleidoscope-ch4.html" title="Chapter 4" class="">Chapter 4</a>
+                          </li>
+                          <li class="">
+                            <a href="Kaleidoscope-ch5.html" title="Chapter 5" class="">Chapter 5</a>
+                          </li>
+                          <li class="">
+                            <a href="Kaleidoscope-ch6.html" title="Chapter 6" class="">Chapter 6</a>
+                          </li>
+                          <li class="">
+                            <a href="Kaleidoscope-ch7.html" title="Chapter 7" class="">Chapter 7</a>
+                          </li>
+                          <li class="">
+                            <a href="Kaleidoscope-ch8.html" title="Chapter 8" class="">Chapter 8</a>
+                          </li>
+                          <li class="">
+                            <a href="Kaleidoscope-ch9.html" title="Chapter 9" class="">Chapter 9</a>
+                          </li>
+                        </ul>  </li>
+                  </ul>        </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="article row grid-right">
+          <div class="col-md-10">
+            <article class="content wrap" id="_content" data-uid="">
+<h1 id="kaleidoscope-tutorial">Kaleidoscope Tutorial</h1>
+
+<p>This series of samples generally follows the official <a href="http://releases.llvm.org/5.0.0/docs/tutorial/LangImpl01.html">LLVM tutorial</a>.</p>
+<h2 id="overview">Overview</h2>
+<p>Kaliedoscope is a simple functional language that is used to illustrate numerous real world
+use cases for Llvm.NET for code generation and JIT execution. </p>
+<p>It is worth pointing out that this example isn&#39;t intended as a treatise on compiler design nor
+on language parsing. While it contains aspects of those topics the sample is focused on the
+use of Llvm.NET for code generation. Furthermore it isn&#39;t a trans-literation of the LLVM C++
+sample as that would defeat one of the major points of Llvm.NET - to provde a familiar API and
+use pattern to C# developers.</p>
+<h2 id="general-layout">General layout</h2>
+<p>The Llvm.NET version of the Kaleidoscope series takes a different route for parsing from the
+LLVM implementation. In particular the Llvm.NET version defines a formal grammar using <a href="http://antlr.org">ANTLR</a>
+with the full grammar for all variations of the language features in a single assembly. This
+helps in isolating the parsing from the use of Llvm.NET and minimizes the need for any sort
+of custom AST. (The antlr parse tree is generally sufficient to generate code)</p>
+<h2 id="the-kaleidoscope-language">The Kaleidoscope Language</h2>
+<h3 id="lexer-symbols">Lexer symbols</h3>
+<p>The Kaleidoscope lexer consists of several tokens and is defined in the Kaleidoscope.g4 grammar file</p>
+<pre><code class="lang-ANTLR">// Lexer Rules -------
+fragment NonZeroDecimalDigit_: [1-9];
+fragment DecimalDigit_: [0-9];
+fragment Digits_: &#39;0&#39; | [1-9][0-9]*;
+fragment EndOfFile_: &#39;\u0000&#39; | &#39;\u001A&#39;;
+fragment EndOfLine_
+    : (&#39;\r&#39; &#39;\n&#39;)
+    | (&#39;\r&#39; |&#39;\n&#39; | &#39;\u2028&#39; | &#39;\u2029&#39;)
+    | EndOfFile_
+    ;
+
+EQUALS: &#39;=&#39;;
+LPAREN: &#39;(&#39;;
+RPAREN: &#39;)&#39;;
+COMMA: &#39;,&#39;;
+SEMICOLON: &#39;;&#39;;
+IF: &#39;if&#39;;
+THEN: &#39;then&#39;;
+ELSE: &#39;else&#39;;
+FOR: &#39;for&#39;;
+IN: &#39;in&#39;;
+VAR: &#39;var&#39;;
+UNARY: &#39;unary&#39;;
+BINARY: &#39;binary&#39;;
+DEF: &#39;def&#39;;
+EXTERN: &#39;extern&#39;;
+
+OPSYMBOL
+    : &#39;!&#39;
+    | &#39;%&#39;
+    | &#39;&amp;&#39;
+    | &#39;*&#39;
+    | &#39;+&#39;
+    | &#39;-&#39;
+    | &#39;.&#39;
+    | &#39;/&#39;
+    | &#39;:&#39;
+    | &#39;&lt;&#39;
+    | &#39;&gt;&#39;
+    | &#39;?&#39;
+    | &#39;@&#39;
+    | &#39;\\&#39;
+    | &#39;^&#39;
+    | &#39;_&#39;
+    | &#39;|&#39;
+    ;
+
+LineComment: &#39;#&#39; ~[\r\n]* EndOfLine_ -&gt; skip;
+WhiteSpace: [ \t\r\n\f]+ -&gt; skip;
+
+Identifier: [a-zA-Z][a-zA-Z0-9]*;
+Number: Digits_ (&#39;.&#39; DecimalDigit_+)?;
+</code></pre><p>This includes basic numeric patterns as well as Identifiers and the symbols allowed for operators and keywords
+for the language. Subsequent chapters will introduce the meaning and use of each of these.</p>
+<h3 id="parser">Parser</h3>
+<p>The parser uses a technique of ANTLR called Semantic Predicates, that allows for dynamic adaptation of the grammar
+and parser to handle variations or versions of the language. The Sample code uses that to selectively enable language
+features as the chapters progress, without needing to change the grammar or generated parser code. The parser code
+provides a simple means of expressing the language support level.</p>
+<h4 id="parser-grammar">Parser grammar</h4>
+<pre><code class="lang-ANTLR">// Parser rules ------
+
+// Identifier as a parser rule enables adaptation of keywords based on language features
+// Depending on the features enabled, certain keywords may be valid identifiers.
+identifier
+    : Identifier
+    | {!FeatureControlFlow}? IF
+    | {!FeatureControlFlow}? THEN
+    | {!FeatureControlFlow}? ELSE
+    | {!FeatureControlFlow}? FOR
+    | {!FeatureControlFlow}? IN
+    | {!FeatureMutableVars}? VAR
+    | {!FeatureUserOperators}? UNARY
+    | {!FeatureUserOperators}? BINARY
+    ;
+
+initializer
+    : identifier (EQUALS expression)?
+    ;
+
+// parser rule to handle the use of the Lexer EQUALS symbol having different meanings in multiple contexts
+opsymbol
+    : EQUALS
+    | OPSYMBOL
+    ;
+
+// Non Left recursive expressions
+primaryExpression
+    : identifier                                                         # VariableExpression
+    | Number                                                             # ConstExpression
+    | LPAREN expression RPAREN                                           # ParenExpression
+    | identifier LPAREN (expression (COMMA expression)*)? RPAREN         # FunctionCallExpression
+    | VAR initializer (initializer)* IN expression                       # VarInExpression
+    | IF expression THEN expression ELSE expression                      # ConditionalExpression
+    | FOR initializer COMMA expression (COMMA expression)? IN expression # ForExpression
+    | identifier EQUALS expression                                       # AssignmentExpression
+    | {IsPrefixOp(_input.Lt(1))}? opsymbol expression                    # UnaryOpExpression
+    ;
+
+// Left-recursive expressions use ANTLR to unroll the left recursion when generating the
+// parser. The generated KaleidoscopeParser can then override the EnterRecursionRule() and
+// PrecPred() methods to handle the dynamic precedence evaluation allowing this grammar to
+// remain clean and simple, yet capable of handling user defined operators and precedence
+expression
+    : primaryExpression              # AtomExpression
+    | expression opsymbol expression # BinaryOpExpression
+    ;
+
+prototype
+    : identifier LPAREN (identifier)* RPAREN                      # FunctionPrototype
+    | UNARY opsymbol Number? LPAREN identifier RPAREN             # UnaryPrototype
+    | BINARY opsymbol Number? LPAREN identifier identifier RPAREN # BinaryPrototype
+    ;
+
+repl
+    : DEF prototype expression # FunctionDefinition
+    | EXTERN prototype         # ExternalDeclaration
+    | expression               # TopLevelExpression
+    | SEMICOLON                # TopLevelSemicolon
+;
+</code></pre><p>A full tutorial on ANTLR is beyond the scope of this tutorial but the basics should be familiar
+enough to anyone acquainted with EBNF form to make enough sense out of it. Don&#39;t worry too much
+about the details at this point as subsequent chapters will cover salient points as new features
+are enabled.</p>
+</article>
+          </div>
+          <div class="contribution-panel mobile-hide">
+              <a href="https://github.com/UbiquityDotNET/Llvm.NET/blob/master/docfx/articles/Samples/Kaleidoscope.md/#L1" title="Improve this Doc" class="fab btn-warning pull-right"><i class="glyphicon glyphicon-pencil"></i></a>
+          </div>
+          
+          <div class="hidden-sm col-md-2" role="complementary">
+            <div class="sideaffix">
+              <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <footer>
+        <div class="grad-bottom"></div>
+        <div class="footer">
+          <div class="container">
+            <span class="pull-right">
+              <a href="#top">Back to top</a>
+            </span>
+            Copyright (C) 2017, Dot NET Foundation
+            
+          </div>
+        </div>
+      </footer>
+    </div>
+    
+    <script type="text/javascript" src="../../styles/docfx.vendor.js"></script>
+    <script type="text/javascript" src="../../styles/docfx.js"></script>
+    <script type="text/javascript" src="../../styles/main.js"></script>
+  </body>
+</html>
