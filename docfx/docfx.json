@@ -5,8 +5,7 @@
       "src":
       [
         {
-          "files": [ "src/**.csproj"  ],
-          "exclude": [ "**/obj/**", "**/bin/**", "**/*Tests/**" ],
+          "files": [ "src/Llvm.Net/Llvm.NET.csproj"  ],
           "src":".."
         }
       ],
@@ -23,10 +22,13 @@
     "content":
     [
       {
-        "files": [ "api/**.yml", "api/index.md" ]
-      },
-      {
-        "files": [ "toc.yml", "*.md" ],
+        "files": [ "toc.yml",
+                   "index.md",
+                   "api/**.md",
+                   "api/**.yml",
+                   "articles/**.md",
+                   "articles/**.yml"
+                 ],
         "exclude": [ "obj/**" ]
       }
     ],

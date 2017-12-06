@@ -13,7 +13,11 @@ using Llvm.NET.Transforms;
 using Llvm.NET.Types;
 using Llvm.NET.Values;
 
+using static Llvm.NET.StaticState;
+
 [assembly: SuppressMessage( "StyleCop.CSharp.DocumentationRules", "SA1652:Enable XML documentation output", Justification = "Sample application" )]
+
+#pragma warning disable SA1512, SA1513, SA1515 // single line comments used to tag regions for extraction into docs
 
 namespace TestDebugInfo
 {
@@ -27,8 +31,14 @@ namespace TestDebugInfo
         /// </remarks>
         public static void Main( string[ ] args )
         {
-            TargetDetails = new CortexM3Details();
-            string srcPath = args[ 0 ];
+            // <CommandlineArguments>
+            if( args.Length != 2 )
+            {
+                ShowUsage( );
+                return;
+            }
+
+            string srcPath = args[ 1 ];
             if( !File.Exists( srcPath ) )
             {
                 Console.Error.WriteLine( "Src file not found: '{0}'", srcPath );
@@ -36,56 +46,73 @@ namespace TestDebugInfo
             }
 
             srcPath = Path.GetFullPath( srcPath );
+            // </CommandlineArguments>
 
-            string moduleName = $"test_{TargetDetails.ShortName}.bc";
-            using( StaticState.InitializeLLVM() )
+            using( InitializeLLVM() )
             {
-                StaticState.RegisterAll( );
-                var targetMachine = TargetMachine.FromTriple( TargetDetails.Triple
-                                                            , TargetDetails.Cpu
-                                                            , TargetDetails.Features
-                                                            , CodeGenOpt.Aggressive
-                                                            , Reloc.Default
-                                                            , CodeModel.Small
-                                                            );
+                // <TargetDetailsSelection>
+                switch( args[ 0 ] )
+                {
+                case "M3":
+                    TargetDetails = new CortexM3Details( );
+                    break;
+
+                case "X64":
+                    TargetDetails = new X64Details( );
+                    break;
+
+                default:
+                    ShowUsage( );
+                    return;
+                }
+
+                string moduleName = $"test_{TargetDetails.ShortName}.bc";
+                // </TargetDetailsSelection>
+
+                // <CreatingModule>
                 using( var context = new Context( ) )
                 using( var module = new BitcodeModule( context, moduleName ) )
                 {
                     module.SourceFileName = Path.GetFileName( srcPath );
+                    module.TargetTriple = TargetDetails.TargetMachine.Triple;
+                    module.Layout = TargetDetails.TargetMachine.TargetData;
+
                     TargetDependentAttributes = TargetDetails.BuildTargetDependentFunctionAttributes( context );
-                    var targetData = targetMachine.TargetData;
+                    // </CreatingModule>
 
-                    module.TargetTriple = targetMachine.Triple;
-                    module.Layout = targetMachine.TargetData;
-
+                    // <CreatingCompileUnit>
                     // create compile unit and file as the top level scope for everything
                     var cu = module.DIBuilder.CreateCompileUnit( SourceLanguage.C99
-                                                               , Path.GetFileName( srcPath )
-                                                               , Path.GetDirectoryName( srcPath )
+                                                               , srcPath
                                                                , VersionIdentString
-                                                               , false
-                                                               , string.Empty
-                                                               , 0
+                                                               , optimized: false
+                                                               , compilationFlags: string.Empty
+                                                               , runtimeVersion: 0
                                                                );
                     var diFile = module.DIBuilder.CreateFile( srcPath );
+                    // </CreatingCompileUnit>
 
+                    // <CreatingBasicTypesWithDebugInfo>
                     // Create basic types used in this compilation
                     var i32 = new DebugBasicType( module.Context.Int32Type, module, "int", DiTypeKind.Signed );
                     var f32 = new DebugBasicType( module.Context.FloatType, module, "float", DiTypeKind.Float );
                     var voidType = DebugType.Create( module.Context.VoidType, ( DIType )null );
                     var i32Array_0_32 = i32.CreateArrayType( module, 0, 32 );
+                    // </CreatingBasicTypesWithDebugInfo>
 
+#pragma warning disable SA1500 // "Warning SA1500  Braces for multi - line statements must not share line" (simple table format)
+                    // <CreatingStructureTypes>
                     // create the LLVM structure type and body with full debug information
-                    #pragma warning disable SA1500 // "Warning SA1500  Braces for multi - line statements must not share line" (simple table format)
                     var fooBody = new[ ]
                         { new DebugMemberInfo { File = diFile, Line = 3, Name = "a", DebugType = i32, Index = 0 }
                         , new DebugMemberInfo { File = diFile, Line = 4, Name = "b", DebugType = f32, Index = 1 }
                         , new DebugMemberInfo { File = diFile, Line = 5, Name = "c", DebugType = i32Array_0_32, Index = 2 }
                         };
-                    #pragma warning restore
 
                     var fooType = new DebugStructType( module, "struct.foo", cu, "foo", diFile, 1, DebugInfoFlags.None, fooBody );
-
+                    // </CreatingStructureTypes>
+#pragma warning restore SA1500
+                    // <CreatingGlobalsAndMetadata>
                     // add global variables and constants
                     var constArray = ConstantArray.From( i32, 32, module.Context.CreateConstant( 3 ), module.Context.CreateConstant( 4 ) );
                     var barValue = module.Context.CreateNamedConstantStruct( fooType
@@ -95,21 +122,24 @@ namespace TestDebugInfo
                                                                            );
 
                     var bar = module.AddGlobal( fooType, false, 0, barValue, "bar" );
-                    bar.Alignment = targetData.AbiAlignmentOf( fooType );
+                    bar.Alignment = module.Layout.AbiAlignmentOf( fooType );
                     bar.AddDebugInfo( module.DIBuilder.CreateGlobalVariableExpression( cu, "bar", string.Empty, diFile, 8, fooType.DIType, false, null ) );
 
                     var baz = module.AddGlobal( fooType, false, Linkage.Common, Constant.NullValueFor( fooType ), "baz" );
-                    baz.Alignment = targetData.AbiAlignmentOf( fooType );
+                    baz.Alignment = module.Layout.AbiAlignmentOf( fooType );
                     baz.AddDebugInfo( module.DIBuilder.CreateGlobalVariableExpression( cu, "baz", string.Empty, diFile, 9, fooType.DIType, false, null ) );
 
                     // add module flags and compiler identifiers...
                     // this can technically occur at any point, though placing it here makes
                     // comparing against clang generated files easier
                     AddModuleFlags( module );
+                    // </CreatingGlobalsAndMetadata>
 
+                    // <CreatingQualifiedTypes>
                     // create types for function args
                     var constFoo = module.DIBuilder.CreateQualifiedType( fooType.DIType, QualifiedTypeTag.Const );
                     var fooPtr = new DebugPointerType( fooType, module );
+                    // </CreatingQualifiedTypes>
 
                     // Create the functions
                     // NOTE: The declaration ordering is reversed from that of the sample code file (test.c)
@@ -118,8 +148,8 @@ namespace TestDebugInfo
                     Function doCopyFunc = DeclareDoCopyFunc( module, diFile, voidType );
                     Function copyFunc = DeclareCopyFunc( module, diFile, voidType, constFoo, fooPtr );
 
-                    CreateCopyFunctionBody( module, targetData, copyFunc, diFile, fooType, fooPtr, constFoo );
-                    CreateDoCopyFunctionBody( module, targetData, doCopyFunc, fooType, bar, baz, copyFunc );
+                    CreateCopyFunctionBody( module, copyFunc, diFile, fooType, fooPtr, constFoo );
+                    CreateDoCopyFunctionBody( module, doCopyFunc, fooType, bar, baz, copyFunc );
 
                     // finalize the debug information
                     // all temporaries must be replaced by now, this resolves any remaining
@@ -163,13 +193,19 @@ namespace TestDebugInfo
                         // Module is good, so generate the output files
                         module.WriteToFile( "test.bc" );
                         File.WriteAllText( "test.ll", module.WriteToString( ) );
-                        targetMachine.EmitToFile( module, "test.o", CodeGenFileType.ObjectFile );
-                        targetMachine.EmitToFile( module, "test.s", CodeGenFileType.AssemblySource );
+                        TargetDetails.TargetMachine.EmitToFile( module, "test.o", CodeGenFileType.ObjectFile );
+                        TargetDetails.TargetMachine.EmitToFile( module, "test.s", CodeGenFileType.AssemblySource );
                     }
                 }
             }
         }
 
+        private static void ShowUsage( )
+        {
+            Console.Error.WriteLine( "Usage: {0} [X64|M3] <source file path>", Path.GetFileName( System.Reflection.Assembly.GetExecutingAssembly( ).CodeBase ) );
+        }
+
+        // <FunctionDeclarations>
         private static Function DeclareDoCopyFunc( BitcodeModule module, DIFile diFile, IDebugType<ITypeRef, DIType> voidType )
         {
             var doCopySig = module.Context.CreateFunctionType( module.DIBuilder, voidType );
@@ -230,6 +266,9 @@ namespace TestDebugInfo
             return copyFunc;
         }
 
+        // </FunctionDeclarations>
+
+        // <AddModuleFlags>
         private static void AddModuleFlags( BitcodeModule module )
         {
             module.AddModuleFlag( ModuleFlagBehavior.Warning, BitcodeModule.DwarfVersionValue, 4 );
@@ -237,9 +276,9 @@ namespace TestDebugInfo
             TargetDetails.AddModuleFlags( module );
             module.AddVersionIdentMetadata( VersionIdentString );
         }
+        // </AddModuleFlags>
 
         private static void CreateCopyFunctionBody( BitcodeModule module
-                                                  , DataLayout layout
                                                   , Function copyFunc
                                                   , DIFile diFile
                                                   , ITypeRef foo
@@ -263,7 +302,7 @@ namespace TestDebugInfo
             var paramSrc = diBuilder.CreateArgument( copyFunc.DISubProgram, "src", diFile, 11, constFooType, false, 0, 1 );
             var paramDst = diBuilder.CreateArgument( copyFunc.DISubProgram, "pDst", diFile, 12, fooPtr.DIType, false, 0, 2 );
 
-            uint ptrAlign = layout.CallFrameAlignmentOf( fooPtr );
+            uint ptrAlign = module.Layout.CallFrameAlignmentOf( fooPtr );
 
             // create Locals
             // NOTE: There's no debug location attached to these instructions.
@@ -304,27 +343,24 @@ namespace TestDebugInfo
                                        .Alignment( ptrAlign )
                                        .SetDebugLocation( 15, 6, copyFunc.DISubProgram );
 
-            var dstPtr = instBuilder.BitCast( loadedDst, module.Context.Int8Type.CreatePointerType( ) )
-                                    .SetDebugLocation( 15, 13, copyFunc.DISubProgram );
+            instBuilder.SetDebugLocation( 15, 13, copyFunc.DISubProgram );
+            var dstPtr = instBuilder.BitCast( loadedDst, module.Context.Int8Type.CreatePointerType( ) );
+            var srcPtr = instBuilder.BitCast( copyFunc.Parameters[ 0 ], module.Context.Int8Type.CreatePointerType( ) );
 
-            var srcPtr = instBuilder.BitCast( copyFunc.Parameters[ 0 ], module.Context.Int8Type.CreatePointerType( ) )
-                                    .SetDebugLocation( 15, 13, copyFunc.DISubProgram );
-
-            uint pointerSize = layout.IntPtrType( module.Context ).IntegerBitWidth;
+            uint pointerSize = module.Layout.IntPtrType( module.Context ).IntegerBitWidth;
             instBuilder.MemCpy( module
                               , dstPtr
                               , srcPtr
-                              , module.Context.CreateConstant( pointerSize, layout.ByteSizeOf( foo ), false )
-                              , ( int )layout.AbiAlignmentOf( foo )
+                              , module.Context.CreateConstant( pointerSize, module.Layout.ByteSizeOf( foo ), false )
+                              , ( int )module.Layout.AbiAlignmentOf( foo )
                               , false
-                              ).SetDebugLocation( 15, 13, copyFunc.DISubProgram );
+                              );
 
             instBuilder.Return( )
                        .SetDebugLocation( 16, 1, copyFunc.DISubProgram );
         }
 
         private static void CreateDoCopyFunctionBody( BitcodeModule module
-                                                    , DataLayout layout
                                                     , Function doCopyFunc
                                                     , IStructType foo
                                                     , GlobalVariable bar
@@ -346,21 +382,19 @@ namespace TestDebugInfo
                 // create a temp local copy of the global structure
                 var dstAddr = instBuilder.Alloca( foo )
                                          .RegisterName( "agg.tmp" )
-                                         .Alignment( layout.CallFrameAlignmentOf( foo ) );
+                                         .Alignment( module.Layout.CallFrameAlignmentOf( foo ) );
 
-                var bitCastDst = instBuilder.BitCast( dstAddr, bytePtrType )
-                                            .SetDebugLocation( 25, 11, doCopyFunc.DISubProgram );
-
-                var bitCastSrc = instBuilder.BitCast( bar, bytePtrType )
-                                            .SetDebugLocation( 25, 11, doCopyFunc.DISubProgram );
+                instBuilder.SetDebugLocation( 25, 11, doCopyFunc.DISubProgram );
+                var bitCastDst = instBuilder.BitCast( dstAddr, bytePtrType );
+                var bitCastSrc = instBuilder.BitCast( bar, bytePtrType );
 
                 instBuilder.MemCpy( module
                                   , bitCastDst
                                   , bitCastSrc
-                                  , module.Context.CreateConstant( layout.ByteSizeOf( foo ) )
-                                  , ( int )layout.CallFrameAlignmentOf( foo )
+                                  , module.Context.CreateConstant( module.Layout.ByteSizeOf( foo ) )
+                                  , ( int )module.Layout.CallFrameAlignmentOf( foo )
                                   , false
-                                  ).SetDebugLocation( 25, 11, doCopyFunc.DISubProgram );
+                                  );
 
                 instBuilder.Call( copyFunc, dstAddr, baz )
                            .SetDebugLocation( 25, 5, doCopyFunc.DISubProgram );

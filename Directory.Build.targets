@@ -97,6 +97,10 @@
             Command='"$(PackageOutputPath)NuGet.exe" pack $(NuSpecFile) -OutputDirectory $(PackageOutputPath) -Properties $(NuspecProperties) -NoPackageAnalysis' />
     </Target>
 
+    <Target Name="EnsureBuildOutputPaths" BeforeTargets="Build;Restore">
+        <MakeDir Directories="$(PackageOutputPath)"/>
+    </Target>
+
     <Target Name="ShowBuildParams" BeforeTargets="Build;Pack">
         <Message Importance="normal" Text="              BuildRootDir: $(BuildRootDir)" />
         <Message Importance="normal" Text="       BaseBuildOutputPath: $(BaseBuildOutputPath)" />
