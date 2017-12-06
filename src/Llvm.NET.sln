@@ -71,7 +71,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "InternalDetails", "Internal
 	ProjectSection(SolutionItems) = preProject
 		..\docfx\articles\InternalDetails\handleref-interning.md = ..\docfx\articles\InternalDetails\handleref-interning.md
 		..\docfx\articles\InternalDetails\index.md = ..\docfx\articles\InternalDetails\index.md
-		..\docfx\articles\InternalDetails\toc.yml = ..\docfx\articles\InternalDetails\toc.yml
+		..\docfx\articles\InternalDetails\llvm-handles.md = ..\docfx\articles\InternalDetails\llvm-handles.md
+		..\docfx\articles\InternalDetails\toc.md = ..\docfx\articles\InternalDetails\toc.md
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Samples", "Samples", "{D04D960B-79E5-4FB5-9241-1509F1576A59}"

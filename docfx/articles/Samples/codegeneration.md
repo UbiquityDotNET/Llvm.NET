@@ -69,7 +69,6 @@ context. This is a fundamental design of LLVM and reduces the complexity of atte
 manage collections of objects and interning them in a thread safe manner. Applicatins instead
 just create a context per thread if needed.
 
-
 To generate code for a particular target the application initializes the module to include the
 source file name that it was generated from, the [Triple](xref:Llvm.NET.Triple) that describes
 the target and a target specific [DataLayout](xref:Llvm.NET.DataLayout). The sample application
@@ -152,17 +151,152 @@ structure is initialized to all zeros. That is the initialized data for the stru
 
 [!code-csharp[Main](../../../Samples/CodeGenWithDebugInfo/Program.cs#CreatingGlobalsAndMetadata)]
 
+LLVM modules may contain additional module flags as metadata that describe how the module is generated
+or how the code generation/linker should treat the code. In this sample the dwarf version and debug meatadata
+versions are set along with a VersionIdentString that identifies the application that generated the module.
+Additionally, any target specific metadata is added to the module. The ordering of these is generally not
+relevant, however it is very specific in the sample to help ensure the generated bitcode is as close to the
+clang version as possible making it possible to run llvm-dis to gerate the textual IR files and compare them.
 [!code-csharp[Main](../../../Samples/CodeGenWithDebugInfo/Program.cs#AddModuleFlags)]
 
 ## Declaring the functions
+The function declarations for both of the two function's is mostly the same, following a common pattern:
+  1. Create the signature with debug information
+  1. Create the function declaration referencing the signature
+  1. Add attributes appropriate for the function
+
+The two functions illustrate a global externally visible function and a static that is visible only locally.
+This is indicated by the [Linkage.Internal](xref:Llvm.NET.Linkage.Internal) linkage value.
+
+>[!NOTE]
+>The use of fluent style extension methods in the Llvm.NET API helps make it easy to add to or modify
+>the attributes and linkage etc...
+
+DeclareCopyFunc() is a bit special in that it handles some target specific support in a generalized way. In
+particular the calling convention for the struct to use the `byval` form to pass the structure as a pointer
+but that the callee gets a copy of the original. This, is used for some large structures and allows the target
+machine generation room to use alternate means of transfering the data. (Stack or possibly otherwise unused
+registers). For the two processors this sample supports Clang only uses this for the Cortex-M3 so the code
+calls the TargetDetails.AddABIAttributesForByValueStructure) to add the appropriate attributes for the target
+as needed. 
 
 [!code-csharp[Main](../../../Samples/CodeGenWithDebugInfo/Program.cs#FunctionDeclarations)]
 
 ## Generating function bodies
-### Entry block
+This is where things really get intersting as this is where the actual code is generated for the functions. Up
+to this point evertyhing has created metadat or prototypes and signatures. The code generation generally follows
+a pattern that starts with creation of an entry block to initialize the paramaters and then additional blocks for
+the actual code. While LLVM IR uses an SSA form with virtual registers, code generation, usually doesn't need to
+worry about that so long as it follows some basic rules, in particular, all of the locals are allocated a slot
+on the stack via alloca along with any paremeters. The parameters are initialized from the signature values. All
+of which is done in the entry block. LLVM has a pass (mem2reg) that will lower this into SSA form with virtual
+registers so that each generating application doesn't have to worry about conversion into SSA form.
 
-#### Arguments and debug information
+After the parameters are handled in the entry block, the rest of the function is generated based on the source
+language or application defined behavior. In this case the sample generates IR equivalent to the functions defined
+in the sample test.c file. There are a few points to make about the function generation in the sample.
 
-### Instruction Generation
+### Generating Argument and Local variables
+As discussed the arguments and locals are allocated in the entry block however that only makes them useable in
+the function and ready for the mem2reg pass. In particular there is no debug information attached to the variables.
+To provide debug information LLVM provides an intrinsic function that is used to declare the debug information for
+a variable. In Llvm.NET this is emitted using the [InsertDeclare](xref:Llvm.NET.DebugInfo.DebugInfoBuilder.InsertDeclare*)
+method.
 
-#### Intrinsic LLVM calls
+### Calling LLVM Intrinsics
+The generated code needs to copy some data, rather than directly doing a copy in a loop, the code uses the LLVM
+intrinsic memcopy function. This function is lowered to an optimized copy for the target so tat applications need
+not worry about building optimal versions of IR for this common functionality. Furthermore, the LLVM instrinsic
+supports a variety of signatures for various data types all of which are hidden in the Llvm.NET method. Rather than
+require callers to create a declaration of the correct signature the Llvm.NET wrapper automatically figures out the
+correct signaure from the parameters provided. 
+
+## Final LLVM IR
+```llvm
+; ModuleID = 'test_M3.bc'
+source_filename = "test.c"
+target datalayout = "e-m:e-p:32:32-i64:64-v128:64:128-a:0:32-n32-S64"
+target triple = "thumbv7m-none--eabi"
+
+%struct.foo = type { i32, float, [32 x i32] }
+
+@bar = global %struct.foo { i32 1, float 2.000000e+00, [32 x i32] [i32 3, i32 4, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0] }, align 4, !dbg !0
+@baz = common global %struct.foo zeroinitializer, align 4, !dbg !6
+
+; Function Attrs: noinline nounwind optnone
+define void @DoCopy() #0 !dbg !23 {
+entry:
+  call void @copy(%struct.foo* byval align 4 @bar, %struct.foo* @baz), !dbg !26
+  ret void, !dbg !27
+}
+
+; Function Attrs: noinline nounwind optnone
+define internal void @copy(%struct.foo* byval align 4 %src, %struct.foo* %pDst) #0 !dbg !28 {
+entry:
+  %pDst.addr = alloca %struct.foo*, align 4
+  call void @llvm.dbg.declare(metadata %struct.foo* %src, metadata !33, metadata !34), !dbg !35
+  store %struct.foo* %pDst, %struct.foo** %pDst.addr, align 4
+  call void @llvm.dbg.declare(metadata %struct.foo** %pDst.addr, metadata !36, metadata !34), !dbg !37
+  %0 = load %struct.foo*, %struct.foo** %pDst.addr, align 4, !dbg !38
+  %1 = bitcast %struct.foo* %0 to i8*, !dbg !39
+  %2 = bitcast %struct.foo* %src to i8*, !dbg !39
+  call void @llvm.memcpy.p0i8.p0i8.i32(i8* %1, i8* %2, i32 136, i32 4, i1 false), !dbg !39
+  ret void, !dbg !40
+}
+
+; Function Attrs: nounwind readnone speculatable
+declare void @llvm.dbg.declare(metadata, metadata, metadata) #1
+
+; Function Attrs: argmemonly nounwind
+declare void @llvm.memcpy.p0i8.p0i8.i32(i8* nocapture writeonly, i8* nocapture readonly, i32, i32, i1) #2
+
+attributes #0 = { noinline nounwind optnone "correctly-rounded-divide-sqrt-fp-math"="false" "disable-tail-calls"="false" "less-precise-fpmad"="false" "no-frame-pointer-elim"="true" "no-frame-pointer-elim-non-leaf" "no-infs-fp-math"="false" "no-jump-tables"="false" "no-nans-fp-math"="false" "no-signed-zeros-fp-math"="false" "no-trapping-math"="false" "stack-protector-buffer-size"="8" "target-cpu"="cortex-m3" "target-features"="+hwdiv,+strict-align,+thumb-mode" "unsafe-fp-math"="false" "use-soft-float"="false" }
+attributes #1 = { nounwind readnone speculatable }
+attributes #2 = { argmemonly nounwind }
+
+!llvm.dbg.cu = !{!2}
+!llvm.module.flags = !{!18, !19, !20, !21}
+!llvm.ident = !{!22}
+
+!0 = !DIGlobalVariableExpression(var: !1)
+!1 = distinct !DIGlobalVariable(name: "bar", scope: !2, file: !3, line: 8, type: !8, isLocal: false, isDefinition: true)
+!2 = distinct !DICompileUnit(language: DW_LANG_C99, file: !3, producer: "clang version 5.0.0 (tags/RELEASE_500/rc4)", isOptimized: false, runtimeVersion: 0, emissionKind: FullDebug, enums: !4, globals: !5)
+!3 = !DIFile(filename: "test.c", directory: "D:\5CGitHub\5CUbiquity.NET\5CLlvm.Net\5CBuildOutput\5Cbin\5CCodeGenWithDebugInfo\5CRelease\5Cnetcoreapp2.0\5CSupport Files")
+!4 = !{}
+!5 = !{!0, !6}
+!6 = !DIGlobalVariableExpression(var: !7)
+!7 = distinct !DIGlobalVariable(name: "baz", scope: !2, file: !3, line: 9, type: !8, isLocal: false, isDefinition: true)
+!8 = !DICompositeType(tag: DW_TAG_structure_type, name: "foo", file: !3, line: 1, size: 1088, elements: !9)
+!9 = !{!10, !12, !14}
+!10 = !DIDerivedType(tag: DW_TAG_member, name: "a", scope: !8, file: !3, line: 3, baseType: !11, size: 32)
+!11 = !DIBasicType(name: "int", size: 32, encoding: DW_ATE_signed)
+!12 = !DIDerivedType(tag: DW_TAG_member, name: "b", scope: !8, file: !3, line: 4, baseType: !13, size: 32, offset: 32)
+!13 = !DIBasicType(name: "float", size: 32, encoding: DW_ATE_float)
+!14 = !DIDerivedType(tag: DW_TAG_member, name: "c", scope: !8, file: !3, line: 5, baseType: !15, size: 1024, offset: 64)
+!15 = !DICompositeType(tag: DW_TAG_array_type, baseType: !11, size: 1024, elements: !16)
+!16 = !{!17}
+!17 = !DISubrange(count: 32)
+!18 = !{i32 2, !"Dwarf Version", i32 4}
+!19 = !{i32 2, !"Debug Info Version", i32 3}
+!20 = !{i32 1, !"wchar_size", i32 4}
+!21 = !{i32 1, !"min_enum_size", i32 4}
+!22 = !{!"clang version 5.0.0 (tags/RELEASE_500/rc4)"}
+!23 = distinct !DISubprogram(name: "DoCopy", scope: !3, file: !3, line: 23, type: !24, isLocal: false, isDefinition: true, scopeLine: 24, isOptimized: false, unit: !2, variables: !4)
+!24 = !DISubroutineType(types: !25)
+!25 = !{null}
+!26 = !DILocation(line: 25, column: 5, scope: !23)
+!27 = !DILocation(line: 26, column: 1, scope: !23)
+!28 = distinct !DISubprogram(name: "copy", scope: !3, file: !3, line: 11, type: !29, isLocal: true, isDefinition: true, scopeLine: 14, flags: DIFlagPrototyped, isOptimized: false, unit: !2, variables: !4)
+!29 = !DISubroutineType(types: !30)
+!30 = !{null, !31, !32}
+!31 = !DIDerivedType(tag: DW_TAG_const_type, baseType: !8)
+!32 = !DIDerivedType(tag: DW_TAG_pointer_type, baseType: !8, size: 32)
+!33 = !DILocalVariable(name: "src", arg: 1, scope: !28, file: !3, line: 11, type: !31)
+!34 = !DIExpression()
+!35 = !DILocation(line: 11, column: 43, scope: !28)
+!36 = !DILocalVariable(name: "pDst", arg: 2, scope: !28, file: !3, line: 12, type: !32)
+!37 = !DILocation(line: 12, column: 38, scope: !28)
+!38 = !DILocation(line: 15, column: 6, scope: !28)
+!39 = !DILocation(line: 15, column: 13, scope: !28)
+!40 = !DILocation(line: 16, column: 1, scope: !28)
+```

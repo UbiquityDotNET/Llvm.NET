@@ -6,6 +6,8 @@ using System.Collections.Generic;
 using Llvm.NET;
 using Llvm.NET.Values;
 
+#pragma warning disable SA1512, SA1513, SA1515 // single line comments used to tag regions for extraction into docs
+
 namespace TestDebugInfo
 {
     // <ITargetDependentDetails>

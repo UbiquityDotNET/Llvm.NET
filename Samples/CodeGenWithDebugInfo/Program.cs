@@ -17,6 +17,8 @@ using static Llvm.NET.StaticState;
 
 [assembly: SuppressMessage( "StyleCop.CSharp.DocumentationRules", "SA1652:Enable XML documentation output", Justification = "Sample application" )]
 
+#pragma warning disable SA1512, SA1513, SA1515 // single line comments used to tag regions for extraction into docs
+
 namespace TestDebugInfo
 {
     /// <summary>Program to test/demonstrate Aspects of debug information generation with Llvm.NET</summary>
@@ -29,7 +31,7 @@ namespace TestDebugInfo
         /// </remarks>
         public static void Main( string[ ] args )
         {
-            #region Commandline Arguments
+            // <CommandlineArguments>
             if( args.Length != 2 )
             {
                 ShowUsage( );
@@ -44,7 +46,7 @@ namespace TestDebugInfo
             }
 
             srcPath = Path.GetFullPath( srcPath );
-            #endregion
+            // </CommandlineArguments>
 
             using( InitializeLLVM() )
             {
@@ -109,7 +111,7 @@ namespace TestDebugInfo
 
                     var fooType = new DebugStructType( module, "struct.foo", cu, "foo", diFile, 1, DebugInfoFlags.None, fooBody );
                     // </CreatingStructureTypes>
-#pragma warning restore
+#pragma warning restore SA1500
                     // <CreatingGlobalsAndMetadata>
                     // add global variables and constants
                     var constArray = ConstantArray.From( i32, 32, module.Context.CreateConstant( 3 ), module.Context.CreateConstant( 4 ) );
@@ -263,6 +265,7 @@ namespace TestDebugInfo
             TargetDetails.AddABIAttributesForByValueStructure( copyFunc, 0 );
             return copyFunc;
         }
+
         // </FunctionDeclarations>
 
         // <AddModuleFlags>
@@ -340,11 +343,9 @@ namespace TestDebugInfo
                                        .Alignment( ptrAlign )
                                        .SetDebugLocation( 15, 6, copyFunc.DISubProgram );
 
-            var dstPtr = instBuilder.BitCast( loadedDst, module.Context.Int8Type.CreatePointerType( ) )
-                                    .SetDebugLocation( 15, 13, copyFunc.DISubProgram );
-
-            var srcPtr = instBuilder.BitCast( copyFunc.Parameters[ 0 ], module.Context.Int8Type.CreatePointerType( ) )
-                                    .SetDebugLocation( 15, 13, copyFunc.DISubProgram );
+            instBuilder.SetDebugLocation( 15, 13, copyFunc.DISubProgram );
+            var dstPtr = instBuilder.BitCast( loadedDst, module.Context.Int8Type.CreatePointerType( ) );
+            var srcPtr = instBuilder.BitCast( copyFunc.Parameters[ 0 ], module.Context.Int8Type.CreatePointerType( ) );
 
             uint pointerSize = module.Layout.IntPtrType( module.Context ).IntegerBitWidth;
             instBuilder.MemCpy( module
@@ -353,7 +354,7 @@ namespace TestDebugInfo
                               , module.Context.CreateConstant( pointerSize, module.Layout.ByteSizeOf( foo ), false )
                               , ( int )module.Layout.AbiAlignmentOf( foo )
                               , false
-                              ).SetDebugLocation( 15, 13, copyFunc.DISubProgram );
+                              );
 
             instBuilder.Return( )
                        .SetDebugLocation( 16, 1, copyFunc.DISubProgram );
@@ -383,11 +384,9 @@ namespace TestDebugInfo
                                          .RegisterName( "agg.tmp" )
                                          .Alignment( module.Layout.CallFrameAlignmentOf( foo ) );
 
-                var bitCastDst = instBuilder.BitCast( dstAddr, bytePtrType )
-                                            .SetDebugLocation( 25, 11, doCopyFunc.DISubProgram );
-
-                var bitCastSrc = instBuilder.BitCast( bar, bytePtrType )
-                                            .SetDebugLocation( 25, 11, doCopyFunc.DISubProgram );
+                instBuilder.SetDebugLocation( 25, 11, doCopyFunc.DISubProgram );
+                var bitCastDst = instBuilder.BitCast( dstAddr, bytePtrType );
+                var bitCastSrc = instBuilder.BitCast( bar, bytePtrType );
 
                 instBuilder.MemCpy( module
                                   , bitCastDst
@@ -395,7 +394,7 @@ namespace TestDebugInfo
                                   , module.Context.CreateConstant( module.Layout.ByteSizeOf( foo ) )
                                   , ( int )module.Layout.CallFrameAlignmentOf( foo )
                                   , false
-                                  ).SetDebugLocation( 25, 11, doCopyFunc.DISubProgram );
+                                  );
 
                 instBuilder.Call( copyFunc, dstAddr, baz )
                            .SetDebugLocation( 25, 5, doCopyFunc.DISubProgram );
