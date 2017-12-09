@@ -17,7 +17,7 @@ namespace Llvm.NET.Instructions
         public CleanupPad CleanupPad => GetOperand<CleanupPad>( 0 );
         /* TODO: CleanupPad { set; } */
 
-        /* TODO:
+        /* TODO: Enable UnwindDestination once the non-operand properties are enabled
             BasicBlock UnwindDestination
             {
                 get => HasUnwindDestination ? GetOperand<BasicBlock>( 1 );

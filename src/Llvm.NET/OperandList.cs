@@ -104,7 +104,7 @@ namespace Llvm.NET
         /// <inheritdoc/>
         public void Add( T item )
         {
-            throw new NotSupportedException( );
+            Container.Add( item );
         }
 
         /// <inheritdoc/>

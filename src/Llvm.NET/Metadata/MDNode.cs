@@ -104,7 +104,7 @@ namespace Llvm.NET
         public string GetOperandString( int index )
             => GetOperand<MDString>( index )?.ToString( ) ?? string.Empty;
 
-        /* TODO:
+        /* TODO: Consider adding these additional properties/methods
         public bool IsTBAAVTableAccess { get; }
 
         public TempMDNode Clone() {...}
@@ -131,6 +131,8 @@ namespace Llvm.NET
             get => FromHandle<LlvmMetadata>( Context, LLVMGetOperandNode( LLVMMDNodeGetOperand( MetadataHandle, ( uint )index ) ) );
             set => LLVMMDNodeReplaceOperand( MetadataHandle, ( uint )index, value.MetadataHandle );
         }
+
+        void IOperandContainer<LlvmMetadata>.Add( LlvmMetadata item ) => throw new NotSupportedException( );
 
         internal MDNode( LLVMMetadataRef handle )
             : base( handle )

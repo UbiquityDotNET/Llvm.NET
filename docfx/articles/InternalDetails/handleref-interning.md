@@ -27,7 +27,7 @@ multiple instances of wrappers for the same underlying instance would be created
 memory.
 
 To solve these problems Llvm.NET uses an interning approach that mirrors the underlying LLVM
-approach by maintaining a mapping of the raw opaque pointers to a single managed instance. This
+implementation by maintaining a mapping of the raw opaque pointers to a single managed instance. This
 means that whenever an interop API retrieves an opaque pointer it can look up the wrapper and
 provide that to the caller. Thus, reference equality "Just works". If there was no instance then
 the interning system will create one. In order to create one it must know the concrete most

@@ -716,7 +716,7 @@ namespace Llvm.NET
                                         );
         }
 
-        /*TODO:
+        /*TODO: Create interop calls to support additional properties
         public unsigned GetMDKindId(string name) {...}
         public IEnumerable<string> MDKindNames { get; }
 
@@ -724,8 +724,6 @@ namespace Llvm.NET
         public IEnumerable<string> OperandBundleTagIds { get; }
 
         public bool ODRUniqueDebugTypes { get; set; }
-
-        public OptBisect OptBisec { get; set; }
         */
 
         // looks up an attribute by it's handle, if none is found a new managed wrapper is created

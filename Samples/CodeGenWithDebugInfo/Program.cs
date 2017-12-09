@@ -265,7 +265,6 @@ namespace TestDebugInfo
             TargetDetails.AddABIAttributesForByValueStructure( copyFunc, 0 );
             return copyFunc;
         }
-
         // </FunctionDeclarations>
 
         // <AddModuleFlags>

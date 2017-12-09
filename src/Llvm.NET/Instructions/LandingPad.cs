@@ -3,9 +3,10 @@
 // </copyright>
 
 using System;
+using System.Collections.Generic;
 using Llvm.NET.Native;
 using Llvm.NET.Values;
-
+using Ubiquity.ArgValidators;
 using static Llvm.NET.Native.NativeMethods;
 
 namespace Llvm.NET.Instructions
@@ -19,32 +20,10 @@ namespace Llvm.NET.Instructions
     /// <seealso href="xref:llvm_exception_handling#exception-handling-in-llvm">Exception Handling in LLVM</seealso>
     public class LandingPad
         : Instruction
+        , IOperandContainer<Constant>
     {
-        /// <summary>Adds a clause to the <see cref="LandingPad"/></summary>
-        /// <param name="clause">A catch or filter clause for the LandingPad</param>
-        public void AddClause(Value clause)
-        {
-            if( clause == null )
-            {
-                throw new ArgumentNullException( nameof( clause ) );
-            }
-
-            LLVMAddClause( ValueHandle, clause.ValueHandle);
-        }
-
-        /*
-        TODO: Implement clauses property
-        This basically requires OperandList.Cast<COnstant>.ToList(), but without the overhead of the
-        duplication and enumeration caused from running ToList(), see notes in UserOperandList
-
-        unsigned LLVMGetNumClauses(LLVMValueRef LandingPad) {
-          return unwrap<LandingPadInst>(LandingPad)->getNumClauses();
-        }
-
-        LLVMValueRef LLVMGetClause(LLVMValueRef LandingPad, unsigned Idx) {
-          return wrap(unwrap<LandingPadInst>(LandingPad)->getClause(Idx));
-        }
-        */
+        /// <summary>Gets the list of clauses for this pad</summary>
+        public IList<Constant> Clauses { get; }
 
         /// <summary>Gets or sets a value indicating whether this <see cref="LandingPad"/> is a cleanup pad</summary>
         public bool IsCleanup
@@ -53,9 +32,25 @@ namespace Llvm.NET.Instructions
             set => LLVMSetCleanup( ValueHandle, value );
         }
 
+        long IOperandContainer<Constant>.Count => Operands.Count;
+
+        Constant IOperandContainer<Constant>.this[ int index ]
+        {
+            get => GetOperand<Constant>( index );
+            set => Operands[ index ] = value;
+        }
+
+        void IOperandContainer<Constant>.Add( Constant item )
+        {
+            item.ValidateNotNull( nameof( item ) );
+
+            LLVMAddClause( ValueHandle, item.ValueHandle );
+        }
+
         internal LandingPad( LLVMValueRef valueRef )
             : base( valueRef )
         {
+            Clauses = new OperandList<Constant>( this );
         }
     }
 }

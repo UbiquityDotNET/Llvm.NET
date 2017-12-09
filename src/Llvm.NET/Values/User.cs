@@ -78,6 +78,8 @@ namespace Llvm.NET.Values
             set => LLVMSetOperand( ValueHandle, ( uint )index, value.ValueHandle );
         }
 
+        void IOperandContainer<Value>.Add( Value item ) => throw new NotSupportedException( );
+
         internal User( LLVMValueRef userRef )
             : base( userRef )
         {
