@@ -8687,18 +8687,18 @@ references:
   commentId: T:Llvm.NET.Instructions.LandingPad
   fullName: Llvm.NET.Instructions.LandingPad
   nameWithType: LandingPad
-- uid: Llvm.NET.Instructions.LandingPad.AddClause(Llvm.NET.Values.Value)
-  name: AddClause(Value)
-  href: api/Llvm.NET.Instructions.LandingPad.AddClause.html#Llvm_NET_Instructions_LandingPad_AddClause_Llvm_NET_Values_Value_
-  commentId: M:Llvm.NET.Instructions.LandingPad.AddClause(Llvm.NET.Values.Value)
-  fullName: Llvm.NET.Instructions.LandingPad.AddClause(Llvm.NET.Values.Value)
-  nameWithType: LandingPad.AddClause(Value)
-- uid: Llvm.NET.Instructions.LandingPad.AddClause*
-  name: AddClause
-  href: api/Llvm.NET.Instructions.LandingPad.AddClause.html
-  commentId: Overload:Llvm.NET.Instructions.LandingPad.AddClause
-  fullName: Llvm.NET.Instructions.LandingPad.AddClause
-  nameWithType: LandingPad.AddClause
+- uid: Llvm.NET.Instructions.LandingPad.Clauses
+  name: Clauses
+  href: api/Llvm.NET.Instructions.LandingPad.Clauses.html#Llvm_NET_Instructions_LandingPad_Clauses
+  commentId: P:Llvm.NET.Instructions.LandingPad.Clauses
+  fullName: Llvm.NET.Instructions.LandingPad.Clauses
+  nameWithType: LandingPad.Clauses
+- uid: Llvm.NET.Instructions.LandingPad.Clauses*
+  name: Clauses
+  href: api/Llvm.NET.Instructions.LandingPad.Clauses.html
+  commentId: Overload:Llvm.NET.Instructions.LandingPad.Clauses
+  fullName: Llvm.NET.Instructions.LandingPad.Clauses
+  nameWithType: LandingPad.Clauses
 - uid: Llvm.NET.Instructions.LandingPad.IsCleanup
   name: IsCleanup
   href: api/Llvm.NET.Instructions.LandingPad.IsCleanup.html#Llvm_NET_Instructions_LandingPad_IsCleanup

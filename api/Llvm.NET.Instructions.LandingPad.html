@@ -10,7 +10,7 @@
     <meta name="viewport" content="width=device-width">
     <meta name="title" content="Class LandingPad
    | Llvm.NET ">
-    <meta name="generator" content="docfx 2.28.1.0">
+    <meta name="generator" content="docfx 2.28.2.0">
     
     <link rel="shortcut icon" href="../favicon.ico">
     <link rel="stylesheet" href="../styles/docfx.vendor.css">
@@ -4452,7 +4452,7 @@
                               
                               <ul class="nav level3">
                                 <li class="">
-                                  <a href="Llvm.NET.Instructions.LandingPad.AddClause.html" title="AddClause" class="">AddClause</a>
+                                  <a href="Llvm.NET.Instructions.LandingPad.Clauses.html" title="Clauses" class="">Clauses</a>
                                 </li>
                                 <li class="">
                                   <a href="Llvm.NET.Instructions.LandingPad.IsCleanup.html" title="IsCleanup" class="">IsCleanup</a>
@@ -5975,7 +5975,7 @@
   
   <h5 id="Llvm_NET_Instructions_LandingPad_syntax">Syntax</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public class LandingPad : Instruction, IExtensiblePropertyContainer, IOperandContainer&lt;Value&gt;</code></pre>
+    <pre><code class="lang-csharp hljs">public class LandingPad : Instruction, IExtensiblePropertyContainer, IOperandContainer&lt;Value&gt;, IOperandContainer&lt;Constant&gt;</code></pre>
   </div>
 
   
@@ -5997,29 +5997,17 @@ in the block.</p>
     </thead>
     <tbody>
       <tr>
+        <td id="Llvm_NET_Instructions_LandingPad_Clauses" data-uid="Llvm.NET.Instructions.LandingPad.Clauses">
+          <a class="xref" href="Llvm.NET.Instructions.LandingPad.Clauses.html#Llvm_NET_Instructions_LandingPad_Clauses">Clauses</a>
+        </td>
+        <td class="markdown level1 summary"><p>Gets the list of clauses for this pad</p>
+</td>
+      </tr>
+      <tr>
         <td id="Llvm_NET_Instructions_LandingPad_IsCleanup" data-uid="Llvm.NET.Instructions.LandingPad.IsCleanup">
           <a class="xref" href="Llvm.NET.Instructions.LandingPad.IsCleanup.html#Llvm_NET_Instructions_LandingPad_IsCleanup">IsCleanup</a>
         </td>
         <td class="markdown level1 summary"><p>Gets or sets a value indicating whether this <a class="xref" href="Llvm.NET.Instructions.LandingPad.html">LandingPad</a> is a cleanup pad</p>
-</td>
-      </tr>
-    </tbody>
-  </table>
-  <h3 id="methods">Methods
-  </h3>
-  <table class="table table-bordered table-striped table-condensed">
-    <thead>
-      <tr>
-        <th>Name</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td id="Llvm_NET_Instructions_LandingPad_AddClause_Llvm_NET_Values_Value_" data-uid="Llvm.NET.Instructions.LandingPad.AddClause(Llvm.NET.Values.Value)">
-          <a class="xref" href="Llvm.NET.Instructions.LandingPad.AddClause.html#Llvm_NET_Instructions_LandingPad_AddClause_Llvm_NET_Values_Value_">AddClause(Value)</a>
-        </td>
-        <td class="markdown level1 summary"><p>Adds a clause to the <a class="xref" href="Llvm.NET.Instructions.LandingPad.html">LandingPad</a></p>
 </td>
       </tr>
     </tbody>
@@ -6049,7 +6037,7 @@ in the block.</p>
           </div>
           <div class="contribution-panel mobile-hide">
               <a href="https://github.com/UbiquityDotNET/Llvm.NET/new/master/apiSpec/new?filename=Llvm_NET_Instructions_LandingPad.md&amp;value=---%0Auid%3A%20Llvm.NET.Instructions.LandingPad%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A" title="Improve this Doc" class="fab btn-warning pull-right"><i class="glyphicon glyphicon-pencil"></i></a>
-              <a href="https://github.com/UbiquityDotNET/Llvm.NET/blob/master/src/Llvm.NET/Instructions/LandingPad.cs/#L20" title="View Source" class="fab btn-info pull-right"><i class="fa fa-code"></i></a>
+              <a href="https://github.com/UbiquityDotNET/Llvm.NET/blob/master/src/Llvm.NET/Instructions/LandingPad.cs/#L21" title="View Source" class="fab btn-info pull-right"><i class="fa fa-code"></i></a>
           </div>
           
           <div class="hidden-sm col-md-2" role="complementary">

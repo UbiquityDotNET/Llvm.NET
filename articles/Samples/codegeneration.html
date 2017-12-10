@@ -8,7 +8,7 @@
     <title>CodeGenWithDebugInfo | Llvm.NET </title>
     <meta name="viewport" content="width=device-width">
     <meta name="title" content="CodeGenWithDebugInfo | Llvm.NET ">
-    <meta name="generator" content="docfx 2.28.1.0">
+    <meta name="generator" content="docfx 2.28.2.0">
     
     <link rel="shortcut icon" href="../../favicon.ico">
     <link rel="stylesheet" href="../../styles/docfx.vendor.css">
@@ -332,7 +332,34 @@ is initialized with constant data. The sample starts by constructing the const a
 forms the initialized value of <code>bar.c</code>, the source only provides const values for the first two
 entries of a 32 element array. The const data is created via <a class="xref" href="../../api/Llvm.NET.Values.ConstantArray.html">ConstArray</a>.
 The full initialized const data for bar is the created from <a class="xref" href="../../api/Llvm.NET.Context.CreateNamedConstantStruct.html">Context.CreateNamedConstantStruct</a></p>
-<p>Once the constant data is available an LLVM global is created for it with a name that matches the source name
+<pre><code class="lang-csharp" name="Main">// add global variables and constants
+var constArray = ConstantArray.From( i32, 32, module.Context.CreateConstant( 3 ), module.Context.CreateConstant( 4 ) );
+var barValue = module.Context.CreateNamedConstantStruct( fooType
+                                                       , module.Context.CreateConstant( 1 )
+                                                       , module.Context.CreateConstant( 2.0f )
+                                                       , constArray
+                                                       );
+
+var bar = module.AddGlobal( fooType, false, 0, barValue, &quot;bar&quot; );
+bar.Alignment = module.Layout.AbiAlignmentOf( fooType );
+bar.AddDebugInfo( module.DIBuilder.CreateGlobalVariableExpression( cu, &quot;bar&quot;, string.Empty, diFile, 8, fooType.DIType, false, null ) );
+
+var baz = module.AddGlobal( fooType, false, Linkage.Common, Constant.NullValueFor( fooType ), &quot;baz&quot; );
+baz.Alignment = module.Layout.AbiAlignmentOf( fooType );
+baz.AddDebugInfo( module.DIBuilder.CreateGlobalVariableExpression( cu, &quot;baz&quot;, string.Empty, diFile, 9, fooType.DIType, false, null ) );
+
+// add module flags and compiler identifiers...
+// this can technically occur at any point, though placing it here makes
+// comparing against clang generated files easier
+AddModuleFlags( module );
+</code></pre><pre><code class="lang-csharp" name="Main">private static void AddModuleFlags( BitcodeModule module )
+{
+    module.AddModuleFlag( ModuleFlagBehavior.Warning, BitcodeModule.DwarfVersionValue, 4 );
+    module.AddModuleFlag( ModuleFlagBehavior.Warning, BitcodeModule.DebugVersionValue, BitcodeModule.DebugMetadataVersion );
+    TargetDetails.AddModuleFlags( module );
+    module.AddVersionIdentMetadata( VersionIdentString );
+}
+</code></pre><p>Once the constant data is available an LLVM global is created for it with a name that matches the source name
 via <a class="xref" href="../../api/Llvm.NET.BitcodeModule.AddGlobal.html">AddGlobal</a>. To ensure the linker lays out the structure
 correctly the code uses the layout information for the module to get the ABI required alignement for 
 the global and sets the <a class="xref" href="../../api/Llvm.NET.Values.GlobalObject.Alignment.html#Llvm_NET_Values_GlobalObject_Alignment">Alignment</a> property for the global.
@@ -453,7 +480,6 @@ private static Function DeclareCopyFunc( BitcodeModule module
     TargetDetails.AddABIAttributesForByValueStructure( copyFunc, 0 );
     return copyFunc;
 }
-
 </code></pre><h2 id="generating-function-bodies">Generating function bodies</h2>
 <p>This is where things really get intersting as this is where the actual code is generated for the functions. Up
 to this point evertyhing has created metadat or prototypes and signatures. The code generation generally follows
