@@ -167,7 +167,7 @@ namespace Kaleidoscope
 
         private void InitializeModuleAndPassManager( )
         {
-            Module = new BitcodeModule( Context, "Kaleidoscope" );
+            Module = new BitcodeModule( Context );
             FunctionPassManager = new FunctionPassManager( Module );
             FunctionPassManager.AddInstructionCombiningPass( )
                                .AddReassociatePass( )
@@ -220,7 +220,13 @@ namespace Kaleidoscope
             return retVal;
         }
 
+// Testing experimental OrcJIT support
+#if USE_ORCJIT
+        private (Function Function, Llvm.NET.JIT.OrcJit.OrcJitHandle JitHandle) DefineFunction( Function function, ExpressionContext body )
+#else
+#pragma warning disable IDE0008
         private (Function Function, int JitHandle) DefineFunction( Function function, ExpressionContext body )
+#endif
         {
             if( !function.IsDeclaration )
             {
@@ -247,14 +253,14 @@ namespace Kaleidoscope
             Trace.TraceInformation( function.ToString( ) );
 
             FunctionPassManager.Run( function );
-            int jitHandle = JIT.AddModule( Module );
+            var jitHandle = JIT.AddModule( Module );
             InitializeModuleAndPassManager( );
             return (function, jitHandle);
         }
 
         /// <summary>Delegate type to allow execution of a JIT'd TopLevelExpression</summary>
         /// <returns>Result of evaluating the expression</returns>
-        [UnmanagedFunctionPointer( CallingConvention.Cdecl )]
+        [UnmanagedFunctionPointer( System.Runtime.InteropServices.CallingConvention.Cdecl )]
         private delegate double AnonExpressionFunc( );
 
         private static int AnonNameIndex;

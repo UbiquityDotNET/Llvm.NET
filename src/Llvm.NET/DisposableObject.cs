@@ -10,7 +10,7 @@ namespace Llvm.NET
     public abstract class DisposableObject
         : IDisposable
     {
-        /// <summary>Finalizes the object releasing any unmanaged resources it owns</summary>
+        /// <summary>Finalizes an instance of the <see cref="DisposableObject"/> class. This releases any unmanaged resources it owns</summary>
         ~DisposableObject( )
         {
            Dispose(false);

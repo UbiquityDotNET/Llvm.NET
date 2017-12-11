@@ -5,7 +5,7 @@
       "src":
       [
         {
-          "files": [ "src/Llvm.Net/Llvm.NET.csproj"  ],
+          "files": [ "src/Llvm.Net/**.cs"  ],
           "src":".."
         }
       ],

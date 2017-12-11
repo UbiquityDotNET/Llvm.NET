@@ -40,7 +40,7 @@ namespace Llvm.NET.DebugInfo
         /// <summary>Gets the <see cref="DICompileUnit"/> that contains this <see cref="DISubProgram"/></summary>
         public DICompileUnit CompileUnit => GetOperand<DICompileUnit>( 5 );
 
-        /* TODO: CompileUnit set => LLVMDISubProgramReplaceUnit() */
+        /* TODO: CompileUnit set => LLVMDISubProgramReplaceUnit() - needs new interop API */
 
         /// <summary>Gets the <see cref="DISubProgram"/> that declares this <see cref="DISubProgram"/></summary>
         public DISubProgram Declaration => GetOperand<DISubProgram>( 6 );

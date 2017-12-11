@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
+using JetBrains.Annotations;
 using Llvm.NET.DebugInfo;
 using Llvm.NET.Native;
 using Llvm.NET.Types;
@@ -34,11 +35,6 @@ namespace Llvm.NET.Instructions
             : this( block.ValidateNotNull( nameof( block ) ).ContainingFunction.ParentModule.Context )
         {
             PositionAtEnd( block );
-        }
-
-        ~InstructionBuilder( )
-        {
-            BuilderHandle.Close( );
         }
 
         /// <summary>Gets the context this builder is creating instructions for</summary>
@@ -101,54 +97,143 @@ namespace Llvm.NET.Instructions
             LLVMPositionBuilderBefore( BuilderHandle, instr.ValueHandle );
         }
 
+        /// <summary>Creates a floating point negation operator</summary>
+        /// <param name="value">value to negate</param>
+        /// <returns><see cref="Value"/> for the instruction</returns>
         public Value FNeg( Value value ) => BuildUnaryOp( LLVMBuildFNeg, value );
 
+        /// <summary>Creates a floating point add operator</summary>
+        /// <param name="lhs">left hand side operand</param>
+        /// <param name="rhs">right hand side operand</param>
+        /// <returns><see cref="Value"/> for the instruction</returns>
         public Value FAdd( Value lhs, Value rhs ) => BuildBinOp( LLVMBuildFAdd, lhs, rhs );
 
+        /// <summary>Creates a floating point subtracion operator</summary>
+        /// <param name="lhs">left hand side operand</param>
+        /// <param name="rhs">right hand side operand</param>
+        /// <returns><see cref="Value"/> for the instruction</returns>
         public Value FSub( Value lhs, Value rhs ) => BuildBinOp( LLVMBuildFSub, lhs, rhs );
 
+        /// <summary>Creates a floating point multiple operator</summary>
+        /// <param name="lhs">left hand side operand</param>
+        /// <param name="rhs">right hand side operand</param>
+        /// <returns><see cref="Value"/> for the instruction</returns>
         public Value FMul( Value lhs, Value rhs ) => BuildBinOp( LLVMBuildFMul, lhs, rhs );
 
+        /// <summary>Creates a floating point division operator</summary>
+        /// <param name="lhs">left hand side operand</param>
+        /// <param name="rhs">right hand side operand</param>
+        /// <returns><see cref="Value"/> for the instruction</returns>
         public Value FDiv( Value lhs, Value rhs ) => BuildBinOp( LLVMBuildFDiv, lhs, rhs );
 
+        /// <summary>Creates a floating point remainder operator</summary>
+        /// <param name="lhs">left hand side operand</param>
+        /// <param name="rhs">right hand side operand</param>
+        /// <returns><see cref="Value"/> for the instruction</returns>
         public Value FRem( Value lhs, Value rhs ) => BuildBinOp( LLVMBuildFRem, lhs, rhs );
 
+        /// <summary>Creates an integer negation operator</summary>
+        /// <param name="value">operand to negate</param>
+        /// <returns><see cref="Value"/> for the instruction</returns>
         public Value Neg( Value value ) => BuildUnaryOp( LLVMBuildNeg, value );
 
+        /// <summary>Creates an integer logical not operator</summary>
+        /// <param name="value">operand</param>
+        /// <returns><see cref="Value"/> for the instruction</returns>
+        /// <remarks>LLVM IR doesn't actually have a logical not instruction so this is implemented as value XOR {one} </remarks>
         public Value Not( Value value ) => BuildUnaryOp( LLVMBuildNot, value );
 
+        /// <summary>Creates an integer add operator</summary>
+        /// <param name="lhs">left hand side operand</param>
+        /// <param name="rhs">right hand side operand</param>
+        /// <returns><see cref="Value"/> for the instruction</returns>
         public Value Add( Value lhs, Value rhs ) => BuildBinOp( LLVMBuildAdd, lhs, rhs );
 
+        /// <summary>Creates an integer bitwise and operator</summary>
+        /// <param name="lhs">left hand side operand</param>
+        /// <param name="rhs">right hand side operand</param>
+        /// <returns><see cref="Value"/> for the instruction</returns>
         public Value And( Value lhs, Value rhs ) => BuildBinOp( LLVMBuildAnd, lhs, rhs );
 
+        /// <summary>Creates an integer subtraction operator</summary>
+        /// <param name="lhs">left hand side operand</param>
+        /// <param name="rhs">right hand side operand</param>
+        /// <returns><see cref="Value"/> for the instruction</returns>
         public Value Sub( Value lhs, Value rhs ) => BuildBinOp( LLVMBuildSub, lhs, rhs );
 
+        /// <summary>Creates an integer multiplication operator</summary>
+        /// <param name="lhs">left hand side operand</param>
+        /// <param name="rhs">right hand side operand</param>
+        /// <returns><see cref="Value"/> for the instruction</returns>
         public Value Mul( Value lhs, Value rhs ) => BuildBinOp( LLVMBuildMul, lhs, rhs );
 
+        /// <summary>Creates an integer shift left operator</summary>
+        /// <param name="lhs">left hand side operand</param>
+        /// <param name="rhs">right hand side operand</param>
+        /// <returns><see cref="Value"/> for the instruction</returns>
         public Value ShiftLeft( Value lhs, Value rhs ) => BuildBinOp( LLVMBuildShl, lhs, rhs );
 
+        /// <summary>Creates an integer areithemetic shift right operator</summary>
+        /// <param name="lhs">left hand side operand</param>
+        /// <param name="rhs">right hand side operand</param>
+        /// <returns><see cref="Value"/> for the instruction</returns>
         public Value ArithmeticShiftRight( Value lhs, Value rhs ) => BuildBinOp( LLVMBuildAShr, lhs, rhs );
 
+        /// <summary>Creates an integer logical shift right operator</summary>
+        /// <param name="lhs">left hand side operand</param>
+        /// <param name="rhs">right hand side operand</param>
+        /// <returns><see cref="Value"/> for the instruction</returns>
         public Value LogicalShiftRight( Value lhs, Value rhs ) => BuildBinOp( LLVMBuildLShr, lhs, rhs );
 
+        /// <summary>Creates an integer unsigned division operator</summary>
+        /// <param name="lhs">left hand side operand</param>
+        /// <param name="rhs">right hand side operand</param>
+        /// <returns><see cref="Value"/> for the instruction</returns>
         public Value UDiv( Value lhs, Value rhs ) => BuildBinOp( LLVMBuildUDiv, lhs, rhs );
 
+        /// <summary>Creates an integer signed division operator</summary>
+        /// <param name="lhs">left hand side operand</param>
+        /// <param name="rhs">right hand side operand</param>
+        /// <returns><see cref="Value"/> for the instruction</returns>
         public Value SDiv( Value lhs, Value rhs ) => BuildBinOp( LLVMBuildUDiv, lhs, rhs );
 
+        /// <summary>Creates an integer unsigned remainder operator</summary>
+        /// <param name="lhs">left hand side operand</param>
+        /// <param name="rhs">right hand side operand</param>
+        /// <returns><see cref="Value"/> for the instruction</returns>
         public Value URem( Value lhs, Value rhs ) => BuildBinOp( LLVMBuildURem, lhs, rhs );
 
+        /// <summary>Creates an integer signed remainder operator</summary>
+        /// <param name="lhs">left hand side operand</param>
+        /// <param name="rhs">right hand side operand</param>
+        /// <returns><see cref="Value"/> for the instruction</returns>
         public Value SRem( Value lhs, Value rhs ) => BuildBinOp( LLVMBuildSRem, lhs, rhs );
 
+        /// <summary>Creates an integer bitwise exlusive or operator</summary>
+        /// <param name="lhs">left hand side operand</param>
+        /// <param name="rhs">right hand side operand</param>
+        /// <returns><see cref="Value"/> for the instruction</returns>
         public Value Xor( Value lhs, Value rhs ) => BuildBinOp( LLVMBuildXor, lhs, rhs );
 
+        /// <summary>Creates an integer bitwise or operator</summary>
+        /// <param name="lhs">left hand side operand</param>
+        /// <param name="rhs">right hand side operand</param>
+        /// <returns><see cref="Value"/> for the instruction</returns>
         public Value Or( Value lhs, Value rhs ) => BuildBinOp( LLVMBuildOr, lhs, rhs );
 
+        /// <summary>Creates an alloca instruction</summary>
+        /// <param name="typeRef">Type of the value to allocate</param>
+        /// <returns><see cref="Instructions.Alloca"/> instruction</returns>
         public Alloca Alloca( ITypeRef typeRef )
         {
             var handle = LLVMBuildAlloca( BuilderHandle, typeRef.GetTypeRef( ), string.Empty );
             return Value.FromHandle<Alloca>( handle );
         }
 
+        /// <summary>Creates an alloca instruction</summary>
+        /// <param name="typeRef">Type of the value to allocate</param>
+        /// <param name="elements">Number of elements to allocate</param>
+        /// <returns><see cref="Instructions.Alloca"/> instruction</returns>
         [System.Diagnostics.CodeAnalysis.SuppressMessage( "Microsoft.Design", "CA1011:ConsiderPassingBaseTypesAsParameters", Justification = "Specific type required by interop call" )]
         public Alloca Alloca( ITypeRef typeRef, ConstantInt elements )
         {
@@ -166,6 +251,9 @@ namespace Llvm.NET.Instructions
             return Value.FromHandle<Alloca>( instHandle );
         }
 
+        /// <summary>Creates a return instruction for a function that has no return value</summary>
+        /// <returns><see cref="ReturnInstruction"/></returns>
+        /// <exception cref="ArgumentException"> the function has a non-void return type</exception>
         public ReturnInstruction Return( )
         {
             if( !InsertBlock.ContainingFunction.ReturnType.IsVoid )
@@ -176,12 +264,12 @@ namespace Llvm.NET.Instructions
             return Value.FromHandle<ReturnInstruction>( LLVMBuildRetVoid( BuilderHandle ) );
         }
 
+        /// <summary>Creates a return instruction with the return value for a function</summary>
+        /// <param name="value"><see cref="Value"/> to return</param>
+        /// <returns><see cref="ReturnInstruction"/></returns>
         public ReturnInstruction Return( Value value )
         {
-            if( value == null )
-            {
-                throw new ArgumentNullException( nameof( value ) );
-            }
+            value.ValidateNotNull( nameof( value ) );
 
             var retType = InsertBlock.ContainingFunction.ReturnType;
             if( retType.IsVoid )
@@ -198,8 +286,16 @@ namespace Llvm.NET.Instructions
             return Value.FromHandle<ReturnInstruction>( handle );
         }
 
+        /// <summary>Creates a call function</summary>
+        /// <param name="func">Function to call</param>
+        /// <param name="args">Arguments to pass to the function</param>
+        /// <returns><see cref="CallInstruction"/></returns>
         public CallInstruction Call( Value func, params Value[ ] args ) => Call( func, ( IReadOnlyList<Value> )args );
 
+        /// <summary>Creates a call function</summary>
+        /// <param name="func">Function to call</param>
+        /// <param name="args">Arguments to pass to the function</param>
+        /// <returns><see cref="CallInstruction"/></returns>
         public CallInstruction Call( Value func, IReadOnlyList<Value> args )
         {
             LLVMValueRef hCall = BuildCall( func, args );
@@ -207,19 +303,17 @@ namespace Llvm.NET.Instructions
             return retVal;
         }
 
+        /// <summary>Creates an <see cref="Instructions.Invoke"/> instruction</summary>
+        /// <param name="func">Function to invoke</param>
+        /// <param name="args">arguments to pass to the function</param>
+        /// <param name="then">Succesful continuation block</param>
+        /// <param name="catchBlock">Exception handling block</param>
+        /// <returns><see cref="Instructions.Invoke"/></returns>
         public Invoke Invoke( Value func, IReadOnlyList<Value> args, BasicBlock then, BasicBlock catchBlock )
         {
-            if( then == null )
-            {
-                throw new ArgumentNullException( nameof( then ) );
-            }
-
-            if( catchBlock == null )
-            {
-                throw new ArgumentNullException( nameof( catchBlock ) );
-            }
-
             ValidateCallArgs( func, args );
+            then.ValidateNotNull( nameof( then ) );
+            catchBlock.ValidateNotNull( nameof( then ) );
 
             LLVMValueRef[] llvmArgs = args.Select( v => v.ValueHandle ).ToArray();
             int argCount = llvmArgs.Length;
@@ -242,6 +336,9 @@ namespace Llvm.NET.Instructions
             return Value.FromHandle<Invoke>( invoke );
         }
 
+        /// <summary>Creates a <see cref="Instructions.LandingPad"/> instruction</summary>
+        /// <param name="resultType">Result type for the pad</param>
+        /// <returns><see cref="Instructions.LandingPad"/></returns>
         public LandingPad LandingPad( ITypeRef resultType )
         {
             LLVMValueRef landingPad = LLVMBuildLandingPad( BuilderHandle
@@ -254,12 +351,12 @@ namespace Llvm.NET.Instructions
             return Value.FromHandle<LandingPad>( landingPad );
         }
 
+        /// <summary>Creates a <see cref="Instructions.ResumeInstruction"/></summary>
+        /// <param name="exception">Exception value</param>
+        /// <returns><see cref="Instructions.ResumeInstruction"/></returns>
         public ResumeInstruction Resume( Value exception )
         {
-            if( exception == null )
-            {
-                throw new ArgumentNullException( nameof( exception ) );
-            }
+            exception.ValidateNotNull( nameof( exception ) );
 
             LLVMValueRef resume = LLVMBuildResume( BuilderHandle, exception.ValueHandle );
             return Value.FromHandle<ResumeInstruction>( resume );
@@ -277,15 +374,8 @@ namespace Llvm.NET.Instructions
         /// </remarks>
         public Store Store( Value value, Value destination )
         {
-            if( value == null )
-            {
-                throw new ArgumentNullException( nameof( value ) );
-            }
-
-            if( destination == null )
-            {
-                throw new ArgumentNullException( nameof( destination ) );
-            }
+            value.ValidateNotNull( nameof( value ) );
+            destination.ValidateNotNull( nameof( destination ) );
 
             var ptrType = destination.NativeType as IPointerType;
             if( ptrType == null )
@@ -303,55 +393,93 @@ namespace Llvm.NET.Instructions
             return Value.FromHandle<Store>( LLVMBuildStore( BuilderHandle, value.ValueHandle, destination.ValueHandle ) );
         }
 
+        /// <summary>Creates a <see cref="Instructions.Load"/> instruction</summary>
+        /// <param name="sourcePtr">Pointer to the value to load</param>
+        /// <returns><see cref="Instructions.Load"/></returns>
         public Load Load( Value sourcePtr )
         {
-            if( sourcePtr == null )
-            {
-                throw new ArgumentNullException( nameof( sourcePtr ) );
-            }
+            sourcePtr.ValidateNotNull( nameof( sourcePtr ) );
 
             var handle = LLVMBuildLoad( BuilderHandle, sourcePtr.ValueHandle, string.Empty );
             return Value.FromHandle<Load>( handle );
         }
 
-        public Value AtomicXchg( Value ptr, Value val ) => BuildAtomicBinOp( LLVMAtomicRMWBinOp.LLVMAtomicRMWBinOpXchg, ptr, val );
+        /// <summary>Creates an atomic exchange (Read, Modify, Write) instruction</summary>
+        /// <param name="ptr">Pointer to the value to update (e.g. destination and the left hand operand)</param>
+        /// <param name="val">Right hand side operand</param>
+        /// <returns><see cref="AtomicRMW"/></returns>
+        public AtomicRMW AtomicXchg( Value ptr, Value val ) => BuildAtomicRMW( LLVMAtomicRMWBinOp.LLVMAtomicRMWBinOpXchg, ptr, val );
 
-        public Value AtomicAdd( Value ptr, Value val ) => BuildAtomicBinOp( LLVMAtomicRMWBinOp.LLVMAtomicRMWBinOpAdd, ptr, val );
+        /// <summary>Creates an atomic add instruction</summary>
+        /// <param name="ptr">Pointer to the value to update (e.g. destination and the left hand operand)</param>
+        /// <param name="val">Right hand side operand</param>
+        /// <returns><see cref="AtomicRMW"/></returns>
+        public AtomicRMW AtomicAdd( Value ptr, Value val ) => BuildAtomicRMW( LLVMAtomicRMWBinOp.LLVMAtomicRMWBinOpAdd, ptr, val );
 
-        public Value AtomicSub( Value ptr, Value val ) => BuildAtomicBinOp( LLVMAtomicRMWBinOp.LLVMAtomicRMWBinOpSub, ptr, val );
+        /// <summary>Creates an atomic subtraction instruction</summary>
+        /// <param name="ptr">Pointer to the value to update (e.g. destination and the left hand operand)</param>
+        /// <param name="val">Right hand side operand</param>
+        /// <returns><see cref="AtomicRMW"/></returns>
+        public AtomicRMW AtomicSub( Value ptr, Value val ) => BuildAtomicRMW( LLVMAtomicRMWBinOp.LLVMAtomicRMWBinOpSub, ptr, val );
 
-        public Value AtomicAnd( Value ptr, Value val ) => BuildAtomicBinOp( LLVMAtomicRMWBinOp.LLVMAtomicRMWBinOpAnd, ptr, val );
+        /// <summary>Creates an atomic And instruction</summary>
+        /// <param name="ptr">Pointer to the value to update (e.g. destination and the left hand operand)</param>
+        /// <param name="val">Right hand side operand</param>
+        /// <returns><see cref="AtomicRMW"/></returns>
+        public AtomicRMW AtomicAnd( Value ptr, Value val ) => BuildAtomicRMW( LLVMAtomicRMWBinOp.LLVMAtomicRMWBinOpAnd, ptr, val );
 
-        public Value AtomicNand( Value ptr, Value val ) => BuildAtomicBinOp( LLVMAtomicRMWBinOp.LLVMAtomicRMWBinOpNand, ptr, val );
+        /// <summary>Creates an atomic nand instruction</summary>
+        /// <param name="ptr">Pointer to the value to update (e.g. destination and the left hand operand)</param>
+        /// <param name="val">Right hand side operand</param>
+        /// <returns><see cref="AtomicRMW"/></returns>
+        public AtomicRMW AtomicNand( Value ptr, Value val ) => BuildAtomicRMW( LLVMAtomicRMWBinOp.LLVMAtomicRMWBinOpNand, ptr, val );
 
-        public Value AtomicOr( Value ptr, Value val ) => BuildAtomicBinOp( LLVMAtomicRMWBinOp.LLVMAtomicRMWBinOpOr, ptr, val );
+        /// <summary>Creates an atomic or instruction</summary>
+        /// <param name="ptr">Pointer to the value to update (e.g. destination and the left hand operand)</param>
+        /// <param name="val">Right hand side operand</param>
+        /// <returns><see cref="AtomicRMW"/></returns>
+        public AtomicRMW AtomicOr( Value ptr, Value val ) => BuildAtomicRMW( LLVMAtomicRMWBinOp.LLVMAtomicRMWBinOpOr, ptr, val );
 
-        public Value AtomicXor( Value ptr, Value val ) => BuildAtomicBinOp( LLVMAtomicRMWBinOp.LLVMAtomicRMWBinOpXor, ptr, val );
+        /// <summary>Creates an atomic XOR instruction</summary>
+        /// <param name="ptr">Pointer to the value to update (e.g. destination and the left hand operand)</param>
+        /// <param name="val">Right hand side operand</param>
+        /// <returns><see cref="AtomicRMW"/></returns>
+        public AtomicRMW AtomicXor( Value ptr, Value val ) => BuildAtomicRMW( LLVMAtomicRMWBinOp.LLVMAtomicRMWBinOpXor, ptr, val );
 
-        public Value AtomicMax( Value ptr, Value val ) => BuildAtomicBinOp( LLVMAtomicRMWBinOp.LLVMAtomicRMWBinOpMax, ptr, val );
+        /// <summary>Creates an atomic add instruction</summary>
+        /// <param name="ptr">Pointer to the value to update (e.g. destination and the left hand operand)</param>
+        /// <param name="val">Right hand side operand</param>
+        /// <returns><see cref="AtomicRMW"/></returns>
+        public AtomicRMW AtomicMax( Value ptr, Value val ) => BuildAtomicRMW( LLVMAtomicRMWBinOp.LLVMAtomicRMWBinOpMax, ptr, val );
 
-        public Value AtomicMin( Value ptr, Value val ) => BuildAtomicBinOp( LLVMAtomicRMWBinOp.LLVMAtomicRMWBinOpMin, ptr, val );
+        /// <summary>Creates an atomic min instruction</summary>
+        /// <param name="ptr">Pointer to the value to update (e.g. destination and the left hand operand)</param>
+        /// <param name="val">Right hand side operand</param>
+        /// <returns><see cref="AtomicRMW"/></returns>
+        public AtomicRMW AtomicMin( Value ptr, Value val ) => BuildAtomicRMW( LLVMAtomicRMWBinOp.LLVMAtomicRMWBinOpMin, ptr, val );
 
-        public Value AtomicUMax( Value ptr, Value val ) => BuildAtomicBinOp( LLVMAtomicRMWBinOp.LLVMAtomicRMWBinOpUMax, ptr, val );
+        /// <summary>Creates an atomic UMax instruction</summary>
+        /// <param name="ptr">Pointer to the value to update (e.g. destination and the left hand operand)</param>
+        /// <param name="val">Right hand side operand</param>
+        /// <returns><see cref="AtomicRMW"/></returns>
+        public AtomicRMW AtomicUMax( Value ptr, Value val ) => BuildAtomicRMW( LLVMAtomicRMWBinOp.LLVMAtomicRMWBinOpUMax, ptr, val );
 
-        public Value AtomicUMin( Value ptr, Value val ) => BuildAtomicBinOp( LLVMAtomicRMWBinOp.LLVMAtomicRMWBinOpUMin, ptr, val );
+        /// <summary>Creates an atomic UMin instruction</summary>
+        /// <param name="ptr">Pointer to the value to update (e.g. destination and the left hand operand)</param>
+        /// <param name="val">Right hand side operand</param>
+        /// <returns><see cref="AtomicRMW"/></returns>
+        public AtomicRMW AtomicUMin( Value ptr, Value val ) => BuildAtomicRMW( LLVMAtomicRMWBinOp.LLVMAtomicRMWBinOpUMin, ptr, val );
 
-        public Value AtomicCmpXchg( Value ptr, Value cmp, Value value )
+        /// <summary>Creates an atomic Compare exchange instruction</summary>
+        /// <param name="ptr">Pointer to the value to update (e.g. destination and the left hand operand)</param>
+        /// <param name="cmp">Comparand for the operation</param>
+        /// <param name="value">Right hand side operand</param>
+        /// <returns><see cref="AtomicRMW"/></returns>
+        public AtomicCmpXchg AtomicCmpXchg( Value ptr, Value cmp, Value value )
         {
-            if( ptr == null )
-            {
-                throw new ArgumentNullException( nameof( ptr ) );
-            }
-
-            if( cmp == null )
-            {
-                throw new ArgumentNullException( nameof( cmp ) );
-            }
-
-            if( value == null )
-            {
-                throw new ArgumentNullException( nameof( value ) );
-            }
+            ptr.ValidateNotNull( nameof( ptr ) );
+            cmp.ValidateNotNull( nameof( cmp ) );
+            value.ValidateNotNull( nameof( value ) );
 
             var ptrType = ptr.NativeType as IPointerType;
             if( ptrType == null )
@@ -377,7 +505,7 @@ namespace Llvm.NET.Instructions
                                                , LLVMAtomicOrdering.LLVMAtomicOrderingSequentiallyConsistent
                                                , false
                                                );
-            return Value.FromHandle( handle );
+            return Value.FromHandle< AtomicCmpXchg>( handle );
         }
 
         /// <summary>Creates a <see cref="Value"/> that accesses an element (field) of a structure</summary>
@@ -393,10 +521,7 @@ namespace Llvm.NET.Instructions
         /// </returns>
         public Value GetStructElementPointer( Value pointer, uint index )
         {
-            if( pointer == null )
-            {
-                throw new ArgumentNullException( nameof( pointer ) );
-            }
+            pointer.ValidateNotNull( nameof( pointer ) );
 
             var ptrType = pointer.NativeType as IPointerType;
             if( ptrType == null )
@@ -557,15 +682,8 @@ namespace Llvm.NET.Instructions
         [SuppressMessage( "Microsoft.Design", "CA1011:ConsiderPassingBaseTypesAsParameters", Justification = "Specific type required by interop call" )]
         public Value IntToPointer( Value intValue, IPointerType ptrType )
         {
-            if( intValue == null )
-            {
-                throw new ArgumentNullException( nameof( intValue ) );
-            }
-
-            if( ptrType == null )
-            {
-                throw new ArgumentNullException( nameof( ptrType ) );
-            }
+            intValue.ValidateNotNull( nameof( intValue ) );
+            ptrType.ValidateNotNull( nameof( ptrType ) );
 
             if( intValue is Constant )
             {
@@ -587,15 +705,8 @@ namespace Llvm.NET.Instructions
         /// </remarks>
         public Value PointerToInt( Value ptrValue, ITypeRef intType )
         {
-            if( ptrValue == null )
-            {
-                throw new ArgumentNullException( nameof( ptrValue ) );
-            }
-
-            if( intType == null )
-            {
-                throw new ArgumentNullException( nameof( intType ) );
-            }
+            ptrValue.ValidateNotNull( nameof( ptrValue ) );
+            intType.ValidateNotNull( nameof( intType ) );
 
             if( ptrValue.NativeType.Kind != TypeKind.Pointer )
             {
@@ -616,25 +727,22 @@ namespace Llvm.NET.Instructions
             return Value.FromHandle( handle );
         }
 
+        /// <summary>Create an unconditional branch</summary>
+        /// <param name="target">Target block for the branch</param>
+        /// <returns><see cref="Instructions.Branch"/></returns>
         public Branch Branch( BasicBlock target )
             => Value.FromHandle<Branch>( LLVMBuildBr( BuilderHandle, target.ValidateNotNull( nameof( target ) ).BlockHandle ) );
 
+        /// <summary>Creates a conditional branch instruction</summary>
+        /// <param name="ifCondition">Condition for the branch</param>
+        /// <param name="thenTarget">Target block for the branch when <paramref name="ifCondition"/> evaluates to a non-zero value</param>
+        /// <param name="elseTarget">Target block for the branch when <paramref name="ifCondition"/> evaluates to a zero value</param>
+        /// <returns><see cref="Instructions.Branch"/></returns>
         public Branch Branch( Value ifCondition, BasicBlock thenTarget, BasicBlock elseTarget )
         {
-            if( ifCondition == null )
-            {
-                throw new ArgumentNullException( nameof( ifCondition ) );
-            }
-
-            if( thenTarget == null )
-            {
-                throw new ArgumentNullException( nameof( thenTarget ) );
-            }
-
-            if( elseTarget == null )
-            {
-                throw new ArgumentNullException( nameof( elseTarget ) );
-            }
+            ifCondition.ValidateNotNull( nameof( ifCondition ) );
+            thenTarget.ValidateNotNull( nameof( thenTarget ) );
+            elseTarget.ValidateNotNull( nameof( elseTarget ) );
 
             var handle = LLVMBuildCondBr( BuilderHandle
                                         , ifCondition.ValueHandle
@@ -645,7 +753,10 @@ namespace Llvm.NET.Instructions
             return Value.FromHandle<Branch>( handle );
         }
 
-        public Unreachable Unreachable( ) => Value.FromHandle<Unreachable>( LLVMBuildUnreachable( BuilderHandle ) );
+        /// <summary>Creates an <see cref="Instructions.Unreachable"/> instruction</summary>
+        /// <returns><see cref="Instructions.Unreachable"/> </returns>
+        public Unreachable Unreachable( )
+            => Value.FromHandle<Unreachable>( LLVMBuildUnreachable( BuilderHandle ) );
 
         /// <summary>Builds an Integer compare instruction</summary>
         /// <param name="predicate">Integer predicate for the comparison</param>
@@ -654,15 +765,9 @@ namespace Llvm.NET.Instructions
         /// <returns>Comparison instruction</returns>
         public Value Compare( IntPredicate predicate, Value lhs, Value rhs )
         {
-            if( lhs == null )
-            {
-                throw new ArgumentNullException( nameof( lhs ) );
-            }
-
-            if( rhs == null )
-            {
-                throw new ArgumentNullException( nameof( rhs ) );
-            }
+            predicate.ValidateDefined( nameof( predicate ) );
+            lhs.ValidateNotNull( nameof( lhs ) );
+            rhs.ValidateNotNull( nameof( rhs ) );
 
             if( !lhs.NativeType.IsInteger && !lhs.NativeType.IsPointer )
             {
@@ -685,15 +790,9 @@ namespace Llvm.NET.Instructions
         /// <returns>Comparison instruction</returns>
         public Value Compare( RealPredicate predicate, Value lhs, Value rhs )
         {
-            if( lhs == null )
-            {
-                throw new ArgumentNullException( nameof( lhs ) );
-            }
-
-            if( rhs == null )
-            {
-                throw new ArgumentNullException( nameof( rhs ) );
-            }
+            predicate.ValidateDefined( nameof( predicate ) );
+            lhs.ValidateNotNull( nameof( lhs ) );
+            rhs.ValidateNotNull( nameof( rhs ) );
 
             if( !lhs.NativeType.IsFloatingPoint )
             {
@@ -734,17 +833,14 @@ namespace Llvm.NET.Instructions
             throw new ArgumentOutOfRangeException( nameof( predicate ), $"'{predicate}' is not a valid value for a compare predicate" );
         }
 
+        /// <summary>Creates a zero extend or bit cast instruction</summary>
+        /// <param name="valueRef">Operand for the instruction</param>
+        /// <param name="targetType">Target type for the instruction</param>
+        /// <returns>Result <see cref="Value"/></returns>
         public Value ZeroExtendOrBitCast( Value valueRef, ITypeRef targetType )
         {
-            if( valueRef == null )
-            {
-                throw new ArgumentNullException( nameof( valueRef ) );
-            }
-
-            if( targetType == null )
-            {
-                throw new ArgumentNullException( nameof( targetType ) );
-            }
+            valueRef.ValidateNotNull( nameof( valueRef ) );
+            targetType.ValidateNotNull( nameof( targetType ) );
 
             // short circuit cast to same type as it won't be a Constant or a BitCast
             if( valueRef.NativeType == targetType )
@@ -765,17 +861,14 @@ namespace Llvm.NET.Instructions
             return Value.FromHandle( handle );
         }
 
+        /// <summary>Creates a sign extend or bit cast instruction</summary>
+        /// <param name="valueRef">Operand for the instruction</param>
+        /// <param name="targetType">Target type for the instruction</param>
+        /// <returns>Result <see cref="Value"/></returns>
         public Value SignExtendOrBitCast( Value valueRef, ITypeRef targetType )
         {
-            if( valueRef == null )
-            {
-                throw new ArgumentNullException( nameof( valueRef ) );
-            }
-
-            if( targetType == null )
-            {
-                throw new ArgumentNullException( nameof( targetType ) );
-            }
+            valueRef.ValidateNotNull( nameof( valueRef ) );
+            targetType.ValidateNotNull( nameof( targetType ) );
 
             // short circuit cast to same type as it won't be a Constant or a BitCast
             if( valueRef.NativeType == targetType )
@@ -796,17 +889,14 @@ namespace Llvm.NET.Instructions
             return Value.FromHandle( handle );
         }
 
+        /// <summary>Creates a trunc or bit cast instruction</summary>
+        /// <param name="valueRef">Operand for the instruction</param>
+        /// <param name="targetType">Target type for the instruction</param>
+        /// <returns>Result <see cref="Value"/></returns>
         public Value TruncOrBitCast( Value valueRef, ITypeRef targetType )
         {
-            if( valueRef == null )
-            {
-                throw new ArgumentNullException( nameof( valueRef ) );
-            }
-
-            if( targetType == null )
-            {
-                throw new ArgumentNullException( nameof( targetType ) );
-            }
+            valueRef.ValidateNotNull( nameof( valueRef ) );
+            targetType.ValidateNotNull( nameof( targetType ) );
 
             // short circuit cast to same type as it won't be a Constant or a BitCast
             if( valueRef.NativeType == targetType )
@@ -827,17 +917,14 @@ namespace Llvm.NET.Instructions
             return Value.FromHandle( handle );
         }
 
+        /// <summary>Creates a Zero Extend instruction</summary>
+        /// <param name="valueRef">Operand for the instruction</param>
+        /// <param name="targetType">Target type for the instruction</param>
+        /// <returns>Result <see cref="Value"/></returns>
         public Value ZeroExtend( Value valueRef, ITypeRef targetType )
         {
-            if( valueRef == null )
-            {
-                throw new ArgumentNullException( nameof( valueRef ) );
-            }
-
-            if( targetType == null )
-            {
-                throw new ArgumentNullException( nameof( targetType ) );
-            }
+            valueRef.ValidateNotNull( nameof( valueRef ) );
+            targetType.ValidateNotNull( nameof( targetType ) );
 
             LLVMValueRef handle;
             if( valueRef is Constant )
@@ -852,17 +939,14 @@ namespace Llvm.NET.Instructions
             return Value.FromHandle( handle );
         }
 
+        /// <summary>Creates a Sign Extend instruction</summary>
+        /// <param name="valueRef">Operand for the instruction</param>
+        /// <param name="targetType">Target type for the instruction</param>
+        /// <returns>Result <see cref="Value"/></returns>
         public Value SignExtend( Value valueRef, ITypeRef targetType )
         {
-            if( valueRef == null )
-            {
-                throw new ArgumentNullException( nameof( valueRef ) );
-            }
-
-            if( targetType == null )
-            {
-                throw new ArgumentNullException( nameof( targetType ) );
-            }
+            valueRef.ValidateNotNull( nameof( valueRef ) );
+            targetType.ValidateNotNull( nameof( targetType ) );
 
             if( valueRef is Constant )
             {
@@ -873,17 +957,14 @@ namespace Llvm.NET.Instructions
             return Value.FromHandle( retValueRef );
         }
 
+        /// <summary>Creates a bitcast instruction</summary>
+        /// <param name="valueRef">Operand for the instruction</param>
+        /// <param name="targetType">Target type for the instruction</param>
+        /// <returns>Result <see cref="Value"/></returns>
         public Value BitCast( Value valueRef, ITypeRef targetType )
         {
-            if( valueRef == null )
-            {
-                throw new ArgumentNullException( nameof( valueRef ) );
-            }
-
-            if( targetType == null )
-            {
-                throw new ArgumentNullException( nameof( targetType ) );
-            }
+            valueRef.ValidateNotNull( nameof( valueRef ) );
+            targetType.ValidateNotNull( nameof( targetType ) );
 
             // short circuit cast to same type as it won't be a Constant or a BitCast
             if( valueRef.NativeType == targetType )
@@ -904,17 +985,15 @@ namespace Llvm.NET.Instructions
             return Value.FromHandle( handle );
         }
 
+        /// <summary>Creates an integer cast instruction</summary>
+        /// <param name="valueRef">Operand for the instruction</param>
+        /// <param name="targetType">Target type for the instruction</param>
+        /// <param name="isSigned">Flag to indicate if the cast is signed or unsigned</param>
+        /// <returns>Result <see cref="Value"/></returns>
         public Value IntCast( Value valueRef, ITypeRef targetType, bool isSigned )
         {
-            if( valueRef == null )
-            {
-                throw new ArgumentNullException( nameof( valueRef ) );
-            }
-
-            if( targetType == null )
-            {
-                throw new ArgumentNullException( nameof( targetType ) );
-            }
+            valueRef.ValidateNotNull( nameof( valueRef ) );
+            targetType.ValidateNotNull( nameof( targetType ) );
 
             LLVMValueRef handle;
             if( valueRef is Constant )
@@ -929,17 +1008,14 @@ namespace Llvm.NET.Instructions
             return Value.FromHandle( handle );
         }
 
+        /// <summary>Creates a trunc instruction</summary>
+        /// <param name="valueRef">Operand for the instruction</param>
+        /// <param name="targetType">Target type for the instruction</param>
+        /// <returns>Result <see cref="Value"/></returns>
         public Value Trunc( Value valueRef, ITypeRef targetType )
         {
-            if( valueRef == null )
-            {
-                throw new ArgumentNullException( nameof( valueRef ) );
-            }
-
-            if( targetType == null )
-            {
-                throw new ArgumentNullException( nameof( targetType ) );
-            }
+            valueRef.ValidateNotNull( nameof( valueRef ) );
+            targetType.ValidateNotNull( nameof( targetType ) );
 
             if( valueRef is Constant )
             {
@@ -949,17 +1025,14 @@ namespace Llvm.NET.Instructions
             return Value.FromHandle( LLVMBuildTrunc( BuilderHandle, valueRef.ValueHandle, targetType.GetTypeRef( ), string.Empty ) );
         }
 
+        /// <summary>Creates a signed integer to floating point cast instruction</summary>
+        /// <param name="valueRef">Operand for the instruction</param>
+        /// <param name="targetType">Target type for the instruction</param>
+        /// <returns>Result <see cref="Value"/></returns>
         public Value SIToFPCast( Value valueRef, ITypeRef targetType )
         {
-            if( valueRef == null )
-            {
-                throw new ArgumentNullException( nameof( valueRef ) );
-            }
-
-            if( targetType == null )
-            {
-                throw new ArgumentNullException( nameof( targetType ) );
-            }
+            valueRef.ValidateNotNull( nameof( valueRef ) );
+            targetType.ValidateNotNull( nameof( targetType ) );
 
             LLVMValueRef handle;
             if( valueRef is Constant )
@@ -974,17 +1047,14 @@ namespace Llvm.NET.Instructions
             return Value.FromHandle( handle );
         }
 
+        /// <summary>Creates an unsigned integer to floating point cast instruction</summary>
+        /// <param name="valueRef">Operand for the instruction</param>
+        /// <param name="targetType">Target type for the instruction</param>
+        /// <returns>Result <see cref="Value"/></returns>
         public Value UIToFPCast( Value valueRef, ITypeRef targetType )
         {
-            if( valueRef == null )
-            {
-                throw new ArgumentNullException( nameof( valueRef ) );
-            }
-
-            if( targetType == null )
-            {
-                throw new ArgumentNullException( nameof( targetType ) );
-            }
+            valueRef.ValidateNotNull( nameof( valueRef ) );
+            targetType.ValidateNotNull( nameof( targetType ) );
 
             LLVMValueRef handle;
             if( valueRef is Constant )
@@ -999,17 +1069,14 @@ namespace Llvm.NET.Instructions
             return Value.FromHandle( handle );
         }
 
+        /// <summary>Creates a Floating point to unsigned integer cast instruction</summary>
+        /// <param name="valueRef">Operand for the instruction</param>
+        /// <param name="targetType">Target type for the instruction</param>
+        /// <returns>Result <see cref="Value"/></returns>
         public Value FPToUICast( Value valueRef, ITypeRef targetType )
         {
-            if( valueRef == null )
-            {
-                throw new ArgumentNullException( nameof( valueRef ) );
-            }
-
-            if( targetType == null )
-            {
-                throw new ArgumentNullException( nameof( targetType ) );
-            }
+            valueRef.ValidateNotNull( nameof( valueRef ) );
+            targetType.ValidateNotNull( nameof( targetType ) );
 
             LLVMValueRef handle;
             if( valueRef is Constant )
@@ -1024,17 +1091,14 @@ namespace Llvm.NET.Instructions
             return Value.FromHandle( handle );
         }
 
+        /// <summary>Creates a floating point to signed integer cast instruction</summary>
+        /// <param name="valueRef">Operand for the instruction</param>
+        /// <param name="targetType">Target type for the instruction</param>
+        /// <returns>Result <see cref="Value"/></returns>
         public Value FPToSICast( Value valueRef, ITypeRef targetType )
         {
-            if( valueRef == null )
-            {
-                throw new ArgumentNullException( nameof( valueRef ) );
-            }
-
-            if( targetType == null )
-            {
-                throw new ArgumentNullException( nameof( targetType ) );
-            }
+            valueRef.ValidateNotNull( nameof( valueRef ) );
+            targetType.ValidateNotNull( nameof( targetType ) );
 
             LLVMValueRef handle;
             if( valueRef is Constant )
@@ -1049,51 +1113,45 @@ namespace Llvm.NET.Instructions
             return Value.FromHandle( handle );
         }
 
-        public Value FPExt( Value valueRef, ITypeRef toType )
+        /// <summary>Creates a floating point extend instruction</summary>
+        /// <param name="valueRef">Operand for the instruction</param>
+        /// <param name="targetType">Target type for the instruction</param>
+        /// <returns>Result <see cref="Value"/></returns>
+        public Value FPExt( Value valueRef, ITypeRef targetType )
         {
-            if( valueRef == null )
-            {
-                throw new ArgumentNullException( nameof( valueRef ) );
-            }
-
-            if( toType == null )
-            {
-                throw new ArgumentNullException( nameof( toType ) );
-            }
+            valueRef.ValidateNotNull( nameof( valueRef ) );
+            targetType.ValidateNotNull( nameof( targetType ) );
 
             LLVMValueRef handle;
             if( valueRef is Constant )
             {
-                handle = LLVMConstFPExt( valueRef.ValueHandle, toType.GetTypeRef( ) );
+                handle = LLVMConstFPExt( valueRef.ValueHandle, targetType.GetTypeRef( ) );
             }
             else
             {
-                handle = LLVMBuildFPExt( BuilderHandle, valueRef.ValueHandle, toType.GetTypeRef( ), string.Empty );
+                handle = LLVMBuildFPExt( BuilderHandle, valueRef.ValueHandle, targetType.GetTypeRef( ), string.Empty );
             }
 
             return Value.FromHandle( handle );
         }
 
-        public Value FPTrunc( Value valueRef, ITypeRef toType )
+        /// <summary>Creates a floating point truncate instruction</summary>
+        /// <param name="valueRef">Operand for the instruction</param>
+        /// <param name="targetType">Target type for the instruction</param>
+        /// <returns>Result <see cref="Value"/></returns>
+        public Value FPTrunc( Value valueRef, ITypeRef targetType )
         {
-            if( valueRef == null )
-            {
-                throw new ArgumentNullException( nameof( valueRef ) );
-            }
-
-            if( toType == null )
-            {
-                throw new ArgumentNullException( nameof( toType ) );
-            }
+            valueRef.ValidateNotNull( nameof( valueRef ) );
+            targetType.ValidateNotNull( nameof( targetType ) );
 
             LLVMValueRef handle;
             if( valueRef is Constant )
             {
-                handle = LLVMConstFPTrunc( valueRef.ValueHandle, toType.GetTypeRef( ) );
+                handle = LLVMConstFPTrunc( valueRef.ValueHandle, targetType.GetTypeRef( ) );
             }
             else
             {
-                handle = LLVMBuildFPTrunc( BuilderHandle, valueRef.ValueHandle, toType.GetTypeRef( ), string.Empty );
+                handle = LLVMBuildFPTrunc( BuilderHandle, valueRef.ValueHandle, targetType.GetTypeRef( ), string.Empty );
             }
 
             return Value.FromHandle( handle );
@@ -1110,20 +1168,9 @@ namespace Llvm.NET.Instructions
         /// </remarks>
         public Value Select( Value ifCondition, Value thenValue, Value elseValue )
         {
-            if( ifCondition == null )
-            {
-                throw new ArgumentNullException( nameof( ifCondition ) );
-            }
-
-            if( thenValue == null )
-            {
-                throw new ArgumentNullException( nameof( thenValue ) );
-            }
-
-            if( elseValue == null )
-            {
-                throw new ArgumentNullException( nameof( elseValue ) );
-            }
+            ifCondition.ValidateNotNull( nameof( ifCondition ) );
+            thenValue.ValidateNotNull( nameof( thenValue ) );
+            elseValue.ValidateNotNull( nameof( elseValue ) );
 
             var conditionVectorType = ifCondition.NativeType as IVectorType;
             var thenVector = thenValue.NativeType as IVectorType;
@@ -1164,55 +1211,56 @@ namespace Llvm.NET.Instructions
             return Value.FromHandle( handle );
         }
 
+        /// <summary>Creates a Phi instruction</summary>
+        /// <param name="resultType">Result type for the instruction</param>
+        /// <returns><see cref="Instructions.PhiNode"/></returns>
         public PhiNode PhiNode( ITypeRef resultType )
         {
             var handle = LLVMBuildPhi( BuilderHandle, resultType.GetTypeRef( ), string.Empty );
             return Value.FromHandle<PhiNode>( handle );
         }
 
+        /// <summary>Creates an extractvalue instruction</summary>
+        /// <param name="instance">Instance to extract a value from</param>
+        /// <param name="index">index of the element to extract</param>
+        /// <returns>Value for the instruction</returns>
         public Value ExtractValue( Value instance, uint index )
         {
-            if( instance == null )
-            {
-                throw new ArgumentNullException( nameof( instance ) );
-            }
+            instance.ValidateNotNull( nameof( instance ) );
 
             var handle = LLVMBuildExtractValue( BuilderHandle, instance.ValueHandle, index, string.Empty );
             return Value.FromHandle( handle );
         }
 
+        /// <summary>Creates a switch instruction</summary>
+        /// <param name="value">Value to switch on</param>
+        /// <param name="defaultCase">default case if <paramref name="value"/> does mach any case</param>
+        /// <param name="numCases">Number of cases for the switch</param>
+        /// <returns><see cref="Instructions.Switch"/></returns>
+        /// <remarks>
+        /// Callers can use <see cref="Instructions.Switch.AddCase(Value, BasicBlock)"/> to add cases to the
+        /// instruction.
+        /// </remarks>
         public Instructions.Switch Switch( Value value, BasicBlock defaultCase, uint numCases )
         {
-            if( value == null )
-            {
-                throw new ArgumentNullException( nameof( value ) );
-            }
-
-            if( defaultCase == null )
-            {
-                throw new ArgumentNullException( nameof( defaultCase ) );
-            }
+            value.ValidateNotNull( nameof( value ) );
+            defaultCase.ValidateNotNull( nameof( defaultCase ) );
 
             var handle = LLVMBuildSwitch( BuilderHandle, value.ValueHandle, defaultCase.BlockHandle, numCases );
             return Value.FromHandle<Instructions.Switch>( handle );
         }
 
-        public Value DoNothing( )
+        /// <summary>Creates a call to the llvm.donothing intrinsic</summary>
+        /// <returns><see cref="CallInstruction"/></returns>
+        /// <exception cref="InvalidOperationException">
+        /// <see cref="InsertBlock"/> is <see langword="null"/> or it's <see cref="BasicBlock.ContainingFunction"/> is null or has a <see langword="null"/> <see cref="GlobalValue.ParentModule"/>
+        /// </exception>
+        public CallInstruction DoNothing( )
         {
             var module = InsertBlock?.ContainingFunction?.ParentModule;
             if( module == null )
             {
                 throw new InvalidOperationException( "Cannot insert when no block/module is available" );
-            }
-
-            return DoNothing( module );
-        }
-
-        public Value DoNothing( BitcodeModule module )
-        {
-            if( module == null )
-            {
-                throw new ArgumentNullException( nameof( module ) );
             }
 
             var func = module.GetFunction( Intrinsic.DoNothingName );
@@ -1224,10 +1272,32 @@ namespace Llvm.NET.Instructions
             }
 
             var hCall = BuildCall( func );
-            return Value.FromHandle( hCall );
+            return Value.FromHandle<CallInstruction>( hCall );
         }
 
-        public Value DebugTrap( )
+        /// <summary>Creates a call to the llvm.donothing intrinsic</summary>
+        /// <param name="module">module to create the declaration for</param>
+        /// <returns><see cref="CallInstruction"/></returns>
+        [Obsolete("Use DoNothing()")]
+        public CallInstruction DoNothing( BitcodeModule module )
+        {
+            module.ValidateNotNull( nameof( module ) );
+
+            var func = module.GetFunction( Intrinsic.DoNothingName );
+            if( func == null )
+            {
+                var ctx = module.Context;
+                var signature = ctx.GetFunctionType( ctx.VoidType );
+                func = module.AddFunction( Intrinsic.DoNothingName, signature );
+            }
+
+            var hCall = BuildCall( func );
+            return Value.FromHandle<CallInstruction>( hCall );
+        }
+
+        /// <summary>Creates a llvm.dbg.trap call</summary>
+        /// <returns><see cref="CallInstruction"/></returns>
+        public CallInstruction DebugTrap( )
         {
             var module = InsertBlock?.ContainingFunction?.ParentModule;
             if( module == null )
@@ -1235,15 +1305,25 @@ namespace Llvm.NET.Instructions
                 throw new InvalidOperationException( "Cannot insert when no block/module is available" );
             }
 
-            return DebugTrap( module );
+            var func = module.GetFunction( Intrinsic.DebugTrapName );
+            if( func == null )
+            {
+                var ctx = module.Context;
+                var signature = ctx.GetFunctionType( ctx.VoidType );
+                func = module.AddFunction( Intrinsic.DebugTrapName, signature );
+            }
+
+            var hCall = LLVMBuildCall( BuilderHandle, func.ValueHandle, out LLVMValueRef args, 0U, string.Empty );
+            return Value.FromHandle<CallInstruction>( hCall );
         }
 
+        /// <summary>Creates a llvm.dbg.trap call</summary>
+        /// <param name="module">Module to insert a declaration for the instrinsic</param>
+        /// <returns><see cref="CallInstruction"/></returns>
+        [Obsolete( "Use DebugTrap()" )]
         public Value DebugTrap( BitcodeModule module )
         {
-            if( module == null )
-            {
-                throw new ArgumentNullException( nameof( module ) );
-            }
+            module.ValidateNotNull( nameof( module ) );
 
             var func = module.GetFunction( Intrinsic.DebugTrapName );
             if( func == null )
@@ -1580,11 +1660,6 @@ namespace Llvm.NET.Instructions
 
         internal static LLVMValueRef[ ] GetValidatedGEPArgs( Value pointer, IEnumerable<Value> args )
         {
-            if( pointer == null )
-            {
-                throw new ArgumentNullException( nameof( pointer ) );
-            }
-
             if( pointer.NativeType.Kind != TypeKind.Pointer )
             {
                 throw new ArgumentException( "Pointer value expected", nameof( pointer ) );
@@ -1636,7 +1711,7 @@ namespace Llvm.NET.Instructions
             return Value.FromHandle( valueRef );
         }
 
-        private Value BuildAtomicBinOp( LLVMAtomicRMWBinOp op, Value ptr, Value val )
+        private AtomicRMW BuildAtomicRMW( LLVMAtomicRMWBinOp op, Value ptr, Value val )
         {
             var ptrType = ptr.NativeType as IPointerType;
             if( ptrType == null )
@@ -1650,16 +1725,11 @@ namespace Llvm.NET.Instructions
             }
 
             var handle = LLVMBuildAtomicRMW( BuilderHandle, op, ptr.ValueHandle, val.ValueHandle, LLVMAtomicOrdering.LLVMAtomicOrderingSequentiallyConsistent, false );
-            return Value.FromHandle( handle );
+            return Value.FromHandle<AtomicRMW>( handle );
         }
 
-        private static void ValidateCallArgs( Value func, IReadOnlyList<Value> args )
+        private static void ValidateCallArgs( [NotNull] Value func, IReadOnlyList<Value> args )
         {
-            if( func == null )
-            {
-                throw new ArgumentNullException( nameof( func ) );
-            }
-
             var funcPtrType = func.NativeType as IPointerType;
             if( funcPtrType == null )
             {
@@ -1709,8 +1779,8 @@ namespace Llvm.NET.Instructions
         }
 
         private const string IncompatibleTypeMsgFmt = "Incompatible types: destination pointer must be of the same type as the value stored.\n"
-                                            + "Types are:\n"
-                                            + "\tDestination: {0}\n"
-                                            + "\tValue: {1}";
+                                                    + "Types are:\n"
+                                                    + "\tDestination: {0}\n"
+                                                    + "\tValue: {1}";
     }
 }

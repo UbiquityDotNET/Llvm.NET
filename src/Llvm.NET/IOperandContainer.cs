@@ -8,7 +8,10 @@ namespace Llvm.NET
 {
     /// <summary>Internal interface to provide raw access to operands of a container type</summary>
     /// <typeparam name="T">type of operands</typeparam>
-    /// <remarks>This is used to build an operand list for multiple container types</remarks>
+    /// <remarks>
+    /// This is used to build an operand list for multiple container types that is ultimately
+    /// exposed as a public property on the container.
+    /// </remarks>
     internal interface IOperandContainer<T>
     {
         /// <summary>Gets the count of operands in the container</summary>

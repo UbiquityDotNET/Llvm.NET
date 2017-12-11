@@ -15,6 +15,16 @@ using static Llvm.NET.Native.NativeMethods;
 
 namespace Llvm.NET
 {
+    /// <summary>Byte ordering for target code generation and data type layout</summary>
+    public enum ByteOrdering
+    {
+        /// <summary>Little-Endian layout format</summary>
+        LittleEndian = LLVMByteOrdering.LLVMLittleEndian,
+
+        /// <summary>Big-Endian layout format</summary>
+        BigEndian = LLVMByteOrdering.LLVMBigEndian
+    }
+
     /// <summary>Provides access to LLVM target data layout information</summary>
     /// <remarks>
     /// <para>There is a distinction between various sizes and alignment for a given type

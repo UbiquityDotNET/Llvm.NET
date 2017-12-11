@@ -48,7 +48,7 @@
     <Rule Id="CA1049" Action="Warning" />
     <Rule Id="CA1050" Action="Warning" />
     <Rule Id="CA1051" Action="Warning" />
-    <Rule Id="CA1052" Action="Warning" />
+    <Rule Id="CA1052" Action="Error" />
     <Rule Id="CA1053" Action="Warning" />
     <Rule Id="CA1054" Action="Warning" />
     <Rule Id="CA1055" Action="Warning" />
@@ -104,7 +104,7 @@
     <Rule Id="CA1712" Action="Warning" />
     <Rule Id="CA1713" Action="Warning" />
     <Rule Id="CA1714" Action="Warning" />
-    <Rule Id="CA1715" Action="Warning" />
+    <Rule Id="CA1715" Action="Error" />
     <Rule Id="CA1717" Action="Warning" />
     <Rule Id="CA1719" Action="Warning" />
     <Rule Id="CA1720" Action="Warning" />
@@ -193,7 +193,7 @@
     <Rule Id="CA2211" Action="Warning" />
     <Rule Id="CA2212" Action="Warning" />
     <Rule Id="CA2213" Action="Warning" />
-    <Rule Id="CA2214" Action="Warning" />
+    <Rule Id="CA2214" Action="Error" />
     <Rule Id="CA2215" Action="Warning" />
     <Rule Id="CA2216" Action="Warning" />
     <Rule Id="CA2217" Action="Warning" />
@@ -581,6 +581,7 @@
     <Rule Id="RECS0083" Action="Error" />
     <Rule Id="RECS0129" Action="None" />
     <Rule Id="RECS0145" Action="None" />
+    <Rule Id="RECS0147" Action="Warning" />
   </Rules>
   <Rules AnalyzerId="StyleCop.Analyzers" RuleNamespace="StyleCop.Analyzers">
     <Rule Id="SA1000" Action="None" />
@@ -712,16 +713,24 @@
     <Rule Id="SA1636" Action="Error" />
     <Rule Id="SA1637" Action="Hidden" />
     <Rule Id="SA1638" Action="Hidden" />
-    <Rule Id="SA1640" Action="None" />
-    <Rule Id="SA1641" Action="None" />
-    <Rule Id="SA1642" Action="Info" />
-    <Rule Id="SA1643" Action="Hidden" />
+    <Rule Id="SA1640" Action="Error" />
+    <Rule Id="SA1641" Action="Error" />
+    <Rule Id="SA1642" Action="Error" />
+    <Rule Id="SA1643" Action="Error" />
     <Rule Id="SA1648" Action="Error" />
     <Rule Id="SA1649" Action="Error" />
     <Rule Id="SA1651" Action="Error" />
-    <Rule Id="SA1652" Action="Info" />
+    <Rule Id="SA1652" Action="Warning" />
     <Rule Id="SX1101" Action="Error" />
     <Rule Id="SX1309" Action="None" />
     <Rule Id="SX1309S" Action="None" />
+    <Rule Id="SA1612" Action="Error" />
+  </Rules>
+  <Rules AnalyzerId="Microsoft.AnalyzerPowerPack.CSharp" RuleNamespace="Microsoft.AnalyzerPowerPack.CSharp">
+    <Rule Id="CA2214" Action="Error" />
+  </Rules>
+  <Rules AnalyzerId="Microsoft.AnalyzerPowerPack.Common" RuleNamespace="Microsoft.AnalyzerPowerPack.Common">
+    <Rule Id="CA1052" Action="Error" />
+    <Rule Id="CA1715" Action="Error" />
   </Rules>
 </RuleSet>

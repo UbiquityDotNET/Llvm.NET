@@ -7,7 +7,6 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Runtime.InteropServices;
-using Antlr4.Runtime;
 using Antlr4.Runtime.Misc;
 using Kaleidoscope.Grammar;
 using Llvm.NET;
@@ -536,7 +535,7 @@ namespace Kaleidoscope
 
         /// <summary>Delegate type to allow execution of a JIT'd TopLevelExpression</summary>
         /// <returns>Result of evaluating the expression</returns>
-        [UnmanagedFunctionPointer( CallingConvention.Cdecl )]
+        [UnmanagedFunctionPointer( System.Runtime.InteropServices.CallingConvention.Cdecl )]
         private delegate double AnonExpressionFunc( );
 
         private static int AnonNameIndex;

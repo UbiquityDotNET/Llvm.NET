@@ -92,7 +92,7 @@ namespace Llvm.NET.Values
 
         private Function ContainingFunction;
 
-        [DllImport( LibraryPath, CallingConvention = CallingConvention.Cdecl )]
+        [DllImport( LibraryPath, CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl )]
         private static extern void LLVMFunctionAppendBasicBlock( LLVMValueRef /*Function*/ function, LLVMBasicBlockRef block );
     }
 }

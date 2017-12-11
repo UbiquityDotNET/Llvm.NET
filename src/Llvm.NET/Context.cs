@@ -716,6 +716,9 @@ namespace Llvm.NET
                                         );
         }
 
+        /// <summary>Gets the modules created in this context</summary>
+        public IEnumerable<BitcodeModule> Modules => ModuleCache.Values;
+
         /*TODO: Create interop calls to support additional properties
         public unsigned GetMDKindId(string name) {...}
         public IEnumerable<string> MDKindNames { get; }
@@ -755,8 +758,8 @@ namespace Llvm.NET
         // The mapping ensures that any LibLLVM handle is always re-mappable to a exactly one wrapper instance.
         // This helps reduce the number of wrapper instances created and also allows reference equality to work
         // as expected for managed types.
-        // TODO: Refactor the interning to class dedicated to managing the mappings, this can allow looking up the
-        // context from handles where there isn't any APIs to retrieve the Context.
+        //
+        // TODO: Refactor the remaining interning to use common implementation
         */
 
         internal void AddModule( BitcodeModule module )
@@ -889,7 +892,7 @@ namespace Llvm.NET
 
         private readonly Dictionary< LLVMMetadataRef, LlvmMetadata > MetadataCache = new Dictionary< LLVMMetadataRef, LlvmMetadata >( );
 
-        [DllImport( LibraryPath, CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi, ThrowOnUnmappableChar = true, BestFitMapping = false )]
+        [DllImport( LibraryPath, CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl, CharSet = CharSet.Ansi, ThrowOnUnmappableChar = true, BestFitMapping = false )]
         private static extern LLVMBasicBlockRef LLVMContextCreateBasicBlock( LLVMContextRef context, [MarshalAs( UnmanagedType.LPStr )] string name, LLVMValueRef /*Function*/ function, LLVMBasicBlockRef insertBefore );
     }
 }

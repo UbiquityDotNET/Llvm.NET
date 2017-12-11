@@ -102,16 +102,16 @@ used in the generated code with appropriate debug information.
 [!code-csharp[Main](../../../Samples/CodeGenWithDebugInfo/Program.cs#CreatingBasicTypesWithDebugInfo)]
 
 This constructs several basic types and assigns them to variables:
+
 | Variable      | Type                  | Language Name
 ----------------|-----------------------|--------------
 | i32           | 32 bit signed integer | int
 | f32           | 32 bit IEEE Float     | float
 | voidType      | void type             | n/a
 | i32Array_0_32 | array i32[0..31]      | n/a
-a 32 bit signed inteer type called "int" in the source language
 
 ## Creating qualified types
-Creating qualified (conts, volatile, etc...) and pointers is just as easy as creating the basic types.
+Creating qualified (const, volatile, etc...) and pointers is just as easy as creating the basic types.
 The sample needs a pointer to a const instance of the struct foo. A qualified type for constant foo is
 created first, then a pointer type is created for the const type.
 

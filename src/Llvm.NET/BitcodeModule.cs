@@ -21,6 +21,44 @@ using static Llvm.NET.Native.NativeMethods;
 
 namespace Llvm.NET
 {
+    /// <summary>Enumeration to indicate the behavior of module level flags metadata sharing the same name in a <see cref="BitcodeModule"/></summary>
+    [SuppressMessage( "Microsoft.Naming"
+                    , "CA1726:UsePreferredTerms"
+                    , MessageId = "Flag"
+                    , Justification = "Enum for the behavior of the LLVM ModuleFlag (Flag in middle doesn't imply the enum is Bit Flags)" )]
+    public enum ModuleFlagBehavior
+    {
+        /// <summary>Invalid value (default value for this enumeration)</summary>
+        Invalid = 0,
+
+        /// <summary>Emits an error if two values disagree, otherwise the resulting value is that of the operands</summary>
+        Error = LLVMModFlagBehavior.Error,
+
+        /// <summary>Emits a warning if two values disagree. The result will be the operand for the flag from the first module being linked</summary>
+        Warning = LLVMModFlagBehavior.Warning,
+
+        /// <summary>Adds a requirement that another module flag be present and have a specified value after linking is performed</summary>
+        /// <remarks>
+        /// The value must be a metadata pair, where the first element of the pair is the ID of the module flag to be restricted, and the
+        /// second element of the pair is the value the module flag should be restricted to. This behavior can be used to restrict the
+        /// allowable results (via triggering of an error) of linking IDs with the <see cref="Override"/> behavior
+        /// </remarks>
+        Require = LLVMModFlagBehavior.Require,
+
+        /// <summary>Uses the specified value, regardless of the behavior or value of the other module</summary>
+        /// <remarks>If both modules specify Override, but the values differ, and error will be emitted</remarks>
+        Override = LLVMModFlagBehavior.Override,
+
+        /// <summary>Appends the two values, which are required to be metadata nodes</summary>
+        Append = LLVMModFlagBehavior.Append,
+
+        /// <summary>Appends the two values, which are required to be metadata nodes dropping duplicate entries in the second list</summary>
+        AppendUnique = LLVMModFlagBehavior.AppendUnique,
+
+        /// <summary>Takes the max of the two values, which are required to be integers</summary>
+        Max = 7 /*LLVMModFlagBehavior.Max*/
+    }
+
     /// <summary>LLVM Bit-code module</summary>
     /// <remarks>
     /// A module is the basic unit for containing code in LLVM. Modules are an in memory
@@ -138,6 +176,11 @@ namespace Llvm.NET
             {
                 ValidateHandle( );
                 var handle = LLVMModuleGetModuleFlagsMetadata( ModuleHandle );
+                if( handle == default )
+                {
+                    return new Dictionary<string, ModuleFlag>( );
+                }
+
                 var namedNode = new NamedMDNode( handle );
                 return namedNode.Operands
                                 .Select( n => new ModuleFlag( n ) )
@@ -883,7 +926,7 @@ namespace Llvm.NET
             }
         }
 
-        [DllImport( LibraryPath, CallingConvention = CallingConvention.Cdecl )]
+        [DllImport( LibraryPath, CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl )]
         private static extern LLVMSharedModuleRef LLVMOrcMakeSharedModule( LLVMModuleRef Mod );
 
         // TODO: Leverage a generic WriteOnce<T> of some sort to enforce intentions in code rather than "by convention"

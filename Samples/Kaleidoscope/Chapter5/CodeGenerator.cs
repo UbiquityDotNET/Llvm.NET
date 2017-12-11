@@ -426,7 +426,7 @@ namespace Kaleidoscope
 
         /// <summary>Delegate type to allow execution of a JIT'd TopLevelExpression</summary>
         /// <returns>Result of evaluating the expression</returns>
-        [UnmanagedFunctionPointer( CallingConvention.Cdecl )]
+        [UnmanagedFunctionPointer( System.Runtime.InteropServices.CallingConvention.Cdecl )]
         private delegate double AnonExpressionFunc( );
 
         private static int AnonNameIndex;

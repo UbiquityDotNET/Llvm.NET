@@ -219,6 +219,8 @@ namespace Llvm.NET.DebugInfo
             PropertyContainer.AddExtendedPropertyValue( id, value );
         }
 
+        /// <summary>Converts a <see cref="DebugType{TNative, TDebug}"/> to <typeparamref name="TDebug"/> by accessin the <see cref="DIType"/> property</summary>
+        /// <param name="self">The type to convert</param>
         [SuppressMessage( "Microsoft.Usage", "CA2225:OperatorOverloadsHaveNamedAlternates", Justification = "Available as a property, this is for convenience" )]
         public static implicit operator TDebug( DebugType<TNative, TDebug> self ) => self.ValidateNotNull(nameof(self)).DIType;
 
