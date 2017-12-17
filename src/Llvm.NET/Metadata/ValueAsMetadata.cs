@@ -35,7 +35,7 @@ namespace Llvm.NET
         {
         }
 
-        [DllImport( LibraryPath, CallingConvention = CallingConvention.Cdecl )]
+        [DllImport( LibraryPath, CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl )]
         private static extern LLVMValueRef LLVMValueAsMetadataGetValue( LLVMMetadataRef vmd );
     }
 }

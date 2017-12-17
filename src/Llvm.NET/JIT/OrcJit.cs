@@ -9,9 +9,6 @@ using Llvm.NET.Native;
 using static Llvm.NET.JIT.OrcJit;
 using static Llvm.NET.Native.NativeMethods;
 
-// siable comment warnings as this is all pretty experimental at this point
-#pragma warning disable SA1600,SA1101
-
 namespace Llvm.NET.JIT
 {
     /// <summary>LLVM On Request Compilation (ORC) Just-In-Time (JIT) Engine</summary>
@@ -27,8 +24,10 @@ namespace Llvm.NET.JIT
         public struct OrcJitHandle
             : IEquatable<OrcJitHandle>
         {
+            /// <inheritdoc/>
             public override int GetHashCode( ) => Handle.GetHashCode( );
 
+            /// <inheritdoc/>
             public override bool Equals( object obj )
             {
                 if( obj is OrcJitHandle h )
@@ -39,10 +38,19 @@ namespace Llvm.NET.JIT
                 return base.Equals( obj );
             }
 
+            /// <inheritdoc/>
             public bool Equals( OrcJitHandle other ) => Handle.Equals( other.Handle );
 
+            /// <summary>Implements equality operator</summary>
+            /// <param name="lhs">Left hand side of equality</param>
+            /// <param name="rhs">Right hand side of equality</param>
+            /// <returns><see langword="true"/> if the handles are equal</returns>
             public static bool operator ==( OrcJitHandle lhs, OrcJitHandle rhs ) => lhs.Equals( rhs );
 
+            /// <summary>Implements inequality operator</summary>
+            /// <param name="lhs">Left hand side of equality</param>
+            /// <param name="rhs">Right hand side of equality</param>
+            /// <returns><see langword="true"/> if the handles are not equal</returns>
             public static bool operator !=( OrcJitHandle lhs, OrcJitHandle rhs ) => !lhs.Equals( rhs );
 
             internal OrcJitHandle( LLVMOrcModuleHandle handle )
@@ -101,7 +109,7 @@ namespace Llvm.NET.JIT
         public OrcJitHandle AddModule( BitcodeModule module, SymbolResolver resolver )
         {
             module.MakeShared( );
-            var err = LLVMOrcAddEagerlyCompiledIR( JitStackHandle, out LLVMOrcModuleHandle retHandle, module.SharedModuleRef, resolver, IntPtr.Zero );
+            var err = LLVMOrcAddLazilyCompiledIR( JitStackHandle, out LLVMOrcModuleHandle retHandle, module.SharedModuleRef, resolver, IntPtr.Zero );
             if(err != LLVMOrcErrorCode.LLVMOrcErrSuccess )
             {
                 throw new Exception( LLVMOrcGetErrorMsg( JitStackHandle ) );
@@ -120,6 +128,10 @@ namespace Llvm.NET.JIT
             }
         }
 
+        /// <summary>Implementation of a default symbol resolver</summary>
+        /// <param name="name">Symbol name to resolve</param>
+        /// <param name="ctx">Resolver context</param>
+        /// <returns>Address of the symbol</returns>
         public UInt64 DefaultSymbolResolver( string name, IntPtr ctx )
         {
             var err = LLVMOrcGetSymbolAddress( JitStackHandle, out LLVMOrcTargetAddress retAddr, name );
@@ -138,6 +150,11 @@ namespace Llvm.NET.JIT
             if( err != LLVMOrcErrorCode.LLVMOrcErrSuccess )
             {
                 throw new Exception( LLVMOrcGetErrorMsg( JitStackHandle ) );
+            }
+
+            if( retAddr.Address == 0 )
+            {
+                return default;
             }
 
             return Marshal.GetDelegateForFunctionPointer<T>( ( IntPtr )retAddr.Address );
@@ -172,10 +189,10 @@ namespace Llvm.NET.JIT
         private static extern string LLVMOrcGetErrorMsg( LLVMOrcJITStackRef @JITStack );
 
         [DllImport( LibraryPath, CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi, ThrowOnUnmappableChar = true, BestFitMapping = false )]
-        private static extern void LLVMOrcGetMangledSymbol( LLVMOrcJITStackRef @JITStack, out IntPtr @MangledSymbol, [MarshalAs( UnmanagedType.LPStr )] string @Symbol );
-
-        [DllImport( LibraryPath, CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi, ThrowOnUnmappableChar = true, BestFitMapping = false )]
-        private static extern void LLVMOrcDisposeMangledSymbol( IntPtr @MangledSymbol );
+        private static extern void LLVMOrcGetMangledSymbol( LLVMOrcJITStackRef @JITStack
+                                                          , [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( StringMarshaler ), MarshalCookie = "MangledSymbol" )] out string @MangledSymbol
+                                                          , [MarshalAs( UnmanagedType.LPStr )] string @Symbol
+                                                          );
 
         [DllImport( LibraryPath, CallingConvention = CallingConvention.Cdecl )]
         private static extern LLVMOrcErrorCode LLVMOrcCreateLazyCompileCallback( LLVMOrcJITStackRef @JITStack, out LLVMOrcTargetAddress retAddr, LLVMOrcLazyCompileCallbackFn @Callback, IntPtr @CallbackCtx );

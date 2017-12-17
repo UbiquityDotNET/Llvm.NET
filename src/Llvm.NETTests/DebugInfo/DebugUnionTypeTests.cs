@@ -2,6 +2,7 @@
 // Copyright (c) .NET Foundation. All rights reserved.
 // </copyright>
 
+using Llvm.NET.Types;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 // warning SA1500: Braces for multi-line statements must not share line

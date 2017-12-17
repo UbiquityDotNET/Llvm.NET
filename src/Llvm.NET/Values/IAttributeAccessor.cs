@@ -6,6 +6,28 @@ using System.Collections.Generic;
 
 namespace Llvm.NET.Values
 {
+    /// <summary>Function index for attributes</summary>
+    /// <remarks>
+    /// Attributes on functions apply to the function itself, the return type
+    /// or one of the function's parameters. This enumeration is used to
+    /// identify where the attribute applies.
+    /// </remarks>
+    public enum FunctionAttributeIndex
+    {
+        /// <summary>The attribute applies to the function itself</summary>
+        Function = -1,
+
+        /// <summary>The attribute applies to the return type of the function</summary>
+        ReturnType = 0,
+
+        /// <summary>The attribute applies to the first parameter of the function</summary>
+        /// <remarks>
+        /// Additional parameters can identified by simply adding an integer value to
+        /// this value. (i.e. FunctionAttributeIndex.Parameter0 + 1 )
+        /// </remarks>
+        Parameter0 = 1
+    }
+
     /// <summary>Interface for raw attribute access</summary>
     /// <remarks>
     /// As of LLVM v3.9x and later, Functions and call sites use distinct LLVM-C API sets for

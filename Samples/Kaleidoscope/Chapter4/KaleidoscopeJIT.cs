@@ -1,7 +1,6 @@
 ﻿// <copyright file="KaleidoscopeJIT.cs" company=".NET Foundation">
 // Copyright (c) .NET Foundation. All rights reserved.
 // </copyright>
-
 using Llvm.NET;
 using Llvm.NET.JIT;
 
@@ -10,7 +9,7 @@ namespace Kaleidoscope
 #if USE_ORCJIT
     internal class KaleidoscopeJIT
     {
-        internal KaleidoscopeJIT( )
+        public KaleidoscopeJIT( )
         {
             TargetMachine = Target.FromTriple( Triple.HostTriple.ToString( ) )
                                   .CreateTargetMachine(Triple.HostTriple.ToString(), null, null, CodeGenOpt.Default, Reloc.Default, CodeModel.JitDefault );
@@ -20,7 +19,7 @@ namespace Kaleidoscope
 
         public TargetMachine TargetMachine { get; }
 
-        public OrcJit.OrcJitHandle AddModule( BitcodeModule module ) => ExecutionEngine.AddModule( module );
+        public OrcJit.OrcJitHandle AddModule( BitcodeModule module ) => ExecutionEngine.AddModule( module, ExecutionEngine.DefaultSymbolResolver );
 
         public void RemoveModule( OrcJit.OrcJitHandle moduleHandle ) => ExecutionEngine.RemoveModule( moduleHandle );
 
@@ -29,7 +28,7 @@ namespace Kaleidoscope
             return ExecutionEngine.GetFunctionDelegate<T>( name );
         }
 
-        private OrcJit ExecutionEngine;
+        private readonly OrcJit ExecutionEngine;
     }
 
 #else

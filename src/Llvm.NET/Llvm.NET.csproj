@@ -6,8 +6,6 @@
         <DebugSymbols>true</DebugSymbols>
         <DocumentationFile>$(BaseIntermediateOutputPath)Llvm.NET.xml</DocumentationFile>
         <SignAssembly>False</SignAssembly>
-        <!-- warning CS1591: Missing XML comment for publicly visible type or member -->
-        <NoWarn>1591</NoWarn>
         <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
         <MinClientVersion>4.0</MinClientVersion>
         <Authors>.NET Foundation,LLVM.org</Authors>

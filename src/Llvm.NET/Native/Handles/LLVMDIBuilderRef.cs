@@ -7,6 +7,7 @@ using System.Collections.Generic;
 
 namespace Llvm.NET.Native
 {
+    // TODO: Convert to using LlvmObject so that DebugInfoBuilder doesn't need to be disposable
     internal struct LLVMDIBuilderRef
         : IEquatable<LLVMDIBuilderRef>
     {

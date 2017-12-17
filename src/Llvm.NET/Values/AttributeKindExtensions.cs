@@ -5,12 +5,8 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Llvm.NET.Instructions;
 using Llvm.NET.Native;
 using Ubiquity.ArgValidators;
-
-// TEMP: Disable these until all values are properly doc'd
-#pragma warning disable SA1600, SA1602 // Enumeration items must be documented
 
 namespace Llvm.NET.Values
 {
@@ -89,14 +85,24 @@ namespace Llvm.NET.Values
         /// </remarks>
         ByVal,
 
+        /// <summary>This attribute indicates that this function is rarely called.</summary>
+        /// <remarks>
+        /// When computing edge weights, basic blocks post-dominated by a cold function call are also considered to be cold; and, thus, given low weight.
+        /// </remarks>
         Cold,
+
+        /// <summary>This attribute marks a function as convergent</summary>
         Convergent,
+
+        /// <summary>This indicates that the parameter or return pointer is dereferenceable</summary>
         Dereferenceable,
+
+        /// <summary>This indicates that the parameter or return value isn’t both non-null and non-dereferenceable (up to 'n' bytes) at the same time.</summary>
         DereferenceableOrNull,
 
         /// <summary>The inalloca argument attribute allows the caller to take the address of outgoing stack arguments.</summary>
         /// <remarks>
-        /// <para>An inalloca argument must be a pointer to stack memory produced by an <see cref="Alloca"/>
+        /// <para>An inalloca argument must be a pointer to stack memory produced by an <see cref="Instructions.Alloca"/>
         /// instruction. The alloca, or argument allocation, must also be tagged with the inalloca keyword.
         /// Only the last argument may have the inalloca attribute, and that argument is guaranteed to be
         /// passed in memory.</para>
@@ -117,30 +123,80 @@ namespace Llvm.NET.Values
         /// some targets use it to distinguish between two different kinds of registers). Use of this attribute is target-specific.
         /// </summary>
         InReg,
+
+        /// <summary>This attribute indicates that the function may only access memory that is not accessible by the module being compiled.</summary>
         InaccessibleMemOnly,
+
+        /// <summary>This attribute indicates that the function may only access memory that is either not accessible by the module being compiled, or is pointed to by its pointer arguments.</summary>
         InaccessibleMemOrArgMemOnly,
+
+        /// <summary>This attribute indicates that the source code contained a hint that inlining this function is desirable (such as the “inline” keyword in C/C++). It is just a hint; it imposes no requirements on the inliner.</summary>
         InlineHint,
+
+        /// <summary>This attribute indicates that the function should be added to a jump-instruction table at code-generation time,</summary>
         JumpTable,
+
+        /// <summary>This attribute suggests that optimization passes and code generator passes make choices that keep the code size of this function as small as possible</summary>
         MinSize,
+
+        /// <summary>This attribute disables prologue / epilogue emission for the function. This can have very system-specific consequences.</summary>
         Naked,
+
+        /// <summary>This indicates that the pointer parameter can be excised using the trampoline intrinsics.</summary>
         Nest,
+
+        /// <summary>This indicates that objects accessed via pointer values based on the argument or return value are not also accessed, during the execution of the function, via pointer values not based on the argument or return value. </summary>
         NoAlias,
+
+        /// <summary>This indicates that the callee function at a call site is not recognized as a built-in function.</summary>
         NoBuiltin,
+
+        /// <summary>This indicates that the callee does not make any copies of the pointer that outlive the callee itself.</summary>
         NoCapture,
+
+        /// <summary>This attribute indicates that calls to the function cannot be duplicated.</summary>
         NoDuplicate,
+
+        /// <summary>This attributes disables implicit floating point instructions.</summary>
         NoImplicitFloat,
+
+        /// <summary>This attribute indicates that the inliner should never inline this function in any situation.</summary>
         NoInline,
+
+        /// <summary>This function attribute indicates that the function does not call itself either directly or indirectly down any possible call path</summary>
         NoRecurse,
+
+        /// <summary>This attribute indicates that the code generator should not use a red zone, even if the target-specific ABI normally permits it</summary>
         NoRedZone,
+
+        /// <summary>This function attribute indicates that the function never returns normally.</summary>
         NoReturn,
+
+        /// <summary>This function attribute indicates that the function never raises an exception.</summary>
         NoUnwind,
+
+        /// <summary>This attribute suppresses lazy symbol binding for the function.</summary>
         NonLazyBind,
+
+        /// <summary>This indicates that the parameter or return pointer is not null.</summary>
         NonNull,
+
+        /// <summary>Optimize for size</summary>
         OptimizeForSize,
+
+        /// <summary>Do not optimize</summary>
         OptimizeNone,
+
+        /// <summary>On a function, this attribute indicates that the function computes its result (or decides to unwind an exception) based strictly on its arguments, without dereferencing any pointer arguments or otherwise accessing any mutable state</summary>
         ReadNone,
+
+        /// <summary>On a function, this attribute indicates that the function does not write through any pointer arguments (including byval arguments) or otherwise modify any state (e.g. memory, control registers, etc) visible to caller functions</summary>
         ReadOnly,
+
+        /// <summary>This indicates that the function always returns the argument as its return value.</summary>
         Returned,
+
+        /// <summary>This attribute indicates that this function can return twice.</summary>
         ReturnsTwice,
 
         /// <summary>This indicates to the code generator that the parameter or return value should be sign-extended to the extent
@@ -148,19 +204,50 @@ namespace Llvm.NET.Values
         /// </summary>
         SExt,
 
+        /// <summary>This attribute indicates that SafeStack protection is enabled for this function.</summary>
         SafeStack,
+
+        /// <summary>This attribute indicates that AddressSanitizer checks (dynamic address safety analysis) are enabled for this function.</summary>
         SanitizeAddress,
+
+        /// <summary>This attribute indicates that MemorySanitizer checks (dynamic detection of accesses to uninitialized memory) are enabled for this function.</summary>
         SanitizeMemory,
+
+        /// <summary>This attribute indicates that ThreadSanitizer checks (dynamic thread safety analysis) are enabled for this function.</summary>
         SanitizeThread,
+
+        /// <summary>This function attribute indicates that the function does not have any effects besides calculating its result and does not have undefined behavior.</summary>
         Speculatable,
+
+        /// <summary>This attribute indicates that, when emitting the prologue and epilogue, the backend should forcibly align the stack pointer.</summary>
         StackAlignment,
+
+        /// <summary>This attribute indicates that the function should emit a stack smashing protector.</summary>
         StackProtect,
+
+        /// <summary>This attribute indicates that the function should always emit a stack smashing protector.</summary>
         StackProtectReq,
+
+        /// <summary>This attribute indicates that the function should emit a stack smashing protector.</summary>
         StackProtectStrong,
+
+        /// <summary>This indicates that the pointer parameter specifies the address of a structure that is the return value of the function in the source program.</summary>
         StructRet,
+
+        /// <summary>This attribute is motivated to model and optimize Swift error handling.</summary>
         SwiftError,
+
+        /// <summary>This indicates that the parameter is the self/context parameter.</summary>
         SwiftSelf,
+
+        /// <summary>This attribute indicates that the ABI being targeted requires that an unwind table entry be produced for this function even if we can show that no exceptions passes by it.</summary>
         UWTable,
+
+        /// <summary>This attribute indactes the item is write only</summary>
+        /// <remarks>
+        /// On a function, this attribute indicates that the function may write to but does not read from memory.
+        /// On an argument, this attribute indicates that the function may write to but does not read through this pointer argument (even though it may read from the memory that the pointer points to).
+        /// </remarks>
         WriteOnly,
 
         /// <summary>This indicates to the code generator that the parameter or return value should be zero-extended to the extent

@@ -11,6 +11,61 @@ using Llvm.NET.Values;
 
 namespace Llvm.NET.Types
 {
+    /// <summary>Basic kind of a type</summary>
+    public enum TypeKind
+    {
+        /// <summary>Type with no size</summary>
+        Void = LLVMTypeKind.LLVMVoidTypeKind,
+
+        /// <summary>16 bit floating point type</summary>
+        Float16 = LLVMTypeKind.LLVMHalfTypeKind,
+
+        /// <summary>32 bit floating point type</summary>
+        Float32 = LLVMTypeKind.LLVMFloatTypeKind,
+
+        /// <summary>64 bit floating point type</summary>
+        Float64 = LLVMTypeKind.LLVMDoubleTypeKind,
+
+        /// <summary>80 bit floating point type (X87)</summary>
+        X86Float80 = LLVMTypeKind.LLVMX86_FP80TypeKind,
+
+        /// <summary>128 bit floating point type (112-bit mantissa)</summary>
+        Float128m112 = LLVMTypeKind.LLVMFP128TypeKind,
+
+        /// <summary>128 bit floating point type (two 64-bits)</summary>
+        Float128 = LLVMTypeKind.LLVMPPC_FP128TypeKind,
+
+        /// <summary><see cref="Llvm.NET.Values.BasicBlock"/> instruction label</summary>
+        Label = LLVMTypeKind.LLVMLabelTypeKind,
+
+        /// <summary>Arbitrary bit width integers</summary>
+        Integer = LLVMTypeKind.LLVMIntegerTypeKind,
+
+        /// <summary><see cref="Llvm.NET.Types.IFunctionType"/></summary>
+        Function = LLVMTypeKind.LLVMFunctionTypeKind,
+
+        /// <summary><see cref="Llvm.NET.Types.IStructType"/></summary>
+        Struct = LLVMTypeKind.LLVMStructTypeKind,
+
+        /// <summary><see cref="Llvm.NET.Types.IArrayType"/></summary>
+        Array = LLVMTypeKind.LLVMArrayTypeKind,
+
+        /// <summary><see cref="Llvm.NET.Types.IPointerType"/></summary>
+        Pointer = LLVMTypeKind.LLVMPointerTypeKind,
+
+        /// <summary>SIMD 'packed' format, or other <see cref="Llvm.NET.Types.IVectorType"/> implementation</summary>
+        Vector = LLVMTypeKind.LLVMVectorTypeKind,
+
+        /// <summary><see cref="Llvm.NET.LlvmMetadata"/></summary>
+        Metadata = LLVMTypeKind.LLVMMetadataTypeKind,
+
+        /// <summary>x86 MMX data type</summary>
+        X86MMX = LLVMTypeKind.LLVMX86_MMXTypeKind,
+
+        /// <summary>Exception handler token</summary>
+        Token = LLVMTypeKind.LLVMTokenTypeKind
+    }
+
     /// <summary>Interface for a Type in LLVM</summary>
     public interface ITypeRef
         : IExtensiblePropertyContainer

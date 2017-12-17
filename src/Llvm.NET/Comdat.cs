@@ -8,14 +8,31 @@ using Ubiquity.ArgValidators;
 
 namespace Llvm.NET
 {
+    /// <summary>Comday kind/behavior</summary>
+    public enum ComdatKind
+    {
+        /// <summary>Linker may choose any COMDAT key, the choice is arbitrary</summary>
+        Any = LLVMComdatSelectionKind.ANY,
+
+        /// <summary>Linker may choose any COMDAT key but sextions must contain the same data</summary>
+        ExactMatch = LLVMComdatSelectionKind.EXACTMATCH,
+
+        /// <summary>The linker will choose the section containing the largets COMDAT key</summary>
+        Largest = LLVMComdatSelectionKind.LARGEST,
+
+        /// <summary>The linker requires that onle one section with this COMDAT key exists</summary>
+        NoDuplicates = LLVMComdatSelectionKind.NODUPLICATES,
+
+        /// <summary>Linker may choose any COMDAT key but sections must contain the same amount of data</summary>
+        SameSize = LLVMComdatSelectionKind.SAMESIZE
+    }
+
     /// <summary>Comdat entry for a module</summary>
     /// <remarks>
-    /// A COMDAT is a named kind pair to ensure that, within
-    /// a given module there are no two named COMDATs with
-    /// different kinds. Ultimately, Comdat is 'owned' by the
-    /// module, if the module is disposed the Comdats it owns
-    /// are invalidated. Using a Comdat instance after the
-    /// module is disposed results in an effective NOP.
+    /// A COMDAT is a named kind pair to ensure that, within a given module there are no two named COMDATs
+    /// with different kinds. Ultimately, Comdat is 'owned' by the module, if the module is disposed the
+    /// Comdats it owns are invalidated. Using a Comdat instance after the module is disposed results in
+    /// an effective NOP.
     /// </remarks>
     public class Comdat
     {

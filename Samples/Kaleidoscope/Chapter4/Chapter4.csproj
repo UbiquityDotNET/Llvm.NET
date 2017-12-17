@@ -5,9 +5,10 @@
     <AssemblyName>kls4</AssemblyName>
     <RootNamespace>Kaleidoscope</RootNamespace>
     <LangVersion>latest</LangVersion>
+    <DefineConstants>USE_ORCJIT</DefineConstants>
   </PropertyGroup>
 
-  <ItemGroup>
+    <ItemGroup>
       <ProjectReference Include="$(BuildRootDir)src\Llvm.NET\Llvm.NET.csproj">
           <Name>Llvm.NET</Name>
       </ProjectReference>

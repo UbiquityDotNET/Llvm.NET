@@ -11,6 +11,70 @@ using static Llvm.NET.Native.NativeMethods;
 
 namespace Llvm.NET
 {
+    /// <summary>Optimization level for target code generation</summary>
+    public enum CodeGenOpt
+    {
+        /// <summary>No optimization</summary>
+        None = LLVMCodeGenOptLevel.LLVMCodeGenLevelNone,
+
+        /// <summary>Minimal optimization</summary>
+        Less = LLVMCodeGenOptLevel.LLVMCodeGenLevelLess,
+
+        /// <summary>Default optimization</summary>
+        Default = LLVMCodeGenOptLevel.LLVMCodeGenLevelDefault,
+
+        /// <summary>Aggresive optimizations</summary>
+        Aggressive = LLVMCodeGenOptLevel.LLVMCodeGenLevelAggressive
+    }
+
+    /// <summary>Relocation type for target code generation</summary>
+    public enum Reloc
+    {
+        /// <summary>Default relocation model for the target</summary>
+        Default = LLVMRelocMode.LLVMRelocDefault,
+
+        /// <summary>Static relocation model</summary>
+        Static = LLVMRelocMode.LLVMRelocStatic,
+
+        /// <summary>Position independent relocation model</summary>
+        PositionIndependent = LLVMRelocMode.LLVMRelocPIC,
+
+        /// <summary>Dynamic relocation model</summary>
+        Dynamic = LLVMRelocMode.LLVMRelocDynamicNoPic
+    }
+
+    /// <summary>Code model to use for target code generation</summary>
+    public enum CodeModel
+    {
+        /// <summary>Default code model for the target</summary>
+        Default = LLVMCodeModel.LLVMCodeModelDefault,
+
+        /// <summary>Default code model for JIT to the target</summary>
+        JitDefault = LLVMCodeModel.LLVMCodeModelJITDefault,
+
+        /// <summary>Small code model</summary>
+        Small = LLVMCodeModel.LLVMCodeModelSmall,
+
+        /// <summary>Kernel code model</summary>
+        Kernel = LLVMCodeModel.LLVMCodeModelKernel,
+
+        /// <summary>Medium code model</summary>
+        Medium = LLVMCodeModel.LLVMCodeModelMedium,
+
+        /// <summary>Large code model</summary>
+        Large = LLVMCodeModel.LLVMCodeModelLarge
+    }
+
+    /// <summary>Output file type for target code generation</summary>
+    public enum CodeGenFileType
+    {
+        /// <summary>Generate assembly source file</summary>
+        AssemblySource = LLVMCodeGenFileType.LLVMAssemblyFile,
+
+        /// <summary>Generate target object file</summary>
+        ObjectFile = LLVMCodeGenFileType.LLVMObjectFile
+    }
+
     /// <summary>LLVM Target Instruction Set Architecture</summary>
     public class Target
     {
