@@ -798,12 +798,10 @@ namespace Llvm.NET
                 return Clone( );
             }
 
-            using( var buffer = WriteToBuffer( ) )
-            {
-                var retVal = LoadFrom( buffer, targetContext );
-                Debug.Assert( retVal.Context == targetContext, "Expected to get a module bound to the specified context" );
-                return retVal;
-            }
+            var buffer = WriteToBuffer( );
+            var retVal = LoadFrom( buffer, targetContext );
+            Debug.Assert( retVal.Context == targetContext, "Expected to get a module bound to the specified context" );
+            return retVal;
         }
 
         /// <inheritdoc/>
@@ -828,10 +826,8 @@ namespace Llvm.NET
                 throw new FileNotFoundException( "Specified bit-code file does not exist", path );
             }
 
-            using( var buffer = new MemoryBuffer( path ) )
-            {
-                return LoadFrom( buffer, context );
-            }
+            var buffer = new MemoryBuffer( path );
+            return LoadFrom( buffer, context );
         }
 
         /// <summary>Load bit code from a memory buffer</summary>

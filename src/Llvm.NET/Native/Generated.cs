@@ -2311,29 +2311,6 @@ namespace Llvm.NET.Native
         internal static extern LLVMValueRef LLVMBuildAtomicCmpXchg( LLVMBuilderRef @B, LLVMValueRef @Ptr, LLVMValueRef @Cmp, LLVMValueRef @New, LLVMAtomicOrdering @SuccessOrdering, LLVMAtomicOrdering @FailureOrdering, [MarshalAs( UnmanagedType.Bool )]bool @SingleThread );
         #endregion
 
-        #region Memory Buffer
-        [DllImport( LibraryPath, EntryPoint = "LLVMCreateMemoryBufferWithContentsOfFile", CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi, ThrowOnUnmappableChar = true, BestFitMapping = false )]
-        internal static extern LLVMStatus LLVMCreateMemoryBufferWithContentsOfFile( [MarshalAs( UnmanagedType.LPStr )] string @Path, out LLVMMemoryBufferRef @OutMemBuf, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( StringMarshaler ), MarshalCookie = "DisposeMessage" )]out string @OutMessage );
-
-        [DllImport( LibraryPath, EntryPoint = "LLVMCreateMemoryBufferWithSTDIN", CallingConvention = CallingConvention.Cdecl )]
-        internal static extern LLVMStatus LLVMCreateMemoryBufferWithSTDIN( out LLVMMemoryBufferRef @OutMemBuf, out IntPtr @OutMessage );
-
-        [DllImport( LibraryPath, EntryPoint = "LLVMCreateMemoryBufferWithMemoryRange", CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi, ThrowOnUnmappableChar = true, BestFitMapping = false )]
-        internal static extern LLVMMemoryBufferRef LLVMCreateMemoryBufferWithMemoryRange( [MarshalAs( UnmanagedType.LPStr )] string @InputData, size_t @InputDataLength, [MarshalAs( UnmanagedType.LPStr )] string @BufferName, [MarshalAs( UnmanagedType.Bool )]bool @RequiresNullTerminator );
-
-        [DllImport( LibraryPath, EntryPoint = "LLVMCreateMemoryBufferWithMemoryRangeCopy", CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi, ThrowOnUnmappableChar = true, BestFitMapping = false )]
-        internal static extern LLVMMemoryBufferRef LLVMCreateMemoryBufferWithMemoryRangeCopy( [MarshalAs( UnmanagedType.LPStr )] string @InputData, size_t @InputDataLength, [MarshalAs( UnmanagedType.LPStr )] string @BufferName );
-
-        [DllImport( LibraryPath, EntryPoint = "LLVMGetBufferStart", CallingConvention = CallingConvention.Cdecl )]
-        internal static extern IntPtr LLVMGetBufferStart( LLVMMemoryBufferRef @MemBuf );
-
-        [DllImport( LibraryPath, EntryPoint = "LLVMGetBufferSize", CallingConvention = CallingConvention.Cdecl )]
-        internal static extern size_t LLVMGetBufferSize( LLVMMemoryBufferRef @MemBuf );
-
-        [DllImport( LibraryPath, EntryPoint = "LLVMDisposeMemoryBuffer", CallingConvention = CallingConvention.Cdecl )]
-        internal static extern void LLVMDisposeMemoryBuffer( LLVMMemoryBufferRef @MemBuf );
-        #endregion
-
         #region Pass Manager
         [DllImport( LibraryPath, EntryPoint = "LLVMGetGlobalPassRegistry", CallingConvention = CallingConvention.Cdecl )]
         internal static extern LLVMPassRegistryRef LLVMGetGlobalPassRegistry( );

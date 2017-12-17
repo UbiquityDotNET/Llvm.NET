@@ -13,7 +13,6 @@ namespace Llvm.NET.JIT
 {
     /// <summary>LLVM JIT discriminated union for a generic primitive value</summary>
     public sealed class GenericValue
-        : IDisposable
     {
         /// <summary>Initializes a new instance of the <see cref="GenericValue"/> class with an integer value</summary>
         /// <param name="t">LLVM type describing the integer bit width</param>
@@ -62,12 +61,6 @@ namespace Llvm.NET.JIT
         /// <param name="ctx">Context to use for the LLVM double type definition</param>
         /// <returns>Floating point value</returns>
         public double ToDouble( Context ctx ) => LLVMGenericValueToFloat( ctx.DoubleType.GetTypeRef( ), Handle );
-
-        /// <inheritdoc/>
-        public void Dispose( )
-        {
-            Handle.Dispose( );
-        }
 
         private readonly LLVMGenericValueRef Handle;
     }
