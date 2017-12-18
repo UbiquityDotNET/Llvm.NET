@@ -13,7 +13,7 @@
         <Description>.NET Bindings for LLVM</Description>
         <PackageTags>LLVM,Compiler,JIT</PackageTags>
         <NoPackageAnalysis>true</NoPackageAnalysis>
-        <LangVersion>7.1</LangVersion>
+        <LangVersion>7.2</LangVersion>
     </PropertyGroup>
     <ItemGroup>
       <Compile Remove="obj\**" />
