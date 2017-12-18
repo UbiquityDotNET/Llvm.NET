@@ -3,7 +3,6 @@
 // </copyright>
 
 using Llvm.NET.Native;
-using Llvm.NET.Native.Handles;
 using Ubiquity.ArgValidators;
 
 namespace Llvm.NET

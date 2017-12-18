@@ -4,7 +4,6 @@
 
 using System.Collections.Generic;
 using Llvm.NET.Native;
-using Llvm.NET.Native.Handles;
 using Ubiquity.ArgValidators;
 
 using static Llvm.NET.Native.NativeMethods;

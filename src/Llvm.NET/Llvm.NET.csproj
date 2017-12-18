@@ -32,7 +32,7 @@
     </ItemGroup>
     <ItemGroup>
         <PackageReference Include="CSemVer.Build.Tasks" Version="1.0.2-beta--ci-BLD.427428397" />
-        <PackageReference Include="Ubiquity.ArgValidators" Version="0.3.0-alpha--ci-REL.424565984" />
+        <PackageReference Include="Ubiquity.ArgValidators" Version="0.3.0-alpha--ci-REL.19A2218B" />
     </ItemGroup>
     <Choose>
         <!--
