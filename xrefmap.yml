@@ -2203,18 +2203,6 @@ references:
   commentId: Overload:Llvm.NET.DebugInfo.DebugInfoBuilder.CreateUnionType
   fullName: Llvm.NET.DebugInfo.DebugInfoBuilder.CreateUnionType
   nameWithType: DebugInfoBuilder.CreateUnionType
-- uid: Llvm.NET.DebugInfo.DebugInfoBuilder.Dispose
-  name: Dispose()
-  href: api/Llvm.NET.DebugInfo.DebugInfoBuilder.Dispose.html#Llvm_NET_DebugInfo_DebugInfoBuilder_Dispose
-  commentId: M:Llvm.NET.DebugInfo.DebugInfoBuilder.Dispose
-  fullName: Llvm.NET.DebugInfo.DebugInfoBuilder.Dispose()
-  nameWithType: DebugInfoBuilder.Dispose()
-- uid: Llvm.NET.DebugInfo.DebugInfoBuilder.Dispose*
-  name: Dispose
-  href: api/Llvm.NET.DebugInfo.DebugInfoBuilder.Dispose.html
-  commentId: Overload:Llvm.NET.DebugInfo.DebugInfoBuilder.Dispose
-  fullName: Llvm.NET.DebugInfo.DebugInfoBuilder.Dispose
-  nameWithType: DebugInfoBuilder.Dispose
 - uid: Llvm.NET.DebugInfo.DebugInfoBuilder.Finish
   name: Finish()
   href: api/Llvm.NET.DebugInfo.DebugInfoBuilder.Finish.html#Llvm_NET_DebugInfo_DebugInfoBuilder_Finish
@@ -9718,18 +9706,6 @@ references:
   commentId: Overload:Llvm.NET.JIT.GenericValue.#ctor
   fullName: Llvm.NET.JIT.GenericValue.GenericValue
   nameWithType: GenericValue.GenericValue
-- uid: Llvm.NET.JIT.GenericValue.Dispose
-  name: Dispose()
-  href: api/Llvm.NET.JIT.GenericValue.Dispose.html#Llvm_NET_JIT_GenericValue_Dispose
-  commentId: M:Llvm.NET.JIT.GenericValue.Dispose
-  fullName: Llvm.NET.JIT.GenericValue.Dispose()
-  nameWithType: GenericValue.Dispose()
-- uid: Llvm.NET.JIT.GenericValue.Dispose*
-  name: Dispose
-  href: api/Llvm.NET.JIT.GenericValue.Dispose.html
-  commentId: Overload:Llvm.NET.JIT.GenericValue.Dispose
-  fullName: Llvm.NET.JIT.GenericValue.Dispose
-  nameWithType: GenericValue.Dispose
 - uid: Llvm.NET.JIT.GenericValue.IntegerBitWidth
   name: IntegerBitWidth
   href: api/Llvm.NET.JIT.GenericValue.IntegerBitWidth.html#Llvm_NET_JIT_GenericValue_IntegerBitWidth
@@ -10374,18 +10350,6 @@ references:
   commentId: Overload:Llvm.NET.MemoryBuffer.#ctor
   fullName: Llvm.NET.MemoryBuffer.MemoryBuffer
   nameWithType: MemoryBuffer.MemoryBuffer
-- uid: Llvm.NET.MemoryBuffer.Dispose
-  name: Dispose()
-  href: api/Llvm.NET.MemoryBuffer.Dispose.html#Llvm_NET_MemoryBuffer_Dispose
-  commentId: M:Llvm.NET.MemoryBuffer.Dispose
-  fullName: Llvm.NET.MemoryBuffer.Dispose()
-  nameWithType: MemoryBuffer.Dispose()
-- uid: Llvm.NET.MemoryBuffer.Dispose*
-  name: Dispose
-  href: api/Llvm.NET.MemoryBuffer.Dispose.html
-  commentId: Overload:Llvm.NET.MemoryBuffer.Dispose
-  fullName: Llvm.NET.MemoryBuffer.Dispose
-  nameWithType: MemoryBuffer.Dispose
 - uid: Llvm.NET.MemoryBuffer.Size
   name: Size
   href: api/Llvm.NET.MemoryBuffer.Size.html#Llvm_NET_MemoryBuffer_Size
