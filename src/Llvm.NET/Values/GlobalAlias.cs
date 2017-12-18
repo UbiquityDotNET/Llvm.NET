@@ -8,26 +8,13 @@ namespace Llvm.NET.Values
 {
     /// <summary>LLVM Global Alias for a function or global value</summary>
     public class GlobalAlias
-        : GlobalValue
+        : GlobalIndirectSymbol
     {
-        /// <summary>Gets the aliasee that this Alias refers to</summary>
+        /// <summary>Gets or sets the aliasee that this Alias refers to</summary>
         public Constant Aliasee
         {
-            get
-            {
-                if( ValueHandle == default )
-                {
-                    return null;
-                }
-
-                var handle = NativeMethods.LLVMGetAliasee( ValueHandle );
-                if( handle == default )
-                {
-                    return null;
-                }
-
-                return FromHandle<Constant>( handle );
-            }
+            get => IndirectSymbol;
+            set => IndirectSymbol = value;
         }
 
         internal GlobalAlias( LLVMValueRef valueRef )

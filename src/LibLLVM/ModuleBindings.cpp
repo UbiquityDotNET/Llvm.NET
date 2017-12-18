@@ -163,4 +163,44 @@ extern "C"
         Comdat const& comdat = *unwrap( comdatRef );
         return LLVMCreateMessage( comdat.getName( ).str( ).c_str( ) );
     }
+
+    LLVMValueRef LLVMModuleGetFirstGlobalAlias( LLVMModuleRef M )
+    {
+        Module *Mod = unwrap( M );
+        Module::alias_iterator I = Mod->alias_begin( );
+        if ( I == Mod->alias_end( ) )
+            return nullptr;
+
+        return wrap( &*I );
+    }
+
+    LLVMValueRef LLVMModuleGetNextGlobalAlias( LLVMValueRef valueRef )
+    {
+        GlobalAlias *pGA = unwrap<GlobalAlias>( valueRef );
+        Module::alias_iterator I( pGA );
+        if ( ++I == pGA->getParent( )->alias_end( ) )
+            return nullptr;
+
+        return wrap( &*I );
+    }
+
+    LLVMNamedMDNodeRef LLVMModuleGetFirstNamedMD( LLVMModuleRef M )
+    {
+        Module *Mod = unwrap( M );
+        Module::named_metadata_iterator I = Mod->named_metadata_begin( );
+        if ( I == Mod->named_metadata_end( ) )
+            return nullptr;
+
+        return wrap( &*I );
+    }
+
+    LLVMNamedMDNodeRef LLVMModuleGetNextNamedMD( LLVMNamedMDNodeRef /*NamedMDNode*/ valueRef )
+    {
+        NamedMDNode *pMD = unwrap( valueRef );
+        Module::named_metadata_iterator I( pMD );
+        if ( ++I == pMD->getParent( )->named_metadata_end( ) )
+            return nullptr;
+
+        return wrap( &*I );
+    }
 }

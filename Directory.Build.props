@@ -69,7 +69,7 @@
                 <PackageReference Include="StyleCop.Analyzers" Version="1.0.2" PrivateAssets="All" />
                 <AdditionalFiles Include="$(MSBuildThisFileDirectory)stylecop.json" Link="stylecop.json" />
             </ItemGroup>
-            <ItemGroup>
+            <ItemGroup Condition="'$(NoCommonAnalyzers)'!='true'">
                 <None Include="$(MSBuildThisFileDirectory)Ubiquity.NET.ruleset" Link="Ubiquity.NET.ruleset" />
             </ItemGroup>
         </When>

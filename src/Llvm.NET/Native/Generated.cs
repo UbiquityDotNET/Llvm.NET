@@ -617,9 +617,6 @@ namespace Llvm.NET.Native
         [DllImport( LibraryPath, EntryPoint = "LLVMContextSetYieldCallback", CallingConvention = CallingConvention.Cdecl )]
         internal static extern void LLVMContextSetYieldCallback( LLVMContextRef @C, LLVMYieldCallback @Callback, IntPtr @OpaqueHandle );
 
-        [DllImport( LibraryPath, EntryPoint = "LLVMGetMDKindIDInContext", CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi, ThrowOnUnmappableChar = true, BestFitMapping = false )]
-        internal static extern uint LLVMGetMDKindIDInContext( LLVMContextRef @C, [MarshalAs( UnmanagedType.LPStr )] string @Name, uint @SLen );
-
         [DllImport( LibraryPath, EntryPoint = "LLVMParseIRInContext", CallingConvention = CallingConvention.Cdecl )]
         internal static extern LLVMStatus LLVMParseIRInContext( LLVMContextRef @ContextRef, LLVMMemoryBufferRef @MemBuf, out LLVMModuleRef @OutM, out IntPtr @OutMessage );
         #endregion
@@ -685,11 +682,8 @@ namespace Llvm.NET.Native
         [DllImport( LibraryPath, EntryPoint = "LLVMGetDataLayoutStr", CallingConvention = CallingConvention.Cdecl )]
         internal static extern IntPtr LLVMGetDataLayoutStr( LLVMModuleRef @M );
 
-        [DllImport( LibraryPath, EntryPoint = "LLVMGetDataLayout", CallingConvention = CallingConvention.Cdecl )]
-        internal static extern IntPtr LLVMGetDataLayout( LLVMModuleRef @M );
-
         [DllImport( LibraryPath, EntryPoint = "LLVMSetDataLayout", CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi, ThrowOnUnmappableChar = true, BestFitMapping = false )]
-        internal static extern void LLVMSetDataLayout( LLVMModuleRef @M, [MarshalAs( UnmanagedType.LPStr )] string @DataLayoutStr );
+        internal static extern void LLVMSetDataLayoutStr( LLVMModuleRef @M, [MarshalAs( UnmanagedType.LPStr )] string @DataLayoutStr );
 
         [DllImport( LibraryPath, EntryPoint = "LLVMGetTarget", CallingConvention = CallingConvention.Cdecl )]
         [return: MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( StringMarshaler ) )]

@@ -178,6 +178,7 @@
   <ItemGroup>
     <ClCompile Include="AnalysisBindings.cpp" />
     <ClCompile Include="AttributeBindings.cpp" />
+    <ClCompile Include="ContextBindings.cpp" />
     <ClCompile Include="DIBuilderBindings.cpp" />
     <ClCompile Include="DITypeBindings.cpp" />
     <ClCompile Include="InlinedExports.cpp" />
@@ -190,6 +191,7 @@
   <ItemGroup>
     <ClInclude Include="AnalysisBindings.h" />
     <ClInclude Include="AttributeBindings.h" />
+    <ClInclude Include="ContextBindings.h" />
     <ClInclude Include="DIBuilderBindings.h" />
     <ClInclude Include="DITypeBindings.h" />
     <ClInclude Include="InlinedExports.h" />

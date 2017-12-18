@@ -61,7 +61,7 @@ namespace Llvm.NET
     /// <summary>LLVM Bit-code module</summary>
     /// <remarks>
     /// A module is the basic unit for containing code in LLVM. Modules are an in memory
-    /// representation of the LLVM bit-code.
+    /// representation of the LLVM Intermediat Representation (IR) bit-code. Each
     /// </remarks>
     public sealed class BitcodeModule
         : IDisposable
@@ -169,15 +169,15 @@ namespace Llvm.NET
             get
             {
                 ThrowIfDisposed( );
-                return Layout_;
+                return CachedLayout;
             }
 
             set
             {
                 ThrowIfDisposed( );
 
-                Layout_ = value;
-                LLVMSetDataLayout( ModuleHandle, value?.ToString( ) ?? string.Empty );
+                CachedLayout = value;
+                LLVMSetDataLayoutStr( ModuleHandle, value?.ToString( ) ?? string.Empty );
             }
         }
 
@@ -197,8 +197,8 @@ namespace Llvm.NET
             }
         }
 
-        /// <summary>Gets the Globals contained by this module</summary>
-        public IEnumerable<Value> Globals
+        /// <summary>Gets the <see cref="GlobalVariable"/>s contained by this module</summary>
+        public IEnumerable<GlobalVariable> Globals
         {
             get
             {
@@ -206,7 +206,7 @@ namespace Llvm.NET
                 var current = LLVMGetFirstGlobal( ModuleHandle );
                 while( current != default )
                 {
-                    yield return Value.FromHandle( current );
+                    yield return Value.FromHandle<GlobalVariable>( current );
                     current = LLVMGetNextGlobal( current );
                 }
             }
@@ -227,8 +227,35 @@ namespace Llvm.NET
             }
         }
 
-        // TODO: Add enumerator for GlobalAlias(s)
-        // TODO: Add enumerator for NamedMDNode(s)
+        /// <summary>Gets the global aliases in this module</summary>
+        public IEnumerable<GlobalAlias> Aliases
+        {
+            get
+            {
+                ThrowIfDisposed( );
+                var current = LLVMModuleGetFirstGlobalAlias( ModuleHandle );
+                while( current != default )
+                {
+                    yield return Value.FromHandle<GlobalAlias>( current );
+                    current = LLVMModuleGetNextGlobalAlias( current );
+                }
+            }
+        }
+
+        /// <summary>Gets the <see cref="NamedMDNode"/>s for this module</summary>
+        public IEnumerable<NamedMDNode> NamedMetadata
+        {
+            get
+            {
+                ThrowIfDisposed( );
+                var current = LLVMModuleGetFirstNamedMD( ModuleHandle );
+                while( current != default )
+                {
+                    yield return new NamedMDNode( current );
+                    current = LLVMModuleGetNextNamedMD( current );
+                }
+            }
+        }
 
         /// <summary>Gets the name of the module</summary>
         public string Name
@@ -242,6 +269,10 @@ namespace Llvm.NET
 
         /// <summary>Gets a value indicating whether this module is shared with a JIT engine</summary>
         public bool IsShared => SharedModuleRef != null;
+
+        /* TODO: Module level inline asm accessors
+            string ModuleInlineAsm { get; set; }
+        */
 
         /// <summary>Makes this module a shared module if it isn't already</summary>
         /// <remarks>
@@ -923,13 +954,14 @@ namespace Llvm.NET
             }
         }
 
-        // TODO: Leverage a generic WriteOnce<T> of some sort to enforce intentions in code rather than "by convention"
-        [SuppressMessage( "StyleCop.CSharp.NamingRules"
-                        , "SA1310:Field names must not contain underscore"
-                        , Justification = "Trailing _ indicates it must not be written to directly even internally"
-                        )
-        ]
-        private DataLayout Layout_;
+        // Do not write to this directly, use the property setter
+        // THis is cached since, internally the LLVM module APIs
+        // deal with C++ references, while that is manageable as
+        // a getter, it is problematic as a setter since there isn't
+        // any sort of ownership transfer and the ownership is a bit
+        // mirky, especally with a managed projection. Thus, the LLVM-C
+        // API sticks to the string form of the layout.
+        private DataLayout CachedLayout;
 
         private readonly ExtensiblePropertyContainer PropertyBag = new ExtensiblePropertyContainer( );
         private readonly Lazy<DebugInfoBuilder> LazyDiBuilder;
@@ -946,5 +978,17 @@ namespace Llvm.NET
 
         [DllImport( LibraryPath, CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl )]
         private static extern LLVMSharedModuleRef LLVMOrcMakeSharedModule( LLVMModuleRef Mod );
+
+        [DllImport( LibraryPath, CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl )]
+        private static extern LLVMValueRef LLVMModuleGetFirstGlobalAlias( LLVMModuleRef M );
+
+        [DllImport( LibraryPath, CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl )]
+        private static extern LLVMValueRef LLVMModuleGetNextGlobalAlias( LLVMValueRef /*GlobalAlias*/ valueRef );
+
+        [DllImport( LibraryPath, CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl )]
+        private static extern LLVMNamedMDNodeRef LLVMModuleGetFirstNamedMD( LLVMModuleRef M );
+
+        [DllImport( LibraryPath, CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl )]
+        private static extern LLVMNamedMDNodeRef LLVMModuleGetNextNamedMD( LLVMNamedMDNodeRef nodeRef );
     }
 }

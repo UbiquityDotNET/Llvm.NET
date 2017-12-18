@@ -56,14 +56,11 @@ namespace Llvm.NET.Values
         }
 
         /* TODO: Add GlobalObject metadata accessors
-        public MDNode GetMetadata(unsigned kindID) {...}
-        public MDNode GetMetadata(string kind) {...}
+        public IEnumerable<MDNode> GetMetadata() {...}
 
-        public MDNode GetMetadata(unsigned kindID, IEnumerable<MDNode> nodes) {...}
-        public MDNode GetMetadata(string kind, IEnumerable<MDNode> nodes) {...}
 
-        public MDNode SetMetadata(unsigned kindID, MDNode node) {...}
-        public MDNode SetMetadata(string kind, MDNode node) {...}
+        public void SetMetadata(unsigned kindID, MDNode node) {...}
+        public void SetMetadata(string kind, MDNode node) {...}
         */
         internal GlobalObject( LLVMValueRef valueRef )
             : base( valueRef )

@@ -267,7 +267,7 @@ namespace Llvm.NET
             var llvmType = GetFunctionType( retType.NativeType, nativeArgTypes, isVarArg );
 
             var diType = diBuilder.CreateSubroutineType( 0, retType.DIType, debugArgTypes );
-            Debug.Assert( diType != null && !diType.IsTemporary, "Should have a valid non temp type by now");
+            Debug.Assert( diType != null && !diType.IsTemporary, "Should have a valid non temp type by now" );
 
             return new DebugFunctionType( llvmType, diType );
         }
@@ -395,10 +395,10 @@ namespace Llvm.NET
             }
 
             // To interop correctly, we need to have an array of at least size one.
-            uint valuesLength = (uint)valueHandles.Length;
+            uint valuesLength = ( uint )valueHandles.Length;
             if( valuesLength == 0 )
             {
-                valueHandles = new LLVMValueRef[1];
+                valueHandles = new LLVMValueRef[ 1 ];
             }
 
             var handle = LLVMConstNamedStruct( type.GetTypeRef( ), out valueHandles[ 0 ], valuesLength );
@@ -686,7 +686,7 @@ namespace Llvm.NET
         /// <summary>Adds a valueless named attribute</summary>
         /// <param name="name">Attribute name</param>
         /// <returns><see cref="AttributeValue"/> with the specified name</returns>
-        public AttributeValue CreateAttribute( string name ) => CreateAttribute( name, string.Empty);
+        public AttributeValue CreateAttribute( string name ) => CreateAttribute( name, string.Empty );
 
         /// <summary>Adds a Target specific named attribute with value</summary>
         /// <param name="name">Name of the attribute</param>
@@ -698,7 +698,7 @@ namespace Llvm.NET
             value.ValidateNotNull( nameof( value ) );
 
             var handle = LLVMCreateStringAttribute( ContextHandle, name, ( uint )name.Length, value, ( uint )value.Length );
-            return AttributeValue.FromHandle(this, handle );
+            return AttributeValue.FromHandle( this, handle );
         }
 
         /// <summary>Create a named <see cref="BasicBlock"/> in a given context</summary>
@@ -744,14 +744,28 @@ namespace Llvm.NET
         /// <summary>Gets the modules created in this context</summary>
         public IEnumerable<BitcodeModule> Modules => ModuleCache;
 
+        /// <summary>Gets non-zero Metadata kind ID for a given name</summary>
+        /// <param name="name">name of the metadata kind</param>
+        /// <returns>integral constant for the ID</returns>
+        /// <remarks>
+        /// These IDs are uniqued across all modules in this context.
+        /// </remarks>
+        public uint GetMDKindId( string name ) => LLVMGetMDKindIDInContext( ContextHandle, name, ( uint )name.Length );
+
+        /// <summary>Gets or sets a value indicating whether the context keeps a map for uniquing debug info identifiers across the context</summary>
+        public bool OdrUniqueDebugTypes
+        {
+            get => LLVMContextGetIsODRUniquingDebugTypes( ContextHandle );
+            set => LLVMContextSetIsODRUniquingDebugTypes( ContextHandle, value );
+        }
+
         /*TODO: Create interop calls to support additional properties/methods
-        public unsigned GetMDKindId(string name) {...}
+        public bool DiscardValueName { get; set; }
+
         public IEnumerable<string> MDKindNames { get; }
 
         public unsigned GetOperandBundleTagId(string name) {...}
         public IEnumerable<string> OperandBundleTagIds { get; }
-
-        public bool ODRUniqueDebugTypes { get; set; }
         */
 
         internal LLVMContextRef ContextHandle { get; private set; }
@@ -874,5 +888,15 @@ namespace Llvm.NET
                                                                            , LLVMValueRef /*Function*/ function
                                                                            , LLVMBasicBlockRef insertBefore
                                                                            );
+
+        [DllImport( LibraryPath, CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl, CharSet = CharSet.Ansi, ThrowOnUnmappableChar = true, BestFitMapping = false )]
+        private static extern uint LLVMGetMDKindIDInContext( LLVMContextRef @C, [MarshalAs( UnmanagedType.LPStr )] string @Name, uint @SLen );
+
+        [DllImport( LibraryPath, CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl )]
+        [return: MarshalAs( UnmanagedType.Bool )]
+        private static extern bool LLVMContextGetIsODRUniquingDebugTypes( LLVMContextRef context );
+
+        [DllImport( LibraryPath, CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl )]
+        private static extern void LLVMContextSetIsODRUniquingDebugTypes( LLVMContextRef context, [MarshalAs( UnmanagedType.Bool )] bool state );
     }
 }
