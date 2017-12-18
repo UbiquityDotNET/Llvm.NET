@@ -3,30 +3,35 @@
 // </copyright>
 
 using System;
-using System.Collections.Generic;
+using System.Runtime.InteropServices;
+using System.Security;
+
+using static Llvm.NET.Native.NativeMethods;
 
 namespace Llvm.NET.Native
 {
-    // TODO: Convert to using LlvmObject so that DebugInfoBuilder doesn't need to be disposable
-    internal struct LLVMDIBuilderRef
-        : IEquatable<LLVMDIBuilderRef>
+    [SecurityCritical]
+    internal class LLVMDIBuilderRef
+        : LlvmObjectRef
     {
-        public override int GetHashCode( ) => Handle.GetHashCode( );
-
-        public override bool Equals( object obj ) => !( obj is null ) && ( obj is LLVMDIBuilderRef r ) && r.Handle == Handle;
-
-        public bool Equals( LLVMDIBuilderRef other ) => Handle == other.Handle;
-
-        public static bool operator ==( LLVMDIBuilderRef lhs, LLVMDIBuilderRef rhs )
-            => EqualityComparer<LLVMDIBuilderRef>.Default.Equals( lhs, rhs );
-
-        public static bool operator !=( LLVMDIBuilderRef lhs, LLVMDIBuilderRef rhs ) => !( lhs == rhs );
-
-        internal LLVMDIBuilderRef( IntPtr pointer )
+        public LLVMDIBuilderRef( IntPtr handle, bool owner)
+            : base( owner )
         {
-            Handle = pointer;
+            SetHandle( handle );
         }
 
-        private readonly IntPtr Handle;
+        protected override bool ReleaseHandle( )
+        {
+            LLVMDIBuilderDestroy( handle );
+            return true;
+        }
+
+        private LLVMDIBuilderRef()
+            : base( true )
+        {
+        }
+
+        [DllImport( LibraryPath, CallingConvention = CallingConvention.Cdecl )]
+        private static extern void LLVMDIBuilderDestroy( IntPtr d );
     }
 }

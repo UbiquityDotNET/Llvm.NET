@@ -1,33 +1,38 @@
-﻿// <copyright file="Generated.cs" company=".NET Foundation">
+﻿// <copyright file="LLVMMemoryBufferRef.cs" company=".NET Foundation">
 // Copyright (c) .NET Foundation. All rights reserved.
 // </copyright>
 
 using System;
-using System.Collections.Generic;
+using System.Runtime.InteropServices;
+using System.Security;
+
+using static Llvm.NET.Native.NativeMethods;
 
 namespace Llvm.NET.Native
 {
-     // TODO: replace with LlvmObject impl so that MemoryBuffer can remove the IDisposable interface and function like any other
-     // garbage collected type in .NET
-     internal struct LLVMMemoryBufferRef
-        : IEquatable<LLVMMemoryBufferRef>
+    [SecurityCritical]
+    internal class LLVMMemoryBufferRef
+        : LlvmObjectRef
     {
-        public override int GetHashCode( ) => Handle.GetHashCode( );
-
-        public override bool Equals( object obj ) => !( obj is null ) && ( obj is LLVMMemoryBufferRef r ) && r.Handle == Handle;
-
-        public bool Equals( LLVMMemoryBufferRef other ) => Handle == other.Handle;
-
-        public static bool operator ==( LLVMMemoryBufferRef lhs, LLVMMemoryBufferRef rhs )
-            => EqualityComparer<LLVMMemoryBufferRef>.Default.Equals( lhs, rhs );
-
-        public static bool operator !=( LLVMMemoryBufferRef lhs, LLVMMemoryBufferRef rhs ) => !( lhs == rhs );
-
-        internal LLVMMemoryBufferRef( IntPtr pointer )
+        public LLVMMemoryBufferRef( IntPtr handle, bool owner )
+            : base( owner )
         {
-            Handle = pointer;
+            SetHandle( handle );
         }
 
-        private readonly IntPtr Handle;
+        [SecurityCritical]
+        protected override bool ReleaseHandle( )
+        {
+            LLVMDisposeMemoryBuffer( handle );
+            return true;
+        }
+
+        private LLVMMemoryBufferRef( )
+            : base( true )
+        {
+        }
+
+        [DllImport( LibraryPath, CallingConvention = CallingConvention.Cdecl )]
+        private static extern void LLVMDisposeMemoryBuffer( IntPtr handle );
     }
 }

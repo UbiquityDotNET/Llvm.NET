@@ -19,8 +19,6 @@ using static Llvm.NET.Native.NativeMethods;
 
 namespace Llvm.NET.DebugInfo
 {
-    // TODO: Remove IDisposable once LLVMDIBuilderRef is based on LlvmObject
-
     /// <summary>DebugInfoBuilder is a factory class for creating DebugInformation for an LLVM
     /// <see cref="BitcodeModule"/></summary>
     /// <remarks>
@@ -31,7 +29,6 @@ namespace Llvm.NET.DebugInfo
     /// </remarks>
     /// <seealso href="xref:llvm_sourceleveldebugging">LLVM Source Level Debugging</seealso>
     public sealed class DebugInfoBuilder
-        : IDisposable
     {
         /// <summary>Gets the module that owns this builder</summary>
         public BitcodeModule OwningModule { get; }
@@ -1305,16 +1302,6 @@ namespace Llvm.NET.DebugInfo
             return MDNode.FromHandle<DICompositeType>( handle );
         }
 
-        /// <inheritdoc/>
-        public void Dispose( )
-        {
-            if( BuilderHandle == default )
-            {
-                LLVMDIBuilderDestroy( BuilderHandle );
-                BuilderHandle = default;
-            }
-        }
-
         internal DebugInfoBuilder( BitcodeModule owningModule )
             : this( owningModule, true )
         {
@@ -1326,10 +1313,7 @@ namespace Llvm.NET.DebugInfo
         // allowUnresolved == false
         private DebugInfoBuilder( BitcodeModule owningModule, bool allowUnresolved )
         {
-            if( owningModule == null )
-            {
-                throw new ArgumentNullException( nameof( owningModule ) );
-            }
+            owningModule.ValidateNotNull( nameof( owningModule ) );
 
             BuilderHandle = LLVMNewDIBuilder( owningModule.ModuleHandle, allowUnresolved );
             OwningModule = owningModule;
@@ -1347,9 +1331,6 @@ namespace Llvm.NET.DebugInfo
         #region LibLLVM P/Invoke APIs
         [DllImport( LibraryPath, CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl, BestFitMapping = false, ThrowOnUnmappableChar = true )]
         private static extern LLVMDIBuilderRef LLVMNewDIBuilder( LLVMModuleRef @m, [MarshalAs( UnmanagedType.Bool )]bool allowUnresolved );
-
-        [DllImport( LibraryPath, CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl, BestFitMapping = false, ThrowOnUnmappableChar = true )]
-        private static extern void LLVMDIBuilderDestroy( LLVMDIBuilderRef @d );
 
         [DllImport( LibraryPath, CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl, BestFitMapping = false, ThrowOnUnmappableChar = true )]
         private static extern void LLVMDIBuilderFinalize( LLVMDIBuilderRef @d );
