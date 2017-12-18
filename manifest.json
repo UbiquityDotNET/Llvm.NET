@@ -582,18 +582,6 @@
       "source_relative_path": "api/Llvm.NET.CodeGenFileType.yml",
       "output": {
         ".html": {
-          "relative_path": "api/Llvm.NET.CodeGenFileType.html",
-          "hash": "DMXTzNBAN+gHWY/UH988OA=="
-        }
-      },
-      "is_incremental": false,
-      "version": ""
-    },
-    {
-      "type": "ManagedReference",
-      "source_relative_path": "api/Llvm.NET.CodeGenFileType.yml",
-      "output": {
-        ".html": {
           "relative_path": "api/Llvm.NET.CodeGenFileType.AssemblySource.html",
           "hash": "wHyqZ8jDWfIOtiafwp36oQ=="
         }
@@ -608,6 +596,18 @@
         ".html": {
           "relative_path": "api/Llvm.NET.CodeGenFileType.ObjectFile.html",
           "hash": "gqi50xN4wpqkFEFir98j7w=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Llvm.NET.CodeGenFileType.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Llvm.NET.CodeGenFileType.html",
+          "hash": "DMXTzNBAN+gHWY/UH988OA=="
         }
       },
       "is_incremental": false,
@@ -668,18 +668,6 @@
         ".html": {
           "relative_path": "api/Llvm.NET.CodeGenOpt.Aggressive.html",
           "hash": "rRrRDiaavx8ZECB8a5If9w=="
-        }
-      },
-      "is_incremental": false,
-      "version": ""
-    },
-    {
-      "type": "ManagedReference",
-      "source_relative_path": "api/Llvm.NET.CodeModel.yml",
-      "output": {
-        ".html": {
-          "relative_path": "api/Llvm.NET.CodeModel.html",
-          "hash": "Zl7pmz161s9kw4xmlRekKg=="
         }
       },
       "is_incremental": false,
@@ -759,6 +747,18 @@
     },
     {
       "type": "ManagedReference",
+      "source_relative_path": "api/Llvm.NET.CodeModel.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Llvm.NET.CodeModel.html",
+          "hash": "Zl7pmz161s9kw4xmlRekKg=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
       "source_relative_path": "api/Llvm.NET.Comdat.yml",
       "output": {
         ".html": {
@@ -800,18 +800,6 @@
         ".html": {
           "relative_path": "api/Llvm.NET.Comdat.Module.html",
           "hash": "+iE4rbbCHzaoMG2WUIfJEQ=="
-        }
-      },
-      "is_incremental": false,
-      "version": ""
-    },
-    {
-      "type": "ManagedReference",
-      "source_relative_path": "api/Llvm.NET.ComdatCollection.yml",
-      "output": {
-        ".html": {
-          "relative_path": "api/Llvm.NET.ComdatCollection.html",
-          "hash": "1oa1WWyYabfu8eZErODcgg=="
         }
       },
       "is_incremental": false,
@@ -915,6 +903,18 @@
     },
     {
       "type": "ManagedReference",
+      "source_relative_path": "api/Llvm.NET.ComdatCollection.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Llvm.NET.ComdatCollection.html",
+          "hash": "1oa1WWyYabfu8eZErODcgg=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
       "source_relative_path": "api/Llvm.NET.ComdatKind.yml",
       "output": {
         ".html": {
@@ -990,8 +990,8 @@
       "source_relative_path": "api/Llvm.NET.ConstantAsMetadata.yml",
       "output": {
         ".html": {
-          "relative_path": "api/Llvm.NET.ConstantAsMetadata.html",
-          "hash": "ViloB4HLlYY4MHIAXKTPsg=="
+          "relative_path": "api/Llvm.NET.ConstantAsMetadata.Constant.html",
+          "hash": "P28NoGLNR9Nn8fpFc4eApA=="
         }
       },
       "is_incremental": false,
@@ -1002,8 +1002,8 @@
       "source_relative_path": "api/Llvm.NET.ConstantAsMetadata.yml",
       "output": {
         ".html": {
-          "relative_path": "api/Llvm.NET.ConstantAsMetadata.Constant.html",
-          "hash": "P28NoGLNR9Nn8fpFc4eApA=="
+          "relative_path": "api/Llvm.NET.ConstantAsMetadata.html",
+          "hash": "ViloB4HLlYY4MHIAXKTPsg=="
         }
       },
       "is_incremental": false,
@@ -1350,18 +1350,6 @@
       "source_relative_path": "api/Llvm.NET.DataLayout.yml",
       "output": {
         ".html": {
-          "relative_path": "api/Llvm.NET.DataLayout.html",
-          "hash": "yT91IRoT4Ey1cpDLFHuJag=="
-        }
-      },
-      "is_incremental": false,
-      "version": ""
-    },
-    {
-      "type": "ManagedReference",
-      "source_relative_path": "api/Llvm.NET.DataLayout.yml",
-      "output": {
-        ".html": {
           "relative_path": "api/Llvm.NET.DataLayout.Endianess.html",
           "hash": "iTmXiy8MAOJieudABpaAJg=="
         }
@@ -1551,6 +1539,18 @@
     },
     {
       "type": "ManagedReference",
+      "source_relative_path": "api/Llvm.NET.DataLayout.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Llvm.NET.DataLayout.html",
+          "hash": "yT91IRoT4Ey1cpDLFHuJag=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
       "source_relative_path": "api/Llvm.NET.DebugInfo.DIBasicType.yml",
       "output": {
         ".html": {
@@ -1686,18 +1686,6 @@
       "source_relative_path": "api/Llvm.NET.DebugInfo.DICompositeType.yml",
       "output": {
         ".html": {
-          "relative_path": "api/Llvm.NET.DebugInfo.DICompositeType.html",
-          "hash": "KxNph4TRH3GUzIBhnkANhg=="
-        }
-      },
-      "is_incremental": false,
-      "version": ""
-    },
-    {
-      "type": "ManagedReference",
-      "source_relative_path": "api/Llvm.NET.DebugInfo.DICompositeType.yml",
-      "output": {
-        ".html": {
           "relative_path": "api/Llvm.NET.DebugInfo.DICompositeType.BaseType.html",
           "hash": "8vRIl/0Mi5we7CY5Wlt0cw=="
         }
@@ -1748,6 +1736,18 @@
         ".html": {
           "relative_path": "api/Llvm.NET.DebugInfo.DICompositeType.Identifier.html",
           "hash": "j/CFHCPleIqJ2tPFQIoaFQ=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Llvm.NET.DebugInfo.DICompositeType.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Llvm.NET.DebugInfo.DICompositeType.html",
+          "hash": "KxNph4TRH3GUzIBhnkANhg=="
         }
       },
       "is_incremental": false,
@@ -1890,18 +1890,6 @@
       "source_relative_path": "api/Llvm.NET.DebugInfo.DIFile.yml",
       "output": {
         ".html": {
-          "relative_path": "api/Llvm.NET.DebugInfo.DIFile.html",
-          "hash": "ajhv9IKh+a/C+9I+lxlvlA=="
-        }
-      },
-      "is_incremental": false,
-      "version": ""
-    },
-    {
-      "type": "ManagedReference",
-      "source_relative_path": "api/Llvm.NET.DebugInfo.DIFile.yml",
-      "output": {
-        ".html": {
           "relative_path": "api/Llvm.NET.DebugInfo.DIFile.FileName.html",
           "hash": "aJ1+ZQMpexMypnMgwck9tg=="
         }
@@ -1940,6 +1928,18 @@
         ".html": {
           "relative_path": "api/Llvm.NET.DebugInfo.DIFile.Path.html",
           "hash": "r6XRuQOVPjGF0NpD0CrTiQ=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Llvm.NET.DebugInfo.DIFile.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Llvm.NET.DebugInfo.DIFile.html",
+          "hash": "ajhv9IKh+a/C+9I+lxlvlA=="
         }
       },
       "is_incremental": false,
@@ -2046,18 +2046,6 @@
       "source_relative_path": "api/Llvm.NET.DebugInfo.DIImportedEntity.yml",
       "output": {
         ".html": {
-          "relative_path": "api/Llvm.NET.DebugInfo.DIImportedEntity.html",
-          "hash": "oF0w4Bs1ia1FgrOa++6JvA=="
-        }
-      },
-      "is_incremental": false,
-      "version": ""
-    },
-    {
-      "type": "ManagedReference",
-      "source_relative_path": "api/Llvm.NET.DebugInfo.DIImportedEntity.yml",
-      "output": {
-        ".html": {
           "relative_path": "api/Llvm.NET.DebugInfo.DIImportedEntity.Scope.html",
           "hash": "0PE+oUd+c6bHJnZcqyvotw=="
         }
@@ -2096,6 +2084,18 @@
         ".html": {
           "relative_path": "api/Llvm.NET.DebugInfo.DIImportedEntity.File.html",
           "hash": "HT/kJIlEepdSH6msayhVLQ=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Llvm.NET.DebugInfo.DIImportedEntity.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Llvm.NET.DebugInfo.DIImportedEntity.html",
+          "hash": "oF0w4Bs1ia1FgrOa++6JvA=="
         }
       },
       "is_incremental": false,
@@ -2154,18 +2154,6 @@
       "source_relative_path": "api/Llvm.NET.DebugInfo.DILocalScope.yml",
       "output": {
         ".html": {
-          "relative_path": "api/Llvm.NET.DebugInfo.DILocalScope.html",
-          "hash": "XmE7a1RFoSffmJqrDjG8wA=="
-        }
-      },
-      "is_incremental": false,
-      "version": ""
-    },
-    {
-      "type": "ManagedReference",
-      "source_relative_path": "api/Llvm.NET.DebugInfo.DILocalScope.yml",
-      "output": {
-        ".html": {
           "relative_path": "api/Llvm.NET.DebugInfo.DILocalScope.LocalScope.html",
           "hash": "gDbUfe1cqfyh4C29Rbsg3g=="
         }
@@ -2199,11 +2187,11 @@
     },
     {
       "type": "ManagedReference",
-      "source_relative_path": "api/Llvm.NET.DebugInfo.DILocalVariable.yml",
+      "source_relative_path": "api/Llvm.NET.DebugInfo.DILocalScope.yml",
       "output": {
         ".html": {
-          "relative_path": "api/Llvm.NET.DebugInfo.DILocalVariable.html",
-          "hash": "XnNzHb1R9jtZB70w5dIQ0g=="
+          "relative_path": "api/Llvm.NET.DebugInfo.DILocalScope.html",
+          "hash": "XmE7a1RFoSffmJqrDjG8wA=="
         }
       },
       "is_incremental": false,
@@ -2216,6 +2204,18 @@
         ".html": {
           "relative_path": "api/Llvm.NET.DebugInfo.DILocalVariable.Scope.html",
           "hash": "koSpOL4rPqEILIy3WB/tPw=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Llvm.NET.DebugInfo.DILocalVariable.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Llvm.NET.DebugInfo.DILocalVariable.html",
+          "hash": "XnNzHb1R9jtZB70w5dIQ0g=="
         }
       },
       "is_incremental": false,
@@ -2334,18 +2334,6 @@
       "source_relative_path": "api/Llvm.NET.DebugInfo.DIMacro.yml",
       "output": {
         ".html": {
-          "relative_path": "api/Llvm.NET.DebugInfo.DIMacro.html",
-          "hash": "MPnh+CJLPOeba/8EuhWEQQ=="
-        }
-      },
-      "is_incremental": false,
-      "version": ""
-    },
-    {
-      "type": "ManagedReference",
-      "source_relative_path": "api/Llvm.NET.DebugInfo.DIMacro.yml",
-      "output": {
-        ".html": {
           "relative_path": "api/Llvm.NET.DebugInfo.DIMacro.Name.html",
           "hash": "oNm8TRxGMb2u7mKZkR4/cQ=="
         }
@@ -2367,11 +2355,11 @@
     },
     {
       "type": "ManagedReference",
-      "source_relative_path": "api/Llvm.NET.DebugInfo.DIMacroFile.yml",
+      "source_relative_path": "api/Llvm.NET.DebugInfo.DIMacro.yml",
       "output": {
         ".html": {
-          "relative_path": "api/Llvm.NET.DebugInfo.DIMacroFile.html",
-          "hash": "NT5YzOsX2z/vv63632VRuw=="
+          "relative_path": "api/Llvm.NET.DebugInfo.DIMacro.html",
+          "hash": "MPnh+CJLPOeba/8EuhWEQQ=="
         }
       },
       "is_incremental": false,
@@ -2396,6 +2384,18 @@
         ".html": {
           "relative_path": "api/Llvm.NET.DebugInfo.DIMacroFile.Elements.html",
           "hash": "Q0sv1GURMnJaxNneGFB6Jw=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Llvm.NET.DebugInfo.DIMacroFile.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Llvm.NET.DebugInfo.DIMacroFile.html",
+          "hash": "NT5YzOsX2z/vv63632VRuw=="
         }
       },
       "is_incremental": false,
@@ -2538,8 +2538,8 @@
       "source_relative_path": "api/Llvm.NET.DebugInfo.DINode.yml",
       "output": {
         ".html": {
-          "relative_path": "api/Llvm.NET.DebugInfo.DINode.html",
-          "hash": "i6LnBpSOL+38WmCqJ4duaw=="
+          "relative_path": "api/Llvm.NET.DebugInfo.DINode.Tag.html",
+          "hash": "uppKJPgPo+fPfvtb6b+3Fg=="
         }
       },
       "is_incremental": false,
@@ -2550,8 +2550,8 @@
       "source_relative_path": "api/Llvm.NET.DebugInfo.DINode.yml",
       "output": {
         ".html": {
-          "relative_path": "api/Llvm.NET.DebugInfo.DINode.Tag.html",
-          "hash": "uppKJPgPo+fPfvtb6b+3Fg=="
+          "relative_path": "api/Llvm.NET.DebugInfo.DINode.html",
+          "hash": "i6LnBpSOL+38WmCqJ4duaw=="
         }
       },
       "is_incremental": false,
@@ -2564,18 +2564,6 @@
         ".html": {
           "relative_path": "api/Llvm.NET.DebugInfo.DINodeArray.html",
           "hash": "mdf2PvLnTlJOZVOcKfZwBg=="
-        }
-      },
-      "is_incremental": false,
-      "version": ""
-    },
-    {
-      "type": "ManagedReference",
-      "source_relative_path": "api/Llvm.NET.DebugInfo.DIObjCProperty.yml",
-      "output": {
-        ".html": {
-          "relative_path": "api/Llvm.NET.DebugInfo.DIObjCProperty.html",
-          "hash": "t2DLHU5sCC7XXozowFo4ZA=="
         }
       },
       "is_incremental": false,
@@ -2643,11 +2631,11 @@
     },
     {
       "type": "ManagedReference",
-      "source_relative_path": "api/Llvm.NET.DebugInfo.DIScope.yml",
+      "source_relative_path": "api/Llvm.NET.DebugInfo.DIObjCProperty.yml",
       "output": {
         ".html": {
-          "relative_path": "api/Llvm.NET.DebugInfo.DIScope.html",
-          "hash": "42LgFZO/8La4p4N5a96+iw=="
+          "relative_path": "api/Llvm.NET.DebugInfo.DIObjCProperty.html",
+          "hash": "t2DLHU5sCC7XXozowFo4ZA=="
         }
       },
       "is_incremental": false,
@@ -2684,6 +2672,18 @@
         ".html": {
           "relative_path": "api/Llvm.NET.DebugInfo.DIScope.Name.html",
           "hash": "hsAGDckra+GU/GTWwc5uOA=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Llvm.NET.DebugInfo.DIScope.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Llvm.NET.DebugInfo.DIScope.html",
+          "hash": "42LgFZO/8La4p4N5a96+iw=="
         }
       },
       "is_incremental": false,
@@ -2886,18 +2886,6 @@
       "source_relative_path": "api/Llvm.NET.DebugInfo.DITemplateParameter.yml",
       "output": {
         ".html": {
-          "relative_path": "api/Llvm.NET.DebugInfo.DITemplateParameter.html",
-          "hash": "HdzObPC4sPNh0dcc6MQLqg=="
-        }
-      },
-      "is_incremental": false,
-      "version": ""
-    },
-    {
-      "type": "ManagedReference",
-      "source_relative_path": "api/Llvm.NET.DebugInfo.DITemplateParameter.yml",
-      "output": {
-        ".html": {
           "relative_path": "api/Llvm.NET.DebugInfo.DITemplateParameter.Name.html",
           "hash": "Zs96JWUQCJi0/GXxVl2lug=="
         }
@@ -2912,6 +2900,18 @@
         ".html": {
           "relative_path": "api/Llvm.NET.DebugInfo.DITemplateParameter.Type.html",
           "hash": "IpmgA5wVb/aIABaTRoIDSg=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Llvm.NET.DebugInfo.DITemplateParameter.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Llvm.NET.DebugInfo.DITemplateParameter.html",
+          "hash": "HdzObPC4sPNh0dcc6MQLqg=="
         }
       },
       "is_incremental": false,
@@ -2946,8 +2946,8 @@
       "source_relative_path": "api/Llvm.NET.DebugInfo.DITemplateValueParameter.yml",
       "output": {
         ".html": {
-          "relative_path": "api/Llvm.NET.DebugInfo.DITemplateValueParameter.html",
-          "hash": "KbGrLbbr3MWysJa0y+aGEA=="
+          "relative_path": "api/Llvm.NET.DebugInfo.DITemplateValueParameter.GetValue.html",
+          "hash": "APJIYMlP16k2NsaIRGPY7w=="
         }
       },
       "is_incremental": false,
@@ -2958,8 +2958,8 @@
       "source_relative_path": "api/Llvm.NET.DebugInfo.DITemplateValueParameter.yml",
       "output": {
         ".html": {
-          "relative_path": "api/Llvm.NET.DebugInfo.DITemplateValueParameter.GetValue.html",
-          "hash": "APJIYMlP16k2NsaIRGPY7w=="
+          "relative_path": "api/Llvm.NET.DebugInfo.DITemplateValueParameter.html",
+          "hash": "KbGrLbbr3MWysJa0y+aGEA=="
         }
       },
       "is_incremental": false,
@@ -3246,18 +3246,6 @@
       "source_relative_path": "api/Llvm.NET.DebugInfo.DebugFunctionType.yml",
       "output": {
         ".html": {
-          "relative_path": "api/Llvm.NET.DebugInfo.DebugFunctionType.html",
-          "hash": "GYvkgBdzEetEhslk0cohjQ=="
-        }
-      },
-      "is_incremental": false,
-      "version": ""
-    },
-    {
-      "type": "ManagedReference",
-      "source_relative_path": "api/Llvm.NET.DebugInfo.DebugFunctionType.yml",
-      "output": {
-        ".html": {
           "relative_path": "api/Llvm.NET.DebugInfo.DebugFunctionType.-ctor.html",
           "hash": "ojnlqswaxDgsQmcnVpGqow=="
         }
@@ -3303,35 +3291,11 @@
     },
     {
       "type": "ManagedReference",
-      "source_relative_path": "api/Llvm.NET.DebugInfo.DebugInfoBuilder.yml",
+      "source_relative_path": "api/Llvm.NET.DebugInfo.DebugFunctionType.yml",
       "output": {
         ".html": {
-          "relative_path": "api/Llvm.NET.DebugInfo.DebugInfoBuilder.html",
-          "hash": "/zvo0fYfRQsRDIqLFeFxUA=="
-        }
-      },
-      "is_incremental": false,
-      "version": ""
-    },
-    {
-      "type": "ManagedReference",
-      "source_relative_path": "api/Llvm.NET.DebugInfo.DebugInfoBuilder.yml",
-      "output": {
-        ".html": {
-          "relative_path": "api/Llvm.NET.DebugInfo.DebugInfoBuilder.OwningModule.html",
-          "hash": "Ypy8oYGBamtAWgUqwijfMg=="
-        }
-      },
-      "is_incremental": false,
-      "version": ""
-    },
-    {
-      "type": "ManagedReference",
-      "source_relative_path": "api/Llvm.NET.DebugInfo.DebugInfoBuilder.yml",
-      "output": {
-        ".html": {
-          "relative_path": "api/Llvm.NET.DebugInfo.DebugInfoBuilder.CreateCompileUnit.html",
-          "hash": "6J6nLhJit2wGOfTqRhtC+w=="
+          "relative_path": "api/Llvm.NET.DebugInfo.DebugFunctionType.html",
+          "hash": "GYvkgBdzEetEhslk0cohjQ=="
         }
       },
       "is_incremental": false,
@@ -3680,6 +3644,42 @@
         ".html": {
           "relative_path": "api/Llvm.NET.DebugInfo.DebugInfoBuilder.CreateReplaceableCompositeType.html",
           "hash": "V46uISGkk924VJf37BFotw=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Llvm.NET.DebugInfo.DebugInfoBuilder.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Llvm.NET.DebugInfo.DebugInfoBuilder.OwningModule.html",
+          "hash": "Ypy8oYGBamtAWgUqwijfMg=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Llvm.NET.DebugInfo.DebugInfoBuilder.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Llvm.NET.DebugInfo.DebugInfoBuilder.CreateCompileUnit.html",
+          "hash": "6J6nLhJit2wGOfTqRhtC+w=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Llvm.NET.DebugInfo.DebugInfoBuilder.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Llvm.NET.DebugInfo.DebugInfoBuilder.html",
+          "hash": "/zvo0fYfRQsRDIqLFeFxUA=="
         }
       },
       "is_incremental": false,
@@ -4110,18 +4110,6 @@
       "source_relative_path": "api/Llvm.NET.DebugInfo.DebugMemberLayout.yml",
       "output": {
         ".html": {
-          "relative_path": "api/Llvm.NET.DebugInfo.DebugMemberLayout.html",
-          "hash": "oo9kGz6QJ6SIlfjlhOxEUA=="
-        }
-      },
-      "is_incremental": false,
-      "version": ""
-    },
-    {
-      "type": "ManagedReference",
-      "source_relative_path": "api/Llvm.NET.DebugInfo.DebugMemberLayout.yml",
-      "output": {
-        ".html": {
           "relative_path": "api/Llvm.NET.DebugInfo.DebugMemberLayout.-ctor.html",
           "hash": "paaFzfjd2OJCmXPwHJj/sg=="
         }
@@ -4167,11 +4155,11 @@
     },
     {
       "type": "ManagedReference",
-      "source_relative_path": "api/Llvm.NET.DebugInfo.DebugPointerType.yml",
+      "source_relative_path": "api/Llvm.NET.DebugInfo.DebugMemberLayout.yml",
       "output": {
         ".html": {
-          "relative_path": "api/Llvm.NET.DebugInfo.DebugPointerType.html",
-          "hash": "YAR3LtofmsM8jQG05KpDhw=="
+          "relative_path": "api/Llvm.NET.DebugInfo.DebugMemberLayout.html",
+          "hash": "oo9kGz6QJ6SIlfjlhOxEUA=="
         }
       },
       "is_incremental": false,
@@ -4208,6 +4196,18 @@
         ".html": {
           "relative_path": "api/Llvm.NET.DebugInfo.DebugPointerType.ElementType.html",
           "hash": "N6nX2ySJ63Dgn0pHIYAdOQ=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Llvm.NET.DebugInfo.DebugPointerType.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Llvm.NET.DebugInfo.DebugPointerType.html",
+          "hash": "YAR3LtofmsM8jQG05KpDhw=="
         }
       },
       "is_incremental": false,
@@ -4590,18 +4590,6 @@
       "source_relative_path": "api/Llvm.NET.DebugInfo.DebugType.yml",
       "output": {
         ".html": {
-          "relative_path": "api/Llvm.NET.DebugInfo.DebugType.html",
-          "hash": "3I1i4l31U7jgJQP5aU+YBw=="
-        }
-      },
-      "is_incremental": false,
-      "version": ""
-    },
-    {
-      "type": "ManagedReference",
-      "source_relative_path": "api/Llvm.NET.DebugInfo.DebugType.yml",
-      "output": {
-        ".html": {
           "relative_path": "api/Llvm.NET.DebugInfo.DebugType.Create.html",
           "hash": "RDYYv+AUG0lmlTrn9qfy7A=="
         }
@@ -4623,11 +4611,11 @@
     },
     {
       "type": "ManagedReference",
-      "source_relative_path": "api/Llvm.NET.DebugInfo.DebugUnionType.yml",
+      "source_relative_path": "api/Llvm.NET.DebugInfo.DebugType.yml",
       "output": {
         ".html": {
-          "relative_path": "api/Llvm.NET.DebugInfo.DebugUnionType.html",
-          "hash": "gWaIuSXZOvkcWHiSyc8NwA=="
+          "relative_path": "api/Llvm.NET.DebugInfo.DebugType.html",
+          "hash": "3I1i4l31U7jgJQP5aU+YBw=="
         }
       },
       "is_incremental": false,
@@ -4700,6 +4688,18 @@
         ".html": {
           "relative_path": "api/Llvm.NET.DebugInfo.DebugUnionType.SetBody.html",
           "hash": "j6y0/FL0dDeuiHoBuvMCuQ=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Llvm.NET.DebugInfo.DebugUnionType.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Llvm.NET.DebugInfo.DebugUnionType.html",
+          "hash": "gWaIuSXZOvkcWHiSyc8NwA=="
         }
       },
       "is_incremental": false,
@@ -6990,18 +6990,6 @@
       "source_relative_path": "api/Llvm.NET.DebugInfo.SourceLanguage.yml",
       "output": {
         ".html": {
-          "relative_path": "api/Llvm.NET.DebugInfo.SourceLanguage.html",
-          "hash": "Egn1ZavsODUnuKNr4zt/fg=="
-        }
-      },
-      "is_incremental": false,
-      "version": ""
-    },
-    {
-      "type": "ManagedReference",
-      "source_relative_path": "api/Llvm.NET.DebugInfo.SourceLanguage.yml",
-      "output": {
-        ".html": {
           "relative_path": "api/Llvm.NET.DebugInfo.SourceLanguage.Invalid.html",
           "hash": "DBmKawiWJrI0URJdT5sgHQ=="
         }
@@ -7395,11 +7383,11 @@
     },
     {
       "type": "ManagedReference",
-      "source_relative_path": "api/Llvm.NET.DebugInfo.Tag.yml",
+      "source_relative_path": "api/Llvm.NET.DebugInfo.SourceLanguage.yml",
       "output": {
         ".html": {
-          "relative_path": "api/Llvm.NET.DebugInfo.Tag.html",
-          "hash": "i9y3FL8Swjt3mcXBHuMXUg=="
+          "relative_path": "api/Llvm.NET.DebugInfo.SourceLanguage.html",
+          "hash": "Egn1ZavsODUnuKNr4zt/fg=="
         }
       },
       "is_incremental": false,
@@ -8343,11 +8331,11 @@
     },
     {
       "type": "ManagedReference",
-      "source_relative_path": "api/Llvm.NET.DebugInfo.TupleTypedArrayWrapper-1.yml",
+      "source_relative_path": "api/Llvm.NET.DebugInfo.Tag.yml",
       "output": {
         ".html": {
-          "relative_path": "api/Llvm.NET.DebugInfo.TupleTypedArrayWrapper-1.html",
-          "hash": "ZCe1YxEwxQFSffRcYSzpZA=="
+          "relative_path": "api/Llvm.NET.DebugInfo.Tag.html",
+          "hash": "i9y3FL8Swjt3mcXBHuMXUg=="
         }
       },
       "is_incremental": false,
@@ -8396,6 +8384,18 @@
         ".html": {
           "relative_path": "api/Llvm.NET.DebugInfo.TupleTypedArrayWrapper-1.GetEnumerator.html",
           "hash": "co3rWdca7OeQ6Gj+m8S+vw=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Llvm.NET.DebugInfo.TupleTypedArrayWrapper-1.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Llvm.NET.DebugInfo.TupleTypedArrayWrapper-1.html",
+          "hash": "ZCe1YxEwxQFSffRcYSzpZA=="
         }
       },
       "is_incremental": false,
@@ -8598,18 +8598,6 @@
       "source_relative_path": "api/Llvm.NET.IExtensiblePropertyContainer.yml",
       "output": {
         ".html": {
-          "relative_path": "api/Llvm.NET.IExtensiblePropertyContainer.html",
-          "hash": "P4ZLWNhsJ/x+SU5z0cxBuw=="
-        }
-      },
-      "is_incremental": false,
-      "version": ""
-    },
-    {
-      "type": "ManagedReference",
-      "source_relative_path": "api/Llvm.NET.IExtensiblePropertyContainer.yml",
-      "output": {
-        ".html": {
           "relative_path": "api/Llvm.NET.IExtensiblePropertyContainer.TryGetExtendedPropertyValue.html",
           "hash": "bLZIU6OUl5NuuX5dfusMfw=="
         }
@@ -8624,6 +8612,18 @@
         ".html": {
           "relative_path": "api/Llvm.NET.IExtensiblePropertyContainer.AddExtendedPropertyValue.html",
           "hash": "+AfYOEQICWn1AhUCkesP9w=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Llvm.NET.IExtensiblePropertyContainer.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Llvm.NET.IExtensiblePropertyContainer.html",
+          "hash": "P4ZLWNhsJ/x+SU5z0cxBuw=="
         }
       },
       "is_incremental": false,
@@ -8766,18 +8766,6 @@
       "source_relative_path": "api/Llvm.NET.Instructions.CallInstruction.yml",
       "output": {
         ".html": {
-          "relative_path": "api/Llvm.NET.Instructions.CallInstruction.html",
-          "hash": "+nr87DVeOKgBawAuwwzmGA=="
-        }
-      },
-      "is_incremental": false,
-      "version": ""
-    },
-    {
-      "type": "ManagedReference",
-      "source_relative_path": "api/Llvm.NET.Instructions.CallInstruction.yml",
-      "output": {
-        ".html": {
           "relative_path": "api/Llvm.NET.Instructions.CallInstruction.TargetFunction.html",
           "hash": "N/ASmvbbqpSUDb21aAxp2Q=="
         }
@@ -8871,11 +8859,11 @@
     },
     {
       "type": "ManagedReference",
-      "source_relative_path": "api/Llvm.NET.Instructions.Cast.yml",
+      "source_relative_path": "api/Llvm.NET.Instructions.CallInstruction.yml",
       "output": {
         ".html": {
-          "relative_path": "api/Llvm.NET.Instructions.Cast.html",
-          "hash": "r3PJtbTC0KoQK8yYHaYowg=="
+          "relative_path": "api/Llvm.NET.Instructions.CallInstruction.html",
+          "hash": "+nr87DVeOKgBawAuwwzmGA=="
         }
       },
       "is_incremental": false,
@@ -8907,11 +8895,11 @@
     },
     {
       "type": "ManagedReference",
-      "source_relative_path": "api/Llvm.NET.Instructions.CatchPad.yml",
+      "source_relative_path": "api/Llvm.NET.Instructions.Cast.yml",
       "output": {
         ".html": {
-          "relative_path": "api/Llvm.NET.Instructions.CatchPad.html",
-          "hash": "bX2jVt+BOWZJqmzPNFvsag=="
+          "relative_path": "api/Llvm.NET.Instructions.Cast.html",
+          "hash": "r3PJtbTC0KoQK8yYHaYowg=="
         }
       },
       "is_incremental": false,
@@ -8931,11 +8919,11 @@
     },
     {
       "type": "ManagedReference",
-      "source_relative_path": "api/Llvm.NET.Instructions.CatchReturn.yml",
+      "source_relative_path": "api/Llvm.NET.Instructions.CatchPad.yml",
       "output": {
         ".html": {
-          "relative_path": "api/Llvm.NET.Instructions.CatchReturn.html",
-          "hash": "X42j+KNgGNWNDsZTHnj5Bg=="
+          "relative_path": "api/Llvm.NET.Instructions.CatchPad.html",
+          "hash": "bX2jVt+BOWZJqmzPNFvsag=="
         }
       },
       "is_incremental": false,
@@ -8972,6 +8960,18 @@
         ".html": {
           "relative_path": "api/Llvm.NET.Instructions.CatchReturn.CatchSwitchParentPad.html",
           "hash": "/1wxXW1AJRUyo/BWXJRUPw=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Llvm.NET.Instructions.CatchReturn.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Llvm.NET.Instructions.CatchReturn.html",
+          "hash": "X42j+KNgGNWNDsZTHnj5Bg=="
         }
       },
       "is_incremental": false,
@@ -9186,18 +9186,6 @@
       "source_relative_path": "api/Llvm.NET.Instructions.FuncletPad.yml",
       "output": {
         ".html": {
-          "relative_path": "api/Llvm.NET.Instructions.FuncletPad.html",
-          "hash": "beqjmHLhTbCNuNYTcxaPbQ=="
-        }
-      },
-      "is_incremental": false,
-      "version": ""
-    },
-    {
-      "type": "ManagedReference",
-      "source_relative_path": "api/Llvm.NET.Instructions.FuncletPad.yml",
-      "output": {
-        ".html": {
           "relative_path": "api/Llvm.NET.Instructions.FuncletPad.ParentPad.html",
           "hash": "mCeLu1MHIgueL2oRyxpq4g=="
         }
@@ -9212,6 +9200,18 @@
         ".html": {
           "relative_path": "api/Llvm.NET.Instructions.FuncletPad.ArgOperands.html",
           "hash": "uk497N7aL7qAEt2DhWucMg=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Llvm.NET.Instructions.FuncletPad.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Llvm.NET.Instructions.FuncletPad.html",
+          "hash": "beqjmHLhTbCNuNYTcxaPbQ=="
         }
       },
       "is_incremental": false,
@@ -10518,18 +10518,6 @@
       "source_relative_path": "api/Llvm.NET.Instructions.Invoke.yml",
       "output": {
         ".html": {
-          "relative_path": "api/Llvm.NET.Instructions.Invoke.html",
-          "hash": "HEUtgxc5fJMdmTDqAb/RTA=="
-        }
-      },
-      "is_incremental": false,
-      "version": ""
-    },
-    {
-      "type": "ManagedReference",
-      "source_relative_path": "api/Llvm.NET.Instructions.Invoke.yml",
-      "output": {
-        ".html": {
           "relative_path": "api/Llvm.NET.Instructions.Invoke.TargetFunction.html",
           "hash": "xsHyiK2KfQc74+QnOLPisg=="
         }
@@ -10611,11 +10599,11 @@
     },
     {
       "type": "ManagedReference",
-      "source_relative_path": "api/Llvm.NET.Instructions.LandingPad.yml",
+      "source_relative_path": "api/Llvm.NET.Instructions.Invoke.yml",
       "output": {
         ".html": {
-          "relative_path": "api/Llvm.NET.Instructions.LandingPad.html",
-          "hash": "lFw2snzdrQaayqWTnZcR6g=="
+          "relative_path": "api/Llvm.NET.Instructions.Invoke.html",
+          "hash": "HEUtgxc5fJMdmTDqAb/RTA=="
         }
       },
       "is_incremental": false,
@@ -10647,11 +10635,11 @@
     },
     {
       "type": "ManagedReference",
-      "source_relative_path": "api/Llvm.NET.Instructions.Load.yml",
+      "source_relative_path": "api/Llvm.NET.Instructions.LandingPad.yml",
       "output": {
         ".html": {
-          "relative_path": "api/Llvm.NET.Instructions.Load.html",
-          "hash": "BlZEkSojB24GLdPrNYgpvw=="
+          "relative_path": "api/Llvm.NET.Instructions.LandingPad.html",
+          "hash": "lFw2snzdrQaayqWTnZcR6g=="
         }
       },
       "is_incremental": false,
@@ -10664,6 +10652,18 @@
         ".html": {
           "relative_path": "api/Llvm.NET.Instructions.Load.IsVolatile.html",
           "hash": "BXr0I+5gtSmXu6xATJUE9g=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Llvm.NET.Instructions.Load.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Llvm.NET.Instructions.Load.html",
+          "hash": "BlZEkSojB24GLdPrNYgpvw=="
         }
       },
       "is_incremental": false,
@@ -10712,18 +10712,6 @@
         ".html": {
           "relative_path": "api/Llvm.NET.Instructions.MemSet.html",
           "hash": "kvMOoHtQdRp5VXRF0nsnCA=="
-        }
-      },
-      "is_incremental": false,
-      "version": ""
-    },
-    {
-      "type": "ManagedReference",
-      "source_relative_path": "api/Llvm.NET.Instructions.OpCode.yml",
-      "output": {
-        ".html": {
-          "relative_path": "api/Llvm.NET.Instructions.OpCode.html",
-          "hash": "CTdxVQA/r1C/WQ7C8dJNXw=="
         }
       },
       "is_incremental": false,
@@ -11511,11 +11499,11 @@
     },
     {
       "type": "ManagedReference",
-      "source_relative_path": "api/Llvm.NET.Instructions.PhiNode.yml",
+      "source_relative_path": "api/Llvm.NET.Instructions.OpCode.yml",
       "output": {
         ".html": {
-          "relative_path": "api/Llvm.NET.Instructions.PhiNode.html",
-          "hash": "WlBkEzvtDDeL5JZrAbnHzQ=="
+          "relative_path": "api/Llvm.NET.Instructions.OpCode.html",
+          "hash": "CTdxVQA/r1C/WQ7C8dJNXw=="
         }
       },
       "is_incremental": false,
@@ -11528,6 +11516,18 @@
         ".html": {
           "relative_path": "api/Llvm.NET.Instructions.PhiNode.AddIncoming.html",
           "hash": "tsYPAjzr7li8zhvJBxuJYg=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Llvm.NET.Instructions.PhiNode.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Llvm.NET.Instructions.PhiNode.html",
+          "hash": "WlBkEzvtDDeL5JZrAbnHzQ=="
         }
       },
       "is_incremental": false,
@@ -12222,8 +12222,8 @@
       "source_relative_path": "api/Llvm.NET.Instructions.Store.yml",
       "output": {
         ".html": {
-          "relative_path": "api/Llvm.NET.Instructions.Store.html",
-          "hash": "vvZqp194OFTO7uuI1M/JdQ=="
+          "relative_path": "api/Llvm.NET.Instructions.Store.IsVolatile.html",
+          "hash": "B2bRbG4ECItpkL1nLyVoIA=="
         }
       },
       "is_incremental": false,
@@ -12234,20 +12234,8 @@
       "source_relative_path": "api/Llvm.NET.Instructions.Store.yml",
       "output": {
         ".html": {
-          "relative_path": "api/Llvm.NET.Instructions.Store.IsVolatile.html",
-          "hash": "B2bRbG4ECItpkL1nLyVoIA=="
-        }
-      },
-      "is_incremental": false,
-      "version": ""
-    },
-    {
-      "type": "ManagedReference",
-      "source_relative_path": "api/Llvm.NET.Instructions.Switch.yml",
-      "output": {
-        ".html": {
-          "relative_path": "api/Llvm.NET.Instructions.Switch.html",
-          "hash": "R5FnSppXhGLUbuLw7JHqSg=="
+          "relative_path": "api/Llvm.NET.Instructions.Store.html",
+          "hash": "vvZqp194OFTO7uuI1M/JdQ=="
         }
       },
       "is_incremental": false,
@@ -12272,6 +12260,18 @@
         ".html": {
           "relative_path": "api/Llvm.NET.Instructions.Switch.AddCase.html",
           "hash": "IeWfZzjOiE6PtOXorqPjHg=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Llvm.NET.Instructions.Switch.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Llvm.NET.Instructions.Switch.html",
+          "hash": "R5FnSppXhGLUbuLw7JHqSg=="
         }
       },
       "is_incremental": false,
@@ -12618,18 +12618,6 @@
       "source_relative_path": "api/Llvm.NET.JIT.LegacyExecutionEngine.yml",
       "output": {
         ".html": {
-          "relative_path": "api/Llvm.NET.JIT.LegacyExecutionEngine.html",
-          "hash": "oJ0rR/csZkIFfRkBsg3Xtg=="
-        }
-      },
-      "is_incremental": false,
-      "version": ""
-    },
-    {
-      "type": "ManagedReference",
-      "source_relative_path": "api/Llvm.NET.JIT.LegacyExecutionEngine.yml",
-      "output": {
-        ".html": {
           "relative_path": "api/Llvm.NET.JIT.LegacyExecutionEngine.-ctor.html",
           "hash": "xqk11EG+xECMfyXFMqe/ww=="
         }
@@ -12723,11 +12711,11 @@
     },
     {
       "type": "ManagedReference",
-      "source_relative_path": "api/Llvm.NET.JIT.OrcJit.OrcJitHandle.yml",
+      "source_relative_path": "api/Llvm.NET.JIT.LegacyExecutionEngine.yml",
       "output": {
         ".html": {
-          "relative_path": "api/Llvm.NET.JIT.OrcJit.OrcJitHandle.html",
-          "hash": "Mz91FC2ok6AjiPT1WSEB2g=="
+          "relative_path": "api/Llvm.NET.JIT.LegacyExecutionEngine.html",
+          "hash": "oJ0rR/csZkIFfRkBsg3Xtg=="
         }
       },
       "is_incremental": false,
@@ -12783,11 +12771,11 @@
     },
     {
       "type": "ManagedReference",
-      "source_relative_path": "api/Llvm.NET.JIT.OrcJit.SymbolResolver.yml",
+      "source_relative_path": "api/Llvm.NET.JIT.OrcJit.OrcJitHandle.yml",
       "output": {
         ".html": {
-          "relative_path": "api/Llvm.NET.JIT.OrcJit.SymbolResolver.html",
-          "hash": "GrbmdOnPQMSbrByP+VUK5A=="
+          "relative_path": "api/Llvm.NET.JIT.OrcJit.OrcJitHandle.html",
+          "hash": "Mz91FC2ok6AjiPT1WSEB2g=="
         }
       },
       "is_incremental": false,
@@ -12795,11 +12783,11 @@
     },
     {
       "type": "ManagedReference",
-      "source_relative_path": "api/Llvm.NET.JIT.OrcJit.yml",
+      "source_relative_path": "api/Llvm.NET.JIT.OrcJit.SymbolResolver.yml",
       "output": {
         ".html": {
-          "relative_path": "api/Llvm.NET.JIT.OrcJit.html",
-          "hash": "ChzTJO29wb1GSuh+zj/+rA=="
+          "relative_path": "api/Llvm.NET.JIT.OrcJit.SymbolResolver.html",
+          "hash": "GrbmdOnPQMSbrByP+VUK5A=="
         }
       },
       "is_incremental": false,
@@ -12903,11 +12891,11 @@
     },
     {
       "type": "ManagedReference",
-      "source_relative_path": "api/Llvm.NET.JIT.yml",
+      "source_relative_path": "api/Llvm.NET.JIT.OrcJit.yml",
       "output": {
         ".html": {
-          "relative_path": "api/Llvm.NET.JIT.html",
-          "hash": "OZHKssUQn8WdaNQYUy2LMQ=="
+          "relative_path": "api/Llvm.NET.JIT.OrcJit.html",
+          "hash": "ChzTJO29wb1GSuh+zj/+rA=="
         }
       },
       "is_incremental": false,
@@ -12915,11 +12903,11 @@
     },
     {
       "type": "ManagedReference",
-      "source_relative_path": "api/Llvm.NET.LlvmMetadata.yml",
+      "source_relative_path": "api/Llvm.NET.JIT.yml",
       "output": {
         ".html": {
-          "relative_path": "api/Llvm.NET.LlvmMetadata.html",
-          "hash": "EaIpRZwcKdfVToEPWajDbA=="
+          "relative_path": "api/Llvm.NET.JIT.html",
+          "hash": "OZHKssUQn8WdaNQYUy2LMQ=="
         }
       },
       "is_incremental": false,
@@ -12963,11 +12951,11 @@
     },
     {
       "type": "ManagedReference",
-      "source_relative_path": "api/Llvm.NET.LocalAsMetadata.yml",
+      "source_relative_path": "api/Llvm.NET.LlvmMetadata.yml",
       "output": {
         ".html": {
-          "relative_path": "api/Llvm.NET.LocalAsMetadata.html",
-          "hash": "eoaWiBOdWc4DfBu7jShOhg=="
+          "relative_path": "api/Llvm.NET.LlvmMetadata.html",
+          "hash": "EaIpRZwcKdfVToEPWajDbA=="
         }
       },
       "is_incremental": false,
@@ -12975,11 +12963,11 @@
     },
     {
       "type": "ManagedReference",
-      "source_relative_path": "api/Llvm.NET.MDNode.yml",
+      "source_relative_path": "api/Llvm.NET.LocalAsMetadata.yml",
       "output": {
         ".html": {
-          "relative_path": "api/Llvm.NET.MDNode.html",
-          "hash": "0uZzedpZMOY3rUvCA1JAEg=="
+          "relative_path": "api/Llvm.NET.LocalAsMetadata.html",
+          "hash": "eoaWiBOdWc4DfBu7jShOhg=="
         }
       },
       "is_incremental": false,
@@ -13112,6 +13100,18 @@
         ".html": {
           "relative_path": "api/Llvm.NET.MDNode.GetOperandString.html",
           "hash": "blXYmXtjQJ8dAj64Dd7KCQ=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Llvm.NET.MDNode.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Llvm.NET.MDNode.html",
+          "hash": "0uZzedpZMOY3rUvCA1JAEg=="
         }
       },
       "is_incremental": false,
@@ -13494,18 +13494,6 @@
       "source_relative_path": "api/Llvm.NET.StaticState.yml",
       "output": {
         ".html": {
-          "relative_path": "api/Llvm.NET.StaticState.html",
-          "hash": "I1FTtwJAd0oK8HsPYH4xOQ=="
-        }
-      },
-      "is_incremental": false,
-      "version": ""
-    },
-    {
-      "type": "ManagedReference",
-      "source_relative_path": "api/Llvm.NET.StaticState.yml",
-      "output": {
-        ".html": {
           "relative_path": "api/Llvm.NET.StaticState.InitializeLLVM.html",
           "hash": "RBe+3FD0AK8/+gGzjJ/vTA=="
         }
@@ -13695,11 +13683,11 @@
     },
     {
       "type": "ManagedReference",
-      "source_relative_path": "api/Llvm.NET.Target.yml",
+      "source_relative_path": "api/Llvm.NET.StaticState.yml",
       "output": {
         ".html": {
-          "relative_path": "api/Llvm.NET.Target.html",
-          "hash": "086yhjMPeNAdVf41vii42A=="
+          "relative_path": "api/Llvm.NET.StaticState.html",
+          "hash": "I1FTtwJAd0oK8HsPYH4xOQ=="
         }
       },
       "is_incremental": false,
@@ -13803,11 +13791,11 @@
     },
     {
       "type": "ManagedReference",
-      "source_relative_path": "api/Llvm.NET.TargetMachine.yml",
+      "source_relative_path": "api/Llvm.NET.Target.yml",
       "output": {
         ".html": {
-          "relative_path": "api/Llvm.NET.TargetMachine.html",
-          "hash": "Nd/aKQrJEnF58T14taEPCQ=="
+          "relative_path": "api/Llvm.NET.Target.html",
+          "hash": "086yhjMPeNAdVf41vii42A=="
         }
       },
       "is_incremental": false,
@@ -13923,11 +13911,11 @@
     },
     {
       "type": "ManagedReference",
-      "source_relative_path": "api/Llvm.NET.TargetRegistrations.yml",
+      "source_relative_path": "api/Llvm.NET.TargetMachine.yml",
       "output": {
         ".html": {
-          "relative_path": "api/Llvm.NET.TargetRegistrations.html",
-          "hash": "Uuh27dBx+bKo6STPzjPoMw=="
+          "relative_path": "api/Llvm.NET.TargetMachine.html",
+          "hash": "Nd/aKQrJEnF58T14taEPCQ=="
         }
       },
       "is_incremental": false,
@@ -14043,11 +14031,11 @@
     },
     {
       "type": "ManagedReference",
-      "source_relative_path": "api/Llvm.NET.Transforms.FunctionPassManager.yml",
+      "source_relative_path": "api/Llvm.NET.TargetRegistrations.yml",
       "output": {
         ".html": {
-          "relative_path": "api/Llvm.NET.Transforms.FunctionPassManager.html",
-          "hash": "/YPNAPVfk9uQDRbdIiN3EA=="
+          "relative_path": "api/Llvm.NET.TargetRegistrations.html",
+          "hash": "Uuh27dBx+bKo6STPzjPoMw=="
         }
       },
       "is_incremental": false,
@@ -14103,11 +14091,11 @@
     },
     {
       "type": "ManagedReference",
-      "source_relative_path": "api/Llvm.NET.Transforms.InterproceduralTransforms.yml",
+      "source_relative_path": "api/Llvm.NET.Transforms.FunctionPassManager.yml",
       "output": {
         ".html": {
-          "relative_path": "api/Llvm.NET.Transforms.InterproceduralTransforms.html",
-          "hash": "WpmWsqfOHZ0niwlaIUs8vg=="
+          "relative_path": "api/Llvm.NET.Transforms.FunctionPassManager.html",
+          "hash": "/YPNAPVfk9uQDRbdIiN3EA=="
         }
       },
       "is_incremental": false,
@@ -14283,11 +14271,11 @@
     },
     {
       "type": "ManagedReference",
-      "source_relative_path": "api/Llvm.NET.Transforms.ModulePassManager.yml",
+      "source_relative_path": "api/Llvm.NET.Transforms.InterproceduralTransforms.yml",
       "output": {
         ".html": {
-          "relative_path": "api/Llvm.NET.Transforms.ModulePassManager.html",
-          "hash": "9wQ6GNzGgDuQdRPr7+lBlA=="
+          "relative_path": "api/Llvm.NET.Transforms.InterproceduralTransforms.html",
+          "hash": "WpmWsqfOHZ0niwlaIUs8vg=="
         }
       },
       "is_incremental": false,
@@ -14312,6 +14300,18 @@
         ".html": {
           "relative_path": "api/Llvm.NET.Transforms.ModulePassManager.Run.html",
           "hash": "mvRHClz+iSYUb9LSBhZJzQ=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Llvm.NET.Transforms.ModulePassManager.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Llvm.NET.Transforms.ModulePassManager.html",
+          "hash": "9wQ6GNzGgDuQdRPr7+lBlA=="
         }
       },
       "is_incremental": false,
@@ -14838,6 +14838,18 @@
       "source_relative_path": "api/Llvm.NET.Transforms.VectorTransforms.yml",
       "output": {
         ".html": {
+          "relative_path": "api/Llvm.NET.Transforms.VectorTransforms.AddSLPVectorizePass.html",
+          "hash": "ZZAXmNp3Fzf/q8eRmWVr6A=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Llvm.NET.Transforms.VectorTransforms.yml",
+      "output": {
+        ".html": {
           "relative_path": "api/Llvm.NET.Transforms.VectorTransforms.html",
           "hash": "hecDNwtqlMw2WspwJxoA1A=="
         }
@@ -14859,35 +14871,11 @@
     },
     {
       "type": "ManagedReference",
-      "source_relative_path": "api/Llvm.NET.Transforms.VectorTransforms.yml",
-      "output": {
-        ".html": {
-          "relative_path": "api/Llvm.NET.Transforms.VectorTransforms.AddSLPVectorizePass.html",
-          "hash": "ZZAXmNp3Fzf/q8eRmWVr6A=="
-        }
-      },
-      "is_incremental": false,
-      "version": ""
-    },
-    {
-      "type": "ManagedReference",
       "source_relative_path": "api/Llvm.NET.Transforms.yml",
       "output": {
         ".html": {
           "relative_path": "api/Llvm.NET.Transforms.html",
           "hash": "ulSJPDmiOD9KlFDNcx8mXQ=="
-        }
-      },
-      "is_incremental": false,
-      "version": ""
-    },
-    {
-      "type": "ManagedReference",
-      "source_relative_path": "api/Llvm.NET.Triple.ArchType.yml",
-      "output": {
-        ".html": {
-          "relative_path": "api/Llvm.NET.Triple.ArchType.html",
-          "hash": "hDMlHMYTQZh0zImWU1glqA=="
         }
       },
       "is_incremental": false,
@@ -15054,90 +15042,6 @@
       "source_relative_path": "api/Llvm.NET.Triple.ArchType.yml",
       "output": {
         ".html": {
-          "relative_path": "api/Llvm.NET.Triple.ArchType.MSP430.html",
-          "hash": "liaTLMew1CfYVHcLkEVXBw=="
-        }
-      },
-      "is_incremental": false,
-      "version": ""
-    },
-    {
-      "type": "ManagedReference",
-      "source_relative_path": "api/Llvm.NET.Triple.ArchType.yml",
-      "output": {
-        ".html": {
-          "relative_path": "api/Llvm.NET.Triple.ArchType.PPC.html",
-          "hash": "cxLs7webHkyOkAdwAPLnoQ=="
-        }
-      },
-      "is_incremental": false,
-      "version": ""
-    },
-    {
-      "type": "ManagedReference",
-      "source_relative_path": "api/Llvm.NET.Triple.ArchType.yml",
-      "output": {
-        ".html": {
-          "relative_path": "api/Llvm.NET.Triple.ArchType.PPC64.html",
-          "hash": "cXyMZBSAcKHQIu/Na/JV0A=="
-        }
-      },
-      "is_incremental": false,
-      "version": ""
-    },
-    {
-      "type": "ManagedReference",
-      "source_relative_path": "api/Llvm.NET.Triple.ArchType.yml",
-      "output": {
-        ".html": {
-          "relative_path": "api/Llvm.NET.Triple.ArchType.PPC64le.html",
-          "hash": "L2zcYBBOf5Kcl8bbwtQq4g=="
-        }
-      },
-      "is_incremental": false,
-      "version": ""
-    },
-    {
-      "type": "ManagedReference",
-      "source_relative_path": "api/Llvm.NET.Triple.ArchType.yml",
-      "output": {
-        ".html": {
-          "relative_path": "api/Llvm.NET.Triple.ArchType.R600.html",
-          "hash": "5aOFOtV2whDCqTnY2Zcyfg=="
-        }
-      },
-      "is_incremental": false,
-      "version": ""
-    },
-    {
-      "type": "ManagedReference",
-      "source_relative_path": "api/Llvm.NET.Triple.ArchType.yml",
-      "output": {
-        ".html": {
-          "relative_path": "api/Llvm.NET.Triple.ArchType.AMDGCN.html",
-          "hash": "ujVwdmqG3UZc3X+A7fx+Xw=="
-        }
-      },
-      "is_incremental": false,
-      "version": ""
-    },
-    {
-      "type": "ManagedReference",
-      "source_relative_path": "api/Llvm.NET.Triple.ArchType.yml",
-      "output": {
-        ".html": {
-          "relative_path": "api/Llvm.NET.Triple.ArchType.RiscV32.html",
-          "hash": "g0lndE+vrOfBltvi2kTUbw=="
-        }
-      },
-      "is_incremental": false,
-      "version": ""
-    },
-    {
-      "type": "ManagedReference",
-      "source_relative_path": "api/Llvm.NET.Triple.ArchType.yml",
-      "output": {
-        ".html": {
           "relative_path": "api/Llvm.NET.Triple.ArchType.RiscV64.html",
           "hash": "ldGhhnNYbjjSnadbSlhAiQ=="
         }
@@ -15152,6 +15056,174 @@
         ".html": {
           "relative_path": "api/Llvm.NET.Triple.ArchType.Sparc.html",
           "hash": "mEjFp8KDJ6CM3CpEBfDU0w=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Llvm.NET.Triple.ArchType.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Llvm.NET.Triple.ArchType.Sparcv9.html",
+          "hash": "wHcMuREKgZafDMS6G8RVNQ=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Llvm.NET.Triple.ArchType.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Llvm.NET.Triple.ArchType.Sparcel.html",
+          "hash": "fhL8eV3V3tAl1r5bkrV0oA=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Llvm.NET.Triple.ArchType.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Llvm.NET.Triple.ArchType.SystemZ.html",
+          "hash": "HwfdQZOdE8356KcRD2cl1w=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Llvm.NET.Triple.ArchType.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Llvm.NET.Triple.ArchType.TCE.html",
+          "hash": "VpP20TapM7O6WsADn1y6CQ=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Llvm.NET.Triple.ArchType.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Llvm.NET.Triple.ArchType.TCEle.html",
+          "hash": "3qojFc3+Oc/VjcTeltUQ7g=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Llvm.NET.Triple.ArchType.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Llvm.NET.Triple.ArchType.Thumb.html",
+          "hash": "PfNwmYuLwHFXupNAGTbcCQ=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Llvm.NET.Triple.ArchType.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Llvm.NET.Triple.ArchType.Thumbeb.html",
+          "hash": "ORZqhyHceQU77c11vG3f7Q=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Llvm.NET.Triple.ArchType.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Llvm.NET.Triple.ArchType.X86.html",
+          "hash": "kfNqwyNfTZvUulcoLocBng=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Llvm.NET.Triple.ArchType.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Llvm.NET.Triple.ArchType.X86_64.html",
+          "hash": "t5SXFTsuTAmdybTscvGGpA=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Llvm.NET.Triple.ArchType.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Llvm.NET.Triple.ArchType.Xcore.html",
+          "hash": "9qpwqIndZEfut68oFQ5y7A=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Llvm.NET.Triple.ArchType.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Llvm.NET.Triple.ArchType.Nvptx.html",
+          "hash": "5EXNC7W7ytd0yRPn/Tu5gw=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Llvm.NET.Triple.ArchType.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Llvm.NET.Triple.ArchType.Nvptx64.html",
+          "hash": "HE3lmNIXjqhU6AzGnPKTOg=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Llvm.NET.Triple.ArchType.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Llvm.NET.Triple.ArchType.Le32.html",
+          "hash": "sSNJ+lSyi6wlhwL2lh5L6w=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Llvm.NET.Triple.ArchType.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Llvm.NET.Triple.ArchType.Le64.html",
+          "hash": "ixGu18hCXDkYlw/dbmJqsA=="
         }
       },
       "is_incremental": false,
@@ -15330,8 +15402,8 @@
       "source_relative_path": "api/Llvm.NET.Triple.ArchType.yml",
       "output": {
         ".html": {
-          "relative_path": "api/Llvm.NET.Triple.ArchType.Sparcv9.html",
-          "hash": "wHcMuREKgZafDMS6G8RVNQ=="
+          "relative_path": "api/Llvm.NET.Triple.ArchType.html",
+          "hash": "hDMlHMYTQZh0zImWU1glqA=="
         }
       },
       "is_incremental": false,
@@ -15342,8 +15414,8 @@
       "source_relative_path": "api/Llvm.NET.Triple.ArchType.yml",
       "output": {
         ".html": {
-          "relative_path": "api/Llvm.NET.Triple.ArchType.Sparcel.html",
-          "hash": "fhL8eV3V3tAl1r5bkrV0oA=="
+          "relative_path": "api/Llvm.NET.Triple.ArchType.MSP430.html",
+          "hash": "liaTLMew1CfYVHcLkEVXBw=="
         }
       },
       "is_incremental": false,
@@ -15354,8 +15426,8 @@
       "source_relative_path": "api/Llvm.NET.Triple.ArchType.yml",
       "output": {
         ".html": {
-          "relative_path": "api/Llvm.NET.Triple.ArchType.SystemZ.html",
-          "hash": "HwfdQZOdE8356KcRD2cl1w=="
+          "relative_path": "api/Llvm.NET.Triple.ArchType.PPC.html",
+          "hash": "cxLs7webHkyOkAdwAPLnoQ=="
         }
       },
       "is_incremental": false,
@@ -15366,8 +15438,8 @@
       "source_relative_path": "api/Llvm.NET.Triple.ArchType.yml",
       "output": {
         ".html": {
-          "relative_path": "api/Llvm.NET.Triple.ArchType.TCE.html",
-          "hash": "VpP20TapM7O6WsADn1y6CQ=="
+          "relative_path": "api/Llvm.NET.Triple.ArchType.PPC64.html",
+          "hash": "cXyMZBSAcKHQIu/Na/JV0A=="
         }
       },
       "is_incremental": false,
@@ -15378,8 +15450,8 @@
       "source_relative_path": "api/Llvm.NET.Triple.ArchType.yml",
       "output": {
         ".html": {
-          "relative_path": "api/Llvm.NET.Triple.ArchType.TCEle.html",
-          "hash": "3qojFc3+Oc/VjcTeltUQ7g=="
+          "relative_path": "api/Llvm.NET.Triple.ArchType.PPC64le.html",
+          "hash": "L2zcYBBOf5Kcl8bbwtQq4g=="
         }
       },
       "is_incremental": false,
@@ -15390,8 +15462,8 @@
       "source_relative_path": "api/Llvm.NET.Triple.ArchType.yml",
       "output": {
         ".html": {
-          "relative_path": "api/Llvm.NET.Triple.ArchType.Thumb.html",
-          "hash": "PfNwmYuLwHFXupNAGTbcCQ=="
+          "relative_path": "api/Llvm.NET.Triple.ArchType.R600.html",
+          "hash": "5aOFOtV2whDCqTnY2Zcyfg=="
         }
       },
       "is_incremental": false,
@@ -15402,8 +15474,8 @@
       "source_relative_path": "api/Llvm.NET.Triple.ArchType.yml",
       "output": {
         ".html": {
-          "relative_path": "api/Llvm.NET.Triple.ArchType.Thumbeb.html",
-          "hash": "ORZqhyHceQU77c11vG3f7Q=="
+          "relative_path": "api/Llvm.NET.Triple.ArchType.AMDGCN.html",
+          "hash": "ujVwdmqG3UZc3X+A7fx+Xw=="
         }
       },
       "is_incremental": false,
@@ -15414,92 +15486,8 @@
       "source_relative_path": "api/Llvm.NET.Triple.ArchType.yml",
       "output": {
         ".html": {
-          "relative_path": "api/Llvm.NET.Triple.ArchType.X86.html",
-          "hash": "kfNqwyNfTZvUulcoLocBng=="
-        }
-      },
-      "is_incremental": false,
-      "version": ""
-    },
-    {
-      "type": "ManagedReference",
-      "source_relative_path": "api/Llvm.NET.Triple.ArchType.yml",
-      "output": {
-        ".html": {
-          "relative_path": "api/Llvm.NET.Triple.ArchType.X86_64.html",
-          "hash": "t5SXFTsuTAmdybTscvGGpA=="
-        }
-      },
-      "is_incremental": false,
-      "version": ""
-    },
-    {
-      "type": "ManagedReference",
-      "source_relative_path": "api/Llvm.NET.Triple.ArchType.yml",
-      "output": {
-        ".html": {
-          "relative_path": "api/Llvm.NET.Triple.ArchType.Xcore.html",
-          "hash": "9qpwqIndZEfut68oFQ5y7A=="
-        }
-      },
-      "is_incremental": false,
-      "version": ""
-    },
-    {
-      "type": "ManagedReference",
-      "source_relative_path": "api/Llvm.NET.Triple.ArchType.yml",
-      "output": {
-        ".html": {
-          "relative_path": "api/Llvm.NET.Triple.ArchType.Nvptx.html",
-          "hash": "5EXNC7W7ytd0yRPn/Tu5gw=="
-        }
-      },
-      "is_incremental": false,
-      "version": ""
-    },
-    {
-      "type": "ManagedReference",
-      "source_relative_path": "api/Llvm.NET.Triple.ArchType.yml",
-      "output": {
-        ".html": {
-          "relative_path": "api/Llvm.NET.Triple.ArchType.Nvptx64.html",
-          "hash": "HE3lmNIXjqhU6AzGnPKTOg=="
-        }
-      },
-      "is_incremental": false,
-      "version": ""
-    },
-    {
-      "type": "ManagedReference",
-      "source_relative_path": "api/Llvm.NET.Triple.ArchType.yml",
-      "output": {
-        ".html": {
-          "relative_path": "api/Llvm.NET.Triple.ArchType.Le32.html",
-          "hash": "sSNJ+lSyi6wlhwL2lh5L6w=="
-        }
-      },
-      "is_incremental": false,
-      "version": ""
-    },
-    {
-      "type": "ManagedReference",
-      "source_relative_path": "api/Llvm.NET.Triple.ArchType.yml",
-      "output": {
-        ".html": {
-          "relative_path": "api/Llvm.NET.Triple.ArchType.Le64.html",
-          "hash": "ixGu18hCXDkYlw/dbmJqsA=="
-        }
-      },
-      "is_incremental": false,
-      "version": ""
-    },
-    {
-      "type": "ManagedReference",
-      "source_relative_path": "api/Llvm.NET.Triple.EnvironmentType.yml",
-      "output": {
-        ".html": {
-          "relative_path": "api/Llvm.NET.Triple.EnvironmentType.html",
-          "hash": "477OGUEoMWpxsQ5O29ZLzA=="
+          "relative_path": "api/Llvm.NET.Triple.ArchType.RiscV32.html",
+          "hash": "g0lndE+vrOfBltvi2kTUbw=="
         }
       },
       "is_incremental": false,
@@ -15735,11 +15723,11 @@
     },
     {
       "type": "ManagedReference",
-      "source_relative_path": "api/Llvm.NET.Triple.OSType.yml",
+      "source_relative_path": "api/Llvm.NET.Triple.EnvironmentType.yml",
       "output": {
         ".html": {
-          "relative_path": "api/Llvm.NET.Triple.OSType.html",
-          "hash": "nyR3aQGj2/bwXDxtsSoOnQ=="
+          "relative_path": "api/Llvm.NET.Triple.EnvironmentType.html",
+          "hash": "477OGUEoMWpxsQ5O29ZLzA=="
         }
       },
       "is_incremental": false,
@@ -16131,11 +16119,11 @@
     },
     {
       "type": "ManagedReference",
-      "source_relative_path": "api/Llvm.NET.Triple.ObjectFormatType.yml",
+      "source_relative_path": "api/Llvm.NET.Triple.OSType.yml",
       "output": {
         ".html": {
-          "relative_path": "api/Llvm.NET.Triple.ObjectFormatType.html",
-          "hash": "MXSZxQ1k0+Mksp+tcwB4cA=="
+          "relative_path": "api/Llvm.NET.Triple.OSType.html",
+          "hash": "nyR3aQGj2/bwXDxtsSoOnQ=="
         }
       },
       "is_incremental": false,
@@ -16203,11 +16191,11 @@
     },
     {
       "type": "ManagedReference",
-      "source_relative_path": "api/Llvm.NET.Triple.SubArchType.yml",
+      "source_relative_path": "api/Llvm.NET.Triple.ObjectFormatType.yml",
       "output": {
         ".html": {
-          "relative_path": "api/Llvm.NET.Triple.SubArchType.html",
-          "hash": "8toeE504GWffj6gllukUOA=="
+          "relative_path": "api/Llvm.NET.Triple.ObjectFormatType.html",
+          "hash": "MXSZxQ1k0+Mksp+tcwB4cA=="
         }
       },
       "is_incremental": false,
@@ -16491,11 +16479,11 @@
     },
     {
       "type": "ManagedReference",
-      "source_relative_path": "api/Llvm.NET.Triple.VendorType.yml",
+      "source_relative_path": "api/Llvm.NET.Triple.SubArchType.yml",
       "output": {
         ".html": {
-          "relative_path": "api/Llvm.NET.Triple.VendorType.html",
-          "hash": "4F9cuz9P0HCSAq0iuDeOiA=="
+          "relative_path": "api/Llvm.NET.Triple.SubArchType.html",
+          "hash": "8toeE504GWffj6gllukUOA=="
         }
       },
       "is_incremental": false,
@@ -16683,11 +16671,11 @@
     },
     {
       "type": "ManagedReference",
-      "source_relative_path": "api/Llvm.NET.Triple.yml",
+      "source_relative_path": "api/Llvm.NET.Triple.VendorType.yml",
       "output": {
         ".html": {
-          "relative_path": "api/Llvm.NET.Triple.html",
-          "hash": "zH7ot+DRdeIJUrddeztRSQ=="
+          "relative_path": "api/Llvm.NET.Triple.VendorType.html",
+          "hash": "4F9cuz9P0HCSAq0iuDeOiA=="
         }
       },
       "is_incremental": false,
@@ -16887,11 +16875,11 @@
     },
     {
       "type": "ManagedReference",
-      "source_relative_path": "api/Llvm.NET.Types.IArrayType.yml",
+      "source_relative_path": "api/Llvm.NET.Triple.yml",
       "output": {
         ".html": {
-          "relative_path": "api/Llvm.NET.Types.IArrayType.html",
-          "hash": "rfr3VFrGh54Yg5YfnWuXzw=="
+          "relative_path": "api/Llvm.NET.Triple.html",
+          "hash": "zH7ot+DRdeIJUrddeztRSQ=="
         }
       },
       "is_incremental": false,
@@ -16911,11 +16899,11 @@
     },
     {
       "type": "ManagedReference",
-      "source_relative_path": "api/Llvm.NET.Types.IFunctionType.yml",
+      "source_relative_path": "api/Llvm.NET.Types.IArrayType.yml",
       "output": {
         ".html": {
-          "relative_path": "api/Llvm.NET.Types.IFunctionType.html",
-          "hash": "Gjzrj/xyOdlVdTA/qkKI0w=="
+          "relative_path": "api/Llvm.NET.Types.IArrayType.html",
+          "hash": "rfr3VFrGh54Yg5YfnWuXzw=="
         }
       },
       "is_incremental": false,
@@ -16959,11 +16947,11 @@
     },
     {
       "type": "ManagedReference",
-      "source_relative_path": "api/Llvm.NET.Types.INamedStructuralType.yml",
+      "source_relative_path": "api/Llvm.NET.Types.IFunctionType.yml",
       "output": {
         ".html": {
-          "relative_path": "api/Llvm.NET.Types.INamedStructuralType.html",
-          "hash": "JTCf5mAHvo+0cwERr1Ulvg=="
+          "relative_path": "api/Llvm.NET.Types.IFunctionType.html",
+          "hash": "Gjzrj/xyOdlVdTA/qkKI0w=="
         }
       },
       "is_incremental": false,
@@ -17007,11 +16995,11 @@
     },
     {
       "type": "ManagedReference",
-      "source_relative_path": "api/Llvm.NET.Types.IPointerType.yml",
+      "source_relative_path": "api/Llvm.NET.Types.INamedStructuralType.yml",
       "output": {
         ".html": {
-          "relative_path": "api/Llvm.NET.Types.IPointerType.html",
-          "hash": "MDg7FWE0T1pZWU9rxKc9MQ=="
+          "relative_path": "api/Llvm.NET.Types.INamedStructuralType.html",
+          "hash": "JTCf5mAHvo+0cwERr1Ulvg=="
         }
       },
       "is_incremental": false,
@@ -17031,11 +17019,11 @@
     },
     {
       "type": "ManagedReference",
-      "source_relative_path": "api/Llvm.NET.Types.ISequenceType.yml",
+      "source_relative_path": "api/Llvm.NET.Types.IPointerType.yml",
       "output": {
         ".html": {
-          "relative_path": "api/Llvm.NET.Types.ISequenceType.html",
-          "hash": "AuVhLhEWvgWQqe0yjyFyIw=="
+          "relative_path": "api/Llvm.NET.Types.IPointerType.html",
+          "hash": "MDg7FWE0T1pZWU9rxKc9MQ=="
         }
       },
       "is_incremental": false,
@@ -17055,11 +17043,11 @@
     },
     {
       "type": "ManagedReference",
-      "source_relative_path": "api/Llvm.NET.Types.IStructType.yml",
+      "source_relative_path": "api/Llvm.NET.Types.ISequenceType.yml",
       "output": {
         ".html": {
-          "relative_path": "api/Llvm.NET.Types.IStructType.html",
-          "hash": "pYV05sUndjpCIpsGSOdDEg=="
+          "relative_path": "api/Llvm.NET.Types.ISequenceType.html",
+          "hash": "AuVhLhEWvgWQqe0yjyFyIw=="
         }
       },
       "is_incremental": false,
@@ -17091,11 +17079,11 @@
     },
     {
       "type": "ManagedReference",
-      "source_relative_path": "api/Llvm.NET.Types.ITypeRef.yml",
+      "source_relative_path": "api/Llvm.NET.Types.IStructType.yml",
       "output": {
         ".html": {
-          "relative_path": "api/Llvm.NET.Types.ITypeRef.html",
-          "hash": "MaybMIhW52rh0WUSWM9Nhw=="
+          "relative_path": "api/Llvm.NET.Types.IStructType.html",
+          "hash": "pYV05sUndjpCIpsGSOdDEg=="
         }
       },
       "is_incremental": false,
@@ -17295,11 +17283,11 @@
     },
     {
       "type": "ManagedReference",
-      "source_relative_path": "api/Llvm.NET.Types.IVectorType.yml",
+      "source_relative_path": "api/Llvm.NET.Types.ITypeRef.yml",
       "output": {
         ".html": {
-          "relative_path": "api/Llvm.NET.Types.IVectorType.html",
-          "hash": "XIxHx2oC9JjHJZwI3Njsuw=="
+          "relative_path": "api/Llvm.NET.Types.ITypeRef.html",
+          "hash": "MaybMIhW52rh0WUSWM9Nhw=="
         }
       },
       "is_incremental": false,
@@ -17319,11 +17307,11 @@
     },
     {
       "type": "ManagedReference",
-      "source_relative_path": "api/Llvm.NET.Types.TypeKind.yml",
+      "source_relative_path": "api/Llvm.NET.Types.IVectorType.yml",
       "output": {
         ".html": {
-          "relative_path": "api/Llvm.NET.Types.TypeKind.html",
-          "hash": "fgwLdFKXLxUfiHQQRlG3dg=="
+          "relative_path": "api/Llvm.NET.Types.IVectorType.html",
+          "hash": "XIxHx2oC9JjHJZwI3Njsuw=="
         }
       },
       "is_incremental": false,
@@ -17535,11 +17523,11 @@
     },
     {
       "type": "ManagedReference",
-      "source_relative_path": "api/Llvm.NET.Types.yml",
+      "source_relative_path": "api/Llvm.NET.Types.TypeKind.yml",
       "output": {
         ".html": {
-          "relative_path": "api/Llvm.NET.Types.html",
-          "hash": "IXRNbVGkS4+/LLacpy7vZg=="
+          "relative_path": "api/Llvm.NET.Types.TypeKind.html",
+          "hash": "fgwLdFKXLxUfiHQQRlG3dg=="
         }
       },
       "is_incremental": false,
@@ -17547,11 +17535,11 @@
     },
     {
       "type": "ManagedReference",
-      "source_relative_path": "api/Llvm.NET.ValueAsMetadata.yml",
+      "source_relative_path": "api/Llvm.NET.Types.yml",
       "output": {
         ".html": {
-          "relative_path": "api/Llvm.NET.ValueAsMetadata.html",
-          "hash": "cisRMwj06Hgqng0jM5QqgQ=="
+          "relative_path": "api/Llvm.NET.Types.html",
+          "hash": "IXRNbVGkS4+/LLacpy7vZg=="
         }
       },
       "is_incremental": false,
@@ -17607,11 +17595,11 @@
     },
     {
       "type": "ManagedReference",
-      "source_relative_path": "api/Llvm.NET.Values.Argument.yml",
+      "source_relative_path": "api/Llvm.NET.ValueAsMetadata.yml",
       "output": {
         ".html": {
-          "relative_path": "api/Llvm.NET.Values.Argument.html",
-          "hash": "tUvfgAhMJLTrciYs+s0lGg=="
+          "relative_path": "api/Llvm.NET.ValueAsMetadata.html",
+          "hash": "cisRMwj06Hgqng0jM5QqgQ=="
         }
       },
       "is_incremental": false,
@@ -17667,11 +17655,11 @@
     },
     {
       "type": "ManagedReference",
-      "source_relative_path": "api/Llvm.NET.Values.ArgumentExtensions.yml",
+      "source_relative_path": "api/Llvm.NET.Values.Argument.yml",
       "output": {
         ".html": {
-          "relative_path": "api/Llvm.NET.Values.ArgumentExtensions.html",
-          "hash": "jAwsgwr+wNDIMQ0VWI83KA=="
+          "relative_path": "api/Llvm.NET.Values.Argument.html",
+          "hash": "tUvfgAhMJLTrciYs+s0lGg=="
         }
       },
       "is_incremental": false,
@@ -17715,11 +17703,11 @@
     },
     {
       "type": "ManagedReference",
-      "source_relative_path": "api/Llvm.NET.Values.AsmDialect.yml",
+      "source_relative_path": "api/Llvm.NET.Values.ArgumentExtensions.yml",
       "output": {
         ".html": {
-          "relative_path": "api/Llvm.NET.Values.AsmDialect.html",
-          "hash": "a4nRT4p4vc8CRhyzlLOewA=="
+          "relative_path": "api/Llvm.NET.Values.ArgumentExtensions.html",
+          "hash": "jAwsgwr+wNDIMQ0VWI83KA=="
         }
       },
       "is_incremental": false,
@@ -17751,11 +17739,11 @@
     },
     {
       "type": "ManagedReference",
-      "source_relative_path": "api/Llvm.NET.Values.AttributeCollectionExtensions.yml",
+      "source_relative_path": "api/Llvm.NET.Values.AsmDialect.yml",
       "output": {
         ".html": {
-          "relative_path": "api/Llvm.NET.Values.AttributeCollectionExtensions.html",
-          "hash": "8GnyOX6I/ic0e3Eexy7c4g=="
+          "relative_path": "api/Llvm.NET.Values.AsmDialect.html",
+          "hash": "a4nRT4p4vc8CRhyzlLOewA=="
         }
       },
       "is_incremental": false,
@@ -17775,11 +17763,11 @@
     },
     {
       "type": "ManagedReference",
-      "source_relative_path": "api/Llvm.NET.Values.AttributeContainerMixins.yml",
+      "source_relative_path": "api/Llvm.NET.Values.AttributeCollectionExtensions.yml",
       "output": {
         ".html": {
-          "relative_path": "api/Llvm.NET.Values.AttributeContainerMixins.html",
-          "hash": "noQctV6a7iQq5ETRH40mpg=="
+          "relative_path": "api/Llvm.NET.Values.AttributeCollectionExtensions.html",
+          "hash": "8GnyOX6I/ic0e3Eexy7c4g=="
         }
       },
       "is_incremental": false,
@@ -17835,11 +17823,11 @@
     },
     {
       "type": "ManagedReference",
-      "source_relative_path": "api/Llvm.NET.Values.AttributeKind.yml",
+      "source_relative_path": "api/Llvm.NET.Values.AttributeContainerMixins.yml",
       "output": {
         ".html": {
-          "relative_path": "api/Llvm.NET.Values.AttributeKind.html",
-          "hash": "Phbte3GcqLKF4RGhPf31ug=="
+          "relative_path": "api/Llvm.NET.Values.AttributeContainerMixins.html",
+          "hash": "noQctV6a7iQq5ETRH40mpg=="
         }
       },
       "is_incremental": false,
@@ -18495,11 +18483,11 @@
     },
     {
       "type": "ManagedReference",
-      "source_relative_path": "api/Llvm.NET.Values.AttributeKindExtensions.yml",
+      "source_relative_path": "api/Llvm.NET.Values.AttributeKind.yml",
       "output": {
         ".html": {
-          "relative_path": "api/Llvm.NET.Values.AttributeKindExtensions.html",
-          "hash": "WaweRq3TTYt7SvDPhdTeZw=="
+          "relative_path": "api/Llvm.NET.Values.AttributeKind.html",
+          "hash": "Phbte3GcqLKF4RGhPf31ug=="
         }
       },
       "is_incremental": false,
@@ -18543,11 +18531,11 @@
     },
     {
       "type": "ManagedReference",
-      "source_relative_path": "api/Llvm.NET.Values.AttributeValue.yml",
+      "source_relative_path": "api/Llvm.NET.Values.AttributeKindExtensions.yml",
       "output": {
         ".html": {
-          "relative_path": "api/Llvm.NET.Values.AttributeValue.html",
-          "hash": "iHt0I/dqbMMTmorc6OG5TA=="
+          "relative_path": "api/Llvm.NET.Values.AttributeKindExtensions.html",
+          "hash": "WaweRq3TTYt7SvDPhdTeZw=="
         }
       },
       "is_incremental": false,
@@ -18735,11 +18723,11 @@
     },
     {
       "type": "ManagedReference",
-      "source_relative_path": "api/Llvm.NET.Values.BasicBlock.yml",
+      "source_relative_path": "api/Llvm.NET.Values.AttributeValue.yml",
       "output": {
         ".html": {
-          "relative_path": "api/Llvm.NET.Values.BasicBlock.html",
-          "hash": "c5agI+08Bg3sztAs4ieVlQ=="
+          "relative_path": "api/Llvm.NET.Values.AttributeValue.html",
+          "hash": "iHt0I/dqbMMTmorc6OG5TA=="
         }
       },
       "is_incremental": false,
@@ -18819,11 +18807,11 @@
     },
     {
       "type": "ManagedReference",
-      "source_relative_path": "api/Llvm.NET.Values.BlockAddress.yml",
+      "source_relative_path": "api/Llvm.NET.Values.BasicBlock.yml",
       "output": {
         ".html": {
-          "relative_path": "api/Llvm.NET.Values.BlockAddress.html",
-          "hash": "VIp56myIy4C0b2UcJBChRg=="
+          "relative_path": "api/Llvm.NET.Values.BasicBlock.html",
+          "hash": "c5agI+08Bg3sztAs4ieVlQ=="
         }
       },
       "is_incremental": false,
@@ -18855,11 +18843,11 @@
     },
     {
       "type": "ManagedReference",
-      "source_relative_path": "api/Llvm.NET.Values.CallingConvention.yml",
+      "source_relative_path": "api/Llvm.NET.Values.BlockAddress.yml",
       "output": {
         ".html": {
-          "relative_path": "api/Llvm.NET.Values.CallingConvention.html",
-          "hash": "3erF51oJd3oj1j2bOj1vew=="
+          "relative_path": "api/Llvm.NET.Values.BlockAddress.html",
+          "hash": "VIp56myIy4C0b2UcJBChRg=="
         }
       },
       "is_incremental": false,
@@ -19371,11 +19359,11 @@
     },
     {
       "type": "ManagedReference",
-      "source_relative_path": "api/Llvm.NET.Values.Constant.yml",
+      "source_relative_path": "api/Llvm.NET.Values.CallingConvention.yml",
       "output": {
         ".html": {
-          "relative_path": "api/Llvm.NET.Values.Constant.html",
-          "hash": "ZCF23raNZQdOI1MqD2Fi4A=="
+          "relative_path": "api/Llvm.NET.Values.CallingConvention.html",
+          "hash": "3erF51oJd3oj1j2bOj1vew=="
         }
       },
       "is_incremental": false,
@@ -19443,6 +19431,18 @@
     },
     {
       "type": "ManagedReference",
+      "source_relative_path": "api/Llvm.NET.Values.Constant.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Llvm.NET.Values.Constant.html",
+          "hash": "ZCF23raNZQdOI1MqD2Fi4A=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
       "source_relative_path": "api/Llvm.NET.Values.ConstantAggregate.yml",
       "output": {
         ".html": {
@@ -19470,8 +19470,8 @@
       "source_relative_path": "api/Llvm.NET.Values.ConstantArray.yml",
       "output": {
         ".html": {
-          "relative_path": "api/Llvm.NET.Values.ConstantArray.html",
-          "hash": "fH6yn9ixI/puma3Kq0mqLA=="
+          "relative_path": "api/Llvm.NET.Values.ConstantArray.From.html",
+          "hash": "YpaImygu/XfYlnwasa9VCA=="
         }
       },
       "is_incremental": false,
@@ -19482,8 +19482,8 @@
       "source_relative_path": "api/Llvm.NET.Values.ConstantArray.yml",
       "output": {
         ".html": {
-          "relative_path": "api/Llvm.NET.Values.ConstantArray.From.html",
-          "hash": "YpaImygu/XfYlnwasa9VCA=="
+          "relative_path": "api/Llvm.NET.Values.ConstantArray.html",
+          "hash": "fH6yn9ixI/puma3Kq0mqLA=="
         }
       },
       "is_incremental": false,
@@ -19518,18 +19518,6 @@
       "source_relative_path": "api/Llvm.NET.Values.ConstantDataSequential.yml",
       "output": {
         ".html": {
-          "relative_path": "api/Llvm.NET.Values.ConstantDataSequential.html",
-          "hash": "1AhUwf8WojDwIN3Gg6uDzQ=="
-        }
-      },
-      "is_incremental": false,
-      "version": ""
-    },
-    {
-      "type": "ManagedReference",
-      "source_relative_path": "api/Llvm.NET.Values.ConstantDataSequential.yml",
-      "output": {
-        ".html": {
           "relative_path": "api/Llvm.NET.Values.ConstantDataSequential.IsString.html",
           "hash": "z9uwvQHbU0AcQCImT1LtkQ=="
         }
@@ -19551,11 +19539,11 @@
     },
     {
       "type": "ManagedReference",
-      "source_relative_path": "api/Llvm.NET.Values.ConstantDataVector.yml",
+      "source_relative_path": "api/Llvm.NET.Values.ConstantDataSequential.yml",
       "output": {
         ".html": {
-          "relative_path": "api/Llvm.NET.Values.ConstantDataVector.html",
-          "hash": "n/mbAJuK+wmGt3dz4vhjHQ=="
+          "relative_path": "api/Llvm.NET.Values.ConstantDataSequential.html",
+          "hash": "1AhUwf8WojDwIN3Gg6uDzQ=="
         }
       },
       "is_incremental": false,
@@ -19563,11 +19551,11 @@
     },
     {
       "type": "ManagedReference",
-      "source_relative_path": "api/Llvm.NET.Values.ConstantExpression.yml",
+      "source_relative_path": "api/Llvm.NET.Values.ConstantDataVector.yml",
       "output": {
         ".html": {
-          "relative_path": "api/Llvm.NET.Values.ConstantExpression.html",
-          "hash": "9JcHy4nGvbwo048JvgrvrA=="
+          "relative_path": "api/Llvm.NET.Values.ConstantDataVector.html",
+          "hash": "n/mbAJuK+wmGt3dz4vhjHQ=="
         }
       },
       "is_incremental": false,
@@ -19623,11 +19611,11 @@
     },
     {
       "type": "ManagedReference",
-      "source_relative_path": "api/Llvm.NET.Values.ConstantFP.yml",
+      "source_relative_path": "api/Llvm.NET.Values.ConstantExpression.yml",
       "output": {
         ".html": {
-          "relative_path": "api/Llvm.NET.Values.ConstantFP.html",
-          "hash": "ZnE+SaIorF2vEiThtR8Osw=="
+          "relative_path": "api/Llvm.NET.Values.ConstantExpression.html",
+          "hash": "9JcHy4nGvbwo048JvgrvrA=="
         }
       },
       "is_incremental": false,
@@ -19659,11 +19647,11 @@
     },
     {
       "type": "ManagedReference",
-      "source_relative_path": "api/Llvm.NET.Values.ConstantInt.yml",
+      "source_relative_path": "api/Llvm.NET.Values.ConstantFP.yml",
       "output": {
         ".html": {
-          "relative_path": "api/Llvm.NET.Values.ConstantInt.html",
-          "hash": "uCLRqFphDjmWfl2Hc2yQdw=="
+          "relative_path": "api/Llvm.NET.Values.ConstantFP.html",
+          "hash": "ZnE+SaIorF2vEiThtR8Osw=="
         }
       },
       "is_incremental": false,
@@ -19707,11 +19695,11 @@
     },
     {
       "type": "ManagedReference",
-      "source_relative_path": "api/Llvm.NET.Values.ConstantPointerNull.yml",
+      "source_relative_path": "api/Llvm.NET.Values.ConstantInt.yml",
       "output": {
         ".html": {
-          "relative_path": "api/Llvm.NET.Values.ConstantPointerNull.html",
-          "hash": "/RdNhn0ge5lW8I1/Jp0FFA=="
+          "relative_path": "api/Llvm.NET.Values.ConstantInt.html",
+          "hash": "uCLRqFphDjmWfl2Hc2yQdw=="
         }
       },
       "is_incremental": false,
@@ -19724,6 +19712,18 @@
         ".html": {
           "relative_path": "api/Llvm.NET.Values.ConstantPointerNull.From.html",
           "hash": "sN5O1brQCIiici9pkp8m+Q=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Llvm.NET.Values.ConstantPointerNull.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Llvm.NET.Values.ConstantPointerNull.html",
+          "hash": "/RdNhn0ge5lW8I1/Jp0FFA=="
         }
       },
       "is_incremental": false,
@@ -19760,18 +19760,6 @@
         ".html": {
           "relative_path": "api/Llvm.NET.Values.ConstantVector.html",
           "hash": "gU6KN0caasSzW6CgLA63bQ=="
-        }
-      },
-      "is_incremental": false,
-      "version": ""
-    },
-    {
-      "type": "ManagedReference",
-      "source_relative_path": "api/Llvm.NET.Values.Function.yml",
-      "output": {
-        ".html": {
-          "relative_path": "api/Llvm.NET.Values.Function.html",
-          "hash": "U575rqG3DN+OBMvqogQRRw=="
         }
       },
       "is_incremental": false,
@@ -20043,11 +20031,11 @@
     },
     {
       "type": "ManagedReference",
-      "source_relative_path": "api/Llvm.NET.Values.FunctionAttributeIndex.yml",
+      "source_relative_path": "api/Llvm.NET.Values.Function.yml",
       "output": {
         ".html": {
-          "relative_path": "api/Llvm.NET.Values.FunctionAttributeIndex.html",
-          "hash": "8zwI77R2PIf1UcghGHk+mQ=="
+          "relative_path": "api/Llvm.NET.Values.Function.html",
+          "hash": "U575rqG3DN+OBMvqogQRRw=="
         }
       },
       "is_incremental": false,
@@ -20091,11 +20079,11 @@
     },
     {
       "type": "ManagedReference",
-      "source_relative_path": "api/Llvm.NET.Values.FunctionIndexKinds.yml",
+      "source_relative_path": "api/Llvm.NET.Values.FunctionAttributeIndex.yml",
       "output": {
         ".html": {
-          "relative_path": "api/Llvm.NET.Values.FunctionIndexKinds.html",
-          "hash": "/gwFkzSaByeIgmOGVWIiKA=="
+          "relative_path": "api/Llvm.NET.Values.FunctionAttributeIndex.html",
+          "hash": "8zwI77R2PIf1UcghGHk+mQ=="
         }
       },
       "is_incremental": false,
@@ -20151,11 +20139,11 @@
     },
     {
       "type": "ManagedReference",
-      "source_relative_path": "api/Llvm.NET.Values.GlobalAlias.yml",
+      "source_relative_path": "api/Llvm.NET.Values.FunctionIndexKinds.yml",
       "output": {
         ".html": {
-          "relative_path": "api/Llvm.NET.Values.GlobalAlias.html",
-          "hash": "6FmY0Coyc4/PEfEEwTOyfg=="
+          "relative_path": "api/Llvm.NET.Values.FunctionIndexKinds.html",
+          "hash": "/gwFkzSaByeIgmOGVWIiKA=="
         }
       },
       "is_incremental": false,
@@ -20175,11 +20163,11 @@
     },
     {
       "type": "ManagedReference",
-      "source_relative_path": "api/Llvm.NET.Values.GlobalObject.yml",
+      "source_relative_path": "api/Llvm.NET.Values.GlobalAlias.yml",
       "output": {
         ".html": {
-          "relative_path": "api/Llvm.NET.Values.GlobalObject.html",
-          "hash": "yqwJP5Nf32m5Ms2iGIVpqg=="
+          "relative_path": "api/Llvm.NET.Values.GlobalAlias.html",
+          "hash": "6FmY0Coyc4/PEfEEwTOyfg=="
         }
       },
       "is_incremental": false,
@@ -20223,11 +20211,11 @@
     },
     {
       "type": "ManagedReference",
-      "source_relative_path": "api/Llvm.NET.Values.GlobalObjectExtensions.yml",
+      "source_relative_path": "api/Llvm.NET.Values.GlobalObject.yml",
       "output": {
         ".html": {
-          "relative_path": "api/Llvm.NET.Values.GlobalObjectExtensions.html",
-          "hash": "LUTUjttN4QtIT7O03Otx9Q=="
+          "relative_path": "api/Llvm.NET.Values.GlobalObject.html",
+          "hash": "yqwJP5Nf32m5Ms2iGIVpqg=="
         }
       },
       "is_incremental": false,
@@ -20271,11 +20259,11 @@
     },
     {
       "type": "ManagedReference",
-      "source_relative_path": "api/Llvm.NET.Values.GlobalValue.yml",
+      "source_relative_path": "api/Llvm.NET.Values.GlobalObjectExtensions.yml",
       "output": {
         ".html": {
-          "relative_path": "api/Llvm.NET.Values.GlobalValue.html",
-          "hash": "IQvrh5GaTFf0OWTKtQJIkw=="
+          "relative_path": "api/Llvm.NET.Values.GlobalObjectExtensions.html",
+          "hash": "LUTUjttN4QtIT7O03Otx9Q=="
         }
       },
       "is_incremental": false,
@@ -20343,11 +20331,11 @@
     },
     {
       "type": "ManagedReference",
-      "source_relative_path": "api/Llvm.NET.Values.GlobalValueExtensions.yml",
+      "source_relative_path": "api/Llvm.NET.Values.GlobalValue.yml",
       "output": {
         ".html": {
-          "relative_path": "api/Llvm.NET.Values.GlobalValueExtensions.html",
-          "hash": "TwseA+cXXHXUJTLBdvA8VA=="
+          "relative_path": "api/Llvm.NET.Values.GlobalValue.html",
+          "hash": "IQvrh5GaTFf0OWTKtQJIkw=="
         }
       },
       "is_incremental": false,
@@ -20391,11 +20379,11 @@
     },
     {
       "type": "ManagedReference",
-      "source_relative_path": "api/Llvm.NET.Values.GlobalVariable.yml",
+      "source_relative_path": "api/Llvm.NET.Values.GlobalValueExtensions.yml",
       "output": {
         ".html": {
-          "relative_path": "api/Llvm.NET.Values.GlobalVariable.html",
-          "hash": "m+O3auQIbOX70MCL1A3uQA=="
+          "relative_path": "api/Llvm.NET.Values.GlobalValueExtensions.html",
+          "hash": "TwseA+cXXHXUJTLBdvA8VA=="
         }
       },
       "is_incremental": false,
@@ -20475,11 +20463,11 @@
     },
     {
       "type": "ManagedReference",
-      "source_relative_path": "api/Llvm.NET.Values.IAttributeAccessor.yml",
+      "source_relative_path": "api/Llvm.NET.Values.GlobalVariable.yml",
       "output": {
         ".html": {
-          "relative_path": "api/Llvm.NET.Values.IAttributeAccessor.html",
-          "hash": "FFCIHBzQ8ujafCkzqWhbpA=="
+          "relative_path": "api/Llvm.NET.Values.GlobalVariable.html",
+          "hash": "m+O3auQIbOX70MCL1A3uQA=="
         }
       },
       "is_incremental": false,
@@ -20547,11 +20535,11 @@
     },
     {
       "type": "ManagedReference",
-      "source_relative_path": "api/Llvm.NET.Values.IAttributeContainer.yml",
+      "source_relative_path": "api/Llvm.NET.Values.IAttributeAccessor.yml",
       "output": {
         ".html": {
-          "relative_path": "api/Llvm.NET.Values.IAttributeContainer.html",
-          "hash": "1LXwv9E3YJJ2lRKsidPUfQ=="
+          "relative_path": "api/Llvm.NET.Values.IAttributeAccessor.html",
+          "hash": "FFCIHBzQ8ujafCkzqWhbpA=="
         }
       },
       "is_incremental": false,
@@ -20583,6 +20571,18 @@
     },
     {
       "type": "ManagedReference",
+      "source_relative_path": "api/Llvm.NET.Values.IAttributeContainer.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Llvm.NET.Values.IAttributeContainer.html",
+          "hash": "1LXwv9E3YJJ2lRKsidPUfQ=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
       "source_relative_path": "api/Llvm.NET.Values.IAttributeDictionary.yml",
       "output": {
         ".html": {
@@ -20600,18 +20600,6 @@
         ".html": {
           "relative_path": "api/Llvm.NET.Values.InlineAsm.html",
           "hash": "VndF0SQ5uUzyFj6wHyn0rw=="
-        }
-      },
-      "is_incremental": false,
-      "version": ""
-    },
-    {
-      "type": "ManagedReference",
-      "source_relative_path": "api/Llvm.NET.Values.Linkage.yml",
-      "output": {
-        ".html": {
-          "relative_path": "api/Llvm.NET.Values.Linkage.html",
-          "hash": "bqRkJN9H/2PD/ElXNJbKQA=="
         }
       },
       "is_incremental": false,
@@ -20799,11 +20787,11 @@
     },
     {
       "type": "ManagedReference",
-      "source_relative_path": "api/Llvm.NET.Values.UndefValue.yml",
+      "source_relative_path": "api/Llvm.NET.Values.Linkage.yml",
       "output": {
         ".html": {
-          "relative_path": "api/Llvm.NET.Values.UndefValue.html",
-          "hash": "SFjvnWQ6/6AI1pGbIUV+Xg=="
+          "relative_path": "api/Llvm.NET.Values.Linkage.html",
+          "hash": "bqRkJN9H/2PD/ElXNJbKQA=="
         }
       },
       "is_incremental": false,
@@ -20811,11 +20799,11 @@
     },
     {
       "type": "ManagedReference",
-      "source_relative_path": "api/Llvm.NET.Values.Use.yml",
+      "source_relative_path": "api/Llvm.NET.Values.UndefValue.yml",
       "output": {
         ".html": {
-          "relative_path": "api/Llvm.NET.Values.Use.html",
-          "hash": "h/AG+e246bEJnrWKMtU8qA=="
+          "relative_path": "api/Llvm.NET.Values.UndefValue.html",
+          "hash": "SFjvnWQ6/6AI1pGbIUV+Xg=="
         }
       },
       "is_incremental": false,
@@ -20847,11 +20835,11 @@
     },
     {
       "type": "ManagedReference",
-      "source_relative_path": "api/Llvm.NET.Values.User.yml",
+      "source_relative_path": "api/Llvm.NET.Values.Use.yml",
       "output": {
         ".html": {
-          "relative_path": "api/Llvm.NET.Values.User.html",
-          "hash": "GpxrVOdozvIZYBhSLTYDXg=="
+          "relative_path": "api/Llvm.NET.Values.Use.html",
+          "hash": "h/AG+e246bEJnrWKMtU8qA=="
         }
       },
       "is_incremental": false,
@@ -20895,11 +20883,11 @@
     },
     {
       "type": "ManagedReference",
-      "source_relative_path": "api/Llvm.NET.Values.Value.yml",
+      "source_relative_path": "api/Llvm.NET.Values.User.yml",
       "output": {
         ".html": {
-          "relative_path": "api/Llvm.NET.Values.Value.html",
-          "hash": "IoZzHyr8rOk5mlxLIOEdrw=="
+          "relative_path": "api/Llvm.NET.Values.User.html",
+          "hash": "GpxrVOdozvIZYBhSLTYDXg=="
         }
       },
       "is_incremental": false,
@@ -21051,11 +21039,11 @@
     },
     {
       "type": "ManagedReference",
-      "source_relative_path": "api/Llvm.NET.Values.ValueExtensions.yml",
+      "source_relative_path": "api/Llvm.NET.Values.Value.yml",
       "output": {
         ".html": {
-          "relative_path": "api/Llvm.NET.Values.ValueExtensions.html",
-          "hash": "MUBiMYBKW+aEdk81NaSsEA=="
+          "relative_path": "api/Llvm.NET.Values.Value.html",
+          "hash": "IoZzHyr8rOk5mlxLIOEdrw=="
         }
       },
       "is_incremental": false,
@@ -21087,11 +21075,11 @@
     },
     {
       "type": "ManagedReference",
-      "source_relative_path": "api/Llvm.NET.Values.Visibility.yml",
+      "source_relative_path": "api/Llvm.NET.Values.ValueExtensions.yml",
       "output": {
         ".html": {
-          "relative_path": "api/Llvm.NET.Values.Visibility.html",
-          "hash": "edI0xjnp/kb5cTXWc8kV2Q=="
+          "relative_path": "api/Llvm.NET.Values.ValueExtensions.html",
+          "hash": "MUBiMYBKW+aEdk81NaSsEA=="
         }
       },
       "is_incremental": false,
@@ -21128,6 +21116,18 @@
         ".html": {
           "relative_path": "api/Llvm.NET.Values.Visibility.Protected.html",
           "hash": "FCSwl+8gW7faIlJJKL23xA=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Llvm.NET.Values.Visibility.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Llvm.NET.Values.Visibility.html",
+          "hash": "edI0xjnp/kb5cTXWc8kV2Q=="
         }
       },
       "is_incremental": false,
