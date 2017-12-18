@@ -10137,6 +10137,18 @@ references:
   commentId: T:Llvm.NET.LlvmMetadata
   fullName: Llvm.NET.LlvmMetadata
   nameWithType: LlvmMetadata
+- uid: Llvm.NET.LlvmMetadata.#ctor(Llvm.NET.Native.LLVMMetadataRef)
+  name: LlvmMetadata(LLVMMetadataRef)
+  href: api/Llvm.NET.LlvmMetadata.-ctor.html#Llvm_NET_LlvmMetadata__ctor_Llvm_NET_Native_LLVMMetadataRef_
+  commentId: M:Llvm.NET.LlvmMetadata.#ctor(Llvm.NET.Native.LLVMMetadataRef)
+  fullName: Llvm.NET.LlvmMetadata.LlvmMetadata(Llvm.NET.Native.LLVMMetadataRef)
+  nameWithType: LlvmMetadata.LlvmMetadata(LLVMMetadataRef)
+- uid: Llvm.NET.LlvmMetadata.#ctor*
+  name: LlvmMetadata
+  href: api/Llvm.NET.LlvmMetadata.-ctor.html
+  commentId: Overload:Llvm.NET.LlvmMetadata.#ctor
+  fullName: Llvm.NET.LlvmMetadata.LlvmMetadata
+  nameWithType: LlvmMetadata.LlvmMetadata
 - uid: Llvm.NET.LlvmMetadata.ReplaceAllUsesWith(Llvm.NET.LlvmMetadata)
   name: ReplaceAllUsesWith(LlvmMetadata)
   href: api/Llvm.NET.LlvmMetadata.ReplaceAllUsesWith.html#Llvm_NET_LlvmMetadata_ReplaceAllUsesWith_Llvm_NET_LlvmMetadata_
