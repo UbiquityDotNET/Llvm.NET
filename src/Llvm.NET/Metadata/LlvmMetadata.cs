@@ -46,20 +46,6 @@ namespace Llvm.NET
 
         internal LLVMMetadataRef MetadataHandle { get; /*protected*/ set; }
 
-        // ideally this would be protected AND internal but C#
-        // doesn't have any syntax to allow such a thing on a constructor
-        // so it is internal and internal code should ensure it is
-        // only ever used by derived type constructors
-        /*protected*/ internal LlvmMetadata( LLVMMetadataRef handle )
-        {
-            if( handle == default )
-            {
-                throw new ArgumentNullException( nameof( handle ) );
-            }
-
-            MetadataHandle = handle;
-        }
-
         internal static T FromHandle<T>( Context context, LLVMMetadataRef handle )
             where T : LlvmMetadata
         {
@@ -69,6 +55,16 @@ namespace Llvm.NET
             }
 
             return ( T )context.GetNodeFor( handle, StaticFactory );
+        }
+
+        private protected LlvmMetadata( LLVMMetadataRef handle )
+        {
+            if( handle == default )
+            {
+                throw new ArgumentNullException( nameof( handle ) );
+            }
+
+            MetadataHandle = handle;
         }
 
         /// <summary>Enumeration to define debug information metadata nodes</summary>
