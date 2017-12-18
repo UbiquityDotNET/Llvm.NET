@@ -443,7 +443,7 @@ namespace Kaleidoscope
 
         private void InitializeModuleAndPassManager( )
         {
-            Module = new BitcodeModule( Context, "Kaleidoscope" );
+            Module = Context.CreateBitcodeModule( "Kaleidoscope" );
         }
 
         private Function GetFunction( string name )

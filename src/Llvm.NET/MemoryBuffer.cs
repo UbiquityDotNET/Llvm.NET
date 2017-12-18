@@ -81,7 +81,7 @@ namespace Llvm.NET
         private static extern LLVMStatus LLVMCreateMemoryBufferWithSTDIN( out LLVMMemoryBufferRef @OutMemBuf, out IntPtr @OutMessage );
 
         [DllImport( LibraryPath, CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi, ThrowOnUnmappableChar = true, BestFitMapping = false )]
-        private static extern LLVMMemoryBufferRef LLVMCreateMemoryBufferWithMemoryRange( [ MarshalAs( UnmanagedType.LPStr )] string @InputData
+        private static extern LLVMMemoryBufferRef LLVMCreateMemoryBufferWithMemoryRange( [MarshalAs( UnmanagedType.LPStr )] string @InputData
                                                                                        , size_t @InputDataLength
                                                                                        , [MarshalAs( UnmanagedType.LPStr )] string @BufferName
                                                                                        , [MarshalAs( UnmanagedType.Bool )]bool @RequiresNullTerminator

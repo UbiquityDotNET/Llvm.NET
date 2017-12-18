@@ -3,8 +3,12 @@
 // </copyright>
 
 using System;
+using System.Diagnostics;
+using System.Runtime.InteropServices;
 using Llvm.NET.Native;
 using Llvm.NET.Values;
+
+using static Llvm.NET.Native.NativeMethods;
 
 // Interface+interal type matches file name
 #pragma warning disable SA1649
@@ -29,12 +33,12 @@ namespace Llvm.NET.Types
                     return false;
                 }
 
-                return NativeMethods.LLVMTypeIsSized( TypeRefHandle );
+                return LLVMTypeIsSized( TypeRefHandle );
             }
         }
 
         /// <inheritdoc/>
-        public TypeKind Kind => ( TypeKind )NativeMethods.LLVMGetTypeKind( TypeRefHandle );
+        public TypeKind Kind => ( TypeKind )LLVMGetTypeKind( TypeRefHandle );
 
         /// <inheritdoc/>
         public bool IsInteger=> Kind == TypeKind.Integer;
@@ -89,7 +93,7 @@ namespace Llvm.NET.Types
         }
 
         /// <inheritdoc/>
-        public Context Context => TypeRefHandle.Context;
+        public Context Context => GetContextFor( TypeRefHandle );
 
         /// <inheritdoc/>
         public uint IntegerBitWidth
@@ -101,7 +105,7 @@ namespace Llvm.NET.Types
                     return 0;
                 }
 
-                return NativeMethods.LLVMGetIntTypeWidth( TypeRefHandle );
+                return LLVMGetIntTypeWidth( TypeRefHandle );
             }
         }
 
@@ -109,7 +113,7 @@ namespace Llvm.NET.Types
         public Constant GetNullValue() => Constant.NullValueFor( this );
 
         /// <inheritdoc/>
-        public IArrayType CreateArrayType( uint count ) => FromHandle<IArrayType>( NativeMethods.LLVMArrayType( TypeRefHandle, count ) );
+        public IArrayType CreateArrayType( uint count ) => FromHandle<IArrayType>( LLVMArrayType( TypeRefHandle, count ) );
 
         /// <inheritdoc/>
         public IPointerType CreatePointerType( ) => CreatePointerType( 0 );
@@ -122,16 +126,18 @@ namespace Llvm.NET.Types
                 throw new InvalidOperationException( "Cannot create pointer to void in LLVM, use i8* instead" );
             }
 
-            return FromHandle<IPointerType>( NativeMethods.LLVMPointerType( TypeRefHandle, addressSpace ) );
+            return FromHandle<IPointerType>( LLVMPointerType( TypeRefHandle, addressSpace ) );
         }
 
-        public bool TryGetExtendedPropertyValue<T>( string id, out T value ) => ExtensibleProperties.TryGetExtendedPropertyValue<T>( id, out value );
+        public bool TryGetExtendedPropertyValue<T>( string id, out T value )
+            => ExtensibleProperties.TryGetExtendedPropertyValue<T>( id, out value );
 
-        public void AddExtendedPropertyValue( string id, object value ) => ExtensibleProperties.AddExtendedPropertyValue( id, value );
+        public void AddExtendedPropertyValue( string id, object value )
+            => ExtensibleProperties.AddExtendedPropertyValue( id, value );
 
         /// <summary>Builds a string representation for this type in LLVM assembly language form</summary>
         /// <returns>Formatted string for this type</returns>
-        public override string ToString( ) => NativeMethods.LLVMPrintTypeToString( TypeRefHandle );
+        public override string ToString( ) => LLVMPrintTypeToString( TypeRefHandle );
 
         internal TypeRef( LLVMTypeRef typeRef )
         {
@@ -152,50 +158,74 @@ namespace Llvm.NET.Types
                 return null;
             }
 
-            var ctx = typeRef.Context;
-            return ( T )ctx.GetTypeFor( typeRef, StaticFactory );
+            var ctx = GetContextFor( typeRef );
+            return ( T )ctx.GetTypeFor( typeRef );
+        }
+
+        internal class InterningFactory
+            : HandleInterningMap<LLVMTypeRef, ITypeRef>
+        {
+            internal InterningFactory( Context context )
+                : base( context )
+            {
+            }
+
+            private protected override ITypeRef ItemFactory( LLVMTypeRef handle )
+            {
+                var kind = ( TypeKind )LLVMGetTypeKind( handle );
+                switch( kind )
+                {
+                case TypeKind.Struct:
+                    return new StructType( handle );
+
+                case TypeKind.Array:
+                    return new ArrayType( handle );
+
+                case TypeKind.Pointer:
+                    return new PointerType( handle );
+
+                case TypeKind.Vector:
+                    return new VectorType( handle );
+
+                case TypeKind.Function: // NOTE: This is a signature rather than a Function, which is a Value
+                    return new FunctionType( handle );
+
+                // other types not yet supported in Object wrappers
+                // but the pattern for doing so should be pretty obvious...
+                case TypeKind.Void:
+                case TypeKind.Float16:
+                case TypeKind.Float32:
+                case TypeKind.Float64:
+                case TypeKind.X86Float80:
+                case TypeKind.Float128m112:
+                case TypeKind.Float128:
+                case TypeKind.Label:
+                case TypeKind.Integer:
+                case TypeKind.Metadata:
+                case TypeKind.X86MMX:
+                default:
+                    return new TypeRef( handle );
+                }
+            }
         }
 
         protected LLVMTypeRef TypeRefHandle { get; }
 
-        private static ITypeRef StaticFactory( LLVMTypeRef typeRef )
+        private static Context GetContextFor( LLVMTypeRef handle )
         {
-            var kind = ( TypeKind )NativeMethods.LLVMGetTypeKind( typeRef );
-            switch( kind )
+            if( handle == default )
             {
-            case TypeKind.Struct:
-                return new StructType( typeRef );
-
-            case TypeKind.Array:
-                return new ArrayType( typeRef );
-
-            case TypeKind.Pointer:
-                return new PointerType( typeRef );
-
-            case TypeKind.Vector:
-                return new VectorType( typeRef );
-
-            case TypeKind.Function: // NOTE: This is a signature rather than a Function, which is a Value
-                return new FunctionType( typeRef );
-
-            // other types not yet supported in Object wrappers
-            // but the pattern for doing so should be pretty obvious...
-            case TypeKind.Void:
-            case TypeKind.Float16:
-            case TypeKind.Float32:
-            case TypeKind.Float64:
-            case TypeKind.X86Float80:
-            case TypeKind.Float128m112:
-            case TypeKind.Float128:
-            case TypeKind.Label:
-            case TypeKind.Integer:
-            case TypeKind.Metadata:
-            case TypeKind.X86MMX:
-            default:
-                return new TypeRef( typeRef );
+                return null;
             }
+
+            var hContext = LLVMGetTypeContext( handle );
+            Debug.Assert( hContext != default, "Should not get a null pointer from LLVM" );
+            return ContextCache.GetContextFor( hContext );
         }
 
         private readonly ExtensiblePropertyContainer ExtensibleProperties = new ExtensiblePropertyContainer( );
+
+        [DllImport( LibraryPath, CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl )]
+        private static extern LLVMContextAlias LLVMGetTypeContext( LLVMTypeRef @Ty );
     }
 }

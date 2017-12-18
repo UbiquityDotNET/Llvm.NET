@@ -68,61 +68,6 @@ namespace Llvm.NET
         : IDisposable
         , IExtensiblePropertyContainer
     {
-        /// <summary>Initializes a new instance of the <see cref="BitcodeModule"/> class in a given context</summary>
-        /// <param name="context">Context for the module</param>
-        public BitcodeModule( [NotNull] Context context )
-            : this( context, string.Empty )
-        {
-        }
-
-        /// <summary>Initializes a new instance of the <see cref="BitcodeModule"/> class in a given context</summary>
-        /// <param name="moduleId">Module's ID</param>
-        /// <param name="context">Context for the module</param>
-        public BitcodeModule( [NotNull] Context context, string moduleId )
-        {
-            moduleId.ValidateNotNull( nameof(moduleId) );
-            ModuleHandle = LLVMModuleCreateWithNameInContext( moduleId, context.ContextHandle );
-            if( ModuleHandle == default )
-            {
-                throw new InternalCodeGeneratorException( "Could not create module in context" );
-            }
-
-            LazyDiBuilder = new Lazy<DebugInfoBuilder>( ( ) => new DebugInfoBuilder( this ) );
-            Context.AddModule( this );
-            Comdats = new ComdatCollection( this );
-        }
-
-        /// <summary>Initializes a new instance of the <see cref="BitcodeModule"/> class with a root <see cref="DICompileUnit"/> to contain debugging information</summary>
-        /// <param name="context">Context for the module</param>
-        /// <param name="moduleId">Module name</param>
-        /// <param name="language">Language to store in the debugging information</param>
-        /// <param name="srcFilePath">path of source file to set for the compilation unit</param>
-        /// <param name="producer">Name of the application producing this module</param>
-        /// <param name="optimized">Flag to indicate if the module is optimized</param>
-        /// <param name="compilationFlags">Additional flags</param>
-        /// <param name="runtimeVersion">Runtime version if any (use 0 if the runtime version has no meaning)</param>
-        public BitcodeModule( Context context
-                            , string moduleId
-                            , SourceLanguage language
-                            , string srcFilePath
-                            , string producer
-                            , bool optimized = false
-                            , string compilationFlags = ""
-                            , uint runtimeVersion = 0
-                            )
-            : this( context, moduleId )
-        {
-            DICompileUnit = DIBuilder.CreateCompileUnit( language
-                                                       , srcFilePath
-                                                       , producer
-                                                       , optimized
-                                                       , compilationFlags
-                                                       , runtimeVersion
-                                                       );
-
-            SourceFileName = Path.GetFileName( srcFilePath );
-        }
-
         /// <summary>Gets a value indicating whether the module is diposed or not</summary>
         public bool IsDisposed => ModuleHandle == default;
 
@@ -131,13 +76,13 @@ namespace Llvm.NET
         {
             get
             {
-                ValidateHandle( );
+                ThrowIfDisposed( );
                 return LLVMGetModuleSourceFileName( ModuleHandle );
             }
 
             set
             {
-                ValidateHandle( );
+                ThrowIfDisposed( );
                 LLVMSetModuleSourceFileName( ModuleHandle, value );
             }
         }
@@ -149,7 +94,7 @@ namespace Llvm.NET
         public const string DwarfVersionValue = "Dwarf Version";
 
         /// <summary>Version of the Debug information Metadata</summary>
-        public const UInt32 DebugMetadataVersion = 3; /* DEBUG_METADATA_VERSION (for LLVM v3.7.0) */
+        public const UInt32 DebugMetadataVersion = 3; /* DEBUG_METADATA_VERSION (for LLVM > v3.7.0) */
 
         /// <summary>Gets the Comdats for this module</summary>
         public ComdatCollection Comdats { get; }
@@ -159,13 +104,13 @@ namespace Llvm.NET
         {
             get
             {
-                ValidateHandle( );
+                ThrowIfDisposed( );
                 if( ModuleHandle == default )
                 {
                     return null;
                 }
 
-                return ModuleHandle.Context;
+                return GetContextFor( ModuleHandle );
             }
         }
 
@@ -174,7 +119,7 @@ namespace Llvm.NET
         {
             get
             {
-                ValidateHandle( );
+                ThrowIfDisposed( );
                 var handle = LLVMModuleGetModuleFlagsMetadata( ModuleHandle );
                 if( handle == default )
                 {
@@ -193,7 +138,7 @@ namespace Llvm.NET
         {
             get
             {
-                ValidateHandle( );
+                ThrowIfDisposed( );
                 return LazyDiBuilder.Value;
             }
         }
@@ -214,7 +159,7 @@ namespace Llvm.NET
         {
             get
             {
-                ValidateHandle( );
+                ThrowIfDisposed( );
                 return Layout?.ToString( ) ?? string.Empty;
             }
         }
@@ -224,13 +169,13 @@ namespace Llvm.NET
         {
             get
             {
-                ValidateHandle( );
+                ThrowIfDisposed( );
                 return Layout_;
             }
 
             set
             {
-                ValidateHandle( );
+                ThrowIfDisposed( );
 
                 Layout_ = value;
                 LLVMSetDataLayout( ModuleHandle, value?.ToString( ) ?? string.Empty );
@@ -242,13 +187,13 @@ namespace Llvm.NET
         {
             get
             {
-                ValidateHandle( );
+                ThrowIfDisposed( );
                 return LLVMGetTarget( ModuleHandle );
             }
 
             set
             {
-                ValidateHandle( );
+                ThrowIfDisposed( );
                 LLVMSetTarget( ModuleHandle, value );
             }
         }
@@ -258,7 +203,7 @@ namespace Llvm.NET
         {
             get
             {
-                ValidateHandle( );
+                ThrowIfDisposed( );
                 var current = LLVMGetFirstGlobal( ModuleHandle );
                 while( current != default )
                 {
@@ -273,7 +218,7 @@ namespace Llvm.NET
         {
             get
             {
-                ValidateHandle( );
+                ThrowIfDisposed( );
                 var current = LLVMGetFirstFunction( ModuleHandle );
                 while( current != default )
                 {
@@ -291,7 +236,7 @@ namespace Llvm.NET
         {
             get
             {
-                ValidateHandle( );
+                ThrowIfDisposed( );
                 return LLVMGetModuleName( ModuleHandle );
             }
         }
@@ -331,7 +276,7 @@ namespace Llvm.NET
         /// </remarks>
         public void Link( BitcodeModule otherModule )
         {
-            ValidateHandle( );
+            ThrowIfDisposed( );
             otherModule.ValidateNotNull( nameof( otherModule ) );
 
             if( otherModule.Context != Context )
@@ -353,7 +298,7 @@ namespace Llvm.NET
         /// <returns>true if the verification succeeded and false if not.</returns>
         public bool Verify( out string errmsg )
         {
-            ValidateHandle( );
+            ThrowIfDisposed( );
             return LLVMVerifyModule( ModuleHandle, LLVMVerifierFailureAction.LLVMReturnStatusAction, out errmsg ).Succeeded;
         }
 
@@ -362,7 +307,7 @@ namespace Llvm.NET
         /// <returns>The function or null if not found</returns>
         public Function GetFunction( string name )
         {
-            ValidateHandle( );
+            ThrowIfDisposed( );
             name.ValidateNotNullOrWhiteSpace( nameof( name ) );
 
             var funcRef = LLVMGetNamedFunction( ModuleHandle, name );
@@ -387,7 +332,7 @@ namespace Llvm.NET
         [SuppressMessage( "Microsoft.Design", "CA1011:ConsiderPassingBaseTypesAsParameters", Justification = "Specific type required by interop call" )]
         public Function AddFunction( string name, IFunctionType signature )
         {
-            ValidateHandle( );
+            ThrowIfDisposed( );
             name.ValidateNotNullOrWhiteSpace( nameof( name ) );
             signature.ValidateNotNull( nameof( signature ) );
 
@@ -403,7 +348,7 @@ namespace Llvm.NET
         /// </remarks>
         public void WriteToFile( string path )
         {
-            ValidateHandle( );
+            ThrowIfDisposed( );
             path.ValidateNotNullOrWhiteSpace( nameof( path ) );
 
             LLVMStatus status = LLVMWriteBitcodeToFile( ModuleHandle, path );
@@ -419,7 +364,7 @@ namespace Llvm.NET
         /// <returns><see langword="true"/> if successful or <see langword="false"/> if not</returns>
         public bool WriteToTextFile( string path, out string errMsg )
         {
-            ValidateHandle( );
+            ThrowIfDisposed( );
             path.ValidateNotNullOrWhiteSpace( nameof( path ) );
 
             return LLVMPrintModuleToFile( ModuleHandle, path, out errMsg ).Succeeded;
@@ -435,7 +380,7 @@ namespace Llvm.NET
         /// </remarks>
         public string WriteToString( )
         {
-            ValidateHandle( );
+            ThrowIfDisposed( );
             return LLVMPrintModuleToString( ModuleHandle );
         }
 
@@ -443,7 +388,7 @@ namespace Llvm.NET
         /// <returns><see cref="MemoryBuffer"/> containing the bit code module</returns>
         public MemoryBuffer WriteToBuffer( )
         {
-            ValidateHandle( );
+            ThrowIfDisposed( );
             return new MemoryBuffer( LLVMWriteBitcodeToMemoryBuffer( ModuleHandle ) );
         }
 
@@ -453,7 +398,7 @@ namespace Llvm.NET
         /// <returns><see cref="GlobalAlias"/> for the alias</returns>
         public GlobalAlias AddAlias( Value aliasee, string aliasName )
         {
-            ValidateHandle( );
+            ThrowIfDisposed( );
             aliasee.ValidateNotNull( nameof( aliasee ) );
             aliasName.ValidateNotNullOrWhiteSpace( nameof( aliasName ) );
 
@@ -466,7 +411,7 @@ namespace Llvm.NET
         /// <returns>Alias matching <paramref name="name"/> or null if no such alias exists</returns>
         public GlobalAlias GetAlias( string name )
         {
-            ValidateHandle( );
+            ThrowIfDisposed( );
             name.ValidateNotNullOrWhiteSpace( nameof( name ) );
 
             var handle = LLVMGetGlobalAlias( ModuleHandle, name );
@@ -483,7 +428,7 @@ namespace Llvm.NET
         /// </openissues>
         public GlobalVariable AddGlobalInAddressSpace( uint addressSpace, ITypeRef typeRef, string name )
         {
-            ValidateHandle( );
+            ThrowIfDisposed( );
             typeRef.ValidateNotNull( nameof( typeRef ) );
             name.ValidateNotNullOrWhiteSpace( nameof( name ) );
 
@@ -500,7 +445,7 @@ namespace Llvm.NET
         /// <returns>New global variable</returns>
         public GlobalVariable AddGlobalInAddressSpace( uint addressSpace, ITypeRef typeRef, bool isConst, Linkage linkage, Constant constVal )
         {
-            ValidateHandle( );
+            ThrowIfDisposed( );
             typeRef.ValidateNotNull( nameof( typeRef ) );
             linkage.ValidateDefined( nameof( linkage ) );
             constVal.ValidateNotNull( nameof( constVal ) );
@@ -518,7 +463,7 @@ namespace Llvm.NET
         /// <returns>New global variable</returns>
         public GlobalVariable AddGlobalInAddressSpace( uint addressSpace, ITypeRef typeRef, bool isConst, Linkage linkage, Constant constVal, string name )
         {
-            ValidateHandle( );
+            ThrowIfDisposed( );
             typeRef.ValidateNotNull( nameof( typeRef ) );
             linkage.ValidateDefined( nameof( linkage ) );
             constVal.ValidateNotNull( nameof( constVal ) );
@@ -540,7 +485,7 @@ namespace Llvm.NET
         /// </openissues>
         public GlobalVariable AddGlobal( ITypeRef typeRef, string name )
         {
-            ValidateHandle( );
+            ThrowIfDisposed( );
             typeRef.ValidateNotNull( nameof( typeRef ) );
             name.ValidateNotNull( nameof( name ) );
 
@@ -556,7 +501,7 @@ namespace Llvm.NET
         /// <returns>New global variable</returns>
         public GlobalVariable AddGlobal( ITypeRef typeRef, bool isConst, Linkage linkage, Constant constVal )
         {
-            ValidateHandle( );
+            ThrowIfDisposed( );
             typeRef.ValidateNotNull( nameof( typeRef ) );
             linkage.ValidateDefined( nameof( linkage ) );
             constVal.ValidateNotNull( nameof( constVal ) );
@@ -573,7 +518,7 @@ namespace Llvm.NET
         /// <returns>New global variable</returns>
         public GlobalVariable AddGlobal( ITypeRef typeRef, bool isConst, Linkage linkage, Constant constVal, string name )
         {
-            ValidateHandle( );
+            ThrowIfDisposed( );
             typeRef.ValidateNotNull( nameof( typeRef ) );
             linkage.ValidateDefined( nameof( linkage ) );
             constVal.ValidateNotNull( nameof( constVal ) );
@@ -591,7 +536,7 @@ namespace Llvm.NET
         /// <returns>The type or null if no type with the specified name exists in the module</returns>
         public ITypeRef GetTypeByName( string name )
         {
-            ValidateHandle( );
+            ThrowIfDisposed( );
             name.ValidateNotNullOrWhiteSpace( nameof( name ) );
 
             var hType = LLVMGetTypeByName( ModuleHandle, name );
@@ -603,7 +548,7 @@ namespace Llvm.NET
         /// <returns><see cref="GlobalVariable"/> or <see langword="null"/> if not found</returns>
         public GlobalVariable GetNamedGlobal( string name )
         {
-            ValidateHandle( );
+            ThrowIfDisposed( );
             name.ValidateNotNullOrWhiteSpace( nameof( name ) );
 
             var hGlobal = LLVMGetNamedGlobal( ModuleHandle, name );
@@ -621,7 +566,7 @@ namespace Llvm.NET
         /// <param name="value">Value of the flag</param>
         public void AddModuleFlag( ModuleFlagBehavior behavior, string name, UInt32 value )
         {
-            ValidateHandle( );
+            ThrowIfDisposed( );
             behavior.ValidateDefined( nameof( behavior ) );
             name.ValidateNotNullOrWhiteSpace( nameof( name ) );
 
@@ -635,7 +580,7 @@ namespace Llvm.NET
         /// <param name="value">Value of the flag</param>
         public void AddModuleFlag( ModuleFlagBehavior behavior, string name, LlvmMetadata value )
         {
-            ValidateHandle( );
+            ThrowIfDisposed( );
             behavior.ValidateDefined( nameof( behavior ) );
             value.ValidateNotNull( nameof( value ) );
             name.ValidateNotNullOrWhiteSpace( nameof( name ) );
@@ -649,7 +594,7 @@ namespace Llvm.NET
         /// <param name="value">operand value</param>
         public void AddNamedMetadataOperand( string name, LlvmMetadata value )
         {
-            ValidateHandle( );
+            ThrowIfDisposed( );
             value.ValidateNotNull( nameof( value ) );
             name.ValidateNotNullOrWhiteSpace( nameof( name ) );
 
@@ -660,7 +605,7 @@ namespace Llvm.NET
         /// <param name="version">version information to place in the llvm.ident metadata</param>
         public void AddVersionIdentMetadata( string version )
         {
-            ValidateHandle( );
+            ThrowIfDisposed( );
             version.ValidateNotNullOrWhiteSpace( nameof( version ) );
 
             var stringNode = CreateMDNode( version );
@@ -672,7 +617,7 @@ namespace Llvm.NET
         /// <returns>New node with the string as the first element of the <see cref="MDNode.Operands"/> property (as an MDString)</returns>
         public MDNode CreateMDNode( string value )
         {
-            ValidateHandle( );
+            ThrowIfDisposed( );
             var elements = new LLVMMetadataRef[ ] { LLVMMDString2( Context.ContextHandle, value, ( uint )( value?.Length ?? 0 ) ) };
             var hNode = LLVMMDNode2( Context.ContextHandle, out elements[ 0 ], ( uint )elements.Length );
             return MDNode.FromHandle<MDNode>( hNode );
@@ -708,7 +653,7 @@ namespace Llvm.NET
                                       , [CanBeNull] MDNode decl = null
                                       )
         {
-            ValidateHandle( );
+            ThrowIfDisposed( );
             scope.ValidateNotNull( nameof( scope ) );
             name.ValidateNotNullOrWhiteSpace( nameof( name ) );
             signature.ValidateNotNull( nameof( signature ) );
@@ -754,7 +699,7 @@ namespace Llvm.NET
                                       , IEnumerable<IDebugType<ITypeRef, DIType>> argumentTypes
                                       )
         {
-            ValidateHandle( );
+            ThrowIfDisposed( );
             IFunctionType signature = Context.CreateFunctionType( DIBuilder, isVarArg, returnType, argumentTypes );
             return AddFunction( name, signature );
         }
@@ -781,7 +726,7 @@ namespace Llvm.NET
         /// <returns>Cloned module</returns>
         public BitcodeModule Clone( )
         {
-            ValidateHandle( );
+            ThrowIfDisposed( );
             return new BitcodeModule( LLVMCloneModule( ModuleHandle ) );
         }
 
@@ -790,7 +735,7 @@ namespace Llvm.NET
         /// <returns>Cloned copy of the module</returns>
         public BitcodeModule Clone( Context targetContext )
         {
-            ValidateHandle( );
+            ThrowIfDisposed( );
             targetContext.ValidateNotNull( nameof( targetContext ) );
 
             if( targetContext == Context )
@@ -854,16 +799,6 @@ namespace Llvm.NET
             return context.GetModuleFor( modRef );
         }
 
-        internal BitcodeModule( LLVMModuleRef handle )
-        {
-            handle.ValidateNotDefault( nameof( handle ) );
-
-            ModuleHandle = handle;
-            LazyDiBuilder = new Lazy<DebugInfoBuilder>( ( ) => new DebugInfoBuilder( this ) );
-            Context.AddModule( this );
-            Comdats = new ComdatCollection( this );
-        }
-
         internal LLVMModuleRef ModuleHandle { get; private set; }
 
         internal LLVMSharedModuleRef SharedModuleRef { get; private set; }
@@ -879,16 +814,75 @@ namespace Llvm.NET
         internal static BitcodeModule FromHandle( LLVMModuleRef nativeHandle )
         {
             nativeHandle.ValidateNotDefault( nameof( nativeHandle ) );
-            var context = nativeHandle.Context;
+            var contextRef = LLVMGetModuleContext( nativeHandle );
+            if( !ContextCache.TryGetValue( contextRef, out Context context ) )
+            {
+                context = new Context( contextRef );
+            }
+
             return context.GetModuleFor( nativeHandle );
         }
 
-        private void ValidateHandle( )
+        internal class InterningFactory
+            : HandleInterningMap<LLVMModuleRef, BitcodeModule>
+            , IBitcodeModuleFactory
         {
-            if( IsDisposed )
+            public BitcodeModule CreateBitcodeModule( ) => CreateBitcodeModule( string.Empty );
+
+            public BitcodeModule CreateBitcodeModule( string moduleId )
             {
-                throw new ObjectDisposedException( "Module was explicitly destroyed or ownership transfered to native library" );
+                // empty string is OK.
+                moduleId.ValidateNotNull( nameof( moduleId ) );
+
+                var hContext = LLVMModuleCreateWithNameInContext( moduleId, Context.ContextHandle );
+                return GetOrCreateItem( hContext );
             }
+
+            public BitcodeModule CreateBitcodeModule( string moduleId
+                                                    , SourceLanguage language
+                                                    , string srcFilePath
+                                                    , string producer
+                                                    , bool optimized = false
+                                                    , string compilationFlags = ""
+                                                    , uint runtimeVersion = 0
+                                                    )
+            {
+                var retVal = CreateBitcodeModule( moduleId );
+                retVal.DICompileUnit = retVal.DIBuilder.CreateCompileUnit( language
+                                                                         , srcFilePath
+                                                                         , producer
+                                                                         , optimized
+                                                                         , compilationFlags
+                                                                         , runtimeVersion
+                                                                         );
+                retVal.SourceFileName = Path.GetFileName( srcFilePath );
+                return retVal;
+            }
+
+            internal InterningFactory( Context context )
+                : base( context )
+            {
+            }
+
+            private protected override BitcodeModule ItemFactory( LLVMModuleRef handle )
+            {
+                var contextRef = LLVMGetModuleContext( handle );
+                if( Context.ContextHandle != contextRef )
+                {
+                    throw new ArgumentException( "Context mismatch - cannot cache modules from multiple contexts" );
+                }
+
+                return new BitcodeModule( handle );
+            }
+        }
+
+        private BitcodeModule( LLVMModuleRef handle )
+        {
+            handle.ValidateNotDefault( nameof( handle ) );
+
+            ModuleHandle = handle;
+            LazyDiBuilder = new Lazy<DebugInfoBuilder>( ( ) => new DebugInfoBuilder( this ) );
+            Comdats = new ComdatCollection( this );
         }
 
         private void Dispose( bool disposing )
@@ -922,18 +916,36 @@ namespace Llvm.NET
             }
         }
 
-        [DllImport( LibraryPath, CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl )]
-        private static extern LLVMSharedModuleRef LLVMOrcMakeSharedModule( LLVMModuleRef Mod );
+        private void ThrowIfDisposed( )
+        {
+            if( IsDisposed )
+            {
+                throw new ObjectDisposedException( "Module was explicitly destroyed or ownership transfered to native library" );
+            }
+        }
 
         // TODO: Leverage a generic WriteOnce<T> of some sort to enforce intentions in code rather than "by convention"
         [SuppressMessage( "StyleCop.CSharp.NamingRules"
                         , "SA1310:Field names must not contain underscore"
-                        , Justification = "Trailing _ indicates it must not be written to directly even directly"
+                        , Justification = "Trailing _ indicates it must not be written to directly even internally"
                         )
         ]
         private DataLayout Layout_;
 
         private readonly ExtensiblePropertyContainer PropertyBag = new ExtensiblePropertyContainer( );
         private readonly Lazy<DebugInfoBuilder> LazyDiBuilder;
+
+        private static Context GetContextFor( LLVMModuleRef handle )
+        {
+            if( handle == default )
+            {
+                return null;
+            }
+
+            return ContextCache.GetContextFor( LLVMGetModuleContext( handle ) );
+        }
+
+        [DllImport( LibraryPath, CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl )]
+        private static extern LLVMSharedModuleRef LLVMOrcMakeSharedModule( LLVMModuleRef Mod );
     }
 }

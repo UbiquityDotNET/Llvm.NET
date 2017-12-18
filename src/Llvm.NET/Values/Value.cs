@@ -3,6 +3,7 @@
 // </copyright>
 
 using System;
+using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using Llvm.NET.Native;
 using Llvm.NET.Types;
@@ -130,255 +131,271 @@ namespace Llvm.NET.Values
         internal static T FromHandle<T>( LLVMValueRef valueRef )
             where T : Value
         {
-            var context = valueRef.Context;
+            var context = GetContextFor( valueRef );
             return ( T )context.GetValueFor( valueRef );
         }
 
-        internal static IHandleInterning<LLVMValueRef, Value> CreateInterningFactory()
+        internal class InterningFactory
+            : HandleInterningMap<LLVMValueRef, Value>
         {
-            return new HandleInterningMap<LLVMValueRef, Value>( ( h, c ) => StaticFactory( h ) );
-        }
-
-        /// <summary>Central factory for creating instances of <see cref="Value"/> and all derived types</summary>
-        /// <param name="h">LibLLVM handle for the value</param>
-        /// <returns>New Value or derived type instance that wraps the underlying LibLLVM handle</returns>
-        /// <remarks>
-        /// This method will determine the correct type for the handle and construct an instance of that
-        /// type wrapping the handle.
-        /// </remarks>
-        [SuppressMessage( "Microsoft.Maintainability", "CA1506:AvoidExcessiveClassCoupling", Justification = "Factory that maps wrappers with underlying types" )]
-        [SuppressMessage( "Microsoft.Maintainability", "CA1502:AvoidExcessiveComplexity", Justification = "Factory that maps wrappers with underlying types" )]
-        private static Value StaticFactory( LLVMValueRef h )
-        {
-            var kind = LLVMGetValueIdAsKind( h );
-            switch( kind )
+            internal InterningFactory( Context context )
+                : base( context )
             {
-            case ValueKind.Argument:
-                return new Argument( h );
-
-            case ValueKind.BasicBlock:
-                return new BasicBlock( h );
-
-            case ValueKind.Function:
-                return new Function( h );
-
-            case ValueKind.GlobalAlias:
-                return new GlobalAlias( h );
-
-            case ValueKind.GlobalVariable:
-                return new GlobalVariable( h );
-
-            case ValueKind.UndefValue:
-                return new UndefValue( h );
-
-            case ValueKind.BlockAddress:
-                return new BlockAddress( h );
-
-            case ValueKind.ConstantExpr:
-                return new ConstantExpression( h );
-
-            case ValueKind.ConstantAggregateZero:
-                return new ConstantAggregateZero( h );
-
-            case ValueKind.ConstantDataArray:
-                return new ConstantDataArray( h );
-
-            case ValueKind.ConstantDataVector:
-                return new ConstantDataVector( h );
-
-            case ValueKind.ConstantInt:
-                return new ConstantInt( h );
-
-            case ValueKind.ConstantFP:
-                return new ConstantFP( h );
-
-            case ValueKind.ConstantArray:
-                return new ConstantArray( h );
-
-            case ValueKind.ConstantStruct:
-                return new ConstantStruct( h );
-
-            case ValueKind.ConstantVector:
-                return new ConstantVector( h );
-
-            case ValueKind.ConstantPointerNull:
-                return new ConstantPointerNull( h );
-
-            case ValueKind.MetadataAsValue:
-                return new MetadataAsValue( h );
-
-            case ValueKind.InlineAsm:
-                return new InlineAsm( h );
-
-            case ValueKind.Instruction:
-                throw new ArgumentException( "Value with kind==Instruction is not valid" );
-
-            case ValueKind.Return:
-                return new Instructions.ReturnInstruction( h );
-
-            case ValueKind.Branch:
-                return new Instructions.Branch( h );
-
-            case ValueKind.Switch:
-                return new Instructions.Switch( h );
-
-            case ValueKind.IndirectBranch:
-                return new Instructions.IndirectBranch( h );
-
-            case ValueKind.Invoke:
-                return new Instructions.Invoke( h );
-
-            case ValueKind.Unreachable:
-                return new Instructions.Unreachable( h );
-
-            case ValueKind.Add:
-            case ValueKind.FAdd:
-            case ValueKind.Sub:
-            case ValueKind.FSub:
-            case ValueKind.Mul:
-            case ValueKind.FMul:
-            case ValueKind.UDiv:
-            case ValueKind.SDiv:
-            case ValueKind.FDiv:
-            case ValueKind.URem:
-            case ValueKind.SRem:
-            case ValueKind.FRem:
-            case ValueKind.Shl:
-            case ValueKind.LShr:
-            case ValueKind.AShr:
-            case ValueKind.And:
-            case ValueKind.Or:
-            case ValueKind.Xor:
-                return new Instructions.BinaryOperator( h );
-
-            case ValueKind.Alloca:
-                return new Instructions.Alloca( h );
-
-            case ValueKind.Load:
-                return new Instructions.Load( h );
-
-            case ValueKind.Store:
-                return new Instructions.Store( h );
-
-            case ValueKind.GetElementPtr:
-                return new Instructions.GetElementPtr( h );
-
-            case ValueKind.Trunc:
-                return new Instructions.Trunc( h );
-
-            case ValueKind.ZeroExtend:
-                return new Instructions.ZeroExtend( h );
-
-            case ValueKind.SignExtend:
-                return new Instructions.SignExtend( h );
-
-            case ValueKind.FPToUI:
-                return new Instructions.FPToUI( h );
-
-            case ValueKind.FPToSI:
-                return new Instructions.FPToSI( h );
-
-            case ValueKind.UIToFP:
-                return new Instructions.UIToFP( h );
-
-            case ValueKind.SIToFP:
-                return new Instructions.SIToFP( h );
-
-            case ValueKind.FPTrunc:
-                return new Instructions.FPTrunc( h );
-
-            case ValueKind.FPExt:
-                return new Instructions.FPExt( h );
-
-            case ValueKind.PtrToInt:
-                return new Instructions.PointerToInt( h );
-
-            case ValueKind.IntToPtr:
-                return new Instructions.IntToPointer( h );
-
-            case ValueKind.BitCast:
-                return new Instructions.BitCast( h );
-
-            case ValueKind.AddrSpaceCast:
-                return new Instructions.AddressSpaceCast( h );
-
-            case ValueKind.ICmp:
-                return new Instructions.IntCmp( h );
-
-            case ValueKind.FCmp:
-                return new Instructions.FCmp( h );
-
-            case ValueKind.Phi:
-                return new Instructions.PhiNode( h );
-
-            case ValueKind.Call:
-                return new Instructions.CallInstruction( h );
-
-            case ValueKind.Select:
-                return new Instructions.Select( h );
-
-            case ValueKind.UserOp1:
-                return new Instructions.UserOp1( h );
-
-            case ValueKind.UserOp2:
-                return new Instructions.UserOp2( h );
-
-            case ValueKind.VaArg:
-                return new Instructions.VaArg( h );
-
-            case ValueKind.ExtractElement:
-                return new Instructions.ExtractElement( h );
-
-            case ValueKind.InsertElement:
-                return new Instructions.InsertElement( h );
-
-            case ValueKind.ShuffleVector:
-                return new Instructions.ShuffleVector( h );
-
-            case ValueKind.ExtractValue:
-                return new Instructions.ExtractValue( h );
-
-            case ValueKind.InsertValue:
-                return new Instructions.InsertValue( h );
-
-            case ValueKind.Fence:
-                return new Instructions.Fence( h );
-
-            case ValueKind.AtomicCmpXchg:
-                return new Instructions.AtomicCmpXchg( h );
-
-            case ValueKind.AtomicRMW:
-                return new Instructions.AtomicRMW( h );
-
-            case ValueKind.Resume:
-                return new Instructions.ResumeInstruction( h );
-
-            case ValueKind.LandingPad:
-                return new Instructions.LandingPad( h );
-
-            case ValueKind.CleanUpReturn:
-                return new Instructions.CleanupReturn( h );
-
-            case ValueKind.CatchReturn:
-                return new Instructions.CatchReturn( h );
-
-            case ValueKind.CatchPad:
-                return new Instructions.CatchPad( h );
-
-            case ValueKind.CleanupPad:
-                return new Instructions.CleanupPad( h );
-
-            case ValueKind.CatchSwitch:
-                return new Instructions.CatchSwitch( h );
-
-            default:
-                if( kind >= ValueKind.ConstantFirstVal && kind <= ValueKind.ConstantLastVal )
+            }
+
+            [SuppressMessage( "Microsoft.Maintainability", "CA1506:AvoidExcessiveClassCoupling", Justification = "Factory that maps wrappers with underlying types" )]
+            [SuppressMessage( "Microsoft.Maintainability", "CA1502:AvoidExcessiveComplexity", Justification = "Factory that maps wrappers with underlying types" )]
+            private protected override Value ItemFactory( LLVMValueRef handle )
+            {
+                var handleContext = GetContextFor( handle );
+                if( handleContext != Context )
                 {
-                    return new Constant( h );
+                    throw new ArgumentException( "Context for the handle provided doesn't match the context for this cache", nameof( handle ) );
                 }
 
-                return kind > ValueKind.Instruction ? new Instructions.Instruction( h ) : new Value( h );
+                var kind = LLVMGetValueIdAsKind( handle );
+                switch( kind )
+                {
+                case ValueKind.Argument:
+                    return new Argument( handle );
+
+                case ValueKind.BasicBlock:
+                    return new BasicBlock( handle );
+
+                case ValueKind.Function:
+                    return new Function( handle );
+
+                case ValueKind.GlobalAlias:
+                    return new GlobalAlias( handle );
+
+                case ValueKind.GlobalVariable:
+                    return new GlobalVariable( handle );
+
+                case ValueKind.UndefValue:
+                    return new UndefValue( handle );
+
+                case ValueKind.BlockAddress:
+                    return new BlockAddress( handle );
+
+                case ValueKind.ConstantExpr:
+                    return new ConstantExpression( handle );
+
+                case ValueKind.ConstantAggregateZero:
+                    return new ConstantAggregateZero( handle );
+
+                case ValueKind.ConstantDataArray:
+                    return new ConstantDataArray( handle );
+
+                case ValueKind.ConstantDataVector:
+                    return new ConstantDataVector( handle );
+
+                case ValueKind.ConstantInt:
+                    return new ConstantInt( handle );
+
+                case ValueKind.ConstantFP:
+                    return new ConstantFP( handle );
+
+                case ValueKind.ConstantArray:
+                    return new ConstantArray( handle );
+
+                case ValueKind.ConstantStruct:
+                    return new ConstantStruct( handle );
+
+                case ValueKind.ConstantVector:
+                    return new ConstantVector( handle );
+
+                case ValueKind.ConstantPointerNull:
+                    return new ConstantPointerNull( handle );
+
+                case ValueKind.MetadataAsValue:
+                    return new MetadataAsValue( handle );
+
+                case ValueKind.InlineAsm:
+                    return new InlineAsm( handle );
+
+                case ValueKind.Instruction:
+                    throw new ArgumentException( "Value with kind==Instruction is not valid" );
+
+                case ValueKind.Return:
+                    return new Instructions.ReturnInstruction( handle );
+
+                case ValueKind.Branch:
+                    return new Instructions.Branch( handle );
+
+                case ValueKind.Switch:
+                    return new Instructions.Switch( handle );
+
+                case ValueKind.IndirectBranch:
+                    return new Instructions.IndirectBranch( handle );
+
+                case ValueKind.Invoke:
+                    return new Instructions.Invoke( handle );
+
+                case ValueKind.Unreachable:
+                    return new Instructions.Unreachable( handle );
+
+                case ValueKind.Add:
+                case ValueKind.FAdd:
+                case ValueKind.Sub:
+                case ValueKind.FSub:
+                case ValueKind.Mul:
+                case ValueKind.FMul:
+                case ValueKind.UDiv:
+                case ValueKind.SDiv:
+                case ValueKind.FDiv:
+                case ValueKind.URem:
+                case ValueKind.SRem:
+                case ValueKind.FRem:
+                case ValueKind.Shl:
+                case ValueKind.LShr:
+                case ValueKind.AShr:
+                case ValueKind.And:
+                case ValueKind.Or:
+                case ValueKind.Xor:
+                    return new Instructions.BinaryOperator( handle );
+
+                case ValueKind.Alloca:
+                    return new Instructions.Alloca( handle );
+
+                case ValueKind.Load:
+                    return new Instructions.Load( handle );
+
+                case ValueKind.Store:
+                    return new Instructions.Store( handle );
+
+                case ValueKind.GetElementPtr:
+                    return new Instructions.GetElementPtr( handle );
+
+                case ValueKind.Trunc:
+                    return new Instructions.Trunc( handle );
+
+                case ValueKind.ZeroExtend:
+                    return new Instructions.ZeroExtend( handle );
+
+                case ValueKind.SignExtend:
+                    return new Instructions.SignExtend( handle );
+
+                case ValueKind.FPToUI:
+                    return new Instructions.FPToUI( handle );
+
+                case ValueKind.FPToSI:
+                    return new Instructions.FPToSI( handle );
+
+                case ValueKind.UIToFP:
+                    return new Instructions.UIToFP( handle );
+
+                case ValueKind.SIToFP:
+                    return new Instructions.SIToFP( handle );
+
+                case ValueKind.FPTrunc:
+                    return new Instructions.FPTrunc( handle );
+
+                case ValueKind.FPExt:
+                    return new Instructions.FPExt( handle );
+
+                case ValueKind.PtrToInt:
+                    return new Instructions.PointerToInt( handle );
+
+                case ValueKind.IntToPtr:
+                    return new Instructions.IntToPointer( handle );
+
+                case ValueKind.BitCast:
+                    return new Instructions.BitCast( handle );
+
+                case ValueKind.AddrSpaceCast:
+                    return new Instructions.AddressSpaceCast( handle );
+
+                case ValueKind.ICmp:
+                    return new Instructions.IntCmp( handle );
+
+                case ValueKind.FCmp:
+                    return new Instructions.FCmp( handle );
+
+                case ValueKind.Phi:
+                    return new Instructions.PhiNode( handle );
+
+                case ValueKind.Call:
+                    return new Instructions.CallInstruction( handle );
+
+                case ValueKind.Select:
+                    return new Instructions.Select( handle );
+
+                case ValueKind.UserOp1:
+                    return new Instructions.UserOp1( handle );
+
+                case ValueKind.UserOp2:
+                    return new Instructions.UserOp2( handle );
+
+                case ValueKind.VaArg:
+                    return new Instructions.VaArg( handle );
+
+                case ValueKind.ExtractElement:
+                    return new Instructions.ExtractElement( handle );
+
+                case ValueKind.InsertElement:
+                    return new Instructions.InsertElement( handle );
+
+                case ValueKind.ShuffleVector:
+                    return new Instructions.ShuffleVector( handle );
+
+                case ValueKind.ExtractValue:
+                    return new Instructions.ExtractValue( handle );
+
+                case ValueKind.InsertValue:
+                    return new Instructions.InsertValue( handle );
+
+                case ValueKind.Fence:
+                    return new Instructions.Fence( handle );
+
+                case ValueKind.AtomicCmpXchg:
+                    return new Instructions.AtomicCmpXchg( handle );
+
+                case ValueKind.AtomicRMW:
+                    return new Instructions.AtomicRMW( handle );
+
+                case ValueKind.Resume:
+                    return new Instructions.ResumeInstruction( handle );
+
+                case ValueKind.LandingPad:
+                    return new Instructions.LandingPad( handle );
+
+                case ValueKind.CleanUpReturn:
+                    return new Instructions.CleanupReturn( handle );
+
+                case ValueKind.CatchReturn:
+                    return new Instructions.CatchReturn( handle );
+
+                case ValueKind.CatchPad:
+                    return new Instructions.CatchPad( handle );
+
+                case ValueKind.CleanupPad:
+                    return new Instructions.CleanupPad( handle );
+
+                case ValueKind.CatchSwitch:
+                    return new Instructions.CatchSwitch( handle );
+
+                default:
+                    if( kind >= ValueKind.ConstantFirstVal && kind <= ValueKind.ConstantLastVal )
+                    {
+                        return new Constant( handle );
+                    }
+
+                    return kind > ValueKind.Instruction ? new Instructions.Instruction( handle ) : new Value( handle );
+                }
             }
+        }
+
+        private static Context GetContextFor( LLVMValueRef valueRef )
+        {
+            if( valueRef == default )
+            {
+                return null;
+            }
+
+            var hType = LLVMTypeOf( valueRef );
+            Debug.Assert( hType != default, "Should not get a null pointer from LLVM" );
+            var type = TypeRef.FromHandle( hType );
+            return type.Context;
         }
 
         private readonly ExtensiblePropertyContainer ExtensibleProperties = new ExtensiblePropertyContainer( );

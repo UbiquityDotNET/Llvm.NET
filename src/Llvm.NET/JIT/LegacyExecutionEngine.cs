@@ -189,11 +189,23 @@ namespace Llvm.NET.JIT
             EngineHandle = handle;
         }
 
-        internal static IHandleInterning<LLVMExecutionEngineRef, LegacyExecutionEngine> CreateInterningFactory( )
+        internal class InterningFactory
+            : HandleInterningMap<LLVMExecutionEngineRef, LegacyExecutionEngine>
         {
-            return new HandleInterningMap<LLVMExecutionEngineRef, LegacyExecutionEngine>( ( h, c ) => new LegacyExecutionEngine( h )
-                                                                                        , ( ee ) => LLVMDisposeExecutionEngine( ee.EngineHandle )
-                                                                                        );
+            internal InterningFactory( Context context )
+                : base( context )
+            {
+            }
+
+            private protected override LegacyExecutionEngine ItemFactory( LLVMExecutionEngineRef handle )
+            {
+                return new LegacyExecutionEngine( handle );
+            }
+
+            private protected override void DisposeItem( LegacyExecutionEngine item )
+            {
+                LLVMDisposeExecutionEngine( item.EngineHandle );
+            }
         }
 
         private void CreateEngine( BitcodeModule module )

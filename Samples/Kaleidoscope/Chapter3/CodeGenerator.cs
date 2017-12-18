@@ -23,7 +23,7 @@ namespace Kaleidoscope
         public CodeGenerator( LanguageLevel level )
         {
             Context = new Context( );
-            Module = new BitcodeModule( Context, "Kaleidoscope" );
+            Module = Context.CreateBitcodeModule( "Kaleidoscope" );
             InstructionBuilder = new InstructionBuilder( Context );
             NamedValues = new Dictionary<string, Value>( );
             ParserStack = new ReplParserStack( level );

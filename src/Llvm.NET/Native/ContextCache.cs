@@ -28,6 +28,23 @@ namespace Llvm.NET.Native
             return context;
         }
 
+        internal static Context GetContextFor( LLVMContextRef contextRef )
+        {
+            if( contextRef == default )
+            {
+                return null;
+            }
+
+            if( TryGetValue( contextRef, out Context retVal ) )
+            {
+                return retVal;
+            }
+
+            // Context constructor will add itself to this cache
+            // ad remove itself on Dispose/finalize
+            return new Context( contextRef );
+        }
+
         private static IDictionary<LLVMContextRef, Context> CreateInstance()
         {
             return new ConcurrentDictionary<LLVMContextRef, Context>( EqualityComparer<LLVMContextRef>.Default );

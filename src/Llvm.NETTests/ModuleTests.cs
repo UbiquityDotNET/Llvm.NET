@@ -36,7 +36,7 @@ namespace Llvm.NET.Tests
         public void DefaultConstructorTest( )
         {
             using( var context = new Context( ) )
-            using( var module = new BitcodeModule( context ) )
+            using( var module = context.CreateBitcodeModule( ) )
             {
                 Assert.AreSame( string.Empty, module.Name );
                 Assert.AreSame( string.Empty, module.SourceFileName );
@@ -64,7 +64,7 @@ namespace Llvm.NET.Tests
         public void ConstructorTestWithName( )
         {
             using( var context = new Context( ) )
-            using( var module = new BitcodeModule( context, TestModuleName ) )
+            using( var module = context.CreateBitcodeModule( TestModuleName ) )
             {
                 Assert.AreEqual( TestModuleName, module.Name );
                 Assert.AreEqual( TestModuleName, module.SourceFileName );
@@ -92,7 +92,7 @@ namespace Llvm.NET.Tests
         public void ConstructorTestWithNameAndCompileUnit( )
         {
             using( var ctx = new Context( ) )
-            using( var module = new BitcodeModule( ctx, TestModuleName, DebugInfo.SourceLanguage.C99, "test.c", "unitTest", false, string.Empty, 0 ) )
+            using( var module = ctx.CreateBitcodeModule( TestModuleName, DebugInfo.SourceLanguage.C99, "test.c", "unitTest", false, string.Empty, 0 ) )
             {
                 Assert.AreEqual( TestModuleName, module.Name );
                 Assert.AreEqual( "test.c", module.SourceFileName );
@@ -118,7 +118,7 @@ namespace Llvm.NET.Tests
         public void DisposeTest( )
         {
             using( var context = new Context( ) )
-            using( var module = new BitcodeModule( context, TestModuleName ) )
+            using( var module = context.CreateBitcodeModule( TestModuleName ) )
             {
             }
         }
@@ -128,8 +128,8 @@ namespace Llvm.NET.Tests
         {
             // verifies linked modules can be disposed
             using( var ctx = new Context( ) )
-            using( var module = new BitcodeModule( ctx, TestModuleName ) )
-            using( var otherModule = new BitcodeModule( ctx, "Other" ) )
+            using( var module = ctx.CreateBitcodeModule( TestModuleName ) )
+            using( var otherModule = ctx.CreateBitcodeModule( "Other" ) )
             {
                 module.Link( otherModule );
                 Assert.IsTrue( otherModule.IsDisposed );
@@ -141,7 +141,7 @@ namespace Llvm.NET.Tests
         public void MultiContextLinkTest( )
         {
             using( var context = new Context( ) )
-            using( var mergedMod = new BitcodeModule( context ) )
+            using( var mergedMod = context.CreateBitcodeModule( ) )
             using( var contextM1 = new Context( ))
             using( var m1 = CreateSimpleModule( contextM1, "module1" ) )
             using( var contextM2 = new Context( ) )
@@ -173,7 +173,7 @@ namespace Llvm.NET.Tests
         public void MultiContextCloneLinkTest( )
         {
             using( var context = new Context( ) )
-            using( var mergedMod = new BitcodeModule( context ) )
+            using( var mergedMod = context.CreateBitcodeModule( ) )
             using( var contextM1 = new Context( ) )
             using( var m1 = CreateSimpleModule( contextM1, "module1" ) )
             using( var contextM2 = new Context( ) )
@@ -199,7 +199,7 @@ namespace Llvm.NET.Tests
         public void VerifyValidModuleTest( )
         {
             using( var context = new Context( ) )
-            using( var module = new BitcodeModule( context, TestModuleName ) )
+            using( var module = context.CreateBitcodeModule( TestModuleName ) )
             {
                 Function testFunc = CreateSimpleVoidNopTestFunction( module, "foo" );
 
@@ -215,7 +215,7 @@ namespace Llvm.NET.Tests
         public void VerifyInvalidModuleTest( )
         {
             using( var context = new Context( ) )
-            using( var module = new BitcodeModule( context, TestModuleName ) )
+            using( var module = context.CreateBitcodeModule( TestModuleName ) )
             {
                 Function testFunc = CreateInvalidFunction( module, "badfunc" );
 
@@ -235,7 +235,7 @@ namespace Llvm.NET.Tests
         public void AddFunctionGetFunctionTest( )
         {
             using( var context = new Context( ) )
-            using( var module = new BitcodeModule( context, TestModuleName ) )
+            using( var module = context.CreateBitcodeModule( TestModuleName ) )
             {
                 Function testFunc = CreateSimpleVoidNopTestFunction( module, "foo" );
 
@@ -257,7 +257,7 @@ namespace Llvm.NET.Tests
             try
             {
                 using( var context = new Context( ) )
-                using( var module = new BitcodeModule( context, TestModuleName ) )
+                using( var module = context.CreateBitcodeModule( TestModuleName ) )
                 {
                     Function testFunc = CreateSimpleVoidNopTestFunction( module, "foo" );
                     module.WriteToFile( path );
@@ -286,7 +286,7 @@ namespace Llvm.NET.Tests
         public void AsStringTest( )
         {
             using( var context = new Context( ) )
-            using( var module = new BitcodeModule( context, TestModuleName ) )
+            using( var module = context.CreateBitcodeModule( TestModuleName ) )
             {
                 Function testFunc = CreateSimpleVoidNopTestFunction( module, "foo" );
 
@@ -303,7 +303,7 @@ namespace Llvm.NET.Tests
         public void AddAliasGetAliasTest( )
         {
             using( var context = new Context( ) )
-            using( var module = new BitcodeModule( context, TestModuleName ) )
+            using( var module = context.CreateBitcodeModule( TestModuleName ) )
             {
                 Function testFunc = CreateSimpleVoidNopTestFunction( module, "_test" );
 
@@ -328,7 +328,7 @@ namespace Llvm.NET.Tests
         public void AddGlobalTest( )
         {
             using( var context = new Context( ) )
-            using( var module = new BitcodeModule( context, TestModuleName ) )
+            using( var module = context.CreateBitcodeModule( TestModuleName ) )
             {
                 module.AddGlobal( module.Context.Int32Type, "TestInt" );
                 GlobalVariable globalVar = module.GetNamedGlobal( "TestInt" );
@@ -341,7 +341,7 @@ namespace Llvm.NET.Tests
         public void AddGlobalTest1( )
         {
             using( var context = new Context( ) )
-            using( var module = new BitcodeModule( context, TestModuleName ) )
+            using( var module = context.CreateBitcodeModule( TestModuleName ) )
             {
                 // unnamed global
                 module.AddGlobal( module.Context.Int32Type, true, Linkage.WeakODR, module.Context.CreateConstant( 0x12345678 ) );
@@ -362,7 +362,7 @@ namespace Llvm.NET.Tests
         public void AddGlobalTest2( )
         {
             using( var context = new Context( ) )
-            using( var module = new BitcodeModule( context, TestModuleName ) )
+            using( var module = context.CreateBitcodeModule( TestModuleName ) )
             {
                 module.AddGlobal( module.Context.Int32Type, true, Linkage.WeakODR, module.Context.CreateConstant( 0x12345678 ), "TestInt" );
                 GlobalVariable globalVar = module.GetNamedGlobal( "TestInt" );
@@ -381,7 +381,7 @@ namespace Llvm.NET.Tests
         public void GetTypeByNameTest( )
         {
             using( var context = new Context( ) )
-            using( var module = new BitcodeModule( context, TestModuleName ) )
+            using( var module = context.CreateBitcodeModule( TestModuleName ) )
             {
                 // while GetTypeByName is exposed on the module it isn't really specific to the module
                 // That is, the type belongs to the context and GetTypeByName() is just a convenience
@@ -398,7 +398,7 @@ namespace Llvm.NET.Tests
         public void AddModuleFlagTest( )
         {
             using( var context = new Context( ) )
-            using( var module = new BitcodeModule( context, TestModuleName ) )
+            using( var module = context.CreateBitcodeModule( TestModuleName ) )
             {
                 module.AddModuleFlag( ModuleFlagBehavior.Warning, BitcodeModule.DwarfVersionValue, 4 );
                 module.AddModuleFlag( ModuleFlagBehavior.Warning, BitcodeModule.DebugVersionValue, BitcodeModule.DebugMetadataVersion );
@@ -468,7 +468,7 @@ namespace Llvm.NET.Tests
         public void ComdatDataTest( )
         {
             using( var context = new Context( ) )
-            using( var module = new BitcodeModule( context, TestModuleName ) )
+            using( var module = context.CreateBitcodeModule( TestModuleName ) )
             {
                 const string comdatName = "testcomdat";
                 const string globalName = "globalwithcomdat";
@@ -503,7 +503,7 @@ namespace Llvm.NET.Tests
         public void ComdatFunctionTest( )
         {
             using( var context = new Context( ) )
-            using( var module = new BitcodeModule( context, TestModuleName ) )
+            using( var module = context.CreateBitcodeModule( TestModuleName ) )
             {
                 const string comdatName = "testcomdat";
                 const string globalName = "globalwithcomdat";
@@ -538,7 +538,7 @@ namespace Llvm.NET.Tests
 
         private BitcodeModule CreateSimpleModule( Context ctx, string name )
         {
-            var retVal = new BitcodeModule( ctx, name );
+            var retVal = ctx.CreateBitcodeModule( name );
             CreateSimpleVoidNopTestFunction( retVal, name );
             return retVal;
         }

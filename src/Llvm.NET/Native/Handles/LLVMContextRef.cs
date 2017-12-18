@@ -10,22 +10,6 @@ namespace Llvm.NET.Native
     internal class LLVMContextRef
         : LlvmObjectRef
     {
-        // FIXME: Move this out of here to the context as it is a layering violation
-        public static explicit operator Context( LLVMContextRef contextRef )
-        {
-            if( contextRef == default )
-            {
-                return null;
-            }
-
-            if( ContextCache.TryGetValue( contextRef, out Context retVal ) )
-            {
-                return retVal;
-            }
-
-            return new Context( contextRef );
-        }
-
         internal LLVMContextRef( IntPtr handle, bool owner )
             : base( owner )
         {

@@ -20,7 +20,7 @@ namespace Llvm.NET.DebugInfo.Tests
         public void DebugUnionTypeTest( )
         {
             using( var context = new Context( ) )
-            using( var module = new BitcodeModule( context ) )
+            using( var module = context.CreateBitcodeModule( ) )
             {
                 const string nativeUnionName = "union.testUnion";
                 const string unionSymbolName = "testUnion";
@@ -93,11 +93,12 @@ namespace Llvm.NET.DebugInfo.Tests
             var testTriple = new Triple( "thumbv7m-none--eabi" );
             var targetMachine = new TargetMachine( testTriple );
             using( var ctx = new Context( ) )
-            using( var module = new BitcodeModule( ctx, "testModule" ) { Layout= targetMachine.TargetData } )
+            using( var module = ctx.CreateBitcodeModule( "testModule" ) )
             {
                 const string nativeUnionName = "union.testUnion";
                 const string unionSymbolName = "testUnion";
 
+                module.Layout = targetMachine.TargetData;
                 var diFile = module.DIBuilder.CreateFile( "test.c" );
                 var diCompileUnit = module.DIBuilder.CreateCompileUnit( SourceLanguage.C, "test.c", "unit-test", false, string.Empty, 0 );
 
