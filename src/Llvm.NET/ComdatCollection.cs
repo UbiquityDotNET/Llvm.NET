@@ -7,7 +7,6 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using Llvm.NET.Native;
-using Llvm.NET.Native.Handles;
 using Llvm.NET.Values;
 using Ubiquity.ArgValidators;
 
