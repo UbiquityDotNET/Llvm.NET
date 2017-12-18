@@ -229,7 +229,7 @@ the target and a target specific <a class="xref" href="../../api/Llvm.NET.DataLa
 extracts these from the <a class="xref" href="../../api/Llvm.NET.TargetMachine.html">TargetMachine</a> provided by the target
 details interface for the selected target.</p>
 <pre><code class="lang-csharp" name="Main">using( var context = new Context( ) )
-using( var module = new BitcodeModule( context, moduleName ) )
+using( var module = context.CreateBitcodeModule( moduleName ) )
 {
     module.SourceFileName = Path.GetFileName( srcPath );
     module.TargetTriple = TargetDetails.TargetMachine.Triple;

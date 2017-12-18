@@ -13,30 +13,6 @@ references:
   commentId: T:Llvm.NET.BitcodeModule
   fullName: Llvm.NET.BitcodeModule
   nameWithType: BitcodeModule
-- uid: Llvm.NET.BitcodeModule.#ctor(Llvm.NET.Context)
-  name: BitcodeModule(Context)
-  href: api/Llvm.NET.BitcodeModule.-ctor.html#Llvm_NET_BitcodeModule__ctor_Llvm_NET_Context_
-  commentId: M:Llvm.NET.BitcodeModule.#ctor(Llvm.NET.Context)
-  fullName: Llvm.NET.BitcodeModule.BitcodeModule(Llvm.NET.Context)
-  nameWithType: BitcodeModule.BitcodeModule(Context)
-- uid: Llvm.NET.BitcodeModule.#ctor(Llvm.NET.Context,System.String)
-  name: BitcodeModule(Context, String)
-  href: api/Llvm.NET.BitcodeModule.-ctor.html#Llvm_NET_BitcodeModule__ctor_Llvm_NET_Context_System_String_
-  commentId: M:Llvm.NET.BitcodeModule.#ctor(Llvm.NET.Context,System.String)
-  fullName: Llvm.NET.BitcodeModule.BitcodeModule(Llvm.NET.Context, System.String)
-  nameWithType: BitcodeModule.BitcodeModule(Context, String)
-- uid: Llvm.NET.BitcodeModule.#ctor(Llvm.NET.Context,System.String,Llvm.NET.DebugInfo.SourceLanguage,System.String,System.String,System.Boolean,System.String,System.UInt32)
-  name: BitcodeModule(Context, String, SourceLanguage, String, String, Boolean, String, UInt32)
-  href: api/Llvm.NET.BitcodeModule.-ctor.html#Llvm_NET_BitcodeModule__ctor_Llvm_NET_Context_System_String_Llvm_NET_DebugInfo_SourceLanguage_System_String_System_String_System_Boolean_System_String_System_UInt32_
-  commentId: M:Llvm.NET.BitcodeModule.#ctor(Llvm.NET.Context,System.String,Llvm.NET.DebugInfo.SourceLanguage,System.String,System.String,System.Boolean,System.String,System.UInt32)
-  fullName: Llvm.NET.BitcodeModule.BitcodeModule(Llvm.NET.Context, System.String, Llvm.NET.DebugInfo.SourceLanguage, System.String, System.String, System.Boolean, System.String, System.UInt32)
-  nameWithType: BitcodeModule.BitcodeModule(Context, String, SourceLanguage, String, String, Boolean, String, UInt32)
-- uid: Llvm.NET.BitcodeModule.#ctor*
-  name: BitcodeModule
-  href: api/Llvm.NET.BitcodeModule.-ctor.html
-  commentId: Overload:Llvm.NET.BitcodeModule.#ctor
-  fullName: Llvm.NET.BitcodeModule.BitcodeModule
-  nameWithType: BitcodeModule.BitcodeModule
 - uid: Llvm.NET.BitcodeModule.AddAlias(Llvm.NET.Values.Value,System.String)
   name: AddAlias(Value, String)
   href: api/Llvm.NET.BitcodeModule.AddAlias.html#Llvm_NET_BitcodeModule_AddAlias_Llvm_NET_Values_Value_System_String_
@@ -982,6 +958,30 @@ references:
   commentId: Overload:Llvm.NET.Context.CreateBasicBlock
   fullName: Llvm.NET.Context.CreateBasicBlock
   nameWithType: Context.CreateBasicBlock
+- uid: Llvm.NET.Context.CreateBitcodeModule
+  name: CreateBitcodeModule()
+  href: api/Llvm.NET.Context.CreateBitcodeModule.html#Llvm_NET_Context_CreateBitcodeModule
+  commentId: M:Llvm.NET.Context.CreateBitcodeModule
+  fullName: Llvm.NET.Context.CreateBitcodeModule()
+  nameWithType: Context.CreateBitcodeModule()
+- uid: Llvm.NET.Context.CreateBitcodeModule(System.String)
+  name: CreateBitcodeModule(String)
+  href: api/Llvm.NET.Context.CreateBitcodeModule.html#Llvm_NET_Context_CreateBitcodeModule_System_String_
+  commentId: M:Llvm.NET.Context.CreateBitcodeModule(System.String)
+  fullName: Llvm.NET.Context.CreateBitcodeModule(System.String)
+  nameWithType: Context.CreateBitcodeModule(String)
+- uid: Llvm.NET.Context.CreateBitcodeModule(System.String,Llvm.NET.DebugInfo.SourceLanguage,System.String,System.String,System.Boolean,System.String,System.UInt32)
+  name: CreateBitcodeModule(String, SourceLanguage, String, String, Boolean, String, UInt32)
+  href: api/Llvm.NET.Context.CreateBitcodeModule.html#Llvm_NET_Context_CreateBitcodeModule_System_String_Llvm_NET_DebugInfo_SourceLanguage_System_String_System_String_System_Boolean_System_String_System_UInt32_
+  commentId: M:Llvm.NET.Context.CreateBitcodeModule(System.String,Llvm.NET.DebugInfo.SourceLanguage,System.String,System.String,System.Boolean,System.String,System.UInt32)
+  fullName: Llvm.NET.Context.CreateBitcodeModule(System.String, Llvm.NET.DebugInfo.SourceLanguage, System.String, System.String, System.Boolean, System.String, System.UInt32)
+  nameWithType: Context.CreateBitcodeModule(String, SourceLanguage, String, String, Boolean, String, UInt32)
+- uid: Llvm.NET.Context.CreateBitcodeModule*
+  name: CreateBitcodeModule
+  href: api/Llvm.NET.Context.CreateBitcodeModule.html
+  commentId: Overload:Llvm.NET.Context.CreateBitcodeModule
+  fullName: Llvm.NET.Context.CreateBitcodeModule
+  nameWithType: Context.CreateBitcodeModule
 - uid: Llvm.NET.Context.CreateConstant(Llvm.NET.Types.ITypeRef,System.UInt64,System.Boolean)
   name: CreateConstant(ITypeRef, UInt64, Boolean)
   href: api/Llvm.NET.Context.CreateConstant.html#Llvm_NET_Context_CreateConstant_Llvm_NET_Types_ITypeRef_System_UInt64_System_Boolean_
@@ -6829,6 +6829,36 @@ references:
   fullName.vb: Llvm.NET.ExtensiblePropertyDescriptor(Of T).SetValueIn
   nameWithType: ExtensiblePropertyDescriptor<T>.SetValueIn
   nameWithType.vb: ExtensiblePropertyDescriptor(Of T).SetValueIn
+- uid: Llvm.NET.IBitcodeModuleFactory
+  name: IBitcodeModuleFactory
+  href: api/Llvm.NET.IBitcodeModuleFactory.html
+  commentId: T:Llvm.NET.IBitcodeModuleFactory
+  fullName: Llvm.NET.IBitcodeModuleFactory
+  nameWithType: IBitcodeModuleFactory
+- uid: Llvm.NET.IBitcodeModuleFactory.CreateBitcodeModule
+  name: CreateBitcodeModule()
+  href: api/Llvm.NET.IBitcodeModuleFactory.CreateBitcodeModule.html#Llvm_NET_IBitcodeModuleFactory_CreateBitcodeModule
+  commentId: M:Llvm.NET.IBitcodeModuleFactory.CreateBitcodeModule
+  fullName: Llvm.NET.IBitcodeModuleFactory.CreateBitcodeModule()
+  nameWithType: IBitcodeModuleFactory.CreateBitcodeModule()
+- uid: Llvm.NET.IBitcodeModuleFactory.CreateBitcodeModule(System.String)
+  name: CreateBitcodeModule(String)
+  href: api/Llvm.NET.IBitcodeModuleFactory.CreateBitcodeModule.html#Llvm_NET_IBitcodeModuleFactory_CreateBitcodeModule_System_String_
+  commentId: M:Llvm.NET.IBitcodeModuleFactory.CreateBitcodeModule(System.String)
+  fullName: Llvm.NET.IBitcodeModuleFactory.CreateBitcodeModule(System.String)
+  nameWithType: IBitcodeModuleFactory.CreateBitcodeModule(String)
+- uid: Llvm.NET.IBitcodeModuleFactory.CreateBitcodeModule(System.String,Llvm.NET.DebugInfo.SourceLanguage,System.String,System.String,System.Boolean,System.String,System.UInt32)
+  name: CreateBitcodeModule(String, SourceLanguage, String, String, Boolean, String, UInt32)
+  href: api/Llvm.NET.IBitcodeModuleFactory.CreateBitcodeModule.html#Llvm_NET_IBitcodeModuleFactory_CreateBitcodeModule_System_String_Llvm_NET_DebugInfo_SourceLanguage_System_String_System_String_System_Boolean_System_String_System_UInt32_
+  commentId: M:Llvm.NET.IBitcodeModuleFactory.CreateBitcodeModule(System.String,Llvm.NET.DebugInfo.SourceLanguage,System.String,System.String,System.Boolean,System.String,System.UInt32)
+  fullName: Llvm.NET.IBitcodeModuleFactory.CreateBitcodeModule(System.String, Llvm.NET.DebugInfo.SourceLanguage, System.String, System.String, System.Boolean, System.String, System.UInt32)
+  nameWithType: IBitcodeModuleFactory.CreateBitcodeModule(String, SourceLanguage, String, String, Boolean, String, UInt32)
+- uid: Llvm.NET.IBitcodeModuleFactory.CreateBitcodeModule*
+  name: CreateBitcodeModule
+  href: api/Llvm.NET.IBitcodeModuleFactory.CreateBitcodeModule.html
+  commentId: Overload:Llvm.NET.IBitcodeModuleFactory.CreateBitcodeModule
+  fullName: Llvm.NET.IBitcodeModuleFactory.CreateBitcodeModule
+  nameWithType: IBitcodeModuleFactory.CreateBitcodeModule
 - uid: Llvm.NET.IExtensiblePropertyContainer
   name: IExtensiblePropertyContainer
   href: api/Llvm.NET.IExtensiblePropertyContainer.html
