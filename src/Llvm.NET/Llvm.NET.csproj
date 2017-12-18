@@ -41,7 +41,7 @@
         -->
         <When Condition="'$(BuildingInsideVisualStudio)'=='true'">
             <ItemGroup>
-                <PackageReference Include="LibLLVM.NET" Version="[5.0.0-*,6)" />
+                <PackageReference Include="LibLLVM.NET" Version="[5.0.1-*,6)" />
             </ItemGroup>
         </When>
         <Otherwise>

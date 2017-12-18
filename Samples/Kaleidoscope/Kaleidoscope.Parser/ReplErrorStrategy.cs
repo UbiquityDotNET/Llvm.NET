@@ -19,35 +19,6 @@ namespace Kaleidoscope.Grammar
     public class ReplErrorStrategy
         : DefaultErrorStrategy
     {
-        /// <summary>Blocks recovery and throws an exception to prevent further processing</summary>
-        /// <param name="recognizer">parser that encountered an error</param>
-        /// <param name="e">exception describing the error</param>
-        public override void Recover( Parser recognizer, RecognitionException e )
-        {
-            for( ParserRuleContext ruleCtx = recognizer.Context; ruleCtx != null; ruleCtx = ( ParserRuleContext )ruleCtx.Parent )
-            {
-                ruleCtx.exception = e;
-            }
-
-            throw new ParseCanceledException( e );
-        }
-
-        /// <summary>Blocks recovery and throws an exception to prevent further processing</summary>
-        /// <param name="recognizer">parser that encountered an error</param>
-        /// <returns>
-        /// Nothing, this always throws an exception to prevent further parsing.
-        /// </returns>
-        public override IToken RecoverInline( Parser recognizer )
-        {
-            var ex = new InputMismatchException( recognizer );
-            for( ParserRuleContext ruleCtx = recognizer.Context; ruleCtx != null; ruleCtx = ( ParserRuleContext )ruleCtx.Parent )
-            {
-                ruleCtx.exception = ex;
-            }
-
-            throw new ParseCanceledException( ex );
-        }
-
         protected override void ReportFailedPredicate( Parser recognizer, FailedPredicateException e )
         {
             string pred = e.Predicate;

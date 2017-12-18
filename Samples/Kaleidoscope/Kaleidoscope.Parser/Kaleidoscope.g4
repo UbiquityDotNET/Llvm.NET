@@ -1,11 +1,13 @@
 // ANTLR4 Grammar for the LLVM Tutorial Sample Kaleidoscope language
-// The grammar supports almost all of the chapters from the C++ tutorial
 // To support a progression through the chapters the language features are
 // selectable and dynamicly adjust the parsing accordingly. This allows a
 // single parser implementation for all chapters, which allows the tutorial
-// to focus on the actual use of LLVM itself.
+// to focus on the actual use of Llvm.NET itself rather than on parsing.
 //
 grammar Kaleidoscope;
+
+// virtual tokens generated from code behind
+tokens { IF, THEN, ELSE, FOR, IN, VAR, UNARY, BINARY }
 
 // Lexer Rules -------
 fragment NonZeroDecimalDigit_: [1-9];
@@ -23,14 +25,6 @@ LPAREN: '(';
 RPAREN: ')';
 COMMA: ',';
 SEMICOLON: ';';
-IF: 'if';
-THEN: 'then';
-ELSE: 'else';
-FOR: 'for';
-IN: 'in';
-VAR: 'var';
-UNARY: 'unary';
-BINARY: 'binary';
 DEF: 'def';
 EXTERN: 'extern';
 
@@ -57,27 +51,17 @@ OPSYMBOL
 LineComment: '#' ~[\r\n]* EndOfLine_ -> skip;
 WhiteSpace: [ \t\r\n\f]+ -> skip;
 
-Identifier: [a-zA-Z][a-zA-Z0-9]*;
+// Action attached to this may convert the identifier to a keyword token
+// if it matches a keyword AND the language feature is enabled. Doing this
+// as opposed to using a semantic predicate allows skipping creating a parser
+// rule for an identifier.
+Identifier: [a-zA-Z][a-zA-Z0-9]* {DynamciallyAdjustKeywordOrIdentifier();};
 Number: Digits_ ('.' DecimalDigit_+)?;
 
 // Parser rules ------
 
-// Identifier as a parser rule enables adaptation of keywords based on language features
-// Depending on the features enabled, certain keywords may be valid identifiers.
-identifier
-    : Identifier
-    | {!FeatureControlFlow}? IF
-    | {!FeatureControlFlow}? THEN
-    | {!FeatureControlFlow}? ELSE
-    | {!FeatureControlFlow}? FOR
-    | {!FeatureControlFlow}? IN
-    | {!FeatureMutableVars}? VAR
-    | {!FeatureUserOperators}? UNARY
-    | {!FeatureUserOperators}? BINARY
-    ;
-
 initializer
-    : identifier (EQUALS expression)?
+    : Identifier (EQUALS expression[0])?
     ;
 
 // parser rule to handle the use of the Lexer EQUALS symbol having different meanings in multiple contexts
@@ -86,37 +70,40 @@ opsymbol
     | OPSYMBOL
     ;
 
-// Non Left recursive expressions
+// Non Left recursive expressions (a.k.a. atoms)
 primaryExpression
-    : identifier                                                         # VariableExpression
-    | Number                                                             # ConstExpression
-    | LPAREN expression RPAREN                                           # ParenExpression
-    | identifier LPAREN (expression (COMMA expression)*)? RPAREN         # FunctionCallExpression
-    | VAR initializer (initializer)* IN expression                       # VarInExpression
-    | IF expression THEN expression ELSE expression                      # ConditionalExpression
-    | FOR initializer COMMA expression (COMMA expression)? IN expression # ForExpression
-    | identifier EQUALS expression                                       # AssignmentExpression
-    | {IsPrefixOp(_input.Lt(1))}? opsymbol expression                    # UnaryOpExpression
+    : Identifier                                                                  # VariableExpression
+    | Number                                                                      # ConstExpression
+    | LPAREN expression[0] RPAREN                                                 # ParenExpression
+    | Identifier LPAREN (expression[0] (COMMA expression[0])*)? RPAREN            # FunctionCallExpression
+    | VAR initializer (initializer)* IN expression[0]                             # VarInExpression
+    | IF expression[0] THEN expression[0] ELSE expression[0]                      # ConditionalExpression
+    | FOR initializer COMMA expression[0] (COMMA expression[0])? IN expression[0] # ForExpression
+    | Identifier EQUALS expression[0]                                             # AssignmentExpression
+    | {IsPrefixOp(_input.Lt(1))}? opsymbol expression[0]                          # UnaryOpExpression
     ;
 
-// Left-recursive expressions use ANTLR to unroll the left recursion when generating the
-// parser. The generated KaleidoScopeParser can then override the EnterRecursionRule and
-// PrecPred methods to handle the dynamic precedence evaluation allowing this grammar to
-// remain clean and simple, yet capable of handling user defined operators and precedence
-expression
-    : primaryExpression              # AtomExpression
-    | expression opsymbol expression # BinaryOpExpression
+// need to make precedence handling explicit in the code behind
+// While some measure of functionality is achievable without an
+// explicit argument and leveraging a overrides of EnterRecursionRule()
+// and PrecPred(). However, that's not a fully viable option as
+// ANTLR's ATN used for prediction will have the values hard
+// coded.
+expression[int _p]
+    : primaryExpression
+      ( {GetPrecedence(_input.Lt(1)) >= $_p}? op=opsymbol expression[GetNextPrecedence(_input.Lt(-1))]
+      )*
     ;
 
 prototype
-    : identifier LPAREN (identifier)* RPAREN                      # FunctionPrototype
-    | UNARY opsymbol Number? LPAREN identifier RPAREN             # UnaryPrototype
-    | BINARY opsymbol Number? LPAREN identifier identifier RPAREN # BinaryPrototype
+    : Identifier LPAREN (Identifier)* RPAREN                      # FunctionPrototype
+    | UNARY opsymbol Number? LPAREN Identifier RPAREN             # UnaryPrototype
+    | BINARY opsymbol Number? LPAREN Identifier Identifier RPAREN # BinaryPrototype
     ;
 
 repl
-    : DEF prototype expression # FunctionDefinition
-    | EXTERN prototype         # ExternalDeclaration
-    | expression               # TopLevelExpression
-    | SEMICOLON                # TopLevelSemicolon
+    : DEF prototype expression[0] # FunctionDefinition
+    | EXTERN prototype            # ExternalDeclaration
+    | expression[0]               # TopLevelExpression
+    | SEMICOLON                   # TopLevelSemicolon
     ;

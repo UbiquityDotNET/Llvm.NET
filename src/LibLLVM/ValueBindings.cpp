@@ -6,8 +6,14 @@
 #include <llvm\IR\GlobalObject.h>
 #include <llvm\IR\GlobalAlias.h>
 #include <llvm\IR\IRBuilder.h>
+#include <llvm\Support\CBindingWrapping.h>
+
+#include "ValueCache.h"
+
 
 using namespace llvm;
+
+DEFINE_SIMPLE_CONVERSION_FUNCTIONS( ValueCache, LLVMValueCacheRef );
 
 extern "C"
 {
@@ -77,5 +83,26 @@ extern "C"
     LLVMValueRef LLVMValueAsMetadataGetValue( LLVMMetadataRef vmd )
     {
         return wrap( unwrap<ValueAsMetadata>( vmd )->getValue( ) );
+    }
+
+    LLVMValueCacheRef LLVMCreateValueCache( LLVMValueCacheItemDeletedCallback /*MaybeNull*/ deletedCallback, LLVMValueCacheItemReplacedCallback replacedCallback )
+    {
+        return wrap( new ValueCache( deletedCallback, replacedCallback ) );
+    }
+
+    void LLVMDisposeValueCache( LLVMValueCacheRef cacheRef )
+    {
+        delete unwrap( cacheRef );
+    }
+
+    void LLVMValueCacheAdd( LLVMValueCacheRef cacheRef, LLVMValueRef valueRef, intptr_t handle )
+    {
+        auto& cache = *unwrap( cacheRef );
+        cache[unwrap( valueRef )] = handle;
+    }
+
+    intptr_t LLVMValueCacheLookup( LLVMValueCacheRef cacheRef, LLVMValueRef valueRef )
+    {
+        return unwrap( cacheRef )->lookup( unwrap( valueRef ) );
     }
 }

@@ -8,6 +8,8 @@ using Kaleidoscope.Grammar;
 using Llvm.NET;
 using Llvm.NET.Values;
 
+[assembly: SuppressMessage( "StyleCop.CSharp.DocumentationRules", "SA1652:Enable XML documentation output", Justification = "Sample application" )]
+
 namespace Kaleidoscope
 {
     public static class Program
@@ -52,7 +54,7 @@ namespace Kaleidoscope
                         Value value = generator.Visit( parseTree );
                         if( value is ConstantFP result )
                         {
-                            Console.WriteLine( result.Value );
+                            Console.WriteLine( "Evaluated to {0}", result.Value );
                         }
                     }
                 }

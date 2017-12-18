@@ -599,7 +599,7 @@
     <Rule Id="SA1027" Action="Error" />
     <Rule Id="SA1028" Action="Error" />
     <Rule Id="SA1100" Action="Error" />
-    <Rule Id="SA1101" Action="Hidden" />
+    <Rule Id="SA1101" Action="None" />
     <Rule Id="SA1106" Action="Error" />
     <Rule Id="SA1107" Action="Error" />
     <Rule Id="SA1108" Action="Error" />

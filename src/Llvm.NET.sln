@@ -93,6 +93,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Samples", "Samples", "{D04D
 		..\docfx\articles\Samples\toc.md = ..\docfx\articles\Samples\toc.md
 	EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Kaleidoscope.Runtime", "..\Samples\Kaleidoscope\Kaleidoscope.Runtime\Kaleidoscope.Runtime.csproj", "{DF586B9E-C590-459F-AD5A-F2E023E3CB45}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -147,6 +149,10 @@ Global
 		{88463779-D746-427C-B951-4E4FF25BC532}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{88463779-D746-427C-B951-4E4FF25BC532}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{88463779-D746-427C-B951-4E4FF25BC532}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DF586B9E-C590-459F-AD5A-F2E023E3CB45}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DF586B9E-C590-459F-AD5A-F2E023E3CB45}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DF586B9E-C590-459F-AD5A-F2E023E3CB45}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DF586B9E-C590-459F-AD5A-F2E023E3CB45}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -166,6 +172,7 @@ Global
 		{3450A680-13CD-4703-BFFE-5617AB775ED4} = {2762672E-8B94-4C84-ADCF-195FFEF5D7DD}
 		{DD8CA942-6EEE-4428-A1BC-D1D64993EEF9} = {3450A680-13CD-4703-BFFE-5617AB775ED4}
 		{D04D960B-79E5-4FB5-9241-1509F1576A59} = {3450A680-13CD-4703-BFFE-5617AB775ED4}
+		{DF586B9E-C590-459F-AD5A-F2E023E3CB45} = {62418FA2-81F2-475F-B735-7B108EBE960D}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {EF28D186-279B-4E91-9BE8-644B6E018432}

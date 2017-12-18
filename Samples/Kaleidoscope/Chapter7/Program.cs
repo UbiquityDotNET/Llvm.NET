@@ -4,9 +4,13 @@
 
 using System;
 using System.Diagnostics.CodeAnalysis;
+using System.IO;
+using System.Linq;
 using Kaleidoscope.Grammar;
 using Llvm.NET;
 using Llvm.NET.Values;
+
+[assembly: SuppressMessage( "StyleCop.CSharp.DocumentationRules", "SA1652:Enable XML documentation output", Justification = "Sample application" )]
 
 namespace Kaleidoscope
 {
@@ -22,7 +26,7 @@ namespace Kaleidoscope
             using( StaticState.InitializeLLVM( ) )
             {
                 StaticState.RegisterNative( );
-                using( var generator = new CodeGenerator( LanguageLevel.UserDefinedOperators ) )
+                using( var generator = new CodeGenerator( LanguageLevel.MutableVariables ) )
                 {
                     RunReplLoop( generator );
                 }
@@ -50,9 +54,25 @@ namespace Kaleidoscope
                     if( parseTree != null )
                     {
                         Value value = generator.Visit( parseTree );
-                        if( value is ConstantFP result )
+                        switch( value )
                         {
-                            Console.WriteLine( result.Value );
+                        case ConstantFP result:
+                            Console.WriteLine( "Evaluated to {0}", result.Value );
+                            break;
+                        case Function function:
+                            Console.WriteLine( "Defined function: {0}", function.Name );
+                            var bldr = new System.Text.StringBuilder( function.Name.Length );
+                            var invalidChars = Path.GetInvalidFileNameChars( );
+                            foreach( char c in function.Name )
+                            {
+                                bldr.Append( invalidChars.Contains( c ) ? '_' : c );
+                            }
+
+                            function.ParentModule.WriteToTextFile( Path.ChangeExtension( bldr.ToString( ), "ll" ), out string ignoredMsg );
+#if NET47
+                            generator.ParserStack.GenerateDgml( parseTree, Path.ChangeExtension( bldr.ToString( ), "dgml" ) );
+#endif
+                            break;
                         }
                     }
                 }

@@ -7,6 +7,8 @@ using System.Diagnostics.CodeAnalysis;
 using Kaleidoscope.Grammar;
 using Llvm.NET;
 
+[assembly: SuppressMessage( "StyleCop.CSharp.DocumentationRules", "SA1652:Enable XML documentation output", Justification = "Sample application" )]
+
 namespace Kaleidoscope
 {
     public static class Program

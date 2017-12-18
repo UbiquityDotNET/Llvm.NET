@@ -5,17 +5,13 @@
     <AssemblyName>kls4</AssemblyName>
     <RootNamespace>Kaleidoscope</RootNamespace>
     <LangVersion>latest</LangVersion>
-    <DefineConstants>USE_ORCJIT</DefineConstants>
   </PropertyGroup>
 
-    <ItemGroup>
-      <ProjectReference Include="$(BuildRootDir)src\Llvm.NET\Llvm.NET.csproj">
-          <Name>Llvm.NET</Name>
-      </ProjectReference>
-  </ItemGroup>
-
   <ItemGroup>
+    <ProjectReference Include="$(BuildRootDir)src\Llvm.NET\Llvm.NET.csproj">
+        <Name>Llvm.NET</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Kaleidoscope.Parser\Kaleidoscope.Grammar.csproj" />
+    <ProjectReference Include="..\Kaleidoscope.Runtime\Kaleidoscope.Runtime.csproj" />
   </ItemGroup>
-
 </Project>

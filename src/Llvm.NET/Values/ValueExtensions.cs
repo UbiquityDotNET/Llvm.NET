@@ -3,9 +3,13 @@
 // </copyright>
 
 using System;
+using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using Llvm.NET.DebugInfo;
 using Llvm.NET.Native;
+using Llvm.NET.Types;
+
+using static Llvm.NET.Native.NativeMethods;
 
 namespace Llvm.NET.Values
 {
@@ -145,6 +149,19 @@ namespace Llvm.NET.Values
             }
 
             return value;
+        }
+
+        internal static Context GetContext( this LLVMValueRef valueRef )
+        {
+            if( valueRef == default )
+            {
+                return null;
+            }
+
+            var hType = LLVMTypeOf( valueRef );
+            Debug.Assert( hType != default, "Should not get a null pointer from LLVM" );
+            var type = TypeRef.FromHandle( hType );
+            return type.Context;
         }
     }
 }

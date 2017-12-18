@@ -108,6 +108,9 @@
     <ClInclude Include="ContextBindings.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="ValueCache.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Resource.rc">

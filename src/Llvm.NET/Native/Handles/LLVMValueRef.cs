@@ -21,6 +21,10 @@ namespace Llvm.NET.Native
 
         public static bool operator !=( LLVMValueRef lhs, LLVMValueRef rhs ) => !( lhs == rhs );
 
+        public override string ToString( ) => Handle.ToString( );
+
+        internal IntPtr GetRawHandle( ) => Handle;
+
         internal LLVMValueRef( IntPtr pointer )
         {
             Handle = pointer;

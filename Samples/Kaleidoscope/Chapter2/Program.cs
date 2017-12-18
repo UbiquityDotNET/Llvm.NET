@@ -4,7 +4,6 @@
 
 using System;
 using System.Diagnostics.CodeAnalysis;
-using Antlr4.Runtime.Tree;
 using Kaleidoscope.Grammar;
 
 [assembly: SuppressMessage( "StyleCop.CSharp.DocumentationRules", "SA1652:Enable XML documentation output", Justification = "Sample application" )]
@@ -50,15 +49,23 @@ namespace Kaleidoscope
                         generator.Visit( parseTree );
 
                         // This departs a tad from the official C++ version for this "chapter"
-                        // by printing out an XML representation of the complete parse tree
-                        // as opposed to the official version's "parsed an XYZ" message.
+                        // by printing generating a representation of the complete parse tree
+                        // as opposed to the official version's simplistic "parsed an XYZ"
+                        // message.
+
                         // This provides much more detailed information about the actual parse
                         // to help in diagnosing issues. Whenever, adding functionality to
                         // the grammar itself it is useful to come back to this to verify what
                         // the parser is actually producing for a given input.
-                        var docListener = new XDocumentListener( generator.ParserStack.Parser );
-                        ParseTreeWalker.Default.Walk( docListener, parseTree );
-                        Console.WriteLine( "Parsed:\n{0}", docListener.Document.ToString( ) );
+#if NET47
+                        // For desktop, generate a DGML from the parse tree. This is useful when modifying
+                        // or debugging the gramar in general as you can open the DGML in VS
+                        // and as each new tree is parsed VS can auto update the visual graph
+                        string path = System.IO.Path.GetFullPath( "parsetree.dgml" );
+                        generator.ParserStack.GenerateDgml( parseTree, path );
+                        Console.WriteLine( "Generated {0}", path );
+#endif
+                        Console.WriteLine( "Parsed:\n{0}", generator.ParserStack.GenerateXmlTree( parseTree ) );
                     }
                 }
 

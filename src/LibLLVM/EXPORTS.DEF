@@ -88,6 +88,11 @@ LLVMExecutionEngineClearGlobalMappingsFromModule
 LLVMContextCreateBasicBlock
 LLVMAttributeToString
 
+LLVMCreateValueCache
+LLVMDisposeValueCache
+LLVMValueCacheAdd
+LLVMValueCacheLookup
+
 ; Debug info functions not part of standard LLVM-C API
 LLVMDIScopeGetFile
 LLVMFunctionGetSubprogram

@@ -15,7 +15,7 @@ namespace Kaleidoscope.Grammar
         PreFix
     }
 
-    internal struct OperatorInfo
+    public struct OperatorInfo
     {
         public OperatorInfo( char literal, OperatorKind kind, int precedence )
             : this( literal, kind, precedence, false )
@@ -44,7 +44,7 @@ namespace Kaleidoscope.Grammar
     {
         public bool TryAddOrReplaceItem( OperatorInfo item )
         {
-            if(!TryGetValue( item.Literal, out var existingItem ))
+            if(!this.TryGetValue( item.Literal, out var existingItem ))
             {
                 Add( item );
                 return true;
@@ -59,20 +59,6 @@ namespace Kaleidoscope.Grammar
             Add( existingItem );
             return true;
         }
-
-        // .NET Core APP 2.0 defines this but .NET Standard 2.0 and .NET 4.x do not, sigh...
-#if !NETCOREAPP2_0
-        public bool TryGetValue( char key, out OperatorInfo item )
-        {
-            item = default;
-            if( Dictionary == null )
-            {
-                return false;
-            }
-
-            return Dictionary.TryGetValue( key, out item );
-        }
-#endif
 
         protected override char GetKeyForItem( OperatorInfo item ) => item.Literal;
 

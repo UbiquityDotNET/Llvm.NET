@@ -29,7 +29,6 @@ namespace Llvm.NET.JIT
     /// <summary>An LLVM Execution Engine</summary>
     public sealed class LegacyExecutionEngine
         : IDisposable
-        , IExecutionEngine<int>
     {
         /// <summary>Initializes a new instance of the <see cref="LegacyExecutionEngine"/> class with an initial module</summary>
         /// <param name="kind"><see cref="EngineKind"/> for the engine to create</param>
@@ -60,7 +59,7 @@ namespace Llvm.NET.JIT
         /// </note>
         /// </remarks>
         /// <returns>Handle for the module in the engine</returns>
-        public int AddModule( BitcodeModule module )
+        public IJitModuleHandle AddModule( BitcodeModule module )
         {
             int handle = System.Threading.Interlocked.Increment( ref NextHandleValue ) - 1;
             lock( OwnedModules )
@@ -75,7 +74,7 @@ namespace Llvm.NET.JIT
 
             LLVMAddModule( EngineHandle, module.ModuleHandle );
             module.Detach( );
-            return handle;
+            return (JitModuleHandle<int>)handle;
         }
 
         /// <summary>Removes a module from the engine</summary>
@@ -83,9 +82,14 @@ namespace Llvm.NET.JIT
         /// <remarks>
         /// This effectively transfers ownership of the module back to the caller.
         /// </remarks>
-        public void RemoveModule( int handle )
+        public void RemoveModule( IJitModuleHandle handle )
         {
-            if(!OwnedModules.TryGetValue( handle, out LLVMModuleRef module))
+            if( !( handle is JitModuleHandle<int> jitHandle ) )
+            {
+                throw new ArgumentException( "Invalid handle provided", nameof( handle ) );
+            }
+
+            if( !OwnedModules.TryGetValue( jitHandle, out LLVMModuleRef module))
             {
                 throw new ArgumentException( "Unknown handle value" );
             }
