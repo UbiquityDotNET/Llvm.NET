@@ -127,6 +127,18 @@ references:
   commentId: Overload:Llvm.NET.BitcodeModule.AddVersionIdentMetadata
   fullName: Llvm.NET.BitcodeModule.AddVersionIdentMetadata
   nameWithType: BitcodeModule.AddVersionIdentMetadata
+- uid: Llvm.NET.BitcodeModule.Aliases
+  name: Aliases
+  href: api/Llvm.NET.BitcodeModule.Aliases.html#Llvm_NET_BitcodeModule_Aliases
+  commentId: P:Llvm.NET.BitcodeModule.Aliases
+  fullName: Llvm.NET.BitcodeModule.Aliases
+  nameWithType: BitcodeModule.Aliases
+- uid: Llvm.NET.BitcodeModule.Aliases*
+  name: Aliases
+  href: api/Llvm.NET.BitcodeModule.Aliases.html
+  commentId: Overload:Llvm.NET.BitcodeModule.Aliases
+  fullName: Llvm.NET.BitcodeModule.Aliases
+  nameWithType: BitcodeModule.Aliases
 - uid: Llvm.NET.BitcodeModule.Clone
   name: Clone()
   href: api/Llvm.NET.BitcodeModule.Clone.html#Llvm_NET_BitcodeModule_Clone
@@ -484,6 +496,18 @@ references:
   commentId: Overload:Llvm.NET.BitcodeModule.Name
   fullName: Llvm.NET.BitcodeModule.Name
   nameWithType: BitcodeModule.Name
+- uid: Llvm.NET.BitcodeModule.NamedMetadata
+  name: NamedMetadata
+  href: api/Llvm.NET.BitcodeModule.NamedMetadata.html#Llvm_NET_BitcodeModule_NamedMetadata
+  commentId: P:Llvm.NET.BitcodeModule.NamedMetadata
+  fullName: Llvm.NET.BitcodeModule.NamedMetadata
+  nameWithType: BitcodeModule.NamedMetadata
+- uid: Llvm.NET.BitcodeModule.NamedMetadata*
+  name: NamedMetadata
+  href: api/Llvm.NET.BitcodeModule.NamedMetadata.html
+  commentId: Overload:Llvm.NET.BitcodeModule.NamedMetadata
+  fullName: Llvm.NET.BitcodeModule.NamedMetadata
+  nameWithType: BitcodeModule.NamedMetadata
 - uid: Llvm.NET.BitcodeModule.SourceFileName
   name: SourceFileName
   href: api/Llvm.NET.BitcodeModule.SourceFileName.html#Llvm_NET_BitcodeModule_SourceFileName
@@ -1285,6 +1309,18 @@ references:
   commentId: Overload:Llvm.NET.Context.GetIntType
   fullName: Llvm.NET.Context.GetIntType
   nameWithType: Context.GetIntType
+- uid: Llvm.NET.Context.GetMDKindId(System.String)
+  name: GetMDKindId(String)
+  href: api/Llvm.NET.Context.GetMDKindId.html#Llvm_NET_Context_GetMDKindId_System_String_
+  commentId: M:Llvm.NET.Context.GetMDKindId(System.String)
+  fullName: Llvm.NET.Context.GetMDKindId(System.String)
+  nameWithType: Context.GetMDKindId(String)
+- uid: Llvm.NET.Context.GetMDKindId*
+  name: GetMDKindId
+  href: api/Llvm.NET.Context.GetMDKindId.html
+  commentId: Overload:Llvm.NET.Context.GetMDKindId
+  fullName: Llvm.NET.Context.GetMDKindId
+  nameWithType: Context.GetMDKindId
 - uid: Llvm.NET.Context.GetPointerTypeFor(Llvm.NET.Types.ITypeRef)
   name: GetPointerTypeFor(ITypeRef)
   href: api/Llvm.NET.Context.GetPointerTypeFor.html#Llvm_NET_Context_GetPointerTypeFor_Llvm_NET_Types_ITypeRef_
@@ -1405,6 +1441,18 @@ references:
   commentId: Overload:Llvm.NET.Context.Modules
   fullName: Llvm.NET.Context.Modules
   nameWithType: Context.Modules
+- uid: Llvm.NET.Context.OdrUniqueDebugTypes
+  name: OdrUniqueDebugTypes
+  href: api/Llvm.NET.Context.OdrUniqueDebugTypes.html#Llvm_NET_Context_OdrUniqueDebugTypes
+  commentId: P:Llvm.NET.Context.OdrUniqueDebugTypes
+  fullName: Llvm.NET.Context.OdrUniqueDebugTypes
+  nameWithType: Context.OdrUniqueDebugTypes
+- uid: Llvm.NET.Context.OdrUniqueDebugTypes*
+  name: OdrUniqueDebugTypes
+  href: api/Llvm.NET.Context.OdrUniqueDebugTypes.html
+  commentId: Overload:Llvm.NET.Context.OdrUniqueDebugTypes
+  fullName: Llvm.NET.Context.OdrUniqueDebugTypes
+  nameWithType: Context.OdrUniqueDebugTypes
 - uid: Llvm.NET.Context.VoidType
   name: VoidType
   href: api/Llvm.NET.Context.VoidType.html#Llvm_NET_Context_VoidType
@@ -10572,6 +10620,30 @@ references:
   commentId: Overload:Llvm.NET.NamedMDNode.ParentModule
   fullName: Llvm.NET.NamedMDNode.ParentModule
   nameWithType: NamedMDNode.ParentModule
+- uid: Llvm.NET.OperandBundleNames
+  name: OperandBundleNames
+  href: api/Llvm.NET.OperandBundleNames.html
+  commentId: T:Llvm.NET.OperandBundleNames
+  fullName: Llvm.NET.OperandBundleNames
+  nameWithType: OperandBundleNames
+- uid: Llvm.NET.OperandBundleNames.DeOpt
+  name: DeOpt
+  href: api/Llvm.NET.OperandBundleNames.DeOpt.html#Llvm_NET_OperandBundleNames_DeOpt
+  commentId: F:Llvm.NET.OperandBundleNames.DeOpt
+  fullName: Llvm.NET.OperandBundleNames.DeOpt
+  nameWithType: OperandBundleNames.DeOpt
+- uid: Llvm.NET.OperandBundleNames.Funclet
+  name: Funclet
+  href: api/Llvm.NET.OperandBundleNames.Funclet.html#Llvm_NET_OperandBundleNames_Funclet
+  commentId: F:Llvm.NET.OperandBundleNames.Funclet
+  fullName: Llvm.NET.OperandBundleNames.Funclet
+  nameWithType: OperandBundleNames.Funclet
+- uid: Llvm.NET.OperandBundleNames.GcTransition
+  name: GcTransition
+  href: api/Llvm.NET.OperandBundleNames.GcTransition.html#Llvm_NET_OperandBundleNames_GcTransition
+  commentId: F:Llvm.NET.OperandBundleNames.GcTransition
+  fullName: Llvm.NET.OperandBundleNames.GcTransition
+  nameWithType: OperandBundleNames.GcTransition
 - uid: Llvm.NET.Reloc
   name: Reloc
   href: api/Llvm.NET.Reloc.html
@@ -15696,6 +15768,42 @@ references:
   commentId: Overload:Llvm.NET.Values.GlobalAlias.Aliasee
   fullName: Llvm.NET.Values.GlobalAlias.Aliasee
   nameWithType: GlobalAlias.Aliasee
+- uid: Llvm.NET.Values.GlobalIFunc
+  name: GlobalIFunc
+  href: api/Llvm.NET.Values.GlobalIFunc.html
+  commentId: T:Llvm.NET.Values.GlobalIFunc
+  fullName: Llvm.NET.Values.GlobalIFunc
+  nameWithType: GlobalIFunc
+- uid: Llvm.NET.Values.GlobalIFunc.Resolver
+  name: Resolver
+  href: api/Llvm.NET.Values.GlobalIFunc.Resolver.html#Llvm_NET_Values_GlobalIFunc_Resolver
+  commentId: P:Llvm.NET.Values.GlobalIFunc.Resolver
+  fullName: Llvm.NET.Values.GlobalIFunc.Resolver
+  nameWithType: GlobalIFunc.Resolver
+- uid: Llvm.NET.Values.GlobalIFunc.Resolver*
+  name: Resolver
+  href: api/Llvm.NET.Values.GlobalIFunc.Resolver.html
+  commentId: Overload:Llvm.NET.Values.GlobalIFunc.Resolver
+  fullName: Llvm.NET.Values.GlobalIFunc.Resolver
+  nameWithType: GlobalIFunc.Resolver
+- uid: Llvm.NET.Values.GlobalIndirectSymbol
+  name: GlobalIndirectSymbol
+  href: api/Llvm.NET.Values.GlobalIndirectSymbol.html
+  commentId: T:Llvm.NET.Values.GlobalIndirectSymbol
+  fullName: Llvm.NET.Values.GlobalIndirectSymbol
+  nameWithType: GlobalIndirectSymbol
+- uid: Llvm.NET.Values.GlobalIndirectSymbol.IndirectSymbol
+  name: IndirectSymbol
+  href: api/Llvm.NET.Values.GlobalIndirectSymbol.IndirectSymbol.html#Llvm_NET_Values_GlobalIndirectSymbol_IndirectSymbol
+  commentId: P:Llvm.NET.Values.GlobalIndirectSymbol.IndirectSymbol
+  fullName: Llvm.NET.Values.GlobalIndirectSymbol.IndirectSymbol
+  nameWithType: GlobalIndirectSymbol.IndirectSymbol
+- uid: Llvm.NET.Values.GlobalIndirectSymbol.IndirectSymbol*
+  name: IndirectSymbol
+  href: api/Llvm.NET.Values.GlobalIndirectSymbol.IndirectSymbol.html
+  commentId: Overload:Llvm.NET.Values.GlobalIndirectSymbol.IndirectSymbol
+  fullName: Llvm.NET.Values.GlobalIndirectSymbol.IndirectSymbol
+  nameWithType: GlobalIndirectSymbol.IndirectSymbol
 - uid: Llvm.NET.Values.GlobalObject
   name: GlobalObject
   href: api/Llvm.NET.Values.GlobalObject.html

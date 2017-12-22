@@ -111,6 +111,9 @@
                                   <a href="Llvm.NET.BitcodeModule.AddVersionIdentMetadata.html" title="AddVersionIdentMetadata" class="">AddVersionIdentMetadata</a>
                                 </li>
                                 <li class="">
+                                  <a href="Llvm.NET.BitcodeModule.Aliases.html" title="Aliases" class="">Aliases</a>
+                                </li>
+                                <li class="">
                                   <a href="Llvm.NET.BitcodeModule.Clone.html" title="Clone" class="">Clone</a>
                                 </li>
                                 <li class="">
@@ -187,6 +190,9 @@
                                 </li>
                                 <li class="">
                                   <a href="Llvm.NET.BitcodeModule.Name.html" title="Name" class="">Name</a>
+                                </li>
+                                <li class="">
+                                  <a href="Llvm.NET.BitcodeModule.NamedMetadata.html" title="NamedMetadata" class="">NamedMetadata</a>
                                 </li>
                                 <li class="">
                                   <a href="Llvm.NET.BitcodeModule.SourceFileName.html" title="SourceFileName" class="">SourceFileName</a>
@@ -405,6 +411,9 @@
                                   <a href="Llvm.NET.Context.GetIntType.html" title="GetIntType" class="">GetIntType</a>
                                 </li>
                                 <li class="">
+                                  <a href="Llvm.NET.Context.GetMDKindId.html" title="GetMDKindId" class="">GetMDKindId</a>
+                                </li>
+                                <li class="">
                                   <a href="Llvm.NET.Context.GetPointerTypeFor.html" title="GetPointerTypeFor" class="">GetPointerTypeFor</a>
                                 </li>
                                 <li class="">
@@ -433,6 +442,9 @@
                                 </li>
                                 <li class="">
                                   <a href="Llvm.NET.Context.Modules.html" title="Modules" class="">Modules</a>
+                                </li>
+                                <li class="">
+                                  <a href="Llvm.NET.Context.OdrUniqueDebugTypes.html" title="OdrUniqueDebugTypes" class="">OdrUniqueDebugTypes</a>
                                 </li>
                                 <li class="">
                                   <a href="Llvm.NET.Context.VoidType.html" title="VoidType" class="">VoidType</a>
@@ -718,6 +730,21 @@
                                 </li>
                                 <li class="">
                                   <a href="Llvm.NET.NamedMDNode.ParentModule.html" title="ParentModule" class="">ParentModule</a>
+                                </li>
+                              </ul>  </li>
+                          <li class="">
+                            <span class="expand-stub"></span>
+                            <a href="Llvm.NET.OperandBundleNames.html" title="OperandBundleNames" class="">OperandBundleNames</a>
+                              
+                              <ul class="nav level3">
+                                <li class="">
+                                  <a href="Llvm.NET.OperandBundleNames.DeOpt.html#Llvm_NET_OperandBundleNames_DeOpt" title="DeOpt" class="">DeOpt</a>
+                                </li>
+                                <li class="">
+                                  <a href="Llvm.NET.OperandBundleNames.Funclet.html#Llvm_NET_OperandBundleNames_Funclet" title="Funclet" class="">Funclet</a>
+                                </li>
+                                <li class="">
+                                  <a href="Llvm.NET.OperandBundleNames.GcTransition.html#Llvm_NET_OperandBundleNames_GcTransition" title="GcTransition" class="">GcTransition</a>
                                 </li>
                               </ul>  </li>
                           <li class="">
@@ -5576,6 +5603,24 @@
                               </ul>  </li>
                           <li class="">
                             <span class="expand-stub"></span>
+                            <a href="Llvm.NET.Values.GlobalIFunc.html" title="GlobalIFunc" class="">GlobalIFunc</a>
+                              
+                              <ul class="nav level3">
+                                <li class="">
+                                  <a href="Llvm.NET.Values.GlobalIFunc.Resolver.html" title="Resolver" class="">Resolver</a>
+                                </li>
+                              </ul>  </li>
+                          <li class="">
+                            <span class="expand-stub"></span>
+                            <a href="Llvm.NET.Values.GlobalIndirectSymbol.html" title="GlobalIndirectSymbol" class="">GlobalIndirectSymbol</a>
+                              
+                              <ul class="nav level3">
+                                <li class="">
+                                  <a href="Llvm.NET.Values.GlobalIndirectSymbol.IndirectSymbol.html" title="IndirectSymbol" class="">IndirectSymbol</a>
+                                </li>
+                              </ul>  </li>
+                          <li class="">
+                            <span class="expand-stub"></span>
                             <a href="Llvm.NET.Values.GlobalObject.html" title="GlobalObject" class="">GlobalObject</a>
                               
                               <ul class="nav level3">
@@ -5872,12 +5917,12 @@
 
 <a id="Llvm_NET_BitcodeModule_Globals_" data-uid="Llvm.NET.BitcodeModule.Globals*"></a>
 <h4 id="Llvm_NET_BitcodeModule_Globals" data-uid="Llvm.NET.BitcodeModule.Globals">Globals</h4>
-<div class="markdown level1 summary"><p>Gets the Globals contained by this module</p>
+<div class="markdown level1 summary"><p>Gets the <a class="xref" href="Llvm.NET.Values.GlobalVariable.html">GlobalVariable</a>s contained by this module</p>
 </div>
 <div class="markdown level1 conceptual"></div>
 <h5 class="decalaration">Declaration</h5>
 <div class="codewrapper">
-  <pre><code class="lang-csharp hljs">public IEnumerable&lt;Value&gt; Globals { get; }</code></pre>
+  <pre><code class="lang-csharp hljs">public IEnumerable&lt;GlobalVariable&gt; Globals { get; }</code></pre>
 </div>
 <h5 class="propertyValue">Property Value</h5>
 <table class="table table-bordered table-striped table-condensed">
@@ -5889,7 +5934,7 @@
   </thead>
   <tbody>
     <tr>
-      <td><span class="xref">System.Collections.Generic.IEnumerable</span>&lt;<a class="xref" href="Llvm.NET.Values.Value.html">Value</a>&gt;</td>
+      <td><span class="xref">System.Collections.Generic.IEnumerable</span>&lt;<a class="xref" href="Llvm.NET.Values.GlobalVariable.html">GlobalVariable</a>&gt;</td>
       <td></td>
     </tr>
   </tbody>
