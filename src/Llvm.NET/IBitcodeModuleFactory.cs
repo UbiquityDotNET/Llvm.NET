@@ -12,7 +12,7 @@ namespace Llvm.NET
     /// Modules are owned by the context and thus not created, freestanding.
     /// This interface provides factory methods for constructing modules. It
     /// is implemented by the <see cref="Context"/> and also internally by
-    /// the handle caches that ultimately call the inderlying LLVM module
+    /// the handle caches that ultimately call the underlying LLVM module
     /// creation APIs.
     /// </remarks>
     public interface IBitcodeModuleFactory

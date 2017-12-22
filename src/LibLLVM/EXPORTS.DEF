@@ -31,6 +31,14 @@ LLVMComdatGetName
 LLVMGlobalObjectGetComdat
 LLVMGlobalObjectSetComdat
 
+LLVMModuleGetFirstGlobalAlias
+LLVMModuleGetNextGlobalAlias
+LLVMModuleGetFirstNamedMD
+LLVMModuleGetNextNamedMD
+
+LLVMContextGetIsODRUniquingDebugTypes
+LLVMContextSetIsODRUniquingDebugTypes
+
 LLVMCreatePassRegistry
 LLVMPassRegistryDispose
 LLVMAddModuleFlag

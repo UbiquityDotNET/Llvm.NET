@@ -81,6 +81,11 @@ extern "C" {
     void LLVMComdatSetKind( LLVMComdatRef comdatRef, LLVMComdatSelectionKind kind );
     char const* LLVMComdatGetName( LLVMComdatRef comdatRef );
 
+    // Alias enumeration
+    LLVMValueRef LLVMModuleGetFirstGlobalAlias( LLVMModuleRef M );
+    LLVMValueRef LLVMModuleGetNextGlobalAlias( LLVMValueRef /*GlobalAlias*/ valueRef );
+    LLVMNamedMDNodeRef LLVMModuleGetFirstNamedMD( LLVMModuleRef M );
+    LLVMNamedMDNodeRef LLVMModuleGetNextNamedMD( LLVMNamedMDNodeRef valueRef );
 #ifdef __cplusplus
 }
 

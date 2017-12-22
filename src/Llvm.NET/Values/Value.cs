@@ -171,6 +171,9 @@ namespace Llvm.NET.Values
                 case ValueKind.GlobalVariable:
                     return new GlobalVariable( handle );
 
+                case ValueKind.GlobalIFunc:
+                    return new GlobalIFunc( handle );
+
                 case ValueKind.UndefValue:
                     return new UndefValue( handle );
 
@@ -374,6 +377,7 @@ namespace Llvm.NET.Values
                 case ValueKind.CatchSwitch:
                     return new Instructions.CatchSwitch( handle );
 
+                // Default to constant, Instruction or generic base Value
                 default:
                     if( kind >= ValueKind.ConstantFirstVal && kind <= ValueKind.ConstantLastVal )
                     {

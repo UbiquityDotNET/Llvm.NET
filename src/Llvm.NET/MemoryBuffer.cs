@@ -20,11 +20,12 @@ namespace Llvm.NET
         public MemoryBuffer( string path )
         {
             path.ValidateNotNullOrWhiteSpace( nameof( path ) );
-
-            if( LLVMCreateMemoryBufferWithContentsOfFile( path, out BufferHandle_, out string msg ).Failed )
+            if( LLVMCreateMemoryBufferWithContentsOfFile( path, out LLVMMemoryBufferRef handle, out string msg ).Failed )
             {
                 throw new InternalCodeGeneratorException( msg );
             }
+
+            BufferHandle_.Value = handle;
         }
 
         /// <summary>Gets the size of the buffer</summary>
@@ -55,12 +56,11 @@ namespace Llvm.NET
         {
             bufferHandle.ValidateNotDefault( nameof( bufferHandle ) );
 
-            BufferHandle_ = bufferHandle;
+            BufferHandle_.Value = bufferHandle;
         }
 
         internal LLVMMemoryBufferRef BufferHandle => BufferHandle_;
 
-        // TODO: Consider some form of WriteOnce<T> to enforce semantics and not rely on a coment
         // keep as a private field so this is usable as an out parameter in constructor
         // do not write to it directly, treat it as readonly.
         [SuppressMessage( "StyleCop.CSharp.NamingRules"
@@ -68,7 +68,7 @@ namespace Llvm.NET
                         , Justification = "Trailing _ indicates should not be written to directly even internally"
                         )
         ]
-        private LLVMMemoryBufferRef BufferHandle_;
+        private readonly WriteOnce<LLVMMemoryBufferRef> BufferHandle_ = new WriteOnce<LLVMMemoryBufferRef>();
 
         [DllImport( LibraryPath, CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi, ThrowOnUnmappableChar = true, BestFitMapping = false )]
         private static extern LLVMStatus LLVMCreateMemoryBufferWithContentsOfFile( [MarshalAs( UnmanagedType.LPStr )] string @Path

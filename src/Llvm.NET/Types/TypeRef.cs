@@ -83,14 +83,7 @@ namespace Llvm.NET.Types
         }
 
         /// <inheritdoc/>
-        public bool IsPointerPointer
-        {
-            get
-            {
-                var ptrType = this as IPointerType;
-                return ptrType != null && ptrType.ElementType.Kind == TypeKind.Pointer;
-            }
-        }
+        public bool IsPointerPointer => (this is IPointerType ptrType) && ptrType.ElementType.Kind == TypeKind.Pointer;
 
         /// <inheritdoc/>
         public Context Context => GetContextFor( TypeRefHandle );

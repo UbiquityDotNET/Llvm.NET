@@ -110,16 +110,11 @@ namespace Llvm.NET.DebugInfo
         /// <exception cref="InvalidOperationException">The native type was already set</exception>
         public TNative NativeType
         {
-            get => NativeType_;
+            get => NativeType_.ValueOrDefault;
 
             protected set
             {
-                if( NativeType_ != null )
-                {
-                    throw new InvalidOperationException( "Once the native type is set it cannot be changed" );
-                }
-
-                NativeType_ = value;
+                NativeType_.Value = value;
             }
         }
 
@@ -230,20 +225,20 @@ namespace Llvm.NET.DebugInfo
 
         internal DebugType( TNative llvmType )
         {
-            NativeType = llvmType ?? throw new ArgumentNullException( nameof( llvmType ) );
+            NativeType_.Value = llvmType ?? throw new ArgumentNullException( nameof( llvmType ) );
         }
 
-        // TODO: Leverage a generic WriteOnce<T> of some sort to enforce intentions in code rather than "by convention"
-        // this can't be an auto property as the setter needs Enforce Set Once semantics
+        // This can't be an auto property as the setter needs Enforce Set Once semantics
         [SuppressMessage( "StyleCop.CSharp.NamingRules"
                         , "SA1310:Field names must not contain underscore"
                         , Justification = "Trailing _ indicates value MUST NOT be written to directly, even internally"
                         )
         ]
-        private TNative NativeType_;
+        private readonly WriteOnce<TNative> NativeType_ = new WriteOnce<TNative>();
 
-        // TODO: Leverage a generic WriteOnce<T> of some sort to enforce intentions in code rather than "by convention"
-        // this can't be an auto property as the setter needs Enforce Set Once semantics
+        // This can't be an auto property as the setter needs Enforce Set Once semantics
+        // NOTE: WriteOnce isn't really viable here as this has a special case to allow replacing
+        // a temporary type.
         [SuppressMessage( "StyleCop.CSharp.NamingRules"
                         , "SA1310:Field names must not contain underscore"
                         , Justification = "Trailing _ indicates value MUST NOT be written to directly, even internally"

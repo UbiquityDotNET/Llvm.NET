@@ -14,7 +14,7 @@ namespace Llvm.NET.Native
 
         Function = LLVMValueKind.LLVMFunctionValueKind,              // This is an instance of Function
         GlobalAlias = LLVMValueKind.LLVMGlobalAliasValueKind,           // This is an instance of GlobalAlias
-        GlobalIFunc = LLVMValueKind.LLVMGlobalIFuncValueKind,           // ???
+        GlobalIFunc = LLVMValueKind.LLVMGlobalIFuncValueKind,           // Global Indirect Function (derived from GlobalIndirectSymbol)
         GlobalVariable = LLVMValueKind.LLVMGlobalVariableValueKind,        // This is an instance of GlobalVariable
         BlockAddress = LLVMValueKind.LLVMBlockAddressValueKind,          // This is an instance of BlockAddress
         ConstantExpr = LLVMValueKind.LLVMConstantExprValueKind,          // This is an instance of ConstantExpr
