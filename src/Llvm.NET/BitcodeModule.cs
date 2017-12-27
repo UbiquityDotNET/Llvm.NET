@@ -757,7 +757,7 @@ namespace Llvm.NET
         public BitcodeModule Clone( )
         {
             ThrowIfDisposed( );
-            return new BitcodeModule( LLVMCloneModule( ModuleHandle ) );
+            return FromHandle( LLVMCloneModule( ModuleHandle ) );
         }
 
         /// <summary>Clones the module into a new <see cref="Context"/></summary>

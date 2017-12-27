@@ -168,26 +168,27 @@ namespace TestDebugInfo
                         {// force a GC to verify callback delegate for diagnostics is still valid, this is for test only and wouldn't
                          // normally be done in production code.
                             GC.Collect( GC.MaxGeneration );
-                            var modForOpt = module.Clone( );
+                            using( var modForOpt = module.Clone( ) )
+                            {
+                                // NOTE:
+                                // The ordering of passes can matter depending on the pass and passes may be added more than once
+                                // the caller has full control of ordering, this is just a sample of effectively randomly picked
+                                // passes and not necessarily a reflection of any particular use case.
+                                var pm = new ModulePassManager( )
+                                         .AddAlwaysInlinerPass( )
+                                         .AddAggressiveDCEPass( )
+                                         .AddArgumentPromotionPass( )
+                                         .AddBasicAliasAnalysisPass( )
+                                         .AddBitTrackingDCEPass( )
+                                         .AddCFGSimplificationPass( )
+                                         .AddConstantMergePass( )
+                                         .AddConstantPropagationPass( )
+                                         .AddFunctionInliningPass( )
+                                         .AddGlobalOptimizerPass( )
+                                         .AddInstructionCombiningPass( );
 
-                            // NOTE:
-                            // The ordering of passes can matter depending on the pass and passes may be added more than once
-                            // the caller has full control of ordering, this is just a sample of effectively randomly picked
-                            // passes and not necessarily a reflection of any particular use case.
-                            var pm = new ModulePassManager( )
-                                     .AddAlwaysInlinerPass( )
-                                     .AddAggressiveDCEPass( )
-                                     .AddArgumentPromotionPass( )
-                                     .AddBasicAliasAnalysisPass( )
-                                     .AddBitTrackingDCEPass( )
-                                     .AddCFGSimplificationPass( )
-                                     .AddConstantMergePass( )
-                                     .AddConstantPropagationPass( )
-                                     .AddFunctionInliningPass( )
-                                     .AddGlobalOptimizerPass( )
-                                     .AddInstructionCombiningPass( );
-
-                            pm.Run( modForOpt );
+                                pm.Run( modForOpt );
+                            }
                         }
 
                         // Module is good, so generate the output files
