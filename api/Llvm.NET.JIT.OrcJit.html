@@ -4367,22 +4367,25 @@
                               </ul>  </li>
                           <li class="">
                             <span class="expand-stub"></span>
-                            <a href="Llvm.NET.JIT.IExecutionEngine-1.html" title="IExecutionEngine&lt;THandle&gt;" class="">IExecutionEngine&lt;THandle&gt;</a>
+                            <a href="Llvm.NET.JIT.IExecutionEngine.html" title="IExecutionEngine" class="">IExecutionEngine</a>
                               
                               <ul class="nav level3">
                                 <li class="">
-                                  <a href="Llvm.NET.JIT.IExecutionEngine-1.AddModule.html" title="AddModule" class="">AddModule</a>
+                                  <a href="Llvm.NET.JIT.IExecutionEngine.AddModule.html" title="AddModule" class="">AddModule</a>
                                 </li>
                                 <li class="">
-                                  <a href="Llvm.NET.JIT.IExecutionEngine-1.GetFunctionDelegate.html" title="GetFunctionDelegate" class="">GetFunctionDelegate</a>
+                                  <a href="Llvm.NET.JIT.IExecutionEngine.GetFunctionDelegate.html" title="GetFunctionDelegate" class="">GetFunctionDelegate</a>
                                 </li>
                                 <li class="">
-                                  <a href="Llvm.NET.JIT.IExecutionEngine-1.RemoveModule.html" title="RemoveModule" class="">RemoveModule</a>
+                                  <a href="Llvm.NET.JIT.IExecutionEngine.RemoveModule.html" title="RemoveModule" class="">RemoveModule</a>
                                 </li>
                                 <li class="">
-                                  <a href="Llvm.NET.JIT.IExecutionEngine-1.TargetMachine.html" title="TargetMachine" class="">TargetMachine</a>
+                                  <a href="Llvm.NET.JIT.IExecutionEngine.TargetMachine.html" title="TargetMachine" class="">TargetMachine</a>
                                 </li>
                               </ul>  </li>
+                          <li class="">
+                            <a href="Llvm.NET.JIT.IJitModuleHandle.html" title="IJitModuleHandle" class="">IJitModuleHandle</a>
+                          </li>
                           <li class="">
                             <span class="expand-stub"></span>
                             <a href="Llvm.NET.JIT.LegacyExecutionEngine.html" title="LegacyExecutionEngine" class="">LegacyExecutionEngine</a>
@@ -4419,6 +4422,9 @@
                               
                               <ul class="nav level3">
                                 <li class="">
+                                  <a href="Llvm.NET.JIT.OrcJit.AddInteropCallback.html" title="AddInteropCallback" class="">AddInteropCallback</a>
+                                </li>
+                                <li class="">
                                   <a href="Llvm.NET.JIT.OrcJit.AddModule.html" title="AddModule" class="">AddModule</a>
                                 </li>
                                 <li class="">
@@ -4441,24 +4447,6 @@
                                 </li>
                                 <li class="">
                                   <a href="Llvm.NET.JIT.OrcJit.TargetMachine.html" title="TargetMachine" class="">TargetMachine</a>
-                                </li>
-                              </ul>  </li>
-                          <li class="">
-                            <span class="expand-stub"></span>
-                            <a href="Llvm.NET.JIT.OrcJit.OrcJitHandle.html" title="OrcJit.OrcJitHandle" class="">OrcJit.OrcJitHandle</a>
-                              
-                              <ul class="nav level3">
-                                <li class="">
-                                  <a href="Llvm.NET.JIT.OrcJit.OrcJitHandle.op_Equality.html" title="Equality" class="">Equality</a>
-                                </li>
-                                <li class="">
-                                  <a href="Llvm.NET.JIT.OrcJit.OrcJitHandle.Equals.html" title="Equals" class="">Equals</a>
-                                </li>
-                                <li class="">
-                                  <a href="Llvm.NET.JIT.OrcJit.OrcJitHandle.GetHashCode.html" title="GetHashCode" class="">GetHashCode</a>
-                                </li>
-                                <li class="">
-                                  <a href="Llvm.NET.JIT.OrcJit.OrcJitHandle.op_Inequality.html" title="Inequality" class="">Inequality</a>
                                 </li>
                               </ul>  </li>
                           <li class="">
@@ -5962,7 +5950,7 @@
   </h5>
   <div id="collapsible-implements-Llvm_NET_JIT_OrcJit" class="collapse collapsed" aria-expanded="false">
       <div class="level"><a class="xref" href="https://msdn.microsoft.com/en-us/library/system.idisposable(v=vs.110).aspx">IDisposable</a></div>
-      <div class="level"><a class="xref" href="Llvm.NET.JIT.IExecutionEngine-1.html">IExecutionEngine</a>&lt;<span class="xref">OrcJitHandle</span>&gt;</div>
+      <div class="level"><a class="xref" href="Llvm.NET.JIT.IExecutionEngine.html">IExecutionEngine</a></div>
   </div>
   </div>
   
@@ -5971,7 +5959,7 @@
   
   <h5 id="Llvm_NET_JIT_OrcJit_syntax">Syntax</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public sealed class OrcJit : DisposableObject, IDisposable, IExecutionEngine&lt;OrcJitHandle&gt;</code></pre>
+    <pre><code class="lang-csharp hljs">public sealed class OrcJit : DisposableObject, IDisposable, IExecutionEngine</code></pre>
   </div>
 
   
@@ -6022,7 +6010,8 @@ clients. For more details on the implementation see the LLVM Documentation.</p>
         <td id="Llvm_NET_JIT_OrcJit_TargetMachine" data-uid="Llvm.NET.JIT.OrcJit.TargetMachine">
           <a class="xref" href="Llvm.NET.JIT.OrcJit.TargetMachine.html#Llvm_NET_JIT_OrcJit_TargetMachine">TargetMachine</a>
         </td>
-        <td class="markdown level1 summary"></td>
+        <td class="markdown level1 summary"><p>Gets the Target machine for this engine</p>
+</td>
       </tr>
     </tbody>
   </table>
@@ -6036,6 +6025,13 @@ clients. For more details on the implementation see the LLVM Documentation.</p>
       </tr>
     </thead>
     <tbody>
+      <tr>
+        <td id="Llvm_NET_JIT_OrcJit_AddInteropCallback_System_String_System_Delegate_" data-uid="Llvm.NET.JIT.OrcJit.AddInteropCallback(System.String,System.Delegate)">
+          <a class="xref" href="Llvm.NET.JIT.OrcJit.AddInteropCallback.html#Llvm_NET_JIT_OrcJit_AddInteropCallback_System_String_System_Delegate_">AddInteropCallback(String, Delegate)</a>
+        </td>
+        <td class="markdown level1 summary"><p>Adds or replaces an interop callback for a global symbol</p>
+</td>
+      </tr>
       <tr>
         <td id="Llvm_NET_JIT_OrcJit_AddModule_Llvm_NET_BitcodeModule_" data-uid="Llvm.NET.JIT.OrcJit.AddModule(Llvm.NET.BitcodeModule)">
           <a class="xref" href="Llvm.NET.JIT.OrcJit.AddModule.html#Llvm_NET_JIT_OrcJit_AddModule_Llvm_NET_BitcodeModule_">AddModule(BitcodeModule)</a>
@@ -6061,7 +6057,8 @@ clients. For more details on the implementation see the LLVM Documentation.</p>
         <td id="Llvm_NET_JIT_OrcJit_GetFunctionDelegate__1_System_String_" data-uid="Llvm.NET.JIT.OrcJit.GetFunctionDelegate``1(System.String)">
           <a class="xref" href="Llvm.NET.JIT.OrcJit.GetFunctionDelegate.html#Llvm_NET_JIT_OrcJit_GetFunctionDelegate__1_System_String_">GetFunctionDelegate&lt;T&gt;(String)</a>
         </td>
-        <td class="markdown level1 summary"></td>
+        <td class="markdown level1 summary"><p>Gets a delegate for the native compiled function in the engine</p>
+</td>
       </tr>
       <tr>
         <td id="Llvm_NET_JIT_OrcJit_InternalDispose_System_Boolean_" data-uid="Llvm.NET.JIT.OrcJit.InternalDispose(System.Boolean)">
@@ -6071,10 +6068,11 @@ clients. For more details on the implementation see the LLVM Documentation.</p>
 </td>
       </tr>
       <tr>
-        <td id="Llvm_NET_JIT_OrcJit_RemoveModule_Llvm_NET_JIT_OrcJit_OrcJitHandle_" data-uid="Llvm.NET.JIT.OrcJit.RemoveModule(Llvm.NET.JIT.OrcJit.OrcJitHandle)">
-          <a class="xref" href="Llvm.NET.JIT.OrcJit.RemoveModule.html#Llvm_NET_JIT_OrcJit_RemoveModule_Llvm_NET_JIT_OrcJit_OrcJitHandle_">RemoveModule(OrcJit.OrcJitHandle)</a>
+        <td id="Llvm_NET_JIT_OrcJit_RemoveModule_Llvm_NET_JIT_IJitModuleHandle_" data-uid="Llvm.NET.JIT.OrcJit.RemoveModule(Llvm.NET.JIT.IJitModuleHandle)">
+          <a class="xref" href="Llvm.NET.JIT.OrcJit.RemoveModule.html#Llvm_NET_JIT_OrcJit_RemoveModule_Llvm_NET_JIT_IJitModuleHandle_">RemoveModule(IJitModuleHandle)</a>
         </td>
-        <td class="markdown level1 summary"></td>
+        <td class="markdown level1 summary"><p>Removes a module from the engine</p>
+</td>
       </tr>
     </tbody>
   </table>

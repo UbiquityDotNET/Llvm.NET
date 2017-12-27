@@ -9844,80 +9844,69 @@ references:
   commentId: Overload:Llvm.NET.JIT.GenericValue.ToUInt32
   fullName: Llvm.NET.JIT.GenericValue.ToUInt32
   nameWithType: GenericValue.ToUInt32
-- uid: Llvm.NET.JIT.IExecutionEngine`1
-  name: IExecutionEngine<THandle>
-  href: api/Llvm.NET.JIT.IExecutionEngine-1.html
-  commentId: T:Llvm.NET.JIT.IExecutionEngine`1
-  name.vb: IExecutionEngine(Of THandle)
-  fullName: Llvm.NET.JIT.IExecutionEngine<THandle>
-  fullName.vb: Llvm.NET.JIT.IExecutionEngine(Of THandle)
-  nameWithType: IExecutionEngine<THandle>
-  nameWithType.vb: IExecutionEngine(Of THandle)
-- uid: Llvm.NET.JIT.IExecutionEngine`1.AddModule(Llvm.NET.BitcodeModule)
+- uid: Llvm.NET.JIT.IExecutionEngine
+  name: IExecutionEngine
+  href: api/Llvm.NET.JIT.IExecutionEngine.html
+  commentId: T:Llvm.NET.JIT.IExecutionEngine
+  fullName: Llvm.NET.JIT.IExecutionEngine
+  nameWithType: IExecutionEngine
+- uid: Llvm.NET.JIT.IExecutionEngine.AddModule(Llvm.NET.BitcodeModule)
   name: AddModule(BitcodeModule)
-  href: api/Llvm.NET.JIT.IExecutionEngine-1.AddModule.html#Llvm_NET_JIT_IExecutionEngine_1_AddModule_Llvm_NET_BitcodeModule_
-  commentId: M:Llvm.NET.JIT.IExecutionEngine`1.AddModule(Llvm.NET.BitcodeModule)
-  fullName: Llvm.NET.JIT.IExecutionEngine<THandle>.AddModule(Llvm.NET.BitcodeModule)
-  fullName.vb: Llvm.NET.JIT.IExecutionEngine(Of THandle).AddModule(Llvm.NET.BitcodeModule)
-  nameWithType: IExecutionEngine<THandle>.AddModule(BitcodeModule)
-  nameWithType.vb: IExecutionEngine(Of THandle).AddModule(BitcodeModule)
-- uid: Llvm.NET.JIT.IExecutionEngine`1.AddModule*
+  href: api/Llvm.NET.JIT.IExecutionEngine.AddModule.html#Llvm_NET_JIT_IExecutionEngine_AddModule_Llvm_NET_BitcodeModule_
+  commentId: M:Llvm.NET.JIT.IExecutionEngine.AddModule(Llvm.NET.BitcodeModule)
+  fullName: Llvm.NET.JIT.IExecutionEngine.AddModule(Llvm.NET.BitcodeModule)
+  nameWithType: IExecutionEngine.AddModule(BitcodeModule)
+- uid: Llvm.NET.JIT.IExecutionEngine.AddModule*
   name: AddModule
-  href: api/Llvm.NET.JIT.IExecutionEngine-1.AddModule.html
-  commentId: Overload:Llvm.NET.JIT.IExecutionEngine`1.AddModule
-  fullName: Llvm.NET.JIT.IExecutionEngine<THandle>.AddModule
-  fullName.vb: Llvm.NET.JIT.IExecutionEngine(Of THandle).AddModule
-  nameWithType: IExecutionEngine<THandle>.AddModule
-  nameWithType.vb: IExecutionEngine(Of THandle).AddModule
-- uid: Llvm.NET.JIT.IExecutionEngine`1.GetFunctionDelegate*
+  href: api/Llvm.NET.JIT.IExecutionEngine.AddModule.html
+  commentId: Overload:Llvm.NET.JIT.IExecutionEngine.AddModule
+  fullName: Llvm.NET.JIT.IExecutionEngine.AddModule
+  nameWithType: IExecutionEngine.AddModule
+- uid: Llvm.NET.JIT.IExecutionEngine.GetFunctionDelegate*
   name: GetFunctionDelegate
-  href: api/Llvm.NET.JIT.IExecutionEngine-1.GetFunctionDelegate.html
-  commentId: Overload:Llvm.NET.JIT.IExecutionEngine`1.GetFunctionDelegate
-  fullName: Llvm.NET.JIT.IExecutionEngine<THandle>.GetFunctionDelegate
-  fullName.vb: Llvm.NET.JIT.IExecutionEngine(Of THandle).GetFunctionDelegate
-  nameWithType: IExecutionEngine<THandle>.GetFunctionDelegate
-  nameWithType.vb: IExecutionEngine(Of THandle).GetFunctionDelegate
-- uid: Llvm.NET.JIT.IExecutionEngine`1.GetFunctionDelegate``1(System.String)
+  href: api/Llvm.NET.JIT.IExecutionEngine.GetFunctionDelegate.html
+  commentId: Overload:Llvm.NET.JIT.IExecutionEngine.GetFunctionDelegate
+  fullName: Llvm.NET.JIT.IExecutionEngine.GetFunctionDelegate
+  nameWithType: IExecutionEngine.GetFunctionDelegate
+- uid: Llvm.NET.JIT.IExecutionEngine.GetFunctionDelegate``1(System.String)
   name: GetFunctionDelegate<T>(String)
-  href: api/Llvm.NET.JIT.IExecutionEngine-1.GetFunctionDelegate.html#Llvm_NET_JIT_IExecutionEngine_1_GetFunctionDelegate__1_System_String_
-  commentId: M:Llvm.NET.JIT.IExecutionEngine`1.GetFunctionDelegate``1(System.String)
+  href: api/Llvm.NET.JIT.IExecutionEngine.GetFunctionDelegate.html#Llvm_NET_JIT_IExecutionEngine_GetFunctionDelegate__1_System_String_
+  commentId: M:Llvm.NET.JIT.IExecutionEngine.GetFunctionDelegate``1(System.String)
   name.vb: GetFunctionDelegate(Of T)(String)
-  fullName: Llvm.NET.JIT.IExecutionEngine<THandle>.GetFunctionDelegate<T>(System.String)
-  fullName.vb: Llvm.NET.JIT.IExecutionEngine(Of THandle).GetFunctionDelegate(Of T)(System.String)
-  nameWithType: IExecutionEngine<THandle>.GetFunctionDelegate<T>(String)
-  nameWithType.vb: IExecutionEngine(Of THandle).GetFunctionDelegate(Of T)(String)
-- uid: Llvm.NET.JIT.IExecutionEngine`1.RemoveModule(`0)
-  name: RemoveModule(THandle)
-  href: api/Llvm.NET.JIT.IExecutionEngine-1.RemoveModule.html#Llvm_NET_JIT_IExecutionEngine_1_RemoveModule__0_
-  commentId: M:Llvm.NET.JIT.IExecutionEngine`1.RemoveModule(`0)
-  fullName: Llvm.NET.JIT.IExecutionEngine<THandle>.RemoveModule(THandle)
-  fullName.vb: Llvm.NET.JIT.IExecutionEngine(Of THandle).RemoveModule(THandle)
-  nameWithType: IExecutionEngine<THandle>.RemoveModule(THandle)
-  nameWithType.vb: IExecutionEngine(Of THandle).RemoveModule(THandle)
-- uid: Llvm.NET.JIT.IExecutionEngine`1.RemoveModule*
+  fullName: Llvm.NET.JIT.IExecutionEngine.GetFunctionDelegate<T>(System.String)
+  fullName.vb: Llvm.NET.JIT.IExecutionEngine.GetFunctionDelegate(Of T)(System.String)
+  nameWithType: IExecutionEngine.GetFunctionDelegate<T>(String)
+  nameWithType.vb: IExecutionEngine.GetFunctionDelegate(Of T)(String)
+- uid: Llvm.NET.JIT.IExecutionEngine.RemoveModule(Llvm.NET.JIT.IJitModuleHandle)
+  name: RemoveModule(IJitModuleHandle)
+  href: api/Llvm.NET.JIT.IExecutionEngine.RemoveModule.html#Llvm_NET_JIT_IExecutionEngine_RemoveModule_Llvm_NET_JIT_IJitModuleHandle_
+  commentId: M:Llvm.NET.JIT.IExecutionEngine.RemoveModule(Llvm.NET.JIT.IJitModuleHandle)
+  fullName: Llvm.NET.JIT.IExecutionEngine.RemoveModule(Llvm.NET.JIT.IJitModuleHandle)
+  nameWithType: IExecutionEngine.RemoveModule(IJitModuleHandle)
+- uid: Llvm.NET.JIT.IExecutionEngine.RemoveModule*
   name: RemoveModule
-  href: api/Llvm.NET.JIT.IExecutionEngine-1.RemoveModule.html
-  commentId: Overload:Llvm.NET.JIT.IExecutionEngine`1.RemoveModule
-  fullName: Llvm.NET.JIT.IExecutionEngine<THandle>.RemoveModule
-  fullName.vb: Llvm.NET.JIT.IExecutionEngine(Of THandle).RemoveModule
-  nameWithType: IExecutionEngine<THandle>.RemoveModule
-  nameWithType.vb: IExecutionEngine(Of THandle).RemoveModule
-- uid: Llvm.NET.JIT.IExecutionEngine`1.TargetMachine
+  href: api/Llvm.NET.JIT.IExecutionEngine.RemoveModule.html
+  commentId: Overload:Llvm.NET.JIT.IExecutionEngine.RemoveModule
+  fullName: Llvm.NET.JIT.IExecutionEngine.RemoveModule
+  nameWithType: IExecutionEngine.RemoveModule
+- uid: Llvm.NET.JIT.IExecutionEngine.TargetMachine
   name: TargetMachine
-  href: api/Llvm.NET.JIT.IExecutionEngine-1.TargetMachine.html#Llvm_NET_JIT_IExecutionEngine_1_TargetMachine
-  commentId: P:Llvm.NET.JIT.IExecutionEngine`1.TargetMachine
-  fullName: Llvm.NET.JIT.IExecutionEngine<THandle>.TargetMachine
-  fullName.vb: Llvm.NET.JIT.IExecutionEngine(Of THandle).TargetMachine
-  nameWithType: IExecutionEngine<THandle>.TargetMachine
-  nameWithType.vb: IExecutionEngine(Of THandle).TargetMachine
-- uid: Llvm.NET.JIT.IExecutionEngine`1.TargetMachine*
+  href: api/Llvm.NET.JIT.IExecutionEngine.TargetMachine.html#Llvm_NET_JIT_IExecutionEngine_TargetMachine
+  commentId: P:Llvm.NET.JIT.IExecutionEngine.TargetMachine
+  fullName: Llvm.NET.JIT.IExecutionEngine.TargetMachine
+  nameWithType: IExecutionEngine.TargetMachine
+- uid: Llvm.NET.JIT.IExecutionEngine.TargetMachine*
   name: TargetMachine
-  href: api/Llvm.NET.JIT.IExecutionEngine-1.TargetMachine.html
-  commentId: Overload:Llvm.NET.JIT.IExecutionEngine`1.TargetMachine
-  fullName: Llvm.NET.JIT.IExecutionEngine<THandle>.TargetMachine
-  fullName.vb: Llvm.NET.JIT.IExecutionEngine(Of THandle).TargetMachine
-  nameWithType: IExecutionEngine<THandle>.TargetMachine
-  nameWithType.vb: IExecutionEngine(Of THandle).TargetMachine
+  href: api/Llvm.NET.JIT.IExecutionEngine.TargetMachine.html
+  commentId: Overload:Llvm.NET.JIT.IExecutionEngine.TargetMachine
+  fullName: Llvm.NET.JIT.IExecutionEngine.TargetMachine
+  nameWithType: IExecutionEngine.TargetMachine
+- uid: Llvm.NET.JIT.IJitModuleHandle
+  name: IJitModuleHandle
+  href: api/Llvm.NET.JIT.IJitModuleHandle.html
+  commentId: T:Llvm.NET.JIT.IJitModuleHandle
+  fullName: Llvm.NET.JIT.IJitModuleHandle
+  nameWithType: IJitModuleHandle
 - uid: Llvm.NET.JIT.LegacyExecutionEngine
   name: LegacyExecutionEngine
   href: api/Llvm.NET.JIT.LegacyExecutionEngine.html
@@ -9981,12 +9970,12 @@ references:
   fullName.vb: Llvm.NET.JIT.LegacyExecutionEngine.GetFunctionDelegate(Of T)(System.String)
   nameWithType: LegacyExecutionEngine.GetFunctionDelegate<T>(String)
   nameWithType.vb: LegacyExecutionEngine.GetFunctionDelegate(Of T)(String)
-- uid: Llvm.NET.JIT.LegacyExecutionEngine.RemoveModule(System.Int32)
-  name: RemoveModule(Int32)
-  href: api/Llvm.NET.JIT.LegacyExecutionEngine.RemoveModule.html#Llvm_NET_JIT_LegacyExecutionEngine_RemoveModule_System_Int32_
-  commentId: M:Llvm.NET.JIT.LegacyExecutionEngine.RemoveModule(System.Int32)
-  fullName: Llvm.NET.JIT.LegacyExecutionEngine.RemoveModule(System.Int32)
-  nameWithType: LegacyExecutionEngine.RemoveModule(Int32)
+- uid: Llvm.NET.JIT.LegacyExecutionEngine.RemoveModule(Llvm.NET.JIT.IJitModuleHandle)
+  name: RemoveModule(IJitModuleHandle)
+  href: api/Llvm.NET.JIT.LegacyExecutionEngine.RemoveModule.html#Llvm_NET_JIT_LegacyExecutionEngine_RemoveModule_Llvm_NET_JIT_IJitModuleHandle_
+  commentId: M:Llvm.NET.JIT.LegacyExecutionEngine.RemoveModule(Llvm.NET.JIT.IJitModuleHandle)
+  fullName: Llvm.NET.JIT.LegacyExecutionEngine.RemoveModule(Llvm.NET.JIT.IJitModuleHandle)
+  nameWithType: LegacyExecutionEngine.RemoveModule(IJitModuleHandle)
 - uid: Llvm.NET.JIT.LegacyExecutionEngine.RemoveModule*
   name: RemoveModule
   href: api/Llvm.NET.JIT.LegacyExecutionEngine.RemoveModule.html
@@ -10050,6 +10039,18 @@ references:
   commentId: Overload:Llvm.NET.JIT.OrcJit.#ctor
   fullName: Llvm.NET.JIT.OrcJit.OrcJit
   nameWithType: OrcJit.OrcJit
+- uid: Llvm.NET.JIT.OrcJit.AddInteropCallback(System.String,System.Delegate)
+  name: AddInteropCallback(String, Delegate)
+  href: api/Llvm.NET.JIT.OrcJit.AddInteropCallback.html#Llvm_NET_JIT_OrcJit_AddInteropCallback_System_String_System_Delegate_
+  commentId: M:Llvm.NET.JIT.OrcJit.AddInteropCallback(System.String,System.Delegate)
+  fullName: Llvm.NET.JIT.OrcJit.AddInteropCallback(System.String, System.Delegate)
+  nameWithType: OrcJit.AddInteropCallback(String, Delegate)
+- uid: Llvm.NET.JIT.OrcJit.AddInteropCallback*
+  name: AddInteropCallback
+  href: api/Llvm.NET.JIT.OrcJit.AddInteropCallback.html
+  commentId: Overload:Llvm.NET.JIT.OrcJit.AddInteropCallback
+  fullName: Llvm.NET.JIT.OrcJit.AddInteropCallback
+  nameWithType: OrcJit.AddInteropCallback
 - uid: Llvm.NET.JIT.OrcJit.AddModule(Llvm.NET.BitcodeModule)
   name: AddModule(BitcodeModule)
   href: api/Llvm.NET.JIT.OrcJit.AddModule.html#Llvm_NET_JIT_OrcJit_AddModule_Llvm_NET_BitcodeModule_
@@ -10119,72 +10120,12 @@ references:
   commentId: Overload:Llvm.NET.JIT.OrcJit.IsDisposed
   fullName: Llvm.NET.JIT.OrcJit.IsDisposed
   nameWithType: OrcJit.IsDisposed
-- uid: Llvm.NET.JIT.OrcJit.OrcJitHandle
-  name: OrcJit.OrcJitHandle
-  href: api/Llvm.NET.JIT.OrcJit.OrcJitHandle.html
-  commentId: T:Llvm.NET.JIT.OrcJit.OrcJitHandle
-  fullName: Llvm.NET.JIT.OrcJit.OrcJitHandle
-  nameWithType: OrcJit.OrcJitHandle
-- uid: Llvm.NET.JIT.OrcJit.OrcJitHandle.Equals(Llvm.NET.JIT.OrcJit.OrcJitHandle)
-  name: Equals(OrcJit.OrcJitHandle)
-  href: api/Llvm.NET.JIT.OrcJit.OrcJitHandle.Equals.html#Llvm_NET_JIT_OrcJit_OrcJitHandle_Equals_Llvm_NET_JIT_OrcJit_OrcJitHandle_
-  commentId: M:Llvm.NET.JIT.OrcJit.OrcJitHandle.Equals(Llvm.NET.JIT.OrcJit.OrcJitHandle)
-  fullName: Llvm.NET.JIT.OrcJit.OrcJitHandle.Equals(Llvm.NET.JIT.OrcJit.OrcJitHandle)
-  nameWithType: OrcJit.OrcJitHandle.Equals(OrcJit.OrcJitHandle)
-- uid: Llvm.NET.JIT.OrcJit.OrcJitHandle.Equals(System.Object)
-  name: Equals(Object)
-  href: api/Llvm.NET.JIT.OrcJit.OrcJitHandle.Equals.html#Llvm_NET_JIT_OrcJit_OrcJitHandle_Equals_System_Object_
-  commentId: M:Llvm.NET.JIT.OrcJit.OrcJitHandle.Equals(System.Object)
-  fullName: Llvm.NET.JIT.OrcJit.OrcJitHandle.Equals(System.Object)
-  nameWithType: OrcJit.OrcJitHandle.Equals(Object)
-- uid: Llvm.NET.JIT.OrcJit.OrcJitHandle.Equals*
-  name: Equals
-  href: api/Llvm.NET.JIT.OrcJit.OrcJitHandle.Equals.html
-  commentId: Overload:Llvm.NET.JIT.OrcJit.OrcJitHandle.Equals
-  fullName: Llvm.NET.JIT.OrcJit.OrcJitHandle.Equals
-  nameWithType: OrcJit.OrcJitHandle.Equals
-- uid: Llvm.NET.JIT.OrcJit.OrcJitHandle.GetHashCode
-  name: GetHashCode()
-  href: api/Llvm.NET.JIT.OrcJit.OrcJitHandle.GetHashCode.html#Llvm_NET_JIT_OrcJit_OrcJitHandle_GetHashCode
-  commentId: M:Llvm.NET.JIT.OrcJit.OrcJitHandle.GetHashCode
-  fullName: Llvm.NET.JIT.OrcJit.OrcJitHandle.GetHashCode()
-  nameWithType: OrcJit.OrcJitHandle.GetHashCode()
-- uid: Llvm.NET.JIT.OrcJit.OrcJitHandle.GetHashCode*
-  name: GetHashCode
-  href: api/Llvm.NET.JIT.OrcJit.OrcJitHandle.GetHashCode.html
-  commentId: Overload:Llvm.NET.JIT.OrcJit.OrcJitHandle.GetHashCode
-  fullName: Llvm.NET.JIT.OrcJit.OrcJitHandle.GetHashCode
-  nameWithType: OrcJit.OrcJitHandle.GetHashCode
-- uid: Llvm.NET.JIT.OrcJit.OrcJitHandle.op_Equality(Llvm.NET.JIT.OrcJit.OrcJitHandle,Llvm.NET.JIT.OrcJit.OrcJitHandle)
-  name: Equality(OrcJit.OrcJitHandle, OrcJit.OrcJitHandle)
-  href: api/Llvm.NET.JIT.OrcJit.OrcJitHandle.op_Equality.html#Llvm_NET_JIT_OrcJit_OrcJitHandle_op_Equality_Llvm_NET_JIT_OrcJit_OrcJitHandle_Llvm_NET_JIT_OrcJit_OrcJitHandle_
-  commentId: M:Llvm.NET.JIT.OrcJit.OrcJitHandle.op_Equality(Llvm.NET.JIT.OrcJit.OrcJitHandle,Llvm.NET.JIT.OrcJit.OrcJitHandle)
-  fullName: Llvm.NET.JIT.OrcJit.OrcJitHandle.Equality(Llvm.NET.JIT.OrcJit.OrcJitHandle, Llvm.NET.JIT.OrcJit.OrcJitHandle)
-  nameWithType: OrcJit.OrcJitHandle.Equality(OrcJit.OrcJitHandle, OrcJit.OrcJitHandle)
-- uid: Llvm.NET.JIT.OrcJit.OrcJitHandle.op_Equality*
-  name: Equality
-  href: api/Llvm.NET.JIT.OrcJit.OrcJitHandle.op_Equality.html
-  commentId: Overload:Llvm.NET.JIT.OrcJit.OrcJitHandle.op_Equality
-  fullName: Llvm.NET.JIT.OrcJit.OrcJitHandle.Equality
-  nameWithType: OrcJit.OrcJitHandle.Equality
-- uid: Llvm.NET.JIT.OrcJit.OrcJitHandle.op_Inequality(Llvm.NET.JIT.OrcJit.OrcJitHandle,Llvm.NET.JIT.OrcJit.OrcJitHandle)
-  name: Inequality(OrcJit.OrcJitHandle, OrcJit.OrcJitHandle)
-  href: api/Llvm.NET.JIT.OrcJit.OrcJitHandle.op_Inequality.html#Llvm_NET_JIT_OrcJit_OrcJitHandle_op_Inequality_Llvm_NET_JIT_OrcJit_OrcJitHandle_Llvm_NET_JIT_OrcJit_OrcJitHandle_
-  commentId: M:Llvm.NET.JIT.OrcJit.OrcJitHandle.op_Inequality(Llvm.NET.JIT.OrcJit.OrcJitHandle,Llvm.NET.JIT.OrcJit.OrcJitHandle)
-  fullName: Llvm.NET.JIT.OrcJit.OrcJitHandle.Inequality(Llvm.NET.JIT.OrcJit.OrcJitHandle, Llvm.NET.JIT.OrcJit.OrcJitHandle)
-  nameWithType: OrcJit.OrcJitHandle.Inequality(OrcJit.OrcJitHandle, OrcJit.OrcJitHandle)
-- uid: Llvm.NET.JIT.OrcJit.OrcJitHandle.op_Inequality*
-  name: Inequality
-  href: api/Llvm.NET.JIT.OrcJit.OrcJitHandle.op_Inequality.html
-  commentId: Overload:Llvm.NET.JIT.OrcJit.OrcJitHandle.op_Inequality
-  fullName: Llvm.NET.JIT.OrcJit.OrcJitHandle.Inequality
-  nameWithType: OrcJit.OrcJitHandle.Inequality
-- uid: Llvm.NET.JIT.OrcJit.RemoveModule(Llvm.NET.JIT.OrcJit.OrcJitHandle)
-  name: RemoveModule(OrcJit.OrcJitHandle)
-  href: api/Llvm.NET.JIT.OrcJit.RemoveModule.html#Llvm_NET_JIT_OrcJit_RemoveModule_Llvm_NET_JIT_OrcJit_OrcJitHandle_
-  commentId: M:Llvm.NET.JIT.OrcJit.RemoveModule(Llvm.NET.JIT.OrcJit.OrcJitHandle)
-  fullName: Llvm.NET.JIT.OrcJit.RemoveModule(Llvm.NET.JIT.OrcJit.OrcJitHandle)
-  nameWithType: OrcJit.RemoveModule(OrcJit.OrcJitHandle)
+- uid: Llvm.NET.JIT.OrcJit.RemoveModule(Llvm.NET.JIT.IJitModuleHandle)
+  name: RemoveModule(IJitModuleHandle)
+  href: api/Llvm.NET.JIT.OrcJit.RemoveModule.html#Llvm_NET_JIT_OrcJit_RemoveModule_Llvm_NET_JIT_IJitModuleHandle_
+  commentId: M:Llvm.NET.JIT.OrcJit.RemoveModule(Llvm.NET.JIT.IJitModuleHandle)
+  fullName: Llvm.NET.JIT.OrcJit.RemoveModule(Llvm.NET.JIT.IJitModuleHandle)
+  nameWithType: OrcJit.RemoveModule(IJitModuleHandle)
 - uid: Llvm.NET.JIT.OrcJit.RemoveModule*
   name: RemoveModule
   href: api/Llvm.NET.JIT.OrcJit.RemoveModule.html
