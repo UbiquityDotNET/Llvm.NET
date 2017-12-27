@@ -788,11 +788,6 @@ namespace Llvm.NET
         internal void RemoveModule( BitcodeModule module )
         {
             ModuleCache.Remove( module.ModuleHandle );
-            var values = ValueCache.OfType<GlobalObject>( ).Where( go => go.ParentModule == module ).ToList( );
-            foreach( var value in values )
-            {
-                ValueCache.Remove( value.ValueHandle );
-            }
         }
 
         internal BitcodeModule GetModuleFor( LLVMModuleRef moduleRef )

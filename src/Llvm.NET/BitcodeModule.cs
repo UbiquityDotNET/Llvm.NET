@@ -292,8 +292,33 @@ namespace Llvm.NET
         /// <inheritdoc/>
         public void Dispose( )
         {
-            Dispose( true );
-            GC.SuppressFinalize( this );
+            // if not already disposed, dispose the module
+            // Do this only on dispose. The containing context
+            // will clean up the module when it is disposed or
+            // finalized. Since finalization order isn't
+            // deterministic it is possible that the module is
+            // finalized after the context has already run its
+            // finalizer, which would cause an access violation
+            // in the native LLVM layer.
+            if( ModuleHandle != default )
+            {
+                // remove the module handle from the module cache.
+                Context.RemoveModule( this );
+
+                // if this module was shared with a JIT, just release
+                // the ref-count but don't dispose the actual module
+                if( IsShared )
+                {
+                    SharedModuleRef.Close( );
+                    SharedModuleRef = default;
+                }
+                else
+                {
+                    LLVMDisposeModule( ModuleHandle );
+                }
+
+                ModuleHandle = default;
+            }
         }
 
         /// <summary>Link another module into this one</summary>
@@ -915,37 +940,6 @@ namespace Llvm.NET
             Comdats = new ComdatCollection( this );
         }
 
-        private void Dispose( bool disposing )
-        {
-            // if not already disposed, dispose the module
-            // Do this only on dispose. The containing context
-            // will clean up the module when it is disposed or
-            // finalized. Since finalization order isn't
-            // deterministic it is possible that the module is
-            // finalized after the context has already run its
-            // finalizer, which would cause an access violation
-            // in the native LLVM layer.
-            if( disposing && ModuleHandle != default )
-            {
-                // remove the module handle from the module cache.
-                Context.RemoveModule( this );
-
-                // if this module was shared with a JIT, just release
-                // the ref-count but don't dispose the actual module
-                if( IsShared )
-                {
-                    SharedModuleRef.Close( );
-                    SharedModuleRef = default;
-                }
-                else
-                {
-                    LLVMDisposeModule( ModuleHandle );
-                }
-
-                ModuleHandle = default;
-            }
-        }
-
         private void ThrowIfDisposed( )
         {
             if( IsDisposed )
@@ -955,8 +949,8 @@ namespace Llvm.NET
         }
 
         // Do not write to this directly, use the property setter
-        // THis is cached since, internally the LLVM module APIs
-        // deal with C++ references, while that is manageable as
+        // This is cached since internally the LLVM module APIs
+        // deal with C++ references. While that is manageable as
         // a getter, it is problematic as a setter since there isn't
         // any sort of ownership transfer and the ownership is a bit
         // mirky, especally with a managed projection. Thus, the LLVM-C
