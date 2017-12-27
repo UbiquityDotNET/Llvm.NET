@@ -838,8 +838,8 @@ namespace Llvm.NET
             ContextHandle = contextRef;
             ContextCache.Add( this );
             ActiveHandler = new WrappedNativeCallback( new LLVMDiagnosticHandler( DiagnosticHandler ) );
-            LLVMContextSetDiagnosticHandler( ContextHandle, ActiveHandler.GetFuncPointer( ), IntPtr.Zero );
-            ValueCache = new Value.InterningFactory( this );
+            LLVMContextSetDiagnosticHandler( ContextHandle, ActiveHandler.NativeFuncPtr, IntPtr.Zero );
+            ValueCache = new ValueCache( this );
             EngineCache = new LegacyExecutionEngine.InterningFactory( this );
             ModuleCache = new BitcodeModule.InterningFactory( this );
             TypeCache = new TypeRef.InterningFactory( this );
@@ -851,6 +851,12 @@ namespace Llvm.NET
         /// <param name="disposing">Flag to indicate if this object is being disposed</param>
         protected override void InternalDispose( bool disposing )
         {
+            // disconnect all modules as some may be sharedmodules shared to a JIT
+            foreach( var module in Modules )
+            {
+                module.Dispose( );
+            }
+
             // make sure engines are disposed before disposing the context
             // as they hold on to all owned Modules, which are ultimately destroyed
             // when the context is, so when the GC finalizes the execution engine
@@ -875,7 +881,7 @@ namespace Llvm.NET
         private WrappedNativeCallback ActiveHandler;
 
         // child item wrapper factories
-        private readonly Value.InterningFactory ValueCache;
+        private readonly ValueCache ValueCache;
         private readonly LegacyExecutionEngine.InterningFactory EngineCache;
         private readonly BitcodeModule.InterningFactory ModuleCache;
         private readonly TypeRef.InterningFactory TypeCache;

@@ -23,7 +23,7 @@ namespace Kaleidoscope
 
         public override int VisitBinaryPrototype( [NotNull] BinaryPrototypeContext context )
         {
-            if( !ParserStack.Parser.TryAddOperator( context.Op, OperatorKind.InfixLeftAssociative, context.Precedence ) )
+            if( !ParserStack.GlobalState.TryAddOperator( context.Op, OperatorKind.InfixLeftAssociative, context.Precedence ) )
             {
                 throw new ArgumentException( "Cannot replace built-in operators", nameof( context ) );
             }
@@ -33,7 +33,7 @@ namespace Kaleidoscope
 
         public override int VisitUnaryPrototype( [NotNull] UnaryPrototypeContext context )
         {
-            if( !ParserStack.Parser.TryAddOperator( context.Op, OperatorKind.PreFix, 0 ) )
+            if( !ParserStack.GlobalState.TryAddOperator( context.Op, OperatorKind.PreFix, 0 ) )
             {
                 throw new ArgumentException( "Cannot replace built-in operators", nameof( context ) );
             }

@@ -15,20 +15,6 @@ namespace Kaleidoscope
             Add( info );
         }
 
-// .NET Core APP 2.0 defines this but .NET Standard 2.0 and .NET 4.x do not, sigh...
-#if !NETCOREAPP2_0
-        public bool TryGetValue( string key, out Prototype item )
-        {
-            item = default;
-            if( Dictionary == null )
-            {
-                return false;
-            }
-
-            return Dictionary.TryGetValue( key, out item );
-        }
-#endif
-
         protected override string GetKeyForItem( Prototype item ) => item.Identifier.Name;
     }
 }

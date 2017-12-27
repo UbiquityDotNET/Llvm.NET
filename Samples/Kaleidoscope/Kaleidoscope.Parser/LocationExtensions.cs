@@ -3,6 +3,7 @@
 // </copyright>
 
 using Antlr4.Runtime;
+using Antlr4.Runtime.Tree;
 
 namespace Kaleidoscope.Grammar
 {
@@ -25,6 +26,16 @@ namespace Kaleidoscope.Grammar
             }
 
             return default;
+        }
+
+        public static SourceSpan GetSourceSpan( this ITerminalNode node )
+        {
+            return GetSourceSpan( node.Symbol );
+        }
+
+        public static SourceSpan GetSourceSpan( this IToken token )
+        {
+            return new SourceSpan( token.Line, token.Column, token.Line, token.Column + token.Text.Length );
         }
     }
 }

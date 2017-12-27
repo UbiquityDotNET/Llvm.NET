@@ -595,7 +595,7 @@ namespace Llvm.NET
         // version info for verification of matched LibLLVM
         private const int VersionMajor = 5;
         private const int VersionMinor = 0;
-        private const int VersionPatch = 0;
+        private const int VersionPatch = 1;
 
         private static IDisposable LlvmInitializationState;
         private static object InitializationSyncObj;

@@ -10,17 +10,19 @@ namespace Llvm.NET.Tests
     [TestClass]
     public class MDNodeTests
     {
-        [TestMethod]
-        public void ResolveCyclesTest( )
-        {
-            Assert.Inconclusive( );
-        }
+        /*[TestMethod]
+        //public void ResolveCyclesTest( )
+        //{
+        //    Assert.Inconclusive( );
+        //}
+        */
 
-        [TestMethod]
-        public void ReplaceAllUsesWithTest( )
-        {
-            Assert.Inconclusive( );
-        }
+        /*[TestMethod]
+        //public void ReplaceAllUsesWithTest( )
+        //{
+        //    Assert.Inconclusive( );
+        //}
+        */
 
         [TestMethod]
         public void OperandsAreAccessibleTest()

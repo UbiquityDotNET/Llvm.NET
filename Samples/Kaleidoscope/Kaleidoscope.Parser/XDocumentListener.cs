@@ -22,6 +22,7 @@ namespace Kaleidoscope.Grammar
 
         public XDocument Document { get; }
 
+/*
         public override void EnterIdentifier( [NotNull] KaleidoscopeParser.IdentifierContext context )
         {
             ActiveNode.Add( new XAttribute( "Name", context.Name ) );
@@ -31,22 +32,27 @@ namespace Kaleidoscope.Grammar
         {
             ActiveNode.Add( new XAttribute( "Op", context.Op ) );
         }
-
+*/
         public override void EnterUnaryOpExpression( [NotNull] KaleidoscopeParser.UnaryOpExpressionContext context )
         {
             ActiveNode.Add( new XAttribute( "Op", context.Op ) );
         }
 
-        public override void EnterEveryRule( [NotNull] ParserRuleContext context )
+        public override void EnterExpression( [NotNull] KaleidoscopeParser.ExpressionContext context )
         {
-            string typeName = context.GetType( ).Name;
-            Push( new XElement( typeName.Substring( 0, typeName.Length - ContextTypeNameSuffix.Length ) ) );
+            base.EnterExpression( context );
         }
 
         public override void VisitTerminal( [NotNull] ITerminalNode node )
         {
             string nodeName = KaleidoscopeLexer.DefaultVocabulary.GetDisplayName( node.Symbol.Type );
             ActiveNode.Add( new XElement( "Terminal", new XAttribute( "Value", node.GetText( ) ) ) );
+        }
+
+        public override void EnterEveryRule( [NotNull] ParserRuleContext context )
+        {
+            string typeName = context.GetType( ).Name;
+            Push( new XElement( typeName.Substring( 0, typeName.Length - ContextTypeNameSuffix.Length ) ) );
         }
 
         public override void ExitEveryRule( [NotNull] ParserRuleContext context )

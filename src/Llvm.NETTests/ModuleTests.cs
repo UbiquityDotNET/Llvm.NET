@@ -446,6 +446,7 @@ namespace Llvm.NET.Tests
             }
         }
 
+/*
         [TestMethod]
         public void AddNamedMetadataOperandTest( )
         {
@@ -463,7 +464,7 @@ namespace Llvm.NET.Tests
         {
             Assert.Inconclusive( );
         }
-
+*/
         [TestMethod]
         public void ComdatDataTest( )
         {

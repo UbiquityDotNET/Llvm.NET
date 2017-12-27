@@ -4,12 +4,17 @@
 
 using System;
 using System.Collections.Generic;
+using Antlr4.Runtime;
 using Kaleidoscope.Grammar;
-
-using static Kaleidoscope.Grammar.KaleidoscopeParser;
 
 namespace Kaleidoscope
 {
+    /// <summary>Description of an identifier in Kaleidoscope code generation</summary>
+    /// <remarks>
+    /// This is distinct from te parse tree nodes as code generation sometimes needs to
+    /// synthesize an identifier (i.e. Building function the definition for an anonymous
+    /// top level expression)
+    /// </remarks>
     public struct Identifier
         : IEquatable<Identifier>
     {
@@ -24,8 +29,8 @@ namespace Kaleidoscope
             Span = span;
         }
 
-        public Identifier( IdentifierContext context )
-            : this( context.Name, context.GetSourceSpan( ) )
+        public Identifier( IToken context )
+            : this( context.Text, context.GetSourceSpan() )
         {
         }
 

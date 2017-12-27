@@ -2,15 +2,12 @@
 // Copyright (c) .NET Foundation. All rights reserved.
 // </copyright>
 
-using System;
 using System.Runtime.InteropServices;
 
 namespace Llvm.NET.JIT
 {
     /// <summary>Common interface for an Execution engine</summary>
-    /// <typeparam name="THandle">Type of handle used as "cookie" to identify each module added</typeparam>
-    public interface IExecutionEngine<THandle>
-        where THandle : struct, IEquatable<THandle>
+    public interface IExecutionEngine
     {
         /// <summary>Gets the Target machine for this engine</summary>
         TargetMachine TargetMachine { get; }
@@ -30,14 +27,14 @@ namespace Llvm.NET.JIT
         /// behavior.</para>
         /// </note>
         /// </remarks>
-        THandle AddModule( BitcodeModule module );
+        IJitModuleHandle AddModule( BitcodeModule module );
 
         /// <summary>Removes a module from the engine</summary>
         /// <param name="handle"><see cref="AddModule(BitcodeModule)"/> to remove</param>
         /// <remarks>
         /// This effectively transfers ownership of the module back to the caller.
         /// </remarks>
-        void RemoveModule( THandle handle );
+        void RemoveModule( IJitModuleHandle handle );
 
         /// <summary>Gets a delegate for the native compiled function in the engine</summary>
         /// <typeparam name="T">Type of the delegate to retrieve</typeparam>

@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Antlr4.Runtime.Misc;
+using Antlr4.Runtime.Tree;
 using Kaleidoscope.Grammar;
 using Llvm.NET;
 using Llvm.NET.Instructions;
@@ -64,22 +65,67 @@ namespace Kaleidoscope
             string varName = context.Name;
             if( !NamedValues.TryGetValue( varName, out Value value ) )
             {
-                throw new ArgumentException( "Unknown variable name", nameof( context ) );
+                throw new CodeGeneratorException( $"Unknown variable name: {context}" );
             }
 
            return value;
         }
 
-        public override Value VisitBinaryOpExpression( [NotNull] BinaryOpExpressionContext context )
+        public override Value VisitFunctionCallExpression( [NotNull] FunctionCallExpressionContext context )
         {
-            var lhs = context.Lhs.Accept( this );
-            var rhs = context.Rhs.Accept( this );
+            var function = GetFunction( context.CaleeName );
+            if( function == null )
+            {
+                throw new CodeGeneratorException( $"function '{context.CaleeName}' is unknown" );
+            }
+
+            var args = context.Args.Select( ctx => ctx.Accept( this ) ).ToArray( );
+            return InstructionBuilder.Call( function, args ).RegisterName( "calltmp" );
+        }
+
+        public override Value VisitFunctionPrototype( [NotNull] FunctionPrototypeContext context )
+        {
+            return GetOrDeclareFunction( new Prototype( context ) );
+        }
+
+        public override Value VisitFunctionDefinition( [NotNull] FunctionDefinitionContext context )
+        {
+            return DefineFunction( ( Function )context.Signature.Accept( this )
+                                 , context.BodyExpression
+                                 );
+        }
+
+        public override Value VisitTopLevelExpression( [NotNull] TopLevelExpressionContext context )
+        {
+            var function = GetOrDeclareFunction( new Prototype( $"anon_expr_{AnonNameIndex++}" ) );
+
+            return DefineFunction( function, context.expression() );
+        }
+
+        public override Value VisitExpression( [NotNull] ExpressionContext context )
+        {
+            // Expression: PrimaryExpression (op expression)*
+            // the sub-expressions are in evaluation order
+            var lhs = context.primaryExpression( ).Accept( this );
+            foreach( var (op, rhs) in context.OperatorExpressions )
+            {
+                lhs = EmitBinaryOperator( lhs, op, rhs );
+            }
+
+            return lhs;
+        }
+
+        protected override Value DefaultResult => null;
+
+        private Value EmitBinaryOperator( Value lhs, OpsymbolContext opSymbol, IParseTree rightTree )
+        {
+            var rhs = rightTree.Accept( this );
             if( lhs == null || rhs == null )
             {
                 return null;
             }
 
-            switch( context.Op )
+            switch( opSymbol.Op )
             {
             case '<':
                 {
@@ -109,42 +155,9 @@ namespace Kaleidoscope
                 return InstructionBuilder.FDiv( lhs, rhs ).RegisterName( "divtmp" );
 
             default:
-                throw new ArgumentException( $"Invalid binary operator {context.Op}", nameof( context ) );
+                throw new CodeGeneratorException( $"Invalid binary operator {opSymbol.Op}" );
             }
         }
-
-        public override Value VisitFunctionCallExpression( [NotNull] FunctionCallExpressionContext context )
-        {
-            var function = GetFunction( context.CaleeName );
-            if( function == null )
-            {
-                throw new ArgumentException( $"Unknown function reference {context.CaleeName}", nameof( context ) );
-            }
-
-            var args = context.Args.Select( ctx => ctx.Accept( this ) ).ToArray( );
-            return InstructionBuilder.Call( function, args ).RegisterName( "calltmp" );
-        }
-
-        public override Value VisitFunctionPrototype( [NotNull] FunctionPrototypeContext context )
-        {
-            return GetOrDeclareFunction( new Prototype( context ) );
-        }
-
-        public override Value VisitFunctionDefinition( [NotNull] FunctionDefinitionContext context )
-        {
-            return DefineFunction( ( Function )context.Signature.Accept( this )
-                                 , context.BodyExpression
-                                 );
-        }
-
-        public override Value VisitTopLevelExpression( [NotNull] TopLevelExpressionContext context )
-        {
-            var function = GetOrDeclareFunction( new Prototype( $"anon_expr_{AnonNameIndex++}" ) );
-
-            return DefineFunction( function, context.expression() );
-        }
-
-        protected override Value DefaultResult => null;
 
         private Function GetFunction( string name )
         {
@@ -178,7 +191,7 @@ namespace Kaleidoscope
         {
             if( !function.IsDeclaration )
             {
-                throw new ArgumentException( $"Function {function.Name} cannot be redefined", nameof( function ) );
+                throw new CodeGeneratorException( $"Function {function.Name} cannot be redefined in the same module" );
             }
 
             var basicBlock = function.AppendBasicBlock( "entry" );

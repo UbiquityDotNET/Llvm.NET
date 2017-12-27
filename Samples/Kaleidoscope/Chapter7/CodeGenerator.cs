@@ -4,13 +4,14 @@
 
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
 using System.Runtime.InteropServices;
 using Antlr4.Runtime.Misc;
+using Antlr4.Runtime.Tree;
 using Kaleidoscope.Grammar;
 using Llvm.NET;
 using Llvm.NET.Instructions;
+using Llvm.NET.JIT;
 using Llvm.NET.Transforms;
 using Llvm.NET.Values;
 
@@ -32,6 +33,7 @@ namespace Kaleidoscope
             NamedValues = new Dictionary<string, Alloca>( );
             FunctionPrototypes = new PrototypeCollection( );
             ParserStack = new ReplParserStack( level );
+            FunctionModuleMap = new Dictionary<string, IJitModuleHandle>( );
         }
 
         public ReplParserStack ParserStack { get; }
@@ -50,8 +52,11 @@ namespace Kaleidoscope
 
         public PrototypeCollection FunctionPrototypes { get; }
 
+        public Dictionary<string, IJitModuleHandle> FunctionModuleMap { get; }
+
         public void Dispose( )
         {
+            JIT.Dispose( );
             Context.Dispose( );
         }
 
@@ -75,90 +80,11 @@ namespace Kaleidoscope
             string varName = context.Name;
             if( !NamedValues.TryGetValue( varName, out Alloca value ) )
             {
-                throw new ArgumentException( "Unknown variable name", nameof( context ) );
+                throw new CodeGeneratorException( $"Unknown variable name: {context}" );
             }
 
             return InstructionBuilder.Load( value )
                                      .RegisterName( varName );
-        }
-
-        public override Value VisitUnaryOpExpression( [NotNull] UnaryOpExpressionContext context )
-        {
-            var opKind = context.GetOperatorInfo( ParserStack.Parser );
-            if( opKind == OperatorKind.None )
-            {
-                throw new ArgumentException( $"invalid unary operator {context.Op}", nameof( context ) );
-            }
-
-            string calleeName = $"$unary{context.Op}";
-            var function = GetFunction( calleeName );
-            if( function == null )
-            {
-                throw new ArgumentException( $"Unknown function reference {calleeName}", nameof( context ) );
-            }
-
-            var arg = context.Rhs.Accept( this );
-            return InstructionBuilder.Call( function, arg ).RegisterName( "calltmp" );
-        }
-
-        public override Value VisitBinaryOpExpression( [NotNull] BinaryOpExpressionContext context )
-        {
-            var lhs = context.Lhs.Accept( this );
-            var rhs = context.Rhs.Accept( this );
-            if( lhs == null || rhs == null )
-            {
-                return null;
-            }
-
-            switch( context.Op )
-            {
-            case '<':
-                {
-                    var tmp = InstructionBuilder.Compare( RealPredicate.UnorderedOrLessThan, lhs, rhs )
-                                                .RegisterName( "cmptmp" );
-                    return InstructionBuilder.UIToFPCast( tmp, InstructionBuilder.Context.DoubleType )
-                                             .RegisterName( "booltmp" );
-                }
-
-            case '^':
-                {
-                    var pow = GetOrDeclareFunction( new Prototype( "llvm.pow.f64", "value", "power" ) );
-                    return InstructionBuilder.Call( pow, lhs, rhs )
-                                             .RegisterName( "powtmp" );
-                }
-
-            case '+':
-                return InstructionBuilder.FAdd( lhs, rhs ).RegisterName( "addtmp" );
-
-            case '-':
-                return InstructionBuilder.FSub( lhs, rhs ).RegisterName( "subtmp" );
-
-            case '*':
-                return InstructionBuilder.FMul( lhs, rhs ).RegisterName( "multmp" );
-
-            case '/':
-                return InstructionBuilder.FDiv( lhs, rhs ).RegisterName( "divtmp" );
-
-            default:
-                {
-                    // User defined op?
-                    var opKind = context.GetOperatorInfo( ParserStack.Parser );
-                    if( opKind != OperatorKind.InfixLeftAssociative && opKind != OperatorKind.InfixRightAssociative )
-                    {
-                        throw new ArgumentException( $"Invalid binary operator {context.Op}", nameof( context ) );
-                    }
-
-                    string calleeName = $"$binary{context.Op}";
-                    var function = GetFunction( calleeName );
-                    if( function == null )
-                    {
-                        throw new ArgumentException( $"Unknown function reference {calleeName}", nameof( context ) );
-                    }
-
-                    var args = context.Args.Select( a => a.Accept( this ) ).ToList( );
-                    return InstructionBuilder.Call( function, args ).RegisterName( "calltmp" );
-                }
-            }
         }
 
         public override Value VisitFunctionCallExpression( [NotNull] FunctionCallExpressionContext context )
@@ -166,31 +92,11 @@ namespace Kaleidoscope
             var function = GetFunction( context.CaleeName );
             if( function == null )
             {
-                throw new ArgumentException( $"Unknown function reference {context.CaleeName}", nameof( context ) );
+                throw new CodeGeneratorException( $"function '{context.CaleeName}' is unknown" );
             }
 
             var args = context.Args.Select( ctx => ctx.Accept( this ) ).ToArray( );
             return InstructionBuilder.Call( function, args ).RegisterName( "calltmp" );
-        }
-
-        public override Value VisitBinaryPrototype( [NotNull] BinaryPrototypeContext context )
-        {
-            if( !ParserStack.Parser.TryAddOperator( context.Op, OperatorKind.InfixLeftAssociative, context.Precedence ) )
-            {
-                throw new ArgumentException( "Cannot replace built-in operators", nameof( context ) );
-            }
-
-            return GetOrDeclareFunction( new Prototype( context, context.GetPrototypeName( ) ) );
-        }
-
-        public override Value VisitUnaryPrototype( [NotNull] UnaryPrototypeContext context )
-        {
-            if( !ParserStack.Parser.TryAddOperator( context.Op, OperatorKind.PreFix, 0 ) )
-            {
-                throw new ArgumentException( "Cannot replace built-in operators", nameof( context ) );
-            }
-
-            return GetOrDeclareFunction( new Prototype( context, context.GetPrototypeName( ) ) );
         }
 
         public override Value VisitFunctionPrototype( [NotNull] FunctionPrototypeContext context )
@@ -218,6 +124,19 @@ namespace Kaleidoscope
             var retVal = Context.CreateConstant( nativeFunc( ) );
             JIT.RemoveModule( jitHandle );
             return retVal;
+        }
+
+        public override Value VisitExpression( [NotNull] ExpressionContext context )
+        {
+            // Expression: PrimaryExpression (op expression)*
+            // the sub-expressions are in evaluation order
+            var lhs = context.primaryExpression( ).Accept( this );
+            foreach( var (op, rhs) in context.OperatorExpressions )
+            {
+                lhs = EmitBinaryOperator( lhs, op, rhs );
+            }
+
+            return lhs;
         }
 
         public override Value VisitConditionalExpression( [NotNull] ConditionalExpressionContext context )
@@ -347,7 +266,6 @@ namespace Kaleidoscope
 
             Value stepValue = Context.CreateConstant( 1.0 );
 
-            // DEBUG: How does ANTLR represent optional context (Null or IsEmpty == true)
             if( context.StepExpression != null )
             {
                 stepValue = context.StepExpression.Accept( this );
@@ -371,7 +289,7 @@ namespace Kaleidoscope
             InstructionBuilder.Store( nextVar, allocaVar );
 
             // Convert condition to a bool by comparing non-equal to 0.0.
-            endCondition = InstructionBuilder.Compare( RealPredicate.OrderedAndNotEqual, endCondition, Context.CreateConstant( 1.0 ) )
+            endCondition = InstructionBuilder.Compare( RealPredicate.OrderedAndNotEqual, endCondition, Context.CreateConstant( 0.0 ) )
                                              .RegisterName( "loopcond" );
 
             // Create the "after loop" block and insert it.
@@ -399,6 +317,46 @@ namespace Kaleidoscope
             return Context.DoubleType.GetNullValue( );
         }
 
+        public override Value VisitUnaryOpExpression( [NotNull] UnaryOpExpressionContext context )
+        {
+            // verify the operator was previously defined
+            var opKind = ParserStack.GlobalState.GetUnaryOperatorInfo( context.Op ).Kind;
+            if( opKind == OperatorKind.None )
+            {
+                throw new CodeGeneratorException( $"invalid unary operator {context.Op}" );
+            }
+
+            string calleeName = $"$unary{context.Op}";
+            var function = GetFunction( calleeName );
+            if( function == null )
+            {
+                throw new CodeGeneratorException( $"Unknown function reference {calleeName}" );
+            }
+
+            var arg = context.Rhs.Accept( this );
+            return InstructionBuilder.Call( function, arg ).RegisterName( "calltmp" );
+        }
+
+        public override Value VisitBinaryPrototype( [NotNull] BinaryPrototypeContext context )
+        {
+            if( !ParserStack.GlobalState.TryAddOperator( context.Op, OperatorKind.InfixLeftAssociative, context.Precedence ) )
+            {
+                throw new CodeGeneratorException( "Cannot replace built-in operators" );
+            }
+
+            return GetOrDeclareFunction( new Prototype( context, context.GetPrototypeName( ) ) );
+        }
+
+        public override Value VisitUnaryPrototype( [NotNull] UnaryPrototypeContext context )
+        {
+            if( !ParserStack.GlobalState.TryAddOperator( context.Op, OperatorKind.PreFix, 0 ) )
+            {
+                throw new CodeGeneratorException( "Cannot replace built-in operators" );
+            }
+
+            return GetOrDeclareFunction( new Prototype( context, context.GetPrototypeName( ) ) );
+        }
+
         public override Value VisitAssignmentExpression( [NotNull] AssignmentExpressionContext context )
         {
             var rhs = context.Value.Accept( this );
@@ -409,7 +367,7 @@ namespace Kaleidoscope
 
             if( !NamedValues.TryGetValue( context.VariableName, out Alloca varSlot ) )
             {
-                throw new ArgumentException( "Unknown variable name" );
+                throw new CodeGeneratorException( $"Unknown variable name {context.VariableName}" );
             }
 
             InstructionBuilder.Store( rhs, varSlot );
@@ -451,9 +409,67 @@ namespace Kaleidoscope
 
         protected override Value DefaultResult => null;
 
+        private Value EmitBinaryOperator( Value lhs, OpsymbolContext opSymbol, IParseTree rightTree )
+        {
+            var rhs = rightTree.Accept( this );
+            if( lhs == null || rhs == null )
+            {
+                return null;
+            }
+
+            switch( opSymbol.Op )
+            {
+            case '<':
+                {
+                    var tmp = InstructionBuilder.Compare( RealPredicate.UnorderedOrLessThan, lhs, rhs )
+                                                .RegisterName( "cmptmp" );
+                    return InstructionBuilder.UIToFPCast( tmp, InstructionBuilder.Context.DoubleType )
+                                             .RegisterName( "booltmp" );
+                }
+
+            case '^':
+                {
+                    var pow = GetOrDeclareFunction( new Prototype( "llvm.pow.f64", "value", "power" ) );
+                    return InstructionBuilder.Call( pow, lhs, rhs )
+                                             .RegisterName( "powtmp" );
+                }
+
+            case '+':
+                return InstructionBuilder.FAdd( lhs, rhs ).RegisterName( "addtmp" );
+
+            case '-':
+                return InstructionBuilder.FSub( lhs, rhs ).RegisterName( "subtmp" );
+
+            case '*':
+                return InstructionBuilder.FMul( lhs, rhs ).RegisterName( "multmp" );
+
+            case '/':
+                return InstructionBuilder.FDiv( lhs, rhs ).RegisterName( "divtmp" );
+
+            default:
+                {
+                    // User defined op?
+                    var opKind = ParserStack.GlobalState.GetBinOperatorInfo( opSymbol.Op ).Kind;
+                    if( opKind != OperatorKind.InfixLeftAssociative && opKind != OperatorKind.InfixRightAssociative )
+                    {
+                        throw new CodeGeneratorException( $"Invalid binary operator {opSymbol.Op}" );
+                    }
+
+                    string calleeName = $"$binary{opSymbol.Op}";
+                    var function = GetFunction( calleeName );
+                    if( function == null )
+                    {
+                        throw new CodeGeneratorException( $"Unknown function reference {calleeName}" );
+                    }
+
+                    return InstructionBuilder.Call( function, lhs, rhs ).RegisterName( "calltmp" );
+                }
+            }
+        }
+
         private void InitializeModuleAndPassManager( )
         {
-            Module = Context.CreateBitcodeModule( "Kaleidoscope" );
+            Module = Context.CreateBitcodeModule( );
             FunctionPassManager = new FunctionPassManager( Module );
             FunctionPassManager.AddPromoteMemoryToRegisterPass()
                                .AddInstructionCombiningPass( )
@@ -507,11 +523,23 @@ namespace Kaleidoscope
             return retVal;
         }
 
-        private (Function Function, int JitHandle) DefineFunction( Function function, ExpressionContext body )
+        private (Function Function, IJitModuleHandle JitHandle) DefineFunction( Function function, ExpressionContext body )
         {
             if( !function.IsDeclaration )
             {
-                throw new ArgumentException( $"Function {function.Name} cannot be redefined", nameof( function ) );
+                throw new CodeGeneratorException( $"Function {function.Name} cannot be redefined in the same module" );
+            }
+
+            // Destroy any previously generated module for this function.
+            // This allows re-definition as the new module will provide the
+            // implementation. This is needed, otherwise both the MCJIT
+            // and OrcJit engines will resolve to the original module, despite
+            // claims to the contrary in the official tutorial text. (Though,
+            // to be fare it may have been true in the original JIT and might
+            // still be true for the interpreter)
+            if( FunctionModuleMap.Remove( function.Name, out IJitModuleHandle handle ) )
+            {
+                JIT.RemoveModule( handle );
             }
 
             var basicBlock = function.AppendBasicBlock( "entry" );
@@ -533,10 +561,10 @@ namespace Kaleidoscope
 
             InstructionBuilder.Return( funcReturn );
             function.Verify( );
-            Trace.TraceInformation( function.ToString( ) );
 
             FunctionPassManager.Run( function );
-            int jitHandle = JIT.AddModule( Module );
+            var jitHandle = JIT.AddModule( Module );
+            FunctionModuleMap.Add( function.Name, jitHandle );
             InitializeModuleAndPassManager( );
             return (function, jitHandle);
         }
