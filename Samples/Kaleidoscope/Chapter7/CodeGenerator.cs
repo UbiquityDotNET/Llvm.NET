@@ -6,9 +6,11 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.InteropServices;
+using Antlr4.Runtime;
 using Antlr4.Runtime.Misc;
 using Antlr4.Runtime.Tree;
 using Kaleidoscope.Grammar;
+using Kaleidoscope.Runtime;
 using Llvm.NET;
 using Llvm.NET.Instructions;
 using Llvm.NET.JIT;
@@ -23,41 +25,36 @@ namespace Kaleidoscope
     internal sealed class CodeGenerator
         : KaleidoscopeBaseVisitor<Value>
         , IDisposable
+        , IKaleidoscopeCodeGenerator<Value>
     {
-        public CodeGenerator( LanguageLevel level )
+        public CodeGenerator( DynamicRuntimeState globalState )
         {
+            RuntimeState = globalState;
             Context = new Context( );
             InitializeModuleAndPassManager( );
             InstructionBuilder = new InstructionBuilder( Context );
             JIT = new KaleidoscopeJIT( );
-            NamedValues = new Dictionary<string, Alloca>( );
             FunctionPrototypes = new PrototypeCollection( );
-            ParserStack = new ReplParserStack( level );
             FunctionModuleMap = new Dictionary<string, IJitModuleHandle>( );
+            NamedValues = new ScopeStack<Alloca>( );
         }
 
-        public ReplParserStack ParserStack { get; }
-
-        public Context Context { get; }
-
-        public BitcodeModule Module { get; private set; }
-
-        public FunctionPassManager FunctionPassManager { get; private set; }
-
-        public InstructionBuilder InstructionBuilder { get; }
-
-        public IDictionary<string, Alloca> NamedValues { get; }
-
-        public KaleidoscopeJIT JIT { get; }
-
-        public PrototypeCollection FunctionPrototypes { get; }
-
-        public Dictionary<string, IJitModuleHandle> FunctionModuleMap { get; }
+        public bool DisableOptimizations { get; set; }
 
         public void Dispose( )
         {
             JIT.Dispose( );
             Context.Dispose( );
+        }
+
+        public Value Generate( Parser parser, IParseTree tree, DiagnosticRepresentations additionalDiagnostics )
+        {
+            if( parser.NumberOfSyntaxErrors > 0 )
+            {
+                return null;
+            }
+
+            return Visit( tree );
         }
 
         public override Value VisitParenExpression( [NotNull] ParenExpressionContext context )
@@ -118,7 +115,7 @@ namespace Kaleidoscope
                                                , isAnonymous: true
                                                );
 
-            var (_, jitHandle) = DefineFunction( function, context.expression() );
+            var (_, jitHandle) = DefineFunction( function, context.expression( ) );
 
             var nativeFunc = JIT.GetDelegateForFunction<AnonExpressionFunc>( proto.Identifier.Name );
             var retVal = Context.CreateConstant( nativeFunc( ) );
@@ -130,7 +127,27 @@ namespace Kaleidoscope
         {
             // Expression: PrimaryExpression (op expression)*
             // the sub-expressions are in evaluation order
-            var lhs = context.primaryExpression( ).Accept( this );
+            //
+            // Special case the assignment operator as there isn't anything to emit
+            // for the lhs expression. (If it was emitted it would be a load of the
+            // value and assignment needs a place to store the value)
+            Value lhs = null;
+            var firstOp = context.GetChild<ITerminalNode>( 0 );
+            if( context.IsAssignment )
+            {
+                var target = context.AssignmentTarget;
+                if( !NamedValues.TryGetValue( target.Name, out Alloca varSlot ) )
+                {
+                    throw new CodeGeneratorException( $"Unknown variable name {target.Name}" );
+                }
+
+                lhs = varSlot;
+            }
+            else
+            {
+                lhs = context.primaryExpression( ).Accept( this );
+            }
+
             foreach( var (op, rhs) in context.OperatorExpressions )
             {
                 lhs = EmitBinaryOperator( lhs, op, rhs );
@@ -251,82 +268,74 @@ namespace Kaleidoscope
 
             variable.AddIncoming( startVal, preHeaderBlock );
 
-            // Within the loop, the variable is defined equal to the PHI node.  If it
-            // shadows an existing variable, we have to restore it, so save it now.
-            NamedValues.TryGetValue( varName, out Alloca oldValue );
-            NamedValues[ varName ] = allocaVar;
-
-            // Emit the body of the loop.  This, like any other expr, can change the
-            // current BB.  Note that we ignore the value computed by the body, but don't
-            // allow an error.
-            if( context.BodyExpression.Accept( this ) == null )
+            // Within the loop, the variable is defined equal to the PHI node.
+            // So, push a new scope for it and any values the body might set
+            using( NamedValues.EnterScope( ) )
             {
-                return null;
-            }
+                NamedValues[ varName ] = allocaVar;
 
-            Value stepValue = Context.CreateConstant( 1.0 );
-
-            if( context.StepExpression != null )
-            {
-                stepValue = context.StepExpression.Accept( this );
-                if( stepValue == null )
+                // Emit the body of the loop.  This, like any other expr, can change the
+                // current BB.  Note that we ignore the value computed by the body, but don't
+                // allow an error.
+                if( context.BodyExpression.Accept( this ) == null )
                 {
                     return null;
                 }
+
+                Value stepValue = Context.CreateConstant( 1.0 );
+
+                if( context.StepExpression != null )
+                {
+                    stepValue = context.StepExpression.Accept( this );
+                    if( stepValue == null )
+                    {
+                        return null;
+                    }
+                }
+
+                // Compute the end condition.
+                Value endCondition = context.EndExpression.Accept( this );
+                if( endCondition == null )
+                {
+                    return null;
+                }
+
+                var curVar = InstructionBuilder.Load( allocaVar )
+                                               .RegisterName( varName );
+                var nextVar = InstructionBuilder.FAdd( curVar, stepValue )
+                                                .RegisterName( "nextvar" );
+                InstructionBuilder.Store( nextVar, allocaVar );
+
+                // Convert condition to a bool by comparing non-equal to 0.0.
+                endCondition = InstructionBuilder.Compare( RealPredicate.OrderedAndNotEqual, endCondition, Context.CreateConstant( 0.0 ) )
+                                                 .RegisterName( "loopcond" );
+
+                // Create the "after loop" block and insert it.
+                var loopEndBlock = InstructionBuilder.InsertBlock;
+                var afterBlock = Context.CreateBasicBlock( "afterloop", function );
+
+                // Insert the conditional branch into the end of LoopEndBB.
+                InstructionBuilder.Branch( endCondition, loopBlock, afterBlock );
+                InstructionBuilder.PositionAtEnd( afterBlock );
+
+                // Add a new entry to the PHI node for the backedge.
+                variable.AddIncoming( nextVar, loopEndBlock );
+
+                // for expr always returns 0.0 for consistency, there is no 'void'
+                return Context.DoubleType.GetNullValue( );
             }
-
-            // Compute the end condition.
-            Value endCondition = context.EndExpression.Accept( this );
-            if( endCondition == null )
-            {
-                return null;
-            }
-
-            var curVar = InstructionBuilder.Load( allocaVar )
-                                           .RegisterName( varName );
-            var nextVar = InstructionBuilder.FAdd( curVar, stepValue )
-                                            .RegisterName( "nextvar" );
-            InstructionBuilder.Store( nextVar, allocaVar );
-
-            // Convert condition to a bool by comparing non-equal to 0.0.
-            endCondition = InstructionBuilder.Compare( RealPredicate.OrderedAndNotEqual, endCondition, Context.CreateConstant( 0.0 ) )
-                                             .RegisterName( "loopcond" );
-
-            // Create the "after loop" block and insert it.
-            var loopEndBlock = InstructionBuilder.InsertBlock;
-            var afterBlock = Context.CreateBasicBlock( "afterloop", function );
-
-            // Insert the conditional branch into the end of LoopEndBB.
-            InstructionBuilder.Branch( endCondition, loopBlock, afterBlock );
-            InstructionBuilder.PositionAtEnd( afterBlock );
-
-            // Add a new entry to the PHI node for the backedge.
-            variable.AddIncoming( nextVar, loopEndBlock );
-
-            // Restore the unshadowed variable.
-            if( oldValue != null )
-            {
-                NamedValues[ varName ] = oldValue;
-            }
-            else
-            {
-                NamedValues.Remove( varName );
-            }
-
-            // for expr always returns 0.0 for consistency, there is no 'void'
-            return Context.DoubleType.GetNullValue( );
         }
 
         public override Value VisitUnaryOpExpression( [NotNull] UnaryOpExpressionContext context )
         {
             // verify the operator was previously defined
-            var opKind = ParserStack.GlobalState.GetUnaryOperatorInfo( context.Op ).Kind;
+            var opKind = RuntimeState.GetUnaryOperatorInfo( context.Op ).Kind;
             if( opKind == OperatorKind.None )
             {
                 throw new CodeGeneratorException( $"invalid unary operator {context.Op}" );
             }
 
-            string calleeName = $"$unary{context.Op}";
+            string calleeName = UnaryPrototypeContext.GetOperatorFunctionName( context.OpToken );
             var function = GetFunction( calleeName );
             if( function == null )
             {
@@ -339,77 +348,50 @@ namespace Kaleidoscope
 
         public override Value VisitBinaryPrototype( [NotNull] BinaryPrototypeContext context )
         {
-            if( !ParserStack.GlobalState.TryAddOperator( context.Op, OperatorKind.InfixLeftAssociative, context.Precedence ) )
+            if( !RuntimeState.TryAddOperator( context.OpToken, OperatorKind.InfixLeftAssociative, context.Precedence ) )
             {
                 throw new CodeGeneratorException( "Cannot replace built-in operators" );
             }
 
-            return GetOrDeclareFunction( new Prototype( context, context.GetPrototypeName( ) ) );
+            return GetOrDeclareFunction( new Prototype( context, context.Name ) );
         }
 
         public override Value VisitUnaryPrototype( [NotNull] UnaryPrototypeContext context )
         {
-            if( !ParserStack.GlobalState.TryAddOperator( context.Op, OperatorKind.PreFix, 0 ) )
+            if( !RuntimeState.TryAddOperator( context.OpToken, OperatorKind.PreFix, 0 ) )
             {
+                // should never get here now that grammar distinguishes built-in operators
                 throw new CodeGeneratorException( "Cannot replace built-in operators" );
             }
 
-            return GetOrDeclareFunction( new Prototype( context, context.GetPrototypeName( ) ) );
-        }
-
-        public override Value VisitAssignmentExpression( [NotNull] AssignmentExpressionContext context )
-        {
-            var rhs = context.Value.Accept( this );
-            if( rhs == null )
-            {
-                return null;
-            }
-
-            if( !NamedValues.TryGetValue( context.VariableName, out Alloca varSlot ) )
-            {
-                throw new CodeGeneratorException( $"Unknown variable name {context.VariableName}" );
-            }
-
-            InstructionBuilder.Store( rhs, varSlot );
-            return rhs;
+            return GetOrDeclareFunction( new Prototype( context, context.Name ) );
         }
 
         public override Value VisitVarInExpression( [NotNull] VarInExpressionContext context )
         {
-            IList<Alloca> oldBindings = new List<Alloca>( );
-            Function function = InstructionBuilder.InsertBlock.ContainingFunction;
-            foreach( var initializer in context.Initiaizers )
+            using( NamedValues.EnterScope( ) )
             {
-                Value initValue = Context.CreateConstant( 0.0 );
-                if( initializer.Value != null )
+                Function function = InstructionBuilder.InsertBlock.ContainingFunction;
+                foreach( var initializer in context.Initiaizers )
                 {
-                    initValue = initializer.Value.Accept( this );
+                    Value initValue = Context.CreateConstant( 0.0 );
+                    if( initializer.Value != null )
+                    {
+                        initValue = initializer.Value.Accept( this );
+                    }
+
+                    var alloca = CreateEntryBlockAlloca( function, initializer.Name );
+                    InstructionBuilder.Store( initValue, alloca );
+                    NamedValues[ initializer.Name ] = alloca;
                 }
 
-                var alloca = CreateEntryBlockAlloca( function, initializer.Name );
-                InstructionBuilder.Store( initValue, alloca );
-                oldBindings.Add( NamedValues[ initializer.Name ] );
-                NamedValues[ initializer.Name ] = alloca;
+                return context.Scope.Accept( this );
             }
-
-            var bodyVal = context.Scope.Accept( this );
-            if( bodyVal == null )
-            {
-                return null;
-            }
-
-            for( int i = 0; i < context.Initiaizers.Count; ++i )
-            {
-                var initializer = context.Initiaizers[ i ];
-                NamedValues[ initializer.Name ] = oldBindings[ i ];
-            }
-
-            return bodyVal;
         }
 
         protected override Value DefaultResult => null;
 
-        private Value EmitBinaryOperator( Value lhs, OpsymbolContext opSymbol, IParseTree rightTree )
+        private Value EmitBinaryOperator( Value lhs, BinaryopContext op, IParseTree rightTree )
         {
             var rhs = rightTree.Accept( this );
             if( lhs == null || rhs == null )
@@ -417,9 +399,9 @@ namespace Kaleidoscope
                 return null;
             }
 
-            switch( opSymbol.Op )
+            switch( op.Token.Type )
             {
-            case '<':
+            case LEFTANGLE:
                 {
                     var tmp = InstructionBuilder.Compare( RealPredicate.UnorderedOrLessThan, lhs, rhs )
                                                 .RegisterName( "cmptmp" );
@@ -427,35 +409,39 @@ namespace Kaleidoscope
                                              .RegisterName( "booltmp" );
                 }
 
-            case '^':
+            case CARET:
                 {
                     var pow = GetOrDeclareFunction( new Prototype( "llvm.pow.f64", "value", "power" ) );
                     return InstructionBuilder.Call( pow, lhs, rhs )
                                              .RegisterName( "powtmp" );
                 }
 
-            case '+':
+            case PLUS:
                 return InstructionBuilder.FAdd( lhs, rhs ).RegisterName( "addtmp" );
 
-            case '-':
+            case MINUS:
                 return InstructionBuilder.FSub( lhs, rhs ).RegisterName( "subtmp" );
 
-            case '*':
+            case ASTERISK:
                 return InstructionBuilder.FMul( lhs, rhs ).RegisterName( "multmp" );
 
-            case '/':
+            case SLASH:
                 return InstructionBuilder.FDiv( lhs, rhs ).RegisterName( "divtmp" );
+
+            case ASSIGN:
+                InstructionBuilder.Store( rhs, lhs );
+                return rhs;
 
             default:
                 {
                     // User defined op?
-                    var opKind = ParserStack.GlobalState.GetBinOperatorInfo( opSymbol.Op ).Kind;
+                    var opKind = RuntimeState.GetBinOperatorInfo( op.Token.Type ).Kind;
                     if( opKind != OperatorKind.InfixLeftAssociative && opKind != OperatorKind.InfixRightAssociative )
                     {
-                        throw new CodeGeneratorException( $"Invalid binary operator {opSymbol.Op}" );
+                        throw new CodeGeneratorException( $"Invalid binary operator {op.Token.Text}" );
                     }
 
-                    string calleeName = $"$binary{opSymbol.Op}";
+                    string calleeName = BinaryPrototypeContext.GetOperatorFunctionName( op.Token );
                     var function = GetFunction( calleeName );
                     if( function == null )
                     {
@@ -471,7 +457,7 @@ namespace Kaleidoscope
         {
             Module = Context.CreateBitcodeModule( );
             FunctionPassManager = new FunctionPassManager( Module );
-            FunctionPassManager.AddPromoteMemoryToRegisterPass()
+            FunctionPassManager.AddPromoteMemoryToRegisterPass( )
                                .AddInstructionCombiningPass( )
                                .AddReassociatePass( )
                                .AddGVNPass( )
@@ -544,25 +530,31 @@ namespace Kaleidoscope
 
             var basicBlock = function.AppendBasicBlock( "entry" );
             InstructionBuilder.PositionAtEnd( basicBlock );
-            NamedValues.Clear( );
-            foreach( var arg in function.Parameters )
+            using( NamedValues.EnterScope( ) )
             {
-                var argSlot = CreateEntryBlockAlloca( function, arg.Name );
-                InstructionBuilder.Store( arg, argSlot );
-                NamedValues[ arg.Name ] = argSlot;
+                foreach( var arg in function.Parameters )
+                {
+                    var argSlot = CreateEntryBlockAlloca( function, arg.Name );
+                    InstructionBuilder.Store( arg, argSlot );
+                    NamedValues[ arg.Name ] = argSlot;
+                }
+
+                var funcReturn = body.Accept( this );
+                if( funcReturn == null )
+                {
+                    function.EraseFromParent( );
+                    return (null, default);
+                }
+
+                InstructionBuilder.Return( funcReturn );
+                function.Verify( );
             }
 
-            var funcReturn = body.Accept( this );
-            if( funcReturn == null )
+            if( !DisableOptimizations )
             {
-                function.EraseFromParent( );
-                return (null, default);
+                FunctionPassManager.Run( function );
             }
 
-            InstructionBuilder.Return( funcReturn );
-            function.Verify( );
-
-            FunctionPassManager.Run( function );
             var jitHandle = JIT.AddModule( Module );
             FunctionModuleMap.Add( function.Name, jitHandle );
             InitializeModuleAndPassManager( );
@@ -581,11 +573,20 @@ namespace Kaleidoscope
                           .RegisterName( varName );
         }
 
+        private readonly DynamicRuntimeState RuntimeState;
+        private static int AnonNameIndex;
+        private readonly Context Context;
+        private BitcodeModule Module;
+        private readonly InstructionBuilder InstructionBuilder;
+        private readonly ScopeStack<Alloca> NamedValues;
+        private readonly KaleidoscopeJIT JIT;
+        private readonly Dictionary<string, IJitModuleHandle> FunctionModuleMap;
+        private FunctionPassManager FunctionPassManager;
+        private readonly PrototypeCollection FunctionPrototypes;
+
         /// <summary>Delegate type to allow execution of a JIT'd TopLevelExpression</summary>
         /// <returns>Result of evaluating the expression</returns>
         [UnmanagedFunctionPointer( System.Runtime.InteropServices.CallingConvention.Cdecl )]
         private delegate double AnonExpressionFunc( );
-
-        private static int AnonNameIndex;
     }
 }

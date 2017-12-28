@@ -3,17 +3,20 @@
 // </copyright>
 
 using System;
-using System.Linq;
 using Antlr4.Runtime;
+
+using static Kaleidoscope.Grammar.KaleidoscopeParser;
 
 namespace Kaleidoscope.Grammar
 {
     /// <summary>Class to hold dynamic runtime global state</summary>
     /// <remarks>
-    /// Generally speaking the parser is the wrong place to place any
+    /// Generally speaking the parser is the wrong place to store any
     /// sort of global state. Furthermore, the actual <see cref="KaleidoscopeParser"/>
     /// is destroyed and re-created for each REPL input string to ensure
-    /// there isn't any internal parsing state carry over between parses.
+    /// there isn't any internal parsing state carry over between parses of partial
+    /// input text.
+    ///
     /// This provides storage and support methods for the runtime global state.
     /// In particular, it maintains the language level to use and the current set
     /// of operators, including any user defined operators so the parser know how
@@ -26,8 +29,8 @@ namespace Kaleidoscope.Grammar
             LanguageLevel = languageLevel;
         }
 
-        /// <summary>Gets the Language level the application supports</summary>
-        public LanguageLevel LanguageLevel { get; }
+        /// <summary>Gets or sets the Language level the application supports</summary>
+        public LanguageLevel LanguageLevel { get; set; }
 
         /// <summary>Attempts to add a new user defined operator</summary>
         /// <param name="token">Symbol for the operator</param>
@@ -38,46 +41,33 @@ namespace Kaleidoscope.Grammar
         /// This can add or replace user defined operators, however attempts to replace a built-in operator
         /// will not replace the operator and will simply return <see langword="false"/>.
         /// </remarks>
-        public bool TryAddOperator( char token, OperatorKind kind, int precedence )
+        public bool TryAddOperator( string token, OperatorKind kind, int precedence )
         {
-            switch( kind )
+            if( !Lexer.TokenTypeMap.TryGetValue( token, out int tokenType ) )
             {
-            case OperatorKind.InfixLeftAssociative:
-            case OperatorKind.InfixRightAssociative:
-                return BinOpPrecedence.TryAddOrReplaceItem( new OperatorInfo( token, kind, precedence, false ) );
-
-            case OperatorKind.PreFix:
-                return UnaryOps.TryAddOrReplaceItem( new OperatorInfo( token, kind, 0, false ) );
-
-            // case OperatorKind.None:
-            default:
-                throw new ArgumentException( "unknown kind", nameof( kind ) );
-            }
-        }
-
-        public OperatorInfo GetBinOperatorInfo( char opChar )
-        {
-            if( BinOpPrecedence.TryGetValue( opChar, out var value ) )
-            {
-                return value;
+                return false;
             }
 
-            return default;
+            return TryAddOperator( tokenType, kind, precedence );
         }
 
-        public OperatorInfo GetBinOperatorInfo( IToken op )
+        /// <summary>Attempts to add a new user defined operator</summary>
+        /// <param name="token">Symbol for the operator</param>
+        /// <param name="kind"><see cref="OperatorKind"/> value to define the behavior of the operator</param>
+        /// <param name="precedence">precedence level for the operator</param>
+        /// <returns><see langword="true"/> if the operator was added and <see langword="false"/> if not</returns>
+        /// <remarks>
+        /// This can add or replace user defined operators, however attempts to replace a built-in operator
+        /// will not replace the operator and will simply return <see langword="false"/>.
+        /// </remarks>
+        public bool TryAddOperator( IToken token, OperatorKind kind, int precedence )
         {
-            if( op != null && op.Text.Length == 1 )
-            {
-                return GetBinOperatorInfo( op.Text[ 0 ] );
-            }
-
-            return default;
+            return TryAddOperator( token.Type, kind, precedence );
         }
 
-        public OperatorInfo GetUnaryOperatorInfo( char opChar )
+        public OperatorInfo GetBinOperatorInfo( int tokenType )
         {
-            if( UnaryOps.TryGetValue( opChar, out var value ) )
+            if( BinOpPrecedence.TryGetValue( tokenType, out var value ) )
             {
                 return value;
             }
@@ -85,44 +75,27 @@ namespace Kaleidoscope.Grammar
             return default;
         }
 
-        public OperatorInfo GetUnaryOperatorInfo( IToken op )
+        public OperatorInfo GetUnaryOperatorInfo( int tokenType )
         {
-            if( op != null && op.Text.Length == 1 )
+            if( UnaryOps.TryGetValue( tokenType, out var value ) )
             {
-                return GetUnaryOperatorInfo( op.Text[ 0 ] );
+                return value;
             }
 
             return default;
         }
 
-        internal bool IsPrefixOp( IToken op )
+        internal bool IsPrefixOp( int tokenType )
         {
-            return UnaryOps.TryGetValue( op.Text[ 0 ], out var value );
+            return UnaryOps.TryGetValue( tokenType, out var value );
         }
 
-        internal int GetIndexedPrecedence( IToken token )
-        {
-            var opInfo = GetBinOperatorInfo( token );
-            return GetIndexedPrecedence( opInfo );
-        }
+        internal int GetPrecedence( int tokenType ) => GetBinOperatorInfo( tokenType ).Precedence;
 
-        internal int GetIndexedPrecedence( OperatorInfo opInfo )
+        internal int GetNextPrecedence( int tokenType )
         {
-            return opInfo.Precedence;
-            /*var sortedDistingPrecedences = BinOpPrecedence.Select( o => o.Precedence ).Distinct( ).OrderBy( p => p ).ToList( );
-            //return sortedDistingPrecedences.IndexOf( opInfo.Precedence );
-            */
-        }
-
-        internal int GetNextPrecedence( IToken op )
-        {
-            var operatorInfo = GetBinOperatorInfo( op );
-            int retVal = GetIndexedPrecedence( operatorInfo );
-            if( retVal == 0 )
-            {
-                return retVal;
-            }
-
+            var operatorInfo = GetBinOperatorInfo( tokenType );
+            int retVal = operatorInfo.Precedence;
             if( operatorInfo.Kind == OperatorKind.InfixRightAssociative || operatorInfo.Kind == OperatorKind.PreFix )
             {
                 return retVal;
@@ -131,16 +104,38 @@ namespace Kaleidoscope.Grammar
             return retVal + 1;
         }
 
-        private OperatorInfoCollection UnaryOps = new OperatorInfoCollection();
-
-        private OperatorInfoCollection BinOpPrecedence = new OperatorInfoCollection()
+        private bool TryAddOperator( int tokenType, OperatorKind kind, int precedence )
         {
-            new OperatorInfo( '<', OperatorKind.InfixLeftAssociative, 10, true),
-            new OperatorInfo( '+', OperatorKind.InfixLeftAssociative, 20, true),
-            new OperatorInfo( '-', OperatorKind.InfixLeftAssociative, 20, true),
-            new OperatorInfo( '*', OperatorKind.InfixLeftAssociative, 40, true),
-            new OperatorInfo( '/', OperatorKind.InfixLeftAssociative, 40, true),
-            new OperatorInfo( '^', OperatorKind.InfixRightAssociative, 50, true),
+            // internally operators are stored as token type integers to accomodate
+            // simpler condition checks and switching on operator types in code generation
+            switch( kind )
+            {
+            case OperatorKind.InfixLeftAssociative:
+            case OperatorKind.InfixRightAssociative:
+                return BinOpPrecedence.TryAddOrReplaceItem( new OperatorInfo( tokenType, kind, precedence, false ) );
+
+            case OperatorKind.PreFix:
+                return UnaryOps.TryAddOrReplaceItem( new OperatorInfo( tokenType, kind, 0, false ) );
+
+            // case OperatorKind.None:
+            default:
+                throw new ArgumentException( "unknown kind", nameof( kind ) );
+            }
+        }
+
+        private OperatorInfoCollection UnaryOps = new OperatorInfoCollection( );
+
+        private OperatorInfoCollection BinOpPrecedence = new OperatorInfoCollection( )
+        {
+            new OperatorInfo( LEFTANGLE, OperatorKind.InfixLeftAssociative, 10, true),
+            new OperatorInfo( PLUS,      OperatorKind.InfixLeftAssociative, 20, true),
+            new OperatorInfo( MINUS,     OperatorKind.InfixLeftAssociative, 20, true),
+            new OperatorInfo( ASTERISK,  OperatorKind.InfixLeftAssociative, 40, true),
+            new OperatorInfo( SLASH,     OperatorKind.InfixLeftAssociative, 40, true),
+            new OperatorInfo( CARET,     OperatorKind.InfixRightAssociative, 50, true),
+            new OperatorInfo( ASSIGN,    OperatorKind.InfixRightAssociative, 2, true),
         };
+
+        private KaleidoscopeLexer Lexer = new KaleidoscopeLexer( null );
     }
 }

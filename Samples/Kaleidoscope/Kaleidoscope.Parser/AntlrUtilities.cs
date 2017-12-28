@@ -2,12 +2,13 @@
 // Copyright (c) .NET Foundation. All rights reserved.
 // </copyright>
 
-using System;
 using System.Collections.Generic;
 using System.Text;
 using Antlr4.Runtime;
 using Antlr4.Runtime.Misc;
 using Antlr4.Runtime.Tree;
+
+using static System.Math;
 
 namespace Kaleidoscope.Grammar
 {
@@ -20,8 +21,39 @@ namespace Kaleidoscope.Grammar
         public static Interval GetCharInterval( this ParserRuleContext ruleContext )
         {
             int startChar = ruleContext.Start.StartIndex;
-            int endChar = ruleContext.Stop.StopIndex;
-            return new Interval( Math.Min( startChar, endChar), Math.Max( startChar, endChar ) );
+            int endChar = ruleContext.Stop.StopIndex - 1;
+            return Interval.Of( Min( startChar, endChar ), Max( startChar, endChar ) );
+        }
+
+        public static ICharStream GetSourceStream( this IRecognizer recognizer )
+        {
+            if( recognizer.InputStream != null && recognizer.InputStream is ITokenStream tokenStream )
+            {
+                return tokenStream.TokenSource.InputStream;
+            }
+
+            return null;
+        }
+
+        public static string GetSourceText( this ParserRuleContext ruleContext, IRecognizer recognizer )
+        {
+            return GetSourceText( ruleContext, GetSourceStream( recognizer ) );
+        }
+
+        public static string GetSourceText( this ParserRuleContext ruleContext, ICharStream charStream )
+        {
+            if( charStream == null )
+            {
+                return string.Empty;
+            }
+
+            var span = ruleContext.GetCharInterval( );
+            if( span.a < 0 )
+            {
+                return string.Empty;
+            }
+
+            return charStream.GetText( span );
         }
 
         public static string GetUniqueNodeId( this IParseTree tree )

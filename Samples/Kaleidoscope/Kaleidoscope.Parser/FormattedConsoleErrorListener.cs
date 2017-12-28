@@ -10,8 +10,7 @@ namespace Kaleidoscope.Grammar
     /// <summary>Implements an error strategy to write colored errors to the console</summary>
     /// <remarks>Errors are formatted to include a "^" to indicate the specific point in the input that caused the error</remarks>
     public class FormattedConsoleErrorListener
-        : IAntlrErrorListener<int>
-        , IAntlrErrorListener<IToken>
+        : IUnifiedErrorListener
     {
         /// <inheritdoc/>
         public void SyntaxError( IRecognizer recognizer

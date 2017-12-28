@@ -19,138 +19,159 @@ helps in isolating the parsing from the use of Llvm.NET and minimizes the need f
 of custom AST. (The antlr parse tree is generally sufficient to generate code)
 
 ## The Kaleidoscope Language
-### Lexer symbols
+### General Concepts
+Kaleidoscope is a simple functional language with the following major features:
+
+* Only a single data type (equivalent to C double)
+* Built-in operators for basic expressions
+* If/then/else style control flow
+* For loop style control flow
+* User defined operators
+  - User defined operators can specify operator precedence
+
+### Example
+The following example is a complete program in Kaleidoscope that will generate a textual representation
+of the classic Mandelbrot Set.
+
+```Kaleidoscope
+def unary!(v)
+  if v then
+    0
+  else
+    1;
+
+def unary-(v)
+  0-v;
+
+def binary> 10 (LHS RHS)
+  RHS < LHS;
+
+def binary| 5 (LHS RHS)
+  if LHS then
+    1
+  else if RHS then
+    1
+  else
+    0;
+
+def binary& 6 (LHS RHS)
+  if !LHS then
+    0
+  else
+    !!RHS;
+
+def binary= 9 (LHS RHS)
+  !(LHS < RHS | LHS > RHS);
+
+def binary : 1 (x y) y;
+
+extern putchard(char);
+
+def printdensity(d)
+  if d > 8 then
+    putchard(32)
+  else if d > 4 then
+    putchard(46)
+  else if d > 2 then
+    putchard(43)
+  else
+    putchard(42);
+
+def mandelconverger(real imag iters creal cimag)
+  if iters > 255 | (real*real + imag*imag > 4) then
+    iters
+  else
+    mandelconverger( real*real - imag*imag + creal
+                   , 2*real*imag + cimag
+                   , iters+1
+                   , creal
+                   , cimag
+                   );
+
+def mandelconverge(real imag)
+  mandelconverger(real, imag, 0, real, imag);
+
+def mandelhelp(xmin xmax xstep   ymin ymax ystep)
+  for y = ymin, y < ymax, ystep in
+  (
+    (for x = xmin, x < xmax, xstep in printdensity(mandelconverge(x,y))) : putchard(10)
+  );
+
+def mandel(realstart imagstart realmag imagmag)
+  mandelhelp(realstart, realstart+realmag*78, realmag, imagstart, imagstart+imagmag*40, imagmag);
+
+mandel(-2.3, -1.3, 0.05, 0.07);
+```
+
+When entered ( or copy/pasted) to the command line Kaleidoscope will print out the following:
+>[!NOTE]
+>This example uses features of the language only enabled/discussed in Chapter 6 of the tutorial.
+>The runtime from earlier chapters will generate errors trying to parse this code.
+
+```
+*******************************************************************************
+*******************************************************************************
+****************************************++++++*********************************
+************************************+++++...++++++*****************************
+*********************************++++++++.. ...+++++***************************
+*******************************++++++++++..   ..+++++**************************
+******************************++++++++++.     ..++++++*************************
+****************************+++++++++....      ..++++++************************
+**************************++++++++.......      .....++++***********************
+*************************++++++++.   .            ... .++**********************
+***********************++++++++...                     ++**********************
+*********************+++++++++....                    .+++*********************
+******************+++..+++++....                      ..+++********************
+**************++++++. ..........                        +++********************
+***********++++++++..        ..                         .++********************
+*********++++++++++...                                 .++++*******************
+********++++++++++..                                   .++++*******************
+*******++++++.....                                    ..++++*******************
+*******+........                                     ...++++*******************
+*******+... ....                                     ...++++*******************
+*******+++++......                                    ..++++*******************
+*******++++++++++...                                   .++++*******************
+*********++++++++++...                                  ++++*******************
+**********+++++++++..        ..                        ..++********************
+*************++++++.. ..........                        +++********************
+******************+++...+++.....                      ..+++********************
+*********************+++++++++....                    ..++*********************
+***********************++++++++...                     +++*********************
+*************************+++++++..   .            ... .++**********************
+**************************++++++++.......      ......+++***********************
+****************************+++++++++....      ..++++++************************
+*****************************++++++++++..     ..++++++*************************
+*******************************++++++++++..  ...+++++**************************
+*********************************++++++++.. ...+++++***************************
+***********************************++++++....+++++*****************************
+***************************************++++++++********************************
+*******************************************************************************
+*******************************************************************************
+*******************************************************************************
+*******************************************************************************
+*******************************************************************************
+```
+
+### Formal Grammar
+#### Lexer symbols
 
 The Kaleidoscope lexer consists of several tokens and is defined in the Kaleidoscope.g4 grammar file
 
-``` ANTLR
-// Lexer Rules -------
-fragment NonZeroDecimalDigit_: [1-9];
-fragment DecimalDigit_: [0-9];
-fragment Digits_: '0' | [1-9][0-9]*;
-fragment EndOfFile_: '\u0000' | '\u001A';
-fragment EndOfLine_
-    : ('\r' '\n')
-    | ('\r' |'\n' | '\u2028' | '\u2029')
-    | EndOfFile_
-    ;
-
-EQUALS: '=';
-LPAREN: '(';
-RPAREN: ')';
-COMMA: ',';
-SEMICOLON: ';';
-IF: 'if';
-THEN: 'then';
-ELSE: 'else';
-FOR: 'for';
-IN: 'in';
-VAR: 'var';
-UNARY: 'unary';
-BINARY: 'binary';
-DEF: 'def';
-EXTERN: 'extern';
-
-OPSYMBOL
-    : '!'
-    | '%'
-    | '&'
-    | '*'
-    | '+'
-    | '-'
-    | '.'
-    | '/'
-    | ':'
-    | '<'
-    | '>'
-    | '?'
-    | '@'
-    | '\\'
-    | '^'
-    | '_'
-    | '|'
-    ;
-
-LineComment: '#' ~[\r\n]* EndOfLine_ -> skip;
-WhiteSpace: [ \t\r\n\f]+ -> skip;
-
-Identifier: [a-zA-Z][a-zA-Z0-9]*;
-Number: Digits_ ('.' DecimalDigit_+)?;
-```
+[!code-c[Lexer](../../../Samples/Kaleidoscope/Kaleidoscope.Parser/Kaleidoscope.g4#Lexer)]
 
 This includes basic numeric patterns as well as Identifiers and the symbols allowed for operators and keywords
 for the language. Subsequent chapters will introduce the meaning and use of each of these.
 
-### Parser
+#### Parser
 
 The parser uses a technique of ANTLR called Semantic Predicates, that allows for dynamic adaptation of the grammar
 and parser to handle variations or versions of the language. The Sample code uses that to selectively enable language
 features as the chapters progress, without needing to change the grammar or generated parser code. The parser code
-provides a simple means of expressing the language support level.
+provides a simple means of expressing the language support level. Semantic predicates play a vital role in supporting
+user defined operators with user defined precedence.
 
-#### Parser grammar
-``` ANTLR
-// Parser rules ------
-
-// Identifier as a parser rule enables adaptation of keywords based on language features
-// Depending on the features enabled, certain keywords may be valid identifiers.
-identifier
-    : Identifier
-    | {!FeatureControlFlow}? IF
-    | {!FeatureControlFlow}? THEN
-    | {!FeatureControlFlow}? ELSE
-    | {!FeatureControlFlow}? FOR
-    | {!FeatureControlFlow}? IN
-    | {!FeatureMutableVars}? VAR
-    | {!FeatureUserOperators}? UNARY
-    | {!FeatureUserOperators}? BINARY
-    ;
-
-initializer
-    : identifier (EQUALS expression)?
-    ;
-
-// parser rule to handle the use of the Lexer EQUALS symbol having different meanings in multiple contexts
-opsymbol
-    : EQUALS
-    | OPSYMBOL
-    ;
-
-// Non Left recursive expressions
-primaryExpression
-    : identifier                                                         # VariableExpression
-    | Number                                                             # ConstExpression
-    | LPAREN expression RPAREN                                           # ParenExpression
-    | identifier LPAREN (expression (COMMA expression)*)? RPAREN         # FunctionCallExpression
-    | VAR initializer (initializer)* IN expression                       # VarInExpression
-    | IF expression THEN expression ELSE expression                      # ConditionalExpression
-    | FOR initializer COMMA expression (COMMA expression)? IN expression # ForExpression
-    | identifier EQUALS expression                                       # AssignmentExpression
-    | {IsPrefixOp(_input.Lt(1))}? opsymbol expression                    # UnaryOpExpression
-    ;
-
-// Left-recursive expressions use ANTLR to unroll the left recursion when generating the
-// parser. The generated KaleidoscopeParser can then override the EnterRecursionRule() and
-// PrecPred() methods to handle the dynamic precedence evaluation allowing this grammar to
-// remain clean and simple, yet capable of handling user defined operators and precedence
-expression
-    : primaryExpression              # AtomExpression
-    | expression opsymbol expression # BinaryOpExpression
-    ;
-
-prototype
-    : identifier LPAREN (identifier)* RPAREN                      # FunctionPrototype
-    | UNARY opsymbol Number? LPAREN identifier RPAREN             # UnaryPrototype
-    | BINARY opsymbol Number? LPAREN identifier identifier RPAREN # BinaryPrototype
-    ;
-
-repl
-    : DEF prototype expression # FunctionDefinition
-    | EXTERN prototype         # ExternalDeclaration
-    | expression               # TopLevelExpression
-    | SEMICOLON                # TopLevelSemicolon
-;
-```
+##### Parser grammar
+[!code-c[Lexer](../../../Samples/Kaleidoscope/Kaleidoscope.Parser/Kaleidoscope.g4#Parser)]
 
 A full tutorial on ANTLR is beyond the scope of this tutorial but the basics should be familiar
 enough to anyone acquainted with EBNF form to make enough sense out of it. Don't worry too much

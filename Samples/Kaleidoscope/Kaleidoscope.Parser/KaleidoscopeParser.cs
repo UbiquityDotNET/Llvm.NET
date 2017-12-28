@@ -2,29 +2,23 @@
 // Copyright (c) .NET Foundation. All rights reserved.
 // </copyright>
 
-using System;
-using System.Diagnostics.CodeAnalysis;
 using Antlr4.Runtime;
-
-[assembly: CLSCompliant( false )]
-[assembly: SuppressMessage( "Microsoft.Naming", "CA1715", Justification = "Generated code", MessageId = "Result", Scope = "type", Target = "Kaleidoscope.Grammar.KaleidoscopeBaseVisitor`1" )]
-[assembly: SuppressMessage( "Microsoft.Naming", "CA1715", Justification = "Generated code", MessageId = "Result", Scope = "type", Target = "Kaleidoscope.Grammar.IKaleidoscopeVisitor`1" )]
-[assembly: SuppressMessage( "Microsoft.Naming", "CA1708", Justification = "Generated code" )]
 
 namespace Kaleidoscope.Grammar
 {
+    /// <summary>Language level supported</summary>
     public enum LanguageLevel
     {
-        /// <summary>Chapters 2-4</summary>
+        /// <summary>Chapters 2-4 Simple Expressions</summary>
         SimpleExpressions,
 
-        /// <summary>Chapter 5</summary>
+        /// <summary>Chapter 5 - Control Flow</summary>
         ControlFlow,
 
-        /// <summary>Chapter 6</summary>
+        /// <summary>Chapter 6 - User defined operators </summary>
         UserDefinedOperators,
 
-        /// <summary>Chapter 7</summary>
+        /// <summary>Chapter 7 - Mutable Variables </summary>
         MutableVariables,
     }
 
@@ -37,7 +31,12 @@ namespace Kaleidoscope.Grammar
         /// <summary>Gets the Language level the application supports</summary>
         public LanguageLevel LanguageLevel => GlobalState.LanguageLevel;
 
-        internal DynamicRuntimeState GlobalState { get; set; }
+        /// <summary>Gets or sets the dynamic state of the runtime for the parser</summary>
+        /// <remarks>
+        /// This provides the <see cref="LanguageLevel"/> along with the
+        /// operators currently available, including user defined operators.
+        /// </remarks>
+        public DynamicRuntimeState GlobalState { get; set; }
 
         private bool FeatureControlFlow => IsFeatureEnabled( LanguageLevel.ControlFlow );
 
@@ -45,18 +44,18 @@ namespace Kaleidoscope.Grammar
 
         private bool FeatureUserOperators => IsFeatureEnabled( LanguageLevel.UserDefinedOperators );
 
-        private bool IsPrefixOp( IToken op ) => GlobalState.IsPrefixOp( op );
-
         private bool IsFeatureEnabled( LanguageLevel feature ) => LanguageLevel >= feature;
 
-        private int GetPrecedence( IToken token )
+        private bool IsPrefixOp( ) => GlobalState.IsPrefixOp( _input.Lt( 1 ).Type );
+
+        private int GetPrecedence( )
         {
-            return GlobalState.GetIndexedPrecedence( token );
+            return GlobalState.GetPrecedence( _input.Lt( 1 ).Type );
         }
 
-        private int GetNextPrecedence( IToken token )
+        private int GetNextPrecedence( )
         {
-            return GlobalState.GetNextPrecedence( token );
+            return GlobalState.GetNextPrecedence( _input.Lt( -1 ).Type );
         }
     }
 }

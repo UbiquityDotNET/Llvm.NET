@@ -12,4 +12,5 @@
     <PackageReference Include="Antlr4" Version="4.6.5-beta001" />
     <PackageReference Include="OpenSoftware.DgmlBuilder" Version="1.9.0" Condition="'$(TargetFramework)'=='net47'" />
   </ItemGroup>
+
 </Project>

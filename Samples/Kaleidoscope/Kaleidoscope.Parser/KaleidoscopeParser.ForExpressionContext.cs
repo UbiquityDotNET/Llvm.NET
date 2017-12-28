@@ -2,6 +2,8 @@
 // Copyright (c) .NET Foundation. All rights reserved.
 // </copyright>
 
+using System.Collections.Generic;
+
 namespace Kaleidoscope.Grammar
 {
     public partial class KaleidoscopeParser
@@ -10,11 +12,13 @@ namespace Kaleidoscope.Grammar
         {
             public InitializerContext Initializer => initializer( );
 
+            public IReadOnlyList<ExpressionContext> Expressions => expression( );
+
             public ExpressionContext EndExpression => expression( 0 );
 
-            public ExpressionContext StepExpression => expression( 1 );
+            public ExpressionContext StepExpression => Expressions.Count > 2 ? expression( 1 ) : null;
 
-            public ExpressionContext BodyExpression => expression( 2 );
+            public ExpressionContext BodyExpression => expression( Expressions.Count - 1 );
         }
     }
 }

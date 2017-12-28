@@ -12,10 +12,10 @@ namespace Llvm.NET
     /// It is most valuable when the scope extends beyond a single function
     /// where a try/finally simply won't work.
     /// </remarks>
-    internal sealed class DisposableAction
+    public struct DisposableAction
         : IDisposable
     {
-        /// <summary>Initializes a new instance of the <see cref="DisposableAction"/> class.</summary>
+        /// <summary>Initializes a new instance of the <see cref="DisposableAction"/> struct.</summary>
         /// <param name="onDispose">Action to run when <see cref="Dispose"/>is called.</param>
         public DisposableAction( Action onDispose )
         {

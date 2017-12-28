@@ -6,8 +6,7 @@
 //
 grammar Kaleidoscope;
 
-// virtual tokens generated from code behind
-tokens { IF, THEN, ELSE, FOR, IN, VAR, UNARY, BINARY }
+// <Lexer>
 
 // Lexer Rules -------
 fragment NonZeroDecimalDigit_: [1-9];
@@ -20,7 +19,6 @@ fragment EndOfLine_
     | EndOfFile_
     ;
 
-EQUALS: '=';
 LPAREN: '(';
 RPAREN: ')';
 COMMA: ',';
@@ -28,77 +26,127 @@ SEMICOLON: ';';
 DEF: 'def';
 EXTERN: 'extern';
 
-OPSYMBOL
-    : '!'
-    | '%'
-    | '&'
-    | '*'
-    | '+'
-    | '-'
-    | '.'
-    | '/'
-    | ':'
-    | '<'
-    | '>'
-    | '?'
-    | '@'
-    | '\\'
-    | '^'
-    | '_'
-    | '|'
-    ;
+ASSIGN:'=';
+ASTERISK: '*';
+PLUS: '+';
+MINUS:'-';
+LEFTANGLE: '<';
+SLASH: '/';
+
+EXCLAMATION: '!';
+PERCENT: '%';
+AMPERSAND:'&';
+PERIOD:'.';
+COLON: ':';
+RIGHTANGLE: '>';
+QMARK: '?';
+ATSIGN: '@';
+BACKSLASH: '\\';
+CARET: '^';
+UNDERSCORE: '_';
+VBAR: '|';
+EQUALEQUAL: '==';
+NOTEQUAL: '!=';
+PLUSPLUS: '++';
+MINUSMINUS: '--';
+
+// <FeatureControlledKeywords>
+IF:     {FeatureControlFlow}? 'if';
+THEN:   {FeatureControlFlow}? 'then';
+ELSE:   {FeatureControlFlow}? 'else';
+FOR:    {FeatureControlFlow}? 'for';
+IN:     {FeatureControlFlow}? 'in';
+VAR:    {FeatureMutableVars}? 'var';
+UNARY:  {FeatureUserOperators}? 'unary';
+BINARY: {FeatureUserOperators}? 'binary';
+// </FeatureControlledKeywords>
 
 LineComment: '#' ~[\r\n]* EndOfLine_ -> skip;
 WhiteSpace: [ \t\r\n\f]+ -> skip;
 
-// Action attached to this may convert the identifier to a keyword token
-// if it matches a keyword AND the language feature is enabled. Doing this
-// as opposed to using a semantic predicate allows skipping creating a parser
-// rule for an identifier.
-Identifier: [a-zA-Z][a-zA-Z0-9]* {DynamciallyAdjustKeywordOrIdentifier();};
+Identifier: [a-zA-Z][a-zA-Z0-9]*;
 Number: Digits_ ('.' DecimalDigit_+)?;
+// </Lexer>
 
+// <Parser>
 // Parser rules ------
 
-initializer
-    : Identifier (EQUALS expression[0])?
+// built-in operator symbols
+builtinop
+    : ASSIGN
+    | ASTERISK
+    | PLUS
+    | MINUS
+    | SLASH
+    | LEFTANGLE
+    | CARET
     ;
 
-// parser rule to handle the use of the Lexer EQUALS symbol having different meanings in multiple contexts
-opsymbol
-    : EQUALS
-    | OPSYMBOL
+// Allowed user defined binary symbols
+userdefinedop
+    : EXCLAMATION
+    | PERCENT
+    | AMPERSAND
+    | PERIOD
+    | COLON
+    | RIGHTANGLE
+    | QMARK
+    | ATSIGN
+    | BACKSLASH
+    | UNDERSCORE
+    | VBAR
+    | EQUALEQUAL
+    | NOTEQUAL
+    | PLUSPLUS
+    | MINUSMINUS
+    ;
+
+// unary ops can re-use built-in binop symbols (Except ASSIGN)
+unaryop
+    : ASTERISK
+    | PLUS
+    | MINUS
+    | SLASH
+    | LEFTANGLE
+    | CARET
+    | userdefinedop
+    ;
+
+// All binary operators
+binaryop
+    : builtinop
+    | userdefinedop
+    ;
+
+// pull the initializer out to a distinct rule so it is easier to get at
+// the list of initializers when walking the parse tree
+initializer
+    : Identifier (ASSIGN expression[0])?
     ;
 
 // Non Left recursive expressions (a.k.a. atoms)
 primaryExpression
-    : Identifier                                                                  # VariableExpression
-    | Number                                                                      # ConstExpression
-    | LPAREN expression[0] RPAREN                                                 # ParenExpression
+    : LPAREN expression[0] RPAREN                                                 # ParenExpression
     | Identifier LPAREN (expression[0] (COMMA expression[0])*)? RPAREN            # FunctionCallExpression
-    | VAR initializer (initializer)* IN expression[0]                             # VarInExpression
+    | VAR initializer (COMMA initializer)* IN expression[0]                       # VarInExpression
     | IF expression[0] THEN expression[0] ELSE expression[0]                      # ConditionalExpression
     | FOR initializer COMMA expression[0] (COMMA expression[0])? IN expression[0] # ForExpression
-    | Identifier EQUALS expression[0]                                             # AssignmentExpression
-    | {IsPrefixOp(_input.Lt(1))}? opsymbol expression[0]                          # UnaryOpExpression
-    ;
+    | {IsPrefixOp()}? unaryop expression[0]                                       # UnaryOpExpression
+    | Identifier                                                                  # VariableExpression
+    | Number                                                                      # ConstExpression;
 
-// need to make precedence handling explicit in the code behind
-// While some measure of functionality is achievable without an
-// explicit argument and leveraging a overrides of EnterRecursionRule()
-// and PrecPred(). However, that's not a fully viable option as
-// ANTLR's ATN used for prediction will have the values hard
-// coded.
+// Need to make precedence handling explicit in the code behind
+// since precedence is potentially user defined at runtime.
 expression[int _p]
     : primaryExpression
-      ( {GetPrecedence(_input.Lt(1)) >= $_p}? op=opsymbol expression[GetNextPrecedence(_input.Lt(-1))]
+      ( {GetPrecedence() >= $_p}? binaryop expression[GetNextPrecedence()]
       )*
     ;
 
 prototype
-    : Identifier LPAREN (Identifier)* RPAREN                      # FunctionPrototype
-    | UNARY opsymbol Number? LPAREN Identifier RPAREN             # UnaryPrototype
-    | BINARY opsymbol Number? LPAREN Identifier Identifier RPAREN # BinaryPrototype
+    : Identifier LPAREN (Identifier)* RPAREN                           # FunctionPrototype
+    | UNARY unaryop Number? LPAREN Identifier RPAREN                   # UnaryPrototype
+    | BINARY userdefinedop Number? LPAREN Identifier Identifier RPAREN # BinaryPrototype
     ;
 
 repl
@@ -107,3 +155,4 @@ repl
     | expression[0]               # TopLevelExpression
     | SEMICOLON                   # TopLevelSemicolon
     ;
+// </Parser>

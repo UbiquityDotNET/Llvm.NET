@@ -66,7 +66,7 @@ objects in LLVM. All modules are owned by exactly one Context. Applications can 
 number of threads and create a context for each one. However, threads must not reference the
 context of another thread nor reference any of the objects created within another thread's
 context. This is a fundamental design of LLVM and reduces the complexity of attempting to
-manage collections of objects and interning them in a thread safe manner. Applicatins instead
+manage collections of objects and interning them in a thread safe manner. Applications instead
 just create a context per thread if needed.
 
 To generate code for a particular target the application initializes the module to include the

@@ -4,6 +4,7 @@
 
 using System.Collections.Generic;
 using System.Linq;
+using Antlr4.Runtime;
 
 namespace Kaleidoscope.Grammar
 {
@@ -11,14 +12,16 @@ namespace Kaleidoscope.Grammar
     {
         public partial class BinaryPrototypeContext
         {
-            public char Op => opsymbol( ).GetText( )[ 0 ];
-
-            public override string Name => $"$binary${Op}";
+            public IToken OpToken => userdefinedop( ).start;
 
             public override IReadOnlyList<(string Name, SourceSpan Span)> Parameters
                 => Identifier( ).Select( i => (i.GetText( ), i.GetSourceSpan( )) ).ToList( );
 
             public int Precedence => ( int )double.Parse( Number( ).GetText( ) );
+
+            public override string Name => GetOperatorFunctionName( OpToken );
+
+            public static string GetOperatorFunctionName( IToken token ) => $"$binary${token.Text}";
         }
     }
 }

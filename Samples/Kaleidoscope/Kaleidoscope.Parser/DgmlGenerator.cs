@@ -87,10 +87,8 @@ namespace Kaleidoscope.Grammar
         public override void ExitEveryRule( [NotNull] ParserRuleContext context )
         {
             base.ExitEveryRule( context );
-            var span = context.GetCharInterval( );
-            var charStream = ( ( ITokenStream )Recognizer.InputStream ).TokenSource.InputStream;
 
-            ActiveNode.Properties.Add( "Text", charStream.GetText( span ) );
+            ActiveNode.Properties.Add( "Text", context.GetSourceText( Recognizer ) );
             ActiveNode.Properties.Add( "RuleIndex", context.RuleIndex );
             ActiveNode.Properties.Add( "SourceInterval", context.SourceInterval.ToString( ) );
             if( context.exception != null )

@@ -3,8 +3,11 @@
 // </copyright>
 
 using System;
+using Antlr4.Runtime;
 using Antlr4.Runtime.Misc;
+using Antlr4.Runtime.Tree;
 using Kaleidoscope.Grammar;
+using Kaleidoscope.Runtime;
 
 using static Kaleidoscope.Grammar.KaleidoscopeParser;
 
@@ -13,19 +16,28 @@ namespace Kaleidoscope
     /// <summary>Static extension methods to perform LLVM IR Code generation from the Kaledoscope AST</summary>
     internal sealed class CodeGenerator
         : KaleidoscopeBaseVisitor<int>
+        , IDisposable
+        , IKaleidoscopeCodeGenerator<int>
     {
-        public CodeGenerator( LanguageLevel level )
+        public CodeGenerator( DynamicRuntimeState globalState )
         {
-            ParserStack = new ReplParserStack( level );
+            RuntimeState = globalState;
         }
 
-        public ReplParserStack ParserStack { get; }
+        public void Dispose( )
+        {
+        }
+
+        public int Generate( Parser parser, IParseTree tree, DiagnosticRepresentations additionalDiagnostics )
+        {
+            return Visit( tree );
+        }
 
         public override int VisitBinaryPrototype( [NotNull] BinaryPrototypeContext context )
         {
-            if( !ParserStack.GlobalState.TryAddOperator( context.Op, OperatorKind.InfixLeftAssociative, context.Precedence ) )
+            if( !RuntimeState.TryAddOperator( context.OpToken, OperatorKind.InfixLeftAssociative, context.Precedence ) )
             {
-                throw new ArgumentException( "Cannot replace built-in operators", nameof( context ) );
+                throw new CodeGeneratorException( "Cannot replace built-in operators" );
             }
 
             return 0;
@@ -33,14 +45,16 @@ namespace Kaleidoscope
 
         public override int VisitUnaryPrototype( [NotNull] UnaryPrototypeContext context )
         {
-            if( !ParserStack.GlobalState.TryAddOperator( context.Op, OperatorKind.PreFix, 0 ) )
+            if( !RuntimeState.TryAddOperator( context.OpToken, OperatorKind.PreFix, 0 ) )
             {
-                throw new ArgumentException( "Cannot replace built-in operators", nameof( context ) );
+                throw new CodeGeneratorException( "Cannot replace built-in operators" );
             }
 
             return 0;
         }
 
         protected override int DefaultResult => 0;
+
+        private readonly DynamicRuntimeState RuntimeState;
     }
 }

@@ -17,20 +17,20 @@ namespace Kaleidoscope.Grammar
 
     public struct OperatorInfo
     {
-        public OperatorInfo( char literal, OperatorKind kind, int precedence )
-            : this( literal, kind, precedence, false )
+        public OperatorInfo( int tokenType, OperatorKind kind, int precedence )
+            : this( tokenType, kind, precedence, false )
         {
         }
 
-        public OperatorInfo( char literal, OperatorKind kind, int precedence, bool isBuiltIn )
+        public OperatorInfo( int tokenType, OperatorKind kind, int precedence, bool isBuiltIn )
         {
-            Literal = literal;
+            TokenType = tokenType;
             Kind = kind;
             Precedence = precedence;
             IsBuiltIn = isBuiltIn;
         }
 
-        public char Literal { get; }
+        public int TokenType { get; }
 
         public OperatorKind Kind { get; }
 
@@ -40,11 +40,11 @@ namespace Kaleidoscope.Grammar
     }
 
     internal class OperatorInfoCollection
-        : KeyedCollection<char, OperatorInfo>
+        : KeyedCollection<int, OperatorInfo>
     {
         public bool TryAddOrReplaceItem( OperatorInfo item )
         {
-            if(!this.TryGetValue( item.Literal, out var existingItem ))
+            if(!this.TryGetValue( item.TokenType, out var existingItem ))
             {
                 Add( item );
                 return true;
@@ -60,7 +60,7 @@ namespace Kaleidoscope.Grammar
             return true;
         }
 
-        protected override char GetKeyForItem( OperatorInfo item ) => item.Literal;
+        protected override int GetKeyForItem( OperatorInfo item ) => item.TokenType;
 
         protected override void RemoveItem( int index )
         {

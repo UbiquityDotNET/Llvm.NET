@@ -11,7 +11,9 @@ namespace Kaleidoscope.Grammar
     {
         public partial class UnaryOpExpressionContext
         {
-            public char Op => opsymbol( ).GetText( )[ 0 ];
+            public IToken OpToken => unaryop( ).start;
+
+            public int Op => OpToken.Type;
 
             public ExpressionContext Rhs => expression( );
 
