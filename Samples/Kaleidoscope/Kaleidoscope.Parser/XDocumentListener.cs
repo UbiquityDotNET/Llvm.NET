@@ -15,7 +15,7 @@ namespace Kaleidoscope.Grammar
     {
         public XDocumentListener( IRecognizer recognizer )
         {
-            Document = new XDocument( );
+            Document = new XDocument( ) { Declaration = new XDeclaration( "1.0", "utf-8", "yes" ) };
             Push( new XElement( "Kaleidoscope" ) );
             Recognizer = recognizer;
         }

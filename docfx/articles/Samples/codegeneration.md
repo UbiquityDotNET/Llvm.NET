@@ -170,7 +170,7 @@ The function declarations for both of the two function's is mostly the same, fol
   1. Add attributes appropriate for the function
 
 The two functions illustrate a global externally visible function and a static that is visible only locally.
-This is indicated by the [Linkage.Internal](xref:Llvm.NET.Linkage.Internal) linkage value.
+This is indicated by the [Linkage.Internal](xref:Llvm.NET.Values.Linkage.Internal) linkage value.
 
 >[!NOTE]
 >The use of fluent style extension methods in the Llvm.NET API helps make it easy to add to or modify

@@ -97,11 +97,21 @@ namespace Kaleidoscope.Runtime
                     docListener.Document.Save("ParseTree.xml");
                 }
 #if NET47
-                if( aditionalDiagnostics.HasFlag( DiagnosticRepresentations.Dgml ) )
+                if( aditionalDiagnostics.HasFlag( DiagnosticRepresentations.Dgml ) || aditionalDiagnostics.HasFlag( DiagnosticRepresentations.BlockDiag ) )
                 {
+                    // both forms share the same initial DirectedGraph model as the formats are pretty similar
                     var dgmlGenerator = new DgmlGenerator( Parser );
                     ParseTreeWalker.Default.Walk( dgmlGenerator, parseTree );
-                    dgmlGenerator.WriteDgmlGraph( "ParseTree.dgml" );
+
+                    if( aditionalDiagnostics.HasFlag( DiagnosticRepresentations.Dgml ) )
+                    {
+                        dgmlGenerator.WriteDgmlGraph( "ParseTree.dgml" );
+                    }
+
+                    if( aditionalDiagnostics.HasFlag( DiagnosticRepresentations.BlockDiag ) )
+                    {
+                        dgmlGenerator.WriteBlockDiag( "ParseTree.diag" );
+                    }
                 }
 #endif
                 return (parseTree, Parser);

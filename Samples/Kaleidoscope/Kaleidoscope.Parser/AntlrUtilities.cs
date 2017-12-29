@@ -20,6 +20,11 @@ namespace Kaleidoscope.Grammar
         /// <returns>Character based interval covered by the context</returns>
         public static Interval GetCharInterval( this ParserRuleContext ruleContext )
         {
+            if( ruleContext.start.Type == Recognizer<IToken, Antlr4.Runtime.Atn.ParserATNSimulator>.Eof )
+            {
+                return Interval.Invalid;
+            }
+
             int startChar = ruleContext.Start.StartIndex;
             int endChar = ruleContext.Stop.StopIndex - 1;
             return Interval.Of( Min( startChar, endChar ), Max( startChar, endChar ) );

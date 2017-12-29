@@ -16,6 +16,8 @@ using Llvm.NET.Values;
 
 using static Kaleidoscope.Grammar.KaleidoscopeParser;
 
+#pragma warning disable SA1512, SA1513, SA1515 // single line comments used to tag regions for extraction into docs
+
 namespace Kaleidoscope
 {
     /// <summary>Static extension methods to perform LLVM IR Code generation from the Kaledoscope AST</summary>
@@ -24,6 +26,7 @@ namespace Kaleidoscope
         , IDisposable
         , IKaleidoscopeCodeGenerator<Value>
     {
+        // <Initialization>
         public CodeGenerator( DynamicRuntimeState globalState )
         {
             RuntimeState = globalState;
@@ -32,6 +35,7 @@ namespace Kaleidoscope
             InstructionBuilder = new InstructionBuilder( Context );
             NamedValues = new Dictionary<string, Value>( );
         }
+        // </Initialization>
 
         public void Dispose( )
         {
@@ -219,11 +223,13 @@ namespace Kaleidoscope
             return function;
         }
 
+        // <PrivateMembers>
         private readonly DynamicRuntimeState RuntimeState;
         private static int AnonNameIndex;
         private readonly Context Context;
         private BitcodeModule Module;
         private readonly InstructionBuilder InstructionBuilder;
         private readonly IDictionary<string, Value> NamedValues;
+        // </PrivateMembers>
     }
 }

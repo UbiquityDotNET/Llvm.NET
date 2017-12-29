@@ -14,7 +14,7 @@ namespace Kaleidoscope.Grammar
 {
     /// <summary>Parse tree listener to generate a DGML Graph of the parsed syntax</summary>
     /// <remarks>
-    /// This is similar to ther <see cref="XDocumentListener"/> but allows writing to a
+    /// This is similar to the <see cref="XDocumentListener"/> but allows writing to a
     /// DGML file for visualizing in VisualStudio or any available DGML viewer.
     /// </remarks>
     public class DgmlGenerator
@@ -49,8 +49,7 @@ namespace Kaleidoscope.Grammar
 
         public override void EnterExpression( [NotNull] ExpressionContext context )
         {
-            base.EnterExpression( context );
-            ActiveNode.Properties.Add( "ChildCount", context.ChildCount );
+            ActiveNode.Properties.Add( "Precedence", context._p );
         }
 
         public override void VisitTerminal( [NotNull] ITerminalNode node )
@@ -114,6 +113,8 @@ namespace Kaleidoscope.Grammar
             Graph.WriteToFile( path );
         }
 
+        internal DirectedGraph Graph { get; } = new DirectedGraph( );
+
         private Node ActiveNode => NodeStack.Peek();
 
         private Node Pop( )
@@ -130,7 +131,6 @@ namespace Kaleidoscope.Grammar
         private const string ContextTypeNameSuffix = "Context";
 
         private KaleidoscopeParser Recognizer;
-        private DirectedGraph Graph = new DirectedGraph();
         private Stack<Node> NodeStack = new Stack<Node>();
     }
 }
