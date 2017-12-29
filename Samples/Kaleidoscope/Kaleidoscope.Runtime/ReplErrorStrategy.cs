@@ -3,9 +3,8 @@
 // </copyright>
 
 using Antlr4.Runtime;
-using Antlr4.Runtime.Misc;
 
-namespace Kaleidoscope.Grammar
+namespace Kaleidoscope.Runtime
 {
     /// <summary>Error handling strategy for REPL scenarios</summary>
     /// <remarks>

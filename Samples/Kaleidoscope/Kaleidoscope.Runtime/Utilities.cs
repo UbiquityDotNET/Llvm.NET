@@ -5,12 +5,14 @@
 using System;
 using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
-
-using static Kaleidoscope.Grammar.KaleidoscopeParser;
+using System.IO;
+using System.Linq;
+using System.Text;
+using Llvm.NET.Values;
 
 [assembly: SuppressMessage( "StyleCop.CSharp.DocumentationRules", "SA1652:Enable XML documentation output", Justification = "Sample application" )]
 
-namespace Kaleidoscope
+namespace Kaleidoscope.Runtime
 {
     public static class Utilities
     {
@@ -39,22 +41,19 @@ namespace Kaleidoscope
             }
         }
 
-        public static string GetPrototypeName( this PrototypeContext prototype )
+        /// <summary>replaces any characters in a name that are invalid for a file name</summary>
+        /// <param name="name">name to convert</param>
+        /// <returns>name with invalid characters replaced with '_'</returns>
+        public static string GetSafeFileName( string name )
         {
-            switch( prototype )
+            var bldr = new StringBuilder( name.Length );
+            var invalidChars = Path.GetInvalidFileNameChars( );
+            foreach( char c in name )
             {
-            case FunctionPrototypeContext func:
-                return func.Name;
-
-            case UnaryPrototypeContext unaryOp:
-                return $"$unary{unaryOp.Op}";
-
-            case BinaryPrototypeContext binOp:
-                return $"$binary{binOp.Op}";
-
-            default:
-                throw new ArgumentException( "unknown prototype" );
+                bldr.Append( invalidChars.Contains( c ) ? '_' : c );
             }
+
+            return bldr.ToString( );
         }
     }
 }

@@ -12,7 +12,7 @@ namespace Kaleidoscope.Grammar
         {
             public IReadOnlyList<InitializerContext> Initiaizers => initializer( );
 
-            public ExpressionContext Scope => GetRuleContext<ExpressionContext>( ChildCount - 1 );
+            public ExpressionContext Scope => expression( );
         }
     }
 }

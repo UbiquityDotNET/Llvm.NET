@@ -6,9 +6,11 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.InteropServices;
+using Antlr4.Runtime;
 using Antlr4.Runtime.Misc;
 using Antlr4.Runtime.Tree;
 using Kaleidoscope.Grammar;
+using Kaleidoscope.Runtime;
 using Llvm.NET;
 using Llvm.NET.Instructions;
 using Llvm.NET.JIT;
@@ -23,41 +25,36 @@ namespace Kaleidoscope
     internal sealed class CodeGenerator
         : KaleidoscopeBaseVisitor<Value>
         , IDisposable
+        , IKaleidoscopeCodeGenerator<Value>
     {
-        public CodeGenerator( LanguageLevel level )
+        public CodeGenerator( DynamicRuntimeState globalState )
         {
+            RuntimeState = globalState;
             Context = new Context( );
             InitializeModuleAndPassManager( );
             InstructionBuilder = new InstructionBuilder( Context );
             JIT = new KaleidoscopeJIT( );
-            NamedValues = new Dictionary<string, Value>( );
             FunctionPrototypes = new PrototypeCollection( );
-            ParserStack = new ReplParserStack( level );
             FunctionModuleMap = new Dictionary<string, IJitModuleHandle>( );
+            NamedValues = new Dictionary<string, Value>( );
         }
 
-        public ReplParserStack ParserStack { get; }
-
-        public Context Context { get; }
-
-        public BitcodeModule Module { get; private set; }
-
-        public FunctionPassManager FunctionPassManager { get; private set; }
-
-        public InstructionBuilder InstructionBuilder { get; }
-
-        public IDictionary<string, Value> NamedValues { get; }
-
-        public KaleidoscopeJIT JIT { get; }
-
-        public PrototypeCollection FunctionPrototypes { get; }
-
-        public Dictionary<string, IJitModuleHandle> FunctionModuleMap { get; }
+        public bool DisableOptimizations { get; set; }
 
         public void Dispose( )
         {
             JIT.Dispose( );
             Context.Dispose( );
+        }
+
+        public Value Generate( Parser parser, IParseTree tree, DiagnosticRepresentations additionalDiagnostics )
+        {
+            if( parser.NumberOfSyntaxErrors > 0 )
+            {
+                return null;
+            }
+
+            return Visit( tree );
         }
 
         public override Value VisitParenExpression( [NotNull] ParenExpressionContext context )
@@ -113,11 +110,9 @@ namespace Kaleidoscope
         public override Value VisitTopLevelExpression( [NotNull] TopLevelExpressionContext context )
         {
             var proto = new Prototype( $"anon_expr_{AnonNameIndex++}" );
-            var function = GetOrDeclareFunction( proto
-                                               , isAnonymous: true
-                                               );
+            var function = GetOrDeclareFunction( proto, isAnonymous: true );
 
-            var (_, jitHandle) = DefineFunction( function, context.expression() );
+            var (_, jitHandle) = DefineFunction( function, context.expression( ) );
 
             var nativeFunc = JIT.GetDelegateForFunction<AnonExpressionFunc>( proto.Identifier.Name );
             var retVal = Context.CreateConstant( nativeFunc( ) );
@@ -140,7 +135,7 @@ namespace Kaleidoscope
 
         protected override Value DefaultResult => null;
 
-        private Value EmitBinaryOperator( Value lhs, OpsymbolContext opSymbol, IParseTree rightTree )
+        private Value EmitBinaryOperator( Value lhs, BinaryopContext op, IParseTree rightTree )
         {
             var rhs = rightTree.Accept( this );
             if( lhs == null || rhs == null )
@@ -148,9 +143,9 @@ namespace Kaleidoscope
                 return null;
             }
 
-            switch( opSymbol.Op )
+            switch( op.Token.Type )
             {
-            case '<':
+            case LEFTANGLE:
                 {
                     var tmp = InstructionBuilder.Compare( RealPredicate.UnorderedOrLessThan, lhs, rhs )
                                                 .RegisterName( "cmptmp" );
@@ -158,27 +153,27 @@ namespace Kaleidoscope
                                              .RegisterName( "booltmp" );
                 }
 
-            case '^':
+            case CARET:
                 {
                     var pow = GetOrDeclareFunction( new Prototype( "llvm.pow.f64", "value", "power" ) );
                     return InstructionBuilder.Call( pow, lhs, rhs )
                                              .RegisterName( "powtmp" );
                 }
 
-            case '+':
+            case PLUS:
                 return InstructionBuilder.FAdd( lhs, rhs ).RegisterName( "addtmp" );
 
-            case '-':
+            case MINUS:
                 return InstructionBuilder.FSub( lhs, rhs ).RegisterName( "subtmp" );
 
-            case '*':
+            case ASTERISK:
                 return InstructionBuilder.FMul( lhs, rhs ).RegisterName( "multmp" );
 
-            case '/':
+            case SLASH:
                 return InstructionBuilder.FDiv( lhs, rhs ).RegisterName( "divtmp" );
 
             default:
-                throw new CodeGeneratorException( $"Invalid binary operator {opSymbol.Op}" );
+                throw new CodeGeneratorException( $"Invalid binary operator {op.Token.Text}" );
             }
         }
 
@@ -274,18 +269,31 @@ namespace Kaleidoscope
             InstructionBuilder.Return( funcReturn );
             function.Verify( );
 
-            FunctionPassManager.Run( function );
+            if( !DisableOptimizations )
+            {
+                FunctionPassManager.Run( function );
+            }
+
             var jitHandle = JIT.AddModule( Module );
             FunctionModuleMap.Add( function.Name, jitHandle );
             InitializeModuleAndPassManager( );
             return (function, jitHandle);
         }
 
+        private readonly DynamicRuntimeState RuntimeState;
+        private static int AnonNameIndex;
+        private readonly Context Context;
+        private BitcodeModule Module;
+        private readonly InstructionBuilder InstructionBuilder;
+        private readonly IDictionary<string, Value> NamedValues;
+        private readonly KaleidoscopeJIT JIT;
+        private readonly Dictionary<string, IJitModuleHandle> FunctionModuleMap;
+        private FunctionPassManager FunctionPassManager;
+        private readonly PrototypeCollection FunctionPrototypes;
+
         /// <summary>Delegate type to allow execution of a JIT'd TopLevelExpression</summary>
         /// <returns>Result of evaluating the expression</returns>
         [UnmanagedFunctionPointer( System.Runtime.InteropServices.CallingConvention.Cdecl )]
         private delegate double AnonExpressionFunc( );
-
-        private static int AnonNameIndex;
     }
 }

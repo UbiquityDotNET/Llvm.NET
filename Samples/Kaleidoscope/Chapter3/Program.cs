@@ -4,9 +4,13 @@
 
 using System;
 using System.Diagnostics.CodeAnalysis;
+using System.IO;
 using Kaleidoscope.Grammar;
-using Llvm.NET;
+using Kaleidoscope.Runtime;
 using Llvm.NET.Values;
+
+using static Kaleidoscope.Runtime.Utilities;
+using static Llvm.NET.StaticState;
 
 [assembly: SuppressMessage( "StyleCop.CSharp.DocumentationRules", "SA1652:Enable XML documentation output", Justification = "Sample application" )]
 
@@ -19,48 +23,44 @@ namespace Kaleidoscope
         [SuppressMessage( "Redundancies in Symbol Declarations", "RECS0154:Parameter is never used", Justification = "Standard required signature" )]
         public static void Main( string[ ] args )
         {
-            Utilities.WaitForDebugger( );
+            WaitForDebugger( );
 
-            using( StaticState.InitializeLLVM( ) )
+            using( InitializeLLVM( ) )
             {
-                StaticState.RegisterNative( );
-                using( var generator = new CodeGenerator( LanguageLevel.SimpleExpressions ) )
+                RegisterNative( );
+                var parser = new ReplParserStack( LanguageLevel.SimpleExpressions );
+                using( var generator = new CodeGenerator( parser.GlobalState ) )
                 {
-                    RunReplLoop( generator );
-                    Console.WriteLine( generator.Module.WriteToString( ) );
+                    Console.WriteLine( "LLVM Kaleidoscope Interpreter - {0}", parser.LanguageLevel );
+
+                    var replLoop = new ReplLoop<Value>( generator, parser );
+                    replLoop.ReadyStateChanged += ( s, e ) => Console.Write( e.PartialParse ? ">" : "Ready>" );
+                    replLoop.GeneratedResultAvailable += OnGeneratedResultAvailable;
+
+                    replLoop.Run( );
                 }
             }
         }
 
-        /// <summary>Runs the REPL loop for the language</summary>
-        /// <param name="generator">Generator for generating code</param>
-        /// <remarks>
-        /// Since ANTLR doesn't have an "interactive" input stream, this sort of fakes
-        /// it by using the <see cref="ReplLoopExtensions.ReadStatements(System.IO.TextReader)"/>
-        /// extension to provide an enumeration of lines that may be partial statements read in.
-        /// This is consistent with the behavior of the official LLVM C++ version and allows
-        /// for full use of ANTLR4 instead of wrting a parser by hand.
-        /// </remarks>
-        private static void RunReplLoop( CodeGenerator generator )
+        private static void OnGeneratedResultAvailable( object sender, GeneratedResultAvailableArgs<Value> e )
         {
-            Console.WriteLine( "LLVM Kaleidoscope Generator - {0}", generator.ParserStack.LanguageLevel );
-            Console.Write( "Ready>" );
-            foreach( var (Txt, IsPartial) in Console.In.ReadStatements( ) )
+            var source = ( ReplLoop<Value> )sender;
+
+            switch( e.Result )
             {
-                if( !IsPartial )
+            case ConstantFP result:
+                Console.WriteLine( "Evaluated to {0}", result.Value );
+                break;
+
+            case Function function:
+                if( source.AdditionalDiagnostics.HasFlag( DiagnosticRepresentations.LlvmIR ) )
                 {
-                    var parseTree = generator.ParserStack.ReplParse( Txt );
-                    if( parseTree != null )
-                    {
-                        Value value = generator.Visit( parseTree );
-                        if( value != null )
-                        {
-                            Console.WriteLine( "Parsed {0}", value );
-                        }
-                    }
+                    function.ParentModule.WriteToTextFile( Path.ChangeExtension( GetSafeFileName( function.Name ), "ll" ), out string ignoredMsg );
                 }
 
-                Console.Write( IsPartial ? ">" : "Ready>" );
+                Console.WriteLine( "Defined function: {0}", function.Name );
+                Console.WriteLine( function );
+                break;
             }
         }
     }

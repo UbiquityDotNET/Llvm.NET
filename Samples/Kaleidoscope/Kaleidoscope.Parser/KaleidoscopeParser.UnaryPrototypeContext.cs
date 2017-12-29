@@ -3,6 +3,7 @@
 // </copyright>
 
 using System.Collections.Generic;
+using Antlr4.Runtime;
 
 namespace Kaleidoscope.Grammar
 {
@@ -10,13 +11,15 @@ namespace Kaleidoscope.Grammar
     {
         public partial class UnaryPrototypeContext
         {
-            public char Op => opsymbol( ).GetText( )[ 0 ];
-
-            public override string Name => $"$unary${Op}";
+            public IToken OpToken => unaryop( ).Start;
 
             public override IReadOnlyList<(string Name, SourceSpan Span)> Parameters
                 => new List<(string Name, SourceSpan Span)>
                     { (Identifier( ).GetText( ), Identifier().GetSourceSpan()) };
+
+            public override string Name => GetOperatorFunctionName( OpToken );
+
+            public static string GetOperatorFunctionName( IToken token ) => $"$unary${token.Text}";
         }
     }
 }

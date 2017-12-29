@@ -2,13 +2,15 @@
 // Copyright (c) .NET Foundation. All rights reserved.
 // </copyright>
 
+using Antlr4.Runtime;
+
 namespace Kaleidoscope.Grammar
 {
     public partial class KaleidoscopeParser
     {
-        public partial class OpsymbolContext
+        public partial class BinaryopContext
         {
-            public char Op => Start.Text[ 0 ];
+            public IToken Token => Start;
         }
     }
 }

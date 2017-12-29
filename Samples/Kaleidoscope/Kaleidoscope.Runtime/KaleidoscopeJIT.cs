@@ -7,7 +7,7 @@ using System.Runtime.InteropServices;
 using Llvm.NET;
 using Llvm.NET.JIT;
 
-namespace Kaleidoscope
+namespace Kaleidoscope.Runtime
 {
     /// <summary>JIT engine for Kaledoscope language</summary>
     public sealed class KaleidoscopeJIT

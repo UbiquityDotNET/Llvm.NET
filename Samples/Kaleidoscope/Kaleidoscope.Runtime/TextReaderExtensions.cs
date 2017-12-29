@@ -4,13 +4,12 @@
 
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Text;
 
-namespace Kaleidoscope.Grammar
+namespace Kaleidoscope.Runtime
 {
     /// <summary>Utility class to provide extensions for REPL Loop</summary>
-    public static class ReplLoopExtensions
+    public static class TextReaderExtensions
     {
         /// <summary>Gets an enumerable that pulls lines of text from a <see cref="TextReader"/></summary>
         /// <param name="reader">Reader to read from</param>
@@ -70,16 +69,18 @@ namespace Kaleidoscope.Grammar
                 var statements = line.Split( ';' );
 
                 // if the last line in the group was terminated with a ; the
-                // the last entry is an empty string
+                // the last entry is an empty string, but a single blank line
+                // as input isn't considered completed.
                 int completeStatements = statements.Length - 1;
-                bool wasLastTerminated = statements[ statements.Length - 1 ].Length == 0;
+                bool wasLastTerminated = statements[ statements.Length - 1 ] == string.Empty && statements.Length > 1;
                 if( wasLastTerminated && completeStatements > 1 )
                 {
                     ++completeStatements;
                 }
 
-                foreach( string statement in statements.Take( completeStatements ) )
+                for( int i =0; i< completeStatements; ++i )
                 {
+                    string statement = statements[ i ];
                     bldr.Append( statement );
                     bldr.Append( ';' );
                     bldr.AppendLine( );
