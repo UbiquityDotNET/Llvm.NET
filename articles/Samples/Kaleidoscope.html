@@ -8,7 +8,7 @@
     <title>Kaleidoscope Tutorial | Llvm.NET </title>
     <meta name="viewport" content="width=device-width">
     <meta name="title" content="Kaleidoscope Tutorial | Llvm.NET ">
-    <meta name="generator" content="docfx 2.28.3.0">
+    <meta name="generator" content="docfx 2.29.1.0">
     
     <link rel="shortcut icon" href="../../favicon.ico">
     <link rel="stylesheet" href="../../styles/docfx.vendor.css">
@@ -136,9 +136,138 @@ with the full grammar for all variations of the language features in a single as
 helps in isolating the parsing from the use of Llvm.NET and minimizes the need for any sort
 of custom AST. (The antlr parse tree is generally sufficient to generate code)</p>
 <h2 id="the-kaleidoscope-language">The Kaleidoscope Language</h2>
-<h3 id="lexer-symbols">Lexer symbols</h3>
+<h3 id="general-concepts">General Concepts</h3>
+<p>Kaleidoscope is a simple functional language with the following major features:</p>
+<ul>
+<li>Only a single data type (equivalent to C double)</li>
+<li>Built-in operators for basic expressions</li>
+<li>If/then/else style control flow</li>
+<li>For loop style control flow</li>
+<li>User defined operators<ul>
+<li>User defined operators can specify operator precedence</li>
+</ul>
+</li>
+</ul>
+<h3 id="example">Example</h3>
+<p>The following example is a complete program in Kaleidoscope that will generate a textual representation
+of the classic Mandelbrot Set.</p>
+<pre><code class="lang-Kaleidoscope">def unary!(v)
+  if v then
+    0
+  else
+    1;
+
+def unary-(v)
+  0-v;
+
+def binary&gt; 10 (LHS RHS)
+  RHS &lt; LHS;
+
+def binary| 5 (LHS RHS)
+  if LHS then
+    1
+  else if RHS then
+    1
+  else
+    0;
+
+def binary&amp; 6 (LHS RHS)
+  if !LHS then
+    0
+  else
+    !!RHS;
+
+def binary= 9 (LHS RHS)
+  !(LHS &lt; RHS | LHS &gt; RHS);
+
+def binary : 1 (x y) y;
+
+extern putchard(char);
+
+def printdensity(d)
+  if d &gt; 8 then
+    putchard(32)
+  else if d &gt; 4 then
+    putchard(46)
+  else if d &gt; 2 then
+    putchard(43)
+  else
+    putchard(42);
+
+def mandelconverger(real imag iters creal cimag)
+  if iters &gt; 255 | (real*real + imag*imag &gt; 4) then
+    iters
+  else
+    mandelconverger( real*real - imag*imag + creal
+                   , 2*real*imag + cimag
+                   , iters+1
+                   , creal
+                   , cimag
+                   );
+
+def mandelconverge(real imag)
+  mandelconverger(real, imag, 0, real, imag);
+
+def mandelhelp(xmin xmax xstep   ymin ymax ystep)
+  for y = ymin, y &lt; ymax, ystep in
+  (
+    (for x = xmin, x &lt; xmax, xstep in printdensity(mandelconverge(x,y))) : putchard(10)
+  );
+
+def mandel(realstart imagstart realmag imagmag)
+  mandelhelp(realstart, realstart+realmag*78, realmag, imagstart, imagstart+imagmag*40, imagmag);
+
+mandel(-2.3, -1.3, 0.05, 0.07);
+</code></pre><p>When entered ( or copy/pasted) to the command line Kaleidoscope will print out the following:</p>
+<div class="NOTE"><h5>Note</h5><p>This example uses features of the language only enabled/discussed in Chapter 6 of the tutorial.
+The runtime from earlier chapters will generate errors trying to parse this code.</p>
+</div>
+<pre><code>*******************************************************************************
+*******************************************************************************
+****************************************++++++*********************************
+************************************+++++...++++++*****************************
+*********************************++++++++.. ...+++++***************************
+*******************************++++++++++..   ..+++++**************************
+******************************++++++++++.     ..++++++*************************
+****************************+++++++++....      ..++++++************************
+**************************++++++++.......      .....++++***********************
+*************************++++++++.   .            ... .++**********************
+***********************++++++++...                     ++**********************
+*********************+++++++++....                    .+++*********************
+******************+++..+++++....                      ..+++********************
+**************++++++. ..........                        +++********************
+***********++++++++..        ..                         .++********************
+*********++++++++++...                                 .++++*******************
+********++++++++++..                                   .++++*******************
+*******++++++.....                                    ..++++*******************
+*******+........                                     ...++++*******************
+*******+... ....                                     ...++++*******************
+*******+++++......                                    ..++++*******************
+*******++++++++++...                                   .++++*******************
+*********++++++++++...                                  ++++*******************
+**********+++++++++..        ..                        ..++********************
+*************++++++.. ..........                        +++********************
+******************+++...+++.....                      ..+++********************
+*********************+++++++++....                    ..++*********************
+***********************++++++++...                     +++*********************
+*************************+++++++..   .            ... .++**********************
+**************************++++++++.......      ......+++***********************
+****************************+++++++++....      ..++++++************************
+*****************************++++++++++..     ..++++++*************************
+*******************************++++++++++..  ...+++++**************************
+*********************************++++++++.. ...+++++***************************
+***********************************++++++....+++++*****************************
+***************************************++++++++********************************
+*******************************************************************************
+*******************************************************************************
+*******************************************************************************
+*******************************************************************************
+*******************************************************************************
+</code></pre><h3 id="formal-grammar">Formal Grammar</h3>
+<h4 id="lexer-symbols">Lexer symbols</h4>
 <p>The Kaleidoscope lexer consists of several tokens and is defined in the Kaleidoscope.g4 grammar file</p>
-<pre><code class="lang-ANTLR">// Lexer Rules -------
+<pre><code class="lang-c" name="Lexer">
+// Lexer Rules -------
 fragment NonZeroDecimalDigit_: [1-9];
 fragment DecimalDigit_: [0-9];
 fragment Digits_: &#39;0&#39; | [1-9][0-9]*;
@@ -149,41 +278,45 @@ fragment EndOfLine_
     | EndOfFile_
     ;
 
-EQUALS: &#39;=&#39;;
 LPAREN: &#39;(&#39;;
 RPAREN: &#39;)&#39;;
 COMMA: &#39;,&#39;;
 SEMICOLON: &#39;;&#39;;
-IF: &#39;if&#39;;
-THEN: &#39;then&#39;;
-ELSE: &#39;else&#39;;
-FOR: &#39;for&#39;;
-IN: &#39;in&#39;;
-VAR: &#39;var&#39;;
-UNARY: &#39;unary&#39;;
-BINARY: &#39;binary&#39;;
 DEF: &#39;def&#39;;
 EXTERN: &#39;extern&#39;;
 
-OPSYMBOL
-    : &#39;!&#39;
-    | &#39;%&#39;
-    | &#39;&amp;&#39;
-    | &#39;*&#39;
-    | &#39;+&#39;
-    | &#39;-&#39;
-    | &#39;.&#39;
-    | &#39;/&#39;
-    | &#39;:&#39;
-    | &#39;&lt;&#39;
-    | &#39;&gt;&#39;
-    | &#39;?&#39;
-    | &#39;@&#39;
-    | &#39;\\&#39;
-    | &#39;^&#39;
-    | &#39;_&#39;
-    | &#39;|&#39;
-    ;
+ASSIGN:&#39;=&#39;;
+ASTERISK: &#39;*&#39;;
+PLUS: &#39;+&#39;;
+MINUS:&#39;-&#39;;
+LEFTANGLE: &#39;&lt;&#39;;
+SLASH: &#39;/&#39;;
+
+EXCLAMATION: &#39;!&#39;;
+PERCENT: &#39;%&#39;;
+AMPERSAND:&#39;&amp;&#39;;
+PERIOD:&#39;.&#39;;
+COLON: &#39;:&#39;;
+RIGHTANGLE: &#39;&gt;&#39;;
+QMARK: &#39;?&#39;;
+ATSIGN: &#39;@&#39;;
+BACKSLASH: &#39;\\&#39;;
+CARET: &#39;^&#39;;
+UNDERSCORE: &#39;_&#39;;
+VBAR: &#39;|&#39;;
+EQUALEQUAL: &#39;==&#39;;
+NOTEQUAL: &#39;!=&#39;;
+PLUSPLUS: &#39;++&#39;;
+MINUSMINUS: &#39;--&#39;;
+
+IF:     {FeatureControlFlow}? &#39;if&#39;;
+THEN:   {FeatureControlFlow}? &#39;then&#39;;
+ELSE:   {FeatureControlFlow}? &#39;else&#39;;
+FOR:    {FeatureControlFlow}? &#39;for&#39;;
+IN:     {FeatureControlFlow}? &#39;in&#39;;
+VAR:    {FeatureMutableVars}? &#39;var&#39;;
+UNARY:  {FeatureUserOperators}? &#39;unary&#39;;
+BINARY: {FeatureUserOperators}? &#39;binary&#39;;
 
 LineComment: &#39;#&#39; ~[\r\n]* EndOfLine_ -&gt; skip;
 WhiteSpace: [ \t\r\n\f]+ -&gt; skip;
@@ -192,72 +325,99 @@ Identifier: [a-zA-Z][a-zA-Z0-9]*;
 Number: Digits_ (&#39;.&#39; DecimalDigit_+)?;
 </code></pre><p>This includes basic numeric patterns as well as Identifiers and the symbols allowed for operators and keywords
 for the language. Subsequent chapters will introduce the meaning and use of each of these.</p>
-<h3 id="parser">Parser</h3>
+<h4 id="parser">Parser</h4>
 <p>The parser uses a technique of ANTLR called Semantic Predicates, that allows for dynamic adaptation of the grammar
 and parser to handle variations or versions of the language. The Sample code uses that to selectively enable language
 features as the chapters progress, without needing to change the grammar or generated parser code. The parser code
-provides a simple means of expressing the language support level.</p>
-<h4 id="parser-grammar">Parser grammar</h4>
-<pre><code class="lang-ANTLR">// Parser rules ------
+provides a simple means of expressing the language support level. Semantic predicates play a vital role in supporting
+user defined operators with user defined precedence.</p>
+<h5 id="parser-grammar">Parser grammar</h5>
+<pre><code class="lang-c" name="Lexer">// Parser rules ------
 
-// Identifier as a parser rule enables adaptation of keywords based on language features
-// Depending on the features enabled, certain keywords may be valid identifiers.
-identifier
-    : Identifier
-    | {!FeatureControlFlow}? IF
-    | {!FeatureControlFlow}? THEN
-    | {!FeatureControlFlow}? ELSE
-    | {!FeatureControlFlow}? FOR
-    | {!FeatureControlFlow}? IN
-    | {!FeatureMutableVars}? VAR
-    | {!FeatureUserOperators}? UNARY
-    | {!FeatureUserOperators}? BINARY
+// built-in operator symbols
+builtinop
+    : ASSIGN
+    | ASTERISK
+    | PLUS
+    | MINUS
+    | SLASH
+    | LEFTANGLE
+    | CARET
     ;
 
+// Allowed user defined binary symbols
+userdefinedop
+    : EXCLAMATION
+    | PERCENT
+    | AMPERSAND
+    | PERIOD
+    | COLON
+    | RIGHTANGLE
+    | QMARK
+    | ATSIGN
+    | BACKSLASH
+    | UNDERSCORE
+    | VBAR
+    | EQUALEQUAL
+    | NOTEQUAL
+    | PLUSPLUS
+    | MINUSMINUS
+    ;
+
+// unary ops can re-use built-in binop symbols (Except ASSIGN)
+unaryop
+    : ASTERISK
+    | PLUS
+    | MINUS
+    | SLASH
+    | LEFTANGLE
+    | CARET
+    | userdefinedop
+    ;
+
+// All binary operators
+binaryop
+    : builtinop
+    | userdefinedop
+    ;
+
+// pull the initializer out to a distinct rule so it is easier to get at
+// the list of initializers when walking the parse tree
 initializer
-    : identifier (EQUALS expression)?
+    : Identifier (ASSIGN expression[0])?
     ;
 
-// parser rule to handle the use of the Lexer EQUALS symbol having different meanings in multiple contexts
-opsymbol
-    : EQUALS
-    | OPSYMBOL
-    ;
-
-// Non Left recursive expressions
+// Non Left recursive expressions (a.k.a. atoms)
 primaryExpression
-    : identifier                                                         # VariableExpression
-    | Number                                                             # ConstExpression
-    | LPAREN expression RPAREN                                           # ParenExpression
-    | identifier LPAREN (expression (COMMA expression)*)? RPAREN         # FunctionCallExpression
-    | VAR initializer (initializer)* IN expression                       # VarInExpression
-    | IF expression THEN expression ELSE expression                      # ConditionalExpression
-    | FOR initializer COMMA expression (COMMA expression)? IN expression # ForExpression
-    | identifier EQUALS expression                                       # AssignmentExpression
-    | {IsPrefixOp(_input.Lt(1))}? opsymbol expression                    # UnaryOpExpression
-    ;
+    : LPAREN expression[0] RPAREN                                                 # ParenExpression
+    | Identifier LPAREN (expression[0] (COMMA expression[0])*)? RPAREN            # FunctionCallExpression
+    | VAR initializer (COMMA initializer)* IN expression[0]                       # VarInExpression
+    | IF expression[0] THEN expression[0] ELSE expression[0]                      # ConditionalExpression
+    | FOR initializer COMMA expression[0] (COMMA expression[0])? IN expression[0] # ForExpression
+    | {IsPrefixOp()}? unaryop expression[0]                                       # UnaryOpExpression
+    | Identifier                                                                  # VariableExpression
+    | Number                                                                      # ConstExpression;
 
-// Left-recursive expressions use ANTLR to unroll the left recursion when generating the
-// parser. The generated KaleidoscopeParser can then override the EnterRecursionRule() and
-// PrecPred() methods to handle the dynamic precedence evaluation allowing this grammar to
-// remain clean and simple, yet capable of handling user defined operators and precedence
-expression
-    : primaryExpression              # AtomExpression
-    | expression opsymbol expression # BinaryOpExpression
+// Need to make precedence handling explicit in the code behind
+// since precedence is potentially user defined at runtime.
+expression[int _p]
+    : primaryExpression
+      ( {GetPrecedence() &gt;= $_p}? binaryop expression[GetNextPrecedence()]
+      )*
     ;
 
 prototype
-    : identifier LPAREN (identifier)* RPAREN                      # FunctionPrototype
-    | UNARY opsymbol Number? LPAREN identifier RPAREN             # UnaryPrototype
-    | BINARY opsymbol Number? LPAREN identifier identifier RPAREN # BinaryPrototype
+    : Identifier LPAREN (Identifier)* RPAREN                           # FunctionPrototype
+    | UNARY unaryop Number? LPAREN Identifier RPAREN                   # UnaryPrototype
+    | BINARY userdefinedop Number? LPAREN Identifier Identifier RPAREN # BinaryPrototype
     ;
 
 repl
-    : DEF prototype expression # FunctionDefinition
-    | EXTERN prototype         # ExternalDeclaration
-    | expression               # TopLevelExpression
-    | SEMICOLON                # TopLevelSemicolon
-;
+    : DEF prototype expression[0] # FunctionDefinition
+    | EXTERN prototype            # ExternalDeclaration
+    | expression[0]               # TopLevelExpression
+    | SEMICOLON                   # TopLevelSemicolon
+    ;
 </code></pre><p>A full tutorial on ANTLR is beyond the scope of this tutorial but the basics should be familiar
 enough to anyone acquainted with EBNF form to make enough sense out of it. Don&#39;t worry too much
 about the details at this point as subsequent chapters will cover salient points as new features
