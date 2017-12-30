@@ -144,7 +144,11 @@ of custom AST. (The antlr parse tree is generally sufficient to generate code)</
 <li>If/then/else style control flow</li>
 <li>For loop style control flow</li>
 <li>User defined operators<ul>
-<li>User defined operators can specify operator precedence</li>
+<li>User defined operators can specify operator precedence<ul>
+<li>This is arguably the most complex part of implementing the language. Though, ANTLR4&#39;s
+flexibility made it fairly easy to do once fully understood. (more details in <a href="Kaleidoscope-ch6.html">Chapter 6</a>)</li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
@@ -222,7 +226,8 @@ mandel(-2.3, -1.3, 0.05, 0.07);
 <div class="NOTE"><h5>Note</h5><p>This example uses features of the language only enabled/discussed in Chapter 6 of the tutorial.
 The runtime from earlier chapters will generate errors trying to parse this code.</p>
 </div>
-<pre><code>*******************************************************************************
+<pre><code>Ready&gt;mandel(-2.3, -1.3, 0.05, 0.07);
+*******************************************************************************
 *******************************************************************************
 ****************************************++++++*********************************
 ************************************+++++...++++++*****************************
@@ -263,166 +268,9 @@ The runtime from earlier chapters will generate errors trying to parse this code
 *******************************************************************************
 *******************************************************************************
 *******************************************************************************
-</code></pre><h3 id="formal-grammar">Formal Grammar</h3>
-<h4 id="lexer-symbols">Lexer symbols</h4>
-<p>The Kaleidoscope lexer consists of several tokens and is defined in the Kaleidoscope.g4 grammar file</p>
-<pre><code class="lang-c" name="Lexer">
-// Lexer Rules -------
-fragment NonZeroDecimalDigit_: [1-9];
-fragment DecimalDigit_: [0-9];
-fragment Digits_: &#39;0&#39; | [1-9][0-9]*;
-fragment EndOfFile_: &#39;\u0000&#39; | &#39;\u001A&#39;;
-fragment EndOfLine_
-    : (&#39;\r&#39; &#39;\n&#39;)
-    | (&#39;\r&#39; |&#39;\n&#39; | &#39;\u2028&#39; | &#39;\u2029&#39;)
-    | EndOfFile_
-    ;
-
-LPAREN: &#39;(&#39;;
-RPAREN: &#39;)&#39;;
-COMMA: &#39;,&#39;;
-SEMICOLON: &#39;;&#39;;
-DEF: &#39;def&#39;;
-EXTERN: &#39;extern&#39;;
-
-ASSIGN:&#39;=&#39;;
-ASTERISK: &#39;*&#39;;
-PLUS: &#39;+&#39;;
-MINUS:&#39;-&#39;;
-LEFTANGLE: &#39;&lt;&#39;;
-SLASH: &#39;/&#39;;
-
-EXCLAMATION: &#39;!&#39;;
-PERCENT: &#39;%&#39;;
-AMPERSAND:&#39;&amp;&#39;;
-PERIOD:&#39;.&#39;;
-COLON: &#39;:&#39;;
-RIGHTANGLE: &#39;&gt;&#39;;
-QMARK: &#39;?&#39;;
-ATSIGN: &#39;@&#39;;
-BACKSLASH: &#39;\\&#39;;
-CARET: &#39;^&#39;;
-UNDERSCORE: &#39;_&#39;;
-VBAR: &#39;|&#39;;
-EQUALEQUAL: &#39;==&#39;;
-NOTEQUAL: &#39;!=&#39;;
-PLUSPLUS: &#39;++&#39;;
-MINUSMINUS: &#39;--&#39;;
-
-IF:     {FeatureControlFlow}? &#39;if&#39;;
-THEN:   {FeatureControlFlow}? &#39;then&#39;;
-ELSE:   {FeatureControlFlow}? &#39;else&#39;;
-FOR:    {FeatureControlFlow}? &#39;for&#39;;
-IN:     {FeatureControlFlow}? &#39;in&#39;;
-VAR:    {FeatureMutableVars}? &#39;var&#39;;
-UNARY:  {FeatureUserOperators}? &#39;unary&#39;;
-BINARY: {FeatureUserOperators}? &#39;binary&#39;;
-
-LineComment: &#39;#&#39; ~[\r\n]* EndOfLine_ -&gt; skip;
-WhiteSpace: [ \t\r\n\f]+ -&gt; skip;
-
-Identifier: [a-zA-Z][a-zA-Z0-9]*;
-Number: Digits_ (&#39;.&#39; DecimalDigit_+)?;
-</code></pre><p>This includes basic numeric patterns as well as Identifiers and the symbols allowed for operators and keywords
-for the language. Subsequent chapters will introduce the meaning and use of each of these.</p>
-<h4 id="parser">Parser</h4>
-<p>The parser uses a technique of ANTLR called Semantic Predicates, that allows for dynamic adaptation of the grammar
-and parser to handle variations or versions of the language. The Sample code uses that to selectively enable language
-features as the chapters progress, without needing to change the grammar or generated parser code. The parser code
-provides a simple means of expressing the language support level. Semantic predicates play a vital role in supporting
-user defined operators with user defined precedence.</p>
-<h5 id="parser-grammar">Parser grammar</h5>
-<pre><code class="lang-c" name="Lexer">// Parser rules ------
-
-// built-in operator symbols
-builtinop
-    : ASSIGN
-    | ASTERISK
-    | PLUS
-    | MINUS
-    | SLASH
-    | LEFTANGLE
-    | CARET
-    ;
-
-// Allowed user defined binary symbols
-userdefinedop
-    : EXCLAMATION
-    | PERCENT
-    | AMPERSAND
-    | PERIOD
-    | COLON
-    | RIGHTANGLE
-    | QMARK
-    | ATSIGN
-    | BACKSLASH
-    | UNDERSCORE
-    | VBAR
-    | EQUALEQUAL
-    | NOTEQUAL
-    | PLUSPLUS
-    | MINUSMINUS
-    ;
-
-// unary ops can re-use built-in binop symbols (Except ASSIGN)
-unaryop
-    : ASTERISK
-    | PLUS
-    | MINUS
-    | SLASH
-    | LEFTANGLE
-    | CARET
-    | userdefinedop
-    ;
-
-// All binary operators
-binaryop
-    : builtinop
-    | userdefinedop
-    ;
-
-// pull the initializer out to a distinct rule so it is easier to get at
-// the list of initializers when walking the parse tree
-initializer
-    : Identifier (ASSIGN expression[0])?
-    ;
-
-// Non Left recursive expressions (a.k.a. atoms)
-primaryExpression
-    : LPAREN expression[0] RPAREN                                                 # ParenExpression
-    | Identifier LPAREN (expression[0] (COMMA expression[0])*)? RPAREN            # FunctionCallExpression
-    | VAR initializer (COMMA initializer)* IN expression[0]                       # VarInExpression
-    | IF expression[0] THEN expression[0] ELSE expression[0]                      # ConditionalExpression
-    | FOR initializer COMMA expression[0] (COMMA expression[0])? IN expression[0] # ForExpression
-    | {IsPrefixOp()}? unaryop expression[0]                                       # UnaryOpExpression
-    | Identifier                                                                  # VariableExpression
-    | Number                                                                      # ConstExpression;
-
-// Need to make precedence handling explicit in the code behind
-// since precedence is potentially user defined at runtime.
-expression[int _p]
-    : primaryExpression
-      ( {GetPrecedence() &gt;= $_p}? binaryop expression[GetNextPrecedence()]
-      )*
-    ;
-
-prototype
-    : Identifier LPAREN (Identifier)* RPAREN                           # FunctionPrototype
-    | UNARY unaryop Number? LPAREN Identifier RPAREN                   # UnaryPrototype
-    | BINARY userdefinedop Number? LPAREN Identifier Identifier RPAREN # BinaryPrototype
-    ;
-
-repl
-    : DEF prototype expression[0] # FunctionDefinition
-    | EXTERN prototype            # ExternalDeclaration
-    | expression[0]               # TopLevelExpression
-    | SEMICOLON                   # TopLevelSemicolon
-    ;
-</code></pre><p>A full tutorial on ANTLR is beyond the scope of this tutorial but the basics should be familiar
-enough to anyone acquainted with EBNF form to make enough sense out of it. Don&#39;t worry too much
-about the details at this point as subsequent chapters will cover salient points as new features
-are enabled.</p>
-</article>
+Evaluated to 0
+Ready&gt;
+</code></pre></article>
           </div>
           <div class="contribution-panel mobile-hide">
               <a href="https://github.com/UbiquityDotNET/Llvm.NET/blob/master/docfx/articles/Samples/Kaleidoscope.md/#L1" title="Improve this Doc" class="fab btn-warning pull-right"><i class="glyphicon glyphicon-pencil"></i></a>
