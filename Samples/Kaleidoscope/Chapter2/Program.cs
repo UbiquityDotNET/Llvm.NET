@@ -4,7 +4,6 @@
 
 using System;
 using System.Diagnostics.CodeAnalysis;
-using Antlr4.Runtime.Tree;
 using Kaleidoscope.Grammar;
 using Kaleidoscope.Runtime;
 
@@ -27,7 +26,11 @@ namespace Kaleidoscope
             {
                 Console.WriteLine( "LLVM Kaleidoscope Syntax Viewer - {0}", parser.LanguageLevel );
 
-                var replLoop = new ReplLoop<int>( generator, parser, DiagnosticRepresentations.Xml | DiagnosticRepresentations.Dgml );
+                // generate hopefully helpful representations of parse trees
+                var replLoop = new ReplLoop<int>( generator
+                                                , parser
+                                                , DiagnosticRepresentations.Xml | DiagnosticRepresentations.Dgml | DiagnosticRepresentations.BlockDiag
+                                                );
                 replLoop.ReadyStateChanged += ( s, e ) => Console.Write( e.PartialParse ? ">" : "Ready>" );
                 replLoop.GeneratedResultAvailable += OnGeneratedResultAvailable;
 
@@ -37,11 +40,10 @@ namespace Kaleidoscope
 
         private static void OnGeneratedResultAvailable( object sender, GeneratedResultAvailableArgs<int> e )
         {
-            var docListener = new XDocumentListener( e.Recognizer );
-            ParseTreeWalker.Default.Walk( docListener, e.ParseTree );
-            Console.WriteLine( "Parsed:" );
-            docListener.Document.Save( Console.Out );
-            Console.WriteLine( );
+            if( e.Recognizer.NumberOfSyntaxErrors == 0 )
+            {
+                Console.WriteLine( "Parsed {0}", e.ParseTree.GetType( ).Name );
+            }
         }
     }
 }

@@ -12,17 +12,17 @@ namespace Kaleidoscope.Runtime
     public class ReplLoop<TResult>
     {
         public ReplLoop( IKaleidoscopeCodeGenerator<TResult> generator, LanguageLevel languageLevel )
-            : this( generator, new ReplParserStack( languageLevel ), DiagnosticRepresentations.None, Console.In, Console.Out )
+            : this( generator, new ReplParserStack( languageLevel ), DiagnosticRepresentations.None, Console.In )
         {
         }
 
         public ReplLoop( IKaleidoscopeCodeGenerator<TResult> generator, IKaleidoscopeParser parser )
-            : this( generator, parser, DiagnosticRepresentations.None, Console.In, Console.Out )
+            : this( generator, parser, DiagnosticRepresentations.None, Console.In )
         {
         }
 
         public ReplLoop( IKaleidoscopeCodeGenerator<TResult> generator, IKaleidoscopeParser parser, DiagnosticRepresentations additionalDiagnostics )
-            : this( generator, parser, additionalDiagnostics, Console.In, Console.Out )
+            : this( generator, parser, additionalDiagnostics, Console.In)
         {
         }
 
@@ -30,13 +30,11 @@ namespace Kaleidoscope.Runtime
                        , IKaleidoscopeParser parser
                        , DiagnosticRepresentations additionalDiagnostics
                        , TextReader inputReader
-                       , TextWriter outputWriter
                        )
         {
             Parser = parser;
             Generator = generator;
             Input = inputReader;
-            Output = outputWriter;
             AdditionalDiagnostics = additionalDiagnostics;
         }
 
@@ -98,6 +96,5 @@ namespace Kaleidoscope.Runtime
         private readonly IKaleidoscopeParser Parser;
         private readonly IKaleidoscopeCodeGenerator<TResult> Generator;
         private readonly TextReader Input;
-        private readonly TextWriter Output;
     }
 }

@@ -27,7 +27,7 @@
                    "api/**.md",
                    "api/**.yml",
                    "articles/**.md",
-                   "articles/**.yml"
+                   "articles/**.yml",
                  ],
         "exclude": [ "obj/**" ]
       }
@@ -35,7 +35,11 @@
     "resource":
     [
       {
-        "files": ["favicon.ico", "DragonSharp48x48.png", "DragonSharp.png"]
+        "files": ["favicon.ico",
+                  "DragonSharp48x48.png",
+                  "DragonSharp.png",
+                  "articles/**.svg"
+                  ]
       }
     ],
     "overwrite":

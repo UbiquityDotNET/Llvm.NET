@@ -21,6 +21,9 @@ namespace Kaleidoscope.Runtime
         /// <summary>Generate a DGML representation of the parse tree</summary>
         Dgml,
 
+        /// <summary>Generates a BlockDiag representation of the parse tree</summary>
+        BlockDiag,
+
         /// <summary>Generate a textual representation of the Lllvm IR</summary>
         LlvmIR,
 

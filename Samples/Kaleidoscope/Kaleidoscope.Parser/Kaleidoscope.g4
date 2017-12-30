@@ -6,8 +6,6 @@
 //
 grammar Kaleidoscope;
 
-// <Lexer>
-
 // Lexer Rules -------
 fragment NonZeroDecimalDigit_: [1-9];
 fragment DecimalDigit_: [0-9];
@@ -50,7 +48,6 @@ NOTEQUAL: '!=';
 PLUSPLUS: '++';
 MINUSMINUS: '--';
 
-// <FeatureControlledKeywords>
 IF:     {FeatureControlFlow}? 'if';
 THEN:   {FeatureControlFlow}? 'then';
 ELSE:   {FeatureControlFlow}? 'else';
@@ -59,16 +56,13 @@ IN:     {FeatureControlFlow}? 'in';
 VAR:    {FeatureMutableVars}? 'var';
 UNARY:  {FeatureUserOperators}? 'unary';
 BINARY: {FeatureUserOperators}? 'binary';
-// </FeatureControlledKeywords>
 
 LineComment: '#' ~[\r\n]* EndOfLine_ -> skip;
 WhiteSpace: [ \t\r\n\f]+ -> skip;
 
 Identifier: [a-zA-Z][a-zA-Z0-9]*;
 Number: Digits_ ('.' DecimalDigit_+)?;
-// </Lexer>
 
-// <Parser>
 // Parser rules ------
 
 // built-in operator symbols
@@ -109,13 +103,47 @@ unaryop
     | SLASH
     | LEFTANGLE
     | CARET
-    | userdefinedop
+    | EXCLAMATION
+    | PERCENT
+    | AMPERSAND
+    | PERIOD
+    | COLON
+    | RIGHTANGLE
+    | QMARK
+    | ATSIGN
+    | BACKSLASH
+    | UNDERSCORE
+    | VBAR
+    | EQUALEQUAL
+    | NOTEQUAL
+    | PLUSPLUS
+    | MINUSMINUS
     ;
 
 // All binary operators
 binaryop
-    : builtinop
-    | userdefinedop
+    : ASSIGN
+    | ASTERISK
+    | PLUS
+    | MINUS
+    | SLASH
+    | LEFTANGLE
+    | CARET
+    | EXCLAMATION
+    | PERCENT
+    | AMPERSAND
+    | PERIOD
+    | COLON
+    | RIGHTANGLE
+    | QMARK
+    | ATSIGN
+    | BACKSLASH
+    | UNDERSCORE
+    | VBAR
+    | EQUALEQUAL
+    | NOTEQUAL
+    | PLUSPLUS
+    | MINUSMINUS
     ;
 
 // pull the initializer out to a distinct rule so it is easier to get at
@@ -133,7 +161,8 @@ primaryExpression
     | FOR initializer COMMA expression[0] (COMMA expression[0])? IN expression[0] # ForExpression
     | {IsPrefixOp()}? unaryop expression[0]                                       # UnaryOpExpression
     | Identifier                                                                  # VariableExpression
-    | Number                                                                      # ConstExpression;
+    | Number                                                                      # ConstExpression
+    ;
 
 // Need to make precedence handling explicit in the code behind
 // since precedence is potentially user defined at runtime.
@@ -155,4 +184,3 @@ repl
     | expression[0]               # TopLevelExpression
     | SEMICOLON                   # TopLevelSemicolon
     ;
-// </Parser>

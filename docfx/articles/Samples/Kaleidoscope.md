@@ -28,6 +28,8 @@ Kaleidoscope is a simple functional language with the following major features:
 * For loop style control flow
 * User defined operators
   - User defined operators can specify operator precedence
+    - This is arguably the most complex part of implementing the language. Though, ANTLR4's
+      flexibility made it fairly easy to do once fully understood. (more details in [Chapter 6](Kaleidoscope-ch6.md))
 
 ### Example
 The following example is a complete program in Kaleidoscope that will generate a textual representation
@@ -109,6 +111,7 @@ When entered ( or copy/pasted) to the command line Kaleidoscope will print out t
 >The runtime from earlier chapters will generate errors trying to parse this code.
 
 ```
+Ready>mandel(-2.3, -1.3, 0.05, 0.07);
 *******************************************************************************
 *******************************************************************************
 ****************************************++++++*********************************
@@ -150,31 +153,6 @@ When entered ( or copy/pasted) to the command line Kaleidoscope will print out t
 *******************************************************************************
 *******************************************************************************
 *******************************************************************************
+Evaluated to 0
+Ready>
 ```
-
-### Formal Grammar
-#### Lexer symbols
-
-The Kaleidoscope lexer consists of several tokens and is defined in the Kaleidoscope.g4 grammar file
-
-[!code-c[Lexer](../../../Samples/Kaleidoscope/Kaleidoscope.Parser/Kaleidoscope.g4#Lexer)]
-
-This includes basic numeric patterns as well as Identifiers and the symbols allowed for operators and keywords
-for the language. Subsequent chapters will introduce the meaning and use of each of these.
-
-#### Parser
-
-The parser uses a technique of ANTLR called Semantic Predicates, that allows for dynamic adaptation of the grammar
-and parser to handle variations or versions of the language. The Sample code uses that to selectively enable language
-features as the chapters progress, without needing to change the grammar or generated parser code. The parser code
-provides a simple means of expressing the language support level. Semantic predicates play a vital role in supporting
-user defined operators with user defined precedence.
-
-##### Parser grammar
-[!code-c[Lexer](../../../Samples/Kaleidoscope/Kaleidoscope.Parser/Kaleidoscope.g4#Parser)]
-
-A full tutorial on ANTLR is beyond the scope of this tutorial but the basics should be familiar
-enough to anyone acquainted with EBNF form to make enough sense out of it. Don't worry too much
-about the details at this point as subsequent chapters will cover salient points as new features
-are enabled.
-

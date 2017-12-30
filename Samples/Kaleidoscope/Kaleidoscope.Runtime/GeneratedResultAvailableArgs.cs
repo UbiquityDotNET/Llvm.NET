@@ -11,7 +11,7 @@ namespace Kaleidoscope.Runtime
     public class GeneratedResultAvailableArgs<TResult>
         : EventArgs
     {
-        public GeneratedResultAvailableArgs( TResult result, IRecognizer recognizer, IParseTree parseTree )
+        public GeneratedResultAvailableArgs( TResult result, Parser recognizer, IParseTree parseTree )
         {
             Result = result;
             ParseTree = parseTree;
@@ -22,6 +22,6 @@ namespace Kaleidoscope.Runtime
 
         public IParseTree ParseTree { get; }
 
-        public IRecognizer Recognizer { get; }
+        public Parser Recognizer { get; }
     }
 }
