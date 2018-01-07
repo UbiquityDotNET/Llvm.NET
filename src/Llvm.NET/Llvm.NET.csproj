@@ -22,8 +22,6 @@
     </ItemGroup>
     <ItemGroup>
         <Content Include="NugetPkg\build\Llvm.NET.props" PackagePath="build" />
-        <Content Include="$(OutputPath)net47\Llvm.Net.pdb" PackagePath="lib\net47" InProject="false" />
-        <Content Include="$(OutputPath)netstandard2.0\Llvm.Net.pdb" PackagePath="lib\netstandard2.0" InProject="false" />
     </ItemGroup>
     <ItemGroup>
         <CodeAnalysisDictionary Include="..\CustomDictionary.xml">

@@ -34,7 +34,6 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Repo Items", "Repo Items", "{BA4F7BCF-67BC-49E4-B2F9-DCED3D57619D}"
 	ProjectSection(SolutionItems) = preProject
 		..\appveyor.yml = ..\appveyor.yml
-		..\Build-docs.ps1 = ..\Build-docs.ps1
 		..\BuildAll.ps1 = ..\BuildAll.ps1
 		..\Directory.Build.props = ..\Directory.Build.props
 		..\Directory.Build.targets = ..\Directory.Build.targets
@@ -101,6 +100,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Samples", "Samples", "{D04D
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Kaleidoscope.Runtime", "..\Samples\Kaleidoscope\Kaleidoscope.Runtime\Kaleidoscope.Runtime.csproj", "{DF586B9E-C590-459F-AD5A-F2E023E3CB45}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Llvm.Net.Docfx", "..\docfx\Llvm.Net.Docfx.csproj", "{887D41FB-C927-4AF2-9A0C-A60AD86CA277}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -159,6 +160,10 @@ Global
 		{DF586B9E-C590-459F-AD5A-F2E023E3CB45}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DF586B9E-C590-459F-AD5A-F2E023E3CB45}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{DF586B9E-C590-459F-AD5A-F2E023E3CB45}.Release|Any CPU.Build.0 = Release|Any CPU
+		{887D41FB-C927-4AF2-9A0C-A60AD86CA277}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{887D41FB-C927-4AF2-9A0C-A60AD86CA277}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{887D41FB-C927-4AF2-9A0C-A60AD86CA277}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{887D41FB-C927-4AF2-9A0C-A60AD86CA277}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

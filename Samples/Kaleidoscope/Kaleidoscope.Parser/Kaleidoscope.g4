@@ -1,6 +1,6 @@
 // ANTLR4 Grammar for the LLVM Tutorial Sample Kaleidoscope language
 // To support a progression through the chapters the language features are
-// selectable and dynamicly adjust the parsing accordingly. This allows a
+// selectable and dynamically adjust the parsing accordingly. This allows a
 // single parser implementation for all chapters, which allows the tutorial
 // to focus on the actual use of Llvm.NET itself rather than on parsing.
 //
