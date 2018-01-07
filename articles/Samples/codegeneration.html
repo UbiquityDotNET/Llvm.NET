@@ -14,8 +14,8 @@
     <link rel="stylesheet" href="../../styles/docfx.vendor.css">
     <link rel="stylesheet" href="../../styles/docfx.css">
     <link rel="stylesheet" href="../../styles/main.css">
-    <meta property="docfx:navrel" content="../../toc">
-    <meta property="docfx:tocrel" content="toc">
+    <meta property="docfx:navrel" content="../../toc.html">
+    <meta property="docfx:tocrel" content="toc.html">
     
     
     
@@ -44,75 +44,16 @@
                   <input type="text" class="form-control" id="search-query" placeholder="Search" autocomplete="off">
                 </div>
               </form>
-                <ul class="nav level1 navbar-nav">
-                  <li class="">
-                    <a href="../../api/index.html" title="API Documentation" class="">API Documentation</a>
-                  </li>
-                  <li class="">
-                    <a href="../../articles/index.html" title="Articles" class="">Articles</a>
-                  </li>
-                  <li class="">
-                    <a href="http://LLVM.org" title="LLVM.org" class="">LLVM.org</a>
-                  </li>
-                  <li class="">
-                    <a href="http://releases.llvm.org/5.0.0/docs/index.html" title="LLVM Docs" class="">LLVM Docs</a>
-                  </li>
-                </ul>
             </div>
           </div>
         </nav>
       </header>
       <div role="main" class="container body-content hide-when-search">
+        
         <div class="sidenav hide-when-search">
           <a class="btn toc-toggle collapse" data-toggle="collapse" href="#sidetoggle" aria-expanded="false" aria-controls="sidetoggle">Show / Hide Table of Contents</a>
           <div class="sidetoggle collapse" id="sidetoggle">
-            <div>
-              <div class="sidefilter">
-                <form class="toc-filter">
-                  <span class="glyphicon glyphicon-filter filter-icon"></span>
-                  <input type="text" id="toc_filter_input" placeholder="Enter here to filter..." onkeypress="if(event.keyCode==13) {return false;}">
-                </form>
-              </div>
-              <div class="sidetoc">
-                <div class="toc" id="toc">
-                  
-                  <ul class="nav level1">
-                    <li class="active">
-                      <a href="codegeneration.html" title="Code Generation" class="active">Code Generation</a>
-                    </li>
-                    <li class="">
-                      <span class="expand-stub"></span>
-                      <a href="Kaleidoscope.html" title="Kaleidoscope" class="">Kaleidoscope</a>
-                        
-                        <ul class="nav level2">
-                          <li class="">
-                            <a href="Kaleidoscope-ch2.html" title="Chapter 2" class="">Chapter 2</a>
-                          </li>
-                          <li class="">
-                            <a href="Kaleidoscope-ch3.html" title="Chapter 3" class="">Chapter 3</a>
-                          </li>
-                          <li class="">
-                            <a href="Kaleidoscope-ch4.html" title="Chapter 4" class="">Chapter 4</a>
-                          </li>
-                          <li class="">
-                            <a href="Kaleidoscope-ch5.html" title="Chapter 5" class="">Chapter 5</a>
-                          </li>
-                          <li class="">
-                            <a href="Kaleidoscope-ch6.html" title="Chapter 6" class="">Chapter 6</a>
-                          </li>
-                          <li class="">
-                            <a href="Kaleidoscope-ch7.html" title="Chapter 7" class="">Chapter 7</a>
-                          </li>
-                          <li class="">
-                            <a href="Kaleidoscope-ch8.html" title="Chapter 8" class="">Chapter 8</a>
-                          </li>
-                          <li class="">
-                            <a href="Kaleidoscope-ch9.html" title="Chapter 9" class="">Chapter 9</a>
-                          </li>
-                        </ul>  </li>
-                  </ul>        </div>
-              </div>
-            </div>
+            <div id="sidetoc"></div>
           </div>
         </div>
         <div class="article row grid-right">
@@ -330,7 +271,7 @@ var fooType = new DebugStructType( module, &quot;struct.foo&quot;, cu, &quot;foo
 is initialized with constant data. The sample starts by constructing the const array data that
 forms the initialized value of <code>bar.c</code>, the source only provides const values for the first two
 entries of a 32 element array. The const data is created via <a class="xref" href="../../api/Llvm.NET.Values.ConstantArray.html">ConstArray</a>.
-The full initialized const data for bar is the created from <a class="xref" href="../../api/Llvm.NET.Context.CreateNamedConstantStruct.html">Context.CreateNamedConstantStruct</a></p>
+The full initialized const data for bar is the created from <a class="xref" href="../../api/Llvm.NET.Context.html#Llvm_NET_Context_CreateNamedConstantStruct_">Context.CreateNamedConstantStruct</a></p>
 <pre><code class="lang-csharp" name="Main">// add global variables and constants
 var constArray = ConstantArray.From( i32, 32, module.Context.CreateConstant( 3 ), module.Context.CreateConstant( 4 ) );
 var barValue = module.Context.CreateNamedConstantStruct( fooType
@@ -359,15 +300,15 @@ AddModuleFlags( module );
     module.AddVersionIdentMetadata( VersionIdentString );
 }
 </code></pre><p>Once the constant data is available an LLVM global is created for it with a name that matches the source name
-via <a class="xref" href="../../api/Llvm.NET.BitcodeModule.AddGlobal.html">AddGlobal</a>. To ensure the linker lays out the structure
+via <a class="xref" href="../../api/Llvm.NET.BitcodeModule.html#Llvm_NET_BitcodeModule_AddGlobal_">AddGlobal</a>. To ensure the linker lays out the structure
 correctly the code uses the layout information for the module to get the ABI required alignement for 
-the global and sets the <a class="xref" href="../../api/Llvm.NET.Values.GlobalObject.Alignment.html#Llvm_NET_Values_GlobalObject_Alignment">Alignment</a> property for the global.
+the global and sets the <a class="xref" href="../../api/Llvm.NET.Values.GlobalObject.html#Llvm_NET_Values_GlobalObject_Alignment">Alignment</a> property for the global.
 Finally the debug information for the gloabl is created as a <a class="xref" href="../../api/Llvm.NET.DebugInfo.DIGlobalVariableExpression.html">DIGlobalVariableExpression</a>
-using <a class="xref" href="../../api/Llvm.NET.DebugInfo.DebugInfoBuilder.CreateGlobalVariableExpression.html">CreateGlobalVariableExpression</a>
+using <a class="xref" href="../../api/Llvm.NET.DebugInfo.DebugInfoBuilder.html#Llvm_NET_DebugInfo_DebugInfoBuilder_CreateGlobalVariableExpression_">CreateGlobalVariableExpression</a>
 finally the added to the variable to complete the creation.</p>
 <p>For the <code>baz</code> instance the process is almost identical. The major difference is that the value of the
 structure is initialized to all zeros. That is the initialized data for the structure is created with
-<a class="xref" href="../../api/Llvm.NET.Values.Constant.NullValueFor.html">NullValueFor</a>, which creates an all zero value of a type.</p>
+<a class="xref" href="../../api/Llvm.NET.Values.Constant.html#Llvm_NET_Values_Constant_NullValueFor_">NullValueFor</a>, which creates an all zero value of a type.</p>
 <pre><code class="lang-csharp" name="Main">// add global variables and constants
 var constArray = ConstantArray.From( i32, 32, module.Context.CreateConstant( 3 ), module.Context.CreateConstant( 4 ) );
 var barValue = module.Context.CreateNamedConstantStruct( fooType
@@ -495,7 +436,7 @@ in the sample test.c file. There are a few points to make about the function gen
 <p>As discussed the arguments and locals are allocated in the entry block however that only makes them useable in
 the function and ready for the mem2reg pass. In particular there is no debug information attached to the variables.
 To provide debug information LLVM provides an intrinsic function that is used to declare the debug information for
-a variable. In Llvm.NET this is emitted using the <a class="xref" href="../../api/Llvm.NET.DebugInfo.DebugInfoBuilder.InsertDeclare.html">InsertDeclare</a>
+a variable. In Llvm.NET this is emitted using the <a class="xref" href="../../api/Llvm.NET.DebugInfo.DebugInfoBuilder.html#Llvm_NET_DebugInfo_DebugInfoBuilder_InsertDeclare_">InsertDeclare</a>
 method.</p>
 <h3 id="calling-llvm-intrinsics">Calling LLVM Intrinsics</h3>
 <p>The generated code needs to copy some data, rather than directly doing a copy in a loop, the code uses the LLVM
@@ -593,13 +534,18 @@ attributes #2 = { argmemonly nounwind }
 !40 = !DILocation(line: 16, column: 1, scope: !28)
 </code></pre></article>
           </div>
-          <div class="contribution-panel mobile-hide">
-              <a href="https://github.com/UbiquityDotNET/Llvm.NET/blob/master/docfx/articles/Samples/codegeneration.md/#L1" title="Improve this Doc" class="fab btn-warning pull-right"><i class="glyphicon glyphicon-pencil"></i></a>
-          </div>
           
           <div class="hidden-sm col-md-2" role="complementary">
             <div class="sideaffix">
+              <div class="contribution">
+                <ul class="nav">
+                  <li>
+                    <a href="https://github.com/UbiquityDotNET/Llvm.NET/blob/master/docfx/articles/Samples/codegeneration.md/#L1" class="contribution-link">Improve this Doc</a>
+                  </li>
+                </ul>
+              </div>
               <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
+              <!-- <p><a class="back-to-top" href="#top">Back to top</a><p> -->
               </nav>
             </div>
           </div>
