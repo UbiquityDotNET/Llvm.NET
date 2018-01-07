@@ -43,6 +43,8 @@ try
         rd -Recurse -Force -Path $buildPaths.BuildOutputPath
     }
 
+    md BuildOutput\NuGet\ | Out-Null
+
     if( $env:CI -and !(Test-Path ".\BuildOutput\docs\.git" -PathType Container))
     {
         Write-Information "Cloning Docs repo"
@@ -56,8 +58,6 @@ try
             popd
         }
     }
-
-    md BuildOutput\NuGet\ | Out-Null
 
     $BuildInfo = Get-BuildInformation $buildPaths
     if($env:APPVEYOR)
