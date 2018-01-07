@@ -57,7 +57,7 @@
                     <a href="http://LLVM.org" title="LLVM.org" class="">LLVM.org</a>
                   </li>
                   <li class="">
-                    <a href="http://releases.llvm.org/5.0.0/docs/index.html" title="LLVM Docs" class="">LLVM Docs</a>
+                    <a href="http://releases.llvm.org/5.0.1/docs/index.html" title="LLVM Docs" class="">LLVM Docs</a>
                   </li>
                 </ul>
             </div>
@@ -3522,24 +3522,16 @@
 
 
 <a id="Llvm_NET_Instructions_InstructionBuilder_MemMove_" data-uid="Llvm.NET.Instructions.InstructionBuilder.MemMove*"></a>
-<h4 id="Llvm_NET_Instructions_InstructionBuilder_MemMove_Llvm_NET_Values_Value_Llvm_NET_Values_Value_Llvm_NET_Values_Value_System_Int32_System_Boolean_" data-uid="Llvm.NET.Instructions.InstructionBuilder.MemMove(Llvm.NET.Values.Value,Llvm.NET.Values.Value,Llvm.NET.Values.Value,System.Int32,System.Boolean)">MemMove(Value, Value, Value, Int32, Boolean)</h4>
+<h2 id="Llvm_NET_Instructions_InstructionBuilder_MemMove_Llvm_NET_Values_Value_Llvm_NET_Values_Value_Llvm_NET_Values_Value_System_Int32_System_Boolean_" data-uid="Llvm.NET.Instructions.InstructionBuilder.MemMove(Llvm.NET.Values.Value,Llvm.NET.Values.Value,Llvm.NET.Values.Value,System.Int32,System.Boolean)">MemMove(Value, Value, Value, Int32, Boolean)</h2>
 <div class="markdown level1 summary"><p>Builds a memmov intrinsic call</p>
 </div>
 <div class="markdown level1 conceptual"></div>
-<h5 class="decalaration">Declaration</h5>
+<h3 class="decalaration">Declaration
 <div class="codewrapper">
   <pre><code class="lang-csharp hljs">public Value MemMove(Value destination, Value source, Value len, int align, bool isVolatile)</code></pre>
 </div>
-<h5 class="parameters">Parameters</h5>
+<h2 class="parameters">Parameters</h2>
 <table class="table table-bordered table-striped table-condensed">
-  <thead>
-    <tr>
-      <th>Type</th>
-      <th>Name</th>
-      <th>Description</th>
-    </tr>
-  </thead>
-  <tbody>
     <tr>
       <td><a class="xref" href="Llvm.NET.Values.Value.html">Value</a></td>
       <td><span class="parametername">destination</span></td>
@@ -3570,25 +3562,16 @@
       <td><p>Flag to indicate if the copy involves volatile data such as physical registers</p>
 </td>
     </tr>
-  </tbody>
 </table>
-<h5 class="returns">Returns</h5>
+<h2 class="returns">Returns</h2>
 <table class="table table-bordered table-striped table-condensed">
-  <thead>
-    <tr>
-      <th>Type</th>
-      <th>Description</th>
-    </tr>
-  </thead>
-  <tbody>
     <tr>
       <td><a class="xref" href="Llvm.NET.Values.Value.html">Value</a></td>
       <td><p><a class="xref" href="Llvm.NET.Instructions.Intrinsic.html">Intrinsic</a> call for the memmov</p>
 </td>
     </tr>
-  </tbody>
 </table>
-<h5 id="Llvm_NET_Instructions_InstructionBuilder_MemMove_Llvm_NET_Values_Value_Llvm_NET_Values_Value_Llvm_NET_Values_Value_System_Int32_System_Boolean__remarks">Remarks</h5>
+<h2 id="Llvm_NET_Instructions_InstructionBuilder_MemMove_Llvm_NET_Values_Value_Llvm_NET_Values_Value_Llvm_NET_Values_Value_System_Int32_System_Boolean__remarks">Remarks</h2>
 <div class="markdown level1 remarks"><p>LLVM has many overloaded variants of the memmove intrinsic, this implementation will deduce the types from
 the provided values and generate a more specific call without the need to provide overloaded forms of this
 method and otherwise complicating the calling code.</p>
@@ -3596,24 +3579,16 @@ method and otherwise complicating the calling code.</p>
 
 
 <a id="Llvm_NET_Instructions_InstructionBuilder_MemMove_" data-uid="Llvm.NET.Instructions.InstructionBuilder.MemMove*"></a>
-<h4 id="Llvm_NET_Instructions_InstructionBuilder_MemMove_Llvm_NET_BitcodeModule_Llvm_NET_Values_Value_Llvm_NET_Values_Value_Llvm_NET_Values_Value_System_Int32_System_Boolean_" data-uid="Llvm.NET.Instructions.InstructionBuilder.MemMove(Llvm.NET.BitcodeModule,Llvm.NET.Values.Value,Llvm.NET.Values.Value,Llvm.NET.Values.Value,System.Int32,System.Boolean)">MemMove(BitcodeModule, Value, Value, Value, Int32, Boolean)</h4>
+<h2 id="Llvm_NET_Instructions_InstructionBuilder_MemMove_Llvm_NET_BitcodeModule_Llvm_NET_Values_Value_Llvm_NET_Values_Value_Llvm_NET_Values_Value_System_Int32_System_Boolean_" data-uid="Llvm.NET.Instructions.InstructionBuilder.MemMove(Llvm.NET.BitcodeModule,Llvm.NET.Values.Value,Llvm.NET.Values.Value,Llvm.NET.Values.Value,System.Int32,System.Boolean)">MemMove(BitcodeModule, Value, Value, Value, Int32, Boolean)</h2>
 <div class="markdown level1 summary"><p>Builds a memmove intrinsic call</p>
 </div>
 <div class="markdown level1 conceptual"></div>
-<h5 class="decalaration">Declaration</h5>
+<h3 class="decalaration">Declaration
 <div class="codewrapper">
   <pre><code class="lang-csharp hljs">public Value MemMove(BitcodeModule module, Value destination, Value source, Value len, int align, bool isVolatile)</code></pre>
 </div>
-<h5 class="parameters">Parameters</h5>
+<h2 class="parameters">Parameters</h2>
 <table class="table table-bordered table-striped table-condensed">
-  <thead>
-    <tr>
-      <th>Type</th>
-      <th>Name</th>
-      <th>Description</th>
-    </tr>
-  </thead>
-  <tbody>
     <tr>
       <td><a class="xref" href="Llvm.NET.BitcodeModule.html">BitcodeModule</a></td>
       <td><span class="parametername">module</span></td>
@@ -3650,30 +3625,21 @@ method and otherwise complicating the calling code.</p>
       <td><p>Flag to indicate if the copy involves volatile data such as physical registers</p>
 </td>
     </tr>
-  </tbody>
 </table>
-<h5 class="returns">Returns</h5>
+<h2 class="returns">Returns</h2>
 <table class="table table-bordered table-striped table-condensed">
-  <thead>
-    <tr>
-      <th>Type</th>
-      <th>Description</th>
-    </tr>
-  </thead>
-  <tbody>
     <tr>
       <td><a class="xref" href="Llvm.NET.Values.Value.html">Value</a></td>
       <td><p><a class="xref" href="Llvm.NET.Instructions.Intrinsic.html">Intrinsic</a> call for the memmove</p>
 </td>
     </tr>
-  </tbody>
 </table>
-<h5 id="Llvm_NET_Instructions_InstructionBuilder_MemMove_Llvm_NET_BitcodeModule_Llvm_NET_Values_Value_Llvm_NET_Values_Value_Llvm_NET_Values_Value_System_Int32_System_Boolean__remarks">Remarks</h5>
+<h2 id="Llvm_NET_Instructions_InstructionBuilder_MemMove_Llvm_NET_BitcodeModule_Llvm_NET_Values_Value_Llvm_NET_Values_Value_Llvm_NET_Values_Value_System_Int32_System_Boolean__remarks">Remarks</h2>
 <div class="markdown level1 remarks"><p>LLVM has many overloaded variants of the memmove intrinsic, this implementation will deduce the types from
 the provided values and generate a more specific call without the need to provide overloaded forms of this
 method and otherwise complicating the calling code.</p>
 </div>
-</article>
+</h3></h3></article>
           </div>
           <div class="contribution-panel mobile-hide">
           </div>

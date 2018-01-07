@@ -57,7 +57,7 @@
                     <a href="http://LLVM.org" title="LLVM.org" class="">LLVM.org</a>
                   </li>
                   <li class="">
-                    <a href="http://releases.llvm.org/5.0.0/docs/index.html" title="LLVM Docs" class="">LLVM Docs</a>
+                    <a href="http://releases.llvm.org/5.0.1/docs/index.html" title="LLVM Docs" class="">LLVM Docs</a>
                   </li>
                 </ul>
             </div>
@@ -3522,53 +3522,37 @@
 
 
 <a id="Llvm_NET_DebugInfo_DebugType_2_DIType_" data-uid="Llvm.NET.DebugInfo.DebugType`2.DIType*"></a>
-<h4 id="Llvm_NET_DebugInfo_DebugType_2_DIType" data-uid="Llvm.NET.DebugInfo.DebugType`2.DIType">DIType</h4>
+<h2 id="Llvm_NET_DebugInfo_DebugType_2_DIType" data-uid="Llvm.NET.DebugInfo.DebugType`2.DIType">DIType</h2>
 <div class="markdown level1 summary"><p>Gets or sets the Debug information type for this </p>
 </div>
 <div class="markdown level1 conceptual"></div>
-<h5 class="decalaration">Declaration</h5>
+<h3 class="decalaration">Declaration
 <div class="codewrapper">
   <pre><code class="lang-csharp hljs">public TDebug DIType { get; set; }</code></pre>
 </div>
-<h5 class="propertyValue">Property Value</h5>
+<h2 class="propertyValue">Property Value</h2>
 <table class="table table-bordered table-striped table-condensed">
-  <thead>
-    <tr>
-      <th>Type</th>
-      <th>Description</th>
-    </tr>
-  </thead>
-  <tbody>
     <tr>
       <td><span class="xref">TDebug</span></td>
       <td></td>
     </tr>
-  </tbody>
 </table>
-<h5 class="implements">Implements</h5>
+<h2 class="implements">Implements</h2>
     <div><a class="xref" href="Llvm.NET.DebugInfo.IDebugType-2.DIType.html#Llvm_NET_DebugInfo_IDebugType_2_DIType">IDebugType&lt;TNative, TDebug&gt;.DIType</a></div>
-<h5 id="Llvm_NET_DebugInfo_DebugType_2_DIType_remarks">Remarks</h5>
+<h2 id="Llvm_NET_DebugInfo_DebugType_2_DIType_remarks">Remarks</h2>
 <div class="markdown level1 remarks"><p>Setting the debug type is only allowed when the deug type is null or <a class="xref" href="Llvm.NET.MDNode.IsTemporary.html#Llvm_NET_MDNode_IsTemporary">IsTemporary</a>
 is <span class="xref">true</span>. If the debug type node is a temporary seting the type will replace all uses
 of the temporary type automatically, via <a class="xref" href="Llvm.NET.MDNode.ReplaceAllUsesWith.html#Llvm_NET_MDNode_ReplaceAllUsesWith_Llvm_NET_LlvmMetadata_">ReplaceAllUsesWith(LlvmMetadata)</a></p>
 </div>
-<h5 class="exceptions">Exceptions</h5>
+<h2 class="exceptions">Exceptions</h2>
 <table class="table table-bordered table-striped table-condensed">
-  <thead>
-    <tr>
-      <th>Type</th>
-      <th>Condition</th>
-    </tr>
-  </thead>
-  <tbody>
     <tr>
       <td><a class="xref" href="https://msdn.microsoft.com/en-us/library/system.invalidoperationexception(v=vs.110).aspx">InvalidOperationException</a></td>
       <td><p>The type is not <span class="xref">null</span> or not a temporary</p>
 </td>
     </tr>
-  </tbody>
 </table>
-</article>
+</h3></article>
           </div>
           <div class="contribution-panel mobile-hide">
           </div>

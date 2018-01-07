@@ -57,7 +57,7 @@
                     <a href="http://LLVM.org" title="LLVM.org" class="">LLVM.org</a>
                   </li>
                   <li class="">
-                    <a href="http://releases.llvm.org/5.0.0/docs/index.html" title="LLVM Docs" class="">LLVM Docs</a>
+                    <a href="http://releases.llvm.org/5.0.1/docs/index.html" title="LLVM Docs" class="">LLVM Docs</a>
                   </li>
                 </ul>
             </div>
@@ -3522,24 +3522,16 @@
 
 
 <a id="Llvm_NET_BitcodeModule_AddFunction_" data-uid="Llvm.NET.BitcodeModule.AddFunction*"></a>
-<h4 id="Llvm_NET_BitcodeModule_AddFunction_System_String_Llvm_NET_Types_IFunctionType_" data-uid="Llvm.NET.BitcodeModule.AddFunction(System.String,Llvm.NET.Types.IFunctionType)">AddFunction(String, IFunctionType)</h4>
+<h2 id="Llvm_NET_BitcodeModule_AddFunction_System_String_Llvm_NET_Types_IFunctionType_" data-uid="Llvm.NET.BitcodeModule.AddFunction(System.String,Llvm.NET.Types.IFunctionType)">AddFunction(String, IFunctionType)</h2>
 <div class="markdown level1 summary"><p>Add a function with the specified signature to the module</p>
 </div>
 <div class="markdown level1 conceptual"></div>
-<h5 class="decalaration">Declaration</h5>
+<h3 class="decalaration">Declaration
 <div class="codewrapper">
   <pre><code class="lang-csharp hljs">public Function AddFunction(string name, IFunctionType signature)</code></pre>
 </div>
-<h5 class="parameters">Parameters</h5>
+<h2 class="parameters">Parameters</h2>
 <table class="table table-bordered table-striped table-condensed">
-  <thead>
-    <tr>
-      <th>Type</th>
-      <th>Name</th>
-      <th>Description</th>
-    </tr>
-  </thead>
-  <tbody>
     <tr>
       <td><a class="xref" href="https://msdn.microsoft.com/en-us/library/system.string(v=vs.110).aspx">String</a></td>
       <td><span class="parametername">name</span></td>
@@ -3552,31 +3544,22 @@
       <td><p>Signature of the function</p>
 </td>
     </tr>
-  </tbody>
 </table>
-<h5 class="returns">Returns</h5>
+<h2 class="returns">Returns</h2>
 <table class="table table-bordered table-striped table-condensed">
-  <thead>
-    <tr>
-      <th>Type</th>
-      <th>Description</th>
-    </tr>
-  </thead>
-  <tbody>
     <tr>
       <td><a class="xref" href="Llvm.NET.Values.Function.html">Function</a></td>
       <td><p><a class="xref" href="Llvm.NET.Values.Function.html">Function</a>matching the specified signature and name</p>
 </td>
     </tr>
-  </tbody>
 </table>
-<h5 id="Llvm_NET_BitcodeModule_AddFunction_System_String_Llvm_NET_Types_IFunctionType__remarks">Remarks</h5>
+<h2 id="Llvm_NET_BitcodeModule_AddFunction_System_String_Llvm_NET_Types_IFunctionType__remarks">Remarks</h2>
 <div class="markdown level1 remarks"><p>If a matching function already exists it is returned, and therefore the returned
 <a class="xref" href="Llvm.NET.Values.Function.html">Function</a> may have a body and additional attributes. If a function of
 the same name exists with a different signature an exception is thrown as LLVM does
 not perform any function overloading.</p>
 </div>
-</article>
+</h3></article>
           </div>
           <div class="contribution-panel mobile-hide">
           </div>

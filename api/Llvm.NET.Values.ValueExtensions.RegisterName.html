@@ -57,7 +57,7 @@
                     <a href="http://LLVM.org" title="LLVM.org" class="">LLVM.org</a>
                   </li>
                   <li class="">
-                    <a href="http://releases.llvm.org/5.0.0/docs/index.html" title="LLVM Docs" class="">LLVM Docs</a>
+                    <a href="http://releases.llvm.org/5.0.1/docs/index.html" title="LLVM Docs" class="">LLVM Docs</a>
                   </li>
                 </ul>
             </div>
@@ -3522,24 +3522,16 @@
 
 
 <a id="Llvm_NET_Values_ValueExtensions_RegisterName_" data-uid="Llvm.NET.Values.ValueExtensions.RegisterName*"></a>
-<h4 id="Llvm_NET_Values_ValueExtensions_RegisterName__1___0_System_String_" data-uid="Llvm.NET.Values.ValueExtensions.RegisterName``1(``0,System.String)">RegisterName&lt;T&gt;(T, String)</h4>
+<h2 id="Llvm_NET_Values_ValueExtensions_RegisterName__1___0_System_String_" data-uid="Llvm.NET.Values.ValueExtensions.RegisterName``1(``0,System.String)">RegisterName&lt;T&gt;(T, String)</h2>
 <div class="markdown level1 summary"><p>Sets the virtual register name for a value</p>
 </div>
 <div class="markdown level1 conceptual"></div>
-<h5 class="decalaration">Declaration</h5>
+<h3 class="decalaration">Declaration
 <div class="codewrapper">
   <pre><code class="lang-csharp hljs">public static T RegisterName&lt;T&gt;(this T value, string name)where T : Value</code></pre>
 </div>
-<h5 class="parameters">Parameters</h5>
+<h2 class="parameters">Parameters</h2>
 <table class="table table-bordered table-striped table-condensed">
-  <thead>
-    <tr>
-      <th>Type</th>
-      <th>Name</th>
-      <th>Description</th>
-    </tr>
-  </thead>
-  <tbody>
     <tr>
       <td><span class="xref">T</span></td>
       <td><span class="parametername">value</span></td>
@@ -3552,41 +3544,24 @@
       <td><p>Name for the virtual register the value represents</p>
 </td>
     </tr>
-  </tbody>
 </table>
-<h5 class="returns">Returns</h5>
+<h2 class="returns">Returns</h2>
 <table class="table table-bordered table-striped table-condensed">
-  <thead>
-    <tr>
-      <th>Type</th>
-      <th>Description</th>
-    </tr>
-  </thead>
-  <tbody>
     <tr>
       <td><span class="xref">T</span></td>
       <td><p><code data-dev-comment-type="paramref" class="paramref">value</code> for fluent usage</p>
 </td>
     </tr>
-  </tbody>
 </table>
-<h5 class="typeParameters">Type Parameters</h5>
+<h2 class="typeParameters">Type Parameters</h2>
 <table class="table table-bordered table-striped table-condensed">
-  <thead>
-    <tr>
-      <th>Name</th>
-      <th>Description</th>
-    </tr>
-  </thead>
-  <tbody>
     <tr>
       <td><span class="parametername">T</span></td>
       <td><p>Type of the value to set the name for</p>
 </td>
     </tr>
-  </tbody>
 </table>
-<h5 id="Llvm_NET_Values_ValueExtensions_RegisterName__1___0_System_String__remarks">Remarks</h5>
+<h2 id="Llvm_NET_Values_ValueExtensions_RegisterName__1___0_System_String__remarks">Remarks</h2>
 <div class="markdown level1 remarks"><p>Technically speaking only an <a class="xref" href="Llvm.NET.Instructions.Instruction.html">Instruction</a> can have register name
 information. However, since LLVM will perform constant folding in the <a class="xref" href="Llvm.NET.Instructions.InstructionBuilder.html">InstructionBuilder</a>
 most of the methods in <a class="xref" href="Llvm.NET.Instructions.InstructionBuilder.html">InstructionBuilder</a> return a <a class="xref" href="Llvm.NET.Values.Value.html">Value</a> rather
@@ -3605,7 +3580,7 @@ name of a local variable etc...) Using the fluent style allows a significant red
 overloaded methods in <a class="xref" href="Llvm.NET.Instructions.InstructionBuilder.html">InstructionBuilder</a> to account for all variations with or without a name.
 </p>
 </div>
-</article>
+</h3></article>
           </div>
           <div class="contribution-panel mobile-hide">
           </div>

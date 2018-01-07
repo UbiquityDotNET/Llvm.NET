@@ -57,7 +57,7 @@
                     <a href="http://LLVM.org" title="LLVM.org" class="">LLVM.org</a>
                   </li>
                   <li class="">
-                    <a href="http://releases.llvm.org/5.0.0/docs/index.html" title="LLVM Docs" class="">LLVM Docs</a>
+                    <a href="http://releases.llvm.org/5.0.1/docs/index.html" title="LLVM Docs" class="">LLVM Docs</a>
                   </li>
                 </ul>
             </div>
@@ -3522,24 +3522,16 @@
 
 
 <a id="Llvm_NET_Instructions_InstructionBuilder_GetElementPtrInBounds_" data-uid="Llvm.NET.Instructions.InstructionBuilder.GetElementPtrInBounds*"></a>
-<h4 id="Llvm_NET_Instructions_InstructionBuilder_GetElementPtrInBounds_Llvm_NET_Values_Value_Llvm_NET_Values_Value___" data-uid="Llvm.NET.Instructions.InstructionBuilder.GetElementPtrInBounds(Llvm.NET.Values.Value,Llvm.NET.Values.Value[])">GetElementPtrInBounds(Value, Value[])</h4>
+<h2 id="Llvm_NET_Instructions_InstructionBuilder_GetElementPtrInBounds_Llvm_NET_Values_Value_Llvm_NET_Values_Value___" data-uid="Llvm.NET.Instructions.InstructionBuilder.GetElementPtrInBounds(Llvm.NET.Values.Value,Llvm.NET.Values.Value[])">GetElementPtrInBounds(Value, Value[])</h2>
 <div class="markdown level1 summary"><p>Creates a <a class="xref" href="Llvm.NET.Values.Value.html">Value</a> that accesses an element of a type referenced by a pointer</p>
 </div>
 <div class="markdown level1 conceptual"></div>
-<h5 class="decalaration">Declaration</h5>
+<h3 class="decalaration">Declaration
 <div class="codewrapper">
   <pre><code class="lang-csharp hljs">public Value GetElementPtrInBounds(Value pointer, params Value[] args)</code></pre>
 </div>
-<h5 class="parameters">Parameters</h5>
+<h2 class="parameters">Parameters</h2>
 <table class="table table-bordered table-striped table-condensed">
-  <thead>
-    <tr>
-      <th>Type</th>
-      <th>Name</th>
-      <th>Description</th>
-    </tr>
-  </thead>
-  <tbody>
     <tr>
       <td><a class="xref" href="Llvm.NET.Values.Value.html">Value</a></td>
       <td><span class="parametername">pointer</span></td>
@@ -3552,17 +3544,9 @@
       <td><p>additional indices for computing the resulting pointer</p>
 </td>
     </tr>
-  </tbody>
 </table>
-<h5 class="returns">Returns</h5>
+<h2 class="returns">Returns</h2>
 <table class="table table-bordered table-striped table-condensed">
-  <thead>
-    <tr>
-      <th>Type</th>
-      <th>Description</th>
-    </tr>
-  </thead>
-  <tbody>
     <tr>
       <td><a class="xref" href="Llvm.NET.Values.Value.html">Value</a></td>
       <td><p><a class="xref" href="Llvm.NET.Values.Value.html">Value</a> for the member access. This is a <a class="xref" href="Llvm.NET.Values.Value.html">Value</a>
@@ -3573,11 +3557,10 @@ or <a class="xref" href="Llvm.NET.Instructions.GetElementPtr.html">GetElementPtr
 or an exception is thrown.</p>
 </td>
     </tr>
-  </tbody>
 </table>
-<h5 id="Llvm_NET_Instructions_InstructionBuilder_GetElementPtrInBounds_Llvm_NET_Values_Value_Llvm_NET_Values_Value____remarks">Remarks</h5>
+<h2 id="Llvm_NET_Instructions_InstructionBuilder_GetElementPtrInBounds_Llvm_NET_Values_Value_Llvm_NET_Values_Value____remarks">Remarks</h2>
 <div class="markdown level1 remarks"><p>For details on GetElementPointer (GEP) see
-<a class="xref" href="http://releases.llvm.org/5.0.0/docs/GetElementPtr.html">The Often Misunderstood GEP Instruction</a>.
+<a class="xref" href="http://releases.llvm.org/5.0.1/docs/GetElementPtr.html">The Often Misunderstood GEP Instruction</a>.
 The basic gist is that the GEP instruction does not access memory, it only computes a pointer
 offset from a base. A common confusion is around the first index and what it means. For C
 and C++ programmers an expression like pFoo-&gt;bar seems to only have a single offset or
@@ -3589,24 +3572,16 @@ element in an aggregate type LLVM requires an explicit first index even if it is
 
 
 <a id="Llvm_NET_Instructions_InstructionBuilder_GetElementPtrInBounds_" data-uid="Llvm.NET.Instructions.InstructionBuilder.GetElementPtrInBounds*"></a>
-<h4 id="Llvm_NET_Instructions_InstructionBuilder_GetElementPtrInBounds_Llvm_NET_Values_Value_System_Collections_Generic_IEnumerable_Llvm_NET_Values_Value__" data-uid="Llvm.NET.Instructions.InstructionBuilder.GetElementPtrInBounds(Llvm.NET.Values.Value,System.Collections.Generic.IEnumerable{Llvm.NET.Values.Value})">GetElementPtrInBounds(Value, IEnumerable&lt;Value&gt;)</h4>
+<h2 id="Llvm_NET_Instructions_InstructionBuilder_GetElementPtrInBounds_Llvm_NET_Values_Value_System_Collections_Generic_IEnumerable_Llvm_NET_Values_Value__" data-uid="Llvm.NET.Instructions.InstructionBuilder.GetElementPtrInBounds(Llvm.NET.Values.Value,System.Collections.Generic.IEnumerable{Llvm.NET.Values.Value})">GetElementPtrInBounds(Value, IEnumerable&lt;Value&gt;)</h2>
 <div class="markdown level1 summary"><p>Creates a <a class="xref" href="Llvm.NET.Values.Value.html">Value</a> that accesses an element of a type referenced by a pointer</p>
 </div>
 <div class="markdown level1 conceptual"></div>
-<h5 class="decalaration">Declaration</h5>
+<h3 class="decalaration">Declaration
 <div class="codewrapper">
   <pre><code class="lang-csharp hljs">public Value GetElementPtrInBounds(Value pointer, IEnumerable&lt;Value&gt; args)</code></pre>
 </div>
-<h5 class="parameters">Parameters</h5>
+<h2 class="parameters">Parameters</h2>
 <table class="table table-bordered table-striped table-condensed">
-  <thead>
-    <tr>
-      <th>Type</th>
-      <th>Name</th>
-      <th>Description</th>
-    </tr>
-  </thead>
-  <tbody>
     <tr>
       <td><a class="xref" href="Llvm.NET.Values.Value.html">Value</a></td>
       <td><span class="parametername">pointer</span></td>
@@ -3619,17 +3594,9 @@ element in an aggregate type LLVM requires an explicit first index even if it is
       <td><p>additional indices for computing the resulting pointer</p>
 </td>
     </tr>
-  </tbody>
 </table>
-<h5 class="returns">Returns</h5>
+<h2 class="returns">Returns</h2>
 <table class="table table-bordered table-striped table-condensed">
-  <thead>
-    <tr>
-      <th>Type</th>
-      <th>Description</th>
-    </tr>
-  </thead>
-  <tbody>
     <tr>
       <td><a class="xref" href="Llvm.NET.Values.Value.html">Value</a></td>
       <td><p><a class="xref" href="Llvm.NET.Values.Value.html">Value</a> for the member access. This is a <a class="xref" href="Llvm.NET.Values.Value.html">Value</a>
@@ -3640,11 +3607,10 @@ or <a class="xref" href="Llvm.NET.Instructions.GetElementPtr.html">GetElementPtr
 or an exception is thrown.</p>
 </td>
     </tr>
-  </tbody>
 </table>
-<h5 id="Llvm_NET_Instructions_InstructionBuilder_GetElementPtrInBounds_Llvm_NET_Values_Value_System_Collections_Generic_IEnumerable_Llvm_NET_Values_Value___remarks">Remarks</h5>
+<h2 id="Llvm_NET_Instructions_InstructionBuilder_GetElementPtrInBounds_Llvm_NET_Values_Value_System_Collections_Generic_IEnumerable_Llvm_NET_Values_Value___remarks">Remarks</h2>
 <div class="markdown level1 remarks"><p>For details on GetElementPointer (GEP) see
-<a class="xref" href="http://releases.llvm.org/5.0.0/docs/GetElementPtr.html">The Often Misunderstood GEP Instruction</a>.
+<a class="xref" href="http://releases.llvm.org/5.0.1/docs/GetElementPtr.html">The Often Misunderstood GEP Instruction</a>.
 The basic gist is that the GEP instruction does not access memory, it only computes a pointer
 offset from a base. A common confusion is around the first index and what it means. For C
 and C++ programmers an expression like pFoo-&gt;bar seems to only have a single offset or
@@ -3653,7 +3619,7 @@ index. That is, there is no difference between pFoo[0].bar and pFoo-&gt;bar exce
 former makes the first index explicit. In order to properly compute the offset for a given
 element in an aggregate type LLVM requires an explicit first index even if it is zero.</p>
 </div>
-</article>
+</h3></h3></article>
           </div>
           <div class="contribution-panel mobile-hide">
           </div>

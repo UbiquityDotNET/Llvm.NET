@@ -57,7 +57,7 @@
                     <a href="http://LLVM.org" title="LLVM.org" class="">LLVM.org</a>
                   </li>
                   <li class="">
-                    <a href="http://releases.llvm.org/5.0.0/docs/index.html" title="LLVM Docs" class="">LLVM Docs</a>
+                    <a href="http://releases.llvm.org/5.0.1/docs/index.html" title="LLVM Docs" class="">LLVM Docs</a>
                   </li>
                 </ul>
             </div>
@@ -3522,24 +3522,16 @@
 
 
 <a id="Llvm_NET_Triple_GetCanonicalArchForSubArch_" data-uid="Llvm.NET.Triple.GetCanonicalArchForSubArch*"></a>
-<h4 id="Llvm_NET_Triple_GetCanonicalArchForSubArch_Llvm_NET_Triple_ArchType_Llvm_NET_Triple_SubArchType_" data-uid="Llvm.NET.Triple.GetCanonicalArchForSubArch(Llvm.NET.Triple.ArchType,Llvm.NET.Triple.SubArchType)">GetCanonicalArchForSubArch(Triple.ArchType, Triple.SubArchType)</h4>
+<h2 id="Llvm_NET_Triple_GetCanonicalArchForSubArch_Llvm_NET_Triple_ArchType_Llvm_NET_Triple_SubArchType_" data-uid="Llvm.NET.Triple.GetCanonicalArchForSubArch(Llvm.NET.Triple.ArchType,Llvm.NET.Triple.SubArchType)">GetCanonicalArchForSubArch(Triple.ArchType, Triple.SubArchType)</h2>
 <div class="markdown level1 summary"><p>Provides the canonical Architecture form for a given architecture sub architecture pair</p>
 </div>
 <div class="markdown level1 conceptual"></div>
-<h5 class="decalaration">Declaration</h5>
+<h3 class="decalaration">Declaration
 <div class="codewrapper">
   <pre><code class="lang-csharp hljs">public static Triple.ArchType GetCanonicalArchForSubArch(Triple.ArchType archType, Triple.SubArchType subArch)</code></pre>
 </div>
-<h5 class="parameters">Parameters</h5>
+<h2 class="parameters">Parameters</h2>
 <table class="table table-bordered table-striped table-condensed">
-  <thead>
-    <tr>
-      <th>Type</th>
-      <th>Name</th>
-      <th>Description</th>
-    </tr>
-  </thead>
-  <tbody>
     <tr>
       <td><a class="xref" href="Llvm.NET.Triple.ArchType.html">Triple.ArchType</a></td>
       <td><span class="parametername">archType</span></td>
@@ -3552,31 +3544,22 @@
       <td><p>Sub Architecture type</p>
 </td>
     </tr>
-  </tbody>
 </table>
-<h5 class="returns">Returns</h5>
+<h2 class="returns">Returns</h2>
 <table class="table table-bordered table-striped table-condensed">
-  <thead>
-    <tr>
-      <th>Type</th>
-      <th>Description</th>
-    </tr>
-  </thead>
-  <tbody>
     <tr>
       <td><a class="xref" href="Llvm.NET.Triple.ArchType.html">Triple.ArchType</a></td>
       <td><p>Canonical <a class="xref" href="Llvm.NET.Triple.ArchType.html">Triple.ArchType</a></p>
 </td>
     </tr>
-  </tbody>
 </table>
-<h5 id="Llvm_NET_Triple_GetCanonicalArchForSubArch_Llvm_NET_Triple_ArchType_Llvm_NET_Triple_SubArchType__remarks">Remarks</h5>
+<h2 id="Llvm_NET_Triple_GetCanonicalArchForSubArch_Llvm_NET_Triple_ArchType_Llvm_NET_Triple_SubArchType__remarks">Remarks</h2>
 <div class="markdown level1 remarks"><p>Some architectures, particularly ARM variants, have multiple sub-architecture types that
 have a canonical form (i.e. Arch=<a class="xref" href="Llvm.NET.Triple.ArchType.html#Llvm_NET_Triple_ArchType_Arm">Arm</a>; SubArch=<a class="xref" href="Llvm.NET.Triple.SubArchType.html#Llvm_NET_Triple_SubArchType_ARMSubArch_v7m">ARMSubArch_v7m</a>;
 has the Canonical Arch of <a class="xref" href="Llvm.NET.Triple.ArchType.html#Llvm_NET_Triple_ArchType_Thumb">Thumb</a>). This method retrieves the canonical Arch
 for a given architecture,SubArchitecture pair.</p>
 </div>
-</article>
+</h3></article>
           </div>
           <div class="contribution-panel mobile-hide">
           </div>

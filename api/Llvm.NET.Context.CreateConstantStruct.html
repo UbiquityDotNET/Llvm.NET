@@ -57,7 +57,7 @@
                     <a href="http://LLVM.org" title="LLVM.org" class="">LLVM.org</a>
                   </li>
                   <li class="">
-                    <a href="http://releases.llvm.org/5.0.0/docs/index.html" title="LLVM Docs" class="">LLVM Docs</a>
+                    <a href="http://releases.llvm.org/5.0.1/docs/index.html" title="LLVM Docs" class="">LLVM Docs</a>
                   </li>
                 </ul>
             </div>
@@ -3522,24 +3522,16 @@
 
 
 <a id="Llvm_NET_Context_CreateConstantStruct_" data-uid="Llvm.NET.Context.CreateConstantStruct*"></a>
-<h4 id="Llvm_NET_Context_CreateConstantStruct_System_Boolean_Llvm_NET_Values_Constant___" data-uid="Llvm.NET.Context.CreateConstantStruct(System.Boolean,Llvm.NET.Values.Constant[])">CreateConstantStruct(Boolean, Constant[])</h4>
+<h2 id="Llvm_NET_Context_CreateConstantStruct_System_Boolean_Llvm_NET_Values_Constant___" data-uid="Llvm.NET.Context.CreateConstantStruct(System.Boolean,Llvm.NET.Values.Constant[])">CreateConstantStruct(Boolean, Constant[])</h2>
 <div class="markdown level1 summary"><p>Creates a constant structure from a set of values</p>
 </div>
 <div class="markdown level1 conceptual"></div>
-<h5 class="decalaration">Declaration</h5>
+<h3 class="decalaration">Declaration
 <div class="codewrapper">
   <pre><code class="lang-csharp hljs">public Constant CreateConstantStruct(bool packed, params Constant[] values)</code></pre>
 </div>
-<h5 class="parameters">Parameters</h5>
+<h2 class="parameters">Parameters</h2>
 <table class="table table-bordered table-striped table-condensed">
-  <thead>
-    <tr>
-      <th>Type</th>
-      <th>Name</th>
-      <th>Description</th>
-    </tr>
-  </thead>
-  <tbody>
     <tr>
       <td><a class="xref" href="https://msdn.microsoft.com/en-us/library/system.boolean(v=vs.110).aspx">Boolean</a></td>
       <td><span class="parametername">packed</span></td>
@@ -3552,49 +3544,32 @@
       <td><p>Set of values to use in forming the structure</p>
 </td>
     </tr>
-  </tbody>
 </table>
-<h5 class="returns">Returns</h5>
+<h2 class="returns">Returns</h2>
 <table class="table table-bordered table-striped table-condensed">
-  <thead>
-    <tr>
-      <th>Type</th>
-      <th>Description</th>
-    </tr>
-  </thead>
-  <tbody>
     <tr>
       <td><a class="xref" href="Llvm.NET.Values.Constant.html">Constant</a></td>
       <td><p>Newly created <a class="xref" href="Llvm.NET.Values.Constant.html">Constant</a></p>
 </td>
     </tr>
-  </tbody>
 </table>
-<h5 id="Llvm_NET_Context_CreateConstantStruct_System_Boolean_Llvm_NET_Values_Constant____remarks">Remarks</h5>
+<h2 id="Llvm_NET_Context_CreateConstantStruct_System_Boolean_Llvm_NET_Values_Constant____remarks">Remarks</h2>
 <div class="markdown level1 remarks"><p>The actual concrete return type depends on the parameters provided and will be one of the following:
 <table><thead><tr><th><a class="xref" href="Llvm.NET.Values.Constant.html">Constant</a> derived type</th><th>Description</th></tr></thead><tbody><tr><td>ConstantAggregateZero</td><td>If all the member values are zero constants</td></tr><tr><td>UndefValue</td><td>If all the member values are UndefValue</td></tr><tr><td>ConstantStruct</td><td>All other cases</td></tr></tbody></table></p>
 </div>
 
 
 <a id="Llvm_NET_Context_CreateConstantStruct_" data-uid="Llvm.NET.Context.CreateConstantStruct*"></a>
-<h4 id="Llvm_NET_Context_CreateConstantStruct_System_Boolean_System_Collections_Generic_IEnumerable_Llvm_NET_Values_Constant__" data-uid="Llvm.NET.Context.CreateConstantStruct(System.Boolean,System.Collections.Generic.IEnumerable{Llvm.NET.Values.Constant})">CreateConstantStruct(Boolean, IEnumerable&lt;Constant&gt;)</h4>
+<h2 id="Llvm_NET_Context_CreateConstantStruct_System_Boolean_System_Collections_Generic_IEnumerable_Llvm_NET_Values_Constant__" data-uid="Llvm.NET.Context.CreateConstantStruct(System.Boolean,System.Collections.Generic.IEnumerable{Llvm.NET.Values.Constant})">CreateConstantStruct(Boolean, IEnumerable&lt;Constant&gt;)</h2>
 <div class="markdown level1 summary"><p>Creates a constant structure from a set of values</p>
 </div>
 <div class="markdown level1 conceptual"></div>
-<h5 class="decalaration">Declaration</h5>
+<h3 class="decalaration">Declaration
 <div class="codewrapper">
   <pre><code class="lang-csharp hljs">public Constant CreateConstantStruct(bool packed, IEnumerable&lt;Constant&gt; values)</code></pre>
 </div>
-<h5 class="parameters">Parameters</h5>
+<h2 class="parameters">Parameters</h2>
 <table class="table table-bordered table-striped table-condensed">
-  <thead>
-    <tr>
-      <th>Type</th>
-      <th>Name</th>
-      <th>Description</th>
-    </tr>
-  </thead>
-  <tbody>
     <tr>
       <td><a class="xref" href="https://msdn.microsoft.com/en-us/library/system.boolean(v=vs.110).aspx">Boolean</a></td>
       <td><span class="parametername">packed</span></td>
@@ -3607,30 +3582,21 @@
       <td><p>Set of values to use in forming the structure</p>
 </td>
     </tr>
-  </tbody>
 </table>
-<h5 class="returns">Returns</h5>
+<h2 class="returns">Returns</h2>
 <table class="table table-bordered table-striped table-condensed">
-  <thead>
-    <tr>
-      <th>Type</th>
-      <th>Description</th>
-    </tr>
-  </thead>
-  <tbody>
     <tr>
       <td><a class="xref" href="Llvm.NET.Values.Constant.html">Constant</a></td>
       <td><p>Newly created <a class="xref" href="Llvm.NET.Values.Constant.html">Constant</a></p>
 </td>
     </tr>
-  </tbody>
 </table>
-<h5 id="Llvm_NET_Context_CreateConstantStruct_System_Boolean_System_Collections_Generic_IEnumerable_Llvm_NET_Values_Constant___remarks">Remarks</h5>
+<h2 id="Llvm_NET_Context_CreateConstantStruct_System_Boolean_System_Collections_Generic_IEnumerable_Llvm_NET_Values_Constant___remarks">Remarks</h2>
 <div class="markdown level1 remarks"><div class="NOTE"><h5>note</h5><p>The actual concrete return type depends on the parameters provided and will be one of the following:
 <table><thead><tr><th><a class="xref" href="Llvm.NET.Values.Constant.html">Constant</a> derived type</th><th>Description</th></tr></thead><tbody><tr><td>ConstantAggregateZero</td><td>If all the member values are zero constants</td></tr><tr><td>UndefValue</td><td>If all the member values are UndefValue</td></tr><tr><td>ConstantStruct</td><td>All other cases</td></tr></tbody></table>
 </p></div>
 </div>
-</article>
+</h3></h3></article>
           </div>
           <div class="contribution-panel mobile-hide">
           </div>

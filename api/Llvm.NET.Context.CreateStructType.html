@@ -57,7 +57,7 @@
                     <a href="http://LLVM.org" title="LLVM.org" class="">LLVM.org</a>
                   </li>
                   <li class="">
-                    <a href="http://releases.llvm.org/5.0.0/docs/index.html" title="LLVM Docs" class="">LLVM Docs</a>
+                    <a href="http://releases.llvm.org/5.0.1/docs/index.html" title="LLVM Docs" class="">LLVM Docs</a>
                   </li>
                 </ul>
             </div>
@@ -3522,69 +3522,44 @@
 
 
 <a id="Llvm_NET_Context_CreateStructType_" data-uid="Llvm.NET.Context.CreateStructType*"></a>
-<h4 id="Llvm_NET_Context_CreateStructType_System_String_" data-uid="Llvm.NET.Context.CreateStructType(System.String)">CreateStructType(String)</h4>
+<h2 id="Llvm_NET_Context_CreateStructType_System_String_" data-uid="Llvm.NET.Context.CreateStructType(System.String)">CreateStructType(String)</h2>
 <div class="markdown level1 summary"><p>Create an empty structure type</p>
 </div>
 <div class="markdown level1 conceptual"></div>
-<h5 class="decalaration">Declaration</h5>
+<h3 class="decalaration">Declaration
 <div class="codewrapper">
   <pre><code class="lang-csharp hljs">public IStructType CreateStructType(string name)</code></pre>
 </div>
-<h5 class="parameters">Parameters</h5>
+<h2 class="parameters">Parameters</h2>
 <table class="table table-bordered table-striped table-condensed">
-  <thead>
-    <tr>
-      <th>Type</th>
-      <th>Name</th>
-      <th>Description</th>
-    </tr>
-  </thead>
-  <tbody>
     <tr>
       <td><a class="xref" href="https://msdn.microsoft.com/en-us/library/system.string(v=vs.110).aspx">String</a></td>
       <td><span class="parametername">name</span></td>
       <td><p>Name of the type</p>
 </td>
     </tr>
-  </tbody>
 </table>
-<h5 class="returns">Returns</h5>
+<h2 class="returns">Returns</h2>
 <table class="table table-bordered table-striped table-condensed">
-  <thead>
-    <tr>
-      <th>Type</th>
-      <th>Description</th>
-    </tr>
-  </thead>
-  <tbody>
     <tr>
       <td><a class="xref" href="Llvm.NET.Types.IStructType.html">IStructType</a></td>
       <td><p>New type</p>
 </td>
     </tr>
-  </tbody>
 </table>
 
 
 <a id="Llvm_NET_Context_CreateStructType_" data-uid="Llvm.NET.Context.CreateStructType*"></a>
-<h4 id="Llvm_NET_Context_CreateStructType_System_Boolean_Llvm_NET_Types_ITypeRef_Llvm_NET_Types_ITypeRef___" data-uid="Llvm.NET.Context.CreateStructType(System.Boolean,Llvm.NET.Types.ITypeRef,Llvm.NET.Types.ITypeRef[])">CreateStructType(Boolean, ITypeRef, ITypeRef[])</h4>
+<h2 id="Llvm_NET_Context_CreateStructType_System_Boolean_Llvm_NET_Types_ITypeRef_Llvm_NET_Types_ITypeRef___" data-uid="Llvm.NET.Context.CreateStructType(System.Boolean,Llvm.NET.Types.ITypeRef,Llvm.NET.Types.ITypeRef[])">CreateStructType(Boolean, ITypeRef, ITypeRef[])</h2>
 <div class="markdown level1 summary"><p>Create an anonymous structure type (e.g. Tuple)</p>
 </div>
 <div class="markdown level1 conceptual"></div>
-<h5 class="decalaration">Declaration</h5>
+<h3 class="decalaration">Declaration
 <div class="codewrapper">
   <pre><code class="lang-csharp hljs">public IStructType CreateStructType(bool packed, ITypeRef element0, params ITypeRef[] elements)</code></pre>
 </div>
-<h5 class="parameters">Parameters</h5>
+<h2 class="parameters">Parameters</h2>
 <table class="table table-bordered table-striped table-condensed">
-  <thead>
-    <tr>
-      <th>Type</th>
-      <th>Name</th>
-      <th>Description</th>
-    </tr>
-  </thead>
-  <tbody>
     <tr>
       <td><a class="xref" href="https://msdn.microsoft.com/en-us/library/system.boolean(v=vs.110).aspx">Boolean</a></td>
       <td><span class="parametername">packed</span></td>
@@ -3603,45 +3578,28 @@
       <td><p>Types of any additional fields of the structure</p>
 </td>
     </tr>
-  </tbody>
 </table>
-<h5 class="returns">Returns</h5>
+<h2 class="returns">Returns</h2>
 <table class="table table-bordered table-striped table-condensed">
-  <thead>
-    <tr>
-      <th>Type</th>
-      <th>Description</th>
-    </tr>
-  </thead>
-  <tbody>
     <tr>
       <td><a class="xref" href="Llvm.NET.Types.IStructType.html">IStructType</a></td>
       <td><p><a class="xref" href="Llvm.NET.Types.IStructType.html">IStructType</a> with the specified body defined.</p>
 </td>
     </tr>
-  </tbody>
 </table>
 
 
 <a id="Llvm_NET_Context_CreateStructType_" data-uid="Llvm.NET.Context.CreateStructType*"></a>
-<h4 id="Llvm_NET_Context_CreateStructType_System_String_System_Boolean_Llvm_NET_Types_ITypeRef___" data-uid="Llvm.NET.Context.CreateStructType(System.String,System.Boolean,Llvm.NET.Types.ITypeRef[])">CreateStructType(String, Boolean, ITypeRef[])</h4>
+<h2 id="Llvm_NET_Context_CreateStructType_System_String_System_Boolean_Llvm_NET_Types_ITypeRef___" data-uid="Llvm.NET.Context.CreateStructType(System.String,System.Boolean,Llvm.NET.Types.ITypeRef[])">CreateStructType(String, Boolean, ITypeRef[])</h2>
 <div class="markdown level1 summary"><p>Creates a new structure type in this <a class="xref" href="Llvm.NET.Context.html">Context</a></p>
 </div>
 <div class="markdown level1 conceptual"></div>
-<h5 class="decalaration">Declaration</h5>
+<h3 class="decalaration">Declaration
 <div class="codewrapper">
   <pre><code class="lang-csharp hljs">public IStructType CreateStructType(string name, bool packed, params ITypeRef[] elements)</code></pre>
 </div>
-<h5 class="parameters">Parameters</h5>
+<h2 class="parameters">Parameters</h2>
 <table class="table table-bordered table-striped table-condensed">
-  <thead>
-    <tr>
-      <th>Type</th>
-      <th>Name</th>
-      <th>Description</th>
-    </tr>
-  </thead>
-  <tbody>
     <tr>
       <td><a class="xref" href="https://msdn.microsoft.com/en-us/library/system.string(v=vs.110).aspx">String</a></td>
       <td><span class="parametername">name</span></td>
@@ -3660,31 +3618,22 @@
       <td><p>Types for the structures elements in layout order</p>
 </td>
     </tr>
-  </tbody>
 </table>
-<h5 class="returns">Returns</h5>
+<h2 class="returns">Returns</h2>
 <table class="table table-bordered table-striped table-condensed">
-  <thead>
-    <tr>
-      <th>Type</th>
-      <th>Description</th>
-    </tr>
-  </thead>
-  <tbody>
     <tr>
       <td><a class="xref" href="Llvm.NET.Types.IStructType.html">IStructType</a></td>
       <td><p><a class="xref" href="Llvm.NET.Types.IStructType.html">IStructType</a> with the specified body defined.</p>
 </td>
     </tr>
-  </tbody>
 </table>
-<h5 id="Llvm_NET_Context_CreateStructType_System_String_System_Boolean_Llvm_NET_Types_ITypeRef____remarks">Remarks</h5>
+<h2 id="Llvm_NET_Context_CreateStructType_System_String_System_Boolean_Llvm_NET_Types_ITypeRef____remarks">Remarks</h2>
 <div class="markdown level1 remarks"><p>If the elements argument list is empty then an opaque type is created (e.g. a forward reference)
 The <a class="xref" href="Llvm.NET.Types.IStructType.SetBody.html#Llvm_NET_Types_IStructType_SetBody_System_Boolean_Llvm_NET_Types_ITypeRef___">SetBody(Boolean, ITypeRef[])</a> method provides a means to add a body to
 an opaque type at a later time if the details of the body are required. (If only pointers to
 to the type are required the body isn&apos;t required)</p>
 </div>
-</article>
+</h3></h3></h3></article>
           </div>
           <div class="contribution-panel mobile-hide">
           </div>

@@ -57,7 +57,7 @@
                     <a href="http://LLVM.org" title="LLVM.org" class="">LLVM.org</a>
                   </li>
                   <li class="">
-                    <a href="http://releases.llvm.org/5.0.0/docs/index.html" title="LLVM Docs" class="">LLVM Docs</a>
+                    <a href="http://releases.llvm.org/5.0.1/docs/index.html" title="LLVM Docs" class="">LLVM Docs</a>
                   </li>
                 </ul>
             </div>
@@ -3522,24 +3522,16 @@
 
 
 <a id="Llvm_NET_Values_AttributeContainerMixins_RemoveAttribute_" data-uid="Llvm.NET.Values.AttributeContainerMixins.RemoveAttribute*"></a>
-<h4 id="Llvm_NET_Values_AttributeContainerMixins_RemoveAttribute__1___0_Llvm_NET_Values_FunctionAttributeIndex_Llvm_NET_Values_AttributeKind_" data-uid="Llvm.NET.Values.AttributeContainerMixins.RemoveAttribute``1(``0,Llvm.NET.Values.FunctionAttributeIndex,Llvm.NET.Values.AttributeKind)">RemoveAttribute&lt;T&gt;(T, FunctionAttributeIndex, AttributeKind)</h4>
+<h2 id="Llvm_NET_Values_AttributeContainerMixins_RemoveAttribute__1___0_Llvm_NET_Values_FunctionAttributeIndex_Llvm_NET_Values_AttributeKind_" data-uid="Llvm.NET.Values.AttributeContainerMixins.RemoveAttribute``1(``0,Llvm.NET.Values.FunctionAttributeIndex,Llvm.NET.Values.AttributeKind)">RemoveAttribute&lt;T&gt;(T, FunctionAttributeIndex, AttributeKind)</h2>
 <div class="markdown level1 summary"><p>Removes an <a class="xref" href="Llvm.NET.Values.AttributeKind.html">AttributeKind</a> from an <a class="xref" href="Llvm.NET.Values.IAttributeContainer.html">IAttributeContainer</a></p>
 </div>
 <div class="markdown level1 conceptual"></div>
-<h5 class="decalaration">Declaration</h5>
+<h3 class="decalaration">Declaration
 <div class="codewrapper">
   <pre><code class="lang-csharp hljs">public static T RemoveAttribute&lt;T&gt;(this T self, FunctionAttributeIndex index, AttributeKind kind)where T : class, IAttributeContainer</code></pre>
 </div>
-<h5 class="parameters">Parameters</h5>
+<h2 class="parameters">Parameters</h2>
 <table class="table table-bordered table-striped table-condensed">
-  <thead>
-    <tr>
-      <th>Type</th>
-      <th>Name</th>
-      <th>Description</th>
-    </tr>
-  </thead>
-  <tbody>
     <tr>
       <td><span class="xref">T</span></td>
       <td><span class="parametername">self</span></td>
@@ -3558,61 +3550,36 @@
       <td><p>Attribute to remove from the container</p>
 </td>
     </tr>
-  </tbody>
 </table>
-<h5 class="returns">Returns</h5>
+<h2 class="returns">Returns</h2>
 <table class="table table-bordered table-striped table-condensed">
-  <thead>
-    <tr>
-      <th>Type</th>
-      <th>Description</th>
-    </tr>
-  </thead>
-  <tbody>
     <tr>
       <td><span class="xref">T</span></td>
       <td><p><code data-dev-comment-type="paramref" class="paramref">self</code> for fluent use</p>
 </td>
     </tr>
-  </tbody>
 </table>
-<h5 class="typeParameters">Type Parameters</h5>
+<h2 class="typeParameters">Type Parameters</h2>
 <table class="table table-bordered table-striped table-condensed">
-  <thead>
-    <tr>
-      <th>Name</th>
-      <th>Description</th>
-    </tr>
-  </thead>
-  <tbody>
     <tr>
       <td><span class="parametername">T</span></td>
       <td><p>Container type</p>
 </td>
     </tr>
-  </tbody>
 </table>
 
 
 <a id="Llvm_NET_Values_AttributeContainerMixins_RemoveAttribute_" data-uid="Llvm.NET.Values.AttributeContainerMixins.RemoveAttribute*"></a>
-<h4 id="Llvm_NET_Values_AttributeContainerMixins_RemoveAttribute__1___0_Llvm_NET_Values_FunctionAttributeIndex_System_String_" data-uid="Llvm.NET.Values.AttributeContainerMixins.RemoveAttribute``1(``0,Llvm.NET.Values.FunctionAttributeIndex,System.String)">RemoveAttribute&lt;T&gt;(T, FunctionAttributeIndex, String)</h4>
+<h2 id="Llvm_NET_Values_AttributeContainerMixins_RemoveAttribute__1___0_Llvm_NET_Values_FunctionAttributeIndex_System_String_" data-uid="Llvm.NET.Values.AttributeContainerMixins.RemoveAttribute``1(``0,Llvm.NET.Values.FunctionAttributeIndex,System.String)">RemoveAttribute&lt;T&gt;(T, FunctionAttributeIndex, String)</h2>
 <div class="markdown level1 summary"><p>Removes a named attribute from an <a class="xref" href="Llvm.NET.Values.IAttributeContainer.html">IAttributeContainer</a></p>
 </div>
 <div class="markdown level1 conceptual"></div>
-<h5 class="decalaration">Declaration</h5>
+<h3 class="decalaration">Declaration
 <div class="codewrapper">
   <pre><code class="lang-csharp hljs">public static T RemoveAttribute&lt;T&gt;(this T self, FunctionAttributeIndex index, string name)where T : class, IAttributeContainer</code></pre>
 </div>
-<h5 class="parameters">Parameters</h5>
+<h2 class="parameters">Parameters</h2>
 <table class="table table-bordered table-striped table-condensed">
-  <thead>
-    <tr>
-      <th>Type</th>
-      <th>Name</th>
-      <th>Description</th>
-    </tr>
-  </thead>
-  <tbody>
     <tr>
       <td><span class="xref">T</span></td>
       <td><span class="parametername">self</span></td>
@@ -3631,41 +3598,24 @@
       <td><p>Attribute name to remove from the container</p>
 </td>
     </tr>
-  </tbody>
 </table>
-<h5 class="returns">Returns</h5>
+<h2 class="returns">Returns</h2>
 <table class="table table-bordered table-striped table-condensed">
-  <thead>
-    <tr>
-      <th>Type</th>
-      <th>Description</th>
-    </tr>
-  </thead>
-  <tbody>
     <tr>
       <td><span class="xref">T</span></td>
       <td><p><code data-dev-comment-type="paramref" class="paramref">self</code> for fluent use</p>
 </td>
     </tr>
-  </tbody>
 </table>
-<h5 class="typeParameters">Type Parameters</h5>
+<h2 class="typeParameters">Type Parameters</h2>
 <table class="table table-bordered table-striped table-condensed">
-  <thead>
-    <tr>
-      <th>Name</th>
-      <th>Description</th>
-    </tr>
-  </thead>
-  <tbody>
     <tr>
       <td><span class="parametername">T</span></td>
       <td><p>Container type</p>
 </td>
     </tr>
-  </tbody>
 </table>
-</article>
+</h3></h3></article>
           </div>
           <div class="contribution-panel mobile-hide">
           </div>

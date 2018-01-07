@@ -57,7 +57,7 @@
                     <a href="http://LLVM.org" title="LLVM.org" class="">LLVM.org</a>
                   </li>
                   <li class="">
-                    <a href="http://releases.llvm.org/5.0.0/docs/index.html" title="LLVM Docs" class="">LLVM Docs</a>
+                    <a href="http://releases.llvm.org/5.0.1/docs/index.html" title="LLVM Docs" class="">LLVM Docs</a>
                   </li>
                 </ul>
             </div>
@@ -3522,24 +3522,16 @@
 
 
 <a id="Llvm_NET_DebugInfo_DebugInfoBuilder_InsertValue_" data-uid="Llvm.NET.DebugInfo.DebugInfoBuilder.InsertValue*"></a>
-<h4 id="Llvm_NET_DebugInfo_DebugInfoBuilder_InsertValue_Llvm_NET_Values_Value_System_UInt64_Llvm_NET_DebugInfo_DILocalVariable_Llvm_NET_DebugInfo_DILocation_Instruction_" data-uid="Llvm.NET.DebugInfo.DebugInfoBuilder.InsertValue(Llvm.NET.Values.Value,System.UInt64,Llvm.NET.DebugInfo.DILocalVariable,Llvm.NET.DebugInfo.DILocation,Instruction)">InsertValue(Value, UInt64, DILocalVariable, DILocation, Instruction)</h4>
+<h2 id="Llvm_NET_DebugInfo_DebugInfoBuilder_InsertValue_Llvm_NET_Values_Value_System_UInt64_Llvm_NET_DebugInfo_DILocalVariable_Llvm_NET_DebugInfo_DILocation_Instruction_" data-uid="Llvm.NET.DebugInfo.DebugInfoBuilder.InsertValue(Llvm.NET.Values.Value,System.UInt64,Llvm.NET.DebugInfo.DILocalVariable,Llvm.NET.DebugInfo.DILocation,Instruction)">InsertValue(Value, UInt64, DILocalVariable, DILocation, Instruction)</h2>
 <div class="markdown level1 summary"><p>Inserts a call to the llvm.dbg.value intrinsic before the specified instruction</p>
 </div>
 <div class="markdown level1 conceptual"></div>
-<h5 class="decalaration">Declaration</h5>
+<h3 class="decalaration">Declaration
 <div class="codewrapper">
   <pre><code class="lang-csharp hljs">public CallInstruction InsertValue(Value value, ulong offset, DILocalVariable varInfo, DILocation location, Instruction insertBefore)</code></pre>
 </div>
-<h5 class="parameters">Parameters</h5>
+<h2 class="parameters">Parameters</h2>
 <table class="table table-bordered table-striped table-condensed">
-  <thead>
-    <tr>
-      <th>Type</th>
-      <th>Name</th>
-      <th>Description</th>
-    </tr>
-  </thead>
-  <tbody>
     <tr>
       <td><a class="xref" href="Llvm.NET.Values.Value.html">Value</a></td>
       <td><span class="parametername">value</span></td>
@@ -3570,25 +3562,16 @@
       <td><p>Location to insert the intrinsic</p>
 </td>
     </tr>
-  </tbody>
 </table>
-<h5 class="returns">Returns</h5>
+<h2 class="returns">Returns</h2>
 <table class="table table-bordered table-striped table-condensed">
-  <thead>
-    <tr>
-      <th>Type</th>
-      <th>Description</th>
-    </tr>
-  </thead>
-  <tbody>
     <tr>
       <td><span class="xref">CallInstruction</span></td>
       <td><p><a class="xref" href="Llvm.NET.Instructions.CallInstruction.html">CallInstruction</a> for the intrinsic</p>
 </td>
     </tr>
-  </tbody>
 </table>
-<h5 id="Llvm_NET_DebugInfo_DebugInfoBuilder_InsertValue_Llvm_NET_Values_Value_System_UInt64_Llvm_NET_DebugInfo_DILocalVariable_Llvm_NET_DebugInfo_DILocation_Instruction__remarks">Remarks</h5>
+<h2 id="Llvm_NET_DebugInfo_DebugInfoBuilder_InsertValue_Llvm_NET_Values_Value_System_UInt64_Llvm_NET_DebugInfo_DILocalVariable_Llvm_NET_DebugInfo_DILocation_Instruction__remarks">Remarks</h2>
 <div class="markdown level1 remarks"><p>This intrinsic provides information when a user source variable is set to a new value.
 <div class="NOTE"><h5>note</h5><p>
 The call has no impact on the actual machine code generated, as it is removed or ignored for actual target instruction
@@ -3597,32 +3580,24 @@ that allows the transformation and optimization passes to track the debug inform
 the actual debug information is retained.
 </p></div></p>
 </div>
-<h5 id="Llvm_NET_DebugInfo_DebugInfoBuilder_InsertValue_Llvm_NET_Values_Value_System_UInt64_Llvm_NET_DebugInfo_DILocalVariable_Llvm_NET_DebugInfo_DILocation_Instruction__seealso">See Also</h5>
+<h2 id="Llvm_NET_DebugInfo_DebugInfoBuilder_InsertValue_Llvm_NET_Values_Value_System_UInt64_Llvm_NET_DebugInfo_DILocalVariable_Llvm_NET_DebugInfo_DILocation_Instruction__seealso">See Also</h2>
 <div class="seealso">
-    <div><span><a class="xref" href="http://releases.llvm.org/5.0.0/docs/SourceLevelDebugging.html#lvm-dbg-value">LLVM: llvm.dbg.value</a></span></div>
-    <div><span><a class="xref" href="http://releases.llvm.org/5.0.0/docs/SourceLevelDebugging.html#source-level-debugging-with-llvm">LLVM: Source Level Debugging with LLVM</a></span></div>
+    <div><span><a class="xref" href="http://releases.llvm.org/5.0.1/docs/SourceLevelDebugging.html#lvm-dbg-value">LLVM: llvm.dbg.value</a></span></div>
+    <div><span><a class="xref" href="http://releases.llvm.org/5.0.1/docs/SourceLevelDebugging.html#source-level-debugging-with-llvm">LLVM: Source Level Debugging with LLVM</a></span></div>
 </div>
 
 
 <a id="Llvm_NET_DebugInfo_DebugInfoBuilder_InsertValue_" data-uid="Llvm.NET.DebugInfo.DebugInfoBuilder.InsertValue*"></a>
-<h4 id="Llvm_NET_DebugInfo_DebugInfoBuilder_InsertValue_Llvm_NET_Values_Value_System_UInt64_Llvm_NET_DebugInfo_DILocalVariable_Llvm_NET_DebugInfo_DIExpression_Llvm_NET_DebugInfo_DILocation_Instruction_" data-uid="Llvm.NET.DebugInfo.DebugInfoBuilder.InsertValue(Llvm.NET.Values.Value,System.UInt64,Llvm.NET.DebugInfo.DILocalVariable,Llvm.NET.DebugInfo.DIExpression,Llvm.NET.DebugInfo.DILocation,Instruction)">InsertValue(Value, UInt64, DILocalVariable, DIExpression, DILocation, Instruction)</h4>
+<h2 id="Llvm_NET_DebugInfo_DebugInfoBuilder_InsertValue_Llvm_NET_Values_Value_System_UInt64_Llvm_NET_DebugInfo_DILocalVariable_Llvm_NET_DebugInfo_DIExpression_Llvm_NET_DebugInfo_DILocation_Instruction_" data-uid="Llvm.NET.DebugInfo.DebugInfoBuilder.InsertValue(Llvm.NET.Values.Value,System.UInt64,Llvm.NET.DebugInfo.DILocalVariable,Llvm.NET.DebugInfo.DIExpression,Llvm.NET.DebugInfo.DILocation,Instruction)">InsertValue(Value, UInt64, DILocalVariable, DIExpression, DILocation, Instruction)</h2>
 <div class="markdown level1 summary"><p>Inserts a call to the llvm.dbg.value intrinsic before the specified instruction</p>
 </div>
 <div class="markdown level1 conceptual"></div>
-<h5 class="decalaration">Declaration</h5>
+<h3 class="decalaration">Declaration
 <div class="codewrapper">
   <pre><code class="lang-csharp hljs">public CallInstruction InsertValue(Value value, ulong offset, DILocalVariable varInfo, DIExpression expression, DILocation location, Instruction insertBefore)</code></pre>
 </div>
-<h5 class="parameters">Parameters</h5>
+<h2 class="parameters">Parameters</h2>
 <table class="table table-bordered table-striped table-condensed">
-  <thead>
-    <tr>
-      <th>Type</th>
-      <th>Name</th>
-      <th>Description</th>
-    </tr>
-  </thead>
-  <tbody>
     <tr>
       <td><a class="xref" href="Llvm.NET.Values.Value.html">Value</a></td>
       <td><span class="parametername">value</span></td>
@@ -3659,25 +3634,16 @@ the actual debug information is retained.
       <td><p>Location to insert the intrinsic</p>
 </td>
     </tr>
-  </tbody>
 </table>
-<h5 class="returns">Returns</h5>
+<h2 class="returns">Returns</h2>
 <table class="table table-bordered table-striped table-condensed">
-  <thead>
-    <tr>
-      <th>Type</th>
-      <th>Description</th>
-    </tr>
-  </thead>
-  <tbody>
     <tr>
       <td><span class="xref">CallInstruction</span></td>
       <td><p><a class="xref" href="Llvm.NET.Instructions.CallInstruction.html">CallInstruction</a> for the intrinsic</p>
 </td>
     </tr>
-  </tbody>
 </table>
-<h5 id="Llvm_NET_DebugInfo_DebugInfoBuilder_InsertValue_Llvm_NET_Values_Value_System_UInt64_Llvm_NET_DebugInfo_DILocalVariable_Llvm_NET_DebugInfo_DIExpression_Llvm_NET_DebugInfo_DILocation_Instruction__remarks">Remarks</h5>
+<h2 id="Llvm_NET_DebugInfo_DebugInfoBuilder_InsertValue_Llvm_NET_Values_Value_System_UInt64_Llvm_NET_DebugInfo_DILocalVariable_Llvm_NET_DebugInfo_DIExpression_Llvm_NET_DebugInfo_DILocation_Instruction__remarks">Remarks</h2>
 <div class="markdown level1 remarks"><p>This intrinsic provides information when a user source variable is set to a new value.
 <div class="NOTE"><h5>note</h5><p>
 The call has no impact on the actual machine code generated, as it is removed or ignored for actual target instruction
@@ -3686,32 +3652,24 @@ that allows the transformation and optimization passes to track the debug inform
 the actual debug information is retained.
 </p></div></p>
 </div>
-<h5 id="Llvm_NET_DebugInfo_DebugInfoBuilder_InsertValue_Llvm_NET_Values_Value_System_UInt64_Llvm_NET_DebugInfo_DILocalVariable_Llvm_NET_DebugInfo_DIExpression_Llvm_NET_DebugInfo_DILocation_Instruction__seealso">See Also</h5>
+<h2 id="Llvm_NET_DebugInfo_DebugInfoBuilder_InsertValue_Llvm_NET_Values_Value_System_UInt64_Llvm_NET_DebugInfo_DILocalVariable_Llvm_NET_DebugInfo_DIExpression_Llvm_NET_DebugInfo_DILocation_Instruction__seealso">See Also</h2>
 <div class="seealso">
-    <div><span><a class="xref" href="http://releases.llvm.org/5.0.0/docs/SourceLevelDebugging.html#lvm-dbg-value">LLVM: llvm.dbg.value</a></span></div>
-    <div><span><a class="xref" href="http://releases.llvm.org/5.0.0/docs/SourceLevelDebugging.html#source-level-debugging-with-llvm">LLVM: Source Level Debugging with LLVM</a></span></div>
+    <div><span><a class="xref" href="http://releases.llvm.org/5.0.1/docs/SourceLevelDebugging.html#lvm-dbg-value">LLVM: llvm.dbg.value</a></span></div>
+    <div><span><a class="xref" href="http://releases.llvm.org/5.0.1/docs/SourceLevelDebugging.html#source-level-debugging-with-llvm">LLVM: Source Level Debugging with LLVM</a></span></div>
 </div>
 
 
 <a id="Llvm_NET_DebugInfo_DebugInfoBuilder_InsertValue_" data-uid="Llvm.NET.DebugInfo.DebugInfoBuilder.InsertValue*"></a>
-<h4 id="Llvm_NET_DebugInfo_DebugInfoBuilder_InsertValue_Llvm_NET_Values_Value_System_UInt64_Llvm_NET_DebugInfo_DILocalVariable_Llvm_NET_DebugInfo_DILocation_Llvm_NET_Values_BasicBlock_" data-uid="Llvm.NET.DebugInfo.DebugInfoBuilder.InsertValue(Llvm.NET.Values.Value,System.UInt64,Llvm.NET.DebugInfo.DILocalVariable,Llvm.NET.DebugInfo.DILocation,Llvm.NET.Values.BasicBlock)">InsertValue(Value, UInt64, DILocalVariable, DILocation, BasicBlock)</h4>
+<h2 id="Llvm_NET_DebugInfo_DebugInfoBuilder_InsertValue_Llvm_NET_Values_Value_System_UInt64_Llvm_NET_DebugInfo_DILocalVariable_Llvm_NET_DebugInfo_DILocation_Llvm_NET_Values_BasicBlock_" data-uid="Llvm.NET.DebugInfo.DebugInfoBuilder.InsertValue(Llvm.NET.Values.Value,System.UInt64,Llvm.NET.DebugInfo.DILocalVariable,Llvm.NET.DebugInfo.DILocation,Llvm.NET.Values.BasicBlock)">InsertValue(Value, UInt64, DILocalVariable, DILocation, BasicBlock)</h2>
 <div class="markdown level1 summary"><p>Inserts a call to the llvm.dbg.value intrinsic at the end of a basic block</p>
 </div>
 <div class="markdown level1 conceptual"></div>
-<h5 class="decalaration">Declaration</h5>
+<h3 class="decalaration">Declaration
 <div class="codewrapper">
   <pre><code class="lang-csharp hljs">public CallInstruction InsertValue(Value value, ulong offset, DILocalVariable varInfo, DILocation location, BasicBlock insertAtEnd)</code></pre>
 </div>
-<h5 class="parameters">Parameters</h5>
+<h2 class="parameters">Parameters</h2>
 <table class="table table-bordered table-striped table-condensed">
-  <thead>
-    <tr>
-      <th>Type</th>
-      <th>Name</th>
-      <th>Description</th>
-    </tr>
-  </thead>
-  <tbody>
     <tr>
       <td><a class="xref" href="Llvm.NET.Values.Value.html">Value</a></td>
       <td><span class="parametername">value</span></td>
@@ -3742,25 +3700,16 @@ the actual debug information is retained.
       <td><p>Block to append the intrinsic to the end of</p>
 </td>
     </tr>
-  </tbody>
 </table>
-<h5 class="returns">Returns</h5>
+<h2 class="returns">Returns</h2>
 <table class="table table-bordered table-striped table-condensed">
-  <thead>
-    <tr>
-      <th>Type</th>
-      <th>Description</th>
-    </tr>
-  </thead>
-  <tbody>
     <tr>
       <td><span class="xref">CallInstruction</span></td>
       <td><p><a class="xref" href="Llvm.NET.Instructions.CallInstruction.html">CallInstruction</a> for the intrinsic</p>
 </td>
     </tr>
-  </tbody>
 </table>
-<h5 id="Llvm_NET_DebugInfo_DebugInfoBuilder_InsertValue_Llvm_NET_Values_Value_System_UInt64_Llvm_NET_DebugInfo_DILocalVariable_Llvm_NET_DebugInfo_DILocation_Llvm_NET_Values_BasicBlock__remarks">Remarks</h5>
+<h2 id="Llvm_NET_DebugInfo_DebugInfoBuilder_InsertValue_Llvm_NET_Values_Value_System_UInt64_Llvm_NET_DebugInfo_DILocalVariable_Llvm_NET_DebugInfo_DILocation_Llvm_NET_Values_BasicBlock__remarks">Remarks</h2>
 <div class="markdown level1 remarks"><p>This intrinsic provides information when a user source variable is set to a new value.
 <div class="NOTE"><h5>note</h5><p>
 The call has no impact on the actual machine code generated, as it is removed or ignored for actual target instruction
@@ -3769,32 +3718,24 @@ that allows the transformation and optimization passes to track the debug inform
 the actual debug information is retained.
 </p></div></p>
 </div>
-<h5 id="Llvm_NET_DebugInfo_DebugInfoBuilder_InsertValue_Llvm_NET_Values_Value_System_UInt64_Llvm_NET_DebugInfo_DILocalVariable_Llvm_NET_DebugInfo_DILocation_Llvm_NET_Values_BasicBlock__seealso">See Also</h5>
+<h2 id="Llvm_NET_DebugInfo_DebugInfoBuilder_InsertValue_Llvm_NET_Values_Value_System_UInt64_Llvm_NET_DebugInfo_DILocalVariable_Llvm_NET_DebugInfo_DILocation_Llvm_NET_Values_BasicBlock__seealso">See Also</h2>
 <div class="seealso">
-    <div><span><a class="xref" href="http://releases.llvm.org/5.0.0/docs/SourceLevelDebugging.html#lvm-dbg-value">LLVM: llvm.dbg.value</a></span></div>
-    <div><span><a class="xref" href="http://releases.llvm.org/5.0.0/docs/SourceLevelDebugging.html#source-level-debugging-with-llvm">LLVM: Source Level Debugging with LLVM</a></span></div>
+    <div><span><a class="xref" href="http://releases.llvm.org/5.0.1/docs/SourceLevelDebugging.html#lvm-dbg-value">LLVM: llvm.dbg.value</a></span></div>
+    <div><span><a class="xref" href="http://releases.llvm.org/5.0.1/docs/SourceLevelDebugging.html#source-level-debugging-with-llvm">LLVM: Source Level Debugging with LLVM</a></span></div>
 </div>
 
 
 <a id="Llvm_NET_DebugInfo_DebugInfoBuilder_InsertValue_" data-uid="Llvm.NET.DebugInfo.DebugInfoBuilder.InsertValue*"></a>
-<h4 id="Llvm_NET_DebugInfo_DebugInfoBuilder_InsertValue_Llvm_NET_Values_Value_Llvm_NET_DebugInfo_DILocalVariable_Llvm_NET_DebugInfo_DIExpression_Llvm_NET_DebugInfo_DILocation_Llvm_NET_Values_BasicBlock_" data-uid="Llvm.NET.DebugInfo.DebugInfoBuilder.InsertValue(Llvm.NET.Values.Value,Llvm.NET.DebugInfo.DILocalVariable,Llvm.NET.DebugInfo.DIExpression,Llvm.NET.DebugInfo.DILocation,Llvm.NET.Values.BasicBlock)">InsertValue(Value, DILocalVariable, DIExpression, DILocation, BasicBlock)</h4>
+<h2 id="Llvm_NET_DebugInfo_DebugInfoBuilder_InsertValue_Llvm_NET_Values_Value_Llvm_NET_DebugInfo_DILocalVariable_Llvm_NET_DebugInfo_DIExpression_Llvm_NET_DebugInfo_DILocation_Llvm_NET_Values_BasicBlock_" data-uid="Llvm.NET.DebugInfo.DebugInfoBuilder.InsertValue(Llvm.NET.Values.Value,Llvm.NET.DebugInfo.DILocalVariable,Llvm.NET.DebugInfo.DIExpression,Llvm.NET.DebugInfo.DILocation,Llvm.NET.Values.BasicBlock)">InsertValue(Value, DILocalVariable, DIExpression, DILocation, BasicBlock)</h2>
 <div class="markdown level1 summary"><p>Inserts a call to the llvm.dbg.value intrinsic at the end of a basic block</p>
 </div>
 <div class="markdown level1 conceptual"></div>
-<h5 class="decalaration">Declaration</h5>
+<h3 class="decalaration">Declaration
 <div class="codewrapper">
   <pre><code class="lang-csharp hljs">public CallInstruction InsertValue(Value value, DILocalVariable varInfo, DIExpression expression, DILocation location, BasicBlock insertAtEnd)</code></pre>
 </div>
-<h5 class="parameters">Parameters</h5>
+<h2 class="parameters">Parameters</h2>
 <table class="table table-bordered table-striped table-condensed">
-  <thead>
-    <tr>
-      <th>Type</th>
-      <th>Name</th>
-      <th>Description</th>
-    </tr>
-  </thead>
-  <tbody>
     <tr>
       <td><a class="xref" href="Llvm.NET.Values.Value.html">Value</a></td>
       <td><span class="parametername">value</span></td>
@@ -3825,25 +3766,16 @@ the actual debug information is retained.
       <td><p>Block to append the intrinsic to the end of</p>
 </td>
     </tr>
-  </tbody>
 </table>
-<h5 class="returns">Returns</h5>
+<h2 class="returns">Returns</h2>
 <table class="table table-bordered table-striped table-condensed">
-  <thead>
-    <tr>
-      <th>Type</th>
-      <th>Description</th>
-    </tr>
-  </thead>
-  <tbody>
     <tr>
       <td><span class="xref">CallInstruction</span></td>
       <td><p><a class="xref" href="Llvm.NET.Instructions.CallInstruction.html">CallInstruction</a> for the intrinsic</p>
 </td>
     </tr>
-  </tbody>
 </table>
-<h5 id="Llvm_NET_DebugInfo_DebugInfoBuilder_InsertValue_Llvm_NET_Values_Value_Llvm_NET_DebugInfo_DILocalVariable_Llvm_NET_DebugInfo_DIExpression_Llvm_NET_DebugInfo_DILocation_Llvm_NET_Values_BasicBlock__remarks">Remarks</h5>
+<h2 id="Llvm_NET_DebugInfo_DebugInfoBuilder_InsertValue_Llvm_NET_Values_Value_Llvm_NET_DebugInfo_DILocalVariable_Llvm_NET_DebugInfo_DIExpression_Llvm_NET_DebugInfo_DILocation_Llvm_NET_Values_BasicBlock__remarks">Remarks</h2>
 <div class="markdown level1 remarks"><p>This intrinsic provides information when a user source variable is set to a new value.
 <div class="NOTE"><h5>note</h5><p>
 The call has no impact on the actual machine code generated, as it is removed or ignored for actual target instruction
@@ -3852,32 +3784,24 @@ that allows the transformation and optimization passes to track the debug inform
 the actual debug information is retained.
 </p></div></p>
 </div>
-<h5 id="Llvm_NET_DebugInfo_DebugInfoBuilder_InsertValue_Llvm_NET_Values_Value_Llvm_NET_DebugInfo_DILocalVariable_Llvm_NET_DebugInfo_DIExpression_Llvm_NET_DebugInfo_DILocation_Llvm_NET_Values_BasicBlock__seealso">See Also</h5>
+<h2 id="Llvm_NET_DebugInfo_DebugInfoBuilder_InsertValue_Llvm_NET_Values_Value_Llvm_NET_DebugInfo_DILocalVariable_Llvm_NET_DebugInfo_DIExpression_Llvm_NET_DebugInfo_DILocation_Llvm_NET_Values_BasicBlock__seealso">See Also</h2>
 <div class="seealso">
-    <div><span><a class="xref" href="http://releases.llvm.org/5.0.0/docs/SourceLevelDebugging.html#lvm-dbg-value">LLVM: llvm.dbg.value</a></span></div>
-    <div><span><a class="xref" href="http://releases.llvm.org/5.0.0/docs/SourceLevelDebugging.html#source-level-debugging-with-llvm">LLVM: Source Level Debugging with LLVM</a></span></div>
+    <div><span><a class="xref" href="http://releases.llvm.org/5.0.1/docs/SourceLevelDebugging.html#lvm-dbg-value">LLVM: llvm.dbg.value</a></span></div>
+    <div><span><a class="xref" href="http://releases.llvm.org/5.0.1/docs/SourceLevelDebugging.html#source-level-debugging-with-llvm">LLVM: Source Level Debugging with LLVM</a></span></div>
 </div>
 
 
 <a id="Llvm_NET_DebugInfo_DebugInfoBuilder_InsertValue_" data-uid="Llvm.NET.DebugInfo.DebugInfoBuilder.InsertValue*"></a>
-<h4 id="Llvm_NET_DebugInfo_DebugInfoBuilder_InsertValue_Llvm_NET_Values_Value_System_UInt64_Llvm_NET_DebugInfo_DILocalVariable_Llvm_NET_DebugInfo_DIExpression_Llvm_NET_DebugInfo_DILocation_Llvm_NET_Values_BasicBlock_" data-uid="Llvm.NET.DebugInfo.DebugInfoBuilder.InsertValue(Llvm.NET.Values.Value,System.UInt64,Llvm.NET.DebugInfo.DILocalVariable,Llvm.NET.DebugInfo.DIExpression,Llvm.NET.DebugInfo.DILocation,Llvm.NET.Values.BasicBlock)">InsertValue(Value, UInt64, DILocalVariable, DIExpression, DILocation, BasicBlock)</h4>
+<h2 id="Llvm_NET_DebugInfo_DebugInfoBuilder_InsertValue_Llvm_NET_Values_Value_System_UInt64_Llvm_NET_DebugInfo_DILocalVariable_Llvm_NET_DebugInfo_DIExpression_Llvm_NET_DebugInfo_DILocation_Llvm_NET_Values_BasicBlock_" data-uid="Llvm.NET.DebugInfo.DebugInfoBuilder.InsertValue(Llvm.NET.Values.Value,System.UInt64,Llvm.NET.DebugInfo.DILocalVariable,Llvm.NET.DebugInfo.DIExpression,Llvm.NET.DebugInfo.DILocation,Llvm.NET.Values.BasicBlock)">InsertValue(Value, UInt64, DILocalVariable, DIExpression, DILocation, BasicBlock)</h2>
 <div class="markdown level1 summary"><p>Inserts a call to the llvm.dbg.value intrinsic at the end of a basic block</p>
 </div>
 <div class="markdown level1 conceptual"></div>
-<h5 class="decalaration">Declaration</h5>
+<h3 class="decalaration">Declaration
 <div class="codewrapper">
   <pre><code class="lang-csharp hljs">public CallInstruction InsertValue(Value value, ulong offset, DILocalVariable varInfo, DIExpression expression, DILocation location, BasicBlock insertAtEnd)</code></pre>
 </div>
-<h5 class="parameters">Parameters</h5>
+<h2 class="parameters">Parameters</h2>
 <table class="table table-bordered table-striped table-condensed">
-  <thead>
-    <tr>
-      <th>Type</th>
-      <th>Name</th>
-      <th>Description</th>
-    </tr>
-  </thead>
-  <tbody>
     <tr>
       <td><a class="xref" href="Llvm.NET.Values.Value.html">Value</a></td>
       <td><span class="parametername">value</span></td>
@@ -3914,25 +3838,16 @@ the actual debug information is retained.
       <td><p>Block to append the intrinsic to the end of</p>
 </td>
     </tr>
-  </tbody>
 </table>
-<h5 class="returns">Returns</h5>
+<h2 class="returns">Returns</h2>
 <table class="table table-bordered table-striped table-condensed">
-  <thead>
-    <tr>
-      <th>Type</th>
-      <th>Description</th>
-    </tr>
-  </thead>
-  <tbody>
     <tr>
       <td><span class="xref">CallInstruction</span></td>
       <td><p><a class="xref" href="Llvm.NET.Instructions.CallInstruction.html">CallInstruction</a> for the intrinsic</p>
 </td>
     </tr>
-  </tbody>
 </table>
-<h5 id="Llvm_NET_DebugInfo_DebugInfoBuilder_InsertValue_Llvm_NET_Values_Value_System_UInt64_Llvm_NET_DebugInfo_DILocalVariable_Llvm_NET_DebugInfo_DIExpression_Llvm_NET_DebugInfo_DILocation_Llvm_NET_Values_BasicBlock__remarks">Remarks</h5>
+<h2 id="Llvm_NET_DebugInfo_DebugInfoBuilder_InsertValue_Llvm_NET_Values_Value_System_UInt64_Llvm_NET_DebugInfo_DILocalVariable_Llvm_NET_DebugInfo_DIExpression_Llvm_NET_DebugInfo_DILocation_Llvm_NET_Values_BasicBlock__remarks">Remarks</h2>
 <div class="markdown level1 remarks"><p>This intrinsic provides information when a user source variable is set to a new value.
 <div class="NOTE"><h5>note</h5><p>
 The call has no impact on the actual machine code generated, as it is removed or ignored for actual target instruction
@@ -3941,12 +3856,12 @@ that allows the transformation and optimization passes to track the debug inform
 the actual debug information is retained.
 </p></div></p>
 </div>
-<h5 id="Llvm_NET_DebugInfo_DebugInfoBuilder_InsertValue_Llvm_NET_Values_Value_System_UInt64_Llvm_NET_DebugInfo_DILocalVariable_Llvm_NET_DebugInfo_DIExpression_Llvm_NET_DebugInfo_DILocation_Llvm_NET_Values_BasicBlock__seealso">See Also</h5>
+<h2 id="Llvm_NET_DebugInfo_DebugInfoBuilder_InsertValue_Llvm_NET_Values_Value_System_UInt64_Llvm_NET_DebugInfo_DILocalVariable_Llvm_NET_DebugInfo_DIExpression_Llvm_NET_DebugInfo_DILocation_Llvm_NET_Values_BasicBlock__seealso">See Also</h2>
 <div class="seealso">
-    <div><span><a class="xref" href="http://releases.llvm.org/5.0.0/docs/SourceLevelDebugging.html#lvm-dbg-value">LLVM: llvm.dbg.value</a></span></div>
-    <div><span><a class="xref" href="http://releases.llvm.org/5.0.0/docs/SourceLevelDebugging.html#source-level-debugging-with-llvm">LLVM: Source Level Debugging with LLVM</a></span></div>
+    <div><span><a class="xref" href="http://releases.llvm.org/5.0.1/docs/SourceLevelDebugging.html#lvm-dbg-value">LLVM: llvm.dbg.value</a></span></div>
+    <div><span><a class="xref" href="http://releases.llvm.org/5.0.1/docs/SourceLevelDebugging.html#source-level-debugging-with-llvm">LLVM: Source Level Debugging with LLVM</a></span></div>
 </div>
-</article>
+</h3></h3></h3></h3></h3></article>
           </div>
           <div class="contribution-panel mobile-hide">
           </div>

@@ -57,7 +57,7 @@
                     <a href="http://LLVM.org" title="LLVM.org" class="">LLVM.org</a>
                   </li>
                   <li class="">
-                    <a href="http://releases.llvm.org/5.0.0/docs/index.html" title="LLVM Docs" class="">LLVM Docs</a>
+                    <a href="http://releases.llvm.org/5.0.1/docs/index.html" title="LLVM Docs" class="">LLVM Docs</a>
                   </li>
                 </ul>
             </div>
@@ -3522,21 +3522,21 @@
 
 
 <a id="Llvm_NET_BitcodeModule_MakeShared_" data-uid="Llvm.NET.BitcodeModule.MakeShared*"></a>
-<h4 id="Llvm_NET_BitcodeModule_MakeShared" data-uid="Llvm.NET.BitcodeModule.MakeShared">MakeShared()</h4>
+<h2 id="Llvm_NET_BitcodeModule_MakeShared" data-uid="Llvm.NET.BitcodeModule.MakeShared">MakeShared()</h2>
 <div class="markdown level1 summary"><p>Makes this module a shared module if it isn&apos;t already</p>
 </div>
 <div class="markdown level1 conceptual"></div>
-<h5 class="decalaration">Declaration</h5>
+<h3 class="decalaration">Declaration
 <div class="codewrapper">
   <pre><code class="lang-csharp hljs">public void MakeShared()</code></pre>
 </div>
-<h5 id="Llvm_NET_BitcodeModule_MakeShared_remarks">Remarks</h5>
+<h2 id="Llvm_NET_BitcodeModule_MakeShared_remarks">Remarks</h2>
 <div class="markdown level1 remarks"><p>Normally, this is called automatically when adding a module to a JIT engine that needs shared modules.
 Shared modules are reference counted so they aren&apos;t completely disposed until the reference count
 is decremented to 0. Calling <a class="xref" href="Llvm.NET.BitcodeModule.Dispose.html#Llvm_NET_BitcodeModule_Dispose">Dispose()</a> on a shared module will mark the module as disposed
 and decrement the share count.</p>
 </div>
-</article>
+</h3></article>
           </div>
           <div class="contribution-panel mobile-hide">
           </div>

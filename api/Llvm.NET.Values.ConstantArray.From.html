@@ -57,7 +57,7 @@
                     <a href="http://LLVM.org" title="LLVM.org" class="">LLVM.org</a>
                   </li>
                   <li class="">
-                    <a href="http://releases.llvm.org/5.0.0/docs/index.html" title="LLVM Docs" class="">LLVM Docs</a>
+                    <a href="http://releases.llvm.org/5.0.1/docs/index.html" title="LLVM Docs" class="">LLVM Docs</a>
                   </li>
                 </ul>
             </div>
@@ -3522,24 +3522,16 @@
 
 
 <a id="Llvm_NET_Values_ConstantArray_From_" data-uid="Llvm.NET.Values.ConstantArray.From*"></a>
-<h4 id="Llvm_NET_Values_ConstantArray_From_Llvm_NET_Types_ITypeRef_Llvm_NET_Values_Constant___" data-uid="Llvm.NET.Values.ConstantArray.From(Llvm.NET.Types.ITypeRef,Llvm.NET.Values.Constant[])">From(ITypeRef, Constant[])</h4>
+<h2 id="Llvm_NET_Values_ConstantArray_From_Llvm_NET_Types_ITypeRef_Llvm_NET_Values_Constant___" data-uid="Llvm.NET.Values.ConstantArray.From(Llvm.NET.Types.ITypeRef,Llvm.NET.Values.Constant[])">From(ITypeRef, Constant[])</h2>
 <div class="markdown level1 summary"><p>Create a constant array of values of a given type</p>
 </div>
 <div class="markdown level1 conceptual"></div>
-<h5 class="decalaration">Declaration</h5>
+<h3 class="decalaration">Declaration
 <div class="codewrapper">
   <pre><code class="lang-csharp hljs">public static Constant From(ITypeRef elementType, params Constant[] values)</code></pre>
 </div>
-<h5 class="parameters">Parameters</h5>
+<h2 class="parameters">Parameters</h2>
 <table class="table table-bordered table-striped table-condensed">
-  <thead>
-    <tr>
-      <th>Type</th>
-      <th>Name</th>
-      <th>Description</th>
-    </tr>
-  </thead>
-  <tbody>
     <tr>
       <td><a class="xref" href="Llvm.NET.Types.ITypeRef.html">ITypeRef</a></td>
       <td><span class="parametername">elementType</span></td>
@@ -3552,45 +3544,28 @@
       <td><p>Values to initialize the array</p>
 </td>
     </tr>
-  </tbody>
 </table>
-<h5 class="returns">Returns</h5>
+<h2 class="returns">Returns</h2>
 <table class="table table-bordered table-striped table-condensed">
-  <thead>
-    <tr>
-      <th>Type</th>
-      <th>Description</th>
-    </tr>
-  </thead>
-  <tbody>
     <tr>
       <td><a class="xref" href="Llvm.NET.Values.Constant.html">Constant</a></td>
       <td><p>Constant representing the array</p>
 </td>
     </tr>
-  </tbody>
 </table>
 
 
 <a id="Llvm_NET_Values_ConstantArray_From_" data-uid="Llvm.NET.Values.ConstantArray.From*"></a>
-<h4 id="Llvm_NET_Values_ConstantArray_From_Llvm_NET_Types_ITypeRef_System_Int32_Llvm_NET_Values_Constant___" data-uid="Llvm.NET.Values.ConstantArray.From(Llvm.NET.Types.ITypeRef,System.Int32,Llvm.NET.Values.Constant[])">From(ITypeRef, Int32, Constant[])</h4>
+<h2 id="Llvm_NET_Values_ConstantArray_From_Llvm_NET_Types_ITypeRef_System_Int32_Llvm_NET_Values_Constant___" data-uid="Llvm.NET.Values.ConstantArray.From(Llvm.NET.Types.ITypeRef,System.Int32,Llvm.NET.Values.Constant[])">From(ITypeRef, Int32, Constant[])</h2>
 <div class="markdown level1 summary"><p>Create a constant array of values of a given type with a fixed size, zero filling any un-specified values</p>
 </div>
 <div class="markdown level1 conceptual"></div>
-<h5 class="decalaration">Declaration</h5>
+<h3 class="decalaration">Declaration
 <div class="codewrapper">
   <pre><code class="lang-csharp hljs">public static Constant From(ITypeRef elementType, int len, params Constant[] values)</code></pre>
 </div>
-<h5 class="parameters">Parameters</h5>
+<h2 class="parameters">Parameters</h2>
 <table class="table table-bordered table-striped table-condensed">
-  <thead>
-    <tr>
-      <th>Type</th>
-      <th>Name</th>
-      <th>Description</th>
-    </tr>
-  </thead>
-  <tbody>
     <tr>
       <td><a class="xref" href="Llvm.NET.Types.ITypeRef.html">ITypeRef</a></td>
       <td><span class="parametername">elementType</span></td>
@@ -3609,49 +3584,32 @@
       <td><p>Values to initialize the array</p>
 </td>
     </tr>
-  </tbody>
 </table>
-<h5 class="returns">Returns</h5>
+<h2 class="returns">Returns</h2>
 <table class="table table-bordered table-striped table-condensed">
-  <thead>
-    <tr>
-      <th>Type</th>
-      <th>Description</th>
-    </tr>
-  </thead>
-  <tbody>
     <tr>
       <td><a class="xref" href="Llvm.NET.Values.Constant.html">Constant</a></td>
       <td><p>Constant representing the array</p>
 </td>
     </tr>
-  </tbody>
 </table>
-<h5 id="Llvm_NET_Values_ConstantArray_From_Llvm_NET_Types_ITypeRef_System_Int32_Llvm_NET_Values_Constant____remarks">Remarks</h5>
+<h2 id="Llvm_NET_Values_ConstantArray_From_Llvm_NET_Types_ITypeRef_System_Int32_Llvm_NET_Values_Constant____remarks">Remarks</h2>
 <div class="markdown level1 remarks"><p>If the number of arguments provided for the values is less than <code data-dev-comment-type="paramref" class="paramref">len</code>
 then the remaining elements of the array are set with the null value for the <code data-dev-comment-type="paramref" class="paramref">elementType</code></p>
 </div>
 
 
 <a id="Llvm_NET_Values_ConstantArray_From_" data-uid="Llvm.NET.Values.ConstantArray.From*"></a>
-<h4 id="Llvm_NET_Values_ConstantArray_From_Llvm_NET_Types_ITypeRef_System_Collections_Generic_IList_Llvm_NET_Values_Constant__" data-uid="Llvm.NET.Values.ConstantArray.From(Llvm.NET.Types.ITypeRef,System.Collections.Generic.IList{Llvm.NET.Values.Constant})">From(ITypeRef, IList&lt;Constant&gt;)</h4>
+<h2 id="Llvm_NET_Values_ConstantArray_From_Llvm_NET_Types_ITypeRef_System_Collections_Generic_IList_Llvm_NET_Values_Constant__" data-uid="Llvm.NET.Values.ConstantArray.From(Llvm.NET.Types.ITypeRef,System.Collections.Generic.IList{Llvm.NET.Values.Constant})">From(ITypeRef, IList&lt;Constant&gt;)</h2>
 <div class="markdown level1 summary"><p>Create a constant array of values of a given type</p>
 </div>
 <div class="markdown level1 conceptual"></div>
-<h5 class="decalaration">Declaration</h5>
+<h3 class="decalaration">Declaration
 <div class="codewrapper">
   <pre><code class="lang-csharp hljs">public static Constant From(ITypeRef elementType, IList&lt;Constant&gt; values)</code></pre>
 </div>
-<h5 class="parameters">Parameters</h5>
+<h2 class="parameters">Parameters</h2>
 <table class="table table-bordered table-striped table-condensed">
-  <thead>
-    <tr>
-      <th>Type</th>
-      <th>Name</th>
-      <th>Description</th>
-    </tr>
-  </thead>
-  <tbody>
     <tr>
       <td><a class="xref" href="Llvm.NET.Types.ITypeRef.html">ITypeRef</a></td>
       <td><span class="parametername">elementType</span></td>
@@ -3664,25 +3622,16 @@ then the remaining elements of the array are set with the null value for the <co
       <td><p>Values to initialize the array</p>
 </td>
     </tr>
-  </tbody>
 </table>
-<h5 class="returns">Returns</h5>
+<h2 class="returns">Returns</h2>
 <table class="table table-bordered table-striped table-condensed">
-  <thead>
-    <tr>
-      <th>Type</th>
-      <th>Description</th>
-    </tr>
-  </thead>
-  <tbody>
     <tr>
       <td><a class="xref" href="Llvm.NET.Values.Constant.html">Constant</a></td>
       <td><p>Constant representing the array</p>
 </td>
     </tr>
-  </tbody>
 </table>
-</article>
+</h3></h3></h3></article>
           </div>
           <div class="contribution-panel mobile-hide">
           </div>
