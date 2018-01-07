@@ -5,7 +5,7 @@
       "src":
       [
         {
-          "files": [ "src/Llvm.Net/**.cs"  ],
+          "files": [ "src/Llvm.Net/**.cs" ],
           "src":".."
         }
       ],
@@ -18,7 +18,6 @@
   ],
   "build":
   {
-    "xref": [ "llvm-xref.yml", "../tools/msdn.4.5.2/content/msdn.4.5.2.zip", "../tools/msdn.4.5.2/content/namespaces.4.5.2.zip"],
     "content":
     [
       {
@@ -60,8 +59,8 @@
       "_appFooter" : "Copyright (C) 2017, Dot NET Foundation",
       "_appLogoPath": "DragonSharp48x48.png",
       "_disableBreadcrumb" : true,
-      "llvmVersion": "5.0.0"
+      "llvmVersion": "5.0.0",
+      "assemblies": ["Llvm.NET"],
     },
-    "template": ["statictoc","../tools/memberpage/content","templates/Ubiquity"]
   }
 }

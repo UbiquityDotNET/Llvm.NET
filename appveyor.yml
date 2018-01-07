@@ -25,6 +25,9 @@ nuget:
 build_script:
   - ps: .\BuildAll.ps1
 
+deploy_script:
+  - ps: .\Push-Docs.ps1
+
 test_script:
   - ps: .\Invoke-UnitTests.ps1
   - ps: Set-Culture fr-FR; .\Invoke-UnitTests.ps1

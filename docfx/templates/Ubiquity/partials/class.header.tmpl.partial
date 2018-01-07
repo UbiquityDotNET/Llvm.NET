@@ -1,4 +1,4 @@
-<h1 id="{{id}}" data-uid="{{uid}}">{{>partials/title}}</h1>
+<h1 id="{{id}}" data-uid="{{uid}}" class="text-break">{{>partials/title}}</h1>
 <div class="markdown level0 summary">{{{summary}}}</div>
 <div class="markdown level0 conceptual">{{{conceptual}}}</div>
 
@@ -62,16 +62,16 @@
 </div>
 {{/implements.0}}
 
-<h6><strong>{{__global.namespace}}</strong>: {{{namespace.specName.0.value}}}</h6>
-<h6><strong>{{__global.assembly}}</strong>: {{assemblies.0}}.dll</h6>
+<h5><strong>{{__global.namespace}}</strong>: {{{namespace.specName.0.value}}}</h5>
+<h5><strong>{{__global.assembly}}</strong>: {{assemblies.0}}.dll</h5>
 
-<h5 id="{{id}}_syntax">{{__global.syntax}}</h5>
+<h3 id="{{id}}_syntax"><strong>{{__global.syntax}}</strong></h3>
 <div class="codewrapper">
   <pre><code class="lang-{{_lang}} hljs">{{syntax.content.0.value}}</code></pre>
 </div>
 
 {{#syntax.parameters.0}}
-<h5 class="parameters">{{__global.parameters}}</h5>
+<h2 class="parameters">{{__global.parameters}}</h2>
 <table>
 {{/syntax.parameters.0}}
 {{#syntax.parameters}}
@@ -88,7 +88,7 @@
 {{/syntax.parameters.0}}
 
 {{#syntax.return}}
-<h5 class="returns">{{__global.returns}}</h5>
+<h2 class="returns">{{__global.returns}}</h2>
 <table>
   <tr>
     <td>
@@ -100,7 +100,7 @@
 {{/syntax.return}}
 
 {{#syntax.typeParameters.0}}
-<h5 class="typeParameters">{{__global.typeParameters}}</h5>
+<h2 class="typeParameters">{{__global.typeParameters}}</h2>
 <table>
 {{/syntax.typeParameters.0}}
 {{#syntax.typeParameters}}
@@ -116,12 +116,12 @@
 {{/syntax.typeParameters.0}}
 
 {{#remarks}}
-<h5 id="{{id}}_remarks"><strong>{{__global.remarks}}</strong></h5>
+<h3 id="{{id}}_remarks"><strong>{{__global.remarks}}</strong></h3>
 <div class="markdown level0 remarks">{{{remarks}}}</div>
 {{/remarks}}
 
 {{#example.0}}
-<h5 id="{{id}}_examples"><strong>{{__global.examples}}</strong></h5>
+<h3 id="{{id}}_examples"><strong>{{__global.examples}}</strong></h3>
 {{/example.0}}
 {{#example}}
 {{{.}}}

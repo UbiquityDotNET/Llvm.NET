@@ -110,7 +110,7 @@ When entered ( or copy/pasted) to the command line Kaleidoscope will print out t
 >This example uses features of the language only enabled/discussed in Chapter 6 of the tutorial.
 >The runtime from earlier chapters will generate errors trying to parse this code.
 
-```
+```shell
 Ready>mandel(-2.3, -1.3, 0.05, 0.07);
 *******************************************************************************
 *******************************************************************************

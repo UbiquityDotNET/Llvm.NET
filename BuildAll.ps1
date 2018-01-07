@@ -43,6 +43,20 @@ try
         rd -Recurse -Force -Path $buildPaths.BuildOutputPath
     }
 
+    if( $env:CI -and !(Test-Path ".\BuildOutput\docs\.git" -PathType Container))
+    {
+        Write-Information "Cloning Docs repo"
+        pushd BuildOutput -ErrorAction Stop
+        try
+        {
+            git clone https://github.com/UbiquityDotNET/Llvm.NET.git -b gh-pages docs -q
+        }
+        finally
+        {
+            popd
+        }
+    }
+
     md BuildOutput\NuGet\ | Out-Null
 
     $BuildInfo = Get-BuildInformation $buildPaths

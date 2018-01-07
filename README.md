@@ -36,34 +36,42 @@ C API with a C# adapter layer to provide the full experience .NET developers exp
 tedious one very little application code required changes.
 
 ### Platform Support
-Currently LLVM.NET supports Win32 and x64 buids targeting the full desktop framework v4.7 and .NET standard 2.0. Idealy other platforms are possible in the future. To keep life simpler the Llvm.NET nuget package is built for the "AnyCPU" platform and references the LibLLVM.NET package to bring in the native binary support. Llvm.NET contains code to dynamically detect the platform it is running on and load the appropriate DLL. This allows applications to build for AnyCPU without creating multiple build configurations and release vehicles for applications. (Any new platforms would need to update the dynamic loading support and include the appropriate P/Invokable binaries)
+Currently LLVM.NET supports Win32 and x64 builds targeting the full desktop framework v4.7 and .NET standard 2.0. Ideally
+other platforms are possible in the future. To keep life simpler the Llvm.NET NuGet package is built for the "AnyCPU"
+platform and references the LibLLVM.NET package to bring in the native binary support. Llvm.NET contains code to dynamically
+detect the platform it is running on and load the appropriate DLL. This allows applications to build for AnyCPU without
+creating multiple build configurations and release vehicles for applications. (Any new platforms would need to update the
+dynamic loading support and include the appropriate P/Invokable binaries)
 
-### CI Build Nuget Packages
-The CI Builds on AppVeyor provide a [Nuget Feed](https://ci.appveyor.com/nuget/Ubiquity.Llvm.NET
-) of the NuGet package built from the lates source in the master branch. 
+### CI Build NuGet Packages
+The CI Builds on AppVeyor provide a [NuGet Feed](https://ci.appveyor.com/NuGet/Ubiquity.Llvm.NET
+) of the NuGet package built from the latest source in the master branch. 
 
-### Building Llvm.NET
-#### Pre-requsites
+### API Documentation
+The full API documentation on using Llvm.NET is available on the [Llvm.NET documentation site](https://ubiquitydotnet.github.io/Llvm.NET/).
+
+## Building Llvm.NET
+### Pre-requsites
 * Visual Studio 2017 (15.4+)
-* Llvm.Libs Nuget Package
-  - To build the Llvm.Libs nuget package locally you can use the build support from the [Llvm.Libs ](https://github.com/UbiquityDotNET/Llvm.Libs) repository
+* Llvm.Libs NuGet Package
+  - To build the Llvm.Libs NuGet package locally you can use the build support from the [Llvm.Libs ](https://github.com/UbiquityDotNET/Llvm.Libs) repository
 
 #### Using Visual Studio
 The repository contains a Visual Studio solution files that allow building the components individually for modifying
 Llvm.NET and LibLLVM, as well as running the available unit tests. This is the primary mode of working with the
-Llvm.NET source code duing development.
+Llvm.NET source code during development.
 
-#### Replicating the automated build
-The Automated build support for Llvm.NET uses BuildAll.ps1 powershell script to build all the binaries, sign them
-[SHA256 hash only at present], and generate a nuget package. To build the full package simply run `BuildAll.ps1`
-from a powershell command prompt with msbuild tools on the system search path.
+### Replicating the automated build
+The Automated build support for Llvm.NET uses BuildAll.ps1 PowerShell script to build all the binaries, sign them
+[SHA256 hash only at present], and generate a NuGet package. To build the full package simply run `BuildAll.ps1`
+from a PowerShell command prompt with MSBuild tools on the system search path.
 
-#### Sample Application
+### Sample Application
 The [CodeGenWithDebugInfo](https://github.com/UbiquityDotNET/Llvm.Net/tree/master/Samples/CodeGenWithDebugInfo) sample application provides an example of using Llvm.NET to generate
 LLVM Bit code equivalent to what the Clang compiler generates for a [simple C language file](https://github.com/UbiquityDotNET/Llvm.Net/blob/master/Samples/CodeGenWithDebugInfo/Support%20Files/test.c).
-The sample applictation doesn't actually parse the source, instead it is a manually constructed and documented example of how to use Llvm.NET to accomplish the bit-code generation. 
+The sample application doesn't actually parse the source, instead it is a manually constructed and documented example of how to use Llvm.NET to accomplish the bit-code generation. 
 
-#### Code of Conduct
+### Code of Conduct
 This project has adopted the code of conduct defined by the [Contributor Covenant](http://contributor-covenant.org/)
 to clarify expected behavior in our community. For more information, see the
 [.NET Foundation Code of Conduct.](http://www.dotnetfoundation.org/code-of-conduct)
