@@ -1,4 +1,4 @@
-/* @import url("https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css");*/
+@import url("https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css");
 
 body,
 html {
@@ -273,6 +273,20 @@ article {
   margin: 1em;
 }
 
+.sideaffix {
+    overflow: visible;
+}
+
+toc .level2 {
+    font-weight: normal;
+    font-size: inherit;
+}
+
+.toc .level1 > li {
+    font-weight: bold;
+    font-size: inherit;
+}
+
 /* Overrides for - Ubiquity DocFX Dark theme */
 body {
     color:#ccc;
@@ -395,7 +409,7 @@ a:focus {
     text-decoration: underline;
 }
 
-a.expander.hover {
+a.expander:hover {
   text-decoration:none;
 }
 

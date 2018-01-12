@@ -55,7 +55,27 @@ $(function () {
         work($(this), 0);
     });
 })
-
+// Add EBNF language from highlightjs.org
+hljs.registerLanguage("ebnf", function (a) {
+    var e = a.C(/\(\*/, /\*\)/),
+        t = {
+            cN: "attribute",
+            b: /^[ ]*[a-zA-Z][a-zA-Z-]*([\s-]+[a-zA-Z][a-zA-Z]*)*/
+        },
+        r = {
+            cN: "meta",
+            b: /\?.*\?/
+        },
+        b = {
+            b: /=/,
+            e: /;/,
+            c: [e, r, a.ASM, a.QSM]
+        };
+    return {
+        i: /\S/,
+        c: [e, t, b]
+    }
+});
 // Add LLVM IR language support from highlightjs.org
 hljs.registerLanguage("llvm", function (e) {
     var n = "([-a-zA-Z$._][\\w\\-$.]*)";
