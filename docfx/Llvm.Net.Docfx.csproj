@@ -1,53 +1,46 @@
-<Project>
-    <Import Project="Sdk.props" Sdk="Microsoft.NET.Sdk" />
+<Project Sdk="Microsoft.NET.Sdk">
+    
     <PropertyGroup>
         <TargetFramework>net47</TargetFramework>
     </PropertyGroup>
 
-    <PropertyGroup>
-        <CompileDependsOn>ResolveReferences;BeforeCompile</CompileDependsOn>
-    </PropertyGroup>
-    
     <ItemGroup>
-        <ProjectReference Include="..\src\Llvm.NET\Llvm.NET.csproj">
-            <PrivateAssets>All</PrivateAssets>
-            <Private>false</Private>
-        </ProjectReference>
+        <ProjectReference Include="..\src\Llvm.NET\Llvm.NET.csproj" />
     </ItemGroup>
 
     <ItemGroup>
-        <None Remove="Docfx-*.log" />
-    </ItemGroup>
-
-    <ItemGroup>
+        <PackageReference Include="CSemVer.Build.Tasks" Version="1.0.3-beta--ci-BLD.431367438" />
         <PackageReference Include="docfx.console" Version="2.29.1" Condition="'$(TargetFramework)'=='net47'" PrivateAssets="All" />
         <PackageReference Include="memberpage" Version="2.29.1" Condition="'$(TargetFramework)'=='net47'" PrivateAssets="All" />
         <PackageReference Include="msdn.4.5.2" Version="0.1.0-alpha-1611021200" Condition="'$(TargetFramework)'=='net47'" PrivateAssets="All" />
     </ItemGroup>
 
-    <Import Project="Sdk.targets" Sdk="Microsoft.NET.Sdk" />
-
+    <!--
+    This target dynamically resolves the installed location of the NuGet Packages used and applies
+    appropriate parameters to the docfx command to use them. Otherwise the docfx.json would need to
+    have a hard coded path, which doesn't work with multiple users of a version controlled project.
+    It also removes the need to workaround the hard coded path with relative paths by using a
+    nuget.config to force package installs to a well known location.
+    -->
     <Target Name="GetDocfxPackagePaths" BeforeTargets="DocBuild">
         <ItemGroup>
             <docfxpkg Include="@(PackageDefinitions)" Condition="'%(PackageDefinitions.Name)'=='docfx.console'" />
             <memberpage Include="@(PackageDefinitions)" Condition="'%(PackageDefinitions.Name)'=='memberpage'" />
             <Msdn4_5_2 Include="@(PackageDefinitions)" Condition="'%(PackageDefinitions.Name)'=='msdn.4.5.2'" />
-            <DocFxInputAssembly Include="@(ReferencePath)" Condition="'%(ReferencePath.ReferenceSourceTarget)'=='ProjectReference'" />
         </ItemGroup>
         <PropertyGroup>
             <DocfxConsolePath>%(docfxpkg.ResolvedPath)</DocfxConsolePath>
             <MemberPagePath>%(memberpage.ResolvedPath)</MemberPagePath>
             <MsdnXRefPath>%(msdn4_5_2.ResolvedPath)</MsdnXRefPath>
-            <LogLevel>Warning</LogLevel>
-            <LogFile>Docfx-$(TargetFramework).log</LogFile>
-            <DocParameters>$(DocParameters) --disableGitFeatures</DocParameters>
+            <LogLevel>Info</LogLevel>
+            <LogFile>$(IntermediateOutputPath)Docfx-Metadata.log</LogFile>
             <DocParameters>$(DocParameters) --cleanupCacheHistory</DocParameters>
             <DocParameters>$(DocParameters) --lruSize=0</DocParameters>
-            <DocParameters>$(DocParameters) --intermediateFolder=$(IntermediateOutputPath)</DocParameters>
-            <DocParameters>$(DocParameters) --xref=llvm-xref.yml,$(MsdnXrefPath)\content\msdn.4.5.2.zip,$(MsdnXrefPath)\content\namespaces.4.5.2.zip</DocParameters>
+            <DocParameters>$(DocParameters) --globalMetadata="{_buildVersion:\"$(FullBuildNumber)\"}"</DocParameters>
+            <DocParameters>$(DocParameters) --intermediateFolder="$(IntermediateOutputPath.TrimEnd('\'))"</DocParameters>
+            <DocParameters>$(DocParameters) --xref="llvm-xref.yml,$(MsdnXrefPath)\content\msdn.4.5.2.zip,$(MsdnXrefPath)\content\namespaces.4.5.2.zip"</DocParameters>
             <DocTemplate>statictoc,$(MemberPagePath)\content,templates\Ubiquity</DocTemplate>
         </PropertyGroup>
-        <Message Importance="high" Text="DocFxInputAssembly: %(DocFxInputAssembly.ReferenceAssembly)" />
     </Target>
 
     <!-- Stub the build target as this project only builds the documentation -->
