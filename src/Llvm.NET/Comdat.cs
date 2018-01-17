@@ -7,19 +7,19 @@ using Ubiquity.ArgValidators;
 
 namespace Llvm.NET
 {
-    /// <summary>Comday kind/behavior</summary>
+    /// <summary>Comdat kind/behavior</summary>
     public enum ComdatKind
     {
         /// <summary>Linker may choose any COMDAT key, the choice is arbitrary</summary>
         Any = LLVMComdatSelectionKind.ANY,
 
-        /// <summary>Linker may choose any COMDAT key but sextions must contain the same data</summary>
+        /// <summary>Linker may choose any COMDAT key but sections must contain the same data</summary>
         ExactMatch = LLVMComdatSelectionKind.EXACTMATCH,
 
-        /// <summary>The linker will choose the section containing the largets COMDAT key</summary>
+        /// <summary>The linker will choose the section containing the targets COMDAT key</summary>
         Largest = LLVMComdatSelectionKind.LARGEST,
 
-        /// <summary>The linker requires that onle one section with this COMDAT key exists</summary>
+        /// <summary>The linker requires that only one section with this COMDAT key exists</summary>
         NoDuplicates = LLVMComdatSelectionKind.NODUPLICATES,
 
         /// <summary>Linker may choose any COMDAT key but sections must contain the same amount of data</summary>

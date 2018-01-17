@@ -2,13 +2,13 @@
 This series of samples generally follows the official [LLVM tutorial](http://releases.llvm.org/5.0.0/docs/tutorial/LangImpl01.html).
 
 ## Overview
-Kaliedoscope is a simple functional language that is used to illustrate numerous real world
+Kaleidoscope is a simple functional language that is used to illustrate numerous real world
 use cases for Llvm.NET for code generation and JIT execution. 
 
 It is worth pointing out that this example isn't intended as a treatise on compiler design nor
 on language parsing. While it contains aspects of those topics the sample is focused on the
 use of Llvm.NET for code generation. Furthermore it isn't a trans-literation of the LLVM C++
-sample as that would defeat one of the major points of Llvm.NET - to provde a familiar API and
+sample as that would defeat one of the major points of Llvm.NET - to provide a familiar API and
 use pattern to C# developers.
 
 ## General layout

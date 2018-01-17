@@ -63,7 +63,7 @@ namespace Llvm.NET.DebugInfo
                                            );
         }
 
-        // Fluent style argument validator to verify arguments before passing to base class.
+        // Fluent style argument validators to verify arguments before passing to base class.
         // Only primitive types are supported.
         private static ITypeRef ValidateType( ITypeRef typeRef )
         {

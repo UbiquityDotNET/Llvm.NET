@@ -319,7 +319,7 @@ namespace Llvm.NET.DebugInfo
         /// <param name="file">File where the variable is declared</param>
         /// <param name="line">Line where the variable is declared</param>
         /// <param name="type">Type of the variable</param>
-        /// <param name="alwaysPreserve">Flag to indicate if this variable's debug informarion should always be preserved</param>
+        /// <param name="alwaysPreserve">Flag to indicate if this variable's debug information should always be preserved</param>
         /// <param name="debugFlags">Flags for the variable</param>
         /// <returns><see cref="DILocalVariable"/></returns>
         [SuppressMessage( "Microsoft.Design", "CA1011:ConsiderPassingBaseTypesAsParameters", Justification = "Specific type required by interop call" )]
@@ -486,7 +486,7 @@ namespace Llvm.NET.DebugInfo
             return CreateSubroutineType( debugFlags, typeArray );
         }
 
-        /// <summary>Creates debug desription of a structure type</summary>
+        /// <summary>Creates debug description of a structure type</summary>
         /// <param name="scope">Scope containing the structure</param>
         /// <param name="name">Name of the type</param>
         /// <param name="file">File containing the type</param>
@@ -527,7 +527,7 @@ namespace Llvm.NET.DebugInfo
             return MDNode.FromHandle<DICompositeType>( handle );
         }
 
-        /// <summary>Creates debug desription of a structure type</summary>
+        /// <summary>Creates debug description of a structure type</summary>
         /// <param name="scope">Scope containing the structure</param>
         /// <param name="name">Name of the type</param>
         /// <param name="file">File containing the type</param>
@@ -552,7 +552,7 @@ namespace Llvm.NET.DebugInfo
             return CreateStructType( scope, name, file, line, bitSize, bitAlign, debugFlags, derivedFrom, GetOrCreateArray( elements ) );
         }
 
-        /// <summary>Creates debug desription of a structure type</summary>
+        /// <summary>Creates debug description of a structure type</summary>
         /// <param name="scope">Scope containing the structure</param>
         /// <param name="name">Name of the type</param>
         /// <param name="file">File containing the type</param>
@@ -577,7 +577,7 @@ namespace Llvm.NET.DebugInfo
             return CreateStructType( scope, name, file, line, bitSize, bitAlign, debugFlags, derivedFrom, GetOrCreateArray( elements ) );
         }
 
-        /// <summary>Creates debug desription of a union type</summary>
+        /// <summary>Creates debug description of a union type</summary>
         /// <param name="scope">Scope containing the union</param>
         /// <param name="name">Name of the type</param>
         /// <param name="file">File containing the union</param>
@@ -615,7 +615,7 @@ namespace Llvm.NET.DebugInfo
             return MDNode.FromHandle<DICompositeType>( handle );
         }
 
-        /// <summary>Creates debug desription of a union type</summary>
+        /// <summary>Creates debug description of a union type</summary>
         /// <param name="scope">Scope containing the union</param>
         /// <param name="name">Name of the type</param>
         /// <param name="file">File containing the union</param>
@@ -638,7 +638,7 @@ namespace Llvm.NET.DebugInfo
             return CreateUnionType( scope, name, file, line, bitSize, bitAlign, debugFlags, GetOrCreateArray( elements ) );
         }
 
-        /// <summary>Creates debug desription of a union type</summary>
+        /// <summary>Creates debug description of a union type</summary>
         /// <param name="scope">Scope containing the union</param>
         /// <param name="name">Name of the type</param>
         /// <param name="file">File containing the union</param>
@@ -855,7 +855,7 @@ namespace Llvm.NET.DebugInfo
         /// <param name="value"><see cref="Value"/> for the variable</param>
         /// <param name="declaration"><see cref="DINode"/> for the declaration of the variable</param>
         /// <param name="bitAlign">Bit alignment for the expression</param>
-        /// <returns><see cref="DIGlobalVariableExpression"/> from the prameters</returns>
+        /// <returns><see cref="DIGlobalVariableExpression"/> from the parameters</returns>
         [SuppressMessage( "Microsoft.Design", "CA1011:ConsiderPassingBaseTypesAsParameters", Justification = "Specific type required by interop call" )]
         public DIGlobalVariableExpression CreateGlobalVariableExpression( DINode scope
                                                                         , string name
@@ -938,7 +938,7 @@ namespace Llvm.NET.DebugInfo
         /// <param name="storage">Value the declaration is bound to</param>
         /// <param name="varInfo"><see cref="DILocalVariable"/> for <paramref name="storage"/></param>
         /// <param name="location"><see cref="DILocation"/>for the variable</param>
-        /// <param name="insertBefore"><see cref="Instructions.Instruction"/> to insert the declartion before</param>
+        /// <param name="insertBefore"><see cref="Instructions.Instruction"/> to insert the declaration before</param>
         /// <returns><see cref="Instructions.CallInstruction"/> for the call to llvm.dbg.declare</returns>
         /// <remarks>
         /// This adds a call to the <see href="xref:llvm_sourcelevel_debugging#lvm-dbg-declare">llvm.dbg.declare</see> intrinsic.
@@ -959,7 +959,7 @@ namespace Llvm.NET.DebugInfo
         /// <param name="varInfo"><see cref="DILocalVariable"/> for <paramref name="storage"/></param>
         /// <param name="expression"><see cref="DIExpression"/> for a debugger to use when extracting the value</param>
         /// <param name="location"><see cref="DILocation"/>for the variable</param>
-        /// <param name="insertBefore"><see cref="Instructions.Instruction"/> to insert the declartion before</param>
+        /// <param name="insertBefore"><see cref="Instructions.Instruction"/> to insert the declaration before</param>
         /// <returns><see cref="Instructions.CallInstruction"/> for the call to llvm.dbg.declare</returns>
         /// <remarks>
         /// This adds a call to the <see href="xref:llvm_sourcelevel_debugging#lvm-dbg-declare">llvm.dbg.declare</see> intrinsic.
@@ -994,7 +994,7 @@ namespace Llvm.NET.DebugInfo
         /// <param name="storage">Value the declaration is bound to</param>
         /// <param name="varInfo"><see cref="DILocalVariable"/> for <paramref name="storage"/></param>
         /// <param name="location"><see cref="DILocation"/>for the variable</param>
-        /// <param name="insertAtEnd"><see cref="BasicBlock"/> to insert the declartion at the end of</param>
+        /// <param name="insertAtEnd"><see cref="BasicBlock"/> to insert the declaration at the end of</param>
         /// <returns><see cref="Instructions.CallInstruction"/> for the call to llvm.dbg.declare</returns>
         /// <remarks>
         /// This adds a call to the <see href="xref:llvm_sourcelevel_debugging#lvm-dbg-declare">llvm.dbg.declare</see> intrinsic.
@@ -1015,7 +1015,7 @@ namespace Llvm.NET.DebugInfo
         /// <param name="varInfo"><see cref="DILocalVariable"/> for <paramref name="storage"/></param>
         /// <param name="expression"><see cref="DIExpression"/> for a debugger to use when extracting the value</param>
         /// <param name="location"><see cref="DILocation"/>for the variable</param>
-        /// <param name="insertAtEnd"><see cref="BasicBlock"/> to insert the declartion at the end of</param>
+        /// <param name="insertAtEnd"><see cref="BasicBlock"/> to insert the declaration at the end of</param>
         /// <returns><see cref="Instructions.CallInstruction"/> for the call to llvm.dbg.declare</returns>
         /// <remarks>
         /// This adds a call to the <see href="xref:llvm_sourcelevel_debugging#lvm-dbg-declare">llvm.dbg.declare</see> intrinsic.
@@ -1272,7 +1272,7 @@ namespace Llvm.NET.DebugInfo
         /// <param name="line">Source line for the type</param>
         /// <param name="lang">Source language the type is defined in</param>
         /// <param name="sizeInBits">size of the type in bits</param>
-        /// <param name="alignBits">alignement of the type in bits</param>
+        /// <param name="alignBits">alignment of the type in bits</param>
         /// <param name="flags"><see cref="DebugInfoFlags"/> for the type</param>
         /// <returns><see cref="DICompositeType"/></returns>
         [SuppressMessage( "Microsoft.Design", "CA1011:ConsiderPassingBaseTypesAsParameters", Justification = "Specific type required by interop call" )]

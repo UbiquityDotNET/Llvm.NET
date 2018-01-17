@@ -8,7 +8,7 @@ namespace Llvm.NET
 {
     /// <summary>Tuple of Metadata nodes</summary>
     /// <remarks>
-    /// This acts as a container of nodes in the metadata heirarchy
+    /// This acts as a container of nodes in the metadata hierarchy
     /// </remarks>
     public class MDTuple : MDNode
     {

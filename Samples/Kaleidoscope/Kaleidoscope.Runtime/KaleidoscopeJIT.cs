@@ -9,7 +9,7 @@ using Llvm.NET.JIT;
 
 namespace Kaleidoscope.Runtime
 {
-    /// <summary>JIT engine for Kaledoscope language</summary>
+    /// <summary>JIT engine for Kaleidoscope language</summary>
     public sealed class KaleidoscopeJIT
         : IDisposable
     {

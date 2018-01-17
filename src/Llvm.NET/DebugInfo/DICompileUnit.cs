@@ -21,7 +21,7 @@ namespace Llvm.NET.DebugInfo
         /// <summary>Gets the name of the producer of this unit</summary>
         public string Producer => GetOperandString( 1 );
 
-        /// <summary>Gets the compliation flags for this unit</summary>
+        /// <summary>Gets the compilation flags for this unit</summary>
         public string Flags => GetOperandString( 2 );
 
         /// <summary>Gets the split debug file name for this unit</summary>

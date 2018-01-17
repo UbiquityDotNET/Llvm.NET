@@ -22,7 +22,7 @@ namespace Llvm.NET
         /// <summary>Default optimization</summary>
         Default = LLVMCodeGenOptLevel.LLVMCodeGenLevelDefault,
 
-        /// <summary>Aggresive optimizations</summary>
+        /// <summary>Aggressive optimizations</summary>
         Aggressive = LLVMCodeGenOptLevel.LLVMCodeGenLevelAggressive
     }
 

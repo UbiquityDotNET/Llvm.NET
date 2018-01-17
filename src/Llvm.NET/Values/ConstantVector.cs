@@ -19,7 +19,7 @@ namespace Llvm.NET.Values
         [CanBeNull]
         Constant SplatValue { get; }
 
-        // reult may be ConstantVector or ConstantDataVector if the splat is compatible with a ConstantDataVector
+        // result may be ConstantVector or ConstantDataVector if the splat is compatible with a ConstantDataVector
         static Constant Splat(uint numelements, Constant element);
         */
     }

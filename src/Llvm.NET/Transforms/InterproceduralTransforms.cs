@@ -9,7 +9,7 @@ using static Llvm.NET.Native.NativeMethods;
 
 namespace Llvm.NET.Transforms
 {
-    /// <summary>Utility class for adding the Interprocedural transform passes to a <see cref="PassManager"/></summary>
+    /// <summary>Utility class for adding the Inter-procedural transform passes to a <see cref="PassManager"/></summary>
     /// <seealso href="xref:llvm_docs_passes">LLVM: Analysis and Transform Passes</seealso>
     public static class InterproceduralTransforms
     {
@@ -49,7 +49,7 @@ namespace Llvm.NET.Transforms
             return passManager;
         }
 
-        /// <summary>A simple interprocedural pass which walks the call-graph to apply attributes that are sticially verifiable</summary>
+        /// <summary>A simple inter-procedural pass which walks the call-graph to apply attributes that are statically verifiable</summary>
         /// <typeparam name="T"><see cref="PassManager"/> type</typeparam>
         /// <param name="passManager">Pass manager to add the pass to</param>
         /// <returns><paramref name="passManager"/> for fluent style construction of a pass manager</returns>
@@ -119,17 +119,17 @@ namespace Llvm.NET.Transforms
             return passManager;
         }
 
-        /// <summary>Adds an Interprocedural constant propagation pass</summary>
+        /// <summary>Adds an Inter-procedural constant propagation pass</summary>
         /// <typeparam name="T"><see cref="PassManager"/> type</typeparam>
         /// <param name="passManager">Pass manager to add the pass to</param>
         /// <returns><paramref name="passManager"/> for fluent style construction of a pass manager</returns>
         /// <remarks>
-        /// This pass implements an extremely simple interprocedural constant propagation pass. It could
+        /// This pass implements an extremely simple inter-procedural constant propagation pass. It could
         /// certainly be improved in many different ways, like using a worklist. This pass makes arguments
         /// dead, but does not remove them. The existing dead argument elimination pass should be run after
         /// this to clean up the mess.
         /// </remarks>
-        /// <seealso href="xref:llvm_docs_passes#ipconstprop-interprocedural-constant-propagation">LLVM: Interprocedural constant propagation pass</seealso>
+        /// <seealso href="xref:llvm_docs_passes#ipconstprop-interprocedural-constant-propagation">LLVM: Inter-procedural constant propagation pass</seealso>
         public static T AddIPConstantPropagationPass<T>( this T passManager )
             where T : PassManager
         {
@@ -142,7 +142,7 @@ namespace Llvm.NET.Transforms
         /// <param name="passManager">Pass manager to add the pass to</param>
         /// <returns><paramref name="passManager"/> for fluent style construction of a pass manager</returns>
         /// <remarks>
-        /// This file implements a simple interprocedural pass which walks the call-graph, turning invoke
+        /// This file implements a simple inter-procedural pass which walks the call-graph, turning invoke
         /// instructions into call instructions if and only if the callee cannot throw an exception. It
         /// implements this as a bottom-up traversal of the call-graph.
         /// </remarks>
@@ -154,12 +154,12 @@ namespace Llvm.NET.Transforms
             return passManager;
         }
 
-        /// <summary>Adds an Interprocedural Sparse Conditional Constant Propagation pass</summary>
+        /// <summary>Adds an Inter-procedural Sparse Conditional Constant Propagation pass</summary>
         /// <typeparam name="T"><see cref="PassManager"/> type</typeparam>
         /// <param name="passManager">Pass manager to add the pass to</param>
         /// <returns><paramref name="passManager"/> for fluent style construction of a pass manager</returns>
         /// <seealso href="xref:llvm_docs_passes#Sparse Conditional Constant Propagation"/>
-        /// <seealso cref="ScalarTransforms.AddSCCPPass{T}(T)">LLVM: Interprocedural Sparse Conditional Constant Propagation pass</seealso>
+        /// <seealso cref="ScalarTransforms.AddSCCPPass{T}(T)">LLVM: Inter-procedural Sparse Conditional Constant Propagation pass</seealso>
         public static T AddIPSCCPPass<T>( this T passManager )
             where T : PassManager
         {

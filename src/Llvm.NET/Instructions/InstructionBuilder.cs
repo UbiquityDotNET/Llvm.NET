@@ -108,7 +108,7 @@ namespace Llvm.NET.Instructions
         /// <returns><see cref="Value"/> for the instruction</returns>
         public Value FAdd( Value lhs, Value rhs ) => BuildBinOp( LLVMBuildFAdd, lhs, rhs );
 
-        /// <summary>Creates a floating point subtracion operator</summary>
+        /// <summary>Creates a floating point subtraction operator</summary>
         /// <param name="lhs">left hand side operand</param>
         /// <param name="rhs">right hand side operand</param>
         /// <returns><see cref="Value"/> for the instruction</returns>
@@ -173,7 +173,7 @@ namespace Llvm.NET.Instructions
         /// <returns><see cref="Value"/> for the instruction</returns>
         public Value ShiftLeft( Value lhs, Value rhs ) => BuildBinOp( LLVMBuildShl, lhs, rhs );
 
-        /// <summary>Creates an integer areithemetic shift right operator</summary>
+        /// <summary>Creates an integer arithmetic shift right operator</summary>
         /// <param name="lhs">left hand side operand</param>
         /// <param name="rhs">right hand side operand</param>
         /// <returns><see cref="Value"/> for the instruction</returns>
@@ -306,7 +306,7 @@ namespace Llvm.NET.Instructions
         /// <summary>Creates an <see cref="Instructions.Invoke"/> instruction</summary>
         /// <param name="func">Function to invoke</param>
         /// <param name="args">arguments to pass to the function</param>
-        /// <param name="then">Succesful continuation block</param>
+        /// <param name="then">Successful continuation block</param>
         /// <param name="catchBlock">Exception handling block</param>
         /// <returns><see cref="Instructions.Invoke"/></returns>
         public Invoke Invoke( Value func, IReadOnlyList<Value> args, BasicBlock then, BasicBlock catchBlock )
@@ -1234,7 +1234,7 @@ namespace Llvm.NET.Instructions
 
         /// <summary>Creates a switch instruction</summary>
         /// <param name="value">Value to switch on</param>
-        /// <param name="defaultCase">default case if <paramref name="value"/> does mach any case</param>
+        /// <param name="defaultCase">default case if <paramref name="value"/> does match any case</param>
         /// <param name="numCases">Number of cases for the switch</param>
         /// <returns><see cref="Instructions.Switch"/></returns>
         /// <remarks>
@@ -1318,7 +1318,7 @@ namespace Llvm.NET.Instructions
         }
 
         /// <summary>Creates a llvm.dbg.trap call</summary>
-        /// <param name="module">Module to insert a declaration for the instrinsic</param>
+        /// <param name="module">Module to insert a declaration for the intrinsic</param>
         /// <returns><see cref="CallInstruction"/></returns>
         [Obsolete( "Use DebugTrap()" )]
         public Value DebugTrap( BitcodeModule module )

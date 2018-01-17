@@ -1,12 +1,12 @@
 # Implementing the parser
-The Lllvm.NET version of Kaleidoscope leverages ANTLR4 to parse the langague into a parse tree.
+The Lllvm.NET version of Kaleidoscope leverages ANTLR4 to parse the language into a parse tree.
 The chapter 2 sample doesn't actually generate any code. Instead it focuses on the general structure
 of the samples and parsing of the language. The sample for this chapter enables all language features
 to allow exploring the language and how it is parsed to help better understand the rest of the chapters
 better. It is hoped that users of this library find this helpful as understanding the language grammar
 from reading the LVM tutorials and source was a difficult task since it isn't formally defined in one
 place. (There are some EBNF like comments in the code but it is spread around without much real discussion
-of the lanbguage the tutorials guide you to implement)
+of the language the tutorials guide you to implement)
 
 
 ## Formal Grammar
@@ -96,7 +96,7 @@ BINARY: {FeatureUserOperators}? 'binary';
 
 >[!NOTE]
 >There are some important distinctions in the Llvm.NET implementation of Kaleidoscope, in the operators allowed for
->User defined operators. The official LLVM version allows definining an operator '=', (in chapter 6). However,
+>User defined operators. The official LLVM version allows defining an operator '=', (in chapter 6). However,
 >in Chapter 7, when Mutable variables are introduced the '=' is reserved by the language for assignment. Thus,
 >any code written for chapter 6 with a user defined '=' operator would not work in later versions. Thus, the
 >Llvm.NET version reserves the '=' in all versions, but allows the '==' operator. (It also adds the '++' and '--'
@@ -119,14 +119,14 @@ about the details at this point as subsequent chapters will cover salient points
 are enabled.
 
 ##### Operators
-In order to support the parser detecting attemtps to overload builtin operators and to handle the fact that some
+In order to support the parser detecting attempts to overload built-in operators and to handle the fact that some
 operators don't make any sense for unary operators (e.g. you can't create a user defined unary '=' operator. technically
 you could implement that but it would make for some confusing code. If you really like hard to read and comprehend code
 there are [other languages](https://en.wikipedia.org/wiki/Brainfuck) better suited to that end 8^) )
 
 To manage detection of appropriate operator tokens the grammar uses a set of parser rules that group the operator
 tokens by their allowed kinds. This allows subsequent rules to simply refer to the kind of operator expected and
-not worry about the actual tokens involved. It also allows the parser to detect syntax and useage errors like
+not worry about the actual tokens involved. It also allows the parser to detect syntax and usage errors like
 trying to create a user defined '+' operator.
 
 ```antlr
@@ -213,7 +213,7 @@ binaryop
 ```
 
 ##### Initializers
-Initializers are a useful re-useable rule to handle a common sequence in the language in multiple different contexts.
+Initializers are a useful re-usable rule to handle a common sequence in the language in multiple different contexts.
 (sort of like a function in most programming languages, in fact, ANTLR rules are implemented in the generated parser
 as methods). 
 
@@ -301,14 +301,14 @@ In particular Chapters 3-7 only really differ in the language level support.
 
 The Main function starts out by calling WaitForDebugger(). This is a useful utility that doesn't do anything in a
 release build, but in debug builds will check for an attached debugger and if none is found it will wait for one.
-This works around a missing feauture of the .NET Standard C# project system that does not support launching mixed
+This works around a missing feature of the .NET Standard C# project system that does not support launching mixed
 native+managed debugging. When you need to go all the way into debugging the LLVM code, you can launch the debug
 version of the app without debugging, then attach to it and select native and managed debugging. (Hopefully this
 feature will be restored to these projects in the future so this trick isn't needed...)
 
 The real heart of the driver app is in the next small block of code. The driver begins by initializing the LLVM
 system, which loads the correct platform architecture version of the LibLLVM.DLL and initializes a number of
-internal LLVM static infrastructure. This requires some teardown for a clean shutdown of LLVM so the initialization
+internal LLVM static infrastructure. This requires some tear down for a clean shutdown of LLVM so the initialization
 returns an IDisposable which requires a call to Dispose() to cleanup. The cleanup is handled automatically via a
 C# using statement.
 
@@ -324,18 +324,18 @@ platforms, and support for each target requires some resources applications need
 For the JIT Kaleidoscope samples the target is the native host system so that is the only target registered.
 
 Once LLVM is initialized the Kaleidoscope parser is created. The ReplParserStack contains the support for parsing the
-Kaleidoscope language from the REPL loop interactive input. The stakc also maintains the global state of the runtime,
+Kaleidoscope language from the REPL loop interactive input. The stack also maintains the global state of the runtime,
 which controls the language features enabled, and if user defined operators are enabled, contains the operators defined
-along with their precednece.
+along with their precedence.
 
 ```C#
 var parser = new ReplParserStack( LanguageLevel.SimpleExpressions );
 ```
 
 After the parser is created the code generator is constructed. The code generator is responsible for most of the real work
-of the language. The implementation of the generator is different for each chapter. Howver, since the generator is based
+of the language. The implementation of the generator is different for each chapter. However, since the generator is based
 on the ANTLR4 generated KaleidoscopeParserListener (using a visitor pattern), and the chapters build on one another, for
-the most part, it is fairly easy to diff the generators for each chapter to see the changes needed to introduce the feauture
+the most part, it is fairly easy to diff the generators for each chapter to see the changes needed to introduce the feature
 the chapter introduces. Each chapter will go into more details on this. Since the generator usually allocates resources in
 Llvm.NET it implements IDisposable to ensure they are released as early as possible.
 
@@ -347,9 +347,9 @@ using( var generator = new CodeGenerator( parser.GlobalState ) )
 
 Inside the using statement for the code generator is the core loop for the language runtime. This starts by displaying
 a brief "hello" message indicating the nature of the app and the language level supported. The actual REPL loop is handled
-via a common library class `ReplLoop<T>` (in Kaleidoscope.Runtime) this class handles retieving text from an input source
+via a common library class `ReplLoop<T>` (in Kaleidoscope.Runtime) this class handles retrieving text from an input source
 (default is Console.In) and producing a complete "statement" for parsings. (Technically speaking Kaleidoscope doesn't have
-statements but to allow a user to type `[...] a+b<newline>+c`) without processing that as two expression invovations a 
+statements but to allow a user to type `[...] a+b<newline>+c`) without processing that as two expression invocations a 
 semicolon is used to convey the user's intent that the code is complete and ready for evaluation. The ReplLoop class takes
 care of this in a generalized manner. The ReplLoop can consume input from any `System.TextReader` and uses `System.Console.In`
 as a default. When the loop detects a new line that doesn't have a semicolon it will generate a Ready state changed event
@@ -398,7 +398,7 @@ serves as an aid in understanding the language itself. Of particular use is the 
 were created by creating the blockdiag files and then generating the SVG files from that). Having a nice visual
 representation of a parser tree result is helpful to understanding the parsing and various parse tree node types.
 
-The visual graph is also immensensly valuable when making changes to the grammar so you can see the results of a parse and
+The visual graph is also immensely valuable when making changes to the grammar so you can see the results of a parse and
 more readily understand why something isn't right. (In fact this feature was enabled to track down bugs in the parsing for
 user defined operator precedence that was difficult to figure out. Once the visualization was available it became quite easy
 to see the problems). Thus, Chapter 2 is both a simple introductory example and tool for use when doing advanced language

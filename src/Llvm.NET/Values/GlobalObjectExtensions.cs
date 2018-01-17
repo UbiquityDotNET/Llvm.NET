@@ -68,7 +68,7 @@ namespace Llvm.NET.Values
         }
 
         /// <summary>Sets the alignment for a <see cref="GlobalObject"/></summary>
-        /// <param name="self">Object to set the alignement of</param>
+        /// <param name="self">Object to set the alignment of</param>
         /// <param name="value">Alignment value to set</param>
         /// <returns><paramref name="self"/> for fluent use</returns>
         /// <seealso cref="GlobalObject.Alignment"/>

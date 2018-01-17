@@ -23,7 +23,7 @@ namespace Llvm.NET.Instructions
         [property: CanBeNull]
         public Value Condition => IsConditional ? GetOperand<Value>( -3 ) : null;
 
-        /// <summary>Gets the succesor block(s) for this branch</summary>
+        /// <summary>Gets the successor block(s) for this branch</summary>
         public IReadOnlyList<BasicBlock> Successors
         {
             get

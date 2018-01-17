@@ -152,7 +152,7 @@ namespace Llvm.NET
             return LLVMCallFrameAlignmentOfType( DataLayoutHandle, typeRef.GetTypeRef( ) );
         }
 
-        /// <summary>Gets teh preferred alignment for an LLVM type</summary>
+        /// <summary>Gets the preferred alignment for an LLVM type</summary>
         /// <param name="typeRef">Type to get the alignment of</param>
         /// <returns>Preferred alignment</returns>
         public uint PreferredAlignmentOf( ITypeRef typeRef )
@@ -161,7 +161,7 @@ namespace Llvm.NET
             return LLVMPreferredAlignmentOfType( DataLayoutHandle, typeRef.GetTypeRef( ) );
         }
 
-        /// <summary>Gets teh preferred alignment for a <see cref="Value"/></summary>
+        /// <summary>Gets the preferred alignment for a <see cref="Value"/></summary>
         /// <param name="value">Value to get the alignment of</param>
         /// <returns>Preferred alignment</returns>
         public uint PreferredAlignmentOf( Value value )
@@ -175,7 +175,7 @@ namespace Llvm.NET
             return LLVMPreferredAlignmentOfGlobal( DataLayoutHandle, value.ValueHandle );
         }
 
-        /// <summary>Gets the element index for a specific offest in a given structure</summary>
+        /// <summary>Gets the element index for a specific offset in a given structure</summary>
         /// <param name="structType">Type of the structure</param>
         /// <param name="offset">Offset to determine the index of</param>
         /// <returns>Index of the element</returns>
@@ -189,7 +189,7 @@ namespace Llvm.NET
         /// <summary>Gets the offset of an element in a structure</summary>
         /// <param name="structType">Type of the structure</param>
         /// <param name="element">index of the element in the structure</param>
-        /// <returns>Offset of the element from the begining of the structure</returns>
+        /// <returns>Offset of the element from the beginning of the structure</returns>
         [SuppressMessage( "Microsoft.Design", "CA1011:ConsiderPassingBaseTypesAsParameters", Justification = "Specific type required by interop call" )]
         public ulong OffsetOfElement( IStructType structType, uint element )
         {

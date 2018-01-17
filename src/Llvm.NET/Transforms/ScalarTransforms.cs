@@ -9,10 +9,10 @@ using static Llvm.NET.Native.NativeMethods;
 
 namespace Llvm.NET.Transforms
 {
-    /// <summary>Utility class for Adding Scalar transform passses to a <see cref="PassManager"/></summary>
+    /// <summary>Utility class for Adding Scalar transform passes to a <see cref="PassManager"/></summary>
     public static class ScalarTransforms
     {
-        /// <summary>Adds an Aggressive Dead Code Elminiation (DCE) pass to the manager</summary>
+        /// <summary>Adds an Aggressive Dead Code Elimination (DCE) pass to the manager</summary>
         /// <typeparam name="T">Type of pass manager to add the pass to</typeparam>
         /// <param name="passManager">Pass manager to add the pass to</param>
         /// <returns><paramref name="passManager"/>for fluent support</returns>

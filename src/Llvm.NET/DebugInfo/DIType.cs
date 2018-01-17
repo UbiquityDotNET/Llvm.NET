@@ -30,7 +30,7 @@ namespace Llvm.NET.DebugInfo
         /// <summary>Gets the offset of the type in bits</summary>
         public UInt64 BitOffset => NativeMethods.LLVMDITypeGetOffsetInBits( MetadataHandle );
 
-        /// <summary>Gets the flags that describe the behaviors fo</summary>
+        /// <summary>Gets the flags that describe the behaviors for</summary>
         public DebugInfoFlags DebugInfoFlags
         {
             get

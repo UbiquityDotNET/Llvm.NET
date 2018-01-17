@@ -20,7 +20,7 @@ using static Kaleidoscope.Grammar.KaleidoscopeParser;
 
 namespace Kaleidoscope
 {
-    /// <summary>Static extension methods to perform LLVM IR Code generation from the Kaledoscope AST</summary>
+    /// <summary>Static extension methods to perform LLVM IR Code generation from the Kaleidoscope AST</summary>
     internal sealed class CodeGenerator
         : KaleidoscopeBaseVisitor<Value>
         , IDisposable

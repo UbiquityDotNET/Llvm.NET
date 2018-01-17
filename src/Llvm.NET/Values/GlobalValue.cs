@@ -40,10 +40,10 @@ namespace Llvm.NET.Values
         /// <seealso href="xref:llvm_langref#linkage-types"/>
         Append = LLVMLinkage.LLVMAppendingLinkage,
 
-        /// <summary>Renane collision when linking (i.e static function)</summary>
+        /// <summary>Rename collision when linking (i.e static function)</summary>
         Internal = LLVMLinkage.LLVMInternalLinkage,
 
-        /// <summary>Link as <see cref="Internal"/> but ommit from the generated symbol table</summary>
+        /// <summary>Link as <see cref="Internal"/> but omit from the generated symbol table</summary>
         Private = LLVMLinkage.LLVMPrivateLinkage,
 
         /// <summary>Global to be imported from a DLL</summary>
@@ -61,7 +61,7 @@ namespace Llvm.NET.Values
 
         // LLVMLinkage.LLVMGhostLinkage,       /*< Obsolete */
 
-        /// <summary>Tenatatice definitions</summary>
+        /// <summary>Tenatative definitions</summary>
         Common = LLVMLinkage.LLVMCommonLinkage,
 
         /// <summary>Like <see cref="Private"/> but the linker remove this symbol</summary>

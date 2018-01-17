@@ -13,10 +13,10 @@ using static Kaleidoscope.Grammar.KaleidoscopeParser;
 
 namespace Kaleidoscope
 {
-    /// <summary>Static extension methods to perform LLVM IR Code generation from the Kaledoscope AST</summary>
+    /// <summary>Static extension methods to perform LLVM IR Code generation from the Kaleidoscope AST</summary>
     /// <remarks>
     /// This doesn't actually generate any code. The only thing it does is to record any user defined operators
-    /// in the <see cref="DynamicRuntimeState"/> so that subsequent parsing takes the operator precednece into
+    /// in the <see cref="DynamicRuntimeState"/> so that subsequent parsing takes the operator precedence into
     /// account. (If the language didn't support user defined precedence this would not be needed at all)
     /// </remarks>
     internal sealed class CodeGenerator

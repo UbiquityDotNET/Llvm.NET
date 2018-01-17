@@ -6,7 +6,7 @@ using Llvm.NET.Native;
 
 namespace Llvm.NET.Instructions
 {
-    /// <summary>Base class for deubg information instrinsic functions in LLVM IR</summary>
+    /// <summary>Base class for debug information intrinsic functions in LLVM IR</summary>
     public class DebugInfoIntrinsic
         : Intrinsic
     {

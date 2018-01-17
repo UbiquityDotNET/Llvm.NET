@@ -9,7 +9,7 @@ using Kaleidoscope.Grammar;
 
 namespace Kaleidoscope.Runtime
 {
-    /// <summary>Combined Lexer and Parser support for REPL useage</summary>
+    /// <summary>Combined Lexer and Parser support for REPL usage</summary>
     public class ReplParserStack
         : IKaleidoscopeParser
     {

@@ -6,7 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Llvm.NET.Native;
 
-// Interface+interal type matches file name
+// Interface+internal type matches file name
 #pragma warning disable SA1649
 
 namespace Llvm.NET.Types

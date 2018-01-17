@@ -70,8 +70,8 @@ namespace Llvm.NET.DebugInfo
     {
         /// <summary>Gets or sets the Debug information type for this </summary>
         /// <remarks>
-        /// Setting the debug type is only allowed when the deug type is null or <see cref="MDNode.IsTemporary"/>
-        /// is <see langword="true"/>. If the debug type node is a temporary seting the type will replace all uses
+        /// Setting the debug type is only allowed when the debug type is null or <see cref="MDNode.IsTemporary"/>
+        /// is <see langword="true"/>. If the debug type node is a temporary setting the type will replace all uses
         /// of the temporary type automatically, via <see cref="MDNode.ReplaceAllUsesWith(LlvmMetadata)"/>
         /// </remarks>
         /// <exception cref="InvalidOperationException">The type is not <see langword="null"/> or not a temporary</exception>
@@ -214,7 +214,7 @@ namespace Llvm.NET.DebugInfo
             PropertyContainer.AddExtendedPropertyValue( id, value );
         }
 
-        /// <summary>Converts a <see cref="DebugType{TNative, TDebug}"/> to <typeparamref name="TDebug"/> by accessin the <see cref="DIType"/> property</summary>
+        /// <summary>Converts a <see cref="DebugType{TNative, TDebug}"/> to <typeparamref name="TDebug"/> by accessing the <see cref="DIType"/> property</summary>
         /// <param name="self">The type to convert</param>
         [SuppressMessage( "Microsoft.Usage", "CA2225:OperatorOverloadsHaveNamedAlternates", Justification = "Available as a property, this is for convenience" )]
         public static implicit operator TDebug( DebugType<TNative, TDebug> self ) => self.ValidateNotNull(nameof(self)).DIType;

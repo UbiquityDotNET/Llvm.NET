@@ -55,7 +55,7 @@ namespace Llvm.NET.DebugInfo
         public DITemplateParameterArray TemplateParams => Operands.Count < 10 ? null : new DITemplateParameterArray( GetOperand<MDTuple>( 9 ) );
 
         /// <summary>Gets the exception types this <see cref="DISubProgram"/> can throw</summary>
-        // Does the list include exeptions thrown by the complete call graph? or only those explicitly thrown by this function?
+        // Does the list include exceptions thrown by the complete call graph? or only those explicitly thrown by this function?
         public DITypeArray ThrownTypes => Operands.Count < 11 ? null : new DITypeArray( GetOperand<MDTuple>( 10 ) );
 
         /// <summary>Determines if this instance describes a given <see cref="Function"/></summary>
