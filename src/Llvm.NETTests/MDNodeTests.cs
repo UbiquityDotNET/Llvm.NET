@@ -23,6 +23,24 @@ namespace Llvm.NET.Tests
         //    Assert.Inconclusive( );
         //}
         */
+        [TestMethod]
+        public void AppendingModuleFlagsTest( )
+        {
+            var targetMachine = TargetTests.GetTargetMachine( );
+            using( var ctx = new Context( ) )
+            using( var module = ctx.CreateBitcodeModule( "test.bc", SourceLanguage.CSharp, "test.cs", "unittests" ) )
+            {
+                module.AddModuleFlag( ModuleFlagBehavior.Append, "testMD", module.CreateMDNode( "testValue" ) );
+                Assert.AreEqual( 1, module.ModuleFlags.Count );
+                var flag = module.ModuleFlags[ "testMD" ];
+                Assert.IsNotNull( flag );
+                Assert.AreEqual( ModuleFlagBehavior.Append, flag.Behavior );
+                Assert.AreEqual( "testMD", flag.Name );
+                Assert.IsInstanceOfType( flag.Metadata, typeof( MDTuple ) );
+                var tuple = ( MDTuple )flag.Metadata;
+                Assert.AreEqual( "testValue", tuple.GetOperandString( 0 ) );
+            }
+        }
 
         [TestMethod]
         public void OperandsAreAccessibleTest()
