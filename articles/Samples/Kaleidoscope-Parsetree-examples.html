@@ -125,7 +125,7 @@
 <p><code>1 + 2 * 3 - 4 / 5 ^ 6;</code></p>
 <p><img src="parsetree-simpleexp-1.svg" alt="Parse Tree"></p>
 <div class="NOTE"><h5>Note</h5><p>The small circle in the upper left corner of the Expression nodes is the precedence value at
-the entry to the rule. ANTLR uses a precendence climbing algorithm so this number indicates
+the entry to the rule. ANTLR uses a precedence climbing algorithm so this number indicates
 the precedence for the expression in relation to others.</p>
 </div>
 <div class="NOTE"><h5>Note</h5><p>The parse tree for the expression has 5 children that are in evaluation order. That is,
@@ -177,7 +177,7 @@ def binary| 5 (LHS RHS)
 # Define = with slightly lower precedence than relationals.
 def binary== 9 (LHS RHS)
   !(LHS &lt; RHS | LHS &gt; RHS);
-</code></pre><p>The epression <code>2 == 3 | 5 &lt; 4 | !1;</code> generates the following parse tree</p>
+</code></pre><p>The expression <code>2 == 3 | 5 &lt; 4 | !1;</code> generates the following parse tree</p>
 <p><img src="parsetree-userops.svg" alt="Parse Tree"></p>
 </article>
           </div>
@@ -201,7 +201,7 @@ def binary== 9 (LHS RHS)
             <span class="pull-right">
               <a href="#top">Back to top</a>
             </span>
-            Copyright (C) 2017, Dot NET Foundation<br><strong>Build:</strong> 5.0.1-alpha--ci-BLD.431629480
+            Copyright (C) 2017, Dot NET Foundation<br><strong>Build:</strong> 5.0.1-alpha--ci-BLD.431956326
             
           </div>
         </div>

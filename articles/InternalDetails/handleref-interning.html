@@ -129,7 +129,7 @@ means that whenever an interop API retrieves an opaque pointer it can look up th
 provide that to the caller. Thus, reference equality &quot;Just works&quot;. If there was no instance then
 the interning system will create one. In order to create one it must know the concrete most
 derived type for the opaque pointer to construct the wrapper type. The LLVM-C API generally defines
-a reference handle type only for the tope most base class rather than a distinct handle for each
+a reference handle type only for the top most base class rather than a distinct handle for each
 derived type. Thus the mapping must know how to determine the correct derived type for the
 projected wrapper. Fortunately, LLVM uses a custom type tagging mechanism to optimize such cases
 internally (e.g. safe dynamic down casting by keeping a TypeKind value). While, the actual
@@ -164,7 +164,7 @@ is not implicitly managed by some container. </p>
             <span class="pull-right">
               <a href="#top">Back to top</a>
             </span>
-            Copyright (C) 2017, Dot NET Foundation<br><strong>Build:</strong> 5.0.1-alpha--ci-BLD.431629480
+            Copyright (C) 2017, Dot NET Foundation<br><strong>Build:</strong> 5.0.1-alpha--ci-BLD.431956326
             
           </div>
         </div>

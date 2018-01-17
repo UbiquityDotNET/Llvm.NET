@@ -124,7 +124,7 @@
 provided in the <a href="https://github.com/UbiquityDotNET/Llvm.NET/tree/master/Samples/CodeGenWithDebugInfo">source tree</a>.</p>
 <p>This sample generates LLVM IR equivalent to what Clang will generate for a sample C file. While it doesn&#39;t parse
 the C File it does show all the steps and techniques for using Llvm.NET to generate the LLVM IR with debug
-information adn ultimately the target machine code.</p>
+information and ultimately the target machine code.</p>
 <h2 id="example-c-code">Example C Code</h2>
 <p>The CodeGenWithDebugInfo sample will generate LLVM IR and machine code for the following sample &quot;C&quot; code. (This
 code file is provided in the source tree along with a script file to compile it for comparing output with Clang)</p>
@@ -154,7 +154,7 @@ void DoCopy( )
 {
     copy( bar, &amp;baz );
 }
-</code></pre><p>This sample supports targetting two different processor types x64 and ARM Cortex-M3</p>
+</code></pre><p>This sample supports targeting two different processor types x64 and ARM Cortex-M3</p>
 <h2 id="initializing-llvmnet">Initializing Llvm.NET</h2>
 <p>The underlying LLVM library requires initialization for it&#39;s internal data, furthermore Llvm.NET must load
 the actual underlying DLL specific to the current system architecture. Thus, the library as a whole requires
@@ -173,7 +173,7 @@ module and exit so it just applies a standard C# <code>using</code> scope to ens
 contains properties and methods to handle target specific support. Furthermore, an application may not need
 to use all of the possible target architectures so the application selects to register/initialize support for
 specific targets. This reduces startup time and resource commitments to only what is required by the application.
-In this sample that is handled in the contructor of the target dependent details. Most compiler type applications
+In this sample that is handled in the constructor of the target dependent details. Most compiler type applications
 would allow command line options for the CPU target variants and feature sets. For this sample those are just
 hard coded into the target details class to keep things simple and focused on the rest of the code generation.</p>
 <pre><code class="lang-csharp" name="Main">internal interface ITargetDependentDetails
@@ -212,7 +212,7 @@ string moduleName = $&quot;test_{TargetDetails.ShortName}.bc&quot;;
 a container for the LLVM IR. To create a module a <a class="xref" href="../../api/Llvm.NET.Context.html">Context</a> is
 required.</p>
 <div class="NOTE"><h5>Note</h5><p>The Context and BitcodeModule are Disposable types in Llvm.NET to manage some complex and
-hidden ownership transfers that can hapen with the different froms of JIT/Execution engines.
+hidden ownership transfers that can happen with the different forms of JIT/Execution engines.
 This may not always be true in future versions of the library, but for now they must be disposable.</p>
 </div>
 <div class="CAUTION"><h5>Caution</h5><p>A Context is, by design, <strong>NOT</strong> a thread safe type. It is designed to contain various interned
@@ -239,8 +239,8 @@ using( var module = context.CreateBitcodeModule( moduleName ) )
 </code></pre><h2 id="creating-the-dicompileunit">Creating the DICompileUnit</h2>
 <p>LLVM Debug information is all scoped to a top level <a class="xref" href="../../api/Llvm.NET.DebugInfo.DICompileUnit.html">DICompileUnit</a>.
 There is exactly one DICompileUnit for a BitcodeModule and all debug information metadata is ultimately
-a child of that unit. The sample creates the compliation unit just after the module is created and the
-target specific information is added to it. In this sample there is a direct 1:1 corelation between the
+a child of that unit. The sample creates the compilation unit just after the module is created and the
+target specific information is added to it. In this sample there is a direct 1:1 correlation between the
 compile unit and the source file so it creates a <a class="xref" href="../../api/Llvm.NET.DebugInfo.DIFile.html">DIFile</a> for the source
 at the same time.</p>
 <pre><code class="lang-csharp" name="Main">// create compile unit and file as the top level scope for everything
@@ -253,8 +253,8 @@ var cu = module.DIBuilder.CreateCompileUnit( SourceLanguage.C99
                                            );
 var diFile = module.DIBuilder.CreateFile( srcPath );
 </code></pre><h2 id="creating-basic-types-with-debug-information">Creating basic types with debug information</h2>
-<p>In LLVM types are fairly minimalistic and only contain the basic strctural information for generating
-the final machine code. Debug information, as meatadata in LLVM, provides all the source level debugging
+<p>In LLVM types are fairly minimalistic and only contain the basic structural information for generating
+the final machine code. Debug information, as metadata in LLVM, provides all the source level debugging
 information. In LLVM this requires creating and tracking both the native type and the Debug information
 metadata as independent object instances. In Llvm.NET this is handled by a unified debug and type information
 system. That is, in Llvm.NET a single class is used to represent types and it acts as a binder between the
@@ -360,9 +360,9 @@ AddModuleFlags( module );
 }
 </code></pre><p>Once the constant data is available an LLVM global is created for it with a name that matches the source name
 via <a class="xref" href="../../api/Llvm.NET.BitcodeModule.AddGlobal.html">AddGlobal</a>. To ensure the linker lays out the structure
-correctly the code uses the layout information for the module to get the ABI required alignement for 
+correctly the code uses the layout information for the module to get the ABI required alignment for 
 the global and sets the <a class="xref" href="../../api/Llvm.NET.Values.GlobalObject.Alignment.html#Llvm_NET_Values_GlobalObject_Alignment">Alignment</a> property for the global.
-Finally the debug information for the gloabl is created as a <a class="xref" href="../../api/Llvm.NET.DebugInfo.DIGlobalVariableExpression.html">DIGlobalVariableExpression</a>
+Finally the debug information for the global is created as a <a class="xref" href="../../api/Llvm.NET.DebugInfo.DIGlobalVariableExpression.html">DIGlobalVariableExpression</a>
 using <a class="xref" href="../../api/Llvm.NET.DebugInfo.DebugInfoBuilder.CreateGlobalVariableExpression.html">CreateGlobalVariableExpression</a>
 finally the added to the variable to complete the creation.</p>
 <p>For the <code>baz</code> instance the process is almost identical. The major difference is that the value of the
@@ -389,11 +389,11 @@ baz.AddDebugInfo( module.DIBuilder.CreateGlobalVariableExpression( cu, &quot;baz
 // comparing against clang generated files easier
 AddModuleFlags( module );
 </code></pre><p>LLVM modules may contain additional module flags as metadata that describe how the module is generated
-or how the code generation/linker should treat the code. In this sample the dwarf version and debug meatadata
+or how the code generation/linker should treat the code. In this sample the dwarf version and debug metadata
 versions are set along with a VersionIdentString that identifies the application that generated the module.
 Additionally, any target specific metadata is added to the module. The ordering of these is generally not
 relevant, however it is very specific in the sample to help ensure the generated bitcode is as close to the
-clang version as possible making it possible to run llvm-dis to gerate the textual IR files and compare them.</p>
+clang version as possible making it possible to run llvm-dis to generate the textual IR files and compare them.</p>
 <pre><code class="lang-csharp" name="Main">private static void AddModuleFlags( BitcodeModule module )
 {
     module.AddModuleFlag( ModuleFlagBehavior.Warning, BitcodeModule.DwarfVersionValue, 4 );
@@ -416,7 +416,7 @@ the attributes and linkage etc...</p>
 <p>DeclareCopyFunc() is a bit special in that it handles some target specific support in a generalized way. In
 particular the calling convention for the struct to use the <code>byval</code> form to pass the structure as a pointer
 but that the callee gets a copy of the original. This, is used for some large structures and allows the target
-machine generation room to use alternate means of transfering the data. (Stack or possibly otherwise unused
+machine generation room to use alternate means of transferring the data. (Stack or possibly otherwise unused
 registers). For the two processors this sample supports Clang only uses this for the Cortex-M3 so the code
 calls the TargetDetails.AddABIAttributesForByValueStructure) to add the appropriate attributes for the target
 as needed. </p>
@@ -480,19 +480,19 @@ private static Function DeclareCopyFunc( BitcodeModule module
     return copyFunc;
 }
 </code></pre><h2 id="generating-function-bodies">Generating function bodies</h2>
-<p>This is where things really get intersting as this is where the actual code is generated for the functions. Up
-to this point evertyhing has created metadat or prototypes and signatures. The code generation generally follows
-a pattern that starts with creation of an entry block to initialize the paramaters and then additional blocks for
+<p>This is where things really get interesting as this is where the actual code is generated for the functions. Up
+to this point everything has created metadata or prototypes and signatures. The code generation generally follows
+a pattern that starts with creation of an entry block to initialize the parameters and then additional blocks for
 the actual code. While LLVM IR uses an SSA form with virtual registers, code generation, usually doesn&#39;t need to
 worry about that so long as it follows some basic rules, in particular, all of the locals are allocated a slot
-on the stack via alloca along with any paremeters. The parameters are initialized from the signature values. All
+on the stack via alloca along with any parameters. The parameters are initialized from the signature values. All
 of which is done in the entry block. LLVM has a pass (mem2reg) that will lower this into SSA form with virtual
 registers so that each generating application doesn&#39;t have to worry about conversion into SSA form.</p>
 <p>After the parameters are handled in the entry block, the rest of the function is generated based on the source
 language or application defined behavior. In this case the sample generates IR equivalent to the functions defined
 in the sample test.c file. There are a few points to make about the function generation in the sample.</p>
 <h3 id="generating-argument-and-local-variables">Generating Argument and Local variables</h3>
-<p>As discussed the arguments and locals are allocated in the entry block however that only makes them useable in
+<p>As discussed the arguments and locals are allocated in the entry block however that only makes them usable in
 the function and ready for the mem2reg pass. In particular there is no debug information attached to the variables.
 To provide debug information LLVM provides an intrinsic function that is used to declare the debug information for
 a variable. In Llvm.NET this is emitted using the <a class="xref" href="../../api/Llvm.NET.DebugInfo.DebugInfoBuilder.InsertDeclare.html">InsertDeclare</a>
@@ -500,10 +500,10 @@ method.</p>
 <h3 id="calling-llvm-intrinsics">Calling LLVM Intrinsics</h3>
 <p>The generated code needs to copy some data, rather than directly doing a copy in a loop, the code uses the LLVM
 intrinsic memcopy function. This function is lowered to an optimized copy for the target so tat applications need
-not worry about building optimal versions of IR for this common functionality. Furthermore, the LLVM instrinsic
+not worry about building optimal versions of IR for this common functionality. Furthermore, the LLVM intrinsic
 supports a variety of signatures for various data types all of which are hidden in the Llvm.NET method. Rather than
 require callers to create a declaration of the correct signature the Llvm.NET wrapper automatically figures out the
-correct signaure from the parameters provided. </p>
+correct signature from the parameters provided. </p>
 <h2 id="final-llvm-ir">Final LLVM IR</h2>
 <pre><code class="lang-llvm">; ModuleID = &#39;test_M3.bc&#39;
 source_filename = &quot;test.c&quot;
@@ -613,7 +613,7 @@ attributes #2 = { argmemonly nounwind }
             <span class="pull-right">
               <a href="#top">Back to top</a>
             </span>
-            Copyright (C) 2017, Dot NET Foundation<br><strong>Build:</strong> 5.0.1-alpha--ci-BLD.431629480
+            Copyright (C) 2017, Dot NET Foundation<br><strong>Build:</strong> 5.0.1-alpha--ci-BLD.431956326
             
           </div>
         </div>
