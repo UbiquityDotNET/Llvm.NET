@@ -1,12 +1,12 @@
 ﻿## LLVM-C Handle wrappers
 
-Handles for LLVM are just opaque pointers. THey geenrally come in one of three forms.
+Handles for LLVM are just opaque pointers. THey generally come in one of three forms.
 
   1. Context owned  
-     Where there is always a well known owner that ultimately is responsibile for
+     Where there is always a well known owner that ultimately is responsible for
      disposing/releasing the resource.
   2. Global resources  
-     Where there is no parent child ownership relationship and callers must manualy release the resource
+     Where there is no parent child ownership relationship and callers must manually release the resource
   3. An unowned alias to a global resource  
      This occurs when a child of a global resource contains a reference to the parent. In such
      a case the handle should be considered like an alias and not disposed.
@@ -54,7 +54,7 @@ namespace Llvm.NET.Native
 ```
 
 ### Global Handles
-Global handles require the caller to explicity release the resources.
+Global handles require the caller to explicitly release the resources.
 In Llvm.NET these are managed with the .NET SafeHandles types through
 an Llvm.NET specific derived type LlvmObject. Thus, all resources in
 LLVM requiring explicit release are handled consistently using the

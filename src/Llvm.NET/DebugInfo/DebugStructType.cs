@@ -29,8 +29,8 @@ namespace Llvm.NET.DebugInfo
         /// <param name="debugElements">Description of all the members of this structure</param>
         /// <param name="derivedFrom">Base type, if any for this type</param>
         /// <param name="packed">Indicates if this type is packed or not</param>
-        /// <param name="bitSize">Total bit sice for this type or <see langword="null"/> to use default for target</param>
-        /// <param name="bitAlignment">Alignment of the type in bits, 0 indicates default for taret</param>
+        /// <param name="bitSize">Total bit size for this type or <see langword="null"/> to use default for target</param>
+        /// <param name="bitAlignment">Alignment of the type in bits, 0 indicates default for target</param>
         public DebugStructType( BitcodeModule module
                               , string nativeName
                               , DIScope scope
@@ -84,7 +84,7 @@ namespace Llvm.NET.DebugInfo
         /// <param name="debugFlags">debug flags for this type</param>
         /// <param name="elements">Debug type of all the members of this structure</param>
         /// <param name="derivedFrom">Base type, if any for this type</param>
-        /// <param name="bitAlignment">Alignment of the type in bits, 0 indicates default for taret</param>
+        /// <param name="bitAlignment">Alignment of the type in bits, 0 indicates default for target</param>
         [SuppressMessage( "Microsoft.Design", "CA1062:Validate arguments of public methods", MessageId = "1", Justification = "ValidateNotNull" )]
         public DebugStructType( IStructType llvmType
                               , BitcodeModule module
@@ -224,8 +224,8 @@ namespace Llvm.NET.DebugInfo
         /// <param name="nativeElements">LLVM type of each element</param>
         /// <param name="debugElements">Descriptors for each element in the type</param>
         /// <param name="derivedFrom">Base type, if any for this type</param>
-        /// <param name="bitSize">Total bit sice for this type or <see langword="null"/> to use default for target</param>
-        /// <param name="bitAlignment">Alignment of the type in bits, 0 indicates default for taret</param>
+        /// <param name="bitSize">Total bit size for this type or <see langword="null"/> to use default for target</param>
+        /// <param name="bitAlignment">Alignment of the type in bits, 0 indicates default for target</param>
         public void SetBody( bool packed
                            , BitcodeModule module
                            , DIScope scope

@@ -6,7 +6,7 @@ using System;
 
 namespace Llvm.NET
 {
-    /// <summary>Wrapper class to provide Write-Once semenatics to a value</summary>
+    /// <summary>Wrapper class to provide Write-Once semantics to a value</summary>
     /// <typeparam name="T">TYpe of value to store</typeparam>
     /// <remarks>
     /// This provides write once semantics for fields that may require initialization

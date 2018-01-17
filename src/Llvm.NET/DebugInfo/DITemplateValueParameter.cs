@@ -11,7 +11,7 @@ namespace Llvm.NET.DebugInfo
     public class DITemplateValueParameter
         : DITemplateParameter
     {
-        /// <summary>Gets the value of the paramter as Metadata</summary>
+        /// <summary>Gets the value of the parameter as Metadata</summary>
         /// <typeparam name="T">Metadata type of the value to get</typeparam>
         /// <returns>Value or <see langword="null"/> if the value is not castable to <typeparamref name="T"/></returns>
         public T GetValue<T>( )

@@ -34,7 +34,7 @@ namespace Llvm.NET.Values
         /// <remarks>
         /// <note type="note">
         /// LLVM will add a numeric suffix to the name set if a
-        /// valaue with the name already exists. Thus, the name
+        /// value with the name already exists. Thus, the name
         /// read from this property may not match what is set.
         /// </note>
         /// </remarks>

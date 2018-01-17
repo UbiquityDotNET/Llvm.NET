@@ -13,7 +13,7 @@ namespace Llvm.NET.DebugInfo
     {
         /* TODO: non-operand properties
         uint Line { get; }
-        uint Coulmn { get; }
+        uint Column { get; }
         */
 
         internal DILexicalBlock( LLVMMetadataRef handle )

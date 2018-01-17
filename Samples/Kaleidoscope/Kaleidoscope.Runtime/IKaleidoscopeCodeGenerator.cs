@@ -47,7 +47,7 @@ namespace Kaleidoscope.Runtime
         /// <returns>Generated result</returns>
         /// <remarks>
         /// The behavior of this method depends on the implementation. The common case is to
-        /// actally generate an LLVM module for the JIT engine. Normally, any anonymous expressions
+        /// actually generate an LLVM module for the JIT engine. Normally, any anonymous expressions
         /// (<see cref="Kaleidoscope.Grammar.KaleidoscopeParser.TopLevelExpressionContext"/>) are
         /// JIT compiled and executed. The result of executing the expression is returned.
         /// For Function definitions or declarations, the <see cref="Llvm.NET.Values.Function"/> is returned.

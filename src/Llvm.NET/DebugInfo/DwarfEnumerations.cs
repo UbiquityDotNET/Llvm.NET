@@ -179,7 +179,7 @@ namespace Llvm.NET.DebugInfo
     /// The three accessibility flags are mutually exclusive and rolled together
     /// in the first two bits.
     /// </remarks>
-    [SuppressMessage( "Microsoft.Naming", "CA1726:UsePreferredTerms", MessageId = "Flags", Justification = "Matches the undelying wrapped API" )]
+    [SuppressMessage( "Microsoft.Naming", "CA1726:UsePreferredTerms", MessageId = "Flags", Justification = "Matches the underlying wrapped API" )]
     [Flags]
     public enum DebugInfoFlags
     {
@@ -214,7 +214,7 @@ namespace Llvm.NET.DebugInfo
     }
 
 #pragma warning disable SA1300 // Element must begin with upper-case letter
-    [SuppressMessage( "Microsoft.Design", "CA1028:EnumStorageShouldBeInt32", Justification = "Mathces underlying interop type" )]
+    [SuppressMessage( "Microsoft.Design", "CA1028:EnumStorageShouldBeInt32", Justification = "Matches underlying interop type" )]
     public enum ExpressionOp : long
     {
         Invalid = 0,

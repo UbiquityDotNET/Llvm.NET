@@ -52,7 +52,7 @@ namespace Kaleidoscope.Runtime
         /// it by using the <see cref="TextReaderExtensions.ReadStatements(System.IO.TextReader)"/>
         /// extension to provide an enumeration of lines that may be partial statements read in.
         /// This is consistent with the behavior of the official LLVM C++ version and allows
-        /// for full use of ANTLR4 instead of wrting a parser by hand.
+        /// for full use of ANTLR4 instead of writing a parser by hand.
         /// </remarks>
         public void Run( )
         {

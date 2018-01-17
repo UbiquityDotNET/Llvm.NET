@@ -3,16 +3,16 @@
 The native interop layer is the lowest layer of LLVM.NET and is generally focused on raw
 P/Invoke declarations, enums, structures and handle types for interop with the LibLLVM library.
 This is deliberately all marked as internal to keep developers from needing to deal with the
-idiosyncracies of the API in the context of a managed runtime.
+idiosyncrasies of the API in the context of a managed runtime.
 
 Originally this was all one "LLVM" static class with all P/Invoke declarations in a single file
 generated from the LLVM headers. This was helpful to get over the tedious stage of mapping all
 the P/Invoke calls. However, the generated signatures were of low quality. They were functional
-for many cases but string marshalling was generally wrong for any strings provided by LLVM. (see
-below for more information on string marshalling). Thus, they were updated manually and the
+for many cases but string marshaling was generally wrong for any strings provided by LLVM. (see
+below for more information on string marshaling). Thus, they were updated manually and the
 "generated" moniker was misleading at best. In addition many new/extended APIs were added to
 extend the LLVM-C APIs for more full support in language projections. This, created two such
-"generated" files with a plethora of P/Invoke delcarations, which makes maintanance more difficult.
+"generated" files with a plethora of P/Invoke declarations, which makes maintenance more difficult.
 Thus, the plan is to move the P/Invoke declarations to the classes that use them and eliminate
 the large "generated" files. This, is an ongoing process but, when finished will help keep things
 better organized and more flexible.
@@ -29,8 +29,8 @@ SAFESTRING that the CLR has built-in support for. Occasionally strings returned 
 pointers to const string data, which would ordinarily require unsafe constructs to work with
 in C# or other .NET languages. Furthermore, the LLVM libraries that work with strings don't
 take platform line endings into account (it just uses \n always). To manage these variations
-Llvm.NET uses custom marshalling for strings so that cleanup of allocations is done automatically
-as is converion to proper line endings - all in a central place.
+Llvm.NET uses custom marshaling for strings so that cleanup of allocations is done automatically
+as is conversion to proper line endings - all in a central place.
 
 ## Enums
 The enums in the native layer match the underlying LLVM form in both value and naming. These,

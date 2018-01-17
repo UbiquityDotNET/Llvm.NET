@@ -12,7 +12,7 @@ namespace Llvm.NET.Instructions
     public class Cmp
         : Instruction
     {
-        /// <summary>Gets teh predicate for the comparison</summary>
+        /// <summary>Gets the predicate for the comparison</summary>
         public Predicate Predicate
         {
             get

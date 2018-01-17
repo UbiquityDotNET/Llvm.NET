@@ -6,7 +6,7 @@ using Llvm.NET.Native;
 
 namespace Llvm.NET.DebugInfo
 {
-    /// <summary>Debug information forn an imported entity</summary>
+    /// <summary>Debug information from an imported entity</summary>
     /// <seealso href="xref:llvm_langref#diimportedentity">LLVM DIImportedEntity</seealso>
     public class DIImportedEntity
         : DINode

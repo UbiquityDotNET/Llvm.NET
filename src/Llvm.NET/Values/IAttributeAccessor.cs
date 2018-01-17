@@ -50,13 +50,13 @@ namespace Llvm.NET.Values
         IEnumerable<AttributeValue> GetAttributesAtIndex( FunctionAttributeIndex index );
 
         /// <summary>Gets a specific attribute at a given index</summary>
-        /// <param name="index">Index to get the the attribute from</param>
+        /// <param name="index">Index to get the attribute from</param>
         /// <param name="kind"><see cref="AttributeKind"/> to get</param>
         /// <returns>The specified attribute or the default <see cref="AttributeValue"/></returns>
         AttributeValue GetAttributeAtIndex( FunctionAttributeIndex index, AttributeKind kind );
 
         /// <summary>Gets a named attribute at a given index</summary>
-        /// <param name="index">Index to get the the attribute from</param>
+        /// <param name="index">Index to get the attribute from</param>
         /// <param name="name">name of the attribute to get</param>
         /// <returns>The specified attribute or the default <see cref="AttributeValue"/></returns>
         AttributeValue GetAttributeAtIndex( FunctionAttributeIndex index, string name );

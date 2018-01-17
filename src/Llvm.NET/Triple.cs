@@ -123,7 +123,7 @@ namespace Llvm.NET
             /// <seealso href="http://tce.cs.tut.fi"/>
             TCEle = LLVMTripleArchType.tcele,
 
-            /// <summary>Thum (little-endian)</summary>
+            /// <summary>Thumb (little-endian)</summary>
             Thumb = LLVMTripleArchType.thumb,
 
             /// <summary>Thumb (big-endian)</summary>
@@ -180,7 +180,7 @@ namespace Llvm.NET
             /// <summary>WebAssembly with 32-bit pointers</summary>
             Wasm32 = LLVMTripleArchType.wasm32,
 
-            /// <summary>WebAssembly eith 64-bit pointers</summary>
+            /// <summary>WebAssembly with 64-bit pointers</summary>
             Wasm64 = LLVMTripleArchType.wasm64,
 
             /// <summary>Renderscript 32-bit</summary>

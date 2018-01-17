@@ -6,7 +6,7 @@ using Llvm.NET.Native;
 
 namespace Llvm.NET.DebugInfo
 {
-    /// <summary>Base class for macro related nodes in the debug hieararchy</summary>
+    /// <summary>Base class for macro related nodes in the debug hierarchy</summary>
     public class DIMacroNode
         : MDNode
     {

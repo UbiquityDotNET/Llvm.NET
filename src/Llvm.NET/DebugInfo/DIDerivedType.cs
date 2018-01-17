@@ -7,7 +7,7 @@ using Llvm.NET.Values;
 
 namespace Llvm.NET.DebugInfo
 {
-    /// <summary>Dervied type</summary>
+    /// <summary>Derived type</summary>
     /// <remarks>
     /// Debug information for a type derived from an existing type
     /// </remarks>

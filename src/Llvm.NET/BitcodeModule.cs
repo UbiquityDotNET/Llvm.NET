@@ -61,13 +61,13 @@ namespace Llvm.NET
     /// <summary>LLVM Bit-code module</summary>
     /// <remarks>
     /// A module is the basic unit for containing code in LLVM. Modules are an in memory
-    /// representation of the LLVM Intermediat Representation (IR) bit-code. Each
+    /// representation of the LLVM Intermediate Representation (IR) bit-code. Each
     /// </remarks>
     public sealed class BitcodeModule
         : IDisposable
         , IExtensiblePropertyContainer
     {
-        /// <summary>Gets a value indicating whether the module is diposed or not</summary>
+        /// <summary>Gets a value indicating whether the module is disposed or not</summary>
         public bool IsDisposed => ModuleHandle == default;
 
         /// <summary>Gets or sets the name of the source file generating this module</summary>
@@ -953,7 +953,7 @@ namespace Llvm.NET
         // deal with C++ references. While that is manageable as
         // a getter, it is problematic as a setter since there isn't
         // any sort of ownership transfer and the ownership is a bit
-        // mirky, especally with a managed projection. Thus, the LLVM-C
+        // mirky, especially with a managed projection. Thus, the LLVM-C
         // API sticks to the string form of the layout.
         private DataLayout CachedLayout;
 

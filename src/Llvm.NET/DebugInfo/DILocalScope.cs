@@ -11,7 +11,7 @@ namespace Llvm.NET.DebugInfo
     public class DILocalScope
         : DIScope
     {
-        /// <summary>Gets the parent scop as a <see cref="DILocalScope"/></summary>
+        /// <summary>Gets the parent scope as a <see cref="DILocalScope"/></summary>
         [property: CanBeNull]
         public DILocalScope LocalScope => Scope as DILocalScope;
 

@@ -103,7 +103,7 @@ namespace Llvm.NET.Values
         X86ThisCall = 70,
 
         /// <summary>Call to a PTX kernel</summary>
-        /// <remarks>Passes all arguements in parameter space</remarks>
+        /// <remarks>Passes all arguments in parameter space</remarks>
         PtxKernel = 71,
 
         /// <summary>Call to a PTX device function</summary>

@@ -6,7 +6,7 @@ using Llvm.NET.Native;
 
 namespace Llvm.NET.Instructions
 {
-    /// <summary>Instruction to load an argument of a specified type from a ariadic argument list</summary>
+    /// <summary>Instruction to load an argument of a specified type from a variadic argument list</summary>
     public class VaArg
         : UnaryInstruction
     {

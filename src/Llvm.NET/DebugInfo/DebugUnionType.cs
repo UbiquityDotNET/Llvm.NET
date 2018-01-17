@@ -19,12 +19,12 @@ namespace Llvm.NET.DebugInfo
         , INamedStructuralType
     {
         /// <summary>Initializes a new instance of the <see cref="DebugUnionType"/> class.</summary>
-        /// <param name="llvmType">Underlying native type this debug type descripbes</param>
+        /// <param name="llvmType">Underlying native type this debug type describes</param>
         /// <param name="module">Module to contain the debug metadata for this type</param>
         /// <param name="scope">Scope containing this type</param>
         /// <param name="name">Debug/source name of the type</param>
         /// <param name="file">Source file containing this type</param>
-        /// <param name="line">Line number ofr this type</param>
+        /// <param name="line">Line number for this type</param>
         /// <param name="debugFlags">Debug flags for this type</param>
         /// <param name="elements">Descriptors for the members of the type</param>
         public DebugUnionType( IStructType llvmType
@@ -64,7 +64,7 @@ namespace Llvm.NET.DebugInfo
         /// <param name="scope">Scope containing this type</param>
         /// <param name="name">Debug/source name of the type</param>
         /// <param name="file">Source file containing this type</param>
-        /// <param name="line">Line number ofr this type</param>
+        /// <param name="line">Line number for this type</param>
         public DebugUnionType( BitcodeModule module
                              , string nativeName
                              , DIScope scope
@@ -104,7 +104,7 @@ namespace Llvm.NET.DebugInfo
         /// <param name="file">File for the type</param>
         /// <param name="line">line number for the type</param>
         /// <param name="debugFlags">Flags for the type</param>
-        /// <param name="debugElements">Dexcriptors for each element in the type</param>
+        /// <param name="debugElements">Descriptors for each element in the type</param>
         public void SetBody( BitcodeModule module
                            , DIScope scope
                            , DIFile file

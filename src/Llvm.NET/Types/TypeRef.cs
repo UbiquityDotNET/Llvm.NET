@@ -10,7 +10,7 @@ using Llvm.NET.Values;
 
 using static Llvm.NET.Native.NativeMethods;
 
-// Interface+interal type matches file name
+// Interface+internal type matches file name
 #pragma warning disable SA1649
 
 namespace Llvm.NET.Types

@@ -32,7 +32,7 @@ means that whenever an interop API retrieves an opaque pointer it can look up th
 provide that to the caller. Thus, reference equality "Just works". If there was no instance then
 the interning system will create one. In order to create one it must know the concrete most
 derived type for the opaque pointer to construct the wrapper type. The LLVM-C API generally defines
-a reference handle type only for the tope most base class rather than a distinct handle for each
+a reference handle type only for the top most base class rather than a distinct handle for each
 derived type. Thus the mapping must know how to determine the correct derived type for the
 projected wrapper. Fortunately, LLVM uses a custom type tagging mechanism to optimize such cases
 internally (e.g. safe dynamic down casting by keeping a TypeKind value). While, the actual

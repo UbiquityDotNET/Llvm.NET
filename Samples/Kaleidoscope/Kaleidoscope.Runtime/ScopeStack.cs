@@ -16,7 +16,7 @@ namespace Kaleidoscope.Runtime
     /// In essence, this is a stack of Dictionaries that is intended for use in code generation.
     /// Most languages have some sort of notion of symbol scopes and name lookups. This implements
     /// the common case of nested scopes where a new 'local scope may override some of the symbols
-    /// in a parent scope. Any values in any parent not overriden by the child are visible to the
+    /// in a parent scope. Any values in any parent not overridden by the child are visible to the
     /// child scope.
     /// </remarks>
     public class ScopeStack<T>
@@ -50,7 +50,7 @@ namespace Kaleidoscope.Runtime
         /// <returns>Value for the symbol</returns>
         /// <remarks>
         /// Getting a symbol value searches all scopes, starting with the current scope.
-        /// Setting a symbol value will only set the value in the current sceop. (e.g.
+        /// Setting a symbol value will only set the value in the current scope. (e.g.
         /// if the value does not exist in the current scope a new entry is made for it
         /// in the current scope, even if some outer scope has the same name.
         /// </remarks>

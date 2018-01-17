@@ -6,7 +6,7 @@ using Llvm.NET.Native;
 
 namespace Llvm.NET.Instructions
 {
-    /// <summary>Base class for a binry operator</summary>
+    /// <summary>Base class for a binary operator</summary>
     public class BinaryOperator
         : Instruction
     {

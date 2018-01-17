@@ -18,7 +18,7 @@ namespace Kaleidoscope.Runtime
         /// <para>This lazy pulls the lines from the reader and, depending on the source the
         /// reader represents it may be an infinite stream. Callers, must not assume the
         /// sequence has a natural end without some knowledge of the source. If the source
-        /// does have an end then the enumration will complete when that end is reached.
+        /// does have an end then the enumeration will complete when that end is reached.
         /// </para>
         /// <para>This is useful in REPL style interactive parsing to pull lines of text from
         /// the console. In such a case the number of lines is infinite but the REPL loop that

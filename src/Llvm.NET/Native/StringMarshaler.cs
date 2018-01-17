@@ -9,7 +9,7 @@ using System.Text.RegularExpressions;
 
 namespace Llvm.NET.Native
 {
-    // Performs string marshalling for various forms of strings used in LLVM interop
+    // Performs string marshaling for various forms of strings used in LLVM interop
     // use with:
     //   // const char* owned by native LLVM, and never disposed by managed callers (just copy to managed string)
     //   [MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef=typeof(StringMarshaler))]

@@ -752,7 +752,7 @@ namespace Llvm.NET
         /// </remarks>
         public uint GetMDKindId( string name ) => LLVMGetMDKindIDInContext( ContextHandle, name, ( uint )name.Length );
 
-        /// <summary>Gets or sets a value indicating whether the context keeps a map for uniquing debug info identifiers across the context</summary>
+        /// <summary>Gets or sets a value indicating whether the context keeps a map for uniqueing debug info identifiers across the context</summary>
         public bool OdrUniqueDebugTypes
         {
             get => LLVMContextGetIsODRUniquingDebugTypes( ContextHandle );

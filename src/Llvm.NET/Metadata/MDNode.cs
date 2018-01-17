@@ -34,7 +34,7 @@ namespace Llvm.NET
         /// <summary>Gets a value indicating whether this node was deleted</summary>
         public bool IsDeleted => MetadataHandle == default;
 
-        /// <summary>Gets a value indicating whether this node is a temprorary</summary>
+        /// <summary>Gets a value indicating whether this node is a temporary</summary>
         public bool IsTemporary => LLVMIsTemporary( MetadataHandle );
 
         /// <summary>Gets a value indicating whether this node is resolved</summary>
@@ -91,7 +91,7 @@ namespace Llvm.NET
         /// <summary>Gets an operand by index as a specific type</summary>
         /// <typeparam name="T">Type of the operand</typeparam>
         /// <param name="index">Index of the operand</param>
-        /// <returns>Operand or <see langword="null"/> if the operand isn't casable to <typeparamref name="T"/></returns>
+        /// <returns>Operand or <see langword="null"/> if the operand isn't castable to <typeparamref name="T"/></returns>
         public T GetOperand<T>( int index )
             where T : LlvmMetadata
         {
@@ -111,7 +111,7 @@ namespace Llvm.NET
 
         public void ReplaceOperandWith(unsigned i, LlvmMetadata other) {...}
         public static MDNode Concat(MDNode a, MDNode b) {...}
-        public static MDNode Interesect(MDNode a, MDNode b) {...}
+        public static MDNode Intersect(MDNode a, MDNode b) {...}
         public static MDNode GetMostGenericTBAA(MDNode a, MDNode b) {...}
         public static MDNode GetMostGenericFPMath(MDNode a, MDNode b) {...}
         public static MDNode GetMostGenericRange(MDNode a, MDNode b) {...}

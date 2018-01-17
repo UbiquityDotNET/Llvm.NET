@@ -22,7 +22,7 @@ namespace Llvm.NET.Values
         /// <summary>Add a block to the underlying function</summary>
         /// <param name="item"><see cref="BasicBlock"/> to add to the function</param>
         /// <remarks>
-        /// The block is appended to the end of the list of blocks owend by the function
+        /// The block is appended to the end of the list of blocks owned by the function
         /// </remarks>
         public void Add( BasicBlock item )
         {

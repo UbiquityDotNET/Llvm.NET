@@ -94,7 +94,7 @@ namespace Llvm.NET.JIT
                 throw new ArgumentException( "Unknown handle value" );
             }
 
-            // Current LLVM-C API is a bit brain dead on this one. The return is hardcoded to 0
+            // Current LLVM-C API is a bit brain dead on this one. The return is hard-coded to 0
             // and the out error message is never used. Furthermore, the return from the C++
             // ExecutionEngine::removeModule() is ultimately ignored.
             if( LLVMRemoveModule( EngineHandle, module, out LLVMModuleRef baseModule, out string errMsg ).Failed )

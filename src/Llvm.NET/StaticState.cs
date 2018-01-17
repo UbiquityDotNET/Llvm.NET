@@ -71,8 +71,8 @@ namespace Llvm.NET
         /// <param name="args">args to parse</param>
         /// <param name="overview">overview of the application for help/diagnostics</param>
         /// <remarks>
-        /// Use fo this method is discouraged as calling applications should control
-        /// options directly without reliance on particulars of the LLVM arument handling
+        /// Use for this method is discouraged as calling applications should control
+        /// options directly without reliance on particulars of the LLVM argument handling
         /// </remarks>
         public static void ParseCommandLineOptions( string[ ] args, string overview )
         {

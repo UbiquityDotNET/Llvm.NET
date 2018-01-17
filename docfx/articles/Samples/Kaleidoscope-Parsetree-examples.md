@@ -10,7 +10,7 @@
 
 >[!NOTE]
 >The small circle in the upper left corner of the Expression nodes is the precedence value at
->the entry to the rule. ANTLR uses a precendence climbing algorithm so this number indicates
+>the entry to the rule. ANTLR uses a precedence climbing algorithm so this number indicates
 >the precedence for the expression in relation to others.
 
 >[!NOTE]
@@ -77,6 +77,6 @@ def binary== 9 (LHS RHS)
   !(LHS < RHS | LHS > RHS);
 ```
 
-The epression `2 == 3 | 5 < 4 | !1;` generates the following parse tree
+The expression `2 == 3 | 5 < 4 | !1;` generates the following parse tree
 
 ![Parse Tree](parsetree-userops.svg)

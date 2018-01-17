@@ -10,7 +10,7 @@ namespace Llvm.NET.Values
     public class GlobalIndirectSymbol
         : GlobalValue
     {
-        /// <summary>Gets or sets the symbol this inderctly references</summary>
+        /// <summary>Gets or sets the symbol this indirectly references</summary>
         public Constant IndirectSymbol
         {
             get => GetOperand<Constant>( 0 );
