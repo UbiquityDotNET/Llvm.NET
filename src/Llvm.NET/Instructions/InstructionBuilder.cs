@@ -1278,7 +1278,7 @@ namespace Llvm.NET.Instructions
         public CallInstruction Trap( )
         {
             var module = GetModuleOrThrow( );
-            var func = module.GetIntrinsicDeclaration( "llvm.debugtrap" );
+            var func = module.GetIntrinsicDeclaration( "llvm.trap" );
 
             return Call( func );
         }
