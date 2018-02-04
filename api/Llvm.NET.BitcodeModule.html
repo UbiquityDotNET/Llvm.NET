@@ -159,6 +159,9 @@
                                   <a href="Llvm.NET.BitcodeModule.GetFunction.html" title="GetFunction" class="">GetFunction</a>
                                 </li>
                                 <li class="">
+                                  <a href="Llvm.NET.BitcodeModule.GetIntrinsicDeclaration.html" title="GetIntrinsicDeclaration" class="">GetIntrinsicDeclaration</a>
+                                </li>
+                                <li class="">
                                   <a href="Llvm.NET.BitcodeModule.GetNamedGlobal.html" title="GetNamedGlobal" class="">GetNamedGlobal</a>
                                 </li>
                                 <li class="">
@@ -1986,6 +1989,9 @@
                                   <a href="Llvm.NET.Instructions.InstructionBuilder.Add.html" title="Add" class="">Add</a>
                                 </li>
                                 <li class="">
+                                  <a href="Llvm.NET.Instructions.InstructionBuilder.AddWithOverflow.html" title="AddWithOverflow" class="">AddWithOverflow</a>
+                                </li>
+                                <li class="">
                                   <a href="Llvm.NET.Instructions.InstructionBuilder.Alloca.html" title="Alloca" class="">Alloca</a>
                                 </li>
                                 <li class="">
@@ -2136,6 +2142,9 @@
                                   <a href="Llvm.NET.Instructions.InstructionBuilder.Mul.html" title="Mul" class="">Mul</a>
                                 </li>
                                 <li class="">
+                                  <a href="Llvm.NET.Instructions.InstructionBuilder.MulWithOverflow.html" title="MulWithOverflow" class="">MulWithOverflow</a>
+                                </li>
+                                <li class="">
                                   <a href="Llvm.NET.Instructions.InstructionBuilder.Neg.html" title="Neg" class="">Neg</a>
                                 </li>
                                 <li class="">
@@ -2193,7 +2202,13 @@
                                   <a href="Llvm.NET.Instructions.InstructionBuilder.Sub.html" title="Sub" class="">Sub</a>
                                 </li>
                                 <li class="">
+                                  <a href="Llvm.NET.Instructions.InstructionBuilder.SubWithOverflow.html" title="SubWithOverflow" class="">SubWithOverflow</a>
+                                </li>
+                                <li class="">
                                   <a href="Llvm.NET.Instructions.InstructionBuilder.Switch.html" title="Switch" class="">Switch</a>
+                                </li>
+                                <li class="">
+                                  <a href="Llvm.NET.Instructions.InstructionBuilder.Trap.html" title="Trap" class="">Trap</a>
                                 </li>
                                 <li class="">
                                   <a href="Llvm.NET.Instructions.InstructionBuilder.Trunc.html" title="Trunc" class="">Trunc</a>
@@ -2242,8 +2257,14 @@
                             <a href="Llvm.NET.Instructions.IntPredicate.html" title="IntPredicate" class="">IntPredicate</a>
                           </li>
                           <li class="">
+                            <span class="expand-stub"></span>
                             <a href="Llvm.NET.Instructions.Intrinsic.html" title="Intrinsic" class="">Intrinsic</a>
-                          </li>
+                              
+                              <ul class="nav level3">
+                                <li class="">
+                                  <a href="Llvm.NET.Instructions.Intrinsic.LookupId.html" title="LookupId" class="">LookupId</a>
+                                </li>
+                              </ul>  </li>
                           <li class="">
                             <a href="Llvm.NET.Instructions.IntToPointer.html" title="IntToPointer" class="">IntToPointer</a>
                           </li>
@@ -3514,7 +3535,7 @@
           <div class="col-md-10">
             <article class="content wrap" id="_content" data-uid="Llvm.NET.BitcodeModule">
   
-  <h1 id="Llvm_NET_BitcodeModule" data-uid="Llvm.NET.BitcodeModule" class="text-break">Class BitcodeModule
+  <h1 id="Llvm_NET_BitcodeModule" data-uid="Llvm.NET.BitcodeModule">Class BitcodeModule
   </h1>
   <div class="markdown level0 summary"><p>LLVM Bit-code module</p>
 </div>
@@ -3875,6 +3896,20 @@ representation of the LLVM Intermediate Representation (IR) bit-code. Each</p>
 </td>
       </tr>
       <tr>
+        <td id="Llvm_NET_BitcodeModule_GetIntrinsicDeclaration_System_String_Llvm_NET_Types_ITypeRef___" data-uid="Llvm.NET.BitcodeModule.GetIntrinsicDeclaration(System.String,Llvm.NET.Types.ITypeRef[])">
+          <a class="xref" href="Llvm.NET.BitcodeModule.GetIntrinsicDeclaration.html#Llvm_NET_BitcodeModule_GetIntrinsicDeclaration_System_String_Llvm_NET_Types_ITypeRef___">GetIntrinsicDeclaration(String, ITypeRef[])</a>
+        </td>
+        <td class="markdown level1 summary"><p>Gets a declaration for an LLVM intrinsic function</p>
+</td>
+      </tr>
+      <tr>
+        <td id="Llvm_NET_BitcodeModule_GetIntrinsicDeclaration_System_UInt32_Llvm_NET_Types_ITypeRef___" data-uid="Llvm.NET.BitcodeModule.GetIntrinsicDeclaration(System.UInt32,Llvm.NET.Types.ITypeRef[])">
+          <a class="xref" href="Llvm.NET.BitcodeModule.GetIntrinsicDeclaration.html#Llvm_NET_BitcodeModule_GetIntrinsicDeclaration_System_UInt32_Llvm_NET_Types_ITypeRef___">GetIntrinsicDeclaration(UInt32, ITypeRef[])</a>
+        </td>
+        <td class="markdown level1 summary"><p>Gets a declaration for an LLVM intrinsic function</p>
+</td>
+      </tr>
+      <tr>
         <td id="Llvm_NET_BitcodeModule_GetNamedGlobal_System_String_" data-uid="Llvm.NET.BitcodeModule.GetNamedGlobal(System.String)">
           <a class="xref" href="Llvm.NET.BitcodeModule.GetNamedGlobal.html#Llvm_NET_BitcodeModule_GetNamedGlobal_System_String_">GetNamedGlobal(String)</a>
         </td>
@@ -3990,7 +4025,7 @@ representation of the LLVM Intermediate Representation (IR) bit-code. Each</p>
             <span class="pull-right">
               <a href="#top">Back to top</a>
             </span>
-            Copyright (C) 2017, Dot NET Foundation<br><strong>Build:</strong> 5.0.1-alpha--ci-BLD.431958309
+            Copyright (C) 2017, Dot NET Foundation<br><strong>Build:</strong> 5.0.1-alpha--ci-BLD.433140595
             
           </div>
         </div>

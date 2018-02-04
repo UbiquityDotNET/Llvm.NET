@@ -159,6 +159,9 @@
                                   <a href="Llvm.NET.BitcodeModule.GetFunction.html" title="GetFunction" class="">GetFunction</a>
                                 </li>
                                 <li class="">
+                                  <a href="Llvm.NET.BitcodeModule.GetIntrinsicDeclaration.html" title="GetIntrinsicDeclaration" class="">GetIntrinsicDeclaration</a>
+                                </li>
+                                <li class="">
                                   <a href="Llvm.NET.BitcodeModule.GetNamedGlobal.html" title="GetNamedGlobal" class="">GetNamedGlobal</a>
                                 </li>
                                 <li class="">
@@ -1986,6 +1989,9 @@
                                   <a href="Llvm.NET.Instructions.InstructionBuilder.Add.html" title="Add" class="">Add</a>
                                 </li>
                                 <li class="">
+                                  <a href="Llvm.NET.Instructions.InstructionBuilder.AddWithOverflow.html" title="AddWithOverflow" class="">AddWithOverflow</a>
+                                </li>
+                                <li class="">
                                   <a href="Llvm.NET.Instructions.InstructionBuilder.Alloca.html" title="Alloca" class="">Alloca</a>
                                 </li>
                                 <li class="">
@@ -2136,6 +2142,9 @@
                                   <a href="Llvm.NET.Instructions.InstructionBuilder.Mul.html" title="Mul" class="">Mul</a>
                                 </li>
                                 <li class="">
+                                  <a href="Llvm.NET.Instructions.InstructionBuilder.MulWithOverflow.html" title="MulWithOverflow" class="">MulWithOverflow</a>
+                                </li>
+                                <li class="">
                                   <a href="Llvm.NET.Instructions.InstructionBuilder.Neg.html" title="Neg" class="">Neg</a>
                                 </li>
                                 <li class="">
@@ -2193,7 +2202,13 @@
                                   <a href="Llvm.NET.Instructions.InstructionBuilder.Sub.html" title="Sub" class="">Sub</a>
                                 </li>
                                 <li class="">
+                                  <a href="Llvm.NET.Instructions.InstructionBuilder.SubWithOverflow.html" title="SubWithOverflow" class="">SubWithOverflow</a>
+                                </li>
+                                <li class="">
                                   <a href="Llvm.NET.Instructions.InstructionBuilder.Switch.html" title="Switch" class="">Switch</a>
+                                </li>
+                                <li class="">
+                                  <a href="Llvm.NET.Instructions.InstructionBuilder.Trap.html" title="Trap" class="">Trap</a>
                                 </li>
                                 <li class="">
                                   <a href="Llvm.NET.Instructions.InstructionBuilder.Trunc.html" title="Trunc" class="">Trunc</a>
@@ -2242,8 +2257,14 @@
                             <a href="Llvm.NET.Instructions.IntPredicate.html" title="IntPredicate" class="">IntPredicate</a>
                           </li>
                           <li class="">
+                            <span class="expand-stub"></span>
                             <a href="Llvm.NET.Instructions.Intrinsic.html" title="Intrinsic" class="">Intrinsic</a>
-                          </li>
+                              
+                              <ul class="nav level3">
+                                <li class="">
+                                  <a href="Llvm.NET.Instructions.Intrinsic.LookupId.html" title="LookupId" class="">LookupId</a>
+                                </li>
+                              </ul>  </li>
                           <li class="">
                             <a href="Llvm.NET.Instructions.IntToPointer.html" title="IntToPointer" class="">IntToPointer</a>
                           </li>
@@ -3514,7 +3535,7 @@
           <div class="col-md-10">
             <article class="content wrap" id="_content" data-uid="Llvm.NET.Instructions.InstructionBuilder">
   
-  <h1 id="Llvm_NET_Instructions_InstructionBuilder" data-uid="Llvm.NET.Instructions.InstructionBuilder" class="text-break">Class InstructionBuilder
+  <h1 id="Llvm_NET_Instructions_InstructionBuilder" data-uid="Llvm.NET.Instructions.InstructionBuilder">Class InstructionBuilder
   </h1>
   <div class="markdown level0 summary"><p>LLVM Instruction builder allowing managed code to generate IR instructions</p>
 </div>
@@ -3618,6 +3639,13 @@
 </td>
       </tr>
       <tr>
+        <td id="Llvm_NET_Instructions_InstructionBuilder_AddWithOverflow_Llvm_NET_Values_Value_Llvm_NET_Values_Value_System_Boolean_" data-uid="Llvm.NET.Instructions.InstructionBuilder.AddWithOverflow(Llvm.NET.Values.Value,Llvm.NET.Values.Value,System.Boolean)">
+          <a class="xref" href="Llvm.NET.Instructions.InstructionBuilder.AddWithOverflow.html#Llvm_NET_Instructions_InstructionBuilder_AddWithOverflow_Llvm_NET_Values_Value_Llvm_NET_Values_Value_System_Boolean_">AddWithOverflow(Value, Value, Boolean)</a>
+        </td>
+        <td class="markdown level1 summary"><p>Generates a call to the llvm.[s|u]add.with.overflow intrinsic</p>
+</td>
+      </tr>
+      <tr>
         <td id="Llvm_NET_Instructions_InstructionBuilder_Alloca_Llvm_NET_Types_ITypeRef_" data-uid="Llvm.NET.Instructions.InstructionBuilder.Alloca(Llvm.NET.Types.ITypeRef)">
           <a class="xref" href="Llvm.NET.Instructions.InstructionBuilder.Alloca.html#Llvm_NET_Instructions_InstructionBuilder_Alloca_Llvm_NET_Types_ITypeRef_">Alloca(ITypeRef)</a>
         </td>
@@ -3656,7 +3684,7 @@
         <td id="Llvm_NET_Instructions_InstructionBuilder_AtomicAnd_Llvm_NET_Values_Value_Llvm_NET_Values_Value_" data-uid="Llvm.NET.Instructions.InstructionBuilder.AtomicAnd(Llvm.NET.Values.Value,Llvm.NET.Values.Value)">
           <a class="xref" href="Llvm.NET.Instructions.InstructionBuilder.AtomicAnd.html#Llvm_NET_Instructions_InstructionBuilder_AtomicAnd_Llvm_NET_Values_Value_Llvm_NET_Values_Value_">AtomicAnd(Value, Value)</a>
         </td>
-        <td class="markdown level1 summary"><p>Creates an atomic And instruction</p>
+        <td class="markdown level1 summary"><p>Creates an atomic AND instruction</p>
 </td>
       </tr>
       <tr>
@@ -3670,21 +3698,21 @@
         <td id="Llvm_NET_Instructions_InstructionBuilder_AtomicMax_Llvm_NET_Values_Value_Llvm_NET_Values_Value_" data-uid="Llvm.NET.Instructions.InstructionBuilder.AtomicMax(Llvm.NET.Values.Value,Llvm.NET.Values.Value)">
           <a class="xref" href="Llvm.NET.Instructions.InstructionBuilder.AtomicMax.html#Llvm_NET_Instructions_InstructionBuilder_AtomicMax_Llvm_NET_Values_Value_Llvm_NET_Values_Value_">AtomicMax(Value, Value)</a>
         </td>
-        <td class="markdown level1 summary"><p>Creates an atomic add instruction</p>
+        <td class="markdown level1 summary"><p>Creates an atomic ADD instruction</p>
 </td>
       </tr>
       <tr>
         <td id="Llvm_NET_Instructions_InstructionBuilder_AtomicMin_Llvm_NET_Values_Value_Llvm_NET_Values_Value_" data-uid="Llvm.NET.Instructions.InstructionBuilder.AtomicMin(Llvm.NET.Values.Value,Llvm.NET.Values.Value)">
           <a class="xref" href="Llvm.NET.Instructions.InstructionBuilder.AtomicMin.html#Llvm_NET_Instructions_InstructionBuilder_AtomicMin_Llvm_NET_Values_Value_Llvm_NET_Values_Value_">AtomicMin(Value, Value)</a>
         </td>
-        <td class="markdown level1 summary"><p>Creates an atomic min instruction</p>
+        <td class="markdown level1 summary"><p>Creates an atomic MIN instruction</p>
 </td>
       </tr>
       <tr>
         <td id="Llvm_NET_Instructions_InstructionBuilder_AtomicNand_Llvm_NET_Values_Value_Llvm_NET_Values_Value_" data-uid="Llvm.NET.Instructions.InstructionBuilder.AtomicNand(Llvm.NET.Values.Value,Llvm.NET.Values.Value)">
           <a class="xref" href="Llvm.NET.Instructions.InstructionBuilder.AtomicNand.html#Llvm_NET_Instructions_InstructionBuilder_AtomicNand_Llvm_NET_Values_Value_Llvm_NET_Values_Value_">AtomicNand(Value, Value)</a>
         </td>
-        <td class="markdown level1 summary"><p>Creates an atomic nand instruction</p>
+        <td class="markdown level1 summary"><p>Creates an atomic NAND instruction</p>
 </td>
       </tr>
       <tr>
@@ -3796,26 +3824,12 @@
         <td id="Llvm_NET_Instructions_InstructionBuilder_DebugTrap" data-uid="Llvm.NET.Instructions.InstructionBuilder.DebugTrap">
           <a class="xref" href="Llvm.NET.Instructions.InstructionBuilder.DebugTrap.html#Llvm_NET_Instructions_InstructionBuilder_DebugTrap">DebugTrap()</a>
         </td>
-        <td class="markdown level1 summary"><p>Creates a llvm.dbg.trap call</p>
-</td>
-      </tr>
-      <tr>
-        <td id="Llvm_NET_Instructions_InstructionBuilder_DebugTrap_Llvm_NET_BitcodeModule_" data-uid="Llvm.NET.Instructions.InstructionBuilder.DebugTrap(Llvm.NET.BitcodeModule)">
-          <a class="xref" href="Llvm.NET.Instructions.InstructionBuilder.DebugTrap.html#Llvm_NET_Instructions_InstructionBuilder_DebugTrap_Llvm_NET_BitcodeModule_">DebugTrap(BitcodeModule)</a>
-        </td>
-        <td class="markdown level1 summary"><p>Creates a llvm.dbg.trap call</p>
+        <td class="markdown level1 summary"><p>Creates a llvm.debugtrap call</p>
 </td>
       </tr>
       <tr>
         <td id="Llvm_NET_Instructions_InstructionBuilder_DoNothing" data-uid="Llvm.NET.Instructions.InstructionBuilder.DoNothing">
           <a class="xref" href="Llvm.NET.Instructions.InstructionBuilder.DoNothing.html#Llvm_NET_Instructions_InstructionBuilder_DoNothing">DoNothing()</a>
-        </td>
-        <td class="markdown level1 summary"><p>Creates a call to the llvm.donothing intrinsic</p>
-</td>
-      </tr>
-      <tr>
-        <td id="Llvm_NET_Instructions_InstructionBuilder_DoNothing_Llvm_NET_BitcodeModule_" data-uid="Llvm.NET.Instructions.InstructionBuilder.DoNothing(Llvm.NET.BitcodeModule)">
-          <a class="xref" href="Llvm.NET.Instructions.InstructionBuilder.DoNothing.html#Llvm_NET_Instructions_InstructionBuilder_DoNothing_Llvm_NET_BitcodeModule_">DoNothing(BitcodeModule)</a>
         </td>
         <td class="markdown level1 summary"><p>Creates a call to the llvm.donothing intrinsic</p>
 </td>
@@ -3975,13 +3989,6 @@
 </td>
       </tr>
       <tr>
-        <td id="Llvm_NET_Instructions_InstructionBuilder_MemCpy_Llvm_NET_BitcodeModule_Llvm_NET_Values_Value_Llvm_NET_Values_Value_Llvm_NET_Values_Value_System_Int32_System_Boolean_" data-uid="Llvm.NET.Instructions.InstructionBuilder.MemCpy(Llvm.NET.BitcodeModule,Llvm.NET.Values.Value,Llvm.NET.Values.Value,Llvm.NET.Values.Value,System.Int32,System.Boolean)">
-          <a class="xref" href="Llvm.NET.Instructions.InstructionBuilder.MemCpy.html#Llvm_NET_Instructions_InstructionBuilder_MemCpy_Llvm_NET_BitcodeModule_Llvm_NET_Values_Value_Llvm_NET_Values_Value_Llvm_NET_Values_Value_System_Int32_System_Boolean_">MemCpy(BitcodeModule, Value, Value, Value, Int32, Boolean)</a>
-        </td>
-        <td class="markdown level1 summary"><p>Builds a memcpy intrinsic call</p>
-</td>
-      </tr>
-      <tr>
         <td id="Llvm_NET_Instructions_InstructionBuilder_MemCpy_Llvm_NET_Values_Value_Llvm_NET_Values_Value_Llvm_NET_Values_Value_System_Int32_System_Boolean_" data-uid="Llvm.NET.Instructions.InstructionBuilder.MemCpy(Llvm.NET.Values.Value,Llvm.NET.Values.Value,Llvm.NET.Values.Value,System.Int32,System.Boolean)">
           <a class="xref" href="Llvm.NET.Instructions.InstructionBuilder.MemCpy.html#Llvm_NET_Instructions_InstructionBuilder_MemCpy_Llvm_NET_Values_Value_Llvm_NET_Values_Value_Llvm_NET_Values_Value_System_Int32_System_Boolean_">MemCpy(Value, Value, Value, Int32, Boolean)</a>
         </td>
@@ -3989,24 +3996,10 @@
 </td>
       </tr>
       <tr>
-        <td id="Llvm_NET_Instructions_InstructionBuilder_MemMove_Llvm_NET_BitcodeModule_Llvm_NET_Values_Value_Llvm_NET_Values_Value_Llvm_NET_Values_Value_System_Int32_System_Boolean_" data-uid="Llvm.NET.Instructions.InstructionBuilder.MemMove(Llvm.NET.BitcodeModule,Llvm.NET.Values.Value,Llvm.NET.Values.Value,Llvm.NET.Values.Value,System.Int32,System.Boolean)">
-          <a class="xref" href="Llvm.NET.Instructions.InstructionBuilder.MemMove.html#Llvm_NET_Instructions_InstructionBuilder_MemMove_Llvm_NET_BitcodeModule_Llvm_NET_Values_Value_Llvm_NET_Values_Value_Llvm_NET_Values_Value_System_Int32_System_Boolean_">MemMove(BitcodeModule, Value, Value, Value, Int32, Boolean)</a>
-        </td>
-        <td class="markdown level1 summary"><p>Builds a memmove intrinsic call</p>
-</td>
-      </tr>
-      <tr>
         <td id="Llvm_NET_Instructions_InstructionBuilder_MemMove_Llvm_NET_Values_Value_Llvm_NET_Values_Value_Llvm_NET_Values_Value_System_Int32_System_Boolean_" data-uid="Llvm.NET.Instructions.InstructionBuilder.MemMove(Llvm.NET.Values.Value,Llvm.NET.Values.Value,Llvm.NET.Values.Value,System.Int32,System.Boolean)">
           <a class="xref" href="Llvm.NET.Instructions.InstructionBuilder.MemMove.html#Llvm_NET_Instructions_InstructionBuilder_MemMove_Llvm_NET_Values_Value_Llvm_NET_Values_Value_Llvm_NET_Values_Value_System_Int32_System_Boolean_">MemMove(Value, Value, Value, Int32, Boolean)</a>
         </td>
-        <td class="markdown level1 summary"><p>Builds a memmov intrinsic call</p>
-</td>
-      </tr>
-      <tr>
-        <td id="Llvm_NET_Instructions_InstructionBuilder_MemSet_Llvm_NET_BitcodeModule_Llvm_NET_Values_Value_Llvm_NET_Values_Value_Llvm_NET_Values_Value_System_Int32_System_Boolean_" data-uid="Llvm.NET.Instructions.InstructionBuilder.MemSet(Llvm.NET.BitcodeModule,Llvm.NET.Values.Value,Llvm.NET.Values.Value,Llvm.NET.Values.Value,System.Int32,System.Boolean)">
-          <a class="xref" href="Llvm.NET.Instructions.InstructionBuilder.MemSet.html#Llvm_NET_Instructions_InstructionBuilder_MemSet_Llvm_NET_BitcodeModule_Llvm_NET_Values_Value_Llvm_NET_Values_Value_Llvm_NET_Values_Value_System_Int32_System_Boolean_">MemSet(BitcodeModule, Value, Value, Value, Int32, Boolean)</a>
-        </td>
-        <td class="markdown level1 summary"><p>Builds a memset intrinsic call</p>
+        <td class="markdown level1 summary"><p>Builds a memmove intrinsic call</p>
 </td>
       </tr>
       <tr>
@@ -4021,6 +4014,13 @@
           <a class="xref" href="Llvm.NET.Instructions.InstructionBuilder.Mul.html#Llvm_NET_Instructions_InstructionBuilder_Mul_Llvm_NET_Values_Value_Llvm_NET_Values_Value_">Mul(Value, Value)</a>
         </td>
         <td class="markdown level1 summary"><p>Creates an integer multiplication operator</p>
+</td>
+      </tr>
+      <tr>
+        <td id="Llvm_NET_Instructions_InstructionBuilder_MulWithOverflow_Llvm_NET_Values_Value_Llvm_NET_Values_Value_System_Boolean_" data-uid="Llvm.NET.Instructions.InstructionBuilder.MulWithOverflow(Llvm.NET.Values.Value,Llvm.NET.Values.Value,System.Boolean)">
+          <a class="xref" href="Llvm.NET.Instructions.InstructionBuilder.MulWithOverflow.html#Llvm_NET_Instructions_InstructionBuilder_MulWithOverflow_Llvm_NET_Values_Value_Llvm_NET_Values_Value_System_Boolean_">MulWithOverflow(Value, Value, Boolean)</a>
+        </td>
+        <td class="markdown level1 summary"><p>Generates a call to the llvm.[s|u]mul.with.overflow intrinsic</p>
 </td>
       </tr>
       <tr>
@@ -4164,10 +4164,24 @@
 </td>
       </tr>
       <tr>
+        <td id="Llvm_NET_Instructions_InstructionBuilder_SubWithOverflow_Llvm_NET_Values_Value_Llvm_NET_Values_Value_System_Boolean_" data-uid="Llvm.NET.Instructions.InstructionBuilder.SubWithOverflow(Llvm.NET.Values.Value,Llvm.NET.Values.Value,System.Boolean)">
+          <a class="xref" href="Llvm.NET.Instructions.InstructionBuilder.SubWithOverflow.html#Llvm_NET_Instructions_InstructionBuilder_SubWithOverflow_Llvm_NET_Values_Value_Llvm_NET_Values_Value_System_Boolean_">SubWithOverflow(Value, Value, Boolean)</a>
+        </td>
+        <td class="markdown level1 summary"><p>Generates a call to the llvm.[s|u]sub.with.overflow intrinsic</p>
+</td>
+      </tr>
+      <tr>
         <td id="Llvm_NET_Instructions_InstructionBuilder_Switch_Llvm_NET_Values_Value_Llvm_NET_Values_BasicBlock_System_UInt32_" data-uid="Llvm.NET.Instructions.InstructionBuilder.Switch(Llvm.NET.Values.Value,Llvm.NET.Values.BasicBlock,System.UInt32)">
           <a class="xref" href="Llvm.NET.Instructions.InstructionBuilder.Switch.html#Llvm_NET_Instructions_InstructionBuilder_Switch_Llvm_NET_Values_Value_Llvm_NET_Values_BasicBlock_System_UInt32_">Switch(Value, BasicBlock, UInt32)</a>
         </td>
         <td class="markdown level1 summary"><p>Creates a switch instruction</p>
+</td>
+      </tr>
+      <tr>
+        <td id="Llvm_NET_Instructions_InstructionBuilder_Trap" data-uid="Llvm.NET.Instructions.InstructionBuilder.Trap">
+          <a class="xref" href="Llvm.NET.Instructions.InstructionBuilder.Trap.html#Llvm_NET_Instructions_InstructionBuilder_Trap">Trap()</a>
+        </td>
+        <td class="markdown level1 summary"><p>Creates a llvm.trap call</p>
 </td>
       </tr>
       <tr>
@@ -4216,7 +4230,7 @@
         <td id="Llvm_NET_Instructions_InstructionBuilder_Xor_Llvm_NET_Values_Value_Llvm_NET_Values_Value_" data-uid="Llvm.NET.Instructions.InstructionBuilder.Xor(Llvm.NET.Values.Value,Llvm.NET.Values.Value)">
           <a class="xref" href="Llvm.NET.Instructions.InstructionBuilder.Xor.html#Llvm_NET_Instructions_InstructionBuilder_Xor_Llvm_NET_Values_Value_Llvm_NET_Values_Value_">Xor(Value, Value)</a>
         </td>
-        <td class="markdown level1 summary"><p>Creates an integer bitwise exlusive or operator</p>
+        <td class="markdown level1 summary"><p>Creates an integer bitwise exclusive or operator</p>
 </td>
       </tr>
       <tr>
@@ -4255,7 +4269,7 @@
             <span class="pull-right">
               <a href="#top">Back to top</a>
             </span>
-            Copyright (C) 2017, Dot NET Foundation<br><strong>Build:</strong> 5.0.1-alpha--ci-BLD.431958309
+            Copyright (C) 2017, Dot NET Foundation<br><strong>Build:</strong> 5.0.1-alpha--ci-BLD.433140595
             
           </div>
         </div>
