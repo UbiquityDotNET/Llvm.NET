@@ -2967,5 +2967,3 @@ namespace Llvm.NET.Native
         #endregion
     }
 }
-
-#pragma warning restore SA1600 // Elements must be documented

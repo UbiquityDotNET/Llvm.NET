@@ -209,7 +209,7 @@ namespace Llvm.NET.Instructions
         /// <returns><see cref="Value"/> for the instruction</returns>
         public Value SRem( Value lhs, Value rhs ) => BuildBinOp( LLVMBuildSRem, lhs, rhs );
 
-        /// <summary>Creates an integer bitwise exlusive or operator</summary>
+        /// <summary>Creates an integer bitwise exclusive or operator</summary>
         /// <param name="lhs">left hand side operand</param>
         /// <param name="rhs">right hand side operand</param>
         /// <returns><see cref="Value"/> for the instruction</returns>
@@ -422,13 +422,13 @@ namespace Llvm.NET.Instructions
         /// <returns><see cref="AtomicRMW"/></returns>
         public AtomicRMW AtomicSub( Value ptr, Value val ) => BuildAtomicRMW( LLVMAtomicRMWBinOp.LLVMAtomicRMWBinOpSub, ptr, val );
 
-        /// <summary>Creates an atomic And instruction</summary>
+        /// <summary>Creates an atomic AND instruction</summary>
         /// <param name="ptr">Pointer to the value to update (e.g. destination and the left hand operand)</param>
         /// <param name="val">Right hand side operand</param>
         /// <returns><see cref="AtomicRMW"/></returns>
         public AtomicRMW AtomicAnd( Value ptr, Value val ) => BuildAtomicRMW( LLVMAtomicRMWBinOp.LLVMAtomicRMWBinOpAnd, ptr, val );
 
-        /// <summary>Creates an atomic nand instruction</summary>
+        /// <summary>Creates an atomic NAND instruction</summary>
         /// <param name="ptr">Pointer to the value to update (e.g. destination and the left hand operand)</param>
         /// <param name="val">Right hand side operand</param>
         /// <returns><see cref="AtomicRMW"/></returns>
@@ -446,13 +446,13 @@ namespace Llvm.NET.Instructions
         /// <returns><see cref="AtomicRMW"/></returns>
         public AtomicRMW AtomicXor( Value ptr, Value val ) => BuildAtomicRMW( LLVMAtomicRMWBinOp.LLVMAtomicRMWBinOpXor, ptr, val );
 
-        /// <summary>Creates an atomic add instruction</summary>
+        /// <summary>Creates an atomic ADD instruction</summary>
         /// <param name="ptr">Pointer to the value to update (e.g. destination and the left hand operand)</param>
         /// <param name="val">Right hand side operand</param>
         /// <returns><see cref="AtomicRMW"/></returns>
         public AtomicRMW AtomicMax( Value ptr, Value val ) => BuildAtomicRMW( LLVMAtomicRMWBinOp.LLVMAtomicRMWBinOpMax, ptr, val );
 
-        /// <summary>Creates an atomic min instruction</summary>
+        /// <summary>Creates an atomic MIN instruction</summary>
         /// <param name="ptr">Pointer to the value to update (e.g. destination and the left hand operand)</param>
         /// <param name="val">Right hand side operand</param>
         /// <returns><see cref="AtomicRMW"/></returns>
@@ -1257,84 +1257,30 @@ namespace Llvm.NET.Instructions
         /// </exception>
         public CallInstruction DoNothing( )
         {
-            var module = InsertBlock?.ContainingFunction?.ParentModule;
-            if( module == null )
-            {
-                throw new InvalidOperationException( "Cannot insert when no block/module is available" );
-            }
-
-            var func = module.GetFunction( Intrinsic.DoNothingName );
-            if( func == null )
-            {
-                var ctx = module.Context;
-                var signature = ctx.GetFunctionType( ctx.VoidType );
-                func = module.AddFunction( Intrinsic.DoNothingName, signature );
-            }
-
+            BitcodeModule module = GetModuleOrThrow( );
+            var func = module.GetIntrinsicDeclaration( "llvm.donothing" );
             var hCall = BuildCall( func );
             return Value.FromHandle<CallInstruction>( hCall );
         }
 
-        /// <summary>Creates a call to the llvm.donothing intrinsic</summary>
-        /// <param name="module">module to create the declaration for</param>
-        /// <returns><see cref="CallInstruction"/></returns>
-        [Obsolete("Use DoNothing()")]
-        public CallInstruction DoNothing( BitcodeModule module )
-        {
-            module.ValidateNotNull( nameof( module ) );
-
-            var func = module.GetFunction( Intrinsic.DoNothingName );
-            if( func == null )
-            {
-                var ctx = module.Context;
-                var signature = ctx.GetFunctionType( ctx.VoidType );
-                func = module.AddFunction( Intrinsic.DoNothingName, signature );
-            }
-
-            var hCall = BuildCall( func );
-            return Value.FromHandle<CallInstruction>( hCall );
-        }
-
-        /// <summary>Creates a llvm.dbg.trap call</summary>
+        /// <summary>Creates a llvm.debugtrap call</summary>
         /// <returns><see cref="CallInstruction"/></returns>
         public CallInstruction DebugTrap( )
         {
-            var module = InsertBlock?.ContainingFunction?.ParentModule;
-            if( module == null )
-            {
-                throw new InvalidOperationException( "Cannot insert when no block/module is available" );
-            }
+            var module = GetModuleOrThrow( );
+            var func = module.GetIntrinsicDeclaration( "llvm.debugtrap" );
 
-            var func = module.GetFunction( Intrinsic.DebugTrapName );
-            if( func == null )
-            {
-                var ctx = module.Context;
-                var signature = ctx.GetFunctionType( ctx.VoidType );
-                func = module.AddFunction( Intrinsic.DebugTrapName, signature );
-            }
-
-            var hCall = LLVMBuildCall( BuilderHandle, func.ValueHandle, out LLVMValueRef args, 0U, string.Empty );
-            return Value.FromHandle<CallInstruction>( hCall );
+            return Call( func );
         }
 
-        /// <summary>Creates a llvm.dbg.trap call</summary>
-        /// <param name="module">Module to insert a declaration for the intrinsic</param>
+        /// <summary>Creates a llvm.trap call</summary>
         /// <returns><see cref="CallInstruction"/></returns>
-        [Obsolete( "Use DebugTrap()" )]
-        public Value DebugTrap( BitcodeModule module )
+        public CallInstruction Trap( )
         {
-            module.ValidateNotNull( nameof( module ) );
+            var module = GetModuleOrThrow( );
+            var func = module.GetIntrinsicDeclaration( "llvm.debugtrap" );
 
-            var func = module.GetFunction( Intrinsic.DebugTrapName );
-            if( func == null )
-            {
-                var ctx = module.Context;
-                var signature = ctx.GetFunctionType( ctx.VoidType );
-                func = module.AddFunction( Intrinsic.DebugTrapName, signature );
-            }
-
-            var hCall = LLVMBuildCall( BuilderHandle, func.ValueHandle, out LLVMValueRef args, 0U, string.Empty );
-            return Value.FromHandle( hCall );
+            return Call( func );
         }
 
         /// <summary>Builds a memcpy intrinsic call</summary>
@@ -1351,34 +1297,10 @@ namespace Llvm.NET.Instructions
         /// </remarks>
         public Value MemCpy( Value destination, Value source, Value len, Int32 align, bool isVolatile )
         {
-            var module = InsertBlock?.ContainingFunction?.ParentModule;
-            if( module == null )
-            {
-                throw new InvalidOperationException( "Cannot insert when no block/module is available" );
-            }
-
-            return MemCpy( module, destination, source, len, align, isVolatile );
-        }
-
-        /// <summary>Builds a memcpy intrinsic call</summary>
-        /// <param name="module">Module to add the declaration of the intrinsic to if it doesn't already exist</param>
-        /// <param name="destination">Destination pointer of the memcpy</param>
-        /// <param name="source">Source pointer of the memcpy</param>
-        /// <param name="len">length of the data to copy</param>
-        /// <param name="align">Alignment of the data for the copy</param>
-        /// <param name="isVolatile">Flag to indicate if the copy involves volatile data such as physical registers</param>
-        /// <returns><see cref="Intrinsic"/> call for the memcpy</returns>
-        /// <remarks>
-        /// LLVM has many overloaded variants of the memcpy intrinsic, this implementation will deduce the types from
-        /// the provided values and generate a more specific call without the need to provide overloaded forms of this
-        /// method and otherwise complicating the calling code.
-        /// </remarks>
-        public Value MemCpy( BitcodeModule module, Value destination, Value source, Value len, Int32 align, bool isVolatile )
-        {
-            module.ValidateNotNull( nameof( module ) );
             destination.ValidateNotNull( nameof( destination ) );
             source.ValidateNotNull( nameof( source ) );
             len.ValidateNotNull( nameof( len ) );
+            var module = GetModuleOrThrow( );
 
             if( destination == source )
             {
@@ -1420,19 +1342,7 @@ namespace Llvm.NET.Instructions
             }
 
             // find the name of the appropriate overloaded form
-            string intrinsicName = Instructions.MemCpy.GetIntrinsicNameForArgs( dstPtrType, srcPtrType, len.NativeType );
-            var func = module.GetFunction( intrinsicName );
-            if( func == null )
-            {
-                var signature = module.Context.GetFunctionType( module.Context.VoidType
-                                                              , dstPtrType
-                                                              , srcPtrType
-                                                              , len.NativeType
-                                                              , module.Context.Int32Type
-                                                              , module.Context.BoolType
-                                                              );
-                func = module.AddFunction( intrinsicName, signature );
-            }
+            var func = module.GetIntrinsicDeclaration( "llvm.memcpy.p.p.i", dstPtrType, srcPtrType, len.NativeType );
 
             var call = BuildCall( func
                                 , destination
@@ -1444,31 +1354,7 @@ namespace Llvm.NET.Instructions
             return Value.FromHandle( call );
         }
 
-        /// <summary>Builds a memmov intrinsic call</summary>
-        /// <param name="destination">Destination pointer of the memmov</param>
-        /// <param name="source">Source pointer of the memmov</param>
-        /// <param name="len">length of the data to copy</param>
-        /// <param name="align">Alignment of the data for the copy</param>
-        /// <param name="isVolatile">Flag to indicate if the copy involves volatile data such as physical registers</param>
-        /// <returns><see cref="Intrinsic"/> call for the memmov</returns>
-        /// <remarks>
-        /// LLVM has many overloaded variants of the memmove intrinsic, this implementation will deduce the types from
-        /// the provided values and generate a more specific call without the need to provide overloaded forms of this
-        /// method and otherwise complicating the calling code.
-        /// </remarks>
-        public Value MemMove( Value destination, Value source, Value len, Int32 align, bool isVolatile )
-        {
-            var module = InsertBlock?.ContainingFunction?.ParentModule;
-            if( module == null )
-            {
-                throw new InvalidOperationException( "Cannot insert when no block/module is available" );
-            }
-
-            return MemMove( module, destination, source, len, align, isVolatile );
-        }
-
         /// <summary>Builds a memmove intrinsic call</summary>
-        /// <param name="module">Module to add the declaration of the intrinsic to if it doesn't already exist</param>
         /// <param name="destination">Destination pointer of the memmove</param>
         /// <param name="source">Source pointer of the memmove</param>
         /// <param name="len">length of the data to copy</param>
@@ -1480,12 +1366,12 @@ namespace Llvm.NET.Instructions
         /// the provided values and generate a more specific call without the need to provide overloaded forms of this
         /// method and otherwise complicating the calling code.
         /// </remarks>
-        public Value MemMove( BitcodeModule module, Value destination, Value source, Value len, Int32 align, bool isVolatile )
+        public Value MemMove( Value destination, Value source, Value len, Int32 align, bool isVolatile )
         {
-            module.ValidateNotNull( nameof( module ) );
             destination.ValidateNotNull( nameof( destination ) );
             source.ValidateNotNull( nameof( source ) );
             len.ValidateNotNull( nameof( len ) );
+            var module = GetModuleOrThrow( );
 
             if( destination == source )
             {
@@ -1525,19 +1411,7 @@ namespace Llvm.NET.Instructions
             }
 
             // find the name of the appropriate overloaded form
-            string intrinsicName = Instructions.MemMove.GetIntrinsicNameForArgs( dstPtrType, srcPtrType, len.NativeType );
-            var func = module.GetFunction( intrinsicName );
-            if( func == null )
-            {
-                var signature = module.Context.GetFunctionType( module.Context.VoidType
-                                                              , dstPtrType
-                                                              , srcPtrType
-                                                              , len.NativeType
-                                                              , module.Context.Int32Type
-                                                              , module.Context.BoolType
-                                                              );
-                func = module.AddFunction( intrinsicName, signature );
-            }
+            var func = module.GetIntrinsicDeclaration( "llvm.memmove.p.p.i", dstPtrType, srcPtrType, len.NativeType );
 
             var call = BuildCall( func, destination, source, len, module.Context.CreateConstant( align ), module.Context.CreateConstant( isVolatile ) );
             return Value.FromHandle( call );
@@ -1557,34 +1431,10 @@ namespace Llvm.NET.Instructions
         /// </remarks>
         public Value MemSet( Value destination, Value value, Value len, Int32 align, bool isVolatile )
         {
-            var module = InsertBlock?.ContainingFunction?.ParentModule;
-            if( module == null )
-            {
-                throw new InvalidOperationException( "Cannot insert when no block/module is available" );
-            }
-
-            return MemSet( module, destination, value, len, align, isVolatile );
-        }
-
-        /// <summary>Builds a memset intrinsic call</summary>
-        /// <param name="module">Module to add the declaration of the intrinsic to if it doesn't already exist</param>
-        /// <param name="destination">Destination pointer of the memset</param>
-        /// <param name="value">fill value for the memset</param>
-        /// <param name="len">length of the data to fill</param>
-        /// <param name="align">ALignment of the data for the fill</param>
-        /// <param name="isVolatile">Flag to indicate if the fill involves volatile data such as physical registers</param>
-        /// <returns><see cref="Intrinsic"/> call for the memset</returns>
-        /// <remarks>
-        /// LLVM has many overloaded variants of the memset intrinsic, this implementation will deduce the types from
-        /// the provided values and generate a more specific call without the need to provide overloaded forms of this
-        /// method and otherwise complicating the calling code.
-        /// </remarks>
-        public Value MemSet( BitcodeModule module, Value destination, Value value, Value len, Int32 align, bool isVolatile )
-        {
-            module.ValidateNotNull( nameof( module ) );
             destination.ValidateNotNull( nameof( destination ) );
             value.ValidateNotNull( nameof( value ) );
             len.ValidateNotNull( nameof( len ) );
+            var module = GetModuleOrThrow( );
 
             if( !( destination.NativeType is IPointerType dstPtrType ) )
             {
@@ -1618,20 +1468,7 @@ namespace Llvm.NET.Instructions
             }
 
             // find the name of the appropriate overloaded form
-            string intrinsicName = Instructions.MemSet.GetIntrinsicNameForArgs( dstPtrType, value.NativeType, len.NativeType );
-            var func = module.GetFunction( intrinsicName );
-            if( func == null )
-            {
-                var signature = module.Context.GetFunctionType( module.Context.VoidType
-                                                              , dstPtrType
-                                                              , value.NativeType
-                                                              , len.NativeType
-                                                              , module.Context.Int32Type
-                                                              , module.Context.BoolType
-                                                              );
-
-                func = module.AddFunction( intrinsicName, signature );
-            }
+            var func = module.GetIntrinsicDeclaration( "llvm.memset.p.i", dstPtrType, value.NativeType );
 
             var call = BuildCall( func
                                 , destination
@@ -1645,7 +1482,7 @@ namespace Llvm.NET.Instructions
         }
 
         /// <summary>Builds an <see cref="Llvm.NET.Instructions.InsertValue"/> instruction </summary>
-        /// <param name="aggValue">Aggergate value to insert <paramref name="elementValue"/> into</param>
+        /// <param name="aggValue">Aggregate value to insert <paramref name="elementValue"/> into</param>
         /// <param name="elementValue">Value to insert into <paramref name="aggValue"/></param>
         /// <param name="index">Index to insert the value into</param>
         /// <returns>Instruction as a <see cref="Value"/></returns>
@@ -1656,6 +1493,53 @@ namespace Llvm.NET.Instructions
 
             var handle = LLVMBuildInsertValue( BuilderHandle, aggValue.ValueHandle, elementValue.ValueHandle, index, string.Empty );
             return Value.FromHandle( handle );
+        }
+
+        /// <summary>Generates a call to the llvm.[s|u]add.with.overflow intrinsic</summary>
+        /// <param name="lhs">Left hand side of the operation</param>
+        /// <param name="rhs">Right hand side of the operation</param>
+        /// <param name="signed">Flag to indicate if the operation is signed <see langword="true"/> or unsigned <see langword="false"/></param>
+        /// <returns>Instruction as a <see cref="Value"/></returns>
+        public Value AddWithOverflow( Value lhs, Value rhs, bool signed )
+        {
+            char kind = signed ? 's' : 'u';
+            string name = $"llvm.{kind}add.with.overflow.i";
+            var module = GetModuleOrThrow( );
+
+            var function = module.GetIntrinsicDeclaration( name, lhs.NativeType );
+            return Call( function, lhs, rhs );
+        }
+
+        /// <summary>Generates a call to the llvm.[s|u]sub.with.overflow intrinsic</summary>
+        /// <param name="lhs">Left hand side of the operation</param>
+        /// <param name="rhs">Right hand side of the operation</param>
+        /// <param name="signed">Flag to indicate if the operation is signed <see langword="true"/> or unsigned <see langword="false"/></param>
+        /// <returns>Instruction as a <see cref="Value"/></returns>
+        public Value SubWithOverflow( Value lhs, Value rhs, bool signed )
+        {
+            char kind = signed ? 's' : 'u';
+            string name = $"llvm.{kind}sub.with.overflow.i";
+            uint id = Intrinsic.LookupId( name );
+            var module = GetModuleOrThrow( );
+
+            var function = module.GetIntrinsicDeclaration( id, lhs.NativeType );
+            return Call( function, lhs, rhs );
+        }
+
+        /// <summary>Generates a call to the llvm.[s|u]mul.with.overflow intrinsic</summary>
+        /// <param name="lhs">Left hand side of the operation</param>
+        /// <param name="rhs">Right hand side of the operation</param>
+        /// <param name="signed">Flag to indicate if the operation is signed <see langword="true"/> or unsigned <see langword="false"/></param>
+        /// <returns>Instruction as a <see cref="Value"/></returns>
+        public Value MulWithOverflow( Value lhs, Value rhs, bool signed )
+        {
+            char kind = signed ? 's' : 'u';
+            string name = $"llvm.{kind}mul.with.overflow.i";
+            uint id = Intrinsic.LookupId( name );
+            var module = GetModuleOrThrow( );
+
+            var function = module.GetIntrinsicDeclaration( id, lhs.NativeType );
+            return Call( function, lhs, rhs );
         }
 
         internal static LLVMValueRef[ ] GetValidatedGEPArgs( Value pointer, IEnumerable<Value> args )
@@ -1682,6 +1566,17 @@ namespace Llvm.NET.Instructions
         }
 
         internal LLVMBuilderRef BuilderHandle { get; }
+
+        private BitcodeModule GetModuleOrThrow( )
+        {
+            var module = InsertBlock?.ContainingFunction?.ParentModule;
+            if( module == null )
+            {
+                throw new InvalidOperationException( "Cannot insert when no block/module is available" );
+            }
+
+            return module;
+        }
 
         // LLVM will automatically perform constant folding, thus the result of applying
         // a unary operator instruction may actually be a constant value and not an instruction

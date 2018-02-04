@@ -86,6 +86,9 @@ LLVMFunctionAppendBasicBlock
 LLVMValueAsMetadataGetValue
 LLVMExecutionEngineClearGlobalMappingsFromModule
 LLVMContextCreateBasicBlock
+LLVMIntrinsicGetDeclaration
+LLVMIsIntrinsicOverloaded
+LLVMLookupInstrinsicId
 LLVMAttributeToString
 
 LLVMCreateValueCache

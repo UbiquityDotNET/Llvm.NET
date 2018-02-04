@@ -180,4 +180,20 @@ extern "C"
                                        )
                    );
     }
+
+    LLVMValueRef /*Function*/ LLVMIntrinsicGetDeclaration( LLVMModuleRef m, unsigned id, LLVMTypeRef* argTypes, unsigned count )
+    {
+        ArrayRef<Type*> Tys( unwrap( argTypes ), count );
+        return wrap( Intrinsic::getDeclaration( unwrap( m ), static_cast< Intrinsic::ID >( id ), Tys ) );
+    }
+
+    LLVMBool LLVMIsIntrinsicOverloaded( unsigned id )
+    {
+        return Intrinsic::isOverloaded( static_cast< Intrinsic::ID >( id ) );
+    }
+
+    unsigned LLVMLookupInstrinsicId( char const* name )
+    {
+        return Function::lookupIntrinsicID( name );
+    }
 }

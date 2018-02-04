@@ -67,6 +67,11 @@ extern "C" {
     LLVMMetadataRef LLVMDIGlobalVarExpGetVariable( LLVMMetadataRef /*DIGlobalVariableExpression*/ metadataHandle );
     void LLVMExecutionEngineClearGlobalMappingsFromModule( LLVMExecutionEngineRef ee, LLVMModuleRef m );
     LLVMBasicBlockRef LLVMContextCreateBasicBlock( LLVMContextRef context, char const* name, LLVMValueRef /*Function*/ function, LLVMBasicBlockRef insertBefore );
+    
+    LLVMValueRef /*Function*/ LLVMIntrinsicGetDeclaration( LLVMModuleRef m, unsigned id, LLVMTypeRef* argTypes, unsigned count );
+    LLVMBool LLVMIsIntrinsicOverloaded( unsigned id );
+    unsigned LLVMLookupInstrinsicId( char const* name );
+
 #ifdef __cplusplus
 }
 #endif

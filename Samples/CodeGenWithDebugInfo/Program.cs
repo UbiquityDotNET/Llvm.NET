@@ -348,8 +348,7 @@ namespace TestDebugInfo
             var srcPtr = instBuilder.BitCast( copyFunc.Parameters[ 0 ], module.Context.Int8Type.CreatePointerType( ) );
 
             uint pointerSize = module.Layout.IntPtrType( module.Context ).IntegerBitWidth;
-            instBuilder.MemCpy( module
-                              , dstPtr
+            instBuilder.MemCpy( dstPtr
                               , srcPtr
                               , module.Context.CreateConstant( pointerSize, module.Layout.ByteSizeOf( foo ), false )
                               , ( int )module.Layout.AbiAlignmentOf( foo )
@@ -388,8 +387,7 @@ namespace TestDebugInfo
                 var bitCastDst = instBuilder.BitCast( dstAddr, bytePtrType );
                 var bitCastSrc = instBuilder.BitCast( bar, bytePtrType );
 
-                instBuilder.MemCpy( module
-                                  , bitCastDst
+                instBuilder.MemCpy( bitCastDst
                                   , bitCastSrc
                                   , module.Context.CreateConstant( module.Layout.ByteSizeOf( foo ) )
                                   , ( int )module.Layout.CallFrameAlignmentOf( foo )
