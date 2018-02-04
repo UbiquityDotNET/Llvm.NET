@@ -782,6 +782,18 @@ namespace Llvm.NET
         /// <param name="name">Name of the intrinsic</param>
         /// <param name="args">Args for the intrinsic</param>
         /// <returns>Function declaration</returns>
+        /// <remarks>
+        /// This method will match overloaded intrinsics based on the parameter types. If an intrinsic
+        /// has no overloads then an exact match is required. If the intrinsic has overloads than a prefix
+        /// match is used.
+        /// <note type="important">
+        /// It is important to note that the prefix match requires the name provided to have a length greater
+        /// than that of the name of the intrinsic and that the name starts with a matching overloaded intrinsic.
+        /// for example: 'llvm.memset' would not match the overloaded memset intrinsic but 'llvm.memset.p.i' does.
+        /// Thus, it is generally a good idea to use the signature from the LLVM documentation without the address
+        /// space, or bit widths. That is instead of 'llvm.memset.p0i8.i32' use 'llvm.memset.p.i'.
+        /// </note>
+        /// </remarks>
         public Function GetIntrinsicDeclaration( string name, params ITypeRef[ ] args )
         {
             uint id = Intrinsic.LookupId( name );
