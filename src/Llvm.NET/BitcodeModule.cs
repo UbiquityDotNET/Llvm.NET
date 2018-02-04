@@ -11,6 +11,7 @@ using System.Linq;
 using System.Runtime.InteropServices;
 using JetBrains.Annotations;
 using Llvm.NET.DebugInfo;
+using Llvm.NET.Instructions;
 using Llvm.NET.Native;
 using Llvm.NET.Types;
 using Llvm.NET.Values;
@@ -777,6 +778,40 @@ namespace Llvm.NET
             return CreateFunction( name, isVarArg, returnType, ( IEnumerable<IDebugType<ITypeRef, DIType>> )argumentTypes );
         }
 
+        /// <summary>Gets a declaration for an LLVM intrinsic function</summary>
+        /// <param name="name">Name of the intrinsic</param>
+        /// <param name="args">Args for the intrinsic</param>
+        /// <returns>Function declaration</returns>
+        public Function GetIntrinsicDeclaration( string name, params ITypeRef[ ] args )
+        {
+            uint id = Intrinsic.LookupId( name );
+            return GetIntrinsicDeclaration( id, args );
+        }
+
+        /// <summary>Gets a declaration for an LLVM intrinsic function</summary>
+        /// <param name="id">id of the intrinsic</param>
+        /// <param name="args">Args for the intrinsic</param>
+        /// <returns>Function declaration</returns>
+        public Function GetIntrinsicDeclaration( UInt32 id, params ITypeRef[] args)
+        {
+            if( !LLVMIsIntrinsicOverloaded( id ) && args.Length > 0 )
+            {
+                throw new ArgumentException( $"intrinsic {id} is not overloaded and therefore does not require type arguments" );
+            }
+
+            LLVMTypeRef[ ] llvmArgs = args.Select( a => a.GetTypeRef( ) ).ToArray( );
+
+            // have to pass a valid addressable object to native interop
+            // so allocate space for a single value but tell LLVM the length is 0
+            uint argCount = (uint)llvmArgs.Length;
+            if( llvmArgs.Length == 0 )
+            {
+                llvmArgs = new LLVMTypeRef[ 1 ];
+            }
+
+            return (Function) Value.FromHandle(LLVMIntrinsicGetDeclaration( ModuleHandle, id, out llvmArgs[ 0 ], argCount ));
+        }
+
         /// <summary>Clones the current module</summary>
         /// <returns>Cloned module</returns>
         public BitcodeModule Clone( )
@@ -953,7 +988,7 @@ namespace Llvm.NET
         // deal with C++ references. While that is manageable as
         // a getter, it is problematic as a setter since there isn't
         // any sort of ownership transfer and the ownership is a bit
-        // mirky, especially with a managed projection. Thus, the LLVM-C
+        // murky, especially with a managed projection. Thus, the LLVM-C
         // API sticks to the string form of the layout.
         private DataLayout CachedLayout;
 
@@ -984,5 +1019,12 @@ namespace Llvm.NET
 
         [DllImport( LibraryPath, CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl )]
         private static extern LLVMNamedMDNodeRef LLVMModuleGetNextNamedMD( LLVMNamedMDNodeRef nodeRef );
+
+        [DllImport( LibraryPath, CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl )]
+        private static extern LLVMValueRef /*Function*/ LLVMIntrinsicGetDeclaration( LLVMModuleRef m, UInt32 id, out LLVMTypeRef paramTypes, uint paramCount );
+
+        [DllImport( LibraryPath, CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl )]
+        [return:MarshalAs(UnmanagedType.Bool)]
+        private static extern bool LLVMIsIntrinsicOverloaded( UInt32 id );
     }
 }
