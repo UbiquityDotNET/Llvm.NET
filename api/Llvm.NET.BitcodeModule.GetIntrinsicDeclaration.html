@@ -3572,6 +3572,18 @@
 </td>
     </tr>
 </table>
+<h2 id="Llvm_NET_BitcodeModule_GetIntrinsicDeclaration_System_String_Llvm_NET_Types_ITypeRef____remarks">Remarks</h2>
+<div class="markdown level1 remarks"><p>This method will match overloaded intrinsics based on the parameter types. If an intrinsic
+has no overloads then an exact match is required. If the intrinsic has overloads than a prefix
+match is used.
+<div class="IMPORTANT"><h5>important</h5><p>
+It is important to note that the prefix match requires the name provided to have a length greater
+than that of the name of the intrinsic and that the name starts with a matching overloaded intrinsic.
+for example: &apos;llvm.memset&apos; would not match the overloaded memset intrinsic but &apos;llvm.memset.p.i&apos; does.
+Thus, it is generally a good idea to use the signature from the LLVM documentation without the address
+space, or bit widths. That is instead of &apos;llvm.memset.p0i8.i32&apos; use &apos;llvm.memset.p.i&apos;.
+</p></div></p>
+</div>
 <a id="Llvm_NET_BitcodeModule_GetIntrinsicDeclaration_" data-uid="Llvm.NET.BitcodeModule.GetIntrinsicDeclaration*"></a>
 <h2 id="Llvm_NET_BitcodeModule_GetIntrinsicDeclaration_System_UInt32_Llvm_NET_Types_ITypeRef___" data-uid="Llvm.NET.BitcodeModule.GetIntrinsicDeclaration(System.UInt32,Llvm.NET.Types.ITypeRef[])">GetIntrinsicDeclaration(UInt32, ITypeRef[])</h2>
 <div class="markdown level1 summary"><p>Gets a declaration for an LLVM intrinsic function</p>
@@ -3625,7 +3637,7 @@
             <span class="pull-right">
               <a href="#top">Back to top</a>
             </span>
-            Copyright (C) 2017, Dot NET Foundation<br><strong>Build:</strong> 5.0.1-alpha--ci-BLD.433140595
+            Copyright (C) 2017, Dot NET Foundation<br><strong>Build:</strong> 5.0.1-alpha--ci-BLD.433162936
             
           </div>
         </div>
