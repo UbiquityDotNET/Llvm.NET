@@ -19,6 +19,19 @@ using static Llvm.NET.Native.NativeMethods;
 
 namespace Llvm.NET.DebugInfo
 {
+    /// <summary>Defines the amount of debug information to emit</summary>
+    public enum DwarfEmissionKind
+    {
+        /// <summary>No debug information</summary>
+        None = 0,
+
+        /// <summary>Full Debug information</summary>
+        Full,
+
+        /// <summary>Emit line tables only</summary>
+        LineTablesOnly
+    }
+
     /// <summary>DebugInfoBuilder is a factory class for creating DebugInformation for an LLVM
     /// <see cref="BitcodeModule"/></summary>
     /// <remarks>
@@ -83,14 +96,22 @@ namespace Llvm.NET.DebugInfo
                 throw new InvalidOperationException( "LLVM only allows one DICompileUnit per module" );
             }
 
-            var handle = LLVMDIBuilderCreateCompileUnit( BuilderHandle
+            var file = CreateFile( fileName, fileDirectory );
+            var handle = LLVMDIBuilderCreateCompileUnit2( BuilderHandle
                                                        , ( uint )language
-                                                       , fileName
-                                                       , fileDirectory
+                                                       , file.MetadataHandle
                                                        , producer
-                                                       , optimized ? 1 : 0
+                                                       , (IntPtr)producer.Length
+                                                       , optimized
                                                        , compilationFlags
+                                                       , (IntPtr)compilationFlags.Length
                                                        , runtimeVersion
+                                                       , string.Empty
+                                                       , IntPtr.Zero
+                                                       , DwarfEmissionKind.Full
+                                                       , 0
+                                                       , false
+                                                       , false
                                                        );
             var retVal = MDNode.FromHandle<DICompileUnit>( handle );
             OwningModule.DICompileUnit = retVal;
@@ -146,7 +167,7 @@ namespace Llvm.NET.DebugInfo
                 return null;
             }
 
-            var handle = LLVMDIBuilderCreateFile( BuilderHandle, fileName, directory ?? string.Empty );
+            var handle = LLVMDIBuilderCreateFile( BuilderHandle, fileName, (IntPtr)fileName.Length, directory ?? string.Empty, (IntPtr)directory.Length );
             return MDNode.FromHandle<DIFile>( handle );
         }
 
@@ -1054,7 +1075,6 @@ namespace Llvm.NET.DebugInfo
 
         /// <summary>Inserts a call to the llvm.dbg.value intrinsic before the specified instruction</summary>
         /// <param name="value">New value</param>
-        /// <param name="offset">Offset in the user source variable where <paramref name="value"/> is written</param>
         /// <param name="varInfo"><see cref="DILocalVariable"/> describing the variable</param>
         /// <param name="location"><see cref="DILocation"/>for the assignment</param>
         /// <param name="insertBefore">Location to insert the intrinsic</param>
@@ -1071,18 +1091,16 @@ namespace Llvm.NET.DebugInfo
         /// <seealso href="xref:llvm_sourcelevel_debugging#lvm-dbg-value">LLVM: llvm.dbg.value</seealso>
         /// <seealso href="xref:llvm_sourcelevel_debugging#source-level-debugging-with-llvm">LLVM: Source Level Debugging with LLVM</seealso>
         public CallInstruction InsertValue( Value value
-                                          , UInt64 offset
                                           , DILocalVariable varInfo
                                           , DILocation location
                                           , Instruction insertBefore
                                           )
         {
-            return InsertValue( value, offset, varInfo, null, location, insertBefore );
+            return InsertValue( value, varInfo, null, location, insertBefore );
         }
 
         /// <summary>Inserts a call to the llvm.dbg.value intrinsic before the specified instruction</summary>
         /// <param name="value">New value</param>
-        /// <param name="offset">Offset in the user source variable where <paramref name="value"/> is written</param>
         /// <param name="varInfo"><see cref="DILocalVariable"/> describing the variable</param>
         /// <param name="expression"><see cref="DIExpression"/> for the variable</param>
         /// <param name="location"><see cref="DILocation"/>for the assignment</param>
@@ -1101,7 +1119,6 @@ namespace Llvm.NET.DebugInfo
         /// <seealso href="xref:llvm_sourcelevel_debugging#source-level-debugging-with-llvm">LLVM: Source Level Debugging with LLVM</seealso>
         [SuppressMessage( "Microsoft.Design", "CA1011:ConsiderPassingBaseTypesAsParameters", Justification = "Interop API requires specific derived type" )]
         public CallInstruction InsertValue( Value value
-                                          , UInt64 offset
                                           , DILocalVariable varInfo
                                           , DIExpression expression
                                           , DILocation location
@@ -1116,7 +1133,6 @@ namespace Llvm.NET.DebugInfo
 
             var handle = LLVMDIBuilderInsertValueBefore( BuilderHandle
                                                        , value.ValueHandle
-                                                       , offset
                                                        , varInfo.MetadataHandle
                                                        , expression?.MetadataHandle ?? CreateExpression( ).MetadataHandle
                                                        , location.MetadataHandle
@@ -1129,7 +1145,6 @@ namespace Llvm.NET.DebugInfo
 
         /// <summary>Inserts a call to the llvm.dbg.value intrinsic at the end of a basic block</summary>
         /// <param name="value">New value</param>
-        /// <param name="offset">Offset in the user source variable where <paramref name="value"/> is written</param>
         /// <param name="varInfo"><see cref="DILocalVariable"/> describing the variable</param>
         /// <param name="location"><see cref="DILocation"/>for the assignment</param>
         /// <param name="insertAtEnd">Block to append the intrinsic to the end of</param>
@@ -1146,47 +1161,16 @@ namespace Llvm.NET.DebugInfo
         /// <seealso href="xref:llvm_sourcelevel_debugging#lvm-dbg-value">LLVM: llvm.dbg.value</seealso>
         /// <seealso href="xref:llvm_sourcelevel_debugging#source-level-debugging-with-llvm">LLVM: Source Level Debugging with LLVM</seealso>
         public CallInstruction InsertValue( Value value
-                                          , UInt64 offset
                                           , DILocalVariable varInfo
                                           , DILocation location
                                           , BasicBlock insertAtEnd
                                           )
         {
-            return InsertValue( value, offset, varInfo, null, location, insertAtEnd );
+            return InsertValue( value, varInfo, null, location, insertAtEnd );
         }
 
         /// <summary>Inserts a call to the llvm.dbg.value intrinsic at the end of a basic block</summary>
         /// <param name="value">New value</param>
-        /// <param name="varInfo"><see cref="DILocalVariable"/> describing the variable</param>
-        /// <param name="expression"><see cref="DIExpression"/> for the variable</param>
-        /// <param name="location"><see cref="DILocation"/>for the assignment</param>
-        /// <param name="insertAtEnd">Block to append the intrinsic to the end of</param>
-        /// <returns><see cref="Instructions.CallInstruction"/> for the intrinsic</returns>
-        /// <remarks>
-        /// This intrinsic provides information when a user source variable is set to a new value.
-        /// <note type="note">
-        /// The call has no impact on the actual machine code generated, as it is removed or ignored for actual target instruction
-        /// selection. Instead this provides a means to bind the LLVM Debug information metadata to a particular LLVM <see cref="Value"/>
-        /// that allows the transformation and optimization passes to track the debug information. Thus, even with optimized code
-        /// the actual debug information is retained.
-        /// </note>
-        /// </remarks>
-        /// <seealso href="xref:llvm_sourcelevel_debugging#lvm-dbg-value">LLVM: llvm.dbg.value</seealso>
-        /// <seealso href="xref:llvm_sourcelevel_debugging#source-level-debugging-with-llvm">LLVM: Source Level Debugging with LLVM</seealso>
-        [SuppressMessage("Microsoft.Design", "CA1011:ConsiderPassingBaseTypesAsParameters", Justification = "Interop API requires specific derived type" )]
-        public CallInstruction InsertValue( Value value
-                                          , DILocalVariable varInfo
-                                          , DIExpression expression
-                                          , DILocation location
-                                          , BasicBlock insertAtEnd
-                                          )
-        {
-            return InsertValue(value, 0, varInfo, expression, location, insertAtEnd);
-        }
-
-        /// <summary>Inserts a call to the llvm.dbg.value intrinsic at the end of a basic block</summary>
-        /// <param name="value">New value</param>
-        /// <param name="offset">Offset in the user source variable where <paramref name="value"/> is written</param>
         /// <param name="varInfo"><see cref="DILocalVariable"/> describing the variable</param>
         /// <param name="expression"><see cref="DIExpression"/> for the variable</param>
         /// <param name="location"><see cref="DILocation"/>for the assignment</param>
@@ -1205,7 +1189,6 @@ namespace Llvm.NET.DebugInfo
         /// <seealso href="xref:llvm_sourcelevel_debugging#source-level-debugging-with-llvm">LLVM: Source Level Debugging with LLVM</seealso>
         [SuppressMessage("Microsoft.Design", "CA1011:ConsiderPassingBaseTypesAsParameters", Justification = "Interop API requires specific derived type" )]
         public CallInstruction InsertValue( Value value
-                                          , UInt64 offset
                                           , DILocalVariable varInfo
                                           , DIExpression expression
                                           , DILocation location
@@ -1230,7 +1213,6 @@ namespace Llvm.NET.DebugInfo
 
             var handle = LLVMDIBuilderInsertValueAtEnd( BuilderHandle
                                                       , value.ValueHandle
-                                                      , offset
                                                       , varInfo.MetadataHandle
                                                       , expression?.MetadataHandle ?? CreateExpression( ).MetadataHandle
                                                       , location.MetadataHandle
@@ -1329,6 +1311,7 @@ namespace Llvm.NET.DebugInfo
 
         #pragma warning disable SA1124 // Do not use regions
         #region LibLLVM P/Invoke APIs
+
         [DllImport( LibraryPath, CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl, BestFitMapping = false, ThrowOnUnmappableChar = true )]
         private static extern LLVMDIBuilderRef LLVMNewDIBuilder( LLVMModuleRef @m, [MarshalAs( UnmanagedType.Bool )]bool allowUnresolved );
 
@@ -1339,10 +1322,30 @@ namespace Llvm.NET.DebugInfo
         private static extern void LLVMDIBuilderFinalizeSubProgram( LLVMDIBuilderRef dref, LLVMMetadataRef /*DISubProgram*/ subProgram );
 
         [DllImport( LibraryPath, CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl, BestFitMapping = false, ThrowOnUnmappableChar = true )]
-        private static extern LLVMMetadataRef LLVMDIBuilderCreateCompileUnit( LLVMDIBuilderRef @D, UInt32 @Language, [MarshalAs( UnmanagedType.LPStr )] string @File, [MarshalAs( UnmanagedType.LPStr )] string @Dir, [MarshalAs( UnmanagedType.LPStr )] string @Producer, int @Optimized, [MarshalAs( UnmanagedType.LPStr )] string @Flags, UInt32 @RuntimeVersion );
+        private static extern LLVMMetadataRef LLVMDIBuilderCreateCompileUnit2( LLVMDIBuilderRef @D
+                                                                             , UInt32 @Language
+                                                                             , LLVMMetadataRef /*DIFile*/ fileRef
+                                                                             , [MarshalAs( UnmanagedType.LPStr )] string @Producer
+                                                                             , IntPtr ProduceLen
+                                                                             , [MarshalAs(UnmanagedType.Bool)] bool @Optimized
+                                                                             , [MarshalAs( UnmanagedType.LPStr )] string @Flags
+                                                                             , IntPtr FlagsLen
+                                                                             , UInt32 @RuntimeVersion
+                                                                             , [MarshalAs( UnmanagedType.LPStr )] string splitName
+                                                                             , IntPtr splitNameLen
+                                                                             , DwarfEmissionKind kind
+                                                                             , UInt32 dwOId
+                                                                             , [MarshalAs( UnmanagedType.Bool )] bool splitDebugInlining
+                                                                             , [MarshalAs( UnmanagedType.Bool )] bool debugInfoForProfiling
+                                                                             );
 
         [DllImport( LibraryPath, CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl, BestFitMapping = false, ThrowOnUnmappableChar = true )]
-        private static extern LLVMMetadataRef LLVMDIBuilderCreateFile( LLVMDIBuilderRef @D, [MarshalAs( UnmanagedType.LPStr )] string @File, [MarshalAs( UnmanagedType.LPStr )] string @Dir );
+        private static extern LLVMMetadataRef LLVMDIBuilderCreateFile( LLVMDIBuilderRef @D
+                                                                     , [MarshalAs( UnmanagedType.LPStr )] string @File
+                                                                     , IntPtr fileLen
+                                                                     , [MarshalAs( UnmanagedType.LPStr )] string @Dir
+                                                                     , IntPtr dirLen
+                                                                     );
 
         [DllImport( LibraryPath, CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl, BestFitMapping = false, ThrowOnUnmappableChar = true )]
         private static extern LLVMMetadataRef LLVMDIBuilderCreateLexicalBlock( LLVMDIBuilderRef @D, LLVMMetadataRef @Scope, LLVMMetadataRef @File, UInt32 @Line, UInt32 @Column );
@@ -1408,7 +1411,10 @@ namespace Llvm.NET.DebugInfo
         private static extern LLVMValueRef LLVMDIBuilderInsertDeclareAtEnd( LLVMDIBuilderRef @D, LLVMValueRef @Storage, LLVMMetadataRef @VarInfo, LLVMMetadataRef @Expr, LLVMMetadataRef Location, LLVMBasicBlockRef @Block );
 
         [DllImport( LibraryPath, CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl, BestFitMapping = false, ThrowOnUnmappableChar = true )]
-        private static extern LLVMValueRef LLVMDIBuilderInsertValueAtEnd( LLVMDIBuilderRef @D, LLVMValueRef @Val, UInt64 @Offset, LLVMMetadataRef @VarInfo, LLVMMetadataRef @Expr, LLVMMetadataRef Location, LLVMBasicBlockRef @Block );
+        private static extern LLVMValueRef LLVMDIBuilderInsertValueAtEnd( LLVMDIBuilderRef @D, LLVMValueRef @Val, LLVMMetadataRef @VarInfo, LLVMMetadataRef @Expr, LLVMMetadataRef Location, LLVMBasicBlockRef @Block );
+
+        [DllImport( LibraryPath, CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl, BestFitMapping = false, ThrowOnUnmappableChar = true )]
+        private static extern LLVMValueRef LLVMDIBuilderInsertValueBefore( LLVMDIBuilderRef Dref, LLVMValueRef Val, LLVMMetadataRef VarInfo, LLVMMetadataRef Expr, LLVMMetadataRef DL, LLVMValueRef InsertBefore );
 
         [DllImport( LibraryPath, CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl, BestFitMapping = false, ThrowOnUnmappableChar = true )]
         private static extern LLVMMetadataRef LLVMDIBuilderCreateEnumerationType( LLVMDIBuilderRef @D, LLVMMetadataRef @Scope, [MarshalAs( UnmanagedType.LPStr )] string @Name, LLVMMetadataRef @File, UInt32 @LineNumber, UInt64 @SizeInBits, UInt32 @AlignInBits, LLVMMetadataRef @Elements, LLVMMetadataRef @UnderlyingType, [MarshalAs( UnmanagedType.LPStr )]string @UniqueId );
@@ -1433,6 +1439,6 @@ namespace Llvm.NET.DebugInfo
 
         [DllImport( LibraryPath, CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl, BestFitMapping = false, ThrowOnUnmappableChar = true )]
         private static extern LLVMMetadataRef LLVMDIBuilderCreateNamespace( LLVMDIBuilderRef Dref, LLVMMetadataRef scope, [MarshalAs( UnmanagedType.LPStr )] string name, [MarshalAs( UnmanagedType.Bool )]bool exportSymbols );
-        #endregion
+#endregion
     }
 }

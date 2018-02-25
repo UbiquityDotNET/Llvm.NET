@@ -183,6 +183,15 @@ namespace Llvm.NET.Values
         /// <summary>Calling convention used for special MSP430 rtlib functions which have an "optimized" convention using additional registers.</summary>
         MSP430BuiltIn = 94,
 
+        /// <summary>Calling convention used for AMDPAL vertex shader if tessellation is in use.</summary>
+        AMDGpuLS = 95,
+
+        /// <summary>Calling convention used for AMDPAL shader stage before geometry shader if geometry is in use.</summary>
+        /// <remarks>
+        /// Either the domain (= tessellation evaluation) shader if tessellation is in use, or otherwise the vertex shader.
+        /// </remarks>
+        AMDGpuEs = 96,
+
         /// <summary>The highest possible calling convention ID. Must be some 2^k - 1.</summary>
         MaxCallingConvention = 1023
     }

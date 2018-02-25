@@ -97,44 +97,43 @@ extern "C"
         delete d;
     }
 
-    void LLVMDIBuilderFinalize( LLVMDIBuilderRef dref )
+    LLVMMetadataRef LLVMDIBuilderCreateCompileUnit2( LLVMDIBuilderRef Builder
+                                                   , LLVMDWARFSourceLanguage Lang
+                                                   , LLVMMetadataRef FileRef
+                                                   , const char *Producer
+                                                   , size_t ProducerLen
+                                                   , LLVMBool isOptimized
+                                                   , const char *Flags
+                                                   , size_t FlagsLen
+                                                   , unsigned RuntimeVer
+                                                   , const char *SplitName
+                                                   , size_t SplitNameLen
+                                                   , LLVMDWARFEmissionKind Kind
+                                                   , unsigned DWOId
+                                                   , LLVMBool SplitDebugInlining
+                                                   , LLVMBool DebugInfoForProfiling
+                                                   )
     {
-        unwrap( dref )->finalize( );
+        auto File = unwrap<DIFile>( FileRef );
+
+        return wrap( unwrap( Builder )->createCompileUnit( Lang
+                                                         , File
+                                                         , StringRef( Producer, ProducerLen )
+                                                         , isOptimized
+                                                         , StringRef( Flags, FlagsLen )
+                                                         , RuntimeVer
+                                                         , StringRef( SplitName, SplitNameLen )
+                                                         , static_cast<DICompileUnit::DebugEmissionKind>( Kind )
+                                                         , DWOId
+                                                         , SplitDebugInlining
+                                                         , DebugInfoForProfiling
+                                                         )
+                   );
     }
 
     void LLVMDIBuilderFinalizeSubProgram( LLVMDIBuilderRef dref, LLVMMetadataRef /*DISubProgram*/ subProgram )
     {
         unwrap( dref )->finalizeSubprogram( unwrap<DISubprogram>( subProgram ) );
-    }
-
-    LLVMMetadataRef LLVMDIBuilderCreateCompileUnit( LLVMDIBuilderRef Dref
-                                                    , unsigned Lang
-                                                    , const char *File
-                                                    , const char *Dir
-                                                    , const char *Producer
-                                                    , int Optimized, const char *Flags
-                                                    , unsigned RuntimeVersion
-                                                    )
-    {
-        DIBuilder *D = unwrap( Dref );
-        DICompileUnit* CU = D->createCompileUnit( Lang
-                                                  , D->createFile(File, Dir )
-                                                  , Producer
-                                                  , Optimized
-                                                  , Flags
-                                                  , RuntimeVersion
-                                                  );
-        return wrap( CU );
-    }
-
-    LLVMMetadataRef LLVMDIBuilderCreateFile( LLVMDIBuilderRef Dref
-                                             , const char *File
-                                             , const char *Dir
-                                             )
-    {
-        DIBuilder *D = unwrap( Dref );
-        DIFile* F = D->createFile( File, Dir );
-        return wrap( F );
     }
 
     LLVMMetadataRef LLVMDIBuilderCreateLexicalBlock( LLVMDIBuilderRef Dref
@@ -548,7 +547,6 @@ extern "C"
 
     LLVMValueRef LLVMDIBuilderInsertValueAtEnd( LLVMDIBuilderRef Dref
                                                 , LLVMValueRef Val
-                                                , uint64_t Offset
                                                 , LLVMMetadataRef VarInfo
                                                 , LLVMMetadataRef Expr
                                                 , LLVMMetadataRef diLocation
@@ -557,7 +555,6 @@ extern "C"
     {
         DIBuilder *D = unwrap( Dref );
         Instruction *Instr = D->insertDbgValueIntrinsic( unwrap( Val )
-                                                         , Offset
                                                          , unwrap<DILocalVariable>( VarInfo )
                                                          , unwrap<DIExpression>( Expr )
                                                          , unwrap<DILocation>( diLocation )
@@ -655,7 +652,6 @@ extern "C"
 
     LLVMValueRef LLVMDIBuilderInsertValueBefore( LLVMDIBuilderRef Dref
                                                  , /*llvm::Value **/LLVMValueRef Val
-                                                 , uint64_t Offset
                                                  , /*DILocalVariable **/ LLVMMetadataRef VarInfo
                                                  , /*DIExpression **/ LLVMMetadataRef Expr
                                                  , /*const DILocation **/ LLVMMetadataRef DL
@@ -664,7 +660,6 @@ extern "C"
     {
         DIBuilder* D = unwrap( Dref );
         Instruction* pInstruction = D->insertDbgValueIntrinsic( unwrap( Val )
-                                                                , Offset
                                                                 , unwrap<DILocalVariable>( VarInfo )
                                                                 , unwrap<DIExpression>( Expr )
                                                                 , unwrap<DILocation>( DL )

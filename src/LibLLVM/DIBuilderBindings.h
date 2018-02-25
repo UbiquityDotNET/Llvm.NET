@@ -19,6 +19,7 @@
 #include <stdint.h>
 #include "IRBindings.h"
 #include "llvm-c/Core.h"
+#include "llvm-c/DebugInfo.h"
 
 #ifdef __cplusplus
 extern "C" {
@@ -155,23 +156,28 @@ extern "C" {
     LLVMDIBuilderRef LLVMNewDIBuilder( LLVMModuleRef m, LLVMBool allowUnresolved );
 
     void LLVMDIBuilderDestroy( LLVMDIBuilderRef d );
-    void LLVMDIBuilderFinalize( LLVMDIBuilderRef d );
     void LLVMDIBuilderFinalizeSubProgram( LLVMDIBuilderRef dref, LLVMMetadataRef /*DISubProgram*/ subProgram );
 
-    LLVMMetadataRef LLVMDIBuilderCreateCompileUnit( LLVMDIBuilderRef D
-                                                    , unsigned Language
-                                                    , const char *File
-                                                    , const char *Dir
-                                                    , const char *Producer
-                                                    , int Optimized
-                                                    , const char *Flags
-                                                    , unsigned RuntimeVersion
-                                                    );
-
-    LLVMMetadataRef LLVMDIBuilderCreateFile( LLVMDIBuilderRef D
-                                             , const char *File
-                                             , const char *Dir
-                                             );
+    // llvm-c has a version of this, but it uses a strict mapping of the source language ID
+    // such that attempting to use valid user defined language types results in an assert
+    // that crashes the caller. That's a bit rude so this version is available to allow
+    // all valid dwarf language IDs including custom user defined values.
+    LLVMMetadataRef LLVMDIBuilderCreateCompileUnit2( LLVMDIBuilderRef Builder
+                                                     , LLVMDWARFSourceLanguage Lang
+                                                     , LLVMMetadataRef FileRef
+                                                     , const char *Producer
+                                                     , size_t ProducerLen
+                                                     , LLVMBool isOptimized
+                                                     , const char *Flags
+                                                     , size_t FlagsLen
+                                                     , unsigned RuntimeVer
+                                                     , const char *SplitName
+                                                     , size_t SplitNameLen
+                                                     , LLVMDWARFEmissionKind Kind
+                                                     , unsigned DWOId
+                                                     , LLVMBool SplitDebugInlining
+                                                     , LLVMBool DebugInfoForProfiling
+                                                     );
 
     LLVMMetadataRef LLVMDIBuilderCreateLexicalBlock( LLVMDIBuilderRef D
                                                      , LLVMMetadataRef Scope
@@ -361,12 +367,18 @@ extern "C" {
 
     LLVMValueRef LLVMDIBuilderInsertValueAtEnd( LLVMDIBuilderRef D
                                                 , LLVMValueRef Val
-                                                , uint64_t Offset
                                                 , LLVMMetadataRef VarInfo
                                                 , LLVMMetadataRef Expr
                                                 , LLVMMetadataRef diLocation
                                                 , LLVMBasicBlockRef Block
                                                 );
+    LLVMValueRef LLVMDIBuilderInsertValueBefore( LLVMDIBuilderRef Dref
+                                                 , /*llvm::Value **/LLVMValueRef Val
+                                                 , /*DILocalVariable **/ LLVMMetadataRef VarInfo
+                                                 , /*DIExpression **/ LLVMMetadataRef Expr
+                                                 , /*const DILocation **/ LLVMMetadataRef DL
+                                                 , /*Instruction **/ LLVMValueRef InsertBefore
+                                               );
 
     /// createEnumerationType - Create debugging information entry for an
     /// enumeration.
@@ -395,30 +407,18 @@ extern "C" {
     //DIEnumerator createEnumerator( StringRef Name, int64_t Val );
     LLVMMetadataRef LLVMDIBuilderCreateEnumeratorValue( LLVMDIBuilderRef D, char const* Name, int64_t Val );
 
-    /// createGlobalVariable - Create a new descriptor for the specified
-    /// variable.
-    /// @param Context     Variable scope.
-    /// @param Name        Name of the variable.
-    /// @param LinkageName Mangled  name of the variable.
-    /// @param File        File where this variable is defined.
-    /// @param LineNo      Line number.
-    /// @param Ty          Variable Type.
-    /// @param isLocalToUnit Boolean flag indicate whether this variable is
-    ///                      externally visible or not.
-    /// @param Val         llvm::Value of the variable.
-    /// @param Decl        Reference to the corresponding declaration.
-    /*DIGlobalVariable*/
-    LLVMMetadataRef LLVMDIBuilderCreateGlobalVariable( LLVMDIBuilderRef D
-                                                       , LLVMMetadataRef Context
-                                                       , char const* Name
-                                                       , char const* LinkageName
-                                                       , LLVMMetadataRef File  // DIFile
-                                                       , unsigned LineNo
-                                                       , LLVMMetadataRef Ty    //DITypeRef
-                                                       , LLVMBool isLocalToUnit
-                                                       , LLVMValueRef Val
-                                                       , LLVMMetadataRef Decl // = nullptr
-                                                       );
+    LLVMMetadataRef LLVMDIBuilderCreateGlobalVariableExpression( LLVMDIBuilderRef Dref
+                                                                 , LLVMMetadataRef Context //DIScope
+                                                                 , char const* Name
+                                                                 , char const* LinkageName
+                                                                 , LLVMMetadataRef File  // DIFile
+                                                                 , unsigned LineNo
+                                                                 , LLVMMetadataRef Ty    //DIType
+                                                                 , LLVMBool isLocalToUnit
+                                                                 , LLVMMetadataRef expression // DIExpression
+                                                                 , LLVMMetadataRef Decl // MDNode = nullptr
+                                                                 , uint32_t AlignInBits
+                                                               );
 
     LLVMDwarfTag LLVMDIDescriptorGetTag( LLVMMetadataRef descriptor );
 
@@ -435,23 +435,6 @@ extern "C" {
                                                    , LLVMMetadataRef diLocation
                                                    , LLVMValueRef InsertBefore // Instruction
                                                    );
-
-    /// Insert a new llvm.dbg.value intrinsic call.
-    /// \param Val          llvm::Value of the variable
-    /// \param Offset       Offset
-    /// \param VarInfo      Variable's debug info descriptor.
-    /// \param Expr         A complex location expression.
-    /// \param DL           Debug info location.
-    /// \param InsertBefore Location for the new intrinsic.
-    /*Instruction **/
-    LLVMValueRef LLVMDIBuilderInsertValueBefore( LLVMDIBuilderRef Dref
-                                                 , /*llvm::Value **/LLVMValueRef Val
-                                                 , uint64_t Offset
-                                                 , /*DILocalVariable **/ LLVMMetadataRef VarInfo
-                                                 , /*DIExpression **/ LLVMMetadataRef Expr
-                                                 , /*const DILocation **/ LLVMMetadataRef DL
-                                                 , /*Instruction **/ LLVMValueRef InsertBefore
-                                                 );
 
     LLVMMetadataRef LLVMDILocation( LLVMContextRef context, unsigned Line, unsigned Column, LLVMMetadataRef scope, LLVMMetadataRef InlinedAt );
     LLVMBool LLVMSubProgramDescribes( LLVMMetadataRef subProgram, LLVMValueRef /*const Function **/F );
