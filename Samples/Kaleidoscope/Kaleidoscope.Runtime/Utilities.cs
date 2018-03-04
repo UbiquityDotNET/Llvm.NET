@@ -17,20 +17,27 @@ namespace Kaleidoscope.Runtime
     public static class Utilities
     {
         /// <summary>Waits for a debugger attach</summary>
+        /// <param name="condition">Condition to determine when to wait for the debugger</param>
         /// <remarks>
-        /// This is useful for Mixed mode debugging CoreCLR builds as it doesn't directly support
-        /// debug launch with mixed debugging. Instead you launch without debugging and call this
-        /// at the start of Main() then use the Attach option to attach using both managed and
-        /// native. This is a bit of a regression in the project system for the new "SDK" type
-        /// .NET projects that will hopefully be resolved in the not too distant future.
+        /// This is useful for Mixed mode debugging the new SDK projects as they don't directly
+        /// support debug launch with mixed debugging. Instead you launch without debugging and
+        /// call this at the start of Main() then use the Attach option to attach using both
+        /// managed and native. This is a regression in the project system for the new "SDK" type
+        /// .NET projects that will hopefully be resolved in the not too distant future, until it
+        /// is this hack will have to do.
         /// <note type="note">
         /// In release builds this is a NOP due to the use of the <see cref="ConditionalAttribute"/>
         /// </note>
         /// </remarks>
         [Conditional( "DEBUG" )]
-        public static void WaitForDebugger( )
+        public static void WaitForDebugger( bool condition )
         {
-            if( !Debugger.IsAttached )
+            if(!condition || Debugger.IsAttached )
+            {
+                return;
+            }
+
+            if( !Debugger.IsAttached)
             {
                 Console.WriteLine( "Waiting for Debugger attach..." );
             }

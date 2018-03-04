@@ -19,9 +19,11 @@ using Llvm.NET.Values;
 
 using static Kaleidoscope.Grammar.KaleidoscopeParser;
 
+#pragma warning disable SA1512, SA1513, SA1515 // single line comments used to tag regions for extraction into docs
+
 namespace Kaleidoscope
 {
-    /// <summary>Static extension methods to perform LLVM IR Code generation from the Kaledoscope AST</summary>
+    /// <summary>Static extension methods to perform LLVM IR Code generation from the Kaleidoscope AST</summary>
     internal sealed class CodeGenerator
         : KaleidoscopeBaseVisitor<Value>
         , IDisposable
@@ -67,11 +69,6 @@ namespace Kaleidoscope
             return Context.CreateConstant( context.Value );
         }
 
-        public override Value VisitExternalDeclaration( [NotNull] ExternalDeclarationContext context )
-        {
-            return context.Signature.Accept( this );
-        }
-
         public override Value VisitVariableExpression( [NotNull] VariableExpressionContext context )
         {
             string varName = context.Name;
@@ -95,6 +92,11 @@ namespace Kaleidoscope
             return InstructionBuilder.Call( function, args ).RegisterName( "calltmp" );
         }
 
+        public override Value VisitExternalDeclaration( [NotNull] ExternalDeclarationContext context )
+        {
+            return context.Signature.Accept( this );
+        }
+
         public override Value VisitFunctionPrototype( [NotNull] FunctionPrototypeContext context )
         {
             return GetOrDeclareFunction( new Prototype( context ) );
@@ -110,9 +112,7 @@ namespace Kaleidoscope
         public override Value VisitTopLevelExpression( [NotNull] TopLevelExpressionContext context )
         {
             var proto = new Prototype( $"anon_expr_{AnonNameIndex++}" );
-            var function = GetOrDeclareFunction( proto
-                                               , isAnonymous: true
-                                               );
+            var function = GetOrDeclareFunction( proto, isAnonymous: true );
 
             var (_, jitHandle) = DefineFunction( function, context.expression( ) );
 
@@ -126,7 +126,7 @@ namespace Kaleidoscope
         {
             // Expression: PrimaryExpression (op expression)*
             // the sub-expressions are in evaluation order
-            var lhs = context.primaryExpression( ).Accept( this );
+            var lhs = context.Atom.Accept( this );
             foreach( var (op, rhs) in context.OperatorExpressions )
             {
                 lhs = EmitBinaryOperator( lhs, op, rhs );
@@ -290,7 +290,7 @@ namespace Kaleidoscope
                 InstructionBuilder.Branch( endCondition, loopBlock, afterBlock );
                 InstructionBuilder.PositionAtEnd( afterBlock );
 
-                // Add a new entry to the PHI node for the backedge.
+                // Add a new entry to the PHI node for the back-edge.
                 variable.AddIncoming( nextVar, loopEndBlock );
 
                 // for expr always returns 0.0 for consistency, there is no 'void'
@@ -447,6 +447,7 @@ namespace Kaleidoscope
             return (function, jitHandle);
         }
 
+        // <PrivateMembers>
         private readonly DynamicRuntimeState RuntimeState;
         private static int AnonNameIndex;
         private readonly Context Context;
@@ -462,5 +463,6 @@ namespace Kaleidoscope
         /// <returns>Result of evaluating the expression</returns>
         [UnmanagedFunctionPointer( System.Runtime.InteropServices.CallingConvention.Cdecl )]
         private delegate double AnonExpressionFunc( );
+        // </PrivateMembers>
     }
 }

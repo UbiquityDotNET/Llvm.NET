@@ -42,6 +42,9 @@ namespace Kaleidoscope
             Context.Dispose( );
         }
 
+        public BitcodeModule GeneratedModule => Module;
+
+        // <Generate>
         public Value Generate( Parser parser, IParseTree tree, DiagnosticRepresentations additionalDiagnostics )
         {
             if( parser.NumberOfSyntaxErrors > 0 )
@@ -51,22 +54,21 @@ namespace Kaleidoscope
 
             return Visit( tree );
         }
+        // </Generate>
 
         public override Value VisitParenExpression( [NotNull] ParenExpressionContext context )
         {
             return context.Expression.Accept( this );
         }
 
+        // <VisitConstExpression>
         public override Value VisitConstExpression( [NotNull] ConstExpressionContext context )
         {
             return Context.CreateConstant( context.Value );
         }
+        // </VisitConstExpression>
 
-        public override Value VisitExternalDeclaration( [NotNull] ExternalDeclarationContext context )
-        {
-            return context.Signature.Accept( this );
-        }
-
+        // <VisitVariableExpression>
         public override Value VisitVariableExpression( [NotNull] VariableExpressionContext context )
         {
             string varName = context.Name;
@@ -77,6 +79,7 @@ namespace Kaleidoscope
 
            return value;
         }
+        // </VisitVariableExpression>
 
         public override Value VisitFunctionCallExpression( [NotNull] FunctionCallExpressionContext context )
         {
@@ -90,18 +93,28 @@ namespace Kaleidoscope
             return InstructionBuilder.Call( function, args ).RegisterName( "calltmp" );
         }
 
+        // <FunctionDeclarations>
+        public override Value VisitExternalDeclaration( [NotNull] ExternalDeclarationContext context )
+        {
+            return context.Signature.Accept( this );
+        }
+
         public override Value VisitFunctionPrototype( [NotNull] FunctionPrototypeContext context )
         {
             return GetOrDeclareFunction( new Prototype( context ) );
         }
+        // </FunctionDeclarations>
 
+        // <VisitFunctionDefinition>
         public override Value VisitFunctionDefinition( [NotNull] FunctionDefinitionContext context )
         {
             return DefineFunction( ( Function )context.Signature.Accept( this )
                                  , context.BodyExpression
                                  );
         }
+        // </VisitFunctionDefinition>
 
+        // <VisitTopLevelExpression>
         public override Value VisitTopLevelExpression( [NotNull] TopLevelExpressionContext context )
         {
             var proto = new Prototype( $"anon_expr_{AnonNameIndex++}" );
@@ -109,12 +122,14 @@ namespace Kaleidoscope
 
             return DefineFunction( function, context.expression() );
         }
+        // </VisitTopLevelExpression>
 
+        // <VisitExpression>
         public override Value VisitExpression( [NotNull] ExpressionContext context )
         {
             // Expression: PrimaryExpression (op expression)*
             // the sub-expressions are in evaluation order
-            var lhs = context.primaryExpression( ).Accept( this );
+            var lhs = context.Atom.Accept( this );
             foreach( var (op, rhs) in context.OperatorExpressions )
             {
                 lhs = EmitBinaryOperator( lhs, op, rhs );
@@ -122,9 +137,11 @@ namespace Kaleidoscope
 
             return lhs;
         }
+        // </VisitExpression>
 
         protected override Value DefaultResult => null;
 
+        // <EmitBinaryOperator>
         private Value EmitBinaryOperator( Value lhs, BinaryopContext op, IParseTree rightTree )
         {
             var rhs = rightTree.Accept( this );
@@ -166,12 +183,14 @@ namespace Kaleidoscope
                 throw new CodeGeneratorException( $"Invalid binary operator {op.Token.Text}" );
             }
         }
+        // </EmitBinaryOperator>
 
         private Function GetFunction( string name )
         {
             return Module.GetFunction( name );
         }
 
+        // <GetOrDeclareFunction>
         private Function GetOrDeclareFunction( Prototype prototype )
         {
             var function = Module.GetFunction( prototype.Identifier.Name );
@@ -194,7 +213,9 @@ namespace Kaleidoscope
 
             return retVal;
         }
+        // </GetOrDeclareFunction>
 
+        // <DefineFunction>
         private Function DefineFunction( Function function, ExpressionContext body )
         {
             if( !function.IsDeclaration )
@@ -222,6 +243,7 @@ namespace Kaleidoscope
 
             return function;
         }
+        // </DefineFunction>
 
         // <PrivateMembers>
         private readonly DynamicRuntimeState RuntimeState;

@@ -19,6 +19,8 @@ using Llvm.NET.Values;
 
 using static Kaleidoscope.Grammar.KaleidoscopeParser;
 
+#pragma warning disable SA1512, SA1513, SA1515 // single line comments used to tag regions for extraction into docs
+
 namespace Kaleidoscope
 {
     /// <summary>Static extension methods to perform LLVM IR Code generation from the Kaleidoscope AST</summary>
@@ -27,6 +29,7 @@ namespace Kaleidoscope
         , IDisposable
         , IKaleidoscopeCodeGenerator<Value>
     {
+        // <Initialization>
         public CodeGenerator( DynamicRuntimeState globalState )
         {
             RuntimeState = globalState;
@@ -38,6 +41,7 @@ namespace Kaleidoscope
             FunctionModuleMap = new Dictionary<string, IJitModuleHandle>( );
             NamedValues = new Dictionary<string, Value>( );
         }
+        // </Initialization>
 
         public bool DisableOptimizations { get; set; }
 
@@ -67,11 +71,6 @@ namespace Kaleidoscope
             return Context.CreateConstant( context.Value );
         }
 
-        public override Value VisitExternalDeclaration( [NotNull] ExternalDeclarationContext context )
-        {
-            return context.Signature.Accept( this );
-        }
-
         public override Value VisitVariableExpression( [NotNull] VariableExpressionContext context )
         {
             string varName = context.Name;
@@ -93,6 +92,11 @@ namespace Kaleidoscope
 
             var args = context.Args.Select( ctx => ctx.Accept( this ) ).ToArray( );
             return InstructionBuilder.Call( function, args ).RegisterName( "calltmp" );
+        }
+
+        public override Value VisitExternalDeclaration( [NotNull] ExternalDeclarationContext context )
+        {
+            return context.Signature.Accept( this );
         }
 
         public override Value VisitFunctionPrototype( [NotNull] FunctionPrototypeContext context )
@@ -124,7 +128,7 @@ namespace Kaleidoscope
         {
             // Expression: PrimaryExpression (op expression)*
             // the sub-expressions are in evaluation order
-            var lhs = context.primaryExpression( ).Accept( this );
+            var lhs = context.Atom.Accept( this );
             foreach( var (op, rhs) in context.OperatorExpressions )
             {
                 lhs = EmitBinaryOperator( lhs, op, rhs );
@@ -244,7 +248,7 @@ namespace Kaleidoscope
             // implementation. This is needed, otherwise both the MCJIT
             // and OrcJit engines will resolve to the original module, despite
             // claims to the contrary in the official tutorial text. (Though,
-            // to be fare it may have been true in the original JIT and might
+            // to be fair it may have been true in the original JIT and might
             // still be true for the interpreter)
             if( FunctionModuleMap.Remove( function.Name, out IJitModuleHandle handle ) )
             {
@@ -280,6 +284,7 @@ namespace Kaleidoscope
             return (function, jitHandle);
         }
 
+        // <PrivateMembers>
         private readonly DynamicRuntimeState RuntimeState;
         private static int AnonNameIndex;
         private readonly Context Context;
@@ -295,5 +300,6 @@ namespace Kaleidoscope
         /// <returns>Result of evaluating the expression</returns>
         [UnmanagedFunctionPointer( System.Runtime.InteropServices.CallingConvention.Cdecl )]
         private delegate double AnonExpressionFunc( );
+        // </PrivateMembers>
     }
 }

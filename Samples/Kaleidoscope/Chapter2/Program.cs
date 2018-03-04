@@ -9,6 +9,8 @@ using Kaleidoscope.Runtime;
 
 [assembly: SuppressMessage( "StyleCop.CSharp.DocumentationRules", "SA1652:Enable XML documentation output", Justification = "Sample application" )]
 
+#pragma warning disable SA1512, SA1513, SA1515 // single line comments used to tag regions for extraction into docs
+
 namespace Kaleidoscope
 {
     public static class Program
@@ -20,7 +22,7 @@ namespace Kaleidoscope
         {
             // Using language level that includes the complete set
             // of language features to allow exploring and verifying
-            // the parser support for the whole language.
+            // <generatorloop>
             var parser = new ReplParserStack( LanguageLevel.MutableVariables );
             using( var generator = new CodeGenerator( parser.GlobalState ) )
             {
@@ -36,8 +38,10 @@ namespace Kaleidoscope
 
                 replLoop.Run( );
             }
+            // </generatorloop>
         }
 
+        // <ProcessResults>
         private static void OnGeneratedResultAvailable( object sender, GeneratedResultAvailableArgs<int> e )
         {
             if( e.Recognizer.NumberOfSyntaxErrors == 0 )
@@ -45,5 +49,6 @@ namespace Kaleidoscope
                 Console.WriteLine( "Parsed {0}", e.ParseTree.GetType( ).Name );
             }
         }
+        // </ProcessResults>
     }
 }

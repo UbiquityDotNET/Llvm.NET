@@ -297,40 +297,11 @@ implementations for working with Kaleidoscope, ANTLR and Llvm.NET.
 While each chapter is a bit different from the others. Many of the chapters are virtually identical for the driver.
 In particular Chapters 3-7 only really differ in the language level support. 
 
-[!code-csharp[Program.cs](../../../Samples/Kaleidoscope/Chapter4/Program.cs)]
+[!code-csharp[Program.cs](../../../Samples/Kaleidoscope/Chapter2/Program.cs#generatorloop)]
 
-The Main function starts out by calling WaitForDebugger(). This is a useful utility that doesn't do anything in a
-release build, but in debug builds will check for an attached debugger and if none is found it will wait for one.
-This works around a missing feature of the .NET Standard C# project system that does not support launching mixed
-native+managed debugging. When you need to go all the way into debugging the LLVM code, you can launch the debug
-version of the app without debugging, then attach to it and select native and managed debugging. (Hopefully this
-feature will be restored to these projects in the future so this trick isn't needed...)
-
-The real heart of the driver app is in the next small block of code. The driver begins by initializing the LLVM
-system, which loads the correct platform architecture version of the LibLLVM.DLL and initializes a number of
-internal LLVM static infrastructure. This requires some tear down for a clean shutdown of LLVM so the initialization
-returns an IDisposable which requires a call to Dispose() to cleanup. The cleanup is handled automatically via a
-C# using statement.
-
-```C#
-using( InitializeLLVM( ) )
-{
-[...]
-}
-```
-
-The next step of initialization for LLVM is registration of platform targets. Since LLVM can target multiple different
-platforms, and support for each target requires some resources applications need to declare the targets they want to use.
-For the JIT Kaleidoscope samples the target is the native host system so that is the only target registered.
-
-Once LLVM is initialized the Kaleidoscope parser is created. The ReplParserStack contains the support for parsing the
-Kaleidoscope language from the REPL loop interactive input. The stack also maintains the global state of the runtime,
-which controls the language features enabled, and if user defined operators are enabled, contains the operators defined
-along with their precedence.
-
-```C#
-var parser = new ReplParserStack( LanguageLevel.SimpleExpressions );
-```
+The ReplParserStack contains the support for parsing the Kaleidoscope language from the REPL loop interactive input.
+The stack also maintains the global state of the runtime, which controls the language features enabled, and if user
+defined operators are enabled, contains the operators defined along with their precedence.
 
 After the parser is created the code generator is constructed. The code generator is responsible for most of the real work
 of the language. The implementation of the generator is different for each chapter. However, since the generator is based
@@ -339,18 +310,12 @@ the most part, it is fairly easy to diff the generators for each chapter to see 
 the chapter introduces. Each chapter will go into more details on this. Since the generator usually allocates resources in
 Llvm.NET it implements IDisposable to ensure they are released as early as possible.
 
-```C#
-using( var generator = new CodeGenerator( parser.GlobalState ) )
-{
-}
-```
-
 Inside the using statement for the code generator is the core loop for the language runtime. This starts by displaying
 a brief "hello" message indicating the nature of the app and the language level supported. The actual REPL loop is handled
 via a common library class `ReplLoop<T>` (in Kaleidoscope.Runtime) this class handles retrieving text from an input source
 (default is Console.In) and producing a complete "statement" for parsings. (Technically speaking Kaleidoscope doesn't have
-statements but to allow a user to type `[...] a+b<newline>+c`) without processing that as two expression invocations a 
-semicolon is used to convey the user's intent that the code is complete and ready for evaluation. The ReplLoop class takes
+statements but to allow a user to type `[...] a+b<newline>+c`) without processing that as two expression invocations (`a+b` and `c`)
+a semicolon is used to convey the user's intent that the code is complete and ready for evaluation. The ReplLoop class takes
 care of this in a generalized manner. The ReplLoop can consume input from any `System.TextReader` and uses `System.Console.In`
 as a default. When the loop detects a new line that doesn't have a semicolon it will generate a Ready state changed event
 so the calling application can inform the user with a different prompt (in all the Llvm.NET samples this is '>'). Once a complete
@@ -359,6 +324,7 @@ and the parser that created it to the generators Generate() method to actually g
 generator is the generic type parameter for `ReplLoop<T>` as the loop class doesn't need to use the result itself. The
 loop will trigger the GeneratedResultAvailable event to allow the driver application to do whatever it wants with the results.
 
+### Processing generated results
 The calling application will generally hook an event handler to show the results of the generation in some fashion. For the
 basic samples (Chapter 3-7) it indicates the value of any JITed and executed top level expressions, or the name of any functions
 defined. Chapter 2 has additional support for showing an XML representation of the tree but the same basic pattern applies.
@@ -367,33 +333,12 @@ feature. The separation of concerns also aids in making the grammar, runtime and
 driver. (Although that isn't implemented yet it is intended for the future to help broaden testing of Llvm.NET to more scenarios
 and catch breaking issues quicker.)
 
-```C#
-private static void OnGeneratedResultAvailable( object sender, GeneratedResultAvailableArgs<Value> e )
-{
-    var source = ( ReplLoop<Value> )sender;
-
-    switch( e.Result )
-    {
-    case ConstantFP result:
-        Console.WriteLine( "Evaluated to {0}", result.Value );
-        break;
-
-    case Function function:
-        if( source.AdditionalDiagnostics.HasFlag( DiagnosticRepresentations.LlvmIR ) )
-        {
-            function.ParentModule.WriteToTextFile( Path.ChangeExtension( GetSafeFileName( function.Name ), "ll" ), out string ignoredMsg );
-        }
-
-        Console.WriteLine( "Defined function: {0}", function.Name );
-        break;
-    }
-}
-```
+[!code-csharp[Program.cs](../../../Samples/Kaleidoscope/Chapter2/Program.cs#ProcessResults)]
 
 ### Special case for Chapter 2
-Chapter 2 sample code, while still following the general patterns, is a bit unique, it doesn't use Lllvm.NET at all. It
-is only focused on the language and parsing. This helps in understanding the basic patterns of the code and support and
-serves as an aid in understanding the language itself. Of particular use is the support for generating DGML and
+Chapter 2 sample code, while still following the general patterns used in all of the chapters, is a bit unique, it doesn't use
+Lllvm.NET at all. It is only focused on the language and parsing. This helps in understanding the basic patterns of the code and
+support and serves as an aid in understanding the language itself. Of particular use is the support for generating DGML and
 [blockdiag](http://blockdiag.com) representations of the parse tree for a given parse (All of the diagrams in these tutorials
 were created by creating the blockdiag files and then generating the SVG files from that). Having a nice visual
 representation of a parser tree result is helpful to understanding the parsing and various parse tree node types.
