@@ -19,11 +19,18 @@ namespace Kaleidoscope
     public static class Program
     {
         /// <summary>C# version of the LLVM Kaleidoscope language tutorial</summary>
-        /// <param name="args">Ignored...</param>
-        [SuppressMessage( "Redundancies in Symbol Declarations", "RECS0154:Parameter is never used", Justification = "Standard required signature" )]
+        /// <param name="args">Command line arguments to the application</param>
+        /// <remarks>
+        /// The only supported command line option at present is 'WaitForDebugger'
+        /// This parameter is optional and if used must be the first parameter.
+        /// Setting 'WaitForDebugger' will trigger a wait loop in Main() to wait
+        /// for an attached debugger if one is not yet attached. This is useful
+        /// for mixed mode native+managed debugging as the SDK project system does
+        /// not support that on launch.
+        /// </remarks>
         public static void Main( string[ ] args )
         {
-            WaitForDebugger( );
+            WaitForDebugger( args.Length > 0 && string.Compare( args[0], "waitfordebugger", StringComparison.InvariantCultureIgnoreCase ) == 0 );
 
             using( InitializeLLVM( ) )
             {
@@ -31,7 +38,7 @@ namespace Kaleidoscope
                 var parser = new ReplParserStack( LanguageLevel.SimpleExpressions );
                 using( var generator = new CodeGenerator( parser.GlobalState ) )
                 {
-                    Console.WriteLine( "LLVM Kaleidoscope Interpreter - {0}", parser.LanguageLevel );
+                    Console.WriteLine( "Llvm.NET Kaleidoscope Interpreter - {0}", parser.LanguageLevel );
 
                     var replLoop = new ReplLoop<Value>( generator, parser );
                     replLoop.ReadyStateChanged += ( s, e ) => Console.Write( e.PartialParse ? ">" : "Ready>" );
