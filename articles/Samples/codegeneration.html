@@ -109,6 +109,12 @@
                           <li class="">
                             <a href="Kaleidoscope-ch9.html" title="Chapter 9" class="">Chapter 9</a>
                           </li>
+                          <li class="">
+                            <a href="Kaleidoscope-ParseTreeVisitor.html" title="ParseTree Visitor" class="">ParseTree Visitor</a>
+                          </li>
+                          <li class="">
+                            <a href="Kaleidoscope-Parsetree-examples.html" title="ParseTree Examples" class="">ParseTree Examples</a>
+                          </li>
                         </ul>  </li>
                   </ul>        </div>
               </div>
@@ -242,17 +248,10 @@ There is exactly one DICompileUnit for a BitcodeModule and all debug information
 a child of that unit. The sample creates the compilation unit just after the module is created and the
 target specific information is added to it. In this sample there is a direct 1:1 correlation between the
 compile unit and the source file so it creates a <a class="xref" href="../../api/Llvm.NET.DebugInfo.DIFile.html">DIFile</a> for the source
-at the same time.</p>
-<pre><code class="lang-csharp" name="Main">// create compile unit and file as the top level scope for everything
-var cu = module.DIBuilder.CreateCompileUnit( SourceLanguage.C99
-                                           , srcPath
-                                           , VersionIdentString
-                                           , optimized: false
-                                           , compilationFlags: string.Empty
-                                           , runtimeVersion: 0
-                                           );
-var diFile = module.DIBuilder.CreateFile( srcPath );
-</code></pre><h2 id="creating-basic-types-with-debug-information">Creating basic types with debug information</h2>
+at the same time. The sample code creates the DICompileUnit when creating the bit code module. This is
+the normal pattern for creating the compile unit when generating debugging information. Though it is possible
+to create it independently and add it to the module there isn&#39;t and real beneffit to doing so.</p>
+<h2 id="creating-basic-types-with-debug-information">Creating basic types with debug information</h2>
 <p>In LLVM types are fairly minimalistic and only contain the basic structural information for generating
 the final machine code. Debug information, as metadata in LLVM, provides all the source level debugging
 information. In LLVM this requires creating and tracking both the native type and the Debug information
@@ -613,7 +612,7 @@ attributes #2 = { argmemonly nounwind }
             <span class="pull-right">
               <a href="#top">Back to top</a>
             </span>
-            Copyright (C) 2017, Dot NET Foundation<br><strong>Build:</strong> 5.0.1-alpha--ci-BLD.433162936
+            Copyright (C) 2017, Dot NET Foundation<br><strong>Build:</strong> 5.0.1-alpha--ci-BLD.434968933
             
           </div>
         </div>
