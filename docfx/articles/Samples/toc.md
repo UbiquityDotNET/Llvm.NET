@@ -8,3 +8,5 @@
 ## [Chapter 7](Kaleidoscope-ch7.md)
 ## [Chapter 8](Kaleidoscope-ch8.md)
 ## [Chapter 9](Kaleidoscope-ch9.md)
+## [ParseTree Visitor](Kaleidoscope-ParseTreeVisitor.md)
+## [ParseTree Examples](Kaleidoscope-ParseTree-examples.md)

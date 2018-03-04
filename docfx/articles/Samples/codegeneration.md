@@ -83,9 +83,9 @@ There is exactly one DICompileUnit for a BitcodeModule and all debug information
 a child of that unit. The sample creates the compilation unit just after the module is created and the
 target specific information is added to it. In this sample there is a direct 1:1 correlation between the
 compile unit and the source file so it creates a [DIFile](xref:Llvm.NET.DebugInfo.DIFile) for the source
-at the same time.
-
-[!code-csharp[Main](../../../Samples/CodeGenWithDebugInfo/Program.cs#CreatingCompileUnit)]
+at the same time. The sample code creates the DICompileUnit when creating the bit code module. This is
+the normal pattern for creating the compile unit when generating debugging information. Though it is possible
+to create it independently and add it to the module there isn't and real beneffit to doing so.
 
 ## Creating basic types with debug information
 In LLVM types are fairly minimalistic and only contain the basic structural information for generating
