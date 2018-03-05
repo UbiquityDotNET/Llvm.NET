@@ -34,9 +34,9 @@ namespace Kaleidoscope
         {
             RuntimeState = globalState;
             Context = new Context( );
+            JIT = new KaleidoscopeJIT( );
             InitializeModuleAndPassManager( );
             InstructionBuilder = new InstructionBuilder( Context );
-            JIT = new KaleidoscopeJIT( );
             FunctionPrototypes = new PrototypeCollection( );
             FunctionModuleMap = new Dictionary<string, IJitModuleHandle>( );
             NamedValues = new Dictionary<string, Value>( );
@@ -84,7 +84,7 @@ namespace Kaleidoscope
 
         public override Value VisitFunctionCallExpression( [NotNull] FunctionCallExpressionContext context )
         {
-            var function = GetFunction( context.CaleeName );
+            var function = FindCallTarget( context.CaleeName );
             if( function == null )
             {
                 throw new CodeGeneratorException( $"function '{context.CaleeName}' is unknown" );
@@ -104,13 +104,16 @@ namespace Kaleidoscope
             return GetOrDeclareFunction( new Prototype( context ) );
         }
 
+        // <VisitFunctionDefinition>
         public override Value VisitFunctionDefinition( [NotNull] FunctionDefinitionContext context )
         {
             return DefineFunction( ( Function )context.Signature.Accept( this )
                                  , context.BodyExpression
                                  ).Function;
         }
+        // </VisitFunctionDefinition>
 
+        // <VisitTopLevelExpression>
         public override Value VisitTopLevelExpression( [NotNull] TopLevelExpressionContext context )
         {
             var proto = new Prototype( $"anon_expr_{AnonNameIndex++}" );
@@ -120,9 +123,11 @@ namespace Kaleidoscope
 
             var nativeFunc = JIT.GetDelegateForFunction<AnonExpressionFunc>( proto.Identifier.Name );
             var retVal = Context.CreateConstant( nativeFunc( ) );
+            FunctionModuleMap.Remove( function.Name );
             JIT.RemoveModule( jitHandle );
             return retVal;
         }
+        // </VisitTopLevelExpression>
 
         public override Value VisitExpression( [NotNull] ExpressionContext context )
         {
@@ -181,9 +186,11 @@ namespace Kaleidoscope
             }
         }
 
+        // <InitializeModuleAndPassManager>
         private void InitializeModuleAndPassManager( )
         {
             Module = Context.CreateBitcodeModule( );
+            Module.Layout = JIT.TargetMachine.TargetData;
             FunctionPassManager = new FunctionPassManager( Module );
             FunctionPassManager.AddInstructionCombiningPass( )
                                .AddReassociatePass( )
@@ -191,9 +198,13 @@ namespace Kaleidoscope
                                .AddCFGSimplificationPass( )
                                .Initialize( );
         }
+        // </InitializeModuleAndPassManager>
 
-        private Function GetFunction( string name )
+        // <FindCallTarget>
+        private Function FindCallTarget( string name )
         {
+            // lookup the prototype for the function to get the signature
+            // and create a declaration in this module
             if( FunctionPrototypes.TryGetValue( name, out var signature ) )
             {
                 return GetOrDeclareFunction( signature );
@@ -207,7 +218,9 @@ namespace Kaleidoscope
 
             return null;
         }
+        // </FindCallTarget>
 
+        // <GetOrDeclareFunction>
         private Function GetOrDeclareFunction( Prototype prototype, bool isAnonymous = false )
         {
             var function = Module.GetFunction( prototype.Identifier.Name );
@@ -235,7 +248,9 @@ namespace Kaleidoscope
 
             return retVal;
         }
+        // </GetOrDeclareFunction>
 
+        // <DefineFunction>
         private (Function Function, IJitModuleHandle JitHandle) DefineFunction( Function function, ExpressionContext body )
         {
             if( !function.IsDeclaration )
@@ -283,6 +298,7 @@ namespace Kaleidoscope
             InitializeModuleAndPassManager( );
             return (function, jitHandle);
         }
+        // </DefineFunction>
 
         // <PrivateMembers>
         private readonly DynamicRuntimeState RuntimeState;

@@ -48,57 +48,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Repo Items", "Repo Items", 
 		..\Ubiquity.NET.ruleset = ..\Ubiquity.NET.ruleset
 	EndProjectSection
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "docfx", "docfx", "{2762672E-8B94-4C84-ADCF-195FFEF5D7DD}"
-	ProjectSection(SolutionItems) = preProject
-		..\docfx\docfx.json = ..\docfx\docfx.json
-		..\docfx\DragonSharp.png = ..\docfx\DragonSharp.png
-		..\docfx\DragonSharp48x48.png = ..\docfx\DragonSharp48x48.png
-		..\docfx\favicon.ico = ..\docfx\favicon.ico
-		..\docfx\index.md = ..\docfx\index.md
-		..\docfx\llvm-xref.yml = ..\docfx\llvm-xref.yml
-		..\docfx\toc.yml = ..\docfx\toc.yml
-	EndProjectSection
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "articles", "articles", "{3450A680-13CD-4703-BFFE-5617AB775ED4}"
-	ProjectSection(SolutionItems) = preProject
-		..\docfx\articles\index.md = ..\docfx\articles\index.md
-		..\docfx\articles\toc.yml = ..\docfx\articles\toc.yml
-	EndProjectSection
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "InternalDetails", "InternalDetails", "{DD8CA942-6EEE-4428-A1BC-D1D64993EEF9}"
-	ProjectSection(SolutionItems) = preProject
-		..\docfx\articles\InternalDetails\handleref-interning.md = ..\docfx\articles\InternalDetails\handleref-interning.md
-		..\docfx\articles\InternalDetails\index.md = ..\docfx\articles\InternalDetails\index.md
-		..\docfx\articles\InternalDetails\llvm-handles.md = ..\docfx\articles\InternalDetails\llvm-handles.md
-		..\docfx\articles\InternalDetails\marshal-LLVMBool.md = ..\docfx\articles\InternalDetails\marshal-LLVMBool.md
-		..\docfx\articles\InternalDetails\marshal-string.md = ..\docfx\articles\InternalDetails\marshal-string.md
-		..\docfx\articles\InternalDetails\toc.md = ..\docfx\articles\InternalDetails\toc.md
-	EndProjectSection
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Samples", "Samples", "{D04D960B-79E5-4FB5-9241-1509F1576A59}"
-	ProjectSection(SolutionItems) = preProject
-		..\docfx\articles\Samples\codegeneration.md = ..\docfx\articles\Samples\codegeneration.md
-		..\docfx\articles\Samples\index.md = ..\docfx\articles\Samples\index.md
-		..\docfx\articles\Samples\Kaleidoscope-ch2.md = ..\docfx\articles\Samples\Kaleidoscope-ch2.md
-		..\docfx\articles\Samples\Kaleidoscope-ch3.md = ..\docfx\articles\Samples\Kaleidoscope-ch3.md
-		..\docfx\articles\Samples\Kaleidoscope-ch4.md = ..\docfx\articles\Samples\Kaleidoscope-ch4.md
-		..\docfx\articles\Samples\Kaleidoscope-ch5.md = ..\docfx\articles\Samples\Kaleidoscope-ch5.md
-		..\docfx\articles\Samples\Kaleidoscope-ch6.md = ..\docfx\articles\Samples\Kaleidoscope-ch6.md
-		..\docfx\articles\Samples\Kaleidoscope-ch7.md = ..\docfx\articles\Samples\Kaleidoscope-ch7.md
-		..\docfx\articles\Samples\Kaleidoscope-ch8.md = ..\docfx\articles\Samples\Kaleidoscope-ch8.md
-		..\docfx\articles\Samples\Kaleidoscope-ch9.md = ..\docfx\articles\Samples\Kaleidoscope-ch9.md
-		..\docfx\articles\Samples\Kaleidoscope-Parsetree-examples.md = ..\docfx\articles\Samples\Kaleidoscope-Parsetree-examples.md
-		..\docfx\articles\Samples\Kaleidoscope-ParseTreeVisitor.md = ..\docfx\articles\Samples\Kaleidoscope-ParseTreeVisitor.md
-		..\docfx\articles\Samples\Kaleidoscope.md = ..\docfx\articles\Samples\Kaleidoscope.md
-		..\docfx\articles\Samples\parsetree-for-loop.svg = ..\docfx\articles\Samples\parsetree-for-loop.svg
-		..\docfx\articles\Samples\parsetree-func-call.svg = ..\docfx\articles\Samples\parsetree-func-call.svg
-		..\docfx\articles\Samples\parsetree-if-else.svg = ..\docfx\articles\Samples\parsetree-if-else.svg
-		..\docfx\articles\Samples\parsetree-paren-expr.svg = ..\docfx\articles\Samples\parsetree-paren-expr.svg
-		..\docfx\articles\Samples\parsetree-simpleexp-1.svg = ..\docfx\articles\Samples\parsetree-simpleexp-1.svg
-		..\docfx\articles\Samples\parsetree-userops.svg = ..\docfx\articles\Samples\parsetree-userops.svg
-		..\docfx\articles\Samples\toc.md = ..\docfx\articles\Samples\toc.md
-	EndProjectSection
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Kaleidoscope.Runtime", "..\Samples\Kaleidoscope\Kaleidoscope.Runtime\Kaleidoscope.Runtime.csproj", "{DF586B9E-C590-459F-AD5A-F2E023E3CB45}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Llvm.Net.Docfx", "..\docfx\Llvm.Net.Docfx.csproj", "{887D41FB-C927-4AF2-9A0C-A60AD86CA277}"
@@ -181,9 +130,6 @@ Global
 		{385172C5-40FB-411D-9483-7D31E9AE3CA2} = {62418FA2-81F2-475F-B735-7B108EBE960D}
 		{091C3D70-3D54-4673-B34C-7F936B652D21} = {62418FA2-81F2-475F-B735-7B108EBE960D}
 		{88463779-D746-427C-B951-4E4FF25BC532} = {62418FA2-81F2-475F-B735-7B108EBE960D}
-		{3450A680-13CD-4703-BFFE-5617AB775ED4} = {2762672E-8B94-4C84-ADCF-195FFEF5D7DD}
-		{DD8CA942-6EEE-4428-A1BC-D1D64993EEF9} = {3450A680-13CD-4703-BFFE-5617AB775ED4}
-		{D04D960B-79E5-4FB5-9241-1509F1576A59} = {3450A680-13CD-4703-BFFE-5617AB775ED4}
 		{DF586B9E-C590-459F-AD5A-F2E023E3CB45} = {62418FA2-81F2-475F-B735-7B108EBE960D}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution

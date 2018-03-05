@@ -1,13 +1,12 @@
-# Implementing the parser
+# 2. Kaleidoscope: Implementing the parser
 The Lllvm.NET version of Kaleidoscope leverages ANTLR4 to parse the language into a parse tree.
 The chapter 2 sample doesn't actually generate any code. Instead it focuses on the general structure
 of the samples and parsing of the language. The sample for this chapter enables all language features
 to allow exploring the language and how it is parsed to help better understand the rest of the chapters
-better. It is hoped that users of this library find this helpful as understanding the language grammar
+better. It is hoped that users of this library find this helpful. Understanding the language grammar
 from reading the LVM tutorials and source was a difficult task since it isn't formally defined in one
 place. (There are some EBNF like comments in the code but it is spread around without much real discussion
 of the language the tutorials guide you to implement)
-
 
 ## Formal Grammar
 ### Lexer symbols
@@ -78,10 +77,10 @@ for the language. Subsequent chapters will introduce the meaning and use of each
 
 #### Language Feature Defined Keywords
 Chapters 5-7 each introduce new language features that introduce new keywords into the language. In order to
-maintain a single grammar for all chapters the lexer uses a technique of ANTLR4 called semantic predicates.
-These are basically boolean expressions that determine if a given rule should be applied. These are applied
-to the rules for the feature specific keywords. Thus, at runtime, if a given feature is disabled then the
-keyword is not recognized.
+maintain a single grammar for all chapters the lexer uses a technique of ANTLR4 called [Semantic Predicates](https://github.com/antlr/antlr4/blob/master/doc/predicates.md).
+These are basically boolean expressions that determine if a given rule should be applied while parsing the
+input language. These are applied to the rules for the feature specific keywords. Thus, at runtime, if a given
+feature is disabled then the keyword is not recognized.
 
 ```antlr
 IF:     {FeatureControlFlow}? 'if';
@@ -266,9 +265,78 @@ for the call `foo(1, 2, 3);` is:
 
 ![Parse Tree](parsetree-func-call.svg)
 
-###### Other expressions
-The other expressions are either simple tokens like `Identifier` and `Number` or more complex expressions that are
-covered in detail in later chapters.
+###### VarInExpression
+```antlr
+VAR initializer (COMMA initializer)* IN expression[0]
+```
+The VarInExpression rule provides variable declaration, with optional initialization. The scope of the
+variables is that of the expression on the right of the `in` keyword. The `var ... in ...` expression is
+in many ways like a declaration of an inline function. The variables declared are scoped to the internal
+implementation of the function. Once the function produces the return value the variables no longer exist.
+
+###### ConditionalExpression
+```antlr
+IF expression[0] THEN expression[0] ELSE expression[0]
+```
+Conditional expressions use the very common and familiar if-then-else syntax and semantics with one noteable
+unique quality. In Kaleidoscope every language construct is an expression, there are no statements. Expressions
+all produce a value. So the result of the conditional expression is the result of the sub expression selected
+based on the condition. The condition value is computed and if the result == 0.0 (false) the `else` expression
+is used to produce the final result. Otherwise, the `then` expression is executed to produce the result. Thus,
+the actual semantics are more like the ternary operator found C and other languages:
+```C
+condition ? thenExpression : elseExpression`
+```
+
+Example:
+```Kaleidoscope
+def fib(x)
+  if x < 3 then
+    1
+  else
+    fib(x-1)+fib(x-2);
+```
+##### ForInExpression
+The ForInExpression provides support for classic for loop constructs. In particular it provides a variable scope for a loop
+value, a condition to test when to exit the loop and an optional step value for incrementing the loop value (default is 1.0).
+
+```Kaleidoscope
+extern putchard(char);
+def printstar(n)
+  for i = 1, i < n, 1.0 in
+    putchard(42);  # ascii 42 = '*'
+
+# print 100 '*' characters
+printstar(100);
+```
+Note: That there are no statements in Kaleidoscope, everything is an expression and has a value. putchard() implicitly returns a
+value as does printstar(). (e.g. there is no void return ALL functions implictly return a floating point value, even if it is always 0.0)
+For loops with mutable values support in the language may provide a result that isn't always 0.0, for example:
+
+```Kaleidoscope
+# Define ':' for sequencing: as a low-precedence operator that ignores operands
+# and just returns the RHS.
+def binary : 1 (x y) y;
+
+# Recursive fib, we could do this before.
+def fib(x)
+  if (x < 3) then
+    1
+  else
+    fib(x-1)+fib(x-2);
+
+# Iterative fib.
+def fibi(x)
+  var a = 1, b = 1, c in
+  (for i = 3, i < x in
+     c = a + b :
+     a = b :
+     b = c) :
+  b;
+
+# Call it.
+fibi(10);
+```
 
 #### Parse Tree
 The Llvm.NET implementation of Kaleidoscope doesn't use an AST per se. Instead it use the parse tree generated

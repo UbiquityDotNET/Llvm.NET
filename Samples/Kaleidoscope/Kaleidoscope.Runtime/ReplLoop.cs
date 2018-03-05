@@ -42,6 +42,8 @@ namespace Kaleidoscope.Runtime
 
         public event EventHandler<ReadyStateChangedArgs> ReadyStateChanged = (s,e)=> { };
 
+        public event EventHandler<CodeGenerationExceptionArgs> CodeGenerationError = (s,e) => { };
+
         public bool Ready { get; private set; } = true;
 
         public DiagnosticRepresentations AdditionalDiagnostics { get; }
@@ -63,8 +65,15 @@ namespace Kaleidoscope.Runtime
                 if( !IsPartial )
                 {
                     var (parseTree, recognizer) = Parser.Parse( Txt, AdditionalDiagnostics );
-                    TResult value = Generator.Generate( recognizer, parseTree, AdditionalDiagnostics );
-                    GeneratedResultAvailable( this, new GeneratedResultAvailableArgs<TResult>( value, recognizer, parseTree ) );
+                    try
+                    {
+                        TResult value = Generator.Generate( recognizer, parseTree, AdditionalDiagnostics );
+                        GeneratedResultAvailable( this, new GeneratedResultAvailableArgs<TResult>( value, recognizer, parseTree ) );
+                    }
+                    catch(CodeGeneratorException ex)
+                    {
+                        CodeGenerationError( this, new CodeGenerationExceptionArgs( ex ) );
+                    }
                 }
 
                 /*
