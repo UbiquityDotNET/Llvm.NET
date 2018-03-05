@@ -5,9 +5,9 @@
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-    <title>Kaleidoscope Tutorial | Llvm.NET </title>
+    <title>1. Kaleidoscope: Language Introduction | Llvm.NET </title>
     <meta name="viewport" content="width=device-width">
-    <meta name="title" content="Kaleidoscope Tutorial | Llvm.NET ">
+    <meta name="title" content="1. Kaleidoscope: Language Introduction | Llvm.NET ">
     <meta name="generator" content="docfx 2.29.1.0">
     
     <link rel="shortcut icon" href="../../favicon.ico">
@@ -78,36 +78,45 @@
                   
                   <ul class="nav level1">
                     <li class="">
-                      <a href="codegeneration.html" title="Code Generation" class="">Code Generation</a>
-                    </li>
-                    <li class="active">
                       <span class="expand-stub"></span>
-                      <a href="Kaleidoscope.html" title="Kaleidoscope" class="active">Kaleidoscope</a>
+                      <a class="">Code Generation</a>
                         
                         <ul class="nav level2">
                           <li class="">
-                            <a href="Kaleidoscope-ch2.html" title="Chapter 2" class="">Chapter 2</a>
+                            <a href="codegeneration.html" title="CodeGenerator With Debug Information" class="">CodeGenerator With Debug Information</a>
+                          </li>
+                        </ul>  </li>
+                    <li class="">
+                      <span class="expand-stub"></span>
+                      <a class="">Kaleidoscope</a>
+                        
+                        <ul class="nav level2">
+                          <li class="active">
+                            <a href="Kaleidoscope.html" title="Chapter 1 - Language Introduction" class="active">Chapter 1 - Language Introduction</a>
                           </li>
                           <li class="">
-                            <a href="Kaleidoscope-ch3.html" title="Chapter 3" class="">Chapter 3</a>
+                            <a href="Kaleidoscope-ch2.html" title="Chapter 2 - Implementing the parser" class="">Chapter 2 - Implementing the parser</a>
                           </li>
                           <li class="">
-                            <a href="Kaleidoscope-ch4.html" title="Chapter 4" class="">Chapter 4</a>
+                            <a href="Kaleidoscope-ch3.html" title="Chapter 3 - Generating LLVM IR" class="">Chapter 3 - Generating LLVM IR</a>
                           </li>
                           <li class="">
-                            <a href="Kaleidoscope-ch5.html" title="Chapter 5" class="">Chapter 5</a>
+                            <a href="Kaleidoscope-ch4.html" title="Chapter 4 - JIT and Optimizer Support" class="">Chapter 4 - JIT and Optimizer Support</a>
                           </li>
                           <li class="">
-                            <a href="Kaleidoscope-ch6.html" title="Chapter 6" class="">Chapter 6</a>
+                            <a href="Kaleidoscope-ch5.html" title="Chapter 5 - Control Flow" class="">Chapter 5 - Control Flow</a>
                           </li>
                           <li class="">
-                            <a href="Kaleidoscope-ch7.html" title="Chapter 7" class="">Chapter 7</a>
+                            <a href="Kaleidoscope-ch6.html" title="Chapter 6 - User Defined Operators" class="">Chapter 6 - User Defined Operators</a>
                           </li>
                           <li class="">
-                            <a href="Kaleidoscope-ch8.html" title="Chapter 8" class="">Chapter 8</a>
+                            <a href="Kaleidoscope-ch7.html" title="Chapter 7 - Mutable Variables" class="">Chapter 7 - Mutable Variables</a>
                           </li>
                           <li class="">
-                            <a href="Kaleidoscope-ch9.html" title="Chapter 9" class="">Chapter 9</a>
+                            <a href="Kaleidoscope-ch8.html" title="Chapter 8 - AOT Compilation" class="">Chapter 8 - AOT Compilation</a>
+                          </li>
+                          <li class="">
+                            <a href="Kaleidoscope-ch9.html" title="Chapter 9 - Debug Information" class="">Chapter 9 - Debug Information</a>
                           </li>
                           <li class="">
                             <a href="Kaleidoscope-ParseTreeVisitor.html" title="ParseTree Visitor" class="">ParseTree Visitor</a>
@@ -124,12 +133,14 @@
         <div class="article row grid-right">
           <div class="col-md-10">
             <article class="content wrap" id="_content" data-uid="">
-<h1 id="kaleidoscope-tutorial">Kaleidoscope Tutorial</h1>
+<h1 id="1-kaleidoscope-language-introduction">1. Kaleidoscope: Language Introduction</h1>
 
-<p>This series of samples generally follows the official <a href="http://releases.llvm.org/5.0.0/docs/tutorial/LangImpl01.html">LLVM tutorial</a>.</p>
+<p>This series of samples generally follows the official <a href="http://releases.llvm.org/5.0.0/docs/tutorial/LangImpl01.html">LLVM tutorial</a>.
+The general flow of this tutorial follows that of the official LLVM tutorial and many of the samples are lifted directly from that
+tutorial to make it easier to follow along both tutorials to see how the various LLVM concepts are projected in the Llvm.NET library.</p>
 <h2 id="overview">Overview</h2>
 <p>Kaleidoscope is a simple functional language that is used to illustrate numerous real world
-use cases for Llvm.NET for code generation and JIT execution. </p>
+use cases for Llvm.NET for code generation and JIT execution.</p>
 <p>It is worth pointing out that this example isn&#39;t intended as a treatise on compiler design nor
 on language parsing. While it contains aspects of those topics the sample is focused on the
 use of Llvm.NET for code generation. Furthermore it isn&#39;t a trans-literation of the LLVM C++
@@ -298,7 +309,7 @@ Ready&gt;
             <span class="pull-right">
               <a href="#top">Back to top</a>
             </span>
-            Copyright (C) 2017, Dot NET Foundation<br><strong>Build:</strong> 5.0.1-alpha--ci-BLD.434968933
+            Copyright (C) 2017, Dot NET Foundation<br><strong>Build:</strong> 5.0.1-alpha--ci-BLD.435031994
             
           </div>
         </div>
