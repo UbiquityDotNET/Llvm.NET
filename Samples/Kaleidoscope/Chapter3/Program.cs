@@ -47,6 +47,7 @@ namespace Kaleidoscope
                     var replLoop = new ReplLoop<Value>( generator, parser );
                     replLoop.ReadyStateChanged += ( s, e ) => Console.Write( e.PartialParse ? ">" : "Ready>" );
                     replLoop.GeneratedResultAvailable += OnGeneratedResultAvailable;
+                    replLoop.CodeGenerationError += OnGeneratorError;
 
                     replLoop.Run( );
                     Console.WriteLine( generator.GeneratedModule.WriteToString( ) );
@@ -54,6 +55,22 @@ namespace Kaleidoscope
                 // </generatorloop>
             }
         }
+
+        // <ErrorHandling>
+        private static void OnGeneratorError( object sender, CodeGenerationExceptionArgs e )
+        {
+            var color = Console.ForegroundColor;
+            Console.ForegroundColor = ConsoleColor.Red;
+            try
+            {
+                Console.Error.WriteLine( e.Exception.Message );
+            }
+            finally
+            {
+                Console.ForegroundColor = color;
+            }
+        }
+        // </ErrorHandling>
 
         // <ResultProcessing>
         private static void OnGeneratedResultAvailable( object sender, GeneratedResultAvailableArgs<Value> e )

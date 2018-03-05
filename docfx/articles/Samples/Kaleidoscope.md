@@ -1,9 +1,11 @@
-# Kaleidoscope Tutorial
+# 1. Kaleidoscope: Language Introduction
 This series of samples generally follows the official [LLVM tutorial](http://releases.llvm.org/5.0.0/docs/tutorial/LangImpl01.html).
+The general flow of this tutorial follows that of the official LLVM tutorial and many of the samples are lifted directly from that
+tutorial to make it easier to follow along both tutorials to see how the various LLVM concepts are projected in the Llvm.NET library.
 
 ## Overview
 Kaleidoscope is a simple functional language that is used to illustrate numerous real world
-use cases for Llvm.NET for code generation and JIT execution. 
+use cases for Llvm.NET for code generation and JIT execution.
 
 It is worth pointing out that this example isn't intended as a treatise on compiler design nor
 on language parsing. While it contains aspects of those topics the sample is focused on the

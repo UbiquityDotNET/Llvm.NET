@@ -14,6 +14,8 @@ using static Llvm.NET.StaticState;
 
 [assembly: SuppressMessage( "StyleCop.CSharp.DocumentationRules", "SA1652:Enable XML documentation output", Justification = "Sample application" )]
 
+#pragma warning disable SA1512, SA1513, SA1515 // single line comments used to tag regions for extraction into docs
+
 namespace Kaleidoscope
 {
     public static class Program
@@ -35,6 +37,8 @@ namespace Kaleidoscope
             using( InitializeLLVM( ) )
             {
                 RegisterNative( );
+
+                // <generatorloop>
                 var parser = new ReplParserStack( LanguageLevel.SimpleExpressions );
                 using( var generator = new CodeGenerator( parser.GlobalState ) )
                 {
@@ -43,12 +47,31 @@ namespace Kaleidoscope
                     var replLoop = new ReplLoop<Value>( generator, parser );
                     replLoop.ReadyStateChanged += ( s, e ) => Console.Write( e.PartialParse ? ">" : "Ready>" );
                     replLoop.GeneratedResultAvailable += OnGeneratedResultAvailable;
+                    replLoop.CodeGenerationError += OnGeneratorError;
 
                     replLoop.Run( );
                 }
+                // </generatorloop>
             }
         }
 
+        // <ErrorHandling>
+        private static void OnGeneratorError( object sender, CodeGenerationExceptionArgs e )
+        {
+            var color = Console.ForegroundColor;
+            Console.ForegroundColor = ConsoleColor.Red;
+            try
+            {
+                Console.Error.WriteLine( e.Exception.Message );
+            }
+            finally
+            {
+                Console.ForegroundColor = color;
+            }
+        }
+        // </ErrorHandling>
+
+        // <ResultProcessing>
         private static void OnGeneratedResultAvailable( object sender, GeneratedResultAvailableArgs<Value> e )
         {
             var source = ( ReplLoop<Value> )sender;
@@ -69,5 +92,6 @@ namespace Kaleidoscope
                 break;
             }
         }
+        // </ResultProcessing>
     }
 }

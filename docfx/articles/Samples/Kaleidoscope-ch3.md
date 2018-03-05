@@ -1,4 +1,4 @@
-# Chapter 3 - Code Generation to LLVM IR
+# 3. Kaleidoscope: Generating LLVM IR
 This chapter focuses on the basics of transforming the ANTLR parse tree into LLVM IR. The general goal is to
 parse Kaleidoscope source code to generate a [BitcodeModule](xref:Llvm.NET.BitcodeModule) representing the
 source as LLVM IR.
@@ -13,7 +13,7 @@ release build, but in debug builds will check for an attached debugger and if no
 This works around a missing feature of the .NET Standard C# project system that does not support launching mixed
 native+managed debugging. When you need to go all the way into debugging the LLVM code, you can launch the debug
 version of the app without debugging, then attach to it and select native and managed debugging. (Hopefully this
-feature will be restored to these projects in the future so this trick isn't needed...)
+feature will be restored to these projects in the future so this rather hacky trick isn't needed...)
 
 ### Initializing Llvm.NET
 The underlying LLVM library requires initialization for it's internal data, furthermore Llvm.NET must load
@@ -57,6 +57,16 @@ the application can use the results. (Typically by showing the results to the us
 chapter it is used to print information about what was generated from the input to the parser.
 
 [!code-csharp[ResultProcessing](../../../Samples/Kaleidoscope/Chapter3/Program.cs#ResultProcessing)]
+
+### Handling errors in code generation
+In many cases successfully parsing the input code isn't sufficient to determine correctness of the code in a given context.
+In particular attempting to re-define a function already defined in the current module is a problem. (Later, chapters deal
+with re-definition by using a new module for each function, but that is more a side-effect of working with the JIT) To handle
+error in the generation the REPL loop will catch any CodeGenerationException and raise the CodeGenerationError event to
+notify the application. The application handles this by indicating the error to the user. This allows the application to continue
+processing input while still informing the user that what they tried to do didn't work.
+
+[!code-csharp[ResultProcessing](../../../Samples/Kaleidoscope/Chapter3/Program.cs#ErrorHandling)]
 
 ## Code generation
 

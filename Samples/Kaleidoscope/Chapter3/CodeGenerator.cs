@@ -83,7 +83,7 @@ namespace Kaleidoscope
 
         public override Value VisitFunctionCallExpression( [NotNull] FunctionCallExpressionContext context )
         {
-            var function = GetFunction( context.CaleeName );
+            var function = FindCallTarget( context.CaleeName );
             if( function == null )
             {
                 throw new CodeGeneratorException( $"function '{context.CaleeName}' is unknown" );
@@ -185,7 +185,7 @@ namespace Kaleidoscope
         }
         // </EmitBinaryOperator>
 
-        private Function GetFunction( string name )
+        private Function FindCallTarget( string name )
         {
             return Module.GetFunction( name );
         }
