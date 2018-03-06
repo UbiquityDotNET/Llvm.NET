@@ -29,17 +29,19 @@ namespace Kaleidoscope
         , IDisposable
         , IKaleidoscopeCodeGenerator<Value>
     {
+        // <Initialization>
         public CodeGenerator( DynamicRuntimeState globalState )
         {
             RuntimeState = globalState;
             Context = new Context( );
+            JIT = new KaleidoscopeJIT( );
             InitializeModuleAndPassManager( );
             InstructionBuilder = new InstructionBuilder( Context );
-            JIT = new KaleidoscopeJIT( );
             FunctionPrototypes = new PrototypeCollection( );
             FunctionModuleMap = new Dictionary<string, IJitModuleHandle>( );
             NamedValues = new ScopeStack<Value>( );
         }
+        // </Initialization>
 
         public bool DisableOptimizations { get; set; }
 
@@ -82,7 +84,7 @@ namespace Kaleidoscope
 
         public override Value VisitFunctionCallExpression( [NotNull] FunctionCallExpressionContext context )
         {
-            var function = GetFunction( context.CaleeName );
+            var function = FindCallTarget( context.CaleeName );
             if( function == null )
             {
                 throw new CodeGeneratorException( $"function '{context.CaleeName}' is unknown" );
@@ -102,13 +104,16 @@ namespace Kaleidoscope
             return GetOrDeclareFunction( new Prototype( context ) );
         }
 
+        // <VisitFunctionDefinition>
         public override Value VisitFunctionDefinition( [NotNull] FunctionDefinitionContext context )
         {
             return DefineFunction( ( Function )context.Signature.Accept( this )
                                  , context.BodyExpression
                                  ).Function;
         }
+        // </VisitFunctionDefinition>
 
+        // <VisitTopLevelExpression>
         public override Value VisitTopLevelExpression( [NotNull] TopLevelExpressionContext context )
         {
             var proto = new Prototype( $"anon_expr_{AnonNameIndex++}" );
@@ -118,9 +123,11 @@ namespace Kaleidoscope
 
             var nativeFunc = JIT.GetDelegateForFunction<AnonExpressionFunc>( proto.Identifier.Name );
             var retVal = Context.CreateConstant( nativeFunc( ) );
+            FunctionModuleMap.Remove( function.Name );
             JIT.RemoveModule( jitHandle );
             return retVal;
         }
+        // </VisitTopLevelExpression>
 
         public override Value VisitExpression( [NotNull] ExpressionContext context )
         {
@@ -135,6 +142,7 @@ namespace Kaleidoscope
             return lhs;
         }
 
+        // <VisitConditionalExpression>
         public override Value VisitConditionalExpression( [NotNull] ConditionalExpressionContext context )
         {
             var condition = context.Condition.Accept( this );
@@ -163,7 +171,7 @@ namespace Kaleidoscope
 
             InstructionBuilder.Branch( phiMergeBlock );
 
-            // capture the insert in case generating thenExpression adds new blocks
+            // capture the insert in case generating else adds new blocks
             thenBlock = InstructionBuilder.InsertBlock;
 
             // generate else block
@@ -188,24 +196,9 @@ namespace Kaleidoscope
             phiNode.AddIncoming( elseValue, elseBlock );
             return phiNode;
         }
+        // </VisitConditionalExpression>
 
-        /*
-        // Output for-loop as:
-        //   ...
-        //   start = startexpr
-        //   goto loop
-        // loop:
-        //   variable = phi [start, loopheader], [nextvariable, loopend]
-        //   ...
-        //   bodyexpr
-        //   ...
-        // loopend:
-        //   step = stepexpr
-        //   nextvariable = variable + step
-        //   endcond = endexpr
-        //   br endcond, loop, endloop
-        // outloop:
-        */
+        // <VisitForExpression>
         public override Value VisitForExpression( [NotNull] ForExpressionContext context )
         {
             var function = InstructionBuilder.InsertBlock.ContainingFunction;
@@ -297,6 +290,7 @@ namespace Kaleidoscope
                 return Context.DoubleType.GetNullValue( );
             }
         }
+        // </VisitForExpression>
 
         protected override Value DefaultResult => null;
 
@@ -342,9 +336,11 @@ namespace Kaleidoscope
             }
         }
 
+        // <InitializeModuleAndPassManager>
         private void InitializeModuleAndPassManager( )
         {
             Module = Context.CreateBitcodeModule( );
+            Module.Layout = JIT.TargetMachine.TargetData;
             FunctionPassManager = new FunctionPassManager( Module );
             FunctionPassManager.AddInstructionCombiningPass( )
                                .AddReassociatePass( )
@@ -352,9 +348,13 @@ namespace Kaleidoscope
                                .AddCFGSimplificationPass( )
                                .Initialize( );
         }
+        // </InitializeModuleAndPassManager>
 
-        private Function GetFunction( string name )
+        // <FindCallTarget>
+        private Function FindCallTarget( string name )
         {
+            // lookup the prototype for the function to get the signature
+            // and create a declaration in this module
             if( FunctionPrototypes.TryGetValue( name, out var signature ) )
             {
                 return GetOrDeclareFunction( signature );
@@ -368,7 +368,9 @@ namespace Kaleidoscope
 
             return null;
         }
+        // </FindCallTarget>
 
+        // <GetOrDeclareFunction>
         private Function GetOrDeclareFunction( Prototype prototype, bool isAnonymous = false )
         {
             var function = Module.GetFunction( prototype.Identifier.Name );
@@ -396,7 +398,9 @@ namespace Kaleidoscope
 
             return retVal;
         }
+        // </GetOrDeclareFunction>
 
+        // <DefineFunction>
         private (Function Function, IJitModuleHandle JitHandle) DefineFunction( Function function, ExpressionContext body )
         {
             if( !function.IsDeclaration )
@@ -409,7 +413,7 @@ namespace Kaleidoscope
             // implementation. This is needed, otherwise both the MCJIT
             // and OrcJit engines will resolve to the original module, despite
             // claims to the contrary in the official tutorial text. (Though,
-            // to be fare it may have been true in the original JIT and might
+            // to be fair it may have been true in the original JIT and might
             // still be true for the interpreter)
             if( FunctionModuleMap.Remove( function.Name, out IJitModuleHandle handle ) )
             {
@@ -446,6 +450,7 @@ namespace Kaleidoscope
             InitializeModuleAndPassManager( );
             return (function, jitHandle);
         }
+        // </DefineFunction>
 
         // <PrivateMembers>
         private readonly DynamicRuntimeState RuntimeState;
