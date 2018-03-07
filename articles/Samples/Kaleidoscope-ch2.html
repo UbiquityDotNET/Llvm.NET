@@ -326,7 +326,7 @@ binaryop
     | PLUSPLUS
     | MINUSMINUS
     ;
-</code></pre><h5 id="initializers">Initializers</h5>
+</code></pre><h3 id="initializers">Initializers</h3>
 <p>Initializers are a useful re-usable rule to handle a common sequence in the language in multiple different contexts.
 (sort of like a function in most programming languages, in fact, ANTLR rules are implemented in the generated parser
 as methods). </p>
@@ -335,7 +335,7 @@ as methods). </p>
 initializer
     : Identifier (ASSIGN expression[0])?
     ;
-</code></pre><h5 id="primary-expressions-atoms">Primary Expressions (Atoms)</h5>
+</code></pre><h3 id="primary-expressions-atoms">Primary Expressions (Atoms)</h3>
 <p>There are a number of primary expressions (also known as &#39;Atoms&#39;) that are not left recursive in their definition.
 These are split out to a distinct rule to aid in the support of left recursion and the need for user defined operator
 precedence.</p>
@@ -351,24 +351,24 @@ primaryExpression
     | Number                                                                      # ConstExpression
     ;
 </code></pre><p>Let&#39;s look at each of these in turn to get a better understanding of the language.</p>
-<h6 id="parenexpression">ParenExpression</h6>
+<h3 id="parenexpression">ParenExpression</h3>
 <pre><code class="lang-antlr">LPAREN expression[0] RPAREN
 </code></pre><p>This is a simple rule for sub-expressions within parenthesis for example: <code>(1+2)/3</code> the parenthesis groups the
 addition so that it occurs before the division since, normally the precedence of division is higher. The parse
 tree for that expression looks like this:</p>
 <p><img src="parsetree-paren-expr.svg" alt="Parse Tree"></p>
-<h6 id="functioncallexpression">FunctionCallExpression</h6>
+<h3 id="functioncallexpression">FunctionCallExpression</h3>
 <pre><code class="lang-antlr">Identifier LPAREN (expression[0] (COMMA expression[0])*)? RPAREN
 </code></pre><p>This rule covers a function call which can have 0 or more comma delimited arguments. The parse tree
 for the call <code>foo(1, 2, 3);</code> is:</p>
 <p><img src="parsetree-func-call.svg" alt="Parse Tree"></p>
-<h6 id="varinexpression">VarInExpression</h6>
+<h3 id="varinexpression">VarInExpression</h3>
 <pre><code class="lang-antlr">VAR initializer (COMMA initializer)* IN expression[0]
 </code></pre><p>The VarInExpression rule provides variable declaration, with optional initialization. The scope of the
 variables is that of the expression on the right of the <code>in</code> keyword. The <code>var ... in ...</code> expression is
 in many ways like a declaration of an inline function. The variables declared are scoped to the internal
 implementation of the function. Once the function produces the return value the variables no longer exist.</p>
-<h6 id="conditionalexpression">ConditionalExpression</h6>
+<h3 id="conditionalexpression">ConditionalExpression</h3>
 <pre><code class="lang-antlr">IF expression[0] THEN expression[0] ELSE expression[0]
 </code></pre><p>Conditional expressions use the very common and familiar if-then-else syntax and semantics with one noteable
 unique quality. In Kaleidoscope every language construct is an expression, there are no statements. Expressions
@@ -383,7 +383,7 @@ the actual semantics are more like the ternary operator found C and other langua
     1
   else
     fib(x-1)+fib(x-2);
-</code></pre><h5 id="forinexpression">ForInExpression</h5>
+</code></pre><h3 id="forinexpression">ForInExpression</h3>
 <p>The ForInExpression provides support for classic for loop constructs. In particular it provides a variable scope for a loop
 value, a condition to test when to exit the loop and an optional step value for incrementing the loop value (default is 1.0).</p>
 <pre><code class="lang-Kaleidoscope">extern putchard(char);
@@ -526,7 +526,7 @@ tweaking.</p>
             <span class="pull-right">
               <a href="#top">Back to top</a>
             </span>
-            Copyright (C) 2017, Dot NET Foundation<br><strong>Build:</strong> 5.0.1-alpha--ci-BLD.435031994
+            Copyright (C) 2017, Dot NET Foundation<br><strong>Build:</strong> 5.0.1-alpha--ci-BLD.435164120
             
           </div>
         </div>
