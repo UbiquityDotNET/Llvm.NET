@@ -15,7 +15,7 @@ namespace Kaleidoscope.Runtime
     /// <remarks>
     /// In essence, this is a stack of Dictionaries that is intended for use in code generation.
     /// Most languages have some sort of notion of symbol scopes and name lookups. This implements
-    /// the common case of nested scopes where a new 'local scope may override some of the symbols
+    /// the common case of nested scopes where a new 'local scope' may override some of the symbols
     /// in a parent scope. Any values in any parent not overridden by the child are visible to the
     /// child scope.
     /// </remarks>

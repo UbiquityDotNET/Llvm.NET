@@ -211,7 +211,7 @@ binaryop
     ;
 ```
 
-##### Initializers
+### Initializers
 Initializers are a useful re-usable rule to handle a common sequence in the language in multiple different contexts.
 (sort of like a function in most programming languages, in fact, ANTLR rules are implemented in the generated parser
 as methods). 
@@ -225,7 +225,7 @@ initializer
 
 ```
 
-##### Primary Expressions (Atoms)
+### Primary Expressions (Atoms)
 There are a number of primary expressions (also known as 'Atoms') that are not left recursive in their definition.
 These are split out to a distinct rule to aid in the support of left recursion and the need for user defined operator
 precedence.
@@ -246,7 +246,7 @@ primaryExpression
 
 Let's look at each of these in turn to get a better understanding of the language.
 
-###### ParenExpression
+### ParenExpression
 ```antlr
 LPAREN expression[0] RPAREN
 ```
@@ -256,7 +256,7 @@ tree for that expression looks like this:
 
 ![Parse Tree](parsetree-paren-expr.svg)
 
-###### FunctionCallExpression
+### FunctionCallExpression
 ```antlr
 Identifier LPAREN (expression[0] (COMMA expression[0])*)? RPAREN
 ```
@@ -265,7 +265,7 @@ for the call `foo(1, 2, 3);` is:
 
 ![Parse Tree](parsetree-func-call.svg)
 
-###### VarInExpression
+### VarInExpression
 ```antlr
 VAR initializer (COMMA initializer)* IN expression[0]
 ```
@@ -274,7 +274,7 @@ variables is that of the expression on the right of the `in` keyword. The `var .
 in many ways like a declaration of an inline function. The variables declared are scoped to the internal
 implementation of the function. Once the function produces the return value the variables no longer exist.
 
-###### ConditionalExpression
+### ConditionalExpression
 ```antlr
 IF expression[0] THEN expression[0] ELSE expression[0]
 ```
@@ -296,7 +296,7 @@ def fib(x)
   else
     fib(x-1)+fib(x-2);
 ```
-##### ForInExpression
+### ForInExpression
 The ForInExpression provides support for classic for loop constructs. In particular it provides a variable scope for a loop
 value, a condition to test when to exit the loop and an optional step value for incrementing the loop value (default is 1.0).
 
