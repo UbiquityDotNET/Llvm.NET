@@ -54,7 +54,7 @@ namespace Kaleidoscope.Runtime
         public static string GetSafeFileName( string name )
         {
             var bldr = new StringBuilder( name.Length );
-            var invalidChars = Path.GetInvalidFileNameChars( );
+            char[ ] invalidChars = Path.GetInvalidFileNameChars( );
             foreach( char c in name )
             {
                 bldr.Append( invalidChars.Contains( c ) ? '_' : c );

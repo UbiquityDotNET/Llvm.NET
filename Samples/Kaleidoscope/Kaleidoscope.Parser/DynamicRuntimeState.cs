@@ -19,8 +19,8 @@ namespace Kaleidoscope.Grammar
     ///
     /// This provides storage and support methods for the runtime global state.
     /// In particular, it maintains the language level to use and the current set
-    /// of operators, including any user defined operators so the parser know how
-    /// to resolve complex expressions with precednece.
+    /// of operators, including any user defined operators so the parser knows how
+    /// to resolve complex expressions with user defined operators and precedence.
     /// </remarks>
     public class DynamicRuntimeState
     {
@@ -106,7 +106,7 @@ namespace Kaleidoscope.Grammar
 
         private bool TryAddOperator( int tokenType, OperatorKind kind, int precedence )
         {
-            // internally operators are stored as token type integers to accomodate
+            // internally operators are stored as token type integers to accommodate
             // simpler condition checks and switching on operator types in code generation
             switch( kind )
             {

@@ -30,7 +30,7 @@ namespace Kaleidoscope.Runtime
         /// <remarks>
         /// If the parse fails then the resulting tuple is the default value ( in this case, both items <see langword="null"/>
         /// Errors from the parse are reported through error listeners provided
-        /// to the parser. Normally this is done via the contructor of a type
+        /// to the parser. Normally this is done via the constructor of a type
         /// implementing this interface.
         /// </remarks>
         (IParseTree parseTree, Parser recognizer) Parse( string txt, DiagnosticRepresentations additionalDiagnostics );
