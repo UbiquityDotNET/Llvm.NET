@@ -43,7 +43,7 @@ namespace Kaleidoscope.Runtime
         /// <returns>Enumerable set of lines that may be partial statements</returns>
         /// <remarks>
         /// Each value enumerated includes the full text since the last complete statement.
-        /// That is the Txt from multiple partial statements will include the text of the
+        /// That is the text from multiple partial statements will include the text of the
         /// preceding partial. Once a complete statement is found the entire string is provided
         /// with the IsPartial property set to <see langword="false"/>
         /// </remarks>
@@ -57,7 +57,7 @@ namespace Kaleidoscope.Runtime
         /// <returns>Enumerable set of lines that may be partial statements</returns>
         /// <remarks>
         /// Each value enumerated includes the full text since the last complete statement.
-        /// That is the Txt from multiple partial statements will include the text of the
+        /// That is the text from multiple partial statements will include the text of the
         /// preceding partial. Once a complete statement is found the entire string is provided
         /// with the IsPartial property set to <see langword="false"/>
         /// </remarks>
@@ -66,7 +66,7 @@ namespace Kaleidoscope.Runtime
             var bldr = new StringBuilder( );
             foreach( string line in lines )
             {
-                var statements = line.Split( ';' );
+                string[ ] statements = line.Split( ';' );
 
                 // if the last line in the group was terminated with a ; the
                 // the last entry is an empty string, but a single blank line

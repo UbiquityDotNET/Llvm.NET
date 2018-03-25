@@ -16,7 +16,7 @@ namespace Kaleidoscope.Grammar
     /// The resulting ".diag" file is convertible to SVG form for documentation.</para>
     /// <para>
     /// The generated diagrams include a numbered element for binary operator expressions
-    /// to indicate the precedence value that is diyamically evaluated for the expression.
+    /// to indicate the precedence value that is dynamically evaluated for the expression.
     /// This is particularly useful for debugging custom operator precedence problems.
     /// </para>
     /// </remarks>

@@ -5,7 +5,7 @@
 namespace Kaleidoscope.Grammar
 {
     // partial extension to handle creating virtual tokens/Identifiers depending
-    // on language feaures enabled.
+    // on language features enabled.
     public partial class KaleidoscopeLexer
     {
         public LanguageLevel LanguageLevel { get; set; }

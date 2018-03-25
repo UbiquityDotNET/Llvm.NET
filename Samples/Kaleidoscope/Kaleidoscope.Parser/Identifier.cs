@@ -11,8 +11,8 @@ namespace Kaleidoscope
 {
     /// <summary>Description of an identifier in Kaleidoscope code generation</summary>
     /// <remarks>
-    /// This is distinct from te parse tree nodes as code generation sometimes needs to
-    /// synthesize an identifier (i.e. Building function the definition for an anonymous
+    /// This is distinct from the parse tree nodes as code generation sometimes needs to
+    /// synthesize an identifier (i.e. Building the function definition for an anonymous
     /// top level expression)
     /// </remarks>
     public struct Identifier
