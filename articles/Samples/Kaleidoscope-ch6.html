@@ -5,9 +5,9 @@
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-    <title>Topic Header | Llvm.NET </title>
+    <title>6. Kaleidoscope: User Defined Operators | Llvm.NET </title>
     <meta name="viewport" content="width=device-width">
-    <meta name="title" content="Topic Header | Llvm.NET ">
+    <meta name="title" content="6. Kaleidoscope: User Defined Operators | Llvm.NET ">
     <meta name="generator" content="docfx 2.29.1.0">
     
     <link rel="shortcut icon" href="../../favicon.ico">
@@ -133,11 +133,306 @@
         <div class="article row grid-right">
           <div class="col-md-10">
             <article class="content wrap" id="_content" data-uid="">
-<h1 id="topic-header">Topic Header</h1>
+<h1 id="6-kaleidoscope-user-defined-operators">6. Kaleidoscope: User Defined Operators</h1>
 
-<p>Summary</p>
-<h2 id="sub-section">Sub Section</h2>
-<p>...</p>
+<p>At this point in the progression of the tutorial Kaleidoscope is a fully functional, albeit fairly minimal language. Thus far, the tutorial has
+avoided details of the parsing. One of the benefits of using a tool like ANTLR4 is that you can accomplish a lot without needing to spend a lot of
+time thinking about the parser too much. With user defined operators we&#39;ll break that and get down and dirty with the parser a bit to make the operators
+work. The actual value of such a thing in a language is a bit debatable, and the initial plan for the Llvm.NET tutorials was to skip this chapter as
+it doesn&#39;t really involve a lot of new LLVM IR or code generation. After the code was done to get the other chapters working this one was still nagging,
+begging really, for a solution. The challenge to come up with a good solution was ultimately too tempting to resist, and we now have a full implementation
+(with a few useful extensions on top!) </p>
+<h2 id="general-idea-of-user-defined-operators">General idea of user defined operators</h2>
+<p>User defined operators in Kaleidoscope are a bit unique. Unlike C++ and other similar languages the precedence of the user defined operators are not fixed. Though,
+the built-in operators all use a fixed precedence. That poses some interesting challenges for a parser to dynamically adapt to the state of the language runtime
+so that it can correctly evaluate the operator expressions. Making that work while using ANTLR requires looking under the hood to how ANTLR4 ordinarily handles
+precedence. A full treatise on the subject is outside the scope of this tutorial, but the <a href="https://github.com/antlr/antlr4/blob/master/doc/left-recursion.md">ANTLR Github site</a>
+has a good description of the details of the precedence climbing approach used in ANTLR. The general idea is that the expression rule takes an additional precedence
+argument and the operator expressions include a semantic predicate that tests the current precedence level. If the current level is less than or equal to the current
+level then that operator rule expression is allowed to match the input. Otherwise, the rule is skipped. Usually this is all hidden by the implicit support for
+precedence climbing and left recursion that is built-in to ANTLR4. However that requires fixing the precedence for operators in the grammar. Thus, Kaleidoscope
+doesn&#39;t use the default left-recursion support, but does use the same concepts with a custom hook.</p>
+<pre><code class="lang-antlr">// pull the initializer out to a distinct rule so it is easier to get at
+// the list of initializers when walking the parse tree
+initializer
+    : Identifier (ASSIGN expression[0])?
+    ;
+
+// Non Left recursive expressions (a.k.a. atoms)
+primaryExpression
+    : LPAREN expression[0] RPAREN                                                 # ParenExpression
+    | Identifier LPAREN (expression[0] (COMMA expression[0])*)? RPAREN            # FunctionCallExpression
+    | VAR initializer (COMMA initializer)* IN expression[0]                       # VarInExpression
+    | IF expression[0] THEN expression[0] ELSE expression[0]                      # ConditionalExpression
+    | FOR initializer COMMA expression[0] (COMMA expression[0])? IN expression[0] # ForExpression
+    | {IsPrefixOp()}? unaryop expression[0]                                       # UnaryOpExpression
+    | Identifier                                                                  # VariableExpression
+    | Number                                                                      # ConstExpression
+    ;
+
+// Need to make precedence handling explicit in the code behind
+// since precedence is potentially user defined at runtime.
+expression[int _p]
+    : primaryExpression
+      ( {GetPrecedence() &gt;= $_p}? binaryop expression[GetNextPrecedence()]
+      )*
+    ;
+</code></pre><p>Two custom functions are used to handle the dynamic runtime defined nature of the precedence.</p>
+<ol>
+<li>GetPrecedence() used in the semantic predicate determines the precedence of the operator for the current rule</li>
+<li>GetNextPrecedence() is used to determine the next higher level of precedence for any child expressions</li>
+</ol>
+<p>These are implemented in the partial extension of the parser:</p>
+<pre><code class="lang-C#">private int GetPrecedence( )
+{
+    return GlobalState.GetPrecedence( _input.Lt( 1 ).Type );
+}
+
+private int GetNextPrecedence( )
+{
+    return GlobalState.GetNextPrecedence( _input.Lt( -1 ).Type );
+}
+</code></pre><p>These two functions use the current input state to identify the actual operator token. Get Precedence does a look-ahead by one token
+to determine what the precedence for the operator is. The rest of the rule is only executed if the precedence is greater than or equal
+to the current precedence. The right hand side matches expressions of a higher precedence by doing a look-behind one token to get the
+next precedence level. The custom parser functions are pretty small since they defer the real work to the GlobalState instance provided
+when constructing the parser. The state is an instance of the DynamicRuntimeState class. Up until now this state was only used to determine
+the language features to enable. With dynamic precedence for user operators the state maintains a pair of tables of operator information
+that includes the symbol for the operator and precedence:</p>
+<pre><code class="lang-C#">private OperatorInfoCollection UnaryOps = new OperatorInfoCollection( );
+
+private OperatorInfoCollection BinOpPrecedence = new OperatorInfoCollection( )
+{
+    new OperatorInfo( LEFTANGLE, OperatorKind.InfixLeftAssociative, 10, true),
+    new OperatorInfo( PLUS,      OperatorKind.InfixLeftAssociative, 20, true),
+    new OperatorInfo( MINUS,     OperatorKind.InfixLeftAssociative, 20, true),
+    new OperatorInfo( ASTERISK,  OperatorKind.InfixLeftAssociative, 40, true),
+    new OperatorInfo( SLASH,     OperatorKind.InfixLeftAssociative, 40, true),
+    new OperatorInfo( CARET,     OperatorKind.InfixRightAssociative, 50, true),
+    new OperatorInfo( ASSIGN,    OperatorKind.InfixRightAssociative, 2, true),
+};
+</code></pre><p>The tables are used to determine the precedence for an operator and what the next precedence should be. They start out with the built-in
+binary operators. (Kaleidoscope doesn&#39;t define any unary operators so that table starts empty) The GetPrededence() and GetNextPrecedence()
+functions lookup the operators token in the table to determine the operators associativity and its precedence.</p>
+<pre><code class="lang-C#">public OperatorInfo GetBinOperatorInfo( int tokenType )
+{
+    if( BinOpPrecedence.TryGetValue( tokenType, out var value ) )
+    {
+        return value;
+    }
+
+    return default;
+}
+
+public OperatorInfo GetUnaryOperatorInfo( int tokenType )
+{
+    if( UnaryOps.TryGetValue( tokenType, out var value ) )
+    {
+        return value;
+    }
+
+    return default;
+}
+
+internal int GetPrecedence( int tokenType ) =&gt; GetBinOperatorInfo( tokenType ).Precedence;
+
+internal int GetNextPrecedence( int tokenType )
+{
+    var operatorInfo = GetBinOperatorInfo( tokenType );
+    int retVal = operatorInfo.Precedence;
+    if( operatorInfo.Kind == OperatorKind.InfixRightAssociative || operatorInfo.Kind == OperatorKind.PreFix )
+    {
+        return retVal;
+    }
+
+    return retVal + 1;
+}
+</code></pre><p>This provides the core ability for looking up and handling precedence. Though as shown so far it is a rather convoluted form of what ANTLR4 gives
+us for free. The real point of this runtime state is the ability of the application to add or remove user operators. (The built-in operators are
+not removable) By adding operators to the runtime state the lookup process will include them during parsing. Thus, whenever visiting an operator
+definition it is generated as a normal function with a specialized name and the operator and precedence are added to the runtime state. Any future
+use of the operator in an expression will detect the correct precedence and the code generation treats it as a function call with the appropriate
+left and right hand argument values.</p>
+<pre><code class="lang-csharp" name="Main">public override Value VisitUnaryOpExpression( [NotNull] UnaryOpExpressionContext context )
+{
+    // verify the operator was previously defined
+    var opKind = RuntimeState.GetUnaryOperatorInfo( context.Op ).Kind;
+    if( opKind == OperatorKind.None )
+    {
+        throw new CodeGeneratorException( $&quot;invalid unary operator {context.Op}&quot; );
+    }
+
+    string calleeName = UnaryPrototypeContext.GetOperatorFunctionName( context.OpToken );
+    var function = FindCallTarget( calleeName );
+    if( function == null )
+    {
+        throw new CodeGeneratorException( $&quot;Unknown function reference {calleeName}&quot; );
+    }
+
+    var arg = context.Rhs.Accept( this );
+    return InstructionBuilder.Call( function, arg ).RegisterName( &quot;calltmp&quot; );
+}
+
+public override Value VisitBinaryPrototype( [NotNull] BinaryPrototypeContext context )
+{
+    if( !RuntimeState.TryAddOperator( context.OpToken, OperatorKind.InfixLeftAssociative, context.Precedence ) )
+    {
+        throw new CodeGeneratorException( &quot;Cannot replace built-in operators&quot; );
+    }
+
+    return GetOrDeclareFunction( new Prototype( context, context.Name ) );
+}
+
+public override Value VisitUnaryPrototype( [NotNull] UnaryPrototypeContext context )
+{
+    if( !RuntimeState.TryAddOperator( context.OpToken, OperatorKind.PreFix, 0 ) )
+    {
+        // should never get here now that grammar distinguishes built-in operators
+        throw new CodeGeneratorException( &quot;Cannot replace built-in operators&quot; );
+    }
+
+    return GetOrDeclareFunction( new Prototype( context, context.Name ) );
+}
+</code></pre><p>Finally, the default case for EmitBinaryOperator() is updated to actually emit a call to the binary operator function generated.</p>
+<pre><code class="lang-csharp" name="Main">default:
+    {
+        // User defined op?
+        var opKind = RuntimeState.GetBinOperatorInfo( op.Token.Type ).Kind;
+        if( opKind != OperatorKind.InfixLeftAssociative &amp;&amp; opKind != OperatorKind.InfixRightAssociative )
+        {
+            throw new CodeGeneratorException( $&quot;Invalid binary operator {op.Token.Text}&quot; );
+        }
+
+        string calleeName = BinaryPrototypeContext.GetOperatorFunctionName( op.Token );
+        var function = FindCallTarget( calleeName );
+        if( function == null )
+        {
+            throw new CodeGeneratorException( $&quot;Unknown function reference {calleeName}&quot; );
+        }
+
+        return InstructionBuilder.Call( function, lhs, rhs ).RegisterName( &quot;calltmp&quot; );
+    }
+</code></pre><p>That completes the support for user defined operators.</p>
+<h3 id="example">Example</h3>
+<p>The following example is a complete program in Kaleidoscope that will generate a textual representation
+of the classic Mandelbrot Set using all of the features of the language.</p>
+<pre><code class="lang-Kaleidoscope">def unary!(v)
+  if v then
+    0
+  else
+    1;
+
+def unary-(v)
+  0-v;
+
+def binary&gt; 10 (LHS RHS)
+  RHS &lt; LHS;
+
+def binary| 5 (LHS RHS)
+  if LHS then
+    1
+  else if RHS then
+    1
+  else
+    0;
+
+def binary&amp; 6 (LHS RHS)
+  if !LHS then
+    0
+  else
+    !!RHS;
+
+def binary= 9 (LHS RHS)
+  !(LHS &lt; RHS | LHS &gt; RHS);
+
+def binary : 1 (x y) y;
+
+extern putchard(char);
+
+def printdensity(d)
+  if d &gt; 8 then
+    putchard(32)
+  else if d &gt; 4 then
+    putchard(46)
+  else if d &gt; 2 then
+    putchard(43)
+  else
+    putchard(42);
+
+def mandelconverger(real imag iters creal cimag)
+  if iters &gt; 255 | (real*real + imag*imag &gt; 4) then
+    iters
+  else
+    mandelconverger( real*real - imag*imag + creal
+                   , 2*real*imag + cimag
+                   , iters+1
+                   , creal
+                   , cimag
+                   );
+
+def mandelconverge(real imag)
+  mandelconverger(real, imag, 0, real, imag);
+
+def mandelhelp(xmin xmax xstep   ymin ymax ystep)
+  for y = ymin, y &lt; ymax, ystep in
+  (
+    (for x = xmin, x &lt; xmax, xstep in printdensity(mandelconverge(x,y))) : putchard(10)
+  );
+
+def mandel(realstart imagstart realmag imagmag)
+  mandelhelp(realstart, realstart+realmag*78, realmag, imagstart, imagstart+imagmag*40, imagmag);
+
+mandel(-2.3, -1.3, 0.05, 0.07);
+</code></pre><p>When entered ( or copy/pasted) to the command line Kaleidoscope will print out the following:</p>
+<pre><code class="lang-shell">Ready&gt;mandel(-2.3, -1.3, 0.05, 0.07);
+*******************************************************************************
+*******************************************************************************
+****************************************++++++*********************************
+************************************+++++...++++++*****************************
+*********************************++++++++.. ...+++++***************************
+*******************************++++++++++..   ..+++++**************************
+******************************++++++++++.     ..++++++*************************
+****************************+++++++++....      ..++++++************************
+**************************++++++++.......      .....++++***********************
+*************************++++++++.   .            ... .++**********************
+***********************++++++++...                     ++**********************
+*********************+++++++++....                    .+++*********************
+******************+++..+++++....                      ..+++********************
+**************++++++. ..........                        +++********************
+***********++++++++..        ..                         .++********************
+*********++++++++++...                                 .++++*******************
+********++++++++++..                                   .++++*******************
+*******++++++.....                                    ..++++*******************
+*******+........                                     ...++++*******************
+*******+... ....                                     ...++++*******************
+*******+++++......                                    ..++++*******************
+*******++++++++++...                                   .++++*******************
+*********++++++++++...                                  ++++*******************
+**********+++++++++..        ..                        ..++********************
+*************++++++.. ..........                        +++********************
+******************+++...+++.....                      ..+++********************
+*********************+++++++++....                    ..++*********************
+***********************++++++++...                     +++*********************
+*************************+++++++..   .            ... .++**********************
+**************************++++++++.......      ......+++***********************
+****************************+++++++++....      ..++++++************************
+*****************************++++++++++..     ..++++++*************************
+*******************************++++++++++..  ...+++++**************************
+*********************************++++++++.. ...+++++***************************
+***********************************++++++....+++++*****************************
+***************************************++++++++********************************
+*******************************************************************************
+*******************************************************************************
+*******************************************************************************
+*******************************************************************************
+*******************************************************************************
+Evaluated to 0
+Ready&gt;
+</code></pre><h2 id="conclusion">Conclusion</h2>
+<p>Adding user defined operators with user defined precedence is fairly straight forward to implement in terms of the code generation. However,
+the real work is on the parser not the code generation. ANTLR4 has support for left-recursion in the grammar and precedence of expressions and
+even though it only directly supports fixed precedence it is rather easy to extend the underlying support to handle dynamic precedence and
+associativity, once the underlying mechanics ANTLR uses for handling left recursion is understood.</p>
 </article>
           </div>
           <div class="contribution-panel mobile-hide">
@@ -160,7 +455,7 @@
             <span class="pull-right">
               <a href="#top">Back to top</a>
             </span>
-            Copyright (C) 2017, Dot NET Foundation<br><strong>Build:</strong> 5.0.1-alpha--ci-BLD.435164120
+            Copyright (C) 2017, Dot NET Foundation<br><strong>Build:</strong> 5.0.1-alpha--ci-BLD.436374711
             
           </div>
         </div>
