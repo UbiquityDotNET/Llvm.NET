@@ -5,13 +5,16 @@
       "src":
       [
         {
-          "files": [ "src/Llvm.Net/**.cs" ],
+          "files": [ "src/Llvm.Net/**.csproj" ],
+          "exclude": [
+            "**/bin/**",
+            "**/obj/**"
+          ],
           "src":".."
         }
       ],
       "dest": "api",
-      "properties":
-      {
+      "properties": {
           "TargetFramework": "net47"
       }
     }
@@ -26,7 +29,7 @@
                    "api/**.md",
                    "api/**.yml",
                    "articles/**.md",
-                   "articles/**.yml",
+                   "articles/**.yml"
                  ],
         "exclude": [ "obj/**" ]
       }
@@ -61,6 +64,11 @@
       "_disableBreadcrumb" : true,
       "llvmVersion": "5.0.0",
       "assemblies": ["Llvm.NET"],
-    },
+      "_gitContribute": {
+          "repo": "https://github.com/UbiquityDotNET/Llvm.NET",
+          "branch":  "master"
+      },
+      "_gitUrlPattern": "github"
+    }
   }
 }

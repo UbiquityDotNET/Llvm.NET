@@ -10,7 +10,7 @@ using static Llvm.NET.Native.NativeMethods;
 namespace Llvm.NET.DebugInfo
 {
     /// <summary>Debug information for a basic type</summary>
-    /// <seealso cref="DebugInfoBuilder.CreateBasicType(string, ulong, DiTypeKind)"/>
+    /// <seealso cref="Llvm.NET.DebugInfo.DebugInfoBuilder.CreateBasicType(string, ulong, DiTypeKind)"/>
     /// <seealso href="xref:llvm_langref#dibasictype">LLVM DIBasicType</seealso>
     public class DIBasicType
         : DIType

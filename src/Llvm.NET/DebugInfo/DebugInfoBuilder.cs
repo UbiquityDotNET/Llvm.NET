@@ -417,8 +417,8 @@ namespace Llvm.NET.DebugInfo
         /// <param name="baseType">Base type to add the qualifier to</param>
         /// <param name="tag">Qualifier to apply</param>
         /// <returns>Qualified type</returns>
-        /// <exception cref="ArgumentException"><paramref name="tag"/> is <see cref="QualifiedTypeTag.None"/></exception>
-        /// <exception cref="ArgumentNullException"><paramref name="baseType"/> is <see langword="null"/></exception>
+        /// <exception cref="System.ArgumentException"><paramref name="tag"/> is <see cref="QualifiedTypeTag.None"/></exception>
+        /// <exception cref="System.ArgumentNullException"><paramref name="baseType"/> is <see langword="null"/></exception>
         [SuppressMessage( "Microsoft.Design", "CA1011:ConsiderPassingBaseTypesAsParameters", Justification = "Specific type required by interop call" )]
         public DIDerivedType CreateQualifiedType( DIType baseType, QualifiedTypeTag tag )
         {
@@ -1253,7 +1253,7 @@ namespace Llvm.NET.DebugInfo
         /// <returns><see cref="DIExpression"/></returns>
         public DIExpression CreateExpression( IEnumerable<ExpressionOp> operations )
         {
-            var args = operations.Cast<long>( ).ToArray( );
+            long[ ] args = operations.Cast<long>( ).ToArray( );
             long actualCount = args.LongLength;
             if( args.Length == 0 )
             {
@@ -1287,7 +1287,7 @@ namespace Llvm.NET.DebugInfo
                                                              , DebugInfoFlags flags = DebugInfoFlags.None
                                                              )
         {
-            // TODO: validate that tag is really valid or document the result if it isn't (as long as llvm won't crash at least)
+            // TODO: validate that tag is really valid or document the result if it isn't (as long as LLVM won't crash at least)
             var handle = LLVMDIBuilderCreateReplaceableCompositeType( BuilderHandle
                                                                     , ( uint )tag
                                                                     , name

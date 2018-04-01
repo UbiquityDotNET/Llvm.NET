@@ -23,8 +23,8 @@ namespace Llvm.NET
         /// <summary>Retrieves <see cref="Comdat"/> by its name</summary>
         /// <param name="key">Name of the <see cref="Comdat"/></param>
         /// <returns><see cref="Comdat"/> or <see langword="null"/></returns>
-        /// <exception cref="ArgumentNullException">Key is null</exception>
-        /// <exception cref="KeyNotFoundException">Key does not exist in the collection</exception>
+        /// <exception cref="System.ArgumentNullException">Key is null</exception>
+        /// <exception cref="System.Collections.Generic.KeyNotFoundException">Key does not exist in the collection</exception>
         public Comdat this[ string key ] => InternalComdatMap[ key ];
 
         /// <summary>Gets the number of items in the collection</summary>

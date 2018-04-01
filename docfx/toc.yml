@@ -4,6 +4,8 @@
 - name: Articles
   href: articles/
   homepage: articles/index.md
+- name: GitHub Repository
+  href: https://github.com/UbiquityDotNET/Llvm.NET
 - name: LLVM.org
   href: http://LLVM.org
 - name: LLVM Docs

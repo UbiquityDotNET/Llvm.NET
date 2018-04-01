@@ -51,11 +51,11 @@ namespace Llvm.NET
     {
         /// <summary>Initializes the native LLVM library support</summary>
         /// <returns>
-        /// <see cref="IDisposable"/> implementation for the library
+        /// <see cref="System.IDisposable"/> implementation for the library
         /// </returns>
         /// <remarks>
         /// This should be called once per application to initialize the
-        /// LLVM library. <see cref="IDisposable.Dispose()"/> will release
+        /// LLVM library. <see cref="System.IDisposable.Dispose()"/> will release
         /// any resources allocated by the library.
         /// </remarks>
         public static IDisposable InitializeLLVM()
@@ -68,12 +68,13 @@ namespace Llvm.NET
         }
 
         /// <summary>Parse a command line string for LLVM Options</summary>
-        /// <param name="args">args to parse</param>
+        /// <param name="args">Arguments to parse</param>
         /// <param name="overview">overview of the application for help/diagnostics</param>
         /// <remarks>
         /// Use for this method is discouraged as calling applications should control
         /// options directly without reliance on particulars of the LLVM argument handling
         /// </remarks>
+        [Obsolete("Applications should manage options directly without relying on the LLVM argument handling")]
         public static void ParseCommandLineOptions( string[ ] args, string overview )
         {
             if( args == null )

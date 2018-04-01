@@ -7,7 +7,7 @@ namespace Llvm.NET.DebugInfo
     /// <summary>DebugMemberLayout is used to define custom layout information for structure members</summary>
     /// <remarks>
     /// Ordinarily layout information is handle automatically in
-    /// <see cref="DebugStructType.SetBody(bool, BitcodeModule, DIScope, DIFile, uint, DebugInfoFlags, System.Collections.Generic.IEnumerable{DebugMemberInfo})"/>
+    /// <see href="xref:Llvm.NET.DebugInfo.DebugStructType.SetBody*">DebugStructType.SetBody</see>
     /// however in cases where explicitly controlled (or "packed") layout is required, instances of DebugMemberLayout are
     /// used to provide the information necessary to generate a proper type and debug information.
     /// </remarks>

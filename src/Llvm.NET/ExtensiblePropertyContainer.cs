@@ -10,7 +10,7 @@ namespace Llvm.NET
     /// <summary>Common implementation of <see cref="IExtensiblePropertyContainer"/></summary>
     /// <remarks>
     /// This class implements <see cref="IExtensiblePropertyContainer"/> through an
-    /// internal <see cref="Dictionary{TKey, TValue}"/>
+    /// internal <see cref="System.Collections.Generic.Dictionary{TKey, TValue}"/>
     /// </remarks>
     public class ExtensiblePropertyContainer
         : IExtensiblePropertyContainer
