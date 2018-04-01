@@ -2,6 +2,7 @@
 // Copyright (c) .NET Foundation. All rights reserved.
 // </copyright>
 
+using System.IO;
 using Antlr4.Runtime;
 using Antlr4.Runtime.Misc;
 using Antlr4.Runtime.Tree;
@@ -9,7 +10,7 @@ using Kaleidoscope.Grammar;
 
 namespace Kaleidoscope.Runtime
 {
-    /// <summary>Combined Lexer and Parser support for REPL usage</summary>
+    /// <summary>Combined Lexer and Parser that can support REPL usage</summary>
     public class ReplParserStack
         : IKaleidoscopeParser
     {
@@ -56,9 +57,20 @@ namespace Kaleidoscope.Runtime
         /// <inheritdoc/>
         public (IParseTree parseTree, Parser recognizer) Parse( string txt, DiagnosticRepresentations aditionalDiagnostics )
         {
+            return Parse( new AntlrInputStream( txt ), aditionalDiagnostics );
+        }
+
+        /// <inheritdoc/>
+        public (IParseTree parseTree, Parser recognizer) Parse( TextReader reader, DiagnosticRepresentations aditionalDiagnostics )
+        {
+            return Parse( new AntlrInputStream( reader ), aditionalDiagnostics );
+        }
+
+        private (IParseTree parseTree, Parser recognizer) Parse( AntlrInputStream inputStream, DiagnosticRepresentations aditionalDiagnostics )
+        {
             try
             {
-                Lexer = new KaleidoscopeLexer( new AntlrInputStream( txt ) )
+                Lexer = new KaleidoscopeLexer( inputStream )
                 {
                     LanguageLevel = GlobalState.LanguageLevel
                 };

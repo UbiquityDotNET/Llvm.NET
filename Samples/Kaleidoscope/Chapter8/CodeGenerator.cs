@@ -4,7 +4,6 @@
 
 using System;
 using System.Linq;
-using System.Runtime.InteropServices;
 using Antlr4.Runtime;
 using Antlr4.Runtime.Misc;
 using Antlr4.Runtime.Tree;
@@ -12,6 +11,7 @@ using Kaleidoscope.Grammar;
 using Kaleidoscope.Runtime;
 using Llvm.NET;
 using Llvm.NET.Instructions;
+using Llvm.NET.Transforms;
 using Llvm.NET.Values;
 
 using static Kaleidoscope.Grammar.KaleidoscopeParser;
@@ -26,15 +26,20 @@ namespace Kaleidoscope
         , IDisposable
         , IKaleidoscopeCodeGenerator<Value>
     {
+        // <Initialization>
         public CodeGenerator( DynamicRuntimeState globalState, TargetMachine machine )
         {
             RuntimeState = globalState;
             Context = new Context( );
             TargetMachine = machine;
+            InitializeModuleAndPassManager( );
             InstructionBuilder = new InstructionBuilder( Context );
-            NamedValues = new ScopeStack<Alloca>( );
             FunctionPrototypes = new PrototypeCollection( );
+            NamedValues = new ScopeStack<Alloca>( );
         }
+        // </Initialization>
+
+        public bool DisableOptimizations { get; set; }
 
         public BitcodeModule Module { get; private set; }
 
@@ -63,6 +68,7 @@ namespace Kaleidoscope
             return Context.CreateConstant( context.Value );
         }
 
+        // <VisitVariableExpression>
         public override Value VisitVariableExpression( [NotNull] VariableExpressionContext context )
         {
             string varName = context.Name;
@@ -74,10 +80,11 @@ namespace Kaleidoscope
             return InstructionBuilder.Load( value )
                                      .RegisterName( varName );
         }
+        // </VisitVariableExpression>
 
         public override Value VisitFunctionCallExpression( [NotNull] FunctionCallExpressionContext context )
         {
-            var function = GetFunction( context.CaleeName );
+            var function = FindCallTarget( context.CaleeName );
             if( function == null )
             {
                 throw new CodeGeneratorException( $"function '{context.CaleeName}' is unknown" );
@@ -97,13 +104,16 @@ namespace Kaleidoscope
             return GetOrDeclareFunction( new Prototype( context ) );
         }
 
+        // <VisitFunctionDefinition>
         public override Value VisitFunctionDefinition( [NotNull] FunctionDefinitionContext context )
         {
             return DefineFunction( ( Function )context.Signature.Accept( this )
                                  , context.BodyExpression
                                  );
         }
+        // </VisitFunctionDefinition>
 
+        // <VisitTopLevelExpression>
         public override Value VisitTopLevelExpression( [NotNull] TopLevelExpressionContext context )
         {
             var function = GetOrDeclareFunction( new Prototype( $"anon_expr_{AnonNameIndex++}" )
@@ -112,7 +122,9 @@ namespace Kaleidoscope
 
             return DefineFunction( function, context.expression( ) );
         }
+        // </VisitTopLevelExpression>
 
+        // <VisitExpression>
         public override Value VisitExpression( [NotNull] ExpressionContext context )
         {
             // Expression: PrimaryExpression (op expression)*
@@ -145,9 +157,13 @@ namespace Kaleidoscope
 
             return lhs;
         }
+        // </VisitExpression>
 
+        // <VisitConditionalExpression>
         public override Value VisitConditionalExpression( [NotNull] ConditionalExpressionContext context )
         {
+            var result = CreateEntryBlockAlloca( InstructionBuilder.InsertBlock.ContainingFunction, "ifresult.alloca" );
+
             var condition = context.Condition.Accept( this );
             if( condition == null )
             {
@@ -161,7 +177,7 @@ namespace Kaleidoscope
 
             var thenBlock = Context.CreateBasicBlock( "then", function );
             var elseBlock = Context.CreateBasicBlock( "else" );
-            var phiMergeBlock = Context.CreateBasicBlock( "ifcont" );
+            var continueBlock = Context.CreateBasicBlock( "ifcont" );
             InstructionBuilder.Branch( condBool, thenBlock, elseBlock );
 
             // generate then block
@@ -172,9 +188,10 @@ namespace Kaleidoscope
                 return null;
             }
 
-            InstructionBuilder.Branch( phiMergeBlock );
+            InstructionBuilder.Store( thenValue, result );
+            InstructionBuilder.Branch( continueBlock );
 
-            // capture the insert in case generating thenExpression adds new blocks
+            // capture the insert in case generating else adds new blocks
             thenBlock = InstructionBuilder.InsertBlock;
 
             // generate else block
@@ -186,37 +203,19 @@ namespace Kaleidoscope
                 return null;
             }
 
-            InstructionBuilder.Branch( phiMergeBlock );
+            InstructionBuilder.Store( elseValue, result );
+            InstructionBuilder.Branch( continueBlock );
             elseBlock = InstructionBuilder.InsertBlock;
 
-            // generate PHI merge block
-            function.BasicBlocks.Add( phiMergeBlock );
-            InstructionBuilder.PositionAtEnd( phiMergeBlock );
-            var phiNode = InstructionBuilder.PhiNode( function.Context.DoubleType )
-                                            .RegisterName( "iftmp" );
-
-            phiNode.AddIncoming( thenValue, thenBlock );
-            phiNode.AddIncoming( elseValue, elseBlock );
-            return phiNode;
+            // generate continue block
+            function.BasicBlocks.Add( continueBlock );
+            InstructionBuilder.PositionAtEnd( continueBlock );
+            return InstructionBuilder.Load( result )
+                                     .RegisterName("ifresult");
         }
+        // </VisitConditionalExpression>
 
-        /*
-        // Output for-loop as:
-        //   ...
-        //   start = startexpr
-        //   goto loop
-        // loop:
-        //   variable = phi [start, loopheader], [nextvariable, loopend]
-        //   ...
-        //   bodyexpr
-        //   ...
-        // loopend:
-        //   step = stepexpr
-        //   nextvariable = variable + step
-        //   endcond = endexpr
-        //   br endcond, loop, endloop
-        // outloop:
-        */
+        // <VisitForExpression>
         public override Value VisitForExpression( [NotNull] ForExpressionContext context )
         {
             var function = InstructionBuilder.InsertBlock.ContainingFunction;
@@ -251,12 +250,6 @@ namespace Kaleidoscope
 
             // Start insertion in loopBlock.
             InstructionBuilder.PositionAtEnd( loopBlock );
-
-            // Start the PHI node with an entry for Start.
-            var variable = InstructionBuilder.PhiNode( Context.DoubleType )
-                                             .RegisterName( varName );
-
-            variable.AddIncoming( startVal, preHeaderBlock );
 
             // Within the loop, the variable is defined equal to the PHI node.
             // So, push a new scope for it and any values the body might set
@@ -308,14 +301,13 @@ namespace Kaleidoscope
                 InstructionBuilder.Branch( endCondition, loopBlock, afterBlock );
                 InstructionBuilder.PositionAtEnd( afterBlock );
 
-                // Add a new entry to the PHI node for the back-edge.
-                variable.AddIncoming( nextVar, loopEndBlock );
-
                 // for expr always returns 0.0 for consistency, there is no 'void'
                 return Context.DoubleType.GetNullValue( );
             }
         }
+        // </VisitForExpression>
 
+        // <VisitUserOperators>
         public override Value VisitUnaryOpExpression( [NotNull] UnaryOpExpressionContext context )
         {
             // verify the operator was previously defined
@@ -326,7 +318,7 @@ namespace Kaleidoscope
             }
 
             string calleeName = UnaryPrototypeContext.GetOperatorFunctionName( context.OpToken );
-            var function = GetFunction( calleeName );
+            var function = FindCallTarget( calleeName );
             if( function == null )
             {
                 throw new CodeGeneratorException( $"Unknown function reference {calleeName}" );
@@ -356,7 +348,9 @@ namespace Kaleidoscope
 
             return GetOrDeclareFunction( new Prototype( context, context.Name ) );
         }
+        // </VisitUserOperators>
 
+        // <VisitVarInExpression>
         public override Value VisitVarInExpression( [NotNull] VarInExpressionContext context )
         {
             using( NamedValues.EnterScope( ) )
@@ -378,6 +372,7 @@ namespace Kaleidoscope
                 return context.Scope.Accept( this );
             }
         }
+        // </VisitVarInExpression>
 
         protected override Value DefaultResult => null;
 
@@ -422,6 +417,7 @@ namespace Kaleidoscope
                 InstructionBuilder.Store( rhs, lhs );
                 return rhs;
 
+            // <EmitUserOperator>
             default:
                 {
                     // User defined op?
@@ -432,7 +428,7 @@ namespace Kaleidoscope
                     }
 
                     string calleeName = BinaryPrototypeContext.GetOperatorFunctionName( op.Token );
-                    var function = GetFunction( calleeName );
+                    var function = FindCallTarget( calleeName );
                     if( function == null )
                     {
                         throw new CodeGeneratorException( $"Unknown function reference {calleeName}" );
@@ -440,16 +436,31 @@ namespace Kaleidoscope
 
                     return InstructionBuilder.Call( function, lhs, rhs ).RegisterName( "calltmp" );
                 }
+            // </EmitUserOperator>
             }
         }
 
+        // <InitializeModuleAndPassManager>
         private void InitializeModuleAndPassManager( )
         {
             Module = Context.CreateBitcodeModule( );
+            Module.TargetTriple = TargetMachine.Triple;
+            Module.Layout = TargetMachine.TargetData;
+            FunctionPassManager = new FunctionPassManager( Module );
+            FunctionPassManager.AddPromoteMemoryToRegisterPass( )
+                               .AddInstructionCombiningPass( )
+                               .AddReassociatePass( )
+                               .AddGVNPass( )
+                               .AddCFGSimplificationPass( )
+                               .Initialize( );
         }
+        // </InitializeModuleAndPassManager>
 
-        private Function GetFunction( string name )
+        // <FindCallTarget>
+        private Function FindCallTarget( string name )
         {
+            // lookup the prototype for the function to get the signature
+            // and create a declaration in this module
             if( FunctionPrototypes.TryGetValue( name, out var signature ) )
             {
                 return GetOrDeclareFunction( signature );
@@ -463,7 +474,9 @@ namespace Kaleidoscope
 
             return null;
         }
+        // </FindCallTarget>
 
+        // <GetOrDeclareFunction>
         private Function GetOrDeclareFunction( Prototype prototype, bool isAnonymous = false )
         {
             var function = Module.GetFunction( prototype.Identifier.Name );
@@ -491,7 +504,9 @@ namespace Kaleidoscope
 
             return retVal;
         }
+        // </GetOrDeclareFunction>
 
+        // <DefineFunction>
         private Function DefineFunction( Function function, ExpressionContext body )
         {
             if( !function.IsDeclaration )
@@ -521,9 +536,16 @@ namespace Kaleidoscope
                 function.Verify( );
             }
 
+            if( !DisableOptimizations )
+            {
+                FunctionPassManager.Run( function );
+            }
+
             return function;
         }
+        // </DefineFunction>
 
+        // <CreateEntryBlockAlloca>
         private static Alloca CreateEntryBlockAlloca( Function theFunction, string varName )
         {
             var tmpBldr = new InstructionBuilder( theFunction.EntryBlock );
@@ -535,6 +557,7 @@ namespace Kaleidoscope
             return tmpBldr.Alloca( theFunction.Context.DoubleType )
                           .RegisterName( varName );
         }
+        // </CreateEntryBlockAlloca>
 
         // <PrivateMembers>
         private readonly DynamicRuntimeState RuntimeState;
@@ -542,13 +565,9 @@ namespace Kaleidoscope
         private readonly Context Context;
         private readonly InstructionBuilder InstructionBuilder;
         private readonly ScopeStack<Alloca> NamedValues;
+        private FunctionPassManager FunctionPassManager;
         private TargetMachine TargetMachine;
         private readonly PrototypeCollection FunctionPrototypes;
-
-        /// <summary>Delegate type to allow execution of a JIT'd TopLevelExpression</summary>
-        /// <returns>Result of evaluating the expression</returns>
-        [UnmanagedFunctionPointer( System.Runtime.InteropServices.CallingConvention.Cdecl )]
-        private delegate double AnonExpressionFunc( );
         // </PrivateMembers>
     }
 }

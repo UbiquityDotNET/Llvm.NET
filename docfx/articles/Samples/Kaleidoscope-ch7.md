@@ -236,22 +236,34 @@ stack needs to switch to using [Alloca](xref:Llvm.NET.Instructions.Alloca).
 private readonly ScopeStack<Alloca> NamedValues;
 ```
 
- To create the alloca instructions
+### Add CreateEntryBlockAlloca 
+To create the alloca instructions
 in the entry block we'll add a new helper routine to build the instructions in the entry block.
 
 [!code-csharp[CreateEntryBlockAlloca](../../../Samples/Kaleidoscope/Chapter7/CodeGenerator.cs#CreateEntryBlockAlloca)]
 
+### Update VisitVariableExpression
 The first change to the code generation is to update handling of variable expressions to generate
 a load through the pointer created with an alloca instruction. This is pretty straight forward since the
 scope map now stores the alloca instructions.
 
 [!code-csharp[VisitVariableExpression](../../../Samples/Kaleidoscope/Chapter7/CodeGenerator.cs#VisitVariableExpression)]
 
+### Update VisitConditionalExpression
+Now that we have the alloca support we can update the conditional expression handling to remove the need for direct
+PHI node construction. This involves adding a new compiler generated local var for the result of the condition and
+storing the result value into that location for each side of the branch. Then, in the continue block load the value
+from the location so that it is available as a value for the result of the expression.
+
+[!code-csharp[VisitConditionalExpression](../../../Samples/Kaleidoscope/Chapter7/CodeGenerator.cs#VisitConditionalExpression)]
+
+### Update VisitForExpression
 Next up is to update the for loop handling to use the allocas. The code is almost identical except for the use
 of load/store for the variables and removal of the manually generated PHI nodes.
 
 [!code-csharp[VisitForExpression](../../../Samples/Kaleidoscope/Chapter7/CodeGenerator.cs#VisitForExpression)]
 
+### Update DefineFunction
 To support mutable function argument variables the handler for functions requires a small update to create
 the allocas for each incoming argument as well.
 
@@ -260,6 +272,7 @@ the allocas for each incoming argument as well.
 The only change there is in the for loop used to create the argument variables via the previously created helper
 function.
 
+### InitializeModuleAndPassManager
 The last piece required for mutable variables support is to include the optimization pass to promote memory to
 registers.
 
@@ -277,6 +290,7 @@ case ASSIGN:
     return rhs;
 ```
 
+### Update VisitExpression
 Unlike the other binary operators assignment doesn't follow the same emit left, emit right, emit operator sequence.
 This is because an expression like '(x+1) = expression' is nonsensical and therefore not allowed. The left hand side
 is always an alloca as the destination of a store. To handle this special case the expression visitor is updated to
@@ -306,16 +320,19 @@ When run, this prints `1234` and `4`, showing that the value was mutated as, exp
 
 ## User-defined Local Variables
 As described in the general syntax discussion of the Kaleidoscope language [VarInExpression](Kaleidoscope-ch2.md#varinexpression)
-The VarIn expression is used to declare local variables for a scope. Code generation for
-the VarIn expression looks like this:
+the VarIn expression is used to declare local variables for a scope. A few changes are
+required to support this language construct.
+
+### Add VisitVarInExpression
+The VarIn expression visitor needs to handle the mutability of the scoped variables.
+The basic idea for each VarIn expression is to push a new scope on the scope stack then walk through all the
+variables in the expression to define them and emit the expression for the initializer. After all the values
+are defined the child expression "scope" is emitted, which may contain another VarIn or loop expression. Once
+the emit completes, the variable scope is popped from the stack to restore back the previous level.
 
 [!code-csharp[VisitVarInExpression](../../../Samples/Kaleidoscope/Chapter7/CodeGenerator.cs#VisitVarInExpression)]
 
-The basic idea there is to push a new scope on the scope stack then walk through all the variables in the
-expression to define then and emit the expression for the initializer. After all the values are defined the child
-expression "scope" is emitted, which may contain another VarIn or loop expression. Once the emit completes, the
-variable scope is popped from the stack to restore back the previous level.
-
+## Conclusion
 This completes the updates needed to support mutable variables with potentially nested scopes. All of this without
 needing to manually deal with PHI nodes or generate SSA form!
 

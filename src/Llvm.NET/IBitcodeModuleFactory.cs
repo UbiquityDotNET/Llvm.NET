@@ -2,7 +2,6 @@
 // Copyright (c) .NET Foundation. All rights reserved.
 // </copyright>
 
-using System;
 using Llvm.NET.DebugInfo;
 
 namespace Llvm.NET
