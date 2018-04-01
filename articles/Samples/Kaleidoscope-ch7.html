@@ -344,7 +344,8 @@ Then support for assignment will complete the mutable variables support.</p>
 <p>Currently the symbol stack in Kaleidoscope stores LLVM Values directly. To support mutable values this
 stack needs to switch to using <a class="xref" href="../../api/Llvm.NET.Instructions.Alloca.html">Alloca</a>.</p>
 <pre><code class="lang-C#">private readonly ScopeStack&lt;Alloca&gt; NamedValues;
-</code></pre><p> To create the alloca instructions
+</code></pre><h3 id="add-createentryblockalloca">Add CreateEntryBlockAlloca</h3>
+<p>To create the alloca instructions
 in the entry block we&#39;ll add a new helper routine to build the instructions in the entry block.</p>
 <pre><code class="lang-csharp" name="CreateEntryBlockAlloca">private static Alloca CreateEntryBlockAlloca( Function theFunction, string varName )
 {
@@ -357,7 +358,8 @@ in the entry block we&#39;ll add a new helper routine to build the instructions 
     return tmpBldr.Alloca( theFunction.Context.DoubleType )
                   .RegisterName( varName );
 }
-</code></pre><p>The first change to the code generation is to update handling of variable expressions to generate
+</code></pre><h3 id="update-visitvariableexpression">Update VisitVariableExpression</h3>
+<p>The first change to the code generation is to update handling of variable expressions to generate
 a load through the pointer created with an alloca instruction. This is pretty straight forward since the
 scope map now stores the alloca instructions.</p>
 <pre><code class="lang-csharp" name="VisitVariableExpression">public override Value VisitVariableExpression( [NotNull] VariableExpressionContext context )
@@ -371,7 +373,66 @@ scope map now stores the alloca instructions.</p>
     return InstructionBuilder.Load( value )
                              .RegisterName( varName );
 }
-</code></pre><p>Next up is to update the for loop handling to use the allocas. The code is almost identical except for the use
+</code></pre><h3 id="update-visitconditionalexpression">Update VisitConditionalExpression</h3>
+<p>Now that we have the alloca support we can update the conditional expression handling to remove the need for direct
+PHI node construction. This involves adding a new compiler generated local var for the result of the condition and
+storing the result value into that location for each side of the branch. Then, in the continue block load the value
+from the location so that it is available as a value for the result of the expression.</p>
+<pre><code class="lang-csharp" name="VisitConditionalExpression">public override Value VisitConditionalExpression( [NotNull] ConditionalExpressionContext context )
+{
+    var result = CreateEntryBlockAlloca( InstructionBuilder.InsertBlock.ContainingFunction, &quot;ifresult.alloca&quot; );
+
+    var condition = context.Condition.Accept( this );
+    if( condition == null )
+    {
+        return null;
+    }
+
+    var condBool = InstructionBuilder.Compare( RealPredicate.OrderedAndNotEqual, condition, Context.CreateConstant( 0.0 ) )
+                                     .RegisterName( &quot;ifcond&quot; );
+
+    var function = InstructionBuilder.InsertBlock.ContainingFunction;
+
+    var thenBlock = Context.CreateBasicBlock( &quot;then&quot;, function );
+    var elseBlock = Context.CreateBasicBlock( &quot;else&quot; );
+    var continueBlock = Context.CreateBasicBlock( &quot;ifcont&quot; );
+    InstructionBuilder.Branch( condBool, thenBlock, elseBlock );
+
+    // generate then block
+    InstructionBuilder.PositionAtEnd( thenBlock );
+    var thenValue = context.ThenExpression.Accept( this );
+    if( thenValue == null )
+    {
+        return null;
+    }
+
+    InstructionBuilder.Store( thenValue, result );
+    InstructionBuilder.Branch( continueBlock );
+
+    // capture the insert in case generating else adds new blocks
+    thenBlock = InstructionBuilder.InsertBlock;
+
+    // generate else block
+    function.BasicBlocks.Add( elseBlock );
+    InstructionBuilder.PositionAtEnd( elseBlock );
+    var elseValue = context.ElseExpression.Accept( this );
+    if( elseValue == null )
+    {
+        return null;
+    }
+
+    InstructionBuilder.Store( elseValue, result );
+    InstructionBuilder.Branch( continueBlock );
+    elseBlock = InstructionBuilder.InsertBlock;
+
+    // generate continue block
+    function.BasicBlocks.Add( continueBlock );
+    InstructionBuilder.PositionAtEnd( continueBlock );
+    return InstructionBuilder.Load( result )
+                             .RegisterName(&quot;ifresult&quot;);
+}
+</code></pre><h3 id="update-visitforexpression">Update VisitForExpression</h3>
+<p>Next up is to update the for loop handling to use the allocas. The code is almost identical except for the use
 of load/store for the variables and removal of the manually generated PHI nodes.</p>
 <pre><code class="lang-csharp" name="VisitForExpression">public override Value VisitForExpression( [NotNull] ForExpressionContext context )
 {
@@ -462,7 +523,8 @@ of load/store for the variables and removal of the manually generated PHI nodes.
         return Context.DoubleType.GetNullValue( );
     }
 }
-</code></pre><p>To support mutable function argument variables the handler for functions requires a small update to create
+</code></pre><h3 id="update-definefunction">Update DefineFunction</h3>
+<p>To support mutable function argument variables the handler for functions requires a small update to create
 the allocas for each incoming argument as well.</p>
 <pre><code class="lang-csharp" name="DefineFunction">private (Function Function, IJitModuleHandle JitHandle) DefineFunction( Function function, ExpressionContext body )
 {
@@ -517,6 +579,7 @@ the allocas for each incoming argument as well.</p>
 }
 </code></pre><p>The only change there is in the for loop used to create the argument variables via the previously created helper
 function.</p>
+<h3 id="initializemoduleandpassmanager">InitializeModuleAndPassManager</h3>
 <p>The last piece required for mutable variables support is to include the optimization pass to promote memory to
 registers.</p>
 <pre><code class="lang-csharp" name="InitializeModuleAndPassManager">private void InitializeModuleAndPassManager( )
@@ -539,7 +602,8 @@ operator to store the right hand value to the left hand value, which is an addre
 <pre><code class="lang-C#">case ASSIGN:
     InstructionBuilder.Store( rhs, lhs );
     return rhs;
-</code></pre><p>Unlike the other binary operators assignment doesn&#39;t follow the same emit left, emit right, emit operator sequence.
+</code></pre><h3 id="update-visitexpression">Update VisitExpression</h3>
+<p>Unlike the other binary operators assignment doesn&#39;t follow the same emit left, emit right, emit operator sequence.
 This is because an expression like &#39;(x+1) = expression&#39; is nonsensical and therefore not allowed. The left hand side
 is always an alloca as the destination of a store. To handle this special case the expression visitor is updated to
 to perform a lookup of the left hand side variable for assignment instead of emitting the expression.</p>
@@ -592,8 +656,14 @@ test(123);
 </code></pre><p>When run, this prints <code>1234</code> and <code>4</code>, showing that the value was mutated as, expected.</p>
 <h2 id="user-defined-local-variables">User-defined Local Variables</h2>
 <p>As described in the general syntax discussion of the Kaleidoscope language <a href="Kaleidoscope-ch2.html#varinexpression">VarInExpression</a>
-The VarIn expression is used to declare local variables for a scope. Code generation for
-the VarIn expression looks like this:</p>
+the VarIn expression is used to declare local variables for a scope. A few changes are
+required to support this language construct.</p>
+<h3 id="add-visitvarinexpression">Add VisitVarInExpression</h3>
+<p>The VarIn expression visitor needs to handle the mutability of the scoped variables.
+The basic idea for each VarIn expression is to push a new scope on the scope stack then walk through all the
+variables in the expression to define them and emit the expression for the initializer. After all the values
+are defined the child expression &quot;scope&quot; is emitted, which may contain another VarIn or loop expression. Once
+the emit completes, the variable scope is popped from the stack to restore back the previous level.</p>
 <pre><code class="lang-csharp" name="VisitVarInExpression">public override Value VisitVarInExpression( [NotNull] VarInExpressionContext context )
 {
     using( NamedValues.EnterScope( ) )
@@ -615,10 +685,7 @@ the VarIn expression looks like this:</p>
         return context.Scope.Accept( this );
     }
 }
-</code></pre><p>The basic idea there is to push a new scope on the scope stack then walk through all the variables in the
-expression to define then and emit the expression for the initializer. After all the values are defined the child
-expression &quot;scope&quot; is emitted, which may contain another VarIn or loop expression. Once the emit completes, the
-variable scope is popped from the stack to restore back the previous level.</p>
+</code></pre><h2 id="conclusion">Conclusion</h2>
 <p>This completes the updates needed to support mutable variables with potentially nested scopes. All of this without
 needing to manually deal with PHI nodes or generate SSA form!</p>
 </article>
@@ -643,7 +710,7 @@ needing to manually deal with PHI nodes or generate SSA form!</p>
             <span class="pull-right">
               <a href="#top">Back to top</a>
             </span>
-            Copyright (C) 2017, Dot NET Foundation<br><strong>Build:</strong> 5.0.1-alpha--ci-BLD.436809058
+            Copyright (C) 2017, Dot NET Foundation<br><strong>Build:</strong> 5.0.1-alpha--ci-BLD.436840127
             
           </div>
         </div>

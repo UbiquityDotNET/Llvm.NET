@@ -5,9 +5,9 @@
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-    <title>Topic Header | Llvm.NET </title>
+    <title>8. Kaleidoscope: Compiling to Object Code | Llvm.NET </title>
     <meta name="viewport" content="width=device-width">
-    <meta name="title" content="Topic Header | Llvm.NET ">
+    <meta name="title" content="8. Kaleidoscope: Compiling to Object Code | Llvm.NET ">
     <meta name="generator" content="docfx 2.33.0.0">
     
     <link rel="shortcut icon" href="../../favicon.ico">
@@ -136,11 +136,311 @@
         <div class="article row grid-right">
           <div class="col-md-10">
             <article class="content wrap" id="_content" data-uid="">
-<h1 id="topic-header">Topic Header</h1>
+<h1 id="8-kaleidoscope-compiling-to-object-code">8. Kaleidoscope: Compiling to Object Code</h1>
 
-<p>Summary</p>
-<h2 id="sub-section">Sub Section</h2>
-<p>...</p>
+<p>This tutorial describes how to adapt the Kaleidoscope JIT engine into an Ahead of Time (AOT) compiler
+by generating target specific native object files.</p>
+<h2 id="choosing-a-target">Choosing a target</h2>
+<p>LLVM has built-in support for cross-compilation. This allows compiling to the architecture of the platform
+you run the compiler on or, just as easily, for some other architecture. For the Kaleidoscope tutorial we&#39;ll
+focus on just the native target the compiler is running on.</p>
+<p>LLVM uses a &quot;Triple&quot; string to describe the target used for code generation. This takes the form <code>&lt;arch&gt;&lt;sub&gt;-&lt;vendor&gt;-&lt;sys&gt;-&lt;abi&gt;</code>
+(see the description of the <a class="xref" href="../../api/Llvm.NET.Triple.html">Triple</a> type for more details)</p>
+<p>Fortunately, it is normally not required to build such strings directly. </p>
+<h2 id="code-generation-changes">Code Generation Changes</h2>
+<p>The changes in code generation are fairly straight forward and consist of the following basic steps.</p>
+<ol>
+<li>Remove JIT engine support</li>
+<li>Expose the bit code module generated, so it is available to the &quot;driver&quot;.</li>
+<li>Saving the target machine (since it doesn&#39;t come from the JIT anymore)</li>
+</ol>
+<p>The changes are shown below in classic &#39;diff&#39; form since each change doesn&#39;t really need a detailed explanation.
+(Nothing even remotely close to &quot;Rocket Science&quot; here. 8^) )</p>
+<pre><code class="lang-diff">diff --git a/Samples/Kaleidoscope/Chapter7/CodeGenerator.cs b/Samples/Kaleidoscope/Chapter8/CodeGenerator.cs
+index 89e9b2ad8..1e7597c78 100644
+--- a/Samples/Kaleidoscope/Chapter7/CodeGenerator.cs
++++ b/Samples/Kaleidoscope/Chapter8/CodeGenerator.cs
+@@ -3,9 +3,7 @@
+ // &lt;/copyright&gt;
+
+ using System;
+-using System.Collections.Generic;
+ using System.Linq;
+-using System.Runtime.InteropServices;
+ using Antlr4.Runtime;
+ using Antlr4.Runtime.Misc;
+ using Antlr4.Runtime.Tree;
+@@ -13,7 +11,6 @@ using Kaleidoscope.Grammar;
+ using Kaleidoscope.Runtime;
+ using Llvm.NET;
+ using Llvm.NET.Instructions;
+-using Llvm.NET.JIT;
+ using Llvm.NET.Transforms;
+ using Llvm.NET.Values;
+
+@@ -30,24 +27,24 @@ namespace Kaleidoscope
+         , IKaleidoscopeCodeGenerator&lt;Value&gt;
+     {
+         // &lt;Initialization&gt;
+-        public CodeGenerator( DynamicRuntimeState globalState )
++        public CodeGenerator( DynamicRuntimeState globalState, TargetMachine machine )
+         {
+             RuntimeState = globalState;
+             Context = new Context( );
+-            JIT = new KaleidoscopeJIT( );
++            TargetMachine = machine;
+             InitializeModuleAndPassManager( );
+             InstructionBuilder = new InstructionBuilder( Context );
+             FunctionPrototypes = new PrototypeCollection( );
+-            FunctionModuleMap = new Dictionary&lt;string, IJitModuleHandle&gt;( );
+             NamedValues = new ScopeStack&lt;Alloca&gt;( );
+         }
+         // &lt;/Initialization&gt;
+
+         public bool DisableOptimizations { get; set; }
+
++        public BitcodeModule Module { get; private set; }
++
+         public void Dispose( )
+         {
+-            JIT.Dispose( );
+             Context.Dispose( );
+         }
+
+@@ -112,23 +109,18 @@ namespace Kaleidoscope
+         {
+             return DefineFunction( ( Function )context.Signature.Accept( this )
+                                  , context.BodyExpression
+-                                 ).Function;
++                                 );
+         }
+         // &lt;/VisitFunctionDefinition&gt;
+
+         // &lt;VisitTopLevelExpression&gt;
+         public override Value VisitTopLevelExpression( [NotNull] TopLevelExpressionContext context )
+         {
+-            var proto = new Prototype( $&quot;anon_expr_{AnonNameIndex++}&quot; );
+-            var function = GetOrDeclareFunction( proto, isAnonymous: true );
+-
+-            var (_, jitHandle) = DefineFunction( function, context.expression( ) );
++            var function = GetOrDeclareFunction( new Prototype( $&quot;anon_expr_{AnonNameIndex++}&quot; )
++                                               , isAnonymous: true
++                                               );
+
+-            var nativeFunc = JIT.GetDelegateForFunction&lt;AnonExpressionFunc&gt;( proto.Identifier.Name );
+-            var retVal = Context.CreateConstant( nativeFunc( ) );
+-            FunctionModuleMap.Remove( function.Name );
+-            JIT.RemoveModule( jitHandle );
+-            return retVal;
++            return DefineFunction( function, context.expression( ) );
+         }
+         // &lt;/VisitTopLevelExpression&gt;
+
+@@ -452,7 +444,8 @@ namespace Kaleidoscope
+         private void InitializeModuleAndPassManager( )
+         {
+             Module = Context.CreateBitcodeModule( );
+-            Module.Layout = JIT.TargetMachine.TargetData;
++            Module.TargetTriple = TargetMachine.Triple;
++            Module.Layout = TargetMachine.TargetData;
+             FunctionPassManager = new FunctionPassManager( Module );
+             FunctionPassManager.AddPromoteMemoryToRegisterPass( )
+                                .AddInstructionCombiningPass( )
+@@ -514,25 +507,13 @@ namespace Kaleidoscope
+         // &lt;/GetOrDeclareFunction&gt;
+
+         // &lt;DefineFunction&gt;
+-        private (Function Function, IJitModuleHandle JitHandle) DefineFunction( Function function, ExpressionContext body )
++        private Function DefineFunction( Function function, ExpressionContext body )
+         {
+             if( !function.IsDeclaration )
+             {
+                 throw new CodeGeneratorException( $&quot;Function {function.Name} cannot be redefined in the same module&quot; );
+             }
+
+-            // Destroy any previously generated module for this function.
+-            // This allows re-definition as the new module will provide the
+-            // implementation. This is needed, otherwise both the MCJIT
+-            // and OrcJit engines will resolve to the original module, despite
+-            // claims to the contrary in the official tutorial text. (Though,
+-            // to be fair it may have been true in the original JIT and might
+-            // still be true for the interpreter)
+-            if( FunctionModuleMap.Remove( function.Name, out IJitModuleHandle handle ) )
+-            {
+-                JIT.RemoveModule( handle );
+-            }
+-
+             var basicBlock = function.AppendBasicBlock( &quot;entry&quot; );
+             InstructionBuilder.PositionAtEnd( basicBlock );
+             using( NamedValues.EnterScope( ) )
+@@ -548,7 +529,7 @@ namespace Kaleidoscope
+                 if( funcReturn == null )
+                 {
+                     function.EraseFromParent( );
+-                    return (null, default);
++                    return null;
+                 }
+
+                 InstructionBuilder.Return( funcReturn );
+@@ -560,10 +541,7 @@ namespace Kaleidoscope
+                 FunctionPassManager.Run( function );
+             }
+
+-            var jitHandle = JIT.AddModule( Module );
+-            FunctionModuleMap.Add( function.Name, jitHandle );
+-            InitializeModuleAndPassManager( );
+-            return (function, jitHandle);
++            return function;
+         }
+         // &lt;/DefineFunction&gt;
+
+@@ -585,18 +563,11 @@ namespace Kaleidoscope
+         private readonly DynamicRuntimeState RuntimeState;
+         private static int AnonNameIndex;
+         private readonly Context Context;
+-        private BitcodeModule Module;
+         private readonly InstructionBuilder InstructionBuilder;
+         private readonly ScopeStack&lt;Alloca&gt; NamedValues;
+-        private readonly KaleidoscopeJIT JIT;
+-        private readonly Dictionary&lt;string, IJitModuleHandle&gt; FunctionModuleMap;
+         private FunctionPassManager FunctionPassManager;
++        private TargetMachine TargetMachine;
+         private readonly PrototypeCollection FunctionPrototypes;
+-
+-        /// &lt;summary&gt;Delegate type to allow execution of a JIT&#39;d TopLevelExpression&lt;/summary&gt;
+-        /// &lt;returns&gt;Result of evaluating the expression&lt;/returns&gt;
+-        [UnmanagedFunctionPointer( System.Runtime.InteropServices.CallingConvention.Cdecl )]
+-        private delegate double AnonExpressionFunc( );
+         // &lt;/PrivateMembers&gt;
+     }
+ }
+</code></pre><h2 id="driver-changes">Driver changes</h2>
+<p>The bulk of the work needed to generate object files is in the &quot;driver&quot; application code. The changes
+fall into two general categories:</p>
+<ol>
+<li>Command line argument handling</li>
+<li>Generating the output files</li>
+</ol>
+<h3 id="adding-command-line-handling">Adding Command Line handling</h3>
+<p>To allow providing a file like a traditional compiler the driver app needs to have some basic
+command line argument handling. (&quot;Basic&quot; in this case means truly rudimentary ::Grin:: )
+Generally this just gets a viable file path to use for the source code.</p>
+<pre><code class="lang-csharp" name="ProcessArgs">// really simple command line handling, just loops through the args
+private static (string SourceFilePath, bool WaitForDebugger, int ExitCode) ProcessArgs( string[ ] args )
+{
+    bool waitforDebugger = false;
+    string sourceFilePath = string.Empty;
+    foreach( string arg in args )
+    {
+        if( string.Compare( arg, &quot;waitfordebugger&quot;, StringComparison.InvariantCultureIgnoreCase ) == 0 )
+        {
+            waitforDebugger = true;
+        }
+        else
+        {
+            if( !string.IsNullOrWhiteSpace( sourceFilePath ) )
+            {
+                Console.Error.WriteLine( &quot;Source path already provided, unrecognized option: &#39;{0}&#39;&quot;, arg );
+            }
+            sourceFilePath = Path.GetFullPath( arg );
+        }
+    }
+
+    WaitForDebugger( waitforDebugger );
+
+    if( string.IsNullOrWhiteSpace( sourceFilePath ) )
+    {
+        Console.Error.WriteLine( &quot;Missing source file name!&quot; );
+        return (null, false, -1);
+    }
+
+    if( !File.Exists( sourceFilePath ) )
+    {
+        Console.Error.WriteLine( &quot;Source file &#39;{0}&#39; - not found!&quot;, sourceFilePath );
+        return (null, false, -2);
+    }
+
+    return (sourceFilePath, waitforDebugger, 0);
+}
+</code></pre><h3 id="update-main">Update Main()</h3>
+<p>The real work comes in the Main application driver, though there isn&#39;t a lot of additional code
+here either. The general plan is:</p>
+<ol>
+<li>Process the arguments to get the path to compile</li>
+<li>Open the file for reading</li>
+<li>Create a new target machine from the default triple of the host</li>
+<li>Build the parser loop - specifying the file as the input source (instead of the default console)</li>
+<li>Remove the REPL loop ready state console output handling as compilation isn&#39;t interactive</li>
+<li>Once the parsing has completed, verify the module and emit the object file</li>
+<li>For diagnostics use, also emit the LLVM IR textual form</li>
+</ol>
+<pre><code class="lang-csharp" name="Main">
+/// &lt;summary&gt;C# version of the LLVM Kaleidoscope language tutorial&lt;/summary&gt;
+/// &lt;param name=&quot;args&quot;&gt;Command line arguments to the application&lt;/param&gt;
+/// &lt;returns&gt;0 on success; non-zero on error&lt;/returns&gt;
+/// &lt;remarks&gt;
+/// The command line options at present are &#39;WaitForDebugger&#39; and the source file name
+///
+/// Specifying &#39;WaitForDebugger&#39; will trigger a wait loop in Main() to wait
+/// for an attached debugger if one is not yet attached. This is useful
+/// for mixed mode native+managed debugging as the SDK project system does
+/// not support that on launch.
+/// &lt;/remarks&gt;
+public static int Main( string[ ] args )
+{
+    (string sourceFilePath, bool waitForDebugger, int exitCode) = ProcessArgs( args );
+    if( exitCode != 0 )
+    {
+        return exitCode;
+    }
+
+    string objFilePath = Path.ChangeExtension( sourceFilePath, &quot;.o&quot; );
+    string irFilePath = Path.ChangeExtension( sourceFilePath, &quot;.ll&quot; );
+
+    using( TextReader rdr = File.OpenText( sourceFilePath ) )
+    using( InitializeLLVM( ) )
+    {
+        RegisterNative( );
+
+        var machine = new TargetMachine( Triple.HostTriple );
+        var parser = new ReplParserStack( LanguageLevel.MutableVariables );
+        using( var generator = new CodeGenerator( parser.GlobalState, machine ) )
+        {
+            Console.WriteLine( &quot;Llvm.NET Kaleidoscope Compiler - {0}&quot;, parser.LanguageLevel );
+            Console.WriteLine( &quot;Compiling {0}&quot;, sourceFilePath );
+
+            var replLoop = new ReplLoop&lt;Value&gt;( generator, parser, DiagnosticRepresentations.None, rdr );
+            replLoop.CodeGenerationError += OnGeneratorError;
+
+            // time the parse and code generation
+            var timer = System.Diagnostics.Stopwatch.StartNew( );
+            replLoop.Run( );
+            if( !generator.Module.Verify( out string errMsg ) )
+            {
+                Console.Error.WriteLine( errMsg );
+            }
+            else
+            {
+                machine.EmitToFile( generator.Module, objFilePath, CodeGenFileType.ObjectFile );
+                timer.Stop( );
+
+                Console.WriteLine( &quot;Wrote {0}&quot;, objFilePath );
+                if( !generator.Module.WriteToTextFile( irFilePath, out string msg ) )
+                {
+                    Console.Error.WriteLine( msg );
+                    return -1;
+                }
+                Console.WriteLine( &quot;CopmilationTiorTime: {0}&quot;, timer.Elapsed );
+            }
+        }
+    }
+
+    return 0;
+}
+</code></pre><h2 id="conclusion">Conclusion</h2>
+<p>That&#39;s it - seriously! Very little change was needed, mostly deleting code. Looking at the changes
+it should be clear that it is possible to support runtime choice between JIT and full native compilation
+instead of deleting the JIT code. (Implementing this feature is &quot;left as an exercise for the reader&quot; ::Grin::)</p>
 </article>
           </div>
           <div class="contribution-panel mobile-hide">
@@ -163,7 +463,7 @@
             <span class="pull-right">
               <a href="#top">Back to top</a>
             </span>
-            Copyright (C) 2017, Dot NET Foundation<br><strong>Build:</strong> 5.0.1-alpha--ci-BLD.436809058
+            Copyright (C) 2017, Dot NET Foundation<br><strong>Build:</strong> 5.0.1-alpha--ci-BLD.436840127
             
           </div>
         </div>

@@ -511,6 +511,22 @@ svg:hover path {
   font-weight: bold;
 }
 
+.hljs-header {
+    color:paleturquoise;
+}
+
+.hljs-addition {
+    color:forestgreen;
+}
+
+.hljs-deletion {
+    color:crimson;
+}
+
+code.lang-diff {
+    color:grey;
+}
+
 /* Override docfx.vendor.css language specific hljs styles */
 .bash .hljs-shebang,
 .java .hljs-javadoc,
