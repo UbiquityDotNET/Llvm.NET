@@ -865,6 +865,22 @@ references:
   commentId: Overload:Llvm.NET.ComdatCollection.Remove
   fullName: Llvm.NET.ComdatCollection.Remove
   nameWithType: ComdatCollection.Remove
+- uid: Llvm.NET.ComdatCollection.System#Collections#IEnumerable#GetEnumerator
+  name: IEnumerable.GetEnumerator()
+  href: api/Llvm.NET.ComdatCollection.System-Collections-IEnumerable-GetEnumerator.html#Llvm_NET_ComdatCollection_System_Collections_IEnumerable_GetEnumerator
+  commentId: M:Llvm.NET.ComdatCollection.System#Collections#IEnumerable#GetEnumerator
+  name.vb: System.Collections.IEnumerable.GetEnumerator()
+  fullName: Llvm.NET.ComdatCollection.System.Collections.IEnumerable.GetEnumerator()
+  nameWithType: ComdatCollection.IEnumerable.GetEnumerator()
+  nameWithType.vb: ComdatCollection.System.Collections.IEnumerable.GetEnumerator()
+- uid: Llvm.NET.ComdatCollection.System#Collections#IEnumerable#GetEnumerator*
+  name: IEnumerable.GetEnumerator
+  href: api/Llvm.NET.ComdatCollection.System-Collections-IEnumerable-GetEnumerator.html
+  commentId: Overload:Llvm.NET.ComdatCollection.System#Collections#IEnumerable#GetEnumerator
+  name.vb: System.Collections.IEnumerable.GetEnumerator
+  fullName: Llvm.NET.ComdatCollection.System.Collections.IEnumerable.GetEnumerator
+  nameWithType: ComdatCollection.IEnumerable.GetEnumerator
+  nameWithType.vb: ComdatCollection.System.Collections.IEnumerable.GetEnumerator
 - uid: Llvm.NET.ComdatCollection.TryGetValue(System.String,Llvm.NET.Comdat@)
   name: TryGetValue(String, out Comdat)
   href: api/Llvm.NET.ComdatCollection.TryGetValue.html#Llvm_NET_ComdatCollection_TryGetValue_System_String_Llvm_NET_Comdat__
@@ -6708,6 +6724,24 @@ references:
   fullName.vb: Llvm.NET.DebugInfo.TupleTypedArrayWrapper(Of T).Item
   nameWithType: TupleTypedArrayWrapper<T>.Item
   nameWithType.vb: TupleTypedArrayWrapper(Of T).Item
+- uid: Llvm.NET.DebugInfo.TupleTypedArrayWrapper`1.System#Collections#IEnumerable#GetEnumerator
+  name: IEnumerable.GetEnumerator()
+  href: api/Llvm.NET.DebugInfo.TupleTypedArrayWrapper-1.System-Collections-IEnumerable-GetEnumerator.html#Llvm_NET_DebugInfo_TupleTypedArrayWrapper_1_System_Collections_IEnumerable_GetEnumerator
+  commentId: M:Llvm.NET.DebugInfo.TupleTypedArrayWrapper`1.System#Collections#IEnumerable#GetEnumerator
+  name.vb: System.Collections.IEnumerable.GetEnumerator()
+  fullName: Llvm.NET.DebugInfo.TupleTypedArrayWrapper<T>.System.Collections.IEnumerable.GetEnumerator()
+  fullName.vb: Llvm.NET.DebugInfo.TupleTypedArrayWrapper(Of T).System.Collections.IEnumerable.GetEnumerator()
+  nameWithType: TupleTypedArrayWrapper<T>.IEnumerable.GetEnumerator()
+  nameWithType.vb: TupleTypedArrayWrapper(Of T).System.Collections.IEnumerable.GetEnumerator()
+- uid: Llvm.NET.DebugInfo.TupleTypedArrayWrapper`1.System#Collections#IEnumerable#GetEnumerator*
+  name: IEnumerable.GetEnumerator
+  href: api/Llvm.NET.DebugInfo.TupleTypedArrayWrapper-1.System-Collections-IEnumerable-GetEnumerator.html
+  commentId: Overload:Llvm.NET.DebugInfo.TupleTypedArrayWrapper`1.System#Collections#IEnumerable#GetEnumerator
+  name.vb: System.Collections.IEnumerable.GetEnumerator
+  fullName: Llvm.NET.DebugInfo.TupleTypedArrayWrapper<T>.System.Collections.IEnumerable.GetEnumerator
+  fullName.vb: Llvm.NET.DebugInfo.TupleTypedArrayWrapper(Of T).System.Collections.IEnumerable.GetEnumerator
+  nameWithType: TupleTypedArrayWrapper<T>.IEnumerable.GetEnumerator
+  nameWithType.vb: TupleTypedArrayWrapper(Of T).System.Collections.IEnumerable.GetEnumerator
 - uid: Llvm.NET.DebugInfo.TupleTypedArrayWrapper`1.Tuple
   name: Tuple
   href: api/Llvm.NET.DebugInfo.TupleTypedArrayWrapper-1.Tuple.html#Llvm_NET_DebugInfo_TupleTypedArrayWrapper_1_Tuple
@@ -10252,18 +10286,6 @@ references:
   commentId: T:Llvm.NET.LlvmMetadata
   fullName: Llvm.NET.LlvmMetadata
   nameWithType: LlvmMetadata
-- uid: Llvm.NET.LlvmMetadata.#ctor(Llvm.NET.Native.LLVMMetadataRef)
-  name: LlvmMetadata(LLVMMetadataRef)
-  href: api/Llvm.NET.LlvmMetadata.-ctor.html#Llvm_NET_LlvmMetadata__ctor_Llvm_NET_Native_LLVMMetadataRef_
-  commentId: M:Llvm.NET.LlvmMetadata.#ctor(Llvm.NET.Native.LLVMMetadataRef)
-  fullName: Llvm.NET.LlvmMetadata.LlvmMetadata(Llvm.NET.Native.LLVMMetadataRef)
-  nameWithType: LlvmMetadata.LlvmMetadata(LLVMMetadataRef)
-- uid: Llvm.NET.LlvmMetadata.#ctor*
-  name: LlvmMetadata
-  href: api/Llvm.NET.LlvmMetadata.-ctor.html
-  commentId: Overload:Llvm.NET.LlvmMetadata.#ctor
-  fullName: Llvm.NET.LlvmMetadata.LlvmMetadata
-  nameWithType: LlvmMetadata.LlvmMetadata
 - uid: Llvm.NET.LlvmMetadata.ReplaceAllUsesWith(Llvm.NET.LlvmMetadata)
   name: ReplaceAllUsesWith(LlvmMetadata)
   href: api/Llvm.NET.LlvmMetadata.ReplaceAllUsesWith.html#Llvm_NET_LlvmMetadata_ReplaceAllUsesWith_Llvm_NET_LlvmMetadata_
