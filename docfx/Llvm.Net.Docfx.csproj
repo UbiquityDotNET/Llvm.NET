@@ -1,61 +1,84 @@
 <Project Sdk="Microsoft.NET.Sdk">
-    <PropertyGroup>
-        <TargetFramework>net47</TargetFramework>
-    </PropertyGroup>
+  <PropertyGroup>
+    <TargetFramework>net47</TargetFramework>
+  </PropertyGroup>
 
-    <ItemGroup>
-        <ProjectReference Include="..\src\Llvm.NET\Llvm.NET.csproj" />
-    </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\src\Llvm.NET\Llvm.NET.csproj" />
+  </ItemGroup>
 
-    <ItemGroup>
-        <PackageReference Include="CSemVer.Build.Tasks" Version="1.0.3-beta--ci-BLD.431367438" PrivateAssets="All" />
-        <PackageReference Include="docfx.console" Version="2.29.1" PrivateAssets="All" />
-        <PackageReference Include="memberpage" Version="2.29.1" PrivateAssets="All" />
-        <PackageReference Include="msdn.4.5.2" Version="0.1.0-alpha-1611021200" Condition="'$(TargetFramework)'=='net47'" PrivateAssets="All" />
-    </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="CSemVer.Build.Tasks" Version="1.0.3-beta--ci-BLD.431367438" PrivateAssets="All" />
+    <PackageReference Include="docfx.console" Version="2.33.0" PrivateAssets="All" />
+    <PackageReference Include="memberpage" Version="2.33.0" PrivateAssets="All" />
+    <PackageReference Include="msdn.4.5.2" Version="0.1.0-alpha-1611021200" PrivateAssets="All" />
+  </ItemGroup>
 
-    <!--
+  <!-- Custom task to Compare versions -->
+  <UsingTask TaskName="VersionCheck" TaskFactory="CodeTaskFactory" AssemblyFile="$(MSBuildToolsPath)\Microsoft.Build.Tasks.v4.0.dll">
+    <ParameterGroup>
+      <ActualVersion ParameterType="System.String" Required="true" />
+      <MinimumRequiredVersion ParameterType="System.String" Required="true" />
+      <IsValidVersion ParameterType="System.Boolean" Output="true" />
+    </ParameterGroup>
+    <Task>
+      <Using Namespace="System" />
+      <Code Type="Fragment" Language="cs">
+        <![CDATA[
+          IsValidVersion = Version.Parse(ActualVersion) > Version.Parse(MinimumRequiredVersion);
+        ]]>
+      </Code>
+    </Task>
+  </UsingTask>
+
+  <!--
     This target dynamically resolves the installed location of the NuGet Packages used and applies
     appropriate parameters to the DocFx command to use them. Otherwise the docfx.json would need to
     have a hard coded path, which doesn't work with multiple users of a version controlled project.
     It also removes the need to workaround the hard coded path with relative paths by using a
     nuget.config to force package installs to a well known location.
     -->
-    <Target Name="GetDocfxPackagePaths" BeforeTargets="DocBuild">
-        <ItemGroup>
-            <docfxpkg Include="@(PackageDefinitions)" Condition="'%(PackageDefinitions.Name)'=='docfx.console'" />
-            <memberpage Include="@(PackageDefinitions)" Condition="'%(PackageDefinitions.Name)'=='memberpage'" />
-            <Msdn4_5_2 Include="@(PackageDefinitions)" Condition="'%(PackageDefinitions.Name)'=='msdn.4.5.2'" />
-        </ItemGroup>
-        <PropertyGroup>
-            <DocfxConsolePath>%(docfxpkg.ResolvedPath)</DocfxConsolePath>
-            <MemberPagePath>%(memberpage.ResolvedPath)</MemberPagePath>
-            <MsdnXRefPath>%(msdn4_5_2.ResolvedPath)</MsdnXRefPath>
-        </PropertyGroup>
-    </Target>
+  <Target Name="GetDocfxPackagePaths" BeforeTargets="DocBuild">
+    <ItemGroup>
+      <docfxpkg Include="@(PackageDefinitions)" Condition="'%(PackageDefinitions.Name)'=='docfx.console'" />
+      <memberpage Include="@(PackageDefinitions)" Condition="'%(PackageDefinitions.Name)'=='memberpage'" />
+      <Msdn4_5_2 Include="@(PackageDefinitions)" Condition="'%(PackageDefinitions.Name)'=='msdn.4.5.2'" />
+    </ItemGroup>
+    <PropertyGroup>
+      <DocfxConsolePath>%(docfxpkg.ResolvedPath)</DocfxConsolePath>
+      <MemberPagePath>%(memberpage.ResolvedPath)</MemberPagePath>
+      <MsdnXRefPath>%(msdn4_5_2.ResolvedPath)</MsdnXRefPath>
+      <IsPrereleaseMSBuild>false</IsPrereleaseMSBuild>
+    </PropertyGroup>
+    <VersionCheck Condition="$(MSBuildVersion)!=''" MinimumRequiredVersion="15.6.82" ActualVersion="$(MSBuildVersion)">
+      <Output TaskParameter="IsValidVersion" PropertyName="IsPrereleaseMSBuild" />
+    </VersionCheck>
+    <!-- NOTE: MSBuildVersion property is new in 15.6 (as of 15.6.0-pre.4.0 the value is 15.6.76 )  -->
+    <Error Code="DOCFX:0001" ContinueOnError="false" Condition="$(IsPrereleaseMSBuild)" Text="As of DOCFX 2.31 docfx cannot generate metadata for CSPROJ files using MSBuild > 15.6.82 (Current MSBuild is $(MSBuildVersion))" />
+  </Target>
 
-    <Target Name="SetDocFxParameters" AfterTargets="GetDocfxPackagePaths" BeforeTargets="DocBuild">
-        <ItemGroup>
-            <DocFxCrossRefMap Include="llvm-xref.yml"/>
-            <DocFxCrossRefMap Include="$(MsdnXrefPath)\content\msdn.4.5.2.zip" />
-            <DocFxCrossRefMap Include="$(MsdnXrefPath)\content\namespaces.4.5.2.zip" />
-        </ItemGroup>
-        <PropertyGroup>
-            <LogLevel>Info</LogLevel>
-            <LogFile>$(IntermediateOutputPath)DocFx-Metadata.log</LogFile>
-            <DocParameters>$(DocParameters) --cleanupCacheHistory</DocParameters>
-            <DocParameters>$(DocParameters) --lruSize=0</DocParameters>
-            <DocParameters>$(DocParameters) --globalMetadata="{_buildVersion:\"$(FullBuildNumber)\"}"</DocParameters>
-            <DocParameters>$(DocParameters) --intermediateFolder="$(IntermediateOutputPath.TrimEnd('\'))"</DocParameters>
-            <DocParameters>$(DocParameters) --xref="@(DocFxCrossRefMap->'%(FullPath)',',')"</DocParameters>
-            <DocTemplate>statictoc,$(MemberPagePath)\content,templates\Ubiquity</DocTemplate>
-        </PropertyGroup>
-    </Target>
+  <Target Name="SetDocFxParameters" AfterTargets="GetDocfxPackagePaths" BeforeTargets="DocBuild">
+    <ItemGroup>
+      <DocFxCrossRefMap Include="llvm-xref.yml" />
+      <DocFxCrossRefMap Include="$(MsdnXrefPath)\content\msdn.4.5.2.zip" />
+      <DocFxCrossRefMap Include="$(MsdnXrefPath)\content\namespaces.4.5.2.zip" />
+    </ItemGroup>
+    <PropertyGroup>
+      <LogLevel>Info</LogLevel>
+      <LogFile>$(IntermediateOutputPath)DocFx-Metadata.log</LogFile>
+      <DocParameters>$(DocParameters) --cleanupCacheHistory</DocParameters>
+      <DocParameters>$(DocParameters) --lruSize=0</DocParameters>
+      <DocParameters>$(DocParameters) --globalMetadata="{_buildVersion:\"$(FullBuildNumber)\"}"</DocParameters>
+      <DocParameters>$(DocParameters) --intermediateFolder="$(IntermediateOutputPath.TrimEnd('\'))"</DocParameters>
+      <DocParameters>$(DocParameters) --xref="@(DocFxCrossRefMap->'%(FullPath)',',')"</DocParameters>
+      <DocTemplate>statictoc,$(MemberPagePath)\content,templates\Ubiquity</DocTemplate>
+    </PropertyGroup>
+  </Target>
 
-    <!-- Stub the build target as this project only builds the documentation -->
-    <Target Name="CoreCompile" DependsOnTargets="$(CoreCompileDependsOn)">
-    </Target>
+  <!-- Stub the build target as this project only builds the documentation -->
+  <Target Name="CoreCompile" DependsOnTargets="$(CoreCompileDependsOn)">
+  </Target>
 
-    <Target Name="CopyFilesToOutputDirectory">
-    </Target>
+  <Target Name="CopyFilesToOutputDirectory">
+  </Target>
 </Project>

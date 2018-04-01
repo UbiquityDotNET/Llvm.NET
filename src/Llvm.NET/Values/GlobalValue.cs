@@ -16,8 +16,8 @@ namespace Llvm.NET.Values
         /// <summary>Available Externally</summary>
         /// <remarks>Globals with “available_externally” linkage are never emitted into the object file corresponding to the LLVM module.
         /// From the linker’s perspective, an available_externally global is equivalent to an external declaration. They exist to allow
-        /// inlining and other optimizations to take place given knowledge of the definition of the global, which is known to be somewhere
-        /// outside the module. Globals with available_externally linkage are allowed to be discarded at will, and allow inlining and other
+        /// in-lining and other optimizations to take place given knowledge of the definition of the global, which is known to be somewhere
+        /// outside the module. Globals with available_externally linkage are allowed to be discarded at will, and allow in-lining and other
         /// optimizations. This linkage type is only allowed on definitions, not declarations.
         /// </remarks>
         AvailableExternally = LLVMLinkage.LLVMAvailableExternallyLinkage,
@@ -61,7 +61,7 @@ namespace Llvm.NET.Values
 
         // LLVMLinkage.LLVMGhostLinkage,       /*< Obsolete */
 
-        /// <summary>Tenatative definitions</summary>
+        /// <summary>Tentative definitions</summary>
         Common = LLVMLinkage.LLVMCommonLinkage,
 
         /// <summary>Like <see cref="Private"/> but the linker remove this symbol</summary>
@@ -75,11 +75,14 @@ namespace Llvm.NET.Values
     // TODO: verify default visbility in globalvalue factory methods
 
     /// <summary>Enumeration for the visibility of a global value</summary>
-    /// <remarks>A symbol with <see cref="Linkage.Internal"/> or <see cref="Linkage.Private"/> must have <see cref="Default"/> visibility</remarks>
-    /// <seealso href="xref:llvm_lang_ref#visibility-styles">LLVM Visibility Styles</seealso>
+    /// <remarks>
+    /// A symbol with <see cref="Llvm.NET.Values.Linkage.Internal"/> or <see cref="Llvm.NET.Values.Linkage.Private"/>
+    /// must have <see cref="Default"/> visibility.
+    /// </remarks>
+    /// <seealso href="xref:llvm_langref#visibility-styles">LLVM Visibility Styles</seealso>
     public enum Visibility
     {
-        /// <summary>Default visibility for a <see cref="GlobalValue"/></summary>
+        /// <summary>Default visibility for a <see cref="Llvm.NET.Values.GlobalValue"/></summary>
         Default = LLVMVisibility.LLVMDefaultVisibility,
 
         /// <summary>Two declarations of an object with hidden visibility refer to the same object if they are in the same shared object</summary>

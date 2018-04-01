@@ -2,7 +2,7 @@
 
 This template is a modification of the template provided by Mathew Sachin
 see: https://github.com/MathewSachin/docfx-tmpl
-combined with a modification of the DocFX memberpage template
+combined with modifications of the DocFX memberpage template
 
 Changes:
 * Dark color theme
@@ -15,5 +15,6 @@ Changes:
 * Added Collapse region for Inheritance chain (Initially collapsed)
 * Added Collapse region for Derived classes list (Initially collapsed)
 * Added Collapse region for Implemented interfaces (Initially collapsed)
-* Added llvm language and EBNF from highlightjs.org as those languages are not part of the docfx.vendor.js by default
+* Added llvm IR, and EBNF from highlightjs.org as those languages are not part of the docfx.vendor.js by default
+* Added custom ANTLR grammer syntax highlighting as that is not part of standard grammars for highlight js
 

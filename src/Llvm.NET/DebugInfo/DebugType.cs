@@ -74,7 +74,7 @@ namespace Llvm.NET.DebugInfo
         /// is <see langword="true"/>. If the debug type node is a temporary setting the type will replace all uses
         /// of the temporary type automatically, via <see cref="MDNode.ReplaceAllUsesWith(LlvmMetadata)"/>
         /// </remarks>
-        /// <exception cref="InvalidOperationException">The type is not <see langword="null"/> or not a temporary</exception>
+        /// <exception cref="System.InvalidOperationException">The type is not <see langword="null"/> or not a temporary</exception>
         [SuppressMessage( "Microsoft.Naming", "CA2204:Literals should be spelled correctly", MessageId = "DIType", Justification = "It is spelled correctly 8^)" )]
         public TDebug DIType
         {
@@ -107,7 +107,7 @@ namespace Llvm.NET.DebugInfo
         /// Once the native type is set, it cannot be reset. Attempts to change the native
         /// type when it isn't <see langword="null"/> will result in an exception.
         /// </remarks>
-        /// <exception cref="InvalidOperationException">The native type was already set</exception>
+        /// <exception cref="System.InvalidOperationException">The native type was already set</exception>
         public TNative NativeType
         {
             get => NativeType_.ValueOrDefault;
