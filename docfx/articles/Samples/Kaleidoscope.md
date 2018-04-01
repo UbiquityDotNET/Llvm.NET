@@ -14,6 +14,12 @@ sample as that would defeat one of the major points of Llvm.NET - to provide a f
 use pattern to C# developers.
 
 ## General layout
+The samples are built using common core libraries and patterns. They are explicitly designed to make
+code comparisons between chapters vis your favorite code comparison tool. Each, chapter builds on the
+next so running a comparison makes it easy to see the changes in full context. The text of the tutorials
+explains why the changes are made and a comparison helps provide the "big picture" view.
+
+## Variations from the Official LLVM Tutorial
 The Llvm.NET version of the Kaleidoscope series takes a different route for parsing from the
 LLVM implementation. In particular the Llvm.NET version defines a formal grammar using [ANTLR](http://antlr.org)
 with the full grammar for all variations of the language features in a single assembly. This

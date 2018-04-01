@@ -170,6 +170,8 @@ namespace Kaleidoscope
         // <VisitConditionalExpression>
         public override Value VisitConditionalExpression( [NotNull] ConditionalExpressionContext context )
         {
+            var result = CreateEntryBlockAlloca( InstructionBuilder.InsertBlock.ContainingFunction, "ifresult.alloca" );
+
             var condition = context.Condition.Accept( this );
             if( condition == null )
             {
@@ -183,7 +185,7 @@ namespace Kaleidoscope
 
             var thenBlock = Context.CreateBasicBlock( "then", function );
             var elseBlock = Context.CreateBasicBlock( "else" );
-            var phiMergeBlock = Context.CreateBasicBlock( "ifcont" );
+            var continueBlock = Context.CreateBasicBlock( "ifcont" );
             InstructionBuilder.Branch( condBool, thenBlock, elseBlock );
 
             // generate then block
@@ -194,7 +196,8 @@ namespace Kaleidoscope
                 return null;
             }
 
-            InstructionBuilder.Branch( phiMergeBlock );
+            InstructionBuilder.Store( thenValue, result );
+            InstructionBuilder.Branch( continueBlock );
 
             // capture the insert in case generating else adds new blocks
             thenBlock = InstructionBuilder.InsertBlock;
@@ -208,18 +211,15 @@ namespace Kaleidoscope
                 return null;
             }
 
-            InstructionBuilder.Branch( phiMergeBlock );
+            InstructionBuilder.Store( elseValue, result );
+            InstructionBuilder.Branch( continueBlock );
             elseBlock = InstructionBuilder.InsertBlock;
 
-            // generate PHI merge block
-            function.BasicBlocks.Add( phiMergeBlock );
-            InstructionBuilder.PositionAtEnd( phiMergeBlock );
-            var phiNode = InstructionBuilder.PhiNode( function.Context.DoubleType )
-                                            .RegisterName( "iftmp" );
-
-            phiNode.AddIncoming( thenValue, thenBlock );
-            phiNode.AddIncoming( elseValue, elseBlock );
-            return phiNode;
+            // generate continue block
+            function.BasicBlocks.Add( continueBlock );
+            InstructionBuilder.PositionAtEnd( continueBlock );
+            return InstructionBuilder.Load( result )
+                                     .RegisterName("ifresult");
         }
         // </VisitConditionalExpression>
 

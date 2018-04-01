@@ -158,7 +158,7 @@ namespace Kaleidoscope
 
             var thenBlock = Context.CreateBasicBlock( "then", function );
             var elseBlock = Context.CreateBasicBlock( "else" );
-            var phiMergeBlock = Context.CreateBasicBlock( "ifcont" );
+            var continueBlock = Context.CreateBasicBlock( "ifcont" );
             InstructionBuilder.Branch( condBool, thenBlock, elseBlock );
 
             // generate then block
@@ -169,7 +169,7 @@ namespace Kaleidoscope
                 return null;
             }
 
-            InstructionBuilder.Branch( phiMergeBlock );
+            InstructionBuilder.Branch( continueBlock );
 
             // capture the insert in case generating else adds new blocks
             thenBlock = InstructionBuilder.InsertBlock;
@@ -183,12 +183,12 @@ namespace Kaleidoscope
                 return null;
             }
 
-            InstructionBuilder.Branch( phiMergeBlock );
+            InstructionBuilder.Branch( continueBlock );
             elseBlock = InstructionBuilder.InsertBlock;
 
-            // generate PHI merge block
-            function.BasicBlocks.Add( phiMergeBlock );
-            InstructionBuilder.PositionAtEnd( phiMergeBlock );
+            // generate continue block
+            function.BasicBlocks.Add( continueBlock );
+            InstructionBuilder.PositionAtEnd( continueBlock );
             var phiNode = InstructionBuilder.PhiNode( function.Context.DoubleType )
                                             .RegisterName( "iftmp" );
 

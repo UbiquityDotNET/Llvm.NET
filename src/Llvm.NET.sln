@@ -12,6 +12,9 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CodeGenWithDebugInfo", "..\Samples\CodeGenWithDebugInfo\CodeGenWithDebugInfo.csproj", "{CEB67C1D-E224-4942-AA65-3F6C12F49076}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Kaleidoscope", "Kaleidoscope", "{62418FA2-81F2-475F-B735-7B108EBE960D}"
+	ProjectSection(SolutionItems) = preProject
+		..\Samples\Kaleidoscope\mandel.kls = ..\Samples\Kaleidoscope\mandel.kls
+	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Kaleidoscope.Grammar", "..\Samples\Kaleidoscope\Kaleidoscope.Parser\Kaleidoscope.Grammar.csproj", "{3EA63BAA-8877-4682-B0BA-AB896A502FFF}"
 EndProject
