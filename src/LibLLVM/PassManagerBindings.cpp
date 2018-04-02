@@ -63,38 +63,4 @@ extern "C"
 
         unwrap( PM )->add( createDataFlowSanitizerPass( ABIListFilesVec ) );
     }
-
-    // For codegen passes, only passes that do IR to IR transformation are
-    // supported.
-    void LLVMInitializeCodeGenForOpt( LLVMPassRegistryRef R )
-    {
-        PassRegistry& Registry = *unwrap( R );
-        initializeCore( Registry );
-        initializeCoroutines( Registry );
-        initializeScalarOpts( Registry );
-        initializeObjCARCOpts( Registry );
-        initializeVectorization( Registry );
-        initializeIPO( Registry );
-        initializeAnalysis( Registry );
-        initializeTransformUtils( Registry );
-        initializeScalarizeMaskedMemIntrinPass( Registry );
-        initializeInstCombine( Registry );
-        initializeInstrumentation( Registry );
-        initializeTarget( Registry );
-        // For codegen passes, only passes that do IR to IR transformation are
-        // supported.
-        initializeCodeGenPreparePass( Registry );
-        initializeAtomicExpandPass( Registry );
-        initializeRewriteSymbolsLegacyPassPass( Registry );
-        initializeWinEHPreparePass( Registry );
-        initializeDwarfEHPreparePass( Registry );
-        initializeSafeStackLegacyPassPass( Registry );
-        initializeSjLjEHPreparePass( Registry );
-        initializePreISelIntrinsicLoweringLegacyPassPass( Registry );
-        initializeGlobalMergePass( Registry );
-        initializeInterleavedAccessPass( Registry );
-        initializeCountingFunctionInserterPass( Registry );
-        initializeUnreachableBlockElimLegacyPassPass( Registry );
-        initializeExpandReductionsPass( Registry );
-    }
 }

@@ -48,7 +48,9 @@ namespace Llvm.NET.DebugInfo
 
         UserMin = 0x8000,
         LlvmMipsAssembler = UserMin + 1,
-        CSharp = UserMin + 0x0100,
+        RenderScript = UserMin + 0x0E57,
+        Delphi = UserMin + 0x03000,
+        CSharp = UserMin + 0x01000,
         ILAsm = UserMin + 0x01001,
         UserMax = 0xffff
     }

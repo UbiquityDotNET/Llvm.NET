@@ -71,7 +71,7 @@ namespace TestDebugInfo
 
                 // <CreatingModule>
                 using( var context = new Context( ) )
-                using( var module = context.CreateBitcodeModule( moduleName ) )
+                using( var module = context.CreateBitcodeModule( moduleName, SourceLanguage.CSharp, srcPath, VersionIdentString ) )
                 {
                     module.SourceFileName = Path.GetFileName( srcPath );
                     module.TargetTriple = TargetDetails.TargetMachine.Triple;
@@ -80,17 +80,7 @@ namespace TestDebugInfo
                     TargetDependentAttributes = TargetDetails.BuildTargetDependentFunctionAttributes( context );
                     // </CreatingModule>
 
-                    // <CreatingCompileUnit>
-                    // create compile unit and file as the top level scope for everything
-                    var cu = module.DIBuilder.CreateCompileUnit( SourceLanguage.C99
-                                                               , srcPath
-                                                               , VersionIdentString
-                                                               , optimized: false
-                                                               , compilationFlags: string.Empty
-                                                               , runtimeVersion: 0
-                                                               );
                     var diFile = module.DIBuilder.CreateFile( srcPath );
-                    // </CreatingCompileUnit>
 
                     // <CreatingBasicTypesWithDebugInfo>
                     // Create basic types used in this compilation
@@ -109,7 +99,7 @@ namespace TestDebugInfo
                         , new DebugMemberInfo { File = diFile, Line = 5, Name = "c", DebugType = i32Array_0_32, Index = 2 }
                         };
 
-                    var fooType = new DebugStructType( module, "struct.foo", cu, "foo", diFile, 1, DebugInfoFlags.None, fooBody );
+                    var fooType = new DebugStructType( module, "struct.foo", module.DICompileUnit, "foo", diFile, 1, DebugInfoFlags.None, fooBody );
                     // </CreatingStructureTypes>
 #pragma warning restore SA1500
                     // <CreatingGlobalsAndMetadata>
@@ -123,11 +113,11 @@ namespace TestDebugInfo
 
                     var bar = module.AddGlobal( fooType, false, 0, barValue, "bar" );
                     bar.Alignment = module.Layout.AbiAlignmentOf( fooType );
-                    bar.AddDebugInfo( module.DIBuilder.CreateGlobalVariableExpression( cu, "bar", string.Empty, diFile, 8, fooType.DIType, false, null ) );
+                    bar.AddDebugInfo( module.DIBuilder.CreateGlobalVariableExpression( module.DICompileUnit, "bar", string.Empty, diFile, 8, fooType.DIType, false, null ) );
 
                     var baz = module.AddGlobal( fooType, false, Linkage.Common, Constant.NullValueFor( fooType ), "baz" );
                     baz.Alignment = module.Layout.AbiAlignmentOf( fooType );
-                    baz.AddDebugInfo( module.DIBuilder.CreateGlobalVariableExpression( cu, "baz", string.Empty, diFile, 9, fooType.DIType, false, null ) );
+                    baz.AddDebugInfo( module.DIBuilder.CreateGlobalVariableExpression( module.DICompileUnit, "baz", string.Empty, diFile, 9, fooType.DIType, false, null ) );
 
                     // add module flags and compiler identifiers...
                     // this can technically occur at any point, though placing it here makes
