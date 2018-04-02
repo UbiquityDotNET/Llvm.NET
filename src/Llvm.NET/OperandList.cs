@@ -13,7 +13,7 @@ namespace Llvm.NET
     /// <typeparam name="T">Element type of an operand</typeparam>
     /// <remarks>
     /// This class is used to implement Operand lists of elements including sub lists based on an offset.
-    /// The latter case is useful for types that expose same fixed set of operands as properties and some
+    /// The latter case is useful for types that expose some fixed set of operands as properties and some
     /// arbitrary number of additional items as operands. In such a case the full set of operands isn't
     /// publicly available so the <see cref="OperandList{T}.OperandList(IOperandContainer{T}, int)"/>
     /// constructor is used to set a base offset in the containers operands to expose through this list
@@ -130,7 +130,7 @@ namespace Llvm.NET
             Container = container;
         }
 
-        private int Offset;
+        private readonly int Offset;
         private readonly IOperandContainer<T> Container;
     }
 }

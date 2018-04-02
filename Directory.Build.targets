@@ -1,115 +1,69 @@
 <Project>
-    <!-- Custom task to download a file from a web URL -->
-    <UsingTask TaskName="DownloadFile"
-               TaskFactory="CodeTaskFactory"
-               AssemblyFile="$(MSBuildToolsPath)\Microsoft.Build.Tasks.v4.0.dll"
-             >
-        <ParameterGroup>
-            <SourceUrl ParameterType="System.String" Required="true"/>
-            <DestinationPath ParameterType="System.String" Required="true"/>
-        </ParameterGroup>
-        <Task>
-            <Using Namespace="System.Net"/>
-            <Code Type="Fragment" Language="cs">
-                <![CDATA[
-          var client = new WebClient();
-          client.DownloadFile( SourceUrl, DestinationPath );
-        ]]>
-            </Code>
-        </Task>
-    </UsingTask>
+  <Import Condition="'$(MSBuildProjectExtension)'=='.vcxproj'" Project="$(BuildRootDir)llvm\llvm-libs.targets"/>
 
-    <!--
+  <!--
   Since Nuget.config is configured to include the build output location this
   will ensure the folder exists during restore so that it won't fail.
   -->
-    <Target Name="CreateBuildOutputNuget" BeforeTargets="Restore;Build;Rebuild">
-        <MakeDir Directories="$(MSBuildThisFileDirectory)BuildOutput\NuGet" />
-    </Target>
+  <Target Name="CreateBuildOutputNuget" BeforeTargets="Restore;Build;Rebuild">
+      <MakeDir Directories="$(MSBuildThisFileDirectory)BuildOutput\NuGet" />
+  </Target>
 
-    <Target Name="SetProjectSpecficVersionDependentProperties" AfterTargets="SetVersionDependentProperties">
-        <PropertyGroup>
-            <LlvmVersion Condition="'$(LlvmVersion)'==''">$(LlvmVersionMajor).$(LlvmVersionMinor).$(LlvmVersionPatch)</LlvmVersion>
-            <NuspecProperties Condition="'$(NuspecFile)'!=''" >version=$(PackageVersion);llvmversion=$(LlvmVersion);buildbinoutput=$(BaseOutputPath);configuration=$(Configuration);$(NuspecProperties)</NuspecProperties>
-        </PropertyGroup>
+  <Target Name="SetProjectSpecficVersionDependentProperties" AfterTargets="SetVersionDependentProperties">
+    <PropertyGroup>
+      <LlvmVersion Condition="'$(LlvmVersion)'==''">$(LlvmVersionMajor).$(LlvmVersionMinor).$(LlvmVersionPatch)</LlvmVersion>
+      <NuspecProperties Condition="'$(NuspecFile)'!=''" >version=$(PackageVersion);llvmversion=$(LlvmVersion);buildbinoutput=$(BaseOutputPath);configuration=$(Configuration);$(NuspecProperties)</NuspecProperties>
+    </PropertyGroup>
+  </Target>
+  
+  <!-- Download nuget.exe if it isn't found-->
+  <Target Name="_DownloadNugetExe" >
+    <MakeDir Directories="$(PackageOutputPath)" Condition="!EXISTS('$(PackageOutputPath')" />
+    <DownloadFile Condition="!EXISTS('$(PackageOutputPath)\NuGet.exe')"
+                  SourceUrl="https://dist.nuget.org/win-x86-commandline/latest/nuget.exe"
+                  DestinationPath="$(PackageOutputPath)\NuGet.exe"
+                  />
+  </Target>
 
-    </Target>
+  <!-- Custom task to download a file from a web URL -->
+  <UsingTask TaskName="DownloadFile"
+             TaskFactory="CodeTaskFactory"
+             AssemblyFile="$(MSBuildToolsPath)\Microsoft.Build.Tasks.v4.0.dll"
+           >
+      <ParameterGroup>
+          <SourceUrl ParameterType="System.String" Required="true"/>
+          <DestinationPath ParameterType="System.String" Required="true"/>
+      </ParameterGroup>
+      <Task>
+          <Using Namespace="System.Net"/>
+          <Code Type="Fragment" Language="cs">
+              <![CDATA[
+        var client = new WebClient();
+        client.DownloadFile( SourceUrl, DestinationPath );
+      ]]>
+          </Code>
+      </Task>
+  </UsingTask>
 
-    <Target Name="MultiTargetBuild" DependsOnTargets="PrepareVersioningForBuild;NativeMultiTargetBuild;Pack" />
+  <!-- Create NuGet packages for all NuSpec Items -->
+  <Target Name="Pack" DependsOnTargets="_DownloadNugetExe;SetProjectSpecficVersionDependentProperties" Condition="'$(MSBuildProjectExtension)'=='.vcxproj'">
+    <Exec Condition="exists('$(NuSpecFile)')"
+          Command='"$(PackageOutputPath)NuGet.exe" pack $(NuSpecFile) -OutputDirectory $(PackageOutputPath) -Properties $(NuspecProperties) -NoPackageAnalysis' />
+  </Target>
 
-    <Target Name="MultiTargetRebuild" DependsOnTargets="PrepareVersioningForBuild;NativeMultiTargetRebuild;Pack"/>
+  <Target Name="EnsureBuildOutputPaths" BeforeTargets="Build;Restore">
+    <MakeDir Directories="$(PackageOutputPath)"/>
+  </Target>
 
-    <Target Name="NativeMultiTargetBuild">
-        <ItemGroup>
-            <MultiTargetProperty Include="FullBuildNumber=$(FullBuildNumber)"/>
-            <MultiTargetProperty Include="PackageVersion=$(PackageVersion)"/>
-            <MultiTargetProperty Include="FileVersionMajor=$(FileVersionMajor)"/>
-            <MultiTargetProperty Include="FileVersionMinor=$(FileVersionMinor)"/>
-            <MultiTargetProperty Include="FileVersionBuild=$(FileVersionBuild)"/>
-            <MultiTargetProperty Include="FileVersionRevision=$(FileVersionRevision)"/>
-            <MultiTargetProperty Include="LlvmVersion=$(LlvmVersion)"/>
-        </ItemGroup>
-        <MSBuild Projects="@(MultiTargetProject)"
-                 Targets="Build"
-                 Properties="Platform=%(MultiTargetProject.Platform);@(MultiTargetProperty)"
-                 BuildInParallel="true"
-                 />
-    </Target>
-
-    <Target Name="MultiTargetClean">
-        <MSBuild Projects="@(MultiTargetProject)"
-                 Targets="Clean"
-                 Properties="Platform=%(MultiTargetProject.Platform)"
-                 BuildInParallel="true"
-                 />
-    </Target>
-
-    <Target Name="NativeMultiTargetRebuild">
-        <ItemGroup>
-            <MultiTargetProperty Include="FullBuildNumber=$(FullBuildNumber)"/>
-            <MultiTargetProperty Include="PackageVersion=$(PackageVersion)"/>
-            <MultiTargetProperty Include="FileVersionMajor=$(FileVersionMajor)"/>
-            <MultiTargetProperty Include="FileVersionMinor=$(FileVersionMinor)"/>
-            <MultiTargetProperty Include="FileVersionBuild=$(FileVersionBuild)"/>
-            <MultiTargetProperty Include="FileVersionRevision=$(FileVersionRevision)"/>
-            <MultiTargetProperty Include="LlvmVersion=$(LlvmVersion)"/>
-        </ItemGroup>
-        <MSBuild Projects="@(MultiTargetProject)"
-                 Targets="Rebuild"
-                 Properties="Platform=%(MultiTargetProject.Platform);@(MultiTargetProperty)"
-                 BuildInParallel="true"
-                 />
-    </Target>
-
-    <!-- Download nuget.exe if it isn't found-->
-    <Target Name="_DownloadNugetExe" >
-        <MakeDir Directories="$(PackageOutputPath)" Condition="!EXISTS('$(PackageOutputPath')" />
-        <DownloadFile Condition="!EXISTS('$(PackageOutputPath)\NuGet.exe')"
-                      SourceUrl="https://dist.nuget.org/win-x86-commandline/latest/nuget.exe"
-                      DestinationPath="$(PackageOutputPath)\NuGet.exe"
-                      />
-    </Target>
-
-    <!-- Create NuGet packages for all NuSpec Items -->
-    <Target Name="Pack" DependsOnTargets="_DownloadNugetExe" Condition="'$(MSBuildProjectExtension)'=='.vcxproj'" >
-        <Exec
-            Condition="exists('$(NuSpecFile)')"
-            Command='"$(PackageOutputPath)NuGet.exe" pack $(NuSpecFile) -OutputDirectory $(PackageOutputPath) -Properties $(NuspecProperties) -NoPackageAnalysis' />
-    </Target>
-
-    <Target Name="EnsureBuildOutputPaths" BeforeTargets="Build;Restore">
-        <MakeDir Directories="$(PackageOutputPath)"/>
-    </Target>
-
-    <Target Name="ShowBuildParams" BeforeTargets="Build;Pack">
-        <Message Importance="normal" Text="              BuildRootDir: $(BuildRootDir)" />
-        <Message Importance="normal" Text="       BaseBuildOutputPath: $(BaseBuildOutputPath)" />
-        <Message Importance="normal" Text="BaseIntermediateOutputPath: $(BaseIntermediateOutputPath)" />
-        <Message Importance="normal" Text="                    IntDir: $(IntDir)" />
-        <Message Importance="normal" Text="            BaseOutputPath: $(BaseOutputPath)" />
-        <Message Importance="normal" Text="           FullBuildNumber: $(FullBuildNumber)"/>
-        <Message Importance="normal" Text="            PackageVersion: $(PackageVersion)"/>
-        <Message Importance="normal" Text="               FileVersion: $(FileVersion)"/>
-        <Message Importance="normal" Text="               LlvmVersion: $(LlvmVersion)"/>
-    </Target>
+  <Target Name="ShowBuildParams" BeforeTargets="Build;Pack">
+    <Message Importance="normal" Text="              BuildRootDir: $(BuildRootDir)" />
+    <Message Importance="normal" Text="       BaseBuildOutputPath: $(BaseBuildOutputPath)" />
+    <Message Importance="normal" Text="BaseIntermediateOutputPath: $(BaseIntermediateOutputPath)" />
+    <Message Importance="normal" Text="                    IntDir: $(IntDir)" />
+    <Message Importance="normal" Text="            BaseOutputPath: $(BaseOutputPath)" />
+    <Message Importance="normal" Text="           FullBuildNumber: $(FullBuildNumber)"/>
+    <Message Importance="normal" Text="            PackageVersion: $(PackageVersion)"/>
+    <Message Importance="normal" Text="               FileVersion: $(FileVersion)"/>
+    <Message Importance="normal" Text="               LlvmVersion: $(LlvmVersion)"/>
+  </Target>
 </Project>

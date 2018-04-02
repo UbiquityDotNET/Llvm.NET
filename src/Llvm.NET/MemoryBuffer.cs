@@ -47,7 +47,7 @@ namespace Llvm.NET
         public byte[] ToArray()
         {
             var bufferStart = LLVMGetBufferStart( BufferHandle );
-            var retVal = new byte[ Size ];
+            byte[ ] retVal = new byte[ Size ];
             Marshal.Copy( bufferStart, retVal, 0, Size );
             return retVal;
         }
@@ -62,7 +62,7 @@ namespace Llvm.NET
         internal LLVMMemoryBufferRef BufferHandle => BufferHandle_;
 
         // keep as a private field so this is usable as an out parameter in constructor
-        // do not write to it directly, treat it as readonly.
+        // do not write to it directly, treat it as read-only.
         [SuppressMessage( "StyleCop.CSharp.NamingRules"
                         , "SA1310:Field names must not contain underscore"
                         , Justification = "Trailing _ indicates should not be written to directly even internally"

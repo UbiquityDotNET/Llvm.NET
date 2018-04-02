@@ -5,7 +5,7 @@
       "src":
       [
         {
-          "files": [ "src/Llvm.Net/**.csproj" ],
+          "files": [ "src/Llvm.Net/Llvm.NET.csproj" ],
           "exclude": [
             "**/bin/**",
             "**/obj/**"

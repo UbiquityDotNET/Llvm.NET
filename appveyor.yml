@@ -41,3 +41,4 @@ test_script:
 artifacts:
   - path: .\BuildOutput\Nuget\LLvm.NET.*.nupkg
   - path: .\BuildOutput\Nuget\LibLLVM.NET.*.nupkg
+  

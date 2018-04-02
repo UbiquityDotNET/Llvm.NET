@@ -1,8 +1,6 @@
 ﻿<Project>
     <PropertyGroup>
         <LibLlvmPkgRoot>$([MSBuild]::NormalizeDirectory('$(MSBuildThisFileDirectory)..'))</LibLlvmPkgRoot>
-        <RuntimePlatform>$(Platform)</RuntimePlatform>
-        <RunTimePlatform Condition="'$(LLVM_PLATFORM)'=='Win32'">x86</RunTimePlatform>
     </PropertyGroup>
 
     <ItemGroup>
@@ -15,16 +13,6 @@
             <Link>runtimes\win-x64\native\LibLLVM.pdb</Link>
             <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
             <PackagePath>runtimes\win-x64\native\LibLLVM.pdb</PackagePath>
-        </Content>
-        <Content Include="$(LibLlvmPkgRoot)runtimes\win-x86\native\LibLLVM.dll">
-            <Link>runtimes\win-x86\native\LibLLVM.dll</Link>
-            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-            <PackagePath>runtimes\win-x86\native\LibLLVM.dll</PackagePath>
-        </Content>
-        <Content Include="$(LibLlvmPkgRoot)runtimes\win-x86\native\LibLLVM.pdb">
-            <Link>runtimes\win-x86\native\LibLLVM.pdb</Link>
-            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-            <PackagePath>runtimes\win-x86\native\LibLLVM.pdb</PackagePath>
         </Content>
     </ItemGroup>
 </Project>

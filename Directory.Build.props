@@ -14,15 +14,15 @@
         other projects that might want to set the build outputs etc... into a different place.
     -->
     <PropertyGroup>
-        <!-- Default to x86/Win32 | Debug build if not otherwise specified -->
+        <!-- Default to x64/AnyCPU | Debug build if not otherwise specified -->
         <Platform Condition="'$(Platform)'=='' AND '$(MSBuildProjectExtension)'!='.vcxproj'">AnyCPU</Platform>
-        <Platform Condition="'$(Platform)'=='' AND '$(MSBuildProjectExtension)'=='.vcxproj'">Win32</Platform>
+        <Platform Condition="'$(Platform)'=='' AND '$(MSBuildProjectExtension)'=='.vcxproj'">x64</Platform>
         <Platform Condition="$(Platform)=='x86' AND '$(MSBuildProjectExtension)'=='.vcxproj'">Win32</Platform>
         <UnifiedPlatformPathName Condition="'$(UnifiedPlatformPathName)'==''">$(Platform)</UnifiedPlatformPathName>
         <UnifiedPlatformPathName Condition="'$(UnifiedPlatformPathName)'=='Win32'">x86</UnifiedPlatformPathName>
-        <UnifiedPlatformPathName Condition="'$(UnifiedPlatformPathName)'=='AnyCPU'">x86</UnifiedPlatformPathName>
+        <UnifiedPlatformPathName Condition="'$(UnifiedPlatformPathName)'=='AnyCPU'">x64</UnifiedPlatformPathName>
 
-        <Configuration Condition="'$(Configuration)'==''">Debug</Configuration>
+        <Configuration Condition="'$(Configuration)'==''">Release</Configuration>
 
         <!-- Use the location of this file (at the top of the build tree) to define the root directory, if not already set -->
         <BuildRootDir Condition="'$(BuildRootDir)'==''">$(MSBuildThisFileDirectory)</BuildRootDir>
@@ -50,6 +50,10 @@
         <IsReleaseBuild Condition="'$(IsReleaseBuild)'==''">false</IsReleaseBuild>
         <BuildVersionXml>$(MSBuildThisFileDirectory)BuildVersion.xml</BuildVersionXml>
         <BuildTimeStamp Condition="'$(BuildTimeStamp)'=='' AND '$(APPVEYOR_REPO_COMMIT_TIMESTAMP)'!=''">$(APPVEYOR_REPO_COMMIT_TIMESTAMP)</BuildTimeStamp>
+        <LlvmVersionMajor Condition="'$(LlvmVersionMajor)'==''">6</LlvmVersionMajor>
+        <LlvmVersionMinor Condition="'$(LlvmVersionMinor)'==''">0</LlvmVersionMinor>
+        <LlvmVersionPatch Condition="'$(LlvmVersionPatch)'==''">1</LlvmVersionPatch>
+        <RuntimeIdentifiers>win-x64</RuntimeIdentifiers>
     </PropertyGroup>
     <Choose>
         <!-- Apply standard analyzers and rule sets for all C# projects -->
@@ -61,7 +65,7 @@
                 <IsTestProject>$(MSBuildProjectName.Contains('Test'))</IsTestProject>
             </PropertyGroup>
             <ItemGroup Condition="'$(NoCommonAnalyzers)'!='true' and '$(IsTestProject)' != 'true' and '$(SourceLinkEnabled)' != 'false'">
-                 <PackageReference Include="SourceLink.Create.CommandLine" Version="2.8.0" PrivateAssets="All" />
+                 <PackageReference Include="SourceLink.Create.CommandLine" Version="2.8.3" PrivateAssets="All" />
             </ItemGroup>
             <ItemGroup Condition="'$(NoCommonAnalyzers)'!='true'">
                 <PackageReference Include="Microsoft.AnalyzerPowerPack" Version="1.1.0" PrivateAssets="All" />
@@ -82,4 +86,5 @@
             </PropertyGroup>
         </When>
     </Choose>
+    <Import Condition="'$(MSBuildProjectExtension)'=='.vcxproj'" Project="$(BuildRootDir)llvm\llvm-libs.props"/>
 </Project>

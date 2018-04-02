@@ -219,7 +219,7 @@ namespace Llvm.NET.Values
         /// <summary>This function attribute indicates that the function does not have any effects besides calculating its result and does not have undefined behavior.</summary>
         Speculatable,
 
-        /// <summary>This attribute indicates that, when emitting the prologue and epilogue, the backend should forcibly align the stack pointer.</summary>
+        /// <summary>This attribute indicates that, when emitting the prologue and epilogue, the back-end should forcibly align the stack pointer.</summary>
         StackAlignment,
 
         /// <summary>This attribute indicates that the function should emit a stack smashing protector.</summary>
@@ -243,7 +243,7 @@ namespace Llvm.NET.Values
         /// <summary>This attribute indicates that the ABI being targeted requires that an unwind table entry be produced for this function even if we can show that no exceptions passes by it.</summary>
         UWTable,
 
-        /// <summary>This attribute indactes the item is write only</summary>
+        /// <summary>This attribute indicates the item is write only</summary>
         /// <remarks>
         /// On a function, this attribute indicates that the function may write to but does not read from memory.
         /// On an argument, this attribute indicates that the function may write to but does not read through this pointer argument (even though it may read from the memory that the pointer points to).
@@ -429,7 +429,7 @@ namespace Llvm.NET.Values
                     function = arg.ContainingFunction;
                     if( index != FunctionAttributeIndex.Parameter0 + ( int )arg.Index )
                     {
-                        throw new ArgumentException( "Index for paramters must be the actual position of the argument" );
+                        throw new ArgumentException( "Index for parameters must be the actual position of the argument" );
                     }
 
                     break;
@@ -621,7 +621,7 @@ namespace Llvm.NET.Values
         // use complement and compare technique for efficiency
         private static bool IsPowerOfTwo( ulong x ) => ( x != 0 ) && ( ( x & ( ~x + 1 ) ) == x );
 
-        // Lazy initialized one time mapping of LLVM attribut Ids to AttributeKind
+        // Lazy initialized one time mapping of LLVM attribute Ids to AttributeKind
         private static Lazy<Dictionary<uint, AttributeKind>> AttribIdToKindMap = new Lazy<Dictionary<uint, AttributeKind>>( BuildAttribIdToKindMap );
 
         private static Dictionary<uint, AttributeKind> BuildAttribIdToKindMap( )
@@ -639,7 +639,7 @@ namespace Llvm.NET.Values
             return AttribIdToKindMap.Value.ToDictionary( kvp => kvp.Value, kvp => kvp.Key );
         }
 
-        private static string[ ] KnownAttributeNames =
+        private static readonly string[ ] KnownAttributeNames =
         {
             string.Empty,
             "align",

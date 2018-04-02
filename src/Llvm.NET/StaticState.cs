@@ -594,9 +594,9 @@ namespace Llvm.NET
         }
 
         // version info for verification of matched LibLLVM
-        private const int VersionMajor = 5;
+        private const int VersionMajor = 6;
         private const int VersionMinor = 0;
-        private const int VersionPatch = 1;
+        private const int VersionPatch = 0;
 
         private static IDisposable LlvmInitializationState;
         private static object InitializationSyncObj;
@@ -620,10 +620,11 @@ namespace Llvm.NET
             string osArch = Environment.Is64BitProcess ? "Win-x64" : "win-x86";
             string runTimePath = Path.Combine( "runtimes", osArch, "native" );
 
-            // .NET core apps will actually run with references directly from the nuget install
+            // .NET core apps will actually run with references directly from the NuGet install
             // but full framework apps (including unit tests will have CopyLocal applied)
             paths.Add( Path.Combine( packageRoot, runTimePath ) );
             paths.Add( Path.Combine( thisModulePath, runTimePath ) );
+            paths.Add( thisModulePath );
             IntPtr hLibLLVM = LoadWin32Library( "LibLlvm.dll", paths );
 
             // Verify the version of LLVM in LibLLVM

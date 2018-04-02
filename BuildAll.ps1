@@ -1,12 +1,12 @@
 Param(
     [string]$Configuration="Release",
-    [switch]$AllowVsPreReleases
+    [switch]$AllowVsPreReleases,
+    [switch]$NoClean
 )
 
 . .\buildutils.ps1
 
 # Main Script entry point -----------
-
 pushd $PSScriptRoot
 $oldPath = $env:Path
 $ErrorActionPreference = "Stop"
@@ -37,17 +37,17 @@ try
     Write-Information "Build Paths:"
     Write-Information ($buildPaths | Format-Table | Out-String)
 
-    if( Test-Path -PathType Container $buildPaths.BuildOutputPath )
+    if( (Test-Path -PathType Container $buildPaths.BuildOutputPath) -and !$NoClean )
     {
         Write-Information "Cleaning output folder from previous builds"
         rd -Recurse -Force -Path $buildPaths.BuildOutputPath
     }
 
-    md BuildOutput\NuGet\ | Out-Null
+    md $buildPaths.NuGetOutputPath -ErrorAction SilentlyContinue| Out-Null
 
-    if( $env:CI -and !(Test-Path ".\BuildOutput\docs\.git" -PathType Container))
+    if( $env:CI -and !(Test-Path (Join-Path $buildPaths.DocsOutput '.git') -PathType Container))
     {
-        Write-Information "Cloning Docs repo"
+        Write-Information "Cloning Docs repository"
         pushd BuildOutput -ErrorAction Stop
         try
         {
@@ -85,19 +85,38 @@ try
     Write-Information "Build Parameters:"
     Write-Information ($BuildInfo | Format-Table | Out-String)
 
+    # Download and unpack the LLVM libs if not already present, this doesn't use NuGet as the NuGet compression
+    # is insufficient to keep the size reasonable enough to support posting to public galleries. Additionally, the
+    # support for native lib projects in NuGet is tenuous at best. Due to various compiler version dependencies
+    # and incompatibilities libs are generally not something published in a package. However, since the build time
+    # for the libraries exceeds the time allowed for most hosted build services these must be pre-built for the
+    # automated APPVEYOR builds.
+    Install-LlvmLibs $buildPaths.LlvmLibsRoot
+
     # Need to invoke NuGet directly for restore of vcxproj as /t:Restore target doesn't support packages.config
     # and PackageReference isn't supported for native projects
     Write-Information "Restoring NuGet Packages for LibLLVM.vcxproj"
     Invoke-NuGet restore src\LibLLVM\LibLLVM.vcxproj -PackagesDirectory $buildPaths.NuGetRepositoryPath -Verbosity quiet
 
     Write-Information "Building LibLLVM"
-    Invoke-MSBuild -Targets Build -Project src\LibLLVM\MultiPlatformBuild.vcxproj -Properties $msBuildProperties -LoggerArgs $msbuildLoggerArgs
+    Invoke-MSBuild -Targets Build -Project src\LibLLVM\LibLLVM.vcxproj -Properties $msBuildProperties -LoggerArgs ($msbuildLoggerArgs + @("/bl:LibLLVM-build.binlog") )
+
+    Write-Information "Packing LibLLVM"
+    Invoke-MSBuild -Targets Pack -Project src\LibLLVM\LibLLVM.vcxproj -Properties $msBuildProperties -LoggerArgs $msbuildLoggerArgs ($msbuildLoggerArgs + @("/bl:LibLLVM-pack.binlog") )
 
     Write-Information "Restoring NuGet Packages for Llvm.NET"
-    Invoke-MSBuild -Targets Restore -Project src\Llvm.NET.sln -Properties $msBuildProperties -LoggerArgs $msbuildLoggerArgs
+    Invoke-MSBuild -Targets Restore -Project src\Llvm.NET.sln -Properties $msBuildProperties -LoggerArgs $msbuildLoggerArgs ($msbuildLoggerArgs + @("/bl:Llvm.NET-restore.binlog") )
 
     Write-Information "Building Llvm.NET"
-    Invoke-MSBuild -Targets Build -Project src\Llvm.NET.sln -Properties $msBuildProperties -LoggerArgs $msbuildLoggerArgs
+    Invoke-MSBuild -Targets Build -Project src\Llvm.NET.sln -Properties $msBuildProperties -LoggerArgs $msbuildLoggerArgs ($msbuildLoggerArgs + @("/bl:Llvm.NET-build.binlog") )
+    
+    if( $env:APPVEYOR_PULL_REQUEST_NUMBER )
+    {
+        foreach( $item in Get-ChildItem *.binlog )
+        {
+            Push-AppveyorArtifact $item.FullName
+        }
+    }
 }
 finally
 {
