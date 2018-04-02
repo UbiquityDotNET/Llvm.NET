@@ -65,7 +65,7 @@ namespace Llvm.NET.Native
             NativeDisposer = nativeDisposer;
         }
 
-        private Action<IntPtr> NativeDisposer;
+        private readonly Action<IntPtr> NativeDisposer;
 
         // LLVM doesn't use environment/OS specific line endings, so this will
         // normalize the line endings from strings provided by LLVM into the current

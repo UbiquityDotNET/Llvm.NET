@@ -1,22 +1,34 @@
 # 6. Kaleidoscope: User Defined Operators
-At this point in the progression of the tutorial Kaleidoscope is a fully functional, albeit fairly minimal language. Thus far, the tutorial has
-avoided details of the parsing. One of the benefits of using a tool like ANTLR4 is that you can accomplish a lot without needing to spend a lot of
-time thinking about the parser too much. With user defined operators we'll break that and get down and dirty with the parser a bit to make the operators
-work. The actual value of such a thing in a language is a bit debatable, and the initial plan for the Llvm.NET tutorials was to skip this chapter as
-it doesn't really involve a lot of new LLVM IR or code generation. After the code was done to get the other chapters working this one was still nagging,
-begging really, for a solution. The challenge to come up with a good solution was ultimately too tempting to resist, and we now have a full implementation
-(with a few useful extensions on top!) 
+At this point in the progression of the tutorial Kaleidoscope is a fully functional, albeit fairly minimal
+language. Thus far, the tutorial has avoided details of the parsing. One of the benefits of using a tool
+like ANTLR4 is that you can accomplish a lot without needing to spend a lot of time thinking about the
+parser too much. With user defined operators we'll break that and get down and dirty with the parser a bit
+to make the operators work.
+
+> [!TIP]
+> The actual value of user defined operator precedence in a language is a bit debatable, and the
+> initial plan for the Llvm.NET tutorials was to skip this chapter as it doesn't really involve a lot of
+> new LLVM IR or code generation. After the code was done to get the other chapters working - this one was
+> still nagging, begging really, for a solution. The challenge to come up with a good solution was
+> ultimately too tempting to resist, and we now have a full implementation with a few useful extensions
+> on top! (Exponent operator '^', '=' vs '==', '++', and '--')
 
 ## General idea of user defined operators
-User defined operators in Kaleidoscope are a bit unique. Unlike C++ and other similar languages the precedence of the user defined operators are not fixed. Though,
-the built-in operators all use a fixed precedence. That poses some interesting challenges for a parser to dynamically adapt to the state of the language runtime
-so that it can correctly evaluate the operator expressions. Making that work while using ANTLR requires looking under the hood to how ANTLR4 ordinarily handles
-precedence. A full treatise on the subject is outside the scope of this tutorial, but the [ANTLR GitHub site](https://github.com/antlr/antlr4/blob/master/doc/left-recursion.md)
-has a good description of the details of the precedence climbing approach used in ANTLR. The general idea is that the expression rule takes an additional precedence
-argument and the operator expressions include a semantic predicate that tests the current precedence level. If the current level is less than or equal to the current
-level then that operator rule expression is allowed to match the input. Otherwise, the rule is skipped. Usually this is all hidden by the implicit support for
-precedence climbing and left recursion that is built-in to ANTLR4. However that requires fixing the precedence for operators in the grammar. Thus, Kaleidoscope
-doesn't use the default left-recursion support, but does use the same concepts with a custom hook.
+User defined operators in Kaleidoscope are a bit unique. Unlike C++ and other similar languages the
+precedence of the user defined operators are not fixed. Though, the built-in operators all use a fixed
+precedence. That poses some interesting challenges for a parser as it must dynamically adapt to the state
+of the language runtime as it is parsing so that it can correctly evaluate the operator expressions.
+Making that work while using ANTLR requires looking under the hood to how ANTLR4 ordinarily handles
+precedence. A full treatise on the subject is outside the scope of this tutorial, but the
+[ANTLR GitHub site](https://github.com/antlr/antlr4/blob/master/doc/left-recursion.md)
+has a good description of the details of the precedence climbing approach used in ANTLR. The general idea
+is that the expression rule takes an additional precedence argument and the operator expressions include
+a semantic predicate that tests the current precedence level. If the current level is less than or equal
+to the current level then that operator rule expression is allowed to match the input. Otherwise, the rule
+is skipped. Usually this is all hidden by the implicit support for precedence climbing and left recursion
+that is built-in to ANTLR4. However that requires fixing the precedence for operators in the grammar.
+Thus, Kaleidoscope doesn't use the default left-recursion support, but does use the same concepts with a
+custom hook in the code behind.
 
 ```antlr
 // pull the initializer out to a distinct rule so it is easier to get at
@@ -47,7 +59,8 @@ expression[int _p]
 ```
 
 Two custom functions are used to handle the dynamic runtime defined nature of the precedence.
-1. GetPrecedence() used in the semantic predicate determines the precedence of the operator for the current rule
+1. GetPrecedence() used in the semantic predicate determines the precedence of the operator for
+the current rule
 2. GetNextPrecedence() is used to determine the next higher level of precedence for any child expressions
 
 These are implemented in the partial extension of the parser:
@@ -63,13 +76,15 @@ private int GetNextPrecedence( )
 }
 ```
 
-These two functions use the current input state to identify the actual operator token. Get Precedence does a look-ahead by one token
-to determine what the precedence for the operator is. The rest of the rule is only executed if the precedence is greater than or equal
-to the current precedence. The right hand side matches expressions of a higher precedence by doing a look-behind one token to get the
-next precedence level. The custom parser functions are pretty small since they defer the real work to the GlobalState instance provided
-when constructing the parser. The state is an instance of the DynamicRuntimeState class. Up until now this state was only used to determine
-the language features to enable. With dynamic precedence for user operators the state maintains a pair of tables of operator information
-that includes the symbol for the operator and precedence:
+These two functions use the current input state to identify the actual operator token. Get Precedence does
+a look-ahead by one token to determine what the precedence for the operator is. The rest of the rule is
+only executed if the precedence is greater than or equal to the current precedence. The right hand side
+matches expressions of a higher precedence by doing a look-behind one token to get the next precedence
+level. The custom parser functions are pretty small since they defer the real work to the GlobalState
+instance provided when constructing the parser. The state is an instance of the DynamicRuntimeState class.
+Up until now this state was only used to determine the language features to enable. With dynamic precedence
+for user operators the state maintains a pair of tables of operator information that includes the symbol
+for the operator and precedence:
 
 ```C#
 private OperatorInfoCollection UnaryOps = new OperatorInfoCollection( );
@@ -86,9 +101,10 @@ private OperatorInfoCollection BinOpPrecedence = new OperatorInfoCollection( )
 };
 ```
 
-The tables are used to determine the precedence for an operator and what the next precedence should be. They start out with the built-in
-binary operators. (Kaleidoscope doesn't define any unary operators so that table starts empty) The GetPrededence() and GetNextPrecedence()
-functions lookup the operators token in the table to determine the operators associativity and its precedence.
+The tables are used to determine the precedence for an operator and what the next precedence should be.
+They start out with the built-in binary operators. (Kaleidoscope doesn't define any unary operators so
+that table starts empty) The GetPrededence() and GetNextPrecedence() functions lookup the operators token
+in the table to determine the operators associativity and its precedence.
 
 ```C#
 public OperatorInfo GetBinOperatorInfo( int tokenType )
@@ -126,26 +142,30 @@ internal int GetNextPrecedence( int tokenType )
 }
 ```
 
-This provides the core ability for looking up and handling precedence. Though, as shown so far, it is just a rather convoluted form of what
-ANTLR4 gives us for free. The real point of this runtime state is the ability of the language to dynamically add user operators. By adding
-operators to the runtime state the lookup process will include them during parsing. Thus, whenever visiting an operator definition it is
-generated as a normal function with a specialized name and the operator and precedence are added to the runtime state. Any future use of
-the operator in an expression will detect the correct precedence and the code generation treats it as a function call with the appropriate
-left and right hand argument values.
+This provides the core ability for looking up and handling precedence. Though, as shown so far, it is just
+a rather convoluted form of what ANTLR4 gives us for free. The real point of this runtime state is the
+ability of the language to dynamically add user operators. By adding operators to the runtime state the
+lookup process will include them during parsing. Thus, whenever visiting an operator definition it is generated
+as a normal function with a specialized name and the operator and precedence are added to the runtime state.
+Any future use of the operator in an expression will detect the correct precedence and the code generation
+treats it as a function call with the appropriate left and right hand argument values.
 
-Actually adding the operators to the table is handled in the parsing process itself using a feature of the ANTLR generated parser called a
-"Parse Listener". A parse listener is attached to the parser and effectively monitors the entire parsing process. For the user operators the
-listener will listen for the specific case of a complete function definition that defines a user operator. When it detects such a case it will
-update the runtime table accordingly.
+Actually adding the operators to the table is handled in the parsing process itself using a feature of the
+ANTLR generated parser called a "Parse Listener". A parse listener is attached to the parser and effectively
+monitors the entire parsing process. For the user operators the listener will listen for the specific case
+of a complete function definition that defines a user operator. When it detects such a case it will update
+the runtime table accordingly.
 
 [!code-csharp[UserOperatorListener](../../../Samples/Kaleidoscope/Kaleidoscope.Runtime/KaleidoscopeUserOperatorListener.cs)]
 
-With the use of the listener the dynamic precedence is contained in the parser which allows the generator and later stages to remain blissfully ignorant
-of the issue of precedence. In the generator operator definitions are simply treated as function definitions with special naming.
+With the use of the listener the dynamic precedence is contained in the parser which allows the generator
+and later stages to remain blissfully ignorant of the issue of precedence. In the generator, operator
+definitions are simply treated as function definitions with special naming.
 
 [!code-csharp[VisitUserOperators](../../../Samples/Kaleidoscope/Chapter6/CodeGenerator.cs#VisitUserOperators)]
 
-Finally, the default case for EmitBinaryOperator() is updated to actually emit a call to the binary operator function generated.
+Finally, the default case for EmitBinaryOperator() is updated to actually emit a call to the binary
+operator function generated.
 
 [!code-csharp[EmitUserOperator](../../../Samples/Kaleidoscope/Chapter6/CodeGenerator.cs#EmitUserOperator)]
 
@@ -275,9 +295,10 @@ Ready>
 ```
 
 ## Conclusion
-Adding user defined operators with user defined precedence is fairly straight forward to implement in terms of the code generation. However,
-the real work is on the parser not the code generation. ANTLR4 has support for left-recursion in the grammar and precedence of expressions and
-even though it only directly supports fixed precedence it is rather easy to extend the underlying support to handle dynamic precedence and
-associativity, once the underlying mechanics ANTLR uses for handling left recursion is understood.
+Adding user defined operators with user defined precedence is fairly straight forward to implement in
+terms of the code generation. However, the real work is on the parser not the code generation. ANTLR4 has
+support for left-recursion in the grammar and precedence of expressions and even though it only directly
+supports fixed precedence it is rather easy to extend the underlying support to handle dynamic precedence
+and associativity, once the underlying mechanics ANTLR uses for handling left recursion is understood.
 
 

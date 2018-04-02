@@ -377,8 +377,7 @@ namespace Llvm.NET.Instructions
             value.ValidateNotNull( nameof( value ) );
             destination.ValidateNotNull( nameof( destination ) );
 
-            var ptrType = destination.NativeType as IPointerType;
-            if( ptrType == null )
+            if( !( destination.NativeType is IPointerType ptrType ) )
             {
                 throw new ArgumentException( "Expected pointer value", nameof( destination ) );
             }
@@ -481,8 +480,7 @@ namespace Llvm.NET.Instructions
             cmp.ValidateNotNull( nameof( cmp ) );
             value.ValidateNotNull( nameof( value ) );
 
-            var ptrType = ptr.NativeType as IPointerType;
-            if( ptrType == null )
+            if( !( ptr.NativeType is IPointerType ptrType ) )
             {
                 throw new ArgumentException( "Expected pointer value", nameof( ptr ) );
             }
@@ -523,14 +521,12 @@ namespace Llvm.NET.Instructions
         {
             pointer.ValidateNotNull( nameof( pointer ) );
 
-            var ptrType = pointer.NativeType as IPointerType;
-            if( ptrType == null )
+            if( !( pointer.NativeType is IPointerType ptrType ) )
             {
                 throw new ArgumentException( "Pointer value expected", nameof( pointer ) );
             }
 
-            var elementStructType = ptrType.ElementType as IStructType;
-            if( elementStructType == null )
+            if( !( ptrType.ElementType is IStructType elementStructType ) )
             {
                 throw new ArgumentException( "Pointer to a structure expected", nameof( pointer ) );
             }
@@ -1307,14 +1303,12 @@ namespace Llvm.NET.Instructions
                 throw new InvalidOperationException( "Source and destination arguments are the same value" );
             }
 
-            var dstPtrType = destination.NativeType as IPointerType;
-            if( dstPtrType == null )
+            if( !( destination.NativeType is IPointerType dstPtrType ) )
             {
                 throw new ArgumentException( "Pointer type expected", nameof( destination ) );
             }
 
-            var srcPtrType = source.NativeType as IPointerType;
-            if( srcPtrType == null )
+            if( !( source.NativeType is IPointerType srcPtrType ) )
             {
                 throw new ArgumentException( "Pointer type expected", nameof( source ) );
             }
@@ -1608,8 +1602,7 @@ namespace Llvm.NET.Instructions
 
         private AtomicRMW BuildAtomicRMW( LLVMAtomicRMWBinOp op, Value ptr, Value val )
         {
-            var ptrType = ptr.NativeType as IPointerType;
-            if( ptrType == null )
+            if( !( ptr.NativeType is IPointerType ptrType ) )
             {
                 throw new ArgumentException( "Expected pointer type", nameof( ptr ) );
             }
@@ -1625,14 +1618,12 @@ namespace Llvm.NET.Instructions
 
         private static void ValidateCallArgs( [NotNull] Value func, IReadOnlyList<Value> args )
         {
-            var funcPtrType = func.NativeType as IPointerType;
-            if( funcPtrType == null )
+            if( !( func.NativeType is IPointerType funcPtrType ) )
             {
                 throw new ArgumentException( "Expected pointer to function", nameof( func ) );
             }
 
-            var elementType = funcPtrType.ElementType as FunctionType;
-            if( elementType == null )
+            if( !( funcPtrType.ElementType is FunctionType elementType ) )
             {
                 throw new ArgumentException( "A pointer to a function is required for an indirect call", nameof( func ) );
             }

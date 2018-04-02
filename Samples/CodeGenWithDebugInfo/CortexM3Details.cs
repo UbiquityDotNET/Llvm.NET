@@ -41,8 +41,7 @@ namespace TestDebugInfo
             // it, for Cortex-Mx it seems to use it only for larger structs, otherwise it uses an [ n x i32]. (Max
             // value of n is not known) and performs casts. Thus, on cortex-m the function parameters are handled
             // quite differently by clang, which seems odd to put such target dependent differences into the front-end.
-            var argType = function.Parameters[ paramIndex ].NativeType as IPointerType;
-            if( argType == null || !argType.ElementType.IsStruct )
+            if( !( function.Parameters[ paramIndex ].NativeType is IPointerType argType ) || !argType.ElementType.IsStruct )
             {
                 throw new ArgumentException( "Signature for specified parameter must be a pointer to a structure" );
             }
@@ -81,8 +80,8 @@ namespace TestDebugInfo
                 ctx.CreateAttribute( "use-soft-float", "false" )
             };
 
-        private static string Cpu = "cortex-m3";
-        private static string Features = "+hwdiv,+strict-align,+thumb-mode";
-        private static string TripleName = "thumbv7m-none--eabi";
+        private const string Cpu = "cortex-m3";
+        private const string Features = "+hwdiv,+strict-align,+thumb-mode";
+        private const string TripleName = "thumbv7m-none--eabi";
     }
 }

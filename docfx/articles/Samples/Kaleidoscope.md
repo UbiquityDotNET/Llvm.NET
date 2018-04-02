@@ -1,30 +1,33 @@
 # 1. Kaleidoscope: Language Introduction
-This series of samples generally follows the official [LLVM tutorial](http://releases.llvm.org/5.0.0/docs/tutorial/LangImpl01.html).
-The general flow of this tutorial follows that of the official LLVM tutorial and many of the samples are lifted directly from that
-tutorial to make it easier to follow along both tutorials to see how the various LLVM concepts are projected in the Llvm.NET library.
+The general flow of this tutorial follows that of the official
+[LLVM tutorial](http://releases.llvm.org/6.0.1/docs/tutorial/LangImpl01.html)
+and many of the samples are lifted directly from that tutorial to make it easier to follow
+along both tutorials to see how the various LLVM concepts are projected in the Llvm.NET library.
 
 ## Overview
 Kaleidoscope is a simple functional language that is used to illustrate numerous real world
 use cases for Llvm.NET for code generation and JIT execution.
 
-It is worth pointing out that this example isn't intended as a treatise on compiler design nor
-on language parsing. While it contains aspects of those topics the sample is focused on the
+It is worth pointing out that this example is not intended as a treatise on compiler design nor
+on language parsing. While it contains many aspects of those topics the tutorial is focused on the
 use of Llvm.NET for code generation. Furthermore it isn't a trans-literation of the LLVM C++
 sample as that would defeat one of the major points of Llvm.NET - to provide a familiar API and
 use pattern to C# developers.
 
 ## General layout
-The samples are built using common core libraries and patterns. They are explicitly designed to make
-code comparisons between chapters vis your favorite code comparison tool. Each, chapter builds on the
-next so running a comparison makes it easy to see the changes in full context. The text of the tutorials
-explains why the changes are made and a comparison helps provide the "big picture" view.
+The samples are built using common core libraries and patterns. They are explicitly designed to
+make code comparisons between chapters vis your favorite code comparison tool. Each, chapter builds
+on the next so running a comparison makes it easy to see the changes in full context. The text of
+the tutorials explains why the changes are made and a comparison helps provide the "big picture"
+view.
 
 ## Variations from the Official LLVM Tutorial
 The Llvm.NET version of the Kaleidoscope series takes a different route for parsing from the
-LLVM implementation. In particular the Llvm.NET version defines a formal grammar using [ANTLR](http://antlr.org)
-with the full grammar for all variations of the language features in a single assembly. This
-helps in isolating the parsing from the use of Llvm.NET and minimizes the need for any sort
-of custom AST. (The antlr parse tree is generally sufficient to generate code)
+LLVM implementation. In particular the Llvm.NET version defines a formal grammar using
+[ANTLR](http://antlr.org) with the full grammar for all variations of the language features in
+a single assembly. This helps in isolating the parsing from the use of Llvm.NET and minimizes
+the need for any sort of custom AST. (For Kaleidoscope, the antlr parse tree is generally
+sufficient to generate code)
 
 ## The Kaleidoscope Language
 ### General Concepts
@@ -116,7 +119,7 @@ mandel(-2.3, -1.3, 0.05, 0.07);
 When entered ( or copy/pasted) to the command line Kaleidoscope will print out the following:
 >[!NOTE]
 >This example uses features of the language only enabled/discussed in Chapter 6 of the tutorial.
->The runtime from earlier chapters will generate errors trying to parse this code.
+>The runtime from chapters 3-5 will generate errors trying to parse this code.
 
 ```shell
 Ready>mandel(-2.3, -1.3, 0.05, 0.07);
@@ -164,3 +167,9 @@ Ready>mandel(-2.3, -1.3, 0.05, 0.07);
 Evaluated to 0
 Ready>
 ```
+
+## Conclusion
+Kaleidoscope is a simple yet complete language with a good deal of functionality. This serves as
+a great language to study the use of LLVM for code generation. While, generally speaking, the 
+Llvm.NET version of this tutorial differs only slightly from that of the official LLVM version, it
+serves well as an example of what you can do with Llvm.NET.

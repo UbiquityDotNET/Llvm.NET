@@ -25,6 +25,6 @@ namespace Llvm.NET.Values
             OpaqueHandle = useRef;
         }
 
-        private LLVMUseRef OpaqueHandle;
+        private readonly LLVMUseRef OpaqueHandle;
     }
 }
