@@ -55,6 +55,7 @@ namespace Llvm.NET.Tests
                   { Triple.ArchType.Aarch64_be,     "aarch64_be" },
                   { Triple.ArchType.Arm,            "arm" },
                   { Triple.ArchType.Armeb,          "armeb" },
+                  { Triple.ArchType.Arc,            "arc" },
                   { Triple.ArchType.Avr,            "avr" },
                   { Triple.ArchType.BPFel,          "bpfel" },
                   { Triple.ArchType.BPFeb,          "bpfeb" },
@@ -112,6 +113,7 @@ namespace Llvm.NET.Tests
             var values = new Dictionary<Triple.SubArchType, string>
                 {
                     { Triple.SubArchType.NoSubArch,               string.Empty },
+                    { Triple.SubArchType.ARMSubArch_v8_3a,        "v8.3a"},
                     { Triple.SubArchType.ARMSubArch_v8_2a,        "v8.2a" },
                     { Triple.SubArchType.ARMSubArch_v8_1a,        "v8.1a" },
                     { Triple.SubArchType.ARMSubArch_v8,           "v8" },
@@ -179,10 +181,12 @@ namespace Llvm.NET.Tests
             var values = new Dictionary<Triple.OSType, string>
             {
                 { Triple.OSType.UnknownOS, "unknown" },
+                { Triple.OSType.Ananas,    "ananas" },
                 { Triple.OSType.CloudABI,  "cloudabi" },
                 { Triple.OSType.Darwin,    "darwin" },
                 { Triple.OSType.DragonFly, "dragonfly" },
                 { Triple.OSType.FreeBSD,   "freebsd" },
+                { Triple.OSType.Fuchsia,   "fuchsia" },
                 { Triple.OSType.IOS,       "ios" },
                 { Triple.OSType.KFreeBSD,  "kfreebsd" },
                 { Triple.OSType.Linux,     "linux" },
@@ -197,7 +201,6 @@ namespace Llvm.NET.Tests
                 { Triple.OSType.RTEMS,     "rtems" },
                 { Triple.OSType.NaCl,      "nacl" },
                 { Triple.OSType.CNK,       "cnk" },
-                { Triple.OSType.Bitrig,    "bitrig" },
                 { Triple.OSType.AIX,       "aix" },
                 { Triple.OSType.CUDA,      "cuda" },
                 { Triple.OSType.NVCL,      "nvcl" },
@@ -207,6 +210,8 @@ namespace Llvm.NET.Tests
                 { Triple.OSType.TvOS,      "tvos" },
                 { Triple.OSType.WatchOS,   "watchos" },
                 { Triple.OSType.Mesa3D,    "mesa3d" },
+                { Triple.OSType.Contiki,   "contiki" },
+                { Triple.OSType.AmdPAL,    "amdpal" }
             };
 
             foreach( var kvp in values )
@@ -224,6 +229,7 @@ namespace Llvm.NET.Tests
             {
                 { Triple.EnvironmentType.UnknownEnvironment, "unknown" },
                 { Triple.EnvironmentType.GNU,                "gnu" },
+                { Triple.EnvironmentType.GNUABIN32,          "gnuabin32" },
                 { Triple.EnvironmentType.GNUABI64,           "gnuabi64" },
                 { Triple.EnvironmentType.GNUEABIHF,          "gnueabihf" },
                 { Triple.EnvironmentType.GNUEABI,            "gnueabi" },
@@ -239,7 +245,8 @@ namespace Llvm.NET.Tests
                 { Triple.EnvironmentType.Itanium,            "itanium" },
                 { Triple.EnvironmentType.Cygnus,             "cygnus" },
                 { Triple.EnvironmentType.AMDOpenCL,          "amdopencl" },
-                { Triple.EnvironmentType.CoreCLR,            "coreclr" }
+                { Triple.EnvironmentType.CoreCLR,            "coreclr" },
+                { Triple.EnvironmentType.OpenCL,             "opencl" }
             };
 
             foreach( var kvp in values )
