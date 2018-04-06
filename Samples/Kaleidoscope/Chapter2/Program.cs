@@ -23,8 +23,8 @@ namespace Kaleidoscope
             // Using language level that includes the complete set
             // of language features to allow exploring and verifying
             // <generatorloop>
-            var parser = new ReplParserStack( LanguageLevel.MutableVariables );
-            using( var generator = new CodeGenerator( parser.GlobalState ) )
+            var parser = new ParserStack( LanguageLevel.MutableVariables );
+            using( var generator = new CodeGenerator( ) )
             {
                 Console.WriteLine( "LLVM Kaleidoscope Syntax Viewer - {0}", parser.LanguageLevel );
 

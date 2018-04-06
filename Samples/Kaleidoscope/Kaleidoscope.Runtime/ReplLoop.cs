@@ -12,7 +12,7 @@ namespace Kaleidoscope.Runtime
     public class ReplLoop<TResult>
     {
         public ReplLoop( IKaleidoscopeCodeGenerator<TResult> generator, LanguageLevel languageLevel )
-            : this( generator, new ReplParserStack( languageLevel ), DiagnosticRepresentations.None, Console.In )
+            : this( generator, new ParserStack( languageLevel ), DiagnosticRepresentations.None, Console.In )
         {
         }
 

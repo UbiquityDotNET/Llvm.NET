@@ -4,8 +4,9 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
+using System.IO;
 using System.Linq;
-using System.Runtime.InteropServices;
 using Antlr4.Runtime;
 using Antlr4.Runtime.Misc;
 using Antlr4.Runtime.Tree;
@@ -30,20 +31,20 @@ namespace Kaleidoscope
         , IKaleidoscopeCodeGenerator<Value>
     {
         // <Initialization>
-        public CodeGenerator( DynamicRuntimeState globalState, TargetMachine machine )
+        public CodeGenerator( DynamicRuntimeState globalState, TargetMachine machine, string sourcePath, bool disableOptimization = false )
         {
             RuntimeState = globalState;
-            LexicalBlocks = new Stack<DIScope>( ); // TODO: combine this with ScopeStack as they work in tandem
+            LexicalBlocks = new Stack<DIScope>( );
             Context = new Context( );
             TargetMachine = machine;
-            InitializeModuleAndPassManager( );
+            DisableOptimizations = disableOptimization;
+            InitializeModuleAndPassManager( sourcePath );
             InstructionBuilder = new InstructionBuilder( Context );
             FunctionPrototypes = new PrototypeCollection( );
             NamedValues = new ScopeStack<Alloca>( );
+            AnonymousFunctions = new List<Function>( );
         }
         // </Initialization>
-
-        public bool DisableOptimizations { get; set; }
 
         public BitcodeModule Module { get; private set; }
 
@@ -52,6 +53,7 @@ namespace Kaleidoscope
             Context.Dispose( );
         }
 
+        // <Generate>
         public Value Generate( Parser parser, IParseTree tree, DiagnosticRepresentations additionalDiagnostics )
         {
             if( parser.NumberOfSyntaxErrors > 0 )
@@ -59,8 +61,36 @@ namespace Kaleidoscope
                 return null;
             }
 
-            return Visit( tree );
+            Visit( tree );
+            if( AnonymousFunctions.Count > 0 )
+            {
+                var mainFunction = Module.AddFunction( "main", Context.GetFunctionType( Context.VoidType ) );
+                var block = mainFunction.AppendBasicBlock( "entry" );
+                var irBuilder = new InstructionBuilder( block );
+                var printdFunc = Module.AddFunction( "printd", Context.GetFunctionType( Context.DoubleType, Context.DoubleType ) );
+                foreach( var anonFunc in AnonymousFunctions )
+                {
+                    var value = irBuilder.Call( anonFunc );
+                    irBuilder.Call( printdFunc, value );
+                }
+
+                irBuilder.Return( );
+
+                // Use always inline and Dead Code Elimination module passes to inline all of the
+                // anonymous functions. This effectively strips all the calls just generated for main()
+                // and inlines each of the anonymous functions directly into main, dropping the now
+                // unused original anonymous functions all while retaining all of the original source
+                // debug information locations.
+                var mpm = new ModulePassManager( )
+                          .AddAlwaysInlinerPass( )
+                          .AddGlobalDCEPass( );
+                mpm.Run( Module );
+            }
+
+            Module.DIBuilder.Finish( );
+            return null;
         }
+        // </Generate>
 
         public override Value VisitParenExpression( [NotNull] ParenExpressionContext context )
         {
@@ -68,11 +98,13 @@ namespace Kaleidoscope
             return context.Expression.Accept( this );
         }
 
+        // <VisitConstExpression>
         public override Value VisitConstExpression( [NotNull] ConstExpressionContext context )
         {
             EmitLocation( context );
             return Context.CreateConstant( context.Value );
         }
+        // </VisitConstExpression>
 
         // <VisitVariableExpression>
         public override Value VisitVariableExpression( [NotNull] VariableExpressionContext context )
@@ -92,6 +124,7 @@ namespace Kaleidoscope
         public override Value VisitFunctionCallExpression( [NotNull] FunctionCallExpressionContext context )
         {
             EmitLocation( context );
+
             var function = FindCallTarget( context.CaleeName );
             if( function == null )
             {
@@ -99,9 +132,12 @@ namespace Kaleidoscope
             }
 
             var args = context.Args.Select( ctx => ctx.Accept( this ) ).ToArray( );
+
+            EmitLocation( context );
             return InstructionBuilder.Call( function, args ).RegisterName( "calltmp" );
         }
 
+        // <FunctionDeclarations>
         public override Value VisitExternalDeclaration( [NotNull] ExternalDeclarationContext context )
         {
             EmitLocation( context );
@@ -112,6 +148,7 @@ namespace Kaleidoscope
         {
             return GetOrDeclareFunction( new Prototype( context ) );
         }
+        // </FunctionDeclarations>
 
         // <VisitFunctionDefinition>
         public override Value VisitFunctionDefinition( [NotNull] FunctionDefinitionContext context )
@@ -129,6 +166,7 @@ namespace Kaleidoscope
                                                , isAnonymous: true
                                                );
 
+            AnonymousFunctions.Add( function );
             return DefineFunction( function, context.expression( ) );
         }
         // </VisitTopLevelExpression>
@@ -180,6 +218,8 @@ namespace Kaleidoscope
                 return null;
             }
 
+            EmitLocation( context );
+
             var condBool = InstructionBuilder.Compare( RealPredicate.OrderedAndNotEqual, condition, Context.CreateConstant( 0.0 ) )
                                              .RegisterName( "ifcond" );
 
@@ -221,7 +261,7 @@ namespace Kaleidoscope
             function.BasicBlocks.Add( continueBlock );
             InstructionBuilder.PositionAtEnd( continueBlock );
             return InstructionBuilder.Load( result )
-                                     .RegisterName("ifresult");
+                                     .RegisterName( "ifresult" );
         }
         // </VisitConditionalExpression>
 
@@ -231,7 +271,7 @@ namespace Kaleidoscope
             EmitLocation( context );
             var function = InstructionBuilder.InsertBlock.ContainingFunction;
             string varName = context.Initializer.Name;
-            var allocaVar = CreateEntryBlockAlloca( function, varName );
+            var allocaVar = CreateEntryBlockAlloca( function, context.Initializer );
 
             // Emit the start code first, without 'variable' in scope.
             Value startVal = null;
@@ -312,7 +352,7 @@ namespace Kaleidoscope
                 InstructionBuilder.Branch( endCondition, loopBlock, afterBlock );
                 InstructionBuilder.PositionAtEnd( afterBlock );
 
-                // for expr always returns 0.0 for consistency, there is no 'void'
+                // for expression always returns 0.0 for consistency, there is no 'void'
                 return Context.DoubleType.GetNullValue( );
             }
         }
@@ -343,22 +383,11 @@ namespace Kaleidoscope
 
         public override Value VisitBinaryPrototype( [NotNull] BinaryPrototypeContext context )
         {
-            if( !RuntimeState.TryAddOperator( context.OpToken, OperatorKind.InfixLeftAssociative, context.Precedence ) )
-            {
-                throw new CodeGeneratorException( "Cannot replace built-in operators" );
-            }
-
             return GetOrDeclareFunction( new Prototype( context, context.Name ) );
         }
 
         public override Value VisitUnaryPrototype( [NotNull] UnaryPrototypeContext context )
         {
-            if( !RuntimeState.TryAddOperator( context.OpToken, OperatorKind.PreFix, 0 ) )
-            {
-                // should never get here now that grammar distinguishes built-in operators
-                throw new CodeGeneratorException( "Cannot replace built-in operators" );
-            }
-
             return GetOrDeclareFunction( new Prototype( context, context.Name ) );
         }
         // </VisitUserOperators>
@@ -377,7 +406,7 @@ namespace Kaleidoscope
                         initValue = initializer.Value.Accept( this );
                     }
 
-                    var alloca = CreateEntryBlockAlloca( function, initializer.Name );
+                    var alloca = CreateEntryBlockAlloca( function, initializer );
                     InstructionBuilder.Store( initValue, alloca );
                     NamedValues[ initializer.Name ] = alloca;
                 }
@@ -389,6 +418,7 @@ namespace Kaleidoscope
 
         protected override Value DefaultResult => null;
 
+        // <EmitBinaryOperator>
         private Value EmitBinaryOperator( Value lhs, BinaryopContext op, IParseTree rightTree )
         {
             EmitLocation( op );
@@ -453,28 +483,34 @@ namespace Kaleidoscope
             // </EmitUserOperator>
             }
         }
+        // </EmitBinaryOperator>
 
         // <InitializeModuleAndPassManager>
-        private void InitializeModuleAndPassManager( )
+        private void InitializeModuleAndPassManager( string sourcePath )
         {
-            Module = Context.CreateBitcodeModule( );
+            Module = Context.CreateBitcodeModule( Path.GetFileName( sourcePath ), SourceLanguage.C, sourcePath, "Kaleidoscope Compiler" );
             Module.TargetTriple = TargetMachine.Triple;
             Module.Layout = TargetMachine.TargetData;
             DoubleType = new DebugBasicType( Context.DoubleType, Module, "double", DiTypeKind.Float );
 
-            FunctionPassManager = new FunctionPassManager( Module );
-            FunctionPassManager.AddPromoteMemoryToRegisterPass( )
-                               .AddInstructionCombiningPass( )
-                               .AddReassociatePass( )
-                               .AddGVNPass( )
-                               .AddCFGSimplificationPass( )
-                               .Initialize( );
+            FunctionPassManager = new FunctionPassManager( Module )
+                                      .AddPromoteMemoryToRegisterPass( );
+
+            if( !DisableOptimizations )
+            {
+                FunctionPassManager.AddInstructionCombiningPass( )
+                                   .AddReassociatePass( )
+                                   .AddGVNPass( )
+                                   .AddCFGSimplificationPass( );
+            }
+            FunctionPassManager.Initialize( );
         }
         // </InitializeModuleAndPassManager>
 
+        // <EmitLocation>
         private void EmitLocation( IParseTree context )
         {
-            if( !(context is ParserRuleContext ruleContext ) )
+            if( !( context is ParserRuleContext ruleContext ) )
             {
                 InstructionBuilder.SetDebugLocation( 0, 0 );
             }
@@ -489,6 +525,7 @@ namespace Kaleidoscope
                 InstructionBuilder.SetDebugLocation( ( uint )ruleContext.Start.Line, ( uint )ruleContext.Start.Column, scope );
             }
         }
+        // </EmitLocation>
 
         // <FindCallTarget>
         private Function FindCallTarget( string name )
@@ -519,15 +556,24 @@ namespace Kaleidoscope
                 return function;
             }
 
-            var debugFile = Module.DIBuilder.CreateFile( Module.DICompileUnit.File.FileName, Module.DICompileUnit.File.Directory );
-            var signature = Context.CreateFunctionType( Module.DIBuilder, DoubleType, prototype.Parameters.Select( _ => DoubleType ) );
-            var lastParam = prototype.Parameters.LastOrDefault( );
-            if( lastParam == default )
+            // extern declarations don't get debug information
+            Function retVal;
+            if( prototype.IsExtern )
             {
-                lastParam = prototype.Identifier;
+                var llvmSignature = Context.GetFunctionType( Context.DoubleType, prototype.Parameters.Select( _ => Context.DoubleType ) );
+                retVal = Module.AddFunction( prototype.Identifier.Name, llvmSignature );
             }
+            else
+            {
+                var debugFile = Module.DIBuilder.CreateFile( Module.DICompileUnit.File.FileName, Module.DICompileUnit.File.Directory );
+                var signature = Context.CreateFunctionType( Module.DIBuilder, DoubleType, prototype.Parameters.Select( _ => DoubleType ) );
+                var lastParam = prototype.Parameters.LastOrDefault( );
+                if( lastParam == default )
+                {
+                    lastParam = prototype.Identifier;
+                }
 
-            var retVal = Module.CreateFunction( Module.DICompileUnit
+                retVal = Module.CreateFunction( Module.DICompileUnit
                                               , prototype.Identifier.Name
                                               , null
                                               , debugFile
@@ -536,11 +582,21 @@ namespace Kaleidoscope
                                               , false
                                               , true
                                               , ( uint )lastParam.Span.EndLine
-                                              , DebugInfoFlags.Prototyped
+                                              , isAnonymous ? DebugInfoFlags.Artificial : DebugInfoFlags.Prototyped
                                               , false
                                               );
+            }
 
-            retVal.Linkage( Linkage.External );
+            // mark anonymous functions as always-inline and private so they can be inlined and then removed
+            if( isAnonymous )
+            {
+                retVal.AddAttribute( FunctionAttributeIndex.Function, AttributeKind.AlwaysInline )
+                      .Linkage( Linkage.Private );
+            }
+            else
+            {
+                retVal.Linkage( Linkage.External );
+            }
 
             int index = 0;
             foreach( var argId in prototype.Parameters )
@@ -566,12 +622,9 @@ namespace Kaleidoscope
                 throw new CodeGeneratorException( $"Function {function.Name} cannot be redefined in the same module" );
             }
 
-            var proto = FunctionPrototypes[ function.Name ];
             var basicBlock = function.AppendBasicBlock( "entry" );
             InstructionBuilder.PositionAtEnd( basicBlock );
 
-            var diFile = Module.DICompileUnit.File;
-            var scope = Module.DICompileUnit;
             LexicalBlocks.Push( function.DISubProgram );
 
             // Unset the location for the prologue emission (leading instructions with no
@@ -579,28 +632,14 @@ namespace Kaleidoscope
             // will run past them when breaking on a function)
             EmitLocation( null );
 
+            FunctionPrototypes.TryGetValue( function.Name, out Prototype proto );
+
             using( NamedValues.EnterScope( ) )
             {
                 foreach( var arg in function.Parameters )
                 {
-                    uint line = ( uint )proto.Parameters[ ( int )( arg.Index ) ].Span.StartLine;
-                    uint col = ( uint )proto.Parameters[ ( int )( arg.Index ) ].Span.StartColumn;
-
-                    var argSlot = CreateEntryBlockAlloca( function, arg.Name );
-                    DILocalVariable debugVar = Module.DIBuilder.CreateArgument( function.DISubProgram
-                                                                              , arg.Name
-                                                                              , diFile
-                                                                              , line
-                                                                              , DoubleType
-                                                                              , true
-                                                                              , DebugInfoFlags.None
-                                                                              , checked(( ushort )(arg.Index + 1)) // Debug index starts at 1!
-                                                                              );
-                    Module.DIBuilder.InsertDeclare( argSlot
-                                                  , debugVar
-                                                  , new DILocation( Context, line, col, function.DISubProgram )
-                                                  , InstructionBuilder.InsertBlock
-                                                  );
+                    var paramNode = proto.Parameters[ ( int )( arg.Index ) ];
+                    var argSlot = CreateEntryBlockAlloca( function, paramNode, arg.Index );
 
                     InstructionBuilder.Store( arg, argSlot );
                     NamedValues[ arg.Name ] = argSlot;
@@ -620,16 +659,58 @@ namespace Kaleidoscope
                 function.Verify( );
             }
 
-            if( !DisableOptimizations )
-            {
-                FunctionPassManager.Run( function );
-            }
+            FunctionPassManager.Run( function );
 
             return function;
         }
         // </DefineFunction>
 
         // <CreateEntryBlockAlloca>
+        private Alloca CreateEntryBlockAlloca( Function function, Identifier paramIdentifier, uint argIndex )
+        {
+            var argSlot = CreateEntryBlockAlloca( function, paramIdentifier.Name );
+            uint line = ( uint )paramIdentifier.Span.StartLine;
+            uint col = ( uint )paramIdentifier.Span.StartColumn;
+
+            DILocalVariable debugVar = Module.DIBuilder.CreateArgument( function.DISubProgram
+                                                                      , paramIdentifier.Name
+                                                                      , function.DISubProgram.File
+                                                                      , line
+                                                                      , DoubleType
+                                                                      , true
+                                                                      , DebugInfoFlags.None
+                                                                      , checked(( ushort )( argIndex + 1 )) // Debug index starts at 1!
+                                                                      );
+            Module.DIBuilder.InsertDeclare( argSlot
+                                          , debugVar
+                                          , new DILocation( Context, line, col, function.DISubProgram )
+                                          , InstructionBuilder.InsertBlock
+                                          );
+            return argSlot;
+        }
+
+        private Alloca CreateEntryBlockAlloca( Function function, InitializerContext initializer )
+        {
+            var argSlot = CreateEntryBlockAlloca( function, initializer.Name );
+            uint line = ( uint )initializer.Start.Line;
+            uint col = ( uint )initializer.Start.Column;
+
+            DILocalVariable debugVar = Module.DIBuilder.CreateLocalVariable( function.DISubProgram
+                                                                           , initializer.Name
+                                                                           , function.DISubProgram.File
+                                                                           , line
+                                                                           , DoubleType
+                                                                           , false
+                                                                           , DebugInfoFlags.None
+                                                                           );
+            Module.DIBuilder.InsertDeclare( argSlot
+                                          , debugVar
+                                          , new DILocation( Context, line, col, function.DISubProgram )
+                                          , InstructionBuilder.InsertBlock
+                                          );
+            return argSlot;
+        }
+
         private static Alloca CreateEntryBlockAlloca( Function theFunction, string varName )
         {
             var tmpBldr = new InstructionBuilder( theFunction.EntryBlock );
@@ -644,6 +725,7 @@ namespace Kaleidoscope
         // </CreateEntryBlockAlloca>
 
         // <PrivateMembers>
+        private readonly bool DisableOptimizations;
         private readonly DynamicRuntimeState RuntimeState;
         private static int AnonNameIndex;
         private readonly Context Context;
@@ -652,7 +734,7 @@ namespace Kaleidoscope
         private FunctionPassManager FunctionPassManager;
         private TargetMachine TargetMachine;
         private readonly PrototypeCollection FunctionPrototypes;
-
+        private readonly List<Function> AnonymousFunctions;
         private DebugBasicType DoubleType;
         private Stack<DIScope> LexicalBlocks;
         // </PrivateMembers>

@@ -38,11 +38,11 @@ namespace Kaleidoscope.Grammar
         /// </remarks>
         public DynamicRuntimeState GlobalState { get; set; }
 
-        private bool FeatureControlFlow => IsFeatureEnabled( LanguageLevel.ControlFlow );
+        public bool FeatureControlFlow => IsFeatureEnabled( LanguageLevel.ControlFlow );
 
-        private bool FeatureMutableVars => IsFeatureEnabled( LanguageLevel.MutableVariables );
+        public bool FeatureMutableVars => IsFeatureEnabled( LanguageLevel.MutableVariables );
 
-        private bool FeatureUserOperators => IsFeatureEnabled( LanguageLevel.UserDefinedOperators );
+        public bool FeatureUserOperators => IsFeatureEnabled( LanguageLevel.UserDefinedOperators );
 
         private bool IsFeatureEnabled( LanguageLevel feature ) => LanguageLevel >= feature;
 

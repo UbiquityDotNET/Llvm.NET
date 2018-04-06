@@ -30,11 +30,12 @@ namespace Kaleidoscope
         , IKaleidoscopeCodeGenerator<Value>
     {
         // <Initialization>
-        public CodeGenerator( DynamicRuntimeState globalState )
+        public CodeGenerator( DynamicRuntimeState globalState, bool disableOptimization = false )
         {
             RuntimeState = globalState;
             Context = new Context( );
             JIT = new KaleidoscopeJIT( );
+            DisableOptimizations = disableOptimization;
             InitializeModuleAndPassManager( );
             InstructionBuilder = new InstructionBuilder( Context );
             FunctionPrototypes = new PrototypeCollection( );
@@ -43,14 +44,13 @@ namespace Kaleidoscope
         }
         // </Initialization>
 
-        public bool DisableOptimizations { get; set; }
-
         public void Dispose( )
         {
             JIT.Dispose( );
             Context.Dispose( );
         }
 
+        // <Generate>
         public Value Generate( Parser parser, IParseTree tree, DiagnosticRepresentations additionalDiagnostics )
         {
             if( parser.NumberOfSyntaxErrors > 0 )
@@ -60,16 +60,19 @@ namespace Kaleidoscope
 
             return Visit( tree );
         }
+        // </Generate>
 
         public override Value VisitParenExpression( [NotNull] ParenExpressionContext context )
         {
             return context.Expression.Accept( this );
         }
 
+        // <VisitConstExpression>
         public override Value VisitConstExpression( [NotNull] ConstExpressionContext context )
         {
             return Context.CreateConstant( context.Value );
         }
+        // </VisitConstExpression>
 
         // <VisitVariableExpression>
         public override Value VisitVariableExpression( [NotNull] VariableExpressionContext context )
@@ -97,6 +100,7 @@ namespace Kaleidoscope
             return InstructionBuilder.Call( function, args ).RegisterName( "calltmp" );
         }
 
+        // <FunctionDeclarations>
         public override Value VisitExternalDeclaration( [NotNull] ExternalDeclarationContext context )
         {
             return context.Signature.Accept( this );
@@ -106,6 +110,7 @@ namespace Kaleidoscope
         {
             return GetOrDeclareFunction( new Prototype( context ) );
         }
+        // </FunctionDeclarations>
 
         // <VisitFunctionDefinition>
         public override Value VisitFunctionDefinition( [NotNull] FunctionDefinitionContext context )
@@ -219,7 +224,7 @@ namespace Kaleidoscope
             function.BasicBlocks.Add( continueBlock );
             InstructionBuilder.PositionAtEnd( continueBlock );
             return InstructionBuilder.Load( result )
-                                     .RegisterName("ifresult");
+                                     .RegisterName( "ifresult" );
         }
         // </VisitConditionalExpression>
 
@@ -309,7 +314,7 @@ namespace Kaleidoscope
                 InstructionBuilder.Branch( endCondition, loopBlock, afterBlock );
                 InstructionBuilder.PositionAtEnd( afterBlock );
 
-                // for expr always returns 0.0 for consistency, there is no 'void'
+                // for expression always returns 0.0 for consistency, there is no 'void'
                 return Context.DoubleType.GetNullValue( );
             }
         }
@@ -338,22 +343,11 @@ namespace Kaleidoscope
 
         public override Value VisitBinaryPrototype( [NotNull] BinaryPrototypeContext context )
         {
-            if( !RuntimeState.TryAddOperator( context.OpToken, OperatorKind.InfixLeftAssociative, context.Precedence ) )
-            {
-                throw new CodeGeneratorException( "Cannot replace built-in operators" );
-            }
-
             return GetOrDeclareFunction( new Prototype( context, context.Name ) );
         }
 
         public override Value VisitUnaryPrototype( [NotNull] UnaryPrototypeContext context )
         {
-            if( !RuntimeState.TryAddOperator( context.OpToken, OperatorKind.PreFix, 0 ) )
-            {
-                // should never get here now that grammar distinguishes built-in operators
-                throw new CodeGeneratorException( "Cannot replace built-in operators" );
-            }
-
             return GetOrDeclareFunction( new Prototype( context, context.Name ) );
         }
         // </VisitUserOperators>
@@ -384,6 +378,7 @@ namespace Kaleidoscope
 
         protected override Value DefaultResult => null;
 
+        // <EmitBinaryOperator>
         private Value EmitBinaryOperator( Value lhs, BinaryopContext op, IParseTree rightTree )
         {
             var rhs = rightTree.Accept( this );
@@ -447,19 +442,25 @@ namespace Kaleidoscope
             // </EmitUserOperator>
             }
         }
+        // </EmitBinaryOperator>
 
         // <InitializeModuleAndPassManager>
         private void InitializeModuleAndPassManager( )
         {
             Module = Context.CreateBitcodeModule( );
             Module.Layout = JIT.TargetMachine.TargetData;
-            FunctionPassManager = new FunctionPassManager( Module );
-            FunctionPassManager.AddPromoteMemoryToRegisterPass( )
-                               .AddInstructionCombiningPass( )
-                               .AddReassociatePass( )
-                               .AddGVNPass( )
-                               .AddCFGSimplificationPass( )
-                               .Initialize( );
+            FunctionPassManager = new FunctionPassManager( Module )
+                                      .AddPromoteMemoryToRegisterPass( );
+
+            if( !DisableOptimizations )
+            {
+                FunctionPassManager.AddInstructionCombiningPass( )
+                                   .AddReassociatePass( )
+                                   .AddGVNPass( )
+                                   .AddCFGSimplificationPass( );
+            }
+
+            FunctionPassManager.Initialize( );
         }
         // </InitializeModuleAndPassManager>
 
@@ -582,6 +583,7 @@ namespace Kaleidoscope
         // </CreateEntryBlockAlloca>
 
         // <PrivateMembers>
+        private readonly bool DisableOptimizations;
         private readonly DynamicRuntimeState RuntimeState;
         private static int AnonNameIndex;
         private readonly Context Context;

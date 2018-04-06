@@ -36,7 +36,7 @@ namespace Kaleidoscope.Runtime
         /// </remarks>
         (IParseTree parseTree, Parser recognizer) Parse( string txt, DiagnosticRepresentations additionalDiagnostics );
 
-        /// <summary>Try parsing the given input text</summary>
+        /// <summary>Try parsing the given input text as full source, potentially containing multiple definitions</summary>
         /// <param name="reader">TextReader to parse</param>
         /// <param name="additionalDiagnostics">Additional diagnostics to generate</param>
         /// <returns>Parse tree and the parser that was used to generate it as a <see cref="System.ValueTuple"/></returns>
