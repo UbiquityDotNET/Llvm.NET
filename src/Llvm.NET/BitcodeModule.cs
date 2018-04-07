@@ -134,6 +134,7 @@ namespace Llvm.NET
         }
 
         /// <summary>Gets the <see cref="DebugInfoBuilder"/> used to create debug information for this module</summary>
+        /// <remarks>The builder returned from this property is lazy constructed on first access so doesn't consume resources unless used.</remarks>
         public DebugInfoBuilder DIBuilder
         {
             get

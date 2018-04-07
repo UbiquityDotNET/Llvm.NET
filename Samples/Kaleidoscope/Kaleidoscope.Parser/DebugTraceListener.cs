@@ -22,13 +22,13 @@ namespace Kaleidoscope.Grammar
         /// <inheritdoc/>
         public virtual void EnterEveryRule( ParserRuleContext ctx )
         {
-            Trace.TraceInformation( $"enter[{ctx.SourceInterval}] {Parser.RuleNames[ ctx.RuleIndex ]} Lt(1)='{( ( ITokenStream )Parser.InputStream ).Lt( 1 ).Text}'" );
+            Trace.TraceInformation( $"enter[{ctx.SourceInterval}] {Parser.RuleNames[ ctx.RuleIndex ]} [{ctx.GetType( ).Name}] Lt(1)='{( ( ITokenStream )Parser.InputStream ).Lt( 1 ).Text}'" );
         }
 
         /// <inheritdoc/>
         public virtual void ExitEveryRule( ParserRuleContext ctx )
         {
-            Trace.TraceInformation( $"exit[{ctx.SourceInterval}] {Parser.RuleNames[ ctx.RuleIndex ]} Lt(1)='{( ( ITokenStream )Parser.InputStream ).Lt( 1 ).Text}'");
+            Trace.TraceInformation( $"exit[{ctx.SourceInterval}] {Parser.RuleNames[ ctx.RuleIndex ]} [{ctx.GetType( ).Name}] Lt(1)='{( ( ITokenStream )Parser.InputStream ).Lt( 1 ).Text}'");
         }
 
         /// <inheritdoc/>

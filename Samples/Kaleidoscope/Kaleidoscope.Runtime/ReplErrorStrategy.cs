@@ -9,11 +9,6 @@ namespace Kaleidoscope.Runtime
     /// <summary>Error handling strategy for REPL scenarios</summary>
     /// <remarks>
     /// This strategy handles creating more meaningful messages on feature predicate failures.
-    /// Additionally, error recovery that results from reaching EOF on an otherwise successful parse
-    /// is translated into a <see cref="ParseCanceledException"/> to prevent any further attempts
-    /// at recovery. This allows for detection of the incomplete statements when used in an interactive
-    /// REPL application. In such a case the incomplete code could be combined with new text from the
-    /// user until it either succeeds or fails due to a syntax error.
     /// </remarks>
     public class ReplErrorStrategy
         : DefaultErrorStrategy

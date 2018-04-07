@@ -39,7 +39,7 @@ namespace Kaleidoscope
                 RegisterNative( );
 
                 // <generatorloop>
-                var parser = new ReplParserStack( LanguageLevel.MutableVariables );
+                var parser = new ParserStack( LanguageLevel.MutableVariables );
                 using( var generator = new CodeGenerator( parser.GlobalState ) )
                 {
                     Console.WriteLine( "Llvm.NET Kaleidoscope Interpreter - {0}", parser.LanguageLevel );

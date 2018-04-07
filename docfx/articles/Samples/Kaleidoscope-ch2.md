@@ -367,7 +367,7 @@ In particular Chapters 3-7 only really differ in the language level support.
 
 [!code-csharp[Program.cs](../../../Samples/Kaleidoscope/Chapter2/Program.cs#generatorloop)]
 
-The ReplParserStack contains the support for parsing the Kaleidoscope language from the REPL loop interactive input.
+The ParserStack contains the support for parsing the Kaleidoscope language from the REPL loop interactive input.
 The stack also maintains the global state of the runtime, which controls the language features enabled, and if user
 defined operators are enabled, contains the operators defined along with their precedence.
 
