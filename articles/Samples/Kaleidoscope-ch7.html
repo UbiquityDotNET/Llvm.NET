@@ -8,7 +8,7 @@
     <title>7. Kaleidoscope: Mutable Variables | Llvm.NET </title>
     <meta name="viewport" content="width=device-width">
     <meta name="title" content="7. Kaleidoscope: Mutable Variables | Llvm.NET ">
-    <meta name="generator" content="docfx 2.33.0.0">
+    <meta name="generator" content="docfx 2.33.2.0">
     
     <link rel="shortcut icon" href="../../favicon.ico">
     <link rel="stylesheet" href="../../styles/docfx.vendor.css">
@@ -429,7 +429,7 @@ from the location so that it is available as a value for the result of the expre
     function.BasicBlocks.Add( continueBlock );
     InstructionBuilder.PositionAtEnd( continueBlock );
     return InstructionBuilder.Load( result )
-                             .RegisterName(&quot;ifresult&quot;);
+                             .RegisterName( &quot;ifresult&quot; );
 }
 </code></pre><h3 id="update-visitforexpression">Update VisitForExpression</h3>
 <p>Next up is to update the for loop handling to use the allocas. The code is almost identical except for the use
@@ -519,7 +519,7 @@ of load/store for the variables and removal of the manually generated PHI nodes.
         InstructionBuilder.Branch( endCondition, loopBlock, afterBlock );
         InstructionBuilder.PositionAtEnd( afterBlock );
 
-        // for expr always returns 0.0 for consistency, there is no &#39;void&#39;
+        // for expression always returns 0.0 for consistency, there is no &#39;void&#39;
         return Context.DoubleType.GetNullValue( );
     }
 }
@@ -586,13 +586,18 @@ registers.</p>
 {
     Module = Context.CreateBitcodeModule( );
     Module.Layout = JIT.TargetMachine.TargetData;
-    FunctionPassManager = new FunctionPassManager( Module );
-    FunctionPassManager.AddPromoteMemoryToRegisterPass( )
-                       .AddInstructionCombiningPass( )
-                       .AddReassociatePass( )
-                       .AddGVNPass( )
-                       .AddCFGSimplificationPass( )
-                       .Initialize( );
+    FunctionPassManager = new FunctionPassManager( Module )
+                              .AddPromoteMemoryToRegisterPass( );
+
+    if( !DisableOptimizations )
+    {
+        FunctionPassManager.AddInstructionCombiningPass( )
+                           .AddReassociatePass( )
+                           .AddGVNPass( )
+                           .AddCFGSimplificationPass( );
+    }
+
+    FunctionPassManager.Initialize( );
 }
 </code></pre><h2 id="new-assignment-operator">New Assignment Operator</h2>
 <p>Building on the existing code generation framework makes adding the new assignment operator. The parser already
@@ -710,7 +715,7 @@ needing to manually deal with PHI nodes or generate SSA form!</p>
             <span class="pull-right">
               <a href="#top">Back to top</a>
             </span>
-            Copyright (C) 2017, Dot NET Foundation<br><strong>Build:</strong> 5.0.1-alpha--ci-BLD.436840127
+            Copyright (C) 2017, Dot NET Foundation<br><strong>Build:</strong> 5.0.1-alpha--ci-BLD.437223788
             
           </div>
         </div>

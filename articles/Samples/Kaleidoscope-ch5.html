@@ -8,7 +8,7 @@
     <title>5. Kaleidoscope: Control Flow | Llvm.NET </title>
     <meta name="viewport" content="width=device-width">
     <meta name="title" content="5. Kaleidoscope: Control Flow | Llvm.NET ">
-    <meta name="generator" content="docfx 2.33.0.0">
+    <meta name="generator" content="docfx 2.33.2.0">
     
     <link rel="shortcut icon" href="../../favicon.ico">
     <link rel="stylesheet" href="../../styles/docfx.vendor.css">
@@ -225,7 +225,7 @@ and the value it produced, so the current block is captured after generation, be
 
     var thenBlock = Context.CreateBasicBlock( &quot;then&quot;, function );
     var elseBlock = Context.CreateBasicBlock( &quot;else&quot; );
-    var phiMergeBlock = Context.CreateBasicBlock( &quot;ifcont&quot; );
+    var continueBlock = Context.CreateBasicBlock( &quot;ifcont&quot; );
     InstructionBuilder.Branch( condBool, thenBlock, elseBlock );
 
     // generate then block
@@ -236,7 +236,7 @@ and the value it produced, so the current block is captured after generation, be
         return null;
     }
 
-    InstructionBuilder.Branch( phiMergeBlock );
+    InstructionBuilder.Branch( continueBlock );
 
     // capture the insert in case generating else adds new blocks
     thenBlock = InstructionBuilder.InsertBlock;
@@ -250,12 +250,12 @@ and the value it produced, so the current block is captured after generation, be
         return null;
     }
 
-    InstructionBuilder.Branch( phiMergeBlock );
+    InstructionBuilder.Branch( continueBlock );
     elseBlock = InstructionBuilder.InsertBlock;
 
-    // generate PHI merge block
-    function.BasicBlocks.Add( phiMergeBlock );
-    InstructionBuilder.PositionAtEnd( phiMergeBlock );
+    // generate continue block
+    function.BasicBlocks.Add( continueBlock );
+    InstructionBuilder.PositionAtEnd( continueBlock );
     var phiNode = InstructionBuilder.PhiNode( function.Context.DoubleType )
                                     .RegisterName( &quot;iftmp&quot; );
 
@@ -442,7 +442,7 @@ the parent, while allowing access to all other variables from other scopes.</p>
             <span class="pull-right">
               <a href="#top">Back to top</a>
             </span>
-            Copyright (C) 2017, Dot NET Foundation<br><strong>Build:</strong> 5.0.1-alpha--ci-BLD.436840127
+            Copyright (C) 2017, Dot NET Foundation<br><strong>Build:</strong> 5.0.1-alpha--ci-BLD.437223788
             
           </div>
         </div>

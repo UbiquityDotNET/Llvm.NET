@@ -8,7 +8,7 @@
     <title>8. Kaleidoscope: Compiling to Object Code | Llvm.NET </title>
     <meta name="viewport" content="width=device-width">
     <meta name="title" content="8. Kaleidoscope: Compiling to Object Code | Llvm.NET ">
-    <meta name="generator" content="docfx 2.33.0.0">
+    <meta name="generator" content="docfx 2.33.2.0">
     
     <link rel="shortcut icon" href="../../favicon.ico">
     <link rel="stylesheet" href="../../styles/docfx.vendor.css">
@@ -147,175 +147,106 @@ focus on just the native target the compiler is running on.</p>
 <p>LLVM uses a &quot;Triple&quot; string to describe the target used for code generation. This takes the form <code>&lt;arch&gt;&lt;sub&gt;-&lt;vendor&gt;-&lt;sys&gt;-&lt;abi&gt;</code>
 (see the description of the <a class="xref" href="../../api/Llvm.NET.Triple.html">Triple</a> type for more details)</p>
 <p>Fortunately, it is normally not required to build such strings directly. </p>
+<h2 id="grammar">Grammar</h2>
+<p>In the preceding chapters the Kaleidoscope implementation provided an interactive JIT based on the classic
+Read Evaluate Print Loop (REPL). So the grammar focused on a top level rule &quot;repl&quot; that processes individual
+expressions one at a time. For native compilation this complicates the process of parsing and processing a
+complete file. To handle these two distinct scenarios the grammar has different rules. For the interactive
+scenario the previously mentioned &quot;repl&quot; rule is used. When parsing a full source file the &quot;fullsrc&quot; rule
+is used.</p>
+<pre><code class="lang-antlr">// Full source parse accepts a series of definitions or prototypes, all top level expressions
+// are generated into a single function called Main()
+fullsrc
+    : repl*;
+</code></pre><p>This rule simply accepts any number of expressions so that a single source file is parsed to a single
+complete parse tree. (This particular point will become even more valuable when generating debug information
+in <a href="Kaleidoscope-ch9.html">Chapter 9</a> as the parse tree nodes contain the source location information based on the input stream).</p>
 <h2 id="code-generation-changes">Code Generation Changes</h2>
 <p>The changes in code generation are fairly straight forward and consist of the following basic steps.</p>
 <ol>
 <li>Remove JIT engine support</li>
 <li>Expose the bit code module generated, so it is available to the &quot;driver&quot;.</li>
 <li>Saving the target machine (since it doesn&#39;t come from the JIT anymore)</li>
+<li>Keep track of all generated top level anonymous expressions</li>
+<li>Once generating from the parse tree is complete generate a main() that includes calls to all the
+previously generated anonymous expressions.</li>
 </ol>
-<p>The changes are shown below in classic &#39;diff&#39; form since each change doesn&#39;t really need a detailed explanation.
-(Nothing even remotely close to &quot;Rocket Science&quot; here. 8^) )</p>
-<pre><code class="lang-diff">diff --git a/Samples/Kaleidoscope/Chapter7/CodeGenerator.cs b/Samples/Kaleidoscope/Chapter8/CodeGenerator.cs
-index 89e9b2ad8..1e7597c78 100644
---- a/Samples/Kaleidoscope/Chapter7/CodeGenerator.cs
-+++ b/Samples/Kaleidoscope/Chapter8/CodeGenerator.cs
-@@ -3,9 +3,7 @@
- // &lt;/copyright&gt;
+<p>Most of these steps are pretty straight forward. The anonymous function handling is a bit distinct.
+Since the language syntax allows anonymous expressions throughout the source file, and they don&#39;t
+actually execute during generation they need to be organized into an executable form. Thus, a new
+list of the generated functions is maintained and after the tree is generated a new main() function
+is created and a call to each anonymous expression is made with a second call to printd() to show
+the results - just like they would appear if typed in an interactive console. A trick used in the
+code generation is to mark each of the anonymous functions as private and always inline. </p>
+<pre><code class="lang-C#">// mark anonymous functions as always-inline and private so they can be inlined and then removed
+if( isAnonymous )
+{
+    retVal.AddAttribute( FunctionAttributeIndex.Function, AttributeKind.AlwaysInline )
+          .Linkage( Linkage.Private );
+}
+else
+{
+    retVal.Linkage( Linkage.External );
+}
+</code></pre><p>These settings are leveraged after generating from the tree to create the main function. A simple
+loop generate a call to each expression and then generates the call to print the results. Once, that
+is completed a <a class="xref" href="../../api/Llvm.NET.Transforms.ModulePassManager.html">ModulePassManager</a> is created to run
+the Always inliner and a global dead code elimination pass. The always inliner will inline the functions
+marked as inline and the dead code elimination pass will eliminate unused internal/private global symbols.
+This has the effect of generating the main function with all top level expressions inlined and the originally
+generated anonymous functions removed. </p>
+<pre><code class="lang-csharp" name="Generate">public Value Generate( Parser parser, IParseTree tree, DiagnosticRepresentations additionalDiagnostics )
+{
+    if( parser.NumberOfSyntaxErrors &gt; 0 )
+    {
+        return null;
+    }
 
- using System;
--using System.Collections.Generic;
- using System.Linq;
--using System.Runtime.InteropServices;
- using Antlr4.Runtime;
- using Antlr4.Runtime.Misc;
- using Antlr4.Runtime.Tree;
-@@ -13,7 +11,6 @@ using Kaleidoscope.Grammar;
- using Kaleidoscope.Runtime;
- using Llvm.NET;
- using Llvm.NET.Instructions;
--using Llvm.NET.JIT;
- using Llvm.NET.Transforms;
- using Llvm.NET.Values;
+    Visit( tree );
+    if( AnonymousFunctions.Count &gt; 0 )
+    {
+        var mainFunction = Module.AddFunction( &quot;main&quot;, Context.GetFunctionType( Context.VoidType ) );
+        var block = mainFunction.AppendBasicBlock( &quot;entry&quot; );
+        var irBuilder = new InstructionBuilder( block );
+        var printdFunc = Module.AddFunction( &quot;printd&quot;, Context.GetFunctionType( Context.DoubleType, Context.DoubleType ) );
+        foreach( var anonFunc in AnonymousFunctions )
+        {
+            var value = irBuilder.Call( anonFunc );
+            irBuilder.Call( printdFunc, value );
+        }
 
-@@ -30,24 +27,24 @@ namespace Kaleidoscope
-         , IKaleidoscopeCodeGenerator&lt;Value&gt;
-     {
-         // &lt;Initialization&gt;
--        public CodeGenerator( DynamicRuntimeState globalState )
-+        public CodeGenerator( DynamicRuntimeState globalState, TargetMachine machine )
-         {
-             RuntimeState = globalState;
-             Context = new Context( );
--            JIT = new KaleidoscopeJIT( );
-+            TargetMachine = machine;
-             InitializeModuleAndPassManager( );
-             InstructionBuilder = new InstructionBuilder( Context );
-             FunctionPrototypes = new PrototypeCollection( );
--            FunctionModuleMap = new Dictionary&lt;string, IJitModuleHandle&gt;( );
-             NamedValues = new ScopeStack&lt;Alloca&gt;( );
-         }
-         // &lt;/Initialization&gt;
+        irBuilder.Return( );
 
-         public bool DisableOptimizations { get; set; }
+        // Use always inline and Dead Code Elimination module passes to inline all of the
+        // anonymous functions. This effectively strips all the calls just generated for main()
+        // and inlines each of the anonymous functions directly into main, dropping the now
+        // unused original anonymous functions all while retaining all of the original source
+        // debug information locations.
+        var mpm = new ModulePassManager( )
+                  .AddAlwaysInlinerPass( )
+                  .AddGlobalDCEPass( );
+        mpm.Run( Module );
+    }
 
-+        public BitcodeModule Module { get; private set; }
-+
-         public void Dispose( )
-         {
--            JIT.Dispose( );
-             Context.Dispose( );
-         }
+    return null;
+}
+</code></pre><p>Most of the rest of the changes are pretty straightforward following the steps listed previously. The larger
+changes are shown here. You can run your favorite diff tool between the two sample folders to see all the little
+changes.</p>
+<h3 id="visittoplevelexpression">VisitTopLevelExpression</h3>
+<p>As previously mentioned when generating the top level expression the resulting function is added to the
+list of anonymous functions to generate a call to it from main().</p>
+<pre><code class="lang-csharp" name="VisitTopLevelExpression">public override Value VisitTopLevelExpression( [NotNull] TopLevelExpressionContext context )
+{
+    var function = GetOrDeclareFunction( new Prototype( $&quot;anon_expr_{AnonNameIndex++}&quot; )
+                                       , isAnonymous: true
+                                       );
 
-@@ -112,23 +109,18 @@ namespace Kaleidoscope
-         {
-             return DefineFunction( ( Function )context.Signature.Accept( this )
-                                  , context.BodyExpression
--                                 ).Function;
-+                                 );
-         }
-         // &lt;/VisitFunctionDefinition&gt;
-
-         // &lt;VisitTopLevelExpression&gt;
-         public override Value VisitTopLevelExpression( [NotNull] TopLevelExpressionContext context )
-         {
--            var proto = new Prototype( $&quot;anon_expr_{AnonNameIndex++}&quot; );
--            var function = GetOrDeclareFunction( proto, isAnonymous: true );
--
--            var (_, jitHandle) = DefineFunction( function, context.expression( ) );
-+            var function = GetOrDeclareFunction( new Prototype( $&quot;anon_expr_{AnonNameIndex++}&quot; )
-+                                               , isAnonymous: true
-+                                               );
-
--            var nativeFunc = JIT.GetDelegateForFunction&lt;AnonExpressionFunc&gt;( proto.Identifier.Name );
--            var retVal = Context.CreateConstant( nativeFunc( ) );
--            FunctionModuleMap.Remove( function.Name );
--            JIT.RemoveModule( jitHandle );
--            return retVal;
-+            return DefineFunction( function, context.expression( ) );
-         }
-         // &lt;/VisitTopLevelExpression&gt;
-
-@@ -452,7 +444,8 @@ namespace Kaleidoscope
-         private void InitializeModuleAndPassManager( )
-         {
-             Module = Context.CreateBitcodeModule( );
--            Module.Layout = JIT.TargetMachine.TargetData;
-+            Module.TargetTriple = TargetMachine.Triple;
-+            Module.Layout = TargetMachine.TargetData;
-             FunctionPassManager = new FunctionPassManager( Module );
-             FunctionPassManager.AddPromoteMemoryToRegisterPass( )
-                                .AddInstructionCombiningPass( )
-@@ -514,25 +507,13 @@ namespace Kaleidoscope
-         // &lt;/GetOrDeclareFunction&gt;
-
-         // &lt;DefineFunction&gt;
--        private (Function Function, IJitModuleHandle JitHandle) DefineFunction( Function function, ExpressionContext body )
-+        private Function DefineFunction( Function function, ExpressionContext body )
-         {
-             if( !function.IsDeclaration )
-             {
-                 throw new CodeGeneratorException( $&quot;Function {function.Name} cannot be redefined in the same module&quot; );
-             }
-
--            // Destroy any previously generated module for this function.
--            // This allows re-definition as the new module will provide the
--            // implementation. This is needed, otherwise both the MCJIT
--            // and OrcJit engines will resolve to the original module, despite
--            // claims to the contrary in the official tutorial text. (Though,
--            // to be fair it may have been true in the original JIT and might
--            // still be true for the interpreter)
--            if( FunctionModuleMap.Remove( function.Name, out IJitModuleHandle handle ) )
--            {
--                JIT.RemoveModule( handle );
--            }
--
-             var basicBlock = function.AppendBasicBlock( &quot;entry&quot; );
-             InstructionBuilder.PositionAtEnd( basicBlock );
-             using( NamedValues.EnterScope( ) )
-@@ -548,7 +529,7 @@ namespace Kaleidoscope
-                 if( funcReturn == null )
-                 {
-                     function.EraseFromParent( );
--                    return (null, default);
-+                    return null;
-                 }
-
-                 InstructionBuilder.Return( funcReturn );
-@@ -560,10 +541,7 @@ namespace Kaleidoscope
-                 FunctionPassManager.Run( function );
-             }
-
--            var jitHandle = JIT.AddModule( Module );
--            FunctionModuleMap.Add( function.Name, jitHandle );
--            InitializeModuleAndPassManager( );
--            return (function, jitHandle);
-+            return function;
-         }
-         // &lt;/DefineFunction&gt;
-
-@@ -585,18 +563,11 @@ namespace Kaleidoscope
-         private readonly DynamicRuntimeState RuntimeState;
-         private static int AnonNameIndex;
-         private readonly Context Context;
--        private BitcodeModule Module;
-         private readonly InstructionBuilder InstructionBuilder;
-         private readonly ScopeStack&lt;Alloca&gt; NamedValues;
--        private readonly KaleidoscopeJIT JIT;
--        private readonly Dictionary&lt;string, IJitModuleHandle&gt; FunctionModuleMap;
-         private FunctionPassManager FunctionPassManager;
-+        private TargetMachine TargetMachine;
-         private readonly PrototypeCollection FunctionPrototypes;
--
--        /// &lt;summary&gt;Delegate type to allow execution of a JIT&#39;d TopLevelExpression&lt;/summary&gt;
--        /// &lt;returns&gt;Result of evaluating the expression&lt;/returns&gt;
--        [UnmanagedFunctionPointer( System.Runtime.InteropServices.CallingConvention.Cdecl )]
--        private delegate double AnonExpressionFunc( );
-         // &lt;/PrivateMembers&gt;
-     }
- }
+    AnonymousFunctions.Add( function );
+    return DefineFunction( function, context.expression( ) );
+}
 </code></pre><h2 id="driver-changes">Driver changes</h2>
-<p>The bulk of the work needed to generate object files is in the &quot;driver&quot; application code. The changes
+<p>To support generating object files the &quot;driver&quot; application code needs some alterations. The changes
 fall into two general categories:</p>
 <ol>
 <li>Command line argument handling</li>
@@ -323,10 +254,10 @@ fall into two general categories:</p>
 </ol>
 <h3 id="adding-command-line-handling">Adding Command Line handling</h3>
 <p>To allow providing a file like a traditional compiler the driver app needs to have some basic
-command line argument handling. (&quot;Basic&quot; in this case means truly rudimentary ::Grin:: )
+command line argument handling. (&quot;Basic&quot; in this case means truly rudimentary <span class="emoji" shortcode="grin">😁</span> )
 Generally this just gets a viable file path to use for the source code.</p>
 <pre><code class="lang-csharp" name="ProcessArgs">// really simple command line handling, just loops through the args
-private static (string SourceFilePath, bool WaitForDebugger, int ExitCode) ProcessArgs( string[ ] args )
+private static (string SourceFilePath, int ExitCode) ProcessArgs( string[ ] args )
 {
     bool waitforDebugger = false;
     string sourceFilePath = string.Empty;
@@ -351,16 +282,16 @@ private static (string SourceFilePath, bool WaitForDebugger, int ExitCode) Proce
     if( string.IsNullOrWhiteSpace( sourceFilePath ) )
     {
         Console.Error.WriteLine( &quot;Missing source file name!&quot; );
-        return (null, false, -1);
+        return (null, -1);
     }
 
     if( !File.Exists( sourceFilePath ) )
     {
         Console.Error.WriteLine( &quot;Source file &#39;{0}&#39; - not found!&quot;, sourceFilePath );
-        return (null, false, -2);
+        return (null, -2);
     }
 
-    return (sourceFilePath, waitforDebugger, 0);
+    return (sourceFilePath, 0);
 }
 </code></pre><h3 id="update-main">Update Main()</h3>
 <p>The real work comes in the Main application driver, though there isn&#39;t a lot of additional code
@@ -369,10 +300,11 @@ here either. The general plan is:</p>
 <li>Process the arguments to get the path to compile</li>
 <li>Open the file for reading</li>
 <li>Create a new target machine from the default triple of the host</li>
-<li>Build the parser loop - specifying the file as the input source (instead of the default console)</li>
-<li>Remove the REPL loop ready state console output handling as compilation isn&#39;t interactive</li>
+<li>Create the parser stack</li>
+<li>Parse the input file</li>
+<li>Generate the IR code from the parse tree</li>
 <li>Once the parsing has completed, verify the module and emit the object file</li>
-<li>For diagnostics use, also emit the LLVM IR textual form</li>
+<li>For diagnostics use, also emit the LLVM IR textual form and assembly files</li>
 </ol>
 <pre><code class="lang-csharp" name="Main">
 /// &lt;summary&gt;C# version of the LLVM Kaleidoscope language tutorial&lt;/summary&gt;
@@ -388,7 +320,7 @@ here either. The general plan is:</p>
 /// &lt;/remarks&gt;
 public static int Main( string[ ] args )
 {
-    (string sourceFilePath, bool waitForDebugger, int exitCode) = ProcessArgs( args );
+    (string sourceFilePath, int exitCode) = ProcessArgs( args );
     if( exitCode != 0 )
     {
         return exitCode;
@@ -396,6 +328,7 @@ public static int Main( string[ ] args )
 
     string objFilePath = Path.ChangeExtension( sourceFilePath, &quot;.o&quot; );
     string irFilePath = Path.ChangeExtension( sourceFilePath, &quot;.ll&quot; );
+    string asmPath = Path.ChangeExtension( sourceFilePath, &quot;.s&quot; );
 
     using( TextReader rdr = File.OpenText( sourceFilePath ) )
     using( InitializeLLVM( ) )
@@ -403,18 +336,16 @@ public static int Main( string[ ] args )
         RegisterNative( );
 
         var machine = new TargetMachine( Triple.HostTriple );
-        var parser = new ReplParserStack( LanguageLevel.MutableVariables );
+        var parser = new ParserStack( LanguageLevel.MutableVariables );
         using( var generator = new CodeGenerator( parser.GlobalState, machine ) )
         {
             Console.WriteLine( &quot;Llvm.NET Kaleidoscope Compiler - {0}&quot;, parser.LanguageLevel );
             Console.WriteLine( &quot;Compiling {0}&quot;, sourceFilePath );
 
-            var replLoop = new ReplLoop&lt;Value&gt;( generator, parser, DiagnosticRepresentations.None, rdr );
-            replLoop.CodeGenerationError += OnGeneratorError;
-
             // time the parse and code generation
             var timer = System.Diagnostics.Stopwatch.StartNew( );
-            replLoop.Run( );
+            var (parseTree, recognizer) = parser.Parse( rdr, DiagnosticRepresentations.DebugTraceParser );
+            generator.Generate( recognizer, parseTree, DiagnosticRepresentations.None );
             if( !generator.Module.Verify( out string errMsg ) )
             {
                 Console.Error.WriteLine( errMsg );
@@ -430,6 +361,8 @@ public static int Main( string[ ] args )
                     Console.Error.WriteLine( msg );
                     return -1;
                 }
+
+                machine.EmitToFile( generator.Module, asmPath, CodeGenFileType.AssemblySource );
                 Console.WriteLine( &quot;CopmilationTiorTime: {0}&quot;, timer.Elapsed );
             }
         }
@@ -438,9 +371,10 @@ public static int Main( string[ ] args )
     return 0;
 }
 </code></pre><h2 id="conclusion">Conclusion</h2>
-<p>That&#39;s it - seriously! Very little change was needed, mostly deleting code. Looking at the changes
-it should be clear that it is possible to support runtime choice between JIT and full native compilation
-instead of deleting the JIT code. (Implementing this feature is &quot;left as an exercise for the reader&quot; ::Grin::)</p>
+<p>That&#39;s it - seriously! Very little change was needed, mostly deleting code and adding the special handling of the
+anonymous expressions. Looking at the changes it should be clear that it is possible to support runtime choice
+between JIT and full native compilation instead of deleting the JIT code. (Implementing this feature is
+&quot;left as an exercise for the reader&quot; <span class="emoji" shortcode="wink">😉</span>)</p>
 </article>
           </div>
           <div class="contribution-panel mobile-hide">
@@ -463,7 +397,7 @@ instead of deleting the JIT code. (Implementing this feature is &quot;left as an
             <span class="pull-right">
               <a href="#top">Back to top</a>
             </span>
-            Copyright (C) 2017, Dot NET Foundation<br><strong>Build:</strong> 5.0.1-alpha--ci-BLD.436840127
+            Copyright (C) 2017, Dot NET Foundation<br><strong>Build:</strong> 5.0.1-alpha--ci-BLD.437223788
             
           </div>
         </div>

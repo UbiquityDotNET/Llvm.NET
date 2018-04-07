@@ -8,7 +8,7 @@
     <title>Kaleidoscope Parse Tree Visitors | Llvm.NET </title>
     <meta name="viewport" content="width=device-width">
     <meta name="title" content="Kaleidoscope Parse Tree Visitors | Llvm.NET ">
-    <meta name="generator" content="docfx 2.33.0.0">
+    <meta name="generator" content="docfx 2.33.2.0">
     
     <link rel="shortcut icon" href="../../favicon.ico">
     <link rel="stylesheet" href="../../styles/docfx.vendor.css">
@@ -145,10 +145,11 @@ for generating code in these examples. All of the CodeGenerator classes derive f
 <p>There are only a few top level rules in the grammar to consider (although each has many sub rules).</p>
 <pre><code class="lang-antlr" name="repl">repl
     : DEF prototype expression[0] # FunctionDefinition
-    | EXTERN prototype            # ExternalDeclaration
+    | EXTERN prototype           # ExternalDeclaration
     | expression[0]               # TopLevelExpression
-    | SEMICOLON                   # TopLevelSemicolon
+    | SEMICOLON                  # TopLevelSemicolon
     ;
+
 </code></pre><p>The parse tree consist of a tree of nodes generated for each rule in the grammar. The rule classes are generated at
 build time when the antlr grammar file is parsed. The C# target for ANTLR4 will generate the rule classes with the
 partial keyword, allowing the application code to add application specific support to the rule classes, and thus to
@@ -180,7 +181,7 @@ implementation but they are all implementations of a parse tree visitor.</p>
             <span class="pull-right">
               <a href="#top">Back to top</a>
             </span>
-            Copyright (C) 2017, Dot NET Foundation<br><strong>Build:</strong> 5.0.1-alpha--ci-BLD.436840127
+            Copyright (C) 2017, Dot NET Foundation<br><strong>Build:</strong> 5.0.1-alpha--ci-BLD.437223788
             
           </div>
         </div>
