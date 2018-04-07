@@ -620,7 +620,7 @@ namespace Llvm.NET
             string osArch = Environment.Is64BitProcess ? "Win-x64" : "win-x86";
             string runTimePath = Path.Combine( "runtimes", osArch, "native" );
 
-            // .NET core apps will actually run with references directly from the nuget install
+            // .NET core apps will actually run with references directly from the NuGet install
             // but full framework apps (including unit tests will have CopyLocal applied)
             paths.Add( Path.Combine( packageRoot, runTimePath ) );
             paths.Add( Path.Combine( thisModulePath, runTimePath ) );

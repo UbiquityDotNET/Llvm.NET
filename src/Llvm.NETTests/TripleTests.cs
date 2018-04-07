@@ -113,7 +113,7 @@ namespace Llvm.NET.Tests
             var values = new Dictionary<Triple.SubArchType, string>
                 {
                     { Triple.SubArchType.NoSubArch,               string.Empty },
-                    { Triple.SubArchType.ARMSubArch_v8_3a,        "v8.3a"},
+                    { Triple.SubArchType.ARMSubArch_v8_3a,        "v8.3a" },
                     { Triple.SubArchType.ARMSubArch_v8_2a,        "v8.2a" },
                     { Triple.SubArchType.ARMSubArch_v8_1a,        "v8.1a" },
                     { Triple.SubArchType.ARMSubArch_v8,           "v8" },

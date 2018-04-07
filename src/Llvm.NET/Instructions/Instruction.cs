@@ -218,7 +218,7 @@ namespace Llvm.NET.Instructions
 
         /* Cast Operators */
 
-        /// <summary>trunct .. to instruction</summary>
+        /// <summary>trunc .. to instruction</summary>
         /// <seealso cref="Instructions.Trunc"/>
         /// <seealso href="xref:llvm_langref#trunc-to-instruction">LLVM trunc .. to instruction</seealso>
         /// <seealso href="xref:llvm_langref#conversion-operations">LLVM Conversion Operations</seealso>

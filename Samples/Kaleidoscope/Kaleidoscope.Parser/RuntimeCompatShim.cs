@@ -8,7 +8,7 @@ using System.Collections.ObjectModel;
 
 namespace Kaleidoscope
 {
-    // compat shims for consistency - so much for the "standard" part of .NET Standard... [Sigh...]
+    // compatibility shims for consistency - so much for the "standard" part of .NET Standard... [Sigh...]
     public static class RuntimeCompatShim
     {
         public static bool Remove<TKey, TValue>( this IDictionary<TKey,TValue> dictionary, TKey key, out TValue value )

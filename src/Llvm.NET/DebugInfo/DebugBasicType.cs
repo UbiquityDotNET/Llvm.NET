@@ -62,27 +62,5 @@ namespace Llvm.NET.DebugInfo
                                            , encoding
                                            );
         }
-
-        // Fluent style argument validators to verify arguments before passing to base class.
-        // Only primitive types are supported.
-        private static ITypeRef ValidateType( ITypeRef typeRef )
-        {
-            typeRef.ValidateNotNull( nameof( typeRef ) );
-
-            switch( typeRef.Kind )
-            {
-            case TypeKind.Label:
-            case TypeKind.Function:
-            case TypeKind.Struct:
-            case TypeKind.Array:
-            case TypeKind.Pointer:
-            case TypeKind.Vector:
-            case TypeKind.Metadata:
-                throw new ArgumentException( "Expected a primitive type", nameof( typeRef ) );
-
-            default:
-                return typeRef;
-            }
-        }
     }
 }

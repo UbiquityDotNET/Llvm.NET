@@ -154,7 +154,7 @@ namespace TestDebugInfo
                     }
                     else
                     {
-                        // test optimization works, but don't save it as that makes it harder to do a diff with official clang builds
+                        // test optimization works, but don't save it as that makes it harder to do a compare with official clang builds
                         {// force a GC to verify callback delegate for diagnostics is still valid, this is for test only and wouldn't
                          // normally be done in production code.
                             GC.Collect( GC.MaxGeneration );
@@ -398,7 +398,7 @@ namespace TestDebugInfo
                        .SetDebugLocation( 26, 1, doCopyFunc.DISubProgram );
         }
 
-        // obviously this is not clang but using an identical name helps in diff with actual clang output
+        // obviously this is not clang but using an identical name helps in comparisons with actual clang output
         private const string VersionIdentString = "clang version 5.0.0 (tags/RELEASE_500/rc4)";
 
         private static ITargetDependentDetails TargetDetails;

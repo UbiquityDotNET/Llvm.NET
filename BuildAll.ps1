@@ -47,7 +47,7 @@ try
 
     if( $env:CI -and !(Test-Path ".\BuildOutput\docs\.git" -PathType Container))
     {
-        Write-Information "Cloning Docs repo"
+        Write-Information "Cloning Docs repository"
         pushd BuildOutput -ErrorAction Stop
         try
         {

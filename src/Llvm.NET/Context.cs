@@ -438,7 +438,7 @@ namespace Llvm.NET
             element0.ValidateNotNull( nameof( element0 ) );
             elements.ValidateNotNull( nameof( elements ) );
 
-            LLVMTypeRef[ ] llvmArgs = new LLVMTypeRef[ elements.Length + 1 ];
+            var llvmArgs = new LLVMTypeRef[ elements.Length + 1 ];
             llvmArgs[ 0 ] = element0.GetTypeRef( );
             for( int i = 1; i < llvmArgs.Length; ++i )
             {
@@ -603,7 +603,7 @@ namespace Llvm.NET
         /// <summary>Creates a new <see cref="ConstantInt"/> with a bit length of 64</summary>
         /// <param name="bitWidth">Bit width of the integer</param>
         /// <param name="constValue">Value for the constant</param>
-        /// <param name="signExtend">flag to indicate if the const value should be sign extended</param>
+        /// <param name="signExtend">flag to indicate if the constant value should be sign extended</param>
         /// <returns><see cref="ConstantInt"/> representing the value</returns>
         public Constant CreateConstant( uint bitWidth, UInt64 constValue, bool signExtend )
         {
@@ -862,7 +862,7 @@ namespace Llvm.NET
         /// <param name="disposing">Flag to indicate if this object is being disposed</param>
         protected override void InternalDispose( bool disposing )
         {
-            // disconnect all modules as some may be sharedmodules shared to a JIT
+            // disconnect all modules as some may be shared modules shared to a JIT
             foreach( var module in Modules )
             {
                 module.Dispose( );
