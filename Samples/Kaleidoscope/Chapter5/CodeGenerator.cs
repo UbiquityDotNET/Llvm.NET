@@ -252,7 +252,7 @@ namespace Kaleidoscope
             {
                 NamedValues[ varName ] = variable;
 
-                // Emit the body of the loop.  This, like any other expr, can change the
+                // Emit the body of the loop.  This, like any other expression, can change the
                 // current BB.  Note that we ignore the value computed by the body, but don't
                 // allow an error.
                 if( context.BodyExpression.Accept( this ) == null )
@@ -296,7 +296,7 @@ namespace Kaleidoscope
                 // Add a new entry to the PHI node for the back-edge.
                 variable.AddIncoming( nextVar, loopEndBlock );
 
-                // for expr always returns 0.0 for consistency, there is no 'void'
+                // for expression always returns 0.0 for consistency, there is no 'void'
                 return Context.DoubleType.GetNullValue( );
             }
         }

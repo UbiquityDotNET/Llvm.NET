@@ -58,7 +58,7 @@ namespace Llvm.NET
             /// <summary>Synopsis ARC</summary>
             Arc = LLVMTripleArchType.arc,
 
-            /// <summary>AVR: Atmel AVR microcontroller</summary>
+            /// <summary>AVR: Atmel AVR micro-controller</summary>
             Avr = LLVMTripleArchType.avr,
 
             /// <summary>eBPF or extended BPF or 64-bit BPF (little endian)</summary>

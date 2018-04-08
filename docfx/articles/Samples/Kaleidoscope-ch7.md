@@ -13,7 +13,7 @@ efficient, and more importantly, well tested, support for converting to SSA form
 might be a bit surprising).
 
 ## Mutable Variables in LLVM
-### Mutable Varibales vs. SSA, What's the big deal?
+### Mutable Variables vs. SSA, What's the big deal?
 Consider the following simple "C" code:
 ```C
 int G, H;
