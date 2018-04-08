@@ -88,6 +88,7 @@ namespace Kaleidoscope
         // </Main>
 
         // <ErrorHandling>
+        [SuppressMessage( "Redundancies in Symbol Declarations", "RECS0154:Parameter is never used", Justification = "Required delegate signature" )]
         private static void OnGeneratorError( object sender, CodeGenerationExceptionArgs e )
         {
             var color = Console.ForegroundColor;

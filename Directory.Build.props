@@ -50,6 +50,9 @@
         <IsReleaseBuild Condition="'$(IsReleaseBuild)'==''">false</IsReleaseBuild>
         <BuildVersionXml>$(MSBuildThisFileDirectory)BuildVersion.xml</BuildVersionXml>
         <BuildTimeStamp Condition="'$(BuildTimeStamp)'=='' AND '$(APPVEYOR_REPO_COMMIT_TIMESTAMP)'!=''">$(APPVEYOR_REPO_COMMIT_TIMESTAMP)</BuildTimeStamp>
+        <LlvmVersionMajor Condition="'$(LlvmVersionMajor)'==''">6</LlvmVersionMajor>
+        <LlvmVersionMinor Condition="'$(LlvmVersionMinor)'==''">0</LlvmVersionMinor>
+        <LlvmVersionPatch Condition="'$(LlvmVersionPatch)'==''">0</LlvmVersionPatch>
     </PropertyGroup>
     <Choose>
         <!-- Apply standard analyzers and rule sets for all C# projects -->

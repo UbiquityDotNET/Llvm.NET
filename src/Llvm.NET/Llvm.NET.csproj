@@ -1,5 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
-    <PropertyGroup>
+
+  <PropertyGroup>
         <TargetFrameworks>net47;netstandard2.0</TargetFrameworks>
         <RuntimeIdentifiers>win-x64</RuntimeIdentifiers>
         <DebugType>portable</DebugType>
@@ -16,11 +17,6 @@
         <LangVersion>7.2</LangVersion>
     </PropertyGroup>
     <ItemGroup>
-      <Compile Remove="obj\**" />
-      <EmbeddedResource Remove="obj\**" />
-      <None Remove="obj\**" />
-    </ItemGroup>
-    <ItemGroup>
         <Content Include="NugetPkg\build\Llvm.NET.props" PackagePath="build" />
     </ItemGroup>
     <ItemGroup>
@@ -33,11 +29,10 @@
         <PackageReference Include="Ubiquity.ArgValidators" Version="0.3.0-alpha--ci-REL.19A2218B" />
     </ItemGroup>
     <ItemGroup>
-      <ProjectReference Include="..\LibLLVM\LibLLVM.vcxproj">
-        <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
-      </ProjectReference>
+      <ProjectReference Include="..\LibLLVM.NET\LibLLVM.NET.csproj" />
     </ItemGroup>
-    <!--
+
+  <!--
     Version numbers are computed at build time after any declarative properties are evaluated
     so this is needed to update the NuSpec properties with the dynamically generated values
     NOTE: This can't use NuspecProperties as that is only applicable when using a NuSpec file.

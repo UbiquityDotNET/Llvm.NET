@@ -27,9 +27,6 @@
     <AdditionalDependencies>@(AllLlvmLibs);$(AdditionalDependencies)</AdditionalDependencies>
     <GenerateVersionInfoHeader>true</GenerateVersionInfoHeader>
     <WindowsTargetPlatformVersion>10.0.16299.0</WindowsTargetPlatformVersion>
-    <NuSpecFile>NuGetPkg\LibLLVM.NET.nuspec</NuSpecFile>
-    <NuSpecProperties>configuration=$(Configuration);llvmversion=$(LLVM_VERSION);version=$(PackageVersion);buildbinoutput=$(BaseOutputPath)</NuSpecProperties>
-    <NoPackageAnalysis>true</NoPackageAnalysis>
   </PropertyGroup>
   <Import Project="..\..\BuildOutput\packages\PdbGit.3.0.41\build\PdbGit.props" Condition="Exists('..\..\BuildOutput\packages\PdbGit.3.0.41\build\PdbGit.props')" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
@@ -104,9 +101,6 @@
   <ItemGroup>
     <None Include="EXPORTS.DEF" />
     <None Include="LlvmApplication.props" />
-    <None Include="NugetPkg\build\LibLlvm.NET.props" />
-    <None Include="NugetPkg\buildMultiTargeting\LibLlvm.NET.props" />
-    <None Include="NugetPkg\LibLLVM.NET.nuspec" />
     <None Include="packages.config">
       <SubType>Designer</SubType>
     </None>
@@ -152,6 +146,7 @@
     <PropertyGroup>
       <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
     </PropertyGroup>
+    <Message Importance="High" Text="PlatformConfiguration: $(Platform)|$(Configuration)" />
     <Error Condition="!Exists('..\..\BuildOutput\packages\PdbGit.3.0.41\build\PdbGit.props')" Text="$([System.String]::Format('$(ErrorText)', '..\..\BuildOutput\packages\PdbGit.3.0.41\build\PdbGit.props'))" />
     <Error Condition="!Exists('..\..\BuildOutput\packages\PdbGit.3.0.41\build\PdbGit.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\BuildOutput\packages\PdbGit.3.0.41\build\PdbGit.targets'))" />
     <Error Condition="!Exists('..\..\BuildOutput\packages\CSemVer.Build.Tasks.1.0.2-beta--ci-BLD.427428397\build\CSemVer.Build.Tasks.props')" Text="$([System.String]::Format('$(ErrorText)', '..\..\BuildOutput\packages\CSemVer.Build.Tasks.1.0.2-beta--ci-BLD.427428397\build\CSemVer.Build.Tasks.props'))" />

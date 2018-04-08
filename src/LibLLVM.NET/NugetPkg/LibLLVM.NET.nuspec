@@ -15,7 +15,7 @@
         <file src="build\LibLLVM.NET.props" target="build\LibLLVM.NET.props" />
         <file src="buildMultiTargeting\LibLLVM.NET.props" target="buildMultiTargeting\LibLLVM.NET.props" />
 
-        <file src="$buildbinoutput$$configuration$\x64\LibLLVM.pdb" target="runtimes\win-x64\native" />
-        <file src="$buildbinoutput$$configuration$\x64\LibLLVM.dll" target="runtimes\win-x64\native" />
+        <file src="$LibLLVMbinoutput$$configuration$\x64\LibLLVM.pdb" target="runtimes\win-x64\native" />
+        <file src="$LibLLVMbinoutput$$configuration$\x64\LibLLVM.dll" target="runtimes\win-x64\native" />
     </files>
 </package>

@@ -140,8 +140,8 @@ update the runtime table accordingly.
 
 [!code-csharp[UserOperatorListener](../../../Samples/Kaleidoscope/Kaleidoscope.Runtime/KaleidoscopeUserOperatorListener.cs)]
 
-With the use of the listener the dynamic precedence is contained in the parsing allowing the generator and later stages to remain blissfully ignorant
-of the issue of precedence. Operator definitions are treated as function definitions.
+With the use of the listener the dynamic precedence is contained in the parser which allows the generator and later stages to remain blissfully ignorant
+of the issue of precedence. In the generator operator definitions are simply treated as function definitions with special naming.
 
 [!code-csharp[VisitUserOperators](../../../Samples/Kaleidoscope/Chapter6/CodeGenerator.cs#VisitUserOperators)]
 
@@ -155,7 +155,7 @@ That completes the support for user defined operators.
 The following example is a complete program in Kaleidoscope that will generate a textual representation
 of the classic Mandelbrot Set using all of the features of the language.
 
-```Kaleidoscope
+```kaleidoscope
 def unary!(v)
   if v then
     0

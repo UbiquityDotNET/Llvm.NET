@@ -172,7 +172,7 @@ function Invoke-msbuild([string]$project, [hashtable]$properties, [string[]]$tar
     $oldPath = $env:Path
     try
     {
-        $msbuildArgs = @($project, "/m", "/nr:false", "/t:$($targets -join ';')") + $loggerArgs + $additionalArgs
+        $msbuildArgs = @($project, "/t:$($targets -join ';')") + $loggerArgs + $additionalArgs
         if( $properties )
         {
             $msbuildArgs += @( "/p:$(ConvertTo-PropertyList $properties)" ) 
