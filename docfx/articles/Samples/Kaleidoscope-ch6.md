@@ -11,7 +11,7 @@ begging really, for a solution. The challenge to come up with a good solution wa
 User defined operators in Kaleidoscope are a bit unique. Unlike C++ and other similar languages the precedence of the user defined operators are not fixed. Though,
 the built-in operators all use a fixed precedence. That poses some interesting challenges for a parser to dynamically adapt to the state of the language runtime
 so that it can correctly evaluate the operator expressions. Making that work while using ANTLR requires looking under the hood to how ANTLR4 ordinarily handles
-precedence. A full treatise on the subject is outside the scope of this tutorial, but the [ANTLR Github site](https://github.com/antlr/antlr4/blob/master/doc/left-recursion.md)
+precedence. A full treatise on the subject is outside the scope of this tutorial, but the [ANTLR GitHub site](https://github.com/antlr/antlr4/blob/master/doc/left-recursion.md)
 has a good description of the details of the precedence climbing approach used in ANTLR. The general idea is that the expression rule takes an additional precedence
 argument and the operator expressions include a semantic predicate that tests the current precedence level. If the current level is less than or equal to the current
 level then that operator rule expression is allowed to match the input. Otherwise, the rule is skipped. Usually this is all hidden by the implicit support for
@@ -126,18 +126,28 @@ internal int GetNextPrecedence( int tokenType )
 }
 ```
 
-This provides the core ability for looking up and handling precedence. Though as shown so far it is a rather convoluted form of what ANTLR4 gives
-us for free. The real point of this runtime state is the ability of the application to add or remove user operators. (The built-in operators are
-not removable) By adding operators to the runtime state the lookup process will include them during parsing. Thus, whenever visiting an operator
-definition it is generated as a normal function with a specialized name and the operator and precedence are added to the runtime state. Any future
-use of the operator in an expression will detect the correct precedence and the code generation treats it as a function call with the appropriate
+This provides the core ability for looking up and handling precedence. Though, as shown so far, it is just a rather convoluted form of what
+ANTLR4 gives us for free. The real point of this runtime state is the ability of the language to dynamically add user operators. By adding
+operators to the runtime state the lookup process will include them during parsing. Thus, whenever visiting an operator definition it is
+generated as a normal function with a specialized name and the operator and precedence are added to the runtime state. Any future use of
+the operator in an expression will detect the correct precedence and the code generation treats it as a function call with the appropriate
 left and right hand argument values.
 
-[!code-csharp[Main](../../../Samples/Kaleidoscope/Chapter6/CodeGenerator.cs#VisitUserOperators)]
+Actually adding the operators to the table is handled in the parsing process itself using a feature of the ANTLR generated parser called a
+"Parse Listener". A parse listener is attached to the parser and effectively monitors the entire parsing process. For the user operators the
+listener will listen for the specific case of a complete function definition that defines a user operator. When it detects such a case it will
+update the runtime table accordingly.
+
+[!code-csharp[UserOperatorListener](../../../Samples/Kaleidoscope/Kaleidoscope.Runtime/KaleidoscopeUserOperatorListener.cs)]
+
+With the use of the listener the dynamic precedence is contained in the parsing allowing the generator and later stages to remain blissfully ignorant
+of the issue of precedence. Operator definitions are treated as function definitions.
+
+[!code-csharp[VisitUserOperators](../../../Samples/Kaleidoscope/Chapter6/CodeGenerator.cs#VisitUserOperators)]
 
 Finally, the default case for EmitBinaryOperator() is updated to actually emit a call to the binary operator function generated.
 
-[!code-csharp[Main](../../../Samples/Kaleidoscope/Chapter6/CodeGenerator.cs#EmitUserOperator)]
+[!code-csharp[EmitUserOperator](../../../Samples/Kaleidoscope/Chapter6/CodeGenerator.cs#EmitUserOperator)]
 
 That completes the support for user defined operators.
 

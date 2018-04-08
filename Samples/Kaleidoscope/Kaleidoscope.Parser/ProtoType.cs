@@ -47,6 +47,7 @@ namespace Kaleidoscope
         public Prototype( FunctionPrototypeContext ctx )
             : this( new Identifier( ctx.Name, ctx.GetSourceSpan( ) ), ctx.Parameters.Select( i => new Identifier( i.Name, i.Span ) ) )
         {
+            IsExtern = ctx.parent is ExternalDeclarationContext;
         }
 
         /// <summary>Initializes a new instance of the <see cref="Prototype"/> class.</summary>
@@ -64,6 +65,8 @@ namespace Kaleidoscope
             : this( new Identifier( linkageName, ctx.GetSourceSpan( ) ), ctx.Parameters.Select( i => new Identifier( i.Name, i.Span ) ) )
         {
         }
+
+        public bool IsExtern { get; }
 
         public Identifier Identifier { get; }
 

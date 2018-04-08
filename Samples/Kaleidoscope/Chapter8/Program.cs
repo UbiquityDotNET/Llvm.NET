@@ -8,7 +8,6 @@ using System.IO;
 using Kaleidoscope.Grammar;
 using Kaleidoscope.Runtime;
 using Llvm.NET;
-using Llvm.NET.Values;
 
 using static Kaleidoscope.Runtime.Utilities;
 using static Llvm.NET.StaticState;
@@ -36,7 +35,7 @@ namespace Kaleidoscope
         /// </remarks>
         public static int Main( string[ ] args )
         {
-            (string sourceFilePath, bool waitForDebugger, int exitCode) = ProcessArgs( args );
+            (string sourceFilePath, int exitCode) = ProcessArgs( args );
             if( exitCode != 0 )
             {
                 return exitCode;
@@ -44,6 +43,7 @@ namespace Kaleidoscope
 
             string objFilePath = Path.ChangeExtension( sourceFilePath, ".o" );
             string irFilePath = Path.ChangeExtension( sourceFilePath, ".ll" );
+            string asmPath = Path.ChangeExtension( sourceFilePath, ".s" );
 
             using( TextReader rdr = File.OpenText( sourceFilePath ) )
             using( InitializeLLVM( ) )
@@ -51,18 +51,16 @@ namespace Kaleidoscope
                 RegisterNative( );
 
                 var machine = new TargetMachine( Triple.HostTriple );
-                var parser = new ReplParserStack( LanguageLevel.MutableVariables );
+                var parser = new ParserStack( LanguageLevel.MutableVariables );
                 using( var generator = new CodeGenerator( parser.GlobalState, machine ) )
                 {
                     Console.WriteLine( "Llvm.NET Kaleidoscope Compiler - {0}", parser.LanguageLevel );
                     Console.WriteLine( "Compiling {0}", sourceFilePath );
 
-                    var replLoop = new ReplLoop<Value>( generator, parser, DiagnosticRepresentations.None, rdr );
-                    replLoop.CodeGenerationError += OnGeneratorError;
-
                     // time the parse and code generation
                     var timer = System.Diagnostics.Stopwatch.StartNew( );
-                    replLoop.Run( );
+                    var (parseTree, recognizer) = parser.Parse( rdr, DiagnosticRepresentations.DebugTraceParser );
+                    generator.Generate( recognizer, parseTree, DiagnosticRepresentations.None );
                     if( !generator.Module.Verify( out string errMsg ) )
                     {
                         Console.Error.WriteLine( errMsg );
@@ -78,6 +76,8 @@ namespace Kaleidoscope
                             Console.Error.WriteLine( msg );
                             return -1;
                         }
+
+                        machine.EmitToFile( generator.Module, asmPath, CodeGenFileType.AssemblySource );
                         Console.WriteLine( "CopmilationTiorTime: {0}", timer.Elapsed );
                     }
                 }
@@ -104,8 +104,8 @@ namespace Kaleidoscope
         // </ErrorHandling>
 
         // <ProcessArgs>
-        // really simple command line handling, just loops through the args
-        private static (string SourceFilePath, bool WaitForDebugger, int ExitCode) ProcessArgs( string[ ] args )
+        // really simple command line handling, just loops through the arguments
+        private static (string SourceFilePath, int ExitCode) ProcessArgs( string[ ] args )
         {
             bool waitforDebugger = false;
             string sourceFilePath = string.Empty;
@@ -130,16 +130,16 @@ namespace Kaleidoscope
             if( string.IsNullOrWhiteSpace( sourceFilePath ) )
             {
                 Console.Error.WriteLine( "Missing source file name!" );
-                return (null, false, -1);
+                return (null, -1);
             }
 
             if( !File.Exists( sourceFilePath ) )
             {
                 Console.Error.WriteLine( "Source file '{0}' - not found!", sourceFilePath );
-                return (null, false, -2);
+                return (null, -2);
             }
 
-            return (sourceFilePath, waitforDebugger, 0);
+            return (sourceFilePath, 0);
         }
         // </ProcessArgs>
     }

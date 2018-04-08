@@ -10,30 +10,36 @@ using Kaleidoscope.Grammar;
 
 namespace Kaleidoscope.Runtime
 {
+    public enum ParseMode
+    {
+        ReplLoop,
+        FullSource,
+    }
+
     /// <summary>Combined Lexer and Parser that can support REPL usage</summary>
-    public class ReplParserStack
+    public class ParserStack
         : IKaleidoscopeParser
     {
-        /// <summary>Initializes a new instance of the <see cref="ReplParserStack"/> class configured for the specified language level</summary>
+        /// <summary>Initializes a new instance of the <see cref="ParserStack"/> class configured for the specified language level</summary>
         /// <param name="level"><see cref="LanguageLevel"/> for the parser</param>
-        public ReplParserStack( LanguageLevel level )
+        public ParserStack( LanguageLevel level )
             : this( level, new FormattedConsoleErrorListener( ) )
         {
         }
 
-        /// <summary>Initializes a new instance of the <see cref="ReplParserStack"/> class.</summary>
+        /// <summary>Initializes a new instance of the <see cref="ParserStack"/> class.</summary>
         /// <param name="level"><see cref="LanguageLevel"/> for the parser</param>
         /// <param name="listener">Combined error listener for lexer and parser errors</param>
-        public ReplParserStack( LanguageLevel level, IUnifiedErrorListener listener )
+        public ParserStack( LanguageLevel level, IUnifiedErrorListener listener )
             : this( level, listener, listener)
         {
         }
 
-        /// <summary>Initializes a new instance of the <see cref="ReplParserStack"/> class.</summary>
+        /// <summary>Initializes a new instance of the <see cref="ParserStack"/> class.</summary>
         /// <param name="level"><see cref="LanguageLevel"/> for the parser</param>
         /// <param name="lexErrorListener">Error listener for Lexer errors</param>
         /// <param name="parseErrorListener">Error listener for parer errors</param>
-        public ReplParserStack( LanguageLevel level
+        public ParserStack( LanguageLevel level
                               , IAntlrErrorListener<int> lexErrorListener
                               , IAntlrErrorListener<IToken> parseErrorListener
                               )
@@ -57,16 +63,16 @@ namespace Kaleidoscope.Runtime
         /// <inheritdoc/>
         public (IParseTree parseTree, Parser recognizer) Parse( string txt, DiagnosticRepresentations aditionalDiagnostics )
         {
-            return Parse( new AntlrInputStream( txt ), aditionalDiagnostics );
+            return Parse( new AntlrInputStream( txt ), aditionalDiagnostics, ParseMode.ReplLoop );
         }
 
         /// <inheritdoc/>
         public (IParseTree parseTree, Parser recognizer) Parse( TextReader reader, DiagnosticRepresentations aditionalDiagnostics )
         {
-            return Parse( new AntlrInputStream( reader ), aditionalDiagnostics );
+            return Parse( new AntlrInputStream( reader ), aditionalDiagnostics, ParseMode.FullSource );
         }
 
-        private (IParseTree parseTree, Parser recognizer) Parse( AntlrInputStream inputStream, DiagnosticRepresentations aditionalDiagnostics )
+        private (IParseTree parseTree, Parser recognizer) Parse( AntlrInputStream inputStream, DiagnosticRepresentations aditionalDiagnostics, ParseMode mode )
         {
             try
             {
@@ -94,13 +100,18 @@ namespace Kaleidoscope.Runtime
                     Parser.AddParseListener( new DebugTraceListener( Parser ) );
                 }
 
+                if( Parser.FeatureUserOperators )
+                {
+                    Parser.AddParseListener( new KaleidoscopeUserOperatorListener( GlobalState ) );
+                }
+
                 if( ParseErrorListener != null )
                 {
                     Parser.RemoveErrorListeners( );
                     Parser.AddErrorListener( ParseErrorListener );
                 }
 
-                var parseTree = Parser.repl( );
+                var parseTree = mode == ParseMode.ReplLoop ? (IParseTree)Parser.repl( ) : Parser.fullsrc();
 
                 if( aditionalDiagnostics.HasFlag( DiagnosticRepresentations.Xml ) )
                 {

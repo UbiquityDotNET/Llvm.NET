@@ -71,8 +71,8 @@ namespace Llvm.NET.Values
         LinkerPrivateWeak = LLVMLinkage.LLVMLinkerPrivateWeakLinkage /*< Like LinkerPrivate, but is weak. */
     }
 
-    // TODO: auto enforce default visibilty in Linkage setter(s)
-    // TODO: verify default visbility in globalvalue factory methods
+    // TODO: auto enforce default visibility in Linkage setter(s)
+    // TODO: verify default viability in global value factory methods
 
     /// <summary>Enumeration for the visibility of a global value</summary>
     /// <remarks>

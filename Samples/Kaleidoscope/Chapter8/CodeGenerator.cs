@@ -3,6 +3,7 @@
 // </copyright>
 
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using Antlr4.Runtime;
 using Antlr4.Runtime.Misc;
@@ -27,19 +28,19 @@ namespace Kaleidoscope
         , IKaleidoscopeCodeGenerator<Value>
     {
         // <Initialization>
-        public CodeGenerator( DynamicRuntimeState globalState, TargetMachine machine )
+        public CodeGenerator( DynamicRuntimeState globalState, TargetMachine machine, bool disableOptimization = false )
         {
             RuntimeState = globalState;
             Context = new Context( );
             TargetMachine = machine;
+            DisableOptimizations = disableOptimization;
             InitializeModuleAndPassManager( );
             InstructionBuilder = new InstructionBuilder( Context );
             FunctionPrototypes = new PrototypeCollection( );
             NamedValues = new ScopeStack<Alloca>( );
+            AnonymousFunctions = new List<Function>( );
         }
         // </Initialization>
-
-        public bool DisableOptimizations { get; set; }
 
         public BitcodeModule Module { get; private set; }
 
@@ -48,6 +49,7 @@ namespace Kaleidoscope
             Context.Dispose( );
         }
 
+        // <Generate>
         public Value Generate( Parser parser, IParseTree tree, DiagnosticRepresentations additionalDiagnostics )
         {
             if( parser.NumberOfSyntaxErrors > 0 )
@@ -55,18 +57,47 @@ namespace Kaleidoscope
                 return null;
             }
 
-            return Visit( tree );
+            Visit( tree );
+            if( AnonymousFunctions.Count > 0 )
+            {
+                var mainFunction = Module.AddFunction( "main", Context.GetFunctionType( Context.VoidType ) );
+                var block = mainFunction.AppendBasicBlock( "entry" );
+                var irBuilder = new InstructionBuilder( block );
+                var printdFunc = Module.AddFunction( "printd", Context.GetFunctionType( Context.DoubleType, Context.DoubleType ) );
+                foreach( var anonFunc in AnonymousFunctions )
+                {
+                    var value = irBuilder.Call( anonFunc );
+                    irBuilder.Call( printdFunc, value );
+                }
+
+                irBuilder.Return( );
+
+                // Use always inline and Dead Code Elimination module passes to inline all of the
+                // anonymous functions. This effectively strips all the calls just generated for main()
+                // and inlines each of the anonymous functions directly into main, dropping the now
+                // unused original anonymous functions all while retaining all of the original source
+                // debug information locations.
+                var mpm = new ModulePassManager( )
+                          .AddAlwaysInlinerPass( )
+                          .AddGlobalDCEPass( );
+                mpm.Run( Module );
+            }
+
+            return null;
         }
+        // </Generate>
 
         public override Value VisitParenExpression( [NotNull] ParenExpressionContext context )
         {
             return context.Expression.Accept( this );
         }
 
+        // <VisitConstExpression>
         public override Value VisitConstExpression( [NotNull] ConstExpressionContext context )
         {
             return Context.CreateConstant( context.Value );
         }
+        // </VisitConstExpression>
 
         // <VisitVariableExpression>
         public override Value VisitVariableExpression( [NotNull] VariableExpressionContext context )
@@ -94,6 +125,7 @@ namespace Kaleidoscope
             return InstructionBuilder.Call( function, args ).RegisterName( "calltmp" );
         }
 
+        // <FunctionDeclarations>
         public override Value VisitExternalDeclaration( [NotNull] ExternalDeclarationContext context )
         {
             return context.Signature.Accept( this );
@@ -103,6 +135,7 @@ namespace Kaleidoscope
         {
             return GetOrDeclareFunction( new Prototype( context ) );
         }
+        // </FunctionDeclarations>
 
         // <VisitFunctionDefinition>
         public override Value VisitFunctionDefinition( [NotNull] FunctionDefinitionContext context )
@@ -120,6 +153,7 @@ namespace Kaleidoscope
                                                , isAnonymous: true
                                                );
 
+            AnonymousFunctions.Add( function );
             return DefineFunction( function, context.expression( ) );
         }
         // </VisitTopLevelExpression>
@@ -211,7 +245,7 @@ namespace Kaleidoscope
             function.BasicBlocks.Add( continueBlock );
             InstructionBuilder.PositionAtEnd( continueBlock );
             return InstructionBuilder.Load( result )
-                                     .RegisterName("ifresult");
+                                     .RegisterName( "ifresult" );
         }
         // </VisitConditionalExpression>
 
@@ -257,7 +291,7 @@ namespace Kaleidoscope
             {
                 NamedValues[ varName ] = allocaVar;
 
-                // Emit the body of the loop.  This, like any other expr, can change the
+                // Emit the body of the loop.  This, like any other expression, can change the
                 // current BB.  Note that we ignore the value computed by the body, but don't
                 // allow an error.
                 if( context.BodyExpression.Accept( this ) == null )
@@ -301,7 +335,7 @@ namespace Kaleidoscope
                 InstructionBuilder.Branch( endCondition, loopBlock, afterBlock );
                 InstructionBuilder.PositionAtEnd( afterBlock );
 
-                // for expr always returns 0.0 for consistency, there is no 'void'
+                // for expression always returns 0.0 for consistency, there is no 'void'
                 return Context.DoubleType.GetNullValue( );
             }
         }
@@ -330,22 +364,11 @@ namespace Kaleidoscope
 
         public override Value VisitBinaryPrototype( [NotNull] BinaryPrototypeContext context )
         {
-            if( !RuntimeState.TryAddOperator( context.OpToken, OperatorKind.InfixLeftAssociative, context.Precedence ) )
-            {
-                throw new CodeGeneratorException( "Cannot replace built-in operators" );
-            }
-
             return GetOrDeclareFunction( new Prototype( context, context.Name ) );
         }
 
         public override Value VisitUnaryPrototype( [NotNull] UnaryPrototypeContext context )
         {
-            if( !RuntimeState.TryAddOperator( context.OpToken, OperatorKind.PreFix, 0 ) )
-            {
-                // should never get here now that grammar distinguishes built-in operators
-                throw new CodeGeneratorException( "Cannot replace built-in operators" );
-            }
-
             return GetOrDeclareFunction( new Prototype( context, context.Name ) );
         }
         // </VisitUserOperators>
@@ -376,6 +399,7 @@ namespace Kaleidoscope
 
         protected override Value DefaultResult => null;
 
+        // <EmitBinaryOperator>
         private Value EmitBinaryOperator( Value lhs, BinaryopContext op, IParseTree rightTree )
         {
             var rhs = rightTree.Accept( this );
@@ -439,6 +463,7 @@ namespace Kaleidoscope
             // </EmitUserOperator>
             }
         }
+        // </EmitBinaryOperator>
 
         // <InitializeModuleAndPassManager>
         private void InitializeModuleAndPassManager( )
@@ -446,13 +471,18 @@ namespace Kaleidoscope
             Module = Context.CreateBitcodeModule( );
             Module.TargetTriple = TargetMachine.Triple;
             Module.Layout = TargetMachine.TargetData;
-            FunctionPassManager = new FunctionPassManager( Module );
-            FunctionPassManager.AddPromoteMemoryToRegisterPass( )
-                               .AddInstructionCombiningPass( )
-                               .AddReassociatePass( )
-                               .AddGVNPass( )
-                               .AddCFGSimplificationPass( )
-                               .Initialize( );
+            FunctionPassManager = new FunctionPassManager( Module )
+                                      .AddPromoteMemoryToRegisterPass( );
+
+            if( !DisableOptimizations )
+            {
+                FunctionPassManager.AddInstructionCombiningPass( )
+                                   .AddReassociatePass( )
+                                   .AddGVNPass( )
+                                   .AddCFGSimplificationPass( );
+            }
+
+            FunctionPassManager.Initialize( );
         }
         // </InitializeModuleAndPassManager>
 
@@ -488,7 +518,16 @@ namespace Kaleidoscope
             var llvmSignature = Context.GetFunctionType( Context.DoubleType, prototype.Parameters.Select( _ => Context.DoubleType ) );
 
             var retVal = Module.AddFunction( prototype.Identifier.Name, llvmSignature );
-            retVal.Linkage( Linkage.External );
+            // mark anonymous functions as always-inline and private so they can be inlined and then removed
+            if( isAnonymous )
+            {
+                retVal.AddAttribute( FunctionAttributeIndex.Function, AttributeKind.AlwaysInline )
+                      .Linkage( Linkage.Private );
+            }
+            else
+            {
+                retVal.Linkage( Linkage.External );
+            }
 
             int index = 0;
             foreach( var argId in prototype.Parameters )
@@ -536,10 +575,7 @@ namespace Kaleidoscope
                 function.Verify( );
             }
 
-            if( !DisableOptimizations )
-            {
-                FunctionPassManager.Run( function );
-            }
+            FunctionPassManager.Run( function );
 
             return function;
         }
@@ -560,6 +596,7 @@ namespace Kaleidoscope
         // </CreateEntryBlockAlloca>
 
         // <PrivateMembers>
+        private readonly bool DisableOptimizations;
         private readonly DynamicRuntimeState RuntimeState;
         private static int AnonNameIndex;
         private readonly Context Context;
@@ -568,6 +605,7 @@ namespace Kaleidoscope
         private FunctionPassManager FunctionPassManager;
         private TargetMachine TargetMachine;
         private readonly PrototypeCollection FunctionPrototypes;
+        private readonly List<Function> AnonymousFunctions;
         // </PrivateMembers>
     }
 }

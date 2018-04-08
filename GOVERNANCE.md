@@ -80,8 +80,8 @@ contributions enable the project team to ensure that they are satisfying the nee
 activities include (but are not limited to):
 
 * Evangelizing about the project
-* Informing developers of project strengths and weaknesses from a new user’s perspective
-* Providing moral support (a ‘thank you’ goes a long way)
+* Informing developers of project strengths and weaknesses from a new user's perspective
+* Providing moral support (a 'thank you' goes a long way)
 * Providing financial support
 
 Users who continue to engage with the project and its community will often find themselves becoming more and more
@@ -105,6 +105,6 @@ in our [roles in open source document](http://oss-watch.ac.uk/resources/rolesino
 
 ### Decision-making process
 
-The benevolent dictatorship model does not need a formal conflict resolution process, since the project lead’s word is
+The benevolent dictatorship model does not need a formal conflict resolution process, since the project lead's word is
 final. If the community chooses to question the wisdom of the actions of a committer, the project lead can review their
 decisions by checking the communication archives, and either uphold or reverse them.

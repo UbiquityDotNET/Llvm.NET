@@ -51,6 +51,7 @@ namespace Kaleidoscope
             Context.Dispose( );
         }
 
+        // <Generate>
         public Value Generate( Parser parser, IParseTree tree, DiagnosticRepresentations additionalDiagnostics )
         {
             if( parser.NumberOfSyntaxErrors > 0 )
@@ -60,17 +61,21 @@ namespace Kaleidoscope
 
             return Visit( tree );
         }
+        // </Generate>
 
         public override Value VisitParenExpression( [NotNull] ParenExpressionContext context )
         {
             return context.Expression.Accept( this );
         }
 
+        // <VisitConstExpression>
         public override Value VisitConstExpression( [NotNull] ConstExpressionContext context )
         {
             return Context.CreateConstant( context.Value );
         }
+        // </VisitConstExpression>
 
+        // <VisitVariableExpression>
         public override Value VisitVariableExpression( [NotNull] VariableExpressionContext context )
         {
             string varName = context.Name;
@@ -81,6 +86,7 @@ namespace Kaleidoscope
 
            return value;
         }
+        // </VisitVariableExpression>
 
         public override Value VisitFunctionCallExpression( [NotNull] FunctionCallExpressionContext context )
         {
@@ -94,6 +100,7 @@ namespace Kaleidoscope
             return InstructionBuilder.Call( function, args ).RegisterName( "calltmp" );
         }
 
+        // <FunctionDeclarations>
         public override Value VisitExternalDeclaration( [NotNull] ExternalDeclarationContext context )
         {
             return context.Signature.Accept( this );
@@ -103,6 +110,7 @@ namespace Kaleidoscope
         {
             return GetOrDeclareFunction( new Prototype( context ) );
         }
+        // </FunctionDeclarations>
 
         // <VisitFunctionDefinition>
         public override Value VisitFunctionDefinition( [NotNull] FunctionDefinitionContext context )
@@ -129,6 +137,7 @@ namespace Kaleidoscope
         }
         // </VisitTopLevelExpression>
 
+        // <VisitExpression>
         public override Value VisitExpression( [NotNull] ExpressionContext context )
         {
             // Expression: PrimaryExpression (op expression)*
@@ -141,6 +150,7 @@ namespace Kaleidoscope
 
             return lhs;
         }
+        // </VisitExpression>
 
         // <VisitConditionalExpression>
         public override Value VisitConditionalExpression( [NotNull] ConditionalExpressionContext context )
@@ -158,7 +168,7 @@ namespace Kaleidoscope
 
             var thenBlock = Context.CreateBasicBlock( "then", function );
             var elseBlock = Context.CreateBasicBlock( "else" );
-            var phiMergeBlock = Context.CreateBasicBlock( "ifcont" );
+            var continueBlock = Context.CreateBasicBlock( "ifcont" );
             InstructionBuilder.Branch( condBool, thenBlock, elseBlock );
 
             // generate then block
@@ -169,7 +179,7 @@ namespace Kaleidoscope
                 return null;
             }
 
-            InstructionBuilder.Branch( phiMergeBlock );
+            InstructionBuilder.Branch( continueBlock );
 
             // capture the insert in case generating else adds new blocks
             thenBlock = InstructionBuilder.InsertBlock;
@@ -183,12 +193,12 @@ namespace Kaleidoscope
                 return null;
             }
 
-            InstructionBuilder.Branch( phiMergeBlock );
+            InstructionBuilder.Branch( continueBlock );
             elseBlock = InstructionBuilder.InsertBlock;
 
-            // generate PHI merge block
-            function.BasicBlocks.Add( phiMergeBlock );
-            InstructionBuilder.PositionAtEnd( phiMergeBlock );
+            // generate continue block
+            function.BasicBlocks.Add( continueBlock );
+            InstructionBuilder.PositionAtEnd( continueBlock );
             var phiNode = InstructionBuilder.PhiNode( function.Context.DoubleType )
                                             .RegisterName( "iftmp" );
 
@@ -242,7 +252,7 @@ namespace Kaleidoscope
             {
                 NamedValues[ varName ] = variable;
 
-                // Emit the body of the loop.  This, like any other expr, can change the
+                // Emit the body of the loop.  This, like any other expression, can change the
                 // current BB.  Note that we ignore the value computed by the body, but don't
                 // allow an error.
                 if( context.BodyExpression.Accept( this ) == null )
@@ -286,7 +296,7 @@ namespace Kaleidoscope
                 // Add a new entry to the PHI node for the back-edge.
                 variable.AddIncoming( nextVar, loopEndBlock );
 
-                // for expr always returns 0.0 for consistency, there is no 'void'
+                // for expression always returns 0.0 for consistency, there is no 'void'
                 return Context.DoubleType.GetNullValue( );
             }
         }
@@ -294,6 +304,7 @@ namespace Kaleidoscope
 
         protected override Value DefaultResult => null;
 
+        // <EmitBinaryOperator>
         private Value EmitBinaryOperator( Value lhs, BinaryopContext op, IParseTree rightTree )
         {
             var rhs = rightTree.Accept( this );
@@ -335,6 +346,7 @@ namespace Kaleidoscope
                 throw new CodeGeneratorException( $"Invalid binary operator {op.Token.Text}" );
             }
         }
+        // </EmitBinaryOperator>
 
         // <InitializeModuleAndPassManager>
         private void InitializeModuleAndPassManager( )

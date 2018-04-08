@@ -212,7 +212,7 @@ binaryop
 ```
 
 ### Initializers
-Initializers are a useful re-usable rule to handle a common sequence in the language in multiple different contexts.
+The Initializers rule provides a way to handle a common sequence in the language in multiple different contexts.
 (sort of like a function in most programming languages, in fact, ANTLR rules are implemented in the generated parser
 as methods). 
 
@@ -278,7 +278,7 @@ implementation of the function. Once the function produces the return value the 
 ```antlr
 IF expression[0] THEN expression[0] ELSE expression[0]
 ```
-Conditional expressions use the very common and familiar if-then-else syntax and semantics with one noteable
+Conditional expressions use the very common and familiar if-then-else syntax and semantics with one notable
 unique quality. In Kaleidoscope every language construct is an expression, there are no statements. Expressions
 all produce a value. So the result of the conditional expression is the result of the sub expression selected
 based on the condition. The condition value is computed and if the result == 0.0 (false) the `else` expression
@@ -310,7 +310,7 @@ def printstar(n)
 printstar(100);
 ```
 Note: That there are no statements in Kaleidoscope, everything is an expression and has a value. putchard() implicitly returns a
-value as does printstar(). (e.g. there is no void return ALL functions implictly return a floating point value, even if it is always 0.0)
+value as does printstar(). (e.g. there is no void return ALL functions implicitly return a floating point value, even if it is always 0.0)
 For loops with mutable values support in the language may provide a result that isn't always 0.0, for example:
 
 ```Kaleidoscope
@@ -339,27 +339,32 @@ fibi(10);
 ```
 
 #### Parse Tree
-The Llvm.NET implementation of Kaleidoscope doesn't use an AST per se. Instead it use the parse tree generated
+The Llvm.NET implementation of Kaleidoscope doesn't use an AST. Instead it use the parse tree generated
 by ANTLR with the addition of C# partial classes. ANTLR will generate a parser based on the grammar description
 input file. This generated parser (and lexer) includes a context type for each rule of the grammar. The C# target
 for ANTLR generates these types as partial classes so the they are extensible from the parser assembly without
 needing to derive a new type or use virtuals etc. Thus, the Kaleidoscope.Grammar assembly contains partial class
 extensions that provide simpler property accessors and support methods to where an additional AST is not needed.
-(e.g. The parse tree is the AST)
+(e.g. The parse tree is the AST) The only exception to this is when the code generation needs to construct nodes
+that otherwise don't exist in the source (i.e. prototypes of top level expressions as anonymous functions).
+
+To manage the creation of anonymous functions while re-using the same general code for code generation. A special
+Prototype and Identifier class are provided. The parse tree nodes have additional properties that can retrieve these
+custom types for the appropriate nodes and the generator can create them when it needs to. This allows all of the
+code generation to deal with consistent types as input, reducing duplication and other sorts of special case conditional
+logic in the code.
 
 See [Kaleidoscope Parse Tree Examples](Kaleidoscope-Parsetree-examples.md) for more information and example
 diagrams of the parse tree for various language constructs.
 
 ## Basic Application Architecture
 
-Generally speaking there are three main components to all of the sample chapter applications.
+Generally speaking there are four main components to all of the sample chapter applications.
 
   1. The main driver application (e.g. program.cs)
   2. The parser (e.g. Kaleidoscope.Grammar assembly)
-  3. The code generator (e.g. CodeGenerator.cs)
-
-There is an additional utility support library Kaleidoscope.Runtime providing some common adapter/facade pattern
-implementations for working with Kaleidoscope, ANTLR and Llvm.NET.
+  3. Runtime support (e.g. Kaliedoscope.Runtime)
+  4. The code generator (e.g. CodeGenerator.cs)
 
 ### Driver
 While each chapter is a bit different from the others. Many of the chapters are virtually identical for the driver.
@@ -367,14 +372,14 @@ In particular Chapters 3-7 only really differ in the language level support.
 
 [!code-csharp[Program.cs](../../../Samples/Kaleidoscope/Chapter2/Program.cs#generatorloop)]
 
-The ReplParserStack contains the support for parsing the Kaleidoscope language from the REPL loop interactive input.
+The ParserStack contains the support for parsing the Kaleidoscope language from the REPL loop interactive input.
 The stack also maintains the global state of the runtime, which controls the language features enabled, and if user
 defined operators are enabled, contains the operators defined along with their precedence.
 
 After the parser is created the code generator is constructed. The code generator is responsible for most of the real work
 of the language. The implementation of the generator is different for each chapter. However, since the generator is based
 on the ANTLR4 generated KaleidoscopeParserListener (using a visitor pattern), and the chapters build on one another, for
-the most part, it is fairly easy to diff the generators for each chapter to see the changes needed to introduce the feature
+the most part, it is fairly easy to compare the generators for each chapter to see the changes needed to introduce the feature
 the chapter introduces. Each chapter will go into more details on this. Since the generator usually allocates resources in
 Llvm.NET it implements IDisposable to ensure they are released as early as possible.
 

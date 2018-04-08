@@ -29,7 +29,7 @@ using( InitializeLLVM() )
 ```
 
 The initialization returns an IDisposable so that the calling application can shutdown/cleanup resources
-and potentially re-init for a different target if desired. This application only needs to generate one
+and potentially re-initialize for a different target if desired. This application only needs to generate one
 module and exit so it just applies a standard C# `using` scope to ensure proper cleanup.
 
 ### Target specific details
@@ -85,7 +85,7 @@ target specific information is added to it. In this sample there is a direct 1:1
 compile unit and the source file so it creates a [DIFile](xref:Llvm.NET.DebugInfo.DIFile) for the source
 at the same time. The sample code creates the DICompileUnit when creating the bit code module. This is
 the normal pattern for creating the compile unit when generating debugging information. Though it is possible
-to create it independently and add it to the module there isn't and real beneffit to doing so.
+to create it independently and add it to the module there isn't and real benefit to doing so.
 
 ## Creating basic types with debug information
 In LLVM types are fairly minimalistic and only contain the basic structural information for generating

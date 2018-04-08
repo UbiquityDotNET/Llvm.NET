@@ -51,6 +51,7 @@ namespace Kaleidoscope
             Context.Dispose( );
         }
 
+        // <Generate>
         public Value Generate( Parser parser, IParseTree tree, DiagnosticRepresentations additionalDiagnostics )
         {
             if( parser.NumberOfSyntaxErrors > 0 )
@@ -60,17 +61,21 @@ namespace Kaleidoscope
 
             return Visit( tree );
         }
+        // </Generate>
 
         public override Value VisitParenExpression( [NotNull] ParenExpressionContext context )
         {
             return context.Expression.Accept( this );
         }
 
+        // <VisitConstExpression>
         public override Value VisitConstExpression( [NotNull] ConstExpressionContext context )
         {
             return Context.CreateConstant( context.Value );
         }
+        // </VisitConstExpression>
 
+        // <VisitVariableExpression>
         public override Value VisitVariableExpression( [NotNull] VariableExpressionContext context )
         {
             string varName = context.Name;
@@ -81,6 +86,7 @@ namespace Kaleidoscope
 
            return value;
         }
+        // </VisitVariableExpression>
 
         public override Value VisitFunctionCallExpression( [NotNull] FunctionCallExpressionContext context )
         {
@@ -94,6 +100,7 @@ namespace Kaleidoscope
             return InstructionBuilder.Call( function, args ).RegisterName( "calltmp" );
         }
 
+        // <FunctionDeclarations>
         public override Value VisitExternalDeclaration( [NotNull] ExternalDeclarationContext context )
         {
             return context.Signature.Accept( this );
@@ -103,6 +110,7 @@ namespace Kaleidoscope
         {
             return GetOrDeclareFunction( new Prototype( context ) );
         }
+        // </FunctionDeclarations>
 
         // <VisitFunctionDefinition>
         public override Value VisitFunctionDefinition( [NotNull] FunctionDefinitionContext context )
@@ -129,6 +137,7 @@ namespace Kaleidoscope
         }
         // </VisitTopLevelExpression>
 
+        // <VisitExpression>
         public override Value VisitExpression( [NotNull] ExpressionContext context )
         {
             // Expression: PrimaryExpression (op expression)*
@@ -141,6 +150,7 @@ namespace Kaleidoscope
 
             return lhs;
         }
+        // </VisitExpression>
 
         // <VisitConditionalExpression>
         public override Value VisitConditionalExpression( [NotNull] ConditionalExpressionContext context )
@@ -242,7 +252,7 @@ namespace Kaleidoscope
             {
                 NamedValues[ varName ] = variable;
 
-                // Emit the body of the loop.  This, like any other expr, can change the
+                // Emit the body of the loop.  This, like any other expression, can change the
                 // current BB.  Note that we ignore the value computed by the body, but don't
                 // allow an error.
                 if( context.BodyExpression.Accept( this ) == null )
@@ -286,7 +296,7 @@ namespace Kaleidoscope
                 // Add a new entry to the PHI node for the back-edge.
                 variable.AddIncoming( nextVar, loopEndBlock );
 
-                // for expr always returns 0.0 for consistency, there is no 'void'
+                // for expression always returns 0.0 for consistency, there is no 'void'
                 return Context.DoubleType.GetNullValue( );
             }
         }
@@ -315,28 +325,18 @@ namespace Kaleidoscope
 
         public override Value VisitBinaryPrototype( [NotNull] BinaryPrototypeContext context )
         {
-            if( !RuntimeState.TryAddOperator( context.OpToken, OperatorKind.InfixLeftAssociative, context.Precedence ) )
-            {
-                throw new CodeGeneratorException( "Cannot replace built-in operators" );
-            }
-
             return GetOrDeclareFunction( new Prototype( context, context.Name ) );
         }
 
         public override Value VisitUnaryPrototype( [NotNull] UnaryPrototypeContext context )
         {
-            if( !RuntimeState.TryAddOperator( context.OpToken, OperatorKind.PreFix, 0 ) )
-            {
-                // should never get here now that grammar distinguishes built-in operators
-                throw new CodeGeneratorException( "Cannot replace built-in operators" );
-            }
-
             return GetOrDeclareFunction( new Prototype( context, context.Name ) );
         }
         // </VisitUserOperators>
 
         protected override Value DefaultResult => null;
 
+        // <EmitBinaryOperator>
         private Value EmitBinaryOperator( Value lhs, BinaryopContext op, IParseTree rightTree )
         {
             var rhs = rightTree.Accept( this );
@@ -396,6 +396,7 @@ namespace Kaleidoscope
             // </EmitUserOperator>
             }
         }
+        // </EmitBinaryOperator>
 
         // <InitializeModuleAndPassManager>
         private void InitializeModuleAndPassManager( )

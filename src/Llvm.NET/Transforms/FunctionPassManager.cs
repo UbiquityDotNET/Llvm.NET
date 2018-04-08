@@ -34,7 +34,7 @@ namespace Llvm.NET.Transforms
             return LLVMRunFunctionPassManager( Handle, target.ValueHandle );
         }
 
-        /// <summary>Finalizes all of the function passes scheduled in in the function pass manager.</summary>
+        /// <summary>Finalizes all of the function passes scheduled in the function pass manager.</summary>
         /// <returns><see langword="true"/>if any of the passes modified the module</returns>
         public bool Finish( )
         {
