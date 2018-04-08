@@ -50,11 +50,11 @@
       <MsdnXRefPath>%(msdn4_5_2.ResolvedPath)</MsdnXRefPath>
       <IsPrereleaseMSBuild>false</IsPrereleaseMSBuild>
     </PropertyGroup>
-    <VersionCheck Condition="$(MSBuildVersion)!=''" MinimumRequiredVersion="15.6.82" ActualVersion="$(MSBuildVersion)">
+    <VersionCheck Condition="$(MSBuildVersion)!=''" MinimumRequiredVersion="15.6.999" ActualVersion="$(MSBuildVersion)">
       <Output TaskParameter="IsValidVersion" PropertyName="IsPrereleaseMSBuild" />
     </VersionCheck>
     <!-- NOTE: MSBuildVersion property is new in 15.6 (as of 15.6.0-pre.4.0 the value is 15.6.76 )  -->
-    <Error Code="DOCFX:0001" ContinueOnError="false" Condition="$(IsPrereleaseMSBuild)" Text="As of DOCFX 2.31 docfx cannot generate metadata for CSPROJ files using MSBuild &gt; 15.6.82 (Current MSBuild is $(MSBuildVersion))" />
+    <Error Code="DOCFX:0001" ContinueOnError="false" Condition="$(IsPrereleaseMSBuild)" Text="As of DOCFX 2.31 docfx cannot generate metadata for CSPROJ files using MSBuild &gt; 15.6.xx (Current MSBuild is $(MSBuildVersion))" />
   </Target>
 
   <Target Name="SetDocFxParameters" AfterTargets="GetDocfxPackagePaths" BeforeTargets="DocBuild">
