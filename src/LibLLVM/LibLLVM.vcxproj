@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="..\..\BuildOutput\packages\Llvm.Libs.6.0.0\build\native\Llvm.Libs.props" Condition="Exists('..\..\BuildOutput\packages\Llvm.Libs.6.0.0\build\native\Llvm.Libs.props')" />
   <Import Project="..\..\BuildOutput\packages\Llvm.Libs.targets.x64-Release.6.0.0\build\native\Llvm.Libs.targets.x64-Release.props" Condition="Exists('..\..\BuildOutput\packages\Llvm.Libs.targets.x64-Release.6.0.0\build\native\Llvm.Libs.targets.x64-Release.props')" />
