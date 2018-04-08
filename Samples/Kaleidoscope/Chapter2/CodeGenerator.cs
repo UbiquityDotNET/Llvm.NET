@@ -20,10 +20,6 @@ namespace Kaleidoscope
         , IDisposable
         , IKaleidoscopeCodeGenerator<int>
     {
-        public CodeGenerator( )
-        {
-        }
-
         public void Dispose( )
         {
         }

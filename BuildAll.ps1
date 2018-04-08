@@ -90,9 +90,6 @@ try
     Write-Information "Restoring NuGet Packages for LibLLVM.vcxproj"
     Invoke-NuGet restore src\LibLLVM\LibLLVM.vcxproj -PackagesDirectory $buildPaths.NuGetRepositoryPath -Verbosity quiet
 
-    Write-Information "Building LibLLVM"
-    Invoke-MSBuild -Targets Build -Project src\LibLLVM\MultiPlatformBuild.vcxproj -Properties $msBuildProperties -LoggerArgs $msbuildLoggerArgs
-
     Write-Information "Restoring NuGet Packages for Llvm.NET"
     Invoke-MSBuild -Targets Restore -Project src\Llvm.NET.sln -Properties $msBuildProperties -LoggerArgs $msbuildLoggerArgs
 

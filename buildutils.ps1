@@ -232,7 +232,7 @@ function Get-BuildInformation($buildPaths)
               FileVersionBuild = $semVer.FileVersionBuild
               FileVersionRevision = $semver.FileVersionRevision
               FileVersion= "$($semVer.FileVersionMajor).$($semVer.FileVersionMinor).$($semVer.FileVersionBuild).$($semVer.FileVersionRevision)"
-              LlvmVersion = "5.0.0"
+              LlvmVersion = "6.0.0"
             }
 }
 
