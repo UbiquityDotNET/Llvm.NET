@@ -36,4 +36,4 @@ as is conversion to proper line endings - all in a central place.
 The enums in the native layer match the underlying LLVM form in both value and naming. These,
 deliberately don't conform to the .NET style rules used throughout the rest of the code. Thus,
 they tend to suppress the normal style rules. Whenever enumerations are required in the public API
-a new .NET style conformant enumeration is created.
+a new .NET style enumeration is created.

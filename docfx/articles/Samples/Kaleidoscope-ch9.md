@@ -1,4 +1,4 @@
-# 9. Kaleidoscop: Adding Debug Information
+# 9. Kaleidoscope: Adding Debug Information
 So far in the progress of the Kaleidoscope tutorials we've covered the basics of the language as a JIT engine
 and even added ahead of time compilation into the mix so it is a full static compiled language. But what happens
 if something goes wrong in one of the programs written in Kaleidoscope? How can a developer debug applications
@@ -13,8 +13,8 @@ the LLVM target will transform the abstract representation into the actual targe
 
 >[!NOTE]
 >Debugging JIT code is rather complex as it requires awareness of the runtime within the debugger to
->control the execution state. Therefore, the focus in this chapter is on the static compilation scenarion (building
->on the suport created in [Chapter 8](Kaleidoscope-ch8.md))
+>control the execution state. Therefore, the focus in this chapter is on the static compilation scenario (building
+>on the support created in [Chapter 8](Kaleidoscope-ch8.md))
 
 ## Why is it a hard problem?
 Debugging is a tough problem for a number of reasons, mostly revolving around optimized code. Optimizations make

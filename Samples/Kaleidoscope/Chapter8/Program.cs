@@ -104,7 +104,7 @@ namespace Kaleidoscope
         // </ErrorHandling>
 
         // <ProcessArgs>
-        // really simple command line handling, just loops through the args
+        // really simple command line handling, just loops through the arguments
         private static (string SourceFilePath, int ExitCode) ProcessArgs( string[ ] args )
         {
             bool waitforDebugger = false;

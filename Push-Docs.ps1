@@ -3,9 +3,9 @@ if($env:APPVEYOR_PULL_REQUEST_NUMBER)
     return;
 }
 
-# Docs must only be updated from a build with the official repo as the default remote.
+# Docs must only be updated from a build with the official repository as the default remote.
 # This ensures that the links to source in the generated docs will have the correct URLs
-# (e.g. docs pushed to the official repo MUST not have links to source in some private fork)
+# (e.g. docs pushed to the official repository MUST not have links to source in some private fork)
 $remoteUrl = git ls-remote --get-url
 if($remoteUrl -ne "https://github.com/UbiquityDotNET/Llvm.NET.git")
 {
@@ -30,7 +30,7 @@ try
     Write-Information "Adding files to git"
     git add *
 
-    Write-Information "Commiting changes to git"
+    Write-Information "Committing changes to git"
     git commit -m "CI Docs Update ($env:APPVEYOR_BUILD_VERSION)"
 
     Write-Information "pushing changes to git"
