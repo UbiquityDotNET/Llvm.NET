@@ -13,15 +13,6 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
-    <Filter Include="NugetPkg">
-      <UniqueIdentifier>{ed484d90-5063-4e27-af54-e2ad3e79e485}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="NugetPkg\build">
-      <UniqueIdentifier>{6f4b8fa6-bd58-4dcf-9e4e-9ca3d30af21a}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="NugetPkg\buildMultiTargeting">
-      <UniqueIdentifier>{3fb532a8-1e3e-476c-877d-bec325263272}</UniqueIdentifier>
-    </Filter>
   </ItemGroup>
   <ItemGroup>
     <None Include="EXPORTS.DEF">
@@ -29,15 +20,6 @@
     </None>
     <None Include="LlvmApplication.props" />
     <None Include="packages.config" />
-    <None Include="NugetPkg\LibLLVM.NET.nuspec">
-      <Filter>NugetPkg</Filter>
-    </None>
-    <None Include="NugetPkg\build\LibLlvm.NET.props">
-      <Filter>NugetPkg\build</Filter>
-    </None>
-    <None Include="NugetPkg\buildMultitargeting\LibLlvm.NET.props">
-        <Filter>NugetPkg\buildMultitargeting</Filter>
-    </None>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="InlinedExports.cpp">
