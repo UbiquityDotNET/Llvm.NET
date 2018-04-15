@@ -18,9 +18,6 @@ $testsFailed = $false
 $vsInstance = Find-VSInstance
 $vstest = [System.IO.Path]::Combine($vsInstance.InstallationPath, 'Common7','IDE','CommonExtensions','Microsoft','TestWindow','vstest.console.exe')
 
-Write-Information 'Running tests as win32'
-& $vstest .\BuildOutput\bin\Llvm.NETTests\Release\net47\Llvm.NETTests.dll /InIsolation /Settings:src\win32.runsettings $loggerArgs
-
 Write-Information 'Running tests as x64'
 & $vstest .\BuildOutput\bin\Llvm.NETTests\Release\net47\Llvm.NETTests.dll /InIsolation /Settings:src\x64.runsettings $loggerArgs
 $testsFailed = $testsFailed -or ($LASTEXITCODE -ne 0)

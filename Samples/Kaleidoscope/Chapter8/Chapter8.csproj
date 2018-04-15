@@ -4,7 +4,7 @@
     <TargetFrameworks>netcoreapp2.0;net47</TargetFrameworks>
     <AssemblyName>kls8</AssemblyName>
     <RootNamespace>Kaleidoscope</RootNamespace>
-    <LangVersion>latest</LangVersion>
+    <LangVersion>7.2</LangVersion>
   </PropertyGroup>
   <ItemGroup>
     <Content Include="..\mandel.kls" Link="mandel.kls">

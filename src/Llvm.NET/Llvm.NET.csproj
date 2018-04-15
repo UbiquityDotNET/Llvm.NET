@@ -16,6 +16,12 @@
         <NoPackageAnalysis>true</NoPackageAnalysis>
         <LangVersion>7.2</LangVersion>
     </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="obj\**" />
+    <EmbeddedResource Remove="obj\**" />
+    <None Remove="obj\**" />
+  </ItemGroup>
     <ItemGroup>
         <Content Include="NugetPkg\build\Llvm.NET.props" PackagePath="build" />
     </ItemGroup>
@@ -26,10 +32,8 @@
     </ItemGroup>
     <ItemGroup>
         <PackageReference Include="CSemVer.Build.Tasks" Version="1.0.3-beta--ci-BLD.431367438" />
+        <PackageReference Include="LibLLVM.NET" Version="6.0.0-alpha--ci-ZZZ.437463602" />
         <PackageReference Include="Ubiquity.ArgValidators" Version="0.3.0-alpha--ci-REL.19A2218B" />
-    </ItemGroup>
-    <ItemGroup>
-      <ProjectReference Include="..\LibLLVM.NET\LibLLVM.NET.csproj" />
     </ItemGroup>
 
   <!--

@@ -4,7 +4,8 @@
     <TargetFrameworks>netcoreapp2.0;net47</TargetFrameworks>
     <AssemblyName>kls2</AssemblyName>
     <RootNamespace>Kaleidoscope</RootNamespace>
-    <LangVersion>latest</LangVersion>
+    <LangVersion>7.2</LangVersion>
+    <PlatformTarget>AnyCPU</PlatformTarget>
   </PropertyGroup>
   <ItemGroup>
     <ProjectReference Include="..\Kaleidoscope.Parser\Kaleidoscope.Grammar.csproj" />

@@ -1,12 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <Import Project="..\..\BuildOutput\packages\Llvm.Libs.x64.6.0.0\build\native\Llvm.Libs.props" Condition="Exists('..\..\BuildOutput\packages\Llvm.Libs.x64.6.0.0\build\native\Llvm.Libs.props')" />
-  <Import Project="..\..\BuildOutput\packages\Llvm.Libs.targets.x64-Release.6.0.0\build\native\Llvm.Libs.targets.x64-Release.props" Condition="Exists('..\..\BuildOutput\packages\Llvm.Libs.targets.x64-Release.6.0.0\build\native\Llvm.Libs.targets.x64-Release.props')" />
-  <Import Project="..\..\BuildOutput\packages\Llvm.Libs.targets.x64-Debug.6.0.0\build\native\Llvm.Libs.targets.x64-Debug.props" Condition="Exists('..\..\BuildOutput\packages\Llvm.Libs.targets.x64-Debug.6.0.0\build\native\Llvm.Libs.targets.x64-Debug.props')" />
-  <Import Project="..\..\BuildOutput\packages\Llvm.Libs.core.x64-Release.6.0.0\build\native\Llvm.Libs.core.x64-Release.props" Condition="Exists('..\..\BuildOutput\packages\Llvm.Libs.core.x64-Release.6.0.0\build\native\Llvm.Libs.core.x64-Release.props')" />
-  <Import Project="..\..\BuildOutput\packages\Llvm.Libs.core.x64-Debug.6.0.0\build\native\Llvm.Libs.core.x64-Debug.props" Condition="Exists('..\..\BuildOutput\packages\Llvm.Libs.core.x64-Debug.6.0.0\build\native\Llvm.Libs.core.x64-Debug.props')" />
-  <Import Project="..\..\BuildOutput\packages\Llvm.Libs.core.pdbs.x64-Debug.6.0.0\build\native\Llvm.Libs.core.pdbs.x64-Debug.props" Condition="Exists('..\..\BuildOutput\packages\Llvm.Libs.core.pdbs.x64-Debug.6.0.0\build\native\Llvm.Libs.core.pdbs.x64-Debug.props')" />
-  <Import Project="..\..\BuildOutput\packages\CSemVer.Build.Tasks.1.0.2-beta--ci-BLD.427428397\build\CSemVer.Build.Tasks.props" Condition="Exists('..\..\BuildOutput\packages\CSemVer.Build.Tasks.1.0.2-beta--ci-BLD.427428397\build\CSemVer.Build.Tasks.props')" />
+  <Import Project="..\..\BuildOutput\packages\Ubiquity.Net.Llvm.Libs.6.0.0\build\native\Ubiquity.Net.Llvm.Libs.props" Condition="Exists('..\..\BuildOutput\packages\Ubiquity.Net.Llvm.Libs.6.0.0\build\native\Ubiquity.Net.Llvm.Libs.props')" />
+  <Import Project="..\..\BuildOutput\packages\Ubiquity.Net.Llvm.Libs.targets.x64-Release.6.0.0\build\native\Ubiquity.Net.Llvm.Libs.targets.x64-Release.props" Condition="Exists('..\..\BuildOutput\packages\Ubiquity.Net.Llvm.Libs.targets.x64-Release.6.0.0\build\native\Ubiquity.Net.Llvm.Libs.targets.x64-Release.props')" />
+  <Import Project="..\..\BuildOutput\packages\Ubiquity.Net.Llvm.Libs.targets.x64-Debug.6.0.0\build\native\Ubiquity.Net.Llvm.Libs.targets.x64-Debug.props" Condition="Exists('..\..\BuildOutput\packages\Ubiquity.Net.Llvm.Libs.targets.x64-Debug.6.0.0\build\native\Ubiquity.Net.Llvm.Libs.targets.x64-Debug.props')" />
+  <Import Project="..\..\BuildOutput\packages\Ubiquity.Net.Llvm.Libs.targets.pdbs.x64-Release.6.0.0\build\native\Ubiquity.Net.Llvm.Libs.targets.pdbs.x64-Release.props" Condition="Exists('..\..\BuildOutput\packages\Ubiquity.Net.Llvm.Libs.targets.pdbs.x64-Release.6.0.0\build\native\Ubiquity.Net.Llvm.Libs.targets.pdbs.x64-Release.props')" />
+  <Import Project="..\..\BuildOutput\packages\Ubiquity.Net.Llvm.Libs.targets.pdbs.x64-Debug.6.0.0\build\native\Ubiquity.Net.Llvm.Libs.targets.pdbs.x64-Debug.props" Condition="Exists('..\..\BuildOutput\packages\Ubiquity.Net.Llvm.Libs.targets.pdbs.x64-Debug.6.0.0\build\native\Ubiquity.Net.Llvm.Libs.targets.pdbs.x64-Debug.props')" />
+  <Import Project="..\..\BuildOutput\packages\Ubiquity.Net.Llvm.Libs.core.x64-Release.6.0.0\build\native\Ubiquity.Net.Llvm.Libs.core.x64-Release.props" Condition="Exists('..\..\BuildOutput\packages\Ubiquity.Net.Llvm.Libs.core.x64-Release.6.0.0\build\native\Ubiquity.Net.Llvm.Libs.core.x64-Release.props')" />
+  <Import Project="..\..\BuildOutput\packages\Ubiquity.Net.Llvm.Libs.core.x64-Debug.6.0.0\build\native\Ubiquity.Net.Llvm.Libs.core.x64-Debug.props" Condition="Exists('..\..\BuildOutput\packages\Ubiquity.Net.Llvm.Libs.core.x64-Debug.6.0.0\build\native\Ubiquity.Net.Llvm.Libs.core.x64-Debug.props')" />
+  <Import Project="..\..\BuildOutput\packages\Ubiquity.Net.Llvm.Libs.core.pdbs.x64-Release.6.0.0\build\native\Ubiquity.Net.Llvm.Libs.core.pdbs.x64-Release.props" Condition="Exists('..\..\BuildOutput\packages\Ubiquity.Net.Llvm.Libs.core.pdbs.x64-Release.6.0.0\build\native\Ubiquity.Net.Llvm.Libs.core.pdbs.x64-Release.props')" />
+  <Import Project="..\..\BuildOutput\packages\Ubiquity.Net.Llvm.Libs.core.pdbs.x64-Debug.6.0.0\build\native\Ubiquity.Net.Llvm.Libs.core.pdbs.x64-Debug.props" Condition="Exists('..\..\BuildOutput\packages\Ubiquity.Net.Llvm.Libs.core.pdbs.x64-Debug.6.0.0\build\native\Ubiquity.Net.Llvm.Libs.core.pdbs.x64-Debug.props')" />
+  <Import Project="..\..\BuildOutput\packages\CSemVer.Build.Tasks.1.0.3-beta--ci-BLD.431367438\build\CSemVer.Build.Tasks.props" Condition="Exists('..\..\BuildOutput\packages\CSemVer.Build.Tasks.1.0.3-beta--ci-BLD.431367438\build\CSemVer.Build.Tasks.props')" />
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Debug|x64">
@@ -23,12 +26,13 @@
     <Keyword>Win32Proj</Keyword>
     <RootNamespace>LibLLVM</RootNamespace>
     <ProjectName>LibLLVM</ProjectName>
-    <TargetPlatformVersion>8.1</TargetPlatformVersion>
     <AdditionalDependencies>@(AllLlvmLibs);$(AdditionalDependencies)</AdditionalDependencies>
     <GenerateVersionInfoHeader>true</GenerateVersionInfoHeader>
     <WindowsTargetPlatformVersion>10.0.16299.0</WindowsTargetPlatformVersion>
+    <NuSpecFile>NuGetPkg\LibLLVM.NET.nuspec</NuSpecFile>
+    <NoPackageAnalysis>true</NoPackageAnalysis>
   </PropertyGroup>
-  <Import Project="..\..\BuildOutput\packages\PdbGit.3.0.41\build\PdbGit.props" Condition="Exists('..\..\BuildOutput\packages\PdbGit.3.0.41\build\PdbGit.props')" />
+  <Import Project="$(BuildOutputPackagesDir)\PdbGit.3.0.41\build\PdbGit.props" Condition="Exists('$(BuildOutputPackagesDir)\PdbGit.3.0.41\build\PdbGit.props')" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
     <ConfigurationType>DynamicLibrary</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
@@ -44,10 +48,9 @@
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
   <ImportGroup Label="ExtensionSettings">
-    <Import Project="..\..\BuildOutput\packages\PdbGit.3.0.41\build\PdbGit.targets" Condition="Exists('..\..\BuildOutput\packages\PdbGit.3.0.41\build\PdbGit.targets')" />
-    <Import Project="..\..\BuildOutput\packages\Llvm.Libs.core.pdbs.x64-Debug.5.0.0\build\native\Llvm.Libs.core.pdbs.x64-Debug.targets" Condition="Exists('..\..\BuildOutput\packages\Llvm.Libs.core.pdbs.x64-Debug.5.0.0\build\native\Llvm.Libs.core.pdbs.x64-Debug.targets')" />
-    <Import Project="..\..\BuildOutput\packages\CSemVer.Build.Tasks.1.0.2-beta--ci-BLD.427428397\build\CSemVer.Build.Tasks.targets" Condition="Exists('..\..\BuildOutput\packages\CSemVer.Build.Tasks.1.0.2-beta--ci-BLD.427428397\build\CSemVer.Build.Tasks.targets')" />
-    <Import Project="..\..\BuildOutput\packages\Llvm.Libs.x64.6.0.0\build\native\Llvm.Libs.targets" Condition="Exists('..\..\BuildOutput\packages\Llvm.Libs.x64.6.0.0\build\native\Llvm.Libs.targets')" />
+    <Import Project="$(BuildOutputPackagesDir)\PdbGit.3.0.41\build\PdbGit.targets" Condition="Exists('$(BuildOutputPackagesDir)\PdbGit.3.0.41\build\PdbGit.targets')" />
+    <Import Project="..\..\BuildOutput\packages\CSemVer.Build.Tasks.1.0.3-beta--ci-BLD.431367438\build\CSemVer.Build.Tasks.targets" Condition="Exists('..\..\BuildOutput\packages\CSemVer.Build.Tasks.1.0.3-beta--ci-BLD.431367438\build\CSemVer.Build.Tasks.targets')" />
+    <Import Project="..\..\BuildOutput\packages\Ubiquity.Net.Llvm.Libs.6.0.0\build\native\Ubiquity.Net.Llvm.Libs.targets" Condition="Exists('..\..\BuildOutput\packages\Ubiquity.Net.Llvm.Libs.6.0.0\build\native\Ubiquity.Net.Llvm.Libs.targets')" />
   </ImportGroup>
   <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="PropertySheets">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
@@ -100,7 +103,6 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <None Include="EXPORTS.DEF" />
-    <None Include="LlvmApplication.props" />
     <None Include="packages.config">
       <SubType>Designer</SubType>
     </None>
@@ -147,16 +149,19 @@
       <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
     </PropertyGroup>
     <Message Importance="High" Text="PlatformConfiguration: $(Platform)|$(Configuration)" />
-    <Error Condition="!Exists('..\..\BuildOutput\packages\PdbGit.3.0.41\build\PdbGit.props')" Text="$([System.String]::Format('$(ErrorText)', '..\..\BuildOutput\packages\PdbGit.3.0.41\build\PdbGit.props'))" />
-    <Error Condition="!Exists('..\..\BuildOutput\packages\PdbGit.3.0.41\build\PdbGit.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\BuildOutput\packages\PdbGit.3.0.41\build\PdbGit.targets'))" />
-    <Error Condition="!Exists('..\..\BuildOutput\packages\CSemVer.Build.Tasks.1.0.2-beta--ci-BLD.427428397\build\CSemVer.Build.Tasks.props')" Text="$([System.String]::Format('$(ErrorText)', '..\..\BuildOutput\packages\CSemVer.Build.Tasks.1.0.2-beta--ci-BLD.427428397\build\CSemVer.Build.Tasks.props'))" />
-    <Error Condition="!Exists('..\..\BuildOutput\packages\CSemVer.Build.Tasks.1.0.2-beta--ci-BLD.427428397\build\CSemVer.Build.Tasks.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\BuildOutput\packages\CSemVer.Build.Tasks.1.0.2-beta--ci-BLD.427428397\build\CSemVer.Build.Tasks.targets'))" />
-    <Error Condition="!Exists('..\..\BuildOutput\packages\Llvm.Libs.core.pdbs.x64-Debug.6.0.0\build\native\Llvm.Libs.core.pdbs.x64-Debug.props')" Text="$([System.String]::Format('$(ErrorText)', '..\..\BuildOutput\packages\Llvm.Libs.core.pdbs.x64-Debug.6.0.0\build\native\Llvm.Libs.core.pdbs.x64-Debug.props'))" />
-    <Error Condition="!Exists('..\..\BuildOutput\packages\Llvm.Libs.core.x64-Debug.6.0.0\build\native\Llvm.Libs.core.x64-Debug.props')" Text="$([System.String]::Format('$(ErrorText)', '..\..\BuildOutput\packages\Llvm.Libs.core.x64-Debug.6.0.0\build\native\Llvm.Libs.core.x64-Debug.props'))" />
-    <Error Condition="!Exists('..\..\BuildOutput\packages\Llvm.Libs.core.x64-Release.6.0.0\build\native\Llvm.Libs.core.x64-Release.props')" Text="$([System.String]::Format('$(ErrorText)', '..\..\BuildOutput\packages\Llvm.Libs.core.x64-Release.6.0.0\build\native\Llvm.Libs.core.x64-Release.props'))" />
-    <Error Condition="!Exists('..\..\BuildOutput\packages\Llvm.Libs.targets.x64-Debug.6.0.0\build\native\Llvm.Libs.targets.x64-Debug.props')" Text="$([System.String]::Format('$(ErrorText)', '..\..\BuildOutput\packages\Llvm.Libs.targets.x64-Debug.6.0.0\build\native\Llvm.Libs.targets.x64-Debug.props'))" />
-    <Error Condition="!Exists('..\..\BuildOutput\packages\Llvm.Libs.targets.x64-Release.6.0.0\build\native\Llvm.Libs.targets.x64-Release.props')" Text="$([System.String]::Format('$(ErrorText)', '..\..\BuildOutput\packages\Llvm.Libs.targets.x64-Release.6.0.0\build\native\Llvm.Libs.targets.x64-Release.props'))" />
-    <Error Condition="!Exists('..\..\BuildOutput\packages\Llvm.Libs.x64.6.0.0\build\native\Llvm.Libs.props')" Text="$([System.String]::Format('$(ErrorText)', '..\..\BuildOutput\packages\Llvm.Libs.x64.6.0.0\build\native\Llvm.Libs.props'))" />
-    <Error Condition="!Exists('..\..\BuildOutput\packages\Llvm.Libs.x64.6.0.0\build\native\Llvm.Libs.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\BuildOutput\packages\Llvm.Libs.x64.6.0.0\build\native\Llvm.Libs.targets'))" />
+    <Error Condition="!Exists('$(BuildOutputPackagesDir)\PdbGit.3.0.41\build\PdbGit.props')" Text="$([System.String]::Format('$(ErrorText)', '$(BuildOutputPackagesDir)\PdbGit.3.0.41\build\PdbGit.props'))" />
+    <Error Condition="!Exists('$(BuildOutputPackagesDir)\PdbGit.3.0.41\build\PdbGit.targets')" Text="$([System.String]::Format('$(ErrorText)', '$(BuildOutputPackagesDir)\PdbGit.3.0.41\build\PdbGit.targets'))" />
+    <Error Condition="!Exists('..\..\BuildOutput\packages\CSemVer.Build.Tasks.1.0.3-beta--ci-BLD.431367438\build\CSemVer.Build.Tasks.props')" Text="$([System.String]::Format('$(ErrorText)', '..\..\BuildOutput\packages\CSemVer.Build.Tasks.1.0.3-beta--ci-BLD.431367438\build\CSemVer.Build.Tasks.props'))" />
+    <Error Condition="!Exists('..\..\BuildOutput\packages\CSemVer.Build.Tasks.1.0.3-beta--ci-BLD.431367438\build\CSemVer.Build.Tasks.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\BuildOutput\packages\CSemVer.Build.Tasks.1.0.3-beta--ci-BLD.431367438\build\CSemVer.Build.Tasks.targets'))" />
+    <Error Condition="!Exists('..\..\BuildOutput\packages\Ubiquity.Net.Llvm.Libs.core.pdbs.x64-Debug.6.0.0\build\native\Ubiquity.Net.Llvm.Libs.core.pdbs.x64-Debug.props')" Text="$([System.String]::Format('$(ErrorText)', '..\..\BuildOutput\packages\Ubiquity.Net.Llvm.Libs.core.pdbs.x64-Debug.6.0.0\build\native\Ubiquity.Net.Llvm.Libs.core.pdbs.x64-Debug.props'))" />
+    <Error Condition="!Exists('..\..\BuildOutput\packages\Ubiquity.Net.Llvm.Libs.core.pdbs.x64-Release.6.0.0\build\native\Ubiquity.Net.Llvm.Libs.core.pdbs.x64-Release.props')" Text="$([System.String]::Format('$(ErrorText)', '..\..\BuildOutput\packages\Ubiquity.Net.Llvm.Libs.core.pdbs.x64-Release.6.0.0\build\native\Ubiquity.Net.Llvm.Libs.core.pdbs.x64-Release.props'))" />
+    <Error Condition="!Exists('..\..\BuildOutput\packages\Ubiquity.Net.Llvm.Libs.core.x64-Debug.6.0.0\build\native\Ubiquity.Net.Llvm.Libs.core.x64-Debug.props')" Text="$([System.String]::Format('$(ErrorText)', '..\..\BuildOutput\packages\Ubiquity.Net.Llvm.Libs.core.x64-Debug.6.0.0\build\native\Ubiquity.Net.Llvm.Libs.core.x64-Debug.props'))" />
+    <Error Condition="!Exists('..\..\BuildOutput\packages\Ubiquity.Net.Llvm.Libs.core.x64-Release.6.0.0\build\native\Ubiquity.Net.Llvm.Libs.core.x64-Release.props')" Text="$([System.String]::Format('$(ErrorText)', '..\..\BuildOutput\packages\Ubiquity.Net.Llvm.Libs.core.x64-Release.6.0.0\build\native\Ubiquity.Net.Llvm.Libs.core.x64-Release.props'))" />
+    <Error Condition="!Exists('..\..\BuildOutput\packages\Ubiquity.Net.Llvm.Libs.targets.pdbs.x64-Debug.6.0.0\build\native\Ubiquity.Net.Llvm.Libs.targets.pdbs.x64-Debug.props')" Text="$([System.String]::Format('$(ErrorText)', '..\..\BuildOutput\packages\Ubiquity.Net.Llvm.Libs.targets.pdbs.x64-Debug.6.0.0\build\native\Ubiquity.Net.Llvm.Libs.targets.pdbs.x64-Debug.props'))" />
+    <Error Condition="!Exists('..\..\BuildOutput\packages\Ubiquity.Net.Llvm.Libs.targets.pdbs.x64-Release.6.0.0\build\native\Ubiquity.Net.Llvm.Libs.targets.pdbs.x64-Release.props')" Text="$([System.String]::Format('$(ErrorText)', '..\..\BuildOutput\packages\Ubiquity.Net.Llvm.Libs.targets.pdbs.x64-Release.6.0.0\build\native\Ubiquity.Net.Llvm.Libs.targets.pdbs.x64-Release.props'))" />
+    <Error Condition="!Exists('..\..\BuildOutput\packages\Ubiquity.Net.Llvm.Libs.targets.x64-Debug.6.0.0\build\native\Ubiquity.Net.Llvm.Libs.targets.x64-Debug.props')" Text="$([System.String]::Format('$(ErrorText)', '..\..\BuildOutput\packages\Ubiquity.Net.Llvm.Libs.targets.x64-Debug.6.0.0\build\native\Ubiquity.Net.Llvm.Libs.targets.x64-Debug.props'))" />
+    <Error Condition="!Exists('..\..\BuildOutput\packages\Ubiquity.Net.Llvm.Libs.targets.x64-Release.6.0.0\build\native\Ubiquity.Net.Llvm.Libs.targets.x64-Release.props')" Text="$([System.String]::Format('$(ErrorText)', '..\..\BuildOutput\packages\Ubiquity.Net.Llvm.Libs.targets.x64-Release.6.0.0\build\native\Ubiquity.Net.Llvm.Libs.targets.x64-Release.props'))" />
+    <Error Condition="!Exists('..\..\BuildOutput\packages\Ubiquity.Net.Llvm.Libs.6.0.0\build\native\Ubiquity.Net.Llvm.Libs.props')" Text="$([System.String]::Format('$(ErrorText)', '..\..\BuildOutput\packages\Ubiquity.Net.Llvm.Libs.6.0.0\build\native\Ubiquity.Net.Llvm.Libs.props'))" />
+    <Error Condition="!Exists('..\..\BuildOutput\packages\Ubiquity.Net.Llvm.Libs.6.0.0\build\native\Ubiquity.Net.Llvm.Libs.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\BuildOutput\packages\Ubiquity.Net.Llvm.Libs.6.0.0\build\native\Ubiquity.Net.Llvm.Libs.targets'))" />
   </Target>
 </Project>

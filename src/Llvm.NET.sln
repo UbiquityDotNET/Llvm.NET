@@ -54,10 +54,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Kaleidoscope.Runtime", "..\
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Llvm.Net.Docfx", "..\docfx\Llvm.Net.Docfx.csproj", "{887D41FB-C927-4AF2-9A0C-A60AD86CA277}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "LibLLVM", "LibLLVM\LibLLVM.vcxproj", "{6C77A7DE-D464-430F-96A9-A64768763B5F}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LibLLVM.NET", "LibLLVM.NET\LibLLVM.NET.csproj", "{2505C091-425D-4E8B-A97F-A04E8449F445}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -120,14 +116,6 @@ Global
 		{887D41FB-C927-4AF2-9A0C-A60AD86CA277}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{887D41FB-C927-4AF2-9A0C-A60AD86CA277}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{887D41FB-C927-4AF2-9A0C-A60AD86CA277}.Release|Any CPU.Build.0 = Release|Any CPU
-		{6C77A7DE-D464-430F-96A9-A64768763B5F}.Debug|Any CPU.ActiveCfg = Debug|x64
-		{6C77A7DE-D464-430F-96A9-A64768763B5F}.Debug|Any CPU.Build.0 = Debug|x64
-		{6C77A7DE-D464-430F-96A9-A64768763B5F}.Release|Any CPU.ActiveCfg = Release|x64
-		{6C77A7DE-D464-430F-96A9-A64768763B5F}.Release|Any CPU.Build.0 = Release|x64
-		{2505C091-425D-4E8B-A97F-A04E8449F445}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{2505C091-425D-4E8B-A97F-A04E8449F445}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{2505C091-425D-4E8B-A97F-A04E8449F445}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{2505C091-425D-4E8B-A97F-A04E8449F445}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

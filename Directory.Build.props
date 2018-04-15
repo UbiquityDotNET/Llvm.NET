@@ -22,7 +22,7 @@
         <UnifiedPlatformPathName Condition="'$(UnifiedPlatformPathName)'=='Win32'">x86</UnifiedPlatformPathName>
         <UnifiedPlatformPathName Condition="'$(UnifiedPlatformPathName)'=='AnyCPU'">x64</UnifiedPlatformPathName>
 
-        <Configuration Condition="'$(Configuration)'==''">Debug</Configuration>
+        <Configuration Condition="'$(Configuration)'==''">Release</Configuration>
 
         <!-- Use the location of this file (at the top of the build tree) to define the root directory, if not already set -->
         <BuildRootDir Condition="'$(BuildRootDir)'==''">$(MSBuildThisFileDirectory)</BuildRootDir>
@@ -53,6 +53,7 @@
         <LlvmVersionMajor Condition="'$(LlvmVersionMajor)'==''">6</LlvmVersionMajor>
         <LlvmVersionMinor Condition="'$(LlvmVersionMinor)'==''">0</LlvmVersionMinor>
         <LlvmVersionPatch Condition="'$(LlvmVersionPatch)'==''">0</LlvmVersionPatch>
+        <RuntimeIdentifiers>win-x64</RuntimeIdentifiers>
     </PropertyGroup>
     <Choose>
         <!-- Apply standard analyzers and rule sets for all C# projects -->

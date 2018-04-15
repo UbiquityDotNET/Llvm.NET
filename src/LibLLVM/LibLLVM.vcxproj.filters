@@ -18,7 +18,6 @@
     <None Include="EXPORTS.DEF">
       <Filter>Source Files</Filter>
     </None>
-    <None Include="LlvmApplication.props" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
