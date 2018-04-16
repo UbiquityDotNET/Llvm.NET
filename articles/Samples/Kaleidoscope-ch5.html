@@ -366,7 +366,7 @@ same.</p>
     {
         NamedValues[ varName ] = variable;
 
-        // Emit the body of the loop.  This, like any other expr, can change the
+        // Emit the body of the loop.  This, like any other expression, can change the
         // current BB.  Note that we ignore the value computed by the body, but don&#39;t
         // allow an error.
         if( context.BodyExpression.Accept( this ) == null )
@@ -410,7 +410,7 @@ same.</p>
         // Add a new entry to the PHI node for the back-edge.
         variable.AddIncoming( nextVar, loopEndBlock );
 
-        // for expr always returns 0.0 for consistency, there is no &#39;void&#39;
+        // for expression always returns 0.0 for consistency, there is no &#39;void&#39;
         return Context.DoubleType.GetNullValue( );
     }
 }
@@ -442,7 +442,7 @@ the parent, while allowing access to all other variables from other scopes.</p>
             <span class="pull-right">
               <a href="#top">Back to top</a>
             </span>
-            Copyright (C) 2017, Dot NET Foundation<br><strong>Build:</strong> 5.0.1-alpha--ci-BLD.437324408
+            Copyright (C) 2017, Dot NET Foundation<br><strong>Build:</strong> 6.0.0-alpha--ci-BLD.437793062
             
           </div>
         </div>

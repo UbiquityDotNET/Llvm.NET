@@ -184,7 +184,7 @@ using( InitializeLLVM() )
     // [...]
 }
 </code></pre><p>The initialization returns an IDisposable so that the calling application can shutdown/cleanup resources
-and potentially re-init for a different target if desired. This application only needs to generate one
+and potentially re-initialize for a different target if desired. This application only needs to generate one
 module and exit so it just applies a standard C# <code>using</code> scope to ensure proper cleanup.</p>
 <h3 id="target-specific-details">Target specific details</h3>
 <p>In order to isolate the specific details of the target architecture the application uses an interface that
@@ -247,7 +247,7 @@ the target and a target specific <a class="xref" href="../../api/Llvm.NET.DataLa
 extracts these from the <a class="xref" href="../../api/Llvm.NET.TargetMachine.html">TargetMachine</a> provided by the target
 details interface for the selected target.</p>
 <pre><code class="lang-csharp" name="Main">using( var context = new Context( ) )
-using( var module = context.CreateBitcodeModule( moduleName ) )
+using( var module = context.CreateBitcodeModule( moduleName, SourceLanguage.CSharp, srcPath, VersionIdentString ) )
 {
     module.SourceFileName = Path.GetFileName( srcPath );
     module.TargetTriple = TargetDetails.TargetMachine.Triple;
@@ -262,7 +262,7 @@ target specific information is added to it. In this sample there is a direct 1:1
 compile unit and the source file so it creates a <a class="xref" href="../../api/Llvm.NET.DebugInfo.DIFile.html">DIFile</a> for the source
 at the same time. The sample code creates the DICompileUnit when creating the bit code module. This is
 the normal pattern for creating the compile unit when generating debugging information. Though it is possible
-to create it independently and add it to the module there isn&#39;t and real beneffit to doing so.</p>
+to create it independently and add it to the module there isn&#39;t and real benefit to doing so.</p>
 <h2 id="creating-basic-types-with-debug-information">Creating basic types with debug information</h2>
 <p>In LLVM types are fairly minimalistic and only contain the basic structural information for generating
 the final machine code. Debug information, as metadata in LLVM, provides all the source level debugging
@@ -335,7 +335,7 @@ var fooBody = new[ ]
     , new DebugMemberInfo { File = diFile, Line = 5, Name = &quot;c&quot;, DebugType = i32Array_0_32, Index = 2 }
     };
 
-var fooType = new DebugStructType( module, &quot;struct.foo&quot;, cu, &quot;foo&quot;, diFile, 1, DebugInfoFlags.None, fooBody );
+var fooType = new DebugStructType( module, &quot;struct.foo&quot;, module.DICompileUnit, &quot;foo&quot;, diFile, 1, DebugInfoFlags.None, fooBody );
 </code></pre><h2 id="creating-module-metadata-and-global-variables">Creating module metadata and global variables</h2>
 <p>The sample code contains two global instances of <code>struct foo</code> <code>bar</code> and <code>baz</code>. Furthermore, bar
 is initialized with constant data. The sample starts by constructing the const array data that
@@ -352,11 +352,11 @@ var barValue = module.Context.CreateNamedConstantStruct( fooType
 
 var bar = module.AddGlobal( fooType, false, 0, barValue, &quot;bar&quot; );
 bar.Alignment = module.Layout.AbiAlignmentOf( fooType );
-bar.AddDebugInfo( module.DIBuilder.CreateGlobalVariableExpression( cu, &quot;bar&quot;, string.Empty, diFile, 8, fooType.DIType, false, null ) );
+bar.AddDebugInfo( module.DIBuilder.CreateGlobalVariableExpression( module.DICompileUnit, &quot;bar&quot;, string.Empty, diFile, 8, fooType.DIType, false, null ) );
 
 var baz = module.AddGlobal( fooType, false, Linkage.Common, Constant.NullValueFor( fooType ), &quot;baz&quot; );
 baz.Alignment = module.Layout.AbiAlignmentOf( fooType );
-baz.AddDebugInfo( module.DIBuilder.CreateGlobalVariableExpression( cu, &quot;baz&quot;, string.Empty, diFile, 9, fooType.DIType, false, null ) );
+baz.AddDebugInfo( module.DIBuilder.CreateGlobalVariableExpression( module.DICompileUnit, &quot;baz&quot;, string.Empty, diFile, 9, fooType.DIType, false, null ) );
 
 // add module flags and compiler identifiers...
 // this can technically occur at any point, though placing it here makes
@@ -389,11 +389,11 @@ var barValue = module.Context.CreateNamedConstantStruct( fooType
 
 var bar = module.AddGlobal( fooType, false, 0, barValue, &quot;bar&quot; );
 bar.Alignment = module.Layout.AbiAlignmentOf( fooType );
-bar.AddDebugInfo( module.DIBuilder.CreateGlobalVariableExpression( cu, &quot;bar&quot;, string.Empty, diFile, 8, fooType.DIType, false, null ) );
+bar.AddDebugInfo( module.DIBuilder.CreateGlobalVariableExpression( module.DICompileUnit, &quot;bar&quot;, string.Empty, diFile, 8, fooType.DIType, false, null ) );
 
 var baz = module.AddGlobal( fooType, false, Linkage.Common, Constant.NullValueFor( fooType ), &quot;baz&quot; );
 baz.Alignment = module.Layout.AbiAlignmentOf( fooType );
-baz.AddDebugInfo( module.DIBuilder.CreateGlobalVariableExpression( cu, &quot;baz&quot;, string.Empty, diFile, 9, fooType.DIType, false, null ) );
+baz.AddDebugInfo( module.DIBuilder.CreateGlobalVariableExpression( module.DICompileUnit, &quot;baz&quot;, string.Empty, diFile, 9, fooType.DIType, false, null ) );
 
 // add module flags and compiler identifiers...
 // this can technically occur at any point, though placing it here makes
@@ -624,7 +624,7 @@ attributes #2 = { argmemonly nounwind }
             <span class="pull-right">
               <a href="#top">Back to top</a>
             </span>
-            Copyright (C) 2017, Dot NET Foundation<br><strong>Build:</strong> 5.0.1-alpha--ci-BLD.437324408
+            Copyright (C) 2017, Dot NET Foundation<br><strong>Build:</strong> 6.0.0-alpha--ci-BLD.437793062
             
           </div>
         </div>

@@ -330,7 +330,7 @@ binaryop
     | MINUSMINUS
     ;
 </code></pre><h3 id="initializers">Initializers</h3>
-<p>Initializers are a useful re-usable rule to handle a common sequence in the language in multiple different contexts.
+<p>The Initializers rule provides a way to handle a common sequence in the language in multiple different contexts.
 (sort of like a function in most programming languages, in fact, ANTLR rules are implemented in the generated parser
 as methods). </p>
 <pre><code class="lang-antlr">// pull the initializer out to a distinct rule so it is easier to get at
@@ -373,7 +373,7 @@ in many ways like a declaration of an inline function. The variables declared ar
 implementation of the function. Once the function produces the return value the variables no longer exist.</p>
 <h3 id="conditionalexpression">ConditionalExpression</h3>
 <pre><code class="lang-antlr">IF expression[0] THEN expression[0] ELSE expression[0]
-</code></pre><p>Conditional expressions use the very common and familiar if-then-else syntax and semantics with one noteable
+</code></pre><p>Conditional expressions use the very common and familiar if-then-else syntax and semantics with one notable
 unique quality. In Kaleidoscope every language construct is an expression, there are no statements. Expressions
 all produce a value. So the result of the conditional expression is the result of the sub expression selected
 based on the condition. The condition value is computed and if the result == 0.0 (false) the <code>else</code> expression
@@ -397,7 +397,7 @@ def printstar(n)
 # print 100 &#39;*&#39; characters
 printstar(100);
 </code></pre><p>Note: That there are no statements in Kaleidoscope, everything is an expression and has a value. putchard() implicitly returns a
-value as does printstar(). (e.g. there is no void return ALL functions implictly return a floating point value, even if it is always 0.0)
+value as does printstar(). (e.g. there is no void return ALL functions implicitly return a floating point value, even if it is always 0.0)
 For loops with mutable values support in the language may provide a result that isn&#39;t always 0.0, for example:</p>
 <pre><code class="lang-Kaleidoscope"># Define &#39;:&#39; for sequencing: as a low-precedence operator that ignores operands
 # and just returns the RHS.
@@ -422,24 +422,29 @@ def fibi(x)
 # Call it.
 fibi(10);
 </code></pre><h4 id="parse-tree">Parse Tree</h4>
-<p>The Llvm.NET implementation of Kaleidoscope doesn&#39;t use an AST per se. Instead it use the parse tree generated
+<p>The Llvm.NET implementation of Kaleidoscope doesn&#39;t use an AST. Instead it use the parse tree generated
 by ANTLR with the addition of C# partial classes. ANTLR will generate a parser based on the grammar description
 input file. This generated parser (and lexer) includes a context type for each rule of the grammar. The C# target
 for ANTLR generates these types as partial classes so the they are extensible from the parser assembly without
 needing to derive a new type or use virtuals etc. Thus, the Kaleidoscope.Grammar assembly contains partial class
 extensions that provide simpler property accessors and support methods to where an additional AST is not needed.
-(e.g. The parse tree is the AST)</p>
+(e.g. The parse tree is the AST) The only exception to this is when the code generation needs to construct nodes
+that otherwise don&#39;t exist in the source (i.e. prototypes of top level expressions as anonymous functions).</p>
+<p>To manage the creation of anonymous functions while re-using the same general code for code generation. A special
+Prototype and Identifier class are provided. The parse tree nodes have additional properties that can retrieve these
+custom types for the appropriate nodes and the generator can create them when it needs to. This allows all of the
+code generation to deal with consistent types as input, reducing duplication and other sorts of special case conditional
+logic in the code.</p>
 <p>See <a href="Kaleidoscope-Parsetree-examples.html">Kaleidoscope Parse Tree Examples</a> for more information and example
 diagrams of the parse tree for various language constructs.</p>
 <h2 id="basic-application-architecture">Basic Application Architecture</h2>
-<p>Generally speaking there are three main components to all of the sample chapter applications.</p>
+<p>Generally speaking there are four main components to all of the sample chapter applications.</p>
 <ol>
 <li>The main driver application (e.g. program.cs)</li>
 <li>The parser (e.g. Kaleidoscope.Grammar assembly)</li>
+<li>Runtime support (e.g. Kaliedoscope.Runtime)</li>
 <li>The code generator (e.g. CodeGenerator.cs)</li>
 </ol>
-<p>There is an additional utility support library Kaleidoscope.Runtime providing some common adapter/facade pattern
-implementations for working with Kaleidoscope, ANTLR and Llvm.NET.</p>
 <h3 id="driver">Driver</h3>
 <p>While each chapter is a bit different from the others. Many of the chapters are virtually identical for the driver.
 In particular Chapters 3-7 only really differ in the language level support. </p>
@@ -464,7 +469,7 @@ defined operators are enabled, contains the operators defined along with their p
 <p>After the parser is created the code generator is constructed. The code generator is responsible for most of the real work
 of the language. The implementation of the generator is different for each chapter. However, since the generator is based
 on the ANTLR4 generated KaleidoscopeParserListener (using a visitor pattern), and the chapters build on one another, for
-the most part, it is fairly easy to diff the generators for each chapter to see the changes needed to introduce the feature
+the most part, it is fairly easy to compare the generators for each chapter to see the changes needed to introduce the feature
 the chapter introduces. Each chapter will go into more details on this. Since the generator usually allocates resources in
 Llvm.NET it implements IDisposable to ensure they are released as early as possible.</p>
 <p>Inside the using statement for the code generator is the core loop for the language runtime. This starts by displaying
@@ -529,7 +534,7 @@ tweaking.</p>
             <span class="pull-right">
               <a href="#top">Back to top</a>
             </span>
-            Copyright (C) 2017, Dot NET Foundation<br><strong>Build:</strong> 5.0.1-alpha--ci-BLD.437324408
+            Copyright (C) 2017, Dot NET Foundation<br><strong>Build:</strong> 6.0.0-alpha--ci-BLD.437793062
             
           </div>
         </div>

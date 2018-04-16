@@ -5,9 +5,9 @@
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-    <title>9. Kaleidoscop: Adding Debug Information | Llvm.NET </title>
+    <title>9. Kaleidoscope: Adding Debug Information | Llvm.NET </title>
     <meta name="viewport" content="width=device-width">
-    <meta name="title" content="9. Kaleidoscop: Adding Debug Information | Llvm.NET ">
+    <meta name="title" content="9. Kaleidoscope: Adding Debug Information | Llvm.NET ">
     <meta name="generator" content="docfx 2.33.2.0">
     
     <link rel="shortcut icon" href="../../favicon.ico">
@@ -136,7 +136,7 @@
         <div class="article row grid-right">
           <div class="col-md-10">
             <article class="content wrap" id="_content" data-uid="">
-<h1 id="9-kaleidoscop-adding-debug-information">9. Kaleidoscop: Adding Debug Information</h1>
+<h1 id="9-kaleidoscope-adding-debug-information">9. Kaleidoscope: Adding Debug Information</h1>
 
 <p>So far in the progress of the Kaleidoscope tutorials we&#39;ve covered the basics of the language as a JIT engine
 and even added ahead of time compilation into the mix so it is a full static compiled language. But what happens
@@ -148,9 +148,7 @@ of the application to the original source code that created it. The exact format
 platform but the general idea holds for all of them. In order to abstract the actual format from LLVM front-end
 developers LLVM uses an abstract form of debug data that is based on the common DWARF debugging format. Internally,
 the LLVM target will transform the abstract representation into the actual target binary form. </p>
-<div class="NOTE"><h5>Note</h5><p>Debugging JIT code is rather complex as it requires awareness of the runtime within the debugger to
-control the execution state. Therefore, the focus in this chapter is on the static compilation scenarion (building
-on the suport created in <a href="Kaleidoscope-ch8.html">Chapter 8</a>)</p>
+<div class="NOTE"><h5>Note</h5><p>Debugging JIT code is rather complex as it requires awareness of the runtime within the debugger to</p>
 </div>
 <h2 id="why-is-it-a-hard-problem">Why is it a hard problem?</h2>
 <p>Debugging is a tough problem for a number of reasons, mostly revolving around optimized code. Optimizations make
@@ -446,7 +444,7 @@ for custom languages, including debug support. </p>
             <span class="pull-right">
               <a href="#top">Back to top</a>
             </span>
-            Copyright (C) 2017, Dot NET Foundation<br><strong>Build:</strong> 5.0.1-alpha--ci-BLD.437324408
+            Copyright (C) 2017, Dot NET Foundation<br><strong>Build:</strong> 6.0.0-alpha--ci-BLD.437793062
             
           </div>
         </div>

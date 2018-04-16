@@ -231,7 +231,7 @@ generated anonymous functions removed. </p>
     return null;
 }
 </code></pre><p>Most of the rest of the changes are pretty straightforward following the steps listed previously. The larger
-changes are shown here. You can run your favorite diff tool between the two sample folders to see all the little
+                 InstructionBuilder.Return( funcReturn );
 changes.</p>
 <h3 id="visittoplevelexpression">VisitTopLevelExpression</h3>
 <p>As previously mentioned when generating the top level expression the resulting function is added to the
@@ -256,7 +256,7 @@ fall into two general categories:</p>
 <p>To allow providing a file like a traditional compiler the driver app needs to have some basic
 command line argument handling. (&quot;Basic&quot; in this case means truly rudimentary <span class="emoji" shortcode="grin">😁</span> )
 Generally this just gets a viable file path to use for the source code.</p>
-<pre><code class="lang-csharp" name="ProcessArgs">// really simple command line handling, just loops through the args
+<pre><code class="lang-csharp" name="ProcessArgs">// really simple command line handling, just loops through the arguments
 private static (string SourceFilePath, int ExitCode) ProcessArgs( string[ ] args )
 {
     bool waitforDebugger = false;
@@ -397,7 +397,7 @@ between JIT and full native compilation instead of deleting the JIT code. (Imple
             <span class="pull-right">
               <a href="#top">Back to top</a>
             </span>
-            Copyright (C) 2017, Dot NET Foundation<br><strong>Build:</strong> 5.0.1-alpha--ci-BLD.437324408
+            Copyright (C) 2017, Dot NET Foundation<br><strong>Build:</strong> 6.0.0-alpha--ci-BLD.437793062
             
           </div>
         </div>

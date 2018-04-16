@@ -116,9 +116,9 @@
 
 <p>Handles for LLVM are just opaque pointers. They generally come in one of three forms.</p>
 <ol>
-<li>Context owned<br>Where there is always a well known owner that ultimately is responsibile for
+<li>Context owned<br>Where there is always a well known owner that ultimately is responsible for
 disposing/releasing the resource.</li>
-<li>Global resources<br>Where there is no parent child ownership relationship and callers must manualy release the resource</li>
+<li>Global resources<br>Where there is no parent child ownership relationship and callers must manually release the resource</li>
 <li>An unowned alias to a global resource<br>This occurs when a child of a global resource contains a reference to the parent. In such
 a case the handle should be considered like an alias and not disposed.</li>
 </ol>
@@ -159,13 +159,13 @@ namespace Llvm.NET.Native
     }
 }
 </code></pre><h3 id="global-handles">Global Handles</h3>
-<p>Global handles require the caller to explicity release the resources. In Llvm.NET these
+<p>Global handles require the caller to explicitly release the resources. In Llvm.NET these
 are managed with the .NET SafeHandles types through an Llvm.NET specific derived type
 LlvmObject. Since these types are derived from a SafeHandle they are properly cleaned
 up by the runtime without the need to make the containing type implement IDisposable,
 though there may be other reasons to make a type Disposable. Generally, types should
 avoid IDisposable unless they really need to perform some special cleanup early or in
-a particluar ordered sequence but such cases are rare.</p>
+a particular ordered sequence but such cases are rare.</p>
 <p>All resource handles in Llvm.NET requiring explicit release are handled consistently
 using the following basic pattern:</p>
 <pre><code class="lang-C#">using System;
@@ -241,7 +241,7 @@ internal class LLVMxyzAlias
             <span class="pull-right">
               <a href="#top">Back to top</a>
             </span>
-            Copyright (C) 2017, Dot NET Foundation<br><strong>Build:</strong> 5.0.1-alpha--ci-BLD.437324408
+            Copyright (C) 2017, Dot NET Foundation<br><strong>Build:</strong> 6.0.0-alpha--ci-BLD.437793062
             
           </div>
         </div>

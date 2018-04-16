@@ -151,7 +151,7 @@ front-end to convert to SSA form directly. In fact it is generally discouraged! 
 efficient, and more importantly, well tested, support for converting to SSA form (Though how that works
 might be a bit surprising).</p>
 <h2 id="mutable-variables-in-llvm">Mutable Variables in LLVM</h2>
-<h3 id="mutable-varibales-vs-ssa-whats-the-big-deal">Mutable Varibales vs. SSA, What&#39;s the big deal?</h3>
+<h3 id="mutable-variables-vs-ssa-whats-the-big-deal">Mutable Variables vs. SSA, What&#39;s the big deal?</h3>
 <p>Consider the following simple &quot;C&quot; code:</p>
 <pre><code class="lang-C">int G, H;
 
@@ -475,7 +475,7 @@ of load/store for the variables and removal of the manually generated PHI nodes.
     {
         NamedValues[ varName ] = allocaVar;
 
-        // Emit the body of the loop.  This, like any other expr, can change the
+        // Emit the body of the loop.  This, like any other expression, can change the
         // current BB.  Note that we ignore the value computed by the body, but don&#39;t
         // allow an error.
         if( context.BodyExpression.Accept( this ) == null )
@@ -715,7 +715,7 @@ needing to manually deal with PHI nodes or generate SSA form!</p>
             <span class="pull-right">
               <a href="#top">Back to top</a>
             </span>
-            Copyright (C) 2017, Dot NET Foundation<br><strong>Build:</strong> 5.0.1-alpha--ci-BLD.437324408
+            Copyright (C) 2017, Dot NET Foundation<br><strong>Build:</strong> 6.0.0-alpha--ci-BLD.437793062
             
           </div>
         </div>

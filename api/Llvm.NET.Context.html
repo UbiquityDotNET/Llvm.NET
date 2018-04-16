@@ -345,6 +345,9 @@
                                   <a href="Llvm.NET.Context.DoubleType.html" title="DoubleType" class="">DoubleType</a>
                                 </li>
                                 <li class="">
+                                  <a href="Llvm.NET.Context.Float128Type.html" title="Float128Type" class="">Float128Type</a>
+                                </li>
+                                <li class="">
                                   <a href="Llvm.NET.Context.FloatType.html" title="FloatType" class="">FloatType</a>
                                 </li>
                                 <li class="">
@@ -384,13 +387,25 @@
                                   <a href="Llvm.NET.Context.Metadata.html" title="Metadata" class="">Metadata</a>
                                 </li>
                                 <li class="">
+                                  <a href="Llvm.NET.Context.MetadataType.html" title="MetadataType" class="">MetadataType</a>
+                                </li>
+                                <li class="">
                                   <a href="Llvm.NET.Context.Modules.html" title="Modules" class="">Modules</a>
                                 </li>
                                 <li class="">
                                   <a href="Llvm.NET.Context.OdrUniqueDebugTypes.html" title="OdrUniqueDebugTypes" class="">OdrUniqueDebugTypes</a>
                                 </li>
                                 <li class="">
+                                  <a href="Llvm.NET.Context.PpcFloat128Type.html" title="PpcFloat128Type" class="">PpcFloat128Type</a>
+                                </li>
+                                <li class="">
+                                  <a href="Llvm.NET.Context.TokenType.html" title="TokenType" class="">TokenType</a>
+                                </li>
+                                <li class="">
                                   <a href="Llvm.NET.Context.VoidType.html" title="VoidType" class="">VoidType</a>
+                                </li>
+                                <li class="">
+                                  <a href="Llvm.NET.Context.X86Float80Type.html" title="X86Float80Type" class="">X86Float80Type</a>
                                 </li>
                               </ul>  </li>
                           <li class="">
@@ -1716,6 +1731,9 @@
                                   <a href="Llvm.NET.DebugInfo.DIVariable.Scope.html" title="Scope" class="">Scope</a>
                                 </li>
                               </ul>  </li>
+                          <li class="">
+                            <a href="Llvm.NET.DebugInfo.DwarfEmissionKind.html" title="DwarfEmissionKind" class="">DwarfEmissionKind</a>
+                          </li>
                           <li class="">
                             <a href="Llvm.NET.DebugInfo.ExpressionOp.html" title="ExpressionOp" class="">ExpressionOp</a>
                           </li>
@@ -3611,25 +3629,21 @@
   
   
   <h3 id="Llvm_NET_Context_remarks"><strong>Remarks</strong></h3>
-  <div class="markdown level0 remarks"><p><p>A context in LLVM is a container for interning (LLVM refers
-to this as &quot;uniqueing&quot;) various types and values in the system. This
-allows running multiple LLVM tool transforms etc.. on different threads
-without causing them to collide namespaces and types even if they use
-the same name (e.g. module one may have a type Foo, and so does module
-two but they are completely distinct from each other)
-</p>
-<p>LLVM Debug information is ultimately all parented to a top level
-<a class="xref" href="Llvm.NET.DebugInfo.DICompileUnit.html">DICompileUnit</a> as the scope, and a compilation
-unit is bound to a <a class="xref" href="Llvm.NET.BitcodeModule.html">BitcodeModule</a>, even though, technically
-the types are owned by a Context. Thus to keep things simpler and help
-make working with debug information easier. Lllvm.NET encapsulates the
-native type and the debug type in separate classes that are instances
+  <div class="markdown level0 remarks"><p>A context in LLVM is a container for interning (LLVM refers to this as &quot;uniqueing&quot;) various types
+and values in the system. This allows running multiple LLVM tool transforms etc.. on different threads
+without causing them to collide namespaces and types even if they use the same name (e.g. module one
+may have a type Foo, and so does module two but they are completely distinct from each other)</p>
+
+<p>LLVM Debug information is ultimately all parented to a top level <a class="xref" href="Llvm.NET.DebugInfo.DICompileUnit.html">DICompileUnit</a> as
+the scope, and a compilation unit is bound to a <a class="xref" href="Llvm.NET.BitcodeModule.html">BitcodeModule</a>, even though, technically
+the types are owned by a Context. Thus to keep things simpler and help make working with debug information
+easier. Lllvm.NET encapsulates the native type and the debug type in separate classes that are instances
 of the <a class="xref" href="Llvm.NET.DebugInfo.IDebugType-2.html">IDebugType&lt;TNative, TDebug&gt;</a> interface </p>
-<div class="NOTE"><h5>note</h5><p>It is important to be aware of the fact that a Context
-is not thread safe. The context itself and the object instances it owns
-are intended for use by a single thread only. Accessing and manipulating
-LLVM objects from multiple threads may lead to race conditions corrupted
-state and any number of other undefined issues.</p></div></p>
+
+<div class="NOTE"><h5>note</h5><p>It is important to be aware of the fact that a Context is not thread safe. The context
+itself and the object instances it owns are intended for use by a single thread only. Accessing and
+manipulating LLVM objects from multiple threads may lead to race conditions corrupted state and any number
+of other undefined issues.</p></div>
 </div>
   
   <h3 id="constructors">Constructors
@@ -3658,6 +3672,13 @@ state and any number of other undefined issues.</p></div></p>
           <a class="xref" href="Llvm.NET.Context.DoubleType.html#Llvm_NET_Context_DoubleType">DoubleType</a>
         </td>
         <td class="markdown level1 summary"><p>Gets the LLVM double precision floating point type for this context</p>
+</td>
+      </tr>
+      <tr>
+        <td id="Llvm_NET_Context_Float128Type" data-uid="Llvm.NET.Context.Float128Type">
+          <a class="xref" href="Llvm.NET.Context.Float128Type.html#Llvm_NET_Context_Float128Type">Float128Type</a>
+        </td>
+        <td class="markdown level1 summary"><p>Gets the LLVM 128-Bit floating point type</p>
 </td>
       </tr>
       <tr>
@@ -3717,6 +3738,13 @@ state and any number of other undefined issues.</p></div></p>
 </td>
       </tr>
       <tr>
+        <td id="Llvm_NET_Context_MetadataType" data-uid="Llvm.NET.Context.MetadataType">
+          <a class="xref" href="Llvm.NET.Context.MetadataType.html#Llvm_NET_Context_MetadataType">MetadataType</a>
+        </td>
+        <td class="markdown level1 summary"><p>Gets the LLVM Metadata type for this context</p>
+</td>
+      </tr>
+      <tr>
         <td id="Llvm_NET_Context_Modules" data-uid="Llvm.NET.Context.Modules">
           <a class="xref" href="Llvm.NET.Context.Modules.html#Llvm_NET_Context_Modules">Modules</a>
         </td>
@@ -3731,10 +3759,31 @@ state and any number of other undefined issues.</p></div></p>
 </td>
       </tr>
       <tr>
+        <td id="Llvm_NET_Context_PpcFloat128Type" data-uid="Llvm.NET.Context.PpcFloat128Type">
+          <a class="xref" href="Llvm.NET.Context.PpcFloat128Type.html#Llvm_NET_Context_PpcFloat128Type">PpcFloat128Type</a>
+        </td>
+        <td class="markdown level1 summary"><p>Gets the LLVM PPC 128-bit floating point type</p>
+</td>
+      </tr>
+      <tr>
+        <td id="Llvm_NET_Context_TokenType" data-uid="Llvm.NET.Context.TokenType">
+          <a class="xref" href="Llvm.NET.Context.TokenType.html#Llvm_NET_Context_TokenType">TokenType</a>
+        </td>
+        <td class="markdown level1 summary"><p>Gets the LLVM token type for this context</p>
+</td>
+      </tr>
+      <tr>
         <td id="Llvm_NET_Context_VoidType" data-uid="Llvm.NET.Context.VoidType">
           <a class="xref" href="Llvm.NET.Context.VoidType.html#Llvm_NET_Context_VoidType">VoidType</a>
         </td>
         <td class="markdown level1 summary"><p>Gets the LLVM void type for this context</p>
+</td>
+      </tr>
+      <tr>
+        <td id="Llvm_NET_Context_X86Float80Type" data-uid="Llvm.NET.Context.X86Float80Type">
+          <a class="xref" href="Llvm.NET.Context.X86Float80Type.html#Llvm_NET_Context_X86Float80Type">X86Float80Type</a>
+        </td>
+        <td class="markdown level1 summary"><p>Gets the LLVM X86 80-bit floating point type for this context</p>
 </td>
       </tr>
   </table>
@@ -4040,7 +4089,7 @@ state and any number of other undefined issues.</p></div></p>
           </div>
           <div class="contribution-panel mobile-hide">
               <a href="https://github.com/UbiquityDotNET/Llvm.NET/new/master/apiSpec/new?filename=Llvm_NET_Context.md&amp;value=---%0Auid%3A%20Llvm.NET.Context%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A" title="Improve this Doc" class="fab btn-warning pull-right"><i class="glyphicon glyphicon-pencil"></i></a>
-              <a href="https://github.com/UbiquityDotNET/Llvm.NET/blob/master/src/Llvm.NET/Context.cs/#L45" title="View Source" class="fab btn-info pull-right"><i class="fa fa-code"></i></a>
+              <a href="https://github.com/UbiquityDotNET/Llvm.NET/blob/master/src/Llvm.NET/Context.cs/#L41" title="View Source" class="fab btn-info pull-right"><i class="fa fa-code"></i></a>
           </div>
           
           <div class="hidden-sm col-md-2" role="complementary">
@@ -4059,7 +4108,7 @@ state and any number of other undefined issues.</p></div></p>
             <span class="pull-right">
               <a href="#top">Back to top</a>
             </span>
-            Copyright (C) 2017, Dot NET Foundation<br><strong>Build:</strong> 5.0.1-alpha--ci-BLD.437324408
+            Copyright (C) 2017, Dot NET Foundation<br><strong>Build:</strong> 6.0.0-alpha--ci-BLD.437793062
             
           </div>
         </div>
