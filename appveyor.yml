@@ -41,5 +41,9 @@ test_script:
 artifacts:
   - path: .\BuildOutput\Nuget\LLvm.NET.*.nupkg
   - path: .\BuildOutput\Nuget\LibLLVM.NET.*.nupkg
-  - path: .\**.binlog
+
+on_failure:
+   - 7z a buildlogs.zip *.binlog
+   - appveyor PushArtifact buildlogs.zip
+
   
