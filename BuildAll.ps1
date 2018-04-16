@@ -85,6 +85,10 @@ try
     Write-Information "Build Parameters:"
     Write-Information ($BuildInfo | Format-Table | Out-String)
 
+    
+    # block vcpkg in AppVeyor as it is causing interference with link, preventing resolution of PDBs
+    $env:VCLibPackagePath= Normalize-Path .\BuildOutput
+    
     # Need to invoke NuGet directly for restore of vcxproj as /t:Restore target doesn't support packages.config
     # and PackageReference isn't supported for native projects
     Write-Information "Restoring NuGet Packages for LibLLVM.vcxproj"
@@ -92,6 +96,9 @@ try
 
     Write-Information "Building LibLLVM"
     Invoke-MSBuild -Targets Build -Project src\LibLLVM\LibLLVM.vcxproj -Properties $msBuildProperties -LoggerArgs $msbuildLoggerArgs
+
+    Write-Information "Packing LibLLVM"
+    Invoke-MSBuild -Targets Pack -Project src\LibLLVM\LibLLVM.vcxproj -Properties $msBuildProperties -LoggerArgs $msbuildLoggerArgs
 
     Write-Information "Restoring NuGet Packages for Llvm.NET"
     Invoke-MSBuild -Targets Restore -Project src\Llvm.NET.sln -Properties $msBuildProperties -LoggerArgs $msbuildLoggerArgs
