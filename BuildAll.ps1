@@ -105,6 +105,11 @@ try
 
     Write-Information "Building Llvm.NET"
     Invoke-MSBuild -Targets Build -Project src\Llvm.NET.sln -Properties $msBuildProperties -LoggerArgs $msbuildLoggerArgs
+    
+    if( $env:APPVEYOR_PULL_REQUEST_NUMBER )
+    {
+        Push-AppveyorArtifact *.binlog
+    }
 }
 finally
 {
