@@ -108,7 +108,10 @@ try
     
     if( $env:APPVEYOR_PULL_REQUEST_NUMBER )
     {
-        Get-ChildItem *.binlog | Push-AppveyorArtifact
+        foreach( $item in Get-ChildItem *.binlog )
+        {
+            Push-AppveyorArtifact $item.FullName
+        }
     }
 }
 finally
