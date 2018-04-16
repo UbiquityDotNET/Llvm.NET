@@ -108,7 +108,7 @@ try
     
     if( $env:APPVEYOR_PULL_REQUEST_NUMBER )
     {
-        Push-AppveyorArtifact *.binlog
+        Get-ChildItem *.binlog | Push-AppveyorArtifact
     }
 }
 finally
