@@ -151,3 +151,4 @@ Tools/
 *.o
 *.s
 *.dgml
+*.binlog

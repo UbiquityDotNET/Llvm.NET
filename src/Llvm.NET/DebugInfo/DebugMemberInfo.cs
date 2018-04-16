@@ -9,7 +9,7 @@ namespace Llvm.NET.DebugInfo
     /// <summary>Describes a member/field of a type for creating debug information</summary>
     /// <remarks>
     /// <para>This class is used with <see cref="DebugStructType"/> to provide debug information for a type.</para>
-    /// <para>In order to support explicit layout structures the members relating to layout are all <see cref="System.Nullable{T}"/>.
+    /// <para>In order to support explicit layout structures the members relating to layout are all nullable.
     /// When they are null then modules <see cref="BitcodeModule.Layout"/> target specific layout information is used to determine
     /// layout details. Setting the layout members of this class to non-null will override that behavior to define explicit
     /// layout details.</para>

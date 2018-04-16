@@ -7,7 +7,6 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.IO;
 using System.Linq;
-using System.Reflection;
 using System.Runtime.InteropServices;
 
 namespace Llvm.NET.Native
@@ -27,7 +26,7 @@ namespace Llvm.NET.Native
 
             var searchCookies = ( from path in alternatePaths
                                   where Directory.Exists( path )
-                                  select AddDllDirectory( path )
+                                  select ( Cookie: AddDllDirectory( path ), Path: path )
                                 ).ToList( );
 
             try
@@ -36,7 +35,7 @@ namespace Llvm.NET.Native
                 if( moduleHandle == IntPtr.Zero )
                 {
                     int lasterror = Marshal.GetLastWin32Error( );
-                    string errMessage = $"System error occurred trying to load DLL {moduleName}.\n Source Module: '{Path.GetDirectoryName( Assembly.GetExecutingAssembly( ).Location )}'\n Search paths:\n {string.Join("\n", alternatePaths)}";
+                    string errMessage = $"System error occurred trying to load DLL {moduleName}.\n Search paths:\n {string.Join("\n", searchCookies.Select(p=>p.Path))}";
                     throw new Win32Exception( lasterror, errMessage );
                 }
 
@@ -46,7 +45,7 @@ namespace Llvm.NET.Native
             {
                 foreach( var c in searchCookies )
                 {
-                    RemoveDllDirectory( c );
+                    RemoveDllDirectory( c.Cookie );
                 }
             }
         }

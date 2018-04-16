@@ -22,25 +22,21 @@ namespace Llvm.NET
 {
     /// <summary>Encapsulates an LLVM context</summary>
     /// <remarks>
-    /// <para>A context in LLVM is a container for interning (LLVM refers
-    /// to this as "uniqueing") various types and values in the system. This
-    /// allows running multiple LLVM tool transforms etc.. on different threads
-    /// without causing them to collide namespaces and types even if they use
-    /// the same name (e.g. module one may have a type Foo, and so does module
-    /// two but they are completely distinct from each other)
-    /// </para>
-    /// <para>LLVM Debug information is ultimately all parented to a top level
-    /// <see cref="DICompileUnit"/> as the scope, and a compilation
-    /// unit is bound to a <see cref="BitcodeModule"/>, even though, technically
-    /// the types are owned by a Context. Thus to keep things simpler and help
-    /// make working with debug information easier. Lllvm.NET encapsulates the
-    /// native type and the debug type in separate classes that are instances
+    /// <para>A context in LLVM is a container for interning (LLVM refers to this as "uniqueing") various types
+    /// and values in the system. This allows running multiple LLVM tool transforms etc.. on different threads
+    /// without causing them to collide namespaces and types even if they use the same name (e.g. module one
+    /// may have a type Foo, and so does module two but they are completely distinct from each other)</para>
+    ///
+    /// <para>LLVM Debug information is ultimately all parented to a top level <see cref="DICompileUnit"/> as
+    /// the scope, and a compilation unit is bound to a <see cref="BitcodeModule"/>, even though, technically
+    /// the types are owned by a Context. Thus to keep things simpler and help make working with debug information
+    /// easier. Lllvm.NET encapsulates the native type and the debug type in separate classes that are instances
     /// of the <see cref="IDebugType{NativeT, DebugT}"/> interface </para>
-    /// <note type="note">It is important to be aware of the fact that a Context
-    /// is not thread safe. The context itself and the object instances it owns
-    /// are intended for use by a single thread only. Accessing and manipulating
-    /// LLVM objects from multiple threads may lead to race conditions corrupted
-    /// state and any number of other undefined issues.</note>
+    ///
+    /// <note type="note">It is important to be aware of the fact that a Context is not thread safe. The context
+    /// itself and the object instances it owns are intended for use by a single thread only. Accessing and
+    /// manipulating LLVM objects from multiple threads may lead to race conditions corrupted state and any number
+    /// of other undefined issues.</note>
     /// </remarks>
     public sealed class Context
         : DisposableObject
@@ -81,6 +77,21 @@ namespace Llvm.NET
 
         /// <summary>Gets the LLVM double precision floating point type for this context</summary>
         public ITypeRef DoubleType => TypeRef.FromHandle( LLVMDoubleTypeInContext( ContextHandle ) );
+
+        /// <summary>Gets the LLVM token type for this context</summary>
+        public ITypeRef TokenType => TypeRef.FromHandle( LLVMTokenTypeInContext( ContextHandle ) );
+
+        /// <summary>Gets the LLVM Metadata type for this context</summary>
+        public ITypeRef MetadataType => TypeRef.FromHandle( LLVMMetadataTypeInContext( ContextHandle ) );
+
+        /// <summary>Gets the LLVM X86 80-bit floating point type for this context</summary>
+        public ITypeRef X86Float80Type => TypeRef.FromHandle( LLVMX86FP80TypeInContext( ContextHandle ) );
+
+        /// <summary>Gets the LLVM 128-Bit floating point type</summary>
+        public ITypeRef Float128Type => TypeRef.FromHandle( LLVMFP128TypeInContext( ContextHandle ) );
+
+        /// <summary>Gets the LLVM PPC 128-bit floating point type</summary>
+        public ITypeRef PpcFloat128Type => TypeRef.FromHandle( LLVMPPCFP128TypeInContext( ContextHandle ) );
 
         /// <summary>Gets an enumerable collection of all the metadata created in this context</summary>
         public IEnumerable<LlvmMetadata> Metadata => MetadataCache;
@@ -427,7 +438,7 @@ namespace Llvm.NET
             element0.ValidateNotNull( nameof( element0 ) );
             elements.ValidateNotNull( nameof( elements ) );
 
-            LLVMTypeRef[ ] llvmArgs = new LLVMTypeRef[ elements.Length + 1 ];
+            var llvmArgs = new LLVMTypeRef[ elements.Length + 1 ];
             llvmArgs[ 0 ] = element0.GetTypeRef( );
             for( int i = 1; i < llvmArgs.Length; ++i )
             {
@@ -592,7 +603,7 @@ namespace Llvm.NET
         /// <summary>Creates a new <see cref="ConstantInt"/> with a bit length of 64</summary>
         /// <param name="bitWidth">Bit width of the integer</param>
         /// <param name="constValue">Value for the constant</param>
-        /// <param name="signExtend">flag to indicate if the const value should be sign extended</param>
+        /// <param name="signExtend">flag to indicate if the constant value should be sign extended</param>
         /// <returns><see cref="ConstantInt"/> representing the value</returns>
         public Constant CreateConstant( uint bitWidth, UInt64 constValue, bool signExtend )
         {
@@ -851,7 +862,7 @@ namespace Llvm.NET
         /// <param name="disposing">Flag to indicate if this object is being disposed</param>
         protected override void InternalDispose( bool disposing )
         {
-            // disconnect all modules as some may be sharedmodules shared to a JIT
+            // disconnect all modules as some may be shared modules shared to a JIT
             foreach( var module in Modules )
             {
                 module.Dispose( );

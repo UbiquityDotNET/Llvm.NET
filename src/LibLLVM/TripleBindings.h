@@ -9,6 +9,7 @@ enum LLVMTripleArchType
     LlvmTripleArchType_armeb,          // ARM (big endian): armeb
     LlvmTripleArchType_aarch64,        // AArch64 (little endian): aarch64
     LlvmTripleArchType_aarch64_be,     // AArch64 (big endian): aarch64_be
+    LlvmTripleArchType_arc,            // Synopsis ARC
     LlvmTripleArchType_avr,            // AVR: Atmel AVR microcontroller
     LlvmTripleArchType_bpfel,          // eBPF or extended BPF or 64-bit BPF (little endian)
     LlvmTripleArchType_bpfeb,          // eBPF or extended BPF or 64-bit BPF (big endian)
@@ -56,6 +57,7 @@ enum LLVMTripleArchType
 enum LLVMTripleSubArchType
 {
     LlvmTripleSubArchType_NoSubArch,
+    LlvmTripleSubArchType_ARMSubArch_v8_3a,
     LlvmTripleSubArchType_ARMSubArch_v8_2a,
     LlvmTripleSubArchType_ARMSubArch_v8_1a,
     LlvmTripleSubArchType_ARMSubArch_v8,
@@ -97,7 +99,8 @@ enum LLVMTripleVendorType
     LlvmTripleVendorType_Myriad,
     LlvmTripleVendorType_AMD,
     LlvmTripleVendorType_Mesa,
-    LlvmTripleVendorType_LastVendorType = LlvmTripleVendorType_Mesa
+    LlvmTripleVendorType_SUSE,
+    LlvmTripleVendorType_LastVendorType = LlvmTripleVendorType_SUSE
 };
 
 enum LLVMTripleOSType
@@ -131,7 +134,9 @@ enum LLVMTripleOSType
     LlvmTripleOSType_TvOS,       // Apple tvOS
     LlvmTripleOSType_WatchOS,    // Apple watchOS
     LlvmTripleOSType_Mesa3D,
-    LlvmTripleOSType_LastOSType = LlvmTripleOSType_Mesa3D
+    LlvmTripleOSType_Contiki,
+    LLvmTropleOSType_AMDPAL,
+    LlvmTripleOSType_LastOSType = LLvmTropleOSType_AMDPAL
 };
 
 enum LLVMTripleEnvironmentType

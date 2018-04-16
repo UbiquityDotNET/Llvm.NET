@@ -29,7 +29,6 @@ namespace Kaleidoscope.Runtime
         /// In release builds this is a NOP due to the use of the <see cref="ConditionalAttribute"/>
         /// </note>
         /// </remarks>
-        [Conditional( "DEBUG" )]
         public static void WaitForDebugger( bool condition )
         {
             if(!condition || Debugger.IsAttached )

@@ -55,7 +55,10 @@ namespace Llvm.NET
             /// <summary>AArch64 (big endian): aarch64_be</summary>
             Aarch64_be = LLVMTripleArchType.aarch64_be,
 
-            /// <summary>AVR: Atmel AVR microcontroller</summary>
+            /// <summary>Synopsis ARC</summary>
+            Arc = LLVMTripleArchType.arc,
+
+            /// <summary>AVR: Atmel AVR micro-controller</summary>
             Avr = LLVMTripleArchType.avr,
 
             /// <summary>eBPF or extended BPF or 64-bit BPF (little endian)</summary>
@@ -199,6 +202,9 @@ namespace Llvm.NET
             /// <summary>No sub architecture</summary>
             NoSubArch = LLVMTripleSubArchType.NoSubArch,
 
+            /// <summary>ARM v8.3a</summary>
+            ARMSubArch_v8_3a = LLVMTripleSubArchType.ARMSubArch_v8_3a,
+
             /// <summary>ARM v8.2a</summary>
             ARMSubArch_v8_2a = LLVMTripleSubArchType.ARMSubArch_v8_2a,
 
@@ -312,7 +318,10 @@ namespace Llvm.NET
             AMD = LLVMTripleVendorType.AMD,
 
             /// <summary>Mesa</summary>
-            Mesa = LLVMTripleVendorType.Mesa
+            Mesa = LLVMTripleVendorType.Mesa,
+
+            /// <summary>SUSE</summary>
+            SUSE = LLVMTripleVendorType.SUSE
         }
 
         /// <summary>OS type for the triple</summary>
@@ -381,9 +390,6 @@ namespace Llvm.NET
             /// <summary>CNK</summary>
             CNK = LLVMTripleOSType.CNK,
 
-            /// <summary>Bitrig</summary>
-            Bitrig = LLVMTripleOSType.Bitrig,
-
             /// <summary>AIX</summary>
             AIX = LLVMTripleOSType.AIX,
 
@@ -412,7 +418,10 @@ namespace Llvm.NET
             Mesa3D = LLVMTripleOSType.Mesa3D,
 
             /// <summary>Contiki</summary>
-            Contiki = LLVMTripleOSType.Contiki
+            Contiki = LLVMTripleOSType.Contiki,
+
+            /// <summary>AMD PAL Runtime</summary>
+            AmdPAL = LLVMTripleOSType.AMDPAL
         }
 
         /// <summary>Triple Environment type</summary>
@@ -423,6 +432,9 @@ namespace Llvm.NET
 
             /// <summary>GNU</summary>
             GNU = LLVMTripleEnvironmentType.GNU,
+
+            /// <summary>GNUABIN32</summary>
+            GNUABIN32 = LLVMTripleEnvironmentType.GNUABIN32,
 
             /// <summary>GNU ABI 64-bit</summary>
             GNUABI64 = LLVMTripleEnvironmentType.GNUABI64,

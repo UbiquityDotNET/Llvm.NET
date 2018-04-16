@@ -808,27 +808,6 @@ namespace Llvm.NET.Native
         [DllImport( LibraryPath, EntryPoint = "LLVMIntTypeInContext", CallingConvention = CallingConvention.Cdecl )]
         internal static extern LLVMTypeRef LLVMIntTypeInContext( LLVMContextRef @C, uint @NumBits );
 
-        [DllImport( LibraryPath, EntryPoint = "LLVMInt1Type", CallingConvention = CallingConvention.Cdecl )]
-        internal static extern LLVMTypeRef LLVMInt1ype( );
-
-        [DllImport( LibraryPath, EntryPoint = "LLVMInt8Type", CallingConvention = CallingConvention.Cdecl )]
-        internal static extern LLVMTypeRef LLVMInt8ype( );
-
-        [DllImport( LibraryPath, EntryPoint = "LLVMInt16Type", CallingConvention = CallingConvention.Cdecl )]
-        internal static extern LLVMTypeRef LLVMInt16Type( );
-
-        [DllImport( LibraryPath, EntryPoint = "LLVMInt32Type", CallingConvention = CallingConvention.Cdecl )]
-        internal static extern LLVMTypeRef LLVMInt32Type( );
-
-        [DllImport( LibraryPath, EntryPoint = "LLVMInt64Type", CallingConvention = CallingConvention.Cdecl )]
-        internal static extern LLVMTypeRef LLVMInt64Type( );
-
-        [DllImport( LibraryPath, EntryPoint = "LLVMInt128Type", CallingConvention = CallingConvention.Cdecl )]
-        internal static extern LLVMTypeRef LLVMInt128Type( );
-
-        [DllImport( LibraryPath, EntryPoint = "LLVMIntType", CallingConvention = CallingConvention.Cdecl )]
-        internal static extern LLVMTypeRef LLVMIntType( uint @NumBits );
-
         [DllImport( LibraryPath, EntryPoint = "LLVMGetIntTypeWidth", CallingConvention = CallingConvention.Cdecl )]
         internal static extern uint LLVMGetIntTypeWidth( LLVMTypeRef @IntegerTy );
 
@@ -841,32 +820,20 @@ namespace Llvm.NET.Native
         [DllImport( LibraryPath, EntryPoint = "LLVMDoubleTypeInContext", CallingConvention = CallingConvention.Cdecl )]
         internal static extern LLVMTypeRef LLVMDoubleTypeInContext( LLVMContextRef @C );
 
+        [DllImport( LibraryPath, EntryPoint = "LLVMTokenTypeInContext", CallingConvention = CallingConvention.Cdecl )]
+        internal static extern LLVMTypeRef LLVMTokenTypeInContext( LLVMContextRef C );
+
+        [DllImport( LibraryPath, EntryPoint = "LLVMMetadataTypeInContext", CallingConvention = CallingConvention.Cdecl )]
+        internal static extern LLVMTypeRef LLVMMetadataTypeInContext( LLVMContextRef C );
+
         [DllImport( LibraryPath, EntryPoint = "LLVMX86FP80TypeInContext", CallingConvention = CallingConvention.Cdecl )]
-        internal static extern LLVMTypeRef LLVMX8FP80TypeInContext( LLVMContextRef @C );
+        internal static extern LLVMTypeRef LLVMX86FP80TypeInContext( LLVMContextRef @C );
 
         [DllImport( LibraryPath, EntryPoint = "LLVMFP128TypeInContext", CallingConvention = CallingConvention.Cdecl )]
-        internal static extern LLVMTypeRef LLVMFP18TypeInContext( LLVMContextRef @C );
+        internal static extern LLVMTypeRef LLVMFP128TypeInContext( LLVMContextRef @C );
 
         [DllImport( LibraryPath, EntryPoint = "LLVMPPCFP128TypeInContext", CallingConvention = CallingConvention.Cdecl )]
-        internal static extern LLVMTypeRef LLVMPPCFP18TypeInContext( LLVMContextRef @C );
-
-        [DllImport( LibraryPath, EntryPoint = "LLVMHalfType", CallingConvention = CallingConvention.Cdecl )]
-        internal static extern LLVMTypeRef LLVMHalfType( );
-
-        [DllImport( LibraryPath, EntryPoint = "LLVMFloatType", CallingConvention = CallingConvention.Cdecl )]
-        internal static extern LLVMTypeRef LLVMFloatType( );
-
-        [DllImport( LibraryPath, EntryPoint = "LLVMDoubleType", CallingConvention = CallingConvention.Cdecl )]
-        internal static extern LLVMTypeRef LLVMDoubleType( );
-
-        [DllImport( LibraryPath, EntryPoint = "LLVMX86FP80Type", CallingConvention = CallingConvention.Cdecl )]
-        internal static extern LLVMTypeRef LLVMX8FP80Type( );
-
-        [DllImport( LibraryPath, EntryPoint = "LLVMFP128Type", CallingConvention = CallingConvention.Cdecl )]
-        internal static extern LLVMTypeRef LLVMFP18Type( );
-
-        [DllImport( LibraryPath, EntryPoint = "LLVMPPCFP128Type", CallingConvention = CallingConvention.Cdecl )]
-        internal static extern LLVMTypeRef LLVMPPCFP18Type( );
+        internal static extern LLVMTypeRef LLVMPPCFP128TypeInContext( LLVMContextRef @C );
 
         [DllImport( LibraryPath, EntryPoint = "LLVMFunctionType", CallingConvention = CallingConvention.Cdecl )]
         internal static extern LLVMTypeRef LLVMFunctionType( LLVMTypeRef @ReturnType, out LLVMTypeRef @ParamTypes, uint @ParamCount, [MarshalAs( UnmanagedType.Bool )]bool @IsVarArg );

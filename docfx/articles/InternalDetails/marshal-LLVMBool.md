@@ -5,13 +5,13 @@ simplest sense an LLVMBool is a representation of a bi-modal value. However, the
 problematic part is that the semantics for the value are different depending on any
 given API. That is, in some cases LLVMBool != 0 is a failure case, and others it is
 a success! The confusion stems from LLVMBool serving a dual role:
-  1) A real boolean true/false
-  2) A status code where 0 == success and non-zero indicates an error
+1. A real boolean true/false
+2. A status code where 0 == success and non-zero indicates an error
 
 This duality is confusing and can lead to subtle errors in usage of APIs if translated
 directly into language projections. This makes hands-off automatic generation of P/Invoke
-calls to LLVM either imposible or error prone. Thus, Llvm.NET uses manually updated P/Invoke
-calls that were initially auto generated to get things started but not maintined via any
+calls to LLVM either impossible or error prone. Thus, Llvm.NET uses manually updated P/Invoke
+calls that were initially auto generated to get things started but not maintained via any
 generation tools. In the case of LLVMBool Llvm.NET uses distinct types for the different 
 semantics and declares the interop signatures with the form appropriate to the function
 being called. The two types are LLVMStatus and standard `System.Boolean` or `bool` in C#
@@ -26,7 +26,7 @@ internal static extern LLVMStatus LLVMWriteBitcodeToFD( LLVMModuleRef @M, int @F
 ```
 
 ## LLVMBool
-This is the traditioanl boolean value where 0==false and non-zero is true and uses the
+This is the traditional boolean value where 0==false and non-zero is true and uses the
 standard boolean marshaling support for System.Boolean
 ```C#
 [DllImport( LibraryPath, EntryPoint = "LLVMTypeIsSized", CallingConvention = CallingConvention.Cdecl )]

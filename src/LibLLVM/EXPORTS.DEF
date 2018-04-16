@@ -116,6 +116,7 @@ LLVMDIBuilderDestroy
 LLVMDIBuilderFinalize
 LLVMDIBuilderFinalizeSubProgram
 LLVMDIBuilderCreateCompileUnit
+LLVMDIBuilderCreateCompileUnit2
 LLVMDIBuilderCreateFile
 LLVMDIBuilderCreateLexicalBlock
 LLVMDIBuilderCreateLexicalBlockFile
@@ -449,6 +450,16 @@ LLVMCreateStringAttribute
 LLVMDeleteBasicBlock
 LLVMDeleteFunction
 LLVMDeleteGlobal
+LLVMDebugMetadataVersion
+LLVMGetModuleDebugMetadataVersion
+LLVMStripModuleDebugInfo
+LLVMCreateDIBuilderDisallowUnresolved
+LLVMCreateDIBuilder
+LLVMDisposeDIBuilder
+LLVMDIBuilderFinalize
+LLVMDIBuilderCreateCompileUnit
+LLVMDIBuilderCreateFile
+LLVMDIBuilderCreateDebugLocation
 LLVMDisposeBuilder
 LLVMDisposeMemoryBuffer
 LLVMDisposeMessage
@@ -798,6 +809,8 @@ LLVMStructType
 LLVMStructTypeInContext
 LLVMTypeIsSized
 LLVMTypeOf
+LLVMTokenTypeInContext
+LLVMMetadataTypeInContext
 LLVMValueAsBasicBlock
 LLVMValueAsMetadata
 LLVMValueIsBasicBlock
@@ -938,10 +951,9 @@ LLVMOrcGetMangledSymbol
 LLVMOrcGetSymbolAddress
 LLVMOrcMakeSharedModule
 LLVMOrcDisposeSharedModuleRef
-LLVMOrcMakeSharedObjectBuffer
-LLVMOrcDisposeSharedObjectBufferRef
 LLVMOrcRemoveModule
 LLVMOrcSetIndirectStubPointer
+LLVMOrcAddObjectFile
 LLVMLinkInOrcMCJITReplacement
 LLVMInitializePowerPCAsmParser
 LLVMInitializePowerPCAsmPrinter
@@ -954,7 +966,6 @@ LLVMAddAlignmentFromAssumptionsPass
 LLVMAddBasicAliasAnalysisPass
 LLVMAddBitTrackingDCEPass
 LLVMAddCFGSimplificationPass
-LLVMAddLateCFGSimplificationPass
 LLVMAddConstantPropagationPass
 LLVMAddCorrelatedValuePropagationPass
 LLVMAddDeadStoreEliminationPass

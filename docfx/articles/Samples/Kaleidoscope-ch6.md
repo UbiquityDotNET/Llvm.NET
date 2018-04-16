@@ -11,7 +11,7 @@ begging really, for a solution. The challenge to come up with a good solution wa
 User defined operators in Kaleidoscope are a bit unique. Unlike C++ and other similar languages the precedence of the user defined operators are not fixed. Though,
 the built-in operators all use a fixed precedence. That poses some interesting challenges for a parser to dynamically adapt to the state of the language runtime
 so that it can correctly evaluate the operator expressions. Making that work while using ANTLR requires looking under the hood to how ANTLR4 ordinarily handles
-precedence. A full treatise on the subject is outside the scope of this tutorial, but the [ANTLR Github site](https://github.com/antlr/antlr4/blob/master/doc/left-recursion.md)
+precedence. A full treatise on the subject is outside the scope of this tutorial, but the [ANTLR GitHub site](https://github.com/antlr/antlr4/blob/master/doc/left-recursion.md)
 has a good description of the details of the precedence climbing approach used in ANTLR. The general idea is that the expression rule takes an additional precedence
 argument and the operator expressions include a semantic predicate that tests the current precedence level. If the current level is less than or equal to the current
 level then that operator rule expression is allowed to match the input. Otherwise, the rule is skipped. Usually this is all hidden by the implicit support for
@@ -140,8 +140,8 @@ update the runtime table accordingly.
 
 [!code-csharp[UserOperatorListener](../../../Samples/Kaleidoscope/Kaleidoscope.Runtime/KaleidoscopeUserOperatorListener.cs)]
 
-With the use of the listener the dynamic precedence is contained in the parsing allowing the generator and later stages to remain blissfully ignorant
-of the issue of precedence. Operator definitions are treated as function definitions.
+With the use of the listener the dynamic precedence is contained in the parser which allows the generator and later stages to remain blissfully ignorant
+of the issue of precedence. In the generator operator definitions are simply treated as function definitions with special naming.
 
 [!code-csharp[VisitUserOperators](../../../Samples/Kaleidoscope/Chapter6/CodeGenerator.cs#VisitUserOperators)]
 
@@ -155,7 +155,7 @@ That completes the support for user defined operators.
 The following example is a complete program in Kaleidoscope that will generate a textual representation
 of the classic Mandelbrot Set using all of the features of the language.
 
-```Kaleidoscope
+```kaleidoscope
 def unary!(v)
   if v then
     0

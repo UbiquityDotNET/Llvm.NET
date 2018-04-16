@@ -172,7 +172,8 @@ namespace Llvm.NET.Native
         armeb,          // ARM (big endian): armeb
         aarch64,        // AArch64 (little endian): aarch64
         aarch64_be,     // AArch64 (big endian): aarch64_be
-        avr,            // AVR: Atmel AVR microcontroller
+        arc,            // ARC: Synopsys ARC
+        avr,            // AVR: Atmel AVR Micro-controller
         bpfel,          // eBPF or extended BPF or 64-bit BPF (little endian)
         bpfeb,          // eBPF or extended BPF or 64-bit BPF (big endian)
         hexagon,        // Hexagon: hexagon
@@ -223,6 +224,7 @@ namespace Llvm.NET.Native
     internal enum LLVMTripleSubArchType
     {
         NoSubArch,
+        ARMSubArch_v8_3a,
         ARMSubArch_v8_2a,
         ARMSubArch_v8_1a,
         ARMSubArch_v8,
@@ -264,7 +266,8 @@ namespace Llvm.NET.Native
         Myriad,
         AMD,
         Mesa,
-        LastVendorType = Mesa
+        SUSE,
+        LastVendorType = SUSE
     }
 
     internal enum LLVMTripleOSType
@@ -291,7 +294,6 @@ namespace Llvm.NET.Native
         RTEMS,
         NaCl,       // Native Client
         CNK,        // BG/P Compute-Node Kernel
-        Bitrig,
         AIX,
         CUDA,       // NVIDIA CUDA
         NVCL,       // NVIDIA OpenCL
@@ -302,13 +304,15 @@ namespace Llvm.NET.Native
         WatchOS,    // Apple watchOS
         Mesa3D,
         Contiki,
-        LastOSType = Contiki
+        AMDPAL,
+        LastOSType = AMDPAL
     }
 
     internal enum LLVMTripleEnvironmentType
     {
         UnknownEnvironment,
         GNU,
+        GNUABIN32,
         GNUABI64,
         GNUEABI,
         GNUEABIHF,
@@ -326,7 +330,8 @@ namespace Llvm.NET.Native
         AMDOpenCL,
         CoreCLR,
         OpenCL,
-        LastEnvironmentType = OpenCL
+        Simulator,
+        LastEnvironmentType = Simulator
     }
 
     internal enum LLVMTripleObjectFormatType

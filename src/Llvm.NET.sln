@@ -40,7 +40,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Repo Items", "Repo Items", 
 		..\BuildAll.ps1 = ..\BuildAll.ps1
 		..\Directory.Build.props = ..\Directory.Build.props
 		..\Directory.Build.targets = ..\Directory.Build.targets
-		..\docs-appveyor.yml = ..\docs-appveyor.yml
 		..\GOVERNANCE.md = ..\GOVERNANCE.md
 		..\Invoke-UnitTests.ps1 = ..\Invoke-UnitTests.ps1
 		..\LICENSE.md = ..\LICENSE.md

@@ -72,7 +72,7 @@ generated anonymous functions removed.
 [!code-csharp[Generate](../../../Samples/Kaleidoscope/Chapter8/CodeGenerator.cs#Generate)]
 
 Most of the rest of the changes are pretty straightforward following the steps listed previously. The larger
-changes are shown here. You can run your favorite diff tool between the two sample folders to see all the little
+                 InstructionBuilder.Return( funcReturn );
 changes.
 
 ### VisitTopLevelExpression

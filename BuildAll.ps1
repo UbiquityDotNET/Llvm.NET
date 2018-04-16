@@ -47,7 +47,7 @@ try
 
     if( $env:CI -and !(Test-Path ".\BuildOutput\docs\.git" -PathType Container))
     {
-        Write-Information "Cloning Docs repo"
+        Write-Information "Cloning Docs repository"
         pushd BuildOutput -ErrorAction Stop
         try
         {
@@ -85,19 +85,35 @@ try
     Write-Information "Build Parameters:"
     Write-Information ($BuildInfo | Format-Table | Out-String)
 
+    
+    # block vcpkg in AppVeyor as it is causing interference with link, preventing resolution of PDBs
+    $env:VCLibPackagePath= Normalize-Path .\BuildOutput
+    
     # Need to invoke NuGet directly for restore of vcxproj as /t:Restore target doesn't support packages.config
     # and PackageReference isn't supported for native projects
     Write-Information "Restoring NuGet Packages for LibLLVM.vcxproj"
     Invoke-NuGet restore src\LibLLVM\LibLLVM.vcxproj -PackagesDirectory $buildPaths.NuGetRepositoryPath -Verbosity quiet
 
+
     Write-Information "Building LibLLVM"
-    Invoke-MSBuild -Targets Build -Project src\LibLLVM\MultiPlatformBuild.vcxproj -Properties $msBuildProperties -LoggerArgs $msbuildLoggerArgs
+    Invoke-MSBuild -Targets Build -Project src\LibLLVM\LibLLVM.vcxproj -Properties $msBuildProperties -LoggerArgs ($msbuildLoggerArgs + @("/bl:LibLLVM-build.binlog") )
+
+    Write-Information "Packing LibLLVM"
+    Invoke-MSBuild -Targets Pack -Project src\LibLLVM\LibLLVM.vcxproj -Properties $msBuildProperties -LoggerArgs $msbuildLoggerArgs ($msbuildLoggerArgs + @("/bl:LibLLVM-pack.binlog") )
 
     Write-Information "Restoring NuGet Packages for Llvm.NET"
-    Invoke-MSBuild -Targets Restore -Project src\Llvm.NET.sln -Properties $msBuildProperties -LoggerArgs $msbuildLoggerArgs
+    Invoke-MSBuild -Targets Restore -Project src\Llvm.NET.sln -Properties $msBuildProperties -LoggerArgs $msbuildLoggerArgs ($msbuildLoggerArgs + @("/bl:Llvm.NET-restore.binlog") )
 
     Write-Information "Building Llvm.NET"
-    Invoke-MSBuild -Targets Build -Project src\Llvm.NET.sln -Properties $msBuildProperties -LoggerArgs $msbuildLoggerArgs
+    Invoke-MSBuild -Targets Build -Project src\Llvm.NET.sln -Properties $msBuildProperties -LoggerArgs $msbuildLoggerArgs ($msbuildLoggerArgs + @("/bl:Llvm.NET-build.binlog") )
+    
+    if( $env:APPVEYOR_PULL_REQUEST_NUMBER )
+    {
+        foreach( $item in Get-ChildItem *.binlog )
+        {
+            Push-AppveyorArtifact $item.FullName
+        }
+    }
 }
 finally
 {

@@ -4,7 +4,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using Antlr4.Runtime;
@@ -308,7 +307,7 @@ namespace Kaleidoscope
             {
                 NamedValues[ varName ] = allocaVar;
 
-                // Emit the body of the loop.  This, like any other expr, can change the
+                // Emit the body of the loop.  This, like any other expression, can change the
                 // current BB.  Note that we ignore the value computed by the body, but don't
                 // allow an error.
                 if( context.BodyExpression.Accept( this ) == null )
