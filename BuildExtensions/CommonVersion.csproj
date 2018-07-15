@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
     <!--
     This Project is used by the build scripts in automated builds to generate version information used
     for all projects in the build.
@@ -9,17 +9,17 @@
         <NoCommonAnalyzers>true</NoCommonAnalyzers>
     </PropertyGroup>
     <ItemGroup>
-        <PackageReference Include="CSemVer.Build.Tasks" Version="1.0.2-beta--ci-BLD.427428397" />
+        <PackageReference Include="CSemVer.Build.Tasks" Version="2.0.0-beta.2.0.ci-BLD.443713343" />
     </ItemGroup>
     <Target Name="GenerateVersionJson" DependsOnTargets="PrepareVersioningForBuild">
         <ItemGroup>
-            <JsonLines Include="{"/>
-            <JsonLines Include='  "FullBuildNumber": "$(FullBuildNumber)",'/>
-            <JsonLines Include='  "FileVersionMajor": "$(FileVersionMajor)",'/>
-            <JsonLines Include='  "FileVersionMinor": "$(FileVersionMinor)",'/>
-            <JsonLines Include='  "FileVersionBuild": "$(FileVersionBuild)",'/>
-            <JsonLines Include='  "FileVersionRevision": "$(FileVersionRevision)"'/>
-            <JsonLines Include="}"/>
+            <JsonLines Include="{" />
+            <JsonLines Include="  &quot;FullBuildNumber&quot;: &quot;$(FullBuildNumber)&quot;," />
+            <JsonLines Include="  &quot;FileVersionMajor&quot;: &quot;$(FileVersionMajor)&quot;," />
+            <JsonLines Include="  &quot;FileVersionMinor&quot;: &quot;$(FileVersionMinor)&quot;," />
+            <JsonLines Include="  &quot;FileVersionBuild&quot;: &quot;$(FileVersionBuild)&quot;," />
+            <JsonLines Include="  &quot;FileVersionRevision&quot;: &quot;$(FileVersionRevision)&quot;" />
+            <JsonLines Include="}" />
         </ItemGroup>
         <WriteLinesToFile File="$(BaseBuildOutputPath)GeneratedVersion.json" Overwrite="true" Lines="@(JsonLines)" />
     </Target>
