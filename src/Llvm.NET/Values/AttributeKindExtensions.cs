@@ -639,7 +639,7 @@ namespace Llvm.NET.Values
             return AttribIdToKindMap.Value.ToDictionary( kvp => kvp.Value, kvp => kvp.Key );
         }
 
-        private static string[ ] KnownAttributeNames =
+        private static readonly string[ ] KnownAttributeNames =
         {
             string.Empty,
             "align",

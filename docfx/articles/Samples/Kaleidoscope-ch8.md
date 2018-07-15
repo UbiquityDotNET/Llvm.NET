@@ -4,11 +4,12 @@ by generating target specific native object files.
 
 ## Choosing a target
 LLVM has built-in support for cross-compilation. This allows compiling to the architecture of the platform
-you run the compiler on or, just as easily, for some other architecture. For the Kaleidoscope tutorial we'll
-focus on just the native target the compiler is running on.
+you run the compiler on or, just as easily, for some other architecture. For the Kaleidoscope tutorial
+we'll focus on just the native target the compiler is running on.
 
-LLVM uses a "Triple" string to describe the target used for code generation. This takes the form `<arch><sub>-<vendor>-<sys>-<abi>`
-(see the description of the [Triple](xref:Llvm.NET.Triple) type for more details)
+LLVM uses a "Triple" string to describe the target used for code generation. This takes the form
+`<arch><sub>-<vendor>-<sys>-<abi>` (see the description of the [Triple](xref:Llvm.NET.Triple) type for
+more details)
 
 Fortunately, it is normally not required to build such strings directly. 
 
@@ -18,7 +19,7 @@ Read Evaluate Print Loop (REPL). So the grammar focused on a top level rule "rep
 expressions one at a time. For native compilation this complicates the process of parsing and processing a
 complete file. To handle these two distinct scenarios the grammar has different rules. For the interactive
 scenario the previously mentioned "repl" rule is used. When parsing a full source file the "fullsrc" rule
-is used.
+is used as the start.
 
 ```antlr
 // Full source parse accepts a series of definitions or prototypes, all top level expressions
@@ -29,7 +30,8 @@ fullsrc
 
 This rule simply accepts any number of expressions so that a single source file is parsed to a single
 complete parse tree. (This particular point will become even more valuable when generating debug information
-in [Chapter 9](Kaleidoscope-ch9.md) as the parse tree nodes contain the source location information based on the input stream).
+in [Chapter 9](Kaleidoscope-ch9.md) as the parse tree nodes contain the source location information based
+on the original input stream).
 
 ## Code Generation Changes
 The changes in code generation are fairly straight forward and consist of the following basic steps.
@@ -42,11 +44,13 @@ previously generated anonymous expressions.
 
 Most of these steps are pretty straight forward. The anonymous function handling is a bit distinct.
 Since the language syntax allows anonymous expressions throughout the source file, and they don't
-actually execute during generation they need to be organized into an executable form. Thus, a new
-list of the generated functions is maintained and after the tree is generated a new main() function
+actually execute during generation - they need to be organized into an executable form. Thus, a new
+list of the generated functions is maintained and, after the tree is generated, a new main() function
 is created and a call to each anonymous expression is made with a second call to printd() to show
 the results - just like they would appear if typed in an interactive console. A trick used in the
-code generation is to mark each of the anonymous functions as private and always inline. 
+code generation is to mark each of the anonymous functions as private and always inline so that a
+simple optimization pass can eliminate the anonymous functions after inlining them all into the main()
+function. 
 
 ```C#
 // mark anonymous functions as always-inline and private so they can be inlined and then removed
@@ -62,7 +66,7 @@ else
 ```
 
 These settings are leveraged after generating from the tree to create the main function. A simple
-loop generate a call to each expression and then generates the call to print the results. Once, that
+loop generates a call to each expression along with the call to print the results. Once, that
 is completed a [ModulePassManager](xref:Llvm.NET.Transforms.ModulePassManager) is created to run
 the Always inliner and a global dead code elimination pass. The always inliner will inline the functions
 marked as inline and the dead code elimination pass will eliminate unused internal/private global symbols.
@@ -71,12 +75,10 @@ generated anonymous functions removed.
 
 [!code-csharp[Generate](../../../Samples/Kaleidoscope/Chapter8/CodeGenerator.cs#Generate)]
 
-Most of the rest of the changes are pretty straightforward following the steps listed previously. The larger
-                 InstructionBuilder.Return( funcReturn );
-changes.
+Most of the rest of the changes are pretty straightforward following the steps listed previously.
 
 ### VisitTopLevelExpression
-As previously mentioned when generating the top level expression the resulting function is added to the
+As previously mentioned, when generating the top level expression the resulting function is added to the
 list of anonymous functions to generate a call to it from main().
 
 [!code-csharp[VisitTopLevelExpression](../../../Samples/Kaleidoscope/Chapter8/CodeGenerator.cs#VisitTopLevelExpression)]
@@ -111,10 +113,10 @@ here either. The general plan is:
 [!code-csharp[Main](../../../Samples/Kaleidoscope/Chapter8/Program.cs#Main)]
 
 ## Conclusion
-That's it - seriously! Very little change was needed, mostly deleting code and adding the special handling of the
-anonymous expressions. Looking at the changes it should be clear that it is possible to support runtime choice
-between JIT and full native compilation instead of deleting the JIT code. (Implementing this feature is
-"left as an exercise for the reader" :wink:)
+That's it - seriously! Very little change was needed, mostly deleting code and adding the special handling
+of the anonymous expressions. Looking at the changes it should be clear that it is possible to support
+runtime choice between JIT and full native compilation instead of deleting the JIT code. (Implementing
+this feature is "left as an exercise for the reader" :wink:)
 
 
 

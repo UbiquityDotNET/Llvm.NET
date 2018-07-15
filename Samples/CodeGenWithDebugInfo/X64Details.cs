@@ -32,8 +32,7 @@ namespace TestDebugInfo
 
         public void AddABIAttributesForByValueStructure( Function function, int paramIndex )
         {
-            var argType = function.Parameters[ paramIndex ].NativeType as IPointerType;
-            if( argType == null || !argType.ElementType.IsStruct )
+            if( !( function.Parameters[ paramIndex ].NativeType is IPointerType argType ) || !argType.ElementType.IsStruct )
             {
                 throw new ArgumentException( "Signature for specified parameter must be a pointer to a structure" );
             }
@@ -60,8 +59,8 @@ namespace TestDebugInfo
                 ctx.CreateAttribute( AttributeKind.UWTable ),
             };
 
-        private static string Cpu = "x86-64";
-        private static string Features = "+sse,+sse2";
-        private static string TripleName = "x86_64-pc-windows-msvc18.0.0";
+        private const string Cpu = "x86-64";
+        private const string Features = "+sse,+sse2";
+        private const string TripleName = "x86_64-pc-windows-msvc18.0.0";
     }
 }

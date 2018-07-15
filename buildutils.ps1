@@ -210,9 +210,10 @@ function Get-BuildPaths([string]$repoRoot)
     $buildPaths.NuGetRepositoryPath = Normalize-Path (Join-Path $buildPaths.BuildOutputPath 'packages')
     $buildPaths.NuGetOutputPath = Normalize-Path (Join-Path $buildPaths.BuildOutputPath 'NuGet')
     $buildPaths.SrcRoot = Normalize-Path (Join-Path $repoRoot 'src')
-    $buildPaths.LibLLVMSrcRoot = Normalize-Path (Join-Path $buildPaths.SrcRoot 'LibLLVM')
+    $buildPaths.LlvmLibsRoot = Normalize-Path (Join-Path $buildPaths.repoRoot 'llvm')
     $buildPaths.BuildExtensionsRoot = ([IO.Path]::Combine( $repoRoot, 'BuildExtensions') )
     $buildPaths.GenerateVersionProj = ([IO.Path]::Combine( $buildPaths.BuildExtensionsRoot, 'CommonVersion.csproj') )
+    $buildPaths.DocsOutput = ([IO.Path]::Combine( $buildPaths.BuildOutputPath, 'docs') )
     return $buildPaths
 }
 
@@ -233,7 +234,7 @@ function Get-BuildInformation($buildPaths)
               FileVersionBuild = $semVer.FileVersionBuild
               FileVersionRevision = $semver.FileVersionRevision
               FileVersion= "$($semVer.FileVersionMajor).$($semVer.FileVersionMinor).$($semVer.FileVersionBuild).$($semVer.FileVersionRevision)"
-              LlvmVersion = "6.0.0"
+              LlvmVersion = "6.0.1" # TODO: Figure out how to extract this from the llvmlibs download
             }
 }
 
@@ -241,3 +242,73 @@ function ConvertTo-PropertyList([hashtable]$table)
 {
     (($table.GetEnumerator() | %{ "$($_.Key)=$($_.Value)" }) -join ';')
 }
+
+function Get-GitHubReleases($org, $project)
+{
+    [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
+
+    $releases = Invoke-RestMethod -Uri "https://api.github.com/repos/$org/$project/releases"
+    foreach($r in $releases)
+    {
+        $r
+    }
+}
+
+function Get-GitHubTaggedRelease($org, $project, $tag)
+{
+    Get-GithubReleases $org $project | ?{$_.tag_name -eq $tag}
+}
+
+Function Expand-Archive([string]$Path, [string]$Destination) {
+    $7zPath = Find7Zip
+    $7zArgs = @(
+        'x'  # eXtract with full path
+        '-y' # auto apply Yes for all prompts
+        "`"-o$($Destination)`""  # Output directory
+        "`"$($Path)`"" # 7z file name
+    )
+    & $7zPath $7zArgs 
+}
+
+function Find7Zip()
+{
+    $path7Z = Find-OnPath '7z.exe' -ErrorAction SilentlyContinue
+    if(!$path7Z)
+    {
+        if( Test-Path -PathType Container HKLM:\SOFTWARE\7-Zip )
+        {
+            $path7Z = Join-Path (Get-ItemProperty HKLM:\SOFTWARE\7-Zip\ 'Path').Path '7z.exe'
+        }
+
+        if( !$path7Z -and ($env:PROCESSOR_ARCHITEW6432 -eq "AMD64") )
+        {
+            $hklm = [Microsoft.Win32.RegistryKey]::OpenBaseKey([Microsoft.Win32.RegistryHive]::LocalMachine, [Microsoft.Win32.RegistryView]::Registry64)
+            $subKey = $hklm.OpenSubKey("SOFTWARE\7-Zip")
+            $root = $subKey.GetValue("Path")
+            if($root)
+            {
+                $path7Z = Join-Path $root '7z.exe'
+            }
+        }
+    }
+
+    if(!$path7Z -or !(Test-Path -PathType Leaf $path7Z ) )
+    {
+        throw "Can't find 7-zip command line executable"
+    }
+
+    return $path7Z
+}
+
+function Install-LlvmLibs($destPath)
+{
+    #TODO: Generalize the LLVM and MSC versioning to eliminate hard coded names here
+    if( !( test-path -PathType Leaf 'llvm-libs-6.0.1-msvc-15.7.7z' ) )
+    {
+        $asset = (Get-GitHubTaggedRelease UbiquityDotNet 'Llvm.Libs' 'v6.0.1').assets[0]
+        Invoke-WebRequest -UseBasicParsing -Uri $asset.browser_download_url -OutFile 'llvm-libs-6.0.1-msvc-15.7.7z'
+    }
+
+    Expand-Archive 'llvm-libs-6.0.1-msvc-15.7.7z' $destPath
+}
+

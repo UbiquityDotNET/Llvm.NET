@@ -1,4 +1,5 @@
 <Project>
+  <Import Condition="'$(MSBuildProjectExtension)'=='.vcxproj'" Project="$(BuildRootDir)llvm\llvm-libs.targets"/>
   <!--
   Since Nuget.config is configured to include the build output location this
   will ensure the folder exists during restore so that it won't fail.

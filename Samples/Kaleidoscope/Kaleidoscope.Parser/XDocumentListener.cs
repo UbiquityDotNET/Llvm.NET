@@ -82,6 +82,6 @@ namespace Kaleidoscope.Grammar
         private const string ContextTypeNameSuffix = "Context";
 
         private XElement ActiveNode;
-        private IRecognizer Recognizer;
+        private readonly IRecognizer Recognizer;
     }
 }
