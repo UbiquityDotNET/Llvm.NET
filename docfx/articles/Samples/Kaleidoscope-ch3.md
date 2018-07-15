@@ -111,7 +111,8 @@ Generation of the LLVM IR for a constant is quite simple.
 
 [!code-csharp[Main](../../../Samples/Kaleidoscope/Chapter3/CodeGenerator.cs#VisitConstExpression)]
 
-> [!NOTE] The constant value is uniqued in LLVM so that multiple calls given the same input value will
+> [!NOTE]
+> The constant value is uniqued in LLVM so that multiple calls given the same input value will
 > produce the same LLVM Value. LLvm.NET honors this and is implemented in a way to ensure that reference
 > equality reflects the identity of the uniqued values correctly.
 

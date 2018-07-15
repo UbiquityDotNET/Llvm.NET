@@ -5,7 +5,8 @@ like ANTLR4 is that you can accomplish a lot without needing to spend a lot of t
 parser too much. With user defined operators we'll break that and get down and dirty with the parser a bit
 to make the operators work.
 
-> [!TIP] The actual value of user defined operator precedence in a language is a bit debatable, and the
+> [!TIP]
+> The actual value of user defined operator precedence in a language is a bit debatable, and the
 > initial plan for the Llvm.NET tutorials was to skip this chapter as it doesn't really involve a lot of
 > new LLVM IR or code generation. After the code was done to get the other chapters working - this one was
 > still nagging, begging really, for a solution. The challenge to come up with a good solution was

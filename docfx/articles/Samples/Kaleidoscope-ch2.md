@@ -322,7 +322,8 @@ def printstar(n)
 printstar(100);
 ```
 
-> [!NOTE] There are no statements in Kaleidoscope, everything is an expression and has a value. putchard()
+> [!NOTE]
+> There are no statements in Kaleidoscope, everything is an expression and has a value. putchard()
 > implicitly returns a value as does printstar(). (e.g. there is no void return - ALL functions implicitly
 > return a floating point value, even if it is always 0.0).
 
