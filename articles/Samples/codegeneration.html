@@ -8,7 +8,7 @@
     <title>CodeGenWithDebugInfo | Llvm.NET </title>
     <meta name="viewport" content="width=device-width">
     <meta name="title" content="CodeGenWithDebugInfo | Llvm.NET ">
-    <meta name="generator" content="docfx 2.33.2.0">
+    <meta name="generator" content="docfx 2.36.2.0">
     
     <link rel="shortcut icon" href="../../favicon.ico">
     <link rel="stylesheet" href="../../styles/docfx.vendor.css">
@@ -20,7 +20,7 @@
     
     
   </head>
-  <body data-spy="scroll" data-target="#affix">
+  <body data-spy="scroll" data-target="#affix" data-offset="120">
     <div id="wrapper">
       <header>
         
@@ -341,7 +341,7 @@ var fooType = new DebugStructType( module, &quot;struct.foo&quot;, module.DIComp
 is initialized with constant data. The sample starts by constructing the const array data that
 forms the initialized value of <code>bar.c</code>, the source only provides const values for the first two
 entries of a 32 element array. The const data is created via <a class="xref" href="../../api/Llvm.NET.Values.ConstantArray.html">ConstArray</a>.
-The full initialized const data for bar is the created from <a class="xref" href="../../api/Llvm.NET.Context.CreateNamedConstantStruct.html">Context.CreateNamedConstantStruct</a></p>
+The full initialized const data for bar is the created from <a class="xref" href="../../api/Llvm.NET.Context.html#Llvm_NET_Context_CreateNamedConstantStruct_">Context.CreateNamedConstantStruct</a></p>
 <pre><code class="lang-csharp" name="Main">// add global variables and constants
 var constArray = ConstantArray.From( i32, 32, module.Context.CreateConstant( 3 ), module.Context.CreateConstant( 4 ) );
 var barValue = module.Context.CreateNamedConstantStruct( fooType
@@ -370,15 +370,15 @@ AddModuleFlags( module );
     module.AddVersionIdentMetadata( VersionIdentString );
 }
 </code></pre><p>Once the constant data is available an LLVM global is created for it with a name that matches the source name
-via <a class="xref" href="../../api/Llvm.NET.BitcodeModule.AddGlobal.html">AddGlobal</a>. To ensure the linker lays out the structure
+via <a class="xref" href="../../api/Llvm.NET.BitcodeModule.html#Llvm_NET_BitcodeModule_AddGlobal_">AddGlobal</a>. To ensure the linker lays out the structure
 correctly the code uses the layout information for the module to get the ABI required alignment for 
-the global and sets the <a class="xref" href="../../api/Llvm.NET.Values.GlobalObject.Alignment.html#Llvm_NET_Values_GlobalObject_Alignment">Alignment</a> property for the global.
+the global and sets the <a class="xref" href="../../api/Llvm.NET.Values.GlobalObject.html#Llvm_NET_Values_GlobalObject_Alignment">Alignment</a> property for the global.
 Finally the debug information for the global is created as a <a class="xref" href="../../api/Llvm.NET.DebugInfo.DIGlobalVariableExpression.html">DIGlobalVariableExpression</a>
-using <a class="xref" href="../../api/Llvm.NET.DebugInfo.DebugInfoBuilder.CreateGlobalVariableExpression.html">CreateGlobalVariableExpression</a>
+using <a class="xref" href="../../api/Llvm.NET.DebugInfo.DebugInfoBuilder.html#Llvm_NET_DebugInfo_DebugInfoBuilder_CreateGlobalVariableExpression_">CreateGlobalVariableExpression</a>
 finally the added to the variable to complete the creation.</p>
 <p>For the <code>baz</code> instance the process is almost identical. The major difference is that the value of the
 structure is initialized to all zeros. That is the initialized data for the structure is created with
-<a class="xref" href="../../api/Llvm.NET.Values.Constant.NullValueFor.html">NullValueFor</a>, which creates an all zero value of a type.</p>
+<a class="xref" href="../../api/Llvm.NET.Values.Constant.html#Llvm_NET_Values_Constant_NullValueFor_">NullValueFor</a>, which creates an all zero value of a type.</p>
 <pre><code class="lang-csharp" name="Main">// add global variables and constants
 var constArray = ConstantArray.From( i32, 32, module.Context.CreateConstant( 3 ), module.Context.CreateConstant( 4 ) );
 var barValue = module.Context.CreateNamedConstantStruct( fooType
@@ -506,7 +506,7 @@ in the sample test.c file. There are a few points to make about the function gen
 <p>As discussed the arguments and locals are allocated in the entry block however that only makes them usable in
 the function and ready for the mem2reg pass. In particular there is no debug information attached to the variables.
 To provide debug information LLVM provides an intrinsic function that is used to declare the debug information for
-a variable. In Llvm.NET this is emitted using the <a class="xref" href="../../api/Llvm.NET.DebugInfo.DebugInfoBuilder.InsertDeclare.html">InsertDeclare</a>
+a variable. In Llvm.NET this is emitted using the <a class="xref" href="../../api/Llvm.NET.DebugInfo.DebugInfoBuilder.html#Llvm_NET_DebugInfo_DebugInfoBuilder_InsertDeclare_">InsertDeclare</a>
 method.</p>
 <h3 id="calling-llvm-intrinsics">Calling LLVM Intrinsics</h3>
 <p>The generated code needs to copy some data, rather than directly doing a copy in a loop, the code uses the LLVM
@@ -624,7 +624,7 @@ attributes #2 = { argmemonly nounwind }
             <span class="pull-right">
               <a href="#top">Back to top</a>
             </span>
-            Copyright (C) 2017, Dot NET Foundation<br><strong>Build:</strong> 6.0.0-alpha--ci-BLD.437793062
+            Copyright (C) 2017, Dot NET Foundation<br><strong>Build:</strong> 6.0.0-alpha--ci-BLD.443683017
             
           </div>
         </div>

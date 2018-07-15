@@ -8,7 +8,7 @@
     <title>8. Kaleidoscope: Compiling to Object Code | Llvm.NET </title>
     <meta name="viewport" content="width=device-width">
     <meta name="title" content="8. Kaleidoscope: Compiling to Object Code | Llvm.NET ">
-    <meta name="generator" content="docfx 2.33.2.0">
+    <meta name="generator" content="docfx 2.36.2.0">
     
     <link rel="shortcut icon" href="../../favicon.ico">
     <link rel="stylesheet" href="../../styles/docfx.vendor.css">
@@ -20,7 +20,7 @@
     
     
   </head>
-  <body data-spy="scroll" data-target="#affix">
+  <body data-spy="scroll" data-target="#affix" data-offset="120">
     <div id="wrapper">
       <header>
         
@@ -142,10 +142,11 @@
 by generating target specific native object files.</p>
 <h2 id="choosing-a-target">Choosing a target</h2>
 <p>LLVM has built-in support for cross-compilation. This allows compiling to the architecture of the platform
-you run the compiler on or, just as easily, for some other architecture. For the Kaleidoscope tutorial we&#39;ll
-focus on just the native target the compiler is running on.</p>
-<p>LLVM uses a &quot;Triple&quot; string to describe the target used for code generation. This takes the form <code>&lt;arch&gt;&lt;sub&gt;-&lt;vendor&gt;-&lt;sys&gt;-&lt;abi&gt;</code>
-(see the description of the <a class="xref" href="../../api/Llvm.NET.Triple.html">Triple</a> type for more details)</p>
+you run the compiler on or, just as easily, for some other architecture. For the Kaleidoscope tutorial
+we&#39;ll focus on just the native target the compiler is running on.</p>
+<p>LLVM uses a &quot;Triple&quot; string to describe the target used for code generation. This takes the form
+<code>&lt;arch&gt;&lt;sub&gt;-&lt;vendor&gt;-&lt;sys&gt;-&lt;abi&gt;</code> (see the description of the <a class="xref" href="../../api/Llvm.NET.Triple.html">Triple</a> type for
+more details)</p>
 <p>Fortunately, it is normally not required to build such strings directly. </p>
 <h2 id="grammar">Grammar</h2>
 <p>In the preceding chapters the Kaleidoscope implementation provided an interactive JIT based on the classic
@@ -153,14 +154,15 @@ Read Evaluate Print Loop (REPL). So the grammar focused on a top level rule &quo
 expressions one at a time. For native compilation this complicates the process of parsing and processing a
 complete file. To handle these two distinct scenarios the grammar has different rules. For the interactive
 scenario the previously mentioned &quot;repl&quot; rule is used. When parsing a full source file the &quot;fullsrc&quot; rule
-is used.</p>
+is used as the start.</p>
 <pre><code class="lang-antlr">// Full source parse accepts a series of definitions or prototypes, all top level expressions
 // are generated into a single function called Main()
 fullsrc
     : repl*;
 </code></pre><p>This rule simply accepts any number of expressions so that a single source file is parsed to a single
 complete parse tree. (This particular point will become even more valuable when generating debug information
-in <a href="Kaleidoscope-ch9.html">Chapter 9</a> as the parse tree nodes contain the source location information based on the input stream).</p>
+in <a href="Kaleidoscope-ch9.html">Chapter 9</a> as the parse tree nodes contain the source location information based
+on the original input stream).</p>
 <h2 id="code-generation-changes">Code Generation Changes</h2>
 <p>The changes in code generation are fairly straight forward and consist of the following basic steps.</p>
 <ol>
@@ -173,11 +175,13 @@ previously generated anonymous expressions.</li>
 </ol>
 <p>Most of these steps are pretty straight forward. The anonymous function handling is a bit distinct.
 Since the language syntax allows anonymous expressions throughout the source file, and they don&#39;t
-actually execute during generation they need to be organized into an executable form. Thus, a new
-list of the generated functions is maintained and after the tree is generated a new main() function
+actually execute during generation - they need to be organized into an executable form. Thus, a new
+list of the generated functions is maintained and, after the tree is generated, a new main() function
 is created and a call to each anonymous expression is made with a second call to printd() to show
 the results - just like they would appear if typed in an interactive console. A trick used in the
-code generation is to mark each of the anonymous functions as private and always inline. </p>
+code generation is to mark each of the anonymous functions as private and always inline so that a
+simple optimization pass can eliminate the anonymous functions after inlining them all into the main()
+function. </p>
 <pre><code class="lang-C#">// mark anonymous functions as always-inline and private so they can be inlined and then removed
 if( isAnonymous )
 {
@@ -189,7 +193,7 @@ else
     retVal.Linkage( Linkage.External );
 }
 </code></pre><p>These settings are leveraged after generating from the tree to create the main function. A simple
-loop generate a call to each expression and then generates the call to print the results. Once, that
+loop generates a call to each expression along with the call to print the results. Once, that
 is completed a <a class="xref" href="../../api/Llvm.NET.Transforms.ModulePassManager.html">ModulePassManager</a> is created to run
 the Always inliner and a global dead code elimination pass. The always inliner will inline the functions
 marked as inline and the dead code elimination pass will eliminate unused internal/private global symbols.
@@ -230,11 +234,9 @@ generated anonymous functions removed. </p>
 
     return null;
 }
-</code></pre><p>Most of the rest of the changes are pretty straightforward following the steps listed previously. The larger
-                 InstructionBuilder.Return( funcReturn );
-changes.</p>
+</code></pre><p>Most of the rest of the changes are pretty straightforward following the steps listed previously.</p>
 <h3 id="visittoplevelexpression">VisitTopLevelExpression</h3>
-<p>As previously mentioned when generating the top level expression the resulting function is added to the
+<p>As previously mentioned, when generating the top level expression the resulting function is added to the
 list of anonymous functions to generate a call to it from main().</p>
 <pre><code class="lang-csharp" name="VisitTopLevelExpression">public override Value VisitTopLevelExpression( [NotNull] TopLevelExpressionContext context )
 {
@@ -371,10 +373,10 @@ public static int Main( string[ ] args )
     return 0;
 }
 </code></pre><h2 id="conclusion">Conclusion</h2>
-<p>That&#39;s it - seriously! Very little change was needed, mostly deleting code and adding the special handling of the
-anonymous expressions. Looking at the changes it should be clear that it is possible to support runtime choice
-between JIT and full native compilation instead of deleting the JIT code. (Implementing this feature is
-&quot;left as an exercise for the reader&quot; <span class="emoji" shortcode="wink">😉</span>)</p>
+<p>That&#39;s it - seriously! Very little change was needed, mostly deleting code and adding the special handling
+of the anonymous expressions. Looking at the changes it should be clear that it is possible to support
+runtime choice between JIT and full native compilation instead of deleting the JIT code. (Implementing
+this feature is &quot;left as an exercise for the reader&quot; <span class="emoji" shortcode="wink">😉</span>)</p>
 </article>
           </div>
           <div class="contribution-panel mobile-hide">
@@ -397,7 +399,7 @@ between JIT and full native compilation instead of deleting the JIT code. (Imple
             <span class="pull-right">
               <a href="#top">Back to top</a>
             </span>
-            Copyright (C) 2017, Dot NET Foundation<br><strong>Build:</strong> 6.0.0-alpha--ci-BLD.437793062
+            Copyright (C) 2017, Dot NET Foundation<br><strong>Build:</strong> 6.0.0-alpha--ci-BLD.443683017
             
           </div>
         </div>

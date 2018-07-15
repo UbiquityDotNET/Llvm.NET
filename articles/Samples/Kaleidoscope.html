@@ -8,7 +8,7 @@
     <title>1. Kaleidoscope: Language Introduction | Llvm.NET </title>
     <meta name="viewport" content="width=device-width">
     <meta name="title" content="1. Kaleidoscope: Language Introduction | Llvm.NET ">
-    <meta name="generator" content="docfx 2.33.2.0">
+    <meta name="generator" content="docfx 2.36.2.0">
     
     <link rel="shortcut icon" href="../../favicon.ico">
     <link rel="stylesheet" href="../../styles/docfx.vendor.css">
@@ -20,7 +20,7 @@
     
     
   </head>
-  <body data-spy="scroll" data-target="#affix">
+  <body data-spy="scroll" data-target="#affix" data-offset="120">
     <div id="wrapper">
       <header>
         
@@ -138,28 +138,31 @@
             <article class="content wrap" id="_content" data-uid="">
 <h1 id="1-kaleidoscope-language-introduction">1. Kaleidoscope: Language Introduction</h1>
 
-<p>This series of samples generally follows the official <a href="http://releases.llvm.org/5.0.0/docs/tutorial/LangImpl01.html">LLVM tutorial</a>.
-The general flow of this tutorial follows that of the official LLVM tutorial and many of the samples are lifted directly from that
-tutorial to make it easier to follow along both tutorials to see how the various LLVM concepts are projected in the Llvm.NET library.</p>
+<p>The general flow of this tutorial follows that of the official
+<a href="http://releases.llvm.org/6.0.1/docs/tutorial/LangImpl01.html">LLVM tutorial</a>
+and many of the samples are lifted directly from that tutorial to make it easier to follow
+along both tutorials to see how the various LLVM concepts are projected in the Llvm.NET library.</p>
 <h2 id="overview">Overview</h2>
 <p>Kaleidoscope is a simple functional language that is used to illustrate numerous real world
 use cases for Llvm.NET for code generation and JIT execution.</p>
-<p>It is worth pointing out that this example isn&#39;t intended as a treatise on compiler design nor
-on language parsing. While it contains aspects of those topics the sample is focused on the
+<p>It is worth pointing out that this example is not intended as a treatise on compiler design nor
+on language parsing. While it contains many aspects of those topics the tutorial is focused on the
 use of Llvm.NET for code generation. Furthermore it isn&#39;t a trans-literation of the LLVM C++
 sample as that would defeat one of the major points of Llvm.NET - to provide a familiar API and
 use pattern to C# developers.</p>
 <h2 id="general-layout">General layout</h2>
-<p>The samples are built using common core libraries and patterns. They are explicitly designed to make
-code comparisons between chapters vis your favorite code comparison tool. Each, chapter builds on the
-next so running a comparison makes it easy to see the changes in full context. The text of the tutorials
-explains why the changes are made and a comparison helps provide the &quot;big picture&quot; view.</p>
+<p>The samples are built using common core libraries and patterns. They are explicitly designed to
+make code comparisons between chapters vis your favorite code comparison tool. Each, chapter builds
+on the next so running a comparison makes it easy to see the changes in full context. The text of
+the tutorials explains why the changes are made and a comparison helps provide the &quot;big picture&quot;
+view.</p>
 <h2 id="variations-from-the-official-llvm-tutorial">Variations from the Official LLVM Tutorial</h2>
 <p>The Llvm.NET version of the Kaleidoscope series takes a different route for parsing from the
-LLVM implementation. In particular the Llvm.NET version defines a formal grammar using <a href="http://antlr.org">ANTLR</a>
-with the full grammar for all variations of the language features in a single assembly. This
-helps in isolating the parsing from the use of Llvm.NET and minimizes the need for any sort
-of custom AST. (The antlr parse tree is generally sufficient to generate code)</p>
+LLVM implementation. In particular the Llvm.NET version defines a formal grammar using
+<a href="http://antlr.org">ANTLR</a> with the full grammar for all variations of the language features in
+a single assembly. This helps in isolating the parsing from the use of Llvm.NET and minimizes
+the need for any sort of custom AST. (For Kaleidoscope, the antlr parse tree is generally
+sufficient to generate code)</p>
 <h2 id="the-kaleidoscope-language">The Kaleidoscope Language</h2>
 <h3 id="general-concepts">General Concepts</h3>
 <p>Kaleidoscope is a simple functional language with the following major features:</p>
@@ -249,7 +252,7 @@ def mandel(realstart imagstart realmag imagmag)
 mandel(-2.3, -1.3, 0.05, 0.07);
 </code></pre><p>When entered ( or copy/pasted) to the command line Kaleidoscope will print out the following:</p>
 <div class="NOTE"><h5>Note</h5><p>This example uses features of the language only enabled/discussed in Chapter 6 of the tutorial.
-The runtime from earlier chapters will generate errors trying to parse this code.</p>
+The runtime from chapters 3-5 will generate errors trying to parse this code.</p>
 </div>
 <pre><code class="lang-shell">Ready&gt;mandel(-2.3, -1.3, 0.05, 0.07);
 *******************************************************************************
@@ -295,7 +298,12 @@ The runtime from earlier chapters will generate errors trying to parse this code
 *******************************************************************************
 Evaluated to 0
 Ready&gt;
-</code></pre></article>
+</code></pre><h2 id="conclusion">Conclusion</h2>
+<p>Kaleidoscope is a simple yet complete language with a good deal of functionality. This serves as
+a great language to study the use of LLVM for code generation. While, generally speaking, the 
+Llvm.NET version of this tutorial differs only slightly from that of the official LLVM version, it
+serves well as an example of what you can do with Llvm.NET.</p>
+</article>
           </div>
           <div class="contribution-panel mobile-hide">
               <a href="https://github.com/UbiquityDotNET/Llvm.NET/blob/master/docfx/articles/Samples/Kaleidoscope.md/#L1" title="Improve this Doc" class="fab btn-warning pull-right"><i class="glyphicon glyphicon-pencil"></i></a>
@@ -317,7 +325,7 @@ Ready&gt;
             <span class="pull-right">
               <a href="#top">Back to top</a>
             </span>
-            Copyright (C) 2017, Dot NET Foundation<br><strong>Build:</strong> 6.0.0-alpha--ci-BLD.437793062
+            Copyright (C) 2017, Dot NET Foundation<br><strong>Build:</strong> 6.0.0-alpha--ci-BLD.443683017
             
           </div>
         </div>

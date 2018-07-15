@@ -8,7 +8,7 @@
     <title>5. Kaleidoscope: Control Flow | Llvm.NET </title>
     <meta name="viewport" content="width=device-width">
     <meta name="title" content="5. Kaleidoscope: Control Flow | Llvm.NET ">
-    <meta name="generator" content="docfx 2.33.2.0">
+    <meta name="generator" content="docfx 2.36.2.0">
     
     <link rel="shortcut icon" href="../../favicon.ico">
     <link rel="stylesheet" href="../../styles/docfx.vendor.css">
@@ -20,7 +20,7 @@
     
     
   </head>
-  <body data-spy="scroll" data-target="#affix">
+  <body data-spy="scroll" data-target="#affix" data-offset="120">
     <div id="wrapper">
       <header>
         
@@ -138,13 +138,16 @@
             <article class="content wrap" id="_content" data-uid="">
 <h1 id="5-kaleidoscope-control-flow">5. Kaleidoscope: Control Flow</h1>
 
-<p>This chapter focuses on adding the support necessary to implement the if-then-else and for loop control flow support in the Kaleidoscope
-language. Without some sort of control flow the Kaleidoscope language is not particularly useful. So, this chapter completes the core language
-support to make it a usable language.</p>
+<p>This chapter focuses on adding the support necessary to implement the if-then-else and for loop control
+flow support in the Kaleidoscope language. Without some sort of control flow the Kaleidoscope language
+is not particularly useful. So, this chapter completes the core language support to make it a usable
+language.</p>
 <h2 id="if-then-else">if-then-else</h2>
-<p>It is worth re-visiting the discussion of the intended syntax and semantics for conditional flow in <a href="Kaleidoscope-ch2.html#conditionalexpression">Chapter 2</a>
-This will help in understanding the language functionality to implement.</p>
-<p>The ultimate goal of the changes to support code generation for control flow constructs is to transform Kaleidoscope code such as:</p>
+<p>It is worth re-visiting the discussion of the intended syntax and semantics for conditional flow in
+<a href="Kaleidoscope-ch2.html#conditionalexpression">Chapter 2</a>. This will help in understanding the language
+functionality to implement.</p>
+<p>The ultimate goal of the changes to support code generation for control flow constructs is to transform
+Kaleidoscope code such as:</p>
 <pre><code class="lang-Kaleidoscope">extern foo();
 extern bar();
 def baz(x) if x then foo() else bar();
@@ -170,21 +173,28 @@ ifcont:     ; preds = %else, %then
   %iftmp = phi double [ %calltmp, %then ], [ %calltmp1, %else ]
   ret double %iftmp
 }
-</code></pre><p>The entry code will convert the input x into an llvm i1 value to use as the condition for a branch. This is done by comparing the input
-value of x to 0.0 to get the condition boolean value. Then the condition is used to branch to either the &#39;then&#39; block or the &#39;else&#39; block.
-The two target blocks contain the generated code for the expressions for each part of the conditional and a final branch to a continuation block.
-Since the code branch could flow into the continuation block from either the &#39;else&#39; or &#39;end&#39; blocks a phi instruction is placed at the beginning
-of the continuation block with appropriate values for the result from each of the two predecessor blocks. The resulting value is then provided as
-the return of the function. It is important to note that using the phi node in this fashion does not require generating all of the code in SSA
-form. In fact, doing that in the front end is generally discouraged. Generally speaking there are only two reasons where a phi node may crop up:</p>
+</code></pre><p>The entry code will convert the input x into an llvm i1 value to use as the condition for a branch. This
+is done by comparing the input value of x to 0.0 to get the condition boolean value. Then the condition is
+used to branch to either the &#39;then&#39; block or the &#39;else&#39; block. The two target blocks contain the generated
+code for the expressions for each part of the conditional and a final branch to a continuation block.</p>
+<p>Since the code branch could flow into the continuation block from either the &#39;else&#39; or &#39;end&#39; blocks a phi
+instruction is placed at the beginning of the continuation block with appropriate values for the result
+from each of the two predecessor blocks. The resulting value is then provided as the return of the function.
+It is important to note that using the phi node in this fashion does not require generating all of the code
+in SSA form. In fact, doing that in the front end is generally discouraged. Generally speaking there are
+only two reasons where a phi node may crop up:</p>
 <ol>
 <li>Mutable variables like x = 1; x = x + 1;</li>
 <li>Values that are part of the structure of the language (usually for control flow)</li>
 </ol>
-<p><a href="Kaleidoscope-ch7.html">Chapter 7</a> Covers the mutable variables case in detail and the techniques for generating the code without using a phi node.
-For cases like this one where it is straight forward and easy to insert the phi node directly then there&#39;s no reason not to.</p>
+<p><a href="Kaleidoscope-ch7.html">Chapter 7</a> Covers the mutable variables case in detail and the techniques for
+generating the code without using a phi node.
+For cases like this one where it is straight forward and easy to insert the phi node directly then there&#39;s
+no reason not to. Though, the solution provided in Chapter 7 can also eliminate the need to manually insert
+the phi node here as well.</p>
 <h3 id="code-generation">Code Generation</h3>
-<p>Generating the code for the condition expression follows the pattern show above with the following high level steps:</p>
+<p>Generating the code for the condition expression follows the pattern shown above with the following high
+level steps:</p>
 <ol>
 <li>Generate the code for the condition value expression</li>
 <li>Emit conversion of the result of the condition to an LLVM i1 by comparing to 0.0</li>
@@ -201,14 +211,18 @@ For cases like this one where it is straight forward and easy to insert the phi 
 <li>Emit a branch to the if continuation block</li>
 <li>Capture the insertion block location as generating the else expression may add new blocks</li>
 <li>Switch to the if continuation block</li>
-<li>Emit phi node with the results of the insertion blocks and result values captured after generating each of the sub expressions</li>
+<li>Emit phi node with the results of the insertion blocks and result values captured after generating
+each of the sub expressions</li>
 <li>Use the result...</li>
 </ol>
-<p>That&#39;s more than the other language constructs, but is still pretty straight forward once you get the general gist of how LLVM IR works. There&#39;s
-one extra trick repeated in steps 9 and again in 14, where after generating the IR for the sub expressions, the current block insertion point is
-captured. This is needed as the generation for the sub expression may include another conditional expression, which may contain a conditional
-sub expression, ... Thus, the &#39;current block&#39; may well have changed from the starting block. The phi node needs the immediate predecessor block
-and the value it produced, so the current block is captured after generation, before switching the block to the next one for generation.</p>
+<p>That&#39;s a bit more complex than the other language constructs seen so far, but is still pretty straight
+forward once you get the general gist of how LLVM IR works. There&#39;s one extra trick repeated in steps 9
+and again in 14, where after generating the IR for the sub expressions, the current block insertion point
+is captured. This is needed as the generation for the sub expression may include another conditional
+expression, which may contain a conditional sub expression, ... Thus, the &#39;current block&#39; may well have
+changed from the starting block. The phi node needs the immediate predecessor block and the value it
+produced, so the current block is captured after generation, before switching the block to the next one
+for generation.</p>
 <p>The actual code follows the description pretty closely and should now be fairly easy to follow:</p>
 <pre><code class="lang-csharp" name="Main">public override Value VisitConditionalExpression( [NotNull] ConditionalExpressionContext context )
 {
@@ -264,7 +278,8 @@ and the value it produced, so the current block is captured after generation, be
     return phiNode;
 }
 </code></pre><h2 id="for-loop">For Loop</h2>
-<p>Now that the basics of control flow are available it is possible to leverage the same concepts to implement the for loop constructs for the language.</p>
+<p>Now that the basics of control flow are available it is possible to leverage the same concepts to
+implement the for loop constructs for the language.</p>
 <p>The general idea is to transform the loops in Kaleidoscope such as this:</p>
 <pre><code class="lang-Kaliedoscope">extern putchard(char);
 def printstar(n)
@@ -300,14 +315,14 @@ afterloop:      ; preds = %loop
 }
 </code></pre><p>Thus, the basic pattern to generate the for loop code consists of the following steps:</p>
 <ol>
-<li>Create block for loopheader</li>
-<li>Switch to the loopheader block</li>
+<li>Create block for loop header</li>
+<li>Switch to the loop header block</li>
 <li>Emit code to Initialize start value with starting value from initialization expression</li>
 <li>Create block for the loop body</li>
 <li>Create block for the loop end</li>
 <li>Emit unconditional branch to the loop body</li>
 <li>Switch to the loop body block</li>
-<li>Emit phi node for the loop value with the loopheader block and initial value as first predecessor</li>
+<li>Emit phi node for the loop value with the loop header block and initial value as first predecessor</li>
 <li>Push a new scope for named values as the loop body represents a new scope</li>
 <li>Add the variable for the loop to the current scope</li>
 <li>Emit the body expression, which may create new blocks</li>
@@ -315,13 +330,15 @@ afterloop:      ; preds = %loop
 <li>Emit code for the end condition</li>
 <li>Emit code to convert the result of the condition to an LLVM i1 for a conditional branch</li>
 <li>Create after loop block</li>
-<li>Emit conditional branch to the loop body block or after loop block depending on the result of the end condition</li>
-<li>Add an incoming predecessor to the phi node at the beginning of the loop body for the next loop value and the loop end block it comes from</li>
-<li>switch to after block</li>
+<li>Emit conditional branch to the loop body block or after loop block depending on the result of the end
+condition</li>
+<li>Add an incoming predecessor to the phi node at the beginning of the loop body for the next loop value
+and the loop end block it comes from</li>
+<li>Switch to after block</li>
 <li>Create constant value of 0.0 as the result expression of the for loop</li>
 </ol>
-<p>That&#39;s a few more steps than even the if-then-else but the basic concepts of blocks, conditional branches and direct phi-nodes remains the
-same.</p>
+<p>That&#39;s a few more steps than even the if-then-else but the basic concepts of blocks, conditional branches
+and direct phi-nodes remains the same.</p>
 <p>The code to generate a for loop follows this pattern pretty closely.</p>
 <pre><code class="lang-csharp" name="Main">public override Value VisitForExpression( [NotNull] ForExpressionContext context )
 {
@@ -414,12 +431,19 @@ same.</p>
         return Context.DoubleType.GetNullValue( );
     }
 }
-</code></pre><p>The only new functionality in that is the use of the ScopeStack class to support nested scopes and the named variables within them. ScopeStack
-is provided in the Kaleidoscope.Runtime library. It is basically a stack of name to value mapping dictionaries. The EnterScope method will push
-a new dictionary on to the stack and return an IDisposable that will handle popping it back off. This allows for nested expressions to use variables
-in the parent scope and to override them with its own value too. That, is the symbols available in a loop include the loop variable and any variables
-in the parent scope, all the way back to the function parameters. The stack nature allows for deeper scopes to shadow the variable of the same name in
-the parent, while allowing access to all other variables from other scopes.</p>
+</code></pre><p>The only new functionality in that is the use of the ScopeStack class to support nested scopes and the named
+variables within them. ScopeStack is provided in the Kaleidoscope.Runtime library. It is basically a stack
+of name to value mapping dictionaries. The EnterScope method will push a new dictionary on to the stack and
+return an IDisposable that will handle popping it back off. This allows for nested expressions to use variables
+in the parent scope and to override them with its own value too. That, is the symbols available in a loop
+include the loop variable and any variables in the parent scope, all the way back to the function parameters.
+The stack nature allows for deeper scopes to shadow the variable of the same name in the parent, while allowing
+access to all other variables from other scopes.</p>
+<h2 id="conclusion">Conclusion</h2>
+<p>Control flow is certainly more complex to generate than any of the other language constructs but it relies on
+a few basic primitive building block patterns. Thus, it is fairly easy to understand and implement once the
+basic patterns are understood. With the inclusion of control flow the Kaleidoscope language is a complete,
+albeit simplistic functional language.</p>
 </article>
           </div>
           <div class="contribution-panel mobile-hide">
@@ -442,7 +466,7 @@ the parent, while allowing access to all other variables from other scopes.</p>
             <span class="pull-right">
               <a href="#top">Back to top</a>
             </span>
-            Copyright (C) 2017, Dot NET Foundation<br><strong>Build:</strong> 6.0.0-alpha--ci-BLD.437793062
+            Copyright (C) 2017, Dot NET Foundation<br><strong>Build:</strong> 6.0.0-alpha--ci-BLD.443683017
             
           </div>
         </div>
