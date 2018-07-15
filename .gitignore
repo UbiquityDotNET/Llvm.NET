@@ -154,5 +154,4 @@ Tools/
 *.dgml
 *.binlog
 *.7z
-
 /llvm
