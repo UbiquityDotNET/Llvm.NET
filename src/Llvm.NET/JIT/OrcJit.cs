@@ -201,7 +201,7 @@ namespace Llvm.NET.JIT
 
         private Dictionary<LLVMOrcModuleHandle, WrappedNativeCallback> SymbolResolvers = new Dictionary<LLVMOrcModuleHandle, WrappedNativeCallback>();
 
-        private LLVMOrcJITStackRef JitStackHandle;
+        private readonly LLVMOrcJITStackRef JitStackHandle;
 
         [DllImport( LibraryPath, CallingConvention = CallingConvention.Cdecl )]
         private static extern LLVMSharedObjectBufferRef LLVMOrcMakeSharedObjectBuffer( LLVMMemoryBufferRef ObjBuffer );

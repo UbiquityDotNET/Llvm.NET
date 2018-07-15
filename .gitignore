@@ -143,6 +143,7 @@ Tools/
 
 # VS2015 support file
 *.opendb
+
 /src/LibLLVM/generatedversioninfo.h
 *.db
 *.exe
@@ -152,3 +153,6 @@ Tools/
 *.s
 *.dgml
 *.binlog
+*.7z
+
+/llvm

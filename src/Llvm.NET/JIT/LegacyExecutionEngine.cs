@@ -241,8 +241,8 @@ namespace Llvm.NET.JIT
             }
         }
 
-        private EngineKind Kind;
-        private CodeGenOpt Optimization;
+        private readonly EngineKind Kind;
+        private readonly CodeGenOpt Optimization;
         private Dictionary<int, LLVMModuleRef> OwnedModules;
         private int NextHandleValue;
         private LLVMExecutionEngineRef EngineHandle;
