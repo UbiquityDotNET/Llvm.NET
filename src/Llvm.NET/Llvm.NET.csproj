@@ -31,7 +31,7 @@
     </CodeAnalysisDictionary>
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="CSemVer.Build.Tasks" Version="1.0.3-beta--ci-BLD.431367438" />
+    <PackageReference Include="CSemVer.Build.Tasks" Version="2.0.0-beta.2.0.ci-BLD.443713343" />
     <PackageReference Include="Ubiquity.ArgValidators" Version="0.3.0-alpha--ci-REL.19A2218B" />
   </ItemGroup>
   <Choose>

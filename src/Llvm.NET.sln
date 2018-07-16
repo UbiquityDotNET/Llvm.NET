@@ -38,6 +38,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Repo Items", "Repo Items", 
 	ProjectSection(SolutionItems) = preProject
 		..\appveyor.yml = ..\appveyor.yml
 		..\BuildAll.ps1 = ..\BuildAll.ps1
+		..\BuildVersion.xml = ..\BuildVersion.xml
 		..\Directory.Build.props = ..\Directory.Build.props
 		..\Directory.Build.targets = ..\Directory.Build.targets
 		..\GOVERNANCE.md = ..\GOVERNANCE.md
