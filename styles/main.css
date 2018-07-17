@@ -92,6 +92,19 @@ article h4 {
     transition:.3s;
 }
 
+.fab-small {
+    width: 26px;
+    height: 26px;
+    text-align: center;
+    padding: 3px 0 0 0;
+    border: none;
+    outline: none;
+    color: #FFF;
+    border-radius: 100%;
+    box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
+    transition: .3s;
+}
+
 .fab:hover {
     transform: scale(1.1);
 }
