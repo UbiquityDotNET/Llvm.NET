@@ -24,7 +24,7 @@ pushd .\BuildOutput\docs -ErrorAction Stop
 try
 {
     # allow default line ending management for the docs
-    git config core.safecrlf true
+    git config core.safecrlf false
     git config core.autocrlf true
 
     Write-Information "Adding files to git"

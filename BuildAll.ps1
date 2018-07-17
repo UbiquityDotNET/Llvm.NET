@@ -98,7 +98,6 @@ try
     Write-Information "Restoring NuGet Packages for LibLLVM.vcxproj"
     Invoke-NuGet restore src\LibLLVM\LibLLVM.vcxproj -PackagesDirectory $buildPaths.NuGetRepositoryPath -Verbosity quiet
 
-
     Write-Information "Building LibLLVM"
     Invoke-MSBuild -Targets Build -Project src\LibLLVM\LibLLVM.vcxproj -Properties $msBuildProperties -LoggerArgs ($msbuildLoggerArgs + @("/bl:LibLLVM-build.binlog") )
 
