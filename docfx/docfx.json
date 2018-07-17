@@ -62,7 +62,7 @@
       "_appFooter" : "Copyright (C) 2017, Dot NET Foundation",
       "_appLogoPath": "DragonSharp48x48.png",
       "_disableBreadcrumb" : true,
-      "llvmVersion": "5.0.0",
+      "llvmVersion": "6.0.1",
       "assemblies": ["Llvm.NET"],
       "_gitContribute": {
           "repo": "https://github.com/UbiquityDotNET/Llvm.NET",
