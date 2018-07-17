@@ -6,6 +6,17 @@
 
 {{#children}}
 {{#children}}
+{{^_disableContribution}}
+{{#docurl}}
+<span class="small pull-right mobile-hide">
+  <span class="divider">&nbsp;</span>
+  <a href="{{docurl}}" title="{{__global.improveThisDoc}}" class="fab-small btn-warning pull-right"><i class="glyphicon glyphicon-pencil"></i></a>
+</span>{{/docurl}}
+{{#sourceurl}}
+<span class="small pull-right mobile-hide">
+  <a href="{{sourceurl}}" title="{{__global.viewSource}}" class="fab-small btn-info pull-right"><i class="fa fa-code"></i></a>
+</span>{{/sourceurl}}
+{{/_disableContribution}}
 {{#overload}}
 <a id="{{id}}" data-uid="{{uid}}"></a>
 {{/overload}}
