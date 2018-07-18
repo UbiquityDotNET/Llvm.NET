@@ -169,13 +169,13 @@ DebugInfoBuilder requires a bit more knowledge on the general concepts of the DW
 in particular the <a class="xref" href="http://releases.llvm.org/6.0.1/docs/SourceLevelDebugging.html">DebuggingMetadata</a> in LLVM. In Llvm.NET you don&#39;t need
 to, and in fact can&#39;t, create an instance of the DebugInfoBuilder class. Instead it is lazy constructed
 internally to a <a class="xref" href="../../api/Llvm.NET.BitcodeModule.html">BitcodeModule</a> and accessible through the
-<a class="xref" href="../../api/Llvm.NET.BitcodeModule.html#Llvm_NET_BitcodeModule_DIBuilder">DIBuilder</a> property. This simplifies creating the builder since it
+<a class="xref" href="../../api/Llvm.NET.BitcodeModule.DIBuilder.html#Llvm_NET_BitcodeModule_DIBuilder">DIBuilder</a> property. This simplifies creating the builder since it
 is bound to the module.</p>
 <p>Another important item for debug information is called the Compilation Unit. In Llvm.NET that is the
 <a class="xref" href="../../api/Llvm.NET.DebugInfo.DICompileUnit.html">DICompileUnit</a>. The compile unit is the top level scope for
 storing debug information, there is only ever one per module and generally it represents the full source
 file that was used to create the module. Since the compile unit, like the builder is really tied to the
-module it is exposed as the <a class="xref" href="../../api/Llvm.NET.BitcodeModule.html#Llvm_NET_BitcodeModule_DIBuilder">DIBuilder</a> property. However, unlike
+module it is exposed as the <a class="xref" href="../../api/Llvm.NET.BitcodeModule.DIBuilder.html#Llvm_NET_BitcodeModule_DIBuilder">DIBuilder</a> property. However, unlike
 a builder it isn&#39;t something that a module can automatically construct without more information. Therefore,
 Llvm.NET provides overloads for the creation of a module that includes the additional data needed to create
 the DICompileUnit for you.</p>
@@ -211,7 +211,7 @@ is provided so that it becomes the root compile unit.</p>
 <div class="IMPORTANT"><h5>Important</h5><p>It is important to note that when using the DIBuilder it must be &quot;finalized&quot; inorder to resolve internal
 forward references in the debug metadata. The exact details of this aren&#39;t generally relevant, just
 remember that somewhere after generating all code and debug information to call the 
-<a class="xref" href="../../api/Llvm.NET.DebugInfo.DebugInfoBuilder.html#Llvm_NET_DebugInfo_DebugInfoBuilder_Finish_Llvm_NET_DebugInfo_DISubProgram_">Finish</a>
+<a class="xref" href="../../api/Llvm.NET.DebugInfo.DebugInfoBuilder.Finish.html#Llvm_NET_DebugInfo_DebugInfoBuilder_Finish_Llvm_NET_DebugInfo_DISubProgram_">Finish</a>
 method. (In Llvm.NET this method is called Finish() to avoid conflicts with the .NET runtime defined
 Finalize() and to avoid confusion on the term as the idea of &quot;finalization&quot; has a very different meaning
 in .NET then what happens here).</p>
@@ -458,7 +458,7 @@ compiler for custom languages, including debug support a lot easier.</p>
             <span class="pull-right">
               <a href="#top">Back to top</a>
             </span>
-            Copyright (C) 2017, Dot NET Foundation<br><strong>Build:</strong> 6.0.0-rc.0.0.ci-BLD.443883850
+            Copyright (C) 2017, Dot NET Foundation<br><strong>Build:</strong> 6.0.0-rc.0.0.ci-BLD.443904349
             
           </div>
         </div>
