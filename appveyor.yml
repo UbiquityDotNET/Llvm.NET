@@ -23,9 +23,6 @@ init:
   - git config --global core.safecrlf false
   - git config --global core.autocrlf input
 
-cache:
-  - *.7z
-
 nuget:
   disable_publish_on_pr: true
   account_feed: false
