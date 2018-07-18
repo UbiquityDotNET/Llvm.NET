@@ -36,8 +36,6 @@
     This target dynamically resolves the installed location of the NuGet Packages used and applies
     appropriate parameters to the DocFx command to use them. Otherwise the docfx.json would need to
     have a hard coded path, which doesn't work with multiple users of a version controlled project.
-    It also removes the need to workaround the hard coded path with relative paths by using a
-    nuget.config to force package installs to a well known location.
     -->
   <Target Name="GetDocfxPackagePaths" BeforeTargets="DocBuild">
     <ItemGroup>
