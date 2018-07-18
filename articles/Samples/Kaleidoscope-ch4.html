@@ -1,0 +1,551 @@
+﻿<!DOCTYPE html>
+<!--[if IE]><![endif]-->
+<html>
+  
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>4. Kaleidoscope: Adding JIT and Optimizer Support | Llvm.NET </title>
+    <meta name="viewport" content="width=device-width">
+    <meta name="title" content="4. Kaleidoscope: Adding JIT and Optimizer Support | Llvm.NET ">
+    <meta name="generator" content="docfx 2.36.2.0">
+    
+    <link rel="shortcut icon" href="../../favicon.ico">
+    <link rel="stylesheet" href="../../styles/docfx.vendor.css">
+    <link rel="stylesheet" href="../../styles/docfx.css">
+    <link rel="stylesheet" href="../../styles/main.css">
+    <meta property="docfx:navrel" content="../../toc">
+    <meta property="docfx:tocrel" content="toc">
+    
+    
+    
+  </head>
+  <body data-spy="scroll" data-target="#affix" data-offset="120">
+    <div id="wrapper">
+      <header>
+        
+        <nav id="autocollapse" class="navbar navbar-inverse ng-scope" role="navigation">
+          <div class="container">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              
+              <a class="navbar-brand" href="../../index.html">
+                <img id="logo" class="svg" src="../../DragonSharp48x48.png" alt="">
+              </a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar">
+              <form class="navbar-form navbar-right" role="search" id="search">
+                <div class="form-group">
+                  <input type="text" class="form-control" id="search-query" placeholder="Search" autocomplete="off">
+                </div>
+              </form>
+                <ul class="nav level1 navbar-nav">
+                  <li class="">
+                    <a href="../../api/index.html" title="API Documentation" class="">API Documentation</a>
+                  </li>
+                  <li class="">
+                    <a href="../../articles/index.html" title="Articles" class="">Articles</a>
+                  </li>
+                  <li class="">
+                    <a href="https://github.com/UbiquityDotNET/Llvm.NET" title="GitHub Repository" class="">GitHub Repository</a>
+                  </li>
+                  <li class="">
+                    <a href="http://LLVM.org" title="LLVM.org" class="">LLVM.org</a>
+                  </li>
+                  <li class="">
+                    <a href="http://releases.llvm.org/6.0.1/docs/index.html" title="LLVM Docs" class="">LLVM Docs</a>
+                  </li>
+                </ul>
+            </div>
+          </div>
+        </nav>
+      </header>
+      <div role="main" class="container body-content hide-when-search">
+        <div class="sidenav hide-when-search">
+          <a class="btn toc-toggle collapse" data-toggle="collapse" href="#sidetoggle" aria-expanded="false" aria-controls="sidetoggle">Show / Hide Table of Contents</a>
+          <div class="sidetoggle collapse" id="sidetoggle">
+            <div>
+              <div class="sidefilter">
+                <form class="toc-filter">
+                  <span class="glyphicon glyphicon-filter filter-icon"></span>
+                  <input type="text" id="toc_filter_input" placeholder="Enter here to filter..." onkeypress="if(event.keyCode==13) {return false;}">
+                </form>
+              </div>
+              <div class="sidetoc">
+                <div class="toc" id="toc">
+                  
+                  <ul class="nav level1">
+                    <li class="">
+                      <span class="expand-stub"></span>
+                      <a class="">Code Generation</a>
+                        
+                        <ul class="nav level2">
+                          <li class="">
+                            <a href="codegeneration.html" title="CodeGenerator With Debug Information" class="">CodeGenerator With Debug Information</a>
+                          </li>
+                        </ul>  </li>
+                    <li class="">
+                      <span class="expand-stub"></span>
+                      <a class="">Kaleidoscope</a>
+                        
+                        <ul class="nav level2">
+                          <li class="">
+                            <a href="Kaleidoscope.html" title="Chapter 1 - Language Introduction" class="">Chapter 1 - Language Introduction</a>
+                          </li>
+                          <li class="">
+                            <a href="Kaleidoscope-ch2.html" title="Chapter 2 - Implementing the parser" class="">Chapter 2 - Implementing the parser</a>
+                          </li>
+                          <li class="">
+                            <a href="Kaleidoscope-ch3.html" title="Chapter 3 - Generating LLVM IR" class="">Chapter 3 - Generating LLVM IR</a>
+                          </li>
+                          <li class="active">
+                            <a href="Kaleidoscope-ch4.html" title="Chapter 4 - JIT and Optimizer Support" class="active">Chapter 4 - JIT and Optimizer Support</a>
+                          </li>
+                          <li class="">
+                            <a href="Kaleidoscope-ch5.html" title="Chapter 5 - Control Flow" class="">Chapter 5 - Control Flow</a>
+                          </li>
+                          <li class="">
+                            <a href="Kaleidoscope-ch6.html" title="Chapter 6 - User Defined Operators" class="">Chapter 6 - User Defined Operators</a>
+                          </li>
+                          <li class="">
+                            <a href="Kaleidoscope-ch7.html" title="Chapter 7 - Mutable Variables" class="">Chapter 7 - Mutable Variables</a>
+                          </li>
+                          <li class="">
+                            <a href="Kaleidoscope-ch8.html" title="Chapter 8 - AOT Compilation" class="">Chapter 8 - AOT Compilation</a>
+                          </li>
+                          <li class="">
+                            <a href="Kaleidoscope-ch9.html" title="Chapter 9 - Debug Information" class="">Chapter 9 - Debug Information</a>
+                          </li>
+                          <li class="">
+                            <a href="Kaleidoscope-ParseTreeVisitor.html" title="ParseTree Visitor" class="">ParseTree Visitor</a>
+                          </li>
+                          <li class="">
+                            <a href="Kaleidoscope-Parsetree-examples.html" title="ParseTree Examples" class="">ParseTree Examples</a>
+                          </li>
+                        </ul>  </li>
+                  </ul>        </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="article row grid-right">
+          <div class="col-md-10">
+            <article class="content wrap" id="_content" data-uid="">
+<h1 id="4-kaleidoscope-adding-jit-and-optimizer-support">4. Kaleidoscope: Adding JIT and Optimizer Support</h1>
+
+<p>This chapter of the Kaleidoscope tutorial introduces JIT compilation and optimizations of the generated
+code. As, such this is the first variant of the language implementation where you can actually execute
+the Kaleidoscope code. Thus, this is a bit more fun than the others as you can finally get to see the
+language working for real!</p>
+<h2 id="constant-folding">Constant Folding</h2>
+<p>If you studied the LLVM IR generated from the previous chapters you will see that it isn&#39;t particularly
+well optimized. Though, there is one case where it does do some nice optimization automatically for us.</p>
+<p>For example:</p>
+<pre><code class="lang-Kaleidoscope">def test(x) 1+2+x;
+</code></pre><p>produces the following LLVM IR:</p>
+<pre><code class="lang-llvm">define double @test(double %x) {
+entry:
+  %addtmp = fadd double 3.000000e+00, %x
+  ret double %addtmp
+}
+</code></pre><p>That&#39;s not exactly what the parse tree would suggest. The <a class="xref" href="../../api/Llvm.NET.Instructions.InstructionBuilder.html">InstructionBuilder</a>
+automatically performs an optimization technique know as &#39;Constant Folding&#39;. This optimization is very
+important, in fact, many compilers implement the folding directly into the generation of the Abstract
+Syntax Tree (AST). With LLVM that isn&#39;t necessary as it is automatically provided for you (no extra
+charge!).</p>
+<p>Obviously constant folding isn&#39;t the only possible optimization and InstructionBuilder only operates on
+the individual instructions as they are built. So, there are limits on what InstructionBUilder can do.</p>
+<p>For example:</p>
+<pre><code class="lang-Kaleidoscope">def test(x) (1+2+x)*(x+(1+2));
+</code></pre><pre><code class="lang-llvm">define double @test(double %x) {
+entry:
+  %addtmp = fadd double 3.000000e+00, %x
+  %addtmp1 = fadd double %x, 3.000000e+00
+  %multmp = fmul double %addtmp, %addtmp1
+  ret double %multmp
+}
+</code></pre><p>In this case the operand of the additions are identical. Ideally this would generate as
+<code>temp = x+3; result = temp*temp;</code> rather than computing X+3 twice. This isn&#39;t something that
+InstructionBuilder can do. Ultimately this requires two distinct transformations:</p>
+<ol>
+<li>Re-association of expressions to make the additions lexically identical (e.g. recognize that x+3 == 3+x )</li>
+<li>Common Subexpression Elimination to remove the redundant add instruction.</li>
+</ol>
+<p>Fortunately, LLVM provides a very broad set of optimization transformations that can handle this and many
+other scenarios.</p>
+<h2 id="llvm-optimization-passes">LLVM Optimization Passes</h2>
+<p>LLVM provides many different optimization passes, each handling a specific scenario with different trade-offs.
+One of the values of LLVM as a general compilation back-end is that it doesn&#39;t enforce any particular set
+of optimizations. By default there aren&#39;t any optimizations (Other than the obvious constant folding built
+into the InstructionBuilder). All optimizations are entirely in the hands of the front-end application.
+The compiler implementor controls what passes are applied, and in what order they are run. This ensures
+that the optimizations are tailored to correctly meet the needs of the language and runtime environment.</p>
+<p>For Kaleidoscope, optimizations are limited to a single function as they are generated when the user types
+them in on the command line. Ultimate, whole program optimization is off the table (You never know when the
+user will enter the last expression so it is incorrect to eliminate unused functions). In order to support
+per-function optimization a <a class="xref" href="../../api/Llvm.NET.Transforms.FunctionPassManager.html">FunctionPassManager</a> is created
+to hold the passes used for optimizing a function. The FunctionPassManager supports running the passes
+added to it against a function to transform it into the optimized form. Since a pass manager is tied to the
+module and, for JIT support, each function is generated into its own module a new function is needed to
+create the module and initialize the pass manager.</p>
+<pre><code class="lang-csharp" name="Main">private void InitializeModuleAndPassManager( )
+{
+    Module = Context.CreateBitcodeModule( );
+    Module.Layout = JIT.TargetMachine.TargetData;
+    FunctionPassManager = new FunctionPassManager( Module );
+    FunctionPassManager.AddInstructionCombiningPass( )
+                       .AddReassociatePass( )
+                       .AddGVNPass( )
+                       .AddCFGSimplificationPass( )
+                       .Initialize( );
+}
+</code></pre><p>Creating the pass manager isn&#39;t enough to get the optimizations. Something needs to actually provide the
+pass manager with the function to optimize. The most sensible place to put that is as the last step of
+generating the function.</p>
+<pre><code class="lang-C#">FunctionPassManager.Run( function );
+</code></pre><p>This will run the passes defined when the FunctionPassManager was created, resulting in better generated code.</p>
+<pre><code class="lang-llvm">define double @test(double %x) {
+entry:
+        %addtmp = fadd double %x, 3.000000e+00
+        %multmp = fmul double %addtmp, %addtmp
+        ret double %multmp
+}
+</code></pre><p>The passes eliminate the redundant add instructions to produce a simpler, yet still correct representation
+of the generated code. LLVM provides a wide variety of optimization passes. Unfortunately not all are well
+documented, yet. Looking into what Clang uses is helpful as is using the LLVM &#39;opt.exe&#39; tool to run passes
+individually or in various combinations and ordering to see how well it optimizes the code based on what
+your front-end generates. (This can lead to changing the passes and ordering, as well as changes in what
+the front-end generates so that the optimizer can handle the input better) This is not an exact science
+with a one size fits all kind of solution. There are many common passes that are likely relevant to all
+languages. Though the ordering of them may differ depending on the needs of the language and runtime.</p>
+<h2 id="adding-jit-compilation">Adding JIT Compilation</h2>
+<p>Now that the code generation produces optimized code, it is time to get to the fun part - executing code!
+The basic idea is to allow the user to type in the Kaleidoscope code as supported thus far and it will
+execute to produce a result. Unlike the previous chapters, instead of just printing out the LLVM IR
+representation of a top level expression it is executed and the results are provided back to the user.</p>
+<h3 id="main-driver">Main Driver</h3>
+<p>The changes needed to the main driver are pretty simple, mostly consisting of removing a couple lines of
+code that print out the LLVM IR for the module at the end and for each function when defined. The code
+already supported showing the results if it was a floating point value by checking if the generated value
+is a <a class="xref" href="../../api/Llvm.NET.Values.ConstantFP.html">ConstantFP</a>. We&#39;ll see a bit later on why that is a ConstantFP
+value.</p>
+<h3 id="code-generator">Code Generator</h3>
+<p>The code generation needs an update to support using a JIT engine to generate and execute the Kaleidescope code provided by the user.</p>
+<p>To begin with, the generator needs some additional members, including the JIT engine.</p>
+<pre><code class="lang-C#">private readonly KaleidoscopeJIT JIT;
+private readonly Dictionary&lt;string, IJitModuleHandle&gt; FunctionModuleMap;
+private FunctionPassManager FunctionPassManager;
+private readonly PrototypeCollection FunctionPrototypes;
+
+/// &lt;summary&gt;Delegate type to allow execution of a JIT&#39;d TopLevelExpression&lt;/summary&gt;
+/// &lt;returns&gt;Result of evaluating the expression&lt;/returns&gt;
+[UnmanagedFunctionPointer( System.Runtime.InteropServices.CallingConvention.Cdecl )]
+private delegate double AnonExpressionFunc( );
+</code></pre><p>The JIT engine is retained for the generator to use. The same engine is retained for the lifetime of the
+generator so that functions are added to the same engine and can call function previously added. The JIT
+provides a &#39;handle&#39; for every module added, which is used to reference the module in the JIT, this is
+normally used to remove the module from the JIT engine when re-defining a function. Thus, a map of the
+function names and the JIT handle created for them is maintained. Additionally, a collection of defined
+function prototypes is retained to enable matching a function call to a previously defined function.
+Since the JIT support uses a module per function approach, lookups on the current module aren&#39;t sufficient.
+Finally, a native function call delegate is defined for top level anonymous expressions. So that, after
+the JIT engine has generated the code, the application can call it through a delegate.</p>
+<p>The initialization of the generator requires updating to support the additional members.</p>
+<pre><code class="lang-csharp" name="Main">public CodeGenerator( DynamicRuntimeState globalState )
+{
+    RuntimeState = globalState;
+    Context = new Context( );
+    JIT = new KaleidoscopeJIT( );
+    InitializeModuleAndPassManager( );
+    InstructionBuilder = new InstructionBuilder( Context );
+    FunctionPrototypes = new PrototypeCollection( );
+    FunctionModuleMap = new Dictionary&lt;string, IJitModuleHandle&gt;( );
+    NamedValues = new Dictionary&lt;string, Value&gt;( );
+}
+</code></pre><p>Additionally, since the JIT engine is disposable, the code generators Dispose() method must call the
+Dispose() method on the JIT engine.</p>
+<p>The JIT engine itself is a class provided in the Kaleidoscope.Runtime library to wrap the LLVM ORC JIT
+engine.</p>
+<pre><code class="lang-csharp" name="Main">// &lt;copyright file=&quot;KaleidoscopeJIT.cs&quot; company=&quot;.NET Foundation&quot;&gt;
+// Copyright (c) .NET Foundation. All rights reserved.
+// &lt;/copyright&gt;
+
+using System;
+using System.Runtime.InteropServices;
+using Llvm.NET;
+using Llvm.NET.JIT;
+
+namespace Kaleidoscope.Runtime
+{
+    /// &lt;summary&gt;JIT engine for Kaleidoscope language&lt;/summary&gt;
+    public sealed class KaleidoscopeJIT
+        : IDisposable
+    {
+        public KaleidoscopeJIT( )
+        {
+            TargetMachine = Target.FromTriple( Triple.HostTriple.ToString( ) )
+                                  .CreateTargetMachine(Triple.HostTriple.ToString(), null, null, CodeGenOpt.Default, Reloc.Default, CodeModel.JitDefault );
+
+            ExecutionEngine = new OrcJit( TargetMachine );
+            ExecutionEngine.AddInteropCallback( &quot;putchard&quot;, new CallbackHandler1( PutChard ) );
+            ExecutionEngine.AddInteropCallback( &quot;printd&quot;, new CallbackHandler1( Printd ) );
+        }
+
+        public TargetMachine TargetMachine { get; }
+
+        public IJitModuleHandle AddModule( BitcodeModule module ) =&gt; ExecutionEngine.AddModule( module, ExecutionEngine.DefaultSymbolResolver );
+
+        public void RemoveModule( IJitModuleHandle moduleHandle ) =&gt; ExecutionEngine.RemoveModule( moduleHandle );
+
+        public T GetDelegateForFunction&lt;T&gt;( string name )
+        {
+            return ExecutionEngine.GetFunctionDelegate&lt;T&gt;( name );
+        }
+
+        public void Dispose( )
+        {
+            ExecutionEngine.Dispose( );
+        }
+
+        [UnmanagedFunctionPointer( CallingConvention.Cdecl )]
+        public delegate double CallbackHandler0( );
+
+        [UnmanagedFunctionPointer( CallingConvention.Cdecl )]
+        public delegate double CallbackHandler1( double arg1 );
+
+        [UnmanagedFunctionPointer( CallingConvention.Cdecl )]
+        public delegate double CallbackHandler2( double arg1, double arg2 );
+
+        [UnmanagedFunctionPointer( CallingConvention.Cdecl )]
+        public delegate double CallbackHandler3( double arg1, double arg2, double arg3 );
+
+        [UnmanagedFunctionPointer( CallingConvention.Cdecl )]
+        public delegate double CallbackHandler4( double arg1, double arg2, double arg3, double arg4 );
+
+        private double Printd( double x )
+        {
+            // STOP ALL EXCEPTIONS from bubbling out to JIT&#39;ed code
+            try
+            {
+                Console.WriteLine( x );
+                return 0.0F;
+            }
+            catch
+            {
+                return 0.0;
+            }
+        }
+
+        private double PutChard( double x )
+        {
+            // STOP ALL EXCEPTIONS from bubbling out to JIT&#39;ed code
+            try
+            {
+                Console.Write( ( char )x );
+                return 0.0F;
+            }
+            catch
+            {
+                return 0.0;
+            }
+        }
+
+        private readonly OrcJit ExecutionEngine;
+    }
+}
+</code></pre><p><a class="xref" href="../../api/Llvm.NET.JIT.OrcJit.html">OrcJit</a> provides support for declaring functions that are external to the JIT
+that the JIT&#39;d module code can call. For Kaleidoscope, two such functions are defined directly in
+KaleidoscoptJIT (putchard and printd), which is consistent with the same functions used in the official
+LLVM C++ tutorial. Thus allowing sharing of samples between the two.</p>
+<div class="WARNING"><h5>Warning</h5><p>All such methods implented in .NET must block any exception from bubling out of the call as the JIT
+engine doesn&#39;t know anything about them and neither does the Kaleidoscope language. Exceptions thrown
+in these functions would produce undefined results, at best - crashing the application.</p>
+</div>
+<p>Since functions are no longer collected into a single module the code to find the target for a function
+call requires updating to lookup the function from a collection of functions mapped by name.</p>
+<pre><code class="lang-csharp" name="Main">private Function FindCallTarget( string name )
+{
+    // lookup the prototype for the function to get the signature
+    // and create a declaration in this module
+    if( FunctionPrototypes.TryGetValue( name, out var signature ) )
+    {
+        return GetOrDeclareFunction( signature );
+    }
+
+    Function retVal = Module.GetFunction( name );
+    if( retVal != null )
+    {
+        return retVal;
+    }
+
+    return null;
+}
+</code></pre><p>This will lookup the function prototype by name and call the GetOrDeclareFunction() with the prototype
+found. If the prototype wasn&#39;t found then it falls back to the previous lookup in the current module.
+This fall back is needed to support recursive functions where the referenced function actually is in the
+current module.</p>
+<p>Next is to update the GetOrDeclareFunction() to handle mapping the functions prototype and re-definition
+of functions.</p>
+<pre><code class="lang-csharp" name="Main">private Function GetOrDeclareFunction( Prototype prototype, bool isAnonymous = false )
+{
+    var function = Module.GetFunction( prototype.Identifier.Name );
+    if( function != null )
+    {
+        return function;
+    }
+
+    var llvmSignature = Context.GetFunctionType( Context.DoubleType, prototype.Parameters.Select( _ =&gt; Context.DoubleType ) );
+
+    var retVal = Module.AddFunction( prototype.Identifier.Name, llvmSignature );
+    retVal.Linkage( Linkage.External );
+
+    int index = 0;
+    foreach( var argId in prototype.Parameters )
+    {
+        retVal.Parameters[ index ].Name = argId.Name;
+        ++index;
+    }
+
+    if( !isAnonymous )
+    {
+        FunctionPrototypes.AddOrReplaceItem( prototype );
+    }
+
+    return retVal;
+}
+</code></pre><p>This distinguishes the special case of an anonymous top level expression as those are never added to the
+prototype maps. They are only in the JIT engine long enough to execute once and are then removed. Since
+they are, by definition, anonymous they can never be referenced by anything else.</p>
+<p>The DefineFunction needs updating to support adding/removing the function&#39;s module in the JIT, tracking
+the JIT handle for the module and ultimately re-initializing a new module and pass manager for the next
+function.</p>
+<pre><code class="lang-csharp" name="Main">private (Function Function, IJitModuleHandle JitHandle) DefineFunction( Function function, ExpressionContext body )
+{
+    if( !function.IsDeclaration )
+    {
+        throw new CodeGeneratorException( $&quot;Function {function.Name} cannot be redefined in the same module&quot; );
+    }
+
+    // Destroy any previously generated module for this function.
+    // This allows re-definition as the new module will provide the
+    // implementation. This is needed, otherwise both the MCJIT
+    // and OrcJit engines will resolve to the original module, despite
+    // claims to the contrary in the official tutorial text. (Though,
+    // to be fair it may have been true in the original JIT and might
+    // still be true for the interpreter)
+    if( FunctionModuleMap.Remove( function.Name, out IJitModuleHandle handle ) )
+    {
+        JIT.RemoveModule( handle );
+    }
+
+    var basicBlock = function.AppendBasicBlock( &quot;entry&quot; );
+    InstructionBuilder.PositionAtEnd( basicBlock );
+    NamedValues.Clear( );
+    foreach( var arg in function.Parameters )
+    {
+        NamedValues[ arg.Name ] = arg;
+    }
+
+    var funcReturn = body.Accept( this );
+    if( funcReturn == null )
+    {
+        function.EraseFromParent( );
+        return (null, default);
+    }
+
+    InstructionBuilder.Return( funcReturn );
+    function.Verify( );
+
+    if( !DisableOptimizations )
+    {
+        FunctionPassManager.Run( function );
+    }
+
+    var jitHandle = JIT.AddModule( Module );
+    FunctionModuleMap.Add( function.Name, jitHandle );
+    InitializeModuleAndPassManager( );
+    return (function, jitHandle);
+}
+</code></pre><div class="NOTE"><h5>Note</h5><p>Instead of just returning the function DefineFunction() now returns a Tuple with the Function and the
+<a class="xref" href="../../api/Llvm.NET.JIT.IJitModuleHandle.html">IJitModuleHandle</a> the JIT generated for the module. The handle is
+used in DefineFunction() later to remove the module whenever re-dfining an existing function.</p>
+</div>
+<p>That covers the modifications to the core generation utility functions for JIT. Only two of the Visitor
+methods require additional updates to complete the JIT engine support.</p>
+<pre><code class="lang-csharp" name="Main">public override Value VisitFunctionDefinition( [NotNull] FunctionDefinitionContext context )
+{
+    return DefineFunction( ( Function )context.Signature.Accept( this )
+                         , context.BodyExpression
+                         ).Function;
+}
+</code></pre><p>VisitFunctionDefinition() requires only a small update to extract the function from the tuple returned
+by DefineFunction(), the handle isn&#39;t needed here as it is mapped already in DefineFunction().</p>
+<pre><code class="lang-csharp" name="Main">public override Value VisitTopLevelExpression( [NotNull] TopLevelExpressionContext context )
+{
+    var proto = new Prototype( $&quot;anon_expr_{AnonNameIndex++}&quot; );
+    var function = GetOrDeclareFunction( proto, isAnonymous: true );
+
+    var (_, jitHandle) = DefineFunction( function, context.expression( ) );
+
+    var nativeFunc = JIT.GetDelegateForFunction&lt;AnonExpressionFunc&gt;( proto.Identifier.Name );
+    var retVal = Context.CreateConstant( nativeFunc( ) );
+    FunctionModuleMap.Remove( function.Name );
+    JIT.RemoveModule( jitHandle );
+    return retVal;
+}
+</code></pre><p>Visiting the top level expression needs some additional work to make the JIT actually work. The generator
+will convert the function to LLVM IR, as before, however it will also capture the JIT handle so it can
+remove it later. The real &#39;magic&#39; of the JIT happens in the next 2 lines:</p>
+<pre><code class="lang-C#">var nativeFunc = JIT.GetDelegateForFunction&lt;AnonExpressionFunc&gt;( proto.Identifier.Name );
+var retVal = Context.CreateConstant( nativeFunc( ) );
+</code></pre><p>This asks the JIT engine to provide a delegate matching the AnonExpressionFunc signature for a function
+with the name of the anonymous function just created (and compiled to native code). The function is then
+called through the delegate to produce a result. Since the result is a raw native double and all of the
+visitor methods must return a <a class="xref" href="../../api/Llvm.NET.Values.Value.html">Value</a> a new <a class="xref" href="../../api/Llvm.NET.Values.ConstantFP.html">ConstantFP</a>
+is created for the result of the call.</p>
+<p>After making the call to the generated function, the anonymous function is removed from the prototype
+mapping and then removed from the JIT module as it is no longer needed.</p>
+<h2 id="conclusion">Conclusion</h2>
+<p>While the amount of words needed to describe the changes to support optimization and JIT execution here
+isn&#39;t exactly small, the actual code changes required really are. The JIT engine does the heavy lifting
+and Llvm.NET provides a clean interface to the JIT that fits with common patterns and runtime support for
+.NET. Very cool, indeed!</p>
+</article>
+          </div>
+          <div class="contribution-panel mobile-hide">
+              <a href="https://github.com/UbiquityDotNET/Llvm.NET/blob/master/docfx/articles/Samples/Kaleidoscope-ch4.md/#L1" title="Improve this Doc" class="fab btn-warning pull-right"><i class="glyphicon glyphicon-pencil"></i></a>
+          </div>
+          
+          <div class="hidden-sm col-md-2" role="complementary">
+            <div class="sideaffix">
+              <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <footer>
+        <div class="grad-bottom"></div>
+        <div class="footer">
+          <div class="container">
+            <span class="pull-right">
+              <a href="#top">Back to top</a>
+            </span>
+            Copyright (C) 2017, Dot NET Foundation<br><strong>Build:</strong> 6.0.0-rc.0.0.ci-BLD.443883850
+            
+          </div>
+        </div>
+      </footer>
+    </div>
+    
+    <script type="text/javascript" src="../../styles/docfx.vendor.js"></script>
+    <script type="text/javascript" src="../../styles/docfx.js"></script>
+    <script type="text/javascript" src="../../styles/main.js"></script>
+  </body>
+</html>

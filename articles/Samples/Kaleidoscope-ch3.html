@@ -1,0 +1,685 @@
+﻿<!DOCTYPE html>
+<!--[if IE]><![endif]-->
+<html>
+  
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>3. Kaleidoscope: Generating LLVM IR | Llvm.NET </title>
+    <meta name="viewport" content="width=device-width">
+    <meta name="title" content="3. Kaleidoscope: Generating LLVM IR | Llvm.NET ">
+    <meta name="generator" content="docfx 2.36.2.0">
+    
+    <link rel="shortcut icon" href="../../favicon.ico">
+    <link rel="stylesheet" href="../../styles/docfx.vendor.css">
+    <link rel="stylesheet" href="../../styles/docfx.css">
+    <link rel="stylesheet" href="../../styles/main.css">
+    <meta property="docfx:navrel" content="../../toc">
+    <meta property="docfx:tocrel" content="toc">
+    
+    
+    
+  </head>
+  <body data-spy="scroll" data-target="#affix" data-offset="120">
+    <div id="wrapper">
+      <header>
+        
+        <nav id="autocollapse" class="navbar navbar-inverse ng-scope" role="navigation">
+          <div class="container">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              
+              <a class="navbar-brand" href="../../index.html">
+                <img id="logo" class="svg" src="../../DragonSharp48x48.png" alt="">
+              </a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar">
+              <form class="navbar-form navbar-right" role="search" id="search">
+                <div class="form-group">
+                  <input type="text" class="form-control" id="search-query" placeholder="Search" autocomplete="off">
+                </div>
+              </form>
+                <ul class="nav level1 navbar-nav">
+                  <li class="">
+                    <a href="../../api/index.html" title="API Documentation" class="">API Documentation</a>
+                  </li>
+                  <li class="">
+                    <a href="../../articles/index.html" title="Articles" class="">Articles</a>
+                  </li>
+                  <li class="">
+                    <a href="https://github.com/UbiquityDotNET/Llvm.NET" title="GitHub Repository" class="">GitHub Repository</a>
+                  </li>
+                  <li class="">
+                    <a href="http://LLVM.org" title="LLVM.org" class="">LLVM.org</a>
+                  </li>
+                  <li class="">
+                    <a href="http://releases.llvm.org/6.0.1/docs/index.html" title="LLVM Docs" class="">LLVM Docs</a>
+                  </li>
+                </ul>
+            </div>
+          </div>
+        </nav>
+      </header>
+      <div role="main" class="container body-content hide-when-search">
+        <div class="sidenav hide-when-search">
+          <a class="btn toc-toggle collapse" data-toggle="collapse" href="#sidetoggle" aria-expanded="false" aria-controls="sidetoggle">Show / Hide Table of Contents</a>
+          <div class="sidetoggle collapse" id="sidetoggle">
+            <div>
+              <div class="sidefilter">
+                <form class="toc-filter">
+                  <span class="glyphicon glyphicon-filter filter-icon"></span>
+                  <input type="text" id="toc_filter_input" placeholder="Enter here to filter..." onkeypress="if(event.keyCode==13) {return false;}">
+                </form>
+              </div>
+              <div class="sidetoc">
+                <div class="toc" id="toc">
+                  
+                  <ul class="nav level1">
+                    <li class="">
+                      <span class="expand-stub"></span>
+                      <a class="">Code Generation</a>
+                        
+                        <ul class="nav level2">
+                          <li class="">
+                            <a href="codegeneration.html" title="CodeGenerator With Debug Information" class="">CodeGenerator With Debug Information</a>
+                          </li>
+                        </ul>  </li>
+                    <li class="">
+                      <span class="expand-stub"></span>
+                      <a class="">Kaleidoscope</a>
+                        
+                        <ul class="nav level2">
+                          <li class="">
+                            <a href="Kaleidoscope.html" title="Chapter 1 - Language Introduction" class="">Chapter 1 - Language Introduction</a>
+                          </li>
+                          <li class="">
+                            <a href="Kaleidoscope-ch2.html" title="Chapter 2 - Implementing the parser" class="">Chapter 2 - Implementing the parser</a>
+                          </li>
+                          <li class="active">
+                            <a href="Kaleidoscope-ch3.html" title="Chapter 3 - Generating LLVM IR" class="active">Chapter 3 - Generating LLVM IR</a>
+                          </li>
+                          <li class="">
+                            <a href="Kaleidoscope-ch4.html" title="Chapter 4 - JIT and Optimizer Support" class="">Chapter 4 - JIT and Optimizer Support</a>
+                          </li>
+                          <li class="">
+                            <a href="Kaleidoscope-ch5.html" title="Chapter 5 - Control Flow" class="">Chapter 5 - Control Flow</a>
+                          </li>
+                          <li class="">
+                            <a href="Kaleidoscope-ch6.html" title="Chapter 6 - User Defined Operators" class="">Chapter 6 - User Defined Operators</a>
+                          </li>
+                          <li class="">
+                            <a href="Kaleidoscope-ch7.html" title="Chapter 7 - Mutable Variables" class="">Chapter 7 - Mutable Variables</a>
+                          </li>
+                          <li class="">
+                            <a href="Kaleidoscope-ch8.html" title="Chapter 8 - AOT Compilation" class="">Chapter 8 - AOT Compilation</a>
+                          </li>
+                          <li class="">
+                            <a href="Kaleidoscope-ch9.html" title="Chapter 9 - Debug Information" class="">Chapter 9 - Debug Information</a>
+                          </li>
+                          <li class="">
+                            <a href="Kaleidoscope-ParseTreeVisitor.html" title="ParseTree Visitor" class="">ParseTree Visitor</a>
+                          </li>
+                          <li class="">
+                            <a href="Kaleidoscope-Parsetree-examples.html" title="ParseTree Examples" class="">ParseTree Examples</a>
+                          </li>
+                        </ul>  </li>
+                  </ul>        </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="article row grid-right">
+          <div class="col-md-10">
+            <article class="content wrap" id="_content" data-uid="">
+<h1 id="3-kaleidoscope-generating-llvm-ir">3. Kaleidoscope: Generating LLVM IR</h1>
+
+<p>This chapter focuses on the basics of transforming the ANTLR parse tree into LLVM IR. The general goal is
+to parse Kaleidoscope source code to generate a <a class="xref" href="../../api/Llvm.NET.BitcodeModule.html">BitcodeModule</a> representing
+the source as LLVM IR.</p>
+<h2 id="basic-code-flow">Basic code flow</h2>
+<p>The entry point for the application is the standard Main() function. This implementation is generally the
+same for most of the remaining chapters. Chapter specific topics will cover any particular variations
+relevant to the changes for that chapter, if any are needed.</p>
+<p>The Main function starts out by calling WaitForDebugger(). This is a useful utility that doesn&#39;t do
+anything in a release build, but in debug builds will check for an attached debugger and, if none is found,
+it will wait for one. This works around a missing feature of the .NET Standard C# project system that
+does not support launching mixed native+managed debugging. When you need to go all the way into debugging
+the LLVM code, you can launch the debug version of the app without debugging, then attach to it and
+select native and managed debugging. (Hopefully this feature will be restored to these projects in the
+future so this rather hacky trick isn&#39;t needed...)</p>
+<h3 id="initializing-llvmnet">Initializing Llvm.NET</h3>
+<p>The underlying LLVM library requires initialization for it&#39;s internal data, furthermore Llvm.NET must load
+the actual underlying DLL specific to the current system architecture. Thus, the library as a whole
+requires initialization.</p>
+<pre><code class="lang-C#">using static Llvm.NET.StaticState;
+// [...]
+
+using( InitializeLLVM() )
+{
+    // [...]
+}
+</code></pre><p>The initialization returns an IDisposable so that the calling application can shutdown/cleanup resources
+and potentially re-initialize for a different target, if desired. This application only needs to generate
+one module and exit so it just applies a standard C# <code>using</code> scope to ensure proper cleanup.</p>
+<h3 id="initializing-targets">Initializing Targets</h3>
+<p>LLVM supports a number of target architectures, however for the Kaleidoscope tutorials the only supported
+target is the one the host application is running on. So, only the native target is registered.</p>
+<pre><code class="lang-C#">    RegisterNative();
+</code></pre><h3 id="generator-and-repl-loop">Generator and REPL loop</h3>
+<p>This chapter supports the simple expressions of the language that are parsed and generated to an LLVM
+<a class="xref" href="../../api/Llvm.NET.Values.Value.html">Value</a>. This forms the foundation of the Kaleidoscope samples outer
+generation loop. Subsequent, chapters will focus on additional functionality including JIT compilation,
+Debugging information, and Native Module generation.</p>
+<pre><code class="lang-csharp" name="Main">var parser = new ParserStack( LanguageLevel.SimpleExpressions );
+using( var generator = new CodeGenerator( parser.GlobalState ) )
+{
+    Console.WriteLine( &quot;Llvm.NET Kaleidoscope Interpreter - {0}&quot;, parser.LanguageLevel );
+
+    var replLoop = new ReplLoop&lt;Value&gt;( generator, parser );
+    replLoop.ReadyStateChanged += ( s, e ) =&gt; Console.Write( e.PartialParse ? &quot;&gt;&quot; : &quot;Ready&gt;&quot; );
+    replLoop.GeneratedResultAvailable += OnGeneratedResultAvailable;
+    replLoop.CodeGenerationError += OnGeneratorError;
+
+    replLoop.Run( );
+    Console.WriteLine( generator.GeneratedModule.WriteToString( ) );
+}
+</code></pre><h3 id="processing-output-for-results">Processing output for results</h3>
+<p>As the REPL loop recognizes the input and generates output it notifies the application of the output so
+that the application can use the results. (Typically by showing the results to the user in some fashion).
+In Chapter2 this was used to generate representations of the raw parse tree to aid in comprehending the
+language. For this chapter it is used to print information about what was generated from the input to the
+parser.</p>
+<pre><code class="lang-csharp" name="ResultProcessing">private static void OnGeneratedResultAvailable( object sender, GeneratedResultAvailableArgs&lt;Value&gt; e )
+{
+    var source = ( ReplLoop&lt;Value&gt; )sender;
+
+    switch( e.Result )
+    {
+    case ConstantFP result:
+        Console.WriteLine( &quot;Evaluated to {0}&quot;, result.Value );
+        break;
+
+    case Function function:
+        if( source.AdditionalDiagnostics.HasFlag( DiagnosticRepresentations.LlvmIR ) )
+        {
+            function.ParentModule.WriteToTextFile( Path.ChangeExtension( GetSafeFileName( function.Name ), &quot;ll&quot; ), out string ignoredMsg );
+        }
+
+        Console.WriteLine( &quot;Defined function: {0}&quot;, function.Name );
+        Console.WriteLine( function );
+        break;
+    }
+}
+</code></pre><h3 id="handling-errors-in-code-generation">Handling errors in code generation</h3>
+<p>In many cases successfully parsing the input code isn&#39;t sufficient to determine correctness of the code in
+a given context. In particular attempting to re-define a function already defined in the current module is
+a problem. (Later, chapters deal with re-definition by using a new module for each function, but that is
+more a side-effect of working with the JIT) To handle error in the generation the REPL loop will catch any
+CodeGenerationException and raise the CodeGenerationError event to notify the application. The application
+handles this by indicating the error to the user. This allows the application to continue processing input
+while still informing the user that what they tried to do didn&#39;t work.</p>
+<pre><code class="lang-csharp" name="ResultProcessing">private static void OnGeneratorError( object sender, CodeGenerationExceptionArgs e )
+{
+    var color = Console.ForegroundColor;
+    Console.ForegroundColor = ConsoleColor.Red;
+    try
+    {
+        Console.Error.WriteLine( e.Exception.Message );
+    }
+    finally
+    {
+        Console.ForegroundColor = color;
+    }
+}
+</code></pre><h2 id="code-generation">Code generation</h2>
+<h3 id="initialization">Initialization</h3>
+<p>The code generation maintains state for the transformation as private members.</p>
+<pre><code class="lang-csharp" name="Main">private readonly DynamicRuntimeState RuntimeState;
+private static int AnonNameIndex;
+private readonly Context Context;
+private BitcodeModule Module;
+private readonly InstructionBuilder InstructionBuilder;
+private readonly IDictionary&lt;string, Value&gt; NamedValues;
+</code></pre><p>These are initialized in the constructor</p>
+<pre><code class="lang-csharp" name="Main">public CodeGenerator( DynamicRuntimeState globalState )
+{
+    RuntimeState = globalState;
+    Context = new Context( );
+    Module = Context.CreateBitcodeModule( &quot;Kaleidoscope&quot; );
+    InstructionBuilder = new InstructionBuilder( Context );
+    NamedValues = new Dictionary&lt;string, Value&gt;( );
+}
+</code></pre><p>The exact set of members varies for each chapter but the basic ideas remain across each chapter.</p>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>RuntimeState</td>
+<td>Contains information about the language and dynamic runtime state needed for resolving operator precedence</td>
+</tr>
+<tr>
+<td>Context</td>
+<td>Current <a class="xref" href="../../api/Llvm.NET.Context.html">Context</a> for LLVM generation</td>
+</tr>
+<tr>
+<td>Module</td>
+<td>Current <a class="xref" href="../../api/Llvm.NET.BitcodeModule.html">BitcodeModule</a> to generate LLVM IR in</td>
+</tr>
+<tr>
+<td>InstructionBuilder</td>
+<td>Current  <a class="xref" href="../../api/Llvm.NET.Instructions.InstructionBuilder.html">InstructionBuilder</a> used to generate LLVM IR instructions</td>
+</tr>
+<tr>
+<td>NamedValues</td>
+<td>Contains a mapping of named variables to the generated <a class="xref" href="../../api/Llvm.NET.Values.Value.html">Value</a></td>
+</tr>
+</tbody>
+</table>
+<h3 id="generate-method">Generate Method</h3>
+<p>The Generate method is used by the REPL loop to generate the final output from a parse tree. The common
+implementation simply checks for syntax errors in the tree, and if there were any returns null otherwise
+performs a visitor walk against the parse tree to generate a result. The syntax errors check is done in
+the generator to allow generators to handle invalid input or partial input gracefully or in some special
+fashion determined by the needs of the generator implementation.</p>
+<pre><code class="lang-csharp" name="Main">public Value Generate( Parser parser, IParseTree tree, DiagnosticRepresentations additionalDiagnostics )
+{
+    if( parser.NumberOfSyntaxErrors &gt; 0 )
+    {
+        return null;
+    }
+
+    return Visit( tree );
+}
+</code></pre><h3 id="constant-expression">Constant expression</h3>
+<p>In Kaleidoscope all values are floating point and constants are represented in LLVM IR as <a class="xref" href="../../api/Llvm.NET.Values.ConstantFP.html">ConstantFP</a>
+The parse tree node for a constant is extended to provide the value of the constant as a C# <code>double</code>.</p>
+<pre><code class="lang-csharp" name="Main">// &lt;copyright file=&quot;Parser.cs&quot; company=&quot;.NET Foundation&quot;&gt;
+// Copyright (c) .NET Foundation. All rights reserved.
+// &lt;/copyright&gt;
+
+namespace Kaleidoscope.Grammar
+{
+    public partial class KaleidoscopeParser
+    {
+        public partial class ConstExpressionContext
+        {
+            public double Value =&gt; double.Parse( Number( ).GetText( ) );
+        }
+    }
+}
+</code></pre><p>Generation of the LLVM IR for a constant is quite simple.</p>
+<pre><code class="lang-csharp" name="Main">public override Value VisitConstExpression( [NotNull] ConstExpressionContext context )
+{
+    return Context.CreateConstant( context.Value );
+}
+</code></pre><div class="NOTE"><h5>Note</h5><p>The constant value is uniqued in LLVM so that multiple calls given the same input value will
+produce the same LLVM Value. LLvm.NET honors this and is implemented in a way to ensure that reference
+equality reflects the identity of the uniqued values correctly.</p>
+</div>
+<h3 id="variable-expression">Variable expression</h3>
+<p>References to variables in Kaleidoscope, like most other languages, use a name. In this chapter the support
+of variables is rather simple. The Variable expression generator assumes the variable is declared somewhere
+else already and simply looks up the value from the private map. At this stage of the development of
+Kaleidoscope the only place where the named values are generated are function arguments, later chapters
+will introduce loop induction variables and variable assignment. The implementation uses a standard TryGet
+pattern to retrieve the value or throw an exception if the variable doesn&#39;t exist.</p>
+<pre><code class="lang-csharp" name="Main">public override Value VisitVariableExpression( [NotNull] VariableExpressionContext context )
+{
+    string varName = context.Name;
+    if( !NamedValues.TryGetValue( varName, out Value value ) )
+    {
+        throw new CodeGeneratorException( $&quot;Unknown variable name: {context}&quot; );
+    }
+
+   return value;
+}
+</code></pre><h3 id="expression">Expression</h3>
+<p>Things start to get a good bit more interesting with binary operators. The parse tree node for an expression
+contains support for walking the chain of operators that form an expression in left to right order, accounting
+for precedence.</p>
+<pre><code class="lang-csharp" name="Main">// &lt;copyright file=&quot;Parser.cs&quot; company=&quot;.NET Foundation&quot;&gt;
+// Copyright (c) .NET Foundation. All rights reserved.
+// &lt;/copyright&gt;
+
+using System.Collections.Generic;
+using Antlr4.Runtime.Tree;
+
+namespace Kaleidoscope.Grammar
+{
+    public partial class KaleidoscopeParser
+    {
+        public partial class ExpressionContext
+        {
+            public PrimaryExpressionContext Atom =&gt; primaryExpression( );
+
+            public bool IsAssignment =&gt; binaryop( ).Length &gt; 0 &amp;&amp; binaryop( )[ 0 ].Start.Type == ASSIGN;
+
+            public VariableExpressionContext AssignmentTarget =&gt; IsAssignment ? GetChild&lt;VariableExpressionContext&gt;( 0 ) : null;
+
+            public IEnumerable&lt;(BinaryopContext op, IParseTree rhs)&gt; OperatorExpressions
+            {
+                get
+                {
+                    // Expression: PrimaryExpression (op expression)*
+                    for( int i = 1; i &lt; ChildCount - 1; i += 2 )
+                    {
+                        yield return (( BinaryopContext )children[ i ], children[ i + 1 ]);
+                    }
+                }
+            }
+        }
+    }
+}
+</code></pre><p>Generation of an expression consists of a pair of related methods.</p>
+<pre><code class="lang-csharp" name="Main">public override Value VisitExpression( [NotNull] ExpressionContext context )
+{
+    // Expression: PrimaryExpression (op expression)*
+    // the sub-expressions are in evaluation order
+    var lhs = context.Atom.Accept( this );
+    foreach( var (op, rhs) in context.OperatorExpressions )
+    {
+        lhs = EmitBinaryOperator( lhs, op, rhs );
+    }
+
+    return lhs;
+}
+</code></pre><p>VisitExpression() will create a value for the left most &#39;Atom&#39; and then use that with the operator and
+right hand side value for the next expression. The left hand side is updated based on the result of each
+operation so that once all operations in the expression are evaluated the <code>lhs</code> variable retains the
+result value for the entire expression. Each operator result is generated through the private utility
+method EmitBinaryOperator().</p>
+<p>EmitBinaryOperator is responsible for generating the LLVM IR representation of a binary operator.</p>
+<pre><code class="lang-csharp" name="Main">private Value EmitBinaryOperator( Value lhs, BinaryopContext op, IParseTree rightTree )
+{
+    var rhs = rightTree.Accept( this );
+    if( lhs == null || rhs == null )
+    {
+        return null;
+    }
+
+    switch( op.Token.Type )
+    {
+    case LEFTANGLE:
+        {
+            var tmp = InstructionBuilder.Compare( RealPredicate.UnorderedOrLessThan, lhs, rhs )
+                                        .RegisterName( &quot;cmptmp&quot; );
+            return InstructionBuilder.UIToFPCast( tmp, InstructionBuilder.Context.DoubleType )
+                                     .RegisterName( &quot;booltmp&quot; );
+        }
+
+    case CARET:
+        {
+            var pow = GetOrDeclareFunction( new Prototype( &quot;llvm.pow.f64&quot;, &quot;value&quot;, &quot;power&quot; ) );
+            return InstructionBuilder.Call( pow, lhs, rhs )
+                                     .RegisterName( &quot;powtmp&quot; );
+        }
+
+    case PLUS:
+        return InstructionBuilder.FAdd( lhs, rhs ).RegisterName( &quot;addtmp&quot; );
+
+    case MINUS:
+        return InstructionBuilder.FSub( lhs, rhs ).RegisterName( &quot;subtmp&quot; );
+
+    case ASTERISK:
+        return InstructionBuilder.FMul( lhs, rhs ).RegisterName( &quot;multmp&quot; );
+
+    case SLASH:
+        return InstructionBuilder.FDiv( lhs, rhs ).RegisterName( &quot;divtmp&quot; );
+
+    default:
+        throw new CodeGeneratorException( $&quot;Invalid binary operator {op.Token.Text}&quot; );
+    }
+}
+</code></pre><p>The process of transforming the operator starts by generating an LLVM IR Value from the right-hand side
+parse tree. A simple switch statement based on the token type of the operator is used to generate the
+actual LLVM IR instruction(s) for the operator.</p>
+<p>LLVM has strict rules on the operators and their values for the IR, in particular the types of the
+operands must be identical and, usually must also match the type of the result. For the Kaleidoscope
+language that&#39;s easy to manage as it only supports one data type. Other languages might need to insert
+additional conversion logic as part of emitting the operators.</p>
+<p>The Generation of the IR instructions uses the current InstructionBuilder and the <a class="xref" href="../../api/Llvm.NET.Values.ValueExtensions.html#Llvm_NET_Values_ValueExtensions_RegisterName__1___0_System_String_">RegisterName</a>
+extension method to provide a name for the result in LLVM IR. The name helps with readability of the IR
+when generated in the textual form of LLVM IR assembly. A nice feature of LLVM is that it will automatically
+handle duplicate names by appending a value to the name automatically so that generators don&#39;t need to
+keep track of the names to ensure uniqueness.</p>
+<p>The <code>Less</code> operator uses a floating point Unordered less than IR instruction followed by an integer to
+float cast to translate the LLVM IR i1 result into a floating point value needed by Kaleidoscope.</p>
+<p>The <code>^</code> operator for exponentiation uses the <code>llvm.pow.f64</code> intrinsic to perform the exponentiation as
+efficiently as the back-end generator can.</p>
+<h3 id="function-declarations">Function Declarations</h3>
+<p>Function declaration is performed on prototypes for the function. This includes External function
+declarations as well as the prototype portion of a function definition.</p>
+<pre><code class="lang-csharp" name="Main">public override Value VisitExternalDeclaration( [NotNull] ExternalDeclarationContext context )
+{
+    return context.Signature.Accept( this );
+}
+
+public override Value VisitFunctionPrototype( [NotNull] FunctionPrototypeContext context )
+{
+    return GetOrDeclareFunction( new Prototype( context ) );
+}
+</code></pre><p>An external declarations has just the prototype so the visitor for those simply extracts the signature
+prototype to visit and returns. The function prototype visitor uses a private utility GetOrDeclareFunction
+to get an existing function or declare a new one.</p>
+<pre><code class="lang-csharp" name="Main">private Function GetOrDeclareFunction( Prototype prototype )
+{
+    var function = Module.GetFunction( prototype.Identifier.Name );
+    if( function != null )
+    {
+        return function;
+    }
+
+    var llvmSignature = Context.GetFunctionType( Context.DoubleType, prototype.Parameters.Select( _ =&gt; Context.DoubleType ) );
+
+    var retVal = Module.AddFunction( prototype.Identifier.Name, llvmSignature );
+    retVal.Linkage( Linkage.External );
+
+    int index = 0;
+    foreach( var argId in prototype.Parameters )
+    {
+        retVal.Parameters[ index ].Name = argId.Name;
+        ++index;
+    }
+
+    return retVal;
+}
+</code></pre><p>GetOrDeclareFunction() will first attempt to get an existing function and if found returns that function.
+Otherwise it creates a function signature type then adds a function to the module with the given name and
+signature and adds the parameter names to the function. In LLVM the signature only contains type information
+and no names, allowing for sharing the same signature for completely different functions.</p>
+<h3 id="function-definition">Function Definition</h3>
+<p>Functions with bodies (e.g. not just a declaration to a function defined elsewhere) are handled via the
+VisitFunctionDefinition() Method.</p>
+<pre><code class="lang-csharp" name="Main">public override Value VisitFunctionDefinition( [NotNull] FunctionDefinitionContext context )
+{
+    return DefineFunction( ( Function )context.Signature.Accept( this )
+                         , context.BodyExpression
+                         );
+}
+</code></pre><p>VisitFunctionDefinition() simply extracts the function prototype from the parse tree node and processes
+that to produce a Function declaration. The declaration and the expression representing the body of the
+function is then passed to the private DefineFunction that does the real work of defining the function.</p>
+<pre><code class="lang-csharp" name="Main">private Function DefineFunction( Function function, ExpressionContext body )
+{
+    if( !function.IsDeclaration )
+    {
+        throw new CodeGeneratorException( $&quot;Function {function.Name} cannot be redefined in the same module&quot; );
+    }
+
+    var basicBlock = function.AppendBasicBlock( &quot;entry&quot; );
+    InstructionBuilder.PositionAtEnd( basicBlock );
+    NamedValues.Clear( );
+    foreach( var arg in function.Parameters )
+    {
+        NamedValues[ arg.Name ] = arg;
+    }
+
+    var funcReturn = body.Accept( this );
+    if( funcReturn == null )
+    {
+        function.EraseFromParent( );
+        return null;
+    }
+
+    InstructionBuilder.Return( funcReturn );
+    function.Verify( );
+
+    return function;
+}
+</code></pre><p>DefineFunctio() first tests to see that the function is a declaration (e.g. does not have a body) as
+Kaleidoscope doesn&#39;t support any sort of overloaded functions.</p>
+<p>The generation of a function starts by constructing a basic block for the entry point of the function and
+attaches the InstructionBuilder to the end of that block. (It&#39;s empty so it is technically at the beginning
+but placing it at the end it will track the end position as new instructions are added so that each instruction
+added will go on the end of the block). At this point there will only be the one entry block as the language
+doesn&#39;t yet have support for control flow. (That is introduced in <a href="Kaleidoscope-ch5.html">Chapter 5</a>)</p>
+<p>The NamedValues map is cleared and each of the parameters is mapped in the NamedValues map to its argument
+value in IR. The body of the function is visited to produce an LLVM Value. The visiting will, in turn add
+instructions, and possibly new blocks, as needed to represent the expression in proper execution order.</p>
+<p>If generating the body results in an error, then the function is removed from the parent and null is
+returned. This allows the user to define the function again.</p>
+<p>Finally, a return instruction is applied to return the result of the expression followed by a verification
+of the function to ensure internal consistency. (Generally the verify is not used in production releases
+as it is an expensive operation to perform on every function. But when building up a language generator
+it is quite useful to detect errors early.)</p>
+<h3 id="top-level-expression">Top Level Expression</h3>
+<p>Top level expressions in Kaleidoscope are transformed into an anonymous function definition by the
+VisitTopLevelExpression visitor method.</p>
+<pre><code class="lang-csharp" name="Main">public override Value VisitTopLevelExpression( [NotNull] TopLevelExpressionContext context )
+{
+    var proto = new Prototype( $&quot;anon_expr_{AnonNameIndex++}&quot; );
+    var function = GetOrDeclareFunction( proto );
+
+    return DefineFunction( function, context.expression() );
+}
+</code></pre><p>This simply creates a new prototype with a unique name then uses that to declare and define a function
+with the expression as the body. This re-use of the GetOrDeclareFunction() and DefineFunction() helps keep
+the generation clean and makes future additions simpler.</p>
+<h2 id="examples">Examples</h2>
+<pre><code class="lang-Console">Llvm.NET Kaleidoscope Interpreter - SimpleExpressions
+Ready&gt;4+5;
+Defined function: anon_expr_0
+
+define double @anon_expr_0() {
+entry:
+  ret double 9.000000e+00
+}
+
+Ready&gt;def foo(a b) a*a + 2*a*b + b*b;
+Defined function: foo
+
+define double @foo(double %a, double %b) {
+entry:
+  %multmp = fmul double %a, %a
+  %multmp1 = fmul double 2.000000e+00, %a
+  %multmp2 = fmul double %multmp1, %b
+  %addtmp = fadd double %multmp, %multmp2
+  %multmp3 = fmul double %b, %b
+  %addtmp4 = fadd double %addtmp, %multmp3
+  ret double %addtmp4
+}
+
+Ready&gt;def bar(a) foo(a, 4.0) + bar(31337);
+Defined function: bar
+
+define double @bar(double %a) {
+entry:
+  %calltmp = call double @foo(double %a, double 4.000000e+00)
+  %calltmp1 = call double @bar(double 3.133700e+04)
+  %addtmp = fadd double %calltmp, %calltmp1
+  ret double %addtmp
+}
+
+Ready&gt;extern cos(x);
+Defined function: cos
+
+declare double @cos(double)
+
+Ready&gt;cos(1.234);
+Defined function: anon_expr_1
+
+define double @anon_expr_1() {
+entry:
+  %calltmp = call double @cos(double 1.234000e+00)
+  ret double %calltmp
+}
+
+Ready&gt;^Z
+</code></pre><pre><code class="lang-llvm">; ModuleID = &#39;Kaleidoscope&#39;
+source_filename = &quot;Kaleidoscope&quot;
+
+define double @anon_expr_0() {
+entry:
+  ret double 9.000000e+00
+}
+
+define double @foo(double %a, double %b) {
+entry:
+  %multmp = fmul double %a, %a
+  %multmp1 = fmul double 2.000000e+00, %a
+  %multmp2 = fmul double %multmp1, %b
+  %addtmp = fadd double %multmp, %multmp2
+  %multmp3 = fmul double %b, %b
+  %addtmp4 = fadd double %addtmp, %multmp3
+  ret double %addtmp4
+}
+
+define double @bar(double %a) {
+entry:
+  %calltmp = call double @foo(double %a, double 4.000000e+00)
+  %calltmp1 = call double @bar(double 3.133700e+04)
+  %addtmp = fadd double %calltmp, %calltmp1
+  ret double %addtmp
+}
+
+declare double @cos(double)
+
+define double @anon_expr_1() {
+entry:
+  %calltmp = call double @cos(double 1.234000e+00)
+  ret double %calltmp
+}
+</code></pre></article>
+          </div>
+          <div class="contribution-panel mobile-hide">
+              <a href="https://github.com/UbiquityDotNET/Llvm.NET/blob/master/docfx/articles/Samples/Kaleidoscope-ch3.md/#L1" title="Improve this Doc" class="fab btn-warning pull-right"><i class="glyphicon glyphicon-pencil"></i></a>
+          </div>
+          
+          <div class="hidden-sm col-md-2" role="complementary">
+            <div class="sideaffix">
+              <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <footer>
+        <div class="grad-bottom"></div>
+        <div class="footer">
+          <div class="container">
+            <span class="pull-right">
+              <a href="#top">Back to top</a>
+            </span>
+            Copyright (C) 2017, Dot NET Foundation<br><strong>Build:</strong> 6.0.0-rc.0.0.ci-BLD.443883850
+            
+          </div>
+        </div>
+      </footer>
+    </div>
+    
+    <script type="text/javascript" src="../../styles/docfx.vendor.js"></script>
+    <script type="text/javascript" src="../../styles/docfx.js"></script>
+    <script type="text/javascript" src="../../styles/main.js"></script>
+  </body>
+</html>
