@@ -95,15 +95,6 @@ try
 
     Write-Information "Building Llvm.NET"
     Invoke-MSBuild -Targets Build -Project src\Llvm.NET.sln -Properties $msBuildProperties -LoggerArgs $msbuildLoggerArgs ($msbuildLoggerArgs + @("/bl:Llvm.NET-build.binlog") )
-    
-    if( $env:APPVEYOR_PULL_REQUEST_NUMBER )
-    {
-        foreach( $item in Get-ChildItem *.binlog )
-        {
-            Push-AppveyorArtifact $item.FullName
-        }
-    }
-
     if( !(Test-Path (Join-Path $buildPaths.DocsOutput '.git') -PathType Container))
     {
         Write-Information "Cloning Docs repository"
@@ -123,6 +114,14 @@ try
 
     Write-Information "Building Docs"
     Invoke-MSBuild -Targets Build -Project docfx\Llvm.NET.DocFX.csproj -Properties $msBuildProperties -LoggerArgs $msbuildLoggerArgs ($msbuildLoggerArgs + @("/bl:Llvm.NET-docfx-build.binlog") )
+    
+    if( $env:APPVEYOR_PULL_REQUEST_NUMBER )
+    {
+        foreach( $item in Get-ChildItem *.binlog )
+        {
+            Push-AppveyorArtifact $item.FullName
+        }
+    }
 }
 finally
 {
