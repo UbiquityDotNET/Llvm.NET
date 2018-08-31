@@ -64,7 +64,7 @@ namespace Llvm.NET.Values
                     throw new ArgumentException( "Location does not describe the function containing the provided instruction", nameof( location ) );
                 }
 
-                NativeMethods.LLVMSetDILocation( value.ValueHandle, location.MetadataHandle );
+                LLVMSetDILocation( value.ValueHandle, location.MetadataHandle );
             }
 
             return value;
@@ -110,7 +110,7 @@ namespace Llvm.NET.Values
                     throw new ArgumentException( "scope does not describe the function containing the provided instruction", nameof( scope ) );
                 }
 
-                NativeMethods.LLVMSetDebugLoc( value.ValueHandle, line, column, scope.MetadataHandle );
+                LLVMSetDebugLoc( value.ValueHandle, line, column, scope.MetadataHandle );
             }
 
             return value;

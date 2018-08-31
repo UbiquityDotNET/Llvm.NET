@@ -2,13 +2,14 @@
 // Copyright (c) .NET Foundation. All rights reserved.
 // </copyright>
 
+using Llvm.NET.DebugInfo;
 using Llvm.NET.Types;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 // warning SA1500: Braces for multi-line statements must not share line
 #pragma warning disable SA1500
 
-namespace Llvm.NET.DebugInfo.Tests
+namespace Llvm.NET.Tests
 {
     // TODO: Standard arg checks and error handling in general
     // for now focusing on verifying it does the right thing

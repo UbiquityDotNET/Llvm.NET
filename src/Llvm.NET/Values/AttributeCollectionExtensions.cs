@@ -49,7 +49,7 @@ namespace Llvm.NET.Values
     /// LLVM AttributeSet class for Versions prior to 5. In LLVM 5 the
     /// equivalent type is currently AttributeList. In v5 AttributeSet
     /// has no index and is therefore more properly a set than in the
-    /// past. To help remove confusion and satisfy naming rules this
+    /// past. To help remove confusion and satisfy .NET naming rules this
     /// is called a Dictionary as that reflects the use here and fits
     /// the direction of LLVM</note>
     /// </remarks>

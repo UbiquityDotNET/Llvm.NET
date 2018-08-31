@@ -2,9 +2,10 @@
 // Copyright (c) .NET Foundation. All rights reserved.
 // </copyright>
 
+using Llvm.NET.Values;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-namespace Llvm.NET.Values.Tests
+namespace Llvm.NET.Tests
 {
     [TestClass]
     public class AttributeValueTests

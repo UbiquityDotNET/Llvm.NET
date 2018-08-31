@@ -9,6 +9,7 @@ using Ubiquity.ArgValidators;
 namespace Llvm.NET.Values
 {
     /// <summary>Provides a layer of simplicity and backwards compatibility for manipulating attributes on Values</summary>
+    /// <remarks>At some point when Default interface methods are available (proposed for C#8) these methods can leverage that</remarks>
     public static class AttributeContainerMixins
     {
         /// <summary>Determines if a collection of <see cref="AttributeValue"/> contains a given <see cref="AttributeKind"/></summary>
