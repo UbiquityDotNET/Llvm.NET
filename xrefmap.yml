@@ -9462,14 +9462,14 @@ references:
   fullName: Llvm.NET.Instructions.PhiNode.AddIncoming(Llvm.NET.Values.Value, Llvm.NET.Values.BasicBlock)
   nameWithType: PhiNode.AddIncoming(Value, BasicBlock)
 - uid: Llvm.NET.Instructions.PhiNode.AddIncoming(System.ValueTuple{Llvm.NET.Values.Value,Llvm.NET.Values.BasicBlock},System.ValueTuple{Llvm.NET.Values.Value,Llvm.NET.Values.BasicBlock}[])
-  name: AddIncoming(, [])
+  name: AddIncoming((Value Value, BasicBlock Block), (Value Value, BasicBlock Block)[])
   href: api/Llvm.NET.Instructions.PhiNode.AddIncoming.html#Llvm_NET_Instructions_PhiNode_AddIncoming_System_ValueTuple_Llvm_NET_Values_Value_Llvm_NET_Values_BasicBlock__System_ValueTuple_Llvm_NET_Values_Value_Llvm_NET_Values_BasicBlock____
   commentId: M:Llvm.NET.Instructions.PhiNode.AddIncoming(System.ValueTuple{Llvm.NET.Values.Value,Llvm.NET.Values.BasicBlock},System.ValueTuple{Llvm.NET.Values.Value,Llvm.NET.Values.BasicBlock}[])
-  name.vb: AddIncoming(, ())
-  fullName: Llvm.NET.Instructions.PhiNode.AddIncoming(System., System.[])
-  fullName.vb: Llvm.NET.Instructions.PhiNode.AddIncoming(System., System.())
-  nameWithType: PhiNode.AddIncoming(, [])
-  nameWithType.vb: PhiNode.AddIncoming(, ())
+  name.vb: AddIncoming((Value As Value, Block As BasicBlock), (Value As Value, Block As BasicBlock)())
+  fullName: Llvm.NET.Instructions.PhiNode.AddIncoming(System.ValueTuple<Llvm.NET.Values.Value, Llvm.NET.Values.BasicBlock>, System.ValueTuple<Llvm.NET.Values.Value, Llvm.NET.Values.BasicBlock>[])
+  fullName.vb: Llvm.NET.Instructions.PhiNode.AddIncoming(System.ValueTuple(Of Llvm.NET.Values.Value, Llvm.NET.Values.BasicBlock), System.ValueTuple(Of Llvm.NET.Values.Value, Llvm.NET.Values.BasicBlock)())
+  nameWithType: PhiNode.AddIncoming((Value Value, BasicBlock Block), (Value Value, BasicBlock Block)[])
+  nameWithType.vb: PhiNode.AddIncoming((Value As Value, Block As BasicBlock), (Value As Value, Block As BasicBlock)())
 - uid: Llvm.NET.Instructions.PhiNode.AddIncoming*
   name: AddIncoming
   href: api/Llvm.NET.Instructions.PhiNode.AddIncoming.html
@@ -14024,6 +14024,51 @@ references:
   commentId: T:Llvm.NET.Values.Argument
   fullName: Llvm.NET.Values.Argument
   nameWithType: Argument
+- uid: Llvm.NET.Values.Argument.AddAttribute(Llvm.NET.Values.AttributeKind)
+  name: AddAttribute(AttributeKind)
+  href: api/Llvm.NET.Values.Argument.AddAttribute.html#Llvm_NET_Values_Argument_AddAttribute_Llvm_NET_Values_AttributeKind_
+  commentId: M:Llvm.NET.Values.Argument.AddAttribute(Llvm.NET.Values.AttributeKind)
+  fullName: Llvm.NET.Values.Argument.AddAttribute(Llvm.NET.Values.AttributeKind)
+  nameWithType: Argument.AddAttribute(AttributeKind)
+- uid: Llvm.NET.Values.Argument.AddAttribute*
+  name: AddAttribute
+  href: api/Llvm.NET.Values.Argument.AddAttribute.html
+  commentId: Overload:Llvm.NET.Values.Argument.AddAttribute
+  fullName: Llvm.NET.Values.Argument.AddAttribute
+  nameWithType: Argument.AddAttribute
+- uid: Llvm.NET.Values.Argument.AddAttributes(Llvm.NET.Values.AttributeKind[])
+  name: AddAttributes(AttributeKind[])
+  href: api/Llvm.NET.Values.Argument.AddAttributes.html#Llvm_NET_Values_Argument_AddAttributes_Llvm_NET_Values_AttributeKind___
+  commentId: M:Llvm.NET.Values.Argument.AddAttributes(Llvm.NET.Values.AttributeKind[])
+  name.vb: AddAttributes(AttributeKind())
+  fullName: Llvm.NET.Values.Argument.AddAttributes(Llvm.NET.Values.AttributeKind[])
+  fullName.vb: Llvm.NET.Values.Argument.AddAttributes(Llvm.NET.Values.AttributeKind())
+  nameWithType: Argument.AddAttributes(AttributeKind[])
+  nameWithType.vb: Argument.AddAttributes(AttributeKind())
+- uid: Llvm.NET.Values.Argument.AddAttributes(Llvm.NET.Values.AttributeValue[])
+  name: AddAttributes(AttributeValue[])
+  href: api/Llvm.NET.Values.Argument.AddAttributes.html#Llvm_NET_Values_Argument_AddAttributes_Llvm_NET_Values_AttributeValue___
+  commentId: M:Llvm.NET.Values.Argument.AddAttributes(Llvm.NET.Values.AttributeValue[])
+  name.vb: AddAttributes(AttributeValue())
+  fullName: Llvm.NET.Values.Argument.AddAttributes(Llvm.NET.Values.AttributeValue[])
+  fullName.vb: Llvm.NET.Values.Argument.AddAttributes(Llvm.NET.Values.AttributeValue())
+  nameWithType: Argument.AddAttributes(AttributeValue[])
+  nameWithType.vb: Argument.AddAttributes(AttributeValue())
+- uid: Llvm.NET.Values.Argument.AddAttributes(System.Collections.Generic.IEnumerable{Llvm.NET.Values.AttributeValue})
+  name: AddAttributes(IEnumerable<AttributeValue>)
+  href: api/Llvm.NET.Values.Argument.AddAttributes.html#Llvm_NET_Values_Argument_AddAttributes_System_Collections_Generic_IEnumerable_Llvm_NET_Values_AttributeValue__
+  commentId: M:Llvm.NET.Values.Argument.AddAttributes(System.Collections.Generic.IEnumerable{Llvm.NET.Values.AttributeValue})
+  name.vb: AddAttributes(IEnumerable(Of AttributeValue))
+  fullName: Llvm.NET.Values.Argument.AddAttributes(System.Collections.Generic.IEnumerable<Llvm.NET.Values.AttributeValue>)
+  fullName.vb: Llvm.NET.Values.Argument.AddAttributes(System.Collections.Generic.IEnumerable(Of Llvm.NET.Values.AttributeValue))
+  nameWithType: Argument.AddAttributes(IEnumerable<AttributeValue>)
+  nameWithType.vb: Argument.AddAttributes(IEnumerable(Of AttributeValue))
+- uid: Llvm.NET.Values.Argument.AddAttributes*
+  name: AddAttributes
+  href: api/Llvm.NET.Values.Argument.AddAttributes.html
+  commentId: Overload:Llvm.NET.Values.Argument.AddAttributes
+  fullName: Llvm.NET.Values.Argument.AddAttributes
+  nameWithType: Argument.AddAttributes
 - uid: Llvm.NET.Values.Argument.Attributes
   name: Attributes
   href: api/Llvm.NET.Values.Argument.Attributes.html#Llvm_NET_Values_Argument_Attributes
@@ -14060,6 +14105,24 @@ references:
   commentId: Overload:Llvm.NET.Values.Argument.Index
   fullName: Llvm.NET.Values.Argument.Index
   nameWithType: Argument.Index
+- uid: Llvm.NET.Values.Argument.RemoveAttribute(Llvm.NET.Values.AttributeKind)
+  name: RemoveAttribute(AttributeKind)
+  href: api/Llvm.NET.Values.Argument.RemoveAttribute.html#Llvm_NET_Values_Argument_RemoveAttribute_Llvm_NET_Values_AttributeKind_
+  commentId: M:Llvm.NET.Values.Argument.RemoveAttribute(Llvm.NET.Values.AttributeKind)
+  fullName: Llvm.NET.Values.Argument.RemoveAttribute(Llvm.NET.Values.AttributeKind)
+  nameWithType: Argument.RemoveAttribute(AttributeKind)
+- uid: Llvm.NET.Values.Argument.RemoveAttribute(System.String)
+  name: RemoveAttribute(String)
+  href: api/Llvm.NET.Values.Argument.RemoveAttribute.html#Llvm_NET_Values_Argument_RemoveAttribute_System_String_
+  commentId: M:Llvm.NET.Values.Argument.RemoveAttribute(System.String)
+  fullName: Llvm.NET.Values.Argument.RemoveAttribute(System.String)
+  nameWithType: Argument.RemoveAttribute(String)
+- uid: Llvm.NET.Values.Argument.RemoveAttribute*
+  name: RemoveAttribute
+  href: api/Llvm.NET.Values.Argument.RemoveAttribute.html
+  commentId: Overload:Llvm.NET.Values.Argument.RemoveAttribute
+  fullName: Llvm.NET.Values.Argument.RemoveAttribute
+  nameWithType: Argument.RemoveAttribute
 - uid: Llvm.NET.Values.Argument.SetAlignment(System.UInt32)
   name: SetAlignment(UInt32)
   href: api/Llvm.NET.Values.Argument.SetAlignment.html#Llvm_NET_Values_Argument_SetAlignment_System_UInt32_
@@ -14072,81 +14135,6 @@ references:
   commentId: Overload:Llvm.NET.Values.Argument.SetAlignment
   fullName: Llvm.NET.Values.Argument.SetAlignment
   nameWithType: Argument.SetAlignment
-- uid: Llvm.NET.Values.ArgumentExtensions
-  name: ArgumentExtensions
-  href: api/Llvm.NET.Values.ArgumentExtensions.html
-  commentId: T:Llvm.NET.Values.ArgumentExtensions
-  fullName: Llvm.NET.Values.ArgumentExtensions
-  nameWithType: ArgumentExtensions
-- uid: Llvm.NET.Values.ArgumentExtensions.AddAttribute(Llvm.NET.Values.Argument,Llvm.NET.Values.AttributeKind)
-  name: AddAttribute(Argument, AttributeKind)
-  href: api/Llvm.NET.Values.ArgumentExtensions.AddAttribute.html#Llvm_NET_Values_ArgumentExtensions_AddAttribute_Llvm_NET_Values_Argument_Llvm_NET_Values_AttributeKind_
-  commentId: M:Llvm.NET.Values.ArgumentExtensions.AddAttribute(Llvm.NET.Values.Argument,Llvm.NET.Values.AttributeKind)
-  fullName: Llvm.NET.Values.ArgumentExtensions.AddAttribute(Llvm.NET.Values.Argument, Llvm.NET.Values.AttributeKind)
-  nameWithType: ArgumentExtensions.AddAttribute(Argument, AttributeKind)
-- uid: Llvm.NET.Values.ArgumentExtensions.AddAttribute(Llvm.NET.Values.Argument,Llvm.NET.Values.AttributeValue)
-  name: AddAttribute(Argument, AttributeValue)
-  href: api/Llvm.NET.Values.ArgumentExtensions.AddAttribute.html#Llvm_NET_Values_ArgumentExtensions_AddAttribute_Llvm_NET_Values_Argument_Llvm_NET_Values_AttributeValue_
-  commentId: M:Llvm.NET.Values.ArgumentExtensions.AddAttribute(Llvm.NET.Values.Argument,Llvm.NET.Values.AttributeValue)
-  fullName: Llvm.NET.Values.ArgumentExtensions.AddAttribute(Llvm.NET.Values.Argument, Llvm.NET.Values.AttributeValue)
-  nameWithType: ArgumentExtensions.AddAttribute(Argument, AttributeValue)
-- uid: Llvm.NET.Values.ArgumentExtensions.AddAttribute*
-  name: AddAttribute
-  href: api/Llvm.NET.Values.ArgumentExtensions.AddAttribute.html
-  commentId: Overload:Llvm.NET.Values.ArgumentExtensions.AddAttribute
-  fullName: Llvm.NET.Values.ArgumentExtensions.AddAttribute
-  nameWithType: ArgumentExtensions.AddAttribute
-- uid: Llvm.NET.Values.ArgumentExtensions.AddAttributes(Llvm.NET.Values.Argument,Llvm.NET.Values.AttributeKind[])
-  name: AddAttributes(Argument, AttributeKind[])
-  href: api/Llvm.NET.Values.ArgumentExtensions.AddAttributes.html#Llvm_NET_Values_ArgumentExtensions_AddAttributes_Llvm_NET_Values_Argument_Llvm_NET_Values_AttributeKind___
-  commentId: M:Llvm.NET.Values.ArgumentExtensions.AddAttributes(Llvm.NET.Values.Argument,Llvm.NET.Values.AttributeKind[])
-  name.vb: AddAttributes(Argument, AttributeKind())
-  fullName: Llvm.NET.Values.ArgumentExtensions.AddAttributes(Llvm.NET.Values.Argument, Llvm.NET.Values.AttributeKind[])
-  fullName.vb: Llvm.NET.Values.ArgumentExtensions.AddAttributes(Llvm.NET.Values.Argument, Llvm.NET.Values.AttributeKind())
-  nameWithType: ArgumentExtensions.AddAttributes(Argument, AttributeKind[])
-  nameWithType.vb: ArgumentExtensions.AddAttributes(Argument, AttributeKind())
-- uid: Llvm.NET.Values.ArgumentExtensions.AddAttributes(Llvm.NET.Values.Argument,Llvm.NET.Values.AttributeValue[])
-  name: AddAttributes(Argument, AttributeValue[])
-  href: api/Llvm.NET.Values.ArgumentExtensions.AddAttributes.html#Llvm_NET_Values_ArgumentExtensions_AddAttributes_Llvm_NET_Values_Argument_Llvm_NET_Values_AttributeValue___
-  commentId: M:Llvm.NET.Values.ArgumentExtensions.AddAttributes(Llvm.NET.Values.Argument,Llvm.NET.Values.AttributeValue[])
-  name.vb: AddAttributes(Argument, AttributeValue())
-  fullName: Llvm.NET.Values.ArgumentExtensions.AddAttributes(Llvm.NET.Values.Argument, Llvm.NET.Values.AttributeValue[])
-  fullName.vb: Llvm.NET.Values.ArgumentExtensions.AddAttributes(Llvm.NET.Values.Argument, Llvm.NET.Values.AttributeValue())
-  nameWithType: ArgumentExtensions.AddAttributes(Argument, AttributeValue[])
-  nameWithType.vb: ArgumentExtensions.AddAttributes(Argument, AttributeValue())
-- uid: Llvm.NET.Values.ArgumentExtensions.AddAttributes(Llvm.NET.Values.Argument,System.Collections.Generic.IEnumerable{Llvm.NET.Values.AttributeValue})
-  name: AddAttributes(Argument, IEnumerable<AttributeValue>)
-  href: api/Llvm.NET.Values.ArgumentExtensions.AddAttributes.html#Llvm_NET_Values_ArgumentExtensions_AddAttributes_Llvm_NET_Values_Argument_System_Collections_Generic_IEnumerable_Llvm_NET_Values_AttributeValue__
-  commentId: M:Llvm.NET.Values.ArgumentExtensions.AddAttributes(Llvm.NET.Values.Argument,System.Collections.Generic.IEnumerable{Llvm.NET.Values.AttributeValue})
-  name.vb: AddAttributes(Argument, IEnumerable(Of AttributeValue))
-  fullName: Llvm.NET.Values.ArgumentExtensions.AddAttributes(Llvm.NET.Values.Argument, System.Collections.Generic.IEnumerable<Llvm.NET.Values.AttributeValue>)
-  fullName.vb: Llvm.NET.Values.ArgumentExtensions.AddAttributes(Llvm.NET.Values.Argument, System.Collections.Generic.IEnumerable(Of Llvm.NET.Values.AttributeValue))
-  nameWithType: ArgumentExtensions.AddAttributes(Argument, IEnumerable<AttributeValue>)
-  nameWithType.vb: ArgumentExtensions.AddAttributes(Argument, IEnumerable(Of AttributeValue))
-- uid: Llvm.NET.Values.ArgumentExtensions.AddAttributes*
-  name: AddAttributes
-  href: api/Llvm.NET.Values.ArgumentExtensions.AddAttributes.html
-  commentId: Overload:Llvm.NET.Values.ArgumentExtensions.AddAttributes
-  fullName: Llvm.NET.Values.ArgumentExtensions.AddAttributes
-  nameWithType: ArgumentExtensions.AddAttributes
-- uid: Llvm.NET.Values.ArgumentExtensions.RemoveAttribute(Llvm.NET.Values.Argument,Llvm.NET.Values.AttributeKind)
-  name: RemoveAttribute(Argument, AttributeKind)
-  href: api/Llvm.NET.Values.ArgumentExtensions.RemoveAttribute.html#Llvm_NET_Values_ArgumentExtensions_RemoveAttribute_Llvm_NET_Values_Argument_Llvm_NET_Values_AttributeKind_
-  commentId: M:Llvm.NET.Values.ArgumentExtensions.RemoveAttribute(Llvm.NET.Values.Argument,Llvm.NET.Values.AttributeKind)
-  fullName: Llvm.NET.Values.ArgumentExtensions.RemoveAttribute(Llvm.NET.Values.Argument, Llvm.NET.Values.AttributeKind)
-  nameWithType: ArgumentExtensions.RemoveAttribute(Argument, AttributeKind)
-- uid: Llvm.NET.Values.ArgumentExtensions.RemoveAttribute(Llvm.NET.Values.Argument,System.String)
-  name: RemoveAttribute(Argument, String)
-  href: api/Llvm.NET.Values.ArgumentExtensions.RemoveAttribute.html#Llvm_NET_Values_ArgumentExtensions_RemoveAttribute_Llvm_NET_Values_Argument_System_String_
-  commentId: M:Llvm.NET.Values.ArgumentExtensions.RemoveAttribute(Llvm.NET.Values.Argument,System.String)
-  fullName: Llvm.NET.Values.ArgumentExtensions.RemoveAttribute(Llvm.NET.Values.Argument, System.String)
-  nameWithType: ArgumentExtensions.RemoveAttribute(Argument, String)
-- uid: Llvm.NET.Values.ArgumentExtensions.RemoveAttribute*
-  name: RemoveAttribute
-  href: api/Llvm.NET.Values.ArgumentExtensions.RemoveAttribute.html
-  commentId: Overload:Llvm.NET.Values.ArgumentExtensions.RemoveAttribute
-  fullName: Llvm.NET.Values.ArgumentExtensions.RemoveAttribute
-  nameWithType: ArgumentExtensions.RemoveAttribute
 - uid: Llvm.NET.Values.AsmDialect
   name: AsmDialect
   href: api/Llvm.NET.Values.AsmDialect.html

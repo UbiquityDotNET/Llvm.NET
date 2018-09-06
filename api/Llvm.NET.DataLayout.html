@@ -10,7 +10,7 @@
     <meta name="viewport" content="width=device-width">
     <meta name="title" content="Class DataLayout
    | Llvm.NET ">
-    <meta name="generator" content="docfx 2.36.2.0">
+    <meta name="generator" content="docfx 2.39.0.0">
     
     <link rel="shortcut icon" href="../favicon.ico">
     <link rel="stylesheet" href="../styles/docfx.vendor.css">
@@ -2940,6 +2940,12 @@
                               
                               <ul class="nav level3">
                                 <li class="">
+                                  <a href="Llvm.NET.Values.Argument.AddAttribute.html" title="AddAttribute" class="">AddAttribute</a>
+                                </li>
+                                <li class="">
+                                  <a href="Llvm.NET.Values.Argument.AddAttributes.html" title="AddAttributes" class="">AddAttributes</a>
+                                </li>
+                                <li class="">
                                   <a href="Llvm.NET.Values.Argument.Attributes.html" title="Attributes" class="">Attributes</a>
                                 </li>
                                 <li class="">
@@ -2949,22 +2955,10 @@
                                   <a href="Llvm.NET.Values.Argument.Index.html" title="Index" class="">Index</a>
                                 </li>
                                 <li class="">
+                                  <a href="Llvm.NET.Values.Argument.RemoveAttribute.html" title="RemoveAttribute" class="">RemoveAttribute</a>
+                                </li>
+                                <li class="">
                                   <a href="Llvm.NET.Values.Argument.SetAlignment.html" title="SetAlignment" class="">SetAlignment</a>
-                                </li>
-                              </ul>  </li>
-                          <li class="">
-                            <span class="expand-stub"></span>
-                            <a href="Llvm.NET.Values.ArgumentExtensions.html" title="ArgumentExtensions" class="">ArgumentExtensions</a>
-                              
-                              <ul class="nav level3">
-                                <li class="">
-                                  <a href="Llvm.NET.Values.ArgumentExtensions.AddAttribute.html" title="AddAttribute" class="">AddAttribute</a>
-                                </li>
-                                <li class="">
-                                  <a href="Llvm.NET.Values.ArgumentExtensions.AddAttributes.html" title="AddAttributes" class="">AddAttributes</a>
-                                </li>
-                                <li class="">
-                                  <a href="Llvm.NET.Values.ArgumentExtensions.RemoveAttribute.html" title="RemoveAttribute" class="">RemoveAttribute</a>
                                 </li>
                               </ul>  </li>
                           <li class="">
@@ -3624,7 +3618,7 @@ that are target dependent.</p>
 <th>Type</th>
 <th>SizeInBits</th>
 <th>StoreSizeInBits</th>
-<th>AllocSizeInBits</th>
+<th>AbiSizeInBits</th>
 </tr>
 </thead>
 <tbody>
@@ -3684,10 +3678,34 @@ that are target dependent.</p>
 </tr>
 </tbody>
 </table>
-<div class="NOTE"><h5>note</h5><p>
+<p><div class="NOTE"><h5>note</h5><p>
 The allocation size depends on the alignment, and thus on the target.
 The values in the example table are for x86-32-linux.
-</p></div>
+</p></div></p>
+<table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Definition</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>SizeInBits</td>
+<td>Minimum number of bits needed to represent the full range of values for the type</td>
+</tr>
+<tr>
+<td>StoreSizeInBits</td>
+<td>Minimum number of bits needed to actually store a <em>single</em> value of the type</td>
+</tr>
+<tr>
+<td>AbiSizeInBits</td>
+<td>Total number of bits used to store a value in a sequence, including any alignement padding</td>
+</tr>
+</tbody>
+</table>
+<p>The alloc size determines the total size of each entry in a sequence so that the &quot;next&quot; element is computed
+by adding the alloc size to the the start address of the current element.</p>
 </div>
   
   <h3 id="properties">Properties
@@ -3835,7 +3853,7 @@ a pointer for the given address space of the target</p>
           </div>
           <div class="contribution-panel mobile-hide">
               <a href="https://github.com/UbiquityDotNET/Llvm.NET/new/master/apiSpec/new?filename=Llvm_NET_DataLayout.md&amp;value=---%0Auid%3A%20Llvm.NET.DataLayout%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A" title="Improve this Doc" class="fab btn-warning pull-right"><i class="glyphicon glyphicon-pencil"></i></a>
-              <a href="https://github.com/UbiquityDotNET/Llvm.NET/blob/master/src/Llvm.NET/DataLayout.cs/#L51" title="View Source" class="fab btn-info pull-right"><i class="fa fa-code"></i></a>
+              <a href="https://github.com/UbiquityDotNET/Llvm.NET/blob/master/src/Llvm.NET/DataLayout.cs/#L59" title="View Source" class="fab btn-info pull-right"><i class="fa fa-code"></i></a>
           </div>
           
           <div class="hidden-sm col-md-2" role="complementary">
@@ -3854,7 +3872,7 @@ a pointer for the given address space of the target</p>
             <span class="pull-right">
               <a href="#top">Back to top</a>
             </span>
-            Copyright (C) 2017, Dot NET Foundation<br><strong>Build:</strong> 6.0.0-rc.0.0.ci-BLD.443904349
+            Copyright (C) 2017, Dot NET Foundation<br><strong>Build:</strong> 6.0.0-rc.0.0.ci-BLD.447157481
             
           </div>
         </div>
