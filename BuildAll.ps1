@@ -79,19 +79,7 @@ try
     # automated APPVEYOR builds.
     Install-LlvmLibs $buildPaths.LlvmLibsRoot
 
-    # Need to invoke NuGet directly for restore of vcxproj as /t:Restore target doesn't support packages.config
-    # and PackageReference isn't supported for native projects
-    Write-Information "Restoring NuGet Packages for LibLLVM.vcxproj"
-    Invoke-NuGet restore src\LibLLVM\LibLLVM.vcxproj -PackagesDirectory $buildPaths.NuGetRepositoryPath -Verbosity quiet
-
-    Write-Information "Building LibLLVM"
-    Invoke-MSBuild -Targets Build -Project src\LibLLVM\LibLLVM.vcxproj -Properties $msBuildProperties -LoggerArgs ($msbuildLoggerArgs + @("/bl:LibLLVM-build.binlog") )
-
-    Write-Information "Packing LibLLVM"
-    Invoke-MSBuild -Targets Pack -Project src\LibLLVM\LibLLVM.vcxproj -Properties $msBuildProperties -LoggerArgs $msbuildLoggerArgs ($msbuildLoggerArgs + @("/bl:LibLLVM-pack.binlog") )
-
-    Write-Information "Restoring NuGet Packages for Llvm.NET"
-    Invoke-MSBuild -Targets Restore -Project src\Llvm.NET.sln -Properties $msBuildProperties -LoggerArgs $msbuildLoggerArgs ($msbuildLoggerArgs + @("/bl:Llvm.NET-restore.binlog") )
+    # clone docs output location so it is available as a destination for the rest of the build
     if( !(Test-Path (Join-Path $buildPaths.DocsOutput '.git') -PathType Container))
     {
         Write-Information "Cloning Docs repository"
@@ -106,15 +94,29 @@ try
         }
     }
 
+    # Need to invoke NuGet directly for restore of vcxproj as /t:Restore target doesn't support packages.config
+    # and PackageReference isn't supported for native projects
+    Write-Information "Restoring NuGet Packages for LibLLVM.vcxproj"
+    Invoke-NuGet restore src\LibLLVM\LibLLVM.vcxproj -PackagesDirectory $buildPaths.NuGetRepositoryPath -Verbosity quiet
+
+    Write-Information "Building LibLLVM"
+    Invoke-MSBuild -Targets Build -Project src\LibLLVM\LibLLVM.vcxproj -Properties $msBuildProperties -LoggerArgs ($msbuildLoggerArgs + @("/bl:LibLLVM-build.binlog") )
+
+    Write-Information "Packing LibLLVM"
+    Invoke-MSBuild -Targets Pack -Project src\LibLLVM\LibLLVM.vcxproj -Properties $msBuildProperties -LoggerArgs $msbuildLoggerArgs ($msbuildLoggerArgs + @("/bl:LibLLVM-pack.binlog") )
+
+    Write-Information "Restoring NuGet Packages for Llvm.NET"
+    Invoke-MSBuild -Targets Restore -Project src\Llvm.NET.sln -Properties $msBuildProperties -LoggerArgs $msbuildLoggerArgs ($msbuildLoggerArgs + @("/bl:Llvm.NET-restore.binlog") )
+
+    Write-Information "Building Llvm.NET"
+    Invoke-MSBuild -Targets Build -Project src\Llvm.NET.sln -Properties $msBuildProperties -LoggerArgs $msbuildLoggerArgs ($msbuildLoggerArgs + @("/bl:Llvm.NET-build.binlog") )
+
     Write-Information "Restoring Docs Project"
     Invoke-MSBuild -Targets Restore -Project docfx\Llvm.NET.DocFX.csproj -Properties $msBuildProperties -LoggerArgs $msbuildLoggerArgs ($msbuildLoggerArgs + @("/bl:Llvm.NET-docfx-restore.binlog") )
 
     Write-Information "Building Docs"
     Invoke-MSBuild -Targets Build -Project docfx\Llvm.NET.DocFX.csproj -Properties $msBuildProperties -LoggerArgs $msbuildLoggerArgs ($msbuildLoggerArgs + @("/bl:Llvm.NET-docfx-build.binlog") )
 
-    Write-Information "Building Llvm.NET"
-    Invoke-MSBuild -Targets Build -Project src\Llvm.NET.sln -Properties $msBuildProperties -LoggerArgs $msbuildLoggerArgs ($msbuildLoggerArgs + @("/bl:Llvm.NET-build.binlog") )
-    
     if( $env:APPVEYOR_PULL_REQUEST_NUMBER )
     {
         foreach( $item in Get-ChildItem *.binlog )
