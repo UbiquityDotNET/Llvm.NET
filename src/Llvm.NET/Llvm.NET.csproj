@@ -5,7 +5,7 @@
     <RuntimeIdentifiers>win-x64</RuntimeIdentifiers>
     <DebugType>portable</DebugType>
     <DebugSymbols>true</DebugSymbols>
-    <DocumentationFile>$(BaseIntermediateOutputPath)Llvm.NET.xml</DocumentationFile>
+    <DocumentationFile>$(BaseIntermediateOutputPath)$(MSBuildProjectName).xml</DocumentationFile>
     <SignAssembly>False</SignAssembly>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <MinClientVersion>4.0</MinClientVersion>

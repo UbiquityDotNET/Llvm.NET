@@ -4,6 +4,7 @@
 
 using System;
 using System.Collections.Generic;
+using JetBrains.Annotations;
 using Llvm.NET.Instructions;
 using Llvm.NET.Native;
 
@@ -37,6 +38,7 @@ namespace Llvm.NET.Values
         }
 
         /// <summary>Gets the first instruction in the block</summary>
+        [CanBeNull]
         public Instruction FirstInstruction
         {
             get
@@ -52,6 +54,7 @@ namespace Llvm.NET.Values
         }
 
         /// <summary>Gets the last instruction in the block</summary>
+        [CanBeNull]
         public Instruction LastInstruction
         {
             get
@@ -71,6 +74,7 @@ namespace Llvm.NET.Values
         /// May be null if the block is not yet well-formed
         /// as is commonly the case while generating code for a new block
         /// </remarks>
+        [CanBeNull]
         public Instruction Terminator
         {
             get

@@ -12,7 +12,7 @@ namespace Llvm.NET.Values
 {
     /// <summary>LLVM Constant Array</summary>
     /// <remarks>
-    /// Due to how LLVM treats constant arrays internally creating a constant array
+    /// Due to how LLVM treats constant arrays internally, creating a constant array
     /// with the From method overloads may not actually produce a ConstantArray
     /// instance. At the least it will produce a Constant. LLVM will determine the
     /// appropriate internal representation based on the input types and values

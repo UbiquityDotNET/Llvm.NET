@@ -107,7 +107,7 @@ namespace Llvm.NET.Types
         Context Context { get; }
 
         /// <summary>Gets the integer bit width of this type or 0 for non integer types</summary>
-        [SuppressMessage( "Microsoft.Naming", "CA1720:IdentifiersShouldNotContainTypeNames", Justification = "Value is the bitwidth of an integer, name is appropriate" )]
+        [SuppressMessage( "Microsoft.Naming", "CA1720:IdentifiersShouldNotContainTypeNames", Justification = "Value is the bit width of an integer, name is appropriate" )]
         uint IntegerBitWidth { get; }
 
         /// <summary>Gets a null value (e.g. all bits == 0 ) for the type</summary>

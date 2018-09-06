@@ -5,6 +5,10 @@
 namespace Llvm.NET.Values
 {
     /// <summary>Fluent style extensions for modifying properties of a <see cref="GlobalValue"/></summary>
+    /// <remarks>
+    /// These are not members of <see cref="GlobalValue"/> to allow the generic return type so that the return
+    /// is for the specific type provided as input instead of the base type of GlobalValue.
+    /// </remarks>
     public static class GlobalValueExtensions
     {
         /// <summary>Visibility of this global value</summary>

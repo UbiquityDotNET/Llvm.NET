@@ -3,7 +3,6 @@
 // </copyright>
 
 using System;
-using System.Diagnostics.CodeAnalysis;
 using Llvm.NET.Native;
 using Llvm.NET.Types;
 
@@ -13,20 +12,15 @@ namespace Llvm.NET.Values
 {
     /// <summary>LLVM Value</summary>
     /// <remarks>
-    /// Value is the root of a hierarchy of types representing values
-    /// in LLVM. Values (and derived classes) are never constructed
-    /// directly with the new operator. Instead, they are produced by
-    /// other classes in this library internally. This is because they
-    /// are just wrappers around the LLVM-C API handles and must
-    /// maintain the "uniqueing" semantics. (e.g. allowing reference
-    /// equality for values that are fundamentally the same value)
-    /// This is generally hidden in the internals of the Llvm.NET
-    /// library so callers need not be concerned with the details
-    /// but can rely on the expected behavior that two Value instances
-    /// referring to the same actual value (i.e. a function) are actually
-    /// the same .NET object as well within the same <see cref="Context"/>
+    /// Value is the root of a hierarchy of types representing values in LLVM. Values (and derived classes)
+    /// are never constructed directly with the new operator. Instead, they are produced by other classes
+    /// in this library internally. This is because they are just wrappers around the LLVM-C API handles
+    /// and must maintain the "uniqueing" semantics. (e.g. allowing reference equality for values that are
+    /// fundamentally the same value). This is generally hidden in the internals of the Llvm.NET library so
+    /// that callers need not be concerned with the details but can rely on the expected behavior that two
+    /// Value instances referring to the same actual value (i.e. a function) are actually the same .NET object
+    /// as well within the same <see cref="Llvm.NET.Context"/>
     /// </remarks>
-    [SuppressMessage( "Microsoft.Maintainability", "CA1506:AvoidExcessiveClassCoupling", Justification = "Mapping factory creates child types from interop handles" )]
     public class Value
         : IExtensiblePropertyContainer
     {

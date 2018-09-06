@@ -31,10 +31,10 @@ namespace Llvm.NET.Values
     /// <summary>Interface for raw attribute access</summary>
     /// <remarks>
     /// As of LLVM v3.9x and later, Functions and call sites use distinct LLVM-C API sets for
-    /// manipulating attributes. Fortunately they have consistent signatures so these
-    /// are used to abstract the difference via derived types specialized for each case.
-    /// Going forward this is the simplest and most direct way to manipulate attributes
-    /// on a value as everything ultimately comes down to this interface.
+    /// manipulating attributes. Fortunately, they have consistent signatures so this interface
+    /// is used to abstract the difference via derived types specialized for each case.
+    /// Going forward this is the most direct way to manipulate attributes on a value as all the
+    /// other forms ultimately come down to this interface.
     /// </remarks>
     public interface IAttributeAccessor
         : IAttributeContainer

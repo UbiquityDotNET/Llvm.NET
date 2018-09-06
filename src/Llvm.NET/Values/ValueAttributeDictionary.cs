@@ -12,7 +12,7 @@ namespace Llvm.NET.Values
 {
     /// <summary>re-usable implementation of IAttributeDictionary for containers that implement IAttributeAccessor</summary>
     /// <remarks>
-    /// This uses the lowlevel methods of IAttributeAccessor to abstract out the differences in the
+    /// This uses the low-level methods of IAttributeAccessor to abstract out the differences in the
     /// LLVM-C API for attributes on CallSites vs. Functions
     /// </remarks>
     internal class ValueAttributeDictionary

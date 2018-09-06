@@ -5,7 +5,7 @@ VisualStudioVersion = 15.0.27130.2036
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Llvm.NET", "Llvm.NET\Llvm.NET.csproj", "{0162C8CE-6641-4922-8664-F8A44356FBF7}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Llvm.NETTests", "Llvm.NETTests\Llvm.NETTests.csproj", "{826ADB1C-4BDC-4A89-836B-87088E511D6A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Llvm.NET.Tests", "Llvm.NETTests\Llvm.NET.Tests.csproj", "{826ADB1C-4BDC-4A89-836B-87088E511D6A}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Samples", "Samples", "{2204ABFA-65AA-4506-8FB0-D742B583246A}"
 EndProject
@@ -49,6 +49,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Repo Items", "Repo Items", 
 		..\README.md = ..\README.md
 		..\stylecop.json = ..\stylecop.json
 		..\Ubiquity.NET.ruleset = ..\Ubiquity.NET.ruleset
+		x64.runsettings = x64.runsettings
 	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Kaleidoscope.Runtime", "..\Samples\Kaleidoscope\Kaleidoscope.Runtime\Kaleidoscope.Runtime.csproj", "{DF586B9E-C590-459F-AD5A-F2E023E3CB45}"

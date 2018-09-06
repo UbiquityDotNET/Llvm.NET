@@ -31,7 +31,7 @@ namespace Llvm.NET
     /// that are target dependent.</para>
     /// <para>The following table illustrates the differences in sizes and their meaning
     ///  for a sample set of types.</para>
-    /// |   Type  | SizeInBits | StoreSizeInBits |AllocSizeInBits|
+    /// |   Type  | SizeInBits | StoreSizeInBits | AbiSizeInBits |
     /// |---------|------------|-----------------|---------------|
     /// | i1      | 1          | 8               | 8             |
     /// | i8      | 8          | 8               | 8             |
@@ -47,6 +47,14 @@ namespace Llvm.NET
     /// The allocation size depends on the alignment, and thus on the target.
     /// The values in the example table are for x86-32-linux.
     /// </note>
+    /// |   Property      | Definition |
+    /// |-----------------|------------|
+    /// | SizeInBits      | Minimum number of bits needed to represent the full range of values for the type |
+    /// | StoreSizeInBits | Minimum number of bits needed to actually store a *single* value of the type |
+    /// | AbiSizeInBits   | Total number of bits used to store a value in a sequence, including any alignement padding |
+    ///
+    /// The alloc size determines the total size of each entry in a sequence so that the "next" element is computed
+    /// by adding the alloc size to the the start address of the current element.
     /// </remarks>
     public sealed class DataLayout
     {
@@ -128,6 +136,10 @@ namespace Llvm.NET
         /// <summary>Retrieves the ABI specified size of the given type</summary>
         /// <param name="typeRef">Type to get the size from</param>
         /// <returns>Size of the type</returns>
+        /// <remarks>
+        /// Returns the offset in bytes between successive objects of the
+        /// specified type, including alignment padding
+        /// </remarks>
         public ulong AbiSizeOf( ITypeRef typeRef )
         {
             VerifySized( typeRef, nameof( typeRef ) );
