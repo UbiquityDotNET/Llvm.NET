@@ -36,7 +36,7 @@ C API with a C# adapter layer to provide the full experience .NET developers exp
 tedious one very little application code required changes.
 
 ### Platform Support
-Currently LLVM.NET supports Win32 and x64 builds targeting the full desktop framework v4.7 and .NET standard 2.0. Ideally
+Currently LLVM.NET supports x64 builds targeting the full desktop framework v4.7 and .NET standard 2.0. Ideally
 other platforms are possible in the future. To keep life simpler the Llvm.NET NuGet package is built for the "AnyCPU"
 platform and references the LibLLVM.NET package to bring in the native binary support. Llvm.NET contains code to dynamically
 detect the platform it is running on and load the appropriate DLL. This allows applications to build for AnyCPU without
