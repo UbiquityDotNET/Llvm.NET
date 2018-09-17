@@ -6,6 +6,7 @@ using System;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using Kaleidoscope.Grammar;
+using Kaleidoscope.Grammar.AST;
 using Kaleidoscope.Runtime;
 using Llvm.NET;
 
@@ -59,8 +60,8 @@ namespace Kaleidoscope
 
                     // time the parse and code generation
                     var timer = System.Diagnostics.Stopwatch.StartNew( );
-                    var (parseTree, recognizer) = parser.Parse( rdr, DiagnosticRepresentations.DebugTraceParser );
-                    generator.Generate( recognizer, parseTree, DiagnosticRepresentations.None );
+                    IAstNode ast = parser.Parse( rdr, DiagnosticRepresentations.DebugTraceParser );
+                    generator.Generate( ast );
                     if( !generator.Module.Verify( out string errMsg ) )
                     {
                         Console.Error.WriteLine( errMsg );
@@ -88,7 +89,6 @@ namespace Kaleidoscope
         // </Main>
 
         // <ErrorHandling>
-        [SuppressMessage( "Redundancies in Symbol Declarations", "RECS0154:Parameter is never used", Justification = "Required delegate signature" )]
         private static void OnGeneratorError( object sender, CodeGenerationExceptionArgs e )
         {
             var color = Console.ForegroundColor;

@@ -70,14 +70,17 @@ namespace Llvm.NET.Values
             return ( T )Operands[ index ];
         }
 
+        /// <inheritdoc/>
         long IOperandContainer<Value>.Count => LLVMGetNumOperands( ValueHandle );
 
+        /// <inheritdoc/>
         Value IOperandContainer<Value>.this[ int index ]
         {
             get => FromHandle( LLVMGetOperand( ValueHandle, ( uint )index ) );
             set => LLVMSetOperand( ValueHandle, ( uint )index, value.ValueHandle );
         }
 
+        /// <inheritdoc/>
         void IOperandContainer<Value>.Add( Value item ) => throw new NotSupportedException( );
 
         internal User( LLVMValueRef userRef )

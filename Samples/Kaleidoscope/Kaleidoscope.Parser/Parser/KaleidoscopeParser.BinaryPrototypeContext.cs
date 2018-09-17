@@ -14,14 +14,10 @@ namespace Kaleidoscope.Grammar
         {
             public IToken OpToken => userdefinedop( ).start;
 
-            public override IReadOnlyList<(string Name, SourceSpan Span)> Parameters
-                => Identifier( ).Select( i => (i.GetText( ), i.GetSourceSpan( )) ).ToList( );
+            public override IEnumerable<(string Name, int Index, SourceSpan Span)> Parameters
+                => Identifier( ).Select( (id,i) => (id.GetText( ), i, id.GetSourceSpan( )) );
 
             public int Precedence => ( int )double.Parse( Number( ).GetText( ) );
-
-            public override string Name => GetOperatorFunctionName( OpToken );
-
-            public static string GetOperatorFunctionName( IToken token ) => $"$binary${token.Text}";
         }
     }
 }

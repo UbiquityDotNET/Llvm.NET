@@ -27,6 +27,7 @@ namespace Llvm.NET.JIT
     }
 
     /// <summary>An LLVM Execution Engine</summary>
+    [Obsolete("Use OrcJit instead")]
     public sealed class LegacyExecutionEngine
         : IDisposable
     {

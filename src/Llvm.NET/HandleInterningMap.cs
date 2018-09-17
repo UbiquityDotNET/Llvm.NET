@@ -6,23 +6,8 @@ using System.Collections;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 
-// interface and common base implementation are a matched pair
-#pragma warning disable SA1649 // File name must match first type name
-
 namespace Llvm.NET
 {
-    internal interface IHandleInterning<THandle, TMappedType>
-        : IEnumerable<TMappedType>
-    {
-        Context Context { get; }
-
-        TMappedType GetOrCreateItem( THandle handle );
-
-        void Remove( THandle handle );
-
-        void Clear( );
-    }
-
     internal abstract class HandleInterningMap<THandle, TMappedType>
         : IHandleInterning<THandle, TMappedType>
     {

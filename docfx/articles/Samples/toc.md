@@ -10,5 +10,7 @@
 ## [Chapter 7 - Mutable Variables](Kaleidoscope-ch7.md)
 ## [Chapter 8 - AOT Compilation](Kaleidoscope-ch8.md)
 ## [Chapter 9 - Debug Information](Kaleidoscope-ch9.md)
+## [Kaleidoscope.Runtime](Kaleidoscope-Runtime.md)
 ## [ParseTree Visitor](Kaleidoscope-ParseTreeVisitor.md)
 ## [ParseTree Examples](Kaleidoscope-ParseTree-examples.md)
+

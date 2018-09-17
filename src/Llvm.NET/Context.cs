@@ -826,11 +826,13 @@ namespace Llvm.NET
             return ValueCache.GetOrCreateItem( valueRef );
         }
 
+#pragma warning disable CS0618 // Type or member is obsolete
         internal LegacyExecutionEngine GetEngineFor( LLVMExecutionEngineRef h )
         {
             h.ValidateNotDefault( nameof( h ) );
             return EngineCache.GetOrCreateItem( h );
         }
+#pragma warning restore CS0618 // Type or member is obsolete
 
         internal LlvmMetadata GetNodeFor( LLVMMetadataRef handle )
         {
@@ -851,7 +853,9 @@ namespace Llvm.NET
             ActiveHandler = new WrappedNativeCallback( new LLVMDiagnosticHandler( DiagnosticHandler ) );
             LLVMContextSetDiagnosticHandler( ContextHandle, ActiveHandler.NativeFuncPtr, IntPtr.Zero );
             ValueCache = new ValueCache( this );
+#pragma warning disable CS0618 // Type or member is obsolete
             EngineCache = new LegacyExecutionEngine.InterningFactory( this );
+#pragma warning restore CS0618 // Type or member is obsolete
             ModuleCache = new BitcodeModule.InterningFactory( this );
             TypeCache = new TypeRef.InterningFactory( this );
             AttributeValueCache = new AttributeValue.InterningFactory( this );
@@ -893,7 +897,9 @@ namespace Llvm.NET
 
         // child item wrapper factories
         private readonly ValueCache ValueCache;
+#pragma warning disable CS0618 // Type or member is obsolete
         private readonly LegacyExecutionEngine.InterningFactory EngineCache;
+#pragma warning restore CS0618 // Type or member is obsolete
         private readonly BitcodeModule.InterningFactory ModuleCache;
         private readonly TypeRef.InterningFactory TypeCache;
         private readonly AttributeValue.InterningFactory AttributeValueCache;

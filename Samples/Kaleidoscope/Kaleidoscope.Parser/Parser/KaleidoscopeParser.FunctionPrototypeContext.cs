@@ -13,8 +13,8 @@ namespace Kaleidoscope.Grammar
         {
             public override string Name => Identifier( 0 ).GetText();
 
-            public override IReadOnlyList<(string Name, SourceSpan Span)> Parameters
-                => Identifier( ).Skip( 1 ).Select( i => (i.GetText(), i.GetSourceSpan( )) ).ToList( );
+            public override IEnumerable<(string Name, int Index, SourceSpan Span)> Parameters
+                => Identifier( ).Skip( 1 ).Select( (id,i) => (id.GetText(), i, id.GetSourceSpan( )) );
         }
     }
 }

@@ -45,7 +45,7 @@
       </Task>
   </UsingTask>
 
-  <!-- Create NuGet packages for all NuSpec Items -->
+  <!-- Create NuGet packages for NuSpec property in VCXPROJ projects -->
   <Target Name="Pack" DependsOnTargets="_DownloadNugetExe;SetProjectSpecficVersionDependentProperties" Condition="'$(MSBuildProjectExtension)'=='.vcxproj'">
     <Exec Condition="exists('$(NuSpecFile)')"
           Command='"$(PackageOutputPath)NuGet.exe" pack $(NuSpecFile) -OutputDirectory $(PackageOutputPath) -Properties $(NuspecProperties) -NoPackageAnalysis' />

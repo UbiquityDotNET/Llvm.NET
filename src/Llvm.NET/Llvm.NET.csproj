@@ -18,6 +18,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <!--Keep docfx generated OBJ folder junk from cluttering solution view-->
     <Compile Remove="obj\**" />
     <EmbeddedResource Remove="obj\**" />
     <None Remove="obj\**" />

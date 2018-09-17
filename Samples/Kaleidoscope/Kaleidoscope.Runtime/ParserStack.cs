@@ -7,6 +7,7 @@ using Antlr4.Runtime;
 using Antlr4.Runtime.Misc;
 using Antlr4.Runtime.Tree;
 using Kaleidoscope.Grammar;
+using Kaleidoscope.Grammar.AST;
 
 namespace Kaleidoscope.Runtime
 {
@@ -16,7 +17,12 @@ namespace Kaleidoscope.Runtime
         FullSource,
     }
 
-    /// <summary>Combined Lexer and Parser that can support REPL usage</summary>
+    /// <summary>Common parse stack for the Kaleidoscope language</summary>
+    /// <remarks>
+    /// A great value of ANTLR is its flexibility, but that comes at the cost
+    /// of increased complexity. This class encapsulates the complexity as
+    /// it is needed for Kaleidoscope code generation with Llvm.NET.
+    /// </remarks>
     public class ParserStack
         : IKaleidoscopeParser
     {
@@ -31,7 +37,7 @@ namespace Kaleidoscope.Runtime
         /// <param name="level"><see cref="LanguageLevel"/> for the parser</param>
         /// <param name="listener">Combined error listener for lexer and parser errors</param>
         public ParserStack( LanguageLevel level, IUnifiedErrorListener listener )
-            : this( level, listener, listener)
+            : this( level, listener, listener )
         {
         }
 
@@ -40,9 +46,9 @@ namespace Kaleidoscope.Runtime
         /// <param name="lexErrorListener">Error listener for Lexer errors</param>
         /// <param name="parseErrorListener">Error listener for parer errors</param>
         public ParserStack( LanguageLevel level
-                              , IAntlrErrorListener<int> lexErrorListener
-                              , IAntlrErrorListener<IToken> parseErrorListener
-                              )
+                          , IAntlrErrorListener<int> lexErrorListener
+                          , IAntlrErrorListener<IToken> parseErrorListener
+                          )
         {
             GlobalState = new DynamicRuntimeState( level );
             LexErrorListener = lexErrorListener;
@@ -61,18 +67,18 @@ namespace Kaleidoscope.Runtime
         public DynamicRuntimeState GlobalState { get; }
 
         /// <inheritdoc/>
-        public (IParseTree parseTree, Parser recognizer) Parse( string txt, DiagnosticRepresentations aditionalDiagnostics )
+        public IAstNode Parse( string txt, DiagnosticRepresentations aditionalDiagnostics = DiagnosticRepresentations.None )
         {
             return Parse( new AntlrInputStream( txt ), aditionalDiagnostics, ParseMode.ReplLoop );
         }
 
         /// <inheritdoc/>
-        public (IParseTree parseTree, Parser recognizer) Parse( TextReader reader, DiagnosticRepresentations aditionalDiagnostics )
+        public IAstNode Parse( TextReader reader, DiagnosticRepresentations aditionalDiagnostics = DiagnosticRepresentations.None )
         {
             return Parse( new AntlrInputStream( reader ), aditionalDiagnostics, ParseMode.FullSource );
         }
 
-        private (IParseTree parseTree, Parser recognizer) Parse( AntlrInputStream inputStream, DiagnosticRepresentations aditionalDiagnostics, ParseMode mode )
+        private IAstNode Parse( AntlrInputStream inputStream, DiagnosticRepresentations aditionalDiagnostics, ParseMode mode )
         {
             try
             {
@@ -111,35 +117,48 @@ namespace Kaleidoscope.Runtime
                     Parser.AddErrorListener( ParseErrorListener );
                 }
 
-                var parseTree = mode == ParseMode.ReplLoop ? (IParseTree)Parser.repl( ) : Parser.fullsrc();
+                var parseTree = mode == ParseMode.ReplLoop ? ( IParseTree )Parser.repl( ) : Parser.fullsrc( );
 
                 if( aditionalDiagnostics.HasFlag( DiagnosticRepresentations.Xml ) )
                 {
                     var docListener = new XDocumentListener( Parser );
                     ParseTreeWalker.Default.Walk( docListener, parseTree );
-                    docListener.Document.Save("ParseTree.xml");
+                    docListener.Document.Save( "ParseTree.xml" );
                 }
+
+                if( Parser.NumberOfSyntaxErrors > 0 )
+                {
+                    return null;
+                }
+
+                var astBuilder = new AstBuilder( GlobalState );
+                var astNode = astBuilder.Visit( parseTree );
+
 #if NET47
                 if( aditionalDiagnostics.HasFlag( DiagnosticRepresentations.Dgml ) || aditionalDiagnostics.HasFlag( DiagnosticRepresentations.BlockDiag ) )
                 {
                     // both forms share the same initial DirectedGraph model as the formats are pretty similar
                     var dgmlGenerator = new DgmlGenerator( Parser );
                     ParseTreeWalker.Default.Walk( dgmlGenerator, parseTree );
+                    var astGraphGenereator = new AstGraphGenerator( );
+                    astNode.Accept( astGraphGenereator );
 
                     if( aditionalDiagnostics.HasFlag( DiagnosticRepresentations.Dgml ) )
                     {
                         dgmlGenerator.WriteDgmlGraph( "ParseTree.dgml" );
+                        astGraphGenereator.WriteDgmlGraph( "Ast.dgml" );
                     }
 
                     if( aditionalDiagnostics.HasFlag( DiagnosticRepresentations.BlockDiag ) )
                     {
                         dgmlGenerator.WriteBlockDiag( "ParseTree.diag" );
+                        astGraphGenereator.WriteBlockDiag( "Ast.diag" );
                     }
                 }
 #endif
-                return (parseTree, Parser);
+                return astNode;
             }
-            catch(ParseCanceledException)
+            catch( ParseCanceledException )
             {
                 return default;
             }

@@ -31,14 +31,17 @@ namespace Llvm.NET.Instructions
             set => LLVMSetCleanup( ValueHandle, value );
         }
 
+        /// <inheritdoc/>
         long IOperandContainer<Constant>.Count => Operands.Count;
 
+        /// <inheritdoc/>
         Constant IOperandContainer<Constant>.this[ int index ]
         {
             get => GetOperand<Constant>( index );
             set => Operands[ index ] = value;
         }
 
+        /// <inheritdoc/>
         void IOperandContainer<Constant>.Add( Constant item )
         {
             item.ValidateNotNull( nameof( item ) );

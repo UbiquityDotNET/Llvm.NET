@@ -6,6 +6,7 @@ using System;
 
 namespace Kaleidoscope.Runtime
 {
+    /// <summary>Event arguments for the ready stat changed event</summary>
     public class ReadyStateChangedArgs
         : EventArgs
     {

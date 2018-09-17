@@ -38,7 +38,7 @@ namespace Kaleidoscope.Runtime
 
             if( !Debugger.IsAttached)
             {
-                Console.WriteLine( "Waiting for Debugger attach..." );
+                Console.WriteLine( "Waiting for Debugger attach... PID: {0}", Process.GetCurrentProcess().Id );
             }
 
             while( !Debugger.IsAttached )

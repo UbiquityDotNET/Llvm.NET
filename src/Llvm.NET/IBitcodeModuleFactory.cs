@@ -31,7 +31,7 @@ namespace Llvm.NET
         /// <param name="srcFilePath">path of source file to set for the compilation unit</param>
         /// <param name="producer">Name of the application producing this module</param>
         /// <param name="optimized">Flag to indicate if the module is optimized</param>
-        /// <param name="compilationFlags">Additional flags (use <see cref="System.String.Empty"/> if none are needed)</param>
+        /// <param name="compilationFlags">Additional flags (use <see cref="string.Empty"/> if none are needed)</param>
         /// <param name="runtimeVersion">Runtime version if any (use 0 if the runtime version has no meaning)</param>
         /// <returns><see cref="BitcodeModule"/></returns>
         BitcodeModule CreateBitcodeModule( string moduleId

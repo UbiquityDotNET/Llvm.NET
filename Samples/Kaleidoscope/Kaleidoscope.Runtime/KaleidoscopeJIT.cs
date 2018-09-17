@@ -10,47 +10,52 @@ using Llvm.NET.JIT;
 namespace Kaleidoscope.Runtime
 {
     /// <summary>JIT engine for Kaleidoscope language</summary>
+    /// <remarks>
+    /// This engine uses the <see cref="Llvm.NET.JIT.OrcJit"/> engine to support lazy
+    /// compilation of LLVM IR modules added to the JIT.
+    /// </remarks>
     public sealed class KaleidoscopeJIT
-        : IDisposable
+        : OrcJit
     {
         public KaleidoscopeJIT( )
+            : base( BuildTargetMachine() )
         {
-            TargetMachine = Target.FromTriple( Triple.HostTriple.ToString( ) )
-                                  .CreateTargetMachine(Triple.HostTriple.ToString(), null, null, CodeGenOpt.Default, Reloc.Default, CodeModel.JitDefault );
-
-            ExecutionEngine = new OrcJit( TargetMachine );
-            ExecutionEngine.AddInteropCallback( "putchard", new CallbackHandler1( PutChard ) );
-            ExecutionEngine.AddInteropCallback( "printd", new CallbackHandler1( Printd ) );
+            AddInteropCallback( "putchard", new CallbackHandler1( PutChard ) );
+            AddInteropCallback( "printd", new CallbackHandler1( Printd ) );
         }
 
-        public TargetMachine TargetMachine { get; }
-
-        public IJitModuleHandle AddModule( BitcodeModule module ) => ExecutionEngine.AddModule( module, ExecutionEngine.DefaultSymbolResolver );
-
-        public void RemoveModule( IJitModuleHandle moduleHandle ) => ExecutionEngine.RemoveModule( moduleHandle );
-
-        public T GetDelegateForFunction<T>( string name )
-        {
-            return ExecutionEngine.GetFunctionDelegate<T>( name );
-        }
-
-        public void Dispose( )
-        {
-            ExecutionEngine.Dispose( );
-        }
-
+        /// <summary>Delegate for an interop callback taking no parameters</summary>
+        /// <returns>value for the function</returns>
         [UnmanagedFunctionPointer( CallingConvention.Cdecl )]
         public delegate double CallbackHandler0( );
 
+        /// <summary>Delegate for an interop callback taking one parameters</summary>
+        /// <param name="arg1">First parameter</param>
+        /// <returns>value for the function</returns>
         [UnmanagedFunctionPointer( CallingConvention.Cdecl )]
         public delegate double CallbackHandler1( double arg1 );
 
+        /// <summary>Delegate for an interop callback taking two parameters</summary>
+        /// <param name="arg1">First parameter</param>
+        /// <param name="arg2">Second parameter</param>
+        /// <returns>value for the function</returns>
         [UnmanagedFunctionPointer( CallingConvention.Cdecl )]
         public delegate double CallbackHandler2( double arg1, double arg2 );
 
+        /// <summary>Delegate for an interop callback taking three parameters</summary>
+        /// <param name="arg1">First parameter</param>
+        /// <param name="arg2">Second parameter</param>
+        /// <param name="arg3">Third parameter</param>
+        /// <returns>value for the function</returns>
         [UnmanagedFunctionPointer( CallingConvention.Cdecl )]
         public delegate double CallbackHandler3( double arg1, double arg2, double arg3 );
 
+        /// <summary>Delegate for an interop callback taking four parameters</summary>
+        /// <param name="arg1">First parameter</param>
+        /// <param name="arg2">Second parameter</param>
+        /// <param name="arg3">Third parameter</param>
+        /// <param name="arg4">Fourth parameter</param>
+        /// <returns>value for the function</returns>
         [UnmanagedFunctionPointer( CallingConvention.Cdecl )]
         public delegate double CallbackHandler4( double arg1, double arg2, double arg3, double arg4 );
 
@@ -82,6 +87,10 @@ namespace Kaleidoscope.Runtime
             }
         }
 
-        private readonly OrcJit ExecutionEngine;
+        private static TargetMachine BuildTargetMachine()
+        {
+            return Target.FromTriple( Triple.HostTriple.ToString( ) )
+                         .CreateTargetMachine( Triple.HostTriple.ToString( ), null, null, CodeGenOpt.Default, Reloc.Default, CodeModel.JitDefault );
+        }
     }
 }
