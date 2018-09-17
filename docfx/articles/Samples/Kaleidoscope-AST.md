@@ -14,9 +14,8 @@ basic categories of nodes:
    * Function Parameters
  * Expressions
    * Assignment
-   * Unary Operator
-   * Binary Operator
    * Variable Reference
+   * Binary Operators
    * For-In Expression
    * Var-In Expression
 
@@ -88,11 +87,12 @@ interface abstracts the differences between the two types of variable declaratio
 
 ## Other AST Nodes
 ### AST Declarations
-Prototype - Function declaration signature
-
-LocalVariableDeclaration - declaration of a local variable (including compiler generated variables)
-ParameterDeclaration - declaration of a function parameter
+[!code-csharp[VarInExpression](../../../Samples/Kaleidoscope/Kaleidoscope.Parser/AST/Prototype.cs)]
+[!code-csharp[VarInExpression](../../../Samples/Kaleidoscope/Kaleidoscope.Parser/AST/LocalVariableDeclaration.cs)]
+[!code-csharp[VarInExpression](../../../Samples/Kaleidoscope/Kaleidoscope.Parser/AST/ParameterDeclaration.cs)]
 
 ### AST FunctionDefinition
 FunctionDefinition, as the name implies, contains the definition of a function. This includes the signature
 and the full body of the function.
+
+[!code-csharp[VarInExpression](../../../Samples/Kaleidoscope/Kaleidoscope.Parser/AST/FunctionDefinition.cs)]

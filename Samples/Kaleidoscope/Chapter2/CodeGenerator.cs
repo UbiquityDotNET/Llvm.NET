@@ -15,9 +15,6 @@ namespace Kaleidoscope
     internal sealed class CodeGenerator
         : IKaleidoscopeCodeGenerator<int>
     {
-        public int Generate( IAstNode ast )
-        {
-            return 0;
-        }
+        public int Generate( IAstNode ast ) => 0;
     }
 }

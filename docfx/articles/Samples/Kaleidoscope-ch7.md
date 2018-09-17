@@ -240,42 +240,36 @@ Currently the symbol stack in Kaleidoscope stores LLVM Values directly. To suppo
 private readonly ScopeStack<Alloca> NamedValues;
 ```
 
-### Add CreateEntryBlockAlloca 
-To create the alloca instructions in the entry block we'll add a new helper routine to build the
-alloca instructions in the entry block.
-
-[!code-csharp[CreateEntryBlockAlloca](../../../Samples/Kaleidoscope/Chapter7/CodeGenerator.cs#CreateEntryBlockAlloca)]
-
-### Update VisitVariableExpression
+### Update Visitor for VariableReferenceExpression
 The first change to the existing code generation is to update handling of variable expressions to generate
 a load through the pointer created with an alloca instruction. This is pretty straight forward since the
 scope map now stores the alloca instructions for the variable.
 
-[!code-csharp[VisitVariableExpression](../../../Samples/Kaleidoscope/Chapter7/CodeGenerator.cs#VisitVariableExpression)]
+[!code-csharp[VisitVariableExpression](../../../Samples/Kaleidoscope/Chapter7/CodeGenerator.cs#VariableReferenceExpression)]
 
-### Update VisitConditionalExpression
+### Update Visitor for ConditionalExpression
 Now that we have the alloca support we can update the conditional expression handling to remove the need
 for direct PHI node construction. This involves adding a new compiler generated local var for the result
 of the condition and storing the result value into that location for each side of the branch. Then, in the
 continue block load the value from the location so that it is available as a value for the result of the
 expression.
 
-[!code-csharp[VisitConditionalExpression](../../../Samples/Kaleidoscope/Chapter7/CodeGenerator.cs#VisitConditionalExpression)]
+[!code-csharp[VisitConditionalExpression](../../../Samples/Kaleidoscope/Chapter7/CodeGenerator.cs#ConditionalExpression)]
 
-### Update VisitForExpression
+### Update Visitor for ForInExpression
 Next up is to update the for loop handling to use the allocas. The code is almost identical except for the
 use of load/store for the variables and removal of the manually generated PHI nodes.
 
-[!code-csharp[VisitForExpression](../../../Samples/Kaleidoscope/Chapter7/CodeGenerator.cs#VisitForExpression)]
+[!code-csharp[VisitForExpression](../../../Samples/Kaleidoscope/Chapter7/CodeGenerator.cs#ForInExpression)]
 
-### Update DefineFunction
+### Update Visitor for FunctionDefinition
 To support mutable function argument variables the handler for functions requires a small update to create
-the allocas for each incoming argument as well.
+the allocas for each incoming argument and for each of the local variables used by the function. The AST
+generation tracks the variable declarations in a function so they are all available to generate directly
+into the entry block.
 
-[!code-csharp[DefineFunction](../../../Samples/Kaleidoscope/Chapter7/CodeGenerator.cs#DefineFunction)]
+[!code-csharp[DefineFunction](../../../Samples/Kaleidoscope/Chapter7/CodeGenerator.cs#FunctionDefinition)]
 
-The only change there is in the for loop used to create the argument variables via the previously created
-helper function.
 
 ### InitializeModuleAndPassManager
 The last piece required for mutable variables support is to include the optimization pass to promote memory
@@ -283,27 +277,14 @@ to registers.
 
 [!code-csharp[InitializeModuleAndPassManager](../../../Samples/Kaleidoscope/Chapter7/CodeGenerator.cs#InitializeModuleAndPassManager)]
 
-## New Assignment Operator
-Building on the existing code generation framework makes adding the new assignment operator. The parser
-already knows how to parse the operator so we need to add code generation for the operator. This is split
-in two places to handle the special nature of the assignment operator. The first step is to add handling
-the assign as a binary operator to store the right hand value to the left hand value, which is an address
-from the alloca for the variable.
-
-```C#
-case ASSIGN:
-    InstructionBuilder.Store( rhs, lhs );
-    return rhs;
-```
-
-### Update VisitExpression
+### Add visitor for Assignment Expressions
 Unlike the other binary operators assignment doesn't follow the same emit left, emit right, emit operator
 sequence. This is because an expression like '(x+1) = expression' is nonsensical and therefore not allowed.
 The left hand side is always an alloca as the destination of a store. To handle this special case the
-expression visitor is updated to perform a lookup of the left hand side variable for assignment instead of
-emitting the expression.
+AST creates a distinct node for assignment. Code generation can then simply implement a visitor for an
+assignment to handle storing the value to the variable.
 
-[!code-csharp[VisitExpression](../../../Samples/Kaleidoscope/Chapter7/CodeGenerator.cs#VisitExpression)]
+[!code-csharp[VisitExpression](../../../Samples/Kaleidoscope/Chapter7/CodeGenerator.cs#AssignmentExpression)]
 
 Now that we have mutable variables and assignment we can mutate loop variables or input parameters. For
 example:
@@ -331,14 +312,14 @@ As described in the general syntax discussion of the Kaleidoscope language [VarI
 the VarIn expression is used to declare local variables for a scope. A few changes are required to support
 this language construct.
 
-### Add VisitVarInExpression
+### Add Visitor for VarInExpression
 The VarIn expression visitor needs to handle the mutability of the scoped variables. The basic idea for each
 VarIn expression is to push a new scope on the scope stack then walk through all the variables in the
 expression to define them and emit the expression for the initializer. After all the values are defined the
 child expression "scope" is emitted, which may contain another VarIn or loop expression. Once the emit
 completes, the variable scope is popped from the stack to restore back the previous level.
 
-[!code-csharp[VisitVarInExpression](../../../Samples/Kaleidoscope/Chapter7/CodeGenerator.cs#VisitVarInExpression)]
+[!code-csharp[VisitVarInExpression](../../../Samples/Kaleidoscope/Chapter7/CodeGenerator.cs#VarInExpression)]
 
 ## Conclusion
 This completes the updates needed to support mutable variables with potentially nested scopes. All of this

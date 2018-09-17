@@ -29,7 +29,7 @@ namespace Kaleidoscope
         {
             if( globalState.LanguageLevel > LanguageLevel.MutableVariables )
             {
-                throw new ArgumentException( "Language features not supported by this generator", nameof(globalState) );
+                throw new ArgumentException( "Language features not supported by this generator", nameof( globalState ) );
             }
 
             RuntimeState = globalState;
@@ -199,7 +199,7 @@ namespace Kaleidoscope
                     return function;
                 }
             }
-            catch(CodeGeneratorException)
+            catch( CodeGeneratorException )
             {
                 function.EraseFromParent( );
                 throw;
@@ -287,7 +287,7 @@ namespace Kaleidoscope
         {
             var function = InstructionBuilder.InsertBlock.ContainingFunction;
             string varName = forInExpression.LoopVariable.Name;
-            if(!NamedValues.TryGetValue(varName, out Alloca allocaVar))
+            if( !NamedValues.TryGetValue( varName, out Alloca allocaVar ) )
             {
                 throw new CodeGeneratorException( $"ICE: For loop initializer variable allocation not found!" );
             }
@@ -381,7 +381,7 @@ namespace Kaleidoscope
                 Function function = InstructionBuilder.InsertBlock.ContainingFunction;
                 foreach( var localVar in varInExpression.LocalVariables )
                 {
-                    if(!NamedValues.TryGetValue( localVar.Name, out Alloca alloca ))
+                    if( !NamedValues.TryGetValue( localVar.Name, out Alloca alloca ) )
                     {
                         throw new CodeGeneratorException( $"ICE: Missing allocation for local variable {localVar.Name}" );
                     }
@@ -408,7 +408,7 @@ namespace Kaleidoscope
             InstructionBuilder.Store( value, targetAlloca );
             return value;
         }
-        // </AssignementExpression>
+        // </AssignmentExpression>
 
         private void EmitBranchToNewBlock( string blockName )
         {
@@ -450,7 +450,6 @@ namespace Kaleidoscope
             }
 
             var llvmSignature = Context.GetFunctionType( Context.DoubleType, prototype.Parameters.Select( _ => Context.DoubleType ) );
-
             var retVal = Module.AddFunction( prototype.Name, llvmSignature );
 
             int index = 0;
@@ -470,7 +469,7 @@ namespace Kaleidoscope
         private readonly InstructionBuilder InstructionBuilder;
         private readonly ScopeStack<Alloca> NamedValues = new ScopeStack<Alloca>( );
         private FunctionPassManager FunctionPassManager;
-        private bool DisableOptimizations;
+        private readonly bool DisableOptimizations;
         private TargetMachine TargetMachine;
         private readonly List<Function> AnonymousFunctions = new List<Function>( );
         // </PrivateMembers>

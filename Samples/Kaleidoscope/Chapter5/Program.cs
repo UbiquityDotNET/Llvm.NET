@@ -91,7 +91,7 @@ namespace Kaleidoscope
 
             case Function function:
 #if GENERATE_LLVM_IR
-                function.ParentModule.WriteToTextFile( Path.ChangeExtension( GetSafeFileName( function.Name ), "ll" ), out string ignoredMsg );
+                function.ParentModule.WriteToTextFile( System.IO.Path.ChangeExtension( GetSafeFileName( function.Name ), "ll" ), out string ignoredMsg );
 #endif
                 break;
             }

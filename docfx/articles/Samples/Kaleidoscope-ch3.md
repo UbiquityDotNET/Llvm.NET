@@ -102,15 +102,15 @@ simply uses pattern matching to detect the type of node to dispatch to a visitor
 
 ### Function Declarations
 Function declarations don't actually generate any code. Instead they are captured and added to a collection
-of declarations used in generating subsequent function definitions.
+of declarations used in validating subsequent function calls when generating the AST for function definitions.
 
-[!code-csharp[Main](../../../Samples/Kaleidoscope/Chapter3/CodeGenerator.cs#VisitFunctionDeclaration)]
+[!code-csharp[Main](../../../Samples/Kaleidoscope/Kaleidoscope.Parser/AST/Prototype.cs)]
 
 ### Function Definition
 Functions with bodies (e.g. not just a declaration to a function defined elsewhere) are handled via the
 VisitFunctionDefinition() Method.
 
-[!code-csharp[Main](../../../Samples/Kaleidoscope/Chapter3/CodeGenerator.cs#VisitFunctionDefinition)]
+[!code-csharp[Main](../../../Samples/Kaleidoscope/Chapter3/CodeGenerator.cs#FunctionDefinition)]
 
 VisitFunctionDefinition() simply extracts the function prototype from the AST node. A private utility 
 method GetOrDeclareFunction() us used to get an existing function or declare a new one.
@@ -122,48 +122,50 @@ Otherwise it creates a function signature type then adds a function to the modul
 signature and adds the parameter names to the function. In LLVM the signature only contains type information
 and no names, allowing for sharing the same signature for completely different functions.
 
-The function and the expression representing the body of the function is then passed to the private
-DefineFunction that does the real work of emitting IR for the function.
+The function and the expression representing the body of the function is then used to emit IR for the function.
 
-[!code-csharp[Main](../../../Samples/Kaleidoscope/Chapter3/CodeGenerator.cs#DefineFunction)]
-
-DefineFunctio() first tests to see that the function is a declaration (e.g. does not have a body) as
-Kaleidoscope doesn't support any sort of overloaded functions.
+The generation verifies that the function is a declaration (e.g. does not have a body) as Kaleidoscope doesn't
+support any sort of overloaded functions.
 
 The generation of a function starts by constructing a basic block for the entry point of the function and
 attaches the InstructionBuilder to the end of that block. (It's empty so it is technically at the beginning
 but placing it at the end it will track the end position as new instructions are added so that each instruction
-added will go on the end of the block). At this point there will only be the one entry block as the language
+added will go on the end of the block). At this point there will only be the one block as the language
 doesn't yet have support for control flow. (That is introduced in [Chapter 5](Kaleidoscope-ch5.md))
 
 The NamedValues map is cleared and each of the parameters is mapped in the NamedValues map to its argument
 value in IR. The body of the function is visited to produce an LLVM Value. The visiting will, in turn add
-instructions, and possibly new blocks, as needed to represent the expression in proper execution order.
+instructions, and possibly new blocks, as needed to represent the body expression in proper execution order.
 
-If generating the body results in an error, then the function is removed from the parent and null is
-returned. This allows the user to define the function again.
+If generating the body results in an error, then the function is removed from the parent and the exception
+propagates up. This allows the user to define the function again, if appropriate.
 
 Finally, a return instruction is applied to return the result of the expression followed by a verification
 of the function to ensure internal consistency. (Generally the verify is not used in production releases
 as it is an expensive operation to perform on every function. But when building up a language generator
 it is quite useful to detect errors early.)
 
+#### Top Level Expression
+Top level expressions in Kaleidoscope are transformed into an anonymous function definition by the
+AstBuilder. Since this chapter is focused on generating the IR module there isn't any special handling
+needed for a top level expression. They are simply just another function definition.
+
 ### Constant expression
 In Kaleidoscope all values are floating point and constants are represented in LLVM IR as [ConstantFP](xref:Llvm.NET.Values.ConstantFP)
-The parse tree node for a constant is extended to provide the value of the constant as a C# `double`.
+The AST provides the value of the constant as a C# `double`.
 
-[!code-csharp[Main](../../../Samples/Kaleidoscope/Kaleidoscope.Parser/KaleidoscopeParser.ConstExpressionContext.cs)]
+[!code-csharp[Main](../../../Samples/Kaleidoscope/Kaleidoscope.Parser/AST/ConstantExpression.cs)]
 
 Generation of the LLVM IR for a constant is quite simple.
 
-[!code-csharp[Main](../../../Samples/Kaleidoscope/Chapter3/CodeGenerator.cs#VisitConstExpression)]
+[!code-csharp[Main](../../../Samples/Kaleidoscope/Chapter3/CodeGenerator.cs#ConstantExpression)]
 
 > [!NOTE]
 > The constant value is uniqued in LLVM so that multiple calls given the same input value will
 > produce the same LLVM Value. LLvm.NET honors this and is implemented in a way to ensure that reference
 > equality reflects the identity of the uniqued values correctly.
 
-### Variable expression
+### Variable reference expression
 References to variables in Kaleidoscope, like most other languages, use a name. In this chapter the support
 of variables is rather simple. The Variable expression generator assumes the variable is declared somewhere
 else already and simply looks up the value from the private map. At this stage of the development of
@@ -171,28 +173,20 @@ Kaleidoscope the only place where the named values are generated are function ar
 will introduce loop induction variables and variable assignment. The implementation uses a standard TryGet
 pattern to retrieve the value or throw an exception if the variable doesn't exist.
 
-[!code-csharp[Main](../../../Samples/Kaleidoscope/Chapter3/CodeGenerator.cs#VisitVariableExpression)]
+[!code-csharp[Main](../../../Samples/Kaleidoscope/Chapter3/CodeGenerator.cs#VariableReferenceExpression)]
 
-### Expression
-Things start to get a good bit more interesting with binary operators. The parse tree node for an expression
-contains support for walking the chain of operators that form an expression in left to right order, accounting
+### Binary Operator Expression
+Things start to get a good bit more interesting with binary operators. The AST node for an expression
+is a simple empty "tagging" interface. Since the interface also requires the IAstNode interface it contains
+support for walking the chain of operators that form an expression in left to right order, accounting
 for precedence.
 
-[!code-csharp[Main](../../../Samples/Kaleidoscope/Kaleidoscope.Parser/KaleidoscopeParser.ExpressionContext.cs)]
+[!code-csharp[Main](../../../Samples/Kaleidoscope/Kaleidoscope.Parser/AST/IExpression.cs)]
 
-Generation of an expression consists of a pair of related methods.
+Generation of an expression consists a simple visitor method to emit the code for the operands and
+the actual operator.
 
-[!code-csharp[Main](../../../Samples/Kaleidoscope/Chapter3/CodeGenerator.cs#VisitExpression)]
-
-VisitExpression() will create a value for the left most 'Atom' and then use that with the operator and
-right hand side value for the next expression. The left hand side is updated based on the result of each
-operation so that once all operations in the expression are evaluated the `lhs` variable retains the
-result value for the entire expression. Each operator result is generated through the private utility
-method EmitBinaryOperator().
-
-EmitBinaryOperator is responsible for generating the LLVM IR representation of a binary operator.
-
-[!code-csharp[Main](../../../Samples/Kaleidoscope/Chapter3/CodeGenerator.cs#EmitBinaryOperator)]
+[!code-csharp[Main](../../../Samples/Kaleidoscope/Chapter3/CodeGenerator.cs#BinaryOperatorExpression)]
 
 The process of transforming the operator starts by generating an LLVM IR Value from the right-hand side
 parse tree. A simple switch statement based on the token type of the operator is used to generate the
@@ -214,11 +208,6 @@ float cast to translate the LLVM IR i1 result into a floating point value needed
 
 The `^` operator for exponentiation uses the `llvm.pow.f64` intrinsic to perform the exponentiation as
 efficiently as the back-end generator can.
-
-### Top Level Expression
-Top level expressions in Kaleidoscope are transformed into an anonymous function definition by the
-AstBuilder. Since this chapter is focused on generating the IR module there isn't any special handling
-needed for a top level expression. They are simply just another function definition.
 
 ## Examples
 

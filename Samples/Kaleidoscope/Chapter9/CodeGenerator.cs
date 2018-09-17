@@ -31,7 +31,7 @@ namespace Kaleidoscope
         {
             if( globalState.LanguageLevel > LanguageLevel.MutableVariables )
             {
-                throw new ArgumentException( "Language features not supported by this generator", nameof(globalState) );
+                throw new ArgumentException( "Language features not supported by this generator", nameof( globalState ) );
             }
 
             RuntimeState = globalState;
@@ -215,14 +215,10 @@ namespace Kaleidoscope
                     return function;
                 }
             }
-            catch(CodeGeneratorException)
+            catch( CodeGeneratorException )
             {
                 function.EraseFromParent( );
                 throw;
-            }
-            finally
-            {
-                LexicalBlocks.Pop( );
             }
         }
         // </FunctionDefinition>
@@ -311,7 +307,7 @@ namespace Kaleidoscope
             EmitLocation( forInExpression );
             var function = InstructionBuilder.InsertBlock.ContainingFunction;
             string varName = forInExpression.LoopVariable.Name;
-            if(!NamedValues.TryGetValue(varName, out Alloca allocaVar))
+            if( !NamedValues.TryGetValue( varName, out Alloca allocaVar ) )
             {
                 throw new CodeGeneratorException( $"ICE: For loop initializer variable allocation not found!" );
             }
@@ -407,7 +403,7 @@ namespace Kaleidoscope
                 foreach( var localVar in varInExpression.LocalVariables )
                 {
                     EmitLocation( localVar );
-                    if(!NamedValues.TryGetValue( localVar.Name, out Alloca alloca ))
+                    if( !NamedValues.TryGetValue( localVar.Name, out Alloca alloca ) )
                     {
                         throw new CodeGeneratorException( $"ICE: Missing allocation for local variable {localVar.Name}" );
                     }
@@ -435,7 +431,7 @@ namespace Kaleidoscope
             InstructionBuilder.Store( value, targetAlloca );
             return value;
         }
-        // </AssignementExpression>
+        // </AssignmentExpression>
 
         private void EmitBranchToNewBlock( string blockName )
         {
@@ -529,6 +525,7 @@ namespace Kaleidoscope
         }
         // </GetOrDeclareFunction>
 
+        // <AddDebugInfoForAlloca>
         private void AddDebugInfoForAlloca( Alloca argSlot, Function function, ParameterDeclaration param )
         {
             uint line = ( uint )param.Location.StartLine;
@@ -569,6 +566,7 @@ namespace Kaleidoscope
                                           , InstructionBuilder.InsertBlock
                                           );
         }
+        // </AddDebugInfoForAlloca>
 
         // <PrivateMembers>
         private readonly DynamicRuntimeState RuntimeState;
@@ -576,7 +574,7 @@ namespace Kaleidoscope
         private readonly InstructionBuilder InstructionBuilder;
         private readonly ScopeStack<Alloca> NamedValues = new ScopeStack<Alloca>( );
         private FunctionPassManager FunctionPassManager;
-        private bool DisableOptimizations;
+        private readonly bool DisableOptimizations;
         private TargetMachine TargetMachine;
         private readonly List<Function> AnonymousFunctions = new List<Function>( );
         private DebugBasicType DoubleType;

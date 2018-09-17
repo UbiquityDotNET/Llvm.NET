@@ -48,6 +48,13 @@ namespace Kaleidoscope
         // <Generate>
         public Value Generate( IAstNode ast )
         {
+            // Prototypes, including extern are ignored as AST generation
+            // adds them to the RuntimeState so that already has the declarations
+            if( !( ast is FunctionDefinition definition ) )
+            {
+                return null;
+            }
+
             return ast.Accept( this );
         }
         // </Generate>
@@ -131,8 +138,8 @@ namespace Kaleidoscope
 
             try
             {
-                var basicBlock = function.AppendBasicBlock( "entry" );
-                InstructionBuilder.PositionAtEnd( basicBlock );
+                var entryBlock = function.AppendBasicBlock( "entry" );
+                InstructionBuilder.PositionAtEnd( entryBlock );
                 NamedValues.Clear( );
                 foreach( var arg in function.Parameters )
                 {
@@ -142,14 +149,13 @@ namespace Kaleidoscope
                 var funcReturn = definition.Body.Accept( this );
                 InstructionBuilder.Return( funcReturn );
                 function.Verify( );
+                return function;
             }
             catch( CodeGeneratorException )
             {
                 function.EraseFromParent( );
                 throw;
             }
-
-            return function;
         }
         // </FunctionDefinition>
 
@@ -180,7 +186,6 @@ namespace Kaleidoscope
             }
 
             var llvmSignature = Context.GetFunctionType( Context.DoubleType, prototype.Parameters.Select( _ => Context.DoubleType ) );
-
             var retVal = Module.AddFunction( prototype.Name, llvmSignature );
 
             int index = 0;

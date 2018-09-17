@@ -6,35 +6,19 @@ using System.Collections.Generic;
 
 namespace Kaleidoscope.Grammar.AST
 {
-    /*
-    Child nodes defined for higher level constructs only.
-    UnaryOpExpressionContext and BinaryOpExpressionCOntext are
-    collapsed to just a FunctionCall for user defined operators)
-    Similarly for prototypes the distinction from unary, binary
-    and regular function are collapsed to just a declared function
-    Precedence and paren expressions are no longer relevent once parsed,
-    the AST just provides an ordered sequence of expressions.
-    The built-in operators don't use the function call form so they
-    still have a representation in the AST.
-
-    Thus the node types produced are:
-        Function Declaration (including extern)
-        Function Definition
-        BinaryOperator
-        FunctionCall
-        VariableReference
-        ConstExpression
-        ConditionalExpression
-        ForExpression
-        VarInExpression
-    */
-
+    /// <summary>Root interface for nodes in the Abstract Syntax Tree</summary>
     public interface IAstNode
     {
+        /// <summary>Source location covering the original source for the node</summary>
         SourceSpan Location { get; }
 
+        /// <summary>Gets a collection of children for the node</summary>
         IEnumerable<IAstNode> Children { get; }
 
+        /// <summary>VIsitor pattern support for implementations to dispatch the concrete node type to a visitor</summary>
+        /// <typeparam name="TResult">Result type for the visitor</typeparam>
+        /// <param name="visitor">Visitor to dispatch the concrete type to</param>
+        /// <returns>Result of visiting this node</returns>
         TResult Accept<TResult>( IAstVisitor<TResult> visitor );
     }
 }

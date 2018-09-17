@@ -4,6 +4,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Collections.Immutable;
 using System.Linq;
 using System.Runtime.InteropServices;
 using Kaleidoscope.Grammar;
@@ -29,7 +30,7 @@ namespace Kaleidoscope
         public CodeGenerator( DynamicRuntimeState globalState, bool disableOptimization = false )
             : base( null )
         {
-            if( globalState.LanguageLevel > LanguageLevel.ControlFlow )
+            if( globalState.LanguageLevel > LanguageLevel.MutableVariables )
             {
                 throw new ArgumentException( "Language features not supported by this generator", nameof( globalState ) );
             }
@@ -58,32 +59,31 @@ namespace Kaleidoscope
                 return null;
             }
 
-            InitializeModuleAndPassManager( );
+            Value retVal = null;
 
-            // Destroy any previously generated module for this function.
-            // This allows re-definition as the new module will provide the
-            // implementation. This is needed, otherwise both the MCJIT
-            // and OrcJit engines will resolve to the original module, despite
-            // claims to the contrary in the official tutorial text. (Though,
-            // to be fair it may have been true in the original JIT and might
-            // still be true for the interpreter)
-            if( FunctionModuleMap.Remove( definition.Name, out IJitModuleHandle handle ) )
-            {
-                JIT.RemoveModule( handle );
-            }
-
-            var function = (Function)ast.Accept( this );
-            var jitHandle = JIT.AddModule( function.ParentModule );
+            // Anonymous functions are called immediately then removed from the JIT
+            // so no point in setting them up as a lazy compilation item.
             if( definition.IsAnonymous )
             {
-                var nativeFunc = JIT.GetFunctionDelegate<AnonExpressionFunc>( function.Name );
-                var retVal = Context.CreateConstant( nativeFunc( ) );
+                var function = (Function)definition.Accept( this );
+                var jitHandle = JIT.AddModule( function.ParentModule );
+                var nativeFunc = JIT.GetFunctionDelegate<AnonExpressionFunc>( definition.Name );
+                retVal = Context.CreateConstant( nativeFunc( ) );
                 JIT.RemoveModule( jitHandle );
-                return retVal;
             }
+            else
+            {
+                FunctionDefinition implDefinition = CloneAndRenameFunction( definition );
 
-            FunctionModuleMap.Add( function.Name, jitHandle );
-            return function;
+                // register the generator as a stub with the original source name
+                JIT.AddLazyFunctionGenerator( definition.Name, ( ) =>
+                {
+                    InitializeModuleAndPassManager( );
+                    var function = ( Function )implDefinition.Accept( this );
+                    return (implDefinition.Name, function.ParentModule);
+                } );
+            }
+            return retVal;
         }
         // </Generate>
 
@@ -172,8 +172,20 @@ namespace Kaleidoscope
                 {
                     foreach( var arg in function.Parameters )
                     {
-                        NamedValues[ arg.Name ] = arg;
+                        var argSlot = InstructionBuilder.Alloca( function.Context.DoubleType )
+                                                        .RegisterName( arg.Name );
+                        InstructionBuilder.Store( arg, argSlot );
+                        NamedValues[ arg.Name ] = argSlot;
                     }
+
+                    foreach( var local in definition.LocalVariables )
+                    {
+                        var localSlot = InstructionBuilder.Alloca( function.Context.DoubleType )
+                                                          .RegisterName( local.Name );
+                        NamedValues[ local.Name ] = localSlot;
+                    }
+
+                    EmitBranchToNewBlock( "body" );
 
                     var funcReturn = definition.Body.Accept( this );
                     InstructionBuilder.Return( funcReturn );
@@ -194,7 +206,7 @@ namespace Kaleidoscope
         // <VariableReferenceExpression>
         public override Value Visit( VariableReferenceExpression reference )
         {
-            if( !NamedValues.TryGetValue( reference.Name, out Value value ) )
+            if( !NamedValues.TryGetValue( reference.Name, out Alloca value ) )
             {
                 // Source input is validated by the parser and AstBuilder, therefore
                 // this is the result of an internal error in the generator rather
@@ -202,13 +214,19 @@ namespace Kaleidoscope
                 throw new CodeGeneratorException( $"ICE: Unknown variable name: {reference.Name}" );
             }
 
-            return value;
+            return InstructionBuilder.Load( value )
+                                     .RegisterName( reference.Name );
         }
         // </VariableReferenceExpression>
 
         // <ConditionalExpression>
         public override Value Visit( ConditionalExpression conditionalExpression )
         {
+            if( !NamedValues.TryGetValue( conditionalExpression.ResultVariable.Name, out Alloca result ) )
+            {
+                throw new CodeGeneratorException( $"ICE: allocation for compiler generated variable '{conditionalExpression.ResultVariable.Name}' not found!" );
+            }
+
             var condition = conditionalExpression.Condition.Accept( this );
             if( condition == null )
             {
@@ -233,6 +251,7 @@ namespace Kaleidoscope
                 return null;
             }
 
+            InstructionBuilder.Store( thenValue, result );
             InstructionBuilder.Branch( continueBlock );
 
             // capture the insert in case generating else adds new blocks
@@ -247,18 +266,15 @@ namespace Kaleidoscope
                 return null;
             }
 
+            InstructionBuilder.Store( elseValue, result );
             InstructionBuilder.Branch( continueBlock );
             elseBlock = InstructionBuilder.InsertBlock;
 
             // generate continue block
             function.BasicBlocks.Add( continueBlock );
             InstructionBuilder.PositionAtEnd( continueBlock );
-            var phiNode = InstructionBuilder.PhiNode( function.Context.DoubleType )
-                                            .RegisterName( "iftmp" );
-
-            phiNode.AddIncoming( thenValue, thenBlock );
-            phiNode.AddIncoming( elseValue, elseBlock );
-            return phiNode;
+            return InstructionBuilder.Load( result )
+                                     .RegisterName( "ifresult" );
         }
         // </ConditionalExpression>
 
@@ -267,6 +283,10 @@ namespace Kaleidoscope
         {
             var function = InstructionBuilder.InsertBlock.ContainingFunction;
             string varName = forInExpression.LoopVariable.Name;
+            if( !NamedValues.TryGetValue( varName, out Alloca allocaVar ) )
+            {
+                throw new CodeGeneratorException( $"ICE: For loop initializer variable allocation not found!" );
+            }
 
             // Emit the start code first, without 'variable' in scope.
             Value startVal = null;
@@ -283,6 +303,9 @@ namespace Kaleidoscope
                 startVal = Context.CreateConstant( 0.0 );
             }
 
+            // store the value into allocated location
+            InstructionBuilder.Store( startVal, allocaVar );
+
             // Make the new basic block for the loop header, inserting after current
             // block.
             var preHeaderBlock = InstructionBuilder.InsertBlock;
@@ -294,17 +317,11 @@ namespace Kaleidoscope
             // Start insertion in loopBlock.
             InstructionBuilder.PositionAtEnd( loopBlock );
 
-            // Start the PHI node with an entry for Start.
-            var variable = InstructionBuilder.PhiNode( Context.DoubleType )
-                                             .RegisterName( varName );
-
-            variable.AddIncoming( startVal, preHeaderBlock );
-
             // Within the loop, the variable is defined equal to the PHI node.
             // So, push a new scope for it and any values the body might set
             using( NamedValues.EnterScope( ) )
             {
-                NamedValues[ varName ] = variable;
+                EmitBranchToNewBlock( "ForInScope" );
 
                 // Emit the body of the loop.  This, like any other expression, can change the
                 // current BB.  Note that we ignore the value computed by the body, but don't
@@ -320,15 +337,18 @@ namespace Kaleidoscope
                     return null;
                 }
 
-                var nextVar = InstructionBuilder.FAdd( variable, stepValue)
-                                                .RegisterName( "nextvar" );
-
                 // Compute the end condition.
                 Value endCondition = forInExpression.Condition.Accept( this );
                 if( endCondition == null )
                 {
                     return null;
                 }
+
+                var curVar = InstructionBuilder.Load( allocaVar )
+                                               .RegisterName( varName );
+                var nextVar = InstructionBuilder.FAdd( curVar, stepValue )
+                                                .RegisterName( "nextvar" );
+                InstructionBuilder.Store( nextVar, allocaVar );
 
                 // Convert condition to a bool by comparing non-equal to 0.0.
                 endCondition = InstructionBuilder.Compare( RealPredicate.OrderedAndNotEqual, endCondition, Context.CreateConstant( 0.0 ) )
@@ -342,21 +362,64 @@ namespace Kaleidoscope
                 InstructionBuilder.Branch( endCondition, loopBlock, afterBlock );
                 InstructionBuilder.PositionAtEnd( afterBlock );
 
-                // Add a new entry to the PHI node for the back-edge.
-                variable.AddIncoming( nextVar, loopEndBlock );
-
                 // for expression always returns 0.0 for consistency, there is no 'void'
                 return Context.DoubleType.GetNullValue( );
             }
         }
         // </ForInExpression>
 
+        // <VarInExpression>
+        public override Value Visit( VarInExpression varInExpression )
+        {
+            using( NamedValues.EnterScope( ) )
+            {
+                EmitBranchToNewBlock( "VarInScope" );
+                Function function = InstructionBuilder.InsertBlock.ContainingFunction;
+                foreach( var localVar in varInExpression.LocalVariables )
+                {
+                    if( !NamedValues.TryGetValue( localVar.Name, out Alloca alloca ) )
+                    {
+                        throw new CodeGeneratorException( $"ICE: Missing allocation for local variable {localVar.Name}" );
+                    }
+
+                    Value initValue = Context.CreateConstant( 0.0 );
+                    if( localVar.Initializer != null )
+                    {
+                        initValue = localVar.Initializer.Accept( this );
+                    }
+
+                    InstructionBuilder.Store( initValue, alloca );
+                }
+
+                return varInExpression.Body.Accept( this );
+            }
+        }
+        // </VarInExpression>
+
+        // <AssignmentExpression>
+        public override Value Visit( AssignmentExpression assignment )
+        {
+            var targetAlloca = NamedValues[ assignment.Target.Name ];
+            var value = assignment.Value.Accept( this );
+            InstructionBuilder.Store( value, targetAlloca );
+            return value;
+        }
+        // </AssignmentExpression>
+
+        private void EmitBranchToNewBlock( string blockName )
+        {
+            var newBlock = InstructionBuilder.InsertBlock.ContainingFunction.AppendBasicBlock( blockName );
+            InstructionBuilder.Branch( newBlock );
+            InstructionBuilder.PositionAtEnd( newBlock );
+        }
+
         // <InitializeModuleAndPassManager>
         private void InitializeModuleAndPassManager( )
         {
             Module = Context.CreateBitcodeModule( );
             Module.Layout = JIT.TargetMachine.TargetData;
-            FunctionPassManager = new FunctionPassManager( Module );
+            FunctionPassManager = new FunctionPassManager( Module )
+                                      .AddPromoteMemoryToRegisterPass( );
 
             if( !DisableOptimizations )
             {
@@ -395,11 +458,30 @@ namespace Kaleidoscope
         }
         // </GetOrDeclareFunction>
 
+        // <CloneAndRenameFunction>
+        private static FunctionDefinition CloneAndRenameFunction( FunctionDefinition definition )
+        {
+            // clone the definition with a new name, note that this is really
+            // a shallow clone so there's minimal overhead for the cloning.
+            var newSignature = new Prototype( definition.Signature.Location
+                                            , definition.Signature.Name + "$impl"
+                                            , definition.Signature.Parameters
+                                            );
+
+            var implDefinition = new FunctionDefinition( definition.Location
+                                                       , newSignature
+                                                       , definition.Body
+                                                       , definition.LocalVariables.ToImmutableArray( )
+                                                       );
+            return implDefinition;
+        }
+        // </CloneAndRenameFunction>
+
         // <PrivateMembers>
         private readonly DynamicRuntimeState RuntimeState;
         private readonly Context Context;
         private readonly InstructionBuilder InstructionBuilder;
-        private readonly ScopeStack<Value> NamedValues = new ScopeStack<Value>( );
+        private readonly ScopeStack<Alloca> NamedValues = new ScopeStack<Alloca>( );
         private FunctionPassManager FunctionPassManager;
         private readonly bool DisableOptimizations;
         private BitcodeModule Module;

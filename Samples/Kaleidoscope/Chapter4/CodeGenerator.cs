@@ -26,23 +26,21 @@ namespace Kaleidoscope
         , IKaleidoscopeCodeGenerator<Value>
     {
         // <Initialization>
-        public CodeGenerator( DynamicRuntimeState globalState, bool disableOptimization = false  )
-            : base(null)
+        public CodeGenerator( DynamicRuntimeState globalState, bool disableOptimization = false )
+            : base( null )
         {
             if( globalState.LanguageLevel > LanguageLevel.SimpleExpressions )
             {
-                throw new ArgumentException( "Language features not supported by this generator", nameof(globalState) );
+                throw new ArgumentException( "Language features not supported by this generator", nameof( globalState ) );
             }
 
             RuntimeState = globalState;
             Context = new Context( );
-            JIT = new KaleidoscopeJIT( );
             DisableOptimizations = disableOptimization;
             InitializeModuleAndPassManager( );
             InstructionBuilder = new InstructionBuilder( Context );
         }
         // </Initialization>
-
 
         public void Dispose( )
         {
@@ -53,7 +51,39 @@ namespace Kaleidoscope
         // <Generate>
         public Value Generate( IAstNode ast )
         {
-            return ast.Accept( this );
+            // Prototypes, including extern are ignored as AST generation
+            // adds them to the RuntimeState so that already has the declarations
+            if( !( ast is FunctionDefinition definition ) )
+            {
+                return null;
+            }
+
+            InitializeModuleAndPassManager( );
+
+            // Destroy any previously generated module for this function.
+            // This allows re-definition as the new module will provide the
+            // implementation. This is needed, otherwise both the MCJIT
+            // and OrcJit engines will resolve to the original module, despite
+            // claims to the contrary in the official tutorial text. (Though,
+            // to be fair it may have been true in the original JIT and might
+            // still be true for the interpreter)
+            if( FunctionModuleMap.Remove( definition.Name, out IJitModuleHandle handle ) )
+            {
+                JIT.RemoveModule( handle );
+            }
+
+            var function = (Function)ast.Accept( this );
+            var jitHandle = JIT.AddModule( function.ParentModule );
+            if( definition.IsAnonymous )
+            {
+                var nativeFunc = JIT.GetFunctionDelegate<AnonExpressionFunc>( function.Name );
+                var retVal = Context.CreateConstant( nativeFunc( ) );
+                JIT.RemoveModule( jitHandle );
+                return retVal;
+            }
+
+            FunctionModuleMap.Add( function.Name, jitHandle );
+            return function;
         }
         // </Generate>
 
@@ -136,20 +166,8 @@ namespace Kaleidoscope
 
             try
             {
-                // Destroy any previously generated module for this function.
-                // This allows re-definition as the new module will provide the
-                // implementation. This is needed, otherwise both the MCJIT
-                // and OrcJit engines will resolve to the original module, despite
-                // claims to the contrary in the official tutorial text. (Though,
-                // to be fair it may have been true in the original JIT and might
-                // still be true for the interpreter)
-                if( FunctionModuleMap.Remove( function.Name, out IJitModuleHandle handle ) )
-                {
-                    JIT.RemoveModule( handle );
-                }
-
-                var basicBlock = function.AppendBasicBlock( "entry" );
-                InstructionBuilder.PositionAtEnd( basicBlock );
+                var entryBlock = function.AppendBasicBlock( "entry" );
+                InstructionBuilder.PositionAtEnd( entryBlock );
                 NamedValues.Clear( );
                 foreach( var arg in function.Parameters )
                 {
@@ -161,27 +179,12 @@ namespace Kaleidoscope
                 function.Verify( );
 
                 FunctionPassManager.Run( function );
-
-                var jitHandle = JIT.AddModule( Module );
-                if( definition.IsAnonymous )
-                {
-                    var nativeFunc = JIT.GetFunctionDelegate<AnonExpressionFunc>( function.Name );
-                    var retVal = Context.CreateConstant( nativeFunc( ) );
-                    JIT.RemoveModule( jitHandle );
-                    return retVal;
-                }
-
-                FunctionModuleMap.Add( function.Name, jitHandle );
                 return function;
             }
             catch( CodeGeneratorException )
             {
                 function.EraseFromParent( );
                 throw;
-            }
-            finally
-            {
-                InitializeModuleAndPassManager( );
             }
         }
         // </FunctionDefinition>
@@ -232,7 +235,6 @@ namespace Kaleidoscope
             }
 
             var llvmSignature = Context.GetFunctionType( Context.DoubleType, prototype.Parameters.Select( _ => Context.DoubleType ) );
-
             var retVal = Module.AddFunction( prototype.Name, llvmSignature );
 
             int index = 0;
@@ -252,9 +254,9 @@ namespace Kaleidoscope
         private readonly InstructionBuilder InstructionBuilder;
         private readonly IDictionary<string, Value> NamedValues = new Dictionary<string, Value>( );
         private FunctionPassManager FunctionPassManager;
-        private bool DisableOptimizations;
+        private readonly bool DisableOptimizations;
         private BitcodeModule Module;
-        private readonly KaleidoscopeJIT JIT;
+        private readonly KaleidoscopeJIT JIT = new KaleidoscopeJIT( );
         private readonly Dictionary<string, IJitModuleHandle> FunctionModuleMap = new Dictionary<string, IJitModuleHandle>( );
 
         /// <summary>Delegate type to allow execution of a JIT'd TopLevelExpression</summary>
