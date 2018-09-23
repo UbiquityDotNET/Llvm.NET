@@ -21,7 +21,7 @@ better organized and more flexible.
 LLVM-C Handles are essentially opaque pointers. Llvm.NET represents these as .NET Value types that
 include equality checks and marshaling support. These are typically named LLVMxxxRef where xxx
 is the name of the underlying type of the handle (i.e. LLVMModuleRef ). See the [handles readme](Handles\readme.md)
-for more information. 
+for more information and details on the different patterns used for handles.
 
 ## String Marshalling
 LLVM is written as portable standard C++ and therefore doesn't use string types like BSTR, or

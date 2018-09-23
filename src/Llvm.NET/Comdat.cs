@@ -2,8 +2,11 @@
 // Copyright (c) .NET Foundation. All rights reserved.
 // </copyright>
 
+using System.Runtime.InteropServices;
 using Llvm.NET.Native;
 using Ubiquity.ArgValidators;
+
+using static Llvm.NET.Native.NativeMethods;
 
 namespace Llvm.NET
 {
@@ -45,7 +48,7 @@ namespace Llvm.NET
                     return string.Empty;
                 }
 
-                return NativeMethods.LLVMComdatGetName( ComdatHandle );
+                return LLVMComdatGetName( ComdatHandle );
             }
         }
 
@@ -59,7 +62,7 @@ namespace Llvm.NET
                     return default;
                 }
 
-                return ( ComdatKind )NativeMethods.LLVMComdatGetKind( ComdatHandle );
+                return ( ComdatKind )LLVMComdatGetKind( ComdatHandle );
             }
 
             set
@@ -69,7 +72,7 @@ namespace Llvm.NET
                     return;
                 }
 
-                NativeMethods.LLVMComdatSetKind( ComdatHandle, ( LLVMComdatSelectionKind )value );
+                LLVMComdatSetKind( ComdatHandle, ( LLVMComdatSelectionKind )value );
             }
         }
 
@@ -90,5 +93,15 @@ namespace Llvm.NET
 
         /// <summary>Gets the wrapped <see cref="LLVMComdatRef"/></summary>
         internal LLVMComdatRef ComdatHandle { get; }
+
+        [DllImport( LibraryPath, CallingConvention = CallingConvention.Cdecl, BestFitMapping = false, ThrowOnUnmappableChar = true )]
+        private static extern LLVMComdatSelectionKind LLVMComdatGetKind( LLVMComdatRef comdatRef );
+
+        [DllImport( LibraryPath, CallingConvention = CallingConvention.Cdecl, BestFitMapping = false, ThrowOnUnmappableChar = true )]
+        private static extern void LLVMComdatSetKind( LLVMComdatRef comdatRef, LLVMComdatSelectionKind kind );
+
+        [DllImport( LibraryPath, CallingConvention = CallingConvention.Cdecl, BestFitMapping = false, ThrowOnUnmappableChar = true )]
+        [return: MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( StringMarshaler ), MarshalCookie = "DisposeMessage" )]
+        private static extern string LLVMComdatGetName( LLVMComdatRef comdatRef );
     }
 }

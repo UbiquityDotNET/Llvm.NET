@@ -5,9 +5,12 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.InteropServices;
 using Llvm.NET.Native;
 using Llvm.NET.Values;
 using Ubiquity.ArgValidators;
+
+using CallingConvention = System.Runtime.InteropServices.CallingConvention;
 
 namespace Llvm.NET
 {
@@ -38,7 +41,7 @@ namespace Llvm.NET
             key.ValidateNotNullOrWhiteSpace( nameof( key ) );
             kind.ValidateDefined( nameof( kind ) );
 
-            LLVMComdatRef comdatRef = NativeMethods.LLVMModuleInsertOrUpdateComdat( Module.ModuleHandle, key, ( LLVMComdatSelectionKind )kind );
+            LLVMComdatRef comdatRef = LLVMModuleInsertOrUpdateComdat( Module.ModuleHandle, key, ( LLVMComdatSelectionKind )kind );
             if(!InternalComdatMap.TryGetValue( key, out Comdat retVal ))
             {
                 retVal = new Comdat( Module, comdatRef );
@@ -57,7 +60,7 @@ namespace Llvm.NET
             }
 
             InternalComdatMap.Clear( );
-            NativeMethods.LLVMModuleComdatClear( Module.ModuleHandle );
+            LLVMModuleComdatClear( Module.ModuleHandle );
         }
 
         /// <summary>Gets a value that indicates if a <see cref="Comdat"/> with a given name exists in the collection</summary>
@@ -90,7 +93,7 @@ namespace Llvm.NET
             if( retVal )
             {
                 ClearComdatFromGlobals( key );
-                NativeMethods.LLVMModuleComdatRemove( Module.ModuleHandle, value.ComdatHandle );
+                LLVMModuleComdatRemove( Module.ModuleHandle, value.ComdatHandle );
             }
 
             return retVal;
@@ -116,7 +119,7 @@ namespace Llvm.NET
             module.ValidateNotNull( nameof( module ) );
 
             Module = module;
-            NativeMethods.LLVMModuleEnumerateComdats( Module.ModuleHandle, AddComdat );
+            LLVMModuleEnumerateComdats( Module.ModuleHandle, AddComdat );
         }
 
         private IEnumerable<GlobalObject> GetModuleGlobalObjects()
@@ -154,5 +157,21 @@ namespace Llvm.NET
 
         private BitcodeModule Module;
         private Dictionary<string, Comdat> InternalComdatMap = new Dictionary<string, Comdat>( );
+
+        [DllImport( NativeMethods.LibraryPath, CallingConvention = CallingConvention.Cdecl, BestFitMapping = false, ThrowOnUnmappableChar = true )]
+        private static extern LLVMComdatRef LLVMModuleInsertOrUpdateComdat( LLVMModuleRef module, [MarshalAs( UnmanagedType.LPStr )] string name, LLVMComdatSelectionKind kind );
+
+        [DllImport( NativeMethods.LibraryPath, CallingConvention = CallingConvention.Cdecl )]
+        private static extern void LLVMModuleComdatRemove( LLVMModuleRef module, LLVMComdatRef comdatRef );
+
+        [DllImport( NativeMethods.LibraryPath, CallingConvention = CallingConvention.Cdecl )]
+        private static extern void LLVMModuleComdatClear( LLVMModuleRef module );
+
+        [UnmanagedFunctionPointer( CallingConvention.Cdecl, BestFitMapping = false, ThrowOnUnmappableChar = true )]
+        [return: MarshalAs( UnmanagedType.Bool )]
+        private delegate bool ComdatIteratorCallback( LLVMComdatRef comdatRef );
+
+        [DllImport( NativeMethods.LibraryPath, CallingConvention = CallingConvention.Cdecl )]
+        private static extern void LLVMModuleEnumerateComdats( LLVMModuleRef module, ComdatIteratorCallback callback );
     }
 }
