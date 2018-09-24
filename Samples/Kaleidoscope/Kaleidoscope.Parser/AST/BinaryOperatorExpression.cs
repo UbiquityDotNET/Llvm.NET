@@ -1,0 +1,66 @@
+﻿// <copyright file="BuiltInBinaryOperator.cs" company=".NET Foundation">
+// Copyright (c) .NET Foundation. All rights reserved.
+// </copyright>
+
+using System.Collections.Generic;
+
+namespace Kaleidoscope.Grammar.AST
+{
+    public enum BuiltInOperatorKind
+    {
+        Invalid,
+        Assign,   // not valid as a unary op
+        Add,
+        Subtract,
+        Multiply,
+        Divide,
+        Less,
+        Pow
+    }
+
+    /// <summary>AST Expression node for a binary operator</summary>
+    public class BinaryOperatorExpression
+        : IExpression
+    {
+        /// <summary>Initializes a new instance of the <see cref="BinaryOperatorExpression"/> class.</summary>
+        /// <param name="location">Source location of the operator expression</param>
+        /// <param name="lhs">Left hand side expression for the operator</param>
+        /// <param name="op">Operator type</param>
+        /// <param name="rhs">Right hand side expression for the operator</param>
+        public BinaryOperatorExpression( SourceSpan location, IExpression lhs, BuiltInOperatorKind op, IExpression rhs )
+        {
+            Location = location;
+            Left = lhs;
+            Op = op;
+            Right = rhs;
+        }
+
+        /// <inheritdoc/>
+        public SourceSpan Location { get; }
+
+        /// <summary>Gets the left hand side expression</summary>
+        public IExpression Left { get; }
+
+        /// <summary>Gets the operator kind for this operator</summary>
+        public BuiltInOperatorKind Op { get; }
+
+        /// <summary>Gets the Operator name for this expression</summary>
+        public string Name => Op.ToString( );
+
+        /// <summary>Gets the Right hand side expression</summary>
+        public IExpression Right { get; }
+
+        /// <inheritdoc/>
+        public IEnumerable<IAstNode> Children
+        {
+            get
+            {
+                yield return Left;
+                yield return Right;
+            }
+        }
+
+        /// <inheritdoc/>
+        public TResult Accept<TResult>( IAstVisitor<TResult> visitor ) => visitor.Visit( this );
+    }
+}

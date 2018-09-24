@@ -86,5 +86,4 @@
             </PropertyGroup>
         </When>
     </Choose>
-    <Import Condition="'$(MSBuildProjectExtension)'=='.vcxproj'" Project="$(BuildRootDir)llvm\llvm-libs.props"/>
 </Project>

@@ -6,10 +6,8 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using Antlr4.Runtime;
-using Antlr4.Runtime.Misc;
-using Antlr4.Runtime.Tree;
 using Kaleidoscope.Grammar;
+using Kaleidoscope.Grammar.AST;
 using Kaleidoscope.Runtime;
 using Llvm.NET;
 using Llvm.NET.DebugInfo;
@@ -17,31 +15,31 @@ using Llvm.NET.Instructions;
 using Llvm.NET.Transforms;
 using Llvm.NET.Values;
 
-using static Kaleidoscope.Grammar.KaleidoscopeParser;
-
 #pragma warning disable SA1512, SA1513, SA1515 // single line comments used to tag regions for extraction into docs
 
 namespace Kaleidoscope
 {
-    /// <summary>Static extension methods to perform LLVM IR Code generation from the Kaleidoscope AST</summary>
+    /// <summary>Performs LLVM IR Code generation from the Kaleidoscope AST</summary>
     internal sealed class CodeGenerator
-        : KaleidoscopeBaseVisitor<Value>
+        : AstVisitorBase<Value>
         , IDisposable
         , IKaleidoscopeCodeGenerator<Value>
     {
         // <Initialization>
         public CodeGenerator( DynamicRuntimeState globalState, TargetMachine machine, string sourcePath, bool disableOptimization = false )
+            : base(null)
         {
+            if( globalState.LanguageLevel > LanguageLevel.MutableVariables )
+            {
+                throw new ArgumentException( "Language features not supported by this generator", nameof( globalState ) );
+            }
+
             RuntimeState = globalState;
-            LexicalBlocks = new Stack<DIScope>( );
             Context = new Context( );
             TargetMachine = machine;
             DisableOptimizations = disableOptimization;
             InitializeModuleAndPassManager( sourcePath );
             InstructionBuilder = new InstructionBuilder( Context );
-            FunctionPrototypes = new PrototypeCollection( );
-            NamedValues = new ScopeStack<Alloca>( );
-            AnonymousFunctions = new List<Function>( );
         }
         // </Initialization>
 
@@ -53,14 +51,10 @@ namespace Kaleidoscope
         }
 
         // <Generate>
-        public Value Generate( Parser parser, IParseTree tree, DiagnosticRepresentations additionalDiagnostics )
+        public Value Generate( IAstNode ast )
         {
-            if( parser.NumberOfSyntaxErrors > 0 )
-            {
-                return null;
-            }
+            ast.Accept( this );
 
-            Visit( tree );
             if( AnonymousFunctions.Count > 0 )
             {
                 var mainFunction = Module.AddFunction( "main", Context.GetFunctionType( Context.VoidType ) );
@@ -91,133 +85,176 @@ namespace Kaleidoscope
         }
         // </Generate>
 
-        public override Value VisitParenExpression( [NotNull] ParenExpressionContext context )
+        // <ConstantExpression>
+        public override Value Visit( Kaleidoscope.Grammar.AST.ConstantExpression constant )
         {
-            EmitLocation( context );
-            return context.Expression.Accept( this );
+            return Context.CreateConstant( constant.Value );
         }
+        // </ConstantExpression>
 
-        // <VisitConstExpression>
-        public override Value VisitConstExpression( [NotNull] ConstExpressionContext context )
+        // <BinaryOperatorExpression>
+        public override Value Visit( BinaryOperatorExpression binaryOperator )
         {
-            EmitLocation( context );
-            return Context.CreateConstant( context.Value );
-        }
-        // </VisitConstExpression>
+            EmitLocation( binaryOperator );
+            var lhs = binaryOperator.Left.Accept( this );
+            var rhs = binaryOperator.Right.Accept( this );
 
-        // <VisitVariableExpression>
-        public override Value VisitVariableExpression( [NotNull] VariableExpressionContext context )
-        {
-            EmitLocation( context );
-            string varName = context.Name;
-            if( !NamedValues.TryGetValue( varName, out Alloca value ) )
+            switch( binaryOperator.Op )
             {
-                throw new CodeGeneratorException( $"Unknown variable name: {context}" );
-            }
-
-            return InstructionBuilder.Load( value )
-                                     .RegisterName( varName );
-        }
-        // </VisitVariableExpression>
-
-        public override Value VisitFunctionCallExpression( [NotNull] FunctionCallExpressionContext context )
-        {
-            EmitLocation( context );
-
-            var function = FindCallTarget( context.CaleeName );
-            if( function == null )
-            {
-                throw new CodeGeneratorException( $"function '{context.CaleeName}' is unknown" );
-            }
-
-            var args = context.Args.Select( ctx => ctx.Accept( this ) ).ToArray( );
-
-            EmitLocation( context );
-            return InstructionBuilder.Call( function, args ).RegisterName( "calltmp" );
-        }
-
-        // <FunctionDeclarations>
-        public override Value VisitExternalDeclaration( [NotNull] ExternalDeclarationContext context )
-        {
-            EmitLocation( context );
-            return context.Signature.Accept( this );
-        }
-
-        public override Value VisitFunctionPrototype( [NotNull] FunctionPrototypeContext context )
-        {
-            return GetOrDeclareFunction( new Prototype( context ) );
-        }
-        // </FunctionDeclarations>
-
-        // <VisitFunctionDefinition>
-        public override Value VisitFunctionDefinition( [NotNull] FunctionDefinitionContext context )
-        {
-            return DefineFunction( ( Function )context.Signature.Accept( this )
-                                 , context.BodyExpression
-                                 );
-        }
-        // </VisitFunctionDefinition>
-
-        // <VisitTopLevelExpression>
-        public override Value VisitTopLevelExpression( [NotNull] TopLevelExpressionContext context )
-        {
-            var function = GetOrDeclareFunction( new Prototype( $"anon_expr_{AnonNameIndex++}" )
-                                               , isAnonymous: true
-                                               );
-
-            AnonymousFunctions.Add( function );
-            return DefineFunction( function, context.expression( ) );
-        }
-        // </VisitTopLevelExpression>
-
-        // <VisitExpression>
-        public override Value VisitExpression( [NotNull] ExpressionContext context )
-        {
-            // Expression: PrimaryExpression (op expression)*
-            // the sub-expressions are in evaluation order
-            //
-            // Special case the assignment operator as there isn't anything to emit
-            // for the lhs expression. (If it was emitted it would be a load of the
-            // value and assignment needs a place to store the value)
-            Value lhs = null;
-            var firstOp = context.GetChild<ITerminalNode>( 0 );
-            if( context.IsAssignment )
-            {
-                var target = context.AssignmentTarget;
-                if( !NamedValues.TryGetValue( target.Name, out Alloca varSlot ) )
+            case BuiltInOperatorKind.Less:
                 {
-                    throw new CodeGeneratorException( $"Unknown variable name {target.Name}" );
+                    var tmp = InstructionBuilder.Compare( RealPredicate.UnorderedOrLessThan, lhs, rhs )
+                                                .RegisterName( "cmptmp" );
+                    return InstructionBuilder.UIToFPCast( tmp, InstructionBuilder.Context.DoubleType )
+                                             .RegisterName( "booltmp" );
                 }
 
-                lhs = varSlot;
+            case BuiltInOperatorKind.Pow:
+                {
+                    var pow = GetOrDeclareFunction( new Prototype( "llvm.pow.f64", "value", "power" ) );
+                    return InstructionBuilder.Call( pow, lhs, rhs )
+                                             .RegisterName( "powtmp" );
+                }
+
+            case BuiltInOperatorKind.Add:
+                return InstructionBuilder.FAdd( lhs, rhs ).RegisterName( "addtmp" );
+
+            case BuiltInOperatorKind.Subtract:
+                return InstructionBuilder.FSub( lhs, rhs ).RegisterName( "subtmp" );
+
+            case BuiltInOperatorKind.Multiply:
+                return InstructionBuilder.FMul( lhs, rhs ).RegisterName( "multmp" );
+
+            case BuiltInOperatorKind.Divide:
+                return InstructionBuilder.FDiv( lhs, rhs ).RegisterName( "divtmp" );
+
+            default:
+                throw new CodeGeneratorException( $"ICE: Invalid binary operator {binaryOperator.Op}" );
+            }
+        }
+        // </BinaryOperatorExpression>
+
+        // <FunctionCallExpression>
+        public override Value Visit( FunctionCallExpression functionCall )
+        {
+            EmitLocation( functionCall );
+            string targetName = functionCall.FunctionPrototype.Name;
+            Function function;
+            // try for an extern function declaration
+            if( RuntimeState.FunctionDeclarations.TryGetValue( targetName, out Prototype target ) )
+            {
+                function = GetOrDeclareFunction( target );
             }
             else
             {
-                lhs = context.primaryExpression( ).Accept( this );
+                function = Module.GetFunction( targetName ) ?? throw new CodeGeneratorException( $"Definition for function {targetName} not found" );
             }
 
-            foreach( var (op, rhs) in context.OperatorExpressions )
-            {
-                lhs = EmitBinaryOperator( lhs, op, rhs );
-            }
-
-            return lhs;
+            var args = functionCall.Arguments.Select( ctx => ctx.Accept( this ) ).ToArray( );
+            EmitLocation( functionCall );
+            return InstructionBuilder.Call( function, args ).RegisterName( "calltmp" );
         }
-        // </VisitExpression>
+        // </FunctionCallExpression>
 
-        // <VisitConditionalExpression>
-        public override Value VisitConditionalExpression( [NotNull] ConditionalExpressionContext context )
+        // <FunctionDefinition>
+        public override Value Visit( FunctionDefinition definition )
         {
-            var result = CreateEntryBlockAlloca( InstructionBuilder.InsertBlock.ContainingFunction, "ifresult.alloca" );
+            var function = GetOrDeclareFunction( definition.Signature );
+            if( !function.IsDeclaration )
+            {
+                throw new CodeGeneratorException( $"Function {function.Name} cannot be redefined in the same module" );
+            }
 
-            EmitLocation( context );
-            var condition = context.Condition.Accept( this );
+            LexicalBlocks.Push( function.DISubProgram );
+            try
+            {
+                var entryBlock = function.AppendBasicBlock( "entry" );
+                InstructionBuilder.PositionAtEnd( entryBlock );
+
+                // Unset the location for the prologue emission (leading instructions with no
+                // location in a function are considered part of the prologue and the debugger
+                // will run past them when breaking on a function)
+                EmitLocation( null );
+
+                using( NamedValues.EnterScope( ) )
+                {
+                    foreach( var param in definition.Signature.Parameters )
+                    {
+                        var argSlot = InstructionBuilder.Alloca( function.Context.DoubleType )
+                                                        .RegisterName( param.Name );
+                        AddDebugInfoForAlloca( argSlot, function, param );
+                        InstructionBuilder.Store( function.Parameters[ param.Index ], argSlot );
+                        NamedValues[ param.Name ] = argSlot;
+                    }
+
+                    foreach( LocalVariableDeclaration local in definition.LocalVariables )
+                    {
+                        var localSlot = InstructionBuilder.Alloca( function.Context.DoubleType )
+                                                          .RegisterName( local.Name );
+                        AddDebugInfoForAlloca( localSlot, function, local );
+                        NamedValues[ local.Name ] = localSlot;
+                    }
+
+                    EmitBranchToNewBlock( "body" );
+
+                    var funcReturn = definition.Body.Accept( this );
+                    InstructionBuilder.Return( funcReturn );
+                    Module.DIBuilder.Finish( function.DISubProgram );
+                    function.Verify( );
+
+                    FunctionPassManager.Run( function );
+
+                    if( definition.IsAnonymous )
+                    {
+                        function.AddAttribute( FunctionAttributeIndex.Function, AttributeKind.AlwaysInline )
+                                .Linkage( Linkage.Private );
+
+                        AnonymousFunctions.Add( function );
+                    }
+
+                    return function;
+                }
+            }
+            catch( CodeGeneratorException )
+            {
+                function.EraseFromParent( );
+                throw;
+            }
+        }
+        // </FunctionDefinition>
+
+        // <VariableReferenceExpression>
+        public override Value Visit( VariableReferenceExpression reference )
+        {
+            if( !NamedValues.TryGetValue( reference.Name, out Alloca value ) )
+            {
+                // Source input is validated by the parser and AstBuilder, therefore
+                // this is the result of an internal error in the generator rather
+                // then some sort of user error.
+                throw new CodeGeneratorException( $"ICE: Unknown variable name: {reference.Name}" );
+            }
+
+            EmitLocation( reference );
+            return InstructionBuilder.Load( value )
+                                     .RegisterName( reference.Name );
+        }
+        // </VariableReferenceExpression>
+
+        // <ConditionalExpression>
+        public override Value Visit( ConditionalExpression conditionalExpression )
+        {
+            if( !NamedValues.TryGetValue( conditionalExpression.ResultVariable.Name, out Alloca result ) )
+            {
+                throw new CodeGeneratorException( $"ICE: allocation for compiler generated variable '{conditionalExpression.ResultVariable.Name}' not found!" );
+            }
+            EmitLocation( conditionalExpression );
+            var condition = conditionalExpression.Condition.Accept( this );
             if( condition == null )
             {
                 return null;
             }
 
-            EmitLocation( context );
+            EmitLocation( conditionalExpression );
 
             var condBool = InstructionBuilder.Compare( RealPredicate.OrderedAndNotEqual, condition, Context.CreateConstant( 0.0 ) )
                                              .RegisterName( "ifcond" );
@@ -231,7 +268,7 @@ namespace Kaleidoscope
 
             // generate then block
             InstructionBuilder.PositionAtEnd( thenBlock );
-            var thenValue = context.ThenExpression.Accept( this );
+            var thenValue = conditionalExpression.ThenExpression.Accept( this );
             if( thenValue == null )
             {
                 return null;
@@ -246,7 +283,7 @@ namespace Kaleidoscope
             // generate else block
             function.BasicBlocks.Add( elseBlock );
             InstructionBuilder.PositionAtEnd( elseBlock );
-            var elseValue = context.ElseExpression.Accept( this );
+            var elseValue = conditionalExpression.ElseExpression.Accept( this );
             if( elseValue == null )
             {
                 return null;
@@ -262,21 +299,24 @@ namespace Kaleidoscope
             return InstructionBuilder.Load( result )
                                      .RegisterName( "ifresult" );
         }
-        // </VisitConditionalExpression>
+        // </ConditionalExpression>
 
-        // <VisitForExpression>
-        public override Value VisitForExpression( [NotNull] ForExpressionContext context )
+        // <ForInExpression>
+        public override Value Visit( ForInExpression forInExpression )
         {
-            EmitLocation( context );
+            EmitLocation( forInExpression );
             var function = InstructionBuilder.InsertBlock.ContainingFunction;
-            string varName = context.Initializer.Name;
-            var allocaVar = CreateEntryBlockAlloca( function, context.Initializer );
+            string varName = forInExpression.LoopVariable.Name;
+            if( !NamedValues.TryGetValue( varName, out Alloca allocaVar ) )
+            {
+                throw new CodeGeneratorException( $"ICE: For loop initializer variable allocation not found!" );
+            }
 
             // Emit the start code first, without 'variable' in scope.
             Value startVal = null;
-            if( context.Initializer.Value != null )
+            if( forInExpression.LoopVariable.Initializer != null )
             {
-                startVal = context.Initializer.Value.Accept( this );
+                startVal = forInExpression.LoopVariable.Initializer.Accept( this );
                 if( startVal == null )
                 {
                     return null;
@@ -305,29 +345,24 @@ namespace Kaleidoscope
             // So, push a new scope for it and any values the body might set
             using( NamedValues.EnterScope( ) )
             {
-                NamedValues[ varName ] = allocaVar;
+                EmitBranchToNewBlock( "ForInScope" );
 
                 // Emit the body of the loop.  This, like any other expression, can change the
                 // current BB.  Note that we ignore the value computed by the body, but don't
                 // allow an error.
-                if( context.BodyExpression.Accept( this ) == null )
+                if( forInExpression.Body.Accept( this ) == null )
                 {
                     return null;
                 }
 
-                Value stepValue = Context.CreateConstant( 1.0 );
-
-                if( context.StepExpression != null )
+                Value stepValue = forInExpression.Step.Accept( this );
+                if( stepValue == null )
                 {
-                    stepValue = context.StepExpression.Accept( this );
-                    if( stepValue == null )
-                    {
-                        return null;
-                    }
+                    return null;
                 }
 
                 // Compute the end condition.
-                Value endCondition = context.EndExpression.Accept( this );
+                Value endCondition = forInExpression.Condition.Accept( this );
                 if( endCondition == null )
                 {
                     return null;
@@ -355,134 +390,55 @@ namespace Kaleidoscope
                 return Context.DoubleType.GetNullValue( );
             }
         }
-        // </VisitForExpression>
+        // </ForInExpression>
 
-        // <VisitUserOperators>
-        public override Value VisitUnaryOpExpression( [NotNull] UnaryOpExpressionContext context )
+        // <VarInExpression>
+        public override Value Visit( VarInExpression varInExpression )
         {
-            EmitLocation( context );
-
-            // verify the operator was previously defined
-            var opKind = RuntimeState.GetUnaryOperatorInfo( context.Op ).Kind;
-            if( opKind == OperatorKind.None )
-            {
-                throw new CodeGeneratorException( $"invalid unary operator {context.Op}" );
-            }
-
-            string calleeName = UnaryPrototypeContext.GetOperatorFunctionName( context.OpToken );
-            var function = FindCallTarget( calleeName );
-            if( function == null )
-            {
-                throw new CodeGeneratorException( $"Unknown function reference {calleeName}" );
-            }
-
-            var arg = context.Rhs.Accept( this );
-            return InstructionBuilder.Call( function, arg ).RegisterName( "calltmp" );
-        }
-
-        public override Value VisitBinaryPrototype( [NotNull] BinaryPrototypeContext context )
-        {
-            return GetOrDeclareFunction( new Prototype( context, context.Name ) );
-        }
-
-        public override Value VisitUnaryPrototype( [NotNull] UnaryPrototypeContext context )
-        {
-            return GetOrDeclareFunction( new Prototype( context, context.Name ) );
-        }
-        // </VisitUserOperators>
-
-        // <VisitVarInExpression>
-        public override Value VisitVarInExpression( [NotNull] VarInExpressionContext context )
-        {
+            EmitLocation( varInExpression );
             using( NamedValues.EnterScope( ) )
             {
+                EmitBranchToNewBlock( "VarInScope" );
                 Function function = InstructionBuilder.InsertBlock.ContainingFunction;
-                foreach( var initializer in context.Initiaizers )
+                foreach( var localVar in varInExpression.LocalVariables )
                 {
+                    EmitLocation( localVar );
+                    if( !NamedValues.TryGetValue( localVar.Name, out Alloca alloca ) )
+                    {
+                        throw new CodeGeneratorException( $"ICE: Missing allocation for local variable {localVar.Name}" );
+                    }
+
                     Value initValue = Context.CreateConstant( 0.0 );
-                    if( initializer.Value != null )
+                    if( localVar.Initializer != null )
                     {
-                        initValue = initializer.Value.Accept( this );
+                        initValue = localVar.Initializer.Accept( this );
                     }
 
-                    var alloca = CreateEntryBlockAlloca( function, initializer );
                     InstructionBuilder.Store( initValue, alloca );
-                    NamedValues[ initializer.Name ] = alloca;
                 }
 
-                return context.Scope.Accept( this );
+                EmitLocation( varInExpression );
+                return varInExpression.Body.Accept( this );
             }
         }
-        // </VisitVarInExpression>
+        // </VarInExpression>
 
-        protected override Value DefaultResult => null;
-
-        // <EmitBinaryOperator>
-        private Value EmitBinaryOperator( Value lhs, BinaryopContext op, IParseTree rightTree )
+        // <AssignmentExpression>
+        public override Value Visit( AssignmentExpression assignment )
         {
-            EmitLocation( op );
-            var rhs = rightTree.Accept( this );
-            if( lhs == null || rhs == null )
-            {
-                return null;
-            }
-
-            switch( op.Token.Type )
-            {
-            case LEFTANGLE:
-                {
-                    var tmp = InstructionBuilder.Compare( RealPredicate.UnorderedOrLessThan, lhs, rhs )
-                                                .RegisterName( "cmptmp" );
-                    return InstructionBuilder.UIToFPCast( tmp, InstructionBuilder.Context.DoubleType )
-                                             .RegisterName( "booltmp" );
-                }
-
-            case CARET:
-                {
-                    var pow = GetOrDeclareFunction( new Prototype( "llvm.pow.f64", "value", "power" ) );
-                    return InstructionBuilder.Call( pow, lhs, rhs )
-                                             .RegisterName( "powtmp" );
-                }
-
-            case PLUS:
-                return InstructionBuilder.FAdd( lhs, rhs ).RegisterName( "addtmp" );
-
-            case MINUS:
-                return InstructionBuilder.FSub( lhs, rhs ).RegisterName( "subtmp" );
-
-            case ASTERISK:
-                return InstructionBuilder.FMul( lhs, rhs ).RegisterName( "multmp" );
-
-            case SLASH:
-                return InstructionBuilder.FDiv( lhs, rhs ).RegisterName( "divtmp" );
-
-            case ASSIGN:
-                InstructionBuilder.Store( rhs, lhs );
-                return rhs;
-
-            // <EmitUserOperator>
-            default:
-                {
-                    // User defined op?
-                    var opKind = RuntimeState.GetBinOperatorInfo( op.Token.Type ).Kind;
-                    if( opKind != OperatorKind.InfixLeftAssociative && opKind != OperatorKind.InfixRightAssociative )
-                    {
-                        throw new CodeGeneratorException( $"Invalid binary operator {op.Token.Text}" );
-                    }
-
-                    string calleeName = BinaryPrototypeContext.GetOperatorFunctionName( op.Token );
-                    var function = FindCallTarget( calleeName );
-                    if( function == null )
-                    {
-                        throw new CodeGeneratorException( $"Unknown function reference {calleeName}" );
-                    }
-
-                    return InstructionBuilder.Call( function, lhs, rhs ).RegisterName( "calltmp" );
-                }
-            // </EmitUserOperator>
-            }
+            var targetAlloca = NamedValues[ assignment.Target.Name ];
+            var value = assignment.Value.Accept( this );
+            InstructionBuilder.Store( value, targetAlloca );
+            return value;
         }
-        // </EmitBinaryOperator>
+        // </AssignmentExpression>
+
+        private void EmitBranchToNewBlock( string blockName )
+        {
+            var newBlock = InstructionBuilder.InsertBlock.ContainingFunction.AppendBasicBlock( blockName );
+            InstructionBuilder.Branch( newBlock );
+            InstructionBuilder.PositionAtEnd( newBlock );
+        }
 
         // <InitializeModuleAndPassManager>
         private void InitializeModuleAndPassManager( string sourcePath )
@@ -502,54 +458,30 @@ namespace Kaleidoscope
                                    .AddGVNPass( )
                                    .AddCFGSimplificationPass( );
             }
+
             FunctionPassManager.Initialize( );
         }
         // </InitializeModuleAndPassManager>
 
         // <EmitLocation>
-        private void EmitLocation( IParseTree context )
+        private void EmitLocation( IAstNode node )
         {
-            if( !( context is ParserRuleContext ruleContext ) )
+            DIScope scope = Module.DICompileUnit;
+            if( LexicalBlocks.Count > 0 )
             {
-                InstructionBuilder.SetDebugLocation( 0, 0 );
+                scope = LexicalBlocks.Peek( );
             }
-            else
-            {
-                DIScope scope = Module.DICompileUnit;
-                if( LexicalBlocks.Count > 0 )
-                {
-                    scope = LexicalBlocks.Peek( );
-                }
 
-                InstructionBuilder.SetDebugLocation( ( uint )ruleContext.Start.Line, ( uint )ruleContext.Start.Column, scope );
-            }
+            InstructionBuilder.SetDebugLocation( ( uint )node.Location.StartLine, ( uint )node.Location.StartColumn, scope );
         }
         // </EmitLocation>
 
-        // <FindCallTarget>
-        private Function FindCallTarget( string name )
-        {
-            // lookup the prototype for the function to get the signature
-            // and create a declaration in this module
-            if( FunctionPrototypes.TryGetValue( name, out var signature ) )
-            {
-                return GetOrDeclareFunction( signature );
-            }
-
-            Function retVal = Module.GetFunction( name );
-            if( retVal != null )
-            {
-                return retVal;
-            }
-
-            return null;
-        }
-        // </FindCallTarget>
-
         // <GetOrDeclareFunction>
-        private Function GetOrDeclareFunction( Prototype prototype, bool isAnonymous = false )
+        // Retrieves a Function" for a prototype from the current module if it exists,
+        // otherwise declares the function and returns the newly declared function.
+        private Function GetOrDeclareFunction( Prototype prototype )
         {
-            var function = Module.GetFunction( prototype.Identifier.Name );
+            var function = Module.GetFunction( prototype.Name );
             if( function != null )
             {
                 return function;
@@ -560,41 +492,26 @@ namespace Kaleidoscope
             if( prototype.IsExtern )
             {
                 var llvmSignature = Context.GetFunctionType( Context.DoubleType, prototype.Parameters.Select( _ => Context.DoubleType ) );
-                retVal = Module.AddFunction( prototype.Identifier.Name, llvmSignature );
+                retVal = Module.AddFunction( prototype.Name, llvmSignature );
             }
             else
             {
                 var debugFile = Module.DIBuilder.CreateFile( Module.DICompileUnit.File.FileName, Module.DICompileUnit.File.Directory );
                 var signature = Context.CreateFunctionType( Module.DIBuilder, DoubleType, prototype.Parameters.Select( _ => DoubleType ) );
-                var lastParam = prototype.Parameters.LastOrDefault( );
-                if( lastParam == default )
-                {
-                    lastParam = prototype.Identifier;
-                }
+                var lastParamLocation = prototype.Parameters.LastOrDefault( )?.Location ?? prototype.Location;
 
                 retVal = Module.CreateFunction( Module.DICompileUnit
-                                              , prototype.Identifier.Name
+                                              , prototype.Name
                                               , null
                                               , debugFile
-                                              , ( uint )prototype.Identifier.Span.StartLine
+                                              , ( uint )prototype.Location.StartLine
                                               , signature
                                               , false
                                               , true
-                                              , ( uint )lastParam.Span.EndLine
-                                              , isAnonymous ? DebugInfoFlags.Artificial : DebugInfoFlags.Prototyped
+                                              , ( uint )lastParamLocation.EndLine
+                                              , prototype.IsCompilerGenerated ? DebugInfoFlags.Artificial : DebugInfoFlags.Prototyped
                                               , false
                                               );
-            }
-
-            // mark anonymous functions as always-inline and private so they can be inlined and then removed
-            if( isAnonymous )
-            {
-                retVal.AddAttribute( FunctionAttributeIndex.Function, AttributeKind.AlwaysInline )
-                      .Linkage( Linkage.Private );
-            }
-            else
-            {
-                retVal.Linkage( Linkage.External );
             }
 
             int index = 0;
@@ -604,98 +521,39 @@ namespace Kaleidoscope
                 ++index;
             }
 
-            if( !isAnonymous )
-            {
-                FunctionPrototypes.AddOrReplaceItem( prototype );
-            }
-
             return retVal;
         }
         // </GetOrDeclareFunction>
 
-        // <DefineFunction>
-        private Function DefineFunction( Function function, ExpressionContext body )
+        // <AddDebugInfoForAlloca>
+        private void AddDebugInfoForAlloca( Alloca argSlot, Function function, ParameterDeclaration param )
         {
-            if( !function.IsDeclaration )
-            {
-                throw new CodeGeneratorException( $"Function {function.Name} cannot be redefined in the same module" );
-            }
-
-            var basicBlock = function.AppendBasicBlock( "entry" );
-            InstructionBuilder.PositionAtEnd( basicBlock );
-
-            LexicalBlocks.Push( function.DISubProgram );
-
-            // Unset the location for the prologue emission (leading instructions with no
-            // location in a function are considered part of the prologue and the debugger
-            // will run past them when breaking on a function)
-            EmitLocation( null );
-
-            FunctionPrototypes.TryGetValue( function.Name, out Prototype proto );
-
-            using( NamedValues.EnterScope( ) )
-            {
-                foreach( var arg in function.Parameters )
-                {
-                    var paramNode = proto.Parameters[ ( int )( arg.Index ) ];
-                    var argSlot = CreateEntryBlockAlloca( function, paramNode, arg.Index );
-
-                    InstructionBuilder.Store( arg, argSlot );
-                    NamedValues[ arg.Name ] = argSlot;
-                }
-
-                var funcReturn = body.Accept( this );
-                if( funcReturn == null )
-                {
-                    function.EraseFromParent( );
-                    LexicalBlocks.Pop( );
-                    return null;
-                }
-
-                InstructionBuilder.Return( funcReturn );
-                LexicalBlocks.Pop( );
-                Module.DIBuilder.Finish( function.DISubProgram );
-                function.Verify( );
-            }
-
-            FunctionPassManager.Run( function );
-
-            return function;
-        }
-        // </DefineFunction>
-
-        // <CreateEntryBlockAlloca>
-        private Alloca CreateEntryBlockAlloca( Function function, Identifier paramIdentifier, uint argIndex )
-        {
-            var argSlot = CreateEntryBlockAlloca( function, paramIdentifier.Name );
-            uint line = ( uint )paramIdentifier.Span.StartLine;
-            uint col = ( uint )paramIdentifier.Span.StartColumn;
+            uint line = ( uint )param.Location.StartLine;
+            uint col = ( uint )param.Location.StartColumn;
 
             DILocalVariable debugVar = Module.DIBuilder.CreateArgument( function.DISubProgram
-                                                                      , paramIdentifier.Name
+                                                                      , param.Name
                                                                       , function.DISubProgram.File
                                                                       , line
                                                                       , DoubleType
                                                                       , true
                                                                       , DebugInfoFlags.None
-                                                                      , checked(( ushort )( argIndex + 1 )) // Debug index starts at 1!
+                                                                      , checked(( ushort )( param.Index + 1 )) // Debug index starts at 1!
                                                                       );
             Module.DIBuilder.InsertDeclare( argSlot
                                           , debugVar
                                           , new DILocation( Context, line, col, function.DISubProgram )
                                           , InstructionBuilder.InsertBlock
                                           );
-            return argSlot;
         }
 
-        private Alloca CreateEntryBlockAlloca( Function function, InitializerContext initializer )
+        private void AddDebugInfoForAlloca( Alloca argSlot, Function function, LocalVariableDeclaration localVar )
         {
-            var argSlot = CreateEntryBlockAlloca( function, initializer.Name );
-            uint line = ( uint )initializer.Start.Line;
-            uint col = ( uint )initializer.Start.Column;
+            uint line = ( uint )localVar.Location.StartLine;
+            uint col = ( uint )localVar.Location.StartColumn;
 
             DILocalVariable debugVar = Module.DIBuilder.CreateLocalVariable( function.DISubProgram
-                                                                           , initializer.Name
+                                                                           , localVar.Name
                                                                            , function.DISubProgram.File
                                                                            , line
                                                                            , DoubleType
@@ -707,35 +565,20 @@ namespace Kaleidoscope
                                           , new DILocation( Context, line, col, function.DISubProgram )
                                           , InstructionBuilder.InsertBlock
                                           );
-            return argSlot;
         }
-
-        private static Alloca CreateEntryBlockAlloca( Function theFunction, string varName )
-        {
-            var tmpBldr = new InstructionBuilder( theFunction.EntryBlock );
-            if( theFunction.EntryBlock.FirstInstruction != null )
-            {
-                tmpBldr.PositionBefore( theFunction.EntryBlock.FirstInstruction );
-            }
-
-            return tmpBldr.Alloca( theFunction.Context.DoubleType )
-                          .RegisterName( varName );
-        }
-        // </CreateEntryBlockAlloca>
+        // </AddDebugInfoForAlloca>
 
         // <PrivateMembers>
-        private readonly bool DisableOptimizations;
         private readonly DynamicRuntimeState RuntimeState;
-        private static int AnonNameIndex;
         private readonly Context Context;
         private readonly InstructionBuilder InstructionBuilder;
-        private readonly ScopeStack<Alloca> NamedValues;
+        private readonly ScopeStack<Alloca> NamedValues = new ScopeStack<Alloca>( );
         private FunctionPassManager FunctionPassManager;
+        private readonly bool DisableOptimizations;
         private TargetMachine TargetMachine;
-        private readonly PrototypeCollection FunctionPrototypes;
-        private readonly List<Function> AnonymousFunctions;
+        private readonly List<Function> AnonymousFunctions = new List<Function>( );
         private DebugBasicType DoubleType;
-        private Stack<DIScope> LexicalBlocks;
+        private Stack<DIScope> LexicalBlocks = new Stack<DIScope>( );
         // </PrivateMembers>
     }
 }

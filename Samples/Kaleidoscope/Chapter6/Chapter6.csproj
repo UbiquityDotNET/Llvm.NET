@@ -6,6 +6,9 @@
     <RootNamespace>Kaleidoscope</RootNamespace>
     <LangVersion>7.2</LangVersion>
   </PropertyGroup>
+  <ItemGroup>
+    <None Include="..\mandel.kls" Link="mandel.kls" />
+  </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="$(BuildRootDir)src\Llvm.NET\Llvm.NET.csproj">

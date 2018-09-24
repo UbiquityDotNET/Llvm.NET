@@ -23,6 +23,7 @@ namespace Llvm.NET.Tests
         //    Assert.Inconclusive( );
         //}
         */
+
         [TestMethod]
         public void AppendingModuleFlagsTest( )
         {
@@ -30,7 +31,7 @@ namespace Llvm.NET.Tests
             using( var ctx = new Context( ) )
             using( var module = ctx.CreateBitcodeModule( "test.bc", SourceLanguage.CSharp, "test.cs", "unittests" ) )
             {
-                module.AddModuleFlag( ModuleFlagBehavior.Append, "testMD", module.CreateMDNode( "testValue" ) );
+                module.AddModuleFlag( ModuleFlagBehavior.Append, "testMD", ctx.CreateMDNode( "testValue" ) );
                 Assert.AreEqual( 1, module.ModuleFlags.Count );
                 var flag = module.ModuleFlags[ "testMD" ];
                 Assert.IsNotNull( flag );
@@ -77,7 +78,8 @@ namespace Llvm.NET.Tests
                 var subRange = mdnode.Elements[ 0 ] as DISubRange;
                 Assert.IsNotNull( subRange );
 
-                /* Assert.AreEqual( 0, subRange.LowerBound );
+                /* TODO: Test non-operand properties when available
+                // Assert.AreEqual( 0, subRange.LowerBound );
                 // Assert.AreEqual( 3, subRange.Length );
                 */
 

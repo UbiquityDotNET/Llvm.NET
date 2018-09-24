@@ -11,16 +11,24 @@ namespace Kaleidoscope.Grammar
 {
     /// <summary>Class to hold dynamic runtime global state</summary>
     /// <remarks>
-    /// Generally speaking the parser is the wrong place to store any
+    /// <para>Generally speaking the parser is the wrong place to store any
     /// sort of global state. Furthermore, the actual <see cref="KaleidoscopeParser"/>
     /// is destroyed and re-created for each REPL input string to ensure
     /// there isn't any internal parsing state carry over between parses of partial
-    /// input text.
-    ///
+    /// input text. Thus, this class serves to maintain state for parsing and the
+    /// current state of the runtime as they are tightly linked in an interactive
+    /// language like Kaleidoscope.
+    /// </para>
+    /// <para>
     /// This provides storage and support methods for the runtime global state.
-    /// In particular, it maintains the language level to use and the current set
-    /// of operators, including any user defined operators so the parser knows how
-    /// to resolve complex expressions with user defined operators and precedence.
+    /// The state includes:
+    /// * The language level to use for parsing
+    /// * The current set of operators, including any user defined operators so the
+    ///   parser knows how to resolve complex expressions with user defined operators
+    ///   and precedence.
+    /// * The current set of external declarations
+    /// * The current set of defined functions
+    /// </para>
     /// </remarks>
     public class DynamicRuntimeState
     {
@@ -31,6 +39,18 @@ namespace Kaleidoscope.Grammar
 
         /// <summary>Gets or sets the Language level the application supports</summary>
         public LanguageLevel LanguageLevel { get; set; }
+
+        /// <summary>Gets a collection of function definitions parsed but not yet generated</summary>
+        /// <remarks>
+        /// This is a potentially dynamic set as parsing can add new entries. Also, when fully lazy
+        /// compilation is implemented the definitions are removed when they are generated to native
+        /// and a declaration takes it's place so that there is a sort of "Garbage Collection" to
+        /// remove definitions when no longer needed.
+        /// </remarks>
+        public FunctionDefinitionCollection FunctionDefinitions { get; } = new FunctionDefinitionCollection( );
+
+        /// <summary>Gets a collection of declared functions</summary>
+        public PrototypeCollection FunctionDeclarations { get; } = new PrototypeCollection( );
 
         /// <summary>Attempts to add a new user defined operator</summary>
         /// <param name="token">Symbol for the operator</param>
@@ -65,6 +85,9 @@ namespace Kaleidoscope.Grammar
             return TryAddOperator( token.Type, kind, precedence );
         }
 
+        /// <summary>Gets the binary operator information for a given token type</summary>
+        /// <param name="tokenType">Operator token type</param>
+        /// <returns>Operator info for the operator or default if not found</returns>
         public OperatorInfo GetBinOperatorInfo( int tokenType )
         {
             if( BinOpPrecedence.TryGetValue( tokenType, out var value ) )
@@ -75,6 +98,9 @@ namespace Kaleidoscope.Grammar
             return default;
         }
 
+        /// <summary>Gets the unary operator information for a given token type</summary>
+        /// <param name="tokenType">Operator token type</param>
+        /// <returns>Operator info for the operator or default if not found</returns>
         public OperatorInfo GetUnaryOperatorInfo( int tokenType )
         {
             if( UnaryOps.TryGetValue( tokenType, out var value ) )
@@ -83,6 +109,13 @@ namespace Kaleidoscope.Grammar
             }
 
             return default;
+        }
+
+        /// <summary>Generates a new unique name for an anonymous function</summary>
+        /// <returns>Name for an anonymous function</returns>
+        public string GenerateAnonymousName( )
+        {
+            return $"anon_expr_{AnonymousNameIndex++}";
         }
 
         internal bool IsPrefixOp( int tokenType )
@@ -136,6 +169,8 @@ namespace Kaleidoscope.Grammar
             new OperatorInfo( ASSIGN,    OperatorKind.InfixRightAssociative, 2, true),
         };
 
+        // this is used only to get the token type map, which is provided via a virtual
         private KaleidoscopeLexer Lexer = new KaleidoscopeLexer( null );
+        private int AnonymousNameIndex;
     }
 }

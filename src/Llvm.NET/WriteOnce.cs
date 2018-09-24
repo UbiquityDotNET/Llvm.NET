@@ -69,7 +69,7 @@ namespace Llvm.NET
         /// <summary>Gets the current value or the default value for <typeparamref name="T"/> if not yet set</summary>
         public T ValueOrDefault => ActualValue;
 
-        /// <summary>Convenieance implicit cast as a wrapper around the <see cref="Value"/> parameter</summary>
+        /// <summary>Convenience implicit cast as a wrapper around the <see cref="Value"/> parameter</summary>
         /// <param name="value"> <see cref="WriteOnce{T}"/> instance to extract a value from</param>
         public static implicit operator T( WriteOnce<T> value ) => value.Value;
 

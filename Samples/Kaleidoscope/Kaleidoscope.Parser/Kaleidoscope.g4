@@ -180,9 +180,9 @@ prototype
 
 repl
     : DEF prototype expression[0] # FunctionDefinition
-    | EXTERN prototype           # ExternalDeclaration
+    | EXTERN prototype            # ExternalDeclaration
     | expression[0]               # TopLevelExpression
-    | SEMICOLON                  # TopLevelSemicolon
+    | SEMICOLON                   # TopLevelSemicolon
     ;
 
 // Full source parse accepts a series of definitions or prototypes, all top level expressions

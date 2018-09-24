@@ -11,6 +11,7 @@
   <ItemGroup>
     <PackageReference Include="Antlr4" Version="4.6.5-beta001" />
     <PackageReference Include="OpenSoftware.DgmlBuilder" Version="1.12.0" Condition="'$(TargetFramework)'=='net47'" />
+    <PackageReference Include="System.Collections.Immutable" Version="1.5.0" />
   </ItemGroup>
 
 </Project>

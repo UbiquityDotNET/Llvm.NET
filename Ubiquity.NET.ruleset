@@ -682,7 +682,7 @@
     <Rule Id="SA1516" Action="Error" />
     <Rule Id="SA1517" Action="Error" />
     <Rule Id="SA1518" Action="Error" />
-    <Rule Id="SA1600" Action="Info" />
+    <Rule Id="SA1600" Action="Error" />
     <Rule Id="SA1601" Action="Warning" />
     <Rule Id="SA1602" Action="Info" />
     <Rule Id="SA1604" Action="Error" />

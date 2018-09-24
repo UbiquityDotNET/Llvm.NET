@@ -39,6 +39,11 @@ namespace Kaleidoscope.Grammar
                 && EndColumn == other.EndColumn;
         }
 
+        public override string ToString( )
+        {
+            return $"({StartLine},{StartColumn})-({EndLine},{EndColumn})";
+        }
+
         public override int GetHashCode( )
         {
             int hashCode = 2078777074;

@@ -4,6 +4,7 @@
 
 using System;
 using System.Diagnostics.CodeAnalysis;
+using System.Reflection;
 using Kaleidoscope.Grammar;
 using Kaleidoscope.Runtime;
 
@@ -15,19 +16,21 @@ namespace Kaleidoscope
 {
     public static class Program
     {
+        // Using language level that includes the complete set for exploration of pare trees and AST
+        private const LanguageLevel LanguageFeatureLevel = LanguageLevel.MutableVariables;
+
         /// <summary>C# version of the LLVM Kaleidoscope language tutorial</summary>
         /// <param name="args">Ignored...</param>
         [SuppressMessage( "Redundancies in Symbol Declarations", "RECS0154:Parameter is never used", Justification = "Standard required signature" )]
         public static void Main( string[ ] args )
         {
-            // Using language level that includes the complete set
-            // of language features to allow exploring and verifying
+            string helloMsg = $"Llvm.NET Kaleidoscope Explorer - {LanguageFeatureLevel}";
+            Console.Title = $"{Assembly.GetExecutingAssembly( ).GetName( )}: {helloMsg}";
+            Console.WriteLine( helloMsg );
             // <generatorloop>
-            var parser = new ParserStack( LanguageLevel.MutableVariables );
-            using( var generator = new CodeGenerator( ) )
+            var parser = new ParserStack( LanguageFeatureLevel );
+            var generator = new CodeGenerator( );
             {
-                Console.WriteLine( "LLVM Kaleidoscope Syntax Viewer - {0}", parser.LanguageLevel );
-
                 // generate hopefully helpful representations of parse trees
                 var replLoop = new ReplLoop<int>( generator
                                                 , parser
@@ -44,10 +47,7 @@ namespace Kaleidoscope
         // <ProcessResults>
         private static void OnGeneratedResultAvailable( object sender, GeneratedResultAvailableArgs<int> e )
         {
-            if( e.Recognizer.NumberOfSyntaxErrors == 0 )
-            {
-                Console.WriteLine( "Parsed {0}", e.ParseTree.GetType( ).Name );
-            }
+            Console.WriteLine( "Parsed {0}", e.Result.GetType( ).Name );
         }
         // </ProcessResults>
     }

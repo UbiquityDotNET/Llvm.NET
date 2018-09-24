@@ -33,13 +33,13 @@ extern putchard(char);
 
 def printdensity(d)
   if d > 8 then
-    putchard(32)
+    putchard(32)     # 32 => ASCII Space
   else if d > 4 then
-    putchard(46)
+    putchard(46)     # 46 => ASCII '.'
   else if d > 2 then
-    putchard(43)
+    putchard(43)     # 43 => ASCII '+'
   else
-    putchard(42);
+    putchard(42);    # 43 => ASCII '*'
 
 def mandelconverger(real imag iters creal cimag)
   if iters > 255 | (real*real + imag*imag > 4) then

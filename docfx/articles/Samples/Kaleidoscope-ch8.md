@@ -77,11 +77,11 @@ generated anonymous functions removed.
 
 Most of the rest of the changes are pretty straightforward following the steps listed previously.
 
-### VisitTopLevelExpression
+### Anonymous Function Definitions
 As previously mentioned, when generating the top level expression the resulting function is added to the
 list of anonymous functions to generate a call to it from main().
 
-[!code-csharp[VisitTopLevelExpression](../../../Samples/Kaleidoscope/Chapter8/CodeGenerator.cs#VisitTopLevelExpression)]
+[!code-csharp[FunctionDefinition](../../../Samples/Kaleidoscope/Chapter8/CodeGenerator.cs#FunctionDefinition)]
 
 
 ## Driver changes

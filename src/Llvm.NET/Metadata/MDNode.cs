@@ -124,14 +124,17 @@ namespace Llvm.NET
         public static DeleteTemporary(MDNode node) {...}
         */
 
+        /// <inheritdoc/>
         long IOperandContainer<LlvmMetadata>.Count => LLVMMDNodeGetNumOperands( MetadataHandle );
 
+        /// <inheritdoc/>
         LlvmMetadata IOperandContainer<LlvmMetadata>.this[ int index ]
         {
             get => FromHandle<LlvmMetadata>( Context, LLVMGetOperandNode( LLVMMDNodeGetOperand( MetadataHandle, ( uint )index ) ) );
             set => LLVMMDNodeReplaceOperand( MetadataHandle, ( uint )index, value.MetadataHandle );
         }
 
+        /// <inheritdoc/>
         void IOperandContainer<LlvmMetadata>.Add( LlvmMetadata item ) => throw new NotSupportedException( );
 
         internal MDNode( LLVMMetadataRef handle )

@@ -1,17 +1,17 @@
 # 6. Kaleidoscope: User Defined Operators
-At this point in the progression of the tutorial Kaleidoscope is a fully functional, albeit fairly minimal
+At this point in the progression of the tutorial, Kaleidoscope is a fully functional, albeit fairly minimal,
 language. Thus far, the tutorial has avoided details of the parsing. One of the benefits of using a tool
 like ANTLR4 is that you can accomplish a lot without needing to spend a lot of time thinking about the
 parser too much. With user defined operators we'll break that and get down and dirty with the parser a bit
-to make the operators work.
+to make the operators work. 
 
 > [!TIP]
 > The actual value of user defined operator precedence in a language is a bit debatable, and the
-> initial plan for the Llvm.NET tutorials was to skip this chapter as it doesn't really involve a lot of
-> new LLVM IR or code generation. After the code was done to get the other chapters working - this one was
-> still nagging, begging really, for a solution. The challenge to come up with a good solution was
-> ultimately too tempting to resist, and we now have a full implementation with a few useful extensions
-> on top! (Exponent operator '^', '=' vs '==', '++', and '--')
+> initial plan for the Llvm.NET tutorials was to skip this chapter as it doesn't involve any new
+> LLVM IR or code generation. After the code was done to get the other chapters working - this one
+> was still nagging, begging really, for a solution. The challenge to come up with a good solution
+> was ultimately too tempting to resist, and we now have a full implementation with a few useful
+> extensions on top! (Exponent operator '^', '=' vs '==', '++', and '--')
 
 ## General idea of user defined operators
 User defined operators in Kaleidoscope are a bit unique. Unlike C++ and other similar languages the
@@ -158,16 +158,29 @@ the runtime table accordingly.
 
 [!code-csharp[UserOperatorListener](../../../Samples/Kaleidoscope/Kaleidoscope.Runtime/KaleidoscopeUserOperatorListener.cs)]
 
-With the use of the listener the dynamic precedence is contained in the parser which allows the generator
-and later stages to remain blissfully ignorant of the issue of precedence. In the generator, operator
-definitions are simply treated as function definitions with special naming.
+With the use of the listener the dynamic precedence is contained entirely in the parser. When the parse tree is
+processed to produce the AST the user defined operators are transformed to simple function declarations and
+function calls. This simplification allows the generator and later stages to remain blissfully ignorant of the
+issue of precedence and even the existence of user defined operators.
 
-[!code-csharp[VisitUserOperators](../../../Samples/Kaleidoscope/Chapter6/CodeGenerator.cs#VisitUserOperators)]
+#### AST
+When building the AST Prototypes for user defined operators are transformed to a FunctionDeclaration
+[!code-csharp[UserOperatorPrototypes](../../../Samples/Kaleidoscope/Kaleidoscope.Parser/AST/AstBuilder.cs#UserOperatorPrototypes)]
 
-Finally, the default case for EmitBinaryOperator() is updated to actually emit a call to the binary
-operator function generated.
+During construction of the AST all occurances of a user defined operator expression are transformed into a function call for the
+function that actually implements the behavior for the operator.
 
-[!code-csharp[EmitUserOperator](../../../Samples/Kaleidoscope/Chapter6/CodeGenerator.cs#EmitUserOperator)]
+[!code-csharp[UserBinaryOpExpression](../../../Samples/Kaleidoscope/Kaleidoscope.Parser/AST/AstBuilder.cs#UserBinaryOpExpression)]
+[!code-csharp[UnaryOpExpression](../../../Samples/Kaleidoscope/Kaleidoscope.Parser/AST/AstBuilder.cs#UnaryOpExpression)]
+
+### CodeGen and Driver
+If you compare the code generation and driver code between Chapter 5 and Chapter 6 you'll see the only difference is the
+language level setting, it got a bump (Literally a single enum on one line of each component). Everything else is identical.
+This is because the real work is on the parser and AST not the code generation. This is where having a good parser + AST model
+can help keep the code generation simpler. If the parse tree alone was used, then the code generation would need additional code
+similar to what is found in the AST generation. Putting it into the AST generation keeps things much cleaner as, obviously, the
+support for user defined operators and precedence has nothing to do with code generation. Keeping the code generation simpler is
+generally a really good thing!
 
 That completes the support for user defined operators.
 
@@ -296,9 +309,24 @@ Ready>
 
 ## Conclusion
 Adding user defined operators with user defined precedence is fairly straight forward to implement in
-terms of the code generation. However, the real work is on the parser not the code generation. ANTLR4 has
-support for left-recursion in the grammar and precedence of expressions and even though it only directly
-supports fixed precedence it is rather easy to extend the underlying support to handle dynamic precedence
-and associativity, once the underlying mechanics ANTLR uses for handling left recursion is understood.
+terms of the code generation. No new code generation is required. ANTLR4 has support for left-recursion
+in the grammar and precedence of expressions. Even though ANTLR only directly supports fixed precedence it is
+rather easy to extend the underlying support to handle dynamic precedence and associativity, once the underlying
+mechanics are understood. The rest is on the Ast construction as it converts the user defined operators to
+function definitions and function calls. 
+
+If you compare the code generation and driver code between Chapter 5 and Chapter 6 you'll see the only difference is the
+language level setting, it got a bump (Literally a single enum on one line of each component). Everything else is identical.
+This is because the real work is on the parser and AST not the code generation. This is where having a good parser + AST model
+can help keep the code generation simpler. If the parse tree alone was used, then the code generation would need additional code
+similar to what is found in the AST generation. Putting it into the AST generation keeps things much cleaner as, obviously, the
+support for user defined operators and precedence has nothing to do with code generation. Keeping the code generation simpler is
+generally a really good thing! 
+
+>[!TIP]
+>An early version of these samples skipped the use of an AST and used the parse tree directly. You can compare the history of
+> the generators for that transition to see how the AST helps simplify the code generation. (Not to mention sets the stage for
+> an otherwise un-implemented feature - truly lazy compilation.)
+
 
 

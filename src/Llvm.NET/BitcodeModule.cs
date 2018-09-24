@@ -19,6 +19,8 @@ using Ubiquity.ArgValidators;
 
 using static Llvm.NET.Native.NativeMethods;
 
+using CallingConvention = System.Runtime.InteropServices.CallingConvention;
+
 namespace Llvm.NET
 {
     /// <summary>Enumeration to indicate the behavior of module level flags metadata sharing the same name in a <see cref="BitcodeModule"/></summary>
@@ -665,19 +667,8 @@ namespace Llvm.NET
             ThrowIfDisposed( );
             version.ValidateNotNullOrWhiteSpace( nameof( version ) );
 
-            var stringNode = CreateMDNode( version );
+            var stringNode = Context.CreateMDNode( version );
             LLVMAddNamedMetadataOperand2( ModuleHandle, "llvm.ident", stringNode.MetadataHandle );
-        }
-
-        /// <summary>Create an <see cref="MDNode"/> from a string</summary>
-        /// <param name="value">String value</param>
-        /// <returns>New node with the string as the first element of the <see cref="MDNode.Operands"/> property (as an MDString)</returns>
-        public MDNode CreateMDNode( string value )
-        {
-            ThrowIfDisposed( );
-            var elements = new LLVMMetadataRef[ ] { LLVMMDString2( Context.ContextHandle, value, ( uint )( value?.Length ?? 0 ) ) };
-            var hNode = LLVMMDNode2( Context.ContextHandle, out elements[ 0 ], ( uint )elements.Length );
-            return MDNode.FromHandle<MDNode>( hNode );
         }
 
         /// <summary>Creates a Function definition with Debug information</summary>
@@ -803,7 +794,7 @@ namespace Llvm.NET
 
         /// <summary>Gets a declaration for an LLVM intrinsic function</summary>
         /// <param name="id">id of the intrinsic</param>
-        /// <param name="args">Args for the intrinsic</param>
+        /// <param name="args">Arguments for the intrinsic</param>
         /// <returns>Function declaration</returns>
         public Function GetIntrinsicDeclaration( UInt32 id, params ITypeRef[] args)
         {
@@ -1018,26 +1009,52 @@ namespace Llvm.NET
             return ContextCache.GetContextFor( LLVMGetModuleContext( handle ) );
         }
 
-        [DllImport( LibraryPath, CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl )]
+        [DllImport( LibraryPath, CallingConvention = CallingConvention.Cdecl )]
         private static extern LLVMSharedModuleRef LLVMOrcMakeSharedModule( LLVMModuleRef Mod );
 
-        [DllImport( LibraryPath, CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl )]
+        [DllImport( LibraryPath, CallingConvention = CallingConvention.Cdecl )]
         private static extern LLVMValueRef LLVMModuleGetFirstGlobalAlias( LLVMModuleRef M );
 
-        [DllImport( LibraryPath, CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl )]
+        [DllImport( LibraryPath, CallingConvention = CallingConvention.Cdecl )]
         private static extern LLVMValueRef LLVMModuleGetNextGlobalAlias( LLVMValueRef /*GlobalAlias*/ valueRef );
 
-        [DllImport( LibraryPath, CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl )]
+        [DllImport( LibraryPath, CallingConvention = CallingConvention.Cdecl )]
         private static extern LLVMNamedMDNodeRef LLVMModuleGetFirstNamedMD( LLVMModuleRef M );
 
-        [DllImport( LibraryPath, CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl )]
+        [DllImport( LibraryPath, CallingConvention = CallingConvention.Cdecl )]
         private static extern LLVMNamedMDNodeRef LLVMModuleGetNextNamedMD( LLVMNamedMDNodeRef nodeRef );
 
-        [DllImport( LibraryPath, CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl )]
+        [DllImport( LibraryPath, CallingConvention = CallingConvention.Cdecl )]
         private static extern LLVMValueRef /*Function*/ LLVMIntrinsicGetDeclaration( LLVMModuleRef m, UInt32 id, out LLVMTypeRef paramTypes, uint paramCount );
 
-        [DllImport( LibraryPath, CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl )]
+        [DllImport( LibraryPath, CallingConvention = CallingConvention.Cdecl )]
         [return:MarshalAs(UnmanagedType.Bool)]
         private static extern bool LLVMIsIntrinsicOverloaded( UInt32 id );
+
+        [DllImport( LibraryPath, CallingConvention = CallingConvention.Cdecl, BestFitMapping = false, ThrowOnUnmappableChar = true )]
+        [return: MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( StringMarshaler ) )]
+        private static extern string LLVMGetModuleSourceFileName( LLVMModuleRef module );
+
+        [DllImport( LibraryPath, CallingConvention = CallingConvention.Cdecl, BestFitMapping = false, ThrowOnUnmappableChar = true )]
+        private static extern void LLVMSetModuleSourceFileName( LLVMModuleRef module, [MarshalAs( UnmanagedType.LPStr )] string name );
+
+        [DllImport( LibraryPath, CallingConvention = CallingConvention.Cdecl, BestFitMapping = false, ThrowOnUnmappableChar = true )]
+        [return: MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( StringMarshaler ) )]
+        private static extern string LLVMGetModuleName( LLVMModuleRef module );
+
+        [DllImport( LibraryPath, CallingConvention = CallingConvention.Cdecl, BestFitMapping = false, ThrowOnUnmappableChar = true )]
+        private static extern void LLVMAddModuleFlag( LLVMModuleRef @M, LLVMModFlagBehavior behavior, [MarshalAs( UnmanagedType.LPStr )] string @name, UInt32 @value );
+
+        [DllImport( LibraryPath, EntryPoint = "LLVMAddModuleFlagMetadata", CallingConvention = CallingConvention.Cdecl, BestFitMapping = false, ThrowOnUnmappableChar = true )]
+        private static extern void LLVMAddModuleFlag( LLVMModuleRef @M, LLVMModFlagBehavior behavior, [MarshalAs( UnmanagedType.LPStr )] string @name, LLVMMetadataRef @value );
+
+        [DllImport( LibraryPath, CallingConvention = CallingConvention.Cdecl )]
+        private static extern LLVMNamedMDNodeRef LLVMModuleGetModuleFlagsMetadata( LLVMModuleRef module );
+
+        [DllImport( LibraryPath, CallingConvention = CallingConvention.Cdecl, BestFitMapping = false, ThrowOnUnmappableChar = true )]
+        private static extern LLVMValueRef LLVMGetOrInsertFunction( LLVMModuleRef module, [MarshalAs( UnmanagedType.LPStr )] string @name, LLVMTypeRef functionType );
+
+        [DllImport( LibraryPath, CallingConvention = CallingConvention.Cdecl, BestFitMapping = false, ThrowOnUnmappableChar = true )]
+        private static extern LLVMValueRef LLVMGetGlobalAlias( LLVMModuleRef module, [MarshalAs( UnmanagedType.LPStr )] string name );
     }
 }

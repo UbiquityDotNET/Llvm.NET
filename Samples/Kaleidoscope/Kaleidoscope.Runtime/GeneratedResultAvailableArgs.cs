@@ -3,25 +3,17 @@
 // </copyright>
 
 using System;
-using Antlr4.Runtime;
-using Antlr4.Runtime.Tree;
 
 namespace Kaleidoscope.Runtime
 {
     public class GeneratedResultAvailableArgs<TResult>
         : EventArgs
     {
-        public GeneratedResultAvailableArgs( TResult result, Parser recognizer, IParseTree parseTree )
+        public GeneratedResultAvailableArgs( TResult result )
         {
             Result = result;
-            ParseTree = parseTree;
-            Recognizer = recognizer;
         }
 
         public TResult Result { get; }
-
-        public IParseTree ParseTree { get; }
-
-        public Parser Recognizer { get; }
     }
 }

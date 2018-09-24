@@ -4,7 +4,7 @@
 
 using System;
 using System.Diagnostics.CodeAnalysis;
-using System.IO;
+using System.Reflection;
 using Kaleidoscope.Grammar;
 using Kaleidoscope.Runtime;
 using Llvm.NET.Values;
@@ -20,6 +20,8 @@ namespace Kaleidoscope
 {
     public static class Program
     {
+        private const LanguageLevel LanguageFeatureLevel = LanguageLevel.SimpleExpressions;
+
         /// <summary>C# version of the LLVM Kaleidoscope language tutorial</summary>
         /// <param name="args">Command line arguments to the application</param>
         /// <remarks>
@@ -32,6 +34,9 @@ namespace Kaleidoscope
         /// </remarks>
         public static void Main( string[ ] args )
         {
+            string helloMsg = $"Llvm.NET Kaleidoscope Interpreter - {LanguageFeatureLevel}";
+            Console.Title = $"{Assembly.GetExecutingAssembly( ).GetName( )}: {helloMsg}";
+            Console.WriteLine( helloMsg );
             WaitForDebugger( args.Length > 0 && string.Compare( args[0], "waitfordebugger", StringComparison.InvariantCultureIgnoreCase ) == 0 );
 
             using( InitializeLLVM( ) )
@@ -39,18 +44,16 @@ namespace Kaleidoscope
                 RegisterNative( );
 
                 // <generatorloop>
-                var parser = new ParserStack( LanguageLevel.SimpleExpressions );
+                var parser = new ParserStack( LanguageFeatureLevel );
                 using( var generator = new CodeGenerator( parser.GlobalState ) )
                 {
-                    Console.WriteLine( "Llvm.NET Kaleidoscope Interpreter - {0}", parser.LanguageLevel );
-
                     var replLoop = new ReplLoop<Value>( generator, parser );
                     replLoop.ReadyStateChanged += ( s, e ) => Console.Write( e.PartialParse ? ">" : "Ready>" );
                     replLoop.GeneratedResultAvailable += OnGeneratedResultAvailable;
                     replLoop.CodeGenerationError += OnGeneratorError;
 
                     replLoop.Run( );
-                    Console.WriteLine( generator.GeneratedModule.WriteToString( ) );
+                    Console.WriteLine( generator.Module.WriteToString( ) );
                 }
                 // </generatorloop>
             }
@@ -80,15 +83,17 @@ namespace Kaleidoscope
             switch( e.Result )
             {
             case ConstantFP result:
+                if( Console.CursorLeft > 0 )
+                {
+                    Console.WriteLine( );
+                }
                 Console.WriteLine( "Evaluated to {0}", result.Value );
                 break;
 
             case Function function:
-                if( source.AdditionalDiagnostics.HasFlag( DiagnosticRepresentations.LlvmIR ) )
-                {
-                    function.ParentModule.WriteToTextFile( Path.ChangeExtension( GetSafeFileName( function.Name ), "ll" ), out string ignoredMsg );
-                }
-
+#if GENERATE_LLVM_IR
+                function.ParentModule.WriteToTextFile( Path.ChangeExtension( GetSafeFileName( function.Name ), "ll" ), out string ignoredMsg );
+#endif
                 Console.WriteLine( "Defined function: {0}", function.Name );
                 Console.WriteLine( function );
                 break;

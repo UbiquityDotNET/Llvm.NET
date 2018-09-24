@@ -11,3 +11,6 @@
 using System.Diagnostics.CodeAnalysis;
 
 [assembly: SuppressMessage( "StyleCop.CSharp.DocumentationRules", "SA1652:Enable XML documentation output", Justification = "Sample application" )]
+[assembly: SuppressMessage( "Microsoft.Naming", "CA1715", Justification = "Generated code", MessageId = "Result", Scope = "type", Target = "Kaleidoscope.Grammar.KaleidoscopeBaseVisitor`1" )]
+[assembly: SuppressMessage( "Microsoft.Naming", "CA1715", Justification = "Generated code", MessageId = "Result", Scope = "type", Target = "Kaleidoscope.Grammar.IKaleidoscopeVisitor`1" )]
+[assembly: SuppressMessage( "Microsoft.Naming", "CA1708", Justification = "Generated code" )]

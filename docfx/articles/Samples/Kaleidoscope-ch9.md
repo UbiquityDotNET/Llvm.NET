@@ -99,7 +99,7 @@ manually adding the location on every instruction.
 
 [!code-csharp[EmitLocation](../../../Samples/Kaleidoscope/Chapter9/CodeGenerator.cs#EmitLocation)]
 
-## DefineFunction
+## Function Definition
 The next step is to update the function definition with attached debug information. The definition starts
 by pushing a new lexical scope that is the functions declaration. This serves as the parent scope for all
 the debug information generated for the function's implementation. The debug location info is cleared from
@@ -108,14 +108,14 @@ information for each parameter is constructed. After the function is fully gener
 for the function is finalized, this is needed to allow for any optimizations to occur at the function
 level.
 
-[!code-csharp[DefineFunction](../../../Samples/Kaleidoscope/Chapter9/CodeGenerator.cs#DefineFunction)]
+[!code-csharp[DefineFunction](../../../Samples/Kaleidoscope/Chapter9/CodeGenerator.cs#FunctionDefinition)]
 
 ## Debug info for Parameters and Local Variables
 Debug information for parameters and local variables is similar but not quite identical. Thus, two new
-overloads of the CreateEntryBlockAlloca() handle attaching the correct debug information for parameters
-and local variables.
+overloaded helper methods `AddDebugInfoForAlloca` handle attaching the correct debug information for
+parameters and local variables.
 
-[!code-csharp[CreateEntryBlockAlloca](../../../Samples/Kaleidoscope/Chapter9/CodeGenerator.cs#CreateEntryBlockAlloca)]
+[!code-csharp[CreateEntryBlockAlloca](../../../Samples/Kaleidoscope/Chapter9/CodeGenerator.cs#AddDebugInfoForAlloca)]
 
 ## Conclusion
 Adding debugging information in LLVM IR is rather straight forward. The bulk of the problem is in tracking

@@ -98,7 +98,7 @@ for generation.
 
 The actual code follows the description pretty closely and should now be fairly easy to follow:
 
-[!code-csharp[Main](../../../Samples/Kaleidoscope/Chapter5/CodeGenerator.cs#VisitConditionalExpression)]
+[!code-csharp[Main](../../../Samples/Kaleidoscope/Chapter5/CodeGenerator.cs#ConditionalExpression)]
 
 ## For Loop
 Now that the basics of control flow are available it is possible to leverage the same concepts to
@@ -174,7 +174,7 @@ and direct phi-nodes remains the same.
 
 The code to generate a for loop follows this pattern pretty closely.
 
-[!code-csharp[Main](../../../Samples/Kaleidoscope/Chapter5/CodeGenerator.cs#VisitForExpression)]
+[!code-csharp[Main](../../../Samples/Kaleidoscope/Chapter5/CodeGenerator.cs#ForInExpression)]
 
 The only new functionality in that is the use of the ScopeStack class to support nested scopes and the named
 variables within them. ScopeStack is provided in the Kaleidoscope.Runtime library. It is basically a stack

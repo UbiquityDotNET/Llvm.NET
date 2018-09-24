@@ -4,17 +4,17 @@
 
 using System.Collections.ObjectModel;
 
-namespace Kaleidoscope
+namespace Kaleidoscope.Grammar
 {
     public class PrototypeCollection
-        : KeyedCollection<string, Prototype>
+        : KeyedCollection<string, AST.Prototype>
     {
-        public void AddOrReplaceItem( Prototype info )
+        public void AddOrReplaceItem( AST.Prototype info )
         {
-            Remove( info.Identifier.Name );
+            Remove( info.Name );
             Add( info );
         }
 
-        protected override string GetKeyForItem( Prototype item ) => item.Identifier.Name;
+        protected override string GetKeyForItem( AST.Prototype item ) => item.Name;
     }
 }

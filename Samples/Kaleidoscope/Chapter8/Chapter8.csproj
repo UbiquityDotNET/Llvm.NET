@@ -6,11 +6,13 @@
     <RootNamespace>Kaleidoscope</RootNamespace>
     <LangVersion>7.2</LangVersion>
   </PropertyGroup>
+
   <ItemGroup>
-    <Content Include="..\mandel.kls" Link="mandel.kls">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
+    <None Include="..\mandel.kls" Link="mandel.kls">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
+
   <ItemGroup>
     <ProjectReference Include="$(BuildRootDir)src\Llvm.NET\Llvm.NET.csproj">
         <Name>Llvm.NET</Name>

@@ -9,12 +9,13 @@
 ### [Chapter 5 - Control Flow](Samples/Kaleidoscope-ch5.md)
 ### [Chapter 6 - User Defined Operators](Samples/Kaleidoscope-ch6.md)
 ### [Chapter 7 - Mutable Variables](Samples/Kaleidoscope-ch7.md)
+### [Chapter 7.1 - Extreme Lazy JIT](Samples/Kaleidoscope-ch7.1.md)
 ### [Chapter 8 - AOT Compilation](Samples/Kaleidoscope-ch8.md)
 ### [Chapter 9 - Debug Information](Samples/Kaleidoscope-ch9.md)
 ### [ParseTree Visitor](Samples/Kaleidoscope-ParseTreeVisitor.md)
 ### [ParseTree Examples](Samples/Kaleidoscope-ParseTree-examples.md)
 
-# [Internal Internal Details](InternalDetails/index.md)
+# [Internal Details](InternalDetails/index.md)
 ## LLVM-C API Handles
 ### [Wrapping LLVM-C Handles](InternalDetails/llvm-handles.md)
 ### [Interning LLVM-C Handles](InternalDetails/handleref-interning.md)

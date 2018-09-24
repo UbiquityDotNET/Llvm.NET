@@ -9,14 +9,14 @@ Kaleidoscope is a simple functional language that is used to illustrate numerous
 use cases for Llvm.NET for code generation and JIT execution.
 
 It is worth pointing out that this example is not intended as a treatise on compiler design nor
-on language parsing. While it contains many aspects of those topics the tutorial is focused on the
-use of Llvm.NET for code generation. Furthermore it isn't a trans-literation of the LLVM C++
+on language parsing. While it contains many aspects of those topics the tutorial is, mostly, focused
+on the use of Llvm.NET for code generation. Furthermore it isn't a trans-literation of the LLVM C++
 sample as that would defeat one of the major points of Llvm.NET - to provide a familiar API and
 use pattern to C# developers.
 
 ## General layout
 The samples are built using common core libraries and patterns. They are explicitly designed to
-make code comparisons between chapters vis your favorite code comparison tool. Each, chapter builds
+make code comparisons between chapters via your favorite code comparison tool. Each, chapter builds
 on the next so running a comparison makes it easy to see the changes in full context. The text of
 the tutorials explains why the changes are made and a comparison helps provide the "big picture"
 view.
@@ -24,10 +24,10 @@ view.
 ## Variations from the Official LLVM Tutorial
 The Llvm.NET version of the Kaleidoscope series takes a different route for parsing from the
 LLVM implementation. In particular the Llvm.NET version defines a formal grammar using
-[ANTLR](http://antlr.org) with the full grammar for all variations of the language features in
-a single assembly. This helps in isolating the parsing from the use of Llvm.NET and minimizes
-the need for any sort of custom AST. (For Kaleidoscope, the antlr parse tree is generally
-sufficient to generate code)
+[ANTLR4](http://antlr.org) with the full grammar for all variations of the language features in
+a single assembly. Ultimately the parsing produces an AST so that the actual technology used for
+the parse is hidden as an implementation detail. This helps in isolating the parsing from the use
+of Llvm.NET for code generation and JIT compilation for interactive languages.
 
 ## The Kaleidoscope Language
 ### General Concepts
@@ -39,8 +39,9 @@ Kaleidoscope is a simple functional language with the following major features:
 * For loop style control flow
 * User defined operators
   - User defined operators can specify operator precedence
-    - This is arguably the most complex part of implementing the language. Though, ANTLR4's
-      flexibility made it fairly easy to do once fully understood. (more details in [Chapter 6](Kaleidoscope-ch6.md))
+    - User defined precedence is arguably the most complex part of parsing and implementing the language.
+      Though, ANTLR4's flexibility made it fairly easy to do once fully understood. (more details in
+      [Chapter 6](Kaleidoscope-ch6.md))
 
 ### Example
 The following example is a complete program in Kaleidoscope that will generate a textual representation

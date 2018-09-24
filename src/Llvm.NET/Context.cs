@@ -18,6 +18,8 @@ using Ubiquity.ArgValidators;
 
 using static Llvm.NET.Native.NativeMethods;
 
+using CallingConvention = System.Runtime.InteropServices.CallingConvention;
+
 namespace Llvm.NET
 {
     /// <summary>Encapsulates an LLVM context</summary>
@@ -481,9 +483,18 @@ namespace Llvm.NET
         /// <returns>new metadata string</returns>
         public MDString CreateMetadataString( [CanBeNull] string value )
         {
-            value = value ?? string.Empty;
-            var handle = LLVMMDString2( ContextHandle, value, ( uint )value.Length );
+            var handle = LLVMMDString2( ContextHandle, value, ( uint )( value?.Length ?? 0 ) );
             return new MDString( handle );
+        }
+
+        /// <summary>Create an <see cref="MDNode"/> from a string</summary>
+        /// <param name="value">String value</param>
+        /// <returns>New node with the string as the first element of the <see cref="MDNode.Operands"/> property (as an MDString)</returns>
+        public MDNode CreateMDNode( string value )
+        {
+            var elements = new LLVMMetadataRef[ ] { CreateMetadataString( value ).MetadataHandle };
+            var hNode = LLVMMDNode2( ContextHandle, out elements[ 0 ], ( uint )elements.Length );
+            return MDNode.FromHandle<MDNode>( hNode );
         }
 
         /// <summary>Create a constant data string value</summary>
@@ -826,11 +837,13 @@ namespace Llvm.NET
             return ValueCache.GetOrCreateItem( valueRef );
         }
 
+#pragma warning disable CS0618 // Type or member is obsolete
         internal LegacyExecutionEngine GetEngineFor( LLVMExecutionEngineRef h )
         {
             h.ValidateNotDefault( nameof( h ) );
             return EngineCache.GetOrCreateItem( h );
         }
+#pragma warning restore CS0618 // Type or member is obsolete
 
         internal LlvmMetadata GetNodeFor( LLVMMetadataRef handle )
         {
@@ -851,7 +864,9 @@ namespace Llvm.NET
             ActiveHandler = new WrappedNativeCallback( new LLVMDiagnosticHandler( DiagnosticHandler ) );
             LLVMContextSetDiagnosticHandler( ContextHandle, ActiveHandler.NativeFuncPtr, IntPtr.Zero );
             ValueCache = new ValueCache( this );
+#pragma warning disable CS0618 // Type or member is obsolete
             EngineCache = new LegacyExecutionEngine.InterningFactory( this );
+#pragma warning restore CS0618 // Type or member is obsolete
             ModuleCache = new BitcodeModule.InterningFactory( this );
             TypeCache = new TypeRef.InterningFactory( this );
             AttributeValueCache = new AttributeValue.InterningFactory( this );
@@ -893,27 +908,42 @@ namespace Llvm.NET
 
         // child item wrapper factories
         private readonly ValueCache ValueCache;
+#pragma warning disable CS0618 // Type or member is obsolete
         private readonly LegacyExecutionEngine.InterningFactory EngineCache;
+#pragma warning restore CS0618 // Type or member is obsolete
         private readonly BitcodeModule.InterningFactory ModuleCache;
         private readonly TypeRef.InterningFactory TypeCache;
         private readonly AttributeValue.InterningFactory AttributeValueCache;
         private readonly LlvmMetadata.InterningFactory MetadataCache;
 
-        [DllImport( LibraryPath, CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl, CharSet = CharSet.Ansi, ThrowOnUnmappableChar = true, BestFitMapping = false )]
+        [DllImport( LibraryPath, CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi, ThrowOnUnmappableChar = true, BestFitMapping = false )]
         private static extern LLVMBasicBlockRef LLVMContextCreateBasicBlock( LLVMContextRef context
                                                                            , [MarshalAs( UnmanagedType.LPStr )] string name
                                                                            , LLVMValueRef /*Function*/ function
                                                                            , LLVMBasicBlockRef insertBefore
                                                                            );
 
-        [DllImport( LibraryPath, CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl, CharSet = CharSet.Ansi, ThrowOnUnmappableChar = true, BestFitMapping = false )]
+        [DllImport( LibraryPath, CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi, ThrowOnUnmappableChar = true, BestFitMapping = false )]
         private static extern uint LLVMGetMDKindIDInContext( LLVMContextRef @C, [MarshalAs( UnmanagedType.LPStr )] string @Name, uint @SLen );
 
-        [DllImport( LibraryPath, CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl )]
+        [DllImport( LibraryPath, CallingConvention = CallingConvention.Cdecl )]
         [return: MarshalAs( UnmanagedType.Bool )]
         private static extern bool LLVMContextGetIsODRUniquingDebugTypes( LLVMContextRef context );
 
-        [DllImport( LibraryPath, CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl )]
+        [DllImport( LibraryPath, CallingConvention = CallingConvention.Cdecl )]
         private static extern void LLVMContextSetIsODRUniquingDebugTypes( LLVMContextRef context, [MarshalAs( UnmanagedType.Bool )] bool state );
+
+        [DllImport( LibraryPath, CallingConvention = CallingConvention.Cdecl, BestFitMapping = false, ThrowOnUnmappableChar = true )]
+        private static extern LLVMMetadataRef LLVMMDString2( LLVMContextRef @C, [MarshalAs( UnmanagedType.LPStr )] string @Str, UInt32 @SLen );
+
+        [DllImport( LibraryPath, CallingConvention = CallingConvention.Cdecl )]
+        private static extern LLVMMetadataRef LLVMMDNode2( LLVMContextRef @C, out LLVMMetadataRef @MDs, UInt32 @Count );
+
+        [DllImport( LibraryPath, CallingConvention = CallingConvention.Cdecl )]
+        private static extern LLVMMetadataRef LLVMTemporaryMDNode( LLVMContextRef @C, out LLVMMetadataRef @MDs, UInt32 @Count );
+
+        [DllImport( LibraryPath, CallingConvention = CallingConvention.Cdecl, BestFitMapping = false, ThrowOnUnmappableChar = true )]
+        [return: MarshalAs( UnmanagedType.Bool )]
+        private static extern bool LLVMRunPassPipeline( LLVMContextRef context, LLVMModuleRef M, LLVMTargetMachineRef TM, [MarshalAs( UnmanagedType.LPStr )] string passPipeline, LLVMOptVerifierKind VK, [MarshalAs( UnmanagedType.Bool )] bool ShouldPreserveAssemblyUseListOrder, [MarshalAs( UnmanagedType.Bool )] bool ShouldPreserveBitcodeUseListOrder );
     }
 }

@@ -29,7 +29,7 @@ Syntax Tree (AST). With LLVM that isn't necessary as it is automatically provide
 charge!).
 
 Obviously constant folding isn't the only possible optimization and InstructionBuilder only operates on
-the individual instructions as they are built. So, there are limits on what InstructionBUilder can do.
+the individual instructions as they are built. So, there are limits on what InstructionBuilder can do.
 
 For example:
 
@@ -121,17 +121,7 @@ The code generation needs an update to support using a JIT engine to generate an
 
 To begin with, the generator needs some additional members, including the JIT engine.
 
-```C#
-private readonly KaleidoscopeJIT JIT;
-private readonly Dictionary<string, IJitModuleHandle> FunctionModuleMap;
-private FunctionPassManager FunctionPassManager;
-private readonly PrototypeCollection FunctionPrototypes;
-
-/// <summary>Delegate type to allow execution of a JIT'd TopLevelExpression</summary>
-/// <returns>Result of evaluating the expression</returns>
-[UnmanagedFunctionPointer( System.Runtime.InteropServices.CallingConvention.Cdecl )]
-private delegate double AnonExpressionFunc( );
-```
+[!code-csharp[Main](../../../Samples/Kaleidoscope/Chapter4/CodeGenerator.cs#Initialization)]
 
 The JIT engine is retained for the generator to use. The same engine is retained for the lifetime of the
 generator so that functions are added to the same engine and can call function previously added. The JIT
@@ -140,7 +130,7 @@ normally used to remove the module from the JIT engine when re-defining a functi
 function names and the JIT handle created for them is maintained. Additionally, a collection of defined
 function prototypes is retained to enable matching a function call to a previously defined function.
 Since the JIT support uses a module per function approach, lookups on the current module aren't sufficient.
-Finally, a native function call delegate is defined for top level anonymous expressions. So that, after
+Finally, a native function call delegate is defined for top level anonymous expressions so that, after
 the JIT engine has generated the code, the application can call it through a delegate.
 
 The initialization of the generator requires updating to support the additional members.
@@ -150,8 +140,8 @@ The initialization of the generator requires updating to support the additional 
 Additionally, since the JIT engine is disposable, the code generators Dispose() method must call the
 Dispose() method on the JIT engine.
 
-The JIT engine itself is a class provided in the Kaleidoscope.Runtime library to wrap the LLVM ORC JIT
-engine.
+The JIT engine itself is a class provided in the Kaleidoscope.Runtime library derived from the Llvm.NET
+OrcJIT engine.
 
 [!code-csharp[Main](../../../Samples/Kaleidoscope/Kaleidoscope.Runtime/KaleidoscopeJIT.cs)]
 
@@ -161,14 +151,14 @@ KaleidoscoptJIT (putchard and printd), which is consistent with the same functio
 LLVM C++ tutorial. Thus allowing sharing of samples between the two.
 
 > [!WARNING]
-> All such methods implented in .NET must block any exception from bubling out of the call as the JIT
+> All such methods implemented in .NET must block any exception from bubbling out of the call as the JIT
 > engine doesn't know anything about them and neither does the Kaleidoscope language. Exceptions thrown
 > in these functions would produce undefined results, at best - crashing the application.
 
 Since functions are no longer collected into a single module the code to find the target for a function
 call requires updating to lookup the function from a collection of functions mapped by name.
 
-[!code-csharp[Main](../../../Samples/Kaleidoscope/Chapter4/CodeGenerator.cs#FindCallTarget)]
+[!code-csharp[Main](../../../Samples/Kaleidoscope/Chapter4/CodeGenerator.cs#FunctionCallExpression)]
 
 This will lookup the function prototype by name and call the GetOrDeclareFunction() with the prototype
 found. If the prototype wasn't found then it falls back to the previous lookup in the current module.
@@ -184,30 +174,17 @@ This distinguishes the special case of an anonymous top level expression as thos
 prototype maps. They are only in the JIT engine long enough to execute once and are then removed. Since
 they are, by definition, anonymous they can never be referenced by anything else.
 
-The DefineFunction needs updating to support adding/removing the function's module in the JIT, tracking
-the JIT handle for the module and ultimately re-initializing a new module and pass manager for the next
-function.
+Visiting a function definition needs updating to support adding/removing the function's module in the JIT,
+tracking the JIT handle for the module and ultimately re-initializing a new module and pass manager for
+the next function.
 
-[!code-csharp[Main](../../../Samples/Kaleidoscope/Chapter4/CodeGenerator.cs#DefineFunction)]
+[!code-csharp[Main](../../../Samples/Kaleidoscope/Chapter4/CodeGenerator.cs#FunctionDefinition)]
 
-> [!NOTE]
-> Instead of just returning the function DefineFunction() now returns a Tuple with the Function and the
-> [IJitModuleHandle](xref:Llvm.NET.JIT.IJitModuleHandle) the JIT generated for the module. The handle is
-> used in DefineFunction() later to remove the module whenever re-dfining an existing function.
 
-That covers the modifications to the core generation utility functions for JIT. Only two of the Visitor
-methods require additional updates to complete the JIT engine support.
-
-[!code-csharp[Main](../../../Samples/Kaleidoscope/Chapter4/CodeGenerator.cs#VisitFunctionDefinition)]
-
-VisitFunctionDefinition() requires only a small update to extract the function from the tuple returned
-by DefineFunction(), the handle isn't needed here as it is mapped already in DefineFunction().
-
-[!code-csharp[Main](../../../Samples/Kaleidoscope/Chapter4/CodeGenerator.cs#VisitTopLevelExpression)]
-
-Visiting the top level expression needs some additional work to make the JIT actually work. The generator
-will convert the function to LLVM IR, as before, however it will also capture the JIT handle so it can
-remove it later. The real 'magic' of the JIT happens in the next 2 lines:
+When visiting a FunctionDefinition top level anonymous expressions needs some additional work to make
+the JIT actually work. The generator will convert the function to LLVM IR, as before, however it will
+also capture the JIT handle so it can remove it later. The real 'magic' of the JIT happens in the next
+2 lines:
 
 ```C#
 var nativeFunc = JIT.GetDelegateForFunction<AnonExpressionFunc>( proto.Identifier.Name );
@@ -225,6 +202,6 @@ mapping and then removed from the JIT module as it is no longer needed.
 
 ## Conclusion
 While the amount of words needed to describe the changes to support optimization and JIT execution here
-isn't exactly small, the actual code changes required really are. The JIT engine does the heavy lifting
-and Llvm.NET provides a clean interface to the JIT that fits with common patterns and runtime support for
-.NET. Very cool, indeed!
+isn't exactly small, the actual code changes required really are. The Parser and JIT engine do all the
+heavy lifting. Llvm.NET provides a clean interface to the JIT that fits with common patterns and runtime
+support for .NET. Very cool, indeed!

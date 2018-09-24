@@ -26,6 +26,19 @@ namespace Llvm.NET
         Aggressive = LLVMCodeGenOptLevel.LLVMCodeGenLevelAggressive
     }
 
+    /// <summary>Optimization Size preference</summary>
+    public enum OptimizationSizeLevel
+    {
+        /// <summary>Default optimization</summary>
+        None = 0,
+
+        /// <summary>Equivalent to -Os</summary>
+        Os = 1,
+
+        /// <summary>Equivalent to -Oz</summary>
+        Oz = 2,
+    }
+
     /// <summary>Relocation type for target code generation</summary>
     public enum Reloc
     {

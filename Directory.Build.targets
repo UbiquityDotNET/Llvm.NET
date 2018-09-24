@@ -1,6 +1,4 @@
 <Project>
-  <Import Condition="'$(MSBuildProjectExtension)'=='.vcxproj'" Project="$(BuildRootDir)llvm\llvm-libs.targets"/>
-
   <!--
   Since Nuget.config is configured to include the build output location this
   will ensure the folder exists during restore so that it won't fail.
@@ -45,7 +43,7 @@
       </Task>
   </UsingTask>
 
-  <!-- Create NuGet packages for all NuSpec Items -->
+  <!-- Create NuGet packages for NuSpec property in VCXPROJ projects -->
   <Target Name="Pack" DependsOnTargets="_DownloadNugetExe;SetProjectSpecficVersionDependentProperties" Condition="'$(MSBuildProjectExtension)'=='.vcxproj'">
     <Exec Condition="exists('$(NuSpecFile)')"
           Command='"$(PackageOutputPath)NuGet.exe" pack $(NuSpecFile) -OutputDirectory $(PackageOutputPath) -Properties $(NuspecProperties) -NoPackageAnalysis' />

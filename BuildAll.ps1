@@ -111,12 +111,13 @@ try
     Write-Information "Building Llvm.NET"
     Invoke-MSBuild -Targets Build -Project src\Llvm.NET.sln -Properties $msBuildProperties -LoggerArgs $msbuildLoggerArgs ($msbuildLoggerArgs + @("/bl:Llvm.NET-build.binlog") )
 
+
     Write-Information "Restoring Docs Project"
     Invoke-MSBuild -Targets Restore -Project docfx\Llvm.NET.DocFX.csproj -Properties $msBuildProperties -LoggerArgs $msbuildLoggerArgs ($msbuildLoggerArgs + @("/bl:Llvm.NET-docfx-restore.binlog") )
 
     Write-Information "Building Docs"
     Invoke-MSBuild -Targets Build -Project docfx\Llvm.NET.DocFX.csproj -Properties $msBuildProperties -LoggerArgs $msbuildLoggerArgs ($msbuildLoggerArgs + @("/bl:Llvm.NET-docfx-build.binlog") )
-
+    
     if( $env:APPVEYOR_PULL_REQUEST_NUMBER )
     {
         foreach( $item in Get-ChildItem *.binlog )

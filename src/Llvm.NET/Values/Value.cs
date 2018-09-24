@@ -3,6 +3,7 @@
 // </copyright>
 
 using System;
+using System.Runtime.InteropServices;
 using Llvm.NET.Native;
 using Llvm.NET.Types;
 

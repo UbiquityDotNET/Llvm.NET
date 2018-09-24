@@ -112,10 +112,7 @@ namespace Llvm.NET.DebugInfo
         {
             get => NativeType_.ValueOrDefault;
 
-            protected set
-            {
-                NativeType_.Value = value;
-            }
+            protected set => NativeType_.Value = value;
         }
 
         /// <summary>Gets an intentionally undocumented value</summary>

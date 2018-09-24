@@ -9,6 +9,19 @@ using Kaleidoscope.Grammar;
 
 namespace Kaleidoscope.Runtime
 {
+    /// <summary>Implementation of common REPL infrastructure for interactive Kaleidoscope implementations</summary>
+    /// <typeparam name="TResult">result type of the generator type</typeparam>
+    /// <remarks>
+    /// <para>This class server to isolate and generalize the REPL infrastructure for the Kaleidoscope language
+    /// implementations. Aside from the general encapsulation and isolation, this also helps to keep the
+    /// individual chapters lean and focused on the use of Llvm.NET to generate executable code and the
+    /// JIT engine support to run it.</para>
+    /// <para>Since ANTLR doesn't have an "interactive" input stream, this sort of fakes
+    /// it by using the <see cref="TextReaderExtensions.ReadStatements(System.IO.TextReader)"/>
+    /// extension to provide an enumeration of lines that may be partial statements read in.
+    /// This is consistent with the behavior of the official LLVM C++ version and allows
+    /// for full use of ANTLR4 instead of writing a parser by hand.</para>
+    /// </remarks>
     public class ReplLoop<TResult>
     {
         public ReplLoop( IKaleidoscopeCodeGenerator<TResult> generator, LanguageLevel languageLevel )
@@ -64,11 +77,14 @@ namespace Kaleidoscope.Runtime
             {
                 if( !IsPartial )
                 {
-                    var (parseTree, recognizer) = Parser.Parse( Txt, AdditionalDiagnostics );
                     try
                     {
-                        TResult value = Generator.Generate( recognizer, parseTree, AdditionalDiagnostics );
-                        GeneratedResultAvailable( this, new GeneratedResultAvailableArgs<TResult>( value, recognizer, parseTree ) );
+                        var parseResult = Parser.Parse( Txt, AdditionalDiagnostics );
+                        if( parseResult != null )
+                        {
+                            TResult value = Generator.Generate( parseResult );
+                            GeneratedResultAvailable( this, new GeneratedResultAvailableArgs<TResult>( value ) );
+                        }
                     }
                     catch(CodeGeneratorException ex)
                     {
@@ -88,7 +104,7 @@ namespace Kaleidoscope.Runtime
                 */
                 if( Ready )
                 {
-                    bool isBlank = String.IsNullOrWhiteSpace( Txt );
+                    bool isBlank = string.IsNullOrWhiteSpace( Txt );
 
                     Debug.Assert( !( Ready && !IsPartial && isBlank ), "Invalid internal state" );
                     Ready = IsPartial == isBlank;

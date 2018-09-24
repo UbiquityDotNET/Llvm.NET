@@ -3,6 +3,7 @@
 // </copyright>
 
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Kaleidoscope.Grammar
 {
@@ -11,8 +12,8 @@ namespace Kaleidoscope.Grammar
         // base type for all prototypes (technically abstract, but the generator doesn't apply that)
         public partial class PrototypeContext
         {
-            public virtual IReadOnlyList<(string Name, SourceSpan Span)> Parameters
-                => new List<(string Name, SourceSpan Span)>( );
+            public virtual IEnumerable<(string Name, int Index, SourceSpan Span)> Parameters
+                => Enumerable.Empty<(string, int, SourceSpan)>( );
 
             public virtual string Name => string.Empty;
         }
