@@ -116,10 +116,16 @@
                             <a href="Kaleidoscope-ch7.html" title="Chapter 7 - Mutable Variables" class="">Chapter 7 - Mutable Variables</a>
                           </li>
                           <li class="">
+                            <a href="Kaleidoscope-ch7.1.html" title="Chapter 7.1 - Extreme Lazy JIT" class="">Chapter 7.1 - Extreme Lazy JIT</a>
+                          </li>
+                          <li class="">
                             <a href="Kaleidoscope-ch8.html" title="Chapter 8 - AOT Compilation" class="">Chapter 8 - AOT Compilation</a>
                           </li>
                           <li class="">
                             <a href="Kaleidoscope-ch9.html" title="Chapter 9 - Debug Information" class="">Chapter 9 - Debug Information</a>
+                          </li>
+                          <li class="">
+                            <a href="Kaleidoscope-Runtime.html" title="Kaleidoscope.Runtime" class="">Kaleidoscope.Runtime</a>
                           </li>
                           <li class="">
                             <a href="Kaleidoscope-ParseTreeVisitor.html" title="ParseTree Visitor" class="">ParseTree Visitor</a>
@@ -159,7 +165,7 @@ important, in fact, many compilers implement the folding directly into the gener
 Syntax Tree (AST). With LLVM that isn&#39;t necessary as it is automatically provided for you (no extra
 charge!).</p>
 <p>Obviously constant folding isn&#39;t the only possible optimization and InstructionBuilder only operates on
-the individual instructions as they are built. So, there are limits on what InstructionBUilder can do.</p>
+the individual instructions as they are built. So, there are limits on what InstructionBuilder can do.</p>
 <p>For example:</p>
 <pre><code class="lang-Kaleidoscope">def test(x) (1+2+x)*(x+(1+2));
 </code></pre><pre><code class="lang-llvm">define double @test(double %x) {
@@ -198,11 +204,16 @@ create the module and initialize the pass manager.</p>
     Module = Context.CreateBitcodeModule( );
     Module.Layout = JIT.TargetMachine.TargetData;
     FunctionPassManager = new FunctionPassManager( Module );
-    FunctionPassManager.AddInstructionCombiningPass( )
-                       .AddReassociatePass( )
-                       .AddGVNPass( )
-                       .AddCFGSimplificationPass( )
-                       .Initialize( );
+
+    if( !DisableOptimizations )
+    {
+        FunctionPassManager.AddInstructionCombiningPass( )
+                           .AddReassociatePass( )
+                           .AddGVNPass( )
+                           .AddCFGSimplificationPass( );
+    }
+
+    FunctionPassManager.Initialize( );
 }
 </code></pre><p>Creating the pass manager isn&#39;t enough to get the optimizations. Something needs to actually provide the
 pass manager with the function to optimize. The most sensible place to put that is as the last step of
@@ -237,15 +248,20 @@ value.</p>
 <h3 id="code-generator">Code Generator</h3>
 <p>The code generation needs an update to support using a JIT engine to generate and execute the Kaleidescope code provided by the user.</p>
 <p>To begin with, the generator needs some additional members, including the JIT engine.</p>
-<pre><code class="lang-C#">private readonly KaleidoscopeJIT JIT;
-private readonly Dictionary&lt;string, IJitModuleHandle&gt; FunctionModuleMap;
-private FunctionPassManager FunctionPassManager;
-private readonly PrototypeCollection FunctionPrototypes;
+<pre><code class="lang-csharp" name="Main">public CodeGenerator( DynamicRuntimeState globalState, bool disableOptimization = false )
+    : base( null )
+{
+    if( globalState.LanguageLevel &gt; LanguageLevel.SimpleExpressions )
+    {
+        throw new ArgumentException( &quot;Language features not supported by this generator&quot;, nameof( globalState ) );
+    }
 
-/// &lt;summary&gt;Delegate type to allow execution of a JIT&#39;d TopLevelExpression&lt;/summary&gt;
-/// &lt;returns&gt;Result of evaluating the expression&lt;/returns&gt;
-[UnmanagedFunctionPointer( System.Runtime.InteropServices.CallingConvention.Cdecl )]
-private delegate double AnonExpressionFunc( );
+    RuntimeState = globalState;
+    Context = new Context( );
+    DisableOptimizations = disableOptimization;
+    InitializeModuleAndPassManager( );
+    InstructionBuilder = new InstructionBuilder( Context );
+}
 </code></pre><p>The JIT engine is retained for the generator to use. The same engine is retained for the lifetime of the
 generator so that functions are added to the same engine and can call function previously added. The JIT
 provides a &#39;handle&#39; for every module added, which is used to reference the module in the JIT, this is
@@ -253,24 +269,27 @@ normally used to remove the module from the JIT engine when re-defining a functi
 function names and the JIT handle created for them is maintained. Additionally, a collection of defined
 function prototypes is retained to enable matching a function call to a previously defined function.
 Since the JIT support uses a module per function approach, lookups on the current module aren&#39;t sufficient.
-Finally, a native function call delegate is defined for top level anonymous expressions. So that, after
+Finally, a native function call delegate is defined for top level anonymous expressions so that, after
 the JIT engine has generated the code, the application can call it through a delegate.</p>
 <p>The initialization of the generator requires updating to support the additional members.</p>
-<pre><code class="lang-csharp" name="Main">public CodeGenerator( DynamicRuntimeState globalState )
+<pre><code class="lang-csharp" name="Main">public CodeGenerator( DynamicRuntimeState globalState, bool disableOptimization = false )
+    : base( null )
 {
+    if( globalState.LanguageLevel &gt; LanguageLevel.SimpleExpressions )
+    {
+        throw new ArgumentException( &quot;Language features not supported by this generator&quot;, nameof( globalState ) );
+    }
+
     RuntimeState = globalState;
     Context = new Context( );
-    JIT = new KaleidoscopeJIT( );
+    DisableOptimizations = disableOptimization;
     InitializeModuleAndPassManager( );
     InstructionBuilder = new InstructionBuilder( Context );
-    FunctionPrototypes = new PrototypeCollection( );
-    FunctionModuleMap = new Dictionary&lt;string, IJitModuleHandle&gt;( );
-    NamedValues = new Dictionary&lt;string, Value&gt;( );
 }
 </code></pre><p>Additionally, since the JIT engine is disposable, the code generators Dispose() method must call the
 Dispose() method on the JIT engine.</p>
-<p>The JIT engine itself is a class provided in the Kaleidoscope.Runtime library to wrap the LLVM ORC JIT
-engine.</p>
+<p>The JIT engine itself is a class provided in the Kaleidoscope.Runtime library derived from the Llvm.NET
+OrcJIT engine.</p>
 <pre><code class="lang-csharp" name="Main">// &lt;copyright file=&quot;KaleidoscopeJIT.cs&quot; company=&quot;.NET Foundation&quot;&gt;
 // Copyright (c) .NET Foundation. All rights reserved.
 // &lt;/copyright&gt;
@@ -283,47 +302,52 @@ using Llvm.NET.JIT;
 namespace Kaleidoscope.Runtime
 {
     /// &lt;summary&gt;JIT engine for Kaleidoscope language&lt;/summary&gt;
+    /// &lt;remarks&gt;
+    /// This engine uses the &lt;see cref=&quot;Llvm.NET.JIT.OrcJit&quot;/&gt; engine to support lazy
+    /// compilation of LLVM IR modules added to the JIT.
+    /// &lt;/remarks&gt;
     public sealed class KaleidoscopeJIT
-        : IDisposable
+        : OrcJit
     {
         public KaleidoscopeJIT( )
+            : base( BuildTargetMachine() )
         {
-            TargetMachine = Target.FromTriple( Triple.HostTriple.ToString( ) )
-                                  .CreateTargetMachine(Triple.HostTriple.ToString(), null, null, CodeGenOpt.Default, Reloc.Default, CodeModel.JitDefault );
-
-            ExecutionEngine = new OrcJit( TargetMachine );
-            ExecutionEngine.AddInteropCallback( &quot;putchard&quot;, new CallbackHandler1( PutChard ) );
-            ExecutionEngine.AddInteropCallback( &quot;printd&quot;, new CallbackHandler1( Printd ) );
+            AddInteropCallback( &quot;putchard&quot;, new CallbackHandler1( PutChard ) );
+            AddInteropCallback( &quot;printd&quot;, new CallbackHandler1( Printd ) );
         }
 
-        public TargetMachine TargetMachine { get; }
-
-        public IJitModuleHandle AddModule( BitcodeModule module ) =&gt; ExecutionEngine.AddModule( module, ExecutionEngine.DefaultSymbolResolver );
-
-        public void RemoveModule( IJitModuleHandle moduleHandle ) =&gt; ExecutionEngine.RemoveModule( moduleHandle );
-
-        public T GetDelegateForFunction&lt;T&gt;( string name )
-        {
-            return ExecutionEngine.GetFunctionDelegate&lt;T&gt;( name );
-        }
-
-        public void Dispose( )
-        {
-            ExecutionEngine.Dispose( );
-        }
-
+        /// &lt;summary&gt;Delegate for an interop callback taking no parameters&lt;/summary&gt;
+        /// &lt;returns&gt;value for the function&lt;/returns&gt;
         [UnmanagedFunctionPointer( CallingConvention.Cdecl )]
         public delegate double CallbackHandler0( );
 
+        /// &lt;summary&gt;Delegate for an interop callback taking one parameters&lt;/summary&gt;
+        /// &lt;param name=&quot;arg1&quot;&gt;First parameter&lt;/param&gt;
+        /// &lt;returns&gt;value for the function&lt;/returns&gt;
         [UnmanagedFunctionPointer( CallingConvention.Cdecl )]
         public delegate double CallbackHandler1( double arg1 );
 
+        /// &lt;summary&gt;Delegate for an interop callback taking two parameters&lt;/summary&gt;
+        /// &lt;param name=&quot;arg1&quot;&gt;First parameter&lt;/param&gt;
+        /// &lt;param name=&quot;arg2&quot;&gt;Second parameter&lt;/param&gt;
+        /// &lt;returns&gt;value for the function&lt;/returns&gt;
         [UnmanagedFunctionPointer( CallingConvention.Cdecl )]
         public delegate double CallbackHandler2( double arg1, double arg2 );
 
+        /// &lt;summary&gt;Delegate for an interop callback taking three parameters&lt;/summary&gt;
+        /// &lt;param name=&quot;arg1&quot;&gt;First parameter&lt;/param&gt;
+        /// &lt;param name=&quot;arg2&quot;&gt;Second parameter&lt;/param&gt;
+        /// &lt;param name=&quot;arg3&quot;&gt;Third parameter&lt;/param&gt;
+        /// &lt;returns&gt;value for the function&lt;/returns&gt;
         [UnmanagedFunctionPointer( CallingConvention.Cdecl )]
         public delegate double CallbackHandler3( double arg1, double arg2, double arg3 );
 
+        /// &lt;summary&gt;Delegate for an interop callback taking four parameters&lt;/summary&gt;
+        /// &lt;param name=&quot;arg1&quot;&gt;First parameter&lt;/param&gt;
+        /// &lt;param name=&quot;arg2&quot;&gt;Second parameter&lt;/param&gt;
+        /// &lt;param name=&quot;arg3&quot;&gt;Third parameter&lt;/param&gt;
+        /// &lt;param name=&quot;arg4&quot;&gt;Fourth parameter&lt;/param&gt;
+        /// &lt;returns&gt;value for the function&lt;/returns&gt;
         [UnmanagedFunctionPointer( CallingConvention.Cdecl )]
         public delegate double CallbackHandler4( double arg1, double arg2, double arg3, double arg4 );
 
@@ -355,35 +379,39 @@ namespace Kaleidoscope.Runtime
             }
         }
 
-        private readonly OrcJit ExecutionEngine;
+        private static TargetMachine BuildTargetMachine()
+        {
+            return Target.FromTriple( Triple.HostTriple.ToString( ) )
+                         .CreateTargetMachine( Triple.HostTriple.ToString( ), null, null, CodeGenOpt.Default, Reloc.Default, CodeModel.JitDefault );
+        }
     }
 }
 </code></pre><p><a class="xref" href="../../api/Llvm.NET.JIT.OrcJit.html">OrcJit</a> provides support for declaring functions that are external to the JIT
 that the JIT&#39;d module code can call. For Kaleidoscope, two such functions are defined directly in
 KaleidoscoptJIT (putchard and printd), which is consistent with the same functions used in the official
 LLVM C++ tutorial. Thus allowing sharing of samples between the two.</p>
-<div class="WARNING"><h5>Warning</h5><p>All such methods implented in .NET must block any exception from bubling out of the call as the JIT
+<div class="WARNING"><h5>Warning</h5><p>All such methods implemented in .NET must block any exception from bubbling out of the call as the JIT
 engine doesn&#39;t know anything about them and neither does the Kaleidoscope language. Exceptions thrown
 in these functions would produce undefined results, at best - crashing the application.</p>
 </div>
 <p>Since functions are no longer collected into a single module the code to find the target for a function
 call requires updating to lookup the function from a collection of functions mapped by name.</p>
-<pre><code class="lang-csharp" name="Main">private Function FindCallTarget( string name )
+<pre><code class="lang-csharp" name="Main">public override Value Visit( FunctionCallExpression functionCall )
 {
-    // lookup the prototype for the function to get the signature
-    // and create a declaration in this module
-    if( FunctionPrototypes.TryGetValue( name, out var signature ) )
+    string targetName = functionCall.FunctionPrototype.Name;
+    Function function;
+    // try for an extern function declaration
+    if( RuntimeState.FunctionDeclarations.TryGetValue( targetName, out Prototype target ) )
     {
-        return GetOrDeclareFunction( signature );
+        function = GetOrDeclareFunction( target );
+    }
+    else
+    {
+        function = Module.GetFunction( targetName ) ?? throw new CodeGeneratorException( $&quot;Definition for function {targetName} not found&quot; );
     }
 
-    Function retVal = Module.GetFunction( name );
-    if( retVal != null )
-    {
-        return retVal;
-    }
-
-    return null;
+    var args = functionCall.Arguments.Select( ctx =&gt; ctx.Accept( this ) ).ToArray( );
+    return InstructionBuilder.Call( function, args ).RegisterName( &quot;calltmp&quot; );
 }
 </code></pre><p>This will lookup the function prototype by name and call the GetOrDeclareFunction() with the prototype
 found. If the prototype wasn&#39;t found then it falls back to the previous lookup in the current module.
@@ -391,18 +419,18 @@ This fall back is needed to support recursive functions where the referenced fun
 current module.</p>
 <p>Next is to update the GetOrDeclareFunction() to handle mapping the functions prototype and re-definition
 of functions.</p>
-<pre><code class="lang-csharp" name="Main">private Function GetOrDeclareFunction( Prototype prototype, bool isAnonymous = false )
+<pre><code class="lang-csharp" name="Main">// Retrieves a Function&quot; for a prototype from the current module if it exists,
+// otherwise declares the function and returns the newly declared function.
+private Function GetOrDeclareFunction( Prototype prototype )
 {
-    var function = Module.GetFunction( prototype.Identifier.Name );
+    var function = Module.GetFunction( prototype.Name );
     if( function != null )
     {
         return function;
     }
 
     var llvmSignature = Context.GetFunctionType( Context.DoubleType, prototype.Parameters.Select( _ =&gt; Context.DoubleType ) );
-
-    var retVal = Module.AddFunction( prototype.Identifier.Name, llvmSignature );
-    retVal.Linkage( Linkage.External );
+    var retVal = Module.AddFunction( prototype.Name, llvmSignature );
 
     int index = 0;
     foreach( var argId in prototype.Parameters )
@@ -411,96 +439,49 @@ of functions.</p>
         ++index;
     }
 
-    if( !isAnonymous )
-    {
-        FunctionPrototypes.AddOrReplaceItem( prototype );
-    }
-
     return retVal;
 }
 </code></pre><p>This distinguishes the special case of an anonymous top level expression as those are never added to the
 prototype maps. They are only in the JIT engine long enough to execute once and are then removed. Since
 they are, by definition, anonymous they can never be referenced by anything else.</p>
-<p>The DefineFunction needs updating to support adding/removing the function&#39;s module in the JIT, tracking
-the JIT handle for the module and ultimately re-initializing a new module and pass manager for the next
-function.</p>
-<pre><code class="lang-csharp" name="Main">private (Function Function, IJitModuleHandle JitHandle) DefineFunction( Function function, ExpressionContext body )
+<p>Visiting a function definition needs updating to support adding/removing the function&#39;s module in the JIT,
+tracking the JIT handle for the module and ultimately re-initializing a new module and pass manager for
+the next function.</p>
+<pre><code class="lang-csharp" name="Main">public override Value Visit( FunctionDefinition definition )
 {
+    var function = GetOrDeclareFunction( definition.Signature );
     if( !function.IsDeclaration )
     {
         throw new CodeGeneratorException( $&quot;Function {function.Name} cannot be redefined in the same module&quot; );
     }
 
-    // Destroy any previously generated module for this function.
-    // This allows re-definition as the new module will provide the
-    // implementation. This is needed, otherwise both the MCJIT
-    // and OrcJit engines will resolve to the original module, despite
-    // claims to the contrary in the official tutorial text. (Though,
-    // to be fair it may have been true in the original JIT and might
-    // still be true for the interpreter)
-    if( FunctionModuleMap.Remove( function.Name, out IJitModuleHandle handle ) )
+    try
     {
-        JIT.RemoveModule( handle );
-    }
+        var entryBlock = function.AppendBasicBlock( &quot;entry&quot; );
+        InstructionBuilder.PositionAtEnd( entryBlock );
+        NamedValues.Clear( );
+        foreach( var arg in function.Parameters )
+        {
+            NamedValues[ arg.Name ] = arg;
+        }
 
-    var basicBlock = function.AppendBasicBlock( &quot;entry&quot; );
-    InstructionBuilder.PositionAtEnd( basicBlock );
-    NamedValues.Clear( );
-    foreach( var arg in function.Parameters )
-    {
-        NamedValues[ arg.Name ] = arg;
-    }
+        var funcReturn = definition.Body.Accept( this );
+        InstructionBuilder.Return( funcReturn );
+        function.Verify( );
 
-    var funcReturn = body.Accept( this );
-    if( funcReturn == null )
+        FunctionPassManager.Run( function );
+        return function;
+    }
+    catch( CodeGeneratorException )
     {
         function.EraseFromParent( );
-        return (null, default);
+        throw;
     }
-
-    InstructionBuilder.Return( funcReturn );
-    function.Verify( );
-
-    if( !DisableOptimizations )
-    {
-        FunctionPassManager.Run( function );
-    }
-
-    var jitHandle = JIT.AddModule( Module );
-    FunctionModuleMap.Add( function.Name, jitHandle );
-    InitializeModuleAndPassManager( );
-    return (function, jitHandle);
 }
-</code></pre><div class="NOTE"><h5>Note</h5><p>Instead of just returning the function DefineFunction() now returns a Tuple with the Function and the
-<a class="xref" href="../../api/Llvm.NET.JIT.IJitModuleHandle.html">IJitModuleHandle</a> the JIT generated for the module. The handle is
-used in DefineFunction() later to remove the module whenever re-dfining an existing function.</p>
-</div>
-<p>That covers the modifications to the core generation utility functions for JIT. Only two of the Visitor
-methods require additional updates to complete the JIT engine support.</p>
-<pre><code class="lang-csharp" name="Main">public override Value VisitFunctionDefinition( [NotNull] FunctionDefinitionContext context )
-{
-    return DefineFunction( ( Function )context.Signature.Accept( this )
-                         , context.BodyExpression
-                         ).Function;
-}
-</code></pre><p>VisitFunctionDefinition() requires only a small update to extract the function from the tuple returned
-by DefineFunction(), the handle isn&#39;t needed here as it is mapped already in DefineFunction().</p>
-<pre><code class="lang-csharp" name="Main">public override Value VisitTopLevelExpression( [NotNull] TopLevelExpressionContext context )
-{
-    var proto = new Prototype( $&quot;anon_expr_{AnonNameIndex++}&quot; );
-    var function = GetOrDeclareFunction( proto, isAnonymous: true );
-
-    var (_, jitHandle) = DefineFunction( function, context.expression( ) );
-
-    var nativeFunc = JIT.GetDelegateForFunction&lt;AnonExpressionFunc&gt;( proto.Identifier.Name );
-    var retVal = Context.CreateConstant( nativeFunc( ) );
-    FunctionModuleMap.Remove( function.Name );
-    JIT.RemoveModule( jitHandle );
-    return retVal;
-}
-</code></pre><p>Visiting the top level expression needs some additional work to make the JIT actually work. The generator
-will convert the function to LLVM IR, as before, however it will also capture the JIT handle so it can
-remove it later. The real &#39;magic&#39; of the JIT happens in the next 2 lines:</p>
+</code></pre><p>When visiting a FunctionDefinition top level anonymous expressions needs some additional work to make
+the JIT actually work. The generator will convert the function to LLVM IR, as before, however it will
+also capture the JIT handle so it can remove it later. The real &#39;magic&#39; of the JIT happens in the next
+2 lines:</p>
 <pre><code class="lang-C#">var nativeFunc = JIT.GetDelegateForFunction&lt;AnonExpressionFunc&gt;( proto.Identifier.Name );
 var retVal = Context.CreateConstant( nativeFunc( ) );
 </code></pre><p>This asks the JIT engine to provide a delegate matching the AnonExpressionFunc signature for a function
@@ -512,9 +493,9 @@ is created for the result of the call.</p>
 mapping and then removed from the JIT module as it is no longer needed.</p>
 <h2 id="conclusion">Conclusion</h2>
 <p>While the amount of words needed to describe the changes to support optimization and JIT execution here
-isn&#39;t exactly small, the actual code changes required really are. The JIT engine does the heavy lifting
-and Llvm.NET provides a clean interface to the JIT that fits with common patterns and runtime support for
-.NET. Very cool, indeed!</p>
+isn&#39;t exactly small, the actual code changes required really are. The Parser and JIT engine do all the
+heavy lifting. Llvm.NET provides a clean interface to the JIT that fits with common patterns and runtime
+support for .NET. Very cool, indeed!</p>
 </article>
           </div>
           <div class="contribution-panel mobile-hide">
@@ -537,7 +518,7 @@ and Llvm.NET provides a clean interface to the JIT that fits with common pattern
             <span class="pull-right">
               <a href="#top">Back to top</a>
             </span>
-            Copyright (C) 2017, Dot NET Foundation<br><strong>Build:</strong> 6.0.0-rc.0.0.ci-BLD.447157481
+            Copyright (C) 2017, Dot NET Foundation<br><strong>Build:</strong> 6.0.1-rc.0.0.ci-BLD.448334824
             
           </div>
         </div>

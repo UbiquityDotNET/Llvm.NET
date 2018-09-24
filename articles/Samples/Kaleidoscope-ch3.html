@@ -116,10 +116,16 @@
                             <a href="Kaleidoscope-ch7.html" title="Chapter 7 - Mutable Variables" class="">Chapter 7 - Mutable Variables</a>
                           </li>
                           <li class="">
+                            <a href="Kaleidoscope-ch7.1.html" title="Chapter 7.1 - Extreme Lazy JIT" class="">Chapter 7.1 - Extreme Lazy JIT</a>
+                          </li>
+                          <li class="">
                             <a href="Kaleidoscope-ch8.html" title="Chapter 8 - AOT Compilation" class="">Chapter 8 - AOT Compilation</a>
                           </li>
                           <li class="">
                             <a href="Kaleidoscope-ch9.html" title="Chapter 9 - Debug Information" class="">Chapter 9 - Debug Information</a>
+                          </li>
+                          <li class="">
+                            <a href="Kaleidoscope-Runtime.html" title="Kaleidoscope.Runtime" class="">Kaleidoscope.Runtime</a>
                           </li>
                           <li class="">
                             <a href="Kaleidoscope-ParseTreeVisitor.html" title="ParseTree Visitor" class="">ParseTree Visitor</a>
@@ -142,9 +148,6 @@
 to parse Kaleidoscope source code to generate a <a class="xref" href="../../api/Llvm.NET.BitcodeModule.html">BitcodeModule</a> representing
 the source as LLVM IR.</p>
 <h2 id="basic-code-flow">Basic code flow</h2>
-<p>The entry point for the application is the standard Main() function. This implementation is generally the
-same for most of the remaining chapters. Chapter specific topics will cover any particular variations
-relevant to the changes for that chapter, if any are needed.</p>
 <p>The Main function starts out by calling WaitForDebugger(). This is a useful utility that doesn&#39;t do
 anything in a release build, but in debug builds will check for an attached debugger and, if none is found,
 it will wait for one. This works around a missing feature of the .NET Standard C# project system that
@@ -154,7 +157,7 @@ select native and managed debugging. (Hopefully this feature will be restored to
 future so this rather hacky trick isn&#39;t needed...)</p>
 <h3 id="initializing-llvmnet">Initializing Llvm.NET</h3>
 <p>The underlying LLVM library requires initialization for it&#39;s internal data, furthermore Llvm.NET must load
-the actual underlying DLL specific to the current system architecture. Thus, the library as a whole
+the actual underlying library specific to the current system architecture. Thus, the Llvm.NET as a whole
 requires initialization.</p>
 <pre><code class="lang-C#">using static Llvm.NET.StaticState;
 // [...]
@@ -175,18 +178,16 @@ target is the one the host application is running on. So, only the native target
 <a class="xref" href="../../api/Llvm.NET.Values.Value.html">Value</a>. This forms the foundation of the Kaleidoscope samples outer
 generation loop. Subsequent, chapters will focus on additional functionality including JIT compilation,
 Debugging information, and Native Module generation.</p>
-<pre><code class="lang-csharp" name="Main">var parser = new ParserStack( LanguageLevel.SimpleExpressions );
+<pre><code class="lang-csharp" name="Main">var parser = new ParserStack( LanguageFeatureLevel );
 using( var generator = new CodeGenerator( parser.GlobalState ) )
 {
-    Console.WriteLine( &quot;Llvm.NET Kaleidoscope Interpreter - {0}&quot;, parser.LanguageLevel );
-
     var replLoop = new ReplLoop&lt;Value&gt;( generator, parser );
     replLoop.ReadyStateChanged += ( s, e ) =&gt; Console.Write( e.PartialParse ? &quot;&gt;&quot; : &quot;Ready&gt;&quot; );
     replLoop.GeneratedResultAvailable += OnGeneratedResultAvailable;
     replLoop.CodeGenerationError += OnGeneratorError;
 
     replLoop.Run( );
-    Console.WriteLine( generator.GeneratedModule.WriteToString( ) );
+    Console.WriteLine( generator.Module.WriteToString( ) );
 }
 </code></pre><h3 id="processing-output-for-results">Processing output for results</h3>
 <p>As the REPL loop recognizes the input and generates output it notifies the application of the output so
@@ -194,27 +195,29 @@ that the application can use the results. (Typically by showing the results to t
 In Chapter2 this was used to generate representations of the raw parse tree to aid in comprehending the
 language. For this chapter it is used to print information about what was generated from the input to the
 parser.</p>
-<pre><code class="lang-csharp" name="ResultProcessing">private static void OnGeneratedResultAvailable( object sender, GeneratedResultAvailableArgs&lt;Value&gt; e )
-{
-    var source = ( ReplLoop&lt;Value&gt; )sender;
-
-    switch( e.Result )
-    {
-    case ConstantFP result:
-        Console.WriteLine( &quot;Evaluated to {0}&quot;, result.Value );
-        break;
-
-    case Function function:
-        if( source.AdditionalDiagnostics.HasFlag( DiagnosticRepresentations.LlvmIR ) )
+<pre><code class="lang-csharp" name="ResultProcessing">        private static void OnGeneratedResultAvailable( object sender, GeneratedResultAvailableArgs&lt;Value&gt; e )
         {
-            function.ParentModule.WriteToTextFile( Path.ChangeExtension( GetSafeFileName( function.Name ), &quot;ll&quot; ), out string ignoredMsg );
-        }
+            var source = ( ReplLoop&lt;Value&gt; )sender;
 
-        Console.WriteLine( &quot;Defined function: {0}&quot;, function.Name );
-        Console.WriteLine( function );
-        break;
-    }
-}
+            switch( e.Result )
+            {
+            case ConstantFP result:
+                if( Console.CursorLeft &gt; 0 )
+                {
+                    Console.WriteLine( );
+                }
+                Console.WriteLine( &quot;Evaluated to {0}&quot;, result.Value );
+                break;
+
+            case Function function:
+#if GENERATE_LLVM_IR
+                function.ParentModule.WriteToTextFile( Path.ChangeExtension( GetSafeFileName( function.Name ), &quot;ll&quot; ), out string ignoredMsg );
+#endif
+                Console.WriteLine( &quot;Defined function: {0}&quot;, function.Name );
+                Console.WriteLine( function );
+                break;
+            }
+        }
 </code></pre><h3 id="handling-errors-in-code-generation">Handling errors in code generation</h3>
 <p>In many cases successfully parsing the input code isn&#39;t sufficient to determine correctness of the code in
 a given context. In particular attempting to re-define a function already defined in the current module is
@@ -240,19 +243,22 @@ while still informing the user that what they tried to do didn&#39;t work.</p>
 <h3 id="initialization">Initialization</h3>
 <p>The code generation maintains state for the transformation as private members.</p>
 <pre><code class="lang-csharp" name="Main">private readonly DynamicRuntimeState RuntimeState;
-private static int AnonNameIndex;
 private readonly Context Context;
-private BitcodeModule Module;
 private readonly InstructionBuilder InstructionBuilder;
-private readonly IDictionary&lt;string, Value&gt; NamedValues;
+private readonly IDictionary&lt;string, Value&gt; NamedValues = new Dictionary&lt;string, Value&gt;( );
 </code></pre><p>These are initialized in the constructor</p>
 <pre><code class="lang-csharp" name="Main">public CodeGenerator( DynamicRuntimeState globalState )
+    : base(null)
 {
+    if( globalState.LanguageLevel &gt; LanguageLevel.SimpleExpressions )
+    {
+        throw new ArgumentException( &quot;Language features not supported by this generator&quot;, nameof(globalState) );
+    }
+
     RuntimeState = globalState;
     Context = new Context( );
     Module = Context.CreateBitcodeModule( &quot;Kaleidoscope&quot; );
     InstructionBuilder = new InstructionBuilder( Context );
-    NamedValues = new Dictionary&lt;string, Value&gt;( );
 }
 </code></pre><p>The exact set of members varies for each chapter but the basic ideas remain across each chapter.</p>
 <table>
@@ -287,129 +293,291 @@ private readonly IDictionary&lt;string, Value&gt; NamedValues;
 </table>
 <h3 id="generate-method">Generate Method</h3>
 <p>The Generate method is used by the REPL loop to generate the final output from a parse tree. The common
-implementation simply checks for syntax errors in the tree, and if there were any returns null otherwise
-performs a visitor walk against the parse tree to generate a result. The syntax errors check is done in
-the generator to allow generators to handle invalid input or partial input gracefully or in some special
-fashion determined by the needs of the generator implementation.</p>
-<pre><code class="lang-csharp" name="Main">public Value Generate( Parser parser, IParseTree tree, DiagnosticRepresentations additionalDiagnostics )
+implementation simply passes the tree to the AST generating parse tree visitor to generate the AST and
+process the AST nodes from that. Due to the simplicity of the Kaleidoscope language the AST is more of
+a List than a tree. In fact, the AstBuilder creates an enumerable sequence of nodes that are either a
+function declaration or a function definition. For the interactive mode should always be a single element.
+(When doing Ahead of Time (AOT) compilation in <a href="Kaleidoscope-ch8.html">Chapter 8</a> this sequence can contain
+many declarations and definitions in any order.) To handle the different node types the generate method
+simply uses pattern matching to detect the type of node to dispatch to a visitor function for that kind of node.</p>
+<pre><code class="lang-csharp" name="Main">public Value Generate( IAstNode ast )
 {
-    if( parser.NumberOfSyntaxErrors &gt; 0 )
+    // Prototypes, including extern are ignored as AST generation
+    // adds them to the RuntimeState so that already has the declarations
+    if( !( ast is FunctionDefinition definition ) )
     {
         return null;
     }
 
-    return Visit( tree );
+    return ast.Accept( this );
 }
-</code></pre><h3 id="constant-expression">Constant expression</h3>
-<p>In Kaleidoscope all values are floating point and constants are represented in LLVM IR as <a class="xref" href="../../api/Llvm.NET.Values.ConstantFP.html">ConstantFP</a>
-The parse tree node for a constant is extended to provide the value of the constant as a C# <code>double</code>.</p>
-<pre><code class="lang-csharp" name="Main">// &lt;copyright file=&quot;Parser.cs&quot; company=&quot;.NET Foundation&quot;&gt;
+</code></pre><h3 id="function-declarations">Function Declarations</h3>
+<p>Function declarations don&#39;t actually generate any code. Instead they are captured and added to a collection
+of declarations used in validating subsequent function calls when generating the AST for function definitions.</p>
+<pre><code class="lang-csharp" name="Main">// &lt;copyright file=&quot;PrototypeCollection.cs&quot; company=&quot;.NET Foundation&quot;&gt;
 // Copyright (c) .NET Foundation. All rights reserved.
 // &lt;/copyright&gt;
 
-namespace Kaleidoscope.Grammar
+using System.Collections.Generic;
+using System.Collections.Immutable;
+using System.Linq;
+
+using static Kaleidoscope.Grammar.KaleidoscopeParser;
+
+namespace Kaleidoscope.Grammar.AST
 {
-    public partial class KaleidoscopeParser
+    /// &lt;summary&gt;Encapsulates data describing a function signature&lt;/summary&gt;
+    /// &lt;remarks&gt;
+    /// This is used to enable consistent representation when the prototype
+    /// is synthesized during code generation (i.e. Anonymous expressions)
+    /// &lt;/remarks&gt;
+    public class Prototype
+        : IAstNode
     {
-        public partial class ConstExpressionContext
+        /// &lt;summary&gt;Initializes a new instance of the &lt;see cref=&quot;Prototype&quot;/&gt; class.&lt;/summary&gt;
+        /// &lt;param name=&quot;location&quot;&gt;Source location covering the complete signature&lt;/param&gt;
+        /// &lt;param name=&quot;name&quot;&gt;&lt;see cref=&quot;Name&quot;/&gt; containing the name of the function&lt;/param&gt;
+        /// &lt;param name=&quot;parameters&quot;&gt;Collection of &lt;see cref=&quot;Name&quot;/&gt;s for the names of each parameter&lt;/param&gt;
+        public Prototype( SourceSpan location, string name, IEnumerable&lt;ParameterDeclaration&gt; parameters )
         {
-            public double Value =&gt; double.Parse( Number( ).GetText( ) );
+            Location = location;
+            Name = name;
+            Parameters = parameters.ToImmutableArray();
         }
+
+        /// &lt;summary&gt;Initializes a new instance of the &lt;see cref=&quot;Prototype&quot;/&gt; class.&lt;/summary&gt;
+        /// &lt;param name=&quot;location&quot;&gt;Source location covering the complete signature&lt;/param&gt;
+        /// &lt;param name=&quot;name&quot;&gt;name of the function&lt;/param&gt;
+        /// &lt;param name=&quot;isCompilerGenerated&quot;&gt;Indicates if this is a compiler generated prototype&lt;/param&gt;
+        /// &lt;param name=&quot;parameters&quot;&gt;names of each parameter&lt;/param&gt;
+        public Prototype( SourceSpan location, string name, bool isCompilerGenerated, params ParameterDeclaration[ ] parameters )
+            : this( location, name, ( IEnumerable&lt;ParameterDeclaration&gt; )parameters )
+        {
+            IsCompilerGenerated = isCompilerGenerated;
+        }
+
+        /// &lt;summary&gt;Initializes a new instance of the &lt;see cref=&quot;Prototype&quot;/&gt; class.&lt;/summary&gt;
+        /// &lt;param name=&quot;location&quot;&gt;Source location covering the complete signature&lt;/param&gt;
+        /// &lt;param name=&quot;name&quot;&gt;name of the function&lt;/param&gt;
+        /// &lt;param name=&quot;parameters&quot;&gt;names of each parameter&lt;/param&gt;
+        public Prototype( SourceSpan location, string name, params ParameterDeclaration[ ] parameters )
+            : this( location, name, (IEnumerable&lt;ParameterDeclaration&gt;) parameters )
+        {
+        }
+
+        /// &lt;summary&gt;Initializes a new instance of the &lt;see cref=&quot;Prototype&quot;/&gt; class.&lt;/summary&gt;
+        /// &lt;param name=&quot;ctx&quot;&gt;&lt;see cref=&quot;PrototypeContext&quot;/&gt; to extract parameter and source location information from&lt;/param&gt;
+        public Prototype( PrototypeContext ctx )
+            : this( ctx.GetSourceSpan(), ctx.Name, ctx.Parameters.Select( p =&gt; new ParameterDeclaration(p.Span, p.Name, p.Index ) ) )
+        {
+            IsExtern = ctx.Parent is ExternalDeclarationContext;
+        }
+
+        /// &lt;summary&gt;Initializes a new instance of the &lt;see cref=&quot;Prototype&quot;/&gt; class.&lt;/summary&gt;
+        /// &lt;param name=&quot;name&quot;&gt;Name of thefunction&lt;/param&gt;
+        /// &lt;param name=&quot;parameters&quot;&gt;Names of each parameter&lt;/param&gt;
+        /// &lt;remarks&gt;
+        /// This version of the constructor is used to create syntehetic prototypes that don&#39;t
+        /// exist within the original source.
+        /// &lt;/remarks&gt;
+        public Prototype( string name, params string[] parameters)
+            : this(default, name, parameters.Select( (n,i)=&gt;new ParameterDeclaration(default, name, i)))
+        {
+        }
+
+        /// &lt;inheritdoc/&gt;
+        public SourceSpan Location { get; }
+
+        /// &lt;summary&gt;Gets the name of the function&lt;/summary&gt;
+        public string Name { get; }
+
+        /// &lt;summary&gt;Gets a value indicating whether the function prototype is an extern declaration&lt;/summary&gt;
+        public bool IsExtern { get; }
+
+        /// &lt;summary&gt;Gets a value indicating whether the function prototype is generated internally by compiler&lt;/summary&gt;
+        public bool IsCompilerGenerated { get; }
+
+        /// &lt;summary&gt;Gets the parameters for the function&lt;/summary&gt;
+        public IReadOnlyList&lt;ParameterDeclaration&gt; Parameters { get; }
+
+        /// &lt;inheritdoc/&gt;
+        public TResult Accept&lt;TResult&gt;( IAstVisitor&lt;TResult&gt; visitor ) =&gt; visitor.Visit( this );
+
+        /// &lt;inheritdoc/&gt;
+        public IEnumerable&lt;IAstNode&gt; Children =&gt; Parameters;
+    }
+}
+</code></pre><h3 id="function-definition">Function Definition</h3>
+<p>Functions with bodies (e.g. not just a declaration to a function defined elsewhere) are handled via the
+VisitFunctionDefinition() Method.</p>
+<pre><code class="lang-csharp" name="Main">public override Value Visit( FunctionDefinition definition )
+{
+    var function = GetOrDeclareFunction( definition.Signature );
+    if( !function.IsDeclaration )
+    {
+        throw new CodeGeneratorException( $&quot;Function {function.Name} cannot be redefined in the same module&quot; );
+    }
+
+    try
+    {
+        var entryBlock = function.AppendBasicBlock( &quot;entry&quot; );
+        InstructionBuilder.PositionAtEnd( entryBlock );
+        NamedValues.Clear( );
+        foreach( var arg in function.Parameters )
+        {
+            NamedValues[ arg.Name ] = arg;
+        }
+
+        var funcReturn = definition.Body.Accept( this );
+        InstructionBuilder.Return( funcReturn );
+        function.Verify( );
+        return function;
+    }
+    catch( CodeGeneratorException )
+    {
+        function.EraseFromParent( );
+        throw;
+    }
+}
+</code></pre><p>VisitFunctionDefinition() simply extracts the function prototype from the AST node. A private utility 
+method GetOrDeclareFunction() us used to get an existing function or declare a new one.</p>
+<pre><code class="lang-csharp" name="Main">// Retrieves a Function&quot; for a prototype from the current module if it exists,
+// otherwise declares the function and returns the newly declared function.
+private Function GetOrDeclareFunction( Prototype prototype )
+{
+    var function = Module.GetFunction( prototype.Name );
+    if( function != null )
+    {
+        return function;
+    }
+
+    var llvmSignature = Context.GetFunctionType( Context.DoubleType, prototype.Parameters.Select( _ =&gt; Context.DoubleType ) );
+    var retVal = Module.AddFunction( prototype.Name, llvmSignature );
+
+    int index = 0;
+    foreach( var argId in prototype.Parameters )
+    {
+        retVal.Parameters[ index ].Name = argId.Name;
+        ++index;
+    }
+
+    return retVal;
+}
+</code></pre><p>GetOrDeclareFunction() will first attempt to get an existing function and if found returns that function.
+Otherwise it creates a function signature type then adds a function to the module with the given name and
+signature and adds the parameter names to the function. In LLVM the signature only contains type information
+and no names, allowing for sharing the same signature for completely different functions.</p>
+<p>The function and the expression representing the body of the function is then used to emit IR for the function.</p>
+<p>The generation verifies that the function is a declaration (e.g. does not have a body) as Kaleidoscope doesn&#39;t
+support any sort of overloaded functions.</p>
+<p>The generation of a function starts by constructing a basic block for the entry point of the function and
+attaches the InstructionBuilder to the end of that block. (It&#39;s empty so it is technically at the beginning
+but placing it at the end it will track the end position as new instructions are added so that each instruction
+added will go on the end of the block). At this point there will only be the one block as the language
+doesn&#39;t yet have support for control flow. (That is introduced in <a href="Kaleidoscope-ch5.html">Chapter 5</a>)</p>
+<p>The NamedValues map is cleared and each of the parameters is mapped in the NamedValues map to its argument
+value in IR. The body of the function is visited to produce an LLVM Value. The visiting will, in turn add
+instructions, and possibly new blocks, as needed to represent the body expression in proper execution order.</p>
+<p>If generating the body results in an error, then the function is removed from the parent and the exception
+propagates up. This allows the user to define the function again, if appropriate.</p>
+<p>Finally, a return instruction is applied to return the result of the expression followed by a verification
+of the function to ensure internal consistency. (Generally the verify is not used in production releases
+as it is an expensive operation to perform on every function. But when building up a language generator
+it is quite useful to detect errors early.)</p>
+<h4 id="top-level-expression">Top Level Expression</h4>
+<p>Top level expressions in Kaleidoscope are transformed into an anonymous function definition by the
+AstBuilder. Since this chapter is focused on generating the IR module there isn&#39;t any special handling
+needed for a top level expression. They are simply just another function definition.</p>
+<h3 id="constant-expression">Constant expression</h3>
+<p>In Kaleidoscope all values are floating point and constants are represented in LLVM IR as <a class="xref" href="../../api/Llvm.NET.Values.ConstantFP.html">ConstantFP</a>
+The AST provides the value of the constant as a C# <code>double</code>.</p>
+<pre><code class="lang-csharp" name="Main">// &lt;copyright file=&quot;Constant.cs&quot; company=&quot;.NET Foundation&quot;&gt;
+// Copyright (c) .NET Foundation. All rights reserved.
+// &lt;/copyright&gt;
+
+using System.Collections.Generic;
+using System.Linq;
+
+namespace Kaleidoscope.Grammar.AST
+{
+    public class ConstantExpression
+        : IExpression
+    {
+        public ConstantExpression( SourceSpan location, double value )
+        {
+            Value = value;
+            Location = location;
+        }
+
+        public double Value { get; }
+
+        public SourceSpan Location { get; }
+
+        public TResult Accept&lt;TResult&gt;( IAstVisitor&lt;TResult&gt; visitor ) =&gt; visitor.Visit( this );
+
+        public IEnumerable&lt;IAstNode&gt; Children =&gt; Enumerable.Empty&lt;IAstNode&gt;( );
     }
 }
 </code></pre><p>Generation of the LLVM IR for a constant is quite simple.</p>
-<pre><code class="lang-csharp" name="Main">public override Value VisitConstExpression( [NotNull] ConstExpressionContext context )
+<pre><code class="lang-csharp" name="Main">public override Value Visit( Kaleidoscope.Grammar.AST.ConstantExpression constant )
 {
-    return Context.CreateConstant( context.Value );
+    return Context.CreateConstant( constant.Value );
 }
 </code></pre><div class="NOTE"><h5>Note</h5><p>The constant value is uniqued in LLVM so that multiple calls given the same input value will
 produce the same LLVM Value. LLvm.NET honors this and is implemented in a way to ensure that reference
 equality reflects the identity of the uniqued values correctly.</p>
 </div>
-<h3 id="variable-expression">Variable expression</h3>
+<h3 id="variable-reference-expression">Variable reference expression</h3>
 <p>References to variables in Kaleidoscope, like most other languages, use a name. In this chapter the support
 of variables is rather simple. The Variable expression generator assumes the variable is declared somewhere
 else already and simply looks up the value from the private map. At this stage of the development of
 Kaleidoscope the only place where the named values are generated are function arguments, later chapters
 will introduce loop induction variables and variable assignment. The implementation uses a standard TryGet
 pattern to retrieve the value or throw an exception if the variable doesn&#39;t exist.</p>
-<pre><code class="lang-csharp" name="Main">public override Value VisitVariableExpression( [NotNull] VariableExpressionContext context )
+<pre><code class="lang-csharp" name="Main">public override Value Visit( VariableReferenceExpression reference )
 {
-    string varName = context.Name;
-    if( !NamedValues.TryGetValue( varName, out Value value ) )
+    if( !NamedValues.TryGetValue( reference.Name, out Value value ) )
     {
-        throw new CodeGeneratorException( $&quot;Unknown variable name: {context}&quot; );
+        // Source input is validated by the parser and AstBuilder, therefore
+        // this is the result of an internal error in the generator rather
+        // then some sort of user error.
+        throw new CodeGeneratorException( $&quot;ICE: Unknown variable name: {reference.Name}&quot; );
     }
 
-   return value;
+    return value;
 }
-</code></pre><h3 id="expression">Expression</h3>
-<p>Things start to get a good bit more interesting with binary operators. The parse tree node for an expression
-contains support for walking the chain of operators that form an expression in left to right order, accounting
+</code></pre><h3 id="binary-operator-expression">Binary Operator Expression</h3>
+<p>Things start to get a good bit more interesting with binary operators. The AST node for an expression
+is a simple empty &quot;tagging&quot; interface. Since the interface also requires the IAstNode interface it contains
+support for walking the chain of operators that form an expression in left to right order, accounting
 for precedence.</p>
-<pre><code class="lang-csharp" name="Main">// &lt;copyright file=&quot;Parser.cs&quot; company=&quot;.NET Foundation&quot;&gt;
+<pre><code class="lang-csharp" name="Main">// &lt;copyright file=&quot;IExpression.cs&quot; company=&quot;.NET Foundation&quot;&gt;
 // Copyright (c) .NET Foundation. All rights reserved.
 // &lt;/copyright&gt;
 
-using System.Collections.Generic;
-using Antlr4.Runtime.Tree;
-
-namespace Kaleidoscope.Grammar
+namespace Kaleidoscope.Grammar.AST
 {
-    public partial class KaleidoscopeParser
+    /// &lt;summary&gt;This is a grouping interface for all AST nodes that are valid expressions&lt;/summary&gt;
+    /// &lt;remarks&gt;
+    /// This is a grouping interface to allow other parts of the system to distinguish between
+    /// an arbitrary node and one that is ultimately an expression. This helps to ensure correctness
+    /// (e.g. a function declaration is not valid as an argument to an operator, only an expression is.
+    /// &lt;/remarks&gt;
+    public interface IExpression
+        : IAstNode
     {
-        public partial class ExpressionContext
-        {
-            public PrimaryExpressionContext Atom =&gt; primaryExpression( );
-
-            public bool IsAssignment =&gt; binaryop( ).Length &gt; 0 &amp;&amp; binaryop( )[ 0 ].Start.Type == ASSIGN;
-
-            public VariableExpressionContext AssignmentTarget =&gt; IsAssignment ? GetChild&lt;VariableExpressionContext&gt;( 0 ) : null;
-
-            public IEnumerable&lt;(BinaryopContext op, IParseTree rhs)&gt; OperatorExpressions
-            {
-                get
-                {
-                    // Expression: PrimaryExpression (op expression)*
-                    for( int i = 1; i &lt; ChildCount - 1; i += 2 )
-                    {
-                        yield return (( BinaryopContext )children[ i ], children[ i + 1 ]);
-                    }
-                }
-            }
-        }
     }
 }
-</code></pre><p>Generation of an expression consists of a pair of related methods.</p>
-<pre><code class="lang-csharp" name="Main">public override Value VisitExpression( [NotNull] ExpressionContext context )
+</code></pre><p>Generation of an expression consists a simple visitor method to emit the code for the operands and
+the actual operator.</p>
+<pre><code class="lang-csharp" name="Main">public override Value Visit( BinaryOperatorExpression binaryOperator )
 {
-    // Expression: PrimaryExpression (op expression)*
-    // the sub-expressions are in evaluation order
-    var lhs = context.Atom.Accept( this );
-    foreach( var (op, rhs) in context.OperatorExpressions )
-    {
-        lhs = EmitBinaryOperator( lhs, op, rhs );
-    }
+    var lhs = binaryOperator.Left.Accept( this );
+    var rhs = binaryOperator.Right.Accept( this );
 
-    return lhs;
-}
-</code></pre><p>VisitExpression() will create a value for the left most &#39;Atom&#39; and then use that with the operator and
-right hand side value for the next expression. The left hand side is updated based on the result of each
-operation so that once all operations in the expression are evaluated the <code>lhs</code> variable retains the
-result value for the entire expression. Each operator result is generated through the private utility
-method EmitBinaryOperator().</p>
-<p>EmitBinaryOperator is responsible for generating the LLVM IR representation of a binary operator.</p>
-<pre><code class="lang-csharp" name="Main">private Value EmitBinaryOperator( Value lhs, BinaryopContext op, IParseTree rightTree )
-{
-    var rhs = rightTree.Accept( this );
-    if( lhs == null || rhs == null )
+    switch( binaryOperator.Op )
     {
-        return null;
-    }
-
-    switch( op.Token.Type )
-    {
-    case LEFTANGLE:
+    case BuiltInOperatorKind.Less:
         {
             var tmp = InstructionBuilder.Compare( RealPredicate.UnorderedOrLessThan, lhs, rhs )
                                         .RegisterName( &quot;cmptmp&quot; );
@@ -417,27 +585,27 @@ method EmitBinaryOperator().</p>
                                      .RegisterName( &quot;booltmp&quot; );
         }
 
-    case CARET:
+    case BuiltInOperatorKind.Pow:
         {
             var pow = GetOrDeclareFunction( new Prototype( &quot;llvm.pow.f64&quot;, &quot;value&quot;, &quot;power&quot; ) );
             return InstructionBuilder.Call( pow, lhs, rhs )
                                      .RegisterName( &quot;powtmp&quot; );
         }
 
-    case PLUS:
+    case BuiltInOperatorKind.Add:
         return InstructionBuilder.FAdd( lhs, rhs ).RegisterName( &quot;addtmp&quot; );
 
-    case MINUS:
+    case BuiltInOperatorKind.Subtract:
         return InstructionBuilder.FSub( lhs, rhs ).RegisterName( &quot;subtmp&quot; );
 
-    case ASTERISK:
+    case BuiltInOperatorKind.Multiply:
         return InstructionBuilder.FMul( lhs, rhs ).RegisterName( &quot;multmp&quot; );
 
-    case SLASH:
+    case BuiltInOperatorKind.Divide:
         return InstructionBuilder.FDiv( lhs, rhs ).RegisterName( &quot;divtmp&quot; );
 
     default:
-        throw new CodeGeneratorException( $&quot;Invalid binary operator {op.Token.Text}&quot; );
+        throw new CodeGeneratorException( $&quot;ICE: Invalid binary operator {binaryOperator.Op}&quot; );
     }
 }
 </code></pre><p>The process of transforming the operator starts by generating an LLVM IR Value from the right-hand side
@@ -456,126 +624,20 @@ keep track of the names to ensure uniqueness.</p>
 float cast to translate the LLVM IR i1 result into a floating point value needed by Kaleidoscope.</p>
 <p>The <code>^</code> operator for exponentiation uses the <code>llvm.pow.f64</code> intrinsic to perform the exponentiation as
 efficiently as the back-end generator can.</p>
-<h3 id="function-declarations">Function Declarations</h3>
-<p>Function declaration is performed on prototypes for the function. This includes External function
-declarations as well as the prototype portion of a function definition.</p>
-<pre><code class="lang-csharp" name="Main">public override Value VisitExternalDeclaration( [NotNull] ExternalDeclarationContext context )
-{
-    return context.Signature.Accept( this );
-}
-
-public override Value VisitFunctionPrototype( [NotNull] FunctionPrototypeContext context )
-{
-    return GetOrDeclareFunction( new Prototype( context ) );
-}
-</code></pre><p>An external declarations has just the prototype so the visitor for those simply extracts the signature
-prototype to visit and returns. The function prototype visitor uses a private utility GetOrDeclareFunction
-to get an existing function or declare a new one.</p>
-<pre><code class="lang-csharp" name="Main">private Function GetOrDeclareFunction( Prototype prototype )
-{
-    var function = Module.GetFunction( prototype.Identifier.Name );
-    if( function != null )
-    {
-        return function;
-    }
-
-    var llvmSignature = Context.GetFunctionType( Context.DoubleType, prototype.Parameters.Select( _ =&gt; Context.DoubleType ) );
-
-    var retVal = Module.AddFunction( prototype.Identifier.Name, llvmSignature );
-    retVal.Linkage( Linkage.External );
-
-    int index = 0;
-    foreach( var argId in prototype.Parameters )
-    {
-        retVal.Parameters[ index ].Name = argId.Name;
-        ++index;
-    }
-
-    return retVal;
-}
-</code></pre><p>GetOrDeclareFunction() will first attempt to get an existing function and if found returns that function.
-Otherwise it creates a function signature type then adds a function to the module with the given name and
-signature and adds the parameter names to the function. In LLVM the signature only contains type information
-and no names, allowing for sharing the same signature for completely different functions.</p>
-<h3 id="function-definition">Function Definition</h3>
-<p>Functions with bodies (e.g. not just a declaration to a function defined elsewhere) are handled via the
-VisitFunctionDefinition() Method.</p>
-<pre><code class="lang-csharp" name="Main">public override Value VisitFunctionDefinition( [NotNull] FunctionDefinitionContext context )
-{
-    return DefineFunction( ( Function )context.Signature.Accept( this )
-                         , context.BodyExpression
-                         );
-}
-</code></pre><p>VisitFunctionDefinition() simply extracts the function prototype from the parse tree node and processes
-that to produce a Function declaration. The declaration and the expression representing the body of the
-function is then passed to the private DefineFunction that does the real work of defining the function.</p>
-<pre><code class="lang-csharp" name="Main">private Function DefineFunction( Function function, ExpressionContext body )
-{
-    if( !function.IsDeclaration )
-    {
-        throw new CodeGeneratorException( $&quot;Function {function.Name} cannot be redefined in the same module&quot; );
-    }
-
-    var basicBlock = function.AppendBasicBlock( &quot;entry&quot; );
-    InstructionBuilder.PositionAtEnd( basicBlock );
-    NamedValues.Clear( );
-    foreach( var arg in function.Parameters )
-    {
-        NamedValues[ arg.Name ] = arg;
-    }
-
-    var funcReturn = body.Accept( this );
-    if( funcReturn == null )
-    {
-        function.EraseFromParent( );
-        return null;
-    }
-
-    InstructionBuilder.Return( funcReturn );
-    function.Verify( );
-
-    return function;
-}
-</code></pre><p>DefineFunctio() first tests to see that the function is a declaration (e.g. does not have a body) as
-Kaleidoscope doesn&#39;t support any sort of overloaded functions.</p>
-<p>The generation of a function starts by constructing a basic block for the entry point of the function and
-attaches the InstructionBuilder to the end of that block. (It&#39;s empty so it is technically at the beginning
-but placing it at the end it will track the end position as new instructions are added so that each instruction
-added will go on the end of the block). At this point there will only be the one entry block as the language
-doesn&#39;t yet have support for control flow. (That is introduced in <a href="Kaleidoscope-ch5.html">Chapter 5</a>)</p>
-<p>The NamedValues map is cleared and each of the parameters is mapped in the NamedValues map to its argument
-value in IR. The body of the function is visited to produce an LLVM Value. The visiting will, in turn add
-instructions, and possibly new blocks, as needed to represent the expression in proper execution order.</p>
-<p>If generating the body results in an error, then the function is removed from the parent and null is
-returned. This allows the user to define the function again.</p>
-<p>Finally, a return instruction is applied to return the result of the expression followed by a verification
-of the function to ensure internal consistency. (Generally the verify is not used in production releases
-as it is an expensive operation to perform on every function. But when building up a language generator
-it is quite useful to detect errors early.)</p>
-<h3 id="top-level-expression">Top Level Expression</h3>
-<p>Top level expressions in Kaleidoscope are transformed into an anonymous function definition by the
-VisitTopLevelExpression visitor method.</p>
-<pre><code class="lang-csharp" name="Main">public override Value VisitTopLevelExpression( [NotNull] TopLevelExpressionContext context )
-{
-    var proto = new Prototype( $&quot;anon_expr_{AnonNameIndex++}&quot; );
-    var function = GetOrDeclareFunction( proto );
-
-    return DefineFunction( function, context.expression() );
-}
-</code></pre><p>This simply creates a new prototype with a unique name then uses that to declare and define a function
-with the expression as the body. This re-use of the GetOrDeclareFunction() and DefineFunction() helps keep
-the generation clean and makes future additions simpler.</p>
 <h2 id="examples">Examples</h2>
 <pre><code class="lang-Console">Llvm.NET Kaleidoscope Interpreter - SimpleExpressions
-Ready&gt;4+5;
-Defined function: anon_expr_0
+Ready&gt;# simple top level expression
+&gt;4+5;
+Defined function: __anon_expr$0
 
-define double @anon_expr_0() {
+define double @&quot;__anon_expr$0&quot;() {
 entry:
   ret double 9.000000e+00
 }
 
-Ready&gt;def foo(a b) a*a + 2*a*b + b*b;
+Ready&gt;
+Ready&gt;# function definitions
+&gt;def foo(a b) a*a + 2*a*b + b*b;
 Defined function: foo
 
 define double @foo(double %a, double %b) {
@@ -589,6 +651,7 @@ entry:
   ret double %addtmp4
 }
 
+Ready&gt;
 Ready&gt;def bar(a) foo(a, 4.0) + bar(31337);
 Defined function: bar
 
@@ -600,55 +663,25 @@ entry:
   ret double %addtmp
 }
 
-Ready&gt;extern cos(x);
+Ready&gt;
+Ready&gt;# external declaration
+&gt;extern cos(x);
 Defined function: cos
 
 declare double @cos(double)
 
-Ready&gt;cos(1.234);
-Defined function: anon_expr_1
+Ready&gt;
+Ready&gt;# calling external function
+&gt;cos(1.234);
+Defined function: __anon_expr$1
 
-define double @anon_expr_1() {
+define double @&quot;__anon_expr$1&quot;() {
 entry:
   %calltmp = call double @cos(double 1.234000e+00)
   ret double %calltmp
 }
 
-Ready&gt;^Z
-</code></pre><pre><code class="lang-llvm">; ModuleID = &#39;Kaleidoscope&#39;
-source_filename = &quot;Kaleidoscope&quot;
-
-define double @anon_expr_0() {
-entry:
-  ret double 9.000000e+00
-}
-
-define double @foo(double %a, double %b) {
-entry:
-  %multmp = fmul double %a, %a
-  %multmp1 = fmul double 2.000000e+00, %a
-  %multmp2 = fmul double %multmp1, %b
-  %addtmp = fadd double %multmp, %multmp2
-  %multmp3 = fmul double %b, %b
-  %addtmp4 = fadd double %addtmp, %multmp3
-  ret double %addtmp4
-}
-
-define double @bar(double %a) {
-entry:
-  %calltmp = call double @foo(double %a, double 4.000000e+00)
-  %calltmp1 = call double @bar(double 3.133700e+04)
-  %addtmp = fadd double %calltmp, %calltmp1
-  ret double %addtmp
-}
-
-declare double @cos(double)
-
-define double @anon_expr_1() {
-entry:
-  %calltmp = call double @cos(double 1.234000e+00)
-  ret double %calltmp
-}
+Ready&gt;
 </code></pre></article>
           </div>
           <div class="contribution-panel mobile-hide">
@@ -671,7 +704,7 @@ entry:
             <span class="pull-right">
               <a href="#top">Back to top</a>
             </span>
-            Copyright (C) 2017, Dot NET Foundation<br><strong>Build:</strong> 6.0.0-rc.0.0.ci-BLD.447157481
+            Copyright (C) 2017, Dot NET Foundation<br><strong>Build:</strong> 6.0.1-rc.0.0.ci-BLD.448334824
             
           </div>
         </div>

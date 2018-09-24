@@ -116,10 +116,16 @@
                             <a href="Kaleidoscope-ch7.html" title="Chapter 7 - Mutable Variables" class="active">Chapter 7 - Mutable Variables</a>
                           </li>
                           <li class="">
+                            <a href="Kaleidoscope-ch7.1.html" title="Chapter 7.1 - Extreme Lazy JIT" class="">Chapter 7.1 - Extreme Lazy JIT</a>
+                          </li>
+                          <li class="">
                             <a href="Kaleidoscope-ch8.html" title="Chapter 8 - AOT Compilation" class="">Chapter 8 - AOT Compilation</a>
                           </li>
                           <li class="">
                             <a href="Kaleidoscope-ch9.html" title="Chapter 9 - Debug Information" class="">Chapter 9 - Debug Information</a>
+                          </li>
+                          <li class="">
+                            <a href="Kaleidoscope-Runtime.html" title="Kaleidoscope.Runtime" class="">Kaleidoscope.Runtime</a>
                           </li>
                           <li class="">
                             <a href="Kaleidoscope-ParseTreeVisitor.html" title="ParseTree Visitor" class="">ParseTree Visitor</a>
@@ -348,46 +354,37 @@ Then support for assignment will complete the mutable variables support.</p>
 <p>Currently the symbol stack in Kaleidoscope stores LLVM Values directly. To support mutable values the
  NamedValues ScopeStack needs to switch to using <a class="xref" href="../../api/Llvm.NET.Instructions.Alloca.html">Alloca</a>.</p>
 <pre><code class="lang-C#">private readonly ScopeStack&lt;Alloca&gt; NamedValues;
-</code></pre><h3 id="add-createentryblockalloca">Add CreateEntryBlockAlloca</h3>
-<p>To create the alloca instructions in the entry block we&#39;ll add a new helper routine to build the
-alloca instructions in the entry block.</p>
-<pre><code class="lang-csharp" name="CreateEntryBlockAlloca">private static Alloca CreateEntryBlockAlloca( Function theFunction, string varName )
-{
-    var tmpBldr = new InstructionBuilder( theFunction.EntryBlock );
-    if( theFunction.EntryBlock.FirstInstruction != null )
-    {
-        tmpBldr.PositionBefore( theFunction.EntryBlock.FirstInstruction );
-    }
-
-    return tmpBldr.Alloca( theFunction.Context.DoubleType )
-                  .RegisterName( varName );
-}
-</code></pre><h3 id="update-visitvariableexpression">Update VisitVariableExpression</h3>
+</code></pre><h3 id="update-visitor-for-variablereferenceexpression">Update Visitor for VariableReferenceExpression</h3>
 <p>The first change to the existing code generation is to update handling of variable expressions to generate
 a load through the pointer created with an alloca instruction. This is pretty straight forward since the
 scope map now stores the alloca instructions for the variable.</p>
-<pre><code class="lang-csharp" name="VisitVariableExpression">public override Value VisitVariableExpression( [NotNull] VariableExpressionContext context )
+<pre><code class="lang-csharp" name="VisitVariableExpression">public override Value Visit( VariableReferenceExpression reference )
 {
-    string varName = context.Name;
-    if( !NamedValues.TryGetValue( varName, out Alloca value ) )
+    if( !NamedValues.TryGetValue( reference.Name, out Alloca value ) )
     {
-        throw new CodeGeneratorException( $&quot;Unknown variable name: {context}&quot; );
+        // Source input is validated by the parser and AstBuilder, therefore
+        // this is the result of an internal error in the generator rather
+        // then some sort of user error.
+        throw new CodeGeneratorException( $&quot;ICE: Unknown variable name: {reference.Name}&quot; );
     }
 
     return InstructionBuilder.Load( value )
-                             .RegisterName( varName );
+                             .RegisterName( reference.Name );
 }
-</code></pre><h3 id="update-visitconditionalexpression">Update VisitConditionalExpression</h3>
+</code></pre><h3 id="update-visitor-for-conditionalexpression">Update Visitor for ConditionalExpression</h3>
 <p>Now that we have the alloca support we can update the conditional expression handling to remove the need
 for direct PHI node construction. This involves adding a new compiler generated local var for the result
 of the condition and storing the result value into that location for each side of the branch. Then, in the
 continue block load the value from the location so that it is available as a value for the result of the
 expression.</p>
-<pre><code class="lang-csharp" name="VisitConditionalExpression">public override Value VisitConditionalExpression( [NotNull] ConditionalExpressionContext context )
+<pre><code class="lang-csharp" name="VisitConditionalExpression">public override Value Visit( ConditionalExpression conditionalExpression )
 {
-    var result = CreateEntryBlockAlloca( InstructionBuilder.InsertBlock.ContainingFunction, &quot;ifresult.alloca&quot; );
+    if( !NamedValues.TryGetValue( conditionalExpression.ResultVariable.Name, out Alloca result ) )
+    {
+        throw new CodeGeneratorException( $&quot;ICE: allocation for compiler generated variable &#39;{conditionalExpression.ResultVariable.Name}&#39; not found!&quot; );
+    }
 
-    var condition = context.Condition.Accept( this );
+    var condition = conditionalExpression.Condition.Accept( this );
     if( condition == null )
     {
         return null;
@@ -405,7 +402,7 @@ expression.</p>
 
     // generate then block
     InstructionBuilder.PositionAtEnd( thenBlock );
-    var thenValue = context.ThenExpression.Accept( this );
+    var thenValue = conditionalExpression.ThenExpression.Accept( this );
     if( thenValue == null )
     {
         return null;
@@ -420,7 +417,7 @@ expression.</p>
     // generate else block
     function.BasicBlocks.Add( elseBlock );
     InstructionBuilder.PositionAtEnd( elseBlock );
-    var elseValue = context.ElseExpression.Accept( this );
+    var elseValue = conditionalExpression.ElseExpression.Accept( this );
     if( elseValue == null )
     {
         return null;
@@ -436,20 +433,23 @@ expression.</p>
     return InstructionBuilder.Load( result )
                              .RegisterName( &quot;ifresult&quot; );
 }
-</code></pre><h3 id="update-visitforexpression">Update VisitForExpression</h3>
+</code></pre><h3 id="update-visitor-for-forinexpression">Update Visitor for ForInExpression</h3>
 <p>Next up is to update the for loop handling to use the allocas. The code is almost identical except for the
 use of load/store for the variables and removal of the manually generated PHI nodes.</p>
-<pre><code class="lang-csharp" name="VisitForExpression">public override Value VisitForExpression( [NotNull] ForExpressionContext context )
+<pre><code class="lang-csharp" name="VisitForExpression">public override Value Visit( ForInExpression forInExpression )
 {
     var function = InstructionBuilder.InsertBlock.ContainingFunction;
-    string varName = context.Initializer.Name;
-    var allocaVar = CreateEntryBlockAlloca( function, varName );
+    string varName = forInExpression.LoopVariable.Name;
+    if( !NamedValues.TryGetValue( varName, out Alloca allocaVar ) )
+    {
+        throw new CodeGeneratorException( $&quot;ICE: For loop initializer variable allocation not found!&quot; );
+    }
 
     // Emit the start code first, without &#39;variable&#39; in scope.
     Value startVal = null;
-    if( context.Initializer.Value != null )
+    if( forInExpression.LoopVariable.Initializer != null )
     {
-        startVal = context.Initializer.Value.Accept( this );
+        startVal = forInExpression.LoopVariable.Initializer.Accept( this );
         if( startVal == null )
         {
             return null;
@@ -478,29 +478,24 @@ use of load/store for the variables and removal of the manually generated PHI no
     // So, push a new scope for it and any values the body might set
     using( NamedValues.EnterScope( ) )
     {
-        NamedValues[ varName ] = allocaVar;
+        EmitBranchToNewBlock( &quot;ForInScope&quot; );
 
         // Emit the body of the loop.  This, like any other expression, can change the
         // current BB.  Note that we ignore the value computed by the body, but don&#39;t
         // allow an error.
-        if( context.BodyExpression.Accept( this ) == null )
+        if( forInExpression.Body.Accept( this ) == null )
         {
             return null;
         }
 
-        Value stepValue = Context.CreateConstant( 1.0 );
-
-        if( context.StepExpression != null )
+        Value stepValue = forInExpression.Step.Accept( this );
+        if( stepValue == null )
         {
-            stepValue = context.StepExpression.Accept( this );
-            if( stepValue == null )
-            {
-                return null;
-            }
+            return null;
         }
 
         // Compute the end condition.
-        Value endCondition = context.EndExpression.Accept( this );
+        Value endCondition = forInExpression.Condition.Accept( this );
         if( endCondition == null )
         {
             return null;
@@ -528,63 +523,57 @@ use of load/store for the variables and removal of the manually generated PHI no
         return Context.DoubleType.GetNullValue( );
     }
 }
-</code></pre><h3 id="update-definefunction">Update DefineFunction</h3>
+</code></pre><h3 id="update-visitor-for-functiondefinition">Update Visitor for FunctionDefinition</h3>
 <p>To support mutable function argument variables the handler for functions requires a small update to create
-the allocas for each incoming argument as well.</p>
-<pre><code class="lang-csharp" name="DefineFunction">private (Function Function, IJitModuleHandle JitHandle) DefineFunction( Function function, ExpressionContext body )
+the allocas for each incoming argument and for each of the local variables used by the function. The AST
+generation tracks the variable declarations in a function so they are all available to generate directly
+into the entry block.</p>
+<pre><code class="lang-csharp" name="DefineFunction">public override Value Visit( FunctionDefinition definition )
 {
+    var function = GetOrDeclareFunction( definition.Signature );
     if( !function.IsDeclaration )
     {
         throw new CodeGeneratorException( $&quot;Function {function.Name} cannot be redefined in the same module&quot; );
     }
 
-    // Destroy any previously generated module for this function.
-    // This allows re-definition as the new module will provide the
-    // implementation. This is needed, otherwise both the MCJIT
-    // and OrcJit engines will resolve to the original module, despite
-    // claims to the contrary in the official tutorial text. (Though,
-    // to be fair it may have been true in the original JIT and might
-    // still be true for the interpreter)
-    if( FunctionModuleMap.Remove( function.Name, out IJitModuleHandle handle ) )
+    try
     {
-        JIT.RemoveModule( handle );
-    }
-
-    var basicBlock = function.AppendBasicBlock( &quot;entry&quot; );
-    InstructionBuilder.PositionAtEnd( basicBlock );
-    using( NamedValues.EnterScope( ) )
-    {
-        foreach( var arg in function.Parameters )
+        var entryBlock = function.AppendBasicBlock( &quot;entry&quot; );
+        InstructionBuilder.PositionAtEnd( entryBlock );
+        using( NamedValues.EnterScope( ) )
         {
-            var argSlot = CreateEntryBlockAlloca( function, arg.Name );
-            InstructionBuilder.Store( arg, argSlot );
-            NamedValues[ arg.Name ] = argSlot;
-        }
+            foreach( var arg in function.Parameters )
+            {
+                var argSlot = InstructionBuilder.Alloca( function.Context.DoubleType )
+                                                .RegisterName( arg.Name );
+                InstructionBuilder.Store( arg, argSlot );
+                NamedValues[ arg.Name ] = argSlot;
+            }
 
-        var funcReturn = body.Accept( this );
-        if( funcReturn == null )
-        {
-            function.EraseFromParent( );
-            return (null, default);
-        }
+            foreach( var local in definition.LocalVariables )
+            {
+                var localSlot = InstructionBuilder.Alloca( function.Context.DoubleType )
+                                                  .RegisterName( local.Name );
+                NamedValues[ local.Name ] = localSlot;
+            }
 
-        InstructionBuilder.Return( funcReturn );
-        function.Verify( );
+            EmitBranchToNewBlock( &quot;body&quot; );
+
+            var funcReturn = definition.Body.Accept( this );
+            InstructionBuilder.Return( funcReturn );
+            function.Verify( );
+
+            FunctionPassManager.Run( function );
+            return function;
+        }
     }
-
-    if( !DisableOptimizations )
+    catch( CodeGeneratorException )
     {
-        FunctionPassManager.Run( function );
+        function.EraseFromParent( );
+        throw;
     }
-
-    var jitHandle = JIT.AddModule( Module );
-    FunctionModuleMap.Add( function.Name, jitHandle );
-    InitializeModuleAndPassManager( );
-    return (function, jitHandle);
 }
-</code></pre><p>The only change there is in the for loop used to create the argument variables via the previously created
-helper function.</p>
-<h3 id="initializemoduleandpassmanager">InitializeModuleAndPassManager</h3>
+</code></pre><h3 id="initializemoduleandpassmanager">InitializeModuleAndPassManager</h3>
 <p>The last piece required for mutable variables support is to include the optimization pass to promote memory
 to registers.</p>
 <pre><code class="lang-csharp" name="InitializeModuleAndPassManager">private void InitializeModuleAndPassManager( )
@@ -604,52 +593,18 @@ to registers.</p>
 
     FunctionPassManager.Initialize( );
 }
-</code></pre><h2 id="new-assignment-operator">New Assignment Operator</h2>
-<p>Building on the existing code generation framework makes adding the new assignment operator. The parser
-already knows how to parse the operator so we need to add code generation for the operator. This is split
-in two places to handle the special nature of the assignment operator. The first step is to add handling
-the assign as a binary operator to store the right hand value to the left hand value, which is an address
-from the alloca for the variable.</p>
-<pre><code class="lang-C#">case ASSIGN:
-    InstructionBuilder.Store( rhs, lhs );
-    return rhs;
-</code></pre><h3 id="update-visitexpression">Update VisitExpression</h3>
+</code></pre><h3 id="add-visitor-for-assignment-expressions">Add visitor for Assignment Expressions</h3>
 <p>Unlike the other binary operators assignment doesn&#39;t follow the same emit left, emit right, emit operator
 sequence. This is because an expression like &#39;(x+1) = expression&#39; is nonsensical and therefore not allowed.
 The left hand side is always an alloca as the destination of a store. To handle this special case the
-expression visitor is updated to perform a lookup of the left hand side variable for assignment instead of
-emitting the expression.</p>
-<pre><code class="lang-csharp" name="VisitExpression">public override Value VisitExpression( [NotNull] ExpressionContext context )
+AST creates a distinct node for assignment. Code generation can then simply implement a visitor for an
+assignment to handle storing the value to the variable.</p>
+<pre><code class="lang-csharp" name="VisitExpression">public override Value Visit( AssignmentExpression assignment )
 {
-    // Expression: PrimaryExpression (op expression)*
-    // the sub-expressions are in evaluation order
-    //
-    // Special case the assignment operator as there isn&#39;t anything to emit
-    // for the lhs expression. (If it was emitted it would be a load of the
-    // value and assignment needs a place to store the value)
-    Value lhs = null;
-    var firstOp = context.GetChild&lt;ITerminalNode&gt;( 0 );
-    if( context.IsAssignment )
-    {
-        var target = context.AssignmentTarget;
-        if( !NamedValues.TryGetValue( target.Name, out Alloca varSlot ) )
-        {
-            throw new CodeGeneratorException( $&quot;Unknown variable name {target.Name}&quot; );
-        }
-
-        lhs = varSlot;
-    }
-    else
-    {
-        lhs = context.primaryExpression( ).Accept( this );
-    }
-
-    foreach( var (op, rhs) in context.OperatorExpressions )
-    {
-        lhs = EmitBinaryOperator( lhs, op, rhs );
-    }
-
-    return lhs;
+    var targetAlloca = NamedValues[ assignment.Target.Name ];
+    var value = assignment.Value.Accept( this );
+    InstructionBuilder.Store( value, targetAlloca );
+    return value;
 }
 </code></pre><p>Now that we have mutable variables and assignment we can mutate loop variables or input parameters. For
 example:</p>
@@ -671,31 +626,35 @@ test(123);
 <p>As described in the general syntax discussion of the Kaleidoscope language <a href="Kaleidoscope-ch2.html#varinexpression">VarInExpression</a>
 the VarIn expression is used to declare local variables for a scope. A few changes are required to support
 this language construct.</p>
-<h3 id="add-visitvarinexpression">Add VisitVarInExpression</h3>
+<h3 id="add-visitor-for-varinexpression">Add Visitor for VarInExpression</h3>
 <p>The VarIn expression visitor needs to handle the mutability of the scoped variables. The basic idea for each
 VarIn expression is to push a new scope on the scope stack then walk through all the variables in the
 expression to define them and emit the expression for the initializer. After all the values are defined the
 child expression &quot;scope&quot; is emitted, which may contain another VarIn or loop expression. Once the emit
 completes, the variable scope is popped from the stack to restore back the previous level.</p>
-<pre><code class="lang-csharp" name="VisitVarInExpression">public override Value VisitVarInExpression( [NotNull] VarInExpressionContext context )
+<pre><code class="lang-csharp" name="VisitVarInExpression">public override Value Visit( VarInExpression varInExpression )
 {
     using( NamedValues.EnterScope( ) )
     {
+        EmitBranchToNewBlock( &quot;VarInScope&quot; );
         Function function = InstructionBuilder.InsertBlock.ContainingFunction;
-        foreach( var initializer in context.Initiaizers )
+        foreach( var localVar in varInExpression.LocalVariables )
         {
-            Value initValue = Context.CreateConstant( 0.0 );
-            if( initializer.Value != null )
+            if( !NamedValues.TryGetValue( localVar.Name, out Alloca alloca ) )
             {
-                initValue = initializer.Value.Accept( this );
+                throw new CodeGeneratorException( $&quot;ICE: Missing allocation for local variable {localVar.Name}&quot; );
             }
 
-            var alloca = CreateEntryBlockAlloca( function, initializer.Name );
+            Value initValue = Context.CreateConstant( 0.0 );
+            if( localVar.Initializer != null )
+            {
+                initValue = localVar.Initializer.Accept( this );
+            }
+
             InstructionBuilder.Store( initValue, alloca );
-            NamedValues[ initializer.Name ] = alloca;
         }
 
-        return context.Scope.Accept( this );
+        return varInExpression.Body.Accept( this );
     }
 }
 </code></pre><h2 id="conclusion">Conclusion</h2>
@@ -723,7 +682,7 @@ without needing to manually deal with PHI nodes or generate SSA form! Now, that&
             <span class="pull-right">
               <a href="#top">Back to top</a>
             </span>
-            Copyright (C) 2017, Dot NET Foundation<br><strong>Build:</strong> 6.0.0-rc.0.0.ci-BLD.447157481
+            Copyright (C) 2017, Dot NET Foundation<br><strong>Build:</strong> 6.0.1-rc.0.0.ci-BLD.448334824
             
           </div>
         </div>

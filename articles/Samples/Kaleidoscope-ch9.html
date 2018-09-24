@@ -116,10 +116,16 @@
                             <a href="Kaleidoscope-ch7.html" title="Chapter 7 - Mutable Variables" class="">Chapter 7 - Mutable Variables</a>
                           </li>
                           <li class="">
+                            <a href="Kaleidoscope-ch7.1.html" title="Chapter 7.1 - Extreme Lazy JIT" class="">Chapter 7.1 - Extreme Lazy JIT</a>
+                          </li>
+                          <li class="">
                             <a href="Kaleidoscope-ch8.html" title="Chapter 8 - AOT Compilation" class="">Chapter 8 - AOT Compilation</a>
                           </li>
                           <li class="active">
                             <a href="Kaleidoscope-ch9.html" title="Chapter 9 - Debug Information" class="active">Chapter 9 - Debug Information</a>
+                          </li>
+                          <li class="">
+                            <a href="Kaleidoscope-Runtime.html" title="Kaleidoscope.Runtime" class="">Kaleidoscope.Runtime</a>
                           </li>
                           <li class="">
                             <a href="Kaleidoscope-ParseTreeVisitor.html" title="ParseTree Visitor" class="">ParseTree Visitor</a>
@@ -197,6 +203,7 @@ the DICompileUnit for you.</p>
                            .AddGVNPass( )
                            .AddCFGSimplificationPass( );
     }
+
     FunctionPassManager.Initialize( );
 }
 </code></pre><p>There are a few points of interest here. First the compile unit is created for the Kaleidoscope language,
@@ -229,9 +236,11 @@ information for the function. The DWARF debug format that LLVM&#39;s debug metad
 a single file and the compile unit already has the file info. However, that&#39;s not always true for all
 languages (i.e. some sort of Include mechanism) so the file is created. It&#39;s not a problem as LLVM will
 intern the file definition so that it won&#39;t actually end up with duplicates.</p>
-<pre><code class="lang-csharp" name="GetIrDeclareFunction">private Function GetOrDeclareFunction( Prototype prototype, bool isAnonymous = false )
+<pre><code class="lang-csharp" name="GetIrDeclareFunction">// Retrieves a Function&quot; for a prototype from the current module if it exists,
+// otherwise declares the function and returns the newly declared function.
+private Function GetOrDeclareFunction( Prototype prototype )
 {
-    var function = Module.GetFunction( prototype.Identifier.Name );
+    var function = Module.GetFunction( prototype.Name );
     if( function != null )
     {
         return function;
@@ -242,41 +251,26 @@ intern the file definition so that it won&#39;t actually end up with duplicates.
     if( prototype.IsExtern )
     {
         var llvmSignature = Context.GetFunctionType( Context.DoubleType, prototype.Parameters.Select( _ =&gt; Context.DoubleType ) );
-        retVal = Module.AddFunction( prototype.Identifier.Name, llvmSignature );
+        retVal = Module.AddFunction( prototype.Name, llvmSignature );
     }
     else
     {
         var debugFile = Module.DIBuilder.CreateFile( Module.DICompileUnit.File.FileName, Module.DICompileUnit.File.Directory );
         var signature = Context.CreateFunctionType( Module.DIBuilder, DoubleType, prototype.Parameters.Select( _ =&gt; DoubleType ) );
-        var lastParam = prototype.Parameters.LastOrDefault( );
-        if( lastParam == default )
-        {
-            lastParam = prototype.Identifier;
-        }
+        var lastParamLocation = prototype.Parameters.LastOrDefault( )?.Location ?? prototype.Location;
 
         retVal = Module.CreateFunction( Module.DICompileUnit
-                                      , prototype.Identifier.Name
+                                      , prototype.Name
                                       , null
                                       , debugFile
-                                      , ( uint )prototype.Identifier.Span.StartLine
+                                      , ( uint )prototype.Location.StartLine
                                       , signature
                                       , false
                                       , true
-                                      , ( uint )lastParam.Span.EndLine
-                                      , isAnonymous ? DebugInfoFlags.Artificial : DebugInfoFlags.Prototyped
+                                      , ( uint )lastParamLocation.EndLine
+                                      , prototype.IsCompilerGenerated ? DebugInfoFlags.Artificial : DebugInfoFlags.Prototyped
                                       , false
                                       );
-    }
-
-    // mark anonymous functions as always-inline and private so they can be inlined and then removed
-    if( isAnonymous )
-    {
-        retVal.AddAttribute( FunctionAttributeIndex.Function, AttributeKind.AlwaysInline )
-              .Linkage( Linkage.Private );
-    }
-    else
-    {
-        retVal.Linkage( Linkage.External );
     }
 
     int index = 0;
@@ -286,11 +280,6 @@ intern the file definition so that it won&#39;t actually end up with duplicates.
         ++index;
     }
 
-    if( !isAnonymous )
-    {
-        FunctionPrototypes.AddOrReplaceItem( prototype );
-    }
-
     return retVal;
 }
 </code></pre><h2 id="debug-locations">Debug Locations</h2>
@@ -298,24 +287,17 @@ intern the file definition so that it won&#39;t actually end up with duplicates.
 debug location information for each node fairly easily. The general idea is to set the location in the
 InstructionBuilder so that it is applied to all instructions emitted until it is changed. This saves on
 manually adding the location on every instruction.</p>
-<pre><code class="lang-csharp" name="EmitLocation">private void EmitLocation( IParseTree context )
+<pre><code class="lang-csharp" name="EmitLocation">private void EmitLocation( IAstNode node )
 {
-    if( !( context is ParserRuleContext ruleContext ) )
+    DIScope scope = Module.DICompileUnit;
+    if( LexicalBlocks.Count &gt; 0 )
     {
-        InstructionBuilder.SetDebugLocation( 0, 0 );
+        scope = LexicalBlocks.Peek( );
     }
-    else
-    {
-        DIScope scope = Module.DICompileUnit;
-        if( LexicalBlocks.Count &gt; 0 )
-        {
-            scope = LexicalBlocks.Peek( );
-        }
 
-        InstructionBuilder.SetDebugLocation( ( uint )ruleContext.Start.Line, ( uint )ruleContext.Start.Column, scope );
-    }
+    InstructionBuilder.SetDebugLocation( ( uint )node.Location.StartLine, ( uint )node.Location.StartColumn, scope );
 }
-</code></pre><h2 id="definefunction">DefineFunction</h2>
+</code></pre><h2 id="function-definition">Function Definition</h2>
 <p>The next step is to update the function definition with attached debug information. The definition starts
 by pushing a new lexical scope that is the functions declaration. This serves as the parent scope for all
 the debug information generated for the function&#39;s implementation. The debug location info is cleared from
@@ -323,89 +305,102 @@ the builder to set up all the parameter variables with alloca, as before. Additi
 information for each parameter is constructed. After the function is fully generated the debug information
 for the function is finalized, this is needed to allow for any optimizations to occur at the function
 level.</p>
-<pre><code class="lang-csharp" name="DefineFunction">private Function DefineFunction( Function function, ExpressionContext body )
+<pre><code class="lang-csharp" name="DefineFunction">public override Value Visit( FunctionDefinition definition )
 {
+    var function = GetOrDeclareFunction( definition.Signature );
     if( !function.IsDeclaration )
     {
         throw new CodeGeneratorException( $&quot;Function {function.Name} cannot be redefined in the same module&quot; );
     }
 
-    var basicBlock = function.AppendBasicBlock( &quot;entry&quot; );
-    InstructionBuilder.PositionAtEnd( basicBlock );
-
     LexicalBlocks.Push( function.DISubProgram );
-
-    // Unset the location for the prologue emission (leading instructions with no
-    // location in a function are considered part of the prologue and the debugger
-    // will run past them when breaking on a function)
-    EmitLocation( null );
-
-    FunctionPrototypes.TryGetValue( function.Name, out Prototype proto );
-
-    using( NamedValues.EnterScope( ) )
+    try
     {
-        foreach( var arg in function.Parameters )
+        var entryBlock = function.AppendBasicBlock( &quot;entry&quot; );
+        InstructionBuilder.PositionAtEnd( entryBlock );
+
+        // Unset the location for the prologue emission (leading instructions with no
+        // location in a function are considered part of the prologue and the debugger
+        // will run past them when breaking on a function)
+        EmitLocation( null );
+
+        using( NamedValues.EnterScope( ) )
         {
-            var paramNode = proto.Parameters[ ( int )( arg.Index ) ];
-            var argSlot = CreateEntryBlockAlloca( function, paramNode, arg.Index );
+            foreach( var param in definition.Signature.Parameters )
+            {
+                var argSlot = InstructionBuilder.Alloca( function.Context.DoubleType )
+                                                .RegisterName( param.Name );
+                AddDebugInfoForAlloca( argSlot, function, param );
+                InstructionBuilder.Store( function.Parameters[ param.Index ], argSlot );
+                NamedValues[ param.Name ] = argSlot;
+            }
 
-            InstructionBuilder.Store( arg, argSlot );
-            NamedValues[ arg.Name ] = argSlot;
+            foreach( LocalVariableDeclaration local in definition.LocalVariables )
+            {
+                var localSlot = InstructionBuilder.Alloca( function.Context.DoubleType )
+                                                  .RegisterName( local.Name );
+                AddDebugInfoForAlloca( localSlot, function, local );
+                NamedValues[ local.Name ] = localSlot;
+            }
+
+            EmitBranchToNewBlock( &quot;body&quot; );
+
+            var funcReturn = definition.Body.Accept( this );
+            InstructionBuilder.Return( funcReturn );
+            Module.DIBuilder.Finish( function.DISubProgram );
+            function.Verify( );
+
+            FunctionPassManager.Run( function );
+
+            if( definition.IsAnonymous )
+            {
+                function.AddAttribute( FunctionAttributeIndex.Function, AttributeKind.AlwaysInline )
+                        .Linkage( Linkage.Private );
+
+                AnonymousFunctions.Add( function );
+            }
+
+            return function;
         }
-
-        var funcReturn = body.Accept( this );
-        if( funcReturn == null )
-        {
-            function.EraseFromParent( );
-            LexicalBlocks.Pop( );
-            return null;
-        }
-
-        InstructionBuilder.Return( funcReturn );
-        LexicalBlocks.Pop( );
-        Module.DIBuilder.Finish( function.DISubProgram );
-        function.Verify( );
     }
-
-    FunctionPassManager.Run( function );
-
-    return function;
+    catch( CodeGeneratorException )
+    {
+        function.EraseFromParent( );
+        throw;
+    }
 }
 </code></pre><h2 id="debug-info-for-parameters-and-local-variables">Debug info for Parameters and Local Variables</h2>
 <p>Debug information for parameters and local variables is similar but not quite identical. Thus, two new
-overloads of the CreateEntryBlockAlloca() handle attaching the correct debug information for parameters
-and local variables.</p>
-<pre><code class="lang-csharp" name="CreateEntryBlockAlloca">private Alloca CreateEntryBlockAlloca( Function function, Identifier paramIdentifier, uint argIndex )
+overloaded helper methods <code>AddDebugInfoForAlloca</code> handle attaching the correct debug information for
+parameters and local variables.</p>
+<pre><code class="lang-csharp" name="CreateEntryBlockAlloca">private void AddDebugInfoForAlloca( Alloca argSlot, Function function, ParameterDeclaration param )
 {
-    var argSlot = CreateEntryBlockAlloca( function, paramIdentifier.Name );
-    uint line = ( uint )paramIdentifier.Span.StartLine;
-    uint col = ( uint )paramIdentifier.Span.StartColumn;
+    uint line = ( uint )param.Location.StartLine;
+    uint col = ( uint )param.Location.StartColumn;
 
     DILocalVariable debugVar = Module.DIBuilder.CreateArgument( function.DISubProgram
-                                                              , paramIdentifier.Name
+                                                              , param.Name
                                                               , function.DISubProgram.File
                                                               , line
                                                               , DoubleType
                                                               , true
                                                               , DebugInfoFlags.None
-                                                              , checked(( ushort )( argIndex + 1 )) // Debug index starts at 1!
+                                                              , checked(( ushort )( param.Index + 1 )) // Debug index starts at 1!
                                                               );
     Module.DIBuilder.InsertDeclare( argSlot
                                   , debugVar
                                   , new DILocation( Context, line, col, function.DISubProgram )
                                   , InstructionBuilder.InsertBlock
                                   );
-    return argSlot;
 }
 
-private Alloca CreateEntryBlockAlloca( Function function, InitializerContext initializer )
+private void AddDebugInfoForAlloca( Alloca argSlot, Function function, LocalVariableDeclaration localVar )
 {
-    var argSlot = CreateEntryBlockAlloca( function, initializer.Name );
-    uint line = ( uint )initializer.Start.Line;
-    uint col = ( uint )initializer.Start.Column;
+    uint line = ( uint )localVar.Location.StartLine;
+    uint col = ( uint )localVar.Location.StartColumn;
 
     DILocalVariable debugVar = Module.DIBuilder.CreateLocalVariable( function.DISubProgram
-                                                                   , initializer.Name
+                                                                   , localVar.Name
                                                                    , function.DISubProgram.File
                                                                    , line
                                                                    , DoubleType
@@ -417,19 +412,6 @@ private Alloca CreateEntryBlockAlloca( Function function, InitializerContext ini
                                   , new DILocation( Context, line, col, function.DISubProgram )
                                   , InstructionBuilder.InsertBlock
                                   );
-    return argSlot;
-}
-
-private static Alloca CreateEntryBlockAlloca( Function theFunction, string varName )
-{
-    var tmpBldr = new InstructionBuilder( theFunction.EntryBlock );
-    if( theFunction.EntryBlock.FirstInstruction != null )
-    {
-        tmpBldr.PositionBefore( theFunction.EntryBlock.FirstInstruction );
-    }
-
-    return tmpBldr.Alloca( theFunction.Context.DoubleType )
-                  .RegisterName( varName );
 }
 </code></pre><h2 id="conclusion">Conclusion</h2>
 <p>Adding debugging information in LLVM IR is rather straight forward. The bulk of the problem is in tracking
@@ -458,7 +440,7 @@ compiler for custom languages, including debug support a lot easier.</p>
             <span class="pull-right">
               <a href="#top">Back to top</a>
             </span>
-            Copyright (C) 2017, Dot NET Foundation<br><strong>Build:</strong> 6.0.0-rc.0.0.ci-BLD.447157481
+            Copyright (C) 2017, Dot NET Foundation<br><strong>Build:</strong> 6.0.1-rc.0.0.ci-BLD.448334824
             
           </div>
         </div>

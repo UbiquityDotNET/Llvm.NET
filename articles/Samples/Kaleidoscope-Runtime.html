@@ -1,0 +1,222 @@
+﻿<!DOCTYPE html>
+<!--[if IE]><![endif]-->
+<html>
+  
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>Kaleidoscope.Runtime Library | Llvm.NET </title>
+    <meta name="viewport" content="width=device-width">
+    <meta name="title" content="Kaleidoscope.Runtime Library | Llvm.NET ">
+    <meta name="generator" content="docfx 2.39.0.0">
+    
+    <link rel="shortcut icon" href="../../favicon.ico">
+    <link rel="stylesheet" href="../../styles/docfx.vendor.css">
+    <link rel="stylesheet" href="../../styles/docfx.css">
+    <link rel="stylesheet" href="../../styles/main.css">
+    <meta property="docfx:navrel" content="../../toc">
+    <meta property="docfx:tocrel" content="toc">
+    
+    
+    
+  </head>
+  <body data-spy="scroll" data-target="#affix" data-offset="120">
+    <div id="wrapper">
+      <header>
+        
+        <nav id="autocollapse" class="navbar navbar-inverse ng-scope" role="navigation">
+          <div class="container">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              
+              <a class="navbar-brand" href="../../index.html">
+                <img id="logo" class="svg" src="../../DragonSharp48x48.png" alt="">
+              </a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar">
+              <form class="navbar-form navbar-right" role="search" id="search">
+                <div class="form-group">
+                  <input type="text" class="form-control" id="search-query" placeholder="Search" autocomplete="off">
+                </div>
+              </form>
+                <ul class="nav level1 navbar-nav">
+                  <li class="">
+                    <a href="../../api/index.html" title="API Documentation" class="">API Documentation</a>
+                  </li>
+                  <li class="">
+                    <a href="../../articles/index.html" title="Articles" class="">Articles</a>
+                  </li>
+                  <li class="">
+                    <a href="https://github.com/UbiquityDotNET/Llvm.NET" title="GitHub Repository" class="">GitHub Repository</a>
+                  </li>
+                  <li class="">
+                    <a href="http://LLVM.org" title="LLVM.org" class="">LLVM.org</a>
+                  </li>
+                  <li class="">
+                    <a href="http://releases.llvm.org/6.0.1/docs/index.html" title="LLVM Docs" class="">LLVM Docs</a>
+                  </li>
+                </ul>
+            </div>
+          </div>
+        </nav>
+      </header>
+      <div role="main" class="container body-content hide-when-search">
+        <div class="sidenav hide-when-search">
+          <a class="btn toc-toggle collapse" data-toggle="collapse" href="#sidetoggle" aria-expanded="false" aria-controls="sidetoggle">Show / Hide Table of Contents</a>
+          <div class="sidetoggle collapse" id="sidetoggle">
+            <div>
+              <div class="sidefilter">
+                <form class="toc-filter">
+                  <span class="glyphicon glyphicon-filter filter-icon"></span>
+                  <input type="text" id="toc_filter_input" placeholder="Enter here to filter..." onkeypress="if(event.keyCode==13) {return false;}">
+                </form>
+              </div>
+              <div class="sidetoc">
+                <div class="toc" id="toc">
+                  
+                  <ul class="nav level1">
+                    <li class="">
+                      <span class="expand-stub"></span>
+                      <a class="">Code Generation</a>
+                        
+                        <ul class="nav level2">
+                          <li class="">
+                            <a href="codegeneration.html" title="CodeGenerator With Debug Information" class="">CodeGenerator With Debug Information</a>
+                          </li>
+                        </ul>  </li>
+                    <li class="">
+                      <span class="expand-stub"></span>
+                      <a class="">Kaleidoscope</a>
+                        
+                        <ul class="nav level2">
+                          <li class="">
+                            <a href="Kaleidoscope.html" title="Chapter 1 - Language Introduction" class="">Chapter 1 - Language Introduction</a>
+                          </li>
+                          <li class="">
+                            <a href="Kaleidoscope-ch2.html" title="Chapter 2 - Implementing the parser" class="">Chapter 2 - Implementing the parser</a>
+                          </li>
+                          <li class="">
+                            <a href="Kaleidoscope-ch3.html" title="Chapter 3 - Generating LLVM IR" class="">Chapter 3 - Generating LLVM IR</a>
+                          </li>
+                          <li class="">
+                            <a href="Kaleidoscope-ch4.html" title="Chapter 4 - JIT and Optimizer Support" class="">Chapter 4 - JIT and Optimizer Support</a>
+                          </li>
+                          <li class="">
+                            <a href="Kaleidoscope-ch5.html" title="Chapter 5 - Control Flow" class="">Chapter 5 - Control Flow</a>
+                          </li>
+                          <li class="">
+                            <a href="Kaleidoscope-ch6.html" title="Chapter 6 - User Defined Operators" class="">Chapter 6 - User Defined Operators</a>
+                          </li>
+                          <li class="">
+                            <a href="Kaleidoscope-ch7.html" title="Chapter 7 - Mutable Variables" class="">Chapter 7 - Mutable Variables</a>
+                          </li>
+                          <li class="">
+                            <a href="Kaleidoscope-ch7.1.html" title="Chapter 7.1 - Extreme Lazy JIT" class="">Chapter 7.1 - Extreme Lazy JIT</a>
+                          </li>
+                          <li class="">
+                            <a href="Kaleidoscope-ch8.html" title="Chapter 8 - AOT Compilation" class="">Chapter 8 - AOT Compilation</a>
+                          </li>
+                          <li class="">
+                            <a href="Kaleidoscope-ch9.html" title="Chapter 9 - Debug Information" class="">Chapter 9 - Debug Information</a>
+                          </li>
+                          <li class="active">
+                            <a href="Kaleidoscope-Runtime.html" title="Kaleidoscope.Runtime" class="active">Kaleidoscope.Runtime</a>
+                          </li>
+                          <li class="">
+                            <a href="Kaleidoscope-ParseTreeVisitor.html" title="ParseTree Visitor" class="">ParseTree Visitor</a>
+                          </li>
+                          <li class="">
+                            <a href="Kaleidoscope-Parsetree-examples.html" title="ParseTree Examples" class="">ParseTree Examples</a>
+                          </li>
+                        </ul>  </li>
+                  </ul>        </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="article row grid-right">
+          <div class="col-md-10">
+            <article class="content wrap" id="_content" data-uid="">
+<h1 id="kaleidoscoperuntime-library">Kaleidoscope.Runtime Library</h1>
+
+<p>The Kaleidoscope.Runtime Library provides a set of common support libraries to aid in keeping the
+tutorial chapter code focused on the code generation and JIT support in Llvm.NET rather then the
+particulars of parsing or the Kaleidoscope language in general.</p>
+<h2 id="repl-loop-infrastructure">REPL Loop infrastructure</h2>
+<p>The Kaleidoscope.Runtime library contains the basic infrastructure for the classic Read, Evaluate,
+Print, Loop (REPL) common for interactive/interpreted language runtimes.</p>
+<h3 id="textreaderextensions-class">TextReaderExtensions class</h3>
+<p>The TextReaderExtensions class provides a means to read lines from a TextReader as an <code>IEnumerable&lt;string&gt;</code>.
+Additionally it supports reading statements from an <code>IEnumerable&lt;string&gt;</code> to <code>IEnumerable&lt;(string Txt, bool IsPartial)&gt;</code>
+the <code>Txt</code> member of the tuple is the text from a line of input and the bool <code>IsPartial</code> indicates if, the line is
+terminated by a semicolon. The extension correctly handles lines with additional text following a semicolon by
+splitting the input into multiple lines. Everything up to, and including, the semicolon is yielded with IsPatial
+set to false. Then the rest of the line up to the next new line is yielded with IsPartial set to true. (The
+implementation supports an arbitrary number of semicolons on the same line and yields complete statements for
+each one)</p>
+<h2 id="repllooplttresultgt-class">ReplLoop&lt;TResult&gt; class</h2>
+<p>This class implements the core of the REPL it leverages the <code>IEnumerable&lt;(string Txt, bool IsPartial)&gt;</code> from 
+the TextReaderExtensions class to feed statements to the parser stack to generate the parse tree.</p>
+<h2 id="parserstack">ParserStack</h2>
+<p>Kaleidoscope for Llvm.NET leverages ANTLR4 for parsing the language into a parse tree. Since ANTRL is a
+generalized parsing infrastructure it has a lot of flexibility depending on the needs of a language and
+application. While that flexibility is generally a value, it does come with added complexity. The ParserStack
+class encapsulates the complexity as needed for the Kaleidoscope language code generation to minimize
+the repetition of boiler-plate code, and in particular the correct set of listeners for errors and user
+operators. This stack supports two distinct modes of parsing, interactive REPL, and FULL source as used
+for ahead of time compilation.</p>
+<h2 id="kaleidoscope-jit-engine">Kaleidoscope JIT engine</h2>
+<p>The JIT engine used for Kaleidoscope is based on the Llvm.NET OrcJit, which, unsurprisingly, uses the LLVM
+OrcJit functionality to provide On Request Compilation (ORC). For most of the chapters, the JIT uses a
+moderately lazy compilation technique where the source language is parsed, converted to LLVM IR and submitted
+to the JIT engine. The JIT engine does not immediately generate native code from the module, however. Instead
+it stores the module, and whenever compiled code calls to a symbol exported by the IR module, it will then
+generate the native code for the function &quot;on the fly&quot;. This has the advantage of not paying the price of
+converting IR to native code if it is never actually used, though it does have the cost of converting the
+source language to IR, even if the code will never execute.</p>
+<h3 id="really-lazy-compilation">Really lazy compilation</h3>
+<p>While the basic lazy compilation of IR to native code has performance benefits over a pure interpreter, it
+still has the potential for wasted overhead converting the parsed language to LLVM IR. Fortunately, the LLVM
+and Lllvm.NET OrcJit support truly lazy compilation. This is done by asking the JIT to create a stub for
+a named symbol and then, whenever code calls that symbol the stub calls back to the JIT which then calls back
+the application to generate the IR, add the module to the JIT and trigger compilation to native. Thus, achieving
+true Just-In-Time compilation. </p>
+</article>
+          </div>
+          <div class="contribution-panel mobile-hide">
+              <a href="https://github.com/UbiquityDotNET/Llvm.NET/blob/master/docfx/articles/Samples/Kaleidoscope-Runtime.md/#L1" title="Improve this Doc" class="fab btn-warning pull-right"><i class="glyphicon glyphicon-pencil"></i></a>
+          </div>
+          
+          <div class="hidden-sm col-md-2" role="complementary">
+            <div class="sideaffix">
+              <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <footer>
+        <div class="grad-bottom"></div>
+        <div class="footer">
+          <div class="container">
+            <span class="pull-right">
+              <a href="#top">Back to top</a>
+            </span>
+            Copyright (C) 2017, Dot NET Foundation<br><strong>Build:</strong> 6.0.1-rc.0.0.ci-BLD.448334824
+            
+          </div>
+        </div>
+      </footer>
+    </div>
+    
+    <script type="text/javascript" src="../../styles/docfx.vendor.js"></script>
+    <script type="text/javascript" src="../../styles/docfx.js"></script>
+    <script type="text/javascript" src="../../styles/main.js"></script>
+  </body>
+</html>

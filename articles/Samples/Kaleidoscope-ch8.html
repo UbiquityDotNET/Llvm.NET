@@ -115,11 +115,17 @@
                           <li class="">
                             <a href="Kaleidoscope-ch7.html" title="Chapter 7 - Mutable Variables" class="">Chapter 7 - Mutable Variables</a>
                           </li>
+                          <li class="">
+                            <a href="Kaleidoscope-ch7.1.html" title="Chapter 7.1 - Extreme Lazy JIT" class="">Chapter 7.1 - Extreme Lazy JIT</a>
+                          </li>
                           <li class="active">
                             <a href="Kaleidoscope-ch8.html" title="Chapter 8 - AOT Compilation" class="active">Chapter 8 - AOT Compilation</a>
                           </li>
                           <li class="">
                             <a href="Kaleidoscope-ch9.html" title="Chapter 9 - Debug Information" class="">Chapter 9 - Debug Information</a>
+                          </li>
+                          <li class="">
+                            <a href="Kaleidoscope-Runtime.html" title="Kaleidoscope.Runtime" class="">Kaleidoscope.Runtime</a>
                           </li>
                           <li class="">
                             <a href="Kaleidoscope-ParseTreeVisitor.html" title="ParseTree Visitor" class="">ParseTree Visitor</a>
@@ -199,14 +205,10 @@ the Always inliner and a global dead code elimination pass. The always inliner w
 marked as inline and the dead code elimination pass will eliminate unused internal/private global symbols.
 This has the effect of generating the main function with all top level expressions inlined and the originally
 generated anonymous functions removed. </p>
-<pre><code class="lang-csharp" name="Generate">public Value Generate( Parser parser, IParseTree tree, DiagnosticRepresentations additionalDiagnostics )
+<pre><code class="lang-csharp" name="Generate">public Value Generate( IAstNode ast )
 {
-    if( parser.NumberOfSyntaxErrors &gt; 0 )
-    {
-        return null;
-    }
+    ast.Accept( this );
 
-    Visit( tree );
     if( AnonymousFunctions.Count &gt; 0 )
     {
         var mainFunction = Module.AddFunction( &quot;main&quot;, Context.GetFunctionType( Context.VoidType ) );
@@ -235,17 +237,62 @@ generated anonymous functions removed. </p>
     return null;
 }
 </code></pre><p>Most of the rest of the changes are pretty straightforward following the steps listed previously.</p>
-<h3 id="visittoplevelexpression">VisitTopLevelExpression</h3>
+<h3 id="anonymous-function-definitions">Anonymous Function Definitions</h3>
 <p>As previously mentioned, when generating the top level expression the resulting function is added to the
 list of anonymous functions to generate a call to it from main().</p>
-<pre><code class="lang-csharp" name="VisitTopLevelExpression">public override Value VisitTopLevelExpression( [NotNull] TopLevelExpressionContext context )
+<pre><code class="lang-csharp" name="FunctionDefinition">public override Value Visit( FunctionDefinition definition )
 {
-    var function = GetOrDeclareFunction( new Prototype( $&quot;anon_expr_{AnonNameIndex++}&quot; )
-                                       , isAnonymous: true
-                                       );
+    var function = GetOrDeclareFunction( definition.Signature );
+    if( !function.IsDeclaration )
+    {
+        throw new CodeGeneratorException( $&quot;Function {function.Name} cannot be redefined in the same module&quot; );
+    }
 
-    AnonymousFunctions.Add( function );
-    return DefineFunction( function, context.expression( ) );
+    try
+    {
+        var entryBlock = function.AppendBasicBlock( &quot;entry&quot; );
+        InstructionBuilder.PositionAtEnd( entryBlock );
+        using( NamedValues.EnterScope( ) )
+        {
+            foreach( var arg in function.Parameters )
+            {
+                var argSlot = InstructionBuilder.Alloca( function.Context.DoubleType )
+                                                .RegisterName( arg.Name );
+                InstructionBuilder.Store( arg, argSlot );
+                NamedValues[ arg.Name ] = argSlot;
+            }
+
+            foreach( var local in definition.LocalVariables )
+            {
+                var localSlot = InstructionBuilder.Alloca( function.Context.DoubleType )
+                                                  .RegisterName( local.Name );
+                NamedValues[ local.Name ] = localSlot;
+            }
+
+            EmitBranchToNewBlock( &quot;body&quot; );
+
+            var funcReturn = definition.Body.Accept( this );
+            InstructionBuilder.Return( funcReturn );
+            function.Verify( );
+
+            FunctionPassManager.Run( function );
+
+            if( definition.IsAnonymous )
+            {
+                function.AddAttribute( FunctionAttributeIndex.Function, AttributeKind.AlwaysInline )
+                        .Linkage( Linkage.Private );
+
+                AnonymousFunctions.Add( function );
+            }
+
+            return function;
+        }
+    }
+    catch( CodeGeneratorException )
+    {
+        function.EraseFromParent( );
+        throw;
+    }
 }
 </code></pre><h2 id="driver-changes">Driver changes</h2>
 <p>To support generating object files the &quot;driver&quot; application code needs some alterations. The changes
@@ -258,7 +305,7 @@ fall into two general categories:</p>
 <p>To allow providing a file like a traditional compiler the driver app needs to have some basic
 command line argument handling. (&quot;Basic&quot; in this case means truly rudimentary <span class="emoji" shortcode="grin">😁</span> )
 Generally this just gets a viable file path to use for the source code.</p>
-<pre><code class="lang-csharp" name="ProcessArgs">// really simple command line handling, just loops through the arguments
+<pre><code class="lang-csharp" name="ProcessArgs">// really simple command line handling, just loops through the input arguments
 private static (string SourceFilePath, int ExitCode) ProcessArgs( string[ ] args )
 {
     bool waitforDebugger = false;
@@ -346,8 +393,8 @@ public static int Main( string[ ] args )
 
             // time the parse and code generation
             var timer = System.Diagnostics.Stopwatch.StartNew( );
-            var (parseTree, recognizer) = parser.Parse( rdr, DiagnosticRepresentations.DebugTraceParser );
-            generator.Generate( recognizer, parseTree, DiagnosticRepresentations.None );
+            IAstNode ast = parser.Parse( rdr, DiagnosticRepresentations.DebugTraceParser );
+            generator.Generate( ast );
             if( !generator.Module.Verify( out string errMsg ) )
             {
                 Console.Error.WriteLine( errMsg );
@@ -399,7 +446,7 @@ this feature is &quot;left as an exercise for the reader&quot; <span class="emoj
             <span class="pull-right">
               <a href="#top">Back to top</a>
             </span>
-            Copyright (C) 2017, Dot NET Foundation<br><strong>Build:</strong> 6.0.0-rc.0.0.ci-BLD.447157481
+            Copyright (C) 2017, Dot NET Foundation<br><strong>Build:</strong> 6.0.1-rc.0.0.ci-BLD.448334824
             
           </div>
         </div>

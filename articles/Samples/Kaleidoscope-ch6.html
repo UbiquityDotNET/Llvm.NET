@@ -116,10 +116,16 @@
                             <a href="Kaleidoscope-ch7.html" title="Chapter 7 - Mutable Variables" class="">Chapter 7 - Mutable Variables</a>
                           </li>
                           <li class="">
+                            <a href="Kaleidoscope-ch7.1.html" title="Chapter 7.1 - Extreme Lazy JIT" class="">Chapter 7.1 - Extreme Lazy JIT</a>
+                          </li>
+                          <li class="">
                             <a href="Kaleidoscope-ch8.html" title="Chapter 8 - AOT Compilation" class="">Chapter 8 - AOT Compilation</a>
                           </li>
                           <li class="">
                             <a href="Kaleidoscope-ch9.html" title="Chapter 9 - Debug Information" class="">Chapter 9 - Debug Information</a>
+                          </li>
+                          <li class="">
+                            <a href="Kaleidoscope-Runtime.html" title="Kaleidoscope.Runtime" class="">Kaleidoscope.Runtime</a>
                           </li>
                           <li class="">
                             <a href="Kaleidoscope-ParseTreeVisitor.html" title="ParseTree Visitor" class="">ParseTree Visitor</a>
@@ -138,17 +144,17 @@
             <article class="content wrap" id="_content" data-uid="">
 <h1 id="6-kaleidoscope-user-defined-operators">6. Kaleidoscope: User Defined Operators</h1>
 
-<p>At this point in the progression of the tutorial Kaleidoscope is a fully functional, albeit fairly minimal
+<p>At this point in the progression of the tutorial, Kaleidoscope is a fully functional, albeit fairly minimal,
 language. Thus far, the tutorial has avoided details of the parsing. One of the benefits of using a tool
 like ANTLR4 is that you can accomplish a lot without needing to spend a lot of time thinking about the
 parser too much. With user defined operators we&#39;ll break that and get down and dirty with the parser a bit
-to make the operators work.</p>
+to make the operators work. </p>
 <div class="TIP"><h5>Tip</h5><p>The actual value of user defined operator precedence in a language is a bit debatable, and the
-initial plan for the Llvm.NET tutorials was to skip this chapter as it doesn&#39;t really involve a lot of
-new LLVM IR or code generation. After the code was done to get the other chapters working - this one was
-still nagging, begging really, for a solution. The challenge to come up with a good solution was
-ultimately too tempting to resist, and we now have a full implementation with a few useful extensions
-on top! (Exponent operator &#39;^&#39;, &#39;=&#39; vs &#39;==&#39;, &#39;++&#39;, and &#39;--&#39;)</p>
+initial plan for the Llvm.NET tutorials was to skip this chapter as it doesn&#39;t involve any new
+LLVM IR or code generation. After the code was done to get the other chapters working - this one
+was still nagging, begging really, for a solution. The challenge to come up with a good solution
+was ultimately too tempting to resist, and we now have a full implementation with a few useful
+extensions on top! (Exponent operator &#39;^&#39;, &#39;=&#39; vs &#39;==&#39;, &#39;++&#39;, and &#39;--&#39;)</p>
 </div>
 <h2 id="general-idea-of-user-defined-operators">General idea of user defined operators</h2>
 <p>User defined operators in Kaleidoscope are a bit unique. Unlike C++ and other similar languages the
@@ -319,10 +325,37 @@ namespace Kaleidoscope.Runtime
         private readonly DynamicRuntimeState RuntimeState;
     }
 }
-</code></pre><p>With the use of the listener the dynamic precedence is contained in the parser which allows the generator
-and later stages to remain blissfully ignorant of the issue of precedence. In the generator, operator
-definitions are simply treated as function definitions with special naming.</p>
-<pre><code class="lang-csharp" name="VisitUserOperators">public override Value VisitUnaryOpExpression( [NotNull] UnaryOpExpressionContext context )
+</code></pre><p>With the use of the listener the dynamic precedence is contained entirely in the parser. When the parse tree is
+processed to produce the AST the user defined operators are transformed to simple function declarations and
+function calls. This simplification allows the generator and later stages to remain blissfully ignorant of the
+issue of precedence and even the existence of user defined operators.</p>
+<h4 id="ast">AST</h4>
+<p>When building the AST Prototypes for user defined operators are transformed to a FunctionDeclaration</p>
+<pre><code class="lang-csharp" name="UserOperatorPrototypes">public override IAstNode VisitBinaryPrototype( [NotNull] BinaryPrototypeContext context )
+{
+    return BuildPrototype( context, CreateBinaryFunctionName( context.OpToken ) );
+}
+
+public override IAstNode VisitUnaryPrototype( [NotNull] UnaryPrototypeContext context )
+{
+    return BuildPrototype( context, CreateUnaryFunctionName( context.OpToken ) );
+}
+</code></pre><p>During construction of the AST all occurances of a user defined operator expression are transformed into a function call for the
+function that actually implements the behavior for the operator.</p>
+<pre><code class="lang-csharp" name="UserBinaryOpExpression">default:
+    {
+        // User defined op?
+        var opKind = RuntimeState.GetBinOperatorInfo( op.Token.Type ).Kind;
+        if( opKind != OperatorKind.InfixLeftAssociative &amp;&amp; opKind != OperatorKind.InfixRightAssociative )
+        {
+            throw new CodeGeneratorException( $&quot;Invalid binary operator &#39;{op.Token.Text}&#39;&quot; );
+        }
+
+        string calleeName = CreateBinaryFunctionName( op.Token );
+        Prototype callTarget = FindCallTarget( calleeName );
+        return new FunctionCallExpression( op.GetSourceSpan( ), callTarget, lhs, rhs );
+    }
+</code></pre><pre><code class="lang-csharp" name="UnaryOpExpression">public override IAstNode VisitUnaryOpExpression( [NotNull] UnaryOpExpressionContext context )
 {
     // verify the operator was previously defined
     var opKind = RuntimeState.GetUnaryOperatorInfo( context.Op ).Kind;
@@ -331,47 +364,25 @@ definitions are simply treated as function definitions with special naming.</p>
         throw new CodeGeneratorException( $&quot;invalid unary operator {context.Op}&quot; );
     }
 
-    string calleeName = UnaryPrototypeContext.GetOperatorFunctionName( context.OpToken );
+    string calleeName = CreateUnaryFunctionName( context.OpToken );
     var function = FindCallTarget( calleeName );
     if( function == null )
     {
         throw new CodeGeneratorException( $&quot;Unknown function reference {calleeName}&quot; );
     }
 
-    var arg = context.Rhs.Accept( this );
-    return InstructionBuilder.Call( function, arg ).RegisterName( &quot;calltmp&quot; );
+    var arg = ( IExpression )context.Rhs.Accept( this );
+    return new FunctionCallExpression( context.GetSourceSpan( ), function, arg );
 }
-
-public override Value VisitBinaryPrototype( [NotNull] BinaryPrototypeContext context )
-{
-    return GetOrDeclareFunction( new Prototype( context, context.Name ) );
-}
-
-public override Value VisitUnaryPrototype( [NotNull] UnaryPrototypeContext context )
-{
-    return GetOrDeclareFunction( new Prototype( context, context.Name ) );
-}
-</code></pre><p>Finally, the default case for EmitBinaryOperator() is updated to actually emit a call to the binary
-operator function generated.</p>
-<pre><code class="lang-csharp" name="EmitUserOperator">default:
-    {
-        // User defined op?
-        var opKind = RuntimeState.GetBinOperatorInfo( op.Token.Type ).Kind;
-        if( opKind != OperatorKind.InfixLeftAssociative &amp;&amp; opKind != OperatorKind.InfixRightAssociative )
-        {
-            throw new CodeGeneratorException( $&quot;Invalid binary operator {op.Token.Text}&quot; );
-        }
-
-        string calleeName = BinaryPrototypeContext.GetOperatorFunctionName( op.Token );
-        var function = FindCallTarget( calleeName );
-        if( function == null )
-        {
-            throw new CodeGeneratorException( $&quot;Unknown function reference {calleeName}&quot; );
-        }
-
-        return InstructionBuilder.Call( function, lhs, rhs ).RegisterName( &quot;calltmp&quot; );
-    }
-</code></pre><p>That completes the support for user defined operators.</p>
+</code></pre><h3 id="codegen-and-driver">CodeGen and Driver</h3>
+<p>If you compare the code generation and driver code between Chapter 5 and Chapter 6 you&#39;ll see the only difference is the
+language level setting, it got a bump (Literally a single enum on one line of each component). Everything else is identical.
+This is because the real work is on the parser and AST not the code generation. This is where having a good parser + AST model
+can help keep the code generation simpler. If the parse tree alone was used, then the code generation would need additional code
+similar to what is found in the AST generation. Putting it into the AST generation keeps things much cleaner as, obviously, the
+support for user defined operators and precedence has nothing to do with code generation. Keeping the code generation simpler is
+generally a really good thing!</p>
+<p>That completes the support for user defined operators.</p>
 <h3 id="example">Example</h3>
 <p>The following example is a complete program in Kaleidoscope that will generate a textual representation
 of the classic Mandelbrot Set using all of the features of the language.</p>
@@ -489,10 +500,22 @@ Evaluated to 0
 Ready&gt;
 </code></pre><h2 id="conclusion">Conclusion</h2>
 <p>Adding user defined operators with user defined precedence is fairly straight forward to implement in
-terms of the code generation. However, the real work is on the parser not the code generation. ANTLR4 has
-support for left-recursion in the grammar and precedence of expressions and even though it only directly
-supports fixed precedence it is rather easy to extend the underlying support to handle dynamic precedence
-and associativity, once the underlying mechanics ANTLR uses for handling left recursion is understood.</p>
+terms of the code generation. No new code generation is required. ANTLR4 has support for left-recursion
+in the grammar and precedence of expressions. Even though ANTLR only directly supports fixed precedence it is
+rather easy to extend the underlying support to handle dynamic precedence and associativity, once the underlying
+mechanics are understood. The rest is on the Ast construction as it converts the user defined operators to
+function definitions and function calls. </p>
+<p>If you compare the code generation and driver code between Chapter 5 and Chapter 6 you&#39;ll see the only difference is the
+language level setting, it got a bump (Literally a single enum on one line of each component). Everything else is identical.
+This is because the real work is on the parser and AST not the code generation. This is where having a good parser + AST model
+can help keep the code generation simpler. If the parse tree alone was used, then the code generation would need additional code
+similar to what is found in the AST generation. Putting it into the AST generation keeps things much cleaner as, obviously, the
+support for user defined operators and precedence has nothing to do with code generation. Keeping the code generation simpler is
+generally a really good thing! </p>
+<div class="TIP"><h5>Tip</h5><p>An early version of these samples skipped the use of an AST and used the parse tree directly. You can compare the history of
+the generators for that transition to see how the AST helps simplify the code generation. (Not to mention sets the stage for
+an otherwise un-implemented feature - truly lazy compilation.)</p>
+</div>
 </article>
           </div>
           <div class="contribution-panel mobile-hide">
@@ -515,7 +538,7 @@ and associativity, once the underlying mechanics ANTLR uses for handling left re
             <span class="pull-right">
               <a href="#top">Back to top</a>
             </span>
-            Copyright (C) 2017, Dot NET Foundation<br><strong>Build:</strong> 6.0.0-rc.0.0.ci-BLD.447157481
+            Copyright (C) 2017, Dot NET Foundation<br><strong>Build:</strong> 6.0.1-rc.0.0.ci-BLD.448334824
             
           </div>
         </div>

@@ -211,18 +211,6 @@ references:
   commentId: Overload:Llvm.NET.BitcodeModule.CreateFunction
   fullName: Llvm.NET.BitcodeModule.CreateFunction
   nameWithType: BitcodeModule.CreateFunction
-- uid: Llvm.NET.BitcodeModule.CreateMDNode(System.String)
-  name: CreateMDNode(String)
-  href: api/Llvm.NET.BitcodeModule.CreateMDNode.html#Llvm_NET_BitcodeModule_CreateMDNode_System_String_
-  commentId: M:Llvm.NET.BitcodeModule.CreateMDNode(System.String)
-  fullName: Llvm.NET.BitcodeModule.CreateMDNode(System.String)
-  nameWithType: BitcodeModule.CreateMDNode(String)
-- uid: Llvm.NET.BitcodeModule.CreateMDNode*
-  name: CreateMDNode
-  href: api/Llvm.NET.BitcodeModule.CreateMDNode.html
-  commentId: Overload:Llvm.NET.BitcodeModule.CreateMDNode
-  fullName: Llvm.NET.BitcodeModule.CreateMDNode
-  nameWithType: BitcodeModule.CreateMDNode
 - uid: Llvm.NET.BitcodeModule.DataLayoutString
   name: DataLayoutString
   href: api/Llvm.NET.BitcodeModule.DataLayoutString.html#Llvm_NET_BitcodeModule_DataLayoutString
@@ -1214,6 +1202,18 @@ references:
   commentId: Overload:Llvm.NET.Context.CreateFunctionType
   fullName: Llvm.NET.Context.CreateFunctionType
   nameWithType: Context.CreateFunctionType
+- uid: Llvm.NET.Context.CreateMDNode(System.String)
+  name: CreateMDNode(String)
+  href: api/Llvm.NET.Context.CreateMDNode.html#Llvm_NET_Context_CreateMDNode_System_String_
+  commentId: M:Llvm.NET.Context.CreateMDNode(System.String)
+  fullName: Llvm.NET.Context.CreateMDNode(System.String)
+  nameWithType: Context.CreateMDNode(String)
+- uid: Llvm.NET.Context.CreateMDNode*
+  name: CreateMDNode
+  href: api/Llvm.NET.Context.CreateMDNode.html
+  commentId: Overload:Llvm.NET.Context.CreateMDNode
+  fullName: Llvm.NET.Context.CreateMDNode
+  nameWithType: Context.CreateMDNode
 - uid: Llvm.NET.Context.CreateMetadataString(System.String)
   name: CreateMetadataString(String)
   href: api/Llvm.NET.Context.CreateMetadataString.html#Llvm_NET_Context_CreateMetadataString_System_String_
@@ -10127,6 +10127,60 @@ references:
   commentId: T:Llvm.NET.JIT.IJitModuleHandle
   fullName: Llvm.NET.JIT.IJitModuleHandle
   nameWithType: IJitModuleHandle
+- uid: Llvm.NET.JIT.ILazyCompileExecutionEngine
+  name: ILazyCompileExecutionEngine
+  href: api/Llvm.NET.JIT.ILazyCompileExecutionEngine.html
+  commentId: T:Llvm.NET.JIT.ILazyCompileExecutionEngine
+  fullName: Llvm.NET.JIT.ILazyCompileExecutionEngine
+  nameWithType: ILazyCompileExecutionEngine
+- uid: Llvm.NET.JIT.ILazyCompileExecutionEngine.AddLazyFunctionGenerator(System.String,Llvm.NET.JIT.LazyFunctionCompiler,System.IntPtr)
+  name: AddLazyFunctionGenerator(String, LazyFunctionCompiler, IntPtr)
+  href: api/Llvm.NET.JIT.ILazyCompileExecutionEngine.AddLazyFunctionGenerator.html#Llvm_NET_JIT_ILazyCompileExecutionEngine_AddLazyFunctionGenerator_System_String_Llvm_NET_JIT_LazyFunctionCompiler_System_IntPtr_
+  commentId: M:Llvm.NET.JIT.ILazyCompileExecutionEngine.AddLazyFunctionGenerator(System.String,Llvm.NET.JIT.LazyFunctionCompiler,System.IntPtr)
+  fullName: Llvm.NET.JIT.ILazyCompileExecutionEngine.AddLazyFunctionGenerator(System.String, Llvm.NET.JIT.LazyFunctionCompiler, System.IntPtr)
+  nameWithType: ILazyCompileExecutionEngine.AddLazyFunctionGenerator(String, LazyFunctionCompiler, IntPtr)
+- uid: Llvm.NET.JIT.ILazyCompileExecutionEngine.AddLazyFunctionGenerator*
+  name: AddLazyFunctionGenerator
+  href: api/Llvm.NET.JIT.ILazyCompileExecutionEngine.AddLazyFunctionGenerator.html
+  commentId: Overload:Llvm.NET.JIT.ILazyCompileExecutionEngine.AddLazyFunctionGenerator
+  fullName: Llvm.NET.JIT.ILazyCompileExecutionEngine.AddLazyFunctionGenerator
+  nameWithType: ILazyCompileExecutionEngine.AddLazyFunctionGenerator
+- uid: Llvm.NET.JIT.ILazyCompileExecutionEngine.DefaultSymbolResolver(System.String,System.IntPtr)
+  name: DefaultSymbolResolver(String, IntPtr)
+  href: api/Llvm.NET.JIT.ILazyCompileExecutionEngine.DefaultSymbolResolver.html#Llvm_NET_JIT_ILazyCompileExecutionEngine_DefaultSymbolResolver_System_String_System_IntPtr_
+  commentId: M:Llvm.NET.JIT.ILazyCompileExecutionEngine.DefaultSymbolResolver(System.String,System.IntPtr)
+  fullName: Llvm.NET.JIT.ILazyCompileExecutionEngine.DefaultSymbolResolver(System.String, System.IntPtr)
+  nameWithType: ILazyCompileExecutionEngine.DefaultSymbolResolver(String, IntPtr)
+- uid: Llvm.NET.JIT.ILazyCompileExecutionEngine.DefaultSymbolResolver*
+  name: DefaultSymbolResolver
+  href: api/Llvm.NET.JIT.ILazyCompileExecutionEngine.DefaultSymbolResolver.html
+  commentId: Overload:Llvm.NET.JIT.ILazyCompileExecutionEngine.DefaultSymbolResolver
+  fullName: Llvm.NET.JIT.ILazyCompileExecutionEngine.DefaultSymbolResolver
+  nameWithType: ILazyCompileExecutionEngine.DefaultSymbolResolver
+- uid: Llvm.NET.JIT.LazyCompilationExecutionEngineExtensions
+  name: LazyCompilationExecutionEngineExtensions
+  href: api/Llvm.NET.JIT.LazyCompilationExecutionEngineExtensions.html
+  commentId: T:Llvm.NET.JIT.LazyCompilationExecutionEngineExtensions
+  fullName: Llvm.NET.JIT.LazyCompilationExecutionEngineExtensions
+  nameWithType: LazyCompilationExecutionEngineExtensions
+- uid: Llvm.NET.JIT.LazyCompilationExecutionEngineExtensions.AddLazyFunctionGenerator(Llvm.NET.JIT.ILazyCompileExecutionEngine,System.String,Llvm.NET.JIT.LazyFunctionCompiler)
+  name: AddLazyFunctionGenerator(ILazyCompileExecutionEngine, String, LazyFunctionCompiler)
+  href: api/Llvm.NET.JIT.LazyCompilationExecutionEngineExtensions.AddLazyFunctionGenerator.html#Llvm_NET_JIT_LazyCompilationExecutionEngineExtensions_AddLazyFunctionGenerator_Llvm_NET_JIT_ILazyCompileExecutionEngine_System_String_Llvm_NET_JIT_LazyFunctionCompiler_
+  commentId: M:Llvm.NET.JIT.LazyCompilationExecutionEngineExtensions.AddLazyFunctionGenerator(Llvm.NET.JIT.ILazyCompileExecutionEngine,System.String,Llvm.NET.JIT.LazyFunctionCompiler)
+  fullName: Llvm.NET.JIT.LazyCompilationExecutionEngineExtensions.AddLazyFunctionGenerator(Llvm.NET.JIT.ILazyCompileExecutionEngine, System.String, Llvm.NET.JIT.LazyFunctionCompiler)
+  nameWithType: LazyCompilationExecutionEngineExtensions.AddLazyFunctionGenerator(ILazyCompileExecutionEngine, String, LazyFunctionCompiler)
+- uid: Llvm.NET.JIT.LazyCompilationExecutionEngineExtensions.AddLazyFunctionGenerator*
+  name: AddLazyFunctionGenerator
+  href: api/Llvm.NET.JIT.LazyCompilationExecutionEngineExtensions.AddLazyFunctionGenerator.html
+  commentId: Overload:Llvm.NET.JIT.LazyCompilationExecutionEngineExtensions.AddLazyFunctionGenerator
+  fullName: Llvm.NET.JIT.LazyCompilationExecutionEngineExtensions.AddLazyFunctionGenerator
+  nameWithType: LazyCompilationExecutionEngineExtensions.AddLazyFunctionGenerator
+- uid: Llvm.NET.JIT.LazyFunctionCompiler
+  name: LazyFunctionCompiler
+  href: api/Llvm.NET.JIT.LazyFunctionCompiler.html
+  commentId: T:Llvm.NET.JIT.LazyFunctionCompiler
+  fullName: Llvm.NET.JIT.LazyFunctionCompiler
+  nameWithType: LazyFunctionCompiler
 - uid: Llvm.NET.JIT.LegacyExecutionEngine
   name: LegacyExecutionEngine
   href: api/Llvm.NET.JIT.LegacyExecutionEngine.html
@@ -10271,18 +10325,30 @@ references:
   commentId: Overload:Llvm.NET.JIT.OrcJit.AddInteropCallback
   fullName: Llvm.NET.JIT.OrcJit.AddInteropCallback
   nameWithType: OrcJit.AddInteropCallback
+- uid: Llvm.NET.JIT.OrcJit.AddLazyFunctionGenerator(System.String,Llvm.NET.JIT.LazyFunctionCompiler,System.IntPtr)
+  name: AddLazyFunctionGenerator(String, LazyFunctionCompiler, IntPtr)
+  href: api/Llvm.NET.JIT.OrcJit.AddLazyFunctionGenerator.html#Llvm_NET_JIT_OrcJit_AddLazyFunctionGenerator_System_String_Llvm_NET_JIT_LazyFunctionCompiler_System_IntPtr_
+  commentId: M:Llvm.NET.JIT.OrcJit.AddLazyFunctionGenerator(System.String,Llvm.NET.JIT.LazyFunctionCompiler,System.IntPtr)
+  fullName: Llvm.NET.JIT.OrcJit.AddLazyFunctionGenerator(System.String, Llvm.NET.JIT.LazyFunctionCompiler, System.IntPtr)
+  nameWithType: OrcJit.AddLazyFunctionGenerator(String, LazyFunctionCompiler, IntPtr)
+- uid: Llvm.NET.JIT.OrcJit.AddLazyFunctionGenerator*
+  name: AddLazyFunctionGenerator
+  href: api/Llvm.NET.JIT.OrcJit.AddLazyFunctionGenerator.html
+  commentId: Overload:Llvm.NET.JIT.OrcJit.AddLazyFunctionGenerator
+  fullName: Llvm.NET.JIT.OrcJit.AddLazyFunctionGenerator
+  nameWithType: OrcJit.AddLazyFunctionGenerator
 - uid: Llvm.NET.JIT.OrcJit.AddModule(Llvm.NET.BitcodeModule)
   name: AddModule(BitcodeModule)
   href: api/Llvm.NET.JIT.OrcJit.AddModule.html#Llvm_NET_JIT_OrcJit_AddModule_Llvm_NET_BitcodeModule_
   commentId: M:Llvm.NET.JIT.OrcJit.AddModule(Llvm.NET.BitcodeModule)
   fullName: Llvm.NET.JIT.OrcJit.AddModule(Llvm.NET.BitcodeModule)
   nameWithType: OrcJit.AddModule(BitcodeModule)
-- uid: Llvm.NET.JIT.OrcJit.AddModule(Llvm.NET.BitcodeModule,Llvm.NET.JIT.OrcJit.SymbolResolver)
-  name: AddModule(BitcodeModule, OrcJit.SymbolResolver)
-  href: api/Llvm.NET.JIT.OrcJit.AddModule.html#Llvm_NET_JIT_OrcJit_AddModule_Llvm_NET_BitcodeModule_Llvm_NET_JIT_OrcJit_SymbolResolver_
-  commentId: M:Llvm.NET.JIT.OrcJit.AddModule(Llvm.NET.BitcodeModule,Llvm.NET.JIT.OrcJit.SymbolResolver)
-  fullName: Llvm.NET.JIT.OrcJit.AddModule(Llvm.NET.BitcodeModule, Llvm.NET.JIT.OrcJit.SymbolResolver)
-  nameWithType: OrcJit.AddModule(BitcodeModule, OrcJit.SymbolResolver)
+- uid: Llvm.NET.JIT.OrcJit.AddModule(Llvm.NET.BitcodeModule,Llvm.NET.JIT.SymbolResolver)
+  name: AddModule(BitcodeModule, SymbolResolver)
+  href: api/Llvm.NET.JIT.OrcJit.AddModule.html#Llvm_NET_JIT_OrcJit_AddModule_Llvm_NET_BitcodeModule_Llvm_NET_JIT_SymbolResolver_
+  commentId: M:Llvm.NET.JIT.OrcJit.AddModule(Llvm.NET.BitcodeModule,Llvm.NET.JIT.SymbolResolver)
+  fullName: Llvm.NET.JIT.OrcJit.AddModule(Llvm.NET.BitcodeModule, Llvm.NET.JIT.SymbolResolver)
+  nameWithType: OrcJit.AddModule(BitcodeModule, SymbolResolver)
 - uid: Llvm.NET.JIT.OrcJit.AddModule*
   name: AddModule
   href: api/Llvm.NET.JIT.OrcJit.AddModule.html
@@ -10352,12 +10418,6 @@ references:
   commentId: Overload:Llvm.NET.JIT.OrcJit.RemoveModule
   fullName: Llvm.NET.JIT.OrcJit.RemoveModule
   nameWithType: OrcJit.RemoveModule
-- uid: Llvm.NET.JIT.OrcJit.SymbolResolver
-  name: OrcJit.SymbolResolver
-  href: api/Llvm.NET.JIT.OrcJit.SymbolResolver.html
-  commentId: T:Llvm.NET.JIT.OrcJit.SymbolResolver
-  fullName: Llvm.NET.JIT.OrcJit.SymbolResolver
-  nameWithType: OrcJit.SymbolResolver
 - uid: Llvm.NET.JIT.OrcJit.TargetMachine
   name: TargetMachine
   href: api/Llvm.NET.JIT.OrcJit.TargetMachine.html#Llvm_NET_JIT_OrcJit_TargetMachine
@@ -10370,6 +10430,12 @@ references:
   commentId: Overload:Llvm.NET.JIT.OrcJit.TargetMachine
   fullName: Llvm.NET.JIT.OrcJit.TargetMachine
   nameWithType: OrcJit.TargetMachine
+- uid: Llvm.NET.JIT.SymbolResolver
+  name: SymbolResolver
+  href: api/Llvm.NET.JIT.SymbolResolver.html
+  commentId: T:Llvm.NET.JIT.SymbolResolver
+  fullName: Llvm.NET.JIT.SymbolResolver
+  nameWithType: SymbolResolver
 - uid: Llvm.NET.LlvmMetadata
   name: LlvmMetadata
   href: api/Llvm.NET.LlvmMetadata.html
@@ -10793,6 +10859,30 @@ references:
   commentId: F:Llvm.NET.OperandBundleNames.GcTransition
   fullName: Llvm.NET.OperandBundleNames.GcTransition
   nameWithType: OperandBundleNames.GcTransition
+- uid: Llvm.NET.OptimizationSizeLevel
+  name: OptimizationSizeLevel
+  href: api/Llvm.NET.OptimizationSizeLevel.html
+  commentId: T:Llvm.NET.OptimizationSizeLevel
+  fullName: Llvm.NET.OptimizationSizeLevel
+  nameWithType: OptimizationSizeLevel
+- uid: Llvm.NET.OptimizationSizeLevel.None
+  name: None
+  href: api/Llvm.NET.OptimizationSizeLevel.html#Llvm_NET_OptimizationSizeLevel_None
+  commentId: F:Llvm.NET.OptimizationSizeLevel.None
+  fullName: Llvm.NET.OptimizationSizeLevel.None
+  nameWithType: OptimizationSizeLevel.None
+- uid: Llvm.NET.OptimizationSizeLevel.Os
+  name: Os
+  href: api/Llvm.NET.OptimizationSizeLevel.html#Llvm_NET_OptimizationSizeLevel_Os
+  commentId: F:Llvm.NET.OptimizationSizeLevel.Os
+  fullName: Llvm.NET.OptimizationSizeLevel.Os
+  nameWithType: OptimizationSizeLevel.Os
+- uid: Llvm.NET.OptimizationSizeLevel.Oz
+  name: Oz
+  href: api/Llvm.NET.OptimizationSizeLevel.html#Llvm_NET_OptimizationSizeLevel_Oz
+  commentId: F:Llvm.NET.OptimizationSizeLevel.Oz
+  fullName: Llvm.NET.OptimizationSizeLevel.Oz
+  nameWithType: OptimizationSizeLevel.Oz
 - uid: Llvm.NET.Reloc
   name: Reloc
   href: api/Llvm.NET.Reloc.html
@@ -10823,6 +10913,81 @@ references:
   commentId: F:Llvm.NET.Reloc.Static
   fullName: Llvm.NET.Reloc.Static
   nameWithType: Reloc.Static
+- uid: Llvm.NET.ScopeStack`1
+  name: ScopeStack<T>
+  href: api/Llvm.NET.ScopeStack-1.html
+  commentId: T:Llvm.NET.ScopeStack`1
+  name.vb: ScopeStack(Of T)
+  fullName: Llvm.NET.ScopeStack<T>
+  fullName.vb: Llvm.NET.ScopeStack(Of T)
+  nameWithType: ScopeStack<T>
+  nameWithType.vb: ScopeStack(Of T)
+- uid: Llvm.NET.ScopeStack`1.#ctor
+  name: ScopeStack()
+  href: api/Llvm.NET.ScopeStack-1.-ctor.html#Llvm_NET_ScopeStack_1__ctor
+  commentId: M:Llvm.NET.ScopeStack`1.#ctor
+  fullName: Llvm.NET.ScopeStack<T>.ScopeStack()
+  fullName.vb: Llvm.NET.ScopeStack(Of T).ScopeStack()
+  nameWithType: ScopeStack<T>.ScopeStack()
+  nameWithType.vb: ScopeStack(Of T).ScopeStack()
+- uid: Llvm.NET.ScopeStack`1.#ctor*
+  name: ScopeStack
+  href: api/Llvm.NET.ScopeStack-1.-ctor.html
+  commentId: Overload:Llvm.NET.ScopeStack`1.#ctor
+  fullName: Llvm.NET.ScopeStack<T>.ScopeStack
+  fullName.vb: Llvm.NET.ScopeStack(Of T).ScopeStack
+  nameWithType: ScopeStack<T>.ScopeStack
+  nameWithType.vb: ScopeStack(Of T).ScopeStack
+- uid: Llvm.NET.ScopeStack`1.EnterScope
+  name: EnterScope()
+  href: api/Llvm.NET.ScopeStack-1.EnterScope.html#Llvm_NET_ScopeStack_1_EnterScope
+  commentId: M:Llvm.NET.ScopeStack`1.EnterScope
+  fullName: Llvm.NET.ScopeStack<T>.EnterScope()
+  fullName.vb: Llvm.NET.ScopeStack(Of T).EnterScope()
+  nameWithType: ScopeStack<T>.EnterScope()
+  nameWithType.vb: ScopeStack(Of T).EnterScope()
+- uid: Llvm.NET.ScopeStack`1.EnterScope*
+  name: EnterScope
+  href: api/Llvm.NET.ScopeStack-1.EnterScope.html
+  commentId: Overload:Llvm.NET.ScopeStack`1.EnterScope
+  fullName: Llvm.NET.ScopeStack<T>.EnterScope
+  fullName.vb: Llvm.NET.ScopeStack(Of T).EnterScope
+  nameWithType: ScopeStack<T>.EnterScope
+  nameWithType.vb: ScopeStack(Of T).EnterScope
+- uid: Llvm.NET.ScopeStack`1.Item(System.String)
+  name: Item[String]
+  href: api/Llvm.NET.ScopeStack-1.Item.html#Llvm_NET_ScopeStack_1_Item_System_String_
+  commentId: P:Llvm.NET.ScopeStack`1.Item(System.String)
+  name.vb: Item(String)
+  fullName: Llvm.NET.ScopeStack<T>.Item[System.String]
+  fullName.vb: Llvm.NET.ScopeStack(Of T).Item(System.String)
+  nameWithType: ScopeStack<T>.Item[String]
+  nameWithType.vb: ScopeStack(Of T).Item(String)
+- uid: Llvm.NET.ScopeStack`1.Item*
+  name: Item
+  href: api/Llvm.NET.ScopeStack-1.Item.html
+  commentId: Overload:Llvm.NET.ScopeStack`1.Item
+  fullName: Llvm.NET.ScopeStack<T>.Item
+  fullName.vb: Llvm.NET.ScopeStack(Of T).Item
+  nameWithType: ScopeStack<T>.Item
+  nameWithType.vb: ScopeStack(Of T).Item
+- uid: Llvm.NET.ScopeStack`1.TryGetValue(System.String,`0@)
+  name: TryGetValue(String, out T)
+  href: api/Llvm.NET.ScopeStack-1.TryGetValue.html#Llvm_NET_ScopeStack_1_TryGetValue_System_String__0__
+  commentId: M:Llvm.NET.ScopeStack`1.TryGetValue(System.String,`0@)
+  name.vb: TryGetValue(String, ByRef T)
+  fullName: Llvm.NET.ScopeStack<T>.TryGetValue(System.String, out T)
+  fullName.vb: Llvm.NET.ScopeStack(Of T).TryGetValue(System.String, ByRef T)
+  nameWithType: ScopeStack<T>.TryGetValue(String, out T)
+  nameWithType.vb: ScopeStack(Of T).TryGetValue(String, ByRef T)
+- uid: Llvm.NET.ScopeStack`1.TryGetValue*
+  name: TryGetValue
+  href: api/Llvm.NET.ScopeStack-1.TryGetValue.html
+  commentId: Overload:Llvm.NET.ScopeStack`1.TryGetValue
+  fullName: Llvm.NET.ScopeStack<T>.TryGetValue
+  fullName.vb: Llvm.NET.ScopeStack(Of T).TryGetValue
+  nameWithType: ScopeStack<T>.TryGetValue
+  nameWithType.vb: ScopeStack(Of T).TryGetValue
 - uid: Llvm.NET.StaticState
   name: StaticState
   href: api/Llvm.NET.StaticState.html
@@ -11624,6 +11789,72 @@ references:
   commentId: T:Llvm.NET.Transforms.PassManager
   fullName: Llvm.NET.Transforms.PassManager
   nameWithType: PassManager
+- uid: Llvm.NET.Transforms.Sanitizers
+  name: Sanitizers
+  href: api/Llvm.NET.Transforms.Sanitizers.html
+  commentId: T:Llvm.NET.Transforms.Sanitizers
+  fullName: Llvm.NET.Transforms.Sanitizers
+  nameWithType: Sanitizers
+- uid: Llvm.NET.Transforms.Sanitizers.AddAddressSanitizerPass(Llvm.NET.Transforms.FunctionPassManager)
+  name: AddAddressSanitizerPass(FunctionPassManager)
+  href: api/Llvm.NET.Transforms.Sanitizers.AddAddressSanitizerPass.html#Llvm_NET_Transforms_Sanitizers_AddAddressSanitizerPass_Llvm_NET_Transforms_FunctionPassManager_
+  commentId: M:Llvm.NET.Transforms.Sanitizers.AddAddressSanitizerPass(Llvm.NET.Transforms.FunctionPassManager)
+  fullName: Llvm.NET.Transforms.Sanitizers.AddAddressSanitizerPass(Llvm.NET.Transforms.FunctionPassManager)
+  nameWithType: Sanitizers.AddAddressSanitizerPass(FunctionPassManager)
+- uid: Llvm.NET.Transforms.Sanitizers.AddAddressSanitizerPass*
+  name: AddAddressSanitizerPass
+  href: api/Llvm.NET.Transforms.Sanitizers.AddAddressSanitizerPass.html
+  commentId: Overload:Llvm.NET.Transforms.Sanitizers.AddAddressSanitizerPass
+  fullName: Llvm.NET.Transforms.Sanitizers.AddAddressSanitizerPass
+  nameWithType: Sanitizers.AddAddressSanitizerPass
+- uid: Llvm.NET.Transforms.Sanitizers.AddDataFlowSanitizerPass(Llvm.NET.Transforms.ModulePassManager,System.String)
+  name: AddDataFlowSanitizerPass(ModulePassManager, String)
+  href: api/Llvm.NET.Transforms.Sanitizers.AddDataFlowSanitizerPass.html#Llvm_NET_Transforms_Sanitizers_AddDataFlowSanitizerPass_Llvm_NET_Transforms_ModulePassManager_System_String_
+  commentId: M:Llvm.NET.Transforms.Sanitizers.AddDataFlowSanitizerPass(Llvm.NET.Transforms.ModulePassManager,System.String)
+  fullName: Llvm.NET.Transforms.Sanitizers.AddDataFlowSanitizerPass(Llvm.NET.Transforms.ModulePassManager, System.String)
+  nameWithType: Sanitizers.AddDataFlowSanitizerPass(ModulePassManager, String)
+- uid: Llvm.NET.Transforms.Sanitizers.AddDataFlowSanitizerPass*
+  name: AddDataFlowSanitizerPass
+  href: api/Llvm.NET.Transforms.Sanitizers.AddDataFlowSanitizerPass.html
+  commentId: Overload:Llvm.NET.Transforms.Sanitizers.AddDataFlowSanitizerPass
+  fullName: Llvm.NET.Transforms.Sanitizers.AddDataFlowSanitizerPass
+  nameWithType: Sanitizers.AddDataFlowSanitizerPass
+- uid: Llvm.NET.Transforms.Sanitizers.AddMemorySanitizerPass(Llvm.NET.Transforms.FunctionPassManager)
+  name: AddMemorySanitizerPass(FunctionPassManager)
+  href: api/Llvm.NET.Transforms.Sanitizers.AddMemorySanitizerPass.html#Llvm_NET_Transforms_Sanitizers_AddMemorySanitizerPass_Llvm_NET_Transforms_FunctionPassManager_
+  commentId: M:Llvm.NET.Transforms.Sanitizers.AddMemorySanitizerPass(Llvm.NET.Transforms.FunctionPassManager)
+  fullName: Llvm.NET.Transforms.Sanitizers.AddMemorySanitizerPass(Llvm.NET.Transforms.FunctionPassManager)
+  nameWithType: Sanitizers.AddMemorySanitizerPass(FunctionPassManager)
+- uid: Llvm.NET.Transforms.Sanitizers.AddMemorySanitizerPass*
+  name: AddMemorySanitizerPass
+  href: api/Llvm.NET.Transforms.Sanitizers.AddMemorySanitizerPass.html
+  commentId: Overload:Llvm.NET.Transforms.Sanitizers.AddMemorySanitizerPass
+  fullName: Llvm.NET.Transforms.Sanitizers.AddMemorySanitizerPass
+  nameWithType: Sanitizers.AddMemorySanitizerPass
+- uid: Llvm.NET.Transforms.Sanitizers.AddSanitizerPass(Llvm.NET.Transforms.ModulePassManager)
+  name: AddSanitizerPass(ModulePassManager)
+  href: api/Llvm.NET.Transforms.Sanitizers.AddSanitizerPass.html#Llvm_NET_Transforms_Sanitizers_AddSanitizerPass_Llvm_NET_Transforms_ModulePassManager_
+  commentId: M:Llvm.NET.Transforms.Sanitizers.AddSanitizerPass(Llvm.NET.Transforms.ModulePassManager)
+  fullName: Llvm.NET.Transforms.Sanitizers.AddSanitizerPass(Llvm.NET.Transforms.ModulePassManager)
+  nameWithType: Sanitizers.AddSanitizerPass(ModulePassManager)
+- uid: Llvm.NET.Transforms.Sanitizers.AddSanitizerPass*
+  name: AddSanitizerPass
+  href: api/Llvm.NET.Transforms.Sanitizers.AddSanitizerPass.html
+  commentId: Overload:Llvm.NET.Transforms.Sanitizers.AddSanitizerPass
+  fullName: Llvm.NET.Transforms.Sanitizers.AddSanitizerPass
+  nameWithType: Sanitizers.AddSanitizerPass
+- uid: Llvm.NET.Transforms.Sanitizers.AddThreadSanitizerPass(Llvm.NET.Transforms.FunctionPassManager)
+  name: AddThreadSanitizerPass(FunctionPassManager)
+  href: api/Llvm.NET.Transforms.Sanitizers.AddThreadSanitizerPass.html#Llvm_NET_Transforms_Sanitizers_AddThreadSanitizerPass_Llvm_NET_Transforms_FunctionPassManager_
+  commentId: M:Llvm.NET.Transforms.Sanitizers.AddThreadSanitizerPass(Llvm.NET.Transforms.FunctionPassManager)
+  fullName: Llvm.NET.Transforms.Sanitizers.AddThreadSanitizerPass(Llvm.NET.Transforms.FunctionPassManager)
+  nameWithType: Sanitizers.AddThreadSanitizerPass(FunctionPassManager)
+- uid: Llvm.NET.Transforms.Sanitizers.AddThreadSanitizerPass*
+  name: AddThreadSanitizerPass
+  href: api/Llvm.NET.Transforms.Sanitizers.AddThreadSanitizerPass.html
+  commentId: Overload:Llvm.NET.Transforms.Sanitizers.AddThreadSanitizerPass
+  fullName: Llvm.NET.Transforms.Sanitizers.AddThreadSanitizerPass
+  nameWithType: Sanitizers.AddThreadSanitizerPass
 - uid: Llvm.NET.Transforms.ScalarTransforms
   name: ScalarTransforms
   href: api/Llvm.NET.Transforms.ScalarTransforms.html
