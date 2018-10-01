@@ -3,6 +3,7 @@
 // </copyright>
 
 using System.Collections.Generic;
+using System.Text;
 
 namespace Kaleidoscope.Grammar.AST
 {
@@ -40,6 +41,26 @@ namespace Kaleidoscope.Grammar.AST
                     yield break;
                 }
             }
+        }
+
+        public override string ToString( )
+        {
+            var bldr = new StringBuilder();
+            if(CompilerGenerated)
+            {
+                bldr.Append( "[CompilerGenerated]" );
+            }
+
+            bldr.Append( "Declare(" );
+            bldr.Append( Name );
+            if(Initializer != null )
+            {
+                bldr.Append( ", " );
+                bldr.Append( Initializer.ToString( ) );
+            }
+
+            bldr.Append( ')' );
+            return bldr.ToString( );
         }
     }
 }

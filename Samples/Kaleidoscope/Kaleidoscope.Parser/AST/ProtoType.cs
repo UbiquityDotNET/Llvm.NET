@@ -5,7 +5,7 @@
 using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Linq;
-
+using System.Text;
 using static Kaleidoscope.Grammar.KaleidoscopeParser;
 
 namespace Kaleidoscope.Grammar.AST
@@ -58,10 +58,10 @@ namespace Kaleidoscope.Grammar.AST
         }
 
         /// <summary>Initializes a new instance of the <see cref="Prototype"/> class.</summary>
-        /// <param name="name">Name of thefunction</param>
+        /// <param name="name">Name of the function</param>
         /// <param name="parameters">Names of each parameter</param>
         /// <remarks>
-        /// This version of the constructor is used to create syntehetic prototypes that don't
+        /// This version of the constructor is used to create synthetic prototypes that don't
         /// exist within the original source.
         /// </remarks>
         public Prototype( string name, params string[] parameters)
@@ -89,5 +89,29 @@ namespace Kaleidoscope.Grammar.AST
 
         /// <inheritdoc/>
         public IEnumerable<IAstNode> Children => Parameters;
+
+        public override string ToString( )
+        {
+            var bldr = new StringBuilder( );
+            if(IsExtern)
+            {
+                bldr.Append( "[extern]" );
+            }
+
+            if(IsCompilerGenerated)
+            {
+                bldr.Append( "[CompilerGenerated]" );
+            }
+
+            bldr.Append( Name );
+            bldr.Append( '(' );
+            if(Parameters.Count > 0)
+            {
+                bldr.Append( string.Join( ", ", Parameters.Select( p => p.ToString( ) ) ) );
+            }
+
+            bldr.Append( ')' );
+            return bldr.ToString( );
+        }
     }
 }

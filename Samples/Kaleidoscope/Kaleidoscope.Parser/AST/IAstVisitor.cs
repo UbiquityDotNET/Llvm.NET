@@ -12,8 +12,6 @@ namespace Kaleidoscope.Grammar.AST
 
         TResult Visit( FunctionDefinition definition );
 
-        TResult Visit( AssignmentExpression assignment );
-
         TResult Visit( ConstantExpression constant );
 
         TResult Visit( VariableReferenceExpression reference );

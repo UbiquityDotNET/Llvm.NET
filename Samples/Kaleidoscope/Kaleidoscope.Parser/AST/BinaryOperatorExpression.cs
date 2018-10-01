@@ -9,7 +9,7 @@ namespace Kaleidoscope.Grammar.AST
     public enum BuiltInOperatorKind
     {
         Invalid,
-        Assign,   // not valid as a unary op
+        Assign,
         Add,
         Subtract,
         Multiply,
@@ -61,6 +61,11 @@ namespace Kaleidoscope.Grammar.AST
         }
 
         /// <inheritdoc/>
-        public TResult Accept<TResult>( IAstVisitor<TResult> visitor ) => visitor.Visit( this );
+        public virtual TResult Accept<TResult>( IAstVisitor<TResult> visitor ) => visitor.Visit( this );
+
+        public override string ToString( )
+        {
+            return $"{Name}({Left},{Right})";
+        }
     }
 }

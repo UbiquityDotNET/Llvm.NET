@@ -10,4 +10,7 @@
     <ItemGroup>
       <Folder Include="Properties\" />
     </ItemGroup>
+    <ItemGroup>
+      <PackageReference Include="System.IO.Pipelines" Version="4.5.1" />
+    </ItemGroup>
 </Project>

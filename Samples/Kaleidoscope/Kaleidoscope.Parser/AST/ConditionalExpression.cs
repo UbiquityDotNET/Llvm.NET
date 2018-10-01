@@ -48,5 +48,10 @@ namespace Kaleidoscope.Grammar.AST
                 yield return ElseExpression;
             }
         }
+
+        public override string ToString( )
+        {
+            return $"Conditional({Condition}, {ThenExpression}, {ElseExpression})";
+        }
     }
 }

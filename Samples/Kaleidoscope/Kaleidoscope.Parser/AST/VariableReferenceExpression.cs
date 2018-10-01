@@ -30,5 +30,10 @@ namespace Kaleidoscope.Grammar.AST
                 yield return Declaration;
             }
         }
+
+        public override string ToString( )
+        {
+            return $"Load({Name})";
+        }
     }
 }

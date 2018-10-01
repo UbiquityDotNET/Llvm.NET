@@ -13,8 +13,6 @@ namespace Kaleidoscope.Grammar.AST
 
         public virtual TResult Visit( FunctionDefinition definition ) => VisitChildren( definition );
 
-        public virtual TResult Visit( AssignmentExpression assignment ) => VisitChildren( assignment );
-
         public virtual TResult Visit( ConstantExpression constant ) => VisitChildren( constant );
 
         public virtual TResult Visit( VariableReferenceExpression reference ) => VisitChildren( reference );

@@ -3,6 +3,7 @@
 // </copyright>
 
 using System.Collections.Generic;
+using System.Text;
 
 namespace Kaleidoscope.Grammar.AST
 {
@@ -35,6 +36,20 @@ namespace Kaleidoscope.Grammar.AST
 
                 yield return Body;
             }
+        }
+
+        public override string ToString( )
+        {
+            var bldr = new StringBuilder( "VarIn{" );
+            foreach(var local in LocalVariables)
+            {
+                bldr.Append( local.ToString() );
+            }
+
+            bldr.Append( "}(" );
+            bldr.Append( Body.ToString( ) );
+            bldr.Append( ')' );
+            return bldr.ToString( );
         }
     }
 }

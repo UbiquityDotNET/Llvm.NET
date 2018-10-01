@@ -12,7 +12,7 @@ namespace Kaleidoscope.Runtime
     /// <summary>Implementation of common REPL infrastructure for interactive Kaleidoscope implementations</summary>
     /// <typeparam name="TResult">result type of the generator type</typeparam>
     /// <remarks>
-    /// <para>This class server to isolate and generalize the REPL infrastructure for the Kaleidoscope language
+    /// <para>This class serves to isolate and generalize the REPL infrastructure for the Kaleidoscope language
     /// implementations. Aside from the general encapsulation and isolation, this also helps to keep the
     /// individual chapters lean and focused on the use of Llvm.NET to generate executable code and the
     /// JIT engine support to run it.</para>

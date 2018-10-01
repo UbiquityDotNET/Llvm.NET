@@ -32,6 +32,8 @@ namespace Kaleidoscope.Grammar
     /// </remarks>
     public class DynamicRuntimeState
     {
+        /// <summary>Initializes a new instance of the <see cref="DynamicRuntimeState"/> class.</summary>
+        /// <param name="languageLevel">Language level supported for this instance</param>
         public DynamicRuntimeState( LanguageLevel languageLevel )
         {
             LanguageLevel = languageLevel;

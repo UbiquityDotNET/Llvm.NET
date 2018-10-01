@@ -14,10 +14,9 @@ using static Kaleidoscope.Runtime.Utilities;
 using static Llvm.NET.StaticState;
 
 [assembly: SuppressMessage( "StyleCop.CSharp.DocumentationRules", "SA1652:Enable XML documentation output", Justification = "Sample application" )]
-
 #pragma warning disable SA1512, SA1513, SA1515 // single line comments used to tag regions for extraction into docs
 
-namespace Kaleidoscope
+namespace Kaleidoscope.Chapter9
 {
     public static class Program
     {

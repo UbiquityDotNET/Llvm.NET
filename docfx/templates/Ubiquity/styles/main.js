@@ -171,7 +171,7 @@ hljs.registerLanguage("antlr", function (e) {
     };
 });
 
-// Add Kaleidoscope language support from highlightjs.org
+// Add Kaleidoscope language support for highlightjs.org
 hljs.registerLanguage("kaleidoscope", function (e) {
     return {
         k: 'def extern if then else for in var unary binary',
