@@ -47,6 +47,27 @@ dynamic loading support and include the appropriate P/Invokable binaries)
 The CI Builds on AppVeyor provide a [NuGet Feed](https://ci.appveyor.com/NuGet/Ubiquity.Llvm.NET
 ) of the NuGet package built from the latest source in the master branch. 
 
+**NOTE:**
+The Llvm.NET package relies on some additional packages from the Ubiquity.Net GitHub organization. Until
+these are all available on NuGet they must be referenced from their own AppVeyor Feeds. This is easily
+accomplished with a custom [Nuget.Config](https://docs.microsoft.com/en-us/nuget/reference/nuget-config-file)
+file. The following is an example of the minimal configuration file needed to use Llvm.NET and it's other
+Ubiquity.NET dependencies:
+
+```xml
+<?xml version="1.0" encoding="utf-8"?>
+<configuration>
+  <packageSources>
+    <add key="AppveyorLlvmNet"
+         value="https://ci.appveyor.com/nuget/Ubiquity.Llvm.NET" />
+    <add key="AppVeyorGitBuild"
+         value="https://ci.appveyor.com/nuget/CSemVer.GitBuild" />
+    <add key="AppVeyorValidators"
+         value="https://ci.appveyor.com/nuget/Ubiquty.ArgValidators" />
+  </packageSources>
+</configuration>
+```
+
 ### API Documentation
 The full API documentation on using Llvm.NET is available on the [Llvm.NET documentation site](https://ubiquitydotnet.github.io/Llvm.NET/).
 
