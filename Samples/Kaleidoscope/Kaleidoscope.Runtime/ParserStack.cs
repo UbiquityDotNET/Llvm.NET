@@ -11,9 +11,13 @@ using Kaleidoscope.Grammar.AST;
 
 namespace Kaleidoscope.Runtime
 {
+    /// <summary>Specifies the parse mode for parsing Kaleidoscope source input</summary>
     public enum ParseMode
     {
+        /// <summary>Parse for a REPL</summary>
         ReplLoop,
+
+        /// <summary>Full text source parse</summary>
         FullSource,
     }
 

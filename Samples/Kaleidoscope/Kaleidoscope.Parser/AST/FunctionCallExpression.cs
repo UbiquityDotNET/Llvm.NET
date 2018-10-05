@@ -4,6 +4,7 @@
 
 using System.Collections.Generic;
 using System.Collections.Immutable;
+using System.Linq;
 
 namespace Kaleidoscope.Grammar.AST
 {
@@ -36,6 +37,16 @@ namespace Kaleidoscope.Grammar.AST
             {
                 yield return FunctionPrototype;
             }
+        }
+
+        public override string ToString( )
+        {
+            if( Arguments.Count == 0 )
+            {
+                return $"Call({FunctionPrototype})";
+            }
+
+            return $"Call({FunctionPrototype}, {string.Join(",", Arguments.Select(a=>a.ToString()))})";
         }
     }
 }

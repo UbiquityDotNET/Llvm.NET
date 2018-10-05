@@ -66,5 +66,10 @@ namespace Kaleidoscope.Grammar.AST
                 yield return Body;
             }
         }
+
+        public override string ToString( )
+        {
+            return $"{Signature}{{{Body}}}";
+        }
     }
 }

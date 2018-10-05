@@ -30,7 +30,7 @@ int test(_Bool Condition)
 ```
 
 The general idea of how to handle this in LLVM SSA form was already covered in [Chapter 5](Kaleidoscope-ch5.md).
-Since there are two possible values for X when the function returns a PHI node inserted to merge the values.
+Since there are two possible values for X when the function returns, a PHI node is inserted to merge the values.
 The LLVM IR for this would look like this:
 
 ```llvm
@@ -277,14 +277,14 @@ to registers.
 
 [!code-csharp[InitializeModuleAndPassManager](../../../Samples/Kaleidoscope/Chapter7/CodeGenerator.cs#InitializeModuleAndPassManager)]
 
-### Add visitor for Assignment Expressions
+### Add operator support for Assignment Expressions
 Unlike the other binary operators assignment doesn't follow the same emit left, emit right, emit operator
 sequence. This is because an expression like '(x+1) = expression' is nonsensical and therefore not allowed.
 The left hand side is always an alloca as the destination of a store. To handle this special case the
-AST creates a distinct node for assignment. Code generation can then simply implement a visitor for an
-assignment to handle storing the value to the variable.
+Generator doesn't generate for the left side, but instead looks up the Alloca for the variable. The generator
+then implements a store operation of the right hand side value to the Alloca for the left side.
 
-[!code-csharp[VisitExpression](../../../Samples/Kaleidoscope/Chapter7/CodeGenerator.cs#AssignmentExpression)]
+[!code-csharp[BinaryOperatorExpression](../../../Samples/Kaleidoscope/Chapter7/CodeGenerator.cs#BinaryOperatorExpression)]
 
 Now that we have mutable variables and assignment we can mutate loop variables or input parameters. For
 example:

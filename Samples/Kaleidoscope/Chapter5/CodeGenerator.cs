@@ -17,10 +17,10 @@ using Llvm.NET.Values;
 
 #pragma warning disable SA1512, SA1513, SA1515 // single line comments used to tag regions for extraction into docs
 
-namespace Kaleidoscope
+namespace Kaleidoscope.Chapter5
 {
     /// <summary>Performs LLVM IR Code generation from the Kaleidoscope AST</summary>
-    internal sealed class CodeGenerator
+    public sealed class CodeGenerator
         : AstVisitorBase<Value>
         , IDisposable
         , IKaleidoscopeCodeGenerator<Value>
@@ -97,14 +97,11 @@ namespace Kaleidoscope
         // <BinaryOperatorExpression>
         public override Value Visit( BinaryOperatorExpression binaryOperator )
         {
-            var lhs = binaryOperator.Left.Accept( this );
-            var rhs = binaryOperator.Right.Accept( this );
-
             switch( binaryOperator.Op )
             {
             case BuiltInOperatorKind.Less:
                 {
-                    var tmp = InstructionBuilder.Compare( RealPredicate.UnorderedOrLessThan, lhs, rhs )
+                    var tmp = InstructionBuilder.Compare( RealPredicate.UnorderedOrLessThan, binaryOperator.Left.Accept( this ), binaryOperator.Right.Accept( this ) )
                                                 .RegisterName( "cmptmp" );
                     return InstructionBuilder.UIToFPCast( tmp, InstructionBuilder.Context.DoubleType )
                                              .RegisterName( "booltmp" );
@@ -113,21 +110,21 @@ namespace Kaleidoscope
             case BuiltInOperatorKind.Pow:
                 {
                     var pow = GetOrDeclareFunction( new Prototype( "llvm.pow.f64", "value", "power" ) );
-                    return InstructionBuilder.Call( pow, lhs, rhs )
+                    return InstructionBuilder.Call( pow, binaryOperator.Left.Accept( this ), binaryOperator.Right.Accept( this ) )
                                              .RegisterName( "powtmp" );
                 }
 
             case BuiltInOperatorKind.Add:
-                return InstructionBuilder.FAdd( lhs, rhs ).RegisterName( "addtmp" );
+                return InstructionBuilder.FAdd( binaryOperator.Left.Accept( this ), binaryOperator.Right.Accept( this ) ).RegisterName( "addtmp" );
 
             case BuiltInOperatorKind.Subtract:
-                return InstructionBuilder.FSub( lhs, rhs ).RegisterName( "subtmp" );
+                return InstructionBuilder.FSub( binaryOperator.Left.Accept( this ), binaryOperator.Right.Accept( this ) ).RegisterName( "subtmp" );
 
             case BuiltInOperatorKind.Multiply:
-                return InstructionBuilder.FMul( lhs, rhs ).RegisterName( "multmp" );
+                return InstructionBuilder.FMul( binaryOperator.Left.Accept( this ), binaryOperator.Right.Accept( this ) ).RegisterName( "multmp" );
 
             case BuiltInOperatorKind.Divide:
-                return InstructionBuilder.FDiv( lhs, rhs ).RegisterName( "divtmp" );
+                return InstructionBuilder.FDiv( binaryOperator.Left.Accept( this ), binaryOperator.Right.Accept( this ) ).RegisterName( "divtmp" );
 
             default:
                 throw new CodeGeneratorException( $"ICE: Invalid binary operator {binaryOperator.Op}" );
@@ -170,9 +167,9 @@ namespace Kaleidoscope
                 InstructionBuilder.PositionAtEnd( entryBlock );
                 using( NamedValues.EnterScope( ) )
                 {
-                    foreach( var arg in function.Parameters )
+                    foreach( var param in definition.Signature.Parameters )
                     {
-                        NamedValues[ arg.Name ] = arg;
+                        NamedValues[ param.Name ] = function.Parameters[ param.Index ];
                     }
 
                     var funcReturn = definition.Body.Accept( this );

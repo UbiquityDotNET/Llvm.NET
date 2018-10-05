@@ -5,7 +5,7 @@
 using Kaleidoscope.Grammar.AST;
 using Kaleidoscope.Runtime;
 
-namespace Kaleidoscope
+namespace Kaleidoscope.Chapter2
 {
     /// <summary>Visitor to perform final syntax error checks</summary>
     /// <remarks>

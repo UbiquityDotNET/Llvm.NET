@@ -18,10 +18,10 @@ using Llvm.NET.Values;
 
 #pragma warning disable SA1512, SA1513, SA1515 // single line comments used to tag regions for extraction into docs
 
-namespace Kaleidoscope
+namespace Kaleidoscope.Chapter7_1
 {
     /// <summary>Performs LLVM IR Code generation from the Kaleidoscope AST</summary>
-    internal sealed class CodeGenerator
+    public sealed class CodeGenerator
         : AstVisitorBase<Value>
         , IDisposable
         , IKaleidoscopeCodeGenerator<Value>
@@ -97,14 +97,11 @@ namespace Kaleidoscope
         // <BinaryOperatorExpression>
         public override Value Visit( BinaryOperatorExpression binaryOperator )
         {
-            var lhs = binaryOperator.Left.Accept( this );
-            var rhs = binaryOperator.Right.Accept( this );
-
             switch( binaryOperator.Op )
             {
             case BuiltInOperatorKind.Less:
                 {
-                    var tmp = InstructionBuilder.Compare( RealPredicate.UnorderedOrLessThan, lhs, rhs )
+                    var tmp = InstructionBuilder.Compare( RealPredicate.UnorderedOrLessThan, binaryOperator.Left.Accept( this ), binaryOperator.Right.Accept( this ) )
                                                 .RegisterName( "cmptmp" );
                     return InstructionBuilder.UIToFPCast( tmp, InstructionBuilder.Context.DoubleType )
                                              .RegisterName( "booltmp" );
@@ -113,21 +110,27 @@ namespace Kaleidoscope
             case BuiltInOperatorKind.Pow:
                 {
                     var pow = GetOrDeclareFunction( new Prototype( "llvm.pow.f64", "value", "power" ) );
-                    return InstructionBuilder.Call( pow, lhs, rhs )
+                    return InstructionBuilder.Call( pow, binaryOperator.Left.Accept( this ), binaryOperator.Right.Accept( this ) )
                                              .RegisterName( "powtmp" );
                 }
 
             case BuiltInOperatorKind.Add:
-                return InstructionBuilder.FAdd( lhs, rhs ).RegisterName( "addtmp" );
+                return InstructionBuilder.FAdd( binaryOperator.Left.Accept( this ), binaryOperator.Right.Accept( this ) ).RegisterName( "addtmp" );
 
             case BuiltInOperatorKind.Subtract:
-                return InstructionBuilder.FSub( lhs, rhs ).RegisterName( "subtmp" );
+                return InstructionBuilder.FSub( binaryOperator.Left.Accept( this ), binaryOperator.Right.Accept( this ) ).RegisterName( "subtmp" );
 
             case BuiltInOperatorKind.Multiply:
-                return InstructionBuilder.FMul( lhs, rhs ).RegisterName( "multmp" );
+                return InstructionBuilder.FMul( binaryOperator.Left.Accept( this ), binaryOperator.Right.Accept( this ) ).RegisterName( "multmp" );
 
             case BuiltInOperatorKind.Divide:
-                return InstructionBuilder.FDiv( lhs, rhs ).RegisterName( "divtmp" );
+                return InstructionBuilder.FDiv( binaryOperator.Left.Accept( this ), binaryOperator.Right.Accept( this ) ).RegisterName( "divtmp" );
+
+            case BuiltInOperatorKind.Assign:
+                Alloca target = LookupVariable( ( ( VariableReferenceExpression )binaryOperator.Left ).Name );
+                Value value = binaryOperator.Right.Accept( this );
+                InstructionBuilder.Store( value, target );
+                return value;
 
             default:
                 throw new CodeGeneratorException( $"ICE: Invalid binary operator {binaryOperator.Op}" );
@@ -170,15 +173,15 @@ namespace Kaleidoscope
                 InstructionBuilder.PositionAtEnd( entryBlock );
                 using( NamedValues.EnterScope( ) )
                 {
-                    foreach( var arg in function.Parameters )
+                    foreach( var param in definition.Signature.Parameters )
                     {
                         var argSlot = InstructionBuilder.Alloca( function.Context.DoubleType )
-                                                        .RegisterName( arg.Name );
-                        InstructionBuilder.Store( arg, argSlot );
-                        NamedValues[ arg.Name ] = argSlot;
+                                                        .RegisterName( param.Name );
+                        InstructionBuilder.Store( function.Parameters[ param.Index ], argSlot );
+                        NamedValues[ param.Name ] = argSlot;
                     }
 
-                    foreach( var local in definition.LocalVariables )
+                    foreach( LocalVariableDeclaration local in definition.LocalVariables )
                     {
                         var localSlot = InstructionBuilder.Alloca( function.Context.DoubleType )
                                                           .RegisterName( local.Name );
@@ -206,13 +209,7 @@ namespace Kaleidoscope
         // <VariableReferenceExpression>
         public override Value Visit( VariableReferenceExpression reference )
         {
-            if( !NamedValues.TryGetValue( reference.Name, out Alloca value ) )
-            {
-                // Source input is validated by the parser and AstBuilder, therefore
-                // this is the result of an internal error in the generator rather
-                // then some sort of user error.
-                throw new CodeGeneratorException( $"ICE: Unknown variable name: {reference.Name}" );
-            }
+            Alloca value = LookupVariable( reference.Name );
 
             return InstructionBuilder.Load( value )
                                      .RegisterName( reference.Name );
@@ -222,10 +219,7 @@ namespace Kaleidoscope
         // <ConditionalExpression>
         public override Value Visit( ConditionalExpression conditionalExpression )
         {
-            if( !NamedValues.TryGetValue( conditionalExpression.ResultVariable.Name, out Alloca result ) )
-            {
-                throw new CodeGeneratorException( $"ICE: allocation for compiler generated variable '{conditionalExpression.ResultVariable.Name}' not found!" );
-            }
+            var result = LookupVariable( conditionalExpression.ResultVariable.Name );
 
             var condition = conditionalExpression.Condition.Accept( this );
             if( condition == null )
@@ -283,10 +277,7 @@ namespace Kaleidoscope
         {
             var function = InstructionBuilder.InsertBlock.ContainingFunction;
             string varName = forInExpression.LoopVariable.Name;
-            if( !NamedValues.TryGetValue( varName, out Alloca allocaVar ) )
-            {
-                throw new CodeGeneratorException( $"ICE: For loop initializer variable allocation not found!" );
-            }
+            Alloca allocaVar = LookupVariable( varName );
 
             // Emit the start code first, without 'variable' in scope.
             Value startVal = null;
@@ -377,11 +368,7 @@ namespace Kaleidoscope
                 Function function = InstructionBuilder.InsertBlock.ContainingFunction;
                 foreach( var localVar in varInExpression.LocalVariables )
                 {
-                    if( !NamedValues.TryGetValue( localVar.Name, out Alloca alloca ) )
-                    {
-                        throw new CodeGeneratorException( $"ICE: Missing allocation for local variable {localVar.Name}" );
-                    }
-
+                    Alloca alloca = LookupVariable( localVar.Name );
                     Value initValue = Context.CreateConstant( 0.0 );
                     if( localVar.Initializer != null )
                     {
@@ -396,15 +383,17 @@ namespace Kaleidoscope
         }
         // </VarInExpression>
 
-        // <AssignmentExpression>
-        public override Value Visit( AssignmentExpression assignment )
+        private Alloca LookupVariable( string name )
         {
-            var targetAlloca = NamedValues[ assignment.Target.Name ];
-            var value = assignment.Value.Accept( this );
-            InstructionBuilder.Store( value, targetAlloca );
+            if( !NamedValues.TryGetValue( name, out Alloca value ) )
+            {
+                // Source input is validated by the parser and AstBuilder, therefore
+                // this is the result of an internal error in the generator rather
+                // then some sort of user error.
+                throw new CodeGeneratorException( $"ICE: Unknown variable name: {name}" );
+            }
             return value;
         }
-        // </AssignmentExpression>
 
         private void EmitBranchToNewBlock( string blockName )
         {

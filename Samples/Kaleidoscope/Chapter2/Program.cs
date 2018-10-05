@@ -9,10 +9,9 @@ using Kaleidoscope.Grammar;
 using Kaleidoscope.Runtime;
 
 [assembly: SuppressMessage( "StyleCop.CSharp.DocumentationRules", "SA1652:Enable XML documentation output", Justification = "Sample application" )]
-
 #pragma warning disable SA1512, SA1513, SA1515 // single line comments used to tag regions for extraction into docs
 
-namespace Kaleidoscope
+namespace Kaleidoscope.Chapter2
 {
     public static class Program
     {
@@ -30,17 +29,16 @@ namespace Kaleidoscope
             // <generatorloop>
             var parser = new ParserStack( LanguageFeatureLevel );
             var generator = new CodeGenerator( );
-            {
-                // generate hopefully helpful representations of parse trees
-                var replLoop = new ReplLoop<int>( generator
-                                                , parser
-                                                , DiagnosticRepresentations.Xml | DiagnosticRepresentations.Dgml | DiagnosticRepresentations.BlockDiag
-                                                );
-                replLoop.ReadyStateChanged += ( s, e ) => Console.Write( e.PartialParse ? ">" : "Ready>" );
-                replLoop.GeneratedResultAvailable += OnGeneratedResultAvailable;
 
-                replLoop.Run( );
-            }
+            // generate hopefully helpful representations of parse trees
+            var replLoop = new ReplLoop<int>( generator
+                                            , parser
+                                            , DiagnosticRepresentations.Xml | DiagnosticRepresentations.Dgml | DiagnosticRepresentations.BlockDiag
+                                            );
+            replLoop.ReadyStateChanged += ( s, e ) => Console.Write( e.PartialParse ? ">" : "Ready>" );
+            replLoop.GeneratedResultAvailable += OnGeneratedResultAvailable;
+
+            replLoop.Run( );
             // </generatorloop>
         }
 

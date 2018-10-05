@@ -26,7 +26,7 @@ namespace Kaleidoscope.Runtime
         /// <summary>Try parsing the given input text</summary>
         /// <param name="txt">Text to parse</param>
         /// <param name="additionalDiagnostics">Additional diagnostics to generate</param>
-        /// <returns>Parse reults as an AST</returns>
+        /// <returns>Parse results as an AST</returns>
         /// <remarks>
         /// If the parse fails then the resulting tuple is the default value ( in this case, both items <see langword="null"/>
         /// Errors from the parse are reported through error listeners provided
@@ -38,7 +38,7 @@ namespace Kaleidoscope.Runtime
         /// <summary>Try parsing the given input text as full source, potentially containing multiple definitions</summary>
         /// <param name="reader">TextReader to parse</param>
         /// <param name="additionalDiagnostics">Additional diagnostics to generate</param>
-        /// <returns>Parse reults as an AST</returns>
+        /// <returns>Parse results as an AST</returns>
         /// <remarks>
         /// If the parse fails then the resulting tuple is the default value ( in this case, both items <see langword="null"/>
         /// Errors from the parse are reported through error listeners provided

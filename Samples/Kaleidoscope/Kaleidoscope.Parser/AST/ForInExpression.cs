@@ -45,5 +45,10 @@ namespace Kaleidoscope.Grammar.AST
                 yield return Body;
             }
         }
+
+        public override string ToString( )
+        {
+            return $"for({LoopVariable}, {Condition}, {Step}, {Body})";
+        }
     }
 }

@@ -279,7 +279,7 @@ namespace Kaleidoscope.Grammar.AST
                 return new BinaryOperatorExpression( op.GetSourceSpan( ), lhs, BuiltInOperatorKind.Divide, rhs );
 
             case ASSIGN:
-                return new AssignmentExpression( op.GetSourceSpan( ), ( VariableReferenceExpression )lhs, rhs );
+                return new BinaryOperatorExpression( op.GetSourceSpan( ), lhs, BuiltInOperatorKind.Assign, rhs );
 
             // <UserBinaryOpExpression>
             default:

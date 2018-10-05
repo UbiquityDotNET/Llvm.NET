@@ -11,7 +11,9 @@
 ## [Chapter 7.1 - Extreme Lazy JIT](Kaleidoscope-ch7.1.md)
 ## [Chapter 8 - AOT Compilation](Kaleidoscope-ch8.md)
 ## [Chapter 9 - Debug Information](Kaleidoscope-ch9.md)
-## [Kaleidoscope.Runtime](Kaleidoscope-Runtime.md)
-## [ParseTree Visitor](Kaleidoscope-ParseTreeVisitor.md)
-## [ParseTree Examples](Kaleidoscope-ParseTree-examples.md)
+## Additional Support
+### [Kaleidoscope.Runtime](Kaleidoscope-Runtime.md)
+### [Kaleidoscope AST](Kaleidoscope-AST.md)
+### [ParseTree Visitor](Kaleidoscope-ParseTreeVisitor.md)
+### [ParseTree Examples](Kaleidoscope-ParseTree-examples.md)
 

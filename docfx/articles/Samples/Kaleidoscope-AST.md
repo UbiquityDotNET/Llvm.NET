@@ -73,12 +73,6 @@ The for in expression is used to implement loops in Kaleidoscope.
 
 [!code-csharp[VarInExpression](../../../Samples/Kaleidoscope/Kaleidoscope.Parser/AST/VarInExpression.cs)]
 
-### Assignment Expression
-Assignment expressions are used to represent "store" semantics for a variable. The AssignmentExpression is only
-available if the Mutable variables feature is enabled. 
-
-[!code-csharp[AssignmentExpression](../../../Samples/Kaleidoscope/Kaleidoscope.Parser/AST/AssignmentExpression.cs)]
-
 ### Misc AST Interfaces
 
 IVariableDeclaration is implemented by local variable declarations and parameter declarations. The
@@ -87,9 +81,9 @@ interface abstracts the differences between the two types of variable declaratio
 
 ## Other AST Nodes
 ### AST Declarations
-[!code-csharp[VarInExpression](../../../Samples/Kaleidoscope/Kaleidoscope.Parser/AST/Prototype.cs)]
-[!code-csharp[VarInExpression](../../../Samples/Kaleidoscope/Kaleidoscope.Parser/AST/LocalVariableDeclaration.cs)]
-[!code-csharp[VarInExpression](../../../Samples/Kaleidoscope/Kaleidoscope.Parser/AST/ParameterDeclaration.cs)]
+[!code-csharp[Function Signatures (Prototype)](../../../Samples/Kaleidoscope/Kaleidoscope.Parser/AST/Prototype.cs)]
+[!code-csharp[Local Variable Declarations](../../../Samples/Kaleidoscope/Kaleidoscope.Parser/AST/LocalVariableDeclaration.cs)]
+[!code-csharp[Parameter declarations](../../../Samples/Kaleidoscope/Kaleidoscope.Parser/AST/ParameterDeclaration.cs)]
 
 ### AST FunctionDefinition
 FunctionDefinition, as the name implies, contains the definition of a function. This includes the signature

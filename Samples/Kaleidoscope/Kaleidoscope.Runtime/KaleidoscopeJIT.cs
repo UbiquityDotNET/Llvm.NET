@@ -17,6 +17,7 @@ namespace Kaleidoscope.Runtime
     public sealed class KaleidoscopeJIT
         : OrcJit
     {
+        /// <summary>Initializes a new instance of the <see cref="KaleidoscopeJIT"/> class.</summary>
         public KaleidoscopeJIT( )
             : base( BuildTargetMachine() )
         {

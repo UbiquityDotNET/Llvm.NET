@@ -28,5 +28,10 @@ namespace Kaleidoscope.Grammar.AST
         public TResult Accept<TResult>( IAstVisitor<TResult> visitor ) => visitor.Visit( this );
 
         public IEnumerable<IAstNode> Children => Enumerable.Empty<IAstNode>( );
+
+        public override string ToString( )
+        {
+            return Name;
+        }
     }
 }

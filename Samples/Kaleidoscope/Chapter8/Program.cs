@@ -17,7 +17,7 @@ using static Llvm.NET.StaticState;
 
 #pragma warning disable SA1512, SA1513, SA1515 // single line comments used to tag regions for extraction into docs
 
-namespace Kaleidoscope
+namespace Kaleidoscope.Chapter8
 {
     public static class Program
     {
