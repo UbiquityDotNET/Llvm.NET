@@ -125,14 +125,23 @@
                             <a href="Kaleidoscope-ch9.html" title="Chapter 9 - Debug Information" class="">Chapter 9 - Debug Information</a>
                           </li>
                           <li class="">
-                            <a href="Kaleidoscope-Runtime.html" title="Kaleidoscope.Runtime" class="">Kaleidoscope.Runtime</a>
-                          </li>
-                          <li class="">
-                            <a href="Kaleidoscope-ParseTreeVisitor.html" title="ParseTree Visitor" class="">ParseTree Visitor</a>
-                          </li>
-                          <li class="">
-                            <a href="Kaleidoscope-Parsetree-examples.html" title="ParseTree Examples" class="">ParseTree Examples</a>
-                          </li>
+                            <span class="expand-stub"></span>
+                            <a class="">Additional Support</a>
+                              
+                              <ul class="nav level3">
+                                <li class="">
+                                  <a href="Kaleidoscope-Runtime.html" title="Kaleidoscope.Runtime" class="">Kaleidoscope.Runtime</a>
+                                </li>
+                                <li class="active">
+                                  <a href="Kaleidoscope-AST.html" title="Kaleidoscope AST" class="active">Kaleidoscope AST</a>
+                                </li>
+                                <li class="">
+                                  <a href="Kaleidoscope-ParseTreeVisitor.html" title="ParseTree Visitor" class="">ParseTree Visitor</a>
+                                </li>
+                                <li class="">
+                                  <a href="Kaleidoscope-Parsetree-examples.html" title="ParseTree Examples" class="">ParseTree Examples</a>
+                                </li>
+                              </ul>  </li>
                         </ul>  </li>
                   </ul>        </div>
               </div>
@@ -258,7 +267,7 @@ namespace Kaleidoscope.Grammar.AST
     public enum BuiltInOperatorKind
     {
         Invalid,
-        Assign,   // not valid as a unary op
+        Assign,
         Add,
         Subtract,
         Multiply,
@@ -310,7 +319,12 @@ namespace Kaleidoscope.Grammar.AST
         }
 
         /// &lt;inheritdoc/&gt;
-        public TResult Accept&lt;TResult&gt;( IAstVisitor&lt;TResult&gt; visitor ) =&gt; visitor.Visit( this );
+        public virtual TResult Accept&lt;TResult&gt;( IAstVisitor&lt;TResult&gt; visitor ) =&gt; visitor.Visit( this );
+
+        public override string ToString( )
+        {
+            return $&quot;{Name}({Left},{Right})&quot;;
+        }
     }
 }
 </code></pre><p>The properties are fairly self explanatory, including the kind of operator and the left and right sides of the
@@ -325,6 +339,7 @@ expressions for all of the arguments to the function.</p>
 
 using System.Collections.Generic;
 using System.Collections.Immutable;
+using System.Linq;
 
 namespace Kaleidoscope.Grammar.AST
 {
@@ -357,6 +372,16 @@ namespace Kaleidoscope.Grammar.AST
             {
                 yield return FunctionPrototype;
             }
+        }
+
+        public override string ToString( )
+        {
+            if( Arguments.Count == 0 )
+            {
+                return $&quot;Call({FunctionPrototype})&quot;;
+            }
+
+            return $&quot;Call({FunctionPrototype}, {string.Join(&quot;,&quot;, Arguments.Select(a=&gt;a.ToString()))})&quot;;
         }
     }
 }
@@ -393,6 +418,11 @@ namespace Kaleidoscope.Grammar.AST
             {
                 yield return Declaration;
             }
+        }
+
+        public override string ToString( )
+        {
+            return $&quot;Load({Name})&quot;;
         }
     }
 }
@@ -449,6 +479,11 @@ namespace Kaleidoscope.Grammar.AST
                 yield return ElseExpression;
             }
         }
+
+        public override string ToString( )
+        {
+            return $&quot;Conditional({Condition}, {ThenExpression}, {ElseExpression})&quot;;
+        }
     }
 }
 </code></pre><h3 id="forinexpression">ForInExpression</h3>
@@ -500,6 +535,11 @@ namespace Kaleidoscope.Grammar.AST
                 yield return Body;
             }
         }
+
+        public override string ToString( )
+        {
+            return $&quot;for({LoopVariable}, {Condition}, {Step}, {Body})&quot;;
+        }
     }
 }
 </code></pre><h3 id="varinexpression">VarInExpression</h3>
@@ -508,6 +548,7 @@ namespace Kaleidoscope.Grammar.AST
 // &lt;/copyright&gt;
 
 using System.Collections.Generic;
+using System.Text;
 
 namespace Kaleidoscope.Grammar.AST
 {
@@ -541,49 +582,19 @@ namespace Kaleidoscope.Grammar.AST
                 yield return Body;
             }
         }
-    }
-}
-</code></pre><h3 id="assignment-expression">Assignment Expression</h3>
-<p>Assignment expressions are used to represent &quot;store&quot; semantics for a variable. The AssignmentExpression is only
-available if the Mutable variables feature is enabled. </p>
-<pre><code class="lang-csharp" name="AssignmentExpression">// &lt;copyright file=&quot;AssignmentExpression.cs&quot; company=&quot;.NET Foundation&quot;&gt;
-// Copyright (c) .NET Foundation. All rights reserved.
-// &lt;/copyright&gt;
 
-using System.Collections.Generic;
-
-namespace Kaleidoscope.Grammar.AST
-{
-    /// &lt;summary&gt;Representation of a variable assignment&lt;/summary&gt;
-    /// &lt;remarks&gt;
-    /// This is a distinct node type to distinguish between a variable reference, which has &quot;load&quot; semantics
-    /// and an assignment, which has &quot;store&quot; semantics.
-    /// &lt;/remarks&gt;
-    public class AssignmentExpression
-        : IExpression
-    {
-        public AssignmentExpression( SourceSpan location, VariableReferenceExpression target, IExpression value )
+        public override string ToString( )
         {
-            Location = location;
-            Target = target;
-            Value = value;
-        }
-
-        public SourceSpan Location { get; }
-
-        public VariableReferenceExpression Target { get; }
-
-        public IExpression Value { get; }
-
-        public TResult Accept&lt;TResult&gt;( IAstVisitor&lt;TResult&gt; visitor ) =&gt; visitor.Visit( this );
-
-        public IEnumerable&lt;IAstNode&gt; Children
-        {
-            get
+            var bldr = new StringBuilder( &quot;VarIn{&quot; );
+            foreach(var local in LocalVariables)
             {
-                yield return Target;
-                yield return Value;
+                bldr.Append( local.ToString() );
             }
+
+            bldr.Append( &quot;}(&quot; );
+            bldr.Append( Body.ToString( ) );
+            bldr.Append( &#39;)&#39; );
+            return bldr.ToString( );
         }
     }
 }
@@ -606,14 +617,14 @@ namespace Kaleidoscope.Grammar.AST
 }
 </code></pre><h2 id="other-ast-nodes">Other AST Nodes</h2>
 <h3 id="ast-declarations">AST Declarations</h3>
-<pre><code class="lang-csharp" name="VarInExpression">// &lt;copyright file=&quot;PrototypeCollection.cs&quot; company=&quot;.NET Foundation&quot;&gt;
+<pre><code class="lang-csharp" name="Function Signatures (Prototype)">// &lt;copyright file=&quot;PrototypeCollection.cs&quot; company=&quot;.NET Foundation&quot;&gt;
 // Copyright (c) .NET Foundation. All rights reserved.
 // &lt;/copyright&gt;
 
 using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Linq;
-
+using System.Text;
 using static Kaleidoscope.Grammar.KaleidoscopeParser;
 
 namespace Kaleidoscope.Grammar.AST
@@ -666,10 +677,10 @@ namespace Kaleidoscope.Grammar.AST
         }
 
         /// &lt;summary&gt;Initializes a new instance of the &lt;see cref=&quot;Prototype&quot;/&gt; class.&lt;/summary&gt;
-        /// &lt;param name=&quot;name&quot;&gt;Name of thefunction&lt;/param&gt;
+        /// &lt;param name=&quot;name&quot;&gt;Name of the function&lt;/param&gt;
         /// &lt;param name=&quot;parameters&quot;&gt;Names of each parameter&lt;/param&gt;
         /// &lt;remarks&gt;
-        /// This version of the constructor is used to create syntehetic prototypes that don&#39;t
+        /// This version of the constructor is used to create synthetic prototypes that don&#39;t
         /// exist within the original source.
         /// &lt;/remarks&gt;
         public Prototype( string name, params string[] parameters)
@@ -697,13 +708,38 @@ namespace Kaleidoscope.Grammar.AST
 
         /// &lt;inheritdoc/&gt;
         public IEnumerable&lt;IAstNode&gt; Children =&gt; Parameters;
+
+        public override string ToString( )
+        {
+            var bldr = new StringBuilder( );
+            if(IsExtern)
+            {
+                bldr.Append( &quot;[extern]&quot; );
+            }
+
+            if(IsCompilerGenerated)
+            {
+                bldr.Append( &quot;[CompilerGenerated]&quot; );
+            }
+
+            bldr.Append( Name );
+            bldr.Append( &#39;(&#39; );
+            if(Parameters.Count &gt; 0)
+            {
+                bldr.Append( string.Join( &quot;, &quot;, Parameters.Select( p =&gt; p.ToString( ) ) ) );
+            }
+
+            bldr.Append( &#39;)&#39; );
+            return bldr.ToString( );
+        }
     }
 }
-</code></pre><pre><code class="lang-csharp" name="VarInExpression">// &lt;copyright file=&quot;LocalVariableDeclaration.cs&quot; company=&quot;.NET Foundation&quot;&gt;
+</code></pre><pre><code class="lang-csharp" name="Local Variable Declarations">// &lt;copyright file=&quot;LocalVariableDeclaration.cs&quot; company=&quot;.NET Foundation&quot;&gt;
 // Copyright (c) .NET Foundation. All rights reserved.
 // &lt;/copyright&gt;
 
 using System.Collections.Generic;
+using System.Text;
 
 namespace Kaleidoscope.Grammar.AST
 {
@@ -742,9 +778,29 @@ namespace Kaleidoscope.Grammar.AST
                 }
             }
         }
+
+        public override string ToString( )
+        {
+            var bldr = new StringBuilder();
+            if(CompilerGenerated)
+            {
+                bldr.Append( &quot;[CompilerGenerated]&quot; );
+            }
+
+            bldr.Append( &quot;Declare(&quot; );
+            bldr.Append( Name );
+            if(Initializer != null )
+            {
+                bldr.Append( &quot;, &quot; );
+                bldr.Append( Initializer.ToString( ) );
+            }
+
+            bldr.Append( &#39;)&#39; );
+            return bldr.ToString( );
+        }
     }
 }
-</code></pre><pre><code class="lang-csharp" name="VarInExpression">// &lt;copyright file=&quot;ParameterDeclaration.cs&quot; company=&quot;.NET Foundation&quot;&gt;
+</code></pre><pre><code class="lang-csharp" name="Parameter declarations">// &lt;copyright file=&quot;ParameterDeclaration.cs&quot; company=&quot;.NET Foundation&quot;&gt;
 // Copyright (c) .NET Foundation. All rights reserved.
 // &lt;/copyright&gt;
 
@@ -774,6 +830,11 @@ namespace Kaleidoscope.Grammar.AST
         public TResult Accept&lt;TResult&gt;( IAstVisitor&lt;TResult&gt; visitor ) =&gt; visitor.Visit( this );
 
         public IEnumerable&lt;IAstNode&gt; Children =&gt; Enumerable.Empty&lt;IAstNode&gt;( );
+
+        public override string ToString( )
+        {
+            return Name;
+        }
     }
 }
 </code></pre><h3 id="ast-functiondefinition">AST FunctionDefinition</h3>
@@ -847,6 +908,11 @@ namespace Kaleidoscope.Grammar.AST
                 yield return Body;
             }
         }
+
+        public override string ToString( )
+        {
+            return $&quot;{Signature}{{{Body}}}&quot;;
+        }
     }
 }
 </code></pre></article>
@@ -871,7 +937,7 @@ namespace Kaleidoscope.Grammar.AST
             <span class="pull-right">
               <a href="#top">Back to top</a>
             </span>
-            Copyright (C) 2017, Dot NET Foundation<br><strong>Build:</strong> 6.0.1-rc.0.0.ci-BLD.448334824
+            Copyright (C) 2017, Dot NET Foundation<br><strong>Build:</strong> 6.0.1-rc.0.0.ci-BLD.449065075
             
           </div>
         </div>

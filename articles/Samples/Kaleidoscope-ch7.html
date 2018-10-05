@@ -125,14 +125,23 @@
                             <a href="Kaleidoscope-ch9.html" title="Chapter 9 - Debug Information" class="">Chapter 9 - Debug Information</a>
                           </li>
                           <li class="">
-                            <a href="Kaleidoscope-Runtime.html" title="Kaleidoscope.Runtime" class="">Kaleidoscope.Runtime</a>
-                          </li>
-                          <li class="">
-                            <a href="Kaleidoscope-ParseTreeVisitor.html" title="ParseTree Visitor" class="">ParseTree Visitor</a>
-                          </li>
-                          <li class="">
-                            <a href="Kaleidoscope-Parsetree-examples.html" title="ParseTree Examples" class="">ParseTree Examples</a>
-                          </li>
+                            <span class="expand-stub"></span>
+                            <a class="">Additional Support</a>
+                              
+                              <ul class="nav level3">
+                                <li class="">
+                                  <a href="Kaleidoscope-Runtime.html" title="Kaleidoscope.Runtime" class="">Kaleidoscope.Runtime</a>
+                                </li>
+                                <li class="">
+                                  <a href="Kaleidoscope-AST.html" title="Kaleidoscope AST" class="">Kaleidoscope AST</a>
+                                </li>
+                                <li class="">
+                                  <a href="Kaleidoscope-ParseTreeVisitor.html" title="ParseTree Visitor" class="">ParseTree Visitor</a>
+                                </li>
+                                <li class="">
+                                  <a href="Kaleidoscope-Parsetree-examples.html" title="ParseTree Examples" class="">ParseTree Examples</a>
+                                </li>
+                              </ul>  </li>
                         </ul>  </li>
                   </ul>        </div>
               </div>
@@ -171,7 +180,7 @@ int test(_Bool Condition)
   return X;
 }
 </code></pre><p>The general idea of how to handle this in LLVM SSA form was already covered in <a href="Kaleidoscope-ch5.html">Chapter 5</a>.
-Since there are two possible values for X when the function returns a PHI node inserted to merge the values.
+Since there are two possible values for X when the function returns, a PHI node is inserted to merge the values.
 The LLVM IR for this would look like this:</p>
 <pre><code class="lang-llvm">@G = weak global i32 0   ; type of @G is i32*
 @H = weak global i32 0   ; type of @H is i32*
@@ -360,13 +369,7 @@ a load through the pointer created with an alloca instruction. This is pretty st
 scope map now stores the alloca instructions for the variable.</p>
 <pre><code class="lang-csharp" name="VisitVariableExpression">public override Value Visit( VariableReferenceExpression reference )
 {
-    if( !NamedValues.TryGetValue( reference.Name, out Alloca value ) )
-    {
-        // Source input is validated by the parser and AstBuilder, therefore
-        // this is the result of an internal error in the generator rather
-        // then some sort of user error.
-        throw new CodeGeneratorException( $&quot;ICE: Unknown variable name: {reference.Name}&quot; );
-    }
+    var value = LookupVariable( reference.Name );
 
     return InstructionBuilder.Load( value )
                              .RegisterName( reference.Name );
@@ -379,10 +382,7 @@ continue block load the value from the location so that it is available as a val
 expression.</p>
 <pre><code class="lang-csharp" name="VisitConditionalExpression">public override Value Visit( ConditionalExpression conditionalExpression )
 {
-    if( !NamedValues.TryGetValue( conditionalExpression.ResultVariable.Name, out Alloca result ) )
-    {
-        throw new CodeGeneratorException( $&quot;ICE: allocation for compiler generated variable &#39;{conditionalExpression.ResultVariable.Name}&#39; not found!&quot; );
-    }
+    var result = LookupVariable( conditionalExpression.ResultVariable.Name );
 
     var condition = conditionalExpression.Condition.Accept( this );
     if( condition == null )
@@ -440,10 +440,7 @@ use of load/store for the variables and removal of the manually generated PHI no
 {
     var function = InstructionBuilder.InsertBlock.ContainingFunction;
     string varName = forInExpression.LoopVariable.Name;
-    if( !NamedValues.TryGetValue( varName, out Alloca allocaVar ) )
-    {
-        throw new CodeGeneratorException( $&quot;ICE: For loop initializer variable allocation not found!&quot; );
-    }
+    Alloca allocaVar = LookupVariable( varName );
 
     // Emit the start code first, without &#39;variable&#39; in scope.
     Value startVal = null;
@@ -542,15 +539,15 @@ into the entry block.</p>
         InstructionBuilder.PositionAtEnd( entryBlock );
         using( NamedValues.EnterScope( ) )
         {
-            foreach( var arg in function.Parameters )
+            foreach( var param in definition.Signature.Parameters )
             {
                 var argSlot = InstructionBuilder.Alloca( function.Context.DoubleType )
-                                                .RegisterName( arg.Name );
-                InstructionBuilder.Store( arg, argSlot );
-                NamedValues[ arg.Name ] = argSlot;
+                                                .RegisterName( param.Name );
+                InstructionBuilder.Store( function.Parameters[ param.Index ], argSlot );
+                NamedValues[ param.Name ] = argSlot;
             }
 
-            foreach( var local in definition.LocalVariables )
+            foreach( LocalVariableDeclaration local in definition.LocalVariables )
             {
                 var localSlot = InstructionBuilder.Alloca( function.Context.DoubleType )
                                                   .RegisterName( local.Name );
@@ -593,18 +590,52 @@ to registers.</p>
 
     FunctionPassManager.Initialize( );
 }
-</code></pre><h3 id="add-visitor-for-assignment-expressions">Add visitor for Assignment Expressions</h3>
+</code></pre><h3 id="add-operator-support-for-assignment-expressions">Add operator support for Assignment Expressions</h3>
 <p>Unlike the other binary operators assignment doesn&#39;t follow the same emit left, emit right, emit operator
 sequence. This is because an expression like &#39;(x+1) = expression&#39; is nonsensical and therefore not allowed.
 The left hand side is always an alloca as the destination of a store. To handle this special case the
-AST creates a distinct node for assignment. Code generation can then simply implement a visitor for an
-assignment to handle storing the value to the variable.</p>
-<pre><code class="lang-csharp" name="VisitExpression">public override Value Visit( AssignmentExpression assignment )
+Generator doesn&#39;t generate for the left side, but instead looks up the Alloca for the variable. The generator
+then implements a store operation of the right hand side value to the Alloca for the left side.</p>
+<pre><code class="lang-csharp" name="BinaryOperatorExpression">public override Value Visit( BinaryOperatorExpression binaryOperator )
 {
-    var targetAlloca = NamedValues[ assignment.Target.Name ];
-    var value = assignment.Value.Accept( this );
-    InstructionBuilder.Store( value, targetAlloca );
-    return value;
+    switch( binaryOperator.Op )
+    {
+    case BuiltInOperatorKind.Less:
+        {
+            var tmp = InstructionBuilder.Compare( RealPredicate.UnorderedOrLessThan, binaryOperator.Left.Accept( this ), binaryOperator.Right.Accept( this ) )
+                                        .RegisterName( &quot;cmptmp&quot; );
+            return InstructionBuilder.UIToFPCast( tmp, InstructionBuilder.Context.DoubleType )
+                                     .RegisterName( &quot;booltmp&quot; );
+        }
+
+    case BuiltInOperatorKind.Pow:
+        {
+            var pow = GetOrDeclareFunction( new Prototype( &quot;llvm.pow.f64&quot;, &quot;value&quot;, &quot;power&quot; ) );
+            return InstructionBuilder.Call( pow, binaryOperator.Left.Accept( this ), binaryOperator.Right.Accept( this ) )
+                                     .RegisterName( &quot;powtmp&quot; );
+        }
+
+    case BuiltInOperatorKind.Add:
+        return InstructionBuilder.FAdd( binaryOperator.Left.Accept( this ), binaryOperator.Right.Accept( this ) ).RegisterName( &quot;addtmp&quot; );
+
+    case BuiltInOperatorKind.Subtract:
+        return InstructionBuilder.FSub( binaryOperator.Left.Accept( this ), binaryOperator.Right.Accept( this ) ).RegisterName( &quot;subtmp&quot; );
+
+    case BuiltInOperatorKind.Multiply:
+        return InstructionBuilder.FMul( binaryOperator.Left.Accept( this ), binaryOperator.Right.Accept( this ) ).RegisterName( &quot;multmp&quot; );
+
+    case BuiltInOperatorKind.Divide:
+        return InstructionBuilder.FDiv( binaryOperator.Left.Accept( this ), binaryOperator.Right.Accept( this ) ).RegisterName( &quot;divtmp&quot; );
+
+    case BuiltInOperatorKind.Assign:
+        Alloca target = LookupVariable( ( ( VariableReferenceExpression )binaryOperator.Left ).Name );
+        Value value = binaryOperator.Right.Accept( this );
+        InstructionBuilder.Store( value, target );
+        return value;
+
+    default:
+        throw new CodeGeneratorException( $&quot;ICE: Invalid binary operator {binaryOperator.Op}&quot; );
+    }
 }
 </code></pre><p>Now that we have mutable variables and assignment we can mutate loop variables or input parameters. For
 example:</p>
@@ -640,11 +671,7 @@ completes, the variable scope is popped from the stack to restore back the previ
         Function function = InstructionBuilder.InsertBlock.ContainingFunction;
         foreach( var localVar in varInExpression.LocalVariables )
         {
-            if( !NamedValues.TryGetValue( localVar.Name, out Alloca alloca ) )
-            {
-                throw new CodeGeneratorException( $&quot;ICE: Missing allocation for local variable {localVar.Name}&quot; );
-            }
-
+            Alloca alloca = LookupVariable( localVar.Name );
             Value initValue = Context.CreateConstant( 0.0 );
             if( localVar.Initializer != null )
             {
@@ -682,7 +709,7 @@ without needing to manually deal with PHI nodes or generate SSA form! Now, that&
             <span class="pull-right">
               <a href="#top">Back to top</a>
             </span>
-            Copyright (C) 2017, Dot NET Foundation<br><strong>Build:</strong> 6.0.1-rc.0.0.ci-BLD.448334824
+            Copyright (C) 2017, Dot NET Foundation<br><strong>Build:</strong> 6.0.1-rc.0.0.ci-BLD.449065075
             
           </div>
         </div>

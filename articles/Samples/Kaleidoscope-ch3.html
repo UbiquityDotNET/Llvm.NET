@@ -125,14 +125,23 @@
                             <a href="Kaleidoscope-ch9.html" title="Chapter 9 - Debug Information" class="">Chapter 9 - Debug Information</a>
                           </li>
                           <li class="">
-                            <a href="Kaleidoscope-Runtime.html" title="Kaleidoscope.Runtime" class="">Kaleidoscope.Runtime</a>
-                          </li>
-                          <li class="">
-                            <a href="Kaleidoscope-ParseTreeVisitor.html" title="ParseTree Visitor" class="">ParseTree Visitor</a>
-                          </li>
-                          <li class="">
-                            <a href="Kaleidoscope-Parsetree-examples.html" title="ParseTree Examples" class="">ParseTree Examples</a>
-                          </li>
+                            <span class="expand-stub"></span>
+                            <a class="">Additional Support</a>
+                              
+                              <ul class="nav level3">
+                                <li class="">
+                                  <a href="Kaleidoscope-Runtime.html" title="Kaleidoscope.Runtime" class="">Kaleidoscope.Runtime</a>
+                                </li>
+                                <li class="">
+                                  <a href="Kaleidoscope-AST.html" title="Kaleidoscope AST" class="">Kaleidoscope AST</a>
+                                </li>
+                                <li class="">
+                                  <a href="Kaleidoscope-ParseTreeVisitor.html" title="ParseTree Visitor" class="">ParseTree Visitor</a>
+                                </li>
+                                <li class="">
+                                  <a href="Kaleidoscope-Parsetree-examples.html" title="ParseTree Examples" class="">ParseTree Examples</a>
+                                </li>
+                              </ul>  </li>
                         </ul>  </li>
                   </ul>        </div>
               </div>
@@ -321,7 +330,7 @@ of declarations used in validating subsequent function calls when generating the
 using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Linq;
-
+using System.Text;
 using static Kaleidoscope.Grammar.KaleidoscopeParser;
 
 namespace Kaleidoscope.Grammar.AST
@@ -374,10 +383,10 @@ namespace Kaleidoscope.Grammar.AST
         }
 
         /// &lt;summary&gt;Initializes a new instance of the &lt;see cref=&quot;Prototype&quot;/&gt; class.&lt;/summary&gt;
-        /// &lt;param name=&quot;name&quot;&gt;Name of thefunction&lt;/param&gt;
+        /// &lt;param name=&quot;name&quot;&gt;Name of the function&lt;/param&gt;
         /// &lt;param name=&quot;parameters&quot;&gt;Names of each parameter&lt;/param&gt;
         /// &lt;remarks&gt;
-        /// This version of the constructor is used to create syntehetic prototypes that don&#39;t
+        /// This version of the constructor is used to create synthetic prototypes that don&#39;t
         /// exist within the original source.
         /// &lt;/remarks&gt;
         public Prototype( string name, params string[] parameters)
@@ -405,6 +414,30 @@ namespace Kaleidoscope.Grammar.AST
 
         /// &lt;inheritdoc/&gt;
         public IEnumerable&lt;IAstNode&gt; Children =&gt; Parameters;
+
+        public override string ToString( )
+        {
+            var bldr = new StringBuilder( );
+            if(IsExtern)
+            {
+                bldr.Append( &quot;[extern]&quot; );
+            }
+
+            if(IsCompilerGenerated)
+            {
+                bldr.Append( &quot;[CompilerGenerated]&quot; );
+            }
+
+            bldr.Append( Name );
+            bldr.Append( &#39;(&#39; );
+            if(Parameters.Count &gt; 0)
+            {
+                bldr.Append( string.Join( &quot;, &quot;, Parameters.Select( p =&gt; p.ToString( ) ) ) );
+            }
+
+            bldr.Append( &#39;)&#39; );
+            return bldr.ToString( );
+        }
     }
 }
 </code></pre><h3 id="function-definition">Function Definition</h3>
@@ -423,9 +456,9 @@ VisitFunctionDefinition() Method.</p>
         var entryBlock = function.AppendBasicBlock( &quot;entry&quot; );
         InstructionBuilder.PositionAtEnd( entryBlock );
         NamedValues.Clear( );
-        foreach( var arg in function.Parameters )
+        foreach( var param in definition.Signature.Parameters )
         {
-            NamedValues[ arg.Name ] = arg;
+            NamedValues[ param.Name ] = function.Parameters[ param.Index ];
         }
 
         var funcReturn = definition.Body.Accept( this );
@@ -516,6 +549,11 @@ namespace Kaleidoscope.Grammar.AST
         public TResult Accept&lt;TResult&gt;( IAstVisitor&lt;TResult&gt; visitor ) =&gt; visitor.Visit( this );
 
         public IEnumerable&lt;IAstNode&gt; Children =&gt; Enumerable.Empty&lt;IAstNode&gt;( );
+
+        public override string ToString( )
+        {
+            return Value.ToString( );
+        }
     }
 }
 </code></pre><p>Generation of the LLVM IR for a constant is quite simple.</p>
@@ -572,14 +610,11 @@ namespace Kaleidoscope.Grammar.AST
 the actual operator.</p>
 <pre><code class="lang-csharp" name="Main">public override Value Visit( BinaryOperatorExpression binaryOperator )
 {
-    var lhs = binaryOperator.Left.Accept( this );
-    var rhs = binaryOperator.Right.Accept( this );
-
     switch( binaryOperator.Op )
     {
     case BuiltInOperatorKind.Less:
         {
-            var tmp = InstructionBuilder.Compare( RealPredicate.UnorderedOrLessThan, lhs, rhs )
+            var tmp = InstructionBuilder.Compare( RealPredicate.UnorderedOrLessThan, binaryOperator.Left.Accept( this ), binaryOperator.Right.Accept( this ) )
                                         .RegisterName( &quot;cmptmp&quot; );
             return InstructionBuilder.UIToFPCast( tmp, InstructionBuilder.Context.DoubleType )
                                      .RegisterName( &quot;booltmp&quot; );
@@ -588,21 +623,21 @@ the actual operator.</p>
     case BuiltInOperatorKind.Pow:
         {
             var pow = GetOrDeclareFunction( new Prototype( &quot;llvm.pow.f64&quot;, &quot;value&quot;, &quot;power&quot; ) );
-            return InstructionBuilder.Call( pow, lhs, rhs )
+            return InstructionBuilder.Call( pow, binaryOperator.Left.Accept( this ), binaryOperator.Right.Accept( this ) )
                                      .RegisterName( &quot;powtmp&quot; );
         }
 
     case BuiltInOperatorKind.Add:
-        return InstructionBuilder.FAdd( lhs, rhs ).RegisterName( &quot;addtmp&quot; );
+        return InstructionBuilder.FAdd( binaryOperator.Left.Accept( this ), binaryOperator.Right.Accept( this ) ).RegisterName( &quot;addtmp&quot; );
 
     case BuiltInOperatorKind.Subtract:
-        return InstructionBuilder.FSub( lhs, rhs ).RegisterName( &quot;subtmp&quot; );
+        return InstructionBuilder.FSub( binaryOperator.Left.Accept( this ), binaryOperator.Right.Accept( this ) ).RegisterName( &quot;subtmp&quot; );
 
     case BuiltInOperatorKind.Multiply:
-        return InstructionBuilder.FMul( lhs, rhs ).RegisterName( &quot;multmp&quot; );
+        return InstructionBuilder.FMul( binaryOperator.Left.Accept( this ), binaryOperator.Right.Accept( this ) ).RegisterName( &quot;multmp&quot; );
 
     case BuiltInOperatorKind.Divide:
-        return InstructionBuilder.FDiv( lhs, rhs ).RegisterName( &quot;divtmp&quot; );
+        return InstructionBuilder.FDiv( binaryOperator.Left.Accept( this ), binaryOperator.Right.Accept( this ) ).RegisterName( &quot;divtmp&quot; );
 
     default:
         throw new CodeGeneratorException( $&quot;ICE: Invalid binary operator {binaryOperator.Op}&quot; );
@@ -704,7 +739,7 @@ Ready&gt;
             <span class="pull-right">
               <a href="#top">Back to top</a>
             </span>
-            Copyright (C) 2017, Dot NET Foundation<br><strong>Build:</strong> 6.0.1-rc.0.0.ci-BLD.448334824
+            Copyright (C) 2017, Dot NET Foundation<br><strong>Build:</strong> 6.0.1-rc.0.0.ci-BLD.449065075
             
           </div>
         </div>
