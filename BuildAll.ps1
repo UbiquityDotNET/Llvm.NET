@@ -111,7 +111,6 @@ try
     Write-Information "Building Llvm.NET"
     Invoke-MSBuild -Targets Build -Project src\Llvm.NET.sln -Properties $msBuildProperties -LoggerArgs $msbuildLoggerArgs ($msbuildLoggerArgs + @("/bl:Llvm.NET-build.binlog") )
 
-
     Write-Information "Restoring Docs Project"
     Invoke-MSBuild -Targets Restore -Project docfx\Llvm.NET.DocFX.csproj -Properties $msBuildProperties -LoggerArgs $msbuildLoggerArgs ($msbuildLoggerArgs + @("/bl:Llvm.NET-docfx-restore.binlog") )
 
@@ -125,26 +124,6 @@ try
             Push-AppveyorArtifact $item.FullName
         }
     }
-
-    if( !(Test-Path (Join-Path $buildPaths.DocsOutput '.git') -PathType Container))
-    {
-        Write-Information "Cloning Docs repository"
-        pushd BuildOutput -ErrorAction Stop
-        try
-        {
-            git clone https://github.com/UbiquityDotNET/Llvm.NET.git -b gh-pages docs -q
-        }
-        finally
-        {
-            popd
-        }
-    }
-
-    Write-Information "Restoring Docs Project"
-    Invoke-MSBuild -Targets Restore -Project docfx\Llvm.NET.DocFX.csproj -Properties $msBuildProperties -LoggerArgs $msbuildLoggerArgs ($msbuildLoggerArgs + @("/bl:Llvm.NET-docfx-restore.binlog") )
-
-    Write-Information "Building Docs"
-    Invoke-MSBuild -Targets Build -Project docfx\Llvm.NET.DocFX.csproj -Properties $msBuildProperties -LoggerArgs $msbuildLoggerArgs ($msbuildLoggerArgs + @("/bl:Llvm.NET-docfx-build.binlog") )
 }
 finally
 {
