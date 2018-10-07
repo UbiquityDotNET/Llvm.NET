@@ -183,7 +183,7 @@ function Invoke-msbuild([string]$project, [hashtable]$properties, [string[]]$tar
         msbuild $msbuildArgs
         if($LASTEXITCODE -ne 0)
         {
-            throw "Error running msbuild: $LASTEXITCODE"
+            Write-Error "Error running msbuild: $LASTEXITCODE"
         }
     }
     finally

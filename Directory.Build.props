@@ -14,7 +14,7 @@
         other projects that might want to set the build outputs etc... into a different place.
     -->
     <PropertyGroup>
-        <!-- Default to x64/AnyCPU | Debug build if not otherwise specified -->
+        <!-- Default to x64/AnyCPU | Release build if not otherwise specified -->
         <Platform Condition="'$(Platform)'=='' AND '$(MSBuildProjectExtension)'!='.vcxproj'">AnyCPU</Platform>
         <Platform Condition="'$(Platform)'=='' AND '$(MSBuildProjectExtension)'=='.vcxproj'">x64</Platform>
         <Platform Condition="$(Platform)=='x86' AND '$(MSBuildProjectExtension)'=='.vcxproj'">Win32</Platform>
