@@ -90,6 +90,7 @@ namespace Kaleidoscope.Grammar.AST
         /// <inheritdoc/>
         public IEnumerable<IAstNode> Children => Parameters;
 
+        /// <inheritdoc/>
         public override string ToString( )
         {
             var bldr = new StringBuilder( );

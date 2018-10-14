@@ -28,6 +28,6 @@ namespace Llvm.NET.Native
         }
 
         [DllImport( NativeMethods.LibraryPath, CallingConvention = CallingConvention.Cdecl )]
-        private static extern void LLVMDisposeValueCache( IntPtr @C );
+        private static extern void LLVMDisposeValueCache( IntPtr C );
     }
 }

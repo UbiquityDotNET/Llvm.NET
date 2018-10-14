@@ -78,7 +78,7 @@ namespace Kaleidoscope.Chapter9
                         }
 
                         machine.EmitToFile( generator.Module, asmPath, CodeGenFileType.AssemblySource );
-                        Console.WriteLine( "CopmilationTiorTime: {0}", timer.Elapsed );
+                        Console.WriteLine( "Compilation Time: {0}", timer.Elapsed );
                     }
                 }
             }
@@ -88,6 +88,7 @@ namespace Kaleidoscope.Chapter9
         // </Main>
 
         // <ErrorHandling>
+        [SuppressMessage( "Redundancies in Symbol Declarations", "RECS0154:Parameter is never used", Justification = "Standard Event signature" )]
         private static void OnGeneratorError( object sender, CodeGenerationExceptionArgs e )
         {
             var color = Console.ForegroundColor;

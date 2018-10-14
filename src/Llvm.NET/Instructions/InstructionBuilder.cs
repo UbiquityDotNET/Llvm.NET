@@ -14,8 +14,8 @@ using Llvm.NET.Native;
 using Llvm.NET.Types;
 using Llvm.NET.Values;
 using Ubiquity.ArgValidators;
-
 using static Llvm.NET.Native.NativeMethods;
+using CallingConvention = System.Runtime.InteropServices.CallingConvention;
 
 namespace Llvm.NET.Instructions
 {
@@ -235,7 +235,7 @@ namespace Llvm.NET.Instructions
         /// <param name="typeRef">Type of the value to allocate</param>
         /// <param name="elements">Number of elements to allocate</param>
         /// <returns><see cref="Instructions.Alloca"/> instruction</returns>
-        [System.Diagnostics.CodeAnalysis.SuppressMessage( "Microsoft.Design", "CA1011:ConsiderPassingBaseTypesAsParameters", Justification = "Specific type required by interop call" )]
+        [SuppressMessage( "Microsoft.Design", "CA1011:ConsiderPassingBaseTypesAsParameters", Justification = "Specific type required by interop call" )]
         public Alloca Alloca( ITypeRef typeRef, ConstantInt elements )
         {
             if( typeRef == null )
@@ -1238,13 +1238,13 @@ namespace Llvm.NET.Instructions
         /// Callers can use <see cref="Instructions.Switch.AddCase(Value, BasicBlock)"/> to add cases to the
         /// instruction.
         /// </remarks>
-        public Instructions.Switch Switch( Value value, BasicBlock defaultCase, uint numCases )
+        public Switch Switch( Value value, BasicBlock defaultCase, uint numCases )
         {
             value.ValidateNotNull( nameof( value ) );
             defaultCase.ValidateNotNull( nameof( defaultCase ) );
 
             var handle = LLVMBuildSwitch( BuilderHandle, value.ValueHandle, defaultCase.BlockHandle, numCases );
-            return Value.FromHandle<Instructions.Switch>( handle );
+            return Value.FromHandle<Switch>( handle );
         }
 
         /// <summary>Creates a call to the llvm.donothing intrinsic</summary>
@@ -1548,7 +1548,7 @@ namespace Llvm.NET.Instructions
             var argsArray = args as Value[ ] ?? args.ToArray( );
             if( argsArray.Any( a => !a.NativeType.IsInteger ) )
             {
-                throw new ArgumentException( $"GEP index arguments must be integers" );
+                throw new ArgumentException( "GEP index arguments must be integers" );
             }
 
             LLVMValueRef[ ] llvmArgs = argsArray.Select( a => a.ValueHandle ).ToArray( );
@@ -1665,11 +1665,11 @@ namespace Llvm.NET.Instructions
             return LLVMBuildCall( BuilderHandle, func.ValueHandle, out llvmArgs[ 0 ], ( uint )argCount, string.Empty );
         }
 
-        [DllImport( LibraryPath, EntryPoint = "LLVMBuildIntCast2", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl, BestFitMapping = false, ThrowOnUnmappableChar = true )]
-        private static extern LLVMValueRef LLVMBuildIntCast( LLVMBuilderRef @param0, LLVMValueRef @Val, LLVMTypeRef @DestTy, [MarshalAs( UnmanagedType.Bool )]bool isSigned, [MarshalAs( UnmanagedType.LPStr )] string @Name );
+        [DllImport( LibraryPath, EntryPoint = "LLVMBuildIntCast2", CallingConvention = CallingConvention.Cdecl, BestFitMapping = false, ThrowOnUnmappableChar = true )]
+        private static extern LLVMValueRef LLVMBuildIntCast( LLVMBuilderRef param0, LLVMValueRef Val, LLVMTypeRef DestTy, [MarshalAs( UnmanagedType.Bool )]bool isSigned, [MarshalAs( UnmanagedType.LPStr )] string Name );
 
-        [DllImport( LibraryPath, CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl )]
-        private static extern void LLVMSetCurrentDebugLocation2( LLVMBuilderRef @Bref, UInt32 @Line, UInt32 @Col, LLVMMetadataRef @Scope, LLVMMetadataRef @InlinedAt );
+        [DllImport( LibraryPath, CallingConvention = CallingConvention.Cdecl )]
+        private static extern void LLVMSetCurrentDebugLocation2( LLVMBuilderRef Bref, UInt32 Line, UInt32 Col, LLVMMetadataRef Scope, LLVMMetadataRef InlinedAt );
 
         private const string IncompatibleTypeMsgFmt = "Incompatible types: destination pointer must be of the same type as the value stored.\n"
                                                     + "Types are:\n"

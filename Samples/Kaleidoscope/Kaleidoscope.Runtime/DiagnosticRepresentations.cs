@@ -23,6 +23,6 @@ namespace Kaleidoscope.Runtime
         BlockDiag,
 
         /// <summary>Emits debug tracing during the parse to an attached debugger</summary>
-        DebugTraceParser,
+        DebugTraceParser
     }
 }

@@ -302,13 +302,18 @@ function Find7Zip()
 
 function Install-LlvmLibs($destPath)
 {
-    #TODO: Generalize the LLVM and MSC versioning to eliminate hard coded names here
-    if( !( test-path -PathType Leaf 'llvm-libs-6.0.1-msvc-15.8.7z' ) )
+    if(!(Test-Path -PathType Container Downloads))
     {
-        $asset = (Get-GitHubTaggedRelease UbiquityDotNet 'Llvm.Libs' 'v6.0.1-msvc-15.8').assets[0]
-        Invoke-WebRequest -UseBasicParsing -Uri $asset.browser_download_url -OutFile 'llvm-libs-6.0.1-msvc-15.8.7z'
+        md Downloads | Out-Null
     }
 
-    Expand-Archive 'llvm-libs-6.0.1-msvc-15.8.7z' $destPath
+    #TODO: Generalize the LLVM and MSC versioning to eliminate hard coded names here
+    if( !( test-path -PathType Leaf 'Downloads\llvm-libs-6.0.1-msvc-15.8.7z' ) )
+    {
+        $asset = (Get-GitHubTaggedRelease UbiquityDotNet 'Llvm.Libs' 'v6.0.1-msvc-15.8').assets[0]
+        Invoke-WebRequest -UseBasicParsing -Uri $asset.browser_download_url -OutFile 'Downloads\llvm-libs-6.0.1-msvc-15.8.7z'
+    }
+
+    Expand-Archive 'Downloads\llvm-libs-6.0.1-msvc-15.8.7z' $destPath
 }
 

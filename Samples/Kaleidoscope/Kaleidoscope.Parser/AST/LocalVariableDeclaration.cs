@@ -36,10 +36,6 @@ namespace Kaleidoscope.Grammar.AST
                 {
                     yield return Initializer;
                 }
-                else
-                {
-                    yield break;
-                }
             }
         }
 

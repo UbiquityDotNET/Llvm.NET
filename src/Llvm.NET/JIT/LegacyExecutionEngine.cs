@@ -5,6 +5,7 @@
 using System;
 using System.Collections.Generic;
 using System.Runtime.InteropServices;
+using System.Threading;
 using Llvm.NET.Native;
 using Llvm.NET.Values;
 
@@ -62,7 +63,7 @@ namespace Llvm.NET.JIT
         /// <returns>Handle for the module in the engine</returns>
         public IJitModuleHandle AddModule( BitcodeModule module )
         {
-            int handle = System.Threading.Interlocked.Increment( ref NextHandleValue ) - 1;
+            int handle = Interlocked.Increment( ref NextHandleValue ) - 1;
             lock( OwnedModules )
             {
                 OwnedModules.Add( handle, module.ModuleHandle );

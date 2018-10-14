@@ -96,7 +96,7 @@ namespace Llvm.NET.Tests
                   { Triple.ArchType.Wasm32,         "wasm32" },
                   { Triple.ArchType.Wasm64,         "wasm64" },
                   { Triple.ArchType.Renderscript32, "renderscript32" },
-                  { Triple.ArchType.Renderscript64, "renderscript64" },
+                  { Triple.ArchType.Renderscript64, "renderscript64" }
             };
 
             foreach( var kvp in values )
@@ -164,7 +164,7 @@ namespace Llvm.NET.Tests
                 { Triple.VendorType.CSR,                     "csr" },
                 { Triple.VendorType.Myriad,                  "myriad" },
                 { Triple.VendorType.AMD,                     "amd" },
-                { Triple.VendorType.Mesa,                    "mesa" },
+                { Triple.VendorType.Mesa,                    "mesa" }
             };
 
             foreach( var kvp in values )

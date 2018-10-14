@@ -73,13 +73,13 @@ namespace Kaleidoscope.Runtime
         {
             Ready = true;
             ReadyStateChanged( this, ReadyStateChangedArgs.CompleteParseArgs );
-            foreach( var (Txt, IsPartial) in Input.ReadStatements( ) )
+            foreach( var (txt, isPartial) in Input.ReadStatements( ) )
             {
-                if( !IsPartial )
+                if( !isPartial )
                 {
                     try
                     {
-                        var parseResult = Parser.Parse( Txt, AdditionalDiagnostics );
+                        var parseResult = Parser.Parse( txt, AdditionalDiagnostics );
                         if( parseResult != null )
                         {
                             TResult value = Generator.Generate( parseResult );
@@ -104,14 +104,14 @@ namespace Kaleidoscope.Runtime
                 */
                 if( Ready )
                 {
-                    bool isBlank = string.IsNullOrWhiteSpace( Txt );
+                    bool isBlank = string.IsNullOrWhiteSpace( txt );
 
-                    Debug.Assert( !( Ready && !IsPartial && isBlank ), "Invalid internal state" );
-                    Ready = IsPartial == isBlank;
+                    Debug.Assert( !( Ready && !isPartial && isBlank ), "Invalid internal state" );
+                    Ready = isPartial == isBlank;
                 }
                 else
                 {
-                    Ready = !IsPartial;
+                    Ready = !isPartial;
                 }
 
                 ReadyStateChanged( this, Ready ? ReadyStateChangedArgs.CompleteParseArgs : ReadyStateChangedArgs.PartialParseArgs );

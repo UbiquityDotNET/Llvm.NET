@@ -3,6 +3,7 @@
 // </copyright>
 
 using System;
+using System.Diagnostics;
 
 namespace Llvm.NET
 {
@@ -13,7 +14,7 @@ namespace Llvm.NET
     /// outside the context of a constructor, but once set should never be set again.
     /// Allowing a sort of lazy <see langword="readonly"/>.
     /// </remarks>
-    [System.Diagnostics.DebuggerDisplay( "{ValueOrDefault}" )]
+    [DebuggerDisplay( "{ValueOrDefault}" )]
     internal sealed class WriteOnce<T>
     {
         /// <inheritdoc/>

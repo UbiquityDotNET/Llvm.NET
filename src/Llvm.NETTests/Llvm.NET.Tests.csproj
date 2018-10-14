@@ -1,9 +1,8 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-      <TargetFrameworks>net47</TargetFrameworks>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net47|AnyCPU'">
-    <LangVersion>7.2</LangVersion>
+      <TargetFrameworks>netcoreapp2.1;net47</TargetFrameworks>
+      <IsPackable>false</IsPackable>
+      <LangVersion>7.2</LangVersion>
   </PropertyGroup>
   <ItemGroup>
     <ProjectReference Include="$(BuildRootDir)src\Llvm.NET\Llvm.NET.csproj">
@@ -11,12 +10,8 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="CSemVer.Build.Tasks" Version="2.0.0-beta.2.0.ci-BLD.443713343" />
-    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="15.8.0" />
-    <PackageReference Include="MSTest.TestAdapter" Version="1.3.2" />
-    <PackageReference Include="MSTest.TestFramework" Version="1.3.2" />
+      <PackageReference Include="Microsoft.NET.Test.Sdk" Version="15.8.0" />
+      <PackageReference Include="MSTest.TestFramework" Version="1.3.2" />
+      <PackageReference Include="MSTest.TestAdapter" Version="1.3.2" />
   </ItemGroup>
-  <Target Name="EnsureLocalNugetFolder" Condition="!EXISTS($(PackageOutputPath))" BeforeTargets="Restore">
-      <MakeDir Directories="$(PackageOutputPath)" />
-  </Target>
 </Project>

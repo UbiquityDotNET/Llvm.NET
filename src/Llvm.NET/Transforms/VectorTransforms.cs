@@ -35,9 +35,9 @@ namespace Llvm.NET.Transforms
         }
 
         [DllImport( LibraryPath, CallingConvention = CallingConvention.Cdecl )]
-        private static extern void LLVMAddLoopVectorizePass( LLVMPassManagerRef @PM );
+        private static extern void LLVMAddLoopVectorizePass( LLVMPassManagerRef PM );
 
         [DllImport( LibraryPath, CallingConvention = CallingConvention.Cdecl )]
-        private static extern void LLVMAddSLPVectorizePass( LLVMPassManagerRef @PM );
+        private static extern void LLVMAddSLPVectorizePass( LLVMPassManagerRef PM );
     }
 }

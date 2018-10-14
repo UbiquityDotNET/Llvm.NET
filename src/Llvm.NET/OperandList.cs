@@ -3,6 +3,7 @@
 // </copyright>
 
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using Ubiquity.ArgValidators;
@@ -60,7 +61,7 @@ namespace Llvm.NET
         }
 
         /// <inheritdoc/>
-        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator( ) => GetEnumerator( );
+        IEnumerator IEnumerable.GetEnumerator( ) => GetEnumerator( );
 
         /// <inheritdoc/>
         public int IndexOf( T item )

@@ -5,6 +5,7 @@
 using System;
 using System.IO;
 using System.Linq;
+using Llvm.NET.DebugInfo;
 using Llvm.NET.Instructions;
 using Llvm.NET.Values;
 using Llvm.NETTests;
@@ -92,7 +93,7 @@ namespace Llvm.NET.Tests
         public void ConstructorTestWithNameAndCompileUnit( )
         {
             using( var ctx = new Context( ) )
-            using( var module = ctx.CreateBitcodeModule( TestModuleName, DebugInfo.SourceLanguage.C99, "test.c", "unitTest", false, string.Empty, 0 ) )
+            using( var module = ctx.CreateBitcodeModule( TestModuleName, SourceLanguage.C99, "test.c", "unitTest", false, string.Empty, 0 ) )
             {
                 Assert.AreEqual( TestModuleName, module.Name );
                 Assert.AreEqual( "test.c", module.SourceFileName );

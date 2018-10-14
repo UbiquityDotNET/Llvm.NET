@@ -2,6 +2,7 @@
 // Copyright (c) .NET Foundation. All rights reserved.
 // </copyright>
 
+using System;
 using Llvm.NET.Native;
 using Llvm.NET.Values;
 
@@ -23,12 +24,12 @@ namespace Llvm.NET.Instructions
         {
             if( onVal == null )
             {
-                throw new System.ArgumentNullException( nameof( onVal ) );
+                throw new ArgumentNullException( nameof( onVal ) );
             }
 
             if( destination == null )
             {
-                throw new System.ArgumentNullException( nameof( destination ) );
+                throw new ArgumentNullException( nameof( destination ) );
             }
 
             LLVMAddCase( ValueHandle, onVal.ValueHandle, destination.BlockHandle );

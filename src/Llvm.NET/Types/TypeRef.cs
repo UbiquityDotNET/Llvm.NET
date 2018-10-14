@@ -9,6 +9,7 @@ using Llvm.NET.Native;
 using Llvm.NET.Values;
 
 using static Llvm.NET.Native.NativeMethods;
+using CallingConvention = System.Runtime.InteropServices.CallingConvention;
 
 // Interface+internal type matches file name
 #pragma warning disable SA1649
@@ -123,7 +124,7 @@ namespace Llvm.NET.Types
         }
 
         public bool TryGetExtendedPropertyValue<T>( string id, out T value )
-            => ExtensibleProperties.TryGetExtendedPropertyValue<T>( id, out value );
+            => ExtensibleProperties.TryGetExtendedPropertyValue( id, out value );
 
         public void AddExtendedPropertyValue( string id, object value )
             => ExtensibleProperties.AddExtendedPropertyValue( id, value );
@@ -218,7 +219,7 @@ namespace Llvm.NET.Types
 
         private readonly ExtensiblePropertyContainer ExtensibleProperties = new ExtensiblePropertyContainer( );
 
-        [DllImport( LibraryPath, CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl )]
-        private static extern LLVMContextAlias LLVMGetTypeContext( LLVMTypeRef @Ty );
+        [DllImport( LibraryPath, CallingConvention = CallingConvention.Cdecl )]
+        private static extern LLVMContextAlias LLVMGetTypeContext( LLVMTypeRef Ty );
     }
 }

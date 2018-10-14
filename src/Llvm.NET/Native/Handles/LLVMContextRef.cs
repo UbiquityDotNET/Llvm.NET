@@ -28,7 +28,7 @@ namespace Llvm.NET.Native
         }
 
         [DllImport( NativeMethods.LibraryPath, EntryPoint = "LLVMContextDispose", CallingConvention = CallingConvention.Cdecl )]
-        private static extern void LLVMContextDispose( IntPtr @C );
+        private static extern void LLVMContextDispose( IntPtr C );
     }
 
     #pragma warning disable SA1402

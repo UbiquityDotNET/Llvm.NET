@@ -61,7 +61,7 @@ namespace TestDebugInfo
         }
 
         public IEnumerable<AttributeValue> BuildTargetDependentFunctionAttributes( Context ctx )
-            => new AttributeValue[]
+            => new[]
             {
                 ctx.CreateAttribute( "correctly-rounded-divide-sqrt-fp-math", "false" ),
                 ctx.CreateAttribute( "disable-tail-calls", "false" ),

@@ -56,7 +56,7 @@ namespace TestDebugInfo
                 ctx.CreateAttribute( "target-features", Features ),
                 ctx.CreateAttribute( "unsafe-fp-math", "false" ),
                 ctx.CreateAttribute( "use-soft-float", "false" ),
-                ctx.CreateAttribute( AttributeKind.UWTable ),
+                ctx.CreateAttribute( AttributeKind.UWTable )
             };
 
         private const string Cpu = "x86-64";

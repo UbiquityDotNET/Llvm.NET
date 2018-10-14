@@ -15,6 +15,8 @@ using Llvm.NET.JIT;
 using Llvm.NET.Transforms;
 using Llvm.NET.Values;
 
+using ConstantExpression = Kaleidoscope.Grammar.AST.ConstantExpression;
+
 #pragma warning disable SA1512, SA1513, SA1515 // single line comments used to tag regions for extraction into docs
 
 namespace Kaleidoscope.Chapter7
@@ -88,7 +90,7 @@ namespace Kaleidoscope.Chapter7
         // </Generate>
 
         // <ConstantExpression>
-        public override Value Visit( Kaleidoscope.Grammar.AST.ConstantExpression constant )
+        public override Value Visit( ConstantExpression constant )
         {
             return Context.CreateConstant( constant.Value );
         }

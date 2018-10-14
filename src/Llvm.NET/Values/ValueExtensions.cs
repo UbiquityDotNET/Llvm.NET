@@ -7,6 +7,7 @@ using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.Runtime.InteropServices;
 using Llvm.NET.DebugInfo;
+using Llvm.NET.Instructions;
 using Llvm.NET.Native;
 using Llvm.NET.Types;
 
@@ -58,7 +59,7 @@ namespace Llvm.NET.Values
                 return value;
             }
 
-            if( value is Instructions.Instruction instruction )
+            if( value is Instruction instruction )
             {
                 if( !location.Scope.SubProgram.Describes( instruction.ContainingBlock.ContainingFunction ) )
                 {
@@ -96,7 +97,7 @@ namespace Llvm.NET.Values
         /// </remarks>
         /// <returns><paramref name="value"/> for fluent usage</returns>
         [SuppressMessage( "Microsoft.Design", "CA1011:ConsiderPassingBaseTypesAsParameters", Justification = "Specific type required by interop call" )]
-        public static T SetDebugLocation<T>( this T value, uint line, uint column, DebugInfo.DILocalScope scope )
+        public static T SetDebugLocation<T>( this T value, uint line, uint column, DILocalScope scope )
             where T : Value
         {
             if( scope == null )
@@ -104,7 +105,7 @@ namespace Llvm.NET.Values
                 return value;
             }
 
-            if( value is Instructions.Instruction instruction )
+            if( value is Instruction instruction )
             {
                 if( !scope.SubProgram.Describes( instruction.ContainingBlock.ContainingFunction ) )
                 {
@@ -144,7 +145,7 @@ namespace Llvm.NET.Values
         public static T RegisterName<T>( this T value, string name )
             where T : Value
         {
-            if( value is Instructions.Instruction inst )
+            if( value is Instruction inst )
             {
                 value.Name = name;
             }

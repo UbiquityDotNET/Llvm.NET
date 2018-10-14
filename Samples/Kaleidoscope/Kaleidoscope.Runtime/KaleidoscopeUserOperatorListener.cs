@@ -2,7 +2,7 @@
 // Copyright (c) .NET Foundation. All rights reserved.
 // </copyright>
 
-using Antlr4.Runtime.Misc;
+using JetBrains.Annotations;
 using Kaleidoscope.Grammar;
 
 namespace Kaleidoscope.Runtime

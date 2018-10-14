@@ -160,7 +160,7 @@ namespace Kaleidoscope.Grammar
 
         private OperatorInfoCollection UnaryOps = new OperatorInfoCollection( );
 
-        private OperatorInfoCollection BinOpPrecedence = new OperatorInfoCollection( )
+        private OperatorInfoCollection BinOpPrecedence = new OperatorInfoCollection
         {
             new OperatorInfo( LEFTANGLE, OperatorKind.InfixLeftAssociative, 10, true),
             new OperatorInfo( PLUS,      OperatorKind.InfixLeftAssociative, 20, true),
@@ -168,7 +168,7 @@ namespace Kaleidoscope.Grammar
             new OperatorInfo( ASTERISK,  OperatorKind.InfixLeftAssociative, 40, true),
             new OperatorInfo( SLASH,     OperatorKind.InfixLeftAssociative, 40, true),
             new OperatorInfo( CARET,     OperatorKind.InfixRightAssociative, 50, true),
-            new OperatorInfo( ASSIGN,    OperatorKind.InfixRightAssociative, 2, true),
+            new OperatorInfo( ASSIGN,    OperatorKind.InfixRightAssociative, 2, true)
         };
 
         // this is used only to get the token type map, which is provided via a virtual

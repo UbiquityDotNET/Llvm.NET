@@ -36,7 +36,7 @@ namespace Llvm.NET
         Os = 1,
 
         /// <summary>Equivalent to -Oz</summary>
-        Oz = 2,
+        Oz = 2
     }
 
     /// <summary>Relocation type for target code generation</summary>

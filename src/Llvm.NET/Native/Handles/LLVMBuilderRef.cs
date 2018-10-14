@@ -33,6 +33,6 @@ namespace Llvm.NET.Native
         }
 
         [DllImport( LibraryPath, CallingConvention = CallingConvention.Cdecl )]
-        private static extern void LLVMDisposeBuilder( IntPtr @Builder );
+        private static extern void LLVMDisposeBuilder( IntPtr Builder );
     }
 }
