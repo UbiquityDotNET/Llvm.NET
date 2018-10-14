@@ -317,13 +317,13 @@ Generally this just gets a viable file path to use for the source code.</p>
 <pre><code class="lang-csharp" name="ProcessArgs">// really simple command line handling, just loops through the input arguments
 private static (string SourceFilePath, int ExitCode) ProcessArgs( string[ ] args )
 {
-    bool waitforDebugger = false;
+    bool waitForDebugger = false;
     string sourceFilePath = string.Empty;
     foreach( string arg in args )
     {
         if( string.Compare( arg, &quot;waitfordebugger&quot;, StringComparison.InvariantCultureIgnoreCase ) == 0 )
         {
-            waitforDebugger = true;
+            waitForDebugger = true;
         }
         else
         {
@@ -335,7 +335,7 @@ private static (string SourceFilePath, int ExitCode) ProcessArgs( string[ ] args
         }
     }
 
-    WaitForDebugger( waitforDebugger );
+    WaitForDebugger( waitForDebugger );
 
     if( string.IsNullOrWhiteSpace( sourceFilePath ) )
     {
@@ -421,7 +421,7 @@ public static int Main( string[ ] args )
                 }
 
                 machine.EmitToFile( generator.Module, asmPath, CodeGenFileType.AssemblySource );
-                Console.WriteLine( &quot;CopmilationTiorTime: {0}&quot;, timer.Elapsed );
+                Console.WriteLine( &quot;Compilation Time: {0}&quot;, timer.Elapsed );
             }
         }
     }
@@ -455,7 +455,7 @@ this feature is &quot;left as an exercise for the reader&quot; <span class="emoj
             <span class="pull-right">
               <a href="#top">Back to top</a>
             </span>
-            Copyright (C) 2017, Dot NET Foundation<br><strong>Build:</strong> 6.0.1-rc.0.0.ci-BLD.449216410
+            Copyright (C) 2017, Dot NET Foundation<br><strong>Build:</strong> 6.0.1-rc.0.0.ci-BLD.449679957
             
           </div>
         </div>

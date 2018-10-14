@@ -415,6 +415,7 @@ namespace Kaleidoscope.Grammar.AST
         /// &lt;inheritdoc/&gt;
         public IEnumerable&lt;IAstNode&gt; Children =&gt; Parameters;
 
+        /// &lt;inheritdoc/&gt;
         public override string ToString( )
         {
             var bldr = new StringBuilder( );
@@ -557,7 +558,7 @@ namespace Kaleidoscope.Grammar.AST
     }
 }
 </code></pre><p>Generation of the LLVM IR for a constant is quite simple.</p>
-<pre><code class="lang-csharp" name="Main">public override Value Visit( Kaleidoscope.Grammar.AST.ConstantExpression constant )
+<pre><code class="lang-csharp" name="Main">public override Value Visit( ConstantExpression constant )
 {
     return Context.CreateConstant( constant.Value );
 }
@@ -739,7 +740,7 @@ Ready&gt;
             <span class="pull-right">
               <a href="#top">Back to top</a>
             </span>
-            Copyright (C) 2017, Dot NET Foundation<br><strong>Build:</strong> 6.0.1-rc.0.0.ci-BLD.449216410
+            Copyright (C) 2017, Dot NET Foundation<br><strong>Build:</strong> 6.0.1-rc.0.0.ci-BLD.449679957
             
           </div>
         </div>

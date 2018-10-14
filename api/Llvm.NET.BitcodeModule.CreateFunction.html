@@ -3641,7 +3641,7 @@
 <div class="markdown level1 conceptual"></div>
 <h3 class="decalaration">Declaration
 <div class="codewrapper">
-  <pre><code class="lang-csharp hljs">public Function CreateFunction(DIScope scope, string name, string linkageName, DIFile file, uint line, DebugFunctionType signature, bool isLocalToUnit, bool isDefinition, uint scopeLine, DebugInfoFlags debugFlags, bool isOptimized, [CanBeNull] MDNode tParam = null, [CanBeNull] MDNode decl = null)</code></pre>
+  <pre><code class="lang-csharp hljs">public Function CreateFunction(DIScope scope, string name, string linkageName, DIFile file, uint line, DebugFunctionType signature, bool isLocalToUnit, bool isDefinition, uint scopeLine, DebugInfoFlags debugFlags, bool isOptimized, [CanBeNull] MDNode parameterNode = null, [CanBeNull] MDNode decl = null)</code></pre>
 </div>
 <h2 class="parameters">Parameters</h2>
 <table class="table table-bordered table-striped table-condensed">
@@ -3713,7 +3713,7 @@
     </tr>
     <tr>
       <td><a class="xref" href="Llvm.NET.MDNode.html">MDNode</a></td>
-      <td><span class="parametername">tParam</span></td>
+      <td><span class="parametername">parameterNode</span></td>
       <td><p>Parameter Metadata node</p>
 </td>
     </tr>
@@ -3859,7 +3859,7 @@ function or a new function if none matching the name and signature is already pr
             <span class="pull-right">
               <a href="#top">Back to top</a>
             </span>
-            Copyright (C) 2017, Dot NET Foundation<br><strong>Build:</strong> 6.0.1-rc.0.0.ci-BLD.449216410
+            Copyright (C) 2017, Dot NET Foundation<br><strong>Build:</strong> 6.0.1-rc.0.0.ci-BLD.449679957
             
           </div>
         </div>

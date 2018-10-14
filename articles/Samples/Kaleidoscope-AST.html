@@ -166,13 +166,13 @@ namespace Kaleidoscope.Grammar.AST
     /// &lt;summary&gt;Root interface for nodes in the Abstract Syntax Tree&lt;/summary&gt;
     public interface IAstNode
     {
-        /// &lt;summary&gt;Source location covering the original source for the node&lt;/summary&gt;
+        /// &lt;summary&gt;Gets the source location covering the original source for the node&lt;/summary&gt;
         SourceSpan Location { get; }
 
         /// &lt;summary&gt;Gets a collection of children for the node&lt;/summary&gt;
         IEnumerable&lt;IAstNode&gt; Children { get; }
 
-        /// &lt;summary&gt;VIsitor pattern support for implementations to dispatch the concrete node type to a visitor&lt;/summary&gt;
+        /// &lt;summary&gt;Visitor pattern support for implementations to dispatch the concrete node type to a visitor&lt;/summary&gt;
         /// &lt;typeparam name=&quot;TResult&quot;&gt;Result type for the visitor&lt;/typeparam&gt;
         /// &lt;param name=&quot;visitor&quot;&gt;Visitor to dispatch the concrete type to&lt;/param&gt;
         /// &lt;returns&gt;Result of visiting this node&lt;/returns&gt;
@@ -213,13 +213,13 @@ namespace Kaleidoscope.Grammar.AST
     /// &lt;summary&gt;Root interface for nodes in the Abstract Syntax Tree&lt;/summary&gt;
     public interface IAstNode
     {
-        /// &lt;summary&gt;Source location covering the original source for the node&lt;/summary&gt;
+        /// &lt;summary&gt;Gets the source location covering the original source for the node&lt;/summary&gt;
         SourceSpan Location { get; }
 
         /// &lt;summary&gt;Gets a collection of children for the node&lt;/summary&gt;
         IEnumerable&lt;IAstNode&gt; Children { get; }
 
-        /// &lt;summary&gt;VIsitor pattern support for implementations to dispatch the concrete node type to a visitor&lt;/summary&gt;
+        /// &lt;summary&gt;Visitor pattern support for implementations to dispatch the concrete node type to a visitor&lt;/summary&gt;
         /// &lt;typeparam name=&quot;TResult&quot;&gt;Result type for the visitor&lt;/typeparam&gt;
         /// &lt;param name=&quot;visitor&quot;&gt;Visitor to dispatch the concrete type to&lt;/param&gt;
         /// &lt;returns&gt;Result of visiting this node&lt;/returns&gt;
@@ -709,6 +709,7 @@ namespace Kaleidoscope.Grammar.AST
         /// &lt;inheritdoc/&gt;
         public IEnumerable&lt;IAstNode&gt; Children =&gt; Parameters;
 
+        /// &lt;inheritdoc/&gt;
         public override string ToString( )
         {
             var bldr = new StringBuilder( );
@@ -771,10 +772,6 @@ namespace Kaleidoscope.Grammar.AST
                 if( Initializer != null )
                 {
                     yield return Initializer;
-                }
-                else
-                {
-                    yield break;
                 }
             }
         }
@@ -937,7 +934,7 @@ namespace Kaleidoscope.Grammar.AST
             <span class="pull-right">
               <a href="#top">Back to top</a>
             </span>
-            Copyright (C) 2017, Dot NET Foundation<br><strong>Build:</strong> 6.0.1-rc.0.0.ci-BLD.449216410
+            Copyright (C) 2017, Dot NET Foundation<br><strong>Build:</strong> 6.0.1-rc.0.0.ci-BLD.449679957
             
           </div>
         </div>

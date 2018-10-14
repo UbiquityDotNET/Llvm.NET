@@ -304,6 +304,7 @@ OrcJIT engine.</p>
 // &lt;/copyright&gt;
 
 using System;
+using System.IO;
 using System.Runtime.InteropServices;
 using Llvm.NET;
 using Llvm.NET.JIT;
@@ -325,6 +326,10 @@ namespace Kaleidoscope.Runtime
             AddInteropCallback( &quot;putchard&quot;, new CallbackHandler1( PutChard ) );
             AddInteropCallback( &quot;printd&quot;, new CallbackHandler1( Printd ) );
         }
+
+        /// &lt;summary&gt;Gets or sets the output writer for output from the program.&lt;/summary&gt;
+        /// &lt;remarks&gt;The default writer is &lt;see cref=&quot;Console.Out&quot;/&gt;.&lt;/remarks&gt;
+        public TextWriter OutputWriter { get; set; } = Console.Out;
 
         /// &lt;summary&gt;Delegate for an interop callback taking no parameters&lt;/summary&gt;
         /// &lt;returns&gt;value for the function&lt;/returns&gt;
@@ -366,7 +371,7 @@ namespace Kaleidoscope.Runtime
             // STOP ALL EXCEPTIONS from bubbling out to JIT&#39;ed code
             try
             {
-                Console.WriteLine( x );
+                OutputWriter.WriteLine( x );
                 return 0.0F;
             }
             catch
@@ -380,7 +385,7 @@ namespace Kaleidoscope.Runtime
             // STOP ALL EXCEPTIONS from bubbling out to JIT&#39;ed code
             try
             {
-                Console.Write( ( char )x );
+                OutputWriter.Write( ( char )x );
                 return 0.0F;
             }
             catch
@@ -528,7 +533,7 @@ support for .NET. Very cool, indeed!</p>
             <span class="pull-right">
               <a href="#top">Back to top</a>
             </span>
-            Copyright (C) 2017, Dot NET Foundation<br><strong>Build:</strong> 6.0.1-rc.0.0.ci-BLD.449216410
+            Copyright (C) 2017, Dot NET Foundation<br><strong>Build:</strong> 6.0.1-rc.0.0.ci-BLD.449679957
             
           </div>
         </div>
