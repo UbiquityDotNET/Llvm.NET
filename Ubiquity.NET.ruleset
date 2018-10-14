@@ -726,8 +726,8 @@
     <Rule Id="SX1309" Action="None" />
     <Rule Id="SX1309S" Action="None" />
     <Rule Id="SA1612" Action="Error" />
-    <Rule Id="SA1413" Action="Info" />
-    <Rule Id="SA1629" Action="Info" />
+    <Rule Id="SA1413" Action="None" />
+    <Rule Id="SA1629" Action="None" />
     <Rule Id="SA1137" Action="Hidden" />
     <Rule Id="SA0001" Action="Hidden" />
   </Rules>
