@@ -18,7 +18,7 @@ namespace Kaleidoscope.Runtime
         ReplLoop,
 
         /// <summary>Full text source parse</summary>
-        FullSource,
+        FullSource
     }
 
     /// <summary>Common parse stack for the Kaleidoscope language</summary>

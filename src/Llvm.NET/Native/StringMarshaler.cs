@@ -95,9 +95,9 @@ namespace Llvm.NET.Native
         private static readonly Regex LineEndingNormalizingRegEx = new Regex( "(\r\n|\n\r|\r|\n)" );
 
         [DllImport( NativeMethods.LibraryPath, CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi, ThrowOnUnmappableChar = true, BestFitMapping = false )]
-        private static extern void LLVMOrcDisposeMangledSymbol( IntPtr @MangledSymbol );
+        private static extern void LLVMOrcDisposeMangledSymbol( IntPtr MangledSymbol );
 
         [DllImport( NativeMethods.LibraryPath, CallingConvention = CallingConvention.Cdecl )]
-        private static extern void LLVMDisposeMessage( IntPtr @Message );
+        private static extern void LLVMDisposeMessage( IntPtr Message );
     }
 }

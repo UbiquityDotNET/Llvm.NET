@@ -17,7 +17,6 @@ using Llvm.NET.Values;
 using Ubiquity.ArgValidators;
 
 using static Llvm.NET.Native.NativeMethods;
-
 using CallingConvention = System.Runtime.InteropServices.CallingConvention;
 
 namespace Llvm.NET
@@ -492,7 +491,7 @@ namespace Llvm.NET
         /// <returns>New node with the string as the first element of the <see cref="MDNode.Operands"/> property (as an MDString)</returns>
         public MDNode CreateMDNode( string value )
         {
-            var elements = new LLVMMetadataRef[ ] { CreateMetadataString( value ).MetadataHandle };
+            var elements = new[ ] { CreateMetadataString( value ).MetadataHandle };
             var hNode = LLVMMDNode2( ContextHandle, out elements[ 0 ], ( uint )elements.Length );
             return MDNode.FromHandle<MDNode>( hNode );
         }
@@ -924,7 +923,7 @@ namespace Llvm.NET
                                                                            );
 
         [DllImport( LibraryPath, CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi, ThrowOnUnmappableChar = true, BestFitMapping = false )]
-        private static extern uint LLVMGetMDKindIDInContext( LLVMContextRef @C, [MarshalAs( UnmanagedType.LPStr )] string @Name, uint @SLen );
+        private static extern uint LLVMGetMDKindIDInContext( LLVMContextRef C, [MarshalAs( UnmanagedType.LPStr )] string Name, uint SLen );
 
         [DllImport( LibraryPath, CallingConvention = CallingConvention.Cdecl )]
         [return: MarshalAs( UnmanagedType.Bool )]
@@ -934,13 +933,13 @@ namespace Llvm.NET
         private static extern void LLVMContextSetIsODRUniquingDebugTypes( LLVMContextRef context, [MarshalAs( UnmanagedType.Bool )] bool state );
 
         [DllImport( LibraryPath, CallingConvention = CallingConvention.Cdecl, BestFitMapping = false, ThrowOnUnmappableChar = true )]
-        private static extern LLVMMetadataRef LLVMMDString2( LLVMContextRef @C, [MarshalAs( UnmanagedType.LPStr )] string @Str, UInt32 @SLen );
+        private static extern LLVMMetadataRef LLVMMDString2( LLVMContextRef C, [MarshalAs( UnmanagedType.LPStr )] string Str, UInt32 SLen );
 
         [DllImport( LibraryPath, CallingConvention = CallingConvention.Cdecl )]
-        private static extern LLVMMetadataRef LLVMMDNode2( LLVMContextRef @C, out LLVMMetadataRef @MDs, UInt32 @Count );
+        private static extern LLVMMetadataRef LLVMMDNode2( LLVMContextRef C, out LLVMMetadataRef MDs, UInt32 Count );
 
         [DllImport( LibraryPath, CallingConvention = CallingConvention.Cdecl )]
-        private static extern LLVMMetadataRef LLVMTemporaryMDNode( LLVMContextRef @C, out LLVMMetadataRef @MDs, UInt32 @Count );
+        private static extern LLVMMetadataRef LLVMTemporaryMDNode( LLVMContextRef C, out LLVMMetadataRef MDs, UInt32 Count );
 
         [DllImport( LibraryPath, CallingConvention = CallingConvention.Cdecl, BestFitMapping = false, ThrowOnUnmappableChar = true )]
         [return: MarshalAs( UnmanagedType.Bool )]

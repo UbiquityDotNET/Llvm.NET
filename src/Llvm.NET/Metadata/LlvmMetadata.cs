@@ -6,6 +6,12 @@ using System;
 using Llvm.NET.DebugInfo;
 using Llvm.NET.Native;
 
+// SA1515  Single-line comment should be preceded by blank line
+#pragma warning disable SA1515
+
+// SA1025  Code should not contain multiple whitespace characters in a row.
+#pragma warning disable SA1025
+
 namespace Llvm.NET
 {
     /// <summary>Root of the LLVM Metadata hierarchy</summary>
@@ -106,7 +112,7 @@ namespace Llvm.NET
                 DIImportedEntity,             // HANDLE_SPECIALIZED_MDNODE_LEAF_UNIQUABLE(DIImportedEntity)
                                               // DIMacroNode,                // HANDLE_SPECIALIZED_MDNODE_BRANCH(DIMacroNode)
                 DIMacro,                      // HANDLE_SPECIALIZED_MDNODE_LEAF_UNIQUABLE(DIMacro)
-                DIMacroFile,                  // HANDLE_SPECIALIZED_MDNODE_LEAF_UNIQUABLE(DIMacroFile)
+                DIMacroFile                   // HANDLE_SPECIALIZED_MDNODE_LEAF_UNIQUABLE(DIMacroFile)
             }
 
             private protected override LlvmMetadata ItemFactory( LLVMMetadataRef handle )

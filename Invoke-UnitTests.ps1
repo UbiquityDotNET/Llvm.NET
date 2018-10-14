@@ -15,11 +15,9 @@ if( $env:APPVEYOR )
 }
 
 $testsFailed = $false
-$vsInstance = Find-VSInstance
-$vstest = [System.IO.Path]::Combine($vsInstance.InstallationPath, 'Common7','IDE','CommonExtensions','Microsoft','TestWindow','vstest.console.exe')
 
 Write-Information 'Running tests as x64'
-& $vstest .\BuildOutput\bin\Llvm.NET.Tests\Release\net47\Llvm.NET.Tests.dll /InIsolation /Settings:src\x64.runsettings $loggerArgs
+dotnet test .\src\Llvm.NETTests\Llvm.NET.Tests.csproj -s (Resolve-Path .\src\x64.runsettings) --no-build
 $testsFailed = $testsFailed -or ($LASTEXITCODE -ne 0)
 
 Write-Information 'Running sample app for net47'

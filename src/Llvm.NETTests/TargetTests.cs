@@ -64,15 +64,13 @@ namespace Llvm.NET.Tests
         }
 
         internal static TargetMachine GetTargetMachine( Target target )
-        {
-            return target.CreateTargetMachine( DefaultTargetTriple
-                                             , DefaultTargetCpu
-                                             , string.Empty
-                                             , CodeGenOpt.Aggressive
-                                             , Reloc.Default
-                                             , CodeModel.Small
-                                             );
-        }
+            => target.CreateTargetMachine( DefaultTargetTriple
+                                         , DefaultTargetCpu
+                                         , string.Empty
+                                         , CodeGenOpt.Aggressive
+                                         , Reloc.Default
+                                         , CodeModel.Small
+                                         );
 
         internal const string DefaultTargetTriple = "thumbv7m-none--eabi";
         internal const string DefaultTargetCpu = "cortex-m3";

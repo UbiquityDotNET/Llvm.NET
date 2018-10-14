@@ -429,6 +429,6 @@ namespace Llvm.NET.Values
         }
 
         [DllImport( LibraryPath, CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl, BestFitMapping = false, ThrowOnUnmappableChar = true )]
-        private static extern LLVMStatus LLVMVerifyFunctionEx( LLVMValueRef @Fn, LLVMVerifierFailureAction @Action, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( StringMarshaler ), MarshalCookie = "DisposeMessage" )] out string @OutMessages );
+        private static extern LLVMStatus LLVMVerifyFunctionEx( LLVMValueRef Fn, LLVMVerifierFailureAction Action, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( StringMarshaler ), MarshalCookie = "DisposeMessage" )] out string OutMessages );
     }
 }

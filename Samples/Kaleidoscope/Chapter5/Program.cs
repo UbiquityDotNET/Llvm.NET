@@ -36,7 +36,7 @@ namespace Kaleidoscope.Chapter5
             string helloMsg = $"Llvm.NET Kaleidoscope Interpreter - {LanguageFeatureLevel}";
             Console.Title = $"{Assembly.GetExecutingAssembly( ).GetName( )}: {helloMsg}";
             Console.WriteLine( helloMsg );
-            WaitForDebugger( args.Length > 0 && string.Compare( args[0], "waitfordebugger", StringComparison.InvariantCultureIgnoreCase ) == 0 );
+            WaitForDebugger( args.Length > 0 && string.Compare( args[ 0 ], "waitfordebugger", StringComparison.InvariantCultureIgnoreCase ) == 0 );
 
             using( InitializeLLVM( ) )
             {

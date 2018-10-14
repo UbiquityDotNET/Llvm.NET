@@ -3,18 +3,19 @@
 // </copyright>
 
 using System.Collections.ObjectModel;
+using Kaleidoscope.Grammar.AST;
 
 namespace Kaleidoscope.Grammar
 {
     public class FunctionDefinitionCollection
-        : KeyedCollection<string, AST.FunctionDefinition>
+        : KeyedCollection<string, FunctionDefinition>
     {
-        public void AddOrReplaceItem( AST.FunctionDefinition item )
+        public void AddOrReplaceItem( FunctionDefinition item )
         {
             Remove( GetKeyForItem(item) );
             Add( item );
         }
 
-        protected override string GetKeyForItem( AST.FunctionDefinition item ) => item.Name;
+        protected override string GetKeyForItem( FunctionDefinition item ) => item.Name;
     }
 }

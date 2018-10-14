@@ -59,18 +59,18 @@ namespace Llvm.NET.Transforms
         }
 
         [DllImport( LibraryPath, CallingConvention = CallingConvention.Cdecl, BestFitMapping = false, ThrowOnUnmappableChar = true )]
-        private static extern void LLVMAddAddressSanitizerFunctionPass( LLVMPassManagerRef @PM );
+        private static extern void LLVMAddAddressSanitizerFunctionPass( LLVMPassManagerRef PM );
 
         [DllImport( LibraryPath, CallingConvention = CallingConvention.Cdecl, BestFitMapping = false, ThrowOnUnmappableChar = true )]
-        private static extern void LLVMAddAddressSanitizerModulePass( LLVMPassManagerRef @PM );
+        private static extern void LLVMAddAddressSanitizerModulePass( LLVMPassManagerRef PM );
 
         [DllImport( LibraryPath, CallingConvention = CallingConvention.Cdecl, BestFitMapping = false, ThrowOnUnmappableChar = true )]
-        private static extern void LLVMAddThreadSanitizerPass( LLVMPassManagerRef @PM );
+        private static extern void LLVMAddThreadSanitizerPass( LLVMPassManagerRef PM );
 
         [DllImport( LibraryPath, CallingConvention = CallingConvention.Cdecl, BestFitMapping = false, ThrowOnUnmappableChar = true )]
-        private static extern void LLVMAddMemorySanitizerPass( LLVMPassManagerRef @PM );
+        private static extern void LLVMAddMemorySanitizerPass( LLVMPassManagerRef PM );
 
         [DllImport( LibraryPath, CallingConvention = CallingConvention.Cdecl, BestFitMapping = false, ThrowOnUnmappableChar = true )]
-        private static extern void LLVMAddDataFlowSanitizerPass( LLVMPassManagerRef @PM, [MarshalAs( UnmanagedType.LPStr )] string @ABIListFile );
+        private static extern void LLVMAddDataFlowSanitizerPass( LLVMPassManagerRef PM, [MarshalAs( UnmanagedType.LPStr )] string ABIListFile );
     }
 }

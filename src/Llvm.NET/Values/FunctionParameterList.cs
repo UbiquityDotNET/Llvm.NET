@@ -3,6 +3,7 @@
 // </copyright>
 
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using Llvm.NET.Native;
 
@@ -48,7 +49,7 @@ namespace Llvm.NET.Values
             }
         }
 
-        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator( ) => GetEnumerator( );
+        IEnumerator IEnumerable.GetEnumerator( ) => GetEnumerator( );
 
         internal FunctionParameterList( Function owningFunction )
         {

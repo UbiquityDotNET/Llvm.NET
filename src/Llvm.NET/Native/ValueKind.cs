@@ -2,6 +2,9 @@
 // Copyright (c) .NET Foundation. All rights reserved.
 // </copyright>
 
+// SA1515  Single-line comment should be preceded by blank line
+#pragma warning disable SA1515
+
 namespace Llvm.NET.Native
 {
     internal enum ValueKind : uint
@@ -118,7 +121,7 @@ namespace Llvm.NET.Native
         ConstantDataFirstVal = UndefValue,
         ConstantDataLastVal = ConstantTokenNone,
         ConstantAggregateFirstVal = ConstantArray,
-        ConstantAggregateLastVal = ConstantVector,
+        ConstantAggregateLastVal = ConstantVector
     }
 
     internal static partial class NativeMethods

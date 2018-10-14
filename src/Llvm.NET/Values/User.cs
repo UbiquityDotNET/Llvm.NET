@@ -92,18 +92,18 @@ namespace Llvm.NET.Values
         private readonly OperandList<Value> OperandList;
 
         [DllImport( LibraryPath, CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl )]
-        private static extern LLVMUseRef LLVMGetFirstUse( LLVMValueRef @Val );
+        private static extern LLVMUseRef LLVMGetFirstUse( LLVMValueRef Val );
 
         [DllImport( LibraryPath, CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl )]
-        private static extern LLVMUseRef LLVMGetNextUse( LLVMUseRef @U );
+        private static extern LLVMUseRef LLVMGetNextUse( LLVMUseRef U );
 
         [DllImport( LibraryPath, CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl )]
-        private static extern LLVMValueRef LLVMGetOperand( LLVMValueRef @Val, uint @Index );
+        private static extern LLVMValueRef LLVMGetOperand( LLVMValueRef Val, uint Index );
 
         [DllImport( LibraryPath, CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl )]
-        private static extern void LLVMSetOperand( LLVMValueRef @User, uint @Index, LLVMValueRef @Val );
+        private static extern void LLVMSetOperand( LLVMValueRef User, uint Index, LLVMValueRef Val );
 
         [DllImport( LibraryPath, CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl )]
-        private static extern int LLVMGetNumOperands( LLVMValueRef @Val );
+        private static extern int LLVMGetNumOperands( LLVMValueRef Val );
     }
 }

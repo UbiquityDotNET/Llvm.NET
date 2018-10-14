@@ -683,7 +683,7 @@ namespace Llvm.NET
         /// <param name="scopeLine">First line of the function's outermost scope, this may not be the same as the first line of the function definition due to source formatting</param>
         /// <param name="debugFlags">Additional flags describing this function</param>
         /// <param name="isOptimized">Flag to indicate if this function is optimized</param>
-        /// <param name="tParam">Parameter Metadata node</param>
+        /// <param name="parameterNode">Parameter Metadata node</param>
         /// <param name="decl">Declaration Metadata node</param>
         /// <returns>Function described by the arguments</returns>
         public Function CreateFunction( DIScope scope
@@ -697,7 +697,7 @@ namespace Llvm.NET
                                       , uint scopeLine
                                       , DebugInfoFlags debugFlags
                                       , bool isOptimized
-                                      , [CanBeNull] MDNode tParam = null
+                                      , [CanBeNull] MDNode parameterNode = null
                                       , [CanBeNull] MDNode decl = null
                                       )
         {
@@ -724,7 +724,7 @@ namespace Llvm.NET
                                                  , debugFlags: debugFlags
                                                  , isOptimized: isOptimized
                                                  , function: func
-                                                 , typeParameter: tParam
+                                                 , typeParameter: parameterNode
                                                  , declaration: decl
                                                  );
             Debug.Assert( diFunc.Describes( func ), "Expected to get a debug function that describes the provided function" );
@@ -1043,16 +1043,16 @@ namespace Llvm.NET
         private static extern string LLVMGetModuleName( LLVMModuleRef module );
 
         [DllImport( LibraryPath, CallingConvention = CallingConvention.Cdecl, BestFitMapping = false, ThrowOnUnmappableChar = true )]
-        private static extern void LLVMAddModuleFlag( LLVMModuleRef @M, LLVMModFlagBehavior behavior, [MarshalAs( UnmanagedType.LPStr )] string @name, UInt32 @value );
+        private static extern void LLVMAddModuleFlag( LLVMModuleRef M, LLVMModFlagBehavior behavior, [MarshalAs( UnmanagedType.LPStr )] string name, UInt32 value );
 
         [DllImport( LibraryPath, EntryPoint = "LLVMAddModuleFlagMetadata", CallingConvention = CallingConvention.Cdecl, BestFitMapping = false, ThrowOnUnmappableChar = true )]
-        private static extern void LLVMAddModuleFlag( LLVMModuleRef @M, LLVMModFlagBehavior behavior, [MarshalAs( UnmanagedType.LPStr )] string @name, LLVMMetadataRef @value );
+        private static extern void LLVMAddModuleFlag( LLVMModuleRef M, LLVMModFlagBehavior behavior, [MarshalAs( UnmanagedType.LPStr )] string name, LLVMMetadataRef value );
 
         [DllImport( LibraryPath, CallingConvention = CallingConvention.Cdecl )]
         private static extern LLVMNamedMDNodeRef LLVMModuleGetModuleFlagsMetadata( LLVMModuleRef module );
 
         [DllImport( LibraryPath, CallingConvention = CallingConvention.Cdecl, BestFitMapping = false, ThrowOnUnmappableChar = true )]
-        private static extern LLVMValueRef LLVMGetOrInsertFunction( LLVMModuleRef module, [MarshalAs( UnmanagedType.LPStr )] string @name, LLVMTypeRef functionType );
+        private static extern LLVMValueRef LLVMGetOrInsertFunction( LLVMModuleRef module, [MarshalAs( UnmanagedType.LPStr )] string name, LLVMTypeRef functionType );
 
         [DllImport( LibraryPath, CallingConvention = CallingConvention.Cdecl, BestFitMapping = false, ThrowOnUnmappableChar = true )]
         private static extern LLVMValueRef LLVMGetGlobalAlias( LLVMModuleRef module, [MarshalAs( UnmanagedType.LPStr )] string name );

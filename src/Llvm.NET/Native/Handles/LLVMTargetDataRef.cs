@@ -33,7 +33,7 @@ namespace Llvm.NET.Native
         }
 
         [DllImport( LibraryPath, CallingConvention = CallingConvention.Cdecl )]
-        private static extern void LLVMDisposeTargetData( IntPtr @TargetData );
+        private static extern void LLVMDisposeTargetData( IntPtr TargetData );
     }
 
 #pragma warning disable SA1402

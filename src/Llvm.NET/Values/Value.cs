@@ -3,7 +3,6 @@
 // </copyright>
 
 using System;
-using System.Runtime.InteropServices;
 using Llvm.NET.Native;
 using Llvm.NET.Types;
 
@@ -85,7 +84,7 @@ namespace Llvm.NET.Values
         }
 
         /// <inheritdoc/>
-        public bool TryGetExtendedPropertyValue<T>( string id, out T value ) => ExtensibleProperties.TryGetExtendedPropertyValue<T>( id, out value );
+        public bool TryGetExtendedPropertyValue<T>( string id, out T value ) => ExtensibleProperties.TryGetExtendedPropertyValue( id, out value );
 
         /// <inheritdoc/>
         public void AddExtendedPropertyValue( string id, object value ) => ExtensibleProperties.AddExtendedPropertyValue( id, value );

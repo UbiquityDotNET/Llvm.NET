@@ -79,7 +79,7 @@ namespace Kaleidoscope.Chapter8
                         }
 
                         machine.EmitToFile( generator.Module, asmPath, CodeGenFileType.AssemblySource );
-                        Console.WriteLine( "CopmilationTiorTime: {0}", timer.Elapsed );
+                        Console.WriteLine( "Compilation Time: {0}", timer.Elapsed );
                     }
                 }
             }
@@ -89,6 +89,7 @@ namespace Kaleidoscope.Chapter8
         // </Main>
 
         // <ErrorHandling>
+        [SuppressMessage( "Redundancies in Symbol Declarations", "RECS0154:Parameter is never used", Justification = "Standard Event signature" )]
         private static void OnGeneratorError( object sender, CodeGenerationExceptionArgs e )
         {
             var color = Console.ForegroundColor;
@@ -108,13 +109,13 @@ namespace Kaleidoscope.Chapter8
         // really simple command line handling, just loops through the input arguments
         private static (string SourceFilePath, int ExitCode) ProcessArgs( string[ ] args )
         {
-            bool waitforDebugger = false;
+            bool waitForDebugger = false;
             string sourceFilePath = string.Empty;
             foreach( string arg in args )
             {
                 if( string.Compare( arg, "waitfordebugger", StringComparison.InvariantCultureIgnoreCase ) == 0 )
                 {
-                    waitforDebugger = true;
+                    waitForDebugger = true;
                 }
                 else
                 {
@@ -126,7 +127,7 @@ namespace Kaleidoscope.Chapter8
                 }
             }
 
-            WaitForDebugger( waitforDebugger );
+            WaitForDebugger( waitForDebugger );
 
             if( string.IsNullOrWhiteSpace( sourceFilePath ) )
             {

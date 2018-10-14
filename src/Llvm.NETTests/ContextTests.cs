@@ -236,7 +236,7 @@ namespace Llvm.NET.Tests
                 Assert.IsNotNull( context.Int16Type );
 
                 // i16 ( i32, float )
-                var argTypes = new ITypeRef[ ] { context.Int32Type, context.FloatType };
+                var argTypes = new[ ] { context.Int32Type, context.FloatType };
                 var funcSig = context.GetFunctionType( context.Int16Type, argTypes );
                 Assert.IsNotNull( funcSig );
                 Assert.AreSame( context, funcSig.Context );

@@ -5,6 +5,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Llvm.NET.Instructions;
 using Llvm.NET.Native;
 using Ubiquity.ArgValidators;
 
@@ -252,7 +253,7 @@ namespace Llvm.NET.Values
 
         /// <summary>This indicates to the code generator that the parameter or return value should be zero-extended to the extent
         /// required by the target’s ABI by the caller (for a parameter) or the callee (for a return value).</summary>
-        ZExt,
+        ZExt
     }
 
     /// <summary>Enumeration flags to indicate which attribute set index an attribute may apply to</summary>
@@ -369,11 +370,11 @@ namespace Llvm.NET.Values
                         function = f;
                         break;
 
-                    case Instructions.Invoke inv:
+                    case Invoke inv:
                         function = inv.TargetFunction;
                         break;
 
-                    case Instructions.CallInstruction call:
+                    case CallInstruction call:
                         function = call.TargetFunction;
                         break;
 
@@ -417,11 +418,11 @@ namespace Llvm.NET.Values
                     function = f;
                     break;
 
-                case Instructions.Invoke inv:
+                case Invoke inv:
                     function = inv.TargetFunction;
                     break;
 
-                case Instructions.CallInstruction call:
+                case CallInstruction call:
                     function = call.TargetFunction;
                     break;
 
@@ -604,10 +605,10 @@ namespace Llvm.NET.Values
             case Function f:
                 return f;
 
-            case Instructions.Invoke inv:
+            case Invoke inv:
                 return inv.TargetFunction;
 
-            case Instructions.CallInstruction call:
+            case CallInstruction call:
                 return call.TargetFunction;
 
             case Argument arg:
@@ -629,7 +630,7 @@ namespace Llvm.NET.Values
             return ( from kind in Enum.GetValues( typeof( AttributeKind ) ).Cast<AttributeKind>( ).Skip( 1 )
                      let name = kind.GetAttributeName( )
                      select new KeyValuePair<uint, AttributeKind>( NativeMethods.LLVMGetEnumAttributeKindForName( name, ( size_t )name.Length ), kind )
-                   ).ToDictionary( ( KeyValuePair<uint, AttributeKind> kvp ) => kvp.Key, ( KeyValuePair<uint, AttributeKind> kvp ) => kvp.Value );
+                   ).ToDictionary( kvp => kvp.Key, kvp => kvp.Value );
         }
 
         private static Lazy<Dictionary<AttributeKind, uint>> KindToAttribIdMap = new Lazy<Dictionary<AttributeKind, uint>>( BuildKindToAttribIdMap );
@@ -694,7 +695,7 @@ namespace Llvm.NET.Values
             "swiftself",
             "uwtable",
             "writeonly",
-            "zeroext",
+            "zeroext"
         };
     }
 }

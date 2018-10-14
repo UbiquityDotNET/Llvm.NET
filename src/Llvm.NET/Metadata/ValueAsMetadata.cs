@@ -8,6 +8,7 @@ using Llvm.NET.Types;
 using Llvm.NET.Values;
 
 using static Llvm.NET.Native.NativeMethods;
+using CallingConvention = System.Runtime.InteropServices.CallingConvention;
 
 namespace Llvm.NET
 {
@@ -35,7 +36,7 @@ namespace Llvm.NET
         {
         }
 
-        [DllImport( LibraryPath, CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl )]
+        [DllImport( LibraryPath, CallingConvention = CallingConvention.Cdecl )]
         private static extern LLVMValueRef LLVMValueAsMetadataGetValue( LLVMMetadataRef vmd );
     }
 }

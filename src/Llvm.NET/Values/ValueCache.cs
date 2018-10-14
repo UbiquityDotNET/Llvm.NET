@@ -8,6 +8,7 @@ using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Runtime.InteropServices;
+using Llvm.NET.Instructions;
 using Llvm.NET.Native;
 
 using static Llvm.NET.Native.NativeMethods;
@@ -159,22 +160,22 @@ namespace Llvm.NET.Values
                 throw new ArgumentException( "Value with kind==Instruction is not valid" );
 
             case ValueKind.Return:
-                return new Instructions.ReturnInstruction( handle );
+                return new ReturnInstruction( handle );
 
             case ValueKind.Branch:
-                return new Instructions.Branch( handle );
+                return new Branch( handle );
 
             case ValueKind.Switch:
-                return new Instructions.Switch( handle );
+                return new Switch( handle );
 
             case ValueKind.IndirectBranch:
-                return new Instructions.IndirectBranch( handle );
+                return new IndirectBranch( handle );
 
             case ValueKind.Invoke:
-                return new Instructions.Invoke( handle );
+                return new Invoke( handle );
 
             case ValueKind.Unreachable:
-                return new Instructions.Unreachable( handle );
+                return new Unreachable( handle );
 
             case ValueKind.Add:
             case ValueKind.FAdd:
@@ -194,127 +195,127 @@ namespace Llvm.NET.Values
             case ValueKind.And:
             case ValueKind.Or:
             case ValueKind.Xor:
-                return new Instructions.BinaryOperator( handle );
+                return new BinaryOperator( handle );
 
             case ValueKind.Alloca:
-                return new Instructions.Alloca( handle );
+                return new Alloca( handle );
 
             case ValueKind.Load:
-                return new Instructions.Load( handle );
+                return new Load( handle );
 
             case ValueKind.Store:
-                return new Instructions.Store( handle );
+                return new Store( handle );
 
             case ValueKind.GetElementPtr:
-                return new Instructions.GetElementPtr( handle );
+                return new GetElementPtr( handle );
 
             case ValueKind.Trunc:
-                return new Instructions.Trunc( handle );
+                return new Trunc( handle );
 
             case ValueKind.ZeroExtend:
-                return new Instructions.ZeroExtend( handle );
+                return new ZeroExtend( handle );
 
             case ValueKind.SignExtend:
-                return new Instructions.SignExtend( handle );
+                return new SignExtend( handle );
 
             case ValueKind.FPToUI:
-                return new Instructions.FPToUI( handle );
+                return new FPToUI( handle );
 
             case ValueKind.FPToSI:
-                return new Instructions.FPToSI( handle );
+                return new FPToSI( handle );
 
             case ValueKind.UIToFP:
-                return new Instructions.UIToFP( handle );
+                return new UIToFP( handle );
 
             case ValueKind.SIToFP:
-                return new Instructions.SIToFP( handle );
+                return new SIToFP( handle );
 
             case ValueKind.FPTrunc:
-                return new Instructions.FPTrunc( handle );
+                return new FPTrunc( handle );
 
             case ValueKind.FPExt:
-                return new Instructions.FPExt( handle );
+                return new FPExt( handle );
 
             case ValueKind.PtrToInt:
-                return new Instructions.PointerToInt( handle );
+                return new PointerToInt( handle );
 
             case ValueKind.IntToPtr:
-                return new Instructions.IntToPointer( handle );
+                return new IntToPointer( handle );
 
             case ValueKind.BitCast:
-                return new Instructions.BitCast( handle );
+                return new BitCast( handle );
 
             case ValueKind.AddrSpaceCast:
-                return new Instructions.AddressSpaceCast( handle );
+                return new AddressSpaceCast( handle );
 
             case ValueKind.ICmp:
-                return new Instructions.IntCmp( handle );
+                return new IntCmp( handle );
 
             case ValueKind.FCmp:
-                return new Instructions.FCmp( handle );
+                return new FCmp( handle );
 
             case ValueKind.Phi:
-                return new Instructions.PhiNode( handle );
+                return new PhiNode( handle );
 
             case ValueKind.Call:
-                return new Instructions.CallInstruction( handle );
+                return new CallInstruction( handle );
 
             case ValueKind.Select:
-                return new Instructions.Select( handle );
+                return new Select( handle );
 
             case ValueKind.UserOp1:
-                return new Instructions.UserOp1( handle );
+                return new UserOp1( handle );
 
             case ValueKind.UserOp2:
-                return new Instructions.UserOp2( handle );
+                return new UserOp2( handle );
 
             case ValueKind.VaArg:
-                return new Instructions.VaArg( handle );
+                return new VaArg( handle );
 
             case ValueKind.ExtractElement:
-                return new Instructions.ExtractElement( handle );
+                return new ExtractElement( handle );
 
             case ValueKind.InsertElement:
-                return new Instructions.InsertElement( handle );
+                return new InsertElement( handle );
 
             case ValueKind.ShuffleVector:
-                return new Instructions.ShuffleVector( handle );
+                return new ShuffleVector( handle );
 
             case ValueKind.ExtractValue:
-                return new Instructions.ExtractValue( handle );
+                return new ExtractValue( handle );
 
             case ValueKind.InsertValue:
-                return new Instructions.InsertValue( handle );
+                return new InsertValue( handle );
 
             case ValueKind.Fence:
-                return new Instructions.Fence( handle );
+                return new Fence( handle );
 
             case ValueKind.AtomicCmpXchg:
-                return new Instructions.AtomicCmpXchg( handle );
+                return new AtomicCmpXchg( handle );
 
             case ValueKind.AtomicRMW:
-                return new Instructions.AtomicRMW( handle );
+                return new AtomicRMW( handle );
 
             case ValueKind.Resume:
-                return new Instructions.ResumeInstruction( handle );
+                return new ResumeInstruction( handle );
 
             case ValueKind.LandingPad:
-                return new Instructions.LandingPad( handle );
+                return new LandingPad( handle );
 
             case ValueKind.CleanUpReturn:
-                return new Instructions.CleanupReturn( handle );
+                return new CleanupReturn( handle );
 
             case ValueKind.CatchReturn:
-                return new Instructions.CatchReturn( handle );
+                return new CatchReturn( handle );
 
             case ValueKind.CatchPad:
-                return new Instructions.CatchPad( handle );
+                return new CatchPad( handle );
 
             case ValueKind.CleanupPad:
-                return new Instructions.CleanupPad( handle );
+                return new CleanupPad( handle );
 
             case ValueKind.CatchSwitch:
-                return new Instructions.CatchSwitch( handle );
+                return new CatchSwitch( handle );
 
             // Default to constant, Instruction or generic base Value
             default:
@@ -323,7 +324,7 @@ namespace Llvm.NET.Values
                     return new Constant( handle );
                 }
 
-                return kind > ValueKind.Instruction ? new Instructions.Instruction( handle ) : new Value( handle );
+                return kind > ValueKind.Instruction ? new Instruction( handle ) : new Value( handle );
             }
         }
 

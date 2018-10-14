@@ -11,12 +11,10 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace Llvm.NETTests
 {
-    /// <summary>Provides common location for one time initialization for all tests in this assembly</summary>
+    // Provides common location for one time initialization for all tests in this assembly
     [TestClass]
     public static class AssemblyInitialize
     {
-        /// <summary>Initializes Llvm.NET state for use with all available targets</summary>
-        /// <param name="ctx">Context for the test run</param>
         [AssemblyInitialize]
         [SuppressMessage( "Redundancies in Symbol Declarations", "RECS0154:Parameter is never used", Justification = "Not needed and signature is defined by test framework" )]
         public static void InitializeAssembly(TestContext ctx)
@@ -26,10 +24,7 @@ namespace Llvm.NETTests
         }
 
         [AssemblyCleanup]
-        public static void UninitializeAssembly()
-        {
-            LlvmInit.Dispose( );
-        }
+        public static void UninitializeAssembly( ) => LlvmInit.Dispose( );
 
         private static IDisposable LlvmInit;
     }

@@ -6,7 +6,11 @@ using System;
 using System.Diagnostics.CodeAnalysis;
 using System.Runtime.InteropServices;
 
-#pragma warning disable SA1300 // "StyleCop.CSharp.NamingRules", "SA1300:ElementMustBeginWithUpperCaseLetter", Justification = "Generated Interop"
+// "StyleCop.CSharp.NamingRules", "SA1300:ElementMustBeginWithUpperCaseLetter", Justification = "Generated Interop"
+#pragma warning disable SA1300
+
+// SA1649  File name should match first type name.
+#pragma warning disable SA1649
 
 /* Enums types and P/Invoke calls here are extensions to standard LLVM-C APIs
 // many are common bindings borrowed from the go bindings (or further extended from them)
@@ -18,7 +22,7 @@ namespace Llvm.NET.Native
 {
     [SuppressMessage( "Style", "IDE1006:Naming Styles", Justification = "Generated code relies on this to match C++" )]
     [SuppressMessage( "StyleCop.CSharp.NamingRules", "SA1300:ElementMustBeginWithUpperCaseLetter", Justification = "Reviewed." )]
-    internal partial struct size_t
+    internal struct size_t
     {
         public static explicit operator size_t(int size) => new size_t( ( IntPtr )size );
 
@@ -37,14 +41,14 @@ namespace Llvm.NET.Native
 #pragma warning disable CA1008 // Enums should have zero value.
     internal enum LLVMModFlagBehavior
     {
-        @Error = 1,
-        @Warning = 2,
-        @Require = 3,
-        @Override = 4,
-        @Append = 5,
-        @AppendUnique = 6,
-        @ModFlagBehaviorFirstVal = Error,
-        @ModFlagBehaviorLastVal = AppendUnique
+        Error = 1,
+        Warning = 2,
+        Require = 3,
+        Override = 4,
+        Append = 5,
+        AppendUnique = 6,
+        ModFlagBehaviorFirstVal = Error,
+        ModFlagBehaviorLastVal = AppendUnique
     }
 
     internal enum LLVMDwarfTag : ushort
@@ -359,7 +363,7 @@ namespace Llvm.NET.Native
         internal static extern void LLVMGetVersionInfo( out LLVMVersionInfo pVersionInfo );
 
         [DllImport( LibraryPath, CallingConvention = CallingConvention.Cdecl, BestFitMapping = false, ThrowOnUnmappableChar = true )]
-        internal static extern int LLVMGetValueID( LLVMValueRef @val );
+        internal static extern int LLVMGetValueID( LLVMValueRef val );
 
         [DllImport( LibraryPath, CallingConvention = CallingConvention.Cdecl, BestFitMapping = false, ThrowOnUnmappableChar = true )]
         internal static extern LLVMComdatRef LLVMGlobalObjectGetComdat( LLVMValueRef Val );
@@ -369,22 +373,22 @@ namespace Llvm.NET.Native
 
         [DllImport( LibraryPath, CallingConvention = CallingConvention.Cdecl, BestFitMapping = false, ThrowOnUnmappableChar = true )]
         [return: MarshalAs(UnmanagedType.Bool)]
-        internal static extern bool LLVMIsConstantZeroValue( LLVMValueRef @Val );
+        internal static extern bool LLVMIsConstantZeroValue( LLVMValueRef Val );
 
         [DllImport( LibraryPath, CallingConvention = CallingConvention.Cdecl, BestFitMapping = false, ThrowOnUnmappableChar = true )]
-        internal static extern void LLVMRemoveGlobalFromParent( LLVMValueRef /*GlobalVariable*/ @Val );
+        internal static extern void LLVMRemoveGlobalFromParent( LLVMValueRef /*GlobalVariable*/ Val );
 
         [DllImport( LibraryPath, CallingConvention = CallingConvention.Cdecl, BestFitMapping = false, ThrowOnUnmappableChar = true )]
-        internal static extern LLVMMetadataRef LLVMConstantAsMetadata( LLVMValueRef @Val );
+        internal static extern LLVMMetadataRef LLVMConstantAsMetadata( LLVMValueRef Val );
 
         [DllImport( LibraryPath, CallingConvention = CallingConvention.Cdecl, BestFitMapping = false, ThrowOnUnmappableChar = true )]
-        internal static extern void LLVMAddNamedMetadataOperand2( LLVMModuleRef @M, [MarshalAs( UnmanagedType.LPStr )] string @name, LLVMMetadataRef @Val );
+        internal static extern void LLVMAddNamedMetadataOperand2( LLVMModuleRef M, [MarshalAs( UnmanagedType.LPStr )] string name, LLVMMetadataRef Val );
 
         [DllImport( LibraryPath, CallingConvention = CallingConvention.Cdecl, BestFitMapping = false, ThrowOnUnmappableChar = true )]
-        internal static extern void LLVMSetMetadata2( LLVMValueRef @Inst, UInt32 @KindID, LLVMMetadataRef @MD );
+        internal static extern void LLVMSetMetadata2( LLVMValueRef Inst, UInt32 KindID, LLVMMetadataRef MD );
 
         [DllImport( LibraryPath, CallingConvention = CallingConvention.Cdecl, BestFitMapping = false, ThrowOnUnmappableChar = true )]
-        internal static extern void LLVMMetadataReplaceAllUsesWith( LLVMMetadataRef @MD, LLVMMetadataRef @New );
+        internal static extern void LLVMMetadataReplaceAllUsesWith( LLVMMetadataRef MD, LLVMMetadataRef New );
 
         [DllImport( LibraryPath, CallingConvention = CallingConvention.Cdecl, BestFitMapping = false, ThrowOnUnmappableChar = true )]
         [return: MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef=typeof(StringMarshaler), MarshalCookie="DisposeMessage")]

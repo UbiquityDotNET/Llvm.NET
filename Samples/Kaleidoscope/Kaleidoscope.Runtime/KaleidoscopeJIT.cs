@@ -3,6 +3,7 @@
 // </copyright>
 
 using System;
+using System.IO;
 using System.Runtime.InteropServices;
 using Llvm.NET;
 using Llvm.NET.JIT;
@@ -24,6 +25,10 @@ namespace Kaleidoscope.Runtime
             AddInteropCallback( "putchard", new CallbackHandler1( PutChard ) );
             AddInteropCallback( "printd", new CallbackHandler1( Printd ) );
         }
+
+        /// <summary>Gets or sets the output writer for output from the program.</summary>
+        /// <remarks>The default writer is <see cref="Console.Out"/>.</remarks>
+        public TextWriter OutputWriter { get; set; } = Console.Out;
 
         /// <summary>Delegate for an interop callback taking no parameters</summary>
         /// <returns>value for the function</returns>
@@ -65,7 +70,7 @@ namespace Kaleidoscope.Runtime
             // STOP ALL EXCEPTIONS from bubbling out to JIT'ed code
             try
             {
-                Console.WriteLine( x );
+                OutputWriter.WriteLine( x );
                 return 0.0F;
             }
             catch
@@ -79,7 +84,7 @@ namespace Kaleidoscope.Runtime
             // STOP ALL EXCEPTIONS from bubbling out to JIT'ed code
             try
             {
-                Console.Write( ( char )x );
+                OutputWriter.Write( ( char )x );
                 return 0.0F;
             }
             catch

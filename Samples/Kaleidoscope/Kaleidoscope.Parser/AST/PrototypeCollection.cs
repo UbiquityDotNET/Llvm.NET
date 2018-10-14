@@ -3,18 +3,19 @@
 // </copyright>
 
 using System.Collections.ObjectModel;
+using Kaleidoscope.Grammar.AST;
 
 namespace Kaleidoscope.Grammar
 {
     public class PrototypeCollection
-        : KeyedCollection<string, AST.Prototype>
+        : KeyedCollection<string, Prototype>
     {
-        public void AddOrReplaceItem( AST.Prototype info )
+        public void AddOrReplaceItem( Prototype info )
         {
             Remove( info.Name );
             Add( info );
         }
 
-        protected override string GetKeyForItem( AST.Prototype item ) => item.Name;
+        protected override string GetKeyForItem( Prototype item ) => item.Name;
     }
 }

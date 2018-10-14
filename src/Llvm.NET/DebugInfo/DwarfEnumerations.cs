@@ -148,7 +148,7 @@ namespace Llvm.NET.DebugInfo
     {
         None = 0,
         Const = Tag.ConstType,
-        Volatile = Tag.VolatileType,
+        Volatile = Tag.VolatileType
     }
 
     public enum DiTypeKind
@@ -380,7 +380,7 @@ namespace Llvm.NET.DebugInfo
 
         // Extensions for Fission proposal.
         GNU_addr_index = 0xfb,
-        GNU_const_index = 0xfc,
+        GNU_const_index = 0xfc
     }
 #pragma warning restore SA1300 // Element must begin with upper-case letter
 }

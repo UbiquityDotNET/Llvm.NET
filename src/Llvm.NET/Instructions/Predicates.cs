@@ -204,7 +204,7 @@ namespace Llvm.NET.Instructions
         SignedLess = LLVMIntPredicate.LLVMIntSLT,
 
         /// <summary>Integer signed less than or equal comparison</summary>
-        SignedLessOrEqual = LLVMIntPredicate.LLVMIntSLE,
+        SignedLessOrEqual = LLVMIntPredicate.LLVMIntSLE
     }
 
     /// <summary>Predicate enumeration for integer comparison</summary>
