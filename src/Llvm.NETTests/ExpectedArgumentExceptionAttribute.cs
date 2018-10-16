@@ -20,7 +20,7 @@ namespace Llvm.NETTests
             : base( noExceptionMessage )
         {
             ExpectedName = expectedName;
-            WrongExceptionMessage = DefautWrongExceptionMessage;
+            WrongExceptionMessage = DefaultWrongExceptionMessage;
         }
 
         public string WrongExceptionMessage { get; set; }
@@ -43,7 +43,7 @@ namespace Llvm.NETTests
             }
         }
 
-       private const string DefautWrongExceptionMessage = "The exception that was thrown does not derive from System.ArgumentException.";
+       private const string DefaultWrongExceptionMessage = "The exception that was thrown does not derive from System.ArgumentException.";
        private readonly string ExpectedName;
     }
 }

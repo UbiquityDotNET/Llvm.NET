@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using JetBrains.Annotations;
 using Llvm.NET.Instructions;
 using Llvm.NET.Native;
+using Llvm.NET.Properties;
 
 namespace Llvm.NET.Values
 {
@@ -116,7 +117,7 @@ namespace Llvm.NET.Values
 
             if( instruction.ContainingBlock != this )
             {
-                throw new ArgumentException( "Instruction is from a different block", nameof( instruction ) );
+                throw new ArgumentException( Resources.Instruction_is_from_a_different_block, nameof( instruction ) );
             }
 
             var hInst = NativeMethods.LLVMGetNextInstruction( instruction.ValueHandle );

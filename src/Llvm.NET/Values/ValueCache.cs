@@ -10,7 +10,7 @@ using System.Linq;
 using System.Runtime.InteropServices;
 using Llvm.NET.Instructions;
 using Llvm.NET.Native;
-
+using Llvm.NET.Properties;
 using static Llvm.NET.Native.NativeMethods;
 
 namespace Llvm.NET.Values
@@ -76,8 +76,13 @@ namespace Llvm.NET.Values
             return (IntPtr)managedHandle;
         }
 
-        private WrappedNativeCallback WrappedOnDeleted;
-        private WrappedNativeCallback WrappedOnReplaced;
+        /* ReSharper disable PrivateFieldCanBeConvertedToLocalVariable
+        // These cannot and must not be made as locals as it holds the references
+        // and GCHandles for the delegate
+        */
+        private readonly WrappedNativeCallback WrappedOnDeleted;
+        private readonly WrappedNativeCallback WrappedOnReplaced;
+        /* ReSharper enable PrivateFieldCanBeConvertedToLocalVariable */
 
         private readonly Dictionary<LLVMValueRef,GCHandle> ValueRefToGCHandleMap = new Dictionary<LLVMValueRef, GCHandle>();
 
@@ -90,7 +95,7 @@ namespace Llvm.NET.Values
             var handleContext = handle.GetContext();
             if( handleContext != Context )
             {
-                throw new ArgumentException( "Context for the handle provided doesn't match the context for this cache", nameof( handle ) );
+                throw new ArgumentException( Resources.Context_for_the_handle_provided_doesn_t_match_the_context_for_this_cache, nameof( handle ) );
             }
 
             var kind = LLVMGetValueIdAsKind( handle );

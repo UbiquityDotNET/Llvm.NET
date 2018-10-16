@@ -4,6 +4,7 @@
 
 using System;
 using Llvm.NET.Native;
+using Llvm.NET.Properties;
 
 namespace Llvm.NET.Values
 {
@@ -48,7 +49,7 @@ namespace Llvm.NET.Values
             {
                 if( value != null && value.Module != ParentModule )
                 {
-                    throw new ArgumentException( "Mismatched modules for Comdat", nameof( value ) );
+                    throw new ArgumentException( Resources.Mismatched_modules_for_Comdat, nameof( value ) );
                 }
 
                 NativeMethods.LLVMGlobalObjectSetComdat( ValueHandle, value?.ComdatHandle?? new LLVMComdatRef( IntPtr.Zero ) );

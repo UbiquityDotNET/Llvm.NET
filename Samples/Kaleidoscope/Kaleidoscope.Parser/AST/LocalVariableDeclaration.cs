@@ -52,7 +52,7 @@ namespace Kaleidoscope.Grammar.AST
             if(Initializer != null )
             {
                 bldr.Append( ", " );
-                bldr.Append( Initializer.ToString( ) );
+                bldr.Append( Initializer );
             }
 
             bldr.Append( ')' );

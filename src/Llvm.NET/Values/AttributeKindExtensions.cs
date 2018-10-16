@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Llvm.NET.Instructions;
 using Llvm.NET.Native;
+using Llvm.NET.Properties;
 using Ubiquity.ArgValidators;
 
 namespace Llvm.NET.Values
@@ -393,7 +394,7 @@ namespace Llvm.NET.Values
                     }
 
                     int paramIndex = index - FunctionAttributeIndex.Parameter0;
-                    if( paramIndex >= function.Parameters.Count )
+                    if( paramIndex >= ( function?.Parameters.Count ?? 0 ) )
                     {
                         return false;
                     }
@@ -430,7 +431,7 @@ namespace Llvm.NET.Values
                     function = arg.ContainingFunction;
                     if( index != FunctionAttributeIndex.Parameter0 + ( int )arg.Index )
                     {
-                        throw new ArgumentException( "Index for parameters must be the actual position of the argument" );
+                        throw new ArgumentException( Resources.Index_for_parameters_must_be_the_actual_position_of_the_argument );
                     }
 
                     break;
@@ -441,9 +442,9 @@ namespace Llvm.NET.Values
                 }
 
                 int paramIndex = index - FunctionAttributeIndex.Parameter0;
-                if( paramIndex > ( function.Parameters.Count - 1 ) )
+                if( paramIndex > ( ( function?.Parameters.Count ?? 0 ) - 1 ) )
                 {
-                    throw new ArgumentException( "Specified parameter index exceeds the number of parameters in the function", nameof( index ) );
+                    throw new ArgumentException( Resources.Specified_parameter_index_exceeds_the_number_of_parameters_in_the_function, nameof( index ) );
                 }
             }
         }
@@ -452,30 +453,30 @@ namespace Llvm.NET.Values
         {
             kind.ValidateDefined( nameof( kind ) );
 
-            FunctionIndexKinds allowedindices = kind.GetAllowedIndexes( );
+            FunctionIndexKinds allowedIndexes = kind.GetAllowedIndexes( );
             switch( index )
             {
             case FunctionAttributeIndex.Function:
-                if( !allowedindices.HasFlag( FunctionIndexKinds.Function ) )
+                if( !allowedIndexes.HasFlag( FunctionIndexKinds.Function ) )
                 {
-                    throw new ArgumentException( "Attribute not allowed on functions", nameof( index ) );
+                    throw new ArgumentException( Resources.Attribute_not_allowed_on_functions, nameof( index ) );
                 }
 
                 break;
 
             case FunctionAttributeIndex.ReturnType:
-                if( !allowedindices.HasFlag( FunctionIndexKinds.Return ) )
+                if( !allowedIndexes.HasFlag( FunctionIndexKinds.Return ) )
                 {
-                    throw new ArgumentException( "Attribute not allowed on function Return", nameof( index ) );
+                    throw new ArgumentException( Resources.Attribute_not_allowed_on_function_Return, nameof( index ) );
                 }
 
                 break;
 
             // case FunctionAttributeIndex.Parameter0:
             default:
-                if( !allowedindices.HasFlag( FunctionIndexKinds.Parameter ) )
+                if( !allowedIndexes.HasFlag( FunctionIndexKinds.Parameter ) )
                 {
-                    throw new ArgumentException( "Attribute not allowed on function parameter", nameof( index ) );
+                    throw new ArgumentException( Resources.Attribute_not_allowed_on_function_parameter, nameof( index ) );
                 }
 
                 break;
@@ -499,7 +500,7 @@ namespace Llvm.NET.Values
             case AttributeKind.Alignment:
                 if( value > UInt32.MaxValue )
                 {
-                    throw new ArgumentOutOfRangeException( nameof( value ), "Expected a 32 bit value for alignment" );
+                    throw new ArgumentOutOfRangeException( nameof( value ), Resources.Expected_a_32_bit_value_for_alignment );
                 }
 
                 break;
@@ -507,12 +508,12 @@ namespace Llvm.NET.Values
             case AttributeKind.StackAlignment:
                 if( value > UInt32.MaxValue )
                 {
-                    throw new ArgumentOutOfRangeException( nameof( value ), "Expected a 32 bit value for stack alignment" );
+                    throw new ArgumentOutOfRangeException( nameof( value ), Resources.Expected_a_32_bit_value_for_stack_alignment );
                 }
 
                 if( value != 0 && !IsPowerOfTwo( value ) )
                 {
-                    throw new ArgumentException( "Stack alignment value must be a power of 2", nameof( value ) );
+                    throw new ArgumentException( Resources.Stack_alignment_value_must_be_a_power_of_2, nameof( value ) );
                 }
 
                 break;
@@ -522,7 +523,7 @@ namespace Llvm.NET.Values
                 break;
 
             default:
-                throw new ArgumentException( $"Attribute '{kind}' does not support an argument", nameof( kind ) );
+                throw new ArgumentException( string.Format(Resources.Attribute_0_does_not_support_an_argument, kind), nameof( kind ) );
             }
         }
 
@@ -598,6 +599,7 @@ namespace Llvm.NET.Values
             }
         }
 
+        /*
         private static Function GetFunctionForAttributes( Value value )
         {
             switch( value )
@@ -618,12 +620,13 @@ namespace Llvm.NET.Values
                 return null;
             }
         }
+        */
 
         // use complement and compare technique for efficiency
         private static bool IsPowerOfTwo( ulong x ) => ( x != 0 ) && ( ( x & ( ~x + 1 ) ) == x );
 
         // Lazy initialized one time mapping of LLVM attribute Ids to AttributeKind
-        private static Lazy<Dictionary<uint, AttributeKind>> AttribIdToKindMap = new Lazy<Dictionary<uint, AttributeKind>>( BuildAttribIdToKindMap );
+        private static readonly Lazy<Dictionary<uint, AttributeKind>> AttribIdToKindMap = new Lazy<Dictionary<uint, AttributeKind>>( BuildAttribIdToKindMap );
 
         private static Dictionary<uint, AttributeKind> BuildAttribIdToKindMap( )
         {
@@ -633,7 +636,7 @@ namespace Llvm.NET.Values
                    ).ToDictionary( kvp => kvp.Key, kvp => kvp.Value );
         }
 
-        private static Lazy<Dictionary<AttributeKind, uint>> KindToAttribIdMap = new Lazy<Dictionary<AttributeKind, uint>>( BuildKindToAttribIdMap );
+        private static readonly Lazy<Dictionary<AttributeKind, uint>> KindToAttribIdMap = new Lazy<Dictionary<AttributeKind, uint>>( BuildKindToAttribIdMap );
 
         private static Dictionary<AttributeKind, uint> BuildKindToAttribIdMap( )
         {

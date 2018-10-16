@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Runtime.InteropServices;
 using Llvm.NET.Native;
+using Llvm.NET.Properties;
 using Ubiquity.ArgValidators;
 
 using static Llvm.NET.Native.NativeMethods;
@@ -72,12 +73,12 @@ namespace Llvm.NET
 
             if( !IsTemporary || IsResolved )
             {
-                throw new InvalidOperationException( "Cannot replace non temporary or resolved MDNode" );
+                throw new InvalidOperationException( Resources.Cannot_replace_non_temporary_or_resolved_MDNode );
             }
 
             if( MetadataHandle == default )
             {
-                throw new InvalidOperationException( "Cannot Replace all uses of a null descriptor" );
+                throw new InvalidOperationException( Resources.Cannot_Replace_all_uses_of_a_null_descriptor );
             }
 
             LLVMMDNodeReplaceAllUsesWith( MetadataHandle, other.MetadataHandle );

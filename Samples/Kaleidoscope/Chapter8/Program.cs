@@ -14,14 +14,13 @@ using static Kaleidoscope.Runtime.Utilities;
 using static Llvm.NET.StaticState;
 
 [assembly: SuppressMessage( "StyleCop.CSharp.DocumentationRules", "SA1652:Enable XML documentation output", Justification = "Sample application" )]
-
 #pragma warning disable SA1512, SA1513, SA1515 // single line comments used to tag regions for extraction into docs
 
 namespace Kaleidoscope.Chapter8
 {
     public static class Program
     {
-        // <Main>
+        #region Main
 
         /// <summary>C# version of the LLVM Kaleidoscope language tutorial</summary>
         /// <param name="args">Command line arguments to the application</param>
@@ -60,8 +59,8 @@ namespace Kaleidoscope.Chapter8
 
                     // time the parse and code generation
                     var timer = System.Diagnostics.Stopwatch.StartNew( );
-                    IAstNode ast = parser.Parse( rdr, DiagnosticRepresentations.DebugTraceParser );
-                    generator.Generate( ast );
+                    IAstNode ast = parser.Parse( rdr );
+                    generator.Generate( ast, null );
                     if( !generator.Module.Verify( out string errMsg ) )
                     {
                         Console.Error.WriteLine( errMsg );
@@ -86,26 +85,9 @@ namespace Kaleidoscope.Chapter8
 
             return 0;
         }
-        // </Main>
+        #endregion
 
-        // <ErrorHandling>
-        [SuppressMessage( "Redundancies in Symbol Declarations", "RECS0154:Parameter is never used", Justification = "Standard Event signature" )]
-        private static void OnGeneratorError( object sender, CodeGenerationExceptionArgs e )
-        {
-            var color = Console.ForegroundColor;
-            Console.ForegroundColor = ConsoleColor.Red;
-            try
-            {
-                Console.Error.WriteLine( e.Exception.Message );
-            }
-            finally
-            {
-                Console.ForegroundColor = color;
-            }
-        }
-        // </ErrorHandling>
-
-        // <ProcessArgs>
+        #region ProcessArgs
         // really simple command line handling, just loops through the input arguments
         private static (string SourceFilePath, int ExitCode) ProcessArgs( string[ ] args )
         {
@@ -143,6 +125,6 @@ namespace Kaleidoscope.Chapter8
 
             return (sourceFilePath, 0);
         }
-        // </ProcessArgs>
+        #endregion
     }
 }

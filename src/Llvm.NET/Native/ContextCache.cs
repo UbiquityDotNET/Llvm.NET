@@ -50,7 +50,7 @@ namespace Llvm.NET.Native
             return new ConcurrentDictionary<LLVMContextRef, Context>( EqualityComparer<LLVMContextRef>.Default );
         }
 
-        private static Lazy<IDictionary<LLVMContextRef, Context>> Instance
+        private static readonly Lazy<IDictionary<LLVMContextRef, Context>> Instance
             = new Lazy<IDictionary<LLVMContextRef, Context>>( CreateInstance, LazyThreadSafetyMode.ExecutionAndPublication);
     }
 }

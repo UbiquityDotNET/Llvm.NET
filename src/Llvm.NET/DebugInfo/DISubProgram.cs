@@ -18,15 +18,12 @@ namespace Llvm.NET.DebugInfo
         /* TODO: Non-operand properties - need interop API to access these
             uint line{ get;}
             Virtuality Virtuality {get;}
-            uint VistrualIndex {get;}
+            uint VirtualIndex {get;}
             int ThisAdjustment {get;}
             int ScopeLine {get;}
             DIFlags Flags {get;}
             bool IsLocalToUnit {get;}
         */
-
-        /// <summary>Gets the scope for this <see cref="DISubProgram"/></summary>
-        public override DIScope Scope => base.Scope;
 
         /// <summary>Gets the name of this <see cref="DISubProgram"/></summary>
         public override string Name => GetOperandString( 2 );

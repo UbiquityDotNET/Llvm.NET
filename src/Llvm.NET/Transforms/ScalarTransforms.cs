@@ -490,6 +490,7 @@ namespace Llvm.NET.Transforms
             return passManager;
         }
 
+        /*
         [DllImport( LibraryPath, EntryPoint = "LLVMPassManagerBuilderCreate", CallingConvention = CallingConvention.Cdecl )]
         private static extern LLVMPassManagerBuilderRef LLVMPassManagerBuilderCreate( );
 
@@ -522,6 +523,7 @@ namespace Llvm.NET.Transforms
 
         [DllImport( LibraryPath, EntryPoint = "LLVMPassManagerBuilderPopulateLTOPassManager", CallingConvention = CallingConvention.Cdecl )]
         private static extern void LLVMPassManagerBuilderPopulateLTOPassManager( LLVMPassManagerBuilderRef PMB, LLVMPassManagerRef PM, [MarshalAs( UnmanagedType.Bool )]bool privateize, [MarshalAs( UnmanagedType.Bool )]bool RunInliner );
+        */
 
         [DllImport( LibraryPath, EntryPoint = "LLVMAddAggressiveDCEPass", CallingConvention = CallingConvention.Cdecl )]
         private static extern void LLVMAddAggressiveDCEPass( LLVMPassManagerRef PM );

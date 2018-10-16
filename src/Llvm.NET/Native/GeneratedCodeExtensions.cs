@@ -8,6 +8,7 @@ using System.ComponentModel;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices;
+using Llvm.NET.Properties;
 
 namespace Llvm.NET.Native
 {
@@ -32,14 +33,14 @@ namespace Llvm.NET.Native
             try
             {
                 IntPtr moduleHandle = LoadLibraryExW( moduleName, IntPtr.Zero, LOAD_LIBRARY_SEARCH_DEFAULT_DIRS );
-                if( moduleHandle == IntPtr.Zero )
+                if(moduleHandle != IntPtr.Zero)
                 {
-                    int lasterror = Marshal.GetLastWin32Error( );
-                    string errMessage = $"System error occurred trying to load DLL {moduleName}.\n Search paths:\n {string.Join("\n", searchCookies.Select(p=>p.Path))}";
-                    throw new Win32Exception( lasterror, errMessage );
+                    return moduleHandle;
                 }
 
-                return moduleHandle;
+                int lastError = Marshal.GetLastWin32Error( );
+                string errMessage = string.Format(Resources.LoadWin32Library_Error_0_occured_loading_1_search_paths_2, lastError, moduleName, string.Join("\n", searchCookies.Select(p=>p.Path)));
+                throw new Win32Exception( lastError, errMessage );
             }
             finally
             {
@@ -55,7 +56,7 @@ namespace Llvm.NET.Native
         internal static extern bool FreeLibrary( IntPtr hModule );
 
         private const UInt32 LOAD_LIBRARY_SEARCH_DEFAULT_DIRS = 0x00001000;
-        private const UInt32 LOAD_LIBRARY_SEARCH_USER_DIRS = 0x00000400;
+        /* private const UInt32 LOAD_LIBRARY_SEARCH_USER_DIRS = 0x00000400; */
 
         [DllImport( "kernel32", SetLastError = true, BestFitMapping = false, ThrowOnUnmappableChar = true )]
         private static extern IntPtr LoadLibraryExW( [MarshalAs( UnmanagedType.LPTStr )]string lpFileName, IntPtr hFile, UInt32 dwFlags );

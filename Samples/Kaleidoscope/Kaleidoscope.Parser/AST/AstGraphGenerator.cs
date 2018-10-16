@@ -1,6 +1,7 @@
 ﻿// <copyright file="AstDgmlGenerator.cs" company=".NET Foundation">
 // Copyright (c) .NET Foundation. All rights reserved.
 // </copyright>
+
 #if NET47
 
 using System.CodeDom.Compiler;

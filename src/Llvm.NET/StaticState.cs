@@ -9,7 +9,7 @@ using System.IO;
 using System.Reflection;
 using System.Threading;
 using Llvm.NET.Native;
-
+using Llvm.NET.Properties;
 using static Llvm.NET.Native.NativeMethods;
 
 namespace Llvm.NET
@@ -614,6 +614,11 @@ namespace Llvm.NET
             // DLL before any use of the wrapped inter-op APIs to
             // allow building this library as ANYCPU
             string thisModulePath = Path.GetDirectoryName( Assembly.GetExecutingAssembly( ).Location );
+            if( string.IsNullOrWhiteSpace(thisModulePath))
+            {
+                throw new InvalidOperationException(Resources.Cannot_determine_assembly_location);
+            }
+
             string packageRoot = Path.GetFullPath( Path.Combine( thisModulePath, "..", ".." ) );
             var paths = new List<string>( );
 
@@ -634,7 +639,7 @@ namespace Llvm.NET
              || versionInfo.Patch < VersionPatch
               )
             {
-                throw new InvalidOperationException( $"Mismatched LibLLVM version - Expected: {VersionMajor}.{VersionMinor}.{VersionPatch} Actual: {versionInfo.Major}.{versionInfo.Minor}.{versionInfo.Patch}" );
+                throw new InvalidOperationException( string.Format(Resources.Mismatched_LibLLVM_version_Expected_0_1_2_Actual_3_4_5, VersionMajor, VersionMinor, VersionPatch, versionInfo.Major, versionInfo.Minor, versionInfo.Patch) );
             }
 
             // initialize the static fields

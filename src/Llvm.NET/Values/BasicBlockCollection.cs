@@ -8,7 +8,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.InteropServices;
 using Llvm.NET.Native;
-
+using Ubiquity.ArgValidators;
 using static Llvm.NET.Native.NativeMethods;
 
 namespace Llvm.NET.Values
@@ -26,6 +26,7 @@ namespace Llvm.NET.Values
         /// </remarks>
         public void Add( BasicBlock item )
         {
+            item.ValidateNotNull( nameof( item ) );
             LLVMFunctionAppendBasicBlock( ContainingFunction.ValueHandle, item.BlockHandle );
         }
 
@@ -56,6 +57,7 @@ namespace Llvm.NET.Values
 
         public bool Contains( BasicBlock item )
         {
+            item.ValidateNotNull( nameof( item ) );
             return item.ContainingFunction == ContainingFunction;
         }
 
@@ -74,6 +76,7 @@ namespace Llvm.NET.Values
 
         public bool Remove( BasicBlock item )
         {
+            item.ValidateNotNull( nameof( item ) );
             if( item.ContainingFunction != ContainingFunction )
             {
                 return false;
@@ -90,7 +93,7 @@ namespace Llvm.NET.Values
             ContainingFunction = function;
         }
 
-        private Function ContainingFunction;
+        private readonly Function ContainingFunction;
 
         [DllImport( LibraryPath, CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl )]
         private static extern void LLVMFunctionAppendBasicBlock( LLVMValueRef /*Function*/ function, LLVMBasicBlockRef block );

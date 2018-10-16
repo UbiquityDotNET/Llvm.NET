@@ -24,6 +24,8 @@ namespace Llvm.NET.Native
             return true;
         }
 
+        // ReSharper disable once UnusedMember.Local
+        // used implicitly by interop marshaling
         private LLVMPassManagerRef( )
             : base( true )
         {

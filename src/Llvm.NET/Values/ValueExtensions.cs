@@ -9,6 +9,7 @@ using System.Runtime.InteropServices;
 using Llvm.NET.DebugInfo;
 using Llvm.NET.Instructions;
 using Llvm.NET.Native;
+using Llvm.NET.Properties;
 using Llvm.NET.Types;
 
 using static Llvm.NET.Native.NativeMethods;
@@ -63,7 +64,7 @@ namespace Llvm.NET.Values
             {
                 if( !location.Scope.SubProgram.Describes( instruction.ContainingBlock.ContainingFunction ) )
                 {
-                    throw new ArgumentException( "Location does not describe the function containing the provided instruction", nameof( location ) );
+                    throw new ArgumentException( Resources.Location_does_not_describe_the_function_containing_the_provided_instruction, nameof( location ) );
                 }
 
                 LLVMSetDILocation( value.ValueHandle, location.MetadataHandle );
@@ -109,7 +110,7 @@ namespace Llvm.NET.Values
             {
                 if( !scope.SubProgram.Describes( instruction.ContainingBlock.ContainingFunction ) )
                 {
-                    throw new ArgumentException( "scope does not describe the function containing the provided instruction", nameof( scope ) );
+                    throw new ArgumentException( Resources.Scope_does_not_describe_the_function_containing_the_provided_instruction, nameof( scope ) );
                 }
 
                 LLVMSetDebugLoc( value.ValueHandle, line, column, scope.MetadataHandle );
@@ -145,7 +146,7 @@ namespace Llvm.NET.Values
         public static T RegisterName<T>( this T value, string name )
             where T : Value
         {
-            if( value is Instruction inst )
+            if( value is Instruction )
             {
                 value.Name = name;
             }
@@ -161,7 +162,7 @@ namespace Llvm.NET.Values
             }
 
             var hType = LLVMTypeOf( valueRef );
-            Debug.Assert( hType != default, "Should not get a null pointer from LLVM" );
+            Debug.Assert( hType != default, Resources.Assert_Should_not_get_a_null_pointer_from_LLVM );
             var type = TypeRef.FromHandle( hType );
             return type.Context;
         }

@@ -25,13 +25,16 @@ namespace Llvm.NET
         /// <summary>Gets the module that owns this node</summary>
         public BitcodeModule ParentModule => BitcodeModule.FromHandle( LLVMNamedMDNodeGetParentModule( NativeHandle ) );
 
+        /// <summary>Erases this node from its parent</summary>
+        public void EraseFromParent() => LLVMNamedMDNodeEraseFromParent( NativeHandle );
+
         internal NamedMDNode( LLVMNamedMDNodeRef nativeNode )
         {
             NativeHandle = nativeNode;
             Operands = new OperandIterator( this );
         }
 
-        private LLVMNamedMDNodeRef NativeHandle;
+        private readonly LLVMNamedMDNodeRef NativeHandle;
 
         [DllImport( LibraryPath, CallingConvention = CallingConvention.Cdecl, BestFitMapping = false, ThrowOnUnmappableChar = true )]
         [return: MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( StringMarshaler ) )]

@@ -13,3 +13,5 @@ using System.Diagnostics.CodeAnalysis;
 // until full docs generation for the sample support libraries is enabled, these are just annoying noise
 [assembly: SuppressMessage( "StyleCop.CSharp.DocumentationRules", "SA1652:Enable XML documentation output", Justification = "Sample Application" )]
 [assembly: SuppressMessage( "StyleCop.CSharp.DocumentationRules", "SA1600:Elements should be documented", Justification = "Sample Application" )]
+[assembly: SuppressMessage( "ReSharper", "LocalizableElement", Justification = "Sample Application")]
+[assembly: SuppressMessage( "StyleCop.CSharp.ReadabilityRules", "SA1124:Do not use regions", Justification = "Regions used to extract sample for documentation" )]

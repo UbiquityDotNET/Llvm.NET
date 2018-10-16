@@ -85,7 +85,6 @@ namespace Llvm.NET.DebugInfo
         /// <param name="elements">Debug type of all the members of this structure</param>
         /// <param name="derivedFrom">Base type, if any for this type</param>
         /// <param name="bitAlignment">Alignment of the type in bits, 0 indicates default for target</param>
-        [SuppressMessage( "Microsoft.Design", "CA1062:Validate arguments of public methods", MessageId = "1", Justification = "ValidateNotNull" )]
         public DebugStructType( IStructType llvmType
                               , BitcodeModule module
                               , DIScope scope

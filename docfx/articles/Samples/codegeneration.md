@@ -3,12 +3,17 @@ Sample application to generate target machine code. The sample is
 provided in the [source tree](https://github.com/UbiquityDotNET/Llvm.NET/tree/master/Samples/CodeGenWithDebugInfo).
 
 This sample generates LLVM IR equivalent to what Clang will generate for a sample C file. While it doesn't parse
-the C File it does show all the steps and techniques for using Llvm.NET to generate the LLVM IR with debug
-information and ultimately the target machine code.
+the C File, this sample does show all the steps and techniques for using Llvm.NET to generate the LLVM IR with debug
+information and, ultimately, the target machine code.
 
 ## Example C Code
-The CodeGenWithDebugInfo sample will generate LLVM IR and machine code for the following sample "C" code. (This
-code file is provided in the source tree along with a script file to compile it for comparing output with Clang)
+The CodeGenWithDebugInfo sample will generate LLVM IR and machine code for the following sample "C" code.
+
+>[NOTE!]
+>The C code file is provided in the source tree along with a script file to compile it for comparing output with Clang.
+>The current implementation was last compared with Clang 5 RC4 - any differences to the latest version of clang
+>are expected to be minor. Updating the sample to replicate the latest Clang version is left as an exercise for
+>the reader :grin:
 
 [!code-c[Main](../../../Samples/CodeGenWithDebugInfo/Support Files/test.c)]
 
@@ -159,8 +164,8 @@ LLVM modules may contain additional module flags as metadata that describe how t
 or how the code generation/linker should treat the code. In this sample the dwarf version and debug metadata
 versions are set along with a VersionIdentString that identifies the application that generated the module.
 Additionally, any target specific metadata is added to the module. The ordering of these is generally not
-relevant, however it is very specific in the sample to help ensure the generated bitcode is as close to the
-clang version as possible making it possible to run llvm-dis to generate the textual IR files and compare them.
+relevant, however it is very specific in the sample to help ensure the generated IR is as close to the
+Clang version as possible making it possible to run llvm-dis to generate the textual IR files and compare them.
 [!code-csharp[Main](../../../Samples/CodeGenWithDebugInfo/Program.cs#AddModuleFlags)]
 
 ## Declaring the functions

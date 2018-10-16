@@ -24,7 +24,7 @@ namespace Llvm.NET.DebugInfo
             {
                 if( this is DILexicalBlockBase block )
                 {
-                    return block.LocalScope.SubProgram;
+                    return block.LocalScope?.SubProgram;
                 }
 
                 return this as DISubProgram;

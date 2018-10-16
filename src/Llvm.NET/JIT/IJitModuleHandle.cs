@@ -21,7 +21,6 @@ namespace Llvm.NET.JIT
     /// <typeparam name="T">Actual JIT engine handle type</typeparam>
     internal struct JitModuleHandle<T>
         : IJitModuleHandle
-        , IEquatable<IJitModuleHandle>
     {
         public static implicit operator T( JitModuleHandle<T> typeDef ) => typeDef.Value;
 

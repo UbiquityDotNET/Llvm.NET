@@ -11,7 +11,7 @@ namespace Llvm.NET.Values
         : ConstantData
     {
         /// <summary>Gets the value of the constant, possibly losing precision</summary>
-        public double Value => GetValueWithLoss( out bool loosesInfo );
+        public double Value => GetValueWithLoss( out bool _ );
 
         /// <summary>Gets the value of the constant, possibly losing precision</summary>
         /// <param name="loosesInfo">flag indicating if precision is lost</param>

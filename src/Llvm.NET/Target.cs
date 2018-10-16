@@ -40,7 +40,7 @@ namespace Llvm.NET
     }
 
     /// <summary>Relocation type for target code generation</summary>
-    public enum Reloc
+    public enum RelocationMode
     {
         /// <summary>Default relocation model for the target</summary>
         Default = LLVMRelocMode.LLVMRelocDefault,
@@ -117,7 +117,7 @@ namespace Llvm.NET
                                                 , string cpu = null
                                                 , string features = null
                                                 , CodeGenOpt optLevel = CodeGenOpt.Default
-                                                , Reloc relocationMode = Reloc.Default
+                                                , RelocationMode relocationMode = RelocationMode.Default
                                                 , CodeModel codeModel = CodeModel.Default
                                                 )
         {
@@ -137,7 +137,7 @@ namespace Llvm.NET
                                                 , string cpu = null
                                                 , string features = null
                                                 , CodeGenOpt optLevel = CodeGenOpt.Default
-                                                , Reloc relocationMode = Reloc.Default
+                                                , RelocationMode relocationMode = RelocationMode.Default
                                                 , CodeModel codeModel = CodeModel.Default
                                                 )
         {
@@ -188,7 +188,7 @@ namespace Llvm.NET
 
         internal LLVMTargetRef TargetHandle { get; }
 
-        internal static LLVMTargetMachineRef InternalCreateTargetMachine( Target target, string triple, string cpu, string features, CodeGenOpt optLevel, Reloc relocationMode, CodeModel codeModel )
+        internal static LLVMTargetMachineRef InternalCreateTargetMachine( Target target, string triple, string cpu, string features, CodeGenOpt optLevel, RelocationMode relocationMode, CodeModel codeModel )
         {
             triple.ValidateNotNullOrWhiteSpace( nameof( triple ) );
             optLevel.ValidateDefined( nameof( optLevel ) );

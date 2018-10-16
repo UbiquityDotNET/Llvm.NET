@@ -6,16 +6,18 @@ using System;
 using System.Diagnostics.CodeAnalysis;
 using Llvm.NET.Native;
 
-// TODO: enable warnings once all of these enumerations are documented
+// The names describe what they are, further details are available in the DWARF specs
 #pragma warning disable CS1591, SA1600, SA1602 // Enumeration items must be documented
 
+// ReSharper disable IdentifierTypo
 namespace Llvm.NET.DebugInfo
 {
+    /// <summary>DWARF Debug information language</summary>
     public enum SourceLanguage
     {
+        /// <summary>Invalid language</summary>
         Invalid = 0,
 
-        // Language names
         C89 = 0x0001,
         C = 0x0002,
         Ada83 = 0x0003,
@@ -46,15 +48,29 @@ namespace Llvm.NET.DebugInfo
         CPlusPlus11 = 0x001a,
         OCaml = 0x001b,
 
+        /// <summary>Base value for un-official languages ids</summary>
         UserMin = 0x8000,
+
+        /// <summary>[LLVM] MIPS Assembler</summary>
         LlvmMipsAssembler = UserMin + 1,
+
+        /// <summary>[LLVM] RenderScript</summary>
         RenderScript = UserMin + 0x0E57,
+
+        /// <summary>[LLVM] Delphi</summary>
         Delphi = UserMin + 0x03000,
+
+        /// <summary>[Llvm.NET] C# Language</summary>
         CSharp = UserMin + 0x01000,
+
+        /// <summary>[Llvm.NET] .NET IL Assembly language (ILAsm)</summary>
         ILAsm = UserMin + 0x01001,
+
+        /// <summary>Max Value for un-official language ids</summary>
         UserMax = 0xffff
     }
 
+    /// <summary>Tag kind for the debug information discriminated union nodes</summary>
     [SuppressMessage( "Microsoft.Design", "CA1028:EnumStorageShouldBeInt32", Justification = "matches interop type from native code" )]
     public enum Tag : ushort
     {
@@ -144,6 +160,7 @@ namespace Llvm.NET.DebugInfo
         HiUser = LLVMDwarfTag.HiUser
     }
 
+    /// <summary>Tags for qualified types</summary>
     public enum QualifiedTypeTag
     {
         None = 0,
@@ -151,6 +168,7 @@ namespace Llvm.NET.DebugInfo
         Volatile = Tag.VolatileType
     }
 
+    /// <summary>Primitive type supported by the debug information</summary>
     public enum DiTypeKind
     {
         Invalid = 0,
@@ -216,6 +234,7 @@ namespace Llvm.NET.DebugInfo
     }
 
 #pragma warning disable SA1300 // Element must begin with upper-case letter
+    /// <summary>Debug information expression operator</summary>
     [SuppressMessage( "Microsoft.Design", "CA1028:EnumStorageShouldBeInt32", Justification = "Matches underlying interop type" )]
     public enum ExpressionOp : long
     {

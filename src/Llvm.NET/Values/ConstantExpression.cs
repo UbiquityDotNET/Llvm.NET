@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using Llvm.NET.Instructions;
 using Llvm.NET.Native;
+using Llvm.NET.Properties;
 using Llvm.NET.Types;
 using Ubiquity.ArgValidators;
 
@@ -30,12 +31,12 @@ namespace Llvm.NET.Values
 
             if( value.NativeType.Kind != TypeKind.Integer )
             {
-                throw new ArgumentException( "Integer Type expected", nameof( value ) );
+                throw new ArgumentException( Resources.Integer_type_expected, nameof( value ) );
             }
 
             if( !( type is IPointerType ) )
             {
-                throw new ArgumentException( "pointer type expected", nameof( type ) );
+                throw new ArgumentException( Resources.Pointer_type_expected, nameof( type ) );
             }
 
             return FromHandle<Constant>( NativeMethods.LLVMConstIntToPtr( value.ValueHandle, type.GetTypeRef( ) ) );

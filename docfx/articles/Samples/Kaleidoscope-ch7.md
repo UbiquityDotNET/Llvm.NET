@@ -1,6 +1,6 @@
 # 7. Kaleidoscope: Mutable Variables
 The previous chapters introduced the Kaleidoscope language and progressively implemented a variety of
-language features to make a fully featured, if not simplistic, functional programing language. To a
+language features to make a fully featured, if not simplistic, functional programming language. To a
 certain extent the choice of a functional language was a bit of a cheat. Generating LLVM IR for a 
 functional language is straight forward as functional languages map very easily into the LLVM native
 [SSA form](http://en.wikipedia.org/wiki/Static_single_assignment_form). While the SSA form is very
@@ -169,12 +169,12 @@ is an integral part of the full solution to mutable variables. Using mem2reg is 
 There are a few conditions for using mem2reg correctly.
 
 1. mem2reg is based on alloca: it looks for and promotes alloca. It does not apply to globals or heap allocations.
-1. mem2reg only looks for alloca instructions in the **entry block** of the function. Placing allocas for
+1. mem2reg only looks for alloca instructions in the **entry block** of the function. Placing Alloca instructions for
 all variables, in all scopes, in the entry block ensures they are executed only once, which makes the conversion
 simpler.
-1. mem2reg only promotes allocas whose only uses are direct loads and stores. If the address of the object
+1. mem2reg only promotes Alloca instructions whose only uses are direct loads and stores. If the address of the object
 is passed to a function or any pointer math applied the alloca is **not** promoted.
-1. mem2reg only works on allocas of first class values (such as pointers, scalars and vectors), and only if
+1. mem2reg only works on Alloca instructions of first class values (such as pointers, scalars and vectors), and only if
 the array size of the allocation is 1.
 1. mem2reg is not capable of promoting structs or arrays to registers. (The SROA pass is more powerful and can promote structs, unions and arrays in many cases)
 
@@ -257,14 +257,14 @@ expression.
 [!code-csharp[VisitConditionalExpression](../../../Samples/Kaleidoscope/Chapter7/CodeGenerator.cs#ConditionalExpression)]
 
 ### Update Visitor for ForInExpression
-Next up is to update the for loop handling to use the allocas. The code is almost identical except for the
+Next up is to update the for loop handling to use Alloca. The code is almost identical except for the
 use of load/store for the variables and removal of the manually generated PHI nodes.
 
 [!code-csharp[VisitForExpression](../../../Samples/Kaleidoscope/Chapter7/CodeGenerator.cs#ForInExpression)]
 
 ### Update Visitor for FunctionDefinition
 To support mutable function argument variables the handler for functions requires a small update to create
-the allocas for each incoming argument and for each of the local variables used by the function. The AST
+the Alloca for each incoming argument and for each of the local variables used by the function. The AST
 generation tracks the variable declarations in a function so they are all available to generate directly
 into the entry block.
 

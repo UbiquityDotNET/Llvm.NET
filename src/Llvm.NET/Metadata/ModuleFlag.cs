@@ -3,6 +3,7 @@
 // </copyright>
 
 using System;
+using Llvm.NET.Properties;
 using Llvm.NET.Values;
 using Ubiquity.ArgValidators;
 
@@ -36,22 +37,22 @@ namespace Llvm.NET
             node.ValidateNotNull( nameof( node ) );
             if( node.Operands.Count != 3 )
             {
-                throw new ArgumentException( "Expected node with 3 operands", nameof( node ) );
+                throw new ArgumentException( Resources.Expected_node_with_3_operands, nameof( node ) );
             }
 
             if( !(node.Operands[0] is ConstantAsMetadata behavior))
             {
-                throw new ArgumentException( "Expected ConstantAsMetadata for first operand", nameof( node ) );
+                throw new ArgumentException( Resources.Expected_ConstantAsMetadata_for_first_operand, nameof( node ) );
             }
 
             if( !(behavior.Constant is ConstantInt behaviorConst ) )
             {
-                throw new ArgumentException( "Expected ConstantInt wrapped in first operand", nameof( node ) );
+                throw new ArgumentException( Resources.Expected_ConstantInt_wrapped_in_first_operand, nameof( node ) );
             }
 
             if( !(node.Operands[1] is MDString nameMd ) )
             {
-                throw new ArgumentException( "Expected MDString as second operand", nameof( node ) );
+                throw new ArgumentException( Resources.Expected_MDString_as_second_operand, nameof( node ) );
             }
 
             Behavior = ( ModuleFlagBehavior )( behaviorConst.ZeroExtendedValue );

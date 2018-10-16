@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Runtime.InteropServices;
 using System.Threading;
 using Llvm.NET.Native;
+using Llvm.NET.Properties;
 using Llvm.NET.Values;
 
 using static Llvm.NET.Native.NativeMethods;
@@ -88,12 +89,16 @@ namespace Llvm.NET.JIT
         {
             if( !( handle is JitModuleHandle<int> jitHandle ) )
             {
-                throw new ArgumentException( "Invalid handle provided", nameof( handle ) );
+                throw new ArgumentException( Resources.Invalid_handle_provided, nameof( handle ) );
             }
 
-            if( !OwnedModules.TryGetValue( jitHandle, out LLVMModuleRef module))
+            LLVMModuleRef module;
+            lock(OwnedModules)
             {
-                throw new ArgumentException( "Unknown handle value" );
+                if( !OwnedModules.TryGetValue( jitHandle, out module))
+                {
+                    throw new ArgumentException( Resources.Unknown_handle_value );
+                }
             }
 
             // Current LLVM-C API is a bit brain dead on this one. The return is hard-coded to 0
@@ -101,7 +106,7 @@ namespace Llvm.NET.JIT
             // ExecutionEngine::removeModule() is ultimately ignored.
             if( LLVMRemoveModule( EngineHandle, module, out LLVMModuleRef baseModule, out string errMsg ).Failed )
             {
-                throw new InternalCodeGeneratorException( "Failed to remove module from engine" );
+                throw new InternalCodeGeneratorException( string.Format(Resources.Failed_to_remove_module_from_engine_0, errMsg ) );
             }
 
             // MCJIT engine doesn't cleanup after a remove
@@ -234,7 +239,7 @@ namespace Llvm.NET.JIT
                 break;
 
             default:
-                throw new ArgumentException( "Invalid EngineKind", nameof( Kind ) );
+                throw new ArgumentException( Resources.Invalid_EngineKind, nameof( Kind ) );
             }
 
             if( status.Failed )
@@ -245,7 +250,7 @@ namespace Llvm.NET.JIT
 
         private readonly EngineKind Kind;
         private readonly CodeGenOpt Optimization;
-        private Dictionary<int, LLVMModuleRef> OwnedModules;
+        private readonly Dictionary<int, LLVMModuleRef> OwnedModules;
         private int NextHandleValue;
         private LLVMExecutionEngineRef EngineHandle;
     }

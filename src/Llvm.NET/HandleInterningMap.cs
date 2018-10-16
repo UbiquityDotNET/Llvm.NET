@@ -71,7 +71,7 @@ namespace Llvm.NET
 
         private protected abstract TMappedType ItemFactory( THandle handle );
 
-        private IDictionary<THandle, TMappedType> HandleMap
+        private readonly IDictionary<THandle, TMappedType> HandleMap
             = new ConcurrentDictionary<THandle, TMappedType>( EqualityComparer<THandle>.Default );
     }
 }

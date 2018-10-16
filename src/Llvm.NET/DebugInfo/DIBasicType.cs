@@ -25,6 +25,7 @@ namespace Llvm.NET.DebugInfo
         {
         }
 
+        // ReSharper disable IdentifierTypo
         [DllImport( LibraryPath, CallingConvention = CallingConvention.Cdecl )]
         private static extern uint LLVMDIBasicTypeGetEncoding( LLVMMetadataRef /*DIBasicType*/ basicType );
     }

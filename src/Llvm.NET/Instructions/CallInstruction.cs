@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Llvm.NET.Native;
+using Llvm.NET.Properties;
 using Llvm.NET.Values;
 
 using static Llvm.NET.Native.NativeMethods;
@@ -71,7 +72,7 @@ namespace Llvm.NET.Instructions
         {
             if( string.IsNullOrWhiteSpace( name ) )
             {
-                throw new ArgumentException( "name cannot be null or empty", nameof( name ) );
+                throw new ArgumentException( Resources.Name_cannot_be_null_or_empty, nameof( name ) );
             }
 
             var handle = LLVMGetCallSiteStringAttribute( ValueHandle, ( LLVMAttributeIndex )index, name, ( uint )name.Length );

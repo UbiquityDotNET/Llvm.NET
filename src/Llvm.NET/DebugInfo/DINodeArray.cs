@@ -2,7 +2,6 @@
 // Copyright (c) .NET Foundation. All rights reserved.
 // </copyright>
 
-using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 
 namespace Llvm.NET.DebugInfo

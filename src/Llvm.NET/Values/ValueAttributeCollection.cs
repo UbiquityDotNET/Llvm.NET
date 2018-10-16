@@ -41,14 +41,19 @@ namespace Llvm.NET.Values
 
         public void CopyTo( AttributeValue[ ] array, int arrayIndex )
         {
+            /* ReSharper disable ConditionIsAlwaysTrueOrFalse */
+            /* ReSharper disable HeuristicUnreachableCode */
             if( array == null )
             {
                 return;
             }
 
-            foreach( AttributeValue attrib in this )
+            /* ReSharper enable HeuristicUnreachableCode */
+            /* ReSharper enable ConditionIsAlwaysTrueOrFalse */
+
+            foreach( AttributeValue attribute in this )
             {
-                array[ arrayIndex ] = attrib;
+                array[ arrayIndex ] = attribute;
                 ++arrayIndex;
             }
         }

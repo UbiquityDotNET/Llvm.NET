@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFrameworks>net47;netstandard2.0</TargetFrameworks>
+    <TargetFrameworks>netstandard2.0;net47</TargetFrameworks>
     <RuntimeIdentifiers>win-x64</RuntimeIdentifiers>
     <DebugType>portable</DebugType>
     <DebugSymbols>true</DebugSymbols>
@@ -15,6 +15,7 @@
     <PackageTags>LLVM,Compiler,JIT</PackageTags>
     <NoPackageAnalysis>true</NoPackageAnalysis>
     <LangVersion>7.2</LangVersion>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
 
   <ItemGroup>
@@ -33,7 +34,21 @@
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="CSemVer.Build.Tasks" Version="2.0.1" />
+    <PackageReference Include="System.Memory" Version="4.5.1" />
     <PackageReference Include="Ubiquity.ArgValidators" Version="6.0.1" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Update="Properties\Resources.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Update="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
   </ItemGroup>
   <Choose>
     <!--

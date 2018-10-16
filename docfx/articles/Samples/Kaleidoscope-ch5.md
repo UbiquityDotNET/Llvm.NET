@@ -59,10 +59,9 @@ only two reasons where a phi node may crop up:
  2. Values that are part of the structure of the language (usually for control flow)
 
 [Chapter 7](Kaleidoscope-ch7.md) Covers the mutable variables case in detail and the techniques for
-generating the code without using a phi node.
-For cases like this one where it is straight forward and easy to insert the phi node directly then there's
-no reason not to. Though, the solution provided in Chapter 7 can also eliminate the need to manually insert
-the phi node here as well.
+generating the code without using a phi node. For cases like this one where it is straight forward and easy
+to insert the phi node directly then there's no reason not to. Though, the solution provided in Chapter 7 can
+also eliminate the need to manually insert the phi node here as well.
 
 ### Code Generation
 Generating the code for the condition expression follows the pattern shown above with the following high
@@ -189,4 +188,4 @@ access to all other variables from other scopes.
 Control flow is certainly more complex to generate than any of the other language constructs but it relies on
 a few basic primitive building block patterns. Thus, it is fairly easy to understand and implement once the
 basic patterns are understood. With the inclusion of control flow the Kaleidoscope language is a complete,
-albeit simplistic functional language.
+albeit simplistic, functional language.

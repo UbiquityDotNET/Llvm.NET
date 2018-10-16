@@ -4,6 +4,7 @@
 
 using System;
 using Llvm.NET.Native;
+using Llvm.NET.Properties;
 using Ubiquity.ArgValidators;
 
 using static Llvm.NET.Native.NativeMethods;
@@ -24,7 +25,7 @@ namespace Llvm.NET
                             , string cpu = null
                             , string features = null
                             , CodeGenOpt optLevel = CodeGenOpt.Default
-                            , Reloc relocationMode = Reloc.Default
+                            , RelocationMode relocationMode = RelocationMode.Default
                             , CodeModel codeModel = CodeModel.Default
                             )
             : this( Target.InternalCreateTargetMachine( Target.FromTriple(triple), triple, cpu, features, optLevel, relocationMode, codeModel ) )
@@ -70,7 +71,7 @@ namespace Llvm.NET
 
             if( module.TargetTriple != null && Triple != module.TargetTriple )
             {
-                throw new ArgumentException( "Triple specified for the module doesn't match target machine", nameof( module ) );
+                throw new ArgumentException( Resources.Triple_specified_for_the_module_doesn_t_match_target_machine, nameof( module ) );
             }
 
             var status = LLVMTargetMachineEmitToFile( TargetMachineHandle
@@ -100,7 +101,7 @@ namespace Llvm.NET
 
             if( module.TargetTriple != null && Triple != module.TargetTriple )
             {
-                throw new ArgumentException( "Triple specified for the module doesn't match target machine", nameof( module ) );
+                throw new ArgumentException( Resources.Triple_specified_for_the_module_doesn_t_match_target_machine, nameof( module ) );
             }
 
             var status = LLVMTargetMachineEmitToMemoryBuffer( TargetMachineHandle
@@ -130,7 +131,7 @@ namespace Llvm.NET
                                               , string cpu = null
                                               , string features = null
                                               , CodeGenOpt optLevel = CodeGenOpt.Default
-                                              , Reloc relocationMode = Reloc.Default
+                                              , RelocationMode relocationMode = RelocationMode.Default
                                               , CodeModel codeModel = CodeModel.Default
                                               )
         {

@@ -12,6 +12,7 @@ using System.Text;
 using JetBrains.Annotations;
 using Llvm.NET.Instructions;
 using Llvm.NET.Native;
+using Llvm.NET.Properties;
 using Llvm.NET.Values;
 using Ubiquity.ArgValidators;
 
@@ -94,7 +95,7 @@ namespace Llvm.NET.DebugInfo
         {
             if( OwningModule.DICompileUnit != null )
             {
-                throw new InvalidOperationException( "LLVM only allows one DICompileUnit per module" );
+                throw new InvalidOperationException( Resources.LLVM_only_allows_one_DICompileUnit_per_module );
             }
 
             var file = CreateFile( fileName, fileDirectory );
@@ -102,10 +103,10 @@ namespace Llvm.NET.DebugInfo
                                                        , ( uint )language
                                                        , file.MetadataHandle
                                                        , producer
-                                                       , (IntPtr)producer.Length
+                                                       , ( IntPtr )producer.Length
                                                        , optimized
                                                        , compilationFlags
-                                                       , (IntPtr)compilationFlags.Length
+                                                       , ( IntPtr )compilationFlags.Length
                                                        , runtimeVersion
                                                        , string.Empty
                                                        , IntPtr.Zero
@@ -168,7 +169,12 @@ namespace Llvm.NET.DebugInfo
                 return null;
             }
 
-            var handle = LLVMDIBuilderCreateFile( BuilderHandle, fileName, (IntPtr)fileName.Length, directory ?? string.Empty, (IntPtr)directory.Length );
+            var handle = LLVMDIBuilderCreateFile( BuilderHandle
+                                                , fileName
+                                                , ( IntPtr )fileName.Length
+                                                , directory ?? string.Empty
+                                                , ( IntPtr )( directory?.Length ?? 0 )
+                                                );
             return MDNode.FromHandle<DIFile>( handle );
         }
 
@@ -468,7 +474,7 @@ namespace Llvm.NET.DebugInfo
             }
 
             var handle = LLVMDIBuilderGetOrCreateTypeArray( BuilderHandle, out handles[ 0 ], ( UInt64 )count );
-            return new DITypeArray( MDNode.FromHandle<MDTuple>( handle) );
+            return new DITypeArray( MDNode.FromHandle<MDTuple>( handle ) );
         }
 
         /// <summary>Creates a <see cref="DISubroutineType"/> to provide debug information for a function/procedure signature</summary>
@@ -541,7 +547,7 @@ namespace Llvm.NET.DebugInfo
                                                       , line
                                                       , bitSize
                                                       , bitAlign
-                                                      , (uint)debugFlags
+                                                      , ( uint )debugFlags
                                                       , derivedFrom?.MetadataHandle ?? default
                                                       , elements.Tuple.MetadataHandle
                                                       );
@@ -750,6 +756,33 @@ namespace Llvm.NET.DebugInfo
             return CreateArrayType( bitSize, bitAlign, elementType, GetOrCreateArray( subscripts ) );
         }
 
+        /// <summary>Creates debug information for a vector type</summary>
+        /// <param name="bitSize">Size, in bits for the type</param>
+        /// <param name="bitAlign">Alignment in bits for the type</param>
+        /// <param name="elementType">Type of elements in the Vector</param>
+        /// <param name="subscripts">Dimensions for the Vector</param>
+        /// <returns><see cref="DICompositeType"/> for the Vector</returns>
+        [SuppressMessage( "Microsoft.Design", "CA1011:ConsiderPassingBaseTypesAsParameters", Justification = "Specific type required by interop call" )]
+        public DICompositeType CreateVectorType( UInt64 bitSize, UInt32 bitAlign, DIType elementType, DINodeArray subscripts )
+        {
+            elementType.ValidateNotNull( nameof( elementType ) );
+            subscripts.ValidateNotNull( nameof( subscripts ) );
+
+            var handle = LLVMDIBuilderCreateVectorType( BuilderHandle, bitSize, bitAlign, elementType.MetadataHandle, subscripts.Tuple.MetadataHandle );
+            return MDNode.FromHandle<DICompositeType>( handle );
+        }
+
+        /// <summary>Creates debug information for a vector type</summary>
+        /// <param name="bitSize">Size, in bits for the type</param>
+        /// <param name="bitAlign">Alignment in bits for the type</param>
+        /// <param name="elementType">Type of elements in the Vector</param>
+        /// <param name="subscripts">Dimensions for the Vector</param>
+        /// <returns><see cref="DICompositeType"/> for the Vector</returns>
+        public DICompositeType CreateVectorType( UInt64 bitSize, UInt32 bitAlign, DIType elementType, params DINode[ ] subscripts )
+        {
+            return CreateVectorType( bitSize, bitAlign, elementType, GetOrCreateArray( subscripts ) );
+        }
+
         /// <summary>Creates debug information for a type definition (e.g. type alias)</summary>
         /// <param name="type">Debug information for the aliased type</param>
         /// <param name="name">Name of the alias</param>
@@ -770,8 +803,8 @@ namespace Llvm.NET.DebugInfo
             return MDNode.FromHandle<DIDerivedType>( handle );
         }
 
-        /// <summary>Creates a new subrange</summary>
-        /// <param name="lo">Lower bounds of the subrange</param>
+        /// <summary>Creates a new <see cref="DISubRange"/></summary>
+        /// <param name="lo">Lower bounds of the <see cref="DISubRange"/></param>
         /// <param name="count">Count of elements in the sub range</param>
         /// <returns><see cref="DISubRange"/></returns>
         public DISubRange CreateSubRange( long lo, long count )
@@ -926,24 +959,24 @@ namespace Llvm.NET.DebugInfo
         /// </remarks>
         public void Finish( )
         {
-            if(IsFinished)
+            if( IsFinished )
             {
                 return;
             }
 
             var bldr = new StringBuilder( );
             var unresolvedTemps = from node in OwningModule.Context.Metadata.OfType<MDNode>( )
-                where node.IsTemporary && !node.IsResolved
-                select node;
+                                  where node.IsTemporary && !node.IsResolved
+                                  select node;
 
             foreach( MDNode node in unresolvedTemps )
             {
                 if( bldr.Length == 0 )
                 {
-                    bldr.AppendLine( "Temporaries must be resolved before finalizing debug information:" );
+                    bldr.AppendLine( Resources.Temporaries_must_be_resolved_before_finalizing_debug_information );
                 }
 
-                bldr.AppendFormat( "\t{0}", node );
+                bldr.AppendFormat( Resources.Unresolved_Debug_temporary_0, node );
                 bldr.AppendLine( );
             }
 
@@ -1061,7 +1094,7 @@ namespace Llvm.NET.DebugInfo
 
             if( location.Scope.SubProgram != varInfo.Scope.SubProgram )
             {
-                throw new ArgumentException( "Mismatched scopes for location and variable" );
+                throw new ArgumentException( Resources.Mismatched_scopes_for_location_and_variable );
             }
 
             var handle = LLVMDIBuilderInsertDeclareAtEnd( BuilderHandle
@@ -1188,7 +1221,7 @@ namespace Llvm.NET.DebugInfo
         /// </remarks>
         /// <seealso href="xref:llvm_sourcelevel_debugging#lvm-dbg-value">LLVM: llvm.dbg.value</seealso>
         /// <seealso href="xref:llvm_sourcelevel_debugging#source-level-debugging-with-llvm">LLVM: Source Level Debugging with LLVM</seealso>
-        [SuppressMessage("Microsoft.Design", "CA1011:ConsiderPassingBaseTypesAsParameters", Justification = "Interop API requires specific derived type" )]
+        [SuppressMessage( "Microsoft.Design", "CA1011:ConsiderPassingBaseTypesAsParameters", Justification = "Interop API requires specific derived type" )]
         public CallInstruction InsertValue( Value value
                                           , DILocalVariable varInfo
                                           , DIExpression expression
@@ -1204,12 +1237,12 @@ namespace Llvm.NET.DebugInfo
 
             if( location.Scope != varInfo.Scope )
             {
-                throw new ArgumentException( "mismatched scopes" );
+                throw new ArgumentException( Resources.Mismatched_scopes );
             }
 
             if( !LocationDescribes( location, insertAtEnd.ContainingFunction ) )
             {
-                throw new ArgumentException( "location does not describe the specified block's containing function" );
+                throw new ArgumentException( Resources.Location_does_not_describe_the_specified_block_s_containing_function );
             }
 
             var handle = LLVMDIBuilderInsertValueAtEnd( BuilderHandle
@@ -1290,7 +1323,7 @@ namespace Llvm.NET.DebugInfo
         {
         }
 
-        internal LLVMDIBuilderRef BuilderHandle { get; private set; }
+        internal LLVMDIBuilderRef BuilderHandle { get; }
 
         // keeping this private for now as there doesn't seem to be a good reason to support
         // allowUnresolved == false
@@ -1310,9 +1343,10 @@ namespace Llvm.NET.DebugInfo
                 || location.InlinedAtScope.SubProgram.Describes( function );
         }
 
-        #pragma warning disable SA1124 // Do not use regions
+#pragma warning disable SA1124 // Do not use regions
         #region LibLLVM P/Invoke APIs
 
+        // ReSharper disable IdentifierTypo
         [DllImport( LibraryPath, CallingConvention = CallingConvention.Cdecl, BestFitMapping = false, ThrowOnUnmappableChar = true )]
         private static extern LLVMDIBuilderRef LLVMNewDIBuilder( LLVMModuleRef m, [MarshalAs( UnmanagedType.Bool )]bool allowUnresolved );
 
@@ -1328,7 +1362,7 @@ namespace Llvm.NET.DebugInfo
                                                                              , LLVMMetadataRef /*DIFile*/ fileRef
                                                                              , [MarshalAs( UnmanagedType.LPStr )] string Producer
                                                                              , IntPtr ProduceLen
-                                                                             , [MarshalAs(UnmanagedType.Bool)] bool Optimized
+                                                                             , [MarshalAs( UnmanagedType.Bool )] bool Optimized
                                                                              , [MarshalAs( UnmanagedType.LPStr )] string Flags
                                                                              , IntPtr FlagsLen
                                                                              , UInt32 RuntimeVersion
@@ -1424,22 +1458,16 @@ namespace Llvm.NET.DebugInfo
         private static extern LLVMMetadataRef LLVMDIBuilderCreateEnumeratorValue( LLVMDIBuilderRef D, [MarshalAs( UnmanagedType.LPStr )]string Name, Int64 Val );
 
         [DllImport( LibraryPath, CallingConvention = CallingConvention.Cdecl, BestFitMapping = false, ThrowOnUnmappableChar = true )]
-        private static extern LLVMDwarfTag LLVMDIDescriptorGetTag( LLVMMetadataRef descriptor );
-
-        [DllImport( LibraryPath, CallingConvention = CallingConvention.Cdecl, BestFitMapping = false, ThrowOnUnmappableChar = true )]
         private static extern LLVMMetadataRef LLVMDIBuilderCreateGlobalVariableExpression( LLVMDIBuilderRef Dref, LLVMMetadataRef Context, [MarshalAs( UnmanagedType.LPStr )] string Name, [MarshalAs( UnmanagedType.LPStr )] string LinkageName, LLVMMetadataRef File, UInt32 LineNo, LLVMMetadataRef Ty, [MarshalAs( UnmanagedType.Bool )]bool isLocalToUnit, LLVMMetadataRef expression, LLVMMetadataRef Decl, UInt32 AlignInBits );
 
         [DllImport( LibraryPath, CallingConvention = CallingConvention.Cdecl, BestFitMapping = false, ThrowOnUnmappableChar = true )]
         private static extern LLVMValueRef LLVMDIBuilderInsertDeclareBefore( LLVMDIBuilderRef Dref, LLVMValueRef Storage, LLVMMetadataRef VarInfo, LLVMMetadataRef Expr, LLVMMetadataRef Location, LLVMValueRef InsertBefore );
 
         [DllImport( LibraryPath, CallingConvention = CallingConvention.Cdecl, BestFitMapping = false, ThrowOnUnmappableChar = true )]
-        private static extern LLVMValueRef LLVMDIBuilderInsertValueBefore( LLVMDIBuilderRef Dref, /*llvm::Value **/LLVMValueRef Val, UInt64 Offset, /*DILocalVariable **/ LLVMMetadataRef VarInfo, /*DIExpression **/ LLVMMetadataRef Expr, /*const DILocation **/ LLVMMetadataRef DL, /*Instruction **/ LLVMValueRef InsertBefore );
-
-        [DllImport( LibraryPath, CallingConvention = CallingConvention.Cdecl, BestFitMapping = false, ThrowOnUnmappableChar = true )]
         private static extern LLVMMetadataRef LLVMDIBuilderCreateReplaceableCompositeType( LLVMDIBuilderRef Dref, UInt32 Tag, [MarshalAs( UnmanagedType.LPStr )] string Name, LLVMMetadataRef Scope, LLVMMetadataRef File, UInt32 Line, UInt32 RuntimeLang, UInt64 SizeInBits, UInt64 AlignInBits, UInt32 Flags );
 
         [DllImport( LibraryPath, CallingConvention = CallingConvention.Cdecl, BestFitMapping = false, ThrowOnUnmappableChar = true )]
         private static extern LLVMMetadataRef LLVMDIBuilderCreateNamespace( LLVMDIBuilderRef Dref, LLVMMetadataRef scope, [MarshalAs( UnmanagedType.LPStr )] string name, [MarshalAs( UnmanagedType.Bool )]bool exportSymbols );
-#endregion
+        #endregion
     }
 }

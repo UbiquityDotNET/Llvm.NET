@@ -4,6 +4,7 @@
 
 using System;
 using Llvm.NET.Native;
+using Llvm.NET.Properties;
 
 // Interface+internal type matches file name
 #pragma warning disable SA1649
@@ -31,7 +32,7 @@ namespace Llvm.NET.Types
         {
             if( NativeMethods.LLVMGetTypeKind( typeRef ) != LLVMTypeKind.LLVMPointerTypeKind )
             {
-                throw new ArgumentException( "Pointer type reference expected", nameof( typeRef ) );
+                throw new ArgumentException( Resources.Pointer_type_reference_expected, nameof( typeRef ) );
             }
         }
     }

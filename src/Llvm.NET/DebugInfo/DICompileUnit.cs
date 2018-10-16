@@ -12,7 +12,7 @@ namespace Llvm.NET.DebugInfo
         : DIScope
     {
         /* TODO: non-operand properties
-        SourceLanguage SourcLanguage {get;}
+        SourceLanguage SourceLanguage {get;}
         bool IsOptimized {get;}
         uint RunTimeVersion {get;}
         ?? EmissionKind { get; }
@@ -34,7 +34,7 @@ namespace Llvm.NET.DebugInfo
         public DIScopeArray RetainedTypes => new DIScopeArray( GetOperand<MDTuple>( 5 ) );
 
         /// <summary>Gets the global variable expressions for this unit</summary>
-        public DIGlobalVariableExpressionArray GlovalVariables => new DIGlobalVariableExpressionArray( GetOperand<MDTuple>( 6 ) );
+        public DIGlobalVariableExpressionArray GlobalVariables => new DIGlobalVariableExpressionArray( GetOperand<MDTuple>( 6 ) );
 
         /// <summary>Gets the imported entities for this unit</summary>
         public DIImportedEntityArray ImportedEntities => new DIImportedEntityArray( GetOperand<MDTuple>( 7 ) );

@@ -6,6 +6,7 @@ using System;
 using System.Diagnostics.CodeAnalysis;
 using System.Runtime.InteropServices;
 using Llvm.NET.Native;
+using Llvm.NET.Properties;
 using Ubiquity.ArgValidators;
 
 using static Llvm.NET.Native.NativeMethods;
@@ -52,6 +53,37 @@ namespace Llvm.NET
             return retVal;
         }
 
+        /// <summary>Create a <see cref="System.ReadOnlySpan{T}"/> for a slice of the buffer</summary>
+        /// <param name="start">Starting index for the slice [default = 0]</param>
+        /// <param name="length">Length of the slice or -1 to include up to the end of the buffer [default = -1]</param>
+        /// <returns>New Span</returns>
+        /// <remarks>Creates an efficient means of accessing the raw data of a buffer</remarks>
+        public ReadOnlySpan<byte> Slice( int start = 0, int length = -1 )
+        {
+            if( length == -1 )
+            {
+                length = Size - start;
+            }
+
+            start.ValidateRange( 0, Size - 1, nameof( start ) );
+            length.ValidateRange( 0, Size, nameof( length ) );
+
+            if( (start + length) > Size )
+            {
+                throw new ArgumentException( Resources.start_plus_length_exceeds_size_of_buffer );
+            }
+
+            unsafe
+            {
+                void* startSlice = ( LLVMGetBufferStart( BufferHandle ) + start ).ToPointer( );
+                return new ReadOnlySpan<byte>( startSlice, length );
+            }
+        }
+
+        /// <summary>Implicit cast operator for getting a <see cref="ReadOnlySpan{T}"/> from the buffer</summary>
+        /// <param name="buffer">Buffer to get the span for</param>
+        public static implicit operator ReadOnlySpan<byte>( MemoryBuffer buffer ) => buffer.Slice( );
+
         internal MemoryBuffer( LLVMMemoryBufferRef bufferHandle )
         {
             bufferHandle.ValidateNotDefault( nameof( bufferHandle ) );
@@ -75,9 +107,10 @@ namespace Llvm.NET
                                                                                  , out LLVMMemoryBufferRef OutMemBuf
                                                                                  , [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( StringMarshaler ), MarshalCookie = "DisposeMessage" )]out string OutMessage
                                                                                  );
-
+        /*
         [DllImport( LibraryPath, CallingConvention = CallingConvention.Cdecl )]
         private static extern LLVMStatus LLVMCreateMemoryBufferWithSTDIN( out LLVMMemoryBufferRef OutMemBuf, out IntPtr OutMessage );
+
 
         [DllImport( LibraryPath, CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi, ThrowOnUnmappableChar = true, BestFitMapping = false )]
         private static extern LLVMMemoryBufferRef LLVMCreateMemoryBufferWithMemoryRange( [MarshalAs( UnmanagedType.LPStr )] string InputData
@@ -91,6 +124,7 @@ namespace Llvm.NET
                                                                                            , size_t InputDataLength
                                                                                            , [MarshalAs( UnmanagedType.LPStr )] string BufferName
                                                                                            );
+        */
 
         [DllImport( LibraryPath, CallingConvention = CallingConvention.Cdecl )]
         private static extern IntPtr LLVMGetBufferStart( LLVMMemoryBufferRef MemBuf );

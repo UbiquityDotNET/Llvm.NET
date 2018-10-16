@@ -122,7 +122,7 @@ namespace Kaleidoscope.Grammar
 
         internal bool IsPrefixOp( int tokenType )
         {
-            return UnaryOps.TryGetValue( tokenType, out var value );
+            return UnaryOps.TryGetValue( tokenType, out _ );
         }
 
         internal int GetPrecedence( int tokenType ) => GetBinOperatorInfo( tokenType ).Precedence;
@@ -158,9 +158,9 @@ namespace Kaleidoscope.Grammar
             }
         }
 
-        private OperatorInfoCollection UnaryOps = new OperatorInfoCollection( );
+        private readonly OperatorInfoCollection UnaryOps = new OperatorInfoCollection( );
 
-        private OperatorInfoCollection BinOpPrecedence = new OperatorInfoCollection
+        private readonly OperatorInfoCollection BinOpPrecedence = new OperatorInfoCollection
         {
             new OperatorInfo( LEFTANGLE, OperatorKind.InfixLeftAssociative, 10, true),
             new OperatorInfo( PLUS,      OperatorKind.InfixLeftAssociative, 20, true),
@@ -172,7 +172,7 @@ namespace Kaleidoscope.Grammar
         };
 
         // this is used only to get the token type map, which is provided via a virtual
-        private KaleidoscopeLexer Lexer = new KaleidoscopeLexer( null );
+        private readonly KaleidoscopeLexer Lexer = new KaleidoscopeLexer( null );
         private int AnonymousNameIndex;
     }
 }

@@ -124,7 +124,7 @@ namespace Llvm.NET
 
         private IEnumerable<GlobalObject> GetModuleGlobalObjects()
         {
-            foreach( var gv in Module.Globals.OfType<GlobalObject>( ) )
+            foreach( var gv in Module.Globals )
             {
                 yield return gv;
             }
@@ -155,8 +155,8 @@ namespace Llvm.NET
             return true;
         }
 
-        private BitcodeModule Module;
-        private Dictionary<string, Comdat> InternalComdatMap = new Dictionary<string, Comdat>( );
+        private readonly BitcodeModule Module;
+        private readonly Dictionary<string, Comdat> InternalComdatMap = new Dictionary<string, Comdat>( );
 
         [DllImport( NativeMethods.LibraryPath, CallingConvention = CallingConvention.Cdecl, BestFitMapping = false, ThrowOnUnmappableChar = true )]
         private static extern LLVMComdatRef LLVMModuleInsertOrUpdateComdat( LLVMModuleRef module, [MarshalAs( UnmanagedType.LPStr )] string name, LLVMComdatSelectionKind kind );

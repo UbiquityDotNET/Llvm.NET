@@ -34,7 +34,6 @@ namespace Kaleidoscope.Grammar
 
         public override void VisitTerminal( [NotNull] ITerminalNode node )
         {
-            string nodeName = KaleidoscopeLexer.DefaultVocabulary.GetDisplayName( node.Symbol.Type );
             ActiveNode.Add( new XElement( "Terminal", new XAttribute( "Value", node.GetText( ) ) ) );
         }
 
@@ -58,11 +57,9 @@ namespace Kaleidoscope.Grammar
             Pop( );
         }
 
-        private XElement Pop( )
+        private void Pop( )
         {
-            var retVal = ActiveNode;
             ActiveNode = ActiveNode?.Parent;
-            return retVal;
         }
 
         private void Push( XElement element )

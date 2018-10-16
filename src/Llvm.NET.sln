@@ -36,6 +36,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Chapter9", "..\Samples\Kale
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Repo Items", "Repo Items", "{BA4F7BCF-67BC-49E4-B2F9-DCED3D57619D}"
 	ProjectSection(SolutionItems) = preProject
+		..\.editorconfig = ..\.editorconfig
 		..\appveyor.yml = ..\appveyor.yml
 		..\BuildAll.ps1 = ..\BuildAll.ps1
 		..\buildutils.ps1 = ..\buildutils.ps1
@@ -46,6 +47,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Repo Items", "Repo Items", 
 		..\GOVERNANCE.md = ..\GOVERNANCE.md
 		..\Invoke-UnitTests.ps1 = ..\Invoke-UnitTests.ps1
 		..\LICENSE.md = ..\LICENSE.md
+		Llvm.NET.sln.DotSettings = Llvm.NET.sln.DotSettings
 		..\NuGet.Config = ..\NuGet.Config
 		..\Push-Docs.ps1 = ..\Push-Docs.ps1
 		..\README.md = ..\README.md

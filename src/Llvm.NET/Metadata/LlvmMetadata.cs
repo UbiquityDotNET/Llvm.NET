@@ -5,6 +5,7 @@
 using System;
 using Llvm.NET.DebugInfo;
 using Llvm.NET.Native;
+using Llvm.NET.Properties;
 
 // SA1515  Single-line comment should be preceded by blank line
 #pragma warning disable SA1515
@@ -31,7 +32,7 @@ namespace Llvm.NET
 
             if( MetadataHandle == default )
             {
-                throw new InvalidOperationException( "Cannot Replace all uses of a null descriptor" );
+                throw new InvalidOperationException( Resources.Cannot_Replace_all_uses_of_a_null_descriptor );
             }
 
             NativeMethods.LLVMMetadataReplaceAllUsesWith( MetadataHandle, other.MetadataHandle );

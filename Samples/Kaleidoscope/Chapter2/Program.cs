@@ -4,12 +4,11 @@
 
 using System;
 using System.Diagnostics.CodeAnalysis;
+using System.Reactive.Linq;
 using System.Reflection;
 using Kaleidoscope.Grammar;
+using Kaleidoscope.Grammar.AST;
 using Kaleidoscope.Runtime;
-
-[assembly: SuppressMessage( "StyleCop.CSharp.DocumentationRules", "SA1652:Enable XML documentation output", Justification = "Sample application" )]
-#pragma warning disable SA1512, SA1513, SA1515 // single line comments used to tag regions for extraction into docs
 
 namespace Kaleidoscope.Chapter2
 {
@@ -17,6 +16,7 @@ namespace Kaleidoscope.Chapter2
     {
         // Using language level that includes the complete set for exploration of pare trees and AST
         private const LanguageLevel LanguageFeatureLevel = LanguageLevel.MutableVariables;
+        private const DiagnosticRepresentations Diagnostics = DiagnosticRepresentations.Xml | DiagnosticRepresentations.Dgml | DiagnosticRepresentations.BlockDiag;
 
         /// <summary>C# version of the LLVM Kaleidoscope language tutorial</summary>
         /// <param name="args">Ignored...</param>
@@ -26,27 +26,44 @@ namespace Kaleidoscope.Chapter2
             string helloMsg = $"Llvm.NET Kaleidoscope Explorer - {LanguageFeatureLevel}";
             Console.Title = $"{Assembly.GetExecutingAssembly( ).GetName( )}: {helloMsg}";
             Console.WriteLine( helloMsg );
-            // <generatorloop>
+
+            #region GeneratorLoop
             var parser = new ParserStack( LanguageFeatureLevel );
-            var generator = new CodeGenerator( );
 
-            // generate hopefully helpful representations of parse trees
-            var replLoop = new ReplLoop<int>( generator
-                                            , parser
-                                            , DiagnosticRepresentations.Xml | DiagnosticRepresentations.Dgml | DiagnosticRepresentations.BlockDiag
-                                            );
-            replLoop.ReadyStateChanged += ( s, e ) => Console.Write( e.PartialParse ? ">" : "Ready>" );
-            replLoop.GeneratedResultAvailable += OnGeneratedResultAvailable;
+            // Create Observable chain to parse input lines from console into AST Nodes
+            var replSeq = parser.Parse( Console.In.ToObservableStatements( ShowPrompt ), ShowCodeGenError );
 
-            replLoop.Run( );
-            // </generatorloop>
+            // Subscribe to the sequence the sequence
+            using( replSeq.Subscribe( ShowResults ) )
+            {
+            }
+
+            Console.WriteLine( "Bye!" );
+            #endregion
         }
 
-        // <ProcessResults>
-        private static void OnGeneratedResultAvailable( object sender, GeneratedResultAvailableArgs<int> e )
+        #region ShowPrompt
+        private static void ShowPrompt(ReadyState state)
         {
-            Console.WriteLine( "Parsed {0}", e.Result.GetType( ).Name );
+            Console.Write( state == ReadyState.StartExpression ? "Ready>" : ">" );
         }
-        // </ProcessResults>
+        #endregion
+
+        #region Error Handling
+        private static void ShowCodeGenError( CodeGeneratorException ex )
+        {
+            var color = Console.ForegroundColor;
+            Console.ForegroundColor = ConsoleColor.Red;
+            Console.Error.WriteLine( ex.Message );
+            Console.ForegroundColor = color;
+        }
+        #endregion
+
+        #region ShowResults
+        private static void ShowResults( IAstNode node )
+        {
+            Console.WriteLine( "Parsed {0}", node.GetType( ).Name );
+        }
+        #endregion
     }
 }

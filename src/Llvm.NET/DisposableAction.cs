@@ -3,6 +3,7 @@
 // </copyright>
 
 using System;
+using System.Threading;
 
 namespace Llvm.NET
 {
@@ -22,15 +23,15 @@ namespace Llvm.NET
             OnDispose = onDispose ?? throw new ArgumentNullException( nameof( onDispose ) );
         }
 
-        /// <summary>Runs the action provided in the constructor (<see cref="DisposableAction(Action)"/></summary>
+        /// <summary>Runs the action provided in the constructor (<see cref="M:Llvm.NET.DisposableAction.#ctor(System.Action)" /></summary>
         public void Dispose( )
         {
-            OnDispose( );
+            Interlocked.Exchange( ref OnDispose, null )?.Invoke( );
         }
 
         /// <summary>Gets a Default disposable action that does nothing</summary>
         public static DisposableAction Nop => new DisposableAction( ()=> { } );
 
-        private readonly Action OnDispose;
+        private Action OnDispose;
     }
 }

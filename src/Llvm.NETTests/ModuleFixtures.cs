@@ -13,18 +13,18 @@ namespace Llvm.NETTests
 {
     // Provides common location for one time initialization for all tests in this assembly
     [TestClass]
-    public static class AssemblyInitialize
+    public static class ModuleFixtures
     {
         [AssemblyInitialize]
         [SuppressMessage( "Redundancies in Symbol Declarations", "RECS0154:Parameter is never used", Justification = "Not needed and signature is defined by test framework" )]
-        public static void InitializeAssembly(TestContext ctx)
+        public static void AssemblyInitialize( TestContext ctx)
         {
             LlvmInit = StaticState.InitializeLLVM( );
             StaticState.RegisterAll( );
         }
 
         [AssemblyCleanup]
-        public static void UninitializeAssembly( ) => LlvmInit.Dispose( );
+        public static void AssemblyCleanup( ) => LlvmInit.Dispose( );
 
         private static IDisposable LlvmInit;
     }

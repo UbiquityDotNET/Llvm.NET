@@ -93,7 +93,7 @@ namespace Llvm.NET.Tests
         public void ConstructorTestWithNameAndCompileUnit( )
         {
             using( var ctx = new Context( ) )
-            using( var module = ctx.CreateBitcodeModule( TestModuleName, SourceLanguage.C99, "test.c", "unitTest", false, string.Empty, 0 ) )
+            using( var module = ctx.CreateBitcodeModule( TestModuleName, SourceLanguage.C99, "test.c", "unitTest", false, string.Empty ) )
             {
                 Assert.AreEqual( TestModuleName, module.Name );
                 Assert.AreEqual( "test.c", module.SourceFileName );
@@ -119,7 +119,7 @@ namespace Llvm.NET.Tests
         public void DisposeTest( )
         {
             using( var context = new Context( ) )
-            using( var module = context.CreateBitcodeModule( TestModuleName ) )
+            using( context.CreateBitcodeModule( TestModuleName ) )
             {
             }
         }
@@ -260,7 +260,7 @@ namespace Llvm.NET.Tests
                 using( var context = new Context( ) )
                 using( var module = context.CreateBitcodeModule( TestModuleName ) )
                 {
-                    Function testFunc = CreateSimpleVoidNopTestFunction( module, "foo" );
+                    /*Function testFunc =*/ CreateSimpleVoidNopTestFunction( module, "foo" );
                     module.WriteToFile( path );
                 }
 
@@ -346,7 +346,7 @@ namespace Llvm.NET.Tests
             {
                 // unnamed global
                 module.AddGlobal( module.Context.Int32Type, true, Linkage.WeakODR, module.Context.CreateConstant( 0x12345678 ) );
-                var globalVar = module.Globals.First( ) as GlobalVariable;
+                var globalVar = module.Globals.First( );
                 Assert.IsNotNull( globalVar );
                 Assert.IsTrue( string.IsNullOrWhiteSpace( globalVar.Name ) );
                 Assert.AreSame( module.Context.Int32Type.CreatePointerType( ), globalVar.NativeType );

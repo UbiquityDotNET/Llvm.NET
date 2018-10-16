@@ -72,7 +72,7 @@ namespace Llvm.NET.Values
     }
 
     // TODO: auto enforce default visibility in Linkage setter(s)
-    // TODO: verify default viability in global value factory methods
+    // TODO: verify default visibility in global value factory methods
 
     /// <summary>Enumeration for the visibility of a global value</summary>
     /// <remarks>

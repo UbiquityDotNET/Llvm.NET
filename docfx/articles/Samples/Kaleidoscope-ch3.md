@@ -46,26 +46,31 @@ generation loop. Subsequent, chapters will focus on additional functionality inc
 Debugging information, and Native Module generation.
 
 [!code-csharp[Main](../../../Samples/Kaleidoscope/Chapter3/Program.cs#generatorloop)]
+This adds the `GenerateResults` operator to the sequence from Chapter 2 to generate the LLVM IR.
 
-### Processing output for results
-As the REPL loop recognizes the input and generates output it notifies the application of the output so
-that the application can use the results. (Typically by showing the results to the user in some fashion).
-In Chapter2 this was used to generate representations of the raw parse tree to aid in comprehending the
-language. For this chapter it is used to print information about what was generated from the input to the
-parser.
+#### GenerateResults Rx.NET operator
+The GenerateResults operator is responsible for transforming the input sequence of AST nodes into a
+sequence of Llvm.NET.Values. The implementation of the operator is common to all result types and is
+provided in the Kaleidoscope.Runtime assembly.
 
-[!code-csharp[ResultProcessing](../../../Samples/Kaleidoscope/Chapter3/Program.cs#ResultProcessing)]
+[!code-csharp[GenerateResults](../../../Samples/Kaleidoscope/Kaleidoscope.Runtime/ObservableExtensions.cs#GenerateResults)]
 
 ### Handling errors in code generation
 In many cases successfully parsing the input code isn't sufficient to determine correctness of the code in
 a given context. In particular attempting to re-define a function already defined in the current module is
 a problem. (Later, chapters deal with re-definition by using a new module for each function, but that is
 more a side-effect of working with the JIT) To handle error in the generation the REPL loop will catch any
-CodeGenerationException and raise the CodeGenerationError event to notify the application. The application
-handles this by indicating the error to the user. This allows the application to continue processing input
+CodeGenerationException and call the error handler callback provided by the application. The application
+handles the error by indicating the error to the user. This allows the application to continue processing input
 while still informing the user that what they tried to do didn't work.
 
-[!code-csharp[ResultProcessing](../../../Samples/Kaleidoscope/Chapter3/Program.cs#ErrorHandling)]
+[!code-csharp[ErrorHandling](../../../Samples/Kaleidoscope/Chapter3/Program.cs#ErrorHandling)]
+
+### Results processing
+Processing the results for this chapter, is pretty simple, it just prints out a textual form of the 
+generated LLVM IR.
+
+[!code-csharp[ShowResults](../../../Samples/Kaleidoscope/Chapter3/Program.cs#ShowResults)]
 
 ## Code generation
 

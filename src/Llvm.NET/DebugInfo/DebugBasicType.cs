@@ -3,6 +3,7 @@
 // </copyright>
 
 using System;
+using Llvm.NET.Properties;
 using Llvm.NET.Types;
 using Ubiquity.ArgValidators;
 
@@ -36,7 +37,7 @@ namespace Llvm.NET.DebugInfo
 
             if( module.Layout == null )
             {
-                throw new ArgumentException( "Module needs Layout to build basic types", nameof( module ) );
+                throw new ArgumentException( Resources.Module_needs_Layout_to_build_basic_types, nameof( module ) );
             }
 
             switch( llvmType.Kind )
@@ -52,7 +53,7 @@ namespace Llvm.NET.DebugInfo
                 break;
 
             default:
-                throw new ArgumentException( "Expected a primitive type", nameof( llvmType ) );
+                throw new ArgumentException( Resources.Expected_a_primitive_type, nameof( llvmType ) );
             }
 
             NativeType = llvmType;

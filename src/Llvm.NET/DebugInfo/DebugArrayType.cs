@@ -3,6 +3,7 @@
 // </copyright>
 
 using System;
+using Llvm.NET.Properties;
 using Llvm.NET.Types;
 using Ubiquity.ArgValidators;
 
@@ -35,7 +36,7 @@ namespace Llvm.NET.DebugInfo
 
             if( llvmType.ElementType.GetTypeRef() != elementType.GetTypeRef() )
             {
-                throw new ArgumentException( "elementType doesn't match array element type" );
+                throw new ArgumentException( Resources.ElementType_doesn_t_match_array_element_type );
             }
 
             DIType = CreateDebugInfoForArray( llvmType, elementType, module, count, lowerBound, alignment );
@@ -78,7 +79,7 @@ namespace Llvm.NET.DebugInfo
         public uint Length => NativeType.Length;
 
         /// <summary>Gets the lower bound of the array - usually, but not always, zero</summary>
-        public uint LowerBound { get; }
+        public uint LowerBound { get; } /*=> DIType.GetOperand<DISubRange>( 0 ).LowerBound;*/
 
         /// <summary>Resolves a temporary metadata node for the array if full size information wasn't available at creation time</summary>
         /// <param name="layout">Type layout information</param>

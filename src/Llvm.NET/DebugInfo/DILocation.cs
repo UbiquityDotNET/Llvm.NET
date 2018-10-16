@@ -71,6 +71,7 @@ namespace Llvm.NET.DebugInfo
         {
         }
 
+        // ReSharper disable IdentifierTypo
         [DllImport( NativeMethods.LibraryPath, CallingConvention = CallingConvention.Cdecl, BestFitMapping = false, ThrowOnUnmappableChar = true )]
         private static extern LLVMMetadataRef /*DILocalScope*/ LLVMGetDILocationScope( LLVMMetadataRef /*DILocation*/ location );
 

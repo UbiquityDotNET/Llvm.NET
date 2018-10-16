@@ -17,8 +17,6 @@ using Llvm.NET.Values;
 
 using ConstantExpression = Kaleidoscope.Grammar.AST.ConstantExpression;
 
-#pragma warning disable SA1512, SA1513, SA1515 // single line comments used to tag regions for extraction into docs
-
 namespace Kaleidoscope.Chapter4
 {
     /// <summary>Performs LLVM IR Code generation from the Kaleidoscope AST</summary>
@@ -27,7 +25,7 @@ namespace Kaleidoscope.Chapter4
         , IDisposable
         , IKaleidoscopeCodeGenerator<Value>
     {
-        // <Initialization>
+        #region Initialization
         public CodeGenerator( DynamicRuntimeState globalState, bool disableOptimization = false )
             : base( null )
         {
@@ -42,7 +40,7 @@ namespace Kaleidoscope.Chapter4
             InitializeModuleAndPassManager( );
             InstructionBuilder = new InstructionBuilder( Context );
         }
-        // </Initialization>
+        #endregion
 
         public void Dispose( )
         {
@@ -50,53 +48,61 @@ namespace Kaleidoscope.Chapter4
             Context.Dispose( );
         }
 
-        // <Generate>
-        public Value Generate( IAstNode ast )
+        #region Generate
+        public Value Generate( IAstNode ast, Action<CodeGeneratorException> errorHandler )
         {
-            // Prototypes, including extern are ignored as AST generation
-            // adds them to the RuntimeState so that already has the declarations
-            if( !( ast is FunctionDefinition definition ) )
+            try
             {
+                // Prototypes, including extern are ignored as AST generation
+                // adds them to the RuntimeState so that already has the declarations
+                if( !( ast is FunctionDefinition definition ) )
+                {
+                    return null;
+                }
+
+                InitializeModuleAndPassManager( );
+
+                // Destroy any previously generated module for this function.
+                // This allows re-definition as the new module will provide the
+                // implementation. This is needed, otherwise both the MCJIT
+                // and OrcJit engines will resolve to the original module, despite
+                // claims to the contrary in the official tutorial text. (Though,
+                // to be fair it may have been true in the original JIT and might
+                // still be true for the interpreter)
+                if( FunctionModuleMap.Remove( definition.Name, out IJitModuleHandle handle ) )
+                {
+                    JIT.RemoveModule( handle );
+                }
+
+                var function = ( Function )definition.Accept( this );
+                var jitHandle = JIT.AddModule( function.ParentModule );
+                if( definition.IsAnonymous )
+                {
+                    var nativeFunc = JIT.GetFunctionDelegate<AnonExpressionFunc>( function.Name );
+                    var retVal = Context.CreateConstant( nativeFunc( ) );
+                    JIT.RemoveModule( jitHandle );
+                    return retVal;
+                }
+
+                FunctionModuleMap.Add( function.Name, jitHandle );
+                return function;
+            }
+            catch( CodeGeneratorException ex ) when( errorHandler != null )
+            {
+                errorHandler( ex );
                 return null;
             }
-
-            InitializeModuleAndPassManager( );
-
-            // Destroy any previously generated module for this function.
-            // This allows re-definition as the new module will provide the
-            // implementation. This is needed, otherwise both the MCJIT
-            // and OrcJit engines will resolve to the original module, despite
-            // claims to the contrary in the official tutorial text. (Though,
-            // to be fair it may have been true in the original JIT and might
-            // still be true for the interpreter)
-            if( FunctionModuleMap.Remove( definition.Name, out IJitModuleHandle handle ) )
-            {
-                JIT.RemoveModule( handle );
-            }
-
-            var function = (Function)ast.Accept( this );
-            var jitHandle = JIT.AddModule( function.ParentModule );
-            if( definition.IsAnonymous )
-            {
-                var nativeFunc = JIT.GetFunctionDelegate<AnonExpressionFunc>( function.Name );
-                var retVal = Context.CreateConstant( nativeFunc( ) );
-                JIT.RemoveModule( jitHandle );
-                return retVal;
-            }
-
-            FunctionModuleMap.Add( function.Name, jitHandle );
-            return function;
         }
-        // </Generate>
+        #endregion
 
-        // <ConstantExpression>
+        #region ConstantExpression
         public override Value Visit( ConstantExpression constant )
         {
             return Context.CreateConstant( constant.Value );
         }
-        // </ConstantExpression>
+        #endregion
 
-        // <BinaryOperatorExpression>
+        #region BinaryOperatorExpression
         public override Value Visit( BinaryOperatorExpression binaryOperator )
         {
             switch( binaryOperator.Op )
@@ -132,13 +138,14 @@ namespace Kaleidoscope.Chapter4
                 throw new CodeGeneratorException( $"ICE: Invalid binary operator {binaryOperator.Op}" );
             }
         }
-        // </BinaryOperatorExpression>
+        #endregion
 
-        // <FunctionCallExpression>
+        #region FunctionCallExpression
         public override Value Visit( FunctionCallExpression functionCall )
         {
             string targetName = functionCall.FunctionPrototype.Name;
             Function function;
+
             // try for an extern function declaration
             if( RuntimeState.FunctionDeclarations.TryGetValue( targetName, out Prototype target ) )
             {
@@ -152,9 +159,9 @@ namespace Kaleidoscope.Chapter4
             var args = functionCall.Arguments.Select( ctx => ctx.Accept( this ) ).ToArray( );
             return InstructionBuilder.Call( function, args ).RegisterName( "calltmp" );
         }
-        // </FunctionCallExpression>
+        #endregion
 
-        // <FunctionDefinition>
+        #region FunctionDefinition
         public override Value Visit( FunctionDefinition definition )
         {
             var function = GetOrDeclareFunction( definition.Signature );
@@ -186,9 +193,9 @@ namespace Kaleidoscope.Chapter4
                 throw;
             }
         }
-        // </FunctionDefinition>
+        #endregion
 
-        // <VariableReferenceExpression>
+        #region VariableReferenceExpression
         public override Value Visit( VariableReferenceExpression reference )
         {
             if( !NamedValues.TryGetValue( reference.Name, out Value value ) )
@@ -201,9 +208,9 @@ namespace Kaleidoscope.Chapter4
 
             return value;
         }
-        // </VariableReferenceExpression>
+        #endregion
 
-        // <InitializeModuleAndPassManager>
+        #region InitializeModuleAndPassManager
         private void InitializeModuleAndPassManager( )
         {
             Module = Context.CreateBitcodeModule( );
@@ -220,9 +227,10 @@ namespace Kaleidoscope.Chapter4
 
             FunctionPassManager.Initialize( );
         }
-        // </InitializeModuleAndPassManager>
+        #endregion
 
-        // <GetOrDeclareFunction>
+        #region GetOrDeclareFunction
+
         // Retrieves a Function" for a prototype from the current module if it exists,
         // otherwise declares the function and returns the newly declared function.
         private Function GetOrDeclareFunction( Prototype prototype )
@@ -245,9 +253,9 @@ namespace Kaleidoscope.Chapter4
 
             return retVal;
         }
-        // </GetOrDeclareFunction>
+        #endregion
 
-        // <PrivateMembers>
+        #region PrivateMembers
         private readonly DynamicRuntimeState RuntimeState;
         private readonly Context Context;
         private readonly InstructionBuilder InstructionBuilder;
@@ -262,6 +270,6 @@ namespace Kaleidoscope.Chapter4
         /// <returns>Result of evaluating the expression</returns>
         [UnmanagedFunctionPointer( System.Runtime.InteropServices.CallingConvention.Cdecl )]
         private delegate double AnonExpressionFunc( );
-        // </PrivateMembers>
+        #endregion
     }
 }
