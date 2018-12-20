@@ -1745,18 +1745,18 @@ references:
   commentId: Overload:Llvm.NET.DataLayout.PreferredAlignmentOf
   fullName: Llvm.NET.DataLayout.PreferredAlignmentOf
   nameWithType: DataLayout.PreferredAlignmentOf
-- uid: Llvm.NET.DataLayout.PreferredBitAlignementOf(Llvm.NET.Types.ITypeRef)
-  name: PreferredBitAlignementOf(ITypeRef)
-  href: api/Llvm.NET.DataLayout.PreferredBitAlignementOf.html#Llvm_NET_DataLayout_PreferredBitAlignementOf_Llvm_NET_Types_ITypeRef_
-  commentId: M:Llvm.NET.DataLayout.PreferredBitAlignementOf(Llvm.NET.Types.ITypeRef)
-  fullName: Llvm.NET.DataLayout.PreferredBitAlignementOf(Llvm.NET.Types.ITypeRef)
-  nameWithType: DataLayout.PreferredBitAlignementOf(ITypeRef)
-- uid: Llvm.NET.DataLayout.PreferredBitAlignementOf*
-  name: PreferredBitAlignementOf
-  href: api/Llvm.NET.DataLayout.PreferredBitAlignementOf.html
-  commentId: Overload:Llvm.NET.DataLayout.PreferredBitAlignementOf
-  fullName: Llvm.NET.DataLayout.PreferredBitAlignementOf
-  nameWithType: DataLayout.PreferredBitAlignementOf
+- uid: Llvm.NET.DataLayout.PreferredBitAlignmentOf(Llvm.NET.Types.ITypeRef)
+  name: PreferredBitAlignmentOf(ITypeRef)
+  href: api/Llvm.NET.DataLayout.PreferredBitAlignmentOf.html#Llvm_NET_DataLayout_PreferredBitAlignmentOf_Llvm_NET_Types_ITypeRef_
+  commentId: M:Llvm.NET.DataLayout.PreferredBitAlignmentOf(Llvm.NET.Types.ITypeRef)
+  fullName: Llvm.NET.DataLayout.PreferredBitAlignmentOf(Llvm.NET.Types.ITypeRef)
+  nameWithType: DataLayout.PreferredBitAlignmentOf(ITypeRef)
+- uid: Llvm.NET.DataLayout.PreferredBitAlignmentOf*
+  name: PreferredBitAlignmentOf
+  href: api/Llvm.NET.DataLayout.PreferredBitAlignmentOf.html
+  commentId: Overload:Llvm.NET.DataLayout.PreferredBitAlignmentOf
+  fullName: Llvm.NET.DataLayout.PreferredBitAlignmentOf
+  nameWithType: DataLayout.PreferredBitAlignmentOf
 - uid: Llvm.NET.DataLayout.StoreSizeOf(Llvm.NET.Types.ITypeRef)
   name: StoreSizeOf(ITypeRef)
   href: api/Llvm.NET.DataLayout.StoreSizeOf.html#Llvm_NET_DataLayout_StoreSizeOf_Llvm_NET_Types_ITypeRef_
@@ -2351,6 +2351,27 @@ references:
   commentId: Overload:Llvm.NET.DebugInfo.DebugInfoBuilder.CreateUnionType
   fullName: Llvm.NET.DebugInfo.DebugInfoBuilder.CreateUnionType
   nameWithType: DebugInfoBuilder.CreateUnionType
+- uid: Llvm.NET.DebugInfo.DebugInfoBuilder.CreateVectorType(System.UInt64,System.UInt32,Llvm.NET.DebugInfo.DIType,Llvm.NET.DebugInfo.DINode[])
+  name: CreateVectorType(UInt64, UInt32, DIType, DINode[])
+  href: api/Llvm.NET.DebugInfo.DebugInfoBuilder.CreateVectorType.html#Llvm_NET_DebugInfo_DebugInfoBuilder_CreateVectorType_System_UInt64_System_UInt32_Llvm_NET_DebugInfo_DIType_Llvm_NET_DebugInfo_DINode___
+  commentId: M:Llvm.NET.DebugInfo.DebugInfoBuilder.CreateVectorType(System.UInt64,System.UInt32,Llvm.NET.DebugInfo.DIType,Llvm.NET.DebugInfo.DINode[])
+  name.vb: CreateVectorType(UInt64, UInt32, DIType, DINode())
+  fullName: Llvm.NET.DebugInfo.DebugInfoBuilder.CreateVectorType(System.UInt64, System.UInt32, Llvm.NET.DebugInfo.DIType, Llvm.NET.DebugInfo.DINode[])
+  fullName.vb: Llvm.NET.DebugInfo.DebugInfoBuilder.CreateVectorType(System.UInt64, System.UInt32, Llvm.NET.DebugInfo.DIType, Llvm.NET.DebugInfo.DINode())
+  nameWithType: DebugInfoBuilder.CreateVectorType(UInt64, UInt32, DIType, DINode[])
+  nameWithType.vb: DebugInfoBuilder.CreateVectorType(UInt64, UInt32, DIType, DINode())
+- uid: Llvm.NET.DebugInfo.DebugInfoBuilder.CreateVectorType(System.UInt64,System.UInt32,Llvm.NET.DebugInfo.DIType,Llvm.NET.DebugInfo.DINodeArray)
+  name: CreateVectorType(UInt64, UInt32, DIType, DINodeArray)
+  href: api/Llvm.NET.DebugInfo.DebugInfoBuilder.CreateVectorType.html#Llvm_NET_DebugInfo_DebugInfoBuilder_CreateVectorType_System_UInt64_System_UInt32_Llvm_NET_DebugInfo_DIType_Llvm_NET_DebugInfo_DINodeArray_
+  commentId: M:Llvm.NET.DebugInfo.DebugInfoBuilder.CreateVectorType(System.UInt64,System.UInt32,Llvm.NET.DebugInfo.DIType,Llvm.NET.DebugInfo.DINodeArray)
+  fullName: Llvm.NET.DebugInfo.DebugInfoBuilder.CreateVectorType(System.UInt64, System.UInt32, Llvm.NET.DebugInfo.DIType, Llvm.NET.DebugInfo.DINodeArray)
+  nameWithType: DebugInfoBuilder.CreateVectorType(UInt64, UInt32, DIType, DINodeArray)
+- uid: Llvm.NET.DebugInfo.DebugInfoBuilder.CreateVectorType*
+  name: CreateVectorType
+  href: api/Llvm.NET.DebugInfo.DebugInfoBuilder.CreateVectorType.html
+  commentId: Overload:Llvm.NET.DebugInfo.DebugInfoBuilder.CreateVectorType
+  fullName: Llvm.NET.DebugInfo.DebugInfoBuilder.CreateVectorType
+  nameWithType: DebugInfoBuilder.CreateVectorType
 - uid: Llvm.NET.DebugInfo.DebugInfoBuilder.Finish
   name: Finish()
   href: api/Llvm.NET.DebugInfo.DebugInfoBuilder.Finish.html#Llvm_NET_DebugInfo_DebugInfoBuilder_Finish
@@ -3554,18 +3575,18 @@ references:
   commentId: Overload:Llvm.NET.DebugInfo.DICompileUnit.Flags
   fullName: Llvm.NET.DebugInfo.DICompileUnit.Flags
   nameWithType: DICompileUnit.Flags
-- uid: Llvm.NET.DebugInfo.DICompileUnit.GlovalVariables
-  name: GlovalVariables
-  href: api/Llvm.NET.DebugInfo.DICompileUnit.GlovalVariables.html#Llvm_NET_DebugInfo_DICompileUnit_GlovalVariables
-  commentId: P:Llvm.NET.DebugInfo.DICompileUnit.GlovalVariables
-  fullName: Llvm.NET.DebugInfo.DICompileUnit.GlovalVariables
-  nameWithType: DICompileUnit.GlovalVariables
-- uid: Llvm.NET.DebugInfo.DICompileUnit.GlovalVariables*
-  name: GlovalVariables
-  href: api/Llvm.NET.DebugInfo.DICompileUnit.GlovalVariables.html
-  commentId: Overload:Llvm.NET.DebugInfo.DICompileUnit.GlovalVariables
-  fullName: Llvm.NET.DebugInfo.DICompileUnit.GlovalVariables
-  nameWithType: DICompileUnit.GlovalVariables
+- uid: Llvm.NET.DebugInfo.DICompileUnit.GlobalVariables
+  name: GlobalVariables
+  href: api/Llvm.NET.DebugInfo.DICompileUnit.GlobalVariables.html#Llvm_NET_DebugInfo_DICompileUnit_GlobalVariables
+  commentId: P:Llvm.NET.DebugInfo.DICompileUnit.GlobalVariables
+  fullName: Llvm.NET.DebugInfo.DICompileUnit.GlobalVariables
+  nameWithType: DICompileUnit.GlobalVariables
+- uid: Llvm.NET.DebugInfo.DICompileUnit.GlobalVariables*
+  name: GlobalVariables
+  href: api/Llvm.NET.DebugInfo.DICompileUnit.GlobalVariables.html
+  commentId: Overload:Llvm.NET.DebugInfo.DICompileUnit.GlobalVariables
+  fullName: Llvm.NET.DebugInfo.DICompileUnit.GlobalVariables
+  nameWithType: DICompileUnit.GlobalVariables
 - uid: Llvm.NET.DebugInfo.DICompileUnit.ImportedEntities
   name: ImportedEntities
   href: api/Llvm.NET.DebugInfo.DICompileUnit.ImportedEntities.html#Llvm_NET_DebugInfo_DICompileUnit_ImportedEntities
@@ -4556,18 +4577,6 @@ references:
   commentId: Overload:Llvm.NET.DebugInfo.DISubProgram.Name
   fullName: Llvm.NET.DebugInfo.DISubProgram.Name
   nameWithType: DISubProgram.Name
-- uid: Llvm.NET.DebugInfo.DISubProgram.Scope
-  name: Scope
-  href: api/Llvm.NET.DebugInfo.DISubProgram.Scope.html#Llvm_NET_DebugInfo_DISubProgram_Scope
-  commentId: P:Llvm.NET.DebugInfo.DISubProgram.Scope
-  fullName: Llvm.NET.DebugInfo.DISubProgram.Scope
-  nameWithType: DISubProgram.Scope
-- uid: Llvm.NET.DebugInfo.DISubProgram.Scope*
-  name: Scope
-  href: api/Llvm.NET.DebugInfo.DISubProgram.Scope.html
-  commentId: Overload:Llvm.NET.DebugInfo.DISubProgram.Scope
-  fullName: Llvm.NET.DebugInfo.DISubProgram.Scope
-  nameWithType: DISubProgram.Scope
 - uid: Llvm.NET.DebugInfo.DISubProgram.Signature
   name: Signature
   href: api/Llvm.NET.DebugInfo.DISubProgram.Signature.html#Llvm_NET_DebugInfo_DISubProgram_Signature
@@ -10655,6 +10664,24 @@ references:
   commentId: Overload:Llvm.NET.MemoryBuffer.#ctor
   fullName: Llvm.NET.MemoryBuffer.MemoryBuffer
   nameWithType: MemoryBuffer.MemoryBuffer
+- uid: Llvm.NET.MemoryBuffer.op_Implicit(Llvm.NET.MemoryBuffer)~System.ReadOnlySpan{System.Byte}
+  name: Implicit(MemoryBuffer to ReadOnlySpan<Byte>)
+  href: api/Llvm.NET.MemoryBuffer.op_Implicit.html#Llvm_NET_MemoryBuffer_op_Implicit_Llvm_NET_MemoryBuffer__System_ReadOnlySpan_System_Byte_
+  commentId: M:Llvm.NET.MemoryBuffer.op_Implicit(Llvm.NET.MemoryBuffer)~System.ReadOnlySpan{System.Byte}
+  name.vb: Widening(MemoryBuffer to ReadOnlySpan(Of Byte))
+  fullName: Llvm.NET.MemoryBuffer.Implicit(Llvm.NET.MemoryBuffer to System.ReadOnlySpan<System.Byte>)
+  fullName.vb: Llvm.NET.MemoryBuffer.Widening(Llvm.NET.MemoryBuffer to System.ReadOnlySpan(Of System.Byte))
+  nameWithType: MemoryBuffer.Implicit(MemoryBuffer to ReadOnlySpan<Byte>)
+  nameWithType.vb: MemoryBuffer.Widening(MemoryBuffer to ReadOnlySpan(Of Byte))
+- uid: Llvm.NET.MemoryBuffer.op_Implicit*
+  name: Implicit
+  href: api/Llvm.NET.MemoryBuffer.op_Implicit.html
+  commentId: Overload:Llvm.NET.MemoryBuffer.op_Implicit
+  name.vb: Widening
+  fullName: Llvm.NET.MemoryBuffer.Implicit
+  fullName.vb: Llvm.NET.MemoryBuffer.Widening
+  nameWithType: MemoryBuffer.Implicit
+  nameWithType.vb: MemoryBuffer.Widening
 - uid: Llvm.NET.MemoryBuffer.Size
   name: Size
   href: api/Llvm.NET.MemoryBuffer.Size.html#Llvm_NET_MemoryBuffer_Size
@@ -10667,6 +10694,18 @@ references:
   commentId: Overload:Llvm.NET.MemoryBuffer.Size
   fullName: Llvm.NET.MemoryBuffer.Size
   nameWithType: MemoryBuffer.Size
+- uid: Llvm.NET.MemoryBuffer.Slice(System.Int32,System.Int32)
+  name: Slice(Int32, Int32)
+  href: api/Llvm.NET.MemoryBuffer.Slice.html#Llvm_NET_MemoryBuffer_Slice_System_Int32_System_Int32_
+  commentId: M:Llvm.NET.MemoryBuffer.Slice(System.Int32,System.Int32)
+  fullName: Llvm.NET.MemoryBuffer.Slice(System.Int32, System.Int32)
+  nameWithType: MemoryBuffer.Slice(Int32, Int32)
+- uid: Llvm.NET.MemoryBuffer.Slice*
+  name: Slice
+  href: api/Llvm.NET.MemoryBuffer.Slice.html
+  commentId: Overload:Llvm.NET.MemoryBuffer.Slice
+  fullName: Llvm.NET.MemoryBuffer.Slice
+  nameWithType: MemoryBuffer.Slice
 - uid: Llvm.NET.MemoryBuffer.ToArray
   name: ToArray()
   href: api/Llvm.NET.MemoryBuffer.ToArray.html#Llvm_NET_MemoryBuffer_ToArray
@@ -10799,6 +10838,18 @@ references:
   commentId: T:Llvm.NET.NamedMDNode
   fullName: Llvm.NET.NamedMDNode
   nameWithType: NamedMDNode
+- uid: Llvm.NET.NamedMDNode.EraseFromParent
+  name: EraseFromParent()
+  href: api/Llvm.NET.NamedMDNode.EraseFromParent.html#Llvm_NET_NamedMDNode_EraseFromParent
+  commentId: M:Llvm.NET.NamedMDNode.EraseFromParent
+  fullName: Llvm.NET.NamedMDNode.EraseFromParent()
+  nameWithType: NamedMDNode.EraseFromParent()
+- uid: Llvm.NET.NamedMDNode.EraseFromParent*
+  name: EraseFromParent
+  href: api/Llvm.NET.NamedMDNode.EraseFromParent.html
+  commentId: Overload:Llvm.NET.NamedMDNode.EraseFromParent
+  fullName: Llvm.NET.NamedMDNode.EraseFromParent
+  nameWithType: NamedMDNode.EraseFromParent
 - uid: Llvm.NET.NamedMDNode.Name
   name: Name
   href: api/Llvm.NET.NamedMDNode.Name.html#Llvm_NET_NamedMDNode_Name
@@ -10883,36 +10934,36 @@ references:
   commentId: F:Llvm.NET.OptimizationSizeLevel.Oz
   fullName: Llvm.NET.OptimizationSizeLevel.Oz
   nameWithType: OptimizationSizeLevel.Oz
-- uid: Llvm.NET.Reloc
-  name: Reloc
-  href: api/Llvm.NET.Reloc.html
-  commentId: T:Llvm.NET.Reloc
-  fullName: Llvm.NET.Reloc
-  nameWithType: Reloc
-- uid: Llvm.NET.Reloc.Default
+- uid: Llvm.NET.RelocationMode
+  name: RelocationMode
+  href: api/Llvm.NET.RelocationMode.html
+  commentId: T:Llvm.NET.RelocationMode
+  fullName: Llvm.NET.RelocationMode
+  nameWithType: RelocationMode
+- uid: Llvm.NET.RelocationMode.Default
   name: Default
-  href: api/Llvm.NET.Reloc.html#Llvm_NET_Reloc_Default
-  commentId: F:Llvm.NET.Reloc.Default
-  fullName: Llvm.NET.Reloc.Default
-  nameWithType: Reloc.Default
-- uid: Llvm.NET.Reloc.Dynamic
+  href: api/Llvm.NET.RelocationMode.html#Llvm_NET_RelocationMode_Default
+  commentId: F:Llvm.NET.RelocationMode.Default
+  fullName: Llvm.NET.RelocationMode.Default
+  nameWithType: RelocationMode.Default
+- uid: Llvm.NET.RelocationMode.Dynamic
   name: Dynamic
-  href: api/Llvm.NET.Reloc.html#Llvm_NET_Reloc_Dynamic
-  commentId: F:Llvm.NET.Reloc.Dynamic
-  fullName: Llvm.NET.Reloc.Dynamic
-  nameWithType: Reloc.Dynamic
-- uid: Llvm.NET.Reloc.PositionIndependent
+  href: api/Llvm.NET.RelocationMode.html#Llvm_NET_RelocationMode_Dynamic
+  commentId: F:Llvm.NET.RelocationMode.Dynamic
+  fullName: Llvm.NET.RelocationMode.Dynamic
+  nameWithType: RelocationMode.Dynamic
+- uid: Llvm.NET.RelocationMode.PositionIndependent
   name: PositionIndependent
-  href: api/Llvm.NET.Reloc.html#Llvm_NET_Reloc_PositionIndependent
-  commentId: F:Llvm.NET.Reloc.PositionIndependent
-  fullName: Llvm.NET.Reloc.PositionIndependent
-  nameWithType: Reloc.PositionIndependent
-- uid: Llvm.NET.Reloc.Static
+  href: api/Llvm.NET.RelocationMode.html#Llvm_NET_RelocationMode_PositionIndependent
+  commentId: F:Llvm.NET.RelocationMode.PositionIndependent
+  fullName: Llvm.NET.RelocationMode.PositionIndependent
+  nameWithType: RelocationMode.PositionIndependent
+- uid: Llvm.NET.RelocationMode.Static
   name: Static
-  href: api/Llvm.NET.Reloc.html#Llvm_NET_Reloc_Static
-  commentId: F:Llvm.NET.Reloc.Static
-  fullName: Llvm.NET.Reloc.Static
-  nameWithType: Reloc.Static
+  href: api/Llvm.NET.RelocationMode.html#Llvm_NET_RelocationMode_Static
+  commentId: F:Llvm.NET.RelocationMode.Static
+  fullName: Llvm.NET.RelocationMode.Static
+  nameWithType: RelocationMode.Static
 - uid: Llvm.NET.ScopeStack`1
   name: ScopeStack<T>
   href: api/Llvm.NET.ScopeStack-1.html
@@ -10938,6 +10989,22 @@ references:
   fullName.vb: Llvm.NET.ScopeStack(Of T).ScopeStack
   nameWithType: ScopeStack<T>.ScopeStack
   nameWithType.vb: ScopeStack(Of T).ScopeStack
+- uid: Llvm.NET.ScopeStack`1.Depth
+  name: Depth
+  href: api/Llvm.NET.ScopeStack-1.Depth.html#Llvm_NET_ScopeStack_1_Depth
+  commentId: P:Llvm.NET.ScopeStack`1.Depth
+  fullName: Llvm.NET.ScopeStack<T>.Depth
+  fullName.vb: Llvm.NET.ScopeStack(Of T).Depth
+  nameWithType: ScopeStack<T>.Depth
+  nameWithType.vb: ScopeStack(Of T).Depth
+- uid: Llvm.NET.ScopeStack`1.Depth*
+  name: Depth
+  href: api/Llvm.NET.ScopeStack-1.Depth.html
+  commentId: Overload:Llvm.NET.ScopeStack`1.Depth
+  fullName: Llvm.NET.ScopeStack<T>.Depth
+  fullName.vb: Llvm.NET.ScopeStack(Of T).Depth
+  nameWithType: ScopeStack<T>.Depth
+  nameWithType.vb: ScopeStack(Of T).Depth
 - uid: Llvm.NET.ScopeStack`1.EnterScope
   name: EnterScope()
   href: api/Llvm.NET.ScopeStack-1.EnterScope.html#Llvm_NET_ScopeStack_1_EnterScope
@@ -11207,18 +11274,18 @@ references:
   commentId: Overload:Llvm.NET.Target.AvailableTargets
   fullName: Llvm.NET.Target.AvailableTargets
   nameWithType: Target.AvailableTargets
-- uid: Llvm.NET.Target.CreateTargetMachine(Llvm.NET.Triple,System.String,System.String,Llvm.NET.CodeGenOpt,Llvm.NET.Reloc,Llvm.NET.CodeModel)
-  name: CreateTargetMachine(Triple, String, String, CodeGenOpt, Reloc, CodeModel)
-  href: api/Llvm.NET.Target.CreateTargetMachine.html#Llvm_NET_Target_CreateTargetMachine_Llvm_NET_Triple_System_String_System_String_Llvm_NET_CodeGenOpt_Llvm_NET_Reloc_Llvm_NET_CodeModel_
-  commentId: M:Llvm.NET.Target.CreateTargetMachine(Llvm.NET.Triple,System.String,System.String,Llvm.NET.CodeGenOpt,Llvm.NET.Reloc,Llvm.NET.CodeModel)
-  fullName: Llvm.NET.Target.CreateTargetMachine(Llvm.NET.Triple, System.String, System.String, Llvm.NET.CodeGenOpt, Llvm.NET.Reloc, Llvm.NET.CodeModel)
-  nameWithType: Target.CreateTargetMachine(Triple, String, String, CodeGenOpt, Reloc, CodeModel)
-- uid: Llvm.NET.Target.CreateTargetMachine(System.String,System.String,System.String,Llvm.NET.CodeGenOpt,Llvm.NET.Reloc,Llvm.NET.CodeModel)
-  name: CreateTargetMachine(String, String, String, CodeGenOpt, Reloc, CodeModel)
-  href: api/Llvm.NET.Target.CreateTargetMachine.html#Llvm_NET_Target_CreateTargetMachine_System_String_System_String_System_String_Llvm_NET_CodeGenOpt_Llvm_NET_Reloc_Llvm_NET_CodeModel_
-  commentId: M:Llvm.NET.Target.CreateTargetMachine(System.String,System.String,System.String,Llvm.NET.CodeGenOpt,Llvm.NET.Reloc,Llvm.NET.CodeModel)
-  fullName: Llvm.NET.Target.CreateTargetMachine(System.String, System.String, System.String, Llvm.NET.CodeGenOpt, Llvm.NET.Reloc, Llvm.NET.CodeModel)
-  nameWithType: Target.CreateTargetMachine(String, String, String, CodeGenOpt, Reloc, CodeModel)
+- uid: Llvm.NET.Target.CreateTargetMachine(Llvm.NET.Triple,System.String,System.String,Llvm.NET.CodeGenOpt,Llvm.NET.RelocationMode,Llvm.NET.CodeModel)
+  name: CreateTargetMachine(Triple, String, String, CodeGenOpt, RelocationMode, CodeModel)
+  href: api/Llvm.NET.Target.CreateTargetMachine.html#Llvm_NET_Target_CreateTargetMachine_Llvm_NET_Triple_System_String_System_String_Llvm_NET_CodeGenOpt_Llvm_NET_RelocationMode_Llvm_NET_CodeModel_
+  commentId: M:Llvm.NET.Target.CreateTargetMachine(Llvm.NET.Triple,System.String,System.String,Llvm.NET.CodeGenOpt,Llvm.NET.RelocationMode,Llvm.NET.CodeModel)
+  fullName: Llvm.NET.Target.CreateTargetMachine(Llvm.NET.Triple, System.String, System.String, Llvm.NET.CodeGenOpt, Llvm.NET.RelocationMode, Llvm.NET.CodeModel)
+  nameWithType: Target.CreateTargetMachine(Triple, String, String, CodeGenOpt, RelocationMode, CodeModel)
+- uid: Llvm.NET.Target.CreateTargetMachine(System.String,System.String,System.String,Llvm.NET.CodeGenOpt,Llvm.NET.RelocationMode,Llvm.NET.CodeModel)
+  name: CreateTargetMachine(String, String, String, CodeGenOpt, RelocationMode, CodeModel)
+  href: api/Llvm.NET.Target.CreateTargetMachine.html#Llvm_NET_Target_CreateTargetMachine_System_String_System_String_System_String_Llvm_NET_CodeGenOpt_Llvm_NET_RelocationMode_Llvm_NET_CodeModel_
+  commentId: M:Llvm.NET.Target.CreateTargetMachine(System.String,System.String,System.String,Llvm.NET.CodeGenOpt,Llvm.NET.RelocationMode,Llvm.NET.CodeModel)
+  fullName: Llvm.NET.Target.CreateTargetMachine(System.String, System.String, System.String, Llvm.NET.CodeGenOpt, Llvm.NET.RelocationMode, Llvm.NET.CodeModel)
+  nameWithType: Target.CreateTargetMachine(String, String, String, CodeGenOpt, RelocationMode, CodeModel)
 - uid: Llvm.NET.Target.CreateTargetMachine*
   name: CreateTargetMachine
   href: api/Llvm.NET.Target.CreateTargetMachine.html
@@ -11309,12 +11376,12 @@ references:
   commentId: T:Llvm.NET.TargetMachine
   fullName: Llvm.NET.TargetMachine
   nameWithType: TargetMachine
-- uid: Llvm.NET.TargetMachine.#ctor(Llvm.NET.Triple,System.String,System.String,Llvm.NET.CodeGenOpt,Llvm.NET.Reloc,Llvm.NET.CodeModel)
-  name: TargetMachine(Triple, String, String, CodeGenOpt, Reloc, CodeModel)
-  href: api/Llvm.NET.TargetMachine.-ctor.html#Llvm_NET_TargetMachine__ctor_Llvm_NET_Triple_System_String_System_String_Llvm_NET_CodeGenOpt_Llvm_NET_Reloc_Llvm_NET_CodeModel_
-  commentId: M:Llvm.NET.TargetMachine.#ctor(Llvm.NET.Triple,System.String,System.String,Llvm.NET.CodeGenOpt,Llvm.NET.Reloc,Llvm.NET.CodeModel)
-  fullName: Llvm.NET.TargetMachine.TargetMachine(Llvm.NET.Triple, System.String, System.String, Llvm.NET.CodeGenOpt, Llvm.NET.Reloc, Llvm.NET.CodeModel)
-  nameWithType: TargetMachine.TargetMachine(Triple, String, String, CodeGenOpt, Reloc, CodeModel)
+- uid: Llvm.NET.TargetMachine.#ctor(Llvm.NET.Triple,System.String,System.String,Llvm.NET.CodeGenOpt,Llvm.NET.RelocationMode,Llvm.NET.CodeModel)
+  name: TargetMachine(Triple, String, String, CodeGenOpt, RelocationMode, CodeModel)
+  href: api/Llvm.NET.TargetMachine.-ctor.html#Llvm_NET_TargetMachine__ctor_Llvm_NET_Triple_System_String_System_String_Llvm_NET_CodeGenOpt_Llvm_NET_RelocationMode_Llvm_NET_CodeModel_
+  commentId: M:Llvm.NET.TargetMachine.#ctor(Llvm.NET.Triple,System.String,System.String,Llvm.NET.CodeGenOpt,Llvm.NET.RelocationMode,Llvm.NET.CodeModel)
+  fullName: Llvm.NET.TargetMachine.TargetMachine(Llvm.NET.Triple, System.String, System.String, Llvm.NET.CodeGenOpt, Llvm.NET.RelocationMode, Llvm.NET.CodeModel)
+  nameWithType: TargetMachine.TargetMachine(Triple, String, String, CodeGenOpt, RelocationMode, CodeModel)
 - uid: Llvm.NET.TargetMachine.#ctor*
   name: TargetMachine
   href: api/Llvm.NET.TargetMachine.-ctor.html
@@ -11369,12 +11436,12 @@ references:
   commentId: Overload:Llvm.NET.TargetMachine.Features
   fullName: Llvm.NET.TargetMachine.Features
   nameWithType: TargetMachine.Features
-- uid: Llvm.NET.TargetMachine.FromTriple(Llvm.NET.Triple,System.String,System.String,Llvm.NET.CodeGenOpt,Llvm.NET.Reloc,Llvm.NET.CodeModel)
-  name: FromTriple(Triple, String, String, CodeGenOpt, Reloc, CodeModel)
-  href: api/Llvm.NET.TargetMachine.FromTriple.html#Llvm_NET_TargetMachine_FromTriple_Llvm_NET_Triple_System_String_System_String_Llvm_NET_CodeGenOpt_Llvm_NET_Reloc_Llvm_NET_CodeModel_
-  commentId: M:Llvm.NET.TargetMachine.FromTriple(Llvm.NET.Triple,System.String,System.String,Llvm.NET.CodeGenOpt,Llvm.NET.Reloc,Llvm.NET.CodeModel)
-  fullName: Llvm.NET.TargetMachine.FromTriple(Llvm.NET.Triple, System.String, System.String, Llvm.NET.CodeGenOpt, Llvm.NET.Reloc, Llvm.NET.CodeModel)
-  nameWithType: TargetMachine.FromTriple(Triple, String, String, CodeGenOpt, Reloc, CodeModel)
+- uid: Llvm.NET.TargetMachine.FromTriple(Llvm.NET.Triple,System.String,System.String,Llvm.NET.CodeGenOpt,Llvm.NET.RelocationMode,Llvm.NET.CodeModel)
+  name: FromTriple(Triple, String, String, CodeGenOpt, RelocationMode, CodeModel)
+  href: api/Llvm.NET.TargetMachine.FromTriple.html#Llvm_NET_TargetMachine_FromTriple_Llvm_NET_Triple_System_String_System_String_Llvm_NET_CodeGenOpt_Llvm_NET_RelocationMode_Llvm_NET_CodeModel_
+  commentId: M:Llvm.NET.TargetMachine.FromTriple(Llvm.NET.Triple,System.String,System.String,Llvm.NET.CodeGenOpt,Llvm.NET.RelocationMode,Llvm.NET.CodeModel)
+  fullName: Llvm.NET.TargetMachine.FromTriple(Llvm.NET.Triple, System.String, System.String, Llvm.NET.CodeGenOpt, Llvm.NET.RelocationMode, Llvm.NET.CodeModel)
+  nameWithType: TargetMachine.FromTriple(Triple, String, String, CodeGenOpt, RelocationMode, CodeModel)
 - uid: Llvm.NET.TargetMachine.FromTriple*
   name: FromTriple
   href: api/Llvm.NET.TargetMachine.FromTriple.html
@@ -12992,6 +13059,18 @@ references:
   commentId: F:Llvm.NET.Triple.EnvironmentType.UnknownEnvironment
   fullName: Llvm.NET.Triple.EnvironmentType.UnknownEnvironment
   nameWithType: Triple.EnvironmentType.UnknownEnvironment
+- uid: Llvm.NET.Triple.EnvironmentVersion
+  name: EnvironmentVersion
+  href: api/Llvm.NET.Triple.EnvironmentVersion.html#Llvm_NET_Triple_EnvironmentVersion
+  commentId: P:Llvm.NET.Triple.EnvironmentVersion
+  fullName: Llvm.NET.Triple.EnvironmentVersion
+  nameWithType: Triple.EnvironmentVersion
+- uid: Llvm.NET.Triple.EnvironmentVersion*
+  name: EnvironmentVersion
+  href: api/Llvm.NET.Triple.EnvironmentVersion.html
+  commentId: Overload:Llvm.NET.Triple.EnvironmentVersion
+  fullName: Llvm.NET.Triple.EnvironmentVersion
+  nameWithType: Triple.EnvironmentVersion
 - uid: Llvm.NET.Triple.Equals(Llvm.NET.Triple)
   name: Equals(Triple)
   href: api/Llvm.NET.Triple.Equals.html#Llvm_NET_Triple_Equals_Llvm_NET_Triple_

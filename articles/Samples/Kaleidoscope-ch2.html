@@ -8,7 +8,7 @@
     <title>2. Kaleidoscope: Implementing the parser | Llvm.NET </title>
     <meta name="viewport" content="width=device-width">
     <meta name="title" content="2. Kaleidoscope: Implementing the parser | Llvm.NET ">
-    <meta name="generator" content="docfx 2.39.0.0">
+    <meta name="generator" content="docfx 2.40.5.0">
     
     <link rel="shortcut icon" href="../../favicon.ico">
     <link rel="stylesheet" href="../../styles/docfx.vendor.css">
@@ -44,24 +44,24 @@
                   <input type="text" class="form-control" id="search-query" placeholder="Search" autocomplete="off">
                 </div>
               </form>
+                
                 <ul class="nav level1 navbar-nav">
-                  <li class="">
-                    <a href="../../api/index.html" title="API Documentation" class="">API Documentation</a>
-                  </li>
-                  <li class="">
-                    <a href="../../articles/index.html" title="Articles" class="">Articles</a>
-                  </li>
-                  <li class="">
-                    <a href="https://github.com/UbiquityDotNET/Llvm.NET" title="GitHub Repository" class="">GitHub Repository</a>
-                  </li>
-                  <li class="">
-                    <a href="http://LLVM.org" title="LLVM.org" class="">LLVM.org</a>
-                  </li>
-                  <li class="">
-                    <a href="http://releases.llvm.org/6.0.1/docs/index.html" title="LLVM Docs" class="">LLVM Docs</a>
-                  </li>
-                </ul>
-            </div>
+                      <li>
+                          <a href="api/index.html" name="api/toc" title="API Documentation">API Documentation</a>
+                      </li>
+                      <li>
+                          <a href="articles/index.html" name="articles/toc" title="Articles">Articles</a>
+                      </li>
+                      <li>
+                          <a href="https://github.com/UbiquityDotNET/Llvm.NET" name="" title="GitHub Repository">GitHub Repository</a>
+                      </li>
+                      <li>
+                          <a href="http://LLVM.org" name="" title="LLVM.org">LLVM.org</a>
+                      </li>
+                      <li>
+                          <a href="http://releases.llvm.org/6.0.1/docs/index.html" name="" title="LLVM Docs">LLVM Docs</a>
+                      </li>
+                </ul>    </div>
           </div>
         </nav>
       </header>
@@ -166,8 +166,9 @@ code but it is spread around without much real discussion of the language the tu
 to implement)</p>
 <h2 id="formal-grammar">Formal Grammar</h2>
 <h3 id="lexer-symbols">Lexer symbols</h3>
-<p>The Kaleidoscope lexer consists of several tokens and is defined in the <a href="https://github.com/UbiquityDotNET/Llvm.NET/blob/master/Samples/Kaleidoscope/Kaleidoscope.Parser/Kaleidoscope.g4">Kaleidoscope.g4</a>
-grammar file</p>
+<p>The Kaleidoscope lexer consists of several tokens and is defined in the
+<a href="https://github.com/UbiquityDotNET/Llvm.NET/blob/master/Samples/Kaleidoscope/Kaleidoscope.Parser/Kaleidoscope.g4">Kaleidoscope.g4</a>
+grammar file.</p>
 <pre><code class="lang-antlr">// Lexer Rules -------
 fragment NonZeroDecimalDigit_: [1-9];
 fragment DecimalDigit_: [0-9];
@@ -246,9 +247,9 @@ BINARY: {FeatureUserOperators}? &#39;binary&#39;;
 symbols allowed for user defined operators. The official LLVM version allows defining an operator &#39;=&#39;,
 (in chapter 6). However, in Chapter 7, when Mutable variables are introduced the &#39;=&#39; is reserved by the
 language for assignment. Thus, any code written for chapter 6 with a user defined &#39;=&#39; operator would not
-work in later versions. Thus, the Llvm.NET version reserves the &#39;=&#39; in all versions, but allows the &#39;==&#39;
-operator. (It also adds the &#39;++&#39; and &#39;--&#39; tokens as user operators [The official LLVM implementation only
-allows a single character as the operator lexeme])</p>
+work in later versions. Thus, the Llvm.NET version reserves the &#39;=&#39; in all versions, but uses the &#39;==&#39;
+operator for equality comparisons. (It also adds the &#39;++&#39; and &#39;--&#39; tokens as user operators [The official
+LLVM implementation only allows a single character as the operator lexeme])</p>
 <p>Additionally the Llvm.NET implementation adds the built-in &#39;^&#39; operator for exponentiation.</p>
 </div>
 <h3 id="parser">Parser</h3>
@@ -263,8 +264,8 @@ anyone acquainted with EBNF form to make enough sense out of it. Don&#39;t worry
 this point as subsequent chapters will cover salient points as new features are enabled.</p>
 <h5 id="operators">Operators</h5>
 <p>In order to support the parser detecting attempts to overload built-in operators and to handle the fact
-that some operators don&#39;t make any sense for unary operators (e.g. you can&#39;t create a user defined unary
-&#39;=&#39; operator. Technically you could implement that but it would make for some confusing code. If you really
+that some operators don&#39;t make any sense as unary operators (e.g. you can&#39;t create a user defined unary
+&#39;=&#39; operator. Technically, you could implement that but it would make for some confusing code. If you really
 like hard to read and comprehend code there are <a href="https://en.wikipedia.org/wiki/Brainfuck">other languages</a>
 better suited to that end 8^) )</p>
 <p>To manage detection of appropriate operator tokens the grammar uses a set of parser rules that group the
@@ -402,7 +403,7 @@ sub-expression selected based on the condition. The condition value is computed 
 (false) the <code>else</code> expression is used to produce the final result. Otherwise, the <code>then</code> expression is
 executed to produce the result. Thus, the actual semantics are more like the ternary operator found C and
 other languages:</p>
-<pre><code class="lang-C">condition ? thenExpression : elseExpression`
+<pre><code class="lang-C">condition ? thenExpression : elseExpression
 </code></pre><p>Example:</p>
 <pre><code class="lang-Kaleidoscope">def fib(x)
   if x &lt; 3 then
@@ -420,7 +421,7 @@ def printstar(n)
 
 # print 100 &#39;*&#39; characters
 printstar(100);
-</code></pre><div class="NOTE"><h5>Note</h5><p>There are no statements in Kaleidoscope, everything is an expression and has a value. putchard()
+</code></pre><div class="NOTE"><h5>Note</h5><p>Technically, there are no statements in Kaleidoscope, everything is an expression and has a value. putchard()
 implicitly returns a value as does printstar(). (e.g. there is no void return - ALL functions implicitly
 return a floating point value, even if it is always 0.0).</p>
 </div>
@@ -448,41 +449,40 @@ def fibi(x)
 
 # Call it.
 fibi(10);
-</code></pre><h4 id="parse-tree">Parse Tree</h4>
-<p>The Llvm.NET implementation of Kaleidoscope doesn&#39;t use a traditional AST. Instead it mostly uses the
-parse tree generated by ANTLR with the addition of C# partial classes. ANTLR will generate a parser
-based on the grammar description input file. This generated parser (and lexer) includes a context type
-for each rule of the grammar. The C# target for ANTLR generates these types as partial classes so the
-they are extensible from the parser assembly without needing to derive a new type or use virtual methods
-etc. Thus, the Kaleidoscope.Grammar assembly contains partial class extensions that provide simpler property
-accessors and support methods to where an additional AST is mostly not needed (e.g. The parse tree is the
-AST). The only exceptions to this is when the code generation needs to construct nodes that otherwise don&#39;t
-exist in the source (i.e. prototypes of top level expressions as anonymous functions, including the identifier
-for the name and the actual definition of the function body).</p>
-<p>To manage the creation of anonymous functions while re-using the same general code for code generation
-special Prototype, Identifier, and FunctionFefinition classes are provided. The parse tree nodes have
-additional properties that can retrieve these custom types for the appropriate nodes and the generator can
-create them when it needs to. Additionally the Prototype and FunctionDefinition classes implement a common
-interface (IFunctionNode). This allows all of the code generation to deal with consistent types as input,
-reducing duplication and other sorts of special case conditional logic in the code.</p>
-<p>To further simplify code generators the Kaleidoscope.Runtime library contains the AstBuilder type that is
-is an ANTLR parse tree visitor. AstBuilder will convert a raw ANTLR IParseTree into an <code>IEnumerable&lt;IFunctionNode&gt;</code>.
-That is it visits the declarations and declarations in the tree to produce an ordered sequence of declarations and
-definitions as they appeared in the source. For interactive modes the sequence will have only a single element,
-however when parsing a whole source file the parse tree may contain multiple declarations and definitions.</p>
+</code></pre><h2 id="parse-tree">Parse Tree</h2>
+<p>ANTLR produces a low level parse tree with nodes corresponding to each of the rules defined in teh grammar.
+In most cases this is extremely verbose and more details than is actually needed for generating code. (Though,
+it can be used as-is in some cases.) Typically code generation will walk the parse tree to provide a simpler
+Abstract Syntax Tree that represents the actual language concepts independent of the syntax of the language.
+ANTLR will generate a parser based on the grammar description input file. This generated parser (and lexer)
+includes a context type for each rule of the grammar. The C# target for ANTLR generates these types as partial
+classes so they are extensible from the parser assembly without needing to derive a new type or use virtual
+methods etc. Thus, the Kaleidoscope.Grammar assembly contains partial class extensions that provide simpler
+property accessors and support methods to aid is generating the AST.</p>
 <p>See <a href="Kaleidoscope-Parsetree-examples.html">Kaleidoscope Parse Tree Examples</a> for more information and example
 diagrams of the parse tree for various language constructs.</p>
 <h2 id="abstract-syntax-tree-ast">Abstract Syntax Tree (AST)</h2>
-<p>The <a href="Kaleidoscope-AST.html">Kaleidoscope AST</a> is a means of simplifying the original parse tree into constructs
-that are easy for the code generation to use directly. In the case of Kaleidoscope there are a few types of nodes
-that are used to generated LLVM IR from. The AstBuilder class is responsible for generating an AST from an ANTLR4
-parse tree.</p>
+<p>To further simplify code generators the Kaleidoscope.Runtime library contains the AstBuilder type that is
+an ANTLR parse tree visitor. AstBuilder will convert a raw ANTLR IParseTree into an <code>IEnumerable&lt;IFunctionNode&gt;</code>.
+That is, it visits the declarations and definitions in the parse tree to produce an ordered sequence of declarations
+and definitions as they appeared in the source. For interactive modes - the sequence will have only a single element.
+However, when parsing a whole source file, the parse tree may contain multiple declarations and definitions.</p>
+<p>The <a href="Kaleidoscope-AST.html">Kaleidoscope AST</a> is a means of simplifying the original parse tree into
+constructs that are easy for the code generation to use directly. In the case of Kaleidoscope there are
+a few types of nodes that are used to generate LLVM IR. The AstBuilder class is responsible for
+generating an AST from an ANTLR4 parse tree.</p>
 <p>The major simplifying transformations performed in building the AST are:</p>
 <ul>
-<li>Convert toplevel functions to a pair of FunctionDeclaration and FunctionDefinition</li>
+<li>Convert top-level functions to a pair of FunctionDeclaration and FunctionDefinition</li>
 <li>Convert user defined operator definition to simple FunctionDefinition with a special name for the operator</li>
 <li>Convert user defined operator expressions into simple function calls to the operator function</li>
 </ul>
+<div class="NOTE"><h5>Note</h5><p>An interesting consequence of these transformations into the AST form is that the concept of user defined
+operators no longer exists in the AST! The AST only deals in function declarations, definitions and the built-in
+operators. All issues of precedence are implicitly resolved in the ordering of the nodes in the AST.
+Thus, the code generation doesn&#39;t need to consider the issue of user defined operators or operator
+precedence at all. (<a href="Kaleidoscope-ch6.html">Chapter 6</a> covers the details of user defined operators)</p>
+</div>
 <h2 id="basic-application-architecture">Basic Application Architecture</h2>
 <p>Generally speaking there are four main components to all of the sample chapter applications.</p>
 <ol>
@@ -495,71 +495,55 @@ parse tree.</p>
 <p>While each chapter is a bit different from the others. Many of the chapters are virtually identical for
 the driver. In particular Chapters 3-7 only really differ in the language level support. </p>
 <pre><code class="lang-csharp" name="Program.cs">var parser = new ParserStack( LanguageFeatureLevel );
-var generator = new CodeGenerator( );
 
-// generate hopefully helpful representations of parse trees
-var replLoop = new ReplLoop&lt;int&gt;( generator
-                                , parser
-                                , DiagnosticRepresentations.Xml | DiagnosticRepresentations.Dgml | DiagnosticRepresentations.BlockDiag
-                                );
-replLoop.ReadyStateChanged += ( s, e ) =&gt; Console.Write( e.PartialParse ? &quot;&gt;&quot; : &quot;Ready&gt;&quot; );
-replLoop.GeneratedResultAvailable += OnGeneratedResultAvailable;
+// Create Observable chain to parse input lines from console into AST Nodes
+var replSeq = parser.Parse( Console.In.ToObservableStatements( ShowPrompt ), ShowCodeGenError );
 
-replLoop.Run( );
+// Subscribe to the sequence the sequence
+using( replSeq.Subscribe( ShowResults ) )
+{
+}
+
+Console.WriteLine( &quot;Bye!&quot; );
 </code></pre><p>The ParserStack contains the support for parsing the Kaleidoscope language from the REPL loop interactive
 input. The stack also maintains the global state of the runtime, which controls the language features
 enabled, and if user defined operators are enabled, contains the operators defined along with their
 precedence.</p>
-<p>After the parser is created the code generator is constructed. The code generator is responsible for most
-of the real work of the language. The implementation of the generator is different for each chapter.
-However, since the generator is based on the ANTLR4 generated KaleidoscopeParserListener (using a visitor
-pattern), and the chapters build on one another, for the most part, it is fairly easy to compare the
-generators for each chapter to see the changes needed to introduce the feature(s) the chapter provides.
-Each chapter will go into more details on this. Since the generator usually allocates resources in Llvm.NET
-it implements IDisposable to ensure they are released as early as possible.</p>
-<p>Inside the using statement for the code generator is the core loop for the language runtime. This starts
-by displaying a brief &quot;hello&quot; message indicating the nature of the app and the language level supported.
-The actual REPL loop is handled via a common library class <code>ReplLoop&lt;T&gt;</code> (in Kaleidoscope.Runtime) this
-class handles retrieving text from an input source (default is Console.In) and producing a complete &quot;statement&quot;
-for parsings. (Technically speaking Kaleidoscope doesn&#39;t have statements but to allow a user to type
-<code>[...] a+b&lt;newline&gt;+c</code>) without processing that as two expression invocations (<code>a+b</code> and <code>+c</code>)
-a semicolon is used to convey the user&#39;s intent that the code is complete and ready for evaluation.
-The ReplLoop class takes care of this in a generalized manner. The ReplLoop can consume input from any
-<code>System.TextReader</code> and uses <code>System.Console.In</code> as a default. When the loop detects a new line that
-doesn&#39;t have a semicolon it will generate a Ready state changed event so the calling application can
-inform the user with a different prompt (in all the Llvm.NET samples this is &#39;&gt;&#39;). Once a complete
-expression is available, the loop will submit it to the parser to generate a parse tree. The loop then
-passes the parse tree and the parser that created it to the generators Generate() method to actually
-generate the result. The result type of the generator is the generic type parameter for <code>ReplLoop&lt;T&gt;</code>
-as the loop class doesn&#39;t need to use the result itself. The loop will trigger the GeneratedResultAvailable
-event to allow the driver application to do whatever it wants with the results.</p>
+<p>After the parser is created an observable sequence of statements is created for the parser to process. The
+parser produces a sequence of AST nodes. This effectively adds <a href="https://github.com/dotnet/reactive">Rx.NET</a>
+operators to the chain of operators to produce the parsed nodes from the input text. After construction the
+sequence is subscribed to call the ShowResults function for each result.</p>
+<p>This use of Observable sequences is a bit of a different approach to things for running an interpreter Read,
+Evaluate Print Loop, but once you get your head around it, the sequence provides a nice clean and flexible
+mechanism for building a pipeline of transformations from the text input into the result output.</p>
 <h3 id="processing-generated-results">Processing generated results</h3>
-<p>The calling application will generally hook an event handler to show the results of the generation in some
-fashion. For the basic samples (Chapter 3-7) it indicates the value of any JITed and executed top level
-expressions, or the name of any functions defined. Chapter 2 has additional support for showing an XML
-representation of the tree but the same basic pattern applies. This, helps to keep the samples consistent
-and as similar as possible to allow direct file comparisons to show the changes for a particular feature.
-The separation of concerns also aids in making the grammar, runtime and code generation unit-testable
-without the driver. (Although that isn&#39;t implemented yet it is intended for the future to help broaden
-testing of Llvm.NET to more scenarios and catch breaking issues quicker.)</p>
-<pre><code class="lang-csharp" name="Program.cs">private static void OnGeneratedResultAvailable( object sender, GeneratedResultAvailableArgs&lt;int&gt; e )
+<p>The calling application will generally subscribe to the observable sequence with a <code>ShowResults</code> function to show the
+results of the generation in some fashion. For the basic samples (Chapter 3-7) it indicates the value of any JITed
+and executed top level expressions, or the name of any functions defined. Chapter 2 has additional support for
+showing an XML representation of the tree but the same basic pattern applies. This, helps to keep the samples
+consistent and as similar as possible to allow direct file comparisons to show the changes for a particular feature.
+The separation of concerns also aids in making the grammar, runtime and code generation unit-testable without the
+driver. (Although that isn&#39;t implemented yet - it is intended for the future to help broaden testing of Llvm.NET to
+more scenarios and catch breaking issues quicker.)</p>
+<pre><code class="lang-csharp" name="ShowResults">private static void ShowResults( IAstNode node )
 {
-    Console.WriteLine( &quot;Parsed {0}&quot;, e.Result.GetType( ).Name );
+    Console.WriteLine( &quot;Parsed {0}&quot;, node.GetType( ).Name );
 }
 </code></pre><h3 id="special-case-for-chapter-2">Special case for Chapter 2</h3>
 <p>Chapter 2 sample code, while still following the general patterns used in all of the chapters, is a bit
-unique, it doesn&#39;t use Lllvm.NET at all. It is only focused on the language and parsing. This helps in
-understanding the basic patterns of the code and support and serves as an aid in understanding the
-language itself. Of particular use is the support for generating DGML and <a href="http://blockdiag.com">blockdiag</a>
-representations of the parse tree for a given parse (All of the diagrams in these tutorials were created
-by creating the blockdiag files and then generating the SVG files from that). Having a nice visual 
-representation of a parser tree result is helpful to understanding the parsing and various parse tree node
-types.</p>
+unique, it doesn&#39;t actually use Lllvm.NET at all. Instead, it is only focused on the language and parsing.
+This helps in understanding the basic patterns of the code. Furthermore, this chapter serves as an aid in
+understanding the language itself. Of particular use is the ability to generate DGML and <a href="http://blockdiag.com">blockdiag</a>
+representations of the parse tree for a given parse.</p>
+<div class="NOTE"><h5>Note</h5><p>All of the diagrams in these tutorials were created by generating the blockdiag files and then producing
+the SVG files from that. Having a nice visual representation of a parse tree result is helpful to understanding
+the parsing and various parse tree node types.</p>
+</div>
 <p>The visual graph is also immensely valuable when making changes to the grammar so you can see the results
-of a parse and more readily understand why something isn&#39;t right. (In fact this feature was enabled to
-track down bugs in the parsing for user defined operator precedence that was difficult to figure out. Once
-the visualization was available it became quite easy to see the problems). Thus, Chapter 2 is both a
-simple introductory example and tool for use when doing advanced language tweaking.</p>
+of a parse and more readily understand why something isn&#39;t right. In fact, this feature was created to
+help track down bugs in the parsing for user defined operator precedence that was difficult to figure out.
+Once the visualization was available it became quite easy to see the problems. Thus, Chapter 2 is both
+a simple introductory example and a tool for use when doing more advanced language tweaking or extension.</p>
 </article>
           </div>
           <div class="contribution-panel mobile-hide">
@@ -582,7 +566,7 @@ simple introductory example and tool for use when doing advanced language tweaki
             <span class="pull-right">
               <a href="#top">Back to top</a>
             </span>
-            Copyright (C) 2017, Dot NET Foundation<br><strong>Build:</strong> 6.0.1-rc.0.0.ci-BLD.449714430
+            Copyright (C) 2017, Dot NET Foundation<br><strong>Build:</strong> 6.0.1-rc.0.0.ci-BLD.454039755
             
           </div>
         </div>

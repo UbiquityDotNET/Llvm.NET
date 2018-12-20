@@ -8,7 +8,7 @@
     <title>4. Kaleidoscope: Adding JIT and Optimizer Support | Llvm.NET </title>
     <meta name="viewport" content="width=device-width">
     <meta name="title" content="4. Kaleidoscope: Adding JIT and Optimizer Support | Llvm.NET ">
-    <meta name="generator" content="docfx 2.39.0.0">
+    <meta name="generator" content="docfx 2.40.5.0">
     
     <link rel="shortcut icon" href="../../favicon.ico">
     <link rel="stylesheet" href="../../styles/docfx.vendor.css">
@@ -44,24 +44,24 @@
                   <input type="text" class="form-control" id="search-query" placeholder="Search" autocomplete="off">
                 </div>
               </form>
+                
                 <ul class="nav level1 navbar-nav">
-                  <li class="">
-                    <a href="../../api/index.html" title="API Documentation" class="">API Documentation</a>
-                  </li>
-                  <li class="">
-                    <a href="../../articles/index.html" title="Articles" class="">Articles</a>
-                  </li>
-                  <li class="">
-                    <a href="https://github.com/UbiquityDotNET/Llvm.NET" title="GitHub Repository" class="">GitHub Repository</a>
-                  </li>
-                  <li class="">
-                    <a href="http://LLVM.org" title="LLVM.org" class="">LLVM.org</a>
-                  </li>
-                  <li class="">
-                    <a href="http://releases.llvm.org/6.0.1/docs/index.html" title="LLVM Docs" class="">LLVM Docs</a>
-                  </li>
-                </ul>
-            </div>
+                      <li>
+                          <a href="api/index.html" name="api/toc" title="API Documentation">API Documentation</a>
+                      </li>
+                      <li>
+                          <a href="articles/index.html" name="articles/toc" title="Articles">Articles</a>
+                      </li>
+                      <li>
+                          <a href="https://github.com/UbiquityDotNET/Llvm.NET" name="" title="GitHub Repository">GitHub Repository</a>
+                      </li>
+                      <li>
+                          <a href="http://LLVM.org" name="" title="LLVM.org">LLVM.org</a>
+                      </li>
+                      <li>
+                          <a href="http://releases.llvm.org/6.0.1/docs/index.html" name="" title="LLVM Docs">LLVM Docs</a>
+                      </li>
+                </ul>    </div>
           </div>
         </nav>
       </header>
@@ -153,13 +153,13 @@
             <article class="content wrap" id="_content" data-uid="">
 <h1 id="4-kaleidoscope-adding-jit-and-optimizer-support">4. Kaleidoscope: Adding JIT and Optimizer Support</h1>
 
-<p>This chapter of the Kaleidoscope tutorial introduces JIT compilation and optimizations of the generated
-code. As, such this is the first variant of the language implementation where you can actually execute
-the Kaleidoscope code. Thus, this is a bit more fun than the others as you can finally get to see the
+<p>This chapter of the Kaleidoscope tutorial introduces Just-In-Time (JIT) compilation and simple optimizations
+of the generated code. As, such this is the first variant of the language implementation where you can actually
+execute the Kaleidoscope code. Thus, this is a bit more fun than the others as you finally get to see the
 language working for real!</p>
 <h2 id="constant-folding">Constant Folding</h2>
 <p>If you studied the LLVM IR generated from the previous chapters you will see that it isn&#39;t particularly
-well optimized. Though, there is one case where it does do some nice optimization automatically for us.</p>
+well optimized. There is one case, though, where it does do some nice optimization automatically for us.</p>
 <p>For example:</p>
 <pre><code class="lang-Kaleidoscope">def test(x) 1+2+x;
 </code></pre><p>produces the following LLVM IR:</p>
@@ -169,9 +169,9 @@ entry:
   ret double %addtmp
 }
 </code></pre><p>That&#39;s not exactly what the parse tree would suggest. The <a class="xref" href="../../api/Llvm.NET.Instructions.InstructionBuilder.html">InstructionBuilder</a>
-automatically performs an optimization technique know as &#39;Constant Folding&#39;. This optimization is very
+automatically performs an optimization technique known as &#39;Constant Folding&#39;. This optimization is very
 important, in fact, many compilers implement the folding directly into the generation of the Abstract
-Syntax Tree (AST). With LLVM that isn&#39;t necessary as it is automatically provided for you (no extra
+Syntax Tree (AST). With LLVM, that isn&#39;t necessary as it is automatically provided for you (no extra
 charge!).</p>
 <p>Obviously constant folding isn&#39;t the only possible optimization and InstructionBuilder only operates on
 the individual instructions as they are built. So, there are limits on what InstructionBuilder can do.</p>
@@ -186,7 +186,7 @@ entry:
 }
 </code></pre><p>In this case the operand of the additions are identical. Ideally this would generate as
 <code>temp = x+3; result = temp*temp;</code> rather than computing X+3 twice. This isn&#39;t something that
-InstructionBuilder can do. Ultimately this requires two distinct transformations:</p>
+InstructionBuilder alone can do. Ultimately this requires two distinct transformations:</p>
 <ol>
 <li>Re-association of expressions to make the additions lexically identical (e.g. recognize that x+3 == 3+x )</li>
 <li>Common Subexpression Elimination to remove the redundant add instruction.</li>
@@ -196,7 +196,7 @@ other scenarios.</p>
 <h2 id="llvm-optimization-passes">LLVM Optimization Passes</h2>
 <p>LLVM provides many different optimization passes, each handling a specific scenario with different trade-offs.
 One of the values of LLVM as a general compilation back-end is that it doesn&#39;t enforce any particular set
-of optimizations. By default there aren&#39;t any optimizations (Other than the obvious constant folding built
+of optimizations. By default, there aren&#39;t any optimizations (Other than the obvious constant folding built
 into the InstructionBuilder). All optimizations are entirely in the hands of the front-end application.
 The compiler implementor controls what passes are applied, and in what order they are run. This ensures
 that the optimizations are tailored to correctly meet the needs of the language and runtime environment.</p>
@@ -205,9 +205,9 @@ them in on the command line. Ultimate, whole program optimization is off the tab
 user will enter the last expression so it is incorrect to eliminate unused functions). In order to support
 per-function optimization a <a class="xref" href="../../api/Llvm.NET.Transforms.FunctionPassManager.html">FunctionPassManager</a> is created
 to hold the passes used for optimizing a function. The FunctionPassManager supports running the passes
-added to it against a function to transform it into the optimized form. Since a pass manager is tied to the
-module and, for JIT support, each function is generated into its own module a new function is needed to
-create the module and initialize the pass manager.</p>
+to transform a function into the optimized form. Since a pass manager is tied to the module and, for JIT
+support, each function is generated into its own module a new method in the code generator is used to create
+the module and initialize the pass manager.</p>
 <pre><code class="lang-csharp" name="Main">private void InitializeModuleAndPassManager( )
 {
     Module = Context.CreateBitcodeModule( );
@@ -242,7 +242,9 @@ individually or in various combinations and ordering to see how well it optimize
 your front-end generates. (This can lead to changing the passes and ordering, as well as changes in what
 the front-end generates so that the optimizer can handle the input better) This is not an exact science
 with a one size fits all kind of solution. There are many common passes that are likely relevant to all
-languages. Though the ordering of them may differ depending on the needs of the language and runtime.</p>
+languages. Though the ordering of them may differ depending on the needs of the language and runtime.
+Getting, the optimizations and ordering for a given language is arguably where the most work lies in
+creating a production quality language using LLVM.</p>
 <h2 id="adding-jit-compilation">Adding JIT Compilation</h2>
 <p>Now that the code generation produces optimized code, it is time to get to the fun part - executing code!
 The basic idea is to allow the user to type in the Kaleidoscope code as supported thus far and it will
@@ -255,7 +257,8 @@ already supported showing the results if it was a floating point value by checki
 is a <a class="xref" href="../../api/Llvm.NET.Values.ConstantFP.html">ConstantFP</a>. We&#39;ll see a bit later on why that is a ConstantFP
 value.</p>
 <h3 id="code-generator">Code Generator</h3>
-<p>The code generation needs an update to support using a JIT engine to generate and execute the Kaleidescope code provided by the user.</p>
+<p>The code generation needs an update to support using a JIT engine to generate and execute the Kaleidescope
+code provided by the user.</p>
 <p>To begin with, the generator needs some additional members, including the JIT engine.</p>
 <pre><code class="lang-csharp" name="Main">public CodeGenerator( DynamicRuntimeState globalState, bool disableOptimization = false )
     : base( null )
@@ -272,7 +275,7 @@ value.</p>
     InstructionBuilder = new InstructionBuilder( Context );
 }
 </code></pre><p>The JIT engine is retained for the generator to use. The same engine is retained for the lifetime of the
-generator so that functions are added to the same engine and can call function previously added. The JIT
+generator so that functions are added to the same engine and can call functions previously added. The JIT
 provides a &#39;handle&#39; for every module added, which is used to reference the module in the JIT, this is
 normally used to remove the module from the JIT engine when re-defining a function. Thus, a map of the
 function names and the JIT handle created for them is maintained. Additionally, a collection of defined
@@ -280,7 +283,7 @@ function prototypes is retained to enable matching a function call to a previous
 Since the JIT support uses a module per function approach, lookups on the current module aren&#39;t sufficient.
 Finally, a native function call delegate is defined for top level anonymous expressions so that, after
 the JIT engine has generated the code, the application can call it through a delegate.</p>
-<p>The initialization of the generator requires updating to support the additional members.</p>
+<p>The initialization of the generator requires updating to support the new members.</p>
 <pre><code class="lang-csharp" name="Main">public CodeGenerator( DynamicRuntimeState globalState, bool disableOptimization = false )
     : base( null )
 {
@@ -397,14 +400,14 @@ namespace Kaleidoscope.Runtime
         private static TargetMachine BuildTargetMachine()
         {
             return Target.FromTriple( Triple.HostTriple.ToString( ) )
-                         .CreateTargetMachine( Triple.HostTriple.ToString( ), null, null, CodeGenOpt.Default, Reloc.Default, CodeModel.JitDefault );
+                         .CreateTargetMachine( Triple.HostTriple.ToString( ), null, null, CodeGenOpt.Default, RelocationMode.Default, CodeModel.JitDefault );
         }
     }
 }
 </code></pre><p><a class="xref" href="../../api/Llvm.NET.JIT.OrcJit.html">OrcJit</a> provides support for declaring functions that are external to the JIT
 that the JIT&#39;d module code can call. For Kaleidoscope, two such functions are defined directly in
 KaleidoscoptJIT (putchard and printd), which is consistent with the same functions used in the official
-LLVM C++ tutorial. Thus allowing sharing of samples between the two.</p>
+LLVM C++ tutorial. Thus, allowing sharing of samples between the two.</p>
 <div class="WARNING"><h5>Warning</h5><p>All such methods implemented in .NET must block any exception from bubbling out of the call as the JIT
 engine doesn&#39;t know anything about them and neither does the Kaleidoscope language. Exceptions thrown
 in these functions would produce undefined results, at best - crashing the application.</p>
@@ -415,6 +418,7 @@ call requires updating to lookup the function from a collection of functions map
 {
     string targetName = functionCall.FunctionPrototype.Name;
     Function function;
+
     // try for an extern function declaration
     if( RuntimeState.FunctionDeclarations.TryGetValue( targetName, out Prototype target ) )
     {
@@ -434,7 +438,8 @@ This fall back is needed to support recursive functions where the referenced fun
 current module.</p>
 <p>Next is to update the GetOrDeclareFunction() to handle mapping the functions prototype and re-definition
 of functions.</p>
-<pre><code class="lang-csharp" name="Main">// Retrieves a Function&quot; for a prototype from the current module if it exists,
+<pre><code class="lang-csharp" name="Main">
+// Retrieves a Function&quot; for a prototype from the current module if it exists,
 // otherwise declares the function and returns the newly declared function.
 private Function GetOrDeclareFunction( Prototype prototype )
 {
@@ -533,7 +538,7 @@ support for .NET. Very cool, indeed!</p>
             <span class="pull-right">
               <a href="#top">Back to top</a>
             </span>
-            Copyright (C) 2017, Dot NET Foundation<br><strong>Build:</strong> 6.0.1-rc.0.0.ci-BLD.449714430
+            Copyright (C) 2017, Dot NET Foundation<br><strong>Build:</strong> 6.0.1-rc.0.0.ci-BLD.454039755
             
           </div>
         </div>

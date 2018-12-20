@@ -8,7 +8,7 @@
     <title>6. Kaleidoscope: User Defined Operators | Llvm.NET </title>
     <meta name="viewport" content="width=device-width">
     <meta name="title" content="6. Kaleidoscope: User Defined Operators | Llvm.NET ">
-    <meta name="generator" content="docfx 2.39.0.0">
+    <meta name="generator" content="docfx 2.40.5.0">
     
     <link rel="shortcut icon" href="../../favicon.ico">
     <link rel="stylesheet" href="../../styles/docfx.vendor.css">
@@ -44,24 +44,24 @@
                   <input type="text" class="form-control" id="search-query" placeholder="Search" autocomplete="off">
                 </div>
               </form>
+                
                 <ul class="nav level1 navbar-nav">
-                  <li class="">
-                    <a href="../../api/index.html" title="API Documentation" class="">API Documentation</a>
-                  </li>
-                  <li class="">
-                    <a href="../../articles/index.html" title="Articles" class="">Articles</a>
-                  </li>
-                  <li class="">
-                    <a href="https://github.com/UbiquityDotNET/Llvm.NET" title="GitHub Repository" class="">GitHub Repository</a>
-                  </li>
-                  <li class="">
-                    <a href="http://LLVM.org" title="LLVM.org" class="">LLVM.org</a>
-                  </li>
-                  <li class="">
-                    <a href="http://releases.llvm.org/6.0.1/docs/index.html" title="LLVM Docs" class="">LLVM Docs</a>
-                  </li>
-                </ul>
-            </div>
+                      <li>
+                          <a href="api/index.html" name="api/toc" title="API Documentation">API Documentation</a>
+                      </li>
+                      <li>
+                          <a href="articles/index.html" name="articles/toc" title="Articles">Articles</a>
+                      </li>
+                      <li>
+                          <a href="https://github.com/UbiquityDotNET/Llvm.NET" name="" title="GitHub Repository">GitHub Repository</a>
+                      </li>
+                      <li>
+                          <a href="http://LLVM.org" name="" title="LLVM.org">LLVM.org</a>
+                      </li>
+                      <li>
+                          <a href="http://releases.llvm.org/6.0.1/docs/index.html" name="" title="LLVM Docs">LLVM Docs</a>
+                      </li>
+                </ul>    </div>
           </div>
         </nav>
       </header>
@@ -212,7 +212,7 @@ expression[int _p]
 the current rule</li>
 <li>GetNextPrecedence() is used to determine the next higher level of precedence for any child expressions</li>
 </ol>
-<p>These are implemented in the partial extension of the parser:</p>
+<p>These are implemented in the partial class extension of the parser:</p>
 <pre><code class="lang-C#">private int GetPrecedence( )
 {
     return GlobalState.GetPrecedence( _input.Lt( 1 ).Type );
@@ -228,8 +228,8 @@ only executed if the precedence is greater than or equal to the current preceden
 matches expressions of a higher precedence by doing a look-behind one token to get the next precedence
 level. The custom parser functions are pretty small since they defer the real work to the GlobalState
 instance provided when constructing the parser. The state is an instance of the DynamicRuntimeState class.
-Up until now this state was only used to determine the language features to enable. With dynamic precedence
-for user operators the state maintains a pair of tables of operator information that includes the symbol
+Up until now, this state was only used to determine the language features to enable. With dynamic precedence
+for user operators, the state maintains a pair of tables of operator information that includes the symbol
 for the operator and precedence:</p>
 <pre><code class="lang-C#">private OperatorInfoCollection UnaryOps = new OperatorInfoCollection( );
 
@@ -283,10 +283,7 @@ internal int GetNextPrecedence( int tokenType )
 </code></pre><p>This provides the core ability for looking up and handling precedence. Though, as shown so far, it is just
 a rather convoluted form of what ANTLR4 gives us for free. The real point of this runtime state is the
 ability of the language to dynamically add user operators. By adding operators to the runtime state the
-lookup process will include them during parsing. Thus, whenever visiting an operator definition it is generated
-as a normal function with a specialized name and the operator and precedence are added to the runtime state.
-Any future use of the operator in an expression will detect the correct precedence and the code generation
-treats it as a function call with the appropriate left and right hand argument values.</p>
+lookup process will include them during parsing.</p>
 <p>Actually adding the operators to the table is handled in the parsing process itself using a feature of the
 ANTLR generated parser called a &quot;Parse Listener&quot;. A parse listener is attached to the parser and effectively
 monitors the entire parsing process. For the user operators the listener will listen for the specific case
@@ -349,7 +346,7 @@ public override IAstNode VisitUnaryPrototype( [NotNull] UnaryPrototypeContext co
 {
     return BuildPrototype( context, CreateUnaryFunctionName( context.OpToken ) );
 }
-</code></pre><p>During construction of the AST all occurances of a user defined operator expression are transformed into a function call for the
+</code></pre><p>During construction of the AST all occurrences of a user defined operator expression are transformed into a function call for the
 function that actually implements the behavior for the operator.</p>
 <pre><code class="lang-csharp" name="UserBinaryOpExpression">default:
     {
@@ -387,9 +384,9 @@ function that actually implements the behavior for the operator.</p>
 <p>If you compare the code generation and driver code between Chapter 5 and Chapter 6 you&#39;ll see the only difference is the
 language level setting, it got a bump (Literally a single enum on one line of each component). Everything else is identical.
 This is because the real work is on the parser and AST not the code generation. This is where having a good parser + AST model
-can help keep the code generation simpler. If the parse tree alone was used, then the code generation would need additional code
-similar to what is found in the AST generation. Putting it into the AST generation keeps things much cleaner as, obviously, the
-support for user defined operators and precedence has nothing to do with code generation. Keeping the code generation simpler is
+can help keep the code generation simpler. If the parse tree alone was used, then the code generation would need additional
+support similar to what is found in the AST generation. Putting it into the AST generation keeps things much cleaner as, obviously,
+the support for user defined operators and precedence has nothing to do with code generation. Keeping the code generation simpler is
 generally a really good thing!</p>
 <p>That completes the support for user defined operators.</p>
 <h3 id="example">Example</h3>
@@ -509,11 +506,11 @@ Evaluated to 0
 Ready&gt;
 </code></pre><h2 id="conclusion">Conclusion</h2>
 <p>Adding user defined operators with user defined precedence is fairly straight forward to implement in
-terms of the code generation. No new code generation is required. ANTLR4 has support for left-recursion
-in the grammar and precedence of expressions. Even though ANTLR only directly supports fixed precedence it is
-rather easy to extend the underlying support to handle dynamic precedence and associativity, once the underlying
-mechanics are understood. The rest is on the Ast construction as it converts the user defined operators to
-function definitions and function calls. </p>
+terms of the code generation. No new code generation is required (Can&#39;t get any simpler than that! <span class="emoji" shortcode="grin">😁</span> ).
+ANTLR4 has support for left-recursion in the grammar and precedence of expressions. Even though ANTLR only
+directly supports fixed precedence it is rather easy to extend the underlying support to handle dynamic
+precedence and associativity, once the underlying mechanics are understood. The rest is on the AST
+construction as it converts the user defined operators to function definitions and function calls. </p>
 <p>If you compare the code generation and driver code between Chapter 5 and Chapter 6 you&#39;ll see the only difference is the
 language level setting, it got a bump (Literally a single enum on one line of each component). Everything else is identical.
 This is because the real work is on the parser and AST not the code generation. This is where having a good parser + AST model
@@ -523,7 +520,7 @@ support for user defined operators and precedence has nothing to do with code ge
 generally a really good thing! </p>
 <div class="TIP"><h5>Tip</h5><p>An early version of these samples skipped the use of an AST and used the parse tree directly. You can compare the history of
 the generators for that transition to see how the AST helps simplify the code generation. (Not to mention sets the stage for
-an otherwise un-implemented feature - truly lazy compilation.)</p>
+an otherwise unimplemented feature - truly lazy compilation, which is covered in <a href="Kaleidoscope-ch7.1.html">Chapter 7.1</a>.)</p>
 </div>
 </article>
           </div>
@@ -547,7 +544,7 @@ an otherwise un-implemented feature - truly lazy compilation.)</p>
             <span class="pull-right">
               <a href="#top">Back to top</a>
             </span>
-            Copyright (C) 2017, Dot NET Foundation<br><strong>Build:</strong> 6.0.1-rc.0.0.ci-BLD.449714430
+            Copyright (C) 2017, Dot NET Foundation<br><strong>Build:</strong> 6.0.1-rc.0.0.ci-BLD.454039755
             
           </div>
         </div>
