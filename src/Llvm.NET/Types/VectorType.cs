@@ -4,6 +4,7 @@
 
 using System;
 using Llvm.NET.Native;
+using Llvm.NET.Properties;
 
 // Interface+internal type matches file name
 #pragma warning disable SA1649
@@ -29,7 +30,7 @@ namespace Llvm.NET.Types
         {
             if( NativeMethods.LLVMGetTypeKind( typeRef ) != LLVMTypeKind.LLVMVectorTypeKind )
             {
-                throw new ArgumentException( "Vector type reference expected", nameof( typeRef ) );
+                throw new ArgumentException( Resources.Vector_type_reference_expected, nameof( typeRef ) );
             }
         }
     }

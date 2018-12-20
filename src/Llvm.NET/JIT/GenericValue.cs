@@ -4,6 +4,7 @@
 
 using System;
 using Llvm.NET.Native;
+using Llvm.NET.Properties;
 using Llvm.NET.Types;
 using Ubiquity.ArgValidators;
 
@@ -23,7 +24,7 @@ namespace Llvm.NET.JIT
             t.ValidateNotNull( nameof( t ) );
             if( !t.IsInteger )
             {
-                throw new ArgumentException( "Type must be an integral data type", nameof( t ) );
+                throw new ArgumentException( Resources.Type_must_be_an_integral_data_type, nameof( t ) );
             }
 
             Handle = LLVMCreateGenericValueOfInt( t.GetTypeRef( ), value, isSigned );
@@ -37,7 +38,7 @@ namespace Llvm.NET.JIT
             t.ValidateNotNull( nameof( t ) );
             if( !t.IsFloatingPoint )
             {
-                throw new ArgumentException( "Type must be a floating point data type", nameof( t ) );
+                throw new ArgumentException( Resources.Type_must_be_a_floating_point_data_type, nameof( t ) );
             }
 
             Handle = LLVMCreateGenericValueOfFloat( t.GetTypeRef( ), value );

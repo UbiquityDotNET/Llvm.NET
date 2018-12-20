@@ -2,12 +2,11 @@
 // Copyright (c) .NET Foundation. All rights reserved.
 // </copyright>
 
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using Llvm.NET.Native;
 using Llvm.NET.Values;
-
+using Ubiquity.ArgValidators;
 using static Llvm.NET.Native.NativeMethods;
 
 namespace Llvm.NET.Instructions
@@ -63,10 +62,7 @@ namespace Llvm.NET.Instructions
         /// <inheritdoc/>
         public AttributeValue GetAttributeAtIndex( FunctionAttributeIndex index, string name )
         {
-            if( string.IsNullOrWhiteSpace( name ) )
-            {
-                throw new ArgumentException( "name cannot be null or empty", nameof( name ) );
-            }
+            name.ValidateNotNullOrWhiteSpace( nameof( name ) );
 
             var handle = LLVMGetCallSiteStringAttribute( ValueHandle, ( LLVMAttributeIndex )index, name, ( uint )name.Length );
             return AttributeValue.FromHandle( Context, handle );

@@ -8,6 +8,7 @@ using System.Diagnostics.CodeAnalysis;
 using System.Runtime.InteropServices;
 using JetBrains.Annotations;
 using Llvm.NET.Native;
+using Llvm.NET.Properties;
 using Llvm.NET.Types;
 using Llvm.NET.Values;
 using Ubiquity.ArgValidators;
@@ -53,10 +54,10 @@ namespace Llvm.NET
     /// |-----------------|------------|
     /// | SizeInBits      | Minimum number of bits needed to represent the full range of values for the type |
     /// | StoreSizeInBits | Minimum number of bits needed to actually store a *single* value of the type |
-    /// | AbiSizeInBits   | Total number of bits used to store a value in a sequence, including any alignement padding |
+    /// | AbiSizeInBits   | Total number of bits used to store a value in a sequence, including any alignment padding |
     ///
-    /// The alloc size determines the total size of each entry in a sequence so that the "next" element is computed
-    /// by adding the alloc size to the the start address of the current element.
+    /// The allocation size determines the total size of each entry in a sequence so that the "next" element is computed
+    /// by adding the size to the start address of the current element.
     /// </remarks>
     public sealed class DataLayout
     {
@@ -222,7 +223,7 @@ namespace Llvm.NET
         /// <summary>Gets the preferred alignment of the type in bits</summary>
         /// <param name="llvmType">Type to get the alignment of</param>
         /// <returns>Alignment of the type</returns>
-        public uint PreferredBitAlignementOf( ITypeRef llvmType ) => PreferredAlignmentOf( llvmType ) * 8;
+        public uint PreferredBitAlignmentOf( ITypeRef llvmType ) => PreferredAlignmentOf( llvmType ) * 8;
 
         /// <summary>Gets the ABI alignment of the type in bits</summary>
         /// <param name="llvmType">Type to get the alignment of</param>
@@ -258,6 +259,7 @@ namespace Llvm.NET
 
         internal LLVMTargetDataRef DataLayoutHandle { get; }
 
+        // ReSharper disable once ParameterOnlyUsedForPreconditionCheck.Local
         private static void VerifySized( [ValidatedNotNull] ITypeRef type, [InvokerParameterName] string name )
         {
             if( type == null )
@@ -267,12 +269,13 @@ namespace Llvm.NET
 
             if( !type.IsSized )
             {
-                throw new ArgumentException( "Type must be sized to get target size information", name );
+                throw new ArgumentException( Resources.Type_must_be_sized_to_get_target_size_information, name );
             }
         }
 
         private static readonly Dictionary<LLVMTargetDataRef, DataLayout> TargetDataMap = new Dictionary<LLVMTargetDataRef, DataLayout>( );
 
+        // ReSharper disable IdentifierTypo
         [DllImport( LibraryPath, EntryPoint = "LLVMCopyStringRepOfTargetData", CallingConvention = CallingConvention.Cdecl )]
         [return: MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( StringMarshaler ), MarshalCookie = "DisposeMessage" )]
         private static extern string LLVMCopyStringRepOfTargetData( LLVMTargetDataRef TD );
@@ -285,12 +288,6 @@ namespace Llvm.NET
 
         [DllImport( LibraryPath, EntryPoint = "LLVMPointerSizeForAS", CallingConvention = CallingConvention.Cdecl )]
         private static extern uint LLVMPointerSizeForAS( LLVMTargetDataRef TD, uint AS );
-
-        [DllImport( LibraryPath, EntryPoint = "LLVMIntPtrType", CallingConvention = CallingConvention.Cdecl )]
-        private static extern LLVMTypeRef LLVMIntPtrType( LLVMTargetDataRef TD );
-
-        [DllImport( LibraryPath, EntryPoint = "LLVMIntPtrTypeForAS", CallingConvention = CallingConvention.Cdecl )]
-        private static extern LLVMTypeRef LLVMIntPtrTypeForAS( LLVMTargetDataRef TD, uint AS );
 
         [DllImport( LibraryPath, EntryPoint = "LLVMIntPtrTypeInContext", CallingConvention = CallingConvention.Cdecl )]
         private static extern LLVMTypeRef LLVMIntPtrTypeInContext( LLVMContextRef C, LLVMTargetDataRef TD );

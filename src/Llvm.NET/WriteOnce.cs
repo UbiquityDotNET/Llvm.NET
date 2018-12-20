@@ -4,6 +4,7 @@
 
 using System;
 using System.Diagnostics;
+using Llvm.NET.Properties;
 
 namespace Llvm.NET
 {
@@ -14,7 +15,7 @@ namespace Llvm.NET
     /// outside the context of a constructor, but once set should never be set again.
     /// Allowing a sort of lazy <see langword="readonly"/>.
     /// </remarks>
-    [DebuggerDisplay( "{ValueOrDefault}" )]
+    [DebuggerDisplay( "{" + nameof(ValueOrDefault) + "}" )]
     internal sealed class WriteOnce<T>
     {
         /// <inheritdoc/>
@@ -32,7 +33,7 @@ namespace Llvm.NET
             {
                 if( !HasValue )
                 {
-                    throw new InvalidOperationException( "Value not set" );
+                    throw new InvalidOperationException( Resources.Value_not_set );
                 }
 
                 return ActualValue;
@@ -42,7 +43,7 @@ namespace Llvm.NET
             {
                 if( HasValue )
                 {
-                    throw new InvalidOperationException( "Value already set" );
+                    throw new InvalidOperationException( Resources.Value_already_set );
                 }
 
                 ActualValue = value;

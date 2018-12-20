@@ -11,6 +11,7 @@ namespace Llvm.NET.DebugInfo
     public class DINamespace
         : DIScope
     {
+        // ReSharper disable IdentifierTypo
         /* TODO: non-operand properties
         public bool ExportSymbols => LLVMDINamespaceGetExportSymbols( MetadataHandle );
         */

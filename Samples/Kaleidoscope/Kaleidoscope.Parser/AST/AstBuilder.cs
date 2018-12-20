@@ -79,14 +79,13 @@ namespace Kaleidoscope.Grammar.AST
         {
             BeginFunctionDefinition( );
 
-            IExpression body;
             var sig = ( Prototype )context.Signature.Accept( this );
             foreach( var param in sig.Parameters )
             {
                 Push( param );
             }
 
-            body = ( IExpression )context.BodyExpression.Accept( this );
+            var body = ( IExpression )context.BodyExpression.Accept( this );
 
             var retVal = new FunctionDefinition( context.GetSourceSpan( )
                                                , sig
@@ -107,7 +106,7 @@ namespace Kaleidoscope.Grammar.AST
             return retVal;
         }
 
-        // <UnaryOpExpression>
+        #region UnaryOpExpression
         public override IAstNode VisitUnaryOpExpression( [NotNull] UnaryOpExpressionContext context )
         {
             // verify the operator was previously defined
@@ -127,7 +126,7 @@ namespace Kaleidoscope.Grammar.AST
             var arg = ( IExpression )context.Rhs.Accept( this );
             return new FunctionCallExpression( context.GetSourceSpan( ), function, arg );
         }
-        // </UnaryOpExpression>
+        #endregion
 
         public override IAstNode VisitFullsrc( [NotNull] FullsrcContext context )
         {
@@ -168,7 +167,7 @@ namespace Kaleidoscope.Grammar.AST
         {
             var initializer = ( LocalVariableDeclaration )context.Initializer.Accept( this );
 
-            ForInExpression retVal = null;
+            ForInExpression retVal;
             using( NamedValues.EnterScope( ) )
             {
                 Push( initializer );
@@ -220,7 +219,7 @@ namespace Kaleidoscope.Grammar.AST
                                                );
         }
 
-        // <UserOperatorPrototypes>
+        #region UserOperatorPrototypes
         public override IAstNode VisitBinaryPrototype( [NotNull] BinaryPrototypeContext context )
         {
             return BuildPrototype( context, CreateBinaryFunctionName( context.OpToken ) );
@@ -230,7 +229,7 @@ namespace Kaleidoscope.Grammar.AST
         {
             return BuildPrototype( context, CreateUnaryFunctionName( context.OpToken ) );
         }
-        // </UserOperatorPrototypes>
+        #endregion
 
         protected override IAstNode DefaultResult => null;
 
@@ -281,7 +280,7 @@ namespace Kaleidoscope.Grammar.AST
             case ASSIGN:
                 return new BinaryOperatorExpression( op.GetSourceSpan( ), lhs, BuiltInOperatorKind.Assign, rhs );
 
-            // <UserBinaryOpExpression>
+            #region UserBinaryOpExpression
             default:
                 {
                     // User defined op?
@@ -295,7 +294,7 @@ namespace Kaleidoscope.Grammar.AST
                     Prototype callTarget = FindCallTarget( calleeName );
                     return new FunctionCallExpression( op.GetSourceSpan( ), callTarget, lhs, rhs );
                 }
-            // </UserBinaryOpExpression>
+            #endregion
             }
         }
 

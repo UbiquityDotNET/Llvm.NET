@@ -10,7 +10,7 @@ using System.Collections.Generic;
 
 namespace Llvm.NET
 {
-    internal interface IHandleInterning<THandle, TMappedType>
+    internal interface IHandleInterning<in THandle, out TMappedType>
         : IEnumerable<TMappedType>
     {
         Context Context { get; }

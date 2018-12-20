@@ -6,7 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Runtime.InteropServices;
 using Llvm.NET.Native;
-
+using Llvm.NET.Properties;
 using static Llvm.NET.Native.NativeMethods;
 
 namespace Llvm.NET.JIT
@@ -47,7 +47,7 @@ namespace Llvm.NET.JIT
         /// </remarks>
         public IJitModuleHandle AddModule( BitcodeModule module )
         {
-            return (JitModuleHandle<LLVMOrcModuleHandle> )AddModule( module, DefaultSymbolResolver );
+            return ( JitModuleHandle<LLVMOrcModuleHandle> )AddModule( module, DefaultSymbolResolver );
         }
 
         /// <summary>Add a module to the engine</summary>
@@ -81,7 +81,7 @@ namespace Llvm.NET.JIT
             // function and the address of that function is returned.
             var err = LLVMOrcAddLazilyCompiledIR( JitStackHandle, out LLVMOrcModuleHandle retHandle, module.SharedModuleRef, wrappedResolver.NativeFuncPtr, IntPtr.Zero );
 #endif
-            if(err != LLVMOrcErrorCode.LLVMOrcErrSuccess )
+            if( err != LLVMOrcErrorCode.LLVMOrcErrSuccess )
             {
                 throw new Exception( LLVMOrcGetErrorMsg( JitStackHandle ) );
             }
@@ -96,7 +96,7 @@ namespace Llvm.NET.JIT
         {
             if( !( handle is JitModuleHandle<LLVMOrcModuleHandle> orcHandle ) )
             {
-                throw new ArgumentException( "Invalid handle provided", nameof( handle ) );
+                throw new ArgumentException( Resources.Invalid_handle_provided, nameof( handle ) );
             }
 
             var err = LLVMOrcRemoveModule( JitStackHandle, orcHandle );
@@ -116,7 +116,7 @@ namespace Llvm.NET.JIT
                 var err = LLVMOrcGetSymbolAddress( JitStackHandle, out LLVMOrcTargetAddress retAddr, name );
                 if( err != LLVMOrcErrorCode.LLVMOrcErrSuccess )
                 {
-                    throw new InvalidOperationException($"Unresolved Symbol: '{name}'; {LLVMOrcGetErrorMsg( JitStackHandle )}");
+                    throw new InvalidOperationException( string.Format( Resources.Unresolved_Symbol_0_1, name, LLVMOrcGetErrorMsg( JitStackHandle ) ) );
                 }
 
                 if( retAddr.Address != 0 )
@@ -152,7 +152,7 @@ namespace Llvm.NET.JIT
 
             if( retAddr.Address == 0 )
             {
-                throw new KeyNotFoundException( $"Function {name} not found" );
+                throw new KeyNotFoundException( string.Format( Resources.Function_0_not_found, name ) );
             }
 
             return Marshal.GetDelegateForFunctionPointer<T>( ( IntPtr )retAddr.Address );
@@ -180,7 +180,7 @@ namespace Llvm.NET.JIT
         public void AddInteropCallback( string symbolName, Delegate @delegate )
         {
             LLVMOrcGetMangledSymbol( JitStackHandle, out string mangledName, symbolName );
-            if(GlobalInteropFunctions.TryGetValue( mangledName, out WrappedNativeCallback existingCallback ))
+            if( GlobalInteropFunctions.TryGetValue( mangledName, out WrappedNativeCallback existingCallback ) )
             {
                 GlobalInteropFunctions.Remove( mangledName );
                 existingCallback.Dispose( );
@@ -215,25 +215,25 @@ namespace Llvm.NET.JIT
             LLVMOrcGetMangledSymbol( JitStackHandle, out string mangledName, name );
 
             // wrap the provided generator function for a safe native callback
-            LLVMOrcTargetAddress CompileAction(IntPtr ctx)
+            LLVMOrcTargetAddress CompileAction( IntPtr ctx )
             {
                 try
                 {
-                    (string implName, BitcodeModule module) = generator();
-                    if(module == null)
+                    (string implName, BitcodeModule module) = generator( );
+                    if( module == null )
                     {
                         return default;
                     }
 
                     AddModule( module );
                     var err = LLVMOrcGetSymbolAddress( JitStackHandle, out LLVMOrcTargetAddress implAddr, implName );
-                    if(err != LLVMOrcErrorCode.LLVMOrcErrSuccess)
+                    if( err != LLVMOrcErrorCode.LLVMOrcErrSuccess )
                     {
                         throw new Exception( LLVMOrcGetErrorMsg( JitStackHandle ) );
                     }
 
                     err = LLVMOrcSetIndirectStubPointer( JitStackHandle, mangledName, implAddr );
-                    if(err != LLVMOrcErrorCode.LLVMOrcErrSuccess)
+                    if( err != LLVMOrcErrorCode.LLVMOrcErrSuccess )
                     {
                         throw new Exception( LLVMOrcGetErrorMsg( JitStackHandle ) );
                     }
@@ -247,7 +247,7 @@ namespace Llvm.NET.JIT
                 }
             }
 
-            var callbackAction = new WrappedNativeCallback( (LazyFunctionGeneratorCallback) CompileAction );
+            var callbackAction = new WrappedNativeCallback( ( LazyFunctionGeneratorCallback )CompileAction );
             LazyFunctionGenerators.Add( mangledName, callbackAction );
 
             var e = LLVMOrcCreateLazyCompileCallback( JitStackHandle, out LLVMOrcTargetAddress stubAddr, callbackAction.NativeFuncPtr, context );
@@ -277,9 +277,9 @@ namespace Llvm.NET.JIT
             DisposeCallbacks( LazyFunctionGenerators );
         }
 
-        private static void DisposeCallbacks<T>(IDictionary<T,WrappedNativeCallback> map)
+        private static void DisposeCallbacks<T>( IDictionary<T, WrappedNativeCallback> map )
         {
-            foreach( var callBack in map.Values)
+            foreach( var callBack in map.Values )
             {
                 callBack.Dispose( );
             }
@@ -290,14 +290,15 @@ namespace Llvm.NET.JIT
         [UnmanagedFunctionPointer( CallingConvention.Cdecl )]
         private delegate LLVMOrcTargetAddress LazyFunctionGeneratorCallback( IntPtr ctx );
 
-        private Dictionary<string, WrappedNativeCallback> GlobalInteropFunctions = new Dictionary<string, WrappedNativeCallback>();
+        private readonly Dictionary<string, WrappedNativeCallback> GlobalInteropFunctions = new Dictionary<string, WrappedNativeCallback>();
 
-        private Dictionary<LLVMOrcModuleHandle, WrappedNativeCallback> SymbolResolvers = new Dictionary<LLVMOrcModuleHandle, WrappedNativeCallback>();
+        private readonly Dictionary<LLVMOrcModuleHandle, WrappedNativeCallback> SymbolResolvers = new Dictionary<LLVMOrcModuleHandle, WrappedNativeCallback>();
 
-        private Dictionary<string, WrappedNativeCallback> LazyFunctionGenerators = new Dictionary<string, WrappedNativeCallback>();
+        private readonly Dictionary<string, WrappedNativeCallback> LazyFunctionGenerators = new Dictionary<string, WrappedNativeCallback>();
 
         private readonly LLVMOrcJITStackRef JitStackHandle;
 
+        /*
         [DllImport( LibraryPath, CallingConvention = CallingConvention.Cdecl )]
         private static extern LLVMSharedObjectBufferRef LLVMOrcMakeSharedObjectBuffer( LLVMMemoryBufferRef ObjBuffer );
 
@@ -305,9 +306,16 @@ namespace Llvm.NET.JIT
         private static extern void LLVMOrcDisposeSharedObjectBufferRef( IntPtr SharedObjBuffer );
 
         [DllImport( LibraryPath, CallingConvention = CallingConvention.Cdecl )]
+        private static extern LLVMOrcErrorCode LLVMOrcAddEagerlyCompiledIR( LLVMOrcJITStackRef JITStack, out LLVMOrcModuleHandle retHandle, LLVMSharedModuleRef Mod, IntPtr SymbolResolver, IntPtr SymbolResolverCtx );
+
+        [DllImport( LibraryPath, CallingConvention = CallingConvention.Cdecl )]
+        private static extern LLVMOrcErrorCode LLVMOrcAddObjectFile( LLVMOrcJITStackRef JITStack, out LLVMOrcModuleHandle retHandle, LLVMSharedObjectBufferRef Obj, IntPtr SymbolResolver, IntPtr SymbolResolverCtx );
+        */
+
+        [DllImport( LibraryPath, CallingConvention = CallingConvention.Cdecl )]
         private static extern LLVMOrcJITStackRef LLVMOrcCreateInstance( LLVMTargetMachineRef TM );
 
-        [DllImport( LibraryPath, CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi, ThrowOnUnmappableChar = true, BestFitMapping = false)]
+        [DllImport( LibraryPath, CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi, ThrowOnUnmappableChar = true, BestFitMapping = false )]
         [return: MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( StringMarshaler ) )]
         private static extern string LLVMOrcGetErrorMsg( LLVMOrcJITStackRef JITStack );
 
@@ -327,13 +335,7 @@ namespace Llvm.NET.JIT
         private static extern LLVMOrcErrorCode LLVMOrcSetIndirectStubPointer( LLVMOrcJITStackRef JITStack, [MarshalAs( UnmanagedType.LPStr )] string StubName, LLVMOrcTargetAddress NewAddr );
 
         [DllImport( LibraryPath, CallingConvention = CallingConvention.Cdecl )]
-        private static extern LLVMOrcErrorCode LLVMOrcAddEagerlyCompiledIR( LLVMOrcJITStackRef JITStack, out LLVMOrcModuleHandle retHandle, LLVMSharedModuleRef Mod, IntPtr SymbolResolver, IntPtr SymbolResolverCtx );
-
-        [DllImport( LibraryPath, CallingConvention = CallingConvention.Cdecl )]
         private static extern LLVMOrcErrorCode LLVMOrcAddLazilyCompiledIR( LLVMOrcJITStackRef JITStack, out LLVMOrcModuleHandle retHandle, LLVMSharedModuleRef Mod, IntPtr SymbolResolver, IntPtr SymbolResolverCtx );
-
-        [DllImport( LibraryPath, CallingConvention = CallingConvention.Cdecl )]
-        private static extern LLVMOrcErrorCode LLVMOrcAddObjectFile( LLVMOrcJITStackRef JITStack, out LLVMOrcModuleHandle retHandle, LLVMSharedObjectBufferRef Obj, IntPtr SymbolResolver, IntPtr SymbolResolverCtx );
 
         [DllImport( LibraryPath, CallingConvention = CallingConvention.Cdecl )]
         private static extern LLVMOrcErrorCode LLVMOrcRemoveModule( LLVMOrcJITStackRef JITStack, LLVMOrcModuleHandle H );

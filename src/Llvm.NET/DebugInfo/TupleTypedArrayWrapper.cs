@@ -7,6 +7,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
+using Llvm.NET.Properties;
 
 namespace Llvm.NET.DebugInfo
 {
@@ -35,7 +36,7 @@ namespace Llvm.NET.DebugInfo
             {
                 if( Tuple == null )
                 {
-                    throw new InvalidOperationException( "Wrapped node is null" );
+                    throw new InvalidOperationException( Resources.Wrapped_node_is_null );
                 }
 
                 if( index > Tuple.Operands.Count )

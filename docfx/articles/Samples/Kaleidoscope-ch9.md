@@ -62,7 +62,7 @@ Another point to note is that the module ID is derived from the source file path
 is provided so that it becomes the root compile unit.
 
 >[!IMPORTANT]
-> It is important to note that when using the DIBuilder it must be "finalized" inorder to resolve internal
+> It is important to note that when using the DIBuilder it must be "finalized" in order to resolve internal
 > forward references in the debug metadata. The exact details of this aren't generally relevant, just
 > remember that somewhere after generating all code and debug information to call the 
 > [Finish](xref:Llvm.NET.DebugInfo.DebugInfoBuilder.Finish(Llvm.NET.DebugInfo.DISubProgram))

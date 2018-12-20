@@ -145,7 +145,7 @@ namespace Llvm.NET.Tests
             var targetMachine = TargetTests.GetTargetMachine( );
             using( var context = new Context( ) )
             {
-                var module = context.CreateBitcodeModule( "test.bc", SourceLanguage.CSharp, "test.cs", "unittests" );
+                var module = context.CreateBitcodeModule( "test.bc", SourceLanguage.CSharp, "test.cs", "unit-tests" );
                 Assert.IsNotNull( module );
                 module.Layout = targetMachine.TargetData;
 
@@ -178,7 +178,7 @@ namespace Llvm.NET.Tests
                 Assert.IsFalse( funcSig.IsVoid );
 
                 Assert.IsNotNull( funcSig.DIType );
-                var subroutineType = funcSig.DIType as DISubroutineType;
+                var subroutineType = funcSig.DIType;
                 Assert.IsNotNull( subroutineType );
                 Assert.AreSame( context, subroutineType.Context );
                 Assert.AreEqual( DebugInfoFlags.None, subroutineType.DebugInfoFlags );
@@ -195,7 +195,7 @@ namespace Llvm.NET.Tests
             var targetMachine = TargetTests.GetTargetMachine( );
             using( var context = new Context( ) )
             {
-                var module = context.CreateBitcodeModule( "test.bc", SourceLanguage.CSharp, "test.cs", "unittests" );
+                var module = context.CreateBitcodeModule( "test.bc", SourceLanguage.CSharp, "test.cs", "unit-tests" );
                 Assert.IsNotNull( module );
                 module.Layout = targetMachine.TargetData;
 
@@ -673,7 +673,7 @@ namespace Llvm.NET.Tests
                 Assert.AreEqual( 2.0, ( ( ConstantFP )value.Operands[ 1 ] ).Value );
                 Assert.AreEqual( -3L, ( ( ConstantInt )value.Operands[ 3 ] ).SignExtendedValue );
 
-                // verify the nested struct is genrated correctly
+                // verify the nested struct is generated correctly
                 var nestedConst = ( Constant )value.Operands[ 2 ];
                 Assert.IsInstanceOfType( nestedConst.Operands[ 0 ], typeof( ConstantInt ) );
                 Assert.IsInstanceOfType( nestedConst.Operands[ 1 ], typeof( ConstantDataArray ) );
@@ -949,7 +949,7 @@ namespace Llvm.NET.Tests
         {
             using( var context = new Context() )
             {
-                string content = "Test MDString";
+                const string content = "Test MDString";
                 var mdstring = context.CreateMetadataString( content );
                 Assert.IsNotNull( mdstring );
                 Assert.AreEqual( content, mdstring.ToString( ) );

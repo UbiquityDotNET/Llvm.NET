@@ -13,7 +13,7 @@ namespace Llvm.NET.DebugInfo
     public class DINode
         : MDNode
     {
-        /// <summary>Gets the Dwarf tag for the descriptor</summary>
+        /// <summary>Gets the Dwarf tag for the node</summary>
         public Tag Tag
         {
             get
@@ -32,6 +32,7 @@ namespace Llvm.NET.DebugInfo
         {
         }
 
+        // ReSharper disable IdentifierTypo
         [DllImport( LibraryPath, CallingConvention = CallingConvention.Cdecl)]
         private static extern LLVMDwarfTag LLVMDIDescriptorGetTag( LLVMMetadataRef descriptor );
     }

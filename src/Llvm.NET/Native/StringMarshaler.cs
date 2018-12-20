@@ -6,6 +6,7 @@ using System;
 using System.Diagnostics.CodeAnalysis;
 using System.Runtime.InteropServices;
 using System.Text.RegularExpressions;
+using Llvm.NET.Properties;
 
 namespace Llvm.NET.Native
 {
@@ -56,7 +57,7 @@ namespace Llvm.NET.Native
                 return new StringMarshaler( LLVMOrcDisposeMangledSymbol );
 
             default:
-                throw new ArgumentException( $"'{cookie}' is not a valid option", nameof( cookie ) );
+                throw new ArgumentException( string.Format(Resources._0_is_not_a_valid_option, cookie), nameof( cookie ) );
             }
         }
 

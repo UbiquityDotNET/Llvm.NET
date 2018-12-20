@@ -2,6 +2,8 @@
 // Copyright (c) .NET Foundation. All rights reserved.
 // </copyright>
 
+using System;
+using JetBrains.Annotations;
 using Kaleidoscope.Grammar.AST;
 
 namespace Kaleidoscope.Runtime
@@ -16,6 +18,7 @@ namespace Kaleidoscope.Runtime
     {
         /// <summary>Generates output from the tree</summary>
         /// <param name="tree">Tree to generate</param>
+        /// <param name="codeGenerationErroHandler">Error handling action for code generator errors</param>
         /// <returns>Generated result</returns>
         /// <remarks>
         /// <para>The behavior of this method depends on the implementation. The common case is to
@@ -29,7 +32,11 @@ namespace Kaleidoscope.Runtime
         /// will create stubs for each function definition. When those functions are called, the stubs trigger a
         /// callback to the application that will then generate the code for the function "on the fly". In this case,
         /// only a top level expression is immediately generated/executed.</para>
+        /// <para>For <typeparamref name="TResult"/> that is a value type the default value for the type is special
+        /// and indicates no result. This is used when a <see cref="CodeGeneratorException"/> is swallowed, and
+        /// reported to the caller via the provided <paramref name="codeGenerationErroHandler"/> for reference types
+        /// null is returned. Thus the default value indicates an unusable result</para>
         /// </remarks>
-        TResult Generate( IAstNode tree );
+        TResult Generate( IAstNode tree, [CanBeNull] Action<CodeGeneratorException> codeGenerationErroHandler );
     }
 }

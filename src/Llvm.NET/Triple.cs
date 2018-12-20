@@ -6,6 +6,7 @@ using System;
 using System.Diagnostics.CodeAnalysis;
 using System.Runtime.InteropServices;
 using Llvm.NET.Native;
+using Llvm.NET.Properties;
 using Ubiquity.ArgValidators;
 
 using static Llvm.NET.Native.NativeMethods;
@@ -540,6 +541,19 @@ namespace Llvm.NET
         /// <summary>Gets the object format type for the triple</summary>
         public ObjectFormatType ObjectFormat => ( ObjectFormatType )LLVMTripleGetObjectFormatType( TripleHandle );
 
+        /// <summary>Gets the version number of the environment</summary>
+        public Version EnvironmentVersion
+        {
+            get
+            {
+                LLVMTripleGetEnvironmentVersion( TripleHandle, out uint major, out uint minor, out uint micro );
+                checked
+                {
+                    return new Version( ( int )major, ( int )minor, ( int )micro );
+                }
+            }
+        }
+
         /// <summary>Retrieves the canonical name for an architecture type</summary>
         /// <param name="archType">Architecture type</param>
         /// <returns>String name for the architecture</returns>
@@ -592,12 +606,7 @@ namespace Llvm.NET
                 return false;
             }
 
-            if( ReferenceEquals( this, other ) )
-            {
-                return true;
-            }
-
-            return LLVMTripleOpEqual( TripleHandle, other.TripleHandle );
+            return ReferenceEquals( this, other ) || LLVMTripleOpEqual( TripleHandle, other.TripleHandle );
         }
 
         /// <summary>Equality test for a triple</summary>
@@ -703,7 +712,7 @@ namespace Llvm.NET
                 return ObjectFormatType.ELF;
 
             default:
-                throw new ArgumentException( "Unsupported Architecture", nameof( arch ) );
+                throw new ArgumentException( Resources.Unsupported_Architecture, nameof( arch ) );
             }
         }
 
@@ -807,9 +816,10 @@ namespace Llvm.NET
         [DllImport( LibraryPath, CallingConvention = CallingConvention.Cdecl, BestFitMapping = false, ThrowOnUnmappableChar = true )]
         private static extern LLVMTripleOSType LLVMTripleGetOsType( LLVMTripleRef triple );
 
-        [DllImport( LibraryPath, CallingConvention = CallingConvention.Cdecl, BestFitMapping = false, ThrowOnUnmappableChar = true )]
+        /*[DllImport( LibraryPath, CallingConvention = CallingConvention.Cdecl, BestFitMapping = false, ThrowOnUnmappableChar = true )]
         [return: MarshalAs( UnmanagedType.Bool )]
         private static extern bool LLVMTripleHasEnvironment( LLVMTripleRef triple );
+        */
 
         [DllImport( LibraryPath, CallingConvention = CallingConvention.Cdecl, BestFitMapping = false, ThrowOnUnmappableChar = true )]
         private static extern LLVMTripleEnvironmentType LLVMTripleGetEnvironmentType( LLVMTripleRef triple );
@@ -852,6 +862,6 @@ namespace Llvm.NET
         [return: MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( StringMarshaler ), MarshalCookie = "DisposeMessage" )]
         private static extern string LLVMNormalizeTriple( [MarshalAs( UnmanagedType.LPStr )] string triple );
 
-        private LLVMTripleRef TripleHandle;
+        private readonly LLVMTripleRef TripleHandle;
     }
 }

@@ -63,7 +63,7 @@ Two custom functions are used to handle the dynamic runtime defined nature of th
 the current rule
 2. GetNextPrecedence() is used to determine the next higher level of precedence for any child expressions
 
-These are implemented in the partial extension of the parser:
+These are implemented in the partial class extension of the parser:
 ```C#
 private int GetPrecedence( )
 {
@@ -82,8 +82,8 @@ only executed if the precedence is greater than or equal to the current preceden
 matches expressions of a higher precedence by doing a look-behind one token to get the next precedence
 level. The custom parser functions are pretty small since they defer the real work to the GlobalState
 instance provided when constructing the parser. The state is an instance of the DynamicRuntimeState class.
-Up until now this state was only used to determine the language features to enable. With dynamic precedence
-for user operators the state maintains a pair of tables of operator information that includes the symbol
+Up until now, this state was only used to determine the language features to enable. With dynamic precedence
+for user operators, the state maintains a pair of tables of operator information that includes the symbol
 for the operator and precedence:
 
 ```C#
@@ -145,10 +145,7 @@ internal int GetNextPrecedence( int tokenType )
 This provides the core ability for looking up and handling precedence. Though, as shown so far, it is just
 a rather convoluted form of what ANTLR4 gives us for free. The real point of this runtime state is the
 ability of the language to dynamically add user operators. By adding operators to the runtime state the
-lookup process will include them during parsing. Thus, whenever visiting an operator definition it is generated
-as a normal function with a specialized name and the operator and precedence are added to the runtime state.
-Any future use of the operator in an expression will detect the correct precedence and the code generation
-treats it as a function call with the appropriate left and right hand argument values.
+lookup process will include them during parsing.
 
 Actually adding the operators to the table is handled in the parsing process itself using a feature of the
 ANTLR generated parser called a "Parse Listener". A parse listener is attached to the parser and effectively
@@ -167,7 +164,7 @@ issue of precedence and even the existence of user defined operators.
 When building the AST Prototypes for user defined operators are transformed to a FunctionDeclaration
 [!code-csharp[UserOperatorPrototypes](../../../Samples/Kaleidoscope/Kaleidoscope.Parser/AST/AstBuilder.cs#UserOperatorPrototypes)]
 
-During construction of the AST all occurances of a user defined operator expression are transformed into a function call for the
+During construction of the AST all occurrences of a user defined operator expression are transformed into a function call for the
 function that actually implements the behavior for the operator.
 
 [!code-csharp[UserBinaryOpExpression](../../../Samples/Kaleidoscope/Kaleidoscope.Parser/AST/AstBuilder.cs#UserBinaryOpExpression)]
@@ -177,9 +174,9 @@ function that actually implements the behavior for the operator.
 If you compare the code generation and driver code between Chapter 5 and Chapter 6 you'll see the only difference is the
 language level setting, it got a bump (Literally a single enum on one line of each component). Everything else is identical.
 This is because the real work is on the parser and AST not the code generation. This is where having a good parser + AST model
-can help keep the code generation simpler. If the parse tree alone was used, then the code generation would need additional code
-similar to what is found in the AST generation. Putting it into the AST generation keeps things much cleaner as, obviously, the
-support for user defined operators and precedence has nothing to do with code generation. Keeping the code generation simpler is
+can help keep the code generation simpler. If the parse tree alone was used, then the code generation would need additional
+support similar to what is found in the AST generation. Putting it into the AST generation keeps things much cleaner as, obviously,
+the support for user defined operators and precedence has nothing to do with code generation. Keeping the code generation simpler is
 generally a really good thing!
 
 That completes the support for user defined operators.
@@ -309,11 +306,11 @@ Ready>
 
 ## Conclusion
 Adding user defined operators with user defined precedence is fairly straight forward to implement in
-terms of the code generation. No new code generation is required. ANTLR4 has support for left-recursion
-in the grammar and precedence of expressions. Even though ANTLR only directly supports fixed precedence it is
-rather easy to extend the underlying support to handle dynamic precedence and associativity, once the underlying
-mechanics are understood. The rest is on the Ast construction as it converts the user defined operators to
-function definitions and function calls. 
+terms of the code generation. No new code generation is required (Can't get any simpler than that! :grin: ).
+ANTLR4 has support for left-recursion in the grammar and precedence of expressions. Even though ANTLR only
+directly supports fixed precedence it is rather easy to extend the underlying support to handle dynamic
+precedence and associativity, once the underlying mechanics are understood. The rest is on the AST
+construction as it converts the user defined operators to function definitions and function calls. 
 
 If you compare the code generation and driver code between Chapter 5 and Chapter 6 you'll see the only difference is the
 language level setting, it got a bump (Literally a single enum on one line of each component). Everything else is identical.
@@ -325,8 +322,6 @@ generally a really good thing!
 
 >[!TIP]
 >An early version of these samples skipped the use of an AST and used the parse tree directly. You can compare the history of
-> the generators for that transition to see how the AST helps simplify the code generation. (Not to mention sets the stage for
-> an otherwise un-implemented feature - truly lazy compilation.)
-
-
+>the generators for that transition to see how the AST helps simplify the code generation. (Not to mention sets the stage for
+>an otherwise unimplemented feature - truly lazy compilation, which is covered in [Chapter 7.1](Kaleidoscope-ch7.1.md).)
 

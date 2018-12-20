@@ -22,7 +22,7 @@
 
 ### If-Else control flow
 Given the following definition of a recursive function to compute
-fibonacci numbers
+Fibonacci numbers
 ```Kaleidoscope
 def fib(x)
   if (x < 3) then

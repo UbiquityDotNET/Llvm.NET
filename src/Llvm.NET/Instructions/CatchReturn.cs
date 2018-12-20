@@ -18,7 +18,7 @@ namespace Llvm.NET.Instructions
         /// <summary>Gets the Successor <see cref="BasicBlock"/>s for this instruction</summary>
         public IReadOnlyList<BasicBlock> Successors => new List<BasicBlock> { GetOperand<BasicBlock>( 1 ) };
 
-        /// <summary>Gets the <see cref="CatchSwitch.ParentPad"/> property from the <see cref="CatchPad.CatchSwitch"/>
+        /// <summary>Gets the <see cref="CatchSwitch.ParentPad"/> property from the <see cref="Llvm.NET.Instructions.CatchPad.CatchSwitch"/>
         /// of the <see cref="CatchReturn.CatchPad"/> property</summary>
         public Value CatchSwitchParentPad => CatchPad.CatchSwitch.ParentPad;
 

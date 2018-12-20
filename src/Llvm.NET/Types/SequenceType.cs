@@ -4,6 +4,7 @@
 
 using System;
 using Llvm.NET.Native;
+using Llvm.NET.Properties;
 
 // Interface+internal type matches file name
 #pragma warning disable SA1649
@@ -46,7 +47,7 @@ namespace Llvm.NET.Types
         {
             if( !IsSequenceTypeRef( typeRef ) )
             {
-                throw new ArgumentException( "Expected a sequence type", nameof( typeRef ) );
+                throw new ArgumentException( Resources.Expected_a_sequence_type, nameof( typeRef ) );
             }
         }
 

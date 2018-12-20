@@ -9,12 +9,12 @@ namespace Kaleidoscope.Grammar
 {
     /// <summary>Provides anonymous names as a sequence of strings</summary>
     /// <remarks>Each call to <see cref="GetEnumerator"/> starts a new sequence</remarks>
-    public class AnoymousNameProvider
+    public class AnonymousNameProvider
         : IEnumerable<string>
     {
-        /// <summary>Initializes a new instance of the <see cref="AnoymousNameProvider"/> class.</summary>
+        /// <summary>Initializes a new instance of the <see cref="AnonymousNameProvider"/> class.</summary>
         /// <param name="prefix">Prefix to use for the name</param>
-        public AnoymousNameProvider(string prefix)
+        public AnonymousNameProvider(string prefix)
         {
             NamePrefix = prefix;
         }
@@ -26,6 +26,8 @@ namespace Kaleidoscope.Grammar
             {
                 yield return $"{NamePrefix}{anonymousIndex++}";
             }
+
+            // ReSharper disable once IteratorNeverReturns
         }
 
         IEnumerator IEnumerable.GetEnumerator( )

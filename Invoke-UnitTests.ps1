@@ -15,10 +15,17 @@ if( $env:APPVEYOR )
 }
 
 $testsFailed = $false
+$TestResultPath = Join-Path (Resolve-Path .\BuildOutput) Test-Results
 
 Write-Information 'Running tests as x64'
-dotnet test .\src\Llvm.NETTests\Llvm.NET.Tests.csproj -s (Resolve-Path .\src\x64.runsettings) --no-build
+dotnet test .\src\Llvm.NETTests\Llvm.NET.Tests.csproj -s (Resolve-Path .\src\x64.runsettings) --no-build --no-restore --logger "trx" -r $TestResultPath
 $testsFailed = $testsFailed -or ($LASTEXITCODE -ne 0)
+if ("${ENV:APPVEYOR_JOB_ID}" -ne "")
+{
+    $wc = New-Object 'System.Net.WebClient'
+    $JobUrl = "https://ci.appveyor.com/api/testresults/mstest/$($env:APPVEYOR_JOB_ID)"
+    dir .\BuildOutput\Test-Results\*.trx | %{ $wc.UploadFile( $JobUrl, $_) }
+}
 
 Write-Information 'Running sample app for net47'
 if($APPVEYOR)

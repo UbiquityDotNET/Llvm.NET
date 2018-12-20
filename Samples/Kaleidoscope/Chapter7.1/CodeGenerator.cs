@@ -3,7 +3,6 @@
 // </copyright>
 
 using System;
-using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Linq;
 using System.Runtime.InteropServices;
@@ -18,8 +17,6 @@ using Llvm.NET.Values;
 
 using ConstantExpression = Kaleidoscope.Grammar.AST.ConstantExpression;
 
-#pragma warning disable SA1512, SA1513, SA1515 // single line comments used to tag regions for extraction into docs
-
 namespace Kaleidoscope.Chapter7_1
 {
     /// <summary>Performs LLVM IR Code generation from the Kaleidoscope AST</summary>
@@ -28,7 +25,7 @@ namespace Kaleidoscope.Chapter7_1
         , IDisposable
         , IKaleidoscopeCodeGenerator<Value>
     {
-        // <Initialization>
+        #region Initialization
         public CodeGenerator( DynamicRuntimeState globalState, bool disableOptimization = false )
             : base( null )
         {
@@ -43,7 +40,7 @@ namespace Kaleidoscope.Chapter7_1
             InitializeModuleAndPassManager( );
             InstructionBuilder = new InstructionBuilder( Context );
         }
-        // </Initialization>
+        #endregion
 
         public void Dispose( )
         {
@@ -51,52 +48,61 @@ namespace Kaleidoscope.Chapter7_1
             Context.Dispose( );
         }
 
-        // <Generate>
-        public Value Generate( IAstNode ast )
+        #region Generate
+        public Value Generate( IAstNode ast, Action<CodeGeneratorException> errorHandler )
         {
-            // Prototypes, including extern are ignored as AST generation
-            // adds them to the RuntimeState so that already has the declarations
-            if( !( ast is FunctionDefinition definition ) )
+            try
             {
+                // Prototypes, including extern are ignored as AST generation
+                // adds them to the RuntimeState so that already has the declarations
+                if( !( ast is FunctionDefinition definition ) )
+                {
+                    return null;
+                }
+
+                Value retVal = null;
+
+                // Anonymous functions are called immediately then removed from the JIT
+                // so no point in setting them up as a lazy compilation item.
+                if( definition.IsAnonymous )
+                {
+                    var function = ( Function )definition.Accept( this );
+                    var jitHandle = JIT.AddModule( function.ParentModule );
+                    var nativeFunc = JIT.GetFunctionDelegate<AnonExpressionFunc>( definition.Name );
+                    retVal = Context.CreateConstant( nativeFunc( ) );
+                    JIT.RemoveModule( jitHandle );
+                }
+                else
+                {
+                    FunctionDefinition implDefinition = CloneAndRenameFunction( definition );
+
+                    // register the generator as a stub with the original source name
+                    JIT.AddLazyFunctionGenerator( definition.Name, ( ) =>
+                    {
+                        InitializeModuleAndPassManager( );
+                        var function = ( Function )implDefinition.Accept( this );
+                        return (implDefinition.Name, function.ParentModule);
+                    } );
+                }
+
+                return retVal;
+            }
+            catch( CodeGeneratorException ex ) when( errorHandler != null )
+            {
+                errorHandler( ex );
                 return null;
             }
-
-            Value retVal = null;
-
-            // Anonymous functions are called immediately then removed from the JIT
-            // so no point in setting them up as a lazy compilation item.
-            if( definition.IsAnonymous )
-            {
-                var function = (Function)definition.Accept( this );
-                var jitHandle = JIT.AddModule( function.ParentModule );
-                var nativeFunc = JIT.GetFunctionDelegate<AnonExpressionFunc>( definition.Name );
-                retVal = Context.CreateConstant( nativeFunc( ) );
-                JIT.RemoveModule( jitHandle );
-            }
-            else
-            {
-                FunctionDefinition implDefinition = CloneAndRenameFunction( definition );
-
-                // register the generator as a stub with the original source name
-                JIT.AddLazyFunctionGenerator( definition.Name, ( ) =>
-                {
-                    InitializeModuleAndPassManager( );
-                    var function = ( Function )implDefinition.Accept( this );
-                    return (implDefinition.Name, function.ParentModule);
-                } );
-            }
-            return retVal;
         }
-        // </Generate>
+        #endregion
 
-        // <ConstantExpression>
+        #region ConstantExpression
         public override Value Visit( ConstantExpression constant )
         {
             return Context.CreateConstant( constant.Value );
         }
-        // </ConstantExpression>
+        #endregion
 
-        // <BinaryOperatorExpression>
+        #region BinaryOperatorExpression
         public override Value Visit( BinaryOperatorExpression binaryOperator )
         {
             switch( binaryOperator.Op )
@@ -138,13 +144,14 @@ namespace Kaleidoscope.Chapter7_1
                 throw new CodeGeneratorException( $"ICE: Invalid binary operator {binaryOperator.Op}" );
             }
         }
-        // </BinaryOperatorExpression>
+        #endregion
 
-        // <FunctionCallExpression>
+        #region FunctionCallExpression
         public override Value Visit( FunctionCallExpression functionCall )
         {
             string targetName = functionCall.FunctionPrototype.Name;
             Function function;
+
             // try for an extern function declaration
             if( RuntimeState.FunctionDeclarations.TryGetValue( targetName, out Prototype target ) )
             {
@@ -158,9 +165,9 @@ namespace Kaleidoscope.Chapter7_1
             var args = functionCall.Arguments.Select( ctx => ctx.Accept( this ) ).ToArray( );
             return InstructionBuilder.Call( function, args ).RegisterName( "calltmp" );
         }
-        // </FunctionCallExpression>
+        #endregion
 
-        // <FunctionDefinition>
+        #region FunctionDefinition
         public override Value Visit( FunctionDefinition definition )
         {
             var function = GetOrDeclareFunction( definition.Signature );
@@ -206,19 +213,19 @@ namespace Kaleidoscope.Chapter7_1
                 throw;
             }
         }
-        // </FunctionDefinition>
+        #endregion
 
-        // <VariableReferenceExpression>
+        #region VariableReferenceExpression
         public override Value Visit( VariableReferenceExpression reference )
         {
-            Alloca value = LookupVariable( reference.Name );
+            var value = LookupVariable( reference.Name );
 
             return InstructionBuilder.Load( value )
                                      .RegisterName( reference.Name );
         }
-        // </VariableReferenceExpression>
+        #endregion
 
-        // <ConditionalExpression>
+        #region ConditionalExpression
         public override Value Visit( ConditionalExpression conditionalExpression )
         {
             var result = LookupVariable( conditionalExpression.ResultVariable.Name );
@@ -250,9 +257,6 @@ namespace Kaleidoscope.Chapter7_1
             InstructionBuilder.Store( thenValue, result );
             InstructionBuilder.Branch( continueBlock );
 
-            // capture the insert in case generating else adds new blocks
-            thenBlock = InstructionBuilder.InsertBlock;
-
             // generate else block
             function.BasicBlocks.Add( elseBlock );
             InstructionBuilder.PositionAtEnd( elseBlock );
@@ -264,7 +268,6 @@ namespace Kaleidoscope.Chapter7_1
 
             InstructionBuilder.Store( elseValue, result );
             InstructionBuilder.Branch( continueBlock );
-            elseBlock = InstructionBuilder.InsertBlock;
 
             // generate continue block
             function.BasicBlocks.Add( continueBlock );
@@ -272,9 +275,9 @@ namespace Kaleidoscope.Chapter7_1
             return InstructionBuilder.Load( result )
                                      .RegisterName( "ifresult" );
         }
-        // </ConditionalExpression>
+        #endregion
 
-        // <ForInExpression>
+        #region ForInExpression
         public override Value Visit( ForInExpression forInExpression )
         {
             var function = InstructionBuilder.InsertBlock.ContainingFunction;
@@ -282,7 +285,7 @@ namespace Kaleidoscope.Chapter7_1
             Alloca allocaVar = LookupVariable( varName );
 
             // Emit the start code first, without 'variable' in scope.
-            Value startVal = null;
+            Value startVal;
             if( forInExpression.LoopVariable.Initializer != null )
             {
                 startVal = forInExpression.LoopVariable.Initializer.Accept( this );
@@ -299,9 +302,7 @@ namespace Kaleidoscope.Chapter7_1
             // store the value into allocated location
             InstructionBuilder.Store( startVal, allocaVar );
 
-            // Make the new basic block for the loop header, inserting after current
-            // block.
-            var preHeaderBlock = InstructionBuilder.InsertBlock;
+            // Make the new basic block for the loop header.
             var loopBlock = Context.CreateBasicBlock( "loop", function );
 
             // Insert an explicit fall through from the current block to the loopBlock.
@@ -348,7 +349,6 @@ namespace Kaleidoscope.Chapter7_1
                                                  .RegisterName( "loopcond" );
 
                 // Create the "after loop" block and insert it.
-                var loopEndBlock = InstructionBuilder.InsertBlock;
                 var afterBlock = Context.CreateBasicBlock( "afterloop", function );
 
                 // Insert the conditional branch into the end of LoopEndBB.
@@ -359,15 +359,14 @@ namespace Kaleidoscope.Chapter7_1
                 return Context.DoubleType.GetNullValue( );
             }
         }
-        // </ForInExpression>
+        #endregion
 
-        // <VarInExpression>
+        #region VarInExpression
         public override Value Visit( VarInExpression varInExpression )
         {
             using( NamedValues.EnterScope( ) )
             {
                 EmitBranchToNewBlock( "VarInScope" );
-                Function function = InstructionBuilder.InsertBlock.ContainingFunction;
                 foreach( var localVar in varInExpression.LocalVariables )
                 {
                     Alloca alloca = LookupVariable( localVar.Name );
@@ -383,7 +382,7 @@ namespace Kaleidoscope.Chapter7_1
                 return varInExpression.Body.Accept( this );
             }
         }
-        // </VarInExpression>
+        #endregion
 
         private Alloca LookupVariable( string name )
         {
@@ -394,6 +393,7 @@ namespace Kaleidoscope.Chapter7_1
                 // then some sort of user error.
                 throw new CodeGeneratorException( $"ICE: Unknown variable name: {name}" );
             }
+
             return value;
         }
 
@@ -404,7 +404,7 @@ namespace Kaleidoscope.Chapter7_1
             InstructionBuilder.PositionAtEnd( newBlock );
         }
 
-        // <InitializeModuleAndPassManager>
+        #region InitializeModuleAndPassManager
         private void InitializeModuleAndPassManager( )
         {
             Module = Context.CreateBitcodeModule( );
@@ -422,9 +422,10 @@ namespace Kaleidoscope.Chapter7_1
 
             FunctionPassManager.Initialize( );
         }
-        // </InitializeModuleAndPassManager>
+        #endregion
 
-        // <GetOrDeclareFunction>
+        #region GetOrDeclareFunction
+
         // Retrieves a Function" for a prototype from the current module if it exists,
         // otherwise declares the function and returns the newly declared function.
         private Function GetOrDeclareFunction( Prototype prototype )
@@ -447,9 +448,9 @@ namespace Kaleidoscope.Chapter7_1
 
             return retVal;
         }
-        // </GetOrDeclareFunction>
+        #endregion
 
-        // <CloneAndRenameFunction>
+        #region CloneAndRenameFunction
         private static FunctionDefinition CloneAndRenameFunction( FunctionDefinition definition )
         {
             // clone the definition with a new name, note that this is really
@@ -466,9 +467,9 @@ namespace Kaleidoscope.Chapter7_1
                                                        );
             return implDefinition;
         }
-        // </CloneAndRenameFunction>
+        #endregion
 
-        // <PrivateMembers>
+        #region PrivateMembers
         private readonly DynamicRuntimeState RuntimeState;
         private readonly Context Context;
         private readonly InstructionBuilder InstructionBuilder;
@@ -477,12 +478,11 @@ namespace Kaleidoscope.Chapter7_1
         private readonly bool DisableOptimizations;
         private BitcodeModule Module;
         private readonly KaleidoscopeJIT JIT = new KaleidoscopeJIT( );
-        private readonly Dictionary<string, IJitModuleHandle> FunctionModuleMap = new Dictionary<string, IJitModuleHandle>( );
 
         /// <summary>Delegate type to allow execution of a JIT'd TopLevelExpression</summary>
         /// <returns>Result of evaluating the expression</returns>
         [UnmanagedFunctionPointer( System.Runtime.InteropServices.CallingConvention.Cdecl )]
         private delegate double AnonExpressionFunc( );
-        // </PrivateMembers>
+        #endregion
     }
 }

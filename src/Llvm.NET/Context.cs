@@ -12,6 +12,7 @@ using JetBrains.Annotations;
 using Llvm.NET.DebugInfo;
 using Llvm.NET.JIT;
 using Llvm.NET.Native;
+using Llvm.NET.Properties;
 using Llvm.NET.Types;
 using Llvm.NET.Values;
 using Ubiquity.ArgValidators;
@@ -31,7 +32,7 @@ namespace Llvm.NET
     /// <para>LLVM Debug information is ultimately all parented to a top level <see cref="DICompileUnit"/> as
     /// the scope, and a compilation unit is bound to a <see cref="BitcodeModule"/>, even though, technically
     /// the types are owned by a Context. Thus to keep things simpler and help make working with debug information
-    /// easier. Lllvm.NET encapsulates the native type and the debug type in separate classes that are instances
+    /// easier. Llvm.NET encapsulates the native type and the debug type in separate classes that are instances
     /// of the <see cref="IDebugType{NativeT, DebugT}"/> interface </para>
     ///
     /// <note type="note">It is important to be aware of the fact that a Context is not thread safe. The context
@@ -106,7 +107,7 @@ namespace Llvm.NET
 
             if( elementType.Context != this )
             {
-                throw new ArgumentException( "Cannot mix types from different contexts", nameof( elementType ) );
+                throw new ArgumentException( Resources.Cannot_mix_types_from_different_contexts, nameof( elementType ) );
             }
 
             return TypeRef.FromHandle<IPointerType>( LLVMPointerType( elementType.GetTypeRef( ), 0 ) );
@@ -125,7 +126,7 @@ namespace Llvm.NET
         {
             if( bitWidth == 0 )
             {
-                throw new ArgumentException( "integer bit width must be greater than 0" );
+                throw new ArgumentException( Resources.Integer_bit_width_must_be_greater_than_0 );
             }
 
             switch( bitWidth )
@@ -171,7 +172,7 @@ namespace Llvm.NET
 
             if( ContextHandle != returnType.Context.ContextHandle )
             {
-                throw new ArgumentException( "Mismatched context", nameof( returnType ) );
+                throw new ArgumentException( Resources.Mismatched_context, nameof( returnType ) );
             }
 
             LLVMTypeRef[ ] llvmArgs = args.Select( a => a.GetTypeRef( ) ).ToArray( );
@@ -241,19 +242,19 @@ namespace Llvm.NET
 
             if( !retType.HasDebugInfo( ) )
             {
-                throw new ArgumentNullException( nameof( retType ), "Return type does not have debug information" );
+                throw new ArgumentNullException( nameof( retType ), Resources.Return_type_does_not_have_debug_information );
             }
 
             var nativeArgTypes = new List<ITypeRef>( );
             var debugArgTypes = new List<DIType>( );
-            var msg = new StringBuilder( "One or more parameter types are not valid:\n" );
+            var msg = new StringBuilder( Resources.One_or_more_parameter_types_are_not_valid );
             bool hasParamErrors = false;
 
             foreach( var indexedPair in argTypes.Select( ( t, i ) => new { Type = t, Index = i } ) )
             {
                 if( indexedPair.Type == null )
                 {
-                    msg.AppendFormat( "\tArgument {0} is null", indexedPair.Index );
+                    msg.AppendFormat( Resources.Argument_0_is_null, indexedPair.Index );
                     hasParamErrors = true;
                 }
                 else
@@ -265,7 +266,7 @@ namespace Llvm.NET
                         continue;
                     }
 
-                    msg.AppendFormat( "\tArgument {0} does not contain debug type information", indexedPair.Index );
+                    msg.AppendFormat( Resources.Argument_0_does_not_contain_debug_type_information, indexedPair.Index );
                     hasParamErrors = true;
                 }
             }
@@ -279,7 +280,7 @@ namespace Llvm.NET
             var llvmType = GetFunctionType( retType.NativeType, nativeArgTypes, isVarArg );
 
             var diType = diBuilder.CreateSubroutineType( 0, retType.DIType, debugArgTypes );
-            Debug.Assert( diType != null && !diType.IsTemporary, "Should have a valid non temp type by now" );
+            Debug.Assert( diType != null && !diType.IsTemporary, Resources.Assert_Should_have_a_valid_non_temp_type_by_now );
 
             return new DebugFunctionType( llvmType, diType );
         }
@@ -325,7 +326,7 @@ namespace Llvm.NET
             var valueHandles = values.Select( v => v.ValueHandle ).ToArray( );
             if( valueHandles.Length == 0 )
             {
-                throw new ArgumentException( "structure must have at least one element", nameof( values ) );
+                throw new ArgumentException( Resources.structure_must_have_at_least_one_element, nameof( values ) );
             }
 
             var handle = LLVMConstStructInContext( ContextHandle, out valueHandles[ 0 ], ( uint )valueHandles.Length, packed );
@@ -376,14 +377,14 @@ namespace Llvm.NET
 
             if( type.Context != this )
             {
-                throw new ArgumentException( "Cannot create named constant struct with type from another context", nameof( type ) );
+                throw new ArgumentException( Resources.Cannot_create_named_constant_struct_with_type_from_another_context, nameof( type ) );
             }
 
             var valueList = values as IList<Constant> ?? values.ToList( );
             var valueHandles = valueList.Select( v => v.ValueHandle ).ToArray( );
             if( type.Members.Count != valueHandles.Length )
             {
-                throw new ArgumentException( "Number of values provided must match the number of elements in the specified type" );
+                throw new ArgumentException( Resources.Number_of_values_provided_must_match_the_number_of_elements_in_the_specified_type );
             }
 
             var mismatchedTypes = from indexedVal in valueList.Select( ( v, i ) => new { Value = v, Index = i } )
@@ -392,11 +393,11 @@ namespace Llvm.NET
 
             if( mismatchedTypes.Any( ) )
             {
-                var msg = new StringBuilder( "One or more values provided do not match the corresponding member type:" );
+                var msg = new StringBuilder( Resources.One_or_more_values_provided_do_not_match_the_corresponding_member_type_ );
                 msg.AppendLine( );
                 foreach( var mismatch in mismatchedTypes )
                 {
-                    msg.AppendFormat( "\t[{0}]: member type={1}; value type={2}"
+                    msg.AppendFormat( Resources.MismatchedType_0_member_type_equals_1_value_type_equals_2
                                     , mismatch.Index
                                     , type.Members[ mismatch.Index ]
                                     , valueList[ mismatch.Index ].NativeType
@@ -632,12 +633,12 @@ namespace Llvm.NET
 
             if( intType.Context != this )
             {
-                throw new ArgumentException( "Cannot mix types from different contexts", nameof( intType ) );
+                throw new ArgumentException( Resources.Cannot_mix_types_from_different_contexts, nameof( intType ) );
             }
 
             if( intType.Kind != TypeKind.Integer )
             {
-                throw new ArgumentException( "Integer type required", nameof( intType ) );
+                throw new ArgumentException( Resources.Integer_type_required, nameof( intType ) );
             }
 
             return Value.FromHandle<Constant>( LLVMConstInt( intType.GetTypeRef( ), constValue, signExtend ) );
@@ -663,7 +664,7 @@ namespace Llvm.NET
             kind.ValidateDefined( nameof( kind ) );
             if( kind.RequiresIntValue( ) )
             {
-                throw new ArgumentException( $"Attribute {kind} requires a value", nameof( kind ) );
+                throw new ArgumentException( string.Format(Resources.Attribute_0_requires_a_value, kind), nameof( kind ) );
             }
 
             var handle = LLVMCreateEnumAttribute( ContextHandle
@@ -694,7 +695,7 @@ namespace Llvm.NET
             kind.ValidateDefined( nameof( kind ) );
             if( !kind.RequiresIntValue( ) )
             {
-                throw new ArgumentException( $"Attribute {kind} does not support a value", nameof( kind ) );
+                throw new ArgumentException( string.Format(Resources.Attribute_0_does_not_support_a_value, kind), nameof( kind ) );
             }
 
             var handle = LLVMCreateEnumAttribute( ContextHandle
@@ -724,14 +725,14 @@ namespace Llvm.NET
 
         /// <summary>Create a named <see cref="BasicBlock"/> in a given context</summary>
         /// <param name="name">Name of the block to create</param>
-        /// <param name="parentFuntion">Parent function (or <see lang="null"/> if no parent)</param>
+        /// <param name="parentFunction">Parent function (or <see lang="null"/> if no parent)</param>
         /// <param name="insertBefore">Optional block to insert the new block in front of</param>
         /// <returns><see cref="BasicBlock"/> created</returns>
-        public BasicBlock CreateBasicBlock( string name, [CanBeNull] Function parentFuntion = null, [CanBeNull] BasicBlock insertBefore = null )
+        public BasicBlock CreateBasicBlock( string name, [CanBeNull] Function parentFunction = null, [CanBeNull] BasicBlock insertBefore = null )
         {
             return BasicBlock.FromHandle( LLVMContextCreateBasicBlock( ContextHandle
                                                                      , name
-                                                                     , parentFuntion?.ValueHandle ?? default
+                                                                     , parentFunction?.ValueHandle ?? default
                                                                      , insertBefore?.BlockHandle ?? default
                                                                      )
                                         );
@@ -789,7 +790,7 @@ namespace Llvm.NET
         public IEnumerable<string> OperandBundleTagIds { get; }
         */
 
-        internal LLVMContextRef ContextHandle { get; private set; }
+        internal LLVMContextRef ContextHandle { get; }
 
         /* These interning methods provide unique mapping between the .NET wrappers and the underlying LLVM instances
         // The mapping ensures that any LibLLVM handle is always re-mappable to a exactly one wrapper instance.
@@ -818,7 +819,7 @@ namespace Llvm.NET
             var hModuleContext = LLVMGetModuleContext( moduleRef );
             if( hModuleContext != ContextHandle )
             {
-                throw new ArgumentException( "Incorrect context for module" );
+                throw new ArgumentException( Resources.Incorrect_context_for_module );
             }
 
             return ModuleCache.GetOrCreateItem( moduleRef );
@@ -872,8 +873,7 @@ namespace Llvm.NET
             MetadataCache = new LlvmMetadata.InterningFactory( this );
         }
 
-        /// <summary>Implements dispose pattern</summary>
-        /// <param name="disposing">Flag to indicate if this object is being disposed</param>
+        /// <inheritdoc />
         protected override void InternalDispose( bool disposing )
         {
             // disconnect all modules as some may be shared modules shared to a JIT
@@ -895,15 +895,15 @@ namespace Llvm.NET
             ContextHandle.Dispose( );
         }
 
-        private void DiagnosticHandler( LLVMDiagnosticInfoRef param0, IntPtr param1 )
+        private static void DiagnosticHandler( LLVMDiagnosticInfoRef param0, IntPtr param1 )
         {
             string msg = LLVMGetDiagInfoDescription( param0 );
             var level = LLVMGetDiagInfoSeverity( param0 );
             Debug.WriteLine( "{0}: {1}", level, msg );
-            Debug.Assert( level != LLVMDiagnosticSeverity.LLVMDSError, "Unexpected Debug state" );
+            Debug.Assert( level != LLVMDiagnosticSeverity.LLVMDSError, Resources.Assert_Unexpected_Debug_state );
         }
 
-        private WrappedNativeCallback ActiveHandler;
+        private readonly WrappedNativeCallback ActiveHandler;
 
         // child item wrapper factories
         private readonly ValueCache ValueCache;
@@ -915,6 +915,7 @@ namespace Llvm.NET
         private readonly AttributeValue.InterningFactory AttributeValueCache;
         private readonly LlvmMetadata.InterningFactory MetadataCache;
 
+        // ReSharper disable IdentifierTypo
         [DllImport( LibraryPath, CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi, ThrowOnUnmappableChar = true, BestFitMapping = false )]
         private static extern LLVMBasicBlockRef LLVMContextCreateBasicBlock( LLVMContextRef context
                                                                            , [MarshalAs( UnmanagedType.LPStr )] string name
@@ -933,16 +934,19 @@ namespace Llvm.NET
         private static extern void LLVMContextSetIsODRUniquingDebugTypes( LLVMContextRef context, [MarshalAs( UnmanagedType.Bool )] bool state );
 
         [DllImport( LibraryPath, CallingConvention = CallingConvention.Cdecl, BestFitMapping = false, ThrowOnUnmappableChar = true )]
+
         private static extern LLVMMetadataRef LLVMMDString2( LLVMContextRef C, [MarshalAs( UnmanagedType.LPStr )] string Str, UInt32 SLen );
 
         [DllImport( LibraryPath, CallingConvention = CallingConvention.Cdecl )]
         private static extern LLVMMetadataRef LLVMMDNode2( LLVMContextRef C, out LLVMMetadataRef MDs, UInt32 Count );
 
-        [DllImport( LibraryPath, CallingConvention = CallingConvention.Cdecl )]
-        private static extern LLVMMetadataRef LLVMTemporaryMDNode( LLVMContextRef C, out LLVMMetadataRef MDs, UInt32 Count );
+        // ReSharper disable CommentTypo
+        /*[DllImport( LibraryPath, CallingConvention = CallingConvention.Cdecl )]
+        //private static extern LLVMMetadataRef LLVMTemporaryMDNode( LLVMContextRef C, out LLVMMetadataRef MDs, UInt32 Count );
 
-        [DllImport( LibraryPath, CallingConvention = CallingConvention.Cdecl, BestFitMapping = false, ThrowOnUnmappableChar = true )]
-        [return: MarshalAs( UnmanagedType.Bool )]
-        private static extern bool LLVMRunPassPipeline( LLVMContextRef context, LLVMModuleRef M, LLVMTargetMachineRef TM, [MarshalAs( UnmanagedType.LPStr )] string passPipeline, LLVMOptVerifierKind VK, [MarshalAs( UnmanagedType.Bool )] bool ShouldPreserveAssemblyUseListOrder, [MarshalAs( UnmanagedType.Bool )] bool ShouldPreserveBitcodeUseListOrder );
+        //[DllImport( LibraryPath, CallingConvention = CallingConvention.Cdecl, BestFitMapping = false, ThrowOnUnmappableChar = true )]
+        //[return: MarshalAs( UnmanagedType.Bool )]
+        //private static extern bool LLVMRunPassPipeline( LLVMContextRef context, LLVMModuleRef M, LLVMTargetMachineRef TM, [MarshalAs( UnmanagedType.LPStr )] string passPipeline, LLVMOptVerifierKind VK, [MarshalAs( UnmanagedType.Bool )] bool ShouldPreserveAssemblyUseListOrder, [MarshalAs( UnmanagedType.Bool )] bool ShouldPreserveBitcodeUseListOrder );
+        */
     }
 }

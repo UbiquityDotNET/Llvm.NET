@@ -5,11 +5,11 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="CSemVer.Build.Tasks" Version="2.0.0-beta.2.0.ci-BLD.443713343" PrivateAssets="All" />
-    <PackageReference Include="docfx.console" Version="2.39.0" PrivateAssets="all">
+    <PackageReference Include="CSemVer.Build.Tasks" Version="2.0.1" PrivateAssets="All" />
+    <PackageReference Include="docfx.console" Version="2.40.5" PrivateAssets="all">
       <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
     </PackageReference>
-    <PackageReference Include="memberpage" Version="2.39.0" PrivateAssets="All" />
+    <PackageReference Include="memberpage" Version="2.40.5" PrivateAssets="All" />
     <PackageReference Include="msdn.4.5.2" Version="0.1.0-alpha-1611021200" PrivateAssets="All" />
   </ItemGroup>
 
@@ -47,11 +47,11 @@
       <MsdnXRefPath>%(msdn4_5_2.ResolvedPath)</MsdnXRefPath>
       <IsSupportedMSBuild>false</IsSupportedMSBuild>
     </PropertyGroup>
-    <VersionCheck Condition="$(MSBuildVersion)!=''" MaximumSupportedVersion="15.8.999" ActualVersion="$(MSBuildVersion)">
+    <VersionCheck Condition="$(MSBuildVersion)!=''" MaximumSupportedVersion="17.0.999" ActualVersion="$(MSBuildVersion)">
       <Output TaskParameter="IsValidVersion" PropertyName="IsSupportedMSBuild" />
     </VersionCheck>
     <!-- NOTE: MSBuildVersion property is new in 15.6 (as of 15.6.0-pre.4.0 the value is 15.6.76 )  -->
-    <Error Code="DOCFX:0001" ContinueOnError="false" Condition="!$(IsSupportedMSBuild)" Text="As of DOCFX 2.39 docfx cannot generate metadata for CSPROJ files using MSBuild &gt; 15.8.xx (Current MSBuild is $(MSBuildVersion))" />
+    <Error Code="DOCFX:0001" ContinueOnError="false" Condition="!$(IsSupportedMSBuild)" Text="As of DOCFX 2.40 docfx cannot generate metadata for CSPROJ files using MSBuild &gt; 15.8.xx (Current MSBuild is $(MSBuildVersion))" />
   </Target>
 
   <Target Name="SetDocFxParameters" AfterTargets="GetDocfxPackagePaths" BeforeTargets="DocBuild">

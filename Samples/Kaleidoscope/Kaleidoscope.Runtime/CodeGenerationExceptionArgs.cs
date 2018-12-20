@@ -6,7 +6,7 @@ using System;
 
 namespace Kaleidoscope.Runtime
 {
-    /// <summary>Event arguments to report <see cref="CodeGeneratorException"/> while processing the <see cref="ReplLoop{TResult}"/></summary>
+    /// <summary>Event arguments to report <see cref="CodeGeneratorException"/> while processing the REPL input</summary>
     public class CodeGenerationExceptionArgs
         : EventArgs
     {

@@ -13,6 +13,7 @@ using JetBrains.Annotations;
 using Llvm.NET.DebugInfo;
 using Llvm.NET.Instructions;
 using Llvm.NET.Native;
+using Llvm.NET.Properties;
 using Llvm.NET.Types;
 using Llvm.NET.Values;
 using Ubiquity.ArgValidators;
@@ -340,12 +341,12 @@ namespace Llvm.NET
 
             if( otherModule.Context != Context )
             {
-                throw new ArgumentException( "Linking modules from different contexts is not allowed", nameof( otherModule ) );
+                throw new ArgumentException( Resources.Linking_modules_from_different_contexts_is_not_allowed, nameof( otherModule ) );
             }
 
             if( !LLVMLinkModules2( ModuleHandle, otherModule.ModuleHandle ).Succeeded )
             {
-                throw new InternalCodeGeneratorException( "Module link error" );
+                throw new InternalCodeGeneratorException( Resources.Module_link_error );
             }
 
             Context.RemoveModule( otherModule );
@@ -353,12 +354,12 @@ namespace Llvm.NET
         }
 
         /// <summary>Verifies a bit-code module</summary>
-        /// <param name="errmsg">Error messages describing any issues found in the bit-code</param>
+        /// <param name="errorMessage">Error messages describing any issues found in the bit-code</param>
         /// <returns>true if the verification succeeded and false if not.</returns>
-        public bool Verify( out string errmsg )
+        public bool Verify( out string errorMessage )
         {
             ThrowIfDisposed( );
-            return LLVMVerifyModule( ModuleHandle, LLVMVerifierFailureAction.LLVMReturnStatusAction, out errmsg ).Succeeded;
+            return LLVMVerifyModule( ModuleHandle, LLVMVerifierFailureAction.LLVMReturnStatusAction, out errorMessage ).Succeeded;
         }
 
         /// <summary>Gets a function by name from this module</summary>
@@ -413,7 +414,7 @@ namespace Llvm.NET
             LLVMStatus status = LLVMWriteBitcodeToFile( ModuleHandle, path );
             if( status.Failed )
             {
-                throw new IOException( $"Error writing bit-code file '{path}'", status.ErrorCode );
+                throw new IOException( string.Format(Resources.Error_writing_bit_code_file_0, path), status.ErrorCode );
             }
         }
 
@@ -479,7 +480,7 @@ namespace Llvm.NET
 
         /// <summary>Adds a global to this module with a specific address space</summary>
         /// <param name="addressSpace">Address space to add the global to</param>
-        /// <param name="typeRef">Type of the global's value</param>
+        /// <param name="typeRef">Type of the value</param>
         /// <param name="name">Name of the global</param>
         /// <returns>The new <see cref="GlobalVariable"/></returns>
         /// <openissues>
@@ -497,7 +498,7 @@ namespace Llvm.NET
 
         /// <summary>Adds a global to this module</summary>
         /// <param name="addressSpace">Address space to add the global to</param>
-        /// <param name="typeRef">Type of the global's value</param>
+        /// <param name="typeRef">Type of the value</param>
         /// <param name="isConst">Flag to indicate if this global is a constant</param>
         /// <param name="linkage">Linkage type for this global</param>
         /// <param name="constVal">Initial value for the global</param>
@@ -514,7 +515,7 @@ namespace Llvm.NET
 
         /// <summary>Adds a global to this module</summary>
         /// <param name="addressSpace">Address space to add the global to</param>
-        /// <param name="typeRef">Type of the global's value</param>
+        /// <param name="typeRef">Type of the value</param>
         /// <param name="isConst">Flag to indicate if this global is a constant</param>
         /// <param name="linkage">Linkage type for this global</param>
         /// <param name="constVal">Initial value for the global</param>
@@ -536,7 +537,7 @@ namespace Llvm.NET
         }
 
         /// <summary>Adds a global to this module</summary>
-        /// <param name="typeRef">Type of the global's value</param>
+        /// <param name="typeRef">Type of the value</param>
         /// <param name="name">Name of the global</param>
         /// <returns>The new <see cref="GlobalVariable"/></returns>
         /// <openissues>
@@ -553,7 +554,7 @@ namespace Llvm.NET
         }
 
         /// <summary>Adds a global to this module</summary>
-        /// <param name="typeRef">Type of the global's value</param>
+        /// <param name="typeRef">Type of the value</param>
         /// <param name="isConst">Flag to indicate if this global is a constant</param>
         /// <param name="linkage">Linkage type for this global</param>
         /// <param name="constVal">Initial value for the global</param>
@@ -569,7 +570,7 @@ namespace Llvm.NET
         }
 
         /// <summary>Adds a global to this module</summary>
-        /// <param name="typeRef">Type of the global's value</param>
+        /// <param name="typeRef">Type of the value</param>
         /// <param name="isConst">Flag to indicate if this global is a constant</param>
         /// <param name="linkage">Linkage type for this global</param>
         /// <param name="constVal">Initial value for the global</param>
@@ -707,7 +708,7 @@ namespace Llvm.NET
             signature.ValidateNotNull( nameof( signature ) );
             if( signature.DIType == null )
             {
-                throw new ArgumentException( "Signature requires debug type information", nameof( signature ) );
+                throw new ArgumentException( Resources.Signature_requires_debug_type_information, nameof( signature ) );
             }
 
             var func = AddFunction( linkageName ?? name, signature );
@@ -727,7 +728,7 @@ namespace Llvm.NET
                                                  , typeParameter: parameterNode
                                                  , declaration: decl
                                                  );
-            Debug.Assert( diFunc.Describes( func ), "Expected to get a debug function that describes the provided function" );
+            Debug.Assert( diFunc.Describes( func ), Resources.Expected_to_get_a_debug_function_that_describes_the_provided_function );
             func.DISubProgram = diFunc;
             return func;
         }
@@ -800,7 +801,7 @@ namespace Llvm.NET
         {
             if( !LLVMIsIntrinsicOverloaded( id ) && args.Length > 0 )
             {
-                throw new ArgumentException( $"intrinsic {id} is not overloaded and therefore does not require type arguments" );
+                throw new ArgumentException( string.Format(Resources.Intrinsic_0_is_not_overloaded_and_therefore_does_not_require_type_arguments, id) );
             }
 
             LLVMTypeRef[ ] llvmArgs = args.Select( a => a.GetTypeRef( ) ).ToArray( );
@@ -839,7 +840,7 @@ namespace Llvm.NET
 
             var buffer = WriteToBuffer( );
             var retVal = LoadFrom( buffer, targetContext );
-            Debug.Assert( retVal.Context == targetContext, "Expected to get a module bound to the specified context" );
+            Debug.Assert( retVal.Context == targetContext, Resources.Expected_to_get_a_module_bound_to_the_specified_context );
             return retVal;
         }
 
@@ -862,7 +863,7 @@ namespace Llvm.NET
 
             if( !File.Exists( path ) )
             {
-                throw new FileNotFoundException( "Specified bit-code file does not exist", path );
+                throw new FileNotFoundException( Resources.Specified_bit_code_file_does_not_exist, path );
             }
 
             var buffer = new MemoryBuffer( path );
@@ -887,7 +888,7 @@ namespace Llvm.NET
 
             if( LLVMParseBitcodeInContext2( context.ContextHandle, buffer.BufferHandle, out LLVMModuleRef modRef ).Failed )
             {
-                throw new InternalCodeGeneratorException( "Could not parse bit code from buffer" );
+                throw new InternalCodeGeneratorException( Resources.Could_not_parse_bit_code_from_buffer );
             }
 
             return context.GetModuleFor( modRef );
@@ -963,7 +964,7 @@ namespace Llvm.NET
                 var contextRef = LLVMGetModuleContext( handle );
                 if( Context.ContextHandle != contextRef )
                 {
-                    throw new ArgumentException( "Context mismatch - cannot cache modules from multiple contexts" );
+                    throw new ArgumentException( Resources.Context_mismatch_cannot_cache_modules_from_multiple_contexts );
                 }
 
                 return new BitcodeModule( handle );
@@ -983,7 +984,7 @@ namespace Llvm.NET
         {
             if( IsDisposed )
             {
-                throw new ObjectDisposedException( "Module was explicitly destroyed or ownership transfered to native library" );
+                throw new ObjectDisposedException( Resources.Module_was_explicitly_destroyed_or_ownership_transferred_to_native_library );
             }
         }
 
@@ -1001,12 +1002,7 @@ namespace Llvm.NET
 
         private static Context GetContextFor( LLVMModuleRef handle )
         {
-            if( handle == default )
-            {
-                return null;
-            }
-
-            return ContextCache.GetContextFor( LLVMGetModuleContext( handle ) );
+            return handle == default ? null : ContextCache.GetContextFor( LLVMGetModuleContext( handle ) );
         }
 
         [DllImport( LibraryPath, CallingConvention = CallingConvention.Cdecl )]

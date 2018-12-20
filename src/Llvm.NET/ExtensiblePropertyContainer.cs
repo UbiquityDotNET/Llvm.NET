@@ -4,6 +4,7 @@
 
 using System;
 using System.Collections.Generic;
+using Llvm.NET.Properties;
 
 namespace Llvm.NET
 {
@@ -24,7 +25,7 @@ namespace Llvm.NET
                 {
                     if( currentValue != null && value != null && currentValue.GetType( ) != value.GetType( ) )
                     {
-                        throw new ArgumentException( " Cannot change type of an extended property once set", nameof( value ) );
+                        throw new ArgumentException( Resources.Cannot_change_type_of_an_extended_property_once_set, nameof( value ) );
                     }
                 }
 

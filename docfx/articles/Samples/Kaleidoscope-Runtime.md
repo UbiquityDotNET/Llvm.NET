@@ -5,7 +5,7 @@ particulars of parsing or the Kaleidoscope language in general.
 
 ## REPL Loop infrastructure
 The Kaleidoscope.Runtime library contains the basic infrastructure for the classic Read, Evaluate,
-Print, Loop (REPL) common for interactive/interpreted language runtimes.
+Print, Loop (REPL) common for interactive/interpreted/JIT language runtimes.
 
 ### TextReaderExtensions class
 The TextReaderExtensions class provides a means to read lines from a TextReader as an `IEnumerable<string>`.
@@ -17,9 +17,39 @@ set to false. Then the rest of the line up to the next new line is yielded with 
 implementation supports an arbitrary number of semicolons on the same line and yields complete statements for
 each one)
 
-## ReplLoop&lt;TResult&gt; class
-This class implements the core of the REPL it leverages the `IEnumerable<(string Txt, bool IsPartial)>` from 
-the TextReaderExtensions class to feed statements to the parser stack to generate the parse tree.
+## REPL Rx.NET Operators
+The core REPL for Kaleidoscope is implemented using an Rx.NET observable sequence. The sequence, ultimately,
+transforms an input TextReader into a sequence of AST nodes. Since operators are chained in a pipe-line the
+actual code generation and execution for the runtime are simply composed onto the end to convert the AST nodes
+into LLVM IR and further to add it to the JIT for execution. 
+
+### Operators for a Text input
+Kaleidoscope runtime provides a few operators for processing text input for parsing.
+
+#### ToObservableLines
+The ToObservableLines operator transforms a TextReader into an observable sequence of lines. This includes an
+optional delegate to produce a prompt. The prompt delegate is called before the transformation needs to read
+a line from the input TextReader.
+
+#### AsStatements
+The AsStatements operator transforms a sequence of input text lines into complete statements for parsing.
+Technically, speaking Kaleidoscope doesn't have statements, though it doesn't have any begin/end scope syntax
+like "{}" in many C style languages. The begin is just implicit and the end is a semicolon. This helps 
+interactive REPL usage to handle long expressions that the user may choose to span multiple lines. (i.e.
+ 10 + 5 `<newline>` + 1; ) The semicolon terminates the expression before sending it to the parser.
+
+The AsStatements operator transforms a sequence of input text lines and splits them into text and boolean
+IsPartial flag. The text is either a complete statement or the text accumulated since the last complete
+statement.
+
+#### AsFullStatements
+The AsFullStatements operator filters a sequence of string+bool pairs (from AsStatements) into only complete
+statements suitable for parsing as an observable sequence of strings.
+
+#### ToObservableStatements
+The ToObservableStatements is a composition of ToObservableLines, AsStatements and AsFullStatements. This
+operator transforms a TextReader to a sequence of complete statements with support for custom prompts as
+needed.
 
 ## ParserStack
 Kaleidoscope for Llvm.NET leverages ANTLR4 for parsing the language into a parse tree. Since ANTRL is a

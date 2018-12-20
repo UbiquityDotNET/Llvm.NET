@@ -1,6 +1,7 @@
 ﻿// <copyright file="DgmlGeneratingListener.cs" company=".NET Foundation">
 // Copyright (c) .NET Foundation. All rights reserved.
 // </copyright>
+
 #if NET47
 using System.Collections.Generic;
 using Antlr4.Runtime;

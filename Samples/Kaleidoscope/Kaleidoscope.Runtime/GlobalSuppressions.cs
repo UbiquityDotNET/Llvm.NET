@@ -15,3 +15,5 @@ using System.Diagnostics.CodeAnalysis;
 [assembly: SuppressMessage( "StyleCop.CSharp.DocumentationRules", "SA1600:Elements should be documented", Justification = "Sample Application" )]
 [assembly: SuppressMessage( "StyleCop.CSharp.DocumentationRules", "SA1601:Partial elements should be documented", Justification = "Sample Application" )]
 [assembly: SuppressMessage( "StyleCop.CSharp.DocumentationRules", "SA1602:Enumeration items should be documented", Justification = "Sample Application" )]
+[assembly: SuppressMessage( "StyleCop.CSharp.ReadabilityRules", "SA1124:Do not use regions", Justification = "Regions used to extract code snippets for documentation" )]
+[assembly: SuppressMessage( "StyleCop.CSharp.ReadabilityRules", "SA1123:Do not place regions within elements", Justification = "Regions used to extract code snippets for documentation" )]

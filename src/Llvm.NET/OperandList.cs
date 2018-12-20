@@ -15,9 +15,7 @@ namespace Llvm.NET
     /// <remarks>
     /// This class is used to implement Operand lists of elements including sub lists based on an offset.
     /// The latter case is useful for types that expose some fixed set of operands as properties and some
-    /// arbitrary number of additional items as operands. In such a case the full set of operands isn't
-    /// publicly available so the <see cref="OperandList{T}.OperandList(IOperandContainer{T}, int)"/>
-    /// constructor is used to set a base offset in the containers operands to expose through this list
+    /// arbitrary number of additional items as operands.
     /// </remarks>
     internal class OperandList<T>
         : IList<T>
@@ -120,15 +118,16 @@ namespace Llvm.NET
             throw new NotSupportedException( );
         }
 
-        internal OperandList( IOperandContainer<T> owningNode )
-            : this( owningNode, 0 )
+        internal OperandList( IOperandContainer<T> owningNode, bool isReadOnly = false )
+            : this( owningNode, 0, isReadOnly )
         {
         }
 
-        internal OperandList( IOperandContainer<T> container, int offset )
+        internal OperandList( IOperandContainer<T> container, int offset, bool isReadOnly = false )
         {
             Offset = offset;
             Container = container;
+            IsReadOnly = isReadOnly;
         }
 
         private readonly int Offset;

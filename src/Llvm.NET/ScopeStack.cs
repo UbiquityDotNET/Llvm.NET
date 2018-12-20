@@ -32,6 +32,10 @@ namespace Llvm.NET
             Scopes.Push( new Dictionary<string, T>( ) );
         }
 
+        /// <summary>Gets the depth of the stack</summary>
+        /// <remarks>The depth starts as 1 since the stack starts at the global scope.</remarks>
+        public int Depth => Scopes.Count;
+
         /// <summary>Starts a new scope</summary>
         /// <returns><see cref="IDisposable"/> to enable automatic restore of the scope in RAII style patterns</returns>
         /// <remarks>

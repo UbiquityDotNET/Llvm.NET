@@ -186,17 +186,17 @@ namespace Llvm.NET.Types
 
                 // other types not yet supported in Object wrappers
                 // but the pattern for doing so should be pretty obvious...
-                case TypeKind.Void:
-                case TypeKind.Float16:
-                case TypeKind.Float32:
-                case TypeKind.Float64:
-                case TypeKind.X86Float80:
-                case TypeKind.Float128m112:
-                case TypeKind.Float128:
-                case TypeKind.Label:
-                case TypeKind.Integer:
-                case TypeKind.Metadata:
-                case TypeKind.X86MMX:
+                // case TypeKind.Void:
+                // case TypeKind.Float16:
+                // case TypeKind.Float32:
+                // case TypeKind.Float64:
+                // case TypeKind.X86Float80:
+                // case TypeKind.Float128m112:
+                // case TypeKind.Float128:
+                // case TypeKind.Label:
+                // case TypeKind.Integer:
+                // case TypeKind.Metadata:
+                // case TypeKind.X86MMX:
                 default:
                     return new TypeRef( handle );
                 }

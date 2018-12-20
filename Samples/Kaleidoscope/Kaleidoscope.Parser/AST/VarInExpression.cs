@@ -43,11 +43,11 @@ namespace Kaleidoscope.Grammar.AST
             var bldr = new StringBuilder( "VarIn{" );
             foreach(var local in LocalVariables)
             {
-                bldr.Append( local.ToString() );
+                bldr.Append( local );
             }
 
             bldr.Append( "}(" );
-            bldr.Append( Body.ToString( ) );
+            bldr.Append( Body );
             bldr.Append( ')' );
             return bldr.ToString( );
         }

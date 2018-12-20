@@ -26,8 +26,7 @@ namespace Llvm.NET.Values
             }
 
             var kind = typeRef.Kind;
-            var structType = typeRef as StructType;
-            if( kind == TypeKind.Label || kind == TypeKind.Function || ( structType != null && structType.IsOpaque ) )
+            if( kind == TypeKind.Label || kind == TypeKind.Function || ( typeRef is StructType structType && structType.IsOpaque ) )
             {
                 throw new ArgumentException( "Cannot get a Null value for labels, functions and opaque types" );
             }

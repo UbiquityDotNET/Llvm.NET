@@ -2,103 +2,114 @@
 // Copyright (c) .NET Foundation. All rights reserved.
 // </copyright>
 
+using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Reactive.Linq;
 using System.Text;
+using JetBrains.Annotations;
 
 namespace Kaleidoscope.Runtime
 {
     /// <summary>Utility class to provide extensions for REPL Loop</summary>
     public static class TextReaderExtensions
     {
-        /// <summary>Gets an enumerable that pulls lines of text from a <see cref="TextReader"/></summary>
-        /// <param name="reader">Reader to read from</param>
-        /// <returns>Enumerable of the lines from the reader</returns>
-        /// <remarks>
-        /// <para>This lazy pulls the lines from the reader and, depending on the source the
-        /// reader represents it may be an infinite stream. Callers, must not assume the
-        /// sequence has a natural end without some knowledge of the source. If the source
-        /// does have an end then the enumeration will complete when that end is reached.
-        /// </para>
-        /// <para>This is useful in REPL style interactive parsing to pull lines of text from
-        /// the console. In such a case the number of lines is infinite but the REPL loop that
-        /// pulls the lines can still choose when to stop.</para>
-        /// </remarks>
-        public static IEnumerable<string> ReadLines( this TextReader reader )
+        /// <summary>Transforms a <see cref="TextReader"/> to an observable sequence of lines</summary>
+        /// <param name="input">Input reader</param>
+        /// <param name="prompt"><see cref="Action"/> to provide a prompt before new lines are read from the reader</param>
+        /// <returns>Observable of the lines read from the reader</returns>
+        public static IObservable<string> ToObservableLines( this TextReader input, [CanBeNull] Action prompt )
         {
-            while( true )
+            return Observable.Create<string>( async observer =>
             {
-                string line = reader.ReadLine( );
-                if( line == null )
+                string line;
+                do
                 {
-                    yield break;
-                }
+                    prompt?.Invoke( );
 
-                yield return line;
-            }
-        }
-
-        /// <summary>Reads lines and statements from a text reader</summary>
-        /// <param name="reader">Source to read text from</param>
-        /// <returns>Enumerable set of lines that may be partial statements</returns>
-        /// <remarks>
-        /// Each value enumerated includes the full text since the last complete statement.
-        /// That is the text from multiple partial statements will include the text of the
-        /// preceding partial. Once a complete statement is found the entire string is provided
-        /// with the IsPartial property set to <see langword="false"/>
-        /// </remarks>
-        public static IEnumerable<(string Txt, bool IsPartial)> ReadStatements( this TextReader reader )
-        {
-            return reader.ReadLines( ).ReadStatements( );
-        }
-
-        /// <summary>Reads lines and statements from a source of lines</summary>
-        /// <param name="lines">Source to pull lines of text from</param>
-        /// <returns>Enumerable set of lines that may be partial statements</returns>
-        /// <remarks>
-        /// Each value enumerated includes the full text since the last complete statement.
-        /// That is the text from multiple partial statements will include the text of the
-        /// preceding partial. Once a complete statement is found the entire string is provided
-        /// with the IsPartial property set to <see langword="false"/>
-        /// </remarks>
-        public static IEnumerable<(string Txt, bool IsPartial)> ReadStatements( this IEnumerable<string> lines )
-        {
-            var bldr = new StringBuilder( );
-            foreach( string line in lines )
-            {
-                string[ ] statements = line.Split( ';' );
-
-                // if the last line in the group was terminated with a ; the
-                // the last entry is an empty string, but a single blank line
-                // as input isn't considered completed.
-                int completeStatements = statements.Length - 1;
-                bool wasLastTerminated = statements[ statements.Length - 1 ] == string.Empty && statements.Length > 1;
-                if( wasLastTerminated && completeStatements > 1 )
-                {
-                    ++completeStatements;
-                }
-
-                for( int i =0; i< completeStatements; ++i )
-                {
-                    string statement = statements[ i ];
-                    bldr.Append( statement );
-                    bldr.Append( ';' );
-                    bldr.AppendLine( );
-
-                    yield return (bldr.ToString( ), false );
-
-                    if( bldr.Length > statement.Length + 1 )
+                    line = await input.ReadLineAsync( );
+                    if( line != null )
                     {
-                        bldr.Clear( );
+                        observer.OnNext( line );
+                    }
+                    else
+                    {
+                        observer.OnCompleted( );
                     }
                 }
+                while( line != null );
+            } );
+        }
 
-                if( !wasLastTerminated )
+        /// <summary>Transforms a sequence of lines into a sequence of statements (Separated by a ";")</summary>
+        /// <param name="lines">Sequence of lines to transform</param>
+        /// <returns>Observable sequence of lines, marked as partials or full statements</returns>
+        public static IObservable<(string Txt, bool IsPartial)> AsStatements( this IObservable<string> lines )
+        {
+            var bldr = new StringBuilder( );
+            return from line in lines
+                   from partial in SplitLines( bldr, line )
+                   select partial;
+        }
+
+        /// <summary>Transforms a sequence of potentially partial statements into a sequence of complete statements</summary>
+        /// <param name="partials">Sequence of potentially partial lines</param>
+        /// <returns>Observable of full statements</returns>
+        public static IObservable<string> AsFullStatements( this IObservable<(string Txt, bool IsPartial)> partials)
+        {
+            return from p in partials
+                   where !p.IsPartial
+                   select p.Txt;
+        }
+
+        /// <summary>Rx.NET operator to encapuslate conversion of text from a <see cref="TextReader"/> into an observable sequence of Kaleidoscope statements</summary>
+        /// <param name="reader">Input reader</param>
+        /// <param name="prompt">Action to provide prompts when the trasnform requires new data from the reader</param>
+        /// <returns>Observable sequence of complete statements ready for parsing</returns>
+        public static IObservable<string> ToObservableStatements(this TextReader reader, [CanBeNull] Action<ReadyState> prompt )
+        {
+            var stateManager = new ReadyStateManager( );
+
+            return reader.ToObservableLines( ( ) => prompt?.Invoke( stateManager.State ) )
+                         .AsStatements( )
+                         .Do( s => stateManager.UpdateState( s.Txt, s.IsPartial ) )
+                         .AsFullStatements( );
+        }
+
+        private static IEnumerable<(string Txt, bool IsPartial)> SplitLines( StringBuilder buffer, string line )
+        {
+            string[ ] statements = line.Split( ';' );
+
+            // if the last line in the group was terminated with a ; the
+            // the last entry is an empty string, but a single blank line
+            // as input isn't considered completed.
+            int completeStatements = statements.Length - 1;
+            bool wasLastTerminated = statements[ statements.Length - 1 ] == string.Empty && statements.Length > 1;
+            if( wasLastTerminated && completeStatements > 1 )
+            {
+                ++completeStatements;
+            }
+
+            for( int i = 0; i < completeStatements; ++i )
+            {
+                string statement = statements[ i ];
+                buffer.Append( statement );
+                buffer.Append( ';' );
+                buffer.AppendLine( );
+
+                yield return (buffer.ToString( ), false);
+
+                if( buffer.Length > statement.Length + 1 )
                 {
-                    string partial = statements[ statements.Length - 1 ];
-                    bldr.AppendLine( partial );
-                    yield return ( partial, true );
+                    buffer.Clear( );
                 }
+            }
+
+            if( !wasLastTerminated )
+            {
+                string partial = statements[ statements.Length - 1 ];
+                buffer.AppendLine( partial );
+                yield return (partial, true);
             }
         }
     }

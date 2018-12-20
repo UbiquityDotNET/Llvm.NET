@@ -27,8 +27,8 @@ namespace Kaleidoscope.Grammar
 
         public override bool Equals( object obj )
         {
-            return obj is SourceSpan
-                && Equals( ( SourceSpan )obj );
+            return obj is SourceSpan span
+                && Equals( span );
         }
 
         public bool Equals( SourceSpan other )

@@ -11,6 +11,7 @@ namespace Llvm.NET.DebugInfo
     public class DILocalVariable
         : DIVariable
     {
+        // ReSharper disable IdentifierTypo
         /* TODO: non-operand properties
         public DebugInfoFlags => LLVMDILocalVariableGetFlags( MetadataHandle );
         public UInt16 ArgIndex => LLVMDILocalVariableGetArg( MetadataHandle );

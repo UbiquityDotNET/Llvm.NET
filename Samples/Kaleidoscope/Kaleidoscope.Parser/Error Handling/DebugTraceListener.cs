@@ -45,6 +45,6 @@ namespace Kaleidoscope.Grammar
             Trace.TraceInformation( "Terminal: '{0}' rule {1}", symbol, Parser.RuleNames[parserRuleContext.RuleIndex] );
         }
 
-        private readonly Antlr4.Runtime.Parser Parser;
+        private readonly Parser Parser;
     }
 }

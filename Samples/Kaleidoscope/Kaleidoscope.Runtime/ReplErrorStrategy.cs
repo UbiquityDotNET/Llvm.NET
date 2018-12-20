@@ -15,12 +15,6 @@ namespace Kaleidoscope.Runtime
     {
         protected override void ReportFailedPredicate( Parser recognizer, FailedPredicateException e )
         {
-            string pred = e.Predicate;
-            if( pred[0] == '!' )
-            {
-                pred = pred.Substring( 1 );
-            }
-
             switch( e.Predicate )
             {
             case "FeatureControlFlow":

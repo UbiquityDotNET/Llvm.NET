@@ -62,32 +62,13 @@ namespace Llvm.NET.Values
 
         /// <summary>Gets the Name of the attribute</summary>
         public string Name
-        {
-            get
-            {
-                if( IsString )
-                {
-                    return NativeMethods.LLVMGetStringAttributeKind( NativeAttribute, out uint length );
-                }
-
-                return AttributeKindExtensions.LookupId( NativeMethods.LLVMGetEnumAttributeKind( NativeAttribute ) ).GetAttributeName( );
-            }
-        }
+            => IsString
+                ? NativeMethods.LLVMGetStringAttributeKind( NativeAttribute, out uint _ )
+                : AttributeKindExtensions.LookupId( NativeMethods.LLVMGetEnumAttributeKind( NativeAttribute ) ).GetAttributeName( );
 
         /// <summary>Gets the value for named attributes with values</summary>
         /// <value>The value as a string or <see lang="null"/> if the attribute has no value</value>
-        public string StringValue
-        {
-            get
-            {
-                if( !IsString )
-                {
-                    return null;
-                }
-
-                return NativeMethods.LLVMGetStringAttributeValue( NativeAttribute, out uint len );
-            }
-        }
+        public string StringValue => !IsString ? null : NativeMethods.LLVMGetStringAttributeValue( NativeAttribute, out uint _ );
 
         /// <summary>Gets the Integer value of the attribute or <see lang="null"/> if the attribute doesn't have a value</summary>
         public UInt64? IntegerValue => IsInt ? NativeMethods.LLVMGetEnumAttributeValue( NativeAttribute ) : ( UInt64? )null;

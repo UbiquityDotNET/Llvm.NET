@@ -14,7 +14,7 @@ namespace Llvm.NET
         /// <returns>String this node wraps</returns>
         public override string ToString( )
         {
-            return NativeMethods.LLVMGetMDStringText( MetadataHandle, out uint len );
+            return NativeMethods.LLVMGetMDStringText( MetadataHandle, out uint _);
         }
 
         internal MDString( LLVMMetadataRef handle )

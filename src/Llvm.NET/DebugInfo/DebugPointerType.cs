@@ -54,7 +54,6 @@ namespace Llvm.NET.DebugInfo
         /// <param name="elementType">Debug type of the pointee</param>
         /// <param name="name">Name of the type [Default: null]</param>
         /// <param name="alignment">Alignment for pointer type</param>
-        [SuppressMessage( "Microsoft.Design", "CA1062:Validate arguments of public methods", MessageId = "1", Justification = "ValidateNotNull" )]
         public DebugPointerType( IPointerType llvmPtrType, BitcodeModule module, DIType elementType, string name = null, uint alignment = 0 )
             : base( llvmPtrType )
         {

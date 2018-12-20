@@ -5,6 +5,7 @@
 using Llvm.NET.Values;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
+/* ReSharper disable StringLiteralTypo */
 namespace Llvm.NET.Tests
 {
     [TestClass]

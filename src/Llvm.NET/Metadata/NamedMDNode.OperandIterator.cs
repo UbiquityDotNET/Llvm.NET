@@ -60,6 +60,8 @@ namespace Llvm.NET
 
             public void Add( MDNode item )
             {
+                item.ValidateNotNull( nameof( item ) );
+                /* ReSharper disable once PossibleNullReferenceException */
                 LLVMNamedMDNodeAddOperand( OwningNode.NativeHandle, item.MetadataHandle );
             }
 
@@ -94,7 +96,7 @@ namespace Llvm.NET
                 throw new NotSupportedException( );
             }
 
-            public bool IsReadOnly { get; }
+            public bool IsReadOnly => false;
 
             internal OperandIterator( NamedMDNode owner )
             {

@@ -68,7 +68,7 @@ namespace Llvm.NET.Tests
                                          , DefaultTargetCpu
                                          , string.Empty
                                          , CodeGenOpt.Aggressive
-                                         , Reloc.Default
+                                         , RelocationMode.Default
                                          , CodeModel.Small
                                          );
 
@@ -105,6 +105,7 @@ namespace Llvm.NET.Tests
 
             public static readonly TargetInfoCollection ExpectedTargets = new TargetInfoCollection
             {
+                /* ReSharper disable StringLiteralTypo */
                 new TargetInfo( "xcore", "XCore", false, false, true ),
                 new TargetInfo( "x86-64", "64-bit X86: EM64T and AMD64", true, true, true ),
                 new TargetInfo( "x86", "32-bit X86: Pentium-Pro and above", true, true, true ),
@@ -136,6 +137,7 @@ namespace Llvm.NET.Tests
                 new TargetInfo( "aarch64_be", "AArch64 (big endian)", true, true, true ),
                 new TargetInfo( "aarch64", "AArch64 (little endian)", true, true, true ),
                 new TargetInfo( "arm64", "ARM64 (little endian)", true, true, true )
+                /* ReSharper enable StringLiteralTypo */
             };
         }
 

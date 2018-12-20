@@ -14,8 +14,6 @@ using Llvm.NET.Values;
 
 using ConstantExpression = Kaleidoscope.Grammar.AST.ConstantExpression;
 
-#pragma warning disable SA1512, SA1513, SA1515 // single line comments used to tag regions for extraction into docs
-
 namespace Kaleidoscope.Chapter3
 {
     /// <summary>Performs LLVM IR Code generation from the Kaleidoscope AST</summary>
@@ -24,7 +22,7 @@ namespace Kaleidoscope.Chapter3
         , IDisposable
         , IKaleidoscopeCodeGenerator<Value>
     {
-        // <Initialization>
+        #region Initialization
         public CodeGenerator( DynamicRuntimeState globalState )
             : base(null)
         {
@@ -38,37 +36,40 @@ namespace Kaleidoscope.Chapter3
             Module = Context.CreateBitcodeModule( "Kaleidoscope" );
             InstructionBuilder = new InstructionBuilder( Context );
         }
-        // </Initialization>
+        #endregion
 
-        public BitcodeModule Module { get; private set; }
+        public BitcodeModule Module { get; }
 
         public void Dispose( )
         {
             Context.Dispose( );
         }
 
-        // <Generate>
-        public Value Generate( IAstNode ast )
+        #region Generate
+        public Value Generate( IAstNode ast, Action<CodeGeneratorException> errorHandler )
         {
-            // Prototypes, including extern are ignored as AST generation
-            // adds them to the RuntimeState so that already has the declarations
-            if( !( ast is FunctionDefinition definition ) )
+            try
             {
+                // Prototypes, including extern are ignored as AST generation
+                // adds them to the RuntimeState so that already has the declarations
+                return ( ast is FunctionDefinition ) ? ast.Accept( this ) : null;
+            }
+            catch( CodeGeneratorException ex ) when( errorHandler != null )
+            {
+                errorHandler( ex );
                 return null;
             }
-
-            return ast.Accept( this );
         }
-        // </Generate>
+        #endregion
 
-        // <ConstantExpression>
+        #region ConstantExpression
         public override Value Visit( ConstantExpression constant )
         {
             return Context.CreateConstant( constant.Value );
         }
-        // </ConstantExpression>
+        #endregion
 
-        // <BinaryOperatorExpression>
+        #region BinaryOperatorExpression
         public override Value Visit( BinaryOperatorExpression binaryOperator )
         {
             switch( binaryOperator.Op )
@@ -104,13 +105,14 @@ namespace Kaleidoscope.Chapter3
                 throw new CodeGeneratorException( $"ICE: Invalid binary operator {binaryOperator.Op}" );
             }
         }
-        // </BinaryOperatorExpression>
+        #endregion
 
-        // <FunctionCallExpression>
+        #region FunctionCallExpression
         public override Value Visit( FunctionCallExpression functionCall )
         {
             string targetName = functionCall.FunctionPrototype.Name;
             Function function;
+
             // try for an extern function declaration
             if( RuntimeState.FunctionDeclarations.TryGetValue( targetName, out Prototype target ) )
             {
@@ -124,9 +126,9 @@ namespace Kaleidoscope.Chapter3
             var args = functionCall.Arguments.Select( ctx => ctx.Accept( this ) ).ToArray( );
             return InstructionBuilder.Call( function, args ).RegisterName( "calltmp" );
         }
-        // </FunctionCallExpression>
+        #endregion
 
-        // <FunctionDefinition>
+        #region FunctionDefinition
         public override Value Visit( FunctionDefinition definition )
         {
             var function = GetOrDeclareFunction( definition.Signature );
@@ -156,9 +158,9 @@ namespace Kaleidoscope.Chapter3
                 throw;
             }
         }
-        // </FunctionDefinition>
+        #endregion
 
-        // <VariableReferenceExpression>
+        #region VariableReferenceExpression
         public override Value Visit( VariableReferenceExpression reference )
         {
             if( !NamedValues.TryGetValue( reference.Name, out Value value ) )
@@ -171,10 +173,11 @@ namespace Kaleidoscope.Chapter3
 
             return value;
         }
-        // </VariableReferenceExpression>
+        #endregion
 
-        // <GetOrDeclareFunction>
-        // Retrieves a Function" for a prototype from the current module if it exists,
+        #region GetOrDeclareFunction
+
+        // Retrieves a Function for a prototype from the current module if it exists,
         // otherwise declares the function and returns the newly declared function.
         private Function GetOrDeclareFunction( Prototype prototype )
         {
@@ -196,13 +199,13 @@ namespace Kaleidoscope.Chapter3
 
             return retVal;
         }
-        // </GetOrDeclareFunction>
+        #endregion
 
-        // <PrivateMembers>
+        #region PrivateMembers
         private readonly DynamicRuntimeState RuntimeState;
         private readonly Context Context;
         private readonly InstructionBuilder InstructionBuilder;
         private readonly IDictionary<string, Value> NamedValues = new Dictionary<string, Value>( );
-        // </PrivateMembers>
+        #endregion
     }
 }

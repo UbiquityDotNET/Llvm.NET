@@ -26,7 +26,7 @@ namespace TestDebugInfo
                                                                       , Cpu
                                                                       , Features
                                                                       , CodeGenOpt.Aggressive
-                                                                      , Reloc.Default
+                                                                      , RelocationMode.Default
                                                                       , CodeModel.Small
                                                                       );
 

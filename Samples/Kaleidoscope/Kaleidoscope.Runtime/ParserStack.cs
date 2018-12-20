@@ -2,12 +2,14 @@
 // Copyright (c) .NET Foundation. All rights reserved.
 // </copyright>
 
+using System;
 using System.IO;
 using Antlr4.Runtime;
 using Antlr4.Runtime.Misc;
 using Antlr4.Runtime.Tree;
 using Kaleidoscope.Grammar;
 using Kaleidoscope.Grammar.AST;
+using Ubiquity.ArgValidators;
 
 namespace Kaleidoscope.Runtime
 {
@@ -32,33 +34,40 @@ namespace Kaleidoscope.Runtime
     {
         /// <summary>Initializes a new instance of the <see cref="ParserStack"/> class configured for the specified language level</summary>
         /// <param name="level"><see cref="LanguageLevel"/> for the parser</param>
-        public ParserStack( LanguageLevel level )
-            : this( level, new FormattedConsoleErrorListener( ) )
+        /// <param name="diagnostics">Diagnostic representations to generate when parsing</param>
+        public ParserStack( LanguageLevel level, DiagnosticRepresentations diagnostics = DiagnosticRepresentations.None )
+            : this( level, new FormattedConsoleErrorListener( ), diagnostics )
         {
         }
 
         /// <summary>Initializes a new instance of the <see cref="ParserStack"/> class.</summary>
         /// <param name="level"><see cref="LanguageLevel"/> for the parser</param>
         /// <param name="listener">Combined error listener for lexer and parser errors</param>
-        public ParserStack( LanguageLevel level, IUnifiedErrorListener listener )
-            : this( level, listener, listener )
+        /// <param name="diagnostics">Diagnostic representations to generate when parsing</param>
+        public ParserStack( LanguageLevel level, IUnifiedErrorListener listener, DiagnosticRepresentations diagnostics = DiagnosticRepresentations.None )
+            : this( new DynamicRuntimeState( level ), diagnostics, listener, listener )
         {
         }
 
         /// <summary>Initializes a new instance of the <see cref="ParserStack"/> class.</summary>
-        /// <param name="level"><see cref="LanguageLevel"/> for the parser</param>
+        /// <param name="globalState"><see cref="DynamicRuntimeState"/> for the parse</param>
+        /// <param name="diagnostics">Diagnostic representations to generate when parsing</param>
         /// <param name="lexErrorListener">Error listener for Lexer errors</param>
         /// <param name="parseErrorListener">Error listener for parer errors</param>
-        public ParserStack( LanguageLevel level
+        public ParserStack( DynamicRuntimeState globalState
+                          , DiagnosticRepresentations diagnostics
                           , IAntlrErrorListener<int> lexErrorListener
                           , IAntlrErrorListener<IToken> parseErrorListener
                           )
         {
-            GlobalState = new DynamicRuntimeState( level );
+            GlobalState = globalState.ValidateNotNull( nameof( globalState ) );
+            Diagnostics = diagnostics;
             LexErrorListener = lexErrorListener;
             ParseErrorListener = parseErrorListener;
             ErrorStrategy = new ReplErrorStrategy( );
         }
+
+        public DiagnosticRepresentations Diagnostics { get; }
 
         /// <summary>Gets or sets the language level for this parser</summary>
         public LanguageLevel LanguageLevel
@@ -71,18 +80,24 @@ namespace Kaleidoscope.Runtime
         public DynamicRuntimeState GlobalState { get; }
 
         /// <inheritdoc/>
-        public IAstNode Parse( string txt, DiagnosticRepresentations aditionalDiagnostics = DiagnosticRepresentations.None )
+        public IAstNode Parse( string txt )
         {
-            return Parse( new AntlrInputStream( txt ), aditionalDiagnostics, ParseMode.ReplLoop );
+            return Parse( new AntlrInputStream( txt ), ParseMode.ReplLoop );
         }
 
         /// <inheritdoc/>
-        public IAstNode Parse( TextReader reader, DiagnosticRepresentations aditionalDiagnostics = DiagnosticRepresentations.None )
+        public IAstNode Parse( TextReader reader )
         {
-            return Parse( new AntlrInputStream( reader ), aditionalDiagnostics, ParseMode.FullSource );
+            return Parse( new AntlrInputStream( reader ), ParseMode.FullSource );
         }
 
-        private IAstNode Parse( AntlrInputStream inputStream, DiagnosticRepresentations aditionalDiagnostics, ParseMode mode )
+        /// <inheritdoc/>
+        public IObservable<IAstNode> Parse( IObservable<string> inputSource, Action<CodeGeneratorException> errorHandler)
+        {
+            return inputSource.ParseWith( this, errorHandler );
+        }
+
+        private IAstNode Parse( ICharStream inputStream, ParseMode mode )
         {
             try
             {
@@ -105,7 +120,7 @@ namespace Kaleidoscope.Runtime
                     GlobalState = GlobalState
                 };
 
-                if( aditionalDiagnostics.HasFlag( DiagnosticRepresentations.DebugTraceParser ) )
+                if( Diagnostics.HasFlag( DiagnosticRepresentations.DebugTraceParser ) )
                 {
                     Parser.AddParseListener( new DebugTraceListener( Parser ) );
                 }
@@ -123,7 +138,7 @@ namespace Kaleidoscope.Runtime
 
                 var parseTree = mode == ParseMode.ReplLoop ? ( IParseTree )Parser.repl( ) : Parser.fullsrc( );
 
-                if( aditionalDiagnostics.HasFlag( DiagnosticRepresentations.Xml ) )
+                if( Diagnostics.HasFlag( DiagnosticRepresentations.Xml ) )
                 {
                     var docListener = new XDocumentListener( Parser );
                     ParseTreeWalker.Default.Walk( docListener, parseTree );
@@ -139,7 +154,7 @@ namespace Kaleidoscope.Runtime
                 var astNode = astBuilder.Visit( parseTree );
 
 #if NET47
-                if( aditionalDiagnostics.HasFlag( DiagnosticRepresentations.Dgml ) || aditionalDiagnostics.HasFlag( DiagnosticRepresentations.BlockDiag ) )
+                if( Diagnostics.HasFlag( DiagnosticRepresentations.Dgml ) || Diagnostics.HasFlag( DiagnosticRepresentations.BlockDiag ) )
                 {
                     // both forms share the same initial DirectedGraph model as the formats are pretty similar
                     var dgmlGenerator = new DgmlGenerator( Parser );
@@ -147,13 +162,13 @@ namespace Kaleidoscope.Runtime
                     var astGraphGenereator = new AstGraphGenerator( );
                     astNode.Accept( astGraphGenereator );
 
-                    if( aditionalDiagnostics.HasFlag( DiagnosticRepresentations.Dgml ) )
+                    if( Diagnostics.HasFlag( DiagnosticRepresentations.Dgml ) )
                     {
                         dgmlGenerator.WriteDgmlGraph( "ParseTree.dgml" );
                         astGraphGenereator.WriteDgmlGraph( "Ast.dgml" );
                     }
 
-                    if( aditionalDiagnostics.HasFlag( DiagnosticRepresentations.BlockDiag ) )
+                    if( Diagnostics.HasFlag( DiagnosticRepresentations.BlockDiag ) )
                     {
                         dgmlGenerator.WriteBlockDiag( "ParseTree.diag" );
                         astGraphGenereator.WriteBlockDiag( "Ast.diag" );

@@ -5,6 +5,7 @@
 using System;
 using System.Diagnostics.CodeAnalysis;
 using Llvm.NET.Native;
+using Llvm.NET.Properties;
 using Llvm.NET.Types;
 using Llvm.NET.Values;
 using Ubiquity.ArgValidators;
@@ -63,7 +64,6 @@ namespace Llvm.NET.DebugInfo
     [SuppressMessage( "StyleCop.CSharp.MaintainabilityRules", "SA1402:File may only contain a single class", Justification = "Interface, Generic type and static extension methods form a common API surface" )]
     public class DebugType<TNative, TDebug>
         : IDebugType<TNative, TDebug>
-        , ITypeRef
         , ITypeHandleOwner
         where TNative : class, ITypeRef
         where TDebug : DIType
@@ -89,7 +89,7 @@ namespace Llvm.NET.DebugInfo
                 {
                     if( value.IsTemporary )
                     {
-                        throw new InvalidOperationException( "Cannot replace a temporary with another temporary" );
+                        throw new InvalidOperationException( Resources.Cannot_replace_a_temporary_with_another_temporary );
                     }
 
                     DIType_.ReplaceAllUsesWith( value );
@@ -97,7 +97,7 @@ namespace Llvm.NET.DebugInfo
                 }
                 else
                 {
-                    throw new InvalidOperationException( "Cannot replace non temporary DIType with a new Type" );
+                    throw new InvalidOperationException( Resources.Cannot_replace_non_temporary_DIType_with_a_new_Type );
                 }
             }
         }
@@ -175,7 +175,7 @@ namespace Llvm.NET.DebugInfo
         {
             if( DIType == null )
             {
-                throw new ArgumentException( "Type does not have associated Debug type from which to construct a pointer type" );
+                throw new ArgumentException( Resources.Type_does_not_have_associated_Debug_type_from_which_to_construct_a_pointer_type );
             }
 
             var nativePointer = NativeType.CreatePointerType( addressSpace );
@@ -187,7 +187,7 @@ namespace Llvm.NET.DebugInfo
         {
             if( DIType == null )
             {
-                throw new ArgumentException( "Type does not have associated Debug type from which to construct an array type" );
+                throw new ArgumentException( Resources.Type_does_not_have_associated_Debug_type_from_which_to_construct_an_array_type );
             }
 
             var llvmArray = NativeType.CreateArrayType( count );

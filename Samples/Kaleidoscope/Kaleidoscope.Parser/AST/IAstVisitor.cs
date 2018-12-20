@@ -4,7 +4,7 @@
 
 namespace Kaleidoscope.Grammar.AST
 {
-    public interface IAstVisitor<TResult>
+    public interface IAstVisitor<out TResult>
     {
         TResult Visit( RootNode root );
 

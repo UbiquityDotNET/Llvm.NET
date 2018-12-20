@@ -15,7 +15,7 @@ namespace Kaleidoscope.Grammar
             {
                 get
                 {
-                    yield return (Identifier( ).GetText( ), 1, Identifier().GetSourceSpan());
+                    yield return (Identifier( ).GetText( ), 0, Identifier().GetSourceSpan());
                 }
             }
 

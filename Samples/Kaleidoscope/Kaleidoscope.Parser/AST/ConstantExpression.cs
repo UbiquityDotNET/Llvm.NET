@@ -3,6 +3,7 @@
 // </copyright>
 
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 
 namespace Kaleidoscope.Grammar.AST
@@ -26,7 +27,7 @@ namespace Kaleidoscope.Grammar.AST
 
         public override string ToString( )
         {
-            return Value.ToString( );
+            return Value.ToString( CultureInfo.CurrentCulture );
         }
     }
 }

@@ -33,7 +33,7 @@ namespace Llvm.NET.Values
                 throw new InvalidOperationException( "Value is not a string" );
             }
 
-            return NativeMethods.LLVMGetAsString( ValueHandle, out size_t len );
+            return NativeMethods.LLVMGetAsString( ValueHandle, out size_t _ );
         }
 
         internal ConstantDataSequential( LLVMValueRef valueRef )

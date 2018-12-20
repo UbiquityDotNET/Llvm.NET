@@ -5,7 +5,7 @@ generating code from the parsed language. Each type of node in the tree implemen
 [!code-csharp[IAstNode](../../../Samples/Kaleidoscope/Kaleidoscope.Parser/AST/IAstNode.cs)]
 
 This interface provides the basic properties of any node in the tree for common uses. The Kaleidoscope
-language is a simple one and therefore has only a few kinds of nodes. The AST consist of the following
+language is a simple one and, therefore, has only a few kinds of nodes. The AST consist of the following
 basic categories of nodes:
  * Function Declarations
  * Function Definitions
@@ -13,10 +13,12 @@ basic categories of nodes:
    * Local Variables
    * Function Parameters
  * Expressions
-   * Assignment
    * Variable Reference
+   * Unary Operators
    * Binary Operators
+   * Function Call
    * For-In Expression
+   * Assignment
    * Var-In Expression
 
 ## AST Nodes
@@ -40,43 +42,56 @@ a common pattern for interfaces but makes sense here since some form of differen
 Unary operators are all user defined, so the AST simply represents them as a Function Definition. No
 additional node types are needed for unary operators in the AST.
 
-### BinaryOperatorExpression
+### Binary Operators
 BinaryOperatorExpression covers the built-in operators
 [!code-csharp[BinaryOperatorExpression](../../../Samples/Kaleidoscope/Kaleidoscope.Parser/AST/BinaryOperatorExpression.cs)]
 
 The properties are fairly self explanatory, including the kind of operator and the left and right sides of the
-operator.
+operator. The normal code generator pattern for the binary operators is:
 
-### FunctionCallExpression
+1. Generate code for the left side expression to a new value
+2. Generate code for the right side expression to a new value
+3. Apply the operator to the generated left and right values
+4. Return the result
+
+#### Assignment
+Assignment is a special kind of binary operator to represent "store" semantics for a variable. (e.g. mutable variables).
+Code generation for the assignment must handle the left side operand with a slightly different pattern. In particular,
+the left hand side is not an evaluated expression. Instead, it is the variable to assign the right had value to. Thus,
+there isn't anything to evaluate for the left hand side as it is always a Variable Reference for the variable to assign
+the value to.
+
+### Function Call Expression
 Calls to functions (extern, user defined operators, or user defined functions) are represented in the AST as a
 FunctionCallExpression. The FunctionCallExpression contains the declaration of the function to call along with 
 expressions for all of the arguments to the function.
 
 [!code-csharp[FunctionCallExpression](../../../Samples/Kaleidoscope/Kaleidoscope.Parser/AST/FunctionCallExpression.cs)]
 
-### VariableReferenceExpression
-A variable reference is used in the tree to represent "load" semantics for a variable.
+### Variable Reference Expression
+A variable reference is used to refer to a variable. In most cases this represents implicit "load" semantics for a variable. However,
+when used as the left hand side of an assignment operator, it has "store" semantics.
 [!code-csharp[VariableReferenceExpression](../../../Samples/Kaleidoscope/Kaleidoscope.Parser/AST/VariableReferenceExpression.cs)]
 
-### ConditionalExpression
+### Conditional Expression
 In Kaleidoscope conditional expressions follow the familiar if/then/else form, even though they are really more
 like the ternary operator expression `( x ? y : z )` in C and related languages.
 
 [!code-csharp[ConditionalExpression](../../../Samples/Kaleidoscope/Kaleidoscope.Parser/AST/ConditionalExpression.cs)]
 
-### ForInExpression
+### For-In Expression
 The for in expression is used to implement loops in Kaleidoscope.
 
 [!code-csharp[ForInExpression](../../../Samples/Kaleidoscope/Kaleidoscope.Parser/AST/ForInExpression.cs)]
 
-### VarInExpression
+### Var-In Expression
+Var-In Expression is used to provide, potentially nested, local scopes for variables
 
 [!code-csharp[VarInExpression](../../../Samples/Kaleidoscope/Kaleidoscope.Parser/AST/VarInExpression.cs)]
 
 ### Misc AST Interfaces
-
 IVariableDeclaration is implemented by local variable declarations and parameter declarations. The
-interface abstracts the differences between the two types of variable declarations.
+interface abstracts the differences between the two types of variable declarations. (Parameters have an index but locals don't)
 [!code-csharp[IVariableDeclaration](../../../Samples/Kaleidoscope/Kaleidoscope.Parser/AST/IVariableDeclaration.cs)]
 
 ## Other AST Nodes
@@ -89,4 +104,4 @@ interface abstracts the differences between the two types of variable declaratio
 FunctionDefinition, as the name implies, contains the definition of a function. This includes the signature
 and the full body of the function.
 
-[!code-csharp[VarInExpression](../../../Samples/Kaleidoscope/Kaleidoscope.Parser/AST/FunctionDefinition.cs)]
+[!code-csharp[FunctionDefinition](../../../Samples/Kaleidoscope/Kaleidoscope.Parser/AST/FunctionDefinition.cs)]

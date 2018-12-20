@@ -17,11 +17,19 @@ namespace Llvm.NET.Native
 
         public override string ToString( )
         {
-            return Marshal.PtrToStringAnsi( VersionStringPtr );
+            return (VersionStringPtr == IntPtr.Zero ? string.Empty : Marshal.PtrToStringAnsi( VersionStringPtr )) ?? string.Empty;
         }
 
         public static implicit operator Version( LLVMVersionInfo versionInfo )
             => new Version( versionInfo.Major, versionInfo.Minor, versionInfo.Patch );
+
+        internal LLVMVersionInfo(int major, int minor, int patch)
+        {
+            Major = major;
+            Minor = minor;
+            Patch = patch;
+            VersionStringPtr = IntPtr.Zero;
+        }
 
         private readonly IntPtr VersionStringPtr;
     }

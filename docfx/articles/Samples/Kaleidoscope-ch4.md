@@ -1,12 +1,12 @@
 # 4. Kaleidoscope: Adding JIT and Optimizer Support
-This chapter of the Kaleidoscope tutorial introduces JIT compilation and optimizations of the generated
-code. As, such this is the first variant of the language implementation where you can actually execute
-the Kaleidoscope code. Thus, this is a bit more fun than the others as you can finally get to see the
+This chapter of the Kaleidoscope tutorial introduces Just-In-Time (JIT) compilation and simple optimizations
+of the generated code. As, such this is the first variant of the language implementation where you can actually
+execute the Kaleidoscope code. Thus, this is a bit more fun than the others as you finally get to see the
 language working for real!
 
 ## Constant Folding
 If you studied the LLVM IR generated from the previous chapters you will see that it isn't particularly
-well optimized. Though, there is one case where it does do some nice optimization automatically for us.
+well optimized. There is one case, though, where it does do some nice optimization automatically for us.
 
 For example:
 ```Kaleidoscope
@@ -23,9 +23,9 @@ entry:
 ```
 
 That's not exactly what the parse tree would suggest. The [InstructionBuilder](xref:Llvm.NET.Instructions.InstructionBuilder)
-automatically performs an optimization technique know as 'Constant Folding'. This optimization is very
+automatically performs an optimization technique known as 'Constant Folding'. This optimization is very
 important, in fact, many compilers implement the folding directly into the generation of the Abstract
-Syntax Tree (AST). With LLVM that isn't necessary as it is automatically provided for you (no extra
+Syntax Tree (AST). With LLVM, that isn't necessary as it is automatically provided for you (no extra
 charge!).
 
 Obviously constant folding isn't the only possible optimization and InstructionBuilder only operates on
@@ -49,7 +49,7 @@ entry:
 
 In this case the operand of the additions are identical. Ideally this would generate as
 `temp = x+3; result = temp*temp;` rather than computing X+3 twice. This isn't something that
-InstructionBuilder can do. Ultimately this requires two distinct transformations:
+InstructionBuilder alone can do. Ultimately this requires two distinct transformations:
   1. Re-association of expressions to make the additions lexically identical (e.g. recognize that x+3 == 3+x )
   1. Common Subexpression Elimination to remove the redundant add instruction.
 
@@ -59,7 +59,7 @@ other scenarios.
 ## LLVM Optimization Passes
 LLVM provides many different optimization passes, each handling a specific scenario with different trade-offs.
 One of the values of LLVM as a general compilation back-end is that it doesn't enforce any particular set
-of optimizations. By default there aren't any optimizations (Other than the obvious constant folding built
+of optimizations. By default, there aren't any optimizations (Other than the obvious constant folding built
 into the InstructionBuilder). All optimizations are entirely in the hands of the front-end application.
 The compiler implementor controls what passes are applied, and in what order they are run. This ensures
 that the optimizations are tailored to correctly meet the needs of the language and runtime environment.
@@ -69,9 +69,9 @@ them in on the command line. Ultimate, whole program optimization is off the tab
 user will enter the last expression so it is incorrect to eliminate unused functions). In order to support
 per-function optimization a [FunctionPassManager](xref:Llvm.NET.Transforms.FunctionPassManager) is created
 to hold the passes used for optimizing a function. The FunctionPassManager supports running the passes
-added to it against a function to transform it into the optimized form. Since a pass manager is tied to the
-module and, for JIT support, each function is generated into its own module a new function is needed to
-create the module and initialize the pass manager.
+to transform a function into the optimized form. Since a pass manager is tied to the module and, for JIT
+support, each function is generated into its own module a new method in the code generator is used to create
+the module and initialize the pass manager.
 
 [!code-csharp[Main](../../../Samples/Kaleidoscope/Chapter4/CodeGenerator.cs#InitializeModuleAndPassManager)]
 
@@ -102,6 +102,8 @@ your front-end generates. (This can lead to changing the passes and ordering, as
 the front-end generates so that the optimizer can handle the input better) This is not an exact science
 with a one size fits all kind of solution. There are many common passes that are likely relevant to all
 languages. Though the ordering of them may differ depending on the needs of the language and runtime.
+Getting, the optimizations and ordering for a given language is arguably where the most work lies in
+creating a production quality language using LLVM.
 
 ## Adding JIT Compilation
 Now that the code generation produces optimized code, it is time to get to the fun part - executing code!
@@ -117,14 +119,15 @@ is a [ConstantFP](xref:Llvm.NET.Values.ConstantFP). We'll see a bit later on why
 value.
 
 ### Code Generator
-The code generation needs an update to support using a JIT engine to generate and execute the Kaleidescope code provided by the user.
+The code generation needs an update to support using a JIT engine to generate and execute the Kaleidescope
+code provided by the user.
 
 To begin with, the generator needs some additional members, including the JIT engine.
 
 [!code-csharp[Main](../../../Samples/Kaleidoscope/Chapter4/CodeGenerator.cs#Initialization)]
 
 The JIT engine is retained for the generator to use. The same engine is retained for the lifetime of the
-generator so that functions are added to the same engine and can call function previously added. The JIT
+generator so that functions are added to the same engine and can call functions previously added. The JIT
 provides a 'handle' for every module added, which is used to reference the module in the JIT, this is
 normally used to remove the module from the JIT engine when re-defining a function. Thus, a map of the
 function names and the JIT handle created for them is maintained. Additionally, a collection of defined
@@ -133,7 +136,7 @@ Since the JIT support uses a module per function approach, lookups on the curren
 Finally, a native function call delegate is defined for top level anonymous expressions so that, after
 the JIT engine has generated the code, the application can call it through a delegate.
 
-The initialization of the generator requires updating to support the additional members.
+The initialization of the generator requires updating to support the new members.
 
 [!code-csharp[Main](../../../Samples/Kaleidoscope/Chapter4/CodeGenerator.cs#Initialization)]
 
@@ -148,7 +151,7 @@ OrcJIT engine.
 [OrcJit](xref:Llvm.NET.JIT.OrcJit) provides support for declaring functions that are external to the JIT
 that the JIT'd module code can call. For Kaleidoscope, two such functions are defined directly in
 KaleidoscoptJIT (putchard and printd), which is consistent with the same functions used in the official
-LLVM C++ tutorial. Thus allowing sharing of samples between the two.
+LLVM C++ tutorial. Thus, allowing sharing of samples between the two.
 
 > [!WARNING]
 > All such methods implemented in .NET must block any exception from bubbling out of the call as the JIT
@@ -179,7 +182,6 @@ tracking the JIT handle for the module and ultimately re-initializing a new modu
 the next function.
 
 [!code-csharp[Main](../../../Samples/Kaleidoscope/Chapter4/CodeGenerator.cs#FunctionDefinition)]
-
 
 When visiting a FunctionDefinition top level anonymous expressions needs some additional work to make
 the JIT actually work. The generator will convert the function to LLVM IR, as before, however it will

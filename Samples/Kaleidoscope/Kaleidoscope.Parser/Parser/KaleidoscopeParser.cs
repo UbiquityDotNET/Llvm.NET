@@ -2,8 +2,6 @@
 // Copyright (c) .NET Foundation. All rights reserved.
 // </copyright>
 
-using Antlr4.Runtime;
-
 namespace Kaleidoscope.Grammar
 {
     /// <summary>Language level supported</summary>
@@ -26,7 +24,6 @@ namespace Kaleidoscope.Grammar
     // This extends the individual parse tree context node types
     // so that labels in the grammar are unnecessary.
     public partial class KaleidoscopeParser
-        : Parser
     {
         /// <summary>Gets the Language level the application supports</summary>
         public LanguageLevel LanguageLevel => GlobalState.LanguageLevel;

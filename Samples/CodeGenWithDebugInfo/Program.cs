@@ -31,7 +31,7 @@ namespace TestDebugInfo
         /// </remarks>
         public static void Main( string[ ] args )
         {
-            // <CommandlineArguments>
+            #region CommandlineArguments
             if( args.Length != 2 )
             {
                 ShowUsage( );
@@ -46,11 +46,11 @@ namespace TestDebugInfo
             }
 
             srcPath = Path.GetFullPath( srcPath );
-            // </CommandlineArguments>
+            #endregion
 
             using( InitializeLLVM() )
             {
-                // <TargetDetailsSelection>
+                #region TargetDetailsSelection
                 switch( args[ 0 ] )
                 {
                 case "M3":
@@ -67,9 +67,9 @@ namespace TestDebugInfo
                 }
 
                 string moduleName = $"test_{TargetDetails.ShortName}.bc";
-                // </TargetDetailsSelection>
+                #endregion
 
-                // <CreatingModule>
+                #region CreatingModule
                 using( var context = new Context( ) )
                 using( var module = context.CreateBitcodeModule( moduleName, SourceLanguage.CSharp, srcPath, VersionIdentString ) )
                 {
@@ -78,20 +78,20 @@ namespace TestDebugInfo
                     module.Layout = TargetDetails.TargetMachine.TargetData;
 
                     TargetDependentAttributes = TargetDetails.BuildTargetDependentFunctionAttributes( context );
-                    // </CreatingModule>
+                    #endregion
 
                     var diFile = module.DIBuilder.CreateFile( srcPath );
 
-                    // <CreatingBasicTypesWithDebugInfo>
+                    #region CreatingBasicTypesWithDebugInfo
                     // Create basic types used in this compilation
                     var i32 = new DebugBasicType( module.Context.Int32Type, module, "int", DiTypeKind.Signed );
                     var f32 = new DebugBasicType( module.Context.FloatType, module, "float", DiTypeKind.Float );
                     var voidType = DebugType.Create( module.Context.VoidType, ( DIType )null );
                     var i32Array_0_32 = i32.CreateArrayType( module, 0, 32 );
-                    // </CreatingBasicTypesWithDebugInfo>
+                    #endregion
 
 #pragma warning disable SA1500 // "Warning SA1500  Braces for multi - line statements must not share line" (simple table format)
-                    // <CreatingStructureTypes>
+                    #region CreatingStructureTypes
                     // create the LLVM structure type and body with full debug information
                     var fooBody = new[ ]
                         { new DebugMemberInfo { File = diFile, Line = 3, Name = "a", DebugType = i32, Index = 0 }
@@ -100,9 +100,9 @@ namespace TestDebugInfo
                         };
 
                     var fooType = new DebugStructType( module, "struct.foo", module.DICompileUnit, "foo", diFile, 1, DebugInfoFlags.None, fooBody );
-                    // </CreatingStructureTypes>
+                    #endregion
 #pragma warning restore SA1500
-                    // <CreatingGlobalsAndMetadata>
+                    #region CreatingGlobalsAndMetadata
                     // add global variables and constants
                     var constArray = ConstantArray.From( i32, 32, module.Context.CreateConstant( 3 ), module.Context.CreateConstant( 4 ) );
                     var barValue = module.Context.CreateNamedConstantStruct( fooType
@@ -123,13 +123,13 @@ namespace TestDebugInfo
                     // this can technically occur at any point, though placing it here makes
                     // comparing against clang generated files easier
                     AddModuleFlags( module );
-                    // </CreatingGlobalsAndMetadata>
+                    #endregion
 
-                    // <CreatingQualifiedTypes>
+                    #region CreatingQualifiedTypes
                     // create types for function args
                     var constFoo = module.DIBuilder.CreateQualifiedType( fooType.DIType, QualifiedTypeTag.Const );
                     var fooPtr = new DebugPointerType( fooType, module );
-                    // </CreatingQualifiedTypes>
+                    #endregion
 
                     // Create the functions
                     // NOTE: The declaration ordering is reversed from that of the sample code file (test.c)
@@ -196,7 +196,7 @@ namespace TestDebugInfo
             Console.Error.WriteLine( "Usage: {0} [X64|M3] <source file path>", Path.GetFileName( System.Reflection.Assembly.GetExecutingAssembly( ).CodeBase ) );
         }
 
-        // <FunctionDeclarations>
+        #region FunctionDeclarations
         private static Function DeclareDoCopyFunc( BitcodeModule module, DIFile diFile, IDebugType<ITypeRef, DIType> voidType )
         {
             var doCopySig = module.Context.CreateFunctionType( module.DIBuilder, voidType );
@@ -256,9 +256,9 @@ namespace TestDebugInfo
             TargetDetails.AddABIAttributesForByValueStructure( copyFunc, 0 );
             return copyFunc;
         }
-        // </FunctionDeclarations>
+        #endregion
 
-        // <AddModuleFlags>
+        #region AddModuleFlags
         private static void AddModuleFlags( BitcodeModule module )
         {
             module.AddModuleFlag( ModuleFlagBehavior.Warning, BitcodeModule.DwarfVersionValue, 4 );
@@ -266,7 +266,7 @@ namespace TestDebugInfo
             TargetDetails.AddModuleFlags( module );
             module.AddVersionIdentMetadata( VersionIdentString );
         }
-        // </AddModuleFlags>
+        #endregion
 
         private static void CreateCopyFunctionBody( BitcodeModule module
                                                   , Function copyFunc

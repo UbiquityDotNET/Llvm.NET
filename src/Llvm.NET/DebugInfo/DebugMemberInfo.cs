@@ -37,9 +37,9 @@ namespace Llvm.NET.DebugInfo
         /// <summary>Gets or sets the explicit layout information for this member</summary>
         /// <remarks>If this is <see langword="null"/> then <see href="xref:Llvm.NET.DebugInfo.DebugStructType.SetBody*">DebugStructType.SetBody</see>
         /// will default to using <see cref="BitcodeModule.Layout"/> to determine the size using the module's target specific layout.
-        /// <note type="note">
+        /// <note type="Important">
         /// If this property is provided (e.g. is not <see langword="null"/>) for any member of a type, then
-        /// it must be set for all members. In other words explicit layout must be defined for all members
+        /// it must be set for *all* members. In other words explicit layout must be defined for all members
         /// or none. Furthermore, for types using explicit layout, the LLVM type containing this member must
         /// include the "packed" modifier.
         /// </note>

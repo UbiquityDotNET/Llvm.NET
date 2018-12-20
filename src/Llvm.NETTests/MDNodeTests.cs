@@ -27,9 +27,8 @@ namespace Llvm.NET.Tests
         [TestMethod]
         public void AppendingModuleFlagsTest( )
         {
-            var targetMachine = TargetTests.GetTargetMachine( );
             using( var ctx = new Context( ) )
-            using( var module = ctx.CreateBitcodeModule( "test.bc", SourceLanguage.CSharp, "test.cs", "unittests" ) )
+            using( var module = ctx.CreateBitcodeModule( "test.bc", SourceLanguage.CSharp, "test.cs", "unit-tests" ) )
             {
                 module.AddModuleFlag( ModuleFlagBehavior.Append, "testMD", ctx.CreateMDNode( "testValue" ) );
                 Assert.AreEqual( 1, module.ModuleFlags.Count );
@@ -48,14 +47,14 @@ namespace Llvm.NET.Tests
         {
             var targetMachine = TargetTests.GetTargetMachine( );
             using( var ctx = new Context( ) )
-            using( var module = ctx.CreateBitcodeModule( "test.bc", SourceLanguage.CSharp, "test.cs", "unittests" ) )
+            using( var module = ctx.CreateBitcodeModule( "test.bc", SourceLanguage.CSharp, "test.cs", "unit-tests" ) )
             {
                 module.Layout = targetMachine.TargetData;
                 var intType = new DebugBasicType( module.Context.Int32Type, module, "int", DiTypeKind.Signed );
                 var arrayType = new DebugArrayType(intType, module, 3u);
                 Assert.IsNotNull( arrayType );
 
-                var mdnode = arrayType.DIType as DICompositeType;
+                var mdnode = arrayType.DIType;
                 Assert.IsNotNull( mdnode.Operands );
                 Assert.AreEqual( 8, mdnode.Operands.Count );
 

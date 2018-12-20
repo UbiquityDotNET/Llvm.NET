@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
+using Llvm.NET.Properties;
 using Llvm.NET.Types;
 using Ubiquity.ArgValidators;
 
@@ -45,7 +46,7 @@ namespace Llvm.NET.DebugInfo
 
             if( !llvmType.IsOpaque )
             {
-                throw new ArgumentException( "Struct type used as basis for a union must not have a body", nameof( llvmType ) );
+                throw new ArgumentException( Resources.Struct_type_used_as_basis_for_a_union_must_not_have_a_body, nameof( llvmType ) );
             }
 
             DIType = module.DIBuilder
@@ -119,7 +120,7 @@ namespace Llvm.NET.DebugInfo
 
             if( module.Layout == null )
             {
-                throw new ArgumentException( "Module needs Layout to build basic types", nameof( module ) );
+                throw new ArgumentException( Resources.Module_needs_Layout_to_build_basic_types, nameof( module ) );
             }
 
             // Native body is a single element of a type with the largest size
@@ -127,17 +128,24 @@ namespace Llvm.NET.DebugInfo
             ITypeRef[ ] nativeMembers = { null };
             foreach( var elem in debugElements )
             {
-                var bitSize = elem.ExplicitLayout?.BitSize ?? module.Layout?.BitSizeOf( elem.DebugType );
+                /* ReSharper disable ConditionIsAlwaysTrueOrFalse */
+                /* ReSharper disable HeuristicUnreachableCode */
+                ulong? bitSize = elem.ExplicitLayout?.BitSize ?? module.Layout?.BitSizeOf( elem.DebugType );
                 if( !bitSize.HasValue )
                 {
-                    throw new ArgumentException( "Cannot determine layout for element; The element must have an explicit layout or the module has a layout to use", nameof( debugElements ) );
+                    throw new ArgumentException( Resources.Cannot_determine_layout_for_element__The_element_must_have_an_explicit_layout_or_the_module_has_a_layout_to_use, nameof( debugElements ) );
                 }
 
-                if( maxSize < bitSize.Value )
+                /* ReSharper enable HeuristicUnreachableCode */
+                /* ReSharper enable ConditionIsAlwaysTrueOrFalse */
+
+                if(maxSize >= bitSize.Value)
                 {
-                    maxSize = bitSize.Value;
-                    nativeMembers[ 0 ] = elem.DebugType;
+                    continue;
                 }
+
+                maxSize = bitSize.Value;
+                nativeMembers[ 0 ] = elem.DebugType;
             }
 
             var nativeType = ( IStructType )NativeType;
