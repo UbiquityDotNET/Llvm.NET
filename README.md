@@ -68,6 +68,7 @@ The full API documentation on using Llvm.NET is available on the [Llvm.NET docum
 ## Building Llvm.NET
 ### Prerequsites
 * Visual Studio 2017 (15.4+) [Community Edition OK]
+* [7-Zip](https://www.7-zip.org/) [Used to unpack the pre-built LLVM libraries]
 
 #### Using Visual Studio
 The repository contains Visual Studio solution files that allow building the components individually for modifying
