@@ -47,7 +47,7 @@ if($APPVEYOR)
 {
     Add-AppVeyorTest -Name 'CodeGenWithDebugInfo (CoreCLR)' -Outcome Running
 }
-pushd '.\BuildOutput\bin\CodeGenWithDebugInfo\Release\netcoreapp2.0'
+pushd '.\BuildOutput\bin\CodeGenWithDebugInfo\Release\netcoreapp2.1'
 dotnet CodeGenWithDebugInfo.dll M3 'Support Files\test.c'
 $testsFailed = $testsFailed -or ($LASTEXITCODE -ne 0)
 $outcome = @('Passed','Failed')[($LASTEXITCODE -eq 0)]
