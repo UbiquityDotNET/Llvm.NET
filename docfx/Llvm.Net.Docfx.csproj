@@ -6,10 +6,10 @@
 
   <ItemGroup>
     <PackageReference Include="CSemVer.Build.Tasks" Version="2.0.1" PrivateAssets="All" />
-    <PackageReference Include="docfx.console" Version="2.40.5" PrivateAssets="all">
+    <PackageReference Include="docfx.console" Version="2.40.11" PrivateAssets="all">
       <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
     </PackageReference>
-    <PackageReference Include="memberpage" Version="2.40.5" PrivateAssets="All" />
+    <PackageReference Include="memberpage" Version="2.40.11" PrivateAssets="All" />
     <PackageReference Include="msdn.4.5.2" Version="0.1.0-alpha-1611021200" PrivateAssets="All" />
   </ItemGroup>
 
