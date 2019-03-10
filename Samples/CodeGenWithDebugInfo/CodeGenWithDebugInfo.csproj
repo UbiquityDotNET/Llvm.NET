@@ -2,7 +2,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <AssemblyVersion>0.0.1.0</AssemblyVersion>
-    <TargetFrameworks>net47;netcoreapp2.0</TargetFrameworks>
+    <TargetFrameworks>netcoreapp2.1;net47</TargetFrameworks>
     <OutputType>exe</OutputType>
     <OutputTypeEx>exe</OutputTypeEx>
     <GeneratePackageOnBuild>false</GeneratePackageOnBuild>

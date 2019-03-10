@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Runtime.InteropServices;
 using Llvm.NET.Native;
 using Llvm.NET.Properties;
+
 using static Llvm.NET.Native.NativeMethods;
 
 namespace Llvm.NET.JIT
