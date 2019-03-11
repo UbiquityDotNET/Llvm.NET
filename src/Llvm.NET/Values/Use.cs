@@ -4,6 +4,8 @@
 
 using Llvm.NET.Native;
 
+using static Llvm.NET.Values.Value.NativeMethods;
+
 namespace Llvm.NET.Values
 {
     /// <summary>LLVM Use, which is essentially a tuple of the <see cref="User"/> and the <see cref="Value"/> used</summary>
@@ -13,10 +15,10 @@ namespace Llvm.NET.Values
     public class Use
     {
         /// <summary>Gets the <see cref="User"/> of this <see cref="Use"/></summary>
-        public User User => Value.FromHandle<User>( NativeMethods.LLVMGetUser( OpaqueHandle ) );
+        public User User => Value.FromHandle<User>( LLVMGetUser( OpaqueHandle ) );
 
         /// <summary>Gets the <see cref="Value"/> used</summary>
-        public Value Value => Value.FromHandle( NativeMethods.LLVMGetUsedValue( OpaqueHandle ) );
+        public Value Value => Value.FromHandle( LLVMGetUsedValue( OpaqueHandle ) );
 
         /// <summary>Initializes a new instance of the <see cref="Use"/> class from low level LLVM <see cref="LLVMUseRef"/></summary>
         /// <param name="useRef">LLVM raw reference</param>

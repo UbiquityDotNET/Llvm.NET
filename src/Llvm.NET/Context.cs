@@ -6,7 +6,6 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
-using System.Runtime.InteropServices;
 using System.Text;
 using JetBrains.Annotations;
 using Llvm.NET.DebugInfo;
@@ -17,8 +16,9 @@ using Llvm.NET.Types;
 using Llvm.NET.Values;
 using Ubiquity.ArgValidators;
 
-using static Llvm.NET.Native.NativeMethods;
-using CallingConvention = System.Runtime.InteropServices.CallingConvention;
+using static Llvm.NET.BitcodeModule.NativeMethods;
+using static Llvm.NET.Context.NativeMethods;
+using static Llvm.NET.Types.TypeRef.NativeMethods;
 
 namespace Llvm.NET
 {
@@ -40,7 +40,7 @@ namespace Llvm.NET
     /// manipulating LLVM objects from multiple threads may lead to race conditions corrupted state and any number
     /// of other undefined issues.</note>
     /// </remarks>
-    public sealed class Context
+    public sealed partial class Context
         : DisposableObject
         , IBitcodeModuleFactory
     {
@@ -914,39 +914,5 @@ namespace Llvm.NET
         private readonly TypeRef.InterningFactory TypeCache;
         private readonly AttributeValue.InterningFactory AttributeValueCache;
         private readonly LlvmMetadata.InterningFactory MetadataCache;
-
-        // ReSharper disable IdentifierTypo
-        [DllImport( LibraryPath, CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi, ThrowOnUnmappableChar = true, BestFitMapping = false )]
-        private static extern LLVMBasicBlockRef LLVMContextCreateBasicBlock( LLVMContextRef context
-                                                                           , [MarshalAs( UnmanagedType.LPStr )] string name
-                                                                           , LLVMValueRef /*Function*/ function
-                                                                           , LLVMBasicBlockRef insertBefore
-                                                                           );
-
-        [DllImport( LibraryPath, CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi, ThrowOnUnmappableChar = true, BestFitMapping = false )]
-        private static extern uint LLVMGetMDKindIDInContext( LLVMContextRef C, [MarshalAs( UnmanagedType.LPStr )] string Name, uint SLen );
-
-        [DllImport( LibraryPath, CallingConvention = CallingConvention.Cdecl )]
-        [return: MarshalAs( UnmanagedType.Bool )]
-        private static extern bool LLVMContextGetIsODRUniquingDebugTypes( LLVMContextRef context );
-
-        [DllImport( LibraryPath, CallingConvention = CallingConvention.Cdecl )]
-        private static extern void LLVMContextSetIsODRUniquingDebugTypes( LLVMContextRef context, [MarshalAs( UnmanagedType.Bool )] bool state );
-
-        [DllImport( LibraryPath, CallingConvention = CallingConvention.Cdecl, BestFitMapping = false, ThrowOnUnmappableChar = true )]
-
-        private static extern LLVMMetadataRef LLVMMDString2( LLVMContextRef C, [MarshalAs( UnmanagedType.LPStr )] string Str, UInt32 SLen );
-
-        [DllImport( LibraryPath, CallingConvention = CallingConvention.Cdecl )]
-        private static extern LLVMMetadataRef LLVMMDNode2( LLVMContextRef C, out LLVMMetadataRef MDs, UInt32 Count );
-
-        // ReSharper disable CommentTypo
-        /*[DllImport( LibraryPath, CallingConvention = CallingConvention.Cdecl )]
-        //private static extern LLVMMetadataRef LLVMTemporaryMDNode( LLVMContextRef C, out LLVMMetadataRef MDs, UInt32 Count );
-
-        //[DllImport( LibraryPath, CallingConvention = CallingConvention.Cdecl, BestFitMapping = false, ThrowOnUnmappableChar = true )]
-        //[return: MarshalAs( UnmanagedType.Bool )]
-        //private static extern bool LLVMRunPassPipeline( LLVMContextRef context, LLVMModuleRef M, LLVMTargetMachineRef TM, [MarshalAs( UnmanagedType.LPStr )] string passPipeline, LLVMOptVerifierKind VK, [MarshalAs( UnmanagedType.Bool )] bool ShouldPreserveAssemblyUseListOrder, [MarshalAs( UnmanagedType.Bool )] bool ShouldPreserveBitcodeUseListOrder );
-        */
     }
 }

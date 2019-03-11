@@ -11,11 +11,14 @@ using System.Runtime.InteropServices;
 using Llvm.NET.Instructions;
 using Llvm.NET.Native;
 using Llvm.NET.Properties;
+
 using static Llvm.NET.Native.NativeMethods;
+using static Llvm.NET.Values.Value.NativeMethods;
+using static Llvm.NET.Values.ValueCache.NativeMethods;
 
 namespace Llvm.NET.Values
 {
-    internal class ValueCache
+    internal partial class ValueCache
         : IHandleInterning<LLVMValueRef, Value>
     {
         public Context Context { get; }
@@ -78,7 +81,7 @@ namespace Llvm.NET.Values
 
         /* ReSharper disable PrivateFieldCanBeConvertedToLocalVariable
         // These cannot and must not be made as locals as it holds the references
-        // and GCHandles for the delegate
+        // and GCHandles for the delegate beyond the local scope they ar used.
         */
         private readonly WrappedNativeCallback WrappedOnDeleted;
         private readonly WrappedNativeCallback WrappedOnReplaced;
@@ -333,19 +336,10 @@ namespace Llvm.NET.Values
             }
         }
 
-        [UnmanagedFunctionPointer(System.Runtime.InteropServices.CallingConvention.Cdecl)]
+        [UnmanagedFunctionPointer( System.Runtime.InteropServices.CallingConvention.Cdecl )]
         private delegate void LLVMValueCacheItemDeletedCallback( LLVMValueRef valueRef, IntPtr handle );
 
-        [UnmanagedFunctionPointer(System.Runtime.InteropServices.CallingConvention.Cdecl)]
+        [UnmanagedFunctionPointer( System.Runtime.InteropServices.CallingConvention.Cdecl )]
         private delegate IntPtr LLVMValueCacheItemReplacedCallback( LLVMValueRef valueRef, IntPtr handle, LLVMValueRef newValue );
-
-        [DllImport( LibraryPath, CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl )]
-        private static extern LLVMValueCacheRef LLVMCreateValueCache( IntPtr deletedCallback, IntPtr replacedCallback );
-
-        [DllImport( LibraryPath, CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl )]
-        private static extern void LLVMValueCacheAdd( LLVMValueCacheRef cacheRef, LLVMValueRef value, IntPtr handle );
-
-        [DllImport( LibraryPath, CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl )]
-        private static extern IntPtr LLVMValueCacheLookup( LLVMValueCacheRef cacheRef, LLVMValueRef valueRef );
     }
 }

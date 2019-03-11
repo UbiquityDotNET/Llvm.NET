@@ -5,14 +5,13 @@
 using System;
 using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
-using System.Runtime.InteropServices;
 using Llvm.NET.DebugInfo;
 using Llvm.NET.Instructions;
 using Llvm.NET.Native;
 using Llvm.NET.Properties;
 using Llvm.NET.Types;
 
-using static Llvm.NET.Native.NativeMethods;
+using static Llvm.NET.Values.Value.NativeMethods;
 
 namespace Llvm.NET.Values
 {
@@ -166,11 +165,5 @@ namespace Llvm.NET.Values
             var type = TypeRef.FromHandle( hType );
             return type.Context;
         }
-
-        [DllImport( LibraryPath, CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl, BestFitMapping = false, ThrowOnUnmappableChar = true )]
-        private static extern void LLVMSetDebugLoc( LLVMValueRef inst, UInt32 line, UInt32 column, LLVMMetadataRef scope );
-
-        [DllImport( LibraryPath, CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl, BestFitMapping = false, ThrowOnUnmappableChar = true )]
-        private static extern void LLVMSetDILocation( LLVMValueRef inst, LLVMMetadataRef location );
     }
 }

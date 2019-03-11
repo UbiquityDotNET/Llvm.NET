@@ -4,6 +4,8 @@
 
 using Llvm.NET.Native;
 
+using static Llvm.NET.Instructions.InstructionBuilder.NativeMethods;
+
 namespace Llvm.NET.Values
 {
     /// <summary>Floating point constant value in LLVM</summary>
@@ -22,7 +24,7 @@ namespace Llvm.NET.Values
         /// </remarks>
         public double GetValueWithLoss( out bool loosesInfo )
         {
-            return NativeMethods.LLVMConstRealGetDouble( ValueHandle, out loosesInfo );
+            return LLVMConstRealGetDouble( ValueHandle, out loosesInfo );
         }
 
         internal ConstantFP( LLVMValueRef valueRef )

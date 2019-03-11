@@ -3,7 +3,10 @@
 // </copyright>
 
 using System;
+using System.Runtime.InteropServices;
 using System.Security;
+
+using static Llvm.NET.Native.NativeMethods;
 
 namespace Llvm.NET.Native
 {
@@ -20,7 +23,7 @@ namespace Llvm.NET.Native
         [SecurityCritical]
         protected override bool ReleaseHandle( )
         {
-            NativeMethods.LLVMDisposeMCJITMemoryManager( handle );
+            LLVMDisposeMCJITMemoryManager( handle );
             return true;
         }
 
@@ -30,5 +33,8 @@ namespace Llvm.NET.Native
             : base( true )
         {
         }
+
+        [DllImport( LibraryPath, EntryPoint = "LLVMDisposeMCJITMemoryManager", CallingConvention = CallingConvention.Cdecl )]
+        private static extern void LLVMDisposeMCJITMemoryManager( IntPtr MM );
     }
 }

@@ -363,31 +363,6 @@ namespace Llvm.NET.Native
         internal static extern void LLVMGetVersionInfo( out LLVMVersionInfo pVersionInfo );
 
         [DllImport( LibraryPath, CallingConvention = CallingConvention.Cdecl, BestFitMapping = false, ThrowOnUnmappableChar = true )]
-        internal static extern int LLVMGetValueID( LLVMValueRef val );
-
-        [DllImport( LibraryPath, CallingConvention = CallingConvention.Cdecl, BestFitMapping = false, ThrowOnUnmappableChar = true )]
-        internal static extern LLVMComdatRef LLVMGlobalObjectGetComdat( LLVMValueRef Val );
-
-        [DllImport( LibraryPath, CallingConvention = CallingConvention.Cdecl, BestFitMapping = false, ThrowOnUnmappableChar = true )]
-        internal static extern void LLVMGlobalObjectSetComdat( LLVMValueRef Val, LLVMComdatRef comdatRef );
-
-        [DllImport( LibraryPath, CallingConvention = CallingConvention.Cdecl, BestFitMapping = false, ThrowOnUnmappableChar = true )]
-        [return: MarshalAs(UnmanagedType.Bool)]
-        internal static extern bool LLVMIsConstantZeroValue( LLVMValueRef Val );
-
-        [DllImport( LibraryPath, CallingConvention = CallingConvention.Cdecl, BestFitMapping = false, ThrowOnUnmappableChar = true )]
-        internal static extern void LLVMRemoveGlobalFromParent( LLVMValueRef /*GlobalVariable*/ Val );
-
-        [DllImport( LibraryPath, CallingConvention = CallingConvention.Cdecl, BestFitMapping = false, ThrowOnUnmappableChar = true )]
-        internal static extern LLVMMetadataRef LLVMConstantAsMetadata( LLVMValueRef Val );
-
-        [DllImport( LibraryPath, CallingConvention = CallingConvention.Cdecl, BestFitMapping = false, ThrowOnUnmappableChar = true )]
-        internal static extern void LLVMAddNamedMetadataOperand2( LLVMModuleRef M, [MarshalAs( UnmanagedType.LPStr )] string name, LLVMMetadataRef Val );
-
-        [DllImport( LibraryPath, CallingConvention = CallingConvention.Cdecl, BestFitMapping = false, ThrowOnUnmappableChar = true )]
-        internal static extern void LLVMSetMetadata2( LLVMValueRef Inst, UInt32 KindID, LLVMMetadataRef MD );
-
-        [DllImport( LibraryPath, CallingConvention = CallingConvention.Cdecl, BestFitMapping = false, ThrowOnUnmappableChar = true )]
         internal static extern void LLVMMetadataReplaceAllUsesWith( LLVMMetadataRef MD, LLVMMetadataRef New );
 
         [DllImport( LibraryPath, CallingConvention = CallingConvention.Cdecl, BestFitMapping = false, ThrowOnUnmappableChar = true )]
@@ -450,9 +425,6 @@ namespace Llvm.NET.Native
         internal static extern LLVMMetadataRef LLVMDIScopeGetFile( LLVMMetadataRef scope );
 
         [DllImport( LibraryPath, CallingConvention = CallingConvention.Cdecl, BestFitMapping = false, ThrowOnUnmappableChar = true )]
-        internal static extern UInt32 LLVMGetArgumentIndex( LLVMValueRef Val );
-
-        [DllImport( LibraryPath, CallingConvention = CallingConvention.Cdecl, BestFitMapping = false, ThrowOnUnmappableChar = true )]
         [return: MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( StringMarshaler ) )]
         internal static extern string LLVMGetDIFileName( LLVMMetadataRef /*DIFile*/ file );
 
@@ -493,11 +465,5 @@ namespace Llvm.NET.Native
 
         [DllImport( LibraryPath, CallingConvention = CallingConvention.Cdecl )]
         internal static extern LLVMMetadataRef LLVMDIGlobalVarExpGetVariable( LLVMMetadataRef metadataHandle );
-
-        [DllImport( LibraryPath, CallingConvention = CallingConvention.Cdecl )]
-        internal static extern void LLVMGlobalVariableAddDebugExpression( LLVMValueRef variable, LLVMMetadataRef metadataHandle );
-
-        [DllImport( LibraryPath, CallingConvention = CallingConvention.Cdecl )]
-        internal static extern void LLVMExecutionEngineClearGlobalMappingsFromModule( LLVMExecutionEngineRef ee, LLVMModuleRef m );
     }
 }

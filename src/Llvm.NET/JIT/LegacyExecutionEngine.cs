@@ -10,7 +10,7 @@ using Llvm.NET.Native;
 using Llvm.NET.Properties;
 using Llvm.NET.Values;
 
-using static Llvm.NET.Native.NativeMethods;
+using static Llvm.NET.JIT.NativeMethods;
 
 namespace Llvm.NET.JIT
 {
@@ -111,7 +111,7 @@ namespace Llvm.NET.JIT
 
             // MCJIT engine doesn't cleanup after a remove
             LLVMExecutionEngineClearGlobalMappingsFromModule( EngineHandle, baseModule );
-            LLVMDisposeModule( module );
+            BitcodeModule.FromHandle( module ).Dispose( );
         }
 
         /// <summary>Tries to get a function from the engine, by name</summary>

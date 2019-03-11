@@ -5,7 +5,7 @@
 using Llvm.NET.Native;
 using Llvm.NET.Values;
 
-using static Llvm.NET.Native.NativeMethods;
+using static Llvm.NET.Values.Value.NativeMethods;
 
 namespace Llvm.NET
 {

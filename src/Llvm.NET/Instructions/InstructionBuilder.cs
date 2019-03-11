@@ -7,7 +7,6 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
-using System.Runtime.InteropServices;
 using JetBrains.Annotations;
 using Llvm.NET.DebugInfo;
 using Llvm.NET.Native;
@@ -15,13 +14,13 @@ using Llvm.NET.Properties;
 using Llvm.NET.Types;
 using Llvm.NET.Values;
 using Ubiquity.ArgValidators;
-using static Llvm.NET.Native.NativeMethods;
-using CallingConvention = System.Runtime.InteropServices.CallingConvention;
+
+using static Llvm.NET.Instructions.InstructionBuilder.NativeMethods;
 
 namespace Llvm.NET.Instructions
 {
     /// <summary>LLVM Instruction builder allowing managed code to generate IR instructions</summary>
-    public sealed class InstructionBuilder
+    public sealed partial class InstructionBuilder
     {
         /// <summary>Initializes a new instance of the <see cref="InstructionBuilder"/> class for a given <see cref="Llvm.NET.Context"/></summary>
         /// <param name="context">Context used for creating instructions</param>
@@ -58,12 +57,7 @@ namespace Llvm.NET.Instructions
             get
             {
                 var handle = LLVMGetInsertBlock( BuilderHandle );
-                if( handle == default )
-                {
-                    return null;
-                }
-
-                return BasicBlock.FromHandle( LLVMGetInsertBlock( BuilderHandle ) );
+                return handle == default ? null : BasicBlock.FromHandle( LLVMGetInsertBlock( BuilderHandle ) );
             }
         }
 
@@ -828,7 +822,7 @@ namespace Llvm.NET.Instructions
                 return Compare( ( IntPredicate )predicate, lhs, rhs );
             }
 
-            throw new ArgumentOutOfRangeException( nameof( predicate ), string.Format(Resources._0_is_not_a_valid_value_for_a_compare_predicate, predicate) );
+            throw new ArgumentOutOfRangeException( nameof( predicate ), string.Format( Resources._0_is_not_a_valid_value_for_a_compare_predicate, predicate ) );
         }
 
         /// <summary>Creates a zero extend or bit cast instruction</summary>
@@ -1108,8 +1102,6 @@ namespace Llvm.NET.Instructions
             elseValue.ValidateNotNull( nameof( elseValue ) );
 
             var conditionVectorType = ifCondition.NativeType as IVectorType;
-            var thenVector = thenValue.NativeType as IVectorType;
-            var elseVector = elseValue.NativeType as IVectorType;
 
             if( ifCondition.NativeType.IntegerBitWidth != 1 && conditionVectorType != null && conditionVectorType.ElementType.IntegerBitWidth != 1 )
             {
@@ -1118,12 +1110,12 @@ namespace Llvm.NET.Instructions
 
             if( conditionVectorType != null )
             {
-                if( thenVector == null || thenVector.Size != conditionVectorType.Size )
+                if( !( thenValue.NativeType is IVectorType thenVector ) || thenVector.Size != conditionVectorType.Size )
                 {
                     throw new ArgumentException( Resources.When_condition_is_a_vector__selected_values_must_be_a_vector_of_the_same_size, nameof( thenValue ) );
                 }
 
-                if( elseVector == null || elseVector.Size != conditionVectorType.Size )
+                if( !( elseValue.NativeType is IVectorType elseVector ) || elseVector.Size != conditionVectorType.Size )
                 {
                     throw new ArgumentException( Resources.When_condition_is_a_vector__selected_values_must_be_a_vector_of_the_same_size, nameof( elseValue ) );
                 }
@@ -1575,7 +1567,7 @@ namespace Llvm.NET.Instructions
             {
                 if( args[ i ].NativeType != elementType.ParameterTypes[ i ] )
                 {
-                    string msg = string.Format(Resources.Call_site_argument_type_mismatch_for_function_0_at_index_1_argType_equals_2_signatureType_equals_3, func, i, args[ i ].NativeType, elementType.ParameterTypes[ i ]);
+                    string msg = string.Format( Resources.Call_site_argument_type_mismatch_for_function_0_at_index_1_argType_equals_2_signatureType_equals_3, func, i, args[ i ].NativeType, elementType.ParameterTypes[ i ] );
                     Debug.WriteLine( msg );
                     throw new ArgumentException( msg, nameof( args ) );
                 }
@@ -1601,11 +1593,5 @@ namespace Llvm.NET.Instructions
 
             return LLVMBuildCall( BuilderHandle, func.ValueHandle, out llvmArgs[ 0 ], ( uint )argCount, string.Empty );
         }
-
-        [DllImport( LibraryPath, EntryPoint = "LLVMBuildIntCast2", CallingConvention = CallingConvention.Cdecl, BestFitMapping = false, ThrowOnUnmappableChar = true )]
-        private static extern LLVMValueRef LLVMBuildIntCast( LLVMBuilderRef param0, LLVMValueRef Val, LLVMTypeRef DestTy, [MarshalAs( UnmanagedType.Bool )]bool isSigned, [MarshalAs( UnmanagedType.LPStr )] string Name );
-
-        [DllImport( LibraryPath, CallingConvention = CallingConvention.Cdecl )]
-        private static extern void LLVMSetCurrentDebugLocation2( LLVMBuilderRef Bref, UInt32 Line, UInt32 Col, LLVMMetadataRef Scope, LLVMMetadataRef InlinedAt );
     }
 }

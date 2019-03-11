@@ -8,7 +8,6 @@ using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Linq;
-using System.Runtime.InteropServices;
 using JetBrains.Annotations;
 using Llvm.NET.DebugInfo;
 using Llvm.NET.Instructions;
@@ -18,9 +17,9 @@ using Llvm.NET.Types;
 using Llvm.NET.Values;
 using Ubiquity.ArgValidators;
 
-using static Llvm.NET.Native.NativeMethods;
+/* using static Llvm.NET.Native.NativeMethods; */
 
-using CallingConvention = System.Runtime.InteropServices.CallingConvention;
+using static Llvm.NET.BitcodeModule.NativeMethods;
 
 namespace Llvm.NET
 {
@@ -67,7 +66,7 @@ namespace Llvm.NET
     /// A module is the basic unit for containing code in LLVM. Modules are an in memory
     /// representation of the LLVM Intermediate Representation (IR) bit-code. Each
     /// </remarks>
-    public sealed class BitcodeModule
+    public sealed partial class BitcodeModule
         : IDisposable
         , IExtensiblePropertyContainer
     {
@@ -108,12 +107,7 @@ namespace Llvm.NET
             get
             {
                 ThrowIfDisposed( );
-                if( ModuleHandle == default )
-                {
-                    return null;
-                }
-
-                return GetContextFor( ModuleHandle );
+                return ModuleHandle == default ? null : GetContextFor( ModuleHandle );
             }
         }
 
@@ -371,12 +365,7 @@ namespace Llvm.NET
             name.ValidateNotNullOrWhiteSpace( nameof( name ) );
 
             var funcRef = LLVMGetNamedFunction( ModuleHandle, name );
-            if( funcRef == default )
-            {
-                return null;
-            }
-
-            return Value.FromHandle<Function>( funcRef );
+            return funcRef == default ? null : Value.FromHandle<Function>( funcRef );
         }
 
         /// <summary>Add a function with the specified signature to the module</summary>
@@ -612,12 +601,7 @@ namespace Llvm.NET
             name.ValidateNotNullOrWhiteSpace( nameof( name ) );
 
             var hGlobal = LLVMGetNamedGlobal( ModuleHandle, name );
-            if( hGlobal == default )
-            {
-                return null;
-            }
-
-            return Value.FromHandle<GlobalVariable>( hGlobal );
+            return hGlobal == default ? null : Value.FromHandle<GlobalVariable>( hGlobal );
         }
 
         /// <summary>Adds a module flag to the module</summary>
@@ -1004,53 +988,5 @@ namespace Llvm.NET
         {
             return handle == default ? null : ContextCache.GetContextFor( LLVMGetModuleContext( handle ) );
         }
-
-        [DllImport( LibraryPath, CallingConvention = CallingConvention.Cdecl )]
-        private static extern LLVMSharedModuleRef LLVMOrcMakeSharedModule( LLVMModuleRef Mod );
-
-        [DllImport( LibraryPath, CallingConvention = CallingConvention.Cdecl )]
-        private static extern LLVMValueRef LLVMModuleGetFirstGlobalAlias( LLVMModuleRef M );
-
-        [DllImport( LibraryPath, CallingConvention = CallingConvention.Cdecl )]
-        private static extern LLVMValueRef LLVMModuleGetNextGlobalAlias( LLVMValueRef /*GlobalAlias*/ valueRef );
-
-        [DllImport( LibraryPath, CallingConvention = CallingConvention.Cdecl )]
-        private static extern LLVMNamedMDNodeRef LLVMModuleGetFirstNamedMD( LLVMModuleRef M );
-
-        [DllImport( LibraryPath, CallingConvention = CallingConvention.Cdecl )]
-        private static extern LLVMNamedMDNodeRef LLVMModuleGetNextNamedMD( LLVMNamedMDNodeRef nodeRef );
-
-        [DllImport( LibraryPath, CallingConvention = CallingConvention.Cdecl )]
-        private static extern LLVMValueRef /*Function*/ LLVMIntrinsicGetDeclaration( LLVMModuleRef m, UInt32 id, out LLVMTypeRef paramTypes, uint paramCount );
-
-        [DllImport( LibraryPath, CallingConvention = CallingConvention.Cdecl )]
-        [return:MarshalAs(UnmanagedType.Bool)]
-        private static extern bool LLVMIsIntrinsicOverloaded( UInt32 id );
-
-        [DllImport( LibraryPath, CallingConvention = CallingConvention.Cdecl, BestFitMapping = false, ThrowOnUnmappableChar = true )]
-        [return: MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( StringMarshaler ) )]
-        private static extern string LLVMGetModuleSourceFileName( LLVMModuleRef module );
-
-        [DllImport( LibraryPath, CallingConvention = CallingConvention.Cdecl, BestFitMapping = false, ThrowOnUnmappableChar = true )]
-        private static extern void LLVMSetModuleSourceFileName( LLVMModuleRef module, [MarshalAs( UnmanagedType.LPStr )] string name );
-
-        [DllImport( LibraryPath, CallingConvention = CallingConvention.Cdecl, BestFitMapping = false, ThrowOnUnmappableChar = true )]
-        [return: MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( StringMarshaler ) )]
-        private static extern string LLVMGetModuleName( LLVMModuleRef module );
-
-        [DllImport( LibraryPath, CallingConvention = CallingConvention.Cdecl, BestFitMapping = false, ThrowOnUnmappableChar = true )]
-        private static extern void LLVMAddModuleFlag( LLVMModuleRef M, LLVMModFlagBehavior behavior, [MarshalAs( UnmanagedType.LPStr )] string name, UInt32 value );
-
-        [DllImport( LibraryPath, EntryPoint = "LLVMAddModuleFlagMetadata", CallingConvention = CallingConvention.Cdecl, BestFitMapping = false, ThrowOnUnmappableChar = true )]
-        private static extern void LLVMAddModuleFlag( LLVMModuleRef M, LLVMModFlagBehavior behavior, [MarshalAs( UnmanagedType.LPStr )] string name, LLVMMetadataRef value );
-
-        [DllImport( LibraryPath, CallingConvention = CallingConvention.Cdecl )]
-        private static extern LLVMNamedMDNodeRef LLVMModuleGetModuleFlagsMetadata( LLVMModuleRef module );
-
-        [DllImport( LibraryPath, CallingConvention = CallingConvention.Cdecl, BestFitMapping = false, ThrowOnUnmappableChar = true )]
-        private static extern LLVMValueRef LLVMGetOrInsertFunction( LLVMModuleRef module, [MarshalAs( UnmanagedType.LPStr )] string name, LLVMTypeRef functionType );
-
-        [DllImport( LibraryPath, CallingConvention = CallingConvention.Cdecl, BestFitMapping = false, ThrowOnUnmappableChar = true )]
-        private static extern LLVMValueRef LLVMGetGlobalAlias( LLVMModuleRef module, [MarshalAs( UnmanagedType.LPStr )] string name );
     }
 }

@@ -5,6 +5,8 @@
 using Llvm.NET.Native;
 using Llvm.NET.Types;
 
+using static Llvm.NET.Types.TypeRef.NativeMethods;
+
 namespace Llvm.NET.Values
 {
     /// <summary>Represents a constant Null pointer</summary>
@@ -16,7 +18,7 @@ namespace Llvm.NET.Values
         /// <returns>Constant null value of the specified type</returns>
         public static ConstantPointerNull From( ITypeRef type )
         {
-            return FromHandle<ConstantPointerNull>( NativeMethods.LLVMConstPointerNull( type.GetTypeRef() ) );
+            return FromHandle<ConstantPointerNull>( LLVMConstPointerNull( type.GetTypeRef() ) );
         }
 
         internal ConstantPointerNull( LLVMValueRef valueRef )

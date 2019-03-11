@@ -123,15 +123,4 @@ namespace Llvm.NET.Native
         ConstantAggregateFirstVal = ConstantArray,
         ConstantAggregateLastVal = ConstantVector
     }
-
-    internal static partial class NativeMethods
-    {
-        // retrieves the raw underlying native C++ ValueKind enumeration for a value
-        // This is generally only used in the mapping of an LLVMValueRef to the Llvm.NET
-        // instance wrapping it. Since the Stable C API uses a distinct enum for the
-        // instruction codes, they don't actually match the underlying C++ kind and
-        // actually overlap it in incompatible ways. So, this uses the underlying enum
-        // to build up the correct .NET types for a given LLVMValueRef.
-        internal static ValueKind LLVMGetValueIdAsKind( LLVMValueRef valueRef ) => ( ValueKind )LLVMGetValueID( valueRef );
-    }
 }

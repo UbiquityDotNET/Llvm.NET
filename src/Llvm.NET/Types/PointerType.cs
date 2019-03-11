@@ -6,6 +6,8 @@ using System;
 using Llvm.NET.Native;
 using Llvm.NET.Properties;
 
+using static Llvm.NET.Types.TypeRef.NativeMethods;
+
 // Interface+internal type matches file name
 #pragma warning disable SA1649
 
@@ -25,12 +27,12 @@ namespace Llvm.NET.Types
         , IPointerType
     {
         /// <summary>Gets the address space the pointer refers to</summary>
-        public uint AddressSpace => NativeMethods.LLVMGetPointerAddressSpace( TypeRefHandle );
+        public uint AddressSpace => LLVMGetPointerAddressSpace( TypeRefHandle );
 
         internal PointerType( LLVMTypeRef typeRef )
             : base( typeRef )
         {
-            if( NativeMethods.LLVMGetTypeKind( typeRef ) != LLVMTypeKind.LLVMPointerTypeKind )
+            if( LLVMGetTypeKind( typeRef ) != LLVMTypeKind.LLVMPointerTypeKind )
             {
                 throw new ArgumentException( Resources.Pointer_type_reference_expected, nameof( typeRef ) );
             }

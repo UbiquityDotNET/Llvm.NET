@@ -7,7 +7,8 @@ using System.Diagnostics.CodeAnalysis;
 using Llvm.NET.Native;
 using Llvm.NET.Values;
 
-using static Llvm.NET.Native.NativeMethods;
+using static Llvm.NET.Instructions.Instruction.NativeMethods;
+using static Llvm.NET.Values.Value.NativeMethods;
 
 namespace Llvm.NET.Instructions
 {
@@ -417,7 +418,7 @@ namespace Llvm.NET.Instructions
     }
 
     /// <summary>Exposes an LLVM Instruction</summary>
-    public class Instruction
+    public partial class Instruction
         : User
     {
         /// <summary>Gets the <see cref="BasicBlock"/> that contains this instruction</summary>

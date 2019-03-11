@@ -4,20 +4,15 @@
 
 using System;
 using System.Diagnostics;
-using System.Runtime.InteropServices;
 using Llvm.NET.Native;
 using Llvm.NET.Values;
 
-using static Llvm.NET.Native.NativeMethods;
-using CallingConvention = System.Runtime.InteropServices.CallingConvention;
-
-// Interface+internal type matches file name
-#pragma warning disable SA1649
+using static Llvm.NET.Types.TypeRef.NativeMethods;
 
 namespace Llvm.NET.Types
 {
     /// <summary>LLVM Type</summary>
-    internal class TypeRef
+    internal partial class TypeRef
         : ITypeRef
         , ITypeHandleOwner
     {
@@ -25,18 +20,7 @@ namespace Llvm.NET.Types
         public LLVMTypeRef TypeHandle => TypeRefHandle;
 
         /// <inheritdoc/>
-        public bool IsSized
-        {
-            get
-            {
-                if( Kind == TypeKind.Function )
-                {
-                    return false;
-                }
-
-                return LLVMTypeIsSized( TypeRefHandle );
-            }
-        }
+        public bool IsSized => Kind != TypeKind.Function && LLVMTypeIsSized( TypeRefHandle );
 
         /// <inheritdoc/>
         public TypeKind Kind => ( TypeKind )LLVMGetTypeKind( TypeRefHandle );
@@ -90,18 +74,7 @@ namespace Llvm.NET.Types
         public Context Context => GetContextFor( TypeRefHandle );
 
         /// <inheritdoc/>
-        public uint IntegerBitWidth
-        {
-            get
-            {
-                if( Kind != TypeKind.Integer )
-                {
-                    return 0;
-                }
-
-                return LLVMGetIntTypeWidth( TypeRefHandle );
-            }
-        }
+        public uint IntegerBitWidth => Kind != TypeKind.Integer ? 0 : LLVMGetIntTypeWidth( TypeRefHandle );
 
         /// <inheritdoc/>
         public Constant GetNullValue() => Constant.NullValueFor( this );
@@ -218,8 +191,5 @@ namespace Llvm.NET.Types
         }
 
         private readonly ExtensiblePropertyContainer ExtensibleProperties = new ExtensiblePropertyContainer( );
-
-        [DllImport( LibraryPath, CallingConvention = CallingConvention.Cdecl )]
-        private static extern LLVMContextAlias LLVMGetTypeContext( LLVMTypeRef Ty );
     }
 }

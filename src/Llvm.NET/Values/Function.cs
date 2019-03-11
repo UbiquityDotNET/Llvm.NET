@@ -6,13 +6,16 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
-using System.Runtime.InteropServices;
 using Llvm.NET.DebugInfo;
 using Llvm.NET.Native;
 using Llvm.NET.Properties;
 using Llvm.NET.Types;
 
+using static Llvm.NET.Context.NativeMethods;
 using static Llvm.NET.Native.NativeMethods;
+using static Llvm.NET.Types.TypeRef.NativeMethods;
+using static Llvm.NET.Values.Function.NativeMethods;
+using static Llvm.NET.Values.Value.NativeMethods;
 
 namespace Llvm.NET.Values
 {
@@ -199,7 +202,7 @@ namespace Llvm.NET.Values
     }
 
     /// <summary>LLVM Function definition</summary>
-    public class Function
+    public partial class Function
         : GlobalObject
         , IAttributeAccessor
     {
@@ -207,18 +210,7 @@ namespace Llvm.NET.Values
         public IFunctionType Signature => TypeRef.FromHandle<IFunctionType>( LLVMGetElementType( LLVMTypeOf( ValueHandle ) ) );
 
         /// <summary>Gets the Entry block for this function</summary>
-        public BasicBlock EntryBlock
-        {
-            get
-            {
-                if( LLVMCountBasicBlocks( ValueHandle ) == 0 )
-                {
-                    return null;
-                }
-
-                return BasicBlock.FromHandle( LLVMGetEntryBasicBlock( ValueHandle ) );
-            }
-        }
+        public BasicBlock EntryBlock => LLVMCountBasicBlocks( ValueHandle ) == 0 ? null : BasicBlock.FromHandle( LLVMGetEntryBasicBlock( ValueHandle ) );
 
         /// <summary>Gets the basic blocks for the function</summary>
         public ICollection<BasicBlock> BasicBlocks { get; }
@@ -245,15 +237,7 @@ namespace Llvm.NET.Values
         /// <summary>Gets or sets the personality function for exception handling in this function</summary>
         public Function PersonalityFunction
         {
-            get
-            {
-                if( !LLVMHasPersonalityFn( ValueHandle ) )
-                {
-                    return null;
-                }
-
-                return FromHandle<Function>( LLVMGetPersonalityFn( ValueHandle ) );
-            }
+            get => !LLVMHasPersonalityFn( ValueHandle ) ? null : FromHandle<Function>( LLVMGetPersonalityFn( ValueHandle ) );
 
             set => LLVMSetPersonalityFn( ValueHandle, value?.ValueHandle ?? new LLVMValueRef( IntPtr.Zero ) );
         }
@@ -295,11 +279,10 @@ namespace Llvm.NET.Values
         }
 
         /// <summary>Verifies the function without throwing an exception</summary>
-        /// <param name="errMsg">Error message if any, or <see cref="String.Empty"/> if no errors detected</param>
+        /// <param name="errMsg">Error message if any, or <see cref="string.Empty"/> if no errors detected</param>
         /// <returns><see langword="true"/> if no errors found</returns>
         public bool Verify( out string errMsg )
         {
-            errMsg = string.Empty;
             return LLVMVerifyFunctionEx( ValueHandle, LLVMVerifierFailureAction.LLVMReturnStatusAction, out errMsg ).Succeeded;
         }
 
@@ -424,8 +407,5 @@ namespace Llvm.NET.Values
             Attributes = new ValueAttributeDictionary( this, ()=>this );
             BasicBlocks = new BasicBlockCollection( this );
         }
-
-        [DllImport( LibraryPath, CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl, BestFitMapping = false, ThrowOnUnmappableChar = true )]
-        private static extern LLVMStatus LLVMVerifyFunctionEx( LLVMValueRef Fn, LLVMVerifierFailureAction Action, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( StringMarshaler ), MarshalCookie = "DisposeMessage" )] out string OutMessages );
     }
 }

@@ -6,7 +6,7 @@ using System;
 using Llvm.NET.Native;
 using Llvm.NET.Types;
 
-using static Llvm.NET.Native.NativeMethods;
+using static Llvm.NET.Values.Value.NativeMethods;
 
 namespace Llvm.NET.Values
 {
@@ -21,7 +21,7 @@ namespace Llvm.NET.Values
     /// Value instances referring to the same actual value (i.e. a function) are actually the same .NET object
     /// as well within the same <see cref="Llvm.NET.Context"/>
     /// </remarks>
-    public class Value
+    public partial class Value
         : IExtensiblePropertyContainer
     {
         /// <summary>Gets or sets name of the value (if any)</summary>

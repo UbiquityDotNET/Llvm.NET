@@ -7,7 +7,8 @@ using System.Linq;
 using Llvm.NET.Native;
 using Llvm.NET.Values;
 using Ubiquity.ArgValidators;
-using static Llvm.NET.Native.NativeMethods;
+
+using static Llvm.NET.Instructions.Instruction.NativeMethods;
 
 namespace Llvm.NET.Instructions
 {

@@ -7,6 +7,8 @@ using System.Collections;
 using System.Collections.Generic;
 using Llvm.NET.Native;
 
+using static Llvm.NET.Values.Function.NativeMethods;
+
 namespace Llvm.NET.Values
 {
     /// <summary>Support class to provide read only list semantics to the parameters of a method</summary>
@@ -22,7 +24,7 @@ namespace Llvm.NET.Values
                     throw new ArgumentOutOfRangeException( nameof( index ) );
                 }
 
-                return Value.FromHandle<Argument>( NativeMethods.LLVMGetParam( OwningFunction.ValueHandle, ( uint )index ) );
+                return Value.FromHandle<Argument>( LLVMGetParam( OwningFunction.ValueHandle, ( uint )index ) );
             }
         }
 
@@ -30,7 +32,7 @@ namespace Llvm.NET.Values
         {
             get
             {
-                uint count = NativeMethods.LLVMCountParams( OwningFunction.ValueHandle );
+                uint count = LLVMCountParams( OwningFunction.ValueHandle );
                 return ( int )Math.Min( count, int.MaxValue );
             }
         }
@@ -39,7 +41,7 @@ namespace Llvm.NET.Values
         {
             for( uint i = 0; i < Count; ++i )
             {
-                LLVMValueRef val = NativeMethods.LLVMGetParam( OwningFunction.ValueHandle, i );
+                LLVMValueRef val = LLVMGetParam( OwningFunction.ValueHandle, i );
                 if( val == default )
                 {
                     yield break;

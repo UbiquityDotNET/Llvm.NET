@@ -6,6 +6,8 @@ using System;
 using Llvm.NET.Native;
 using Llvm.NET.Properties;
 
+using static Llvm.NET.Types.TypeRef.NativeMethods;
+
 // Interface+internal type matches file name
 #pragma warning disable SA1649
 
@@ -32,7 +34,7 @@ namespace Llvm.NET.Types
         {
             get
             {
-                var typeRef = NativeMethods.LLVMGetElementType( this.GetTypeRef() );
+                var typeRef = LLVMGetElementType( this.GetTypeRef() );
                 if( typeRef == default )
                 {
                     return null;
@@ -53,7 +55,7 @@ namespace Llvm.NET.Types
 
         internal static bool IsSequenceTypeRef( LLVMTypeRef typeRef )
         {
-            var kind = ( TypeKind )NativeMethods.LLVMGetTypeKind( typeRef );
+            var kind = ( TypeKind )LLVMGetTypeKind( typeRef );
             return kind == TypeKind.Array
                 || kind == TypeKind.Vector
                 || kind == TypeKind.Pointer;
