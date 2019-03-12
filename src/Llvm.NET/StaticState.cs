@@ -10,7 +10,8 @@ using System.Reflection;
 using System.Threading;
 using Llvm.NET.Native;
 using Llvm.NET.Properties;
-using static Llvm.NET.Native.NativeMethods;
+
+using static Llvm.NET.StaticState.NativeMethods;
 
 namespace Llvm.NET
 {
@@ -47,7 +48,7 @@ namespace Llvm.NET
     }
 
     /// <summary>Provides support for various LLVM static state initialization and manipulation</summary>
-    public static class StaticState
+    public static partial class StaticState
     {
         /// <summary>Initializes the native LLVM library support</summary>
         /// <returns>
@@ -58,7 +59,7 @@ namespace Llvm.NET
         /// LLVM library. <see cref="System.IDisposable.Dispose()"/> will release
         /// any resources allocated by the library.
         /// </remarks>
-        public static IDisposable InitializeLLVM()
+        public static IDisposable InitializeLLVM( )
         {
             return LazyInitializer.EnsureInitialized( ref LlvmInitializationState
                                                     , ref LlvmStateInitialized
@@ -74,7 +75,7 @@ namespace Llvm.NET
         /// Use for this method is discouraged as calling applications should control
         /// options directly without reliance on particulars of the LLVM argument handling
         /// </remarks>
-        [Obsolete("Applications should manage options directly without relying on the LLVM argument handling")]
+        [Obsolete( "Applications should manage options directly without relying on the LLVM argument handling" )]
         public static void ParseCommandLineOptions( string[ ] args, string overview )
         {
             if( args == null )
@@ -614,9 +615,9 @@ namespace Llvm.NET
             // DLL before any use of the wrapped inter-op APIs to
             // allow building this library as ANYCPU
             string thisModulePath = Path.GetDirectoryName( Assembly.GetExecutingAssembly( ).Location );
-            if( string.IsNullOrWhiteSpace(thisModulePath))
+            if( string.IsNullOrWhiteSpace( thisModulePath ) )
             {
-                throw new InvalidOperationException(Resources.Cannot_determine_assembly_location);
+                throw new InvalidOperationException( Resources.Cannot_determine_assembly_location );
             }
 
             string packageRoot = Path.GetFullPath( Path.Combine( thisModulePath, "..", ".." ) );
@@ -639,7 +640,7 @@ namespace Llvm.NET
              || versionInfo.Patch < VersionPatch
               )
             {
-                throw new InvalidOperationException( string.Format(Resources.Mismatched_LibLLVM_version_Expected_0_1_2_Actual_3_4_5, VersionMajor, VersionMinor, VersionPatch, versionInfo.Major, versionInfo.Minor, versionInfo.Patch) );
+                throw new InvalidOperationException( string.Format( Resources.Mismatched_LibLLVM_version_Expected_0_1_2_Actual_3_4_5, VersionMajor, VersionMinor, VersionPatch, versionInfo.Major, versionInfo.Minor, versionInfo.Patch ) );
             }
 
             // initialize the static fields
