@@ -11,8 +11,6 @@ using System.Runtime.InteropServices;
 using Llvm.NET.Instructions;
 using Llvm.NET.Native;
 using Llvm.NET.Properties;
-
-using static Llvm.NET.Native.NativeMethods;
 using static Llvm.NET.Values.Value.NativeMethods;
 using static Llvm.NET.Values.ValueCache.NativeMethods;
 

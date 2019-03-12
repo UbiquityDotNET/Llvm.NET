@@ -207,6 +207,12 @@ namespace Llvm.NET
 
             [DllImport( LibraryPath, CallingConvention = CallingConvention.Cdecl, BestFitMapping = false, ThrowOnUnmappableChar = true )]
             internal static extern void LLVMAddNamedMetadataOperand2( LLVMModuleRef M, [MarshalAs( UnmanagedType.LPStr )] string name, LLVMMetadataRef Val );
+
+            [DllImport( LibraryPath, EntryPoint = "LLVMGetModuleDataLayout", CallingConvention = CallingConvention.Cdecl )]
+            internal static extern LLVMTargetDataAlias LLVMGetModuleDataLayout( LLVMModuleRef M );
+
+            [DllImport( LibraryPath, CallingConvention = CallingConvention.Cdecl )]
+            internal static extern LLVMTargetDataAlias LLVMSetModuleDataLayout( LLVMModuleRef M, LLVMTargetDataRef DL );
         }
     }
 }

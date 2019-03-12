@@ -20,6 +20,9 @@ namespace Llvm.NET
     {
         internal static class NativeMethods
         {
+            [UnmanagedFunctionPointer( CallingConvention.Cdecl )]
+            internal delegate void LLVMFatalErrorHandler( [MarshalAs( UnmanagedType.LPStr )] string reason );
+
             /// <summary>Dynamically loads a DLL from a directory dependent on the current architecture</summary>
             /// <param name="moduleName">name of the DLL</param>
             /// <param name="alternatePaths">alternate path locations to use to search for the DLL</param>

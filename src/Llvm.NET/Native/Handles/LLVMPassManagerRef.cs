@@ -3,7 +3,10 @@
 // </copyright>
 
 using System;
+using System.Runtime.InteropServices;
 using System.Security;
+
+using static Llvm.NET.Native.NativeMethods;
 
 namespace Llvm.NET.Native
 {
@@ -29,6 +32,12 @@ namespace Llvm.NET.Native
         private LLVMPassManagerRef( )
             : base( true )
         {
+        }
+
+        private static class NativeMethods
+        {
+            [DllImport( LibraryPath, EntryPoint = "LLVMDisposePassManager", CallingConvention = CallingConvention.Cdecl )]
+            internal static extern void LLVMDisposePassManager( IntPtr PM );
         }
     }
 }

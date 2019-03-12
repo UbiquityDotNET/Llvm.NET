@@ -6,7 +6,7 @@ using System.Collections.Generic;
 using Llvm.NET.Native;
 using Ubiquity.ArgValidators;
 
-using static Llvm.NET.Native.NativeMethods;
+using static Llvm.NET.Target.NativeMethods;
 
 namespace Llvm.NET
 {
@@ -88,7 +88,7 @@ namespace Llvm.NET
     }
 
     /// <summary>LLVM Target Instruction Set Architecture</summary>
-    public class Target
+    public partial class Target
     {
         /// <summary>Gets the name of this target</summary>
         public string Name => LLVMGetTargetName( TargetHandle );

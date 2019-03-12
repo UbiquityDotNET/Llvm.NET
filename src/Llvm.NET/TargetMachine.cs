@@ -7,12 +7,12 @@ using Llvm.NET.Native;
 using Llvm.NET.Properties;
 using Ubiquity.ArgValidators;
 
-using static Llvm.NET.Native.NativeMethods;
+using static Llvm.NET.TargetMachine.NativeMethods;
 
 namespace Llvm.NET
 {
     /// <summary>Target specific code generation information</summary>
-    public sealed class TargetMachine
+    public sealed partial class TargetMachine
     {
         /// <summary>Initializes a new instance of the <see cref="TargetMachine"/> class.</summary>
         /// <param name="triple">Triple for the target machine</param>
@@ -50,12 +50,7 @@ namespace Llvm.NET
             get
             {
                 var handle = LLVMCreateTargetDataLayout( TargetMachineHandle );
-                if( handle == default )
-                {
-                    return null;
-                }
-
-                return DataLayout.FromHandle( handle );
+                return handle == default ? null : DataLayout.FromHandle( handle );
             }
         }
 

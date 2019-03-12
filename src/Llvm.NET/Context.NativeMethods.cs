@@ -16,6 +16,12 @@ namespace Llvm.NET
     {
         internal static class NativeMethods
         {
+            [UnmanagedFunctionPointer( CallingConvention.Cdecl )]
+            internal delegate void LLVMDiagnosticHandler( LLVMDiagnosticInfoRef param0, IntPtr param1 );
+
+            [UnmanagedFunctionPointer( CallingConvention.Cdecl )]
+            internal delegate void LLVMYieldCallback( LLVMContextRef param0, IntPtr param1 );
+
             [DllImport( LibraryPath, EntryPoint = "LLVMGetDiagInfoDescription", CallingConvention = CallingConvention.Cdecl )]
             [return: MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( StringMarshaler ), MarshalCookie = "DisposeMessage" )]
             internal static extern string LLVMGetDiagInfoDescription( LLVMDiagnosticInfoRef DI );

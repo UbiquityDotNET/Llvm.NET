@@ -12,6 +12,8 @@ using System.Runtime.InteropServices;
 // SA1649  File name should match first type name.
 #pragma warning disable SA1649
 
+#pragma warning disable SA1124 // Do not use regions - using regions to group functions for eventual split to distinct source files
+
 /* Enums types and P/Invoke calls here are extensions to standard LLVM-C APIs
 // many are common bindings borrowed from the go bindings (or further extended from them)
 // others are unique to Llvm.NET to enable max use of the LLVM libraries in .NET based
@@ -169,184 +171,6 @@ namespace Llvm.NET.Native
         VerifyEachPass
     }
 
-    internal enum LLVMTripleArchType
-    {
-        UnknownArch,
-        arm,            // ARM (little endian): arm, armv.*, xscale
-        armeb,          // ARM (big endian): armeb
-        aarch64,        // AArch64 (little endian): aarch64
-        aarch64_be,     // AArch64 (big endian): aarch64_be
-        arc,            // ARC: Synopsys ARC
-        avr,            // AVR: Atmel AVR Micro-controller
-        bpfel,          // eBPF or extended BPF or 64-bit BPF (little endian)
-        bpfeb,          // eBPF or extended BPF or 64-bit BPF (big endian)
-        hexagon,        // Hexagon: hexagon
-        mips,           // MIPS: mips, mipsallegrex
-        mipsel,         // MIPSEL: mipsel, mipsallegrexel
-        mips64,         // MIPS64: mips64
-        mips64el,       // MIPS64EL: mips64el
-        msp430,         // MSP430: msp430
-        nios2,          // NIOSII: nios2
-        ppc,            // PPC: powerpc
-        ppc64,          // PPC64: powerpc64, ppu
-        ppc64le,        // PPC64LE: powerpc64le
-        r600,           // R600: AMD GPUs HD2XXX - HD6XXX
-        amdgcn,         // AMDGCN: AMD GCN GPUs
-        riscV32,        // RISC-V (32-bit): riscv32
-        riscV64,        // RISC-V (64-bit): riscv64
-        sparc,          // Sparc: sparc
-        sparcv9,        // Sparcv9: Sparcv9
-        sparcel,        // Sparc: (endianness = little). NB: 'Sparcle' is a CPU variant
-        systemz,        // SystemZ: s390x
-        tce,            // TCE (http://tce.cs.tut.fi/): tce
-        tcele,          // TCE little endian (http://tce.cs.tut.fi/): tcele
-        thumb,          // Thumb (little endian): thumb, thumbv.*
-        thumbeb,        // Thumb (big endian): thumbeb
-        x86,            // X86: i[3-9]86
-        x86_64,         // X86-64: amd64, x86_64
-        xcore,          // XCore: xcore
-        nvptx,          // NVPTX: 32-bit
-        nvptx64,        // NVPTX: 64-bit
-        le32,           // le32: generic little-endian 32-bit CPU (PNaCl)
-        le64,           // le64: generic little-endian 64-bit CPU (PNaCl)
-        amdil,          // AMDIL
-        amdil64,        // AMDIL with 64-bit pointers
-        hsail,          // AMD HSAIL
-        hsail64,        // AMD HSAIL with 64-bit pointers
-        spir,           // SPIR: standard portable IR for OpenCL 32-bit version
-        spir64,         // SPIR: standard portable IR for OpenCL 64-bit version
-        kalimba,        // Kalimba: generic kalimba
-        shave,          // SHAVE: Movidius vector VLIW processors
-        lanai,          // Lanai: Lanai 32-bit
-        wasm32,         // WebAssembly with 32-bit pointers
-        wasm64,         // WebAssembly with 64-bit pointers
-        renderscript32, // 32-bit RenderScript
-        renderscript64, // 64-bit RenderScript
-        LastArchType = renderscript64
-    }
-
-    internal enum LLVMTripleSubArchType
-    {
-        NoSubArch,
-        ARMSubArch_v8_3a,
-        ARMSubArch_v8_2a,
-        ARMSubArch_v8_1a,
-        ARMSubArch_v8,
-        ARMSubArch_v8r,
-        ARMSubArch_v8m_baseline,
-        ARMSubArch_v8m_mainline,
-        ARMSubArch_v7,
-        ARMSubArch_v7em,
-        ARMSubArch_v7m,
-        ARMSubArch_v7s,
-        ARMSubArch_v7k,
-        ARMSubArch_v7ve,
-        ARMSubArch_v6,
-        ARMSubArch_v6m,
-        ARMSubArch_v6k,
-        ARMSubArch_v6t2,
-        ARMSubArch_v5,
-        ARMSubArch_v5te,
-        ARMSubArch_v4t,
-        KalimbaSubArch_v3,
-        KalimbaSubArch_v4,
-        KalimbaSubArch_v5
-    }
-
-    internal enum LLVMTripleVendorType
-    {
-        UnknownVendor,
-        Apple,
-        PC,
-        SCEI,
-        BGP,
-        BGQ,
-        Freescale,
-        IBM,
-        ImaginationTechnologies,
-        MipsTechnologies,
-        NVIDIA,
-        CSR,
-        Myriad,
-        AMD,
-        Mesa,
-        SUSE,
-        LastVendorType = SUSE
-    }
-
-    internal enum LLVMTripleOSType
-    {
-        UnknownOS,
-
-        Ananas,
-        CloudABI,
-        Darwin,
-        DragonFly,
-        FreeBSD,
-        Fuchsia,
-        IOS,
-        KFreeBSD,
-        Linux,
-        Lv2,        // PS3
-        MacOSX,
-        NetBSD,
-        OpenBSD,
-        Solaris,
-        Win32,
-        Haiku,
-        Minix,
-        RTEMS,
-        NaCl,       // Native Client
-        CNK,        // BG/P Compute-Node Kernel
-        AIX,
-        CUDA,       // NVIDIA CUDA
-        NVCL,       // NVIDIA OpenCL
-        AMDHSA,     // AMD HSA Runtime
-        PS4,
-        ELFIAMCU,
-        TvOS,       // Apple tvOS
-        WatchOS,    // Apple watchOS
-        Mesa3D,
-        Contiki,
-        AMDPAL,
-        LastOSType = AMDPAL
-    }
-
-    internal enum LLVMTripleEnvironmentType
-    {
-        UnknownEnvironment,
-        GNU,
-        GNUABIN32,
-        GNUABI64,
-        GNUEABI,
-        GNUEABIHF,
-        GNUX32,
-        CODE16,
-        EABI,
-        EABIHF,
-        Android,
-        Musl,
-        MuslEABI,
-        MuslEABIHF,
-        MSVC,
-        Itanium,
-        Cygnus,
-        AMDOpenCL,
-        CoreCLR,
-        OpenCL,
-        Simulator,
-        LastEnvironmentType = Simulator
-    }
-
-    internal enum LLVMTripleObjectFormatType
-    {
-        UnknownObjectFormat,
-        COFF,
-        ELF,
-        MachO,
-        Wasm
-    }
-
     internal enum LLVMComdatSelectionKind
     {
         ANY,
@@ -359,6 +183,7 @@ namespace Llvm.NET.Native
     [SuppressMessage( "Microsoft.Maintainability", "CA1506:AvoidExcessiveClassCoupling", Justification = "Mapping to interop C based API" )]
     internal static partial class NativeMethods
     {
+        #region General Metadata
         [DllImport( LibraryPath, CallingConvention = CallingConvention.Cdecl, BestFitMapping = false, ThrowOnUnmappableChar = true )]
         internal static extern void LLVMMetadataReplaceAllUsesWith( LLVMMetadataRef MD, LLVMMetadataRef New );
 
@@ -395,7 +220,9 @@ namespace Llvm.NET.Native
         [DllImport( LibraryPath, CallingConvention = CallingConvention.Cdecl, BestFitMapping = false, ThrowOnUnmappableChar = true )]
         [return: MarshalAs( UnmanagedType.Bool )]
         internal static extern bool LLVMSubProgramDescribes( LLVMMetadataRef subProgram, LLVMValueRef function );
+        #endregion
 
+        #region Debug Info
         [DllImport( LibraryPath, CallingConvention = CallingConvention.Cdecl, BestFitMapping = false, ThrowOnUnmappableChar = true )]
         internal static extern UInt32 LLVMDITypeGetLine( LLVMMetadataRef typeRef );
 
@@ -447,20 +274,8 @@ namespace Llvm.NET.Native
         [DllImport( LibraryPath, CallingConvention = CallingConvention.Cdecl, BestFitMapping = false, ThrowOnUnmappableChar = true )]
         internal static extern LLVMPassRegistryRef LLVMCreatePassRegistry( );
 
-        [DllImport( LibraryPath, CallingConvention = CallingConvention.Cdecl, BestFitMapping = false, ThrowOnUnmappableChar = true )]
-        internal static extern void LLVMPassRegistryDispose( IntPtr hPassRegistry );
-
-        [DllImport( LibraryPath, CallingConvention = CallingConvention.Cdecl, BestFitMapping = false, ThrowOnUnmappableChar = true )]
-        internal static extern void LLVMInitializeCodeGenForOpt( LLVMPassRegistryRef R );
-
-        [DllImport( LibraryPath, CallingConvention = CallingConvention.Cdecl, BestFitMapping = false, ThrowOnUnmappableChar = true )]
-        internal static extern void LLVMInitializePassesForLegacyOpt( );
-
-        [DllImport( LibraryPath, CallingConvention = CallingConvention.Cdecl )]
-        [return: MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef=typeof(StringMarshaler), MarshalCookie="DisposeMessage")]
-        internal static extern string LLVMAttributeToString( LLVMAttributeRef attribute );
-
         [DllImport( LibraryPath, CallingConvention = CallingConvention.Cdecl )]
         internal static extern LLVMMetadataRef LLVMDIGlobalVarExpGetVariable( LLVMMetadataRef metadataHandle );
+        #endregion
     }
 }

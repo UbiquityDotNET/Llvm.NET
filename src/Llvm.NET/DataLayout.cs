@@ -5,7 +5,6 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
-using System.Runtime.InteropServices;
 using JetBrains.Annotations;
 using Llvm.NET.Native;
 using Llvm.NET.Properties;
@@ -13,8 +12,7 @@ using Llvm.NET.Types;
 using Llvm.NET.Values;
 using Ubiquity.ArgValidators;
 
-using static Llvm.NET.Native.NativeMethods;
-using CallingConvention = System.Runtime.InteropServices.CallingConvention;
+using static Llvm.NET.DataLayout.NativeMethods;
 
 namespace Llvm.NET
 {
@@ -59,7 +57,7 @@ namespace Llvm.NET
     /// The allocation size determines the total size of each entry in a sequence so that the "next" element is computed
     /// by adding the size to the start address of the current element.
     /// </remarks>
-    public sealed class DataLayout
+    public sealed partial class DataLayout
     {
         /// <summary>Gets the byte ordering for this target</summary>
         public ByteOrdering Endianess => ( ByteOrdering )LLVMByteOrder( DataLayoutHandle );
@@ -274,52 +272,5 @@ namespace Llvm.NET
         }
 
         private static readonly Dictionary<LLVMTargetDataRef, DataLayout> TargetDataMap = new Dictionary<LLVMTargetDataRef, DataLayout>( );
-
-        // ReSharper disable IdentifierTypo
-        [DllImport( LibraryPath, EntryPoint = "LLVMCopyStringRepOfTargetData", CallingConvention = CallingConvention.Cdecl )]
-        [return: MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( StringMarshaler ), MarshalCookie = "DisposeMessage" )]
-        private static extern string LLVMCopyStringRepOfTargetData( LLVMTargetDataRef TD );
-
-        [DllImport( LibraryPath, EntryPoint = "LLVMByteOrder", CallingConvention = CallingConvention.Cdecl )]
-        private static extern LLVMByteOrdering LLVMByteOrder( LLVMTargetDataRef TD );
-
-        [DllImport( LibraryPath, EntryPoint = "LLVMPointerSize", CallingConvention = CallingConvention.Cdecl )]
-        private static extern uint LLVMPointerSize( LLVMTargetDataRef TD );
-
-        [DllImport( LibraryPath, EntryPoint = "LLVMPointerSizeForAS", CallingConvention = CallingConvention.Cdecl )]
-        private static extern uint LLVMPointerSizeForAS( LLVMTargetDataRef TD, uint AS );
-
-        [DllImport( LibraryPath, EntryPoint = "LLVMIntPtrTypeInContext", CallingConvention = CallingConvention.Cdecl )]
-        private static extern LLVMTypeRef LLVMIntPtrTypeInContext( LLVMContextRef C, LLVMTargetDataRef TD );
-
-        [DllImport( LibraryPath, EntryPoint = "LLVMIntPtrTypeForASInContext", CallingConvention = CallingConvention.Cdecl )]
-        private static extern LLVMTypeRef LLVMIntPtrTypeForASInContext( LLVMContextRef C, LLVMTargetDataRef TD, uint AS );
-
-        [DllImport( LibraryPath, EntryPoint = "LLVMSizeOfTypeInBits", CallingConvention = CallingConvention.Cdecl )]
-        private static extern ulong LLVMSizeOfTypeInBits( LLVMTargetDataRef TD, LLVMTypeRef Ty );
-
-        [DllImport( LibraryPath, EntryPoint = "LLVMStoreSizeOfType", CallingConvention = CallingConvention.Cdecl )]
-        private static extern ulong LLVMStoreSizeOfType( LLVMTargetDataRef TD, LLVMTypeRef Ty );
-
-        [DllImport( LibraryPath, EntryPoint = "LLVMABISizeOfType", CallingConvention = CallingConvention.Cdecl )]
-        private static extern ulong LLVMABISizeOfType( LLVMTargetDataRef TD, LLVMTypeRef Ty );
-
-        [DllImport( LibraryPath, EntryPoint = "LLVMABIAlignmentOfType", CallingConvention = CallingConvention.Cdecl )]
-        private static extern uint LLVMABIAlignmentOfType( LLVMTargetDataRef TD, LLVMTypeRef Ty );
-
-        [DllImport( LibraryPath, EntryPoint = "LLVMCallFrameAlignmentOfType", CallingConvention = CallingConvention.Cdecl )]
-        private static extern uint LLVMCallFrameAlignmentOfType( LLVMTargetDataRef TD, LLVMTypeRef Ty );
-
-        [DllImport( LibraryPath, EntryPoint = "LLVMPreferredAlignmentOfType", CallingConvention = CallingConvention.Cdecl )]
-        private static extern uint LLVMPreferredAlignmentOfType( LLVMTargetDataRef TD, LLVMTypeRef Ty );
-
-        [DllImport( LibraryPath, EntryPoint = "LLVMPreferredAlignmentOfGlobal", CallingConvention = CallingConvention.Cdecl )]
-        private static extern uint LLVMPreferredAlignmentOfGlobal( LLVMTargetDataRef TD, LLVMValueRef GlobalVar );
-
-        [DllImport( LibraryPath, EntryPoint = "LLVMElementAtOffset", CallingConvention = CallingConvention.Cdecl )]
-        private static extern uint LLVMElementAtOffset( LLVMTargetDataRef TD, LLVMTypeRef StructTy, ulong Offset );
-
-        [DllImport( LibraryPath, EntryPoint = "LLVMOffsetOfElement", CallingConvention = CallingConvention.Cdecl )]
-        private static extern ulong LLVMOffsetOfElement( LLVMTargetDataRef TD, LLVMTypeRef StructTy, uint Element );
     }
 }

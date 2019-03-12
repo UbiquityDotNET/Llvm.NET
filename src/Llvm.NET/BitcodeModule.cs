@@ -972,6 +972,10 @@ namespace Llvm.NET
             }
         }
 
+        // TODO: leverage LLVMGetModuleDataLayout and LLVMSetDataLayout instead of this manual caching
+        // the underlying implementation is that the data layout is exposed, by ref, and copy assigned
+        // on set, so the LLVMTargetDataAlias is valid to use.
+        //
         // Do not write to this directly, use the property setter
         // This is cached since internally the LLVM module APIs
         // deal with C++ references. While that is manageable as

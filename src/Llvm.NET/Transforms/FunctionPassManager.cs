@@ -2,9 +2,7 @@
 // Copyright (c) .NET Foundation. All rights reserved.
 // </copyright>
 
-using Llvm.NET.Values;
-
-using static Llvm.NET.Native.NativeMethods;
+using Function = Llvm.NET.Values.Function;
 
 namespace Llvm.NET.Transforms
 {
@@ -15,7 +13,7 @@ namespace Llvm.NET.Transforms
         /// <summary>Initializes a new instance of the <see cref="FunctionPassManager"/> class.</summary>
         /// <param name="module">Module that owns the functions this manager works on</param>
         public FunctionPassManager( BitcodeModule module )
-            : base( LLVMCreateFunctionPassManagerForModule( module.ModuleHandle ))
+            : base( NativeMethods.LLVMCreateFunctionPassManagerForModule( module.ModuleHandle ))
         {
         }
 
@@ -23,7 +21,7 @@ namespace Llvm.NET.Transforms
         /// <returns><see langword="true"/>if any of the passes modified the module</returns>
         public bool Initialize( )
         {
-            return LLVMInitializeFunctionPassManager( Handle );
+            return NativeMethods.LLVMInitializeFunctionPassManager( Handle );
         }
 
         /// <summary>Runs the passes registered in the pass manager</summary>
@@ -31,14 +29,14 @@ namespace Llvm.NET.Transforms
         /// <returns><see langword="true"/>if any of the passes modified the module</returns>
         public bool Run( Function target )
         {
-            return LLVMRunFunctionPassManager( Handle, target.ValueHandle );
+            return NativeMethods.LLVMRunFunctionPassManager( Handle, target.ValueHandle );
         }
 
         /// <summary>Finalizes all of the function passes scheduled in the function pass manager.</summary>
         /// <returns><see langword="true"/>if any of the passes modified the module</returns>
         public bool Finish( )
         {
-            return LLVMFinalizeFunctionPassManager( Handle );
+            return NativeMethods.LLVMFinalizeFunctionPassManager( Handle );
         }
     }
 }

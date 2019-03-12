@@ -4,12 +4,11 @@
 
 using System;
 using System.Diagnostics.CodeAnalysis;
-using System.Runtime.InteropServices;
 using Llvm.NET.Native;
 using Llvm.NET.Properties;
 using Ubiquity.ArgValidators;
 
-using static Llvm.NET.Native.NativeMethods;
+using static Llvm.NET.Triple.NativeMethods;
 
 namespace Llvm.NET
 {
@@ -34,7 +33,7 @@ namespace Llvm.NET
     /// an optional version number).
     /// </para>
     /// </remarks>
-    public sealed class Triple
+    public sealed partial class Triple
         : IEquatable<Triple>
     {
         /// <summary>Enumeration for the Architecture portion of a target triple</summary>
@@ -793,74 +792,6 @@ namespace Llvm.NET
                 return false;
             }
         }
-
-        [DllImport( LibraryPath, CallingConvention = CallingConvention.Cdecl, BestFitMapping = false, ThrowOnUnmappableChar = true )]
-        private static extern LLVMTripleRef LLVMParseTriple( [MarshalAs( UnmanagedType.LPStr )] string triple );
-
-        [DllImport( LibraryPath, CallingConvention = CallingConvention.Cdecl)]
-        private static extern LLVMTripleRef LLVMGetHostTriple( );
-
-        [DllImport( LibraryPath, CallingConvention = CallingConvention.Cdecl, BestFitMapping = false, ThrowOnUnmappableChar = true )]
-        [return: MarshalAs( UnmanagedType.Bool )]
-        private static extern bool LLVMTripleOpEqual( LLVMTripleRef lhs, LLVMTripleRef rhs );
-
-        [DllImport( LibraryPath, CallingConvention = CallingConvention.Cdecl, BestFitMapping = false, ThrowOnUnmappableChar = true )]
-        private static extern LLVMTripleArchType LLVMTripleGetArchType( LLVMTripleRef triple );
-
-        [DllImport( LibraryPath, CallingConvention = CallingConvention.Cdecl, BestFitMapping = false, ThrowOnUnmappableChar = true )]
-        private static extern LLVMTripleSubArchType LLVMTripleGetSubArchType( LLVMTripleRef triple );
-
-        [DllImport( LibraryPath, CallingConvention = CallingConvention.Cdecl, BestFitMapping = false, ThrowOnUnmappableChar = true )]
-        private static extern LLVMTripleVendorType LLVMTripleGetVendorType( LLVMTripleRef triple );
-
-        [DllImport( LibraryPath, CallingConvention = CallingConvention.Cdecl, BestFitMapping = false, ThrowOnUnmappableChar = true )]
-        private static extern LLVMTripleOSType LLVMTripleGetOsType( LLVMTripleRef triple );
-
-        /*[DllImport( LibraryPath, CallingConvention = CallingConvention.Cdecl, BestFitMapping = false, ThrowOnUnmappableChar = true )]
-        [return: MarshalAs( UnmanagedType.Bool )]
-        private static extern bool LLVMTripleHasEnvironment( LLVMTripleRef triple );
-        */
-
-        [DllImport( LibraryPath, CallingConvention = CallingConvention.Cdecl, BestFitMapping = false, ThrowOnUnmappableChar = true )]
-        private static extern LLVMTripleEnvironmentType LLVMTripleGetEnvironmentType( LLVMTripleRef triple );
-
-        [DllImport( LibraryPath, CallingConvention = CallingConvention.Cdecl, BestFitMapping = false, ThrowOnUnmappableChar = true )]
-        private static extern void LLVMTripleGetEnvironmentVersion( LLVMTripleRef triple, out UInt32 major, out UInt32 minor, out UInt32 micro );
-
-        [DllImport( LibraryPath, CallingConvention = CallingConvention.Cdecl, BestFitMapping = false, ThrowOnUnmappableChar = true )]
-        private static extern LLVMTripleObjectFormatType LLVMTripleGetObjectFormatType( LLVMTripleRef triple );
-
-        [DllImport( LibraryPath, CallingConvention = CallingConvention.Cdecl, BestFitMapping = false, ThrowOnUnmappableChar = true )]
-        [return: MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( StringMarshaler ), MarshalCookie = "DisposeMessage" )]
-        private static extern string LLVMTripleAsString( LLVMTripleRef triple, [MarshalAs( UnmanagedType.U1 )]bool normalize );
-
-        [DllImport( LibraryPath, CallingConvention = CallingConvention.Cdecl, BestFitMapping = false, ThrowOnUnmappableChar = true )]
-        [return: MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( StringMarshaler ), MarshalCookie = "DisposeMessage" )]
-        private static extern string LLVMTripleGetArchTypeName( LLVMTripleArchType type );
-
-        [DllImport( LibraryPath, CallingConvention = CallingConvention.Cdecl, BestFitMapping = false, ThrowOnUnmappableChar = true )]
-        [return: MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( StringMarshaler ), MarshalCookie = "DisposeMessage" )]
-        private static extern string LLVMTripleGetSubArchTypeName( LLVMTripleSubArchType type );
-
-        [DllImport( LibraryPath, CallingConvention = CallingConvention.Cdecl, BestFitMapping = false, ThrowOnUnmappableChar = true )]
-        [return: MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( StringMarshaler ), MarshalCookie = "DisposeMessage" )]
-        private static extern string LLVMTripleGetVendorTypeName( LLVMTripleVendorType vendor );
-
-        [DllImport( LibraryPath, CallingConvention = CallingConvention.Cdecl, BestFitMapping = false, ThrowOnUnmappableChar = true )]
-        [return: MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( StringMarshaler ), MarshalCookie = "DisposeMessage" )]
-        private static extern string LLVMTripleGetOsTypeName( LLVMTripleOSType osType );
-
-        [DllImport( LibraryPath, CallingConvention = CallingConvention.Cdecl, BestFitMapping = false, ThrowOnUnmappableChar = true )]
-        [return: MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( StringMarshaler ), MarshalCookie = "DisposeMessage" )]
-        private static extern string LLVMTripleGetEnvironmentTypeName( LLVMTripleEnvironmentType environmentType );
-
-        [DllImport( LibraryPath, CallingConvention = CallingConvention.Cdecl, BestFitMapping = false, ThrowOnUnmappableChar = true )]
-        [return: MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( StringMarshaler ), MarshalCookie = "DisposeMessage" )]
-        private static extern string LLVMTripleGetObjectFormatTypeName( LLVMTripleObjectFormatType environmentType );
-
-        [DllImport( LibraryPath, CallingConvention = CallingConvention.Cdecl, BestFitMapping = false, ThrowOnUnmappableChar = true )]
-        [return: MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( StringMarshaler ), MarshalCookie = "DisposeMessage" )]
-        private static extern string LLVMNormalizeTriple( [MarshalAs( UnmanagedType.LPStr )] string triple );
 
         private readonly LLVMTripleRef TripleHandle;
     }

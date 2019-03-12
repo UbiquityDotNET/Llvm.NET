@@ -3,7 +3,10 @@
 // </copyright>
 
 using System;
+using System.Runtime.InteropServices;
 using System.Security;
+
+using static Llvm.NET.Native.NativeMethods;
 
 namespace Llvm.NET.Native
 {
@@ -22,7 +25,7 @@ namespace Llvm.NET.Native
         {
             if( !IsInvalid && !IsClosed )
             {
-                NativeMethods.LLVMPassRegistryDispose( handle );
+                LLVMPassRegistryDispose( handle );
                 SetHandleAsInvalid( );
             }
 
@@ -35,5 +38,8 @@ namespace Llvm.NET.Native
             : base( true )
         {
         }
+
+        [DllImport( LibraryPath, CallingConvention = CallingConvention.Cdecl, BestFitMapping = false, ThrowOnUnmappableChar = true )]
+        private static extern void LLVMPassRegistryDispose( IntPtr hPassRegistry );
     }
 }

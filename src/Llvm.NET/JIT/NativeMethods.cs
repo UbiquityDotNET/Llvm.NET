@@ -10,10 +10,28 @@ using Llvm.NET.Native;
 
 using static Llvm.NET.Native.NativeMethods;
 
+// warning CS0649: Field 'xxx' is never assigned to, and will always have its default value 0
+#pragma warning disable 649
+
 namespace Llvm.NET.JIT
 {
-    internal class NativeMethods
+    internal static class NativeMethods
     {
+        internal enum LLVMOrcErrorCode
+        {
+            LLVMOrcErrSuccess = 0,
+            LLVMOrcErrGeneric = 1
+        }
+
+        internal struct LLVMMCJITCompilerOptions
+        {
+            internal uint OptLevel;
+            internal LLVMCodeModel CodeModel;
+            internal int NoFramePointerElim;
+            internal int EnableFastISel;
+            internal LLVMMCJITMemoryManagerRef MCJMM;
+        }
+
         /*[DllImport( LibraryPath, EntryPoint = "LLVMLinkInMCJIT", CallingConvention = CallingConvention.Cdecl )]
         //internal static extern void LLVMLinkInMCJIT( );
 
@@ -114,5 +132,53 @@ namespace Llvm.NET.JIT
 
         [DllImport( LibraryPath, CallingConvention = CallingConvention.Cdecl )]
         internal static extern void LLVMExecutionEngineClearGlobalMappingsFromModule( LLVMExecutionEngineRef ee, LLVMModuleRef m );
+
+        /*
+        [DllImport( LibraryPath, CallingConvention = CallingConvention.Cdecl )]
+        internal static extern LLVMSharedObjectBufferRef LLVMOrcMakeSharedObjectBuffer( LLVMMemoryBufferRef ObjBuffer );
+
+        [DllImport( LibraryPath, CallingConvention = CallingConvention.Cdecl )]
+        internal static extern void LLVMOrcDisposeSharedObjectBufferRef( IntPtr SharedObjBuffer );
+
+        [DllImport( LibraryPath, CallingConvention = CallingConvention.Cdecl )]
+        internal static extern LLVMOrcErrorCode LLVMOrcAddEagerlyCompiledIR( LLVMOrcJITStackRef JITStack, out LLVMOrcModuleHandle retHandle, LLVMSharedModuleRef Mod, IntPtr SymbolResolver, IntPtr SymbolResolverCtx );
+
+        [DllImport( LibraryPath, CallingConvention = CallingConvention.Cdecl )]
+        internal static extern LLVMOrcErrorCode LLVMOrcAddObjectFile( LLVMOrcJITStackRef JITStack, out LLVMOrcModuleHandle retHandle, LLVMSharedObjectBufferRef Obj, IntPtr SymbolResolver, IntPtr SymbolResolverCtx );
+        */
+
+        [DllImport( LibraryPath, CallingConvention = CallingConvention.Cdecl )]
+        internal static extern LLVMOrcJITStackRef LLVMOrcCreateInstance( LLVMTargetMachineRef TM );
+
+        [DllImport( LibraryPath, CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi, ThrowOnUnmappableChar = true, BestFitMapping = false )]
+        [return: MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( StringMarshaler ) )]
+        internal static extern string LLVMOrcGetErrorMsg( LLVMOrcJITStackRef JITStack );
+
+        [DllImport( LibraryPath, CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi, ThrowOnUnmappableChar = true, BestFitMapping = false )]
+        internal static extern void LLVMOrcGetMangledSymbol( LLVMOrcJITStackRef JITStack
+                                                          , [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( StringMarshaler ), MarshalCookie = "MangledSymbol" )] out string MangledSymbol
+                                                          , [MarshalAs( UnmanagedType.LPStr )] string Symbol
+                                                          );
+
+        [DllImport( LibraryPath, CallingConvention = CallingConvention.Cdecl )]
+        internal static extern LLVMOrcErrorCode LLVMOrcCreateLazyCompileCallback( LLVMOrcJITStackRef JITStack, out LLVMOrcTargetAddress retAddr, IntPtr Callback, IntPtr CallbackCtx );
+
+        [DllImport( LibraryPath, CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi, ThrowOnUnmappableChar = true, BestFitMapping = false )]
+        internal static extern LLVMOrcErrorCode LLVMOrcCreateIndirectStub( LLVMOrcJITStackRef JITStack, [MarshalAs( UnmanagedType.LPStr )] string StubName, LLVMOrcTargetAddress InitAddr );
+
+        [DllImport( LibraryPath, CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi, ThrowOnUnmappableChar = true, BestFitMapping = false )]
+        internal static extern LLVMOrcErrorCode LLVMOrcSetIndirectStubPointer( LLVMOrcJITStackRef JITStack, [MarshalAs( UnmanagedType.LPStr )] string StubName, LLVMOrcTargetAddress NewAddr );
+
+        [DllImport( LibraryPath, CallingConvention = CallingConvention.Cdecl )]
+        internal static extern LLVMOrcErrorCode LLVMOrcAddLazilyCompiledIR( LLVMOrcJITStackRef JITStack, out LLVMOrcModuleHandle retHandle, LLVMSharedModuleRef Mod, IntPtr SymbolResolver, IntPtr SymbolResolverCtx );
+
+        [DllImport( LibraryPath, CallingConvention = CallingConvention.Cdecl )]
+        internal static extern LLVMOrcErrorCode LLVMOrcRemoveModule( LLVMOrcJITStackRef JITStack, LLVMOrcModuleHandle H );
+
+        [DllImport( LibraryPath, CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi, ThrowOnUnmappableChar = true, BestFitMapping = false )]
+        internal static extern LLVMOrcErrorCode LLVMOrcGetSymbolAddress( LLVMOrcJITStackRef JITStack, out LLVMOrcTargetAddress retAddr, [MarshalAs( UnmanagedType.LPStr )] string SymbolName );
+
+        [DllImport( LibraryPath, CallingConvention = CallingConvention.Cdecl )]
+        internal static extern LLVMOrcErrorCode LLVMOrcDisposeInstance( LLVMOrcJITStackRef JITStack );
     }
 }
