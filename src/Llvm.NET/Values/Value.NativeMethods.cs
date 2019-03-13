@@ -16,6 +16,41 @@ namespace Llvm.NET.Values
     {
         internal static class NativeMethods
         {
+            internal enum LLVMLinkage
+            {
+                LLVMExternalLinkage = 0,
+                LLVMAvailableExternallyLinkage = 1,
+                LLVMLinkOnceAnyLinkage = 2,
+                LLVMLinkOnceODRLinkage = 3,
+                LLVMLinkOnceODRAutoHideLinkage = 4,
+                LLVMWeakAnyLinkage = 5,
+                LLVMWeakODRLinkage = 6,
+                LLVMAppendingLinkage = 7,
+                LLVMInternalLinkage = 8,
+                LLVMPrivateLinkage = 9,
+                LLVMDLLImportLinkage = 10,
+                LLVMDLLExportLinkage = 11,
+                LLVMExternalWeakLinkage = 12,
+                LLVMGhostLinkage = 13,
+                LLVMCommonLinkage = 14,
+                LLVMLinkerPrivateLinkage = 15,
+                LLVMLinkerPrivateWeakLinkage = 16
+            }
+
+            internal enum LLVMVisibility
+            {
+                LLVMDefaultVisibility = 0,
+                LLVMHiddenVisibility = 1,
+                LLVMProtectedVisibility = 2
+            }
+
+            internal enum LLVMDLLStorageClass
+            {
+                LLVMDefaultStorageClass = 0,
+                LLVMDLLImportStorageClass = 1,
+                LLVMDLLExportStorageClass = 2
+            }
+
             // Retrieves the raw underlying native C++ ValueKind enumeration for a value
             // This is generally only used in the mapping of an LLVMValueRef to the Llvm.NET
             // instance wrapping it. The Stable C API uses a distinct enum for the instruction
@@ -465,6 +500,21 @@ namespace Llvm.NET.Values
 
             [DllImport( LibraryPath, CallingConvention = CC.Cdecl )]
             internal static extern void LLVMGlobalVariableAddDebugExpression( LLVMValueRef variable, LLVMMetadataRef metadataHandle );
+
+            [DllImport( LibraryPath, CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl )]
+            internal static extern LLVMUseRef LLVMGetFirstUse( LLVMValueRef Val );
+
+            [DllImport( LibraryPath, CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl )]
+            internal static extern LLVMUseRef LLVMGetNextUse( LLVMUseRef U );
+
+            [DllImport( LibraryPath, CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl )]
+            internal static extern LLVMValueRef LLVMGetOperand( LLVMValueRef Val, uint Index );
+
+            [DllImport( LibraryPath, CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl )]
+            internal static extern void LLVMSetOperand( LLVMValueRef User, uint Index, LLVMValueRef Val );
+
+            [DllImport( LibraryPath, CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl )]
+            internal static extern int LLVMGetNumOperands( LLVMValueRef Val );
         }
     }
 }

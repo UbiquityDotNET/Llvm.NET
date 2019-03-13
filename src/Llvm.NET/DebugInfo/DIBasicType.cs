@@ -2,10 +2,9 @@
 // Copyright (c) .NET Foundation. All rights reserved.
 // </copyright>
 
-using System.Runtime.InteropServices;
 using Llvm.NET.Native;
 
-using static Llvm.NET.Native.NativeMethods;
+using static Llvm.NET.DebugInfo.DINode.NativeMethods;
 
 namespace Llvm.NET.DebugInfo
 {
@@ -24,9 +23,5 @@ namespace Llvm.NET.DebugInfo
             : base( handle )
         {
         }
-
-        // ReSharper disable IdentifierTypo
-        [DllImport( LibraryPath, CallingConvention = CallingConvention.Cdecl )]
-        private static extern uint LLVMDIBasicTypeGetEncoding( LLVMMetadataRef /*DIBasicType*/ basicType );
     }
 }

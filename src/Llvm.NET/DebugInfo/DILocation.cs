@@ -2,11 +2,11 @@
 // Copyright (c) .NET Foundation. All rights reserved.
 // </copyright>
 
-using System;
-using System.Runtime.InteropServices;
 using JetBrains.Annotations;
 using Llvm.NET.Native;
 using Ubiquity.ArgValidators;
+
+using static Llvm.NET.DebugInfo.DINode.NativeMethods;
 
 namespace Llvm.NET.DebugInfo
 {
@@ -70,24 +70,5 @@ namespace Llvm.NET.DebugInfo
             : base( handle )
         {
         }
-
-        // ReSharper disable IdentifierTypo
-        [DllImport( NativeMethods.LibraryPath, CallingConvention = CallingConvention.Cdecl, BestFitMapping = false, ThrowOnUnmappableChar = true )]
-        private static extern LLVMMetadataRef /*DILocalScope*/ LLVMGetDILocationScope( LLVMMetadataRef /*DILocation*/ location );
-
-        [DllImport( NativeMethods.LibraryPath, CallingConvention = CallingConvention.Cdecl, BestFitMapping = false, ThrowOnUnmappableChar = true )]
-        private static extern UInt32 LLVMGetDILocationLine( LLVMMetadataRef /*DILocation*/ location );
-
-        [DllImport( NativeMethods.LibraryPath, CallingConvention = CallingConvention.Cdecl, BestFitMapping = false, ThrowOnUnmappableChar = true )]
-        private static extern UInt32 LLVMGetDILocationColumn( LLVMMetadataRef /*DILocation*/ location );
-
-        [DllImport( NativeMethods.LibraryPath, CallingConvention = CallingConvention.Cdecl, BestFitMapping = false, ThrowOnUnmappableChar = true )]
-        private static extern LLVMMetadataRef /*DILocation*/ LLVMGetDILocationInlinedAt( LLVMMetadataRef /*DILocation*/ location );
-
-        [DllImport( NativeMethods.LibraryPath, CallingConvention = CallingConvention.Cdecl, BestFitMapping = false, ThrowOnUnmappableChar = true )]
-        private static extern LLVMMetadataRef /*DILocalScope*/ LLVMDILocationGetInlinedAtScope( LLVMMetadataRef /*DILocation*/ location );
-
-        [DllImport( NativeMethods.LibraryPath, CallingConvention = CallingConvention.Cdecl )]
-        private static extern LLVMMetadataRef LLVMDILocation( LLVMContextRef context, UInt32 Line, UInt32 Column, LLVMMetadataRef scope, LLVMMetadataRef InlinedAt );
     }
 }

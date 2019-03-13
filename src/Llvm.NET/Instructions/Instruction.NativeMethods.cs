@@ -16,6 +16,12 @@ namespace Llvm.NET.Instructions
     {
         internal static new class NativeMethods
         {
+            internal enum LLVMAttributeIndex
+            {
+                LLVMAttributeReturnIndex = 0,
+                LLVMAttributeFunctionIndex = -1
+            }
+
 #pragma warning disable CA1008 // Enums should have zero value.
             internal enum LLVMOpcode
             {
@@ -84,7 +90,82 @@ namespace Llvm.NET.Instructions
                 LLVMCleanupPad = 64,
                 LLVMCatchSwitch = 65
             }
+
+            internal enum LLVMIntPredicate
+            {
+                LLVMIntEQ = 32,
+                LLVMIntNE = 33,
+                LLVMIntUGT = 34,
+                LLVMIntUGE = 35,
+                LLVMIntULT = 36,
+                LLVMIntULE = 37,
+                LLVMIntSGT = 38,
+                LLVMIntSGE = 39,
+                LLVMIntSLT = 40,
+                LLVMIntSLE = 41
+            }
 #pragma warning restore CA1008 // Enums should have zero value.
+
+            internal enum LLVMRealPredicate
+            {
+                LLVMRealPredicateFalse = 0,
+                LLVMRealOEQ = 1,
+                LLVMRealOGT = 2,
+                LLVMRealOGE = 3,
+                LLVMRealOLT = 4,
+                LLVMRealOLE = 5,
+                LLVMRealONE = 6,
+                LLVMRealORD = 7,
+                LLVMRealUNO = 8,
+                LLVMRealUEQ = 9,
+                LLVMRealUGT = 10,
+                LLVMRealUGE = 11,
+                LLVMRealULT = 12,
+                LLVMRealULE = 13,
+                LLVMRealUNE = 14,
+                LLVMRealPredicateTrue = 15
+            }
+
+            internal enum LLVMLandingPadClauseTy
+            {
+                LLVMLandingPadCatch = 0,
+                LLVMLandingPadFilter = 1
+            }
+
+            internal enum LLVMThreadLocalMode
+            {
+                LLVMNotThreadLocal = 0,
+                LLVMGeneralDynamicTLSModel = 1,
+                LLVMLocalDynamicTLSModel = 2,
+                LLVMInitialExecTLSModel = 3,
+                LLVMLocalExecTLSModel = 4
+            }
+
+            internal enum LLVMAtomicOrdering
+            {
+                LLVMAtomicOrderingNotAtomic = 0,
+                LLVMAtomicOrderingUnordered = 1,
+                LLVMAtomicOrderingMonotonic = 2,
+                LLVMAtomicOrderingAcquire = 4,
+                LLVMAtomicOrderingRelease = 5,
+                LLVMAtomicOrderingAcquireRelease = 6,
+                LLVMAtomicOrderingSequentiallyConsistent = 7
+            }
+
+            internal enum LLVMAtomicRMWBinOp
+            {
+                LLVMAtomicRMWBinOpXchg = 0,
+                LLVMAtomicRMWBinOpAdd = 1,
+                LLVMAtomicRMWBinOpSub = 2,
+                LLVMAtomicRMWBinOpAnd = 3,
+                LLVMAtomicRMWBinOpNand = 4,
+                LLVMAtomicRMWBinOpOr = 5,
+                LLVMAtomicRMWBinOpXor = 6,
+                LLVMAtomicRMWBinOpMax = 7,
+                LLVMAtomicRMWBinOpMin = 8,
+                LLVMAtomicRMWBinOpUMax = 9,
+                LLVMAtomicRMWBinOpUMin = 10
+            }
 
             [DllImport( LibraryPath, EntryPoint = "LLVMGetInstructionParent", CallingConvention = CallingConvention.Cdecl )]
             internal static extern LLVMBasicBlockRef LLVMGetInstructionParent( LLVMValueRef Inst );
@@ -252,6 +333,9 @@ namespace Llvm.NET.Instructions
 
             [DllImport( LibraryPath, EntryPoint = "LLVMSetOrdering", CallingConvention = CallingConvention.Cdecl )]
             internal static extern void LLVMSetOrdering( LLVMValueRef MemoryAccessInst, LLVMAtomicOrdering Ordering );
+
+            [DllImport( LibraryPath, CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi, ThrowOnUnmappableChar = true, BestFitMapping = false )]
+            internal static extern UInt32 LLVMLookupInstrinsicId( [MarshalAs( UnmanagedType.LPStr )] string name );
         }
     }
 }

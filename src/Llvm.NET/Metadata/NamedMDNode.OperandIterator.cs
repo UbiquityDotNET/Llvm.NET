@@ -8,6 +8,8 @@ using System.Collections.Generic;
 using System.Linq;
 using Ubiquity.ArgValidators;
 
+using static Llvm.NET.NamedMDNode.NativeMethods;
+
 namespace Llvm.NET
 {
     /// <content>Private partial class implementation to contain the Operand list/iterator for NamedMDNode</content>

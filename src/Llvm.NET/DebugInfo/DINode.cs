@@ -2,15 +2,14 @@
 // Copyright (c) .NET Foundation. All rights reserved.
 // </copyright>
 
-using System.Runtime.InteropServices;
 using Llvm.NET.Native;
 
-using static Llvm.NET.Native.NativeMethods;
+using static Llvm.NET.DebugInfo.DINode.NativeMethods;
 
 namespace Llvm.NET.DebugInfo
 {
     /// <summary>Root of the object hierarchy for Debug information metadata nodes</summary>
-    public class DINode
+    public partial class DINode
         : MDNode
     {
         /// <summary>Gets the Dwarf tag for the node</summary>
@@ -31,9 +30,5 @@ namespace Llvm.NET.DebugInfo
             : base( handle )
         {
         }
-
-        // ReSharper disable IdentifierTypo
-        [DllImport( LibraryPath, CallingConvention = CallingConvention.Cdecl)]
-        private static extern LLVMDwarfTag LLVMDIDescriptorGetTag( LLVMMetadataRef descriptor );
     }
 }

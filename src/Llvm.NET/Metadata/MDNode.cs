@@ -4,12 +4,11 @@
 
 using System;
 using System.Collections.Generic;
-using System.Runtime.InteropServices;
 using Llvm.NET.Native;
 using Llvm.NET.Properties;
 using Ubiquity.ArgValidators;
 
-using static Llvm.NET.Native.NativeMethods;
+using static Llvm.NET.LlvmMetadata.NativeMethods;
 
 namespace Llvm.NET
 {
@@ -155,14 +154,5 @@ namespace Llvm.NET
             var context = handle.Context;
             return FromHandle<T>( context, handle );
         }
-
-        [DllImport( LibraryPath, CallingConvention = CallingConvention.Cdecl )]
-        private static extern UInt32 LLVMMDNodeGetNumOperands( LLVMMetadataRef /*MDNode*/ node );
-
-        [DllImport( LibraryPath, CallingConvention = CallingConvention.Cdecl )]
-        private static extern LLVMMDOperandRef LLVMMDNodeGetOperand( LLVMMetadataRef /*MDNode*/ node, UInt32 index );
-
-        [DllImport( LibraryPath, CallingConvention = CallingConvention.Cdecl )]
-        private static extern void LLVMMDNodeReplaceOperand( LLVMMetadataRef /* MDNode */ node, UInt32 index, LLVMMetadataRef operand );
     }
 }

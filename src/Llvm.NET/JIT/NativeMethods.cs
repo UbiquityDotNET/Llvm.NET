@@ -17,6 +17,18 @@ namespace Llvm.NET.JIT
 {
     internal static class NativeMethods
     {
+        [UnmanagedFunctionPointer( CallingConvention.Cdecl )]
+        internal delegate IntPtr LLVMMemoryManagerAllocateCodeSectionCallback( IntPtr opaque, int size, uint alignment, uint sectionID, [MarshalAs( UnmanagedType.LPStr )] string sectionName );
+
+        [UnmanagedFunctionPointer( CallingConvention.Cdecl )]
+        internal delegate IntPtr LLVMMemoryManagerAllocateDataSectionCallback( IntPtr opaque, int size, uint alignment, uint sectionID, [MarshalAs( UnmanagedType.LPStr )] string sectionName, int isReadOnly );
+
+        [UnmanagedFunctionPointer( CallingConvention.Cdecl )]
+        internal delegate int LLVMMemoryManagerFinalizeMemoryCallback( IntPtr opaque, out IntPtr errMsg );
+
+        [UnmanagedFunctionPointer( CallingConvention.Cdecl )]
+        internal delegate void LLVMMemoryManagerDestroyCallback( IntPtr opaque );
+
         internal enum LLVMOrcErrorCode
         {
             LLVMOrcErrSuccess = 0,

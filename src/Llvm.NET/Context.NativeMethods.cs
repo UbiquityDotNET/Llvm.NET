@@ -16,6 +16,14 @@ namespace Llvm.NET
     {
         internal static class NativeMethods
         {
+            internal enum LLVMDiagnosticSeverity
+            {
+                LLVMDSError = 0,
+                LLVMDSWarning = 1,
+                LLVMDSRemark = 2,
+                LLVMDSNote = 3
+            }
+
             [UnmanagedFunctionPointer( CallingConvention.Cdecl )]
             internal delegate void LLVMDiagnosticHandler( LLVMDiagnosticInfoRef param0, IntPtr param1 );
 

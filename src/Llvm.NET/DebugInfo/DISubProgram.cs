@@ -7,6 +7,8 @@ using Llvm.NET.Native;
 using Llvm.NET.Values;
 using Ubiquity.ArgValidators;
 
+using static Llvm.NET.LlvmMetadata.NativeMethods;
+
 namespace Llvm.NET.DebugInfo
 {
     /// <summary>Debug information for a SubProgram</summary>
@@ -60,7 +62,7 @@ namespace Llvm.NET.DebugInfo
         /// <returns><see langword="true"/> if this <see cref="DISubProgram"/> describes <paramref name="function"/> </returns>
         [SuppressMessage( "Microsoft.Design", "CA1011:ConsiderPassingBaseTypesAsParameters", Justification = "Specific type required by interop call" )]
         public bool Describes( Function function )
-            => NativeMethods.LLVMSubProgramDescribes( MetadataHandle, function.ValidateNotNull( nameof( function )).ValueHandle );
+            => LLVMSubProgramDescribes( MetadataHandle, function.ValidateNotNull( nameof( function )).ValueHandle );
 
         internal DISubProgram( LLVMMetadataRef handle )
             : base( handle )

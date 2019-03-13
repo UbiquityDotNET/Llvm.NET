@@ -2,12 +2,10 @@
 // Copyright (c) .NET Foundation. All rights reserved.
 // </copyright>
 
-using System;
 using System.Collections.Generic;
-using System.Runtime.InteropServices;
 using Llvm.NET.Native;
 
-using static Llvm.NET.Native.NativeMethods;
+using static Llvm.NET.NamedMDNode.NativeMethods;
 
 namespace Llvm.NET
 {
@@ -35,30 +33,5 @@ namespace Llvm.NET
         }
 
         private readonly LLVMNamedMDNodeRef NativeHandle;
-
-        [DllImport( LibraryPath, CallingConvention = CallingConvention.Cdecl, BestFitMapping = false, ThrowOnUnmappableChar = true )]
-        [return: MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( StringMarshaler ) )]
-        private static extern string /*char const**/ LLVMNamedMDNodeGetName( LLVMNamedMDNodeRef namedMDNode );
-
-        [DllImport( LibraryPath, CallingConvention = CallingConvention.Cdecl )]
-        private static extern UInt32 LLVMNamedMDNodeGetNumOperands( LLVMNamedMDNodeRef namedMDNode );
-
-        [DllImport( LibraryPath, CallingConvention = CallingConvention.Cdecl )]
-        private static extern /*MDNode*/ LLVMMetadataRef LLVMNamedMDNodeGetOperand( LLVMNamedMDNodeRef namedMDNode, UInt32 index );
-
-        [DllImport( LibraryPath, CallingConvention = CallingConvention.Cdecl )]
-        private static extern void LLVMNamedMDNodeSetOperand( LLVMNamedMDNodeRef namedMDNode, UInt32 index, LLVMMetadataRef /*MDNode*/ node );
-
-        [DllImport( LibraryPath, CallingConvention = CallingConvention.Cdecl )]
-        private static extern void LLVMNamedMDNodeAddOperand( LLVMNamedMDNodeRef namedMDNode, LLVMMetadataRef /*MDNode*/ node );
-
-        [DllImport( LibraryPath, CallingConvention = CallingConvention.Cdecl )]
-        private static extern void LLVMNamedMDNodeClearOperands( LLVMNamedMDNodeRef namedMDNode );
-
-        [DllImport( LibraryPath, CallingConvention = CallingConvention.Cdecl )]
-        private static extern void LLVMNamedMDNodeEraseFromParent( LLVMNamedMDNodeRef namedMDNode );
-
-        [DllImport( LibraryPath, CallingConvention = CallingConvention.Cdecl)]
-        private static extern LLVMModuleRef LLVMNamedMDNodeGetParentModule( LLVMNamedMDNodeRef namedMDNode );
     }
 }

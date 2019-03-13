@@ -15,6 +15,20 @@ namespace Llvm.NET
     /// <summary>LLVM Bit-code module</summary>
     public sealed partial class BitcodeModule
     {
+#pragma warning disable CA1008 // Enums should have zero value.
+        internal enum LLVMModFlagBehavior
+        {
+            Error = 1,
+            Warning = 2,
+            Require = 3,
+            Override = 4,
+            Append = 5,
+            AppendUnique = 6,
+            ModFlagBehaviorFirstVal = Error,
+            ModFlagBehaviorLastVal = AppendUnique
+        }
+#pragma warning restore CA1008 // Enums should have zero value.
+
         internal static class NativeMethods
         {
             [DllImport( LibraryPath, EntryPoint = "LLVMLinkModules2", CallingConvention = CallingConvention.Cdecl )]

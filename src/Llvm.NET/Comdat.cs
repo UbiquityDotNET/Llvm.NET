@@ -2,11 +2,10 @@
 // Copyright (c) .NET Foundation. All rights reserved.
 // </copyright>
 
-using System.Runtime.InteropServices;
 using Llvm.NET.Native;
 using Ubiquity.ArgValidators;
 
-using static Llvm.NET.Native.NativeMethods;
+using static Llvm.NET.Comdat.NativeMethods;
 
 namespace Llvm.NET
 {
@@ -36,7 +35,7 @@ namespace Llvm.NET
     /// Comdats it owns are invalidated. Using a Comdat instance after the module is disposed results in
     /// an effective NOP.
     /// </remarks>
-    public class Comdat
+    public partial class Comdat
     {
         /// <summary>Gets the name of the <see cref="Comdat"/></summary>
         public string Name => Module.IsDisposed ? string.Empty : LLVMComdatGetName( ComdatHandle );
@@ -82,15 +81,5 @@ namespace Llvm.NET
 
         /// <summary>Gets the wrapped <see cref="LLVMComdatRef"/></summary>
         internal LLVMComdatRef ComdatHandle { get; }
-
-        [DllImport( LibraryPath, CallingConvention = CallingConvention.Cdecl, BestFitMapping = false, ThrowOnUnmappableChar = true )]
-        private static extern LLVMComdatSelectionKind LLVMComdatGetKind( LLVMComdatRef comdatRef );
-
-        [DllImport( LibraryPath, CallingConvention = CallingConvention.Cdecl, BestFitMapping = false, ThrowOnUnmappableChar = true )]
-        private static extern void LLVMComdatSetKind( LLVMComdatRef comdatRef, LLVMComdatSelectionKind kind );
-
-        [DllImport( LibraryPath, CallingConvention = CallingConvention.Cdecl, BestFitMapping = false, ThrowOnUnmappableChar = true )]
-        [return: MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( StringMarshaler ), MarshalCookie = "DisposeMessage" )]
-        private static extern string LLVMComdatGetName( LLVMComdatRef comdatRef );
     }
 }

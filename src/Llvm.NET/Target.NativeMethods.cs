@@ -14,6 +14,39 @@ namespace Llvm.NET
     {
         internal static class NativeMethods
         {
+
+            internal enum LLVMCodeGenOptLevel
+            {
+                LLVMCodeGenLevelNone = 0,
+                LLVMCodeGenLevelLess = 1,
+                LLVMCodeGenLevelDefault = 2,
+                LLVMCodeGenLevelAggressive = 3
+            }
+
+            internal enum LLVMRelocMode
+            {
+                LLVMRelocDefault = 0,
+                LLVMRelocStatic = 1,
+                LLVMRelocPIC = 2,
+                LLVMRelocDynamicNoPic = 3
+            }
+
+            internal enum LLVMCodeModel
+            {
+                LLVMCodeModelDefault = 0,
+                LLVMCodeModelJITDefault = 1,
+                LLVMCodeModelSmall = 2,
+                LLVMCodeModelKernel = 3,
+                LLVMCodeModelMedium = 4,
+                LLVMCodeModelLarge = 5
+            }
+
+            internal enum LLVMCodeGenFileType
+            {
+                LLVMAssemblyFile = 0,
+                LLVMObjectFile = 1
+            }
+
             [DllImport( LibraryPath, EntryPoint = "LLVMGetFirstTarget", CallingConvention = CallingConvention.Cdecl )]
             internal static extern LLVMTargetRef LLVMGetFirstTarget( );
 

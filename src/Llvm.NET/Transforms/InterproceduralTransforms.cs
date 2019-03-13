@@ -2,16 +2,13 @@
 // Copyright (c) .NET Foundation. All rights reserved.
 // </copyright>
 
-using System.Runtime.InteropServices;
-using Llvm.NET.Native;
-
-using static Llvm.NET.Native.NativeMethods;
+using static Llvm.NET.Transforms.InterproceduralTransforms.NativeMethods;
 
 namespace Llvm.NET.Transforms
 {
     /// <summary>Utility class for adding the Inter-procedural transform passes to a <see cref="PassManager"/></summary>
     /// <seealso href="xref:llvm_docs_passes">LLVM: Analysis and Transform Passes</seealso>
-    public static class InterproceduralTransforms
+    public static partial class InterproceduralTransforms
     {
         /// <summary>This pass promotes “by reference” arguments to be “by value” arguments.</summary>
         /// <typeparam name="T"><see cref="PassManager"/> type</typeparam>
@@ -221,47 +218,5 @@ namespace Llvm.NET.Transforms
             LLVMAddStripSymbolsPass( passManager.Handle );
             return passManager;
         }
-
-        [DllImport( LibraryPath, CallingConvention = CallingConvention.Cdecl )]
-        private static extern void LLVMAddArgumentPromotionPass( LLVMPassManagerRef PM );
-
-        [DllImport( LibraryPath, CallingConvention = CallingConvention.Cdecl )]
-        private static extern void LLVMAddConstantMergePass( LLVMPassManagerRef PM );
-
-        [DllImport( LibraryPath, CallingConvention = CallingConvention.Cdecl )]
-        private static extern void LLVMAddDeadArgEliminationPass( LLVMPassManagerRef PM );
-
-        [DllImport( LibraryPath, CallingConvention = CallingConvention.Cdecl )]
-        private static extern void LLVMAddFunctionAttrsPass( LLVMPassManagerRef PM );
-
-        [DllImport( LibraryPath, CallingConvention = CallingConvention.Cdecl )]
-        private static extern void LLVMAddFunctionInliningPass( LLVMPassManagerRef PM );
-
-        [DllImport( LibraryPath, CallingConvention = CallingConvention.Cdecl )]
-        private static extern void LLVMAddAlwaysInlinerPass( LLVMPassManagerRef PM );
-
-        [DllImport( LibraryPath, CallingConvention = CallingConvention.Cdecl )]
-        private static extern void LLVMAddGlobalDCEPass( LLVMPassManagerRef PM );
-
-        [DllImport( LibraryPath, CallingConvention = CallingConvention.Cdecl )]
-        private static extern void LLVMAddGlobalOptimizerPass( LLVMPassManagerRef PM );
-
-        [DllImport( LibraryPath, CallingConvention = CallingConvention.Cdecl )]
-        private static extern void LLVMAddIPConstantPropagationPass( LLVMPassManagerRef PM );
-
-        [DllImport( LibraryPath, CallingConvention = CallingConvention.Cdecl )]
-        private static extern void LLVMAddPruneEHPass( LLVMPassManagerRef PM );
-
-        [DllImport( LibraryPath, CallingConvention = CallingConvention.Cdecl )]
-        private static extern void LLVMAddIPSCCPPass( LLVMPassManagerRef PM );
-
-        [DllImport( LibraryPath, CallingConvention = CallingConvention.Cdecl )]
-        private static extern void LLVMAddInternalizePass( LLVMPassManagerRef param0, [MarshalAs( UnmanagedType.Bool )]bool AllButMain );
-
-        [DllImport( LibraryPath, CallingConvention = CallingConvention.Cdecl )]
-        private static extern void LLVMAddStripDeadPrototypesPass( LLVMPassManagerRef PM );
-
-        [DllImport( LibraryPath, CallingConvention = CallingConvention.Cdecl )]
-        private static extern void LLVMAddStripSymbolsPass( LLVMPassManagerRef PM );
     }
 }

@@ -2,15 +2,12 @@
 // Copyright (c) .NET Foundation. All rights reserved.
 // </copyright>
 
-using System.Runtime.InteropServices;
-using Llvm.NET.Native;
-
-using static Llvm.NET.Native.NativeMethods;
+using static Llvm.NET.Transforms.Sanitizers.NativeMethods;
 
 namespace Llvm.NET.Transforms
 {
     /// <summary>LLVM Sanitizer passes</summary>
-    public static class Sanitizers
+    public static partial class Sanitizers
     {
         /// <summary>Adds an Address Sanitizer Function pass</summary>
         /// <param name="passManager">Pass manager to add the pass to</param>
@@ -57,20 +54,5 @@ namespace Llvm.NET.Transforms
             LLVMAddDataFlowSanitizerPass( passManager.Handle, abiListFile );
             return passManager;
         }
-
-        [DllImport( LibraryPath, CallingConvention = CallingConvention.Cdecl, BestFitMapping = false, ThrowOnUnmappableChar = true )]
-        private static extern void LLVMAddAddressSanitizerFunctionPass( LLVMPassManagerRef PM );
-
-        [DllImport( LibraryPath, CallingConvention = CallingConvention.Cdecl, BestFitMapping = false, ThrowOnUnmappableChar = true )]
-        private static extern void LLVMAddAddressSanitizerModulePass( LLVMPassManagerRef PM );
-
-        [DllImport( LibraryPath, CallingConvention = CallingConvention.Cdecl, BestFitMapping = false, ThrowOnUnmappableChar = true )]
-        private static extern void LLVMAddThreadSanitizerPass( LLVMPassManagerRef PM );
-
-        [DllImport( LibraryPath, CallingConvention = CallingConvention.Cdecl, BestFitMapping = false, ThrowOnUnmappableChar = true )]
-        private static extern void LLVMAddMemorySanitizerPass( LLVMPassManagerRef PM );
-
-        [DllImport( LibraryPath, CallingConvention = CallingConvention.Cdecl, BestFitMapping = false, ThrowOnUnmappableChar = true )]
-        private static extern void LLVMAddDataFlowSanitizerPass( LLVMPassManagerRef PM, [MarshalAs( UnmanagedType.LPStr )] string ABIListFile );
     }
 }

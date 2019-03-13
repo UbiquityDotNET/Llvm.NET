@@ -18,6 +18,12 @@ namespace Llvm.NET.Values
         internal static new class NativeMethods
         {
             [DllImport( LibraryPath, CallingConvention = CC.Cdecl, BestFitMapping = false, ThrowOnUnmappableChar = true )]
+            internal static extern void LLVMFunctionSetSubprogram( LLVMValueRef function, LLVMMetadataRef subprogram );
+
+            [DllImport( LibraryPath, CallingConvention = CC.Cdecl, BestFitMapping = false, ThrowOnUnmappableChar = true )]
+            internal static extern LLVMMetadataRef LLVMFunctionGetSubprogram( LLVMValueRef function );
+
+            [DllImport( LibraryPath, CallingConvention = CC.Cdecl, BestFitMapping = false, ThrowOnUnmappableChar = true )]
             internal static extern UInt32 LLVMGetArgumentIndex( LLVMValueRef Val );
 
             [DllImport( LibraryPath, CallingConvention = CC.Cdecl )]

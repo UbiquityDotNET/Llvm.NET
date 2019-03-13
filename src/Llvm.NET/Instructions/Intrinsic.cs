@@ -3,10 +3,9 @@
 // </copyright>
 
 using System;
-using System.Runtime.InteropServices;
 using Llvm.NET.Native;
 
-using static Llvm.NET.Native.NativeMethods;
+using static Llvm.NET.Instructions.Instruction.NativeMethods;
 
 namespace Llvm.NET.Instructions
 {
@@ -26,8 +25,5 @@ namespace Llvm.NET.Instructions
             : base( valueRef )
         {
         }
-
-        [DllImport( LibraryPath, CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi, ThrowOnUnmappableChar = true, BestFitMapping = false )]
-        private static extern UInt32 LLVMLookupInstrinsicId( [MarshalAs( UnmanagedType.LPStr )] string name );
     }
 }

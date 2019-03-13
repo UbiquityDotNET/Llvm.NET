@@ -15,6 +15,12 @@ namespace Llvm.NET
     {
         internal static class NativeMethods
         {
+            internal enum LLVMByteOrdering
+            {
+                LLVMBigEndian = 0,
+                LLVMLittleEndian = 1
+            }
+
             /* TODO: Support constructing DataLayout from a string*/
             [DllImport( LibraryPath, EntryPoint = "LLVMCreateTargetData", CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi, ThrowOnUnmappableChar = true, BestFitMapping = false )]
             internal static extern LLVMTargetDataRef LLVMCreateTargetData( [MarshalAs( UnmanagedType.LPStr )] string StringRep );
