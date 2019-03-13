@@ -6,6 +6,7 @@ using System.Runtime.InteropServices;
 using Llvm.NET.Native;
 
 using static Llvm.NET.Native.NativeMethods;
+using static Llvm.NET.Target.NativeMethods;
 
 namespace Llvm.NET
 {

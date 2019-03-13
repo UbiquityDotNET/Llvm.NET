@@ -9,6 +9,7 @@ using System.Runtime.InteropServices;
 using Llvm.NET.Native;
 
 using static Llvm.NET.Native.NativeMethods;
+using static Llvm.NET.Target.NativeMethods;
 
 // warning CS0649: Field 'xxx' is never assigned to, and will always have its default value 0
 #pragma warning disable 649

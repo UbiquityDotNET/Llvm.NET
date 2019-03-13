@@ -5,7 +5,7 @@
 using System;
 using System.Runtime.InteropServices;
 using Llvm.NET.Native;
-
+using static Llvm.NET.Instructions.Instruction.NativeMethods;
 using static Llvm.NET.Native.NativeMethods;
 
 using CC = System.Runtime.InteropServices.CallingConvention;

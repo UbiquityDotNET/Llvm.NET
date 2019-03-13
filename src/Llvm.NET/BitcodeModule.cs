@@ -17,8 +17,6 @@ using Llvm.NET.Types;
 using Llvm.NET.Values;
 using Ubiquity.ArgValidators;
 
-/* using static Llvm.NET.Native.NativeMethods; */
-
 using static Llvm.NET.BitcodeModule.NativeMethods;
 
 namespace Llvm.NET

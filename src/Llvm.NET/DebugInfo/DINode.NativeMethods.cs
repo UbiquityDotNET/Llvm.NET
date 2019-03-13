@@ -5,7 +5,7 @@
 using System;
 using System.Runtime.InteropServices;
 using Llvm.NET.Native;
-
+using static Llvm.NET.DebugInfo.DebugInfoBuilder;
 using static Llvm.NET.Native.NativeMethods;
 
 namespace Llvm.NET.DebugInfo

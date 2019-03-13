@@ -14,7 +14,6 @@ namespace Llvm.NET
     {
         internal static class NativeMethods
         {
-
             internal enum LLVMCodeGenOptLevel
             {
                 LLVMCodeGenLevelNone = 0,

@@ -3,6 +3,7 @@
 // </copyright>
 
 using Llvm.NET.Native;
+using static Llvm.NET.Values.Value.NativeMethods;
 
 namespace Llvm.NET.Values
 {

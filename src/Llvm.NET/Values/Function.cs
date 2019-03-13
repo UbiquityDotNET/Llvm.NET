@@ -12,6 +12,7 @@ using Llvm.NET.Properties;
 using Llvm.NET.Types;
 
 using static Llvm.NET.Context.NativeMethods;
+using static Llvm.NET.Instructions.Instruction.NativeMethods;
 using static Llvm.NET.Types.TypeRef.NativeMethods;
 using static Llvm.NET.Values.Function.NativeMethods;
 using static Llvm.NET.Values.Value.NativeMethods;

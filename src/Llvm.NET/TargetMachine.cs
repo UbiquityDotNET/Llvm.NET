@@ -6,7 +6,7 @@ using System;
 using Llvm.NET.Native;
 using Llvm.NET.Properties;
 using Ubiquity.ArgValidators;
-
+using static Llvm.NET.Target.NativeMethods;
 using static Llvm.NET.TargetMachine.NativeMethods;
 
 namespace Llvm.NET

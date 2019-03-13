@@ -5,6 +5,7 @@
 using System.Diagnostics.CodeAnalysis;
 using Llvm.NET.Native;
 using Llvm.NET.Values;
+using static Llvm.NET.Types.TypeRef.NativeMethods;
 
 // Interface+internal type matches file name
 #pragma warning disable SA1649
