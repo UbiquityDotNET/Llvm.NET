@@ -1,6 +1,6 @@
 <BuildVersionData
-    BuildMajor = "6"
+    BuildMajor = "8"
     BuildMinor = "0"
-    BuildPatch = "1"
-    PreReleaseName = "rc"
+    BuildPatch = "0"
+    PreReleaseName = "alpha"
 />

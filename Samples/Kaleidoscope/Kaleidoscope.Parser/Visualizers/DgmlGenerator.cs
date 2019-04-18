@@ -59,7 +59,7 @@ namespace Kaleidoscope.Grammar
             Graph.Nodes.Add( new Node( )
             {
                 Id = node.GetUniqueNodeId( ),
-                Label = node.GetText( ),
+                Label = nodeName,
                 Category = "Terminal"
             } );
 
@@ -132,7 +132,7 @@ namespace Kaleidoscope.Grammar
         private const string ContextTypeNameSuffix = "Context";
 
         private readonly KaleidoscopeParser Recognizer;
-        private Stack<Node> NodeStack = new Stack<Node>();
+        private readonly Stack<Node> NodeStack = new Stack<Node>();
     }
 }
 #endif

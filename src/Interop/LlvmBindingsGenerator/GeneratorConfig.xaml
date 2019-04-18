@@ -1,0 +1,32 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<GeneratorConfig xmlns="clr-namespace:LlvmBindingsGenerator.Configuration;assembly=LlvmBindingsGenerator"
+                 xmlns:system="clr-namespace:System;assembly=mscorlib">
+    <GeneratorConfig.StatusReturningFunctions>
+        <system:String>LLVMParseIRInContext</system:String>
+        <system:String>LLVMLinkModules2</system:String>
+        <system:String>LLVMPrintModuleToFile</system:String>
+        <system:String>LLVMWriteBitcodeToFile</system:String>
+        <system:String>LLVMWriteBitcodeToFD</system:String>
+        <system:String>LLVMWriteBitcodeToFileHandle</system:String>
+        <system:String>LLVMParseBitcode2</system:String>
+        <system:String>LLVMGetBitcodeModule2</system:String>
+        <system:String>LLVMParseBitcodeInContext2</system:String>
+        <system:String>LLVMGetBitcodeModuleInContext2</system:String>
+        <system:String>LLVMVerifyModule</system:String>
+        <system:String>LVMVerifyFunction</system:String>
+        <system:String>LLVMInitializeNativeTarget</system:String>
+        <system:String>LLVMInitializeNativeAsmParser</system:String>
+        <system:String>LLVMInitializeNativeAsmPrinter</system:String>
+        <system:String>LLVMInitializeNativeDisassembler</system:String>
+        <system:String>LLVMGetTargetFromTriple</system:String>
+        <system:String>LLVMTargetMachineEmitToFile</system:String>
+        <system:String>LLVMTargetMachineEmitToMemoryBuffer</system:String>
+        <system:String>LLVMCreateExecutionEngineForModule</system:String>
+        <system:String>LLVMCreateInterpreterForModule</system:String>
+        <system:String>LLVMCreateJITCompilerForModule</system:String>
+        <system:String>LLVMCreateMCJITCompilerForModule</system:String>
+        <system:String>LLVMRemoveModule</system:String>
+        <system:String>LLVMFindFunction</system:String>
+    </GeneratorConfig.StatusReturningFunctions>
+    <GeneratorConfig.MarshalingInfo></GeneratorConfig.MarshalingInfo>
+</GeneratorConfig>

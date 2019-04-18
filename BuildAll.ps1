@@ -76,8 +76,8 @@ try
     # support for native lib projects in NuGet is tenuous at best. Due to various compiler version dependencies
     # and incompatibilities libs are generally not something published in a package. However, since the build time
     # for the libraries exceeds the time allowed for most hosted build services these must be pre-built for the
-    # automated APPVEYOR builds.
-    Install-LlvmLibs $buildPaths.LlvmLibsRoot
+    # automated builds.
+    Install-LlvmLibs $buildPaths.LlvmLibsRoot "8.0.0" "msvc" "15.9"
 
     # clone docs output location so it is available as a destination for the rest of the build
     if( !(Test-Path (Join-Path $buildPaths.DocsOutput '.git') -PathType Container))
@@ -94,16 +94,7 @@ try
         }
     }
 
-    # Need to invoke NuGet directly for restore of vcxproj as /t:Restore target doesn't support packages.config
-    # and PackageReference isn't supported for native projects
-    Write-Information "Restoring NuGet Packages for LibLLVM.vcxproj"
-    Invoke-NuGet restore src\LibLLVM\LibLLVM.vcxproj -PackagesDirectory $buildPaths.NuGetRepositoryPath -Verbosity quiet
-
-    Write-Information "Building LibLLVM"
-    Invoke-MSBuild -Targets Build -Project src\LibLLVM\LibLLVM.vcxproj -Properties $msBuildProperties -LoggerArgs ($msbuildLoggerArgs + @("/bl:LibLLVM-build.binlog") )
-
-    Write-Information "Packing LibLLVM"
-    Invoke-MSBuild -Targets Pack -Project src\LibLLVM\LibLLVM.vcxproj -Properties $msBuildProperties -LoggerArgs $msbuildLoggerArgs ($msbuildLoggerArgs + @("/bl:LibLLVM-pack.binlog") )
+    .\Build-Interop.ps1
 
     Write-Information "Restoring NuGet Packages for Llvm.NET"
     Invoke-MSBuild -Targets Restore -Project src\Llvm.NET.sln -Properties $msBuildProperties -LoggerArgs $msbuildLoggerArgs ($msbuildLoggerArgs + @("/bl:Llvm.NET-restore.binlog") )
@@ -116,7 +107,7 @@ try
 
     Write-Information "Building Docs"
     Invoke-MSBuild -Targets Build -Project docfx\Llvm.NET.DocFX.csproj -Properties $msBuildProperties -LoggerArgs $msbuildLoggerArgs ($msbuildLoggerArgs + @("/bl:Llvm.NET-docfx-build.binlog") )
-    
+
     if( $env:APPVEYOR_PULL_REQUEST_NUMBER )
     {
         foreach( $item in Get-ChildItem *.binlog )

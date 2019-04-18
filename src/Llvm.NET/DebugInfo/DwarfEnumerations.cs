@@ -208,7 +208,7 @@ namespace Llvm.NET.DebugInfo
         Private = 1,
         Protected = 2,
         Public = 3,
-        AccessibilityMask = 1 << 0 | 1 << 1,
+        AccessibilityMask = ( 1 << 0 ) | ( 1 << 1 ),
 
         ForwardDeclaration = 1 << 2,
         AppleBlock = 1 << 3,

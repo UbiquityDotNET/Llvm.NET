@@ -13,7 +13,6 @@ namespace Kaleidoscope
     {
         public static bool Remove<TKey, TValue>( this IDictionary<TKey,TValue> dictionary, TKey key, out TValue value )
         {
-            value = default;
             if( !dictionary.TryGetValue( key, out value ) )
             {
                 return false;

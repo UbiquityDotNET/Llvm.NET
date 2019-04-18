@@ -34,7 +34,7 @@
             "companyName": ".NET Foundation",
             "headerDecoration": "-----------------------------------------------------------------------",
             "documentExposedElements": true,
-            "documentInterfaces": true,
+            "documentInterfaces": false,
             "documentInternalElements": false,
             "documentPrivateElements": false,
             "documentPrivateFields": false,

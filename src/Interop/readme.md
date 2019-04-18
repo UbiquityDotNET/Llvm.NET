@@ -1,0 +1,45 @@
+# Interop Support
+This folder contains the low level LLVM direct interop support. It requires specialized build
+ordering and processing, which is handled by the Build-Interop.ps1 PowerShell script.
+
+The nature of the .NET SDK projects and VCX projects makes drives the need for the script,
+instead of VS solution dependencies or even MSBuild project to project references. Unfortunately,
+due to the way multi-targeting is done in the newer C# SDK projects project to project references
+don't work. The VCXproj files don't have targets for all the .NET targets. Making that all work
+seamlessly in VS is just plain hard work that has, thus far, not worked particularly well. Thus,
+the design here uses a Simpler PowerShell script that takes care of building the correct
+platform+configuration+target framework combinations of each and finally builds the NuGet
+package from the resulting binaries.
+
+## Projects
+### LibLLVM
+This is the native project that creates the extended LLVM-C API as an actual DLL (Currently
+only Windows 64 bit is supported, though other configurations are plausible with additional
+build steps in the PowerShell script to build for other platforms.)
+
+### Llvm.NET.Interop
+This is the .NET P/Invoke layer that provides the raw API projection to .NET. The, majority
+of the code is generated P/Invokes from the LlvmBindingsGenerator tool. There are a few
+additional support classes that are consistent across variations in LLVM. While this library
+has a runtime dependency on the native LibLLVM binary there is no compile time dependency.
+
+### LlvmBindingsGenerator
+This is the P/Invoke generator for the generated interop code in Llvm.NET.Interop. It uses
+CppSharp to parse the C headers and generate the C# P/Invoke API declarations, enums and value
+types required to interop with the native code.
+
+#### Usage
+`LlvmBindingsGenerator <llvmRoot> <extensionsRoot> [OutputPath]`
+
+| Parameter | Usage |
+|------------|-------|
+| llvmroot   | This is the root of the LLVM directory in the repository containing the llvm headers |
+| extensionsRoot | this is the root of the directory containing the extended LLVM-C headers from the LibLLVM project |
+| OutputPath | This is the root of the location to generate the output into, normally this is the root of the Llvm.NET.Interop project so the files are generated into the project |
+
+This tool is generally only required once per Major LLVM release. (Though a Minor release that adds new APIs
+would also warrant a new run) However, to ensure the code generation tool itself isn't altered with a breaking
+change, the PowerShell script takes care of running the generator to update the Llvm.NET.Interop
+code base on each run, even if nothing changes in the end. This is run on every automated build before building
+the Llvm.NET.Interop project so that the generator is tested on every full automated build. 
+
