@@ -2,12 +2,12 @@
 This folder contains the low level LLVM direct interop support. It requires specialized build
 ordering and processing, which is handled by the Build-Interop.ps1 PowerShell script.
 
-The nature of the .NET SDK projects and VCX projects makes drives the need for the script,
-instead of VS solution dependencies or even MSBuild project to project references. Unfortunately,
-due to the way multi-targeting is done in the newer C# SDK projects project to project references
+The nature of the .NET SDK projects and VCX projects drives the need for the script,instead of
+VS solution dependencies or even MSBuild project to project references. Unfortunately, due to
+the way multi-targeting is done in the newer C# SDK projects project to project references
 don't work. The VCXproj files don't have targets for all the .NET targets. Making that all work
 seamlessly in VS is just plain hard work that has, thus far, not worked particularly well. Thus,
-the design here uses a Simpler PowerShell script that takes care of building the correct
+the design here uses a simpler PowerShell script that takes care of building the correct
 platform+configuration+target framework combinations of each and finally builds the NuGet
 package from the resulting binaries.
 
@@ -42,4 +42,38 @@ would also warrant a new run) However, to ensure the code generation tool itself
 change, the PowerShell script takes care of running the generator to update the Llvm.NET.Interop
 code base on each run, even if nothing changes in the end. This is run on every automated build before building
 the Llvm.NET.Interop project so that the generator is tested on every full automated build. 
+
+## Building the Interop libraries
+### General requirements
+There are some general steps that are required to successfully build the interop NuGet package and a couple
+of different ways to go about completing them.
+ 1. Build the native libraries for all supported runtimes (OS+arch)
+    * Doing this first ensures that the later code generation phase starts from known good buildable headers
+ 2. Build LlvmBindingsGenerator
+ 3. Run LlvmBindingsGenerator with to parse the llvm headers and the extended headers from the native LibLLVM
+ and generate the interop code into the Llvm.NET.Interop project directory.
+ 4. Build Llvm.NET.Interop to create the interop assembly and, ultimately create the final NuGet package with
+the native and manged code bundled together.
+
+### Automated build
+The interop libraries are built using the Build-Interop.ps1 PowerShell script. This script is required
+to correctly build the projects in an automated build as it isn't possible to accomplish all the required
+steps in a standard project/solution. (OK, impossible is a bit strong as creating custom targets and tasks
+could probably cover it but at the expense of greater complexity). The script is pretty simple though
+understanding it is a more complex matter this document is aimed towards.
+
+### Manually (developer inner loop)
+While it is possible to use the PowerShell script as part of the development of the interop libraries themselves,
+it is generally easier to use the Interop.sln. The solution contains projects for the native libraries, the
+bindings generator and the managed interop. Using the solution requires that you manually build/run the projects.
+
+1. Build LibLLVM project
+2. Build LlvmBindingsGenerator project
+3. Run LlvmBindingsGenerator (via command line or debugger launch) with the location of the LLVM headers, the
+LibLLVM headers, and the output location of generated code for the Llvm.NET.Interop project.
+4. Build the Llvm.NET.Interop project.
+
+
+
+
 
