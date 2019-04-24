@@ -27,16 +27,20 @@ namespace Llvm.NET.Interop
         : SafeHandle
         , IEquatable<LlvmObjectRef>
     {
+        /// <inheritdoc/>
         public override bool IsInvalid
         {
             [SecurityCritical]
             get => handle == IntPtr.Zero;
         }
 
+        /// <inheritdoc/>
         public override int GetHashCode( ) => DangerousGetHandle( ).GetHashCode( );
 
+        /// <inheritdoc/>
         public override bool Equals( object obj ) => Equals( obj as LlvmObjectRef );
 
+        /// <inheritdoc/>
         public bool Equals( LlvmObjectRef other ) => ( !( other is null ) ) && ( handle == other.handle );
 
         public static bool operator ==( LlvmObjectRef lhs, LlvmObjectRef rhs )
@@ -44,6 +48,10 @@ namespace Llvm.NET.Interop
 
         public static bool operator !=( LlvmObjectRef lhs, LlvmObjectRef rhs ) => !( lhs == rhs );
 
+        /// <summary>Initializes a new instance of the <see cref="LlvmObjectRef"/> class with the specified value</summary>
+        /// <param name="ownsHandle">true to reliably let System.Runtime.InteropServices.SafeHandle release the handle during
+        /// the finalization phase; otherwise, false (not recommended).
+        /// </param>
         [ReliabilityContract( Consistency.WillNotCorruptState, Cer.MayFail )]
         protected LlvmObjectRef( bool ownsHandle )
             : base( IntPtr.Zero, ownsHandle )

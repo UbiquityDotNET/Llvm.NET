@@ -2,12 +2,12 @@
 // Copyright (c) .NET Foundation. All rights reserved.
 // </copyright>
 
-using static Llvm.NET.Transforms.Sanitizers.NativeMethods;
+using static Llvm.NET.Interop.NativeMethods;
 
 namespace Llvm.NET.Transforms
 {
     /// <summary>LLVM Sanitizer passes</summary>
-    public static partial class Sanitizers
+    public static class Sanitizers
     {
         /// <summary>Adds an Address Sanitizer Function pass</summary>
         /// <param name="passManager">Pass manager to add the pass to</param>

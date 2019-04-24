@@ -28,7 +28,7 @@ namespace Llvm.NET.Interop
          */
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
-        public static extern void LLVMInstallFatalErrorHandler( global::Llvm.NET.Interop.LLVMFatalErrorHandler Handler );
+        public static extern void LLVMInstallFatalErrorHandler( LLVMFatalErrorHandler Handler );
 
         /**
          * Reset the fatal error handler. This resets LLVM's fatal error handling

@@ -3,6 +3,7 @@
 // </copyright>
 
 using System.Collections.Generic;
+using Llvm.NET.Interop;
 
 namespace Llvm.NET.Values
 {
@@ -15,17 +16,17 @@ namespace Llvm.NET.Values
     public enum FunctionAttributeIndex
     {
         /// <summary>The attribute applies to the function itself</summary>
-        Function = -1,
+        Function = LLVMAttributeIndex.LLVMAttributeFunctionIndex,
 
         /// <summary>The attribute applies to the return type of the function</summary>
-        ReturnType = 0,
+        ReturnType = LLVMAttributeIndex.LLVMAttributeReturnIndex,
 
         /// <summary>The attribute applies to the first parameter of the function</summary>
         /// <remarks>
-        /// Additional parameters can identified by simply adding an integer value to
+        /// Additional parameters are identified by simply adding an integer value to
         /// this value. (i.e. FunctionAttributeIndex.Parameter0 + 1 )
         /// </remarks>
-        Parameter0 = 1
+        Parameter0 = ReturnType +1
     }
 
     /// <summary>Interface for raw attribute access</summary>

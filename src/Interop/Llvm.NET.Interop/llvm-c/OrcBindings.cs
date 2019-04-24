@@ -15,10 +15,10 @@ using System.Security;
 namespace Llvm.NET.Interop
 {
     [UnmanagedFunctionPointer( global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
-    public delegate ulong LLVMOrcSymbolResolverFn( [MarshalAs( UnmanagedType.LPStr )]string Name, global::System.IntPtr LookupCtx );
+    public delegate System.UInt64 LLVMOrcSymbolResolverFn( [MarshalAs( UnmanagedType.LPStr )]string Name, global::System.IntPtr LookupCtx );
 
     [UnmanagedFunctionPointer( global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
-    public delegate ulong LLVMOrcLazyCompileCallbackFn( LLVMOrcJITStackRef JITStack, global::System.IntPtr CallbackCtx );
+    public delegate System.UInt64 LLVMOrcLazyCompileCallbackFn( LLVMOrcJITStackRef JITStack, global::System.IntPtr CallbackCtx );
 
     public static partial class NativeMethods
     {
@@ -66,35 +66,35 @@ namespace Llvm.NET.Interop
          */
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
-        public static extern LLVMErrorRef LLVMOrcCreateLazyCompileCallback( LLVMOrcJITStackRef JITStack, out ulong RetAddr, global::Llvm.NET.Interop.LLVMOrcLazyCompileCallbackFn Callback, global::System.IntPtr CallbackCtx );
+        public static extern LLVMErrorRef LLVMOrcCreateLazyCompileCallback( LLVMOrcJITStackRef JITStack, out System.UInt64 RetAddr, LLVMOrcLazyCompileCallbackFn Callback, global::System.IntPtr CallbackCtx );
 
         /**
          * Create a named indirect call stub.
          */
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
-        public static extern LLVMErrorRef LLVMOrcCreateIndirectStub( LLVMOrcJITStackRef JITStack, [MarshalAs( UnmanagedType.LPStr )]string StubName, ulong InitAddr );
+        public static extern LLVMErrorRef LLVMOrcCreateIndirectStub( LLVMOrcJITStackRef JITStack, [MarshalAs( UnmanagedType.LPStr )]string StubName, System.UInt64 InitAddr );
 
         /**
          * Set the pointer for the given indirect stub.
          */
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
-        public static extern LLVMErrorRef LLVMOrcSetIndirectStubPointer( LLVMOrcJITStackRef JITStack, [MarshalAs( UnmanagedType.LPStr )]string StubName, ulong NewAddr );
+        public static extern LLVMErrorRef LLVMOrcSetIndirectStubPointer( LLVMOrcJITStackRef JITStack, [MarshalAs( UnmanagedType.LPStr )]string StubName, System.UInt64 NewAddr );
 
         /**
          * Add module to be eagerly compiled.
          */
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
-        public static extern LLVMErrorRef LLVMOrcAddEagerlyCompiledIR( LLVMOrcJITStackRef JITStack, out ulong RetHandle, LLVMModuleRef Mod, global::Llvm.NET.Interop.LLVMOrcSymbolResolverFn SymbolResolver, global::System.IntPtr SymbolResolverCtx );
+        public static extern LLVMErrorRef LLVMOrcAddEagerlyCompiledIR( LLVMOrcJITStackRef JITStack, out System.UInt64 RetHandle, LLVMModuleRef Mod, LLVMOrcSymbolResolverFn SymbolResolver, global::System.IntPtr SymbolResolverCtx );
 
         /**
          * Add module to be lazily compiled one function at a time.
          */
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
-        public static extern LLVMErrorRef LLVMOrcAddLazilyCompiledIR( LLVMOrcJITStackRef JITStack, out ulong RetHandle, LLVMModuleRef Mod, global::Llvm.NET.Interop.LLVMOrcSymbolResolverFn SymbolResolver, global::System.IntPtr SymbolResolverCtx );
+        public static extern LLVMErrorRef LLVMOrcAddLazilyCompiledIR( LLVMOrcJITStackRef JITStack, out System.UInt64 RetHandle, LLVMModuleRef Mod, LLVMOrcSymbolResolverFn SymbolResolver, global::System.IntPtr SymbolResolverCtx );
 
         /**
          * Add an object file.
@@ -106,7 +106,7 @@ namespace Llvm.NET.Interop
          */
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
-        public static extern LLVMErrorRef LLVMOrcAddObjectFile( LLVMOrcJITStackRef JITStack, out ulong RetHandle, LLVMMemoryBufferRef Obj, global::Llvm.NET.Interop.LLVMOrcSymbolResolverFn SymbolResolver, global::System.IntPtr SymbolResolverCtx );
+        public static extern LLVMErrorRef LLVMOrcAddObjectFile( LLVMOrcJITStackRef JITStack, out System.UInt64 RetHandle, LLVMMemoryBufferRef Obj, LLVMOrcSymbolResolverFn SymbolResolver, global::System.IntPtr SymbolResolverCtx );
 
         /**
          * Remove a module set from the JIT.
@@ -116,14 +116,14 @@ namespace Llvm.NET.Interop
          */
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
-        public static extern LLVMErrorRef LLVMOrcRemoveModule( LLVMOrcJITStackRef JITStack, ulong H );
+        public static extern LLVMErrorRef LLVMOrcRemoveModule( LLVMOrcJITStackRef JITStack, System.UInt64 H );
 
         /**
          * Get symbol address from JIT instance.
          */
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
-        public static extern LLVMErrorRef LLVMOrcGetSymbolAddress( LLVMOrcJITStackRef JITStack, out ulong RetAddr, [MarshalAs( UnmanagedType.LPStr )]string SymbolName );
+        public static extern LLVMErrorRef LLVMOrcGetSymbolAddress( LLVMOrcJITStackRef JITStack, out System.UInt64 RetAddr, [MarshalAs( UnmanagedType.LPStr )]string SymbolName );
 
         /**
          * Get symbol address from JIT instance, searching only the specified
@@ -131,7 +131,7 @@ namespace Llvm.NET.Interop
          */
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
-        public static extern LLVMErrorRef LLVMOrcGetSymbolAddressIn( LLVMOrcJITStackRef JITStack, out ulong RetAddr, ulong H, [MarshalAs( UnmanagedType.LPStr )]string SymbolName );
+        public static extern LLVMErrorRef LLVMOrcGetSymbolAddressIn( LLVMOrcJITStackRef JITStack, out System.UInt64 RetAddr, System.UInt64 H, [MarshalAs( UnmanagedType.LPStr )]string SymbolName );
 
         /**
          * Register a JIT Event Listener.

@@ -32,6 +32,8 @@ namespace Llvm.NET.Interop
 
         public static bool operator !=( LLVMJITEventListenerRef lhs, LLVMJITEventListenerRef rhs ) => !( lhs == rhs );
 
+        public static LLVMJITEventListenerRef Zero { get; } = new LLVMJITEventListenerRef(IntPtr.Zero);
+
         internal LLVMJITEventListenerRef( IntPtr p )
         {
             Handle = p;

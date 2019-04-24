@@ -16,7 +16,7 @@
       </PackageReference>
     </ItemGroup>
     <!--
-    HACKFIX: CppSharp uses baseclass.contrib.nuget.output, which among it's many issues requires packages.config.
+    HACKFIX: CppSharp uses baseclass.contrib.nuget.output, which, among it's many issues, requires packages.config.
     After analyzing that package it's basically a VERY convoluted means of copying the output folder from the
     packages root location into the output folder of this project. So, just do the copy using standard project items...
     -->

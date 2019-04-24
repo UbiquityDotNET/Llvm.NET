@@ -4,10 +4,10 @@
 
 using System;
 using System.Diagnostics;
-using Llvm.NET.Native;
+using Llvm.NET.Interop;
 using Llvm.NET.Values;
 
-using static Llvm.NET.Types.TypeRef.NativeMethods;
+using static Llvm.NET.Interop.NativeMethods;
 
 namespace Llvm.NET.Types
 {

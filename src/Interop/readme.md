@@ -47,11 +47,9 @@ the Llvm.NET.Interop project so that the generator is tested on every full autom
 ### General requirements
 There are some general steps that are required to successfully build the interop NuGet package and a couple
 of different ways to go about completing them.
- 1. Build the native libraries for all supported runtimes (OS+arch)
-    * Doing this first ensures that the later code generation phase starts from known good buildable headers
- 2. Build LlvmBindingsGenerator
- 3. Run LlvmBindingsGenerator with to parse the llvm headers and the extended headers from the native LibLLVM
- and generate the interop code into the Llvm.NET.Interop project directory.
+ 1. Build LlvmBindingsGenerator
+ 2. Run LlvmBindingsGenerator with to parse the llvm headers and the extended headers from the native LibLLVM
+ 3. Build the native libraries for all supported runtimes (OS+arch)
  4. Build Llvm.NET.Interop to create the interop assembly and, ultimately create the final NuGet package with
 the native and manged code bundled together.
 
@@ -67,10 +65,12 @@ While it is possible to use the PowerShell script as part of the development of 
 it is generally easier to use the Interop.sln. The solution contains projects for the native libraries, the
 bindings generator and the managed interop. Using the solution requires that you manually build/run the projects.
 
-1. Build LibLLVM project
-2. Build LlvmBindingsGenerator project
-3. Run LlvmBindingsGenerator (via command line or debugger launch) with the location of the LLVM headers, the
+1. Build LlvmBindingsGenerator project
+2. Run LlvmBindingsGenerator (via command line or debugger launch) with the location of the LLVM headers, the
 LibLLVM headers, and the output location of generated code for the Llvm.NET.Interop project.
+     1. This, generates C# interop source files ADN also generates the native C++ EXPORTS.DEF for the LibLLVM library
+and therefore, must run before building either of the other libraries.
+3. Build LibLLVM project
 4. Build the Llvm.NET.Interop project.
 
 

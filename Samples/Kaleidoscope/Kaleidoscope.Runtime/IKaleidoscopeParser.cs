@@ -50,7 +50,7 @@ namespace Kaleidoscope.Runtime
         /// </remarks>
         IAstNode Parse( TextReader reader );
 
-        /// <summary>Parse from a sequnce of input text</summary>
+        /// <summary>Parse from a sequence of input text</summary>
         /// <param name="inputSource">Input sequence of lines</param>
         /// <param name="errorHandler">Error handler for any <see cref="CodeGeneratorException"/>s generated during parsing</param>
         /// <returns>Observable sequence of AST nodes</returns>

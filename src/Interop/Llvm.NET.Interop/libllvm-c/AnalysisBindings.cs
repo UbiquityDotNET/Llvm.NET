@@ -18,8 +18,7 @@ namespace Llvm.NET.Interop
     {
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
-        [return: MarshalAs( UnmanagedType.Bool )]
-        public static extern bool LLVMVerifyFunctionEx( LLVMValueRef Fn, global::Llvm.NET.Interop.LLVMVerifierFailureAction Action, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( DisposeMessageMarshaler ) )]out string OutMessages );
+        public static extern LLVMStatus LLVMVerifyFunctionEx( LLVMValueRef Fn, LLVMVerifierFailureAction Action, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( DisposeMessageMarshaler ) )]out string OutMessages );
 
     }
 }

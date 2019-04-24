@@ -19,35 +19,35 @@ namespace Llvm.NET.Interop
     {
         [MarshalAs( UnmanagedType.LPStr )]
         string Str;
-        uint Len;
+        System.UInt32 Len;
     }
 
     [StructLayout( LayoutKind.Sequential )]
     public struct LLVMOptRemarkDebugLoc
     {
-        global::Llvm.NET.Interop.LLVMOptRemarkStringRef SourceFile;
-        uint SourceLineNumber;
-        uint SourceColumnNumber;
+        LLVMOptRemarkStringRef SourceFile;
+        System.UInt32 SourceLineNumber;
+        System.UInt32 SourceColumnNumber;
     }
 
     [StructLayout( LayoutKind.Sequential )]
     public struct LLVMOptRemarkArg
     {
-        global::Llvm.NET.Interop.LLVMOptRemarkStringRef Key;
-        global::Llvm.NET.Interop.LLVMOptRemarkStringRef Value;
-        global::Llvm.NET.Interop.LLVMOptRemarkDebugLoc DebugLoc;
+        LLVMOptRemarkStringRef Key;
+        LLVMOptRemarkStringRef Value;
+        LLVMOptRemarkDebugLoc DebugLoc;
     }
 
     [StructLayout( LayoutKind.Sequential )]
     public struct LLVMOptRemarkEntry
     {
-        global::Llvm.NET.Interop.LLVMOptRemarkStringRef RemarkType;
-        global::Llvm.NET.Interop.LLVMOptRemarkStringRef PassName;
-        global::Llvm.NET.Interop.LLVMOptRemarkStringRef RemarkName;
-        global::Llvm.NET.Interop.LLVMOptRemarkStringRef FunctionName;
-        global::Llvm.NET.Interop.LLVMOptRemarkDebugLoc DebugLoc;
-        uint Hotness;
-        uint NumArgs;
+        LLVMOptRemarkStringRef RemarkType;
+        LLVMOptRemarkStringRef PassName;
+        LLVMOptRemarkStringRef RemarkName;
+        LLVMOptRemarkStringRef FunctionName;
+        LLVMOptRemarkDebugLoc DebugLoc;
+        System.UInt32 Hotness;
+        System.UInt32 NumArgs;
         global::Llvm.NET.Interop.LLVMOptRemarkArg Args;
     }
 
@@ -66,7 +66,7 @@ namespace Llvm.NET.Interop
          */
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
-        public static extern LLVMOptRemarkParserRef LLVMOptRemarkParserCreate( global::System.IntPtr Buf, ulong Size );
+        public static extern LLVMOptRemarkParserRef LLVMOptRemarkParserCreate( global::System.IntPtr Buf, System.UInt64 Size );
 
         /**
          * Returns the next remark in the file.
@@ -117,9 +117,9 @@ namespace Llvm.NET.Interop
          *
          * \since OPT_REMARKS_API_VERSION=0
          */
+        [return: MarshalAs( UnmanagedType.Bool )]
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
-        [return: MarshalAs( UnmanagedType.Bool )]
         public static extern bool LLVMOptRemarkParserHasError( LLVMOptRemarkParserRef Parser );
 
         /**

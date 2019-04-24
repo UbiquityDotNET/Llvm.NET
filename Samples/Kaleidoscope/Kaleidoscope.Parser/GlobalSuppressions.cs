@@ -21,3 +21,4 @@ using System.Diagnostics.CodeAnalysis;
 [assembly: SuppressMessage( "Microsoft.Naming", "CA1715", Justification = "Generated code", MessageId = "Result", Scope = "type", Target = "Kaleidoscope.Grammar.KaleidoscopeBaseVisitor`1" )]
 [assembly: SuppressMessage( "Microsoft.Naming", "CA1715", Justification = "Generated code", MessageId = "Result", Scope = "type", Target = "Kaleidoscope.Grammar.IKaleidoscopeVisitor`1" )]
 [assembly: SuppressMessage( "Microsoft.Naming", "CA1708", Justification = "Generated code" )]
+[assembly: SuppressMessage( "Globalization", "CA1303:Do not pass literals as localized parameters", Justification = "Sample Application" )]

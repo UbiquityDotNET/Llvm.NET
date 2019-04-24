@@ -562,14 +562,14 @@ namespace Llvm.NET.Interop
          */
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
-        public static extern void LLVMContextSetDiagnosticHandler( LLVMContextRef C, global::Llvm.NET.Interop.LLVMDiagnosticHandler Handler, global::System.IntPtr DiagnosticContext );
+        public static extern void LLVMContextSetDiagnosticHandler( LLVMContextRef C, LLVMDiagnosticHandler Handler, global::System.IntPtr DiagnosticContext );
 
         /**
          * Get the diagnostic handler of this context.
          */
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
-        public static extern global::Llvm.NET.Interop.LLVMDiagnosticHandler LLVMContextGetDiagnosticHandler( LLVMContextRef C );
+        public static extern LLVMDiagnosticHandler LLVMContextGetDiagnosticHandler( LLVMContextRef C );
 
         /**
          * Get the diagnostic context of this context.
@@ -585,16 +585,16 @@ namespace Llvm.NET.Interop
          */
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
-        public static extern void LLVMContextSetYieldCallback( LLVMContextRef C, global::Llvm.NET.Interop.LLVMYieldCallback Callback, global::System.IntPtr OpaqueHandle );
+        public static extern void LLVMContextSetYieldCallback( LLVMContextRef C, LLVMYieldCallback Callback, global::System.IntPtr OpaqueHandle );
 
         /**
          * Retrieve whether the given context is set to discard all value names.
          *
          * @see LLVMContext::shouldDiscardValueNames()
          */
+        [return: MarshalAs( UnmanagedType.Bool )]
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
-        [return: MarshalAs( UnmanagedType.Bool )]
         public static extern bool LLVMContextShouldDiscardValueNames( LLVMContextRef C );
 
         /**
@@ -627,7 +627,7 @@ namespace Llvm.NET.Interop
          */
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
-        public static extern global::Llvm.NET.Interop.LLVMDiagnosticSeverity LLVMGetDiagInfoSeverity( LLVMDiagnosticInfoRef DI );
+        public static extern LLVMDiagnosticSeverity LLVMGetDiagInfoSeverity( LLVMDiagnosticInfoRef DI );
 
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
@@ -650,7 +650,7 @@ namespace Llvm.NET.Interop
          */
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
-        public static extern uint LLVMGetEnumAttributeKindForName( [MarshalAs( UnmanagedType.LPStr )]string Name, ulong SLen );
+        public static extern uint LLVMGetEnumAttributeKindForName( [MarshalAs( UnmanagedType.LPStr )]string Name, size_t SLen );
 
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
@@ -661,7 +661,7 @@ namespace Llvm.NET.Interop
          */
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
-        public static extern LLVMAttributeRef LLVMCreateEnumAttribute( LLVMContextRef C, uint KindID, ulong Val );
+        public static extern LLVMAttributeRef LLVMCreateEnumAttribute( LLVMContextRef C, uint KindID, System.UInt64 Val );
 
         /**
          * Get the unique id corresponding to the enum attribute
@@ -676,7 +676,7 @@ namespace Llvm.NET.Interop
          */
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
-        public static extern ulong LLVMGetEnumAttributeValue( LLVMAttributeRef A );
+        public static extern System.UInt64 LLVMGetEnumAttributeValue( LLVMAttributeRef A );
 
         /**
          * Create a string attribute.
@@ -704,14 +704,14 @@ namespace Llvm.NET.Interop
         /**
          * Check for the different types of attributes.
          */
+        [return: MarshalAs( UnmanagedType.Bool )]
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
-        [return: MarshalAs( UnmanagedType.Bool )]
         public static extern bool LLVMIsEnumAttribute( LLVMAttributeRef A );
 
+        [return: MarshalAs( UnmanagedType.Bool )]
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
-        [return: MarshalAs( UnmanagedType.Bool )]
         public static extern bool LLVMIsStringAttribute( LLVMAttributeRef A );
 
         /**
@@ -765,7 +765,7 @@ namespace Llvm.NET.Interop
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         [return: MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( AliasStringMarshaler ) )]
-        public static extern string LLVMGetModuleIdentifier( LLVMModuleRef M, out ulong Len );
+        public static extern string LLVMGetModuleIdentifier( LLVMModuleRef M, out size_t Len );
 
         /**
          * Set the identifier of a module to a string Ident with length Len.
@@ -777,7 +777,7 @@ namespace Llvm.NET.Interop
          */
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
-        public static extern void LLVMSetModuleIdentifier( LLVMModuleRef M, [MarshalAs( UnmanagedType.LPStr )]string Ident, ulong Len );
+        public static extern void LLVMSetModuleIdentifier( LLVMModuleRef M, [MarshalAs( UnmanagedType.LPStr )]string Ident, size_t Len );
 
         /**
          * Obtain the module's original source file name.
@@ -790,7 +790,7 @@ namespace Llvm.NET.Interop
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         [return: MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( AliasStringMarshaler ) )]
-        public static extern string LLVMGetSourceFileName( LLVMModuleRef M, out ulong Len );
+        public static extern string LLVMGetSourceFileName( LLVMModuleRef M, out size_t Len );
 
         /**
          * Set the original source file name of a module to a string Name with length
@@ -803,7 +803,7 @@ namespace Llvm.NET.Interop
          */
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
-        public static extern void LLVMSetSourceFileName( LLVMModuleRef M, [MarshalAs( UnmanagedType.LPStr )]string Name, ulong Len );
+        public static extern void LLVMSetSourceFileName( LLVMModuleRef M, [MarshalAs( UnmanagedType.LPStr )]string Name, size_t Len );
 
         /**
          * Obtain the data layout for a module.
@@ -856,7 +856,7 @@ namespace Llvm.NET.Interop
          */
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
-        public static extern LLVMModuleFlagEntry LLVMCopyModuleFlagsMetadata( LLVMModuleRef M, out ulong Len );
+        public static extern LLVMModuleFlagEntry LLVMCopyModuleFlagsMetadata( LLVMModuleRef M, out size_t Len );
 
         /**
          * Returns the flag behavior for a module flag entry at a specific index.
@@ -865,7 +865,7 @@ namespace Llvm.NET.Interop
          */
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
-        public static extern global::Llvm.NET.Interop.LLVMModuleFlagBehavior LLVMModuleFlagEntriesGetFlagBehavior( LLVMModuleFlagEntry Entries, uint Index );
+        public static extern LLVMModuleFlagBehavior LLVMModuleFlagEntriesGetFlagBehavior( LLVMModuleFlagEntry Entries, uint Index );
 
         /**
          * Returns the key for a module flag entry at a specific index.
@@ -875,7 +875,7 @@ namespace Llvm.NET.Interop
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         [return: MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( AliasStringMarshaler ) )]
-        public static extern string LLVMModuleFlagEntriesGetKey( LLVMModuleFlagEntry Entries, uint Index, out ulong Len );
+        public static extern string LLVMModuleFlagEntriesGetKey( LLVMModuleFlagEntry Entries, uint Index, out size_t Len );
 
         /**
          * Returns the metadata for a module flag entry at a specific index.
@@ -894,7 +894,7 @@ namespace Llvm.NET.Interop
          */
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
-        public static extern LLVMMetadataRef LLVMGetModuleFlag( LLVMModuleRef M, [MarshalAs( UnmanagedType.LPStr )]string Key, ulong KeyLen );
+        public static extern LLVMMetadataRef LLVMGetModuleFlag( LLVMModuleRef M, [MarshalAs( UnmanagedType.LPStr )]string Key, size_t KeyLen );
 
         /**
          * Add a module-level flag to the module-level flags metadata if it doesn't
@@ -904,7 +904,7 @@ namespace Llvm.NET.Interop
          */
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
-        public static extern void LLVMAddModuleFlag( LLVMModuleRef M, global::Llvm.NET.Interop.LLVMModuleFlagBehavior Behavior, [MarshalAs( UnmanagedType.LPStr )]string Key, ulong KeyLen, LLVMMetadataRef Val );
+        public static extern void LLVMAddModuleFlag( LLVMModuleRef M, LLVMModuleFlagBehavior Behavior, [MarshalAs( UnmanagedType.LPStr )]string Key, size_t KeyLen, LLVMMetadataRef Val );
 
         /**
          * Dump a representation of a module to stderr.
@@ -944,7 +944,7 @@ namespace Llvm.NET.Interop
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         [return: MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( AliasStringMarshaler ) )]
-        public static extern string LLVMGetModuleInlineAsm( LLVMModuleRef M, out ulong Len );
+        public static extern string LLVMGetModuleInlineAsm( LLVMModuleRef M, out size_t Len );
 
         /**
          * Set inline assembly for a module.
@@ -953,7 +953,7 @@ namespace Llvm.NET.Interop
          */
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
-        public static extern void LLVMSetModuleInlineAsm2( LLVMModuleRef M, [MarshalAs( UnmanagedType.LPStr )]string Asm, ulong Len );
+        public static extern void LLVMSetModuleInlineAsm2( LLVMModuleRef M, [MarshalAs( UnmanagedType.LPStr )]string Asm, size_t Len );
 
         /**
          * Append inline assembly to a module.
@@ -962,7 +962,7 @@ namespace Llvm.NET.Interop
          */
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
-        public static extern void LLVMAppendModuleInlineAsm( LLVMModuleRef M, [MarshalAs( UnmanagedType.LPStr )]string Asm, ulong Len );
+        public static extern void LLVMAppendModuleInlineAsm( LLVMModuleRef M, [MarshalAs( UnmanagedType.LPStr )]string Asm, size_t Len );
 
         /**
          * Create the specified uniqued inline asm string.
@@ -971,7 +971,7 @@ namespace Llvm.NET.Interop
          */
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
-        public static extern LLVMValueRef LLVMGetInlineAsm( LLVMTypeRef Ty, [MarshalAs( UnmanagedType.LPStr )]string AsmString, ulong AsmStringSize, [MarshalAs( UnmanagedType.LPStr )]string Constraints, ulong ConstraintsSize, [MarshalAs( UnmanagedType.Bool )]bool HasSideEffects, [MarshalAs( UnmanagedType.Bool )]bool IsAlignStack, global::Llvm.NET.Interop.LLVMInlineAsmDialect Dialect );
+        public static extern LLVMValueRef LLVMGetInlineAsm( LLVMTypeRef Ty, [MarshalAs( UnmanagedType.LPStr )]string AsmString, size_t AsmStringSize, [MarshalAs( UnmanagedType.LPStr )]string Constraints, size_t ConstraintsSize, [MarshalAs( UnmanagedType.Bool )]bool HasSideEffects, [MarshalAs( UnmanagedType.Bool )]bool IsAlignStack, LLVMInlineAsmDialect Dialect );
 
         /**
          * Obtain the context to which this module is associated.
@@ -1035,7 +1035,7 @@ namespace Llvm.NET.Interop
          */
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
-        public static extern LLVMNamedMDNodeRef LLVMGetNamedMetadata( LLVMModuleRef M, [MarshalAs( UnmanagedType.LPStr )]string Name, ulong NameLen );
+        public static extern LLVMNamedMDNodeRef LLVMGetNamedMetadata( LLVMModuleRef M, [MarshalAs( UnmanagedType.LPStr )]string Name, size_t NameLen );
 
         /**
          * Retrieve a NamedMDNode with the given name, creating a new node if no such
@@ -1045,7 +1045,7 @@ namespace Llvm.NET.Interop
          */
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
-        public static extern LLVMNamedMDNodeRef LLVMGetOrInsertNamedMetadata( LLVMModuleRef M, [MarshalAs( UnmanagedType.LPStr )]string Name, ulong NameLen );
+        public static extern LLVMNamedMDNodeRef LLVMGetOrInsertNamedMetadata( LLVMModuleRef M, [MarshalAs( UnmanagedType.LPStr )]string Name, size_t NameLen );
 
         /**
          * Retrieve the name of a NamedMDNode.
@@ -1055,7 +1055,7 @@ namespace Llvm.NET.Interop
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         [return: MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( AliasStringMarshaler ) )]
-        public static extern string LLVMGetNamedMetadataName( LLVMNamedMDNodeRef NamedMD, out ulong NameLen );
+        public static extern string LLVMGetNamedMetadataName( LLVMNamedMDNodeRef NamedMD, out size_t NameLen );
 
         /**
          * Obtain the number of operands for named metadata in a module.
@@ -1079,7 +1079,7 @@ namespace Llvm.NET.Interop
          */
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
-        public static extern void LLVMGetNamedMetadataOperands( LLVMModuleRef M, [MarshalAs( UnmanagedType.LPStr )]string Name, LLVMValueRef Dest );
+        public static extern void LLVMGetNamedMetadataOperands( LLVMModuleRef M, [MarshalAs( UnmanagedType.LPStr )]string Name, out LLVMValueRef Dest );
 
         /**
          * Add an operand to named metadata.
@@ -1204,7 +1204,7 @@ namespace Llvm.NET.Interop
          */
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
-        public static extern global::Llvm.NET.Interop.LLVMTypeKind LLVMGetTypeKind( LLVMTypeRef Ty );
+        public static extern LLVMTypeKind LLVMGetTypeKind( LLVMTypeRef Ty );
 
         /**
          * Whether the type has a known size.
@@ -1213,9 +1213,9 @@ namespace Llvm.NET.Interop
          *
          * @see llvm::Type::isSized()
          */
+        [return: MarshalAs( UnmanagedType.Bool )]
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
-        [return: MarshalAs( UnmanagedType.Bool )]
         public static extern bool LLVMTypeIsSized( LLVMTypeRef Ty );
 
         /**
@@ -1394,14 +1394,14 @@ namespace Llvm.NET.Interop
          */
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
-        public static extern LLVMTypeRef LLVMFunctionType( LLVMTypeRef ReturnType, LLVMTypeRef ParamTypes, uint ParamCount, [MarshalAs( UnmanagedType.Bool )]bool IsVarArg );
+        public static extern LLVMTypeRef LLVMFunctionType( LLVMTypeRef ReturnType, out LLVMTypeRef ParamTypes, uint ParamCount, [MarshalAs( UnmanagedType.Bool )]bool IsVarArg );
 
         /**
          * Returns whether a function type is variadic.
          */
+        [return: MarshalAs( UnmanagedType.Bool )]
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
-        [return: MarshalAs( UnmanagedType.Bool )]
         public static extern bool LLVMIsFunctionVarArg( LLVMTypeRef FunctionTy );
 
         /**
@@ -1431,7 +1431,7 @@ namespace Llvm.NET.Interop
          */
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
-        public static extern void LLVMGetParamTypes( LLVMTypeRef FunctionTy, LLVMTypeRef Dest );
+        public static extern void LLVMGetParamTypes( LLVMTypeRef FunctionTy, out LLVMTypeRef Dest );
 
         /**
          * Create a new structure type in a context.
@@ -1443,7 +1443,7 @@ namespace Llvm.NET.Interop
          */
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
-        public static extern LLVMTypeRef LLVMStructTypeInContext( LLVMContextRef C, LLVMTypeRef ElementTypes, uint ElementCount, [MarshalAs( UnmanagedType.Bool )]bool Packed );
+        public static extern LLVMTypeRef LLVMStructTypeInContext( LLVMContextRef C, out LLVMTypeRef ElementTypes, uint ElementCount, [MarshalAs( UnmanagedType.Bool )]bool Packed );
 
         /**
          * Create a new structure type in the global context.
@@ -1452,7 +1452,7 @@ namespace Llvm.NET.Interop
          */
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
-        public static extern LLVMTypeRef LLVMStructType( LLVMTypeRef ElementTypes, uint ElementCount, [MarshalAs( UnmanagedType.Bool )]bool Packed );
+        public static extern LLVMTypeRef LLVMStructType( out LLVMTypeRef ElementTypes, uint ElementCount, [MarshalAs( UnmanagedType.Bool )]bool Packed );
 
         /**
          * Create an empty structure in a context having a specified name.
@@ -1480,7 +1480,7 @@ namespace Llvm.NET.Interop
          */
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
-        public static extern void LLVMStructSetBody( LLVMTypeRef StructTy, LLVMTypeRef ElementTypes, uint ElementCount, [MarshalAs( UnmanagedType.Bool )]bool Packed );
+        public static extern void LLVMStructSetBody( LLVMTypeRef StructTy, out LLVMTypeRef ElementTypes, uint ElementCount, [MarshalAs( UnmanagedType.Bool )]bool Packed );
 
         /**
          * Get the number of elements defined inside the structure.
@@ -1503,7 +1503,7 @@ namespace Llvm.NET.Interop
          */
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
-        public static extern void LLVMGetStructElementTypes( LLVMTypeRef StructTy, LLVMTypeRef Dest );
+        public static extern void LLVMGetStructElementTypes( LLVMTypeRef StructTy, out LLVMTypeRef Dest );
 
         /**
          * Get the type of the element at a given index in the structure.
@@ -1519,9 +1519,9 @@ namespace Llvm.NET.Interop
          *
          * @see llvm::StructType::isPacked()
          */
+        [return: MarshalAs( UnmanagedType.Bool )]
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
-        [return: MarshalAs( UnmanagedType.Bool )]
         public static extern bool LLVMIsPackedStruct( LLVMTypeRef StructTy );
 
         /**
@@ -1529,9 +1529,9 @@ namespace Llvm.NET.Interop
          *
          * @see llvm::StructType::isOpaque()
          */
+        [return: MarshalAs( UnmanagedType.Bool )]
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
-        [return: MarshalAs( UnmanagedType.Bool )]
         public static extern bool LLVMIsOpaqueStruct( LLVMTypeRef StructTy );
 
         /**
@@ -1539,9 +1539,9 @@ namespace Llvm.NET.Interop
          *
          * @see llvm::StructType::isLiteral()
          */
+        [return: MarshalAs( UnmanagedType.Bool )]
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
-        [return: MarshalAs( UnmanagedType.Bool )]
         public static extern bool LLVMIsLiteralStruct( LLVMTypeRef StructTy );
 
         /**
@@ -1562,7 +1562,7 @@ namespace Llvm.NET.Interop
          */
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
-        public static extern void LLVMGetSubtypes( LLVMTypeRef Tp, LLVMTypeRef Arr );
+        public static extern void LLVMGetSubtypes( LLVMTypeRef Tp, out LLVMTypeRef Arr );
 
         /**
          *  Return the number of types in the derived type.
@@ -1710,7 +1710,7 @@ namespace Llvm.NET.Interop
          */
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
-        public static extern global::Llvm.NET.Interop.LLVMValueKind LLVMGetValueKind( LLVMValueRef Val );
+        public static extern LLVMValueKind LLVMGetValueKind( LLVMValueRef Val );
 
         /**
          * Obtain the string name of a value.
@@ -1720,7 +1720,7 @@ namespace Llvm.NET.Interop
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         [return: MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( AliasStringMarshaler ) )]
-        public static extern string LLVMGetValueName2( LLVMValueRef Val, out ulong Length );
+        public static extern string LLVMGetValueName2( LLVMValueRef Val, out size_t Length );
 
         /**
          * Set the string name of a value.
@@ -1729,7 +1729,7 @@ namespace Llvm.NET.Interop
          */
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
-        public static extern void LLVMSetValueName2( LLVMValueRef Val, [MarshalAs( UnmanagedType.LPStr )]string Name, ulong NameLen );
+        public static extern void LLVMSetValueName2( LLVMValueRef Val, [MarshalAs( UnmanagedType.LPStr )]string Name, size_t NameLen );
 
         /**
          * Dump a representation of a value to stderr.
@@ -1763,17 +1763,17 @@ namespace Llvm.NET.Interop
         /**
          * Determine whether the specified value instance is constant.
          */
+        [return: MarshalAs( UnmanagedType.Bool )]
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
-        [return: MarshalAs( UnmanagedType.Bool )]
         public static extern bool LLVMIsConstant( LLVMValueRef Val );
 
         /**
          * Determine whether a value instance is undefined.
          */
+        [return: MarshalAs( UnmanagedType.Bool )]
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
-        [return: MarshalAs( UnmanagedType.Bool )]
         public static extern bool LLVMIsUndef( LLVMValueRef Val );
 
         [SuppressUnmanagedCodeSecurity]
@@ -2219,9 +2219,9 @@ namespace Llvm.NET.Interop
          *
          * @see llvm::Constant::isNullValue()
          */
+        [return: MarshalAs( UnmanagedType.Bool )]
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
-        [return: MarshalAs( UnmanagedType.Bool )]
         public static extern bool LLVMIsNull( LLVMValueRef Val );
 
         /**
@@ -2267,7 +2267,7 @@ namespace Llvm.NET.Interop
          */
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
-        public static extern LLVMValueRef LLVMConstIntOfString( LLVMTypeRef IntTy, [MarshalAs( UnmanagedType.LPStr )]string Text, byte Radix );
+        public static extern LLVMValueRef LLVMConstIntOfString( LLVMTypeRef IntTy, [MarshalAs( UnmanagedType.LPStr )]string Text, System.Byte Radix );
 
         /**
          * Obtain a constant value for an integer parsed from a string with
@@ -2277,7 +2277,7 @@ namespace Llvm.NET.Interop
          */
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
-        public static extern LLVMValueRef LLVMConstIntOfStringAndSize( LLVMTypeRef IntTy, [MarshalAs( UnmanagedType.LPStr )]string Text, uint SLen, byte Radix );
+        public static extern LLVMValueRef LLVMConstIntOfStringAndSize( LLVMTypeRef IntTy, [MarshalAs( UnmanagedType.LPStr )]string Text, uint SLen, System.Byte Radix );
 
         /**
          * Obtain a constant value referring to a double floating point value.
@@ -2329,7 +2329,7 @@ namespace Llvm.NET.Interop
          */
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
-        public static extern double LLVMConstRealGetDouble( LLVMValueRef ConstantVal, out int losesInfo );
+        public static extern double LLVMConstRealGetDouble( LLVMValueRef ConstantVal, out bool losesInfo );
 
         /**
          * Create a ConstantDataSequential and initialize it with a string.
@@ -2358,9 +2358,9 @@ namespace Llvm.NET.Interop
          *
          * @see ConstantDataSequential::getAsString()
          */
+        [return: MarshalAs( UnmanagedType.Bool )]
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
-        [return: MarshalAs( UnmanagedType.Bool )]
         public static extern bool LLVMIsConstantString( LLVMValueRef c );
 
         /**
@@ -2371,7 +2371,7 @@ namespace Llvm.NET.Interop
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         [return: MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( AliasStringMarshaler ) )]
-        public static extern string LLVMGetAsString( LLVMValueRef c, out ulong Length );
+        public static extern string LLVMGetAsString( LLVMValueRef c, out size_t Length );
 
         /**
          * Create an anonymous ConstantStruct with the specified values.
@@ -2380,7 +2380,7 @@ namespace Llvm.NET.Interop
          */
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
-        public static extern LLVMValueRef LLVMConstStructInContext( LLVMContextRef C, LLVMValueRef ConstantVals, uint Count, [MarshalAs( UnmanagedType.Bool )]bool Packed );
+        public static extern LLVMValueRef LLVMConstStructInContext( LLVMContextRef C, out LLVMValueRef ConstantVals, uint Count, [MarshalAs( UnmanagedType.Bool )]bool Packed );
 
         /**
          * Create a ConstantStruct in the global Context.
@@ -2392,7 +2392,7 @@ namespace Llvm.NET.Interop
          */
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
-        public static extern LLVMValueRef LLVMConstStruct( LLVMValueRef ConstantVals, uint Count, [MarshalAs( UnmanagedType.Bool )]bool Packed );
+        public static extern LLVMValueRef LLVMConstStruct( out LLVMValueRef ConstantVals, uint Count, [MarshalAs( UnmanagedType.Bool )]bool Packed );
 
         /**
          * Create a ConstantArray from values.
@@ -2401,7 +2401,7 @@ namespace Llvm.NET.Interop
          */
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
-        public static extern LLVMValueRef LLVMConstArray( LLVMTypeRef ElementTy, LLVMValueRef ConstantVals, uint Length );
+        public static extern LLVMValueRef LLVMConstArray( LLVMTypeRef ElementTy, out LLVMValueRef ConstantVals, uint Length );
 
         /**
          * Create a non-anonymous ConstantStruct from values.
@@ -2410,7 +2410,7 @@ namespace Llvm.NET.Interop
          */
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
-        public static extern LLVMValueRef LLVMConstNamedStruct( LLVMTypeRef StructTy, LLVMValueRef ConstantVals, uint Count );
+        public static extern LLVMValueRef LLVMConstNamedStruct( LLVMTypeRef StructTy, out LLVMValueRef ConstantVals, uint Count );
 
         /**
          * Get an element at specified index as a constant.
@@ -2428,7 +2428,7 @@ namespace Llvm.NET.Interop
          */
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
-        public static extern LLVMValueRef LLVMConstVector( LLVMValueRef ScalarConstantVals, uint Size );
+        public static extern LLVMValueRef LLVMConstVector( out LLVMValueRef ScalarConstantVals, uint Size );
 
         /**
          * @defgroup LLVMCCoreValueConstantExpressions Constant Expressions
@@ -2441,7 +2441,7 @@ namespace Llvm.NET.Interop
          */
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
-        public static extern global::Llvm.NET.Interop.LLVMOpcode LLVMGetConstOpcode( LLVMValueRef ConstantVal );
+        public static extern LLVMOpcode LLVMGetConstOpcode( LLVMValueRef ConstantVal );
 
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
@@ -2565,11 +2565,11 @@ namespace Llvm.NET.Interop
 
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
-        public static extern LLVMValueRef LLVMConstICmp( global::Llvm.NET.Interop.LLVMIntPredicate Predicate, LLVMValueRef LHSConstant, LLVMValueRef RHSConstant );
+        public static extern LLVMValueRef LLVMConstICmp( LLVMIntPredicate Predicate, LLVMValueRef LHSConstant, LLVMValueRef RHSConstant );
 
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
-        public static extern LLVMValueRef LLVMConstFCmp( global::Llvm.NET.Interop.LLVMRealPredicate Predicate, LLVMValueRef LHSConstant, LLVMValueRef RHSConstant );
+        public static extern LLVMValueRef LLVMConstFCmp( LLVMRealPredicate Predicate, LLVMValueRef LHSConstant, LLVMValueRef RHSConstant );
 
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
@@ -2585,11 +2585,11 @@ namespace Llvm.NET.Interop
 
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
-        public static extern LLVMValueRef LLVMConstGEP( LLVMValueRef ConstantVal, LLVMValueRef ConstantIndices, uint NumIndices );
+        public static extern LLVMValueRef LLVMConstGEP( LLVMValueRef ConstantVal, out LLVMValueRef ConstantIndices, uint NumIndices );
 
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
-        public static extern LLVMValueRef LLVMConstInBoundsGEP( LLVMValueRef ConstantVal, LLVMValueRef ConstantIndices, uint NumIndices );
+        public static extern LLVMValueRef LLVMConstInBoundsGEP( LLVMValueRef ConstantVal, out LLVMValueRef ConstantIndices, uint NumIndices );
 
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
@@ -2709,18 +2709,18 @@ namespace Llvm.NET.Interop
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern LLVMModuleRef LLVMGetGlobalParent( LLVMValueRef Global );
 
+        [return: MarshalAs( UnmanagedType.Bool )]
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
-        [return: MarshalAs( UnmanagedType.Bool )]
         public static extern bool LLVMIsDeclaration( LLVMValueRef Global );
 
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
-        public static extern global::Llvm.NET.Interop.LLVMLinkage LLVMGetLinkage( LLVMValueRef Global );
+        public static extern LLVMLinkage LLVMGetLinkage( LLVMValueRef Global );
 
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
-        public static extern void LLVMSetLinkage( LLVMValueRef Global, global::Llvm.NET.Interop.LLVMLinkage Linkage );
+        public static extern void LLVMSetLinkage( LLVMValueRef Global, LLVMLinkage Linkage );
 
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
@@ -2733,27 +2733,27 @@ namespace Llvm.NET.Interop
 
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
-        public static extern global::Llvm.NET.Interop.LLVMVisibility LLVMGetVisibility( LLVMValueRef Global );
+        public static extern LLVMVisibility LLVMGetVisibility( LLVMValueRef Global );
 
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
-        public static extern void LLVMSetVisibility( LLVMValueRef Global, global::Llvm.NET.Interop.LLVMVisibility Viz );
+        public static extern void LLVMSetVisibility( LLVMValueRef Global, LLVMVisibility Viz );
 
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
-        public static extern global::Llvm.NET.Interop.LLVMDLLStorageClass LLVMGetDLLStorageClass( LLVMValueRef Global );
+        public static extern LLVMDLLStorageClass LLVMGetDLLStorageClass( LLVMValueRef Global );
 
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
-        public static extern void LLVMSetDLLStorageClass( LLVMValueRef Global, global::Llvm.NET.Interop.LLVMDLLStorageClass Class );
+        public static extern void LLVMSetDLLStorageClass( LLVMValueRef Global, LLVMDLLStorageClass Class );
 
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
-        public static extern global::Llvm.NET.Interop.LLVMUnnamedAddr LLVMGetUnnamedAddress( LLVMValueRef Global );
+        public static extern LLVMUnnamedAddr LLVMGetUnnamedAddress( LLVMValueRef Global );
 
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
-        public static extern void LLVMSetUnnamedAddress( LLVMValueRef Global, global::Llvm.NET.Interop.LLVMUnnamedAddr UnnamedAddr );
+        public static extern void LLVMSetUnnamedAddress( LLVMValueRef Global, LLVMUnnamedAddr UnnamedAddr );
 
         /**
          * Returns the "value type" of a global value.  This differs from the formal
@@ -2824,7 +2824,7 @@ namespace Llvm.NET.Interop
          */
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
-        public static extern LLVMValueMetadataEntry LLVMGlobalCopyAllMetadata( LLVMValueRef Value, out ulong NumEntries );
+        public static extern LLVMValueMetadataEntry LLVMGlobalCopyAllMetadata( LLVMValueRef Value, out size_t NumEntries );
 
         /**
          * Returns the kind of a value metadata entry at a specific index.
@@ -2890,18 +2890,18 @@ namespace Llvm.NET.Interop
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern void LLVMSetInitializer( LLVMValueRef GlobalVar, LLVMValueRef ConstantVal );
 
+        [return: MarshalAs( UnmanagedType.Bool )]
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
-        [return: MarshalAs( UnmanagedType.Bool )]
         public static extern bool LLVMIsThreadLocal( LLVMValueRef GlobalVar );
 
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern void LLVMSetThreadLocal( LLVMValueRef GlobalVar, [MarshalAs( UnmanagedType.Bool )]bool IsThreadLocal );
 
+        [return: MarshalAs( UnmanagedType.Bool )]
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
-        [return: MarshalAs( UnmanagedType.Bool )]
         public static extern bool LLVMIsGlobalConstant( LLVMValueRef GlobalVar );
 
         [SuppressUnmanagedCodeSecurity]
@@ -2910,15 +2910,15 @@ namespace Llvm.NET.Interop
 
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
-        public static extern global::Llvm.NET.Interop.LLVMThreadLocalMode LLVMGetThreadLocalMode( LLVMValueRef GlobalVar );
+        public static extern LLVMThreadLocalMode LLVMGetThreadLocalMode( LLVMValueRef GlobalVar );
 
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
-        public static extern void LLVMSetThreadLocalMode( LLVMValueRef GlobalVar, global::Llvm.NET.Interop.LLVMThreadLocalMode Mode );
+        public static extern void LLVMSetThreadLocalMode( LLVMValueRef GlobalVar, LLVMThreadLocalMode Mode );
 
-        [SuppressUnmanagedCodeSecurity]
-        [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         [return: MarshalAs( UnmanagedType.Bool )]
+        [SuppressUnmanagedCodeSecurity]
+        [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern bool LLVMIsExternallyInitialized( LLVMValueRef GlobalVar );
 
         [SuppressUnmanagedCodeSecurity]
@@ -2947,7 +2947,7 @@ namespace Llvm.NET.Interop
          */
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
-        public static extern LLVMValueRef LLVMGetNamedGlobalAlias( LLVMModuleRef M, [MarshalAs( UnmanagedType.LPStr )]string Name, ulong NameLen );
+        public static extern LLVMValueRef LLVMGetNamedGlobalAlias( LLVMModuleRef M, [MarshalAs( UnmanagedType.LPStr )]string Name, size_t NameLen );
 
         /**
          * Obtain an iterator to the first GlobalAlias in a Module.
@@ -3015,9 +3015,9 @@ namespace Llvm.NET.Interop
          *
          * @see llvm::Function::hasPersonalityFn()
          */
+        [return: MarshalAs( UnmanagedType.Bool )]
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
-        [return: MarshalAs( UnmanagedType.Bool )]
         public static extern bool LLVMHasPersonalityFn( LLVMValueRef Fn );
 
         /**
@@ -3055,7 +3055,7 @@ namespace Llvm.NET.Interop
          */
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
-        public static extern LLVMValueRef LLVMGetIntrinsicDeclaration( LLVMModuleRef Mod, uint ID, LLVMTypeRef ParamTypes, ulong ParamCount );
+        public static extern LLVMValueRef LLVMGetIntrinsicDeclaration( LLVMModuleRef Mod, uint ID, out LLVMTypeRef ParamTypes, size_t ParamCount );
 
         /**
          * Retrieves the type of an intrinsic.  For overloaded intrinsics, parameter
@@ -3065,7 +3065,7 @@ namespace Llvm.NET.Interop
          */
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
-        public static extern LLVMTypeRef LLVMIntrinsicGetType( LLVMContextRef Ctx, uint ID, LLVMTypeRef ParamTypes, ulong ParamCount );
+        public static extern LLVMTypeRef LLVMIntrinsicGetType( LLVMContextRef Ctx, uint ID, out LLVMTypeRef ParamTypes, size_t ParamCount );
 
         /**
          * Retrieves the name of an intrinsic.
@@ -3075,7 +3075,7 @@ namespace Llvm.NET.Interop
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         [return: MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( AliasStringMarshaler ) )]
-        public static extern string LLVMIntrinsicGetName( uint ID, out ulong NameLength );
+        public static extern string LLVMIntrinsicGetName( uint ID, out size_t NameLength );
 
         /**
          * Copies the name of an overloaded intrinsic identified by a given list of
@@ -3089,16 +3089,16 @@ namespace Llvm.NET.Interop
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         [return: MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( AliasStringMarshaler ) )]
-        public static extern string LLVMIntrinsicCopyOverloadedName( uint ID, LLVMTypeRef ParamTypes, ulong ParamCount, out ulong NameLength );
+        public static extern string LLVMIntrinsicCopyOverloadedName( uint ID, out LLVMTypeRef ParamTypes, size_t ParamCount, out size_t NameLength );
 
         /**
          * Obtain if the intrinsic identified by the given ID is overloaded.
          *
          * @see llvm::Intrinsic::isOverloaded()
          */
+        [return: MarshalAs( UnmanagedType.Bool )]
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
-        [return: MarshalAs( UnmanagedType.Bool )]
         public static extern bool LLVMIntrinsicIsOverloaded( uint ID );
 
         /**
@@ -3151,31 +3151,31 @@ namespace Llvm.NET.Interop
          */
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
-        public static extern void LLVMAddAttributeAtIndex( LLVMValueRef F, uint Idx, LLVMAttributeRef A );
+        public static extern void LLVMAddAttributeAtIndex( LLVMValueRef F, LLVMAttributeIndex Idx, LLVMAttributeRef A );
 
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
-        public static extern uint LLVMGetAttributeCountAtIndex( LLVMValueRef F, uint Idx );
+        public static extern uint LLVMGetAttributeCountAtIndex( LLVMValueRef F, LLVMAttributeIndex Idx );
 
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
-        public static extern void LLVMGetAttributesAtIndex( LLVMValueRef F, uint Idx, LLVMAttributeRef Attrs );
+        public static extern void LLVMGetAttributesAtIndex( LLVMValueRef F, LLVMAttributeIndex Idx, out LLVMAttributeRef Attrs );
 
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
-        public static extern LLVMAttributeRef LLVMGetEnumAttributeAtIndex( LLVMValueRef F, uint Idx, uint KindID );
+        public static extern LLVMAttributeRef LLVMGetEnumAttributeAtIndex( LLVMValueRef F, LLVMAttributeIndex Idx, uint KindID );
 
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
-        public static extern LLVMAttributeRef LLVMGetStringAttributeAtIndex( LLVMValueRef F, uint Idx, [MarshalAs( UnmanagedType.LPStr )]string K, uint KLen );
+        public static extern LLVMAttributeRef LLVMGetStringAttributeAtIndex( LLVMValueRef F, LLVMAttributeIndex Idx, [MarshalAs( UnmanagedType.LPStr )]string K, uint KLen );
 
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
-        public static extern void LLVMRemoveEnumAttributeAtIndex( LLVMValueRef F, uint Idx, uint KindID );
+        public static extern void LLVMRemoveEnumAttributeAtIndex( LLVMValueRef F, LLVMAttributeIndex Idx, uint KindID );
 
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
-        public static extern void LLVMRemoveStringAttributeAtIndex( LLVMValueRef F, uint Idx, [MarshalAs( UnmanagedType.LPStr )]string K, uint KLen );
+        public static extern void LLVMRemoveStringAttributeAtIndex( LLVMValueRef F, LLVMAttributeIndex Idx, [MarshalAs( UnmanagedType.LPStr )]string K, uint KLen );
 
         /**
          * Add a target-dependent attribute to a function
@@ -3207,7 +3207,7 @@ namespace Llvm.NET.Interop
          */
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
-        public static extern void LLVMGetParams( LLVMValueRef Fn, LLVMValueRef Params );
+        public static extern void LLVMGetParams( LLVMValueRef Fn, out LLVMValueRef Params );
 
         /**
          * Obtain the parameter at the specified index.
@@ -3308,14 +3308,14 @@ namespace Llvm.NET.Interop
          */
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
-        public static extern LLVMValueRef LLVMMDNodeInContext( LLVMContextRef C, LLVMValueRef Vals, uint Count );
+        public static extern LLVMValueRef LLVMMDNodeInContext( LLVMContextRef C, out LLVMValueRef Vals, uint Count );
 
         /**
          * Obtain a MDNode value from the global context.
          */
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
-        public static extern LLVMValueRef LLVMMDNode( LLVMValueRef Vals, uint Count );
+        public static extern LLVMValueRef LLVMMDNode( out LLVMValueRef Vals, uint Count );
 
         /**
          * Obtain a Metadata as a Value.
@@ -3366,7 +3366,7 @@ namespace Llvm.NET.Interop
          */
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
-        public static extern void LLVMGetMDNodeOperands( LLVMValueRef V, LLVMValueRef Dest );
+        public static extern void LLVMGetMDNodeOperands( LLVMValueRef V, out LLVMValueRef Dest );
 
         /**
          * Convert a basic block instance to a value type.
@@ -3378,9 +3378,9 @@ namespace Llvm.NET.Interop
         /**
          * Determine whether an LLVMValueRef is itself a basic block.
          */
+        [return: MarshalAs( UnmanagedType.Bool )]
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
-        [return: MarshalAs( UnmanagedType.Bool )]
         public static extern bool LLVMValueIsBasicBlock( LLVMValueRef Val );
 
         /**
@@ -3440,7 +3440,7 @@ namespace Llvm.NET.Interop
          */
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
-        public static extern void LLVMGetBasicBlocks( LLVMValueRef Fn, LLVMBasicBlockRef BasicBlocks );
+        public static extern void LLVMGetBasicBlocks( LLVMValueRef Fn, out LLVMBasicBlockRef BasicBlocks );
 
         /**
          * Obtain the first basic block in a function.
@@ -3626,7 +3626,7 @@ namespace Llvm.NET.Interop
          */
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
-        public static extern LLVMValueMetadataEntry LLVMInstructionGetAllMetadataOtherThanDebugLoc( LLVMValueRef Instr, out ulong NumEntries );
+        public static extern LLVMValueMetadataEntry LLVMInstructionGetAllMetadataOtherThanDebugLoc( LLVMValueRef Instr, out size_t NumEntries );
 
         /**
          * Obtain the basic block to which an instruction belongs.
@@ -3690,7 +3690,7 @@ namespace Llvm.NET.Interop
          */
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
-        public static extern global::Llvm.NET.Interop.LLVMOpcode LLVMGetInstructionOpcode( LLVMValueRef Inst );
+        public static extern LLVMOpcode LLVMGetInstructionOpcode( LLVMValueRef Inst );
 
         /**
          * Obtain the predicate of an instruction.
@@ -3702,7 +3702,7 @@ namespace Llvm.NET.Interop
          */
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
-        public static extern global::Llvm.NET.Interop.LLVMIntPredicate LLVMGetICmpPredicate( LLVMValueRef Inst );
+        public static extern LLVMIntPredicate LLVMGetICmpPredicate( LLVMValueRef Inst );
 
         /**
          * Obtain the float predicate of an instruction.
@@ -3714,7 +3714,7 @@ namespace Llvm.NET.Interop
          */
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
-        public static extern global::Llvm.NET.Interop.LLVMRealPredicate LLVMGetFCmpPredicate( LLVMValueRef Inst );
+        public static extern LLVMRealPredicate LLVMGetFCmpPredicate( LLVMValueRef Inst );
 
         /**
          * Create a copy of 'this' instruction that is identical in all ways
@@ -3784,31 +3784,31 @@ namespace Llvm.NET.Interop
 
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
-        public static extern void LLVMAddCallSiteAttribute( LLVMValueRef C, uint Idx, LLVMAttributeRef A );
+        public static extern void LLVMAddCallSiteAttribute( LLVMValueRef C, LLVMAttributeIndex Idx, LLVMAttributeRef A );
 
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
-        public static extern uint LLVMGetCallSiteAttributeCount( LLVMValueRef C, uint Idx );
+        public static extern uint LLVMGetCallSiteAttributeCount( LLVMValueRef C, LLVMAttributeIndex Idx );
 
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
-        public static extern void LLVMGetCallSiteAttributes( LLVMValueRef C, uint Idx, LLVMAttributeRef Attrs );
+        public static extern void LLVMGetCallSiteAttributes( LLVMValueRef C, LLVMAttributeIndex Idx, out LLVMAttributeRef Attrs );
 
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
-        public static extern LLVMAttributeRef LLVMGetCallSiteEnumAttribute( LLVMValueRef C, uint Idx, uint KindID );
+        public static extern LLVMAttributeRef LLVMGetCallSiteEnumAttribute( LLVMValueRef C, LLVMAttributeIndex Idx, uint KindID );
 
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
-        public static extern LLVMAttributeRef LLVMGetCallSiteStringAttribute( LLVMValueRef C, uint Idx, [MarshalAs( UnmanagedType.LPStr )]string K, uint KLen );
+        public static extern LLVMAttributeRef LLVMGetCallSiteStringAttribute( LLVMValueRef C, LLVMAttributeIndex Idx, [MarshalAs( UnmanagedType.LPStr )]string K, uint KLen );
 
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
-        public static extern void LLVMRemoveCallSiteEnumAttribute( LLVMValueRef C, uint Idx, uint KindID );
+        public static extern void LLVMRemoveCallSiteEnumAttribute( LLVMValueRef C, LLVMAttributeIndex Idx, uint KindID );
 
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
-        public static extern void LLVMRemoveCallSiteStringAttribute( LLVMValueRef C, uint Idx, [MarshalAs( UnmanagedType.LPStr )]string K, uint KLen );
+        public static extern void LLVMRemoveCallSiteStringAttribute( LLVMValueRef C, LLVMAttributeIndex Idx, [MarshalAs( UnmanagedType.LPStr )]string K, uint KLen );
 
         /**
          * Obtain the function type called by this instruction.
@@ -3839,9 +3839,9 @@ namespace Llvm.NET.Interop
          *
          * @see llvm::CallInst::isTailCall()
          */
+        [return: MarshalAs( UnmanagedType.Bool )]
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
-        [return: MarshalAs( UnmanagedType.Bool )]
         public static extern bool LLVMIsTailCall( LLVMValueRef CallInst );
 
         /**
@@ -3939,9 +3939,9 @@ namespace Llvm.NET.Interop
          *
          * @see llvm::BranchInst::isConditional
          */
+        [return: MarshalAs( UnmanagedType.Bool )]
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
-        [return: MarshalAs( UnmanagedType.Bool )]
         public static extern bool LLVMIsConditional( LLVMValueRef Branch );
 
         /**
@@ -3987,9 +3987,9 @@ namespace Llvm.NET.Interop
         /**
          * Check whether the given GEP instruction is inbounds.
          */
+        [return: MarshalAs( UnmanagedType.Bool )]
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
-        [return: MarshalAs( UnmanagedType.Bool )]
         public static extern bool LLVMIsInBounds( LLVMValueRef GEP );
 
         /**
@@ -4004,7 +4004,7 @@ namespace Llvm.NET.Interop
          */
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
-        public static extern void LLVMAddIncoming( LLVMValueRef PhiNode, LLVMValueRef IncomingValues, LLVMBasicBlockRef IncomingBlocks, uint Count );
+        public static extern void LLVMAddIncoming( LLVMValueRef PhiNode, out LLVMValueRef IncomingValues, out LLVMBasicBlockRef IncomingBlocks, uint Count );
 
         /**
          * Obtain the number of incoming basic blocks to a PHI node.
@@ -4108,7 +4108,7 @@ namespace Llvm.NET.Interop
 
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
-        public static extern LLVMValueRef LLVMBuildAggregateRet( LLVMBuilderRef _0, LLVMValueRef RetVals, uint N );
+        public static extern LLVMValueRef LLVMBuildAggregateRet( LLVMBuilderRef _0, out LLVMValueRef RetVals, uint N );
 
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
@@ -4128,7 +4128,7 @@ namespace Llvm.NET.Interop
 
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
-        public static extern LLVMValueRef LLVMBuildInvoke2( LLVMBuilderRef _0, LLVMTypeRef Ty, LLVMValueRef Fn, LLVMValueRef Args, uint NumArgs, LLVMBasicBlockRef Then, LLVMBasicBlockRef Catch, [MarshalAs( UnmanagedType.LPStr )]string Name );
+        public static extern LLVMValueRef LLVMBuildInvoke2( LLVMBuilderRef _0, LLVMTypeRef Ty, LLVMValueRef Fn, out LLVMValueRef Args, uint NumArgs, LLVMBasicBlockRef Then, LLVMBasicBlockRef Catch, [MarshalAs( UnmanagedType.LPStr )]string Name );
 
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
@@ -4152,11 +4152,11 @@ namespace Llvm.NET.Interop
 
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
-        public static extern LLVMValueRef LLVMBuildCatchPad( LLVMBuilderRef B, LLVMValueRef ParentPad, LLVMValueRef Args, uint NumArgs, [MarshalAs( UnmanagedType.LPStr )]string Name );
+        public static extern LLVMValueRef LLVMBuildCatchPad( LLVMBuilderRef B, LLVMValueRef ParentPad, out LLVMValueRef Args, uint NumArgs, [MarshalAs( UnmanagedType.LPStr )]string Name );
 
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
-        public static extern LLVMValueRef LLVMBuildCleanupPad( LLVMBuilderRef B, LLVMValueRef ParentPad, LLVMValueRef Args, uint NumArgs, [MarshalAs( UnmanagedType.LPStr )]string Name );
+        public static extern LLVMValueRef LLVMBuildCleanupPad( LLVMBuilderRef B, LLVMValueRef ParentPad, out LLVMValueRef Args, uint NumArgs, [MarshalAs( UnmanagedType.LPStr )]string Name );
 
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
@@ -4182,9 +4182,9 @@ namespace Llvm.NET.Interop
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern void LLVMAddClause( LLVMValueRef LandingPad, LLVMValueRef ClauseVal );
 
+        [return: MarshalAs( UnmanagedType.Bool )]
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
-        [return: MarshalAs( UnmanagedType.Bool )]
         public static extern bool LLVMIsCleanup( LLVMValueRef LandingPad );
 
         [SuppressUnmanagedCodeSecurity]
@@ -4212,7 +4212,7 @@ namespace Llvm.NET.Interop
          */
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
-        public static extern void LLVMGetHandlers( LLVMValueRef CatchSwitch, LLVMBasicBlockRef Handlers );
+        public static extern void LLVMGetHandlers( LLVMValueRef CatchSwitch, out LLVMBasicBlockRef Handlers );
 
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
@@ -4350,7 +4350,7 @@ namespace Llvm.NET.Interop
 
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
-        public static extern LLVMValueRef LLVMBuildBinOp( LLVMBuilderRef B, global::Llvm.NET.Interop.LLVMOpcode Op, LLVMValueRef LHS, LLVMValueRef RHS, [MarshalAs( UnmanagedType.LPStr )]string Name );
+        public static extern LLVMValueRef LLVMBuildBinOp( LLVMBuilderRef B, LLVMOpcode Op, LLVMValueRef LHS, LLVMValueRef RHS, [MarshalAs( UnmanagedType.LPStr )]string Name );
 
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
@@ -4430,11 +4430,11 @@ namespace Llvm.NET.Interop
 
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
-        public static extern LLVMValueRef LLVMBuildGEP2( LLVMBuilderRef B, LLVMTypeRef Ty, LLVMValueRef Pointer, LLVMValueRef Indices, uint NumIndices, [MarshalAs( UnmanagedType.LPStr )]string Name );
+        public static extern LLVMValueRef LLVMBuildGEP2( LLVMBuilderRef B, LLVMTypeRef Ty, LLVMValueRef Pointer, out LLVMValueRef Indices, uint NumIndices, [MarshalAs( UnmanagedType.LPStr )]string Name );
 
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
-        public static extern LLVMValueRef LLVMBuildInBoundsGEP2( LLVMBuilderRef B, LLVMTypeRef Ty, LLVMValueRef Pointer, LLVMValueRef Indices, uint NumIndices, [MarshalAs( UnmanagedType.LPStr )]string Name );
+        public static extern LLVMValueRef LLVMBuildInBoundsGEP2( LLVMBuilderRef B, LLVMTypeRef Ty, LLVMValueRef Pointer, out LLVMValueRef Indices, uint NumIndices, [MarshalAs( UnmanagedType.LPStr )]string Name );
 
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
@@ -4448,9 +4448,9 @@ namespace Llvm.NET.Interop
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern LLVMValueRef LLVMBuildGlobalStringPtr( LLVMBuilderRef B, [MarshalAs( UnmanagedType.LPStr )]string Str, [MarshalAs( UnmanagedType.LPStr )]string Name );
 
+        [return: MarshalAs( UnmanagedType.Bool )]
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
-        [return: MarshalAs( UnmanagedType.Bool )]
         public static extern bool LLVMGetVolatile( LLVMValueRef MemoryAccessInst );
 
         [SuppressUnmanagedCodeSecurity]
@@ -4459,11 +4459,11 @@ namespace Llvm.NET.Interop
 
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
-        public static extern global::Llvm.NET.Interop.LLVMAtomicOrdering LLVMGetOrdering( LLVMValueRef MemoryAccessInst );
+        public static extern LLVMAtomicOrdering LLVMGetOrdering( LLVMValueRef MemoryAccessInst );
 
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
-        public static extern void LLVMSetOrdering( LLVMValueRef MemoryAccessInst, global::Llvm.NET.Interop.LLVMAtomicOrdering Ordering );
+        public static extern void LLVMSetOrdering( LLVMValueRef MemoryAccessInst, LLVMAtomicOrdering Ordering );
 
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
@@ -4531,7 +4531,7 @@ namespace Llvm.NET.Interop
 
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
-        public static extern LLVMValueRef LLVMBuildCast( LLVMBuilderRef B, global::Llvm.NET.Interop.LLVMOpcode Op, LLVMValueRef Val, LLVMTypeRef DestTy, [MarshalAs( UnmanagedType.LPStr )]string Name );
+        public static extern LLVMValueRef LLVMBuildCast( LLVMBuilderRef B, LLVMOpcode Op, LLVMValueRef Val, LLVMTypeRef DestTy, [MarshalAs( UnmanagedType.LPStr )]string Name );
 
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
@@ -4547,11 +4547,11 @@ namespace Llvm.NET.Interop
 
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
-        public static extern LLVMValueRef LLVMBuildICmp( LLVMBuilderRef _0, global::Llvm.NET.Interop.LLVMIntPredicate Op, LLVMValueRef LHS, LLVMValueRef RHS, [MarshalAs( UnmanagedType.LPStr )]string Name );
+        public static extern LLVMValueRef LLVMBuildICmp( LLVMBuilderRef _0, LLVMIntPredicate Op, LLVMValueRef LHS, LLVMValueRef RHS, [MarshalAs( UnmanagedType.LPStr )]string Name );
 
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
-        public static extern LLVMValueRef LLVMBuildFCmp( LLVMBuilderRef _0, global::Llvm.NET.Interop.LLVMRealPredicate Op, LLVMValueRef LHS, LLVMValueRef RHS, [MarshalAs( UnmanagedType.LPStr )]string Name );
+        public static extern LLVMValueRef LLVMBuildFCmp( LLVMBuilderRef _0, LLVMRealPredicate Op, LLVMValueRef LHS, LLVMValueRef RHS, [MarshalAs( UnmanagedType.LPStr )]string Name );
 
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
@@ -4559,7 +4559,7 @@ namespace Llvm.NET.Interop
 
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
-        public static extern LLVMValueRef LLVMBuildCall2( LLVMBuilderRef _0, LLVMTypeRef _1, LLVMValueRef Fn, LLVMValueRef Args, uint NumArgs, [MarshalAs( UnmanagedType.LPStr )]string Name );
+        public static extern LLVMValueRef LLVMBuildCall2( LLVMBuilderRef _0, LLVMTypeRef _1, LLVMValueRef Fn, out LLVMValueRef Args, uint NumArgs, [MarshalAs( UnmanagedType.LPStr )]string Name );
 
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
@@ -4603,19 +4603,19 @@ namespace Llvm.NET.Interop
 
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
-        public static extern LLVMValueRef LLVMBuildFence( LLVMBuilderRef B, global::Llvm.NET.Interop.LLVMAtomicOrdering ordering, [MarshalAs( UnmanagedType.Bool )]bool singleThread, [MarshalAs( UnmanagedType.LPStr )]string Name );
+        public static extern LLVMValueRef LLVMBuildFence( LLVMBuilderRef B, LLVMAtomicOrdering ordering, [MarshalAs( UnmanagedType.Bool )]bool singleThread, [MarshalAs( UnmanagedType.LPStr )]string Name );
 
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
-        public static extern LLVMValueRef LLVMBuildAtomicRMW( LLVMBuilderRef B, global::Llvm.NET.Interop.LLVMAtomicRMWBinOp op, LLVMValueRef PTR, LLVMValueRef Val, global::Llvm.NET.Interop.LLVMAtomicOrdering ordering, [MarshalAs( UnmanagedType.Bool )]bool singleThread );
+        public static extern LLVMValueRef LLVMBuildAtomicRMW( LLVMBuilderRef B, LLVMAtomicRMWBinOp op, LLVMValueRef PTR, LLVMValueRef Val, LLVMAtomicOrdering ordering, [MarshalAs( UnmanagedType.Bool )]bool singleThread );
 
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
-        public static extern LLVMValueRef LLVMBuildAtomicCmpXchg( LLVMBuilderRef B, LLVMValueRef Ptr, LLVMValueRef Cmp, LLVMValueRef New, global::Llvm.NET.Interop.LLVMAtomicOrdering SuccessOrdering, global::Llvm.NET.Interop.LLVMAtomicOrdering FailureOrdering, [MarshalAs( UnmanagedType.Bool )]bool SingleThread );
+        public static extern LLVMValueRef LLVMBuildAtomicCmpXchg( LLVMBuilderRef B, LLVMValueRef Ptr, LLVMValueRef Cmp, LLVMValueRef New, LLVMAtomicOrdering SuccessOrdering, LLVMAtomicOrdering FailureOrdering, [MarshalAs( UnmanagedType.Bool )]bool SingleThread );
 
-        [SuppressUnmanagedCodeSecurity]
-        [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         [return: MarshalAs( UnmanagedType.Bool )]
+        [SuppressUnmanagedCodeSecurity]
+        [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern bool LLVMIsAtomicSingleThread( LLVMValueRef AtomicInst );
 
         [SuppressUnmanagedCodeSecurity]
@@ -4624,19 +4624,19 @@ namespace Llvm.NET.Interop
 
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
-        public static extern global::Llvm.NET.Interop.LLVMAtomicOrdering LLVMGetCmpXchgSuccessOrdering( LLVMValueRef CmpXchgInst );
+        public static extern LLVMAtomicOrdering LLVMGetCmpXchgSuccessOrdering( LLVMValueRef CmpXchgInst );
 
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
-        public static extern void LLVMSetCmpXchgSuccessOrdering( LLVMValueRef CmpXchgInst, global::Llvm.NET.Interop.LLVMAtomicOrdering Ordering );
+        public static extern void LLVMSetCmpXchgSuccessOrdering( LLVMValueRef CmpXchgInst, LLVMAtomicOrdering Ordering );
 
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
-        public static extern global::Llvm.NET.Interop.LLVMAtomicOrdering LLVMGetCmpXchgFailureOrdering( LLVMValueRef CmpXchgInst );
+        public static extern LLVMAtomicOrdering LLVMGetCmpXchgFailureOrdering( LLVMValueRef CmpXchgInst );
 
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
-        public static extern void LLVMSetCmpXchgFailureOrdering( LLVMValueRef CmpXchgInst, global::Llvm.NET.Interop.LLVMAtomicOrdering Ordering );
+        public static extern void LLVMSetCmpXchgFailureOrdering( LLVMValueRef CmpXchgInst, LLVMAtomicOrdering Ordering );
 
         /**
          * Changes the type of M so it can be passed to FunctionPassManagers and the
@@ -4651,23 +4651,23 @@ namespace Llvm.NET.Interop
          *
          * @{
          */
-        [SuppressUnmanagedCodeSecurity]
-        [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         [return: MarshalAs( UnmanagedType.Bool )]
-        public static extern bool LLVMCreateMemoryBufferWithContentsOfFile( [MarshalAs( UnmanagedType.LPStr )]string Path, LLVMMemoryBufferRef OutMemBuf, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( DisposeMessageMarshaler ) )]out string OutMessage );
-
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
+        public static extern bool LLVMCreateMemoryBufferWithContentsOfFile( [MarshalAs( UnmanagedType.LPStr )]string Path, out LLVMMemoryBufferRef OutMemBuf, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( DisposeMessageMarshaler ) )]out string OutMessage );
+
         [return: MarshalAs( UnmanagedType.Bool )]
-        public static extern bool LLVMCreateMemoryBufferWithSTDIN( LLVMMemoryBufferRef OutMemBuf, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( DisposeMessageMarshaler ) )]out string OutMessage );
+        [SuppressUnmanagedCodeSecurity]
+        [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
+        public static extern bool LLVMCreateMemoryBufferWithSTDIN( out LLVMMemoryBufferRef OutMemBuf, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( DisposeMessageMarshaler ) )]out string OutMessage );
 
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
-        public static extern LLVMMemoryBufferRef LLVMCreateMemoryBufferWithMemoryRange( [MarshalAs( UnmanagedType.LPStr )]string InputData, ulong InputDataLength, [MarshalAs( UnmanagedType.LPStr )]string BufferName, [MarshalAs( UnmanagedType.Bool )]bool RequiresNullTerminator );
+        public static extern LLVMMemoryBufferRef LLVMCreateMemoryBufferWithMemoryRange( [MarshalAs( UnmanagedType.LPStr )]string InputData, size_t InputDataLength, [MarshalAs( UnmanagedType.LPStr )]string BufferName, [MarshalAs( UnmanagedType.Bool )]bool RequiresNullTerminator );
 
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
-        public static extern LLVMMemoryBufferRef LLVMCreateMemoryBufferWithMemoryRangeCopy( [MarshalAs( UnmanagedType.LPStr )]string InputData, ulong InputDataLength, [MarshalAs( UnmanagedType.LPStr )]string BufferName );
+        public static extern LLVMMemoryBufferRef LLVMCreateMemoryBufferWithMemoryRangeCopy( [MarshalAs( UnmanagedType.LPStr )]string InputData, size_t InputDataLength, [MarshalAs( UnmanagedType.LPStr )]string BufferName );
 
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
@@ -4676,7 +4676,7 @@ namespace Llvm.NET.Interop
 
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
-        public static extern ulong LLVMGetBufferSize( LLVMMemoryBufferRef MemBuf );
+        public static extern size_t LLVMGetBufferSize( LLVMMemoryBufferRef MemBuf );
 
         /** Return the global pass registry, for use with initialization functions.
             @see llvm::PassRegistry::getPassRegistry */
@@ -4703,41 +4703,41 @@ namespace Llvm.NET.Interop
             passes scheduled in the pass manager. Returns 1 if any of the passes
             modified the module, 0 otherwise.
             @see llvm::PassManager::run(Module&) */
+        [return: MarshalAs( UnmanagedType.Bool )]
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
-        [return: MarshalAs( UnmanagedType.Bool )]
         public static extern bool LLVMRunPassManager( LLVMPassManagerRef PM, LLVMModuleRef M );
 
         /** Initializes all of the function passes scheduled in the function pass
             manager. Returns 1 if any of the passes modified the module, 0 otherwise.
             @see llvm::FunctionPassManager::doInitialization */
+        [return: MarshalAs( UnmanagedType.Bool )]
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
-        [return: MarshalAs( UnmanagedType.Bool )]
         public static extern bool LLVMInitializeFunctionPassManager( LLVMPassManagerRef FPM );
 
         /** Executes all of the function passes scheduled in the function pass manager
             on the provided function. Returns 1 if any of the passes modified the
             function, false otherwise.
             @see llvm::FunctionPassManager::run(Function&) */
+        [return: MarshalAs( UnmanagedType.Bool )]
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
-        [return: MarshalAs( UnmanagedType.Bool )]
         public static extern bool LLVMRunFunctionPassManager( LLVMPassManagerRef FPM, LLVMValueRef F );
 
         /** Finalizes all of the function passes scheduled in the function pass
             manager. Returns 1 if any of the passes modified the module, 0 otherwise.
             @see llvm::FunctionPassManager::doFinalization */
+        [return: MarshalAs( UnmanagedType.Bool )]
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
-        [return: MarshalAs( UnmanagedType.Bool )]
         public static extern bool LLVMFinalizeFunctionPassManager( LLVMPassManagerRef FPM );
 
         /** Check whether LLVM is executing in thread-safe mode or not.
             @see llvm::llvm_is_multithreaded */
+        [return: MarshalAs( UnmanagedType.Bool )]
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
-        [return: MarshalAs( UnmanagedType.Bool )]
         public static extern bool LLVMIsMultithreaded(  );
 
     }

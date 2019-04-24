@@ -2,7 +2,7 @@
 // Copyright (c) .NET Foundation. All rights reserved.
 // </copyright>
 
-using static Llvm.NET.Transforms.InterproceduralTransforms.NativeMethods;
+using static Llvm.NET.Interop.NativeMethods;
 
 namespace Llvm.NET.Transforms
 {

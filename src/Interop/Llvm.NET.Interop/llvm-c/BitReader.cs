@@ -22,33 +22,33 @@ namespace Llvm.NET.Interop
          *
          * @{
          */
-        [SuppressUnmanagedCodeSecurity]
-        [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         [return: MarshalAs( UnmanagedType.Bool )]
-        public static extern bool LLVMParseBitcode( LLVMMemoryBufferRef MemBuf, LLVMModuleRef OutModule, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( DisposeMessageMarshaler ) )]out string OutMessage );
+        [SuppressUnmanagedCodeSecurity]
+        [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
+        public static extern bool LLVMParseBitcode( LLVMMemoryBufferRef MemBuf, out LLVMModuleRef OutModule, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( DisposeMessageMarshaler ) )]out string OutMessage );
 
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
-        public static extern LLVMStatus LLVMParseBitcode2( LLVMMemoryBufferRef MemBuf, LLVMModuleRef OutModule );
+        public static extern LLVMStatus LLVMParseBitcode2( LLVMMemoryBufferRef MemBuf, out LLVMModuleRef OutModule );
 
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
-        public static extern LLVMStatus LLVMParseBitcodeInContext2( LLVMContextRef ContextRef, LLVMMemoryBufferRef MemBuf, LLVMModuleRef OutModule );
+        public static extern LLVMStatus LLVMParseBitcodeInContext2( LLVMContextRef ContextRef, LLVMMemoryBufferRef MemBuf, out LLVMModuleRef OutModule );
 
         /** Reads a module from the specified path, returning via the OutMP parameter a
          * module provider which performs lazy deserialization. Returns 0 on success. */
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
-        public static extern LLVMStatus LLVMGetBitcodeModuleInContext2( LLVMContextRef ContextRef, LLVMMemoryBufferRef MemBuf, LLVMModuleRef OutM );
+        public static extern LLVMStatus LLVMGetBitcodeModuleInContext2( LLVMContextRef ContextRef, LLVMMemoryBufferRef MemBuf, out LLVMModuleRef OutM );
 
-        [SuppressUnmanagedCodeSecurity]
-        [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         [return: MarshalAs( UnmanagedType.Bool )]
-        public static extern bool LLVMGetBitcodeModule( LLVMMemoryBufferRef MemBuf, LLVMModuleRef OutM, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( DisposeMessageMarshaler ) )]out string OutMessage );
+        [SuppressUnmanagedCodeSecurity]
+        [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
+        public static extern bool LLVMGetBitcodeModule( LLVMMemoryBufferRef MemBuf, out LLVMModuleRef OutM, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( DisposeMessageMarshaler ) )]out string OutMessage );
 
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
-        public static extern LLVMStatus LLVMGetBitcodeModule2( LLVMMemoryBufferRef MemBuf, LLVMModuleRef OutM );
+        public static extern LLVMStatus LLVMGetBitcodeModule2( LLVMMemoryBufferRef MemBuf, out LLVMModuleRef OutM );
 
     }
 }

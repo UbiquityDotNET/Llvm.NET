@@ -6,17 +6,17 @@ using System;
 using System.Collections.Generic;
 using System.Runtime.InteropServices;
 using System.Threading;
-using Llvm.NET.Native;
+using Llvm.NET.Interop;
 using Llvm.NET.Properties;
 using Llvm.NET.Values;
-
-using static Llvm.NET.JIT.NativeMethods;
+using Ubiquity.ArgValidators;
+using static Llvm.NET.Interop.NativeMethods;
 
 namespace Llvm.NET.JIT
 {
     /// <summary>Defines the kind of Execution engine to create</summary>
     [Flags]
-    public enum EngineKind
+    public enum EngineKinds
     {
         /// <summary>Just-In-Time compilation to native code</summary>
         Jit = 1,
@@ -34,18 +34,18 @@ namespace Llvm.NET.JIT
         : IDisposable
     {
         /// <summary>Initializes a new instance of the <see cref="LegacyExecutionEngine"/> class with an initial module</summary>
-        /// <param name="kind"><see cref="EngineKind"/> for the engine to create</param>
+        /// <param name="kind"><see cref="EngineKinds"/> for the engine to create</param>
         /// <remarks>This does not create the underlying engine, instead that is deferred until the first module is added</remarks>
-        public LegacyExecutionEngine( EngineKind kind )
+        public LegacyExecutionEngine( EngineKinds kind )
             : this( kind, CodeGenOpt.Default )
         {
         }
 
         /// <summary>Initializes a new instance of the <see cref="LegacyExecutionEngine"/> class with an initial module</summary>
-        /// <param name="kind"><see cref="EngineKind"/> for the engine to create</param>
+        /// <param name="kind"><see cref="EngineKinds"/> for the engine to create</param>
         /// <param name="optLevel">Optimization level for the engine</param>
         /// <remarks>This does not create the underlying engine, instead that is deferred until the first module is added</remarks>
-        public LegacyExecutionEngine( EngineKind kind, CodeGenOpt optLevel )
+        public LegacyExecutionEngine( EngineKinds kind, CodeGenOpt optLevel )
         {
             Kind = kind;
             Optimization = optLevel;
@@ -64,6 +64,7 @@ namespace Llvm.NET.JIT
         /// <returns>Handle for the module in the engine</returns>
         public IJitModuleHandle AddModule( BitcodeModule module )
         {
+            module.ValidateNotNull( nameof( module ) );
             int handle = Interlocked.Increment( ref NextHandleValue ) - 1;
             lock( OwnedModules )
             {
@@ -188,11 +189,11 @@ namespace Llvm.NET.JIT
         {
             if( EngineHandle != default )
             {
-                LLVMDisposeExecutionEngine( EngineHandle );
+                EngineHandle.Close( );
+                EngineHandle = default;
             }
 
             OwnedModules.Clear( );
-            EngineHandle = default;
         }
 
         internal LegacyExecutionEngine( LLVMExecutionEngineRef handle )
@@ -215,7 +216,7 @@ namespace Llvm.NET.JIT
 
             private protected override void DisposeItem( LegacyExecutionEngine item )
             {
-                LLVMDisposeExecutionEngine( item.EngineHandle );
+                item.EngineHandle.Close( );
             }
         }
 
@@ -226,20 +227,20 @@ namespace Llvm.NET.JIT
 
             switch( Kind )
             {
-            case EngineKind.Jit:
+            case EngineKinds.Jit:
                 status = LLVMCreateJITCompilerForModule( out EngineHandle, module.ModuleHandle, ( uint )Optimization, out errMsg );
                 break;
 
-            case EngineKind.Interpreter:
+            case EngineKinds.Interpreter:
                 status = LLVMCreateInterpreterForModule( out EngineHandle, module.ModuleHandle, out errMsg );
                 break;
 
-            case EngineKind.Either:
+            case EngineKinds.Either:
                 status = LLVMCreateExecutionEngineForModule( out EngineHandle, module.ModuleHandle, out errMsg );
                 break;
 
             default:
-                throw new ArgumentException( Resources.Invalid_EngineKind, nameof( Kind ) );
+                throw new InvalidOperationException( $"{Resources.Invalid_EngineKind} '{nameof( Kind )}'" );
             }
 
             if( status.Failed )
@@ -248,7 +249,7 @@ namespace Llvm.NET.JIT
             }
         }
 
-        private readonly EngineKind Kind;
+        private readonly EngineKinds Kind;
         private readonly CodeGenOpt Optimization;
         private readonly Dictionary<int, LLVMModuleRef> OwnedModules;
         private int NextHandleValue;

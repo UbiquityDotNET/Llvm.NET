@@ -26,6 +26,8 @@ namespace Llvm.NET.Interop
             SetHandle( handle );
         }
 
+        public static LLVMPassRegistryRef Zero { get; } = new LLVMPassRegistryRef(IntPtr.Zero, false);
+
         [SecurityCritical]
         protected override bool ReleaseHandle( )
         {

@@ -7,15 +7,11 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using Llvm.NET.DebugInfo;
-using Llvm.NET.Native;
+using Llvm.NET.Interop;
 using Llvm.NET.Properties;
 using Llvm.NET.Types;
 
-using static Llvm.NET.Context.NativeMethods;
-using static Llvm.NET.Instructions.Instruction.NativeMethods;
-using static Llvm.NET.Types.TypeRef.NativeMethods;
-using static Llvm.NET.Values.Function.NativeMethods;
-using static Llvm.NET.Values.Value.NativeMethods;
+using static Llvm.NET.Interop.NativeMethods;
 
 namespace Llvm.NET.Values
 {
@@ -202,7 +198,7 @@ namespace Llvm.NET.Values
     }
 
     /// <summary>LLVM Function definition</summary>
-    public partial class Function
+    public class Function
         : GlobalObject
         , IAttributeAccessor
     {
@@ -239,7 +235,7 @@ namespace Llvm.NET.Values
         {
             get => !LLVMHasPersonalityFn( ValueHandle ) ? null : FromHandle<Function>( LLVMGetPersonalityFn( ValueHandle ) );
 
-            set => LLVMSetPersonalityFn( ValueHandle, value?.ValueHandle ?? new LLVMValueRef( IntPtr.Zero ) );
+            set => LLVMSetPersonalityFn( ValueHandle, value?.ValueHandle ?? LLVMValueRef.Zero );
         }
 
         /// <summary>Gets or sets the debug information for this function</summary>

@@ -77,7 +77,7 @@ namespace Llvm.NET.Interop
           Use LLVMDisposeMessage to dispose the message. */
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
-        public static extern LLVMStatus LLVMGetTargetFromTriple( [MarshalAs( UnmanagedType.LPStr )]string Triple, LLVMTargetRef T, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( DisposeMessageMarshaler ) )]out string ErrorMessage );
+        public static extern LLVMStatus LLVMGetTargetFromTriple( [MarshalAs( UnmanagedType.LPStr )]string Triple, out LLVMTargetRef T, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( DisposeMessageMarshaler ) )]out string ErrorMessage );
 
         /** Returns the name of a target. See llvm::Target::getName */
         [SuppressUnmanagedCodeSecurity]
@@ -92,27 +92,27 @@ namespace Llvm.NET.Interop
         public static extern string LLVMGetTargetDescription( LLVMTargetRef T );
 
         /** Returns if the target has a JIT */
+        [return: MarshalAs( UnmanagedType.Bool )]
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
-        [return: MarshalAs( UnmanagedType.Bool )]
         public static extern bool LLVMTargetHasJIT( LLVMTargetRef T );
 
         /** Returns if the target has a TargetMachine associated */
+        [return: MarshalAs( UnmanagedType.Bool )]
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
-        [return: MarshalAs( UnmanagedType.Bool )]
         public static extern bool LLVMTargetHasTargetMachine( LLVMTargetRef T );
 
         /** Returns if the target as an ASM backend (required for emitting output) */
+        [return: MarshalAs( UnmanagedType.Bool )]
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
-        [return: MarshalAs( UnmanagedType.Bool )]
         public static extern bool LLVMTargetHasAsmBackend( LLVMTargetRef T );
 
         /** Creates a new llvm::TargetMachine. See llvm::Target::createTargetMachine */
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
-        public static extern LLVMTargetMachineRef LLVMCreateTargetMachine( LLVMTargetRef T, [MarshalAs( UnmanagedType.LPStr )]string Triple, [MarshalAs( UnmanagedType.LPStr )]string CPU, [MarshalAs( UnmanagedType.LPStr )]string Features, global::Llvm.NET.Interop.LLVMCodeGenOptLevel Level, global::Llvm.NET.Interop.LLVMRelocMode Reloc, global::Llvm.NET.Interop.LLVMCodeModel CodeModel );
+        public static extern LLVMTargetMachineRef LLVMCreateTargetMachine( LLVMTargetRef T, [MarshalAs( UnmanagedType.LPStr )]string Triple, [MarshalAs( UnmanagedType.LPStr )]string CPU, [MarshalAs( UnmanagedType.LPStr )]string Features, LLVMCodeGenOptLevel Level, LLVMRelocMode Reloc, LLVMCodeModel CodeModel );
 
         /** Returns the Target used in a TargetMachine */
         [SuppressUnmanagedCodeSecurity]
@@ -155,12 +155,12 @@ namespace Llvm.NET.Interop
           error in ErrorMessage. Use LLVMDisposeMessage to dispose the message. */
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
-        public static extern LLVMStatus LLVMTargetMachineEmitToFile( LLVMTargetMachineRef T, LLVMModuleRef M, [MarshalAs( UnmanagedType.LPStr )]string Filename, global::Llvm.NET.Interop.LLVMCodeGenFileType codegen, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( DisposeMessageMarshaler ) )]out string ErrorMessage );
+        public static extern LLVMStatus LLVMTargetMachineEmitToFile( LLVMTargetMachineRef T, LLVMModuleRef M, [MarshalAs( UnmanagedType.LPStr )]string Filename, LLVMCodeGenFileType codegen, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( DisposeMessageMarshaler ) )]out string ErrorMessage );
 
         /** Compile the LLVM IR stored in \p M and store the result in \p OutMemBuf. */
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
-        public static extern LLVMStatus LLVMTargetMachineEmitToMemoryBuffer( LLVMTargetMachineRef T, LLVMModuleRef M, global::Llvm.NET.Interop.LLVMCodeGenFileType codegen, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( DisposeMessageMarshaler ) )]out string ErrorMessage, LLVMMemoryBufferRef OutMemBuf );
+        public static extern LLVMStatus LLVMTargetMachineEmitToMemoryBuffer( LLVMTargetMachineRef T, LLVMModuleRef M, LLVMCodeGenFileType codegen, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( DisposeMessageMarshaler ) )]out string ErrorMessage, out LLVMMemoryBufferRef OutMemBuf );
 
         /** Get a triple for the host machine as a string. The result needs to be
           disposed with LLVMDisposeMessage. */

@@ -8,7 +8,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Ubiquity.ArgValidators;
 
-using static Llvm.NET.NamedMDNode.NativeMethods;
+using static Llvm.NET.Interop.NativeMethods;
 
 namespace Llvm.NET
 {

@@ -32,6 +32,8 @@ namespace Llvm.NET.Interop
 
         public static bool operator !=( LLVMErrorTypeId lhs, LLVMErrorTypeId rhs ) => !( lhs == rhs );
 
+        public static LLVMErrorTypeId Zero { get; } = new LLVMErrorTypeId(IntPtr.Zero);
+
         internal LLVMErrorTypeId( IntPtr p )
         {
             Handle = p;

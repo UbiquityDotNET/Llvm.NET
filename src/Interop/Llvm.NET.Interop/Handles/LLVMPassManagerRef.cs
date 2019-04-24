@@ -26,6 +26,8 @@ namespace Llvm.NET.Interop
             SetHandle( handle );
         }
 
+        public static LLVMPassManagerRef Zero { get; } = new LLVMPassManagerRef(IntPtr.Zero, false);
+
         [SecurityCritical]
         protected override bool ReleaseHandle( )
         {

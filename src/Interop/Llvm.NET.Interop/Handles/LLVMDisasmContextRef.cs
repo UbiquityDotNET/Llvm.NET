@@ -26,6 +26,8 @@ namespace Llvm.NET.Interop
             SetHandle( handle );
         }
 
+        public static LLVMDisasmContextRef Zero { get; } = new LLVMDisasmContextRef(IntPtr.Zero, false);
+
         [SecurityCritical]
         protected override bool ReleaseHandle( )
         {

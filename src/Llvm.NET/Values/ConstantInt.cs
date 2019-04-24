@@ -3,9 +3,9 @@
 // </copyright>
 
 using System;
-using Llvm.NET.Native;
+using Llvm.NET.Interop;
 
-using static Llvm.NET.Instructions.InstructionBuilder.NativeMethods;
+using static Llvm.NET.Interop.NativeMethods;
 
 namespace Llvm.NET.Values
 {

@@ -32,6 +32,8 @@ namespace Llvm.NET.Interop
 
         public static bool operator !=( LLVMNamedMDNodeRef lhs, LLVMNamedMDNodeRef rhs ) => !( lhs == rhs );
 
+        public static LLVMNamedMDNodeRef Zero { get; } = new LLVMNamedMDNodeRef(IntPtr.Zero);
+
         internal LLVMNamedMDNodeRef( IntPtr p )
         {
             Handle = p;

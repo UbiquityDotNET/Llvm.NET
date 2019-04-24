@@ -5,10 +5,10 @@
 using System;
 using System.Diagnostics.CodeAnalysis;
 using Llvm.NET.DebugInfo;
-using Llvm.NET.Native;
+using Llvm.NET.Interop;
 using Ubiquity.ArgValidators;
 
-using static Llvm.NET.Values.Value.NativeMethods;
+using static Llvm.NET.Interop.NativeMethods;
 
 namespace Llvm.NET.Values
 {
@@ -51,7 +51,7 @@ namespace Llvm.NET.Values
                 return FromHandle<Constant>( handle );
             }
 
-            set => LLVMSetInitializer( ValueHandle, value?.ValueHandle ?? new LLVMValueRef( IntPtr.Zero ) );
+            set => LLVMSetInitializer( ValueHandle, value?.ValueHandle ?? LLVMValueRef.Zero );
         }
 
         /// <summary>Adds a <see cref="DIGlobalVariableExpression"/> for a <see cref="GlobalVariable"/></summary>

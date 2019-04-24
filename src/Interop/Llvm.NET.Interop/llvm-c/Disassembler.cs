@@ -26,7 +26,7 @@ namespace Llvm.NET.Interop
          */
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
-        public static extern LLVMDisasmContextRef LLVMCreateDisasm( [MarshalAs( UnmanagedType.LPStr )]string TripleName, global::System.IntPtr DisInfo, int TagType, global::Llvm.NET.Interop.LLVMOpInfoCallback GetOpInfo, global::Llvm.NET.Interop.LLVMSymbolLookupCallback SymbolLookUp );
+        public static extern LLVMDisasmContextRef LLVMCreateDisasm( [MarshalAs( UnmanagedType.LPStr )]string TripleName, global::System.IntPtr DisInfo, int TagType, LLVMOpInfoCallback GetOpInfo, LLVMSymbolLookupCallback SymbolLookUp );
 
         /**
          * Create a disassembler for the TripleName and a specific CPU.  Symbolic
@@ -38,7 +38,7 @@ namespace Llvm.NET.Interop
          */
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
-        public static extern LLVMDisasmContextRef LLVMCreateDisasmCPU( [MarshalAs( UnmanagedType.LPStr )]string Triple, [MarshalAs( UnmanagedType.LPStr )]string CPU, global::System.IntPtr DisInfo, int TagType, global::Llvm.NET.Interop.LLVMOpInfoCallback GetOpInfo, global::Llvm.NET.Interop.LLVMSymbolLookupCallback SymbolLookUp );
+        public static extern LLVMDisasmContextRef LLVMCreateDisasmCPU( [MarshalAs( UnmanagedType.LPStr )]string Triple, [MarshalAs( UnmanagedType.LPStr )]string CPU, global::System.IntPtr DisInfo, int TagType, LLVMOpInfoCallback GetOpInfo, LLVMSymbolLookupCallback SymbolLookUp );
 
         /**
          * Create a disassembler for the TripleName, a specific CPU and specific feature
@@ -49,7 +49,7 @@ namespace Llvm.NET.Interop
          */
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
-        public static extern LLVMDisasmContextRef LLVMCreateDisasmCPUFeatures( [MarshalAs( UnmanagedType.LPStr )]string Triple, [MarshalAs( UnmanagedType.LPStr )]string CPU, [MarshalAs( UnmanagedType.LPStr )]string Features, global::System.IntPtr DisInfo, int TagType, global::Llvm.NET.Interop.LLVMOpInfoCallback GetOpInfo, global::Llvm.NET.Interop.LLVMSymbolLookupCallback SymbolLookUp );
+        public static extern LLVMDisasmContextRef LLVMCreateDisasmCPUFeatures( [MarshalAs( UnmanagedType.LPStr )]string Triple, [MarshalAs( UnmanagedType.LPStr )]string CPU, [MarshalAs( UnmanagedType.LPStr )]string Features, global::System.IntPtr DisInfo, int TagType, LLVMOpInfoCallback GetOpInfo, LLVMSymbolLookupCallback SymbolLookUp );
 
         /**
          * Set the disassembler's options.  Returns 1 if it can set the Options and 0
@@ -57,7 +57,7 @@ namespace Llvm.NET.Interop
          */
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
-        public static extern int LLVMSetDisasmOptions( LLVMDisasmContextRef DC, ulong Options );
+        public static extern int LLVMSetDisasmOptions( LLVMDisasmContextRef DC, System.UInt64 Options );
 
         /**
          * Disassemble a single instruction using the disassembler context specified in
@@ -71,7 +71,7 @@ namespace Llvm.NET.Interop
          */
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
-        public static extern ulong LLVMDisasmInstruction( LLVMDisasmContextRef DC, [MarshalAs( UnmanagedType.LPArray, ArraySubType = UnmanagedType.I1 )]global::System.Byte[] Bytes, ulong BytesSize, ulong PC, ref global::System.Text.StringBuilder OutString, ulong OutStringSize );
+        public static extern size_t LLVMDisasmInstruction( LLVMDisasmContextRef DC, [MarshalAs( UnmanagedType.LPArray, ArraySubType = UnmanagedType.I1 )]global::System.Byte[] Bytes, System.UInt64 BytesSize, System.UInt64 PC, ref global::System.Text.StringBuilder OutString, size_t OutStringSize );
 
     }
 }

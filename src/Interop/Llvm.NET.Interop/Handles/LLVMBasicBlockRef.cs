@@ -32,6 +32,8 @@ namespace Llvm.NET.Interop
 
         public static bool operator !=( LLVMBasicBlockRef lhs, LLVMBasicBlockRef rhs ) => !( lhs == rhs );
 
+        public static LLVMBasicBlockRef Zero { get; } = new LLVMBasicBlockRef(IntPtr.Zero);
+
         internal LLVMBasicBlockRef( IntPtr p )
         {
             Handle = p;

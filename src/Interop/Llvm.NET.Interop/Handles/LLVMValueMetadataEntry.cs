@@ -26,6 +26,8 @@ namespace Llvm.NET.Interop
             SetHandle( handle );
         }
 
+        public static LLVMValueMetadataEntry Zero { get; } = new LLVMValueMetadataEntry(IntPtr.Zero, false);
+
         [SecurityCritical]
         protected override bool ReleaseHandle( )
         {

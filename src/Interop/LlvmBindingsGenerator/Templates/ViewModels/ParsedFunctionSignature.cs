@@ -91,8 +91,44 @@ namespace LlvmBindingsGenerator.Templates
             string retVal;
             switch( type )
             {
-            case TypedefType tdt when( tdt.Declaration.Name == "LLVMStatus" ):
-                retVal = "LLVMStatus";
+            case TypedefType tdt when tdt.Declaration.Name == "LLVMBool":
+                retVal = "bool";
+                break;
+
+            case TypedefType tdt when tdt.Declaration.Name == "intptr_t":
+                retVal = "System.IntPtr";
+                break;
+
+            case TypedefType tdt when tdt.Declaration.Name == "uintptr_t":
+                retVal = "System.UIntPtr";
+                break;
+
+            case TypedefType tdt when tdt.Declaration.Name == "uint8_t":
+                retVal = "System.Byte";
+                break;
+
+            case TypedefType tdt when( tdt.Declaration.Name == "uint32_t" || tdt.Declaration.Name == "LLVMDWARFTypeEncoding" ):
+                retVal = "System.UInt32";
+                break;
+
+            case TypedefType tdt when ( tdt.Declaration.Name == "uint64_t" || tdt.Declaration.Name == "LLVMOrcModuleHandle" || tdt.Declaration.Name == "LLVMOrcTargetAddress" ):
+                retVal = "System.UInt64";
+                break;
+
+            case TypedefType tdt when tdt.Declaration.Name == "int8_t":
+                retVal = "System.SByte";
+                break;
+
+            case TypedefType tdt when tdt.Declaration.Name == "int32_t":
+                retVal = "System.Int32";
+                break;
+
+            case TypedefType tdt when tdt.Declaration.Name == "int64_t":
+                retVal = "System.Int64";
+                break;
+
+            case TypedefType tdt:
+                retVal = tdt.Declaration.Name;
                 break;
 
             case CppSharp.AST.Type t when t.TryGetHandleDecl( out TypedefNameDecl decl ):

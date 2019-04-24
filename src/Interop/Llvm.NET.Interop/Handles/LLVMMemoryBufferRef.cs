@@ -26,6 +26,8 @@ namespace Llvm.NET.Interop
             SetHandle( handle );
         }
 
+        public static LLVMMemoryBufferRef Zero { get; } = new LLVMMemoryBufferRef(IntPtr.Zero, false);
+
         [SecurityCritical]
         protected override bool ReleaseHandle( )
         {

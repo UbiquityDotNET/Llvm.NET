@@ -18,15 +18,15 @@ namespace LlvmBindingsGenerator.Passes
     internal class AddMarshalingAttributesPass
         : TranslationUnitPass
     {
-        public AddMarshalingAttributesPass( IEnumerable<IMarshalInfo> marshalInfo )
+        public AddMarshalingAttributesPass( MarshalingInfoMap marshalInfo )
         {
             VisitOptions.VisitClassBases = false;
             VisitOptions.VisitClassMethods = false;
             VisitOptions.VisitClassProperties = false;
             VisitOptions.VisitClassTemplateSpecializations = false;
             VisitOptions.VisitEventParameters = false;
-            VisitOptions.VisitFunctionParameters = false;
-            VisitOptions.VisitFunctionReturnType = false;
+            VisitOptions.VisitFunctionParameters = true;
+            VisitOptions.VisitFunctionReturnType = true;
             VisitOptions.VisitNamespaceEnums = false;
             VisitOptions.VisitNamespaceEvents = false;
             VisitOptions.VisitNamespaceTemplates = false;
@@ -35,27 +35,10 @@ namespace LlvmBindingsGenerator.Passes
             VisitOptions.VisitPropertyAccessors = false;
             VisitOptions.VisitTemplateArguments = false;
 
-            MarshalInfo = marshalInfo;
+            ParamMarshalingMap = marshalInfo;
         }
 
-        public override bool VisitASTContext( ASTContext context )
-        {
-            // resolve parameter names with actual declarations to get index
-            // marshaling info deals with index since, the name is optional for declarations
-            Map = new MarshalingInfoMap( context );
-            foreach( var mi in MarshalInfo )
-            {
-                Map.Add( mi );
-            }
-
-            foreach( TranslationUnit unit in context.GeneratedUnits( ) )
-            {
-                VisitTranslationUnit( unit );
-            }
-
-            return true;
-        }
-
+        // Add LayoutKind.Sequential to all value types
         public override bool VisitClassDecl( Class @class )
         {
             if( !@class.IsValueType )
@@ -73,21 +56,9 @@ namespace LlvmBindingsGenerator.Passes
             return true;
         }
 
-        public override bool VisitFunctionType( FunctionType function, TypeQualifiers quals )
-        {
-            if( function.ReturnType.Type != null )
-            {
-                VisitReturnType( function );
-            }
-
-            foreach( Parameter parameter in function.Parameters )
-            {
-                parameter.Visit( this );
-            }
-
-            return true;
-        }
-
+        // visit delegate types by pushing the type onto the declaration stack
+        // as the current scope for parameter handling etc... The typedef for
+        // a function pointer has the name (FunctionType has no name )
         public override bool VisitTypedefDecl( TypedefDecl typedef )
         {
             if( typedef.IsDelegateTypeDef( ) )
@@ -113,6 +84,7 @@ namespace LlvmBindingsGenerator.Passes
                 return false;
             }
 
+            // push function declaration as current scope for parameters and return type
             DeclarationStack.Push( function );
             try
             {
@@ -140,10 +112,10 @@ namespace LlvmBindingsGenerator.Passes
 
         public override bool VisitParameterDecl( Parameter parameter )
         {
-            var decl = DeclarationStack.Peek( );
+            var scope = DeclarationStack.Peek( );
 
             // mapped settings override any implicit handling
-            if( Map.TryGetValue( decl.Name, parameter.Index, out IMarshalInfo marshalInfo ) )
+            if( ParamMarshalingMap.TryGetValue( scope.Name, parameter.Index, out IMarshalInfo marshalInfo ) )
             {
                 ApplyParameterMarshaling( parameter, marshalInfo );
             }
@@ -157,12 +129,12 @@ namespace LlvmBindingsGenerator.Passes
 
         private bool VisitReturnType( FunctionType signature )
         {
-            var decl = DeclarationStack.Peek( );
-            if( Map.TryGetValue( decl.Name, MarshalingInfoMap.ReturnParamIndex, out IMarshalInfo marshalInfo ) )
+            var scope = DeclarationStack.Peek( );
+            if( ParamMarshalingMap.TryGetValue( scope.Name, MarshalingInfoMap.ReturnParamIndex, out IMarshalInfo marshalInfo ) )
             {
                 signature.ReturnType = new QualifiedType( marshalInfo.Type, signature.ReturnType.Qualifiers );
-                decl.Attributes.AddRange( marshalInfo.Attributes );
-                if( decl is Function f )
+                scope.Attributes.AddRange( marshalInfo.Attributes );
+                if( scope is Function f )
                 {
                     // sadly the CppSharp AST treats Function.ReturnType distinct from Function.FunctionType.ReturnType.
                     f.ReturnType = signature.ReturnType;
@@ -181,15 +153,19 @@ namespace LlvmBindingsGenerator.Passes
                 p.QualifiedType = new QualifiedType( type, p.QualifiedType.Qualifiers );
             }
 
-            if( p.Type is PointerType pt && pt.Pointee.Desugar( ) is BuiltinType bt )
+            if( p.Type is PointerType pt )
             {
-                if( bt.Type == PrimitiveType.Void )
+                switch( pt.Pointee.Desugar( ) )
                 {
+                case BuiltinType bt when bt.Type == PrimitiveType.Void:
                     p.QualifiedType = new QualifiedType( new CILType( typeof( IntPtr ) ) );
-                }
-                else
-                {
+                    break;
+
+                // Pointer to Pointer and Pointer to built in types are out parameters
+                case PointerType _:
+                case BuiltinType _:
                     p.Usage = ParameterUsage.Out;
+                    break;
                 }
             }
         }
@@ -262,9 +238,7 @@ namespace LlvmBindingsGenerator.Passes
                 Value = string.Empty
             };
 
-        private MarshalingInfoMap Map;
-
-        private readonly IEnumerable<IMarshalInfo> MarshalInfo;
+        private MarshalingInfoMap ParamMarshalingMap;
 
         private readonly Stack<Declaration> DeclarationStack = new Stack<Declaration>();
 

@@ -3,7 +3,7 @@
 // </copyright>
 
 using System.Collections.Generic;
-using Llvm.NET.Native;
+using Llvm.NET.Interop;
 using Llvm.NET.Values;
 
 namespace Llvm.NET.Instructions

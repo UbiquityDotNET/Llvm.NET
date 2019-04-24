@@ -11,13 +11,13 @@ using System.Linq;
 using JetBrains.Annotations;
 using Llvm.NET.DebugInfo;
 using Llvm.NET.Instructions;
-using Llvm.NET.Native;
+using Llvm.NET.Interop;
 using Llvm.NET.Properties;
 using Llvm.NET.Types;
 using Llvm.NET.Values;
 using Ubiquity.ArgValidators;
 
-using static Llvm.NET.BitcodeModule.NativeMethods;
+using static Llvm.NET.Interop.NativeMethods;
 
 namespace Llvm.NET
 {
@@ -64,7 +64,7 @@ namespace Llvm.NET
     /// A module is the basic unit for containing code in LLVM. Modules are an in memory
     /// representation of the LLVM Intermediate Representation (IR) bit-code. Each
     /// </remarks>
-    public sealed partial class BitcodeModule
+    public sealed class BitcodeModule
         : IDisposable
         , IExtensiblePropertyContainer
     {
@@ -264,27 +264,13 @@ namespace Llvm.NET
             }
         }
 
-        /// <summary>Gets a value indicating whether this module is shared with a JIT engine</summary>
-        public bool IsShared => SharedModuleRef != null;
+        /*/// <summary>Gets a value indicating whether this module is shared with a JIT engine</summary>
+        //public bool IsShared => SharedModuleRef != null;
+        */
 
         /* TODO: Module level inline asm accessors
             string ModuleInlineAsm { get; set; }
         */
-
-        /// <summary>Makes this module a shared module if it isn't already</summary>
-        /// <remarks>
-        /// Normally, this is called automatically when adding a module to a JIT engine that needs shared modules.
-        /// Shared modules are reference counted so they aren't completely disposed until the reference count
-        /// is decremented to 0. Calling <see cref="Dispose()"/> on a shared module will mark the module as disposed
-        /// and decrement the share count.
-        /// </remarks>
-        public void MakeShared( )
-        {
-            if( !IsShared )
-            {
-                SharedModuleRef = LLVMOrcMakeSharedModule( ModuleHandle );
-            }
-        }
 
         /// <inheritdoc/>
         public void Dispose( )
@@ -301,19 +287,7 @@ namespace Llvm.NET
             {
                 // remove the module handle from the module cache.
                 Context.RemoveModule( this );
-
-                // if this module was shared with a JIT, just release
-                // the ref-count but don't dispose the actual module
-                if( IsShared )
-                {
-                    SharedModuleRef.Close( );
-                    SharedModuleRef = default;
-                }
-                else
-                {
-                    LLVMDisposeModule( ModuleHandle );
-                }
-
+                LLVMDisposeModule( ModuleHandle );
                 ModuleHandle = default;
             }
         }
@@ -342,7 +316,7 @@ namespace Llvm.NET
             }
 
             Context.RemoveModule( otherModule );
-            otherModule.ModuleHandle = new LLVMModuleRef( IntPtr.Zero );
+            otherModule.ModuleHandle = LLVMModuleRef.Zero;
         }
 
         /// <summary>Verifies a bit-code module</summary>
@@ -878,7 +852,7 @@ namespace Llvm.NET
 
         internal LLVMModuleRef ModuleHandle { get; private set; }
 
-        internal LLVMSharedModuleRef SharedModuleRef { get; private set; }
+        /* internal LLVMSharedModuleRef SharedModuleRef { get; private set; } */
 
         internal LLVMModuleRef Detach( )
         {

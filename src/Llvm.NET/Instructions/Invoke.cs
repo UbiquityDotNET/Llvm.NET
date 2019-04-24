@@ -4,11 +4,11 @@
 
 using System.Collections.Generic;
 using System.Linq;
-using Llvm.NET.Native;
+using Llvm.NET.Interop;
 using Llvm.NET.Values;
 using Ubiquity.ArgValidators;
 
-using static Llvm.NET.Instructions.Instruction.NativeMethods;
+using static Llvm.NET.Interop.NativeMethods;
 
 namespace Llvm.NET.Instructions
 {
@@ -21,7 +21,7 @@ namespace Llvm.NET.Instructions
         /// <summary>Gets the target function of the invocation</summary>
         public Function TargetFunction => FromHandle<Function>( LLVMGetCalledValue( ValueHandle ) );
 
-        /// <summary>Gets the attributes for this callsite</summary>
+        /// <summary>Gets the attributes for this call site</summary>
         public IAttributeDictionary Attributes { get; }
 
         /// <inheritdoc/>

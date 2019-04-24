@@ -4,7 +4,6 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
-using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using CppSharp;
@@ -73,16 +72,16 @@ namespace LlvmBindingsGenerator
             // always start the passes with the IgnoreSystemHeaders pass to ensure that generation
             // only occurs for the desired headers.
             driver.AddTranslationUnitPass( new IgnoreSystemHeaders( ) );
+            driver.AddTranslationUnitPass( new ConvertLLVMBoolPass( Configuration.StatusReturningFunctions ) );
             driver.AddTranslationUnitPass( new CheckFlagEnumsPass( ) );
             driver.AddTranslationUnitPass( new DeAnonymizeEnumsPass( Configuration.AnonymousEnumNames ) );
-            driver.AddTranslationUnitPass( new MapHandleTypeDefsPass( ) );
+            driver.AddTranslationUnitPass( new AddTypeMapsPass( ) );
             driver.AddTranslationUnitPass( new PODToValueTypePass( ) );
-            driver.AddTranslationUnitPass( new RemoveDuplicateNamesPass( ) );
+            driver.AddTranslationUnitPass( new IgnoreDuplicateNamesPass( ) );
             driver.AddTranslationUnitPass( new AddMissingParameterNamesPass( ) );
             driver.AddTranslationUnitPass( new MarkFunctionsIgnoredPass( Configuration.HandleToTemplateMap.DisposeFunctionNames.Concat( Configuration.IgnoredFunctions ) ) );
             driver.AddTranslationUnitPass( new MarkDeprecatedFunctionsAsObsoletePass( Configuration.DeprecatedFunctionToMessageMap, true ) );
-            driver.AddTranslationUnitPass( new AddMarshalingAttributesPass( Configuration.MarshalingInfo ) );
-            driver.AddTranslationUnitPass( new ConvertLLVMBoolPass( Configuration.StatusReturningFunctions ) );
+            driver.AddTranslationUnitPass( new AddMarshalingAttributesPass( new MarshalingInfoMap( ctx, Configuration.MarshalingInfo ) ) );
         }
 
         public void Postprocess( Driver driver, ASTContext ctx )

@@ -62,9 +62,9 @@ namespace Kaleidoscope.Runtime
                    select p.Txt;
         }
 
-        /// <summary>Rx.NET operator to encapuslate conversion of text from a <see cref="TextReader"/> into an observable sequence of Kaleidoscope statements</summary>
+        /// <summary>Rx.NET operator to encapsulate conversion of text from a <see cref="TextReader"/> into an observable sequence of Kaleidoscope statements</summary>
         /// <param name="reader">Input reader</param>
-        /// <param name="prompt">Action to provide prompts when the trasnform requires new data from the reader</param>
+        /// <param name="prompt">Action to provide prompts when the transform requires new data from the reader</param>
         /// <returns>Observable sequence of complete statements ready for parsing</returns>
         public static IObservable<string> ToObservableStatements(this TextReader reader, [CanBeNull] Action<ReadyState> prompt )
         {
@@ -84,7 +84,7 @@ namespace Kaleidoscope.Runtime
             // the last entry is an empty string, but a single blank line
             // as input isn't considered completed.
             int completeStatements = statements.Length - 1;
-            bool wasLastTerminated = statements[ statements.Length - 1 ] == string.Empty && statements.Length > 1;
+            bool wasLastTerminated = string.IsNullOrEmpty( statements[ statements.Length - 1 ] ) && statements.Length > 1;
             if( wasLastTerminated && completeStatements > 1 )
             {
                 ++completeStatements;

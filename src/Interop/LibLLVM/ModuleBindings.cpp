@@ -115,36 +115,36 @@ extern "C"
     //    unwrap( namedMDNode )->eraseFromParent( );
     //}
 
-    //LLVMComdatRef LLVMModuleInsertOrUpdateComdat( LLVMModuleRef module, char const* name, LLVMComdatSelectionKind kind )
-    //{
-    //    auto pModule = unwrap( module );
-    //    auto pComdat = pModule->getOrInsertComdat( name );
-    //    pComdat->setSelectionKind( ( Comdat::SelectionKind ) kind );
-    //    return wrap( pComdat );
-    //}
+    LLVMComdatRef LLVMModuleInsertOrUpdateComdat( LLVMModuleRef module, char const* name, LLVMComdatSelectionKind kind )
+    {
+        auto pModule = unwrap( module );
+        auto pComdat = pModule->getOrInsertComdat( name );
+        pComdat->setSelectionKind( ( Comdat::SelectionKind ) kind );
+        return wrap( pComdat );
+    }
 
-    //void LLVMModuleEnumerateComdats( LLVMModuleRef module, LLVMComdatIteratorCallback callback )
-    //{
-    //    auto pModule = unwrap( module );
-    //    for( auto&& entry : pModule->getComdatSymbolTable( ) )
-    //    {
-    //        if( !callback( wrap( &entry.second ) ) )
-    //            break;
-    //    }
-    //}
+    void LLVMModuleEnumerateComdats( LLVMModuleRef module, LLVMComdatIteratorCallback callback )
+    {
+        auto pModule = unwrap( module );
+        for( auto&& entry : pModule->getComdatSymbolTable( ) )
+        {
+            if( !callback( wrap( &entry.second ) ) )
+                break;
+        }
+    }
 
-    //void LLVMModuleComdatRemove( LLVMModuleRef module, LLVMComdatRef comdatRef )
-    //{
-    //    auto pModule = unwrap( module );
-    //    auto pComdat = unwrap( comdatRef );
-    //    pModule->getComdatSymbolTable( ).erase( pComdat->getName( ) );
-    //}
+    void LLVMModuleComdatRemove( LLVMModuleRef module, LLVMComdatRef comdatRef )
+    {
+        auto pModule = unwrap( module );
+        auto pComdat = unwrap( comdatRef );
+        pModule->getComdatSymbolTable( ).erase( pComdat->getName( ) );
+    }
 
-    //void LLVMModuleComdatClear( LLVMModuleRef module )
-    //{
-    //    auto pModule = unwrap( module );
-    //    pModule->getComdatSymbolTable( ).clear( );
-    //}
+    void LLVMModuleComdatClear( LLVMModuleRef module )
+    {
+        auto pModule = unwrap( module );
+        pModule->getComdatSymbolTable( ).clear( );
+    }
 
     //LLVMComdatSelectionKind LLVMComdatGetKind( LLVMComdatRef comdatRef )
     //{
@@ -158,11 +158,11 @@ extern "C"
     //    comdat.setSelectionKind( ( Comdat::SelectionKind )kind );
     //}
 
-    //char const* LLVMComdatGetName( LLVMComdatRef comdatRef )
-    //{
-    //    Comdat const& comdat = *unwrap( comdatRef );
-    //    return LLVMCreateMessage( comdat.getName( ).str( ).c_str( ) );
-    //}
+    char const* LLVMComdatGetName( LLVMComdatRef comdatRef )
+    {
+        Comdat const& comdat = *unwrap( comdatRef );
+        return LLVMCreateMessage( comdat.getName( ).str( ).c_str( ) );
+    }
 
     LLVMValueRef LLVMModuleGetFirstGlobalAlias( LLVMModuleRef M )
     {

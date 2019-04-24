@@ -484,9 +484,15 @@ Types are:
   <data name="Assert_Should_not_get_a_null_pointer_from_LLVM" xml:space="preserve">
     <value>Should not get a null pointer from LLVM</value>
   </data>
-    <data name="LoadWin32Library_Error_0_occured_loading_1_search_paths_2" xml:space="preserve">
+  <data name="LoadWin32Library_Error_0_occured_loading_1_search_paths_2" xml:space="preserve">
     <value>System error (0x{0:X08}) occurred trying to load DLL {1}.
  Search paths:
  {2}</value>
+  </data>
+  <data name="Cannot_get_null_for_labels_and_opaque_types" xml:space="preserve">
+    <value>Cannot get a Null value for labels, functions and opaque types</value>
+  </data>
+  <data name="Alignment_only_allowed_on_memory_instructions" xml:space="preserve">
+    <value>Alignment can only be set for instructions dealing with memory read/write (alloca, load, store)</value>
   </data>
 </root>

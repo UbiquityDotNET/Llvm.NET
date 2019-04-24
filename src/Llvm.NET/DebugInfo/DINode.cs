@@ -2,14 +2,14 @@
 // Copyright (c) .NET Foundation. All rights reserved.
 // </copyright>
 
-using Llvm.NET.Native;
+using Llvm.NET.Interop;
 
-using static Llvm.NET.DebugInfo.DINode.NativeMethods;
+using static Llvm.NET.Interop.NativeMethods;
 
 namespace Llvm.NET.DebugInfo
 {
     /// <summary>Root of the object hierarchy for Debug information metadata nodes</summary>
-    public partial class DINode
+    public class DINode
         : MDNode
     {
         /// <summary>Gets the Dwarf tag for the node</summary>

@@ -2,12 +2,12 @@
 // Copyright (c) .NET Foundation. All rights reserved.
 // </copyright>
 
-using static Llvm.NET.Transforms.ScalarTransforms.NativeMethods;
+using static Llvm.NET.Interop.NativeMethods;
 
 namespace Llvm.NET.Transforms
 {
     /// <summary>Utility class for Adding Scalar transform passes to a <see cref="PassManager"/></summary>
-    public static partial class ScalarTransforms
+    public static class ScalarTransforms
     {
         /// <summary>Adds an Aggressive Dead Code Elimination (DCE) pass to the manager</summary>
         /// <typeparam name="T">Type of pass manager to add the pass to</typeparam>

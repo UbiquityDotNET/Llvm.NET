@@ -20,7 +20,9 @@ namespace LlvmBindingsGenerator
                 Diagnostics.Error( "USAGE: LlvmBindingsGenerator <llvmRoot> <extensionsRoot> [OutputPath]" );
                 return -1;
             }
-
+#if DEBUG
+            Diagnostics.Level = DiagnosticKind.Debug;
+#endif
             string llvmRoot = args[ 0 ];
             string extensionsRoot = args[ 1 ];
             string outputPath = args.Length > 2 ? args[ 2 ] : System.Environment.CurrentDirectory;
@@ -48,7 +50,7 @@ namespace LlvmBindingsGenerator
                     "LLVMParseBitcodeInContext2",
                     "LLVMGetBitcodeModuleInContext2",
                     "LLVMVerifyModule",
-                    "LLVMVerifyFunction",
+                    "LLVMVerifyFunctionEx",
                     "LLVMInitializeNativeTarget",
                     "LLVMInitializeNativeAsmParser",
                     "LLVMInitializeNativeAsmPrinter",
@@ -288,7 +290,8 @@ namespace LlvmBindingsGenerator
                     new GlobalHandleTemplate( "LLVMModuleFlagEntry", "LLVMDisposeModuleFlagsMetadata"),
                     new GlobalHandleTemplate( "LLVMDisasmContextRef", "LLVMDisasmDispose"),
                     new GlobalHandleTemplate( "LLVMTripleRef", "LLVMDisposeTriple" ),
-                    new GlobalHandleTemplate( "LLVMValueCacheRef", "LLVMDisposeValueCache")
+                    new GlobalHandleTemplate( "LLVMValueCacheRef", "LLVMDisposeValueCache"),
+                    new ContextHandleTemplate("LLVMOrcModuleHandle")
                 },
                 AnonymousEnumNames = new Dictionary<string, string>
                 {

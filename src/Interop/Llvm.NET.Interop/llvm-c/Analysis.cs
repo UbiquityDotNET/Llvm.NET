@@ -32,11 +32,12 @@ namespace Llvm.NET.Interop
     {
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
-        public static extern LLVMStatus LLVMVerifyModule( LLVMModuleRef M, global::Llvm.NET.Interop.LLVMVerifierFailureAction Action, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( DisposeMessageMarshaler ) )]out string OutMessage );
+        public static extern LLVMStatus LLVMVerifyModule( LLVMModuleRef M, LLVMVerifierFailureAction Action, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( DisposeMessageMarshaler ) )]out string OutMessage );
 
+        [return: MarshalAs( UnmanagedType.Bool )]
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
-        public static extern LLVMStatus LLVMVerifyFunction( LLVMValueRef Fn, global::Llvm.NET.Interop.LLVMVerifierFailureAction Action );
+        public static extern bool LLVMVerifyFunction( LLVMValueRef Fn, LLVMVerifierFailureAction Action );
 
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]

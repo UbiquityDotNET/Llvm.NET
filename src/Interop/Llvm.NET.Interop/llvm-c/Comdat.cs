@@ -65,11 +65,11 @@ namespace Llvm.NET.Interop
 
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
-        public static extern global::Llvm.NET.Interop.LLVMComdatSelectionKind LLVMGetComdatSelectionKind( LLVMComdatRef C );
+        public static extern LLVMComdatSelectionKind LLVMGetComdatSelectionKind( LLVMComdatRef C );
 
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
-        public static extern void LLVMSetComdatSelectionKind( LLVMComdatRef C, global::Llvm.NET.Interop.LLVMComdatSelectionKind Kind );
+        public static extern void LLVMSetComdatSelectionKind( LLVMComdatRef C, LLVMComdatSelectionKind Kind );
 
     }
 }

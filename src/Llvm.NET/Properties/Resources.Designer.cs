@@ -19,7 +19,7 @@ namespace Llvm.NET.Properties {
     // class via a tool like ResGen or Visual Studio.
     // To add or remove a member, edit your .ResX file then rerun ResGen
     // with the /str option, or rebuild your VS project.
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "15.0.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "16.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     internal class Resources {
@@ -84,6 +84,15 @@ namespace Llvm.NET.Properties {
         internal static string A_pointer_to_a_function_is_required_for_an_indirect_call {
             get {
                 return ResourceManager.GetString("A_pointer_to_a_function_is_required_for_an_indirect_call", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Alignment can only be set for instructions dealing with memory read/write (alloca, load, store).
+        /// </summary>
+        internal static string Alignment_only_allowed_on_memory_instructions {
+            get {
+                return ResourceManager.GetString("Alignment_only_allowed_on_memory_instructions", resourceCulture);
             }
         }
         
@@ -248,6 +257,15 @@ namespace Llvm.NET.Properties {
         internal static string Cannot_get_element_of_unsized_opaque_structures {
             get {
                 return ResourceManager.GetString("Cannot_get_element_of_unsized_opaque_structures", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Cannot get a Null value for labels, functions and opaque types.
+        /// </summary>
+        internal static string Cannot_get_null_for_labels_and_opaque_types {
+            get {
+                return ResourceManager.GetString("Cannot_get_null_for_labels_and_opaque_types", resourceCulture);
             }
         }
         

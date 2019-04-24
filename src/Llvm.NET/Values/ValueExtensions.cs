@@ -7,11 +7,11 @@ using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using Llvm.NET.DebugInfo;
 using Llvm.NET.Instructions;
-using Llvm.NET.Native;
+using Llvm.NET.Interop;
 using Llvm.NET.Properties;
 using Llvm.NET.Types;
 
-using static Llvm.NET.Values.Value.NativeMethods;
+using static Llvm.NET.Interop.NativeMethods;
 
 namespace Llvm.NET.Values
 {

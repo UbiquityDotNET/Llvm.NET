@@ -5,30 +5,34 @@
 enum LLVMTripleArchType
 {
     LlvmTripleArchType_UnknownArch,
+
     LlvmTripleArchType_arm,            // ARM (little endian): arm, armv.*, xscale
     LlvmTripleArchType_armeb,          // ARM (big endian): armeb
     LlvmTripleArchType_aarch64,        // AArch64 (little endian): aarch64
     LlvmTripleArchType_aarch64_be,     // AArch64 (big endian): aarch64_be
-    LlvmTripleArchType_arc,            // Synopsis ARC
+    LlvmTripleArchType_arc,            // ARC: Synopsys ARC
     LlvmTripleArchType_avr,            // AVR: Atmel AVR microcontroller
     LlvmTripleArchType_bpfel,          // eBPF or extended BPF or 64-bit BPF (little endian)
     LlvmTripleArchType_bpfeb,          // eBPF or extended BPF or 64-bit BPF (big endian)
     LlvmTripleArchType_hexagon,        // Hexagon: hexagon
-    LlvmTripleArchType_mips,           // MIPS: mips, mipsallegrex
-    LlvmTripleArchType_mipsel,         // MIPSEL: mipsel, mipsallegrexel
-    LlvmTripleArchType_mips64,         // MIPS64: mips64
-    LlvmTripleArchType_mips64el,       // MIPS64EL: mips64el
+    LlvmTripleArchType_mips,           // MIPS: mips, mipsallegrex, mipsr6
+    LlvmTripleArchType_mipsel,         // MIPSEL: mipsel, mipsallegrexe, mipsr6el
+    LlvmTripleArchType_mips64,         // MIPS64: mips64, mips64r6, mipsn32, mipsn32r6
+    LlvmTripleArchType_mips64el,       // MIPS64EL: mips64el, mips64r6el, mipsn32el, mipsn32r6el
     LlvmTripleArchType_msp430,         // MSP430: msp430
     LlvmTripleArchType_ppc,            // PPC: powerpc
     LlvmTripleArchType_ppc64,          // PPC64: powerpc64, ppu
     LlvmTripleArchType_ppc64le,        // PPC64LE: powerpc64le
     LlvmTripleArchType_r600,           // R600: AMD GPUs HD2XXX - HD6XXX
     LlvmTripleArchType_amdgcn,         // AMDGCN: AMD GCN GPUs
+    LlvmTripleArchType_riscv32,        // RISC-V (32-bit): riscv32
+    LlvmTripleArchType_riscv64,        // RISC-V (64-bit): riscv64
     LlvmTripleArchType_sparc,          // Sparc: sparc
     LlvmTripleArchType_sparcv9,        // Sparcv9: Sparcv9
     LlvmTripleArchType_sparcel,        // Sparc: (endianness = little). NB: 'Sparcle' is a CPU variant
     LlvmTripleArchType_systemz,        // SystemZ: s390x
     LlvmTripleArchType_tce,            // TCE (http://tce.cs.tut.fi/): tce
+    LlvmTripleArchType_tcele,          // TCE little endian (http://tce.cs.tut.fi/): tcele
     LlvmTripleArchType_thumb,          // Thumb (little endian): thumb, thumbv.*
     LlvmTripleArchType_thumbeb,        // Thumb (big endian): thumbeb
     LlvmTripleArchType_x86,            // X86: i[3-9]86
@@ -57,6 +61,9 @@ enum LLVMTripleArchType
 enum LLVMTripleSubArchType
 {
     LlvmTripleSubArchType_NoSubArch,
+
+    LlvmTripleSubArchType_ARMSubArch_v8_5a,
+    LlvmTripleSubArchType_ARMSubArch_v8_4a,
     LlvmTripleSubArchType_ARMSubArch_v8_3a,
     LlvmTripleSubArchType_ARMSubArch_v8_2a,
     LlvmTripleSubArchType_ARMSubArch_v8_1a,
@@ -77,14 +84,18 @@ enum LLVMTripleSubArchType
     LlvmTripleSubArchType_ARMSubArch_v5,
     LlvmTripleSubArchType_ARMSubArch_v5te,
     LlvmTripleSubArchType_ARMSubArch_v4t,
+
     LlvmTripleSubArchType_KalimbaSubArch_v3,
     LlvmTripleSubArchType_KalimbaSubArch_v4,
-    LlvmTripleSubArchType_KalimbaSubArch_v5
+    LlvmTripleSubArchType_KalimbaSubArch_v5,
+
+    LlvmTripleSubArchType_MipsSubArch_r6
 };
 
 enum LLVMTripleVendorType
 {
     LlvmTripleVendorType_UnknownVendor,
+
     LlvmTripleVendorType_Apple,
     LlvmTripleVendorType_PC,
     LlvmTripleVendorType_SCEI,
@@ -100,16 +111,20 @@ enum LLVMTripleVendorType
     LlvmTripleVendorType_AMD,
     LlvmTripleVendorType_Mesa,
     LlvmTripleVendorType_SUSE,
-    LlvmTripleVendorType_LastVendorType = LlvmTripleVendorType_SUSE
+    LlvmTripleVendorType_OpenEmbedded,
+    LlvmTripleVendorType_LastVendorType = LlvmTripleVendorType_OpenEmbedded
 };
 
 enum LLVMTripleOSType
 {
     LlvmTripleOSType_UnknownOS,
+
+    LlvmTripleOSType_Ananas,
     LlvmTripleOSType_CloudABI,
     LlvmTripleOSType_Darwin,
     LlvmTripleOSType_DragonFly,
     LlvmTripleOSType_FreeBSD,
+    LlvmTripleOSType_Fuchsia,
     LlvmTripleOSType_IOS,
     LlvmTripleOSType_KFreeBSD,
     LlvmTripleOSType_Linux,
@@ -124,7 +139,6 @@ enum LLVMTripleOSType
     LlvmTripleOSType_RTEMS,
     LlvmTripleOSType_NaCl,       // Native Client
     LlvmTripleOSType_CNK,        // BG/P Compute-Node Kernel
-    LlvmTripleOSType_Bitrig,
     LlvmTripleOSType_AIX,
     LlvmTripleOSType_CUDA,       // NVIDIA CUDA
     LlvmTripleOSType_NVCL,       // NVIDIA OpenCL
@@ -135,14 +149,19 @@ enum LLVMTripleOSType
     LlvmTripleOSType_WatchOS,    // Apple watchOS
     LlvmTripleOSType_Mesa3D,
     LlvmTripleOSType_Contiki,
-    LLvmTropleOSType_AMDPAL,
-    LlvmTripleOSType_LastOSType = LLvmTropleOSType_AMDPAL
+    LlvmTripleOSType_AMDPAL,     // AMD PAL Runtime
+    LlvmTripleOSType_HermitCore, // HermitCore Unikernel/Multikernel
+    LlvmTripleOSType_Hurd,       // GNU/Hurd
+    LlvmTripleOSType_WASI,       // Experimental WebAssembly OS
+    LlvmTripleOSType_LastOSType = LlvmTripleOSType_WASI
 };
 
 enum LLVMTripleEnvironmentType
 {
     LlvmTripleEnvironmentType_UnknownEnvironment,
+
     LlvmTripleEnvironmentType_GNU,
+    LlvmTripleEnvironmentType_GNUABIN32,
     LlvmTripleEnvironmentType_GNUABI64,
     LlvmTripleEnvironmentType_GNUEABI,
     LlvmTripleEnvironmentType_GNUEABIHF,
@@ -154,12 +173,13 @@ enum LLVMTripleEnvironmentType
     LlvmTripleEnvironmentType_Musl,
     LlvmTripleEnvironmentType_MuslEABI,
     LlvmTripleEnvironmentType_MuslEABIHF,
+
     LlvmTripleEnvironmentType_MSVC,
     LlvmTripleEnvironmentType_Itanium,
     LlvmTripleEnvironmentType_Cygnus,
-    LlvmTripleEnvironmentType_AMDOpenCL,
     LlvmTripleEnvironmentType_CoreCLR,
-    LlvmTripleEnvironmentType_LastEnvironmentType = LlvmTripleEnvironmentType_CoreCLR
+    LlvmTripleEnvironmentType_Simulator,  // Simulator variants of other systems, e.g., Apple's iOS
+    LlvmTripleEnvironmentType_LastEnvironmentType = LlvmTripleEnvironmentType_Simulator
 };
 
 enum LLVMTripleObjectFormatType
@@ -168,6 +188,7 @@ enum LLVMTripleObjectFormatType
     LlvmTripleObjectFormatType_COFF,
     LlvmTripleObjectFormatType_ELF,
     LlvmTripleObjectFormatType_MachO,
+    LlvmTripleObjectFormatType_Wasm,
 };
 
 typedef struct LLVMOpaqueTriple* LLVMTripleRef;

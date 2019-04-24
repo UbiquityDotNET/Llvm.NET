@@ -4,7 +4,7 @@
 
 using System;
 using Llvm.NET.DebugInfo;
-using Llvm.NET.Native;
+using Llvm.NET.Interop;
 using Llvm.NET.Properties;
 
 // SA1515  Single-line comment should be preceded by blank line
@@ -13,7 +13,7 @@ using Llvm.NET.Properties;
 // SA1025  Code should not contain multiple whitespace characters in a row.
 #pragma warning disable SA1025
 
-using static Llvm.NET.LlvmMetadata.NativeMethods;
+using static Llvm.NET.Interop.NativeMethods;
 
 namespace Llvm.NET
 {
@@ -21,7 +21,7 @@ namespace Llvm.NET
     /// <remarks>In LLVM this is just "Metadata" however that name has the potential
     /// to conflict with the .NET runtime namespace of the same name, so the name
     /// is changed in the .NET bindings to avoid the conflict.</remarks>
-    public abstract partial class LlvmMetadata
+    public abstract class LlvmMetadata
     {
         /// <summary>Replace all uses of this descriptor with another</summary>
         /// <param name="other">New descriptor to replace this one with</param>
@@ -37,14 +37,14 @@ namespace Llvm.NET
                 throw new InvalidOperationException( Resources.Cannot_Replace_all_uses_of_a_null_descriptor );
             }
 
-            NativeMethods.LLVMMetadataReplaceAllUsesWith( MetadataHandle, other.MetadataHandle );
+            LLVMMetadataReplaceAllUsesWith( MetadataHandle, other.MetadataHandle );
             MetadataHandle = default;
         }
 
         /// <inheritdoc/>
         public override string ToString( )
         {
-            return MetadataHandle == default ? string.Empty : NativeMethods.LLVMMetadataAsString( MetadataHandle );
+            return MetadataHandle == default ? string.Empty : LLVMMetadataAsString( MetadataHandle );
         }
 
         internal LLVMMetadataRef MetadataHandle { get; /*protected*/ set; }

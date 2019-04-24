@@ -2,12 +2,12 @@
 // Copyright (c) .NET Foundation. All rights reserved.
 // </copyright>
 
-using static Llvm.NET.Transforms.VectorTransforms.NativeMethods;
+using static Llvm.NET.Interop.NativeMethods;
 
 namespace Llvm.NET.Transforms
 {
     /// <summary>Extension methods for adding vector transform passes</summary>
-    public static partial class VectorTransforms
+    public static class VectorTransforms
     {
         /// <summary>Adds a loop vectorizer pass</summary>
         /// <typeparam name="T"><see cref="PassManager"/> type</typeparam>

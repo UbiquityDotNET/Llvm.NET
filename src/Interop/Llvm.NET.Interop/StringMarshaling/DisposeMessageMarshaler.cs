@@ -9,15 +9,18 @@
 // ------------------------------------------------------------------------------
 
 using System;
+using System.CodeDom.Compiler;
 using System.Diagnostics.CodeAnalysis;
 using System.Runtime.InteropServices;
 
 namespace Llvm.NET.Interop
 {
-    [SuppressMessage( "Microsoft.Performance", "CA1812:AvoidUninstantiatedInternalClasses", Justification = "Instantiated via CustomMarshaling" )]
+     ///<summary>Custom string marshaling class for strings using LLVMDisposeMessage</summary>
+    [GeneratedCode("LlvmBindingsGenerator","2.17941.31104.49410")]
     public class DisposeMessageMarshaler
         : ICustomMarshaler
     {
+        ///<Inheritdoc/>
         public void CleanUpManagedData( object ManagedObj )
         {
         }

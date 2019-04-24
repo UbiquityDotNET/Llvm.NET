@@ -16,9 +16,9 @@ namespace Llvm.NET.Interop
 {
     public static partial class NativeMethods
     {
+        [return: MarshalAs( UnmanagedType.Bool )]
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
-        [return: MarshalAs( UnmanagedType.Bool )]
         public static extern bool LLVMContextGetIsODRUniquingDebugTypes( LLVMContextRef context );
 
         [SuppressUnmanagedCodeSecurity]

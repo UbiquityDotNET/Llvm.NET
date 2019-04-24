@@ -18,6 +18,11 @@ LLVMGetModuleSourceFileName
 LLVMSetModuleSourceFileName
 LLVMGetModuleName
 LLVMGetGlobalAlias
+LLVMModuleEnumerateComdats
+LLVMModuleInsertOrUpdateComdat
+LLVMModuleComdatRemove
+LLVMModuleComdatClear
+LLVMComdatGetName
 LLVMModuleGetFirstGlobalAlias
 LLVMModuleGetNextGlobalAlias
 LLVMAddAddressSanitizerFunctionPass

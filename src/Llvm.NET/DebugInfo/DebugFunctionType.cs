@@ -16,7 +16,7 @@ namespace Llvm.NET.DebugInfo
     /// <para>Function signatures are unnamed interned types in LLVM. While there is usually a one
     /// to one mapping between an LLVM function signature type and the source language debug
     /// signature type - that isn't always true. In particular, when passing data by value. In
-    /// cases where the address of a by value structure is needed a common pattern is to use
+    /// cases where the address of a by value structure is needed, a common pattern is to use
     /// a pointer to the structure in the signature, then perform an Alloca + memcpy. The
     /// actual approach taken depends on the calling conventions of the target. In these cases
     /// you get an LLVM signature that doesn't match the source and could actually match another

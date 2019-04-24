@@ -9,16 +9,14 @@ using System.Linq;
 using System.Text;
 using JetBrains.Annotations;
 using Llvm.NET.DebugInfo;
+using Llvm.NET.Interop;
 using Llvm.NET.JIT;
-using Llvm.NET.Native;
 using Llvm.NET.Properties;
 using Llvm.NET.Types;
 using Llvm.NET.Values;
 using Ubiquity.ArgValidators;
 
-using static Llvm.NET.BitcodeModule.NativeMethods;
-using static Llvm.NET.Context.NativeMethods;
-using static Llvm.NET.Types.TypeRef.NativeMethods;
+using static Llvm.NET.Interop.NativeMethods;
 
 namespace Llvm.NET
 {
@@ -40,7 +38,7 @@ namespace Llvm.NET
     /// manipulating LLVM objects from multiple threads may lead to race conditions corrupted state and any number
     /// of other undefined issues.</note>
     /// </remarks>
-    public sealed partial class Context
+    public sealed class Context
         : DisposableObject
         , IBitcodeModuleFactory
     {
@@ -49,9 +47,6 @@ namespace Llvm.NET
             : this( LLVMContextCreate( ) )
         {
         }
-
-        /// <inheritdoc/>
-        public override bool IsDisposed => ContextHandle.IsClosed;
 
         /// <summary>Gets the LLVM void type for this context</summary>
         public ITypeRef VoidType => TypeRef.FromHandle( LLVMVoidTypeInContext( ContextHandle ) );
@@ -874,7 +869,7 @@ namespace Llvm.NET
         }
 
         /// <inheritdoc />
-        protected override void InternalDispose( bool disposing )
+        protected override void Dispose( bool disposing )
         {
             // disconnect all modules as some may be shared modules shared to a JIT
             foreach( var module in Modules )
@@ -887,7 +882,7 @@ namespace Llvm.NET
             // when the context is, so when the GC finalizes the execution engine
             // the modules are already destroyed triggering a double free.
             EngineCache.Clear( );
-            LLVMContextSetDiagnosticHandler( ContextHandle, IntPtr.Zero, IntPtr.Zero );
+            LLVMContextSetDiagnosticHandler( ContextHandle, null, IntPtr.Zero );
             ActiveHandler.Dispose( );
 
             ContextCache.Remove( ContextHandle );

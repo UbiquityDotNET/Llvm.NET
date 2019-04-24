@@ -31,7 +31,7 @@ namespace Llvm.NET.Interop
      * returns 1, otherwise it returns 0.
      */
     [UnmanagedFunctionPointer( global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
-    public delegate int LLVMOpInfoCallback( global::System.IntPtr DisInfo, ulong PC, ulong Offset, ulong Size, int TagType, global::System.IntPtr TagBuf );
+    public delegate int LLVMOpInfoCallback( global::System.IntPtr DisInfo, System.UInt64 PC, System.UInt64 Offset, System.UInt64 Size, int TagType, global::System.IntPtr TagBuf );
 
     /**
      * The type for the symbol lookup function.  This may be called by the
@@ -46,15 +46,15 @@ namespace Llvm.NET.Interop
      * to NULL.
      */
     [UnmanagedFunctionPointer( global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
-    public delegate string LLVMSymbolLookupCallback( global::System.IntPtr DisInfo, ulong ReferenceValue, out ulong ReferenceType, ulong ReferencePC, [MarshalAs( UnmanagedType.LPStr, ArraySubType = UnmanagedType.LPStr )]global::System.String[] ReferenceName );
+    public delegate string LLVMSymbolLookupCallback( global::System.IntPtr DisInfo, System.UInt64 ReferenceValue, out System.UInt64 ReferenceType, System.UInt64 ReferencePC, [MarshalAs( UnmanagedType.LPStr, ArraySubType = UnmanagedType.LPStr )]global::System.String[] ReferenceName );
 
     [StructLayout( LayoutKind.Sequential )]
     public struct LLVMOpInfoSymbol1
     {
-        ulong Present;
+        System.UInt64 Present;
         [MarshalAs( UnmanagedType.LPStr )]
         string Name;
-        ulong Value;
+        System.UInt64 Value;
     }
 
     [StructLayout( LayoutKind.Sequential )]
@@ -62,8 +62,8 @@ namespace Llvm.NET.Interop
     {
         global::Llvm.NET.Interop.LLVMOpInfoSymbol1 AddSymbol;
         global::Llvm.NET.Interop.LLVMOpInfoSymbol1 SubtractSymbol;
-        ulong Value;
-        ulong VariantKind;
+        System.UInt64 Value;
+        System.UInt64 VariantKind;
     }
 
     public static partial class NativeMethods

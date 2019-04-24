@@ -3,16 +3,15 @@
 // </copyright>
 
 using System;
-using Llvm.NET.Native;
+using Llvm.NET.Interop;
 using Llvm.NET.Properties;
 using Ubiquity.ArgValidators;
-using static Llvm.NET.Target.NativeMethods;
-using static Llvm.NET.TargetMachine.NativeMethods;
+using static Llvm.NET.Interop.NativeMethods;
 
 namespace Llvm.NET
 {
     /// <summary>Target specific code generation information</summary>
-    public sealed partial class TargetMachine
+    public sealed class TargetMachine
     {
         /// <summary>Initializes a new instance of the <see cref="TargetMachine"/> class.</summary>
         /// <param name="triple">Triple for the target machine</param>

@@ -32,6 +32,8 @@ namespace Llvm.NET.Interop
 
         public static bool operator !=( LLVMTargetLibraryInfoRef lhs, LLVMTargetLibraryInfoRef rhs ) => !( lhs == rhs );
 
+        public static LLVMTargetLibraryInfoRef Zero { get; } = new LLVMTargetLibraryInfoRef(IntPtr.Zero);
+
         internal LLVMTargetLibraryInfoRef( IntPtr p )
         {
             Handle = p;

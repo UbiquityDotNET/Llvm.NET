@@ -3,10 +3,11 @@
 // </copyright>
 
 using System;
-using Llvm.NET.Native;
+using Llvm.NET.Interop;
+using Llvm.NET.Properties;
 using Llvm.NET.Types;
 
-using static Llvm.NET.Types.TypeRef.NativeMethods;
+using static Llvm.NET.Interop.NativeMethods;
 
 namespace Llvm.NET.Values
 {
@@ -15,7 +16,7 @@ namespace Llvm.NET.Values
         : User
     {
         /// <summary>Gets a value indicating whether the constant is a Zero value for the its type</summary>
-        public bool IsZeroValue => NativeMethods.LLVMIsConstantZeroValue( ValueHandle );
+        public bool IsZeroValue => LLVMIsConstantZeroValue( ValueHandle );
 
         /// <summary>Create a NULL pointer for a given type</summary>
         /// <param name="typeRef">Type of pointer to create a null vale for</param>
@@ -30,7 +31,7 @@ namespace Llvm.NET.Values
             var kind = typeRef.Kind;
             if( kind == TypeKind.Label || kind == TypeKind.Function || ( typeRef is StructType structType && structType.IsOpaque ) )
             {
-                throw new ArgumentException( "Cannot get a Null value for labels, functions and opaque types" );
+                throw new ArgumentException( Resources.Cannot_get_null_for_labels_and_opaque_types );
             }
 
             return FromHandle<Constant>( LLVMConstNull( typeRef.GetTypeRef( ) ) );

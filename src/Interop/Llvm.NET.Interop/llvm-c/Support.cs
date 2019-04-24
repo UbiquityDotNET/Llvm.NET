@@ -22,9 +22,9 @@ namespace Llvm.NET.Interop
          *
          * @see sys::DynamicLibrary::LoadLibraryPermanently()
           */
+        [return: MarshalAs( UnmanagedType.Bool )]
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
-        [return: MarshalAs( UnmanagedType.Bool )]
         public static extern bool LLVMLoadLibraryPermanently( [MarshalAs( UnmanagedType.LPStr )]string Filename );
 
         /**

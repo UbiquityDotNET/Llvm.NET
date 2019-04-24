@@ -3,10 +3,10 @@
 // </copyright>
 
 using System;
-using Llvm.NET.Native;
+using Llvm.NET.Interop;
 using Llvm.NET.Properties;
 
-using static Llvm.NET.Values.Value.NativeMethods;
+using static Llvm.NET.Interop.NativeMethods;
 
 namespace Llvm.NET.Values
 {
@@ -49,7 +49,7 @@ namespace Llvm.NET.Values
                     throw new ArgumentException( Resources.Mismatched_modules_for_Comdat, nameof( value ) );
                 }
 
-                LLVMGlobalObjectSetComdat( ValueHandle, value?.ComdatHandle?? new LLVMComdatRef( IntPtr.Zero ) );
+                LLVMGlobalObjectSetComdat( ValueHandle, value?.ComdatHandle ?? LLVMComdatRef.Zero );
             }
         }
 

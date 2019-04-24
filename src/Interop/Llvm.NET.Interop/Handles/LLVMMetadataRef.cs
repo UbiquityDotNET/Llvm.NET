@@ -32,6 +32,8 @@ namespace Llvm.NET.Interop
 
         public static bool operator !=( LLVMMetadataRef lhs, LLVMMetadataRef rhs ) => !( lhs == rhs );
 
+        public static LLVMMetadataRef Zero { get; } = new LLVMMetadataRef(IntPtr.Zero);
+
         internal LLVMMetadataRef( IntPtr p )
         {
             Handle = p;

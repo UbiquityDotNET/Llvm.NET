@@ -6,11 +6,10 @@ using System;
 using System.Collections.Generic;
 using JetBrains.Annotations;
 using Llvm.NET.Instructions;
-using Llvm.NET.Native;
+using Llvm.NET.Interop;
 using Llvm.NET.Properties;
 
-using static Llvm.NET.Instructions.Instruction.NativeMethods;
-using static Llvm.NET.Values.BasicBlock.NativeMethods;
+using static Llvm.NET.Interop.NativeMethods;
 
 namespace Llvm.NET.Values
 {
@@ -20,7 +19,7 @@ namespace Llvm.NET.Values
     /// and a single exit. The exit point must be a <see cref="Terminator"/>
     /// instruction or the block is not (yet) well-formed.
     /// </remarks>
-    public partial class BasicBlock
+    public class BasicBlock
         : Value
     {
         /// <summary>Gets the function containing the block</summary>

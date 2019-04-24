@@ -9,14 +9,14 @@ using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Runtime.InteropServices;
 using Llvm.NET.Instructions;
-using Llvm.NET.Native;
+using Llvm.NET.Interop;
 using Llvm.NET.Properties;
-using static Llvm.NET.Values.Value.NativeMethods;
-using static Llvm.NET.Values.ValueCache.NativeMethods;
+
+using static Llvm.NET.Interop.NativeMethods;
 
 namespace Llvm.NET.Values
 {
-    internal partial class ValueCache
+    internal class ValueCache
         : IHandleInterning<LLVMValueRef, Value>
     {
         public Context Context { get; }

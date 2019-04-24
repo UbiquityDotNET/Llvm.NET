@@ -9,13 +9,13 @@ using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using JetBrains.Annotations;
 using Llvm.NET.DebugInfo;
-using Llvm.NET.Native;
+using Llvm.NET.Interop;
 using Llvm.NET.Properties;
 using Llvm.NET.Types;
 using Llvm.NET.Values;
 using Ubiquity.ArgValidators;
-using static Llvm.NET.Instructions.Instruction.NativeMethods;
-using static Llvm.NET.Instructions.InstructionBuilder.NativeMethods;
+
+using static Llvm.NET.Interop.NativeMethods;
 
 namespace Llvm.NET.Instructions
 {

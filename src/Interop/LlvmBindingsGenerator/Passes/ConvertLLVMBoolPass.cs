@@ -49,27 +49,25 @@ namespace LlvmBindingsGenerator.Passes
 
         public override bool VisitFunctionDecl( Function function )
         {
-            if( function.ReturnType.Type is TypedefType tdt && tdt.Declaration.Name == LLVMBoolTypeName )
+            var signature = ( FunctionType )function.FunctionType.Type;
+            switch( function.ReturnType.Type )
             {
-                var signature = ( FunctionType )function.FunctionType.Type;
-                if( FunctionNames.Contains( function.Name ) )
-                {
-                    var statusDecl = new TypedefDecl( )
-                    {
-                        Name = "LLVMStatus",
-                        QualifiedType = tdt.Declaration.QualifiedType
-                    };
-                    function.ReturnType = new QualifiedType( new TypedefType( statusDecl ), function.ReturnType.Qualifiers );
-                    signature.ReturnType = function.ReturnType;
-                    Diagnostics.Debug( "Converted return type of function {0} to LLVMStatus", function.Name );
-                }
-                else
-                {
-                    function.Attributes.Add( ReturnBoolAttribute );
-                    function.ReturnType = new QualifiedType( new CILType( typeof( bool ) ) );
-                    signature.ReturnType = function.ReturnType;
-                    Diagnostics.Debug( "Converted return type of function {0} to bool", function.Name );
-                }
+            // Any function listed in the map is converted regardless of declared return type
+            // Some functions use int instead of LlvmBool, apparently to avoid the confusion.
+            // Unfortunately since this is not consistent, it creates more confusion.
+            case Type _ when FunctionNames.Contains( function.Name ):
+                function.ReturnType = LlvmStatusType;
+                signature.ReturnType = function.ReturnType;
+                Diagnostics.Debug( "Converted return type of function {0} to LLVMStatus", function.Name );
+                break;
+
+            // functions not mapped but having LlvmBool are converted to returning "bool"
+            case TypedefType tdt when tdt.Declaration.Name == LLVMBoolTypeName:
+                function.Attributes.Add( ReturnBoolAttribute );
+                function.ReturnType = BoolType;
+                signature.ReturnType = function.ReturnType;
+                Diagnostics.Debug( "Converted return type of function {0} to bool", function.Name );
+                break;
             }
 
             foreach( var p in function.Parameters )
@@ -85,11 +83,22 @@ namespace LlvmBindingsGenerator.Passes
             return true;
         }
 
+        private readonly ISet<string> FunctionNames;
+        private static QualifiedType BoolType = new QualifiedType( new CILType( typeof(bool ) ) );
+        private static QualifiedType LlvmStatusType =
+            new QualifiedType(
+                new TypedefType(
+                    new TypedefDecl
+                    {
+                        Name = "LLVMStatus",
+                        QualifiedType = new QualifiedType( new BuiltinType( PrimitiveType.Int ) )
+                    }
+                    )
+                );
+
         private static Attribute ReturnBoolAttribute { get; } = new TargetedAttribute( AttributeTarget.Return, typeof( MarshalAsAttribute ), UnmanagedTypeBool );
 
         private static Attribute ParamBoolAttribute { get; } = new TargetedAttribute( typeof( MarshalAsAttribute ), UnmanagedTypeBool );
-
-        private readonly ISet<string> FunctionNames;
 
         private const string LLVMBoolTypeName = "LLVMBool";
         private const string UnmanagedTypeBool = "UnmanagedType.Bool";

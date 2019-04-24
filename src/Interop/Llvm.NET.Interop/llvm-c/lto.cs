@@ -87,14 +87,14 @@ namespace Llvm.NET.Interop
      * \since LTO_API_VERSION=7
      */
     [UnmanagedFunctionPointer( global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
-    public delegate void lto_diagnostic_handler_t( global::Llvm.NET.Interop.lto_codegen_diagnostic_severity_t severity, [MarshalAs( UnmanagedType.LPStr )]string diag, global::System.IntPtr ctxt );
+    public delegate void lto_diagnostic_handler_t( lto_codegen_diagnostic_severity_t severity, [MarshalAs( UnmanagedType.LPStr )]string diag, global::System.IntPtr ctxt );
 
     [StructLayout( LayoutKind.Sequential )]
     public struct LTOObjectBuffer
     {
         [MarshalAs( UnmanagedType.LPStr )]
         string Buffer;
-        ulong Size;
+        size_t Size;
     }
 
     public static partial class NativeMethods

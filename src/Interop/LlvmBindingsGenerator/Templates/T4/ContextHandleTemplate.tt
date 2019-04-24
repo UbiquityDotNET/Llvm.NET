@@ -37,6 +37,8 @@ namespace Llvm.NET.Interop
 
         public static bool operator !=( <#=HandleName#> lhs, <#=HandleName#> rhs ) => !( lhs == rhs );
 
+        public static <#=HandleName#> Zero { get; } = new <#=HandleName#>(IntPtr.Zero);
+
         internal <#=HandleName#>( IntPtr p )
         {
             Handle = p;

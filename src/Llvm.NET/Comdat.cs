@@ -2,10 +2,10 @@
 // Copyright (c) .NET Foundation. All rights reserved.
 // </copyright>
 
-using Llvm.NET.Native;
+using Llvm.NET.Interop;
 using Ubiquity.ArgValidators;
 
-using static Llvm.NET.Comdat.NativeMethods;
+using static Llvm.NET.Interop.NativeMethods;
 
 namespace Llvm.NET
 {
@@ -13,19 +13,19 @@ namespace Llvm.NET
     public enum ComdatKind
     {
         /// <summary>Linker may choose any COMDAT key, the choice is arbitrary</summary>
-        Any = LLVMComdatSelectionKind.ANY,
+        Any = LLVMComdatSelectionKind.LLVMAnyComdatSelectionKind,
 
         /// <summary>Linker may choose any COMDAT key but sections must contain the same data</summary>
-        ExactMatch = LLVMComdatSelectionKind.EXACTMATCH,
+        ExactMatch = LLVMComdatSelectionKind.LLVMExactMatchComdatSelectionKind,
 
         /// <summary>The linker will choose the section containing the targets COMDAT key</summary>
-        Largest = LLVMComdatSelectionKind.LARGEST,
+        Largest = LLVMComdatSelectionKind.LLVMLargestComdatSelectionKind,
 
         /// <summary>The linker requires that only one section with this COMDAT key exists</summary>
-        NoDuplicates = LLVMComdatSelectionKind.NODUPLICATES,
+        NoDuplicates = LLVMComdatSelectionKind.LLVMNoDuplicatesComdatSelectionKind,
 
         /// <summary>Linker may choose any COMDAT key but sections must contain the same amount of data</summary>
-        SameSize = LLVMComdatSelectionKind.SAMESIZE
+        SameSize = LLVMComdatSelectionKind.LLVMSameSizeComdatSelectionKind
     }
 
     /// <summary>Comdat entry for a module</summary>
@@ -35,7 +35,7 @@ namespace Llvm.NET
     /// Comdats it owns are invalidated. Using a Comdat instance after the module is disposed results in
     /// an effective NOP.
     /// </remarks>
-    public partial class Comdat
+    public class Comdat
     {
         /// <summary>Gets the name of the <see cref="Comdat"/></summary>
         public string Name => Module.IsDisposed ? string.Empty : LLVMComdatGetName( ComdatHandle );
@@ -50,7 +50,7 @@ namespace Llvm.NET
                     return default;
                 }
 
-                return ( ComdatKind )LLVMComdatGetKind( ComdatHandle );
+                return ( ComdatKind )LLVMGetComdatSelectionKind( ComdatHandle );
             }
 
             set
@@ -60,7 +60,7 @@ namespace Llvm.NET
                     return;
                 }
 
-                LLVMComdatSetKind( ComdatHandle, ( LLVMComdatSelectionKind )value );
+                LLVMSetComdatSelectionKind( ComdatHandle, ( LLVMComdatSelectionKind )value );
             }
         }
 

@@ -15,13 +15,13 @@ using System.Security;
 namespace Llvm.NET.Interop
 {
     [UnmanagedFunctionPointer( global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
-    unsafe public delegate byte* LLVMMemoryManagerAllocateCodeSectionCallback( global::System.IntPtr Opaque, ulong Size, uint Alignment, uint SectionID, [MarshalAs( UnmanagedType.LPStr )]string SectionName );
+    unsafe public delegate byte* LLVMMemoryManagerAllocateCodeSectionCallback( global::System.IntPtr Opaque, System.UIntPtr Size, uint Alignment, uint SectionID, [MarshalAs( UnmanagedType.LPStr )]string SectionName );
 
     [UnmanagedFunctionPointer( global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
-    unsafe public delegate byte* LLVMMemoryManagerAllocateDataSectionCallback( global::System.IntPtr Opaque, ulong Size, uint Alignment, uint SectionID, [MarshalAs( UnmanagedType.LPStr )]string SectionName, int IsReadOnly );
+    unsafe public delegate byte* LLVMMemoryManagerAllocateDataSectionCallback( global::System.IntPtr Opaque, System.UIntPtr Size, uint Alignment, uint SectionID, [MarshalAs( UnmanagedType.LPStr )]string SectionName, bool IsReadOnly );
 
     [UnmanagedFunctionPointer( global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
-    public delegate int LLVMMemoryManagerFinalizeMemoryCallback( global::System.IntPtr Opaque, [MarshalAs( UnmanagedType.LPStr, ArraySubType = UnmanagedType.LPStr )]global::System.String[] ErrMsg );
+    public delegate bool LLVMMemoryManagerFinalizeMemoryCallback( global::System.IntPtr Opaque, [MarshalAs( UnmanagedType.LPStr, ArraySubType = UnmanagedType.LPStr )]global::System.String[] ErrMsg );
 
     [UnmanagedFunctionPointer( global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
     public delegate void LLVMMemoryManagerDestroyCallback( global::System.IntPtr Opaque );
@@ -30,9 +30,9 @@ namespace Llvm.NET.Interop
     public struct LLVMMCJITCompilerOptions
     {
         uint OptLevel;
-        global::Llvm.NET.Interop.LLVMCodeModel CodeModel;
-        int NoFramePointerElim;
-        int EnableFastISel;
+        LLVMCodeModel CodeModel;
+        bool NoFramePointerElim;
+        bool EnableFastISel;
         LLVMMCJITMemoryManagerRef MCJMM;
     }
 
@@ -82,19 +82,19 @@ namespace Llvm.NET.Interop
 
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
-        public static extern LLVMStatus LLVMCreateExecutionEngineForModule( LLVMExecutionEngineRef OutEE, LLVMModuleRef M, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( DisposeMessageMarshaler ) )]out string OutError );
+        public static extern LLVMStatus LLVMCreateExecutionEngineForModule( out LLVMExecutionEngineRef OutEE, LLVMModuleRef M, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( DisposeMessageMarshaler ) )]out string OutError );
 
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
-        public static extern LLVMStatus LLVMCreateInterpreterForModule( LLVMExecutionEngineRef OutInterp, LLVMModuleRef M, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( DisposeMessageMarshaler ) )]out string OutError );
+        public static extern LLVMStatus LLVMCreateInterpreterForModule( out LLVMExecutionEngineRef OutInterp, LLVMModuleRef M, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( DisposeMessageMarshaler ) )]out string OutError );
 
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
-        public static extern LLVMStatus LLVMCreateJITCompilerForModule( LLVMExecutionEngineRef OutJIT, LLVMModuleRef M, uint OptLevel, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( DisposeMessageMarshaler ) )]out string OutError );
+        public static extern LLVMStatus LLVMCreateJITCompilerForModule( out LLVMExecutionEngineRef OutJIT, LLVMModuleRef M, uint OptLevel, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( DisposeMessageMarshaler ) )]out string OutError );
 
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
-        public static extern void LLVMInitializeMCJITCompilerOptions( global::Llvm.NET.Interop.LLVMMCJITCompilerOptions Options, ulong SizeOfOptions );
+        public static extern void LLVMInitializeMCJITCompilerOptions( global::Llvm.NET.Interop.LLVMMCJITCompilerOptions Options, size_t SizeOfOptions );
 
         /**
          * Create an MCJIT execution engine for a module, with the given options. It is
@@ -115,7 +115,7 @@ namespace Llvm.NET.Interop
          */
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
-        public static extern LLVMStatus LLVMCreateMCJITCompilerForModule( LLVMExecutionEngineRef OutJIT, LLVMModuleRef M, global::Llvm.NET.Interop.LLVMMCJITCompilerOptions Options, ulong SizeOfOptions, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( DisposeMessageMarshaler ) )]out string OutError );
+        public static extern LLVMStatus LLVMCreateMCJITCompilerForModule( out LLVMExecutionEngineRef OutJIT, LLVMModuleRef M, global::Llvm.NET.Interop.LLVMMCJITCompilerOptions Options, size_t SizeOfOptions, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( DisposeMessageMarshaler ) )]out string OutError );
 
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
@@ -131,7 +131,7 @@ namespace Llvm.NET.Interop
 
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
-        public static extern LLVMGenericValueRef LLVMRunFunction( LLVMExecutionEngineRef EE, LLVMValueRef F, uint NumArgs, LLVMGenericValueRef Args );
+        public static extern LLVMGenericValueRef LLVMRunFunction( LLVMExecutionEngineRef EE, LLVMValueRef F, uint NumArgs, out LLVMGenericValueRef Args );
 
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
@@ -143,11 +143,11 @@ namespace Llvm.NET.Interop
 
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
-        public static extern LLVMStatus LLVMRemoveModule( LLVMExecutionEngineRef EE, LLVMModuleRef M, LLVMModuleRef OutMod, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( DisposeMessageMarshaler ) )]out string OutError );
+        public static extern LLVMStatus LLVMRemoveModule( LLVMExecutionEngineRef EE, LLVMModuleRef M, out LLVMModuleRef OutMod, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( DisposeMessageMarshaler ) )]out string OutError );
 
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
-        public static extern LLVMStatus LLVMFindFunction( LLVMExecutionEngineRef EE, [MarshalAs( UnmanagedType.LPStr )]string Name, LLVMValueRef OutFn );
+        public static extern LLVMStatus LLVMFindFunction( LLVMExecutionEngineRef EE, [MarshalAs( UnmanagedType.LPStr )]string Name, out LLVMValueRef OutFn );
 
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
@@ -171,11 +171,11 @@ namespace Llvm.NET.Interop
 
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
-        public static extern ulong LLVMGetGlobalValueAddress( LLVMExecutionEngineRef EE, [MarshalAs( UnmanagedType.LPStr )]string Name );
+        public static extern System.UInt64 LLVMGetGlobalValueAddress( LLVMExecutionEngineRef EE, [MarshalAs( UnmanagedType.LPStr )]string Name );
 
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
-        public static extern ulong LLVMGetFunctionAddress( LLVMExecutionEngineRef EE, [MarshalAs( UnmanagedType.LPStr )]string Name );
+        public static extern System.UInt64 LLVMGetFunctionAddress( LLVMExecutionEngineRef EE, [MarshalAs( UnmanagedType.LPStr )]string Name );
 
         /**
          * Create a simple custom MCJIT memory manager. This memory manager can
@@ -190,7 +190,7 @@ namespace Llvm.NET.Interop
          */
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
-        public static extern LLVMMCJITMemoryManagerRef LLVMCreateSimpleMCJITMemoryManager( global::System.IntPtr Opaque, global::Llvm.NET.Interop.LLVMMemoryManagerAllocateCodeSectionCallback AllocateCodeSection, global::Llvm.NET.Interop.LLVMMemoryManagerAllocateDataSectionCallback AllocateDataSection, global::Llvm.NET.Interop.LLVMMemoryManagerFinalizeMemoryCallback FinalizeMemory, global::Llvm.NET.Interop.LLVMMemoryManagerDestroyCallback Destroy );
+        public static extern LLVMMCJITMemoryManagerRef LLVMCreateSimpleMCJITMemoryManager( global::System.IntPtr Opaque, LLVMMemoryManagerAllocateCodeSectionCallback AllocateCodeSection, LLVMMemoryManagerAllocateDataSectionCallback AllocateDataSection, LLVMMemoryManagerFinalizeMemoryCallback FinalizeMemory, LLVMMemoryManagerDestroyCallback Destroy );
 
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]

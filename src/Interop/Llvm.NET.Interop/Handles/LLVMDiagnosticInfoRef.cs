@@ -32,6 +32,8 @@ namespace Llvm.NET.Interop
 
         public static bool operator !=( LLVMDiagnosticInfoRef lhs, LLVMDiagnosticInfoRef rhs ) => !( lhs == rhs );
 
+        public static LLVMDiagnosticInfoRef Zero { get; } = new LLVMDiagnosticInfoRef(IntPtr.Zero);
+
         internal LLVMDiagnosticInfoRef( IntPtr p )
         {
             Handle = p;

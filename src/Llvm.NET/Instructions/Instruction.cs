@@ -4,11 +4,11 @@
 
 using System;
 using System.Diagnostics.CodeAnalysis;
-using Llvm.NET.Native;
+using Llvm.NET.Interop;
+using Llvm.NET.Properties;
 using Llvm.NET.Values;
 
-using static Llvm.NET.Instructions.Instruction.NativeMethods;
-using static Llvm.NET.Values.Value.NativeMethods;
+using static Llvm.NET.Interop.NativeMethods;
 
 namespace Llvm.NET.Instructions
 {
@@ -418,7 +418,7 @@ namespace Llvm.NET.Instructions
     }
 
     /// <summary>Exposes an LLVM Instruction</summary>
-    public partial class Instruction
+    public class Instruction
         : User
     {
         /// <summary>Gets the <see cref="BasicBlock"/> that contains this instruction</summary>
@@ -454,7 +454,7 @@ namespace Llvm.NET.Instructions
             {
                 if( !IsMemoryAccess )
                 {
-                    throw new InvalidOperationException( "Alignment can only be set for instructions dealing with memory read/write (alloca, load, store)" );
+                    throw new InvalidOperationException( Resources.Alignment_only_allowed_on_memory_instructions );
                 }
 
                 LLVMSetAlignment( ValueHandle, value );

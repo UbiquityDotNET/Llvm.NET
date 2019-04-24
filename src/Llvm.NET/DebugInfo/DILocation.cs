@@ -3,10 +3,10 @@
 // </copyright>
 
 using JetBrains.Annotations;
-using Llvm.NET.Native;
+using Llvm.NET.Interop;
 using Ubiquity.ArgValidators;
 
-using static Llvm.NET.DebugInfo.DINode.NativeMethods;
+using static Llvm.NET.Interop.NativeMethods;
 
 namespace Llvm.NET.DebugInfo
 {

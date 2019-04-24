@@ -24,9 +24,9 @@ namespace Llvm.NET.Interop
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern LLVMSectionIteratorRef LLVMGetSections( LLVMObjectFileRef ObjectFile );
 
+        [return: MarshalAs( UnmanagedType.Bool )]
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
-        [return: MarshalAs( UnmanagedType.Bool )]
         public static extern bool LLVMIsSectionIteratorAtEnd( LLVMObjectFileRef ObjectFile, LLVMSectionIteratorRef SI );
 
         [SuppressUnmanagedCodeSecurity]
@@ -41,9 +41,9 @@ namespace Llvm.NET.Interop
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern LLVMSymbolIteratorRef LLVMGetSymbols( LLVMObjectFileRef ObjectFile );
 
+        [return: MarshalAs( UnmanagedType.Bool )]
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
-        [return: MarshalAs( UnmanagedType.Bool )]
         public static extern bool LLVMIsSymbolIteratorAtEnd( LLVMObjectFileRef ObjectFile, LLVMSymbolIteratorRef SI );
 
         [SuppressUnmanagedCodeSecurity]
@@ -57,7 +57,7 @@ namespace Llvm.NET.Interop
 
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
-        public static extern ulong LLVMGetSectionSize( LLVMSectionIteratorRef SI );
+        public static extern System.UInt64 LLVMGetSectionSize( LLVMSectionIteratorRef SI );
 
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
@@ -66,20 +66,20 @@ namespace Llvm.NET.Interop
 
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
-        public static extern ulong LLVMGetSectionAddress( LLVMSectionIteratorRef SI );
+        public static extern System.UInt64 LLVMGetSectionAddress( LLVMSectionIteratorRef SI );
 
+        [return: MarshalAs( UnmanagedType.Bool )]
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
-        [return: MarshalAs( UnmanagedType.Bool )]
         public static extern bool LLVMGetSectionContainsSymbol( LLVMSectionIteratorRef SI, LLVMSymbolIteratorRef Sym );
 
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern LLVMRelocationIteratorRef LLVMGetRelocations( LLVMSectionIteratorRef Section );
 
+        [return: MarshalAs( UnmanagedType.Bool )]
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
-        [return: MarshalAs( UnmanagedType.Bool )]
         public static extern bool LLVMIsRelocationIteratorAtEnd( LLVMSectionIteratorRef Section, LLVMRelocationIteratorRef RI );
 
         [SuppressUnmanagedCodeSecurity]
@@ -93,15 +93,15 @@ namespace Llvm.NET.Interop
 
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
-        public static extern ulong LLVMGetSymbolAddress( LLVMSymbolIteratorRef SI );
+        public static extern System.UInt64 LLVMGetSymbolAddress( LLVMSymbolIteratorRef SI );
 
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
-        public static extern ulong LLVMGetSymbolSize( LLVMSymbolIteratorRef SI );
+        public static extern System.UInt64 LLVMGetSymbolSize( LLVMSymbolIteratorRef SI );
 
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
-        public static extern ulong LLVMGetRelocationOffset( LLVMRelocationIteratorRef RI );
+        public static extern System.UInt64 LLVMGetRelocationOffset( LLVMRelocationIteratorRef RI );
 
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
@@ -109,7 +109,7 @@ namespace Llvm.NET.Interop
 
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
-        public static extern ulong LLVMGetRelocationType( LLVMRelocationIteratorRef RI );
+        public static extern System.UInt64 LLVMGetRelocationType( LLVMRelocationIteratorRef RI );
 
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]

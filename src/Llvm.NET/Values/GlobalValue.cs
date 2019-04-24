@@ -2,8 +2,9 @@
 // Copyright (c) .NET Foundation. All rights reserved.
 // </copyright>
 
-using Llvm.NET.Native;
-using static Llvm.NET.Values.Value.NativeMethods;
+using Llvm.NET.Interop;
+
+using static Llvm.NET.Interop.NativeMethods;
 
 namespace Llvm.NET.Values
 {
@@ -114,8 +115,8 @@ namespace Llvm.NET.Values
         /// <summary>Gets or sets a value indicating whether this is an Unnamed address</summary>
         public bool UnnamedAddress
         {
-            get => NativeMethods.LLVMHasUnnamedAddr( ValueHandle );
-            set => NativeMethods.LLVMSetUnnamedAddr( ValueHandle, value );
+            get => LLVMHasUnnamedAddr( ValueHandle );
+            set => LLVMSetUnnamedAddr( ValueHandle, value );
         }
 
         /// <summary>Gets a value indicating whether this is a declaration</summary>

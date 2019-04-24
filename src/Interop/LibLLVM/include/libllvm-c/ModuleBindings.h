@@ -2,9 +2,7 @@
 #define _MODULE_BINDINGS_H_
 
 #include "llvm-c/Core.h"
-#ifdef __cplusplus
-#include "llvm\IR\Comdat.h"
-#endif
+#include "llvm-c/Comdat.h"
 
 /// See Module::ModFlagBehavior
 enum LLVMModFlagBehavior
@@ -57,16 +55,16 @@ extern "C" {
     // Thus, a callback is used to provide the caller with all the elements without
     // requiring the use of unsafe and difficult to project constructs.
     // if the callback returns false the enumeration stops
-    //typedef LLVMBool( *LLVMComdatIteratorCallback )( LLVMComdatRef comdatRef );
-    //void LLVMModuleEnumerateComdats( LLVMModuleRef module, LLVMComdatIteratorCallback callback );
-    //LLVMComdatRef LLVMModuleInsertOrUpdateComdat( LLVMModuleRef module, char const* name, LLVMComdatSelectionKind kind );
-    //void LLVMModuleComdatRemove( LLVMModuleRef module, LLVMComdatRef comdatRef );
-    //void LLVMModuleComdatClear( LLVMModuleRef module );
+    typedef LLVMBool( *LLVMComdatIteratorCallback )( LLVMComdatRef comdatRef );
+    void LLVMModuleEnumerateComdats( LLVMModuleRef module, LLVMComdatIteratorCallback callback );
+    LLVMComdatRef LLVMModuleInsertOrUpdateComdat( LLVMModuleRef module, char const* name, LLVMComdatSelectionKind kind );
+    void LLVMModuleComdatRemove( LLVMModuleRef module, LLVMComdatRef comdatRef );
+    void LLVMModuleComdatClear( LLVMModuleRef module );
 
     //// Comdat accessors
     //LLVMComdatSelectionKind LLVMComdatGetKind( LLVMComdatRef comdatRef );
     //void LLVMComdatSetKind( LLVMComdatRef comdatRef, LLVMComdatSelectionKind kind );
-    //char const* LLVMComdatGetName( LLVMComdatRef comdatRef );
+    char const* LLVMComdatGetName( LLVMComdatRef comdatRef );
 
     // Alias enumeration
     LLVMValueRef LLVMModuleGetFirstGlobalAlias( LLVMModuleRef M );

@@ -10,12 +10,12 @@ using System.Linq;
 using System.Text;
 using JetBrains.Annotations;
 using Llvm.NET.Instructions;
-using Llvm.NET.Native;
+using Llvm.NET.Interop;
 using Llvm.NET.Properties;
 using Llvm.NET.Values;
 using Ubiquity.ArgValidators;
 
-using static Llvm.NET.DebugInfo.DebugInfoBuilder.NativeMethods;
+using static Llvm.NET.Interop.NativeMethods;
 
 namespace Llvm.NET.DebugInfo
 {
@@ -40,7 +40,7 @@ namespace Llvm.NET.DebugInfo
     /// be added to ensure that the data remains valid.
     /// </remarks>
     /// <seealso href="xref:llvm_sourceleveldebugging">LLVM Source Level Debugging</seealso>
-    public sealed partial class DebugInfoBuilder
+    public sealed class DebugInfoBuilder
     {
         /// <summary>Gets the module that owns this builder</summary>
         public BitcodeModule OwningModule { get; }
@@ -168,9 +168,9 @@ namespace Llvm.NET.DebugInfo
 
             var handle = LLVMDIBuilderCreateFile( BuilderHandle
                                                 , fileName
-                                                , ( IntPtr )fileName.Length
+                                                , fileName.Length
                                                 , directory ?? string.Empty
-                                                , ( IntPtr )( directory?.Length ?? 0 )
+                                                , ( long )( directory?.Length ?? 0 )
                                                 );
             return MDNode.FromHandle<DIFile>( handle );
         }
@@ -1273,7 +1273,7 @@ namespace Llvm.NET.DebugInfo
                 args = new long[ 1 ];
             }
 
-            var handle = LLVMDIBuilderCreateExpression( BuilderHandle, out args[ 0 ], ( UInt64 )actualCount );
+            var handle = LLVMDIBuilderCreateExpression( BuilderHandle, out args[ 0 ], size_t.FromInt64(actualCount) );
             return new DIExpression( handle );
         }
 

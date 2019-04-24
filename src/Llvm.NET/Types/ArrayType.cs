@@ -3,10 +3,10 @@
 // </copyright>
 
 using System;
-using Llvm.NET.Native;
+using Llvm.NET.Interop;
 using Llvm.NET.Properties;
 
-using static Llvm.NET.Types.TypeRef.NativeMethods;
+using static Llvm.NET.Interop.NativeMethods;
 
 // Interface+internal type matches file name
 #pragma warning disable SA1649

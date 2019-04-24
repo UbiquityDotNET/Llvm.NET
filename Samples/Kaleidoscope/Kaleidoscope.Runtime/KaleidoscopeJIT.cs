@@ -3,6 +3,7 @@
 // </copyright>
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Runtime.InteropServices;
 using Llvm.NET;
@@ -65,6 +66,7 @@ namespace Kaleidoscope.Runtime
         [UnmanagedFunctionPointer( CallingConvention.Cdecl )]
         public delegate double CallbackHandler4( double arg1, double arg2, double arg3, double arg4 );
 
+        [SuppressMessage( "Design", "CA1031:Do not catch general exception types", Justification = "Native callback *MUST NOT* surface managed exceptions" )]
         private double Printd( double x )
         {
             // STOP ALL EXCEPTIONS from bubbling out to JIT'ed code
@@ -79,6 +81,7 @@ namespace Kaleidoscope.Runtime
             }
         }
 
+        [SuppressMessage( "Design", "CA1031:Do not catch general exception types", Justification = "Native callback *MUST NOT* surface managed exceptions" )]
         private double PutChard( double x )
         {
             // STOP ALL EXCEPTIONS from bubbling out to JIT'ed code

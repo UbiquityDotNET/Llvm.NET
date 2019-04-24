@@ -3,6 +3,7 @@
 // </copyright>
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Llvm.NET
 {
@@ -17,14 +18,19 @@ namespace Llvm.NET
         }
 
         /// <inheritdoc/>
+        [SuppressMessage( "Design", "CA1063:Implement IDisposable Correctly", Justification = "This guarantees dispose is idempotent" )]
         public void Dispose( )
         {
-            Dispose( true );
-            GC.SuppressFinalize(this);
+            if( !IsDisposed )
+            {
+                Dispose( true );
+                IsDisposed = true;
+                GC.SuppressFinalize( this );
+            }
         }
 
         /// <summary>Gets a value indicating whether the object is disposed or not</summary>
-        public abstract bool IsDisposed { get; }
+        public bool IsDisposed { get; private set; }
 
         /// <summary>Abstract method that is implemented by derived types to perform the dispose operation</summary>
         /// <param name="disposing">Indicates if this is a dispose or finalize operation</param>
@@ -34,14 +40,6 @@ namespace Llvm.NET
         /// is <see langword="true"/> then the implementation should release managed and unmanaged resources, otherwise it should
         /// only release the unmanaged resources
         /// </remarks>
-        protected abstract void InternalDispose( bool disposing );
-
-        private void Dispose( bool disposing )
-        {
-            if( !IsDisposed )
-            {
-                InternalDispose( disposing );
-            }
-        }
+        protected abstract void Dispose( bool disposing );
     }
 }

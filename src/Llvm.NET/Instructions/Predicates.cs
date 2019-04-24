@@ -3,8 +3,8 @@
 // </copyright>
 
 using System.Diagnostics.CodeAnalysis;
-using Llvm.NET.Native;
-using static Llvm.NET.Instructions.Instruction.NativeMethods;
+using Llvm.NET.Interop;
+using static Llvm.NET.Interop.NativeMethods;
 
 namespace Llvm.NET.Instructions
 {

@@ -19,12 +19,12 @@ namespace Llvm.NET.Interop
         /** Writes a module to the specified path. Returns 0 on success. */
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
-        public static extern int LLVMWriteBitcodeToFile( LLVMModuleRef M, [MarshalAs( UnmanagedType.LPStr )]string Path );
+        public static extern LLVMStatus LLVMWriteBitcodeToFile( LLVMModuleRef M, [MarshalAs( UnmanagedType.LPStr )]string Path );
 
         /** Writes a module to an open file descriptor. Returns 0 on success. */
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
-        public static extern int LLVMWriteBitcodeToFD( LLVMModuleRef M, int FD, int ShouldClose, int Unbuffered );
+        public static extern LLVMStatus LLVMWriteBitcodeToFD( LLVMModuleRef M, int FD, int ShouldClose, int Unbuffered );
 
         /** Writes a module to a new memory buffer and returns it. */
         [SuppressUnmanagedCodeSecurity]

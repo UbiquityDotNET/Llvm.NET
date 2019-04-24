@@ -4,7 +4,6 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
-using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
@@ -28,7 +27,7 @@ namespace LlvmBindingsGenerator
         public const uint ReturnParamIndex = uint.MaxValue - 1;
         public const uint UnresolvedParamIndex = uint.MaxValue;
 
-        public MarshalingInfoMap( ASTContext context )
+        public MarshalingInfoMap( ASTContext context, IEnumerable<IMarshalInfo> marshalInfo )
         {
             FunctionPointerMap = ( from tu in context.TranslationUnits
                                    from td in tu.Typedefs
@@ -39,6 +38,11 @@ namespace LlvmBindingsGenerator
                                    select (td.Name, Signature: ft)
                                  ).ToDictionary( item => item.Name, item => item.Signature );
             Context = context;
+
+            foreach( var mi in marshalInfo )
+            {
+                Add( mi );
+            }
         }
 
         public bool TryGetValue( string functionName, uint paramIndex, out IMarshalInfo marshalInfo )

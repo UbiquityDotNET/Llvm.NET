@@ -31,6 +31,8 @@ namespace Llvm.NET.Interop
             SetHandle( handle );
         }
 
+        public static <#=HandleName#> Zero { get; } = new <#=HandleName#>(IntPtr.Zero, false);
+
         [SecurityCritical]
         protected override bool ReleaseHandle( )
         {

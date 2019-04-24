@@ -4,7 +4,7 @@
 
 using System;
 using System.Diagnostics.CodeAnalysis;
-using Llvm.NET.Native;
+using Llvm.NET.Interop;
 using static Llvm.NET.DebugInfo.DebugInfoBuilder;
 
 // The names describe what they are, further details are available in the DWARF specs
@@ -49,7 +49,7 @@ namespace Llvm.NET.DebugInfo
         CPlusPlus11 = 0x001a,
         OCaml = 0x001b,
 
-        /// <summary>Base value for un-official languages ids</summary>
+        /// <summary>Base value for unofficial languages ids</summary>
         UserMin = 0x8000,
 
         /// <summary>[LLVM] MIPS Assembler</summary>
@@ -67,7 +67,7 @@ namespace Llvm.NET.DebugInfo
         /// <summary>[Llvm.NET] .NET IL Assembly language (ILAsm)</summary>
         ILAsm = UserMin + 0x01001,
 
-        /// <summary>Max Value for un-official language ids</summary>
+        /// <summary>Max Value for unofficial language ids</summary>
         UserMax = 0xffff
     }
 
