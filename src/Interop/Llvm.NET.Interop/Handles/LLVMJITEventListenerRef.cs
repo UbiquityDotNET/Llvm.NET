@@ -34,6 +34,10 @@ namespace Llvm.NET.Interop
 
         public static LLVMJITEventListenerRef Zero { get; } = new LLVMJITEventListenerRef(IntPtr.Zero);
 
+        public IntPtr ToIntPtr() => Handle;
+
+        public static implicit operator IntPtr(LLVMJITEventListenerRef value) => value.ToIntPtr();
+
         internal LLVMJITEventListenerRef( IntPtr p )
         {
             Handle = p;

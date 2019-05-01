@@ -27,13 +27,14 @@ namespace Llvm.NET.Interop
     public delegate void LLVMMemoryManagerDestroyCallback( global::System.IntPtr Opaque );
 
     [StructLayout( LayoutKind.Sequential )]
+    [GeneratedCode( "LlvmBindingsGenerator", "2.17941.31104.49410" )]
     public struct LLVMMCJITCompilerOptions
     {
-        uint OptLevel;
-        LLVMCodeModel CodeModel;
-        bool NoFramePointerElim;
-        bool EnableFastISel;
-        LLVMMCJITMemoryManagerRef MCJMM;
+        public uint OptLevel;
+        public LLVMCodeModel CodeModel;
+        public bool NoFramePointerElim;
+        public bool EnableFastISel;
+        public LLVMMCJITMemoryManagerRef MCJMM;
     }
 
     public static partial class NativeMethods
@@ -94,7 +95,7 @@ namespace Llvm.NET.Interop
 
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
-        public static extern void LLVMInitializeMCJITCompilerOptions( global::Llvm.NET.Interop.LLVMMCJITCompilerOptions Options, size_t SizeOfOptions );
+        public static extern void LLVMInitializeMCJITCompilerOptions( out global::Llvm.NET.Interop.LLVMMCJITCompilerOptions Options, size_t SizeOfOptions );
 
         /**
          * Create an MCJIT execution engine for a module, with the given options. It is
@@ -115,7 +116,7 @@ namespace Llvm.NET.Interop
          */
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
-        public static extern LLVMStatus LLVMCreateMCJITCompilerForModule( out LLVMExecutionEngineRef OutJIT, LLVMModuleRef M, global::Llvm.NET.Interop.LLVMMCJITCompilerOptions Options, size_t SizeOfOptions, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( DisposeMessageMarshaler ) )]out string OutError );
+        public static extern LLVMStatus LLVMCreateMCJITCompilerForModule( out LLVMExecutionEngineRef OutJIT, LLVMModuleRef M, out global::Llvm.NET.Interop.LLVMMCJITCompilerOptions Options, size_t SizeOfOptions, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( DisposeMessageMarshaler ) )]out string OutError );
 
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]

@@ -43,14 +43,4 @@ namespace Llvm.NET.Interop
         [DllImport( NativeMethods.LibraryPath, CallingConvention = CallingConvention.Cdecl )]
         private static extern void LLVMDisposeExecutionEngine( IntPtr p );
     }
-
-    [GeneratedCode("LlvmBindingsGenerator","2.17941.31104.49410")]
-    internal class LLVMExecutionEngineRefAlias
-        : LLVMExecutionEngineRef
-    {
-        private LLVMExecutionEngineRefAlias()
-            : base( IntPtr.Zero, false )
-        {
-        }
-    }
 }

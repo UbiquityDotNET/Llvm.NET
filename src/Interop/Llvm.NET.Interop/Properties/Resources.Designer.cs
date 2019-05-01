@@ -61,11 +61,31 @@ namespace Llvm.NET.Interop.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Cannot determine assembly location.
+        /// </summary>
+        internal static string Cannot_determine_assembly_location {
+            get {
+                return ResourceManager.GetString("Cannot_determine_assembly_location", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to System error (0x{0:X08}) occurred trying to load DLL {1}.
+        /// Search paths:
+        /// {2}.
+        /// </summary>
+        internal static string LoadWin32Library_Error_0_occured_loading_1_search_paths_2 {
+            get {
+                return ResourceManager.GetString("LoadWin32Library_Error_0_occured_loading_1_search_paths_2", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Marshaling of Generic delegate types to a native callback is not supported.
         /// </summary>
         internal static string Marshaling_of_Generic_delegate_types_to_a_native_callback_is_not_supported {
             get {
-                return ResourceManager.GetString("Marshaling_of_Generic_delegate_types_to_a_native_callbacks_is_not_supported", resourceCulture);
+                return ResourceManager.GetString("Marshaling_of_Generic_delegate_types_to_a_native_callback_is_not_supported", resourceCulture);
             }
         }
         
@@ -76,6 +96,15 @@ namespace Llvm.NET.Interop.Properties {
             get {
                 return ResourceManager.GetString("Marshalling_a_delegate_to_a_native_callback_requires_an_UnmanagedFunctionPointerA" +
                         "ttribute_for_the_delegate_type", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Mismatched LibLLVM version - Expected: {0}.{1}.{2} Actual: {3}.{4}.{5}.
+        /// </summary>
+        internal static string Mismatched_LibLLVM_version_Expected_0_1_2_Actual_3_4_5 {
+            get {
+                return ResourceManager.GetString("Mismatched_LibLLVM_version_Expected_0_1_2_Actual_3_4_5", resourceCulture);
             }
         }
     }

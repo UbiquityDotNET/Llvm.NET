@@ -13,7 +13,7 @@ namespace Kaleidoscope.Runtime
     public class ReplErrorStrategy
         : DefaultErrorStrategy
     {
-        protected override void ReportFailedPredicate( Parser recognizer, FailedPredicateException e )
+        protected override void ReportFailedPredicate( Antlr4.Runtime.Parser recognizer, FailedPredicateException e )
         {
             switch( e.Predicate )
             {

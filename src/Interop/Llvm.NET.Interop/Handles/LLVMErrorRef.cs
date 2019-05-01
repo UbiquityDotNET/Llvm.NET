@@ -39,9 +39,11 @@ namespace Llvm.NET.Interop
             return true;
         }
 
+        // during marshaling the runtime always calls the default constructor and calls SetHandle()
         private LLVMErrorRef( )
             : base( true )
         {
+            LazyMessage = new Lazy<string>( InternalGetMessage );
         }
 
         private string InternalGetMessage( )

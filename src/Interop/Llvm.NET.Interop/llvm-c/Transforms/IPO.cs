@@ -79,7 +79,7 @@ namespace Llvm.NET.Interop
         /** See llvm::createInternalizePass function. */
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
-        public static extern void LLVMAddInternalizePass( LLVMPassManagerRef _0, uint AllButMain );
+        public static extern void LLVMAddInternalizePass( LLVMPassManagerRef _0, bool AllButMain );
 
         /** See llvm::createStripDeadPrototypesPass function. */
         [SuppressUnmanagedCodeSecurity]

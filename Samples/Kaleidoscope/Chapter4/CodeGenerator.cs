@@ -45,11 +45,12 @@ namespace Kaleidoscope.Chapter4
         public void Dispose( )
         {
             JIT.Dispose( );
+            Module.Dispose( );
             Context.Dispose( );
         }
 
         #region Generate
-        public Value Generate( IAstNode ast, Action<CodeGeneratorException> errorHandler )
+        public Value Generate( IAstNode ast, Action<CodeGeneratorException> codeGenerationErroHandler )
         {
             try
             {
@@ -87,9 +88,9 @@ namespace Kaleidoscope.Chapter4
                 FunctionModuleMap.Add( function.Name, jitHandle );
                 return function;
             }
-            catch( CodeGeneratorException ex ) when( errorHandler != null )
+            catch( CodeGeneratorException ex ) when( codeGenerationErroHandler != null )
             {
-                errorHandler( ex );
+                codeGenerationErroHandler( ex );
                 return null;
             }
         }

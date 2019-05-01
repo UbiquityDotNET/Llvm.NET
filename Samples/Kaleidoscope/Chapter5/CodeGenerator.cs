@@ -45,11 +45,12 @@ namespace Kaleidoscope.Chapter5
         public void Dispose( )
         {
             JIT.Dispose( );
+            Module.Dispose( );
             Context.Dispose( );
         }
 
         #region Generate
-        public Value Generate( IAstNode ast, Action<CodeGeneratorException> errorHandler )
+        public Value Generate( IAstNode ast, Action<CodeGeneratorException> codeGenerationErroHandler )
         {
             try
             {
@@ -87,9 +88,9 @@ namespace Kaleidoscope.Chapter5
                 FunctionModuleMap.Add( function.Name, jitHandle );
                 return function;
             }
-            catch( CodeGeneratorException ex ) when( errorHandler != null )
+            catch( CodeGeneratorException ex ) when( codeGenerationErroHandler != null )
             {
-                errorHandler( ex );
+                codeGenerationErroHandler( ex );
                 return null;
             }
         }
@@ -226,9 +227,9 @@ namespace Kaleidoscope.Chapter5
 
             var function = InstructionBuilder.InsertBlock.ContainingFunction;
 
-            var thenBlock = Context.CreateBasicBlock( "then", function );
-            var elseBlock = Context.CreateBasicBlock( "else" );
-            var continueBlock = Context.CreateBasicBlock( "ifcont" );
+            var thenBlock = function.AppendBasicBlock( "then" );
+            var elseBlock = function.AppendBasicBlock( "else" );
+            var continueBlock = function.AppendBasicBlock( "ifcont" );
             InstructionBuilder.Branch( condBool, thenBlock, elseBlock );
 
             // generate then block
@@ -292,7 +293,7 @@ namespace Kaleidoscope.Chapter5
             // Make the new basic block for the loop header, inserting after current
             // block.
             var preHeaderBlock = InstructionBuilder.InsertBlock;
-            var loopBlock = Context.CreateBasicBlock( "loop", function );
+            var loopBlock = function.AppendBasicBlock( "loop" );
 
             // Insert an explicit fall through from the current block to the loopBlock.
             InstructionBuilder.Branch( loopBlock );
@@ -342,7 +343,7 @@ namespace Kaleidoscope.Chapter5
 
                 // Create the "after loop" block and insert it.
                 var loopEndBlock = InstructionBuilder.InsertBlock;
-                var afterBlock = Context.CreateBasicBlock( "afterloop", function );
+                var afterBlock = function.AppendBasicBlock( "afterloop" );
 
                 // Insert the conditional branch into the end of LoopEndBB.
                 InstructionBuilder.Branch( endCondition, loopBlock, afterBlock );

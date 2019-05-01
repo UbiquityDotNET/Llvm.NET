@@ -96,13 +96,19 @@ try
 
     Write-Information "Generating P/Invoke Binding code"
     & "$($buildPaths.BuildOutputPath)\bin\LlvmBindingsGenerator\Release\net47\LlvmBindingsGenerator.exe" $buildPaths.LlvmLibsRoot (Join-Path $buildPaths.SrcRoot 'Interop\LibLLVM') (Join-Path $buildPaths.SrcRoot 'Interop\Llvm.NET.Interop') 
+    if($LASTEXITCODE -eq 0)
+    {
+        # now build the projects that consume generated output for the bindings
+        Write-Information "Building LibLLVM"
+        Invoke-MSBuild -Targets Build -Project 'src\Interop\LibLLVM\LibLLVM.vcxproj' -Properties $msBuildProperties -LoggerArgs ($msbuildLoggerArgs + @("/bl:LibLLVM-build.binlog") )
 
-    # now build the projects that consume generated output for the bindings
-    Write-Information "Building LibLLVM"
-    Invoke-MSBuild -Targets Build -Project 'src\Interop\LibLLVM\LibLLVM.vcxproj' -Properties $msBuildProperties -LoggerArgs ($msbuildLoggerArgs + @("/bl:LibLLVM-build.binlog") )
-
-    Write-Information "Building Lllvm.NET.Interop"
-    Invoke-MSBuild -Targets Build -Project 'src\Interop\Llvm.NET.Interop\Llvm.NET.Interop.csproj' -Properties $msBuildProperties -LoggerArgs ($msbuildLoggerArgs + @("/bl:Llvm.NET.Interop.binlog") )
+        Write-Information "Building Lllvm.NET.Interop"
+        Invoke-MSBuild -Targets Build -Project 'src\Interop\Llvm.NET.Interop\Llvm.NET.Interop.csproj' -Properties $msBuildProperties -LoggerArgs ($msbuildLoggerArgs + @("/bl:Llvm.NET.Interop.binlog") )
+    }
+    else
+    {
+        Write-Error "Generating LLVM Bindings failed"
+    }
 }
 finally
 {

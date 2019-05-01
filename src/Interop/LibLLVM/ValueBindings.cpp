@@ -53,11 +53,6 @@ extern "C"
         pGlobal->removeFromParent( );
     }
 
-    //LLVMValueRef LLVMBuildIntCast2( LLVMBuilderRef B, LLVMValueRef Val, LLVMTypeRef DestTy, LLVMBool isSigned, const char *Name )
-    //{
-    //    return wrap( unwrap( B )->CreateIntCast( unwrap( Val ), unwrap( DestTy ), isSigned, Name ) );
-    //}
-
     int LLVMGetValueID( LLVMValueRef valueRef )
     {
         return unwrap( valueRef )->getValueID( );

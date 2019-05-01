@@ -39,6 +39,10 @@ namespace Llvm.NET.Interop
 
         public static <#=HandleName#> Zero { get; } = new <#=HandleName#>(IntPtr.Zero);
 
+        public IntPtr ToIntPtr() => Handle;
+
+        public static implicit operator IntPtr(<#=HandleName#> value) => value.ToIntPtr();
+
         internal <#=HandleName#>( IntPtr p )
         {
             Handle = p;

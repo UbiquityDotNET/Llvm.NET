@@ -51,7 +51,7 @@ namespace Kaleidoscope.Chapter9
         }
 
         #region Generate
-        public Value Generate( IAstNode ast, Action<CodeGeneratorException> errorHandler )
+        public Value Generate( IAstNode ast, Action<CodeGeneratorException> codeGenerationErroHandler )
         {
             try
             {
@@ -83,9 +83,9 @@ namespace Kaleidoscope.Chapter9
                     Module.DIBuilder.Finish( );
                 }
             }
-            catch(CodeGeneratorException ex) when (errorHandler != null)
+            catch(CodeGeneratorException ex) when ( codeGenerationErroHandler != null)
             {
-                errorHandler( ex );
+                codeGenerationErroHandler( ex );
             }
 
             return null;
@@ -265,9 +265,9 @@ namespace Kaleidoscope.Chapter9
 
             var function = InstructionBuilder.InsertBlock.ContainingFunction;
 
-            var thenBlock = Context.CreateBasicBlock( "then", function );
-            var elseBlock = Context.CreateBasicBlock( "else" );
-            var continueBlock = Context.CreateBasicBlock( "ifcont" );
+            var thenBlock = function.AppendBasicBlock( "then" );
+            var elseBlock = function.AppendBasicBlock( "else" );
+            var continueBlock = function.AppendBasicBlock( "ifcont" );
             InstructionBuilder.Branch( condBool, thenBlock, elseBlock );
 
             // generate then block
@@ -328,7 +328,7 @@ namespace Kaleidoscope.Chapter9
             InstructionBuilder.Store( startVal, allocaVar );
 
             // Make the new basic block for the loop header
-            var loopBlock = Context.CreateBasicBlock( "loop", function );
+            var loopBlock = function.AppendBasicBlock( "loop" );
 
             // Insert an explicit fall through from the current block to the loopBlock.
             InstructionBuilder.Branch( loopBlock );
@@ -374,7 +374,7 @@ namespace Kaleidoscope.Chapter9
                                                  .RegisterName( "loopcond" );
 
                 // Create the "after loop" block and insert it.
-                var afterBlock = Context.CreateBasicBlock( "afterloop", function );
+                var afterBlock = function.AppendBasicBlock( "afterloop" );
 
                 // Insert the conditional branch into the end of LoopEndBB.
                 InstructionBuilder.Branch( endCondition, loopBlock, afterBlock );
@@ -489,9 +489,10 @@ namespace Kaleidoscope.Chapter9
             }
             else
             {
+                var parameters = prototype.Parameters;
                 var debugFile = Module.DIBuilder.CreateFile( Module.DICompileUnit.File.FileName, Module.DICompileUnit.File.Directory );
                 var signature = Context.CreateFunctionType( Module.DIBuilder, DoubleType, prototype.Parameters.Select( _ => DoubleType ) );
-                var lastParamLocation = prototype.Parameters.LastOrDefault( )?.Location ?? prototype.Location;
+                var lastParamLocation = parameters.Count > 0 ? parameters[ parameters.Count - 1 ].Location : prototype.Location;
 
                 retVal = Module.CreateFunction( Module.DICompileUnit
                                               , prototype.Name

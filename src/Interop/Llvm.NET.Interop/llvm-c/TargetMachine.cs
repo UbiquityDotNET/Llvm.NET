@@ -124,21 +124,24 @@ namespace Llvm.NET.Interop
           LLVMDisposeMessage. */
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
-        unsafe public static extern sbyte* LLVMGetTargetMachineTriple( LLVMTargetMachineRef T );
+        [return: MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( DisposeMessageMarshaler ) )]
+        public static extern string LLVMGetTargetMachineTriple( LLVMTargetMachineRef T );
 
         /** Returns the cpu used creating this target machine. See
           llvm::TargetMachine::getCPU. The result needs to be disposed with
           LLVMDisposeMessage. */
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
-        unsafe public static extern sbyte* LLVMGetTargetMachineCPU( LLVMTargetMachineRef T );
+        [return: MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( DisposeMessageMarshaler ) )]
+        public static extern string LLVMGetTargetMachineCPU( LLVMTargetMachineRef T );
 
         /** Returns the feature string used creating this target machine. See
           llvm::TargetMachine::getFeatureString. The result needs to be disposed with
           LLVMDisposeMessage. */
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
-        unsafe public static extern sbyte* LLVMGetTargetMachineFeatureString( LLVMTargetMachineRef T );
+        [return: MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( DisposeMessageMarshaler ) )]
+        public static extern string LLVMGetTargetMachineFeatureString( LLVMTargetMachineRef T );
 
         /** Create a DataLayout based on the targetMachine. */
         [SuppressUnmanagedCodeSecurity]

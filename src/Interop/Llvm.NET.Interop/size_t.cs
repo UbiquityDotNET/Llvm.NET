@@ -100,6 +100,9 @@ namespace Llvm.NET.Interop
         /// <param name="size">size to convert</param>
         public static implicit operator long( size_t size ) => size.ToInt64( );
 
+        /// <summary>Gets a 0 size value</summary>
+        public static size_t Zero { get; } = size_t.FromInt32( 0 );
+
         internal size_t( IntPtr pointer )
         {
             Pointer = pointer;

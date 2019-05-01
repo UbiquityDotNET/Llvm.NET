@@ -43,7 +43,7 @@ namespace Llvm.NET.Values
         /// <param name="value">New value to set</param>
         /// <returns><paramref name="self"/> for fluent usage patterns</returns>
         /// <seealso cref="GlobalValue.UnnamedAddress"/>
-        public static T UnnamedAddress<T>( this T self, bool value )
+        public static T UnnamedAddress<T>( this T self, UnnamedAddressKind value )
             where T : GlobalValue
         {
             self.UnnamedAddress = value;

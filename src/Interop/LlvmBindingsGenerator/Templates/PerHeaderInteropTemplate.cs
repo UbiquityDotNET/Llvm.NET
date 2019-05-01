@@ -76,7 +76,7 @@ namespace LlvmBindingsGenerator.Templates
 
         public IEnumerable<ParsedFunctionSignature> Functions
             => from f in Unit.Functions
-               where !f.Ignore && f.IsGenerated
+               where f.IsGenerated
                select new ParsedFunctionSignature( f );
 
         public IEnumerable<ParsedFunctionSignature> Delegates

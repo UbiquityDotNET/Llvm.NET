@@ -4,6 +4,7 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
+using System.Collections.Generic;
 using CppSharp.AST;
 using CppSharp.Passes;
 
@@ -13,6 +14,11 @@ namespace LlvmBindingsGenerator.Passes
     internal class IgnoreSystemHeaders
         : TranslationUnitPass
     {
+        public IgnoreSystemHeaders(ISet<string> ignoredHeaders)
+        {
+            IgnoredHeaders = ignoredHeaders;
+        }
+
         public IgnoreSystemHeaders( )
         {
             VisitOptions.VisitClassBases = false;
@@ -34,8 +40,19 @@ namespace LlvmBindingsGenerator.Passes
 
         public override bool VisitTranslationUnit( TranslationUnit unit )
         {
-            unit.GenerationKind = ( unit.IsCoreHeader( ) || unit.IsExtensionHeader( ) ) ? GenerationKind.Generate : GenerationKind.None;
+            bool isExplicitlyIgnored = IgnoredHeaders.Contains( unit.FileName );
+            if( isExplicitlyIgnored )
+            {
+                unit.Ignore = true;
+            }
+            else
+            {
+                unit.GenerationKind = ( unit.IsCoreHeader( ) || unit.IsExtensionHeader( ) ) ? GenerationKind.Generate : GenerationKind.None;
+            }
+
             return true;
         }
+
+        private readonly ISet<string> IgnoredHeaders;
     }
 }

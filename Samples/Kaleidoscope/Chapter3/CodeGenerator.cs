@@ -42,11 +42,12 @@ namespace Kaleidoscope.Chapter3
 
         public void Dispose( )
         {
+            Module.Dispose( );
             Context.Dispose( );
         }
 
         #region Generate
-        public Value Generate( IAstNode ast, Action<CodeGeneratorException> errorHandler )
+        public Value Generate( IAstNode ast, Action<CodeGeneratorException> codeGenerationErroHandler )
         {
             try
             {
@@ -54,9 +55,9 @@ namespace Kaleidoscope.Chapter3
                 // adds them to the RuntimeState so that already has the declarations
                 return ( ast is FunctionDefinition ) ? ast.Accept( this ) : null;
             }
-            catch( CodeGeneratorException ex ) when( errorHandler != null )
+            catch( CodeGeneratorException ex ) when( codeGenerationErroHandler != null )
             {
-                errorHandler( ex );
+                codeGenerationErroHandler( ex );
                 return null;
             }
         }

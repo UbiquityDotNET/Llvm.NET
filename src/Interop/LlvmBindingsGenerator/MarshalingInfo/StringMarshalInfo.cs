@@ -37,7 +37,11 @@ namespace LlvmBindingsGenerator
 
         public StringDisposal DisposalKind { get; }
 
-        public override CppSharp.AST.Type Type => Semantics == ParamSemantics.InOut ? StringBuilderType : StringType;
+        public override QualifiedType TransformType( QualifiedType type )
+        {
+            var transformedType = Semantics == ParamSemantics.InOut ? StringBuilderType : StringType;
+            return new QualifiedType( transformedType );
+        }
 
         public override IEnumerable<Attribute> Attributes
         {

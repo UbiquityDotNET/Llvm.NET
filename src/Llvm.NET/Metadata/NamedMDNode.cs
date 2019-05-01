@@ -15,16 +15,16 @@ namespace Llvm.NET
     public partial class NamedMDNode
     {
         /// <summary>Gets the name of the node</summary>
-        public string Name => LLVMNamedMDNodeGetName( NativeHandle );
+        public string Name => LLVMGetNamedMetadataName( NativeHandle, out size_t _ );
 
         /// <summary>Gets the operands for the node</summary>
         public IList<MDNode> Operands { get; }
 
         /// <summary>Gets the module that owns this node</summary>
-        public BitcodeModule ParentModule => BitcodeModule.FromHandle( LLVMNamedMDNodeGetParentModule( NativeHandle ) );
+        public BitcodeModule ParentModule => BitcodeModule.FromHandle( LLVMNamedMetadataGetParentModule( NativeHandle ) );
 
         /// <summary>Erases this node from its parent</summary>
-        public void EraseFromParent() => LLVMNamedMDNodeEraseFromParent( NativeHandle );
+        public void EraseFromParent() => LLVMNamedMetadataEraseFromParent( NativeHandle );
 
         internal NamedMDNode( LLVMNamedMDNodeRef nativeNode )
         {

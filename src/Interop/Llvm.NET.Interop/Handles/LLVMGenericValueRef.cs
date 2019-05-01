@@ -43,14 +43,4 @@ namespace Llvm.NET.Interop
         [DllImport( NativeMethods.LibraryPath, CallingConvention = CallingConvention.Cdecl )]
         private static extern void LLVMDisposeGenericValue( IntPtr p );
     }
-
-    [GeneratedCode("LlvmBindingsGenerator","2.17941.31104.49410")]
-    internal class LLVMGenericValueRefAlias
-        : LLVMGenericValueRef
-    {
-        private LLVMGenericValueRefAlias()
-            : base( IntPtr.Zero, false )
-        {
-        }
-    }
 }

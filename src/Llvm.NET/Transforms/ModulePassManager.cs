@@ -1,6 +1,7 @@
 ﻿// <copyright file="ModulePassManager.cs" company=".NET Foundation">
 // Copyright (c) .NET Foundation. All rights reserved.
 // </copyright>
+using static Llvm.NET.Interop.NativeMethods;
 
 namespace Llvm.NET.Transforms
 {
@@ -10,7 +11,7 @@ namespace Llvm.NET.Transforms
     {
         /// <summary>Initializes a new instance of the <see cref="ModulePassManager"/> class.</summary>
         public ModulePassManager( )
-            : base( NativeMethods.LLVMCreatePassManager( ) )
+            : base( LLVMCreatePassManager( ) )
         {
         }
 
@@ -19,7 +20,7 @@ namespace Llvm.NET.Transforms
         /// <returns><see langword="true"/> if one of the passes modified the module</returns>
         public bool Run( BitcodeModule target )
         {
-            return NativeMethods.LLVMRunPassManager( Handle, target.ModuleHandle );
+            return LLVMRunPassManager( Handle, target.ModuleHandle );
         }
     }
 }

@@ -43,14 +43,4 @@ namespace Llvm.NET.Interop
         [DllImport( NativeMethods.LibraryPath, CallingConvention = CallingConvention.Cdecl )]
         private static extern void LLVMDisposeMemoryBuffer( IntPtr p );
     }
-
-    [GeneratedCode("LlvmBindingsGenerator","2.17941.31104.49410")]
-    internal class LLVMMemoryBufferRefAlias
-        : LLVMMemoryBufferRef
-    {
-        private LLVMMemoryBufferRefAlias()
-            : base( IntPtr.Zero, false )
-        {
-        }
-    }
 }

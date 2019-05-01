@@ -2,7 +2,6 @@
 #define _VALUE_BINDINGS_H_
 
 #include "llvm-c/Core.h"
-#include "DIBuilderBindings.h"
 #include "ModuleBindings.h"
 
 #ifdef __cplusplus

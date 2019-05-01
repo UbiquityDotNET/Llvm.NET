@@ -13,8 +13,8 @@
     <Description>.NET Bindings for LLVM</Description>
     <PackageTags>LLVM,Compiler,JIT</PackageTags>
     <NoPackageAnalysis>true</NoPackageAnalysis>
-    <LangVersion>7.2</LangVersion>
-    <AllowUnsafeBlocks>false</AllowUnsafeBlocks>
+    <LangVersion>7.3</LangVersion>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <NoCommonAnalyzers>true</NoCommonAnalyzers>
   </PropertyGroup>
   <ItemGroup>

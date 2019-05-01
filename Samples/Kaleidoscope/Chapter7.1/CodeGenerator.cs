@@ -17,7 +17,7 @@ using Llvm.NET.Values;
 
 using ConstantExpression = Kaleidoscope.Grammar.AST.ConstantExpression;
 
-namespace Kaleidoscope.Chapter7_1
+namespace Kaleidoscope.Chapter71
 {
     /// <summary>Performs LLVM IR Code generation from the Kaleidoscope AST</summary>
     public sealed class CodeGenerator
@@ -45,11 +45,12 @@ namespace Kaleidoscope.Chapter7_1
         public void Dispose( )
         {
             JIT.Dispose( );
+            Module.Dispose( );
             Context.Dispose( );
         }
 
         #region Generate
-        public Value Generate( IAstNode ast, Action<CodeGeneratorException> errorHandler )
+        public Value Generate( IAstNode ast, Action<CodeGeneratorException> codeGenerationErroHandler )
         {
             try
             {
@@ -87,9 +88,9 @@ namespace Kaleidoscope.Chapter7_1
 
                 return retVal;
             }
-            catch( CodeGeneratorException ex ) when( errorHandler != null )
+            catch( CodeGeneratorException ex ) when( codeGenerationErroHandler != null )
             {
-                errorHandler( ex );
+                codeGenerationErroHandler( ex );
                 return null;
             }
         }
@@ -241,9 +242,9 @@ namespace Kaleidoscope.Chapter7_1
 
             var function = InstructionBuilder.InsertBlock.ContainingFunction;
 
-            var thenBlock = Context.CreateBasicBlock( "then", function );
-            var elseBlock = Context.CreateBasicBlock( "else" );
-            var continueBlock = Context.CreateBasicBlock( "ifcont" );
+            var thenBlock = function.AppendBasicBlock( "then" );
+            var elseBlock = function.AppendBasicBlock( "else" );
+            var continueBlock = function.AppendBasicBlock( "ifcont" );
             InstructionBuilder.Branch( condBool, thenBlock, elseBlock );
 
             // generate then block
@@ -303,7 +304,7 @@ namespace Kaleidoscope.Chapter7_1
             InstructionBuilder.Store( startVal, allocaVar );
 
             // Make the new basic block for the loop header.
-            var loopBlock = Context.CreateBasicBlock( "loop", function );
+            var loopBlock = function.AppendBasicBlock( "loop" );
 
             // Insert an explicit fall through from the current block to the loopBlock.
             InstructionBuilder.Branch( loopBlock );
@@ -349,7 +350,7 @@ namespace Kaleidoscope.Chapter7_1
                                                  .RegisterName( "loopcond" );
 
                 // Create the "after loop" block and insert it.
-                var afterBlock = Context.CreateBasicBlock( "afterloop", function );
+                var afterBlock = function.AppendBasicBlock( "afterloop" );
 
                 // Insert the conditional branch into the end of LoopEndBB.
                 InstructionBuilder.Branch( endCondition, loopBlock, afterBlock );

@@ -6,6 +6,7 @@
 
 using System.Collections.Generic;
 using System.Diagnostics;
+using CppSharp.AST;
 
 namespace LlvmBindingsGenerator
 {
@@ -21,7 +22,7 @@ namespace LlvmBindingsGenerator
 
         public ParamSemantics Semantics { get; }
 
-        public abstract CppSharp.AST.Type Type { get; }
+        public virtual QualifiedType TransformType( CppSharp.AST.QualifiedType type ) => type;
 
         public abstract IEnumerable<CppSharp.AST.Attribute> Attributes { get; }
 

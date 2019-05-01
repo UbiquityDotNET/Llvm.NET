@@ -58,10 +58,10 @@ namespace Llvm.NET.Values
             Context = context;
 
             // methods used as cross P/Invoke callbacks so the delegates must remain alive for duration
-            WrappedOnDeleted = new WrappedNativeCallback( new LLVMValueCacheItemDeletedCallback( OnItemDeleted ) );
-            WrappedOnReplaced = new WrappedNativeCallback( new LLVMValueCacheItemReplacedCallback( OnItemReplaced ) );
+            WrappedOnDeleted = new WrappedNativeCallback<LLVMValueCacheItemDeletedCallback>( OnItemDeleted );
+            WrappedOnReplaced = new WrappedNativeCallback<LLVMValueCacheItemReplacedCallback>( OnItemReplaced );
 
-            Handle = LLVMCreateValueCache( WrappedOnDeleted.NativeFuncPtr, WrappedOnReplaced.NativeFuncPtr );
+            Handle = LLVMCreateValueCache( WrappedOnDeleted, WrappedOnReplaced );
         }
 
         private void OnItemDeleted( LLVMValueRef valueRef, IntPtr handle )
@@ -78,11 +78,11 @@ namespace Llvm.NET.Values
         }
 
         /* ReSharper disable PrivateFieldCanBeConvertedToLocalVariable
-        // These cannot and must not be made as locals as it holds the references
-        // and GCHandles for the delegate beyond the local scope they ar used.
+        // These cannot and *must not* be made as locals as it holds the references
+        // and GCHandles for the delegate beyond the local scope they are created in.
         */
-        private readonly WrappedNativeCallback WrappedOnDeleted;
-        private readonly WrappedNativeCallback WrappedOnReplaced;
+        private readonly WrappedNativeCallback<LLVMValueCacheItemDeletedCallback> WrappedOnDeleted;
+        private readonly WrappedNativeCallback<LLVMValueCacheItemReplacedCallback> WrappedOnReplaced;
         /* ReSharper enable PrivateFieldCanBeConvertedToLocalVariable */
 
         private readonly Dictionary<LLVMValueRef,GCHandle> ValueRefToGCHandleMap = new Dictionary<LLVMValueRef, GCHandle>();
@@ -333,11 +333,5 @@ namespace Llvm.NET.Values
                 return kind > ValueKind.Instruction ? new Instruction( handle ) : new Value( handle );
             }
         }
-
-        [UnmanagedFunctionPointer( System.Runtime.InteropServices.CallingConvention.Cdecl )]
-        private delegate void LLVMValueCacheItemDeletedCallback( LLVMValueRef valueRef, IntPtr handle );
-
-        [UnmanagedFunctionPointer( System.Runtime.InteropServices.CallingConvention.Cdecl )]
-        private delegate IntPtr LLVMValueCacheItemReplacedCallback( LLVMValueRef valueRef, IntPtr handle, LLVMValueRef newValue );
     }
 }

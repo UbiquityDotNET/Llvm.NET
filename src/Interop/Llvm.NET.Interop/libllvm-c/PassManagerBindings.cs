@@ -26,6 +26,14 @@ namespace Llvm.NET.Interop
 
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
+        public static extern void LLVMAddThreadSanitizerPass( LLVMPassManagerRef PM );
+
+        [SuppressUnmanagedCodeSecurity]
+        [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
+        public static extern void LLVMAddMemorySanitizerPass( LLVMPassManagerRef PM );
+
+        [SuppressUnmanagedCodeSecurity]
+        [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern void LLVMAddDataFlowSanitizerPass( LLVMPassManagerRef PM, int ABIListFilesNum, [MarshalAs( UnmanagedType.LPStr, ArraySubType = UnmanagedType.LPStr )]global::System.String[] ABIListFiles );
 
         [SuppressUnmanagedCodeSecurity]

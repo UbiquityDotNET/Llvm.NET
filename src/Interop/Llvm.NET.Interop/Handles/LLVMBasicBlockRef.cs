@@ -34,6 +34,10 @@ namespace Llvm.NET.Interop
 
         public static LLVMBasicBlockRef Zero { get; } = new LLVMBasicBlockRef(IntPtr.Zero);
 
+        public IntPtr ToIntPtr() => Handle;
+
+        public static implicit operator IntPtr(LLVMBasicBlockRef value) => value.ToIntPtr();
+
         internal LLVMBasicBlockRef( IntPtr p )
         {
             Handle = p;

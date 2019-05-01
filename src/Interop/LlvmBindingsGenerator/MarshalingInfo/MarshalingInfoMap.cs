@@ -123,6 +123,7 @@ namespace LlvmBindingsGenerator
             if( mappedParam == null )
             {
                 Diagnostics.Error( "Function {0} does not contain a parameter named '{1}' declared in map", function, item.ParameterName );
+                return;
             }
 
             item.ParameterIndex = mappedParam.Index;

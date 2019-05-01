@@ -55,17 +55,6 @@ namespace Llvm.NET.Transforms
             return passManager;
         }
 
-        /// <summary>Adds a Late CFG Simplification pass to the manager</summary>
-        /// <typeparam name="T">Type of pass manager to add the pass to</typeparam>
-        /// <param name="passManager">Pass manager to add the pass to</param>
-        /// <returns><paramref name="passManager"/>for fluent support</returns>
-        public static T AddLateCFGSimplificationPass<T>( this T passManager )
-            where T : PassManager
-        {
-            LLVMAddLateCFGSimplificationPass( passManager.Handle );
-            return passManager;
-        }
-
         /// <summary>Adds a Dead Store Elimination pass to the manager</summary>
         /// <typeparam name="T">Type of pass manager to add the pass to</typeparam>
         /// <param name="passManager">Pass manager to add the pass to</param>
@@ -229,6 +218,18 @@ namespace Llvm.NET.Transforms
             return passManager;
         }
 
+        /// <summary>Adds a Loop Unroll and Jam pass to the manager</summary>
+        /// <typeparam name="T">Type of pass manager to add the pass to</typeparam>
+        /// <param name="passManager">Pass manager to add the pass to</param>
+        /// <returns><paramref name="passManager"/>for fluent support</returns>
+        /// <seealso href="xref:llvm_docs_passes#loop-unroll-unroll-loops">LLVM: Unroll Loops</seealso>
+        public static T AddLoopUnrollAndJamPass<T>( this T passManager )
+            where T : PassManager
+        {
+            LLVMAddLoopUnrollAndJamPass( passManager.Handle );
+            return passManager;
+        }
+
         /// <summary>Adds a Loop Unswitch pass to the manager</summary>
         /// <typeparam name="T">Type of pass manager to add the pass to</typeparam>
         /// <param name="passManager">Pass manager to add the pass to</param>
@@ -238,6 +239,18 @@ namespace Llvm.NET.Transforms
             where T : PassManager
         {
             LLVMAddLoopUnswitchPass( passManager.Handle );
+            return passManager;
+        }
+
+        /// <summary>Adds a Lower Atomic pass to the manager</summary>
+        /// <typeparam name="T">Type of pass manager to add the pass to</typeparam>
+        /// <param name="passManager">Pass manager to add the pass to</param>
+        /// <returns><paramref name="passManager"/>for fluent support</returns>
+        /// <seealso href="xref:llvm_docs_passes#loweratomic-lower-atomic-intrinsics-to-non-atomic-form">LLVM: Lower atomic</seealso>
+        public static T LowerAtomicPass<T>( this T passManager )
+            where T : PassManager
+        {
+            LLVMAddLowerAtomicPass( passManager.Handle );
             return passManager;
         }
 

@@ -31,7 +31,7 @@ namespace Llvm.NET.Interop
         [SecurityCritical]
         protected override bool ReleaseHandle( )
         {
-            LLVMDisposeBuilder( handle );
+            LLVMDisposeDIBuilder( handle );
             return true;
         }
 
@@ -41,16 +41,6 @@ namespace Llvm.NET.Interop
         }
 
         [DllImport( NativeMethods.LibraryPath, CallingConvention = CallingConvention.Cdecl )]
-        private static extern void LLVMDisposeBuilder( IntPtr p );
-    }
-
-    [GeneratedCode("LlvmBindingsGenerator","2.17941.31104.49410")]
-    internal class LLVMDIBuilderRefAlias
-        : LLVMDIBuilderRef
-    {
-        private LLVMDIBuilderRefAlias()
-            : base( IntPtr.Zero, false )
-        {
-        }
+        private static extern void LLVMDisposeDIBuilder( IntPtr p );
     }
 }

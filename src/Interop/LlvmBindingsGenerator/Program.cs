@@ -5,6 +5,7 @@
 // -----------------------------------------------------------------------
 
 using System.Collections.Generic;
+using System.Runtime.InteropServices;
 using CppSharp;
 using LlvmBindingsGenerator.Configuration;
 using LlvmBindingsGenerator.Templates;
@@ -15,7 +16,10 @@ namespace LlvmBindingsGenerator
     {
         public static int Main( string[ ] args )
         {
-            if(args.Length < 2 )
+            var diagnostics = new ErrorTrackingDiagnostics( );
+            Diagnostics.Implementation = diagnostics;
+
+            if( args.Length < 2 )
             {
                 Diagnostics.Error( "USAGE: LlvmBindingsGenerator <llvmRoot> <extensionsRoot> [OutputPath]" );
                 return -1;
@@ -26,17 +30,18 @@ namespace LlvmBindingsGenerator
             string llvmRoot = args[ 0 ];
             string extensionsRoot = args[ 1 ];
             string outputPath = args.Length > 2 ? args[ 2 ] : System.Environment.CurrentDirectory;
-            var library = new LibLlvmGeneratorLibrary( CreateConfiguration(), llvmRoot, extensionsRoot, outputPath );
+            var library = new LibLlvmGeneratorLibrary( CreateConfiguration( ), llvmRoot, extensionsRoot, outputPath );
             ConsoleDriver.Run( library );
-            return 0;
+            return diagnostics.ErrorCount;
         }
 
         // it is hoped that, over time, the generation is flexible enough that LLVM version to version
         // differences are constrained to this configuration only.
-        private static GeneratorConfig CreateConfiguration()
+        private static GeneratorConfig CreateConfiguration( )
         {
             return new GeneratorConfig( )
             {
+                /* These functions all return a non-zero value on failure */
                 StatusReturningFunctions = new SortedSet<string>( )
                 {
                     "LLVMParseIRInContext",
@@ -64,7 +69,10 @@ namespace LlvmBindingsGenerator
                     "LLVMCreateMCJITCompilerForModule",
                     "LLVMRemoveModule",
                     "LLVMFindFunction",
+                    "LLVMCreateMemoryBufferWithContentsOfFile",
+                    "LLVMCreateMemoryBufferWithSTDIN"
                 },
+                /* Special marshaling information for parameters and return types */
                 MarshalingInfo = new List<IMarshalInfo>( )
                 {
                     // function parameters
@@ -90,8 +98,24 @@ namespace LlvmBindingsGenerator
                     new StringMarshalInfo( "LLVMGetInlineAsm", "Constraints", ParamSemantics.In ),
                     new StringMarshalInfo( "LLVMTargetMachineEmitToFile", "Filename", ParamSemantics.In ),
                     new StringMarshalInfo( "LLVMDisasmInstruction", "OutString", ParamSemantics.InOut ),
-                    new ByteArrayMarshalInfo( "LLVMDisasmInstruction", "Bytes" ),
+                    new ArrayMarshalInfo( "LLVMDisasmInstruction", "Bytes" ),
                     new StringMarshalInfo( "LLVMVerifyFunctionEx", "OutMessages", ParamSemantics.Out, StringDisposal.DisposeMessage ),
+                    new StringMarshalInfo( "LLVMCopyStringRepOfTargetData", StringDisposal.DisposeMessage ),
+                    new StringMarshalInfo( "LLVMMetadataAsString", StringDisposal.DisposeMessage ),
+                    new ArrayMarshalInfo( "LLVMDIBuilderCreateEnumerationType", "Elements", UnmanagedType.SysInt ),
+                    new ArrayMarshalInfo( "LLVMDIBuilderCreateSubroutineType", "ParameterTypes", UnmanagedType.SysInt ),
+                    new ArrayMarshalInfo( "LLVMDIBuilderCreateStructType", "Elements", UnmanagedType.SysInt ),
+                    new ArrayMarshalInfo( "LLVMDIBuilderCreateUnionType", "Elements", UnmanagedType.SysInt ),
+                    new ArrayMarshalInfo( "LLVMDIBuilderCreateArrayType", "Subscripts", UnmanagedType.SysInt ),
+                    new ArrayMarshalInfo( "LLVMDIBuilderCreateVectorType", "Subscripts", UnmanagedType.SysInt ),
+                    new PrimitiveTypeMarshalInfo( "LLVMAddInternalizePass", CppSharp.AST.PrimitiveType.Bool, "AllButMain", ParamSemantics.In ),
+                    new OutElementMarshalingInfo( "LLVMGetCallSiteAttributes", "Attrs"),
+                    new OutElementMarshalingInfo( "LLVMGetAttributesAtIndex", "Attrs"),
+                    new ArrayMarshalInfo( "LLVMAddIncoming", "IncomingValues", UnmanagedType.SysInt),
+                    new ArrayMarshalInfo( "LLVMAddIncoming", "IncomingBlocks", UnmanagedType.SysInt),
+                    new ArrayMarshalInfo( "LLVMGetIntrinsicDeclaration", "ParamTypes", UnmanagedType.SysInt),
+                    new ArrayMarshalInfo( "LLVMIntrinsicGetType", "ParamTypes", UnmanagedType.SysInt),
+                    new ArrayMarshalInfo( "LLVMIntrinsicCopyOverloadedName", "ParamTypes", UnmanagedType.SysInt),
 
                     // Function return types
                     new StringMarshalInfo( "LLVMGetDiagInfoDescription", StringDisposal.DisposeMessage ),
@@ -117,7 +141,6 @@ namespace LlvmBindingsGenerator
                     new StringMarshalInfo( "LLVMGetGC", StringDisposal.CopyAlias ),
                     new StringMarshalInfo( "LLVMGetMDString", StringDisposal.CopyAlias ),
                     new StringMarshalInfo( "LLVMGetBasicBlockName", StringDisposal.CopyAlias ),
-                    new StringMarshalInfo( "LLVMGetBufferStart", StringDisposal.CopyAlias ),
                     new StringMarshalInfo( "LLVMDITypeGetName", StringDisposal.CopyAlias ),
                     new StringMarshalInfo( "LLVMGetTargetName", StringDisposal.CopyAlias ),
                     new StringMarshalInfo( "LLVMGetTargetDescription", StringDisposal.CopyAlias ),
@@ -137,7 +160,25 @@ namespace LlvmBindingsGenerator
                     new StringMarshalInfo( "LLVMPrintModuleToString", StringDisposal.DisposeMessage ),
                     new StringMarshalInfo( "LLVMPrintTypeToString", StringDisposal.DisposeMessage ),
                     new StringMarshalInfo( "LLVMPrintValueToString", StringDisposal.DisposeMessage ),
+                    new StringMarshalInfo( "LLVMGetTargetMachineTriple", StringDisposal.DisposeMessage),
+                    new StringMarshalInfo( "LLVMGetTargetMachineCPU", StringDisposal.DisposeMessage),
+                    new StringMarshalInfo( "LLVMGetTargetMachineFeatureString", StringDisposal.DisposeMessage),
+                    new PrimitiveTypeMarshalInfo("LLVMGetBufferStart", CppSharp.AST.PrimitiveType.IntPtr),
+                    new StringMarshalInfo("LLVMGetMDStringText", StringDisposal.CopyAlias),
+                    new StringMarshalInfo("LLVMAttributeToString", StringDisposal.DisposeErrorMesage),
+                    new StringMarshalInfo("LLVMGetModuleSourceFileName", StringDisposal.CopyAlias),
+                    new StringMarshalInfo("LLVMGetModuleName", StringDisposal.CopyAlias),
+                    new StringMarshalInfo("LLVMComdatGetName", StringDisposal.DisposeErrorMesage),
+                    new StringMarshalInfo("LLVMTripleAsString", StringDisposal.DisposeMessage),
+                    new StringMarshalInfo("LLVMTripleGetArchTypeName", StringDisposal.DisposeMessage),
+                    new StringMarshalInfo("LLVMTripleGetSubArchTypeName", StringDisposal.DisposeMessage),
+                    new StringMarshalInfo("LLVMTripleGetVendorTypeName", StringDisposal.DisposeMessage),
+                    new StringMarshalInfo("LLVMTripleGetOsTypeName", StringDisposal.DisposeMessage),
+                    new StringMarshalInfo("LLVMTripleGetEnvironmentTypeName", StringDisposal.DisposeMessage),
+                    new StringMarshalInfo("LLVMTripleGetObjectFormatTypeName", StringDisposal.DisposeMessage),
+                    new StringMarshalInfo("LLVMNormalizeTriple", StringDisposal.DisposeMessage),
                 },
+                /* Functions that are deprecated in LLVM and should be marked obsolte in generation (or by default ommitted completely)*/
                 DeprecatedFunctionToMessageMap = new Dictionary<string, string>
                 {
                     { "LLVMParseBitCode", "Use LLVMParseBitcod2 instead" },
@@ -163,93 +204,97 @@ namespace LlvmBindingsGenerator
                     { "LLVMStartMultithreaded", "This function is deprecated, multi-threading support is a compile-time variable and cannot be changed at run-time" },
                     { "LLVMStopMultithreaded", "This function is deprecated, multi-threading support is a compile-time variable and cannot be changed at run-time" },
                 },
-                IgnoredFunctions = new List<string>
+                /*Functions that code generation should ignore, but are still exported from LibLLVM*/
+                InternalFunctions = new List<(string Name, bool Ignored)>
                 {
-                    "LLVMCreateMessage",
-                    "LLVMDisposeMessage",
-                    "LLVMDisposeErrorMessage",
-                    "LLVMConsumeError",
-                    "LLVMConstGEP2",         // declared in LLVM headers but never defined [Go, Figure!]
-                    "LLVMConstInBoundsGEP2", // declared in LLVM headers but never defined [Go, Figure!]
-                    "LLVMOptRemarkVersion",  // declared in LLVM headers; implemented in tools\opt-remarks, which isn't included in LibLLVM
-                    /* LTO/Thin LTO not built into LibLLVM */
-                    "llvm_create_optimizer",
-                    "llvm_destroy_optimizer",
-                    "llvm_optimize_modules",
-                    "llvm_read_object_file",
-                    "lto_api_version",
-                    "lto_codegen_add_module",
-                    "lto_codegen_add_must_preserve_symbol",
-                    "lto_codegen_compile",
-                    "lto_codegen_compile_optimized",
-                    "lto_codegen_compile_to_file",
-                    "lto_codegen_create",
-                    "lto_codegen_create_in_local_context",
-                    "lto_codegen_debug_options",
-                    "lto_codegen_dispose",
-                    "lto_codegen_optimize",
-                    "lto_codegen_set_assembler_args",
-                    "lto_codegen_set_assembler_path",
-                    "lto_codegen_set_cpu",
-                    "lto_codegen_set_debug_model",
-                    "lto_codegen_set_diagnostic_handler",
-                    "lto_codegen_set_module",
-                    "lto_codegen_set_pic_model",
-                    "lto_codegen_set_should_embed_uselists",
-                    "lto_codegen_set_should_internalize",
-                    "lto_codegen_write_merged_modules",
-                    "lto_get_error_message",
-                    "lto_get_version",
-                    "lto_initialize_disassembler",
-                    "lto_module_create",
-                    "lto_module_create_from_fd",
-                    "lto_module_create_from_fd_at_offset",
-                    "lto_module_create_from_memory",
-                    "lto_module_create_from_memory_with_path",
-                    "lto_module_create_in_codegen_context",
-                    "lto_module_create_in_local_context",
-                    "lto_module_dispose",
-                    "lto_module_get_linkeropts",
-                    "lto_module_get_num_symbols",
-                    "lto_module_get_symbol_attribute",
-                    "lto_module_get_symbol_name",
-                    "lto_module_get_target_triple",
-                    "lto_module_has_objc_category",
-                    "lto_module_is_object_file",
-                    "lto_module_is_object_file_for_target",
-                    "lto_module_is_object_file_in_memory",
-                    "lto_module_is_object_file_in_memory_for_target",
-                    "lto_module_is_thinlto",
-                    "lto_module_set_target_triple",
-                    "thinlto_codegen_add_cross_referenced_symbol",
-                    "thinlto_codegen_add_module",
-                    "thinlto_codegen_add_must_preserve_symbol",
-                    "thinlto_codegen_disable_codegen",
-                    "thinlto_codegen_dispose",
-                    "thinlto_codegen_process",
-                    "thinlto_codegen_set_cache_dir",
-                    "thinlto_codegen_set_cache_entry_expiration",
-                    "thinlto_codegen_set_cache_pruning_interval",
-                    "thinlto_codegen_set_cache_size_bytes",
-                    "thinlto_codegen_set_cache_size_files",
-                    "thinlto_codegen_set_cache_size_megabytes",
-                    "thinlto_codegen_set_codegen_only",
-                    "thinlto_codegen_set_cpu",
-                    "thinlto_codegen_set_final_cache_size_relative_to_available_space",
-                    "thinlto_codegen_set_pic_model",
-                    "thinlto_codegen_set_savetemps_dir",
-                    "thinlto_create_codegen",
-                    "thinlto_debug_options",
-                    "thinlto_module_get_num_object_files",
-                    "thinlto_module_get_num_objects",
-                    "thinlto_module_get_object",
-                    "thinlto_module_get_object_file",
-                    "thinlto_set_generated_objects_dir"
+                    /* Disposal methods used and generated in Handle wrappers directly*/
+                    ("LLVMCreateMessage", false ),
+                    ("LLVMDisposeMessage", false ),
+                    ("LLVMDisposeErrorMessage", false ),
+                    ("LLVMConsumeError", false ),
+                    /* Declared but not present in LibLLVM */
+                    ("LLVMConstGEP2", true ),         // declared in LLVM headers but never defined [Go, Figure!]
+                    ("LLVMConstInBoundsGEP2", true ), // declared in LLVM headers but never defined [Go, Figure!]
+                    ("LLVMOptRemarkVersion", true ),  // declared in LLVM headers; implemented in tools\opt-remarks, which isn't included in LibLLVM
+                    /* LTO/Thin LTO not built into LibLLVM, so these are completely ignored */
+                    ("llvm_create_optimizer", true ),
+                    ("llvm_destroy_optimizer", true ),
+                    ("llvm_optimize_modules", true ),
+                    ("llvm_read_object_file", true ),
+                    ("lto_api_version", true ),
+                    ("lto_codegen_add_module", true ),
+                    ("lto_codegen_add_must_preserve_symbol", true ),
+                    ("lto_codegen_compile", true ),
+                    ("lto_codegen_compile_optimized", true ),
+                    ("lto_codegen_compile_to_file", true ),
+                    ("lto_codegen_create", true ),
+                    ("lto_codegen_create_in_local_context", true ),
+                    ("lto_codegen_debug_options", true ),
+                    ("lto_codegen_dispose", true ),
+                    ("lto_codegen_optimize", true ),
+                    ("lto_codegen_set_assembler_args", true ),
+                    ("lto_codegen_set_assembler_path", true ),
+                    ("lto_codegen_set_cpu", true ),
+                    ("lto_codegen_set_debug_model", true ),
+                    ("lto_codegen_set_diagnostic_handler", true ),
+                    ("lto_codegen_set_module", true ),
+                    ("lto_codegen_set_pic_model", true ),
+                    ("lto_codegen_set_should_embed_uselists", true ),
+                    ("lto_codegen_set_should_internalize", true ),
+                    ("lto_codegen_write_merged_modules", true ),
+                    ("lto_get_error_message", true ),
+                    ("lto_get_version", true ),
+                    ("lto_initialize_disassembler", true ),
+                    ("lto_module_create", true ),
+                    ("lto_module_create_from_fd", true ),
+                    ("lto_module_create_from_fd_at_offset", true ),
+                    ("lto_module_create_from_memory", true ),
+                    ("lto_module_create_from_memory_with_path", true ),
+                    ("lto_module_create_in_codegen_context", true ),
+                    ("lto_module_create_in_local_context", true ),
+                    ("lto_module_dispose", true ),
+                    ("lto_module_get_linkeropts", true ),
+                    ("lto_module_get_num_symbols", true ),
+                    ("lto_module_get_symbol_attribute", true ),
+                    ("lto_module_get_symbol_name", true ),
+                    ("lto_module_get_target_triple", true ),
+                    ("lto_module_has_objc_category", true ),
+                    ("lto_module_is_object_file", true ),
+                    ("lto_module_is_object_file_for_target", true ),
+                    ("lto_module_is_object_file_in_memory", true ),
+                    ("lto_module_is_object_file_in_memory_for_target", true ),
+                    ("lto_module_is_thinlto", true ),
+                    ("lto_module_set_target_triple", true ),
+                    ("thinlto_codegen_add_cross_referenced_symbol", true ),
+                    ("thinlto_codegen_add_module", true ),
+                    ("thinlto_codegen_add_must_preserve_symbol", true ),
+                    ("thinlto_codegen_disable_codegen", true ),
+                    ("thinlto_codegen_dispose", true ),
+                    ("thinlto_codegen_process", true ),
+                    ("thinlto_codegen_set_cache_dir", true ),
+                    ("thinlto_codegen_set_cache_entry_expiration", true ),
+                    ("thinlto_codegen_set_cache_pruning_interval", true ),
+                    ("thinlto_codegen_set_cache_size_bytes", true ),
+                    ("thinlto_codegen_set_cache_size_files", true ),
+                    ("thinlto_codegen_set_cache_size_megabytes", true ),
+                    ("thinlto_codegen_set_codegen_only", true ),
+                    ("thinlto_codegen_set_cpu", true ),
+                    ("thinlto_codegen_set_final_cache_size_relative_to_available_space", true ),
+                    ("thinlto_codegen_set_pic_model", true ),
+                    ("thinlto_codegen_set_savetemps_dir", true ),
+                    ("thinlto_create_codegen", true ),
+                    ("thinlto_debug_options", true ),
+                    ("thinlto_module_get_num_object_files", true ),
+                    ("thinlto_module_get_num_objects", true ),
+                    ("thinlto_module_get_object", true ),
+                    ("thinlto_module_get_object_file", true ),
+                    ("thinlto_set_generated_objects_dir", true )
                 },
+                /*Mapping of handle types to the code generation template for the handle*/
                 HandleToTemplateMap = new HandleTemplateMap( )
                 {
                     new GlobalHandleTemplate( "LLVMMemoryBufferRef","LLVMDisposeMemoryBuffer"),
-                    new GlobalHandleTemplate( "LLVMContextRef" , "LLVMContextDispose" ),
+                    new GlobalHandleTemplate( "LLVMContextRef" , "LLVMContextDispose", needsAlias: true ),
                     new ContextHandleTemplate( "LLVMModuleRef" ),
                     new ContextHandleTemplate( "LLVMTypeRef" ),
                     new ContextHandleTemplate( "LLVMValueRef" ),
@@ -257,7 +302,7 @@ namespace LlvmBindingsGenerator
                     new ContextHandleTemplate( "LLVMMetadataRef" ),
                     new ContextHandleTemplate( "LLVMNamedMDNodeRef" ),
                     new GlobalHandleTemplate( "LLVMBuilderRef", "LLVMDisposeBuilder" ),
-                    new GlobalHandleTemplate( "LLVMDIBuilderRef", "LLVMDisposeBuilder" ),
+                    new GlobalHandleTemplate( "LLVMDIBuilderRef", "LLVMDisposeDIBuilder" ),
                     new GlobalHandleTemplate( "LLVMModuleProviderRef", "LLVMDisposeModuleProvider" ),
                     new GlobalHandleTemplate( "LLVMPassManagerRef", "LLVMDisposePassManager" ),
                     new GlobalHandleTemplate( "LLVMPassRegistryRef", "LLVMPassRegistryDispose" ),
@@ -275,10 +320,6 @@ namespace LlvmBindingsGenerator
                     new GlobalHandleTemplate( "LLVMTargetMachineRef", "LLVMDisposeTargetMachine" ),
                     new ContextHandleTemplate( "LLVMTargetRef" ),
                     new ContextHandleTemplate( "LLVMErrorTypeId"),
-                    new GlobalHandleTemplate( "llvm_lto_t", "llvm_destroy_optimizer"),
-                    new GlobalHandleTemplate( "lto_module_t", "lto_module_dispose" ),
-                    new GlobalHandleTemplate( "lto_code_gen_t", "lto_codegen_dispose" ),
-                    new GlobalHandleTemplate( "thinlto_code_gen_t", "thinlto_codegen_dispose" ),
                     new GlobalHandleTemplate( "LLVMObjectFileRef", "LLVMDisposeObjectFile"),
                     new GlobalHandleTemplate( "LLVMSectionIteratorRef", "LLVMDisposeSectionIterator"),
                     new GlobalHandleTemplate( "LLVMSymbolIteratorRef", "LLVMDisposeSymbolIterator"),
@@ -291,12 +332,31 @@ namespace LlvmBindingsGenerator
                     new GlobalHandleTemplate( "LLVMDisasmContextRef", "LLVMDisasmDispose"),
                     new GlobalHandleTemplate( "LLVMTripleRef", "LLVMDisposeTriple" ),
                     new GlobalHandleTemplate( "LLVMValueCacheRef", "LLVMDisposeValueCache"),
-                    new ContextHandleTemplate("LLVMOrcModuleHandle")
+                    new ContextHandleTemplate("LLVMOrcModuleHandle"),
+                    new ContextHandleTemplate("LLVMMDOperandRef")
                 },
+                /*Collection of annonymous enum names*/
                 AnonymousEnumNames = new Dictionary<string, string>
                 {
                     { "LLVMAttributeReturnIndex", "LLVMAttributeIndex" },
                     { "LLVMMDStringMetadataKind", "LLVMMetadataKind" }
+                },
+                IgnoredHeaders = new SortedSet<string>( )
+                {
+                    "lto.h",
+                    "LinkTimeOptimizer.h",
+                    "OptRemarks.h"
+                },
+                /*
+                Set of names of functions that return an alias as the handle, which should not be disposed.
+                Basically, these are a weak reference.
+                */
+                AliasReturningFunctions = new SortedSet<string>( )
+                {
+                    "LLVMGetTypeContext",
+                    "LLVMGetNodeContext",
+                    "LLVMGetModuleContext",
+                    "LLVMGetGlobalContext",
                 }
             };
         }

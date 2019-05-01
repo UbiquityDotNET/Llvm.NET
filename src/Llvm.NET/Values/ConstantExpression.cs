@@ -71,7 +71,7 @@ namespace Llvm.NET.Values
         [SuppressMessage("Microsoft.Design", "CA1011:ConsiderPassingBaseTypesAsParameters", Justification = "Specific type required by interop call")]
         public static Constant GetElementPtr(Constant value, IEnumerable<Constant> args)
         {
-            var llvmArgs = InstructionBuilder.GetValidatedGEPArgs(value, args);
+            var llvmArgs = InstructionBuilder.GetValidatedGEPArgs(value.NativeType, value, args);
             var handle = LLVMConstGEP( value.ValueHandle, out llvmArgs[0], (uint)llvmArgs.Length);
             return FromHandle<Constant>(handle);
         }

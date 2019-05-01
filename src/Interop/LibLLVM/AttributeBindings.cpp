@@ -15,5 +15,4 @@ extern "C"
     {
         return LLVMCreateMessage( unwrap( attribute ).getAsString( ).c_str( ) );
     }
-
 }

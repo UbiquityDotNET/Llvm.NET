@@ -135,6 +135,10 @@ namespace LlvmBindingsGenerator.Templates
                 retVal = decl.Name;
                 break;
 
+            case ArrayType at:
+                retVal = $"{GetTypeName( at.Type )}[]";
+                break;
+
             default:
                 retVal = type.ToString( );
                 break;

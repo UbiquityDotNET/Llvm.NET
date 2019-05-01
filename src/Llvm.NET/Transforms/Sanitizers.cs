@@ -47,11 +47,11 @@ namespace Llvm.NET.Transforms
 
         /// <summary>Adds a DataFlow Sanitizer Module pass</summary>
         /// <param name="passManager">Pass manager to add the pass to</param>
-        /// <param name="abiListFile">ABI List File</param>
+        /// <param name="abiListFile">ABI List Files</param>
         /// <returns><paramref name="passManager"/>for fluent support</returns>
-        public static ModulePassManager AddDataFlowSanitizerPass( this ModulePassManager passManager, string abiListFile )
+        public static ModulePassManager AddDataFlowSanitizerPass( this ModulePassManager passManager, string[] abiListFile )
         {
-            LLVMAddDataFlowSanitizerPass( passManager.Handle, abiListFile );
+            LLVMAddDataFlowSanitizerPass( passManager.Handle,abiListFile.Length, abiListFile );
             return passManager;
         }
     }

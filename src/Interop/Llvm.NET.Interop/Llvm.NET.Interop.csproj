@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
       <TargetFrameworks>netstandard20;net47</TargetFrameworks>
-      <LangVersion>7.2</LangVersion>
+      <LangVersion>7.3</LangVersion>
       <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
       <DebugType>portable</DebugType>
       <DebugSymbols>true</DebugSymbols>
@@ -17,18 +17,18 @@
       <RepositoryUrl>https://github.com/UbiquityDotNET/Llvm.Net.git</RepositoryUrl>
       <DocumentationFile></DocumentationFile>
   </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|netstandard20|AnyCPU'">
-    <NoWarn>1591</NoWarn>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|netstandard20|AnyCPU'">
-    <NoWarn>1591</NoWarn>
-  </PropertyGroup>
   <ItemGroup>
     <Content Include="..\..\..\BuildOutput\bin\LibLLVM\$(Configuration)\x64\LibLLVM.dll" Link="runtimes\win-x64\native\LibLLVM.dll">
         <PackagePath>runtimes\win-x64\native</PackagePath>
     </Content>
     <Content Include="..\..\..\BuildOutput\bin\LibLLVM\$(Configuration)\x64\LibLLVM.pdb" Link="runtimes\win-x64\native\LibLLVM.pdb">
         <PackagePath>runtimes\win-x64\native</PackagePath>
+    </Content>
+    <Content Include="NugetPkg\build\Llvm.NET.Interop.props">
+        <PackagePath>build\Llvm.NET.Interop.props</PackagePath>
+    </Content>
+    <Content Include="NugetPkg\buildMultiTargeting\Llvm.NET.Interop.props">
+        <PackagePath>buildMultiTargeting\Llvm.NET.Interop.props</PackagePath>
     </Content>
   </ItemGroup>
   <ItemGroup>

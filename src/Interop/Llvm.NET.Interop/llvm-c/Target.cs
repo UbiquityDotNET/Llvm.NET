@@ -483,7 +483,8 @@ namespace Llvm.NET.Interop
             See the constructor llvm::DataLayout::DataLayout. */
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
-        unsafe public static extern sbyte* LLVMCopyStringRepOfTargetData( LLVMTargetDataRef TD );
+        [return: MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( DisposeMessageMarshaler ) )]
+        public static extern string LLVMCopyStringRepOfTargetData( LLVMTargetDataRef TD );
 
         /** Returns the byte order of a target, either LLVMBigEndian or
             LLVMLittleEndian.

@@ -112,14 +112,21 @@ namespace Llvm.NET.Interop
             
             #line default
             #line hidden
-            this.Write("( IntPtr p );\r\n    }\r\n\r\n    [GeneratedCode(\"LlvmBindingsGenerator\",\"");
+            this.Write("( IntPtr p );\r\n    }\r\n");
+            
+            #line 51 "D:\GitHub\Ubiquity.NET\Llvm.Net\src\Interop\LlvmBindingsGenerator\Templates\T4\GlobalHandleTemplate.tt"
+if(NeedsAlias){
+            
+            #line default
+            #line hidden
+            this.Write("    [GeneratedCode(\"LlvmBindingsGenerator\",\"");
             
             #line 52 "D:\GitHub\Ubiquity.NET\Llvm.Net\src\Interop\LlvmBindingsGenerator\Templates\T4\GlobalHandleTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(ToolVersion));
             
             #line default
             #line hidden
-            this.Write("\")]\r\n    internal class ");
+            this.Write("\")]\r\n    public class ");
             
             #line 53 "D:\GitHub\Ubiquity.NET\Llvm.Net\src\Interop\LlvmBindingsGenerator\Templates\T4\GlobalHandleTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(HandleName));
@@ -140,8 +147,14 @@ namespace Llvm.NET.Interop
             
             #line default
             #line hidden
-            this.Write("Alias()\r\n            : base( IntPtr.Zero, false )\r\n        {\r\n        }\r\n    }\r\n}" +
-                    "\r\n");
+            this.Write("Alias()\r\n            : base( IntPtr.Zero, false )\r\n        {\r\n        }\r\n    }\r\n");
+            
+            #line 61 "D:\GitHub\Ubiquity.NET\Llvm.Net\src\Interop\LlvmBindingsGenerator\Templates\T4\GlobalHandleTemplate.tt"
+}
+            
+            #line default
+            #line hidden
+            this.Write("}\r\n");
             return this.GenerationEnvironment.ToString();
         }
     }

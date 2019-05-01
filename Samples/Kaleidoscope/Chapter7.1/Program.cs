@@ -10,9 +10,9 @@ using Kaleidoscope.Runtime;
 using Llvm.NET.Values;
 
 using static Kaleidoscope.Runtime.Utilities;
-using static Llvm.NET.StaticState;
+using static Llvm.NET.Interop.Library;
 
-namespace Kaleidoscope.Chapter7_1
+namespace Kaleidoscope.Chapter71
 {
     public static class Program
     {
@@ -33,14 +33,14 @@ namespace Kaleidoscope.Chapter7_1
             string helloMsg = $"Llvm.NET Kaleidoscope Interpreter - {LanguageFeatureLevel}";
             Console.Title = $"{Assembly.GetExecutingAssembly( ).GetName( )}: {helloMsg}";
             Console.WriteLine( helloMsg );
-            WaitForDebugger( args.Length > 0 && string.Compare( args[ 0 ], "waitfordebugger", StringComparison.InvariantCultureIgnoreCase ) == 0 );
+            WaitForDebugger( args.Length > 0 && string.Compare( args[ 0 ], "waitfordebugger", StringComparison.OrdinalIgnoreCase ) == 0 );
 
             using( InitializeLLVM( ) )
             {
                 RegisterNative( );
 
                 #region GeneratorLoop
-                var parser = new ParserStack( LanguageFeatureLevel );
+                var parser = new Parser( LanguageFeatureLevel );
                 using( var generator = new CodeGenerator( parser.GlobalState ) )
                 {
                     var readyState = new ReadyStateManager( );

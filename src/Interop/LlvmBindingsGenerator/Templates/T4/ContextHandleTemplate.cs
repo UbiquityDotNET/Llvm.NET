@@ -136,9 +136,17 @@ namespace Llvm.NET.Interop
             
             #line default
             #line hidden
-            this.Write("(IntPtr.Zero);\r\n\r\n        internal ");
+            this.Write("(IntPtr.Zero);\r\n\r\n        public IntPtr ToIntPtr() => Handle;\r\n\r\n        public s" +
+                    "tatic implicit operator IntPtr(");
             
-            #line 42 "D:\GitHub\Ubiquity.NET\Llvm.Net\src\Interop\LlvmBindingsGenerator\Templates\T4\ContextHandleTemplate.tt"
+            #line 44 "D:\GitHub\Ubiquity.NET\Llvm.Net\src\Interop\LlvmBindingsGenerator\Templates\T4\ContextHandleTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(HandleName));
+            
+            #line default
+            #line hidden
+            this.Write(" value) => value.ToIntPtr();\r\n\r\n        internal ");
+            
+            #line 46 "D:\GitHub\Ubiquity.NET\Llvm.Net\src\Interop\LlvmBindingsGenerator\Templates\T4\ContextHandleTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(HandleName));
             
             #line default

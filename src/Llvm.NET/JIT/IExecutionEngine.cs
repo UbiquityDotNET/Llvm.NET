@@ -7,13 +7,6 @@ using System.Runtime.InteropServices;
 
 namespace Llvm.NET.JIT
 {
-    /// <summary>JIT call back for symbol resolution</summary>
-    /// <param name="name">Name of the symbol</param>
-    /// <param name="lookupCtx">unused</param>
-    /// <returns>Address of the symbol</returns>
-    [UnmanagedFunctionPointer( CallingConvention.Cdecl )]
-    public delegate ulong SymbolResolver( [MarshalAs( UnmanagedType.LPStr )] string name, IntPtr lookupCtx );
-
     /// <summary>Common interface for an Execution engine</summary>
     public interface IExecutionEngine
     {
@@ -25,14 +18,8 @@ namespace Llvm.NET.JIT
         /// <returns>Handle for the module in the engine</returns>
         /// <remarks>
         /// <note type="warning">
-        /// <para>For the legacy JIT engine the input <paramref name="module"/> is disconnected from
-        /// the underlying LLVM module as the module is considered fully owned by the engine.
-        /// Thus, upon return the <see cref="BitcodeModule.IsDisposed"/> property is <see langword="true"/></para>
-        /// <para>For the OrcJit, however, the module is shared with the engine using a reference
-        /// count. In this case <see cref="BitcodeModule.IsDisposed"/> property is <see langword="false"/> and the
-        /// <see cref="BitcodeModule.IsShared"/> property is <see langword="true"/>. Callers may continue to use the
-        /// module in this case, though modifying it or interned data from it's context may result in undefined
-        /// behavior.</para>
+        /// <para>For the JIT engine the input <paramref name="module"/> is disconnected from
+        /// the underlying LLVM module as the module is considered fully owned by the engine.</para>
         /// </note>
         /// </remarks>
         IJitModuleHandle AddModule( BitcodeModule module );

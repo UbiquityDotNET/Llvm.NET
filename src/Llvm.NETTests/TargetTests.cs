@@ -103,12 +103,14 @@ namespace Llvm.NET.Tests
 
             public bool HasTargetMachine { get; }
 
-            public static readonly TargetInfoCollection ExpectedTargets = new TargetInfoCollection
+            public static TargetInfoCollection ExpectedTargets { get; } = new TargetInfoCollection
             {
                 /* ReSharper disable StringLiteralTypo */
                 new TargetInfo( "xcore", "XCore", false, false, true ),
                 new TargetInfo( "x86-64", "64-bit X86: EM64T and AMD64", true, true, true ),
                 new TargetInfo( "x86", "32-bit X86: Pentium-Pro and above", true, true, true ),
+                new TargetInfo( "wasm64", "WebAssembly 64-bit", true, false, true ),
+                new TargetInfo( "wasm32", "WebAssembly 32-bit", true, false, true ),
                 new TargetInfo( "systemz", "SystemZ", true, true, true ),
                 new TargetInfo( "sparcel", "Sparc LE", true, true, true ),
                 new TargetInfo( "sparcv9", "Sparc V9", true, true, true ),
@@ -118,13 +120,13 @@ namespace Llvm.NET.Tests
                 new TargetInfo( "ppc32", "PowerPC 32", true, true, true ),
                 new TargetInfo( "nvptx64", "NVIDIA PTX 64-bit", false, false, true ),
                 new TargetInfo( "nvptx", "NVIDIA PTX 32-bit", false, false, true ),
-                new TargetInfo( "msp430", "MSP430 [experimental]", false, false, true ),
-                new TargetInfo( "mips64el", "Mips64el [experimental]", true, true, true ),
-                new TargetInfo( "mips64", "Mips64 [experimental]", true, true, true ),
-                new TargetInfo( "mipsel", "Mipsel", true, true, true ),
-                new TargetInfo( "mips", "Mips", true, true, true ),
+                new TargetInfo( "msp430", "MSP430 [experimental]", true, false, true ),
+                new TargetInfo( "mips64el", "MIPS (64-bit little endian)", true, true, true ),
+                new TargetInfo( "mips64", "MIPS (64-bit big endian)", true, true, true ),
+                new TargetInfo( "mipsel", "MIPS (32-bit little endian)", true, true, true ),
+                new TargetInfo( "mips", "MIPS (32-bit big endian)", true, true, true ),
                 new TargetInfo( "lanai", "Lanai", true, false, true ),
-                new TargetInfo( "hexagon", "Hexagon", true, false, true ),
+                new TargetInfo( "hexagon", "Hexagon", true, true, true ),
                 new TargetInfo( "bpfeb", "BPF (big endian)", true, true, true ),
                 new TargetInfo( "bpfel", "BPF (little endian)", true, true, true ),
                 new TargetInfo( "bpf", "BPF (host endian)", true, true, true ),
@@ -148,7 +150,7 @@ namespace Llvm.NET.Tests
         // typing
         internal string GenerateExpectedTargets( )
         {
-            var bldr = new System.Text.StringBuilder( "public static TargetInfoCollection ExpectedTargets = new TargetInfoCollection {" );
+            var bldr = new System.Text.StringBuilder( "private static readonly TargetInfoCollection ExpectedTargets = new TargetInfoCollection {" );
             bldr.AppendLine( );
             var targets = System.Linq.Enumerable.ToList( Target.AvailableTargets );
             for( int i = 0; i < targets.Count; ++i )

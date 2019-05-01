@@ -3,6 +3,7 @@
 // </copyright>
 
 using System.Collections.ObjectModel;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 
 namespace Kaleidoscope.Grammar
@@ -15,6 +16,7 @@ namespace Kaleidoscope.Grammar
         PreFix
     }
 
+    [SuppressMessage( "Performance", "CA1815:Override equals and operator equals on value types", Justification = "Equality operators make no sense for this type" )]
     public struct OperatorInfo
     {
         public OperatorInfo( int tokenType, OperatorKind kind, int precedence )

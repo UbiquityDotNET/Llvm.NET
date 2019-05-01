@@ -34,6 +34,10 @@ namespace Llvm.NET.Interop
 
         public static LLVMComdatRef Zero { get; } = new LLVMComdatRef(IntPtr.Zero);
 
+        public IntPtr ToIntPtr() => Handle;
+
+        public static implicit operator IntPtr(LLVMComdatRef value) => value.ToIntPtr();
+
         internal LLVMComdatRef( IntPtr p )
         {
             Handle = p;

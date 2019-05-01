@@ -94,6 +94,19 @@ namespace Llvm.NET.Values
         Protected = LLVMVisibility.LLVMProtectedVisibility
     }
 
+    /// <summary>Unnamed address state of a global value</summary>
+    public enum UnnamedAddressKind
+    {
+        /// <summary>Address of the global is significant</summary>
+        None = LLVMUnnamedAddr.LLVMNoUnnamedAddr,
+
+        /// <summary>Address of the global is locally significant</summary>
+        Local = LLVMUnnamedAddr.LLVMLocalUnnamedAddr,
+
+        /// <summary>Address of the global is globally significant</summary>
+        Global = LLVMUnnamedAddr.LLVMGlobalUnnamedAddr
+    }
+
     /// <summary>LLVM Global value </summary>
     public class GlobalValue
         : Constant
@@ -101,29 +114,29 @@ namespace Llvm.NET.Values
         /// <summary>Gets or sets the visibility of this global value</summary>
         public Visibility Visibility
         {
-            get => ( Visibility )NativeMethods.LLVMGetVisibility( ValueHandle );
-            set => NativeMethods.LLVMSetVisibility( ValueHandle, ( LLVMVisibility )value );
+            get => ( Visibility )LLVMGetVisibility( ValueHandle );
+            set => LLVMSetVisibility( ValueHandle, ( LLVMVisibility )value );
         }
 
         /// <summary>Gets or sets the linkage specification for this symbol</summary>
         public Linkage Linkage
         {
-            get => ( Linkage )NativeMethods.LLVMGetLinkage( ValueHandle );
-            set => NativeMethods.LLVMSetLinkage( ValueHandle, ( LLVMLinkage )value );
+            get => ( Linkage )LLVMGetLinkage( ValueHandle );
+            set => LLVMSetLinkage( ValueHandle, ( LLVMLinkage )value );
         }
 
         /// <summary>Gets or sets a value indicating whether this is an Unnamed address</summary>
-        public bool UnnamedAddress
+        public UnnamedAddressKind UnnamedAddress
         {
-            get => LLVMHasUnnamedAddr( ValueHandle );
-            set => LLVMSetUnnamedAddr( ValueHandle, value );
+            get => ( UnnamedAddressKind )LLVMGetUnnamedAddress( ValueHandle );
+            set => LLVMSetUnnamedAddress( ValueHandle, ( LLVMUnnamedAddr )value );
         }
 
         /// <summary>Gets a value indicating whether this is a declaration</summary>
-        public bool IsDeclaration => NativeMethods.LLVMIsDeclaration( ValueHandle );
+        public bool IsDeclaration => LLVMIsDeclaration( ValueHandle );
 
         /// <summary>Gets the Module containing this global value</summary>
-        public BitcodeModule ParentModule => NativeType.Context.GetModuleFor( NativeMethods.LLVMGetGlobalParent( ValueHandle ) );
+        public BitcodeModule ParentModule => NativeType.Context.GetModuleFor( LLVMGetGlobalParent( ValueHandle ) );
 
         internal GlobalValue( LLVMValueRef valueRef )
             : base( valueRef )

@@ -35,7 +35,7 @@ namespace Llvm.NET.Instructions
             LLVMValueRef[ ] llvmValues = allIncoming.Select( vb => vb.Value.ValueHandle ).ToArray( );
             LLVMBasicBlockRef[ ] llvmBlocks = allIncoming.Select( vb => vb.Block.BlockHandle ).ToArray( );
 
-            LLVMAddIncoming( ValueHandle, out llvmValues[ 0 ], out llvmBlocks[ 0 ], ( uint )llvmValues.Length );
+            LLVMAddIncoming( ValueHandle, llvmValues, llvmBlocks, ( uint )llvmValues.Length );
         }
 
         internal PhiNode( LLVMValueRef valueRef )

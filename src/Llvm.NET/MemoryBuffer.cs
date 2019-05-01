@@ -30,24 +30,13 @@ namespace Llvm.NET
         }
 
         /// <summary>Gets the size of the buffer</summary>
-        public int Size
-        {
-            get
-            {
-                if( BufferHandle == default )
-                {
-                    return 0;
-                }
-
-                return LLVMGetBufferSize( BufferHandle ).Pointer.ToInt32();
-            }
-        }
+        public int Size => BufferHandle == default ? 0 : ( int )LLVMGetBufferSize( BufferHandle );
 
         /// <summary>Gets an array of bytes from the buffer</summary>
         /// <returns>Array of bytes copied from the buffer</returns>
         public byte[] ToArray()
         {
-            var bufferStart = LLVMGetBufferStart( BufferHandle );
+            IntPtr bufferStart = LLVMGetBufferStart( BufferHandle );
             byte[ ] retVal = new byte[ Size ];
             Marshal.Copy( bufferStart, retVal, 0, Size );
             return retVal;

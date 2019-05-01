@@ -201,14 +201,6 @@ namespace Llvm.NET.Interop
         public static extern LLVMDIBuilderRef LLVMCreateDIBuilder( LLVMModuleRef M );
 
         /**
-         * Deallocates the \c DIBuilder and everything it owns.
-         * @note You must call \c LLVMDIBuilderFinalize before this
-         */
-        [SuppressUnmanagedCodeSecurity]
-        [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
-        public static extern void LLVMDisposeDIBuilder( LLVMDIBuilderRef Builder );
-
-        /**
          * Construct any deferred debug info descriptors.
          */
         [SuppressUnmanagedCodeSecurity]
@@ -454,7 +446,7 @@ namespace Llvm.NET.Interop
          */
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
-        public static extern LLVMMetadataRef LLVMDIBuilderCreateSubroutineType( LLVMDIBuilderRef Builder, LLVMMetadataRef File, out LLVMMetadataRef ParameterTypes, uint NumParameterTypes, LLVMDIFlags Flags );
+        public static extern LLVMMetadataRef LLVMDIBuilderCreateSubroutineType( LLVMDIBuilderRef Builder, LLVMMetadataRef File, [MarshalAs( UnmanagedType.LPArray, ArraySubType = UnmanagedType.SysInt )]LLVMMetadataRef[] ParameterTypes, uint NumParameterTypes, LLVMDIFlags Flags );
 
         /**
          * Create debugging information entry for an enumeration.
@@ -472,7 +464,7 @@ namespace Llvm.NET.Interop
          */
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
-        public static extern LLVMMetadataRef LLVMDIBuilderCreateEnumerationType( LLVMDIBuilderRef Builder, LLVMMetadataRef Scope, [MarshalAs( UnmanagedType.LPStr )]string Name, size_t NameLen, LLVMMetadataRef File, uint LineNumber, System.UInt64 SizeInBits, System.UInt32 AlignInBits, out LLVMMetadataRef Elements, uint NumElements, LLVMMetadataRef ClassTy );
+        public static extern LLVMMetadataRef LLVMDIBuilderCreateEnumerationType( LLVMDIBuilderRef Builder, LLVMMetadataRef Scope, [MarshalAs( UnmanagedType.LPStr )]string Name, size_t NameLen, LLVMMetadataRef File, uint LineNumber, System.UInt64 SizeInBits, System.UInt32 AlignInBits, [MarshalAs( UnmanagedType.LPArray, ArraySubType = UnmanagedType.SysInt )]LLVMMetadataRef[] Elements, uint NumElements, LLVMMetadataRef ClassTy );
 
         /**
          * Create debugging information entry for a union.
@@ -493,7 +485,7 @@ namespace Llvm.NET.Interop
          */
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
-        public static extern LLVMMetadataRef LLVMDIBuilderCreateUnionType( LLVMDIBuilderRef Builder, LLVMMetadataRef Scope, [MarshalAs( UnmanagedType.LPStr )]string Name, size_t NameLen, LLVMMetadataRef File, uint LineNumber, System.UInt64 SizeInBits, System.UInt32 AlignInBits, LLVMDIFlags Flags, out LLVMMetadataRef Elements, uint NumElements, uint RunTimeLang, [MarshalAs( UnmanagedType.LPStr )]string UniqueId, size_t UniqueIdLen );
+        public static extern LLVMMetadataRef LLVMDIBuilderCreateUnionType( LLVMDIBuilderRef Builder, LLVMMetadataRef Scope, [MarshalAs( UnmanagedType.LPStr )]string Name, size_t NameLen, LLVMMetadataRef File, uint LineNumber, System.UInt64 SizeInBits, System.UInt32 AlignInBits, LLVMDIFlags Flags, [MarshalAs( UnmanagedType.LPArray, ArraySubType = UnmanagedType.SysInt )]LLVMMetadataRef[] Elements, uint NumElements, uint RunTimeLang, [MarshalAs( UnmanagedType.LPStr )]string UniqueId, size_t UniqueIdLen );
 
         /**
          * Create debugging information entry for an array.
@@ -506,7 +498,7 @@ namespace Llvm.NET.Interop
          */
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
-        public static extern LLVMMetadataRef LLVMDIBuilderCreateArrayType( LLVMDIBuilderRef Builder, System.UInt64 Size, System.UInt32 AlignInBits, LLVMMetadataRef Ty, out LLVMMetadataRef Subscripts, uint NumSubscripts );
+        public static extern LLVMMetadataRef LLVMDIBuilderCreateArrayType( LLVMDIBuilderRef Builder, System.UInt64 Size, System.UInt32 AlignInBits, LLVMMetadataRef Ty, [MarshalAs( UnmanagedType.LPArray, ArraySubType = UnmanagedType.SysInt )]LLVMMetadataRef[] Subscripts, uint NumSubscripts );
 
         /**
          * Create debugging information entry for a vector type.
@@ -519,7 +511,7 @@ namespace Llvm.NET.Interop
          */
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
-        public static extern LLVMMetadataRef LLVMDIBuilderCreateVectorType( LLVMDIBuilderRef Builder, System.UInt64 Size, System.UInt32 AlignInBits, LLVMMetadataRef Ty, out LLVMMetadataRef Subscripts, uint NumSubscripts );
+        public static extern LLVMMetadataRef LLVMDIBuilderCreateVectorType( LLVMDIBuilderRef Builder, System.UInt64 Size, System.UInt32 AlignInBits, LLVMMetadataRef Ty, [MarshalAs( UnmanagedType.LPArray, ArraySubType = UnmanagedType.SysInt )]LLVMMetadataRef[] Subscripts, uint NumSubscripts );
 
         /**
          * Create a DWARF unspecified type.
@@ -579,7 +571,7 @@ namespace Llvm.NET.Interop
          */
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
-        public static extern LLVMMetadataRef LLVMDIBuilderCreateStructType( LLVMDIBuilderRef Builder, LLVMMetadataRef Scope, [MarshalAs( UnmanagedType.LPStr )]string Name, size_t NameLen, LLVMMetadataRef File, uint LineNumber, System.UInt64 SizeInBits, System.UInt32 AlignInBits, LLVMDIFlags Flags, LLVMMetadataRef DerivedFrom, out LLVMMetadataRef Elements, uint NumElements, uint RunTimeLang, LLVMMetadataRef VTableHolder, [MarshalAs( UnmanagedType.LPStr )]string UniqueId, size_t UniqueIdLen );
+        public static extern LLVMMetadataRef LLVMDIBuilderCreateStructType( LLVMDIBuilderRef Builder, LLVMMetadataRef Scope, [MarshalAs( UnmanagedType.LPStr )]string Name, size_t NameLen, LLVMMetadataRef File, uint LineNumber, System.UInt64 SizeInBits, System.UInt32 AlignInBits, LLVMDIFlags Flags, LLVMMetadataRef DerivedFrom, [MarshalAs( UnmanagedType.LPArray, ArraySubType = UnmanagedType.SysInt )]LLVMMetadataRef[] Elements, uint NumElements, uint RunTimeLang, LLVMMetadataRef VTableHolder, [MarshalAs( UnmanagedType.LPStr )]string UniqueId, size_t UniqueIdLen );
 
         /**
          * Create debugging information entry for a member.

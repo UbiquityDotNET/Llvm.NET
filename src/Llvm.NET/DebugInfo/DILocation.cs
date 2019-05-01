@@ -42,17 +42,17 @@ namespace Llvm.NET.DebugInfo
         }
 
         /// <summary>Gets the scope for this location</summary>
-        public DILocalScope Scope => FromHandle<DILocalScope>( Context, LLVMGetDILocationScope( MetadataHandle ) );
+        public DILocalScope Scope => FromHandle<DILocalScope>( Context, LLVMDILocationGetScope( MetadataHandle ) );
 
         /// <summary>Gets the line for this location</summary>
-        public uint Line => LLVMGetDILocationLine( MetadataHandle );
+        public uint Line => LLVMDILocationGetLine( MetadataHandle );
 
         /// <summary>Gets the column for this location</summary>
-        public uint Column => LLVMGetDILocationColumn( MetadataHandle );
+        public uint Column => LLVMDILocationGetColumn( MetadataHandle );
 
         /// <summary>Gets the location this location is inlined at</summary>
         [property: CanBeNull]
-        public DILocation InlinedAt => FromHandle<DILocation>( LLVMGetDILocationInlinedAt( MetadataHandle ) );
+        public DILocation InlinedAt => FromHandle<DILocation>( LLVMDILocationGetInlinedAt( MetadataHandle ) );
 
         /// <summary>Gets the scope where this is inlined.</summary>
         /// <remarks>This walks through the <see cref="InlinedAt"/> properties to return

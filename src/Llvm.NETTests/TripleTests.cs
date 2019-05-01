@@ -28,10 +28,10 @@ namespace Llvm.NET.Tests
         public void ToStringTest( )
         {
             // constructor should parse and normalize the triple
-            // so that ToString() retrieves the normalized form
+            // so that ToString() retrieves the full normalized form
             var triple = new Triple( "thumbv7m-none-eabi" );
             string str = triple.ToString( );
-            Assert.AreEqual( "thumbv7m-none--eabi", str );
+            Assert.AreEqual( "thumbv7m-none-unknown-eabi", str );
         }
 
         [TestMethod]
@@ -245,9 +245,7 @@ namespace Llvm.NET.Tests
                 { Triple.EnvironmentType.MSVC,               "msvc" },
                 { Triple.EnvironmentType.Itanium,            "itanium" },
                 { Triple.EnvironmentType.Cygnus,             "cygnus" },
-                { Triple.EnvironmentType.AMDOpenCL,          "amdopencl" },
                 { Triple.EnvironmentType.CoreCLR,            "coreclr" },
-                { Triple.EnvironmentType.OpenCL,             "opencl" }
             };
 
             foreach( var kvp in values )
@@ -258,7 +256,7 @@ namespace Llvm.NET.Tests
             Assert.AreEqual( values[ Triple.EnvironmentType.UnknownEnvironment ], Triple.GetCanonicalName( ( Triple.EnvironmentType )0x12345678 ) );
         }
 
-        public void GetObjFormatTypeNameTest( )
+        public static void GetObjFormatTypeNameTest( )
         {
             var values = new Dictionary<Triple.ObjectFormatType, string>
             {

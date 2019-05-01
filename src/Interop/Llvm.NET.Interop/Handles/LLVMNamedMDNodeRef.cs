@@ -34,6 +34,10 @@ namespace Llvm.NET.Interop
 
         public static LLVMNamedMDNodeRef Zero { get; } = new LLVMNamedMDNodeRef(IntPtr.Zero);
 
+        public IntPtr ToIntPtr() => Handle;
+
+        public static implicit operator IntPtr(LLVMNamedMDNodeRef value) => value.ToIntPtr();
+
         internal LLVMNamedMDNodeRef( IntPtr p )
         {
             Handle = p;

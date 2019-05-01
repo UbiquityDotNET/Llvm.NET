@@ -19,6 +19,10 @@
       <Filter>Source Files</Filter>
     </None>
     <None Include="packages.config" />
+    <None Include="cpp.hint" />
+    <None Include="include\ReadMe.md">
+      <Filter>Header Files</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="InlinedExports.cpp">
@@ -45,6 +49,15 @@
     <ClCompile Include="ContextBindings.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="IRBindings.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="MetadataBindings.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="DIBuilderBindings.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Resource.rc">
@@ -53,15 +66,6 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\InlinedExports.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="include\resource.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="include\stdafx.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="include\targetver.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="include\ValueCache.h">
@@ -76,9 +80,6 @@
     <ClInclude Include="include\libllvm-c\ContextBindings.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="include\libllvm-c\DIBuilderBindings.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="include\libllvm-c\ModuleBindings.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -89,6 +90,24 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="include\libllvm-c\ValueBindings.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\libllvm-c\IRBindings.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\libllvm-c\MetadataBindings.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\libllvm-c\DIBuilderBindings.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="resource.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="stdafx.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="targetver.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

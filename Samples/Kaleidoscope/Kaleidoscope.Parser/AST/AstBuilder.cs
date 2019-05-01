@@ -257,7 +257,7 @@ namespace Kaleidoscope.Grammar.AST
                 return null;
             }
 
-            switch( op.Token.Type )
+            switch( op.OpToken.Type )
             {
             case LEFTANGLE:
                 return new BinaryOperatorExpression( op.GetSourceSpan( ), lhs, BuiltInOperatorKind.Less, rhs );
@@ -284,13 +284,13 @@ namespace Kaleidoscope.Grammar.AST
             default:
                 {
                     // User defined op?
-                    var opKind = RuntimeState.GetBinOperatorInfo( op.Token.Type ).Kind;
+                    var opKind = RuntimeState.GetBinOperatorInfo( op.OpToken.Type ).Kind;
                     if( opKind != OperatorKind.InfixLeftAssociative && opKind != OperatorKind.InfixRightAssociative )
                     {
-                        throw new CodeGeneratorException( $"Invalid binary operator '{op.Token.Text}'" );
+                        throw new CodeGeneratorException( $"Invalid binary operator '{op.OpToken.Text}'" );
                     }
 
-                    string calleeName = CreateBinaryFunctionName( op.Token );
+                    string calleeName = CreateBinaryFunctionName( op.OpToken );
                     Prototype callTarget = FindCallTarget( calleeName );
                     return new FunctionCallExpression( op.GetSourceSpan( ), callTarget, lhs, rhs );
                 }

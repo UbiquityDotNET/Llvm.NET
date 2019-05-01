@@ -4,19 +4,6 @@
 #include "llvm-c/Core.h"
 #include "llvm-c/Comdat.h"
 
-/// See Module::ModFlagBehavior
-enum LLVMModFlagBehavior
-{
-    Error = 1,
-    Warning = 2,
-    Require = 3,
-    Override = 4,
-    Append = 5,
-    AppendUnique = 6,
-    ModFlagBehaviorFirstVal = Error,
-    ModFlagBehaviorLastVal = AppendUnique
-};
-
 #ifdef __cplusplus
 extern "C" {
 #endif
@@ -64,6 +51,8 @@ extern "C" {
     //// Comdat accessors
     //LLVMComdatSelectionKind LLVMComdatGetKind( LLVMComdatRef comdatRef );
     //void LLVMComdatSetKind( LLVMComdatRef comdatRef, LLVMComdatSelectionKind kind );
+
+    // caller must free returned string via LLVMDisposeMessage()
     char const* LLVMComdatGetName( LLVMComdatRef comdatRef );
 
     // Alias enumeration

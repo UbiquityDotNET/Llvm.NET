@@ -5,6 +5,7 @@
 // -----------------------------------------------------------------------
 
 using System;
+using System.CodeDom.Compiler;
 using System.Collections.Generic;
 using System.Runtime.InteropServices;
 using CppSharp;
@@ -46,7 +47,8 @@ namespace LlvmBindingsGenerator.Passes
                 return false;
             }
 
-            @class.Attributes.Add( new TargetedAttribute( typeof( StructLayoutAttribute ), "LayoutKind.Sequential" ) );
+            @class.Attributes.Add( StructLayoutAttr );
+            @class.Attributes.Add( GeneratedCodeAttrib );
             return base.VisitClassDecl( @class );
         }
 
@@ -132,7 +134,7 @@ namespace LlvmBindingsGenerator.Passes
             var scope = DeclarationStack.Peek( );
             if( ParamMarshalingMap.TryGetValue( scope.Name, MarshalingInfoMap.ReturnParamIndex, out IMarshalInfo marshalInfo ) )
             {
-                signature.ReturnType = new QualifiedType( marshalInfo.Type, signature.ReturnType.Qualifiers );
+                signature.ReturnType = marshalInfo.TransformType( signature.ReturnType );
                 scope.Attributes.AddRange( marshalInfo.Attributes );
                 if( scope is Function f )
                 {
@@ -151,19 +153,29 @@ namespace LlvmBindingsGenerator.Passes
             {
                 p.Usage = usage;
                 p.QualifiedType = new QualifiedType( type, p.QualifiedType.Qualifiers );
+                return;
             }
 
             if( p.Type is PointerType pt )
             {
                 switch( pt.Pointee.Desugar( ) )
                 {
+                // void* => IntPtr
                 case BuiltinType bt when bt.Type == PrimitiveType.Void:
                     p.QualifiedType = new QualifiedType( new CILType( typeof( IntPtr ) ) );
                     break;
 
+                // some handle typedefs do not follow the standard typedef patterns 'typedef struct OpaqueFoo* Foo;'
+                // and instead use 'typedef struct OpaqueFoo Foo;' (e.g. the pointer is not part of the typedef)
+                // this is the sort of inconsistency that drives users insane... Deal with it by treating the single
+                // pointer case as an "in" of the handle type to hide the differences from the generated bindings
+                case TagType _ when pt.Pointee.TryGetHandleDecl( out TypedefNameDecl handleDecl ):
+                    p.Usage = ParameterUsage.In;
+                    p.QualifiedType = new QualifiedType( new TypedefType( handleDecl ) );
+                    break;
+
                 // Pointer to Pointer and Pointer to built in types are out parameters
-                case PointerType _:
-                case BuiltinType _:
+                default:
                     p.Usage = ParameterUsage.Out;
                     break;
                 }
@@ -191,7 +203,7 @@ namespace LlvmBindingsGenerator.Passes
         private static void ApplyParameterMarshaling( Parameter parameter, IMarshalInfo marshaling )
         {
             parameter.Attributes.AddRange( marshaling.Attributes );
-            parameter.QualifiedType = new QualifiedType( marshaling.Type );
+            parameter.QualifiedType = marshaling.TransformType( parameter.QualifiedType );
             switch( marshaling.Semantics )
             {
             case ParamSemantics.Return:
@@ -238,7 +250,7 @@ namespace LlvmBindingsGenerator.Passes
                 Value = string.Empty
             };
 
-        private MarshalingInfoMap ParamMarshalingMap;
+        private readonly MarshalingInfoMap ParamMarshalingMap;
 
         private readonly Stack<Declaration> DeclarationStack = new Stack<Declaration>();
 
@@ -250,5 +262,11 @@ namespace LlvmBindingsGenerator.Passes
 
         private static readonly CppSharp.AST.Type StringType = new CILType( typeof(string) );
         private static readonly CppSharp.AST.Type StringArrayType = new CILType( typeof(string[]) );
+        private static readonly TargetedAttribute StructLayoutAttr = new TargetedAttribute( typeof(StructLayoutAttribute ), "LayoutKind.Sequential" );
+        private static readonly TargetedAttribute GeneratedCodeAttrib
+            = new TargetedAttribute( typeof( GeneratedCodeAttribute )
+                                   , "\"LlvmBindingsGenerator\""
+                                   , $"\"{typeof(AddMarshalingAttributesPass).Assembly.GetName( ).Version.ToString()}\""
+                                   );
     }
 }

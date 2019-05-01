@@ -42,7 +42,7 @@ namespace Llvm.NET.DebugInfo
                     return 0;
                 }
 
-                return ( DebugInfoFlags )NativeMethods.LLVMDITypeGetFlags( MetadataHandle );
+                return ( DebugInfoFlags )LLVMDITypeGetFlags( MetadataHandle );
             }
         }
 

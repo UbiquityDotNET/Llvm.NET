@@ -71,7 +71,7 @@ namespace LlvmBindingsGenerator
 
             // always start the passes with the IgnoreSystemHeaders pass to ensure that generation
             // only occurs for the desired headers.
-            driver.AddTranslationUnitPass( new IgnoreSystemHeaders( ) );
+            driver.AddTranslationUnitPass( new IgnoreSystemHeaders( Configuration.IgnoredHeaders ) );
             driver.AddTranslationUnitPass( new ConvertLLVMBoolPass( Configuration.StatusReturningFunctions ) );
             driver.AddTranslationUnitPass( new CheckFlagEnumsPass( ) );
             driver.AddTranslationUnitPass( new DeAnonymizeEnumsPass( Configuration.AnonymousEnumNames ) );
@@ -79,14 +79,25 @@ namespace LlvmBindingsGenerator
             driver.AddTranslationUnitPass( new PODToValueTypePass( ) );
             driver.AddTranslationUnitPass( new IgnoreDuplicateNamesPass( ) );
             driver.AddTranslationUnitPass( new AddMissingParameterNamesPass( ) );
-            driver.AddTranslationUnitPass( new MarkFunctionsIgnoredPass( Configuration.HandleToTemplateMap.DisposeFunctionNames.Concat( Configuration.IgnoredFunctions ) ) );
+            driver.AddTranslationUnitPass( new MapHandleAliasTypesPass( Configuration.AliasReturningFunctions ) );
+
+            // all handle dispose functions are considered internal, but not ignored
+            var disposeFuncEntries = Configuration.HandleToTemplateMap.DisposeFunctionNames.Select( n => (Name: n, Ignored: false) );
+            driver.AddTranslationUnitPass( new MarkFunctionsInternalPass( disposeFuncEntries.Concat( Configuration.InternalFunctions ) ) );
             driver.AddTranslationUnitPass( new MarkDeprecatedFunctionsAsObsoletePass( Configuration.DeprecatedFunctionToMessageMap, true ) );
             driver.AddTranslationUnitPass( new AddMarshalingAttributesPass( new MarshalingInfoMap( ctx, Configuration.MarshalingInfo ) ) );
+            driver.AddTranslationUnitPass( new ValidateHasStringMarshalingAttributes( ) );
         }
 
         public void Postprocess( Driver driver, ASTContext ctx )
         {
-            // Don't rely on CppSHarp built-in code generation as it doesn't handle the needs of this library well.
+            if(Diagnostics.Implementation is ErrorTrackingDiagnostics etd && etd.ErrorCount > 0)
+            {
+                Diagnostics.Error( "Errors in transformation passes, skipping generation" );
+                return;
+            }
+
+            // Don't rely on CppSharp built-in code generation as it doesn't handle the needs of this library well.
             GenerateCode( driver );
         }
 

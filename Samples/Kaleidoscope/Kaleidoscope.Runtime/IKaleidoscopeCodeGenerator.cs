@@ -17,7 +17,7 @@ namespace Kaleidoscope.Runtime
     public interface IKaleidoscopeCodeGenerator<TResult>
     {
         /// <summary>Generates output from the tree</summary>
-        /// <param name="tree">Tree to generate</param>
+        /// <param name="ast">Tree to generate</param>
         /// <param name="codeGenerationErroHandler">Error handling action for code generator errors</param>
         /// <returns>Generated result</returns>
         /// <remarks>
@@ -37,6 +37,6 @@ namespace Kaleidoscope.Runtime
         /// reported to the caller via the provided <paramref name="codeGenerationErroHandler"/> for reference types
         /// null is returned. Thus the default value indicates an unusable result</para>
         /// </remarks>
-        TResult Generate( IAstNode tree, [CanBeNull] Action<CodeGeneratorException> codeGenerationErroHandler );
+        TResult Generate( IAstNode ast, [CanBeNull] Action<CodeGeneratorException> codeGenerationErroHandler );
     }
 }

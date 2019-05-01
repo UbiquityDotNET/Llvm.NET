@@ -49,21 +49,23 @@ namespace Llvm.NET.Interop
     public delegate string LLVMSymbolLookupCallback( global::System.IntPtr DisInfo, System.UInt64 ReferenceValue, out System.UInt64 ReferenceType, System.UInt64 ReferencePC, [MarshalAs( UnmanagedType.LPStr, ArraySubType = UnmanagedType.LPStr )]global::System.String[] ReferenceName );
 
     [StructLayout( LayoutKind.Sequential )]
+    [GeneratedCode( "LlvmBindingsGenerator", "2.17941.31104.49410" )]
     public struct LLVMOpInfoSymbol1
     {
-        System.UInt64 Present;
+        public System.UInt64 Present;
         [MarshalAs( UnmanagedType.LPStr )]
-        string Name;
-        System.UInt64 Value;
+        public string Name;
+        public System.UInt64 Value;
     }
 
     [StructLayout( LayoutKind.Sequential )]
+    [GeneratedCode( "LlvmBindingsGenerator", "2.17941.31104.49410" )]
     public struct LLVMOpInfo1
     {
-        global::Llvm.NET.Interop.LLVMOpInfoSymbol1 AddSymbol;
-        global::Llvm.NET.Interop.LLVMOpInfoSymbol1 SubtractSymbol;
-        System.UInt64 Value;
-        System.UInt64 VariantKind;
+        public global::Llvm.NET.Interop.LLVMOpInfoSymbol1 AddSymbol;
+        public global::Llvm.NET.Interop.LLVMOpInfoSymbol1 SubtractSymbol;
+        public System.UInt64 Value;
+        public System.UInt64 VariantKind;
     }
 
     public static partial class NativeMethods

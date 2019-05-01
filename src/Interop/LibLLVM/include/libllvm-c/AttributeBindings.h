@@ -22,7 +22,7 @@
 #ifdef __cplusplus
 extern "C" {
 #endif
-
+    // caller must release the returned string via LLVMDisposeMessage
     char const* LLVMAttributeToString( LLVMAttributeRef attribute );
 
 #ifdef __cplusplus

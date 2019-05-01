@@ -96,18 +96,18 @@ namespace Llvm.NET.DebugInfo
             }
 
             var file = CreateFile( fileName, fileDirectory );
-            var handle = LLVMDIBuilderCreateCompileUnit2( BuilderHandle
-                                                       , ( uint )language
+            var handle = LLVMDIBuilderCreateCompileUnit( BuilderHandle
+                                                       , ( LLVMDWARFSourceLanguage )language
                                                        , file.MetadataHandle
                                                        , producer
-                                                       , ( IntPtr )producer.Length
+                                                       , producer.Length
                                                        , optimized
                                                        , compilationFlags
-                                                       , ( IntPtr )compilationFlags.Length
+                                                       , compilationFlags.Length
                                                        , runtimeVersion
                                                        , string.Empty
-                                                       , IntPtr.Zero
-                                                       , DwarfEmissionKind.Full
+                                                       , size_t.Zero
+                                                       , LLVMDWARFEmissionKind.LLVMDWARFEmissionFull
                                                        , 0
                                                        , false
                                                        , false
@@ -127,9 +127,10 @@ namespace Llvm.NET.DebugInfo
         {
             name.ValidateNotNullOrWhiteSpace( nameof( name ) );
 
-            var handle = LLVMDIBuilderCreateNamespace( BuilderHandle
+            var handle = LLVMDIBuilderCreateNameSpace( BuilderHandle
                                                      , scope?.MetadataHandle ?? default
                                                      , name
+                                                     , name.Length
                                                      , exportSymbols
                                                      );
 
@@ -144,12 +145,7 @@ namespace Llvm.NET.DebugInfo
         /// </returns>
         public DIFile CreateFile( string path )
         {
-            if( string.IsNullOrWhiteSpace( path ) )
-            {
-                return null;
-            }
-
-            return CreateFile( Path.GetFileName( path ), Path.GetDirectoryName( path ) );
+            return string.IsNullOrWhiteSpace( path ) ? null : CreateFile( Path.GetFileName( path ), Path.GetDirectoryName( path ) );
         }
 
         /// <summary>Creates a <see cref="DIFile"/></summary>
@@ -228,8 +224,6 @@ namespace Llvm.NET.DebugInfo
         /// <param name="debugFlags"><see cref="DebugInfoFlags"/> for this function</param>
         /// <param name="isOptimized">Flag to indicate if this function is optimized</param>
         /// <param name="function">Underlying LLVM <see cref="Function"/> to attach debug info to</param>
-        /// <param name="typeParameter">Template parameter [default = null]</param>
-        /// <param name="declaration">Template declarations [default = null]</param>
         /// <returns><see cref="DISubProgram"/> created based on the input parameters</returns>
         [SuppressMessage( "Microsoft.Design", "CA1011:ConsiderPassingBaseTypesAsParameters", Justification = "Specific type required by interop call" )]
         public DISubProgram CreateFunction( DIScope scope
@@ -244,8 +238,6 @@ namespace Llvm.NET.DebugInfo
                                           , DebugInfoFlags debugFlags
                                           , bool isOptimized
                                           , Function function
-                                          , [CanBeNull] MDNode typeParameter = null
-                                          , [CanBeNull] MDNode declaration = null
                                           )
         {
             scope.ValidateNotNull( nameof( scope ) );
@@ -265,17 +257,17 @@ namespace Llvm.NET.DebugInfo
             var handle = LLVMDIBuilderCreateFunction( BuilderHandle
                                                     , scope.MetadataHandle
                                                     , name
+                                                    , name.Length
                                                     , mangledName
+                                                    , mangledName.Length
                                                     , file?.MetadataHandle ?? default
                                                     , line
                                                     , signatureType.MetadataHandle
-                                                    , isLocalToUnit ? 1 : 0
-                                                    , isDefinition ? 1 : 0
+                                                    , isLocalToUnit
+                                                    , isDefinition
                                                     , scopeLine
-                                                    , ( uint )debugFlags
-                                                    , isOptimized ? 1 : 0
-                                                    , typeParameter?.MetadataHandle ?? default
-                                                    , declaration?.MetadataHandle ?? default
+                                                    , ( LLVMDIFlags )debugFlags
+                                                    , isOptimized
                                                     );
             return MDNode.FromHandle<DISubProgram>( handle );
         }
@@ -323,17 +315,17 @@ namespace Llvm.NET.DebugInfo
             var handle = LLVMDIBuilderCreateTempFunctionFwdDecl( BuilderHandle
                                                                , scope.MetadataHandle
                                                                , name
+                                                               , name.Length
                                                                , mangledName
+                                                               , mangledName.Length
                                                                , file?.MetadataHandle ?? default
                                                                , line
                                                                , subroutineType.MetadataHandle
-                                                               , isLocalToUnit ? 1 : 0
-                                                               , isDefinition ? 1 : 0
+                                                               , isLocalToUnit
+                                                               , isDefinition
                                                                , scopeLine
-                                                               , ( uint )debugFlags
-                                                               , isOptimized ? 1 : 0
-                                                               , default
-                                                               , default
+                                                               , ( LLVMDIFlags )debugFlags
+                                                               , isOptimized
                                                                );
             return MDNode.FromHandle<DISubProgram>( handle );
         }
@@ -346,6 +338,7 @@ namespace Llvm.NET.DebugInfo
         /// <param name="type">Type of the variable</param>
         /// <param name="alwaysPreserve">Flag to indicate if this variable's debug information should always be preserved</param>
         /// <param name="debugFlags">Flags for the variable</param>
+        /// <param name="alignInBits">Variable alignment (in Bits)</param>
         /// <returns><see cref="DILocalVariable"/></returns>
         [SuppressMessage( "Microsoft.Design", "CA1011:ConsiderPassingBaseTypesAsParameters", Justification = "Specific type required by interop call" )]
         public DILocalVariable CreateLocalVariable( DIScope scope
@@ -355,6 +348,7 @@ namespace Llvm.NET.DebugInfo
                                                   , DIType type
                                                   , bool alwaysPreserve
                                                   , DebugInfoFlags debugFlags
+                                                  , uint alignInBits = 0
                                                   )
         {
             scope.ValidateNotNull( nameof( scope ) );
@@ -363,11 +357,13 @@ namespace Llvm.NET.DebugInfo
             var handle = LLVMDIBuilderCreateAutoVariable( BuilderHandle
                                                         , scope.MetadataHandle
                                                         , name
+                                                        , name.Length
                                                         , file?.MetadataHandle ?? default
                                                         , line
                                                         , type.MetadataHandle
-                                                        , alwaysPreserve ? 1 : 0
-                                                        , ( uint )debugFlags
+                                                        , alwaysPreserve
+                                                        , ( LLVMDIFlags )debugFlags
+                                                        , alignInBits
                                                         );
             return MDNode.FromHandle<DILocalVariable>( handle );
         }
@@ -399,12 +395,13 @@ namespace Llvm.NET.DebugInfo
             var handle = LLVMDIBuilderCreateParameterVariable( BuilderHandle
                                                              , scope.MetadataHandle
                                                              , name
+                                                             , name.Length
                                                              , argNo
                                                              , file?.MetadataHandle ?? default
                                                              , line
                                                              , type.MetadataHandle
-                                                             , alwaysPreserve ? 1 : 0
-                                                             , ( uint )debugFlags
+                                                             , alwaysPreserve
+                                                             , ( LLVMDIFlags )debugFlags
                                                              );
             return MDNode.FromHandle<DILocalVariable>( handle );
         }
@@ -413,10 +410,11 @@ namespace Llvm.NET.DebugInfo
         /// <param name="name">Name of the type</param>
         /// <param name="bitSize">Bit size for the type</param>
         /// <param name="encoding"><see cref="DiTypeKind"/> encoding for the type</param>
+        /// <param name="diFlags"><see cref="DebugInfoFlags"/> for the type</param>
         /// <returns>Basic type debugging information</returns>
-        public DIBasicType CreateBasicType( string name, UInt64 bitSize, DiTypeKind encoding )
+        public DIBasicType CreateBasicType( string name, UInt64 bitSize, DiTypeKind encoding, DebugInfoFlags diFlags = DebugInfoFlags.None )
         {
-            var handle = LLVMDIBuilderCreateBasicType( BuilderHandle, name, bitSize, ( uint )encoding );
+            var handle = LLVMDIBuilderCreateBasicType( BuilderHandle, name, name.Length, bitSize, ( uint )encoding, ( LLVMDIFlags )diFlags );
             return MDNode.FromHandle<DIBasicType>( handle );
         }
 
@@ -425,15 +423,18 @@ namespace Llvm.NET.DebugInfo
         /// <param name="name">Name of the type</param>
         /// <param name="bitSize">Bit size of the type</param>
         /// <param name="bitAlign">But alignment of the type</param>
+        /// <param name="addressSpace">Address space for the pointer</param>
         /// <returns>Pointer type</returns>
         [SuppressMessage( "Microsoft.Design", "CA1011:ConsiderPassingBaseTypesAsParameters", Justification = "Specific type required by interop call" )]
-        public DIDerivedType CreatePointerType( DIType pointeeType, string name, UInt64 bitSize, UInt32 bitAlign = 0 )
+        public DIDerivedType CreatePointerType( DIType pointeeType, string name, UInt64 bitSize, UInt32 bitAlign = 0, uint addressSpace = 0)
         {
             var handle = LLVMDIBuilderCreatePointerType( BuilderHandle
                                                        , pointeeType?.MetadataHandle ?? default // null == void
                                                        , bitSize
                                                        , bitAlign
+                                                       , addressSpace
                                                        , name ?? string.Empty
+                                                       , name?.Length ?? 0
                                                        );
             return MDNode.FromHandle<DIDerivedType>( handle );
         }
@@ -479,13 +480,34 @@ namespace Llvm.NET.DebugInfo
         /// <param name="types">Parameter types</param>
         /// <returns><see cref="DISubroutineType"/></returns>
         [SuppressMessage( "Microsoft.Design", "CA1011:ConsiderPassingBaseTypesAsParameters", Justification = "Specific type required by interop call" )]
+        [Obsolete("Use overload supporting Array or IEnumerable of DIType")]
         public DISubroutineType CreateSubroutineType( DebugInfoFlags debugFlags, DITypeArray types )
         {
-            types.ValidateNotNull( nameof( types ) );
+            return CreateSubroutineType( debugFlags, types.AsEnumerable( ) );
+        }
 
+        /// <summary>Creates a <see cref="DISubroutineType"/> to provide debug information for a function/procedure signature</summary>
+        /// <param name="debugFlags"><see cref="DebugInfoFlags"/> for this signature</param>
+        /// <param name="types">Parameter types</param>
+        /// <returns><see cref="DISubroutineType"/></returns>
+        public DISubroutineType CreateSubroutineType( DebugInfoFlags debugFlags, params DIType[ ] types )
+        {
+            return CreateSubroutineType( debugFlags, ( IEnumerable<DIType> )types );
+        }
+
+        /// <summary>Creates a <see cref="DISubroutineType"/> to provide debug information for a function/procedure signature</summary>
+        /// <param name="debugFlags"><see cref="DebugInfoFlags"/> for this signature</param>
+        /// <param name="types">Parameter types</param>
+        /// <returns><see cref="DISubroutineType"/></returns>
+        public DISubroutineType CreateSubroutineType( DebugInfoFlags debugFlags, IEnumerable<DIType> types )
+        {
+            types.ValidateNotNull( nameof( types ) );
+            var handles = types.Select( t => t.MetadataHandle ).ToArray( );
             var handle = LLVMDIBuilderCreateSubroutineType( BuilderHandle
-                                                          , types.Tuple.MetadataHandle
-                                                          , ( uint )debugFlags
+                                                          , LLVMMetadataRef.Zero
+                                                          , handles
+                                                          , checked(( uint )handles.Length)
+                                                          , ( LLVMDIFlags )debugFlags
                                                           );
 
             return MDNode.FromHandle<DISubroutineType>( handle );
@@ -496,8 +518,7 @@ namespace Llvm.NET.DebugInfo
         /// <returns><see cref="DISubroutineType"/></returns>
         public DISubroutineType CreateSubroutineType( DebugInfoFlags debugFlags )
         {
-            var typeArray = GetOrCreateTypeArray( null );
-            return CreateSubroutineType( debugFlags, typeArray );
+            return CreateSubroutineType( debugFlags, new DIType[0] );
         }
 
         /// <summary>Creates a <see cref="DISubroutineType"/> to provide debug information for a function/procedure signature</summary>
@@ -507,8 +528,7 @@ namespace Llvm.NET.DebugInfo
         /// <returns><see cref="DISubroutineType"/></returns>
         public DISubroutineType CreateSubroutineType( DebugInfoFlags debugFlags, DIType returnType, IEnumerable<DIType> types )
         {
-            var typeArray = GetOrCreateTypeArray( types.Prepend( returnType ) );
-            return CreateSubroutineType( debugFlags, typeArray );
+            return CreateSubroutineType( debugFlags, returnType != null ? types.Prepend( returnType ) : types );
         }
 
         /// <summary>Creates debug description of a structure type</summary>
@@ -523,6 +543,7 @@ namespace Llvm.NET.DebugInfo
         /// <param name="elements">Node array describing the elements of the structure</param>
         /// <returns><see cref="DICompositeType"/></returns>
         [SuppressMessage( "Microsoft.Design", "CA1011:ConsiderPassingBaseTypesAsParameters", Justification = "Specific type required by interop call" )]
+        [Obsolete("Use overload accepting array or IEnumerable of DINode")]
         public DICompositeType CreateStructType( DIScope scope
                                                , string name
                                                , DIFile file
@@ -534,22 +555,7 @@ namespace Llvm.NET.DebugInfo
                                                , DINodeArray elements
                                                )
         {
-            scope.ValidateNotNull( nameof( scope ) );
-            elements.ValidateNotNull( nameof( elements ) );
-
-            var handle = LLVMDIBuilderCreateStructType( BuilderHandle
-                                                      , scope.MetadataHandle
-                                                      , name
-                                                      , file?.MetadataHandle ?? default
-                                                      , line
-                                                      , bitSize
-                                                      , bitAlign
-                                                      , ( uint )debugFlags
-                                                      , derivedFrom?.MetadataHandle ?? default
-                                                      , elements.Tuple.MetadataHandle
-                                                      );
-
-            return MDNode.FromHandle<DICompositeType>( handle );
+            return CreateStructType( scope, name, file, line, bitSize, bitAlign, debugFlags, derivedFrom, (IEnumerable<DINode>)elements );
         }
 
         /// <summary>Creates debug description of a structure type</summary>
@@ -574,7 +580,7 @@ namespace Llvm.NET.DebugInfo
                                                , params DINode[ ] elements
                                                )
         {
-            return CreateStructType( scope, name, file, line, bitSize, bitAlign, debugFlags, derivedFrom, GetOrCreateArray( elements ) );
+            return CreateStructType( scope, name, file, line, bitSize, bitAlign, debugFlags, derivedFrom, (IEnumerable<DINode>)( elements ) );
         }
 
         /// <summary>Creates debug description of a structure type</summary>
@@ -587,6 +593,9 @@ namespace Llvm.NET.DebugInfo
         /// <param name="debugFlags"><see cref="DebugInfoFlags"/> for the structure</param>
         /// <param name="derivedFrom"><see cref="DIType"/> this type is derived from, if any</param>
         /// <param name="elements">Node array describing the elements of the structure</param>
+        /// <param name="runTimeLang">runtime language for the type</param>
+        /// <param name="vTableHolder">VTable holder for the type</param>
+        /// <param name="uniqueId">Unique ID for the type</param>
         /// <returns><see cref="DICompositeType"/></returns>
         public DICompositeType CreateStructType( DIScope scope
                                                , string name
@@ -597,9 +606,34 @@ namespace Llvm.NET.DebugInfo
                                                , DebugInfoFlags debugFlags
                                                , DIType derivedFrom
                                                , IEnumerable<DINode> elements
+                                               , uint runTimeLang = 0
+                                               , [CanBeNull] LlvmMetadata vTableHolder = null
+                                               , string uniqueId = ""
                                                )
         {
-            return CreateStructType( scope, name, file, line, bitSize, bitAlign, debugFlags, derivedFrom, GetOrCreateArray( elements ) );
+            scope.ValidateNotNull( nameof( scope ) );
+            elements.ValidateNotNull( nameof( elements ) );
+            var elementHandles = elements.Select( e => e.MetadataHandle ).ToArray( );
+            var handle = LLVMDIBuilderCreateStructType( BuilderHandle
+                                                      , scope.MetadataHandle
+                                                      , name
+                                                      , name.Length
+                                                      , file?.MetadataHandle ?? default
+                                                      , line
+                                                      , bitSize
+                                                      , bitAlign
+                                                      , ( LLVMDIFlags )debugFlags
+                                                      , derivedFrom?.MetadataHandle ?? default
+                                                      , elementHandles
+                                                      , (uint)elementHandles.Length
+                                                      , runTimeLang
+                                                      , vTableHolder?.MetadataHandle ?? default
+                                                      , uniqueId ?? string.Empty
+                                                      , uniqueId?.Length ?? 0
+                                                      );
+
+            return MDNode.FromHandle<DICompositeType>( handle );
+
         }
 
         /// <summary>Creates debug description of a union type</summary>
@@ -623,21 +657,7 @@ namespace Llvm.NET.DebugInfo
                                               , DINodeArray elements
                                               )
         {
-            scope.ValidateNotNull( nameof( scope ) );
-            elements.ValidateNotNull( nameof( elements ) );
-
-            var handle = LLVMDIBuilderCreateUnionType( BuilderHandle
-                                                     , scope.MetadataHandle
-                                                     , name
-                                                     , file?.MetadataHandle ?? default
-                                                     , line
-                                                     , bitSize
-                                                     , bitAlign
-                                                     , ( uint )debugFlags
-                                                     , elements.Tuple.MetadataHandle
-                                                     );
-
-            return MDNode.FromHandle<DICompositeType>( handle );
+            return CreateUnionType( scope, name, file, line, bitSize, bitAlign, debugFlags, ( IEnumerable<DINode> )elements );
         }
 
         /// <summary>Creates debug description of a union type</summary>
@@ -660,7 +680,7 @@ namespace Llvm.NET.DebugInfo
                                               , params DINode[ ] elements
                                               )
         {
-            return CreateUnionType( scope, name, file, line, bitSize, bitAlign, debugFlags, GetOrCreateArray( elements ) );
+            return CreateUnionType( scope, name, file, line, bitSize, bitAlign, debugFlags, (IEnumerable<DINode>)elements);
         }
 
         /// <summary>Creates debug description of a union type</summary>
@@ -672,6 +692,8 @@ namespace Llvm.NET.DebugInfo
         /// <param name="bitAlign">Bit alignment of the union</param>
         /// <param name="debugFlags"><see cref="DebugInfoFlags"/> for the union</param>
         /// <param name="elements">Node array describing the elements of the union</param>
+        /// <param name="runTimeLang">Objective-C runtime version [Default=0]</param>
+        /// <param name="uniqueId">A unique identifier for the type</param>
         /// <returns><see cref="DICompositeType"/></returns>
         public DICompositeType CreateUnionType( DIScope scope
                                                , string name
@@ -681,9 +703,30 @@ namespace Llvm.NET.DebugInfo
                                                , UInt32 bitAlign
                                                , DebugInfoFlags debugFlags
                                                , IEnumerable<DINode> elements
+                                               , uint runTimeLang = 0
+                                               , string uniqueId = ""
                                                )
         {
-            return CreateUnionType( scope, name, file, line, bitSize, bitAlign, debugFlags, GetOrCreateArray( elements ) );
+            scope.ValidateNotNull( nameof( scope ) );
+            elements.ValidateNotNull( nameof( elements ) );
+            var elementHandles = elements.Select( e => e.MetadataHandle ).ToArray( );
+            var handle = LLVMDIBuilderCreateUnionType( BuilderHandle
+                                                     , scope.MetadataHandle
+                                                     , name
+                                                     , name.Length
+                                                     , file?.MetadataHandle ?? default
+                                                     , line
+                                                     , bitSize
+                                                     , bitAlign
+                                                     , ( LLVMDIFlags )debugFlags
+                                                     , elementHandles
+                                                     , (uint)elementHandles.Length
+                                                     , runTimeLang
+                                                     , uniqueId ?? string.Empty
+                                                     , uniqueId?.Length ?? 0
+                                                     );
+
+            return MDNode.FromHandle<DICompositeType>( handle );
         }
 
         /// <summary>Creates a <see cref="DIDerivedType"/> for a member of a type</summary>
@@ -715,12 +758,13 @@ namespace Llvm.NET.DebugInfo
             var handle = LLVMDIBuilderCreateMemberType( BuilderHandle
                                                       , scope.MetadataHandle
                                                       , name
+                                                      , name.Length
                                                       , file?.MetadataHandle ?? default
                                                       , line
                                                       , bitSize
                                                       , bitAlign
                                                       , bitOffset
-                                                      , ( uint )debugFlags
+                                                      , ( LLVMDIFlags )debugFlags
                                                       , type.MetadataHandle
                                                       );
             return MDNode.FromHandle<DIDerivedType>( handle );
@@ -735,11 +779,7 @@ namespace Llvm.NET.DebugInfo
         [SuppressMessage( "Microsoft.Design", "CA1011:ConsiderPassingBaseTypesAsParameters", Justification = "Specific type required by interop call" )]
         public DICompositeType CreateArrayType( UInt64 bitSize, UInt32 bitAlign, DIType elementType, DINodeArray subscripts )
         {
-            elementType.ValidateNotNull( nameof( elementType ) );
-            subscripts.ValidateNotNull( nameof( subscripts ) );
-
-            var handle = LLVMDIBuilderCreateArrayType( BuilderHandle, bitSize, bitAlign, elementType.MetadataHandle, subscripts.Tuple.MetadataHandle );
-            return MDNode.FromHandle<DICompositeType>( handle );
+            return CreateArrayType( bitSize, bitAlign, elementType, ( IEnumerable<DINode> )subscripts );
         }
 
         /// <summary>Creates debug information for an array type</summary>
@@ -750,7 +790,23 @@ namespace Llvm.NET.DebugInfo
         /// <returns><see cref="DICompositeType"/> for the array</returns>
         public DICompositeType CreateArrayType( UInt64 bitSize, UInt32 bitAlign, DIType elementType, params DINode[ ] subscripts )
         {
-            return CreateArrayType( bitSize, bitAlign, elementType, GetOrCreateArray( subscripts ) );
+            return CreateArrayType( bitSize, bitAlign, elementType, (IEnumerable<DINode>)subscripts );
+        }
+
+        /// <summary>Creates debug information for an array type</summary>
+        /// <param name="bitSize">Size, in bits for the type</param>
+        /// <param name="bitAlign">Alignment in bits for the type</param>
+        /// <param name="elementType">Type of elements in the array</param>
+        /// <param name="subscripts">Dimensions for the array</param>
+        /// <returns><see cref="DICompositeType"/> for the array</returns>
+        public DICompositeType CreateArrayType( UInt64 bitSize, UInt32 bitAlign, DIType elementType, IEnumerable<DINode> subscripts )
+        {
+            elementType.ValidateNotNull( nameof( elementType ) );
+            subscripts.ValidateNotNull( nameof( subscripts ) );
+
+            var subScriptHandles = subscripts.Select( s => s.MetadataHandle ).ToArray( );
+            var handle = LLVMDIBuilderCreateArrayType( BuilderHandle, bitSize, bitAlign, elementType.MetadataHandle, subScriptHandles, (uint)subScriptHandles.Length );
+            return MDNode.FromHandle<DICompositeType>( handle );
         }
 
         /// <summary>Creates debug information for a vector type</summary>
@@ -762,11 +818,7 @@ namespace Llvm.NET.DebugInfo
         [SuppressMessage( "Microsoft.Design", "CA1011:ConsiderPassingBaseTypesAsParameters", Justification = "Specific type required by interop call" )]
         public DICompositeType CreateVectorType( UInt64 bitSize, UInt32 bitAlign, DIType elementType, DINodeArray subscripts )
         {
-            elementType.ValidateNotNull( nameof( elementType ) );
-            subscripts.ValidateNotNull( nameof( subscripts ) );
-
-            var handle = LLVMDIBuilderCreateVectorType( BuilderHandle, bitSize, bitAlign, elementType.MetadataHandle, subscripts.Tuple.MetadataHandle );
-            return MDNode.FromHandle<DICompositeType>( handle );
+            return CreateVectorType( bitSize, bitAlign, elementType, ( IEnumerable<DINode> )subscripts );
         }
 
         /// <summary>Creates debug information for a vector type</summary>
@@ -777,7 +829,23 @@ namespace Llvm.NET.DebugInfo
         /// <returns><see cref="DICompositeType"/> for the Vector</returns>
         public DICompositeType CreateVectorType( UInt64 bitSize, UInt32 bitAlign, DIType elementType, params DINode[ ] subscripts )
         {
-            return CreateVectorType( bitSize, bitAlign, elementType, GetOrCreateArray( subscripts ) );
+            return CreateVectorType( bitSize, bitAlign, elementType, (IEnumerable<DINode>)subscripts );
+        }
+
+        /// <summary>Creates debug information for a vector type</summary>
+        /// <param name="bitSize">Size, in bits for the type</param>
+        /// <param name="bitAlign">Alignment in bits for the type</param>
+        /// <param name="elementType">Type of elements in the Vector</param>
+        /// <param name="subscripts">Dimensions for the Vector</param>
+        /// <returns><see cref="DICompositeType"/> for the Vector</returns>
+        public DICompositeType CreateVectorType( UInt64 bitSize, UInt32 bitAlign, DIType elementType, IEnumerable<DINode> subscripts )
+        {
+            elementType.ValidateNotNull( nameof( elementType ) );
+            subscripts.ValidateNotNull( nameof( subscripts ) );
+
+            var subScriptHandles = subscripts.Select( s => s.MetadataHandle ).ToArray( );
+            var handle = LLVMDIBuilderCreateVectorType( BuilderHandle, bitSize, bitAlign, elementType.MetadataHandle, subScriptHandles, (uint)subScriptHandles.Length );
+            return MDNode.FromHandle<DICompositeType>( handle );
         }
 
         /// <summary>Creates debug information for a type definition (e.g. type alias)</summary>
@@ -793,6 +861,7 @@ namespace Llvm.NET.DebugInfo
             var handle = LLVMDIBuilderCreateTypedef( BuilderHandle
                                                    , type?.MetadataHandle ?? default
                                                    , name
+                                                   , name.Length
                                                    , file?.MetadataHandle ?? default
                                                    , line
                                                    , context?.MetadataHandle ?? default
@@ -813,6 +882,12 @@ namespace Llvm.NET.DebugInfo
         /// <summary>Gets or creates a node array with the specified elements</summary>
         /// <param name="elements">Elements of the array</param>
         /// <returns><see cref="DINodeArray"/></returns>
+        /// <remarks>
+        /// <note type="Note">
+        /// As of LLVM 8.0 there's not much reason to manually construct a <see cref="DINodeArray"/>
+        /// since use as an "in" parameter were superseded by overloads taking an actual array.
+        /// </note>
+        /// </remarks>
         public DINodeArray GetOrCreateArray( IEnumerable<DINode> elements )
         {
             var buf = elements.Select( d => d?.MetadataHandle ?? default ).ToArray( );
@@ -862,7 +937,6 @@ namespace Llvm.NET.DebugInfo
         /// <param name="alignInBits">Alignment, in bits for the type</param>
         /// <param name="elements"><see cref="DIEnumerator"/> elements for the type</param>
         /// <param name="underlyingType">Underlying type for the enumerated type</param>
-        /// <param name="uniqueId">unique ID for the type *default is an empty string</param>
         /// <returns><see cref="DICompositeType"/> for the enumerated type</returns>
         [SuppressMessage( "Microsoft.Design", "CA1011:ConsiderPassingBaseTypesAsParameters", Justification = "Specific type required by interop call" )]
         public DICompositeType CreateEnumerationType( DIScope scope
@@ -873,24 +947,23 @@ namespace Llvm.NET.DebugInfo
                                                     , UInt32 alignInBits
                                                     , IEnumerable<DIEnumerator> elements
                                                     , DIType underlyingType
-                                                    , string uniqueId = ""
                                                     )
         {
             scope.ValidateNotNull( nameof( scope ) );
             underlyingType.ValidateNotNull( nameof( underlyingType ) );
 
             var elementHandles = elements.Select( e => e.MetadataHandle ).ToArray( );
-            var elementArray = LLVMDIBuilderGetOrCreateArray( BuilderHandle, out elementHandles[ 0 ], ( UInt64 )elementHandles.LongLength );
             var handle = LLVMDIBuilderCreateEnumerationType( BuilderHandle
                                                            , scope.MetadataHandle
                                                            , name
+                                                           , name.Length
                                                            , file?.MetadataHandle ?? default
                                                            , lineNumber
                                                            , sizeInBits
                                                            , alignInBits
-                                                           , elementArray
+                                                           , elementHandles
+                                                           , checked(( uint )elementHandles.Length)
                                                            , underlyingType.MetadataHandle
-                                                           , uniqueId
                                                            );
 
             return MDNode.FromHandle<DICompositeType>( handle );
@@ -927,7 +1000,9 @@ namespace Llvm.NET.DebugInfo
             var handle = LLVMDIBuilderCreateGlobalVariableExpression( BuilderHandle
                                                                     , scope.MetadataHandle
                                                                     , name
+                                                                    , name.Length
                                                                     , linkageName
+                                                                    , linkageName.Length
                                                                     , file?.MetadataHandle ?? default
                                                                     , lineNo
                                                                     , type.MetadataHandle
@@ -1162,13 +1237,13 @@ namespace Llvm.NET.DebugInfo
             location.ValidateNotNull( nameof( location ) );
             insertBefore.ValidateNotNull( nameof( insertBefore ) );
 
-            var handle = LLVMDIBuilderInsertValueBefore( BuilderHandle
-                                                       , value.ValueHandle
-                                                       , varInfo.MetadataHandle
-                                                       , expression?.MetadataHandle ?? CreateExpression( ).MetadataHandle
-                                                       , location.MetadataHandle
-                                                       , insertBefore.ValueHandle
-                                                       );
+            var handle = LLVMDIBuilderInsertDbgValueBefore( BuilderHandle
+                                                          , value.ValueHandle
+                                                          , varInfo.MetadataHandle
+                                                          , expression?.MetadataHandle ?? CreateExpression( ).MetadataHandle
+                                                          , location.MetadataHandle
+                                                          , insertBefore.ValueHandle
+                                                          );
             var retVal = Value.FromHandle<CallInstruction>( handle );
             retVal.IsTailCall = true;
             return retVal;
@@ -1242,13 +1317,13 @@ namespace Llvm.NET.DebugInfo
                 throw new ArgumentException( Resources.Location_does_not_describe_the_specified_block_s_containing_function );
             }
 
-            var handle = LLVMDIBuilderInsertValueAtEnd( BuilderHandle
-                                                      , value.ValueHandle
-                                                      , varInfo.MetadataHandle
-                                                      , expression?.MetadataHandle ?? CreateExpression( ).MetadataHandle
-                                                      , location.MetadataHandle
-                                                      , insertAtEnd.BlockHandle
-                                                      );
+            var handle = LLVMDIBuilderInsertDbgValueAtEnd( BuilderHandle
+                                                         , value.ValueHandle
+                                                         , varInfo.MetadataHandle
+                                                         , expression?.MetadataHandle ?? CreateExpression( ).MetadataHandle
+                                                         , location.MetadataHandle
+                                                         , insertAtEnd.BlockHandle
+                                                         );
 
             var retVal = Value.FromHandle<CallInstruction>( handle );
             retVal.IsTailCall = true;
@@ -1273,7 +1348,7 @@ namespace Llvm.NET.DebugInfo
                 args = new long[ 1 ];
             }
 
-            var handle = LLVMDIBuilderCreateExpression( BuilderHandle, out args[ 0 ], size_t.FromInt64(actualCount) );
+            var handle = LLVMDIBuilderCreateExpression( BuilderHandle, out args[ 0 ], size_t.FromInt64( actualCount ) );
             return new DIExpression( handle );
         }
 
@@ -1287,6 +1362,7 @@ namespace Llvm.NET.DebugInfo
         /// <param name="sizeInBits">size of the type in bits</param>
         /// <param name="alignBits">alignment of the type in bits</param>
         /// <param name="flags"><see cref="DebugInfoFlags"/> for the type</param>
+        /// <param name="uniqueId">Unique identifier for the type</param>
         /// <returns><see cref="DICompositeType"/></returns>
         [SuppressMessage( "Microsoft.Design", "CA1011:ConsiderPassingBaseTypesAsParameters", Justification = "Specific type required by interop call" )]
         public DICompositeType CreateReplaceableCompositeType( Tag tag
@@ -1296,21 +1372,25 @@ namespace Llvm.NET.DebugInfo
                                                              , uint line
                                                              , uint lang = 0
                                                              , UInt64 sizeInBits = 0
-                                                             , UInt64 alignBits = 0
+                                                             , UInt32 alignBits = 0
                                                              , DebugInfoFlags flags = DebugInfoFlags.None
+                                                             , string uniqueId = ""
                                                              )
         {
             // TODO: validate that tag is really valid or document the result if it isn't (as long as LLVM won't crash at least)
             var handle = LLVMDIBuilderCreateReplaceableCompositeType( BuilderHandle
                                                                     , ( uint )tag
                                                                     , name
+                                                                    , name.Length
                                                                     , scope?.MetadataHandle ?? default
                                                                     , file?.MetadataHandle ?? default
                                                                     , line
                                                                     , lang
                                                                     , sizeInBits
                                                                     , alignBits
-                                                                    , ( uint )flags
+                                                                    , ( LLVMDIFlags )flags
+                                                                    , uniqueId
+                                                                    , uniqueId.Length
                                                                     );
             return MDNode.FromHandle<DICompositeType>( handle );
         }
@@ -1327,8 +1407,10 @@ namespace Llvm.NET.DebugInfo
         private DebugInfoBuilder( BitcodeModule owningModule, bool allowUnresolved )
         {
             owningModule.ValidateNotNull( nameof( owningModule ) );
+            BuilderHandle = allowUnresolved
+                ? LLVMCreateDIBuilderDisallowUnresolved( owningModule.ModuleHandle )
+                : LLVMCreateDIBuilder( owningModule.ModuleHandle );
 
-            BuilderHandle = LLVMNewDIBuilder( owningModule.ModuleHandle, allowUnresolved );
             OwningModule = owningModule;
         }
 

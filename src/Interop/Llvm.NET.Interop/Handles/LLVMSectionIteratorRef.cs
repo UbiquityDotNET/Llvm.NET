@@ -43,14 +43,4 @@ namespace Llvm.NET.Interop
         [DllImport( NativeMethods.LibraryPath, CallingConvention = CallingConvention.Cdecl )]
         private static extern void LLVMDisposeSectionIterator( IntPtr p );
     }
-
-    [GeneratedCode("LlvmBindingsGenerator","2.17941.31104.49410")]
-    internal class LLVMSectionIteratorRefAlias
-        : LLVMSectionIteratorRef
-    {
-        private LLVMSectionIteratorRefAlias()
-            : base( IntPtr.Zero, false )
-        {
-        }
-    }
 }

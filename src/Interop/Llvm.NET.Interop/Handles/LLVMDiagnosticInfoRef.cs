@@ -34,6 +34,10 @@ namespace Llvm.NET.Interop
 
         public static LLVMDiagnosticInfoRef Zero { get; } = new LLVMDiagnosticInfoRef(IntPtr.Zero);
 
+        public IntPtr ToIntPtr() => Handle;
+
+        public static implicit operator IntPtr(LLVMDiagnosticInfoRef value) => value.ToIntPtr();
+
         internal LLVMDiagnosticInfoRef( IntPtr p )
         {
             Handle = p;

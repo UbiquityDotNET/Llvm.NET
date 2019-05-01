@@ -28,11 +28,15 @@ namespace LlvmBindingsGenerator.Configuration
 
         // Functions that have manually placed P/Invoke in the templates should be ignored
         // to prevent confusion. These are normally the string disposal types.
-        public List<string> IgnoredFunctions { get; set; } = new List<string>( );
+        public List<(string Name, bool Ignored)> InternalFunctions { get; set; } = new List<(string Name, bool Ignored)>( );
 
         // maps a handle type name to a template for generating the interop for the handle
         public HandleTemplateMap HandleToTemplateMap { get; set; } = new HandleTemplateMap( );
 
         public Dictionary<string, string> AnonymousEnumNames { get; set; } = new Dictionary<string, string>( );
+
+        public SortedSet<string> IgnoredHeaders { get; set; } = new SortedSet<string>( );
+
+        public SortedSet<string> AliasReturningFunctions { get; set; } = new SortedSet<string>( );
     }
 }

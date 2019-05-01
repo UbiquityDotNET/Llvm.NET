@@ -4,6 +4,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using Llvm.NET.Interop;
 using Llvm.NET.Properties;
 using Ubiquity.ArgValidators;
@@ -21,15 +22,13 @@ namespace Llvm.NET
     /// at construction. At construction, if any operand is a temporary or otherwise unresolved
     /// uniqued node, the node itself is unresolved. As soon as all operands become resolved
     /// the node will no longer support <see cref="ReplaceAllUsesWith(LlvmMetadata)"/></para>
-    /// <para>If an unresolved node is part of a cycle, then <see cref="ResolveCycles"/> must
-    /// be called on some member of the cycle once all temporary nodes have been replaced.</para>
     /// </remarks>
     public class MDNode
         : LlvmMetadata
         , IOperandContainer<LlvmMetadata>
     {
         /// <summary>Gets the <see cref="Context"/> this node belongs to</summary>
-        public Context Context => MetadataHandle.Context;
+        public Context Context => MetadataHandle == default ? null : GetMeatadataContext( MetadataHandle );
 
         /// <summary>Gets a value indicating whether this node was deleted</summary>
         public bool IsDeleted => MetadataHandle == default;
@@ -45,10 +44,6 @@ namespace Llvm.NET
         ///
         /// <para>If <see cref="IsUniqued"/> is <see langword="true"/> then this returns <see langword="true"/>
         /// if this node has already dropped RAUW support (because all operands are resolved).</para>
-        ///
-        /// <para>As forward declarations are resolved, their containers should get
-        /// resolved automatically.  However, if this (or one of its operands) is
-        /// involved in a cycle, <see cref="ResolveCycles"/> needs to be called explicitly.</para>
         /// </remarks>
         public bool IsResolved => LLVMIsResolved( MetadataHandle );
 
@@ -61,8 +56,8 @@ namespace Llvm.NET
         /// <summary>Gets the operands for this node, if any</summary>
         public IList<LlvmMetadata> Operands { get; }
 
-        /// <summary>Resolves cycles from this node</summary>
-        public void ResolveCycles( ) => LLVMMDNodeResolveCycles( MetadataHandle );
+        /*/// <summary>Resolves cycles from this node</summary>*/
+        //public void ResolveCycles( ) => LLVMMDNodeResolveCycles( MetadataHandle );
 
         /// <summary>Replace all uses of this node with a new node</summary>
         /// <param name="other">Node to replace this one with</param>
@@ -80,7 +75,7 @@ namespace Llvm.NET
                 throw new InvalidOperationException( Resources.Cannot_Replace_all_uses_of_a_null_descriptor );
             }
 
-            LLVMMDNodeReplaceAllUsesWith( MetadataHandle, other.MetadataHandle );
+            LLVMMetadataReplaceAllUsesWith( MetadataHandle, other.MetadataHandle );
 
             // remove current node mapping from the context.
             // It won't be valid for use after clearing the handle
@@ -151,8 +146,15 @@ namespace Llvm.NET
                 return null;
             }
 
-            var context = handle.Context;
+            var context = GetMeatadataContext( handle );
             return FromHandle<T>( context, handle );
+        }
+
+        private static Context GetMeatadataContext( LLVMMetadataRef metadataHandle )
+        {
+            var hContext = LLVMGetNodeContext( metadataHandle );
+            Debug.Assert( hContext != default, "Should not get a null pointer from LLVM" );
+            return ContextCache.GetContextFor( hContext );
         }
     }
 }

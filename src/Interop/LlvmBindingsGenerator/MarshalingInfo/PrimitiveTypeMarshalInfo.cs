@@ -15,13 +15,21 @@ namespace LlvmBindingsGenerator
     internal class PrimitiveTypeMarshalInfo
         : MarshalInfoBase
     {
-        public PrimitiveTypeMarshalInfo(string functionName, BuiltinType type, string parameterName, ParamSemantics semantics)
-            : base( functionName, parameterName, semantics )
+        public PrimitiveTypeMarshalInfo( string functionName, PrimitiveType primitiveType)
+            : this( functionName, primitiveType, MarshalingInfoMap.ReturnParamName, ParamSemantics.Return )
         {
-            MarshalType = type;
         }
 
-        public override Type Type => MarshalType;
+        public PrimitiveTypeMarshalInfo(string functionName, PrimitiveType type, string parameterName, ParamSemantics semantics)
+            : base( functionName, parameterName, semantics )
+        {
+            MarshalType = new BuiltinType( type );
+        }
+
+        public override QualifiedType TransformType( QualifiedType type )
+        {
+            return new QualifiedType( MarshalType, type.Qualifiers );
+        }
 
         public override IEnumerable<CppSharp.AST.Attribute> Attributes => Enumerable.Empty<CppSharp.AST.Attribute>( );
 

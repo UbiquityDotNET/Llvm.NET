@@ -13,11 +13,13 @@
 
 #include "libllvm-c/PassManagerBindings.h"
 
-#include "llvm-c/Core.h"
-#include "llvm/IR/LegacyPassManager.h"
-#include "llvm/IR/Module.h"
-#include "llvm/Transforms/Instrumentation.h"
-#include "llvm/PassRegistry.h"
+#include <llvm-c/Core.h>
+#include <llvm/IR/LegacyPassManager.h>
+#include <llvm/IR/Module.h>
+#include <llvm/Transforms/Instrumentation.h>
+#include <llvm/PassRegistry.h>
+#include <llvm/Transforms/Instrumentation/MemorySanitizer.h>
+#include <llvm/Transforms/Instrumentation/ThreadSanitizer.h>
 
 using namespace llvm;
 
@@ -43,15 +45,15 @@ extern "C"
         unwrap( PM )->add( createAddressSanitizerModulePass( ) );
     }
 
-    //void LLVMAddThreadSanitizerPass( LLVMPassManagerRef PM )
-    //{
-    //    unwrap( PM )->add( createThreadSanitizerPass( ) );
-    //}
+    void LLVMAddThreadSanitizerPass( LLVMPassManagerRef PM )
+    {
+        unwrap( PM )->add( createThreadSanitizerLegacyPassPass( ) );
+    }
 
-    //void LLVMAddMemorySanitizerPass( LLVMPassManagerRef PM )
-    //{
-    //    unwrap( PM )->add( createMemorySanitizerPass( ) );
-    //}
+    void LLVMAddMemorySanitizerPass( LLVMPassManagerRef PM )
+    {
+        unwrap( PM )->add( createMemorySanitizerLegacyPassPass( ) );
+    }
 
     void LLVMAddDataFlowSanitizerPass( LLVMPassManagerRef PM, int ABIListFilesNum, const char **ABIListFiles )
     {

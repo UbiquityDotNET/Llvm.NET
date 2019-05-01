@@ -555,7 +555,7 @@ namespace Llvm.NET.Interop
          */
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
-        public static extern LLVMContextRef LLVMGetGlobalContext(  );
+        public static extern LLVMContextRefAlias LLVMGetGlobalContext(  );
 
         /**
          * Set the diagnostic handler for this context.
@@ -980,7 +980,7 @@ namespace Llvm.NET.Interop
          */
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
-        public static extern LLVMContextRef LLVMGetModuleContext( LLVMModuleRef M );
+        public static extern LLVMContextRefAlias LLVMGetModuleContext( LLVMModuleRef M );
 
         /**
          * Obtain a Type from a module by its registered name.
@@ -1225,7 +1225,7 @@ namespace Llvm.NET.Interop
          */
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
-        public static extern LLVMContextRef LLVMGetTypeContext( LLVMTypeRef Ty );
+        public static extern LLVMContextRefAlias LLVMGetTypeContext( LLVMTypeRef Ty );
 
         /**
          * Dump a representation of a type to stderr.
@@ -2254,7 +2254,7 @@ namespace Llvm.NET.Interop
          */
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
-        public static extern LLVMValueRef LLVMConstIntOfArbitraryPrecision( LLVMTypeRef IntTy, uint NumWords, ulong[] Words );
+        public static extern LLVMValueRef LLVMConstIntOfArbitraryPrecision( LLVMTypeRef IntTy, uint NumWords, System.UInt64[] Words );
 
         /**
          * Obtain a constant value for an integer parsed from a string.
@@ -3055,7 +3055,7 @@ namespace Llvm.NET.Interop
          */
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
-        public static extern LLVMValueRef LLVMGetIntrinsicDeclaration( LLVMModuleRef Mod, uint ID, out LLVMTypeRef ParamTypes, size_t ParamCount );
+        public static extern LLVMValueRef LLVMGetIntrinsicDeclaration( LLVMModuleRef Mod, uint ID, [MarshalAs( UnmanagedType.LPArray, ArraySubType = UnmanagedType.SysInt )]LLVMTypeRef[] ParamTypes, size_t ParamCount );
 
         /**
          * Retrieves the type of an intrinsic.  For overloaded intrinsics, parameter
@@ -3065,7 +3065,7 @@ namespace Llvm.NET.Interop
          */
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
-        public static extern LLVMTypeRef LLVMIntrinsicGetType( LLVMContextRef Ctx, uint ID, out LLVMTypeRef ParamTypes, size_t ParamCount );
+        public static extern LLVMTypeRef LLVMIntrinsicGetType( LLVMContextRef Ctx, uint ID, [MarshalAs( UnmanagedType.LPArray, ArraySubType = UnmanagedType.SysInt )]LLVMTypeRef[] ParamTypes, size_t ParamCount );
 
         /**
          * Retrieves the name of an intrinsic.
@@ -3089,7 +3089,7 @@ namespace Llvm.NET.Interop
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         [return: MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( AliasStringMarshaler ) )]
-        public static extern string LLVMIntrinsicCopyOverloadedName( uint ID, out LLVMTypeRef ParamTypes, size_t ParamCount, out size_t NameLength );
+        public static extern string LLVMIntrinsicCopyOverloadedName( uint ID, [MarshalAs( UnmanagedType.LPArray, ArraySubType = UnmanagedType.SysInt )]LLVMTypeRef[] ParamTypes, size_t ParamCount, out size_t NameLength );
 
         /**
          * Obtain if the intrinsic identified by the given ID is overloaded.
@@ -4004,7 +4004,7 @@ namespace Llvm.NET.Interop
          */
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
-        public static extern void LLVMAddIncoming( LLVMValueRef PhiNode, out LLVMValueRef IncomingValues, out LLVMBasicBlockRef IncomingBlocks, uint Count );
+        public static extern void LLVMAddIncoming( LLVMValueRef PhiNode, [MarshalAs( UnmanagedType.LPArray, ArraySubType = UnmanagedType.SysInt )]LLVMValueRef[] IncomingValues, [MarshalAs( UnmanagedType.LPArray, ArraySubType = UnmanagedType.SysInt )]LLVMBasicBlockRef[] IncomingBlocks, uint Count );
 
         /**
          * Obtain the number of incoming basic blocks to a PHI node.
@@ -4651,15 +4651,13 @@ namespace Llvm.NET.Interop
          *
          * @{
          */
-        [return: MarshalAs( UnmanagedType.Bool )]
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
-        public static extern bool LLVMCreateMemoryBufferWithContentsOfFile( [MarshalAs( UnmanagedType.LPStr )]string Path, out LLVMMemoryBufferRef OutMemBuf, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( DisposeMessageMarshaler ) )]out string OutMessage );
+        public static extern LLVMStatus LLVMCreateMemoryBufferWithContentsOfFile( [MarshalAs( UnmanagedType.LPStr )]string Path, out LLVMMemoryBufferRef OutMemBuf, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( DisposeMessageMarshaler ) )]out string OutMessage );
 
-        [return: MarshalAs( UnmanagedType.Bool )]
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
-        public static extern bool LLVMCreateMemoryBufferWithSTDIN( out LLVMMemoryBufferRef OutMemBuf, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( DisposeMessageMarshaler ) )]out string OutMessage );
+        public static extern LLVMStatus LLVMCreateMemoryBufferWithSTDIN( out LLVMMemoryBufferRef OutMemBuf, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( DisposeMessageMarshaler ) )]out string OutMessage );
 
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
@@ -4671,8 +4669,7 @@ namespace Llvm.NET.Interop
 
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
-        [return: MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( AliasStringMarshaler ) )]
-        public static extern string LLVMGetBufferStart( LLVMMemoryBufferRef MemBuf );
+        public static extern global::System.IntPtr LLVMGetBufferStart( LLVMMemoryBufferRef MemBuf );
 
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]

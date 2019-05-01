@@ -14,12 +14,12 @@ namespace LlvmBindingsGenerator
 
         string ParameterName { get; }
 
-        uint ParameterIndex { get; set;  }
+        uint ParameterIndex { get; set; }
 
         ParamSemantics Semantics { get; }
 
-        CppSharp.AST.Type Type { get; }
-
         IEnumerable<CppSharp.AST.Attribute> Attributes { get; }
+
+        CppSharp.AST.QualifiedType TransformType( CppSharp.AST.QualifiedType type );
     }
 }

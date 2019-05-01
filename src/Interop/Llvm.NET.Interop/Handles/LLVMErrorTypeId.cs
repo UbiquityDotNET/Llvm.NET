@@ -34,6 +34,10 @@ namespace Llvm.NET.Interop
 
         public static LLVMErrorTypeId Zero { get; } = new LLVMErrorTypeId(IntPtr.Zero);
 
+        public IntPtr ToIntPtr() => Handle;
+
+        public static implicit operator IntPtr(LLVMErrorTypeId value) => value.ToIntPtr();
+
         internal LLVMErrorTypeId( IntPtr p )
         {
             Handle = p;

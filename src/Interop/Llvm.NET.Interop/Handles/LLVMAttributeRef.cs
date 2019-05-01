@@ -34,6 +34,10 @@ namespace Llvm.NET.Interop
 
         public static LLVMAttributeRef Zero { get; } = new LLVMAttributeRef(IntPtr.Zero);
 
+        public IntPtr ToIntPtr() => Handle;
+
+        public static implicit operator IntPtr(LLVMAttributeRef value) => value.ToIntPtr();
+
         internal LLVMAttributeRef( IntPtr p )
         {
             Handle = p;

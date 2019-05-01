@@ -14,20 +14,6 @@ using System.Security;
 
 namespace Llvm.NET.Interop
 {
-    /// See Module::ModFlagBehavior
-    [GeneratedCode("LlvmBindingsGenerator","2.17941.31104.49410")]
-    public enum LLVMModFlagBehavior : global::System.Int32
-    {
-        Error = 1,
-        Warning = 2,
-        Require = 3,
-        Override = 4,
-        Append = 5,
-        AppendUnique = 6,
-        ModFlagBehaviorFirstVal = 1,
-        ModFlagBehaviorLastVal = 6,
-    }
-
     [UnmanagedFunctionPointer( global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
     public delegate bool LLVMComdatIteratorCallback( LLVMComdatRef comdatRef );
 
@@ -39,6 +25,7 @@ namespace Llvm.NET.Interop
 
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
+        [return: MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( AliasStringMarshaler ) )]
         public static extern string LLVMGetModuleSourceFileName( LLVMModuleRef module );
 
         [SuppressUnmanagedCodeSecurity]
@@ -47,6 +34,7 @@ namespace Llvm.NET.Interop
 
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
+        [return: MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( AliasStringMarshaler ) )]
         public static extern string LLVMGetModuleName( LLVMModuleRef module );
 
         [SuppressUnmanagedCodeSecurity]
@@ -71,6 +59,7 @@ namespace Llvm.NET.Interop
 
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
+        [return: MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( ErrorMessageMarshaler ) )]
         public static extern string LLVMComdatGetName( LLVMComdatRef comdatRef );
 
         [SuppressUnmanagedCodeSecurity]

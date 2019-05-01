@@ -48,9 +48,9 @@ namespace Llvm.NET.Interop
         [DllImport( NativeMethods.LibraryPath, CallingConvention = CallingConvention.Cdecl )]
         private static extern void <#=HandleDisposeFunction#>( IntPtr p );
     }
-
+<#if(NeedsAlias){#>
     [GeneratedCode("LlvmBindingsGenerator","<#=ToolVersion#>")]
-    internal class <#=HandleName#>Alias
+    public class <#=HandleName#>Alias
         : <#=HandleName#>
     {
         private <#=HandleName#>Alias()
@@ -58,4 +58,5 @@ namespace Llvm.NET.Interop
         {
         }
     }
+<#}#>
 }
