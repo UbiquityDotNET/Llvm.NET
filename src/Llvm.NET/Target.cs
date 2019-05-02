@@ -88,7 +88,7 @@ namespace Llvm.NET
     }
 
     /// <summary>LLVM Target Instruction Set Architecture</summary>
-    public partial class Target
+    public class Target
     {
         /// <summary>Gets the name of this target</summary>
         public string Name => LLVMGetTargetName( TargetHandle );

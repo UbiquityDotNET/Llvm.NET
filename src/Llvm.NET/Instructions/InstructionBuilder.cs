@@ -20,7 +20,7 @@ using static Llvm.NET.Interop.NativeMethods;
 namespace Llvm.NET.Instructions
 {
     /// <summary>LLVM Instruction builder allowing managed code to generate IR instructions</summary>
-    public sealed partial class InstructionBuilder
+    public sealed class InstructionBuilder
     {
         /// <summary>Initializes a new instance of the <see cref="InstructionBuilder"/> class for a given <see cref="Llvm.NET.Context"/></summary>
         /// <param name="context">Context used for creating instructions</param>

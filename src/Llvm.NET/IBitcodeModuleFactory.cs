@@ -8,7 +8,7 @@ namespace Llvm.NET
 {
     /// <summary>Interface for a <see cref="BitcodeModule"/> factory</summary>
     /// <remarks>
-    /// Modules are owned by the context and thus not created, freestanding.
+    /// Modules are owned by the context and thus not created freestanding.
     /// This interface provides factory methods for constructing modules. It
     /// is implemented by the <see cref="Context"/> and also internally by
     /// the handle caches that ultimately call the underlying LLVM module

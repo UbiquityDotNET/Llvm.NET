@@ -8,7 +8,7 @@ namespace Llvm.NET.Transforms
 {
     /// <summary>Utility class for adding the Inter-procedural transform passes to a <see cref="PassManager"/></summary>
     /// <seealso href="xref:llvm_docs_passes">LLVM: Analysis and Transform Passes</seealso>
-    public static partial class InterproceduralTransforms
+    public static class InterproceduralTransforms
     {
         /// <summary>This pass promotes “by reference” arguments to be “by value” arguments.</summary>
         /// <typeparam name="T"><see cref="PassManager"/> type</typeparam>

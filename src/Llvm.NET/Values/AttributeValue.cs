@@ -16,7 +16,7 @@ namespace Llvm.NET.Values
     /// AttributeValue in .NET to prevent confusion with the standard <see cref="Attribute"/> class
     /// that is used throughout .NET libraries.
     /// </remarks>
-    public partial struct AttributeValue
+    public struct AttributeValue
         : IEquatable<AttributeValue>
     {
         /// <summary>Gets the context that owns this <see cref="AttributeValue"/></summary>

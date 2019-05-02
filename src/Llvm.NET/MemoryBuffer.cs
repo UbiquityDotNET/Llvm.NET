@@ -14,7 +14,7 @@ using static Llvm.NET.Interop.NativeMethods;
 namespace Llvm.NET
 {
     /// <summary>LLVM MemoryBuffer</summary>
-    public sealed partial class MemoryBuffer
+    public sealed class MemoryBuffer
     {
         /// <summary>Initializes a new instance of the <see cref="MemoryBuffer"/> class from a file</summary>
         /// <param name="path">Path of the file to load</param>

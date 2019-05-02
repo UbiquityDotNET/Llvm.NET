@@ -145,7 +145,7 @@ namespace Llvm.NET.Tests
 
         /*
         // This is useful for generating the list of expected targets
-        // Obviously since it uses the API being tested the results require verification
+        // Obviously, since it uses the API being tested, the results require verification
         // before updating the list of ExpectedTargets above, but it helps eliminate tedious
         // typing
         internal string GenerateExpectedTargets( )

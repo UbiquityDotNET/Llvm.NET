@@ -16,6 +16,7 @@ namespace Llvm.NET.Interop
 {
     public static partial class NativeMethods
     {
+        /// createEnumerator - Create a single enumerator value.
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern LLVMMetadataRef LLVMDIBuilderCreateEnumeratorValue( LLVMDIBuilderRef D, [MarshalAs( UnmanagedType.LPStr )]string Name, System.Int64 Val );

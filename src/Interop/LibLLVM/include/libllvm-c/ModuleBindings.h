@@ -7,34 +7,11 @@
 #ifdef __cplusplus
 extern "C" {
 #endif
-    //void LLVMAddModuleFlag( LLVMModuleRef M
-    //                        , LLVMModFlagBehavior behavior
-    //                        , const char *name
-    //                        , uint32_t value
-    //                        );
-
-    //void LLVMAddModuleFlagMetadata( LLVMModuleRef M
-    //                                , LLVMModFlagBehavior behavior
-    //                                , const char *name
-    //                                , LLVMMetadataRef metadataRef
-    //                                );
-
     LLVMValueRef LLVMGetOrInsertFunction( LLVMModuleRef module, const char* name, LLVMTypeRef functionType );
     char const* LLVMGetModuleSourceFileName( LLVMModuleRef module );
     void LLVMSetModuleSourceFileName( LLVMModuleRef module, char const* name );
     char const* LLVMGetModuleName( LLVMModuleRef module );
     LLVMValueRef LLVMGetGlobalAlias( LLVMModuleRef module, char const* name );
-
-    //LLVMNamedMDNodeRef LLVMModuleGetModuleFlagsMetadata( LLVMModuleRef module );
-    //char const* LLVMNamedMDNodeGetName( LLVMNamedMDNodeRef namedMDNode );
-    //unsigned LLVMNamedMDNodeGetNumOperands( LLVMNamedMDNodeRef namedMDNode );
-    ///*MDNode*/ LLVMMetadataRef LLVMNamedMDNodeGetOperand( LLVMNamedMDNodeRef namedMDNode, unsigned index );
-    //void LLVMNamedMDNodeSetOperand( LLVMNamedMDNodeRef namedMDNode, unsigned index, LLVMMetadataRef /*MDNode*/ node );
-    //void LLVMNamedMDNodeAddOperand( LLVMNamedMDNodeRef namedMDNode, LLVMMetadataRef /*MDNode*/ node );
-    //void LLVMNamedMDNodeClearOperands( LLVMNamedMDNodeRef namedMDNode );
-    //void LLVMNamedMDNodeEraseFromParent( LLVMNamedMDNodeRef namedMDNode );
-
-    //LLVMModuleRef LLVMNamedMDNodeGetParentModule( LLVMNamedMDNodeRef namedMDNode );
 
     // iterating the Comdats is a tricky prospect with a "C" based projection as
     // the Comdat class doesn't have any sort of "Next" method and the iterator
@@ -48,24 +25,14 @@ extern "C" {
     void LLVMModuleComdatRemove( LLVMModuleRef module, LLVMComdatRef comdatRef );
     void LLVMModuleComdatClear( LLVMModuleRef module );
 
-    //// Comdat accessors
-    //LLVMComdatSelectionKind LLVMComdatGetKind( LLVMComdatRef comdatRef );
-    //void LLVMComdatSetKind( LLVMComdatRef comdatRef, LLVMComdatSelectionKind kind );
-
     // caller must free returned string via LLVMDisposeMessage()
     char const* LLVMComdatGetName( LLVMComdatRef comdatRef );
 
     // Alias enumeration
     LLVMValueRef LLVMModuleGetFirstGlobalAlias( LLVMModuleRef M );
     LLVMValueRef LLVMModuleGetNextGlobalAlias( LLVMValueRef /*GlobalAlias*/ valueRef );
-    //LLVMNamedMDNodeRef LLVMModuleGetFirstNamedMD( LLVMModuleRef M );
-    //LLVMNamedMDNodeRef LLVMModuleGetNextNamedMD( LLVMNamedMDNodeRef valueRef );
 #ifdef __cplusplus
 }
-
-//namespace llvm {
-//    DEFINE_SIMPLE_CONVERSION_FUNCTIONS( Comdat, LLVMComdatRef );
-//}
 #endif
 
 #endif

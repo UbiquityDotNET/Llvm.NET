@@ -79,7 +79,7 @@ namespace Kaleidoscope.Chapter5
                 var jitHandle = JIT.AddModule( function.ParentModule );
                 if( definition.IsAnonymous )
                 {
-                    var nativeFunc = JIT.GetFunctionDelegate<AnonExpressionFunc>( function.Name );
+                    var nativeFunc = JIT.GetFunctionDelegate<KaleidoscopeJIT.CallbackHandler0>( function.Name );
                     var retVal = Context.CreateConstant( nativeFunc( ) );
                     JIT.RemoveModule( jitHandle );
                     return retVal;
@@ -413,11 +413,6 @@ namespace Kaleidoscope.Chapter5
         private BitcodeModule Module;
         private readonly KaleidoscopeJIT JIT = new KaleidoscopeJIT( );
         private readonly Dictionary<string, IJitModuleHandle> FunctionModuleMap = new Dictionary<string, IJitModuleHandle>( );
-
-        /// <summary>Delegate type to allow execution of a JIT'd TopLevelExpression</summary>
-        /// <returns>Result of evaluating the expression</returns>
-        [UnmanagedFunctionPointer( System.Runtime.InteropServices.CallingConvention.Cdecl )]
-        private delegate double AnonExpressionFunc( );
         #endregion
     }
 }

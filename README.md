@@ -30,10 +30,11 @@ the LLVM libraries from .NET applications.
 ### Brief History
 Llvm.NET began with LLVM 3.4 as a C++/CLI wrapper which enabled a closer binding to the original C++ object model
 then the official LLVM-C API supported. As Llvm.NET progressed so to did LLVM. Eventually the LLVM code base
-migrated to requiring C++11 support in the language to build. This became an issue for the C++/CLI wrapper as the
+migrated to requiring C++/11 support in the language to build. This became an issue for the C++/CLI wrapper as the
 Microsoft C++/CLI compiler didn't support the C++11 syntax. Thus a change was made to Llvm.NET to move to an extended
 C API with a C# adapter layer to provide the full experience .NET developers expect. While the transition was a
-tedious one very little application code required changes.
+tedious one very little application code required changes. LLVM and LLvm.NET have continued to progress and Llvm.NET
+is currently based on LLVM 8.0.
 
 ### Platform Support
 Currently LLVM.NET supports x64 builds targeting the full desktop framework v4.7 and .NET standard 2.0. Ideally
@@ -81,7 +82,7 @@ NuGet package. To build the full package simply run `BuildAll.ps1` from a PowerS
 on the system search path.
 
 ### Sample Applications
-#### Code Generation WIth Debug Information
+#### Code Generation With Debug Information
 The [CodeGenWithDebugInfo](https://github.com/UbiquityDotNET/Llvm.Net/tree/master/Samples/CodeGenWithDebugInfo) sample application provides an example of using Llvm.NET to generate
 LLVM Bit code equivalent to what the Clang compiler generates for a [simple C language file](https://github.com/UbiquityDotNET/Llvm.Net/blob/master/Samples/CodeGenWithDebugInfo/Support%20Files/test.c).
 The sample application doesn't actually parse the source, instead it is a manually constructed and documented example of how to use Llvm.NET to accomplish the bit-code generation. 

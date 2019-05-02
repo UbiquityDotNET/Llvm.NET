@@ -33,10 +33,6 @@ void LLVMAddDataFlowSanitizerPass( LLVMPassManagerRef PM, int ABIListFilesNum, c
 LLVMPassRegistryRef LLVMCreatePassRegistry( );
 void LLVMPassRegistryDispose( LLVMPassRegistryRef passReg );
 
-// For  optimization codegen passes, only passes that do IR to IR transformation are
-// used.
-//void LLVMInitializeCodeGenForOpt( LLVMPassRegistryRef R );
-
 #ifdef __cplusplus
 }
 #endif

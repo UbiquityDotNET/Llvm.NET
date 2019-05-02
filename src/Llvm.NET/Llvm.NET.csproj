@@ -59,7 +59,7 @@
     </When>
     <Otherwise>
       <ItemGroup>
-        <PackageReference Include="Llvm.NET.Interop" Version="[$(PackageVersion)]" />
+        <PackageReference Include="Llvm.NET.Interop" Version="$(PackageVersion)" />
       </ItemGroup>
     </Otherwise>
   </Choose>

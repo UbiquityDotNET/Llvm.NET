@@ -30,7 +30,9 @@
 Param(
     [string]$Configuration="Release",
     [switch]$AllowVsPreReleases,
-    [switch]$NoClean
+    [switch]$NoClean,
+    [Parameter(ParameterSetName='FullBuild')]
+    $BuildInfo
 )
 
 . .\buildutils.ps1
@@ -65,12 +67,14 @@ try
 
     md $buildPaths.NuGetOutputPath -ErrorAction SilentlyContinue| Out-Null
 
-    $BuildInfo = Get-BuildInformation $buildPaths
-    if($env:APPVEYOR)
+    if(!$BuildInfo)
     {
-        Update-AppVeyorBuild -Version $BuildInfo.FullBuildNumber
+        $BuildInfo = Get-BuildInformation $buildPaths
+        if($env:APPVEYOR)
+        {
+            Update-AppVeyorBuild -Version $BuildInfo.FullBuildNumber
+        }
     }
-
     $msBuildProperties = @{ Configuration = $Configuration
                             FullBuildNumber = $BuildInfo.FullBuildNumber
                             PackageVersion = $BuildInfo.PackageVersion

@@ -9,24 +9,6 @@ DEFINE_SIMPLE_CONVERSION_FUNCTIONS( NamedMDNode, LLVMNamedMDNodeRef )
 
 extern "C"
 {
-    //void LLVMAddModuleFlag( LLVMModuleRef M
-    //                        , LLVMModFlagBehavior behavior
-    //                        , const char *name
-    //                        , uint32_t value
-    //                        )
-    //{
-    //    unwrap( M )->addModuleFlag( (Module::ModFlagBehavior)behavior, name, value );
-    //}
-
-    //void LLVMAddModuleFlagMetadata( LLVMModuleRef M
-    //                               , LLVMModFlagBehavior behavior
-    //                               , const char *name
-    //                               , LLVMMetadataRef metadataRef
-    //                               )
-    //{
-    //    unwrap( M )->addModuleFlag( ( Module::ModFlagBehavior )behavior, name, unwrap( metadataRef ) );
-    //}
-
     LLVMValueRef LLVMGetOrInsertFunction( LLVMModuleRef module, const char* name, LLVMTypeRef functionType )
     {
         auto pModule = unwrap( module );
@@ -57,63 +39,6 @@ extern "C"
         auto pModule = unwrap( module );
         return wrap( pModule->getNamedAlias( name ) );
     }
-
-    //LLVMNamedMDNodeRef LLVMModuleGetModuleFlagsMetadata( LLVMModuleRef module )
-    //{
-    //    auto pModule = unwrap( module );
-    //    return wrap( pModule->getModuleFlagsMetadata( ) );
-    //}
-
-    //char const* LLVMNamedMDNodeGetName( LLVMNamedMDNodeRef namedMDNode )
-    //{
-    //    return unwrap( namedMDNode )->getName().data();
-    //}
-
-    //unsigned LLVMNamedMDNodeGetNumOperands( LLVMNamedMDNodeRef namedMDNode )
-    //{
-    //    auto pMDNode = unwrap( namedMDNode );
-    //    return pMDNode->getNumOperands( );
-    //}
-
-    //LLVMMetadataRef LLVMNamedMDNodeGetOperand( LLVMNamedMDNodeRef namedMDNode, unsigned index )
-    //{
-    //    auto pMDNode = unwrap( namedMDNode );
-    //    if( index >= pMDNode->getNumOperands( ) )
-    //        return nullptr;
-
-    //    return wrap( pMDNode->getOperand( index ) );
-    //}
-
-    //void LLVMNamedMDNodeSetOperand( LLVMNamedMDNodeRef namedMDNode, unsigned index, LLVMMetadataRef /*MDNode*/ node )
-    //{
-    //    auto pMDNode = unwrap( namedMDNode );
-    //    if ( index >= pMDNode->getNumOperands( ) )
-    //        return;
-
-    //    pMDNode->setOperand( index, unwrap<MDNode>( node ) );
-    //}
-
-    //void LLVMNamedMDNodeAddOperand( LLVMNamedMDNodeRef namedMDNode, LLVMMetadataRef /*MDNode*/ node )
-    //{
-    //    auto pMDNode = unwrap( namedMDNode );
-    //    pMDNode->addOperand( unwrap<MDNode>( node ) );
-    //}
-
-    //LLVMModuleRef LLVMNamedMDNodeGetParentModule( LLVMNamedMDNodeRef namedMDNode )
-    //{
-    //    auto pMDNode = unwrap( namedMDNode );
-    //    return wrap( pMDNode->getParent( ) );
-    //}
-
-    //void LLVMNamedMDNodeClearOperands( LLVMNamedMDNodeRef namedMDNode )
-    //{
-    //    unwrap( namedMDNode )->clearOperands( );
-    //}
-
-    //void LLVMNamedMDNodeEraseFromParent( LLVMNamedMDNodeRef namedMDNode )
-    //{
-    //    unwrap( namedMDNode )->eraseFromParent( );
-    //}
 
     LLVMComdatRef LLVMModuleInsertOrUpdateComdat( LLVMModuleRef module, char const* name, LLVMComdatSelectionKind kind )
     {
@@ -146,18 +71,6 @@ extern "C"
         pModule->getComdatSymbolTable( ).clear( );
     }
 
-    //LLVMComdatSelectionKind LLVMComdatGetKind( LLVMComdatRef comdatRef )
-    //{
-    //    Comdat const& comdat = *unwrap( comdatRef );
-    //    return ( LLVMComdatSelectionKind )comdat.getSelectionKind( );
-    //}
-
-    //void LLVMComdatSetKind( LLVMComdatRef comdatRef, LLVMComdatSelectionKind kind )
-    //{
-    //    Comdat& comdat = *unwrap( comdatRef );
-    //    comdat.setSelectionKind( ( Comdat::SelectionKind )kind );
-    //}
-
     char const* LLVMComdatGetName( LLVMComdatRef comdatRef )
     {
         Comdat const& comdat = *unwrap( comdatRef );
@@ -183,24 +96,4 @@ extern "C"
 
         return wrap( &*I );
     }
-
-    //LLVMNamedMDNodeRef LLVMModuleGetFirstNamedMD( LLVMModuleRef M )
-    //{
-    //    Module *Mod = unwrap( M );
-    //    Module::named_metadata_iterator I = Mod->named_metadata_begin( );
-    //    if ( I == Mod->named_metadata_end( ) )
-    //        return nullptr;
-
-    //    return wrap( &*I );
-    //}
-
-    //LLVMNamedMDNodeRef LLVMModuleGetNextNamedMD( LLVMNamedMDNodeRef /*NamedMDNode*/ valueRef )
-    //{
-    //    NamedMDNode *pMD = unwrap( valueRef );
-    //    Module::named_metadata_iterator I( pMD );
-    //    if ( ++I == pMD->getParent( )->named_metadata_end( ) )
-    //        return nullptr;
-
-    //    return wrap( &*I );
-    //}
 }

@@ -8,7 +8,6 @@ extern "C" {
 #endif
 
 /// createEnumerator - Create a single enumerator value.
-//DIEnumerator createEnumerator( StringRef Name, int64_t Val );
 LLVMMetadataRef LLVMDIBuilderCreateEnumeratorValue( LLVMDIBuilderRef D, char const* Name, int64_t Val );
 
 #ifdef __cplusplus

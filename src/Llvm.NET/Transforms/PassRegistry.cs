@@ -7,7 +7,7 @@
 #if LEGACY_PASS_REGISTRY
 namespace Llvm.NET.Transforms
 {
-    internal partial class PassRegistry
+    internal class PassRegistry
     {
     }
 }

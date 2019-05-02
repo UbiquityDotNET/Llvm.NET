@@ -9,7 +9,7 @@ information and, ultimately, the target machine code.
 ## Example C Code
 The CodeGenWithDebugInfo sample will generate LLVM IR and machine code for the following sample "C" code.
 
->[NOTE!]
+>[!NOTE]
 >The C code file is provided in the source tree along with a script file to compile it for comparing output with Clang.
 >The current implementation was last compared with Clang 5 RC4 - any differences to the latest version of clang
 >are expected to be minor. Updating the sample to replicate the latest Clang version is left as an exercise for

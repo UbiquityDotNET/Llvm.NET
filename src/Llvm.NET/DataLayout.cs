@@ -57,7 +57,7 @@ namespace Llvm.NET
     /// The allocation size determines the total size of each entry in a sequence so that the "next" element is computed
     /// by adding the size to the start address of the current element.
     /// </remarks>
-    public sealed partial class DataLayout
+    public sealed class DataLayout
     {
         /// <summary>Gets the byte ordering for this target</summary>
         public ByteOrdering Endianess => ( ByteOrdering )LLVMByteOrder( DataLayoutHandle );

@@ -12,7 +12,7 @@ using static Llvm.NET.Interop.NativeMethods;
 namespace Llvm.NET.Types
 {
     /// <summary>LLVM Type</summary>
-    internal partial class TypeRef
+    internal class TypeRef
         : ITypeRef
         , ITypeHandleOwner
     {
