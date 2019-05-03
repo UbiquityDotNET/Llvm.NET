@@ -3,6 +3,7 @@
 // </copyright>
 
 using System.Collections.Generic;
+using System.Globalization;
 using System.Text;
 using Antlr4.Runtime;
 using Antlr4.Runtime.Misc;
@@ -82,7 +83,7 @@ namespace Kaleidoscope.Grammar
         /// </remarks>
         public static string GetUniqueNodeId( this IParseTree tree )
         {
-            var bldr = new StringBuilder( tree.GetHashCode( ).ToString( ) );
+            var bldr = new StringBuilder( tree.GetHashCode( ).ToString( CultureInfo.InvariantCulture ) );
             if( tree.Parent != null )
             {
                 bldr.Append( tree.Parent.GetChildIndex( tree ) );

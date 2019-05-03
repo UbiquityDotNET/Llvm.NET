@@ -145,7 +145,7 @@ namespace Llvm.NET.Tests
             var targetMachine = TargetTests.GetTargetMachine( );
             using( var context = new Context( ) )
             {
-                var module = context.CreateBitcodeModule( "test.bc", SourceLanguage.CSharp, "test.cs", "unit-tests" );
+                var module = context.CreateBitcodeModule( "test.bc", SourceLanguage.C99, "test.c", "unit-tests" );
                 Assert.IsNotNull( module );
                 module.Layout = targetMachine.TargetData;
 
@@ -195,7 +195,7 @@ namespace Llvm.NET.Tests
             var targetMachine = TargetTests.GetTargetMachine( );
             using( var context = new Context( ) )
             {
-                var module = context.CreateBitcodeModule( "test.bc", SourceLanguage.CSharp, "test.cs", "unit-tests" );
+                var module = context.CreateBitcodeModule( "test.bc", SourceLanguage.C99, "test.cs", "unit-tests" );
                 Assert.IsNotNull( module );
                 module.Layout = targetMachine.TargetData;
 

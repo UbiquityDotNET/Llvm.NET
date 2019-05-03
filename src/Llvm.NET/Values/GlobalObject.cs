@@ -3,8 +3,10 @@
 // </copyright>
 
 using System;
-using Llvm.NET.Native;
+using Llvm.NET.Interop;
 using Llvm.NET.Properties;
+
+using static Llvm.NET.Interop.NativeMethods;
 
 namespace Llvm.NET.Values
 {
@@ -15,15 +17,15 @@ namespace Llvm.NET.Values
         /// <summary>Gets or sets the alignment requirements for this object</summary>
         public uint Alignment
         {
-            get => NativeMethods.LLVMGetAlignment( ValueHandle );
-            set => NativeMethods.LLVMSetAlignment( ValueHandle, value );
+            get => LLVMGetAlignment( ValueHandle );
+            set => LLVMSetAlignment( ValueHandle, value );
         }
 
         /// <summary>Gets or sets the linker section this object belongs to</summary>
         public string Section
         {
-            get => NativeMethods.LLVMGetSection( ValueHandle );
-            set => NativeMethods.LLVMSetSection( ValueHandle, value );
+            get => LLVMGetSection( ValueHandle );
+            set => LLVMSetSection( ValueHandle, value );
         }
 
         /// <summary>Gets or sets the comdat attached to this object, if any</summary>
@@ -36,13 +38,8 @@ namespace Llvm.NET.Values
         {
             get
             {
-                LLVMComdatRef comdatRef = NativeMethods.LLVMGlobalObjectGetComdat( ValueHandle );
-                if( comdatRef == default )
-                {
-                    return null;
-                }
-
-                return new Comdat( ParentModule, comdatRef );
+                LLVMComdatRef comdatRef = LLVMGlobalObjectGetComdat( ValueHandle );
+                return comdatRef == default ? null : new Comdat( ParentModule, comdatRef );
             }
 
             set
@@ -52,7 +49,7 @@ namespace Llvm.NET.Values
                     throw new ArgumentException( Resources.Mismatched_modules_for_Comdat, nameof( value ) );
                 }
 
-                NativeMethods.LLVMGlobalObjectSetComdat( ValueHandle, value?.ComdatHandle?? new LLVMComdatRef( IntPtr.Zero ) );
+                LLVMGlobalObjectSetComdat( ValueHandle, value?.ComdatHandle ?? LLVMComdatRef.Zero );
             }
         }
 

@@ -6,10 +6,12 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using Llvm.NET.Instructions;
-using Llvm.NET.Native;
+using Llvm.NET.Interop;
 using Llvm.NET.Properties;
 using Llvm.NET.Types;
 using Ubiquity.ArgValidators;
+
+using static Llvm.NET.Interop.NativeMethods;
 
 namespace Llvm.NET.Values
 {
@@ -18,7 +20,7 @@ namespace Llvm.NET.Values
         : Constant
     {
         /// <summary>Gets the constant instruction expression op code</summary>
-        public OpCode OpCode => ( OpCode )NativeMethods.LLVMGetConstOpcode( ValueHandle );
+        public OpCode OpCode => ( OpCode )LLVMGetConstOpcode( ValueHandle );
 
         /// <summary>Gets an IntToPtr expression to convert an integral value to a pointer</summary>
         /// <param name="value">Constant value to cast to a pointer</param>
@@ -39,7 +41,7 @@ namespace Llvm.NET.Values
                 throw new ArgumentException( Resources.Pointer_type_expected, nameof( type ) );
             }
 
-            return FromHandle<Constant>( NativeMethods.LLVMConstIntToPtr( value.ValueHandle, type.GetTypeRef( ) ) );
+            return FromHandle<Constant>( LLVMConstIntToPtr( value.ValueHandle, type.GetTypeRef( ) ) );
         }
 
         /// <summary>Creates a constant bit cast expression</summary>
@@ -51,7 +53,7 @@ namespace Llvm.NET.Values
         {
             value.ValidateNotNull( nameof( value ) );
 
-            var handle = NativeMethods.LLVMConstBitCast( value.ValueHandle, toType.GetTypeRef( ) );
+            var handle = LLVMConstBitCast( value.ValueHandle, toType.GetTypeRef( ) );
             return FromHandle<Constant>( handle );
         }
 
@@ -69,8 +71,8 @@ namespace Llvm.NET.Values
         [SuppressMessage("Microsoft.Design", "CA1011:ConsiderPassingBaseTypesAsParameters", Justification = "Specific type required by interop call")]
         public static Constant GetElementPtr(Constant value, IEnumerable<Constant> args)
         {
-            var llvmArgs = InstructionBuilder.GetValidatedGEPArgs(value, args);
-            var handle = NativeMethods.LLVMConstGEP( value.ValueHandle, out llvmArgs[0], (uint)llvmArgs.Length);
+            var llvmArgs = InstructionBuilder.GetValidatedGEPArgs(value.NativeType, value, args);
+            var handle = LLVMConstGEP( value.ValueHandle, out llvmArgs[0], (uint)llvmArgs.Length);
             return FromHandle<Constant>(handle);
         }
 

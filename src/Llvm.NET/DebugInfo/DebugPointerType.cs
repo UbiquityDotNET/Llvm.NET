@@ -2,7 +2,6 @@
 // Copyright (c) .NET Foundation. All rights reserved.
 // </copyright>
 
-using System.Diagnostics.CodeAnalysis;
 using Llvm.NET.Types;
 using Ubiquity.ArgValidators;
 

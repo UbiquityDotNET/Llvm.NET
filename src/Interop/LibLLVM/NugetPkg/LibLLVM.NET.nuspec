@@ -1,0 +1,25 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
+    <metadata minClientVersion="4.0">
+        <id>Ubiquity.Llvm.NET.Interop</id>
+        <version>$version$</version>
+        <authors>Ubiquity.NET</authors>
+        <requireLicenseAcceptance>false</requireLicenseAcceptance>
+        <description>Ubiquity.NET Interop support for LLVM v$llvmversion$</description>
+        <developmentDependency>true</developmentDependency>
+        <projectUrl>http://github.com/netmf/LLVM.NET</projectUrl>
+        <licenseUrl>http://releases.llvm.org/$llvmversion$/LICENSE.TXT</licenseUrl>
+        <tags>LLVM,compiler,native</tags>
+    </metadata>
+    <files>
+        <file src="build\LibLLVM.NET.props" target="build\LibLLVM.NET.props" />
+        <file src="buildMultiTargeting\LibLLVM.NET.props" target="buildMultiTargeting\LibLLVM.NET.props" />
+
+        <file src="$buildbinoutput$$configuration$\x64\LibLLVM.pdb" target="runtimes\win-x64\native" />
+        <file src="$buildbinoutput$$configuration$\x64\LibLLVM.dll" target="runtimes\win-x64\native" />
+        <file src="$buildbinoutput$\Llvm.NET.Interop\$configuration$\net47\Llvm.NET.Interop.pdb" target="lib\net47\Llvm.NET.Interop.pdb" />
+        <file src="$buildbinoutput$\Llvm.NET.Interop\$configuration$\netstandard20\Llvm.NET.Interop.pdb" target="lib\netstandard2.0\Llvm.NET.Interop.pdb" />
+        <file src="$buildbinoutput$\Llvm.NET.Interop\$configuration$\net47\Llvm.NET.Interop.dll" target="lib\net47\Llvm.NET.Interop.dll" />
+        <file src="$buildbinoutput$\Llvm.NET.Interop\$configuration$\netstandard20\Llvm.NET.Interop.dll" target="lib\netstandard2.0\Llvm.NET.Interop.dll" />
+    </files>
+</package>

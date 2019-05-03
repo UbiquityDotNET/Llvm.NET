@@ -3,6 +3,7 @@
 // </copyright>
 
 using System;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using Llvm.NET.DebugInfo;
@@ -273,7 +274,7 @@ namespace Llvm.NET.Tests
                     Assert.IsNotNull( testFunc );
                     string txt = module2.WriteToString( );
                     Assert.IsFalse( string.IsNullOrWhiteSpace( txt ) );
-                    string expectedText = string.Format( TestModuleTemplate, Environment.NewLine, path );
+                    string expectedText = string.Format( CultureInfo.InvariantCulture, TestModuleTemplate, Environment.NewLine, path );
                     Assert.AreEqual( expectedText, txt );
                 }
             }
@@ -295,7 +296,7 @@ namespace Llvm.NET.Tests
                 Assert.IsNotNull( testFunc );
                 string txt = module.WriteToString( );
                 Assert.IsFalse( string.IsNullOrWhiteSpace( txt ) );
-                string expectedText = string.Format( TestModuleTemplate, Environment.NewLine, "test" );
+                string expectedText = string.Format( CultureInfo.InvariantCulture, TestModuleTemplate, Environment.NewLine, "test" );
                 Assert.AreEqual( expectedText, txt );
             }
         }

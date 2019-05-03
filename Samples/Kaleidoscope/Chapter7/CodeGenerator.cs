@@ -45,11 +45,12 @@ namespace Kaleidoscope.Chapter7
         public void Dispose( )
         {
             JIT.Dispose( );
+            Module.Dispose( );
             Context.Dispose( );
         }
 
         #region Generate
-        public Value Generate( IAstNode ast, Action<CodeGeneratorException> errorHandler )
+        public Value Generate( IAstNode ast, Action<CodeGeneratorException> codeGenerationErroHandler )
         {
             try
             {
@@ -78,7 +79,7 @@ namespace Kaleidoscope.Chapter7
                 var jitHandle = JIT.AddModule( function.ParentModule );
                 if( definition.IsAnonymous )
                 {
-                    var nativeFunc = JIT.GetFunctionDelegate<AnonExpressionFunc>( function.Name );
+                    var nativeFunc = JIT.GetFunctionDelegate<KaleidoscopeJIT.CallbackHandler0>( function.Name );
                     var retVal = Context.CreateConstant( nativeFunc( ) );
                     JIT.RemoveModule( jitHandle );
                     return retVal;
@@ -87,9 +88,9 @@ namespace Kaleidoscope.Chapter7
                 FunctionModuleMap.Add( function.Name, jitHandle );
                 return function;
             }
-            catch( CodeGeneratorException ex ) when( errorHandler != null )
+            catch( CodeGeneratorException ex ) when( codeGenerationErroHandler != null )
             {
-                errorHandler( ex );
+                codeGenerationErroHandler( ex );
                 return null;
             }
         }
@@ -241,9 +242,9 @@ namespace Kaleidoscope.Chapter7
 
             var function = InstructionBuilder.InsertBlock.ContainingFunction;
 
-            var thenBlock = Context.CreateBasicBlock( "then", function );
-            var elseBlock = Context.CreateBasicBlock( "else" );
-            var continueBlock = Context.CreateBasicBlock( "ifcont" );
+            var thenBlock = function.AppendBasicBlock( "then" );
+            var elseBlock = function.AppendBasicBlock( "else" );
+            var continueBlock = function.AppendBasicBlock( "ifcont" );
             InstructionBuilder.Branch( condBool, thenBlock, elseBlock );
 
             // generate then block
@@ -303,7 +304,7 @@ namespace Kaleidoscope.Chapter7
             InstructionBuilder.Store( startVal, allocaVar );
 
             // Make the new basic block for the loop header.
-            var loopBlock = Context.CreateBasicBlock( "loop", function );
+            var loopBlock = function.AppendBasicBlock( "loop" );
 
             // Insert an explicit fall through from the current block to the loopBlock.
             InstructionBuilder.Branch( loopBlock );
@@ -349,7 +350,7 @@ namespace Kaleidoscope.Chapter7
                                                  .RegisterName( "loopcond" );
 
                 // Create the "after loop" block and insert it.
-                var afterBlock = Context.CreateBasicBlock( "afterloop", function );
+                var afterBlock = function.AppendBasicBlock( "afterloop" );
 
                 // Insert the conditional branch into the end of LoopEndBB.
                 InstructionBuilder.Branch( endCondition, loopBlock, afterBlock );
@@ -426,7 +427,7 @@ namespace Kaleidoscope.Chapter7
 
         #region GetOrDeclareFunction
 
-        // Retrieves a Function" for a prototype from the current module if it exists,
+        // Retrieves a Function for a prototype from the current module if it exists,
         // otherwise declares the function and returns the newly declared function.
         private Function GetOrDeclareFunction( Prototype prototype )
         {
@@ -460,11 +461,6 @@ namespace Kaleidoscope.Chapter7
         private BitcodeModule Module;
         private readonly KaleidoscopeJIT JIT = new KaleidoscopeJIT( );
         private readonly Dictionary<string, IJitModuleHandle> FunctionModuleMap = new Dictionary<string, IJitModuleHandle>( );
-
-        /// <summary>Delegate type to allow execution of a JIT'd TopLevelExpression</summary>
-        /// <returns>Result of evaluating the expression</returns>
-        [UnmanagedFunctionPointer( System.Runtime.InteropServices.CallingConvention.Cdecl )]
-        private delegate double AnonExpressionFunc( );
         #endregion
     }
 }

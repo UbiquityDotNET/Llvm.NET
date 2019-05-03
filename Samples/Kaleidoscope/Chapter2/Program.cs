@@ -16,19 +16,16 @@ namespace Kaleidoscope.Chapter2
     {
         // Using language level that includes the complete set for exploration of pare trees and AST
         private const LanguageLevel LanguageFeatureLevel = LanguageLevel.MutableVariables;
-        private const DiagnosticRepresentations Diagnostics = DiagnosticRepresentations.Xml | DiagnosticRepresentations.Dgml | DiagnosticRepresentations.BlockDiag;
 
         /// <summary>C# version of the LLVM Kaleidoscope language tutorial</summary>
-        /// <param name="args">Ignored...</param>
-        [SuppressMessage( "Redundancies in Symbol Declarations", "RECS0154:Parameter is never used", Justification = "Standard required signature" )]
-        public static void Main( string[ ] args )
+        public static void Main( /*string[ ] args*/ )
         {
             string helloMsg = $"Llvm.NET Kaleidoscope Explorer - {LanguageFeatureLevel}";
             Console.Title = $"{Assembly.GetExecutingAssembly( ).GetName( )}: {helloMsg}";
             Console.WriteLine( helloMsg );
 
             #region GeneratorLoop
-            var parser = new ParserStack( LanguageFeatureLevel );
+            var parser = new Parser( LanguageFeatureLevel );
 
             // Create Observable chain to parse input lines from console into AST Nodes
             var replSeq = parser.Parse( Console.In.ToObservableStatements( ShowPrompt ), ShowCodeGenError );

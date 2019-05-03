@@ -4,7 +4,9 @@
 
 using System.Collections.Generic;
 using System.Linq;
-using Llvm.NET.Native;
+using Llvm.NET.Interop;
+
+using static Llvm.NET.Interop.NativeMethods;
 
 // Interface+internal type matches file name
 #pragma warning disable SA1649
@@ -57,14 +59,14 @@ namespace Llvm.NET.Types
                 llvmArgs = new LLVMTypeRef[ 1 ];
             }
 
-            NativeMethods.LLVMStructSetBody( TypeRefHandle, out llvmArgs[ 0 ], argsLength, packed );
+            LLVMStructSetBody( TypeRefHandle, out llvmArgs[ 0 ], argsLength, packed );
         }
 
-        public string Name => NativeMethods.LLVMGetStructName( TypeRefHandle );
+        public string Name => LLVMGetStructName( TypeRefHandle );
 
-        public bool IsOpaque => NativeMethods.LLVMIsOpaqueStruct( TypeRefHandle );
+        public bool IsOpaque => LLVMIsOpaqueStruct( TypeRefHandle );
 
-        public bool IsPacked => NativeMethods.LLVMIsPackedStruct( TypeRefHandle );
+        public bool IsPacked => LLVMIsPackedStruct( TypeRefHandle );
 
         public IReadOnlyList<ITypeRef> Members
         {
@@ -73,11 +75,11 @@ namespace Llvm.NET.Types
                 var members = new List<ITypeRef>( );
                 if( Kind == TypeKind.Struct && !IsOpaque )
                 {
-                    uint count = NativeMethods.LLVMCountStructElementTypes( TypeRefHandle );
+                    uint count = LLVMCountStructElementTypes( TypeRefHandle );
                     if (count > 0)
                     {
                         LLVMTypeRef[] structElements = new LLVMTypeRef[ count ];
-                        NativeMethods.LLVMGetStructElementTypes( TypeRefHandle, out structElements[ 0 ] );
+                        LLVMGetStructElementTypes( TypeRefHandle, out structElements[ 0 ] );
                         members.AddRange( structElements.Select( FromHandle<ITypeRef> ) );
                     }
                 }

@@ -2,13 +2,11 @@
 // Copyright (c) .NET Foundation. All rights reserved.
 // </copyright>
 
-using System.Runtime.InteropServices;
-using Llvm.NET.Native;
+using Llvm.NET.Interop;
 using Llvm.NET.Types;
 using Llvm.NET.Values;
 
-using static Llvm.NET.Native.NativeMethods;
-using CallingConvention = System.Runtime.InteropServices.CallingConvention;
+using static Llvm.NET.Interop.NativeMethods;
 
 namespace Llvm.NET
 {
@@ -30,13 +28,9 @@ namespace Llvm.NET
         /// <remarks>This is a simple wrapper around the <see cref="Value"/> property</remarks>
         public static implicit operator Value( ValueAsMetadata md ) => md.Value;
 
-        /*private protected*/
-        internal ValueAsMetadata( LLVMMetadataRef handle )
+        private protected ValueAsMetadata( LLVMMetadataRef handle )
             : base( handle )
         {
         }
-
-        [DllImport( LibraryPath, CallingConvention = CallingConvention.Cdecl )]
-        private static extern LLVMValueRef LLVMValueAsMetadataGetValue( LLVMMetadataRef vmd );
     }
 }

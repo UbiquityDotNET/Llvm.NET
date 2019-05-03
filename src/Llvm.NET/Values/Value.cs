@@ -3,10 +3,10 @@
 // </copyright>
 
 using System;
-using Llvm.NET.Native;
+using Llvm.NET.Interop;
 using Llvm.NET.Types;
 
-using static Llvm.NET.Native.NativeMethods;
+using static Llvm.NET.Interop.NativeMethods;
 
 namespace Llvm.NET.Values
 {
@@ -34,9 +34,9 @@ namespace Llvm.NET.Values
         /// </remarks>
         public string Name
         {
-            get => Context.IsDisposed ? string.Empty : LLVMGetValueName( ValueHandle );
+            get => Context.IsDisposed ? string.Empty : LLVMGetValueName2( ValueHandle, out size_t _ );
 
-            set => LLVMSetValueName( ValueHandle, value );
+            set => LLVMSetValueName2( ValueHandle, value, value.Length );
         }
 
         /// <summary>Gets a value indicating whether this value is Undefined</summary>

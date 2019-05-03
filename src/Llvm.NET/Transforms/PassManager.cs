@@ -2,7 +2,9 @@
 // Copyright (c) .NET Foundation. All rights reserved.
 // </copyright>
 
-using Llvm.NET.Native;
+using Llvm.NET.Interop;
+
+/* TODO: implement PassManagerBuilder support... */
 
 namespace Llvm.NET.Transforms
 {

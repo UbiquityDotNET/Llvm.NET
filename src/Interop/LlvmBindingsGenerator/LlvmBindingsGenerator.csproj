@@ -1,0 +1,97 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+    <PropertyGroup>
+        <OutputType>Exe</OutputType>
+        <TargetFrameworks>net47</TargetFrameworks>
+        <LangVersion>7.3</LangVersion>
+        <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+        <DebugType>portable</DebugType>
+        <DebugSymbols>true</DebugSymbols>
+        <SignAssembly>False</SignAssembly>
+        <PlatformTarget>x64</PlatformTarget>
+    </PropertyGroup>
+    <ItemGroup>
+      <PackageReference Include="CppSharp" Version="0.9.0">
+        <PrivateAssets>all</PrivateAssets>
+        <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+      </PackageReference>
+    </ItemGroup>
+    <!--
+    HACKFIX: CppSharp uses baseclass.contrib.nuget.output, which, among it's many issues, requires packages.config.
+    After analyzing that package it's basically a VERY convoluted means of copying the output folder from the
+    packages root location into the output folder of this project. So, just do the copy using standard project items...
+    -->
+    <ItemGroup>
+        <None Include="$(PkgCppSharp)\output\**\*.*">
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+        </None>
+        <Reference Include="$(PkgCppSharp)\lib\*.dll" />
+    </ItemGroup>
+    <!-- Runtime T4 templates need to specify the single file generator for the code behind -->
+    <ItemGroup>
+      <None Update="Templates\T4\ContextHandleTemplate.tt">
+        <Generator>TextTemplatingFilePreprocessor</Generator>
+        <LastGenOutput>ContextHandleTemplate.cs</LastGenOutput>
+        <CustomToolNamespace>LlvmBindingsGenerator.Templates</CustomToolNamespace>
+      </None>
+      <None Update="Templates\T4\ExportsTemplate.tt">
+        <Generator>TextTemplatingFilePreprocessor</Generator>
+        <LastGenOutput>ExportsTemplate.cs</LastGenOutput>
+        <CustomToolNamespace>LlvmBindingsGenerator.Templates</CustomToolNamespace>
+      </None>
+      <None Update="Templates\T4\GlobalHandleTemplate.tt">
+        <Generator>TextTemplatingFilePreprocessor</Generator>
+        <LastGenOutput>GlobalHandleTemplate.cs</LastGenOutput>
+        <CustomToolNamespace>LlvmBindingsGenerator.Templates</CustomToolNamespace>
+      </None>
+      <None Update="Templates\T4\LLVMErrorRefTemplate.tt">
+        <Generator>TextTemplatingFilePreprocessor</Generator>
+        <LastGenOutput>LLVMErrorRefTemplate.cs</LastGenOutput>
+        <CustomToolNamespace>LlvmBindingsGenerator.Templates</CustomToolNamespace>
+      </None>
+      <None Update="Templates\T4\PerHeaderInteropTemplate.tt">
+        <Generator>TextTemplatingFilePreprocessor</Generator>
+        <LastGenOutput>PerHeaderInteropTemplate.cs</LastGenOutput>
+        <CustomToolNamespace>LlvmBindingsGenerator.Templates</CustomToolNamespace>
+      </None>
+      <None Update="Templates\T4\StringMarshalerTemplate.tt">
+        <Generator>TextTemplatingFilePreprocessor</Generator>
+        <LastGenOutput>StringMarshalerTemplate.cs</LastGenOutput>
+        <CustomToolNamespace>LlvmBindingsGenerator.Templates</CustomToolNamespace>
+      </None>
+    </ItemGroup>
+    <ItemGroup>
+      <Service Include="{508349b6-6b84-4df5-91f0-309beebad82d}" />
+    </ItemGroup>
+    <ItemGroup>
+      <Compile Update="Templates\T4\ContextHandleTemplate.cs">
+        <DesignTime>True</DesignTime>
+        <AutoGen>True</AutoGen>
+        <DependentUpon>ContextHandleTemplate.tt</DependentUpon>
+      </Compile>
+      <Compile Update="Templates\T4\ExportsTemplate.cs">
+        <DesignTime>True</DesignTime>
+        <AutoGen>True</AutoGen>
+        <DependentUpon>ExportsTemplate.tt</DependentUpon>
+      </Compile>
+      <Compile Update="Templates\T4\GlobalHandleTemplate.cs">
+        <DesignTime>True</DesignTime>
+        <AutoGen>True</AutoGen>
+        <DependentUpon>GlobalHandleTemplate.tt</DependentUpon>
+      </Compile>
+      <Compile Update="Templates\T4\LLVMErrorRefTemplate.cs">
+        <DesignTime>True</DesignTime>
+        <AutoGen>True</AutoGen>
+        <DependentUpon>LLVMErrorRefTemplate.tt</DependentUpon>
+      </Compile>
+      <Compile Update="Templates\T4\PerHeaderInteropTemplate.cs">
+        <DesignTime>True</DesignTime>
+        <AutoGen>True</AutoGen>
+        <DependentUpon>PerHeaderInteropTemplate.tt</DependentUpon>
+      </Compile>
+      <Compile Update="Templates\T4\StringMarshalerTemplate.cs">
+        <DesignTime>True</DesignTime>
+        <AutoGen>True</AutoGen>
+        <DependentUpon>StringMarshalerTemplate.tt</DependentUpon>
+      </Compile>
+    </ItemGroup>
+</Project>

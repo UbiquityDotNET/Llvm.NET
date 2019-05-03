@@ -3,10 +3,10 @@
 // </copyright>
 
 using System;
-using Llvm.NET.Native;
+using Llvm.NET.Interop;
 using Llvm.NET.Values;
 
-using static Llvm.NET.Native.NativeMethods;
+using static Llvm.NET.Interop.NativeMethods;
 
 namespace Llvm.NET.Instructions
 {

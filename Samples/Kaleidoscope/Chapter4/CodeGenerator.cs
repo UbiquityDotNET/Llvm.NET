@@ -45,11 +45,12 @@ namespace Kaleidoscope.Chapter4
         public void Dispose( )
         {
             JIT.Dispose( );
+            Module.Dispose( );
             Context.Dispose( );
         }
 
         #region Generate
-        public Value Generate( IAstNode ast, Action<CodeGeneratorException> errorHandler )
+        public Value Generate( IAstNode ast, Action<CodeGeneratorException> codeGenerationErroHandler )
         {
             try
             {
@@ -78,7 +79,7 @@ namespace Kaleidoscope.Chapter4
                 var jitHandle = JIT.AddModule( function.ParentModule );
                 if( definition.IsAnonymous )
                 {
-                    var nativeFunc = JIT.GetFunctionDelegate<AnonExpressionFunc>( function.Name );
+                    var nativeFunc = JIT.GetFunctionDelegate<KaleidoscopeJIT.CallbackHandler0>( function.Name );
                     var retVal = Context.CreateConstant( nativeFunc( ) );
                     JIT.RemoveModule( jitHandle );
                     return retVal;
@@ -87,9 +88,9 @@ namespace Kaleidoscope.Chapter4
                 FunctionModuleMap.Add( function.Name, jitHandle );
                 return function;
             }
-            catch( CodeGeneratorException ex ) when( errorHandler != null )
+            catch( CodeGeneratorException ex ) when( codeGenerationErroHandler != null )
             {
-                errorHandler( ex );
+                codeGenerationErroHandler( ex );
                 return null;
             }
         }
@@ -265,11 +266,6 @@ namespace Kaleidoscope.Chapter4
         private BitcodeModule Module;
         private readonly KaleidoscopeJIT JIT = new KaleidoscopeJIT( );
         private readonly Dictionary<string, IJitModuleHandle> FunctionModuleMap = new Dictionary<string, IJitModuleHandle>( );
-
-        /// <summary>Delegate type to allow execution of a JIT'd TopLevelExpression</summary>
-        /// <returns>Result of evaluating the expression</returns>
-        [UnmanagedFunctionPointer( System.Runtime.InteropServices.CallingConvention.Cdecl )]
-        private delegate double AnonExpressionFunc( );
         #endregion
     }
 }

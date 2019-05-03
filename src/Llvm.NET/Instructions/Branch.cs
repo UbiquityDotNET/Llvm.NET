@@ -4,7 +4,7 @@
 
 using System.Collections.Generic;
 using JetBrains.Annotations;
-using Llvm.NET.Native;
+using Llvm.NET.Interop;
 using Llvm.NET.Values;
 
 namespace Llvm.NET.Instructions

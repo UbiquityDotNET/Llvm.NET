@@ -3,7 +3,9 @@
 // </copyright>
 
 using System;
-using Llvm.NET.Native;
+using Llvm.NET.Interop;
+
+using static Llvm.NET.Interop.NativeMethods;
 
 namespace Llvm.NET.DebugInfo
 {
@@ -19,16 +21,16 @@ namespace Llvm.NET.DebugInfo
         public override string Name => GetOperand<MDString>( 2 )?.ToString( ) ?? string.Empty;
 
         /// <summary>Gets the source line for the type</summary>
-        public UInt32 Line => NativeMethods.LLVMDITypeGetLine( MetadataHandle );
+        public UInt32 Line => LLVMDITypeGetLine( MetadataHandle );
 
         /// <summary>Gets the size of the type in bits</summary>
-        public UInt64 BitSize => NativeMethods.LLVMDITypeGetSizeInBits( MetadataHandle );
+        public UInt64 BitSize => LLVMDITypeGetSizeInBits( MetadataHandle );
 
         /// <summary>Gets the alignment of the type in bits</summary>
-        public UInt64 BitAlignment => NativeMethods.LLVMDITypeGetAlignInBits( MetadataHandle );
+        public UInt64 BitAlignment => LLVMDITypeGetAlignInBits( MetadataHandle );
 
         /// <summary>Gets the offset of the type in bits</summary>
-        public UInt64 BitOffset => NativeMethods.LLVMDITypeGetOffsetInBits( MetadataHandle );
+        public UInt64 BitOffset => LLVMDITypeGetOffsetInBits( MetadataHandle );
 
         /// <summary>Gets the flags that describe the behaviors for</summary>
         public DebugInfoFlags DebugInfoFlags
@@ -40,7 +42,7 @@ namespace Llvm.NET.DebugInfo
                     return 0;
                 }
 
-                return ( DebugInfoFlags )NativeMethods.LLVMDITypeGetFlags( MetadataHandle );
+                return ( DebugInfoFlags )LLVMDITypeGetFlags( MetadataHandle );
             }
         }
 

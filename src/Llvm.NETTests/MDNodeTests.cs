@@ -10,25 +10,11 @@ namespace Llvm.NET.Tests
     [TestClass]
     public class MDNodeTests
     {
-        /*[TestMethod]
-        //public void ResolveCyclesTest( )
-        //{
-        //    Assert.Inconclusive( );
-        //}
-        */
-
-        /*[TestMethod]
-        //public void ReplaceAllUsesWithTest( )
-        //{
-        //    Assert.Inconclusive( );
-        //}
-        */
-
         [TestMethod]
         public void AppendingModuleFlagsTest( )
         {
             using( var ctx = new Context( ) )
-            using( var module = ctx.CreateBitcodeModule( "test.bc", SourceLanguage.CSharp, "test.cs", "unit-tests" ) )
+            using( var module = ctx.CreateBitcodeModule( "test.bc", SourceLanguage.C99, "test.c", "unit-tests" ) )
             {
                 module.AddModuleFlag( ModuleFlagBehavior.Append, "testMD", ctx.CreateMDNode( "testValue" ) );
                 Assert.AreEqual( 1, module.ModuleFlags.Count );
@@ -45,9 +31,10 @@ namespace Llvm.NET.Tests
         [TestMethod]
         public void OperandsAreAccessibleTest()
         {
+            const int CompositeTypeOperandCount = 9;
             var targetMachine = TargetTests.GetTargetMachine( );
             using( var ctx = new Context( ) )
-            using( var module = ctx.CreateBitcodeModule( "test.bc", SourceLanguage.CSharp, "test.cs", "unit-tests" ) )
+            using( var module = ctx.CreateBitcodeModule( "test.bc", SourceLanguage.C99, "test.c", "unit-tests" ) )
             {
                 module.Layout = targetMachine.TargetData;
                 var intType = new DebugBasicType( module.Context.Int32Type, module, "int", DiTypeKind.Signed );
@@ -56,7 +43,7 @@ namespace Llvm.NET.Tests
 
                 var mdnode = arrayType.DIType;
                 Assert.IsNotNull( mdnode.Operands );
-                Assert.AreEqual( 8, mdnode.Operands.Count );
+                Assert.AreEqual( CompositeTypeOperandCount, mdnode.Operands.Count );
 
                 Assert.IsNull( mdnode.File );
                 Assert.IsNull( mdnode.Operands[ 0 ] );
@@ -90,6 +77,9 @@ namespace Llvm.NET.Tests
 
                 Assert.IsTrue( string.IsNullOrEmpty( mdnode.Identifier ) );
                 Assert.IsNull( mdnode.Operands[ 7 ] );
+
+                Assert.IsNull( mdnode.Discriminator );
+                Assert.IsNull( mdnode.Operands[ 8 ] );
 
                 Assert.AreSame( intType.DIType, mdnode.BaseType );
             }

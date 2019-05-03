@@ -6,13 +6,12 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
-using System.Runtime.InteropServices;
 using Llvm.NET.DebugInfo;
-using Llvm.NET.Native;
+using Llvm.NET.Interop;
 using Llvm.NET.Properties;
 using Llvm.NET.Types;
-
-using static Llvm.NET.Native.NativeMethods;
+using Ubiquity.ArgValidators;
+using static Llvm.NET.Interop.NativeMethods;
 
 namespace Llvm.NET.Values
 {
@@ -207,18 +206,7 @@ namespace Llvm.NET.Values
         public IFunctionType Signature => TypeRef.FromHandle<IFunctionType>( LLVMGetElementType( LLVMTypeOf( ValueHandle ) ) );
 
         /// <summary>Gets the Entry block for this function</summary>
-        public BasicBlock EntryBlock
-        {
-            get
-            {
-                if( LLVMCountBasicBlocks( ValueHandle ) == 0 )
-                {
-                    return null;
-                }
-
-                return BasicBlock.FromHandle( LLVMGetEntryBasicBlock( ValueHandle ) );
-            }
-        }
+        public BasicBlock EntryBlock => LLVMCountBasicBlocks( ValueHandle ) == 0 ? null : BasicBlock.FromHandle( LLVMGetEntryBasicBlock( ValueHandle ) );
 
         /// <summary>Gets the basic blocks for the function</summary>
         public ICollection<BasicBlock> BasicBlocks { get; }
@@ -245,23 +233,15 @@ namespace Llvm.NET.Values
         /// <summary>Gets or sets the personality function for exception handling in this function</summary>
         public Function PersonalityFunction
         {
-            get
-            {
-                if( !LLVMHasPersonalityFn( ValueHandle ) )
-                {
-                    return null;
-                }
+            get => !LLVMHasPersonalityFn( ValueHandle ) ? null : FromHandle<Function>( LLVMGetPersonalityFn( ValueHandle ) );
 
-                return FromHandle<Function>( LLVMGetPersonalityFn( ValueHandle ) );
-            }
-
-            set => LLVMSetPersonalityFn( ValueHandle, value?.ValueHandle ?? new LLVMValueRef( IntPtr.Zero ) );
+            set => LLVMSetPersonalityFn( ValueHandle, value?.ValueHandle ?? LLVMValueRef.Zero );
         }
 
         /// <summary>Gets or sets the debug information for this function</summary>
         public DISubProgram DISubProgram
         {
-            get => MDNode.FromHandle<DISubProgram>( LLVMFunctionGetSubprogram( ValueHandle ) );
+            get => MDNode.FromHandle<DISubProgram>( LLVMGetSubprogram( ValueHandle ) );
 
             set
             {
@@ -270,7 +250,7 @@ namespace Llvm.NET.Values
                     throw new ArgumentException( "Subprogram does not describe this Function" );
                 }
 
-                LLVMFunctionSetSubprogram( ValueHandle, value?.MetadataHandle ?? default );
+                LLVMSetSubprogram( ValueHandle, value?.MetadataHandle ?? default );
             }
         }
 
@@ -295,11 +275,10 @@ namespace Llvm.NET.Values
         }
 
         /// <summary>Verifies the function without throwing an exception</summary>
-        /// <param name="errMsg">Error message if any, or <see cref="String.Empty"/> if no errors detected</param>
+        /// <param name="errMsg">Error message if any, or <see cref="string.Empty"/> if no errors detected</param>
         /// <returns><see langword="true"/> if no errors found</returns>
         public bool Verify( out string errMsg )
         {
-            errMsg = string.Empty;
             return LLVMVerifyFunctionEx( ValueHandle, LLVMVerifierFailureAction.LLVMReturnStatusAction, out errMsg ).Succeeded;
         }
 
@@ -330,6 +309,20 @@ namespace Llvm.NET.Values
         {
             LLVMBasicBlockRef blockRef = LLVMAppendBasicBlockInContext( NativeType.Context.ContextHandle, ValueHandle, name );
             return BasicBlock.FromHandle( blockRef );
+        }
+
+        /// <summary>Inserts a basic block before another block in the function</summary>
+        /// <param name="name"></param>
+        /// <param name="insertBefore"></param>
+        /// <returns></returns>
+        public BasicBlock InsertBasicBlock( string name, BasicBlock insertBefore )
+        {
+            insertBefore.ValidateNotNull( nameof(insertBefore) );
+            if( insertBefore.ContainingFunction != this )
+            {
+                throw new ArgumentException( "Basic block belongs to another function", nameof( insertBefore ) );
+            }
+            return BasicBlock.FromHandle( LLVMInsertBasicBlockInContext( NativeType.Context.ContextHandle, insertBefore.BlockHandle, name ) );
         }
 
         /// <summary>Retrieves or creates block by name</summary>
@@ -424,8 +417,5 @@ namespace Llvm.NET.Values
             Attributes = new ValueAttributeDictionary( this, ()=>this );
             BasicBlocks = new BasicBlockCollection( this );
         }
-
-        [DllImport( LibraryPath, CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl, BestFitMapping = false, ThrowOnUnmappableChar = true )]
-        private static extern LLVMStatus LLVMVerifyFunctionEx( LLVMValueRef Fn, LLVMVerifierFailureAction Action, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( StringMarshaler ), MarshalCookie = "DisposeMessage" )] out string OutMessages );
     }
 }

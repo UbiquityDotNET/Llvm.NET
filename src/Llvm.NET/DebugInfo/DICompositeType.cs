@@ -3,7 +3,7 @@
 // </copyright>
 
 using JetBrains.Annotations;
-using Llvm.NET.Native;
+using Llvm.NET.Interop;
 
 namespace Llvm.NET.DebugInfo
 {
@@ -41,6 +41,9 @@ namespace Llvm.NET.DebugInfo
 
         /// <summary>Gets the identifier for this type</summary>
         public string Identifier => GetOperandString( 7 );
+
+        /// <summary>Gets the Discriminator for the composite type</summary>
+        public DIDerivedType Discriminator => GetOperand<DIDerivedType>( 8 );
 
         /// <summary>Initializes a new instance of the <see cref="DICompositeType"/> class from an LLVM-C API Metadata handle</summary>
         /// <param name="handle">LLVM handle to wrap</param>

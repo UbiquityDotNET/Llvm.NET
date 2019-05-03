@@ -2,6 +2,7 @@
 // Copyright (c) .NET Foundation. All rights reserved.
 // </copyright>
 
+using System;
 using System.Runtime.InteropServices;
 
 // Setting ComVisible to false makes the types in this assembly not visible
@@ -11,3 +12,5 @@ using System.Runtime.InteropServices;
 
 // The following GUID is for the ID of the typelib if this project is exposed to COM
 [assembly: Guid( "826adb1c-4bdc-4a89-836b-87088e511d6a" )]
+
+[assembly: CLSCompliant(false)]

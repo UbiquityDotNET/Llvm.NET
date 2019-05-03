@@ -2,8 +2,10 @@
 // Copyright (c) .NET Foundation. All rights reserved.
 // </copyright>
 
-using Llvm.NET.Native;
+using Llvm.NET.Interop;
 using Llvm.NET.Types;
+
+using static Llvm.NET.Interop.NativeMethods;
 
 namespace Llvm.NET.Values
 {
@@ -16,7 +18,7 @@ namespace Llvm.NET.Values
         /// <returns>Constant null value of the specified type</returns>
         public static ConstantPointerNull From( ITypeRef type )
         {
-            return FromHandle<ConstantPointerNull>( NativeMethods.LLVMConstPointerNull( type.GetTypeRef() ) );
+            return FromHandle<ConstantPointerNull>( LLVMConstPointerNull( type.GetTypeRef() ) );
         }
 
         internal ConstantPointerNull( LLVMValueRef valueRef )

@@ -3,12 +3,12 @@
 // </copyright>
 
 using System;
-using Llvm.NET.Native;
+using Llvm.NET.Interop;
 using Llvm.NET.Properties;
 using Llvm.NET.Types;
 using Ubiquity.ArgValidators;
 
-using static Llvm.NET.Native.NativeMethods;
+using static Llvm.NET.Interop.NativeMethods;
 
 namespace Llvm.NET.JIT
 {
@@ -21,8 +21,7 @@ namespace Llvm.NET.JIT
         /// <param name="isSigned">Indicates if the value is signed</param>
         public GenericValue( ITypeRef t, UInt64 value, bool isSigned )
         {
-            t.ValidateNotNull( nameof( t ) );
-            if( !t.IsInteger )
+            if( !t.ValidateNotNull( nameof( t ) ).IsInteger )
             {
                 throw new ArgumentException( Resources.Type_must_be_an_integral_data_type, nameof( t ) );
             }
@@ -35,8 +34,7 @@ namespace Llvm.NET.JIT
         /// <param name="value">floating point value</param>
         public GenericValue( ITypeRef t, double value )
         {
-            t.ValidateNotNull( nameof( t ) );
-            if( !t.IsFloatingPoint )
+            if( !t.ValidateNotNull( nameof( t ) ).IsFloatingPoint )
             {
                 throw new ArgumentException( Resources.Type_must_be_a_floating_point_data_type, nameof( t ) );
             }

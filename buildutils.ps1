@@ -25,7 +25,7 @@ function Invoke-NuGet
         {
             if(!(Test-Path -PathType Container "$PSScriptRoot\Tools" ) )
             {
-                md "$PSScriptRoot\Tools" | Out-Null 
+                md "$PSScriptRoot\Tools" | Out-Null
             }
 
             # Download it from official NuGet release location
@@ -151,6 +151,11 @@ function Find-MSBuild([switch]$AllowVsPreReleases)
 
         Write-Verbose "VS installation found: $vsInstall"
         $msBuildPath = [System.IO.Path]::Combine( $vsInstall.InstallationPath, 'MSBuild', '15.0', 'bin', 'MSBuild.exe')
+        if(!(Test-Path -PathType Leaf $msBuildPath))
+        {
+            $msBuildPath = [System.IO.Path]::Combine( $vsInstall.InstallationPath, 'MSBuild', 'current', 'bin', 'MSBuild.exe')
+        }
+
         $foundOnPath = $false
     }
 
@@ -171,12 +176,12 @@ function Invoke-msbuild([string]$project, [hashtable]$properties, [string[]]$tar
 {
     $oldPath = $env:Path
     try
-    { 
+    {
         $projName = [System.IO.Path]::GetFileNameWithoutExtension($project)
         $msbuildArgs = @($project, "/m", "/t:$($targets -join ';')") + $loggerArgs + $additionalArgs
         if( $properties )
         {
-            $msbuildArgs += @( "/p:$(ConvertTo-PropertyList $properties)" ) 
+            $msbuildArgs += @( "/p:$(ConvertTo-PropertyList $properties)" )
         }
 
         Write-Information "msbuild $($msbuildArgs -join ' ')"
@@ -234,7 +239,7 @@ function Get-BuildInformation($buildPaths)
               FileVersionBuild = $semVer.FileVersionBuild
               FileVersionRevision = $semver.FileVersionRevision
               FileVersion= "$($semVer.FileVersionMajor).$($semVer.FileVersionMinor).$($semVer.FileVersionBuild).$($semVer.FileVersionRevision)"
-              LlvmVersion = "6.0.1" # TODO: Figure out how to extract this from the llvmlibs download
+              LlvmVersion = "8.0.0" # TODO: Figure out how to extract this from the llvmlibs download
             }
 }
 
@@ -267,7 +272,7 @@ Function Expand-Archive([string]$Path, [string]$Destination) {
         "`"-o$($Destination)`""  # Output directory
         "`"$($Path)`"" # 7z file name
     )
-    & $7zPath $7zArgs 
+    & $7zPath $7zArgs
 }
 
 function Find7Zip()
@@ -300,20 +305,32 @@ function Find7Zip()
     return $path7Z
 }
 
-function Install-LlvmLibs($destPath)
+function Install-LlvmLibs($destPath, $llvmversion, $compiler, $compilerversion)
 {
-    if(!(Test-Path -PathType Container Downloads))
+    if(!(Test-Path -PathType Container $destPath))
     {
-        md Downloads | Out-Null
-    }
+        if(!(Test-Path -PathType Container Downloads))
+        {
+            md Downloads | Out-Null
+        }
 
-    #TODO: Generalize the LLVM and MSC versioning to eliminate hard coded names here
-    if( !( test-path -PathType Leaf 'Downloads\llvm-libs-6.0.1-msvc-15.8.7z' ) )
-    {
-        $asset = (Get-GitHubTaggedRelease UbiquityDotNet 'Llvm.Libs' 'v6.0.1-msvc-15.8').assets[0]
-        Invoke-WebRequest -UseBasicParsing -Uri $asset.browser_download_url -OutFile 'Downloads\llvm-libs-6.0.1-msvc-15.8.7z'
-    }
+        $releaseName = "$llvmVersion-$compiler-$compilerVersion"
+        $localLlvmLibs7zPath = Join-Path 'Downloads' "llvm-libs-$releaseName.7z"
+        if( !( test-path -PathType Leaf $localLlvmLibs7zPath ) )
+        {
+            $release = Get-GitHubTaggedRelease UbiquityDotNet 'Llvm.Libs' "v$releaseName"
+            if($release)
+            {
+                $asset = (Get-GitHubTaggedRelease UbiquityDotNet 'Llvm.Libs' "v$releaseName").assets[0]
+                Invoke-WebRequest -UseBasicParsing -Uri $asset.browser_download_url -OutFile $localLlvmLibs7zPath
+            }
+            else
+            {
+                throw "Release '$releaseName' not found!"
+            }
+        }
 
-    Expand-Archive 'Downloads\llvm-libs-6.0.1-msvc-15.8.7z' $destPath
+        Expand-Archive $localLlvmLibs7zPath $destPath
+    }
 }
 

@@ -5,8 +5,10 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Llvm.NET.Native;
+using Llvm.NET.Interop;
 using Llvm.NET.Types;
+
+using static Llvm.NET.Interop.NativeMethods;
 
 namespace Llvm.NET.Values
 {
@@ -62,7 +64,7 @@ namespace Llvm.NET.Values
                 valueHandles = new LLVMValueRef[ 1 ];
             }
 
-            var handle = NativeMethods.LLVMConstArray( elementType.GetTypeRef(), out valueHandles[ 0 ], (uint)argCount );
+            var handle = LLVMConstArray( elementType.GetTypeRef(), out valueHandles[ 0 ], (uint)argCount );
             return FromHandle<Constant>( handle );
         }
 

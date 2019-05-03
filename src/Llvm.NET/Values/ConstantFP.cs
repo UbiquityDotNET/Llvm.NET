@@ -2,7 +2,9 @@
 // Copyright (c) .NET Foundation. All rights reserved.
 // </copyright>
 
-using Llvm.NET.Native;
+using Llvm.NET.Interop;
+
+using static Llvm.NET.Interop.NativeMethods;
 
 namespace Llvm.NET.Values
 {
@@ -22,7 +24,7 @@ namespace Llvm.NET.Values
         /// </remarks>
         public double GetValueWithLoss( out bool loosesInfo )
         {
-            return NativeMethods.LLVMConstRealGetDouble( ValueHandle, out loosesInfo );
+            return LLVMConstRealGetDouble( ValueHandle, out loosesInfo );
         }
 
         internal ConstantFP( LLVMValueRef valueRef )

@@ -9,7 +9,7 @@
     Projects importing this property sheet can still override those settings.
 
     Implementation Note:
-        ALL properties defined here should be done conditionally to allow inheriting from
+        ALL properties defined here should be done conditional to allow inheriting from
         a parent. Conditional properties makes this project a well behaved sub module for
         other projects that might want to set the build outputs etc... into a different place.
     -->
@@ -49,14 +49,14 @@
         <IsReleaseBuild Condition="'$(IsReleaseBuild)'=='' AND '$(APPVEYOR_REPO_TAG)'=='true' AND '$(APPVEYOR_PULL_REQUEST_NUMBER)'==''">true</IsReleaseBuild>
         <IsReleaseBuild Condition="'$(IsReleaseBuild)'==''">false</IsReleaseBuild>
         <BuildTimeStamp Condition="'$(BuildTimeStamp)'=='' AND '$(APPVEYOR_REPO_COMMIT_TIMESTAMP)'!=''">$(APPVEYOR_REPO_COMMIT_TIMESTAMP)</BuildTimeStamp>
-        <LlvmVersionMajor Condition="'$(LlvmVersionMajor)'==''">6</LlvmVersionMajor>
+        <LlvmVersionMajor Condition="'$(LlvmVersionMajor)'==''">8</LlvmVersionMajor>
         <LlvmVersionMinor Condition="'$(LlvmVersionMinor)'==''">0</LlvmVersionMinor>
-        <LlvmVersionPatch Condition="'$(LlvmVersionPatch)'==''">1</LlvmVersionPatch>
-        <RuntimeIdentifiers>win-x64</RuntimeIdentifiers>
+        <LlvmVersionPatch Condition="'$(LlvmVersionPatch)'==''">0</LlvmVersionPatch>
+        <!--<RuntimeIdentifiers>win-x64</RuntimeIdentifiers>-->
     </PropertyGroup>
     <Choose>
         <!-- Apply standard analyzers and rule sets for all C# projects -->
-        <When Condition="'$(MSBuildProjectExtension)'=='.csproj'">
+        <When Condition="'$(MSBuildProjectExtension)'=='.csproj' and '$(DisableDirProps)'!='true'">
             <PropertyGroup>
                 <CodeAnalysisRuleSet>$(MSBuildThisFileDirectory)Ubiquity.NET.ruleset</CodeAnalysisRuleSet>
                 <CodeAnalysisIgnoreGeneratedCode>true</CodeAnalysisIgnoreGeneratedCode>
@@ -67,7 +67,9 @@
                  <PackageReference Include="SourceLink.Create.CommandLine" Version="2.8.3" PrivateAssets="All" />
             </ItemGroup>
             <ItemGroup Condition="'$(NoCommonAnalyzers)'!='true'">
-                <PackageReference Include="Microsoft.AnalyzerPowerPack" Version="1.1.0" PrivateAssets="All" />
+                <PackageReference Include="CSemVer.Build.Tasks" Version="2.0.1" />
+                <PackageReference Include="Ubiquity.ArgValidators" Version="6.0.1" />
+                <PackageReference Include="Microsoft.CodeAnalysis.FxCopAnalyzers" Version="2.9.2" PrivateAssets="All" />
                 <PackageReference Include="RefactoringEssentials" Version="5.6.0" PrivateAssets="All" />
                 <PackageReference Include="StyleCop.Analyzers" Version="1.1.0-beta009" PrivateAssets="All" />
                 <AdditionalFiles Include="$(MSBuildThisFileDirectory)stylecop.json" Link="stylecop.json" />

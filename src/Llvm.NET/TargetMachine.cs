@@ -3,11 +3,10 @@
 // </copyright>
 
 using System;
-using Llvm.NET.Native;
+using Llvm.NET.Interop;
 using Llvm.NET.Properties;
 using Ubiquity.ArgValidators;
-
-using static Llvm.NET.Native.NativeMethods;
+using static Llvm.NET.Interop.NativeMethods;
 
 namespace Llvm.NET
 {
@@ -50,12 +49,7 @@ namespace Llvm.NET
             get
             {
                 var handle = LLVMCreateTargetDataLayout( TargetMachineHandle );
-                if( handle == default )
-                {
-                    return null;
-                }
-
-                return DataLayout.FromHandle( handle );
+                return handle == default ? null : DataLayout.FromHandle( handle );
             }
         }
 

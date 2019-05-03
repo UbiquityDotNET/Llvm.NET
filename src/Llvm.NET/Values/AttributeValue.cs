@@ -3,8 +3,10 @@
 // </copyright>
 
 using System;
-using Llvm.NET.Native;
+using Llvm.NET.Interop;
 using Ubiquity.ArgValidators;
+
+using static Llvm.NET.Interop.NativeMethods;
 
 namespace Llvm.NET.Values
 {
@@ -48,39 +50,31 @@ namespace Llvm.NET.Values
         /// <summary>Gets the kind of the attribute</summary>
         /// <value>The <see cref="AttributeKind"/> or <see cref="AttributeKind.None"/> for named attributes</value>
         public AttributeKind Kind
-        {
-            get
-            {
-                if( !NativeMethods.LLVMIsEnumAttribute( NativeAttribute ) )
-                {
-                    return AttributeKind.None;
-                }
-
-                return AttributeKindExtensions.LookupId( NativeMethods.LLVMGetEnumAttributeKind( NativeAttribute ) );
-            }
-        }
+            => !LLVMIsEnumAttribute( NativeAttribute )
+                 ? AttributeKind.None
+                 : AttributeKindExtensions.LookupId( LLVMGetEnumAttributeKind( NativeAttribute ) );
 
         /// <summary>Gets the Name of the attribute</summary>
         public string Name
             => IsString
-                ? NativeMethods.LLVMGetStringAttributeKind( NativeAttribute, out uint _ )
-                : AttributeKindExtensions.LookupId( NativeMethods.LLVMGetEnumAttributeKind( NativeAttribute ) ).GetAttributeName( );
+                ? LLVMGetStringAttributeKind( NativeAttribute, out uint _ )
+                : AttributeKindExtensions.LookupId( LLVMGetEnumAttributeKind( NativeAttribute ) ).GetAttributeName( );
 
         /// <summary>Gets the value for named attributes with values</summary>
         /// <value>The value as a string or <see lang="null"/> if the attribute has no value</value>
-        public string StringValue => !IsString ? null : NativeMethods.LLVMGetStringAttributeValue( NativeAttribute, out uint _ );
+        public string StringValue => !IsString ? null : LLVMGetStringAttributeValue( NativeAttribute, out uint _ );
 
         /// <summary>Gets the Integer value of the attribute or <see lang="null"/> if the attribute doesn't have a value</summary>
-        public UInt64? IntegerValue => IsInt ? NativeMethods.LLVMGetEnumAttributeValue( NativeAttribute ) : ( UInt64? )null;
+        public UInt64? IntegerValue => IsInt ? LLVMGetEnumAttributeValue( NativeAttribute ) : ( UInt64? )null;
 
         /// <summary>Gets a value indicating whether this attribute is a target specific string value</summary>
-        public bool IsString => NativeMethods.LLVMIsStringAttribute( NativeAttribute );
+        public bool IsString => LLVMIsStringAttribute( NativeAttribute );
 
         /// <summary>Gets a value indicating whether this attribute has an integer attribute</summary>
         public bool IsInt => Kind.RequiresIntValue( );
 
         /// <summary>Gets a value indicating whether this attribute is a simple enumeration value</summary>
-        public bool IsEnum => NativeMethods.LLVMIsEnumAttribute( NativeAttribute );
+        public bool IsEnum => LLVMIsEnumAttribute( NativeAttribute );
 
         /// <summary>Tests if the attribute is valid for a <see cref="Value"/> on a given <see cref="FunctionAttributeIndex"/></summary>
         /// <param name="index">Attribute index to test if the attribute is valid on</param>
@@ -121,7 +115,7 @@ namespace Llvm.NET.Values
             }
 
             // for now all string attributes are valid everywhere as they are target dependent
-            // (e.g. no way to verify the validity of an arbitrary without knowing the target)
+            // (e.g. no way to verify the validity of an arbitrary attribute without knowing the target)
             if( IsString )
             {
                 return;
@@ -134,7 +128,7 @@ namespace Llvm.NET.Values
         /// <returns>Attribute as a string</returns>
         public override string ToString( )
         {
-            return NativeMethods.LLVMAttributeToString( NativeAttribute );
+            return LLVMAttributeToString( NativeAttribute );
         }
 
         /// <summary>Tests attributes for equality</summary>

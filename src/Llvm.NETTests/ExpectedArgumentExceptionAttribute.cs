@@ -27,6 +27,10 @@ namespace Llvm.NETTests
 
         public string ExpectedExceptionMessage { get; set; }
 
+        public string ExpectedName { get; }
+
+        public new string NoExceptionMessage => base.NoExceptionMessage;
+
         protected override void Verify( Exception exception )
         {
             Assert.IsNotNull(exception);
@@ -44,6 +48,5 @@ namespace Llvm.NETTests
         }
 
        private const string DefaultWrongExceptionMessage = "The exception that was thrown does not derive from System.ArgumentException.";
-       private readonly string ExpectedName;
     }
 }

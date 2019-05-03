@@ -2,11 +2,11 @@
 // Copyright (c) .NET Foundation. All rights reserved.
 // </copyright>
 
-using System;
-using System.Runtime.InteropServices;
 using JetBrains.Annotations;
-using Llvm.NET.Native;
+using Llvm.NET.Interop;
 using Ubiquity.ArgValidators;
+
+using static Llvm.NET.Interop.NativeMethods;
 
 namespace Llvm.NET.DebugInfo
 {
@@ -42,17 +42,17 @@ namespace Llvm.NET.DebugInfo
         }
 
         /// <summary>Gets the scope for this location</summary>
-        public DILocalScope Scope => FromHandle<DILocalScope>( Context, LLVMGetDILocationScope( MetadataHandle ) );
+        public DILocalScope Scope => FromHandle<DILocalScope>( Context, LLVMDILocationGetScope( MetadataHandle ) );
 
         /// <summary>Gets the line for this location</summary>
-        public uint Line => LLVMGetDILocationLine( MetadataHandle );
+        public uint Line => LLVMDILocationGetLine( MetadataHandle );
 
         /// <summary>Gets the column for this location</summary>
-        public uint Column => LLVMGetDILocationColumn( MetadataHandle );
+        public uint Column => LLVMDILocationGetColumn( MetadataHandle );
 
         /// <summary>Gets the location this location is inlined at</summary>
         [property: CanBeNull]
-        public DILocation InlinedAt => FromHandle<DILocation>( LLVMGetDILocationInlinedAt( MetadataHandle ) );
+        public DILocation InlinedAt => FromHandle<DILocation>( LLVMDILocationGetInlinedAt( MetadataHandle ) );
 
         /// <summary>Gets the scope where this is inlined.</summary>
         /// <remarks>This walks through the <see cref="InlinedAt"/> properties to return
@@ -70,24 +70,5 @@ namespace Llvm.NET.DebugInfo
             : base( handle )
         {
         }
-
-        // ReSharper disable IdentifierTypo
-        [DllImport( NativeMethods.LibraryPath, CallingConvention = CallingConvention.Cdecl, BestFitMapping = false, ThrowOnUnmappableChar = true )]
-        private static extern LLVMMetadataRef /*DILocalScope*/ LLVMGetDILocationScope( LLVMMetadataRef /*DILocation*/ location );
-
-        [DllImport( NativeMethods.LibraryPath, CallingConvention = CallingConvention.Cdecl, BestFitMapping = false, ThrowOnUnmappableChar = true )]
-        private static extern UInt32 LLVMGetDILocationLine( LLVMMetadataRef /*DILocation*/ location );
-
-        [DllImport( NativeMethods.LibraryPath, CallingConvention = CallingConvention.Cdecl, BestFitMapping = false, ThrowOnUnmappableChar = true )]
-        private static extern UInt32 LLVMGetDILocationColumn( LLVMMetadataRef /*DILocation*/ location );
-
-        [DllImport( NativeMethods.LibraryPath, CallingConvention = CallingConvention.Cdecl, BestFitMapping = false, ThrowOnUnmappableChar = true )]
-        private static extern LLVMMetadataRef /*DILocation*/ LLVMGetDILocationInlinedAt( LLVMMetadataRef /*DILocation*/ location );
-
-        [DllImport( NativeMethods.LibraryPath, CallingConvention = CallingConvention.Cdecl, BestFitMapping = false, ThrowOnUnmappableChar = true )]
-        private static extern LLVMMetadataRef /*DILocalScope*/ LLVMDILocationGetInlinedAtScope( LLVMMetadataRef /*DILocation*/ location );
-
-        [DllImport( NativeMethods.LibraryPath, CallingConvention = CallingConvention.Cdecl )]
-        private static extern LLVMMetadataRef LLVMDILocation( LLVMContextRef context, UInt32 Line, UInt32 Column, LLVMMetadataRef scope, LLVMMetadataRef InlinedAt );
     }
 }

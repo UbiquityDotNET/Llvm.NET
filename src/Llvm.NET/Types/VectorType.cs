@@ -3,8 +3,10 @@
 // </copyright>
 
 using System;
-using Llvm.NET.Native;
+using Llvm.NET.Interop;
 using Llvm.NET.Properties;
+
+using static Llvm.NET.Interop.NativeMethods;
 
 // Interface+internal type matches file name
 #pragma warning disable SA1649
@@ -23,12 +25,12 @@ namespace Llvm.NET.Types
         : SequenceType
         , IVectorType
     {
-        public uint Size => NativeMethods.LLVMGetVectorSize( TypeRefHandle );
+        public uint Size => LLVMGetVectorSize( TypeRefHandle );
 
         internal VectorType( LLVMTypeRef typeRef )
             : base( typeRef )
         {
-            if( NativeMethods.LLVMGetTypeKind( typeRef ) != LLVMTypeKind.LLVMVectorTypeKind )
+            if( LLVMGetTypeKind( typeRef ) != LLVMTypeKind.LLVMVectorTypeKind )
             {
                 throw new ArgumentException( Resources.Vector_type_reference_expected, nameof( typeRef ) );
             }

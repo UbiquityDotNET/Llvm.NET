@@ -19,7 +19,7 @@ namespace Llvm.NET.Properties {
     // class via a tool like ResGen or Visual Studio.
     // To add or remove a member, edit your .ResX file then rerun ResGen
     // with the /str option, or rebuild your VS project.
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "15.0.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "16.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     internal class Resources {
@@ -84,6 +84,15 @@ namespace Llvm.NET.Properties {
         internal static string A_pointer_to_a_function_is_required_for_an_indirect_call {
             get {
                 return ResourceManager.GetString("A_pointer_to_a_function_is_required_for_an_indirect_call", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Alignment can only be set for instructions dealing with memory read/write (alloca, load, store).
+        /// </summary>
+        internal static string Alignment_only_allowed_on_memory_instructions {
+            get {
+                return ResourceManager.GetString("Alignment_only_allowed_on_memory_instructions", resourceCulture);
             }
         }
         
@@ -224,15 +233,6 @@ namespace Llvm.NET.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Cannot determine assembly location.
-        /// </summary>
-        internal static string Cannot_determine_assembly_location {
-            get {
-                return ResourceManager.GetString("Cannot_determine_assembly_location", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Cannot determine layout for element; The element must have an explicit layout or the module has a layout to use.
         /// </summary>
         internal static string Cannot_determine_layout_for_element__The_element_must_have_an_explicit_layout_or_the_module_has_a_layout_to_use {
@@ -248,6 +248,15 @@ namespace Llvm.NET.Properties {
         internal static string Cannot_get_element_of_unsized_opaque_structures {
             get {
                 return ResourceManager.GetString("Cannot_get_element_of_unsized_opaque_structures", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Cannot get a Null value for labels, functions and opaque types.
+        /// </summary>
+        internal static string Cannot_get_null_for_labels_and_opaque_types {
+            get {
+                return ResourceManager.GetString("Cannot_get_null_for_labels_and_opaque_types", resourceCulture);
             }
         }
         
@@ -542,8 +551,8 @@ namespace Llvm.NET.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Incompatible types: destination pointer must be of the same type as the value stored.
         ///Types are:
-        ///	Destination: {0}
-        ///	Value: {1}.
+        ///    Destination: {0}
+        ///    Value: {1}.
         /// </summary>
         internal static string Incompatible_types_destination_pointer_must_be_same_type_0_1 {
             get {
@@ -660,17 +669,6 @@ namespace Llvm.NET.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to System error (0x{0:X08}) occurred trying to load DLL {1}.
-        /// Search paths:
-        /// {2}.
-        /// </summary>
-        internal static string LoadWin32Library_Error_0_occured_loading_1_search_paths_2 {
-            get {
-                return ResourceManager.GetString("LoadWin32Library_Error_0_occured_loading_1_search_paths_2", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Location does not describe the function containing the provided instruction.
         /// </summary>
         internal static string Location_does_not_describe_the_function_containing_the_provided_instruction {
@@ -713,15 +711,6 @@ namespace Llvm.NET.Properties {
         internal static string Mismatched_context {
             get {
                 return ResourceManager.GetString("Mismatched_context", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Mismatched LibLLVM version - Expected: {0}.{1}.{2} Actual: {3}.{4}.{5}.
-        /// </summary>
-        internal static string Mismatched_LibLLVM_version_Expected_0_1_2_Actual_3_4_5 {
-            get {
-                return ResourceManager.GetString("Mismatched_LibLLVM_version_Expected_0_1_2_Actual_3_4_5", resourceCulture);
             }
         }
         

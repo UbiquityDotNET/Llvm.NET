@@ -2,7 +2,7 @@
 // Copyright (c) .NET Foundation. All rights reserved.
 // </copyright>
 
-using Llvm.NET.Native;
+using Llvm.NET.Interop;
 
 namespace Llvm.NET
 {

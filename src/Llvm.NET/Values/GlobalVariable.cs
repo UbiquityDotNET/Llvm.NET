@@ -5,8 +5,10 @@
 using System;
 using System.Diagnostics.CodeAnalysis;
 using Llvm.NET.DebugInfo;
-using Llvm.NET.Native;
+using Llvm.NET.Interop;
 using Ubiquity.ArgValidators;
+
+using static Llvm.NET.Interop.NativeMethods;
 
 namespace Llvm.NET.Values
 {
@@ -17,22 +19,22 @@ namespace Llvm.NET.Values
         /// <summary>Gets or sets a value indicating whether this variable is initialized in an external module</summary>
         public bool IsExternallyInitialized
         {
-            get => NativeMethods.LLVMIsExternallyInitialized( ValueHandle );
-            set => NativeMethods.LLVMSetExternallyInitialized( ValueHandle, value );
+            get => LLVMIsExternallyInitialized( ValueHandle );
+            set => LLVMSetExternallyInitialized( ValueHandle, value );
         }
 
         /// <summary>Gets or sets a value indicating whether this global is a Constant</summary>
         public bool IsConstant
         {
-            get => NativeMethods.LLVMIsGlobalConstant( ValueHandle );
-            set => NativeMethods.LLVMSetGlobalConstant( ValueHandle, value );
+            get => LLVMIsGlobalConstant( ValueHandle );
+            set => LLVMSetGlobalConstant( ValueHandle, value );
         }
 
         /// <summary>Gets or sets a value indicating whether this global is stored per thread</summary>
         public bool IsThreadLocal
         {
-            get => NativeMethods.LLVMIsThreadLocal( ValueHandle );
-            set => NativeMethods.LLVMSetThreadLocal( ValueHandle, value );
+            get => LLVMIsThreadLocal( ValueHandle );
+            set => LLVMSetThreadLocal( ValueHandle, value );
         }
 
         /// <summary>Gets or sets the initial value for the variable</summary>
@@ -40,7 +42,7 @@ namespace Llvm.NET.Values
         {
             get
             {
-                var handle = NativeMethods.LLVMGetInitializer( ValueHandle );
+                var handle = LLVMGetInitializer( ValueHandle );
                 if( handle == default )
                 {
                     return null;
@@ -49,7 +51,7 @@ namespace Llvm.NET.Values
                 return FromHandle<Constant>( handle );
             }
 
-            set => NativeMethods.LLVMSetInitializer( ValueHandle, value?.ValueHandle ?? new LLVMValueRef( IntPtr.Zero ) );
+            set => LLVMSetInitializer( ValueHandle, value?.ValueHandle ?? LLVMValueRef.Zero );
         }
 
         /// <summary>Adds a <see cref="DIGlobalVariableExpression"/> for a <see cref="GlobalVariable"/></summary>
@@ -59,11 +61,11 @@ namespace Llvm.NET.Values
         {
             expression.ValidateNotNull( nameof( expression ) );
 
-            NativeMethods.LLVMGlobalVariableAddDebugExpression( ValueHandle, expression.MetadataHandle );
+            LLVMGlobalVariableAddDebugExpression( ValueHandle, expression.MetadataHandle );
         }
 
         /// <summary>Removes the value from its parent module, but does not delete it</summary>
-        public void RemoveFromParent() => NativeMethods.LLVMRemoveGlobalFromParent( ValueHandle );
+        public void RemoveFromParent() => LLVMRemoveGlobalFromParent( ValueHandle );
 
         internal GlobalVariable( LLVMValueRef valueRef )
             : base( valueRef )

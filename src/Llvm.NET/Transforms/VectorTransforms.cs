@@ -2,10 +2,7 @@
 // Copyright (c) .NET Foundation. All rights reserved.
 // </copyright>
 
-using System.Runtime.InteropServices;
-using Llvm.NET.Native;
-
-using static Llvm.NET.Native.NativeMethods;
+using static Llvm.NET.Interop.NativeMethods;
 
 namespace Llvm.NET.Transforms
 {
@@ -33,11 +30,5 @@ namespace Llvm.NET.Transforms
             LLVMAddSLPVectorizePass( passManager.Handle );
             return passManager;
         }
-
-        [DllImport( LibraryPath, CallingConvention = CallingConvention.Cdecl )]
-        private static extern void LLVMAddLoopVectorizePass( LLVMPassManagerRef PM );
-
-        [DllImport( LibraryPath, CallingConvention = CallingConvention.Cdecl )]
-        private static extern void LLVMAddSLPVectorizePass( LLVMPassManagerRef PM );
     }
 }

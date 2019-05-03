@@ -6,9 +6,11 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Llvm.NET.Instructions;
-using Llvm.NET.Native;
+using Llvm.NET.Interop;
 using Llvm.NET.Properties;
 using Ubiquity.ArgValidators;
+
+using static Llvm.NET.Interop.NativeMethods;
 
 namespace Llvm.NET.Values
 {
@@ -310,22 +312,12 @@ namespace Llvm.NET.Values
         /// <returns><see cref="AttributeKind"/> that corresponds to the LLVM id</returns>
         public static AttributeKind LookupId( uint id )
         {
-            if( AttribIdToKindMap.Value.TryGetValue( id, out AttributeKind retValue ) )
-            {
-                return retValue;
-            }
-
-            return AttributeKind.None;
+            return AttribIdToKindMap.Value.TryGetValue( id, out AttributeKind retValue ) ? retValue : AttributeKind.None;
         }
 
         internal static uint GetEnumAttributeId( this AttributeKind kind )
         {
-            if( KindToAttribIdMap.Value.TryGetValue( kind, out uint retVal ) )
-            {
-                return retVal;
-            }
-
-            return 0;
+            return KindToAttribIdMap.Value.TryGetValue( kind, out uint retVal ) ? retVal : 0;
         }
 
         internal static bool CheckAttributeUsage( this AttributeKind kind, FunctionAttributeIndex index, Value value )
@@ -632,7 +624,7 @@ namespace Llvm.NET.Values
         {
             return ( from kind in Enum.GetValues( typeof( AttributeKind ) ).Cast<AttributeKind>( ).Skip( 1 )
                      let name = kind.GetAttributeName( )
-                     select new KeyValuePair<uint, AttributeKind>( NativeMethods.LLVMGetEnumAttributeKindForName( name, ( size_t )name.Length ), kind )
+                     select new KeyValuePair<uint, AttributeKind>( LLVMGetEnumAttributeKindForName( name, ( size_t )name.Length ), kind )
                    ).ToDictionary( kvp => kvp.Key, kvp => kvp.Value );
         }
 

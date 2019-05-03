@@ -4,6 +4,7 @@
 
 using System;
 using Antlr4.Runtime;
+using Ubiquity.ArgValidators;
 
 namespace Kaleidoscope.Grammar
 {
@@ -21,6 +22,7 @@ namespace Kaleidoscope.Grammar
                                , RecognitionException e
                                )
         {
+            recognizer.ValidateNotNull( nameof( recognizer ) );
             Console.ForegroundColor = ConsoleColor.White;
             try
             {

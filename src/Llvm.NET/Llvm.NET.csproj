@@ -1,5 +1,4 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
-
   <PropertyGroup>
     <TargetFrameworks>netstandard2.0;net47</TargetFrameworks>
     <RuntimeIdentifiers>win-x64</RuntimeIdentifiers>
@@ -14,10 +13,10 @@
     <Description>.NET Bindings for LLVM</Description>
     <PackageTags>LLVM,Compiler,JIT</PackageTags>
     <NoPackageAnalysis>true</NoPackageAnalysis>
-    <LangVersion>7.2</LangVersion>
+    <LangVersion>7.3</LangVersion>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <NoCommonAnalyzers>true</NoCommonAnalyzers>
   </PropertyGroup>
-
   <ItemGroup>
     <!--Keep docfx generated OBJ folder junk from cluttering solution view-->
     <Compile Remove="obj\**" />
@@ -33,9 +32,7 @@
     </CodeAnalysisDictionary>
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="CSemVer.Build.Tasks" Version="2.0.1" />
-    <PackageReference Include="System.Memory" Version="4.5.1" />
-    <PackageReference Include="Ubiquity.ArgValidators" Version="6.0.1" />
+    <PackageReference Include="System.Memory" Version="4.5.2" />
   </ItemGroup>
   <ItemGroup>
     <Compile Update="Properties\Resources.Designer.cs">
@@ -57,12 +54,12 @@
     -->
     <When Condition="'$(PackageVersion)'==''">
       <ItemGroup>
-        <PackageReference Include="LibLLVM.NET" Version="[6.0.0-*,7)" />
+        <PackageReference Include="Llvm.NET.Interop" Version="[8.0.0-*,9)" />
       </ItemGroup>
     </When>
     <Otherwise>
       <ItemGroup>
-        <PackageReference Include="LibLLVM.NET" Version="[$(PackageVersion)]" />
+        <PackageReference Include="Llvm.NET.Interop" Version="$(PackageVersion)" />
       </ItemGroup>
     </Otherwise>
   </Choose>

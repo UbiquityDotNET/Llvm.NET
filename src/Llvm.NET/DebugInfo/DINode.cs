@@ -2,10 +2,9 @@
 // Copyright (c) .NET Foundation. All rights reserved.
 // </copyright>
 
-using System.Runtime.InteropServices;
-using Llvm.NET.Native;
+using Llvm.NET.Interop;
 
-using static Llvm.NET.Native.NativeMethods;
+using static Llvm.NET.Interop.NativeMethods;
 
 namespace Llvm.NET.DebugInfo
 {
@@ -14,26 +13,11 @@ namespace Llvm.NET.DebugInfo
         : MDNode
     {
         /// <summary>Gets the Dwarf tag for the node</summary>
-        public Tag Tag
-        {
-            get
-            {
-                if( MetadataHandle == default )
-                {
-                    return (Tag)ushort.MaxValue;
-                }
-
-                return ( Tag )LLVMDIDescriptorGetTag( MetadataHandle );
-            }
-        }
+        public Tag Tag => MetadataHandle == default ? ( Tag )ushort.MaxValue : ( Tag )LLVMDIDescriptorGetTag( MetadataHandle );
 
         internal DINode( LLVMMetadataRef handle )
             : base( handle )
         {
         }
-
-        // ReSharper disable IdentifierTypo
-        [DllImport( LibraryPath, CallingConvention = CallingConvention.Cdecl)]
-        private static extern LLVMDwarfTag LLVMDIDescriptorGetTag( LLVMMetadataRef descriptor );
     }
 }

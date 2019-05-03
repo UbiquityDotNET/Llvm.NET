@@ -5,12 +5,11 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using System.Runtime.InteropServices;
-using Llvm.NET.Native;
+using Llvm.NET.Interop;
 using Llvm.NET.Values;
 using Ubiquity.ArgValidators;
 
-using CallingConvention = System.Runtime.InteropServices.CallingConvention;
+using static Llvm.NET.Interop.NativeMethods;
 
 namespace Llvm.NET
 {
@@ -157,21 +156,5 @@ namespace Llvm.NET
 
         private readonly BitcodeModule Module;
         private readonly Dictionary<string, Comdat> InternalComdatMap = new Dictionary<string, Comdat>( );
-
-        [DllImport( NativeMethods.LibraryPath, CallingConvention = CallingConvention.Cdecl, BestFitMapping = false, ThrowOnUnmappableChar = true )]
-        private static extern LLVMComdatRef LLVMModuleInsertOrUpdateComdat( LLVMModuleRef module, [MarshalAs( UnmanagedType.LPStr )] string name, LLVMComdatSelectionKind kind );
-
-        [DllImport( NativeMethods.LibraryPath, CallingConvention = CallingConvention.Cdecl )]
-        private static extern void LLVMModuleComdatRemove( LLVMModuleRef module, LLVMComdatRef comdatRef );
-
-        [DllImport( NativeMethods.LibraryPath, CallingConvention = CallingConvention.Cdecl )]
-        private static extern void LLVMModuleComdatClear( LLVMModuleRef module );
-
-        [UnmanagedFunctionPointer( CallingConvention.Cdecl, BestFitMapping = false, ThrowOnUnmappableChar = true )]
-        [return: MarshalAs( UnmanagedType.Bool )]
-        private delegate bool ComdatIteratorCallback( LLVMComdatRef comdatRef );
-
-        [DllImport( NativeMethods.LibraryPath, CallingConvention = CallingConvention.Cdecl )]
-        private static extern void LLVMModuleEnumerateComdats( LLVMModuleRef module, ComdatIteratorCallback callback );
     }
 }

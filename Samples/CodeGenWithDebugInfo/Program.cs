@@ -13,11 +13,12 @@ using Llvm.NET.Transforms;
 using Llvm.NET.Types;
 using Llvm.NET.Values;
 
-using static Llvm.NET.StaticState;
+using static Llvm.NET.Interop.Library;
 
 [assembly: SuppressMessage( "StyleCop.CSharp.DocumentationRules", "SA1652:Enable XML documentation output", Justification = "Sample application" )]
 
 #pragma warning disable SA1512, SA1513, SA1515 // single line comments used to tag regions for extraction into docs
+#pragma warning disable CA1506 // warning CA1506: 'Main' is coupled with '51' different types from '12' different namespaces. Rewrite or refactor the code to decrease its class coupling below '41'.
 
 namespace TestDebugInfo
 {
@@ -51,7 +52,7 @@ namespace TestDebugInfo
             using( InitializeLLVM() )
             {
                 #region TargetDetailsSelection
-                switch( args[ 0 ] )
+                switch( args[ 0 ].ToUpperInvariant() )
                 {
                 case "M3":
                     TargetDetails = new CortexM3Details( );
@@ -71,7 +72,7 @@ namespace TestDebugInfo
 
                 #region CreatingModule
                 using( var context = new Context( ) )
-                using( var module = context.CreateBitcodeModule( moduleName, SourceLanguage.CSharp, srcPath, VersionIdentString ) )
+                using( var module = context.CreateBitcodeModule( moduleName, SourceLanguage.C99, srcPath, VersionIdentString ) )
                 {
                     module.SourceFileName = Path.GetFileName( srcPath );
                     module.TargetTriple = TargetDetails.TargetMachine.Triple;
@@ -329,9 +330,9 @@ namespace TestDebugInfo
                                        );
             }
 
-            var loadedDst = instBuilder.Load( dstAddr )
-                                       .Alignment( ptrAlign )
-                                       .SetDebugLocation( 15, 6, copyFunc.DISubProgram );
+            var loadedDst = instBuilder.SetDebugLocation( 15, 6, copyFunc.DISubProgram )
+                                       .Load( dstAddr )
+                                       .Alignment( ptrAlign );
 
             instBuilder.SetDebugLocation( 15, 13, copyFunc.DISubProgram );
             var dstPtr = instBuilder.BitCast( loadedDst, module.Context.Int8Type.CreatePointerType( ) );
@@ -341,12 +342,10 @@ namespace TestDebugInfo
             instBuilder.MemCpy( dstPtr
                               , srcPtr
                               , module.Context.CreateConstant( pointerSize, module.Layout.ByteSizeOf( foo ), false )
-                              , ( int )module.Layout.AbiAlignmentOf( foo )
                               , false
                               );
-
-            instBuilder.Return( )
-                       .SetDebugLocation( 16, 1, copyFunc.DISubProgram );
+            instBuilder.SetDebugLocation( 16, 1, copyFunc.DISubProgram )
+                       .Return( );
         }
 
         private static void CreateDoCopyFunctionBody( BitcodeModule module
@@ -380,22 +379,21 @@ namespace TestDebugInfo
                 instBuilder.MemCpy( bitCastDst
                                   , bitCastSrc
                                   , module.Context.CreateConstant( module.Layout.ByteSizeOf( foo ) )
-                                  , ( int )module.Layout.CallFrameAlignmentOf( foo )
                                   , false
                                   );
 
-                instBuilder.Call( copyFunc, dstAddr, baz )
-                           .SetDebugLocation( 25, 5, doCopyFunc.DISubProgram );
+                instBuilder.SetDebugLocation( 25, 5, doCopyFunc.DISubProgram )
+                           .Call( copyFunc, dstAddr, baz );
             }
             else
             {
-                instBuilder.Call( copyFunc, bar, baz )
-                           .SetDebugLocation( 25, 5, doCopyFunc.DISubProgram )
+                instBuilder.SetDebugLocation( 25, 5, doCopyFunc.DISubProgram )
+                           .Call( copyFunc, bar, baz )
                            .AddAttributes( FunctionAttributeIndex.Parameter0, copyFunc.Parameters[0].Attributes );
             }
 
-            instBuilder.Return( )
-                       .SetDebugLocation( 26, 1, doCopyFunc.DISubProgram );
+            instBuilder.SetDebugLocation( 26, 1, doCopyFunc.DISubProgram )
+                       .Return( );
         }
 
         // obviously this is not clang but using an identical name helps in comparisons with actual clang output

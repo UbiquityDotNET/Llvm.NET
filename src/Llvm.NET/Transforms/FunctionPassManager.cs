@@ -2,9 +2,9 @@
 // Copyright (c) .NET Foundation. All rights reserved.
 // </copyright>
 
-using Llvm.NET.Values;
+using static Llvm.NET.Interop.NativeMethods;
 
-using static Llvm.NET.Native.NativeMethods;
+using Function = Llvm.NET.Values.Function;
 
 namespace Llvm.NET.Transforms
 {

@@ -8,7 +8,7 @@ using Llvm.NET;
 using Llvm.NET.Types;
 using Llvm.NET.Values;
 
-using static Llvm.NET.StaticState;
+using static Llvm.NET.Interop.Library;
 
 namespace TestDebugInfo
 {

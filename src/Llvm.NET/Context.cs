@@ -6,19 +6,16 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
-using System.Runtime.InteropServices;
 using System.Text;
 using JetBrains.Annotations;
 using Llvm.NET.DebugInfo;
-using Llvm.NET.JIT;
-using Llvm.NET.Native;
+using Llvm.NET.Interop;
 using Llvm.NET.Properties;
 using Llvm.NET.Types;
 using Llvm.NET.Values;
 using Ubiquity.ArgValidators;
 
-using static Llvm.NET.Native.NativeMethods;
-using CallingConvention = System.Runtime.InteropServices.CallingConvention;
+using static Llvm.NET.Interop.NativeMethods;
 
 namespace Llvm.NET
 {
@@ -49,9 +46,6 @@ namespace Llvm.NET
             : this( LLVMContextCreate( ) )
         {
         }
-
-        /// <inheritdoc/>
-        public override bool IsDisposed => ContextHandle.IsClosed;
 
         /// <summary>Gets the LLVM void type for this context</summary>
         public ITypeRef VoidType => TypeRef.FromHandle( LLVMVoidTypeInContext( ContextHandle ) );
@@ -723,19 +717,12 @@ namespace Llvm.NET
             return AttributeValue.FromHandle( this, handle );
         }
 
-        /// <summary>Create a named <see cref="BasicBlock"/> in a given context</summary>
+        /// <summary>Create a named <see cref="BasicBlock"/> without inserting it into a function</summary>
         /// <param name="name">Name of the block to create</param>
-        /// <param name="parentFunction">Parent function (or <see lang="null"/> if no parent)</param>
-        /// <param name="insertBefore">Optional block to insert the new block in front of</param>
         /// <returns><see cref="BasicBlock"/> created</returns>
-        public BasicBlock CreateBasicBlock( string name, [CanBeNull] Function parentFunction = null, [CanBeNull] BasicBlock insertBefore = null )
+        public BasicBlock CreateBasicBlock( string name )
         {
-            return BasicBlock.FromHandle( LLVMContextCreateBasicBlock( ContextHandle
-                                                                     , name
-                                                                     , parentFunction?.ValueHandle ?? default
-                                                                     , insertBefore?.BlockHandle ?? default
-                                                                     )
-                                        );
+            return BasicBlock.FromHandle( LLVMCreateBasicBlockInContext( ContextHandle, name ) );
         }
 
         /// <inheritdoc/>
@@ -760,6 +747,7 @@ namespace Llvm.NET
                                                 , uint runtimeVersion = 0
                                                 )
         {
+
             return ModuleCache.CreateBitcodeModule( moduleId, language, srcFilePath, producer, optimized, compilationFlags, runtimeVersion );
         }
 
@@ -837,14 +825,6 @@ namespace Llvm.NET
             return ValueCache.GetOrCreateItem( valueRef );
         }
 
-#pragma warning disable CS0618 // Type or member is obsolete
-        internal LegacyExecutionEngine GetEngineFor( LLVMExecutionEngineRef h )
-        {
-            h.ValidateNotDefault( nameof( h ) );
-            return EngineCache.GetOrCreateItem( h );
-        }
-#pragma warning restore CS0618 // Type or member is obsolete
-
         internal LlvmMetadata GetNodeFor( LLVMMetadataRef handle )
         {
             handle.ValidateNotDefault( nameof( handle ) );
@@ -861,12 +841,9 @@ namespace Llvm.NET
         {
             ContextHandle = contextRef;
             ContextCache.Add( this );
-            ActiveHandler = new WrappedNativeCallback( new LLVMDiagnosticHandler( DiagnosticHandler ) );
-            LLVMContextSetDiagnosticHandler( ContextHandle, ActiveHandler.NativeFuncPtr, IntPtr.Zero );
+            ActiveHandler = new WrappedNativeCallback<LLVMDiagnosticHandler>( DiagnosticHandler );
+            LLVMContextSetDiagnosticHandler( ContextHandle, ActiveHandler, IntPtr.Zero );
             ValueCache = new ValueCache( this );
-#pragma warning disable CS0618 // Type or member is obsolete
-            EngineCache = new LegacyExecutionEngine.InterningFactory( this );
-#pragma warning restore CS0618 // Type or member is obsolete
             ModuleCache = new BitcodeModule.InterningFactory( this );
             TypeCache = new TypeRef.InterningFactory( this );
             AttributeValueCache = new AttributeValue.InterningFactory( this );
@@ -874,7 +851,7 @@ namespace Llvm.NET
         }
 
         /// <inheritdoc />
-        protected override void InternalDispose( bool disposing )
+        protected override void Dispose( bool disposing )
         {
             // disconnect all modules as some may be shared modules shared to a JIT
             foreach( var module in Modules )
@@ -882,12 +859,7 @@ namespace Llvm.NET
                 module.Dispose( );
             }
 
-            // make sure engines are disposed before disposing the context
-            // as they hold on to all owned Modules, which are ultimately destroyed
-            // when the context is, so when the GC finalizes the execution engine
-            // the modules are already destroyed triggering a double free.
-            EngineCache.Clear( );
-            LLVMContextSetDiagnosticHandler( ContextHandle, IntPtr.Zero, IntPtr.Zero );
+            LLVMContextSetDiagnosticHandler( ContextHandle, null, IntPtr.Zero );
             ActiveHandler.Dispose( );
 
             ContextCache.Remove( ContextHandle );
@@ -903,50 +875,13 @@ namespace Llvm.NET
             Debug.Assert( level != LLVMDiagnosticSeverity.LLVMDSError, Resources.Assert_Unexpected_Debug_state );
         }
 
-        private readonly WrappedNativeCallback ActiveHandler;
+        private readonly  WrappedNativeCallback<LLVMDiagnosticHandler> ActiveHandler;
 
         // child item wrapper factories
         private readonly ValueCache ValueCache;
-#pragma warning disable CS0618 // Type or member is obsolete
-        private readonly LegacyExecutionEngine.InterningFactory EngineCache;
-#pragma warning restore CS0618 // Type or member is obsolete
         private readonly BitcodeModule.InterningFactory ModuleCache;
         private readonly TypeRef.InterningFactory TypeCache;
         private readonly AttributeValue.InterningFactory AttributeValueCache;
         private readonly LlvmMetadata.InterningFactory MetadataCache;
-
-        // ReSharper disable IdentifierTypo
-        [DllImport( LibraryPath, CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi, ThrowOnUnmappableChar = true, BestFitMapping = false )]
-        private static extern LLVMBasicBlockRef LLVMContextCreateBasicBlock( LLVMContextRef context
-                                                                           , [MarshalAs( UnmanagedType.LPStr )] string name
-                                                                           , LLVMValueRef /*Function*/ function
-                                                                           , LLVMBasicBlockRef insertBefore
-                                                                           );
-
-        [DllImport( LibraryPath, CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi, ThrowOnUnmappableChar = true, BestFitMapping = false )]
-        private static extern uint LLVMGetMDKindIDInContext( LLVMContextRef C, [MarshalAs( UnmanagedType.LPStr )] string Name, uint SLen );
-
-        [DllImport( LibraryPath, CallingConvention = CallingConvention.Cdecl )]
-        [return: MarshalAs( UnmanagedType.Bool )]
-        private static extern bool LLVMContextGetIsODRUniquingDebugTypes( LLVMContextRef context );
-
-        [DllImport( LibraryPath, CallingConvention = CallingConvention.Cdecl )]
-        private static extern void LLVMContextSetIsODRUniquingDebugTypes( LLVMContextRef context, [MarshalAs( UnmanagedType.Bool )] bool state );
-
-        [DllImport( LibraryPath, CallingConvention = CallingConvention.Cdecl, BestFitMapping = false, ThrowOnUnmappableChar = true )]
-
-        private static extern LLVMMetadataRef LLVMMDString2( LLVMContextRef C, [MarshalAs( UnmanagedType.LPStr )] string Str, UInt32 SLen );
-
-        [DllImport( LibraryPath, CallingConvention = CallingConvention.Cdecl )]
-        private static extern LLVMMetadataRef LLVMMDNode2( LLVMContextRef C, out LLVMMetadataRef MDs, UInt32 Count );
-
-        // ReSharper disable CommentTypo
-        /*[DllImport( LibraryPath, CallingConvention = CallingConvention.Cdecl )]
-        //private static extern LLVMMetadataRef LLVMTemporaryMDNode( LLVMContextRef C, out LLVMMetadataRef MDs, UInt32 Count );
-
-        //[DllImport( LibraryPath, CallingConvention = CallingConvention.Cdecl, BestFitMapping = false, ThrowOnUnmappableChar = true )]
-        //[return: MarshalAs( UnmanagedType.Bool )]
-        //private static extern bool LLVMRunPassPipeline( LLVMContextRef context, LLVMModuleRef M, LLVMTargetMachineRef TM, [MarshalAs( UnmanagedType.LPStr )] string passPipeline, LLVMOptVerifierKind VK, [MarshalAs( UnmanagedType.Bool )] bool ShouldPreserveAssemblyUseListOrder, [MarshalAs( UnmanagedType.Bool )] bool ShouldPreserveBitcodeUseListOrder );
-        */
     }
 }

@@ -4,6 +4,8 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
+using Llvm.NET.Interop;
 
 namespace Llvm.NET
 {
@@ -19,6 +21,7 @@ namespace Llvm.NET
     /// or <see cref="Instructions.Alloca"/> to allow a code generator to track a value or mutable variable
     /// with the source name in multiple scope layers.</para>
     /// </remarks>
+    [SuppressMessage( "Naming", "CA1711:Identifiers should not have incorrect suffix", Justification = "Semantically this type *is* a Stack" )]
     public class ScopeStack<T>
     {
         /// <summary>Initializes a new instance of the <see cref="ScopeStack{T}"/> class.</summary>

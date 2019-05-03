@@ -1,17 +1,17 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <root>
-  <!-- 
-    Microsoft ResX Schema 
-    
+  <!--
+    Microsoft ResX Schema
+
     Version 2.0
-    
-    The primary goals of this format is to allow a simple XML format 
-    that is mostly human readable. The generation and parsing of the 
-    various data types are done through the TypeConverter classes 
+
+    The primary goals of this format is to allow a simple XML format
+    that is mostly human readable. The generation and parsing of the
+    various data types are done through the TypeConverter classes
     associated with the data types.
-    
+
     Example:
-    
+
     ... ado.net/XML headers & schema ...
     <resheader name="resmimetype">text/microsoft-resx</resheader>
     <resheader name="version">2.0</resheader>
@@ -26,36 +26,36 @@
         <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
         <comment>This is a comment</comment>
     </data>
-                
-    There are any number of "resheader" rows that contain simple 
+
+    There are any number of "resheader" rows that contain simple
     name/value pairs.
-    
-    Each data row contains a name, and value. The row also contains a 
-    type or mimetype. Type corresponds to a .NET class that support 
-    text/value conversion through the TypeConverter architecture. 
-    Classes that don't support this are serialized and stored with the 
+
+    Each data row contains a name, and value. The row also contains a
+    type or mimetype. Type corresponds to a .NET class that support
+    text/value conversion through the TypeConverter architecture.
+    Classes that don't support this are serialized and stored with the
     mimetype set.
-    
-    The mimetype is used for serialized objects, and tells the 
-    ResXResourceReader how to depersist the object. This is currently not 
+
+    The mimetype is used for serialized objects, and tells the
+    ResXResourceReader how to depersist the object. This is currently not
     extensible. For a given mimetype the value must be set accordingly:
-    
-    Note - application/x-microsoft.net.object.binary.base64 is the format 
-    that the ResXResourceWriter will generate, however the reader can 
+
+    Note - application/x-microsoft.net.object.binary.base64 is the format
+    that the ResXResourceWriter will generate, however the reader can
     read any of the formats listed below.
-    
+
     mimetype: application/x-microsoft.net.object.binary.base64
-    value   : The object must be serialized with 
+    value   : The object must be serialized with
             : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
             : and then encoded with base64 encoding.
-    
+
     mimetype: application/x-microsoft.net.object.soap.base64
-    value   : The object must be serialized with 
+    value   : The object must be serialized with
             : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
             : and then encoded with base64 encoding.
 
     mimetype: application/x-microsoft.net.object.bytearray.base64
-    value   : The object must be serialized into a byte array 
+    value   : The object must be serialized into a byte array
             : using a System.ComponentModel.TypeConverter
             : and then encoded with base64 encoding.
     -->
@@ -213,12 +213,6 @@
   </data>
   <data name="start_plus_length_exceeds_size_of_buffer" xml:space="preserve">
     <value>start + length exceeds size of buffer</value>
-  </data>
-  <data name="Cannot_determine_assembly_location" xml:space="preserve">
-    <value>Cannot determine assembly location</value>
-  </data>
-  <data name="Mismatched_LibLLVM_version_Expected_0_1_2_Actual_3_4_5" xml:space="preserve">
-    <value>Mismatched LibLLVM version - Expected: {0}.{1}.{2} Actual: {3}.{4}.{5}</value>
   </data>
   <data name="Triple_specified_for_the_module_doesn_t_match_target_machine" xml:space="preserve">
     <value>Triple specified for the module doesn't match target machine</value>
@@ -403,8 +397,8 @@
   <data name="Incompatible_types_destination_pointer_must_be_same_type_0_1" xml:space="preserve">
     <value>Incompatible types: destination pointer must be of the same type as the value stored.
 Types are:
-	Destination: {0}
-	Value: {1}</value>
+    Destination: {0}
+    Value: {1}</value>
   </data>
   <data name="0_is_not_a_valid_option" xml:space="preserve">
     <value>'{0}' is not a valid option</value>
@@ -484,9 +478,10 @@ Types are:
   <data name="Assert_Should_not_get_a_null_pointer_from_LLVM" xml:space="preserve">
     <value>Should not get a null pointer from LLVM</value>
   </data>
-    <data name="LoadWin32Library_Error_0_occured_loading_1_search_paths_2" xml:space="preserve">
-    <value>System error (0x{0:X08}) occurred trying to load DLL {1}.
- Search paths:
- {2}</value>
+  <data name="Cannot_get_null_for_labels_and_opaque_types" xml:space="preserve">
+    <value>Cannot get a Null value for labels, functions and opaque types</value>
+  </data>
+  <data name="Alignment_only_allowed_on_memory_instructions" xml:space="preserve">
+    <value>Alignment can only be set for instructions dealing with memory read/write (alloca, load, store)</value>
   </data>
 </root>

@@ -3,7 +3,9 @@
 // </copyright>
 
 using System;
-using Llvm.NET.Native;
+using Llvm.NET.Interop;
+
+using static Llvm.NET.Interop.NativeMethods;
 
 namespace Llvm.NET.Values
 {
@@ -21,7 +23,7 @@ namespace Llvm.NET.Values
         : ConstantData
     {
         /// <summary>Gets a value indicating whether this constant is a string</summary>
-        public bool IsString => NativeMethods.LLVMIsConstantString( ValueHandle );
+        public bool IsString => LLVMIsConstantString( ValueHandle );
 
         /// <summary>Extract a string value from the constant</summary>
         /// <returns>Extracted string</returns>
@@ -33,7 +35,7 @@ namespace Llvm.NET.Values
                 throw new InvalidOperationException( "Value is not a string" );
             }
 
-            return NativeMethods.LLVMGetAsString( ValueHandle, out size_t _ );
+            return LLVMGetAsString( ValueHandle, out size_t _ );
         }
 
         internal ConstantDataSequential( LLVMValueRef valueRef )

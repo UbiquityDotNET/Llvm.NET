@@ -1,4 +1,4 @@
-<Project>
+<Project InitialTargets="ShowBuildParameters">
   <!--
   Since Nuget.config is configured to include the build output location this
   will ensure the folder exists during restore so that it won't fail.
@@ -13,7 +13,7 @@
       <NuspecProperties Condition="'$(NuspecFile)'!=''" >version=$(PackageVersion);llvmversion=$(LlvmVersion);buildbinoutput=$(BaseOutputPath);configuration=$(Configuration);$(NuspecProperties)</NuspecProperties>
     </PropertyGroup>
   </Target>
-  
+
   <!-- Download nuget.exe if it isn't found-->
   <Target Name="_DownloadNugetExe" >
     <MakeDir Directories="$(PackageOutputPath)" Condition="!EXISTS('$(PackageOutputPath')" />
@@ -53,7 +53,7 @@
     <MakeDir Directories="$(PackageOutputPath)"/>
   </Target>
 
-  <Target Name="ShowBuildParams" BeforeTargets="Build;Pack">
+  <Target Name="ShowBuildParameters">
     <Message Importance="normal" Text="              BuildRootDir: $(BuildRootDir)" />
     <Message Importance="normal" Text="       BaseBuildOutputPath: $(BaseBuildOutputPath)" />
     <Message Importance="normal" Text="BaseIntermediateOutputPath: $(BaseIntermediateOutputPath)" />
@@ -63,5 +63,7 @@
     <Message Importance="normal" Text="            PackageVersion: $(PackageVersion)"/>
     <Message Importance="normal" Text="               FileVersion: $(FileVersion)"/>
     <Message Importance="normal" Text="               LlvmVersion: $(LlvmVersion)"/>
+    <Message Importance="normal" Text="                  Platform: $(Platform)"/>
+    <Message Importance="normal" Text="             Configuration: $(Configuration)"/>
   </Target>
 </Project>

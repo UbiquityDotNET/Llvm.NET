@@ -5,11 +5,11 @@
 using System;
 using System.Diagnostics.CodeAnalysis;
 using System.Runtime.InteropServices;
-using Llvm.NET.Native;
+using Llvm.NET.Interop;
 using Llvm.NET.Properties;
 using Ubiquity.ArgValidators;
 
-using static Llvm.NET.Native.NativeMethods;
+using static Llvm.NET.Interop.NativeMethods;
 
 namespace Llvm.NET
 {
@@ -30,24 +30,13 @@ namespace Llvm.NET
         }
 
         /// <summary>Gets the size of the buffer</summary>
-        public int Size
-        {
-            get
-            {
-                if( BufferHandle == default )
-                {
-                    return 0;
-                }
-
-                return LLVMGetBufferSize( BufferHandle ).Pointer.ToInt32();
-            }
-        }
+        public int Size => BufferHandle == default ? 0 : ( int )LLVMGetBufferSize( BufferHandle );
 
         /// <summary>Gets an array of bytes from the buffer</summary>
         /// <returns>Array of bytes copied from the buffer</returns>
         public byte[] ToArray()
         {
-            var bufferStart = LLVMGetBufferStart( BufferHandle );
+            IntPtr bufferStart = LLVMGetBufferStart( BufferHandle );
             byte[ ] retVal = new byte[ Size ];
             Marshal.Copy( bufferStart, retVal, 0, Size );
             return retVal;
@@ -101,35 +90,5 @@ namespace Llvm.NET
                         )
         ]
         private readonly WriteOnce<LLVMMemoryBufferRef> BufferHandle_ = new WriteOnce<LLVMMemoryBufferRef>();
-
-        [DllImport( LibraryPath, CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi, ThrowOnUnmappableChar = true, BestFitMapping = false )]
-        private static extern LLVMStatus LLVMCreateMemoryBufferWithContentsOfFile( [MarshalAs( UnmanagedType.LPStr )] string Path
-                                                                                 , out LLVMMemoryBufferRef OutMemBuf
-                                                                                 , [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( StringMarshaler ), MarshalCookie = "DisposeMessage" )]out string OutMessage
-                                                                                 );
-        /*
-        [DllImport( LibraryPath, CallingConvention = CallingConvention.Cdecl )]
-        private static extern LLVMStatus LLVMCreateMemoryBufferWithSTDIN( out LLVMMemoryBufferRef OutMemBuf, out IntPtr OutMessage );
-
-
-        [DllImport( LibraryPath, CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi, ThrowOnUnmappableChar = true, BestFitMapping = false )]
-        private static extern LLVMMemoryBufferRef LLVMCreateMemoryBufferWithMemoryRange( [MarshalAs( UnmanagedType.LPStr )] string InputData
-                                                                                       , size_t InputDataLength
-                                                                                       , [MarshalAs( UnmanagedType.LPStr )] string BufferName
-                                                                                       , [MarshalAs( UnmanagedType.Bool )]bool RequiresNullTerminator
-                                                                                       );
-
-        [DllImport( LibraryPath, CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi, ThrowOnUnmappableChar = true, BestFitMapping = false )]
-        private static extern LLVMMemoryBufferRef LLVMCreateMemoryBufferWithMemoryRangeCopy( [MarshalAs( UnmanagedType.LPStr )] string InputData
-                                                                                           , size_t InputDataLength
-                                                                                           , [MarshalAs( UnmanagedType.LPStr )] string BufferName
-                                                                                           );
-        */
-
-        [DllImport( LibraryPath, CallingConvention = CallingConvention.Cdecl )]
-        private static extern IntPtr LLVMGetBufferStart( LLVMMemoryBufferRef MemBuf );
-
-        [DllImport( LibraryPath, CallingConvention = CallingConvention.Cdecl )]
-        private static extern size_t LLVMGetBufferSize( LLVMMemoryBufferRef MemBuf );
     }
 }

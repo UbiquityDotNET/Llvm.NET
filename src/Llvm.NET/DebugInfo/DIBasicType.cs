@@ -2,15 +2,14 @@
 // Copyright (c) .NET Foundation. All rights reserved.
 // </copyright>
 
-using System.Runtime.InteropServices;
-using Llvm.NET.Native;
+using Llvm.NET.Interop;
 
-using static Llvm.NET.Native.NativeMethods;
+using static Llvm.NET.Interop.NativeMethods;
 
 namespace Llvm.NET.DebugInfo
 {
     /// <summary>Debug information for a basic type</summary>
-    /// <seealso cref="Llvm.NET.DebugInfo.DebugInfoBuilder.CreateBasicType(string, ulong, DiTypeKind)"/>
+    /// <seealso cref="Llvm.NET.DebugInfo.DebugInfoBuilder.CreateBasicType(string, ulong, DiTypeKind, DebugInfoFlags)"/>
     /// <seealso href="xref:llvm_langref#dibasictype">LLVM DIBasicType</seealso>
     public class DIBasicType
         : DIType
@@ -24,9 +23,5 @@ namespace Llvm.NET.DebugInfo
             : base( handle )
         {
         }
-
-        // ReSharper disable IdentifierTypo
-        [DllImport( LibraryPath, CallingConvention = CallingConvention.Cdecl )]
-        private static extern uint LLVMDIBasicTypeGetEncoding( LLVMMetadataRef /*DIBasicType*/ basicType );
     }
 }

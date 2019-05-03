@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.27130.2036
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.28714.193
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Llvm.NET", "Llvm.NET\Llvm.NET.csproj", "{0162C8CE-6641-4922-8664-F8A44356FBF7}"
 EndProject
@@ -44,10 +44,10 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Repo Items", "Repo Items", 
 		..\CODE_OF_CONDUCT.md = ..\CODE_OF_CONDUCT.md
 		..\Directory.Build.props = ..\Directory.Build.props
 		..\Directory.Build.targets = ..\Directory.Build.targets
+		..\global.json = ..\global.json
 		..\GOVERNANCE.md = ..\GOVERNANCE.md
 		..\Invoke-UnitTests.ps1 = ..\Invoke-UnitTests.ps1
 		..\LICENSE.md = ..\LICENSE.md
-		Llvm.NET.sln.DotSettings = Llvm.NET.sln.DotSettings
 		..\NuGet.Config = ..\NuGet.Config
 		..\Push-Docs.ps1 = ..\Push-Docs.ps1
 		..\README.md = ..\README.md

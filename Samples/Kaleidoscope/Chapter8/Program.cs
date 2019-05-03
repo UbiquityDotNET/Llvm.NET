@@ -11,7 +11,7 @@ using Kaleidoscope.Runtime;
 using Llvm.NET;
 
 using static Kaleidoscope.Runtime.Utilities;
-using static Llvm.NET.StaticState;
+using static Llvm.NET.Interop.Library;
 
 [assembly: SuppressMessage( "StyleCop.CSharp.DocumentationRules", "SA1652:Enable XML documentation output", Justification = "Sample application" )]
 #pragma warning disable SA1512, SA1513, SA1515 // single line comments used to tag regions for extraction into docs
@@ -51,7 +51,7 @@ namespace Kaleidoscope.Chapter8
                 RegisterNative( );
 
                 var machine = new TargetMachine( Triple.HostTriple );
-                var parser = new ParserStack( LanguageLevel.MutableVariables );
+                var parser = new Parser( LanguageLevel.MutableVariables );
                 using( var generator = new CodeGenerator( parser.GlobalState, machine ) )
                 {
                     Console.WriteLine( "Llvm.NET Kaleidoscope Compiler - {0}", parser.LanguageLevel );
@@ -95,7 +95,7 @@ namespace Kaleidoscope.Chapter8
             string sourceFilePath = string.Empty;
             foreach( string arg in args )
             {
-                if( string.Compare( arg, "waitfordebugger", StringComparison.InvariantCultureIgnoreCase ) == 0 )
+                if( string.Compare( arg, "waitfordebugger", StringComparison.OrdinalIgnoreCase ) == 0 )
                 {
                     waitForDebugger = true;
                 }

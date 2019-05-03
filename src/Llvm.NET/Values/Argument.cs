@@ -4,8 +4,10 @@
 
 using System.Collections.Generic;
 using JetBrains.Annotations;
-using Llvm.NET.Native;
+using Llvm.NET.Interop;
 using Ubiquity.ArgValidators;
+
+using static Llvm.NET.Interop.NativeMethods;
 
 namespace Llvm.NET.Values
 {
@@ -14,10 +16,10 @@ namespace Llvm.NET.Values
         : Value
     {
         /// <summary>Gets the function this argument belongs to</summary>
-        public Function ContainingFunction => FromHandle<Function>( NativeMethods.LLVMGetParamParent( ValueHandle ) );
+        public Function ContainingFunction => FromHandle<Function>( LLVMGetParamParent( ValueHandle ) );
 
         /// <summary>Gets the zero based index of the argument</summary>
-        public uint Index => NativeMethods.LLVMGetArgumentIndex( ValueHandle );
+        public uint Index => LLVMGetArgumentIndex( ValueHandle );
 
         /// <summary>Sets the alignment for the argument</summary>
         /// <param name="value">Alignment value for this argument</param>

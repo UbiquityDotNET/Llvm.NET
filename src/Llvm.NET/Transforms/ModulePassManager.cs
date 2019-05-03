@@ -1,8 +1,7 @@
 ﻿// <copyright file="ModulePassManager.cs" company=".NET Foundation">
 // Copyright (c) .NET Foundation. All rights reserved.
 // </copyright>
-
-using static Llvm.NET.Native.NativeMethods;
+using static Llvm.NET.Interop.NativeMethods;
 
 namespace Llvm.NET.Transforms
 {

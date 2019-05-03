@@ -4,7 +4,9 @@
 
 using System.Collections.Generic;
 using System.Linq;
-using Llvm.NET.Native;
+using Llvm.NET.Interop;
+
+using static Llvm.NET.Interop.NativeMethods;
 
 // Interface+internal type matches file name
 #pragma warning disable SA1649
@@ -31,24 +33,24 @@ namespace Llvm.NET.Types
         , IFunctionType
     {
         /// <inheritdoc/>
-        public bool IsVarArg => NativeMethods.LLVMIsFunctionVarArg( TypeRefHandle );
+        public bool IsVarArg => LLVMIsFunctionVarArg( TypeRefHandle );
 
         /// <inheritdoc/>
-        public ITypeRef ReturnType => FromHandle<ITypeRef>( NativeMethods.LLVMGetReturnType( TypeRefHandle ) );
+        public ITypeRef ReturnType => FromHandle<ITypeRef>( LLVMGetReturnType( TypeRefHandle ) );
 
         /// <inheritdoc/>
         public IReadOnlyList<ITypeRef> ParameterTypes
         {
             get
             {
-                uint paramCount = NativeMethods.LLVMCountParamTypes( TypeRefHandle );
+                uint paramCount = LLVMCountParamTypes( TypeRefHandle );
                 if( paramCount == 0 )
                 {
                     return new List<TypeRef>().AsReadOnly();
                 }
 
                 var paramTypes = new LLVMTypeRef[ paramCount ];
-                NativeMethods.LLVMGetParamTypes( TypeRefHandle, out paramTypes[ 0 ] );
+                LLVMGetParamTypes( TypeRefHandle, out paramTypes[ 0 ] );
                 return paramTypes.Select( FromHandle<TypeRef> )
                                  .ToList( )
                                  .AsReadOnly( );

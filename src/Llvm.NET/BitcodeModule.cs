@@ -8,19 +8,15 @@ using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Linq;
-using System.Runtime.InteropServices;
-using JetBrains.Annotations;
 using Llvm.NET.DebugInfo;
 using Llvm.NET.Instructions;
-using Llvm.NET.Native;
+using Llvm.NET.Interop;
 using Llvm.NET.Properties;
 using Llvm.NET.Types;
 using Llvm.NET.Values;
 using Ubiquity.ArgValidators;
 
-using static Llvm.NET.Native.NativeMethods;
-
-using CallingConvention = System.Runtime.InteropServices.CallingConvention;
+using static Llvm.NET.Interop.NativeMethods;
 
 namespace Llvm.NET
 {
@@ -35,10 +31,10 @@ namespace Llvm.NET
         Invalid = 0,
 
         /// <summary>Emits an error if two values disagree, otherwise the resulting value is that of the operands</summary>
-        Error = LLVMModFlagBehavior.Error,
+        Error = LLVMModuleFlagBehavior.LLVMModuleFlagBehaviorError,
 
         /// <summary>Emits a warning if two values disagree. The result will be the operand for the flag from the first module being linked</summary>
-        Warning = LLVMModFlagBehavior.Warning,
+        Warning = LLVMModuleFlagBehavior.LLVMModuleFlagBehaviorWarning,
 
         /// <summary>Adds a requirement that another module flag be present and have a specified value after linking is performed</summary>
         /// <remarks>
@@ -46,20 +42,17 @@ namespace Llvm.NET
         /// second element of the pair is the value the module flag should be restricted to. This behavior can be used to restrict the
         /// allowable results (via triggering of an error) of linking IDs with the <see cref="Override"/> behavior
         /// </remarks>
-        Require = LLVMModFlagBehavior.Require,
+        Require = LLVMModuleFlagBehavior.LLVMModuleFlagBehaviorRequire,
 
         /// <summary>Uses the specified value, regardless of the behavior or value of the other module</summary>
         /// <remarks>If both modules specify Override, but the values differ, and error will be emitted</remarks>
-        Override = LLVMModFlagBehavior.Override,
+        Override = LLVMModuleFlagBehavior.LLVMModuleFlagBehaviorOverride,
 
         /// <summary>Appends the two values, which are required to be metadata nodes</summary>
-        Append = LLVMModFlagBehavior.Append,
+        Append = LLVMModuleFlagBehavior.LLVMModuleFlagBehaviorAppend,
 
         /// <summary>Appends the two values, which are required to be metadata nodes dropping duplicate entries in the second list</summary>
-        AppendUnique = LLVMModFlagBehavior.AppendUnique,
-
-        /// <summary>Takes the max of the two values, which are required to be integers</summary>
-        Max = 7 /*LLVMModFlagBehavior.Max*/
+        AppendUnique = LLVMModuleFlagBehavior.LLVMModuleFlagBehaviorAppendUnique,
     }
 
     /// <summary>LLVM Bit-code module</summary>
@@ -108,12 +101,7 @@ namespace Llvm.NET
             get
             {
                 ThrowIfDisposed( );
-                if( ModuleHandle == default )
-                {
-                    return null;
-                }
-
-                return GetContextFor( ModuleHandle );
+                return ModuleHandle == default ? null : GetContextFor( ModuleHandle );
             }
         }
 
@@ -122,17 +110,19 @@ namespace Llvm.NET
         {
             get
             {
-                ThrowIfDisposed( );
-                var handle = LLVMModuleGetModuleFlagsMetadata( ModuleHandle );
-                if( handle == default )
+                var retVal = new Dictionary<string, ModuleFlag>( );
+                using(LLVMModuleFlagEntry flags = LLVMCopyModuleFlagsMetadata(ModuleHandle, out size_t len))
                 {
-                    return new Dictionary<string, ModuleFlag>( );
-                }
 
-                var namedNode = new NamedMDNode( handle );
-                return namedNode.Operands
-                                .Select( n => new ModuleFlag( n ) )
-                                .ToDictionary( f => f.Name );
+                    for(uint i = 0; i< len; ++i )
+                    {
+                        var behavior = LLVMModuleFlagEntriesGetFlagBehavior( flags, i );
+                        string key = LLVMModuleFlagEntriesGetKey( flags, i, out size_t _ );
+                        var metadata = LlvmMetadata.FromHandle<LlvmMetadata>( Context, LLVMModuleFlagEntriesGetMetadata( flags, i ) );
+                        retVal.Add( key, new ModuleFlag( (ModuleFlagBehavior)behavior, key, metadata ) );
+                    }
+                }
+                return retVal;
             }
         }
 
@@ -182,7 +172,7 @@ namespace Llvm.NET
                 ThrowIfDisposed( );
 
                 CachedLayout = value;
-                LLVMSetDataLayoutStr( ModuleHandle, value?.ToString( ) ?? string.Empty );
+                LLVMSetDataLayout( ModuleHandle, value?.ToString( ) ?? string.Empty );
             }
         }
 
@@ -253,11 +243,11 @@ namespace Llvm.NET
             get
             {
                 ThrowIfDisposed( );
-                var current = LLVMModuleGetFirstNamedMD( ModuleHandle );
+                var current = LLVMGetFirstNamedMetadata( ModuleHandle );
                 while( current != default )
                 {
                     yield return new NamedMDNode( current );
-                    current = LLVMModuleGetNextNamedMD( current );
+                    current = LLVMGetNextNamedMetadata( current );
                 }
             }
         }
@@ -272,27 +262,13 @@ namespace Llvm.NET
             }
         }
 
-        /// <summary>Gets a value indicating whether this module is shared with a JIT engine</summary>
-        public bool IsShared => SharedModuleRef != null;
+        /*/// <summary>Gets a value indicating whether this module is shared with a JIT engine</summary>
+        //public bool IsShared => SharedModuleRef != null;
+        */
 
         /* TODO: Module level inline asm accessors
             string ModuleInlineAsm { get; set; }
         */
-
-        /// <summary>Makes this module a shared module if it isn't already</summary>
-        /// <remarks>
-        /// Normally, this is called automatically when adding a module to a JIT engine that needs shared modules.
-        /// Shared modules are reference counted so they aren't completely disposed until the reference count
-        /// is decremented to 0. Calling <see cref="Dispose()"/> on a shared module will mark the module as disposed
-        /// and decrement the share count.
-        /// </remarks>
-        public void MakeShared( )
-        {
-            if( !IsShared )
-            {
-                SharedModuleRef = LLVMOrcMakeSharedModule( ModuleHandle );
-            }
-        }
 
         /// <inheritdoc/>
         public void Dispose( )
@@ -309,19 +285,7 @@ namespace Llvm.NET
             {
                 // remove the module handle from the module cache.
                 Context.RemoveModule( this );
-
-                // if this module was shared with a JIT, just release
-                // the ref-count but don't dispose the actual module
-                if( IsShared )
-                {
-                    SharedModuleRef.Close( );
-                    SharedModuleRef = default;
-                }
-                else
-                {
-                    LLVMDisposeModule( ModuleHandle );
-                }
-
+                LLVMDisposeModule( ModuleHandle );
                 ModuleHandle = default;
             }
         }
@@ -350,7 +314,7 @@ namespace Llvm.NET
             }
 
             Context.RemoveModule( otherModule );
-            otherModule.ModuleHandle = new LLVMModuleRef( IntPtr.Zero );
+            otherModule.ModuleHandle = LLVMModuleRef.Zero;
         }
 
         /// <summary>Verifies a bit-code module</summary>
@@ -371,12 +335,7 @@ namespace Llvm.NET
             name.ValidateNotNullOrWhiteSpace( nameof( name ) );
 
             var funcRef = LLVMGetNamedFunction( ModuleHandle, name );
-            if( funcRef == default )
-            {
-                return null;
-            }
-
-            return Value.FromHandle<Function>( funcRef );
+            return funcRef == default ? null : Value.FromHandle<Function>( funcRef );
         }
 
         /// <summary>Add a function with the specified signature to the module</summary>
@@ -612,12 +571,7 @@ namespace Llvm.NET
             name.ValidateNotNullOrWhiteSpace( nameof( name ) );
 
             var hGlobal = LLVMGetNamedGlobal( ModuleHandle, name );
-            if( hGlobal == default )
-            {
-                return null;
-            }
-
-            return Value.FromHandle<GlobalVariable>( hGlobal );
+            return hGlobal == default ? null : Value.FromHandle<GlobalVariable>( hGlobal );
         }
 
         /// <summary>Adds a module flag to the module</summary>
@@ -629,9 +583,9 @@ namespace Llvm.NET
             ThrowIfDisposed( );
             behavior.ValidateDefined( nameof( behavior ) );
             name.ValidateNotNullOrWhiteSpace( nameof( name ) );
+            var metadata = Context.CreateConstant( value ).ToMetadata();
 
-            // AddModuleFlag comes from custom LLVMDebug-C API
-            LLVMAddModuleFlag( ModuleHandle, ( LLVMModFlagBehavior )behavior, name, value );
+            LLVMAddModuleFlag( ModuleHandle, ( LLVMModuleFlagBehavior )behavior, name, name.Length, metadata.MetadataHandle );
         }
 
         /// <summary>Adds a module flag to the module</summary>
@@ -645,8 +599,7 @@ namespace Llvm.NET
             value.ValidateNotNull( nameof( value ) );
             name.ValidateNotNullOrWhiteSpace( nameof( name ) );
 
-            // AddModuleFlag comes from custom LLVMDebug-C API
-            LLVMAddModuleFlag( ModuleHandle, ( LLVMModFlagBehavior )behavior, name, value.MetadataHandle );
+            LLVMAddModuleFlag( ModuleHandle, ( LLVMModuleFlagBehavior )behavior, name, name.Length, value.MetadataHandle );
         }
 
         /// <summary>Adds operand value to named metadata</summary>
@@ -684,8 +637,6 @@ namespace Llvm.NET
         /// <param name="scopeLine">First line of the function's outermost scope, this may not be the same as the first line of the function definition due to source formatting</param>
         /// <param name="debugFlags">Additional flags describing this function</param>
         /// <param name="isOptimized">Flag to indicate if this function is optimized</param>
-        /// <param name="parameterNode">Parameter Metadata node</param>
-        /// <param name="decl">Declaration Metadata node</param>
         /// <returns>Function described by the arguments</returns>
         public Function CreateFunction( DIScope scope
                                       , string name
@@ -698,8 +649,6 @@ namespace Llvm.NET
                                       , uint scopeLine
                                       , DebugInfoFlags debugFlags
                                       , bool isOptimized
-                                      , [CanBeNull] MDNode parameterNode = null
-                                      , [CanBeNull] MDNode decl = null
                                       )
         {
             ThrowIfDisposed( );
@@ -725,10 +674,9 @@ namespace Llvm.NET
                                                  , debugFlags: debugFlags
                                                  , isOptimized: isOptimized
                                                  , function: func
-                                                 , typeParameter: parameterNode
-                                                 , declaration: decl
                                                  );
-            Debug.Assert( diFunc.Describes( func ), Resources.Expected_to_get_a_debug_function_that_describes_the_provided_function );
+
+            Debug.Assert( diFunc.Describes( func ), "Expected to get a debug function that describes the provided function" );
             func.DISubProgram = diFunc;
             return func;
         }
@@ -799,22 +747,13 @@ namespace Llvm.NET
         /// <returns>Function declaration</returns>
         public Function GetIntrinsicDeclaration( UInt32 id, params ITypeRef[] args)
         {
-            if( !LLVMIsIntrinsicOverloaded( id ) && args.Length > 0 )
+            if( !LLVMIntrinsicIsOverloaded( id ) && args.Length > 0 )
             {
                 throw new ArgumentException( string.Format(Resources.Intrinsic_0_is_not_overloaded_and_therefore_does_not_require_type_arguments, id) );
             }
 
             LLVMTypeRef[ ] llvmArgs = args.Select( a => a.GetTypeRef( ) ).ToArray( );
-
-            // have to pass a valid addressable object to native interop
-            // so allocate space for a single value but tell LLVM the length is 0
-            uint argCount = (uint)llvmArgs.Length;
-            if( llvmArgs.Length == 0 )
-            {
-                llvmArgs = new LLVMTypeRef[ 1 ];
-            }
-
-            return (Function) Value.FromHandle(LLVMIntrinsicGetDeclaration( ModuleHandle, id, out llvmArgs[ 0 ], argCount ));
+            return (Function) Value.FromHandle( LLVMGetIntrinsicDeclaration( ModuleHandle, id, llvmArgs, llvmArgs.Length ));
         }
 
         /// <summary>Clones the current module</summary>
@@ -896,7 +835,7 @@ namespace Llvm.NET
 
         internal LLVMModuleRef ModuleHandle { get; private set; }
 
-        internal LLVMSharedModuleRef SharedModuleRef { get; private set; }
+        /* internal LLVMSharedModuleRef SharedModuleRef { get; private set; } */
 
         internal LLVMModuleRef Detach( )
         {
@@ -988,6 +927,10 @@ namespace Llvm.NET
             }
         }
 
+        // TODO: leverage LLVMGetModuleDataLayout and LLVMSetDataLayout instead of this manual caching
+        // the underlying implementation is that the data layout is exposed, by ref, and copy assigned
+        // on set, so the LLVMTargetDataAlias is valid to use.
+        //
         // Do not write to this directly, use the property setter
         // This is cached since internally the LLVM module APIs
         // deal with C++ references. While that is manageable as
@@ -1004,53 +947,5 @@ namespace Llvm.NET
         {
             return handle == default ? null : ContextCache.GetContextFor( LLVMGetModuleContext( handle ) );
         }
-
-        [DllImport( LibraryPath, CallingConvention = CallingConvention.Cdecl )]
-        private static extern LLVMSharedModuleRef LLVMOrcMakeSharedModule( LLVMModuleRef Mod );
-
-        [DllImport( LibraryPath, CallingConvention = CallingConvention.Cdecl )]
-        private static extern LLVMValueRef LLVMModuleGetFirstGlobalAlias( LLVMModuleRef M );
-
-        [DllImport( LibraryPath, CallingConvention = CallingConvention.Cdecl )]
-        private static extern LLVMValueRef LLVMModuleGetNextGlobalAlias( LLVMValueRef /*GlobalAlias*/ valueRef );
-
-        [DllImport( LibraryPath, CallingConvention = CallingConvention.Cdecl )]
-        private static extern LLVMNamedMDNodeRef LLVMModuleGetFirstNamedMD( LLVMModuleRef M );
-
-        [DllImport( LibraryPath, CallingConvention = CallingConvention.Cdecl )]
-        private static extern LLVMNamedMDNodeRef LLVMModuleGetNextNamedMD( LLVMNamedMDNodeRef nodeRef );
-
-        [DllImport( LibraryPath, CallingConvention = CallingConvention.Cdecl )]
-        private static extern LLVMValueRef /*Function*/ LLVMIntrinsicGetDeclaration( LLVMModuleRef m, UInt32 id, out LLVMTypeRef paramTypes, uint paramCount );
-
-        [DllImport( LibraryPath, CallingConvention = CallingConvention.Cdecl )]
-        [return:MarshalAs(UnmanagedType.Bool)]
-        private static extern bool LLVMIsIntrinsicOverloaded( UInt32 id );
-
-        [DllImport( LibraryPath, CallingConvention = CallingConvention.Cdecl, BestFitMapping = false, ThrowOnUnmappableChar = true )]
-        [return: MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( StringMarshaler ) )]
-        private static extern string LLVMGetModuleSourceFileName( LLVMModuleRef module );
-
-        [DllImport( LibraryPath, CallingConvention = CallingConvention.Cdecl, BestFitMapping = false, ThrowOnUnmappableChar = true )]
-        private static extern void LLVMSetModuleSourceFileName( LLVMModuleRef module, [MarshalAs( UnmanagedType.LPStr )] string name );
-
-        [DllImport( LibraryPath, CallingConvention = CallingConvention.Cdecl, BestFitMapping = false, ThrowOnUnmappableChar = true )]
-        [return: MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( StringMarshaler ) )]
-        private static extern string LLVMGetModuleName( LLVMModuleRef module );
-
-        [DllImport( LibraryPath, CallingConvention = CallingConvention.Cdecl, BestFitMapping = false, ThrowOnUnmappableChar = true )]
-        private static extern void LLVMAddModuleFlag( LLVMModuleRef M, LLVMModFlagBehavior behavior, [MarshalAs( UnmanagedType.LPStr )] string name, UInt32 value );
-
-        [DllImport( LibraryPath, EntryPoint = "LLVMAddModuleFlagMetadata", CallingConvention = CallingConvention.Cdecl, BestFitMapping = false, ThrowOnUnmappableChar = true )]
-        private static extern void LLVMAddModuleFlag( LLVMModuleRef M, LLVMModFlagBehavior behavior, [MarshalAs( UnmanagedType.LPStr )] string name, LLVMMetadataRef value );
-
-        [DllImport( LibraryPath, CallingConvention = CallingConvention.Cdecl )]
-        private static extern LLVMNamedMDNodeRef LLVMModuleGetModuleFlagsMetadata( LLVMModuleRef module );
-
-        [DllImport( LibraryPath, CallingConvention = CallingConvention.Cdecl, BestFitMapping = false, ThrowOnUnmappableChar = true )]
-        private static extern LLVMValueRef LLVMGetOrInsertFunction( LLVMModuleRef module, [MarshalAs( UnmanagedType.LPStr )] string name, LLVMTypeRef functionType );
-
-        [DllImport( LibraryPath, CallingConvention = CallingConvention.Cdecl, BestFitMapping = false, ThrowOnUnmappableChar = true )]
-        private static extern LLVMValueRef LLVMGetGlobalAlias( LLVMModuleRef module, [MarshalAs( UnmanagedType.LPStr )] string name );
     }
 }

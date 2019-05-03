@@ -1,0 +1,65 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+      <TargetFrameworks>netstandard20;net47</TargetFrameworks>
+      <LangVersion>7.3</LangVersion>
+      <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+      <DebugType>portable</DebugType>
+      <DebugSymbols>true</DebugSymbols>
+      <SignAssembly>False</SignAssembly>
+      <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+      <MinClientVersion>4.0</MinClientVersion>
+      <Authors>.NET Foundation,LLVM.org,Ubiquity.NET</Authors>
+      <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
+      <Description>.NET Low Level Interop Bindings for Ubiquity.LibLLVM</Description>
+      <PackageTags>LLVM,Compiler,JIT,Ubiquity.NET</PackageTags>
+      <NoPackageAnalysis>true</NoPackageAnalysis>
+      <RepositoryType>git</RepositoryType>
+      <RepositoryUrl>https://github.com/UbiquityDotNET/Llvm.Net.git</RepositoryUrl>
+      <DocumentationFile></DocumentationFile>
+  </PropertyGroup>
+  <ItemGroup>
+    <Content Include="..\..\..\BuildOutput\bin\LibLLVM\$(Configuration)\x64\LibLLVM.dll" Link="runtimes\win-x64\native\LibLLVM.dll">
+        <PackagePath>runtimes\win-x64\native</PackagePath>
+    </Content>
+    <Content Include="..\..\..\BuildOutput\bin\LibLLVM\$(Configuration)\x64\LibLLVM.pdb" Link="runtimes\win-x64\native\LibLLVM.pdb">
+        <PackagePath>runtimes\win-x64\native</PackagePath>
+    </Content>
+    <Content Include="NugetPkg\build\Llvm.NET.Interop.props">
+        <PackagePath>build\Llvm.NET.Interop.props</PackagePath>
+    </Content>
+    <Content Include="NugetPkg\buildMultiTargeting\Llvm.NET.Interop.props">
+        <PackagePath>buildMultiTargeting\Llvm.NET.Interop.props</PackagePath>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Update="Properties\Resources.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Update="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+  </ItemGroup>
+
+    <!--
+    Version numbers are computed at build time after any declarative properties are evaluated
+    so this is needed to update the NuSpec properties with the dynamically generated values
+    NOTE: This can't use NuspecProperties as that is only applicable when using a NuSpec file.
+          Worse, it can cause a NullReferenceException (See: https://github.com/NuGet/Home/issues/4649 )
+    -->
+    <Target Name="_SetNuSpecPropertiesWithBuildInfo" BeforeTargets="GenerateNuspec">
+        <PropertyGroup>
+            <Description>$(Description) $(llvmVersion)</Description>
+        </PropertyGroup>
+        <Message Importance="high" Text="llvmVersion=$(llvmVersion)" />
+    </Target>
+
+    <Target Name="EnsureLocalNugetFolder" Condition="!EXISTS($(PackageOutputPath))" BeforeTargets="Restore">
+        <MakeDir Directories="$(PackageOutputPath)" />
+    </Target>
+
+</Project>

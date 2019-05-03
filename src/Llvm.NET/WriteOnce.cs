@@ -9,7 +9,7 @@ using Llvm.NET.Properties;
 namespace Llvm.NET
 {
     /// <summary>Wrapper class to provide Write-Once semantics to a value</summary>
-    /// <typeparam name="T">TYpe of value to store</typeparam>
+    /// <typeparam name="T">Type of value to store</typeparam>
     /// <remarks>
     /// This provides write once semantics for fields that may require initialization
     /// outside the context of a constructor, but once set should never be set again.

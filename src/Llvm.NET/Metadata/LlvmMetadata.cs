@@ -4,7 +4,7 @@
 
 using System;
 using Llvm.NET.DebugInfo;
-using Llvm.NET.Native;
+using Llvm.NET.Interop;
 using Llvm.NET.Properties;
 
 // SA1515  Single-line comment should be preceded by blank line
@@ -12,6 +12,8 @@ using Llvm.NET.Properties;
 
 // SA1025  Code should not contain multiple whitespace characters in a row.
 #pragma warning disable SA1025
+
+using static Llvm.NET.Interop.NativeMethods;
 
 namespace Llvm.NET
 {
@@ -35,19 +37,14 @@ namespace Llvm.NET
                 throw new InvalidOperationException( Resources.Cannot_Replace_all_uses_of_a_null_descriptor );
             }
 
-            NativeMethods.LLVMMetadataReplaceAllUsesWith( MetadataHandle, other.MetadataHandle );
+            LLVMMetadataReplaceAllUsesWith( MetadataHandle, other.MetadataHandle );
             MetadataHandle = default;
         }
 
         /// <inheritdoc/>
         public override string ToString( )
         {
-            if( MetadataHandle == default )
-            {
-                return string.Empty;
-            }
-
-            return NativeMethods.LLVMMetadataAsString( MetadataHandle );
+            return MetadataHandle == default ? string.Empty : LLVMMetadataAsString( MetadataHandle );
         }
 
         internal LLVMMetadataRef MetadataHandle { get; /*protected*/ set; }
@@ -55,12 +52,7 @@ namespace Llvm.NET
         internal static T FromHandle<T>( Context context, LLVMMetadataRef handle )
             where T : LlvmMetadata
         {
-            if( handle == default )
-            {
-                return null;
-            }
-
-            return ( T )context.GetNodeFor( handle );
+            return handle == default ? null : ( T )context.GetNodeFor( handle );
         }
 
         internal class InterningFactory
@@ -120,7 +112,7 @@ namespace Llvm.NET
             {
                 // use the native kind value to determine the managed type
                 // that should wrap this particular handle
-                var kind = ( MetadataKind )NativeMethods.LLVMGetMetadataID( handle );
+                var kind = ( MetadataKind )LLVMGetMetadataID( handle );
                 switch( kind )
                 {
                 case MetadataKind.MDString:

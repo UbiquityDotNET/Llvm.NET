@@ -3,10 +3,11 @@
 // </copyright>
 
 using System.Linq;
-using Llvm.NET.Native;
+using Llvm.NET.Interop;
 using Llvm.NET.Values;
 using Ubiquity.ArgValidators;
-using static Llvm.NET.Native.NativeMethods;
+
+using static Llvm.NET.Interop.NativeMethods;
 
 namespace Llvm.NET.Instructions
 {
@@ -34,7 +35,7 @@ namespace Llvm.NET.Instructions
             LLVMValueRef[ ] llvmValues = allIncoming.Select( vb => vb.Value.ValueHandle ).ToArray( );
             LLVMBasicBlockRef[ ] llvmBlocks = allIncoming.Select( vb => vb.Block.BlockHandle ).ToArray( );
 
-            LLVMAddIncoming( ValueHandle, out llvmValues[ 0 ], out llvmBlocks[ 0 ], ( uint )llvmValues.Length );
+            LLVMAddIncoming( ValueHandle, llvmValues, llvmBlocks, ( uint )llvmValues.Length );
         }
 
         internal PhiNode( LLVMValueRef valueRef )

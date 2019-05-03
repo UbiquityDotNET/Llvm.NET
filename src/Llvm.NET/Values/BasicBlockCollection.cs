@@ -6,10 +6,10 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using System.Runtime.InteropServices;
-using Llvm.NET.Native;
+using Llvm.NET.Interop;
 using Ubiquity.ArgValidators;
-using static Llvm.NET.Native.NativeMethods;
+
+using static Llvm.NET.Interop.NativeMethods;
 
 namespace Llvm.NET.Values
 {
@@ -94,8 +94,5 @@ namespace Llvm.NET.Values
         }
 
         private readonly Function ContainingFunction;
-
-        [DllImport( LibraryPath, CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl )]
-        private static extern void LLVMFunctionAppendBasicBlock( LLVMValueRef /*Function*/ function, LLVMBasicBlockRef block );
     }
 }
