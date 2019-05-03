@@ -395,9 +395,9 @@ expression.</p>
 
     var function = InstructionBuilder.InsertBlock.ContainingFunction;
 
-    var thenBlock = Context.CreateBasicBlock( &quot;then&quot;, function );
-    var elseBlock = Context.CreateBasicBlock( &quot;else&quot; );
-    var continueBlock = Context.CreateBasicBlock( &quot;ifcont&quot; );
+    var thenBlock = function.AppendBasicBlock( &quot;then&quot; );
+    var elseBlock = function.AppendBasicBlock( &quot;else&quot; );
+    var continueBlock = function.AppendBasicBlock( &quot;ifcont&quot; );
     InstructionBuilder.Branch( condBool, thenBlock, elseBlock );
 
     // generate then block
@@ -457,7 +457,7 @@ use of load/store for the variables and removal of the manually generated PHI no
     InstructionBuilder.Store( startVal, allocaVar );
 
     // Make the new basic block for the loop header.
-    var loopBlock = Context.CreateBasicBlock( &quot;loop&quot;, function );
+    var loopBlock = function.AppendBasicBlock( &quot;loop&quot; );
 
     // Insert an explicit fall through from the current block to the loopBlock.
     InstructionBuilder.Branch( loopBlock );
@@ -503,7 +503,7 @@ use of load/store for the variables and removal of the manually generated PHI no
                                          .RegisterName( &quot;loopcond&quot; );
 
         // Create the &quot;after loop&quot; block and insert it.
-        var afterBlock = Context.CreateBasicBlock( &quot;afterloop&quot;, function );
+        var afterBlock = function.AppendBasicBlock( &quot;afterloop&quot; );
 
         // Insert the conditional branch into the end of LoopEndBB.
         InstructionBuilder.Branch( endCondition, loopBlock, afterBlock );
@@ -701,7 +701,7 @@ without needing to manually deal with PHI nodes or generate SSA form! Now, that&
             <span class="pull-right">
               <a href="#top">Back to top</a>
             </span>
-            Copyright (C) 2017, Dot NET Foundation<br><strong>Build:</strong> 6.0.1-rc.0.0.ci-BLD.462817119
+            Copyright (C) 2017, Dot NET Foundation<br><strong>Build:</strong> 8.0.0-alpha.0.0.ci-BLD.462818004
             
           </div>
         </div>

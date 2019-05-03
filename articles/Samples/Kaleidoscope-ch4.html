@@ -307,6 +307,7 @@ OrcJIT engine.</p>
 // &lt;/copyright&gt;
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Runtime.InteropServices;
 using Llvm.NET;
@@ -369,6 +370,7 @@ namespace Kaleidoscope.Runtime
         [UnmanagedFunctionPointer( CallingConvention.Cdecl )]
         public delegate double CallbackHandler4( double arg1, double arg2, double arg3, double arg4 );
 
+        [SuppressMessage( &quot;Design&quot;, &quot;CA1031:Do not catch general exception types&quot;, Justification = &quot;Native callback *MUST NOT* surface managed exceptions&quot; )]
         private double Printd( double x )
         {
             // STOP ALL EXCEPTIONS from bubbling out to JIT&#39;ed code
@@ -383,6 +385,7 @@ namespace Kaleidoscope.Runtime
             }
         }
 
+        [SuppressMessage( &quot;Design&quot;, &quot;CA1031:Do not catch general exception types&quot;, Justification = &quot;Native callback *MUST NOT* surface managed exceptions&quot; )]
         private double PutChard( double x )
         {
             // STOP ALL EXCEPTIONS from bubbling out to JIT&#39;ed code
@@ -538,7 +541,7 @@ support for .NET. Very cool, indeed!</p>
             <span class="pull-right">
               <a href="#top">Back to top</a>
             </span>
-            Copyright (C) 2017, Dot NET Foundation<br><strong>Build:</strong> 6.0.1-rc.0.0.ci-BLD.462817119
+            Copyright (C) 2017, Dot NET Foundation<br><strong>Build:</strong> 8.0.0-alpha.0.0.ci-BLD.462818004
             
           </div>
         </div>

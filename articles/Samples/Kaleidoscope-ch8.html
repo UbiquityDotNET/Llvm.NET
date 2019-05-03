@@ -214,7 +214,7 @@ the Always inliner and a global dead code elimination pass. The always inliner w
 marked as inline and the dead code elimination pass will eliminate unused internal/private global symbols.
 This has the effect of generating the main function with all top level expressions inlined and the originally
 generated anonymous functions removed. </p>
-<pre><code class="lang-csharp" name="Generate">public Value Generate( IAstNode ast, Action&lt;CodeGeneratorException&gt; errorHandler )
+<pre><code class="lang-csharp" name="Generate">public Value Generate( IAstNode ast, Action&lt;CodeGeneratorException&gt; codeGenerationErroHandler )
 {
     try
     {
@@ -245,9 +245,9 @@ generated anonymous functions removed. </p>
             mpm.Run( Module );
         }
     }
-    catch(CodeGeneratorException ex) when (errorHandler != null)
+    catch(CodeGeneratorException ex) when ( codeGenerationErroHandler != null)
     {
-        errorHandler( ex );
+        codeGenerationErroHandler( ex );
     }
 
     return null;
@@ -328,7 +328,7 @@ private static (string SourceFilePath, int ExitCode) ProcessArgs( string[ ] args
     string sourceFilePath = string.Empty;
     foreach( string arg in args )
     {
-        if( string.Compare( arg, &quot;waitfordebugger&quot;, StringComparison.InvariantCultureIgnoreCase ) == 0 )
+        if( string.Compare( arg, &quot;waitfordebugger&quot;, StringComparison.OrdinalIgnoreCase ) == 0 )
         {
             waitForDebugger = true;
         }
@@ -401,7 +401,7 @@ public static int Main( string[ ] args )
         RegisterNative( );
 
         var machine = new TargetMachine( Triple.HostTriple );
-        var parser = new ParserStack( LanguageLevel.MutableVariables );
+        var parser = new Parser( LanguageLevel.MutableVariables );
         using( var generator = new CodeGenerator( parser.GlobalState, machine ) )
         {
             Console.WriteLine( &quot;Llvm.NET Kaleidoscope Compiler - {0}&quot;, parser.LanguageLevel );
@@ -462,7 +462,7 @@ this feature is &quot;left as an exercise for the reader&quot; <span class="emoj
             <span class="pull-right">
               <a href="#top">Back to top</a>
             </span>
-            Copyright (C) 2017, Dot NET Foundation<br><strong>Build:</strong> 6.0.1-rc.0.0.ci-BLD.462817119
+            Copyright (C) 2017, Dot NET Foundation<br><strong>Build:</strong> 8.0.0-alpha.0.0.ci-BLD.462818004
             
           </div>
         </div>

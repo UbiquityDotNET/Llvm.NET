@@ -215,7 +215,7 @@ renaming it. This only needs a shallow clone so there isn&#39;t a lot of overhea
 is pretty much the same. There&#39;s really no point in going through the process of setting up the lazy JIT
 when the next thing to do is get the address of the function and call it. For other definitions, though,
 things get different as they are selected for lazy JIT.</p>
-<pre><code class="lang-csharp" name="Generate">public Value Generate( IAstNode ast, Action&lt;CodeGeneratorException&gt; errorHandler )
+<pre><code class="lang-csharp" name="Generate">public Value Generate( IAstNode ast, Action&lt;CodeGeneratorException&gt; codeGenerationErroHandler )
 {
     try
     {
@@ -234,7 +234,7 @@ things get different as they are selected for lazy JIT.</p>
         {
             var function = ( Function )definition.Accept( this );
             var jitHandle = JIT.AddModule( function.ParentModule );
-            var nativeFunc = JIT.GetFunctionDelegate&lt;AnonExpressionFunc&gt;( definition.Name );
+            var nativeFunc = JIT.GetFunctionDelegate&lt;KaleidoscopeJIT.CallbackHandler0&gt;( definition.Name );
             retVal = Context.CreateConstant( nativeFunc( ) );
             JIT.RemoveModule( jitHandle );
         }
@@ -253,9 +253,9 @@ things get different as they are selected for lazy JIT.</p>
 
         return retVal;
     }
-    catch( CodeGeneratorException ex ) when( errorHandler != null )
+    catch( CodeGeneratorException ex ) when( codeGenerationErroHandler != null )
     {
-        errorHandler( ex );
+        codeGenerationErroHandler( ex );
         return null;
     }
 }
@@ -306,7 +306,7 @@ works doesn&#39;t change no matter what approach a given language or runtime wan
             <span class="pull-right">
               <a href="#top">Back to top</a>
             </span>
-            Copyright (C) 2017, Dot NET Foundation<br><strong>Build:</strong> 6.0.1-rc.0.0.ci-BLD.462817119
+            Copyright (C) 2017, Dot NET Foundation<br><strong>Build:</strong> 8.0.0-alpha.0.0.ci-BLD.462818004
             
           </div>
         </div>

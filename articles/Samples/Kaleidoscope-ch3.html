@@ -187,7 +187,7 @@ target is the one the host application is running on. So, only the native target
 <a class="xref" href="../../api/Llvm.NET.Values.Value.html">Value</a>. This forms the foundation of the Kaleidoscope samples outer
 generation loop. Subsequent, chapters will focus on additional functionality including JIT compilation,
 Debugging information, and Native Module generation.</p>
-<pre><code class="lang-csharp" name="Main">var parser = new ParserStack( LanguageFeatureLevel );
+<pre><code class="lang-csharp" name="Main">var parser = new Parser( LanguageFeatureLevel );
 using( var generator = new CodeGenerator( parser.GlobalState ) )
 {
     var readyState = new ReadyStateManager( );
@@ -307,7 +307,7 @@ function declaration or a function definition. For the interactive mode should a
 (When doing Ahead of Time (AOT) compilation in <a href="Kaleidoscope-ch8.html">Chapter 8</a> this sequence can contain
 many declarations and definitions in any order.) To handle the different node types the generate method
 simply uses pattern matching to detect the type of node to dispatch to a visitor function for that kind of node.</p>
-<pre><code class="lang-csharp" name="Main">public Value Generate( IAstNode ast, Action&lt;CodeGeneratorException&gt; errorHandler )
+<pre><code class="lang-csharp" name="Main">public Value Generate( IAstNode ast, Action&lt;CodeGeneratorException&gt; codeGenerationErroHandler )
 {
     try
     {
@@ -315,9 +315,9 @@ simply uses pattern matching to detect the type of node to dispatch to a visitor
         // adds them to the RuntimeState so that already has the declarations
         return ( ast is FunctionDefinition ) ? ast.Accept( this ) : null;
     }
-    catch( CodeGeneratorException ex ) when( errorHandler != null )
+    catch( CodeGeneratorException ex ) when( codeGenerationErroHandler != null )
     {
-        errorHandler( ex );
+        codeGenerationErroHandler( ex );
         return null;
     }
 }
@@ -743,7 +743,7 @@ Ready&gt;
             <span class="pull-right">
               <a href="#top">Back to top</a>
             </span>
-            Copyright (C) 2017, Dot NET Foundation<br><strong>Build:</strong> 6.0.1-rc.0.0.ci-BLD.462817119
+            Copyright (C) 2017, Dot NET Foundation<br><strong>Build:</strong> 8.0.0-alpha.0.0.ci-BLD.462818004
             
           </div>
         </div>

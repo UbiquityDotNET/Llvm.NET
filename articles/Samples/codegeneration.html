@@ -160,12 +160,11 @@ the C File, this sample does show all the steps and techniques for using Llvm.NE
 information and, ultimately, the target machine code.</p>
 <h2 id="example-c-code">Example C Code</h2>
 <p>The CodeGenWithDebugInfo sample will generate LLVM IR and machine code for the following sample &quot;C&quot; code.</p>
-<blockquote><p>[NOTE!]
-The C code file is provided in the source tree along with a script file to compile it for comparing output with Clang.
+<div class="NOTE"><h5>Note</h5><p>The C code file is provided in the source tree along with a script file to compile it for comparing output with Clang.
 The current implementation was last compared with Clang 5 RC4 - any differences to the latest version of clang
 are expected to be minor. Updating the sample to replicate the latest Clang version is left as an exercise for
 the reader <span class="emoji" shortcode="grin">😁</span></p>
-</blockquote>
+</div>
 <pre><code class="lang-c" name="Main">struct foo
 {
     int a;
@@ -229,7 +228,7 @@ hard coded into the target details class to keep things simple and focused on th
 </code></pre><p>This interface isolates the rest of the code from knowing which architecture is used, and theoretically
 could include support for additional targets beyond the two in the sample source.</p>
 <p>The sample determines which target to use based on the second command line argument to the application</p>
-<pre><code class="lang-csharp" name="Main">switch( args[ 0 ] )
+<pre><code class="lang-csharp" name="Main">switch( args[ 0 ].ToUpperInvariant() )
 {
 case &quot;M3&quot;:
     TargetDetails = new CortexM3Details( );
@@ -267,7 +266,7 @@ the target and a target specific <a class="xref" href="../../api/Llvm.NET.DataLa
 extracts these from the <a class="xref" href="../../api/Llvm.NET.TargetMachine.html">TargetMachine</a> provided by the target
 details interface for the selected target.</p>
 <pre><code class="lang-csharp" name="Main">using( var context = new Context( ) )
-using( var module = context.CreateBitcodeModule( moduleName, SourceLanguage.CSharp, srcPath, VersionIdentString ) )
+using( var module = context.CreateBitcodeModule( moduleName, SourceLanguage.C99, srcPath, VersionIdentString ) )
 {
     module.SourceFileName = Path.GetFileName( srcPath );
     module.TargetTriple = TargetDetails.TargetMachine.Triple;
@@ -644,7 +643,7 @@ attributes #2 = { argmemonly nounwind }
             <span class="pull-right">
               <a href="#top">Back to top</a>
             </span>
-            Copyright (C) 2017, Dot NET Foundation<br><strong>Build:</strong> 6.0.1-rc.0.0.ci-BLD.462817119
+            Copyright (C) 2017, Dot NET Foundation<br><strong>Build:</strong> 8.0.0-alpha.0.0.ci-BLD.462818004
             
           </div>
         </div>

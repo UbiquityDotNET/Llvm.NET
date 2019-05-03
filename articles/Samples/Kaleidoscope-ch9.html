@@ -265,9 +265,10 @@ private Function GetOrDeclareFunction( Prototype prototype )
     }
     else
     {
+        var parameters = prototype.Parameters;
         var debugFile = Module.DIBuilder.CreateFile( Module.DICompileUnit.File.FileName, Module.DICompileUnit.File.Directory );
         var signature = Context.CreateFunctionType( Module.DIBuilder, DoubleType, prototype.Parameters.Select( _ =&gt; DoubleType ) );
-        var lastParamLocation = prototype.Parameters.LastOrDefault( )?.Location ?? prototype.Location;
+        var lastParamLocation = parameters.Count &gt; 0 ? parameters[ parameters.Count - 1 ].Location : prototype.Location;
 
         retVal = Module.CreateFunction( Module.DICompileUnit
                                       , prototype.Name
@@ -450,7 +451,7 @@ compiler for custom languages, including debug support a lot easier.</p>
             <span class="pull-right">
               <a href="#top">Back to top</a>
             </span>
-            Copyright (C) 2017, Dot NET Foundation<br><strong>Build:</strong> 6.0.1-rc.0.0.ci-BLD.462817119
+            Copyright (C) 2017, Dot NET Foundation<br><strong>Build:</strong> 8.0.0-alpha.0.0.ci-BLD.462818004
             
           </div>
         </div>
