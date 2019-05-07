@@ -116,6 +116,10 @@ namespace LlvmBindingsGenerator
                     new ArrayMarshalInfo( "LLVMGetIntrinsicDeclaration", "ParamTypes", UnmanagedType.SysInt),
                     new ArrayMarshalInfo( "LLVMIntrinsicGetType", "ParamTypes", UnmanagedType.SysInt),
                     new ArrayMarshalInfo( "LLVMIntrinsicCopyOverloadedName", "ParamTypes", UnmanagedType.SysInt),
+                    new ArrayMarshalInfo( "LLVMBuildCall2", "Args", UnmanagedType.SysInt),
+                    new ArrayMarshalInfo( "LLVMBuildInBoundsGEP2", "Indices", UnmanagedType.SysInt ),
+                    new ArrayMarshalInfo( "LLVMConstGEP", "ConstantIndices", UnmanagedType.SysInt ),
+                    new ArrayMarshalInfo( "LLVMBuildGEP2", "Indices", UnmanagedType.SysInt ),
 
                     // Function return types
                     new StringMarshalInfo( "LLVMGetDiagInfoDescription", StringDisposal.DisposeMessage ),

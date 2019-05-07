@@ -484,4 +484,10 @@ Types are:
   <data name="Alignment_only_allowed_on_memory_instructions" xml:space="preserve">
     <value>Alignment can only be set for instructions dealing with memory read/write (alloca, load, store)</value>
   </data>
+  <data name="Non_pointer_type_expected" xml:space="preserve">
+      <value>Non-pointer type expected</value>
+  </data>
+  <data name="Cannot_load_a_value_for_an_opaque_or_unsized_type" xml:space="preserve">
+      <value>Cannot load a value for an opaque or unsized type</value>
+  </data>
 </root>

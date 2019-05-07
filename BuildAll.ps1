@@ -1,7 +1,8 @@
 Param(
     [string]$Configuration="Release",
     [switch]$AllowVsPreReleases,
-    [switch]$NoClean
+    [switch]$NoClean,
+    [switch]$SkipDocs
 )
 
 . .\buildutils.ps1
@@ -80,7 +81,7 @@ try
     Install-LlvmLibs $buildPaths.LlvmLibsRoot "8.0.0" "msvc" "15.9"
 
     # clone docs output location so it is available as a destination for the rest of the build
-    if( !(Test-Path (Join-Path $buildPaths.DocsOutput '.git') -PathType Container))
+    if(!$SkipDocs -and !(Test-Path (Join-Path $buildPaths.DocsOutput '.git') -PathType Container))
     {
         Write-Information "Cloning Docs repository"
         pushd BuildOutput -ErrorAction Stop
@@ -105,8 +106,11 @@ try
     Write-Information "Restoring Docs Project"
     Invoke-MSBuild -Targets Restore -Project docfx\Llvm.NET.DocFX.csproj -Properties $msBuildProperties -LoggerArgs $msbuildLoggerArgs ($msbuildLoggerArgs + @("/bl:Llvm.NET-docfx-restore.binlog") )
 
-    Write-Information "Building Docs"
-    Invoke-MSBuild -Targets Build -Project docfx\Llvm.NET.DocFX.csproj -Properties $msBuildProperties -LoggerArgs $msbuildLoggerArgs ($msbuildLoggerArgs + @("/bl:Llvm.NET-docfx-build.binlog") )
+    if(!$SkipDocs)
+    {
+        Write-Information "Building Docs"
+        Invoke-MSBuild -Targets Build -Project docfx\Llvm.NET.DocFX.csproj -Properties $msBuildProperties -LoggerArgs $msbuildLoggerArgs ($msbuildLoggerArgs + @("/bl:Llvm.NET-docfx-build.binlog") )
+    }
 
     if( $env:APPVEYOR_PULL_REQUEST_NUMBER )
     {

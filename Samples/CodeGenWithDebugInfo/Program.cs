@@ -187,6 +187,7 @@ namespace TestDebugInfo
                         File.WriteAllText( "test.ll", module.WriteToString( ) );
                         TargetDetails.TargetMachine.EmitToFile( module, "test.o", CodeGenFileType.ObjectFile );
                         TargetDetails.TargetMachine.EmitToFile( module, "test.s", CodeGenFileType.AssemblySource );
+                        Console.WriteLine( "Generated test.bc, test.ll, test.o, and test.s" );
                     }
                 }
             }
@@ -331,7 +332,7 @@ namespace TestDebugInfo
             }
 
             var loadedDst = instBuilder.SetDebugLocation( 15, 6, copyFunc.DISubProgram )
-                                       .Load( dstAddr )
+                                       .Load( fooPtr, dstAddr )
                                        .Alignment( ptrAlign );
 
             instBuilder.SetDebugLocation( 15, 13, copyFunc.DISubProgram );

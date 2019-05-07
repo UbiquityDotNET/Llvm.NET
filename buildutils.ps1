@@ -326,7 +326,7 @@ function Install-LlvmLibs($destPath, $llvmversion, $compiler, $compilerversion)
             }
             else
             {
-                throw "Release '$releaseName' not found!"
+                throw "Release 'v$releaseName' not found!"
             }
         }
 

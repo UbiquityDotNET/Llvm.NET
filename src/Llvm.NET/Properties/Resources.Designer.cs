@@ -270,6 +270,15 @@ namespace Llvm.NET.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Cannot load a value for an opaque or unsized type.
+        /// </summary>
+        internal static string Cannot_load_a_value_for_an_opaque_or_unsized_type {
+            get {
+                return ResourceManager.GetString("Cannot_load_a_value_for_an_opaque_or_unsized_type", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Cannot mix types from different contexts.
         /// </summary>
         internal static string Cannot_mix_types_from_different_contexts {
@@ -801,6 +810,15 @@ namespace Llvm.NET.Properties {
         internal static string Name_cannot_be_null_or_empty {
             get {
                 return ResourceManager.GetString("Name_cannot_be_null_or_empty", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Non-pointer type expected.
+        /// </summary>
+        internal static string Non_pointer_type_expected {
+            get {
+                return ResourceManager.GetString("Non_pointer_type_expected", resourceCulture);
             }
         }
         

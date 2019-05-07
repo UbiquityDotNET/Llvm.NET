@@ -330,7 +330,7 @@ namespace Llvm.NET.Instructions
             }
 
             LLVMValueRef invoke = LLVMBuildInvoke2( BuilderHandle
-                                                  , func.NativeType.GetTypeRef()
+                                                  , func.NativeType.GetTypeRef( )
                                                   , func.ValueHandle
                                                   , out llvmArgs[ 0 ]
                                                   , ( uint )argCount
@@ -402,25 +402,41 @@ namespace Llvm.NET.Instructions
         /// <param name="sourcePtr">Pointer to the value to load</param>
         /// <returns><see cref="Instructions.Load"/></returns>
         /// <remarks>The <paramref name="sourcePtr"/> must not be an opaque pointer type</remarks>
+        [Obsolete( "Use overload accepting a type and opaque pointer instead" )]
         public Load Load( Value sourcePtr )
         {
-            sourcePtr.ValidateNotNull( nameof( sourcePtr ) );
-            // TODO: Validate sourcePtr is not an opaque pointer, as load requires a specific type
-            var handle = LLVMBuildLoad2( BuilderHandle, sourcePtr.NativeType.GetTypeRef(), sourcePtr.ValueHandle, string.Empty );
-            return Value.FromHandle<Load>( handle );
+            if( !( sourcePtr.NativeType is IPointerType ptrType ) )
+            {
+                throw new ArgumentException( Resources.Expected_a_pointer_value, nameof( sourcePtr ) );
+            }
+
+            return Load( ptrType.ElementType, sourcePtr );
         }
 
         /// <summary>Creates a load instruction</summary>
-        /// <param name="type"></param>
-        /// <param name="sourcePtr"></param>
-        /// <returns></returns>
-        public Load Load(ITypeRef type, Value sourcePtr )
+        /// <param name="type">Type of the value to load</param>
+        /// <param name="sourcePtr">pointer to load the value from</param>
+        /// <returns>Load instruction</returns>
+        /// <remarks>
+        /// The <paramref name="type"/> of the value must be a sized type (e.g. not Opaque with a non-zero size ).
+        /// if <paramref name="sourcePtr"/> is a non-opaque pointer then its ElementType must be the same as <paramref name="type"/>
+        /// </remarks>
+        public Load Load( ITypeRef type, Value sourcePtr )
         {
             type.ValidateNotDefault( nameof( type ) );
             sourcePtr.ValidateNotNull( nameof( sourcePtr ) );
+            if( sourcePtr.NativeType.Kind != TypeKind.Pointer )
+            {
+                throw new ArgumentException( Resources.Expected_a_pointer_value, nameof( sourcePtr ) );
+            }
 
-            // TODO: validate sourceptr is opaque or sourcePtr.Type == type
-            var handle = LLVMBuildLoad2( BuilderHandle, type.GetTypeRef(), sourcePtr.ValueHandle, string.Empty );
+            if( !type.IsSized )
+            {
+                throw new ArgumentException( Resources.Cannot_load_a_value_for_an_opaque_or_unsized_type, nameof( type ) );
+            }
+
+            // TODO: validate sourceptr is opaque or sourcePtr.Type.ElementType == type
+            var handle = LLVMBuildLoad2( BuilderHandle, type.GetTypeRef( ), sourcePtr.ValueHandle, string.Empty );
             return Value.FromHandle<Load>( handle );
         }
 
@@ -538,12 +554,12 @@ namespace Llvm.NET.Instructions
         /// <para>Note that <paramref name="pointer"/> must be a pointer to a structure
         /// or an exception is thrown.</para>
         /// </returns>
-        [Obsolete("Use the overload that takes a type and opaque pointer")]
+        [Obsolete( "Use the overload that takes a type and opaque pointer" )]
         public Value GetStructElementPointer( Value pointer, uint index )
         {
             ValidateStructGepArgs( pointer, index );
             // TODO: verify pointer isn't an opaque pointer
-            var handle = LLVMBuildStructGEP2( BuilderHandle, pointer.NativeType.GetTypeRef(), pointer.ValueHandle, index, string.Empty );
+            var handle = LLVMBuildStructGEP2( BuilderHandle, pointer.NativeType.GetTypeRef( ), pointer.ValueHandle, index, string.Empty );
             return Value.FromHandle( handle );
         }
 
@@ -568,7 +584,7 @@ namespace Llvm.NET.Instructions
         }
 
         /// <summary>Creates a <see cref="Value"/> that accesses an element of a type referenced by a pointer</summary>
-        /// <param name="type">Type of base pointer</param>
+        /// <param name="type">Type of array,vector or structure to get the element pointer from</param>
         /// <param name="pointer">opaque pointer to get an element from</param>
         /// <param name="args">additional indices for computing the resulting pointer</param>
         /// <returns>
@@ -590,13 +606,13 @@ namespace Llvm.NET.Instructions
         /// former makes the first index explicit. LLVM requires an explicit first index, even if it is
         /// zero, in order to properly compute the offset for a given element in an aggregate type.
         /// </remarks>
-        public Value GetElementPtr(ITypeRef type, Value pointer, IEnumerable<Value> args )
+        public Value GetElementPtr( ITypeRef type, Value pointer, IEnumerable<Value> args )
         {
-            var llvmArgs = GetValidatedGEPArgs(type, pointer, args );
+            var llvmArgs = GetValidatedGEPArgs( type, pointer, args );
             var handle = LLVMBuildGEP2( BuilderHandle
-                                      , type.GetTypeRef()
+                                      , type.GetTypeRef( )
                                       , pointer.ValueHandle
-                                      , out llvmArgs[ 0 ]
+                                      , llvmArgs
                                       , ( uint )llvmArgs.Length
                                       , string.Empty
                                       );
@@ -673,7 +689,7 @@ namespace Llvm.NET.Instructions
         /// former makes the first index explicit. LLVM requires an explicit first index, even if it is
         /// zero, in order to properly compute the offset for a given element in an aggregate type.
         /// </remarks>
-        [Obsolete("Use overload that takes a pointer type and opaque pointer")]
+        [Obsolete( "Use overload that takes a pointer type and opaque pointer" )]
         public Value GetElementPtrInBounds( Value pointer, IEnumerable<Value> args )
         {
             return GetElementPtrInBounds( pointer.NativeType, pointer, args );
@@ -702,13 +718,13 @@ namespace Llvm.NET.Instructions
         /// former makes the first index explicit. LLVM requires an explicit first index, even if it is
         /// zero, in order to properly compute the offset for a given element in an aggregate type.
         /// </remarks>
-        public Value GetElementPtrInBounds(ITypeRef type, Value pointer, IEnumerable<Value> args )
+        public Value GetElementPtrInBounds( ITypeRef type, Value pointer, IEnumerable<Value> args )
         {
-            var llvmArgs = GetValidatedGEPArgs(type, pointer, args );
+            var llvmArgs = GetValidatedGEPArgs( type, pointer, args );
             var hRetVal = LLVMBuildInBoundsGEP2( BuilderHandle
-                                               , type.GetTypeRef()
+                                               , type.GetTypeRef( )
                                                , pointer.ValueHandle
-                                               , out llvmArgs[ 0 ]
+                                               , llvmArgs
                                                , ( uint )llvmArgs.Length
                                                , string.Empty
                                                );
@@ -795,7 +811,7 @@ namespace Llvm.NET.Instructions
         /// </remarks>
         public static Value ConstGetElementPtrInBounds( Value pointer, params Value[ ] args )
         {
-            var llvmArgs = GetValidatedGEPArgs(pointer.NativeType, pointer, args );
+            var llvmArgs = GetValidatedGEPArgs( pointer.NativeType, pointer, args );
             var handle = LLVMConstInBoundsGEP( pointer.ValueHandle, out llvmArgs[ 0 ], ( uint )llvmArgs.Length );
             return Value.FromHandle( handle );
         }
@@ -1418,7 +1434,6 @@ namespace Llvm.NET.Instructions
         /// <param name="destination">Destination pointer of the memmove</param>
         /// <param name="source">Source pointer of the memmove</param>
         /// <param name="len">length of the data to copy</param>
-        /// <param name="align">Alignment of the data for the copy</param>
         /// <param name="isVolatile">Flag to indicate if the copy involves volatile data such as physical registers</param>
         /// <returns><see cref="Intrinsic"/> call for the memmove</returns>
         /// <remarks>
@@ -1426,7 +1441,7 @@ namespace Llvm.NET.Instructions
         /// the provided values and generate a more specific call without the need to provide overloaded forms of this
         /// method and otherwise complicating the calling code.
         /// </remarks>
-        public Value MemMove( Value destination, Value source, Value len, Int32 align, bool isVolatile )
+        public Value MemMove( Value destination, Value source, Value len, bool isVolatile )
         {
             destination.ValidateNotNull( nameof( destination ) );
             source.ValidateNotNull( nameof( source ) );
@@ -1473,7 +1488,7 @@ namespace Llvm.NET.Instructions
             // find the name of the appropriate overloaded form
             var func = module.GetIntrinsicDeclaration( "llvm.memmove.p.p.i", dstPtrType, srcPtrType, len.NativeType );
 
-            var call = BuildCall( func, destination, source, len, module.Context.CreateConstant( align ), module.Context.CreateConstant( isVolatile ) );
+            var call = BuildCall( func, destination, source, len, module.Context.CreateConstant( isVolatile ) );
             return Value.FromHandle( call );
         }
 
@@ -1481,7 +1496,6 @@ namespace Llvm.NET.Instructions
         /// <param name="destination">Destination pointer of the memset</param>
         /// <param name="value">fill value for the memset</param>
         /// <param name="len">length of the data to fill</param>
-        /// <param name="align">ALignment of the data for the fill</param>
         /// <param name="isVolatile">Flag to indicate if the fill involves volatile data such as physical registers</param>
         /// <returns><see cref="Intrinsic"/> call for the memset</returns>
         /// <remarks>
@@ -1489,7 +1503,7 @@ namespace Llvm.NET.Instructions
         /// the provided values and generate a more specific call without the need to provide overloaded forms of this
         /// method and otherwise complicating the calling code.
         /// </remarks>
-        public Value MemSet( Value destination, Value value, Value len, Int32 align, bool isVolatile )
+        public Value MemSet( Value destination, Value value, Value len, bool isVolatile )
         {
             destination.ValidateNotNull( nameof( destination ) );
             value.ValidateNotNull( nameof( value ) );
@@ -1527,14 +1541,13 @@ namespace Llvm.NET.Instructions
                 destination = BitCast( destination, dstPtrType );
             }
 
-            // find the name of the appropriate overloaded form
+            // find the appropriate overloaded form of the function
             var func = module.GetIntrinsicDeclaration( "llvm.memset.p.i", dstPtrType, value.NativeType );
 
             var call = BuildCall( func
                                 , destination
                                 , value
                                 , len
-                                , module.Context.CreateConstant( align )
                                 , module.Context.CreateConstant( isVolatile )
                                 );
 
@@ -1602,12 +1615,48 @@ namespace Llvm.NET.Instructions
             return Call( function, lhs, rhs );
         }
 
-        internal static LLVMValueRef[ ] GetValidatedGEPArgs(ITypeRef type, Value pointer, IEnumerable<Value> args )
+        internal static LLVMValueRef[ ] GetValidatedGEPArgs( ITypeRef type, Value pointer, IEnumerable<Value> args )
         {
-            // TODO: VALIDATE pointer.Type is opaque or type == pointer.type
-            if( type.Kind != TypeKind.Pointer )
+            type.ValidateNotDefault( nameof( type ) );
+
+            if( !( pointer.NativeType is IPointerType pointerType ) )
             {
                 throw new ArgumentException( Resources.Pointer_value_expected, nameof( pointer ) );
+            }
+
+            if( pointerType.ElementType.GetTypeRef( ) != type.GetTypeRef( ) )
+            {
+                throw new ArgumentException( "GEP pointer and element type don't agree!" );
+            }
+
+            // start with the base pointer as type for first index
+            ITypeRef elementType = type.CreatePointerType();
+            foreach( var index in args )
+            {
+                switch( elementType )
+                {
+                case ISequenceType s:
+                    elementType = s.ElementType;
+                    break;
+
+                case IStructType st:
+                    if( !( index is ConstantInt constIndex ) )
+                    {
+                        throw new ArgumentException( "GEP index into a structure type must be constant" );
+                    }
+
+                    long indexValue = constIndex.SignExtendedValue;
+                    if( indexValue >= st.Members.Count || indexValue < 0 )
+                    {
+                        throw new ArgumentException( $"GEP index {indexValue} is out of range for {st.Name}" );
+                    }
+
+                    elementType = st.Members[ ( int )constIndex.SignExtendedValue ];
+                    break;
+
+                default:
+                    throw new ArgumentException( $"GEP index through a non-aggregate type {elementType}" );
+                }
             }
 
             // if not an array already, pull from source enumerable into an array only once
@@ -1627,7 +1676,7 @@ namespace Llvm.NET.Instructions
         }
         internal LLVMBuilderRef BuilderHandle { get; }
 
-        private static void ValidateStructGepArgs([ValidatedNotNull] Value pointer, uint index)
+        private static void ValidateStructGepArgs( [ValidatedNotNull] Value pointer, uint index )
         {
             pointer.ValidateNotNull( nameof( pointer ) );
 
@@ -1744,17 +1793,8 @@ namespace Llvm.NET.Instructions
         private LLVMValueRef BuildCall( Value func, IReadOnlyList<Value> args )
         {
             FunctionType sig = ValidateCallArgs( func, args );
-
             LLVMValueRef[ ] llvmArgs = args.Select( v => v.ValueHandle ).ToArray( );
-            int argCount = llvmArgs.Length;
-
-            // must always provide at least one element for successful marshaling/interop, but tell LLVM there are none
-            if( argCount == 0 )
-            {
-                llvmArgs = new LLVMValueRef[ 1 ];
-            }
-
-            return LLVMBuildCall2( BuilderHandle, sig.TypeHandle, func.ValueHandle, out llvmArgs[ 0 ], ( uint )argCount, string.Empty );
+            return LLVMBuildCall2( BuilderHandle, sig.TypeHandle, func.ValueHandle, llvmArgs, ( uint )llvmArgs.Length, string.Empty );
         }
     }
 }

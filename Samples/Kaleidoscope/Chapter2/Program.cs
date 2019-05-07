@@ -3,7 +3,6 @@
 // </copyright>
 
 using System;
-using System.Diagnostics.CodeAnalysis;
 using System.Reactive.Linq;
 using System.Reflection;
 using Kaleidoscope.Grammar;
