@@ -7121,6 +7121,18 @@ references:
   commentId: T:Llvm.NET.Instructions.Alloca
   fullName: Llvm.NET.Instructions.Alloca
   nameWithType: Alloca
+- uid: Llvm.NET.Instructions.Alloca.ElementType
+  name: ElementType
+  href: api/Llvm.NET.Instructions.Alloca.ElementType.html#Llvm_NET_Instructions_Alloca_ElementType
+  commentId: P:Llvm.NET.Instructions.Alloca.ElementType
+  fullName: Llvm.NET.Instructions.Alloca.ElementType
+  nameWithType: Alloca.ElementType
+- uid: Llvm.NET.Instructions.Alloca.ElementType*
+  name: ElementType
+  href: api/Llvm.NET.Instructions.Alloca.ElementType.html
+  commentId: Overload:Llvm.NET.Instructions.Alloca.ElementType
+  fullName: Llvm.NET.Instructions.Alloca.ElementType
+  nameWithType: Alloca.ElementType
 - uid: Llvm.NET.Instructions.AtomicCmpXchg
   name: AtomicCmpXchg
   href: api/Llvm.NET.Instructions.AtomicCmpXchg.html
@@ -8348,24 +8360,24 @@ references:
   commentId: Overload:Llvm.NET.Instructions.InstructionBuilder.MemCpy
   fullName: Llvm.NET.Instructions.InstructionBuilder.MemCpy
   nameWithType: InstructionBuilder.MemCpy
-- uid: Llvm.NET.Instructions.InstructionBuilder.MemMove(Llvm.NET.Values.Value,Llvm.NET.Values.Value,Llvm.NET.Values.Value,System.Int32,System.Boolean)
-  name: MemMove(Value, Value, Value, Int32, Boolean)
-  href: api/Llvm.NET.Instructions.InstructionBuilder.MemMove.html#Llvm_NET_Instructions_InstructionBuilder_MemMove_Llvm_NET_Values_Value_Llvm_NET_Values_Value_Llvm_NET_Values_Value_System_Int32_System_Boolean_
-  commentId: M:Llvm.NET.Instructions.InstructionBuilder.MemMove(Llvm.NET.Values.Value,Llvm.NET.Values.Value,Llvm.NET.Values.Value,System.Int32,System.Boolean)
-  fullName: Llvm.NET.Instructions.InstructionBuilder.MemMove(Llvm.NET.Values.Value, Llvm.NET.Values.Value, Llvm.NET.Values.Value, System.Int32, System.Boolean)
-  nameWithType: InstructionBuilder.MemMove(Value, Value, Value, Int32, Boolean)
+- uid: Llvm.NET.Instructions.InstructionBuilder.MemMove(Llvm.NET.Values.Value,Llvm.NET.Values.Value,Llvm.NET.Values.Value,System.Boolean)
+  name: MemMove(Value, Value, Value, Boolean)
+  href: api/Llvm.NET.Instructions.InstructionBuilder.MemMove.html#Llvm_NET_Instructions_InstructionBuilder_MemMove_Llvm_NET_Values_Value_Llvm_NET_Values_Value_Llvm_NET_Values_Value_System_Boolean_
+  commentId: M:Llvm.NET.Instructions.InstructionBuilder.MemMove(Llvm.NET.Values.Value,Llvm.NET.Values.Value,Llvm.NET.Values.Value,System.Boolean)
+  fullName: Llvm.NET.Instructions.InstructionBuilder.MemMove(Llvm.NET.Values.Value, Llvm.NET.Values.Value, Llvm.NET.Values.Value, System.Boolean)
+  nameWithType: InstructionBuilder.MemMove(Value, Value, Value, Boolean)
 - uid: Llvm.NET.Instructions.InstructionBuilder.MemMove*
   name: MemMove
   href: api/Llvm.NET.Instructions.InstructionBuilder.MemMove.html
   commentId: Overload:Llvm.NET.Instructions.InstructionBuilder.MemMove
   fullName: Llvm.NET.Instructions.InstructionBuilder.MemMove
   nameWithType: InstructionBuilder.MemMove
-- uid: Llvm.NET.Instructions.InstructionBuilder.MemSet(Llvm.NET.Values.Value,Llvm.NET.Values.Value,Llvm.NET.Values.Value,System.Int32,System.Boolean)
-  name: MemSet(Value, Value, Value, Int32, Boolean)
-  href: api/Llvm.NET.Instructions.InstructionBuilder.MemSet.html#Llvm_NET_Instructions_InstructionBuilder_MemSet_Llvm_NET_Values_Value_Llvm_NET_Values_Value_Llvm_NET_Values_Value_System_Int32_System_Boolean_
-  commentId: M:Llvm.NET.Instructions.InstructionBuilder.MemSet(Llvm.NET.Values.Value,Llvm.NET.Values.Value,Llvm.NET.Values.Value,System.Int32,System.Boolean)
-  fullName: Llvm.NET.Instructions.InstructionBuilder.MemSet(Llvm.NET.Values.Value, Llvm.NET.Values.Value, Llvm.NET.Values.Value, System.Int32, System.Boolean)
-  nameWithType: InstructionBuilder.MemSet(Value, Value, Value, Int32, Boolean)
+- uid: Llvm.NET.Instructions.InstructionBuilder.MemSet(Llvm.NET.Values.Value,Llvm.NET.Values.Value,Llvm.NET.Values.Value,System.Boolean)
+  name: MemSet(Value, Value, Value, Boolean)
+  href: api/Llvm.NET.Instructions.InstructionBuilder.MemSet.html#Llvm_NET_Instructions_InstructionBuilder_MemSet_Llvm_NET_Values_Value_Llvm_NET_Values_Value_Llvm_NET_Values_Value_System_Boolean_
+  commentId: M:Llvm.NET.Instructions.InstructionBuilder.MemSet(Llvm.NET.Values.Value,Llvm.NET.Values.Value,Llvm.NET.Values.Value,System.Boolean)
+  fullName: Llvm.NET.Instructions.InstructionBuilder.MemSet(Llvm.NET.Values.Value, Llvm.NET.Values.Value, Llvm.NET.Values.Value, System.Boolean)
+  nameWithType: InstructionBuilder.MemSet(Value, Value, Value, Boolean)
 - uid: Llvm.NET.Instructions.InstructionBuilder.MemSet*
   name: MemSet
   href: api/Llvm.NET.Instructions.InstructionBuilder.MemSet.html

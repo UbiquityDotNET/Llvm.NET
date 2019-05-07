@@ -371,7 +371,10 @@ scope map now stores the alloca instructions for the variable.</p>
 {
     var value = LookupVariable( reference.Name );
 
-    return InstructionBuilder.Load( value )
+    // since the Alloca is created as a non-opaque pointer it is OK to just use the
+    // ElementType. If full opaque pointer support was used, then the Lookup map
+    // would need to include the type of the value allocated.
+    return InstructionBuilder.Load( value.ElementType, value )
                              .RegisterName( reference.Name );
 }
 </code></pre><h3 id="update-visitor-for-conditionalexpression">Update Visitor for ConditionalExpression</h3>
@@ -426,7 +429,11 @@ expression.</p>
     // generate continue block
     function.BasicBlocks.Add( continueBlock );
     InstructionBuilder.PositionAtEnd( continueBlock );
-    return InstructionBuilder.Load( result )
+
+    // since the Alloca is created as a non-opaque pointer it is OK to just use the
+    // ElementType. If full opaque pointer support was used, then the Lookup map
+    // would need to include the type of the value allocated.
+    return InstructionBuilder.Load( result.ElementType, result )
                              .RegisterName( &quot;ifresult&quot; );
 }
 </code></pre><h3 id="update-visitor-for-forinexpression">Update Visitor for ForInExpression</h3>
@@ -492,7 +499,10 @@ use of load/store for the variables and removal of the manually generated PHI no
             return null;
         }
 
-        var curVar = InstructionBuilder.Load( allocaVar )
+        // since the Alloca is created as a non-opaque pointer it is OK to just use the
+        // ElementType. If full opaque pointer support was used, then the Lookup map
+        // would need to include the type of the value allocated.
+        var curVar = InstructionBuilder.Load( allocaVar.ElementType, allocaVar )
                                        .RegisterName( varName );
         var nextVar = InstructionBuilder.FAdd( curVar, stepValue )
                                         .RegisterName( &quot;nextvar&quot; );
@@ -701,7 +711,7 @@ without needing to manually deal with PHI nodes or generate SSA form! Now, that&
             <span class="pull-right">
               <a href="#top">Back to top</a>
             </span>
-            Copyright (C) 2017, Dot NET Foundation<br><strong>Build:</strong> 8.0.0-alpha.0.0.ci-BLD.462818004
+            Copyright (C) 2017, Dot NET Foundation<br><strong>Build:</strong> 8.0.0-alpha.0.0.ci-BLD.463084516
             
           </div>
         </div>
