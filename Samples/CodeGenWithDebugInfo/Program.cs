@@ -187,6 +187,7 @@ namespace TestDebugInfo
                         File.WriteAllText( "test.ll", module.WriteToString( ) );
                         TargetDetails.TargetMachine.EmitToFile( module, "test.o", CodeGenFileType.ObjectFile );
                         TargetDetails.TargetMachine.EmitToFile( module, "test.s", CodeGenFileType.AssemblySource );
+                        Console.WriteLine( "Generated test.bc, test.ll, test.o, and test.s" );
                     }
                 }
             }

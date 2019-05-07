@@ -48,6 +48,9 @@ namespace Llvm.NET.DebugInfo
             DebugMembers = new ReadOnlyCollection<DebugMemberInfo>( debugElements as IList<DebugMemberInfo> ?? debugElements.ToList( ) );
 
             NativeType = module.Context.CreateStructType( nativeName, packed, debugElements.Select( e => e.DebugType ).ToArray( ) );
+
+            // create a temp opaque type to act as scope for members
+            // this is RAUW with the full struct once it is defined
             DIType = module.DIBuilder.CreateReplaceableCompositeType( Tag.StructureType
                                                                     , name
                                                                     , scope

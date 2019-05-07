@@ -839,6 +839,11 @@ namespace Llvm.NET
 
         internal Context( LLVMContextRef contextRef )
         {
+            if( contextRef == LLVMContextRef.Zero )
+            {
+                throw new ArgumentNullException( nameof( contextRef ) );
+            }
+
             ContextHandle = contextRef;
             ContextCache.Add( this );
             ActiveHandler = new WrappedNativeCallback<LLVMDiagnosticHandler>( DiagnosticHandler );
