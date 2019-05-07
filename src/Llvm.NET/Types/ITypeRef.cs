@@ -7,8 +7,6 @@ using Llvm.NET.Interop;
 using Llvm.NET.Values;
 using Ubiquity.ArgValidators;
 
-using static Llvm.NET.Interop.NativeMethods;
-
 // Interface+internal type matches file name
 #pragma warning disable SA1649
 

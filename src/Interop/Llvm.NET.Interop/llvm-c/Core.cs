@@ -2585,7 +2585,7 @@ namespace Llvm.NET.Interop
 
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
-        public static extern LLVMValueRef LLVMConstGEP( LLVMValueRef ConstantVal, out LLVMValueRef ConstantIndices, uint NumIndices );
+        public static extern LLVMValueRef LLVMConstGEP( LLVMValueRef ConstantVal, [MarshalAs( UnmanagedType.LPArray, ArraySubType = UnmanagedType.SysInt )]LLVMValueRef[] ConstantIndices, uint NumIndices );
 
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
@@ -4430,11 +4430,11 @@ namespace Llvm.NET.Interop
 
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
-        public static extern LLVMValueRef LLVMBuildGEP2( LLVMBuilderRef B, LLVMTypeRef Ty, LLVMValueRef Pointer, out LLVMValueRef Indices, uint NumIndices, [MarshalAs( UnmanagedType.LPStr )]string Name );
+        public static extern LLVMValueRef LLVMBuildGEP2( LLVMBuilderRef B, LLVMTypeRef Ty, LLVMValueRef Pointer, [MarshalAs( UnmanagedType.LPArray, ArraySubType = UnmanagedType.SysInt )]LLVMValueRef[] Indices, uint NumIndices, [MarshalAs( UnmanagedType.LPStr )]string Name );
 
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
-        public static extern LLVMValueRef LLVMBuildInBoundsGEP2( LLVMBuilderRef B, LLVMTypeRef Ty, LLVMValueRef Pointer, out LLVMValueRef Indices, uint NumIndices, [MarshalAs( UnmanagedType.LPStr )]string Name );
+        public static extern LLVMValueRef LLVMBuildInBoundsGEP2( LLVMBuilderRef B, LLVMTypeRef Ty, LLVMValueRef Pointer, [MarshalAs( UnmanagedType.LPArray, ArraySubType = UnmanagedType.SysInt )]LLVMValueRef[] Indices, uint NumIndices, [MarshalAs( UnmanagedType.LPStr )]string Name );
 
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
@@ -4559,7 +4559,7 @@ namespace Llvm.NET.Interop
 
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
-        public static extern LLVMValueRef LLVMBuildCall2( LLVMBuilderRef _0, LLVMTypeRef _1, LLVMValueRef Fn, out LLVMValueRef Args, uint NumArgs, [MarshalAs( UnmanagedType.LPStr )]string Name );
+        public static extern LLVMValueRef LLVMBuildCall2( LLVMBuilderRef _0, LLVMTypeRef _1, LLVMValueRef Fn, [MarshalAs( UnmanagedType.LPArray, ArraySubType = UnmanagedType.SysInt )]LLVMValueRef[] Args, uint NumArgs, [MarshalAs( UnmanagedType.LPStr )]string Name );
 
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]

@@ -3,6 +3,7 @@
 // </copyright>
 
 using Llvm.NET.Interop;
+using Llvm.NET.Types;
 
 namespace Llvm.NET.Instructions
 {
@@ -19,5 +20,13 @@ namespace Llvm.NET.Instructions
             : base( valueRef )
         {
         }
+
+        /// <summary>Gets the type of the alloca element</summary>
+        /// <remarks>
+        /// The <see cref="Llvm.NET.Values.Value.NativeType"/> of an <see cref="Alloca"/>
+        /// is always a pointer type, this provides the ElementType (e.g. the pointee type)
+        /// for the alloca.
+        /// </remarks>
+        public ITypeRef ElementType => ( ( IPointerType )NativeType ).ElementType;
     }
 }

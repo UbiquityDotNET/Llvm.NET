@@ -4,7 +4,6 @@
 
 using System.Diagnostics.CodeAnalysis;
 using Llvm.NET.Interop;
-using static Llvm.NET.Interop.NativeMethods;
 
 namespace Llvm.NET.Instructions
 {

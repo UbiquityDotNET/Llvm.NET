@@ -238,10 +238,14 @@ namespace Kaleidoscope.Chapter9
         #region VariableReferenceExpression
         public override Value Visit( VariableReferenceExpression reference )
         {
-            Alloca value = LookupVariable( reference.Name );
+            var value = LookupVariable( reference.Name );
 
             EmitLocation( reference );
-            return InstructionBuilder.Load( value )
+
+            // since the Alloca is created as a non-opaque pointer it is OK to just use the
+            // ElementType. If full opaque pointer support was used, then the Lookup map
+            // would need to include the type of the value allocated.
+            return InstructionBuilder.Load( value.ElementType, value )
                                      .RegisterName( reference.Name );
         }
         #endregion
@@ -296,7 +300,11 @@ namespace Kaleidoscope.Chapter9
             // generate continue block
             function.BasicBlocks.Add( continueBlock );
             InstructionBuilder.PositionAtEnd( continueBlock );
-            return InstructionBuilder.Load( result )
+
+            // since the Alloca is created as a non-opaque pointer it is OK to just use the
+            // ElementType. If full opaque pointer support was used, then the Lookup map
+            // would need to include the type of the value allocated.
+            return InstructionBuilder.Load( result.ElementType, result )
                                      .RegisterName( "ifresult" );
         }
         #endregion
@@ -327,7 +335,7 @@ namespace Kaleidoscope.Chapter9
             // store the value into allocated location
             InstructionBuilder.Store( startVal, allocaVar );
 
-            // Make the new basic block for the loop header
+            // Make the new basic block for the loop header.
             var loopBlock = function.AppendBasicBlock( "loop" );
 
             // Insert an explicit fall through from the current block to the loopBlock.
@@ -363,7 +371,10 @@ namespace Kaleidoscope.Chapter9
                     return null;
                 }
 
-                var curVar = InstructionBuilder.Load( allocaVar )
+                // since the Alloca is created as a non-opaque pointer it is OK to just use the
+                // ElementType. If full opaque pointer support was used, then the Lookup map
+                // would need to include the type of the value allocated.
+                var curVar = InstructionBuilder.Load( allocaVar.ElementType, allocaVar )
                                                .RegisterName( varName );
                 var nextVar = InstructionBuilder.FAdd( curVar, stepValue )
                                                 .RegisterName( "nextvar" );
@@ -470,7 +481,7 @@ namespace Kaleidoscope.Chapter9
 
         #region GetOrDeclareFunction
 
-        // Retrieves a Function" for a prototype from the current module if it exists,
+        // Retrieves a Function for a prototype from the current module if it exists,
         // otherwise declares the function and returns the newly declared function.
         private Function GetOrDeclareFunction( Prototype prototype )
         {

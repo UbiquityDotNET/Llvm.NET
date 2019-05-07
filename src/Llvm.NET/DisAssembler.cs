@@ -4,11 +4,6 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
-using System;
-using System.Runtime.InteropServices;
-using Llvm.NET.Interop;
-
-using static Llvm.NET.Interop.NativeMethods;
 
 // warning CS0649: Field 'xxx' is never assigned to, and will always have its default value 0
 #pragma warning disable 649

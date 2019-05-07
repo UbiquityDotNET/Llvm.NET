@@ -331,7 +331,7 @@ namespace TestDebugInfo
             }
 
             var loadedDst = instBuilder.SetDebugLocation( 15, 6, copyFunc.DISubProgram )
-                                       .Load( dstAddr )
+                                       .Load( fooPtr, dstAddr )
                                        .Alignment( ptrAlign );
 
             instBuilder.SetDebugLocation( 15, 13, copyFunc.DISubProgram );

@@ -4,7 +4,6 @@
 
 using System;
 using System.Diagnostics.CodeAnalysis;
-using Llvm.NET;
 using Llvm.NET.Interop;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
