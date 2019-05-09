@@ -96,22 +96,22 @@ namespace Llvm.NET.DebugInfo
             }
 
             var file = CreateFile( fileName, fileDirectory );
-            var handle = LLVMDIBuilderCreateCompileUnit( BuilderHandle
-                                                       , ( LLVMDWARFSourceLanguage )language
-                                                       , file.MetadataHandle
-                                                       , producer
-                                                       , producer.Length
-                                                       , optimized
-                                                       , compilationFlags
-                                                       , compilationFlags.Length
-                                                       , runtimeVersion
-                                                       , string.Empty
-                                                       , size_t.Zero
-                                                       , LLVMDWARFEmissionKind.LLVMDWARFEmissionFull
-                                                       , 0
-                                                       , false
-                                                       , false
-                                                       );
+            var handle = LibLLVMDIBuilderCreateCompileUnit( BuilderHandle
+                                                          , ( LibLLVMDwarfSourceLanguage )language
+                                                          , file.MetadataHandle
+                                                          , producer
+                                                          , producer.Length
+                                                          , optimized
+                                                          , compilationFlags
+                                                          , compilationFlags.Length
+                                                          , runtimeVersion
+                                                          , string.Empty
+                                                          , size_t.Zero
+                                                          , LLVMDWARFEmissionKind.LLVMDWARFEmissionFull
+                                                          , 0
+                                                          , false
+                                                          , false
+                                                          );
             var retVal = MDNode.FromHandle<DICompileUnit>( handle );
             OwningModule.DICompileUnit = retVal;
             return retVal;
