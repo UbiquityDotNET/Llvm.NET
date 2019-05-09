@@ -100,8 +100,8 @@ namespace Llvm.NET.Tests
                 const string unionSymbolName = "testUnion";
 
                 module.Layout = targetMachine.TargetData;
-                var diFile = module.DIBuilder.CreateFile( "test.c" );
-                var diCompileUnit = module.DIBuilder.CreateCompileUnit( SourceLanguage.C, "test.c", "unit-test", false, string.Empty, 0 );
+                var diFile = module.DIBuilder.CreateFile( "test.cs" );
+                var diCompileUnit = module.DIBuilder.CreateCompileUnit( SourceLanguage.CSharp, "test.cs", "unit-test", false, string.Empty, 0 );
 
                 // Create basic types used in this compilation
                 var i32 = new DebugBasicType( module.Context.Int32Type, module, "int", DiTypeKind.Signed );

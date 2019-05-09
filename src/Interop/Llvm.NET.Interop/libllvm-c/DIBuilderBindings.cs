@@ -14,12 +14,61 @@ using System.Security;
 
 namespace Llvm.NET.Interop
 {
+    [GeneratedCode("LlvmBindingsGenerator","2.17941.31104.49410")]
+    public enum LibLLVMDwarfSourceLanguage : global::System.Int32
+    {
+        LibLLVMDwarfSourceLanguageC89 = 1,
+        LibLLVMDwarfSourceLanguageC = 2,
+        LibLLVMDwarfSourceLanguageAda83 = 3,
+        LibLLVMDwarfSourceLanguageC_plus_plus = 4,
+        LibLLVMDwarfSourceLanguageCobol74 = 5,
+        LibLLVMDwarfSourceLanguageCobol85 = 6,
+        LibLLVMDwarfSourceLanguageFortran77 = 7,
+        LibLLVMDwarfSourceLanguageFortran90 = 8,
+        LibLLVMDwarfSourceLanguagePascal83 = 9,
+        LibLLVMDwarfSourceLanguageModula2 = 10,
+        LibLLVMDwarfSourceLanguageJava = 11,
+        LibLLVMDwarfSourceLanguageC99 = 12,
+        LibLLVMDwarfSourceLanguageAda95 = 13,
+        LibLLVMDwarfSourceLanguageFortran95 = 14,
+        LibLLVMDwarfSourceLanguagePLI = 15,
+        LibLLVMDwarfSourceLanguageObjC = 16,
+        LibLLVMDwarfSourceLanguageObjC_plus_plus = 17,
+        LibLLVMDwarfSourceLanguageUPC = 18,
+        LibLLVMDwarfSourceLanguageD = 19,
+        LibLLVMDwarfSourceLanguagePython = 20,
+        LibLLVMDwarfSourceLanguageOpenCL = 21,
+        LibLLVMDwarfSourceLanguageGo = 22,
+        LibLLVMDwarfSourceLanguageModula3 = 23,
+        LibLLVMDwarfSourceLanguageHaskell = 24,
+        LibLLVMDwarfSourceLanguageC_plus_plus_03 = 25,
+        LibLLVMDwarfSourceLanguageC_plus_plus_11 = 26,
+        LibLLVMDwarfSourceLanguageOCaml = 27,
+        LibLLVMDwarfSourceLanguageRust = 28,
+        LibLLVMDwarfSourceLanguageC11 = 29,
+        LibLLVMDwarfSourceLanguageSwift = 30,
+        LibLLVMDwarfSourceLanguageJulia = 31,
+        LibLLVMDwarfSourceLanguageDylan = 32,
+        LibLLVMDwarfSourceLanguageC_plus_plus_14 = 33,
+        LibLLVMDwarfSourceLanguageFortran03 = 34,
+        LibLLVMDwarfSourceLanguageFortran08 = 35,
+        LibLLVMDwarfSourceLanguageRenderScript = 36,
+        LibLLVMDwarfSourceLanguageBLISS = 37,
+        LibLLVMDwarfSourceLanguageMips_Assembler = 32769,
+        LibLLVMDwarfSourceLanguageGOOGLE_RenderScript = 36439,
+        LibLLVMDwarfSourceLanguageBORLAND_Delphi = 45056,
+    }
+
     public static partial class NativeMethods
     {
         /// createEnumerator - Create a single enumerator value.
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern LLVMMetadataRef LLVMDIBuilderCreateEnumeratorValue( LLVMDIBuilderRef D, [MarshalAs( UnmanagedType.LPStr )]string Name, System.Int64 Val );
+
+        [SuppressUnmanagedCodeSecurity]
+        [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
+        public static extern LLVMMetadataRef LibLLVMDIBuilderCreateCompileUnit( LLVMDIBuilderRef Builder, global::Llvm.NET.Interop.LibLLVMDwarfSourceLanguage Lang, LLVMMetadataRef FileRef, [MarshalAs( UnmanagedType.LPStr )]string Producer, size_t ProducerLen, [MarshalAs( UnmanagedType.Bool )]bool isOptimized, [MarshalAs( UnmanagedType.LPStr )]string Flags, size_t FlagsLen, uint RuntimeVer, [MarshalAs( UnmanagedType.LPStr )]string SplitName, size_t SplitNameLen, LLVMDWARFEmissionKind Kind, uint DWOId, [MarshalAs( UnmanagedType.Bool )]bool SplitDebugInlining, [MarshalAs( UnmanagedType.Bool )]bool DebugInfoForProfiling );
 
     }
 }
