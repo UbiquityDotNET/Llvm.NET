@@ -6165,12 +6165,30 @@ references:
   commentId: F:Llvm.NET.DebugInfo.SourceLanguage.Ada95
   fullName: Llvm.NET.DebugInfo.SourceLanguage.Ada95
   nameWithType: SourceLanguage.Ada95
+- uid: Llvm.NET.DebugInfo.SourceLanguage.Bliss
+  name: Bliss
+  href: api/Llvm.NET.DebugInfo.SourceLanguage.html#Llvm_NET_DebugInfo_SourceLanguage_Bliss
+  commentId: F:Llvm.NET.DebugInfo.SourceLanguage.Bliss
+  fullName: Llvm.NET.DebugInfo.SourceLanguage.Bliss
+  nameWithType: SourceLanguage.Bliss
+- uid: Llvm.NET.DebugInfo.SourceLanguage.BorlandDelphi
+  name: BorlandDelphi
+  href: api/Llvm.NET.DebugInfo.SourceLanguage.html#Llvm_NET_DebugInfo_SourceLanguage_BorlandDelphi
+  commentId: F:Llvm.NET.DebugInfo.SourceLanguage.BorlandDelphi
+  fullName: Llvm.NET.DebugInfo.SourceLanguage.BorlandDelphi
+  nameWithType: SourceLanguage.BorlandDelphi
 - uid: Llvm.NET.DebugInfo.SourceLanguage.C
   name: C
   href: api/Llvm.NET.DebugInfo.SourceLanguage.html#Llvm_NET_DebugInfo_SourceLanguage_C
   commentId: F:Llvm.NET.DebugInfo.SourceLanguage.C
   fullName: Llvm.NET.DebugInfo.SourceLanguage.C
   nameWithType: SourceLanguage.C
+- uid: Llvm.NET.DebugInfo.SourceLanguage.C11
+  name: C11
+  href: api/Llvm.NET.DebugInfo.SourceLanguage.html#Llvm_NET_DebugInfo_SourceLanguage_C11
+  commentId: F:Llvm.NET.DebugInfo.SourceLanguage.C11
+  fullName: Llvm.NET.DebugInfo.SourceLanguage.C11
+  nameWithType: SourceLanguage.C11
 - uid: Llvm.NET.DebugInfo.SourceLanguage.C89
   name: C89
   href: api/Llvm.NET.DebugInfo.SourceLanguage.html#Llvm_NET_DebugInfo_SourceLanguage_C89
@@ -6213,18 +6231,42 @@ references:
   commentId: F:Llvm.NET.DebugInfo.SourceLanguage.CPlusPlus11
   fullName: Llvm.NET.DebugInfo.SourceLanguage.CPlusPlus11
   nameWithType: SourceLanguage.CPlusPlus11
+- uid: Llvm.NET.DebugInfo.SourceLanguage.CPlusPlus14
+  name: CPlusPlus14
+  href: api/Llvm.NET.DebugInfo.SourceLanguage.html#Llvm_NET_DebugInfo_SourceLanguage_CPlusPlus14
+  commentId: F:Llvm.NET.DebugInfo.SourceLanguage.CPlusPlus14
+  fullName: Llvm.NET.DebugInfo.SourceLanguage.CPlusPlus14
+  nameWithType: SourceLanguage.CPlusPlus14
+- uid: Llvm.NET.DebugInfo.SourceLanguage.CSharp
+  name: CSharp
+  href: api/Llvm.NET.DebugInfo.SourceLanguage.html#Llvm_NET_DebugInfo_SourceLanguage_CSharp
+  commentId: F:Llvm.NET.DebugInfo.SourceLanguage.CSharp
+  fullName: Llvm.NET.DebugInfo.SourceLanguage.CSharp
+  nameWithType: SourceLanguage.CSharp
 - uid: Llvm.NET.DebugInfo.SourceLanguage.D
   name: D
   href: api/Llvm.NET.DebugInfo.SourceLanguage.html#Llvm_NET_DebugInfo_SourceLanguage_D
   commentId: F:Llvm.NET.DebugInfo.SourceLanguage.D
   fullName: Llvm.NET.DebugInfo.SourceLanguage.D
   nameWithType: SourceLanguage.D
-- uid: Llvm.NET.DebugInfo.SourceLanguage.Delphi
-  name: Delphi
-  href: api/Llvm.NET.DebugInfo.SourceLanguage.html#Llvm_NET_DebugInfo_SourceLanguage_Delphi
-  commentId: F:Llvm.NET.DebugInfo.SourceLanguage.Delphi
-  fullName: Llvm.NET.DebugInfo.SourceLanguage.Delphi
-  nameWithType: SourceLanguage.Delphi
+- uid: Llvm.NET.DebugInfo.SourceLanguage.Dylan
+  name: Dylan
+  href: api/Llvm.NET.DebugInfo.SourceLanguage.html#Llvm_NET_DebugInfo_SourceLanguage_Dylan
+  commentId: F:Llvm.NET.DebugInfo.SourceLanguage.Dylan
+  fullName: Llvm.NET.DebugInfo.SourceLanguage.Dylan
+  nameWithType: SourceLanguage.Dylan
+- uid: Llvm.NET.DebugInfo.SourceLanguage.Fortran03
+  name: Fortran03
+  href: api/Llvm.NET.DebugInfo.SourceLanguage.html#Llvm_NET_DebugInfo_SourceLanguage_Fortran03
+  commentId: F:Llvm.NET.DebugInfo.SourceLanguage.Fortran03
+  fullName: Llvm.NET.DebugInfo.SourceLanguage.Fortran03
+  nameWithType: SourceLanguage.Fortran03
+- uid: Llvm.NET.DebugInfo.SourceLanguage.Fortran08
+  name: Fortran08
+  href: api/Llvm.NET.DebugInfo.SourceLanguage.html#Llvm_NET_DebugInfo_SourceLanguage_Fortran08
+  commentId: F:Llvm.NET.DebugInfo.SourceLanguage.Fortran08
+  fullName: Llvm.NET.DebugInfo.SourceLanguage.Fortran08
+  nameWithType: SourceLanguage.Fortran08
 - uid: Llvm.NET.DebugInfo.SourceLanguage.Fortran77
   name: Fortran77
   href: api/Llvm.NET.DebugInfo.SourceLanguage.html#Llvm_NET_DebugInfo_SourceLanguage_Fortran77
@@ -6249,12 +6291,24 @@ references:
   commentId: F:Llvm.NET.DebugInfo.SourceLanguage.Go
   fullName: Llvm.NET.DebugInfo.SourceLanguage.Go
   nameWithType: SourceLanguage.Go
+- uid: Llvm.NET.DebugInfo.SourceLanguage.GoogleRenderScript
+  name: GoogleRenderScript
+  href: api/Llvm.NET.DebugInfo.SourceLanguage.html#Llvm_NET_DebugInfo_SourceLanguage_GoogleRenderScript
+  commentId: F:Llvm.NET.DebugInfo.SourceLanguage.GoogleRenderScript
+  fullName: Llvm.NET.DebugInfo.SourceLanguage.GoogleRenderScript
+  nameWithType: SourceLanguage.GoogleRenderScript
 - uid: Llvm.NET.DebugInfo.SourceLanguage.Haskell
   name: Haskell
   href: api/Llvm.NET.DebugInfo.SourceLanguage.html#Llvm_NET_DebugInfo_SourceLanguage_Haskell
   commentId: F:Llvm.NET.DebugInfo.SourceLanguage.Haskell
   fullName: Llvm.NET.DebugInfo.SourceLanguage.Haskell
   nameWithType: SourceLanguage.Haskell
+- uid: Llvm.NET.DebugInfo.SourceLanguage.ILAsm
+  name: ILAsm
+  href: api/Llvm.NET.DebugInfo.SourceLanguage.html#Llvm_NET_DebugInfo_SourceLanguage_ILAsm
+  commentId: F:Llvm.NET.DebugInfo.SourceLanguage.ILAsm
+  fullName: Llvm.NET.DebugInfo.SourceLanguage.ILAsm
+  nameWithType: SourceLanguage.ILAsm
 - uid: Llvm.NET.DebugInfo.SourceLanguage.Invalid
   name: Invalid
   href: api/Llvm.NET.DebugInfo.SourceLanguage.html#Llvm_NET_DebugInfo_SourceLanguage_Invalid
@@ -6267,12 +6321,18 @@ references:
   commentId: F:Llvm.NET.DebugInfo.SourceLanguage.Java
   fullName: Llvm.NET.DebugInfo.SourceLanguage.Java
   nameWithType: SourceLanguage.Java
-- uid: Llvm.NET.DebugInfo.SourceLanguage.LlvmMipsAssembler
-  name: LlvmMipsAssembler
-  href: api/Llvm.NET.DebugInfo.SourceLanguage.html#Llvm_NET_DebugInfo_SourceLanguage_LlvmMipsAssembler
-  commentId: F:Llvm.NET.DebugInfo.SourceLanguage.LlvmMipsAssembler
-  fullName: Llvm.NET.DebugInfo.SourceLanguage.LlvmMipsAssembler
-  nameWithType: SourceLanguage.LlvmMipsAssembler
+- uid: Llvm.NET.DebugInfo.SourceLanguage.Julia
+  name: Julia
+  href: api/Llvm.NET.DebugInfo.SourceLanguage.html#Llvm_NET_DebugInfo_SourceLanguage_Julia
+  commentId: F:Llvm.NET.DebugInfo.SourceLanguage.Julia
+  fullName: Llvm.NET.DebugInfo.SourceLanguage.Julia
+  nameWithType: SourceLanguage.Julia
+- uid: Llvm.NET.DebugInfo.SourceLanguage.MipsAssembler
+  name: MipsAssembler
+  href: api/Llvm.NET.DebugInfo.SourceLanguage.html#Llvm_NET_DebugInfo_SourceLanguage_MipsAssembler
+  commentId: F:Llvm.NET.DebugInfo.SourceLanguage.MipsAssembler
+  fullName: Llvm.NET.DebugInfo.SourceLanguage.MipsAssembler
+  nameWithType: SourceLanguage.MipsAssembler
 - uid: Llvm.NET.DebugInfo.SourceLanguage.Modula2
   name: Modula2
   href: api/Llvm.NET.DebugInfo.SourceLanguage.html#Llvm_NET_DebugInfo_SourceLanguage_Modula2
@@ -6333,6 +6393,18 @@ references:
   commentId: F:Llvm.NET.DebugInfo.SourceLanguage.RenderScript
   fullName: Llvm.NET.DebugInfo.SourceLanguage.RenderScript
   nameWithType: SourceLanguage.RenderScript
+- uid: Llvm.NET.DebugInfo.SourceLanguage.Rust
+  name: Rust
+  href: api/Llvm.NET.DebugInfo.SourceLanguage.html#Llvm_NET_DebugInfo_SourceLanguage_Rust
+  commentId: F:Llvm.NET.DebugInfo.SourceLanguage.Rust
+  fullName: Llvm.NET.DebugInfo.SourceLanguage.Rust
+  nameWithType: SourceLanguage.Rust
+- uid: Llvm.NET.DebugInfo.SourceLanguage.Swift
+  name: Swift
+  href: api/Llvm.NET.DebugInfo.SourceLanguage.html#Llvm_NET_DebugInfo_SourceLanguage_Swift
+  commentId: F:Llvm.NET.DebugInfo.SourceLanguage.Swift
+  fullName: Llvm.NET.DebugInfo.SourceLanguage.Swift
+  nameWithType: SourceLanguage.Swift
 - uid: Llvm.NET.DebugInfo.SourceLanguage.UPC
   name: UPC
   href: api/Llvm.NET.DebugInfo.SourceLanguage.html#Llvm_NET_DebugInfo_SourceLanguage_UPC
