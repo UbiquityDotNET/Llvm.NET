@@ -32,7 +32,7 @@ namespace Llvm.NET.Interop
         /// <returns>
         /// <see cref="ValueKind"/> for <paramref name="valueRef"/>
         /// </returns>
-        public static ValueKind LLVMGetValueIdAsKind( LLVMValueRef valueRef ) => ( ValueKind )LLVMGetValueID( valueRef );
+        public static ValueKind LLVMGetValueIdAsKind( LLVMValueRef valueRef ) => ( ValueKind )LibLLVMGetValueID( valueRef );
 
         /// <summary>Dynamically loads a DLL from a directory dependent on the current architecture</summary>
         /// <param name="moduleName">name of the DLL</param>

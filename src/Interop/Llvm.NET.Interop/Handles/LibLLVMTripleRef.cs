@@ -18,16 +18,16 @@ namespace Llvm.NET.Interop
 {
     [SecurityCritical]
     [GeneratedCode("LlvmBindingsGenerator","2.17941.31104.49410")]
-    public class LLVMPassRegistryRef
+    public class LibLLVMTripleRef
         : LlvmObjectRef
     {
-        public LLVMPassRegistryRef( IntPtr handle, bool owner )
+        public LibLLVMTripleRef( IntPtr handle, bool owner )
             : base( owner )
         {
             SetHandle( handle );
         }
 
-        public static LLVMPassRegistryRef Zero { get; } = new LLVMPassRegistryRef(IntPtr.Zero, false);
+        public static LibLLVMTripleRef Zero { get; } = new LibLLVMTripleRef(IntPtr.Zero, false);
 
         [SecurityCritical]
         protected override bool ReleaseHandle( )
@@ -38,17 +38,17 @@ namespace Llvm.NET.Interop
 
             if( prevHandle != IntPtr.Zero )
             {
-                LLVMPassRegistryDispose( handle );
+                LibLLVMDisposeTriple( handle );
             }
             return true;
         }
 
-        private LLVMPassRegistryRef( )
+        private LibLLVMTripleRef( )
             : base( true )
         {
         }
 
         [DllImport( NativeMethods.LibraryPath, CallingConvention = CallingConvention.Cdecl )]
-        private static extern void LLVMPassRegistryDispose( IntPtr p );
+        private static extern void LibLLVMDisposeTriple( IntPtr p );
     }
 }

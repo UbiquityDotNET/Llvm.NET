@@ -26,7 +26,7 @@ namespace Llvm.NET.DebugInfo
         public LlvmMetadata ExtraData => Operands[ 4 ];
 
         /// <summary>Gets the Class type extra data for a pointer to member type</summary>
-        public DIType ClassType => Tag != Tag.PtrToMemberType ? null : GetOperand<DIType>( 4 );
+        public DIType ClassType => Tag != Tag.PointerToMemberType ? null : GetOperand<DIType>( 4 );
 
         /// <summary>Gets the ObjCProperty extra data</summary>
         public DIObjCProperty ObjCProperty => GetOperand<DIObjCProperty>( 4 );
@@ -50,17 +50,9 @@ namespace Llvm.NET.DebugInfo
 
         /// <summary>Gets the constant for a static member</summary>
         public Constant Constant
-        {
-            get
-            {
-                if( Tag == Tag.Member && DebugInfoFlags.HasFlag( DebugInfoFlags.StaticMember ) )
-                {
-                    return GetOperand<ConstantAsMetadata>( 4 )?.Value as Constant;
-                }
-
-                return null;
-            }
-        }
+            => Tag == Tag.Member && DebugInfoFlags.HasFlag( DebugInfoFlags.StaticMember )
+                    ? GetOperand<ConstantAsMetadata>( 4 )?.Value as Constant
+                    : null;
 
         /// <summary>Initializes a new instance of the <see cref="DIDerivedType"/> class from an <see cref="LLVMMetadataRef"/></summary>
         /// <param name="handle">Handle to wrap</param>

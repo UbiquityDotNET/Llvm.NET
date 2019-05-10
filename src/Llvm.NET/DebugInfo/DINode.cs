@@ -13,7 +13,7 @@ namespace Llvm.NET.DebugInfo
         : MDNode
     {
         /// <summary>Gets the Dwarf tag for the node</summary>
-        public Tag Tag => MetadataHandle == default ? ( Tag )ushort.MaxValue : ( Tag )LLVMDIDescriptorGetTag( MetadataHandle );
+        public Tag Tag => MetadataHandle == default ? Tag.None : ( Tag )LibLLVMDIDescriptorGetTag( MetadataHandle );
 
         internal DINode( LLVMMetadataRef handle )
             : base( handle )

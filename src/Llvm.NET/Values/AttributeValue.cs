@@ -128,7 +128,7 @@ namespace Llvm.NET.Values
         /// <returns>Attribute as a string</returns>
         public override string ToString( )
         {
-            return LLVMAttributeToString( NativeAttribute );
+            return LibLLVMAttributeToString( NativeAttribute );
         }
 
         /// <summary>Tests attributes for equality</summary>

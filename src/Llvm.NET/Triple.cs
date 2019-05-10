@@ -42,156 +42,156 @@ namespace Llvm.NET
         public enum ArchType
         {
             /// <summary>Invalid or unknown architecture</summary>
-            UnknownArch = LLVMTripleArchType.LlvmTripleArchType_UnknownArch,
+            UnknownArch = LibLLVMTripleArchType.LibLLVMTripleArchType_UnknownArch,
 
             /// <summary>ARM (little endian): arm, armv.*, xscale</summary>
-            Arm = LLVMTripleArchType.LlvmTripleArchType_arm,
+            Arm = LibLLVMTripleArchType.LibLLVMTripleArchType_arm,
 
             /// <summary>ARM (big endian): armeb</summary>
-            Armeb = LLVMTripleArchType.LlvmTripleArchType_armeb,
+            Armeb = LibLLVMTripleArchType.LibLLVMTripleArchType_armeb,
 
             /// <summary>AArch64 (little endian): aarch64</summary>
-            Aarch64 = LLVMTripleArchType.LlvmTripleArchType_aarch64,
+            Aarch64 = LibLLVMTripleArchType.LibLLVMTripleArchType_aarch64,
 
             /// <summary>AArch64 (big endian): aarch64_be</summary>
-            Aarch64_be = LLVMTripleArchType.LlvmTripleArchType_aarch64_be,
+            Aarch64_be = LibLLVMTripleArchType.LibLLVMTripleArchType_aarch64_be,
 
             /// <summary>Synopsis ARC</summary>
-            Arc = LLVMTripleArchType.LlvmTripleArchType_arc,
+            Arc = LibLLVMTripleArchType.LibLLVMTripleArchType_arc,
 
             /// <summary>AVR: Atmel AVR micro-controller</summary>
-            Avr = LLVMTripleArchType.LlvmTripleArchType_avr,
+            Avr = LibLLVMTripleArchType.LibLLVMTripleArchType_avr,
 
             /// <summary>eBPF or extended BPF or 64-bit BPF (little endian)</summary>
-            BPFel = LLVMTripleArchType.LlvmTripleArchType_bpfel,
+            BPFel = LibLLVMTripleArchType.LibLLVMTripleArchType_bpfel,
 
             /// <summary>eBPF or extended BPF or 64-bit BPF (big endian)</summary>
-            BPFeb = LLVMTripleArchType.LlvmTripleArchType_bpfeb,
+            BPFeb = LibLLVMTripleArchType.LibLLVMTripleArchType_bpfeb,
 
             /// <summary>Hexagon processor</summary>
-            Hexagon = LLVMTripleArchType.LlvmTripleArchType_hexagon,
+            Hexagon = LibLLVMTripleArchType.LibLLVMTripleArchType_hexagon,
 
             /// <summary>MIPS: mips, mipsallegrex</summary>
-            MIPS = LLVMTripleArchType.LlvmTripleArchType_mips,
+            MIPS = LibLLVMTripleArchType.LibLLVMTripleArchType_mips,
 
             /// <summary>MIPSEL: mipsel, mipsallegrexel</summary>
-            MIPSel = LLVMTripleArchType.LlvmTripleArchType_mipsel,
+            MIPSel = LibLLVMTripleArchType.LibLLVMTripleArchType_mipsel,
 
             /// <summary>MIPS 64 bit</summary>
-            MIPS64 = LLVMTripleArchType.LlvmTripleArchType_mips64,
+            MIPS64 = LibLLVMTripleArchType.LibLLVMTripleArchType_mips64,
 
             /// <summary>MIPS 64-bit little endian</summary>
-            MIPS64el = LLVMTripleArchType.LlvmTripleArchType_mips64el,
+            MIPS64el = LibLLVMTripleArchType.LibLLVMTripleArchType_mips64el,
 
             /// <summary>MSP430</summary>
-            MSP430 = LLVMTripleArchType.LlvmTripleArchType_msp430,
+            MSP430 = LibLLVMTripleArchType.LibLLVMTripleArchType_msp430,
 
             /// <summary>PowerPC</summary>
-            PPC = LLVMTripleArchType.LlvmTripleArchType_ppc,
+            PPC = LibLLVMTripleArchType.LibLLVMTripleArchType_ppc,
 
             /// <summary>PowerPC 64-bit</summary>
-            PPC64 = LLVMTripleArchType.LlvmTripleArchType_ppc64,
+            PPC64 = LibLLVMTripleArchType.LibLLVMTripleArchType_ppc64,
 
             /// <summary>PowerPC 64-bit little endian</summary>
-            PPC64le = LLVMTripleArchType.LlvmTripleArchType_ppc64le,
+            PPC64le = LibLLVMTripleArchType.LibLLVMTripleArchType_ppc64le,
 
             /// <summary>R600 AMD GPUS HD2XXX-HD6XXX</summary>
-            R600 = LLVMTripleArchType.LlvmTripleArchType_r600,
+            R600 = LibLLVMTripleArchType.LibLLVMTripleArchType_r600,
 
             /// <summary>AMD GCN GPUs</summary>
-            AMDGCN = LLVMTripleArchType.LlvmTripleArchType_amdgcn,
+            AMDGCN = LibLLVMTripleArchType.LibLLVMTripleArchType_amdgcn,
 
             /// <summary>RISC-V (32-bit)</summary>
-            RiscV32 = LLVMTripleArchType.LlvmTripleArchType_riscv32,
+            RiscV32 = LibLLVMTripleArchType.LibLLVMTripleArchType_riscv32,
 
             /// <summary>RISC-V (64-bit)</summary>
-            RiscV64 = LLVMTripleArchType.LlvmTripleArchType_riscv64,
+            RiscV64 = LibLLVMTripleArchType.LibLLVMTripleArchType_riscv64,
 
             /// <summary>Sparc</summary>
-            Sparc = LLVMTripleArchType.LlvmTripleArchType_sparc,
+            Sparc = LibLLVMTripleArchType.LibLLVMTripleArchType_sparc,
 
             /// <summary>SPARC V9</summary>
-            Sparcv9 = LLVMTripleArchType.LlvmTripleArchType_sparcv9,
+            Sparcv9 = LibLLVMTripleArchType.LibLLVMTripleArchType_sparcv9,
 
             /// <summary>SPARC Little-Endian</summary>
-            Sparcel = LLVMTripleArchType.LlvmTripleArchType_sparcel,
+            Sparcel = LibLLVMTripleArchType.LibLLVMTripleArchType_sparcel,
 
             /// <summary>SystemZ - s390x</summary>
-            SystemZ = LLVMTripleArchType.LlvmTripleArchType_systemz,
+            SystemZ = LibLLVMTripleArchType.LibLLVMTripleArchType_systemz,
 
             /// <summary>TCE</summary>
             /// <seealso href="http://tce.cs.tut.fi"/>
-            TCE = LLVMTripleArchType.LlvmTripleArchType_tce,
+            TCE = LibLLVMTripleArchType.LibLLVMTripleArchType_tce,
 
             /// <summary>TCE Little-Endian</summary>
             /// <seealso href="http://tce.cs.tut.fi"/>
-            TCEle = LLVMTripleArchType.LlvmTripleArchType_tcele,
+            TCEle = LibLLVMTripleArchType.LibLLVMTripleArchType_tcele,
 
             /// <summary>Thumb (little-endian)</summary>
-            Thumb = LLVMTripleArchType.LlvmTripleArchType_thumb,
+            Thumb = LibLLVMTripleArchType.LibLLVMTripleArchType_thumb,
 
             /// <summary>Thumb (big-endian)</summary>
-            Thumbeb = LLVMTripleArchType.LlvmTripleArchType_thumbeb,
+            Thumbeb = LibLLVMTripleArchType.LibLLVMTripleArchType_thumbeb,
 
             /// <summary>x86 i[3-9]86</summary>
-            X86 = LLVMTripleArchType.LlvmTripleArchType_x86,
+            X86 = LibLLVMTripleArchType.LibLLVMTripleArchType_x86,
 
             /// <summary>X86 64-bit (amd64)</summary>
-            X86_64 = LLVMTripleArchType.LlvmTripleArchType_x86_64,
+            X86_64 = LibLLVMTripleArchType.LibLLVMTripleArchType_x86_64,
 
             /// <summary>XCore</summary>
-            Xcore = LLVMTripleArchType.LlvmTripleArchType_xcore,
+            Xcore = LibLLVMTripleArchType.LibLLVMTripleArchType_xcore,
 
             /// <summary>NVidia PTX 32-bit</summary>
-            Nvptx = LLVMTripleArchType.LlvmTripleArchType_nvptx,
+            Nvptx = LibLLVMTripleArchType.LibLLVMTripleArchType_nvptx,
 
             /// <summary>NVidia PTX 64-bit</summary>
-            Nvptx64 = LLVMTripleArchType.LlvmTripleArchType_nvptx64,
+            Nvptx64 = LibLLVMTripleArchType.LibLLVMTripleArchType_nvptx64,
 
             /// <summary>Generic little-endian 32-bit CPU (PNaCl)</summary>
-            Le32 = LLVMTripleArchType.LlvmTripleArchType_le32,
+            Le32 = LibLLVMTripleArchType.LibLLVMTripleArchType_le32,
 
             /// <summary>Generic little-endian 64-bit CPU (PNaCl)</summary>
-            Le64 = LLVMTripleArchType.LlvmTripleArchType_le64,
+            Le64 = LibLLVMTripleArchType.LibLLVMTripleArchType_le64,
 
             /// <summary>AMD IL</summary>
-            Amdil = LLVMTripleArchType.LlvmTripleArchType_amdil,
+            Amdil = LibLLVMTripleArchType.LibLLVMTripleArchType_amdil,
 
             /// <summary>AMD IL 64-bit pointers</summary>
-            Amdil64 = LLVMTripleArchType.LlvmTripleArchType_amdil64,
+            Amdil64 = LibLLVMTripleArchType.LibLLVMTripleArchType_amdil64,
 
             /// <summary>AMD HSAIL</summary>
-            Hsail = LLVMTripleArchType.LlvmTripleArchType_hsail,
+            Hsail = LibLLVMTripleArchType.LibLLVMTripleArchType_hsail,
 
             /// <summary>AMD HSAIL with 64-bit pointers</summary>
-            Hsail64 = LLVMTripleArchType.LlvmTripleArchType_hsail64,
+            Hsail64 = LibLLVMTripleArchType.LibLLVMTripleArchType_hsail64,
 
             /// <summary>Standard Portable IR for OpenCL 32-bit version</summary>
-            Spir = LLVMTripleArchType.LlvmTripleArchType_spir,
+            Spir = LibLLVMTripleArchType.LibLLVMTripleArchType_spir,
 
             /// <summary>Standard Portable IR for OpenCL 64-bit version</summary>
-            Spir64 = LLVMTripleArchType.LlvmTripleArchType_spir64,
+            Spir64 = LibLLVMTripleArchType.LibLLVMTripleArchType_spir64,
 
             /// <summary>Generic Kalimba</summary>
-            Kalimba = LLVMTripleArchType.LlvmTripleArchType_kalimba,
+            Kalimba = LibLLVMTripleArchType.LibLLVMTripleArchType_kalimba,
 
             /// <summary>Movidius vector VLIW processors</summary>
-            Shave = LLVMTripleArchType.LlvmTripleArchType_shave,
+            Shave = LibLLVMTripleArchType.LibLLVMTripleArchType_shave,
 
             /// <summary>Lanai 32-bit</summary>
-            Lanai = LLVMTripleArchType.LlvmTripleArchType_lanai,
+            Lanai = LibLLVMTripleArchType.LibLLVMTripleArchType_lanai,
 
             /// <summary>WebAssembly with 32-bit pointers</summary>
-            Wasm32 = LLVMTripleArchType.LlvmTripleArchType_wasm32,
+            Wasm32 = LibLLVMTripleArchType.LibLLVMTripleArchType_wasm32,
 
             /// <summary>WebAssembly with 64-bit pointers</summary>
-            Wasm64 = LLVMTripleArchType.LlvmTripleArchType_wasm64,
+            Wasm64 = LibLLVMTripleArchType.LibLLVMTripleArchType_wasm64,
 
             /// <summary>Renderscript 32-bit</summary>
-            Renderscript32 = LLVMTripleArchType.LlvmTripleArchType_renderscript32,
+            Renderscript32 = LibLLVMTripleArchType.LibLLVMTripleArchType_renderscript32,
 
             /// <summary>Renderscript 64-bit</summary>
-            Renderscript64 = LLVMTripleArchType.LlvmTripleArchType_renderscript64,
+            Renderscript64 = LibLLVMTripleArchType.LibLLVMTripleArchType_renderscript64,
 
             /// <summary>Maximum architecture type</summary>
             LastArchType = Renderscript64
@@ -202,323 +202,323 @@ namespace Llvm.NET
         public enum SubArchType
         {
             /// <summary>No sub architecture</summary>
-            NoSubArch = LLVMTripleSubArchType.LlvmTripleSubArchType_NoSubArch,
+            NoSubArch = LibLLVMTripleSubArchType.LibLLVMTripleSubArchType_NoSubArch,
 
             /// <summary>ARM v8.3a</summary>
-            ARMSubArch_v8_3a = LLVMTripleSubArchType.LlvmTripleSubArchType_ARMSubArch_v8_3a,
+            ARMSubArch_v8_3a = LibLLVMTripleSubArchType.LibLLVMTripleSubArchType_ARMSubArch_v8_3a,
 
             /// <summary>ARM v8.2a</summary>
-            ARMSubArch_v8_2a = LLVMTripleSubArchType.LlvmTripleSubArchType_ARMSubArch_v8_2a,
+            ARMSubArch_v8_2a = LibLLVMTripleSubArchType.LibLLVMTripleSubArchType_ARMSubArch_v8_2a,
 
             /// <summary>ARM v8.1a</summary>
-            ARMSubArch_v8_1a = LLVMTripleSubArchType.LlvmTripleSubArchType_ARMSubArch_v8_1a,
+            ARMSubArch_v8_1a = LibLLVMTripleSubArchType.LibLLVMTripleSubArchType_ARMSubArch_v8_1a,
 
             /// <summary>ARM v8</summary>
-            ARMSubArch_v8 = LLVMTripleSubArchType.LlvmTripleSubArchType_ARMSubArch_v8,
+            ARMSubArch_v8 = LibLLVMTripleSubArchType.LibLLVMTripleSubArchType_ARMSubArch_v8,
 
             /// <summary>ARM v8r</summary>
-            ARMSubArch_v8r = LLVMTripleSubArchType.LlvmTripleSubArchType_ARMSubArch_v8r,
+            ARMSubArch_v8r = LibLLVMTripleSubArchType.LibLLVMTripleSubArchType_ARMSubArch_v8r,
 
             /// <summary>ARM v8m baseline</summary>
-            ARMSubArch_v8m_baseline = LLVMTripleSubArchType.LlvmTripleSubArchType_ARMSubArch_v8m_baseline,
+            ARMSubArch_v8m_baseline = LibLLVMTripleSubArchType.LibLLVMTripleSubArchType_ARMSubArch_v8m_baseline,
 
             /// <summary>ARM v8m mainline</summary>
-            ARMSubArch_v8m_mainline = LLVMTripleSubArchType.LlvmTripleSubArchType_ARMSubArch_v8m_mainline,
+            ARMSubArch_v8m_mainline = LibLLVMTripleSubArchType.LibLLVMTripleSubArchType_ARMSubArch_v8m_mainline,
 
             /// <summary>ARM v7</summary>
-            ARMSubArch_v7 = LLVMTripleSubArchType.LlvmTripleSubArchType_ARMSubArch_v7,
+            ARMSubArch_v7 = LibLLVMTripleSubArchType.LibLLVMTripleSubArchType_ARMSubArch_v7,
 
             /// <summary>ARM v7em</summary>
-            ARMSubArch_v7em = LLVMTripleSubArchType.LlvmTripleSubArchType_ARMSubArch_v7em,
+            ARMSubArch_v7em = LibLLVMTripleSubArchType.LibLLVMTripleSubArchType_ARMSubArch_v7em,
 
             /// <summary>ARM v7m</summary>
-            ARMSubArch_v7m = LLVMTripleSubArchType.LlvmTripleSubArchType_ARMSubArch_v7m,
+            ARMSubArch_v7m = LibLLVMTripleSubArchType.LibLLVMTripleSubArchType_ARMSubArch_v7m,
 
             /// <summary>ARM v7s</summary>
-            ARMSubArch_v7s = LLVMTripleSubArchType.LlvmTripleSubArchType_ARMSubArch_v7s,
+            ARMSubArch_v7s = LibLLVMTripleSubArchType.LibLLVMTripleSubArchType_ARMSubArch_v7s,
 
             /// <summary>ARM v7k</summary>
-            ARMSubArch_v7k = LLVMTripleSubArchType.LlvmTripleSubArchType_ARMSubArch_v7k,
+            ARMSubArch_v7k = LibLLVMTripleSubArchType.LibLLVMTripleSubArchType_ARMSubArch_v7k,
 
             /// <summary>ARM v7ve</summary>
-            ARMSubArch_v7ve = LLVMTripleSubArchType.LlvmTripleSubArchType_ARMSubArch_v7ve,
+            ARMSubArch_v7ve = LibLLVMTripleSubArchType.LibLLVMTripleSubArchType_ARMSubArch_v7ve,
 
             /// <summary>ARM v6</summary>
-            ARMSubArch_v6 = LLVMTripleSubArchType.LlvmTripleSubArchType_ARMSubArch_v6,
+            ARMSubArch_v6 = LibLLVMTripleSubArchType.LibLLVMTripleSubArchType_ARMSubArch_v6,
 
             /// <summary>ARM v6m</summary>
-            ARMSubArch_v6m = LLVMTripleSubArchType.LlvmTripleSubArchType_ARMSubArch_v6m,
+            ARMSubArch_v6m = LibLLVMTripleSubArchType.LibLLVMTripleSubArchType_ARMSubArch_v6m,
 
             /// <summary>ARM v6k</summary>
-            ARMSubArch_v6k = LLVMTripleSubArchType.LlvmTripleSubArchType_ARMSubArch_v6k,
+            ARMSubArch_v6k = LibLLVMTripleSubArchType.LibLLVMTripleSubArchType_ARMSubArch_v6k,
 
             /// <summary>ARM v6t2</summary>
-            ARMSubArch_v6t2 = LLVMTripleSubArchType.LlvmTripleSubArchType_ARMSubArch_v6t2,
+            ARMSubArch_v6t2 = LibLLVMTripleSubArchType.LibLLVMTripleSubArchType_ARMSubArch_v6t2,
 
             /// <summary>ARM v5</summary>
-            ARMSubArch_v5 = LLVMTripleSubArchType.LlvmTripleSubArchType_ARMSubArch_v5,
+            ARMSubArch_v5 = LibLLVMTripleSubArchType.LibLLVMTripleSubArchType_ARMSubArch_v5,
 
             /// <summary>ARM v5te</summary>
-            ARMSubArch_v5te = LLVMTripleSubArchType.LlvmTripleSubArchType_ARMSubArch_v5te,
+            ARMSubArch_v5te = LibLLVMTripleSubArchType.LibLLVMTripleSubArchType_ARMSubArch_v5te,
 
             /// <summary>ARM v4t</summary>
-            ARMSubArch_v4t = LLVMTripleSubArchType.LlvmTripleSubArchType_ARMSubArch_v4t,
+            ARMSubArch_v4t = LibLLVMTripleSubArchType.LibLLVMTripleSubArchType_ARMSubArch_v4t,
 
             /// <summary>Kalimba v3</summary>
-            KalimbaSubArch_v3 = LLVMTripleSubArchType.LlvmTripleSubArchType_KalimbaSubArch_v3,
+            KalimbaSubArch_v3 = LibLLVMTripleSubArchType.LibLLVMTripleSubArchType_KalimbaSubArch_v3,
 
             /// <summary>Kalimba v4</summary>
-            KalimbaSubArch_v4 = LLVMTripleSubArchType.LlvmTripleSubArchType_KalimbaSubArch_v4,
+            KalimbaSubArch_v4 = LibLLVMTripleSubArchType.LibLLVMTripleSubArchType_KalimbaSubArch_v4,
 
             /// <summary>Kalimba v5</summary>
-            KalimbaSubArch_v5 = LLVMTripleSubArchType.LlvmTripleSubArchType_KalimbaSubArch_v5,
+            KalimbaSubArch_v5 = LibLLVMTripleSubArchType.LibLLVMTripleSubArchType_KalimbaSubArch_v5,
 
             /// <summary>MIPS R6</summary>
-            MipsSibArch_r6 = LLVMTripleSubArchType.LlvmTripleSubArchType_MipsSubArch_r6
+            MipsSibArch_r6 = LibLLVMTripleSubArchType.LibLLVMTripleSubArchType_MipsSubArch_r6
         }
 
         /// <summary>Vendor type for the triple</summary>
         public enum VendorType
         {
             /// <summary>Unknown vendor</summary>
-            UnknownVendor = LLVMTripleVendorType.LlvmTripleVendorType_UnknownVendor,
+            UnknownVendor = LibLLVMTripleVendorType.LibLLVMTripleVendorType_UnknownVendor,
 
             /// <summary>Apple</summary>
-            Apple = LLVMTripleVendorType.LlvmTripleVendorType_Apple,
+            Apple = LibLLVMTripleVendorType.LibLLVMTripleVendorType_Apple,
 
             /// <summary>Generic PC</summary>
-            PC = LLVMTripleVendorType.LlvmTripleVendorType_PC,
+            PC = LibLLVMTripleVendorType.LibLLVMTripleVendorType_PC,
 
             /// <summary>SCEI</summary>
-            SCEI = LLVMTripleVendorType.LlvmTripleVendorType_SCEI,
+            SCEI = LibLLVMTripleVendorType.LibLLVMTripleVendorType_SCEI,
 
             /// <summary>BGP</summary>
-            BGP = LLVMTripleVendorType.LlvmTripleVendorType_BGP,
+            BGP = LibLLVMTripleVendorType.LibLLVMTripleVendorType_BGP,
 
             /// <summary>BGQ</summary>
-            BGQ = LLVMTripleVendorType.LlvmTripleVendorType_BGQ,
+            BGQ = LibLLVMTripleVendorType.LibLLVMTripleVendorType_BGQ,
 
             /// <summary>Freescale</summary>
-            Freescale = LLVMTripleVendorType.LlvmTripleVendorType_Freescale,
+            Freescale = LibLLVMTripleVendorType.LibLLVMTripleVendorType_Freescale,
 
             /// <summary>IBM</summary>
-            IBM = LLVMTripleVendorType.LlvmTripleVendorType_IBM,
+            IBM = LibLLVMTripleVendorType.LibLLVMTripleVendorType_IBM,
 
             /// <summary>Imagination Technologies</summary>
-            ImaginationTechnologies = LLVMTripleVendorType.LlvmTripleVendorType_ImaginationTechnologies,
+            ImaginationTechnologies = LibLLVMTripleVendorType.LibLLVMTripleVendorType_ImaginationTechnologies,
 
             /// <summary>MIPS Technologies</summary>
-            MipsTechnologies = LLVMTripleVendorType.LlvmTripleVendorType_MipsTechnologies,
+            MipsTechnologies = LibLLVMTripleVendorType.LibLLVMTripleVendorType_MipsTechnologies,
 
             /// <summary>NVidia</summary>
-            NVIDIA = LLVMTripleVendorType.LlvmTripleVendorType_NVIDIA,
+            NVIDIA = LibLLVMTripleVendorType.LibLLVMTripleVendorType_NVIDIA,
 
             /// <summary>CSR</summary>
-            CSR = LLVMTripleVendorType.LlvmTripleVendorType_CSR,
+            CSR = LibLLVMTripleVendorType.LibLLVMTripleVendorType_CSR,
 
             /// <summary>Myriad</summary>
-            Myriad = LLVMTripleVendorType.LlvmTripleVendorType_Myriad,
+            Myriad = LibLLVMTripleVendorType.LibLLVMTripleVendorType_Myriad,
 
             /// <summary>AMD</summary>
-            AMD = LLVMTripleVendorType.LlvmTripleVendorType_AMD,
+            AMD = LibLLVMTripleVendorType.LibLLVMTripleVendorType_AMD,
 
             /// <summary>Mesa</summary>
-            Mesa = LLVMTripleVendorType.LlvmTripleVendorType_Mesa,
+            Mesa = LibLLVMTripleVendorType.LibLLVMTripleVendorType_Mesa,
 
             /// <summary>SUSE</summary>
-            SUSE = LLVMTripleVendorType.LlvmTripleVendorType_SUSE,
+            SUSE = LibLLVMTripleVendorType.LibLLVMTripleVendorType_SUSE,
 
             /// <summary>OpenEmbedded</summary>
-            OpenEmebedded = LLVMTripleVendorType.LlvmTripleVendorType_OpenEmbedded,
+            OpenEmebedded = LibLLVMTripleVendorType.LibLLVMTripleVendorType_OpenEmbedded,
         }
 
         /// <summary>OS type for the triple</summary>
         public enum OSType
         {
             /// <summary>Unknown OS</summary>
-            UnknownOS = LLVMTripleOSType.LlvmTripleOSType_UnknownOS,
+            UnknownOS = LibLLVMTripleOSType.LibLLVMTripleOSType_UnknownOS,
 
             /// <summary>Ananas</summary>
-            Ananas = LLVMTripleOSType.LlvmTripleOSType_Ananas,
+            Ananas = LibLLVMTripleOSType.LibLLVMTripleOSType_Ananas,
 
             /// <summary>CloudABI</summary>
-            CloudABI = LLVMTripleOSType.LlvmTripleOSType_CloudABI,
+            CloudABI = LibLLVMTripleOSType.LibLLVMTripleOSType_CloudABI,
 
             /// <summary>Darwin</summary>
-            Darwin = LLVMTripleOSType.LlvmTripleOSType_Darwin,
+            Darwin = LibLLVMTripleOSType.LibLLVMTripleOSType_Darwin,
 
             /// <summary>DragonFly</summary>
-            DragonFly = LLVMTripleOSType.LlvmTripleOSType_DragonFly,
+            DragonFly = LibLLVMTripleOSType.LibLLVMTripleOSType_DragonFly,
 
             /// <summary>FreeBSD</summary>
-            FreeBSD = LLVMTripleOSType.LlvmTripleOSType_FreeBSD,
+            FreeBSD = LibLLVMTripleOSType.LibLLVMTripleOSType_FreeBSD,
 
             /// <summary>Fuchsia</summary>
-            Fuchsia = LLVMTripleOSType.LlvmTripleOSType_Fuchsia,
+            Fuchsia = LibLLVMTripleOSType.LibLLVMTripleOSType_Fuchsia,
 
             /// <summary>iOS</summary>
-            IOS = LLVMTripleOSType.LlvmTripleOSType_IOS,
+            IOS = LibLLVMTripleOSType.LibLLVMTripleOSType_IOS,
 
             /// <summary>KFreeBSD</summary>
-            KFreeBSD = LLVMTripleOSType.LlvmTripleOSType_KFreeBSD,
+            KFreeBSD = LibLLVMTripleOSType.LibLLVMTripleOSType_KFreeBSD,
 
             /// <summary>Linux</summary>
-            Linux = LLVMTripleOSType.LlvmTripleOSType_Linux,
+            Linux = LibLLVMTripleOSType.LibLLVMTripleOSType_Linux,
 
             /// <summary>Lv2</summary>
-            Lv2 = LLVMTripleOSType.LlvmTripleOSType_Lv2,
+            Lv2 = LibLLVMTripleOSType.LibLLVMTripleOSType_Lv2,
 
             /// <summary>Mac OSX</summary>
-            MacOSX = LLVMTripleOSType.LlvmTripleOSType_MacOSX,
+            MacOSX = LibLLVMTripleOSType.LibLLVMTripleOSType_MacOSX,
 
             /// <summary>NetBSD</summary>
-            NetBSD = LLVMTripleOSType.LlvmTripleOSType_NetBSD,
+            NetBSD = LibLLVMTripleOSType.LibLLVMTripleOSType_NetBSD,
 
             /// <summary>OpenBSD</summary>
-            OpenBSD = LLVMTripleOSType.LlvmTripleOSType_OpenBSD,
+            OpenBSD = LibLLVMTripleOSType.LibLLVMTripleOSType_OpenBSD,
 
             /// <summary>Solaris</summary>
-            Solaris = LLVMTripleOSType.LlvmTripleOSType_Solaris,
+            Solaris = LibLLVMTripleOSType.LibLLVMTripleOSType_Solaris,
 
             /// <summary>Windows WIN32</summary>
-            Win32 = LLVMTripleOSType.LlvmTripleOSType_Win32,
+            Win32 = LibLLVMTripleOSType.LibLLVMTripleOSType_Win32,
 
             /// <summary>Haiku</summary>
-            Haiku = LLVMTripleOSType.LlvmTripleOSType_Haiku,
+            Haiku = LibLLVMTripleOSType.LibLLVMTripleOSType_Haiku,
 
             /// <summary>Minix</summary>
-            Minix = LLVMTripleOSType.LlvmTripleOSType_Minix,
+            Minix = LibLLVMTripleOSType.LibLLVMTripleOSType_Minix,
 
             /// <summary>RTEMS</summary>
-            RTEMS = LLVMTripleOSType.LlvmTripleOSType_RTEMS,
+            RTEMS = LibLLVMTripleOSType.LibLLVMTripleOSType_RTEMS,
 
             /// <summary>NaCl</summary>
-            NaCl = LLVMTripleOSType.LlvmTripleOSType_NaCl,
+            NaCl = LibLLVMTripleOSType.LibLLVMTripleOSType_NaCl,
 
             /// <summary>CNK</summary>
-            CNK = LLVMTripleOSType.LlvmTripleOSType_CNK,
+            CNK = LibLLVMTripleOSType.LibLLVMTripleOSType_CNK,
 
             /// <summary>AIX</summary>
-            AIX = LLVMTripleOSType.LlvmTripleOSType_AIX,
+            AIX = LibLLVMTripleOSType.LibLLVMTripleOSType_AIX,
 
             /// <summary>CUDA</summary>
-            CUDA = LLVMTripleOSType.LlvmTripleOSType_CUDA,
+            CUDA = LibLLVMTripleOSType.LibLLVMTripleOSType_CUDA,
 
             /// <summary>NVCL</summary>
-            NVCL = LLVMTripleOSType.LlvmTripleOSType_NVCL,
+            NVCL = LibLLVMTripleOSType.LibLLVMTripleOSType_NVCL,
 
             /// <summary>AMD HSA</summary>
-            AMDHSA = LLVMTripleOSType.LlvmTripleOSType_AMDHSA,
+            AMDHSA = LibLLVMTripleOSType.LibLLVMTripleOSType_AMDHSA,
 
             /// <summary>PS4</summary>
-            PS4 = LLVMTripleOSType.LlvmTripleOSType_PS4,
+            PS4 = LibLLVMTripleOSType.LibLLVMTripleOSType_PS4,
 
             /// <summary>ELFIAMCU</summary>
-            ELFIAMCU = LLVMTripleOSType.LlvmTripleOSType_ELFIAMCU,
+            ELFIAMCU = LibLLVMTripleOSType.LibLLVMTripleOSType_ELFIAMCU,
 
             /// <summary>TvOS</summary>
-            TvOS = LLVMTripleOSType.LlvmTripleOSType_TvOS,
+            TvOS = LibLLVMTripleOSType.LibLLVMTripleOSType_TvOS,
 
             /// <summary>WatchOS</summary>
-            WatchOS = LLVMTripleOSType.LlvmTripleOSType_WatchOS,
+            WatchOS = LibLLVMTripleOSType.LibLLVMTripleOSType_WatchOS,
 
             /// <summary>Mesa3D</summary>
-            Mesa3D = LLVMTripleOSType.LlvmTripleOSType_Mesa3D,
+            Mesa3D = LibLLVMTripleOSType.LibLLVMTripleOSType_Mesa3D,
 
             /// <summary>Contiki</summary>
-            Contiki = LLVMTripleOSType.LlvmTripleOSType_Contiki,
+            Contiki = LibLLVMTripleOSType.LibLLVMTripleOSType_Contiki,
 
             /// <summary>AMD PAL Runtime</summary>
-            AmdPAL = LLVMTripleOSType.LlvmTripleOSType_AMDPAL,
+            AmdPAL = LibLLVMTripleOSType.LibLLVMTripleOSType_AMDPAL,
 
             /// <summary>HermitCore Unikernel/Multikernel</summary>
-            HermitCore = LLVMTripleOSType.LlvmTripleOSType_HermitCore,
+            HermitCore = LibLLVMTripleOSType.LibLLVMTripleOSType_HermitCore,
 
             /// <summary>GNU/Hurd</summary>
-            Hurd = LLVMTripleOSType.LlvmTripleOSType_Hurd,
+            Hurd = LibLLVMTripleOSType.LibLLVMTripleOSType_Hurd,
 
             /// <summary>WebAssembly OS</summary>
-            WASI = LLVMTripleOSType.LlvmTripleOSType_WASI,
+            WASI = LibLLVMTripleOSType.LibLLVMTripleOSType_WASI,
         }
 
         /// <summary>Triple Environment type</summary>
         public enum EnvironmentType
         {
             /// <summary>Unknown environment</summary>
-            UnknownEnvironment = LLVMTripleEnvironmentType.LlvmTripleEnvironmentType_UnknownEnvironment,
+            UnknownEnvironment = LibLLVMTripleEnvironmentType.LibLLVMTripleEnvironmentType_UnknownEnvironment,
 
             /// <summary>GNU</summary>
-            GNU = LLVMTripleEnvironmentType.LlvmTripleEnvironmentType_GNU,
+            GNU = LibLLVMTripleEnvironmentType.LibLLVMTripleEnvironmentType_GNU,
 
             /// <summary>GNUABIN32</summary>
-            GNUABIN32 = LLVMTripleEnvironmentType.LlvmTripleEnvironmentType_GNUABIN32,
+            GNUABIN32 = LibLLVMTripleEnvironmentType.LibLLVMTripleEnvironmentType_GNUABIN32,
 
             /// <summary>GNU ABI 64-bit</summary>
-            GNUABI64 = LLVMTripleEnvironmentType.LlvmTripleEnvironmentType_GNUABI64,
+            GNUABI64 = LibLLVMTripleEnvironmentType.LibLLVMTripleEnvironmentType_GNUABI64,
 
             /// <summary>GNU EABI</summary>
-            GNUEABI = LLVMTripleEnvironmentType.LlvmTripleEnvironmentType_GNUEABI,
+            GNUEABI = LibLLVMTripleEnvironmentType.LibLLVMTripleEnvironmentType_GNUEABI,
 
             /// <summary>GNU EABI-HF</summary>
-            GNUEABIHF = LLVMTripleEnvironmentType.LlvmTripleEnvironmentType_GNUEABIHF,
+            GNUEABIHF = LibLLVMTripleEnvironmentType.LibLLVMTripleEnvironmentType_GNUEABIHF,
 
             /// <summary>GNU X32</summary>
-            GNUX32 = LLVMTripleEnvironmentType.LlvmTripleEnvironmentType_GNUX32,
+            GNUX32 = LibLLVMTripleEnvironmentType.LibLLVMTripleEnvironmentType_GNUX32,
 
             /// <summary>CODE16</summary>
-            CODE16 = LLVMTripleEnvironmentType.LlvmTripleEnvironmentType_CODE16,
+            CODE16 = LibLLVMTripleEnvironmentType.LibLLVMTripleEnvironmentType_CODE16,
 
             /// <summary>EABI</summary>
-            EABI = LLVMTripleEnvironmentType.LlvmTripleEnvironmentType_EABI,
+            EABI = LibLLVMTripleEnvironmentType.LibLLVMTripleEnvironmentType_EABI,
 
             /// <summary>EABI-HF</summary>
-            EABIHF = LLVMTripleEnvironmentType.LlvmTripleEnvironmentType_EABIHF,
+            EABIHF = LibLLVMTripleEnvironmentType.LibLLVMTripleEnvironmentType_EABIHF,
 
             /// <summary>Android</summary>
-            Android = LLVMTripleEnvironmentType.LlvmTripleEnvironmentType_Android,
+            Android = LibLLVMTripleEnvironmentType.LibLLVMTripleEnvironmentType_Android,
 
             /// <summary>MUSL</summary>
-            Musl = LLVMTripleEnvironmentType.LlvmTripleEnvironmentType_Musl,
+            Musl = LibLLVMTripleEnvironmentType.LibLLVMTripleEnvironmentType_Musl,
 
             /// <summary>MUSL EABI</summary>
-            MuslEABI = LLVMTripleEnvironmentType.LlvmTripleEnvironmentType_MuslEABI,
+            MuslEABI = LibLLVMTripleEnvironmentType.LibLLVMTripleEnvironmentType_MuslEABI,
 
             /// <summary>MUSL EABI-HF</summary>
-            MuslEABIHF = LLVMTripleEnvironmentType.LlvmTripleEnvironmentType_MuslEABIHF,
+            MuslEABIHF = LibLLVMTripleEnvironmentType.LibLLVMTripleEnvironmentType_MuslEABIHF,
 
             /// <summary>Microsoft Visual C</summary>
-            MSVC = LLVMTripleEnvironmentType.LlvmTripleEnvironmentType_MSVC,
+            MSVC = LibLLVMTripleEnvironmentType.LibLLVMTripleEnvironmentType_MSVC,
 
             /// <summary>Itanium</summary>
-            Itanium = LLVMTripleEnvironmentType.LlvmTripleEnvironmentType_Itanium,
+            Itanium = LibLLVMTripleEnvironmentType.LibLLVMTripleEnvironmentType_Itanium,
 
             /// <summary>Cygnus</summary>
-            Cygnus = LLVMTripleEnvironmentType.LlvmTripleEnvironmentType_Cygnus,
+            Cygnus = LibLLVMTripleEnvironmentType.LibLLVMTripleEnvironmentType_Cygnus,
 
             /// <summary>CoreCLR</summary>
-            CoreCLR = LLVMTripleEnvironmentType.LlvmTripleEnvironmentType_CoreCLR,
+            CoreCLR = LibLLVMTripleEnvironmentType.LibLLVMTripleEnvironmentType_CoreCLR,
 
             /// <summary>Simulator</summary>
-            Simultator = LLVMTripleEnvironmentType.LlvmTripleEnvironmentType_Simulator
+            Simultator = LibLLVMTripleEnvironmentType.LibLLVMTripleEnvironmentType_Simulator
         }
 
         /// <summary>Object format type for a Triple</summary>
         public enum ObjectFormatType
         {
             /// <summary>Unknown format</summary>
-            UnknownObjectFormat = LLVMTripleObjectFormatType.LlvmTripleObjectFormatType_UnknownObjectFormat,
+            UnknownObjectFormat = LibLLVMTripleObjectFormatType.LibLLVMTripleObjectFormatType_UnknownObjectFormat,
 
             /// <summary>COFF format</summary>
-            COFF = LLVMTripleObjectFormatType.LlvmTripleObjectFormatType_COFF,
+            COFF = LibLLVMTripleObjectFormatType.LibLLVMTripleObjectFormatType_COFF,
 
             /// <summary>ELF format</summary>
-            ELF = LLVMTripleObjectFormatType.LlvmTripleObjectFormatType_ELF,
+            ELF = LibLLVMTripleObjectFormatType.LibLLVMTripleObjectFormatType_ELF,
 
             /// <summary>MachO format</summary>
-            MachO = LLVMTripleObjectFormatType.LlvmTripleObjectFormatType_MachO,
+            MachO = LibLLVMTripleObjectFormatType.LibLLVMTripleObjectFormatType_MachO,
 
             /// <summary>Wasm format</summary>
-            Wasm = LLVMTripleObjectFormatType.LlvmTripleObjectFormatType_Wasm
+            Wasm = LibLLVMTripleObjectFormatType.LibLLVMTripleObjectFormatType_Wasm
         }
 
         /// <summary>Initializes a new instance of the <see cref="Triple"/> class from a triple string</summary>
@@ -529,37 +529,37 @@ namespace Llvm.NET
         /// </remarks>
         public Triple( string tripleTxt )
         {
-            TripleHandle = LLVMParseTriple( tripleTxt );
+            TripleHandle = LibLLVMParseTriple( tripleTxt );
         }
 
         /// <summary>Retrieves the final string form of the triple</summary>
         /// <returns>Normalized Triple string</returns>
-        public override string ToString( ) => LLVMTripleAsString( TripleHandle, true );
+        public override string ToString( ) => LibLLVMTripleAsString( TripleHandle, true );
 
         /// <summary>Gets the Architecture of the triple</summary>
-        public ArchType ArchitectureType => ( ArchType )LLVMTripleGetArchType( TripleHandle );
+        public ArchType ArchitectureType => ( ArchType )LibLLVMTripleGetArchType( TripleHandle );
 
         /// <summary>Gets the Sub Architecture type</summary>
-        public SubArchType SubArchitecture => ( SubArchType )LLVMTripleGetSubArchType( TripleHandle );
+        public SubArchType SubArchitecture => ( SubArchType )LibLLVMTripleGetSubArchType( TripleHandle );
 
         /// <summary>Gets the Vendor component of the triple</summary>
-        public VendorType Vendor => ( VendorType )LLVMTripleGetVendorType( TripleHandle );
+        public VendorType Vendor => ( VendorType )LibLLVMTripleGetVendorType( TripleHandle );
 
         /// <summary>Gets the OS Type for the triple</summary>
-        public OSType OS => ( OSType )LLVMTripleGetOsType( TripleHandle );
+        public OSType OS => ( OSType )LibLLVMTripleGetOsType( TripleHandle );
 
         /// <summary>Gets the environment type for the triple</summary>
-        public EnvironmentType Environment => ( EnvironmentType )LLVMTripleGetEnvironmentType( TripleHandle );
+        public EnvironmentType Environment => ( EnvironmentType )LibLLVMTripleGetEnvironmentType( TripleHandle );
 
         /// <summary>Gets the object format type for the triple</summary>
-        public ObjectFormatType ObjectFormat => ( ObjectFormatType )LLVMTripleGetObjectFormatType( TripleHandle );
+        public ObjectFormatType ObjectFormat => ( ObjectFormatType )LibLLVMTripleGetObjectFormatType( TripleHandle );
 
         /// <summary>Gets the version number of the environment</summary>
         public Version EnvironmentVersion
         {
             get
             {
-                LLVMTripleGetEnvironmentVersion( TripleHandle, out uint major, out uint minor, out uint micro );
+                LibLLVMTripleGetEnvironmentVersion( TripleHandle, out uint major, out uint minor, out uint micro );
                 checked
                 {
                     return new Version( ( int )major, ( int )minor, ( int )micro );
@@ -577,44 +577,44 @@ namespace Llvm.NET
         /// such triple components used in a normalized triple.
         /// </overloads>
         public static string GetCanonicalName( ArchType archType )
-            => LLVMTripleGetArchTypeName( ( LLVMTripleArchType )archType ) ?? string.Empty;
+            => LibLLVMTripleGetArchTypeName( ( LibLLVMTripleArchType )archType ) ?? string.Empty;
 
         /// <summary>Retrieves the canonical name for an architecture sub type</summary>
         /// <param name="subArchType">Architecture sub type</param>
         /// <returns>String name for the architecture sub type</returns>
         public static string GetCanonicalName( SubArchType subArchType )
-            => LLVMTripleGetSubArchTypeName( ( LLVMTripleSubArchType )subArchType ) ?? string.Empty;
+            => LibLLVMTripleGetSubArchTypeName( ( LibLLVMTripleSubArchType )subArchType ) ?? string.Empty;
 
         /// <summary>Retrieves the canonical name for the vendor component of a triple</summary>
         /// <param name="vendorType">Vendor type</param>
         /// <returns>String name for the vendor</returns>
         public static string GetCanonicalName( VendorType vendorType )
-            => LLVMTripleGetVendorTypeName( ( LLVMTripleVendorType )vendorType ) ?? string.Empty;
+            => LibLLVMTripleGetVendorTypeName( ( LibLLVMTripleVendorType )vendorType ) ?? string.Empty;
 
         /// <summary>Retrieves the canonical name for the OS component of a triple</summary>
         /// <param name="osType">OS type</param>
         /// <returns>String name for the OS</returns>
         public static string GetCanonicalName( OSType osType )
-            => LLVMTripleGetOsTypeName( ( LLVMTripleOSType )osType ) ?? string.Empty;
+            => LibLLVMTripleGetOsTypeName( ( LibLLVMTripleOSType )osType ) ?? string.Empty;
 
         /// <summary>Retrieves the canonical name for the environment component of a triple</summary>
         /// <param name="envType">Environment type</param>
         /// <returns>String name for the environment component</returns>
         public static string GetCanonicalName( EnvironmentType envType )
-            => LLVMTripleGetEnvironmentTypeName( ( LLVMTripleEnvironmentType )envType ) ?? string.Empty;
+            => LibLLVMTripleGetEnvironmentTypeName( ( LibLLVMTripleEnvironmentType )envType ) ?? string.Empty;
 
         /// <summary>Retrieves the canonical name for the object component of a triple</summary>
         /// <param name="objFormatType">Object type</param>
         /// <returns>String name for the object component</returns>
         public static string GetCanonicalName( ObjectFormatType objFormatType )
-            => LLVMTripleGetObjectFormatTypeName( ( LLVMTripleObjectFormatType )objFormatType ) ?? string.Empty;
+            => LibLLVMTripleGetObjectFormatTypeName( ( LibLLVMTripleObjectFormatType )objFormatType ) ?? string.Empty;
 
         /// <summary>Equality test for a triple</summary>
         /// <param name="other">triple to compare this triple to</param>
         /// <returns><see langword="true"/> if the two triples are equivalent</returns>
         public bool Equals( Triple other )
         {
-            return (other != null && ReferenceEquals( this, other )) || LLVMTripleOpEqual( TripleHandle, other.TripleHandle );
+            return (other != null && ReferenceEquals( this, other )) || LibLLVMTripleOpEqual( TripleHandle, other.TripleHandle );
         }
 
         /// <summary>Equality test for a triple</summary>
@@ -638,7 +638,7 @@ namespace Llvm.NET
         {
             unNormalizedTriple.ValidateNotNullOrWhiteSpace( nameof( unNormalizedTriple ) );
 
-            return LLVMNormalizeTriple( unNormalizedTriple );
+            return LibLLVMNormalizeTriple( unNormalizedTriple );
         }
 
         /// <summary>Gets the default <see cref="ObjectFormatType"/> for a given <see cref="ArchType"/> and <see cref="OSType"/></summary>
@@ -774,13 +774,13 @@ namespace Llvm.NET
         }
 
         /// <summary>Gets a triple for the host LLVM is built for</summary>
-        public static Triple HostTriple => new Triple( LLVMGetHostTriple( ) );
+        public static Triple HostTriple => new Triple( LibLLVMGetHostTriple( ) );
 
         /// <summary>Implicitly converts a triple to a string</summary>
         /// <param name="triple"><see cref="Triple"/> to convert</param>
         public static implicit operator string(Triple triple) => triple.ToString();
 
-        private Triple( LLVMTripleRef handle )
+        private Triple( LibLLVMTripleRef handle )
         {
             TripleHandle = handle;
         }
@@ -802,6 +802,6 @@ namespace Llvm.NET
             }
         }
 
-        private readonly LLVMTripleRef TripleHandle;
+        private readonly LibLLVMTripleRef TripleHandle;
     }
 }

@@ -15,279 +15,279 @@ using System.Security;
 namespace Llvm.NET.Interop
 {
     [GeneratedCode("LlvmBindingsGenerator","2.17941.31104.49410")]
-    public enum LLVMTripleArchType : global::System.Int32
+    public enum LibLLVMTripleArchType : global::System.Int32
     {
-        LlvmTripleArchType_UnknownArch = 0,
-        LlvmTripleArchType_arm = 1,
-        LlvmTripleArchType_armeb = 2,
-        LlvmTripleArchType_aarch64 = 3,
-        LlvmTripleArchType_aarch64_be = 4,
-        LlvmTripleArchType_arc = 5,
-        LlvmTripleArchType_avr = 6,
-        LlvmTripleArchType_bpfel = 7,
-        LlvmTripleArchType_bpfeb = 8,
-        LlvmTripleArchType_hexagon = 9,
-        LlvmTripleArchType_mips = 10,
-        LlvmTripleArchType_mipsel = 11,
-        LlvmTripleArchType_mips64 = 12,
-        LlvmTripleArchType_mips64el = 13,
-        LlvmTripleArchType_msp430 = 14,
-        LlvmTripleArchType_ppc = 15,
-        LlvmTripleArchType_ppc64 = 16,
-        LlvmTripleArchType_ppc64le = 17,
-        LlvmTripleArchType_r600 = 18,
-        LlvmTripleArchType_amdgcn = 19,
-        LlvmTripleArchType_riscv32 = 20,
-        LlvmTripleArchType_riscv64 = 21,
-        LlvmTripleArchType_sparc = 22,
-        LlvmTripleArchType_sparcv9 = 23,
-        LlvmTripleArchType_sparcel = 24,
-        LlvmTripleArchType_systemz = 25,
-        LlvmTripleArchType_tce = 26,
-        LlvmTripleArchType_tcele = 27,
-        LlvmTripleArchType_thumb = 28,
-        LlvmTripleArchType_thumbeb = 29,
-        LlvmTripleArchType_x86 = 30,
-        LlvmTripleArchType_x86_64 = 31,
-        LlvmTripleArchType_xcore = 32,
-        LlvmTripleArchType_nvptx = 33,
-        LlvmTripleArchType_nvptx64 = 34,
-        LlvmTripleArchType_le32 = 35,
-        LlvmTripleArchType_le64 = 36,
-        LlvmTripleArchType_amdil = 37,
-        LlvmTripleArchType_amdil64 = 38,
-        LlvmTripleArchType_hsail = 39,
-        LlvmTripleArchType_hsail64 = 40,
-        LlvmTripleArchType_spir = 41,
-        LlvmTripleArchType_spir64 = 42,
-        LlvmTripleArchType_kalimba = 43,
-        LlvmTripleArchType_shave = 44,
-        LlvmTripleArchType_lanai = 45,
-        LlvmTripleArchType_wasm32 = 46,
-        LlvmTripleArchType_wasm64 = 47,
-        LlvmTripleArchType_renderscript32 = 48,
-        LlvmTripleArchType_renderscript64 = 49,
-        LlvmTripleArchType_LastArchType = 49,
+        LibLLVMTripleArchType_UnknownArch = 0,
+        LibLLVMTripleArchType_arm = 1,
+        LibLLVMTripleArchType_armeb = 2,
+        LibLLVMTripleArchType_aarch64 = 3,
+        LibLLVMTripleArchType_aarch64_be = 4,
+        LibLLVMTripleArchType_arc = 5,
+        LibLLVMTripleArchType_avr = 6,
+        LibLLVMTripleArchType_bpfel = 7,
+        LibLLVMTripleArchType_bpfeb = 8,
+        LibLLVMTripleArchType_hexagon = 9,
+        LibLLVMTripleArchType_mips = 10,
+        LibLLVMTripleArchType_mipsel = 11,
+        LibLLVMTripleArchType_mips64 = 12,
+        LibLLVMTripleArchType_mips64el = 13,
+        LibLLVMTripleArchType_msp430 = 14,
+        LibLLVMTripleArchType_ppc = 15,
+        LibLLVMTripleArchType_ppc64 = 16,
+        LibLLVMTripleArchType_ppc64le = 17,
+        LibLLVMTripleArchType_r600 = 18,
+        LibLLVMTripleArchType_amdgcn = 19,
+        LibLLVMTripleArchType_riscv32 = 20,
+        LibLLVMTripleArchType_riscv64 = 21,
+        LibLLVMTripleArchType_sparc = 22,
+        LibLLVMTripleArchType_sparcv9 = 23,
+        LibLLVMTripleArchType_sparcel = 24,
+        LibLLVMTripleArchType_systemz = 25,
+        LibLLVMTripleArchType_tce = 26,
+        LibLLVMTripleArchType_tcele = 27,
+        LibLLVMTripleArchType_thumb = 28,
+        LibLLVMTripleArchType_thumbeb = 29,
+        LibLLVMTripleArchType_x86 = 30,
+        LibLLVMTripleArchType_x86_64 = 31,
+        LibLLVMTripleArchType_xcore = 32,
+        LibLLVMTripleArchType_nvptx = 33,
+        LibLLVMTripleArchType_nvptx64 = 34,
+        LibLLVMTripleArchType_le32 = 35,
+        LibLLVMTripleArchType_le64 = 36,
+        LibLLVMTripleArchType_amdil = 37,
+        LibLLVMTripleArchType_amdil64 = 38,
+        LibLLVMTripleArchType_hsail = 39,
+        LibLLVMTripleArchType_hsail64 = 40,
+        LibLLVMTripleArchType_spir = 41,
+        LibLLVMTripleArchType_spir64 = 42,
+        LibLLVMTripleArchType_kalimba = 43,
+        LibLLVMTripleArchType_shave = 44,
+        LibLLVMTripleArchType_lanai = 45,
+        LibLLVMTripleArchType_wasm32 = 46,
+        LibLLVMTripleArchType_wasm64 = 47,
+        LibLLVMTripleArchType_renderscript32 = 48,
+        LibLLVMTripleArchType_renderscript64 = 49,
+        LibLLVMTripleArchType_LastArchType = 49,
     }
 
     [GeneratedCode("LlvmBindingsGenerator","2.17941.31104.49410")]
-    public enum LLVMTripleSubArchType : global::System.Int32
+    public enum LibLLVMTripleSubArchType : global::System.Int32
     {
-        LlvmTripleSubArchType_NoSubArch = 0,
-        LlvmTripleSubArchType_ARMSubArch_v8_5a = 1,
-        LlvmTripleSubArchType_ARMSubArch_v8_4a = 2,
-        LlvmTripleSubArchType_ARMSubArch_v8_3a = 3,
-        LlvmTripleSubArchType_ARMSubArch_v8_2a = 4,
-        LlvmTripleSubArchType_ARMSubArch_v8_1a = 5,
-        LlvmTripleSubArchType_ARMSubArch_v8 = 6,
-        LlvmTripleSubArchType_ARMSubArch_v8r = 7,
-        LlvmTripleSubArchType_ARMSubArch_v8m_baseline = 8,
-        LlvmTripleSubArchType_ARMSubArch_v8m_mainline = 9,
-        LlvmTripleSubArchType_ARMSubArch_v7 = 10,
-        LlvmTripleSubArchType_ARMSubArch_v7em = 11,
-        LlvmTripleSubArchType_ARMSubArch_v7m = 12,
-        LlvmTripleSubArchType_ARMSubArch_v7s = 13,
-        LlvmTripleSubArchType_ARMSubArch_v7k = 14,
-        LlvmTripleSubArchType_ARMSubArch_v7ve = 15,
-        LlvmTripleSubArchType_ARMSubArch_v6 = 16,
-        LlvmTripleSubArchType_ARMSubArch_v6m = 17,
-        LlvmTripleSubArchType_ARMSubArch_v6k = 18,
-        LlvmTripleSubArchType_ARMSubArch_v6t2 = 19,
-        LlvmTripleSubArchType_ARMSubArch_v5 = 20,
-        LlvmTripleSubArchType_ARMSubArch_v5te = 21,
-        LlvmTripleSubArchType_ARMSubArch_v4t = 22,
-        LlvmTripleSubArchType_KalimbaSubArch_v3 = 23,
-        LlvmTripleSubArchType_KalimbaSubArch_v4 = 24,
-        LlvmTripleSubArchType_KalimbaSubArch_v5 = 25,
-        LlvmTripleSubArchType_MipsSubArch_r6 = 26,
+        LibLLVMTripleSubArchType_NoSubArch = 0,
+        LibLLVMTripleSubArchType_ARMSubArch_v8_5a = 1,
+        LibLLVMTripleSubArchType_ARMSubArch_v8_4a = 2,
+        LibLLVMTripleSubArchType_ARMSubArch_v8_3a = 3,
+        LibLLVMTripleSubArchType_ARMSubArch_v8_2a = 4,
+        LibLLVMTripleSubArchType_ARMSubArch_v8_1a = 5,
+        LibLLVMTripleSubArchType_ARMSubArch_v8 = 6,
+        LibLLVMTripleSubArchType_ARMSubArch_v8r = 7,
+        LibLLVMTripleSubArchType_ARMSubArch_v8m_baseline = 8,
+        LibLLVMTripleSubArchType_ARMSubArch_v8m_mainline = 9,
+        LibLLVMTripleSubArchType_ARMSubArch_v7 = 10,
+        LibLLVMTripleSubArchType_ARMSubArch_v7em = 11,
+        LibLLVMTripleSubArchType_ARMSubArch_v7m = 12,
+        LibLLVMTripleSubArchType_ARMSubArch_v7s = 13,
+        LibLLVMTripleSubArchType_ARMSubArch_v7k = 14,
+        LibLLVMTripleSubArchType_ARMSubArch_v7ve = 15,
+        LibLLVMTripleSubArchType_ARMSubArch_v6 = 16,
+        LibLLVMTripleSubArchType_ARMSubArch_v6m = 17,
+        LibLLVMTripleSubArchType_ARMSubArch_v6k = 18,
+        LibLLVMTripleSubArchType_ARMSubArch_v6t2 = 19,
+        LibLLVMTripleSubArchType_ARMSubArch_v5 = 20,
+        LibLLVMTripleSubArchType_ARMSubArch_v5te = 21,
+        LibLLVMTripleSubArchType_ARMSubArch_v4t = 22,
+        LibLLVMTripleSubArchType_KalimbaSubArch_v3 = 23,
+        LibLLVMTripleSubArchType_KalimbaSubArch_v4 = 24,
+        LibLLVMTripleSubArchType_KalimbaSubArch_v5 = 25,
+        LibLLVMTripleSubArchType_MipsSubArch_r6 = 26,
     }
 
     [GeneratedCode("LlvmBindingsGenerator","2.17941.31104.49410")]
-    public enum LLVMTripleVendorType : global::System.Int32
+    public enum LibLLVMTripleVendorType : global::System.Int32
     {
-        LlvmTripleVendorType_UnknownVendor = 0,
-        LlvmTripleVendorType_Apple = 1,
-        LlvmTripleVendorType_PC = 2,
-        LlvmTripleVendorType_SCEI = 3,
-        LlvmTripleVendorType_BGP = 4,
-        LlvmTripleVendorType_BGQ = 5,
-        LlvmTripleVendorType_Freescale = 6,
-        LlvmTripleVendorType_IBM = 7,
-        LlvmTripleVendorType_ImaginationTechnologies = 8,
-        LlvmTripleVendorType_MipsTechnologies = 9,
-        LlvmTripleVendorType_NVIDIA = 10,
-        LlvmTripleVendorType_CSR = 11,
-        LlvmTripleVendorType_Myriad = 12,
-        LlvmTripleVendorType_AMD = 13,
-        LlvmTripleVendorType_Mesa = 14,
-        LlvmTripleVendorType_SUSE = 15,
-        LlvmTripleVendorType_OpenEmbedded = 16,
-        LlvmTripleVendorType_LastVendorType = 16,
+        LibLLVMTripleVendorType_UnknownVendor = 0,
+        LibLLVMTripleVendorType_Apple = 1,
+        LibLLVMTripleVendorType_PC = 2,
+        LibLLVMTripleVendorType_SCEI = 3,
+        LibLLVMTripleVendorType_BGP = 4,
+        LibLLVMTripleVendorType_BGQ = 5,
+        LibLLVMTripleVendorType_Freescale = 6,
+        LibLLVMTripleVendorType_IBM = 7,
+        LibLLVMTripleVendorType_ImaginationTechnologies = 8,
+        LibLLVMTripleVendorType_MipsTechnologies = 9,
+        LibLLVMTripleVendorType_NVIDIA = 10,
+        LibLLVMTripleVendorType_CSR = 11,
+        LibLLVMTripleVendorType_Myriad = 12,
+        LibLLVMTripleVendorType_AMD = 13,
+        LibLLVMTripleVendorType_Mesa = 14,
+        LibLLVMTripleVendorType_SUSE = 15,
+        LibLLVMTripleVendorType_OpenEmbedded = 16,
+        LibLLVMTripleVendorType_LastVendorType = 16,
     }
 
     [GeneratedCode("LlvmBindingsGenerator","2.17941.31104.49410")]
-    public enum LLVMTripleOSType : global::System.Int32
+    public enum LibLLVMTripleOSType : global::System.Int32
     {
-        LlvmTripleOSType_UnknownOS = 0,
-        LlvmTripleOSType_Ananas = 1,
-        LlvmTripleOSType_CloudABI = 2,
-        LlvmTripleOSType_Darwin = 3,
-        LlvmTripleOSType_DragonFly = 4,
-        LlvmTripleOSType_FreeBSD = 5,
-        LlvmTripleOSType_Fuchsia = 6,
-        LlvmTripleOSType_IOS = 7,
-        LlvmTripleOSType_KFreeBSD = 8,
-        LlvmTripleOSType_Linux = 9,
-        LlvmTripleOSType_Lv2 = 10,
-        LlvmTripleOSType_MacOSX = 11,
-        LlvmTripleOSType_NetBSD = 12,
-        LlvmTripleOSType_OpenBSD = 13,
-        LlvmTripleOSType_Solaris = 14,
-        LlvmTripleOSType_Win32 = 15,
-        LlvmTripleOSType_Haiku = 16,
-        LlvmTripleOSType_Minix = 17,
-        LlvmTripleOSType_RTEMS = 18,
-        LlvmTripleOSType_NaCl = 19,
-        LlvmTripleOSType_CNK = 20,
-        LlvmTripleOSType_AIX = 21,
-        LlvmTripleOSType_CUDA = 22,
-        LlvmTripleOSType_NVCL = 23,
-        LlvmTripleOSType_AMDHSA = 24,
-        LlvmTripleOSType_PS4 = 25,
-        LlvmTripleOSType_ELFIAMCU = 26,
-        LlvmTripleOSType_TvOS = 27,
-        LlvmTripleOSType_WatchOS = 28,
-        LlvmTripleOSType_Mesa3D = 29,
-        LlvmTripleOSType_Contiki = 30,
-        LlvmTripleOSType_AMDPAL = 31,
-        LlvmTripleOSType_HermitCore = 32,
-        LlvmTripleOSType_Hurd = 33,
-        LlvmTripleOSType_WASI = 34,
-        LlvmTripleOSType_LastOSType = 34,
+        LibLLVMTripleOSType_UnknownOS = 0,
+        LibLLVMTripleOSType_Ananas = 1,
+        LibLLVMTripleOSType_CloudABI = 2,
+        LibLLVMTripleOSType_Darwin = 3,
+        LibLLVMTripleOSType_DragonFly = 4,
+        LibLLVMTripleOSType_FreeBSD = 5,
+        LibLLVMTripleOSType_Fuchsia = 6,
+        LibLLVMTripleOSType_IOS = 7,
+        LibLLVMTripleOSType_KFreeBSD = 8,
+        LibLLVMTripleOSType_Linux = 9,
+        LibLLVMTripleOSType_Lv2 = 10,
+        LibLLVMTripleOSType_MacOSX = 11,
+        LibLLVMTripleOSType_NetBSD = 12,
+        LibLLVMTripleOSType_OpenBSD = 13,
+        LibLLVMTripleOSType_Solaris = 14,
+        LibLLVMTripleOSType_Win32 = 15,
+        LibLLVMTripleOSType_Haiku = 16,
+        LibLLVMTripleOSType_Minix = 17,
+        LibLLVMTripleOSType_RTEMS = 18,
+        LibLLVMTripleOSType_NaCl = 19,
+        LibLLVMTripleOSType_CNK = 20,
+        LibLLVMTripleOSType_AIX = 21,
+        LibLLVMTripleOSType_CUDA = 22,
+        LibLLVMTripleOSType_NVCL = 23,
+        LibLLVMTripleOSType_AMDHSA = 24,
+        LibLLVMTripleOSType_PS4 = 25,
+        LibLLVMTripleOSType_ELFIAMCU = 26,
+        LibLLVMTripleOSType_TvOS = 27,
+        LibLLVMTripleOSType_WatchOS = 28,
+        LibLLVMTripleOSType_Mesa3D = 29,
+        LibLLVMTripleOSType_Contiki = 30,
+        LibLLVMTripleOSType_AMDPAL = 31,
+        LibLLVMTripleOSType_HermitCore = 32,
+        LibLLVMTripleOSType_Hurd = 33,
+        LibLLVMTripleOSType_WASI = 34,
+        LibLLVMTripleOSType_LastOSType = 34,
     }
 
     [GeneratedCode("LlvmBindingsGenerator","2.17941.31104.49410")]
-    public enum LLVMTripleEnvironmentType : global::System.Int32
+    public enum LibLLVMTripleEnvironmentType : global::System.Int32
     {
-        LlvmTripleEnvironmentType_UnknownEnvironment = 0,
-        LlvmTripleEnvironmentType_GNU = 1,
-        LlvmTripleEnvironmentType_GNUABIN32 = 2,
-        LlvmTripleEnvironmentType_GNUABI64 = 3,
-        LlvmTripleEnvironmentType_GNUEABI = 4,
-        LlvmTripleEnvironmentType_GNUEABIHF = 5,
-        LlvmTripleEnvironmentType_GNUX32 = 6,
-        LlvmTripleEnvironmentType_CODE16 = 7,
-        LlvmTripleEnvironmentType_EABI = 8,
-        LlvmTripleEnvironmentType_EABIHF = 9,
-        LlvmTripleEnvironmentType_Android = 10,
-        LlvmTripleEnvironmentType_Musl = 11,
-        LlvmTripleEnvironmentType_MuslEABI = 12,
-        LlvmTripleEnvironmentType_MuslEABIHF = 13,
-        LlvmTripleEnvironmentType_MSVC = 14,
-        LlvmTripleEnvironmentType_Itanium = 15,
-        LlvmTripleEnvironmentType_Cygnus = 16,
-        LlvmTripleEnvironmentType_CoreCLR = 17,
-        LlvmTripleEnvironmentType_Simulator = 18,
-        LlvmTripleEnvironmentType_LastEnvironmentType = 18,
+        LibLLVMTripleEnvironmentType_UnknownEnvironment = 0,
+        LibLLVMTripleEnvironmentType_GNU = 1,
+        LibLLVMTripleEnvironmentType_GNUABIN32 = 2,
+        LibLLVMTripleEnvironmentType_GNUABI64 = 3,
+        LibLLVMTripleEnvironmentType_GNUEABI = 4,
+        LibLLVMTripleEnvironmentType_GNUEABIHF = 5,
+        LibLLVMTripleEnvironmentType_GNUX32 = 6,
+        LibLLVMTripleEnvironmentType_CODE16 = 7,
+        LibLLVMTripleEnvironmentType_EABI = 8,
+        LibLLVMTripleEnvironmentType_EABIHF = 9,
+        LibLLVMTripleEnvironmentType_Android = 10,
+        LibLLVMTripleEnvironmentType_Musl = 11,
+        LibLLVMTripleEnvironmentType_MuslEABI = 12,
+        LibLLVMTripleEnvironmentType_MuslEABIHF = 13,
+        LibLLVMTripleEnvironmentType_MSVC = 14,
+        LibLLVMTripleEnvironmentType_Itanium = 15,
+        LibLLVMTripleEnvironmentType_Cygnus = 16,
+        LibLLVMTripleEnvironmentType_CoreCLR = 17,
+        LibLLVMTripleEnvironmentType_Simulator = 18,
+        LibLLVMTripleEnvironmentType_LastEnvironmentType = 18,
     }
 
     [GeneratedCode("LlvmBindingsGenerator","2.17941.31104.49410")]
-    public enum LLVMTripleObjectFormatType : global::System.Int32
+    public enum LibLLVMTripleObjectFormatType : global::System.Int32
     {
-        LlvmTripleObjectFormatType_UnknownObjectFormat = 0,
-        LlvmTripleObjectFormatType_COFF = 1,
-        LlvmTripleObjectFormatType_ELF = 2,
-        LlvmTripleObjectFormatType_MachO = 3,
-        LlvmTripleObjectFormatType_Wasm = 4,
+        LibLLVMTripleObjectFormatType_UnknownObjectFormat = 0,
+        LibLLVMTripleObjectFormatType_COFF = 1,
+        LibLLVMTripleObjectFormatType_ELF = 2,
+        LibLLVMTripleObjectFormatType_MachO = 3,
+        LibLLVMTripleObjectFormatType_Wasm = 4,
     }
 
     public static partial class NativeMethods
     {
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
-        public static extern LLVMTripleRef LLVMParseTriple( [MarshalAs( UnmanagedType.LPStr )]string triple );
+        public static extern LibLLVMTripleRef LibLLVMParseTriple( [MarshalAs( UnmanagedType.LPStr )]string triple );
 
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
-        public static extern LLVMTripleRef LLVMGetHostTriple(  );
-
-        [return: MarshalAs( UnmanagedType.Bool )]
-        [SuppressUnmanagedCodeSecurity]
-        [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
-        public static extern bool LLVMTripleOpEqual( LLVMTripleRef lhs, LLVMTripleRef rhs );
-
-        [SuppressUnmanagedCodeSecurity]
-        [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
-        public static extern global::Llvm.NET.Interop.LLVMTripleArchType LLVMTripleGetArchType( LLVMTripleRef triple );
-
-        [SuppressUnmanagedCodeSecurity]
-        [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
-        public static extern global::Llvm.NET.Interop.LLVMTripleSubArchType LLVMTripleGetSubArchType( LLVMTripleRef triple );
-
-        [SuppressUnmanagedCodeSecurity]
-        [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
-        public static extern global::Llvm.NET.Interop.LLVMTripleVendorType LLVMTripleGetVendorType( LLVMTripleRef triple );
-
-        [SuppressUnmanagedCodeSecurity]
-        [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
-        public static extern global::Llvm.NET.Interop.LLVMTripleOSType LLVMTripleGetOsType( LLVMTripleRef triple );
+        public static extern LibLLVMTripleRef LibLLVMGetHostTriple(  );
 
         [return: MarshalAs( UnmanagedType.Bool )]
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
-        public static extern bool LLVMTripleHasEnvironment( LLVMTripleRef triple );
+        public static extern bool LibLLVMTripleOpEqual( LibLLVMTripleRef lhs, LibLLVMTripleRef rhs );
 
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
-        public static extern global::Llvm.NET.Interop.LLVMTripleEnvironmentType LLVMTripleGetEnvironmentType( LLVMTripleRef triple );
+        public static extern global::Llvm.NET.Interop.LibLLVMTripleArchType LibLLVMTripleGetArchType( LibLLVMTripleRef triple );
 
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
-        public static extern void LLVMTripleGetEnvironmentVersion( LLVMTripleRef triple, out uint major, out uint minor, out uint micro );
+        public static extern global::Llvm.NET.Interop.LibLLVMTripleSubArchType LibLLVMTripleGetSubArchType( LibLLVMTripleRef triple );
 
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
-        public static extern global::Llvm.NET.Interop.LLVMTripleObjectFormatType LLVMTripleGetObjectFormatType( LLVMTripleRef triple );
+        public static extern global::Llvm.NET.Interop.LibLLVMTripleVendorType LibLLVMTripleGetVendorType( LibLLVMTripleRef triple );
 
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
-        [return: MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( DisposeMessageMarshaler ) )]
-        public static extern string LLVMTripleAsString( LLVMTripleRef triple, bool normalize );
+        public static extern global::Llvm.NET.Interop.LibLLVMTripleOSType LibLLVMTripleGetOsType( LibLLVMTripleRef triple );
+
+        [return: MarshalAs( UnmanagedType.Bool )]
+        [SuppressUnmanagedCodeSecurity]
+        [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
+        public static extern bool LibLLVMTripleHasEnvironment( LibLLVMTripleRef triple );
 
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
-        [return: MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( DisposeMessageMarshaler ) )]
-        public static extern string LLVMTripleGetArchTypeName( global::Llvm.NET.Interop.LLVMTripleArchType type );
+        public static extern global::Llvm.NET.Interop.LibLLVMTripleEnvironmentType LibLLVMTripleGetEnvironmentType( LibLLVMTripleRef triple );
 
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
-        [return: MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( DisposeMessageMarshaler ) )]
-        public static extern string LLVMTripleGetSubArchTypeName( global::Llvm.NET.Interop.LLVMTripleSubArchType type );
+        public static extern void LibLLVMTripleGetEnvironmentVersion( LibLLVMTripleRef triple, out uint major, out uint minor, out uint micro );
 
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
-        [return: MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( DisposeMessageMarshaler ) )]
-        public static extern string LLVMTripleGetVendorTypeName( global::Llvm.NET.Interop.LLVMTripleVendorType vendor );
-
-        [SuppressUnmanagedCodeSecurity]
-        [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
-        [return: MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( DisposeMessageMarshaler ) )]
-        public static extern string LLVMTripleGetOsTypeName( global::Llvm.NET.Interop.LLVMTripleOSType osType );
+        public static extern global::Llvm.NET.Interop.LibLLVMTripleObjectFormatType LibLLVMTripleGetObjectFormatType( LibLLVMTripleRef triple );
 
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         [return: MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( DisposeMessageMarshaler ) )]
-        public static extern string LLVMTripleGetEnvironmentTypeName( global::Llvm.NET.Interop.LLVMTripleEnvironmentType environmentType );
+        public static extern string LibLLVMTripleAsString( LibLLVMTripleRef triple, bool normalize );
 
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         [return: MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( DisposeMessageMarshaler ) )]
-        public static extern string LLVMTripleGetObjectFormatTypeName( global::Llvm.NET.Interop.LLVMTripleObjectFormatType objectFormatType );
+        public static extern string LibLLVMTripleGetArchTypeName( global::Llvm.NET.Interop.LibLLVMTripleArchType type );
 
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         [return: MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( DisposeMessageMarshaler ) )]
-        public static extern string LLVMNormalizeTriple( [MarshalAs( UnmanagedType.LPStr )]string triple );
+        public static extern string LibLLVMTripleGetSubArchTypeName( global::Llvm.NET.Interop.LibLLVMTripleSubArchType type );
+
+        [SuppressUnmanagedCodeSecurity]
+        [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
+        [return: MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( DisposeMessageMarshaler ) )]
+        public static extern string LibLLVMTripleGetVendorTypeName( global::Llvm.NET.Interop.LibLLVMTripleVendorType vendor );
+
+        [SuppressUnmanagedCodeSecurity]
+        [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
+        [return: MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( DisposeMessageMarshaler ) )]
+        public static extern string LibLLVMTripleGetOsTypeName( global::Llvm.NET.Interop.LibLLVMTripleOSType osType );
+
+        [SuppressUnmanagedCodeSecurity]
+        [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
+        [return: MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( DisposeMessageMarshaler ) )]
+        public static extern string LibLLVMTripleGetEnvironmentTypeName( global::Llvm.NET.Interop.LibLLVMTripleEnvironmentType environmentType );
+
+        [SuppressUnmanagedCodeSecurity]
+        [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
+        [return: MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( DisposeMessageMarshaler ) )]
+        public static extern string LibLLVMTripleGetObjectFormatTypeName( global::Llvm.NET.Interop.LibLLVMTripleObjectFormatType objectFormatType );
+
+        [SuppressUnmanagedCodeSecurity]
+        [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
+        [return: MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( DisposeMessageMarshaler ) )]
+        public static extern string LibLLVMNormalizeTriple( [MarshalAs( UnmanagedType.LPStr )]string triple );
 
     }
 }

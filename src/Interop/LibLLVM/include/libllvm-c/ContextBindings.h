@@ -7,8 +7,8 @@
 extern "C" {
 #endif
 
-    LLVMBool LLVMContextGetIsODRUniquingDebugTypes( LLVMContextRef context );
-    void LLVMContextSetIsODRUniquingDebugTypes( LLVMContextRef context, LLVMBool state );
+    LLVMBool LibLLVMContextGetIsODRUniquingDebugTypes( LLVMContextRef context );
+    void LibLLVMContextSetIsODRUniquingDebugTypes( LLVMContextRef context, LLVMBool state );
 
 #ifdef __cplusplus
 }

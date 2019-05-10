@@ -8,7 +8,7 @@ extern "C" {
 #endif
 
 /// createEnumerator - Create a single enumerator value.
-LLVMMetadataRef LLVMDIBuilderCreateEnumeratorValue( LLVMDIBuilderRef D, char const* Name, int64_t Val );
+LLVMMetadataRef LibLLVMDIBuilderCreateEnumeratorValue( LLVMDIBuilderRef D, char const* Name, int64_t Val );
 
 enum LibLLVMDwarfSourceLanguage
 {

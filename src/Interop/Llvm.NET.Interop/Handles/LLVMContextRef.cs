@@ -12,6 +12,7 @@ using System;
 using System.CodeDom.Compiler;
 using System.Runtime.InteropServices;
 using System.Security;
+using System.Threading;
 
 namespace Llvm.NET.Interop
 {
@@ -31,7 +32,14 @@ namespace Llvm.NET.Interop
         [SecurityCritical]
         protected override bool ReleaseHandle( )
         {
-            LLVMContextDispose( handle );
+            // ensure handle appears invalid from this point forward
+            var prevHandle = Interlocked.Exchange( ref handle, IntPtr.Zero );
+            SetHandleAsInvalid( );
+
+            if( prevHandle != IntPtr.Zero )
+            {
+                LLVMContextDispose( handle );
+            }
             return true;
         }
 
@@ -43,6 +51,7 @@ namespace Llvm.NET.Interop
         [DllImport( NativeMethods.LibraryPath, CallingConvention = CallingConvention.Cdecl )]
         private static extern void LLVMContextDispose( IntPtr p );
     }
+
     [GeneratedCode("LlvmBindingsGenerator","2.17941.31104.49410")]
     public class LLVMContextRefAlias
         : LLVMContextRef

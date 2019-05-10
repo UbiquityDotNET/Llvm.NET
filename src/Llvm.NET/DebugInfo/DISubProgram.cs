@@ -62,7 +62,7 @@ namespace Llvm.NET.DebugInfo
         /// <returns><see langword="true"/> if this <see cref="DISubProgram"/> describes <paramref name="function"/> </returns>
         [SuppressMessage( "Microsoft.Design", "CA1011:ConsiderPassingBaseTypesAsParameters", Justification = "Specific type required by interop call" )]
         public bool Describes( Function function )
-            => LLVMSubProgramDescribes( MetadataHandle, function.ValidateNotNull( nameof( function )).ValueHandle );
+            => LibLLVMSubProgramDescribes( MetadataHandle, function.ValidateNotNull( nameof( function )).ValueHandle );
 
         internal DISubProgram( LLVMMetadataRef handle )
             : base( handle )

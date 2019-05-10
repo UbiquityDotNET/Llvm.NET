@@ -634,7 +634,7 @@ namespace Llvm.NET.Interop
             IntPtr hLibLLVM = LoadWin32Library( "LibLlvm.dll", paths );
 
             // Verify the version of LLVM in LibLLVM
-            LLVMGetVersionInfo( out LLVMVersionInfo versionInfo );
+            LibLLVMGetVersionInfo( out LibLLVMVersionInfo versionInfo );
             if( versionInfo.Major != VersionMajor
              || versionInfo.Minor != VersionMinor
              || versionInfo.Patch < VersionPatch

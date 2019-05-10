@@ -34,7 +34,7 @@ namespace Llvm.NET
         public bool IsDeleted => MetadataHandle == default;
 
         /// <summary>Gets a value indicating whether this node is a temporary</summary>
-        public bool IsTemporary => LLVMIsTemporary( MetadataHandle );
+        public bool IsTemporary => LibLLVMIsTemporary( MetadataHandle );
 
         /// <summary>Gets a value indicating whether this node is resolved</summary>
         /// <remarks>
@@ -45,13 +45,13 @@ namespace Llvm.NET
         /// <para>If <see cref="IsUniqued"/> is <see langword="true"/> then this returns <see langword="true"/>
         /// if this node has already dropped RAUW support (because all operands are resolved).</para>
         /// </remarks>
-        public bool IsResolved => LLVMIsResolved( MetadataHandle );
+        public bool IsResolved => LibLLVMIsResolved( MetadataHandle );
 
         /// <summary>Gets a value indicating whether this node is uniqued</summary>
-        public bool IsUniqued => LLVMIsUniqued( MetadataHandle );
+        public bool IsUniqued => LibLLVMIsUniqued( MetadataHandle );
 
         /// <summary>Gets a value indicating whether this node is distinct</summary>
-        public bool IsDistinct => LLVMIsDistinct( MetadataHandle );
+        public bool IsDistinct => LibLLVMIsDistinct( MetadataHandle );
 
         /// <summary>Gets the operands for this node, if any</summary>
         public IList<LlvmMetadata> Operands { get; }
@@ -120,13 +120,13 @@ namespace Llvm.NET
         */
 
         /// <inheritdoc/>
-        long IOperandContainer<LlvmMetadata>.Count => LLVMMDNodeGetNumOperands( MetadataHandle );
+        long IOperandContainer<LlvmMetadata>.Count => LibLLVMMDNodeGetNumOperands( MetadataHandle );
 
         /// <inheritdoc/>
         LlvmMetadata IOperandContainer<LlvmMetadata>.this[ int index ]
         {
-            get => FromHandle<LlvmMetadata>( Context, LLVMGetOperandNode( LLVMMDNodeGetOperand( MetadataHandle, ( uint )index ) ) );
-            set => LLVMMDNodeReplaceOperand( MetadataHandle, ( uint )index, value.MetadataHandle );
+            get => FromHandle<LlvmMetadata>( Context, LibLLVMGetOperandNode( LibLLVMMDNodeGetOperand( MetadataHandle, ( uint )index ) ) );
+            set => LibLLVMMDNodeReplaceOperand( MetadataHandle, ( uint )index, value.MetadataHandle );
         }
 
         /// <inheritdoc/>
@@ -152,7 +152,7 @@ namespace Llvm.NET
 
         private static Context GetMeatadataContext( LLVMMetadataRef metadataHandle )
         {
-            var hContext = LLVMGetNodeContext( metadataHandle );
+            var hContext = LibLLVMGetNodeContext( metadataHandle );
             Debug.Assert( hContext != default, "Should not get a null pointer from LLVM" );
             return ContextCache.GetContextFor( hContext );
         }

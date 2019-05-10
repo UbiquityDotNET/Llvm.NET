@@ -279,7 +279,7 @@ namespace Llvm.NET.Values
         /// <returns><see langword="true"/> if no errors found</returns>
         public bool Verify( out string errMsg )
         {
-            return LLVMVerifyFunctionEx( ValueHandle, LLVMVerifierFailureAction.LLVMReturnStatusAction, out errMsg ).Succeeded;
+            return LibLLVMVerifyFunctionEx( ValueHandle, LLVMVerifierFailureAction.LLVMReturnStatusAction, out errMsg ).Succeeded;
         }
 
         /// <summary>Add a new basic block to the beginning of a function</summary>

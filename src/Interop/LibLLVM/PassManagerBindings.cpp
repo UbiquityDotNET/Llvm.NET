@@ -25,37 +25,37 @@ using namespace llvm;
 
 extern "C"
 {
-    LLVMPassRegistryRef LLVMCreatePassRegistry( )
+    LLVMPassRegistryRef LibLLVMCreatePassRegistry( )
     {
         return wrap( new PassRegistry( ) );
     }
 
-    void LLVMPassRegistryDispose( LLVMPassRegistryRef passReg )
+    void LibLLVMPassRegistryDispose( LLVMPassRegistryRef passReg )
     {
         delete unwrap( passReg );
     }
 
-    void LLVMAddAddressSanitizerFunctionPass( LLVMPassManagerRef PM )
+    void LibLLVMAddAddressSanitizerFunctionPass( LLVMPassManagerRef PM )
     {
         unwrap( PM )->add( createAddressSanitizerFunctionPass( ) );
     }
 
-    void LLVMAddAddressSanitizerModulePass( LLVMPassManagerRef PM )
+    void LibLLVMAddAddressSanitizerModulePass( LLVMPassManagerRef PM )
     {
         unwrap( PM )->add( createAddressSanitizerModulePass( ) );
     }
 
-    void LLVMAddThreadSanitizerPass( LLVMPassManagerRef PM )
+    void LibLLVMAddThreadSanitizerPass( LLVMPassManagerRef PM )
     {
         unwrap( PM )->add( createThreadSanitizerLegacyPassPass( ) );
     }
 
-    void LLVMAddMemorySanitizerPass( LLVMPassManagerRef PM )
+    void LibLLVMAddMemorySanitizerPass( LLVMPassManagerRef PM )
     {
         unwrap( PM )->add( createMemorySanitizerLegacyPassPass( ) );
     }
 
-    void LLVMAddDataFlowSanitizerPass( LLVMPassManagerRef PM, int ABIListFilesNum, const char **ABIListFiles )
+    void LibLLVMAddDataFlowSanitizerPass( LLVMPassManagerRef PM, int ABIListFilesNum, const char **ABIListFiles )
     {
         std::vector<std::string> ABIListFilesVec;
         for( int i = 0; i != ABIListFilesNum; ++i )

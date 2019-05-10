@@ -14,7 +14,7 @@ namespace LlvmBindingsGenerator.Templates
     internal partial class ExportsTemplate
         : ICodeGenTemplate
     {
-        public ExportsTemplate(ASTContext ast)
+        public ExportsTemplate( ASTContext ast )
         {
             Ast = ast;
         }
@@ -42,8 +42,8 @@ namespace LlvmBindingsGenerator.Templates
                select func;
 
         public IEnumerable<Function> LlvmFunctions
-            => from tu in Ast.GeneratedUnits()
-               where tu.IsCoreHeader()
+            => from tu in Ast.GeneratedUnits( )
+               where tu.IsCoreHeader( )
                from func in tu.Functions
                where !func.IsInline && !func.Ignore
                select func;

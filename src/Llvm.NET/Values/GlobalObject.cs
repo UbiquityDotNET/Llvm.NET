@@ -38,7 +38,7 @@ namespace Llvm.NET.Values
         {
             get
             {
-                LLVMComdatRef comdatRef = LLVMGlobalObjectGetComdat( ValueHandle );
+                LLVMComdatRef comdatRef = LibLLVMGlobalObjectGetComdat( ValueHandle );
                 return comdatRef == default ? null : new Comdat( ParentModule, comdatRef );
             }
 
@@ -49,7 +49,7 @@ namespace Llvm.NET.Values
                     throw new ArgumentException( Resources.Mismatched_modules_for_Comdat, nameof( value ) );
                 }
 
-                LLVMGlobalObjectSetComdat( ValueHandle, value?.ComdatHandle ?? LLVMComdatRef.Zero );
+                LibLLVMGlobalObjectSetComdat( ValueHandle, value?.ComdatHandle ?? LLVMComdatRef.Zero );
             }
         }
 

@@ -1,5 +1,8 @@
 #include "libllvm-c/DIBuilderBindings.h"
 #include "llvm/IR/DIBuilder.h"
+#include "llvm/IR/DebugLoc.h"
+#include "llvm/IR/DebugInfoMetadata.h"
+#include <llvm/Support/CBindingWrapping.h>
 
 using namespace llvm;
 
@@ -10,7 +13,7 @@ template <typename DIT> DIT* unwrapDI( LLVMMetadataRef Ref )
 
 extern "C"
 {
-    LLVMMetadataRef LLVMDIBuilderCreateEnumeratorValue( LLVMDIBuilderRef Dref, char const* Name, int64_t Val )
+    LLVMMetadataRef LibLLVMDIBuilderCreateEnumeratorValue( LLVMDIBuilderRef Dref, char const* Name, int64_t Val )
     {
         DIBuilder* D = unwrap( Dref );
         DIEnumerator* enumerator = D->createEnumerator( Name, Val );

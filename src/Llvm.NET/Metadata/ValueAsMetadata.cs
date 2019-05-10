@@ -15,7 +15,7 @@ namespace Llvm.NET
         : LlvmMetadata
     {
         /// <summary>Gets the <see cref="Value"/> this node wraps</summary>
-        public Value Value => Value.FromHandle( LLVMValueAsMetadataGetValue( MetadataHandle ) );
+        public Value Value => Value.FromHandle( LibLLVMValueAsMetadataGetValue( MetadataHandle ) );
 
         /// <summary>Gets the type of <see cref="Value"/> this node wraps</summary>
         public ITypeRef Type => Value?.NativeType;

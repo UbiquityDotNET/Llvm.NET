@@ -60,11 +60,11 @@ namespace Llvm.NET.Values
         {
             expression.ValidateNotNull( nameof( expression ) );
 
-            LLVMGlobalVariableAddDebugExpression( ValueHandle, expression.MetadataHandle );
+            LibLLVMGlobalVariableAddDebugExpression( ValueHandle, expression.MetadataHandle );
         }
 
         /// <summary>Removes the value from its parent module, but does not delete it</summary>
-        public void RemoveFromParent() => LLVMRemoveGlobalFromParent( ValueHandle );
+        public void RemoveFromParent() => LibLLVMRemoveGlobalFromParent( ValueHandle );
 
         internal GlobalVariable( LLVMValueRef valueRef )
             : base( valueRef )

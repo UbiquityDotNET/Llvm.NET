@@ -8,10 +8,10 @@
 extern "C" {
 #endif
 
-    LLVMBool LLVMVerifyFunctionEx( LLVMValueRef Fn
-                                   , LLVMVerifierFailureAction Action
-                                   , char **OutMessages
-                                   );
+    LLVMBool LibLLVMVerifyFunctionEx( LLVMValueRef Fn
+                                      , LLVMVerifierFailureAction Action
+                                      , char** OutMessages
+    );
 #ifdef __cplusplus
 }
 #endif

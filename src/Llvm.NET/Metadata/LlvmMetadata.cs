@@ -44,7 +44,7 @@ namespace Llvm.NET
         /// <inheritdoc/>
         public override string ToString( )
         {
-            return MetadataHandle == default ? string.Empty : LLVMMetadataAsString( MetadataHandle );
+            return MetadataHandle == default ? string.Empty : LibLLVMMetadataAsString( MetadataHandle );
         }
 
         internal LLVMMetadataRef MetadataHandle { get; /*protected*/ set; }
@@ -112,7 +112,7 @@ namespace Llvm.NET
             {
                 // use the native kind value to determine the managed type
                 // that should wrap this particular handle
-                var kind = ( MetadataKind )LLVMGetMetadataID( handle );
+                var kind = ( MetadataKind )LibLLVMGetMetadataID( handle );
                 switch( kind )
                 {
                 case MetadataKind.MDString:

@@ -19,7 +19,7 @@ namespace Llvm.NET.Values
         public Function ContainingFunction => FromHandle<Function>( LLVMGetParamParent( ValueHandle ) );
 
         /// <summary>Gets the zero based index of the argument</summary>
-        public uint Index => LLVMGetArgumentIndex( ValueHandle );
+        public uint Index => LibLLVMGetArgumentIndex( ValueHandle );
 
         /// <summary>Sets the alignment for the argument</summary>
         /// <param name="value">Alignment value for this argument</param>

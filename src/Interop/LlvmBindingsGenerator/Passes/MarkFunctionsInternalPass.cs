@@ -18,7 +18,6 @@ namespace LlvmBindingsGenerator.Passes
         {
             VisitOptions.VisitClassBases = false;
             VisitOptions.VisitClassFields = false;
-            VisitOptions.VisitClassMethods = false;
             VisitOptions.VisitClassProperties = false;
             VisitOptions.VisitClassTemplateSpecializations = false;
             VisitOptions.VisitEventParameters = false;
@@ -47,6 +46,16 @@ namespace LlvmBindingsGenerator.Passes
 
         public override bool VisitFunctionDecl( Function function )
         {
+            if( function.Ignore )
+            {
+                return true;
+            }
+
+            if( function.IsImplicit )
+            {
+                function.Ignore = true;
+            }
+
             var entry = IgnoredFunctions.FirstOrDefault( e => e.Name == function.Name );
             if( entry != default )
             {

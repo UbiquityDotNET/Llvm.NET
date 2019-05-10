@@ -25,10 +25,10 @@ namespace Llvm.NET
         public IList<MDNode> Operands { get; }
 
         /// <summary>Gets the module that owns this node</summary>
-        public BitcodeModule ParentModule => BitcodeModule.FromHandle( LLVMNamedMetadataGetParentModule( NativeHandle ) );
+        public BitcodeModule ParentModule => BitcodeModule.FromHandle( LibLLVMNamedMetadataGetParentModule( NativeHandle ) );
 
         /// <summary>Erases this node from its parent</summary>
-        public void EraseFromParent() => LLVMNamedMetadataEraseFromParent( NativeHandle );
+        public void EraseFromParent() => LibLLVMNamedMetadataEraseFromParent( NativeHandle );
 
         internal NamedMDNode( LLVMNamedMDNodeRef nativeNode )
         {
@@ -45,18 +45,18 @@ namespace Llvm.NET
                 get
                 {
                     index.ValidateRange( 0, Count, nameof( index ) );
-                    var nodeHanlde = LLVMNamedMDNodeGetOperand( OwningNode.NativeHandle, ( uint )index );
+                    var nodeHanlde = LibLLVMNamedMDNodeGetOperand( OwningNode.NativeHandle, ( uint )index );
                     return LlvmMetadata.FromHandle<MDNode>( OwningNode.ParentModule.Context, nodeHanlde );
                 }
 
                 set
                 {
                     index.ValidateRange( 0, Count, nameof( index ) );
-                    LLVMNamedMDNodeSetOperand( OwningNode.NativeHandle, ( uint )index, value.MetadataHandle );
+                    LibLLVMNamedMDNodeSetOperand( OwningNode.NativeHandle, ( uint )index, value.MetadataHandle );
                 }
             }
 
-            public int Count => ( int )LLVMNamedMDNodeGetNumOperands( OwningNode.NativeHandle );
+            public int Count => ( int )LibLLVMNamedMDNodeGetNumOperands( OwningNode.NativeHandle );
 
             public IEnumerator<MDNode> GetEnumerator( )
             {
@@ -84,13 +84,12 @@ namespace Llvm.NET
             public void Add( MDNode item )
             {
                 item.ValidateNotNull( nameof( item ) );
-                /* ReSharper disable once PossibleNullReferenceException */
-                LLVMNamedMDNodeAddOperand( OwningNode.NativeHandle, item.MetadataHandle );
+                LibLLVMNamedMDNodeAddOperand( OwningNode.NativeHandle, item.MetadataHandle );
             }
 
             public void Clear( )
             {
-                LLVMNamedMDNodeClearOperands( OwningNode.NativeHandle );
+                LibLLVMNamedMDNodeClearOperands( OwningNode.NativeHandle );
             }
 
             public bool Contains( MDNode item ) => this.Any( n => n == item );

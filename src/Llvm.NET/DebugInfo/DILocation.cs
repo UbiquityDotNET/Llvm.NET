@@ -31,12 +31,12 @@ namespace Llvm.NET.DebugInfo
         /// <param name="scope">Containing scope for the location</param>
         /// <param name="inlinedAt">Scope where this scope is inlined at/into</param>
         public DILocation( Context context, uint line, uint column, DILocalScope scope, DILocation inlinedAt )
-            : base( LLVMDILocation( context.ValidateNotNull( nameof( context ) ).ContextHandle
-                                  , line
-                                  , column
-                                  , scope.ValidateNotNull(nameof(scope)).MetadataHandle
-                                  , inlinedAt?.MetadataHandle ?? default
-                                  )
+            : base( LibLLVMDILocation( context.ValidateNotNull( nameof( context ) ).ContextHandle
+                                     , line
+                                     , column
+                                     , scope.ValidateNotNull(nameof(scope)).MetadataHandle
+                                     , inlinedAt?.MetadataHandle ?? default
+                                     )
                   )
         {
         }
@@ -52,13 +52,13 @@ namespace Llvm.NET.DebugInfo
 
         /// <summary>Gets the location this location is inlined at</summary>
         [property: CanBeNull]
-        public DILocation InlinedAt => FromHandle<DILocation>( LLVMDILocationGetInlinedAt( MetadataHandle ) );
+        public DILocation InlinedAt => FromHandle<DILocation>( LibLLVMDILocationGetInlinedAt( MetadataHandle ) );
 
         /// <summary>Gets the scope where this is inlined.</summary>
         /// <remarks>This walks through the <see cref="InlinedAt"/> properties to return
         /// a <see cref="DILocalScope"/> from the deepest location.
         /// </remarks>
-        public DILocalScope InlinedAtScope => FromHandle<DILocalScope>( LLVMDILocationGetInlinedAtScope( MetadataHandle ) );
+        public DILocalScope InlinedAtScope => FromHandle<DILocalScope>( LibLLVMDILocationGetInlinedAtScope( MetadataHandle ) );
 
         /// <inheritdoc/>
         public override string ToString( )

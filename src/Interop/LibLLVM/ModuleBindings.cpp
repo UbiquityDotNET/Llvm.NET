@@ -1,7 +1,6 @@
 #include <type_traits>
 #include <llvm/IR/Module.h>
 #include "libllvm-c/ModuleBindings.h"
-//#include <llvm-c/comdat.h>
 
 using namespace llvm;
 
@@ -9,38 +8,38 @@ DEFINE_SIMPLE_CONVERSION_FUNCTIONS( NamedMDNode, LLVMNamedMDNodeRef )
 
 extern "C"
 {
-    LLVMValueRef LLVMGetOrInsertFunction( LLVMModuleRef module, const char* name, LLVMTypeRef functionType )
+    LLVMValueRef LibLLVMGetOrInsertFunction( LLVMModuleRef module, const char* name, LLVMTypeRef functionType )
     {
         auto pModule = unwrap( module );
         auto pSignature = cast< FunctionType >( unwrap( functionType ) );
         return wrap( pModule->getOrInsertFunction( name, pSignature ) );
     }
 
-    char const* LLVMGetModuleSourceFileName( LLVMModuleRef module )
+    char const* LibLLVMGetModuleSourceFileName( LLVMModuleRef module )
     {
         auto pModule = unwrap( module );
         return pModule->getSourceFileName( ).c_str( );
     }
 
-    void LLVMSetModuleSourceFileName( LLVMModuleRef module, char const* name )
+    void LibLLVMSetModuleSourceFileName( LLVMModuleRef module, char const* name )
     {
         auto pModule = unwrap( module );
         pModule->setSourceFileName( name );
     }
 
-    char const* LLVMGetModuleName( LLVMModuleRef module )
+    char const* LibLLVMGetModuleName( LLVMModuleRef module )
     {
         auto pModule = unwrap( module );
         return pModule->getModuleIdentifier( ).c_str( );
     }
 
-    LLVMValueRef LLVMGetGlobalAlias( LLVMModuleRef module, char const* name )
+    LLVMValueRef LibLLVMGetGlobalAlias( LLVMModuleRef module, char const* name )
     {
         auto pModule = unwrap( module );
         return wrap( pModule->getNamedAlias( name ) );
     }
 
-    LLVMComdatRef LLVMModuleInsertOrUpdateComdat( LLVMModuleRef module, char const* name, LLVMComdatSelectionKind kind )
+    LLVMComdatRef LibLLVMModuleInsertOrUpdateComdat( LLVMModuleRef module, char const* name, LLVMComdatSelectionKind kind )
     {
         auto pModule = unwrap( module );
         auto pComdat = pModule->getOrInsertComdat( name );
@@ -48,7 +47,7 @@ extern "C"
         return wrap( pComdat );
     }
 
-    void LLVMModuleEnumerateComdats( LLVMModuleRef module, LLVMComdatIteratorCallback callback )
+    void LibLLVMModuleEnumerateComdats( LLVMModuleRef module, LibLLVMComdatIteratorCallback callback )
     {
         auto pModule = unwrap( module );
         for( auto&& entry : pModule->getComdatSymbolTable( ) )
@@ -58,26 +57,26 @@ extern "C"
         }
     }
 
-    void LLVMModuleComdatRemove( LLVMModuleRef module, LLVMComdatRef comdatRef )
+    void LibLLVMModuleComdatRemove( LLVMModuleRef module, LLVMComdatRef comdatRef )
     {
         auto pModule = unwrap( module );
         auto pComdat = unwrap( comdatRef );
         pModule->getComdatSymbolTable( ).erase( pComdat->getName( ) );
     }
 
-    void LLVMModuleComdatClear( LLVMModuleRef module )
+    void LibLLVMModuleComdatClear( LLVMModuleRef module )
     {
         auto pModule = unwrap( module );
         pModule->getComdatSymbolTable( ).clear( );
     }
 
-    char const* LLVMComdatGetName( LLVMComdatRef comdatRef )
+    char const* LibLLVMComdatGetName( LLVMComdatRef comdatRef )
     {
         Comdat const& comdat = *unwrap( comdatRef );
         return LLVMCreateMessage( comdat.getName( ).str( ).c_str( ) );
     }
 
-    LLVMValueRef LLVMModuleGetFirstGlobalAlias( LLVMModuleRef M )
+    LLVMValueRef LibLLVMModuleGetFirstGlobalAlias( LLVMModuleRef M )
     {
         Module *Mod = unwrap( M );
         Module::alias_iterator I = Mod->alias_begin( );
@@ -87,7 +86,7 @@ extern "C"
         return wrap( &*I );
     }
 
-    LLVMValueRef LLVMModuleGetNextGlobalAlias( LLVMValueRef valueRef )
+    LLVMValueRef LibLLVMModuleGetNextGlobalAlias( LLVMValueRef valueRef )
     {
         GlobalAlias *pGA = unwrap<GlobalAlias>( valueRef );
         Module::alias_iterator I( pGA );
