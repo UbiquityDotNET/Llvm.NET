@@ -6441,30 +6441,66 @@ references:
   commentId: F:Llvm.NET.DebugInfo.Tag.AppleProperty
   fullName: Llvm.NET.DebugInfo.Tag.AppleProperty
   nameWithType: Tag.AppleProperty
-- uid: Llvm.NET.DebugInfo.Tag.ArgVariable
-  name: ArgVariable
-  href: api/Llvm.NET.DebugInfo.Tag.html#Llvm_NET_DebugInfo_Tag_ArgVariable
-  commentId: F:Llvm.NET.DebugInfo.Tag.ArgVariable
-  fullName: Llvm.NET.DebugInfo.Tag.ArgVariable
-  nameWithType: Tag.ArgVariable
 - uid: Llvm.NET.DebugInfo.Tag.ArrayType
   name: ArrayType
   href: api/Llvm.NET.DebugInfo.Tag.html#Llvm_NET_DebugInfo_Tag_ArrayType
   commentId: F:Llvm.NET.DebugInfo.Tag.ArrayType
   fullName: Llvm.NET.DebugInfo.Tag.ArrayType
   nameWithType: Tag.ArrayType
-- uid: Llvm.NET.DebugInfo.Tag.AutoVariable
-  name: AutoVariable
-  href: api/Llvm.NET.DebugInfo.Tag.html#Llvm_NET_DebugInfo_Tag_AutoVariable
-  commentId: F:Llvm.NET.DebugInfo.Tag.AutoVariable
-  fullName: Llvm.NET.DebugInfo.Tag.AutoVariable
-  nameWithType: Tag.AutoVariable
+- uid: Llvm.NET.DebugInfo.Tag.AtomicType
+  name: AtomicType
+  href: api/Llvm.NET.DebugInfo.Tag.html#Llvm_NET_DebugInfo_Tag_AtomicType
+  commentId: F:Llvm.NET.DebugInfo.Tag.AtomicType
+  fullName: Llvm.NET.DebugInfo.Tag.AtomicType
+  nameWithType: Tag.AtomicType
 - uid: Llvm.NET.DebugInfo.Tag.BaseType
   name: BaseType
   href: api/Llvm.NET.DebugInfo.Tag.html#Llvm_NET_DebugInfo_Tag_BaseType
   commentId: F:Llvm.NET.DebugInfo.Tag.BaseType
   fullName: Llvm.NET.DebugInfo.Tag.BaseType
   nameWithType: Tag.BaseType
+- uid: Llvm.NET.DebugInfo.Tag.BorlandDelphiDynamicString
+  name: BorlandDelphiDynamicString
+  href: api/Llvm.NET.DebugInfo.Tag.html#Llvm_NET_DebugInfo_Tag_BorlandDelphiDynamicString
+  commentId: F:Llvm.NET.DebugInfo.Tag.BorlandDelphiDynamicString
+  fullName: Llvm.NET.DebugInfo.Tag.BorlandDelphiDynamicString
+  nameWithType: Tag.BorlandDelphiDynamicString
+- uid: Llvm.NET.DebugInfo.Tag.BorlandDelphiSet
+  name: BorlandDelphiSet
+  href: api/Llvm.NET.DebugInfo.Tag.html#Llvm_NET_DebugInfo_Tag_BorlandDelphiSet
+  commentId: F:Llvm.NET.DebugInfo.Tag.BorlandDelphiSet
+  fullName: Llvm.NET.DebugInfo.Tag.BorlandDelphiSet
+  nameWithType: Tag.BorlandDelphiSet
+- uid: Llvm.NET.DebugInfo.Tag.BorlandDelphiString
+  name: BorlandDelphiString
+  href: api/Llvm.NET.DebugInfo.Tag.html#Llvm_NET_DebugInfo_Tag_BorlandDelphiString
+  commentId: F:Llvm.NET.DebugInfo.Tag.BorlandDelphiString
+  fullName: Llvm.NET.DebugInfo.Tag.BorlandDelphiString
+  nameWithType: Tag.BorlandDelphiString
+- uid: Llvm.NET.DebugInfo.Tag.BorlandDelphiVariant
+  name: BorlandDelphiVariant
+  href: api/Llvm.NET.DebugInfo.Tag.html#Llvm_NET_DebugInfo_Tag_BorlandDelphiVariant
+  commentId: F:Llvm.NET.DebugInfo.Tag.BorlandDelphiVariant
+  fullName: Llvm.NET.DebugInfo.Tag.BorlandDelphiVariant
+  nameWithType: Tag.BorlandDelphiVariant
+- uid: Llvm.NET.DebugInfo.Tag.BorlandProperty
+  name: BorlandProperty
+  href: api/Llvm.NET.DebugInfo.Tag.html#Llvm_NET_DebugInfo_Tag_BorlandProperty
+  commentId: F:Llvm.NET.DebugInfo.Tag.BorlandProperty
+  fullName: Llvm.NET.DebugInfo.Tag.BorlandProperty
+  nameWithType: Tag.BorlandProperty
+- uid: Llvm.NET.DebugInfo.Tag.CallSite
+  name: CallSite
+  href: api/Llvm.NET.DebugInfo.Tag.html#Llvm_NET_DebugInfo_Tag_CallSite
+  commentId: F:Llvm.NET.DebugInfo.Tag.CallSite
+  fullName: Llvm.NET.DebugInfo.Tag.CallSite
+  nameWithType: Tag.CallSite
+- uid: Llvm.NET.DebugInfo.Tag.CallSiteParameter
+  name: CallSiteParameter
+  href: api/Llvm.NET.DebugInfo.Tag.html#Llvm_NET_DebugInfo_Tag_CallSiteParameter
+  commentId: F:Llvm.NET.DebugInfo.Tag.CallSiteParameter
+  fullName: Llvm.NET.DebugInfo.Tag.CallSiteParameter
+  nameWithType: Tag.CallSiteParameter
 - uid: Llvm.NET.DebugInfo.Tag.CatchBlock
   name: CatchBlock
   href: api/Llvm.NET.DebugInfo.Tag.html#Llvm_NET_DebugInfo_Tag_CatchBlock
@@ -6555,12 +6591,6 @@ references:
   commentId: F:Llvm.NET.DebugInfo.Tag.Enumerator
   fullName: Llvm.NET.DebugInfo.Tag.Enumerator
   nameWithType: Tag.Enumerator
-- uid: Llvm.NET.DebugInfo.Tag.Expression
-  name: Expression
-  href: api/Llvm.NET.DebugInfo.Tag.html#Llvm_NET_DebugInfo_Tag_Expression
-  commentId: F:Llvm.NET.DebugInfo.Tag.Expression
-  fullName: Llvm.NET.DebugInfo.Tag.Expression
-  nameWithType: Tag.Expression
 - uid: Llvm.NET.DebugInfo.Tag.FileType
   name: FileType
   href: api/Llvm.NET.DebugInfo.Tag.html#Llvm_NET_DebugInfo_Tag_FileType
@@ -6573,12 +6603,12 @@ references:
   commentId: F:Llvm.NET.DebugInfo.Tag.FormalParameter
   fullName: Llvm.NET.DebugInfo.Tag.FormalParameter
   nameWithType: Tag.FormalParameter
-- uid: Llvm.NET.DebugInfo.Tag.FormatLabel
-  name: FormatLabel
-  href: api/Llvm.NET.DebugInfo.Tag.html#Llvm_NET_DebugInfo_Tag_FormatLabel
-  commentId: F:Llvm.NET.DebugInfo.Tag.FormatLabel
-  fullName: Llvm.NET.DebugInfo.Tag.FormatLabel
-  nameWithType: Tag.FormatLabel
+- uid: Llvm.NET.DebugInfo.Tag.FormatLablel
+  name: FormatLablel
+  href: api/Llvm.NET.DebugInfo.Tag.html#Llvm_NET_DebugInfo_Tag_FormatLablel
+  commentId: F:Llvm.NET.DebugInfo.Tag.FormatLablel
+  fullName: Llvm.NET.DebugInfo.Tag.FormatLablel
+  nameWithType: Tag.FormatLablel
 - uid: Llvm.NET.DebugInfo.Tag.Friend
   name: Friend
   href: api/Llvm.NET.DebugInfo.Tag.html#Llvm_NET_DebugInfo_Tag_Friend
@@ -6591,36 +6621,48 @@ references:
   commentId: F:Llvm.NET.DebugInfo.Tag.FunctionTemplate
   fullName: Llvm.NET.DebugInfo.Tag.FunctionTemplate
   nameWithType: Tag.FunctionTemplate
-- uid: Llvm.NET.DebugInfo.Tag.GenericSubrange
-  name: GenericSubrange
-  href: api/Llvm.NET.DebugInfo.Tag.html#Llvm_NET_DebugInfo_Tag_GenericSubrange
-  commentId: F:Llvm.NET.DebugInfo.Tag.GenericSubrange
-  fullName: Llvm.NET.DebugInfo.Tag.GenericSubrange
-  nameWithType: Tag.GenericSubrange
-- uid: Llvm.NET.DebugInfo.Tag.GnuFormalParameterPack
-  name: GnuFormalParameterPack
-  href: api/Llvm.NET.DebugInfo.Tag.html#Llvm_NET_DebugInfo_Tag_GnuFormalParameterPack
-  commentId: F:Llvm.NET.DebugInfo.Tag.GnuFormalParameterPack
-  fullName: Llvm.NET.DebugInfo.Tag.GnuFormalParameterPack
-  nameWithType: Tag.GnuFormalParameterPack
-- uid: Llvm.NET.DebugInfo.Tag.GnuTemplateParameterPack
-  name: GnuTemplateParameterPack
-  href: api/Llvm.NET.DebugInfo.Tag.html#Llvm_NET_DebugInfo_Tag_GnuTemplateParameterPack
-  commentId: F:Llvm.NET.DebugInfo.Tag.GnuTemplateParameterPack
-  fullName: Llvm.NET.DebugInfo.Tag.GnuTemplateParameterPack
-  nameWithType: Tag.GnuTemplateParameterPack
-- uid: Llvm.NET.DebugInfo.Tag.GnuTemplateTemplateParameter
-  name: GnuTemplateTemplateParameter
-  href: api/Llvm.NET.DebugInfo.Tag.html#Llvm_NET_DebugInfo_Tag_GnuTemplateTemplateParameter
-  commentId: F:Llvm.NET.DebugInfo.Tag.GnuTemplateTemplateParameter
-  fullName: Llvm.NET.DebugInfo.Tag.GnuTemplateTemplateParameter
-  nameWithType: Tag.GnuTemplateTemplateParameter
-- uid: Llvm.NET.DebugInfo.Tag.HiUser
-  name: HiUser
-  href: api/Llvm.NET.DebugInfo.Tag.html#Llvm_NET_DebugInfo_Tag_HiUser
-  commentId: F:Llvm.NET.DebugInfo.Tag.HiUser
-  fullName: Llvm.NET.DebugInfo.Tag.HiUser
-  nameWithType: Tag.HiUser
+- uid: Llvm.NET.DebugInfo.Tag.GenericSubRange
+  name: GenericSubRange
+  href: api/Llvm.NET.DebugInfo.Tag.html#Llvm_NET_DebugInfo_Tag_GenericSubRange
+  commentId: F:Llvm.NET.DebugInfo.Tag.GenericSubRange
+  fullName: Llvm.NET.DebugInfo.Tag.GenericSubRange
+  nameWithType: Tag.GenericSubRange
+- uid: Llvm.NET.DebugInfo.Tag.GNUCallSite
+  name: GNUCallSite
+  href: api/Llvm.NET.DebugInfo.Tag.html#Llvm_NET_DebugInfo_Tag_GNUCallSite
+  commentId: F:Llvm.NET.DebugInfo.Tag.GNUCallSite
+  fullName: Llvm.NET.DebugInfo.Tag.GNUCallSite
+  nameWithType: Tag.GNUCallSite
+- uid: Llvm.NET.DebugInfo.Tag.GNUCallSiteParameter
+  name: GNUCallSiteParameter
+  href: api/Llvm.NET.DebugInfo.Tag.html#Llvm_NET_DebugInfo_Tag_GNUCallSiteParameter
+  commentId: F:Llvm.NET.DebugInfo.Tag.GNUCallSiteParameter
+  fullName: Llvm.NET.DebugInfo.Tag.GNUCallSiteParameter
+  nameWithType: Tag.GNUCallSiteParameter
+- uid: Llvm.NET.DebugInfo.Tag.GNUFormalParameterPack
+  name: GNUFormalParameterPack
+  href: api/Llvm.NET.DebugInfo.Tag.html#Llvm_NET_DebugInfo_Tag_GNUFormalParameterPack
+  commentId: F:Llvm.NET.DebugInfo.Tag.GNUFormalParameterPack
+  fullName: Llvm.NET.DebugInfo.Tag.GNUFormalParameterPack
+  nameWithType: Tag.GNUFormalParameterPack
+- uid: Llvm.NET.DebugInfo.Tag.GNUTemplateParameter
+  name: GNUTemplateParameter
+  href: api/Llvm.NET.DebugInfo.Tag.html#Llvm_NET_DebugInfo_Tag_GNUTemplateParameter
+  commentId: F:Llvm.NET.DebugInfo.Tag.GNUTemplateParameter
+  fullName: Llvm.NET.DebugInfo.Tag.GNUTemplateParameter
+  nameWithType: Tag.GNUTemplateParameter
+- uid: Llvm.NET.DebugInfo.Tag.GNUTemplateParameterPack
+  name: GNUTemplateParameterPack
+  href: api/Llvm.NET.DebugInfo.Tag.html#Llvm_NET_DebugInfo_Tag_GNUTemplateParameterPack
+  commentId: F:Llvm.NET.DebugInfo.Tag.GNUTemplateParameterPack
+  fullName: Llvm.NET.DebugInfo.Tag.GNUTemplateParameterPack
+  nameWithType: Tag.GNUTemplateParameterPack
+- uid: Llvm.NET.DebugInfo.Tag.ImmutableType
+  name: ImmutableType
+  href: api/Llvm.NET.DebugInfo.Tag.html#Llvm_NET_DebugInfo_Tag_ImmutableType
+  commentId: F:Llvm.NET.DebugInfo.Tag.ImmutableType
+  fullName: Llvm.NET.DebugInfo.Tag.ImmutableType
+  nameWithType: Tag.ImmutableType
 - uid: Llvm.NET.DebugInfo.Tag.ImportedDeclaration
   name: ImportedDeclaration
   href: api/Llvm.NET.DebugInfo.Tag.html#Llvm_NET_DebugInfo_Tag_ImportedDeclaration
@@ -6657,66 +6699,54 @@ references:
   commentId: F:Llvm.NET.DebugInfo.Tag.InterfaceType
   fullName: Llvm.NET.DebugInfo.Tag.InterfaceType
   nameWithType: Tag.InterfaceType
-- uid: Llvm.NET.DebugInfo.Tag.Invalid
-  name: Invalid
-  href: api/Llvm.NET.DebugInfo.Tag.html#Llvm_NET_DebugInfo_Tag_Invalid
-  commentId: F:Llvm.NET.DebugInfo.Tag.Invalid
-  fullName: Llvm.NET.DebugInfo.Tag.Invalid
-  nameWithType: Tag.Invalid
-- uid: Llvm.NET.DebugInfo.Tag.Label
-  name: Label
-  href: api/Llvm.NET.DebugInfo.Tag.html#Llvm_NET_DebugInfo_Tag_Label
-  commentId: F:Llvm.NET.DebugInfo.Tag.Label
-  fullName: Llvm.NET.DebugInfo.Tag.Label
-  nameWithType: Tag.Label
 - uid: Llvm.NET.DebugInfo.Tag.LexicalBlock
   name: LexicalBlock
   href: api/Llvm.NET.DebugInfo.Tag.html#Llvm_NET_DebugInfo_Tag_LexicalBlock
   commentId: F:Llvm.NET.DebugInfo.Tag.LexicalBlock
   fullName: Llvm.NET.DebugInfo.Tag.LexicalBlock
   nameWithType: Tag.LexicalBlock
-- uid: Llvm.NET.DebugInfo.Tag.LoUser
-  name: LoUser
-  href: api/Llvm.NET.DebugInfo.Tag.html#Llvm_NET_DebugInfo_Tag_LoUser
-  commentId: F:Llvm.NET.DebugInfo.Tag.LoUser
-  fullName: Llvm.NET.DebugInfo.Tag.LoUser
-  nameWithType: Tag.LoUser
+- uid: Llvm.NET.DebugInfo.Tag.List
+  name: List
+  href: api/Llvm.NET.DebugInfo.Tag.html#Llvm_NET_DebugInfo_Tag_List
+  commentId: F:Llvm.NET.DebugInfo.Tag.List
+  fullName: Llvm.NET.DebugInfo.Tag.List
+  nameWithType: Tag.List
+- uid: Llvm.NET.DebugInfo.Tag.ListItem
+  name: ListItem
+  href: api/Llvm.NET.DebugInfo.Tag.html#Llvm_NET_DebugInfo_Tag_ListItem
+  commentId: F:Llvm.NET.DebugInfo.Tag.ListItem
+  fullName: Llvm.NET.DebugInfo.Tag.ListItem
+  nameWithType: Tag.ListItem
 - uid: Llvm.NET.DebugInfo.Tag.Member
   name: Member
   href: api/Llvm.NET.DebugInfo.Tag.html#Llvm_NET_DebugInfo_Tag_Member
   commentId: F:Llvm.NET.DebugInfo.Tag.Member
   fullName: Llvm.NET.DebugInfo.Tag.Member
   nameWithType: Tag.Member
-- uid: Llvm.NET.DebugInfo.Tag.MipsLoop
-  name: MipsLoop
-  href: api/Llvm.NET.DebugInfo.Tag.html#Llvm_NET_DebugInfo_Tag_MipsLoop
-  commentId: F:Llvm.NET.DebugInfo.Tag.MipsLoop
-  fullName: Llvm.NET.DebugInfo.Tag.MipsLoop
-  nameWithType: Tag.MipsLoop
+- uid: Llvm.NET.DebugInfo.Tag.MIPSLoop
+  name: MIPSLoop
+  href: api/Llvm.NET.DebugInfo.Tag.html#Llvm_NET_DebugInfo_Tag_MIPSLoop
+  commentId: F:Llvm.NET.DebugInfo.Tag.MIPSLoop
+  fullName: Llvm.NET.DebugInfo.Tag.MIPSLoop
+  nameWithType: Tag.MIPSLoop
 - uid: Llvm.NET.DebugInfo.Tag.Module
   name: Module
   href: api/Llvm.NET.DebugInfo.Tag.html#Llvm_NET_DebugInfo_Tag_Module
   commentId: F:Llvm.NET.DebugInfo.Tag.Module
   fullName: Llvm.NET.DebugInfo.Tag.Module
   nameWithType: Tag.Module
-- uid: Llvm.NET.DebugInfo.Tag.NameList
-  name: NameList
-  href: api/Llvm.NET.DebugInfo.Tag.html#Llvm_NET_DebugInfo_Tag_NameList
-  commentId: F:Llvm.NET.DebugInfo.Tag.NameList
-  fullName: Llvm.NET.DebugInfo.Tag.NameList
-  nameWithType: Tag.NameList
-- uid: Llvm.NET.DebugInfo.Tag.NameListItem
-  name: NameListItem
-  href: api/Llvm.NET.DebugInfo.Tag.html#Llvm_NET_DebugInfo_Tag_NameListItem
-  commentId: F:Llvm.NET.DebugInfo.Tag.NameListItem
-  fullName: Llvm.NET.DebugInfo.Tag.NameListItem
-  nameWithType: Tag.NameListItem
 - uid: Llvm.NET.DebugInfo.Tag.Namespace
   name: Namespace
   href: api/Llvm.NET.DebugInfo.Tag.html#Llvm_NET_DebugInfo_Tag_Namespace
   commentId: F:Llvm.NET.DebugInfo.Tag.Namespace
   fullName: Llvm.NET.DebugInfo.Tag.Namespace
   nameWithType: Tag.Namespace
+- uid: Llvm.NET.DebugInfo.Tag.None
+  name: None
+  href: api/Llvm.NET.DebugInfo.Tag.html#Llvm_NET_DebugInfo_Tag_None
+  commentId: F:Llvm.NET.DebugInfo.Tag.None
+  fullName: Llvm.NET.DebugInfo.Tag.None
+  nameWithType: Tag.None
 - uid: Llvm.NET.DebugInfo.Tag.PackedType
   name: PackedType
   href: api/Llvm.NET.DebugInfo.Tag.html#Llvm_NET_DebugInfo_Tag_PackedType
@@ -6729,18 +6759,18 @@ references:
   commentId: F:Llvm.NET.DebugInfo.Tag.PartialUnit
   fullName: Llvm.NET.DebugInfo.Tag.PartialUnit
   nameWithType: Tag.PartialUnit
+- uid: Llvm.NET.DebugInfo.Tag.PointerToMemberType
+  name: PointerToMemberType
+  href: api/Llvm.NET.DebugInfo.Tag.html#Llvm_NET_DebugInfo_Tag_PointerToMemberType
+  commentId: F:Llvm.NET.DebugInfo.Tag.PointerToMemberType
+  fullName: Llvm.NET.DebugInfo.Tag.PointerToMemberType
+  nameWithType: Tag.PointerToMemberType
 - uid: Llvm.NET.DebugInfo.Tag.PointerType
   name: PointerType
   href: api/Llvm.NET.DebugInfo.Tag.html#Llvm_NET_DebugInfo_Tag_PointerType
   commentId: F:Llvm.NET.DebugInfo.Tag.PointerType
   fullName: Llvm.NET.DebugInfo.Tag.PointerType
   nameWithType: Tag.PointerType
-- uid: Llvm.NET.DebugInfo.Tag.PtrToMemberType
-  name: PtrToMemberType
-  href: api/Llvm.NET.DebugInfo.Tag.html#Llvm_NET_DebugInfo_Tag_PtrToMemberType
-  commentId: F:Llvm.NET.DebugInfo.Tag.PtrToMemberType
-  fullName: Llvm.NET.DebugInfo.Tag.PtrToMemberType
-  nameWithType: Tag.PtrToMemberType
 - uid: Llvm.NET.DebugInfo.Tag.ReferenceType
   name: ReferenceType
   href: api/Llvm.NET.DebugInfo.Tag.html#Llvm_NET_DebugInfo_Tag_ReferenceType
@@ -6753,12 +6783,6 @@ references:
   commentId: F:Llvm.NET.DebugInfo.Tag.RestrictType
   fullName: Llvm.NET.DebugInfo.Tag.RestrictType
   nameWithType: Tag.RestrictType
-- uid: Llvm.NET.DebugInfo.Tag.RValueReferenceType
-  name: RValueReferenceType
-  href: api/Llvm.NET.DebugInfo.Tag.html#Llvm_NET_DebugInfo_Tag_RValueReferenceType
-  commentId: F:Llvm.NET.DebugInfo.Tag.RValueReferenceType
-  fullName: Llvm.NET.DebugInfo.Tag.RValueReferenceType
-  nameWithType: Tag.RValueReferenceType
 - uid: Llvm.NET.DebugInfo.Tag.SetType
   name: SetType
   href: api/Llvm.NET.DebugInfo.Tag.html#Llvm_NET_DebugInfo_Tag_SetType
@@ -6771,6 +6795,12 @@ references:
   commentId: F:Llvm.NET.DebugInfo.Tag.SharedType
   fullName: Llvm.NET.DebugInfo.Tag.SharedType
   nameWithType: Tag.SharedType
+- uid: Llvm.NET.DebugInfo.Tag.SkeletonUnit
+  name: SkeletonUnit
+  href: api/Llvm.NET.DebugInfo.Tag.html#Llvm_NET_DebugInfo_Tag_SkeletonUnit
+  commentId: F:Llvm.NET.DebugInfo.Tag.SkeletonUnit
+  fullName: Llvm.NET.DebugInfo.Tag.SkeletonUnit
+  nameWithType: Tag.SkeletonUnit
 - uid: Llvm.NET.DebugInfo.Tag.StringType
   name: StringType
   href: api/Llvm.NET.DebugInfo.Tag.html#Llvm_NET_DebugInfo_Tag_StringType
@@ -6789,36 +6819,30 @@ references:
   commentId: F:Llvm.NET.DebugInfo.Tag.SubProgram
   fullName: Llvm.NET.DebugInfo.Tag.SubProgram
   nameWithType: Tag.SubProgram
-- uid: Llvm.NET.DebugInfo.Tag.SubrangeType
-  name: SubrangeType
-  href: api/Llvm.NET.DebugInfo.Tag.html#Llvm_NET_DebugInfo_Tag_SubrangeType
-  commentId: F:Llvm.NET.DebugInfo.Tag.SubrangeType
-  fullName: Llvm.NET.DebugInfo.Tag.SubrangeType
-  nameWithType: Tag.SubrangeType
+- uid: Llvm.NET.DebugInfo.Tag.SubRangeType
+  name: SubRangeType
+  href: api/Llvm.NET.DebugInfo.Tag.html#Llvm_NET_DebugInfo_Tag_SubRangeType
+  commentId: F:Llvm.NET.DebugInfo.Tag.SubRangeType
+  fullName: Llvm.NET.DebugInfo.Tag.SubRangeType
+  nameWithType: Tag.SubRangeType
 - uid: Llvm.NET.DebugInfo.Tag.SubroutineType
   name: SubroutineType
   href: api/Llvm.NET.DebugInfo.Tag.html#Llvm_NET_DebugInfo_Tag_SubroutineType
   commentId: F:Llvm.NET.DebugInfo.Tag.SubroutineType
   fullName: Llvm.NET.DebugInfo.Tag.SubroutineType
   nameWithType: Tag.SubroutineType
+- uid: Llvm.NET.DebugInfo.Tag.TagLable
+  name: TagLable
+  href: api/Llvm.NET.DebugInfo.Tag.html#Llvm_NET_DebugInfo_Tag_TagLable
+  commentId: F:Llvm.NET.DebugInfo.Tag.TagLable
+  fullName: Llvm.NET.DebugInfo.Tag.TagLable
+  nameWithType: Tag.TagLable
 - uid: Llvm.NET.DebugInfo.Tag.TemplateAlias
   name: TemplateAlias
   href: api/Llvm.NET.DebugInfo.Tag.html#Llvm_NET_DebugInfo_Tag_TemplateAlias
   commentId: F:Llvm.NET.DebugInfo.Tag.TemplateAlias
   fullName: Llvm.NET.DebugInfo.Tag.TemplateAlias
   nameWithType: Tag.TemplateAlias
-- uid: Llvm.NET.DebugInfo.Tag.TemplateTypeParameter
-  name: TemplateTypeParameter
-  href: api/Llvm.NET.DebugInfo.Tag.html#Llvm_NET_DebugInfo_Tag_TemplateTypeParameter
-  commentId: F:Llvm.NET.DebugInfo.Tag.TemplateTypeParameter
-  fullName: Llvm.NET.DebugInfo.Tag.TemplateTypeParameter
-  nameWithType: Tag.TemplateTypeParameter
-- uid: Llvm.NET.DebugInfo.Tag.TemplateValueParameter
-  name: TemplateValueParameter
-  href: api/Llvm.NET.DebugInfo.Tag.html#Llvm_NET_DebugInfo_Tag_TemplateValueParameter
-  commentId: F:Llvm.NET.DebugInfo.Tag.TemplateValueParameter
-  fullName: Llvm.NET.DebugInfo.Tag.TemplateValueParameter
-  nameWithType: Tag.TemplateValueParameter
 - uid: Llvm.NET.DebugInfo.Tag.ThrownType
   name: ThrownType
   href: api/Llvm.NET.DebugInfo.Tag.html#Llvm_NET_DebugInfo_Tag_ThrownType
@@ -6837,6 +6861,12 @@ references:
   commentId: F:Llvm.NET.DebugInfo.Tag.TypeDef
   fullName: Llvm.NET.DebugInfo.Tag.TypeDef
   nameWithType: Tag.TypeDef
+- uid: Llvm.NET.DebugInfo.Tag.TypeParameter
+  name: TypeParameter
+  href: api/Llvm.NET.DebugInfo.Tag.html#Llvm_NET_DebugInfo_Tag_TypeParameter
+  commentId: F:Llvm.NET.DebugInfo.Tag.TypeParameter
+  fullName: Llvm.NET.DebugInfo.Tag.TypeParameter
+  nameWithType: Tag.TypeParameter
 - uid: Llvm.NET.DebugInfo.Tag.TypeUnit
   name: TypeUnit
   href: api/Llvm.NET.DebugInfo.Tag.html#Llvm_NET_DebugInfo_Tag_TypeUnit
@@ -6861,12 +6891,18 @@ references:
   commentId: F:Llvm.NET.DebugInfo.Tag.UnspecifiedType
   fullName: Llvm.NET.DebugInfo.Tag.UnspecifiedType
   nameWithType: Tag.UnspecifiedType
-- uid: Llvm.NET.DebugInfo.Tag.UserBase
-  name: UserBase
-  href: api/Llvm.NET.DebugInfo.Tag.html#Llvm_NET_DebugInfo_Tag_UserBase
-  commentId: F:Llvm.NET.DebugInfo.Tag.UserBase
-  fullName: Llvm.NET.DebugInfo.Tag.UserBase
-  nameWithType: Tag.UserBase
+- uid: Llvm.NET.DebugInfo.Tag.ValueParameter
+  name: ValueParameter
+  href: api/Llvm.NET.DebugInfo.Tag.html#Llvm_NET_DebugInfo_Tag_ValueParameter
+  commentId: F:Llvm.NET.DebugInfo.Tag.ValueParameter
+  fullName: Llvm.NET.DebugInfo.Tag.ValueParameter
+  nameWithType: Tag.ValueParameter
+- uid: Llvm.NET.DebugInfo.Tag.ValueReferenceType
+  name: ValueReferenceType
+  href: api/Llvm.NET.DebugInfo.Tag.html#Llvm_NET_DebugInfo_Tag_ValueReferenceType
+  commentId: F:Llvm.NET.DebugInfo.Tag.ValueReferenceType
+  fullName: Llvm.NET.DebugInfo.Tag.ValueReferenceType
+  nameWithType: Tag.ValueReferenceType
 - uid: Llvm.NET.DebugInfo.Tag.Variable
   name: Variable
   href: api/Llvm.NET.DebugInfo.Tag.html#Llvm_NET_DebugInfo_Tag_Variable
