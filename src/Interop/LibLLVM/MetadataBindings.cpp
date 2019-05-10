@@ -7,17 +7,11 @@
 
 using namespace llvm;
 
-DEFINE_SIMPLE_CONVERSION_FUNCTIONS( MDOperand, LLVMMDOperandRef )
+DEFINE_SIMPLE_CONVERSION_FUNCTIONS( MDOperand, LibLLVMMDOperandRef )
 
 template <typename DIT> DIT* unwrapDI( LLVMMetadataRef Ref )
 {
     return ( DIT* )( Ref ? unwrap<MDNode>( Ref ) : nullptr );
-}
-
-LLVMContextRef LLVMGetNodeContext( LLVMMetadataRef /*MDNode*/ node )
-{
-    MDNode* pNode = unwrap<MDNode>( node );
-    return wrap( &pNode->getContext( ) );
 }
 
 static DINode::DIFlags map_from_llvmDIFlags( LLVMDIFlags Flags )
@@ -38,23 +32,29 @@ pack_into_DISPFlags( bool IsLocalToUnit, bool IsDefinition, bool IsOptimized )
 
 extern "C"
 {
-    LLVMBool LLVMSubProgramDescribes( LLVMMetadataRef subProgram, LLVMValueRef /*const Function **/F )
+    LLVMContextRef LibLLVMGetNodeContext( LLVMMetadataRef /*MDNode*/ node )
+    {
+        MDNode* pNode = unwrap<MDNode>( node );
+        return wrap( &pNode->getContext( ) );
+    }
+
+    LLVMBool LibLLVMSubProgramDescribes( LLVMMetadataRef subProgram, LLVMValueRef /*const Function **/F )
     {
         DISubprogram* pSub = unwrap<DISubprogram>( subProgram );
         return pSub->describes( unwrap<Function>( F ) );
     }
 
-    unsigned int LLVMDIBasicTypeGetEncoding( LLVMMetadataRef /*DIBasicType*/ basicType )
+    unsigned int LibLLVMDIBasicTypeGetEncoding( LLVMMetadataRef /*DIBasicType*/ basicType )
     {
         return unwrap<DIBasicType>( basicType )->getEncoding( );
     }
 
-    void LLVMDIBuilderFinalizeSubProgram( LLVMDIBuilderRef dref, LLVMMetadataRef /*DISubProgram*/ subProgram )
+    void LibLLVMDIBuilderFinalizeSubProgram( LLVMDIBuilderRef dref, LLVMMetadataRef /*DISubProgram*/ subProgram )
     {
         unwrap( dref )->finalizeSubprogram( unwrap<DISubprogram>( subProgram ) );
     }
 
-    LLVMMetadataRef LLVMDILocation( LLVMContextRef context, unsigned Line, unsigned Column, LLVMMetadataRef scope, LLVMMetadataRef InlinedAt )
+    LLVMMetadataRef LibLLVMDILocation( LLVMContextRef context, unsigned Line, unsigned Column, LLVMMetadataRef scope, LLVMMetadataRef InlinedAt )
     {
         DILocation* pLoc = DILocation::get( *unwrap( context )
                                            , Line
@@ -65,25 +65,25 @@ extern "C"
         return wrap( pLoc );
     }
 
-    LLVMMetadataRef /*DILocation*/ LLVMDILocationGetInlinedAt( LLVMMetadataRef /*DILocation*/ location )
+    LLVMMetadataRef /*DILocation*/ LibLLVMDILocationGetInlinedAt( LLVMMetadataRef /*DILocation*/ location )
     {
         DILocation* loc = unwrap<DILocation>( location );
         return wrap( loc->getInlinedAt( ) );
     }
 
-    LLVMMetadataRef /*DILocalScope*/ LLVMDILocationGetInlinedAtScope( LLVMMetadataRef /*DILocation*/ location )
+    LLVMMetadataRef /*DILocalScope*/ LibLLVMDILocationGetInlinedAtScope( LLVMMetadataRef /*DILocation*/ location )
     {
         DILocation* loc = unwrap<DILocation>( location );
         return wrap( loc->getInlinedAtScope( ) );
     }
 
-    LLVMDwarfTag LLVMDIDescriptorGetTag( LLVMMetadataRef descriptor )
+    LibLLVMDwarfTag LibLLVMDIDescriptorGetTag( LLVMMetadataRef descriptor )
     {
         DINode* desc = unwrap<DINode>( descriptor );
-        return ( LLVMDwarfTag )desc->getTag( );
+        return ( LibLLVMDwarfTag )desc->getTag( );
     }
 
-    LLVMMetadataRef LLVMDIBuilderCreateTempFunctionFwdDecl( LLVMDIBuilderRef Builder
+    LLVMMetadataRef LibLLVMDIBuilderCreateTempFunctionFwdDecl( LLVMDIBuilderRef Builder
                                                             , LLVMMetadataRef /*DIScope* */Scope
                                                             , char const* Name
                                                             , size_t NameLen
@@ -114,7 +114,7 @@ extern "C"
             nullptr ) );
     }
 
-    char const* LLVMMetadataAsString( LLVMMetadataRef descriptor )
+    char const* LibLLVMMetadataAsString( LLVMMetadataRef descriptor )
     {
         std::string Messages;
         raw_string_ostream Msg( Messages );
@@ -123,53 +123,53 @@ extern "C"
         return LLVMCreateMessage( Msg.str( ).c_str( ) );
     }
 
-    uint32_t LLVMMDNodeGetNumOperands( LLVMMetadataRef /*MDNode*/ node )
+    uint32_t LibLLVMMDNodeGetNumOperands( LLVMMetadataRef /*MDNode*/ node )
     {
         MDNode* pNode = unwrap<MDNode>( node );
         return pNode->getNumOperands( );
     }
 
-    LLVMMDOperandRef LLVMMDNodeGetOperand( LLVMMetadataRef /*MDNode*/ node, uint32_t index )
+    LibLLVMMDOperandRef LibLLVMMDNodeGetOperand( LLVMMetadataRef /*MDNode*/ node, uint32_t index )
     {
         MDNode* pNode = unwrap<MDNode>( node );
         return wrap( &pNode->getOperand( index ) );
     }
 
-    void LLVMMDNodeReplaceOperand( LLVMMetadataRef /* MDNode */ node, uint32_t index, LLVMMetadataRef operand )
+    void LibLLVMMDNodeReplaceOperand( LLVMMetadataRef /* MDNode */ node, uint32_t index, LLVMMetadataRef operand )
     {
         unwrap<MDNode>( node )->replaceOperandWith( index, unwrap( operand ) );
     }
 
-    LLVMMetadataRef LLVMGetOperandNode( LLVMMDOperandRef operand )
+    LLVMMetadataRef LibLLVMGetOperandNode( LibLLVMMDOperandRef operand )
     {
         MDOperand const* pOperand = unwrap( operand );
         return wrap( pOperand->get( ) );
     }
 
-    LLVMModuleRef LLVMNamedMetadataGetParentModule( LLVMNamedMDNodeRef namedMDNode )
+    LLVMModuleRef LibLLVMNamedMetadataGetParentModule( LLVMNamedMDNodeRef namedMDNode )
     {
         auto pMDNode = unwrap( namedMDNode );
         return wrap( pMDNode->getParent( ) );
     }
 
-    void LLVMNamedMetadataEraseFromParent( LLVMNamedMDNodeRef namedMDNode )
+    void LibLLVMNamedMetadataEraseFromParent( LLVMNamedMDNodeRef namedMDNode )
     {
         unwrap( namedMDNode )->eraseFromParent( );
     }
 
-    LLVMMetadataKind LLVMGetMetadataID( LLVMMetadataRef /*Metadata*/ md )
+    LLVMMetadataKind LibLLVMGetMetadataID( LLVMMetadataRef /*Metadata*/ md )
     {
         Metadata* pMetadata = unwrap( md );
         return (LLVMMetadataKind )pMetadata->getMetadataID( );
     }
 
-    unsigned LLVMNamedMDNodeGetNumOperands( LLVMNamedMDNodeRef namedMDNode )
+    unsigned LibLLVMNamedMDNodeGetNumOperands( LLVMNamedMDNodeRef namedMDNode )
     {
         auto pMDNode = unwrap( namedMDNode );
         return pMDNode->getNumOperands( );
     }
 
-    LLVMMetadataRef LLVMNamedMDNodeGetOperand( LLVMNamedMDNodeRef namedMDNode, unsigned index )
+    LLVMMetadataRef LibLLVMNamedMDNodeGetOperand( LLVMNamedMDNodeRef namedMDNode, unsigned index )
     {
         auto pMDNode = unwrap( namedMDNode );
         if ( index >= pMDNode->getNumOperands( ) )
@@ -178,7 +178,7 @@ extern "C"
         return wrap( pMDNode->getOperand( index ) );
     }
 
-    void LLVMNamedMDNodeSetOperand( LLVMNamedMDNodeRef namedMDNode, unsigned index, LLVMMetadataRef /*MDNode*/ node )
+    void LibLLVMNamedMDNodeSetOperand( LLVMNamedMDNodeRef namedMDNode, unsigned index, LLVMMetadataRef /*MDNode*/ node )
     {
         auto pMDNode = unwrap( namedMDNode );
         if ( index >= pMDNode->getNumOperands( ) )
@@ -187,14 +187,94 @@ extern "C"
         pMDNode->setOperand( index, unwrap<MDNode>( node ) );
     }
 
-    void LLVMNamedMDNodeAddOperand( LLVMNamedMDNodeRef namedMDNode, LLVMMetadataRef /*MDNode*/ node )
+    void LibLLVMNamedMDNodeAddOperand( LLVMNamedMDNodeRef namedMDNode, LLVMMetadataRef /*MDNode*/ node )
     {
         auto pMDNode = unwrap( namedMDNode );
         pMDNode->addOperand( unwrap<MDNode>( node ) );
     }
 
-    void LLVMNamedMDNodeClearOperands( LLVMNamedMDNodeRef namedMDNode )
+    void LibLLVMNamedMDNodeClearOperands( LLVMNamedMDNodeRef namedMDNode )
     {
         unwrap( namedMDNode )->clearOperands( );
+    }
+
+    LLVMMetadataRef LibLLVMConstantAsMetadata( LLVMValueRef C )
+    {
+        return wrap( ConstantAsMetadata::get( unwrap<Constant>( C ) ) );
+    }
+
+    LLVMMetadataRef LibLLVMMDString2( LLVMContextRef C, char const* Str, unsigned SLen )
+    {
+        return wrap( MDString::get( *unwrap( C ), StringRef( Str, SLen ) ) );
+    }
+
+    LLVMMetadataRef LibLLVMMDNode2( LLVMContextRef C
+                                 , LLVMMetadataRef* MDs
+                                 , unsigned Count
+    )
+    {
+        auto node = MDNode::get( *unwrap( C )
+                                 , ArrayRef<Metadata*>( unwrap( MDs ), Count )
+        );
+        return wrap( node );
+    }
+
+    void LibLLVMAddNamedMetadataOperand2( LLVMModuleRef M
+                                       , char const* name
+                                       , LLVMMetadataRef Val
+    )
+    {
+        NamedMDNode* N = unwrap( M )->getOrInsertNamedMetadata( name );
+        if ( !N )
+            return;
+
+        if ( !Val )
+            return;
+
+        N->addOperand( unwrap<MDNode>( Val ) );
+    }
+
+    void LibLLVMSetMetadata2( LLVMValueRef Inst, unsigned KindID, LLVMMetadataRef MD )
+    {
+        MDNode* N = MD ? unwrap<MDNode>( MD ) : nullptr;
+        unwrap<Instruction>( Inst )->setMetadata( KindID, N );
+    }
+
+    LLVMBool LibLLVMIsTemporary( LLVMMetadataRef M )
+    {
+        auto pMetadata = unwrap<MDNode>( M );
+        return pMetadata->isTemporary( );
+    }
+
+    LLVMBool LibLLVMIsResolved( LLVMMetadataRef M )
+    {
+        auto pMetadata = unwrap<MDNode>( M );
+        return pMetadata->isResolved( );
+    }
+
+    LLVMBool LibLLVMIsUniqued( LLVMMetadataRef M )
+    {
+        auto pMetadata = unwrap<MDNode>( M );
+        return pMetadata->isUniqued( );
+    }
+
+    LLVMBool LibLLVMIsDistinct( LLVMMetadataRef M )
+    {
+        auto pMetadata = unwrap<MDNode>( M );
+        return pMetadata->isDistinct( );
+    }
+
+    char const* LibLLVMGetMDStringText( LLVMMetadataRef mdstring, unsigned* len )
+    {
+        MDString const* S = unwrap<MDString>( mdstring );
+        *len = S->getString( ).size( );
+        return S->getString( ).data( );
+    }
+
+
+    LLVMMetadataRef LibLLVMDIGlobalVarExpGetVariable( LLVMMetadataRef metadataHandle )
+    {
+        auto pExp = unwrap<DIGlobalVariableExpression>( metadataHandle );
+        return wrap( pExp->getVariable( ) );
     }
 }

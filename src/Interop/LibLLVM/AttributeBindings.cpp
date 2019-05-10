@@ -11,7 +11,7 @@ using namespace llvm;
 
 extern "C"
 {
-    char const* LLVMAttributeToString( LLVMAttributeRef attribute )
+    char const* LibLLVMAttributeToString( LLVMAttributeRef attribute )
     {
         return LLVMCreateMessage( unwrap( attribute ).getAsString( ).c_str( ) );
     }

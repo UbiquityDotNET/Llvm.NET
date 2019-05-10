@@ -12,6 +12,7 @@ using System;
 using System.CodeDom.Compiler;
 using System.Runtime.InteropServices;
 using System.Security;
+using System.Threading;
 
 namespace Llvm.NET.Interop
 {
@@ -31,7 +32,14 @@ namespace Llvm.NET.Interop
         [SecurityCritical]
         protected override bool ReleaseHandle( )
         {
-            LLVMDisposeGenericValue( handle );
+            // ensure handle appears invalid from this point forward
+            var prevHandle = Interlocked.Exchange( ref handle, IntPtr.Zero );
+            SetHandleAsInvalid( );
+
+            if( prevHandle != IntPtr.Zero )
+            {
+                LLVMDisposeGenericValue( handle );
+            }
             return true;
         }
 

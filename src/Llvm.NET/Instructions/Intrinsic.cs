@@ -18,7 +18,7 @@ namespace Llvm.NET.Instructions
         /// <returns>Intrinsic ID or 0 if the name does not correspond with an intrinsic function</returns>
         public static UInt32 LookupId( string name )
         {
-            return LLVMLookupInstrinsicId( name );
+            return LibLLVMLookupInstrinsicId( name );
         }
 
         internal Intrinsic( LLVMValueRef valueRef )

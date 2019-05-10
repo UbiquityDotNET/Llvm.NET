@@ -312,21 +312,21 @@ namespace Llvm.NET.DebugInfo
                 mangledName = string.Empty;
             }
 
-            var handle = LLVMDIBuilderCreateTempFunctionFwdDecl( BuilderHandle
-                                                               , scope.MetadataHandle
-                                                               , name
-                                                               , name.Length
-                                                               , mangledName
-                                                               , mangledName.Length
-                                                               , file?.MetadataHandle ?? default
-                                                               , line
-                                                               , subroutineType.MetadataHandle
-                                                               , isLocalToUnit
-                                                               , isDefinition
-                                                               , scopeLine
-                                                               , ( LLVMDIFlags )debugFlags
-                                                               , isOptimized
-                                                               );
+            var handle = LibLLVMDIBuilderCreateTempFunctionFwdDecl( BuilderHandle
+                                                                  , scope.MetadataHandle
+                                                                  , name
+                                                                  , name.Length
+                                                                  , mangledName
+                                                                  , mangledName.Length
+                                                                  , file?.MetadataHandle ?? default
+                                                                  , line
+                                                                  , subroutineType.MetadataHandle
+                                                                  , isLocalToUnit
+                                                                  , isDefinition
+                                                                  , scopeLine
+                                                                  , ( LLVMDIFlags )debugFlags
+                                                                  , isOptimized
+                                                                  );
             return MDNode.FromHandle<DISubProgram>( handle );
         }
 
@@ -924,7 +924,7 @@ namespace Llvm.NET.DebugInfo
         /// <returns><see cref="DIEnumerator"/> for the name, value pair</returns>
         public DIEnumerator CreateEnumeratorValue( string name, long value )
         {
-            var handle = LLVMDIBuilderCreateEnumeratorValue( BuilderHandle, name, value );
+            var handle = LibLLVMDIBuilderCreateEnumeratorValue( BuilderHandle, name, value );
             return MDNode.FromHandle<DIEnumerator>( handle );
         }
 
@@ -1018,7 +1018,7 @@ namespace Llvm.NET.DebugInfo
         /// <param name="subProgram"><see cref="DISubProgram"/> to finalize debug information for</param>
         public void Finish( DISubProgram subProgram )
         {
-            LLVMDIBuilderFinalizeSubProgram( BuilderHandle, subProgram.MetadataHandle );
+            LibLLVMDIBuilderFinalizeSubProgram( BuilderHandle, subProgram.MetadataHandle );
         }
 
         /// <summary>Finalizes debug information for all items built by this builder</summary>

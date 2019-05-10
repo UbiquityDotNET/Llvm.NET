@@ -12,35 +12,43 @@ using System;
 using System.CodeDom.Compiler;
 using System.Runtime.InteropServices;
 using System.Security;
+using System.Threading;
 
 namespace Llvm.NET.Interop
 {
     [SecurityCritical]
     [GeneratedCode("LlvmBindingsGenerator","2.17941.31104.49410")]
-    public class LLVMValueCacheRef
+    public class LibLLVMTripleRef
         : LlvmObjectRef
     {
-        public LLVMValueCacheRef( IntPtr handle, bool owner )
+        public LibLLVMTripleRef( IntPtr handle, bool owner )
             : base( owner )
         {
             SetHandle( handle );
         }
 
-        public static LLVMValueCacheRef Zero { get; } = new LLVMValueCacheRef(IntPtr.Zero, false);
+        public static LibLLVMTripleRef Zero { get; } = new LibLLVMTripleRef(IntPtr.Zero, false);
 
         [SecurityCritical]
         protected override bool ReleaseHandle( )
         {
-            LLVMDisposeValueCache( handle );
+            // ensure handle appears invalid from this point forward
+            var prevHandle = Interlocked.Exchange( ref handle, IntPtr.Zero );
+            SetHandleAsInvalid( );
+
+            if( prevHandle != IntPtr.Zero )
+            {
+                LibLLVMDisposeTriple( handle );
+            }
             return true;
         }
 
-        private LLVMValueCacheRef( )
+        private LibLLVMTripleRef( )
             : base( true )
         {
         }
 
         [DllImport( NativeMethods.LibraryPath, CallingConvention = CallingConvention.Cdecl )]
-        private static extern void LLVMDisposeValueCache( IntPtr p );
+        private static extern void LibLLVMDisposeTriple( IntPtr p );
     }
 }

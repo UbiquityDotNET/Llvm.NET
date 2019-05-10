@@ -13,29 +13,29 @@
 
 using namespace llvm;
 
-DEFINE_SIMPLE_CONVERSION_FUNCTIONS( ValueCache, LLVMValueCacheRef );
+DEFINE_SIMPLE_CONVERSION_FUNCTIONS( ValueCache, LibLLVMValueCacheRef );
 
 extern "C"
 {
-    LLVMComdatRef LLVMGlobalObjectGetComdat( LLVMValueRef Val )
+    LLVMComdatRef LibLLVMGlobalObjectGetComdat( LLVMValueRef Val )
     {
         auto pGlobalObj = dyn_cast< GlobalObject >( unwrap( Val ) );
         return wrap( pGlobalObj->getComdat( ) );
     }
 
-    void LLVMGlobalObjectSetComdat( LLVMValueRef Val, LLVMComdatRef comdatRef )
+    void LibLLVMGlobalObjectSetComdat( LLVMValueRef Val, LLVMComdatRef comdatRef )
     {
         auto pGlobalObj = dyn_cast< GlobalObject >( unwrap( Val ) );
         pGlobalObj->setComdat( unwrap( comdatRef ) );
     }
 
-    uint32_t LLVMGetArgumentIndex( LLVMValueRef valueRef )
+    uint32_t LibLLVMGetArgumentIndex( LLVMValueRef valueRef )
     {
         auto pArgument = unwrap<Argument>( valueRef );
         return pArgument->getArgNo( );
     }
 
-    LLVMBool LLVMIsConstantZeroValue( LLVMValueRef valueRef )
+    LLVMBool LibLLVMIsConstantZeroValue( LLVMValueRef valueRef )
     {
         auto pConstant = dyn_cast< Constant >( unwrap( valueRef ) );
         if( pConstant == nullptr )
@@ -44,7 +44,7 @@ extern "C"
         return pConstant->isZeroValue( ) ? 1 : 0;
     }
 
-    void LLVMRemoveGlobalFromParent( LLVMValueRef valueRef )
+    void LibLLVMRemoveGlobalFromParent( LLVMValueRef valueRef )
     {
         auto pGlobal = dyn_cast< GlobalVariable >( unwrap( valueRef ) );
         if( pGlobal == nullptr )
@@ -53,50 +53,50 @@ extern "C"
         pGlobal->removeFromParent( );
     }
 
-    int LLVMGetValueID( LLVMValueRef valueRef )
+    int LibLLVMGetValueID( LLVMValueRef valueRef )
     {
         return unwrap( valueRef )->getValueID( );
     }
 
-    LLVMValueRef LLVMGetAliasee( LLVMValueRef Val )
+    LLVMValueRef LibLLVMGetAliasee( LLVMValueRef Val )
     {
         auto pAlias = unwrap<GlobalAlias>( Val );
         return wrap( pAlias->getAliasee( ) );
     }
 
-    void LLVMGlobalVariableAddDebugExpression( LLVMValueRef /*GlobalVariable*/ globalVar, LLVMMetadataRef exp )
+    void LibLLVMGlobalVariableAddDebugExpression( LLVMValueRef /*GlobalVariable*/ globalVar, LLVMMetadataRef exp )
     {
         auto gv = unwrap<GlobalVariable>( globalVar );
         gv->addDebugInfo( unwrap<DIGlobalVariableExpression>( exp ));
     }
 
-    void LLVMFunctionAppendBasicBlock( LLVMValueRef /*Function*/ function, LLVMBasicBlockRef block )
+    void LibLLVMFunctionAppendBasicBlock( LLVMValueRef /*Function*/ function, LLVMBasicBlockRef block )
     {
         unwrap<Function>( function )->getBasicBlockList( ).push_back( unwrap( block ) );
     }
 
-    LLVMValueRef LLVMValueAsMetadataGetValue( LLVMMetadataRef vmd )
+    LLVMValueRef LibLLVMValueAsMetadataGetValue( LLVMMetadataRef vmd )
     {
         return wrap( unwrap<ValueAsMetadata>( vmd )->getValue( ) );
     }
 
-    LLVMValueCacheRef LLVMCreateValueCache( LLVMValueCacheItemDeletedCallback /*MaybeNull*/ deletedCallback, LLVMValueCacheItemReplacedCallback replacedCallback )
+    LibLLVMValueCacheRef LibLLVMCreateValueCache( LibLLVMValueCacheItemDeletedCallback /*MaybeNull*/ deletedCallback, LibLLVMValueCacheItemReplacedCallback replacedCallback )
     {
         return wrap( new ValueCache( deletedCallback, replacedCallback ) );
     }
 
-    void LLVMDisposeValueCache( LLVMValueCacheRef cacheRef )
+    void LibLLVMDisposeValueCache( LibLLVMValueCacheRef cacheRef )
     {
         delete unwrap( cacheRef );
     }
 
-    void LLVMValueCacheAdd( LLVMValueCacheRef cacheRef, LLVMValueRef valueRef, intptr_t handle )
+    void LibLLVMValueCacheAdd( LibLLVMValueCacheRef cacheRef, LLVMValueRef valueRef, intptr_t handle )
     {
         auto& cache = *unwrap( cacheRef );
         cache[unwrap( valueRef )] = handle;
     }
 
-    intptr_t LLVMValueCacheLookup( LLVMValueCacheRef cacheRef, LLVMValueRef valueRef )
+    intptr_t LibLLVMValueCacheLookup( LibLLVMValueCacheRef cacheRef, LLVMValueRef valueRef )
     {
         return unwrap( cacheRef )->lookup( unwrap( valueRef ) );
     }

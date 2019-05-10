@@ -73,13 +73,13 @@ namespace Llvm.NET
             get
             {
                 ThrowIfDisposed( );
-                return LLVMGetModuleSourceFileName( ModuleHandle );
+                return LibLLVMGetModuleSourceFileName( ModuleHandle );
             }
 
             set
             {
                 ThrowIfDisposed( );
-                LLVMSetModuleSourceFileName( ModuleHandle, value );
+                LibLLVMSetModuleSourceFileName( ModuleHandle, value );
             }
         }
 
@@ -228,11 +228,11 @@ namespace Llvm.NET
             get
             {
                 ThrowIfDisposed( );
-                var current = LLVMModuleGetFirstGlobalAlias( ModuleHandle );
+                var current = LibLLVMModuleGetFirstGlobalAlias( ModuleHandle );
                 while( current != default )
                 {
                     yield return Value.FromHandle<GlobalAlias>( current );
-                    current = LLVMModuleGetNextGlobalAlias( current );
+                    current = LibLLVMModuleGetNextGlobalAlias( current );
                 }
             }
         }
@@ -258,7 +258,7 @@ namespace Llvm.NET
             get
             {
                 ThrowIfDisposed( );
-                return LLVMGetModuleName( ModuleHandle );
+                return LibLLVMGetModuleName( ModuleHandle );
             }
         }
 
@@ -355,7 +355,7 @@ namespace Llvm.NET
             name.ValidateNotNullOrWhiteSpace( nameof( name ) );
             signature.ValidateNotNull( nameof( signature ) );
 
-            return Value.FromHandle<Function>( LLVMGetOrInsertFunction( ModuleHandle, name, signature.GetTypeRef( ) ) );
+            return Value.FromHandle<Function>( LibLLVMGetOrInsertFunction( ModuleHandle, name, signature.GetTypeRef( ) ) );
         }
 
         /// <summary>Writes a bit-code module to a file</summary>
@@ -433,7 +433,7 @@ namespace Llvm.NET
             ThrowIfDisposed( );
             name.ValidateNotNullOrWhiteSpace( nameof( name ) );
 
-            var handle = LLVMGetGlobalAlias( ModuleHandle, name );
+            var handle = LibLLVMGetGlobalAlias( ModuleHandle, name );
             return Value.FromHandle<GlobalAlias>( handle );
         }
 
@@ -611,7 +611,7 @@ namespace Llvm.NET
             value.ValidateNotNull( nameof( value ) );
             name.ValidateNotNullOrWhiteSpace( nameof( name ) );
 
-            LLVMAddNamedMetadataOperand2( ModuleHandle, name, value?.MetadataHandle ?? default );
+            LibLLVMAddNamedMetadataOperand2( ModuleHandle, name, value?.MetadataHandle ?? default );
         }
 
         /// <summary>Adds an llvm.ident metadata string to the module</summary>
@@ -622,7 +622,7 @@ namespace Llvm.NET
             version.ValidateNotNullOrWhiteSpace( nameof( version ) );
 
             var stringNode = Context.CreateMDNode( version );
-            LLVMAddNamedMetadataOperand2( ModuleHandle, "llvm.ident", stringNode.MetadataHandle );
+            LibLLVMAddNamedMetadataOperand2( ModuleHandle, "llvm.ident", stringNode.MetadataHandle );
         }
 
         /// <summary>Creates a Function definition with Debug information</summary>

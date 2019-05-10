@@ -86,7 +86,10 @@ namespace LlvmBindingsGenerator
             driver.AddTranslationUnitPass( new MarkFunctionsInternalPass( disposeFuncEntries.Concat( Configuration.InternalFunctions ) ) );
             driver.AddTranslationUnitPass( new MarkDeprecatedFunctionsAsObsoletePass( Configuration.DeprecatedFunctionToMessageMap, true ) );
             driver.AddTranslationUnitPass( new AddMarshalingAttributesPass( new MarshalingInfoMap( ctx, Configuration.MarshalingInfo ) ) );
+
+            // validations apply after all transforms
             driver.AddTranslationUnitPass( new ValidateHasStringMarshalingAttributes( ) );
+            driver.AddTranslationUnitPass( new ValidateExtensionNamingPass( ) );
         }
 
         public void Postprocess( Driver driver, ASTContext ctx )

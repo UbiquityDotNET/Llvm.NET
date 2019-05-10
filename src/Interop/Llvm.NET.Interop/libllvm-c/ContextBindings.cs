@@ -19,11 +19,11 @@ namespace Llvm.NET.Interop
         [return: MarshalAs( UnmanagedType.Bool )]
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
-        public static extern bool LLVMContextGetIsODRUniquingDebugTypes( LLVMContextRef context );
+        public static extern bool LibLLVMContextGetIsODRUniquingDebugTypes( LLVMContextRef context );
 
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
-        public static extern void LLVMContextSetIsODRUniquingDebugTypes( LLVMContextRef context, [MarshalAs( UnmanagedType.Bool )]bool state );
+        public static extern void LibLLVMContextSetIsODRUniquingDebugTypes( LLVMContextRef context, [MarshalAs( UnmanagedType.Bool )]bool state );
 
     }
 }

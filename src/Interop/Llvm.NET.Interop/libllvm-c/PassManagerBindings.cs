@@ -18,27 +18,31 @@ namespace Llvm.NET.Interop
     {
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
-        public static extern void LLVMAddAddressSanitizerFunctionPass( LLVMPassManagerRef PM );
+        public static extern void LibLLVMAddAddressSanitizerFunctionPass( LLVMPassManagerRef PM );
 
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
-        public static extern void LLVMAddAddressSanitizerModulePass( LLVMPassManagerRef PM );
+        public static extern void LibLLVMAddAddressSanitizerModulePass( LLVMPassManagerRef PM );
 
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
-        public static extern void LLVMAddThreadSanitizerPass( LLVMPassManagerRef PM );
+        public static extern void LibLLVMAddThreadSanitizerPass( LLVMPassManagerRef PM );
 
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
-        public static extern void LLVMAddMemorySanitizerPass( LLVMPassManagerRef PM );
+        public static extern void LibLLVMAddMemorySanitizerPass( LLVMPassManagerRef PM );
 
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
-        public static extern void LLVMAddDataFlowSanitizerPass( LLVMPassManagerRef PM, int ABIListFilesNum, [MarshalAs( UnmanagedType.LPStr, ArraySubType = UnmanagedType.LPStr )]global::System.String[] ABIListFiles );
+        public static extern void LibLLVMAddDataFlowSanitizerPass( LLVMPassManagerRef PM, int ABIListFilesNum, [MarshalAs( UnmanagedType.LPStr, ArraySubType = UnmanagedType.LPStr )]global::System.String[] ABIListFiles );
 
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
-        public static extern LLVMPassRegistryRef LLVMCreatePassRegistry(  );
+        public static extern LLVMPassRegistryRef LibLLVMCreatePassRegistry(  );
+
+        [SuppressUnmanagedCodeSecurity]
+        [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
+        public static extern void LibLLVMPassRegistryDispose( LLVMPassRegistryRef passReg );
 
     }
 }

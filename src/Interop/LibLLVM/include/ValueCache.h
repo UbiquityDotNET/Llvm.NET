@@ -2,6 +2,7 @@
 #define _VALUECACHE_H_
 
 #include "llvm/IR/ValueMap.h"
+#include "libllvm-c/ValueBindings.h"
 
 namespace llvm
 {
@@ -20,8 +21,8 @@ namespace llvm
         struct ExtraData
         {
             explicit ExtraData( ValueCache* owningCache
-                              , LLVMValueCacheItemDeletedCallback deletedCallback = nullptr
-                              , LLVMValueCacheItemReplacedCallback replacedCallback = nullptr
+                              , LibLLVMValueCacheItemDeletedCallback deletedCallback = nullptr
+                              , LibLLVMValueCacheItemReplacedCallback replacedCallback = nullptr
                               )
                 : Cache( owningCache )
                 , ItemDeletedCallback( deletedCallback )
@@ -32,8 +33,8 @@ namespace llvm
             ExtraData( ExtraData const& other ) = default;
 
             ValueCache* Cache;
-            /*MaybeNull*/ LLVMValueCacheItemDeletedCallback ItemDeletedCallback;
-            /*MaybeNull*/ LLVMValueCacheItemReplacedCallback ItemReplacedCallback;
+            /*MaybeNull*/ LibLLVMValueCacheItemDeletedCallback ItemDeletedCallback;
+            /*MaybeNull*/ LibLLVMValueCacheItemReplacedCallback ItemReplacedCallback;
 
         };
 
@@ -47,7 +48,7 @@ namespace llvm
         typedef ValueMap<Value*, intptr_t, ValueCacheConfig> base_t;
 
     public:
-        ValueCache( LLVMValueCacheItemDeletedCallback deletedCallback, LLVMValueCacheItemReplacedCallback replacedCallback )
+        ValueCache( LibLLVMValueCacheItemDeletedCallback deletedCallback, LibLLVMValueCacheItemReplacedCallback replacedCallback )
             : base_t( ValueCacheConfig::ExtraData( this, deletedCallback, replacedCallback ) )
         {
         }

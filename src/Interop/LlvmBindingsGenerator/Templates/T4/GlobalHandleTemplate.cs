@@ -48,27 +48,28 @@ using System;
 using System.CodeDom.Compiler;
 using System.Runtime.InteropServices;
 using System.Security;
+using System.Threading;
 
 namespace Llvm.NET.Interop
 {
     [SecurityCritical]
     [GeneratedCode(""LlvmBindingsGenerator"",""");
             
-            #line 24 "D:\GitHub\Ubiquity.NET\Llvm.Net\src\Interop\LlvmBindingsGenerator\Templates\T4\GlobalHandleTemplate.tt"
+            #line 25 "D:\GitHub\Ubiquity.NET\Llvm.Net\src\Interop\LlvmBindingsGenerator\Templates\T4\GlobalHandleTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(ToolVersion));
             
             #line default
             #line hidden
             this.Write("\")]\r\n    public class ");
             
-            #line 25 "D:\GitHub\Ubiquity.NET\Llvm.Net\src\Interop\LlvmBindingsGenerator\Templates\T4\GlobalHandleTemplate.tt"
+            #line 26 "D:\GitHub\Ubiquity.NET\Llvm.Net\src\Interop\LlvmBindingsGenerator\Templates\T4\GlobalHandleTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(HandleName));
             
             #line default
             #line hidden
             this.Write("\r\n        : LlvmObjectRef\r\n    {\r\n        public ");
             
-            #line 28 "D:\GitHub\Ubiquity.NET\Llvm.Net\src\Interop\LlvmBindingsGenerator\Templates\T4\GlobalHandleTemplate.tt"
+            #line 29 "D:\GitHub\Ubiquity.NET\Llvm.Net\src\Interop\LlvmBindingsGenerator\Templates\T4\GlobalHandleTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(HandleName));
             
             #line default
@@ -76,29 +77,40 @@ namespace Llvm.NET.Interop
             this.Write("( IntPtr handle, bool owner )\r\n            : base( owner )\r\n        {\r\n          " +
                     "  SetHandle( handle );\r\n        }\r\n\r\n        public static ");
             
-            #line 34 "D:\GitHub\Ubiquity.NET\Llvm.Net\src\Interop\LlvmBindingsGenerator\Templates\T4\GlobalHandleTemplate.tt"
+            #line 35 "D:\GitHub\Ubiquity.NET\Llvm.Net\src\Interop\LlvmBindingsGenerator\Templates\T4\GlobalHandleTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(HandleName));
             
             #line default
             #line hidden
             this.Write(" Zero { get; } = new ");
             
-            #line 34 "D:\GitHub\Ubiquity.NET\Llvm.Net\src\Interop\LlvmBindingsGenerator\Templates\T4\GlobalHandleTemplate.tt"
+            #line 35 "D:\GitHub\Ubiquity.NET\Llvm.Net\src\Interop\LlvmBindingsGenerator\Templates\T4\GlobalHandleTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(HandleName));
             
             #line default
             #line hidden
-            this.Write("(IntPtr.Zero, false);\r\n\r\n        [SecurityCritical]\r\n        protected override b" +
-                    "ool ReleaseHandle( )\r\n        {\r\n            ");
+            this.Write(@"(IntPtr.Zero, false);
+
+        [SecurityCritical]
+        protected override bool ReleaseHandle( )
+        {
+            // ensure handle appears invalid from this point forward
+            var prevHandle = Interlocked.Exchange( ref handle, IntPtr.Zero );
+            SetHandleAsInvalid( );
+
+            if( prevHandle != IntPtr.Zero )
+            {
+                ");
             
-            #line 39 "D:\GitHub\Ubiquity.NET\Llvm.Net\src\Interop\LlvmBindingsGenerator\Templates\T4\GlobalHandleTemplate.tt"
+            #line 46 "D:\GitHub\Ubiquity.NET\Llvm.Net\src\Interop\LlvmBindingsGenerator\Templates\T4\GlobalHandleTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(HandleDisposeFunction));
             
             #line default
             #line hidden
-            this.Write("( handle );\r\n            return true;\r\n        }\r\n\r\n        private ");
+            this.Write("( handle );\r\n            }\r\n            return true;\r\n        }\r\n\r\n        privat" +
+                    "e ");
             
-            #line 43 "D:\GitHub\Ubiquity.NET\Llvm.Net\src\Interop\LlvmBindingsGenerator\Templates\T4\GlobalHandleTemplate.tt"
+            #line 51 "D:\GitHub\Ubiquity.NET\Llvm.Net\src\Interop\LlvmBindingsGenerator\Templates\T4\GlobalHandleTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(HandleName));
             
             #line default
@@ -107,49 +119,49 @@ namespace Llvm.NET.Interop
                     "veMethods.LibraryPath, CallingConvention = CallingConvention.Cdecl )]\r\n        p" +
                     "rivate static extern void ");
             
-            #line 49 "D:\GitHub\Ubiquity.NET\Llvm.Net\src\Interop\LlvmBindingsGenerator\Templates\T4\GlobalHandleTemplate.tt"
+            #line 57 "D:\GitHub\Ubiquity.NET\Llvm.Net\src\Interop\LlvmBindingsGenerator\Templates\T4\GlobalHandleTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(HandleDisposeFunction));
             
             #line default
             #line hidden
             this.Write("( IntPtr p );\r\n    }\r\n");
             
-            #line 51 "D:\GitHub\Ubiquity.NET\Llvm.Net\src\Interop\LlvmBindingsGenerator\Templates\T4\GlobalHandleTemplate.tt"
+            #line 59 "D:\GitHub\Ubiquity.NET\Llvm.Net\src\Interop\LlvmBindingsGenerator\Templates\T4\GlobalHandleTemplate.tt"
 if(NeedsAlias){
             
             #line default
             #line hidden
-            this.Write("    [GeneratedCode(\"LlvmBindingsGenerator\",\"");
+            this.Write("\r\n    [GeneratedCode(\"LlvmBindingsGenerator\",\"");
             
-            #line 52 "D:\GitHub\Ubiquity.NET\Llvm.Net\src\Interop\LlvmBindingsGenerator\Templates\T4\GlobalHandleTemplate.tt"
+            #line 61 "D:\GitHub\Ubiquity.NET\Llvm.Net\src\Interop\LlvmBindingsGenerator\Templates\T4\GlobalHandleTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(ToolVersion));
             
             #line default
             #line hidden
             this.Write("\")]\r\n    public class ");
             
-            #line 53 "D:\GitHub\Ubiquity.NET\Llvm.Net\src\Interop\LlvmBindingsGenerator\Templates\T4\GlobalHandleTemplate.tt"
+            #line 62 "D:\GitHub\Ubiquity.NET\Llvm.Net\src\Interop\LlvmBindingsGenerator\Templates\T4\GlobalHandleTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(HandleName));
             
             #line default
             #line hidden
             this.Write("Alias\r\n        : ");
             
-            #line 54 "D:\GitHub\Ubiquity.NET\Llvm.Net\src\Interop\LlvmBindingsGenerator\Templates\T4\GlobalHandleTemplate.tt"
+            #line 63 "D:\GitHub\Ubiquity.NET\Llvm.Net\src\Interop\LlvmBindingsGenerator\Templates\T4\GlobalHandleTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(HandleName));
             
             #line default
             #line hidden
             this.Write("\r\n    {\r\n        private ");
             
-            #line 56 "D:\GitHub\Ubiquity.NET\Llvm.Net\src\Interop\LlvmBindingsGenerator\Templates\T4\GlobalHandleTemplate.tt"
+            #line 65 "D:\GitHub\Ubiquity.NET\Llvm.Net\src\Interop\LlvmBindingsGenerator\Templates\T4\GlobalHandleTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(HandleName));
             
             #line default
             #line hidden
             this.Write("Alias()\r\n            : base( IntPtr.Zero, false )\r\n        {\r\n        }\r\n    }\r\n");
             
-            #line 61 "D:\GitHub\Ubiquity.NET\Llvm.Net\src\Interop\LlvmBindingsGenerator\Templates\T4\GlobalHandleTemplate.tt"
+            #line 70 "D:\GitHub\Ubiquity.NET\Llvm.Net\src\Interop\LlvmBindingsGenerator\Templates\T4\GlobalHandleTemplate.tt"
 }
             
             #line default

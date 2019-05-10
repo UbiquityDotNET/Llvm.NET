@@ -14,7 +14,7 @@ namespace Llvm.NET.Transforms
         /// <returns><paramref name="passManager"/>for fluent support</returns>
         public static FunctionPassManager AddAddressSanitizerPass( this FunctionPassManager passManager )
         {
-            LLVMAddAddressSanitizerFunctionPass( passManager.Handle );
+            LibLLVMAddAddressSanitizerFunctionPass( passManager.Handle );
             return passManager;
         }
 
@@ -23,7 +23,7 @@ namespace Llvm.NET.Transforms
         /// <returns><paramref name="passManager"/>for fluent support</returns>
         public static ModulePassManager AddSanitizerPass(this ModulePassManager passManager)
         {
-            LLVMAddAddressSanitizerModulePass( passManager.Handle );
+            LibLLVMAddAddressSanitizerModulePass( passManager.Handle );
             return passManager;
         }
 
@@ -32,7 +32,7 @@ namespace Llvm.NET.Transforms
         /// <returns><paramref name="passManager"/>for fluent support</returns>
         public static FunctionPassManager AddThreadSanitizerPass( this FunctionPassManager passManager )
         {
-            LLVMAddThreadSanitizerPass( passManager.Handle );
+            LibLLVMAddThreadSanitizerPass( passManager.Handle );
             return passManager;
         }
 
@@ -41,7 +41,7 @@ namespace Llvm.NET.Transforms
         /// <returns><paramref name="passManager"/>for fluent support</returns>
         public static FunctionPassManager AddMemorySanitizerPass( this FunctionPassManager passManager )
         {
-            LLVMAddMemorySanitizerPass( passManager.Handle );
+            LibLLVMAddMemorySanitizerPass( passManager.Handle );
             return passManager;
         }
 
@@ -51,7 +51,7 @@ namespace Llvm.NET.Transforms
         /// <returns><paramref name="passManager"/>for fluent support</returns>
         public static ModulePassManager AddDataFlowSanitizerPass( this ModulePassManager passManager, string[] abiListFile )
         {
-            LLVMAddDataFlowSanitizerPass( passManager.Handle,abiListFile.Length, abiListFile );
+            LibLLVMAddDataFlowSanitizerPass( passManager.Handle,abiListFile.Length, abiListFile );
             return passManager;
         }
     }

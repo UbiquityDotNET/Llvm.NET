@@ -24,14 +24,14 @@ extern "C" {
 // a (somewhat) less stable collection of C APIs for use in creating bindings of
 // LLVM in other languages.
 
-void LLVMAddAddressSanitizerFunctionPass(LLVMPassManagerRef PM);
-void LLVMAddAddressSanitizerModulePass(LLVMPassManagerRef PM);
-void LLVMAddThreadSanitizerPass(LLVMPassManagerRef PM);
-void LLVMAddMemorySanitizerPass(LLVMPassManagerRef PM);
-void LLVMAddDataFlowSanitizerPass( LLVMPassManagerRef PM, int ABIListFilesNum, const char **ABIListFiles );
+void LibLLVMAddAddressSanitizerFunctionPass(LLVMPassManagerRef PM);
+void LibLLVMAddAddressSanitizerModulePass(LLVMPassManagerRef PM);
+void LibLLVMAddThreadSanitizerPass(LLVMPassManagerRef PM);
+void LibLLVMAddMemorySanitizerPass(LLVMPassManagerRef PM);
+void LibLLVMAddDataFlowSanitizerPass( LLVMPassManagerRef PM, int ABIListFilesNum, const char **ABIListFiles );
 
-LLVMPassRegistryRef LLVMCreatePassRegistry( );
-void LLVMPassRegistryDispose( LLVMPassRegistryRef passReg );
+LLVMPassRegistryRef LibLLVMCreatePassRegistry( );
+void LibLLVMPassRegistryDispose( LLVMPassRegistryRef passReg );
 
 #ifdef __cplusplus
 }

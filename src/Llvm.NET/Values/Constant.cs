@@ -16,7 +16,7 @@ namespace Llvm.NET.Values
         : User
     {
         /// <summary>Gets a value indicating whether the constant is a Zero value for the its type</summary>
-        public bool IsZeroValue => LLVMIsConstantZeroValue( ValueHandle );
+        public bool IsZeroValue => LibLLVMIsConstantZeroValue( ValueHandle );
 
         /// <summary>Create a NULL pointer for a given type</summary>
         /// <param name="typeRef">Type of pointer to create a null vale for</param>
@@ -38,7 +38,7 @@ namespace Llvm.NET.Values
         }
 
         /// <summary>Gets the constant as a Metadata node</summary>
-        public ConstantAsMetadata ToMetadata() => LlvmMetadata.FromHandle<ConstantAsMetadata>( Context, LLVMConstantAsMetadata( ValueHandle ) );
+        public ConstantAsMetadata ToMetadata() => LlvmMetadata.FromHandle<ConstantAsMetadata>( Context, LibLLVMConstantAsMetadata( ValueHandle ) );
 
         /// <summary>Creates a constant instance of <paramref name="typeRef"/> with all bits in the instance set to 1</summary>
         /// <param name="typeRef">Type of value to create</param>

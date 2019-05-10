@@ -38,7 +38,7 @@ namespace Llvm.NET
     public class Comdat
     {
         /// <summary>Gets the name of the <see cref="Comdat"/></summary>
-        public string Name => Module.IsDisposed ? string.Empty : LLVMComdatGetName( ComdatHandle );
+        public string Name => Module.IsDisposed ? string.Empty : LibLLVMComdatGetName( ComdatHandle );
 
         /// <summary>Gets or sets the <see cref="ComdatKind"/> for this <see cref="Comdat"/></summary>
         public ComdatKind Kind

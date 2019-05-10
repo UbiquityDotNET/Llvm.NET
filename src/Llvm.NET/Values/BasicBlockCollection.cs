@@ -27,7 +27,7 @@ namespace Llvm.NET.Values
         public void Add( BasicBlock item )
         {
             item.ValidateNotNull( nameof( item ) );
-            LLVMFunctionAppendBasicBlock( ContainingFunction.ValueHandle, item.BlockHandle );
+            LibLLVMFunctionAppendBasicBlock( ContainingFunction.ValueHandle, item.BlockHandle );
         }
 
         /// <inheritdoc/>

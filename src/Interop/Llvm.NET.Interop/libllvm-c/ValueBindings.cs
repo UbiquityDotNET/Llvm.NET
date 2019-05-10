@@ -15,65 +15,65 @@ using System.Security;
 namespace Llvm.NET.Interop
 {
     [UnmanagedFunctionPointer( global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
-    public delegate void LLVMValueCacheItemDeletedCallback( LLVMValueRef @ref, System.IntPtr handle );
+    public delegate void LibLLVMValueCacheItemDeletedCallback( LLVMValueRef @ref, System.IntPtr handle );
 
     [UnmanagedFunctionPointer( global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
-    public delegate System.IntPtr LLVMValueCacheItemReplacedCallback( LLVMValueRef oldValue, System.IntPtr handle, LLVMValueRef newValue );
+    public delegate System.IntPtr LibLLVMValueCacheItemReplacedCallback( LLVMValueRef oldValue, System.IntPtr handle, LLVMValueRef newValue );
 
     public static partial class NativeMethods
     {
         [return: MarshalAs( UnmanagedType.Bool )]
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
-        public static extern bool LLVMIsConstantZeroValue( LLVMValueRef valueRef );
+        public static extern bool LibLLVMIsConstantZeroValue( LLVMValueRef valueRef );
 
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
-        public static extern void LLVMRemoveGlobalFromParent( LLVMValueRef valueRef );
+        public static extern void LibLLVMRemoveGlobalFromParent( LLVMValueRef valueRef );
 
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
-        public static extern int LLVMGetValueID( LLVMValueRef valueRef );
+        public static extern int LibLLVMGetValueID( LLVMValueRef valueRef );
 
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
-        public static extern LLVMValueRef LLVMGetAliasee( LLVMValueRef Val );
+        public static extern LLVMValueRef LibLLVMGetAliasee( LLVMValueRef Val );
 
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
-        public static extern System.UInt32 LLVMGetArgumentIndex( LLVMValueRef Val );
+        public static extern System.UInt32 LibLLVMGetArgumentIndex( LLVMValueRef Val );
 
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
-        public static extern LLVMComdatRef LLVMGlobalObjectGetComdat( LLVMValueRef Val );
+        public static extern LLVMComdatRef LibLLVMGlobalObjectGetComdat( LLVMValueRef Val );
 
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
-        public static extern void LLVMGlobalObjectSetComdat( LLVMValueRef Val, LLVMComdatRef comdatRef );
+        public static extern void LibLLVMGlobalObjectSetComdat( LLVMValueRef Val, LLVMComdatRef comdatRef );
 
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
-        public static extern void LLVMGlobalVariableAddDebugExpression( LLVMValueRef globalVar, LLVMMetadataRef exp );
+        public static extern void LibLLVMGlobalVariableAddDebugExpression( LLVMValueRef globalVar, LLVMMetadataRef exp );
 
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
-        public static extern void LLVMFunctionAppendBasicBlock( LLVMValueRef function, LLVMBasicBlockRef block );
+        public static extern void LibLLVMFunctionAppendBasicBlock( LLVMValueRef function, LLVMBasicBlockRef block );
 
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
-        public static extern LLVMValueRef LLVMValueAsMetadataGetValue( LLVMMetadataRef vmd );
+        public static extern LLVMValueRef LibLLVMValueAsMetadataGetValue( LLVMMetadataRef vmd );
 
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
-        public static extern LLVMValueCacheRef LLVMCreateValueCache( LLVMValueCacheItemDeletedCallback deletedCallback, LLVMValueCacheItemReplacedCallback replacedCallback );
+        public static extern LibLLVMValueCacheRef LibLLVMCreateValueCache( LibLLVMValueCacheItemDeletedCallback deletedCallback, LibLLVMValueCacheItemReplacedCallback replacedCallback );
 
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
-        public static extern void LLVMValueCacheAdd( LLVMValueCacheRef cacheRef, LLVMValueRef value, System.IntPtr handle );
+        public static extern void LibLLVMValueCacheAdd( LibLLVMValueCacheRef cacheRef, LLVMValueRef value, System.IntPtr handle );
 
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
-        public static extern System.IntPtr LLVMValueCacheLookup( LLVMValueCacheRef cacheRef, LLVMValueRef valueRef );
+        public static extern System.IntPtr LibLLVMValueCacheLookup( LibLLVMValueCacheRef cacheRef, LLVMValueRef valueRef );
 
     }
 }

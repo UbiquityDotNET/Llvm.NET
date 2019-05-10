@@ -15,174 +15,238 @@ using System.Security;
 namespace Llvm.NET.Interop
 {
     [GeneratedCode("LlvmBindingsGenerator","2.17941.31104.49410")]
-    public enum LLVMDwarfTag : global::System.Int32
+    public enum LibLLVMDwarfTag : global::System.Int32
     {
-        LLVMDwarfTagArrayType = 1,
-        LLVMDwarfTagClassType = 2,
-        LLVMDwarfTagEntryPoint = 3,
-        LLVMDwarfTagEnumerationType = 4,
-        LLVMDwarfTagFormalParameter = 5,
-        LLVMDwarfTagImportedDeclaration = 8,
-        LLVMDwarfTagLabel = 10,
-        LLVMDwarfTagLexicalBlock = 11,
-        LLVMDwarfTagMember = 13,
-        LLVMDwarfTagPointerType = 15,
-        LLVMDwarfTagReferenceType = 16,
-        LLVMDwarfTagCompileUnit = 17,
-        LLVMDwarfTagStringType = 18,
-        LLVMDwarfTagStructureType = 19,
-        LLVMDwarfTagSubroutineType = 21,
-        LLVMDwarfTagTypeDef = 22,
-        LLVMDwarfTagUnionType = 23,
-        LLVMDwarfTagUnspecifiedParameters = 24,
-        LLVMDwarfTagVariant = 25,
-        LLVMDwarfTagCommonBlock = 26,
-        LLVMDwarfTagCommonInclusion = 27,
-        LLVMDwarfTagInheritance = 28,
-        LLVMDwarfTagInlinedSubroutine = 29,
-        LLVMDwarfTagModule = 30,
-        LLVMDwarfTagPtrToMemberType = 31,
-        LLVMDwarfTagSetType = 32,
-        LLVMDwarfTagSubrangeType = 33,
-        LLVMDwarfTagWithStatement = 34,
-        LLVMDwarfTagAccessDeclaration = 35,
-        LLVMDwarfTagBaseType = 36,
-        LLVMDwarfTagCatchBlock = 37,
-        LLVMDwarfTagConstType = 38,
-        LLVMDwarfTagConstant = 39,
-        LLVMDwarfTagEnumerator = 40,
-        LLVMDwarfTagFileType = 41,
-        LLVMDwarfTagFriend = 42,
-        LLVMDwarfTagNameList = 43,
-        LLVMDwarfTagNameListItem = 44,
-        LLVMDwarfTagPackedType = 45,
-        LLVMDwarfTagSubProgram = 46,
-        LLVMDwarfTagTemplateTypeParameter = 47,
-        LLVMDwarfTagTemplateValueParameter = 48,
-        LLVMDwarfTagThrownType = 49,
-        LLVMDwarfTagTryBlock = 50,
-        LLVMDwarfTagVariantPart = 51,
-        LLVMDwarfTagVariable = 52,
-        LLVMDwarfTagVolatileType = 53,
-        LLVMDwarfTagDwarfProcedure = 54,
-        LLVMDwarfTagRestrictType = 55,
-        LLVMDwarfTagInterfaceType = 56,
-        LLVMDwarfTagNamespace = 57,
-        LLVMDwarfTagImportedModule = 58,
-        LLVMDwarfTagUnspecifiedType = 59,
-        LLVMDwarfTagPartialUnit = 60,
-        LLVMDwarfTagImportedUnit = 61,
-        LLVMDwarfTagCondition = 63,
-        LLVMDwarfTagSharedType = 64,
-        LLVMDwarfTagTypeUnit = 65,
-        LLVMDwarfTagRValueReferenceType = 66,
-        LLVMDwarfTagTemplateAlias = 67,
-        LLVMDwarfTagCoArrayType = 68,
-        LLVMDwarfTagGenericSubrange = 69,
-        LLVMDwarfTagDynamicType = 70,
-        LLVMDwarfTagMipsLoop = 16513,
-        LLVMDwarfTagFormatLabel = 16641,
-        LLVMDwarfTagFunctionTemplate = 16642,
-        LLVMDwarfTagClassTemplate = 16643,
-        LLVMDwarfTagGnuTemplateTemplateParam = 16646,
-        LLVMDwarfTagGnuTemplateParameterPack = 16647,
-        LLVMDwarfTagGnuFormalParameterPack = 16648,
-        LLVMDwarfTagLoUser = 16512,
-        LLVMDwarfTagAppleProperty = 16896,
-        LLVMDwarfTagHiUser = 65535,
+        LibLLVMDwarfTagnull = 0,
+        LibLLVMDwarfTagarray_type = 1,
+        LibLLVMDwarfTagclass_type = 2,
+        LibLLVMDwarfTagentry_point = 3,
+        LibLLVMDwarfTagenumeration_type = 4,
+        LibLLVMDwarfTagformal_parameter = 5,
+        LibLLVMDwarfTagimported_declaration = 8,
+        LibLLVMDwarfTaglabel = 10,
+        LibLLVMDwarfTaglexical_block = 11,
+        LibLLVMDwarfTagmember = 13,
+        LibLLVMDwarfTagpointer_type = 15,
+        LibLLVMDwarfTagreference_type = 16,
+        LibLLVMDwarfTagcompile_unit = 17,
+        LibLLVMDwarfTagstring_type = 18,
+        LibLLVMDwarfTagstructure_type = 19,
+        LibLLVMDwarfTagsubroutine_type = 21,
+        LibLLVMDwarfTagtypedef = 22,
+        LibLLVMDwarfTagunion_type = 23,
+        LibLLVMDwarfTagunspecified_parameters = 24,
+        LibLLVMDwarfTagvariant = 25,
+        LibLLVMDwarfTagcommon_block = 26,
+        LibLLVMDwarfTagcommon_inclusion = 27,
+        LibLLVMDwarfTaginheritance = 28,
+        LibLLVMDwarfTaginlined_subroutine = 29,
+        LibLLVMDwarfTagmodule = 30,
+        LibLLVMDwarfTagptr_to_member_type = 31,
+        LibLLVMDwarfTagset_type = 32,
+        LibLLVMDwarfTagsubrange_type = 33,
+        LibLLVMDwarfTagwith_stmt = 34,
+        LibLLVMDwarfTagaccess_declaration = 35,
+        LibLLVMDwarfTagbase_type = 36,
+        LibLLVMDwarfTagcatch_block = 37,
+        LibLLVMDwarfTagconst_type = 38,
+        LibLLVMDwarfTagconstant = 39,
+        LibLLVMDwarfTagenumerator = 40,
+        LibLLVMDwarfTagfile_type = 41,
+        LibLLVMDwarfTagfriend = 42,
+        LibLLVMDwarfTagnamelist = 43,
+        LibLLVMDwarfTagnamelist_item = 44,
+        LibLLVMDwarfTagpacked_type = 45,
+        LibLLVMDwarfTagsubprogram = 46,
+        LibLLVMDwarfTagtemplate_type_parameter = 47,
+        LibLLVMDwarfTagtemplate_value_parameter = 48,
+        LibLLVMDwarfTagthrown_type = 49,
+        LibLLVMDwarfTagtry_block = 50,
+        LibLLVMDwarfTagvariant_part = 51,
+        LibLLVMDwarfTagvariable = 52,
+        LibLLVMDwarfTagvolatile_type = 53,
+        LibLLVMDwarfTagdwarf_procedure = 54,
+        LibLLVMDwarfTagrestrict_type = 55,
+        LibLLVMDwarfTaginterface_type = 56,
+        LibLLVMDwarfTagnamespace = 57,
+        LibLLVMDwarfTagimported_module = 58,
+        LibLLVMDwarfTagunspecified_type = 59,
+        LibLLVMDwarfTagpartial_unit = 60,
+        LibLLVMDwarfTagimported_unit = 61,
+        LibLLVMDwarfTagcondition = 63,
+        LibLLVMDwarfTagshared_type = 64,
+        LibLLVMDwarfTagtype_unit = 65,
+        LibLLVMDwarfTagrvalue_reference_type = 66,
+        LibLLVMDwarfTagtemplate_alias = 67,
+        LibLLVMDwarfTagcoarray_type = 68,
+        LibLLVMDwarfTaggeneric_subrange = 69,
+        LibLLVMDwarfTagdynamic_type = 70,
+        LibLLVMDwarfTagatomic_type = 71,
+        LibLLVMDwarfTagcall_site = 72,
+        LibLLVMDwarfTagcall_site_parameter = 73,
+        LibLLVMDwarfTagskeleton_unit = 74,
+        LibLLVMDwarfTagimmutable_type = 75,
+        LibLLVMDwarfTagMIPS_loop = 16513,
+        LibLLVMDwarfTagformat_label = 16641,
+        LibLLVMDwarfTagfunction_template = 16642,
+        LibLLVMDwarfTagclass_template = 16643,
+        LibLLVMDwarfTagGNU_template_template_param = 16646,
+        LibLLVMDwarfTagGNU_template_parameter_pack = 16647,
+        LibLLVMDwarfTagGNU_formal_parameter_pack = 16648,
+        LibLLVMDwarfTagGNU_call_site = 16649,
+        LibLLVMDwarfTagGNU_call_site_parameter = 16650,
+        LibLLVMDwarfTagAPPLE_property = 16896,
+        LibLLVMDwarfTagBORLAND_property = 45056,
+        LibLLVMDwarfTagBORLAND_Delphi_string = 45057,
+        LibLLVMDwarfTagBORLAND_Delphi_dynamic_array = 45058,
+        LibLLVMDwarfTagBORLAND_Delphi_set = 45059,
+        LibLLVMDwarfTagBORLAND_Delphi_variant = 45060,
     }
 
     public static partial class NativeMethods
     {
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
-        public static extern uint LLVMDIBasicTypeGetEncoding( LLVMMetadataRef basicType );
+        public static extern uint LibLLVMDIBasicTypeGetEncoding( LLVMMetadataRef basicType );
 
         [return: MarshalAs( UnmanagedType.Bool )]
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
-        public static extern bool LLVMSubProgramDescribes( LLVMMetadataRef subProgram, LLVMValueRef F );
+        public static extern bool LibLLVMSubProgramDescribes( LLVMMetadataRef subProgram, LLVMValueRef F );
 
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
-        public static extern LLVMContextRefAlias LLVMGetNodeContext( LLVMMetadataRef node );
+        public static extern LLVMContextRef LibLLVMGetNodeContext( LLVMMetadataRef node );
 
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
-        public static extern LLVMMetadataRef LLVMDIBuilderCreateTempFunctionFwdDecl( LLVMDIBuilderRef D, LLVMMetadataRef Scope, [MarshalAs( UnmanagedType.LPStr )]string Name, size_t NameLen, [MarshalAs( UnmanagedType.LPStr )]string LinkageName, size_t LinakgeNameLen, LLVMMetadataRef File, uint LineNo, LLVMMetadataRef Ty, [MarshalAs( UnmanagedType.Bool )]bool isLocalToUnit, [MarshalAs( UnmanagedType.Bool )]bool isDefinition, uint ScopeLine, LLVMDIFlags Flags, [MarshalAs( UnmanagedType.Bool )]bool isOptimized );
+        public static extern LLVMMetadataRef LibLLVMDIBuilderCreateTempFunctionFwdDecl( LLVMDIBuilderRef D, LLVMMetadataRef Scope, [MarshalAs( UnmanagedType.LPStr )]string Name, size_t NameLen, [MarshalAs( UnmanagedType.LPStr )]string LinkageName, size_t LinakgeNameLen, LLVMMetadataRef File, uint LineNo, LLVMMetadataRef Ty, [MarshalAs( UnmanagedType.Bool )]bool isLocalToUnit, [MarshalAs( UnmanagedType.Bool )]bool isDefinition, uint ScopeLine, LLVMDIFlags Flags, [MarshalAs( UnmanagedType.Bool )]bool isOptimized );
 
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
-        public static extern void LLVMDIBuilderFinalizeSubProgram( LLVMDIBuilderRef dref, LLVMMetadataRef subProgram );
+        public static extern void LibLLVMDIBuilderFinalizeSubProgram( LLVMDIBuilderRef dref, LLVMMetadataRef subProgram );
 
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
-        public static extern LLVMMetadataRef LLVMDILocation( LLVMContextRef context, uint Line, uint Column, LLVMMetadataRef scope, LLVMMetadataRef InlinedAt );
+        public static extern LLVMMetadataRef LibLLVMDILocation( LLVMContextRef context, uint Line, uint Column, LLVMMetadataRef scope, LLVMMetadataRef InlinedAt );
 
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
-        public static extern global::Llvm.NET.Interop.LLVMDwarfTag LLVMDIDescriptorGetTag( LLVMMetadataRef descriptor );
+        public static extern global::Llvm.NET.Interop.LibLLVMDwarfTag LibLLVMDIDescriptorGetTag( LLVMMetadataRef descriptor );
 
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
-        public static extern LLVMMetadataRef LLVMDILocationGetInlinedAt( LLVMMetadataRef location );
+        public static extern LLVMMetadataRef LibLLVMDILocationGetInlinedAt( LLVMMetadataRef location );
 
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
-        public static extern LLVMMetadataRef LLVMDILocationGetInlinedAtScope( LLVMMetadataRef location );
+        public static extern LLVMMetadataRef LibLLVMDILocationGetInlinedAtScope( LLVMMetadataRef location );
 
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         [return: MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( DisposeMessageMarshaler ) )]
-        public static extern string LLVMMetadataAsString( LLVMMetadataRef descriptor );
+        public static extern string LibLLVMMetadataAsString( LLVMMetadataRef descriptor );
 
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
-        public static extern System.UInt32 LLVMMDNodeGetNumOperands( LLVMMetadataRef node );
+        public static extern System.UInt32 LibLLVMMDNodeGetNumOperands( LLVMMetadataRef node );
 
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
-        public static extern LLVMMDOperandRef LLVMMDNodeGetOperand( LLVMMetadataRef node, System.UInt32 index );
+        public static extern LibLLVMMDOperandRef LibLLVMMDNodeGetOperand( LLVMMetadataRef node, System.UInt32 index );
 
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
-        public static extern void LLVMMDNodeReplaceOperand( LLVMMetadataRef node, System.UInt32 index, LLVMMetadataRef operand );
+        public static extern void LibLLVMMDNodeReplaceOperand( LLVMMetadataRef node, System.UInt32 index, LLVMMetadataRef operand );
 
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
-        public static extern LLVMMetadataRef LLVMGetOperandNode( LLVMMDOperandRef operand );
+        public static extern LLVMMetadataRef LibLLVMGetOperandNode( LibLLVMMDOperandRef operand );
 
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
-        public static extern LLVMModuleRef LLVMNamedMetadataGetParentModule( LLVMNamedMDNodeRef namedMDNode );
+        public static extern LLVMModuleRef LibLLVMNamedMetadataGetParentModule( LLVMNamedMDNodeRef namedMDNode );
 
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
-        public static extern void LLVMNamedMetadataEraseFromParent( LLVMNamedMDNodeRef namedMDNode );
+        public static extern void LibLLVMNamedMetadataEraseFromParent( LLVMNamedMDNodeRef namedMDNode );
 
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
-        public static extern LLVMMetadataKind LLVMGetMetadataID( LLVMMetadataRef md );
+        public static extern LLVMMetadataKind LibLLVMGetMetadataID( LLVMMetadataRef md );
 
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
-        public static extern uint LLVMNamedMDNodeGetNumOperands( LLVMNamedMDNodeRef namedMDNode );
+        public static extern uint LibLLVMNamedMDNodeGetNumOperands( LLVMNamedMDNodeRef namedMDNode );
 
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
-        public static extern LLVMMetadataRef LLVMNamedMDNodeGetOperand( LLVMNamedMDNodeRef namedMDNode, uint index );
+        public static extern LLVMMetadataRef LibLLVMNamedMDNodeGetOperand( LLVMNamedMDNodeRef namedMDNode, uint index );
 
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
-        public static extern void LLVMNamedMDNodeSetOperand( LLVMNamedMDNodeRef namedMDNode, uint index, LLVMMetadataRef node );
+        public static extern void LibLLVMNamedMDNodeSetOperand( LLVMNamedMDNodeRef namedMDNode, uint index, LLVMMetadataRef node );
 
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
-        public static extern void LLVMNamedMDNodeAddOperand( LLVMNamedMDNodeRef namedMDNode, LLVMMetadataRef node );
+        public static extern void LibLLVMNamedMDNodeAddOperand( LLVMNamedMDNodeRef namedMDNode, LLVMMetadataRef node );
 
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
-        public static extern void LLVMNamedMDNodeClearOperands( LLVMNamedMDNodeRef namedMDNode );
+        public static extern void LibLLVMNamedMDNodeClearOperands( LLVMNamedMDNodeRef namedMDNode );
+
+        [SuppressUnmanagedCodeSecurity]
+        [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
+        public static extern LLVMMetadataRef LibLLVMConstantAsMetadata( LLVMValueRef Val );
+
+        [SuppressUnmanagedCodeSecurity]
+        [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
+        public static extern LLVMMetadataRef LibLLVMMDString2( LLVMContextRef C, [MarshalAs( UnmanagedType.LPStr )]string Str, uint SLen );
+
+        [SuppressUnmanagedCodeSecurity]
+        [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
+        public static extern LLVMMetadataRef LibLLVMMDNode2( LLVMContextRef C, out LLVMMetadataRef MDs, uint Count );
+
+        [SuppressUnmanagedCodeSecurity]
+        [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
+        [return: MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( AliasStringMarshaler ) )]
+        public static extern string LibLLVMGetMDStringText( LLVMMetadataRef mdstring, out uint len );
+
+        [SuppressUnmanagedCodeSecurity]
+        [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
+        public static extern void LibLLVMAddNamedMetadataOperand2( LLVMModuleRef M, [MarshalAs( UnmanagedType.LPStr )]string name, LLVMMetadataRef Val );
+
+        [SuppressUnmanagedCodeSecurity]
+        [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
+        public static extern void LibLLVMSetMetadata2( LLVMValueRef Inst, uint KindID, LLVMMetadataRef MD );
+
+        [SuppressUnmanagedCodeSecurity]
+        [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
+        public static extern void LibLLVMSetCurrentDebugLocation2( LLVMBuilderRef Bref, uint Line, uint Col, LLVMMetadataRef Scope, LLVMMetadataRef InlinedAt );
+
+        [return: MarshalAs( UnmanagedType.Bool )]
+        [SuppressUnmanagedCodeSecurity]
+        [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
+        public static extern bool LibLLVMIsTemporary( LLVMMetadataRef M );
+
+        [return: MarshalAs( UnmanagedType.Bool )]
+        [SuppressUnmanagedCodeSecurity]
+        [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
+        public static extern bool LibLLVMIsResolved( LLVMMetadataRef M );
+
+        [return: MarshalAs( UnmanagedType.Bool )]
+        [SuppressUnmanagedCodeSecurity]
+        [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
+        public static extern bool LibLLVMIsUniqued( LLVMMetadataRef M );
+
+        [return: MarshalAs( UnmanagedType.Bool )]
+        [SuppressUnmanagedCodeSecurity]
+        [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
+        public static extern bool LibLLVMIsDistinct( LLVMMetadataRef M );
+
+        [SuppressUnmanagedCodeSecurity]
+        [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
+        public static extern LLVMMetadataRef LibLLVMDIGlobalVarExpGetVariable( LLVMMetadataRef metadataHandle );
 
     }
 }

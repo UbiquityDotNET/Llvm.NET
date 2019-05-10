@@ -23,7 +23,7 @@ namespace Llvm.NET.Values
 
         public Value GetOrCreateItem( LLVMValueRef valueRef )
         {
-            IntPtr managedHandlePtr = LLVMValueCacheLookup( Handle, valueRef );
+            IntPtr managedHandlePtr = LibLLVMValueCacheLookup( Handle, valueRef );
             if( managedHandlePtr != IntPtr.Zero )
             {
                 return (Value)GCHandle.FromIntPtr( managedHandlePtr ).Target;
@@ -31,7 +31,7 @@ namespace Llvm.NET.Values
 
             Value instance = CreateValueInstance( valueRef );
             var managedHandle = GCHandle.Alloc( instance );
-            LLVMValueCacheAdd( Handle, valueRef, (IntPtr)managedHandle );
+            LibLLVMValueCacheAdd( Handle, valueRef, (IntPtr)managedHandle );
             ValueRefToGCHandleMap[ valueRef ] = managedHandle;
             return instance;
         }
@@ -58,10 +58,10 @@ namespace Llvm.NET.Values
             Context = context;
 
             // methods used as cross P/Invoke callbacks so the delegates must remain alive for duration
-            WrappedOnDeleted = new WrappedNativeCallback<LLVMValueCacheItemDeletedCallback>( OnItemDeleted );
-            WrappedOnReplaced = new WrappedNativeCallback<LLVMValueCacheItemReplacedCallback>( OnItemReplaced );
+            WrappedOnDeleted = new WrappedNativeCallback<LibLLVMValueCacheItemDeletedCallback>( OnItemDeleted );
+            WrappedOnReplaced = new WrappedNativeCallback<LibLLVMValueCacheItemReplacedCallback>( OnItemReplaced );
 
-            Handle = LLVMCreateValueCache( WrappedOnDeleted, WrappedOnReplaced );
+            Handle = LibLLVMCreateValueCache( WrappedOnDeleted, WrappedOnReplaced );
         }
 
         private void OnItemDeleted( LLVMValueRef valueRef, IntPtr handle )
@@ -81,13 +81,13 @@ namespace Llvm.NET.Values
         // These cannot and *must not* be made as locals as it holds the references
         // and GCHandles for the delegate beyond the local scope they are created in.
         */
-        private readonly WrappedNativeCallback<LLVMValueCacheItemDeletedCallback> WrappedOnDeleted;
-        private readonly WrappedNativeCallback<LLVMValueCacheItemReplacedCallback> WrappedOnReplaced;
+        private readonly WrappedNativeCallback<LibLLVMValueCacheItemDeletedCallback> WrappedOnDeleted;
+        private readonly WrappedNativeCallback<LibLLVMValueCacheItemReplacedCallback> WrappedOnReplaced;
         /* ReSharper enable PrivateFieldCanBeConvertedToLocalVariable */
 
         private readonly Dictionary<LLVMValueRef,GCHandle> ValueRefToGCHandleMap = new Dictionary<LLVMValueRef, GCHandle>();
 
-        private readonly LLVMValueCacheRef Handle;
+        private readonly LibLLVMValueCacheRef Handle;
 
         [SuppressMessage( "Microsoft.Maintainability", "CA1506:AvoidExcessiveClassCoupling", Justification = "Factory that maps wrappers with underlying types" )]
         [SuppressMessage( "Microsoft.Maintainability", "CA1502:AvoidExcessiveComplexity", Justification = "Factory that maps wrappers with underlying types" )]

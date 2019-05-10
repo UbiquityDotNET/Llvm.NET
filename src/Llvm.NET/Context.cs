@@ -477,7 +477,7 @@ namespace Llvm.NET
         /// <returns>new metadata string</returns>
         public MDString CreateMetadataString( [CanBeNull] string value )
         {
-            var handle = LLVMMDString2( ContextHandle, value, ( uint )( value?.Length ?? 0 ) );
+            var handle = LibLLVMMDString2( ContextHandle, value, ( uint )( value?.Length ?? 0 ) );
             return new MDString( handle );
         }
 
@@ -487,7 +487,7 @@ namespace Llvm.NET
         public MDNode CreateMDNode( string value )
         {
             var elements = new[ ] { CreateMetadataString( value ).MetadataHandle };
-            var hNode = LLVMMDNode2( ContextHandle, out elements[ 0 ], ( uint )elements.Length );
+            var hNode = LibLLVMMDNode2( ContextHandle, out elements[ 0 ], ( uint )elements.Length );
             return MDNode.FromHandle<MDNode>( hNode );
         }
 
@@ -765,8 +765,8 @@ namespace Llvm.NET
         /// <summary>Gets or sets a value indicating whether the context keeps a map for uniqueing debug info identifiers across the context</summary>
         public bool OdrUniqueDebugTypes
         {
-            get => LLVMContextGetIsODRUniquingDebugTypes( ContextHandle );
-            set => LLVMContextSetIsODRUniquingDebugTypes( ContextHandle, value );
+            get => LibLLVMContextGetIsODRUniquingDebugTypes( ContextHandle );
+            set => LibLLVMContextSetIsODRUniquingDebugTypes( ContextHandle, value );
         }
 
         /*TODO: Create interop calls to support additional properties/methods

@@ -7,11 +7,11 @@
 #ifdef __cplusplus
 extern "C" {
 #endif
-    LLVMValueRef LLVMGetOrInsertFunction( LLVMModuleRef module, const char* name, LLVMTypeRef functionType );
-    char const* LLVMGetModuleSourceFileName( LLVMModuleRef module );
-    void LLVMSetModuleSourceFileName( LLVMModuleRef module, char const* name );
-    char const* LLVMGetModuleName( LLVMModuleRef module );
-    LLVMValueRef LLVMGetGlobalAlias( LLVMModuleRef module, char const* name );
+    LLVMValueRef LibLLVMGetOrInsertFunction( LLVMModuleRef module, const char* name, LLVMTypeRef functionType );
+    char const* LibLLVMGetModuleSourceFileName( LLVMModuleRef module );
+    void LibLLVMSetModuleSourceFileName( LLVMModuleRef module, char const* name );
+    char const* LibLLVMGetModuleName( LLVMModuleRef module );
+    LLVMValueRef LibLLVMGetGlobalAlias( LLVMModuleRef module, char const* name );
 
     // iterating the Comdats is a tricky prospect with a "C" based projection as
     // the Comdat class doesn't have any sort of "Next" method and the iterator
@@ -19,18 +19,18 @@ extern "C" {
     // Thus, a callback is used to provide the caller with all the elements without
     // requiring the use of unsafe and difficult to project constructs.
     // if the callback returns false the enumeration stops
-    typedef LLVMBool( *LLVMComdatIteratorCallback )( LLVMComdatRef comdatRef );
-    void LLVMModuleEnumerateComdats( LLVMModuleRef module, LLVMComdatIteratorCallback callback );
-    LLVMComdatRef LLVMModuleInsertOrUpdateComdat( LLVMModuleRef module, char const* name, LLVMComdatSelectionKind kind );
-    void LLVMModuleComdatRemove( LLVMModuleRef module, LLVMComdatRef comdatRef );
-    void LLVMModuleComdatClear( LLVMModuleRef module );
+    typedef LLVMBool( *LibLLVMComdatIteratorCallback )( LLVMComdatRef comdatRef );
+    void LibLLVMModuleEnumerateComdats( LLVMModuleRef module, LibLLVMComdatIteratorCallback callback );
+    LLVMComdatRef LibLLVMModuleInsertOrUpdateComdat( LLVMModuleRef module, char const* name, LLVMComdatSelectionKind kind );
+    void LibLLVMModuleComdatRemove( LLVMModuleRef module, LLVMComdatRef comdatRef );
+    void LibLLVMModuleComdatClear( LLVMModuleRef module );
 
     // caller must free returned string via LLVMDisposeMessage()
-    char const* LLVMComdatGetName( LLVMComdatRef comdatRef );
+    char const* LibLLVMComdatGetName( LLVMComdatRef comdatRef );
 
     // Alias enumeration
-    LLVMValueRef LLVMModuleGetFirstGlobalAlias( LLVMModuleRef M );
-    LLVMValueRef LLVMModuleGetNextGlobalAlias( LLVMValueRef /*GlobalAlias*/ valueRef );
+    LLVMValueRef LibLLVMModuleGetFirstGlobalAlias( LLVMModuleRef M );
+    LLVMValueRef LibLLVMModuleGetNextGlobalAlias( LLVMValueRef /*GlobalAlias*/ valueRef );
 #ifdef __cplusplus
 }
 #endif

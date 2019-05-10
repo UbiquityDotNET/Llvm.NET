@@ -64,7 +64,7 @@ namespace Llvm.NET.Interop
         /// createEnumerator - Create a single enumerator value.
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
-        public static extern LLVMMetadataRef LLVMDIBuilderCreateEnumeratorValue( LLVMDIBuilderRef D, [MarshalAs( UnmanagedType.LPStr )]string Name, System.Int64 Val );
+        public static extern LLVMMetadataRef LibLLVMDIBuilderCreateEnumeratorValue( LLVMDIBuilderRef D, [MarshalAs( UnmanagedType.LPStr )]string Name, System.Int64 Val );
 
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]

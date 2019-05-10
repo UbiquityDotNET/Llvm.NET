@@ -28,32 +28,16 @@
 extern "C" {
 #endif
 
-    typedef struct LLVMVersionInfo
+    typedef struct LibLLVMVersionInfo
     {
         int Major;
         int Minor;
         int Patch;
-    }LLVMVersionInfo;
+    }LibLLVMVersionInfo;
 
-    void LLVMGetVersionInfo( LLVMVersionInfo* pVersionInfo );
+    void LibLLVMGetVersionInfo( LibLLVMVersionInfo* pVersionInfo );
 
-    LLVMMetadataRef LLVMConstantAsMetadata( LLVMValueRef Val );
-    LLVMMetadataRef LLVMMDString2( LLVMContextRef C, const char* Str, unsigned SLen );
-    LLVMMetadataRef LLVMMDNode2( LLVMContextRef C, LLVMMetadataRef* MDs, unsigned Count );
-
-    char const* LLVMGetMDStringText( LLVMMetadataRef mdstring, unsigned* len );
-
-    void LLVMAddNamedMetadataOperand2( LLVMModuleRef M, const char* name, LLVMMetadataRef Val );
-    void LLVMSetMetadata2( LLVMValueRef Inst, unsigned KindID, LLVMMetadataRef MD );
-    void LLVMSetCurrentDebugLocation2( LLVMBuilderRef Bref, unsigned Line, unsigned Col, LLVMMetadataRef Scope, LLVMMetadataRef InlinedAt );
-
-    LLVMBool LLVMIsTemporary( LLVMMetadataRef M );
-    LLVMBool LLVMIsResolved( LLVMMetadataRef M );
-    LLVMBool LLVMIsUniqued( LLVMMetadataRef M );
-    LLVMBool LLVMIsDistinct( LLVMMetadataRef M );
-
-    LLVMMetadataRef LLVMDIGlobalVarExpGetVariable( LLVMMetadataRef /*DIGlobalVariableExpression*/ metadataHandle );
-    unsigned LLVMLookupInstrinsicId( char const* name );
+    unsigned LibLLVMLookupInstrinsicId( char const* name );
 
 #ifdef __cplusplus
 }

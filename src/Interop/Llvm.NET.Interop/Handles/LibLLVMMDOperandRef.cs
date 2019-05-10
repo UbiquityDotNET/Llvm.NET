@@ -15,30 +15,30 @@ using System.Collections.Generic;
 namespace Llvm.NET.Interop
 {
     [GeneratedCode("LlvmBindingsGenerator","2.17941.31104.49410")]
-    public struct LLVMMDOperandRef
-        : IEquatable<LLVMMDOperandRef>
+    public struct LibLLVMMDOperandRef
+        : IEquatable<LibLLVMMDOperandRef>
     {
         public override int GetHashCode( ) => Handle.GetHashCode( );
 
         public override bool Equals( object obj )
             => !( obj is null )
-             && ( obj is LLVMMDOperandRef r )
+             && ( obj is LibLLVMMDOperandRef r )
              && ( r.Handle == Handle );
 
-        public bool Equals( LLVMMDOperandRef other ) => Handle == other.Handle;
+        public bool Equals( LibLLVMMDOperandRef other ) => Handle == other.Handle;
 
-        public static bool operator ==( LLVMMDOperandRef lhs, LLVMMDOperandRef rhs )
-            => EqualityComparer<LLVMMDOperandRef>.Default.Equals( lhs, rhs );
+        public static bool operator ==( LibLLVMMDOperandRef lhs, LibLLVMMDOperandRef rhs )
+            => EqualityComparer<LibLLVMMDOperandRef>.Default.Equals( lhs, rhs );
 
-        public static bool operator !=( LLVMMDOperandRef lhs, LLVMMDOperandRef rhs ) => !( lhs == rhs );
+        public static bool operator !=( LibLLVMMDOperandRef lhs, LibLLVMMDOperandRef rhs ) => !( lhs == rhs );
 
-        public static LLVMMDOperandRef Zero { get; } = new LLVMMDOperandRef(IntPtr.Zero);
+        public static LibLLVMMDOperandRef Zero { get; } = new LibLLVMMDOperandRef(IntPtr.Zero);
 
         public IntPtr ToIntPtr() => Handle;
 
-        public static implicit operator IntPtr(LLVMMDOperandRef value) => value.ToIntPtr();
+        public static implicit operator IntPtr(LibLLVMMDOperandRef value) => value.ToIntPtr();
 
-        internal LLVMMDOperandRef( IntPtr p )
+        internal LibLLVMMDOperandRef( IntPtr p )
         {
             Handle = p;
         }

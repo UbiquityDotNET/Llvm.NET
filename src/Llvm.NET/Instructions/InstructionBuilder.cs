@@ -56,7 +56,7 @@ namespace Llvm.NET.Instructions
         /// <returns>This builder for fluent API usage</returns>
         public InstructionBuilder SetDebugLocation( uint line, uint col, DIScope scope = null, DIScope inlinedAt = null )
         {
-            LLVMSetCurrentDebugLocation2( BuilderHandle, line, col, scope?.MetadataHandle ?? default, inlinedAt?.MetadataHandle ?? default );
+            LibLLVMSetCurrentDebugLocation2( BuilderHandle, line, col, scope?.MetadataHandle ?? default, inlinedAt?.MetadataHandle ?? default );
             return this;
         }
 

@@ -19,7 +19,7 @@ namespace Llvm.NET.Interop
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         [return: MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( ErrorMessageMarshaler ) )]
-        public static extern string LLVMAttributeToString( LLVMAttributeRef attribute );
+        public static extern string LibLLVMAttributeToString( LLVMAttributeRef attribute );
 
     }
 }

@@ -17,6 +17,7 @@ using System;
 using System.CodeDom.Compiler;
 using System.Runtime.InteropServices;
 using System.Security;
+using System.Threading;
 
 namespace Llvm.NET.Interop
 {
@@ -36,7 +37,14 @@ namespace Llvm.NET.Interop
         [SecurityCritical]
         protected override bool ReleaseHandle( )
         {
-            <#=HandleDisposeFunction#>( handle );
+            // ensure handle appears invalid from this point forward
+            var prevHandle = Interlocked.Exchange( ref handle, IntPtr.Zero );
+            SetHandleAsInvalid( );
+
+            if( prevHandle != IntPtr.Zero )
+            {
+                <#=HandleDisposeFunction#>( handle );
+            }
             return true;
         }
 
@@ -49,6 +57,7 @@ namespace Llvm.NET.Interop
         private static extern void <#=HandleDisposeFunction#>( IntPtr p );
     }
 <#if(NeedsAlias){#>
+
     [GeneratedCode("LlvmBindingsGenerator","<#=ToolVersion#>")]
     public class <#=HandleName#>Alias
         : <#=HandleName#>
@@ -58,5 +67,4 @@ namespace Llvm.NET.Interop
         {
         }
     }
-<#}#>
-}
+<#}#>}

@@ -15,60 +15,60 @@ using System.Security;
 namespace Llvm.NET.Interop
 {
     [UnmanagedFunctionPointer( global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
-    public delegate bool LLVMComdatIteratorCallback( LLVMComdatRef comdatRef );
+    public delegate bool LibLLVMComdatIteratorCallback( LLVMComdatRef comdatRef );
 
     public static partial class NativeMethods
     {
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
-        public static extern LLVMValueRef LLVMGetOrInsertFunction( LLVMModuleRef module, [MarshalAs( UnmanagedType.LPStr )]string name, LLVMTypeRef functionType );
+        public static extern LLVMValueRef LibLLVMGetOrInsertFunction( LLVMModuleRef module, [MarshalAs( UnmanagedType.LPStr )]string name, LLVMTypeRef functionType );
 
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         [return: MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( AliasStringMarshaler ) )]
-        public static extern string LLVMGetModuleSourceFileName( LLVMModuleRef module );
+        public static extern string LibLLVMGetModuleSourceFileName( LLVMModuleRef module );
 
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
-        public static extern void LLVMSetModuleSourceFileName( LLVMModuleRef module, [MarshalAs( UnmanagedType.LPStr )]string name );
+        public static extern void LibLLVMSetModuleSourceFileName( LLVMModuleRef module, [MarshalAs( UnmanagedType.LPStr )]string name );
 
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         [return: MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( AliasStringMarshaler ) )]
-        public static extern string LLVMGetModuleName( LLVMModuleRef module );
+        public static extern string LibLLVMGetModuleName( LLVMModuleRef module );
 
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
-        public static extern LLVMValueRef LLVMGetGlobalAlias( LLVMModuleRef module, [MarshalAs( UnmanagedType.LPStr )]string name );
+        public static extern LLVMValueRef LibLLVMGetGlobalAlias( LLVMModuleRef module, [MarshalAs( UnmanagedType.LPStr )]string name );
 
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
-        public static extern void LLVMModuleEnumerateComdats( LLVMModuleRef module, LLVMComdatIteratorCallback callback );
+        public static extern void LibLLVMModuleEnumerateComdats( LLVMModuleRef module, LibLLVMComdatIteratorCallback callback );
 
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
-        public static extern LLVMComdatRef LLVMModuleInsertOrUpdateComdat( LLVMModuleRef module, [MarshalAs( UnmanagedType.LPStr )]string name, LLVMComdatSelectionKind kind );
+        public static extern LLVMComdatRef LibLLVMModuleInsertOrUpdateComdat( LLVMModuleRef module, [MarshalAs( UnmanagedType.LPStr )]string name, LLVMComdatSelectionKind kind );
 
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
-        public static extern void LLVMModuleComdatRemove( LLVMModuleRef module, LLVMComdatRef comdatRef );
+        public static extern void LibLLVMModuleComdatRemove( LLVMModuleRef module, LLVMComdatRef comdatRef );
 
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
-        public static extern void LLVMModuleComdatClear( LLVMModuleRef module );
+        public static extern void LibLLVMModuleComdatClear( LLVMModuleRef module );
 
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         [return: MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( ErrorMessageMarshaler ) )]
-        public static extern string LLVMComdatGetName( LLVMComdatRef comdatRef );
+        public static extern string LibLLVMComdatGetName( LLVMComdatRef comdatRef );
 
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
-        public static extern LLVMValueRef LLVMModuleGetFirstGlobalAlias( LLVMModuleRef M );
+        public static extern LLVMValueRef LibLLVMModuleGetFirstGlobalAlias( LLVMModuleRef M );
 
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
-        public static extern LLVMValueRef LLVMModuleGetNextGlobalAlias( LLVMValueRef valueRef );
+        public static extern LLVMValueRef LibLLVMModuleGetNextGlobalAlias( LLVMValueRef valueRef );
 
     }
 }
