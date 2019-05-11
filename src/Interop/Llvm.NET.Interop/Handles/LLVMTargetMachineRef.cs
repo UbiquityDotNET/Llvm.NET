@@ -16,19 +16,25 @@ using System.Threading;
 
 namespace Llvm.NET.Interop
 {
+    /// <summary>Global LLVM object handle</summary>
     [SecurityCritical]
     [GeneratedCode("LlvmBindingsGenerator","2.17941.31104.49410")]
     public class LLVMTargetMachineRef
         : LlvmObjectRef
     {
+        /// <summary>Creates a new instance of an LLVMTargetMachineRef</summary>
+        /// <param name="handle">Raw native pointer for the handle</param>
+        /// <param name="owner">Value to indicate whether the handle is owned or not</param>
         public LLVMTargetMachineRef( IntPtr handle, bool owner )
             : base( owner )
         {
             SetHandle( handle );
         }
 
+        /// <summary>Gets a Zero (<see langword="null"/> value handle</summary>
         public static LLVMTargetMachineRef Zero { get; } = new LLVMTargetMachineRef(IntPtr.Zero, false);
 
+        /// <inheritdoc/>
         [SecurityCritical]
         protected override bool ReleaseHandle( )
         {

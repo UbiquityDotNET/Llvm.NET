@@ -20,7 +20,7 @@ using System.Runtime.InteropServices;
 
 namespace Llvm.NET.Interop
 {
- <#if(HasNativeDisposer){#>
+<#if(HasNativeDisposer){#>
     ///<summary>Custom string marshaling class for strings using <#=NativeDisposer#></summary>
 <#}else{#>
     ///<summary>Custom string marshaling class for strings in LLVM</summary>
@@ -29,26 +29,35 @@ namespace Llvm.NET.Interop
     public class <#=Name#>
         : ICustomMarshaler
     {
-        ///<Inheritdoc/>
+        /// <inheritdoc/>
         public void CleanUpManagedData( object ManagedObj )
         {
         }
 
 <#if(HasNativeDisposer){#>
+        /// <inheritdoc/>
         public void CleanUpNativeData( IntPtr pNativeData )
             => NativeDisposer?.Invoke( pNativeData );
 <#}else{#>
+        /// <inheritdoc/>
         public void CleanUpNativeData( IntPtr pNativeData ) { /* NOP */ }
 <#}#>
+
+        /// <inheritdoc/>
         [SuppressMessage( "Design", "CA1024:Use properties where appropriate.", Justification = "Name and signature defined by interface")]
         public int GetNativeDataSize( ) => -1;
 
+        /// <inheritdoc/>
         public IntPtr MarshalManagedToNative( object ManagedObj )
             => throw new NotImplementedException( );
 
+        /// <inheritdoc/>
         public object MarshalNativeToManaged( IntPtr pNativeData )
             => StringNormalizer.NormalizeLineEndings( pNativeData );
 
+        /// <summary>Custom marshaler static factory contract implementation</summary>
+        /// <param name="cookie">Cookie from attribute</param>
+        /// <returns>Custom marshaller instance</returns>
         public static ICustomMarshaler GetInstance( string cookie )
         {
             switch( cookie.ToUpperInvariant( ) )

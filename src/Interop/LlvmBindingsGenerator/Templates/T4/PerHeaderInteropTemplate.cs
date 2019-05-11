@@ -67,131 +67,178 @@ foreach(var e in Enums){
             
             #line default
             #line hidden
+            this.Write("    /// <include file=\"");
             
             #line 23 "D:\GitHub\Ubiquity.NET\Llvm.Net\src\Interop\LlvmBindingsGenerator\Templates\T4\PerHeaderInteropTemplate.tt"
-foreach(var commentLine in e.Comment){
+            this.Write(this.ToStringHelper.ToStringWithCulture(Unit.FileNameWithoutExtension));
             
             #line default
             #line hidden
-            this.Write("    ");
+            this.Write(".xml\" path=\'LibLLVMAPI/Enumeration[@name=\"");
+            
+            #line 23 "D:\GitHub\Ubiquity.NET\Llvm.Net\src\Interop\LlvmBindingsGenerator\Templates\T4\PerHeaderInteropTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(e.Name));
+            
+            #line default
+            #line hidden
+            this.Write("\"]/*[not(self::Item)]\' />\r\n    [GeneratedCode(\"LlvmBindingsGenerator\",\"");
             
             #line 24 "D:\GitHub\Ubiquity.NET\Llvm.Net\src\Interop\LlvmBindingsGenerator\Templates\T4\PerHeaderInteropTemplate.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(commentLine));
-            
-            #line default
-            #line hidden
-            this.Write("\r\n");
-            
-            #line 25 "D:\GitHub\Ubiquity.NET\Llvm.Net\src\Interop\LlvmBindingsGenerator\Templates\T4\PerHeaderInteropTemplate.tt"
-}
-            
-            #line default
-            #line hidden
-            this.Write("    [GeneratedCode(\"LlvmBindingsGenerator\",\"");
-            
-            #line 26 "D:\GitHub\Ubiquity.NET\Llvm.Net\src\Interop\LlvmBindingsGenerator\Templates\T4\PerHeaderInteropTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(ToolVersion));
             
             #line default
             #line hidden
             this.Write("\")]\r\n    public enum ");
             
-            #line 27 "D:\GitHub\Ubiquity.NET\Llvm.Net\src\Interop\LlvmBindingsGenerator\Templates\T4\PerHeaderInteropTemplate.tt"
+            #line 25 "D:\GitHub\Ubiquity.NET\Llvm.Net\src\Interop\LlvmBindingsGenerator\Templates\T4\PerHeaderInteropTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(e.Name));
             
             #line default
             #line hidden
             this.Write(" : ");
             
-            #line 27 "D:\GitHub\Ubiquity.NET\Llvm.Net\src\Interop\LlvmBindingsGenerator\Templates\T4\PerHeaderInteropTemplate.tt"
+            #line 25 "D:\GitHub\Ubiquity.NET\Llvm.Net\src\Interop\LlvmBindingsGenerator\Templates\T4\PerHeaderInteropTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(e.BaseType));
             
             #line default
             #line hidden
             this.Write("\r\n    {\r\n");
             
-            #line 29 "D:\GitHub\Ubiquity.NET\Llvm.Net\src\Interop\LlvmBindingsGenerator\Templates\T4\PerHeaderInteropTemplate.tt"
+            #line 27 "D:\GitHub\Ubiquity.NET\Llvm.Net\src\Interop\LlvmBindingsGenerator\Templates\T4\PerHeaderInteropTemplate.tt"
 foreach(var m in e.Members) {
-      foreach(var commentLine in m.Comment){
             
             #line default
             #line hidden
-            this.Write("        ");
+            this.Write("        /// <include file=\"");
             
-            #line 31 "D:\GitHub\Ubiquity.NET\Llvm.Net\src\Interop\LlvmBindingsGenerator\Templates\T4\PerHeaderInteropTemplate.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(commentLine));
-            
-            #line default
-            #line hidden
-            this.Write("\r\n");
-            
-            #line 32 "D:\GitHub\Ubiquity.NET\Llvm.Net\src\Interop\LlvmBindingsGenerator\Templates\T4\PerHeaderInteropTemplate.tt"
-}
+            #line 28 "D:\GitHub\Ubiquity.NET\Llvm.Net\src\Interop\LlvmBindingsGenerator\Templates\T4\PerHeaderInteropTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(Unit.FileNameWithoutExtension));
             
             #line default
             #line hidden
-            this.Write("        ");
+            this.Write(".xml\" path=\'LibLLVMAPI/Enumeration[@name=\"");
             
-            #line 33 "D:\GitHub\Ubiquity.NET\Llvm.Net\src\Interop\LlvmBindingsGenerator\Templates\T4\PerHeaderInteropTemplate.tt"
+            #line 28 "D:\GitHub\Ubiquity.NET\Llvm.Net\src\Interop\LlvmBindingsGenerator\Templates\T4\PerHeaderInteropTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(e.Name));
+            
+            #line default
+            #line hidden
+            this.Write("\"]/Item[@name=\"");
+            
+            #line 28 "D:\GitHub\Ubiquity.NET\Llvm.Net\src\Interop\LlvmBindingsGenerator\Templates\T4\PerHeaderInteropTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(m.Name));
+            
+            #line default
+            #line hidden
+            this.Write("\"]/*\' />\r\n        ");
+            
+            #line 29 "D:\GitHub\Ubiquity.NET\Llvm.Net\src\Interop\LlvmBindingsGenerator\Templates\T4\PerHeaderInteropTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(m.Name));
             
             #line default
             #line hidden
             this.Write(" = ");
             
-            #line 33 "D:\GitHub\Ubiquity.NET\Llvm.Net\src\Interop\LlvmBindingsGenerator\Templates\T4\PerHeaderInteropTemplate.tt"
+            #line 29 "D:\GitHub\Ubiquity.NET\Llvm.Net\src\Interop\LlvmBindingsGenerator\Templates\T4\PerHeaderInteropTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(m.Value));
             
             #line default
             #line hidden
             this.Write(",\r\n");
             
-            #line 34 "D:\GitHub\Ubiquity.NET\Llvm.Net\src\Interop\LlvmBindingsGenerator\Templates\T4\PerHeaderInteropTemplate.tt"
+            #line 30 "D:\GitHub\Ubiquity.NET\Llvm.Net\src\Interop\LlvmBindingsGenerator\Templates\T4\PerHeaderInteropTemplate.tt"
 }
             
             #line default
             #line hidden
             this.Write("    }\r\n\r\n");
             
-            #line 37 "D:\GitHub\Ubiquity.NET\Llvm.Net\src\Interop\LlvmBindingsGenerator\Templates\T4\PerHeaderInteropTemplate.tt"
+            #line 33 "D:\GitHub\Ubiquity.NET\Llvm.Net\src\Interop\LlvmBindingsGenerator\Templates\T4\PerHeaderInteropTemplate.tt"
 }
 foreach(var d in Delegates) {
-    foreach( var commentLine in d.Comments ) {
+            
+            #line default
+            #line hidden
+            this.Write("    /// <include file=\"");
+            
+            #line 35 "D:\GitHub\Ubiquity.NET\Llvm.Net\src\Interop\LlvmBindingsGenerator\Templates\T4\PerHeaderInteropTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(Unit.FileNameWithoutExtension));
+            
+            #line default
+            #line hidden
+            this.Write(".xml\" path=\'LibLLVMAPI/Delegate[@name=\"");
+            
+            #line 35 "D:\GitHub\Ubiquity.NET\Llvm.Net\src\Interop\LlvmBindingsGenerator\Templates\T4\PerHeaderInteropTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(d.Name));
+            
+            #line default
+            #line hidden
+            this.Write("\"]/*\' />\r\n");
+            
+            #line 36 "D:\GitHub\Ubiquity.NET\Llvm.Net\src\Interop\LlvmBindingsGenerator\Templates\T4\PerHeaderInteropTemplate.tt"
+foreach( var attrib in d.Attributes) {
             
             #line default
             #line hidden
             this.Write("    ");
             
-            #line 40 "D:\GitHub\Ubiquity.NET\Llvm.Net\src\Interop\LlvmBindingsGenerator\Templates\T4\PerHeaderInteropTemplate.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(commentLine));
-            
-            #line default
-            #line hidden
-            this.Write("\r\n");
-            
-            #line 41 "D:\GitHub\Ubiquity.NET\Llvm.Net\src\Interop\LlvmBindingsGenerator\Templates\T4\PerHeaderInteropTemplate.tt"
-}foreach( var attrib in d.Attributes) {
-            
-            #line default
-            #line hidden
-            this.Write("    ");
-            
-            #line 42 "D:\GitHub\Ubiquity.NET\Llvm.Net\src\Interop\LlvmBindingsGenerator\Templates\T4\PerHeaderInteropTemplate.tt"
+            #line 37 "D:\GitHub\Ubiquity.NET\Llvm.Net\src\Interop\LlvmBindingsGenerator\Templates\T4\PerHeaderInteropTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(attrib.AsString()));
             
             #line default
             #line hidden
             this.Write("\r\n");
             
-            #line 43 "D:\GitHub\Ubiquity.NET\Llvm.Net\src\Interop\LlvmBindingsGenerator\Templates\T4\PerHeaderInteropTemplate.tt"
+            #line 38 "D:\GitHub\Ubiquity.NET\Llvm.Net\src\Interop\LlvmBindingsGenerator\Templates\T4\PerHeaderInteropTemplate.tt"
 }
             
             #line default
             #line hidden
             this.Write("    ");
             
-            #line 44 "D:\GitHub\Ubiquity.NET\Llvm.Net\src\Interop\LlvmBindingsGenerator\Templates\T4\PerHeaderInteropTemplate.tt"
+            #line 39 "D:\GitHub\Ubiquity.NET\Llvm.Net\src\Interop\LlvmBindingsGenerator\Templates\T4\PerHeaderInteropTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(d));
+            
+            #line default
+            #line hidden
+            this.Write("\r\n");
+            
+            #line 40 "D:\GitHub\Ubiquity.NET\Llvm.Net\src\Interop\LlvmBindingsGenerator\Templates\T4\PerHeaderInteropTemplate.tt"
+}
+            
+            #line default
+            #line hidden
+            
+            #line 41 "D:\GitHub\Ubiquity.NET\Llvm.Net\src\Interop\LlvmBindingsGenerator\Templates\T4\PerHeaderInteropTemplate.tt"
+foreach(var s in ValueTypes){
+            
+            #line default
+            #line hidden
+            this.Write("    /// <include file=\"");
+            
+            #line 42 "D:\GitHub\Ubiquity.NET\Llvm.Net\src\Interop\LlvmBindingsGenerator\Templates\T4\PerHeaderInteropTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(Unit.FileNameWithoutExtension));
+            
+            #line default
+            #line hidden
+            this.Write(".xml\" path=\'LibLLVMAPI/Struct[@name=\"");
+            
+            #line 42 "D:\GitHub\Ubiquity.NET\Llvm.Net\src\Interop\LlvmBindingsGenerator\Templates\T4\PerHeaderInteropTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(s.Name));
+            
+            #line default
+            #line hidden
+            this.Write("\"]/*[not(self::Field)]\' />\r\n");
+            
+            #line 43 "D:\GitHub\Ubiquity.NET\Llvm.Net\src\Interop\LlvmBindingsGenerator\Templates\T4\PerHeaderInteropTemplate.tt"
+    foreach(var sa in s.Attributes) {
+            
+            #line default
+            #line hidden
+            this.Write("    ");
+            
+            #line 44 "D:\GitHub\Ubiquity.NET\Llvm.Net\src\Interop\LlvmBindingsGenerator\Templates\T4\PerHeaderInteropTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(sa.AsString()));
             
             #line default
             #line hidden
@@ -202,130 +249,142 @@ foreach(var d in Delegates) {
             
             #line default
             #line hidden
-            
-            #line 46 "D:\GitHub\Ubiquity.NET\Llvm.Net\src\Interop\LlvmBindingsGenerator\Templates\T4\PerHeaderInteropTemplate.tt"
-foreach(var s in ValueTypes){
-    foreach(var sa in s.Attributes) {
-            
-            #line default
-            #line hidden
-            this.Write("    ");
-            
-            #line 48 "D:\GitHub\Ubiquity.NET\Llvm.Net\src\Interop\LlvmBindingsGenerator\Templates\T4\PerHeaderInteropTemplate.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(sa.AsString()));
-            
-            #line default
-            #line hidden
-            this.Write("\r\n");
-            
-            #line 49 "D:\GitHub\Ubiquity.NET\Llvm.Net\src\Interop\LlvmBindingsGenerator\Templates\T4\PerHeaderInteropTemplate.tt"
-}
-            
-            #line default
-            #line hidden
             this.Write("    public struct ");
             
-            #line 50 "D:\GitHub\Ubiquity.NET\Llvm.Net\src\Interop\LlvmBindingsGenerator\Templates\T4\PerHeaderInteropTemplate.tt"
+            #line 46 "D:\GitHub\Ubiquity.NET\Llvm.Net\src\Interop\LlvmBindingsGenerator\Templates\T4\PerHeaderInteropTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(s.Name));
             
             #line default
             #line hidden
             this.Write("\r\n    {\r\n");
             
-            #line 52 "D:\GitHub\Ubiquity.NET\Llvm.Net\src\Interop\LlvmBindingsGenerator\Templates\T4\PerHeaderInteropTemplate.tt"
+            #line 48 "D:\GitHub\Ubiquity.NET\Llvm.Net\src\Interop\LlvmBindingsGenerator\Templates\T4\PerHeaderInteropTemplate.tt"
 foreach(var fld in s.Fields){
-     foreach(var fa in fld.Attributes) {
+            
+            #line default
+            #line hidden
+            this.Write("        /// <include file=\"");
+            
+            #line 49 "D:\GitHub\Ubiquity.NET\Llvm.Net\src\Interop\LlvmBindingsGenerator\Templates\T4\PerHeaderInteropTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(Unit.FileNameWithoutExtension));
+            
+            #line default
+            #line hidden
+            this.Write(".xml\" path=\'LibLLVMAPI/struct[@name=\"");
+            
+            #line 49 "D:\GitHub\Ubiquity.NET\Llvm.Net\src\Interop\LlvmBindingsGenerator\Templates\T4\PerHeaderInteropTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(s.Name));
+            
+            #line default
+            #line hidden
+            this.Write("\"]/Field[@name=\"");
+            
+            #line 49 "D:\GitHub\Ubiquity.NET\Llvm.Net\src\Interop\LlvmBindingsGenerator\Templates\T4\PerHeaderInteropTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(fld.Name));
+            
+            #line default
+            #line hidden
+            this.Write("\"]/*\' />\r\n");
+            
+            #line 50 "D:\GitHub\Ubiquity.NET\Llvm.Net\src\Interop\LlvmBindingsGenerator\Templates\T4\PerHeaderInteropTemplate.tt"
+  foreach(var fa in fld.Attributes) {
             
             #line default
             #line hidden
             this.Write("        ");
             
-            #line 54 "D:\GitHub\Ubiquity.NET\Llvm.Net\src\Interop\LlvmBindingsGenerator\Templates\T4\PerHeaderInteropTemplate.tt"
+            #line 51 "D:\GitHub\Ubiquity.NET\Llvm.Net\src\Interop\LlvmBindingsGenerator\Templates\T4\PerHeaderInteropTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(fa.AsString()));
             
             #line default
             #line hidden
             this.Write("\r\n");
             
-            #line 55 "D:\GitHub\Ubiquity.NET\Llvm.Net\src\Interop\LlvmBindingsGenerator\Templates\T4\PerHeaderInteropTemplate.tt"
-}
+            #line 52 "D:\GitHub\Ubiquity.NET\Llvm.Net\src\Interop\LlvmBindingsGenerator\Templates\T4\PerHeaderInteropTemplate.tt"
+  }
             
             #line default
             #line hidden
             this.Write("        public ");
             
-            #line 56 "D:\GitHub\Ubiquity.NET\Llvm.Net\src\Interop\LlvmBindingsGenerator\Templates\T4\PerHeaderInteropTemplate.tt"
+            #line 53 "D:\GitHub\Ubiquity.NET\Llvm.Net\src\Interop\LlvmBindingsGenerator\Templates\T4\PerHeaderInteropTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(GetTypeName(fld.Type)));
             
             #line default
             #line hidden
             this.Write(" ");
             
-            #line 56 "D:\GitHub\Ubiquity.NET\Llvm.Net\src\Interop\LlvmBindingsGenerator\Templates\T4\PerHeaderInteropTemplate.tt"
+            #line 53 "D:\GitHub\Ubiquity.NET\Llvm.Net\src\Interop\LlvmBindingsGenerator\Templates\T4\PerHeaderInteropTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(fld.Name));
             
             #line default
             #line hidden
             this.Write(";\r\n");
             
-            #line 57 "D:\GitHub\Ubiquity.NET\Llvm.Net\src\Interop\LlvmBindingsGenerator\Templates\T4\PerHeaderInteropTemplate.tt"
+            #line 54 "D:\GitHub\Ubiquity.NET\Llvm.Net\src\Interop\LlvmBindingsGenerator\Templates\T4\PerHeaderInteropTemplate.tt"
 }
             
             #line default
             #line hidden
             this.Write("    }\r\n\r\n");
             
-            #line 60 "D:\GitHub\Ubiquity.NET\Llvm.Net\src\Interop\LlvmBindingsGenerator\Templates\T4\PerHeaderInteropTemplate.tt"
+            #line 57 "D:\GitHub\Ubiquity.NET\Llvm.Net\src\Interop\LlvmBindingsGenerator\Templates\T4\PerHeaderInteropTemplate.tt"
 }
             
             #line default
             #line hidden
             this.Write("    public static partial class NativeMethods\r\n    {\r\n");
             
-            #line 63 "D:\GitHub\Ubiquity.NET\Llvm.Net\src\Interop\LlvmBindingsGenerator\Templates\T4\PerHeaderInteropTemplate.tt"
+            #line 60 "D:\GitHub\Ubiquity.NET\Llvm.Net\src\Interop\LlvmBindingsGenerator\Templates\T4\PerHeaderInteropTemplate.tt"
 foreach(var f in Functions) {
-     foreach( var commentLine in f.Comments ) {
+            
+            #line default
+            #line hidden
+            this.Write("        /// <include file=\"");
+            
+            #line 61 "D:\GitHub\Ubiquity.NET\Llvm.Net\src\Interop\LlvmBindingsGenerator\Templates\T4\PerHeaderInteropTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(Unit.FileNameWithoutExtension));
+            
+            #line default
+            #line hidden
+            this.Write(".xml\" path=\'LibLLVMAPI/Function[@name=\"");
+            
+            #line 61 "D:\GitHub\Ubiquity.NET\Llvm.Net\src\Interop\LlvmBindingsGenerator\Templates\T4\PerHeaderInteropTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(f.Name));
+            
+            #line default
+            #line hidden
+            this.Write("\"]/*\' />\r\n");
+            
+            #line 62 "D:\GitHub\Ubiquity.NET\Llvm.Net\src\Interop\LlvmBindingsGenerator\Templates\T4\PerHeaderInteropTemplate.tt"
+foreach(var a in f.Attributes) {
             
             #line default
             #line hidden
             this.Write("        ");
             
-            #line 65 "D:\GitHub\Ubiquity.NET\Llvm.Net\src\Interop\LlvmBindingsGenerator\Templates\T4\PerHeaderInteropTemplate.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(commentLine));
-            
-            #line default
-            #line hidden
-            this.Write("\r\n");
-            
-            #line 66 "D:\GitHub\Ubiquity.NET\Llvm.Net\src\Interop\LlvmBindingsGenerator\Templates\T4\PerHeaderInteropTemplate.tt"
-}  foreach(var a in f.Attributes) {
-            
-            #line default
-            #line hidden
-            this.Write("        ");
-            
-            #line 67 "D:\GitHub\Ubiquity.NET\Llvm.Net\src\Interop\LlvmBindingsGenerator\Templates\T4\PerHeaderInteropTemplate.tt"
+            #line 63 "D:\GitHub\Ubiquity.NET\Llvm.Net\src\Interop\LlvmBindingsGenerator\Templates\T4\PerHeaderInteropTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(a.AsString()));
             
             #line default
             #line hidden
             this.Write("\r\n");
             
-            #line 68 "D:\GitHub\Ubiquity.NET\Llvm.Net\src\Interop\LlvmBindingsGenerator\Templates\T4\PerHeaderInteropTemplate.tt"
+            #line 64 "D:\GitHub\Ubiquity.NET\Llvm.Net\src\Interop\LlvmBindingsGenerator\Templates\T4\PerHeaderInteropTemplate.tt"
 }
             
             #line default
             #line hidden
             this.Write("        ");
             
-            #line 69 "D:\GitHub\Ubiquity.NET\Llvm.Net\src\Interop\LlvmBindingsGenerator\Templates\T4\PerHeaderInteropTemplate.tt"
+            #line 65 "D:\GitHub\Ubiquity.NET\Llvm.Net\src\Interop\LlvmBindingsGenerator\Templates\T4\PerHeaderInteropTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(f));
             
             #line default
             #line hidden
             this.Write("\r\n");
             
-            #line 70 "D:\GitHub\Ubiquity.NET\Llvm.Net\src\Interop\LlvmBindingsGenerator\Templates\T4\PerHeaderInteropTemplate.tt"
+            #line 66 "D:\GitHub\Ubiquity.NET\Llvm.Net\src\Interop\LlvmBindingsGenerator\Templates\T4\PerHeaderInteropTemplate.tt"
 }
             
             #line default

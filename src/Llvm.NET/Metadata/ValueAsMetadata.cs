@@ -2,6 +2,7 @@
 // Copyright (c) .NET Foundation. All rights reserved.
 // </copyright>
 
+using System.Diagnostics.CodeAnalysis;
 using Llvm.NET.Interop;
 using Llvm.NET.Types;
 using Llvm.NET.Values;
@@ -26,6 +27,7 @@ namespace Llvm.NET
         /// <summary>Implicit conversion to <see cref="Value"/></summary>
         /// <param name="md"><see cref="ValueAsMetadata"/> to get the value for</param>
         /// <remarks>This is a simple wrapper around the <see cref="Value"/> property</remarks>
+        [SuppressMessage( "Usage", "CA2225:Operator overloads have named alternates", Justification = "Value property provides this functionality already" )]
         public static implicit operator Value( ValueAsMetadata md ) => md.Value;
 
         private protected ValueAsMetadata( LLVMMetadataRef handle )

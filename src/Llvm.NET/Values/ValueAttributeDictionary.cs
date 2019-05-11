@@ -64,7 +64,7 @@ namespace Llvm.NET.Values
 
         IEnumerator IEnumerable.GetEnumerator( ) => GetEnumerator( );
 
-        internal ValueAttributeDictionary( IAttributeAccessor container, Func<Function> functionFetcher )
+        internal ValueAttributeDictionary( IAttributeAccessor container, Func<IrFunction> functionFetcher )
         {
             Container = container;
             FunctionFetcher = functionFetcher;
@@ -82,7 +82,7 @@ namespace Llvm.NET.Values
             }
         }
 
-        private readonly Func<Function> FunctionFetcher;
+        private readonly Func<IrFunction> FunctionFetcher;
         private readonly IAttributeAccessor Container;
     }
 }

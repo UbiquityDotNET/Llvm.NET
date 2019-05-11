@@ -38,7 +38,6 @@ namespace Llvm.NET
     {
         /// <summary>Enumeration for the Architecture portion of a target triple</summary>
         [SuppressMessage( "Microsoft.Design", "CA1027:MarkEnumsWithFlags", Justification = "Not actually flags" )]
-        [SuppressMessage( "Naming", "CA1707:Identifiers should not contain underscores", Justification = "Harder to understand without them" )]
         public enum ArchType
         {
             /// <summary>Invalid or unknown architecture</summary>
@@ -54,7 +53,7 @@ namespace Llvm.NET
             Aarch64 = LibLLVMTripleArchType.LibLLVMTripleArchType_aarch64,
 
             /// <summary>AArch64 (big endian): aarch64_be</summary>
-            Aarch64_be = LibLLVMTripleArchType.LibLLVMTripleArchType_aarch64_be,
+            Aarch64BE = LibLLVMTripleArchType.LibLLVMTripleArchType_aarch64_be,
 
             /// <summary>Synopsis ARC</summary>
             Arc = LibLLVMTripleArchType.LibLLVMTripleArchType_arc,
@@ -137,7 +136,7 @@ namespace Llvm.NET
             X86 = LibLLVMTripleArchType.LibLLVMTripleArchType_x86,
 
             /// <summary>X86 64-bit (amd64)</summary>
-            X86_64 = LibLLVMTripleArchType.LibLLVMTripleArchType_x86_64,
+            Amd64 = LibLLVMTripleArchType.LibLLVMTripleArchType_x86_64,
 
             /// <summary>XCore</summary>
             Xcore = LibLLVMTripleArchType.LibLLVMTripleArchType_xcore,
@@ -645,6 +644,7 @@ namespace Llvm.NET
         /// <param name="arch">Architecture type</param>
         /// <param name="os">Operating system type</param>
         /// <returns>Default object format</returns>
+        [SuppressMessage( "Maintainability", "CA1502:Avoid excessive complexity", Justification = "Type factory from naitve typekind" )]
         public static ObjectFormatType GetDefaultObjectFormat( ArchType arch, OSType os )
         {
             arch.ValidateDefined( nameof( arch ) );
@@ -657,7 +657,7 @@ namespace Llvm.NET
             case ArchType.Arm:
             case ArchType.Thumb:
             case ArchType.X86:
-            case ArchType.X86_64:
+            case ArchType.Amd64:
                 if( IsOsDarwin( os ) )
                 {
                     return ObjectFormatType.MachO;
@@ -670,7 +670,7 @@ namespace Llvm.NET
 
                 return ObjectFormatType.ELF;
 
-            case ArchType.Aarch64_be:
+            case ArchType.Aarch64BE:
             case ArchType.AMDGCN:
             case ArchType.Amdil:
             case ArchType.Amdil64:

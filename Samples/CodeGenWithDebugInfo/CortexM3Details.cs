@@ -30,7 +30,7 @@ namespace TestDebugInfo
                                                                       , CodeModel.Small
                                                                       );
 
-        public void AddABIAttributesForByValueStructure( Function function, int paramIndex )
+        public void AddABIAttributesForByValueStructure( IrFunction function, int paramIndex )
         {
             // ByVal pointers indicate by value semantics. The actual LLVM semantics are along the lines of
             // "pass the arg as copy on the arguments stack and set parameter implicitly to that copy's address"

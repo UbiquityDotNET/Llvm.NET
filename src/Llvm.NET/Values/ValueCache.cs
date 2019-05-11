@@ -17,7 +17,8 @@ using static Llvm.NET.Interop.NativeMethods;
 namespace Llvm.NET.Values
 {
     internal class ValueCache
-        : IHandleInterning<LLVMValueRef, Value>
+        : DisposableObject
+        , IHandleInterning<LLVMValueRef, Value>
     {
         public Context Context { get; }
 
@@ -62,6 +63,16 @@ namespace Llvm.NET.Values
             WrappedOnReplaced = new WrappedNativeCallback<LibLLVMValueCacheItemReplacedCallback>( OnItemReplaced );
 
             Handle = LibLLVMCreateValueCache( WrappedOnDeleted, WrappedOnReplaced );
+        }
+
+        protected override void Dispose( bool disposing )
+        {
+            if(disposing)
+            {
+                WrappedOnDeleted.Dispose( );
+                WrappedOnReplaced.Dispose( );
+                Handle.Dispose( );
+            }
         }
 
         private void OnItemDeleted( LLVMValueRef valueRef, IntPtr handle )
@@ -109,7 +120,7 @@ namespace Llvm.NET.Values
                 return new BasicBlock( handle );
 
             case ValueKind.Function:
-                return new Function( handle );
+                return new IrFunction( handle );
 
             case ValueKind.GlobalAlias:
                 return new GlobalAlias( handle );
@@ -267,7 +278,7 @@ namespace Llvm.NET.Values
                 return new CallInstruction( handle );
 
             case ValueKind.Select:
-                return new Select( handle );
+                return new SelectInstruction( handle );
 
             case ValueKind.UserOp1:
                 return new UserOp1( handle );

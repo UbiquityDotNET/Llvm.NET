@@ -14,15 +14,15 @@ namespace Llvm.NET.JIT
         TargetMachine TargetMachine { get; }
 
         /// <summary>Add a module to the engine</summary>
-        /// <param name="module">The module to add to the engine</param>
+        /// <param name="bitcodeModule">The module to add to the engine</param>
         /// <returns>Handle for the module in the engine</returns>
         /// <remarks>
         /// <note type="warning">
-        /// <para>For the JIT engine the input <paramref name="module"/> is disconnected from
+        /// <para>For the JIT engine the input <paramref name="bitcodeModule"/> is disconnected from
         /// the underlying LLVM module as the module is considered fully owned by the engine.</para>
         /// </note>
         /// </remarks>
-        IJitModuleHandle AddModule( BitcodeModule module );
+        IJitModuleHandle AddModule( BitcodeModule bitcodeModule );
 
         /// <summary>Removes a module from the engine</summary>
         /// <param name="handle"><see cref="AddModule(BitcodeModule)"/> to remove</param>

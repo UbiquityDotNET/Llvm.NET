@@ -16,19 +16,25 @@ using System.Threading;
 
 namespace Llvm.NET.Interop
 {
+    /// <summary>Global LLVM object handle</summary>
     [SecurityCritical]
     [GeneratedCode("LlvmBindingsGenerator","2.17941.31104.49410")]
     public class LLVMContextRef
         : LlvmObjectRef
     {
+        /// <summary>Creates a new instance of an LLVMContextRef</summary>
+        /// <param name="handle">Raw native pointer for the handle</param>
+        /// <param name="owner">Value to indicate whether the handle is owned or not</param>
         public LLVMContextRef( IntPtr handle, bool owner )
             : base( owner )
         {
             SetHandle( handle );
         }
 
+        /// <summary>Gets a Zero (<see langword="null"/> value handle</summary>
         public static LLVMContextRef Zero { get; } = new LLVMContextRef(IntPtr.Zero, false);
 
+        /// <inheritdoc/>
         [SecurityCritical]
         protected override bool ReleaseHandle( )
         {
@@ -52,6 +58,13 @@ namespace Llvm.NET.Interop
         private static extern void LLVMContextDispose( IntPtr p );
     }
 
+    /// <summary>Alias handle for an LLVM object</summary>
+    ///<remarks>
+    /// Sometimes a global object is exposed via a child that maintains a reference to the parent.
+    /// In such cases, the handle isn't owned by the App (it's an alias) and therfore should not be
+    /// disposed or destroyed. This handle type takes care of that in a type safe manner and does not
+    /// perform any automatic cleanup.
+    ///</remarks>
     [GeneratedCode("LlvmBindingsGenerator","2.17941.31104.49410")]
     public class LLVMContextRefAlias
         : LLVMContextRef

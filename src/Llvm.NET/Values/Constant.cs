@@ -38,6 +38,7 @@ namespace Llvm.NET.Values
         }
 
         /// <summary>Gets the constant as a Metadata node</summary>
+        /// <returns>Constant value as a metadata constant</returns>
         public ConstantAsMetadata ToMetadata() => LlvmMetadata.FromHandle<ConstantAsMetadata>( Context, LibLLVMConstantAsMetadata( ValueHandle ) );
 
         /// <summary>Creates a constant instance of <paramref name="typeRef"/> with all bits in the instance set to 1</summary>
@@ -56,7 +57,6 @@ namespace Llvm.NET.Values
         /// <param name="typeRef">Type of pointer to create a null value for</param>
         /// <returns>Constant NULL pointer of the specified type</returns>
         public static Constant ConstPointerToNullFor( ITypeRef typeRef ) => FromHandle<Constant>( LLVMConstPointerNull( typeRef.GetTypeRef( ) ) );
-
 
         internal Constant( LLVMValueRef valueRef )
             : base( valueRef )

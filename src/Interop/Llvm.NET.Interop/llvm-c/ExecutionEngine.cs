@@ -14,197 +14,207 @@ using System.Security;
 
 namespace Llvm.NET.Interop
 {
+    /// <include file="ExecutionEngine.xml" path='LibLLVMAPI/Delegate[@name="LLVMMemoryManagerAllocateCodeSectionCallback"]/*' />
     [UnmanagedFunctionPointer( global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
     unsafe public delegate byte* LLVMMemoryManagerAllocateCodeSectionCallback( global::System.IntPtr Opaque, System.UIntPtr Size, uint Alignment, uint SectionID, [MarshalAs( UnmanagedType.LPStr )]string SectionName );
 
+    /// <include file="ExecutionEngine.xml" path='LibLLVMAPI/Delegate[@name="LLVMMemoryManagerAllocateDataSectionCallback"]/*' />
     [UnmanagedFunctionPointer( global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
     unsafe public delegate byte* LLVMMemoryManagerAllocateDataSectionCallback( global::System.IntPtr Opaque, System.UIntPtr Size, uint Alignment, uint SectionID, [MarshalAs( UnmanagedType.LPStr )]string SectionName, bool IsReadOnly );
 
+    /// <include file="ExecutionEngine.xml" path='LibLLVMAPI/Delegate[@name="LLVMMemoryManagerFinalizeMemoryCallback"]/*' />
     [UnmanagedFunctionPointer( global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
     public delegate bool LLVMMemoryManagerFinalizeMemoryCallback( global::System.IntPtr Opaque, [MarshalAs( UnmanagedType.LPStr, ArraySubType = UnmanagedType.LPStr )]global::System.String[] ErrMsg );
 
+    /// <include file="ExecutionEngine.xml" path='LibLLVMAPI/Delegate[@name="LLVMMemoryManagerDestroyCallback"]/*' />
     [UnmanagedFunctionPointer( global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
     public delegate void LLVMMemoryManagerDestroyCallback( global::System.IntPtr Opaque );
 
+    /// <include file="ExecutionEngine.xml" path='LibLLVMAPI/Struct[@name="LLVMMCJITCompilerOptions"]/*[not(self::Field)]' />
     [StructLayout( LayoutKind.Sequential )]
     [GeneratedCode( "LlvmBindingsGenerator", "2.17941.31104.49410" )]
     public struct LLVMMCJITCompilerOptions
     {
+        /// <include file="ExecutionEngine.xml" path='LibLLVMAPI/struct[@name="LLVMMCJITCompilerOptions"]/Field[@name="OptLevel"]/*' />
         public uint OptLevel;
+        /// <include file="ExecutionEngine.xml" path='LibLLVMAPI/struct[@name="LLVMMCJITCompilerOptions"]/Field[@name="CodeModel"]/*' />
         public LLVMCodeModel CodeModel;
+        /// <include file="ExecutionEngine.xml" path='LibLLVMAPI/struct[@name="LLVMMCJITCompilerOptions"]/Field[@name="NoFramePointerElim"]/*' />
         public bool NoFramePointerElim;
+        /// <include file="ExecutionEngine.xml" path='LibLLVMAPI/struct[@name="LLVMMCJITCompilerOptions"]/Field[@name="EnableFastISel"]/*' />
         public bool EnableFastISel;
+        /// <include file="ExecutionEngine.xml" path='LibLLVMAPI/struct[@name="LLVMMCJITCompilerOptions"]/Field[@name="MCJMM"]/*' />
         public LLVMMCJITMemoryManagerRef MCJMM;
     }
 
     public static partial class NativeMethods
     {
-        /**
-         * @defgroup LLVMCExecutionEngine Execution Engine
-         * @ingroup LLVMC
-         *
-         * @{
-         */
+        /// <include file="ExecutionEngine.xml" path='LibLLVMAPI/Function[@name="LLVMLinkInMCJIT"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern void LLVMLinkInMCJIT(  );
 
+        /// <include file="ExecutionEngine.xml" path='LibLLVMAPI/Function[@name="LLVMLinkInInterpreter"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern void LLVMLinkInInterpreter(  );
 
+        /// <include file="ExecutionEngine.xml" path='LibLLVMAPI/Function[@name="LLVMCreateGenericValueOfInt"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern LLVMGenericValueRef LLVMCreateGenericValueOfInt( LLVMTypeRef Ty, ulong N, [MarshalAs( UnmanagedType.Bool )]bool IsSigned );
 
+        /// <include file="ExecutionEngine.xml" path='LibLLVMAPI/Function[@name="LLVMCreateGenericValueOfPointer"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern LLVMGenericValueRef LLVMCreateGenericValueOfPointer( global::System.IntPtr P );
 
+        /// <include file="ExecutionEngine.xml" path='LibLLVMAPI/Function[@name="LLVMCreateGenericValueOfFloat"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern LLVMGenericValueRef LLVMCreateGenericValueOfFloat( LLVMTypeRef Ty, double N );
 
+        /// <include file="ExecutionEngine.xml" path='LibLLVMAPI/Function[@name="LLVMGenericValueIntWidth"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern uint LLVMGenericValueIntWidth( LLVMGenericValueRef GenValRef );
 
+        /// <include file="ExecutionEngine.xml" path='LibLLVMAPI/Function[@name="LLVMGenericValueToInt"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern ulong LLVMGenericValueToInt( LLVMGenericValueRef GenVal, [MarshalAs( UnmanagedType.Bool )]bool IsSigned );
 
+        /// <include file="ExecutionEngine.xml" path='LibLLVMAPI/Function[@name="LLVMGenericValueToPointer"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern global::System.IntPtr LLVMGenericValueToPointer( LLVMGenericValueRef GenVal );
 
+        /// <include file="ExecutionEngine.xml" path='LibLLVMAPI/Function[@name="LLVMGenericValueToFloat"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern double LLVMGenericValueToFloat( LLVMTypeRef TyRef, LLVMGenericValueRef GenVal );
 
+        /// <include file="ExecutionEngine.xml" path='LibLLVMAPI/Function[@name="LLVMCreateExecutionEngineForModule"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern LLVMStatus LLVMCreateExecutionEngineForModule( out LLVMExecutionEngineRef OutEE, LLVMModuleRef M, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( DisposeMessageMarshaler ) )]out string OutError );
 
+        /// <include file="ExecutionEngine.xml" path='LibLLVMAPI/Function[@name="LLVMCreateInterpreterForModule"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern LLVMStatus LLVMCreateInterpreterForModule( out LLVMExecutionEngineRef OutInterp, LLVMModuleRef M, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( DisposeMessageMarshaler ) )]out string OutError );
 
+        /// <include file="ExecutionEngine.xml" path='LibLLVMAPI/Function[@name="LLVMCreateJITCompilerForModule"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern LLVMStatus LLVMCreateJITCompilerForModule( out LLVMExecutionEngineRef OutJIT, LLVMModuleRef M, uint OptLevel, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( DisposeMessageMarshaler ) )]out string OutError );
 
+        /// <include file="ExecutionEngine.xml" path='LibLLVMAPI/Function[@name="LLVMInitializeMCJITCompilerOptions"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern void LLVMInitializeMCJITCompilerOptions( out global::Llvm.NET.Interop.LLVMMCJITCompilerOptions Options, size_t SizeOfOptions );
 
-        /**
-         * Create an MCJIT execution engine for a module, with the given options. It is
-         * the responsibility of the caller to ensure that all fields in Options up to
-         * the given SizeOfOptions are initialized. It is correct to pass a smaller
-         * value of SizeOfOptions that omits some fields. The canonical way of using
-         * this is:
-         *
-         * LLVMMCJITCompilerOptions options;
-         * LLVMInitializeMCJITCompilerOptions(&options, sizeof(options));
-         * ... fill in those options you care about
-         * LLVMCreateMCJITCompilerForModule(&jit, mod, &options, sizeof(options),
-         *                                  &error);
-         *
-         * Note that this is also correct, though possibly suboptimal:
-         *
-         * LLVMCreateMCJITCompilerForModule(&jit, mod, 0, 0, &error);
-         */
+        /// <include file="ExecutionEngine.xml" path='LibLLVMAPI/Function[@name="LLVMCreateMCJITCompilerForModule"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern LLVMStatus LLVMCreateMCJITCompilerForModule( out LLVMExecutionEngineRef OutJIT, LLVMModuleRef M, out global::Llvm.NET.Interop.LLVMMCJITCompilerOptions Options, size_t SizeOfOptions, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( DisposeMessageMarshaler ) )]out string OutError );
 
+        /// <include file="ExecutionEngine.xml" path='LibLLVMAPI/Function[@name="LLVMRunStaticConstructors"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern void LLVMRunStaticConstructors( LLVMExecutionEngineRef EE );
 
+        /// <include file="ExecutionEngine.xml" path='LibLLVMAPI/Function[@name="LLVMRunStaticDestructors"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern void LLVMRunStaticDestructors( LLVMExecutionEngineRef EE );
 
+        /// <include file="ExecutionEngine.xml" path='LibLLVMAPI/Function[@name="LLVMRunFunctionAsMain"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern int LLVMRunFunctionAsMain( LLVMExecutionEngineRef EE, LLVMValueRef F, uint ArgC, [MarshalAs( UnmanagedType.LPStr, ArraySubType = UnmanagedType.LPStr )]global::System.String[] ArgV, [MarshalAs( UnmanagedType.LPStr, ArraySubType = UnmanagedType.LPStr )]global::System.String[] EnvP );
 
+        /// <include file="ExecutionEngine.xml" path='LibLLVMAPI/Function[@name="LLVMRunFunction"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern LLVMGenericValueRef LLVMRunFunction( LLVMExecutionEngineRef EE, LLVMValueRef F, uint NumArgs, out LLVMGenericValueRef Args );
 
+        /// <include file="ExecutionEngine.xml" path='LibLLVMAPI/Function[@name="LLVMFreeMachineCodeForFunction"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern void LLVMFreeMachineCodeForFunction( LLVMExecutionEngineRef EE, LLVMValueRef F );
 
+        /// <include file="ExecutionEngine.xml" path='LibLLVMAPI/Function[@name="LLVMAddModule"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern void LLVMAddModule( LLVMExecutionEngineRef EE, LLVMModuleRef M );
 
+        /// <include file="ExecutionEngine.xml" path='LibLLVMAPI/Function[@name="LLVMRemoveModule"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern LLVMStatus LLVMRemoveModule( LLVMExecutionEngineRef EE, LLVMModuleRef M, out LLVMModuleRef OutMod, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( DisposeMessageMarshaler ) )]out string OutError );
 
+        /// <include file="ExecutionEngine.xml" path='LibLLVMAPI/Function[@name="LLVMFindFunction"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern LLVMStatus LLVMFindFunction( LLVMExecutionEngineRef EE, [MarshalAs( UnmanagedType.LPStr )]string Name, out LLVMValueRef OutFn );
 
+        /// <include file="ExecutionEngine.xml" path='LibLLVMAPI/Function[@name="LLVMRecompileAndRelinkFunction"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern global::System.IntPtr LLVMRecompileAndRelinkFunction( LLVMExecutionEngineRef EE, LLVMValueRef Fn );
 
+        /// <include file="ExecutionEngine.xml" path='LibLLVMAPI/Function[@name="LLVMGetExecutionEngineTargetData"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern LLVMTargetDataRef LLVMGetExecutionEngineTargetData( LLVMExecutionEngineRef EE );
 
+        /// <include file="ExecutionEngine.xml" path='LibLLVMAPI/Function[@name="LLVMGetExecutionEngineTargetMachine"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern LLVMTargetMachineRef LLVMGetExecutionEngineTargetMachine( LLVMExecutionEngineRef EE );
 
+        /// <include file="ExecutionEngine.xml" path='LibLLVMAPI/Function[@name="LLVMAddGlobalMapping"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern void LLVMAddGlobalMapping( LLVMExecutionEngineRef EE, LLVMValueRef Global, global::System.IntPtr Addr );
 
+        /// <include file="ExecutionEngine.xml" path='LibLLVMAPI/Function[@name="LLVMGetPointerToGlobal"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern global::System.IntPtr LLVMGetPointerToGlobal( LLVMExecutionEngineRef EE, LLVMValueRef Global );
 
+        /// <include file="ExecutionEngine.xml" path='LibLLVMAPI/Function[@name="LLVMGetGlobalValueAddress"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern System.UInt64 LLVMGetGlobalValueAddress( LLVMExecutionEngineRef EE, [MarshalAs( UnmanagedType.LPStr )]string Name );
 
+        /// <include file="ExecutionEngine.xml" path='LibLLVMAPI/Function[@name="LLVMGetFunctionAddress"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern System.UInt64 LLVMGetFunctionAddress( LLVMExecutionEngineRef EE, [MarshalAs( UnmanagedType.LPStr )]string Name );
 
-        /**
-         * Create a simple custom MCJIT memory manager. This memory manager can
-         * intercept allocations in a module-oblivious way. This will return NULL
-         * if any of the passed functions are NULL.
-         *
-         * @param Opaque An opaque client object to pass back to the callbacks.
-         * @param AllocateCodeSection Allocate a block of memory for executable code.
-         * @param AllocateDataSection Allocate a block of memory for data.
-         * @param FinalizeMemory Set page permissions and flush cache. Return 0 on
-         *   success, 1 on error.
-         */
+        /// <include file="ExecutionEngine.xml" path='LibLLVMAPI/Function[@name="LLVMCreateSimpleMCJITMemoryManager"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern LLVMMCJITMemoryManagerRef LLVMCreateSimpleMCJITMemoryManager( global::System.IntPtr Opaque, LLVMMemoryManagerAllocateCodeSectionCallback AllocateCodeSection, LLVMMemoryManagerAllocateDataSectionCallback AllocateDataSection, LLVMMemoryManagerFinalizeMemoryCallback FinalizeMemory, LLVMMemoryManagerDestroyCallback Destroy );
 
+        /// <include file="ExecutionEngine.xml" path='LibLLVMAPI/Function[@name="LLVMCreateGDBRegistrationListener"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern LLVMJITEventListenerRef LLVMCreateGDBRegistrationListener(  );
 
+        /// <include file="ExecutionEngine.xml" path='LibLLVMAPI/Function[@name="LLVMCreateIntelJITEventListener"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern LLVMJITEventListenerRef LLVMCreateIntelJITEventListener(  );
 
+        /// <include file="ExecutionEngine.xml" path='LibLLVMAPI/Function[@name="LLVMCreateOProfileJITEventListener"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern LLVMJITEventListenerRef LLVMCreateOProfileJITEventListener(  );
 
+        /// <include file="ExecutionEngine.xml" path='LibLLVMAPI/Function[@name="LLVMCreatePerfJITEventListener"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern LLVMJITEventListenerRef LLVMCreatePerfJITEventListener(  );

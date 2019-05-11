@@ -14,4724 +14,3828 @@ using System.Security;
 
 namespace Llvm.NET.Interop
 {
-    /// External users depend on the following values being stable. It is not safe
-    /// to reorder them.
+    /// <include file="Core.xml" path='LibLLVMAPI/Enumeration[@name="LLVMOpcode"]/*[not(self::Item)]' />
     [GeneratedCode("LlvmBindingsGenerator","2.17941.31104.49410")]
     public enum LLVMOpcode : global::System.Int32
     {
+        /// <include file="Core.xml" path='LibLLVMAPI/Enumeration[@name="LLVMOpcode"]/Item[@name="LLVMRet"]/*' />
         LLVMRet = 1,
+        /// <include file="Core.xml" path='LibLLVMAPI/Enumeration[@name="LLVMOpcode"]/Item[@name="LLVMBr"]/*' />
         LLVMBr = 2,
+        /// <include file="Core.xml" path='LibLLVMAPI/Enumeration[@name="LLVMOpcode"]/Item[@name="LLVMSwitch"]/*' />
         LLVMSwitch = 3,
+        /// <include file="Core.xml" path='LibLLVMAPI/Enumeration[@name="LLVMOpcode"]/Item[@name="LLVMIndirectBr"]/*' />
         LLVMIndirectBr = 4,
+        /// <include file="Core.xml" path='LibLLVMAPI/Enumeration[@name="LLVMOpcode"]/Item[@name="LLVMInvoke"]/*' />
         LLVMInvoke = 5,
+        /// <include file="Core.xml" path='LibLLVMAPI/Enumeration[@name="LLVMOpcode"]/Item[@name="LLVMUnreachable"]/*' />
         LLVMUnreachable = 7,
+        /// <include file="Core.xml" path='LibLLVMAPI/Enumeration[@name="LLVMOpcode"]/Item[@name="LLVMFNeg"]/*' />
         LLVMFNeg = 66,
+        /// <include file="Core.xml" path='LibLLVMAPI/Enumeration[@name="LLVMOpcode"]/Item[@name="LLVMAdd"]/*' />
         LLVMAdd = 8,
+        /// <include file="Core.xml" path='LibLLVMAPI/Enumeration[@name="LLVMOpcode"]/Item[@name="LLVMFAdd"]/*' />
         LLVMFAdd = 9,
+        /// <include file="Core.xml" path='LibLLVMAPI/Enumeration[@name="LLVMOpcode"]/Item[@name="LLVMSub"]/*' />
         LLVMSub = 10,
+        /// <include file="Core.xml" path='LibLLVMAPI/Enumeration[@name="LLVMOpcode"]/Item[@name="LLVMFSub"]/*' />
         LLVMFSub = 11,
+        /// <include file="Core.xml" path='LibLLVMAPI/Enumeration[@name="LLVMOpcode"]/Item[@name="LLVMMul"]/*' />
         LLVMMul = 12,
+        /// <include file="Core.xml" path='LibLLVMAPI/Enumeration[@name="LLVMOpcode"]/Item[@name="LLVMFMul"]/*' />
         LLVMFMul = 13,
+        /// <include file="Core.xml" path='LibLLVMAPI/Enumeration[@name="LLVMOpcode"]/Item[@name="LLVMUDiv"]/*' />
         LLVMUDiv = 14,
+        /// <include file="Core.xml" path='LibLLVMAPI/Enumeration[@name="LLVMOpcode"]/Item[@name="LLVMSDiv"]/*' />
         LLVMSDiv = 15,
+        /// <include file="Core.xml" path='LibLLVMAPI/Enumeration[@name="LLVMOpcode"]/Item[@name="LLVMFDiv"]/*' />
         LLVMFDiv = 16,
+        /// <include file="Core.xml" path='LibLLVMAPI/Enumeration[@name="LLVMOpcode"]/Item[@name="LLVMURem"]/*' />
         LLVMURem = 17,
+        /// <include file="Core.xml" path='LibLLVMAPI/Enumeration[@name="LLVMOpcode"]/Item[@name="LLVMSRem"]/*' />
         LLVMSRem = 18,
+        /// <include file="Core.xml" path='LibLLVMAPI/Enumeration[@name="LLVMOpcode"]/Item[@name="LLVMFRem"]/*' />
         LLVMFRem = 19,
+        /// <include file="Core.xml" path='LibLLVMAPI/Enumeration[@name="LLVMOpcode"]/Item[@name="LLVMShl"]/*' />
         LLVMShl = 20,
+        /// <include file="Core.xml" path='LibLLVMAPI/Enumeration[@name="LLVMOpcode"]/Item[@name="LLVMLShr"]/*' />
         LLVMLShr = 21,
+        /// <include file="Core.xml" path='LibLLVMAPI/Enumeration[@name="LLVMOpcode"]/Item[@name="LLVMAShr"]/*' />
         LLVMAShr = 22,
+        /// <include file="Core.xml" path='LibLLVMAPI/Enumeration[@name="LLVMOpcode"]/Item[@name="LLVMAnd"]/*' />
         LLVMAnd = 23,
+        /// <include file="Core.xml" path='LibLLVMAPI/Enumeration[@name="LLVMOpcode"]/Item[@name="LLVMOr"]/*' />
         LLVMOr = 24,
+        /// <include file="Core.xml" path='LibLLVMAPI/Enumeration[@name="LLVMOpcode"]/Item[@name="LLVMXor"]/*' />
         LLVMXor = 25,
+        /// <include file="Core.xml" path='LibLLVMAPI/Enumeration[@name="LLVMOpcode"]/Item[@name="LLVMAlloca"]/*' />
         LLVMAlloca = 26,
+        /// <include file="Core.xml" path='LibLLVMAPI/Enumeration[@name="LLVMOpcode"]/Item[@name="LLVMLoad"]/*' />
         LLVMLoad = 27,
+        /// <include file="Core.xml" path='LibLLVMAPI/Enumeration[@name="LLVMOpcode"]/Item[@name="LLVMStore"]/*' />
         LLVMStore = 28,
+        /// <include file="Core.xml" path='LibLLVMAPI/Enumeration[@name="LLVMOpcode"]/Item[@name="LLVMGetElementPtr"]/*' />
         LLVMGetElementPtr = 29,
+        /// <include file="Core.xml" path='LibLLVMAPI/Enumeration[@name="LLVMOpcode"]/Item[@name="LLVMTrunc"]/*' />
         LLVMTrunc = 30,
+        /// <include file="Core.xml" path='LibLLVMAPI/Enumeration[@name="LLVMOpcode"]/Item[@name="LLVMZExt"]/*' />
         LLVMZExt = 31,
+        /// <include file="Core.xml" path='LibLLVMAPI/Enumeration[@name="LLVMOpcode"]/Item[@name="LLVMSExt"]/*' />
         LLVMSExt = 32,
+        /// <include file="Core.xml" path='LibLLVMAPI/Enumeration[@name="LLVMOpcode"]/Item[@name="LLVMFPToUI"]/*' />
         LLVMFPToUI = 33,
+        /// <include file="Core.xml" path='LibLLVMAPI/Enumeration[@name="LLVMOpcode"]/Item[@name="LLVMFPToSI"]/*' />
         LLVMFPToSI = 34,
+        /// <include file="Core.xml" path='LibLLVMAPI/Enumeration[@name="LLVMOpcode"]/Item[@name="LLVMUIToFP"]/*' />
         LLVMUIToFP = 35,
+        /// <include file="Core.xml" path='LibLLVMAPI/Enumeration[@name="LLVMOpcode"]/Item[@name="LLVMSIToFP"]/*' />
         LLVMSIToFP = 36,
+        /// <include file="Core.xml" path='LibLLVMAPI/Enumeration[@name="LLVMOpcode"]/Item[@name="LLVMFPTrunc"]/*' />
         LLVMFPTrunc = 37,
+        /// <include file="Core.xml" path='LibLLVMAPI/Enumeration[@name="LLVMOpcode"]/Item[@name="LLVMFPExt"]/*' />
         LLVMFPExt = 38,
+        /// <include file="Core.xml" path='LibLLVMAPI/Enumeration[@name="LLVMOpcode"]/Item[@name="LLVMPtrToInt"]/*' />
         LLVMPtrToInt = 39,
+        /// <include file="Core.xml" path='LibLLVMAPI/Enumeration[@name="LLVMOpcode"]/Item[@name="LLVMIntToPtr"]/*' />
         LLVMIntToPtr = 40,
+        /// <include file="Core.xml" path='LibLLVMAPI/Enumeration[@name="LLVMOpcode"]/Item[@name="LLVMBitCast"]/*' />
         LLVMBitCast = 41,
+        /// <include file="Core.xml" path='LibLLVMAPI/Enumeration[@name="LLVMOpcode"]/Item[@name="LLVMAddrSpaceCast"]/*' />
         LLVMAddrSpaceCast = 60,
+        /// <include file="Core.xml" path='LibLLVMAPI/Enumeration[@name="LLVMOpcode"]/Item[@name="LLVMICmp"]/*' />
         LLVMICmp = 42,
+        /// <include file="Core.xml" path='LibLLVMAPI/Enumeration[@name="LLVMOpcode"]/Item[@name="LLVMFCmp"]/*' />
         LLVMFCmp = 43,
+        /// <include file="Core.xml" path='LibLLVMAPI/Enumeration[@name="LLVMOpcode"]/Item[@name="LLVMPHI"]/*' />
         LLVMPHI = 44,
+        /// <include file="Core.xml" path='LibLLVMAPI/Enumeration[@name="LLVMOpcode"]/Item[@name="LLVMCall"]/*' />
         LLVMCall = 45,
+        /// <include file="Core.xml" path='LibLLVMAPI/Enumeration[@name="LLVMOpcode"]/Item[@name="LLVMSelect"]/*' />
         LLVMSelect = 46,
+        /// <include file="Core.xml" path='LibLLVMAPI/Enumeration[@name="LLVMOpcode"]/Item[@name="LLVMUserOp1"]/*' />
         LLVMUserOp1 = 47,
+        /// <include file="Core.xml" path='LibLLVMAPI/Enumeration[@name="LLVMOpcode"]/Item[@name="LLVMUserOp2"]/*' />
         LLVMUserOp2 = 48,
+        /// <include file="Core.xml" path='LibLLVMAPI/Enumeration[@name="LLVMOpcode"]/Item[@name="LLVMVAArg"]/*' />
         LLVMVAArg = 49,
+        /// <include file="Core.xml" path='LibLLVMAPI/Enumeration[@name="LLVMOpcode"]/Item[@name="LLVMExtractElement"]/*' />
         LLVMExtractElement = 50,
+        /// <include file="Core.xml" path='LibLLVMAPI/Enumeration[@name="LLVMOpcode"]/Item[@name="LLVMInsertElement"]/*' />
         LLVMInsertElement = 51,
+        /// <include file="Core.xml" path='LibLLVMAPI/Enumeration[@name="LLVMOpcode"]/Item[@name="LLVMShuffleVector"]/*' />
         LLVMShuffleVector = 52,
+        /// <include file="Core.xml" path='LibLLVMAPI/Enumeration[@name="LLVMOpcode"]/Item[@name="LLVMExtractValue"]/*' />
         LLVMExtractValue = 53,
+        /// <include file="Core.xml" path='LibLLVMAPI/Enumeration[@name="LLVMOpcode"]/Item[@name="LLVMInsertValue"]/*' />
         LLVMInsertValue = 54,
+        /// <include file="Core.xml" path='LibLLVMAPI/Enumeration[@name="LLVMOpcode"]/Item[@name="LLVMFence"]/*' />
         LLVMFence = 55,
+        /// <include file="Core.xml" path='LibLLVMAPI/Enumeration[@name="LLVMOpcode"]/Item[@name="LLVMAtomicCmpXchg"]/*' />
         LLVMAtomicCmpXchg = 56,
+        /// <include file="Core.xml" path='LibLLVMAPI/Enumeration[@name="LLVMOpcode"]/Item[@name="LLVMAtomicRMW"]/*' />
         LLVMAtomicRMW = 57,
+        /// <include file="Core.xml" path='LibLLVMAPI/Enumeration[@name="LLVMOpcode"]/Item[@name="LLVMResume"]/*' />
         LLVMResume = 58,
+        /// <include file="Core.xml" path='LibLLVMAPI/Enumeration[@name="LLVMOpcode"]/Item[@name="LLVMLandingPad"]/*' />
         LLVMLandingPad = 59,
+        /// <include file="Core.xml" path='LibLLVMAPI/Enumeration[@name="LLVMOpcode"]/Item[@name="LLVMCleanupRet"]/*' />
         LLVMCleanupRet = 61,
+        /// <include file="Core.xml" path='LibLLVMAPI/Enumeration[@name="LLVMOpcode"]/Item[@name="LLVMCatchRet"]/*' />
         LLVMCatchRet = 62,
+        /// <include file="Core.xml" path='LibLLVMAPI/Enumeration[@name="LLVMOpcode"]/Item[@name="LLVMCatchPad"]/*' />
         LLVMCatchPad = 63,
+        /// <include file="Core.xml" path='LibLLVMAPI/Enumeration[@name="LLVMOpcode"]/Item[@name="LLVMCleanupPad"]/*' />
         LLVMCleanupPad = 64,
+        /// <include file="Core.xml" path='LibLLVMAPI/Enumeration[@name="LLVMOpcode"]/Item[@name="LLVMCatchSwitch"]/*' />
         LLVMCatchSwitch = 65,
     }
 
+    /// <include file="Core.xml" path='LibLLVMAPI/Enumeration[@name="LLVMTypeKind"]/*[not(self::Item)]' />
     [GeneratedCode("LlvmBindingsGenerator","2.17941.31104.49410")]
     public enum LLVMTypeKind : global::System.Int32
     {
-        /**< type with no size */
+        /// <include file="Core.xml" path='LibLLVMAPI/Enumeration[@name="LLVMTypeKind"]/Item[@name="LLVMVoidTypeKind"]/*' />
         LLVMVoidTypeKind = 0,
-        /**< 16 bit floating point type */
+        /// <include file="Core.xml" path='LibLLVMAPI/Enumeration[@name="LLVMTypeKind"]/Item[@name="LLVMHalfTypeKind"]/*' />
         LLVMHalfTypeKind = 1,
-        /**< 32 bit floating point type */
+        /// <include file="Core.xml" path='LibLLVMAPI/Enumeration[@name="LLVMTypeKind"]/Item[@name="LLVMFloatTypeKind"]/*' />
         LLVMFloatTypeKind = 2,
-        /**< 64 bit floating point type */
+        /// <include file="Core.xml" path='LibLLVMAPI/Enumeration[@name="LLVMTypeKind"]/Item[@name="LLVMDoubleTypeKind"]/*' />
         LLVMDoubleTypeKind = 3,
-        /**< 80 bit floating point type (X87) */
+        /// <include file="Core.xml" path='LibLLVMAPI/Enumeration[@name="LLVMTypeKind"]/Item[@name="LLVMX86_FP80TypeKind"]/*' />
         LLVMX86_FP80TypeKind = 4,
-        /**< 128 bit floating point type (112-bit mantissa)*/
+        /// <include file="Core.xml" path='LibLLVMAPI/Enumeration[@name="LLVMTypeKind"]/Item[@name="LLVMFP128TypeKind"]/*' />
         LLVMFP128TypeKind = 5,
-        /**< 128 bit floating point type (two 64-bits) */
+        /// <include file="Core.xml" path='LibLLVMAPI/Enumeration[@name="LLVMTypeKind"]/Item[@name="LLVMPPC_FP128TypeKind"]/*' />
         LLVMPPC_FP128TypeKind = 6,
-        /**< Labels */
+        /// <include file="Core.xml" path='LibLLVMAPI/Enumeration[@name="LLVMTypeKind"]/Item[@name="LLVMLabelTypeKind"]/*' />
         LLVMLabelTypeKind = 7,
-        /**< Arbitrary bit width integers */
+        /// <include file="Core.xml" path='LibLLVMAPI/Enumeration[@name="LLVMTypeKind"]/Item[@name="LLVMIntegerTypeKind"]/*' />
         LLVMIntegerTypeKind = 8,
-        /**< Functions */
+        /// <include file="Core.xml" path='LibLLVMAPI/Enumeration[@name="LLVMTypeKind"]/Item[@name="LLVMFunctionTypeKind"]/*' />
         LLVMFunctionTypeKind = 9,
-        /**< Structures */
+        /// <include file="Core.xml" path='LibLLVMAPI/Enumeration[@name="LLVMTypeKind"]/Item[@name="LLVMStructTypeKind"]/*' />
         LLVMStructTypeKind = 10,
-        /**< Arrays */
+        /// <include file="Core.xml" path='LibLLVMAPI/Enumeration[@name="LLVMTypeKind"]/Item[@name="LLVMArrayTypeKind"]/*' />
         LLVMArrayTypeKind = 11,
-        /**< Pointers */
+        /// <include file="Core.xml" path='LibLLVMAPI/Enumeration[@name="LLVMTypeKind"]/Item[@name="LLVMPointerTypeKind"]/*' />
         LLVMPointerTypeKind = 12,
-        /**< SIMD 'packed' format, or other vector type */
+        /// <include file="Core.xml" path='LibLLVMAPI/Enumeration[@name="LLVMTypeKind"]/Item[@name="LLVMVectorTypeKind"]/*' />
         LLVMVectorTypeKind = 13,
-        /**< Metadata */
+        /// <include file="Core.xml" path='LibLLVMAPI/Enumeration[@name="LLVMTypeKind"]/Item[@name="LLVMMetadataTypeKind"]/*' />
         LLVMMetadataTypeKind = 14,
-        /**< X86 MMX */
+        /// <include file="Core.xml" path='LibLLVMAPI/Enumeration[@name="LLVMTypeKind"]/Item[@name="LLVMX86_MMXTypeKind"]/*' />
         LLVMX86_MMXTypeKind = 15,
-        /**< Tokens */
+        /// <include file="Core.xml" path='LibLLVMAPI/Enumeration[@name="LLVMTypeKind"]/Item[@name="LLVMTokenTypeKind"]/*' />
         LLVMTokenTypeKind = 16,
     }
 
+    /// <include file="Core.xml" path='LibLLVMAPI/Enumeration[@name="LLVMLinkage"]/*[not(self::Item)]' />
     [GeneratedCode("LlvmBindingsGenerator","2.17941.31104.49410")]
     public enum LLVMLinkage : global::System.Int32
     {
-        /**< Externally visible function */
+        /// <include file="Core.xml" path='LibLLVMAPI/Enumeration[@name="LLVMLinkage"]/Item[@name="LLVMExternalLinkage"]/*' />
         LLVMExternalLinkage = 0,
+        /// <include file="Core.xml" path='LibLLVMAPI/Enumeration[@name="LLVMLinkage"]/Item[@name="LLVMAvailableExternallyLinkage"]/*' />
         LLVMAvailableExternallyLinkage = 1,
-        /**< Keep one copy of function when linking (inline)*/
+        /// <include file="Core.xml" path='LibLLVMAPI/Enumeration[@name="LLVMLinkage"]/Item[@name="LLVMLinkOnceAnyLinkage"]/*' />
         LLVMLinkOnceAnyLinkage = 2,
-        /**< Same, but only replaced by something
-                                    equivalent. */
+        /// <include file="Core.xml" path='LibLLVMAPI/Enumeration[@name="LLVMLinkage"]/Item[@name="LLVMLinkOnceODRLinkage"]/*' />
         LLVMLinkOnceODRLinkage = 3,
-        /**< Obsolete */
+        /// <include file="Core.xml" path='LibLLVMAPI/Enumeration[@name="LLVMLinkage"]/Item[@name="LLVMLinkOnceODRAutoHideLinkage"]/*' />
         LLVMLinkOnceODRAutoHideLinkage = 4,
-        /**< Keep one copy of function when linking (weak) */
+        /// <include file="Core.xml" path='LibLLVMAPI/Enumeration[@name="LLVMLinkage"]/Item[@name="LLVMWeakAnyLinkage"]/*' />
         LLVMWeakAnyLinkage = 5,
-        /**< Same, but only replaced by something
-                                    equivalent. */
+        /// <include file="Core.xml" path='LibLLVMAPI/Enumeration[@name="LLVMLinkage"]/Item[@name="LLVMWeakODRLinkage"]/*' />
         LLVMWeakODRLinkage = 6,
-        /**< Special purpose, only applies to global arrays */
+        /// <include file="Core.xml" path='LibLLVMAPI/Enumeration[@name="LLVMLinkage"]/Item[@name="LLVMAppendingLinkage"]/*' />
         LLVMAppendingLinkage = 7,
-        /**< Rename collisions when linking (static
-                                       functions) */
+        /// <include file="Core.xml" path='LibLLVMAPI/Enumeration[@name="LLVMLinkage"]/Item[@name="LLVMInternalLinkage"]/*' />
         LLVMInternalLinkage = 8,
-        /**< Like Internal, but omit from symbol table */
+        /// <include file="Core.xml" path='LibLLVMAPI/Enumeration[@name="LLVMLinkage"]/Item[@name="LLVMPrivateLinkage"]/*' />
         LLVMPrivateLinkage = 9,
-        /**< Obsolete */
+        /// <include file="Core.xml" path='LibLLVMAPI/Enumeration[@name="LLVMLinkage"]/Item[@name="LLVMDLLImportLinkage"]/*' />
         LLVMDLLImportLinkage = 10,
-        /**< Obsolete */
+        /// <include file="Core.xml" path='LibLLVMAPI/Enumeration[@name="LLVMLinkage"]/Item[@name="LLVMDLLExportLinkage"]/*' />
         LLVMDLLExportLinkage = 11,
-        /**< ExternalWeak linkage description */
+        /// <include file="Core.xml" path='LibLLVMAPI/Enumeration[@name="LLVMLinkage"]/Item[@name="LLVMExternalWeakLinkage"]/*' />
         LLVMExternalWeakLinkage = 12,
-        /**< Obsolete */
+        /// <include file="Core.xml" path='LibLLVMAPI/Enumeration[@name="LLVMLinkage"]/Item[@name="LLVMGhostLinkage"]/*' />
         LLVMGhostLinkage = 13,
-        /**< Tentative definitions */
+        /// <include file="Core.xml" path='LibLLVMAPI/Enumeration[@name="LLVMLinkage"]/Item[@name="LLVMCommonLinkage"]/*' />
         LLVMCommonLinkage = 14,
-        /**< Like Private, but linker removes. */
+        /// <include file="Core.xml" path='LibLLVMAPI/Enumeration[@name="LLVMLinkage"]/Item[@name="LLVMLinkerPrivateLinkage"]/*' />
         LLVMLinkerPrivateLinkage = 15,
-        /**< Like LinkerPrivate, but is weak. */
+        /// <include file="Core.xml" path='LibLLVMAPI/Enumeration[@name="LLVMLinkage"]/Item[@name="LLVMLinkerPrivateWeakLinkage"]/*' />
         LLVMLinkerPrivateWeakLinkage = 16,
     }
 
+    /// <include file="Core.xml" path='LibLLVMAPI/Enumeration[@name="LLVMVisibility"]/*[not(self::Item)]' />
     [GeneratedCode("LlvmBindingsGenerator","2.17941.31104.49410")]
     public enum LLVMVisibility : global::System.Int32
     {
-        /**< The GV is visible */
+        /// <include file="Core.xml" path='LibLLVMAPI/Enumeration[@name="LLVMVisibility"]/Item[@name="LLVMDefaultVisibility"]/*' />
         LLVMDefaultVisibility = 0,
-        /**< The GV is hidden */
+        /// <include file="Core.xml" path='LibLLVMAPI/Enumeration[@name="LLVMVisibility"]/Item[@name="LLVMHiddenVisibility"]/*' />
         LLVMHiddenVisibility = 1,
-        /**< The GV is protected */
+        /// <include file="Core.xml" path='LibLLVMAPI/Enumeration[@name="LLVMVisibility"]/Item[@name="LLVMProtectedVisibility"]/*' />
         LLVMProtectedVisibility = 2,
     }
 
+    /// <include file="Core.xml" path='LibLLVMAPI/Enumeration[@name="LLVMUnnamedAddr"]/*[not(self::Item)]' />
     [GeneratedCode("LlvmBindingsGenerator","2.17941.31104.49410")]
     public enum LLVMUnnamedAddr : global::System.Int32
     {
-        /**< Address of the GV is significant. */
+        /// <include file="Core.xml" path='LibLLVMAPI/Enumeration[@name="LLVMUnnamedAddr"]/Item[@name="LLVMNoUnnamedAddr"]/*' />
         LLVMNoUnnamedAddr = 0,
-        /**< Address of the GV is locally insignificant. */
+        /// <include file="Core.xml" path='LibLLVMAPI/Enumeration[@name="LLVMUnnamedAddr"]/Item[@name="LLVMLocalUnnamedAddr"]/*' />
         LLVMLocalUnnamedAddr = 1,
-        /**< Address of the GV is globally insignificant. */
+        /// <include file="Core.xml" path='LibLLVMAPI/Enumeration[@name="LLVMUnnamedAddr"]/Item[@name="LLVMGlobalUnnamedAddr"]/*' />
         LLVMGlobalUnnamedAddr = 2,
     }
 
+    /// <include file="Core.xml" path='LibLLVMAPI/Enumeration[@name="LLVMDLLStorageClass"]/*[not(self::Item)]' />
     [GeneratedCode("LlvmBindingsGenerator","2.17941.31104.49410")]
     public enum LLVMDLLStorageClass : global::System.Int32
     {
+        /// <include file="Core.xml" path='LibLLVMAPI/Enumeration[@name="LLVMDLLStorageClass"]/Item[@name="LLVMDefaultStorageClass"]/*' />
         LLVMDefaultStorageClass = 0,
-        /**< Function to be imported from DLL. */
+        /// <include file="Core.xml" path='LibLLVMAPI/Enumeration[@name="LLVMDLLStorageClass"]/Item[@name="LLVMDLLImportStorageClass"]/*' />
         LLVMDLLImportStorageClass = 1,
-        /**< Function to be accessible from DLL. */
+        /// <include file="Core.xml" path='LibLLVMAPI/Enumeration[@name="LLVMDLLStorageClass"]/Item[@name="LLVMDLLExportStorageClass"]/*' />
         LLVMDLLExportStorageClass = 2,
     }
 
+    /// <include file="Core.xml" path='LibLLVMAPI/Enumeration[@name="LLVMCallConv"]/*[not(self::Item)]' />
     [GeneratedCode("LlvmBindingsGenerator","2.17941.31104.49410")]
     public enum LLVMCallConv : global::System.Int32
     {
+        /// <include file="Core.xml" path='LibLLVMAPI/Enumeration[@name="LLVMCallConv"]/Item[@name="LLVMCCallConv"]/*' />
         LLVMCCallConv = 0,
+        /// <include file="Core.xml" path='LibLLVMAPI/Enumeration[@name="LLVMCallConv"]/Item[@name="LLVMFastCallConv"]/*' />
         LLVMFastCallConv = 8,
+        /// <include file="Core.xml" path='LibLLVMAPI/Enumeration[@name="LLVMCallConv"]/Item[@name="LLVMColdCallConv"]/*' />
         LLVMColdCallConv = 9,
+        /// <include file="Core.xml" path='LibLLVMAPI/Enumeration[@name="LLVMCallConv"]/Item[@name="LLVMGHCCallConv"]/*' />
         LLVMGHCCallConv = 10,
+        /// <include file="Core.xml" path='LibLLVMAPI/Enumeration[@name="LLVMCallConv"]/Item[@name="LLVMHiPECallConv"]/*' />
         LLVMHiPECallConv = 11,
+        /// <include file="Core.xml" path='LibLLVMAPI/Enumeration[@name="LLVMCallConv"]/Item[@name="LLVMWebKitJSCallConv"]/*' />
         LLVMWebKitJSCallConv = 12,
+        /// <include file="Core.xml" path='LibLLVMAPI/Enumeration[@name="LLVMCallConv"]/Item[@name="LLVMAnyRegCallConv"]/*' />
         LLVMAnyRegCallConv = 13,
+        /// <include file="Core.xml" path='LibLLVMAPI/Enumeration[@name="LLVMCallConv"]/Item[@name="LLVMPreserveMostCallConv"]/*' />
         LLVMPreserveMostCallConv = 14,
+        /// <include file="Core.xml" path='LibLLVMAPI/Enumeration[@name="LLVMCallConv"]/Item[@name="LLVMPreserveAllCallConv"]/*' />
         LLVMPreserveAllCallConv = 15,
+        /// <include file="Core.xml" path='LibLLVMAPI/Enumeration[@name="LLVMCallConv"]/Item[@name="LLVMSwiftCallConv"]/*' />
         LLVMSwiftCallConv = 16,
+        /// <include file="Core.xml" path='LibLLVMAPI/Enumeration[@name="LLVMCallConv"]/Item[@name="LLVMCXXFASTTLSCallConv"]/*' />
         LLVMCXXFASTTLSCallConv = 17,
+        /// <include file="Core.xml" path='LibLLVMAPI/Enumeration[@name="LLVMCallConv"]/Item[@name="LLVMX86StdcallCallConv"]/*' />
         LLVMX86StdcallCallConv = 64,
+        /// <include file="Core.xml" path='LibLLVMAPI/Enumeration[@name="LLVMCallConv"]/Item[@name="LLVMX86FastcallCallConv"]/*' />
         LLVMX86FastcallCallConv = 65,
+        /// <include file="Core.xml" path='LibLLVMAPI/Enumeration[@name="LLVMCallConv"]/Item[@name="LLVMARMAPCSCallConv"]/*' />
         LLVMARMAPCSCallConv = 66,
+        /// <include file="Core.xml" path='LibLLVMAPI/Enumeration[@name="LLVMCallConv"]/Item[@name="LLVMARMAAPCSCallConv"]/*' />
         LLVMARMAAPCSCallConv = 67,
+        /// <include file="Core.xml" path='LibLLVMAPI/Enumeration[@name="LLVMCallConv"]/Item[@name="LLVMARMAAPCSVFPCallConv"]/*' />
         LLVMARMAAPCSVFPCallConv = 68,
+        /// <include file="Core.xml" path='LibLLVMAPI/Enumeration[@name="LLVMCallConv"]/Item[@name="LLVMMSP430INTRCallConv"]/*' />
         LLVMMSP430INTRCallConv = 69,
+        /// <include file="Core.xml" path='LibLLVMAPI/Enumeration[@name="LLVMCallConv"]/Item[@name="LLVMX86ThisCallCallConv"]/*' />
         LLVMX86ThisCallCallConv = 70,
+        /// <include file="Core.xml" path='LibLLVMAPI/Enumeration[@name="LLVMCallConv"]/Item[@name="LLVMPTXKernelCallConv"]/*' />
         LLVMPTXKernelCallConv = 71,
+        /// <include file="Core.xml" path='LibLLVMAPI/Enumeration[@name="LLVMCallConv"]/Item[@name="LLVMPTXDeviceCallConv"]/*' />
         LLVMPTXDeviceCallConv = 72,
+        /// <include file="Core.xml" path='LibLLVMAPI/Enumeration[@name="LLVMCallConv"]/Item[@name="LLVMSPIRFUNCCallConv"]/*' />
         LLVMSPIRFUNCCallConv = 75,
+        /// <include file="Core.xml" path='LibLLVMAPI/Enumeration[@name="LLVMCallConv"]/Item[@name="LLVMSPIRKERNELCallConv"]/*' />
         LLVMSPIRKERNELCallConv = 76,
+        /// <include file="Core.xml" path='LibLLVMAPI/Enumeration[@name="LLVMCallConv"]/Item[@name="LLVMIntelOCLBICallConv"]/*' />
         LLVMIntelOCLBICallConv = 77,
+        /// <include file="Core.xml" path='LibLLVMAPI/Enumeration[@name="LLVMCallConv"]/Item[@name="LLVMX8664SysVCallConv"]/*' />
         LLVMX8664SysVCallConv = 78,
+        /// <include file="Core.xml" path='LibLLVMAPI/Enumeration[@name="LLVMCallConv"]/Item[@name="LLVMWin64CallConv"]/*' />
         LLVMWin64CallConv = 79,
+        /// <include file="Core.xml" path='LibLLVMAPI/Enumeration[@name="LLVMCallConv"]/Item[@name="LLVMX86VectorCallCallConv"]/*' />
         LLVMX86VectorCallCallConv = 80,
+        /// <include file="Core.xml" path='LibLLVMAPI/Enumeration[@name="LLVMCallConv"]/Item[@name="LLVMHHVMCallConv"]/*' />
         LLVMHHVMCallConv = 81,
+        /// <include file="Core.xml" path='LibLLVMAPI/Enumeration[@name="LLVMCallConv"]/Item[@name="LLVMHHVMCCallConv"]/*' />
         LLVMHHVMCCallConv = 82,
+        /// <include file="Core.xml" path='LibLLVMAPI/Enumeration[@name="LLVMCallConv"]/Item[@name="LLVMX86INTRCallConv"]/*' />
         LLVMX86INTRCallConv = 83,
+        /// <include file="Core.xml" path='LibLLVMAPI/Enumeration[@name="LLVMCallConv"]/Item[@name="LLVMAVRINTRCallConv"]/*' />
         LLVMAVRINTRCallConv = 84,
+        /// <include file="Core.xml" path='LibLLVMAPI/Enumeration[@name="LLVMCallConv"]/Item[@name="LLVMAVRSIGNALCallConv"]/*' />
         LLVMAVRSIGNALCallConv = 85,
+        /// <include file="Core.xml" path='LibLLVMAPI/Enumeration[@name="LLVMCallConv"]/Item[@name="LLVMAVRBUILTINCallConv"]/*' />
         LLVMAVRBUILTINCallConv = 86,
+        /// <include file="Core.xml" path='LibLLVMAPI/Enumeration[@name="LLVMCallConv"]/Item[@name="LLVMAMDGPUVSCallConv"]/*' />
         LLVMAMDGPUVSCallConv = 87,
+        /// <include file="Core.xml" path='LibLLVMAPI/Enumeration[@name="LLVMCallConv"]/Item[@name="LLVMAMDGPUGSCallConv"]/*' />
         LLVMAMDGPUGSCallConv = 88,
+        /// <include file="Core.xml" path='LibLLVMAPI/Enumeration[@name="LLVMCallConv"]/Item[@name="LLVMAMDGPUPSCallConv"]/*' />
         LLVMAMDGPUPSCallConv = 89,
+        /// <include file="Core.xml" path='LibLLVMAPI/Enumeration[@name="LLVMCallConv"]/Item[@name="LLVMAMDGPUCSCallConv"]/*' />
         LLVMAMDGPUCSCallConv = 90,
+        /// <include file="Core.xml" path='LibLLVMAPI/Enumeration[@name="LLVMCallConv"]/Item[@name="LLVMAMDGPUKERNELCallConv"]/*' />
         LLVMAMDGPUKERNELCallConv = 91,
+        /// <include file="Core.xml" path='LibLLVMAPI/Enumeration[@name="LLVMCallConv"]/Item[@name="LLVMX86RegCallCallConv"]/*' />
         LLVMX86RegCallCallConv = 92,
+        /// <include file="Core.xml" path='LibLLVMAPI/Enumeration[@name="LLVMCallConv"]/Item[@name="LLVMAMDGPUHSCallConv"]/*' />
         LLVMAMDGPUHSCallConv = 93,
+        /// <include file="Core.xml" path='LibLLVMAPI/Enumeration[@name="LLVMCallConv"]/Item[@name="LLVMMSP430BUILTINCallConv"]/*' />
         LLVMMSP430BUILTINCallConv = 94,
+        /// <include file="Core.xml" path='LibLLVMAPI/Enumeration[@name="LLVMCallConv"]/Item[@name="LLVMAMDGPULSCallConv"]/*' />
         LLVMAMDGPULSCallConv = 95,
+        /// <include file="Core.xml" path='LibLLVMAPI/Enumeration[@name="LLVMCallConv"]/Item[@name="LLVMAMDGPUESCallConv"]/*' />
         LLVMAMDGPUESCallConv = 96,
     }
 
+    /// <include file="Core.xml" path='LibLLVMAPI/Enumeration[@name="LLVMValueKind"]/*[not(self::Item)]' />
     [GeneratedCode("LlvmBindingsGenerator","2.17941.31104.49410")]
     public enum LLVMValueKind : global::System.Int32
     {
+        /// <include file="Core.xml" path='LibLLVMAPI/Enumeration[@name="LLVMValueKind"]/Item[@name="LLVMArgumentValueKind"]/*' />
         LLVMArgumentValueKind = 0,
+        /// <include file="Core.xml" path='LibLLVMAPI/Enumeration[@name="LLVMValueKind"]/Item[@name="LLVMBasicBlockValueKind"]/*' />
         LLVMBasicBlockValueKind = 1,
+        /// <include file="Core.xml" path='LibLLVMAPI/Enumeration[@name="LLVMValueKind"]/Item[@name="LLVMMemoryUseValueKind"]/*' />
         LLVMMemoryUseValueKind = 2,
+        /// <include file="Core.xml" path='LibLLVMAPI/Enumeration[@name="LLVMValueKind"]/Item[@name="LLVMMemoryDefValueKind"]/*' />
         LLVMMemoryDefValueKind = 3,
+        /// <include file="Core.xml" path='LibLLVMAPI/Enumeration[@name="LLVMValueKind"]/Item[@name="LLVMMemoryPhiValueKind"]/*' />
         LLVMMemoryPhiValueKind = 4,
+        /// <include file="Core.xml" path='LibLLVMAPI/Enumeration[@name="LLVMValueKind"]/Item[@name="LLVMFunctionValueKind"]/*' />
         LLVMFunctionValueKind = 5,
+        /// <include file="Core.xml" path='LibLLVMAPI/Enumeration[@name="LLVMValueKind"]/Item[@name="LLVMGlobalAliasValueKind"]/*' />
         LLVMGlobalAliasValueKind = 6,
+        /// <include file="Core.xml" path='LibLLVMAPI/Enumeration[@name="LLVMValueKind"]/Item[@name="LLVMGlobalIFuncValueKind"]/*' />
         LLVMGlobalIFuncValueKind = 7,
+        /// <include file="Core.xml" path='LibLLVMAPI/Enumeration[@name="LLVMValueKind"]/Item[@name="LLVMGlobalVariableValueKind"]/*' />
         LLVMGlobalVariableValueKind = 8,
+        /// <include file="Core.xml" path='LibLLVMAPI/Enumeration[@name="LLVMValueKind"]/Item[@name="LLVMBlockAddressValueKind"]/*' />
         LLVMBlockAddressValueKind = 9,
+        /// <include file="Core.xml" path='LibLLVMAPI/Enumeration[@name="LLVMValueKind"]/Item[@name="LLVMConstantExprValueKind"]/*' />
         LLVMConstantExprValueKind = 10,
+        /// <include file="Core.xml" path='LibLLVMAPI/Enumeration[@name="LLVMValueKind"]/Item[@name="LLVMConstantArrayValueKind"]/*' />
         LLVMConstantArrayValueKind = 11,
+        /// <include file="Core.xml" path='LibLLVMAPI/Enumeration[@name="LLVMValueKind"]/Item[@name="LLVMConstantStructValueKind"]/*' />
         LLVMConstantStructValueKind = 12,
+        /// <include file="Core.xml" path='LibLLVMAPI/Enumeration[@name="LLVMValueKind"]/Item[@name="LLVMConstantVectorValueKind"]/*' />
         LLVMConstantVectorValueKind = 13,
+        /// <include file="Core.xml" path='LibLLVMAPI/Enumeration[@name="LLVMValueKind"]/Item[@name="LLVMUndefValueValueKind"]/*' />
         LLVMUndefValueValueKind = 14,
+        /// <include file="Core.xml" path='LibLLVMAPI/Enumeration[@name="LLVMValueKind"]/Item[@name="LLVMConstantAggregateZeroValueKind"]/*' />
         LLVMConstantAggregateZeroValueKind = 15,
+        /// <include file="Core.xml" path='LibLLVMAPI/Enumeration[@name="LLVMValueKind"]/Item[@name="LLVMConstantDataArrayValueKind"]/*' />
         LLVMConstantDataArrayValueKind = 16,
+        /// <include file="Core.xml" path='LibLLVMAPI/Enumeration[@name="LLVMValueKind"]/Item[@name="LLVMConstantDataVectorValueKind"]/*' />
         LLVMConstantDataVectorValueKind = 17,
+        /// <include file="Core.xml" path='LibLLVMAPI/Enumeration[@name="LLVMValueKind"]/Item[@name="LLVMConstantIntValueKind"]/*' />
         LLVMConstantIntValueKind = 18,
+        /// <include file="Core.xml" path='LibLLVMAPI/Enumeration[@name="LLVMValueKind"]/Item[@name="LLVMConstantFPValueKind"]/*' />
         LLVMConstantFPValueKind = 19,
+        /// <include file="Core.xml" path='LibLLVMAPI/Enumeration[@name="LLVMValueKind"]/Item[@name="LLVMConstantPointerNullValueKind"]/*' />
         LLVMConstantPointerNullValueKind = 20,
+        /// <include file="Core.xml" path='LibLLVMAPI/Enumeration[@name="LLVMValueKind"]/Item[@name="LLVMConstantTokenNoneValueKind"]/*' />
         LLVMConstantTokenNoneValueKind = 21,
+        /// <include file="Core.xml" path='LibLLVMAPI/Enumeration[@name="LLVMValueKind"]/Item[@name="LLVMMetadataAsValueValueKind"]/*' />
         LLVMMetadataAsValueValueKind = 22,
+        /// <include file="Core.xml" path='LibLLVMAPI/Enumeration[@name="LLVMValueKind"]/Item[@name="LLVMInlineAsmValueKind"]/*' />
         LLVMInlineAsmValueKind = 23,
+        /// <include file="Core.xml" path='LibLLVMAPI/Enumeration[@name="LLVMValueKind"]/Item[@name="LLVMInstructionValueKind"]/*' />
         LLVMInstructionValueKind = 24,
     }
 
+    /// <include file="Core.xml" path='LibLLVMAPI/Enumeration[@name="LLVMIntPredicate"]/*[not(self::Item)]' />
     [GeneratedCode("LlvmBindingsGenerator","2.17941.31104.49410")]
     public enum LLVMIntPredicate : global::System.Int32
     {
-        /**< equal */
+        /// <include file="Core.xml" path='LibLLVMAPI/Enumeration[@name="LLVMIntPredicate"]/Item[@name="LLVMIntEQ"]/*' />
         LLVMIntEQ = 32,
-        /**< not equal */
+        /// <include file="Core.xml" path='LibLLVMAPI/Enumeration[@name="LLVMIntPredicate"]/Item[@name="LLVMIntNE"]/*' />
         LLVMIntNE = 33,
-        /**< unsigned greater than */
+        /// <include file="Core.xml" path='LibLLVMAPI/Enumeration[@name="LLVMIntPredicate"]/Item[@name="LLVMIntUGT"]/*' />
         LLVMIntUGT = 34,
-        /**< unsigned greater or equal */
+        /// <include file="Core.xml" path='LibLLVMAPI/Enumeration[@name="LLVMIntPredicate"]/Item[@name="LLVMIntUGE"]/*' />
         LLVMIntUGE = 35,
-        /**< unsigned less than */
+        /// <include file="Core.xml" path='LibLLVMAPI/Enumeration[@name="LLVMIntPredicate"]/Item[@name="LLVMIntULT"]/*' />
         LLVMIntULT = 36,
-        /**< unsigned less or equal */
+        /// <include file="Core.xml" path='LibLLVMAPI/Enumeration[@name="LLVMIntPredicate"]/Item[@name="LLVMIntULE"]/*' />
         LLVMIntULE = 37,
-        /**< signed greater than */
+        /// <include file="Core.xml" path='LibLLVMAPI/Enumeration[@name="LLVMIntPredicate"]/Item[@name="LLVMIntSGT"]/*' />
         LLVMIntSGT = 38,
-        /**< signed greater or equal */
+        /// <include file="Core.xml" path='LibLLVMAPI/Enumeration[@name="LLVMIntPredicate"]/Item[@name="LLVMIntSGE"]/*' />
         LLVMIntSGE = 39,
-        /**< signed less than */
+        /// <include file="Core.xml" path='LibLLVMAPI/Enumeration[@name="LLVMIntPredicate"]/Item[@name="LLVMIntSLT"]/*' />
         LLVMIntSLT = 40,
-        /**< signed less or equal */
+        /// <include file="Core.xml" path='LibLLVMAPI/Enumeration[@name="LLVMIntPredicate"]/Item[@name="LLVMIntSLE"]/*' />
         LLVMIntSLE = 41,
     }
 
+    /// <include file="Core.xml" path='LibLLVMAPI/Enumeration[@name="LLVMRealPredicate"]/*[not(self::Item)]' />
     [GeneratedCode("LlvmBindingsGenerator","2.17941.31104.49410")]
     public enum LLVMRealPredicate : global::System.Int32
     {
-        /**< Always false (always folded) */
+        /// <include file="Core.xml" path='LibLLVMAPI/Enumeration[@name="LLVMRealPredicate"]/Item[@name="LLVMRealPredicateFalse"]/*' />
         LLVMRealPredicateFalse = 0,
-        /**< True if ordered and equal */
+        /// <include file="Core.xml" path='LibLLVMAPI/Enumeration[@name="LLVMRealPredicate"]/Item[@name="LLVMRealOEQ"]/*' />
         LLVMRealOEQ = 1,
-        /**< True if ordered and greater than */
+        /// <include file="Core.xml" path='LibLLVMAPI/Enumeration[@name="LLVMRealPredicate"]/Item[@name="LLVMRealOGT"]/*' />
         LLVMRealOGT = 2,
-        /**< True if ordered and greater than or equal */
+        /// <include file="Core.xml" path='LibLLVMAPI/Enumeration[@name="LLVMRealPredicate"]/Item[@name="LLVMRealOGE"]/*' />
         LLVMRealOGE = 3,
-        /**< True if ordered and less than */
+        /// <include file="Core.xml" path='LibLLVMAPI/Enumeration[@name="LLVMRealPredicate"]/Item[@name="LLVMRealOLT"]/*' />
         LLVMRealOLT = 4,
-        /**< True if ordered and less than or equal */
+        /// <include file="Core.xml" path='LibLLVMAPI/Enumeration[@name="LLVMRealPredicate"]/Item[@name="LLVMRealOLE"]/*' />
         LLVMRealOLE = 5,
-        /**< True if ordered and operands are unequal */
+        /// <include file="Core.xml" path='LibLLVMAPI/Enumeration[@name="LLVMRealPredicate"]/Item[@name="LLVMRealONE"]/*' />
         LLVMRealONE = 6,
-        /**< True if ordered (no nans) */
+        /// <include file="Core.xml" path='LibLLVMAPI/Enumeration[@name="LLVMRealPredicate"]/Item[@name="LLVMRealORD"]/*' />
         LLVMRealORD = 7,
-        /**< True if unordered: isnan(X) | isnan(Y) */
+        /// <include file="Core.xml" path='LibLLVMAPI/Enumeration[@name="LLVMRealPredicate"]/Item[@name="LLVMRealUNO"]/*' />
         LLVMRealUNO = 8,
-        /**< True if unordered or equal */
+        /// <include file="Core.xml" path='LibLLVMAPI/Enumeration[@name="LLVMRealPredicate"]/Item[@name="LLVMRealUEQ"]/*' />
         LLVMRealUEQ = 9,
-        /**< True if unordered or greater than */
+        /// <include file="Core.xml" path='LibLLVMAPI/Enumeration[@name="LLVMRealPredicate"]/Item[@name="LLVMRealUGT"]/*' />
         LLVMRealUGT = 10,
-        /**< True if unordered, greater than, or equal */
+        /// <include file="Core.xml" path='LibLLVMAPI/Enumeration[@name="LLVMRealPredicate"]/Item[@name="LLVMRealUGE"]/*' />
         LLVMRealUGE = 11,
-        /**< True if unordered or less than */
+        /// <include file="Core.xml" path='LibLLVMAPI/Enumeration[@name="LLVMRealPredicate"]/Item[@name="LLVMRealULT"]/*' />
         LLVMRealULT = 12,
-        /**< True if unordered, less than, or equal */
+        /// <include file="Core.xml" path='LibLLVMAPI/Enumeration[@name="LLVMRealPredicate"]/Item[@name="LLVMRealULE"]/*' />
         LLVMRealULE = 13,
-        /**< True if unordered or not equal */
+        /// <include file="Core.xml" path='LibLLVMAPI/Enumeration[@name="LLVMRealPredicate"]/Item[@name="LLVMRealUNE"]/*' />
         LLVMRealUNE = 14,
-        /**< Always true (always folded) */
+        /// <include file="Core.xml" path='LibLLVMAPI/Enumeration[@name="LLVMRealPredicate"]/Item[@name="LLVMRealPredicateTrue"]/*' />
         LLVMRealPredicateTrue = 15,
     }
 
+    /// <include file="Core.xml" path='LibLLVMAPI/Enumeration[@name="LLVMLandingPadClauseTy"]/*[not(self::Item)]' />
     [GeneratedCode("LlvmBindingsGenerator","2.17941.31104.49410")]
     public enum LLVMLandingPadClauseTy : global::System.Int32
     {
-        /**< A catch clause   */
+        /// <include file="Core.xml" path='LibLLVMAPI/Enumeration[@name="LLVMLandingPadClauseTy"]/Item[@name="LLVMLandingPadCatch"]/*' />
         LLVMLandingPadCatch = 0,
-        /**< A filter clause  */
+        /// <include file="Core.xml" path='LibLLVMAPI/Enumeration[@name="LLVMLandingPadClauseTy"]/Item[@name="LLVMLandingPadFilter"]/*' />
         LLVMLandingPadFilter = 1,
     }
 
+    /// <include file="Core.xml" path='LibLLVMAPI/Enumeration[@name="LLVMThreadLocalMode"]/*[not(self::Item)]' />
     [GeneratedCode("LlvmBindingsGenerator","2.17941.31104.49410")]
     public enum LLVMThreadLocalMode : global::System.Int32
     {
+        /// <include file="Core.xml" path='LibLLVMAPI/Enumeration[@name="LLVMThreadLocalMode"]/Item[@name="LLVMNotThreadLocal"]/*' />
         LLVMNotThreadLocal = 0,
+        /// <include file="Core.xml" path='LibLLVMAPI/Enumeration[@name="LLVMThreadLocalMode"]/Item[@name="LLVMGeneralDynamicTLSModel"]/*' />
         LLVMGeneralDynamicTLSModel = 1,
+        /// <include file="Core.xml" path='LibLLVMAPI/Enumeration[@name="LLVMThreadLocalMode"]/Item[@name="LLVMLocalDynamicTLSModel"]/*' />
         LLVMLocalDynamicTLSModel = 2,
+        /// <include file="Core.xml" path='LibLLVMAPI/Enumeration[@name="LLVMThreadLocalMode"]/Item[@name="LLVMInitialExecTLSModel"]/*' />
         LLVMInitialExecTLSModel = 3,
+        /// <include file="Core.xml" path='LibLLVMAPI/Enumeration[@name="LLVMThreadLocalMode"]/Item[@name="LLVMLocalExecTLSModel"]/*' />
         LLVMLocalExecTLSModel = 4,
     }
 
+    /// <include file="Core.xml" path='LibLLVMAPI/Enumeration[@name="LLVMAtomicOrdering"]/*[not(self::Item)]' />
     [GeneratedCode("LlvmBindingsGenerator","2.17941.31104.49410")]
     public enum LLVMAtomicOrdering : global::System.Int32
     {
-        /**< A load or store which is not atomic */
+        /// <include file="Core.xml" path='LibLLVMAPI/Enumeration[@name="LLVMAtomicOrdering"]/Item[@name="LLVMAtomicOrderingNotAtomic"]/*' />
         LLVMAtomicOrderingNotAtomic = 0,
-        /**< Lowest level of atomicity, guarantees
-                                             somewhat sane results, lock free. */
+        /// <include file="Core.xml" path='LibLLVMAPI/Enumeration[@name="LLVMAtomicOrdering"]/Item[@name="LLVMAtomicOrderingUnordered"]/*' />
         LLVMAtomicOrderingUnordered = 1,
-        /**< guarantees that if you take all the
-                                             operations affecting a specific address,
-                                             a consistent ordering exists */
+        /// <include file="Core.xml" path='LibLLVMAPI/Enumeration[@name="LLVMAtomicOrdering"]/Item[@name="LLVMAtomicOrderingMonotonic"]/*' />
         LLVMAtomicOrderingMonotonic = 2,
-        /**< Acquire provides a barrier of the sort
-                                           necessary to acquire a lock to access other
-                                           memory with normal loads and stores. */
+        /// <include file="Core.xml" path='LibLLVMAPI/Enumeration[@name="LLVMAtomicOrdering"]/Item[@name="LLVMAtomicOrderingAcquire"]/*' />
         LLVMAtomicOrderingAcquire = 4,
-        /**< Release is similar to Acquire, but with
-                                           a barrier of the sort necessary to release
-                                           a lock. */
+        /// <include file="Core.xml" path='LibLLVMAPI/Enumeration[@name="LLVMAtomicOrdering"]/Item[@name="LLVMAtomicOrderingRelease"]/*' />
         LLVMAtomicOrderingRelease = 5,
-        /**< provides both an Acquire and a
-                                                  Release barrier (for fences and
-                                                  operations which both read and write
-                                                   memory). */
+        /// <include file="Core.xml" path='LibLLVMAPI/Enumeration[@name="LLVMAtomicOrdering"]/Item[@name="LLVMAtomicOrderingAcquireRelease"]/*' />
         LLVMAtomicOrderingAcquireRelease = 6,
-        /**< provides Acquire semantics
-                                                         for loads and Release
-                                                         semantics for stores.
-                                                         Additionally, it guarantees
-                                                         that a total ordering exists
-                                                         between all
-                                                         SequentiallyConsistent
-                                                         operations. */
+        /// <include file="Core.xml" path='LibLLVMAPI/Enumeration[@name="LLVMAtomicOrdering"]/Item[@name="LLVMAtomicOrderingSequentiallyConsistent"]/*' />
         LLVMAtomicOrderingSequentiallyConsistent = 7,
     }
 
+    /// <include file="Core.xml" path='LibLLVMAPI/Enumeration[@name="LLVMAtomicRMWBinOp"]/*[not(self::Item)]' />
     [GeneratedCode("LlvmBindingsGenerator","2.17941.31104.49410")]
     public enum LLVMAtomicRMWBinOp : global::System.Int32
     {
-        /**< Set the new value and return the one old */
+        /// <include file="Core.xml" path='LibLLVMAPI/Enumeration[@name="LLVMAtomicRMWBinOp"]/Item[@name="LLVMAtomicRMWBinOpXchg"]/*' />
         LLVMAtomicRMWBinOpXchg = 0,
-        /**< Add a value and return the old one */
+        /// <include file="Core.xml" path='LibLLVMAPI/Enumeration[@name="LLVMAtomicRMWBinOp"]/Item[@name="LLVMAtomicRMWBinOpAdd"]/*' />
         LLVMAtomicRMWBinOpAdd = 1,
-        /**< Subtract a value and return the old one */
+        /// <include file="Core.xml" path='LibLLVMAPI/Enumeration[@name="LLVMAtomicRMWBinOp"]/Item[@name="LLVMAtomicRMWBinOpSub"]/*' />
         LLVMAtomicRMWBinOpSub = 2,
-        /**< And a value and return the old one */
+        /// <include file="Core.xml" path='LibLLVMAPI/Enumeration[@name="LLVMAtomicRMWBinOp"]/Item[@name="LLVMAtomicRMWBinOpAnd"]/*' />
         LLVMAtomicRMWBinOpAnd = 3,
-        /**< Not-And a value and return the old one */
+        /// <include file="Core.xml" path='LibLLVMAPI/Enumeration[@name="LLVMAtomicRMWBinOp"]/Item[@name="LLVMAtomicRMWBinOpNand"]/*' />
         LLVMAtomicRMWBinOpNand = 4,
-        /**< OR a value and return the old one */
+        /// <include file="Core.xml" path='LibLLVMAPI/Enumeration[@name="LLVMAtomicRMWBinOp"]/Item[@name="LLVMAtomicRMWBinOpOr"]/*' />
         LLVMAtomicRMWBinOpOr = 5,
-        /**< Xor a value and return the old one */
+        /// <include file="Core.xml" path='LibLLVMAPI/Enumeration[@name="LLVMAtomicRMWBinOp"]/Item[@name="LLVMAtomicRMWBinOpXor"]/*' />
         LLVMAtomicRMWBinOpXor = 6,
-        /**< Sets the value if it's greater than the
-                                     original using a signed comparison and return
-                                     the old one */
+        /// <include file="Core.xml" path='LibLLVMAPI/Enumeration[@name="LLVMAtomicRMWBinOp"]/Item[@name="LLVMAtomicRMWBinOpMax"]/*' />
         LLVMAtomicRMWBinOpMax = 7,
-        /**< Sets the value if it's Smaller than the
-                                     original using a signed comparison and return
-                                     the old one */
+        /// <include file="Core.xml" path='LibLLVMAPI/Enumeration[@name="LLVMAtomicRMWBinOp"]/Item[@name="LLVMAtomicRMWBinOpMin"]/*' />
         LLVMAtomicRMWBinOpMin = 8,
-        /**< Sets the value if it's greater than the
-                                     original using an unsigned comparison and return
-                                     the old one */
+        /// <include file="Core.xml" path='LibLLVMAPI/Enumeration[@name="LLVMAtomicRMWBinOp"]/Item[@name="LLVMAtomicRMWBinOpUMax"]/*' />
         LLVMAtomicRMWBinOpUMax = 9,
-        /**< Sets the value if it's greater than the
-                                     original using an unsigned comparison  and return
-                                     the old one */
+        /// <include file="Core.xml" path='LibLLVMAPI/Enumeration[@name="LLVMAtomicRMWBinOp"]/Item[@name="LLVMAtomicRMWBinOpUMin"]/*' />
         LLVMAtomicRMWBinOpUMin = 10,
     }
 
+    /// <include file="Core.xml" path='LibLLVMAPI/Enumeration[@name="LLVMDiagnosticSeverity"]/*[not(self::Item)]' />
     [GeneratedCode("LlvmBindingsGenerator","2.17941.31104.49410")]
     public enum LLVMDiagnosticSeverity : global::System.Int32
     {
+        /// <include file="Core.xml" path='LibLLVMAPI/Enumeration[@name="LLVMDiagnosticSeverity"]/Item[@name="LLVMDSError"]/*' />
         LLVMDSError = 0,
+        /// <include file="Core.xml" path='LibLLVMAPI/Enumeration[@name="LLVMDiagnosticSeverity"]/Item[@name="LLVMDSWarning"]/*' />
         LLVMDSWarning = 1,
+        /// <include file="Core.xml" path='LibLLVMAPI/Enumeration[@name="LLVMDiagnosticSeverity"]/Item[@name="LLVMDSRemark"]/*' />
         LLVMDSRemark = 2,
+        /// <include file="Core.xml" path='LibLLVMAPI/Enumeration[@name="LLVMDiagnosticSeverity"]/Item[@name="LLVMDSNote"]/*' />
         LLVMDSNote = 3,
     }
 
+    /// <include file="Core.xml" path='LibLLVMAPI/Enumeration[@name="LLVMInlineAsmDialect"]/*[not(self::Item)]' />
     [GeneratedCode("LlvmBindingsGenerator","2.17941.31104.49410")]
     public enum LLVMInlineAsmDialect : global::System.Int32
     {
+        /// <include file="Core.xml" path='LibLLVMAPI/Enumeration[@name="LLVMInlineAsmDialect"]/Item[@name="LLVMInlineAsmDialectATT"]/*' />
         LLVMInlineAsmDialectATT = 0,
+        /// <include file="Core.xml" path='LibLLVMAPI/Enumeration[@name="LLVMInlineAsmDialect"]/Item[@name="LLVMInlineAsmDialectIntel"]/*' />
         LLVMInlineAsmDialectIntel = 1,
     }
 
+    /// <include file="Core.xml" path='LibLLVMAPI/Enumeration[@name="LLVMModuleFlagBehavior"]/*[not(self::Item)]' />
     [GeneratedCode("LlvmBindingsGenerator","2.17941.31104.49410")]
     public enum LLVMModuleFlagBehavior : global::System.Int32
     {
-        /**
-           * Emits an error if two values disagree, otherwise the resulting value is
-           * that of the operands.
-           *
-           * @see Module::ModFlagBehavior::Error
-           */
+        /// <include file="Core.xml" path='LibLLVMAPI/Enumeration[@name="LLVMModuleFlagBehavior"]/Item[@name="LLVMModuleFlagBehaviorError"]/*' />
         LLVMModuleFlagBehaviorError = 0,
-        /**
-           * Emits a warning if two values disagree. The result value will be the
-           * operand for the flag from the first module being linked.
-           *
-           * @see Module::ModFlagBehavior::Warning
-           */
+        /// <include file="Core.xml" path='LibLLVMAPI/Enumeration[@name="LLVMModuleFlagBehavior"]/Item[@name="LLVMModuleFlagBehaviorWarning"]/*' />
         LLVMModuleFlagBehaviorWarning = 1,
-        /**
-           * Adds a requirement that another module flag be present and have a
-           * specified value after linking is performed. The value must be a metadata
-           * pair, where the first element of the pair is the ID of the module flag
-           * to be restricted, and the second element of the pair is the value the
-           * module flag should be restricted to. This behavior can be used to
-           * restrict the allowable results (via triggering of an error) of linking
-           * IDs with the **Override** behavior.
-           *
-           * @see Module::ModFlagBehavior::Require
-           */
+        /// <include file="Core.xml" path='LibLLVMAPI/Enumeration[@name="LLVMModuleFlagBehavior"]/Item[@name="LLVMModuleFlagBehaviorRequire"]/*' />
         LLVMModuleFlagBehaviorRequire = 2,
-        /**
-           * Uses the specified value, regardless of the behavior or value of the
-           * other module. If both modules specify **Override**, but the values
-           * differ, an error will be emitted.
-           *
-           * @see Module::ModFlagBehavior::Override
-           */
+        /// <include file="Core.xml" path='LibLLVMAPI/Enumeration[@name="LLVMModuleFlagBehavior"]/Item[@name="LLVMModuleFlagBehaviorOverride"]/*' />
         LLVMModuleFlagBehaviorOverride = 3,
-        /**
-           * Appends the two values, which are required to be metadata nodes.
-           *
-           * @see Module::ModFlagBehavior::Append
-           */
+        /// <include file="Core.xml" path='LibLLVMAPI/Enumeration[@name="LLVMModuleFlagBehavior"]/Item[@name="LLVMModuleFlagBehaviorAppend"]/*' />
         LLVMModuleFlagBehaviorAppend = 4,
-        /**
-           * Appends the two values, which are required to be metadata
-           * nodes. However, duplicate entries in the second list are dropped
-           * during the append operation.
-           *
-           * @see Module::ModFlagBehavior::AppendUnique
-           */
+        /// <include file="Core.xml" path='LibLLVMAPI/Enumeration[@name="LLVMModuleFlagBehavior"]/Item[@name="LLVMModuleFlagBehaviorAppendUnique"]/*' />
         LLVMModuleFlagBehaviorAppendUnique = 5,
     }
 
-    /**
-     * Attribute index are either LLVMAttributeReturnIndex,
-     * LLVMAttributeFunctionIndex or a parameter number from 1 to N.
-     */
+    /// <include file="Core.xml" path='LibLLVMAPI/Enumeration[@name="LLVMAttributeIndex"]/*[not(self::Item)]' />
     [GeneratedCode("LlvmBindingsGenerator","2.17941.31104.49410")]
     public enum LLVMAttributeIndex : global::System.Int32
     {
+        /// <include file="Core.xml" path='LibLLVMAPI/Enumeration[@name="LLVMAttributeIndex"]/Item[@name="LLVMAttributeReturnIndex"]/*' />
         LLVMAttributeReturnIndex = 0,
+        /// <include file="Core.xml" path='LibLLVMAPI/Enumeration[@name="LLVMAttributeIndex"]/Item[@name="LLVMAttributeFunctionIndex"]/*' />
         LLVMAttributeFunctionIndex = -1,
     }
 
-    /**
-     * @defgroup LLVMCCoreContext Contexts
-     *
-     * Contexts are execution states for the core LLVM IR system.
-     *
-     * Most types are tied to a context instance. Multiple contexts can
-     * exist simultaneously. A single context is not thread safe. However,
-     * different contexts can execute on different threads simultaneously.
-     *
-     * @{
-     */
+    /// <include file="Core.xml" path='LibLLVMAPI/Delegate[@name="LLVMDiagnosticHandler"]/*' />
     [UnmanagedFunctionPointer( global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
     public delegate void LLVMDiagnosticHandler( LLVMDiagnosticInfoRef _0, global::System.IntPtr _1 );
 
+    /// <include file="Core.xml" path='LibLLVMAPI/Delegate[@name="LLVMYieldCallback"]/*' />
     [UnmanagedFunctionPointer( global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
     public delegate void LLVMYieldCallback( LLVMContextRef _0, global::System.IntPtr _1 );
 
     public static partial class NativeMethods
     {
-        /**
-         * @}
-         */
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMInitializeCore"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern void LLVMInitializeCore( LLVMPassRegistryRef R );
 
-        /** Deallocate and destroy all ManagedStatic variables.
-            @see llvm::llvm_shutdown
-            @see ManagedStatic */
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMShutdown"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern void LLVMShutdown(  );
 
-        /**
-         * Create a new context.
-         *
-         * Every call to this function should be paired with a call to
-         * LLVMContextDispose() or the context will leak memory.
-         */
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMContextCreate"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern LLVMContextRef LLVMContextCreate(  );
 
-        /**
-         * Obtain the global context instance.
-         */
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMGetGlobalContext"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern LLVMContextRefAlias LLVMGetGlobalContext(  );
 
-        /**
-         * Set the diagnostic handler for this context.
-         */
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMContextSetDiagnosticHandler"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern void LLVMContextSetDiagnosticHandler( LLVMContextRef C, LLVMDiagnosticHandler Handler, global::System.IntPtr DiagnosticContext );
 
-        /**
-         * Get the diagnostic handler of this context.
-         */
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMContextGetDiagnosticHandler"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern LLVMDiagnosticHandler LLVMContextGetDiagnosticHandler( LLVMContextRef C );
 
-        /**
-         * Get the diagnostic context of this context.
-         */
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMContextGetDiagnosticContext"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern global::System.IntPtr LLVMContextGetDiagnosticContext( LLVMContextRef C );
 
-        /**
-         * Set the yield callback function for this context.
-         *
-         * @see LLVMContext::setYieldCallback()
-         */
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMContextSetYieldCallback"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern void LLVMContextSetYieldCallback( LLVMContextRef C, LLVMYieldCallback Callback, global::System.IntPtr OpaqueHandle );
 
-        /**
-         * Retrieve whether the given context is set to discard all value names.
-         *
-         * @see LLVMContext::shouldDiscardValueNames()
-         */
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMContextShouldDiscardValueNames"]/*' />
         [return: MarshalAs( UnmanagedType.Bool )]
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern bool LLVMContextShouldDiscardValueNames( LLVMContextRef C );
 
-        /**
-         * Set whether the given context discards all value names.
-         *
-         * If true, only the names of GlobalValue objects will be available in the IR.
-         * This can be used to save memory and runtime, especially in release mode.
-         *
-         * @see LLVMContext::setDiscardValueNames()
-         */
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMContextSetDiscardValueNames"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern void LLVMContextSetDiscardValueNames( LLVMContextRef C, [MarshalAs( UnmanagedType.Bool )]bool Discard );
 
-        /**
-         * Return a string representation of the DiagnosticInfo. Use
-         * LLVMDisposeMessage to free the string.
-         *
-         * @see DiagnosticInfo::print()
-         */
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMGetDiagInfoDescription"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         [return: MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( DisposeMessageMarshaler ) )]
         public static extern string LLVMGetDiagInfoDescription( LLVMDiagnosticInfoRef DI );
 
-        /**
-         * Return an enum LLVMDiagnosticSeverity.
-         *
-         * @see DiagnosticInfo::getSeverity()
-         */
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMGetDiagInfoSeverity"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern LLVMDiagnosticSeverity LLVMGetDiagInfoSeverity( LLVMDiagnosticInfoRef DI );
 
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMGetMDKindIDInContext"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern uint LLVMGetMDKindIDInContext( LLVMContextRef C, [MarshalAs( UnmanagedType.LPStr )]string Name, uint SLen );
 
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMGetMDKindID"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern uint LLVMGetMDKindID( [MarshalAs( UnmanagedType.LPStr )]string Name, uint SLen );
 
-        /**
-         * Return an unique id given the name of a enum attribute,
-         * or 0 if no attribute by that name exists.
-         *
-         * See http://llvm.org/docs/LangRef.html#parameter-attributes
-         * and http://llvm.org/docs/LangRef.html#function-attributes
-         * for the list of available attributes.
-         *
-         * NB: Attribute names and/or id are subject to change without
-         * going through the C API deprecation cycle.
-         */
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMGetEnumAttributeKindForName"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern uint LLVMGetEnumAttributeKindForName( [MarshalAs( UnmanagedType.LPStr )]string Name, size_t SLen );
 
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMGetLastEnumAttributeKind"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern uint LLVMGetLastEnumAttributeKind(  );
 
-        /**
-         * Create an enum attribute.
-         */
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMCreateEnumAttribute"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern LLVMAttributeRef LLVMCreateEnumAttribute( LLVMContextRef C, uint KindID, System.UInt64 Val );
 
-        /**
-         * Get the unique id corresponding to the enum attribute
-         * passed as argument.
-         */
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMGetEnumAttributeKind"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern uint LLVMGetEnumAttributeKind( LLVMAttributeRef A );
 
-        /**
-         * Get the enum attribute's value. 0 is returned if none exists.
-         */
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMGetEnumAttributeValue"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern System.UInt64 LLVMGetEnumAttributeValue( LLVMAttributeRef A );
 
-        /**
-         * Create a string attribute.
-         */
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMCreateStringAttribute"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern LLVMAttributeRef LLVMCreateStringAttribute( LLVMContextRef C, [MarshalAs( UnmanagedType.LPStr )]string K, uint KLength, [MarshalAs( UnmanagedType.LPStr )]string V, uint VLength );
 
-        /**
-         * Get the string attribute's kind.
-         */
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMGetStringAttributeKind"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         [return: MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( AliasStringMarshaler ) )]
         public static extern string LLVMGetStringAttributeKind( LLVMAttributeRef A, out uint Length );
 
-        /**
-         * Get the string attribute's value.
-         */
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMGetStringAttributeValue"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         [return: MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( AliasStringMarshaler ) )]
         public static extern string LLVMGetStringAttributeValue( LLVMAttributeRef A, out uint Length );
 
-        /**
-         * Check for the different types of attributes.
-         */
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMIsEnumAttribute"]/*' />
         [return: MarshalAs( UnmanagedType.Bool )]
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern bool LLVMIsEnumAttribute( LLVMAttributeRef A );
 
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMIsStringAttribute"]/*' />
         [return: MarshalAs( UnmanagedType.Bool )]
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern bool LLVMIsStringAttribute( LLVMAttributeRef A );
 
-        /**
-         * Create a new, empty module in the global context.
-         *
-         * This is equivalent to calling LLVMModuleCreateWithNameInContext with
-         * LLVMGetGlobalContext() as the context parameter.
-         *
-         * Every invocation should be paired with LLVMDisposeModule() or memory
-         * will be leaked.
-         */
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMModuleCreateWithName"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern LLVMModuleRef LLVMModuleCreateWithName( [MarshalAs( UnmanagedType.LPStr )]string ModuleID );
 
-        /**
-         * Create a new, empty module in a specific context.
-         *
-         * Every invocation should be paired with LLVMDisposeModule() or memory
-         * will be leaked.
-         */
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMModuleCreateWithNameInContext"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern LLVMModuleRef LLVMModuleCreateWithNameInContext( [MarshalAs( UnmanagedType.LPStr )]string ModuleID, LLVMContextRef C );
 
-        /**
-         * Return an exact copy of the specified module.
-         */
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMCloneModule"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern LLVMModuleRef LLVMCloneModule( LLVMModuleRef M );
 
-        /**
-         * Destroy a module instance.
-         *
-         * This must be called for every created module or memory will be
-         * leaked.
-         */
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMDisposeModule"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern void LLVMDisposeModule( LLVMModuleRef M );
 
-        /**
-         * Obtain the identifier of a module.
-         *
-         * @param M Module to obtain identifier of
-         * @param Len Out parameter which holds the length of the returned string.
-         * @return The identifier of M.
-         * @see Module::getModuleIdentifier()
-         */
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMGetModuleIdentifier"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         [return: MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( AliasStringMarshaler ) )]
         public static extern string LLVMGetModuleIdentifier( LLVMModuleRef M, out size_t Len );
 
-        /**
-         * Set the identifier of a module to a string Ident with length Len.
-         *
-         * @param M The module to set identifier
-         * @param Ident The string to set M's identifier to
-         * @param Len Length of Ident
-         * @see Module::setModuleIdentifier()
-         */
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMSetModuleIdentifier"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern void LLVMSetModuleIdentifier( LLVMModuleRef M, [MarshalAs( UnmanagedType.LPStr )]string Ident, size_t Len );
 
-        /**
-         * Obtain the module's original source file name.
-         *
-         * @param M Module to obtain the name of
-         * @param Len Out parameter which holds the length of the returned string
-         * @return The original source file name of M
-         * @see Module::getSourceFileName()
-         */
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMGetSourceFileName"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         [return: MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( AliasStringMarshaler ) )]
         public static extern string LLVMGetSourceFileName( LLVMModuleRef M, out size_t Len );
 
-        /**
-         * Set the original source file name of a module to a string Name with length
-         * Len.
-         *
-         * @param M The module to set the source file name of
-         * @param Name The string to set M's source file name to
-         * @param Len Length of Name
-         * @see Module::setSourceFileName()
-         */
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMSetSourceFileName"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern void LLVMSetSourceFileName( LLVMModuleRef M, [MarshalAs( UnmanagedType.LPStr )]string Name, size_t Len );
 
-        /**
-         * Obtain the data layout for a module.
-         *
-         * @see Module::getDataLayoutStr()
-         *
-         * LLVMGetDataLayout is DEPRECATED, as the name is not only incorrect,
-         * but match the name of another method on the module. Prefer the use
-         * of LLVMGetDataLayoutStr, which is not ambiguous.
-         */
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMGetDataLayoutStr"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         [return: MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( AliasStringMarshaler ) )]
         public static extern string LLVMGetDataLayoutStr( LLVMModuleRef M );
 
-        /**
-         * Set the data layout for a module.
-         *
-         * @see Module::setDataLayout()
-         */
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMSetDataLayout"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern void LLVMSetDataLayout( LLVMModuleRef M, [MarshalAs( UnmanagedType.LPStr )]string DataLayoutStr );
 
-        /**
-         * Obtain the target triple for a module.
-         *
-         * @see Module::getTargetTriple()
-         */
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMGetTarget"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         [return: MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( AliasStringMarshaler ) )]
         public static extern string LLVMGetTarget( LLVMModuleRef M );
 
-        /**
-         * Set the target triple for a module.
-         *
-         * @see Module::setTargetTriple()
-         */
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMSetTarget"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern void LLVMSetTarget( LLVMModuleRef M, [MarshalAs( UnmanagedType.LPStr )]string Triple );
 
-        /**
-         * Returns the module flags as an array of flag-key-value triples.  The caller
-         * is responsible for freeing this array by calling
-         * \c LLVMDisposeModuleFlagsMetadata.
-         *
-         * @see Module::getModuleFlagsMetadata()
-         */
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMCopyModuleFlagsMetadata"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern LLVMModuleFlagEntry LLVMCopyModuleFlagsMetadata( LLVMModuleRef M, out size_t Len );
 
-        /**
-         * Returns the flag behavior for a module flag entry at a specific index.
-         *
-         * @see Module::ModuleFlagEntry::Behavior
-         */
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMModuleFlagEntriesGetFlagBehavior"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern LLVMModuleFlagBehavior LLVMModuleFlagEntriesGetFlagBehavior( LLVMModuleFlagEntry Entries, uint Index );
 
-        /**
-         * Returns the key for a module flag entry at a specific index.
-         *
-         * @see Module::ModuleFlagEntry::Key
-         */
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMModuleFlagEntriesGetKey"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         [return: MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( AliasStringMarshaler ) )]
         public static extern string LLVMModuleFlagEntriesGetKey( LLVMModuleFlagEntry Entries, uint Index, out size_t Len );
 
-        /**
-         * Returns the metadata for a module flag entry at a specific index.
-         *
-         * @see Module::ModuleFlagEntry::Val
-         */
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMModuleFlagEntriesGetMetadata"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern LLVMMetadataRef LLVMModuleFlagEntriesGetMetadata( LLVMModuleFlagEntry Entries, uint Index );
 
-        /**
-         * Add a module-level flag to the module-level flags metadata if it doesn't
-         * already exist.
-         *
-         * @see Module::getModuleFlag()
-         */
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMGetModuleFlag"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern LLVMMetadataRef LLVMGetModuleFlag( LLVMModuleRef M, [MarshalAs( UnmanagedType.LPStr )]string Key, size_t KeyLen );
 
-        /**
-         * Add a module-level flag to the module-level flags metadata if it doesn't
-         * already exist.
-         *
-         * @see Module::addModuleFlag()
-         */
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMAddModuleFlag"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern void LLVMAddModuleFlag( LLVMModuleRef M, LLVMModuleFlagBehavior Behavior, [MarshalAs( UnmanagedType.LPStr )]string Key, size_t KeyLen, LLVMMetadataRef Val );
 
-        /**
-         * Dump a representation of a module to stderr.
-         *
-         * @see Module::dump()
-         */
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMDumpModule"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern void LLVMDumpModule( LLVMModuleRef M );
 
-        /**
-         * Print a representation of a module to a file. The ErrorMessage needs to be
-         * disposed with LLVMDisposeMessage. Returns 0 on success, 1 otherwise.
-         *
-         * @see Module::print()
-         */
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMPrintModuleToFile"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern LLVMStatus LLVMPrintModuleToFile( LLVMModuleRef M, [MarshalAs( UnmanagedType.LPStr )]string Filename, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( DisposeMessageMarshaler ) )]out string ErrorMessage );
 
-        /**
-         * Return a string representation of the module. Use
-         * LLVMDisposeMessage to free the string.
-         *
-         * @see Module::print()
-         */
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMPrintModuleToString"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         [return: MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( DisposeMessageMarshaler ) )]
         public static extern string LLVMPrintModuleToString( LLVMModuleRef M );
 
-        /**
-         * Get inline assembly for a module.
-         *
-         * @see Module::getModuleInlineAsm()
-         */
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMGetModuleInlineAsm"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         [return: MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( AliasStringMarshaler ) )]
         public static extern string LLVMGetModuleInlineAsm( LLVMModuleRef M, out size_t Len );
 
-        /**
-         * Set inline assembly for a module.
-         *
-         * @see Module::setModuleInlineAsm()
-         */
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMSetModuleInlineAsm2"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern void LLVMSetModuleInlineAsm2( LLVMModuleRef M, [MarshalAs( UnmanagedType.LPStr )]string Asm, size_t Len );
 
-        /**
-         * Append inline assembly to a module.
-         *
-         * @see Module::appendModuleInlineAsm()
-         */
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMAppendModuleInlineAsm"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern void LLVMAppendModuleInlineAsm( LLVMModuleRef M, [MarshalAs( UnmanagedType.LPStr )]string Asm, size_t Len );
 
-        /**
-         * Create the specified uniqued inline asm string.
-         *
-         * @see InlineAsm::get()
-         */
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMGetInlineAsm"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern LLVMValueRef LLVMGetInlineAsm( LLVMTypeRef Ty, [MarshalAs( UnmanagedType.LPStr )]string AsmString, size_t AsmStringSize, [MarshalAs( UnmanagedType.LPStr )]string Constraints, size_t ConstraintsSize, [MarshalAs( UnmanagedType.Bool )]bool HasSideEffects, [MarshalAs( UnmanagedType.Bool )]bool IsAlignStack, LLVMInlineAsmDialect Dialect );
 
-        /**
-         * Obtain the context to which this module is associated.
-         *
-         * @see Module::getContext()
-         */
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMGetModuleContext"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern LLVMContextRefAlias LLVMGetModuleContext( LLVMModuleRef M );
 
-        /**
-         * Obtain a Type from a module by its registered name.
-         */
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMGetTypeByName"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern LLVMTypeRef LLVMGetTypeByName( LLVMModuleRef M, [MarshalAs( UnmanagedType.LPStr )]string Name );
 
-        /**
-         * Obtain an iterator to the first NamedMDNode in a Module.
-         *
-         * @see llvm::Module::named_metadata_begin()
-         */
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMGetFirstNamedMetadata"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern LLVMNamedMDNodeRef LLVMGetFirstNamedMetadata( LLVMModuleRef M );
 
-        /**
-         * Obtain an iterator to the last NamedMDNode in a Module.
-         *
-         * @see llvm::Module::named_metadata_end()
-         */
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMGetLastNamedMetadata"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern LLVMNamedMDNodeRef LLVMGetLastNamedMetadata( LLVMModuleRef M );
 
-        /**
-         * Advance a NamedMDNode iterator to the next NamedMDNode.
-         *
-         * Returns NULL if the iterator was already at the end and there are no more
-         * named metadata nodes.
-         */
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMGetNextNamedMetadata"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern LLVMNamedMDNodeRef LLVMGetNextNamedMetadata( LLVMNamedMDNodeRef NamedMDNode );
 
-        /**
-         * Decrement a NamedMDNode iterator to the previous NamedMDNode.
-         *
-         * Returns NULL if the iterator was already at the beginning and there are
-         * no previous named metadata nodes.
-         */
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMGetPreviousNamedMetadata"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern LLVMNamedMDNodeRef LLVMGetPreviousNamedMetadata( LLVMNamedMDNodeRef NamedMDNode );
 
-        /**
-         * Retrieve a NamedMDNode with the given name, returning NULL if no such
-         * node exists.
-         *
-         * @see llvm::Module::getNamedMetadata()
-         */
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMGetNamedMetadata"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern LLVMNamedMDNodeRef LLVMGetNamedMetadata( LLVMModuleRef M, [MarshalAs( UnmanagedType.LPStr )]string Name, size_t NameLen );
 
-        /**
-         * Retrieve a NamedMDNode with the given name, creating a new node if no such
-         * node exists.
-         *
-         * @see llvm::Module::getOrInsertNamedMetadata()
-         */
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMGetOrInsertNamedMetadata"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern LLVMNamedMDNodeRef LLVMGetOrInsertNamedMetadata( LLVMModuleRef M, [MarshalAs( UnmanagedType.LPStr )]string Name, size_t NameLen );
 
-        /**
-         * Retrieve the name of a NamedMDNode.
-         *
-         * @see llvm::NamedMDNode::getName()
-         */
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMGetNamedMetadataName"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         [return: MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( AliasStringMarshaler ) )]
         public static extern string LLVMGetNamedMetadataName( LLVMNamedMDNodeRef NamedMD, out size_t NameLen );
 
-        /**
-         * Obtain the number of operands for named metadata in a module.
-         *
-         * @see llvm::Module::getNamedMetadata()
-         */
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMGetNamedMetadataNumOperands"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern uint LLVMGetNamedMetadataNumOperands( LLVMModuleRef M, [MarshalAs( UnmanagedType.LPStr )]string Name );
 
-        /**
-         * Obtain the named metadata operands for a module.
-         *
-         * The passed LLVMValueRef pointer should refer to an array of
-         * LLVMValueRef at least LLVMGetNamedMetadataNumOperands long. This
-         * array will be populated with the LLVMValueRef instances. Each
-         * instance corresponds to a llvm::MDNode.
-         *
-         * @see llvm::Module::getNamedMetadata()
-         * @see llvm::MDNode::getOperand()
-         */
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMGetNamedMetadataOperands"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern void LLVMGetNamedMetadataOperands( LLVMModuleRef M, [MarshalAs( UnmanagedType.LPStr )]string Name, out LLVMValueRef Dest );
 
-        /**
-         * Add an operand to named metadata.
-         *
-         * @see llvm::Module::getNamedMetadata()
-         * @see llvm::MDNode::addOperand()
-         */
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMAddNamedMetadataOperand"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern void LLVMAddNamedMetadataOperand( LLVMModuleRef M, [MarshalAs( UnmanagedType.LPStr )]string Name, LLVMValueRef Val );
 
-        /**
-         * Return the directory of the debug location for this value, which must be
-         * an llvm::Instruction, llvm::GlobalVariable, or llvm::Function.
-         *
-         * @see llvm::Instruction::getDebugLoc()
-         * @see llvm::GlobalVariable::getDebugInfo()
-         * @see llvm::Function::getSubprogram()
-         */
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMGetDebugLocDirectory"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         [return: MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( AliasStringMarshaler ) )]
         public static extern string LLVMGetDebugLocDirectory( LLVMValueRef Val, out uint Length );
 
-        /**
-         * Return the filename of the debug location for this value, which must be
-         * an llvm::Instruction, llvm::GlobalVariable, or llvm::Function.
-         *
-         * @see llvm::Instruction::getDebugLoc()
-         * @see llvm::GlobalVariable::getDebugInfo()
-         * @see llvm::Function::getSubprogram()
-         */
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMGetDebugLocFilename"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         [return: MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( AliasStringMarshaler ) )]
         public static extern string LLVMGetDebugLocFilename( LLVMValueRef Val, out uint Length );
 
-        /**
-         * Return the line number of the debug location for this value, which must be
-         * an llvm::Instruction, llvm::GlobalVariable, or llvm::Function.
-         *
-         * @see llvm::Instruction::getDebugLoc()
-         * @see llvm::GlobalVariable::getDebugInfo()
-         * @see llvm::Function::getSubprogram()
-         */
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMGetDebugLocLine"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern uint LLVMGetDebugLocLine( LLVMValueRef Val );
 
-        /**
-         * Return the column number of the debug location for this value, which must be
-         * an llvm::Instruction.
-         *
-         * @see llvm::Instruction::getDebugLoc()
-         */
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMGetDebugLocColumn"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern uint LLVMGetDebugLocColumn( LLVMValueRef Val );
 
-        /**
-         * Add a function to a module under a specified name.
-         *
-         * @see llvm::Function::Create()
-         */
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMAddFunction"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern LLVMValueRef LLVMAddFunction( LLVMModuleRef M, [MarshalAs( UnmanagedType.LPStr )]string Name, LLVMTypeRef FunctionTy );
 
-        /**
-         * Obtain a Function value from a Module by its name.
-         *
-         * The returned value corresponds to a llvm::Function value.
-         *
-         * @see llvm::Module::getFunction()
-         */
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMGetNamedFunction"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern LLVMValueRef LLVMGetNamedFunction( LLVMModuleRef M, [MarshalAs( UnmanagedType.LPStr )]string Name );
 
-        /**
-         * Obtain an iterator to the first Function in a Module.
-         *
-         * @see llvm::Module::begin()
-         */
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMGetFirstFunction"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern LLVMValueRef LLVMGetFirstFunction( LLVMModuleRef M );
 
-        /**
-         * Obtain an iterator to the last Function in a Module.
-         *
-         * @see llvm::Module::end()
-         */
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMGetLastFunction"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern LLVMValueRef LLVMGetLastFunction( LLVMModuleRef M );
 
-        /**
-         * Advance a Function iterator to the next Function.
-         *
-         * Returns NULL if the iterator was already at the end and there are no more
-         * functions.
-         */
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMGetNextFunction"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern LLVMValueRef LLVMGetNextFunction( LLVMValueRef Fn );
 
-        /**
-         * Decrement a Function iterator to the previous Function.
-         *
-         * Returns NULL if the iterator was already at the beginning and there are
-         * no previous functions.
-         */
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMGetPreviousFunction"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern LLVMValueRef LLVMGetPreviousFunction( LLVMValueRef Fn );
 
-        /**
-         * Obtain the enumerated type of a Type instance.
-         *
-         * @see llvm::Type:getTypeID()
-         */
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMGetTypeKind"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern LLVMTypeKind LLVMGetTypeKind( LLVMTypeRef Ty );
 
-        /**
-         * Whether the type has a known size.
-         *
-         * Things that don't have a size are abstract types, labels, and void.a
-         *
-         * @see llvm::Type::isSized()
-         */
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMTypeIsSized"]/*' />
         [return: MarshalAs( UnmanagedType.Bool )]
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern bool LLVMTypeIsSized( LLVMTypeRef Ty );
 
-        /**
-         * Obtain the context to which this type instance is associated.
-         *
-         * @see llvm::Type::getContext()
-         */
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMGetTypeContext"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern LLVMContextRefAlias LLVMGetTypeContext( LLVMTypeRef Ty );
 
-        /**
-         * Dump a representation of a type to stderr.
-         *
-         * @see llvm::Type::dump()
-         */
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMDumpType"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern void LLVMDumpType( LLVMTypeRef Val );
 
-        /**
-         * Return a string representation of the type. Use
-         * LLVMDisposeMessage to free the string.
-         *
-         * @see llvm::Type::print()
-         */
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMPrintTypeToString"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         [return: MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( DisposeMessageMarshaler ) )]
         public static extern string LLVMPrintTypeToString( LLVMTypeRef Val );
 
-        /**
-         * Obtain an integer type from a context with specified bit width.
-         */
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMInt1TypeInContext"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern LLVMTypeRef LLVMInt1TypeInContext( LLVMContextRef C );
 
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMInt8TypeInContext"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern LLVMTypeRef LLVMInt8TypeInContext( LLVMContextRef C );
 
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMInt16TypeInContext"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern LLVMTypeRef LLVMInt16TypeInContext( LLVMContextRef C );
 
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMInt32TypeInContext"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern LLVMTypeRef LLVMInt32TypeInContext( LLVMContextRef C );
 
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMInt64TypeInContext"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern LLVMTypeRef LLVMInt64TypeInContext( LLVMContextRef C );
 
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMInt128TypeInContext"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern LLVMTypeRef LLVMInt128TypeInContext( LLVMContextRef C );
 
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMIntTypeInContext"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern LLVMTypeRef LLVMIntTypeInContext( LLVMContextRef C, uint NumBits );
 
-        /**
-         * Obtain an integer type from the global context with a specified bit
-         * width.
-         */
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMInt1Type"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern LLVMTypeRef LLVMInt1Type(  );
 
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMInt8Type"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern LLVMTypeRef LLVMInt8Type(  );
 
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMInt16Type"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern LLVMTypeRef LLVMInt16Type(  );
 
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMInt32Type"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern LLVMTypeRef LLVMInt32Type(  );
 
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMInt64Type"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern LLVMTypeRef LLVMInt64Type(  );
 
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMInt128Type"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern LLVMTypeRef LLVMInt128Type(  );
 
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMIntType"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern LLVMTypeRef LLVMIntType( uint NumBits );
 
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMGetIntTypeWidth"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern uint LLVMGetIntTypeWidth( LLVMTypeRef IntegerTy );
 
-        /**
-         * Obtain a 16-bit floating point type from a context.
-         */
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMHalfTypeInContext"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern LLVMTypeRef LLVMHalfTypeInContext( LLVMContextRef C );
 
-        /**
-         * Obtain a 32-bit floating point type from a context.
-         */
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMFloatTypeInContext"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern LLVMTypeRef LLVMFloatTypeInContext( LLVMContextRef C );
 
-        /**
-         * Obtain a 64-bit floating point type from a context.
-         */
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMDoubleTypeInContext"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern LLVMTypeRef LLVMDoubleTypeInContext( LLVMContextRef C );
 
-        /**
-         * Obtain a 80-bit floating point type (X87) from a context.
-         */
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMX86FP80TypeInContext"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern LLVMTypeRef LLVMX86FP80TypeInContext( LLVMContextRef C );
 
-        /**
-         * Obtain a 128-bit floating point type (112-bit mantissa) from a
-         * context.
-         */
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMFP128TypeInContext"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern LLVMTypeRef LLVMFP128TypeInContext( LLVMContextRef C );
 
-        /**
-         * Obtain a 128-bit floating point type (two 64-bits) from a context.
-         */
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMPPCFP128TypeInContext"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern LLVMTypeRef LLVMPPCFP128TypeInContext( LLVMContextRef C );
 
-        /**
-         * Obtain a floating point type from the global context.
-         *
-         * These map to the functions in this group of the same name.
-         */
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMHalfType"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern LLVMTypeRef LLVMHalfType(  );
 
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMFloatType"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern LLVMTypeRef LLVMFloatType(  );
 
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMDoubleType"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern LLVMTypeRef LLVMDoubleType(  );
 
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMX86FP80Type"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern LLVMTypeRef LLVMX86FP80Type(  );
 
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMFP128Type"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern LLVMTypeRef LLVMFP128Type(  );
 
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMPPCFP128Type"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern LLVMTypeRef LLVMPPCFP128Type(  );
 
-        /**
-         * Obtain a function type consisting of a specified signature.
-         *
-         * The function is defined as a tuple of a return Type, a list of
-         * parameter types, and whether the function is variadic.
-         */
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMFunctionType"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern LLVMTypeRef LLVMFunctionType( LLVMTypeRef ReturnType, out LLVMTypeRef ParamTypes, uint ParamCount, [MarshalAs( UnmanagedType.Bool )]bool IsVarArg );
 
-        /**
-         * Returns whether a function type is variadic.
-         */
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMIsFunctionVarArg"]/*' />
         [return: MarshalAs( UnmanagedType.Bool )]
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern bool LLVMIsFunctionVarArg( LLVMTypeRef FunctionTy );
 
-        /**
-         * Obtain the Type this function Type returns.
-         */
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMGetReturnType"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern LLVMTypeRef LLVMGetReturnType( LLVMTypeRef FunctionTy );
 
-        /**
-         * Obtain the number of parameters this function accepts.
-         */
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMCountParamTypes"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern uint LLVMCountParamTypes( LLVMTypeRef FunctionTy );
 
-        /**
-         * Obtain the types of a function's parameters.
-         *
-         * The Dest parameter should point to a pre-allocated array of
-         * LLVMTypeRef at least LLVMCountParamTypes() large. On return, the
-         * first LLVMCountParamTypes() entries in the array will be populated
-         * with LLVMTypeRef instances.
-         *
-         * @param FunctionTy The function type to operate on.
-         * @param Dest Memory address of an array to be filled with result.
-         */
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMGetParamTypes"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern void LLVMGetParamTypes( LLVMTypeRef FunctionTy, out LLVMTypeRef Dest );
 
-        /**
-         * Create a new structure type in a context.
-         *
-         * A structure is specified by a list of inner elements/types and
-         * whether these can be packed together.
-         *
-         * @see llvm::StructType::create()
-         */
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMStructTypeInContext"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern LLVMTypeRef LLVMStructTypeInContext( LLVMContextRef C, out LLVMTypeRef ElementTypes, uint ElementCount, [MarshalAs( UnmanagedType.Bool )]bool Packed );
 
-        /**
-         * Create a new structure type in the global context.
-         *
-         * @see llvm::StructType::create()
-         */
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMStructType"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern LLVMTypeRef LLVMStructType( out LLVMTypeRef ElementTypes, uint ElementCount, [MarshalAs( UnmanagedType.Bool )]bool Packed );
 
-        /**
-         * Create an empty structure in a context having a specified name.
-         *
-         * @see llvm::StructType::create()
-         */
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMStructCreateNamed"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern LLVMTypeRef LLVMStructCreateNamed( LLVMContextRef C, [MarshalAs( UnmanagedType.LPStr )]string Name );
 
-        /**
-         * Obtain the name of a structure.
-         *
-         * @see llvm::StructType::getName()
-         */
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMGetStructName"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         [return: MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( AliasStringMarshaler ) )]
         public static extern string LLVMGetStructName( LLVMTypeRef Ty );
 
-        /**
-         * Set the contents of a structure type.
-         *
-         * @see llvm::StructType::setBody()
-         */
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMStructSetBody"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern void LLVMStructSetBody( LLVMTypeRef StructTy, out LLVMTypeRef ElementTypes, uint ElementCount, [MarshalAs( UnmanagedType.Bool )]bool Packed );
 
-        /**
-         * Get the number of elements defined inside the structure.
-         *
-         * @see llvm::StructType::getNumElements()
-         */
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMCountStructElementTypes"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern uint LLVMCountStructElementTypes( LLVMTypeRef StructTy );
 
-        /**
-         * Get the elements within a structure.
-         *
-         * The function is passed the address of a pre-allocated array of
-         * LLVMTypeRef at least LLVMCountStructElementTypes() long. After
-         * invocation, this array will be populated with the structure's
-         * elements. The objects in the destination array will have a lifetime
-         * of the structure type itself, which is the lifetime of the context it
-         * is contained in.
-         */
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMGetStructElementTypes"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern void LLVMGetStructElementTypes( LLVMTypeRef StructTy, out LLVMTypeRef Dest );
 
-        /**
-         * Get the type of the element at a given index in the structure.
-         *
-         * @see llvm::StructType::getTypeAtIndex()
-         */
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMStructGetTypeAtIndex"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern LLVMTypeRef LLVMStructGetTypeAtIndex( LLVMTypeRef StructTy, uint i );
 
-        /**
-         * Determine whether a structure is packed.
-         *
-         * @see llvm::StructType::isPacked()
-         */
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMIsPackedStruct"]/*' />
         [return: MarshalAs( UnmanagedType.Bool )]
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern bool LLVMIsPackedStruct( LLVMTypeRef StructTy );
 
-        /**
-         * Determine whether a structure is opaque.
-         *
-         * @see llvm::StructType::isOpaque()
-         */
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMIsOpaqueStruct"]/*' />
         [return: MarshalAs( UnmanagedType.Bool )]
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern bool LLVMIsOpaqueStruct( LLVMTypeRef StructTy );
 
-        /**
-         * Determine whether a structure is literal.
-         *
-         * @see llvm::StructType::isLiteral()
-         */
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMIsLiteralStruct"]/*' />
         [return: MarshalAs( UnmanagedType.Bool )]
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern bool LLVMIsLiteralStruct( LLVMTypeRef StructTy );
 
-        /**
-         * Obtain the type of elements within a sequential type.
-         *
-         * This works on array, vector, and pointer types.
-         *
-         * @see llvm::SequentialType::getElementType()
-         */
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMGetElementType"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern LLVMTypeRef LLVMGetElementType( LLVMTypeRef Ty );
 
-        /**
-         * Returns type's subtypes
-         *
-         * @see llvm::Type::subtypes()
-         */
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMGetSubtypes"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern void LLVMGetSubtypes( LLVMTypeRef Tp, out LLVMTypeRef Arr );
 
-        /**
-         *  Return the number of types in the derived type.
-         *
-         * @see llvm::Type::getNumContainedTypes()
-         */
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMGetNumContainedTypes"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern uint LLVMGetNumContainedTypes( LLVMTypeRef Tp );
 
-        /**
-         * Create a fixed size array type that refers to a specific type.
-         *
-         * The created type will exist in the context that its element type
-         * exists in.
-         *
-         * @see llvm::ArrayType::get()
-         */
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMArrayType"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern LLVMTypeRef LLVMArrayType( LLVMTypeRef ElementType, uint ElementCount );
 
-        /**
-         * Obtain the length of an array type.
-         *
-         * This only works on types that represent arrays.
-         *
-         * @see llvm::ArrayType::getNumElements()
-         */
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMGetArrayLength"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern uint LLVMGetArrayLength( LLVMTypeRef ArrayTy );
 
-        /**
-         * Create a pointer type that points to a defined type.
-         *
-         * The created type will exist in the context that its pointee type
-         * exists in.
-         *
-         * @see llvm::PointerType::get()
-         */
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMPointerType"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern LLVMTypeRef LLVMPointerType( LLVMTypeRef ElementType, uint AddressSpace );
 
-        /**
-         * Obtain the address space of a pointer type.
-         *
-         * This only works on types that represent pointers.
-         *
-         * @see llvm::PointerType::getAddressSpace()
-         */
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMGetPointerAddressSpace"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern uint LLVMGetPointerAddressSpace( LLVMTypeRef PointerTy );
 
-        /**
-         * Create a vector type that contains a defined type and has a specific
-         * number of elements.
-         *
-         * The created type will exist in the context thats its element type
-         * exists in.
-         *
-         * @see llvm::VectorType::get()
-         */
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMVectorType"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern LLVMTypeRef LLVMVectorType( LLVMTypeRef ElementType, uint ElementCount );
 
-        /**
-         * Obtain the number of elements in a vector type.
-         *
-         * This only works on types that represent vectors.
-         *
-         * @see llvm::VectorType::getNumElements()
-         */
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMGetVectorSize"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern uint LLVMGetVectorSize( LLVMTypeRef VectorTy );
 
-        /**
-         * Create a void type in a context.
-         */
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMVoidTypeInContext"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern LLVMTypeRef LLVMVoidTypeInContext( LLVMContextRef C );
 
-        /**
-         * Create a label type in a context.
-         */
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMLabelTypeInContext"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern LLVMTypeRef LLVMLabelTypeInContext( LLVMContextRef C );
 
-        /**
-         * Create a X86 MMX type in a context.
-         */
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMX86MMXTypeInContext"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern LLVMTypeRef LLVMX86MMXTypeInContext( LLVMContextRef C );
 
-        /**
-         * Create a token type in a context.
-         */
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMTokenTypeInContext"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern LLVMTypeRef LLVMTokenTypeInContext( LLVMContextRef C );
 
-        /**
-         * Create a metadata type in a context.
-         */
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMMetadataTypeInContext"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern LLVMTypeRef LLVMMetadataTypeInContext( LLVMContextRef C );
 
-        /**
-         * These are similar to the above functions except they operate on the
-         * global context.
-         */
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMVoidType"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern LLVMTypeRef LLVMVoidType(  );
 
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMLabelType"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern LLVMTypeRef LLVMLabelType(  );
 
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMX86MMXType"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern LLVMTypeRef LLVMX86MMXType(  );
 
-        /**
-         * Obtain the type of a value.
-         *
-         * @see llvm::Value::getType()
-         */
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMTypeOf"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern LLVMTypeRef LLVMTypeOf( LLVMValueRef Val );
 
-        /**
-         * Obtain the enumerated type of a Value instance.
-         *
-         * @see llvm::Value::getValueID()
-         */
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMGetValueKind"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern LLVMValueKind LLVMGetValueKind( LLVMValueRef Val );
 
-        /**
-         * Obtain the string name of a value.
-         *
-         * @see llvm::Value::getName()
-         */
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMGetValueName2"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         [return: MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( AliasStringMarshaler ) )]
         public static extern string LLVMGetValueName2( LLVMValueRef Val, out size_t Length );
 
-        /**
-         * Set the string name of a value.
-         *
-         * @see llvm::Value::setName()
-         */
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMSetValueName2"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern void LLVMSetValueName2( LLVMValueRef Val, [MarshalAs( UnmanagedType.LPStr )]string Name, size_t NameLen );
 
-        /**
-         * Dump a representation of a value to stderr.
-         *
-         * @see llvm::Value::dump()
-         */
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMDumpValue"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern void LLVMDumpValue( LLVMValueRef Val );
 
-        /**
-         * Return a string representation of the value. Use
-         * LLVMDisposeMessage to free the string.
-         *
-         * @see llvm::Value::print()
-         */
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMPrintValueToString"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         [return: MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( DisposeMessageMarshaler ) )]
         public static extern string LLVMPrintValueToString( LLVMValueRef Val );
 
-        /**
-         * Replace all uses of a value with another one.
-         *
-         * @see llvm::Value::replaceAllUsesWith()
-         */
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMReplaceAllUsesWith"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern void LLVMReplaceAllUsesWith( LLVMValueRef OldVal, LLVMValueRef NewVal );
 
-        /**
-         * Determine whether the specified value instance is constant.
-         */
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMIsConstant"]/*' />
         [return: MarshalAs( UnmanagedType.Bool )]
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern bool LLVMIsConstant( LLVMValueRef Val );
 
-        /**
-         * Determine whether a value instance is undefined.
-         */
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMIsUndef"]/*' />
         [return: MarshalAs( UnmanagedType.Bool )]
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern bool LLVMIsUndef( LLVMValueRef Val );
 
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMIsAArgument"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern LLVMValueRef LLVMIsAArgument( LLVMValueRef Val );
 
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMIsABasicBlock"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern LLVMValueRef LLVMIsABasicBlock( LLVMValueRef Val );
 
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMIsAInlineAsm"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern LLVMValueRef LLVMIsAInlineAsm( LLVMValueRef Val );
 
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMIsAUser"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern LLVMValueRef LLVMIsAUser( LLVMValueRef Val );
 
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMIsAConstant"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern LLVMValueRef LLVMIsAConstant( LLVMValueRef Val );
 
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMIsABlockAddress"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern LLVMValueRef LLVMIsABlockAddress( LLVMValueRef Val );
 
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMIsAConstantAggregateZero"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern LLVMValueRef LLVMIsAConstantAggregateZero( LLVMValueRef Val );
 
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMIsAConstantArray"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern LLVMValueRef LLVMIsAConstantArray( LLVMValueRef Val );
 
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMIsAConstantDataSequential"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern LLVMValueRef LLVMIsAConstantDataSequential( LLVMValueRef Val );
 
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMIsAConstantDataArray"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern LLVMValueRef LLVMIsAConstantDataArray( LLVMValueRef Val );
 
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMIsAConstantDataVector"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern LLVMValueRef LLVMIsAConstantDataVector( LLVMValueRef Val );
 
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMIsAConstantExpr"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern LLVMValueRef LLVMIsAConstantExpr( LLVMValueRef Val );
 
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMIsAConstantFP"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern LLVMValueRef LLVMIsAConstantFP( LLVMValueRef Val );
 
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMIsAConstantInt"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern LLVMValueRef LLVMIsAConstantInt( LLVMValueRef Val );
 
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMIsAConstantPointerNull"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern LLVMValueRef LLVMIsAConstantPointerNull( LLVMValueRef Val );
 
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMIsAConstantStruct"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern LLVMValueRef LLVMIsAConstantStruct( LLVMValueRef Val );
 
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMIsAConstantTokenNone"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern LLVMValueRef LLVMIsAConstantTokenNone( LLVMValueRef Val );
 
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMIsAConstantVector"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern LLVMValueRef LLVMIsAConstantVector( LLVMValueRef Val );
 
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMIsAGlobalValue"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern LLVMValueRef LLVMIsAGlobalValue( LLVMValueRef Val );
 
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMIsAGlobalAlias"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern LLVMValueRef LLVMIsAGlobalAlias( LLVMValueRef Val );
 
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMIsAGlobalIFunc"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern LLVMValueRef LLVMIsAGlobalIFunc( LLVMValueRef Val );
 
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMIsAGlobalObject"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern LLVMValueRef LLVMIsAGlobalObject( LLVMValueRef Val );
 
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMIsAFunction"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern LLVMValueRef LLVMIsAFunction( LLVMValueRef Val );
 
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMIsAGlobalVariable"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern LLVMValueRef LLVMIsAGlobalVariable( LLVMValueRef Val );
 
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMIsAUndefValue"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern LLVMValueRef LLVMIsAUndefValue( LLVMValueRef Val );
 
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMIsAInstruction"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern LLVMValueRef LLVMIsAInstruction( LLVMValueRef Val );
 
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMIsABinaryOperator"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern LLVMValueRef LLVMIsABinaryOperator( LLVMValueRef Val );
 
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMIsACallInst"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern LLVMValueRef LLVMIsACallInst( LLVMValueRef Val );
 
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMIsAIntrinsicInst"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern LLVMValueRef LLVMIsAIntrinsicInst( LLVMValueRef Val );
 
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMIsADbgInfoIntrinsic"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern LLVMValueRef LLVMIsADbgInfoIntrinsic( LLVMValueRef Val );
 
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMIsADbgVariableIntrinsic"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern LLVMValueRef LLVMIsADbgVariableIntrinsic( LLVMValueRef Val );
 
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMIsADbgDeclareInst"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern LLVMValueRef LLVMIsADbgDeclareInst( LLVMValueRef Val );
 
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMIsADbgLabelInst"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern LLVMValueRef LLVMIsADbgLabelInst( LLVMValueRef Val );
 
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMIsAMemIntrinsic"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern LLVMValueRef LLVMIsAMemIntrinsic( LLVMValueRef Val );
 
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMIsAMemCpyInst"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern LLVMValueRef LLVMIsAMemCpyInst( LLVMValueRef Val );
 
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMIsAMemMoveInst"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern LLVMValueRef LLVMIsAMemMoveInst( LLVMValueRef Val );
 
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMIsAMemSetInst"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern LLVMValueRef LLVMIsAMemSetInst( LLVMValueRef Val );
 
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMIsACmpInst"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern LLVMValueRef LLVMIsACmpInst( LLVMValueRef Val );
 
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMIsAFCmpInst"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern LLVMValueRef LLVMIsAFCmpInst( LLVMValueRef Val );
 
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMIsAICmpInst"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern LLVMValueRef LLVMIsAICmpInst( LLVMValueRef Val );
 
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMIsAExtractElementInst"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern LLVMValueRef LLVMIsAExtractElementInst( LLVMValueRef Val );
 
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMIsAGetElementPtrInst"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern LLVMValueRef LLVMIsAGetElementPtrInst( LLVMValueRef Val );
 
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMIsAInsertElementInst"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern LLVMValueRef LLVMIsAInsertElementInst( LLVMValueRef Val );
 
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMIsAInsertValueInst"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern LLVMValueRef LLVMIsAInsertValueInst( LLVMValueRef Val );
 
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMIsALandingPadInst"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern LLVMValueRef LLVMIsALandingPadInst( LLVMValueRef Val );
 
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMIsAPHINode"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern LLVMValueRef LLVMIsAPHINode( LLVMValueRef Val );
 
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMIsASelectInst"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern LLVMValueRef LLVMIsASelectInst( LLVMValueRef Val );
 
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMIsAShuffleVectorInst"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern LLVMValueRef LLVMIsAShuffleVectorInst( LLVMValueRef Val );
 
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMIsAStoreInst"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern LLVMValueRef LLVMIsAStoreInst( LLVMValueRef Val );
 
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMIsABranchInst"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern LLVMValueRef LLVMIsABranchInst( LLVMValueRef Val );
 
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMIsAIndirectBrInst"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern LLVMValueRef LLVMIsAIndirectBrInst( LLVMValueRef Val );
 
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMIsAInvokeInst"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern LLVMValueRef LLVMIsAInvokeInst( LLVMValueRef Val );
 
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMIsAReturnInst"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern LLVMValueRef LLVMIsAReturnInst( LLVMValueRef Val );
 
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMIsASwitchInst"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern LLVMValueRef LLVMIsASwitchInst( LLVMValueRef Val );
 
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMIsAUnreachableInst"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern LLVMValueRef LLVMIsAUnreachableInst( LLVMValueRef Val );
 
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMIsAResumeInst"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern LLVMValueRef LLVMIsAResumeInst( LLVMValueRef Val );
 
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMIsACleanupReturnInst"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern LLVMValueRef LLVMIsACleanupReturnInst( LLVMValueRef Val );
 
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMIsACatchReturnInst"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern LLVMValueRef LLVMIsACatchReturnInst( LLVMValueRef Val );
 
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMIsAFuncletPadInst"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern LLVMValueRef LLVMIsAFuncletPadInst( LLVMValueRef Val );
 
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMIsACatchPadInst"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern LLVMValueRef LLVMIsACatchPadInst( LLVMValueRef Val );
 
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMIsACleanupPadInst"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern LLVMValueRef LLVMIsACleanupPadInst( LLVMValueRef Val );
 
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMIsAUnaryInstruction"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern LLVMValueRef LLVMIsAUnaryInstruction( LLVMValueRef Val );
 
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMIsAAllocaInst"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern LLVMValueRef LLVMIsAAllocaInst( LLVMValueRef Val );
 
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMIsACastInst"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern LLVMValueRef LLVMIsACastInst( LLVMValueRef Val );
 
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMIsAAddrSpaceCastInst"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern LLVMValueRef LLVMIsAAddrSpaceCastInst( LLVMValueRef Val );
 
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMIsABitCastInst"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern LLVMValueRef LLVMIsABitCastInst( LLVMValueRef Val );
 
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMIsAFPExtInst"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern LLVMValueRef LLVMIsAFPExtInst( LLVMValueRef Val );
 
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMIsAFPToSIInst"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern LLVMValueRef LLVMIsAFPToSIInst( LLVMValueRef Val );
 
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMIsAFPToUIInst"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern LLVMValueRef LLVMIsAFPToUIInst( LLVMValueRef Val );
 
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMIsAFPTruncInst"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern LLVMValueRef LLVMIsAFPTruncInst( LLVMValueRef Val );
 
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMIsAIntToPtrInst"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern LLVMValueRef LLVMIsAIntToPtrInst( LLVMValueRef Val );
 
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMIsAPtrToIntInst"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern LLVMValueRef LLVMIsAPtrToIntInst( LLVMValueRef Val );
 
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMIsASExtInst"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern LLVMValueRef LLVMIsASExtInst( LLVMValueRef Val );
 
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMIsASIToFPInst"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern LLVMValueRef LLVMIsASIToFPInst( LLVMValueRef Val );
 
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMIsATruncInst"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern LLVMValueRef LLVMIsATruncInst( LLVMValueRef Val );
 
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMIsAUIToFPInst"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern LLVMValueRef LLVMIsAUIToFPInst( LLVMValueRef Val );
 
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMIsAZExtInst"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern LLVMValueRef LLVMIsAZExtInst( LLVMValueRef Val );
 
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMIsAExtractValueInst"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern LLVMValueRef LLVMIsAExtractValueInst( LLVMValueRef Val );
 
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMIsALoadInst"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern LLVMValueRef LLVMIsALoadInst( LLVMValueRef Val );
 
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMIsAVAArgInst"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern LLVMValueRef LLVMIsAVAArgInst( LLVMValueRef Val );
 
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMIsAMDNode"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern LLVMValueRef LLVMIsAMDNode( LLVMValueRef Val );
 
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMIsAMDString"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern LLVMValueRef LLVMIsAMDString( LLVMValueRef Val );
 
-        /**
-         * Obtain the first use of a value.
-         *
-         * Uses are obtained in an iterator fashion. First, call this function
-         * to obtain a reference to the first use. Then, call LLVMGetNextUse()
-         * on that instance and all subsequently obtained instances until
-         * LLVMGetNextUse() returns NULL.
-         *
-         * @see llvm::Value::use_begin()
-         */
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMGetFirstUse"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern LLVMUseRef LLVMGetFirstUse( LLVMValueRef Val );
 
-        /**
-         * Obtain the next use of a value.
-         *
-         * This effectively advances the iterator. It returns NULL if you are on
-         * the final use and no more are available.
-         */
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMGetNextUse"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern LLVMUseRef LLVMGetNextUse( LLVMUseRef U );
 
-        /**
-         * Obtain the user value for a user.
-         *
-         * The returned value corresponds to a llvm::User type.
-         *
-         * @see llvm::Use::getUser()
-         */
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMGetUser"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern LLVMValueRef LLVMGetUser( LLVMUseRef U );
 
-        /**
-         * Obtain the value this use corresponds to.
-         *
-         * @see llvm::Use::get().
-         */
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMGetUsedValue"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern LLVMValueRef LLVMGetUsedValue( LLVMUseRef U );
 
-        /**
-         * Obtain an operand at a specific index in a llvm::User value.
-         *
-         * @see llvm::User::getOperand()
-         */
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMGetOperand"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern LLVMValueRef LLVMGetOperand( LLVMValueRef Val, uint Index );
 
-        /**
-         * Obtain the use of an operand at a specific index in a llvm::User value.
-         *
-         * @see llvm::User::getOperandUse()
-         */
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMGetOperandUse"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern LLVMUseRef LLVMGetOperandUse( LLVMValueRef Val, uint Index );
 
-        /**
-         * Set an operand at a specific index in a llvm::User value.
-         *
-         * @see llvm::User::setOperand()
-         */
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMSetOperand"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern void LLVMSetOperand( LLVMValueRef User, uint Index, LLVMValueRef Val );
 
-        /**
-         * Obtain the number of operands in a llvm::User value.
-         *
-         * @see llvm::User::getNumOperands()
-         */
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMGetNumOperands"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern int LLVMGetNumOperands( LLVMValueRef Val );
 
-        /**
-         * Obtain a constant value referring to the null instance of a type.
-         *
-         * @see llvm::Constant::getNullValue()
-         */
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMConstNull"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern LLVMValueRef LLVMConstNull( LLVMTypeRef Ty );
 
-        /**
-         * Obtain a constant value referring to the instance of a type
-         * consisting of all ones.
-         *
-         * This is only valid for integer types.
-         *
-         * @see llvm::Constant::getAllOnesValue()
-         */
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMConstAllOnes"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern LLVMValueRef LLVMConstAllOnes( LLVMTypeRef Ty );
 
-        /**
-         * Obtain a constant value referring to an undefined value of a type.
-         *
-         * @see llvm::UndefValue::get()
-         */
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMGetUndef"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern LLVMValueRef LLVMGetUndef( LLVMTypeRef Ty );
 
-        /**
-         * Determine whether a value instance is null.
-         *
-         * @see llvm::Constant::isNullValue()
-         */
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMIsNull"]/*' />
         [return: MarshalAs( UnmanagedType.Bool )]
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern bool LLVMIsNull( LLVMValueRef Val );
 
-        /**
-         * Obtain a constant that is a constant pointer pointing to NULL for a
-         * specified type.
-         */
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMConstPointerNull"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern LLVMValueRef LLVMConstPointerNull( LLVMTypeRef Ty );
 
-        /**
-         * Obtain a constant value for an integer type.
-         *
-         * The returned value corresponds to a llvm::ConstantInt.
-         *
-         * @see llvm::ConstantInt::get()
-         *
-         * @param IntTy Integer type to obtain value of.
-         * @param N The value the returned instance should refer to.
-         * @param SignExtend Whether to sign extend the produced value.
-         */
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMConstInt"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern LLVMValueRef LLVMConstInt( LLVMTypeRef IntTy, ulong N, [MarshalAs( UnmanagedType.Bool )]bool SignExtend );
 
-        /**
-         * Obtain a constant value for an integer of arbitrary precision.
-         *
-         * @see llvm::ConstantInt::get()
-         */
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMConstIntOfArbitraryPrecision"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern LLVMValueRef LLVMConstIntOfArbitraryPrecision( LLVMTypeRef IntTy, uint NumWords, System.UInt64[] Words );
 
-        /**
-         * Obtain a constant value for an integer parsed from a string.
-         *
-         * A similar API, LLVMConstIntOfStringAndSize is also available. If the
-         * string's length is available, it is preferred to call that function
-         * instead.
-         *
-         * @see llvm::ConstantInt::get()
-         */
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMConstIntOfString"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern LLVMValueRef LLVMConstIntOfString( LLVMTypeRef IntTy, [MarshalAs( UnmanagedType.LPStr )]string Text, System.Byte Radix );
 
-        /**
-         * Obtain a constant value for an integer parsed from a string with
-         * specified length.
-         *
-         * @see llvm::ConstantInt::get()
-         */
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMConstIntOfStringAndSize"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern LLVMValueRef LLVMConstIntOfStringAndSize( LLVMTypeRef IntTy, [MarshalAs( UnmanagedType.LPStr )]string Text, uint SLen, System.Byte Radix );
 
-        /**
-         * Obtain a constant value referring to a double floating point value.
-         */
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMConstReal"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern LLVMValueRef LLVMConstReal( LLVMTypeRef RealTy, double N );
 
-        /**
-         * Obtain a constant for a floating point value parsed from a string.
-         *
-         * A similar API, LLVMConstRealOfStringAndSize is also available. It
-         * should be used if the input string's length is known.
-         */
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMConstRealOfString"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern LLVMValueRef LLVMConstRealOfString( LLVMTypeRef RealTy, [MarshalAs( UnmanagedType.LPStr )]string Text );
 
-        /**
-         * Obtain a constant for a floating point value parsed from a string.
-         */
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMConstRealOfStringAndSize"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern LLVMValueRef LLVMConstRealOfStringAndSize( LLVMTypeRef RealTy, [MarshalAs( UnmanagedType.LPStr )]string Text, uint SLen );
 
-        /**
-         * Obtain the zero extended value for an integer constant value.
-         *
-         * @see llvm::ConstantInt::getZExtValue()
-         */
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMConstIntGetZExtValue"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern ulong LLVMConstIntGetZExtValue( LLVMValueRef ConstantVal );
 
-        /**
-         * Obtain the sign extended value for an integer constant value.
-         *
-         * @see llvm::ConstantInt::getSExtValue()
-         */
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMConstIntGetSExtValue"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern long LLVMConstIntGetSExtValue( LLVMValueRef ConstantVal );
 
-        /**
-         * Obtain the double value for an floating point constant value.
-         * losesInfo indicates if some precision was lost in the conversion.
-         *
-         * @see llvm::ConstantFP::getDoubleValue
-         */
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMConstRealGetDouble"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern double LLVMConstRealGetDouble( LLVMValueRef ConstantVal, out bool losesInfo );
 
-        /**
-         * Create a ConstantDataSequential and initialize it with a string.
-         *
-         * @see llvm::ConstantDataArray::getString()
-         */
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMConstStringInContext"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern LLVMValueRef LLVMConstStringInContext( LLVMContextRef C, [MarshalAs( UnmanagedType.LPStr )]string Str, uint Length, [MarshalAs( UnmanagedType.Bool )]bool DontNullTerminate );
 
-        /**
-         * Create a ConstantDataSequential with string content in the global context.
-         *
-         * This is the same as LLVMConstStringInContext except it operates on the
-         * global context.
-         *
-         * @see LLVMConstStringInContext()
-         * @see llvm::ConstantDataArray::getString()
-         */
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMConstString"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern LLVMValueRef LLVMConstString( [MarshalAs( UnmanagedType.LPStr )]string Str, uint Length, [MarshalAs( UnmanagedType.Bool )]bool DontNullTerminate );
 
-        /**
-         * Returns true if the specified constant is an array of i8.
-         *
-         * @see ConstantDataSequential::getAsString()
-         */
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMIsConstantString"]/*' />
         [return: MarshalAs( UnmanagedType.Bool )]
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern bool LLVMIsConstantString( LLVMValueRef c );
 
-        /**
-         * Get the given constant data sequential as a string.
-         *
-         * @see ConstantDataSequential::getAsString()
-         */
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMGetAsString"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         [return: MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( AliasStringMarshaler ) )]
         public static extern string LLVMGetAsString( LLVMValueRef c, out size_t Length );
 
-        /**
-         * Create an anonymous ConstantStruct with the specified values.
-         *
-         * @see llvm::ConstantStruct::getAnon()
-         */
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMConstStructInContext"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern LLVMValueRef LLVMConstStructInContext( LLVMContextRef C, out LLVMValueRef ConstantVals, uint Count, [MarshalAs( UnmanagedType.Bool )]bool Packed );
 
-        /**
-         * Create a ConstantStruct in the global Context.
-         *
-         * This is the same as LLVMConstStructInContext except it operates on the
-         * global Context.
-         *
-         * @see LLVMConstStructInContext()
-         */
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMConstStruct"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern LLVMValueRef LLVMConstStruct( out LLVMValueRef ConstantVals, uint Count, [MarshalAs( UnmanagedType.Bool )]bool Packed );
 
-        /**
-         * Create a ConstantArray from values.
-         *
-         * @see llvm::ConstantArray::get()
-         */
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMConstArray"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern LLVMValueRef LLVMConstArray( LLVMTypeRef ElementTy, out LLVMValueRef ConstantVals, uint Length );
 
-        /**
-         * Create a non-anonymous ConstantStruct from values.
-         *
-         * @see llvm::ConstantStruct::get()
-         */
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMConstNamedStruct"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern LLVMValueRef LLVMConstNamedStruct( LLVMTypeRef StructTy, out LLVMValueRef ConstantVals, uint Count );
 
-        /**
-         * Get an element at specified index as a constant.
-         *
-         * @see ConstantDataSequential::getElementAsConstant()
-         */
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMGetElementAsConstant"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern LLVMValueRef LLVMGetElementAsConstant( LLVMValueRef C, uint idx );
 
-        /**
-         * Create a ConstantVector from values.
-         *
-         * @see llvm::ConstantVector::get()
-         */
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMConstVector"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern LLVMValueRef LLVMConstVector( out LLVMValueRef ScalarConstantVals, uint Size );
 
-        /**
-         * @defgroup LLVMCCoreValueConstantExpressions Constant Expressions
-         *
-         * Functions in this group correspond to APIs on llvm::ConstantExpr.
-         *
-         * @see llvm::ConstantExpr.
-         *
-         * @{
-         */
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMGetConstOpcode"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern LLVMOpcode LLVMGetConstOpcode( LLVMValueRef ConstantVal );
 
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMAlignOf"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern LLVMValueRef LLVMAlignOf( LLVMTypeRef Ty );
 
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMSizeOf"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern LLVMValueRef LLVMSizeOf( LLVMTypeRef Ty );
 
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMConstNeg"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern LLVMValueRef LLVMConstNeg( LLVMValueRef ConstantVal );
 
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMConstNSWNeg"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern LLVMValueRef LLVMConstNSWNeg( LLVMValueRef ConstantVal );
 
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMConstNUWNeg"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern LLVMValueRef LLVMConstNUWNeg( LLVMValueRef ConstantVal );
 
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMConstFNeg"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern LLVMValueRef LLVMConstFNeg( LLVMValueRef ConstantVal );
 
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMConstNot"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern LLVMValueRef LLVMConstNot( LLVMValueRef ConstantVal );
 
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMConstAdd"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern LLVMValueRef LLVMConstAdd( LLVMValueRef LHSConstant, LLVMValueRef RHSConstant );
 
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMConstNSWAdd"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern LLVMValueRef LLVMConstNSWAdd( LLVMValueRef LHSConstant, LLVMValueRef RHSConstant );
 
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMConstNUWAdd"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern LLVMValueRef LLVMConstNUWAdd( LLVMValueRef LHSConstant, LLVMValueRef RHSConstant );
 
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMConstFAdd"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern LLVMValueRef LLVMConstFAdd( LLVMValueRef LHSConstant, LLVMValueRef RHSConstant );
 
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMConstSub"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern LLVMValueRef LLVMConstSub( LLVMValueRef LHSConstant, LLVMValueRef RHSConstant );
 
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMConstNSWSub"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern LLVMValueRef LLVMConstNSWSub( LLVMValueRef LHSConstant, LLVMValueRef RHSConstant );
 
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMConstNUWSub"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern LLVMValueRef LLVMConstNUWSub( LLVMValueRef LHSConstant, LLVMValueRef RHSConstant );
 
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMConstFSub"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern LLVMValueRef LLVMConstFSub( LLVMValueRef LHSConstant, LLVMValueRef RHSConstant );
 
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMConstMul"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern LLVMValueRef LLVMConstMul( LLVMValueRef LHSConstant, LLVMValueRef RHSConstant );
 
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMConstNSWMul"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern LLVMValueRef LLVMConstNSWMul( LLVMValueRef LHSConstant, LLVMValueRef RHSConstant );
 
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMConstNUWMul"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern LLVMValueRef LLVMConstNUWMul( LLVMValueRef LHSConstant, LLVMValueRef RHSConstant );
 
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMConstFMul"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern LLVMValueRef LLVMConstFMul( LLVMValueRef LHSConstant, LLVMValueRef RHSConstant );
 
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMConstUDiv"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern LLVMValueRef LLVMConstUDiv( LLVMValueRef LHSConstant, LLVMValueRef RHSConstant );
 
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMConstExactUDiv"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern LLVMValueRef LLVMConstExactUDiv( LLVMValueRef LHSConstant, LLVMValueRef RHSConstant );
 
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMConstSDiv"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern LLVMValueRef LLVMConstSDiv( LLVMValueRef LHSConstant, LLVMValueRef RHSConstant );
 
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMConstExactSDiv"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern LLVMValueRef LLVMConstExactSDiv( LLVMValueRef LHSConstant, LLVMValueRef RHSConstant );
 
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMConstFDiv"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern LLVMValueRef LLVMConstFDiv( LLVMValueRef LHSConstant, LLVMValueRef RHSConstant );
 
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMConstURem"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern LLVMValueRef LLVMConstURem( LLVMValueRef LHSConstant, LLVMValueRef RHSConstant );
 
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMConstSRem"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern LLVMValueRef LLVMConstSRem( LLVMValueRef LHSConstant, LLVMValueRef RHSConstant );
 
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMConstFRem"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern LLVMValueRef LLVMConstFRem( LLVMValueRef LHSConstant, LLVMValueRef RHSConstant );
 
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMConstAnd"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern LLVMValueRef LLVMConstAnd( LLVMValueRef LHSConstant, LLVMValueRef RHSConstant );
 
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMConstOr"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern LLVMValueRef LLVMConstOr( LLVMValueRef LHSConstant, LLVMValueRef RHSConstant );
 
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMConstXor"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern LLVMValueRef LLVMConstXor( LLVMValueRef LHSConstant, LLVMValueRef RHSConstant );
 
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMConstICmp"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern LLVMValueRef LLVMConstICmp( LLVMIntPredicate Predicate, LLVMValueRef LHSConstant, LLVMValueRef RHSConstant );
 
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMConstFCmp"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern LLVMValueRef LLVMConstFCmp( LLVMRealPredicate Predicate, LLVMValueRef LHSConstant, LLVMValueRef RHSConstant );
 
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMConstShl"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern LLVMValueRef LLVMConstShl( LLVMValueRef LHSConstant, LLVMValueRef RHSConstant );
 
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMConstLShr"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern LLVMValueRef LLVMConstLShr( LLVMValueRef LHSConstant, LLVMValueRef RHSConstant );
 
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMConstAShr"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern LLVMValueRef LLVMConstAShr( LLVMValueRef LHSConstant, LLVMValueRef RHSConstant );
 
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMConstGEP"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern LLVMValueRef LLVMConstGEP( LLVMValueRef ConstantVal, [MarshalAs( UnmanagedType.LPArray, ArraySubType = UnmanagedType.SysInt )]LLVMValueRef[] ConstantIndices, uint NumIndices );
 
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMConstInBoundsGEP"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern LLVMValueRef LLVMConstInBoundsGEP( LLVMValueRef ConstantVal, out LLVMValueRef ConstantIndices, uint NumIndices );
 
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMConstTrunc"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern LLVMValueRef LLVMConstTrunc( LLVMValueRef ConstantVal, LLVMTypeRef ToType );
 
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMConstSExt"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern LLVMValueRef LLVMConstSExt( LLVMValueRef ConstantVal, LLVMTypeRef ToType );
 
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMConstZExt"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern LLVMValueRef LLVMConstZExt( LLVMValueRef ConstantVal, LLVMTypeRef ToType );
 
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMConstFPTrunc"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern LLVMValueRef LLVMConstFPTrunc( LLVMValueRef ConstantVal, LLVMTypeRef ToType );
 
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMConstFPExt"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern LLVMValueRef LLVMConstFPExt( LLVMValueRef ConstantVal, LLVMTypeRef ToType );
 
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMConstUIToFP"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern LLVMValueRef LLVMConstUIToFP( LLVMValueRef ConstantVal, LLVMTypeRef ToType );
 
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMConstSIToFP"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern LLVMValueRef LLVMConstSIToFP( LLVMValueRef ConstantVal, LLVMTypeRef ToType );
 
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMConstFPToUI"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern LLVMValueRef LLVMConstFPToUI( LLVMValueRef ConstantVal, LLVMTypeRef ToType );
 
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMConstFPToSI"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern LLVMValueRef LLVMConstFPToSI( LLVMValueRef ConstantVal, LLVMTypeRef ToType );
 
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMConstPtrToInt"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern LLVMValueRef LLVMConstPtrToInt( LLVMValueRef ConstantVal, LLVMTypeRef ToType );
 
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMConstIntToPtr"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern LLVMValueRef LLVMConstIntToPtr( LLVMValueRef ConstantVal, LLVMTypeRef ToType );
 
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMConstBitCast"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern LLVMValueRef LLVMConstBitCast( LLVMValueRef ConstantVal, LLVMTypeRef ToType );
 
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMConstAddrSpaceCast"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern LLVMValueRef LLVMConstAddrSpaceCast( LLVMValueRef ConstantVal, LLVMTypeRef ToType );
 
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMConstZExtOrBitCast"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern LLVMValueRef LLVMConstZExtOrBitCast( LLVMValueRef ConstantVal, LLVMTypeRef ToType );
 
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMConstSExtOrBitCast"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern LLVMValueRef LLVMConstSExtOrBitCast( LLVMValueRef ConstantVal, LLVMTypeRef ToType );
 
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMConstTruncOrBitCast"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern LLVMValueRef LLVMConstTruncOrBitCast( LLVMValueRef ConstantVal, LLVMTypeRef ToType );
 
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMConstPointerCast"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern LLVMValueRef LLVMConstPointerCast( LLVMValueRef ConstantVal, LLVMTypeRef ToType );
 
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMConstIntCast"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern LLVMValueRef LLVMConstIntCast( LLVMValueRef ConstantVal, LLVMTypeRef ToType, [MarshalAs( UnmanagedType.Bool )]bool isSigned );
 
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMConstFPCast"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern LLVMValueRef LLVMConstFPCast( LLVMValueRef ConstantVal, LLVMTypeRef ToType );
 
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMConstSelect"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern LLVMValueRef LLVMConstSelect( LLVMValueRef ConstantCondition, LLVMValueRef ConstantIfTrue, LLVMValueRef ConstantIfFalse );
 
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMConstExtractElement"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern LLVMValueRef LLVMConstExtractElement( LLVMValueRef VectorConstant, LLVMValueRef IndexConstant );
 
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMConstInsertElement"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern LLVMValueRef LLVMConstInsertElement( LLVMValueRef VectorConstant, LLVMValueRef ElementValueConstant, LLVMValueRef IndexConstant );
 
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMConstShuffleVector"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern LLVMValueRef LLVMConstShuffleVector( LLVMValueRef VectorAConstant, LLVMValueRef VectorBConstant, LLVMValueRef MaskConstant );
 
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMConstExtractValue"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern LLVMValueRef LLVMConstExtractValue( LLVMValueRef AggConstant, out uint IdxList, uint NumIdx );
 
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMConstInsertValue"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern LLVMValueRef LLVMConstInsertValue( LLVMValueRef AggConstant, LLVMValueRef ElementValueConstant, out uint IdxList, uint NumIdx );
 
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMBlockAddress"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern LLVMValueRef LLVMBlockAddress( LLVMValueRef F, LLVMBasicBlockRef BB );
 
-        /**
-         * @defgroup LLVMCCoreValueConstantGlobals Global Values
-         *
-         * This group contains functions that operate on global values. Functions in
-         * this group relate to functions in the llvm::GlobalValue class tree.
-         *
-         * @see llvm::GlobalValue
-         *
-         * @{
-         */
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMGetGlobalParent"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern LLVMModuleRef LLVMGetGlobalParent( LLVMValueRef Global );
 
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMIsDeclaration"]/*' />
         [return: MarshalAs( UnmanagedType.Bool )]
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern bool LLVMIsDeclaration( LLVMValueRef Global );
 
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMGetLinkage"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern LLVMLinkage LLVMGetLinkage( LLVMValueRef Global );
 
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMSetLinkage"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern void LLVMSetLinkage( LLVMValueRef Global, LLVMLinkage Linkage );
 
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMGetSection"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         [return: MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( AliasStringMarshaler ) )]
         public static extern string LLVMGetSection( LLVMValueRef Global );
 
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMSetSection"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern void LLVMSetSection( LLVMValueRef Global, [MarshalAs( UnmanagedType.LPStr )]string Section );
 
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMGetVisibility"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern LLVMVisibility LLVMGetVisibility( LLVMValueRef Global );
 
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMSetVisibility"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern void LLVMSetVisibility( LLVMValueRef Global, LLVMVisibility Viz );
 
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMGetDLLStorageClass"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern LLVMDLLStorageClass LLVMGetDLLStorageClass( LLVMValueRef Global );
 
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMSetDLLStorageClass"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern void LLVMSetDLLStorageClass( LLVMValueRef Global, LLVMDLLStorageClass Class );
 
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMGetUnnamedAddress"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern LLVMUnnamedAddr LLVMGetUnnamedAddress( LLVMValueRef Global );
 
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMSetUnnamedAddress"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern void LLVMSetUnnamedAddress( LLVMValueRef Global, LLVMUnnamedAddr UnnamedAddr );
 
-        /**
-         * Returns the "value type" of a global value.  This differs from the formal
-         * type of a global value which is always a pointer type.
-         *
-         * @see llvm::GlobalValue::getValueType()
-         */
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMGlobalGetValueType"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern LLVMTypeRef LLVMGlobalGetValueType( LLVMValueRef Global );
 
-        /**
-         * Obtain the preferred alignment of the value.
-         * @see llvm::AllocaInst::getAlignment()
-         * @see llvm::LoadInst::getAlignment()
-         * @see llvm::StoreInst::getAlignment()
-         * @see llvm::GlobalValue::getAlignment()
-         */
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMGetAlignment"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern uint LLVMGetAlignment( LLVMValueRef V );
 
-        /**
-         * Set the preferred alignment of the value.
-         * @see llvm::AllocaInst::setAlignment()
-         * @see llvm::LoadInst::setAlignment()
-         * @see llvm::StoreInst::setAlignment()
-         * @see llvm::GlobalValue::setAlignment()
-         */
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMSetAlignment"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern void LLVMSetAlignment( LLVMValueRef V, uint Bytes );
 
-        /**
-         * Sets a metadata attachment, erasing the existing metadata attachment if
-         * it already exists for the given kind.
-         *
-         * @see llvm::GlobalObject::setMetadata()
-         */
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMGlobalSetMetadata"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern void LLVMGlobalSetMetadata( LLVMValueRef Global, uint Kind, LLVMMetadataRef MD );
 
-        /**
-         * Erases a metadata attachment of the given kind if it exists.
-         *
-         * @see llvm::GlobalObject::eraseMetadata()
-         */
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMGlobalEraseMetadata"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern void LLVMGlobalEraseMetadata( LLVMValueRef Global, uint Kind );
 
-        /**
-         * Removes all metadata attachments from this value.
-         *
-         * @see llvm::GlobalObject::clearMetadata()
-         */
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMGlobalClearMetadata"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern void LLVMGlobalClearMetadata( LLVMValueRef Global );
 
-        /**
-         * Retrieves an array of metadata entries representing the metadata attached to
-         * this value. The caller is responsible for freeing this array by calling
-         * \c LLVMDisposeValueMetadataEntries.
-         *
-         * @see llvm::GlobalObject::getAllMetadata()
-         */
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMGlobalCopyAllMetadata"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern LLVMValueMetadataEntry LLVMGlobalCopyAllMetadata( LLVMValueRef Value, out size_t NumEntries );
 
-        /**
-         * Returns the kind of a value metadata entry at a specific index.
-         */
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMValueMetadataEntriesGetKind"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern uint LLVMValueMetadataEntriesGetKind( LLVMValueMetadataEntry Entries, uint Index );
 
-        /**
-         * Returns the underlying metadata node of a value metadata entry at a
-         * specific index.
-         */
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMValueMetadataEntriesGetMetadata"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern LLVMMetadataRef LLVMValueMetadataEntriesGetMetadata( LLVMValueMetadataEntry Entries, uint Index );
 
-        /**
-         * @defgroup LLVMCoreValueConstantGlobalVariable Global Variables
-         *
-         * This group contains functions that operate on global variable values.
-         *
-         * @see llvm::GlobalVariable
-         *
-         * @{
-         */
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMAddGlobal"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern LLVMValueRef LLVMAddGlobal( LLVMModuleRef M, LLVMTypeRef Ty, [MarshalAs( UnmanagedType.LPStr )]string Name );
 
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMAddGlobalInAddressSpace"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern LLVMValueRef LLVMAddGlobalInAddressSpace( LLVMModuleRef M, LLVMTypeRef Ty, [MarshalAs( UnmanagedType.LPStr )]string Name, uint AddressSpace );
 
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMGetNamedGlobal"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern LLVMValueRef LLVMGetNamedGlobal( LLVMModuleRef M, [MarshalAs( UnmanagedType.LPStr )]string Name );
 
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMGetFirstGlobal"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern LLVMValueRef LLVMGetFirstGlobal( LLVMModuleRef M );
 
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMGetLastGlobal"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern LLVMValueRef LLVMGetLastGlobal( LLVMModuleRef M );
 
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMGetNextGlobal"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern LLVMValueRef LLVMGetNextGlobal( LLVMValueRef GlobalVar );
 
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMGetPreviousGlobal"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern LLVMValueRef LLVMGetPreviousGlobal( LLVMValueRef GlobalVar );
 
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMDeleteGlobal"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern void LLVMDeleteGlobal( LLVMValueRef GlobalVar );
 
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMGetInitializer"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern LLVMValueRef LLVMGetInitializer( LLVMValueRef GlobalVar );
 
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMSetInitializer"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern void LLVMSetInitializer( LLVMValueRef GlobalVar, LLVMValueRef ConstantVal );
 
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMIsThreadLocal"]/*' />
         [return: MarshalAs( UnmanagedType.Bool )]
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern bool LLVMIsThreadLocal( LLVMValueRef GlobalVar );
 
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMSetThreadLocal"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern void LLVMSetThreadLocal( LLVMValueRef GlobalVar, [MarshalAs( UnmanagedType.Bool )]bool IsThreadLocal );
 
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMIsGlobalConstant"]/*' />
         [return: MarshalAs( UnmanagedType.Bool )]
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern bool LLVMIsGlobalConstant( LLVMValueRef GlobalVar );
 
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMSetGlobalConstant"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern void LLVMSetGlobalConstant( LLVMValueRef GlobalVar, [MarshalAs( UnmanagedType.Bool )]bool IsConstant );
 
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMGetThreadLocalMode"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern LLVMThreadLocalMode LLVMGetThreadLocalMode( LLVMValueRef GlobalVar );
 
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMSetThreadLocalMode"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern void LLVMSetThreadLocalMode( LLVMValueRef GlobalVar, LLVMThreadLocalMode Mode );
 
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMIsExternallyInitialized"]/*' />
         [return: MarshalAs( UnmanagedType.Bool )]
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern bool LLVMIsExternallyInitialized( LLVMValueRef GlobalVar );
 
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMSetExternallyInitialized"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern void LLVMSetExternallyInitialized( LLVMValueRef GlobalVar, [MarshalAs( UnmanagedType.Bool )]bool IsExtInit );
 
-        /**
-         * @defgroup LLVMCoreValueConstantGlobalAlias Global Aliases
-         *
-         * This group contains function that operate on global alias values.
-         *
-         * @see llvm::GlobalAlias
-         *
-         * @{
-         */
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMAddAlias"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern LLVMValueRef LLVMAddAlias( LLVMModuleRef M, LLVMTypeRef Ty, LLVMValueRef Aliasee, [MarshalAs( UnmanagedType.LPStr )]string Name );
 
-        /**
-         * Obtain a GlobalAlias value from a Module by its name.
-         *
-         * The returned value corresponds to a llvm::GlobalAlias value.
-         *
-         * @see llvm::Module::getNamedAlias()
-         */
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMGetNamedGlobalAlias"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern LLVMValueRef LLVMGetNamedGlobalAlias( LLVMModuleRef M, [MarshalAs( UnmanagedType.LPStr )]string Name, size_t NameLen );
 
-        /**
-         * Obtain an iterator to the first GlobalAlias in a Module.
-         *
-         * @see llvm::Module::alias_begin()
-         */
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMGetFirstGlobalAlias"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern LLVMValueRef LLVMGetFirstGlobalAlias( LLVMModuleRef M );
 
-        /**
-         * Obtain an iterator to the last GlobalAlias in a Module.
-         *
-         * @see llvm::Module::alias_end()
-         */
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMGetLastGlobalAlias"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern LLVMValueRef LLVMGetLastGlobalAlias( LLVMModuleRef M );
 
-        /**
-         * Advance a GlobalAlias iterator to the next GlobalAlias.
-         *
-         * Returns NULL if the iterator was already at the end and there are no more
-         * global aliases.
-         */
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMGetNextGlobalAlias"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern LLVMValueRef LLVMGetNextGlobalAlias( LLVMValueRef GA );
 
-        /**
-         * Decrement a GlobalAlias iterator to the previous GlobalAlias.
-         *
-         * Returns NULL if the iterator was already at the beginning and there are
-         * no previous global aliases.
-         */
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMGetPreviousGlobalAlias"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern LLVMValueRef LLVMGetPreviousGlobalAlias( LLVMValueRef GA );
 
-        /**
-         * Retrieve the target value of an alias.
-         */
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMAliasGetAliasee"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern LLVMValueRef LLVMAliasGetAliasee( LLVMValueRef Alias );
 
-        /**
-         * Set the target value of an alias.
-         */
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMAliasSetAliasee"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern void LLVMAliasSetAliasee( LLVMValueRef Alias, LLVMValueRef Aliasee );
 
-        /**
-         * Remove a function from its containing module and deletes it.
-         *
-         * @see llvm::Function::eraseFromParent()
-         */
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMDeleteFunction"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern void LLVMDeleteFunction( LLVMValueRef Fn );
 
-        /**
-         * Check whether the given function has a personality function.
-         *
-         * @see llvm::Function::hasPersonalityFn()
-         */
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMHasPersonalityFn"]/*' />
         [return: MarshalAs( UnmanagedType.Bool )]
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern bool LLVMHasPersonalityFn( LLVMValueRef Fn );
 
-        /**
-         * Obtain the personality function attached to the function.
-         *
-         * @see llvm::Function::getPersonalityFn()
-         */
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMGetPersonalityFn"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern LLVMValueRef LLVMGetPersonalityFn( LLVMValueRef Fn );
 
-        /**
-         * Set the personality function attached to the function.
-         *
-         * @see llvm::Function::setPersonalityFn()
-         */
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMSetPersonalityFn"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern void LLVMSetPersonalityFn( LLVMValueRef Fn, LLVMValueRef PersonalityFn );
 
-        /**
-         * Obtain the ID number from a function instance.
-         *
-         * @see llvm::Function::getIntrinsicID()
-         */
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMGetIntrinsicID"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern uint LLVMGetIntrinsicID( LLVMValueRef Fn );
 
-        /**
-         * Create or insert the declaration of an intrinsic.  For overloaded intrinsics,
-         * parameter types must be provided to uniquely identify an overload.
-         *
-         * @see llvm::Intrinsic::getDeclaration()
-         */
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMGetIntrinsicDeclaration"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern LLVMValueRef LLVMGetIntrinsicDeclaration( LLVMModuleRef Mod, uint ID, [MarshalAs( UnmanagedType.LPArray, ArraySubType = UnmanagedType.SysInt )]LLVMTypeRef[] ParamTypes, size_t ParamCount );
 
-        /**
-         * Retrieves the type of an intrinsic.  For overloaded intrinsics, parameter
-         * types must be provided to uniquely identify an overload.
-         *
-         * @see llvm::Intrinsic::getType()
-         */
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMIntrinsicGetType"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern LLVMTypeRef LLVMIntrinsicGetType( LLVMContextRef Ctx, uint ID, [MarshalAs( UnmanagedType.LPArray, ArraySubType = UnmanagedType.SysInt )]LLVMTypeRef[] ParamTypes, size_t ParamCount );
 
-        /**
-         * Retrieves the name of an intrinsic.
-         *
-         * @see llvm::Intrinsic::getName()
-         */
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMIntrinsicGetName"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         [return: MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( AliasStringMarshaler ) )]
         public static extern string LLVMIntrinsicGetName( uint ID, out size_t NameLength );
 
-        /**
-         * Copies the name of an overloaded intrinsic identified by a given list of
-         * parameter types.
-         *
-         * Unlike LLVMIntrinsicGetName, the caller is responsible for freeing the
-         * returned string.
-         *
-         * @see llvm::Intrinsic::getName()
-         */
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMIntrinsicCopyOverloadedName"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         [return: MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( AliasStringMarshaler ) )]
         public static extern string LLVMIntrinsicCopyOverloadedName( uint ID, [MarshalAs( UnmanagedType.LPArray, ArraySubType = UnmanagedType.SysInt )]LLVMTypeRef[] ParamTypes, size_t ParamCount, out size_t NameLength );
 
-        /**
-         * Obtain if the intrinsic identified by the given ID is overloaded.
-         *
-         * @see llvm::Intrinsic::isOverloaded()
-         */
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMIntrinsicIsOverloaded"]/*' />
         [return: MarshalAs( UnmanagedType.Bool )]
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern bool LLVMIntrinsicIsOverloaded( uint ID );
 
-        /**
-         * Obtain the calling function of a function.
-         *
-         * The returned value corresponds to the LLVMCallConv enumeration.
-         *
-         * @see llvm::Function::getCallingConv()
-         */
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMGetFunctionCallConv"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern uint LLVMGetFunctionCallConv( LLVMValueRef Fn );
 
-        /**
-         * Set the calling convention of a function.
-         *
-         * @see llvm::Function::setCallingConv()
-         *
-         * @param Fn Function to operate on
-         * @param CC LLVMCallConv to set calling convention to
-         */
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMSetFunctionCallConv"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern void LLVMSetFunctionCallConv( LLVMValueRef Fn, uint CC );
 
-        /**
-         * Obtain the name of the garbage collector to use during code
-         * generation.
-         *
-         * @see llvm::Function::getGC()
-         */
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMGetGC"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         [return: MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( AliasStringMarshaler ) )]
         public static extern string LLVMGetGC( LLVMValueRef Fn );
 
-        /**
-         * Define the garbage collector to use during code generation.
-         *
-         * @see llvm::Function::setGC()
-         */
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMSetGC"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern void LLVMSetGC( LLVMValueRef Fn, [MarshalAs( UnmanagedType.LPStr )]string Name );
 
-        /**
-         * Add an attribute to a function.
-         *
-         * @see llvm::Function::addAttribute()
-         */
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMAddAttributeAtIndex"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern void LLVMAddAttributeAtIndex( LLVMValueRef F, LLVMAttributeIndex Idx, LLVMAttributeRef A );
 
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMGetAttributeCountAtIndex"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern uint LLVMGetAttributeCountAtIndex( LLVMValueRef F, LLVMAttributeIndex Idx );
 
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMGetAttributesAtIndex"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern void LLVMGetAttributesAtIndex( LLVMValueRef F, LLVMAttributeIndex Idx, out LLVMAttributeRef Attrs );
 
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMGetEnumAttributeAtIndex"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern LLVMAttributeRef LLVMGetEnumAttributeAtIndex( LLVMValueRef F, LLVMAttributeIndex Idx, uint KindID );
 
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMGetStringAttributeAtIndex"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern LLVMAttributeRef LLVMGetStringAttributeAtIndex( LLVMValueRef F, LLVMAttributeIndex Idx, [MarshalAs( UnmanagedType.LPStr )]string K, uint KLen );
 
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMRemoveEnumAttributeAtIndex"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern void LLVMRemoveEnumAttributeAtIndex( LLVMValueRef F, LLVMAttributeIndex Idx, uint KindID );
 
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMRemoveStringAttributeAtIndex"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern void LLVMRemoveStringAttributeAtIndex( LLVMValueRef F, LLVMAttributeIndex Idx, [MarshalAs( UnmanagedType.LPStr )]string K, uint KLen );
 
-        /**
-         * Add a target-dependent attribute to a function
-         * @see llvm::AttrBuilder::addAttribute()
-         */
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMAddTargetDependentFunctionAttr"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern void LLVMAddTargetDependentFunctionAttr( LLVMValueRef Fn, [MarshalAs( UnmanagedType.LPStr )]string A, [MarshalAs( UnmanagedType.LPStr )]string V );
 
-        /**
-         * Obtain the number of parameters in a function.
-         *
-         * @see llvm::Function::arg_size()
-         */
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMCountParams"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern uint LLVMCountParams( LLVMValueRef Fn );
 
-        /**
-         * Obtain the parameters in a function.
-         *
-         * The takes a pointer to a pre-allocated array of LLVMValueRef that is
-         * at least LLVMCountParams() long. This array will be filled with
-         * LLVMValueRef instances which correspond to the parameters the
-         * function receives. Each LLVMValueRef corresponds to a llvm::Argument
-         * instance.
-         *
-         * @see llvm::Function::arg_begin()
-         */
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMGetParams"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern void LLVMGetParams( LLVMValueRef Fn, out LLVMValueRef Params );
 
-        /**
-         * Obtain the parameter at the specified index.
-         *
-         * Parameters are indexed from 0.
-         *
-         * @see llvm::Function::arg_begin()
-         */
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMGetParam"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern LLVMValueRef LLVMGetParam( LLVMValueRef Fn, uint Index );
 
-        /**
-         * Obtain the function to which this argument belongs.
-         *
-         * Unlike other functions in this group, this one takes an LLVMValueRef
-         * that corresponds to a llvm::Attribute.
-         *
-         * The returned LLVMValueRef is the llvm::Function to which this
-         * argument belongs.
-         */
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMGetParamParent"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern LLVMValueRef LLVMGetParamParent( LLVMValueRef Inst );
 
-        /**
-         * Obtain the first parameter to a function.
-         *
-         * @see llvm::Function::arg_begin()
-         */
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMGetFirstParam"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern LLVMValueRef LLVMGetFirstParam( LLVMValueRef Fn );
 
-        /**
-         * Obtain the last parameter to a function.
-         *
-         * @see llvm::Function::arg_end()
-         */
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMGetLastParam"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern LLVMValueRef LLVMGetLastParam( LLVMValueRef Fn );
 
-        /**
-         * Obtain the next parameter to a function.
-         *
-         * This takes an LLVMValueRef obtained from LLVMGetFirstParam() (which is
-         * actually a wrapped iterator) and obtains the next parameter from the
-         * underlying iterator.
-         */
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMGetNextParam"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern LLVMValueRef LLVMGetNextParam( LLVMValueRef Arg );
 
-        /**
-         * Obtain the previous parameter to a function.
-         *
-         * This is the opposite of LLVMGetNextParam().
-         */
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMGetPreviousParam"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern LLVMValueRef LLVMGetPreviousParam( LLVMValueRef Arg );
 
-        /**
-         * Set the alignment for a function parameter.
-         *
-         * @see llvm::Argument::addAttr()
-         * @see llvm::AttrBuilder::addAlignmentAttr()
-         */
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMSetParamAlignment"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern void LLVMSetParamAlignment( LLVMValueRef Arg, uint Align );
 
-        /**
-         * Obtain a MDString value from a context.
-         *
-         * The returned instance corresponds to the llvm::MDString class.
-         *
-         * The instance is specified by string data of a specified length. The
-         * string content is copied, so the backing memory can be freed after
-         * this function returns.
-         */
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMMDStringInContext"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern LLVMValueRef LLVMMDStringInContext( LLVMContextRef C, [MarshalAs( UnmanagedType.LPStr )]string Str, uint SLen );
 
-        /**
-         * Obtain a MDString value from the global context.
-         */
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMMDString"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern LLVMValueRef LLVMMDString( [MarshalAs( UnmanagedType.LPStr )]string Str, uint SLen );
 
-        /**
-         * Obtain a MDNode value from a context.
-         *
-         * The returned value corresponds to the llvm::MDNode class.
-         */
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMMDNodeInContext"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern LLVMValueRef LLVMMDNodeInContext( LLVMContextRef C, out LLVMValueRef Vals, uint Count );
 
-        /**
-         * Obtain a MDNode value from the global context.
-         */
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMMDNode"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern LLVMValueRef LLVMMDNode( out LLVMValueRef Vals, uint Count );
 
-        /**
-         * Obtain a Metadata as a Value.
-         */
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMMetadataAsValue"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern LLVMValueRef LLVMMetadataAsValue( LLVMContextRef C, LLVMMetadataRef MD );
 
-        /**
-         * Obtain a Value as a Metadata.
-         */
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMValueAsMetadata"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern LLVMMetadataRef LLVMValueAsMetadata( LLVMValueRef Val );
 
-        /**
-         * Obtain the underlying string from a MDString value.
-         *
-         * @param V Instance to obtain string from.
-         * @param Length Memory address which will hold length of returned string.
-         * @return String data in MDString.
-         */
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMGetMDString"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         [return: MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( AliasStringMarshaler ) )]
         public static extern string LLVMGetMDString( LLVMValueRef V, out uint Length );
 
-        /**
-         * Obtain the number of operands from an MDNode value.
-         *
-         * @param V MDNode to get number of operands from.
-         * @return Number of operands of the MDNode.
-         */
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMGetMDNodeNumOperands"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern uint LLVMGetMDNodeNumOperands( LLVMValueRef V );
 
-        /**
-         * Obtain the given MDNode's operands.
-         *
-         * The passed LLVMValueRef pointer should point to enough memory to hold all of
-         * the operands of the given MDNode (see LLVMGetMDNodeNumOperands) as
-         * LLVMValueRefs. This memory will be populated with the LLVMValueRefs of the
-         * MDNode's operands.
-         *
-         * @param V MDNode to get the operands from.
-         * @param Dest Destination array for operands.
-         */
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMGetMDNodeOperands"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern void LLVMGetMDNodeOperands( LLVMValueRef V, out LLVMValueRef Dest );
 
-        /**
-         * Convert a basic block instance to a value type.
-         */
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMBasicBlockAsValue"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern LLVMValueRef LLVMBasicBlockAsValue( LLVMBasicBlockRef BB );
 
-        /**
-         * Determine whether an LLVMValueRef is itself a basic block.
-         */
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMValueIsBasicBlock"]/*' />
         [return: MarshalAs( UnmanagedType.Bool )]
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern bool LLVMValueIsBasicBlock( LLVMValueRef Val );
 
-        /**
-         * Convert an LLVMValueRef to an LLVMBasicBlockRef instance.
-         */
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMValueAsBasicBlock"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern LLVMBasicBlockRef LLVMValueAsBasicBlock( LLVMValueRef Val );
 
-        /**
-         * Obtain the string name of a basic block.
-         */
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMGetBasicBlockName"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         [return: MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( AliasStringMarshaler ) )]
         public static extern string LLVMGetBasicBlockName( LLVMBasicBlockRef BB );
 
-        /**
-         * Obtain the function to which a basic block belongs.
-         *
-         * @see llvm::BasicBlock::getParent()
-         */
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMGetBasicBlockParent"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern LLVMValueRef LLVMGetBasicBlockParent( LLVMBasicBlockRef BB );
 
-        /**
-         * Obtain the terminator instruction for a basic block.
-         *
-         * If the basic block does not have a terminator (it is not well-formed
-         * if it doesn't), then NULL is returned.
-         *
-         * The returned LLVMValueRef corresponds to an llvm::Instruction.
-         *
-         * @see llvm::BasicBlock::getTerminator()
-         */
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMGetBasicBlockTerminator"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern LLVMValueRef LLVMGetBasicBlockTerminator( LLVMBasicBlockRef BB );
 
-        /**
-         * Obtain the number of basic blocks in a function.
-         *
-         * @param Fn Function value to operate on.
-         */
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMCountBasicBlocks"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern uint LLVMCountBasicBlocks( LLVMValueRef Fn );
 
-        /**
-         * Obtain all of the basic blocks in a function.
-         *
-         * This operates on a function value. The BasicBlocks parameter is a
-         * pointer to a pre-allocated array of LLVMBasicBlockRef of at least
-         * LLVMCountBasicBlocks() in length. This array is populated with
-         * LLVMBasicBlockRef instances.
-         */
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMGetBasicBlocks"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern void LLVMGetBasicBlocks( LLVMValueRef Fn, out LLVMBasicBlockRef BasicBlocks );
 
-        /**
-         * Obtain the first basic block in a function.
-         *
-         * The returned basic block can be used as an iterator. You will likely
-         * eventually call into LLVMGetNextBasicBlock() with it.
-         *
-         * @see llvm::Function::begin()
-         */
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMGetFirstBasicBlock"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern LLVMBasicBlockRef LLVMGetFirstBasicBlock( LLVMValueRef Fn );
 
-        /**
-         * Obtain the last basic block in a function.
-         *
-         * @see llvm::Function::end()
-         */
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMGetLastBasicBlock"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern LLVMBasicBlockRef LLVMGetLastBasicBlock( LLVMValueRef Fn );
 
-        /**
-         * Advance a basic block iterator.
-         */
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMGetNextBasicBlock"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern LLVMBasicBlockRef LLVMGetNextBasicBlock( LLVMBasicBlockRef BB );
 
-        /**
-         * Go backwards in a basic block iterator.
-         */
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMGetPreviousBasicBlock"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern LLVMBasicBlockRef LLVMGetPreviousBasicBlock( LLVMBasicBlockRef BB );
 
-        /**
-         * Obtain the basic block that corresponds to the entry point of a
-         * function.
-         *
-         * @see llvm::Function::getEntryBlock()
-         */
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMGetEntryBasicBlock"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern LLVMBasicBlockRef LLVMGetEntryBasicBlock( LLVMValueRef Fn );
 
-        /**
-         * Create a new basic block without inserting it into a function.
-         *
-         * @see llvm::BasicBlock::Create()
-         */
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMCreateBasicBlockInContext"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern LLVMBasicBlockRef LLVMCreateBasicBlockInContext( LLVMContextRef C, [MarshalAs( UnmanagedType.LPStr )]string Name );
 
-        /**
-         * Append a basic block to the end of a function.
-         *
-         * @see llvm::BasicBlock::Create()
-         */
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMAppendBasicBlockInContext"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern LLVMBasicBlockRef LLVMAppendBasicBlockInContext( LLVMContextRef C, LLVMValueRef Fn, [MarshalAs( UnmanagedType.LPStr )]string Name );
 
-        /**
-         * Append a basic block to the end of a function using the global
-         * context.
-         *
-         * @see llvm::BasicBlock::Create()
-         */
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMAppendBasicBlock"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern LLVMBasicBlockRef LLVMAppendBasicBlock( LLVMValueRef Fn, [MarshalAs( UnmanagedType.LPStr )]string Name );
 
-        /**
-         * Insert a basic block in a function before another basic block.
-         *
-         * The function to add to is determined by the function of the
-         * passed basic block.
-         *
-         * @see llvm::BasicBlock::Create()
-         */
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMInsertBasicBlockInContext"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern LLVMBasicBlockRef LLVMInsertBasicBlockInContext( LLVMContextRef C, LLVMBasicBlockRef BB, [MarshalAs( UnmanagedType.LPStr )]string Name );
 
-        /**
-         * Insert a basic block in a function using the global context.
-         *
-         * @see llvm::BasicBlock::Create()
-         */
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMInsertBasicBlock"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern LLVMBasicBlockRef LLVMInsertBasicBlock( LLVMBasicBlockRef InsertBeforeBB, [MarshalAs( UnmanagedType.LPStr )]string Name );
 
-        /**
-         * Remove a basic block from a function and delete it.
-         *
-         * This deletes the basic block from its containing function and deletes
-         * the basic block itself.
-         *
-         * @see llvm::BasicBlock::eraseFromParent()
-         */
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMDeleteBasicBlock"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern void LLVMDeleteBasicBlock( LLVMBasicBlockRef BB );
 
-        /**
-         * Remove a basic block from a function.
-         *
-         * This deletes the basic block from its containing function but keep
-         * the basic block alive.
-         *
-         * @see llvm::BasicBlock::removeFromParent()
-         */
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMRemoveBasicBlockFromParent"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern void LLVMRemoveBasicBlockFromParent( LLVMBasicBlockRef BB );
 
-        /**
-         * Move a basic block to before another one.
-         *
-         * @see llvm::BasicBlock::moveBefore()
-         */
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMMoveBasicBlockBefore"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern void LLVMMoveBasicBlockBefore( LLVMBasicBlockRef BB, LLVMBasicBlockRef MovePos );
 
-        /**
-         * Move a basic block to after another one.
-         *
-         * @see llvm::BasicBlock::moveAfter()
-         */
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMMoveBasicBlockAfter"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern void LLVMMoveBasicBlockAfter( LLVMBasicBlockRef BB, LLVMBasicBlockRef MovePos );
 
-        /**
-         * Obtain the first instruction in a basic block.
-         *
-         * The returned LLVMValueRef corresponds to a llvm::Instruction
-         * instance.
-         */
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMGetFirstInstruction"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern LLVMValueRef LLVMGetFirstInstruction( LLVMBasicBlockRef BB );
 
-        /**
-         * Obtain the last instruction in a basic block.
-         *
-         * The returned LLVMValueRef corresponds to an LLVM:Instruction.
-         */
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMGetLastInstruction"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern LLVMValueRef LLVMGetLastInstruction( LLVMBasicBlockRef BB );
 
-        /**
-         * Determine whether an instruction has any metadata attached.
-         */
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMHasMetadata"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern int LLVMHasMetadata( LLVMValueRef Val );
 
-        /**
-         * Return metadata associated with an instruction value.
-         */
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMGetMetadata"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern LLVMValueRef LLVMGetMetadata( LLVMValueRef Val, uint KindID );
 
-        /**
-         * Set metadata associated with an instruction value.
-         */
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMSetMetadata"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern void LLVMSetMetadata( LLVMValueRef Val, uint KindID, LLVMValueRef Node );
 
-        /**
-         * Returns the metadata associated with an instruction value, but filters out
-         * all the debug locations.
-         *
-         * @see llvm::Instruction::getAllMetadataOtherThanDebugLoc()
-         */
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMInstructionGetAllMetadataOtherThanDebugLoc"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern LLVMValueMetadataEntry LLVMInstructionGetAllMetadataOtherThanDebugLoc( LLVMValueRef Instr, out size_t NumEntries );
 
-        /**
-         * Obtain the basic block to which an instruction belongs.
-         *
-         * @see llvm::Instruction::getParent()
-         */
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMGetInstructionParent"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern LLVMBasicBlockRef LLVMGetInstructionParent( LLVMValueRef Inst );
 
-        /**
-         * Obtain the instruction that occurs after the one specified.
-         *
-         * The next instruction will be from the same basic block.
-         *
-         * If this is the last instruction in a basic block, NULL will be
-         * returned.
-         */
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMGetNextInstruction"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern LLVMValueRef LLVMGetNextInstruction( LLVMValueRef Inst );
 
-        /**
-         * Obtain the instruction that occurred before this one.
-         *
-         * If the instruction is the first instruction in a basic block, NULL
-         * will be returned.
-         */
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMGetPreviousInstruction"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern LLVMValueRef LLVMGetPreviousInstruction( LLVMValueRef Inst );
 
-        /**
-         * Remove and delete an instruction.
-         *
-         * The instruction specified is removed from its containing building
-         * block but is kept alive.
-         *
-         * @see llvm::Instruction::removeFromParent()
-         */
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMInstructionRemoveFromParent"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern void LLVMInstructionRemoveFromParent( LLVMValueRef Inst );
 
-        /**
-         * Remove and delete an instruction.
-         *
-         * The instruction specified is removed from its containing building
-         * block and then deleted.
-         *
-         * @see llvm::Instruction::eraseFromParent()
-         */
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMInstructionEraseFromParent"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern void LLVMInstructionEraseFromParent( LLVMValueRef Inst );
 
-        /**
-         * Obtain the code opcode for an individual instruction.
-         *
-         * @see llvm::Instruction::getOpCode()
-         */
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMGetInstructionOpcode"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern LLVMOpcode LLVMGetInstructionOpcode( LLVMValueRef Inst );
 
-        /**
-         * Obtain the predicate of an instruction.
-         *
-         * This is only valid for instructions that correspond to llvm::ICmpInst
-         * or llvm::ConstantExpr whose opcode is llvm::Instruction::ICmp.
-         *
-         * @see llvm::ICmpInst::getPredicate()
-         */
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMGetICmpPredicate"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern LLVMIntPredicate LLVMGetICmpPredicate( LLVMValueRef Inst );
 
-        /**
-         * Obtain the float predicate of an instruction.
-         *
-         * This is only valid for instructions that correspond to llvm::FCmpInst
-         * or llvm::ConstantExpr whose opcode is llvm::Instruction::FCmp.
-         *
-         * @see llvm::FCmpInst::getPredicate()
-         */
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMGetFCmpPredicate"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern LLVMRealPredicate LLVMGetFCmpPredicate( LLVMValueRef Inst );
 
-        /**
-         * Create a copy of 'this' instruction that is identical in all ways
-         * except the following:
-         *   * The instruction has no parent
-         *   * The instruction has no name
-         *
-         * @see llvm::Instruction::clone()
-         */
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMInstructionClone"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern LLVMValueRef LLVMInstructionClone( LLVMValueRef Inst );
 
-        /**
-         * Determine whether an instruction is a terminator. This routine is named to
-         * be compatible with historical functions that did this by querying the
-         * underlying C++ type.
-         *
-         * @see llvm::Instruction::isTerminator()
-         */
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMIsATerminatorInst"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern LLVMValueRef LLVMIsATerminatorInst( LLVMValueRef Inst );
 
-        /**
-         * Obtain the argument count for a call instruction.
-         *
-         * This expects an LLVMValueRef that corresponds to a llvm::CallInst,
-         * llvm::InvokeInst, or llvm:FuncletPadInst.
-         *
-         * @see llvm::CallInst::getNumArgOperands()
-         * @see llvm::InvokeInst::getNumArgOperands()
-         * @see llvm::FuncletPadInst::getNumArgOperands()
-         */
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMGetNumArgOperands"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern uint LLVMGetNumArgOperands( LLVMValueRef Instr );
 
-        /**
-         * Set the calling convention for a call instruction.
-         *
-         * This expects an LLVMValueRef that corresponds to a llvm::CallInst or
-         * llvm::InvokeInst.
-         *
-         * @see llvm::CallInst::setCallingConv()
-         * @see llvm::InvokeInst::setCallingConv()
-         */
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMSetInstructionCallConv"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern void LLVMSetInstructionCallConv( LLVMValueRef Instr, uint CC );
 
-        /**
-         * Obtain the calling convention for a call instruction.
-         *
-         * This is the opposite of LLVMSetInstructionCallConv(). Reads its
-         * usage.
-         *
-         * @see LLVMSetInstructionCallConv()
-         */
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMGetInstructionCallConv"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern uint LLVMGetInstructionCallConv( LLVMValueRef Instr );
 
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMSetInstrParamAlignment"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern void LLVMSetInstrParamAlignment( LLVMValueRef Instr, uint index, uint Align );
 
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMAddCallSiteAttribute"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern void LLVMAddCallSiteAttribute( LLVMValueRef C, LLVMAttributeIndex Idx, LLVMAttributeRef A );
 
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMGetCallSiteAttributeCount"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern uint LLVMGetCallSiteAttributeCount( LLVMValueRef C, LLVMAttributeIndex Idx );
 
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMGetCallSiteAttributes"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern void LLVMGetCallSiteAttributes( LLVMValueRef C, LLVMAttributeIndex Idx, out LLVMAttributeRef Attrs );
 
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMGetCallSiteEnumAttribute"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern LLVMAttributeRef LLVMGetCallSiteEnumAttribute( LLVMValueRef C, LLVMAttributeIndex Idx, uint KindID );
 
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMGetCallSiteStringAttribute"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern LLVMAttributeRef LLVMGetCallSiteStringAttribute( LLVMValueRef C, LLVMAttributeIndex Idx, [MarshalAs( UnmanagedType.LPStr )]string K, uint KLen );
 
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMRemoveCallSiteEnumAttribute"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern void LLVMRemoveCallSiteEnumAttribute( LLVMValueRef C, LLVMAttributeIndex Idx, uint KindID );
 
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMRemoveCallSiteStringAttribute"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern void LLVMRemoveCallSiteStringAttribute( LLVMValueRef C, LLVMAttributeIndex Idx, [MarshalAs( UnmanagedType.LPStr )]string K, uint KLen );
 
-        /**
-         * Obtain the function type called by this instruction.
-         *
-         * @see llvm::CallBase::getFunctionType()
-         */
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMGetCalledFunctionType"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern LLVMTypeRef LLVMGetCalledFunctionType( LLVMValueRef C );
 
-        /**
-         * Obtain the pointer to the function invoked by this instruction.
-         *
-         * This expects an LLVMValueRef that corresponds to a llvm::CallInst or
-         * llvm::InvokeInst.
-         *
-         * @see llvm::CallInst::getCalledValue()
-         * @see llvm::InvokeInst::getCalledValue()
-         */
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMGetCalledValue"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern LLVMValueRef LLVMGetCalledValue( LLVMValueRef Instr );
 
-        /**
-         * Obtain whether a call instruction is a tail call.
-         *
-         * This only works on llvm::CallInst instructions.
-         *
-         * @see llvm::CallInst::isTailCall()
-         */
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMIsTailCall"]/*' />
         [return: MarshalAs( UnmanagedType.Bool )]
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern bool LLVMIsTailCall( LLVMValueRef CallInst );
 
-        /**
-         * Set whether a call instruction is a tail call.
-         *
-         * This only works on llvm::CallInst instructions.
-         *
-         * @see llvm::CallInst::setTailCall()
-         */
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMSetTailCall"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern void LLVMSetTailCall( LLVMValueRef CallInst, [MarshalAs( UnmanagedType.Bool )]bool IsTailCall );
 
-        /**
-         * Return the normal destination basic block.
-         *
-         * This only works on llvm::InvokeInst instructions.
-         *
-         * @see llvm::InvokeInst::getNormalDest()
-         */
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMGetNormalDest"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern LLVMBasicBlockRef LLVMGetNormalDest( LLVMValueRef InvokeInst );
 
-        /**
-         * Return the unwind destination basic block.
-         *
-         * Works on llvm::InvokeInst, llvm::CleanupReturnInst, and
-         * llvm::CatchSwitchInst instructions.
-         *
-         * @see llvm::InvokeInst::getUnwindDest()
-         * @see llvm::CleanupReturnInst::getUnwindDest()
-         * @see llvm::CatchSwitchInst::getUnwindDest()
-         */
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMGetUnwindDest"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern LLVMBasicBlockRef LLVMGetUnwindDest( LLVMValueRef InvokeInst );
 
-        /**
-         * Set the normal destination basic block.
-         *
-         * This only works on llvm::InvokeInst instructions.
-         *
-         * @see llvm::InvokeInst::setNormalDest()
-         */
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMSetNormalDest"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern void LLVMSetNormalDest( LLVMValueRef InvokeInst, LLVMBasicBlockRef B );
 
-        /**
-         * Set the unwind destination basic block.
-         *
-         * Works on llvm::InvokeInst, llvm::CleanupReturnInst, and
-         * llvm::CatchSwitchInst instructions.
-         *
-         * @see llvm::InvokeInst::setUnwindDest()
-         * @see llvm::CleanupReturnInst::setUnwindDest()
-         * @see llvm::CatchSwitchInst::setUnwindDest()
-         */
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMSetUnwindDest"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern void LLVMSetUnwindDest( LLVMValueRef InvokeInst, LLVMBasicBlockRef B );
 
-        /**
-         * Return the number of successors that this terminator has.
-         *
-         * @see llvm::Instruction::getNumSuccessors
-         */
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMGetNumSuccessors"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern uint LLVMGetNumSuccessors( LLVMValueRef Term );
 
-        /**
-         * Return the specified successor.
-         *
-         * @see llvm::Instruction::getSuccessor
-         */
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMGetSuccessor"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern LLVMBasicBlockRef LLVMGetSuccessor( LLVMValueRef Term, uint i );
 
-        /**
-         * Update the specified successor to point at the provided block.
-         *
-         * @see llvm::Instruction::setSuccessor
-         */
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMSetSuccessor"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern void LLVMSetSuccessor( LLVMValueRef Term, uint i, LLVMBasicBlockRef block );
 
-        /**
-         * Return if a branch is conditional.
-         *
-         * This only works on llvm::BranchInst instructions.
-         *
-         * @see llvm::BranchInst::isConditional
-         */
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMIsConditional"]/*' />
         [return: MarshalAs( UnmanagedType.Bool )]
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern bool LLVMIsConditional( LLVMValueRef Branch );
 
-        /**
-         * Return the condition of a branch instruction.
-         *
-         * This only works on llvm::BranchInst instructions.
-         *
-         * @see llvm::BranchInst::getCondition
-         */
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMGetCondition"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern LLVMValueRef LLVMGetCondition( LLVMValueRef Branch );
 
-        /**
-         * Set the condition of a branch instruction.
-         *
-         * This only works on llvm::BranchInst instructions.
-         *
-         * @see llvm::BranchInst::setCondition
-         */
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMSetCondition"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern void LLVMSetCondition( LLVMValueRef Branch, LLVMValueRef Cond );
 
-        /**
-         * Obtain the default destination basic block of a switch instruction.
-         *
-         * This only works on llvm::SwitchInst instructions.
-         *
-         * @see llvm::SwitchInst::getDefaultDest()
-         */
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMGetSwitchDefaultDest"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern LLVMBasicBlockRef LLVMGetSwitchDefaultDest( LLVMValueRef SwitchInstr );
 
-        /**
-         * Obtain the type that is being allocated by the alloca instruction.
-         */
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMGetAllocatedType"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern LLVMTypeRef LLVMGetAllocatedType( LLVMValueRef Alloca );
 
-        /**
-         * Check whether the given GEP instruction is inbounds.
-         */
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMIsInBounds"]/*' />
         [return: MarshalAs( UnmanagedType.Bool )]
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern bool LLVMIsInBounds( LLVMValueRef GEP );
 
-        /**
-         * Set the given GEP instruction to be inbounds or not.
-         */
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMSetIsInBounds"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern void LLVMSetIsInBounds( LLVMValueRef GEP, [MarshalAs( UnmanagedType.Bool )]bool InBounds );
 
-        /**
-         * Add an incoming value to the end of a PHI list.
-         */
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMAddIncoming"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern void LLVMAddIncoming( LLVMValueRef PhiNode, [MarshalAs( UnmanagedType.LPArray, ArraySubType = UnmanagedType.SysInt )]LLVMValueRef[] IncomingValues, [MarshalAs( UnmanagedType.LPArray, ArraySubType = UnmanagedType.SysInt )]LLVMBasicBlockRef[] IncomingBlocks, uint Count );
 
-        /**
-         * Obtain the number of incoming basic blocks to a PHI node.
-         */
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMCountIncoming"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern uint LLVMCountIncoming( LLVMValueRef PhiNode );
 
-        /**
-         * Obtain an incoming value to a PHI node as an LLVMValueRef.
-         */
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMGetIncomingValue"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern LLVMValueRef LLVMGetIncomingValue( LLVMValueRef PhiNode, uint Index );
 
-        /**
-         * Obtain an incoming value to a PHI node as an LLVMBasicBlockRef.
-         */
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMGetIncomingBlock"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern LLVMBasicBlockRef LLVMGetIncomingBlock( LLVMValueRef PhiNode, uint Index );
 
-        /**
-         * Obtain the number of indices.
-         * NB: This also works on GEP.
-         */
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMGetNumIndices"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern uint LLVMGetNumIndices( LLVMValueRef Inst );
 
-        /**
-         * Obtain the indices as an array.
-         */
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMGetIndices"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         unsafe public static extern uint* LLVMGetIndices( LLVMValueRef Inst );
 
-        /**
-         * @defgroup LLVMCCoreInstructionBuilder Instruction Builders
-         *
-         * An instruction builder represents a point within a basic block and is
-         * the exclusive means of building instructions using the C interface.
-         *
-         * @{
-         */
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMCreateBuilderInContext"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern LLVMBuilderRef LLVMCreateBuilderInContext( LLVMContextRef C );
 
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMCreateBuilder"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern LLVMBuilderRef LLVMCreateBuilder(  );
 
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMPositionBuilder"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern void LLVMPositionBuilder( LLVMBuilderRef Builder, LLVMBasicBlockRef Block, LLVMValueRef Instr );
 
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMPositionBuilderBefore"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern void LLVMPositionBuilderBefore( LLVMBuilderRef Builder, LLVMValueRef Instr );
 
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMPositionBuilderAtEnd"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern void LLVMPositionBuilderAtEnd( LLVMBuilderRef Builder, LLVMBasicBlockRef Block );
 
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMGetInsertBlock"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern LLVMBasicBlockRef LLVMGetInsertBlock( LLVMBuilderRef Builder );
 
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMClearInsertionPosition"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern void LLVMClearInsertionPosition( LLVMBuilderRef Builder );
 
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMInsertIntoBuilder"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern void LLVMInsertIntoBuilder( LLVMBuilderRef Builder, LLVMValueRef Instr );
 
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMInsertIntoBuilderWithName"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern void LLVMInsertIntoBuilderWithName( LLVMBuilderRef Builder, LLVMValueRef Instr, [MarshalAs( UnmanagedType.LPStr )]string Name );
 
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMSetCurrentDebugLocation"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern void LLVMSetCurrentDebugLocation( LLVMBuilderRef Builder, LLVMValueRef L );
 
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMGetCurrentDebugLocation"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern LLVMValueRef LLVMGetCurrentDebugLocation( LLVMBuilderRef Builder );
 
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMSetInstDebugLocation"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern void LLVMSetInstDebugLocation( LLVMBuilderRef Builder, LLVMValueRef Inst );
 
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMBuildRetVoid"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern LLVMValueRef LLVMBuildRetVoid( LLVMBuilderRef _0 );
 
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMBuildRet"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern LLVMValueRef LLVMBuildRet( LLVMBuilderRef _0, LLVMValueRef V );
 
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMBuildAggregateRet"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern LLVMValueRef LLVMBuildAggregateRet( LLVMBuilderRef _0, out LLVMValueRef RetVals, uint N );
 
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMBuildBr"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern LLVMValueRef LLVMBuildBr( LLVMBuilderRef _0, LLVMBasicBlockRef Dest );
 
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMBuildCondBr"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern LLVMValueRef LLVMBuildCondBr( LLVMBuilderRef _0, LLVMValueRef If, LLVMBasicBlockRef Then, LLVMBasicBlockRef Else );
 
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMBuildSwitch"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern LLVMValueRef LLVMBuildSwitch( LLVMBuilderRef _0, LLVMValueRef V, LLVMBasicBlockRef Else, uint NumCases );
 
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMBuildIndirectBr"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern LLVMValueRef LLVMBuildIndirectBr( LLVMBuilderRef B, LLVMValueRef Addr, uint NumDests );
 
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMBuildInvoke2"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern LLVMValueRef LLVMBuildInvoke2( LLVMBuilderRef _0, LLVMTypeRef Ty, LLVMValueRef Fn, out LLVMValueRef Args, uint NumArgs, LLVMBasicBlockRef Then, LLVMBasicBlockRef Catch, [MarshalAs( UnmanagedType.LPStr )]string Name );
 
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMBuildUnreachable"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern LLVMValueRef LLVMBuildUnreachable( LLVMBuilderRef _0 );
 
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMBuildResume"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern LLVMValueRef LLVMBuildResume( LLVMBuilderRef B, LLVMValueRef Exn );
 
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMBuildLandingPad"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern LLVMValueRef LLVMBuildLandingPad( LLVMBuilderRef B, LLVMTypeRef Ty, LLVMValueRef PersFn, uint NumClauses, [MarshalAs( UnmanagedType.LPStr )]string Name );
 
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMBuildCleanupRet"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern LLVMValueRef LLVMBuildCleanupRet( LLVMBuilderRef B, LLVMValueRef CatchPad, LLVMBasicBlockRef BB );
 
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMBuildCatchRet"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern LLVMValueRef LLVMBuildCatchRet( LLVMBuilderRef B, LLVMValueRef CatchPad, LLVMBasicBlockRef BB );
 
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMBuildCatchPad"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern LLVMValueRef LLVMBuildCatchPad( LLVMBuilderRef B, LLVMValueRef ParentPad, out LLVMValueRef Args, uint NumArgs, [MarshalAs( UnmanagedType.LPStr )]string Name );
 
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMBuildCleanupPad"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern LLVMValueRef LLVMBuildCleanupPad( LLVMBuilderRef B, LLVMValueRef ParentPad, out LLVMValueRef Args, uint NumArgs, [MarshalAs( UnmanagedType.LPStr )]string Name );
 
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMBuildCatchSwitch"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern LLVMValueRef LLVMBuildCatchSwitch( LLVMBuilderRef B, LLVMValueRef ParentPad, LLVMBasicBlockRef UnwindBB, uint NumHandlers, [MarshalAs( UnmanagedType.LPStr )]string Name );
 
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMAddCase"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern void LLVMAddCase( LLVMValueRef Switch, LLVMValueRef OnVal, LLVMBasicBlockRef Dest );
 
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMAddDestination"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern void LLVMAddDestination( LLVMValueRef IndirectBr, LLVMBasicBlockRef Dest );
 
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMGetNumClauses"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern uint LLVMGetNumClauses( LLVMValueRef LandingPad );
 
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMGetClause"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern LLVMValueRef LLVMGetClause( LLVMValueRef LandingPad, uint Idx );
 
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMAddClause"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern void LLVMAddClause( LLVMValueRef LandingPad, LLVMValueRef ClauseVal );
 
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMIsCleanup"]/*' />
         [return: MarshalAs( UnmanagedType.Bool )]
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern bool LLVMIsCleanup( LLVMValueRef LandingPad );
 
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMSetCleanup"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern void LLVMSetCleanup( LLVMValueRef LandingPad, [MarshalAs( UnmanagedType.Bool )]bool Val );
 
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMAddHandler"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern void LLVMAddHandler( LLVMValueRef CatchSwitch, LLVMBasicBlockRef Dest );
 
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMGetNumHandlers"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern uint LLVMGetNumHandlers( LLVMValueRef CatchSwitch );
 
-        /**
-         * Obtain the basic blocks acting as handlers for a catchswitch instruction.
-         *
-         * The Handlers parameter should point to a pre-allocated array of
-         * LLVMBasicBlockRefs at least LLVMGetNumHandlers() large. On return, the
-         * first LLVMGetNumHandlers() entries in the array will be populated
-         * with LLVMBasicBlockRef instances.
-         *
-         * @param CatchSwitch The catchswitch instruction to operate on.
-         * @param Handlers Memory address of an array to be filled with basic blocks.
-         */
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMGetHandlers"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern void LLVMGetHandlers( LLVMValueRef CatchSwitch, out LLVMBasicBlockRef Handlers );
 
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMGetArgOperand"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern LLVMValueRef LLVMGetArgOperand( LLVMValueRef Funclet, uint i );
 
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMSetArgOperand"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern void LLVMSetArgOperand( LLVMValueRef Funclet, uint i, LLVMValueRef value );
 
-        /**
-         * Get the parent catchswitch instruction of a catchpad instruction.
-         *
-         * This only works on llvm::CatchPadInst instructions.
-         *
-         * @see llvm::CatchPadInst::getCatchSwitch()
-         */
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMGetParentCatchSwitch"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern LLVMValueRef LLVMGetParentCatchSwitch( LLVMValueRef CatchPad );
 
-        /**
-         * Set the parent catchswitch instruction of a catchpad instruction.
-         *
-         * This only works on llvm::CatchPadInst instructions.
-         *
-         * @see llvm::CatchPadInst::setCatchSwitch()
-         */
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMSetParentCatchSwitch"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern void LLVMSetParentCatchSwitch( LLVMValueRef CatchPad, LLVMValueRef CatchSwitch );
 
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMBuildAdd"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern LLVMValueRef LLVMBuildAdd( LLVMBuilderRef _0, LLVMValueRef LHS, LLVMValueRef RHS, [MarshalAs( UnmanagedType.LPStr )]string Name );
 
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMBuildNSWAdd"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern LLVMValueRef LLVMBuildNSWAdd( LLVMBuilderRef _0, LLVMValueRef LHS, LLVMValueRef RHS, [MarshalAs( UnmanagedType.LPStr )]string Name );
 
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMBuildNUWAdd"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern LLVMValueRef LLVMBuildNUWAdd( LLVMBuilderRef _0, LLVMValueRef LHS, LLVMValueRef RHS, [MarshalAs( UnmanagedType.LPStr )]string Name );
 
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMBuildFAdd"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern LLVMValueRef LLVMBuildFAdd( LLVMBuilderRef _0, LLVMValueRef LHS, LLVMValueRef RHS, [MarshalAs( UnmanagedType.LPStr )]string Name );
 
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMBuildSub"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern LLVMValueRef LLVMBuildSub( LLVMBuilderRef _0, LLVMValueRef LHS, LLVMValueRef RHS, [MarshalAs( UnmanagedType.LPStr )]string Name );
 
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMBuildNSWSub"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern LLVMValueRef LLVMBuildNSWSub( LLVMBuilderRef _0, LLVMValueRef LHS, LLVMValueRef RHS, [MarshalAs( UnmanagedType.LPStr )]string Name );
 
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMBuildNUWSub"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern LLVMValueRef LLVMBuildNUWSub( LLVMBuilderRef _0, LLVMValueRef LHS, LLVMValueRef RHS, [MarshalAs( UnmanagedType.LPStr )]string Name );
 
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMBuildFSub"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern LLVMValueRef LLVMBuildFSub( LLVMBuilderRef _0, LLVMValueRef LHS, LLVMValueRef RHS, [MarshalAs( UnmanagedType.LPStr )]string Name );
 
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMBuildMul"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern LLVMValueRef LLVMBuildMul( LLVMBuilderRef _0, LLVMValueRef LHS, LLVMValueRef RHS, [MarshalAs( UnmanagedType.LPStr )]string Name );
 
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMBuildNSWMul"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern LLVMValueRef LLVMBuildNSWMul( LLVMBuilderRef _0, LLVMValueRef LHS, LLVMValueRef RHS, [MarshalAs( UnmanagedType.LPStr )]string Name );
 
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMBuildNUWMul"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern LLVMValueRef LLVMBuildNUWMul( LLVMBuilderRef _0, LLVMValueRef LHS, LLVMValueRef RHS, [MarshalAs( UnmanagedType.LPStr )]string Name );
 
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMBuildFMul"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern LLVMValueRef LLVMBuildFMul( LLVMBuilderRef _0, LLVMValueRef LHS, LLVMValueRef RHS, [MarshalAs( UnmanagedType.LPStr )]string Name );
 
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMBuildUDiv"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern LLVMValueRef LLVMBuildUDiv( LLVMBuilderRef _0, LLVMValueRef LHS, LLVMValueRef RHS, [MarshalAs( UnmanagedType.LPStr )]string Name );
 
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMBuildExactUDiv"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern LLVMValueRef LLVMBuildExactUDiv( LLVMBuilderRef _0, LLVMValueRef LHS, LLVMValueRef RHS, [MarshalAs( UnmanagedType.LPStr )]string Name );
 
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMBuildSDiv"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern LLVMValueRef LLVMBuildSDiv( LLVMBuilderRef _0, LLVMValueRef LHS, LLVMValueRef RHS, [MarshalAs( UnmanagedType.LPStr )]string Name );
 
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMBuildExactSDiv"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern LLVMValueRef LLVMBuildExactSDiv( LLVMBuilderRef _0, LLVMValueRef LHS, LLVMValueRef RHS, [MarshalAs( UnmanagedType.LPStr )]string Name );
 
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMBuildFDiv"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern LLVMValueRef LLVMBuildFDiv( LLVMBuilderRef _0, LLVMValueRef LHS, LLVMValueRef RHS, [MarshalAs( UnmanagedType.LPStr )]string Name );
 
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMBuildURem"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern LLVMValueRef LLVMBuildURem( LLVMBuilderRef _0, LLVMValueRef LHS, LLVMValueRef RHS, [MarshalAs( UnmanagedType.LPStr )]string Name );
 
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMBuildSRem"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern LLVMValueRef LLVMBuildSRem( LLVMBuilderRef _0, LLVMValueRef LHS, LLVMValueRef RHS, [MarshalAs( UnmanagedType.LPStr )]string Name );
 
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMBuildFRem"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern LLVMValueRef LLVMBuildFRem( LLVMBuilderRef _0, LLVMValueRef LHS, LLVMValueRef RHS, [MarshalAs( UnmanagedType.LPStr )]string Name );
 
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMBuildShl"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern LLVMValueRef LLVMBuildShl( LLVMBuilderRef _0, LLVMValueRef LHS, LLVMValueRef RHS, [MarshalAs( UnmanagedType.LPStr )]string Name );
 
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMBuildLShr"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern LLVMValueRef LLVMBuildLShr( LLVMBuilderRef _0, LLVMValueRef LHS, LLVMValueRef RHS, [MarshalAs( UnmanagedType.LPStr )]string Name );
 
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMBuildAShr"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern LLVMValueRef LLVMBuildAShr( LLVMBuilderRef _0, LLVMValueRef LHS, LLVMValueRef RHS, [MarshalAs( UnmanagedType.LPStr )]string Name );
 
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMBuildAnd"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern LLVMValueRef LLVMBuildAnd( LLVMBuilderRef _0, LLVMValueRef LHS, LLVMValueRef RHS, [MarshalAs( UnmanagedType.LPStr )]string Name );
 
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMBuildOr"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern LLVMValueRef LLVMBuildOr( LLVMBuilderRef _0, LLVMValueRef LHS, LLVMValueRef RHS, [MarshalAs( UnmanagedType.LPStr )]string Name );
 
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMBuildXor"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern LLVMValueRef LLVMBuildXor( LLVMBuilderRef _0, LLVMValueRef LHS, LLVMValueRef RHS, [MarshalAs( UnmanagedType.LPStr )]string Name );
 
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMBuildBinOp"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern LLVMValueRef LLVMBuildBinOp( LLVMBuilderRef B, LLVMOpcode Op, LLVMValueRef LHS, LLVMValueRef RHS, [MarshalAs( UnmanagedType.LPStr )]string Name );
 
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMBuildNeg"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern LLVMValueRef LLVMBuildNeg( LLVMBuilderRef _0, LLVMValueRef V, [MarshalAs( UnmanagedType.LPStr )]string Name );
 
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMBuildNSWNeg"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern LLVMValueRef LLVMBuildNSWNeg( LLVMBuilderRef B, LLVMValueRef V, [MarshalAs( UnmanagedType.LPStr )]string Name );
 
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMBuildNUWNeg"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern LLVMValueRef LLVMBuildNUWNeg( LLVMBuilderRef B, LLVMValueRef V, [MarshalAs( UnmanagedType.LPStr )]string Name );
 
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMBuildFNeg"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern LLVMValueRef LLVMBuildFNeg( LLVMBuilderRef _0, LLVMValueRef V, [MarshalAs( UnmanagedType.LPStr )]string Name );
 
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMBuildNot"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern LLVMValueRef LLVMBuildNot( LLVMBuilderRef _0, LLVMValueRef V, [MarshalAs( UnmanagedType.LPStr )]string Name );
 
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMBuildMalloc"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern LLVMValueRef LLVMBuildMalloc( LLVMBuilderRef _0, LLVMTypeRef Ty, [MarshalAs( UnmanagedType.LPStr )]string Name );
 
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMBuildArrayMalloc"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern LLVMValueRef LLVMBuildArrayMalloc( LLVMBuilderRef _0, LLVMTypeRef Ty, LLVMValueRef Val, [MarshalAs( UnmanagedType.LPStr )]string Name );
 
-        /**
-         * Creates and inserts a memset to the specified pointer and the 
-         * specified value.
-         *
-         * @see llvm::IRRBuilder::CreateMemSet()
-         */
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMBuildMemSet"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern LLVMValueRef LLVMBuildMemSet( LLVMBuilderRef B, LLVMValueRef Ptr, LLVMValueRef Val, LLVMValueRef Len, uint Align );
 
-        /**
-         * Creates and inserts a memcpy between the specified pointers.
-         *
-         * @see llvm::IRRBuilder::CreateMemCpy()
-         */
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMBuildMemCpy"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern LLVMValueRef LLVMBuildMemCpy( LLVMBuilderRef B, LLVMValueRef Dst, uint DstAlign, LLVMValueRef Src, uint SrcAlign, LLVMValueRef Size );
 
-        /**
-         * Creates and inserts a memmove between the specified pointers.
-         *
-         * @see llvm::IRRBuilder::CreateMemMove()
-         */
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMBuildMemMove"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern LLVMValueRef LLVMBuildMemMove( LLVMBuilderRef B, LLVMValueRef Dst, uint DstAlign, LLVMValueRef Src, uint SrcAlign, LLVMValueRef Size );
 
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMBuildAlloca"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern LLVMValueRef LLVMBuildAlloca( LLVMBuilderRef _0, LLVMTypeRef Ty, [MarshalAs( UnmanagedType.LPStr )]string Name );
 
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMBuildArrayAlloca"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern LLVMValueRef LLVMBuildArrayAlloca( LLVMBuilderRef _0, LLVMTypeRef Ty, LLVMValueRef Val, [MarshalAs( UnmanagedType.LPStr )]string Name );
 
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMBuildFree"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern LLVMValueRef LLVMBuildFree( LLVMBuilderRef _0, LLVMValueRef PointerVal );
 
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMBuildLoad2"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern LLVMValueRef LLVMBuildLoad2( LLVMBuilderRef _0, LLVMTypeRef Ty, LLVMValueRef PointerVal, [MarshalAs( UnmanagedType.LPStr )]string Name );
 
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMBuildStore"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern LLVMValueRef LLVMBuildStore( LLVMBuilderRef _0, LLVMValueRef Val, LLVMValueRef Ptr );
 
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMBuildGEP2"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern LLVMValueRef LLVMBuildGEP2( LLVMBuilderRef B, LLVMTypeRef Ty, LLVMValueRef Pointer, [MarshalAs( UnmanagedType.LPArray, ArraySubType = UnmanagedType.SysInt )]LLVMValueRef[] Indices, uint NumIndices, [MarshalAs( UnmanagedType.LPStr )]string Name );
 
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMBuildInBoundsGEP2"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern LLVMValueRef LLVMBuildInBoundsGEP2( LLVMBuilderRef B, LLVMTypeRef Ty, LLVMValueRef Pointer, [MarshalAs( UnmanagedType.LPArray, ArraySubType = UnmanagedType.SysInt )]LLVMValueRef[] Indices, uint NumIndices, [MarshalAs( UnmanagedType.LPStr )]string Name );
 
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMBuildStructGEP2"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern LLVMValueRef LLVMBuildStructGEP2( LLVMBuilderRef B, LLVMTypeRef Ty, LLVMValueRef Pointer, uint Idx, [MarshalAs( UnmanagedType.LPStr )]string Name );
 
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMBuildGlobalString"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern LLVMValueRef LLVMBuildGlobalString( LLVMBuilderRef B, [MarshalAs( UnmanagedType.LPStr )]string Str, [MarshalAs( UnmanagedType.LPStr )]string Name );
 
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMBuildGlobalStringPtr"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern LLVMValueRef LLVMBuildGlobalStringPtr( LLVMBuilderRef B, [MarshalAs( UnmanagedType.LPStr )]string Str, [MarshalAs( UnmanagedType.LPStr )]string Name );
 
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMGetVolatile"]/*' />
         [return: MarshalAs( UnmanagedType.Bool )]
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern bool LLVMGetVolatile( LLVMValueRef MemoryAccessInst );
 
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMSetVolatile"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern void LLVMSetVolatile( LLVMValueRef MemoryAccessInst, [MarshalAs( UnmanagedType.Bool )]bool IsVolatile );
 
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMGetOrdering"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern LLVMAtomicOrdering LLVMGetOrdering( LLVMValueRef MemoryAccessInst );
 
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMSetOrdering"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern void LLVMSetOrdering( LLVMValueRef MemoryAccessInst, LLVMAtomicOrdering Ordering );
 
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMBuildTrunc"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern LLVMValueRef LLVMBuildTrunc( LLVMBuilderRef _0, LLVMValueRef Val, LLVMTypeRef DestTy, [MarshalAs( UnmanagedType.LPStr )]string Name );
 
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMBuildZExt"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern LLVMValueRef LLVMBuildZExt( LLVMBuilderRef _0, LLVMValueRef Val, LLVMTypeRef DestTy, [MarshalAs( UnmanagedType.LPStr )]string Name );
 
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMBuildSExt"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern LLVMValueRef LLVMBuildSExt( LLVMBuilderRef _0, LLVMValueRef Val, LLVMTypeRef DestTy, [MarshalAs( UnmanagedType.LPStr )]string Name );
 
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMBuildFPToUI"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern LLVMValueRef LLVMBuildFPToUI( LLVMBuilderRef _0, LLVMValueRef Val, LLVMTypeRef DestTy, [MarshalAs( UnmanagedType.LPStr )]string Name );
 
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMBuildFPToSI"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern LLVMValueRef LLVMBuildFPToSI( LLVMBuilderRef _0, LLVMValueRef Val, LLVMTypeRef DestTy, [MarshalAs( UnmanagedType.LPStr )]string Name );
 
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMBuildUIToFP"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern LLVMValueRef LLVMBuildUIToFP( LLVMBuilderRef _0, LLVMValueRef Val, LLVMTypeRef DestTy, [MarshalAs( UnmanagedType.LPStr )]string Name );
 
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMBuildSIToFP"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern LLVMValueRef LLVMBuildSIToFP( LLVMBuilderRef _0, LLVMValueRef Val, LLVMTypeRef DestTy, [MarshalAs( UnmanagedType.LPStr )]string Name );
 
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMBuildFPTrunc"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern LLVMValueRef LLVMBuildFPTrunc( LLVMBuilderRef _0, LLVMValueRef Val, LLVMTypeRef DestTy, [MarshalAs( UnmanagedType.LPStr )]string Name );
 
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMBuildFPExt"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern LLVMValueRef LLVMBuildFPExt( LLVMBuilderRef _0, LLVMValueRef Val, LLVMTypeRef DestTy, [MarshalAs( UnmanagedType.LPStr )]string Name );
 
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMBuildPtrToInt"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern LLVMValueRef LLVMBuildPtrToInt( LLVMBuilderRef _0, LLVMValueRef Val, LLVMTypeRef DestTy, [MarshalAs( UnmanagedType.LPStr )]string Name );
 
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMBuildIntToPtr"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern LLVMValueRef LLVMBuildIntToPtr( LLVMBuilderRef _0, LLVMValueRef Val, LLVMTypeRef DestTy, [MarshalAs( UnmanagedType.LPStr )]string Name );
 
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMBuildBitCast"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern LLVMValueRef LLVMBuildBitCast( LLVMBuilderRef _0, LLVMValueRef Val, LLVMTypeRef DestTy, [MarshalAs( UnmanagedType.LPStr )]string Name );
 
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMBuildAddrSpaceCast"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern LLVMValueRef LLVMBuildAddrSpaceCast( LLVMBuilderRef _0, LLVMValueRef Val, LLVMTypeRef DestTy, [MarshalAs( UnmanagedType.LPStr )]string Name );
 
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMBuildZExtOrBitCast"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern LLVMValueRef LLVMBuildZExtOrBitCast( LLVMBuilderRef _0, LLVMValueRef Val, LLVMTypeRef DestTy, [MarshalAs( UnmanagedType.LPStr )]string Name );
 
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMBuildSExtOrBitCast"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern LLVMValueRef LLVMBuildSExtOrBitCast( LLVMBuilderRef _0, LLVMValueRef Val, LLVMTypeRef DestTy, [MarshalAs( UnmanagedType.LPStr )]string Name );
 
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMBuildTruncOrBitCast"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern LLVMValueRef LLVMBuildTruncOrBitCast( LLVMBuilderRef _0, LLVMValueRef Val, LLVMTypeRef DestTy, [MarshalAs( UnmanagedType.LPStr )]string Name );
 
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMBuildCast"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern LLVMValueRef LLVMBuildCast( LLVMBuilderRef B, LLVMOpcode Op, LLVMValueRef Val, LLVMTypeRef DestTy, [MarshalAs( UnmanagedType.LPStr )]string Name );
 
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMBuildPointerCast"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern LLVMValueRef LLVMBuildPointerCast( LLVMBuilderRef _0, LLVMValueRef Val, LLVMTypeRef DestTy, [MarshalAs( UnmanagedType.LPStr )]string Name );
 
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMBuildIntCast2"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern LLVMValueRef LLVMBuildIntCast2( LLVMBuilderRef _0, LLVMValueRef Val, LLVMTypeRef DestTy, [MarshalAs( UnmanagedType.Bool )]bool IsSigned, [MarshalAs( UnmanagedType.LPStr )]string Name );
 
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMBuildFPCast"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern LLVMValueRef LLVMBuildFPCast( LLVMBuilderRef _0, LLVMValueRef Val, LLVMTypeRef DestTy, [MarshalAs( UnmanagedType.LPStr )]string Name );
 
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMBuildICmp"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern LLVMValueRef LLVMBuildICmp( LLVMBuilderRef _0, LLVMIntPredicate Op, LLVMValueRef LHS, LLVMValueRef RHS, [MarshalAs( UnmanagedType.LPStr )]string Name );
 
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMBuildFCmp"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern LLVMValueRef LLVMBuildFCmp( LLVMBuilderRef _0, LLVMRealPredicate Op, LLVMValueRef LHS, LLVMValueRef RHS, [MarshalAs( UnmanagedType.LPStr )]string Name );
 
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMBuildPhi"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern LLVMValueRef LLVMBuildPhi( LLVMBuilderRef _0, LLVMTypeRef Ty, [MarshalAs( UnmanagedType.LPStr )]string Name );
 
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMBuildCall2"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern LLVMValueRef LLVMBuildCall2( LLVMBuilderRef _0, LLVMTypeRef _1, LLVMValueRef Fn, [MarshalAs( UnmanagedType.LPArray, ArraySubType = UnmanagedType.SysInt )]LLVMValueRef[] Args, uint NumArgs, [MarshalAs( UnmanagedType.LPStr )]string Name );
 
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMBuildSelect"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern LLVMValueRef LLVMBuildSelect( LLVMBuilderRef _0, LLVMValueRef If, LLVMValueRef Then, LLVMValueRef Else, [MarshalAs( UnmanagedType.LPStr )]string Name );
 
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMBuildVAArg"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern LLVMValueRef LLVMBuildVAArg( LLVMBuilderRef _0, LLVMValueRef List, LLVMTypeRef Ty, [MarshalAs( UnmanagedType.LPStr )]string Name );
 
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMBuildExtractElement"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern LLVMValueRef LLVMBuildExtractElement( LLVMBuilderRef _0, LLVMValueRef VecVal, LLVMValueRef Index, [MarshalAs( UnmanagedType.LPStr )]string Name );
 
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMBuildInsertElement"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern LLVMValueRef LLVMBuildInsertElement( LLVMBuilderRef _0, LLVMValueRef VecVal, LLVMValueRef EltVal, LLVMValueRef Index, [MarshalAs( UnmanagedType.LPStr )]string Name );
 
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMBuildShuffleVector"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern LLVMValueRef LLVMBuildShuffleVector( LLVMBuilderRef _0, LLVMValueRef V1, LLVMValueRef V2, LLVMValueRef Mask, [MarshalAs( UnmanagedType.LPStr )]string Name );
 
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMBuildExtractValue"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern LLVMValueRef LLVMBuildExtractValue( LLVMBuilderRef _0, LLVMValueRef AggVal, uint Index, [MarshalAs( UnmanagedType.LPStr )]string Name );
 
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMBuildInsertValue"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern LLVMValueRef LLVMBuildInsertValue( LLVMBuilderRef _0, LLVMValueRef AggVal, LLVMValueRef EltVal, uint Index, [MarshalAs( UnmanagedType.LPStr )]string Name );
 
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMBuildIsNull"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern LLVMValueRef LLVMBuildIsNull( LLVMBuilderRef _0, LLVMValueRef Val, [MarshalAs( UnmanagedType.LPStr )]string Name );
 
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMBuildIsNotNull"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern LLVMValueRef LLVMBuildIsNotNull( LLVMBuilderRef _0, LLVMValueRef Val, [MarshalAs( UnmanagedType.LPStr )]string Name );
 
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMBuildPtrDiff"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern LLVMValueRef LLVMBuildPtrDiff( LLVMBuilderRef _0, LLVMValueRef LHS, LLVMValueRef RHS, [MarshalAs( UnmanagedType.LPStr )]string Name );
 
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMBuildFence"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern LLVMValueRef LLVMBuildFence( LLVMBuilderRef B, LLVMAtomicOrdering ordering, [MarshalAs( UnmanagedType.Bool )]bool singleThread, [MarshalAs( UnmanagedType.LPStr )]string Name );
 
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMBuildAtomicRMW"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern LLVMValueRef LLVMBuildAtomicRMW( LLVMBuilderRef B, LLVMAtomicRMWBinOp op, LLVMValueRef PTR, LLVMValueRef Val, LLVMAtomicOrdering ordering, [MarshalAs( UnmanagedType.Bool )]bool singleThread );
 
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMBuildAtomicCmpXchg"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern LLVMValueRef LLVMBuildAtomicCmpXchg( LLVMBuilderRef B, LLVMValueRef Ptr, LLVMValueRef Cmp, LLVMValueRef New, LLVMAtomicOrdering SuccessOrdering, LLVMAtomicOrdering FailureOrdering, [MarshalAs( UnmanagedType.Bool )]bool SingleThread );
 
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMIsAtomicSingleThread"]/*' />
         [return: MarshalAs( UnmanagedType.Bool )]
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern bool LLVMIsAtomicSingleThread( LLVMValueRef AtomicInst );
 
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMSetAtomicSingleThread"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern void LLVMSetAtomicSingleThread( LLVMValueRef AtomicInst, [MarshalAs( UnmanagedType.Bool )]bool SingleThread );
 
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMGetCmpXchgSuccessOrdering"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern LLVMAtomicOrdering LLVMGetCmpXchgSuccessOrdering( LLVMValueRef CmpXchgInst );
 
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMSetCmpXchgSuccessOrdering"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern void LLVMSetCmpXchgSuccessOrdering( LLVMValueRef CmpXchgInst, LLVMAtomicOrdering Ordering );
 
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMGetCmpXchgFailureOrdering"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern LLVMAtomicOrdering LLVMGetCmpXchgFailureOrdering( LLVMValueRef CmpXchgInst );
 
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMSetCmpXchgFailureOrdering"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern void LLVMSetCmpXchgFailureOrdering( LLVMValueRef CmpXchgInst, LLVMAtomicOrdering Ordering );
 
-        /**
-         * Changes the type of M so it can be passed to FunctionPassManagers and the
-         * JIT.  They take ModuleProviders for historical reasons.
-         */
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMCreateModuleProviderForExistingModule"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern LLVMModuleProviderRef LLVMCreateModuleProviderForExistingModule( LLVMModuleRef M );
 
-        /**
-         * @defgroup LLVMCCoreMemoryBuffers Memory Buffers
-         *
-         * @{
-         */
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMCreateMemoryBufferWithContentsOfFile"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern LLVMStatus LLVMCreateMemoryBufferWithContentsOfFile( [MarshalAs( UnmanagedType.LPStr )]string Path, out LLVMMemoryBufferRef OutMemBuf, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( DisposeMessageMarshaler ) )]out string OutMessage );
 
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMCreateMemoryBufferWithSTDIN"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern LLVMStatus LLVMCreateMemoryBufferWithSTDIN( out LLVMMemoryBufferRef OutMemBuf, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( DisposeMessageMarshaler ) )]out string OutMessage );
 
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMCreateMemoryBufferWithMemoryRange"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern LLVMMemoryBufferRef LLVMCreateMemoryBufferWithMemoryRange( [MarshalAs( UnmanagedType.LPStr )]string InputData, size_t InputDataLength, [MarshalAs( UnmanagedType.LPStr )]string BufferName, [MarshalAs( UnmanagedType.Bool )]bool RequiresNullTerminator );
 
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMCreateMemoryBufferWithMemoryRangeCopy"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern LLVMMemoryBufferRef LLVMCreateMemoryBufferWithMemoryRangeCopy( [MarshalAs( UnmanagedType.LPStr )]string InputData, size_t InputDataLength, [MarshalAs( UnmanagedType.LPStr )]string BufferName );
 
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMGetBufferStart"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern global::System.IntPtr LLVMGetBufferStart( LLVMMemoryBufferRef MemBuf );
 
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMGetBufferSize"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern size_t LLVMGetBufferSize( LLVMMemoryBufferRef MemBuf );
 
-        /** Return the global pass registry, for use with initialization functions.
-            @see llvm::PassRegistry::getPassRegistry */
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMGetGlobalPassRegistry"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern LLVMPassRegistryRef LLVMGetGlobalPassRegistry(  );
 
-        /** Constructs a new whole-module pass pipeline. This type of pipeline is
-            suitable for link-time optimization and whole-module transformations.
-            @see llvm::PassManager::PassManager */
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMCreatePassManager"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern LLVMPassManagerRef LLVMCreatePassManager(  );
 
-        /** Constructs a new function-by-function pass pipeline over the module
-            provider. It does not take ownership of the module provider. This type of
-            pipeline is suitable for code generation and JIT compilation tasks.
-            @see llvm::FunctionPassManager::FunctionPassManager */
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMCreateFunctionPassManagerForModule"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern LLVMPassManagerRef LLVMCreateFunctionPassManagerForModule( LLVMModuleRef M );
 
-        /** Initializes, executes on the provided module, and finalizes all of the
-            passes scheduled in the pass manager. Returns 1 if any of the passes
-            modified the module, 0 otherwise.
-            @see llvm::PassManager::run(Module&) */
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMRunPassManager"]/*' />
         [return: MarshalAs( UnmanagedType.Bool )]
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern bool LLVMRunPassManager( LLVMPassManagerRef PM, LLVMModuleRef M );
 
-        /** Initializes all of the function passes scheduled in the function pass
-            manager. Returns 1 if any of the passes modified the module, 0 otherwise.
-            @see llvm::FunctionPassManager::doInitialization */
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMInitializeFunctionPassManager"]/*' />
         [return: MarshalAs( UnmanagedType.Bool )]
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern bool LLVMInitializeFunctionPassManager( LLVMPassManagerRef FPM );
 
-        /** Executes all of the function passes scheduled in the function pass manager
-            on the provided function. Returns 1 if any of the passes modified the
-            function, false otherwise.
-            @see llvm::FunctionPassManager::run(Function&) */
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMRunFunctionPassManager"]/*' />
         [return: MarshalAs( UnmanagedType.Bool )]
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern bool LLVMRunFunctionPassManager( LLVMPassManagerRef FPM, LLVMValueRef F );
 
-        /** Finalizes all of the function passes scheduled in the function pass
-            manager. Returns 1 if any of the passes modified the module, 0 otherwise.
-            @see llvm::FunctionPassManager::doFinalization */
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMFinalizeFunctionPassManager"]/*' />
         [return: MarshalAs( UnmanagedType.Bool )]
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern bool LLVMFinalizeFunctionPassManager( LLVMPassManagerRef FPM );
 
-        /** Check whether LLVM is executing in thread-safe mode or not.
-            @see llvm::llvm_is_multithreaded */
+        /// <include file="Core.xml" path='LibLLVMAPI/Function[@name="LLVMIsMultithreaded"]/*' />
         [return: MarshalAs( UnmanagedType.Bool )]
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]

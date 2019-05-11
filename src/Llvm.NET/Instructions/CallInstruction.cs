@@ -20,7 +20,7 @@ namespace Llvm.NET.Instructions
         , IAttributeAccessor
     {
         /// <summary>Gets the target function of the call</summary>
-        public Function TargetFunction => FromHandle<Function>( LLVMGetCalledValue( ValueHandle ) );
+        public IrFunction TargetFunction => FromHandle<IrFunction>( LLVMGetCalledValue( ValueHandle ) );
 
         /// <summary>Gets or sets a value indicating whether the call is a tail call</summary>
         public bool IsTailCall

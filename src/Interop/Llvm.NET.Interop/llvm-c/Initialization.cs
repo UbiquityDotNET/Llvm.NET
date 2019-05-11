@@ -16,50 +16,62 @@ namespace Llvm.NET.Interop
 {
     public static partial class NativeMethods
     {
+        /// <include file="Initialization.xml" path='LibLLVMAPI/Function[@name="LLVMInitializeTransformUtils"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern void LLVMInitializeTransformUtils( LLVMPassRegistryRef R );
 
+        /// <include file="Initialization.xml" path='LibLLVMAPI/Function[@name="LLVMInitializeScalarOpts"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern void LLVMInitializeScalarOpts( LLVMPassRegistryRef R );
 
+        /// <include file="Initialization.xml" path='LibLLVMAPI/Function[@name="LLVMInitializeObjCARCOpts"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern void LLVMInitializeObjCARCOpts( LLVMPassRegistryRef R );
 
+        /// <include file="Initialization.xml" path='LibLLVMAPI/Function[@name="LLVMInitializeVectorization"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern void LLVMInitializeVectorization( LLVMPassRegistryRef R );
 
+        /// <include file="Initialization.xml" path='LibLLVMAPI/Function[@name="LLVMInitializeInstCombine"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern void LLVMInitializeInstCombine( LLVMPassRegistryRef R );
 
+        /// <include file="Initialization.xml" path='LibLLVMAPI/Function[@name="LLVMInitializeAggressiveInstCombiner"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern void LLVMInitializeAggressiveInstCombiner( LLVMPassRegistryRef R );
 
+        /// <include file="Initialization.xml" path='LibLLVMAPI/Function[@name="LLVMInitializeIPO"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern void LLVMInitializeIPO( LLVMPassRegistryRef R );
 
+        /// <include file="Initialization.xml" path='LibLLVMAPI/Function[@name="LLVMInitializeInstrumentation"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern void LLVMInitializeInstrumentation( LLVMPassRegistryRef R );
 
+        /// <include file="Initialization.xml" path='LibLLVMAPI/Function[@name="LLVMInitializeAnalysis"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern void LLVMInitializeAnalysis( LLVMPassRegistryRef R );
 
+        /// <include file="Initialization.xml" path='LibLLVMAPI/Function[@name="LLVMInitializeIPA"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern void LLVMInitializeIPA( LLVMPassRegistryRef R );
 
+        /// <include file="Initialization.xml" path='LibLLVMAPI/Function[@name="LLVMInitializeCodeGen"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern void LLVMInitializeCodeGen( LLVMPassRegistryRef R );
 
+        /// <include file="Initialization.xml" path='LibLLVMAPI/Function[@name="LLVMInitializeTarget"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern void LLVMInitializeTarget( LLVMPassRegistryRef R );

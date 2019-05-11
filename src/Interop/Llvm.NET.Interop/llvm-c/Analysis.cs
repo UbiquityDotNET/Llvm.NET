@@ -14,35 +14,37 @@ using System.Security;
 
 namespace Llvm.NET.Interop
 {
-    /**
-     * @defgroup LLVMCAnalysis Analysis
-     * @ingroup LLVMC
-     *
-     * @{
-     */
+    /// <include file="Analysis.xml" path='LibLLVMAPI/Enumeration[@name="LLVMVerifierFailureAction"]/*[not(self::Item)]' />
     [GeneratedCode("LlvmBindingsGenerator","2.17941.31104.49410")]
     public enum LLVMVerifierFailureAction : global::System.Int32
     {
+        /// <include file="Analysis.xml" path='LibLLVMAPI/Enumeration[@name="LLVMVerifierFailureAction"]/Item[@name="LLVMAbortProcessAction"]/*' />
         LLVMAbortProcessAction = 0,
+        /// <include file="Analysis.xml" path='LibLLVMAPI/Enumeration[@name="LLVMVerifierFailureAction"]/Item[@name="LLVMPrintMessageAction"]/*' />
         LLVMPrintMessageAction = 1,
+        /// <include file="Analysis.xml" path='LibLLVMAPI/Enumeration[@name="LLVMVerifierFailureAction"]/Item[@name="LLVMReturnStatusAction"]/*' />
         LLVMReturnStatusAction = 2,
     }
 
     public static partial class NativeMethods
     {
+        /// <include file="Analysis.xml" path='LibLLVMAPI/Function[@name="LLVMVerifyModule"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern LLVMStatus LLVMVerifyModule( LLVMModuleRef M, LLVMVerifierFailureAction Action, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( DisposeMessageMarshaler ) )]out string OutMessage );
 
+        /// <include file="Analysis.xml" path='LibLLVMAPI/Function[@name="LLVMVerifyFunction"]/*' />
         [return: MarshalAs( UnmanagedType.Bool )]
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern bool LLVMVerifyFunction( LLVMValueRef Fn, LLVMVerifierFailureAction Action );
 
+        /// <include file="Analysis.xml" path='LibLLVMAPI/Function[@name="LLVMViewFunctionCFG"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern void LLVMViewFunctionCFG( LLVMValueRef Fn );
 
+        /// <include file="Analysis.xml" path='LibLLVMAPI/Function[@name="LLVMViewFunctionCFGOnly"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern void LLVMViewFunctionCFGOnly( LLVMValueRef Fn );

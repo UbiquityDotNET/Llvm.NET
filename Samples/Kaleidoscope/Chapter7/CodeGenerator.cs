@@ -74,7 +74,7 @@ namespace Kaleidoscope.Chapter7
                     JIT.RemoveModule( handle );
                 }
 
-                var function = ( Function )definition.Accept( this );
+                var function = ( IrFunction )definition.Accept( this );
                 var jitHandle = JIT.AddModule( function.ParentModule );
                 if( definition.IsAnonymous )
                 {
@@ -150,7 +150,7 @@ namespace Kaleidoscope.Chapter7
         public override Value Visit( FunctionCallExpression functionCall )
         {
             string targetName = functionCall.FunctionPrototype.Name;
-            Function function;
+            IrFunction function;
 
             // try for an extern function declaration
             if( RuntimeState.FunctionDeclarations.TryGetValue( targetName, out Prototype target ) )
@@ -438,7 +438,7 @@ namespace Kaleidoscope.Chapter7
 
         // Retrieves a Function for a prototype from the current module if it exists,
         // otherwise declares the function and returns the newly declared function.
-        private Function GetOrDeclareFunction( Prototype prototype )
+        private IrFunction GetOrDeclareFunction( Prototype prototype )
         {
             var function = Module.GetFunction( prototype.Name );
             if( function != null )

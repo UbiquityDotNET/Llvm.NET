@@ -5,6 +5,7 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using JetBrains.Annotations;
@@ -248,7 +249,7 @@ namespace Llvm.NET
             {
                 if( indexedPair.Type == null )
                 {
-                    msg.AppendFormat( Resources.Argument_0_is_null, indexedPair.Index );
+                    msg.AppendFormat( CultureInfo.CurrentCulture, Resources.Argument_0_is_null, indexedPair.Index );
                     hasParamErrors = true;
                 }
                 else
@@ -260,7 +261,7 @@ namespace Llvm.NET
                         continue;
                     }
 
-                    msg.AppendFormat( Resources.Argument_0_does_not_contain_debug_type_information, indexedPair.Index );
+                    msg.AppendFormat( CultureInfo.CurrentCulture, Resources.Argument_0_does_not_contain_debug_type_information, indexedPair.Index );
                     hasParamErrors = true;
                 }
             }
@@ -391,7 +392,8 @@ namespace Llvm.NET
                 msg.AppendLine( );
                 foreach( var mismatch in mismatchedTypes )
                 {
-                    msg.AppendFormat( Resources.MismatchedType_0_member_type_equals_1_value_type_equals_2
+                    msg.AppendFormat( CultureInfo.CurrentCulture
+                                    , Resources.MismatchedType_0_member_type_equals_1_value_type_equals_2
                                     , mismatch.Index
                                     , type.Members[ mismatch.Index ]
                                     , valueList[ mismatch.Index ].NativeType
@@ -658,7 +660,7 @@ namespace Llvm.NET
             kind.ValidateDefined( nameof( kind ) );
             if( kind.RequiresIntValue( ) )
             {
-                throw new ArgumentException( string.Format(Resources.Attribute_0_requires_a_value, kind), nameof( kind ) );
+                throw new ArgumentException( string.Format( CultureInfo.CurrentCulture, Resources.Attribute_0_requires_a_value, kind), nameof( kind ) );
             }
 
             var handle = LLVMCreateEnumAttribute( ContextHandle
@@ -689,7 +691,7 @@ namespace Llvm.NET
             kind.ValidateDefined( nameof( kind ) );
             if( !kind.RequiresIntValue( ) )
             {
-                throw new ArgumentException( string.Format(Resources.Attribute_0_does_not_support_a_value, kind), nameof( kind ) );
+                throw new ArgumentException( string.Format( CultureInfo.CurrentCulture, Resources.Attribute_0_does_not_support_a_value, kind), nameof( kind ) );
             }
 
             var handle = LLVMCreateEnumAttribute( ContextHandle
@@ -747,7 +749,6 @@ namespace Llvm.NET
                                                 , uint runtimeVersion = 0
                                                 )
         {
-
             return ModuleCache.CreateBitcodeModule( moduleId, language, srcFilePath, producer, optimized, compilationFlags, runtimeVersion );
         }
 
@@ -864,6 +865,7 @@ namespace Llvm.NET
                 module.Dispose( );
             }
 
+            ValueCache.Dispose( );
             LLVMContextSetDiagnosticHandler( ContextHandle, null, IntPtr.Zero );
             ActiveHandler.Dispose( );
 
@@ -880,7 +882,7 @@ namespace Llvm.NET
             Debug.Assert( level != LLVMDiagnosticSeverity.LLVMDSError, Resources.Assert_Unexpected_Debug_state );
         }
 
-        private readonly  WrappedNativeCallback<LLVMDiagnosticHandler> ActiveHandler;
+        private readonly WrappedNativeCallback<LLVMDiagnosticHandler> ActiveHandler;
 
         // child item wrapper factories
         private readonly ValueCache ValueCache;

@@ -50,103 +50,142 @@ using System.Collections.Generic;
 
 namespace Llvm.NET.Interop
 {
+    /// <summary>Simple typesafe handle to wrap a raw pointer for interop with ""C"" API exported from LibLLVM</summary>
+    /// <remarks>
+    ///    This handle is owned by it's container and therefore isn't disposed by the
+    ///    calling App.
+    /// <note type=""important"">
+    ///     Since this is not owned by the App, the item it references is destroyed,
+    ///     whenever it's container is destroyed, which will invalidate this handle.
+    ///     use of this handle after the container is destroyed will produce undefined
+    ///     behavior, includingly, and most likely, memory access violations.
+    /// </note>
+    /// </remarks>
     [GeneratedCode(""LlvmBindingsGenerator"",""");
             
-            #line 22 "D:\GitHub\Ubiquity.NET\Llvm.Net\src\Interop\LlvmBindingsGenerator\Templates\T4\ContextHandleTemplate.tt"
+            #line 33 "D:\GitHub\Ubiquity.NET\Llvm.Net\src\Interop\LlvmBindingsGenerator\Templates\T4\ContextHandleTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(ToolVersion));
             
             #line default
             #line hidden
             this.Write("\")]\r\n    public struct ");
             
-            #line 23 "D:\GitHub\Ubiquity.NET\Llvm.Net\src\Interop\LlvmBindingsGenerator\Templates\T4\ContextHandleTemplate.tt"
+            #line 34 "D:\GitHub\Ubiquity.NET\Llvm.Net\src\Interop\LlvmBindingsGenerator\Templates\T4\ContextHandleTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(HandleName));
             
             #line default
             #line hidden
             this.Write("\r\n        : IEquatable<");
             
-            #line 24 "D:\GitHub\Ubiquity.NET\Llvm.Net\src\Interop\LlvmBindingsGenerator\Templates\T4\ContextHandleTemplate.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(HandleName));
-            
-            #line default
-            #line hidden
-            this.Write(">\r\n    {\r\n        public override int GetHashCode( ) => Handle.GetHashCode( );\r\n\r" +
-                    "\n        public override bool Equals( object obj )\r\n            => !( obj is nul" +
-                    "l )\r\n             && ( obj is ");
-            
-            #line 30 "D:\GitHub\Ubiquity.NET\Llvm.Net\src\Interop\LlvmBindingsGenerator\Templates\T4\ContextHandleTemplate.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(HandleName));
-            
-            #line default
-            #line hidden
-            this.Write(" r )\r\n             && ( r.Handle == Handle );\r\n\r\n        public bool Equals( ");
-            
-            #line 33 "D:\GitHub\Ubiquity.NET\Llvm.Net\src\Interop\LlvmBindingsGenerator\Templates\T4\ContextHandleTemplate.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(HandleName));
-            
-            #line default
-            #line hidden
-            this.Write(" other ) => Handle == other.Handle;\r\n\r\n        public static bool operator ==( ");
-            
             #line 35 "D:\GitHub\Ubiquity.NET\Llvm.Net\src\Interop\LlvmBindingsGenerator\Templates\T4\ContextHandleTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(HandleName));
+            
+            #line default
+            #line hidden
+            this.Write(">\r\n    {\r\n        /// <inheritdoc/>\r\n        public override int GetHashCode( ) =" +
+                    "> Handle.GetHashCode( );\r\n\r\n        /// <inheritdoc/>\r\n        public override b" +
+                    "ool Equals( object obj )\r\n            => !( obj is null )\r\n             && ( obj" +
+                    " is ");
+            
+            #line 43 "D:\GitHub\Ubiquity.NET\Llvm.Net\src\Interop\LlvmBindingsGenerator\Templates\T4\ContextHandleTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(HandleName));
+            
+            #line default
+            #line hidden
+            this.Write(@" r )
+             && ( r.Handle == Handle );
+
+        /// <summary>Tests another for reference equality</summary>
+        /// <param name=""other"">Other block to compare</param>
+        /// <returns><see langword=""true""/> if the other handle refers to the same native object (e.g. reference equality)</returns>
+        public bool Equals( ");
+            
+            #line 49 "D:\GitHub\Ubiquity.NET\Llvm.Net\src\Interop\LlvmBindingsGenerator\Templates\T4\ContextHandleTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(HandleName));
+            
+            #line default
+            #line hidden
+            this.Write(@" other ) => Handle == other.Handle;
+
+        /// <summary>Tests two handles for reference equality</summary>
+        /// <param name=""lhs"">Left side of comparison</param>
+        /// <param name=""rhs"">Right side of comparison</param>
+        /// <returns><see langword=""true""/> if both handles refer to the same native object (e.g. reference equality)</returns>
+        public static bool operator ==( ");
+            
+            #line 55 "D:\GitHub\Ubiquity.NET\Llvm.Net\src\Interop\LlvmBindingsGenerator\Templates\T4\ContextHandleTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(HandleName));
             
             #line default
             #line hidden
             this.Write(" lhs, ");
             
-            #line 35 "D:\GitHub\Ubiquity.NET\Llvm.Net\src\Interop\LlvmBindingsGenerator\Templates\T4\ContextHandleTemplate.tt"
+            #line 55 "D:\GitHub\Ubiquity.NET\Llvm.Net\src\Interop\LlvmBindingsGenerator\Templates\T4\ContextHandleTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(HandleName));
             
             #line default
             #line hidden
             this.Write(" rhs )\r\n            => EqualityComparer<");
             
-            #line 36 "D:\GitHub\Ubiquity.NET\Llvm.Net\src\Interop\LlvmBindingsGenerator\Templates\T4\ContextHandleTemplate.tt"
+            #line 56 "D:\GitHub\Ubiquity.NET\Llvm.Net\src\Interop\LlvmBindingsGenerator\Templates\T4\ContextHandleTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(HandleName));
             
             #line default
             #line hidden
-            this.Write(">.Default.Equals( lhs, rhs );\r\n\r\n        public static bool operator !=( ");
+            this.Write(@">.Default.Equals( lhs, rhs );
+
+        /// <summary>Tests two handles for reference inequality</summary>
+        /// <param name=""lhs"">Left side of comparison</param>
+        /// <param name=""rhs"">Right side of comparison</param>
+        /// <returns><see langword=""false""/> if both handles refer to the same native object (e.g. reference equality)</returns>
+        public static bool operator !=( ");
             
-            #line 38 "D:\GitHub\Ubiquity.NET\Llvm.Net\src\Interop\LlvmBindingsGenerator\Templates\T4\ContextHandleTemplate.tt"
+            #line 62 "D:\GitHub\Ubiquity.NET\Llvm.Net\src\Interop\LlvmBindingsGenerator\Templates\T4\ContextHandleTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(HandleName));
             
             #line default
             #line hidden
             this.Write(" lhs, ");
             
-            #line 38 "D:\GitHub\Ubiquity.NET\Llvm.Net\src\Interop\LlvmBindingsGenerator\Templates\T4\ContextHandleTemplate.tt"
+            #line 62 "D:\GitHub\Ubiquity.NET\Llvm.Net\src\Interop\LlvmBindingsGenerator\Templates\T4\ContextHandleTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(HandleName));
             
             #line default
             #line hidden
-            this.Write(" rhs ) => !( lhs == rhs );\r\n\r\n        public static ");
+            this.Write(" rhs ) => !( lhs == rhs );\r\n\r\n        /// <summary>Gets a zero (<see langword=\"nu" +
+                    "ll\"/>) value handle</summary>\r\n        public static ");
             
-            #line 40 "D:\GitHub\Ubiquity.NET\Llvm.Net\src\Interop\LlvmBindingsGenerator\Templates\T4\ContextHandleTemplate.tt"
+            #line 65 "D:\GitHub\Ubiquity.NET\Llvm.Net\src\Interop\LlvmBindingsGenerator\Templates\T4\ContextHandleTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(HandleName));
             
             #line default
             #line hidden
             this.Write(" Zero { get; } = new ");
             
-            #line 40 "D:\GitHub\Ubiquity.NET\Llvm.Net\src\Interop\LlvmBindingsGenerator\Templates\T4\ContextHandleTemplate.tt"
+            #line 65 "D:\GitHub\Ubiquity.NET\Llvm.Net\src\Interop\LlvmBindingsGenerator\Templates\T4\ContextHandleTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(HandleName));
             
             #line default
             #line hidden
-            this.Write("(IntPtr.Zero);\r\n\r\n        public IntPtr ToIntPtr() => Handle;\r\n\r\n        public s" +
-                    "tatic implicit operator IntPtr(");
+            this.Write(@"(IntPtr.Zero);
+
+        /// <summary>Gets the handle as an <see cref=""IntPtr""/> suitable for passing to native code</summary>
+        /// <returns>The handle as an <see cref=""IntPtr""/></returns>
+        public IntPtr ToIntPtr() => Handle;
+
+        /// <summary>Gets the handle as an <see cref=""IntPtr""/> suitable for passing to native code</summary>
+        /// <param name=""value"">Handle to convert</param>
+        /// <returns>The handle as an <see cref=""IntPtr""/></returns>
+        public static implicit operator IntPtr(");
             
-            #line 44 "D:\GitHub\Ubiquity.NET\Llvm.Net\src\Interop\LlvmBindingsGenerator\Templates\T4\ContextHandleTemplate.tt"
+            #line 74 "D:\GitHub\Ubiquity.NET\Llvm.Net\src\Interop\LlvmBindingsGenerator\Templates\T4\ContextHandleTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(HandleName));
             
             #line default
             #line hidden
             this.Write(" value) => value.ToIntPtr();\r\n\r\n        internal ");
             
-            #line 46 "D:\GitHub\Ubiquity.NET\Llvm.Net\src\Interop\LlvmBindingsGenerator\Templates\T4\ContextHandleTemplate.tt"
+            #line 76 "D:\GitHub\Ubiquity.NET\Llvm.Net\src\Interop\LlvmBindingsGenerator\Templates\T4\ContextHandleTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(HandleName));
             
             #line default

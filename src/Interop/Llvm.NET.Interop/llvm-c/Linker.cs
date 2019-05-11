@@ -14,15 +14,19 @@ using System.Security;
 
 namespace Llvm.NET.Interop
 {
+    /// <include file="Linker.xml" path='LibLLVMAPI/Enumeration[@name="LLVMLinkerMode"]/*[not(self::Item)]' />
     [GeneratedCode("LlvmBindingsGenerator","2.17941.31104.49410")]
     public enum LLVMLinkerMode : global::System.Int32
     {
+        /// <include file="Linker.xml" path='LibLLVMAPI/Enumeration[@name="LLVMLinkerMode"]/Item[@name="LLVMLinkerDestroySource"]/*' />
         LLVMLinkerDestroySource = 0,
+        /// <include file="Linker.xml" path='LibLLVMAPI/Enumeration[@name="LLVMLinkerMode"]/Item[@name="LLVMLinkerPreserveSource_Removed"]/*' />
         LLVMLinkerPreserveSource_Removed = 1,
     }
 
     public static partial class NativeMethods
     {
+        /// <include file="Linker.xml" path='LibLLVMAPI/Function[@name="LLVMLinkModules2"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern LLVMStatus LLVMLinkModules2( LLVMModuleRef Dest, LLVMModuleRef Src );

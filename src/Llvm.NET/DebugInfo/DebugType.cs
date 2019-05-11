@@ -45,17 +45,17 @@ namespace Llvm.NET.DebugInfo
         TDebug DIType { get; }
 
         /// <summary>Creates a pointer to this type for a given module and address space</summary>
-        /// <param name="module">Module the debug type information belongs to</param>
+        /// <param name="bitcodeModule">Module the debug type information belongs to</param>
         /// <param name="addressSpace">Address space for the pointer</param>
         /// <returns><see cref="DebugPointerType"/></returns>
-        DebugPointerType CreatePointerType( BitcodeModule module, uint addressSpace );
+        DebugPointerType CreatePointerType( BitcodeModule bitcodeModule, uint addressSpace );
 
         /// <summary>Creates a type defining an array of elements of this type</summary>
-        /// <param name="module">Module the debug information belongs to</param>
+        /// <param name="bitcodeModule">Module the debug information belongs to</param>
         /// <param name="lowerBound">Lower bound of the array</param>
         /// <param name="count">Count of elements in the array</param>
         /// <returns><see cref="DebugArrayType"/></returns>
-        DebugArrayType CreateArrayType( BitcodeModule module, uint lowerBound, uint count );
+        DebugArrayType CreateArrayType( BitcodeModule bitcodeModule, uint lowerBound, uint count );
     }
 
     /// <summary>Base class for Debug types bound with an LLVM type</summary>
@@ -171,7 +171,7 @@ namespace Llvm.NET.DebugInfo
         public IPointerType CreatePointerType( uint addressSpace ) => NativeType.CreatePointerType( addressSpace );
 
         /// <inheritdoc/>
-        public DebugPointerType CreatePointerType( BitcodeModule module, uint addressSpace )
+        public DebugPointerType CreatePointerType( BitcodeModule bitcodeModule, uint addressSpace )
         {
             if( DIType == null )
             {
@@ -179,11 +179,11 @@ namespace Llvm.NET.DebugInfo
             }
 
             var nativePointer = NativeType.CreatePointerType( addressSpace );
-            return new DebugPointerType( nativePointer, module, DIType, string.Empty );
+            return new DebugPointerType( nativePointer, bitcodeModule, DIType, string.Empty );
         }
 
         /// <inheritdoc/>
-        public DebugArrayType CreateArrayType( BitcodeModule module, uint lowerBound, uint count )
+        public DebugArrayType CreateArrayType( BitcodeModule bitcodeModule, uint lowerBound, uint count )
         {
             if( DIType == null )
             {
@@ -191,18 +191,15 @@ namespace Llvm.NET.DebugInfo
             }
 
             var llvmArray = NativeType.CreateArrayType( count );
-            return new DebugArrayType( llvmArray, module, DIType, count, lowerBound );
+            return new DebugArrayType( llvmArray, bitcodeModule, DIType, count, lowerBound );
         }
 
         /// <inheritdoc/>
         public bool TryGetExtendedPropertyValue<TProperty>( string id, out TProperty value )
         {
-            if( PropertyContainer.TryGetExtendedPropertyValue( id, out value ) )
-            {
-                return true;
-            }
-
-            return NativeType.TryGetExtendedPropertyValue( id, out value );
+            return PropertyContainer.TryGetExtendedPropertyValue( id, out value )
+                ? true
+                : NativeType.TryGetExtendedPropertyValue( id, out value );
         }
 
         /// <inheritdoc/>

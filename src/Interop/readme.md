@@ -13,9 +13,11 @@ package from the resulting binaries.
 
 ## Projects
 ### LibLLVM
-This is the native project that creates the extended LLVM-C API as an actual DLL (Currently
+This is the native project that creates the extended LLVM-C API as an actual DLL. Currently
 only Windows 64 bit is supported, though other configurations are plausible with additional
-build steps in the PowerShell script to build for other platforms.)
+build steps in the PowerShell script to build for other platforms. The extensions are configured
+to build with high C++ conformance mode, so they should readily build without much modification
+for other platforms given the appropriate build infrastructure is set up.
 
 ### Llvm.NET.Interop
 This is the .NET P/Invoke layer that provides the raw API projection to .NET. The, majority
@@ -48,7 +50,7 @@ the Llvm.NET.Interop project so that the generator is tested on every full autom
 There are some general steps that are required to successfully build the interop NuGet package and a couple
 of different ways to go about completing them.
  1. Build LlvmBindingsGenerator
- 2. Run LlvmBindingsGenerator with to parse the llvm headers and the extended headers from the native LibLLVM
+ 2. Run LlvmBindingsGenerator to parse the llvm headers and the extended headers from the native LibLLVM
  3. Build the native libraries for all supported runtimes (OS+arch)
  4. Build Llvm.NET.Interop to create the interop assembly and, ultimately create the final NuGet package with
 the native and manged code bundled together.
@@ -68,9 +70,11 @@ bindings generator and the managed interop. Using the solution requires that you
 1. Build LlvmBindingsGenerator project
 2. Run LlvmBindingsGenerator (via command line or debugger launch) with the location of the LLVM headers, the
 LibLLVM headers, and the output location of generated code for the Llvm.NET.Interop project.
-     1. This, generates C# interop source files ADN also generates the native C++ EXPORTS.DEF for the LibLLVM library
+     1. This, generates C# interop source files AND also generates the native C++ EXPORTS.DEF for the LibLLVM library
 and therefore, must run before building either of the other libraries.
-3. Build LibLLVM project
+3. Build LibLLVM project for all architectures and configurations.
+   1. At present the only supported runtime and architecture is Windows 64bit so batch building, etc.. isn't required.
+      Other runtimes and architectures are possible in the future, however.
 4. Build the Llvm.NET.Interop project.
 
 

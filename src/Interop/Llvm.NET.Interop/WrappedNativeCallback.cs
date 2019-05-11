@@ -11,7 +11,6 @@ using Ubiquity.ArgValidators;
 namespace Llvm.NET.Interop
 {
     /// <summary>Keep alive holder to ensure native call back delegates are not destroyed while registered with native code</summary>
-    /// <typeparam name="T">Delegate signature of the native callback</typeparam>
     /// <remarks>
     /// This generates a holder for a delegate that allows a native function pointer for the delegate to remain valid until the
     /// instance of this wrapper is disposed. This is generally only necessary where the native call back must remain valid for
@@ -30,6 +29,8 @@ namespace Llvm.NET.Interop
         /// <returns>Native callable function pointer</returns>
         public IntPtr ToIntPtr( ) => NativeFuncPtr;
 
+        /// <summary>Converts a callback to an IntPtr suitable for passing to native code</summary>
+        /// <param name="cb">Callback to cast to an <see cref="IntPtr"/></param>
         public static implicit operator IntPtr( WrappedNativeCallback cb ) => cb.ToIntPtr( );
 
         /// <summary>Initializes a new instance of the <see cref="WrappedNativeCallback"/> class.</summary>
@@ -108,6 +109,9 @@ namespace Llvm.NET.Interop
         /// <returns>Delegate suitable for passing as an "in" parameter to native methods</returns>
         public T ToDelegate( ) => ToDelegate<T>();
 
+        /// <summary>Gets a delegate from the raw native callback</summary>
+        /// <param name="cb">Callback to get the delegate for</param>
+        /// <returns>Delegate suitable for passing as an "in" parameter to native methods</returns>
         [SuppressMessage( "Usage", "CA2225:Operator overloads have named alternates", Justification = "ToDelegate serves the purpose without confusion on generic parameter name" )]
         public static implicit operator T(WrappedNativeCallback<T> cb) => cb.ToDelegate();
     }

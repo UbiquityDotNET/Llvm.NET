@@ -16,202 +16,202 @@ namespace Llvm.NET.Interop
 {
     public static partial class NativeMethods
     {
-        /** See llvm::createAggressiveDCEPass function. */
+        /// <include file="Scalar.xml" path='LibLLVMAPI/Function[@name="LLVMAddAggressiveDCEPass"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern void LLVMAddAggressiveDCEPass( LLVMPassManagerRef PM );
 
-        /** See llvm::createBitTrackingDCEPass function. */
+        /// <include file="Scalar.xml" path='LibLLVMAPI/Function[@name="LLVMAddBitTrackingDCEPass"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern void LLVMAddBitTrackingDCEPass( LLVMPassManagerRef PM );
 
-        /** See llvm::createAlignmentFromAssumptionsPass function. */
+        /// <include file="Scalar.xml" path='LibLLVMAPI/Function[@name="LLVMAddAlignmentFromAssumptionsPass"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern void LLVMAddAlignmentFromAssumptionsPass( LLVMPassManagerRef PM );
 
-        /** See llvm::createCFGSimplificationPass function. */
+        /// <include file="Scalar.xml" path='LibLLVMAPI/Function[@name="LLVMAddCFGSimplificationPass"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern void LLVMAddCFGSimplificationPass( LLVMPassManagerRef PM );
 
-        /** See llvm::createDeadStoreEliminationPass function. */
+        /// <include file="Scalar.xml" path='LibLLVMAPI/Function[@name="LLVMAddDeadStoreEliminationPass"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern void LLVMAddDeadStoreEliminationPass( LLVMPassManagerRef PM );
 
-        /** See llvm::createScalarizerPass function. */
+        /// <include file="Scalar.xml" path='LibLLVMAPI/Function[@name="LLVMAddScalarizerPass"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern void LLVMAddScalarizerPass( LLVMPassManagerRef PM );
 
-        /** See llvm::createMergedLoadStoreMotionPass function. */
+        /// <include file="Scalar.xml" path='LibLLVMAPI/Function[@name="LLVMAddMergedLoadStoreMotionPass"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern void LLVMAddMergedLoadStoreMotionPass( LLVMPassManagerRef PM );
 
-        /** See llvm::createGVNPass function. */
+        /// <include file="Scalar.xml" path='LibLLVMAPI/Function[@name="LLVMAddGVNPass"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern void LLVMAddGVNPass( LLVMPassManagerRef PM );
 
-        /** See llvm::createGVNPass function. */
+        /// <include file="Scalar.xml" path='LibLLVMAPI/Function[@name="LLVMAddNewGVNPass"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern void LLVMAddNewGVNPass( LLVMPassManagerRef PM );
 
-        /** See llvm::createIndVarSimplifyPass function. */
+        /// <include file="Scalar.xml" path='LibLLVMAPI/Function[@name="LLVMAddIndVarSimplifyPass"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern void LLVMAddIndVarSimplifyPass( LLVMPassManagerRef PM );
 
-        /** See llvm::createJumpThreadingPass function. */
+        /// <include file="Scalar.xml" path='LibLLVMAPI/Function[@name="LLVMAddJumpThreadingPass"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern void LLVMAddJumpThreadingPass( LLVMPassManagerRef PM );
 
-        /** See llvm::createLICMPass function. */
+        /// <include file="Scalar.xml" path='LibLLVMAPI/Function[@name="LLVMAddLICMPass"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern void LLVMAddLICMPass( LLVMPassManagerRef PM );
 
-        /** See llvm::createLoopDeletionPass function. */
+        /// <include file="Scalar.xml" path='LibLLVMAPI/Function[@name="LLVMAddLoopDeletionPass"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern void LLVMAddLoopDeletionPass( LLVMPassManagerRef PM );
 
-        /** See llvm::createLoopIdiomPass function */
+        /// <include file="Scalar.xml" path='LibLLVMAPI/Function[@name="LLVMAddLoopIdiomPass"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern void LLVMAddLoopIdiomPass( LLVMPassManagerRef PM );
 
-        /** See llvm::createLoopRotatePass function. */
+        /// <include file="Scalar.xml" path='LibLLVMAPI/Function[@name="LLVMAddLoopRotatePass"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern void LLVMAddLoopRotatePass( LLVMPassManagerRef PM );
 
-        /** See llvm::createLoopRerollPass function. */
+        /// <include file="Scalar.xml" path='LibLLVMAPI/Function[@name="LLVMAddLoopRerollPass"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern void LLVMAddLoopRerollPass( LLVMPassManagerRef PM );
 
-        /** See llvm::createLoopUnrollPass function. */
+        /// <include file="Scalar.xml" path='LibLLVMAPI/Function[@name="LLVMAddLoopUnrollPass"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern void LLVMAddLoopUnrollPass( LLVMPassManagerRef PM );
 
-        /** See llvm::createLoopUnrollAndJamPass function. */
+        /// <include file="Scalar.xml" path='LibLLVMAPI/Function[@name="LLVMAddLoopUnrollAndJamPass"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern void LLVMAddLoopUnrollAndJamPass( LLVMPassManagerRef PM );
 
-        /** See llvm::createLoopUnswitchPass function. */
+        /// <include file="Scalar.xml" path='LibLLVMAPI/Function[@name="LLVMAddLoopUnswitchPass"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern void LLVMAddLoopUnswitchPass( LLVMPassManagerRef PM );
 
-        /** See llvm::createLowerAtomicPass function. */
+        /// <include file="Scalar.xml" path='LibLLVMAPI/Function[@name="LLVMAddLowerAtomicPass"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern void LLVMAddLowerAtomicPass( LLVMPassManagerRef PM );
 
-        /** See llvm::createMemCpyOptPass function. */
+        /// <include file="Scalar.xml" path='LibLLVMAPI/Function[@name="LLVMAddMemCpyOptPass"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern void LLVMAddMemCpyOptPass( LLVMPassManagerRef PM );
 
-        /** See llvm::createPartiallyInlineLibCallsPass function. */
+        /// <include file="Scalar.xml" path='LibLLVMAPI/Function[@name="LLVMAddPartiallyInlineLibCallsPass"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern void LLVMAddPartiallyInlineLibCallsPass( LLVMPassManagerRef PM );
 
-        /** See llvm::createReassociatePass function. */
+        /// <include file="Scalar.xml" path='LibLLVMAPI/Function[@name="LLVMAddReassociatePass"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern void LLVMAddReassociatePass( LLVMPassManagerRef PM );
 
-        /** See llvm::createSCCPPass function. */
+        /// <include file="Scalar.xml" path='LibLLVMAPI/Function[@name="LLVMAddSCCPPass"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern void LLVMAddSCCPPass( LLVMPassManagerRef PM );
 
-        /** See llvm::createSROAPass function. */
+        /// <include file="Scalar.xml" path='LibLLVMAPI/Function[@name="LLVMAddScalarReplAggregatesPass"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern void LLVMAddScalarReplAggregatesPass( LLVMPassManagerRef PM );
 
-        /** See llvm::createSROAPass function. */
+        /// <include file="Scalar.xml" path='LibLLVMAPI/Function[@name="LLVMAddScalarReplAggregatesPassSSA"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern void LLVMAddScalarReplAggregatesPassSSA( LLVMPassManagerRef PM );
 
-        /** See llvm::createSROAPass function. */
+        /// <include file="Scalar.xml" path='LibLLVMAPI/Function[@name="LLVMAddScalarReplAggregatesPassWithThreshold"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern void LLVMAddScalarReplAggregatesPassWithThreshold( LLVMPassManagerRef PM, int Threshold );
 
-        /** See llvm::createSimplifyLibCallsPass function. */
+        /// <include file="Scalar.xml" path='LibLLVMAPI/Function[@name="LLVMAddSimplifyLibCallsPass"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern void LLVMAddSimplifyLibCallsPass( LLVMPassManagerRef PM );
 
-        /** See llvm::createTailCallEliminationPass function. */
+        /// <include file="Scalar.xml" path='LibLLVMAPI/Function[@name="LLVMAddTailCallEliminationPass"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern void LLVMAddTailCallEliminationPass( LLVMPassManagerRef PM );
 
-        /** See llvm::createConstantPropagationPass function. */
+        /// <include file="Scalar.xml" path='LibLLVMAPI/Function[@name="LLVMAddConstantPropagationPass"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern void LLVMAddConstantPropagationPass( LLVMPassManagerRef PM );
 
-        /** See llvm::demotePromoteMemoryToRegisterPass function. */
+        /// <include file="Scalar.xml" path='LibLLVMAPI/Function[@name="LLVMAddDemoteMemoryToRegisterPass"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern void LLVMAddDemoteMemoryToRegisterPass( LLVMPassManagerRef PM );
 
-        /** See llvm::createVerifierPass function. */
+        /// <include file="Scalar.xml" path='LibLLVMAPI/Function[@name="LLVMAddVerifierPass"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern void LLVMAddVerifierPass( LLVMPassManagerRef PM );
 
-        /** See llvm::createCorrelatedValuePropagationPass function */
+        /// <include file="Scalar.xml" path='LibLLVMAPI/Function[@name="LLVMAddCorrelatedValuePropagationPass"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern void LLVMAddCorrelatedValuePropagationPass( LLVMPassManagerRef PM );
 
-        /** See llvm::createEarlyCSEPass function */
+        /// <include file="Scalar.xml" path='LibLLVMAPI/Function[@name="LLVMAddEarlyCSEPass"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern void LLVMAddEarlyCSEPass( LLVMPassManagerRef PM );
 
-        /** See llvm::createEarlyCSEPass function */
+        /// <include file="Scalar.xml" path='LibLLVMAPI/Function[@name="LLVMAddEarlyCSEMemSSAPass"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern void LLVMAddEarlyCSEMemSSAPass( LLVMPassManagerRef PM );
 
-        /** See llvm::createLowerExpectIntrinsicPass function */
+        /// <include file="Scalar.xml" path='LibLLVMAPI/Function[@name="LLVMAddLowerExpectIntrinsicPass"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern void LLVMAddLowerExpectIntrinsicPass( LLVMPassManagerRef PM );
 
-        /** See llvm::createTypeBasedAliasAnalysisPass function */
+        /// <include file="Scalar.xml" path='LibLLVMAPI/Function[@name="LLVMAddTypeBasedAliasAnalysisPass"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern void LLVMAddTypeBasedAliasAnalysisPass( LLVMPassManagerRef PM );
 
-        /** See llvm::createScopedNoAliasAAPass function */
+        /// <include file="Scalar.xml" path='LibLLVMAPI/Function[@name="LLVMAddScopedNoAliasAAPass"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern void LLVMAddScopedNoAliasAAPass( LLVMPassManagerRef PM );
 
-        /** See llvm::createBasicAliasAnalysisPass function */
+        /// <include file="Scalar.xml" path='LibLLVMAPI/Function[@name="LLVMAddBasicAliasAnalysisPass"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern void LLVMAddBasicAliasAnalysisPass( LLVMPassManagerRef PM );
 
-        /** See llvm::createUnifyFunctionExitNodesPass function */
+        /// <include file="Scalar.xml" path='LibLLVMAPI/Function[@name="LLVMAddUnifyFunctionExitNodesPass"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern void LLVMAddUnifyFunctionExitNodesPass( LLVMPassManagerRef PM );

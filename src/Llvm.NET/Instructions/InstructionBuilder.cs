@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
+using System.Globalization;
 using System.Linq;
 using JetBrains.Annotations;
 using Llvm.NET.DebugInfo;
@@ -392,7 +393,7 @@ namespace Llvm.NET.Instructions
              || ( value.NativeType.Kind == TypeKind.Integer && value.NativeType.IntegerBitWidth != ptrType.ElementType.IntegerBitWidth )
               )
             {
-                throw new ArgumentException( string.Format( Resources.Incompatible_types_destination_pointer_must_be_same_type_0_1, ptrType.ElementType, value.NativeType ) );
+                throw new ArgumentException( string.Format( CultureInfo.CurrentCulture, Resources.Incompatible_types_destination_pointer_must_be_same_type_0_1, ptrType.ElementType, value.NativeType ) );
             }
 
             return Value.FromHandle<Store>( LLVMBuildStore( BuilderHandle, value.ValueHandle, destination.ValueHandle ) );
@@ -524,12 +525,12 @@ namespace Llvm.NET.Instructions
 
             if( ptrType.ElementType != cmp.NativeType )
             {
-                throw new ArgumentException( string.Format( Resources.Incompatible_types_destination_pointer_must_be_same_type_0_1, ptrType.ElementType, cmp.NativeType ) );
+                throw new ArgumentException( string.Format( CultureInfo.CurrentCulture, Resources.Incompatible_types_destination_pointer_must_be_same_type_0_1, ptrType.ElementType, cmp.NativeType ) );
             }
 
             if( ptrType.ElementType != value.NativeType )
             {
-                throw new ArgumentException( string.Format( Resources.Incompatible_types_destination_pointer_must_be_same_type_0_1, ptrType.ElementType, value.NativeType ) );
+                throw new ArgumentException( string.Format( CultureInfo.CurrentCulture, Resources.Incompatible_types_destination_pointer_must_be_same_type_0_1, ptrType.ElementType, value.NativeType ) );
             }
 
             var handle = LLVMBuildAtomicCmpXchg( BuilderHandle
@@ -558,6 +559,7 @@ namespace Llvm.NET.Instructions
         public Value GetStructElementPointer( Value pointer, uint index )
         {
             ValidateStructGepArgs( pointer, index );
+
             // TODO: verify pointer isn't an opaque pointer
             var handle = LLVMBuildStructGEP2( BuilderHandle, pointer.NativeType.GetTypeRef( ), pointer.ValueHandle, index, string.Empty );
             return Value.FromHandle( handle );
@@ -578,6 +580,7 @@ namespace Llvm.NET.Instructions
         public Value GetStructElementPointer( ITypeRef type, Value pointer, uint index )
         {
             ValidateStructGepArgs( pointer, index );
+
             // TODO: verify pointer is an opaque pointer or type == pointer.NativeTYpe
             var handle = LLVMBuildStructGEP2( BuilderHandle, type.GetTypeRef( ), pointer.ValueHandle, index, string.Empty );
             return Value.FromHandle( handle );
@@ -976,7 +979,7 @@ namespace Llvm.NET.Instructions
                 return Compare( ( IntPredicate )predicate, lhs, rhs );
             }
 
-            throw new ArgumentOutOfRangeException( nameof( predicate ), string.Format( Resources._0_is_not_a_valid_value_for_a_compare_predicate, predicate ) );
+            throw new ArgumentOutOfRangeException( nameof( predicate ), string.Format( CultureInfo.CurrentCulture, Resources._0_is_not_a_valid_value_for_a_compare_predicate, predicate ) );
         }
 
         /// <summary>Creates a zero extend or bit cast instruction</summary>
@@ -1240,7 +1243,7 @@ namespace Llvm.NET.Instructions
             return Value.FromHandle( handle );
         }
 
-        /// <summary>Builds a <see cref="Llvm.NET.Instructions.Select"/> instruction</summary>
+        /// <summary>Builds a <see cref="Llvm.NET.Instructions.SelectInstruction"/> instruction</summary>
         /// <param name="ifCondition">Value for the condition to select between the values</param>
         /// <param name="thenValue">Result value if <paramref name="ifCondition"/> evaluates to 1</param>
         /// <param name="elseValue">Result value if <paramref name="ifCondition"/> evaluates to 0</param>
@@ -1674,6 +1677,7 @@ namespace Llvm.NET.Instructions
 
             return llvmArgs;
         }
+
         internal LLVMBuilderRef BuilderHandle { get; }
 
         private static void ValidateStructGepArgs( [ValidatedNotNull] Value pointer, uint index )
@@ -1749,7 +1753,7 @@ namespace Llvm.NET.Instructions
 
             if( ptrType.ElementType != val.NativeType )
             {
-                throw new ArgumentException( string.Format( Resources.Incompatible_types_destination_pointer_must_be_same_type_0_1, ptrType.ElementType, val.NativeType ) );
+                throw new ArgumentException( string.Format( CultureInfo.CurrentCulture, Resources.Incompatible_types_destination_pointer_must_be_same_type_0_1, ptrType.ElementType, val.NativeType ) );
             }
 
             var handle = LLVMBuildAtomicRMW( BuilderHandle, op, ptr.ValueHandle, val.ValueHandle, LLVMAtomicOrdering.LLVMAtomicOrderingSequentiallyConsistent, false );
@@ -1777,7 +1781,7 @@ namespace Llvm.NET.Instructions
             {
                 if( args[ i ].NativeType != signatureType.ParameterTypes[ i ] )
                 {
-                    string msg = string.Format( Resources.Call_site_argument_type_mismatch_for_function_0_at_index_1_argType_equals_2_signatureType_equals_3, func, i, args[ i ].NativeType, signatureType.ParameterTypes[ i ] );
+                    string msg = string.Format( CultureInfo.CurrentCulture, Resources.Call_site_argument_type_mismatch_for_function_0_at_index_1_argType_equals_2_signatureType_equals_3, func, i, args[ i ].NativeType, signatureType.ParameterTypes[ i ] );
                     Debug.WriteLine( msg );
                     throw new ArgumentException( msg, nameof( args ) );
                 }

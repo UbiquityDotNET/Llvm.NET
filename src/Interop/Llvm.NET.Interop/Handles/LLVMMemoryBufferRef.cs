@@ -16,19 +16,25 @@ using System.Threading;
 
 namespace Llvm.NET.Interop
 {
+    /// <summary>Global LLVM object handle</summary>
     [SecurityCritical]
     [GeneratedCode("LlvmBindingsGenerator","2.17941.31104.49410")]
     public class LLVMMemoryBufferRef
         : LlvmObjectRef
     {
+        /// <summary>Creates a new instance of an LLVMMemoryBufferRef</summary>
+        /// <param name="handle">Raw native pointer for the handle</param>
+        /// <param name="owner">Value to indicate whether the handle is owned or not</param>
         public LLVMMemoryBufferRef( IntPtr handle, bool owner )
             : base( owner )
         {
             SetHandle( handle );
         }
 
+        /// <summary>Gets a Zero (<see langword="null"/> value handle</summary>
         public static LLVMMemoryBufferRef Zero { get; } = new LLVMMemoryBufferRef(IntPtr.Zero, false);
 
+        /// <inheritdoc/>
         [SecurityCritical]
         protected override bool ReleaseHandle( )
         {

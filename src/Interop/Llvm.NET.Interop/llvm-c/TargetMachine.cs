@@ -14,182 +14,191 @@ using System.Security;
 
 namespace Llvm.NET.Interop
 {
+    /// <include file="TargetMachine.xml" path='LibLLVMAPI/Enumeration[@name="LLVMCodeGenOptLevel"]/*[not(self::Item)]' />
     [GeneratedCode("LlvmBindingsGenerator","2.17941.31104.49410")]
     public enum LLVMCodeGenOptLevel : global::System.Int32
     {
+        /// <include file="TargetMachine.xml" path='LibLLVMAPI/Enumeration[@name="LLVMCodeGenOptLevel"]/Item[@name="LLVMCodeGenLevelNone"]/*' />
         LLVMCodeGenLevelNone = 0,
+        /// <include file="TargetMachine.xml" path='LibLLVMAPI/Enumeration[@name="LLVMCodeGenOptLevel"]/Item[@name="LLVMCodeGenLevelLess"]/*' />
         LLVMCodeGenLevelLess = 1,
+        /// <include file="TargetMachine.xml" path='LibLLVMAPI/Enumeration[@name="LLVMCodeGenOptLevel"]/Item[@name="LLVMCodeGenLevelDefault"]/*' />
         LLVMCodeGenLevelDefault = 2,
+        /// <include file="TargetMachine.xml" path='LibLLVMAPI/Enumeration[@name="LLVMCodeGenOptLevel"]/Item[@name="LLVMCodeGenLevelAggressive"]/*' />
         LLVMCodeGenLevelAggressive = 3,
     }
 
+    /// <include file="TargetMachine.xml" path='LibLLVMAPI/Enumeration[@name="LLVMRelocMode"]/*[not(self::Item)]' />
     [GeneratedCode("LlvmBindingsGenerator","2.17941.31104.49410")]
     public enum LLVMRelocMode : global::System.Int32
     {
+        /// <include file="TargetMachine.xml" path='LibLLVMAPI/Enumeration[@name="LLVMRelocMode"]/Item[@name="LLVMRelocDefault"]/*' />
         LLVMRelocDefault = 0,
+        /// <include file="TargetMachine.xml" path='LibLLVMAPI/Enumeration[@name="LLVMRelocMode"]/Item[@name="LLVMRelocStatic"]/*' />
         LLVMRelocStatic = 1,
+        /// <include file="TargetMachine.xml" path='LibLLVMAPI/Enumeration[@name="LLVMRelocMode"]/Item[@name="LLVMRelocPIC"]/*' />
         LLVMRelocPIC = 2,
+        /// <include file="TargetMachine.xml" path='LibLLVMAPI/Enumeration[@name="LLVMRelocMode"]/Item[@name="LLVMRelocDynamicNoPic"]/*' />
         LLVMRelocDynamicNoPic = 3,
+        /// <include file="TargetMachine.xml" path='LibLLVMAPI/Enumeration[@name="LLVMRelocMode"]/Item[@name="LLVMRelocROPI"]/*' />
         LLVMRelocROPI = 4,
+        /// <include file="TargetMachine.xml" path='LibLLVMAPI/Enumeration[@name="LLVMRelocMode"]/Item[@name="LLVMRelocRWPI"]/*' />
         LLVMRelocRWPI = 5,
+        /// <include file="TargetMachine.xml" path='LibLLVMAPI/Enumeration[@name="LLVMRelocMode"]/Item[@name="LLVMRelocROPI_RWPI"]/*' />
         LLVMRelocROPI_RWPI = 6,
     }
 
+    /// <include file="TargetMachine.xml" path='LibLLVMAPI/Enumeration[@name="LLVMCodeModel"]/*[not(self::Item)]' />
     [GeneratedCode("LlvmBindingsGenerator","2.17941.31104.49410")]
     public enum LLVMCodeModel : global::System.Int32
     {
+        /// <include file="TargetMachine.xml" path='LibLLVMAPI/Enumeration[@name="LLVMCodeModel"]/Item[@name="LLVMCodeModelDefault"]/*' />
         LLVMCodeModelDefault = 0,
+        /// <include file="TargetMachine.xml" path='LibLLVMAPI/Enumeration[@name="LLVMCodeModel"]/Item[@name="LLVMCodeModelJITDefault"]/*' />
         LLVMCodeModelJITDefault = 1,
+        /// <include file="TargetMachine.xml" path='LibLLVMAPI/Enumeration[@name="LLVMCodeModel"]/Item[@name="LLVMCodeModelTiny"]/*' />
         LLVMCodeModelTiny = 2,
+        /// <include file="TargetMachine.xml" path='LibLLVMAPI/Enumeration[@name="LLVMCodeModel"]/Item[@name="LLVMCodeModelSmall"]/*' />
         LLVMCodeModelSmall = 3,
+        /// <include file="TargetMachine.xml" path='LibLLVMAPI/Enumeration[@name="LLVMCodeModel"]/Item[@name="LLVMCodeModelKernel"]/*' />
         LLVMCodeModelKernel = 4,
+        /// <include file="TargetMachine.xml" path='LibLLVMAPI/Enumeration[@name="LLVMCodeModel"]/Item[@name="LLVMCodeModelMedium"]/*' />
         LLVMCodeModelMedium = 5,
+        /// <include file="TargetMachine.xml" path='LibLLVMAPI/Enumeration[@name="LLVMCodeModel"]/Item[@name="LLVMCodeModelLarge"]/*' />
         LLVMCodeModelLarge = 6,
     }
 
+    /// <include file="TargetMachine.xml" path='LibLLVMAPI/Enumeration[@name="LLVMCodeGenFileType"]/*[not(self::Item)]' />
     [GeneratedCode("LlvmBindingsGenerator","2.17941.31104.49410")]
     public enum LLVMCodeGenFileType : global::System.Int32
     {
+        /// <include file="TargetMachine.xml" path='LibLLVMAPI/Enumeration[@name="LLVMCodeGenFileType"]/Item[@name="LLVMAssemblyFile"]/*' />
         LLVMAssemblyFile = 0,
+        /// <include file="TargetMachine.xml" path='LibLLVMAPI/Enumeration[@name="LLVMCodeGenFileType"]/Item[@name="LLVMObjectFile"]/*' />
         LLVMObjectFile = 1,
     }
 
     public static partial class NativeMethods
     {
-        /** Returns the first llvm::Target in the registered targets list. */
+        /// <include file="TargetMachine.xml" path='LibLLVMAPI/Function[@name="LLVMGetFirstTarget"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern LLVMTargetRef LLVMGetFirstTarget(  );
 
-        /** Returns the next llvm::Target given a previous one (or null if there's none) */
+        /// <include file="TargetMachine.xml" path='LibLLVMAPI/Function[@name="LLVMGetNextTarget"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern LLVMTargetRef LLVMGetNextTarget( LLVMTargetRef T );
 
-        /** Finds the target corresponding to the given name and stores it in \p T.
-          Returns 0 on success. */
+        /// <include file="TargetMachine.xml" path='LibLLVMAPI/Function[@name="LLVMGetTargetFromName"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern LLVMTargetRef LLVMGetTargetFromName( [MarshalAs( UnmanagedType.LPStr )]string Name );
 
-        /** Finds the target corresponding to the given triple and stores it in \p T.
-          Returns 0 on success. Optionally returns any error in ErrorMessage.
-          Use LLVMDisposeMessage to dispose the message. */
+        /// <include file="TargetMachine.xml" path='LibLLVMAPI/Function[@name="LLVMGetTargetFromTriple"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern LLVMStatus LLVMGetTargetFromTriple( [MarshalAs( UnmanagedType.LPStr )]string Triple, out LLVMTargetRef T, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( DisposeMessageMarshaler ) )]out string ErrorMessage );
 
-        /** Returns the name of a target. See llvm::Target::getName */
+        /// <include file="TargetMachine.xml" path='LibLLVMAPI/Function[@name="LLVMGetTargetName"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         [return: MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( AliasStringMarshaler ) )]
         public static extern string LLVMGetTargetName( LLVMTargetRef T );
 
-        /** Returns the description  of a target. See llvm::Target::getDescription */
+        /// <include file="TargetMachine.xml" path='LibLLVMAPI/Function[@name="LLVMGetTargetDescription"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         [return: MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( AliasStringMarshaler ) )]
         public static extern string LLVMGetTargetDescription( LLVMTargetRef T );
 
-        /** Returns if the target has a JIT */
+        /// <include file="TargetMachine.xml" path='LibLLVMAPI/Function[@name="LLVMTargetHasJIT"]/*' />
         [return: MarshalAs( UnmanagedType.Bool )]
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern bool LLVMTargetHasJIT( LLVMTargetRef T );
 
-        /** Returns if the target has a TargetMachine associated */
+        /// <include file="TargetMachine.xml" path='LibLLVMAPI/Function[@name="LLVMTargetHasTargetMachine"]/*' />
         [return: MarshalAs( UnmanagedType.Bool )]
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern bool LLVMTargetHasTargetMachine( LLVMTargetRef T );
 
-        /** Returns if the target as an ASM backend (required for emitting output) */
+        /// <include file="TargetMachine.xml" path='LibLLVMAPI/Function[@name="LLVMTargetHasAsmBackend"]/*' />
         [return: MarshalAs( UnmanagedType.Bool )]
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern bool LLVMTargetHasAsmBackend( LLVMTargetRef T );
 
-        /** Creates a new llvm::TargetMachine. See llvm::Target::createTargetMachine */
+        /// <include file="TargetMachine.xml" path='LibLLVMAPI/Function[@name="LLVMCreateTargetMachine"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern LLVMTargetMachineRef LLVMCreateTargetMachine( LLVMTargetRef T, [MarshalAs( UnmanagedType.LPStr )]string Triple, [MarshalAs( UnmanagedType.LPStr )]string CPU, [MarshalAs( UnmanagedType.LPStr )]string Features, LLVMCodeGenOptLevel Level, LLVMRelocMode Reloc, LLVMCodeModel CodeModel );
 
-        /** Returns the Target used in a TargetMachine */
+        /// <include file="TargetMachine.xml" path='LibLLVMAPI/Function[@name="LLVMGetTargetMachineTarget"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern LLVMTargetRef LLVMGetTargetMachineTarget( LLVMTargetMachineRef T );
 
-        /** Returns the triple used creating this target machine. See
-          llvm::TargetMachine::getTriple. The result needs to be disposed with
-          LLVMDisposeMessage. */
+        /// <include file="TargetMachine.xml" path='LibLLVMAPI/Function[@name="LLVMGetTargetMachineTriple"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         [return: MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( DisposeMessageMarshaler ) )]
         public static extern string LLVMGetTargetMachineTriple( LLVMTargetMachineRef T );
 
-        /** Returns the cpu used creating this target machine. See
-          llvm::TargetMachine::getCPU. The result needs to be disposed with
-          LLVMDisposeMessage. */
+        /// <include file="TargetMachine.xml" path='LibLLVMAPI/Function[@name="LLVMGetTargetMachineCPU"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         [return: MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( DisposeMessageMarshaler ) )]
         public static extern string LLVMGetTargetMachineCPU( LLVMTargetMachineRef T );
 
-        /** Returns the feature string used creating this target machine. See
-          llvm::TargetMachine::getFeatureString. The result needs to be disposed with
-          LLVMDisposeMessage. */
+        /// <include file="TargetMachine.xml" path='LibLLVMAPI/Function[@name="LLVMGetTargetMachineFeatureString"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         [return: MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( DisposeMessageMarshaler ) )]
         public static extern string LLVMGetTargetMachineFeatureString( LLVMTargetMachineRef T );
 
-        /** Create a DataLayout based on the targetMachine. */
+        /// <include file="TargetMachine.xml" path='LibLLVMAPI/Function[@name="LLVMCreateTargetDataLayout"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern LLVMTargetDataRef LLVMCreateTargetDataLayout( LLVMTargetMachineRef T );
 
-        /** Set the target machine's ASM verbosity. */
+        /// <include file="TargetMachine.xml" path='LibLLVMAPI/Function[@name="LLVMSetTargetMachineAsmVerbosity"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern void LLVMSetTargetMachineAsmVerbosity( LLVMTargetMachineRef T, [MarshalAs( UnmanagedType.Bool )]bool VerboseAsm );
 
-        /** Emits an asm or object file for the given module to the filename. This
-          wraps several c++ only classes (among them a file stream). Returns any
-          error in ErrorMessage. Use LLVMDisposeMessage to dispose the message. */
+        /// <include file="TargetMachine.xml" path='LibLLVMAPI/Function[@name="LLVMTargetMachineEmitToFile"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern LLVMStatus LLVMTargetMachineEmitToFile( LLVMTargetMachineRef T, LLVMModuleRef M, [MarshalAs( UnmanagedType.LPStr )]string Filename, LLVMCodeGenFileType codegen, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( DisposeMessageMarshaler ) )]out string ErrorMessage );
 
-        /** Compile the LLVM IR stored in \p M and store the result in \p OutMemBuf. */
+        /// <include file="TargetMachine.xml" path='LibLLVMAPI/Function[@name="LLVMTargetMachineEmitToMemoryBuffer"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern LLVMStatus LLVMTargetMachineEmitToMemoryBuffer( LLVMTargetMachineRef T, LLVMModuleRef M, LLVMCodeGenFileType codegen, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( DisposeMessageMarshaler ) )]out string ErrorMessage, out LLVMMemoryBufferRef OutMemBuf );
 
-        /** Get a triple for the host machine as a string. The result needs to be
-          disposed with LLVMDisposeMessage. */
+        /// <include file="TargetMachine.xml" path='LibLLVMAPI/Function[@name="LLVMGetDefaultTargetTriple"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         unsafe public static extern sbyte* LLVMGetDefaultTargetTriple(  );
 
-        /** Normalize a target triple. The result needs to be disposed with
-          LLVMDisposeMessage. */
+        /// <include file="TargetMachine.xml" path='LibLLVMAPI/Function[@name="LLVMNormalizeTargetTriple"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         unsafe public static extern sbyte* LLVMNormalizeTargetTriple( [MarshalAs( UnmanagedType.LPStr )]string triple );
 
-        /** Get the host CPU as a string. The result needs to be disposed with
-          LLVMDisposeMessage. */
+        /// <include file="TargetMachine.xml" path='LibLLVMAPI/Function[@name="LLVMGetHostCPUName"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         unsafe public static extern sbyte* LLVMGetHostCPUName(  );
 
-        /** Get the host CPU's features as a string. The result needs to be disposed
-          with LLVMDisposeMessage. */
+        /// <include file="TargetMachine.xml" path='LibLLVMAPI/Function[@name="LLVMGetHostCPUFeatures"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         unsafe public static extern sbyte* LLVMGetHostCPUFeatures(  );
 
-        /** Adds the target-specific analysis passes to the pass manager. */
+        /// <include file="TargetMachine.xml" path='LibLLVMAPI/Function[@name="LLVMAddAnalysisPasses"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern void LLVMAddAnalysisPasses( LLVMTargetMachineRef T, LLVMPassManagerRef PM );

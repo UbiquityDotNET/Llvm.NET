@@ -4,6 +4,7 @@
 
 using System;
 using System.Diagnostics;
+using System.Diagnostics.CodeAnalysis;
 using Llvm.NET.Interop;
 using Llvm.NET.Values;
 
@@ -178,6 +179,7 @@ namespace Llvm.NET.Types
 
         protected LLVMTypeRef TypeRefHandle { get; }
 
+        [SuppressMessage( "Reliability", "CA2000:Dispose objects before losing scope", Justification = "Context created here is owned, and disposed of via the ContextCache" )]
         private static Context GetContextFor( LLVMTypeRef handle )
         {
             if( handle == default )

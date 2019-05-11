@@ -5,6 +5,7 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Diagnostics.CodeAnalysis;
 using Llvm.NET.Interop;
 using Llvm.NET.Properties;
 using Ubiquity.ArgValidators;
@@ -55,9 +56,6 @@ namespace Llvm.NET
 
         /// <summary>Gets the operands for this node, if any</summary>
         public IList<LlvmMetadata> Operands { get; }
-
-        /*/// <summary>Resolves cycles from this node</summary>*/
-        //public void ResolveCycles( ) => LLVMMDNodeResolveCycles( MetadataHandle );
 
         /// <summary>Replace all uses of this node with a new node</summary>
         /// <param name="other">Node to replace this one with</param>
@@ -150,6 +148,7 @@ namespace Llvm.NET
             return FromHandle<T>( context, handle );
         }
 
+        [SuppressMessage( "Reliability", "CA2000:Dispose objects before losing scope", Justification = "Context created here is owned, and disposed of via the ContextCache" )]
         private static Context GetMeatadataContext( LLVMMetadataRef metadataHandle )
         {
             var hContext = LibLLVMGetNodeContext( metadataHandle );

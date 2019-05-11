@@ -16,7 +16,7 @@ namespace Llvm.NET.Values
         : Value
     {
         /// <summary>Gets the function this argument belongs to</summary>
-        public Function ContainingFunction => FromHandle<Function>( LLVMGetParamParent( ValueHandle ) );
+        public IrFunction ContainingFunction => FromHandle<IrFunction>( LLVMGetParamParent( ValueHandle ) );
 
         /// <summary>Gets the zero based index of the argument</summary>
         public uint Index => LibLLVMGetArgumentIndex( ValueHandle );

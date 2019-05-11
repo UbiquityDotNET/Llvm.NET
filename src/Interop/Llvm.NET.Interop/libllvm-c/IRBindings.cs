@@ -14,21 +14,27 @@ using System.Security;
 
 namespace Llvm.NET.Interop
 {
+    /// <include file="IRBindings.xml" path='LibLLVMAPI/Struct[@name="LibLLVMVersionInfo"]/*[not(self::Field)]' />
     [StructLayout( LayoutKind.Sequential )]
     [GeneratedCode( "LlvmBindingsGenerator", "2.17941.31104.49410" )]
     public struct LibLLVMVersionInfo
     {
+        /// <include file="IRBindings.xml" path='LibLLVMAPI/struct[@name="LibLLVMVersionInfo"]/Field[@name="Major"]/*' />
         public int Major;
+        /// <include file="IRBindings.xml" path='LibLLVMAPI/struct[@name="LibLLVMVersionInfo"]/Field[@name="Minor"]/*' />
         public int Minor;
+        /// <include file="IRBindings.xml" path='LibLLVMAPI/struct[@name="LibLLVMVersionInfo"]/Field[@name="Patch"]/*' />
         public int Patch;
     }
 
     public static partial class NativeMethods
     {
+        /// <include file="IRBindings.xml" path='LibLLVMAPI/Function[@name="LibLLVMGetVersionInfo"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern void LibLLVMGetVersionInfo( out LibLLVMVersionInfo pVersionInfo );
 
+        /// <include file="IRBindings.xml" path='LibLLVMAPI/Function[@name="LibLLVMLookupInstrinsicId"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern uint LibLLVMLookupInstrinsicId( [MarshalAs( UnmanagedType.LPStr )]string name );

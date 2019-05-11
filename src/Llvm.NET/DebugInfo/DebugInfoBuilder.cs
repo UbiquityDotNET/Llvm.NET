@@ -5,6 +5,7 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -223,7 +224,7 @@ namespace Llvm.NET.DebugInfo
         /// <param name="scopeLine">starting line of the first scope of the function's body</param>
         /// <param name="debugFlags"><see cref="DebugInfoFlags"/> for this function</param>
         /// <param name="isOptimized">Flag to indicate if this function is optimized</param>
-        /// <param name="function">Underlying LLVM <see cref="Function"/> to attach debug info to</param>
+        /// <param name="function">Underlying LLVM <see cref="IrFunction"/> to attach debug info to</param>
         /// <returns><see cref="DISubProgram"/> created based on the input parameters</returns>
         [SuppressMessage( "Microsoft.Design", "CA1011:ConsiderPassingBaseTypesAsParameters", Justification = "Specific type required by interop call" )]
         public DISubProgram CreateFunction( DIScope scope
@@ -237,7 +238,7 @@ namespace Llvm.NET.DebugInfo
                                           , uint scopeLine
                                           , DebugInfoFlags debugFlags
                                           , bool isOptimized
-                                          , Function function
+                                          , IrFunction function
                                           )
         {
             scope.ValidateNotNull( nameof( scope ) );
@@ -518,7 +519,7 @@ namespace Llvm.NET.DebugInfo
         /// <returns><see cref="DISubroutineType"/></returns>
         public DISubroutineType CreateSubroutineType( DebugInfoFlags debugFlags )
         {
-            return CreateSubroutineType( debugFlags, new DIType[0] );
+            return CreateSubroutineType( debugFlags, Array.Empty<DIType>() );
         }
 
         /// <summary>Creates a <see cref="DISubroutineType"/> to provide debug information for a function/procedure signature</summary>
@@ -633,7 +634,6 @@ namespace Llvm.NET.DebugInfo
                                                       );
 
             return MDNode.FromHandle<DICompositeType>( handle );
-
         }
 
         /// <summary>Creates debug description of a union type</summary>
@@ -1048,7 +1048,7 @@ namespace Llvm.NET.DebugInfo
                     bldr.AppendLine( Resources.Temporaries_must_be_resolved_before_finalizing_debug_information );
                 }
 
-                bldr.AppendFormat( Resources.Unresolved_Debug_temporary_0, node );
+                bldr.AppendFormat( CultureInfo.CurrentCulture, Resources.Unresolved_Debug_temporary_0, node );
                 bldr.AppendLine( );
             }
 
@@ -1416,7 +1416,7 @@ namespace Llvm.NET.DebugInfo
 
         private bool IsFinished;
 
-        private static bool LocationDescribes( DILocation location, Function function )
+        private static bool LocationDescribes( DILocation location, IrFunction function )
         {
             return location.Scope.SubProgram.Describes( function )
                 || location.InlinedAtScope.SubProgram.Describes( function );

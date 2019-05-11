@@ -25,7 +25,7 @@ namespace Kaleidoscope.Runtime
         /// actually generate an LLVM module for the JIT engine. Normally, any anonymous expressions
         /// (<see cref="Kaleidoscope.Grammar.KaleidoscopeParser.TopLevelExpressionContext"/>) are
         /// JIT compiled and executed. The result of executing the expression is returned.
-        /// For Function definitions or declarations, the <see cref="Llvm.NET.Values.Function"/> is returned.
+        /// For Function definitions or declarations, the <see cref="Llvm.NET.Values.IrFunction"/> is returned.
         /// However, that's not required. In a simple syntax analyzer, the generate may do nothing
         /// more than generate diagrams or other diagnostics from the input tree.</para>
         /// <para>For a lazy compilation JIT the generator will defer the actual generation of code and instead

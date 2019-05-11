@@ -16,12 +16,12 @@ namespace Llvm.NET.Interop
 {
     public static partial class NativeMethods
     {
-        /** See llvm::createLowerSwitchPass function. */
+        /// <include file="Utils.xml" path='LibLLVMAPI/Function[@name="LLVMAddLowerSwitchPass"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern void LLVMAddLowerSwitchPass( LLVMPassManagerRef PM );
 
-        /** See llvm::createPromoteMemoryToRegisterPass function. */
+        /// <include file="Utils.xml" path='LibLLVMAPI/Function[@name="LLVMAddPromoteMemoryToRegisterPass"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern void LLVMAddPromoteMemoryToRegisterPass( LLVMPassManagerRef PM );

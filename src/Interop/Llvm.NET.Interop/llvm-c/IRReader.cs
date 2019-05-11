@@ -16,15 +16,7 @@ namespace Llvm.NET.Interop
 {
     public static partial class NativeMethods
     {
-        /**
-         * Read LLVM IR from a memory buffer and convert it into an in-memory Module
-         * object. Returns 0 on success.
-         * Optionally returns a human-readable description of any errors that
-         * occurred during parsing IR. OutMessage must be disposed with
-         * LLVMDisposeMessage.
-         *
-         * @see llvm::ParseIR()
-         */
+        /// <include file="IRReader.xml" path='LibLLVMAPI/Function[@name="LLVMParseIRInContext"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern LLVMStatus LLVMParseIRInContext( LLVMContextRef ContextRef, LLVMMemoryBufferRef MemBuf, out LLVMModuleRef OutM, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( DisposeMessageMarshaler ) )]out string OutMessage );

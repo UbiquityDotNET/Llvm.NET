@@ -52,8 +52,16 @@ namespace Llvm.NET.Interop
             return OnDispose.Equals( other.OnDispose );
         }
 
+        /// <summary>Compares two actions for equality</summary>
+        /// <param name="left">Left action to compare</param>
+        /// <param name="right">Right action to compare</param>
+        /// <returns><see langword="true"/> if the delegates the actions wrap are equal <see langword="false"/> if not</returns>
         public static bool operator ==( DisposableAction left, DisposableAction right ) => left.Equals( right );
 
+        /// <summary>Compares two actions for inequality</summary>
+        /// <param name="left">Left action to compare</param>
+        /// <param name="right">Right action to compare</param>
+        /// <returns><see langword="true"/> if the delegates the actions wrap are not equal <see langword="false"/> if not</returns>
         public static bool operator !=( DisposableAction left, DisposableAction right ) => !( left == right );
 
         private Action OnDispose;

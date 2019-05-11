@@ -16,52 +16,52 @@ namespace Llvm.NET.Interop
 {
     public static partial class NativeMethods
     {
-        /** See llvm::PassManagerBuilder. */
+        /// <include file="PassManagerBuilder.xml" path='LibLLVMAPI/Function[@name="LLVMPassManagerBuilderCreate"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern LLVMPassManagerBuilderRef LLVMPassManagerBuilderCreate(  );
 
-        /** See llvm::PassManagerBuilder::OptLevel. */
+        /// <include file="PassManagerBuilder.xml" path='LibLLVMAPI/Function[@name="LLVMPassManagerBuilderSetOptLevel"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern void LLVMPassManagerBuilderSetOptLevel( LLVMPassManagerBuilderRef PMB, uint OptLevel );
 
-        /** See llvm::PassManagerBuilder::SizeLevel. */
+        /// <include file="PassManagerBuilder.xml" path='LibLLVMAPI/Function[@name="LLVMPassManagerBuilderSetSizeLevel"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern void LLVMPassManagerBuilderSetSizeLevel( LLVMPassManagerBuilderRef PMB, uint SizeLevel );
 
-        /** See llvm::PassManagerBuilder::DisableUnitAtATime. */
+        /// <include file="PassManagerBuilder.xml" path='LibLLVMAPI/Function[@name="LLVMPassManagerBuilderSetDisableUnitAtATime"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern void LLVMPassManagerBuilderSetDisableUnitAtATime( LLVMPassManagerBuilderRef PMB, [MarshalAs( UnmanagedType.Bool )]bool Value );
 
-        /** See llvm::PassManagerBuilder::DisableUnrollLoops. */
+        /// <include file="PassManagerBuilder.xml" path='LibLLVMAPI/Function[@name="LLVMPassManagerBuilderSetDisableUnrollLoops"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern void LLVMPassManagerBuilderSetDisableUnrollLoops( LLVMPassManagerBuilderRef PMB, [MarshalAs( UnmanagedType.Bool )]bool Value );
 
-        /** See llvm::PassManagerBuilder::DisableSimplifyLibCalls */
+        /// <include file="PassManagerBuilder.xml" path='LibLLVMAPI/Function[@name="LLVMPassManagerBuilderSetDisableSimplifyLibCalls"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern void LLVMPassManagerBuilderSetDisableSimplifyLibCalls( LLVMPassManagerBuilderRef PMB, [MarshalAs( UnmanagedType.Bool )]bool Value );
 
-        /** See llvm::PassManagerBuilder::Inliner. */
+        /// <include file="PassManagerBuilder.xml" path='LibLLVMAPI/Function[@name="LLVMPassManagerBuilderUseInlinerWithThreshold"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern void LLVMPassManagerBuilderUseInlinerWithThreshold( LLVMPassManagerBuilderRef PMB, uint Threshold );
 
-        /** See llvm::PassManagerBuilder::populateFunctionPassManager. */
+        /// <include file="PassManagerBuilder.xml" path='LibLLVMAPI/Function[@name="LLVMPassManagerBuilderPopulateFunctionPassManager"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern void LLVMPassManagerBuilderPopulateFunctionPassManager( LLVMPassManagerBuilderRef PMB, LLVMPassManagerRef PM );
 
-        /** See llvm::PassManagerBuilder::populateModulePassManager. */
+        /// <include file="PassManagerBuilder.xml" path='LibLLVMAPI/Function[@name="LLVMPassManagerBuilderPopulateModulePassManager"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern void LLVMPassManagerBuilderPopulateModulePassManager( LLVMPassManagerBuilderRef PMB, LLVMPassManagerRef PM );
 
-        /** See llvm::PassManagerBuilder::populateLTOPassManager. */
+        /// <include file="PassManagerBuilder.xml" path='LibLLVMAPI/Function[@name="LLVMPassManagerBuilderPopulateLTOPassManager"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern void LLVMPassManagerBuilderPopulateLTOPassManager( LLVMPassManagerBuilderRef PMB, LLVMPassManagerRef PM, [MarshalAs( UnmanagedType.Bool )]bool Internalize, [MarshalAs( UnmanagedType.Bool )]bool RunInliner );

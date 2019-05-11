@@ -198,7 +198,7 @@ namespace Llvm.NET.Values
     }
 
     /// <summary>LLVM Function definition</summary>
-    public class Function
+    public class IrFunction
         : GlobalObject
         , IAttributeAccessor
     {
@@ -231,9 +231,9 @@ namespace Llvm.NET.Values
         public ITypeRef ReturnType => Signature.ReturnType;
 
         /// <summary>Gets or sets the personality function for exception handling in this function</summary>
-        public Function PersonalityFunction
+        public IrFunction PersonalityFunction
         {
-            get => !LLVMHasPersonalityFn( ValueHandle ) ? null : FromHandle<Function>( LLVMGetPersonalityFn( ValueHandle ) );
+            get => !LLVMHasPersonalityFn( ValueHandle ) ? null : FromHandle<IrFunction>( LLVMGetPersonalityFn( ValueHandle ) );
 
             set => LLVMSetPersonalityFn( ValueHandle, value?.ValueHandle ?? LLVMValueRef.Zero );
         }
@@ -312,9 +312,10 @@ namespace Llvm.NET.Values
         }
 
         /// <summary>Inserts a basic block before another block in the function</summary>
-        /// <param name="name"></param>
-        /// <param name="insertBefore"></param>
-        /// <returns></returns>
+        /// <param name="name">Name of the block</param>
+        /// <param name="insertBefore">Block to insert the new block before</param>
+        /// <returns>New <see cref="BasicBlock"/> inserted</returns>
+        /// <exception cref="ArgumentException"><paramref name="insertBefore"/> belongs to a different function</exception>
         public BasicBlock InsertBasicBlock( string name, BasicBlock insertBefore )
         {
             insertBefore.ValidateNotNull( nameof(insertBefore) );
@@ -322,6 +323,7 @@ namespace Llvm.NET.Values
             {
                 throw new ArgumentException( "Basic block belongs to another function", nameof( insertBefore ) );
             }
+
             return BasicBlock.FromHandle( LLVMInsertBasicBlockInContext( NativeType.Context.ContextHandle, insertBefore.BlockHandle, name ) );
         }
 
@@ -411,7 +413,7 @@ namespace Llvm.NET.Values
             LLVMDeleteFunction( ValueHandle );
         }
 
-        internal Function( LLVMValueRef valueRef )
+        internal IrFunction( LLVMValueRef valueRef )
             : base( valueRef )
         {
             Attributes = new ValueAttributeDictionary( this, ()=>this );

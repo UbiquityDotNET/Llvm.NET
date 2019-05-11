@@ -16,11 +16,6 @@ namespace Llvm.NET.Instructions
     public class Alloca
         : UnaryInstruction
     {
-        internal Alloca( LLVMValueRef valueRef )
-            : base( valueRef )
-        {
-        }
-
         /// <summary>Gets the type of the alloca element</summary>
         /// <remarks>
         /// The <see cref="Llvm.NET.Values.Value.NativeType"/> of an <see cref="Alloca"/>
@@ -28,5 +23,10 @@ namespace Llvm.NET.Instructions
         /// for the alloca.
         /// </remarks>
         public ITypeRef ElementType => ( ( IPointerType )NativeType ).ElementType;
+
+        internal Alloca( LLVMValueRef valueRef )
+            : base( valueRef )
+        {
+        }
     }
 }

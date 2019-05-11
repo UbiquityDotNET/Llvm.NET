@@ -3,6 +3,7 @@
 // </copyright>
 
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 
 namespace Llvm.NET.Values
@@ -53,6 +54,7 @@ namespace Llvm.NET.Values
     /// is called a Dictionary as that reflects the use here and fits
     /// the direction of LLVM</note>
     /// </remarks>
+    [SuppressMessage( "Naming", "CA1710:Identifiers should have correct suffix", Justification = "It has the correct suffix, it's a dictionary, not just a collection" )]
     public interface IAttributeDictionary
         : IReadOnlyDictionary<FunctionAttributeIndex, ICollection<AttributeValue>>
     {

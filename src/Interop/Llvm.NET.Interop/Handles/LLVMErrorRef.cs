@@ -12,14 +12,19 @@ using System;
 using System.CodeDom.Compiler;
 using System.Runtime.InteropServices;
 using System.Security;
+using System.Threading;
 
 namespace Llvm.NET.Interop
 {
+    /// <summary>Global LLVM object handle</summary>
     [SecurityCritical]
     [GeneratedCode( "LlvmBindingsGenerator", "2.17941.31104.49410" )]
     public class LLVMErrorRef
         : LlvmObjectRef
     {
+        /// <summary>Creates a new instance of an LLVMErrorRef</summary>
+        /// <param name="handle">Raw native pointer for the handle</param>
+        /// <param name="owner">Value to indicate whether the handle is owned or not</param>
         public LLVMErrorRef( IntPtr handle, bool owner )
             : base( owner )
         {
@@ -27,15 +32,24 @@ namespace Llvm.NET.Interop
             LazyMessage = new Lazy<string>( InternalGetMessage );
         }
 
+        /// <inheritdoc/>
         public override string ToString()
         {
             return LazyMessage.Value;
         }
 
+        /// <inheritdoc/>
         [SecurityCritical]
         protected override bool ReleaseHandle( )
         {
-            LLVMConsumeError( handle );
+            // ensure handle appears invalid from this point forward
+            var prevHandle = Interlocked.Exchange( ref handle, IntPtr.Zero );
+            SetHandleAsInvalid( );
+
+            if( prevHandle != IntPtr.Zero )
+            {
+                LLVMConsumeError( handle );
+            }
             return true;
         }
 

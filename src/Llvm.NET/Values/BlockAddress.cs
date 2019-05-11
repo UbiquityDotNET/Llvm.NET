@@ -11,7 +11,7 @@ namespace Llvm.NET.Values
         : Constant
     {
         /// <summary>Gets the <see cref="Function"/> that owns the block</summary>
-        public Function Function => GetOperand<Function>( 0 );
+        public IrFunction Function => GetOperand<IrFunction>( 0 );
 
         /// <summary>Gets the <see cref="BasicBlock"/> the address refers to</summary>
         public BasicBlock BasicBlock => GetOperand<BasicBlock>( 1 );

@@ -4,14 +4,12 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
-
-// warning CS0649: Field 'xxx' is never assigned to, and will always have its default value 0
-#pragma warning disable 649
+/* TODO: Implement DisAssembler
 
 namespace Llvm.NET
 {
     internal class DisAssembler
     {
-        /* TODO: Implement DisAssembler */
     }
 }
+*/

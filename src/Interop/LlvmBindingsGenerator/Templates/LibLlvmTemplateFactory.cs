@@ -61,7 +61,8 @@ namespace LlvmBindingsGenerator
             foreach( var tu in ctx.ASTContext.GeneratedUnits( ) )
             {
                 var t4Template = new PerHeaderInteropTemplate( tu );
-                yield return new GeneratorCodeTemplate( tu, new[ ] { t4Template } );
+                var t4XmlDocsTemplate = new ExternalDocXmlTemplate( tu );
+                yield return new GeneratorCodeTemplate( tu, new ICodeGenTemplate[ ] { t4Template, t4XmlDocsTemplate } );
             }
         }
 

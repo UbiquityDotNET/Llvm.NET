@@ -4,7 +4,7 @@
 
 using static Llvm.NET.Interop.NativeMethods;
 
-using Function = Llvm.NET.Values.Function;
+using IrFunction = Llvm.NET.Values.IrFunction;
 
 namespace Llvm.NET.Transforms
 {
@@ -29,7 +29,7 @@ namespace Llvm.NET.Transforms
         /// <summary>Runs the passes registered in the pass manager</summary>
         /// <param name="target">Function to run the passes on</param>
         /// <returns><see langword="true"/>if any of the passes modified the module</returns>
-        public bool Run( Function target )
+        public bool Run( IrFunction target )
         {
             return LLVMRunFunctionPassManager( Handle, target.ValueHandle );
         }

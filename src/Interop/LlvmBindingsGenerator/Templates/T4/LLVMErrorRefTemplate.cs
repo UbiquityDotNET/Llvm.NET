@@ -48,39 +48,48 @@ using System;
 using System.CodeDom.Compiler;
 using System.Runtime.InteropServices;
 using System.Security;
+using System.Threading;
 
 namespace Llvm.NET.Interop
 {
+    /// <summary>Global LLVM object handle</summary>
     [SecurityCritical]
     [GeneratedCode( ""LlvmBindingsGenerator"", """);
             
-            #line 24 "D:\GitHub\Ubiquity.NET\Llvm.Net\src\Interop\LlvmBindingsGenerator\Templates\T4\LLVMErrorRefTemplate.tt"
+            #line 26 "D:\GitHub\Ubiquity.NET\Llvm.Net\src\Interop\LlvmBindingsGenerator\Templates\T4\LLVMErrorRefTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(ToolVersion));
             
             #line default
             #line hidden
-            this.Write("\" )]\r\n    public class LLVMErrorRef\r\n        : LlvmObjectRef\r\n    {\r\n        publ" +
-                    "ic LLVMErrorRef( IntPtr handle, bool owner )\r\n            : base( owner )\r\n     " +
-                    "   {\r\n            SetHandle( handle );\r\n            LazyMessage = new Lazy<strin" +
-                    "g>( InternalGetMessage );\r\n        }\r\n\r\n        public override string ToString(" +
-                    ")\r\n        {\r\n            return LazyMessage.Value;\r\n        }\r\n\r\n        [Secur" +
-                    "ityCritical]\r\n        protected override bool ReleaseHandle( )\r\n        {\r\n     " +
-                    "       LLVMConsumeError( handle );\r\n            return true;\r\n        }\r\n\r\n     " +
-                    "   // during marshaling the runtime always calls the default constructor and cal" +
-                    "ls SetHandle()\r\n        private LLVMErrorRef( )\r\n            : base( true )\r\n   " +
-                    "     {\r\n            LazyMessage = new Lazy<string>( InternalGetMessage );\r\n     " +
-                    "   }\r\n\r\n        private string InternalGetMessage( )\r\n        {\r\n            if(" +
-                    " IsInvalid )\r\n            {\r\n                return string.Empty;\r\n            }" +
-                    "\r\n\r\n            string retVal = LLVMGetErrorMessage( handle );\r\n            SetH" +
-                    "andle( IntPtr.Zero );\r\n            SetHandleAsInvalid( );\r\n            return re" +
-                    "tVal;\r\n        }\r\n\r\n        // use Lazy to cache result of the underlying destru" +
-                    "ctive get\r\n        Lazy<string> LazyMessage;\r\n\r\n        [DllImport( NativeMethod" +
-                    "s.LibraryPath, CallingConvention = CallingConvention.Cdecl )]\r\n        private s" +
-                    "tatic extern void LLVMConsumeError( IntPtr p );\r\n\r\n        [DllImport( NativeMet" +
-                    "hods.LibraryPath, CallingConvention = CallingConvention.Cdecl )]\r\n        [retur" +
-                    "n: MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( ErrorMessa" +
-                    "geMarshaler ) )]\r\n        private static extern string LLVMGetErrorMessage( IntP" +
-                    "tr p );\r\n    }\r\n}\r\n");
+            this.Write("\" )]\r\n    public class LLVMErrorRef\r\n        : LlvmObjectRef\r\n    {\r\n        /// " +
+                    "<summary>Creates a new instance of an LLVMErrorRef</summary>\r\n        /// <param" +
+                    " name=\"handle\">Raw native pointer for the handle</param>\r\n        /// <param nam" +
+                    "e=\"owner\">Value to indicate whether the handle is owned or not</param>\r\n        " +
+                    "public LLVMErrorRef( IntPtr handle, bool owner )\r\n            : base( owner )\r\n " +
+                    "       {\r\n            SetHandle( handle );\r\n            LazyMessage = new Lazy<s" +
+                    "tring>( InternalGetMessage );\r\n        }\r\n\r\n        /// <inheritdoc/>\r\n        p" +
+                    "ublic override string ToString()\r\n        {\r\n            return LazyMessage.Valu" +
+                    "e;\r\n        }\r\n\r\n        /// <inheritdoc/>\r\n        [SecurityCritical]\r\n        " +
+                    "protected override bool ReleaseHandle( )\r\n        {\r\n            // ensure handl" +
+                    "e appears invalid from this point forward\r\n            var prevHandle = Interloc" +
+                    "ked.Exchange( ref handle, IntPtr.Zero );\r\n            SetHandleAsInvalid( );\r\n\r\n" +
+                    "            if( prevHandle != IntPtr.Zero )\r\n            {\r\n                LLVM" +
+                    "ConsumeError( handle );\r\n            }\r\n            return true;\r\n        }\r\n\r\n " +
+                    "       // during marshaling the runtime always calls the default constructor and" +
+                    " calls SetHandle()\r\n        private LLVMErrorRef( )\r\n            : base( true )\r" +
+                    "\n        {\r\n            LazyMessage = new Lazy<string>( InternalGetMessage );\r\n " +
+                    "       }\r\n\r\n        private string InternalGetMessage( )\r\n        {\r\n           " +
+                    " if( IsInvalid )\r\n            {\r\n                return string.Empty;\r\n         " +
+                    "   }\r\n\r\n            string retVal = LLVMGetErrorMessage( handle );\r\n            " +
+                    "SetHandle( IntPtr.Zero );\r\n            SetHandleAsInvalid( );\r\n            retur" +
+                    "n retVal;\r\n        }\r\n\r\n        // use Lazy to cache result of the underlying de" +
+                    "structive get\r\n        Lazy<string> LazyMessage;\r\n\r\n        [DllImport( NativeMe" +
+                    "thods.LibraryPath, CallingConvention = CallingConvention.Cdecl )]\r\n        priva" +
+                    "te static extern void LLVMConsumeError( IntPtr p );\r\n\r\n        [DllImport( Nativ" +
+                    "eMethods.LibraryPath, CallingConvention = CallingConvention.Cdecl )]\r\n        [r" +
+                    "eturn: MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( ErrorM" +
+                    "essageMarshaler ) )]\r\n        private static extern string LLVMGetErrorMessage( " +
+                    "IntPtr p );\r\n    }\r\n}\r\n");
             return this.GenerationEnvironment.ToString();
         }
     }

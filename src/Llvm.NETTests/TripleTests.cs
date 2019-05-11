@@ -53,7 +53,7 @@ namespace Llvm.NET.Tests
                 {
                   { Triple.ArchType.UnknownArch,    "unknown" },
                   { Triple.ArchType.Aarch64,        "aarch64" },
-                  { Triple.ArchType.Aarch64_be,     "aarch64_be" },
+                  { Triple.ArchType.Aarch64BE,      "aarch64_be" },
                   { Triple.ArchType.Arm,            "arm" },
                   { Triple.ArchType.Armeb,          "armeb" },
                   { Triple.ArchType.Arc,            "arc" },
@@ -79,7 +79,7 @@ namespace Llvm.NET.Tests
                   { Triple.ArchType.Thumb,          "thumb" },
                   { Triple.ArchType.Thumbeb,        "thumbeb" },
                   { Triple.ArchType.X86,            "i386" },
-                  { Triple.ArchType.X86_64,         "x86_64" },
+                  { Triple.ArchType.Amd64,          "x86_64" },
                   { Triple.ArchType.Xcore,          "xcore" },
                   { Triple.ArchType.Nvptx,          "nvptx" },
                   { Triple.ArchType.Nvptx64,        "nvptx64" },

@@ -203,7 +203,7 @@ namespace Llvm.NET.Tests
             using( var context = new Context( ) )
             using( var module = context.CreateBitcodeModule( TestModuleName ) )
             {
-                Function testFunc = CreateSimpleVoidNopTestFunction( module, "foo" );
+                IrFunction testFunc = CreateSimpleVoidNopTestFunction( module, "foo" );
 
                 // verify basics
                 Assert.IsNotNull( testFunc );
@@ -219,7 +219,7 @@ namespace Llvm.NET.Tests
             using( var context = new Context( ) )
             using( var module = context.CreateBitcodeModule( TestModuleName ) )
             {
-                Function testFunc = CreateInvalidFunction( module, "badfunc" );
+                IrFunction testFunc = CreateInvalidFunction( module, "badfunc" );
 
                 // verify basics
                 Assert.IsNotNull( testFunc );
@@ -239,7 +239,7 @@ namespace Llvm.NET.Tests
             using( var context = new Context( ) )
             using( var module = context.CreateBitcodeModule( TestModuleName ) )
             {
-                Function testFunc = CreateSimpleVoidNopTestFunction( module, "foo" );
+                IrFunction testFunc = CreateSimpleVoidNopTestFunction( module, "foo" );
 
                 // verify basics
                 Assert.IsNotNull( testFunc );
@@ -268,7 +268,7 @@ namespace Llvm.NET.Tests
                 using( var ctx = new Context( ) )
                 using( var module2 = BitcodeModule.LoadFrom( path, ctx ) )
                 {
-                    Function testFunc = module2.GetFunction( "foo" );
+                    IrFunction testFunc = module2.GetFunction( "foo" );
 
                     // verify basics
                     Assert.IsNotNull( testFunc );
@@ -290,7 +290,7 @@ namespace Llvm.NET.Tests
             using( var context = new Context( ) )
             using( var module = context.CreateBitcodeModule( TestModuleName ) )
             {
-                Function testFunc = CreateSimpleVoidNopTestFunction( module, "foo" );
+                IrFunction testFunc = CreateSimpleVoidNopTestFunction( module, "foo" );
 
                 // verify basics
                 Assert.IsNotNull( testFunc );
@@ -307,7 +307,7 @@ namespace Llvm.NET.Tests
             using( var context = new Context( ) )
             using( var module = context.CreateBitcodeModule( TestModuleName ) )
             {
-                Function testFunc = CreateSimpleVoidNopTestFunction( module, "_test" );
+                IrFunction testFunc = CreateSimpleVoidNopTestFunction( module, "_test" );
 
                 var alias = module.AddAlias( testFunc, TestModuleName );
                 Assert.AreSame( alias, module.GetAlias( TestModuleName ) );
@@ -546,7 +546,7 @@ namespace Llvm.NET.Tests
             return retVal;
         }
 
-        private static Function CreateSimpleVoidNopTestFunction( BitcodeModule module, string name )
+        private static IrFunction CreateSimpleVoidNopTestFunction( BitcodeModule module, string name )
         {
             var ctx = module.Context;
             Assert.IsNotNull( ctx );
@@ -557,7 +557,7 @@ namespace Llvm.NET.Tests
             return testFunc;
         }
 
-        private static Function CreateInvalidFunction( BitcodeModule module, string name )
+        private static IrFunction CreateInvalidFunction( BitcodeModule module, string name )
         {
             var ctx = module.Context;
 

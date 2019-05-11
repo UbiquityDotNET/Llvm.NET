@@ -16,6 +16,7 @@ namespace Llvm.NET.Interop
 {
     public static partial class NativeMethods
     {
+        /// <include file="AttributeBindings.xml" path='LibLLVMAPI/Function[@name="LibLLVMAttributeToString"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         [return: MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( ErrorMessageMarshaler ) )]

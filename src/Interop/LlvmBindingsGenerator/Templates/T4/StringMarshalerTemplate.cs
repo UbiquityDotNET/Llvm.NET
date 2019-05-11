@@ -51,7 +51,7 @@ using System.Runtime.InteropServices;
 
 namespace Llvm.NET.Interop
 {
- ");
+");
             
             #line 23 "D:\GitHub\Ubiquity.NET\Llvm.Net\src\Interop\LlvmBindingsGenerator\Templates\T4\StringMarshalerTemplate.tt"
 if(HasNativeDisposer){
@@ -93,38 +93,46 @@ if(HasNativeDisposer){
             
             #line default
             #line hidden
-            this.Write("\r\n        : ICustomMarshaler\r\n    {\r\n        ///<Inheritdoc/>\r\n        public voi" +
-                    "d CleanUpManagedData( object ManagedObj )\r\n        {\r\n        }\r\n\r\n");
+            this.Write("\r\n        : ICustomMarshaler\r\n    {\r\n        /// <inheritdoc/>\r\n        public vo" +
+                    "id CleanUpManagedData( object ManagedObj )\r\n        {\r\n        }\r\n\r\n");
             
             #line 37 "D:\GitHub\Ubiquity.NET\Llvm.Net\src\Interop\LlvmBindingsGenerator\Templates\T4\StringMarshalerTemplate.tt"
 if(HasNativeDisposer){
             
             #line default
             #line hidden
-            this.Write("        public void CleanUpNativeData( IntPtr pNativeData )\r\n            => Nativ" +
-                    "eDisposer?.Invoke( pNativeData );\r\n");
+            this.Write("        /// <inheritdoc/>\r\n        public void CleanUpNativeData( IntPtr pNativeD" +
+                    "ata )\r\n            => NativeDisposer?.Invoke( pNativeData );\r\n");
             
-            #line 40 "D:\GitHub\Ubiquity.NET\Llvm.Net\src\Interop\LlvmBindingsGenerator\Templates\T4\StringMarshalerTemplate.tt"
+            #line 41 "D:\GitHub\Ubiquity.NET\Llvm.Net\src\Interop\LlvmBindingsGenerator\Templates\T4\StringMarshalerTemplate.tt"
 }else{
             
             #line default
             #line hidden
-            this.Write("        public void CleanUpNativeData( IntPtr pNativeData ) { /* NOP */ }\r\n");
+            this.Write("        /// <inheritdoc/>\r\n        public void CleanUpNativeData( IntPtr pNativeD" +
+                    "ata ) { /* NOP */ }\r\n");
             
-            #line 42 "D:\GitHub\Ubiquity.NET\Llvm.Net\src\Interop\LlvmBindingsGenerator\Templates\T4\StringMarshalerTemplate.tt"
+            #line 44 "D:\GitHub\Ubiquity.NET\Llvm.Net\src\Interop\LlvmBindingsGenerator\Templates\T4\StringMarshalerTemplate.tt"
 }
             
             #line default
             #line hidden
-            this.Write(@"        [SuppressMessage( ""Design"", ""CA1024:Use properties where appropriate."", Justification = ""Name and signature defined by interface"")]
+            this.Write(@"
+        /// <inheritdoc/>
+        [SuppressMessage( ""Design"", ""CA1024:Use properties where appropriate."", Justification = ""Name and signature defined by interface"")]
         public int GetNativeDataSize( ) => -1;
 
+        /// <inheritdoc/>
         public IntPtr MarshalManagedToNative( object ManagedObj )
             => throw new NotImplementedException( );
 
+        /// <inheritdoc/>
         public object MarshalNativeToManaged( IntPtr pNativeData )
             => StringNormalizer.NormalizeLineEndings( pNativeData );
 
+        /// <summary>Custom marshaler static factory contract implementation</summary>
+        /// <param name=""cookie"">Cookie from attribute</param>
+        /// <returns>Custom marshaller instance</returns>
         public static ICustomMarshaler GetInstance( string cookie )
         {
             switch( cookie.ToUpperInvariant( ) )
@@ -134,7 +142,7 @@ if(HasNativeDisposer){
             case ""NONE"":
                 return new ");
             
-            #line 59 "D:\GitHub\Ubiquity.NET\Llvm.Net\src\Interop\LlvmBindingsGenerator\Templates\T4\StringMarshalerTemplate.tt"
+            #line 68 "D:\GitHub\Ubiquity.NET\Llvm.Net\src\Interop\LlvmBindingsGenerator\Templates\T4\StringMarshalerTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(Name));
             
             #line default
@@ -143,35 +151,35 @@ if(HasNativeDisposer){
                     "id marshal cookie\", nameof( cookie ) );\r\n            }\r\n        }\r\n\r\n        int" +
                     "ernal ");
             
-            #line 66 "D:\GitHub\Ubiquity.NET\Llvm.Net\src\Interop\LlvmBindingsGenerator\Templates\T4\StringMarshalerTemplate.tt"
+            #line 75 "D:\GitHub\Ubiquity.NET\Llvm.Net\src\Interop\LlvmBindingsGenerator\Templates\T4\StringMarshalerTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(Name));
             
             #line default
             #line hidden
             this.Write("( )\r\n        {\r\n");
             
-            #line 68 "D:\GitHub\Ubiquity.NET\Llvm.Net\src\Interop\LlvmBindingsGenerator\Templates\T4\StringMarshalerTemplate.tt"
+            #line 77 "D:\GitHub\Ubiquity.NET\Llvm.Net\src\Interop\LlvmBindingsGenerator\Templates\T4\StringMarshalerTemplate.tt"
 if(HasNativeDisposer){
             
             #line default
             #line hidden
             this.Write("            NativeDisposer = ");
             
-            #line 69 "D:\GitHub\Ubiquity.NET\Llvm.Net\src\Interop\LlvmBindingsGenerator\Templates\T4\StringMarshalerTemplate.tt"
+            #line 78 "D:\GitHub\Ubiquity.NET\Llvm.Net\src\Interop\LlvmBindingsGenerator\Templates\T4\StringMarshalerTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(NativeDisposer));
             
             #line default
             #line hidden
             this.Write(";\r\n");
             
-            #line 70 "D:\GitHub\Ubiquity.NET\Llvm.Net\src\Interop\LlvmBindingsGenerator\Templates\T4\StringMarshalerTemplate.tt"
+            #line 79 "D:\GitHub\Ubiquity.NET\Llvm.Net\src\Interop\LlvmBindingsGenerator\Templates\T4\StringMarshalerTemplate.tt"
 }
             
             #line default
             #line hidden
             this.Write("        }\r\n\r\n");
             
-            #line 73 "D:\GitHub\Ubiquity.NET\Llvm.Net\src\Interop\LlvmBindingsGenerator\Templates\T4\StringMarshalerTemplate.tt"
+            #line 82 "D:\GitHub\Ubiquity.NET\Llvm.Net\src\Interop\LlvmBindingsGenerator\Templates\T4\StringMarshalerTemplate.tt"
 if(HasNativeDisposer){
             
             #line default
@@ -181,14 +189,14 @@ if(HasNativeDisposer){
         [DllImport( NativeMethods.LibraryPath, CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi, ThrowOnUnmappableChar = true, BestFitMapping = false )]
         private static extern void ");
             
-            #line 77 "D:\GitHub\Ubiquity.NET\Llvm.Net\src\Interop\LlvmBindingsGenerator\Templates\T4\StringMarshalerTemplate.tt"
+            #line 86 "D:\GitHub\Ubiquity.NET\Llvm.Net\src\Interop\LlvmBindingsGenerator\Templates\T4\StringMarshalerTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(NativeDisposer));
             
             #line default
             #line hidden
             this.Write("( IntPtr p );\r\n");
             
-            #line 78 "D:\GitHub\Ubiquity.NET\Llvm.Net\src\Interop\LlvmBindingsGenerator\Templates\T4\StringMarshalerTemplate.tt"
+            #line 87 "D:\GitHub\Ubiquity.NET\Llvm.Net\src\Interop\LlvmBindingsGenerator\Templates\T4\StringMarshalerTemplate.tt"
 }
             
             #line default

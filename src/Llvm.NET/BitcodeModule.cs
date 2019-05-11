@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using Llvm.NET.DebugInfo;
@@ -25,6 +26,7 @@ namespace Llvm.NET
                     , "CA1726:UsePreferredTerms"
                     , MessageId = "Flag"
                     , Justification = "Enum for the behavior of the LLVM ModuleFlag (Flag in middle doesn't imply the enum is Bit Flags)" )]
+    [SuppressMessage( "Design", "CA1027:Mark enums with FlagsAttribute", Justification = "It isn't a flags enum" )]
     public enum ModuleFlagBehavior
     {
         /// <summary>Invalid value (default value for this enumeration)</summary>
@@ -113,7 +115,6 @@ namespace Llvm.NET
                 var retVal = new Dictionary<string, ModuleFlag>( );
                 using(LLVMModuleFlagEntry flags = LLVMCopyModuleFlagsMetadata(ModuleHandle, out size_t len))
                 {
-
                     for(uint i = 0; i< len; ++i )
                     {
                         var behavior = LLVMModuleFlagEntriesGetFlagBehavior( flags, i );
@@ -122,6 +123,7 @@ namespace Llvm.NET
                         retVal.Add( key, new ModuleFlag( (ModuleFlagBehavior)behavior, key, metadata ) );
                     }
                 }
+
                 return retVal;
             }
         }
@@ -208,7 +210,7 @@ namespace Llvm.NET
         }
 
         /// <summary>Gets the functions contained in this module</summary>
-        public IEnumerable<Function> Functions
+        public IEnumerable<IrFunction> Functions
         {
             get
             {
@@ -216,7 +218,7 @@ namespace Llvm.NET
                 var current = LLVMGetFirstFunction( ModuleHandle );
                 while( current != default )
                 {
-                    yield return Value.FromHandle<Function>( current );
+                    yield return Value.FromHandle<IrFunction>( current );
                     current = LLVMGetNextFunction( current );
                 }
             }
@@ -329,33 +331,33 @@ namespace Llvm.NET
         /// <summary>Gets a function by name from this module</summary>
         /// <param name="name">Name of the function to get</param>
         /// <returns>The function or null if not found</returns>
-        public Function GetFunction( string name )
+        public IrFunction GetFunction( string name )
         {
             ThrowIfDisposed( );
             name.ValidateNotNullOrWhiteSpace( nameof( name ) );
 
             var funcRef = LLVMGetNamedFunction( ModuleHandle, name );
-            return funcRef == default ? null : Value.FromHandle<Function>( funcRef );
+            return funcRef == default ? null : Value.FromHandle<IrFunction>( funcRef );
         }
 
         /// <summary>Add a function with the specified signature to the module</summary>
         /// <param name="name">Name of the function to add</param>
         /// <param name="signature">Signature of the function</param>
-        /// <returns><see cref="Function"/>matching the specified signature and name</returns>
+        /// <returns><see cref="IrFunction"/>matching the specified signature and name</returns>
         /// <remarks>
         /// If a matching function already exists it is returned, and therefore the returned
-        /// <see cref="Function"/> may have a body and additional attributes. If a function of
+        /// <see cref="IrFunction"/> may have a body and additional attributes. If a function of
         /// the same name exists with a different signature an exception is thrown as LLVM does
         /// not perform any function overloading.
         /// </remarks>
         [SuppressMessage( "Microsoft.Design", "CA1011:ConsiderPassingBaseTypesAsParameters", Justification = "Specific type required by interop call" )]
-        public Function AddFunction( string name, IFunctionType signature )
+        public IrFunction AddFunction( string name, IFunctionType signature )
         {
             ThrowIfDisposed( );
             name.ValidateNotNullOrWhiteSpace( nameof( name ) );
             signature.ValidateNotNull( nameof( signature ) );
 
-            return Value.FromHandle<Function>( LibLLVMGetOrInsertFunction( ModuleHandle, name, signature.GetTypeRef( ) ) );
+            return Value.FromHandle<IrFunction>( LibLLVMGetOrInsertFunction( ModuleHandle, name, signature.GetTypeRef( ) ) );
         }
 
         /// <summary>Writes a bit-code module to a file</summary>
@@ -373,7 +375,7 @@ namespace Llvm.NET
             LLVMStatus status = LLVMWriteBitcodeToFile( ModuleHandle, path );
             if( status.Failed )
             {
-                throw new IOException( string.Format(Resources.Error_writing_bit_code_file_0, path), status.ErrorCode );
+                throw new IOException( string.Format( CultureInfo.CurrentCulture, Resources.Error_writing_bit_code_file_0, path), status.ErrorCode );
             }
         }
 
@@ -638,7 +640,7 @@ namespace Llvm.NET
         /// <param name="debugFlags">Additional flags describing this function</param>
         /// <param name="isOptimized">Flag to indicate if this function is optimized</param>
         /// <returns>Function described by the arguments</returns>
-        public Function CreateFunction( DIScope scope
+        public IrFunction CreateFunction( DIScope scope
                                       , string name
                                       , string linkageName
                                       , DIFile file
@@ -690,7 +692,7 @@ namespace Llvm.NET
         /// Function, matching the signature specified. This may be a previously declared or defined
         /// function or a new function if none matching the name and signature is already present.
         /// </returns>
-        public Function CreateFunction( string name
+        public IrFunction CreateFunction( string name
                                       , bool isVarArg
                                       , IDebugType<ITypeRef, DIType> returnType
                                       , IEnumerable<IDebugType<ITypeRef, DIType>> argumentTypes
@@ -710,7 +712,7 @@ namespace Llvm.NET
         /// Function, matching the signature specified. This may be a previously declared or defined
         /// function or a new function if none matching the name and signature is already present.
         /// </returns>
-        public Function CreateFunction( string name
+        public IrFunction CreateFunction( string name
                                       , bool isVarArg
                                       , IDebugType<ITypeRef, DIType> returnType
                                       , params IDebugType<ITypeRef, DIType>[ ] argumentTypes
@@ -735,7 +737,7 @@ namespace Llvm.NET
         /// space, or bit widths. That is instead of 'llvm.memset.p0i8.i32' use 'llvm.memset.p.i'.
         /// </note>
         /// </remarks>
-        public Function GetIntrinsicDeclaration( string name, params ITypeRef[ ] args )
+        public IrFunction GetIntrinsicDeclaration( string name, params ITypeRef[ ] args )
         {
             uint id = Intrinsic.LookupId( name );
             return GetIntrinsicDeclaration( id, args );
@@ -745,15 +747,15 @@ namespace Llvm.NET
         /// <param name="id">id of the intrinsic</param>
         /// <param name="args">Arguments for the intrinsic</param>
         /// <returns>Function declaration</returns>
-        public Function GetIntrinsicDeclaration( UInt32 id, params ITypeRef[] args)
+        public IrFunction GetIntrinsicDeclaration( UInt32 id, params ITypeRef[] args)
         {
             if( !LLVMIntrinsicIsOverloaded( id ) && args.Length > 0 )
             {
-                throw new ArgumentException( string.Format(Resources.Intrinsic_0_is_not_overloaded_and_therefore_does_not_require_type_arguments, id) );
+                throw new ArgumentException( string.Format( CultureInfo.CurrentCulture, Resources.Intrinsic_0_is_not_overloaded_and_therefore_does_not_require_type_arguments, id) );
             }
 
             LLVMTypeRef[ ] llvmArgs = args.Select( a => a.GetTypeRef( ) ).ToArray( );
-            return (Function) Value.FromHandle( LLVMGetIntrinsicDeclaration( ModuleHandle, id, llvmArgs, llvmArgs.Length ));
+            return (IrFunction) Value.FromHandle( LLVMGetIntrinsicDeclaration( ModuleHandle, id, llvmArgs, llvmArgs.Length ));
         }
 
         /// <summary>Clones the current module</summary>
@@ -845,15 +847,12 @@ namespace Llvm.NET
             return retVal;
         }
 
+        [SuppressMessage( "Reliability", "CA2000:Dispose objects before losing scope", Justification = "Context created here is owned, and disposed of via the ContextCache" )]
         internal static BitcodeModule FromHandle( LLVMModuleRef nativeHandle )
         {
             nativeHandle.ValidateNotDefault( nameof( nativeHandle ) );
             var contextRef = LLVMGetModuleContext( nativeHandle );
-            if( !ContextCache.TryGetValue( contextRef, out Context context ) )
-            {
-                context = new Context( contextRef );
-            }
-
+            Context context = ContextCache.GetContextFor( contextRef );
             return context.GetModuleFor( nativeHandle );
         }
 

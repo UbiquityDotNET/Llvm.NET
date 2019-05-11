@@ -14,35 +14,23 @@ using System.Security;
 
 namespace Llvm.NET.Interop
 {
+    /// <include file="ErrorHandling.xml" path='LibLLVMAPI/Delegate[@name="LLVMFatalErrorHandler"]/*' />
     [UnmanagedFunctionPointer( global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
     public delegate void LLVMFatalErrorHandler( [MarshalAs( UnmanagedType.LPStr )]string Reason );
 
     public static partial class NativeMethods
     {
-        /**
-         * Install a fatal error handler. By default, if LLVM detects a fatal error, it
-         * will call exit(1). This may not be appropriate in many contexts. For example,
-         * doing exit(1) will bypass many crash reporting/tracing system tools. This
-         * function allows you to install a callback that will be invoked prior to the
-         * call to exit(1).
-         */
+        /// <include file="ErrorHandling.xml" path='LibLLVMAPI/Function[@name="LLVMInstallFatalErrorHandler"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern void LLVMInstallFatalErrorHandler( LLVMFatalErrorHandler Handler );
 
-        /**
-         * Reset the fatal error handler. This resets LLVM's fatal error handling
-         * behavior to the default.
-         */
+        /// <include file="ErrorHandling.xml" path='LibLLVMAPI/Function[@name="LLVMResetFatalErrorHandler"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern void LLVMResetFatalErrorHandler(  );
 
-        /**
-         * Enable LLVM's built-in stack trace code. This intercepts the OS's crash
-         * signals and prints which component of LLVM you were in at the time if the
-         * crash.
-         */
+        /// <include file="ErrorHandling.xml" path='LibLLVMAPI/Function[@name="LLVMEnablePrettyStackTrace"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern void LLVMEnablePrettyStackTrace(  );

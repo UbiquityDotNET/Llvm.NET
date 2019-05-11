@@ -20,39 +20,36 @@ using <#=import#>;
 namespace Llvm.NET.Interop
 {
 <#foreach(var e in Enums){#>
-<#foreach(var commentLine in e.Comment){#>
-    <#=commentLine#>
-<#}#>
+    /// <include file="<#=Unit.FileNameWithoutExtension#>.xml" path='LibLLVMAPI/Enumeration[@name="<#=e.Name#>"]/*[not(self::Item)]' />
     [GeneratedCode("LlvmBindingsGenerator","<#=ToolVersion#>")]
     public enum <#=e.Name#> : <#=e.BaseType#>
     {
-<#foreach(var m in e.Members) {
-      foreach(var commentLine in m.Comment){#>
-        <#=commentLine#>
-<#}#>
+<#foreach(var m in e.Members) {#>
+        /// <include file="<#=Unit.FileNameWithoutExtension#>.xml" path='LibLLVMAPI/Enumeration[@name="<#=e.Name#>"]/Item[@name="<#=m.Name#>"]/*' />
         <#=m.Name#> = <#=m.Value#>,
 <#}#>
     }
 
 <#}
-foreach(var d in Delegates) {
-    foreach( var commentLine in d.Comments ) {#>
-    <#=commentLine#>
-<#}foreach( var attrib in d.Attributes) {#>
+foreach(var d in Delegates) {#>
+    /// <include file="<#=Unit.FileNameWithoutExtension#>.xml" path='LibLLVMAPI/Delegate[@name="<#=d.Name#>"]/*' />
+<#foreach( var attrib in d.Attributes) {#>
     <#=attrib.AsString()#>
 <#}#>
     <#=d#>
 <#}#>
-<#foreach(var s in ValueTypes){
-    foreach(var sa in s.Attributes) {#>
+<#foreach(var s in ValueTypes){#>
+    /// <include file="<#=Unit.FileNameWithoutExtension#>.xml" path='LibLLVMAPI/Struct[@name="<#=s.Name#>"]/*[not(self::Field)]' />
+<#    foreach(var sa in s.Attributes) {#>
     <#=sa.AsString()#>
 <#}#>
     public struct <#=s.Name#>
     {
-<#foreach(var fld in s.Fields){
-     foreach(var fa in fld.Attributes) {#>
+<#foreach(var fld in s.Fields){#>
+        /// <include file="<#=Unit.FileNameWithoutExtension#>.xml" path='LibLLVMAPI/struct[@name="<#=s.Name#>"]/Field[@name="<#=fld.Name#>"]/*' />
+<#  foreach(var fa in fld.Attributes) {#>
         <#=fa.AsString()#>
-<#}#>
+<#  }#>
         public <#=GetTypeName(fld.Type)#> <#=fld.Name#>;
 <#}#>
     }
@@ -60,10 +57,9 @@ foreach(var d in Delegates) {
 <#}#>
     public static partial class NativeMethods
     {
-<#foreach(var f in Functions) {
-     foreach( var commentLine in f.Comments ) {#>
-        <#=commentLine#>
-<#}  foreach(var a in f.Attributes) {#>
+<#foreach(var f in Functions) {#>
+        /// <include file="<#=Unit.FileNameWithoutExtension#>.xml" path='LibLLVMAPI/Function[@name="<#=f.Name#>"]/*' />
+<#foreach(var a in f.Attributes) {#>
         <#=a.AsString()#>
 <#}#>
         <#=f#>

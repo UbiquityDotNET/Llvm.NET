@@ -16,59 +16,27 @@ namespace Llvm.NET.Interop
 {
     public static partial class NativeMethods
     {
-        /**
-         * Create a disassembler for the TripleName.  Symbolic disassembly is supported
-         * by passing a block of information in the DisInfo parameter and specifying the
-         * TagType and callback functions as described above.  These can all be passed
-         * as NULL.  If successful, this returns a disassembler context.  If not, it
-         * returns NULL. This function is equivalent to calling
-         * LLVMCreateDisasmCPUFeatures() with an empty CPU name and feature set.
-         */
+        /// <include file="Disassembler.xml" path='LibLLVMAPI/Function[@name="LLVMCreateDisasm"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern LLVMDisasmContextRef LLVMCreateDisasm( [MarshalAs( UnmanagedType.LPStr )]string TripleName, global::System.IntPtr DisInfo, int TagType, LLVMOpInfoCallback GetOpInfo, LLVMSymbolLookupCallback SymbolLookUp );
 
-        /**
-         * Create a disassembler for the TripleName and a specific CPU.  Symbolic
-         * disassembly is supported by passing a block of information in the DisInfo
-         * parameter and specifying the TagType and callback functions as described
-         * above.  These can all be passed * as NULL.  If successful, this returns a
-         * disassembler context.  If not, it returns NULL. This function is equivalent
-         * to calling LLVMCreateDisasmCPUFeatures() with an empty feature set.
-         */
+        /// <include file="Disassembler.xml" path='LibLLVMAPI/Function[@name="LLVMCreateDisasmCPU"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern LLVMDisasmContextRef LLVMCreateDisasmCPU( [MarshalAs( UnmanagedType.LPStr )]string Triple, [MarshalAs( UnmanagedType.LPStr )]string CPU, global::System.IntPtr DisInfo, int TagType, LLVMOpInfoCallback GetOpInfo, LLVMSymbolLookupCallback SymbolLookUp );
 
-        /**
-         * Create a disassembler for the TripleName, a specific CPU and specific feature
-         * string.  Symbolic disassembly is supported by passing a block of information
-         * in the DisInfo parameter and specifying the TagType and callback functions as
-         * described above.  These can all be passed * as NULL.  If successful, this
-         * returns a disassembler context.  If not, it returns NULL.
-         */
+        /// <include file="Disassembler.xml" path='LibLLVMAPI/Function[@name="LLVMCreateDisasmCPUFeatures"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern LLVMDisasmContextRef LLVMCreateDisasmCPUFeatures( [MarshalAs( UnmanagedType.LPStr )]string Triple, [MarshalAs( UnmanagedType.LPStr )]string CPU, [MarshalAs( UnmanagedType.LPStr )]string Features, global::System.IntPtr DisInfo, int TagType, LLVMOpInfoCallback GetOpInfo, LLVMSymbolLookupCallback SymbolLookUp );
 
-        /**
-         * Set the disassembler's options.  Returns 1 if it can set the Options and 0
-         * otherwise.
-         */
+        /// <include file="Disassembler.xml" path='LibLLVMAPI/Function[@name="LLVMSetDisasmOptions"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern int LLVMSetDisasmOptions( LLVMDisasmContextRef DC, System.UInt64 Options );
 
-        /**
-         * Disassemble a single instruction using the disassembler context specified in
-         * the parameter DC.  The bytes of the instruction are specified in the
-         * parameter Bytes, and contains at least BytesSize number of bytes.  The
-         * instruction is at the address specified by the PC parameter.  If a valid
-         * instruction can be disassembled, its string is returned indirectly in
-         * OutString whose size is specified in the parameter OutStringSize.  This
-         * function returns the number of bytes in the instruction or zero if there was
-         * no valid instruction.
-         */
+        /// <include file="Disassembler.xml" path='LibLLVMAPI/Function[@name="LLVMDisasmInstruction"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern size_t LLVMDisasmInstruction( LLVMDisasmContextRef DC, [MarshalAs( UnmanagedType.LPArray, ArraySubType = UnmanagedType.I1 )]global::System.Byte[] Bytes, System.UInt64 BytesSize, System.UInt64 PC, ref global::System.Text.StringBuilder OutString, size_t OutStringSize );

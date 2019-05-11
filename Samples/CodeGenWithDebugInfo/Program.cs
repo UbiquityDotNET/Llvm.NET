@@ -136,8 +136,8 @@ namespace TestDebugInfo
                     // NOTE: The declaration ordering is reversed from that of the sample code file (test.c)
                     //       However, this is what Clang ends up doing for some reason so it is
                     //       replicated here to aid in comparing the generated LL files.
-                    Function doCopyFunc = DeclareDoCopyFunc( module, diFile, voidType );
-                    Function copyFunc = DeclareCopyFunc( module, diFile, voidType, constFoo, fooPtr );
+                    IrFunction doCopyFunc = DeclareDoCopyFunc( module, diFile, voidType );
+                    IrFunction copyFunc = DeclareCopyFunc( module, diFile, voidType, constFoo, fooPtr );
 
                     CreateCopyFunctionBody( module, copyFunc, diFile, fooType, fooPtr, constFoo );
                     CreateDoCopyFunctionBody( module, doCopyFunc, fooType, bar, baz, copyFunc );
@@ -199,7 +199,7 @@ namespace TestDebugInfo
         }
 
         #region FunctionDeclarations
-        private static Function DeclareDoCopyFunc( BitcodeModule module, DIFile diFile, IDebugType<ITypeRef, DIType> voidType )
+        private static IrFunction DeclareDoCopyFunc( BitcodeModule module, DIFile diFile, IDebugType<ITypeRef, DIType> voidType )
         {
             var doCopySig = module.Context.CreateFunctionType( module.DIBuilder, voidType );
 
@@ -219,7 +219,7 @@ namespace TestDebugInfo
             return doCopyFunc;
         }
 
-        private static Function DeclareCopyFunc( BitcodeModule module
+        private static IrFunction DeclareCopyFunc( BitcodeModule module
                                                , DIFile diFile
                                                , IDebugType<ITypeRef, DIType> voidType
                                                , DIDerivedType constFoo
@@ -271,7 +271,7 @@ namespace TestDebugInfo
         #endregion
 
         private static void CreateCopyFunctionBody( BitcodeModule module
-                                                  , Function copyFunc
+                                                  , IrFunction copyFunc
                                                   , DIFile diFile
                                                   , ITypeRef foo
                                                   , DebugPointerType fooPtr
@@ -325,7 +325,7 @@ namespace TestDebugInfo
                 // inform the debugger to treat it as the value by dereferencing the pointer
                 diBuilder.InsertDeclare( copyFunc.Parameters[ 0 ]
                                        , paramSrc
-                                       , diBuilder.CreateExpression( ExpressionOp.deref )
+                                       , diBuilder.CreateExpression( ExpressionOp.Deref )
                                        , new DILocation( module.Context, 11, 43, copyFunc.DISubProgram )
                                        , blk
                                        );
@@ -350,11 +350,11 @@ namespace TestDebugInfo
         }
 
         private static void CreateDoCopyFunctionBody( BitcodeModule module
-                                                    , Function doCopyFunc
+                                                    , IrFunction doCopyFunc
                                                     , IStructType foo
                                                     , GlobalVariable bar
                                                     , GlobalVariable baz
-                                                    , Function copyFunc
+                                                    , IrFunction copyFunc
                                                     )
         {
             var bytePtrType = module.Context.Int8Type.CreatePointerType( );

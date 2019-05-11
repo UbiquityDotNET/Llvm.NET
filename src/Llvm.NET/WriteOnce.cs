@@ -4,6 +4,7 @@
 
 using System;
 using System.Diagnostics;
+using System.Globalization;
 using Llvm.NET.Properties;
 
 namespace Llvm.NET
@@ -21,7 +22,7 @@ namespace Llvm.NET
         /// <inheritdoc/>
         public override string ToString( )
         {
-            return HasValue ? Convert.ToString( ActualValue ) : string.Empty;
+            return HasValue ? Convert.ToString( ActualValue, CultureInfo.CurrentCulture ) : string.Empty;
         }
 
         /// <summary>Gets or sets the value for this instance</summary>

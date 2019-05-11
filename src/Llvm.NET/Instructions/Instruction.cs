@@ -323,7 +323,7 @@ namespace Llvm.NET.Instructions
         Call = LLVMOpcode.LLVMCall,
 
         /// <summary>select instruction</summary>
-        /// <seealso cref="Instructions.Select"/>
+        /// <seealso cref="Instructions.SelectInstruction"/>
         /// <seealso href="xref:llvm_langref#select-instruction">LLVM select instruction</seealso>
         /// <seealso href="xref:llvm_langref#other-operations">LLVM Other Operations</seealso>
         Select = LLVMOpcode.LLVMSelect,

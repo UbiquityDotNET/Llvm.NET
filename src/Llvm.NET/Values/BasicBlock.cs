@@ -23,7 +23,7 @@ namespace Llvm.NET.Values
         : Value
     {
         /// <summary>Gets the function containing the block</summary>
-        public Function ContainingFunction
+        public IrFunction ContainingFunction
         {
             get
             {
@@ -36,7 +36,7 @@ namespace Llvm.NET.Values
                 // cache functions and use lookups to ensure
                 // identity/interning remains consistent with actual
                 // LLVM model of interning
-                return FromHandle<Function>( parent );
+                return FromHandle<IrFunction>( parent );
             }
         }
 

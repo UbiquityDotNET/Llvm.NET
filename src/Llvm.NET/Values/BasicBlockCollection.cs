@@ -88,11 +88,11 @@ namespace Llvm.NET.Values
 
         public bool IsReadOnly => false;
 
-        internal BasicBlockCollection( Function function )
+        internal BasicBlockCollection( IrFunction function )
         {
             ContainingFunction = function;
         }
 
-        private readonly Function ContainingFunction;
+        private readonly IrFunction ContainingFunction;
     }
 }

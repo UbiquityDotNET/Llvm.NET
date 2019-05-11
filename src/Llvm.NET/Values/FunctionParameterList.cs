@@ -53,11 +53,11 @@ namespace Llvm.NET.Values
 
         IEnumerator IEnumerable.GetEnumerator( ) => GetEnumerator( );
 
-        internal FunctionParameterList( Function owningFunction )
+        internal FunctionParameterList( IrFunction owningFunction )
         {
             OwningFunction = owningFunction;
         }
 
-        private readonly Function OwningFunction;
+        private readonly IrFunction OwningFunction;
     }
 }

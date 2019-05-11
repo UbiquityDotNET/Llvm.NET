@@ -32,9 +32,17 @@ namespace Llvm.NET.Interop
             return ErrorCode.GetHashCode();
         }
 
-        public static bool operator ==( LLVMStatus left, LLVMStatus right ) => left.ErrorCode.Equals( right.ErrorCode );
+        /// <summary>Compares two status values for equality</summary>
+        /// <param name="lhs">Left side of comparison</param>
+        /// <param name="rhs">Right side of comparison</param>
+        /// <returns><see langword="true"/> if the handles are equal</returns>
+        public static bool operator ==( LLVMStatus lhs, LLVMStatus rhs ) => lhs.ErrorCode.Equals( rhs.ErrorCode );
 
-        public static bool operator !=( LLVMStatus left, LLVMStatus right ) => !( left == right );
+        /// <summary>Compares two status values for inequality</summary>
+        /// <param name="lhs">Left side of comparison</param>
+        /// <param name="rhs">Right side of comparison</param>
+        /// <returns><see langword="true"/> if the handles are not equal</returns>
+        public static bool operator !=( LLVMStatus lhs, LLVMStatus rhs ) => !( lhs == rhs );
 
         /// <inheritdoc/>
         public bool Equals( LLVMStatus other )

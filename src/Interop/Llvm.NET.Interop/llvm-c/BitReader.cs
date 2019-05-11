@@ -16,36 +16,34 @@ namespace Llvm.NET.Interop
 {
     public static partial class NativeMethods
     {
-        /**
-         * @defgroup LLVMCBitReader Bit Reader
-         * @ingroup LLVMC
-         *
-         * @{
-         */
+        /// <include file="BitReader.xml" path='LibLLVMAPI/Function[@name="LLVMParseBitcode"]/*' />
         [return: MarshalAs( UnmanagedType.Bool )]
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern bool LLVMParseBitcode( LLVMMemoryBufferRef MemBuf, out LLVMModuleRef OutModule, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( DisposeMessageMarshaler ) )]out string OutMessage );
 
+        /// <include file="BitReader.xml" path='LibLLVMAPI/Function[@name="LLVMParseBitcode2"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern LLVMStatus LLVMParseBitcode2( LLVMMemoryBufferRef MemBuf, out LLVMModuleRef OutModule );
 
+        /// <include file="BitReader.xml" path='LibLLVMAPI/Function[@name="LLVMParseBitcodeInContext2"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern LLVMStatus LLVMParseBitcodeInContext2( LLVMContextRef ContextRef, LLVMMemoryBufferRef MemBuf, out LLVMModuleRef OutModule );
 
-        /** Reads a module from the specified path, returning via the OutMP parameter a
-         * module provider which performs lazy deserialization. Returns 0 on success. */
+        /// <include file="BitReader.xml" path='LibLLVMAPI/Function[@name="LLVMGetBitcodeModuleInContext2"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern LLVMStatus LLVMGetBitcodeModuleInContext2( LLVMContextRef ContextRef, LLVMMemoryBufferRef MemBuf, out LLVMModuleRef OutM );
 
+        /// <include file="BitReader.xml" path='LibLLVMAPI/Function[@name="LLVMGetBitcodeModule"]/*' />
         [return: MarshalAs( UnmanagedType.Bool )]
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern bool LLVMGetBitcodeModule( LLVMMemoryBufferRef MemBuf, out LLVMModuleRef OutM, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( DisposeMessageMarshaler ) )]out string OutMessage );
 
+        /// <include file="BitReader.xml" path='LibLLVMAPI/Function[@name="LLVMGetBitcodeModule2"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern LLVMStatus LLVMGetBitcodeModule2( LLVMMemoryBufferRef MemBuf, out LLVMModuleRef OutM );
