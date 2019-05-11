@@ -16,12 +16,12 @@ namespace Llvm.NET.Interop
 {
     public static partial class NativeMethods
     {
-        /** See llvm::createLoopVectorizePass function. */
+        /// <include file="Vectorize.xml" path='LibLLVMAPI/Function[@name="LLVMAddLoopVectorizePass"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern void LLVMAddLoopVectorizePass( LLVMPassManagerRef PM );
 
-        /** See llvm::createSLPVectorizerPass function. */
+        /// <include file="Vectorize.xml" path='LibLLVMAPI/Function[@name="LLVMAddSLPVectorizePass"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern void LLVMAddSLPVectorizePass( LLVMPassManagerRef PM );

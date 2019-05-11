@@ -11,15 +11,15 @@ using CppSharp.Passes;
 namespace LlvmBindingsGenerator.Passes
 {
     // should always be the first pass so that other passes can rely on IsGenerated etc...
-    internal class IgnoreSystemHeaders
+    internal class IgnoreSystemHeadersPass
         : TranslationUnitPass
     {
-        public IgnoreSystemHeaders(ISet<string> ignoredHeaders)
+        public IgnoreSystemHeadersPass(ISet<string> ignoredHeaders)
         {
             IgnoredHeaders = ignoredHeaders;
         }
 
-        public IgnoreSystemHeaders( )
+        public IgnoreSystemHeadersPass( )
         {
             VisitOptions.VisitClassBases = false;
             VisitOptions.VisitClassFields = false;

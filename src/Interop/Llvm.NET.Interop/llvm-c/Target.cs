@@ -14,574 +14,605 @@ using System.Security;
 
 namespace Llvm.NET.Interop
 {
-    /**
-     * @defgroup LLVMCTarget Target information
-     * @ingroup LLVMC
-     *
-     * @{
-     */
+    /// <include file="Target.xml" path='LibLLVMAPI/Enumeration[@name="LLVMByteOrdering"]/*[not(self::Item)]' />
     [GeneratedCode("LlvmBindingsGenerator","2.17941.31104.49410")]
     public enum LLVMByteOrdering : global::System.Int32
     {
+        /// <include file="Target.xml" path='LibLLVMAPI/Enumeration[@name="LLVMByteOrdering"]/Item[@name="LLVMBigEndian"]/*' />
         LLVMBigEndian = 0,
+        /// <include file="Target.xml" path='LibLLVMAPI/Enumeration[@name="LLVMByteOrdering"]/Item[@name="LLVMLittleEndian"]/*' />
         LLVMLittleEndian = 1,
     }
 
     public static partial class NativeMethods
     {
+        /// <include file="Target.xml" path='LibLLVMAPI/Function[@name="LLVMInitializeAArch64TargetInfo"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern void LLVMInitializeAArch64TargetInfo(  );
 
+        /// <include file="Target.xml" path='LibLLVMAPI/Function[@name="LLVMInitializeAMDGPUTargetInfo"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern void LLVMInitializeAMDGPUTargetInfo(  );
 
+        /// <include file="Target.xml" path='LibLLVMAPI/Function[@name="LLVMInitializeARMTargetInfo"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern void LLVMInitializeARMTargetInfo(  );
 
+        /// <include file="Target.xml" path='LibLLVMAPI/Function[@name="LLVMInitializeBPFTargetInfo"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern void LLVMInitializeBPFTargetInfo(  );
 
+        /// <include file="Target.xml" path='LibLLVMAPI/Function[@name="LLVMInitializeHexagonTargetInfo"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern void LLVMInitializeHexagonTargetInfo(  );
 
+        /// <include file="Target.xml" path='LibLLVMAPI/Function[@name="LLVMInitializeLanaiTargetInfo"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern void LLVMInitializeLanaiTargetInfo(  );
 
+        /// <include file="Target.xml" path='LibLLVMAPI/Function[@name="LLVMInitializeMipsTargetInfo"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern void LLVMInitializeMipsTargetInfo(  );
 
+        /// <include file="Target.xml" path='LibLLVMAPI/Function[@name="LLVMInitializeMSP430TargetInfo"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern void LLVMInitializeMSP430TargetInfo(  );
 
+        /// <include file="Target.xml" path='LibLLVMAPI/Function[@name="LLVMInitializeNVPTXTargetInfo"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern void LLVMInitializeNVPTXTargetInfo(  );
 
+        /// <include file="Target.xml" path='LibLLVMAPI/Function[@name="LLVMInitializePowerPCTargetInfo"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern void LLVMInitializePowerPCTargetInfo(  );
 
+        /// <include file="Target.xml" path='LibLLVMAPI/Function[@name="LLVMInitializeSparcTargetInfo"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern void LLVMInitializeSparcTargetInfo(  );
 
+        /// <include file="Target.xml" path='LibLLVMAPI/Function[@name="LLVMInitializeSystemZTargetInfo"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern void LLVMInitializeSystemZTargetInfo(  );
 
+        /// <include file="Target.xml" path='LibLLVMAPI/Function[@name="LLVMInitializeWebAssemblyTargetInfo"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern void LLVMInitializeWebAssemblyTargetInfo(  );
 
+        /// <include file="Target.xml" path='LibLLVMAPI/Function[@name="LLVMInitializeX86TargetInfo"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern void LLVMInitializeX86TargetInfo(  );
 
+        /// <include file="Target.xml" path='LibLLVMAPI/Function[@name="LLVMInitializeXCoreTargetInfo"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern void LLVMInitializeXCoreTargetInfo(  );
 
+        /// <include file="Target.xml" path='LibLLVMAPI/Function[@name="LLVMInitializeAArch64Target"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern void LLVMInitializeAArch64Target(  );
 
+        /// <include file="Target.xml" path='LibLLVMAPI/Function[@name="LLVMInitializeAMDGPUTarget"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern void LLVMInitializeAMDGPUTarget(  );
 
+        /// <include file="Target.xml" path='LibLLVMAPI/Function[@name="LLVMInitializeARMTarget"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern void LLVMInitializeARMTarget(  );
 
+        /// <include file="Target.xml" path='LibLLVMAPI/Function[@name="LLVMInitializeBPFTarget"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern void LLVMInitializeBPFTarget(  );
 
+        /// <include file="Target.xml" path='LibLLVMAPI/Function[@name="LLVMInitializeHexagonTarget"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern void LLVMInitializeHexagonTarget(  );
 
+        /// <include file="Target.xml" path='LibLLVMAPI/Function[@name="LLVMInitializeLanaiTarget"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern void LLVMInitializeLanaiTarget(  );
 
+        /// <include file="Target.xml" path='LibLLVMAPI/Function[@name="LLVMInitializeMipsTarget"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern void LLVMInitializeMipsTarget(  );
 
+        /// <include file="Target.xml" path='LibLLVMAPI/Function[@name="LLVMInitializeMSP430Target"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern void LLVMInitializeMSP430Target(  );
 
+        /// <include file="Target.xml" path='LibLLVMAPI/Function[@name="LLVMInitializeNVPTXTarget"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern void LLVMInitializeNVPTXTarget(  );
 
+        /// <include file="Target.xml" path='LibLLVMAPI/Function[@name="LLVMInitializePowerPCTarget"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern void LLVMInitializePowerPCTarget(  );
 
+        /// <include file="Target.xml" path='LibLLVMAPI/Function[@name="LLVMInitializeSparcTarget"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern void LLVMInitializeSparcTarget(  );
 
+        /// <include file="Target.xml" path='LibLLVMAPI/Function[@name="LLVMInitializeSystemZTarget"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern void LLVMInitializeSystemZTarget(  );
 
+        /// <include file="Target.xml" path='LibLLVMAPI/Function[@name="LLVMInitializeWebAssemblyTarget"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern void LLVMInitializeWebAssemblyTarget(  );
 
+        /// <include file="Target.xml" path='LibLLVMAPI/Function[@name="LLVMInitializeX86Target"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern void LLVMInitializeX86Target(  );
 
+        /// <include file="Target.xml" path='LibLLVMAPI/Function[@name="LLVMInitializeXCoreTarget"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern void LLVMInitializeXCoreTarget(  );
 
+        /// <include file="Target.xml" path='LibLLVMAPI/Function[@name="LLVMInitializeAArch64TargetMC"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern void LLVMInitializeAArch64TargetMC(  );
 
+        /// <include file="Target.xml" path='LibLLVMAPI/Function[@name="LLVMInitializeAMDGPUTargetMC"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern void LLVMInitializeAMDGPUTargetMC(  );
 
+        /// <include file="Target.xml" path='LibLLVMAPI/Function[@name="LLVMInitializeARMTargetMC"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern void LLVMInitializeARMTargetMC(  );
 
+        /// <include file="Target.xml" path='LibLLVMAPI/Function[@name="LLVMInitializeBPFTargetMC"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern void LLVMInitializeBPFTargetMC(  );
 
+        /// <include file="Target.xml" path='LibLLVMAPI/Function[@name="LLVMInitializeHexagonTargetMC"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern void LLVMInitializeHexagonTargetMC(  );
 
+        /// <include file="Target.xml" path='LibLLVMAPI/Function[@name="LLVMInitializeLanaiTargetMC"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern void LLVMInitializeLanaiTargetMC(  );
 
+        /// <include file="Target.xml" path='LibLLVMAPI/Function[@name="LLVMInitializeMipsTargetMC"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern void LLVMInitializeMipsTargetMC(  );
 
+        /// <include file="Target.xml" path='LibLLVMAPI/Function[@name="LLVMInitializeMSP430TargetMC"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern void LLVMInitializeMSP430TargetMC(  );
 
+        /// <include file="Target.xml" path='LibLLVMAPI/Function[@name="LLVMInitializeNVPTXTargetMC"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern void LLVMInitializeNVPTXTargetMC(  );
 
+        /// <include file="Target.xml" path='LibLLVMAPI/Function[@name="LLVMInitializePowerPCTargetMC"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern void LLVMInitializePowerPCTargetMC(  );
 
+        /// <include file="Target.xml" path='LibLLVMAPI/Function[@name="LLVMInitializeSparcTargetMC"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern void LLVMInitializeSparcTargetMC(  );
 
+        /// <include file="Target.xml" path='LibLLVMAPI/Function[@name="LLVMInitializeSystemZTargetMC"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern void LLVMInitializeSystemZTargetMC(  );
 
+        /// <include file="Target.xml" path='LibLLVMAPI/Function[@name="LLVMInitializeWebAssemblyTargetMC"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern void LLVMInitializeWebAssemblyTargetMC(  );
 
+        /// <include file="Target.xml" path='LibLLVMAPI/Function[@name="LLVMInitializeX86TargetMC"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern void LLVMInitializeX86TargetMC(  );
 
+        /// <include file="Target.xml" path='LibLLVMAPI/Function[@name="LLVMInitializeXCoreTargetMC"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern void LLVMInitializeXCoreTargetMC(  );
 
+        /// <include file="Target.xml" path='LibLLVMAPI/Function[@name="LLVMInitializeAArch64AsmPrinter"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern void LLVMInitializeAArch64AsmPrinter(  );
 
+        /// <include file="Target.xml" path='LibLLVMAPI/Function[@name="LLVMInitializeAMDGPUAsmPrinter"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern void LLVMInitializeAMDGPUAsmPrinter(  );
 
+        /// <include file="Target.xml" path='LibLLVMAPI/Function[@name="LLVMInitializeARMAsmPrinter"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern void LLVMInitializeARMAsmPrinter(  );
 
+        /// <include file="Target.xml" path='LibLLVMAPI/Function[@name="LLVMInitializeBPFAsmPrinter"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern void LLVMInitializeBPFAsmPrinter(  );
 
+        /// <include file="Target.xml" path='LibLLVMAPI/Function[@name="LLVMInitializeHexagonAsmPrinter"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern void LLVMInitializeHexagonAsmPrinter(  );
 
+        /// <include file="Target.xml" path='LibLLVMAPI/Function[@name="LLVMInitializeLanaiAsmPrinter"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern void LLVMInitializeLanaiAsmPrinter(  );
 
+        /// <include file="Target.xml" path='LibLLVMAPI/Function[@name="LLVMInitializeMipsAsmPrinter"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern void LLVMInitializeMipsAsmPrinter(  );
 
+        /// <include file="Target.xml" path='LibLLVMAPI/Function[@name="LLVMInitializeMSP430AsmPrinter"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern void LLVMInitializeMSP430AsmPrinter(  );
 
+        /// <include file="Target.xml" path='LibLLVMAPI/Function[@name="LLVMInitializeNVPTXAsmPrinter"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern void LLVMInitializeNVPTXAsmPrinter(  );
 
+        /// <include file="Target.xml" path='LibLLVMAPI/Function[@name="LLVMInitializePowerPCAsmPrinter"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern void LLVMInitializePowerPCAsmPrinter(  );
 
+        /// <include file="Target.xml" path='LibLLVMAPI/Function[@name="LLVMInitializeSparcAsmPrinter"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern void LLVMInitializeSparcAsmPrinter(  );
 
+        /// <include file="Target.xml" path='LibLLVMAPI/Function[@name="LLVMInitializeSystemZAsmPrinter"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern void LLVMInitializeSystemZAsmPrinter(  );
 
+        /// <include file="Target.xml" path='LibLLVMAPI/Function[@name="LLVMInitializeWebAssemblyAsmPrinter"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern void LLVMInitializeWebAssemblyAsmPrinter(  );
 
+        /// <include file="Target.xml" path='LibLLVMAPI/Function[@name="LLVMInitializeX86AsmPrinter"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern void LLVMInitializeX86AsmPrinter(  );
 
+        /// <include file="Target.xml" path='LibLLVMAPI/Function[@name="LLVMInitializeXCoreAsmPrinter"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern void LLVMInitializeXCoreAsmPrinter(  );
 
+        /// <include file="Target.xml" path='LibLLVMAPI/Function[@name="LLVMInitializeAArch64AsmParser"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern void LLVMInitializeAArch64AsmParser(  );
 
+        /// <include file="Target.xml" path='LibLLVMAPI/Function[@name="LLVMInitializeAMDGPUAsmParser"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern void LLVMInitializeAMDGPUAsmParser(  );
 
+        /// <include file="Target.xml" path='LibLLVMAPI/Function[@name="LLVMInitializeARMAsmParser"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern void LLVMInitializeARMAsmParser(  );
 
+        /// <include file="Target.xml" path='LibLLVMAPI/Function[@name="LLVMInitializeBPFAsmParser"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern void LLVMInitializeBPFAsmParser(  );
 
+        /// <include file="Target.xml" path='LibLLVMAPI/Function[@name="LLVMInitializeHexagonAsmParser"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern void LLVMInitializeHexagonAsmParser(  );
 
+        /// <include file="Target.xml" path='LibLLVMAPI/Function[@name="LLVMInitializeLanaiAsmParser"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern void LLVMInitializeLanaiAsmParser(  );
 
+        /// <include file="Target.xml" path='LibLLVMAPI/Function[@name="LLVMInitializeMipsAsmParser"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern void LLVMInitializeMipsAsmParser(  );
 
+        /// <include file="Target.xml" path='LibLLVMAPI/Function[@name="LLVMInitializeMSP430AsmParser"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern void LLVMInitializeMSP430AsmParser(  );
 
+        /// <include file="Target.xml" path='LibLLVMAPI/Function[@name="LLVMInitializePowerPCAsmParser"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern void LLVMInitializePowerPCAsmParser(  );
 
+        /// <include file="Target.xml" path='LibLLVMAPI/Function[@name="LLVMInitializeSparcAsmParser"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern void LLVMInitializeSparcAsmParser(  );
 
+        /// <include file="Target.xml" path='LibLLVMAPI/Function[@name="LLVMInitializeSystemZAsmParser"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern void LLVMInitializeSystemZAsmParser(  );
 
+        /// <include file="Target.xml" path='LibLLVMAPI/Function[@name="LLVMInitializeWebAssemblyAsmParser"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern void LLVMInitializeWebAssemblyAsmParser(  );
 
+        /// <include file="Target.xml" path='LibLLVMAPI/Function[@name="LLVMInitializeX86AsmParser"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern void LLVMInitializeX86AsmParser(  );
 
+        /// <include file="Target.xml" path='LibLLVMAPI/Function[@name="LLVMInitializeAArch64Disassembler"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern void LLVMInitializeAArch64Disassembler(  );
 
+        /// <include file="Target.xml" path='LibLLVMAPI/Function[@name="LLVMInitializeAMDGPUDisassembler"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern void LLVMInitializeAMDGPUDisassembler(  );
 
+        /// <include file="Target.xml" path='LibLLVMAPI/Function[@name="LLVMInitializeARMDisassembler"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern void LLVMInitializeARMDisassembler(  );
 
+        /// <include file="Target.xml" path='LibLLVMAPI/Function[@name="LLVMInitializeBPFDisassembler"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern void LLVMInitializeBPFDisassembler(  );
 
+        /// <include file="Target.xml" path='LibLLVMAPI/Function[@name="LLVMInitializeHexagonDisassembler"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern void LLVMInitializeHexagonDisassembler(  );
 
+        /// <include file="Target.xml" path='LibLLVMAPI/Function[@name="LLVMInitializeLanaiDisassembler"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern void LLVMInitializeLanaiDisassembler(  );
 
+        /// <include file="Target.xml" path='LibLLVMAPI/Function[@name="LLVMInitializeMipsDisassembler"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern void LLVMInitializeMipsDisassembler(  );
 
+        /// <include file="Target.xml" path='LibLLVMAPI/Function[@name="LLVMInitializeMSP430Disassembler"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern void LLVMInitializeMSP430Disassembler(  );
 
+        /// <include file="Target.xml" path='LibLLVMAPI/Function[@name="LLVMInitializePowerPCDisassembler"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern void LLVMInitializePowerPCDisassembler(  );
 
+        /// <include file="Target.xml" path='LibLLVMAPI/Function[@name="LLVMInitializeSparcDisassembler"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern void LLVMInitializeSparcDisassembler(  );
 
+        /// <include file="Target.xml" path='LibLLVMAPI/Function[@name="LLVMInitializeSystemZDisassembler"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern void LLVMInitializeSystemZDisassembler(  );
 
+        /// <include file="Target.xml" path='LibLLVMAPI/Function[@name="LLVMInitializeWebAssemblyDisassembler"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern void LLVMInitializeWebAssemblyDisassembler(  );
 
+        /// <include file="Target.xml" path='LibLLVMAPI/Function[@name="LLVMInitializeX86Disassembler"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern void LLVMInitializeX86Disassembler(  );
 
+        /// <include file="Target.xml" path='LibLLVMAPI/Function[@name="LLVMInitializeXCoreDisassembler"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern void LLVMInitializeXCoreDisassembler(  );
 
-        /** LLVMInitializeAllTargetInfos - The main program should call this function if
-            it wants access to all available targets that LLVM is configured to
-            support. */
+        /// <include file="Target.xml" path='LibLLVMAPI/Function[@name="LLVMInitializeAllTargetInfos"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern void LLVMInitializeAllTargetInfos(  );
 
-        /** LLVMInitializeAllTargets - The main program should call this function if it
-            wants to link in all available targets that LLVM is configured to
-            support. */
+        /// <include file="Target.xml" path='LibLLVMAPI/Function[@name="LLVMInitializeAllTargets"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern void LLVMInitializeAllTargets(  );
 
-        /** LLVMInitializeAllTargetMCs - The main program should call this function if
-            it wants access to all available target MC that LLVM is configured to
-            support. */
+        /// <include file="Target.xml" path='LibLLVMAPI/Function[@name="LLVMInitializeAllTargetMCs"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern void LLVMInitializeAllTargetMCs(  );
 
-        /** LLVMInitializeAllAsmPrinters - The main program should call this function if
-            it wants all asm printers that LLVM is configured to support, to make them
-            available via the TargetRegistry. */
+        /// <include file="Target.xml" path='LibLLVMAPI/Function[@name="LLVMInitializeAllAsmPrinters"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern void LLVMInitializeAllAsmPrinters(  );
 
-        /** LLVMInitializeAllAsmParsers - The main program should call this function if
-            it wants all asm parsers that LLVM is configured to support, to make them
-            available via the TargetRegistry. */
+        /// <include file="Target.xml" path='LibLLVMAPI/Function[@name="LLVMInitializeAllAsmParsers"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern void LLVMInitializeAllAsmParsers(  );
 
-        /** LLVMInitializeAllDisassemblers - The main program should call this function
-            if it wants all disassemblers that LLVM is configured to support, to make
-            them available via the TargetRegistry. */
+        /// <include file="Target.xml" path='LibLLVMAPI/Function[@name="LLVMInitializeAllDisassemblers"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern void LLVMInitializeAllDisassemblers(  );
 
-        /** LLVMInitializeNativeTarget - The main program should call this function to
-            initialize the native target corresponding to the host.  This is useful
-            for JIT applications to ensure that the target gets linked in correctly. */
+        /// <include file="Target.xml" path='LibLLVMAPI/Function[@name="LLVMInitializeNativeTarget"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern LLVMStatus LLVMInitializeNativeTarget(  );
 
-        /** LLVMInitializeNativeTargetAsmParser - The main program should call this
-            function to initialize the parser for the native target corresponding to the
-            host. */
+        /// <include file="Target.xml" path='LibLLVMAPI/Function[@name="LLVMInitializeNativeAsmParser"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern LLVMStatus LLVMInitializeNativeAsmParser(  );
 
-        /** LLVMInitializeNativeTargetAsmPrinter - The main program should call this
-            function to initialize the printer for the native target corresponding to
-            the host. */
+        /// <include file="Target.xml" path='LibLLVMAPI/Function[@name="LLVMInitializeNativeAsmPrinter"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern LLVMStatus LLVMInitializeNativeAsmPrinter(  );
 
-        /** LLVMInitializeNativeTargetDisassembler - The main program should call this
-            function to initialize the disassembler for the native target corresponding
-            to the host. */
+        /// <include file="Target.xml" path='LibLLVMAPI/Function[@name="LLVMInitializeNativeDisassembler"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern LLVMStatus LLVMInitializeNativeDisassembler(  );
 
-        /**
-         * Obtain the data layout for a module.
-         *
-         * @see Module::getDataLayout()
-         */
+        /// <include file="Target.xml" path='LibLLVMAPI/Function[@name="LLVMGetModuleDataLayout"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern LLVMTargetDataRef LLVMGetModuleDataLayout( LLVMModuleRef M );
 
-        /**
-         * Set the data layout for a module.
-         *
-         * @see Module::setDataLayout()
-         */
+        /// <include file="Target.xml" path='LibLLVMAPI/Function[@name="LLVMSetModuleDataLayout"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern void LLVMSetModuleDataLayout( LLVMModuleRef M, LLVMTargetDataRef DL );
 
-        /** Creates target data from a target layout string.
-            See the constructor llvm::DataLayout::DataLayout. */
+        /// <include file="Target.xml" path='LibLLVMAPI/Function[@name="LLVMCreateTargetData"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern LLVMTargetDataRef LLVMCreateTargetData( [MarshalAs( UnmanagedType.LPStr )]string StringRep );
 
-        /** Adds target library information to a pass manager. This does not take
-            ownership of the target library info.
-            See the method llvm::PassManagerBase::add. */
+        /// <include file="Target.xml" path='LibLLVMAPI/Function[@name="LLVMAddTargetLibraryInfo"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern void LLVMAddTargetLibraryInfo( LLVMTargetLibraryInfoRef TLI, LLVMPassManagerRef PM );
 
-        /** Converts target data to a target layout string. The string must be disposed
-            with LLVMDisposeMessage.
-            See the constructor llvm::DataLayout::DataLayout. */
+        /// <include file="Target.xml" path='LibLLVMAPI/Function[@name="LLVMCopyStringRepOfTargetData"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         [return: MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( DisposeMessageMarshaler ) )]
         public static extern string LLVMCopyStringRepOfTargetData( LLVMTargetDataRef TD );
 
-        /** Returns the byte order of a target, either LLVMBigEndian or
-            LLVMLittleEndian.
-            See the method llvm::DataLayout::isLittleEndian. */
+        /// <include file="Target.xml" path='LibLLVMAPI/Function[@name="LLVMByteOrder"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern global::Llvm.NET.Interop.LLVMByteOrdering LLVMByteOrder( LLVMTargetDataRef TD );
 
-        /** Returns the pointer size in bytes for a target.
-            See the method llvm::DataLayout::getPointerSize. */
+        /// <include file="Target.xml" path='LibLLVMAPI/Function[@name="LLVMPointerSize"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern uint LLVMPointerSize( LLVMTargetDataRef TD );
 
-        /** Returns the pointer size in bytes for a target for a specified
-            address space.
-            See the method llvm::DataLayout::getPointerSize. */
+        /// <include file="Target.xml" path='LibLLVMAPI/Function[@name="LLVMPointerSizeForAS"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern uint LLVMPointerSizeForAS( LLVMTargetDataRef TD, uint AS );
 
-        /** Returns the integer type that is the same size as a pointer on a target.
-            See the method llvm::DataLayout::getIntPtrType. */
+        /// <include file="Target.xml" path='LibLLVMAPI/Function[@name="LLVMIntPtrType"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern LLVMTypeRef LLVMIntPtrType( LLVMTargetDataRef TD );
 
-        /** Returns the integer type that is the same size as a pointer on a target.
-            This version allows the address space to be specified.
-            See the method llvm::DataLayout::getIntPtrType. */
+        /// <include file="Target.xml" path='LibLLVMAPI/Function[@name="LLVMIntPtrTypeForAS"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern LLVMTypeRef LLVMIntPtrTypeForAS( LLVMTargetDataRef TD, uint AS );
 
-        /** Returns the integer type that is the same size as a pointer on a target.
-            See the method llvm::DataLayout::getIntPtrType. */
+        /// <include file="Target.xml" path='LibLLVMAPI/Function[@name="LLVMIntPtrTypeInContext"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern LLVMTypeRef LLVMIntPtrTypeInContext( LLVMContextRef C, LLVMTargetDataRef TD );
 
-        /** Returns the integer type that is the same size as a pointer on a target.
-            This version allows the address space to be specified.
-            See the method llvm::DataLayout::getIntPtrType. */
+        /// <include file="Target.xml" path='LibLLVMAPI/Function[@name="LLVMIntPtrTypeForASInContext"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern LLVMTypeRef LLVMIntPtrTypeForASInContext( LLVMContextRef C, LLVMTargetDataRef TD, uint AS );
 
-        /** Computes the size of a type in bytes for a target.
-            See the method llvm::DataLayout::getTypeSizeInBits. */
+        /// <include file="Target.xml" path='LibLLVMAPI/Function[@name="LLVMSizeOfTypeInBits"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern ulong LLVMSizeOfTypeInBits( LLVMTargetDataRef TD, LLVMTypeRef Ty );
 
-        /** Computes the storage size of a type in bytes for a target.
-            See the method llvm::DataLayout::getTypeStoreSize. */
+        /// <include file="Target.xml" path='LibLLVMAPI/Function[@name="LLVMStoreSizeOfType"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern ulong LLVMStoreSizeOfType( LLVMTargetDataRef TD, LLVMTypeRef Ty );
 
-        /** Computes the ABI size of a type in bytes for a target.
-            See the method llvm::DataLayout::getTypeAllocSize. */
+        /// <include file="Target.xml" path='LibLLVMAPI/Function[@name="LLVMABISizeOfType"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern ulong LLVMABISizeOfType( LLVMTargetDataRef TD, LLVMTypeRef Ty );
 
-        /** Computes the ABI alignment of a type in bytes for a target.
-            See the method llvm::DataLayout::getTypeABISize. */
+        /// <include file="Target.xml" path='LibLLVMAPI/Function[@name="LLVMABIAlignmentOfType"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern uint LLVMABIAlignmentOfType( LLVMTargetDataRef TD, LLVMTypeRef Ty );
 
-        /** Computes the call frame alignment of a type in bytes for a target.
-            See the method llvm::DataLayout::getTypeABISize. */
+        /// <include file="Target.xml" path='LibLLVMAPI/Function[@name="LLVMCallFrameAlignmentOfType"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern uint LLVMCallFrameAlignmentOfType( LLVMTargetDataRef TD, LLVMTypeRef Ty );
 
-        /** Computes the preferred alignment of a type in bytes for a target.
-            See the method llvm::DataLayout::getTypeABISize. */
+        /// <include file="Target.xml" path='LibLLVMAPI/Function[@name="LLVMPreferredAlignmentOfType"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern uint LLVMPreferredAlignmentOfType( LLVMTargetDataRef TD, LLVMTypeRef Ty );
 
-        /** Computes the preferred alignment of a global variable in bytes for a target.
-            See the method llvm::DataLayout::getPreferredAlignment. */
+        /// <include file="Target.xml" path='LibLLVMAPI/Function[@name="LLVMPreferredAlignmentOfGlobal"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern uint LLVMPreferredAlignmentOfGlobal( LLVMTargetDataRef TD, LLVMValueRef GlobalVar );
 
-        /** Computes the structure element that contains the byte offset for a target.
-            See the method llvm::StructLayout::getElementContainingOffset. */
+        /// <include file="Target.xml" path='LibLLVMAPI/Function[@name="LLVMElementAtOffset"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern uint LLVMElementAtOffset( LLVMTargetDataRef TD, LLVMTypeRef StructTy, ulong Offset );
 
-        /** Computes the byte offset of the indexed struct element for a target.
-            See the method llvm::StructLayout::getElementContainingOffset. */
+        /// <include file="Target.xml" path='LibLLVMAPI/Function[@name="LLVMOffsetOfElement"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern ulong LLVMOffsetOfElement( LLVMTargetDataRef TD, LLVMTypeRef StructTy, uint Element );

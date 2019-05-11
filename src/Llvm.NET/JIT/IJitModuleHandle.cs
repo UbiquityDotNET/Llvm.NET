@@ -20,23 +20,28 @@ namespace Llvm.NET.JIT
     /// <summary>Generic value type as a typedef for JIT module handles</summary>
     /// <typeparam name="T">Actual JIT engine handle type</typeparam>
     internal struct JitModuleHandle<T>
-        : IJitModuleHandle
+        : IJitModuleHandle, IEquatable<JitModuleHandle<T>>
     {
         public static implicit operator T( JitModuleHandle<T> typeDef ) => typeDef.Value;
 
         public static implicit operator JitModuleHandle<T>( T value ) => new JitModuleHandle<T>( value );
 
-        public override bool Equals( object obj ) => obj is JitModuleHandle<T> && Value.Equals( obj );
+        public override bool Equals( object obj ) => obj is JitModuleHandle<T> mh && Value.Equals( mh.Value );
 
         public override int GetHashCode( ) => Value.GetHashCode( );
 
         public override string ToString( ) => Value.ToString( );
 
-        public bool Equals( IJitModuleHandle other ) => other is JitModuleHandle<T> && Value.Equals( other );
+        public bool Equals( IJitModuleHandle other ) => other is JitModuleHandle<T> mh && Value.Equals( mh.Value );
 
         public static bool operator ==( JitModuleHandle<T> lhs, IJitModuleHandle rhs ) => lhs.Equals( rhs );
 
         public static bool operator !=( JitModuleHandle<T> lhs, IJitModuleHandle rhs ) => !lhs.Equals( rhs );
+
+        public bool Equals( JitModuleHandle<T> other )
+        {
+            return Value.Equals( other.Value );
+        }
 
         private JitModuleHandle( T value )
         {

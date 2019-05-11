@@ -89,8 +89,8 @@ namespace LlvmBindingsGenerator.Templates
                where cls.IsValueType
                select cls;
 
-        private static string GetTypeName( CppSharp.AST.Type type ) => ParsedFunctionSignature.GetTypeName( type );
+        public TranslationUnit Unit { get; }
 
-        private readonly TranslationUnit Unit;
+        private static string GetTypeName( CppSharp.AST.Type type ) => ParsedFunctionSignature.GetTypeName( type );
     }
 }

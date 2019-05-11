@@ -43,9 +43,17 @@ namespace Llvm.NET.Interop
         /// <inheritdoc/>
         public bool Equals( LlvmObjectRef other ) => ( !( other is null ) ) && ( handle == other.handle );
 
+        /// <summary>Compares two object handles</summary>
+        /// <param name="lhs">Left side of comparison</param>
+        /// <param name="rhs">Right side of comparison</param>
+        /// <returns><see langword="true"/> if the handles are equal</returns>
         public static bool operator ==( LlvmObjectRef lhs, LlvmObjectRef rhs )
             => EqualityComparer<LlvmObjectRef>.Default.Equals( lhs, rhs );
 
+        /// <summary>Compares two object handles for inequality</summary>
+        /// <param name="lhs">Left side of comparison</param>
+        /// <param name="rhs">Right side of comparison</param>
+        /// <returns><see langword="true"/> if the handles are not equal</returns>
         public static bool operator !=( LlvmObjectRef lhs, LlvmObjectRef rhs ) => !( lhs == rhs );
 
         /// <summary>Initializes a new instance of the <see cref="LlvmObjectRef"/> class with the specified value</summary>

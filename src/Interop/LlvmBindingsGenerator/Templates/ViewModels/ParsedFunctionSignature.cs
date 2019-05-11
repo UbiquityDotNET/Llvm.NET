@@ -7,6 +7,7 @@
 using System;
 using System.CodeDom.Compiler;
 using System.Collections.Generic;
+using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text;
 using CppSharp.AST;
@@ -57,9 +58,13 @@ namespace LlvmBindingsGenerator.Templates
 
         public IEnumerable<CppSharp.AST.Attribute> Attributes { get; }
 
+        public bool HasNonVoidReturn => ReturnType != "void";
+
         public string ReturnType => GetTypeName( Signature.ReturnType.Type );
 
         public IEnumerable<string> Parameters => GetParameters( Signature.Parameters );
+
+        public IEnumerable<string> ParameterNames => Signature.Parameters.Select( p => p.Name );
 
         public override string ToString( )
         {

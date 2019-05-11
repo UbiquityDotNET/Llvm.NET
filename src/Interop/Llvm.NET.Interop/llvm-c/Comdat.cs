@@ -14,59 +14,45 @@ using System.Security;
 
 namespace Llvm.NET.Interop
 {
+    /// <include file="Comdat.xml" path='LibLLVMAPI/Enumeration[@name="LLVMComdatSelectionKind"]/*[not(self::Item)]' />
     [GeneratedCode("LlvmBindingsGenerator","2.17941.31104.49410")]
     public enum LLVMComdatSelectionKind : global::System.Int32
     {
-        ///< The linker may choose any COMDAT.
+        /// <include file="Comdat.xml" path='LibLLVMAPI/Enumeration[@name="LLVMComdatSelectionKind"]/Item[@name="LLVMAnyComdatSelectionKind"]/*' />
         LLVMAnyComdatSelectionKind = 0,
-        ///< The data referenced by the COMDAT must
-                                             ///< be the same.
+        /// <include file="Comdat.xml" path='LibLLVMAPI/Enumeration[@name="LLVMComdatSelectionKind"]/Item[@name="LLVMExactMatchComdatSelectionKind"]/*' />
         LLVMExactMatchComdatSelectionKind = 1,
-        ///< The linker will choose the largest
-                                             ///< COMDAT.
+        /// <include file="Comdat.xml" path='LibLLVMAPI/Enumeration[@name="LLVMComdatSelectionKind"]/Item[@name="LLVMLargestComdatSelectionKind"]/*' />
         LLVMLargestComdatSelectionKind = 2,
-        ///< No other Module may specify this
-                                               ///< COMDAT.
+        /// <include file="Comdat.xml" path='LibLLVMAPI/Enumeration[@name="LLVMComdatSelectionKind"]/Item[@name="LLVMNoDuplicatesComdatSelectionKind"]/*' />
         LLVMNoDuplicatesComdatSelectionKind = 3,
-        ///< The data referenced by the COMDAT must be
-                                          ///< the same size.
+        /// <include file="Comdat.xml" path='LibLLVMAPI/Enumeration[@name="LLVMComdatSelectionKind"]/Item[@name="LLVMSameSizeComdatSelectionKind"]/*' />
         LLVMSameSizeComdatSelectionKind = 4,
     }
 
     public static partial class NativeMethods
     {
-        /**
-         * Return the Comdat in the module with the specified name. It is created
-         * if it didn't already exist.
-         *
-         * @see llvm::Module::getOrInsertComdat()
-         */
+        /// <include file="Comdat.xml" path='LibLLVMAPI/Function[@name="LLVMGetOrInsertComdat"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern LLVMComdatRef LLVMGetOrInsertComdat( LLVMModuleRef M, [MarshalAs( UnmanagedType.LPStr )]string Name );
 
-        /**
-         * Get the Comdat assigned to the given global object.
-         *
-         * @see llvm::GlobalObject::getComdat()
-         */
+        /// <include file="Comdat.xml" path='LibLLVMAPI/Function[@name="LLVMGetComdat"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern LLVMComdatRef LLVMGetComdat( LLVMValueRef V );
 
-        /**
-         * Assign the Comdat to the given global object.
-         *
-         * @see llvm::GlobalObject::setComdat()
-         */
+        /// <include file="Comdat.xml" path='LibLLVMAPI/Function[@name="LLVMSetComdat"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern void LLVMSetComdat( LLVMValueRef V, LLVMComdatRef C );
 
+        /// <include file="Comdat.xml" path='LibLLVMAPI/Function[@name="LLVMGetComdatSelectionKind"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern LLVMComdatSelectionKind LLVMGetComdatSelectionKind( LLVMComdatRef C );
 
+        /// <include file="Comdat.xml" path='LibLLVMAPI/Function[@name="LLVMSetComdatSelectionKind"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern void LLVMSetComdatSelectionKind( LLVMComdatRef C, LLVMComdatSelectionKind Kind );

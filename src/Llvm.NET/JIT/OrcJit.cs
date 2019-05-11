@@ -5,6 +5,7 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
+using System.Globalization;
 using System.Runtime.InteropServices;
 using Llvm.NET.Interop;
 using Llvm.NET.Properties;
@@ -34,13 +35,15 @@ namespace Llvm.NET.JIT
         public TargetMachine TargetMachine { get; }
 
         /// <summary>Add a module to the engine</summary>
-        /// <param name="module">The module to add to the engine</param>
+        /// <param name="bitcodeModule">The module to add to the engine</param>
         /// <returns>Handle for the module in the engine</returns>
         /// <remarks>
+        /// Once the module is provided to the engine it is fully owned by the engine and should
+        /// be considered res-only to the calling app.
         /// </remarks>
-        public IJitModuleHandle AddModule( BitcodeModule module )
+        public IJitModuleHandle AddModule( BitcodeModule bitcodeModule )
         {
-            return ( JitModuleHandle<UInt64> )AddModule( module, DefaultSymbolResolver );
+            return ( JitModuleHandle<UInt64> )AddModule( bitcodeModule, DefaultSymbolResolver );
         }
 
         /// <summary>Add a module to the engine</summary>
@@ -75,6 +78,7 @@ namespace Llvm.NET.JIT
             {
                 throw new LlvmException( err.ToString( ) );
             }
+
             module.Detach( );
 
             // keep resolver delegate alive as native code needs to call it after this function exits
@@ -108,7 +112,7 @@ namespace Llvm.NET.JIT
                 var err = LLVMOrcGetSymbolAddress( JitStackHandle, out UInt64 retAddr, name );
                 if( !err.IsInvalid )
                 {
-                    throw new InvalidOperationException( string.Format( Resources.Unresolved_Symbol_0_1, name, LLVMOrcGetErrorMsg( JitStackHandle ) ) );
+                    throw new InvalidOperationException( string.Format( CultureInfo.CurrentCulture, Resources.Unresolved_Symbol_0_1, name, LLVMOrcGetErrorMsg( JitStackHandle ) ) );
                 }
 
                 if( retAddr != 0 )
@@ -144,13 +148,14 @@ namespace Llvm.NET.JIT
 
             if( retAddr == 0 )
             {
-                throw new KeyNotFoundException( string.Format( Resources.Function_0_not_found, name ) );
+                throw new KeyNotFoundException( string.Format( CultureInfo.CurrentCulture, Resources.Function_0_not_found, name ) );
             }
 
             return Marshal.GetDelegateForFunctionPointer<T>( ( IntPtr )retAddr );
         }
 
         /// <summary>Adds or replaces an interop callback for a global symbol</summary>
+        /// <typeparam name="T">Delegate type for the callback</typeparam>
         /// <param name="symbolName">Symbol name of the global</param>
         /// <param name="delegate">Delegate for the callback</param>
         /// <remarks>

@@ -69,10 +69,6 @@ namespace Llvm.NET
             }
         }
 
-        /// <summary>Implicit cast operator for getting a <see cref="ReadOnlySpan{T}"/> from the buffer</summary>
-        /// <param name="buffer">Buffer to get the span for</param>
-        public static implicit operator ReadOnlySpan<byte>( MemoryBuffer buffer ) => buffer.Slice( );
-
         internal MemoryBuffer( LLVMMemoryBufferRef bufferHandle )
         {
             bufferHandle.ValidateNotDefault( nameof( bufferHandle ) );

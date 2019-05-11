@@ -14,139 +14,88 @@ using System.Security;
 
 namespace Llvm.NET.Interop
 {
+    /// <include file="OrcBindings.xml" path='LibLLVMAPI/Delegate[@name="LLVMOrcSymbolResolverFn"]/*' />
     [UnmanagedFunctionPointer( global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
     public delegate System.UInt64 LLVMOrcSymbolResolverFn( [MarshalAs( UnmanagedType.LPStr )]string Name, global::System.IntPtr LookupCtx );
 
+    /// <include file="OrcBindings.xml" path='LibLLVMAPI/Delegate[@name="LLVMOrcLazyCompileCallbackFn"]/*' />
     [UnmanagedFunctionPointer( global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
     public delegate System.UInt64 LLVMOrcLazyCompileCallbackFn( LLVMOrcJITStackRef JITStack, global::System.IntPtr CallbackCtx );
 
     public static partial class NativeMethods
     {
-        /**
-         * Create an ORC JIT stack.
-         *
-         * The client owns the resulting stack, and must call OrcDisposeInstance(...)
-         * to destroy it and free its memory. The JIT stack will take ownership of the
-         * TargetMachine, which will be destroyed when the stack is destroyed. The
-         * client should not attempt to dispose of the Target Machine, or it will result
-         * in a double-free.
-         */
+        /// <include file="OrcBindings.xml" path='LibLLVMAPI/Function[@name="LLVMOrcCreateInstance"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern LLVMOrcJITStackRef LLVMOrcCreateInstance( LLVMTargetMachineRef TM );
 
-        /**
-         * Get the error message for the most recent error (if any).
-         *
-         * This message is owned by the ORC JIT Stack and will be freed when the stack
-         * is disposed of by LLVMOrcDisposeInstance.
-         */
+        /// <include file="OrcBindings.xml" path='LibLLVMAPI/Function[@name="LLVMOrcGetErrorMsg"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         [return: MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( AliasStringMarshaler ) )]
         public static extern string LLVMOrcGetErrorMsg( LLVMOrcJITStackRef JITStack );
 
-        /**
-         * Mangle the given symbol.
-         * Memory will be allocated for MangledSymbol to hold the result. The client
-         */
+        /// <include file="OrcBindings.xml" path='LibLLVMAPI/Function[@name="LLVMOrcGetMangledSymbol"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern void LLVMOrcGetMangledSymbol( LLVMOrcJITStackRef JITStack, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( OrcDisposeMangledSymbolMarshaler ) )]out string MangledSymbol, [MarshalAs( UnmanagedType.LPStr )]string Symbol );
 
-        /**
-         * Dispose of a mangled symbol.
-         */
+        /// <include file="OrcBindings.xml" path='LibLLVMAPI/Function[@name="LLVMOrcDisposeMangledSymbol"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern void LLVMOrcDisposeMangledSymbol( out sbyte MangledSymbol );
 
-        /**
-         * Create a lazy compile callback.
-         */
+        /// <include file="OrcBindings.xml" path='LibLLVMAPI/Function[@name="LLVMOrcCreateLazyCompileCallback"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern LLVMErrorRef LLVMOrcCreateLazyCompileCallback( LLVMOrcJITStackRef JITStack, out System.UInt64 RetAddr, LLVMOrcLazyCompileCallbackFn Callback, global::System.IntPtr CallbackCtx );
 
-        /**
-         * Create a named indirect call stub.
-         */
+        /// <include file="OrcBindings.xml" path='LibLLVMAPI/Function[@name="LLVMOrcCreateIndirectStub"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern LLVMErrorRef LLVMOrcCreateIndirectStub( LLVMOrcJITStackRef JITStack, [MarshalAs( UnmanagedType.LPStr )]string StubName, System.UInt64 InitAddr );
 
-        /**
-         * Set the pointer for the given indirect stub.
-         */
+        /// <include file="OrcBindings.xml" path='LibLLVMAPI/Function[@name="LLVMOrcSetIndirectStubPointer"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern LLVMErrorRef LLVMOrcSetIndirectStubPointer( LLVMOrcJITStackRef JITStack, [MarshalAs( UnmanagedType.LPStr )]string StubName, System.UInt64 NewAddr );
 
-        /**
-         * Add module to be eagerly compiled.
-         */
+        /// <include file="OrcBindings.xml" path='LibLLVMAPI/Function[@name="LLVMOrcAddEagerlyCompiledIR"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern LLVMErrorRef LLVMOrcAddEagerlyCompiledIR( LLVMOrcJITStackRef JITStack, out System.UInt64 RetHandle, LLVMModuleRef Mod, LLVMOrcSymbolResolverFn SymbolResolver, global::System.IntPtr SymbolResolverCtx );
 
-        /**
-         * Add module to be lazily compiled one function at a time.
-         */
+        /// <include file="OrcBindings.xml" path='LibLLVMAPI/Function[@name="LLVMOrcAddLazilyCompiledIR"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern LLVMErrorRef LLVMOrcAddLazilyCompiledIR( LLVMOrcJITStackRef JITStack, out System.UInt64 RetHandle, LLVMModuleRef Mod, LLVMOrcSymbolResolverFn SymbolResolver, global::System.IntPtr SymbolResolverCtx );
 
-        /**
-         * Add an object file.
-         *
-         * This method takes ownership of the given memory buffer and attempts to add
-         * it to the JIT as an object file.
-         * Clients should *not* dispose of the 'Obj' argument: the JIT will manage it
-         * from this call onwards.
-         */
+        /// <include file="OrcBindings.xml" path='LibLLVMAPI/Function[@name="LLVMOrcAddObjectFile"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern LLVMErrorRef LLVMOrcAddObjectFile( LLVMOrcJITStackRef JITStack, out System.UInt64 RetHandle, LLVMMemoryBufferRef Obj, LLVMOrcSymbolResolverFn SymbolResolver, global::System.IntPtr SymbolResolverCtx );
 
-        /**
-         * Remove a module set from the JIT.
-         *
-         * This works for all modules that can be added via OrcAdd*, including object
-         * files.
-         */
+        /// <include file="OrcBindings.xml" path='LibLLVMAPI/Function[@name="LLVMOrcRemoveModule"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern LLVMErrorRef LLVMOrcRemoveModule( LLVMOrcJITStackRef JITStack, System.UInt64 H );
 
-        /**
-         * Get symbol address from JIT instance.
-         */
+        /// <include file="OrcBindings.xml" path='LibLLVMAPI/Function[@name="LLVMOrcGetSymbolAddress"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern LLVMErrorRef LLVMOrcGetSymbolAddress( LLVMOrcJITStackRef JITStack, out System.UInt64 RetAddr, [MarshalAs( UnmanagedType.LPStr )]string SymbolName );
 
-        /**
-         * Get symbol address from JIT instance, searching only the specified
-         * handle.
-         */
+        /// <include file="OrcBindings.xml" path='LibLLVMAPI/Function[@name="LLVMOrcGetSymbolAddressIn"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern LLVMErrorRef LLVMOrcGetSymbolAddressIn( LLVMOrcJITStackRef JITStack, out System.UInt64 RetAddr, System.UInt64 H, [MarshalAs( UnmanagedType.LPStr )]string SymbolName );
 
-        /**
-         * Register a JIT Event Listener.
-         *
-         * A NULL listener is ignored.
-         */
+        /// <include file="OrcBindings.xml" path='LibLLVMAPI/Function[@name="LLVMOrcRegisterJITEventListener"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern void LLVMOrcRegisterJITEventListener( LLVMOrcJITStackRef JITStack, LLVMJITEventListenerRef L );
 
-        /**
-         * Unegister a JIT Event Listener.
-         *
-         * A NULL listener is ignored.
-         */
+        /// <include file="OrcBindings.xml" path='LibLLVMAPI/Function[@name="LLVMOrcUnregisterJITEventListener"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern void LLVMOrcUnregisterJITEventListener( LLVMOrcJITStackRef JITStack, LLVMJITEventListenerRef L );

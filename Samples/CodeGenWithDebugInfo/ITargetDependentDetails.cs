@@ -17,7 +17,7 @@ namespace TestDebugInfo
 
         IEnumerable<AttributeValue> BuildTargetDependentFunctionAttributes( Context ctx );
 
-        void AddABIAttributesForByValueStructure( Function function, int paramIndex );
+        void AddABIAttributesForByValueStructure( IrFunction function, int paramIndex );
 
         void AddModuleFlags( BitcodeModule module );
     }

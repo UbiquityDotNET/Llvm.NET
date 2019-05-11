@@ -4,10 +4,12 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
+/* TODO: Implement support for ObjectFile
 namespace Llvm.NET
 {
     internal class ObjectFile
     {
-        /* TODO: Implement support for ObjectFile */
+
     }
 }
+*/

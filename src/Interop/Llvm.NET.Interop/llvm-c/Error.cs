@@ -16,27 +16,17 @@ namespace Llvm.NET.Interop
 {
     public static partial class NativeMethods
     {
-        /**
-         * Returns the type id for the given error instance, which must be a failure
-         * value (i.e. non-null).
-         */
+        /// <include file="Error.xml" path='LibLLVMAPI/Function[@name="LLVMGetErrorTypeId"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern LLVMErrorTypeId LLVMGetErrorTypeId( LLVMErrorRef Err );
 
-        /**
-         * Returns the given string's error message. This operation consumes the error,
-         * and the given LLVMErrorRef value is not usable once this call returns.
-         * The caller is responsible for disposing of the string by calling
-         * LLVMDisposeErrorMessage.
-         */
+        /// <include file="Error.xml" path='LibLLVMAPI/Function[@name="LLVMGetErrorMessage"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         unsafe public static extern sbyte* LLVMGetErrorMessage( LLVMErrorRef Err );
 
-        /**
-         * Returns the type id for llvm StringError.
-         */
+        /// <include file="Error.xml" path='LibLLVMAPI/Function[@name="LLVMGetStringErrorTypeId"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern LLVMErrorTypeId LLVMGetStringErrorTypeId(  );

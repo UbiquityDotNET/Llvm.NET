@@ -358,7 +358,7 @@ namespace LlvmBindingsGenerator
                 AliasReturningFunctions = new SortedSet<string>( )
                 {
                     "LLVMGetTypeContext",
-                    "LLVMGetNodeContext",
+                    "LibLLVMGetNodeContext",
                     "LLVMGetModuleContext",
                     "LLVMGetGlobalContext",
                 }

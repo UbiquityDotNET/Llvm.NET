@@ -16,7 +16,7 @@ namespace Llvm.NET.Interop
 {
     public static partial class NativeMethods
     {
-        /** See llvm::createAggressiveInstCombinerPass function. */
+        /// <include file="AggressiveInstCombine.xml" path='LibLLVMAPI/Function[@name="LLVMAddAggressiveInstCombinerPass"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern void LLVMAddAggressiveInstCombinerPass( LLVMPassManagerRef PM );

@@ -42,7 +42,7 @@ namespace Llvm.NET
             }
 
             // Context constructor will add itself to this cache
-            // ad remove itself on Dispose/finalize
+            // and remove itself on Dispose/finalize
             return new Context( contextRef );
         }
 

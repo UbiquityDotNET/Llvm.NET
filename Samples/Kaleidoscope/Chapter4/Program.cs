@@ -89,7 +89,7 @@ namespace Kaleidoscope.Chapter4
                 Console.WriteLine( "Evaluated to {0}", result.Value );
                 break;
 
-            case Function function:
+            case IrFunction function:
 #if GENERATE_LLVM_IR
                 function.ParentModule.WriteToTextFile( System.IO.Path.ChangeExtension( GetSafeFileName( function.Name ), "ll" ), out string ignoredMsg );
 #endif

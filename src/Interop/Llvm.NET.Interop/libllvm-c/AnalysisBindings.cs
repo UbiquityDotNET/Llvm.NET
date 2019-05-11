@@ -16,6 +16,7 @@ namespace Llvm.NET.Interop
 {
     public static partial class NativeMethods
     {
+        /// <include file="AnalysisBindings.xml" path='LibLLVMAPI/Function[@name="LibLLVMVerifyFunctionEx"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern LLVMStatus LibLLVMVerifyFunctionEx( LLVMValueRef Fn, LLVMVerifierFailureAction Action, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( DisposeMessageMarshaler ) )]out string OutMessages );

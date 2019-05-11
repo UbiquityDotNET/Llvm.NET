@@ -144,7 +144,7 @@ namespace Kaleidoscope.Chapter8
         public override Value Visit( FunctionCallExpression functionCall )
         {
             string targetName = functionCall.FunctionPrototype.Name;
-            Function function;
+            IrFunction function;
 
             // try for an extern function declaration
             if( RuntimeState.FunctionDeclarations.TryGetValue( targetName, out Prototype target ) )
@@ -442,7 +442,7 @@ namespace Kaleidoscope.Chapter8
 
         // Retrieves a Function for a prototype from the current module if it exists,
         // otherwise declares the function and returns the newly declared function.
-        private Function GetOrDeclareFunction( Prototype prototype )
+        private IrFunction GetOrDeclareFunction( Prototype prototype )
         {
             var function = Module.GetFunction( prototype.Name );
             if( function != null )
@@ -472,7 +472,7 @@ namespace Kaleidoscope.Chapter8
         private FunctionPassManager FunctionPassManager;
         private readonly bool DisableOptimizations;
         private readonly TargetMachine TargetMachine;
-        private readonly List<Function> AnonymousFunctions = new List<Function>( );
+        private readonly List<IrFunction> AnonymousFunctions = new List<IrFunction>( );
         #endregion
     }
 }

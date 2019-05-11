@@ -4,6 +4,8 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
+using System.Globalization;
 using System.Linq;
 using Llvm.NET.Instructions;
 using Llvm.NET.Interop;
@@ -356,10 +358,10 @@ namespace Llvm.NET.Values
                         return false;
                     }
 
-                    Function function;
+                    IrFunction function;
                     switch( value )
                     {
-                    case Function f:
+                    case IrFunction f:
                         function = f;
                         break;
 
@@ -404,10 +406,10 @@ namespace Llvm.NET.Values
 
             if( index >= FunctionAttributeIndex.Parameter0 )
             {
-                Function function;
+                IrFunction function;
                 switch( value )
                 {
-                case Function f:
+                case IrFunction f:
                     function = f;
                     break;
 
@@ -515,10 +517,11 @@ namespace Llvm.NET.Values
                 break;
 
             default:
-                throw new ArgumentException( string.Format(Resources.Attribute_0_does_not_support_an_argument, kind), nameof( kind ) );
+                throw new ArgumentException( string.Format( CultureInfo.CurrentCulture, Resources.Attribute_0_does_not_support_an_argument, kind ), nameof( kind ) );
             }
         }
 
+        [SuppressMessage( "Maintainability", "CA1502:Avoid excessive complexity", Justification = "It's just a big switch, get over it." )]
         internal static FunctionIndexKinds GetAllowedIndexes( this AttributeKind kind )
         {
             kind.ValidateDefined( nameof( kind ) );

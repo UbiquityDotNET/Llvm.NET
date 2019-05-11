@@ -16,77 +16,77 @@ namespace Llvm.NET.Interop
 {
     public static partial class NativeMethods
     {
-        /** See llvm::createArgumentPromotionPass function. */
+        /// <include file="IPO.xml" path='LibLLVMAPI/Function[@name="LLVMAddArgumentPromotionPass"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern void LLVMAddArgumentPromotionPass( LLVMPassManagerRef PM );
 
-        /** See llvm::createConstantMergePass function. */
+        /// <include file="IPO.xml" path='LibLLVMAPI/Function[@name="LLVMAddConstantMergePass"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern void LLVMAddConstantMergePass( LLVMPassManagerRef PM );
 
-        /** See llvm::createCalledValuePropagationPass function. */
+        /// <include file="IPO.xml" path='LibLLVMAPI/Function[@name="LLVMAddCalledValuePropagationPass"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern void LLVMAddCalledValuePropagationPass( LLVMPassManagerRef PM );
 
-        /** See llvm::createDeadArgEliminationPass function. */
+        /// <include file="IPO.xml" path='LibLLVMAPI/Function[@name="LLVMAddDeadArgEliminationPass"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern void LLVMAddDeadArgEliminationPass( LLVMPassManagerRef PM );
 
-        /** See llvm::createFunctionAttrsPass function. */
+        /// <include file="IPO.xml" path='LibLLVMAPI/Function[@name="LLVMAddFunctionAttrsPass"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern void LLVMAddFunctionAttrsPass( LLVMPassManagerRef PM );
 
-        /** See llvm::createFunctionInliningPass function. */
+        /// <include file="IPO.xml" path='LibLLVMAPI/Function[@name="LLVMAddFunctionInliningPass"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern void LLVMAddFunctionInliningPass( LLVMPassManagerRef PM );
 
-        /** See llvm::createAlwaysInlinerPass function. */
+        /// <include file="IPO.xml" path='LibLLVMAPI/Function[@name="LLVMAddAlwaysInlinerPass"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern void LLVMAddAlwaysInlinerPass( LLVMPassManagerRef PM );
 
-        /** See llvm::createGlobalDCEPass function. */
+        /// <include file="IPO.xml" path='LibLLVMAPI/Function[@name="LLVMAddGlobalDCEPass"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern void LLVMAddGlobalDCEPass( LLVMPassManagerRef PM );
 
-        /** See llvm::createGlobalOptimizerPass function. */
+        /// <include file="IPO.xml" path='LibLLVMAPI/Function[@name="LLVMAddGlobalOptimizerPass"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern void LLVMAddGlobalOptimizerPass( LLVMPassManagerRef PM );
 
-        /** See llvm::createIPConstantPropagationPass function. */
+        /// <include file="IPO.xml" path='LibLLVMAPI/Function[@name="LLVMAddIPConstantPropagationPass"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern void LLVMAddIPConstantPropagationPass( LLVMPassManagerRef PM );
 
-        /** See llvm::createPruneEHPass function. */
+        /// <include file="IPO.xml" path='LibLLVMAPI/Function[@name="LLVMAddPruneEHPass"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern void LLVMAddPruneEHPass( LLVMPassManagerRef PM );
 
-        /** See llvm::createIPSCCPPass function. */
+        /// <include file="IPO.xml" path='LibLLVMAPI/Function[@name="LLVMAddIPSCCPPass"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern void LLVMAddIPSCCPPass( LLVMPassManagerRef PM );
 
-        /** See llvm::createInternalizePass function. */
+        /// <include file="IPO.xml" path='LibLLVMAPI/Function[@name="LLVMAddInternalizePass"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern void LLVMAddInternalizePass( LLVMPassManagerRef _0, bool AllButMain );
 
-        /** See llvm::createStripDeadPrototypesPass function. */
+        /// <include file="IPO.xml" path='LibLLVMAPI/Function[@name="LLVMAddStripDeadPrototypesPass"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern void LLVMAddStripDeadPrototypesPass( LLVMPassManagerRef PM );
 
-        /** See llvm::createStripSymbolsPass function. */
+        /// <include file="IPO.xml" path='LibLLVMAPI/Function[@name="LLVMAddStripSymbolsPass"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern void LLVMAddStripSymbolsPass( LLVMPassManagerRef PM );

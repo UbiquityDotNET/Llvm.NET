@@ -30,7 +30,7 @@ namespace TestDebugInfo
                                                                       , CodeModel.Small
                                                                       );
 
-        public void AddABIAttributesForByValueStructure( Function function, int paramIndex )
+        public void AddABIAttributesForByValueStructure( IrFunction function, int paramIndex )
         {
             if( !( function.Parameters[ paramIndex ].NativeType is IPointerType argType ) || !argType.ElementType.IsStruct )
             {

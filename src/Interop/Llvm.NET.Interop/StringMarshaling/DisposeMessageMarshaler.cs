@@ -15,27 +15,35 @@ using System.Runtime.InteropServices;
 
 namespace Llvm.NET.Interop
 {
-     ///<summary>Custom string marshaling class for strings using LLVMDisposeMessage</summary>
+    ///<summary>Custom string marshaling class for strings using LLVMDisposeMessage</summary>
     [GeneratedCode("LlvmBindingsGenerator","2.17941.31104.49410")]
     public class DisposeMessageMarshaler
         : ICustomMarshaler
     {
-        ///<Inheritdoc/>
+        /// <inheritdoc/>
         public void CleanUpManagedData( object ManagedObj )
         {
         }
 
+        /// <inheritdoc/>
         public void CleanUpNativeData( IntPtr pNativeData )
             => NativeDisposer?.Invoke( pNativeData );
+
+        /// <inheritdoc/>
         [SuppressMessage( "Design", "CA1024:Use properties where appropriate.", Justification = "Name and signature defined by interface")]
         public int GetNativeDataSize( ) => -1;
 
+        /// <inheritdoc/>
         public IntPtr MarshalManagedToNative( object ManagedObj )
             => throw new NotImplementedException( );
 
+        /// <inheritdoc/>
         public object MarshalNativeToManaged( IntPtr pNativeData )
             => StringNormalizer.NormalizeLineEndings( pNativeData );
 
+        /// <summary>Custom marshaler static factory contract implementation</summary>
+        /// <param name="cookie">Cookie from attribute</param>
+        /// <returns>Custom marshaller instance</returns>
         public static ICustomMarshaler GetInstance( string cookie )
         {
             switch( cookie.ToUpperInvariant( ) )

@@ -2,6 +2,8 @@
   <PropertyGroup>
     <TargetFrameworks>netstandard2.0;net47</TargetFrameworks>
     <RuntimeIdentifiers>win-x64</RuntimeIdentifiers>
+    <LangVersion>7.3</LangVersion>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <DebugType>portable</DebugType>
     <DebugSymbols>true</DebugSymbols>
     <DocumentationFile>$(BaseIntermediateOutputPath)$(MSBuildProjectName).xml</DocumentationFile>
@@ -11,11 +13,8 @@
     <Authors>.NET Foundation,LLVM.org,Ubiquity.NET</Authors>
     <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
     <Description>.NET Bindings for LLVM</Description>
-    <PackageTags>LLVM,Compiler,JIT</PackageTags>
+    <PackageTags>LLVM,Compiler,JIT,Ubiquity.NET</PackageTags>
     <NoPackageAnalysis>true</NoPackageAnalysis>
-    <LangVersion>7.3</LangVersion>
-    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
-    <NoCommonAnalyzers>true</NoCommonAnalyzers>
   </PropertyGroup>
   <ItemGroup>
     <!--Keep docfx generated OBJ folder junk from cluttering solution view-->

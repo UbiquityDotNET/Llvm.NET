@@ -16,22 +16,22 @@ namespace Llvm.NET.Interop
 {
     public static partial class NativeMethods
     {
-        /** See llvm::createCoroEarlyPass function. */
+        /// <include file="Coroutines.xml" path='LibLLVMAPI/Function[@name="LLVMAddCoroEarlyPass"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern void LLVMAddCoroEarlyPass( LLVMPassManagerRef PM );
 
-        /** See llvm::createCoroSplitPass function. */
+        /// <include file="Coroutines.xml" path='LibLLVMAPI/Function[@name="LLVMAddCoroSplitPass"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern void LLVMAddCoroSplitPass( LLVMPassManagerRef PM );
 
-        /** See llvm::createCoroElidePass function. */
+        /// <include file="Coroutines.xml" path='LibLLVMAPI/Function[@name="LLVMAddCoroElidePass"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern void LLVMAddCoroElidePass( LLVMPassManagerRef PM );
 
-        /** See llvm::createCoroCleanupPass function. */
+        /// <include file="Coroutines.xml" path='LibLLVMAPI/Function[@name="LLVMAddCoroCleanupPass"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern void LLVMAddCoroCleanupPass( LLVMPassManagerRef PM );

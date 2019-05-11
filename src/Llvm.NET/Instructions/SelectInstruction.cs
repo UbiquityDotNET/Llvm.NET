@@ -7,10 +7,10 @@ using Llvm.NET.Interop;
 namespace Llvm.NET.Instructions
 {
     /// <summary>Select instruction</summary>
-    public class Select
+    public class SelectInstruction
         : Instruction
     {
-        internal Select( LLVMValueRef valueRef )
+        internal SelectInstruction( LLVMValueRef valueRef )
             : base( valueRef )
         {
         }

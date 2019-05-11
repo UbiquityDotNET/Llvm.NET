@@ -16,11 +16,13 @@ namespace Llvm.NET.Interop
 {
     public static partial class NativeMethods
     {
+        /// <include file="ContextBindings.xml" path='LibLLVMAPI/Function[@name="LibLLVMContextGetIsODRUniquingDebugTypes"]/*' />
         [return: MarshalAs( UnmanagedType.Bool )]
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern bool LibLLVMContextGetIsODRUniquingDebugTypes( LLVMContextRef context );
 
+        /// <include file="ContextBindings.xml" path='LibLLVMAPI/Function[@name="LibLLVMContextSetIsODRUniquingDebugTypes"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern void LibLLVMContextSetIsODRUniquingDebugTypes( LLVMContextRef context, [MarshalAs( UnmanagedType.Bool )]bool state );

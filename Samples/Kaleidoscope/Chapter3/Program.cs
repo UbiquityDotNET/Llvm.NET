@@ -82,7 +82,7 @@ namespace Kaleidoscope.Chapter3
         {
             switch( resultValue )
             {
-            case Function function:
+            case IrFunction function:
                 Console.WriteLine( "Defined function: {0}", function.Name );
                 Console.WriteLine( function );
                 break;

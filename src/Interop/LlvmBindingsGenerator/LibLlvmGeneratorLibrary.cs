@@ -69,21 +69,24 @@ namespace LlvmBindingsGenerator
             // remove all the default passes so we can control the exact set of passes used
             driver.Context.TranslationUnitPasses.Passes.Clear( );
 
-            // always start the passes with the IgnoreSystemHeaders pass to ensure that generation
-            // only occurs for the desired headers.
-            driver.AddTranslationUnitPass( new IgnoreSystemHeaders( Configuration.IgnoredHeaders ) );
-            driver.AddTranslationUnitPass( new ConvertLLVMBoolPass( Configuration.StatusReturningFunctions ) );
-            driver.AddTranslationUnitPass( new CheckFlagEnumsPass( ) );
-            driver.AddTranslationUnitPass( new DeAnonymizeEnumsPass( Configuration.AnonymousEnumNames ) );
-            driver.AddTranslationUnitPass( new AddTypeMapsPass( ) );
-            driver.AddTranslationUnitPass( new PODToValueTypePass( ) );
-            driver.AddTranslationUnitPass( new IgnoreDuplicateNamesPass( ) );
-            driver.AddTranslationUnitPass( new AddMissingParameterNamesPass( ) );
-            driver.AddTranslationUnitPass( new MapHandleAliasTypesPass( Configuration.AliasReturningFunctions ) );
-
             // all handle dispose functions are considered internal, but not ignored
             var disposeFuncEntries = Configuration.HandleToTemplateMap.DisposeFunctionNames.Select( n => (Name: n, Ignored: false) );
+
+            // Analysis passes that markup, but don't otherwise modify the AST run first
+            // always start the passes with the IgnoreSystemHeaders pass to ensure that generation
+            // only occurs for the desired headers. Other passes depend on TranslationUint.IsGenerated
+            driver.AddTranslationUnitPass( new IgnoreSystemHeadersPass( Configuration.IgnoredHeaders ) );
+            driver.AddTranslationUnitPass( new IgnoreDuplicateNamesPass( ) );
+            driver.AddTranslationUnitPass( new AddMissingParameterNamesPass( ) );
+            driver.AddTranslationUnitPass( new AddTypeMapsPass( ) );
+            driver.AddTranslationUnitPass( new PODToValueTypePass( ) );
+            driver.AddTranslationUnitPass( new CheckFlagEnumsPass( ) );
             driver.AddTranslationUnitPass( new MarkFunctionsInternalPass( disposeFuncEntries.Concat( Configuration.InternalFunctions ) ) );
+
+            // General transformations
+            driver.AddTranslationUnitPass( new ConvertLLVMBoolPass( Configuration.StatusReturningFunctions ) );
+            driver.AddTranslationUnitPass( new DeAnonymizeEnumsPass( Configuration.AnonymousEnumNames ) );
+            driver.AddTranslationUnitPass( new MapHandleAliasTypesPass( Configuration.AliasReturningFunctions ) );
             driver.AddTranslationUnitPass( new MarkDeprecatedFunctionsAsObsoletePass( Configuration.DeprecatedFunctionToMessageMap, true ) );
             driver.AddTranslationUnitPass( new AddMarshalingAttributesPass( new MarshalingInfoMap( ctx, Configuration.MarshalingInfo ) ) );
 
@@ -129,12 +132,19 @@ namespace LlvmBindingsGenerator
 
                 foreach( ICodeGenTemplate template in output.Templates )
                 {
-                    string fileRelativePath = $"{fileBase}.{template.FileExtension}";
+                    try
+                    {
+                        string fileRelativePath = $"{fileBase}.{template.FileExtension}";
 
-                    string file = Path.Combine( outputPath, fileRelativePath );
-                    File.WriteAllText( file, template.Generate( ) );
+                        string file = Path.Combine( outputPath, fileRelativePath );
+                        File.WriteAllText( file, template.Generate( ) );
 
-                    Diagnostics.Message( "Generated '{0}'", fileRelativePath );
+                        Diagnostics.Message( "Generated '{0}'", fileRelativePath );
+                    }
+                    catch( System.IO.IOException ex)
+                    {
+                        Diagnostics.Error( ex.Message );
+                    }
                 }
             }
         }

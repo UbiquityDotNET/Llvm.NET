@@ -16,7 +16,7 @@ namespace Llvm.NET.Interop
 {
     public static partial class NativeMethods
     {
-        /** See llvm::createInstructionCombiningPass function. */
+        /// <include file="InstCombine.xml" path='LibLLVMAPI/Function[@name="LLVMAddInstructionCombiningPass"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern void LLVMAddInstructionCombiningPass( LLVMPassManagerRef PM );

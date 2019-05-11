@@ -16,17 +16,17 @@ namespace Llvm.NET.Interop
 {
     public static partial class NativeMethods
     {
-        /** Writes a module to the specified path. Returns 0 on success. */
+        /// <include file="BitWriter.xml" path='LibLLVMAPI/Function[@name="LLVMWriteBitcodeToFile"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern LLVMStatus LLVMWriteBitcodeToFile( LLVMModuleRef M, [MarshalAs( UnmanagedType.LPStr )]string Path );
 
-        /** Writes a module to an open file descriptor. Returns 0 on success. */
+        /// <include file="BitWriter.xml" path='LibLLVMAPI/Function[@name="LLVMWriteBitcodeToFD"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern LLVMStatus LLVMWriteBitcodeToFD( LLVMModuleRef M, int FD, int ShouldClose, int Unbuffered );
 
-        /** Writes a module to a new memory buffer and returns it. */
+        /// <include file="BitWriter.xml" path='LibLLVMAPI/Function[@name="LLVMWriteBitcodeToMemoryBuffer"]/*' />
         [SuppressUnmanagedCodeSecurity]
         [DllImport( LibraryPath, CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl )]
         public static extern LLVMMemoryBufferRef LLVMWriteBitcodeToMemoryBuffer( LLVMModuleRef M );

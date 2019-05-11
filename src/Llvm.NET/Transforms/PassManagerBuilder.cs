@@ -4,10 +4,11 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
+/* TODO: Implement PassManagerBuilder
 namespace Llvm.NET.Transforms
 {
-    /* TODO: Implement PassManagerBuilder */
     internal class PassManagerBuilder
     {
     }
 }
+*/

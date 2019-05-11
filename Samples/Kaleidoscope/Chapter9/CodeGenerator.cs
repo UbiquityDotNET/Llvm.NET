@@ -150,7 +150,7 @@ namespace Kaleidoscope.Chapter9
         {
             EmitLocation( functionCall );
             string targetName = functionCall.FunctionPrototype.Name;
-            Function function;
+            IrFunction function;
 
             // try for an extern function declaration
             if( RuntimeState.FunctionDeclarations.TryGetValue( targetName, out Prototype target ) )
@@ -483,7 +483,7 @@ namespace Kaleidoscope.Chapter9
 
         // Retrieves a Function for a prototype from the current module if it exists,
         // otherwise declares the function and returns the newly declared function.
-        private Function GetOrDeclareFunction( Prototype prototype )
+        private IrFunction GetOrDeclareFunction( Prototype prototype )
         {
             var function = Module.GetFunction( prototype.Name );
             if( function != null )
@@ -492,7 +492,7 @@ namespace Kaleidoscope.Chapter9
             }
 
             // extern declarations don't get debug information
-            Function retVal;
+            IrFunction retVal;
             if( prototype.IsExtern )
             {
                 var llvmSignature = Context.GetFunctionType( Context.DoubleType, prototype.Parameters.Select( _ => Context.DoubleType ) );
@@ -531,7 +531,7 @@ namespace Kaleidoscope.Chapter9
         #endregion
 
         #region AddDebugInfoForAlloca
-        private void AddDebugInfoForAlloca( Alloca argSlot, Function function, ParameterDeclaration param )
+        private void AddDebugInfoForAlloca( Alloca argSlot, IrFunction function, ParameterDeclaration param )
         {
             uint line = ( uint )param.Location.StartLine;
             uint col = ( uint )param.Location.StartColumn;
@@ -552,7 +552,7 @@ namespace Kaleidoscope.Chapter9
                                           );
         }
 
-        private void AddDebugInfoForAlloca( Alloca argSlot, Function function, LocalVariableDeclaration localVar )
+        private void AddDebugInfoForAlloca( Alloca argSlot, IrFunction function, LocalVariableDeclaration localVar )
         {
             uint line = ( uint )localVar.Location.StartLine;
             uint col = ( uint )localVar.Location.StartColumn;
@@ -581,7 +581,7 @@ namespace Kaleidoscope.Chapter9
         private FunctionPassManager FunctionPassManager;
         private readonly bool DisableOptimizations;
         private readonly TargetMachine TargetMachine;
-        private readonly List<Function> AnonymousFunctions = new List<Function>( );
+        private readonly List<IrFunction> AnonymousFunctions = new List<IrFunction>( );
         private DebugBasicType DoubleType;
         private readonly Stack<DIScope> LexicalBlocks = new Stack<DIScope>( );
         #endregion

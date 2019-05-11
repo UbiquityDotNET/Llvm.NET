@@ -26,6 +26,9 @@
         </None>
         <Reference Include="$(PkgCppSharp)\lib\*.dll" />
     </ItemGroup>
+    <ItemGroup>
+      <Reference Include="mscorlib" />
+    </ItemGroup>
     <!-- Runtime T4 templates need to specify the single file generator for the code behind -->
     <ItemGroup>
       <None Update="Templates\T4\ContextHandleTemplate.tt">
@@ -36,6 +39,11 @@
       <None Update="Templates\T4\ExportsTemplate.tt">
         <Generator>TextTemplatingFilePreprocessor</Generator>
         <LastGenOutput>ExportsTemplate.cs</LastGenOutput>
+        <CustomToolNamespace>LlvmBindingsGenerator.Templates</CustomToolNamespace>
+      </None>
+      <None Update="Templates\T4\ExternalDocXmlTemplate.tt">
+        <Generator>TextTemplatingFilePreprocessor</Generator>
+        <LastGenOutput>ExternalDocXmlTemplate.cs</LastGenOutput>
         <CustomToolNamespace>LlvmBindingsGenerator.Templates</CustomToolNamespace>
       </None>
       <None Update="Templates\T4\GlobalHandleTemplate.tt">
@@ -72,6 +80,11 @@
         <DesignTime>True</DesignTime>
         <AutoGen>True</AutoGen>
         <DependentUpon>ExportsTemplate.tt</DependentUpon>
+      </Compile>
+      <Compile Update="Templates\T4\ExternalDocXmlTemplate.cs">
+        <DesignTime>True</DesignTime>
+        <AutoGen>True</AutoGen>
+        <DependentUpon>ExternalDocXmlTemplate.tt</DependentUpon>
       </Compile>
       <Compile Update="Templates\T4\GlobalHandleTemplate.cs">
         <DesignTime>True</DesignTime>
