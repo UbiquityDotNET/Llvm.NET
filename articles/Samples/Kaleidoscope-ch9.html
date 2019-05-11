@@ -248,7 +248,7 @@ intern the file definition so that it won&#39;t actually end up with duplicates.
 <pre><code class="lang-csharp" name="GetIrDeclareFunction">
 // Retrieves a Function for a prototype from the current module if it exists,
 // otherwise declares the function and returns the newly declared function.
-private Function GetOrDeclareFunction( Prototype prototype )
+private IrFunction GetOrDeclareFunction( Prototype prototype )
 {
     var function = Module.GetFunction( prototype.Name );
     if( function != null )
@@ -257,7 +257,7 @@ private Function GetOrDeclareFunction( Prototype prototype )
     }
 
     // extern declarations don&#39;t get debug information
-    Function retVal;
+    IrFunction retVal;
     if( prototype.IsExtern )
     {
         var llvmSignature = Context.GetFunctionType( Context.DoubleType, prototype.Parameters.Select( _ =&gt; Context.DoubleType ) );
@@ -384,7 +384,7 @@ level.</p>
 <p>Debug information for parameters and local variables is similar but not quite identical. Thus, two new
 overloaded helper methods <code>AddDebugInfoForAlloca</code> handle attaching the correct debug information for
 parameters and local variables.</p>
-<pre><code class="lang-csharp" name="CreateEntryBlockAlloca">private void AddDebugInfoForAlloca( Alloca argSlot, Function function, ParameterDeclaration param )
+<pre><code class="lang-csharp" name="CreateEntryBlockAlloca">private void AddDebugInfoForAlloca( Alloca argSlot, IrFunction function, ParameterDeclaration param )
 {
     uint line = ( uint )param.Location.StartLine;
     uint col = ( uint )param.Location.StartColumn;
@@ -405,7 +405,7 @@ parameters and local variables.</p>
                                   );
 }
 
-private void AddDebugInfoForAlloca( Alloca argSlot, Function function, LocalVariableDeclaration localVar )
+private void AddDebugInfoForAlloca( Alloca argSlot, IrFunction function, LocalVariableDeclaration localVar )
 {
     uint line = ( uint )localVar.Location.StartLine;
     uint col = ( uint )localVar.Location.StartColumn;
@@ -451,7 +451,7 @@ compiler for custom languages, including debug support a lot easier.</p>
             <span class="pull-right">
               <a href="#top">Back to top</a>
             </span>
-            Copyright (C) 2017, Dot NET Foundation<br><strong>Build:</strong> 8.0.0-alpha.0.0.ci-BLD.463300721
+            Copyright (C) 2017, Dot NET Foundation<br><strong>Build:</strong> 8.0.0-alpha.0.0.ci-BLD.463373925
             
           </div>
         </div>

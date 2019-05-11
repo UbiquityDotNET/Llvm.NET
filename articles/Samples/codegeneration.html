@@ -221,7 +221,7 @@ hard coded into the target details class to keep things simple and focused on th
 
     IEnumerable&lt;AttributeValue&gt; BuildTargetDependentFunctionAttributes( Context ctx );
 
-    void AddABIAttributesForByValueStructure( Function function, int paramIndex );
+    void AddABIAttributesForByValueStructure( IrFunction function, int paramIndex );
 
     void AddModuleFlags( BitcodeModule module );
 }
@@ -450,7 +450,7 @@ machine generation room to use alternate means of transferring the data. (Stack 
 registers). For the two processors this sample supports Clang only uses this for the Cortex-M3 so the code
 calls the TargetDetails.AddABIAttributesForByValueStructure) to add the appropriate attributes for the target
 as needed. </p>
-<pre><code class="lang-csharp" name="Main">private static Function DeclareDoCopyFunc( BitcodeModule module, DIFile diFile, IDebugType&lt;ITypeRef, DIType&gt; voidType )
+<pre><code class="lang-csharp" name="Main">private static IrFunction DeclareDoCopyFunc( BitcodeModule module, DIFile diFile, IDebugType&lt;ITypeRef, DIType&gt; voidType )
 {
     var doCopySig = module.Context.CreateFunctionType( module.DIBuilder, voidType );
 
@@ -470,7 +470,7 @@ as needed. </p>
     return doCopyFunc;
 }
 
-private static Function DeclareCopyFunc( BitcodeModule module
+private static IrFunction DeclareCopyFunc( BitcodeModule module
                                        , DIFile diFile
                                        , IDebugType&lt;ITypeRef, DIType&gt; voidType
                                        , DIDerivedType constFoo
@@ -643,7 +643,7 @@ attributes #2 = { argmemonly nounwind }
             <span class="pull-right">
               <a href="#top">Back to top</a>
             </span>
-            Copyright (C) 2017, Dot NET Foundation<br><strong>Build:</strong> 8.0.0-alpha.0.0.ci-BLD.463300721
+            Copyright (C) 2017, Dot NET Foundation<br><strong>Build:</strong> 8.0.0-alpha.0.0.ci-BLD.463373925
             
           </div>
         </div>

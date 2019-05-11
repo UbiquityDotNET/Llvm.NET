@@ -237,7 +237,7 @@ generated LLVM IR.</p>
 {
     switch( resultValue )
     {
-    case Function function:
+    case IrFunction function:
         Console.WriteLine( &quot;Defined function: {0}&quot;, function.Name );
         Console.WriteLine( function );
         break;
@@ -479,7 +479,7 @@ method GetOrDeclareFunction() us used to get an existing function or declare a n
 <pre><code class="lang-csharp" name="Main">
 // Retrieves a Function for a prototype from the current module if it exists,
 // otherwise declares the function and returns the newly declared function.
-private Function GetOrDeclareFunction( Prototype prototype )
+private IrFunction GetOrDeclareFunction( Prototype prototype )
 {
     var function = Module.GetFunction( prototype.Name );
     if( function != null )
@@ -743,7 +743,7 @@ Ready&gt;
             <span class="pull-right">
               <a href="#top">Back to top</a>
             </span>
-            Copyright (C) 2017, Dot NET Foundation<br><strong>Build:</strong> 8.0.0-alpha.0.0.ci-BLD.463300721
+            Copyright (C) 2017, Dot NET Foundation<br><strong>Build:</strong> 8.0.0-alpha.0.0.ci-BLD.463373925
             
           </div>
         </div>

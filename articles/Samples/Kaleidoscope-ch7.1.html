@@ -232,7 +232,7 @@ things get different as they are selected for lazy JIT.</p>
         // so no point in setting them up as a lazy compilation item.
         if( definition.IsAnonymous )
         {
-            var function = ( Function )definition.Accept( this );
+            var function = ( IrFunction )definition.Accept( this );
             var jitHandle = JIT.AddModule( function.ParentModule );
             var nativeFunc = JIT.GetFunctionDelegate&lt;KaleidoscopeJIT.CallbackHandler0&gt;( definition.Name );
             retVal = Context.CreateConstant( nativeFunc( ) );
@@ -246,7 +246,7 @@ things get different as they are selected for lazy JIT.</p>
             JIT.AddLazyFunctionGenerator( definition.Name, ( ) =&gt;
             {
                 InitializeModuleAndPassManager( );
-                var function = ( Function )implDefinition.Accept( this );
+                var function = ( IrFunction )implDefinition.Accept( this );
                 return (implDefinition.Name, function.ParentModule);
             } );
         }
@@ -306,7 +306,7 @@ works doesn&#39;t change no matter what approach a given language or runtime wan
             <span class="pull-right">
               <a href="#top">Back to top</a>
             </span>
-            Copyright (C) 2017, Dot NET Foundation<br><strong>Build:</strong> 8.0.0-alpha.0.0.ci-BLD.463300721
+            Copyright (C) 2017, Dot NET Foundation<br><strong>Build:</strong> 8.0.0-alpha.0.0.ci-BLD.463373925
             
           </div>
         </div>
