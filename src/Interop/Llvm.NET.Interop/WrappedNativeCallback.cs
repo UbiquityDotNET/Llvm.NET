@@ -1,5 +1,5 @@
-﻿// <copyright file="WrappedNativeCallback.cs" company=".NET Foundation">
-// Copyright (c) .NET Foundation. All rights reserved.
+﻿// <copyright file="WrappedNativeCallback.cs" company="Ubiquity.NET Contributors">
+// Copyright (c) Ubiquity.NET Contributors. All rights reserved.
 // </copyright>
 
 using System;

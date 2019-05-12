@@ -31,7 +31,7 @@
         },
         "documentationRules":
         {
-            "companyName": ".NET Foundation",
+            "companyName": "Ubiquity.NET Contributors",
             "headerDecoration": "-----------------------------------------------------------------------",
             "documentExposedElements": true,
             "documentInterfaces": false,
