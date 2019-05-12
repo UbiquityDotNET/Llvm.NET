@@ -1,6 +1,8 @@
-﻿// <copyright file="VectorTransforms.cs" company=".NET Foundation">
-// Copyright (c) .NET Foundation. All rights reserved.
+﻿// -----------------------------------------------------------------------
+// <copyright file="VectorTransforms.cs" company="Ubiquity.NET Contributors">
+// Copyright (c) Ubiquity.NET Contributors. All rights reserved.
 // </copyright>
+// -----------------------------------------------------------------------
 
 using static Llvm.NET.Interop.NativeMethods;
 

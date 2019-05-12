@@ -1,6 +1,8 @@
-﻿// <copyright file="PhiNode.cs" company=".NET Foundation">
-// Copyright (c) .NET Foundation. All rights reserved.
+﻿// -----------------------------------------------------------------------
+// <copyright file="PhiNode.cs" company="Ubiquity.NET Contributors">
+// Copyright (c) Ubiquity.NET Contributors. All rights reserved.
 // </copyright>
+// -----------------------------------------------------------------------
 
 using System.Linq;
 using Llvm.NET.Interop;

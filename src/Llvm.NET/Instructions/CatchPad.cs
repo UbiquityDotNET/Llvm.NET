@@ -1,6 +1,8 @@
-﻿// <copyright file="CatchPad.cs" company=".NET Foundation">
-// Copyright (c) .NET Foundation. All rights reserved.
+﻿// -----------------------------------------------------------------------
+// <copyright file="CatchPad.cs" company="Ubiquity.NET Contributors">
+// Copyright (c) Ubiquity.NET Contributors. All rights reserved.
 // </copyright>
+// -----------------------------------------------------------------------
 
 using Llvm.NET.Interop;
 using Llvm.NET.Values;

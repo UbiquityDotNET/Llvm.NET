@@ -1,6 +1,8 @@
-﻿// <copyright file="Triple.cs" company=".NET Foundation">
-// Copyright (c) .NET Foundation. All rights reserved.
+﻿// -----------------------------------------------------------------------
+// <copyright file="Triple.cs" company="Ubiquity.NET Contributors">
+// Copyright (c) Ubiquity.NET Contributors. All rights reserved.
 // </copyright>
+// -----------------------------------------------------------------------
 
 using System;
 using System.Diagnostics.CodeAnalysis;
@@ -637,7 +639,7 @@ namespace Llvm.NET
         {
             unNormalizedTriple.ValidateNotNullOrWhiteSpace( nameof( unNormalizedTriple ) );
 
-            return LibLLVMNormalizeTriple( unNormalizedTriple );
+            return LLVMNormalizeTargetTriple( unNormalizedTriple );
         }
 
         /// <summary>Gets the default <see cref="ObjectFormatType"/> for a given <see cref="ArchType"/> and <see cref="OSType"/></summary>
@@ -774,7 +776,7 @@ namespace Llvm.NET
         }
 
         /// <summary>Gets a triple for the host LLVM is built for</summary>
-        public static Triple HostTriple => new Triple( LibLLVMGetHostTriple( ) );
+        public static Triple HostTriple => new Triple( LLVMGetDefaultTargetTriple( ) );
 
         /// <summary>Implicitly converts a triple to a string</summary>
         /// <param name="triple"><see cref="Triple"/> to convert</param>

@@ -1,6 +1,8 @@
-﻿// <copyright file="OperatorInfo.cs" company=".NET Foundation">
-// Copyright (c) .NET Foundation. All rights reserved.
+﻿// -----------------------------------------------------------------------
+// <copyright file="OperatorInfo.cs" company="Ubiquity.NET Contributors">
+// Copyright (c) Ubiquity.NET Contributors. All rights reserved.
 // </copyright>
+// -----------------------------------------------------------------------
 
 using System.Collections.ObjectModel;
 using System.Diagnostics.CodeAnalysis;

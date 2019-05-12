@@ -1,6 +1,8 @@
-﻿// <copyright file="RuntimeCompatShim.cs" company=".NET Foundation">
-// Copyright (c) .NET Foundation. All rights reserved.
+﻿// -----------------------------------------------------------------------
+// <copyright file="RuntimeCompatShim.cs" company="Ubiquity.NET Contributors">
+// Copyright (c) Ubiquity.NET Contributors. All rights reserved.
 // </copyright>
+// -----------------------------------------------------------------------
 
 #if !NETCOREAPP2_0
 using System.Collections.Generic;

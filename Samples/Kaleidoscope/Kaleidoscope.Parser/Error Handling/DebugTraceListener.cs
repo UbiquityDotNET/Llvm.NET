@@ -1,6 +1,8 @@
-﻿// <copyright file="DebugTraceListener.cs" company=".NET Foundation">
-// Copyright (c) .NET Foundation. All rights reserved.
+﻿// -----------------------------------------------------------------------
+// <copyright file="DebugTraceListener.cs" company="Ubiquity.NET Contributors">
+// Copyright (c) Ubiquity.NET Contributors. All rights reserved.
 // </copyright>
+// -----------------------------------------------------------------------
 
 using System.Diagnostics;
 using Antlr4.Runtime;
