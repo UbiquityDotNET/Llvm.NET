@@ -199,7 +199,6 @@ extern "C" {
 
     LibLLVMTripleRef LibLLVMParseTriple( char const* triple );
     void LibLLVMDisposeTriple( LibLLVMTripleRef triple );
-    LibLLVMTripleRef LibLLVMGetHostTriple( );
 
     LLVMBool LibLLVMTripleOpEqual( LibLLVMTripleRef lhs, LibLLVMTripleRef rhs );
     LibLLVMTripleArchType LibLLVMTripleGetArchType( LibLLVMTripleRef triple );
@@ -220,7 +219,6 @@ extern "C" {
     char const* LibLLVMTripleGetOsTypeName( LibLLVMTripleOSType osType );
     char const* LibLLVMTripleGetEnvironmentTypeName( LibLLVMTripleEnvironmentType environmentType );
     char const* LibLLVMTripleGetObjectFormatTypeName( LibLLVMTripleObjectFormatType objectFormatType );
-    char const* LibLLVMNormalizeTriple( char const* triple );
 #ifdef __cplusplus
 }
 #endif
