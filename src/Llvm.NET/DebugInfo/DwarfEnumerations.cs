@@ -1,6 +1,8 @@
-﻿// <copyright file="DwarfEnumerations.cs" company=".NET Foundation">
-// Copyright (c) .NET Foundation. All rights reserved.
+﻿// -----------------------------------------------------------------------
+// <copyright file="DwarfEnumerations.cs" company="Ubiquity.NET Contributors">
+// Copyright (c) Ubiquity.NET Contributors. All rights reserved.
 // </copyright>
+// -----------------------------------------------------------------------
 
 using System;
 using System.Diagnostics.CodeAnalysis;

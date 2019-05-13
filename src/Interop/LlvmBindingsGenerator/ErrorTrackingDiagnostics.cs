@@ -1,9 +1,10 @@
 ﻿// -----------------------------------------------------------------------
-// <copyright file="ErrorTrackingDiagnostics.cs" company=".NET Foundation">
-// Copyright (c) .NET Foundation. All rights reserved.
+// <copyright file="ErrorTrackingDiagnostics.cs" company="Ubiquity.NET Contributors">
+// Copyright (c) Ubiquity.NET Contributors. All rights reserved.
 // </copyright>
 // -----------------------------------------------------------------------
 
+using System;
 using CppSharp;
 
 namespace LlvmBindingsGenerator
@@ -21,12 +22,34 @@ namespace LlvmBindingsGenerator
 
         public void Emit( DiagnosticInfo info )
         {
-            if(info.Kind == DiagnosticKind.Error )
+            try
             {
-                ++ErrorCount;
-            }
+                switch( info.Kind )
+                {
+                case DiagnosticKind.Debug:
+                    Console.ForegroundColor = ConsoleColor.Cyan;
+                    break;
 
-            InnerDiagnostics.Emit( info );
+                case DiagnosticKind.Message:
+                    Console.ForegroundColor = ConsoleColor.White;
+                    break;
+
+                case DiagnosticKind.Warning:
+                    Console.ForegroundColor = ConsoleColor.Yellow;
+                    break;
+
+                case DiagnosticKind.Error:
+                    Console.ForegroundColor = ConsoleColor.Red;
+                    ++ErrorCount;
+                    break;
+                }
+
+                InnerDiagnostics.Emit( info );
+            }
+            finally
+            {
+                Console.ResetColor( );
+            }
         }
 
         public void PopIndent( )

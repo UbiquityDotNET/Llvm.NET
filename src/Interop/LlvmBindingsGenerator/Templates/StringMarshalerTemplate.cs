@@ -1,6 +1,6 @@
 ﻿// -----------------------------------------------------------------------
-// <copyright file="StringMarshalerTemplate.cs" company=".NET Foundation">
-// Copyright (c) .NET Foundation. All rights reserved.
+// <copyright file="StringMarshalerTemplate.cs" company="Ubiquity.NET Contributors">
+// Copyright (c) Ubiquity.NET Contributors. All rights reserved.
 // </copyright>
 // -----------------------------------------------------------------------
 
@@ -30,7 +30,9 @@ namespace LlvmBindingsGenerator.Templates
 
         public Version ToolVersion => GetType( ).Assembly.GetName( ).Version;
 
-        public string FileExtension => "cs";
+        public string FileExtension => "g.cs";
+
+        public string SubFolder => string.Empty;
 
         public string Generate( )
         {

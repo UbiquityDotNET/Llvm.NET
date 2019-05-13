@@ -1,5 +1,5 @@
-﻿// <copyright file="ValueKind.cs" company=".NET Foundation">
-// Copyright (c) .NET Foundation. All rights reserved.
+﻿// <copyright file="ValueKind.cs" company="Ubiquity.NET Contributors">
+// Copyright (c) Ubiquity.NET Contributors. All rights reserved.
 // </copyright>
 
 // SA1515 - Single-line comment should be preceded by blank line

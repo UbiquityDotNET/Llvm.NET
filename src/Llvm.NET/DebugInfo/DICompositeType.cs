@@ -1,6 +1,8 @@
-﻿// <copyright file="DICompositeType.cs" company=".NET Foundation">
-// Copyright (c) .NET Foundation. All rights reserved.
+﻿// -----------------------------------------------------------------------
+// <copyright file="DICompositeType.cs" company="Ubiquity.NET Contributors">
+// Copyright (c) Ubiquity.NET Contributors. All rights reserved.
 // </copyright>
+// -----------------------------------------------------------------------
 
 using JetBrains.Annotations;
 using Llvm.NET.Interop;

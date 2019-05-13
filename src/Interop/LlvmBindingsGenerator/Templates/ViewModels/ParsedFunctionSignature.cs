@@ -1,6 +1,6 @@
 ﻿// -----------------------------------------------------------------------
-// <copyright file="ParsedFunction.cs" company=".NET Foundation">
-// Copyright (c) .NET Foundation. All rights reserved.
+// <copyright file="ParsedFunction.cs" company="Ubiquity.NET Contributors">
+// Copyright (c) Ubiquity.NET Contributors. All rights reserved.
 // </copyright>
 // -----------------------------------------------------------------------
 
@@ -25,7 +25,7 @@ namespace LlvmBindingsGenerator.Templates
             }
 
             Signature = f.FunctionType.Type as FunctionType;
-            Comments = new ParsedComment( f.Comment );
+            Comments = new ParsedComment( f );
             Name = f.Name;
             Attributes = f.Attributes;
             Introducer = "public static extern ";
@@ -41,7 +41,7 @@ namespace LlvmBindingsGenerator.Templates
                 }
 
                 Signature = signature;
-                Comments = new ParsedComment( td.Comment );
+                Comments = new ParsedComment( td );
                 Name = td.Name;
                 Attributes = new[ ] { UnmanagedFunctionPointerAttrib };
                 Introducer = "public delegate ";
@@ -60,7 +60,7 @@ namespace LlvmBindingsGenerator.Templates
 
         public bool HasNonVoidReturn => ReturnType != "void";
 
-        public string ReturnType => GetTypeName( Signature.ReturnType.Type );
+        public string ReturnType => Signature.ReturnType.Type.ToString( );
 
         public IEnumerable<string> Parameters => GetParameters( Signature.Parameters );
 
@@ -90,67 +90,6 @@ namespace LlvmBindingsGenerator.Templates
         }
 
         public FunctionType Signature { get; }
-
-        internal static string GetTypeName( CppSharp.AST.Type type )
-        {
-            string retVal;
-            switch( type )
-            {
-            case TypedefType tdt when tdt.Declaration.Name == "LLVMBool":
-                retVal = "bool";
-                break;
-
-            case TypedefType tdt when tdt.Declaration.Name == "intptr_t":
-                retVal = "System.IntPtr";
-                break;
-
-            case TypedefType tdt when tdt.Declaration.Name == "uintptr_t":
-                retVal = "System.UIntPtr";
-                break;
-
-            case TypedefType tdt when tdt.Declaration.Name == "uint8_t":
-                retVal = "System.Byte";
-                break;
-
-            case TypedefType tdt when( tdt.Declaration.Name == "uint32_t" || tdt.Declaration.Name == "LLVMDWARFTypeEncoding" ):
-                retVal = "System.UInt32";
-                break;
-
-            case TypedefType tdt when ( tdt.Declaration.Name == "uint64_t" || tdt.Declaration.Name == "LLVMOrcModuleHandle" || tdt.Declaration.Name == "LLVMOrcTargetAddress" ):
-                retVal = "System.UInt64";
-                break;
-
-            case TypedefType tdt when tdt.Declaration.Name == "int8_t":
-                retVal = "System.SByte";
-                break;
-
-            case TypedefType tdt when tdt.Declaration.Name == "int32_t":
-                retVal = "System.Int32";
-                break;
-
-            case TypedefType tdt when tdt.Declaration.Name == "int64_t":
-                retVal = "System.Int64";
-                break;
-
-            case TypedefType tdt:
-                retVal = tdt.Declaration.Name;
-                break;
-
-            case CppSharp.AST.Type t when t.TryGetHandleDecl( out TypedefNameDecl decl ):
-                retVal = decl.Name;
-                break;
-
-            case ArrayType at:
-                retVal = $"{GetTypeName( at.Type )}[]";
-                break;
-
-            default:
-                retVal = type.ToString( );
-                break;
-            }
-
-            return retVal;
-        }
 
         private static string CreateEscapedIdentifier( Parameter p )
         {
@@ -187,7 +126,7 @@ namespace LlvmBindingsGenerator.Templates
                     }
                 }
 
-                bldr.Append( GetTypeName( argType ) )
+                bldr.Append( argType.ToString( ) )
                     .Append( ' ' )
                     .Append( CreateEscapedIdentifier( arg ) );
 

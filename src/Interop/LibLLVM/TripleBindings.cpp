@@ -134,11 +134,6 @@ ARM::ArchKind MapEnum( LibLLVMTripleSubArchType from )
 }
 extern "C"
 {
-    char const* LibLLVMNormalizeTriple( char const* triple )
-    {
-        return LLVMCreateMessage( Triple::normalize( triple ).c_str( ) );
-    }
-
     LibLLVMTripleRef LibLLVMParseTriple( char const* triple )
     {
         return wrap( new Triple( Triple::normalize( triple ) ) );

@@ -1,6 +1,6 @@
 ﻿// -----------------------------------------------------------------------
-// <copyright file="Program.cs" company=".NET Foundation">
-// Copyright (c) .NET Foundation. All rights reserved.
+// <copyright file="Program.cs" company="Ubiquity.NET Contributors">
+// Copyright (c) Ubiquity.NET Contributors. All rights reserved.
 // </copyright>
 // -----------------------------------------------------------------------
 
@@ -24,14 +24,12 @@ namespace LlvmBindingsGenerator
                 Diagnostics.Error( "USAGE: LlvmBindingsGenerator <llvmRoot> <extensionsRoot> [OutputPath]" );
                 return -1;
             }
-#if DEBUG
-            Diagnostics.Level = DiagnosticKind.Debug;
-#endif
+
             string llvmRoot = args[ 0 ];
             string extensionsRoot = args[ 1 ];
             string outputPath = args.Length > 2 ? args[ 2 ] : System.Environment.CurrentDirectory;
             var library = new LibLlvmGeneratorLibrary( CreateConfiguration( ), llvmRoot, extensionsRoot, outputPath );
-            ConsoleDriver.Run( library );
+            Driver.Run( library );
             return diagnostics.ErrorCount;
         }
 
@@ -180,7 +178,10 @@ namespace LlvmBindingsGenerator
                     new StringMarshalInfo("LibLLVMTripleGetOsTypeName", StringDisposal.DisposeMessage),
                     new StringMarshalInfo("LibLLVMTripleGetEnvironmentTypeName", StringDisposal.DisposeMessage),
                     new StringMarshalInfo("LibLLVMTripleGetObjectFormatTypeName", StringDisposal.DisposeMessage),
-                    new StringMarshalInfo("LibLLVMNormalizeTriple", StringDisposal.DisposeMessage),
+                    new StringMarshalInfo("LLVMNormalizeTargetTriple", StringDisposal.DisposeMessage),
+                    new StringMarshalInfo("LLVMGetDefaultTargetTriple", StringDisposal.DisposeMessage),
+                    new StringMarshalInfo("LLVMGetHostCPUName", StringDisposal.DisposeMessage),
+                    new StringMarshalInfo("LLVMGetHostCPUFeatures", StringDisposal.DisposeMessage),
                 },
                 /* Functions that are deprecated in LLVM and should be marked obsolte in generation (or by default ommitted completely)*/
                 DeprecatedFunctionToMessageMap = new Dictionary<string, string>
@@ -216,6 +217,8 @@ namespace LlvmBindingsGenerator
                     ("LLVMDisposeMessage", false ),
                     ("LLVMDisposeErrorMessage", false ),
                     ("LLVMConsumeError", false ),
+                    ("LLVMGetErrorMessage", true),
+                    ("LLVMCreateMessage", true), // Not relevant to managed projections
                     /* Declared but not present in LibLLVM */
                     ("LLVMConstGEP2", true ),         // declared in LLVM headers but never defined [Go, Figure!]
                     ("LLVMConstInBoundsGEP2", true ), // declared in LLVM headers but never defined [Go, Figure!]

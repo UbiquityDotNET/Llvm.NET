@@ -79,14 +79,14 @@ foreach(var e in Enums){
             this.Write(" Enumeration</summary>\r\n");
             
             #line 31 "D:\GitHub\Ubiquity.NET\Llvm.Net\src\Interop\LlvmBindingsGenerator\Templates\T4\ExternalDocXmlTemplate.tt"
-if( e.Comment.Any() ){
+if( e.Comments.Any() ){
             
             #line default
             #line hidden
             this.Write("        <remarks>\r\n");
             
             #line 33 "D:\GitHub\Ubiquity.NET\Llvm.Net\src\Interop\LlvmBindingsGenerator\Templates\T4\ExternalDocXmlTemplate.tt"
-foreach(var commentLine in e.Comment){
+foreach(var commentLine in e.Comments){
             
             #line default
             #line hidden
@@ -311,75 +311,76 @@ foreach(var s in ValueTypes){
             this.Write("</summary>\r\n");
             
             #line 68 "D:\GitHub\Ubiquity.NET\Llvm.Net\src\Interop\LlvmBindingsGenerator\Templates\T4\ExternalDocXmlTemplate.tt"
-if( s.GetParsedComment().Any() ){
+ var parsedComments = new ParsedComment(s);
+if( parsedComments.Any() ){
             
             #line default
             #line hidden
             this.Write("        <remarks>\r\n");
             
-            #line 70 "D:\GitHub\Ubiquity.NET\Llvm.Net\src\Interop\LlvmBindingsGenerator\Templates\T4\ExternalDocXmlTemplate.tt"
-foreach(var commentLine in s.GetParsedComment()){
+            #line 71 "D:\GitHub\Ubiquity.NET\Llvm.Net\src\Interop\LlvmBindingsGenerator\Templates\T4\ExternalDocXmlTemplate.tt"
+foreach(var commentLine in parsedComments){
             
             #line default
             #line hidden
             this.Write("            ");
             
-            #line 71 "D:\GitHub\Ubiquity.NET\Llvm.Net\src\Interop\LlvmBindingsGenerator\Templates\T4\ExternalDocXmlTemplate.tt"
+            #line 72 "D:\GitHub\Ubiquity.NET\Llvm.Net\src\Interop\LlvmBindingsGenerator\Templates\T4\ExternalDocXmlTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(commentLine));
             
             #line default
             #line hidden
             this.Write("\r\n");
             
-            #line 72 "D:\GitHub\Ubiquity.NET\Llvm.Net\src\Interop\LlvmBindingsGenerator\Templates\T4\ExternalDocXmlTemplate.tt"
+            #line 73 "D:\GitHub\Ubiquity.NET\Llvm.Net\src\Interop\LlvmBindingsGenerator\Templates\T4\ExternalDocXmlTemplate.tt"
 }
             
             #line default
             #line hidden
             this.Write("        </remarks>\r\n");
             
-            #line 74 "D:\GitHub\Ubiquity.NET\Llvm.Net\src\Interop\LlvmBindingsGenerator\Templates\T4\ExternalDocXmlTemplate.tt"
+            #line 75 "D:\GitHub\Ubiquity.NET\Llvm.Net\src\Interop\LlvmBindingsGenerator\Templates\T4\ExternalDocXmlTemplate.tt"
 }
             
             #line default
             #line hidden
             
-            #line 75 "D:\GitHub\Ubiquity.NET\Llvm.Net\src\Interop\LlvmBindingsGenerator\Templates\T4\ExternalDocXmlTemplate.tt"
+            #line 76 "D:\GitHub\Ubiquity.NET\Llvm.Net\src\Interop\LlvmBindingsGenerator\Templates\T4\ExternalDocXmlTemplate.tt"
 foreach(var fld in s.Fields){
             
             #line default
             #line hidden
             this.Write("        <Field name=\"");
             
-            #line 76 "D:\GitHub\Ubiquity.NET\Llvm.Net\src\Interop\LlvmBindingsGenerator\Templates\T4\ExternalDocXmlTemplate.tt"
+            #line 77 "D:\GitHub\Ubiquity.NET\Llvm.Net\src\Interop\LlvmBindingsGenerator\Templates\T4\ExternalDocXmlTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(fld.Name));
             
             #line default
             #line hidden
             this.Write("\">\r\n            <summary>TODO: Provide summary for field ");
             
-            #line 77 "D:\GitHub\Ubiquity.NET\Llvm.Net\src\Interop\LlvmBindingsGenerator\Templates\T4\ExternalDocXmlTemplate.tt"
+            #line 78 "D:\GitHub\Ubiquity.NET\Llvm.Net\src\Interop\LlvmBindingsGenerator\Templates\T4\ExternalDocXmlTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(s.Name));
             
             #line default
             #line hidden
             this.Write(".");
             
-            #line 77 "D:\GitHub\Ubiquity.NET\Llvm.Net\src\Interop\LlvmBindingsGenerator\Templates\T4\ExternalDocXmlTemplate.tt"
+            #line 78 "D:\GitHub\Ubiquity.NET\Llvm.Net\src\Interop\LlvmBindingsGenerator\Templates\T4\ExternalDocXmlTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(fld.Name));
             
             #line default
             #line hidden
             this.Write("</summary>\r\n        </Field>\r\n");
             
-            #line 79 "D:\GitHub\Ubiquity.NET\Llvm.Net\src\Interop\LlvmBindingsGenerator\Templates\T4\ExternalDocXmlTemplate.tt"
+            #line 80 "D:\GitHub\Ubiquity.NET\Llvm.Net\src\Interop\LlvmBindingsGenerator\Templates\T4\ExternalDocXmlTemplate.tt"
 }
             
             #line default
             #line hidden
             this.Write("    </Struct>\r\n");
             
-            #line 81 "D:\GitHub\Ubiquity.NET\Llvm.Net\src\Interop\LlvmBindingsGenerator\Templates\T4\ExternalDocXmlTemplate.tt"
+            #line 82 "D:\GitHub\Ubiquity.NET\Llvm.Net\src\Interop\LlvmBindingsGenerator\Templates\T4\ExternalDocXmlTemplate.tt"
 }
             
             #line default

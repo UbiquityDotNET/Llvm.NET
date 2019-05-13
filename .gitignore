@@ -156,4 +156,5 @@ Tools/
 *.7z
 
 /llvm
-*.g.xml
+**/GeneratedDocs/
+**/GeneratedCode/

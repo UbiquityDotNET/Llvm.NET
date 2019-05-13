@@ -1,6 +1,6 @@
 ﻿// -----------------------------------------------------------------------
-// <copyright file="ExternalDocXmlTemplate.cs" company=".NET Foundation">
-// Copyright (c) .NET Foundation. All rights reserved.
+// <copyright file="ExternalDocXmlTemplate.cs" company="Ubiquity.NET Contributors">
+// Copyright (c) Ubiquity.NET Contributors. All rights reserved.
 // </copyright>
 // -----------------------------------------------------------------------
 
@@ -21,7 +21,9 @@ namespace LlvmBindingsGenerator.Templates
 
         public Version ToolVersion => GetType( ).Assembly.GetName( ).Version;
 
-        public string FileExtension => "g.xml";
+        public string FileExtension => "xml";
+
+        public string SubFolder => "GeneratedDocs";
 
         public string Generate( )
         {

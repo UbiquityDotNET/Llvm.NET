@@ -1,6 +1,8 @@
-﻿// <copyright file="DebugUnionTypeTests.cs" company=".NET Foundation">
-// Copyright (c) .NET Foundation. All rights reserved.
+﻿// -----------------------------------------------------------------------
+// <copyright file="DebugUnionTypeTests.cs" company="Ubiquity.NET Contributors">
+// Copyright (c) Ubiquity.NET Contributors. All rights reserved.
 // </copyright>
+// -----------------------------------------------------------------------
 
 using Llvm.NET.DebugInfo;
 using Llvm.NET.Types;

@@ -55,10 +55,10 @@ namespace Llvm.NET.Interop
     ///    This handle is owned by it's container and therefore isn't disposed by the
     ///    calling App.
     /// <note type=""important"">
-    ///     Since this is not owned by the App, the item it references is destroyed,
-    ///     whenever it's container is destroyed, which will invalidate this handle.
-    ///     use of this handle after the container is destroyed will produce undefined
-    ///     behavior, includingly, and most likely, memory access violations.
+    ///     Since the object this handle refers to is not owned by the App, the object is
+    ///     destroyed whenever it's container is destroyed, which will invalidate this handle.
+    ///     Use of this handle after the container is destroyed will produce undefined
+    ///     behavior, including, and most likely, memory access violations.
     /// </note>
     /// </remarks>
     [GeneratedCode(""LlvmBindingsGenerator"",""");

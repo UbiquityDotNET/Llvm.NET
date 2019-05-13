@@ -5,11 +5,10 @@
       "src":
       [
         {
-          "files": [ "src/Llvm.Net/Llvm.NET.csproj", "src/Interop/Llvm.NET.Interop/Llvm.NET.Interop.csproj" ],
-          "exclude": [
-            "**/bin/**",
-            "**/obj/**"
-          ],
+            "files": [
+                "src/Llvm.Net/Llvm.NET.csproj",
+                "BuildOutput/bin/Llvm.NET.Interop/Release/net47/Llvm.NET.Interop.dll"
+            ],
           "src":".."
         }
       ],

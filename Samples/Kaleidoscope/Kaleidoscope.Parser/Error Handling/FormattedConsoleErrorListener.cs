@@ -1,6 +1,8 @@
-﻿// <copyright file="FormattedConsoleErrorListener.cs" company=".NET Foundation">
-// Copyright (c) .NET Foundation. All rights reserved.
+﻿// -----------------------------------------------------------------------
+// <copyright file="FormattedConsoleErrorListener.cs" company="Ubiquity.NET Contributors">
+// Copyright (c) Ubiquity.NET Contributors. All rights reserved.
 // </copyright>
+// -----------------------------------------------------------------------
 
 using System;
 using Antlr4.Runtime;

@@ -1,0 +1,172 @@
+<!--
+;; ==============================================================================
+;; <usage>
+;;     This file contains the Manually edited doc comments info that the
+;;     generated code files refer to. This was originally cloned from the
+;;     'GeneratedDocsFolder' and requires manual update and merging whenever
+;;     the API surface changes. The generated XML is not commited to the repository
+;;     but serves as a useful aid in building the docs for generated code files.
+;; </usage>
+;; ==============================================================================
+-->
+<LibLlvmAPI>
+    <Enumeration name="LibLLVMDwarfSourceLanguage">
+        <summary>Source Language tags for LLVM Dwarf</summary>
+        <remarks>
+        This is a custom LibLLVM enumeration since the official LLVM-C APIs
+        restrict the set of languages to only those officially defined. (e.g.
+        they don't support any user defined languages not already declared in
+        the LLVM headers.) This prevents experimentation with new languages or
+        the development of domain specific languages with the LLVM-C API. This
+        restriction is not present with the C++ API surface. So LibLLVM bypasses
+        the filtering in the LLVM-C API to provide full access to all DWARF
+        language types, including user defined values.
+        </remarks>
+        <Item name="LibLLVMDwarfSourceLanguageC89">
+            <summary>Standard C89</summary>
+        </Item>
+        <Item name="LibLLVMDwarfSourceLanguageC">
+            <summary>C Language</summary>
+        </Item>
+        <Item name="LibLLVMDwarfSourceLanguageAda83">
+            <summary>Ada 83 Language</summary>
+        </Item>
+        <Item name="LibLLVMDwarfSourceLanguageC_plus_plus">
+            <summary>C++ Language</summary>
+        </Item>
+        <Item name="LibLLVMDwarfSourceLanguageCobol74">
+            <summary>Cobol 74 Language</summary>
+        </Item>
+        <Item name="LibLLVMDwarfSourceLanguageCobol85">
+            <summary>Cobol 85</summary>
+        </Item>
+        <Item name="LibLLVMDwarfSourceLanguageFortran77">
+            <summary>Fortran 77</summary>
+        </Item>
+        <Item name="LibLLVMDwarfSourceLanguageFortran90">
+            <summary>Fortran 90</summary>
+        </Item>
+        <Item name="LibLLVMDwarfSourceLanguagePascal83">
+            <summary>Pascal 83</summary>
+        </Item>
+        <Item name="LibLLVMDwarfSourceLanguageModula2">
+            <summary>Modula 2 Language</summary>
+        </Item>
+        <Item name="LibLLVMDwarfSourceLanguageJava">
+            <summary>Java Language</summary>
+        </Item>
+        <Item name="LibLLVMDwarfSourceLanguageC99">
+            <summary>Standard C99 Language</summary>
+        </Item>
+        <Item name="LibLLVMDwarfSourceLanguageAda95">
+            <summary>Ada 95 Language</summary>
+        </Item>
+        <Item name="LibLLVMDwarfSourceLanguageFortran95">
+            <summary>Fortran 95</summary>
+        </Item>
+        <Item name="LibLLVMDwarfSourceLanguagePLI">
+            <summary>PLI Language</summary>
+        </Item>
+        <Item name="LibLLVMDwarfSourceLanguageObjC">
+            <summary>Objective C</summary>
+        </Item>
+        <Item name="LibLLVMDwarfSourceLanguageObjC_plus_plus">
+            <summary>Objective C++</summary>
+        </Item>
+        <Item name="LibLLVMDwarfSourceLanguageUPC">
+            <summary>UPC Language</summary>
+        </Item>
+        <Item name="LibLLVMDwarfSourceLanguageD">
+            <summary>D Language</summary>
+        </Item>
+        <Item name="LibLLVMDwarfSourceLanguagePython">
+            <summary>Python</summary>
+        </Item>
+        <Item name="LibLLVMDwarfSourceLanguageOpenCL">
+            <summary>OpenCL</summary>
+        </Item>
+        <Item name="LibLLVMDwarfSourceLanguageGo">
+            <summary>Go Language</summary>
+        </Item>
+        <Item name="LibLLVMDwarfSourceLanguageModula3">
+            <summary>Modula3 Language</summary>
+        </Item>
+        <Item name="LibLLVMDwarfSourceLanguageHaskell">
+            <summary>Haskell Language</summary>
+        </Item>
+        <Item name="LibLLVMDwarfSourceLanguageC_plus_plus_03">
+            <summary>C++ 03</summary>
+        </Item>
+        <Item name="LibLLVMDwarfSourceLanguageC_plus_plus_11">
+            <summary>C++ 11</summary>
+        </Item>
+        <Item name="LibLLVMDwarfSourceLanguageOCaml">
+            <summary>OCaml Language</summary>
+        </Item>
+        <Item name="LibLLVMDwarfSourceLanguageRust">
+            <summary>Rust Language</summary>
+        </Item>
+        <Item name="LibLLVMDwarfSourceLanguageC11">
+            <summary>C 11</summary>
+        </Item>
+        <Item name="LibLLVMDwarfSourceLanguageSwift">
+            <summary>Swift Language</summary>
+        </Item>
+        <Item name="LibLLVMDwarfSourceLanguageJulia">
+            <summary>Julia Language</summary>
+        </Item>
+        <Item name="LibLLVMDwarfSourceLanguageDylan">
+            <summary>Dylan Language</summary>
+        </Item>
+        <Item name="LibLLVMDwarfSourceLanguageC_plus_plus_14">
+            <summary>C++ 14</summary>
+        </Item>
+        <Item name="LibLLVMDwarfSourceLanguageFortran03">
+            <summary>Fortran 03</summary>
+        </Item>
+        <Item name="LibLLVMDwarfSourceLanguageFortran08">
+            <summary>Fortran 08</summary>
+        </Item>
+        <Item name="LibLLVMDwarfSourceLanguageRenderScript">
+            <summary>RenderScript</summary>
+        </Item>
+        <Item name="LibLLVMDwarfSourceLanguageBLISS">
+            <summary>BLISS</summary>
+        </Item>
+        <Item name="LibLLVMDwarfSourceLanguageMips_Assembler">
+            <summary>MIPS Assembler</summary>
+        </Item>
+        <Item name="LibLLVMDwarfSourceLanguageGOOGLE_RenderScript">
+            <summary>Google RenderScript</summary>
+        </Item>
+        <Item name="LibLLVMDwarfSourceLanguageBORLAND_Delphi">
+            <summary>Borland Delphi</summary>
+        </Item>
+    </Enumeration>
+    <Function name="LibLLVMDIBuilderCreateEnumeratorValue">
+        <summary>Creates Debug information for an enumerated value</summary>
+        <param name="D"><see cref="LLVMDIBuilderRef"/> to create the value</param>
+        <param name="Name">Name of the enumerated value</param>
+        <param name="Val">Numeric value for the enumerated value</param>
+        <returns><see cref="LLVMMetadataRef"/> for the newly created value</returns>
+    </Function>
+    <Function name="LibLLVMDIBuilderCreateCompileUnit">
+        <summary>This is a clone of the official LLVM-C API that accepts all of the DWARF languages without filtering</summary>
+        <param name="Builder"><see cref="LLVMDIBuilderRef"/> to create the compile unit</param>
+        <param name="Lang">DWARF language for the compile unit</param>
+        <param name="FileRef"><see cref="LLVMMetadataRef"/> for the file this unit represents</param>
+        <param name="Producer">Producer name</param>
+        <param name="ProducerLen">Length of the <paramref name="Producer"/> string</param>
+        <param name="isOptimized">Value to indicate whether the compilation unit is optimized or not</param>
+        <param name="Flags">Additional flags for the compilation unit</param>
+        <param name="FlagsLen">Length of the <paramref name="Flags"/> string</param>
+        <param name="RuntimeVer">Runtime version (use 0 if not needed)</param>
+        <param name="SplitName">SplitName</param>
+        <param name="SplitNameLen">Length of the <paramref name="SplitName"/> string</param>
+        <param name="Kind">TODO: Provide details of parameter Kind</param>
+        <param name="DWOId">TODO: Provide details of parameter DWOId</param>
+        <param name="SplitDebugInlining">TODO: Provide details of parameter SplitDebugInlining</param>
+        <param name="DebugInfoForProfiling">TODO: Provide details of parameter DebugInfoForProfiling</param>
+        <returns>TODO: Document return value</returns>
+    </Function>
+</LibLlvmAPI>
