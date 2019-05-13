@@ -58,21 +58,22 @@ if(HasNativeDisposer){
             
             #line default
             #line hidden
-            this.Write("    ///<summary>Custom string marshaling class for strings using ");
+            this.Write("    ///<summary>Custom string marshaling class for strings using <see cref=\"");
             
             #line 24 "D:\GitHub\Ubiquity.NET\Llvm.Net\src\Interop\LlvmBindingsGenerator\Templates\T4\StringMarshalerTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(NativeDisposer));
             
             #line default
             #line hidden
-            this.Write("</summary>\r\n");
+            this.Write("\"/></summary>\r\n");
             
             #line 25 "D:\GitHub\Ubiquity.NET\Llvm.Net\src\Interop\LlvmBindingsGenerator\Templates\T4\StringMarshalerTemplate.tt"
 }else{
             
             #line default
             #line hidden
-            this.Write("    ///<summary>Custom string marshaling class for strings in LLVM</summary>\r\n");
+            this.Write("    ///<summary>Custom string marshaling class for strings in LLVM that do not re" +
+                    "quire any disposal (e.g. simple copy on marshal)</summary>\r\n");
             
             #line 27 "D:\GitHub\Ubiquity.NET\Llvm.Net\src\Interop\LlvmBindingsGenerator\Templates\T4\StringMarshalerTemplate.tt"
 }

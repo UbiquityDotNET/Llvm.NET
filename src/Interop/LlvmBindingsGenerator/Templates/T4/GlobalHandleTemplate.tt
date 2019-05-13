@@ -36,7 +36,7 @@ namespace Llvm.NET.Interop
             SetHandle( handle );
         }
 
-        /// <summary>Gets a Zero (<see langword="null"/> value handle</summary>
+        /// <summary>Gets a Zero (<see langword="null"/>) value handle</summary>
         public static <#=HandleName#> Zero { get; } = new <#=HandleName#>(IntPtr.Zero, false);
 
         /// <inheritdoc/>
