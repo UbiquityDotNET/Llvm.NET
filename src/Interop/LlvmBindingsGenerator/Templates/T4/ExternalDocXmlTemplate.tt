@@ -28,9 +28,9 @@
 <#foreach(var e in Enums){#>
     <Enumeration name="<#=e.Name#>">
         <summary>TODO: Provide summary for <#=e.Name#> Enumeration</summary>
-<#if( e.Comment.Any() ){#>
+<#if( e.Comments.Any() ){#>
         <remarks>
-<#foreach(var commentLine in e.Comment){#>
+<#foreach(var commentLine in e.Comments){#>
             <#=commentLine#>
 <#}#>
         </remarks>
@@ -65,9 +65,10 @@
 <#foreach(var s in ValueTypes){#>
     <Struct name="<#=s.Name#>">
         <summary>TODO: Provide summary for struct <#=s.Name#></summary>
-<#if( s.GetParsedComment().Any() ){#>
+<# var parsedComments = new ParsedComment(s);
+if( parsedComments.Any() ){#>
         <remarks>
-<#foreach(var commentLine in s.GetParsedComment()){#>
+<#foreach(var commentLine in parsedComments){#>
             <#=commentLine#>
 <#}#>
         </remarks>

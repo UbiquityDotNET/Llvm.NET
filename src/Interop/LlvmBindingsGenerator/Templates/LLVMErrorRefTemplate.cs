@@ -1,6 +1,6 @@
 ﻿// -----------------------------------------------------------------------
-// <copyright file="LLVMErrorRefTemplate.cs" company=".NET Foundation">
-// Copyright (c) .NET Foundation. All rights reserved.
+// <copyright file="LLVMErrorRefTemplate.cs" company="Ubiquity.NET Contributors">
+// Copyright (c) Ubiquity.NET Contributors. All rights reserved.
 // </copyright>
 // -----------------------------------------------------------------------
 
@@ -15,7 +15,9 @@ namespace LlvmBindingsGenerator.Templates
 
         public string HandleName => "LLVMErrorRef";
 
-        public string FileExtension => "cs";
+        public string FileExtension => "g.cs";
+
+        public string SubFolder => string.Empty;
 
         public string Generate( ) => TransformText( );
     }

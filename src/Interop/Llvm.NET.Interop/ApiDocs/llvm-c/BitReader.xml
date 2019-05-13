@@ -1,0 +1,53 @@
+<!--
+;; ==============================================================================
+;; <usage>
+;;     This file contains the Manually edited doc comments info that the
+;;     generated code files refer to. This was originally cloned from the
+;;     'GeneratedDocsFolder' and requires manual update and merging whenever
+;;     the API surface changes. The generated XML is not commited to the repository
+;;     but serves as a useful aid in building the docs for generated code files.
+;; </usage>
+;; ==============================================================================
+-->
+<LibLlvmAPI>
+    <Function name="LLVMParseBitcode">
+        <summary>TODO: Provide summary for Function LLVMParseBitcode</summary>
+        <param name="MemBuf">TODO: Provide details of parameter MemBuf</param>
+        <param name="OutModule">TODO: Provide details of parameter OutModule</param>
+        <param name="OutMessage">TODO: Provide details of parameter OutMessage</param>
+        <returns>TODO: Document return value</returns>
+    </Function>
+    <Function name="LLVMParseBitcode2">
+        <summary>TODO: Provide summary for Function LLVMParseBitcode2</summary>
+        <param name="MemBuf">TODO: Provide details of parameter MemBuf</param>
+        <param name="OutModule">TODO: Provide details of parameter OutModule</param>
+        <returns>TODO: Document return value</returns>
+    </Function>
+    <Function name="LLVMParseBitcodeInContext2">
+        <summary>TODO: Provide summary for Function LLVMParseBitcodeInContext2</summary>
+        <param name="ContextRef">TODO: Provide details of parameter ContextRef</param>
+        <param name="MemBuf">TODO: Provide details of parameter MemBuf</param>
+        <param name="OutModule">TODO: Provide details of parameter OutModule</param>
+        <returns>TODO: Document return value</returns>
+    </Function>
+    <Function name="LLVMGetBitcodeModuleInContext2">
+        <summary>TODO: Provide summary for Function LLVMGetBitcodeModuleInContext2</summary>
+        <param name="ContextRef">TODO: Provide details of parameter ContextRef</param>
+        <param name="MemBuf">TODO: Provide details of parameter MemBuf</param>
+        <param name="OutM">TODO: Provide details of parameter OutM</param>
+        <returns>TODO: Document return value</returns>
+    </Function>
+    <Function name="LLVMGetBitcodeModule">
+        <summary>TODO: Provide summary for Function LLVMGetBitcodeModule</summary>
+        <param name="MemBuf">TODO: Provide details of parameter MemBuf</param>
+        <param name="OutM">TODO: Provide details of parameter OutM</param>
+        <param name="OutMessage">TODO: Provide details of parameter OutMessage</param>
+        <returns>TODO: Document return value</returns>
+    </Function>
+    <Function name="LLVMGetBitcodeModule2">
+        <summary>TODO: Provide summary for Function LLVMGetBitcodeModule2</summary>
+        <param name="MemBuf">TODO: Provide details of parameter MemBuf</param>
+        <param name="OutM">TODO: Provide details of parameter OutM</param>
+        <returns>TODO: Document return value</returns>
+    </Function>
+</LibLlvmAPI>

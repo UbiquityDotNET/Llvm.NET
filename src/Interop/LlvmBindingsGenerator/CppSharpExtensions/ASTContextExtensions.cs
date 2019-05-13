@@ -1,6 +1,6 @@
 ﻿// -----------------------------------------------------------------------
-// <copyright file="ASTContextExtensions.cs" company=".NET Foundation">
-// Copyright (c) .NET Foundation. All rights reserved.
+// <copyright file="ASTContextExtensions.cs" company="Ubiquity.NET Contributors">
+// Copyright (c) Ubiquity.NET Contributors. All rights reserved.
 // </copyright>
 // -----------------------------------------------------------------------
 
@@ -53,14 +53,10 @@ namespace LlvmBindingsGenerator
         {
             switch( astType )
             {
-            // standard form: typedef struct LLVMOpaqueFoo* LLVMFooRef;
             case TypedefType tdt when( tdt.Declaration.IsHandleTypeDef( ) ):
                 decl = tdt.Declaration;
                 return true;
 
-            // bad form: typedef struct LLVMOpaqueFoo LLVMFoo;
-            // found in some APIs (LLVMOpaqueValueMetadataEntry, LLVMOpaqueModuleFlagEntry)
-            // the type passed used for params and returns is always a LLVMFoo*
             case PointerType pt when( pt.Pointee is TypedefType tdt && tdt.Declaration.IsHandleTypeDef( ) ):
                 decl = tdt.Declaration;
                 return true;
@@ -76,6 +72,11 @@ namespace LlvmBindingsGenerator
             return t.TryGetHandleDecl( out TypedefNameDecl _ );
         }
 
+        public static bool IsOpaqueHandleType( this CppSharp.AST.Type t )
+        {
+            return t.TryGetHandleDecl( out TypedefNameDecl decl ) && decl.IsOpaquHandleTypeDef( );
+        }
+
         public static bool IsOpaqueStruct( this TagType tt )
         {
             return tt.Declaration is Class c && c.IsOpaque;
@@ -83,13 +84,24 @@ namespace LlvmBindingsGenerator
 
         public static bool IsHandleTypeDef( this TypedefNameDecl td )
         {
-            if( td.Type is PointerType pt )
+            return IsCannonicalHandleTypeDef( td ) || IsOpaquHandleTypeDef( td );
+        }
+
+        public static bool IsOpaquHandleTypeDef( this TypedefNameDecl td )
+        {
+            // bad form, declaration is the opaque struct, not a pointer to the struct
+            return td.Type is TagType tt2 && tt2.IsOpaqueStruct( );
+        }
+
+        public static bool IsCannonicalHandleTypeDef( this TypedefNameDecl td )
+        {
+            // Cannonical form, declaration is a pointer to an opaque struct
+            if( !(td.Type is PointerType pt ))
             {
-                return ( pt.Pointee is TagType tt && tt.IsOpaqueStruct( ) )
-                    || ( pt.Pointee is BuiltinType bt && bt.Type == PrimitiveType.Void );
+                return false;
             }
 
-            return td.Type is TagType tt2 && tt2.IsOpaqueStruct( );
+            return ( pt.Pointee is TagType tt && tt.IsOpaqueStruct( ) ) || ( pt.Pointee is BuiltinType bt && bt.Type == PrimitiveType.Void );
         }
 
         public static DiagnosticKind ConvertToDiagnosticKind( this CppSharp.Parser.ParserDiagnosticLevel level )

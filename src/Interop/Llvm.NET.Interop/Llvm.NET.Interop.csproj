@@ -44,9 +44,6 @@
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="StringMarshaling\" />
-  </ItemGroup>
 
   <!--
     Version numbers are computed at build time after any declarative properties are evaluated

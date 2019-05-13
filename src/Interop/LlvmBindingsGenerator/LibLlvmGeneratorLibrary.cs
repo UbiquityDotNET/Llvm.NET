@@ -1,9 +1,10 @@
 ﻿// -----------------------------------------------------------------------
-// <copyright file="LibLlvmGeneratorLibrary.cs" company=".NET Foundation">
-// Copyright (c) .NET Foundation. All rights reserved.
+// <copyright file="LibLlvmGeneratorLibrary.cs" company="Ubiquity.NET Contributors">
+// Copyright (c) Ubiquity.NET Contributors. All rights reserved.
 // </copyright>
 // -----------------------------------------------------------------------
 
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using CppSharp;
@@ -11,13 +12,12 @@ using CppSharp.AST;
 using CppSharp.Passes;
 using LlvmBindingsGenerator.Configuration;
 using LlvmBindingsGenerator.Passes;
-using LlvmBindingsGenerator.Templates;
 
 namespace LlvmBindingsGenerator
 {
     /// <summary>ILibrary implementation for the Lllvm.NET Interop</summary>
     /// <remarks>
-    /// This class provides the library specific bridging from the general
+    /// This class provides the library specific bridging from the generalized
     /// CppSharp infrastructure for the specific needs of the Llvm.NET.Interop library
     /// </remarks>
     internal class LibLlvmGeneratorLibrary
@@ -38,11 +38,9 @@ namespace LlvmBindingsGenerator
             OutputPath = Path.GetFullPath( outputPath );
         }
 
-        public void Setup( Driver driver )
+        public void Setup( IDriver driver )
         {
-            // ALWAYS DryRun to disable CppSharp standard code generation as it isn't flexible enough to do what is needed for this lib
-            // Instead, the PostProcess function will do the generation based on the ASTContext and T4 templates
-            driver.Options.DryRun = true;
+            Driver = driver;
             driver.Options.Quiet = true;
             driver.Options.UseHeaderDirectories = true;
             driver.Options.GenerateSingleCSharpFile = false;
@@ -53,102 +51,59 @@ namespace LlvmBindingsGenerator
             driver.ParserOptions.AddIncludeDirs( ExtensionsInclude );
 
             var coreHeaders = Directory.EnumerateFiles( Path.Combine( CommonInclude, "llvm-c" ), "*.h", SearchOption.AllDirectories );
-            var extHeaders = Directory.EnumerateFiles( Path.Combine( ExtensionsInclude, "libllvm-c"), "*.h", SearchOption.AllDirectories );
+            var extHeaders = Directory.EnumerateFiles( Path.Combine( ExtensionsInclude, "libllvm-c" ), "*.h", SearchOption.AllDirectories );
             var module = driver.Options.AddModule( "Llvm.NET.Interop" );
             module.Headers.AddRange( coreHeaders );
             module.Headers.AddRange( extHeaders );
         }
 
-        public void SetupPasses( Driver driver )
+        public void SetupPasses( )
         {
-            // Don't setup pases here, need to wait until driver has added all standard passes to remove them to completely control the passes
-        }
-
-        public void Preprocess( Driver driver, ASTContext ctx )
-        {
-            // remove all the default passes so we can control the exact set of passes used
-            driver.Context.TranslationUnitPasses.Passes.Clear( );
-
             // all handle dispose functions are considered internal, but not ignored
             var disposeFuncEntries = Configuration.HandleToTemplateMap.DisposeFunctionNames.Select( n => (Name: n, Ignored: false) );
 
             // Analysis passes that markup, but don't otherwise modify the AST run first
             // always start the passes with the IgnoreSystemHeaders pass to ensure that generation
             // only occurs for the desired headers. Other passes depend on TranslationUint.IsGenerated
-            driver.AddTranslationUnitPass( new IgnoreSystemHeadersPass( Configuration.IgnoredHeaders ) );
-            driver.AddTranslationUnitPass( new IgnoreDuplicateNamesPass( ) );
-            driver.AddTranslationUnitPass( new AddMissingParameterNamesPass( ) );
-            driver.AddTranslationUnitPass( new AddTypeMapsPass( ) );
-            driver.AddTranslationUnitPass( new PODToValueTypePass( ) );
-            driver.AddTranslationUnitPass( new CheckFlagEnumsPass( ) );
-            driver.AddTranslationUnitPass( new MarkFunctionsInternalPass( disposeFuncEntries.Concat( Configuration.InternalFunctions ) ) );
+            Driver.AddTranslationUnitPass( new IgnoreSystemHeadersPass( Configuration.IgnoredHeaders ) );
+            Driver.AddTranslationUnitPass( new IgnoreDuplicateNamesPass( ) );
+            Driver.AddTranslationUnitPass( new AddMissingParameterNamesPass( ) );
+            Driver.AddTranslationUnitPass( new AddTypeMapsPass( ) );
+            Driver.AddTranslationUnitPass( new PODToValueTypePass( ) );
+            Driver.AddTranslationUnitPass( new CheckFlagEnumsPass( ) );
+            Driver.AddTranslationUnitPass( new MarkFunctionsInternalPass( disposeFuncEntries.Concat( Configuration.InternalFunctions ) ) );
 
             // General transformations
-            driver.AddTranslationUnitPass( new ConvertLLVMBoolPass( Configuration.StatusReturningFunctions ) );
-            driver.AddTranslationUnitPass( new DeAnonymizeEnumsPass( Configuration.AnonymousEnumNames ) );
-            driver.AddTranslationUnitPass( new MapHandleAliasTypesPass( Configuration.AliasReturningFunctions ) );
-            driver.AddTranslationUnitPass( new MarkDeprecatedFunctionsAsObsoletePass( Configuration.DeprecatedFunctionToMessageMap, true ) );
-            driver.AddTranslationUnitPass( new AddMarshalingAttributesPass( new MarshalingInfoMap( ctx, Configuration.MarshalingInfo ) ) );
+            Driver.AddTranslationUnitPass( new FixInconsistentLLVMHandleDeclarations( ) );
+            Driver.AddTranslationUnitPass( new ConvertLLVMBoolPass( Configuration.StatusReturningFunctions ) );
+            Driver.AddTranslationUnitPass( new DeAnonymizeEnumsPass( Configuration.AnonymousEnumNames ) );
+            Driver.AddTranslationUnitPass( new MapHandleAliasTypesPass( Configuration.AliasReturningFunctions ) );
+            Driver.AddTranslationUnitPass( new MarkDeprecatedFunctionsAsObsoletePass( Configuration.DeprecatedFunctionToMessageMap, true ) );
+            Driver.AddTranslationUnitPass( new AddMarshalingAttributesPass( new MarshalingInfoMap( Driver.Context.ASTContext, Configuration.MarshalingInfo ) ) );
 
             // validations apply after all transforms
-            driver.AddTranslationUnitPass( new ValidateHasStringMarshalingAttributes( ) );
-            driver.AddTranslationUnitPass( new ValidateExtensionNamingPass( ) );
+            Driver.AddTranslationUnitPass( new ValidateMarshalingInfoPass( ) );
+            Driver.AddTranslationUnitPass( new ValidateExtensionNamingPass( ) );
         }
 
-        public void Postprocess( Driver driver, ASTContext ctx )
+        public void Preprocess( ASTContext ctx )
         {
-            if(Diagnostics.Implementation is ErrorTrackingDiagnostics etd && etd.ErrorCount > 0)
-            {
-                Diagnostics.Error( "Errors in transformation passes, skipping generation" );
-                return;
-            }
-
-            // Don't rely on CppSharp built-in code generation as it doesn't handle the needs of this library well.
-            GenerateCode( driver );
+            Driver.TypePrinter = new LibLLVMTypePrinter( Driver.Context );
+            return;
         }
 
-        private void GenerateCode( Driver driver )
+        public void Postprocess( ASTContext ctx )
         {
-            string outputPath = Path.GetFullPath( driver.Options.OutputDir );
+            return;
+        }
 
-            if( !Directory.Exists( outputPath ) )
-            {
-                Directory.CreateDirectory( outputPath );
-            }
-
+        public IEnumerable<ICodeGenerator> CreateGenerators( )
+        {
             var templateFactory = new LibLlvmTemplateFactory( Configuration.HandleToTemplateMap );
-            var templates = templateFactory.CreateTemplates( driver.Context );
-
-            foreach( IGeneratorCodeTemplate output in templates.Where( o => o.IsValid ) )
-            {
-                string fileBase = output.FileNameWithoutExtension;
-
-                if( driver.Options.UseHeaderDirectories )
-                {
-                    string dir = Path.Combine( outputPath, output.FileRelativeDirectory );
-                    Directory.CreateDirectory( dir );
-                    fileBase = Path.Combine( output.FileRelativeDirectory, fileBase );
-                }
-
-                foreach( ICodeGenTemplate template in output.Templates )
-                {
-                    try
-                    {
-                        string fileRelativePath = $"{fileBase}.{template.FileExtension}";
-
-                        string file = Path.Combine( outputPath, fileRelativePath );
-                        File.WriteAllText( file, template.Generate( ) );
-
-                        Diagnostics.Message( "Generated '{0}'", fileRelativePath );
-                    }
-                    catch( System.IO.IOException ex)
-                    {
-                        Diagnostics.Error( ex.Message );
-                    }
-                }
-            }
+            return templateFactory.CreateTemplates( Driver.Context );
         }
 
+        private IDriver Driver;
         private readonly GeneratorConfig Configuration;
         private readonly string CommonInclude;
         private readonly string ArchInclude;

@@ -1,6 +1,6 @@
 ﻿// -----------------------------------------------------------------------
-// <copyright file="ParsedEnum.cs" company=".NET Foundation">
-// Copyright (c) .NET Foundation. All rights reserved.
+// <copyright file="ParsedEnum.cs" company="Ubiquity.NET Contributors">
+// Copyright (c) Ubiquity.NET Contributors. All rights reserved.
 // </copyright>
 // -----------------------------------------------------------------------
 
@@ -15,14 +15,14 @@ namespace LlvmBindingsGenerator.Templates
     {
         public ParsedEnum( Enumeration e )
         {
-            Comment = new ParsedComment( e.Comment );
+            Comments = new ParsedComment( e );
             Name = !string.IsNullOrWhiteSpace( e.Name ) ? e.Name : throw new ArgumentException("Enum name cannot be blank");
             BaseType = GetBaseTypeName( e.BuiltinType );
             Members = from i in e.Items
-                      select (i.Name, e.GetItemValueAsString( i ), new ParsedComment( i.Comment ));
+                      select (i.Name, e.GetItemValueAsString( i ), new ParsedComment( i ));
         }
 
-        public ParsedComment Comment { get; }
+        public ParsedComment Comments { get; }
 
         public string Name { get; }
 

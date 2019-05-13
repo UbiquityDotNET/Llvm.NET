@@ -6,10 +6,10 @@
 
   <ItemGroup>
     <PackageReference Include="CSemVer.Build.Tasks" Version="2.0.1" PrivateAssets="All" />
-    <PackageReference Include="docfx.console" Version="2.40.11" PrivateAssets="all">
+    <PackageReference Include="docfx.console" Version="2.42.2" PrivateAssets="all">
       <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
     </PackageReference>
-    <PackageReference Include="memberpage" Version="2.40.11" PrivateAssets="All" />
+    <PackageReference Include="memberpage" Version="2.42.2" PrivateAssets="All" />
     <PackageReference Include="msdn.4.5.2" Version="0.1.0-alpha-1611021200" PrivateAssets="All" />
   </ItemGroup>
 
@@ -54,17 +54,15 @@
     <Error Code="DOCFX:0001" ContinueOnError="false" Condition="!$(IsSupportedMSBuild)" Text="As of DOCFX 2.40 docfx cannot generate metadata for CSPROJ files using MSBuild &gt; 15.8.xx (Current MSBuild is $(MSBuildVersion))" />
   </Target>
 
-  <Target Name="SetDocFxParameters" AfterTargets="GetDocfxPackagePaths" BeforeTargets="DocBuild">
+  <Target Name="SetDocFxParameters" AfterTargets="GetDocfxPackagePaths" BeforeTargets="DocGenerateMetadata">
     <ItemGroup>
       <DocFxCrossRefMap Include="llvm-xref.yml" />
       <DocFxCrossRefMap Include="$(MsdnXrefPath)\content\msdn.4.5.2.zip" />
       <DocFxCrossRefMap Include="$(MsdnXrefPath)\content\namespaces.4.5.2.zip" />
     </ItemGroup>
     <PropertyGroup>
-      <LogLevel>Info</LogLevel>
+      <LogLevel>Warning</LogLevel>
       <LogFile>$(IntermediateOutputPath)DocFx-Metadata.log</LogFile>
-      <DocParameters>$(DocParameters) --cleanupCacheHistory</DocParameters>
-      <DocParameters>$(DocParameters) --lruSize=0</DocParameters>
       <DocParameters>$(DocParameters) --globalMetadata="{_buildVersion:\"$(FullBuildNumber)\"}"</DocParameters>
       <DocParameters>$(DocParameters) --intermediateFolder="$(IntermediateOutputPath.TrimEnd('\'))"</DocParameters>
       <DocParameters>$(DocParameters) --xref="@(DocFxCrossRefMap->'%(FullPath)',',')"</DocParameters>

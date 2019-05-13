@@ -1,6 +1,6 @@
 ﻿// -----------------------------------------------------------------------
-// <copyright file="ExportsTemplate.cs" company=".NET Foundation">
-// Copyright (c) .NET Foundation. All rights reserved.
+// <copyright file="ExportsTemplate.cs" company="Ubiquity.NET Contributors">
+// Copyright (c) Ubiquity.NET Contributors. All rights reserved.
 // </copyright>
 // -----------------------------------------------------------------------
 
@@ -21,7 +21,9 @@ namespace LlvmBindingsGenerator.Templates
 
         public Version ToolVersion => GetType( ).Assembly.GetName( ).Version;
 
-        public string FileExtension => "DEF";
+        public string FileExtension => "g.DEF";
+
+        public string SubFolder => string.Empty;
 
         public string Generate( )
         {

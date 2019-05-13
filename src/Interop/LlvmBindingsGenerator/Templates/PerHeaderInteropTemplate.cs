@@ -1,12 +1,14 @@
 ﻿// -----------------------------------------------------------------------
-// <copyright file="PerHeaderInteropTemplate.cs" company=".NET Foundation">
-// Copyright (c) .NET Foundation. All rights reserved.
+// <copyright file="PerHeaderInteropTemplate.cs" company="Ubiquity.NET Contributors">
+// Copyright (c) Ubiquity.NET Contributors. All rights reserved.
 // </copyright>
 // -----------------------------------------------------------------------
 
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Text;
 using CppSharp.AST;
 
 namespace LlvmBindingsGenerator.Templates
@@ -21,11 +23,36 @@ namespace LlvmBindingsGenerator.Templates
 
         public Version ToolVersion => GetType( ).Assembly.GetName( ).Version;
 
-        public string FileExtension => "cs";
+        public string FileExtension => "g.cs";
+
+        public string SubFolder => string.Empty;
 
         public string Generate( )
         {
             return TransformText( );
+        }
+
+        public string XDocIncludePath
+        {
+            get
+            {
+                var bldr = new StringBuilder();
+
+                string[ ] pathParts = Unit.FileRelativeDirectory.Split( Path.DirectorySeparatorChar, Path.AltDirectorySeparatorChar );
+                int numLevels = 2 + (pathParts.Length > 0 ? pathParts.Length - 1 : 0);
+                for(int i = 0; i < numLevels; ++i )
+                {
+                    bldr.Append( "../" );
+                }
+
+                bldr.Append( "ApiDocs/" )
+                    .Append( Unit.FileRelativeDirectory )
+                    .Append( '/' )
+                    .Append( Unit.FileNameWithoutExtension )
+                    .Append( ".xml" );
+
+                return bldr.ToString( );
+            }
         }
 
         public ISet<string> Imports
@@ -90,7 +117,5 @@ namespace LlvmBindingsGenerator.Templates
                select cls;
 
         public TranslationUnit Unit { get; }
-
-        private static string GetTypeName( CppSharp.AST.Type type ) => ParsedFunctionSignature.GetTypeName( type );
     }
 }

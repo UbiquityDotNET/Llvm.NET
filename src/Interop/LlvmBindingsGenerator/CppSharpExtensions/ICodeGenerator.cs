@@ -1,6 +1,6 @@
 ﻿// -----------------------------------------------------------------------
-// <copyright file="IGeneratorCodeTemplate.cs" company=".NET Foundation">
-// Copyright (c) .NET Foundation. All rights reserved.
+// <copyright file="IGeneratorCodeTemplate.cs" company="Ubiquity.NET Contributors">
+// Copyright (c) Ubiquity.NET Contributors. All rights reserved.
 // </copyright>
 // -----------------------------------------------------------------------
 
@@ -10,7 +10,7 @@ using LlvmBindingsGenerator.Templates;
 
 namespace LlvmBindingsGenerator
 {
-    internal interface IGeneratorCodeTemplate
+    internal interface ICodeGenerator
     {
         bool IsValid { get; }
 
@@ -21,9 +21,9 @@ namespace LlvmBindingsGenerator
         IEnumerable<ICodeGenTemplate> Templates { get; }
     }
 
-    internal interface IGeneratorCodeTemplateFactory
+    internal interface ICodeGeneratorTemplateFactory
     {
-        IEnumerable<IGeneratorCodeTemplate> CreateTemplates( BindingContext bindingContext );
+        IEnumerable<ICodeGenerator> CreateTemplates( BindingContext bindingContext );
 
         void SetupPasses( BindingContext bindingContext );
     }

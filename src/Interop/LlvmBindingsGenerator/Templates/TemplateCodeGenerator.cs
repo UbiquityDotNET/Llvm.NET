@@ -1,6 +1,6 @@
 ﻿// -----------------------------------------------------------------------
-// <copyright file="GeneratorCodeTemplate.cs" company=".NET Foundation">
-// Copyright (c) .NET Foundation. All rights reserved.
+// <copyright file="GeneratorCodeTemplate.cs" company="Ubiquity.NET Contributors">
+// Copyright (c) Ubiquity.NET Contributors. All rights reserved.
 // </copyright>
 // -----------------------------------------------------------------------
 
@@ -9,10 +9,10 @@ using CppSharp.AST;
 
 namespace LlvmBindingsGenerator.Templates
 {
-    internal class GeneratorCodeTemplate
-        : IGeneratorCodeTemplate
+    internal class TemplateCodeGenerator
+        : ICodeGenerator
     {
-        public GeneratorCodeTemplate( TranslationUnit unit, IEnumerable<ICodeGenTemplate> templates )
+        public TemplateCodeGenerator( TranslationUnit unit, IEnumerable<ICodeGenTemplate> templates )
             : this( unit.IsValid,
                     unit.FileNameWithoutExtension,
                     unit.IncludePath == null ? string.Empty : unit.FileRelativeDirectory,
@@ -20,7 +20,7 @@ namespace LlvmBindingsGenerator.Templates
         {
         }
 
-        public GeneratorCodeTemplate(
+        public TemplateCodeGenerator(
             bool isValid,
             string fileNameWithoutExtension,
             string fileRelativeDirectory,

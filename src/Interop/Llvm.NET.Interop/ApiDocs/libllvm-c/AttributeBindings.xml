@@ -1,0 +1,18 @@
+<!--
+;; ==============================================================================
+;; <usage>
+;;     This file contains the Manually edited doc comments info that the
+;;     generated code files refer to. This was originally cloned from the
+;;     'GeneratedDocsFolder' and requires manual update and merging whenever
+;;     the API surface changes. The generated XML is not commited to the repository
+;;     but serves as a useful aid in building the docs for generated code files.
+;; </usage>
+;; ==============================================================================
+-->
+<LibLlvmAPI>
+    <Function name="LibLLVMAttributeToString">
+        <summary>Gets an attribute as a string</summary>
+        <param name="attribute"><see cref="LLVMAttributeRef"/> for the attribute to get the string form from</param>
+        <returns><paramref name="attribute"/> as a string</returns>
+    </Function>
+</LibLlvmAPI>

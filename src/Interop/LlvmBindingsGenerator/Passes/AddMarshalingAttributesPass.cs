@@ -1,6 +1,6 @@
 ﻿// -----------------------------------------------------------------------
-// <copyright file="AddMarshalingAttributesPass.cs" company=".NET Foundation">
-// Copyright (c) .NET Foundation. All rights reserved.
+// <copyright file="AddMarshalingAttributesPass.cs" company="Ubiquity.NET Contributors">
+// Copyright (c) Ubiquity.NET Contributors. All rights reserved.
 // </copyright>
 // -----------------------------------------------------------------------
 
@@ -165,15 +165,6 @@ namespace LlvmBindingsGenerator.Passes
                     p.QualifiedType = new QualifiedType( new CILType( typeof( IntPtr ) ) );
                     break;
 
-                // some handle typedefs do not follow the standard typedef patterns 'typedef struct OpaqueFoo* Foo;'
-                // and instead use 'typedef struct OpaqueFoo Foo;' (e.g. the pointer is not part of the typedef)
-                // this is the sort of inconsistency that drives users insane... Deal with it by treating the single
-                // pointer case as an "in" of the handle type to hide the differences from the generated bindings
-                case TagType _ when pt.Pointee.TryGetHandleDecl( out TypedefNameDecl handleDecl ):
-                    p.Usage = ParameterUsage.In;
-                    p.QualifiedType = new QualifiedType( new TypedefType( handleDecl ) );
-                    break;
-
                 // Pointer to Pointer and Pointer to built in types are out parameters
                 default:
                     p.Usage = ParameterUsage.Out;
@@ -185,13 +176,13 @@ namespace LlvmBindingsGenerator.Passes
         private static (ParameterUsage, CppSharp.AST.Type) TryAddImplicitMarahalingAttributesForType( QualifiedType type, IList<CppSharp.AST.Attribute> attributes )
         {
             // currently only handle strings and arrays of strings by default
-            switch( type.ToString( ) )
+            switch( type.Type )
             {
-            case "string":
+            case PointerType pt when pt.Pointee is BuiltinType bt && bt.Type == PrimitiveType.Char:
                 attributes.Add( MarshalAsLPStrAttrib );
                 return (ParameterUsage.In, StringType);
 
-            case "sbyte**":
+            case PointerType pt when pt.Pointee is PointerType pt2 && pt2.Pointee is BuiltinType bt && bt.Type == PrimitiveType.Char:
                 attributes.Add( MarshalAsLPStrArrayAttrib );
                 return (ParameterUsage.In, StringArrayType);
 

@@ -1,10 +1,11 @@
 ﻿// -----------------------------------------------------------------------
-// <copyright file="LibLlvmTemplateFactory.cs" company=".NET Foundation">
-// Copyright (c) .NET Foundation. All rights reserved.
+// <copyright file="LibLlvmTemplateFactory.cs" company="Ubiquity.NET Contributors">
+// Copyright (c) Ubiquity.NET Contributors. All rights reserved.
 // </copyright>
 // -----------------------------------------------------------------------
 
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using CppSharp;
 using CppSharp.Generators;
@@ -21,7 +22,7 @@ namespace LlvmBindingsGenerator
     // templates in the form of GeneratorOutput. Therefore, IGeneratorCodeTemplate
     // here is the functional equivalent to CppSharp's GeneratorOutput.
     internal class LibLlvmTemplateFactory
-        : IGeneratorCodeTemplateFactory
+        : ICodeGeneratorTemplateFactory
     {
         public LibLlvmTemplateFactory( HandleTemplateMap map )
         {
@@ -33,7 +34,7 @@ namespace LlvmBindingsGenerator
             bindingContext.TranslationUnitPasses.AddPass( new CheckAbiParameters( ) );
         }
 
-        public IEnumerable<IGeneratorCodeTemplate> CreateTemplates( BindingContext bindingContext )
+        public IEnumerable<ICodeGenerator> CreateTemplates( BindingContext bindingContext )
         {
             return CreateHandleTypeTemplates( bindingContext )
                     .Concat( CreatePerHeaderInterop( bindingContext ) )
@@ -41,39 +42,43 @@ namespace LlvmBindingsGenerator
                     .Concat( CreateMiscTemplates( bindingContext ) );
         }
 
-        private IEnumerable<IGeneratorCodeTemplate> CreateMiscTemplates( BindingContext bindingContext )
+        private IEnumerable<ICodeGenerator> CreateMiscTemplates( BindingContext bindingContext )
         {
-            yield return new GeneratorCodeTemplate( true, "EXPORTS", @"..\LibLLVM", new[ ] { new ExportsTemplate( bindingContext.ASTContext ) } );
+            yield return new TemplateCodeGenerator( true, "EXPORTS", Path.Combine("..","LibLLVM"), new[ ] { new ExportsTemplate( bindingContext.ASTContext ) } );
         }
 
-        private IEnumerable<IGeneratorCodeTemplate> CreateStringMarhsallingTemplates( )
+        private IEnumerable<ICodeGenerator> CreateStringMarhsallingTemplates( )
         {
             foreach( StringDisposal kind in GetEnumValues<StringDisposal>())
             {
                 var (name, nativeDisposer) = StringDisposalMarshalerMap.LookupMarshaler( kind );
                 var t4Template = new StringMarshalerTemplate( name, nativeDisposer );
-                yield return new GeneratorCodeTemplate( true, name, "StringMarshaling", new[ ] { t4Template } );
+                yield return new TemplateCodeGenerator( true, name, Path.Combine( GeneratedCodePath, "StringMarshaling"), new[ ] { t4Template } );
             }
         }
 
-        private IEnumerable<IGeneratorCodeTemplate> CreatePerHeaderInterop( BindingContext ctx )
+        private IEnumerable<ICodeGenerator> CreatePerHeaderInterop( BindingContext ctx )
         {
             foreach( var tu in ctx.ASTContext.GeneratedUnits( ) )
             {
                 var t4Template = new PerHeaderInteropTemplate( tu );
                 var t4XmlDocsTemplate = new ExternalDocXmlTemplate( tu );
-                yield return new GeneratorCodeTemplate( tu, new ICodeGenTemplate[ ] { t4Template, t4XmlDocsTemplate } );
+                yield return new TemplateCodeGenerator( tu.IsValid
+                                                      , tu.FileNameWithoutExtension
+                                                      , tu.IncludePath == null ? GeneratedCodePath : Path.Combine( GeneratedCodePath, tu.FileRelativeDirectory )
+                                                      , new ICodeGenTemplate[ ] { t4Template, t4XmlDocsTemplate }
+                                                      );
             }
         }
 
-        private IEnumerable<IGeneratorCodeTemplate> CreateHandleTypeTemplates( BindingContext ctx )
+        private IEnumerable<ICodeGenerator> CreateHandleTypeTemplates( BindingContext ctx )
         {
             var handles = ctx.ASTContext.GetHandleTypeDefs( );
             foreach( var handle in handles )
             {
                 if( HandleToTemplateMap.TryGetValue( handle.Name, out IHandleCodeTemplate template ) )
                 {
-                    yield return new GeneratorCodeTemplate( true, handle.Name, "Handles", new[ ] { template } );
+                    yield return new TemplateCodeGenerator( true, handle.Name, Path.Combine(GeneratedCodePath, "Handles"), new[ ] { template } );
                 }
                 else
                 {
@@ -83,5 +88,7 @@ namespace LlvmBindingsGenerator
         }
 
         private readonly HandleTemplateMap HandleToTemplateMap;
+
+        private const string GeneratedCodePath = "GeneratedCode";
     }
 }

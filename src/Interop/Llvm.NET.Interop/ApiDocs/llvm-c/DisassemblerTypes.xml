@@ -1,0 +1,81 @@
+<!--
+;; ==============================================================================
+;; <usage>
+;;     This file contains the Manually edited doc comments info that the
+;;     generated code files refer to. This was originally cloned from the
+;;     'GeneratedDocsFolder' and requires manual update and merging whenever
+;;     the API surface changes. The generated XML is not commited to the repository
+;;     but serves as a useful aid in building the docs for generated code files.
+;; </usage>
+;; ==============================================================================
+-->
+<LibLlvmAPI>
+    <Delegate name="LLVMOpInfoCallback">
+        <summary>TODO: Provide summary for Delegate LLVMOpInfoCallback</summary>
+        <param name="DisInfo">TODO: Provide details of parameter DisInfo</param>
+        <param name="PC">TODO: Provide details of parameter PC</param>
+        <param name="Offset">TODO: Provide details of parameter Offset</param>
+        <param name="Size">TODO: Provide details of parameter Size</param>
+        <param name="TagType">TODO: Provide details of parameter TagType</param>
+        <param name="TagBuf">TODO: Provide details of parameter TagBuf</param>
+        <returns>TODO: Document return value</returns>
+    </Delegate>
+    <Delegate name="LLVMSymbolLookupCallback">
+        <summary>TODO: Provide summary for Delegate LLVMSymbolLookupCallback</summary>
+        <param name="DisInfo">TODO: Provide details of parameter DisInfo</param>
+        <param name="ReferenceValue">TODO: Provide details of parameter ReferenceValue</param>
+        <param name="ReferenceType">TODO: Provide details of parameter ReferenceType</param>
+        <param name="ReferencePC">TODO: Provide details of parameter ReferencePC</param>
+        <param name="ReferenceName">TODO: Provide details of parameter ReferenceName</param>
+        <returns>TODO: Document return value</returns>
+    </Delegate>
+    <Struct name="LLVMOpInfoSymbol1">
+        <summary>TODO: Provide summary for struct LLVMOpInfoSymbol1</summary>
+        <remarks>
+            **
+             * The initial support in LLVM MC for the most general form of a relocatable
+             * expression is "AddSymbol - SubtractSymbol + Offset".  For some Darwin targets
+             * this full form is encoded in the relocation information so that AddSymbol and
+             * SubtractSymbol can be link edited independent of each other.  Many other
+             * platforms only allow a relocatable expression of the form AddSymbol + Offset
+             * to be encoded.
+             *
+             * The LLVMOpInfoCallback() for the TagType value of 1 uses the struct
+             * LLVMOpInfo1.  The value of the relocatable expression for the operand,
+             * including any PC adjustment, is passed in to the call back in the Value
+             * field.  The symbolic information about the operand is returned using all
+             * the fields of the structure with the Offset of the relocatable expression
+             * returned in the Value field.  It is possible that some symbols in the
+             * relocatable expression were assembly temporary symbols, for example
+             * "Ldata - LpicBase + constant", and only the Values of the symbols without
+             * symbol names are present in the relocation information.  The VariantKind
+             * type is one of the Target specific #defines below and is used to print
+             * operands like "_foo@GOT", ":lower16:_foo", etc.
+             *
+        </remarks>
+        <Field name="Present">
+            <summary>TODO: Provide summary for field LLVMOpInfoSymbol1.Present</summary>
+        </Field>
+        <Field name="Name">
+            <summary>TODO: Provide summary for field LLVMOpInfoSymbol1.Name</summary>
+        </Field>
+        <Field name="Value">
+            <summary>TODO: Provide summary for field LLVMOpInfoSymbol1.Value</summary>
+        </Field>
+    </Struct>
+    <Struct name="LLVMOpInfo1">
+        <summary>TODO: Provide summary for struct LLVMOpInfo1</summary>
+        <Field name="AddSymbol">
+            <summary>TODO: Provide summary for field LLVMOpInfo1.AddSymbol</summary>
+        </Field>
+        <Field name="SubtractSymbol">
+            <summary>TODO: Provide summary for field LLVMOpInfo1.SubtractSymbol</summary>
+        </Field>
+        <Field name="Value">
+            <summary>TODO: Provide summary for field LLVMOpInfo1.Value</summary>
+        </Field>
+        <Field name="VariantKind">
+            <summary>TODO: Provide summary for field LLVMOpInfo1.VariantKind</summary>
+        </Field>
+    </Struct>
+</LibLlvmAPI>

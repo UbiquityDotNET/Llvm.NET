@@ -1,6 +1,6 @@
 ﻿// -----------------------------------------------------------------------
-// <copyright file="ICodeGenTemplate.cs" company=".NET Foundation">
-// Copyright (c) .NET Foundation. All rights reserved.
+// <copyright file="ICodeGenTemplate.cs" company="Ubiquity.NET Contributors">
+// Copyright (c) Ubiquity.NET Contributors. All rights reserved.
 // </copyright>
 // -----------------------------------------------------------------------
 
@@ -13,6 +13,8 @@ namespace LlvmBindingsGenerator.Templates
         Version ToolVersion { get; }
 
         string FileExtension { get; }
+
+        string SubFolder { get; }
 
         string Generate( );
     }

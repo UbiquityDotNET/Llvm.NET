@@ -1,0 +1,92 @@
+<!--
+;; ==============================================================================
+;; <usage>
+;;     This file contains the Manually edited doc comments info that the
+;;     generated code files refer to. This was originally cloned from the
+;;     'GeneratedDocsFolder' and requires manual update and merging whenever
+;;     the API surface changes. The generated XML is not commited to the repository
+;;     but serves as a useful aid in building the docs for generated code files.
+;; </usage>
+;; ==============================================================================
+-->
+<LibLlvmAPI>
+    <Delegate name="LibLLVMValueCacheItemDeletedCallback">
+        <summary>TODO: Provide summary for Delegate LibLLVMValueCacheItemDeletedCallback</summary>
+        <param name="ref">TODO: Provide details of parameter ref</param>
+        <param name="handle">TODO: Provide details of parameter handle</param>
+    </Delegate>
+    <Delegate name="LibLLVMValueCacheItemReplacedCallback">
+        <summary>TODO: Provide summary for Delegate LibLLVMValueCacheItemReplacedCallback</summary>
+        <param name="oldValue">TODO: Provide details of parameter oldValue</param>
+        <param name="handle">TODO: Provide details of parameter handle</param>
+        <param name="newValue">TODO: Provide details of parameter newValue</param>
+        <returns>TODO: Document return value</returns>
+    </Delegate>
+    <Function name="LibLLVMIsConstantZeroValue">
+        <summary>TODO: Provide summary for Function LibLLVMIsConstantZeroValue</summary>
+        <param name="valueRef">TODO: Provide details of parameter valueRef</param>
+        <returns>TODO: Document return value</returns>
+    </Function>
+    <Function name="LibLLVMRemoveGlobalFromParent">
+        <summary>TODO: Provide summary for Function LibLLVMRemoveGlobalFromParent</summary>
+        <param name="valueRef">TODO: Provide details of parameter valueRef</param>
+    </Function>
+    <Function name="LibLLVMGetValueID">
+        <summary>TODO: Provide summary for Function LibLLVMGetValueID</summary>
+        <param name="valueRef">TODO: Provide details of parameter valueRef</param>
+        <returns>TODO: Document return value</returns>
+    </Function>
+    <Function name="LibLLVMGetAliasee">
+        <summary>TODO: Provide summary for Function LibLLVMGetAliasee</summary>
+        <param name="Val">TODO: Provide details of parameter Val</param>
+        <returns>TODO: Document return value</returns>
+    </Function>
+    <Function name="LibLLVMGetArgumentIndex">
+        <summary>TODO: Provide summary for Function LibLLVMGetArgumentIndex</summary>
+        <param name="Val">TODO: Provide details of parameter Val</param>
+        <returns>TODO: Document return value</returns>
+    </Function>
+    <Function name="LibLLVMGlobalObjectGetComdat">
+        <summary>TODO: Provide summary for Function LibLLVMGlobalObjectGetComdat</summary>
+        <param name="Val">TODO: Provide details of parameter Val</param>
+        <returns>TODO: Document return value</returns>
+    </Function>
+    <Function name="LibLLVMGlobalObjectSetComdat">
+        <summary>TODO: Provide summary for Function LibLLVMGlobalObjectSetComdat</summary>
+        <param name="Val">TODO: Provide details of parameter Val</param>
+        <param name="comdatRef">TODO: Provide details of parameter comdatRef</param>
+    </Function>
+    <Function name="LibLLVMGlobalVariableAddDebugExpression">
+        <summary>TODO: Provide summary for Function LibLLVMGlobalVariableAddDebugExpression</summary>
+        <param name="globalVar">TODO: Provide details of parameter globalVar</param>
+        <param name="exp">TODO: Provide details of parameter exp</param>
+    </Function>
+    <Function name="LibLLVMFunctionAppendBasicBlock">
+        <summary>TODO: Provide summary for Function LibLLVMFunctionAppendBasicBlock</summary>
+        <param name="function">TODO: Provide details of parameter function</param>
+        <param name="block">TODO: Provide details of parameter block</param>
+    </Function>
+    <Function name="LibLLVMValueAsMetadataGetValue">
+        <summary>TODO: Provide summary for Function LibLLVMValueAsMetadataGetValue</summary>
+        <param name="vmd">TODO: Provide details of parameter vmd</param>
+        <returns>TODO: Document return value</returns>
+    </Function>
+    <Function name="LibLLVMCreateValueCache">
+        <summary>TODO: Provide summary for Function LibLLVMCreateValueCache</summary>
+        <param name="deletedCallback">TODO: Provide details of parameter deletedCallback</param>
+        <param name="replacedCallback">TODO: Provide details of parameter replacedCallback</param>
+        <returns>TODO: Document return value</returns>
+    </Function>
+    <Function name="LibLLVMValueCacheAdd">
+        <summary>TODO: Provide summary for Function LibLLVMValueCacheAdd</summary>
+        <param name="cacheRef">TODO: Provide details of parameter cacheRef</param>
+        <param name="value">TODO: Provide details of parameter value</param>
+        <param name="handle">TODO: Provide details of parameter handle</param>
+    </Function>
+    <Function name="LibLLVMValueCacheLookup">
+        <summary>TODO: Provide summary for Function LibLLVMValueCacheLookup</summary>
+        <param name="cacheRef">TODO: Provide details of parameter cacheRef</param>
+        <param name="valueRef">TODO: Provide details of parameter valueRef</param>
+        <returns>TODO: Document return value</returns>
+    </Function>
+</LibLlvmAPI>

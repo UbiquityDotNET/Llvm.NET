@@ -1,12 +1,13 @@
 ﻿// -----------------------------------------------------------------------
-// <copyright file="ParsedComment.cs" company=".NET Foundation">
-// Copyright (c) .NET Foundation. All rights reserved.
+// <copyright file="ParsedComment.cs" company="Ubiquity.NET Contributors">
+// Copyright (c) Ubiquity.NET Contributors. All rights reserved.
 // </copyright>
 // -----------------------------------------------------------------------
 
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using CppSharp.AST;
 
 namespace LlvmBindingsGenerator.Templates
@@ -14,11 +15,11 @@ namespace LlvmBindingsGenerator.Templates
     internal class ParsedComment
         : IEnumerable<string>
     {
-        public ParsedComment( RawComment c )
+        public ParsedComment( Declaration decl )
         {
-            if( c != null )
+            if( decl.Comment != null )
             {
-                Lines.AddRange( c.Text.Split( new[ ] { "\r\n", "\n" }, StringSplitOptions.None ) );
+                Lines.AddRange( decl.Comment.Text.Split( AnyNewLine, StringSplitOptions.None ).Select( l=>l.Trim('/') ) );
             }
         }
 
@@ -33,5 +34,7 @@ namespace LlvmBindingsGenerator.Templates
         }
 
         private readonly List<string> Lines = new List<string>();
+
+        private static readonly string[ ] AnyNewLine = { "\r\n", "\n" };
     }
 }

@@ -1,6 +1,6 @@
 ﻿// -----------------------------------------------------------------------
-// <copyright file="ValidateHasStringMarshalingAttributes.cs" company=".NET Foundation">
-// Copyright (c) .NET Foundation. All rights reserved.
+// <copyright file="ValidateHasStringMarshalingAttributes.cs" company="Ubiquity.NET Contributors">
+// Copyright (c) Ubiquity.NET Contributors. All rights reserved.
 // </copyright>
 // -----------------------------------------------------------------------
 
@@ -12,10 +12,10 @@ using LlvmBindingsGenerator.CppSharpExtensions;
 
 namespace LlvmBindingsGenerator.Passes
 {
-    internal class ValidateHasStringMarshalingAttributes
+    internal class ValidateMarshalingInfoPass
         : TranslationUnitPass
     {
-        public ValidateHasStringMarshalingAttributes( )
+        public ValidateMarshalingInfoPass( )
         {
             VisitOptions.VisitClassBases = false;
             VisitOptions.VisitClassFields = false;
@@ -36,7 +36,12 @@ namespace LlvmBindingsGenerator.Passes
 
         public override bool VisitFunctionDecl( Function function )
         {
-            if(function.ReturnType.Type.ToString() == "string" )
+            if( !function.IsGenerated )
+            {
+                return false;
+            }
+
+            if(function.ReturnType.Type is CILType cilType && cilType.Type.Name == "string" )
             {
                 bool hasCustomMarshaling = ( from attrib in function.Attributes.OfType<TargetedAttribute>( )
                                              where attrib.Target == AttributeTarget.Return && IsStringMarshalingAttribute( attrib )
@@ -47,10 +52,24 @@ namespace LlvmBindingsGenerator.Passes
                     Diagnostics.Error( "ERROR: Function {0} has string return type, but does not have string custom marshaling attribute to define marshaling behavior!", function.Name );
                 }
             }
+            else if ( function.ReturnType.Type is PointerType pt && function.ReturnType.Type is CILType cilptr && cilptr.Type.Name != "IntPtr" )
+            {
+                bool hasMarhsalAsAttrib = ( from attrib in function.Attributes.OfType<TargetedAttribute>( )
+                                            where attrib.Target == AttributeTarget.Return && attrib.Type.Name == "MarshalAsAttribute"
+                                            select attrib
+                                          ).Any( );
+                if( !hasMarhsalAsAttrib )
+                {
+                    Diagnostics.Error( "ERROR: Function {0} has unsafe return type '{1}', without a marshaling attribute - (Possible missing marshal info map entry)"
+                                     , function.Name
+                                     , pt.ToString( )
+                                     );
+                }
+            }
 
             var outStrings = from p in function.Parameters
                              where (p.IsOut || p.IsInOut)
-                                && p.Type.ToString( ) == "string"
+                                && ( p.Type.ToString( ) == "string" || p.Type.ToString() == "sbyte")
                                 && !p.Attributes.Any( IsStringMarshalingAttribute )
                              select p;
 
