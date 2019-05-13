@@ -21,9 +21,9 @@ using System.Runtime.InteropServices;
 namespace Llvm.NET.Interop
 {
 <#if(HasNativeDisposer){#>
-    ///<summary>Custom string marshaling class for strings using <#=NativeDisposer#></summary>
+    ///<summary>Custom string marshaling class for strings using <see cref="<#=NativeDisposer#>"/></summary>
 <#}else{#>
-    ///<summary>Custom string marshaling class for strings in LLVM</summary>
+    ///<summary>Custom string marshaling class for strings in LLVM that do not require any disposal (e.g. simple copy on marshal)</summary>
 <#}#>
     [GeneratedCode("LlvmBindingsGenerator","<#=ToolVersion#>")]
     public class <#=Name#>

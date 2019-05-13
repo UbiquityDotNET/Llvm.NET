@@ -87,7 +87,7 @@ namespace Llvm.NET.Interop
             #line hidden
             this.Write("( IntPtr handle, bool owner )\r\n            : base( owner )\r\n        {\r\n          " +
                     "  SetHandle( handle );\r\n        }\r\n\r\n        /// <summary>Gets a Zero (<see lang" +
-                    "word=\"null\"/> value handle</summary>\r\n        public static ");
+                    "word=\"null\"/>) value handle</summary>\r\n        public static ");
             
             #line 40 "D:\GitHub\Ubiquity.NET\Llvm.Net\src\Interop\LlvmBindingsGenerator\Templates\T4\GlobalHandleTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(HandleName));
