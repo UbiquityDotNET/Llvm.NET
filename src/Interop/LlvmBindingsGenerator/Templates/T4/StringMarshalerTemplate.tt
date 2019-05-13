@@ -15,7 +15,6 @@
 
 using System;
 using System.CodeDom.Compiler;
-using System.Diagnostics.CodeAnalysis;
 using System.Runtime.InteropServices;
 
 namespace Llvm.NET.Interop
@@ -27,34 +26,8 @@ namespace Llvm.NET.Interop
 <#}#>
     [GeneratedCode("LlvmBindingsGenerator","<#=ToolVersion#>")]
     public class <#=Name#>
-        : ICustomMarshaler
+        : CustomStringMarshalerBase
     {
-        /// <inheritdoc/>
-        public void CleanUpManagedData( object ManagedObj )
-        {
-        }
-
-<#if(HasNativeDisposer){#>
-        /// <inheritdoc/>
-        public void CleanUpNativeData( IntPtr pNativeData )
-            => NativeDisposer?.Invoke( pNativeData );
-<#}else{#>
-        /// <inheritdoc/>
-        public void CleanUpNativeData( IntPtr pNativeData ) { /* NOP */ }
-<#}#>
-
-        /// <inheritdoc/>
-        [SuppressMessage( "Design", "CA1024:Use properties where appropriate.", Justification = "Name and signature defined by interface")]
-        public int GetNativeDataSize( ) => -1;
-
-        /// <inheritdoc/>
-        public IntPtr MarshalManagedToNative( object ManagedObj )
-            => throw new NotImplementedException( );
-
-        /// <inheritdoc/>
-        public object MarshalNativeToManaged( IntPtr pNativeData )
-            => StringNormalizer.NormalizeLineEndings( pNativeData );
-
         /// <summary>Custom marshaler static factory contract implementation</summary>
         /// <param name="cookie">Cookie from attribute</param>
         /// <returns>Custom marshaller instance</returns>
@@ -73,15 +46,13 @@ namespace Llvm.NET.Interop
         }
 
         internal <#=Name#>( )
-        {
 <#if(HasNativeDisposer){#>
-            NativeDisposer = <#=NativeDisposer#>;
+            : base( <#=NativeDisposer#> )
 <#}#>
+        {
         }
 
 <#if(HasNativeDisposer){#>
-        private readonly Action<IntPtr> NativeDisposer;
-
         [DllImport( NativeMethods.LibraryPath, CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi, ThrowOnUnmappableChar = true, BestFitMapping = false )]
         private static extern void <#=NativeDisposer#>( IntPtr p );
 <#}#>
