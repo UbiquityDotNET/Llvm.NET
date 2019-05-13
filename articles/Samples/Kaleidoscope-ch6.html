@@ -8,7 +8,7 @@
     <title>6. Kaleidoscope: User Defined Operators | Llvm.NET </title>
     <meta name="viewport" content="width=device-width">
     <meta name="title" content="6. Kaleidoscope: User Defined Operators | Llvm.NET ">
-    <meta name="generator" content="docfx 2.40.11.0">
+    <meta name="generator" content="docfx 2.42.2.0">
     
     <link rel="shortcut icon" href="../../favicon.ico">
     <link rel="stylesheet" href="../../styles/docfx.vendor.css">
@@ -289,9 +289,11 @@ ANTLR generated parser called a &quot;Parse Listener&quot;. A parse listener is 
 monitors the entire parsing process. For the user operators the listener will listen for the specific case
 of a complete function definition that defines a user operator. When it detects such a case it will update
 the runtime table accordingly.</p>
-<pre><code class="lang-csharp" name="UserOperatorListener">// &lt;copyright file=&quot;KaleidoscopeUserOperatorListener.cs&quot; company=&quot;.NET Foundation&quot;&gt;
-// Copyright (c) .NET Foundation. All rights reserved.
+<pre><code class="lang-csharp" name="UserOperatorListener">// -----------------------------------------------------------------------
+// &lt;copyright file=&quot;KaleidoscopeUserOperatorListener.cs&quot; company=&quot;Ubiquity.NET Contributors&quot;&gt;
+// Copyright (c) Ubiquity.NET Contributors. All rights reserved.
 // &lt;/copyright&gt;
+// -----------------------------------------------------------------------
 
 using JetBrains.Annotations;
 using Kaleidoscope.Grammar;
@@ -544,7 +546,7 @@ an otherwise unimplemented feature - truly lazy compilation, which is covered in
             <span class="pull-right">
               <a href="#top">Back to top</a>
             </span>
-            Copyright (C) 2017, Dot NET Foundation<br><strong>Build:</strong> 8.0.0-alpha.0.0.ci-BLD.463373925
+            Copyright (C) 2017, Dot NET Foundation<br><strong>Build:</strong> 8.0.0-alpha.0.0.ci-BLD.463473686
             
           </div>
         </div>

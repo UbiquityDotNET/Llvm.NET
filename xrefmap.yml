@@ -10295,6 +10295,18 @@ references:
   commentId: T:Llvm.NET.Interop.DisposableObject
   fullName: Llvm.NET.Interop.DisposableObject
   nameWithType: DisposableObject
+- uid: Llvm.NET.Interop.DisposableObject.#ctor
+  name: DisposableObject()
+  href: api/Llvm.NET.Interop.DisposableObject.-ctor.html#Llvm_NET_Interop_DisposableObject__ctor
+  commentId: M:Llvm.NET.Interop.DisposableObject.#ctor
+  fullName: Llvm.NET.Interop.DisposableObject.DisposableObject()
+  nameWithType: DisposableObject.DisposableObject()
+- uid: Llvm.NET.Interop.DisposableObject.#ctor*
+  name: DisposableObject
+  href: api/Llvm.NET.Interop.DisposableObject.-ctor.html
+  commentId: Overload:Llvm.NET.Interop.DisposableObject.#ctor
+  fullName: Llvm.NET.Interop.DisposableObject.DisposableObject
+  nameWithType: DisposableObject.DisposableObject
 - uid: Llvm.NET.Interop.DisposableObject.Dispose
   name: Dispose()
   href: api/Llvm.NET.Interop.DisposableObject.Dispose.html#Llvm_NET_Interop_DisposableObject_Dispose
@@ -10523,6 +10535,54 @@ references:
   commentId: T:Llvm.NET.Interop.LibLLVMComdatIteratorCallback
   fullName: Llvm.NET.Interop.LibLLVMComdatIteratorCallback
   nameWithType: LibLLVMComdatIteratorCallback
+- uid: Llvm.NET.Interop.LibLLVMComdatIteratorCallback.#ctor(System.Object,System.IntPtr)
+  name: LibLLVMComdatIteratorCallback(Object, IntPtr)
+  href: api/Llvm.NET.Interop.LibLLVMComdatIteratorCallback.-ctor.html#Llvm_NET_Interop_LibLLVMComdatIteratorCallback__ctor_System_Object_System_IntPtr_
+  commentId: M:Llvm.NET.Interop.LibLLVMComdatIteratorCallback.#ctor(System.Object,System.IntPtr)
+  fullName: Llvm.NET.Interop.LibLLVMComdatIteratorCallback.LibLLVMComdatIteratorCallback(System.Object, System.IntPtr)
+  nameWithType: LibLLVMComdatIteratorCallback.LibLLVMComdatIteratorCallback(Object, IntPtr)
+- uid: Llvm.NET.Interop.LibLLVMComdatIteratorCallback.#ctor*
+  name: LibLLVMComdatIteratorCallback
+  href: api/Llvm.NET.Interop.LibLLVMComdatIteratorCallback.-ctor.html
+  commentId: Overload:Llvm.NET.Interop.LibLLVMComdatIteratorCallback.#ctor
+  fullName: Llvm.NET.Interop.LibLLVMComdatIteratorCallback.LibLLVMComdatIteratorCallback
+  nameWithType: LibLLVMComdatIteratorCallback.LibLLVMComdatIteratorCallback
+- uid: Llvm.NET.Interop.LibLLVMComdatIteratorCallback.BeginInvoke(Llvm.NET.Interop.LLVMComdatRef,System.AsyncCallback,System.Object)
+  name: BeginInvoke(LLVMComdatRef, AsyncCallback, Object)
+  href: api/Llvm.NET.Interop.LibLLVMComdatIteratorCallback.BeginInvoke.html#Llvm_NET_Interop_LibLLVMComdatIteratorCallback_BeginInvoke_Llvm_NET_Interop_LLVMComdatRef_System_AsyncCallback_System_Object_
+  commentId: M:Llvm.NET.Interop.LibLLVMComdatIteratorCallback.BeginInvoke(Llvm.NET.Interop.LLVMComdatRef,System.AsyncCallback,System.Object)
+  fullName: Llvm.NET.Interop.LibLLVMComdatIteratorCallback.BeginInvoke(Llvm.NET.Interop.LLVMComdatRef, System.AsyncCallback, System.Object)
+  nameWithType: LibLLVMComdatIteratorCallback.BeginInvoke(LLVMComdatRef, AsyncCallback, Object)
+- uid: Llvm.NET.Interop.LibLLVMComdatIteratorCallback.BeginInvoke*
+  name: BeginInvoke
+  href: api/Llvm.NET.Interop.LibLLVMComdatIteratorCallback.BeginInvoke.html
+  commentId: Overload:Llvm.NET.Interop.LibLLVMComdatIteratorCallback.BeginInvoke
+  fullName: Llvm.NET.Interop.LibLLVMComdatIteratorCallback.BeginInvoke
+  nameWithType: LibLLVMComdatIteratorCallback.BeginInvoke
+- uid: Llvm.NET.Interop.LibLLVMComdatIteratorCallback.EndInvoke(System.IAsyncResult)
+  name: EndInvoke(IAsyncResult)
+  href: api/Llvm.NET.Interop.LibLLVMComdatIteratorCallback.EndInvoke.html#Llvm_NET_Interop_LibLLVMComdatIteratorCallback_EndInvoke_System_IAsyncResult_
+  commentId: M:Llvm.NET.Interop.LibLLVMComdatIteratorCallback.EndInvoke(System.IAsyncResult)
+  fullName: Llvm.NET.Interop.LibLLVMComdatIteratorCallback.EndInvoke(System.IAsyncResult)
+  nameWithType: LibLLVMComdatIteratorCallback.EndInvoke(IAsyncResult)
+- uid: Llvm.NET.Interop.LibLLVMComdatIteratorCallback.EndInvoke*
+  name: EndInvoke
+  href: api/Llvm.NET.Interop.LibLLVMComdatIteratorCallback.EndInvoke.html
+  commentId: Overload:Llvm.NET.Interop.LibLLVMComdatIteratorCallback.EndInvoke
+  fullName: Llvm.NET.Interop.LibLLVMComdatIteratorCallback.EndInvoke
+  nameWithType: LibLLVMComdatIteratorCallback.EndInvoke
+- uid: Llvm.NET.Interop.LibLLVMComdatIteratorCallback.Invoke(Llvm.NET.Interop.LLVMComdatRef)
+  name: Invoke(LLVMComdatRef)
+  href: api/Llvm.NET.Interop.LibLLVMComdatIteratorCallback.Invoke.html#Llvm_NET_Interop_LibLLVMComdatIteratorCallback_Invoke_Llvm_NET_Interop_LLVMComdatRef_
+  commentId: M:Llvm.NET.Interop.LibLLVMComdatIteratorCallback.Invoke(Llvm.NET.Interop.LLVMComdatRef)
+  fullName: Llvm.NET.Interop.LibLLVMComdatIteratorCallback.Invoke(Llvm.NET.Interop.LLVMComdatRef)
+  nameWithType: LibLLVMComdatIteratorCallback.Invoke(LLVMComdatRef)
+- uid: Llvm.NET.Interop.LibLLVMComdatIteratorCallback.Invoke*
+  name: Invoke
+  href: api/Llvm.NET.Interop.LibLLVMComdatIteratorCallback.Invoke.html
+  commentId: Overload:Llvm.NET.Interop.LibLLVMComdatIteratorCallback.Invoke
+  fullName: Llvm.NET.Interop.LibLLVMComdatIteratorCallback.Invoke
+  nameWithType: LibLLVMComdatIteratorCallback.Invoke
 - uid: Llvm.NET.Interop.LibLLVMDwarfSourceLanguage
   name: LibLLVMDwarfSourceLanguage
   href: api/Llvm.NET.Interop.LibLLVMDwarfSourceLanguage.html
@@ -12407,12 +12467,108 @@ references:
   commentId: T:Llvm.NET.Interop.LibLLVMValueCacheItemDeletedCallback
   fullName: Llvm.NET.Interop.LibLLVMValueCacheItemDeletedCallback
   nameWithType: LibLLVMValueCacheItemDeletedCallback
+- uid: Llvm.NET.Interop.LibLLVMValueCacheItemDeletedCallback.#ctor(System.Object,System.IntPtr)
+  name: LibLLVMValueCacheItemDeletedCallback(Object, IntPtr)
+  href: api/Llvm.NET.Interop.LibLLVMValueCacheItemDeletedCallback.-ctor.html#Llvm_NET_Interop_LibLLVMValueCacheItemDeletedCallback__ctor_System_Object_System_IntPtr_
+  commentId: M:Llvm.NET.Interop.LibLLVMValueCacheItemDeletedCallback.#ctor(System.Object,System.IntPtr)
+  fullName: Llvm.NET.Interop.LibLLVMValueCacheItemDeletedCallback.LibLLVMValueCacheItemDeletedCallback(System.Object, System.IntPtr)
+  nameWithType: LibLLVMValueCacheItemDeletedCallback.LibLLVMValueCacheItemDeletedCallback(Object, IntPtr)
+- uid: Llvm.NET.Interop.LibLLVMValueCacheItemDeletedCallback.#ctor*
+  name: LibLLVMValueCacheItemDeletedCallback
+  href: api/Llvm.NET.Interop.LibLLVMValueCacheItemDeletedCallback.-ctor.html
+  commentId: Overload:Llvm.NET.Interop.LibLLVMValueCacheItemDeletedCallback.#ctor
+  fullName: Llvm.NET.Interop.LibLLVMValueCacheItemDeletedCallback.LibLLVMValueCacheItemDeletedCallback
+  nameWithType: LibLLVMValueCacheItemDeletedCallback.LibLLVMValueCacheItemDeletedCallback
+- uid: Llvm.NET.Interop.LibLLVMValueCacheItemDeletedCallback.BeginInvoke(Llvm.NET.Interop.LLVMValueRef,System.IntPtr,System.AsyncCallback,System.Object)
+  name: BeginInvoke(LLVMValueRef, IntPtr, AsyncCallback, Object)
+  href: api/Llvm.NET.Interop.LibLLVMValueCacheItemDeletedCallback.BeginInvoke.html#Llvm_NET_Interop_LibLLVMValueCacheItemDeletedCallback_BeginInvoke_Llvm_NET_Interop_LLVMValueRef_System_IntPtr_System_AsyncCallback_System_Object_
+  commentId: M:Llvm.NET.Interop.LibLLVMValueCacheItemDeletedCallback.BeginInvoke(Llvm.NET.Interop.LLVMValueRef,System.IntPtr,System.AsyncCallback,System.Object)
+  fullName: Llvm.NET.Interop.LibLLVMValueCacheItemDeletedCallback.BeginInvoke(Llvm.NET.Interop.LLVMValueRef, System.IntPtr, System.AsyncCallback, System.Object)
+  nameWithType: LibLLVMValueCacheItemDeletedCallback.BeginInvoke(LLVMValueRef, IntPtr, AsyncCallback, Object)
+- uid: Llvm.NET.Interop.LibLLVMValueCacheItemDeletedCallback.BeginInvoke*
+  name: BeginInvoke
+  href: api/Llvm.NET.Interop.LibLLVMValueCacheItemDeletedCallback.BeginInvoke.html
+  commentId: Overload:Llvm.NET.Interop.LibLLVMValueCacheItemDeletedCallback.BeginInvoke
+  fullName: Llvm.NET.Interop.LibLLVMValueCacheItemDeletedCallback.BeginInvoke
+  nameWithType: LibLLVMValueCacheItemDeletedCallback.BeginInvoke
+- uid: Llvm.NET.Interop.LibLLVMValueCacheItemDeletedCallback.EndInvoke(System.IAsyncResult)
+  name: EndInvoke(IAsyncResult)
+  href: api/Llvm.NET.Interop.LibLLVMValueCacheItemDeletedCallback.EndInvoke.html#Llvm_NET_Interop_LibLLVMValueCacheItemDeletedCallback_EndInvoke_System_IAsyncResult_
+  commentId: M:Llvm.NET.Interop.LibLLVMValueCacheItemDeletedCallback.EndInvoke(System.IAsyncResult)
+  fullName: Llvm.NET.Interop.LibLLVMValueCacheItemDeletedCallback.EndInvoke(System.IAsyncResult)
+  nameWithType: LibLLVMValueCacheItemDeletedCallback.EndInvoke(IAsyncResult)
+- uid: Llvm.NET.Interop.LibLLVMValueCacheItemDeletedCallback.EndInvoke*
+  name: EndInvoke
+  href: api/Llvm.NET.Interop.LibLLVMValueCacheItemDeletedCallback.EndInvoke.html
+  commentId: Overload:Llvm.NET.Interop.LibLLVMValueCacheItemDeletedCallback.EndInvoke
+  fullName: Llvm.NET.Interop.LibLLVMValueCacheItemDeletedCallback.EndInvoke
+  nameWithType: LibLLVMValueCacheItemDeletedCallback.EndInvoke
+- uid: Llvm.NET.Interop.LibLLVMValueCacheItemDeletedCallback.Invoke(Llvm.NET.Interop.LLVMValueRef,System.IntPtr)
+  name: Invoke(LLVMValueRef, IntPtr)
+  href: api/Llvm.NET.Interop.LibLLVMValueCacheItemDeletedCallback.Invoke.html#Llvm_NET_Interop_LibLLVMValueCacheItemDeletedCallback_Invoke_Llvm_NET_Interop_LLVMValueRef_System_IntPtr_
+  commentId: M:Llvm.NET.Interop.LibLLVMValueCacheItemDeletedCallback.Invoke(Llvm.NET.Interop.LLVMValueRef,System.IntPtr)
+  fullName: Llvm.NET.Interop.LibLLVMValueCacheItemDeletedCallback.Invoke(Llvm.NET.Interop.LLVMValueRef, System.IntPtr)
+  nameWithType: LibLLVMValueCacheItemDeletedCallback.Invoke(LLVMValueRef, IntPtr)
+- uid: Llvm.NET.Interop.LibLLVMValueCacheItemDeletedCallback.Invoke*
+  name: Invoke
+  href: api/Llvm.NET.Interop.LibLLVMValueCacheItemDeletedCallback.Invoke.html
+  commentId: Overload:Llvm.NET.Interop.LibLLVMValueCacheItemDeletedCallback.Invoke
+  fullName: Llvm.NET.Interop.LibLLVMValueCacheItemDeletedCallback.Invoke
+  nameWithType: LibLLVMValueCacheItemDeletedCallback.Invoke
 - uid: Llvm.NET.Interop.LibLLVMValueCacheItemReplacedCallback
   name: LibLLVMValueCacheItemReplacedCallback
   href: api/Llvm.NET.Interop.LibLLVMValueCacheItemReplacedCallback.html
   commentId: T:Llvm.NET.Interop.LibLLVMValueCacheItemReplacedCallback
   fullName: Llvm.NET.Interop.LibLLVMValueCacheItemReplacedCallback
   nameWithType: LibLLVMValueCacheItemReplacedCallback
+- uid: Llvm.NET.Interop.LibLLVMValueCacheItemReplacedCallback.#ctor(System.Object,System.IntPtr)
+  name: LibLLVMValueCacheItemReplacedCallback(Object, IntPtr)
+  href: api/Llvm.NET.Interop.LibLLVMValueCacheItemReplacedCallback.-ctor.html#Llvm_NET_Interop_LibLLVMValueCacheItemReplacedCallback__ctor_System_Object_System_IntPtr_
+  commentId: M:Llvm.NET.Interop.LibLLVMValueCacheItemReplacedCallback.#ctor(System.Object,System.IntPtr)
+  fullName: Llvm.NET.Interop.LibLLVMValueCacheItemReplacedCallback.LibLLVMValueCacheItemReplacedCallback(System.Object, System.IntPtr)
+  nameWithType: LibLLVMValueCacheItemReplacedCallback.LibLLVMValueCacheItemReplacedCallback(Object, IntPtr)
+- uid: Llvm.NET.Interop.LibLLVMValueCacheItemReplacedCallback.#ctor*
+  name: LibLLVMValueCacheItemReplacedCallback
+  href: api/Llvm.NET.Interop.LibLLVMValueCacheItemReplacedCallback.-ctor.html
+  commentId: Overload:Llvm.NET.Interop.LibLLVMValueCacheItemReplacedCallback.#ctor
+  fullName: Llvm.NET.Interop.LibLLVMValueCacheItemReplacedCallback.LibLLVMValueCacheItemReplacedCallback
+  nameWithType: LibLLVMValueCacheItemReplacedCallback.LibLLVMValueCacheItemReplacedCallback
+- uid: Llvm.NET.Interop.LibLLVMValueCacheItemReplacedCallback.BeginInvoke(Llvm.NET.Interop.LLVMValueRef,System.IntPtr,Llvm.NET.Interop.LLVMValueRef,System.AsyncCallback,System.Object)
+  name: BeginInvoke(LLVMValueRef, IntPtr, LLVMValueRef, AsyncCallback, Object)
+  href: api/Llvm.NET.Interop.LibLLVMValueCacheItemReplacedCallback.BeginInvoke.html#Llvm_NET_Interop_LibLLVMValueCacheItemReplacedCallback_BeginInvoke_Llvm_NET_Interop_LLVMValueRef_System_IntPtr_Llvm_NET_Interop_LLVMValueRef_System_AsyncCallback_System_Object_
+  commentId: M:Llvm.NET.Interop.LibLLVMValueCacheItemReplacedCallback.BeginInvoke(Llvm.NET.Interop.LLVMValueRef,System.IntPtr,Llvm.NET.Interop.LLVMValueRef,System.AsyncCallback,System.Object)
+  fullName: Llvm.NET.Interop.LibLLVMValueCacheItemReplacedCallback.BeginInvoke(Llvm.NET.Interop.LLVMValueRef, System.IntPtr, Llvm.NET.Interop.LLVMValueRef, System.AsyncCallback, System.Object)
+  nameWithType: LibLLVMValueCacheItemReplacedCallback.BeginInvoke(LLVMValueRef, IntPtr, LLVMValueRef, AsyncCallback, Object)
+- uid: Llvm.NET.Interop.LibLLVMValueCacheItemReplacedCallback.BeginInvoke*
+  name: BeginInvoke
+  href: api/Llvm.NET.Interop.LibLLVMValueCacheItemReplacedCallback.BeginInvoke.html
+  commentId: Overload:Llvm.NET.Interop.LibLLVMValueCacheItemReplacedCallback.BeginInvoke
+  fullName: Llvm.NET.Interop.LibLLVMValueCacheItemReplacedCallback.BeginInvoke
+  nameWithType: LibLLVMValueCacheItemReplacedCallback.BeginInvoke
+- uid: Llvm.NET.Interop.LibLLVMValueCacheItemReplacedCallback.EndInvoke(System.IAsyncResult)
+  name: EndInvoke(IAsyncResult)
+  href: api/Llvm.NET.Interop.LibLLVMValueCacheItemReplacedCallback.EndInvoke.html#Llvm_NET_Interop_LibLLVMValueCacheItemReplacedCallback_EndInvoke_System_IAsyncResult_
+  commentId: M:Llvm.NET.Interop.LibLLVMValueCacheItemReplacedCallback.EndInvoke(System.IAsyncResult)
+  fullName: Llvm.NET.Interop.LibLLVMValueCacheItemReplacedCallback.EndInvoke(System.IAsyncResult)
+  nameWithType: LibLLVMValueCacheItemReplacedCallback.EndInvoke(IAsyncResult)
+- uid: Llvm.NET.Interop.LibLLVMValueCacheItemReplacedCallback.EndInvoke*
+  name: EndInvoke
+  href: api/Llvm.NET.Interop.LibLLVMValueCacheItemReplacedCallback.EndInvoke.html
+  commentId: Overload:Llvm.NET.Interop.LibLLVMValueCacheItemReplacedCallback.EndInvoke
+  fullName: Llvm.NET.Interop.LibLLVMValueCacheItemReplacedCallback.EndInvoke
+  nameWithType: LibLLVMValueCacheItemReplacedCallback.EndInvoke
+- uid: Llvm.NET.Interop.LibLLVMValueCacheItemReplacedCallback.Invoke(Llvm.NET.Interop.LLVMValueRef,System.IntPtr,Llvm.NET.Interop.LLVMValueRef)
+  name: Invoke(LLVMValueRef, IntPtr, LLVMValueRef)
+  href: api/Llvm.NET.Interop.LibLLVMValueCacheItemReplacedCallback.Invoke.html#Llvm_NET_Interop_LibLLVMValueCacheItemReplacedCallback_Invoke_Llvm_NET_Interop_LLVMValueRef_System_IntPtr_Llvm_NET_Interop_LLVMValueRef_
+  commentId: M:Llvm.NET.Interop.LibLLVMValueCacheItemReplacedCallback.Invoke(Llvm.NET.Interop.LLVMValueRef,System.IntPtr,Llvm.NET.Interop.LLVMValueRef)
+  fullName: Llvm.NET.Interop.LibLLVMValueCacheItemReplacedCallback.Invoke(Llvm.NET.Interop.LLVMValueRef, System.IntPtr, Llvm.NET.Interop.LLVMValueRef)
+  nameWithType: LibLLVMValueCacheItemReplacedCallback.Invoke(LLVMValueRef, IntPtr, LLVMValueRef)
+- uid: Llvm.NET.Interop.LibLLVMValueCacheItemReplacedCallback.Invoke*
+  name: Invoke
+  href: api/Llvm.NET.Interop.LibLLVMValueCacheItemReplacedCallback.Invoke.html
+  commentId: Overload:Llvm.NET.Interop.LibLLVMValueCacheItemReplacedCallback.Invoke
+  fullName: Llvm.NET.Interop.LibLLVMValueCacheItemReplacedCallback.Invoke
+  nameWithType: LibLLVMValueCacheItemReplacedCallback.Invoke
 - uid: Llvm.NET.Interop.LibLLVMValueCacheRef
   name: LibLLVMValueCacheRef
   href: api/Llvm.NET.Interop.LibLLVMValueCacheRef.html
@@ -13628,6 +13784,54 @@ references:
   commentId: T:Llvm.NET.Interop.LLVMDiagnosticHandler
   fullName: Llvm.NET.Interop.LLVMDiagnosticHandler
   nameWithType: LLVMDiagnosticHandler
+- uid: Llvm.NET.Interop.LLVMDiagnosticHandler.#ctor(System.Object,System.IntPtr)
+  name: LLVMDiagnosticHandler(Object, IntPtr)
+  href: api/Llvm.NET.Interop.LLVMDiagnosticHandler.-ctor.html#Llvm_NET_Interop_LLVMDiagnosticHandler__ctor_System_Object_System_IntPtr_
+  commentId: M:Llvm.NET.Interop.LLVMDiagnosticHandler.#ctor(System.Object,System.IntPtr)
+  fullName: Llvm.NET.Interop.LLVMDiagnosticHandler.LLVMDiagnosticHandler(System.Object, System.IntPtr)
+  nameWithType: LLVMDiagnosticHandler.LLVMDiagnosticHandler(Object, IntPtr)
+- uid: Llvm.NET.Interop.LLVMDiagnosticHandler.#ctor*
+  name: LLVMDiagnosticHandler
+  href: api/Llvm.NET.Interop.LLVMDiagnosticHandler.-ctor.html
+  commentId: Overload:Llvm.NET.Interop.LLVMDiagnosticHandler.#ctor
+  fullName: Llvm.NET.Interop.LLVMDiagnosticHandler.LLVMDiagnosticHandler
+  nameWithType: LLVMDiagnosticHandler.LLVMDiagnosticHandler
+- uid: Llvm.NET.Interop.LLVMDiagnosticHandler.BeginInvoke(Llvm.NET.Interop.LLVMDiagnosticInfoRef,System.IntPtr,System.AsyncCallback,System.Object)
+  name: BeginInvoke(LLVMDiagnosticInfoRef, IntPtr, AsyncCallback, Object)
+  href: api/Llvm.NET.Interop.LLVMDiagnosticHandler.BeginInvoke.html#Llvm_NET_Interop_LLVMDiagnosticHandler_BeginInvoke_Llvm_NET_Interop_LLVMDiagnosticInfoRef_System_IntPtr_System_AsyncCallback_System_Object_
+  commentId: M:Llvm.NET.Interop.LLVMDiagnosticHandler.BeginInvoke(Llvm.NET.Interop.LLVMDiagnosticInfoRef,System.IntPtr,System.AsyncCallback,System.Object)
+  fullName: Llvm.NET.Interop.LLVMDiagnosticHandler.BeginInvoke(Llvm.NET.Interop.LLVMDiagnosticInfoRef, System.IntPtr, System.AsyncCallback, System.Object)
+  nameWithType: LLVMDiagnosticHandler.BeginInvoke(LLVMDiagnosticInfoRef, IntPtr, AsyncCallback, Object)
+- uid: Llvm.NET.Interop.LLVMDiagnosticHandler.BeginInvoke*
+  name: BeginInvoke
+  href: api/Llvm.NET.Interop.LLVMDiagnosticHandler.BeginInvoke.html
+  commentId: Overload:Llvm.NET.Interop.LLVMDiagnosticHandler.BeginInvoke
+  fullName: Llvm.NET.Interop.LLVMDiagnosticHandler.BeginInvoke
+  nameWithType: LLVMDiagnosticHandler.BeginInvoke
+- uid: Llvm.NET.Interop.LLVMDiagnosticHandler.EndInvoke(System.IAsyncResult)
+  name: EndInvoke(IAsyncResult)
+  href: api/Llvm.NET.Interop.LLVMDiagnosticHandler.EndInvoke.html#Llvm_NET_Interop_LLVMDiagnosticHandler_EndInvoke_System_IAsyncResult_
+  commentId: M:Llvm.NET.Interop.LLVMDiagnosticHandler.EndInvoke(System.IAsyncResult)
+  fullName: Llvm.NET.Interop.LLVMDiagnosticHandler.EndInvoke(System.IAsyncResult)
+  nameWithType: LLVMDiagnosticHandler.EndInvoke(IAsyncResult)
+- uid: Llvm.NET.Interop.LLVMDiagnosticHandler.EndInvoke*
+  name: EndInvoke
+  href: api/Llvm.NET.Interop.LLVMDiagnosticHandler.EndInvoke.html
+  commentId: Overload:Llvm.NET.Interop.LLVMDiagnosticHandler.EndInvoke
+  fullName: Llvm.NET.Interop.LLVMDiagnosticHandler.EndInvoke
+  nameWithType: LLVMDiagnosticHandler.EndInvoke
+- uid: Llvm.NET.Interop.LLVMDiagnosticHandler.Invoke(Llvm.NET.Interop.LLVMDiagnosticInfoRef,System.IntPtr)
+  name: Invoke(LLVMDiagnosticInfoRef, IntPtr)
+  href: api/Llvm.NET.Interop.LLVMDiagnosticHandler.Invoke.html#Llvm_NET_Interop_LLVMDiagnosticHandler_Invoke_Llvm_NET_Interop_LLVMDiagnosticInfoRef_System_IntPtr_
+  commentId: M:Llvm.NET.Interop.LLVMDiagnosticHandler.Invoke(Llvm.NET.Interop.LLVMDiagnosticInfoRef,System.IntPtr)
+  fullName: Llvm.NET.Interop.LLVMDiagnosticHandler.Invoke(Llvm.NET.Interop.LLVMDiagnosticInfoRef, System.IntPtr)
+  nameWithType: LLVMDiagnosticHandler.Invoke(LLVMDiagnosticInfoRef, IntPtr)
+- uid: Llvm.NET.Interop.LLVMDiagnosticHandler.Invoke*
+  name: Invoke
+  href: api/Llvm.NET.Interop.LLVMDiagnosticHandler.Invoke.html
+  commentId: Overload:Llvm.NET.Interop.LLVMDiagnosticHandler.Invoke
+  fullName: Llvm.NET.Interop.LLVMDiagnosticHandler.Invoke
+  nameWithType: LLVMDiagnosticHandler.Invoke
 - uid: Llvm.NET.Interop.LLVMDiagnosticInfoRef
   name: LLVMDiagnosticInfoRef
   href: api/Llvm.NET.Interop.LLVMDiagnosticInfoRef.html
@@ -14588,6 +14792,54 @@ references:
   commentId: T:Llvm.NET.Interop.LLVMFatalErrorHandler
   fullName: Llvm.NET.Interop.LLVMFatalErrorHandler
   nameWithType: LLVMFatalErrorHandler
+- uid: Llvm.NET.Interop.LLVMFatalErrorHandler.#ctor(System.Object,System.IntPtr)
+  name: LLVMFatalErrorHandler(Object, IntPtr)
+  href: api/Llvm.NET.Interop.LLVMFatalErrorHandler.-ctor.html#Llvm_NET_Interop_LLVMFatalErrorHandler__ctor_System_Object_System_IntPtr_
+  commentId: M:Llvm.NET.Interop.LLVMFatalErrorHandler.#ctor(System.Object,System.IntPtr)
+  fullName: Llvm.NET.Interop.LLVMFatalErrorHandler.LLVMFatalErrorHandler(System.Object, System.IntPtr)
+  nameWithType: LLVMFatalErrorHandler.LLVMFatalErrorHandler(Object, IntPtr)
+- uid: Llvm.NET.Interop.LLVMFatalErrorHandler.#ctor*
+  name: LLVMFatalErrorHandler
+  href: api/Llvm.NET.Interop.LLVMFatalErrorHandler.-ctor.html
+  commentId: Overload:Llvm.NET.Interop.LLVMFatalErrorHandler.#ctor
+  fullName: Llvm.NET.Interop.LLVMFatalErrorHandler.LLVMFatalErrorHandler
+  nameWithType: LLVMFatalErrorHandler.LLVMFatalErrorHandler
+- uid: Llvm.NET.Interop.LLVMFatalErrorHandler.BeginInvoke(System.String,System.AsyncCallback,System.Object)
+  name: BeginInvoke(String, AsyncCallback, Object)
+  href: api/Llvm.NET.Interop.LLVMFatalErrorHandler.BeginInvoke.html#Llvm_NET_Interop_LLVMFatalErrorHandler_BeginInvoke_System_String_System_AsyncCallback_System_Object_
+  commentId: M:Llvm.NET.Interop.LLVMFatalErrorHandler.BeginInvoke(System.String,System.AsyncCallback,System.Object)
+  fullName: Llvm.NET.Interop.LLVMFatalErrorHandler.BeginInvoke(System.String, System.AsyncCallback, System.Object)
+  nameWithType: LLVMFatalErrorHandler.BeginInvoke(String, AsyncCallback, Object)
+- uid: Llvm.NET.Interop.LLVMFatalErrorHandler.BeginInvoke*
+  name: BeginInvoke
+  href: api/Llvm.NET.Interop.LLVMFatalErrorHandler.BeginInvoke.html
+  commentId: Overload:Llvm.NET.Interop.LLVMFatalErrorHandler.BeginInvoke
+  fullName: Llvm.NET.Interop.LLVMFatalErrorHandler.BeginInvoke
+  nameWithType: LLVMFatalErrorHandler.BeginInvoke
+- uid: Llvm.NET.Interop.LLVMFatalErrorHandler.EndInvoke(System.IAsyncResult)
+  name: EndInvoke(IAsyncResult)
+  href: api/Llvm.NET.Interop.LLVMFatalErrorHandler.EndInvoke.html#Llvm_NET_Interop_LLVMFatalErrorHandler_EndInvoke_System_IAsyncResult_
+  commentId: M:Llvm.NET.Interop.LLVMFatalErrorHandler.EndInvoke(System.IAsyncResult)
+  fullName: Llvm.NET.Interop.LLVMFatalErrorHandler.EndInvoke(System.IAsyncResult)
+  nameWithType: LLVMFatalErrorHandler.EndInvoke(IAsyncResult)
+- uid: Llvm.NET.Interop.LLVMFatalErrorHandler.EndInvoke*
+  name: EndInvoke
+  href: api/Llvm.NET.Interop.LLVMFatalErrorHandler.EndInvoke.html
+  commentId: Overload:Llvm.NET.Interop.LLVMFatalErrorHandler.EndInvoke
+  fullName: Llvm.NET.Interop.LLVMFatalErrorHandler.EndInvoke
+  nameWithType: LLVMFatalErrorHandler.EndInvoke
+- uid: Llvm.NET.Interop.LLVMFatalErrorHandler.Invoke(System.String)
+  name: Invoke(String)
+  href: api/Llvm.NET.Interop.LLVMFatalErrorHandler.Invoke.html#Llvm_NET_Interop_LLVMFatalErrorHandler_Invoke_System_String_
+  commentId: M:Llvm.NET.Interop.LLVMFatalErrorHandler.Invoke(System.String)
+  fullName: Llvm.NET.Interop.LLVMFatalErrorHandler.Invoke(System.String)
+  nameWithType: LLVMFatalErrorHandler.Invoke(String)
+- uid: Llvm.NET.Interop.LLVMFatalErrorHandler.Invoke*
+  name: Invoke
+  href: api/Llvm.NET.Interop.LLVMFatalErrorHandler.Invoke.html
+  commentId: Overload:Llvm.NET.Interop.LLVMFatalErrorHandler.Invoke
+  fullName: Llvm.NET.Interop.LLVMFatalErrorHandler.Invoke
+  nameWithType: LLVMFatalErrorHandler.Invoke
 - uid: Llvm.NET.Interop.LLVMGenericValueRef
   name: LLVMGenericValueRef
   href: api/Llvm.NET.Interop.LLVMGenericValueRef.html
@@ -15086,24 +15338,222 @@ references:
   commentId: T:Llvm.NET.Interop.LLVMMemoryManagerAllocateCodeSectionCallback
   fullName: Llvm.NET.Interop.LLVMMemoryManagerAllocateCodeSectionCallback
   nameWithType: LLVMMemoryManagerAllocateCodeSectionCallback
+- uid: Llvm.NET.Interop.LLVMMemoryManagerAllocateCodeSectionCallback.#ctor(System.Object,System.IntPtr)
+  name: LLVMMemoryManagerAllocateCodeSectionCallback(Object, IntPtr)
+  href: api/Llvm.NET.Interop.LLVMMemoryManagerAllocateCodeSectionCallback.-ctor.html#Llvm_NET_Interop_LLVMMemoryManagerAllocateCodeSectionCallback__ctor_System_Object_System_IntPtr_
+  commentId: M:Llvm.NET.Interop.LLVMMemoryManagerAllocateCodeSectionCallback.#ctor(System.Object,System.IntPtr)
+  fullName: Llvm.NET.Interop.LLVMMemoryManagerAllocateCodeSectionCallback.LLVMMemoryManagerAllocateCodeSectionCallback(System.Object, System.IntPtr)
+  nameWithType: LLVMMemoryManagerAllocateCodeSectionCallback.LLVMMemoryManagerAllocateCodeSectionCallback(Object, IntPtr)
+- uid: Llvm.NET.Interop.LLVMMemoryManagerAllocateCodeSectionCallback.#ctor*
+  name: LLVMMemoryManagerAllocateCodeSectionCallback
+  href: api/Llvm.NET.Interop.LLVMMemoryManagerAllocateCodeSectionCallback.-ctor.html
+  commentId: Overload:Llvm.NET.Interop.LLVMMemoryManagerAllocateCodeSectionCallback.#ctor
+  fullName: Llvm.NET.Interop.LLVMMemoryManagerAllocateCodeSectionCallback.LLVMMemoryManagerAllocateCodeSectionCallback
+  nameWithType: LLVMMemoryManagerAllocateCodeSectionCallback.LLVMMemoryManagerAllocateCodeSectionCallback
+- uid: Llvm.NET.Interop.LLVMMemoryManagerAllocateCodeSectionCallback.BeginInvoke(System.IntPtr,System.UIntPtr,System.UInt32,System.UInt32,System.String,System.AsyncCallback,System.Object)
+  name: BeginInvoke(IntPtr, UIntPtr, UInt32, UInt32, String, AsyncCallback, Object)
+  href: api/Llvm.NET.Interop.LLVMMemoryManagerAllocateCodeSectionCallback.BeginInvoke.html#Llvm_NET_Interop_LLVMMemoryManagerAllocateCodeSectionCallback_BeginInvoke_System_IntPtr_System_UIntPtr_System_UInt32_System_UInt32_System_String_System_AsyncCallback_System_Object_
+  commentId: M:Llvm.NET.Interop.LLVMMemoryManagerAllocateCodeSectionCallback.BeginInvoke(System.IntPtr,System.UIntPtr,System.UInt32,System.UInt32,System.String,System.AsyncCallback,System.Object)
+  fullName: Llvm.NET.Interop.LLVMMemoryManagerAllocateCodeSectionCallback.BeginInvoke(System.IntPtr, System.UIntPtr, System.UInt32, System.UInt32, System.String, System.AsyncCallback, System.Object)
+  nameWithType: LLVMMemoryManagerAllocateCodeSectionCallback.BeginInvoke(IntPtr, UIntPtr, UInt32, UInt32, String, AsyncCallback, Object)
+- uid: Llvm.NET.Interop.LLVMMemoryManagerAllocateCodeSectionCallback.BeginInvoke*
+  name: BeginInvoke
+  href: api/Llvm.NET.Interop.LLVMMemoryManagerAllocateCodeSectionCallback.BeginInvoke.html
+  commentId: Overload:Llvm.NET.Interop.LLVMMemoryManagerAllocateCodeSectionCallback.BeginInvoke
+  fullName: Llvm.NET.Interop.LLVMMemoryManagerAllocateCodeSectionCallback.BeginInvoke
+  nameWithType: LLVMMemoryManagerAllocateCodeSectionCallback.BeginInvoke
+- uid: Llvm.NET.Interop.LLVMMemoryManagerAllocateCodeSectionCallback.EndInvoke(System.IAsyncResult)
+  name: EndInvoke(IAsyncResult)
+  href: api/Llvm.NET.Interop.LLVMMemoryManagerAllocateCodeSectionCallback.EndInvoke.html#Llvm_NET_Interop_LLVMMemoryManagerAllocateCodeSectionCallback_EndInvoke_System_IAsyncResult_
+  commentId: M:Llvm.NET.Interop.LLVMMemoryManagerAllocateCodeSectionCallback.EndInvoke(System.IAsyncResult)
+  fullName: Llvm.NET.Interop.LLVMMemoryManagerAllocateCodeSectionCallback.EndInvoke(System.IAsyncResult)
+  nameWithType: LLVMMemoryManagerAllocateCodeSectionCallback.EndInvoke(IAsyncResult)
+- uid: Llvm.NET.Interop.LLVMMemoryManagerAllocateCodeSectionCallback.EndInvoke*
+  name: EndInvoke
+  href: api/Llvm.NET.Interop.LLVMMemoryManagerAllocateCodeSectionCallback.EndInvoke.html
+  commentId: Overload:Llvm.NET.Interop.LLVMMemoryManagerAllocateCodeSectionCallback.EndInvoke
+  fullName: Llvm.NET.Interop.LLVMMemoryManagerAllocateCodeSectionCallback.EndInvoke
+  nameWithType: LLVMMemoryManagerAllocateCodeSectionCallback.EndInvoke
+- uid: Llvm.NET.Interop.LLVMMemoryManagerAllocateCodeSectionCallback.Invoke(System.IntPtr,System.UIntPtr,System.UInt32,System.UInt32,System.String)
+  name: Invoke(IntPtr, UIntPtr, UInt32, UInt32, String)
+  href: api/Llvm.NET.Interop.LLVMMemoryManagerAllocateCodeSectionCallback.Invoke.html#Llvm_NET_Interop_LLVMMemoryManagerAllocateCodeSectionCallback_Invoke_System_IntPtr_System_UIntPtr_System_UInt32_System_UInt32_System_String_
+  commentId: M:Llvm.NET.Interop.LLVMMemoryManagerAllocateCodeSectionCallback.Invoke(System.IntPtr,System.UIntPtr,System.UInt32,System.UInt32,System.String)
+  fullName: Llvm.NET.Interop.LLVMMemoryManagerAllocateCodeSectionCallback.Invoke(System.IntPtr, System.UIntPtr, System.UInt32, System.UInt32, System.String)
+  nameWithType: LLVMMemoryManagerAllocateCodeSectionCallback.Invoke(IntPtr, UIntPtr, UInt32, UInt32, String)
+- uid: Llvm.NET.Interop.LLVMMemoryManagerAllocateCodeSectionCallback.Invoke*
+  name: Invoke
+  href: api/Llvm.NET.Interop.LLVMMemoryManagerAllocateCodeSectionCallback.Invoke.html
+  commentId: Overload:Llvm.NET.Interop.LLVMMemoryManagerAllocateCodeSectionCallback.Invoke
+  fullName: Llvm.NET.Interop.LLVMMemoryManagerAllocateCodeSectionCallback.Invoke
+  nameWithType: LLVMMemoryManagerAllocateCodeSectionCallback.Invoke
 - uid: Llvm.NET.Interop.LLVMMemoryManagerAllocateDataSectionCallback
   name: LLVMMemoryManagerAllocateDataSectionCallback
   href: api/Llvm.NET.Interop.LLVMMemoryManagerAllocateDataSectionCallback.html
   commentId: T:Llvm.NET.Interop.LLVMMemoryManagerAllocateDataSectionCallback
   fullName: Llvm.NET.Interop.LLVMMemoryManagerAllocateDataSectionCallback
   nameWithType: LLVMMemoryManagerAllocateDataSectionCallback
+- uid: Llvm.NET.Interop.LLVMMemoryManagerAllocateDataSectionCallback.#ctor(System.Object,System.IntPtr)
+  name: LLVMMemoryManagerAllocateDataSectionCallback(Object, IntPtr)
+  href: api/Llvm.NET.Interop.LLVMMemoryManagerAllocateDataSectionCallback.-ctor.html#Llvm_NET_Interop_LLVMMemoryManagerAllocateDataSectionCallback__ctor_System_Object_System_IntPtr_
+  commentId: M:Llvm.NET.Interop.LLVMMemoryManagerAllocateDataSectionCallback.#ctor(System.Object,System.IntPtr)
+  fullName: Llvm.NET.Interop.LLVMMemoryManagerAllocateDataSectionCallback.LLVMMemoryManagerAllocateDataSectionCallback(System.Object, System.IntPtr)
+  nameWithType: LLVMMemoryManagerAllocateDataSectionCallback.LLVMMemoryManagerAllocateDataSectionCallback(Object, IntPtr)
+- uid: Llvm.NET.Interop.LLVMMemoryManagerAllocateDataSectionCallback.#ctor*
+  name: LLVMMemoryManagerAllocateDataSectionCallback
+  href: api/Llvm.NET.Interop.LLVMMemoryManagerAllocateDataSectionCallback.-ctor.html
+  commentId: Overload:Llvm.NET.Interop.LLVMMemoryManagerAllocateDataSectionCallback.#ctor
+  fullName: Llvm.NET.Interop.LLVMMemoryManagerAllocateDataSectionCallback.LLVMMemoryManagerAllocateDataSectionCallback
+  nameWithType: LLVMMemoryManagerAllocateDataSectionCallback.LLVMMemoryManagerAllocateDataSectionCallback
+- uid: Llvm.NET.Interop.LLVMMemoryManagerAllocateDataSectionCallback.BeginInvoke(System.IntPtr,System.UIntPtr,System.UInt32,System.UInt32,System.String,System.Boolean,System.AsyncCallback,System.Object)
+  name: BeginInvoke(IntPtr, UIntPtr, UInt32, UInt32, String, Boolean, AsyncCallback, Object)
+  href: api/Llvm.NET.Interop.LLVMMemoryManagerAllocateDataSectionCallback.BeginInvoke.html#Llvm_NET_Interop_LLVMMemoryManagerAllocateDataSectionCallback_BeginInvoke_System_IntPtr_System_UIntPtr_System_UInt32_System_UInt32_System_String_System_Boolean_System_AsyncCallback_System_Object_
+  commentId: M:Llvm.NET.Interop.LLVMMemoryManagerAllocateDataSectionCallback.BeginInvoke(System.IntPtr,System.UIntPtr,System.UInt32,System.UInt32,System.String,System.Boolean,System.AsyncCallback,System.Object)
+  fullName: Llvm.NET.Interop.LLVMMemoryManagerAllocateDataSectionCallback.BeginInvoke(System.IntPtr, System.UIntPtr, System.UInt32, System.UInt32, System.String, System.Boolean, System.AsyncCallback, System.Object)
+  nameWithType: LLVMMemoryManagerAllocateDataSectionCallback.BeginInvoke(IntPtr, UIntPtr, UInt32, UInt32, String, Boolean, AsyncCallback, Object)
+- uid: Llvm.NET.Interop.LLVMMemoryManagerAllocateDataSectionCallback.BeginInvoke*
+  name: BeginInvoke
+  href: api/Llvm.NET.Interop.LLVMMemoryManagerAllocateDataSectionCallback.BeginInvoke.html
+  commentId: Overload:Llvm.NET.Interop.LLVMMemoryManagerAllocateDataSectionCallback.BeginInvoke
+  fullName: Llvm.NET.Interop.LLVMMemoryManagerAllocateDataSectionCallback.BeginInvoke
+  nameWithType: LLVMMemoryManagerAllocateDataSectionCallback.BeginInvoke
+- uid: Llvm.NET.Interop.LLVMMemoryManagerAllocateDataSectionCallback.EndInvoke(System.IAsyncResult)
+  name: EndInvoke(IAsyncResult)
+  href: api/Llvm.NET.Interop.LLVMMemoryManagerAllocateDataSectionCallback.EndInvoke.html#Llvm_NET_Interop_LLVMMemoryManagerAllocateDataSectionCallback_EndInvoke_System_IAsyncResult_
+  commentId: M:Llvm.NET.Interop.LLVMMemoryManagerAllocateDataSectionCallback.EndInvoke(System.IAsyncResult)
+  fullName: Llvm.NET.Interop.LLVMMemoryManagerAllocateDataSectionCallback.EndInvoke(System.IAsyncResult)
+  nameWithType: LLVMMemoryManagerAllocateDataSectionCallback.EndInvoke(IAsyncResult)
+- uid: Llvm.NET.Interop.LLVMMemoryManagerAllocateDataSectionCallback.EndInvoke*
+  name: EndInvoke
+  href: api/Llvm.NET.Interop.LLVMMemoryManagerAllocateDataSectionCallback.EndInvoke.html
+  commentId: Overload:Llvm.NET.Interop.LLVMMemoryManagerAllocateDataSectionCallback.EndInvoke
+  fullName: Llvm.NET.Interop.LLVMMemoryManagerAllocateDataSectionCallback.EndInvoke
+  nameWithType: LLVMMemoryManagerAllocateDataSectionCallback.EndInvoke
+- uid: Llvm.NET.Interop.LLVMMemoryManagerAllocateDataSectionCallback.Invoke(System.IntPtr,System.UIntPtr,System.UInt32,System.UInt32,System.String,System.Boolean)
+  name: Invoke(IntPtr, UIntPtr, UInt32, UInt32, String, Boolean)
+  href: api/Llvm.NET.Interop.LLVMMemoryManagerAllocateDataSectionCallback.Invoke.html#Llvm_NET_Interop_LLVMMemoryManagerAllocateDataSectionCallback_Invoke_System_IntPtr_System_UIntPtr_System_UInt32_System_UInt32_System_String_System_Boolean_
+  commentId: M:Llvm.NET.Interop.LLVMMemoryManagerAllocateDataSectionCallback.Invoke(System.IntPtr,System.UIntPtr,System.UInt32,System.UInt32,System.String,System.Boolean)
+  fullName: Llvm.NET.Interop.LLVMMemoryManagerAllocateDataSectionCallback.Invoke(System.IntPtr, System.UIntPtr, System.UInt32, System.UInt32, System.String, System.Boolean)
+  nameWithType: LLVMMemoryManagerAllocateDataSectionCallback.Invoke(IntPtr, UIntPtr, UInt32, UInt32, String, Boolean)
+- uid: Llvm.NET.Interop.LLVMMemoryManagerAllocateDataSectionCallback.Invoke*
+  name: Invoke
+  href: api/Llvm.NET.Interop.LLVMMemoryManagerAllocateDataSectionCallback.Invoke.html
+  commentId: Overload:Llvm.NET.Interop.LLVMMemoryManagerAllocateDataSectionCallback.Invoke
+  fullName: Llvm.NET.Interop.LLVMMemoryManagerAllocateDataSectionCallback.Invoke
+  nameWithType: LLVMMemoryManagerAllocateDataSectionCallback.Invoke
 - uid: Llvm.NET.Interop.LLVMMemoryManagerDestroyCallback
   name: LLVMMemoryManagerDestroyCallback
   href: api/Llvm.NET.Interop.LLVMMemoryManagerDestroyCallback.html
   commentId: T:Llvm.NET.Interop.LLVMMemoryManagerDestroyCallback
   fullName: Llvm.NET.Interop.LLVMMemoryManagerDestroyCallback
   nameWithType: LLVMMemoryManagerDestroyCallback
+- uid: Llvm.NET.Interop.LLVMMemoryManagerDestroyCallback.#ctor(System.Object,System.IntPtr)
+  name: LLVMMemoryManagerDestroyCallback(Object, IntPtr)
+  href: api/Llvm.NET.Interop.LLVMMemoryManagerDestroyCallback.-ctor.html#Llvm_NET_Interop_LLVMMemoryManagerDestroyCallback__ctor_System_Object_System_IntPtr_
+  commentId: M:Llvm.NET.Interop.LLVMMemoryManagerDestroyCallback.#ctor(System.Object,System.IntPtr)
+  fullName: Llvm.NET.Interop.LLVMMemoryManagerDestroyCallback.LLVMMemoryManagerDestroyCallback(System.Object, System.IntPtr)
+  nameWithType: LLVMMemoryManagerDestroyCallback.LLVMMemoryManagerDestroyCallback(Object, IntPtr)
+- uid: Llvm.NET.Interop.LLVMMemoryManagerDestroyCallback.#ctor*
+  name: LLVMMemoryManagerDestroyCallback
+  href: api/Llvm.NET.Interop.LLVMMemoryManagerDestroyCallback.-ctor.html
+  commentId: Overload:Llvm.NET.Interop.LLVMMemoryManagerDestroyCallback.#ctor
+  fullName: Llvm.NET.Interop.LLVMMemoryManagerDestroyCallback.LLVMMemoryManagerDestroyCallback
+  nameWithType: LLVMMemoryManagerDestroyCallback.LLVMMemoryManagerDestroyCallback
+- uid: Llvm.NET.Interop.LLVMMemoryManagerDestroyCallback.BeginInvoke(System.IntPtr,System.AsyncCallback,System.Object)
+  name: BeginInvoke(IntPtr, AsyncCallback, Object)
+  href: api/Llvm.NET.Interop.LLVMMemoryManagerDestroyCallback.BeginInvoke.html#Llvm_NET_Interop_LLVMMemoryManagerDestroyCallback_BeginInvoke_System_IntPtr_System_AsyncCallback_System_Object_
+  commentId: M:Llvm.NET.Interop.LLVMMemoryManagerDestroyCallback.BeginInvoke(System.IntPtr,System.AsyncCallback,System.Object)
+  fullName: Llvm.NET.Interop.LLVMMemoryManagerDestroyCallback.BeginInvoke(System.IntPtr, System.AsyncCallback, System.Object)
+  nameWithType: LLVMMemoryManagerDestroyCallback.BeginInvoke(IntPtr, AsyncCallback, Object)
+- uid: Llvm.NET.Interop.LLVMMemoryManagerDestroyCallback.BeginInvoke*
+  name: BeginInvoke
+  href: api/Llvm.NET.Interop.LLVMMemoryManagerDestroyCallback.BeginInvoke.html
+  commentId: Overload:Llvm.NET.Interop.LLVMMemoryManagerDestroyCallback.BeginInvoke
+  fullName: Llvm.NET.Interop.LLVMMemoryManagerDestroyCallback.BeginInvoke
+  nameWithType: LLVMMemoryManagerDestroyCallback.BeginInvoke
+- uid: Llvm.NET.Interop.LLVMMemoryManagerDestroyCallback.EndInvoke(System.IAsyncResult)
+  name: EndInvoke(IAsyncResult)
+  href: api/Llvm.NET.Interop.LLVMMemoryManagerDestroyCallback.EndInvoke.html#Llvm_NET_Interop_LLVMMemoryManagerDestroyCallback_EndInvoke_System_IAsyncResult_
+  commentId: M:Llvm.NET.Interop.LLVMMemoryManagerDestroyCallback.EndInvoke(System.IAsyncResult)
+  fullName: Llvm.NET.Interop.LLVMMemoryManagerDestroyCallback.EndInvoke(System.IAsyncResult)
+  nameWithType: LLVMMemoryManagerDestroyCallback.EndInvoke(IAsyncResult)
+- uid: Llvm.NET.Interop.LLVMMemoryManagerDestroyCallback.EndInvoke*
+  name: EndInvoke
+  href: api/Llvm.NET.Interop.LLVMMemoryManagerDestroyCallback.EndInvoke.html
+  commentId: Overload:Llvm.NET.Interop.LLVMMemoryManagerDestroyCallback.EndInvoke
+  fullName: Llvm.NET.Interop.LLVMMemoryManagerDestroyCallback.EndInvoke
+  nameWithType: LLVMMemoryManagerDestroyCallback.EndInvoke
+- uid: Llvm.NET.Interop.LLVMMemoryManagerDestroyCallback.Invoke(System.IntPtr)
+  name: Invoke(IntPtr)
+  href: api/Llvm.NET.Interop.LLVMMemoryManagerDestroyCallback.Invoke.html#Llvm_NET_Interop_LLVMMemoryManagerDestroyCallback_Invoke_System_IntPtr_
+  commentId: M:Llvm.NET.Interop.LLVMMemoryManagerDestroyCallback.Invoke(System.IntPtr)
+  fullName: Llvm.NET.Interop.LLVMMemoryManagerDestroyCallback.Invoke(System.IntPtr)
+  nameWithType: LLVMMemoryManagerDestroyCallback.Invoke(IntPtr)
+- uid: Llvm.NET.Interop.LLVMMemoryManagerDestroyCallback.Invoke*
+  name: Invoke
+  href: api/Llvm.NET.Interop.LLVMMemoryManagerDestroyCallback.Invoke.html
+  commentId: Overload:Llvm.NET.Interop.LLVMMemoryManagerDestroyCallback.Invoke
+  fullName: Llvm.NET.Interop.LLVMMemoryManagerDestroyCallback.Invoke
+  nameWithType: LLVMMemoryManagerDestroyCallback.Invoke
 - uid: Llvm.NET.Interop.LLVMMemoryManagerFinalizeMemoryCallback
   name: LLVMMemoryManagerFinalizeMemoryCallback
   href: api/Llvm.NET.Interop.LLVMMemoryManagerFinalizeMemoryCallback.html
   commentId: T:Llvm.NET.Interop.LLVMMemoryManagerFinalizeMemoryCallback
   fullName: Llvm.NET.Interop.LLVMMemoryManagerFinalizeMemoryCallback
   nameWithType: LLVMMemoryManagerFinalizeMemoryCallback
+- uid: Llvm.NET.Interop.LLVMMemoryManagerFinalizeMemoryCallback.#ctor(System.Object,System.IntPtr)
+  name: LLVMMemoryManagerFinalizeMemoryCallback(Object, IntPtr)
+  href: api/Llvm.NET.Interop.LLVMMemoryManagerFinalizeMemoryCallback.-ctor.html#Llvm_NET_Interop_LLVMMemoryManagerFinalizeMemoryCallback__ctor_System_Object_System_IntPtr_
+  commentId: M:Llvm.NET.Interop.LLVMMemoryManagerFinalizeMemoryCallback.#ctor(System.Object,System.IntPtr)
+  fullName: Llvm.NET.Interop.LLVMMemoryManagerFinalizeMemoryCallback.LLVMMemoryManagerFinalizeMemoryCallback(System.Object, System.IntPtr)
+  nameWithType: LLVMMemoryManagerFinalizeMemoryCallback.LLVMMemoryManagerFinalizeMemoryCallback(Object, IntPtr)
+- uid: Llvm.NET.Interop.LLVMMemoryManagerFinalizeMemoryCallback.#ctor*
+  name: LLVMMemoryManagerFinalizeMemoryCallback
+  href: api/Llvm.NET.Interop.LLVMMemoryManagerFinalizeMemoryCallback.-ctor.html
+  commentId: Overload:Llvm.NET.Interop.LLVMMemoryManagerFinalizeMemoryCallback.#ctor
+  fullName: Llvm.NET.Interop.LLVMMemoryManagerFinalizeMemoryCallback.LLVMMemoryManagerFinalizeMemoryCallback
+  nameWithType: LLVMMemoryManagerFinalizeMemoryCallback.LLVMMemoryManagerFinalizeMemoryCallback
+- uid: Llvm.NET.Interop.LLVMMemoryManagerFinalizeMemoryCallback.BeginInvoke(System.IntPtr,System.String[],System.AsyncCallback,System.Object)
+  name: BeginInvoke(IntPtr, String[], AsyncCallback, Object)
+  href: api/Llvm.NET.Interop.LLVMMemoryManagerFinalizeMemoryCallback.BeginInvoke.html#Llvm_NET_Interop_LLVMMemoryManagerFinalizeMemoryCallback_BeginInvoke_System_IntPtr_System_String___System_AsyncCallback_System_Object_
+  commentId: M:Llvm.NET.Interop.LLVMMemoryManagerFinalizeMemoryCallback.BeginInvoke(System.IntPtr,System.String[],System.AsyncCallback,System.Object)
+  name.vb: BeginInvoke(IntPtr, String(), AsyncCallback, Object)
+  fullName: Llvm.NET.Interop.LLVMMemoryManagerFinalizeMemoryCallback.BeginInvoke(System.IntPtr, System.String[], System.AsyncCallback, System.Object)
+  fullName.vb: Llvm.NET.Interop.LLVMMemoryManagerFinalizeMemoryCallback.BeginInvoke(System.IntPtr, System.String(), System.AsyncCallback, System.Object)
+  nameWithType: LLVMMemoryManagerFinalizeMemoryCallback.BeginInvoke(IntPtr, String[], AsyncCallback, Object)
+  nameWithType.vb: LLVMMemoryManagerFinalizeMemoryCallback.BeginInvoke(IntPtr, String(), AsyncCallback, Object)
+- uid: Llvm.NET.Interop.LLVMMemoryManagerFinalizeMemoryCallback.BeginInvoke*
+  name: BeginInvoke
+  href: api/Llvm.NET.Interop.LLVMMemoryManagerFinalizeMemoryCallback.BeginInvoke.html
+  commentId: Overload:Llvm.NET.Interop.LLVMMemoryManagerFinalizeMemoryCallback.BeginInvoke
+  fullName: Llvm.NET.Interop.LLVMMemoryManagerFinalizeMemoryCallback.BeginInvoke
+  nameWithType: LLVMMemoryManagerFinalizeMemoryCallback.BeginInvoke
+- uid: Llvm.NET.Interop.LLVMMemoryManagerFinalizeMemoryCallback.EndInvoke(System.IAsyncResult)
+  name: EndInvoke(IAsyncResult)
+  href: api/Llvm.NET.Interop.LLVMMemoryManagerFinalizeMemoryCallback.EndInvoke.html#Llvm_NET_Interop_LLVMMemoryManagerFinalizeMemoryCallback_EndInvoke_System_IAsyncResult_
+  commentId: M:Llvm.NET.Interop.LLVMMemoryManagerFinalizeMemoryCallback.EndInvoke(System.IAsyncResult)
+  fullName: Llvm.NET.Interop.LLVMMemoryManagerFinalizeMemoryCallback.EndInvoke(System.IAsyncResult)
+  nameWithType: LLVMMemoryManagerFinalizeMemoryCallback.EndInvoke(IAsyncResult)
+- uid: Llvm.NET.Interop.LLVMMemoryManagerFinalizeMemoryCallback.EndInvoke*
+  name: EndInvoke
+  href: api/Llvm.NET.Interop.LLVMMemoryManagerFinalizeMemoryCallback.EndInvoke.html
+  commentId: Overload:Llvm.NET.Interop.LLVMMemoryManagerFinalizeMemoryCallback.EndInvoke
+  fullName: Llvm.NET.Interop.LLVMMemoryManagerFinalizeMemoryCallback.EndInvoke
+  nameWithType: LLVMMemoryManagerFinalizeMemoryCallback.EndInvoke
+- uid: Llvm.NET.Interop.LLVMMemoryManagerFinalizeMemoryCallback.Invoke(System.IntPtr,System.String[])
+  name: Invoke(IntPtr, String[])
+  href: api/Llvm.NET.Interop.LLVMMemoryManagerFinalizeMemoryCallback.Invoke.html#Llvm_NET_Interop_LLVMMemoryManagerFinalizeMemoryCallback_Invoke_System_IntPtr_System_String___
+  commentId: M:Llvm.NET.Interop.LLVMMemoryManagerFinalizeMemoryCallback.Invoke(System.IntPtr,System.String[])
+  name.vb: Invoke(IntPtr, String())
+  fullName: Llvm.NET.Interop.LLVMMemoryManagerFinalizeMemoryCallback.Invoke(System.IntPtr, System.String[])
+  fullName.vb: Llvm.NET.Interop.LLVMMemoryManagerFinalizeMemoryCallback.Invoke(System.IntPtr, System.String())
+  nameWithType: LLVMMemoryManagerFinalizeMemoryCallback.Invoke(IntPtr, String[])
+  nameWithType.vb: LLVMMemoryManagerFinalizeMemoryCallback.Invoke(IntPtr, String())
+- uid: Llvm.NET.Interop.LLVMMemoryManagerFinalizeMemoryCallback.Invoke*
+  name: Invoke
+  href: api/Llvm.NET.Interop.LLVMMemoryManagerFinalizeMemoryCallback.Invoke.html
+  commentId: Overload:Llvm.NET.Interop.LLVMMemoryManagerFinalizeMemoryCallback.Invoke
+  fullName: Llvm.NET.Interop.LLVMMemoryManagerFinalizeMemoryCallback.Invoke
+  nameWithType: LLVMMemoryManagerFinalizeMemoryCallback.Invoke
 - uid: Llvm.NET.Interop.LLVMMetadataKind
   name: LLVMMetadataKind
   href: api/Llvm.NET.Interop.LLVMMetadataKind.html
@@ -16286,6 +16736,54 @@ references:
   commentId: T:Llvm.NET.Interop.LLVMOpInfoCallback
   fullName: Llvm.NET.Interop.LLVMOpInfoCallback
   nameWithType: LLVMOpInfoCallback
+- uid: Llvm.NET.Interop.LLVMOpInfoCallback.#ctor(System.Object,System.IntPtr)
+  name: LLVMOpInfoCallback(Object, IntPtr)
+  href: api/Llvm.NET.Interop.LLVMOpInfoCallback.-ctor.html#Llvm_NET_Interop_LLVMOpInfoCallback__ctor_System_Object_System_IntPtr_
+  commentId: M:Llvm.NET.Interop.LLVMOpInfoCallback.#ctor(System.Object,System.IntPtr)
+  fullName: Llvm.NET.Interop.LLVMOpInfoCallback.LLVMOpInfoCallback(System.Object, System.IntPtr)
+  nameWithType: LLVMOpInfoCallback.LLVMOpInfoCallback(Object, IntPtr)
+- uid: Llvm.NET.Interop.LLVMOpInfoCallback.#ctor*
+  name: LLVMOpInfoCallback
+  href: api/Llvm.NET.Interop.LLVMOpInfoCallback.-ctor.html
+  commentId: Overload:Llvm.NET.Interop.LLVMOpInfoCallback.#ctor
+  fullName: Llvm.NET.Interop.LLVMOpInfoCallback.LLVMOpInfoCallback
+  nameWithType: LLVMOpInfoCallback.LLVMOpInfoCallback
+- uid: Llvm.NET.Interop.LLVMOpInfoCallback.BeginInvoke(System.IntPtr,System.UInt64,System.UInt64,System.UInt64,System.Int32,System.IntPtr,System.AsyncCallback,System.Object)
+  name: BeginInvoke(IntPtr, UInt64, UInt64, UInt64, Int32, IntPtr, AsyncCallback, Object)
+  href: api/Llvm.NET.Interop.LLVMOpInfoCallback.BeginInvoke.html#Llvm_NET_Interop_LLVMOpInfoCallback_BeginInvoke_System_IntPtr_System_UInt64_System_UInt64_System_UInt64_System_Int32_System_IntPtr_System_AsyncCallback_System_Object_
+  commentId: M:Llvm.NET.Interop.LLVMOpInfoCallback.BeginInvoke(System.IntPtr,System.UInt64,System.UInt64,System.UInt64,System.Int32,System.IntPtr,System.AsyncCallback,System.Object)
+  fullName: Llvm.NET.Interop.LLVMOpInfoCallback.BeginInvoke(System.IntPtr, System.UInt64, System.UInt64, System.UInt64, System.Int32, System.IntPtr, System.AsyncCallback, System.Object)
+  nameWithType: LLVMOpInfoCallback.BeginInvoke(IntPtr, UInt64, UInt64, UInt64, Int32, IntPtr, AsyncCallback, Object)
+- uid: Llvm.NET.Interop.LLVMOpInfoCallback.BeginInvoke*
+  name: BeginInvoke
+  href: api/Llvm.NET.Interop.LLVMOpInfoCallback.BeginInvoke.html
+  commentId: Overload:Llvm.NET.Interop.LLVMOpInfoCallback.BeginInvoke
+  fullName: Llvm.NET.Interop.LLVMOpInfoCallback.BeginInvoke
+  nameWithType: LLVMOpInfoCallback.BeginInvoke
+- uid: Llvm.NET.Interop.LLVMOpInfoCallback.EndInvoke(System.IAsyncResult)
+  name: EndInvoke(IAsyncResult)
+  href: api/Llvm.NET.Interop.LLVMOpInfoCallback.EndInvoke.html#Llvm_NET_Interop_LLVMOpInfoCallback_EndInvoke_System_IAsyncResult_
+  commentId: M:Llvm.NET.Interop.LLVMOpInfoCallback.EndInvoke(System.IAsyncResult)
+  fullName: Llvm.NET.Interop.LLVMOpInfoCallback.EndInvoke(System.IAsyncResult)
+  nameWithType: LLVMOpInfoCallback.EndInvoke(IAsyncResult)
+- uid: Llvm.NET.Interop.LLVMOpInfoCallback.EndInvoke*
+  name: EndInvoke
+  href: api/Llvm.NET.Interop.LLVMOpInfoCallback.EndInvoke.html
+  commentId: Overload:Llvm.NET.Interop.LLVMOpInfoCallback.EndInvoke
+  fullName: Llvm.NET.Interop.LLVMOpInfoCallback.EndInvoke
+  nameWithType: LLVMOpInfoCallback.EndInvoke
+- uid: Llvm.NET.Interop.LLVMOpInfoCallback.Invoke(System.IntPtr,System.UInt64,System.UInt64,System.UInt64,System.Int32,System.IntPtr)
+  name: Invoke(IntPtr, UInt64, UInt64, UInt64, Int32, IntPtr)
+  href: api/Llvm.NET.Interop.LLVMOpInfoCallback.Invoke.html#Llvm_NET_Interop_LLVMOpInfoCallback_Invoke_System_IntPtr_System_UInt64_System_UInt64_System_UInt64_System_Int32_System_IntPtr_
+  commentId: M:Llvm.NET.Interop.LLVMOpInfoCallback.Invoke(System.IntPtr,System.UInt64,System.UInt64,System.UInt64,System.Int32,System.IntPtr)
+  fullName: Llvm.NET.Interop.LLVMOpInfoCallback.Invoke(System.IntPtr, System.UInt64, System.UInt64, System.UInt64, System.Int32, System.IntPtr)
+  nameWithType: LLVMOpInfoCallback.Invoke(IntPtr, UInt64, UInt64, UInt64, Int32, IntPtr)
+- uid: Llvm.NET.Interop.LLVMOpInfoCallback.Invoke*
+  name: Invoke
+  href: api/Llvm.NET.Interop.LLVMOpInfoCallback.Invoke.html
+  commentId: Overload:Llvm.NET.Interop.LLVMOpInfoCallback.Invoke
+  fullName: Llvm.NET.Interop.LLVMOpInfoCallback.Invoke
+  nameWithType: LLVMOpInfoCallback.Invoke
 - uid: Llvm.NET.Interop.LLVMOpInfoSymbol1
   name: LLVMOpInfoSymbol1
   href: api/Llvm.NET.Interop.LLVMOpInfoSymbol1.html
@@ -16358,12 +16856,108 @@ references:
   commentId: T:Llvm.NET.Interop.LLVMOrcLazyCompileCallbackFn
   fullName: Llvm.NET.Interop.LLVMOrcLazyCompileCallbackFn
   nameWithType: LLVMOrcLazyCompileCallbackFn
+- uid: Llvm.NET.Interop.LLVMOrcLazyCompileCallbackFn.#ctor(System.Object,System.IntPtr)
+  name: LLVMOrcLazyCompileCallbackFn(Object, IntPtr)
+  href: api/Llvm.NET.Interop.LLVMOrcLazyCompileCallbackFn.-ctor.html#Llvm_NET_Interop_LLVMOrcLazyCompileCallbackFn__ctor_System_Object_System_IntPtr_
+  commentId: M:Llvm.NET.Interop.LLVMOrcLazyCompileCallbackFn.#ctor(System.Object,System.IntPtr)
+  fullName: Llvm.NET.Interop.LLVMOrcLazyCompileCallbackFn.LLVMOrcLazyCompileCallbackFn(System.Object, System.IntPtr)
+  nameWithType: LLVMOrcLazyCompileCallbackFn.LLVMOrcLazyCompileCallbackFn(Object, IntPtr)
+- uid: Llvm.NET.Interop.LLVMOrcLazyCompileCallbackFn.#ctor*
+  name: LLVMOrcLazyCompileCallbackFn
+  href: api/Llvm.NET.Interop.LLVMOrcLazyCompileCallbackFn.-ctor.html
+  commentId: Overload:Llvm.NET.Interop.LLVMOrcLazyCompileCallbackFn.#ctor
+  fullName: Llvm.NET.Interop.LLVMOrcLazyCompileCallbackFn.LLVMOrcLazyCompileCallbackFn
+  nameWithType: LLVMOrcLazyCompileCallbackFn.LLVMOrcLazyCompileCallbackFn
+- uid: Llvm.NET.Interop.LLVMOrcLazyCompileCallbackFn.BeginInvoke(Llvm.NET.Interop.LLVMOrcJITStackRef,System.IntPtr,System.AsyncCallback,System.Object)
+  name: BeginInvoke(LLVMOrcJITStackRef, IntPtr, AsyncCallback, Object)
+  href: api/Llvm.NET.Interop.LLVMOrcLazyCompileCallbackFn.BeginInvoke.html#Llvm_NET_Interop_LLVMOrcLazyCompileCallbackFn_BeginInvoke_Llvm_NET_Interop_LLVMOrcJITStackRef_System_IntPtr_System_AsyncCallback_System_Object_
+  commentId: M:Llvm.NET.Interop.LLVMOrcLazyCompileCallbackFn.BeginInvoke(Llvm.NET.Interop.LLVMOrcJITStackRef,System.IntPtr,System.AsyncCallback,System.Object)
+  fullName: Llvm.NET.Interop.LLVMOrcLazyCompileCallbackFn.BeginInvoke(Llvm.NET.Interop.LLVMOrcJITStackRef, System.IntPtr, System.AsyncCallback, System.Object)
+  nameWithType: LLVMOrcLazyCompileCallbackFn.BeginInvoke(LLVMOrcJITStackRef, IntPtr, AsyncCallback, Object)
+- uid: Llvm.NET.Interop.LLVMOrcLazyCompileCallbackFn.BeginInvoke*
+  name: BeginInvoke
+  href: api/Llvm.NET.Interop.LLVMOrcLazyCompileCallbackFn.BeginInvoke.html
+  commentId: Overload:Llvm.NET.Interop.LLVMOrcLazyCompileCallbackFn.BeginInvoke
+  fullName: Llvm.NET.Interop.LLVMOrcLazyCompileCallbackFn.BeginInvoke
+  nameWithType: LLVMOrcLazyCompileCallbackFn.BeginInvoke
+- uid: Llvm.NET.Interop.LLVMOrcLazyCompileCallbackFn.EndInvoke(System.IAsyncResult)
+  name: EndInvoke(IAsyncResult)
+  href: api/Llvm.NET.Interop.LLVMOrcLazyCompileCallbackFn.EndInvoke.html#Llvm_NET_Interop_LLVMOrcLazyCompileCallbackFn_EndInvoke_System_IAsyncResult_
+  commentId: M:Llvm.NET.Interop.LLVMOrcLazyCompileCallbackFn.EndInvoke(System.IAsyncResult)
+  fullName: Llvm.NET.Interop.LLVMOrcLazyCompileCallbackFn.EndInvoke(System.IAsyncResult)
+  nameWithType: LLVMOrcLazyCompileCallbackFn.EndInvoke(IAsyncResult)
+- uid: Llvm.NET.Interop.LLVMOrcLazyCompileCallbackFn.EndInvoke*
+  name: EndInvoke
+  href: api/Llvm.NET.Interop.LLVMOrcLazyCompileCallbackFn.EndInvoke.html
+  commentId: Overload:Llvm.NET.Interop.LLVMOrcLazyCompileCallbackFn.EndInvoke
+  fullName: Llvm.NET.Interop.LLVMOrcLazyCompileCallbackFn.EndInvoke
+  nameWithType: LLVMOrcLazyCompileCallbackFn.EndInvoke
+- uid: Llvm.NET.Interop.LLVMOrcLazyCompileCallbackFn.Invoke(Llvm.NET.Interop.LLVMOrcJITStackRef,System.IntPtr)
+  name: Invoke(LLVMOrcJITStackRef, IntPtr)
+  href: api/Llvm.NET.Interop.LLVMOrcLazyCompileCallbackFn.Invoke.html#Llvm_NET_Interop_LLVMOrcLazyCompileCallbackFn_Invoke_Llvm_NET_Interop_LLVMOrcJITStackRef_System_IntPtr_
+  commentId: M:Llvm.NET.Interop.LLVMOrcLazyCompileCallbackFn.Invoke(Llvm.NET.Interop.LLVMOrcJITStackRef,System.IntPtr)
+  fullName: Llvm.NET.Interop.LLVMOrcLazyCompileCallbackFn.Invoke(Llvm.NET.Interop.LLVMOrcJITStackRef, System.IntPtr)
+  nameWithType: LLVMOrcLazyCompileCallbackFn.Invoke(LLVMOrcJITStackRef, IntPtr)
+- uid: Llvm.NET.Interop.LLVMOrcLazyCompileCallbackFn.Invoke*
+  name: Invoke
+  href: api/Llvm.NET.Interop.LLVMOrcLazyCompileCallbackFn.Invoke.html
+  commentId: Overload:Llvm.NET.Interop.LLVMOrcLazyCompileCallbackFn.Invoke
+  fullName: Llvm.NET.Interop.LLVMOrcLazyCompileCallbackFn.Invoke
+  nameWithType: LLVMOrcLazyCompileCallbackFn.Invoke
 - uid: Llvm.NET.Interop.LLVMOrcSymbolResolverFn
   name: LLVMOrcSymbolResolverFn
   href: api/Llvm.NET.Interop.LLVMOrcSymbolResolverFn.html
   commentId: T:Llvm.NET.Interop.LLVMOrcSymbolResolverFn
   fullName: Llvm.NET.Interop.LLVMOrcSymbolResolverFn
   nameWithType: LLVMOrcSymbolResolverFn
+- uid: Llvm.NET.Interop.LLVMOrcSymbolResolverFn.#ctor(System.Object,System.IntPtr)
+  name: LLVMOrcSymbolResolverFn(Object, IntPtr)
+  href: api/Llvm.NET.Interop.LLVMOrcSymbolResolverFn.-ctor.html#Llvm_NET_Interop_LLVMOrcSymbolResolverFn__ctor_System_Object_System_IntPtr_
+  commentId: M:Llvm.NET.Interop.LLVMOrcSymbolResolverFn.#ctor(System.Object,System.IntPtr)
+  fullName: Llvm.NET.Interop.LLVMOrcSymbolResolverFn.LLVMOrcSymbolResolverFn(System.Object, System.IntPtr)
+  nameWithType: LLVMOrcSymbolResolverFn.LLVMOrcSymbolResolverFn(Object, IntPtr)
+- uid: Llvm.NET.Interop.LLVMOrcSymbolResolverFn.#ctor*
+  name: LLVMOrcSymbolResolverFn
+  href: api/Llvm.NET.Interop.LLVMOrcSymbolResolverFn.-ctor.html
+  commentId: Overload:Llvm.NET.Interop.LLVMOrcSymbolResolverFn.#ctor
+  fullName: Llvm.NET.Interop.LLVMOrcSymbolResolverFn.LLVMOrcSymbolResolverFn
+  nameWithType: LLVMOrcSymbolResolverFn.LLVMOrcSymbolResolverFn
+- uid: Llvm.NET.Interop.LLVMOrcSymbolResolverFn.BeginInvoke(System.String,System.IntPtr,System.AsyncCallback,System.Object)
+  name: BeginInvoke(String, IntPtr, AsyncCallback, Object)
+  href: api/Llvm.NET.Interop.LLVMOrcSymbolResolverFn.BeginInvoke.html#Llvm_NET_Interop_LLVMOrcSymbolResolverFn_BeginInvoke_System_String_System_IntPtr_System_AsyncCallback_System_Object_
+  commentId: M:Llvm.NET.Interop.LLVMOrcSymbolResolverFn.BeginInvoke(System.String,System.IntPtr,System.AsyncCallback,System.Object)
+  fullName: Llvm.NET.Interop.LLVMOrcSymbolResolverFn.BeginInvoke(System.String, System.IntPtr, System.AsyncCallback, System.Object)
+  nameWithType: LLVMOrcSymbolResolverFn.BeginInvoke(String, IntPtr, AsyncCallback, Object)
+- uid: Llvm.NET.Interop.LLVMOrcSymbolResolverFn.BeginInvoke*
+  name: BeginInvoke
+  href: api/Llvm.NET.Interop.LLVMOrcSymbolResolverFn.BeginInvoke.html
+  commentId: Overload:Llvm.NET.Interop.LLVMOrcSymbolResolverFn.BeginInvoke
+  fullName: Llvm.NET.Interop.LLVMOrcSymbolResolverFn.BeginInvoke
+  nameWithType: LLVMOrcSymbolResolverFn.BeginInvoke
+- uid: Llvm.NET.Interop.LLVMOrcSymbolResolverFn.EndInvoke(System.IAsyncResult)
+  name: EndInvoke(IAsyncResult)
+  href: api/Llvm.NET.Interop.LLVMOrcSymbolResolverFn.EndInvoke.html#Llvm_NET_Interop_LLVMOrcSymbolResolverFn_EndInvoke_System_IAsyncResult_
+  commentId: M:Llvm.NET.Interop.LLVMOrcSymbolResolverFn.EndInvoke(System.IAsyncResult)
+  fullName: Llvm.NET.Interop.LLVMOrcSymbolResolverFn.EndInvoke(System.IAsyncResult)
+  nameWithType: LLVMOrcSymbolResolverFn.EndInvoke(IAsyncResult)
+- uid: Llvm.NET.Interop.LLVMOrcSymbolResolverFn.EndInvoke*
+  name: EndInvoke
+  href: api/Llvm.NET.Interop.LLVMOrcSymbolResolverFn.EndInvoke.html
+  commentId: Overload:Llvm.NET.Interop.LLVMOrcSymbolResolverFn.EndInvoke
+  fullName: Llvm.NET.Interop.LLVMOrcSymbolResolverFn.EndInvoke
+  nameWithType: LLVMOrcSymbolResolverFn.EndInvoke
+- uid: Llvm.NET.Interop.LLVMOrcSymbolResolverFn.Invoke(System.String,System.IntPtr)
+  name: Invoke(String, IntPtr)
+  href: api/Llvm.NET.Interop.LLVMOrcSymbolResolverFn.Invoke.html#Llvm_NET_Interop_LLVMOrcSymbolResolverFn_Invoke_System_String_System_IntPtr_
+  commentId: M:Llvm.NET.Interop.LLVMOrcSymbolResolverFn.Invoke(System.String,System.IntPtr)
+  fullName: Llvm.NET.Interop.LLVMOrcSymbolResolverFn.Invoke(System.String, System.IntPtr)
+  nameWithType: LLVMOrcSymbolResolverFn.Invoke(String, IntPtr)
+- uid: Llvm.NET.Interop.LLVMOrcSymbolResolverFn.Invoke*
+  name: Invoke
+  href: api/Llvm.NET.Interop.LLVMOrcSymbolResolverFn.Invoke.html
+  commentId: Overload:Llvm.NET.Interop.LLVMOrcSymbolResolverFn.Invoke
+  fullName: Llvm.NET.Interop.LLVMOrcSymbolResolverFn.Invoke
+  nameWithType: LLVMOrcSymbolResolverFn.Invoke
 - uid: Llvm.NET.Interop.LLVMPassManagerBuilderRef
   name: LLVMPassManagerBuilderRef
   href: api/Llvm.NET.Interop.LLVMPassManagerBuilderRef.html
@@ -16868,6 +17462,63 @@ references:
   commentId: T:Llvm.NET.Interop.LLVMSymbolLookupCallback
   fullName: Llvm.NET.Interop.LLVMSymbolLookupCallback
   nameWithType: LLVMSymbolLookupCallback
+- uid: Llvm.NET.Interop.LLVMSymbolLookupCallback.#ctor(System.Object,System.IntPtr)
+  name: LLVMSymbolLookupCallback(Object, IntPtr)
+  href: api/Llvm.NET.Interop.LLVMSymbolLookupCallback.-ctor.html#Llvm_NET_Interop_LLVMSymbolLookupCallback__ctor_System_Object_System_IntPtr_
+  commentId: M:Llvm.NET.Interop.LLVMSymbolLookupCallback.#ctor(System.Object,System.IntPtr)
+  fullName: Llvm.NET.Interop.LLVMSymbolLookupCallback.LLVMSymbolLookupCallback(System.Object, System.IntPtr)
+  nameWithType: LLVMSymbolLookupCallback.LLVMSymbolLookupCallback(Object, IntPtr)
+- uid: Llvm.NET.Interop.LLVMSymbolLookupCallback.#ctor*
+  name: LLVMSymbolLookupCallback
+  href: api/Llvm.NET.Interop.LLVMSymbolLookupCallback.-ctor.html
+  commentId: Overload:Llvm.NET.Interop.LLVMSymbolLookupCallback.#ctor
+  fullName: Llvm.NET.Interop.LLVMSymbolLookupCallback.LLVMSymbolLookupCallback
+  nameWithType: LLVMSymbolLookupCallback.LLVMSymbolLookupCallback
+- uid: Llvm.NET.Interop.LLVMSymbolLookupCallback.BeginInvoke(System.IntPtr,System.UInt64,System.UInt64@,System.UInt64,System.String[],System.AsyncCallback,System.Object)
+  name: BeginInvoke(IntPtr, UInt64, out UInt64, UInt64, String[], AsyncCallback, Object)
+  href: api/Llvm.NET.Interop.LLVMSymbolLookupCallback.BeginInvoke.html#Llvm_NET_Interop_LLVMSymbolLookupCallback_BeginInvoke_System_IntPtr_System_UInt64_System_UInt64__System_UInt64_System_String___System_AsyncCallback_System_Object_
+  commentId: M:Llvm.NET.Interop.LLVMSymbolLookupCallback.BeginInvoke(System.IntPtr,System.UInt64,System.UInt64@,System.UInt64,System.String[],System.AsyncCallback,System.Object)
+  name.vb: BeginInvoke(IntPtr, UInt64, ByRef UInt64, UInt64, String(), AsyncCallback, Object)
+  fullName: Llvm.NET.Interop.LLVMSymbolLookupCallback.BeginInvoke(System.IntPtr, System.UInt64, out System.UInt64, System.UInt64, System.String[], System.AsyncCallback, System.Object)
+  fullName.vb: Llvm.NET.Interop.LLVMSymbolLookupCallback.BeginInvoke(System.IntPtr, System.UInt64, ByRef System.UInt64, System.UInt64, System.String(), System.AsyncCallback, System.Object)
+  nameWithType: LLVMSymbolLookupCallback.BeginInvoke(IntPtr, UInt64, out UInt64, UInt64, String[], AsyncCallback, Object)
+  nameWithType.vb: LLVMSymbolLookupCallback.BeginInvoke(IntPtr, UInt64, ByRef UInt64, UInt64, String(), AsyncCallback, Object)
+- uid: Llvm.NET.Interop.LLVMSymbolLookupCallback.BeginInvoke*
+  name: BeginInvoke
+  href: api/Llvm.NET.Interop.LLVMSymbolLookupCallback.BeginInvoke.html
+  commentId: Overload:Llvm.NET.Interop.LLVMSymbolLookupCallback.BeginInvoke
+  fullName: Llvm.NET.Interop.LLVMSymbolLookupCallback.BeginInvoke
+  nameWithType: LLVMSymbolLookupCallback.BeginInvoke
+- uid: Llvm.NET.Interop.LLVMSymbolLookupCallback.EndInvoke(System.UInt64@,System.IAsyncResult)
+  name: EndInvoke(out UInt64, IAsyncResult)
+  href: api/Llvm.NET.Interop.LLVMSymbolLookupCallback.EndInvoke.html#Llvm_NET_Interop_LLVMSymbolLookupCallback_EndInvoke_System_UInt64__System_IAsyncResult_
+  commentId: M:Llvm.NET.Interop.LLVMSymbolLookupCallback.EndInvoke(System.UInt64@,System.IAsyncResult)
+  name.vb: EndInvoke(ByRef UInt64, IAsyncResult)
+  fullName: Llvm.NET.Interop.LLVMSymbolLookupCallback.EndInvoke(out System.UInt64, System.IAsyncResult)
+  fullName.vb: Llvm.NET.Interop.LLVMSymbolLookupCallback.EndInvoke(ByRef System.UInt64, System.IAsyncResult)
+  nameWithType: LLVMSymbolLookupCallback.EndInvoke(out UInt64, IAsyncResult)
+  nameWithType.vb: LLVMSymbolLookupCallback.EndInvoke(ByRef UInt64, IAsyncResult)
+- uid: Llvm.NET.Interop.LLVMSymbolLookupCallback.EndInvoke*
+  name: EndInvoke
+  href: api/Llvm.NET.Interop.LLVMSymbolLookupCallback.EndInvoke.html
+  commentId: Overload:Llvm.NET.Interop.LLVMSymbolLookupCallback.EndInvoke
+  fullName: Llvm.NET.Interop.LLVMSymbolLookupCallback.EndInvoke
+  nameWithType: LLVMSymbolLookupCallback.EndInvoke
+- uid: Llvm.NET.Interop.LLVMSymbolLookupCallback.Invoke(System.IntPtr,System.UInt64,System.UInt64@,System.UInt64,System.String[])
+  name: Invoke(IntPtr, UInt64, out UInt64, UInt64, String[])
+  href: api/Llvm.NET.Interop.LLVMSymbolLookupCallback.Invoke.html#Llvm_NET_Interop_LLVMSymbolLookupCallback_Invoke_System_IntPtr_System_UInt64_System_UInt64__System_UInt64_System_String___
+  commentId: M:Llvm.NET.Interop.LLVMSymbolLookupCallback.Invoke(System.IntPtr,System.UInt64,System.UInt64@,System.UInt64,System.String[])
+  name.vb: Invoke(IntPtr, UInt64, ByRef UInt64, UInt64, String())
+  fullName: Llvm.NET.Interop.LLVMSymbolLookupCallback.Invoke(System.IntPtr, System.UInt64, out System.UInt64, System.UInt64, System.String[])
+  fullName.vb: Llvm.NET.Interop.LLVMSymbolLookupCallback.Invoke(System.IntPtr, System.UInt64, ByRef System.UInt64, System.UInt64, System.String())
+  nameWithType: LLVMSymbolLookupCallback.Invoke(IntPtr, UInt64, out UInt64, UInt64, String[])
+  nameWithType.vb: LLVMSymbolLookupCallback.Invoke(IntPtr, UInt64, ByRef UInt64, UInt64, String())
+- uid: Llvm.NET.Interop.LLVMSymbolLookupCallback.Invoke*
+  name: Invoke
+  href: api/Llvm.NET.Interop.LLVMSymbolLookupCallback.Invoke.html
+  commentId: Overload:Llvm.NET.Interop.LLVMSymbolLookupCallback.Invoke
+  fullName: Llvm.NET.Interop.LLVMSymbolLookupCallback.Invoke
+  nameWithType: LLVMSymbolLookupCallback.Invoke
 - uid: Llvm.NET.Interop.LLVMTargetDataRef
   name: LLVMTargetDataRef
   href: api/Llvm.NET.Interop.LLVMTargetDataRef.html
@@ -17882,6 +18533,54 @@ references:
   commentId: T:Llvm.NET.Interop.LLVMYieldCallback
   fullName: Llvm.NET.Interop.LLVMYieldCallback
   nameWithType: LLVMYieldCallback
+- uid: Llvm.NET.Interop.LLVMYieldCallback.#ctor(System.Object,System.IntPtr)
+  name: LLVMYieldCallback(Object, IntPtr)
+  href: api/Llvm.NET.Interop.LLVMYieldCallback.-ctor.html#Llvm_NET_Interop_LLVMYieldCallback__ctor_System_Object_System_IntPtr_
+  commentId: M:Llvm.NET.Interop.LLVMYieldCallback.#ctor(System.Object,System.IntPtr)
+  fullName: Llvm.NET.Interop.LLVMYieldCallback.LLVMYieldCallback(System.Object, System.IntPtr)
+  nameWithType: LLVMYieldCallback.LLVMYieldCallback(Object, IntPtr)
+- uid: Llvm.NET.Interop.LLVMYieldCallback.#ctor*
+  name: LLVMYieldCallback
+  href: api/Llvm.NET.Interop.LLVMYieldCallback.-ctor.html
+  commentId: Overload:Llvm.NET.Interop.LLVMYieldCallback.#ctor
+  fullName: Llvm.NET.Interop.LLVMYieldCallback.LLVMYieldCallback
+  nameWithType: LLVMYieldCallback.LLVMYieldCallback
+- uid: Llvm.NET.Interop.LLVMYieldCallback.BeginInvoke(Llvm.NET.Interop.LLVMContextRef,System.IntPtr,System.AsyncCallback,System.Object)
+  name: BeginInvoke(LLVMContextRef, IntPtr, AsyncCallback, Object)
+  href: api/Llvm.NET.Interop.LLVMYieldCallback.BeginInvoke.html#Llvm_NET_Interop_LLVMYieldCallback_BeginInvoke_Llvm_NET_Interop_LLVMContextRef_System_IntPtr_System_AsyncCallback_System_Object_
+  commentId: M:Llvm.NET.Interop.LLVMYieldCallback.BeginInvoke(Llvm.NET.Interop.LLVMContextRef,System.IntPtr,System.AsyncCallback,System.Object)
+  fullName: Llvm.NET.Interop.LLVMYieldCallback.BeginInvoke(Llvm.NET.Interop.LLVMContextRef, System.IntPtr, System.AsyncCallback, System.Object)
+  nameWithType: LLVMYieldCallback.BeginInvoke(LLVMContextRef, IntPtr, AsyncCallback, Object)
+- uid: Llvm.NET.Interop.LLVMYieldCallback.BeginInvoke*
+  name: BeginInvoke
+  href: api/Llvm.NET.Interop.LLVMYieldCallback.BeginInvoke.html
+  commentId: Overload:Llvm.NET.Interop.LLVMYieldCallback.BeginInvoke
+  fullName: Llvm.NET.Interop.LLVMYieldCallback.BeginInvoke
+  nameWithType: LLVMYieldCallback.BeginInvoke
+- uid: Llvm.NET.Interop.LLVMYieldCallback.EndInvoke(System.IAsyncResult)
+  name: EndInvoke(IAsyncResult)
+  href: api/Llvm.NET.Interop.LLVMYieldCallback.EndInvoke.html#Llvm_NET_Interop_LLVMYieldCallback_EndInvoke_System_IAsyncResult_
+  commentId: M:Llvm.NET.Interop.LLVMYieldCallback.EndInvoke(System.IAsyncResult)
+  fullName: Llvm.NET.Interop.LLVMYieldCallback.EndInvoke(System.IAsyncResult)
+  nameWithType: LLVMYieldCallback.EndInvoke(IAsyncResult)
+- uid: Llvm.NET.Interop.LLVMYieldCallback.EndInvoke*
+  name: EndInvoke
+  href: api/Llvm.NET.Interop.LLVMYieldCallback.EndInvoke.html
+  commentId: Overload:Llvm.NET.Interop.LLVMYieldCallback.EndInvoke
+  fullName: Llvm.NET.Interop.LLVMYieldCallback.EndInvoke
+  nameWithType: LLVMYieldCallback.EndInvoke
+- uid: Llvm.NET.Interop.LLVMYieldCallback.Invoke(Llvm.NET.Interop.LLVMContextRef,System.IntPtr)
+  name: Invoke(LLVMContextRef, IntPtr)
+  href: api/Llvm.NET.Interop.LLVMYieldCallback.Invoke.html#Llvm_NET_Interop_LLVMYieldCallback_Invoke_Llvm_NET_Interop_LLVMContextRef_System_IntPtr_
+  commentId: M:Llvm.NET.Interop.LLVMYieldCallback.Invoke(Llvm.NET.Interop.LLVMContextRef,System.IntPtr)
+  fullName: Llvm.NET.Interop.LLVMYieldCallback.Invoke(Llvm.NET.Interop.LLVMContextRef, System.IntPtr)
+  nameWithType: LLVMYieldCallback.Invoke(LLVMContextRef, IntPtr)
+- uid: Llvm.NET.Interop.LLVMYieldCallback.Invoke*
+  name: Invoke
+  href: api/Llvm.NET.Interop.LLVMYieldCallback.Invoke.html
+  commentId: Overload:Llvm.NET.Interop.LLVMYieldCallback.Invoke
+  fullName: Llvm.NET.Interop.LLVMYieldCallback.Invoke
+  nameWithType: LLVMYieldCallback.Invoke
 - uid: Llvm.NET.Interop.NativeMethods
   name: NativeMethods
   href: api/Llvm.NET.Interop.NativeMethods.html
@@ -18215,18 +18914,6 @@ references:
   commentId: Overload:Llvm.NET.Interop.NativeMethods.LibLLVMGetGlobalAlias
   fullName: Llvm.NET.Interop.NativeMethods.LibLLVMGetGlobalAlias
   nameWithType: NativeMethods.LibLLVMGetGlobalAlias
-- uid: Llvm.NET.Interop.NativeMethods.LibLLVMGetHostTriple
-  name: LibLLVMGetHostTriple()
-  href: api/Llvm.NET.Interop.NativeMethods.LibLLVMGetHostTriple.html#Llvm_NET_Interop_NativeMethods_LibLLVMGetHostTriple
-  commentId: M:Llvm.NET.Interop.NativeMethods.LibLLVMGetHostTriple
-  fullName: Llvm.NET.Interop.NativeMethods.LibLLVMGetHostTriple()
-  nameWithType: NativeMethods.LibLLVMGetHostTriple()
-- uid: Llvm.NET.Interop.NativeMethods.LibLLVMGetHostTriple*
-  name: LibLLVMGetHostTriple
-  href: api/Llvm.NET.Interop.NativeMethods.LibLLVMGetHostTriple.html
-  commentId: Overload:Llvm.NET.Interop.NativeMethods.LibLLVMGetHostTriple
-  fullName: Llvm.NET.Interop.NativeMethods.LibLLVMGetHostTriple
-  nameWithType: NativeMethods.LibLLVMGetHostTriple
 - uid: Llvm.NET.Interop.NativeMethods.LibLLVMGetMDStringText(Llvm.NET.Interop.LLVMMetadataRef,System.UInt32@)
   name: LibLLVMGetMDStringText(LLVMMetadataRef, out UInt32)
   href: api/Llvm.NET.Interop.NativeMethods.LibLLVMGetMDStringText.html#Llvm_NET_Interop_NativeMethods_LibLLVMGetMDStringText_Llvm_NET_Interop_LLVMMetadataRef_System_UInt32__
@@ -18680,18 +19367,6 @@ references:
   commentId: Overload:Llvm.NET.Interop.NativeMethods.LibLLVMNamedMetadataGetParentModule
   fullName: Llvm.NET.Interop.NativeMethods.LibLLVMNamedMetadataGetParentModule
   nameWithType: NativeMethods.LibLLVMNamedMetadataGetParentModule
-- uid: Llvm.NET.Interop.NativeMethods.LibLLVMNormalizeTriple(System.String)
-  name: LibLLVMNormalizeTriple(String)
-  href: api/Llvm.NET.Interop.NativeMethods.LibLLVMNormalizeTriple.html#Llvm_NET_Interop_NativeMethods_LibLLVMNormalizeTriple_System_String_
-  commentId: M:Llvm.NET.Interop.NativeMethods.LibLLVMNormalizeTriple(System.String)
-  fullName: Llvm.NET.Interop.NativeMethods.LibLLVMNormalizeTriple(System.String)
-  nameWithType: NativeMethods.LibLLVMNormalizeTriple(String)
-- uid: Llvm.NET.Interop.NativeMethods.LibLLVMNormalizeTriple*
-  name: LibLLVMNormalizeTriple
-  href: api/Llvm.NET.Interop.NativeMethods.LibLLVMNormalizeTriple.html
-  commentId: Overload:Llvm.NET.Interop.NativeMethods.LibLLVMNormalizeTriple
-  fullName: Llvm.NET.Interop.NativeMethods.LibLLVMNormalizeTriple
-  nameWithType: NativeMethods.LibLLVMNormalizeTriple
 - uid: Llvm.NET.Interop.NativeMethods.LibLLVMParseTriple(System.String)
   name: LibLLVMParseTriple(String)
   href: api/Llvm.NET.Interop.NativeMethods.LibLLVMParseTriple.html#Llvm_NET_Interop_NativeMethods_LibLLVMParseTriple_System_String_
@@ -24665,18 +25340,6 @@ references:
   commentId: Overload:Llvm.NET.Interop.NativeMethods.LLVMGetEnumAttributeValue
   fullName: Llvm.NET.Interop.NativeMethods.LLVMGetEnumAttributeValue
   nameWithType: NativeMethods.LLVMGetEnumAttributeValue
-- uid: Llvm.NET.Interop.NativeMethods.LLVMGetErrorMessage(Llvm.NET.Interop.LLVMErrorRef)
-  name: LLVMGetErrorMessage(LLVMErrorRef)
-  href: api/Llvm.NET.Interop.NativeMethods.LLVMGetErrorMessage.html#Llvm_NET_Interop_NativeMethods_LLVMGetErrorMessage_Llvm_NET_Interop_LLVMErrorRef_
-  commentId: M:Llvm.NET.Interop.NativeMethods.LLVMGetErrorMessage(Llvm.NET.Interop.LLVMErrorRef)
-  fullName: Llvm.NET.Interop.NativeMethods.LLVMGetErrorMessage(Llvm.NET.Interop.LLVMErrorRef)
-  nameWithType: NativeMethods.LLVMGetErrorMessage(LLVMErrorRef)
-- uid: Llvm.NET.Interop.NativeMethods.LLVMGetErrorMessage*
-  name: LLVMGetErrorMessage
-  href: api/Llvm.NET.Interop.NativeMethods.LLVMGetErrorMessage.html
-  commentId: Overload:Llvm.NET.Interop.NativeMethods.LLVMGetErrorMessage
-  fullName: Llvm.NET.Interop.NativeMethods.LLVMGetErrorMessage
-  nameWithType: NativeMethods.LLVMGetErrorMessage
 - uid: Llvm.NET.Interop.NativeMethods.LLVMGetErrorTypeId(Llvm.NET.Interop.LLVMErrorRef)
   name: LLVMGetErrorTypeId(LLVMErrorRef)
   href: api/Llvm.NET.Interop.NativeMethods.LLVMGetErrorTypeId.html#Llvm_NET_Interop_NativeMethods_LLVMGetErrorTypeId_Llvm_NET_Interop_LLVMErrorRef_
@@ -30107,15 +30770,12 @@ references:
   commentId: Overload:Llvm.NET.Interop.NativeMethods.LLVMOrcCreateLazyCompileCallback
   fullName: Llvm.NET.Interop.NativeMethods.LLVMOrcCreateLazyCompileCallback
   nameWithType: NativeMethods.LLVMOrcCreateLazyCompileCallback
-- uid: Llvm.NET.Interop.NativeMethods.LLVMOrcDisposeMangledSymbol(System.SByte@)
-  name: LLVMOrcDisposeMangledSymbol(out SByte)
-  href: api/Llvm.NET.Interop.NativeMethods.LLVMOrcDisposeMangledSymbol.html#Llvm_NET_Interop_NativeMethods_LLVMOrcDisposeMangledSymbol_System_SByte__
-  commentId: M:Llvm.NET.Interop.NativeMethods.LLVMOrcDisposeMangledSymbol(System.SByte@)
-  name.vb: LLVMOrcDisposeMangledSymbol(ByRef SByte)
-  fullName: Llvm.NET.Interop.NativeMethods.LLVMOrcDisposeMangledSymbol(out System.SByte)
-  fullName.vb: Llvm.NET.Interop.NativeMethods.LLVMOrcDisposeMangledSymbol(ByRef System.SByte)
-  nameWithType: NativeMethods.LLVMOrcDisposeMangledSymbol(out SByte)
-  nameWithType.vb: NativeMethods.LLVMOrcDisposeMangledSymbol(ByRef SByte)
+- uid: Llvm.NET.Interop.NativeMethods.LLVMOrcDisposeMangledSymbol(System.String)
+  name: LLVMOrcDisposeMangledSymbol(String)
+  href: api/Llvm.NET.Interop.NativeMethods.LLVMOrcDisposeMangledSymbol.html#Llvm_NET_Interop_NativeMethods_LLVMOrcDisposeMangledSymbol_System_String_
+  commentId: M:Llvm.NET.Interop.NativeMethods.LLVMOrcDisposeMangledSymbol(System.String)
+  fullName: Llvm.NET.Interop.NativeMethods.LLVMOrcDisposeMangledSymbol(System.String)
+  nameWithType: NativeMethods.LLVMOrcDisposeMangledSymbol(String)
 - uid: Llvm.NET.Interop.NativeMethods.LLVMOrcDisposeMangledSymbol*
   name: LLVMOrcDisposeMangledSymbol
   href: api/Llvm.NET.Interop.NativeMethods.LLVMOrcDisposeMangledSymbol.html
