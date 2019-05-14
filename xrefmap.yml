@@ -10121,30 +10121,6 @@ references:
   commentId: T:Llvm.NET.Interop.AliasStringMarshaler
   fullName: Llvm.NET.Interop.AliasStringMarshaler
   nameWithType: AliasStringMarshaler
-- uid: Llvm.NET.Interop.AliasStringMarshaler.CleanUpManagedData(System.Object)
-  name: CleanUpManagedData(Object)
-  href: api/Llvm.NET.Interop.AliasStringMarshaler.CleanUpManagedData.html#Llvm_NET_Interop_AliasStringMarshaler_CleanUpManagedData_System_Object_
-  commentId: M:Llvm.NET.Interop.AliasStringMarshaler.CleanUpManagedData(System.Object)
-  fullName: Llvm.NET.Interop.AliasStringMarshaler.CleanUpManagedData(System.Object)
-  nameWithType: AliasStringMarshaler.CleanUpManagedData(Object)
-- uid: Llvm.NET.Interop.AliasStringMarshaler.CleanUpManagedData*
-  name: CleanUpManagedData
-  href: api/Llvm.NET.Interop.AliasStringMarshaler.CleanUpManagedData.html
-  commentId: Overload:Llvm.NET.Interop.AliasStringMarshaler.CleanUpManagedData
-  fullName: Llvm.NET.Interop.AliasStringMarshaler.CleanUpManagedData
-  nameWithType: AliasStringMarshaler.CleanUpManagedData
-- uid: Llvm.NET.Interop.AliasStringMarshaler.CleanUpNativeData(System.IntPtr)
-  name: CleanUpNativeData(IntPtr)
-  href: api/Llvm.NET.Interop.AliasStringMarshaler.CleanUpNativeData.html#Llvm_NET_Interop_AliasStringMarshaler_CleanUpNativeData_System_IntPtr_
-  commentId: M:Llvm.NET.Interop.AliasStringMarshaler.CleanUpNativeData(System.IntPtr)
-  fullName: Llvm.NET.Interop.AliasStringMarshaler.CleanUpNativeData(System.IntPtr)
-  nameWithType: AliasStringMarshaler.CleanUpNativeData(IntPtr)
-- uid: Llvm.NET.Interop.AliasStringMarshaler.CleanUpNativeData*
-  name: CleanUpNativeData
-  href: api/Llvm.NET.Interop.AliasStringMarshaler.CleanUpNativeData.html
-  commentId: Overload:Llvm.NET.Interop.AliasStringMarshaler.CleanUpNativeData
-  fullName: Llvm.NET.Interop.AliasStringMarshaler.CleanUpNativeData
-  nameWithType: AliasStringMarshaler.CleanUpNativeData
 - uid: Llvm.NET.Interop.AliasStringMarshaler.GetInstance(System.String)
   name: GetInstance(String)
   href: api/Llvm.NET.Interop.AliasStringMarshaler.GetInstance.html#Llvm_NET_Interop_AliasStringMarshaler_GetInstance_System_String_
@@ -10157,42 +10133,72 @@ references:
   commentId: Overload:Llvm.NET.Interop.AliasStringMarshaler.GetInstance
   fullName: Llvm.NET.Interop.AliasStringMarshaler.GetInstance
   nameWithType: AliasStringMarshaler.GetInstance
-- uid: Llvm.NET.Interop.AliasStringMarshaler.GetNativeDataSize
+- uid: Llvm.NET.Interop.CustomStringMarshalerBase
+  name: CustomStringMarshalerBase
+  href: api/Llvm.NET.Interop.CustomStringMarshalerBase.html
+  commentId: T:Llvm.NET.Interop.CustomStringMarshalerBase
+  fullName: Llvm.NET.Interop.CustomStringMarshalerBase
+  nameWithType: CustomStringMarshalerBase
+- uid: Llvm.NET.Interop.CustomStringMarshalerBase.CleanUpManagedData(System.Object)
+  name: CleanUpManagedData(Object)
+  href: api/Llvm.NET.Interop.CustomStringMarshalerBase.CleanUpManagedData.html#Llvm_NET_Interop_CustomStringMarshalerBase_CleanUpManagedData_System_Object_
+  commentId: M:Llvm.NET.Interop.CustomStringMarshalerBase.CleanUpManagedData(System.Object)
+  fullName: Llvm.NET.Interop.CustomStringMarshalerBase.CleanUpManagedData(System.Object)
+  nameWithType: CustomStringMarshalerBase.CleanUpManagedData(Object)
+- uid: Llvm.NET.Interop.CustomStringMarshalerBase.CleanUpManagedData*
+  name: CleanUpManagedData
+  href: api/Llvm.NET.Interop.CustomStringMarshalerBase.CleanUpManagedData.html
+  commentId: Overload:Llvm.NET.Interop.CustomStringMarshalerBase.CleanUpManagedData
+  fullName: Llvm.NET.Interop.CustomStringMarshalerBase.CleanUpManagedData
+  nameWithType: CustomStringMarshalerBase.CleanUpManagedData
+- uid: Llvm.NET.Interop.CustomStringMarshalerBase.CleanUpNativeData(System.IntPtr)
+  name: CleanUpNativeData(IntPtr)
+  href: api/Llvm.NET.Interop.CustomStringMarshalerBase.CleanUpNativeData.html#Llvm_NET_Interop_CustomStringMarshalerBase_CleanUpNativeData_System_IntPtr_
+  commentId: M:Llvm.NET.Interop.CustomStringMarshalerBase.CleanUpNativeData(System.IntPtr)
+  fullName: Llvm.NET.Interop.CustomStringMarshalerBase.CleanUpNativeData(System.IntPtr)
+  nameWithType: CustomStringMarshalerBase.CleanUpNativeData(IntPtr)
+- uid: Llvm.NET.Interop.CustomStringMarshalerBase.CleanUpNativeData*
+  name: CleanUpNativeData
+  href: api/Llvm.NET.Interop.CustomStringMarshalerBase.CleanUpNativeData.html
+  commentId: Overload:Llvm.NET.Interop.CustomStringMarshalerBase.CleanUpNativeData
+  fullName: Llvm.NET.Interop.CustomStringMarshalerBase.CleanUpNativeData
+  nameWithType: CustomStringMarshalerBase.CleanUpNativeData
+- uid: Llvm.NET.Interop.CustomStringMarshalerBase.GetNativeDataSize
   name: GetNativeDataSize()
-  href: api/Llvm.NET.Interop.AliasStringMarshaler.GetNativeDataSize.html#Llvm_NET_Interop_AliasStringMarshaler_GetNativeDataSize
-  commentId: M:Llvm.NET.Interop.AliasStringMarshaler.GetNativeDataSize
-  fullName: Llvm.NET.Interop.AliasStringMarshaler.GetNativeDataSize()
-  nameWithType: AliasStringMarshaler.GetNativeDataSize()
-- uid: Llvm.NET.Interop.AliasStringMarshaler.GetNativeDataSize*
+  href: api/Llvm.NET.Interop.CustomStringMarshalerBase.GetNativeDataSize.html#Llvm_NET_Interop_CustomStringMarshalerBase_GetNativeDataSize
+  commentId: M:Llvm.NET.Interop.CustomStringMarshalerBase.GetNativeDataSize
+  fullName: Llvm.NET.Interop.CustomStringMarshalerBase.GetNativeDataSize()
+  nameWithType: CustomStringMarshalerBase.GetNativeDataSize()
+- uid: Llvm.NET.Interop.CustomStringMarshalerBase.GetNativeDataSize*
   name: GetNativeDataSize
-  href: api/Llvm.NET.Interop.AliasStringMarshaler.GetNativeDataSize.html
-  commentId: Overload:Llvm.NET.Interop.AliasStringMarshaler.GetNativeDataSize
-  fullName: Llvm.NET.Interop.AliasStringMarshaler.GetNativeDataSize
-  nameWithType: AliasStringMarshaler.GetNativeDataSize
-- uid: Llvm.NET.Interop.AliasStringMarshaler.MarshalManagedToNative(System.Object)
+  href: api/Llvm.NET.Interop.CustomStringMarshalerBase.GetNativeDataSize.html
+  commentId: Overload:Llvm.NET.Interop.CustomStringMarshalerBase.GetNativeDataSize
+  fullName: Llvm.NET.Interop.CustomStringMarshalerBase.GetNativeDataSize
+  nameWithType: CustomStringMarshalerBase.GetNativeDataSize
+- uid: Llvm.NET.Interop.CustomStringMarshalerBase.MarshalManagedToNative(System.Object)
   name: MarshalManagedToNative(Object)
-  href: api/Llvm.NET.Interop.AliasStringMarshaler.MarshalManagedToNative.html#Llvm_NET_Interop_AliasStringMarshaler_MarshalManagedToNative_System_Object_
-  commentId: M:Llvm.NET.Interop.AliasStringMarshaler.MarshalManagedToNative(System.Object)
-  fullName: Llvm.NET.Interop.AliasStringMarshaler.MarshalManagedToNative(System.Object)
-  nameWithType: AliasStringMarshaler.MarshalManagedToNative(Object)
-- uid: Llvm.NET.Interop.AliasStringMarshaler.MarshalManagedToNative*
+  href: api/Llvm.NET.Interop.CustomStringMarshalerBase.MarshalManagedToNative.html#Llvm_NET_Interop_CustomStringMarshalerBase_MarshalManagedToNative_System_Object_
+  commentId: M:Llvm.NET.Interop.CustomStringMarshalerBase.MarshalManagedToNative(System.Object)
+  fullName: Llvm.NET.Interop.CustomStringMarshalerBase.MarshalManagedToNative(System.Object)
+  nameWithType: CustomStringMarshalerBase.MarshalManagedToNative(Object)
+- uid: Llvm.NET.Interop.CustomStringMarshalerBase.MarshalManagedToNative*
   name: MarshalManagedToNative
-  href: api/Llvm.NET.Interop.AliasStringMarshaler.MarshalManagedToNative.html
-  commentId: Overload:Llvm.NET.Interop.AliasStringMarshaler.MarshalManagedToNative
-  fullName: Llvm.NET.Interop.AliasStringMarshaler.MarshalManagedToNative
-  nameWithType: AliasStringMarshaler.MarshalManagedToNative
-- uid: Llvm.NET.Interop.AliasStringMarshaler.MarshalNativeToManaged(System.IntPtr)
+  href: api/Llvm.NET.Interop.CustomStringMarshalerBase.MarshalManagedToNative.html
+  commentId: Overload:Llvm.NET.Interop.CustomStringMarshalerBase.MarshalManagedToNative
+  fullName: Llvm.NET.Interop.CustomStringMarshalerBase.MarshalManagedToNative
+  nameWithType: CustomStringMarshalerBase.MarshalManagedToNative
+- uid: Llvm.NET.Interop.CustomStringMarshalerBase.MarshalNativeToManaged(System.IntPtr)
   name: MarshalNativeToManaged(IntPtr)
-  href: api/Llvm.NET.Interop.AliasStringMarshaler.MarshalNativeToManaged.html#Llvm_NET_Interop_AliasStringMarshaler_MarshalNativeToManaged_System_IntPtr_
-  commentId: M:Llvm.NET.Interop.AliasStringMarshaler.MarshalNativeToManaged(System.IntPtr)
-  fullName: Llvm.NET.Interop.AliasStringMarshaler.MarshalNativeToManaged(System.IntPtr)
-  nameWithType: AliasStringMarshaler.MarshalNativeToManaged(IntPtr)
-- uid: Llvm.NET.Interop.AliasStringMarshaler.MarshalNativeToManaged*
+  href: api/Llvm.NET.Interop.CustomStringMarshalerBase.MarshalNativeToManaged.html#Llvm_NET_Interop_CustomStringMarshalerBase_MarshalNativeToManaged_System_IntPtr_
+  commentId: M:Llvm.NET.Interop.CustomStringMarshalerBase.MarshalNativeToManaged(System.IntPtr)
+  fullName: Llvm.NET.Interop.CustomStringMarshalerBase.MarshalNativeToManaged(System.IntPtr)
+  nameWithType: CustomStringMarshalerBase.MarshalNativeToManaged(IntPtr)
+- uid: Llvm.NET.Interop.CustomStringMarshalerBase.MarshalNativeToManaged*
   name: MarshalNativeToManaged
-  href: api/Llvm.NET.Interop.AliasStringMarshaler.MarshalNativeToManaged.html
-  commentId: Overload:Llvm.NET.Interop.AliasStringMarshaler.MarshalNativeToManaged
-  fullName: Llvm.NET.Interop.AliasStringMarshaler.MarshalNativeToManaged
-  nameWithType: AliasStringMarshaler.MarshalNativeToManaged
+  href: api/Llvm.NET.Interop.CustomStringMarshalerBase.MarshalNativeToManaged.html
+  commentId: Overload:Llvm.NET.Interop.CustomStringMarshalerBase.MarshalNativeToManaged
+  fullName: Llvm.NET.Interop.CustomStringMarshalerBase.MarshalNativeToManaged
+  nameWithType: CustomStringMarshalerBase.MarshalNativeToManaged
 - uid: Llvm.NET.Interop.DisposableAction
   name: DisposableAction
   href: api/Llvm.NET.Interop.DisposableAction.html
@@ -10355,30 +10361,6 @@ references:
   commentId: T:Llvm.NET.Interop.DisposeMessageMarshaler
   fullName: Llvm.NET.Interop.DisposeMessageMarshaler
   nameWithType: DisposeMessageMarshaler
-- uid: Llvm.NET.Interop.DisposeMessageMarshaler.CleanUpManagedData(System.Object)
-  name: CleanUpManagedData(Object)
-  href: api/Llvm.NET.Interop.DisposeMessageMarshaler.CleanUpManagedData.html#Llvm_NET_Interop_DisposeMessageMarshaler_CleanUpManagedData_System_Object_
-  commentId: M:Llvm.NET.Interop.DisposeMessageMarshaler.CleanUpManagedData(System.Object)
-  fullName: Llvm.NET.Interop.DisposeMessageMarshaler.CleanUpManagedData(System.Object)
-  nameWithType: DisposeMessageMarshaler.CleanUpManagedData(Object)
-- uid: Llvm.NET.Interop.DisposeMessageMarshaler.CleanUpManagedData*
-  name: CleanUpManagedData
-  href: api/Llvm.NET.Interop.DisposeMessageMarshaler.CleanUpManagedData.html
-  commentId: Overload:Llvm.NET.Interop.DisposeMessageMarshaler.CleanUpManagedData
-  fullName: Llvm.NET.Interop.DisposeMessageMarshaler.CleanUpManagedData
-  nameWithType: DisposeMessageMarshaler.CleanUpManagedData
-- uid: Llvm.NET.Interop.DisposeMessageMarshaler.CleanUpNativeData(System.IntPtr)
-  name: CleanUpNativeData(IntPtr)
-  href: api/Llvm.NET.Interop.DisposeMessageMarshaler.CleanUpNativeData.html#Llvm_NET_Interop_DisposeMessageMarshaler_CleanUpNativeData_System_IntPtr_
-  commentId: M:Llvm.NET.Interop.DisposeMessageMarshaler.CleanUpNativeData(System.IntPtr)
-  fullName: Llvm.NET.Interop.DisposeMessageMarshaler.CleanUpNativeData(System.IntPtr)
-  nameWithType: DisposeMessageMarshaler.CleanUpNativeData(IntPtr)
-- uid: Llvm.NET.Interop.DisposeMessageMarshaler.CleanUpNativeData*
-  name: CleanUpNativeData
-  href: api/Llvm.NET.Interop.DisposeMessageMarshaler.CleanUpNativeData.html
-  commentId: Overload:Llvm.NET.Interop.DisposeMessageMarshaler.CleanUpNativeData
-  fullName: Llvm.NET.Interop.DisposeMessageMarshaler.CleanUpNativeData
-  nameWithType: DisposeMessageMarshaler.CleanUpNativeData
 - uid: Llvm.NET.Interop.DisposeMessageMarshaler.GetInstance(System.String)
   name: GetInstance(String)
   href: api/Llvm.NET.Interop.DisposeMessageMarshaler.GetInstance.html#Llvm_NET_Interop_DisposeMessageMarshaler_GetInstance_System_String_
@@ -10391,72 +10373,12 @@ references:
   commentId: Overload:Llvm.NET.Interop.DisposeMessageMarshaler.GetInstance
   fullName: Llvm.NET.Interop.DisposeMessageMarshaler.GetInstance
   nameWithType: DisposeMessageMarshaler.GetInstance
-- uid: Llvm.NET.Interop.DisposeMessageMarshaler.GetNativeDataSize
-  name: GetNativeDataSize()
-  href: api/Llvm.NET.Interop.DisposeMessageMarshaler.GetNativeDataSize.html#Llvm_NET_Interop_DisposeMessageMarshaler_GetNativeDataSize
-  commentId: M:Llvm.NET.Interop.DisposeMessageMarshaler.GetNativeDataSize
-  fullName: Llvm.NET.Interop.DisposeMessageMarshaler.GetNativeDataSize()
-  nameWithType: DisposeMessageMarshaler.GetNativeDataSize()
-- uid: Llvm.NET.Interop.DisposeMessageMarshaler.GetNativeDataSize*
-  name: GetNativeDataSize
-  href: api/Llvm.NET.Interop.DisposeMessageMarshaler.GetNativeDataSize.html
-  commentId: Overload:Llvm.NET.Interop.DisposeMessageMarshaler.GetNativeDataSize
-  fullName: Llvm.NET.Interop.DisposeMessageMarshaler.GetNativeDataSize
-  nameWithType: DisposeMessageMarshaler.GetNativeDataSize
-- uid: Llvm.NET.Interop.DisposeMessageMarshaler.MarshalManagedToNative(System.Object)
-  name: MarshalManagedToNative(Object)
-  href: api/Llvm.NET.Interop.DisposeMessageMarshaler.MarshalManagedToNative.html#Llvm_NET_Interop_DisposeMessageMarshaler_MarshalManagedToNative_System_Object_
-  commentId: M:Llvm.NET.Interop.DisposeMessageMarshaler.MarshalManagedToNative(System.Object)
-  fullName: Llvm.NET.Interop.DisposeMessageMarshaler.MarshalManagedToNative(System.Object)
-  nameWithType: DisposeMessageMarshaler.MarshalManagedToNative(Object)
-- uid: Llvm.NET.Interop.DisposeMessageMarshaler.MarshalManagedToNative*
-  name: MarshalManagedToNative
-  href: api/Llvm.NET.Interop.DisposeMessageMarshaler.MarshalManagedToNative.html
-  commentId: Overload:Llvm.NET.Interop.DisposeMessageMarshaler.MarshalManagedToNative
-  fullName: Llvm.NET.Interop.DisposeMessageMarshaler.MarshalManagedToNative
-  nameWithType: DisposeMessageMarshaler.MarshalManagedToNative
-- uid: Llvm.NET.Interop.DisposeMessageMarshaler.MarshalNativeToManaged(System.IntPtr)
-  name: MarshalNativeToManaged(IntPtr)
-  href: api/Llvm.NET.Interop.DisposeMessageMarshaler.MarshalNativeToManaged.html#Llvm_NET_Interop_DisposeMessageMarshaler_MarshalNativeToManaged_System_IntPtr_
-  commentId: M:Llvm.NET.Interop.DisposeMessageMarshaler.MarshalNativeToManaged(System.IntPtr)
-  fullName: Llvm.NET.Interop.DisposeMessageMarshaler.MarshalNativeToManaged(System.IntPtr)
-  nameWithType: DisposeMessageMarshaler.MarshalNativeToManaged(IntPtr)
-- uid: Llvm.NET.Interop.DisposeMessageMarshaler.MarshalNativeToManaged*
-  name: MarshalNativeToManaged
-  href: api/Llvm.NET.Interop.DisposeMessageMarshaler.MarshalNativeToManaged.html
-  commentId: Overload:Llvm.NET.Interop.DisposeMessageMarshaler.MarshalNativeToManaged
-  fullName: Llvm.NET.Interop.DisposeMessageMarshaler.MarshalNativeToManaged
-  nameWithType: DisposeMessageMarshaler.MarshalNativeToManaged
 - uid: Llvm.NET.Interop.ErrorMessageMarshaler
   name: ErrorMessageMarshaler
   href: api/Llvm.NET.Interop.ErrorMessageMarshaler.html
   commentId: T:Llvm.NET.Interop.ErrorMessageMarshaler
   fullName: Llvm.NET.Interop.ErrorMessageMarshaler
   nameWithType: ErrorMessageMarshaler
-- uid: Llvm.NET.Interop.ErrorMessageMarshaler.CleanUpManagedData(System.Object)
-  name: CleanUpManagedData(Object)
-  href: api/Llvm.NET.Interop.ErrorMessageMarshaler.CleanUpManagedData.html#Llvm_NET_Interop_ErrorMessageMarshaler_CleanUpManagedData_System_Object_
-  commentId: M:Llvm.NET.Interop.ErrorMessageMarshaler.CleanUpManagedData(System.Object)
-  fullName: Llvm.NET.Interop.ErrorMessageMarshaler.CleanUpManagedData(System.Object)
-  nameWithType: ErrorMessageMarshaler.CleanUpManagedData(Object)
-- uid: Llvm.NET.Interop.ErrorMessageMarshaler.CleanUpManagedData*
-  name: CleanUpManagedData
-  href: api/Llvm.NET.Interop.ErrorMessageMarshaler.CleanUpManagedData.html
-  commentId: Overload:Llvm.NET.Interop.ErrorMessageMarshaler.CleanUpManagedData
-  fullName: Llvm.NET.Interop.ErrorMessageMarshaler.CleanUpManagedData
-  nameWithType: ErrorMessageMarshaler.CleanUpManagedData
-- uid: Llvm.NET.Interop.ErrorMessageMarshaler.CleanUpNativeData(System.IntPtr)
-  name: CleanUpNativeData(IntPtr)
-  href: api/Llvm.NET.Interop.ErrorMessageMarshaler.CleanUpNativeData.html#Llvm_NET_Interop_ErrorMessageMarshaler_CleanUpNativeData_System_IntPtr_
-  commentId: M:Llvm.NET.Interop.ErrorMessageMarshaler.CleanUpNativeData(System.IntPtr)
-  fullName: Llvm.NET.Interop.ErrorMessageMarshaler.CleanUpNativeData(System.IntPtr)
-  nameWithType: ErrorMessageMarshaler.CleanUpNativeData(IntPtr)
-- uid: Llvm.NET.Interop.ErrorMessageMarshaler.CleanUpNativeData*
-  name: CleanUpNativeData
-  href: api/Llvm.NET.Interop.ErrorMessageMarshaler.CleanUpNativeData.html
-  commentId: Overload:Llvm.NET.Interop.ErrorMessageMarshaler.CleanUpNativeData
-  fullName: Llvm.NET.Interop.ErrorMessageMarshaler.CleanUpNativeData
-  nameWithType: ErrorMessageMarshaler.CleanUpNativeData
 - uid: Llvm.NET.Interop.ErrorMessageMarshaler.GetInstance(System.String)
   name: GetInstance(String)
   href: api/Llvm.NET.Interop.ErrorMessageMarshaler.GetInstance.html#Llvm_NET_Interop_ErrorMessageMarshaler_GetInstance_System_String_
@@ -10469,42 +10391,6 @@ references:
   commentId: Overload:Llvm.NET.Interop.ErrorMessageMarshaler.GetInstance
   fullName: Llvm.NET.Interop.ErrorMessageMarshaler.GetInstance
   nameWithType: ErrorMessageMarshaler.GetInstance
-- uid: Llvm.NET.Interop.ErrorMessageMarshaler.GetNativeDataSize
-  name: GetNativeDataSize()
-  href: api/Llvm.NET.Interop.ErrorMessageMarshaler.GetNativeDataSize.html#Llvm_NET_Interop_ErrorMessageMarshaler_GetNativeDataSize
-  commentId: M:Llvm.NET.Interop.ErrorMessageMarshaler.GetNativeDataSize
-  fullName: Llvm.NET.Interop.ErrorMessageMarshaler.GetNativeDataSize()
-  nameWithType: ErrorMessageMarshaler.GetNativeDataSize()
-- uid: Llvm.NET.Interop.ErrorMessageMarshaler.GetNativeDataSize*
-  name: GetNativeDataSize
-  href: api/Llvm.NET.Interop.ErrorMessageMarshaler.GetNativeDataSize.html
-  commentId: Overload:Llvm.NET.Interop.ErrorMessageMarshaler.GetNativeDataSize
-  fullName: Llvm.NET.Interop.ErrorMessageMarshaler.GetNativeDataSize
-  nameWithType: ErrorMessageMarshaler.GetNativeDataSize
-- uid: Llvm.NET.Interop.ErrorMessageMarshaler.MarshalManagedToNative(System.Object)
-  name: MarshalManagedToNative(Object)
-  href: api/Llvm.NET.Interop.ErrorMessageMarshaler.MarshalManagedToNative.html#Llvm_NET_Interop_ErrorMessageMarshaler_MarshalManagedToNative_System_Object_
-  commentId: M:Llvm.NET.Interop.ErrorMessageMarshaler.MarshalManagedToNative(System.Object)
-  fullName: Llvm.NET.Interop.ErrorMessageMarshaler.MarshalManagedToNative(System.Object)
-  nameWithType: ErrorMessageMarshaler.MarshalManagedToNative(Object)
-- uid: Llvm.NET.Interop.ErrorMessageMarshaler.MarshalManagedToNative*
-  name: MarshalManagedToNative
-  href: api/Llvm.NET.Interop.ErrorMessageMarshaler.MarshalManagedToNative.html
-  commentId: Overload:Llvm.NET.Interop.ErrorMessageMarshaler.MarshalManagedToNative
-  fullName: Llvm.NET.Interop.ErrorMessageMarshaler.MarshalManagedToNative
-  nameWithType: ErrorMessageMarshaler.MarshalManagedToNative
-- uid: Llvm.NET.Interop.ErrorMessageMarshaler.MarshalNativeToManaged(System.IntPtr)
-  name: MarshalNativeToManaged(IntPtr)
-  href: api/Llvm.NET.Interop.ErrorMessageMarshaler.MarshalNativeToManaged.html#Llvm_NET_Interop_ErrorMessageMarshaler_MarshalNativeToManaged_System_IntPtr_
-  commentId: M:Llvm.NET.Interop.ErrorMessageMarshaler.MarshalNativeToManaged(System.IntPtr)
-  fullName: Llvm.NET.Interop.ErrorMessageMarshaler.MarshalNativeToManaged(System.IntPtr)
-  nameWithType: ErrorMessageMarshaler.MarshalNativeToManaged(IntPtr)
-- uid: Llvm.NET.Interop.ErrorMessageMarshaler.MarshalNativeToManaged*
-  name: MarshalNativeToManaged
-  href: api/Llvm.NET.Interop.ErrorMessageMarshaler.MarshalNativeToManaged.html
-  commentId: Overload:Llvm.NET.Interop.ErrorMessageMarshaler.MarshalNativeToManaged
-  fullName: Llvm.NET.Interop.ErrorMessageMarshaler.MarshalNativeToManaged
-  nameWithType: ErrorMessageMarshaler.MarshalNativeToManaged
 - uid: Llvm.NET.Interop.IntPtrExtensions
   name: IntPtrExtensions
   href: api/Llvm.NET.Interop.IntPtrExtensions.html
@@ -32501,30 +32387,6 @@ references:
   commentId: T:Llvm.NET.Interop.OrcDisposeMangledSymbolMarshaler
   fullName: Llvm.NET.Interop.OrcDisposeMangledSymbolMarshaler
   nameWithType: OrcDisposeMangledSymbolMarshaler
-- uid: Llvm.NET.Interop.OrcDisposeMangledSymbolMarshaler.CleanUpManagedData(System.Object)
-  name: CleanUpManagedData(Object)
-  href: api/Llvm.NET.Interop.OrcDisposeMangledSymbolMarshaler.CleanUpManagedData.html#Llvm_NET_Interop_OrcDisposeMangledSymbolMarshaler_CleanUpManagedData_System_Object_
-  commentId: M:Llvm.NET.Interop.OrcDisposeMangledSymbolMarshaler.CleanUpManagedData(System.Object)
-  fullName: Llvm.NET.Interop.OrcDisposeMangledSymbolMarshaler.CleanUpManagedData(System.Object)
-  nameWithType: OrcDisposeMangledSymbolMarshaler.CleanUpManagedData(Object)
-- uid: Llvm.NET.Interop.OrcDisposeMangledSymbolMarshaler.CleanUpManagedData*
-  name: CleanUpManagedData
-  href: api/Llvm.NET.Interop.OrcDisposeMangledSymbolMarshaler.CleanUpManagedData.html
-  commentId: Overload:Llvm.NET.Interop.OrcDisposeMangledSymbolMarshaler.CleanUpManagedData
-  fullName: Llvm.NET.Interop.OrcDisposeMangledSymbolMarshaler.CleanUpManagedData
-  nameWithType: OrcDisposeMangledSymbolMarshaler.CleanUpManagedData
-- uid: Llvm.NET.Interop.OrcDisposeMangledSymbolMarshaler.CleanUpNativeData(System.IntPtr)
-  name: CleanUpNativeData(IntPtr)
-  href: api/Llvm.NET.Interop.OrcDisposeMangledSymbolMarshaler.CleanUpNativeData.html#Llvm_NET_Interop_OrcDisposeMangledSymbolMarshaler_CleanUpNativeData_System_IntPtr_
-  commentId: M:Llvm.NET.Interop.OrcDisposeMangledSymbolMarshaler.CleanUpNativeData(System.IntPtr)
-  fullName: Llvm.NET.Interop.OrcDisposeMangledSymbolMarshaler.CleanUpNativeData(System.IntPtr)
-  nameWithType: OrcDisposeMangledSymbolMarshaler.CleanUpNativeData(IntPtr)
-- uid: Llvm.NET.Interop.OrcDisposeMangledSymbolMarshaler.CleanUpNativeData*
-  name: CleanUpNativeData
-  href: api/Llvm.NET.Interop.OrcDisposeMangledSymbolMarshaler.CleanUpNativeData.html
-  commentId: Overload:Llvm.NET.Interop.OrcDisposeMangledSymbolMarshaler.CleanUpNativeData
-  fullName: Llvm.NET.Interop.OrcDisposeMangledSymbolMarshaler.CleanUpNativeData
-  nameWithType: OrcDisposeMangledSymbolMarshaler.CleanUpNativeData
 - uid: Llvm.NET.Interop.OrcDisposeMangledSymbolMarshaler.GetInstance(System.String)
   name: GetInstance(String)
   href: api/Llvm.NET.Interop.OrcDisposeMangledSymbolMarshaler.GetInstance.html#Llvm_NET_Interop_OrcDisposeMangledSymbolMarshaler_GetInstance_System_String_
@@ -32537,42 +32399,6 @@ references:
   commentId: Overload:Llvm.NET.Interop.OrcDisposeMangledSymbolMarshaler.GetInstance
   fullName: Llvm.NET.Interop.OrcDisposeMangledSymbolMarshaler.GetInstance
   nameWithType: OrcDisposeMangledSymbolMarshaler.GetInstance
-- uid: Llvm.NET.Interop.OrcDisposeMangledSymbolMarshaler.GetNativeDataSize
-  name: GetNativeDataSize()
-  href: api/Llvm.NET.Interop.OrcDisposeMangledSymbolMarshaler.GetNativeDataSize.html#Llvm_NET_Interop_OrcDisposeMangledSymbolMarshaler_GetNativeDataSize
-  commentId: M:Llvm.NET.Interop.OrcDisposeMangledSymbolMarshaler.GetNativeDataSize
-  fullName: Llvm.NET.Interop.OrcDisposeMangledSymbolMarshaler.GetNativeDataSize()
-  nameWithType: OrcDisposeMangledSymbolMarshaler.GetNativeDataSize()
-- uid: Llvm.NET.Interop.OrcDisposeMangledSymbolMarshaler.GetNativeDataSize*
-  name: GetNativeDataSize
-  href: api/Llvm.NET.Interop.OrcDisposeMangledSymbolMarshaler.GetNativeDataSize.html
-  commentId: Overload:Llvm.NET.Interop.OrcDisposeMangledSymbolMarshaler.GetNativeDataSize
-  fullName: Llvm.NET.Interop.OrcDisposeMangledSymbolMarshaler.GetNativeDataSize
-  nameWithType: OrcDisposeMangledSymbolMarshaler.GetNativeDataSize
-- uid: Llvm.NET.Interop.OrcDisposeMangledSymbolMarshaler.MarshalManagedToNative(System.Object)
-  name: MarshalManagedToNative(Object)
-  href: api/Llvm.NET.Interop.OrcDisposeMangledSymbolMarshaler.MarshalManagedToNative.html#Llvm_NET_Interop_OrcDisposeMangledSymbolMarshaler_MarshalManagedToNative_System_Object_
-  commentId: M:Llvm.NET.Interop.OrcDisposeMangledSymbolMarshaler.MarshalManagedToNative(System.Object)
-  fullName: Llvm.NET.Interop.OrcDisposeMangledSymbolMarshaler.MarshalManagedToNative(System.Object)
-  nameWithType: OrcDisposeMangledSymbolMarshaler.MarshalManagedToNative(Object)
-- uid: Llvm.NET.Interop.OrcDisposeMangledSymbolMarshaler.MarshalManagedToNative*
-  name: MarshalManagedToNative
-  href: api/Llvm.NET.Interop.OrcDisposeMangledSymbolMarshaler.MarshalManagedToNative.html
-  commentId: Overload:Llvm.NET.Interop.OrcDisposeMangledSymbolMarshaler.MarshalManagedToNative
-  fullName: Llvm.NET.Interop.OrcDisposeMangledSymbolMarshaler.MarshalManagedToNative
-  nameWithType: OrcDisposeMangledSymbolMarshaler.MarshalManagedToNative
-- uid: Llvm.NET.Interop.OrcDisposeMangledSymbolMarshaler.MarshalNativeToManaged(System.IntPtr)
-  name: MarshalNativeToManaged(IntPtr)
-  href: api/Llvm.NET.Interop.OrcDisposeMangledSymbolMarshaler.MarshalNativeToManaged.html#Llvm_NET_Interop_OrcDisposeMangledSymbolMarshaler_MarshalNativeToManaged_System_IntPtr_
-  commentId: M:Llvm.NET.Interop.OrcDisposeMangledSymbolMarshaler.MarshalNativeToManaged(System.IntPtr)
-  fullName: Llvm.NET.Interop.OrcDisposeMangledSymbolMarshaler.MarshalNativeToManaged(System.IntPtr)
-  nameWithType: OrcDisposeMangledSymbolMarshaler.MarshalNativeToManaged(IntPtr)
-- uid: Llvm.NET.Interop.OrcDisposeMangledSymbolMarshaler.MarshalNativeToManaged*
-  name: MarshalNativeToManaged
-  href: api/Llvm.NET.Interop.OrcDisposeMangledSymbolMarshaler.MarshalNativeToManaged.html
-  commentId: Overload:Llvm.NET.Interop.OrcDisposeMangledSymbolMarshaler.MarshalNativeToManaged
-  fullName: Llvm.NET.Interop.OrcDisposeMangledSymbolMarshaler.MarshalNativeToManaged
-  nameWithType: OrcDisposeMangledSymbolMarshaler.MarshalNativeToManaged
 - uid: Llvm.NET.Interop.size_t
   name: size_t
   href: api/Llvm.NET.Interop.size_t.html
