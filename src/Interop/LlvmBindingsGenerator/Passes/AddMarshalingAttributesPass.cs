@@ -209,7 +209,7 @@ namespace LlvmBindingsGenerator.Passes
                 break;
 
             case ParamSemantics.InOut:
-                parameter.Usage = ParameterUsage.InOut;
+                parameter.Usage = parameter.Type is ArrayType ? ParameterUsage.In : ParameterUsage.InOut;
                 break;
 
             default:

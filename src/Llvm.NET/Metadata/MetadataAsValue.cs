@@ -22,12 +22,9 @@ namespace Llvm.NET
 
         internal static LLVMValueRef IsAMetadataAsValue( LLVMValueRef value )
         {
-            if( value == default )
-            {
-                return value;
-            }
-
-            return LLVMGetValueIdAsKind( value ) == ValueKind.MetadataAsValue ? value : default;
+            return value == default
+                   ? value
+                   : LibLLVMGetValueKind( value ) == LibLLVMValueKind.MetadataAsValueKind ? value : default;
         }
 
         /*

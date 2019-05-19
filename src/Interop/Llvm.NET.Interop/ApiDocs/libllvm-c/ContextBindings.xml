@@ -13,7 +13,7 @@
     <Function name="LibLLVMContextGetIsODRUniquingDebugTypes">
         <summary>Gets a value that indicates whether the context is ODR uniqueing debug types</summary>
         <param name="context"><see cref="LLVMContextRef"/> to get the value for</param>
-        <returns>TODO: Document return value</returns>
+        <returns>Value indicating whether the context is ODR uniqueing debug types</returns>
     </Function>
     <Function name="LibLLVMContextSetIsODRUniquingDebugTypes">
         <summary>Sets a value that indicates whether the context is ODR uniqueing debug types</summary>

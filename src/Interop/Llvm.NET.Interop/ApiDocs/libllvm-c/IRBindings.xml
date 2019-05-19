@@ -11,24 +11,24 @@
 -->
 <LibLlvmAPI>
     <Function name="LibLLVMGetVersionInfo">
-        <summary>TODO: Provide summary for Function LibLLVMGetVersionInfo</summary>
-        <param name="pVersionInfo">TODO: Provide details of parameter pVersionInfo</param>
+        <summary>Gets the <see cref="Llvm.NET.Interop.LibLLVMVersionInfo"/> for the native LibLLVM library</summary>
+        <param name="pVersionInfo">Version info as an out param</param>
     </Function>
     <Function name="LibLLVMLookupInstrinsicId">
-        <summary>TODO: Provide summary for Function LibLLVMLookupInstrinsicId</summary>
-        <param name="name">TODO: Provide details of parameter name</param>
-        <returns>TODO: Document return value</returns>
+        <summary>Gets the intrinsic ID from the name of the intrinsic</summary>
+        <param name="name">Name of the intrinsic</param>
+        <returns>ID of the intrinsic</returns>
     </Function>
     <Struct name="LibLLVMVersionInfo">
-        <summary>TODO: Provide summary for struct LibLLVMVersionInfo</summary>
+        <summary>Simple struct to hold version information for the LibLLVM library loaded for Interop</summary>
         <Field name="Major">
-            <summary>TODO: Provide summary for field LibLLVMVersionInfo.Major</summary>
+            <summary>Major part of the version number</summary>
         </Field>
         <Field name="Minor">
-            <summary>TODO: Provide summary for field LibLLVMVersionInfo.Minor</summary>
+            <summary>Minor part of the version number</summary>
         </Field>
         <Field name="Patch">
-            <summary>TODO: Provide summary for field LibLLVMVersionInfo.Patch</summary>
+            <summary>Patch part of the version number</summary>
         </Field>
     </Struct>
 </LibLlvmAPI>

@@ -53,7 +53,7 @@ namespace LlvmBindingsGenerator.Passes
             switch( function.ReturnType.Type )
             {
             // Any function listed in the map is converted regardless of declared return type
-            // Some functions use int instead of LlvmBool, apparently to avoid the confusion.
+            // Some functions use int instead of LLVMBool, apparently to avoid the confusion.
             // Unfortunately since this is not consistent, it creates more confusion.
             case Type _ when FunctionNames.Contains( function.Name ):
                 function.ReturnType = LlvmStatusType;
@@ -61,7 +61,7 @@ namespace LlvmBindingsGenerator.Passes
                 Diagnostics.Debug( "Converted return type of function {0} to LLVMStatus", function.Name );
                 break;
 
-            // functions not mapped but having LlvmBool are converted to returning "bool"
+            // functions not mapped but having LLVMBool are converted to returning "bool"
             case TypedefType tdt when tdt.Declaration.Name == LLVMBoolTypeName:
                 function.Attributes.Add( ReturnBoolAttribute );
                 function.ReturnType = BoolType;

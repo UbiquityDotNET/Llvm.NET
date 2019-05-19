@@ -53,9 +53,9 @@ extern "C"
         pGlobal->removeFromParent( );
     }
 
-    int LibLLVMGetValueID( LLVMValueRef valueRef )
+    LibLLVMValueKind LibLLVMGetValueKind( LLVMValueRef valueRef )
     {
-        return unwrap( valueRef )->getValueID( );
+        return static_cast<LibLLVMValueKind>( unwrap( valueRef )->getValueID( ) );
     }
 
     LLVMValueRef LibLLVMGetAliasee( LLVMValueRef Val )

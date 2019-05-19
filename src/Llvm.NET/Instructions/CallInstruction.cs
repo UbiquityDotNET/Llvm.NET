@@ -57,7 +57,7 @@ namespace Llvm.NET.Instructions
             }
 
             var buffer = new LLVMAttributeRef[ count ];
-            LLVMGetCallSiteAttributes( ValueHandle, ( LLVMAttributeIndex )index, out buffer[ 0 ] );
+            LLVMGetCallSiteAttributes( ValueHandle, ( LLVMAttributeIndex )index, buffer );
             return from attribRef in buffer
                    select AttributeValue.FromHandle( Context, attribRef );
         }
