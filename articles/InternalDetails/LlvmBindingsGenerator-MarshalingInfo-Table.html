@@ -1,0 +1,177 @@
+﻿<!DOCTYPE html>
+<!--[if IE]><![endif]-->
+<html>
+  
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>MarshalingInfoTable | Llvm.NET </title>
+    <meta name="viewport" content="width=device-width">
+    <meta name="title" content="MarshalingInfoTable | Llvm.NET ">
+    <meta name="generator" content="docfx 2.42.2.0">
+    
+    <link rel="shortcut icon" href="../../favicon.ico">
+    <link rel="stylesheet" href="../../styles/docfx.vendor.css">
+    <link rel="stylesheet" href="../../styles/docfx.css">
+    <link rel="stylesheet" href="../../styles/main.css">
+    <meta property="docfx:navrel" content="../../toc">
+    <meta property="docfx:tocrel" content="toc">
+    
+    
+    
+  </head>
+  <body data-spy="scroll" data-target="#affix" data-offset="120">
+    <div id="wrapper">
+      <header>
+        
+        <nav id="autocollapse" class="navbar navbar-inverse ng-scope" role="navigation">
+          <div class="container">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              
+              <a class="navbar-brand" href="../../index.html">
+                <img id="logo" class="svg" src="../../DragonSharp48x48.png" alt="">
+              </a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar">
+              <form class="navbar-form navbar-right" role="search" id="search">
+                <div class="form-group">
+                  <input type="text" class="form-control" id="search-query" placeholder="Search" autocomplete="off">
+                </div>
+              </form>
+                
+                <ul class="nav level1 navbar-nav">
+                      <li>
+                          <a href="../../api/index.html" title="API Documentation">API Documentation</a>
+                      </li>
+                      <li>
+                          <a href="../../articles/index.html" title="Articles">Articles</a>
+                      </li>
+                      <li>
+                          <a href="https://github.com/UbiquityDotNET/Llvm.NET" title="GitHub Repository">GitHub Repository</a>
+                      </li>
+                      <li>
+                          <a href="http://LLVM.org" title="LLVM.org">LLVM.org</a>
+                      </li>
+                      <li>
+                          <a href="http://releases.llvm.org/6.0.1/docs/index.html" title="LLVM Docs">LLVM Docs</a>
+                      </li>
+                </ul>    </div>
+          </div>
+        </nav>
+      </header>
+      <div role="main" class="container body-content hide-when-search">
+        <div class="sidenav hide-when-search">
+          <a class="btn toc-toggle collapse" data-toggle="collapse" href="#sidetoggle" aria-expanded="false" aria-controls="sidetoggle">Show / Hide Table of Contents</a>
+          <div class="sidetoggle collapse" id="sidetoggle">
+            <div>
+              <div class="sidefilter">
+                <form class="toc-filter">
+                  <span class="glyphicon glyphicon-filter filter-icon"></span>
+                  <input type="text" id="toc_filter_input" placeholder="Enter here to filter..." onkeypress="if(event.keyCode==13) {return false;}">
+                </form>
+              </div>
+              <div class="sidetoc">
+                <div class="toc" id="toc">
+                  
+                  <ul class="nav level1">
+                    <li class="">
+                      <span class="expand-stub"></span>
+                      <a class="">LLVM-C API Handles</a>
+                        
+                        <ul class="nav level2">
+                          <li class="">
+                            <a href="llvm-handles.html" title="Wrapping LLVM-C Handles" class="">Wrapping LLVM-C Handles</a>
+                          </li>
+                          <li class="">
+                            <a href="handleref-interning.html" title="Interning LLVM-C Handles" class="">Interning LLVM-C Handles</a>
+                          </li>
+                        </ul>  </li>
+                    <li class="">
+                      <span class="expand-stub"></span>
+                      <a class="">Marshaling LLVM types</a>
+                        
+                        <ul class="nav level2">
+                          <li class="">
+                            <a href="marshal-string.html" title="Marshaling Strings" class="">Marshaling Strings</a>
+                          </li>
+                          <li class="">
+                            <a href="marshal-LLVMBool.html" title="Marshaling LLVMBool" class="">Marshaling LLVMBool</a>
+                          </li>
+                        </ul>  </li>
+                    <li class="">
+                      <span class="expand-stub"></span>
+                      <a class="">LLVMBindingsGenerator</a>
+                        
+                        <ul class="nav level2">
+                          <li class="">
+                            <a href="LlvmBindingsGenerator-Overview.html" title="Bindings Overview" class="">Bindings Overview</a>
+                          </li>
+                          <li class="">
+                            <span class="expand-stub"></span>
+                            <a href="LlvmBindingsGenerator-Configuration.html" title="Configuration" class="">Configuration</a>
+                              
+                              <ul class="nav level3">
+                                <li class="active">
+                                  <a href="LlvmBindingsGenerator-MarshalingInfo-Table.html" title="Marshaling Info Table" class="active">Marshaling Info Table</a>
+                                </li>
+                              </ul>  </li>
+                        </ul>  </li>
+                  </ul>        </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="article row grid-right">
+          <div class="col-md-10">
+            <article class="content wrap" id="_content" data-uid="">
+<h1 id="marshalinginfotable">MarshalingInfoTable</h1>
+
+<p>The marshaling info table provides details on the special marshaling type transforms
+and attributes required to implement correct call semantics for the interop code. All
+entries in the table implement the IMarshalInfo interface which, abstracts the details
+of each case. There are several different implementations of the marshaling interface
+for the various patterns in the LLVM-C headers.</p>
+<h2 id="array-marshaling">Array Marshaling</h2>
+<p>Array marshaling determines the in/out semantics as well as the correct element type
+and size information for correct marshaling of out and return arrays.</p>
+<h2 id="out-element-marshaling">Out Element marshaling</h2>
+</article>
+          </div>
+          <div class="contribution-panel mobile-hide">
+              <a href="https://github.com/UbiquityDotNET/Llvm.NET/blob/master/docfx/articles/InternalDetails/LlvmBindingsGenerator-MarshalingInfo-Table.md/#L1" title="Improve this Doc" class="fab btn-warning pull-right"><i class="glyphicon glyphicon-pencil"></i></a>
+          </div>
+          
+          <div class="hidden-sm col-md-2" role="complementary">
+            <div class="sideaffix">
+              <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <footer>
+        <div class="grad-bottom"></div>
+        <div class="footer">
+          <div class="container">
+            <span class="pull-right">
+              <a href="#top">Back to top</a>
+            </span>
+            Copyright (C) 2017, Dot NET Foundation<br><strong>Build:</strong> 8.0.0-alpha.0.0.ci-BLD.463895434
+            
+          </div>
+        </div>
+      </footer>
+    </div>
+    
+    <script type="text/javascript" src="../../styles/docfx.vendor.js"></script>
+    <script type="text/javascript" src="../../styles/docfx.js"></script>
+    <script type="text/javascript" src="../../styles/main.js"></script>
+  </body>
+</html>

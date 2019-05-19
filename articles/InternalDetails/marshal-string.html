@@ -104,6 +104,24 @@
                             <a href="marshal-LLVMBool.html" title="Marshaling LLVMBool" class="">Marshaling LLVMBool</a>
                           </li>
                         </ul>  </li>
+                    <li class="">
+                      <span class="expand-stub"></span>
+                      <a class="">LLVMBindingsGenerator</a>
+                        
+                        <ul class="nav level2">
+                          <li class="">
+                            <a href="LlvmBindingsGenerator-Overview.html" title="Bindings Overview" class="">Bindings Overview</a>
+                          </li>
+                          <li class="">
+                            <span class="expand-stub"></span>
+                            <a href="LlvmBindingsGenerator-Configuration.html" title="Configuration" class="">Configuration</a>
+                              
+                              <ul class="nav level3">
+                                <li class="">
+                                  <a href="LlvmBindingsGenerator-MarshalingInfo-Table.html" title="Marshaling Info Table" class="">Marshaling Info Table</a>
+                                </li>
+                              </ul>  </li>
+                        </ul>  </li>
                   </ul>        </div>
               </div>
             </div>
@@ -122,19 +140,19 @@ APIs difficult. (e.g. in some LLVM APIs the returned string must be released
 via LLVMDisposeMessage() or some other call, while in other cases it is just
 a pointer to an internal const string that does not need any release.)</p>
 <p>To resolve these issues and make the requirements explicitly clear and consistent
-Llvm.NET uses custom marshaling of the strings to mark the exact behavior directly
+Llvm.NET.Interop uses custom marshaling of the strings to mark the exact behavior directly
 on the P/Invoke signature so it is both clear and easy to use for the upper layers
 (it&#39;s just a <code>System.String</code>)</p>
-<p>The current forms of string marshalling are:</p>
-<pre><code class="lang-C#">// const char* owned by native LLVM, and never disposed by managed callers (just copy to managed string)
-[MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef=typeof(StringMarshaler))]
-
-// const char* allocated in native LLVM, released by managed caller via LLVMDisposeMessage
-[MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef=typeof(StringMarshaler), MarshalCookie=&quot;DisposeMessage&quot;)]
-
-// const char* allocated in native LLVM, released by managed caller via LLVMDisposeMangledSymbol
-[MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef=typeof(StringMarshaler), MarshalCookie=&quot;MangledSymbol&quot;)]
-</code></pre></article>
+<h2 id="generated-string-marshalers">Generated String Marshalers</h2>
+<p>The <a href="https://github.com/UbiquityDotNET/Llvm.NET/tree/master/src/Interop/LlvmBindingsGenerator">LlvmBindingsGenerator</a>
+Creates concrete custom marshalers for every string disposal type supported. To
+keep things simple and eliminate redundancies, the generated marshalers all derive from
+a common base type <a class="xref" href="../../api/Llvm.NET.Interop.CustomStringMarshalerBase.html">CustomStringMarshalerBase</a>.</p>
+<h3 id="marshaling-configuration">Marshaling configuration</h3>
+<p>LLVMBindingsGenerator supports a flexible configuration to identify which functions require which
+form of marshalling. For strings this is an instance of the <a href="LLVMBindingsGenerator.StringMarshalInfo">StringMarshalInfo</a>
+class</p>
+</article>
           </div>
           <div class="contribution-panel mobile-hide">
               <a href="https://github.com/UbiquityDotNET/Llvm.NET/blob/master/docfx/articles/InternalDetails/marshal-string.md/#L1" title="Improve this Doc" class="fab btn-warning pull-right"><i class="glyphicon glyphicon-pencil"></i></a>
@@ -156,7 +174,7 @@ on the P/Invoke signature so it is both clear and easy to use for the upper laye
             <span class="pull-right">
               <a href="#top">Back to top</a>
             </span>
-            Copyright (C) 2017, Dot NET Foundation<br><strong>Build:</strong> 8.0.0-alpha.0.0.ci-BLD.463544366
+            Copyright (C) 2017, Dot NET Foundation<br><strong>Build:</strong> 8.0.0-alpha.0.0.ci-BLD.463895434
             
           </div>
         </div>
