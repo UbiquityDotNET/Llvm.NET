@@ -163,10 +163,10 @@
         <param name="RuntimeVer">Runtime version (use 0 if not needed)</param>
         <param name="SplitName">SplitName</param>
         <param name="SplitNameLen">Length of the <paramref name="SplitName"/> string</param>
-        <param name="Kind">TODO: Provide details of parameter Kind</param>
-        <param name="DWOId">TODO: Provide details of parameter DWOId</param>
-        <param name="SplitDebugInlining">TODO: Provide details of parameter SplitDebugInlining</param>
-        <param name="DebugInfoForProfiling">TODO: Provide details of parameter DebugInfoForProfiling</param>
-        <returns>TODO: Document return value</returns>
+        <param name="Kind">Kind for the compilation unit</param>
+        <param name="DWOId">OId for the compilation unit</param>
+        <param name="SplitDebugInlining">Value to indicate if the compilation will split debug inlining</param>
+        <param name="DebugInfoForProfiling">Value to indicate if the debug info includes profiling</param>
+        <returns>Handle for a new compile unit</returns>
     </Function>
 </LibLlvmAPI>

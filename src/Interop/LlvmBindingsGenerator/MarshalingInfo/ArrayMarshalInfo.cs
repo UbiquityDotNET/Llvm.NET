@@ -16,13 +16,28 @@ namespace LlvmBindingsGenerator
     internal class ArrayMarshalInfo
         : MarshalInfoBase
     {
-        public ArrayMarshalInfo( string functionName, string paramName, UnmanagedType subType = UnmanagedType.I1, ParamSemantics semantics = ParamSemantics.In, int sizeParam = 0 )
+        public ArrayMarshalInfo( string functionName, string paramName )
+            : this(functionName, paramName, UnmanagedType.I1, ParamSemantics.In, null )
+        {
+        }
+
+        public ArrayMarshalInfo( string functionName, string paramName, UnmanagedType subType )
+            : this( functionName, paramName, subType, ParamSemantics.In)
+        {
+        }
+
+        public ArrayMarshalInfo( string functionName, string paramName, UnmanagedType subType, ParamSemantics semantics )
+            : this( functionName, paramName, subType, semantics, null )
+        {
+        }
+
+        public ArrayMarshalInfo( string functionName, string paramName, UnmanagedType subType, ParamSemantics semantics, int? sizeParam)
             : base( functionName, paramName, semantics )
         {
-            SizeParam = sizeParam;
             ElementMarshalType = subType;
             Attrib = new TargetedAttribute( typeof( MarshalAsAttribute ), "UnmanagedType.LPArray", $"ArraySubType = UnmanagedType.{subType}" );
-            if( Semantics != ParamSemantics.In )
+            SizeParam = sizeParam;
+            if( SizeParam.HasValue )
             {
                 Attrib.AddParameter( $"SizeParamIndex = {sizeParam}" );
             }
@@ -40,13 +55,38 @@ namespace LlvmBindingsGenerator
 
         public override IEnumerable<CppSharp.AST.Attribute> Attributes
         {
-            get { yield return Attrib; }
+            get
+            {
+                switch( Semantics )
+                {
+                case ParamSemantics.Return:
+                    break;
+
+                case ParamSemantics.In:
+                    yield return InAttribute;
+                    break;
+
+                case ParamSemantics.Out:
+                    yield return OutAttribute;
+                    break;
+
+                case ParamSemantics.InOut:
+                    yield return InAttribute;
+                    yield return OutAttribute;
+                    break;
+                }
+
+                yield return Attrib;
+            }
         }
 
-        public int SizeParam { get; }
+        public int? SizeParam { get; }
 
         public UnmanagedType ElementMarshalType { get; }
 
         private readonly TargetedAttribute Attrib;
+
+        private static readonly Attribute InAttribute = new TargetedAttribute( typeof( InAttribute ) );
+        private static readonly Attribute OutAttribute = new TargetedAttribute( typeof( OutAttribute ) );
     }
 }

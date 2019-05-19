@@ -28,9 +28,13 @@
     </ItemGroup>
     <ItemGroup>
       <Reference Include="mscorlib" />
+      <Reference Include="System.Xaml" />
     </ItemGroup>
     <!-- Runtime T4 templates need to specify the single file generator for the code behind -->
     <ItemGroup>
+      <None Update="BindingsConfig.xaml">
+        <Generator>MSBuild:Compile</Generator>
+      </None>
       <None Update="Templates\T4\ContextHandleTemplate.tt">
         <Generator>TextTemplatingFilePreprocessor</Generator>
         <LastGenOutput>ContextHandleTemplate.cs</LastGenOutput>

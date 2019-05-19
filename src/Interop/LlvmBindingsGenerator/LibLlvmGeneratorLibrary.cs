@@ -6,8 +6,6 @@
 
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using CppSharp;
 using CppSharp.AST;
 using CppSharp.Passes;
 using LlvmBindingsGenerator.Configuration;
@@ -59,19 +57,16 @@ namespace LlvmBindingsGenerator
 
         public void SetupPasses( )
         {
-            // all handle dispose functions are considered internal, but not ignored
-            var disposeFuncEntries = Configuration.HandleToTemplateMap.DisposeFunctionNames.Select( n => (Name: n, Ignored: false) );
-
             // Analysis passes that markup, but don't otherwise modify the AST run first
             // always start the passes with the IgnoreSystemHeaders pass to ensure that generation
-            // only occurs for the desired headers. Other passes depend on TranslationUint.IsGenerated
+            // only occurs for the desired headers. Other passes depend on TranslationUnit.IsGenerated
             Driver.AddTranslationUnitPass( new IgnoreSystemHeadersPass( Configuration.IgnoredHeaders ) );
             Driver.AddTranslationUnitPass( new IgnoreDuplicateNamesPass( ) );
             Driver.AddTranslationUnitPass( new AddMissingParameterNamesPass( ) );
             Driver.AddTranslationUnitPass( new AddTypeMapsPass( ) );
             Driver.AddTranslationUnitPass( new PODToValueTypePass( ) );
             Driver.AddTranslationUnitPass( new CheckFlagEnumsPass( ) );
-            Driver.AddTranslationUnitPass( new MarkFunctionsInternalPass( disposeFuncEntries.Concat( Configuration.InternalFunctions ) ) );
+            Driver.AddTranslationUnitPass( new MarkFunctionsInternalPass( Configuration.InternalFunctions ) );
 
             // General transformations
             Driver.AddTranslationUnitPass( new FixInconsistentLLVMHandleDeclarations( ) );

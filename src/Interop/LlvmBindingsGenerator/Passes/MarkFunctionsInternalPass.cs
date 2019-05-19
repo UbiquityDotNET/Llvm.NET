@@ -5,16 +5,21 @@
 // -----------------------------------------------------------------------
 
 using System.Collections.Generic;
-using System.Linq;
 using CppSharp.AST;
 using CppSharp.Passes;
 
 namespace LlvmBindingsGenerator.Passes
 {
+    /// <summary>Mark functions as internal or ignored</summary>
+    /// <remarks>
+    /// This pass will mark all Implicit functions from the headers ignored (i.e. an implicit constructor
+    /// for a struct). Additionally, it uses a provided collection of name, ignored tuples to
+    /// mark functions as either internal of ignored.
+    /// </remarks>
     internal class MarkFunctionsInternalPass
         : TranslationUnitPass
     {
-        public MarkFunctionsInternalPass( IEnumerable<(string Name, bool Ignored)> internalFunctions )
+        public MarkFunctionsInternalPass( IDictionary<string, bool> internalFunctions )
         {
             VisitOptions.VisitClassBases = false;
             VisitOptions.VisitClassFields = false;
@@ -31,7 +36,7 @@ namespace LlvmBindingsGenerator.Passes
             VisitOptions.VisitPropertyAccessors = false;
             VisitOptions.VisitTemplateArguments = false;
 
-            IgnoredFunctions = internalFunctions.ToList( );
+            InternalFunctions = internalFunctions;
         }
 
         public override bool VisitASTContext( ASTContext context )
@@ -56,10 +61,9 @@ namespace LlvmBindingsGenerator.Passes
                 function.Ignore = true;
             }
 
-            var entry = IgnoredFunctions.FirstOrDefault( e => e.Name == function.Name );
-            if( entry != default )
+            if( InternalFunctions.TryGetValue( function.Name, out bool isIgnored ) )
             {
-                if( entry.Ignored )
+                if( isIgnored )
                 {
                     function.Ignore = true;
                 }
@@ -72,6 +76,6 @@ namespace LlvmBindingsGenerator.Passes
             return false;
         }
 
-        private static List<(string Name, bool Ignored)> IgnoredFunctions;
+        private static IDictionary<string, bool> InternalFunctions;
     }
 }

@@ -8,10 +8,31 @@
 extern "C" {
 #endif
 
+    typedef enum LibLLVMValueKind
+    {
+#define HANDLE_VALUE(Name) Name##Kind,
+#define HANDLE_MEMORY_VALUE(Name) Name##Kind,
+#define HANDLE_INSTRUCTION(Name) Name##Kind,
+#include "llvm/IR/Value.def"
+#undef HANDLE_VALUE
+#undef HANDLE_MEMORY_VALUE
+#undef HANDLE_INSTRUCTION
+
+#define HANDLE_INST(N, OPC, CLASS) OPC##Kind = Instruction##Kind + N,
+#define HANDLE_USER_INST(N, OPC, CLASS) OPC##Kind = Instruction##Kind + N,
+#include "llvm/IR/Instruction.def"
+#undef HANDLE_INST
+#undef HANDLE_USER_INST
+
+#define HANDLE_CONSTANT_MARKER(MarkerName, ValueName) MarkerName##Kind = ValueName##Kind,
+#include "llvm/IR/Value.def"
+#undef HANDLE_CONSTANT_MARKER
+    }LibLLVMValueKind;
+
     LLVMBool LibLLVMIsConstantZeroValue( LLVMValueRef valueRef );
     void LibLLVMRemoveGlobalFromParent( LLVMValueRef valueRef );
 
-    int LibLLVMGetValueID( LLVMValueRef valueRef);
+    LibLLVMValueKind LibLLVMGetValueKind( LLVMValueRef valueRef);
     LLVMValueRef LibLLVMGetAliasee( LLVMValueRef Val );
     uint32_t LibLLVMGetArgumentIndex( LLVMValueRef Val);
 
@@ -44,7 +65,6 @@ extern "C" {
     void LibLLVMDisposeValueCache( LibLLVMValueCacheRef cacheRef );
     void LibLLVMValueCacheAdd( LibLLVMValueCacheRef cacheRef, LLVMValueRef value, intptr_t handle );
     intptr_t LibLLVMValueCacheLookup( LibLLVMValueCacheRef cacheRef, LLVMValueRef valueRef );
-
 #ifdef __cplusplus
 }
 #endif

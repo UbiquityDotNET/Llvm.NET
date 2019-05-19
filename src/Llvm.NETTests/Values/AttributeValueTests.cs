@@ -4,6 +4,7 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
+using System.Linq;
 using Llvm.NET.Values;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
@@ -65,7 +66,7 @@ namespace Llvm.NET.Tests
         }
 
         [TestMethod]
-        public void ImplicitCastAttributeKindToAttributeValueTest()
+        public void ImplicitCastAttributeKindToAttributeValueTest( )
         {
             using( var ctx = new Context( ) )
             {
@@ -96,6 +97,22 @@ namespace Llvm.NET.Tests
             }
         }
 
-        // test all int value parameters to ensure that a value is provided (implicit casting from enum should provide default value of 0)
+        // test all attributes for an index are available and reflect attributes set
+        // (verifies [In,Out] array marshaling is functioning correctly)
+        [TestMethod]
+        public void AttributeIndexTest( )
+        {
+            using( var ctx = new Context( ) )
+            using( var module = ctx.CreateBitcodeModule( ) )
+            {
+                var signature = ctx.GetFunctionType( ctx.DoubleType, ctx.Int8Type.CreatePointerType( ), ctx.Int32Type );
+                var function = module.AddFunction( "test", signature );
+                function.Parameters[ 0 ].AddAttributes( AttributeKind.Nest, AttributeKind.ByVal );
+                var attributes = function.GetAttributesAtIndex( FunctionAttributeIndex.Parameter0 ).ToArray( );
+                Assert.AreEqual( 2, attributes.Length );
+                Assert.IsTrue( attributes.Contains( AttributeKind.Nest ) );
+                Assert.IsTrue( attributes.Contains( AttributeKind.ByVal ) );
+            }
+        }
     }
 }

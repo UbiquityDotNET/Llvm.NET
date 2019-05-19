@@ -112,238 +112,238 @@ namespace Llvm.NET.Values
                 throw new ArgumentException( Resources.Context_for_the_handle_provided_doesn_t_match_the_context_for_this_cache, nameof( handle ) );
             }
 
-            var kind = LLVMGetValueIdAsKind( handle );
+            var kind = LibLLVMGetValueKind( handle );
             switch( kind )
             {
-            case ValueKind.Argument:
+            case LibLLVMValueKind.ArgumentKind:
                 return new Argument( handle );
 
-            case ValueKind.BasicBlock:
+            case LibLLVMValueKind.BasicBlockKind:
                 return new BasicBlock( handle );
 
-            case ValueKind.Function:
+            case LibLLVMValueKind.FunctionKind:
                 return new IrFunction( handle );
 
-            case ValueKind.GlobalAlias:
+            case LibLLVMValueKind.GlobalAliasKind:
                 return new GlobalAlias( handle );
 
-            case ValueKind.GlobalVariable:
+            case LibLLVMValueKind.GlobalVariableKind:
                 return new GlobalVariable( handle );
 
-            case ValueKind.GlobalIFunc:
+            case LibLLVMValueKind.GlobalIFuncKind:
                 return new GlobalIFunc( handle );
 
-            case ValueKind.UndefValue:
+            case LibLLVMValueKind.UndefValueKind:
                 return new UndefValue( handle );
 
-            case ValueKind.BlockAddress:
+            case LibLLVMValueKind.BlockAddressKind:
                 return new BlockAddress( handle );
 
-            case ValueKind.ConstantExpr:
+            case LibLLVMValueKind.ConstantExprKind:
                 return new ConstantExpression( handle );
 
-            case ValueKind.ConstantAggregateZero:
+            case LibLLVMValueKind.ConstantAggregateZeroKind:
                 return new ConstantAggregateZero( handle );
 
-            case ValueKind.ConstantDataArray:
+            case LibLLVMValueKind.ConstantDataArrayKind:
                 return new ConstantDataArray( handle );
 
-            case ValueKind.ConstantDataVector:
+            case LibLLVMValueKind.ConstantDataVectorKind:
                 return new ConstantDataVector( handle );
 
-            case ValueKind.ConstantInt:
+            case LibLLVMValueKind.ConstantIntKind:
                 return new ConstantInt( handle );
 
-            case ValueKind.ConstantFP:
+            case LibLLVMValueKind.ConstantFPKind:
                 return new ConstantFP( handle );
 
-            case ValueKind.ConstantArray:
+            case LibLLVMValueKind.ConstantArrayKind:
                 return new ConstantArray( handle );
 
-            case ValueKind.ConstantStruct:
+            case LibLLVMValueKind.ConstantStructKind:
                 return new ConstantStruct( handle );
 
-            case ValueKind.ConstantVector:
+            case LibLLVMValueKind.ConstantVectorKind:
                 return new ConstantVector( handle );
 
-            case ValueKind.ConstantPointerNull:
+            case LibLLVMValueKind.ConstantPointerNullKind:
                 return new ConstantPointerNull( handle );
 
-            case ValueKind.MetadataAsValue:
+            case LibLLVMValueKind.MetadataAsValueKind:
                 return new MetadataAsValue( handle );
 
-            case ValueKind.InlineAsm:
+            case LibLLVMValueKind.InlineAsmKind:
                 return new InlineAsm( handle );
 
-            case ValueKind.Instruction:
-                throw new ArgumentException( "Value with kind==Instruction is not valid" );
+            case LibLLVMValueKind.InstructionKind:
+                throw new ArgumentException( "Value with kind==InstructionKind is not valid" );
 
-            case ValueKind.Return:
+            case LibLLVMValueKind.RetKind:
                 return new ReturnInstruction( handle );
 
-            case ValueKind.Branch:
+            case LibLLVMValueKind.BrKind:
                 return new Branch( handle );
 
-            case ValueKind.Switch:
+            case LibLLVMValueKind.SwitchKind:
                 return new Switch( handle );
 
-            case ValueKind.IndirectBranch:
+            case LibLLVMValueKind.IndirectBrKind:
                 return new IndirectBranch( handle );
 
-            case ValueKind.Invoke:
+            case LibLLVMValueKind.InvokeKind:
                 return new Invoke( handle );
 
-            case ValueKind.Unreachable:
+            case LibLLVMValueKind.UnreachableKind:
                 return new Unreachable( handle );
 
-            case ValueKind.Add:
-            case ValueKind.FAdd:
-            case ValueKind.Sub:
-            case ValueKind.FSub:
-            case ValueKind.Mul:
-            case ValueKind.FMul:
-            case ValueKind.UDiv:
-            case ValueKind.SDiv:
-            case ValueKind.FDiv:
-            case ValueKind.URem:
-            case ValueKind.SRem:
-            case ValueKind.FRem:
-            case ValueKind.Shl:
-            case ValueKind.LShr:
-            case ValueKind.AShr:
-            case ValueKind.And:
-            case ValueKind.Or:
-            case ValueKind.Xor:
+            case LibLLVMValueKind.AddKind:
+            case LibLLVMValueKind.FAddKind:
+            case LibLLVMValueKind.SubKind:
+            case LibLLVMValueKind.FSubKind:
+            case LibLLVMValueKind.MulKind:
+            case LibLLVMValueKind.FMulKind:
+            case LibLLVMValueKind.UDivKind:
+            case LibLLVMValueKind.SDivKind:
+            case LibLLVMValueKind.FDivKind:
+            case LibLLVMValueKind.URemKind:
+            case LibLLVMValueKind.SRemKind:
+            case LibLLVMValueKind.FRemKind:
+            case LibLLVMValueKind.ShlKind:
+            case LibLLVMValueKind.LShrKind:
+            case LibLLVMValueKind.AShrKind:
+            case LibLLVMValueKind.AndKind:
+            case LibLLVMValueKind.OrKind:
+            case LibLLVMValueKind.XorKind:
                 return new BinaryOperator( handle );
 
-            case ValueKind.Alloca:
+            case LibLLVMValueKind.AllocaKind:
                 return new Alloca( handle );
 
-            case ValueKind.Load:
+            case LibLLVMValueKind.LoadKind:
                 return new Load( handle );
 
-            case ValueKind.Store:
+            case LibLLVMValueKind.StoreKind:
                 return new Store( handle );
 
-            case ValueKind.GetElementPtr:
+            case LibLLVMValueKind.GetElementPtrKind:
                 return new GetElementPtr( handle );
 
-            case ValueKind.Trunc:
+            case LibLLVMValueKind.TruncKind:
                 return new Trunc( handle );
 
-            case ValueKind.ZeroExtend:
+            case LibLLVMValueKind.ZExtKind:
                 return new ZeroExtend( handle );
 
-            case ValueKind.SignExtend:
+            case LibLLVMValueKind.SExtKind:
                 return new SignExtend( handle );
 
-            case ValueKind.FPToUI:
+            case LibLLVMValueKind.FPToUIKind:
                 return new FPToUI( handle );
 
-            case ValueKind.FPToSI:
+            case LibLLVMValueKind.FPToSIKind:
                 return new FPToSI( handle );
 
-            case ValueKind.UIToFP:
+            case LibLLVMValueKind.UIToFPKind:
                 return new UIToFP( handle );
 
-            case ValueKind.SIToFP:
+            case LibLLVMValueKind.SIToFPKind:
                 return new SIToFP( handle );
 
-            case ValueKind.FPTrunc:
+            case LibLLVMValueKind.FPTruncKind:
                 return new FPTrunc( handle );
 
-            case ValueKind.FPExt:
+            case LibLLVMValueKind.FPExtKind:
                 return new FPExt( handle );
 
-            case ValueKind.PtrToInt:
+            case LibLLVMValueKind.PtrToIntKind:
                 return new PointerToInt( handle );
 
-            case ValueKind.IntToPtr:
+            case LibLLVMValueKind.IntToPtrKind:
                 return new IntToPointer( handle );
 
-            case ValueKind.BitCast:
+            case LibLLVMValueKind.BitCastKind:
                 return new BitCast( handle );
 
-            case ValueKind.AddrSpaceCast:
+            case LibLLVMValueKind.AddrSpaceCastKind:
                 return new AddressSpaceCast( handle );
 
-            case ValueKind.ICmp:
+            case LibLLVMValueKind.ICmpKind:
                 return new IntCmp( handle );
 
-            case ValueKind.FCmp:
+            case LibLLVMValueKind.FCmpKind:
                 return new FCmp( handle );
 
-            case ValueKind.Phi:
+            case LibLLVMValueKind.PHIKind:
                 return new PhiNode( handle );
 
-            case ValueKind.Call:
+            case LibLLVMValueKind.CallKind:
                 return new CallInstruction( handle );
 
-            case ValueKind.Select:
+            case LibLLVMValueKind.SelectKind:
                 return new SelectInstruction( handle );
 
-            case ValueKind.UserOp1:
+            case LibLLVMValueKind.UserOp1Kind:
                 return new UserOp1( handle );
 
-            case ValueKind.UserOp2:
+            case LibLLVMValueKind.UserOp2Kind:
                 return new UserOp2( handle );
 
-            case ValueKind.VaArg:
+            case LibLLVMValueKind.VAArgKind:
                 return new VaArg( handle );
 
-            case ValueKind.ExtractElement:
+            case LibLLVMValueKind.ExtractElementKind:
                 return new ExtractElement( handle );
 
-            case ValueKind.InsertElement:
+            case LibLLVMValueKind.InsertElementKind:
                 return new InsertElement( handle );
 
-            case ValueKind.ShuffleVector:
+            case LibLLVMValueKind.ShuffleVectorKind:
                 return new ShuffleVector( handle );
 
-            case ValueKind.ExtractValue:
+            case LibLLVMValueKind.ExtractValueKind:
                 return new ExtractValue( handle );
 
-            case ValueKind.InsertValue:
+            case LibLLVMValueKind.InsertValueKind:
                 return new InsertValue( handle );
 
-            case ValueKind.Fence:
+            case LibLLVMValueKind.FenceKind:
                 return new Fence( handle );
 
-            case ValueKind.AtomicCmpXchg:
+            case LibLLVMValueKind.AtomicCmpXchgKind:
                 return new AtomicCmpXchg( handle );
 
-            case ValueKind.AtomicRMW:
+            case LibLLVMValueKind.AtomicRMWKind:
                 return new AtomicRMW( handle );
 
-            case ValueKind.Resume:
+            case LibLLVMValueKind.ResumeKind:
                 return new ResumeInstruction( handle );
 
-            case ValueKind.LandingPad:
+            case LibLLVMValueKind.LandingPadKind:
                 return new LandingPad( handle );
 
-            case ValueKind.CleanUpReturn:
+            case LibLLVMValueKind.CleanupRetKind:
                 return new CleanupReturn( handle );
 
-            case ValueKind.CatchReturn:
+            case LibLLVMValueKind.CatchRetKind:
                 return new CatchReturn( handle );
 
-            case ValueKind.CatchPad:
+            case LibLLVMValueKind.CatchPadKind:
                 return new CatchPad( handle );
 
-            case ValueKind.CleanupPad:
+            case LibLLVMValueKind.CleanupPadKind:
                 return new CleanupPad( handle );
 
-            case ValueKind.CatchSwitch:
+            case LibLLVMValueKind.CatchSwitchKind:
                 return new CatchSwitch( handle );
 
             // Default to constant, Instruction or generic base Value
             default:
-                if( kind >= ValueKind.ConstantFirstVal && kind <= ValueKind.ConstantLastVal )
+                if( kind >= LibLLVMValueKind.ConstantFirstValKind && kind <= LibLLVMValueKind.ConstantLastValKind )
                 {
                     return new Constant( handle );
                 }
 
-                return kind > ValueKind.Instruction ? new Instruction( handle ) : new Value( handle );
+                return kind > LibLLVMValueKind.InstructionKind ? new Instruction( handle ) : new Value( handle );
             }
         }
     }

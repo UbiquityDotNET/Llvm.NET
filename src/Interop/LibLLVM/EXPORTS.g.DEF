@@ -90,7 +90,7 @@ LibLLVMTripleGetEnvironmentTypeName
 LibLLVMTripleGetObjectFormatTypeName
 LibLLVMIsConstantZeroValue
 LibLLVMRemoveGlobalFromParent
-LibLLVMGetValueID
+LibLLVMGetValueKind
 LibLLVMGetAliasee
 LibLLVMGetArgumentIndex
 LibLLVMGlobalObjectGetComdat
@@ -136,7 +136,6 @@ LLVMGetComdatSelectionKind
 LLVMSetComdatSelectionKind
 LLVMInitializeCore
 LLVMShutdown
-LLVMCreateMessage
 LLVMDisposeMessage
 LLVMContextCreate
 LLVMGetGlobalContext

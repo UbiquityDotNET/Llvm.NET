@@ -10,31 +10,341 @@
 ;; ==============================================================================
 -->
 <LibLlvmAPI>
+    <Enumeration name="LibLLVMValueKind">
+        <summary>Enum to match the underlying raw LLVM Value kind enumeration</summary>
+        <remarks>
+            In order to map from an arbitrary LLVMValueRef to a wrapped managed type the
+            exact kind of value must be known. However, the LLVM-C API uses a value kind
+            that is not complete and doesn't match the underlying enum values. (It includes
+            complex transforms to ensure the 'C' API is "stable". This, causes problems for
+            managed projections like Llvm.NET. So as an extension to LLVM-C the LibLLVM library
+            supports a method to get at the underlying value.
+            <note type="Important">
+                It is important to note that the enumerated values here are subject to change with
+                every version of LLVM. Generally, this is only intended for use within the object model
+                projection of Llvm.NET.
+            </note>
+        </remarks>
+        <Item name="FunctionVal">
+            <summary>TODO: Provide summary for LibLLVMValueKind.FunctionVal Enumeration</summary>
+        </Item>
+        <Item name="GlobalAliasVal">
+            <summary>TODO: Provide summary for LibLLVMValueKind.GlobalAliasVal Enumeration</summary>
+        </Item>
+        <Item name="GlobalIFuncVal">
+            <summary>TODO: Provide summary for LibLLVMValueKind.GlobalIFuncVal Enumeration</summary>
+        </Item>
+        <Item name="GlobalVariableVal">
+            <summary>TODO: Provide summary for LibLLVMValueKind.GlobalVariableVal Enumeration</summary>
+        </Item>
+        <Item name="BlockAddressVal">
+            <summary>TODO: Provide summary for LibLLVMValueKind.BlockAddressVal Enumeration</summary>
+        </Item>
+        <Item name="ConstantExprVal">
+            <summary>TODO: Provide summary for LibLLVMValueKind.ConstantExprVal Enumeration</summary>
+        </Item>
+        <Item name="ConstantArrayVal">
+            <summary>TODO: Provide summary for LibLLVMValueKind.ConstantArrayVal Enumeration</summary>
+        </Item>
+        <Item name="ConstantStructVal">
+            <summary>TODO: Provide summary for LibLLVMValueKind.ConstantStructVal Enumeration</summary>
+        </Item>
+        <Item name="ConstantVectorVal">
+            <summary>TODO: Provide summary for LibLLVMValueKind.ConstantVectorVal Enumeration</summary>
+        </Item>
+        <Item name="UndefValueVal">
+            <summary>TODO: Provide summary for LibLLVMValueKind.UndefValueVal Enumeration</summary>
+        </Item>
+        <Item name="ConstantAggregateZeroVal">
+            <summary>TODO: Provide summary for LibLLVMValueKind.ConstantAggregateZeroVal Enumeration</summary>
+        </Item>
+        <Item name="ConstantDataArrayVal">
+            <summary>TODO: Provide summary for LibLLVMValueKind.ConstantDataArrayVal Enumeration</summary>
+        </Item>
+        <Item name="ConstantDataVectorVal">
+            <summary>TODO: Provide summary for LibLLVMValueKind.ConstantDataVectorVal Enumeration</summary>
+        </Item>
+        <Item name="ConstantIntVal">
+            <summary>TODO: Provide summary for LibLLVMValueKind.ConstantIntVal Enumeration</summary>
+        </Item>
+        <Item name="ConstantFPVal">
+            <summary>TODO: Provide summary for LibLLVMValueKind.ConstantFPVal Enumeration</summary>
+        </Item>
+        <Item name="ConstantPointerNullVal">
+            <summary>TODO: Provide summary for LibLLVMValueKind.ConstantPointerNullVal Enumeration</summary>
+        </Item>
+        <Item name="ConstantTokenNoneVal">
+            <summary>TODO: Provide summary for LibLLVMValueKind.ConstantTokenNoneVal Enumeration</summary>
+        </Item>
+        <Item name="ArgumentVal">
+            <summary>TODO: Provide summary for LibLLVMValueKind.ArgumentVal Enumeration</summary>
+        </Item>
+        <Item name="BasicBlockVal">
+            <summary>TODO: Provide summary for LibLLVMValueKind.BasicBlockVal Enumeration</summary>
+        </Item>
+        <Item name="MetadataAsValueVal">
+            <summary>TODO: Provide summary for LibLLVMValueKind.MetadataAsValueVal Enumeration</summary>
+        </Item>
+        <Item name="InlineAsmVal">
+            <summary>TODO: Provide summary for LibLLVMValueKind.InlineAsmVal Enumeration</summary>
+        </Item>
+        <Item name="MemoryUseVal">
+            <summary>TODO: Provide summary for LibLLVMValueKind.MemoryUseVal Enumeration</summary>
+        </Item>
+        <Item name="MemoryDefVal">
+            <summary>TODO: Provide summary for LibLLVMValueKind.MemoryDefVal Enumeration</summary>
+        </Item>
+        <Item name="MemoryPhiVal">
+            <summary>TODO: Provide summary for LibLLVMValueKind.MemoryPhiVal Enumeration</summary>
+        </Item>
+        <Item name="InstructionVal">
+            <summary>TODO: Provide summary for LibLLVMValueKind.InstructionVal Enumeration</summary>
+        </Item>
+        <Item name="Ret">
+            <summary>TODO: Provide summary for LibLLVMValueKind.Ret Enumeration</summary>
+        </Item>
+        <Item name="Br">
+            <summary>TODO: Provide summary for LibLLVMValueKind.Br Enumeration</summary>
+        </Item>
+        <Item name="Switch">
+            <summary>TODO: Provide summary for LibLLVMValueKind.Switch Enumeration</summary>
+        </Item>
+        <Item name="IndirectBr">
+            <summary>TODO: Provide summary for LibLLVMValueKind.IndirectBr Enumeration</summary>
+        </Item>
+        <Item name="Invoke">
+            <summary>TODO: Provide summary for LibLLVMValueKind.Invoke Enumeration</summary>
+        </Item>
+        <Item name="Resume">
+            <summary>TODO: Provide summary for LibLLVMValueKind.Resume Enumeration</summary>
+        </Item>
+        <Item name="Unreachable">
+            <summary>TODO: Provide summary for LibLLVMValueKind.Unreachable Enumeration</summary>
+        </Item>
+        <Item name="CleanupRet">
+            <summary>TODO: Provide summary for LibLLVMValueKind.CleanupRet Enumeration</summary>
+        </Item>
+        <Item name="CatchRet">
+            <summary>TODO: Provide summary for LibLLVMValueKind.CatchRet Enumeration</summary>
+        </Item>
+        <Item name="CatchSwitch">
+            <summary>TODO: Provide summary for LibLLVMValueKind.CatchSwitch Enumeration</summary>
+        </Item>
+        <Item name="FNeg">
+            <summary>TODO: Provide summary for LibLLVMValueKind.FNeg Enumeration</summary>
+        </Item>
+        <Item name="Add">
+            <summary>TODO: Provide summary for LibLLVMValueKind.Add Enumeration</summary>
+        </Item>
+        <Item name="FAdd">
+            <summary>TODO: Provide summary for LibLLVMValueKind.FAdd Enumeration</summary>
+        </Item>
+        <Item name="Sub">
+            <summary>TODO: Provide summary for LibLLVMValueKind.Sub Enumeration</summary>
+        </Item>
+        <Item name="FSub">
+            <summary>TODO: Provide summary for LibLLVMValueKind.FSub Enumeration</summary>
+        </Item>
+        <Item name="Mul">
+            <summary>TODO: Provide summary for LibLLVMValueKind.Mul Enumeration</summary>
+        </Item>
+        <Item name="FMul">
+            <summary>TODO: Provide summary for LibLLVMValueKind.FMul Enumeration</summary>
+        </Item>
+        <Item name="UDiv">
+            <summary>TODO: Provide summary for LibLLVMValueKind.UDiv Enumeration</summary>
+        </Item>
+        <Item name="SDiv">
+            <summary>TODO: Provide summary for LibLLVMValueKind.SDiv Enumeration</summary>
+        </Item>
+        <Item name="FDiv">
+            <summary>TODO: Provide summary for LibLLVMValueKind.FDiv Enumeration</summary>
+        </Item>
+        <Item name="URem">
+            <summary>TODO: Provide summary for LibLLVMValueKind.URem Enumeration</summary>
+        </Item>
+        <Item name="SRem">
+            <summary>TODO: Provide summary for LibLLVMValueKind.SRem Enumeration</summary>
+        </Item>
+        <Item name="FRem">
+            <summary>TODO: Provide summary for LibLLVMValueKind.FRem Enumeration</summary>
+        </Item>
+        <Item name="Shl">
+            <summary>TODO: Provide summary for LibLLVMValueKind.Shl Enumeration</summary>
+        </Item>
+        <Item name="LShr">
+            <summary>TODO: Provide summary for LibLLVMValueKind.LShr Enumeration</summary>
+        </Item>
+        <Item name="AShr">
+            <summary>TODO: Provide summary for LibLLVMValueKind.AShr Enumeration</summary>
+        </Item>
+        <Item name="And">
+            <summary>TODO: Provide summary for LibLLVMValueKind.And Enumeration</summary>
+        </Item>
+        <Item name="Or">
+            <summary>TODO: Provide summary for LibLLVMValueKind.Or Enumeration</summary>
+        </Item>
+        <Item name="Xor">
+            <summary>TODO: Provide summary for LibLLVMValueKind.Xor Enumeration</summary>
+        </Item>
+        <Item name="Alloca">
+            <summary>TODO: Provide summary for LibLLVMValueKind.Alloca Enumeration</summary>
+        </Item>
+        <Item name="Load">
+            <summary>TODO: Provide summary for LibLLVMValueKind.Load Enumeration</summary>
+        </Item>
+        <Item name="Store">
+            <summary>TODO: Provide summary for LibLLVMValueKind.Store Enumeration</summary>
+        </Item>
+        <Item name="GetElementPtr">
+            <summary>TODO: Provide summary for LibLLVMValueKind.GetElementPtr Enumeration</summary>
+        </Item>
+        <Item name="Fence">
+            <summary>TODO: Provide summary for LibLLVMValueKind.Fence Enumeration</summary>
+        </Item>
+        <Item name="AtomicCmpXchg">
+            <summary>TODO: Provide summary for LibLLVMValueKind.AtomicCmpXchg Enumeration</summary>
+        </Item>
+        <Item name="AtomicRMW">
+            <summary>TODO: Provide summary for LibLLVMValueKind.AtomicRMW Enumeration</summary>
+        </Item>
+        <Item name="Trunc">
+            <summary>TODO: Provide summary for LibLLVMValueKind.Trunc Enumeration</summary>
+        </Item>
+        <Item name="ZExt">
+            <summary>TODO: Provide summary for LibLLVMValueKind.ZExt Enumeration</summary>
+        </Item>
+        <Item name="SExt">
+            <summary>TODO: Provide summary for LibLLVMValueKind.SExt Enumeration</summary>
+        </Item>
+        <Item name="FPToUI">
+            <summary>TODO: Provide summary for LibLLVMValueKind.FPToUI Enumeration</summary>
+        </Item>
+        <Item name="FPToSI">
+            <summary>TODO: Provide summary for LibLLVMValueKind.FPToSI Enumeration</summary>
+        </Item>
+        <Item name="UIToFP">
+            <summary>TODO: Provide summary for LibLLVMValueKind.UIToFP Enumeration</summary>
+        </Item>
+        <Item name="SIToFP">
+            <summary>TODO: Provide summary for LibLLVMValueKind.SIToFP Enumeration</summary>
+        </Item>
+        <Item name="FPTrunc">
+            <summary>TODO: Provide summary for LibLLVMValueKind.FPTrunc Enumeration</summary>
+        </Item>
+        <Item name="FPExt">
+            <summary>TODO: Provide summary for LibLLVMValueKind.FPExt Enumeration</summary>
+        </Item>
+        <Item name="PtrToInt">
+            <summary>TODO: Provide summary for LibLLVMValueKind.PtrToInt Enumeration</summary>
+        </Item>
+        <Item name="IntToPtr">
+            <summary>TODO: Provide summary for LibLLVMValueKind.IntToPtr Enumeration</summary>
+        </Item>
+        <Item name="BitCast">
+            <summary>TODO: Provide summary for LibLLVMValueKind.BitCast Enumeration</summary>
+        </Item>
+        <Item name="AddrSpaceCast">
+            <summary>TODO: Provide summary for LibLLVMValueKind.AddrSpaceCast Enumeration</summary>
+        </Item>
+        <Item name="CleanupPad">
+            <summary>TODO: Provide summary for LibLLVMValueKind.CleanupPad Enumeration</summary>
+        </Item>
+        <Item name="CatchPad">
+            <summary>TODO: Provide summary for LibLLVMValueKind.CatchPad Enumeration</summary>
+        </Item>
+        <Item name="ICmp">
+            <summary>TODO: Provide summary for LibLLVMValueKind.ICmp Enumeration</summary>
+        </Item>
+        <Item name="FCmp">
+            <summary>TODO: Provide summary for LibLLVMValueKind.FCmp Enumeration</summary>
+        </Item>
+        <Item name="PHI">
+            <summary>TODO: Provide summary for LibLLVMValueKind.PHI Enumeration</summary>
+        </Item>
+        <Item name="Call">
+            <summary>TODO: Provide summary for LibLLVMValueKind.Call Enumeration</summary>
+        </Item>
+        <Item name="Select">
+            <summary>TODO: Provide summary for LibLLVMValueKind.Select Enumeration</summary>
+        </Item>
+        <Item name="UserOp1">
+            <summary>TODO: Provide summary for LibLLVMValueKind.UserOp1 Enumeration</summary>
+        </Item>
+        <Item name="UserOp2">
+            <summary>TODO: Provide summary for LibLLVMValueKind.UserOp2 Enumeration</summary>
+        </Item>
+        <Item name="VAArg">
+            <summary>TODO: Provide summary for LibLLVMValueKind.VAArg Enumeration</summary>
+        </Item>
+        <Item name="ExtractElement">
+            <summary>TODO: Provide summary for LibLLVMValueKind.ExtractElement Enumeration</summary>
+        </Item>
+        <Item name="InsertElement">
+            <summary>TODO: Provide summary for LibLLVMValueKind.InsertElement Enumeration</summary>
+        </Item>
+        <Item name="ShuffleVector">
+            <summary>TODO: Provide summary for LibLLVMValueKind.ShuffleVector Enumeration</summary>
+        </Item>
+        <Item name="ExtractValue">
+            <summary>TODO: Provide summary for LibLLVMValueKind.ExtractValue Enumeration</summary>
+        </Item>
+        <Item name="InsertValue">
+            <summary>TODO: Provide summary for LibLLVMValueKind.InsertValue Enumeration</summary>
+        </Item>
+        <Item name="LandingPad">
+            <summary>TODO: Provide summary for LibLLVMValueKind.LandingPad Enumeration</summary>
+        </Item>
+        <Item name="ConstantFirstVal">
+            <summary>TODO: Provide summary for LibLLVMValueKind.ConstantFirstVal Enumeration</summary>
+        </Item>
+        <Item name="ConstantLastVal">
+            <summary>TODO: Provide summary for LibLLVMValueKind.ConstantLastVal Enumeration</summary>
+        </Item>
+        <Item name="ConstantDataFirstVal">
+            <summary>TODO: Provide summary for LibLLVMValueKind.ConstantDataFirstVal Enumeration</summary>
+        </Item>
+        <Item name="ConstantDataLastVal">
+            <summary>TODO: Provide summary for LibLLVMValueKind.ConstantDataLastVal Enumeration</summary>
+        </Item>
+        <Item name="ConstantAggregateFirstVal">
+            <summary>TODO: Provide summary for LibLLVMValueKind.ConstantAggregateFirstVal Enumeration</summary>
+        </Item>
+        <Item name="ConstantAggregateLastVal">
+            <summary>TODO: Provide summary for LibLLVMValueKind.ConstantAggregateLastVal Enumeration</summary>
+        </Item>
+    </Enumeration>
     <Delegate name="LibLLVMValueCacheItemDeletedCallback">
-        <summary>TODO: Provide summary for Delegate LibLLVMValueCacheItemDeletedCallback</summary>
-        <param name="ref">TODO: Provide details of parameter ref</param>
-        <param name="handle">TODO: Provide details of parameter handle</param>
+        <summary>Native call back for when an item in the value cache is deleted</summary>
+        <param name="ref">LLVM handle for the value being removed</param>
+        <param name="handle">App provided opaque handle for the app managed item</param>
     </Delegate>
     <Delegate name="LibLLVMValueCacheItemReplacedCallback">
-        <summary>TODO: Provide summary for Delegate LibLLVMValueCacheItemReplacedCallback</summary>
-        <param name="oldValue">TODO: Provide details of parameter oldValue</param>
-        <param name="handle">TODO: Provide details of parameter handle</param>
-        <param name="newValue">TODO: Provide details of parameter newValue</param>
-        <returns>TODO: Document return value</returns>
+        <summary>Callback for when a value in the cache is replaced</summary>
+        <param name="oldValue">Original LLVM value handle for the value being replaced</param>
+        <param name="handle">App provided opaque handle for the value</param>
+        <param name="newValue">LLVM handle for the replacement value</param>
+        <returns>App defined opaque handle for the new value</returns>
     </Delegate>
     <Function name="LibLLVMIsConstantZeroValue">
-        <summary>TODO: Provide summary for Function LibLLVMIsConstantZeroValue</summary>
-        <param name="valueRef">TODO: Provide details of parameter valueRef</param>
-        <returns>TODO: Document return value</returns>
+        <summary>Tests if a value is the constant zero form of the value</summary>
+        <param name="valueRef">Value to test</param>
+        <returns><see langword="true"/> if the value is the constant 0</returns>
     </Function>
     <Function name="LibLLVMRemoveGlobalFromParent">
-        <summary>TODO: Provide summary for Function LibLLVMRemoveGlobalFromParent</summary>
-        <param name="valueRef">TODO: Provide details of parameter valueRef</param>
+        <summary>Removes a global from the containing module</summary>
+        <param name="valueRef">Global to remove from it's parent</param>
     </Function>
     <Function name="LibLLVMGetValueID">
-        <summary>TODO: Provide summary for Function LibLLVMGetValueID</summary>
-        <param name="valueRef">TODO: Provide details of parameter valueRef</param>
-        <returns>TODO: Document return value</returns>
+        <summary>Gets an ID for the concrete type of this object.</summary>
+        <param name="valueRef">Value to get the ID from</param>
+        <remarks>
+        This is used to implement the classof checks that enable interop code to determine the
+        correct derived type for a generic <see cref="LLVMValueRef"/>. This should not be used
+        for any other purpose, as the values do change as LLVM evolves. Also, note that for
+        instructions, the Instruction's opcode is added to InstructionVal.
+        </remarks>
+        <returns>Type id of the value</returns>
     </Function>
     <Function name="LibLLVMGetAliasee">
         <summary>TODO: Provide summary for Function LibLLVMGetAliasee</summary>

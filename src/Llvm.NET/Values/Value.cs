@@ -54,18 +54,18 @@ namespace Llvm.NET.Values
         public Context Context => NativeType.Context;
 
         /// <summary>Gets a value indicating whether the Value is an instruction</summary>
-        public bool IsInstruction => LLVMGetValueIdAsKind( ValueHandle ) > ValueKind.Instruction;
+        public bool IsInstruction => LibLLVMGetValueKind( ValueHandle ) > LibLLVMValueKind.InstructionKind;
 
         /// <summary>Gets a value indicating whether the Value is a function</summary>
-        public bool IsFunction => LLVMGetValueIdAsKind( ValueHandle ) == ValueKind.Function;
+        public bool IsFunction => LibLLVMGetValueKind( ValueHandle ) == LibLLVMValueKind.FunctionKind;
 
         /// <summary>Gets a value indicating whether the Value is a call-site</summary>
         public bool IsCallSite
         {
             get
             {
-                var kind = LLVMGetValueIdAsKind( ValueHandle );
-                return (kind == ValueKind.Call) || (kind == ValueKind.Invoke);
+                var kind = LibLLVMGetValueKind( ValueHandle );
+                return (kind == LibLLVMValueKind.CallKind) || (kind == LibLLVMValueKind.InvokeKind);
             }
         }
 

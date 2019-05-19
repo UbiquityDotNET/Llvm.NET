@@ -8,20 +8,17 @@ via LLVMDisposeMessage() or some other call, while in other cases it is just
 a pointer to an internal const string that does not need any release.)
 
 To resolve these issues and make the requirements explicitly clear and consistent
-Llvm.NET uses custom marshaling of the strings to mark the exact behavior directly
+Llvm.NET.Interop uses custom marshaling of the strings to mark the exact behavior directly
 on the P/Invoke signature so it is both clear and easy to use for the upper layers
 (it's just a `System.String`)
 
-The current forms of string marshalling are:
+## Generated String Marshalers
+The [LlvmBindingsGenerator](https://github.com/UbiquityDotNET/Llvm.NET/tree/master/src/Interop/LlvmBindingsGenerator)
+Creates concrete custom marshalers for every string disposal type supported. To
+keep things simple and eliminate redundancies, the generated marshalers all derive from
+a common base type [CustomStringMarshalerBase](xref:Llvm.NET.Interop.CustomStringMarshalerBase).
 
-```C#
-// const char* owned by native LLVM, and never disposed by managed callers (just copy to managed string)
-[MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef=typeof(StringMarshaler))]
-
-// const char* allocated in native LLVM, released by managed caller via LLVMDisposeMessage
-[MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef=typeof(StringMarshaler), MarshalCookie="DisposeMessage")]
-
-// const char* allocated in native LLVM, released by managed caller via LLVMDisposeMangledSymbol
-[MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef=typeof(StringMarshaler), MarshalCookie="MangledSymbol")]
-
-```
+### Marshaling configuration
+LLVMBindingsGenerator supports a flexible configuration to identify which functions require which
+form of marshalling. For strings this is an instance of the [StringMarshalInfo](LLVMBindingsGenerator.StringMarshalInfo)
+class

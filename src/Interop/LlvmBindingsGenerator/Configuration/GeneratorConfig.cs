@@ -9,7 +9,7 @@ using LlvmBindingsGenerator.Templates;
 
 namespace LlvmBindingsGenerator.Configuration
 {
-    /// <summary>XAML configuration  root type</summary>
+    /// <summary>Configuration  root type</summary>
     internal class GeneratorConfig
     {
         /// <summary>Gets or sets the set of names of LLVM-C functions that are declared as returning LLVMBool but have semantics of SUCCESS == 0</summary>
@@ -28,7 +28,7 @@ namespace LlvmBindingsGenerator.Configuration
 
         // Functions that have manually placed P/Invoke in the templates should be ignored
         // to prevent confusion. These are normally the string disposal types.
-        public List<(string Name, bool Ignored)> InternalFunctions { get; set; } = new List<(string Name, bool Ignored)>( );
+        public IDictionary<string, bool> InternalFunctions { get; set; } = new Dictionary<string, bool>( );
 
         // maps a handle type name to a template for generating the interop for the handle
         public HandleTemplateMap HandleToTemplateMap { get; set; } = new HandleTemplateMap( );

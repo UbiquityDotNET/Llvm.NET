@@ -368,7 +368,7 @@ namespace Llvm.NET.Values
             }
 
             var buffer = new LLVMAttributeRef[ count ];
-            LLVMGetAttributesAtIndex( ValueHandle, ( LLVMAttributeIndex )index, out buffer[0] );
+            LLVMGetAttributesAtIndex( ValueHandle, ( LLVMAttributeIndex )index, buffer );
             return from attribRef in buffer
                    select AttributeValue.FromHandle( Context, attribRef );
         }
