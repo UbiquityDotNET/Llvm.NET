@@ -17,18 +17,6 @@ DEFINE_SIMPLE_CONVERSION_FUNCTIONS( ValueCache, LibLLVMValueCacheRef );
 
 extern "C"
 {
-    LLVMComdatRef LibLLVMGlobalObjectGetComdat( LLVMValueRef Val )
-    {
-        auto pGlobalObj = dyn_cast< GlobalObject >( unwrap( Val ) );
-        return wrap( pGlobalObj->getComdat( ) );
-    }
-
-    void LibLLVMGlobalObjectSetComdat( LLVMValueRef Val, LLVMComdatRef comdatRef )
-    {
-        auto pGlobalObj = dyn_cast< GlobalObject >( unwrap( Val ) );
-        pGlobalObj->setComdat( unwrap( comdatRef ) );
-    }
-
     uint32_t LibLLVMGetArgumentIndex( LLVMValueRef valueRef )
     {
         auto pArgument = unwrap<Argument>( valueRef );

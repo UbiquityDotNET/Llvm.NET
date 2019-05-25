@@ -8,6 +8,11 @@
 extern "C" {
 #endif
 
+    // ordering matters, all distinct values are generated first, then any derived values (e.g. foo = bar + 1), to ensure the
+    // values match expectations of underlying C++ code and don't alter the sequencing as C++ numbers enum values without an
+    // initializer as automatic +1 of the previous value, thus sticking the derived values in at arbitrary locations in the
+    // declaration order would reset the values.
+
     typedef enum LibLLVMValueKind
     {
 #define HANDLE_VALUE(Name) Name##Kind,
@@ -35,9 +40,6 @@ extern "C" {
     LibLLVMValueKind LibLLVMGetValueKind( LLVMValueRef valueRef);
     LLVMValueRef LibLLVMGetAliasee( LLVMValueRef Val );
     uint32_t LibLLVMGetArgumentIndex( LLVMValueRef Val);
-
-    LLVMComdatRef LibLLVMGlobalObjectGetComdat( LLVMValueRef Val );
-    void LibLLVMGlobalObjectSetComdat( LLVMValueRef Val, LLVMComdatRef comdatRef );
 
     void LibLLVMGlobalVariableAddDebugExpression( LLVMValueRef /*GlobalVariable*/ globalVar, LLVMMetadataRef exp );
     void LibLLVMFunctionAppendBasicBlock( LLVMValueRef /*Function*/ function, LLVMBasicBlockRef block );

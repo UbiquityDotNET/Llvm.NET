@@ -93,8 +93,6 @@ LibLLVMRemoveGlobalFromParent
 LibLLVMGetValueKind
 LibLLVMGetAliasee
 LibLLVMGetArgumentIndex
-LibLLVMGlobalObjectGetComdat
-LibLLVMGlobalObjectSetComdat
 LibLLVMGlobalVariableAddDebugExpression
 LibLLVMFunctionAppendBasicBlock
 LibLLVMValueAsMetadataGetValue
