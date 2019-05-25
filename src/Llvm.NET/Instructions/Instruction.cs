@@ -5,6 +5,7 @@
 // -----------------------------------------------------------------------
 
 using System;
+using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using Llvm.NET.Interop;
 using Llvm.NET.Properties;
@@ -438,6 +439,36 @@ namespace Llvm.NET.Instructions
                 return opCode == OpCode.Alloca
                     || opCode == OpCode.Load
                     || opCode == OpCode.Store;
+            }
+        }
+
+        /// <summary>Gets a value indicating whether this instruction has metadata</summary>
+        public bool HasMetadata => LLVMHasMetadata( ValueHandle );
+
+        /// <summary>Gets or sets Metadata (as a value) for this instruction</summary>
+        /// <param name="kindKey">Metadata kind to get</param>
+        /// <returns>Metadata for the kind or <see langword="null"/> if not present</returns>
+        public MetadataAsValue this[MetadataKind kindKey]
+        {
+            get => FromHandle<MetadataAsValue>( LLVMGetMetadata( ValueHandle, ( uint )kindKey ) );
+
+            set => LLVMSetMetadata( ValueHandle, ( uint )kindKey, value.ValueHandle );
+        }
+
+        /// <summary>Gets a snap-shot collection of the metadata for this instruction, filtering out all the debug location nodes</summary>
+        /// <returns>Enumerable of the metadata nodes for the instruction</returns>
+        public IEnumerable<MDNode> NonDebugLocMetadata
+        {
+            get
+            {
+                using( var entries = LLVMInstructionGetAllMetadataOtherThanDebugLoc( ValueHandle, out size_t numEntries ) )
+                {
+                    for( long i = 0; i < numEntries.ToInt32( ); ++i )
+                    {
+                        LLVMMetadataRef handle = LLVMValueMetadataEntriesGetMetadata( entries, ( uint )i );
+                        yield return MDNode.FromHandle<MDNode>( handle );
+                    }
+                }
             }
         }
 

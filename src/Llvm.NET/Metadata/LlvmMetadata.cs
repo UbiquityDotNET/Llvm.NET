@@ -10,16 +10,105 @@ using Llvm.NET.DebugInfo;
 using Llvm.NET.Interop;
 using Llvm.NET.Properties;
 
-// SA1515  Single-line comment should be preceded by blank line
-#pragma warning disable SA1515
-
-// SA1025  Code should not contain multiple whitespace characters in a row.
-#pragma warning disable SA1025
-
 using static Llvm.NET.Interop.NativeMethods;
 
 namespace Llvm.NET
 {
+    /// <summary>Enumeration to define metadata type kind</summary>
+    [SuppressMessage( "Design", "CA1027:Mark enums with FlagsAttribute", Justification = "It's not a flags enum, get over it...")]
+    public enum MetadataKind
+    {
+        /// <summary>Metadata string</summary>
+        MDString = LibLLVMMetadataKind.LibLLVMMetadataKind_MDString,
+
+        /// <summary>Constant Value as metadata</summary>
+        ConstantAsMetadata = LibLLVMMetadataKind.LibLLVMMetadataKind_ConstantAsMetadata,
+
+        /// <summary>Local value as metadata</summary>
+        LocalAsMetadata = LibLLVMMetadataKind.LibLLVMMetadataKind_LocalAsMetadata,
+
+        /// <summary>Distinct metadata place holder</summary>
+        DistinctMDOperandPlaceholder = LibLLVMMetadataKind.LibLLVMMetadataKind_DistinctMDOperandPlaceholder,
+
+        /// <summary>Metadata tuple</summary>
+        MDTuple = LibLLVMMetadataKind.LibLLVMMetadataKind_MDTuple,
+
+        /// <summary>Debug info location</summary>
+        DILocation = LibLLVMMetadataKind.LibLLVMMetadataKind_DILocation,
+
+        /// <summary>Debug info expression</summary>
+        DIExpression = LibLLVMMetadataKind.LibLLVMMetadataKind_DIExpression,
+
+        /// <summary>Debug info global variable expression</summary>
+        DIGlobalVariableExpression = LibLLVMMetadataKind.LibLLVMMetadataKind_DIGlobalVariableExpression,
+
+        /// <summary>Generic Debug info node</summary>
+        GenericDINode = LibLLVMMetadataKind.LibLLVMMetadataKind_GenericDINode,
+
+        /// <summary>Debug info sub range</summary>
+        DISubrange = LibLLVMMetadataKind.LibLLVMMetadataKind_DISubrange,
+
+        /// <summary>Debug info enumerator</summary>
+        DIEnumerator = LibLLVMMetadataKind.LibLLVMMetadataKind_DIEnumerator,
+
+        /// <summary>Debug info basic type</summary>
+        DIBasicType = LibLLVMMetadataKind.LibLLVMMetadataKind_DIBasicType,
+
+        /// <summary>Debug info derived type</summary>
+        DIDerivedType = LibLLVMMetadataKind.LibLLVMMetadataKind_DIDerivedType,
+
+        /// <summary>Debug info composite type</summary>
+        DICompositeType = LibLLVMMetadataKind.LibLLVMMetadataKind_DICompositeType,
+
+        /// <summary>Debug info subroutine type</summary>
+        DISubroutineType = LibLLVMMetadataKind.LibLLVMMetadataKind_DISubroutineType,
+
+        /// <summary>Debug info file reference</summary>
+        DIFile = LibLLVMMetadataKind.LibLLVMMetadataKind_DIFile,
+
+        /// <summary>Debug info Compilation Unit</summary>
+        DICompileUnit = LibLLVMMetadataKind.LibLLVMMetadataKind_DICompileUnit,
+
+        /// <summary>Debug info sub program</summary>
+        DISubprogram = LibLLVMMetadataKind.LibLLVMMetadataKind_DISubprogram,
+
+        /// <summary>Debug info lexical block</summary>
+        DILexicalBlock = LibLLVMMetadataKind.LibLLVMMetadataKind_DILexicalBlock,
+
+        /// <summary>Debug info lexical block file</summary>
+        DILexicalBlockFile = LibLLVMMetadataKind.LibLLVMMetadataKind_DILexicalBlockFile,
+
+        /// <summary>Debug info namespace</summary>
+        DINamespace = LibLLVMMetadataKind.LibLLVMMetadataKind_DINamespace,
+
+        /// <summary>Debug info fro a module</summary>
+        DIModule = LibLLVMMetadataKind.LibLLVMMetadataKind_DIModule,
+
+        /// <summary>Debug info for a template type parameter</summary>
+        DITemplateTypeParameter = LibLLVMMetadataKind.LibLLVMMetadataKind_DITemplateTypeParameter,
+
+        /// <summary>Debug info for a template value parameter</summary>
+        DITemplateValueParameter = LibLLVMMetadataKind.LibLLVMMetadataKind_DITemplateValueParameter,
+
+        /// <summary>Debug info for a global variable</summary>
+        DIGlobalVariable = LibLLVMMetadataKind.LibLLVMMetadataKind_DIGlobalVariable,
+
+        /// <summary>Debug info for a local variable</summary>
+        DILocalVariable = LibLLVMMetadataKind.LibLLVMMetadataKind_DILocalVariable,
+
+        /// <summary>Debug info for an Objective C style property</summary>
+        DIObjCProperty = LibLLVMMetadataKind.LibLLVMMetadataKind_DIObjCProperty,
+
+        /// <summary>Debug info for an imported entity</summary>
+        DIImportedEntity = LibLLVMMetadataKind.LibLLVMMetadataKind_DIImportedEntity,
+
+        /// <summary>Debug info for a macro</summary>
+        DIMacro = LibLLVMMetadataKind.LibLLVMMetadataKind_DIMacro,
+
+        /// <summary>Debug info for a macro file</summary>
+        DIMacroFile = LibLLVMMetadataKind.LibLLVMMetadataKind_DIMacroFile,
+    }
+
     /// <summary>Root of the LLVM Metadata hierarchy</summary>
     /// <remarks>In LLVM this is just "Metadata" however that name has the potential
     /// to conflict with the .NET runtime namespace of the same name, so the name
@@ -49,6 +138,9 @@ namespace Llvm.NET
         {
             return MetadataHandle == default ? string.Empty : LibLLVMMetadataAsString( MetadataHandle );
         }
+
+        /// <summary>Gets a value indicating this metadata's kind</summary>
+        public MetadataKind Kind => ( MetadataKind )LibLLVMGetMetadataID( MetadataHandle );
 
         internal LLVMMetadataRef MetadataHandle { get; /*protected*/ set; }
 
@@ -169,51 +261,6 @@ namespace Llvm.NET
                     throw new NotImplementedException( );
 #pragma warning restore RECS0083
                 }
-            }
-
-            /// <summary>Enumeration to define debug information metadata nodes</summary>
-            private enum MetadataKind : uint
-            {
-                MDString,                     // HANDLE_METADATA_LEAF(MDString)
-                                              // ValueAsMetadata,            // HANDLE_METADATA_BRANCH(ValueAsMetadata)
-                ConstantAsMetadata,           // HANDLE_METADATA_LEAF(ConstantAsMetadata)
-                LocalAsMetadata,              // HANDLE_METADATA_LEAF(LocalAsMetadata)
-                DistinctMDOperandPlaceholder, // HANDLE_METADATA_LEAF(DistinctMDOperandPlaceholder)
-                                              // MDNode,                     // HANDLE_MDNODE_BRANCH(MDNode)
-                MDTuple,                      // HANDLE_MDNODE_LEAF_UNIQUABLE(MDTuple)
-                DILocation,                   // HANDLE_SPECIALIZED_MDNODE_LEAF_UNIQUABLE(DILocation)
-                DIExpression,                 // HANDLE_SPECIALIZED_MDNODE_LEAF_UNIQUABLE(DIExpression)
-                DIGlobalVariableExpression,   // HANDLE_SPECIALIZED_MDNODE_LEAF_UNIQUABLE(DIGlobalVariableExpression)
-                                              // DINode,                     // HANDLE_SPECIALIZED_MDNODE_BRANCH(DINode)
-                GenericDINode,                // HANDLE_SPECIALIZED_MDNODE_LEAF_UNIQUABLE(GenericDINode)
-                DISubrange,                   // HANDLE_SPECIALIZED_MDNODE_LEAF_UNIQUABLE(DISubrange)
-                DIEnumerator,                 // HANDLE_SPECIALIZED_MDNODE_LEAF_UNIQUABLE(DIEnumerator)
-                                              // DIScope,                    // HANDLE_SPECIALIZED_MDNODE_BRANCH(DIScope)
-                                              // DIType,                     // HANDLE_SPECIALIZED_MDNODE_BRANCH(DIType)
-                DIBasicType,                  // HANDLE_SPECIALIZED_MDNODE_LEAF_UNIQUABLE(DIBasicType)
-                DIDerivedType,                // HANDLE_SPECIALIZED_MDNODE_LEAF_UNIQUABLE(DIDerivedType)
-                DICompositeType,              // HANDLE_SPECIALIZED_MDNODE_LEAF_UNIQUABLE(DICompositeType)
-                DISubroutineType,             // HANDLE_SPECIALIZED_MDNODE_LEAF_UNIQUABLE(DISubroutineType)
-                DIFile,                       // HANDLE_SPECIALIZED_MDNODE_LEAF_UNIQUABLE(DIFile)
-                DICompileUnit,                // HANDLE_SPECIALIZED_MDNODE_LEAF(DICompileUnit)
-                                              // DILocalScope,               // HANDLE_SPECIALIZED_MDNODE_BRANCH(DILocalScope)
-                DISubprogram,                 // HANDLE_SPECIALIZED_MDNODE_LEAF_UNIQUABLE(DISubprogram)
-                                              // DILexicalBlockBase,         // HANDLE_SPECIALIZED_MDNODE_BRANCH(DILexicalBlockBase)
-                DILexicalBlock,               // HANDLE_SPECIALIZED_MDNODE_LEAF_UNIQUABLE(DILexicalBlock)
-                DILexicalBlockFile,           // HANDLE_SPECIALIZED_MDNODE_LEAF_UNIQUABLE(DILexicalBlockFile)
-                DINamespace,                  // HANDLE_SPECIALIZED_MDNODE_LEAF_UNIQUABLE(DINamespace)
-                DIModule,                     // HANDLE_SPECIALIZED_MDNODE_LEAF_UNIQUABLE(DIModule)
-                                              // DITemplateParameter,        // HANDLE_SPECIALIZED_MDNODE_BRANCH(DITemplateParameter)
-                DITemplateTypeParameter,      // HANDLE_SPECIALIZED_MDNODE_LEAF_UNIQUABLE(DITemplateTypeParameter)
-                DITemplateValueParameter,     // HANDLE_SPECIALIZED_MDNODE_LEAF_UNIQUABLE(DITemplateValueParameter)
-                                              // DIVariable,                 // HANDLE_SPECIALIZED_MDNODE_BRANCH(DIVariable)
-                DIGlobalVariable,             // HANDLE_SPECIALIZED_MDNODE_LEAF_UNIQUABLE(DIGlobalVariable)
-                DILocalVariable,              // HANDLE_SPECIALIZED_MDNODE_LEAF_UNIQUABLE(DILocalVariable)
-                DIObjCProperty,               // HANDLE_SPECIALIZED_MDNODE_LEAF_UNIQUABLE(DIObjCProperty)
-                DIImportedEntity,             // HANDLE_SPECIALIZED_MDNODE_LEAF_UNIQUABLE(DIImportedEntity)
-                                              // DIMacroNode,                // HANDLE_SPECIALIZED_MDNODE_BRANCH(DIMacroNode)
-                DIMacro,                      // HANDLE_SPECIALIZED_MDNODE_LEAF_UNIQUABLE(DIMacro)
-                DIMacroFile                   // HANDLE_SPECIALIZED_MDNODE_LEAF_UNIQUABLE(DIMacroFile)
             }
         }
 

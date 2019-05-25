@@ -9,13 +9,20 @@
 extern "C" {
 #endif
 
-    enum LibLLVMDwarfTag
+    typedef enum LibLLVMDwarfTag
     {
 #define HANDLE_DW_TAG(ID, NAME, VERSION, VENDOR)                 \
   LibLLVMDwarfTag##NAME = ID,
 #include "llvm/BinaryFormat/Dwarf.def"
 #undef HANDLE_DW_TAG
-    };
+    } LibLLVMDwarfTag;
+
+    typedef enum LibLLVMMetadataKind
+    {
+#define HANDLE_METADATA_LEAF(CLASS) LibLLVMMetadataKind_##CLASS,
+#include "llvm/IR/Metadata.def"
+#undef HANDLE_METADATA_LEAF
+    } LibLLVMMetadataKind;
 
     typedef struct LLVMOpaqueMDOperand* LibLLVMMDOperandRef;
 
