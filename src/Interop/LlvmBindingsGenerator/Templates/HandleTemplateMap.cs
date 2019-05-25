@@ -25,8 +25,6 @@ namespace LlvmBindingsGenerator.Templates
             return true;
         }
 
-        public IEnumerable<string> HandleTypeNames => from item in this select item.HandleName;
-
         public IEnumerable<string> DisposeFunctionNames
             => from item in this
                let ght = item as GlobalHandleTemplate

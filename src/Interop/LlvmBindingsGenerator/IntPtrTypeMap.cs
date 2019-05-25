@@ -11,6 +11,10 @@ using CppSharp.Types;
 
 namespace LlvmBindingsGenerator
 {
+    // DO NOT apply the TypeMap attribute here as that triggers auto inclusion in the
+    // TypeMapDataBase and these must be constructed at run time to provide the correct name
+
+    /// <summary>Custom type map entry for pointer typedefs to System.IntPtr</summary>
     internal class IntPtrTypeMap
         : TypeMap
     {

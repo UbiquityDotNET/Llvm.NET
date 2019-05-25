@@ -67,7 +67,7 @@ namespace Llvm.NET.Interop
     /// <summary>Alias handle for an LLVM object</summary>
     ///<remarks>
     /// Sometimes a global object is exposed via a child that maintains a reference to the parent.
-    /// In such cases, the handle isn't owned by the App (it's an alias) and therfore should not be
+    /// In such cases, the handle isn't owned by the App (it's an alias) and therefore should not be
     /// disposed or destroyed. This handle type takes care of that in a type safe manner and does not
     /// perform any automatic cleanup.
     ///</remarks>

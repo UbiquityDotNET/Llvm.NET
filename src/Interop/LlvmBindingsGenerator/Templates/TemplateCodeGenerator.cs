@@ -5,21 +5,12 @@
 // -----------------------------------------------------------------------
 
 using System.Collections.Generic;
-using CppSharp.AST;
 
 namespace LlvmBindingsGenerator.Templates
 {
     internal class TemplateCodeGenerator
         : ICodeGenerator
     {
-        public TemplateCodeGenerator( TranslationUnit unit, IEnumerable<ICodeGenTemplate> templates )
-            : this( unit.IsValid,
-                    unit.FileNameWithoutExtension,
-                    unit.IncludePath == null ? string.Empty : unit.FileRelativeDirectory,
-                    templates )
-        {
-        }
-
         public TemplateCodeGenerator(
             bool isValid,
             string fileNameWithoutExtension,

@@ -44,7 +44,7 @@ namespace LlvmBindingsGenerator.Templates
 ;; </auto-generated>
 ;; <usage>
 ;;     This file contains the bare bones skeleton doc comments info that the
-;;     generated code files refer to. If the orginal source contained comments,
+;;     generated code files refer to. If the original source contained comments,
 ;;     those comments are generated here as the ""remarks"" element to aid in
 ;;     completing the docs. This always generated file is created with a .g.xml
 ;;     extension, however the generated C# code includes the form with the "".g""
