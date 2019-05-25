@@ -72,11 +72,8 @@ try
         }
     }
 
-    Write-Information "Restoring Docs Project"
-    Invoke-MSBuild -Targets Restore -Project docfx\Llvm.NET.DocFX.csproj -Properties $msBuildProperties -LoggerArgs $msbuildLoggerArgs ($msbuildLoggerArgs + @("/bl:Llvm.NET-docfx-restore.binlog") )
-
-    Write-Information "Building Docs"
-    Invoke-MSBuild -Targets Build -Project docfx\Llvm.NET.DocFX.csproj -Properties $msBuildProperties -LoggerArgs $msbuildLoggerArgs ($msbuildLoggerArgs + @("/bl:Llvm.NET-docfx-build.binlog") )
+    Write-Information "Building Docs Project"
+    Invoke-MSBuild -Targets 'Restore;Build' -Project docfx\Llvm.NET.DocFX.csproj -Properties $msBuildProperties -LoggerArgs $msbuildLoggerArgs ($msbuildLoggerArgs + @("/bl:Llvm.NET-docfx.binlog") )
 }
 finally
 {

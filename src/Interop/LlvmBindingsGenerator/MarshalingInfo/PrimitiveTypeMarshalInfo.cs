@@ -5,13 +5,11 @@
 // -----------------------------------------------------------------------
 
 using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using CppSharp.AST;
 
 namespace LlvmBindingsGenerator
 {
-    [SuppressMessage( "Performance", "CA1812:Avoid uninstantiated internal classes", Justification = "Can be used in configuration" )]
     internal class PrimitiveTypeMarshalInfo
         : MarshalInfoBase
     {

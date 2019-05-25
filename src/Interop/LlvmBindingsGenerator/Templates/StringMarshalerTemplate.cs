@@ -11,11 +11,6 @@ namespace LlvmBindingsGenerator.Templates
     internal partial class StringMarshalerTemplate
         : ICodeGenTemplate
     {
-        public StringMarshalerTemplate( string name )
-            : this( name, string.Empty)
-        {
-        }
-
         public StringMarshalerTemplate( string name, string disposeFunctionName)
         {
             Name = name;

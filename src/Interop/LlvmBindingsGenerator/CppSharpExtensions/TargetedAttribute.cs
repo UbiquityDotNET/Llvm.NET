@@ -48,13 +48,6 @@ namespace LlvmBindingsGenerator.CppSharpExtensions
             Value = string.Join( ", ", args );
         }
 
-        public TargetedAttribute( AttributeTarget target, CppSharp.AST.Attribute other )
-        {
-            Type = other.Type;
-            Value = other.Value;
-            Target = target;
-        }
-
         public void AddParameter( string param )
         {
             Value = $"{Value}, {param}";

@@ -50,8 +50,6 @@ namespace LlvmBindingsGenerator
 
         public BindingContext Context { get; private set; }
 
-        public bool HasCompilationErrors { get; set; }
-
         public ITypePrinter TypePrinter
         {
             get => InternalTypePrinter;

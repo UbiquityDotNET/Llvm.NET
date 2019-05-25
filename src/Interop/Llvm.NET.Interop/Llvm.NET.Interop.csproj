@@ -11,7 +11,10 @@
     <MinClientVersion>4.0</MinClientVersion>
     <Authors>.NET Foundation,LLVM.org,Ubiquity.NET</Authors>
     <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
-    <Description>.NET Low Level Interop Bindings for Ubiquity.LibLLVM</Description>
+    <Description>
+    .NET Low Level Interop Bindings for Ubiquity.LibLLVM. Direct use of this low level API is discouraged, instead you should
+    use the Llvm.NET package, which provides a full C# object model projection of the LLVM APIs on top of this library.
+    </Description>
     <PackageTags>LLVM,Compiler,JIT,Ubiquity.NET</PackageTags>
     <NoPackageAnalysis>true</NoPackageAnalysis>
     <RepositoryType>git</RepositoryType>

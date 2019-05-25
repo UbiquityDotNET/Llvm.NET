@@ -50,10 +50,5 @@ namespace LlvmBindingsGenerator.Passes
 
             return false;
         }
-
-        public override bool VisitFunctionType( FunctionType function, TypeQualifiers quals )
-        {
-            return base.VisitFunctionType( function, quals );
-        }
     }
 }

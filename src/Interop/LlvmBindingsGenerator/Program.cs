@@ -182,6 +182,7 @@ namespace LlvmBindingsGenerator
                     new StringMarshalInfo("LLVMGetDefaultTargetTriple", StringDisposal.DisposeMessage),
                     new StringMarshalInfo("LLVMGetHostCPUName", StringDisposal.DisposeMessage),
                     new StringMarshalInfo("LLVMGetHostCPUFeatures", StringDisposal.DisposeMessage),
+                    new PrimitiveTypeMarshalInfo("LLVMHasMetadata", CppSharp.AST.PrimitiveType.Bool),
                 },
                 /* Functions that are deprecated in LLVM and should be marked obsolte in generation (or by default ommitted completely)*/
                 DeprecatedFunctionToMessageMap = new Dictionary<string, string>
