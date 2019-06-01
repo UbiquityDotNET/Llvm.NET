@@ -83,7 +83,7 @@ try
     .\Build-Interop.ps1 -BuildInfo $BuildInfo
 
     Write-Information "Restoring NuGet Packages for Llvm.NET"
-    Invoke-MSBuild -Targets 'Restore;Build' -Project src\Llvm.NET.sln -Properties $msBuildProperties -LoggerArgs $msbuildLoggerArgs ($msbuildLoggerArgs + @("/bl:Llvm.NET-restore.binlog") )
+    Invoke-MSBuild -Targets 'Restore;Build' -Project src\Llvm.NET.sln -Properties $msBuildProperties -LoggerArgs $msbuildLoggerArgs ($msbuildLoggerArgs + @("/bl:Llvm.NET.binlog") )
 
     if(!$SkipDocs)
     {

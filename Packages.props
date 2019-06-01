@@ -18,5 +18,8 @@
         <PackageReference Update="OpenSoftware.DgmlBuilder" Version="1.12.0" Condition="'$(TargetFramework)'=='net47'" />
         <PackageReference Update="System.Collections.Immutable" Version="1.5.0" />
         <PackageReference Update="System.Reactive" Version="4.1.5" />
+        <PackageReference Update="docfx.console" Version="2.42.2" />
+        <PackageReference Update="memberpage" Version="2.42.2" />
+        <PackageReference Update="msdn.4.5.2" Version="0.1.0-alpha-1611021200" />
     </ItemGroup>
 </Project>

@@ -1,5 +1,4 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
-    <Sdk Name="Microsoft.Build.CentralPackageVersions" Version="2.0.1" />
     <PropertyGroup>
         <TargetFrameworks>netstandard2.0;net47</TargetFrameworks>
         <RuntimeIdentifiers>win-x64</RuntimeIdentifiers>

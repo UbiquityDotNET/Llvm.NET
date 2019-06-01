@@ -11,22 +11,11 @@
         <PlatformTarget>x64</PlatformTarget>
     </PropertyGroup>
     <ItemGroup>
-        <PackageReference Include="Ubiquity.ArgValidators"/>
-        <PackageReference Include="CppSharp">
-            <PrivateAssets>all</PrivateAssets>
-            <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-        </PackageReference>
+        <Service Include="{508349b6-6b84-4df5-91f0-309beebad82d}" />
     </ItemGroup>
-    <!--
-    HACKFIX: CppSharp uses baseclass.contrib.nuget.output, which, among it's many issues, requires packages.config.
-    After analyzing that package it's basically a VERY convoluted means of copying the output folder from the
-    packages root location into the output folder of this project. So, just do the copy using standard project items...
-    -->
     <ItemGroup>
-        <None Include="$(PkgCppSharp)\output\**\*.*">
-            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-        </None>
-        <Reference Include="$(PkgCppSharp)\lib\*.dll" />
+        <PackageReference Include="Ubiquity.ArgValidators"/>
+        <PackageReference Include="CppSharp"/>
     </ItemGroup>
     <!-- Runtime T4 templates need to specify the single file generator for the code behind -->
     <ItemGroup>
@@ -67,9 +56,6 @@
         </None>
     </ItemGroup>
     <ItemGroup>
-        <Service Include="{508349b6-6b84-4df5-91f0-309beebad82d}" />
-    </ItemGroup>
-    <ItemGroup>
         <Compile Update="Templates\T4\ContextHandleTemplate.cs">
             <DesignTime>True</DesignTime>
             <AutoGen>True</AutoGen>
@@ -106,4 +92,26 @@
             <DependentUpon>StringMarshalerTemplate.tt</DependentUpon>
         </Compile>
     </ItemGroup>
+
+    <!--
+    HACKFIX: CppSharp uses baseclass.contrib.nuget.output, which, among it's many issues, requires packages.config.
+    After analyzing that package it's basically a VERY convoluted means of copying the output folder from the
+    packages root location into the output folder of this project. So, just do the copy with help from
+    ResolvePackageDependenciesDesignTime to get the location of the package root
+    -->
+    <Target Name="CopyCppSharpOutput" AfterTargets="Compile" DependsOnTargets="ResolvePackageDependenciesDesignTime">
+        <ItemGroup>
+          <CppSharpPkg Include="@(PackageDefinitions)" Condition="'%(PackageDefinitions.Name)'=='CppSharp'" />
+        </ItemGroup>
+        <PropertyGroup>
+          <CppSharpPkgPath>%(CppSharpPkg.ResolvedPath)</CppSharpPkgPath>
+        </PropertyGroup>
+        <ItemGroup>
+            <_CppSharpOutputFiles Include="$(CppSharpPkgPath)\output\**\*.*"/>
+        </ItemGroup>
+        <Copy
+            SkipUnchangedFiles="true"
+            SourceFiles="@(_CppSharpOutputFiles)"
+            DestinationFiles="@(_CppSharpOutputFiles->'$(OutDir)\%(RecursiveDir)%(Filename)%(Extension)')"/>
+    </Target>
 </Project>

@@ -265,6 +265,102 @@
             <summary>TODO: Provide summary for LibLLVMDwarfTag.LibLLVMDwarfTagBORLAND_Delphi_variant Enumeration</summary>
         </Item>
     </Enumeration>
+    <Enumeration name="LibLLVMMetadataKind">
+        <summary>TODO: Provide summary for LibLLVMMetadataKind Enumeration</summary>
+        <Item name="LibLLVMMetadataKind_MDString">
+            <summary>TODO: Provide summary for LibLLVMMetadataKind.LibLLVMMetadataKind_MDString Enumeration</summary>
+        </Item>
+        <Item name="LibLLVMMetadataKind_ConstantAsMetadata">
+            <summary>TODO: Provide summary for LibLLVMMetadataKind.LibLLVMMetadataKind_ConstantAsMetadata Enumeration</summary>
+        </Item>
+        <Item name="LibLLVMMetadataKind_LocalAsMetadata">
+            <summary>TODO: Provide summary for LibLLVMMetadataKind.LibLLVMMetadataKind_LocalAsMetadata Enumeration</summary>
+        </Item>
+        <Item name="LibLLVMMetadataKind_DistinctMDOperandPlaceholder">
+            <summary>TODO: Provide summary for LibLLVMMetadataKind.LibLLVMMetadataKind_DistinctMDOperandPlaceholder Enumeration</summary>
+        </Item>
+        <Item name="LibLLVMMetadataKind_MDTuple">
+            <summary>TODO: Provide summary for LibLLVMMetadataKind.LibLLVMMetadataKind_MDTuple Enumeration</summary>
+        </Item>
+        <Item name="LibLLVMMetadataKind_DILocation">
+            <summary>TODO: Provide summary for LibLLVMMetadataKind.LibLLVMMetadataKind_DILocation Enumeration</summary>
+        </Item>
+        <Item name="LibLLVMMetadataKind_DIExpression">
+            <summary>TODO: Provide summary for LibLLVMMetadataKind.LibLLVMMetadataKind_DIExpression Enumeration</summary>
+        </Item>
+        <Item name="LibLLVMMetadataKind_DIGlobalVariableExpression">
+            <summary>TODO: Provide summary for LibLLVMMetadataKind.LibLLVMMetadataKind_DIGlobalVariableExpression Enumeration</summary>
+        </Item>
+        <Item name="LibLLVMMetadataKind_GenericDINode">
+            <summary>TODO: Provide summary for LibLLVMMetadataKind.LibLLVMMetadataKind_GenericDINode Enumeration</summary>
+        </Item>
+        <Item name="LibLLVMMetadataKind_DISubrange">
+            <summary>TODO: Provide summary for LibLLVMMetadataKind.LibLLVMMetadataKind_DISubrange Enumeration</summary>
+        </Item>
+        <Item name="LibLLVMMetadataKind_DIEnumerator">
+            <summary>TODO: Provide summary for LibLLVMMetadataKind.LibLLVMMetadataKind_DIEnumerator Enumeration</summary>
+        </Item>
+        <Item name="LibLLVMMetadataKind_DIBasicType">
+            <summary>TODO: Provide summary for LibLLVMMetadataKind.LibLLVMMetadataKind_DIBasicType Enumeration</summary>
+        </Item>
+        <Item name="LibLLVMMetadataKind_DIDerivedType">
+            <summary>TODO: Provide summary for LibLLVMMetadataKind.LibLLVMMetadataKind_DIDerivedType Enumeration</summary>
+        </Item>
+        <Item name="LibLLVMMetadataKind_DICompositeType">
+            <summary>TODO: Provide summary for LibLLVMMetadataKind.LibLLVMMetadataKind_DICompositeType Enumeration</summary>
+        </Item>
+        <Item name="LibLLVMMetadataKind_DISubroutineType">
+            <summary>TODO: Provide summary for LibLLVMMetadataKind.LibLLVMMetadataKind_DISubroutineType Enumeration</summary>
+        </Item>
+        <Item name="LibLLVMMetadataKind_DIFile">
+            <summary>TODO: Provide summary for LibLLVMMetadataKind.LibLLVMMetadataKind_DIFile Enumeration</summary>
+        </Item>
+        <Item name="LibLLVMMetadataKind_DICompileUnit">
+            <summary>TODO: Provide summary for LibLLVMMetadataKind.LibLLVMMetadataKind_DICompileUnit Enumeration</summary>
+        </Item>
+        <Item name="LibLLVMMetadataKind_DISubprogram">
+            <summary>TODO: Provide summary for LibLLVMMetadataKind.LibLLVMMetadataKind_DISubprogram Enumeration</summary>
+        </Item>
+        <Item name="LibLLVMMetadataKind_DILexicalBlock">
+            <summary>TODO: Provide summary for LibLLVMMetadataKind.LibLLVMMetadataKind_DILexicalBlock Enumeration</summary>
+        </Item>
+        <Item name="LibLLVMMetadataKind_DILexicalBlockFile">
+            <summary>TODO: Provide summary for LibLLVMMetadataKind.LibLLVMMetadataKind_DILexicalBlockFile Enumeration</summary>
+        </Item>
+        <Item name="LibLLVMMetadataKind_DINamespace">
+            <summary>TODO: Provide summary for LibLLVMMetadataKind.LibLLVMMetadataKind_DINamespace Enumeration</summary>
+        </Item>
+        <Item name="LibLLVMMetadataKind_DIModule">
+            <summary>TODO: Provide summary for LibLLVMMetadataKind.LibLLVMMetadataKind_DIModule Enumeration</summary>
+        </Item>
+        <Item name="LibLLVMMetadataKind_DITemplateTypeParameter">
+            <summary>TODO: Provide summary for LibLLVMMetadataKind.LibLLVMMetadataKind_DITemplateTypeParameter Enumeration</summary>
+        </Item>
+        <Item name="LibLLVMMetadataKind_DITemplateValueParameter">
+            <summary>TODO: Provide summary for LibLLVMMetadataKind.LibLLVMMetadataKind_DITemplateValueParameter Enumeration</summary>
+        </Item>
+        <Item name="LibLLVMMetadataKind_DIGlobalVariable">
+            <summary>TODO: Provide summary for LibLLVMMetadataKind.LibLLVMMetadataKind_DIGlobalVariable Enumeration</summary>
+        </Item>
+        <Item name="LibLLVMMetadataKind_DILocalVariable">
+            <summary>TODO: Provide summary for LibLLVMMetadataKind.LibLLVMMetadataKind_DILocalVariable Enumeration</summary>
+        </Item>
+        <Item name="LibLLVMMetadataKind_DILabel">
+            <summary>TODO: Provide summary for LibLLVMMetadataKind.LibLLVMMetadataKind_DILabel Enumeration</summary>
+        </Item>
+        <Item name="LibLLVMMetadataKind_DIObjCProperty">
+            <summary>TODO: Provide summary for LibLLVMMetadataKind.LibLLVMMetadataKind_DIObjCProperty Enumeration</summary>
+        </Item>
+        <Item name="LibLLVMMetadataKind_DIImportedEntity">
+            <summary>TODO: Provide summary for LibLLVMMetadataKind.LibLLVMMetadataKind_DIImportedEntity Enumeration</summary>
+        </Item>
+        <Item name="LibLLVMMetadataKind_DIMacro">
+            <summary>TODO: Provide summary for LibLLVMMetadataKind.LibLLVMMetadataKind_DIMacro Enumeration</summary>
+        </Item>
+        <Item name="LibLLVMMetadataKind_DIMacroFile">
+            <summary>TODO: Provide summary for LibLLVMMetadataKind.LibLLVMMetadataKind_DIMacroFile Enumeration</summary>
+        </Item>
+    </Enumeration>
     <Function name="LibLLVMDIBasicTypeGetEncoding">
         <summary>TODO: Provide summary for Function LibLLVMDIBasicTypeGetEncoding</summary>
         <param name="basicType">TODO: Provide details of parameter basicType</param>
