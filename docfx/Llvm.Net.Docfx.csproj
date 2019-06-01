@@ -1,7 +1,6 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.Build.NoTargets">
   <PropertyGroup>
     <TargetFramework>net47</TargetFramework>
-    <LangVersion>7.2</LangVersion>
   </PropertyGroup>
 
   <ItemGroup>
@@ -68,12 +67,5 @@
       <DocParameters>$(DocParameters) --xref="@(DocFxCrossRefMap->'%(FullPath)',',')"</DocParameters>
       <DocTemplate>statictoc,$(MemberPagePath)\content,templates\Ubiquity</DocTemplate>
     </PropertyGroup>
-  </Target>
-
-  <!-- Stub the build target as this project only builds the documentation -->
-  <Target Name="CoreCompile" DependsOnTargets="$(CoreCompileDependsOn)">
-  </Target>
-
-  <Target Name="CopyFilesToOutputDirectory">
   </Target>
 </Project>

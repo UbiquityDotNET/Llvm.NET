@@ -49,6 +49,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Repo Items", "Repo Items", 
 		..\Invoke-UnitTests.ps1 = ..\Invoke-UnitTests.ps1
 		..\LICENSE.md = ..\LICENSE.md
 		..\NuGet.Config = ..\NuGet.Config
+		..\Packages.props = ..\Packages.props
 		..\Push-Docs.ps1 = ..\Push-Docs.ps1
 		..\README.md = ..\README.md
 		..\stylecop.json = ..\stylecop.json

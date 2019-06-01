@@ -1,6 +1,7 @@
 # Interop Support
 This folder contains the low level LLVM direct interop support. It requires specialized build
-ordering and processing, which is handled by the Build-Interop.ps1 PowerShell script.
+ordering and processing, which is handled by the [Build-Interop.ps1](../../Build-Interop.ps1)
+PowerShell script.
 
 The nature of the .NET SDK projects and VCX projects drives the need for the script,instead of
 VS solution dependencies or even MSBuild project to project references. Unfortunately, due to
@@ -51,6 +52,10 @@ There are some general steps that are required to successfully build the interop
 of different ways to go about completing them.
  1. Build LlvmBindingsGenerator
  2. Run LlvmBindingsGenerator to parse the llvm headers and the extended headers from the native LibLLVM
+    1. This generates the C# interop code AND the linker DEF file used by the native library and therefore
+       needs to run before the other projects are built. Generating the exports file ensures that it is always
+       accurate and any functions declared in the headers are exported so that the linker generate an error
+       for any missing implementation(s).
  3. Build the native libraries for all supported runtimes (OS+arch)
  4. Build Llvm.NET.Interop to create the interop assembly and, ultimately create the final NuGet package with
 the native and manged code bundled together.

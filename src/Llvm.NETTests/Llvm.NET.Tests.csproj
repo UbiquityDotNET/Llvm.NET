@@ -1,5 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
-  <PropertyGroup>
+    <Sdk Name="Microsoft.Build.CentralPackageVersions" Version="2.0.1" />
+    <PropertyGroup>
       <TargetFrameworks>netcoreapp2.1;net47</TargetFrameworks>
       <IsPackable>false</IsPackable>
       <LangVersion>7.2</LangVersion>
@@ -10,8 +11,8 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-      <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.0.1" />
-      <PackageReference Include="MSTest.TestFramework" Version="1.4.0" />
-      <PackageReference Include="MSTest.TestAdapter" Version="1.4.0" />
+      <PackageReference Include="Microsoft.NET.Test.Sdk" />
+      <PackageReference Include="MSTest.TestFramework" />
+      <PackageReference Include="MSTest.TestAdapter" />
   </ItemGroup>
 </Project>

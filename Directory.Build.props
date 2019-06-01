@@ -48,7 +48,7 @@
 
         <IsReleaseBuild Condition="'$(IsReleaseBuild)'=='' AND '$(APPVEYOR_REPO_TAG)'=='true' AND '$(APPVEYOR_PULL_REQUEST_NUMBER)'==''">true</IsReleaseBuild>
         <IsReleaseBuild Condition="'$(IsReleaseBuild)'==''">false</IsReleaseBuild>
-        <BuildTimeStamp Condition="'$(BuildTimeStamp)'=='' AND '$(APPVEYOR_REPO_COMMIT_TIMESTAMP)'!=''">$(APPVEYOR_REPO_COMMIT_TIMESTAMP)</BuildTimeStamp>
+        <BuildTime Condition="'$(BuildTime)'=='' AND '$(APPVEYOR_REPO_COMMIT_TIMESTAMP)'!=''">$(APPVEYOR_REPO_COMMIT_TIMESTAMP)</BuildTime>
         <LlvmVersionMajor Condition="'$(LlvmVersionMajor)'==''">8</LlvmVersionMajor>
         <LlvmVersionMinor Condition="'$(LlvmVersionMinor)'==''">0</LlvmVersionMinor>
         <LlvmVersionPatch Condition="'$(LlvmVersionPatch)'==''">0</LlvmVersionPatch>
@@ -63,20 +63,9 @@
                 <Determenistic>true</Determenistic>
                 <IsTestProject>$(MSBuildProjectName.Contains('Test'))</IsTestProject>
             </PropertyGroup>
-            <ItemGroup Condition="'$(IsTestProject)' != 'true' and '$(SourceLinkEnabled)' != 'false'">
-                 <PackageReference Include="SourceLink.Create.CommandLine" Version="2.8.3" PrivateAssets="All" />
-            </ItemGroup>
             <ItemGroup Condition="'$(NoCommonAnalyzers)'!='true'">
-                <PackageReference Include="CSemVer.Build.Tasks" Version="2.0.1" />
-                <PackageReference Include="Ubiquity.ArgValidators" Version="6.0.1" />
-                <PackageReference Include="Microsoft.CodeAnalysis.FxCopAnalyzers" Version="2.9.2" PrivateAssets="All" />
-                <PackageReference Include="RefactoringEssentials" Version="5.6.0" PrivateAssets="All" />
-                <PackageReference Include="StyleCop.Analyzers" Version="1.1.118" PrivateAssets="All" />
                 <AdditionalFiles Include="$(MSBuildThisFileDirectory)stylecop.json" Link="stylecop.json" />
                 <None Include="$(MSBuildThisFileDirectory)Ubiquity.NET.ruleset" Link="Ubiquity.NET.ruleset" />
-            </ItemGroup>
-            <ItemGroup>
-                <PackageReference Include="CSemVer.Build.Tasks" Version="2.0.1" />
             </ItemGroup>
         </When>
         <When Condition="'$(MSBuildProjectExtension)'=='.vcxproj'">
