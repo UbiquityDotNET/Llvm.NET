@@ -7727,6 +7727,18 @@ references:
   commentId: Overload:Llvm.NET.Instructions.Instruction.ContainingBlock
   fullName: Llvm.NET.Instructions.Instruction.ContainingBlock
   nameWithType: Instruction.ContainingBlock
+- uid: Llvm.NET.Instructions.Instruction.HasMetadata
+  name: HasMetadata
+  href: api/Llvm.NET.Instructions.Instruction.HasMetadata.html#Llvm_NET_Instructions_Instruction_HasMetadata
+  commentId: P:Llvm.NET.Instructions.Instruction.HasMetadata
+  fullName: Llvm.NET.Instructions.Instruction.HasMetadata
+  nameWithType: Instruction.HasMetadata
+- uid: Llvm.NET.Instructions.Instruction.HasMetadata*
+  name: HasMetadata
+  href: api/Llvm.NET.Instructions.Instruction.HasMetadata.html
+  commentId: Overload:Llvm.NET.Instructions.Instruction.HasMetadata
+  fullName: Llvm.NET.Instructions.Instruction.HasMetadata
+  nameWithType: Instruction.HasMetadata
 - uid: Llvm.NET.Instructions.Instruction.IsMemoryAccess
   name: IsMemoryAccess
   href: api/Llvm.NET.Instructions.Instruction.IsMemoryAccess.html#Llvm_NET_Instructions_Instruction_IsMemoryAccess
@@ -7739,6 +7751,33 @@ references:
   commentId: Overload:Llvm.NET.Instructions.Instruction.IsMemoryAccess
   fullName: Llvm.NET.Instructions.Instruction.IsMemoryAccess
   nameWithType: Instruction.IsMemoryAccess
+- uid: Llvm.NET.Instructions.Instruction.Item(Llvm.NET.MetadataKind)
+  name: Item[MetadataKind]
+  href: api/Llvm.NET.Instructions.Instruction.Item.html#Llvm_NET_Instructions_Instruction_Item_Llvm_NET_MetadataKind_
+  commentId: P:Llvm.NET.Instructions.Instruction.Item(Llvm.NET.MetadataKind)
+  name.vb: Item(MetadataKind)
+  fullName: Llvm.NET.Instructions.Instruction.Item[Llvm.NET.MetadataKind]
+  fullName.vb: Llvm.NET.Instructions.Instruction.Item(Llvm.NET.MetadataKind)
+  nameWithType: Instruction.Item[MetadataKind]
+  nameWithType.vb: Instruction.Item(MetadataKind)
+- uid: Llvm.NET.Instructions.Instruction.Item*
+  name: Item
+  href: api/Llvm.NET.Instructions.Instruction.Item.html
+  commentId: Overload:Llvm.NET.Instructions.Instruction.Item
+  fullName: Llvm.NET.Instructions.Instruction.Item
+  nameWithType: Instruction.Item
+- uid: Llvm.NET.Instructions.Instruction.NonDebugLocMetadata
+  name: NonDebugLocMetadata
+  href: api/Llvm.NET.Instructions.Instruction.NonDebugLocMetadata.html#Llvm_NET_Instructions_Instruction_NonDebugLocMetadata
+  commentId: P:Llvm.NET.Instructions.Instruction.NonDebugLocMetadata
+  fullName: Llvm.NET.Instructions.Instruction.NonDebugLocMetadata
+  nameWithType: Instruction.NonDebugLocMetadata
+- uid: Llvm.NET.Instructions.Instruction.NonDebugLocMetadata*
+  name: NonDebugLocMetadata
+  href: api/Llvm.NET.Instructions.Instruction.NonDebugLocMetadata.html
+  commentId: Overload:Llvm.NET.Instructions.Instruction.NonDebugLocMetadata
+  fullName: Llvm.NET.Instructions.Instruction.NonDebugLocMetadata
+  nameWithType: Instruction.NonDebugLocMetadata
 - uid: Llvm.NET.Instructions.Instruction.Opcode
   name: Opcode
   href: api/Llvm.NET.Instructions.Instruction.Opcode.html#Llvm_NET_Instructions_Instruction_Opcode
@@ -11327,6 +11366,198 @@ references:
   commentId: Overload:Llvm.NET.Interop.LibLLVMMDOperandRef.Zero
   fullName: Llvm.NET.Interop.LibLLVMMDOperandRef.Zero
   nameWithType: LibLLVMMDOperandRef.Zero
+- uid: Llvm.NET.Interop.LibLLVMMetadataKind
+  name: LibLLVMMetadataKind
+  href: api/Llvm.NET.Interop.LibLLVMMetadataKind.html
+  commentId: T:Llvm.NET.Interop.LibLLVMMetadataKind
+  fullName: Llvm.NET.Interop.LibLLVMMetadataKind
+  nameWithType: LibLLVMMetadataKind
+- uid: Llvm.NET.Interop.LibLLVMMetadataKind.LibLLVMMetadataKind_ConstantAsMetadata
+  name: LibLLVMMetadataKind_ConstantAsMetadata
+  href: api/Llvm.NET.Interop.LibLLVMMetadataKind.html#Llvm_NET_Interop_LibLLVMMetadataKind_LibLLVMMetadataKind_ConstantAsMetadata
+  commentId: F:Llvm.NET.Interop.LibLLVMMetadataKind.LibLLVMMetadataKind_ConstantAsMetadata
+  fullName: Llvm.NET.Interop.LibLLVMMetadataKind.LibLLVMMetadataKind_ConstantAsMetadata
+  nameWithType: LibLLVMMetadataKind.LibLLVMMetadataKind_ConstantAsMetadata
+- uid: Llvm.NET.Interop.LibLLVMMetadataKind.LibLLVMMetadataKind_DIBasicType
+  name: LibLLVMMetadataKind_DIBasicType
+  href: api/Llvm.NET.Interop.LibLLVMMetadataKind.html#Llvm_NET_Interop_LibLLVMMetadataKind_LibLLVMMetadataKind_DIBasicType
+  commentId: F:Llvm.NET.Interop.LibLLVMMetadataKind.LibLLVMMetadataKind_DIBasicType
+  fullName: Llvm.NET.Interop.LibLLVMMetadataKind.LibLLVMMetadataKind_DIBasicType
+  nameWithType: LibLLVMMetadataKind.LibLLVMMetadataKind_DIBasicType
+- uid: Llvm.NET.Interop.LibLLVMMetadataKind.LibLLVMMetadataKind_DICompileUnit
+  name: LibLLVMMetadataKind_DICompileUnit
+  href: api/Llvm.NET.Interop.LibLLVMMetadataKind.html#Llvm_NET_Interop_LibLLVMMetadataKind_LibLLVMMetadataKind_DICompileUnit
+  commentId: F:Llvm.NET.Interop.LibLLVMMetadataKind.LibLLVMMetadataKind_DICompileUnit
+  fullName: Llvm.NET.Interop.LibLLVMMetadataKind.LibLLVMMetadataKind_DICompileUnit
+  nameWithType: LibLLVMMetadataKind.LibLLVMMetadataKind_DICompileUnit
+- uid: Llvm.NET.Interop.LibLLVMMetadataKind.LibLLVMMetadataKind_DICompositeType
+  name: LibLLVMMetadataKind_DICompositeType
+  href: api/Llvm.NET.Interop.LibLLVMMetadataKind.html#Llvm_NET_Interop_LibLLVMMetadataKind_LibLLVMMetadataKind_DICompositeType
+  commentId: F:Llvm.NET.Interop.LibLLVMMetadataKind.LibLLVMMetadataKind_DICompositeType
+  fullName: Llvm.NET.Interop.LibLLVMMetadataKind.LibLLVMMetadataKind_DICompositeType
+  nameWithType: LibLLVMMetadataKind.LibLLVMMetadataKind_DICompositeType
+- uid: Llvm.NET.Interop.LibLLVMMetadataKind.LibLLVMMetadataKind_DIDerivedType
+  name: LibLLVMMetadataKind_DIDerivedType
+  href: api/Llvm.NET.Interop.LibLLVMMetadataKind.html#Llvm_NET_Interop_LibLLVMMetadataKind_LibLLVMMetadataKind_DIDerivedType
+  commentId: F:Llvm.NET.Interop.LibLLVMMetadataKind.LibLLVMMetadataKind_DIDerivedType
+  fullName: Llvm.NET.Interop.LibLLVMMetadataKind.LibLLVMMetadataKind_DIDerivedType
+  nameWithType: LibLLVMMetadataKind.LibLLVMMetadataKind_DIDerivedType
+- uid: Llvm.NET.Interop.LibLLVMMetadataKind.LibLLVMMetadataKind_DIEnumerator
+  name: LibLLVMMetadataKind_DIEnumerator
+  href: api/Llvm.NET.Interop.LibLLVMMetadataKind.html#Llvm_NET_Interop_LibLLVMMetadataKind_LibLLVMMetadataKind_DIEnumerator
+  commentId: F:Llvm.NET.Interop.LibLLVMMetadataKind.LibLLVMMetadataKind_DIEnumerator
+  fullName: Llvm.NET.Interop.LibLLVMMetadataKind.LibLLVMMetadataKind_DIEnumerator
+  nameWithType: LibLLVMMetadataKind.LibLLVMMetadataKind_DIEnumerator
+- uid: Llvm.NET.Interop.LibLLVMMetadataKind.LibLLVMMetadataKind_DIExpression
+  name: LibLLVMMetadataKind_DIExpression
+  href: api/Llvm.NET.Interop.LibLLVMMetadataKind.html#Llvm_NET_Interop_LibLLVMMetadataKind_LibLLVMMetadataKind_DIExpression
+  commentId: F:Llvm.NET.Interop.LibLLVMMetadataKind.LibLLVMMetadataKind_DIExpression
+  fullName: Llvm.NET.Interop.LibLLVMMetadataKind.LibLLVMMetadataKind_DIExpression
+  nameWithType: LibLLVMMetadataKind.LibLLVMMetadataKind_DIExpression
+- uid: Llvm.NET.Interop.LibLLVMMetadataKind.LibLLVMMetadataKind_DIFile
+  name: LibLLVMMetadataKind_DIFile
+  href: api/Llvm.NET.Interop.LibLLVMMetadataKind.html#Llvm_NET_Interop_LibLLVMMetadataKind_LibLLVMMetadataKind_DIFile
+  commentId: F:Llvm.NET.Interop.LibLLVMMetadataKind.LibLLVMMetadataKind_DIFile
+  fullName: Llvm.NET.Interop.LibLLVMMetadataKind.LibLLVMMetadataKind_DIFile
+  nameWithType: LibLLVMMetadataKind.LibLLVMMetadataKind_DIFile
+- uid: Llvm.NET.Interop.LibLLVMMetadataKind.LibLLVMMetadataKind_DIGlobalVariable
+  name: LibLLVMMetadataKind_DIGlobalVariable
+  href: api/Llvm.NET.Interop.LibLLVMMetadataKind.html#Llvm_NET_Interop_LibLLVMMetadataKind_LibLLVMMetadataKind_DIGlobalVariable
+  commentId: F:Llvm.NET.Interop.LibLLVMMetadataKind.LibLLVMMetadataKind_DIGlobalVariable
+  fullName: Llvm.NET.Interop.LibLLVMMetadataKind.LibLLVMMetadataKind_DIGlobalVariable
+  nameWithType: LibLLVMMetadataKind.LibLLVMMetadataKind_DIGlobalVariable
+- uid: Llvm.NET.Interop.LibLLVMMetadataKind.LibLLVMMetadataKind_DIGlobalVariableExpression
+  name: LibLLVMMetadataKind_DIGlobalVariableExpression
+  href: api/Llvm.NET.Interop.LibLLVMMetadataKind.html#Llvm_NET_Interop_LibLLVMMetadataKind_LibLLVMMetadataKind_DIGlobalVariableExpression
+  commentId: F:Llvm.NET.Interop.LibLLVMMetadataKind.LibLLVMMetadataKind_DIGlobalVariableExpression
+  fullName: Llvm.NET.Interop.LibLLVMMetadataKind.LibLLVMMetadataKind_DIGlobalVariableExpression
+  nameWithType: LibLLVMMetadataKind.LibLLVMMetadataKind_DIGlobalVariableExpression
+- uid: Llvm.NET.Interop.LibLLVMMetadataKind.LibLLVMMetadataKind_DIImportedEntity
+  name: LibLLVMMetadataKind_DIImportedEntity
+  href: api/Llvm.NET.Interop.LibLLVMMetadataKind.html#Llvm_NET_Interop_LibLLVMMetadataKind_LibLLVMMetadataKind_DIImportedEntity
+  commentId: F:Llvm.NET.Interop.LibLLVMMetadataKind.LibLLVMMetadataKind_DIImportedEntity
+  fullName: Llvm.NET.Interop.LibLLVMMetadataKind.LibLLVMMetadataKind_DIImportedEntity
+  nameWithType: LibLLVMMetadataKind.LibLLVMMetadataKind_DIImportedEntity
+- uid: Llvm.NET.Interop.LibLLVMMetadataKind.LibLLVMMetadataKind_DILabel
+  name: LibLLVMMetadataKind_DILabel
+  href: api/Llvm.NET.Interop.LibLLVMMetadataKind.html#Llvm_NET_Interop_LibLLVMMetadataKind_LibLLVMMetadataKind_DILabel
+  commentId: F:Llvm.NET.Interop.LibLLVMMetadataKind.LibLLVMMetadataKind_DILabel
+  fullName: Llvm.NET.Interop.LibLLVMMetadataKind.LibLLVMMetadataKind_DILabel
+  nameWithType: LibLLVMMetadataKind.LibLLVMMetadataKind_DILabel
+- uid: Llvm.NET.Interop.LibLLVMMetadataKind.LibLLVMMetadataKind_DILexicalBlock
+  name: LibLLVMMetadataKind_DILexicalBlock
+  href: api/Llvm.NET.Interop.LibLLVMMetadataKind.html#Llvm_NET_Interop_LibLLVMMetadataKind_LibLLVMMetadataKind_DILexicalBlock
+  commentId: F:Llvm.NET.Interop.LibLLVMMetadataKind.LibLLVMMetadataKind_DILexicalBlock
+  fullName: Llvm.NET.Interop.LibLLVMMetadataKind.LibLLVMMetadataKind_DILexicalBlock
+  nameWithType: LibLLVMMetadataKind.LibLLVMMetadataKind_DILexicalBlock
+- uid: Llvm.NET.Interop.LibLLVMMetadataKind.LibLLVMMetadataKind_DILexicalBlockFile
+  name: LibLLVMMetadataKind_DILexicalBlockFile
+  href: api/Llvm.NET.Interop.LibLLVMMetadataKind.html#Llvm_NET_Interop_LibLLVMMetadataKind_LibLLVMMetadataKind_DILexicalBlockFile
+  commentId: F:Llvm.NET.Interop.LibLLVMMetadataKind.LibLLVMMetadataKind_DILexicalBlockFile
+  fullName: Llvm.NET.Interop.LibLLVMMetadataKind.LibLLVMMetadataKind_DILexicalBlockFile
+  nameWithType: LibLLVMMetadataKind.LibLLVMMetadataKind_DILexicalBlockFile
+- uid: Llvm.NET.Interop.LibLLVMMetadataKind.LibLLVMMetadataKind_DILocalVariable
+  name: LibLLVMMetadataKind_DILocalVariable
+  href: api/Llvm.NET.Interop.LibLLVMMetadataKind.html#Llvm_NET_Interop_LibLLVMMetadataKind_LibLLVMMetadataKind_DILocalVariable
+  commentId: F:Llvm.NET.Interop.LibLLVMMetadataKind.LibLLVMMetadataKind_DILocalVariable
+  fullName: Llvm.NET.Interop.LibLLVMMetadataKind.LibLLVMMetadataKind_DILocalVariable
+  nameWithType: LibLLVMMetadataKind.LibLLVMMetadataKind_DILocalVariable
+- uid: Llvm.NET.Interop.LibLLVMMetadataKind.LibLLVMMetadataKind_DILocation
+  name: LibLLVMMetadataKind_DILocation
+  href: api/Llvm.NET.Interop.LibLLVMMetadataKind.html#Llvm_NET_Interop_LibLLVMMetadataKind_LibLLVMMetadataKind_DILocation
+  commentId: F:Llvm.NET.Interop.LibLLVMMetadataKind.LibLLVMMetadataKind_DILocation
+  fullName: Llvm.NET.Interop.LibLLVMMetadataKind.LibLLVMMetadataKind_DILocation
+  nameWithType: LibLLVMMetadataKind.LibLLVMMetadataKind_DILocation
+- uid: Llvm.NET.Interop.LibLLVMMetadataKind.LibLLVMMetadataKind_DIMacro
+  name: LibLLVMMetadataKind_DIMacro
+  href: api/Llvm.NET.Interop.LibLLVMMetadataKind.html#Llvm_NET_Interop_LibLLVMMetadataKind_LibLLVMMetadataKind_DIMacro
+  commentId: F:Llvm.NET.Interop.LibLLVMMetadataKind.LibLLVMMetadataKind_DIMacro
+  fullName: Llvm.NET.Interop.LibLLVMMetadataKind.LibLLVMMetadataKind_DIMacro
+  nameWithType: LibLLVMMetadataKind.LibLLVMMetadataKind_DIMacro
+- uid: Llvm.NET.Interop.LibLLVMMetadataKind.LibLLVMMetadataKind_DIMacroFile
+  name: LibLLVMMetadataKind_DIMacroFile
+  href: api/Llvm.NET.Interop.LibLLVMMetadataKind.html#Llvm_NET_Interop_LibLLVMMetadataKind_LibLLVMMetadataKind_DIMacroFile
+  commentId: F:Llvm.NET.Interop.LibLLVMMetadataKind.LibLLVMMetadataKind_DIMacroFile
+  fullName: Llvm.NET.Interop.LibLLVMMetadataKind.LibLLVMMetadataKind_DIMacroFile
+  nameWithType: LibLLVMMetadataKind.LibLLVMMetadataKind_DIMacroFile
+- uid: Llvm.NET.Interop.LibLLVMMetadataKind.LibLLVMMetadataKind_DIModule
+  name: LibLLVMMetadataKind_DIModule
+  href: api/Llvm.NET.Interop.LibLLVMMetadataKind.html#Llvm_NET_Interop_LibLLVMMetadataKind_LibLLVMMetadataKind_DIModule
+  commentId: F:Llvm.NET.Interop.LibLLVMMetadataKind.LibLLVMMetadataKind_DIModule
+  fullName: Llvm.NET.Interop.LibLLVMMetadataKind.LibLLVMMetadataKind_DIModule
+  nameWithType: LibLLVMMetadataKind.LibLLVMMetadataKind_DIModule
+- uid: Llvm.NET.Interop.LibLLVMMetadataKind.LibLLVMMetadataKind_DINamespace
+  name: LibLLVMMetadataKind_DINamespace
+  href: api/Llvm.NET.Interop.LibLLVMMetadataKind.html#Llvm_NET_Interop_LibLLVMMetadataKind_LibLLVMMetadataKind_DINamespace
+  commentId: F:Llvm.NET.Interop.LibLLVMMetadataKind.LibLLVMMetadataKind_DINamespace
+  fullName: Llvm.NET.Interop.LibLLVMMetadataKind.LibLLVMMetadataKind_DINamespace
+  nameWithType: LibLLVMMetadataKind.LibLLVMMetadataKind_DINamespace
+- uid: Llvm.NET.Interop.LibLLVMMetadataKind.LibLLVMMetadataKind_DIObjCProperty
+  name: LibLLVMMetadataKind_DIObjCProperty
+  href: api/Llvm.NET.Interop.LibLLVMMetadataKind.html#Llvm_NET_Interop_LibLLVMMetadataKind_LibLLVMMetadataKind_DIObjCProperty
+  commentId: F:Llvm.NET.Interop.LibLLVMMetadataKind.LibLLVMMetadataKind_DIObjCProperty
+  fullName: Llvm.NET.Interop.LibLLVMMetadataKind.LibLLVMMetadataKind_DIObjCProperty
+  nameWithType: LibLLVMMetadataKind.LibLLVMMetadataKind_DIObjCProperty
+- uid: Llvm.NET.Interop.LibLLVMMetadataKind.LibLLVMMetadataKind_DistinctMDOperandPlaceholder
+  name: LibLLVMMetadataKind_DistinctMDOperandPlaceholder
+  href: api/Llvm.NET.Interop.LibLLVMMetadataKind.html#Llvm_NET_Interop_LibLLVMMetadataKind_LibLLVMMetadataKind_DistinctMDOperandPlaceholder
+  commentId: F:Llvm.NET.Interop.LibLLVMMetadataKind.LibLLVMMetadataKind_DistinctMDOperandPlaceholder
+  fullName: Llvm.NET.Interop.LibLLVMMetadataKind.LibLLVMMetadataKind_DistinctMDOperandPlaceholder
+  nameWithType: LibLLVMMetadataKind.LibLLVMMetadataKind_DistinctMDOperandPlaceholder
+- uid: Llvm.NET.Interop.LibLLVMMetadataKind.LibLLVMMetadataKind_DISubprogram
+  name: LibLLVMMetadataKind_DISubprogram
+  href: api/Llvm.NET.Interop.LibLLVMMetadataKind.html#Llvm_NET_Interop_LibLLVMMetadataKind_LibLLVMMetadataKind_DISubprogram
+  commentId: F:Llvm.NET.Interop.LibLLVMMetadataKind.LibLLVMMetadataKind_DISubprogram
+  fullName: Llvm.NET.Interop.LibLLVMMetadataKind.LibLLVMMetadataKind_DISubprogram
+  nameWithType: LibLLVMMetadataKind.LibLLVMMetadataKind_DISubprogram
+- uid: Llvm.NET.Interop.LibLLVMMetadataKind.LibLLVMMetadataKind_DISubrange
+  name: LibLLVMMetadataKind_DISubrange
+  href: api/Llvm.NET.Interop.LibLLVMMetadataKind.html#Llvm_NET_Interop_LibLLVMMetadataKind_LibLLVMMetadataKind_DISubrange
+  commentId: F:Llvm.NET.Interop.LibLLVMMetadataKind.LibLLVMMetadataKind_DISubrange
+  fullName: Llvm.NET.Interop.LibLLVMMetadataKind.LibLLVMMetadataKind_DISubrange
+  nameWithType: LibLLVMMetadataKind.LibLLVMMetadataKind_DISubrange
+- uid: Llvm.NET.Interop.LibLLVMMetadataKind.LibLLVMMetadataKind_DISubroutineType
+  name: LibLLVMMetadataKind_DISubroutineType
+  href: api/Llvm.NET.Interop.LibLLVMMetadataKind.html#Llvm_NET_Interop_LibLLVMMetadataKind_LibLLVMMetadataKind_DISubroutineType
+  commentId: F:Llvm.NET.Interop.LibLLVMMetadataKind.LibLLVMMetadataKind_DISubroutineType
+  fullName: Llvm.NET.Interop.LibLLVMMetadataKind.LibLLVMMetadataKind_DISubroutineType
+  nameWithType: LibLLVMMetadataKind.LibLLVMMetadataKind_DISubroutineType
+- uid: Llvm.NET.Interop.LibLLVMMetadataKind.LibLLVMMetadataKind_DITemplateTypeParameter
+  name: LibLLVMMetadataKind_DITemplateTypeParameter
+  href: api/Llvm.NET.Interop.LibLLVMMetadataKind.html#Llvm_NET_Interop_LibLLVMMetadataKind_LibLLVMMetadataKind_DITemplateTypeParameter
+  commentId: F:Llvm.NET.Interop.LibLLVMMetadataKind.LibLLVMMetadataKind_DITemplateTypeParameter
+  fullName: Llvm.NET.Interop.LibLLVMMetadataKind.LibLLVMMetadataKind_DITemplateTypeParameter
+  nameWithType: LibLLVMMetadataKind.LibLLVMMetadataKind_DITemplateTypeParameter
+- uid: Llvm.NET.Interop.LibLLVMMetadataKind.LibLLVMMetadataKind_DITemplateValueParameter
+  name: LibLLVMMetadataKind_DITemplateValueParameter
+  href: api/Llvm.NET.Interop.LibLLVMMetadataKind.html#Llvm_NET_Interop_LibLLVMMetadataKind_LibLLVMMetadataKind_DITemplateValueParameter
+  commentId: F:Llvm.NET.Interop.LibLLVMMetadataKind.LibLLVMMetadataKind_DITemplateValueParameter
+  fullName: Llvm.NET.Interop.LibLLVMMetadataKind.LibLLVMMetadataKind_DITemplateValueParameter
+  nameWithType: LibLLVMMetadataKind.LibLLVMMetadataKind_DITemplateValueParameter
+- uid: Llvm.NET.Interop.LibLLVMMetadataKind.LibLLVMMetadataKind_GenericDINode
+  name: LibLLVMMetadataKind_GenericDINode
+  href: api/Llvm.NET.Interop.LibLLVMMetadataKind.html#Llvm_NET_Interop_LibLLVMMetadataKind_LibLLVMMetadataKind_GenericDINode
+  commentId: F:Llvm.NET.Interop.LibLLVMMetadataKind.LibLLVMMetadataKind_GenericDINode
+  fullName: Llvm.NET.Interop.LibLLVMMetadataKind.LibLLVMMetadataKind_GenericDINode
+  nameWithType: LibLLVMMetadataKind.LibLLVMMetadataKind_GenericDINode
+- uid: Llvm.NET.Interop.LibLLVMMetadataKind.LibLLVMMetadataKind_LocalAsMetadata
+  name: LibLLVMMetadataKind_LocalAsMetadata
+  href: api/Llvm.NET.Interop.LibLLVMMetadataKind.html#Llvm_NET_Interop_LibLLVMMetadataKind_LibLLVMMetadataKind_LocalAsMetadata
+  commentId: F:Llvm.NET.Interop.LibLLVMMetadataKind.LibLLVMMetadataKind_LocalAsMetadata
+  fullName: Llvm.NET.Interop.LibLLVMMetadataKind.LibLLVMMetadataKind_LocalAsMetadata
+  nameWithType: LibLLVMMetadataKind.LibLLVMMetadataKind_LocalAsMetadata
+- uid: Llvm.NET.Interop.LibLLVMMetadataKind.LibLLVMMetadataKind_MDString
+  name: LibLLVMMetadataKind_MDString
+  href: api/Llvm.NET.Interop.LibLLVMMetadataKind.html#Llvm_NET_Interop_LibLLVMMetadataKind_LibLLVMMetadataKind_MDString
+  commentId: F:Llvm.NET.Interop.LibLLVMMetadataKind.LibLLVMMetadataKind_MDString
+  fullName: Llvm.NET.Interop.LibLLVMMetadataKind.LibLLVMMetadataKind_MDString
+  nameWithType: LibLLVMMetadataKind.LibLLVMMetadataKind_MDString
+- uid: Llvm.NET.Interop.LibLLVMMetadataKind.LibLLVMMetadataKind_MDTuple
+  name: LibLLVMMetadataKind_MDTuple
+  href: api/Llvm.NET.Interop.LibLLVMMetadataKind.html#Llvm_NET_Interop_LibLLVMMetadataKind_LibLLVMMetadataKind_MDTuple
+  commentId: F:Llvm.NET.Interop.LibLLVMMetadataKind.LibLLVMMetadataKind_MDTuple
+  fullName: Llvm.NET.Interop.LibLLVMMetadataKind.LibLLVMMetadataKind_MDTuple
+  nameWithType: LibLLVMMetadataKind.LibLLVMMetadataKind_MDTuple
 - uid: Llvm.NET.Interop.LibLLVMTripleArchType
   name: LibLLVMTripleArchType
   href: api/Llvm.NET.Interop.LibLLVMTripleArchType.html
@@ -19508,30 +19739,6 @@ references:
   commentId: Overload:Llvm.NET.Interop.NativeMethods.LibLLVMGetVersionInfo
   fullName: Llvm.NET.Interop.NativeMethods.LibLLVMGetVersionInfo
   nameWithType: NativeMethods.LibLLVMGetVersionInfo
-- uid: Llvm.NET.Interop.NativeMethods.LibLLVMGlobalObjectGetComdat(Llvm.NET.Interop.LLVMValueRef)
-  name: LibLLVMGlobalObjectGetComdat(LLVMValueRef)
-  href: api/Llvm.NET.Interop.NativeMethods.LibLLVMGlobalObjectGetComdat.html#Llvm_NET_Interop_NativeMethods_LibLLVMGlobalObjectGetComdat_Llvm_NET_Interop_LLVMValueRef_
-  commentId: M:Llvm.NET.Interop.NativeMethods.LibLLVMGlobalObjectGetComdat(Llvm.NET.Interop.LLVMValueRef)
-  fullName: Llvm.NET.Interop.NativeMethods.LibLLVMGlobalObjectGetComdat(Llvm.NET.Interop.LLVMValueRef)
-  nameWithType: NativeMethods.LibLLVMGlobalObjectGetComdat(LLVMValueRef)
-- uid: Llvm.NET.Interop.NativeMethods.LibLLVMGlobalObjectGetComdat*
-  name: LibLLVMGlobalObjectGetComdat
-  href: api/Llvm.NET.Interop.NativeMethods.LibLLVMGlobalObjectGetComdat.html
-  commentId: Overload:Llvm.NET.Interop.NativeMethods.LibLLVMGlobalObjectGetComdat
-  fullName: Llvm.NET.Interop.NativeMethods.LibLLVMGlobalObjectGetComdat
-  nameWithType: NativeMethods.LibLLVMGlobalObjectGetComdat
-- uid: Llvm.NET.Interop.NativeMethods.LibLLVMGlobalObjectSetComdat(Llvm.NET.Interop.LLVMValueRef,Llvm.NET.Interop.LLVMComdatRef)
-  name: LibLLVMGlobalObjectSetComdat(LLVMValueRef, LLVMComdatRef)
-  href: api/Llvm.NET.Interop.NativeMethods.LibLLVMGlobalObjectSetComdat.html#Llvm_NET_Interop_NativeMethods_LibLLVMGlobalObjectSetComdat_Llvm_NET_Interop_LLVMValueRef_Llvm_NET_Interop_LLVMComdatRef_
-  commentId: M:Llvm.NET.Interop.NativeMethods.LibLLVMGlobalObjectSetComdat(Llvm.NET.Interop.LLVMValueRef,Llvm.NET.Interop.LLVMComdatRef)
-  fullName: Llvm.NET.Interop.NativeMethods.LibLLVMGlobalObjectSetComdat(Llvm.NET.Interop.LLVMValueRef, Llvm.NET.Interop.LLVMComdatRef)
-  nameWithType: NativeMethods.LibLLVMGlobalObjectSetComdat(LLVMValueRef, LLVMComdatRef)
-- uid: Llvm.NET.Interop.NativeMethods.LibLLVMGlobalObjectSetComdat*
-  name: LibLLVMGlobalObjectSetComdat
-  href: api/Llvm.NET.Interop.NativeMethods.LibLLVMGlobalObjectSetComdat.html
-  commentId: Overload:Llvm.NET.Interop.NativeMethods.LibLLVMGlobalObjectSetComdat
-  fullName: Llvm.NET.Interop.NativeMethods.LibLLVMGlobalObjectSetComdat
-  nameWithType: NativeMethods.LibLLVMGlobalObjectSetComdat
 - uid: Llvm.NET.Interop.NativeMethods.LibLLVMGlobalVariableAddDebugExpression(Llvm.NET.Interop.LLVMValueRef,Llvm.NET.Interop.LLVMMetadataRef)
   name: LibLLVMGlobalVariableAddDebugExpression(LLVMValueRef, LLVMMetadataRef)
   href: api/Llvm.NET.Interop.NativeMethods.LibLLVMGlobalVariableAddDebugExpression.html#Llvm_NET_Interop_NativeMethods_LibLLVMGlobalVariableAddDebugExpression_Llvm_NET_Interop_LLVMValueRef_Llvm_NET_Interop_LLVMMetadataRef_
@@ -33721,6 +33928,18 @@ references:
   commentId: T:Llvm.NET.LlvmMetadata
   fullName: Llvm.NET.LlvmMetadata
   nameWithType: LlvmMetadata
+- uid: Llvm.NET.LlvmMetadata.Kind
+  name: Kind
+  href: api/Llvm.NET.LlvmMetadata.Kind.html#Llvm_NET_LlvmMetadata_Kind
+  commentId: P:Llvm.NET.LlvmMetadata.Kind
+  fullName: Llvm.NET.LlvmMetadata.Kind
+  nameWithType: LlvmMetadata.Kind
+- uid: Llvm.NET.LlvmMetadata.Kind*
+  name: Kind
+  href: api/Llvm.NET.LlvmMetadata.Kind.html
+  commentId: Overload:Llvm.NET.LlvmMetadata.Kind
+  fullName: Llvm.NET.LlvmMetadata.Kind
+  nameWithType: LlvmMetadata.Kind
 - uid: Llvm.NET.LlvmMetadata.ReplaceAllUsesWith(Llvm.NET.LlvmMetadata)
   name: ReplaceAllUsesWith(LlvmMetadata)
   href: api/Llvm.NET.LlvmMetadata.ReplaceAllUsesWith.html#Llvm_NET_LlvmMetadata_ReplaceAllUsesWith_Llvm_NET_LlvmMetadata_
@@ -33964,6 +34183,192 @@ references:
   commentId: T:Llvm.NET.MetadataAsValue
   fullName: Llvm.NET.MetadataAsValue
   nameWithType: MetadataAsValue
+- uid: Llvm.NET.MetadataKind
+  name: MetadataKind
+  href: api/Llvm.NET.MetadataKind.html
+  commentId: T:Llvm.NET.MetadataKind
+  fullName: Llvm.NET.MetadataKind
+  nameWithType: MetadataKind
+- uid: Llvm.NET.MetadataKind.ConstantAsMetadata
+  name: ConstantAsMetadata
+  href: api/Llvm.NET.MetadataKind.html#Llvm_NET_MetadataKind_ConstantAsMetadata
+  commentId: F:Llvm.NET.MetadataKind.ConstantAsMetadata
+  fullName: Llvm.NET.MetadataKind.ConstantAsMetadata
+  nameWithType: MetadataKind.ConstantAsMetadata
+- uid: Llvm.NET.MetadataKind.DIBasicType
+  name: DIBasicType
+  href: api/Llvm.NET.MetadataKind.html#Llvm_NET_MetadataKind_DIBasicType
+  commentId: F:Llvm.NET.MetadataKind.DIBasicType
+  fullName: Llvm.NET.MetadataKind.DIBasicType
+  nameWithType: MetadataKind.DIBasicType
+- uid: Llvm.NET.MetadataKind.DICompileUnit
+  name: DICompileUnit
+  href: api/Llvm.NET.MetadataKind.html#Llvm_NET_MetadataKind_DICompileUnit
+  commentId: F:Llvm.NET.MetadataKind.DICompileUnit
+  fullName: Llvm.NET.MetadataKind.DICompileUnit
+  nameWithType: MetadataKind.DICompileUnit
+- uid: Llvm.NET.MetadataKind.DICompositeType
+  name: DICompositeType
+  href: api/Llvm.NET.MetadataKind.html#Llvm_NET_MetadataKind_DICompositeType
+  commentId: F:Llvm.NET.MetadataKind.DICompositeType
+  fullName: Llvm.NET.MetadataKind.DICompositeType
+  nameWithType: MetadataKind.DICompositeType
+- uid: Llvm.NET.MetadataKind.DIDerivedType
+  name: DIDerivedType
+  href: api/Llvm.NET.MetadataKind.html#Llvm_NET_MetadataKind_DIDerivedType
+  commentId: F:Llvm.NET.MetadataKind.DIDerivedType
+  fullName: Llvm.NET.MetadataKind.DIDerivedType
+  nameWithType: MetadataKind.DIDerivedType
+- uid: Llvm.NET.MetadataKind.DIEnumerator
+  name: DIEnumerator
+  href: api/Llvm.NET.MetadataKind.html#Llvm_NET_MetadataKind_DIEnumerator
+  commentId: F:Llvm.NET.MetadataKind.DIEnumerator
+  fullName: Llvm.NET.MetadataKind.DIEnumerator
+  nameWithType: MetadataKind.DIEnumerator
+- uid: Llvm.NET.MetadataKind.DIExpression
+  name: DIExpression
+  href: api/Llvm.NET.MetadataKind.html#Llvm_NET_MetadataKind_DIExpression
+  commentId: F:Llvm.NET.MetadataKind.DIExpression
+  fullName: Llvm.NET.MetadataKind.DIExpression
+  nameWithType: MetadataKind.DIExpression
+- uid: Llvm.NET.MetadataKind.DIFile
+  name: DIFile
+  href: api/Llvm.NET.MetadataKind.html#Llvm_NET_MetadataKind_DIFile
+  commentId: F:Llvm.NET.MetadataKind.DIFile
+  fullName: Llvm.NET.MetadataKind.DIFile
+  nameWithType: MetadataKind.DIFile
+- uid: Llvm.NET.MetadataKind.DIGlobalVariable
+  name: DIGlobalVariable
+  href: api/Llvm.NET.MetadataKind.html#Llvm_NET_MetadataKind_DIGlobalVariable
+  commentId: F:Llvm.NET.MetadataKind.DIGlobalVariable
+  fullName: Llvm.NET.MetadataKind.DIGlobalVariable
+  nameWithType: MetadataKind.DIGlobalVariable
+- uid: Llvm.NET.MetadataKind.DIGlobalVariableExpression
+  name: DIGlobalVariableExpression
+  href: api/Llvm.NET.MetadataKind.html#Llvm_NET_MetadataKind_DIGlobalVariableExpression
+  commentId: F:Llvm.NET.MetadataKind.DIGlobalVariableExpression
+  fullName: Llvm.NET.MetadataKind.DIGlobalVariableExpression
+  nameWithType: MetadataKind.DIGlobalVariableExpression
+- uid: Llvm.NET.MetadataKind.DIImportedEntity
+  name: DIImportedEntity
+  href: api/Llvm.NET.MetadataKind.html#Llvm_NET_MetadataKind_DIImportedEntity
+  commentId: F:Llvm.NET.MetadataKind.DIImportedEntity
+  fullName: Llvm.NET.MetadataKind.DIImportedEntity
+  nameWithType: MetadataKind.DIImportedEntity
+- uid: Llvm.NET.MetadataKind.DILexicalBlock
+  name: DILexicalBlock
+  href: api/Llvm.NET.MetadataKind.html#Llvm_NET_MetadataKind_DILexicalBlock
+  commentId: F:Llvm.NET.MetadataKind.DILexicalBlock
+  fullName: Llvm.NET.MetadataKind.DILexicalBlock
+  nameWithType: MetadataKind.DILexicalBlock
+- uid: Llvm.NET.MetadataKind.DILexicalBlockFile
+  name: DILexicalBlockFile
+  href: api/Llvm.NET.MetadataKind.html#Llvm_NET_MetadataKind_DILexicalBlockFile
+  commentId: F:Llvm.NET.MetadataKind.DILexicalBlockFile
+  fullName: Llvm.NET.MetadataKind.DILexicalBlockFile
+  nameWithType: MetadataKind.DILexicalBlockFile
+- uid: Llvm.NET.MetadataKind.DILocalVariable
+  name: DILocalVariable
+  href: api/Llvm.NET.MetadataKind.html#Llvm_NET_MetadataKind_DILocalVariable
+  commentId: F:Llvm.NET.MetadataKind.DILocalVariable
+  fullName: Llvm.NET.MetadataKind.DILocalVariable
+  nameWithType: MetadataKind.DILocalVariable
+- uid: Llvm.NET.MetadataKind.DILocation
+  name: DILocation
+  href: api/Llvm.NET.MetadataKind.html#Llvm_NET_MetadataKind_DILocation
+  commentId: F:Llvm.NET.MetadataKind.DILocation
+  fullName: Llvm.NET.MetadataKind.DILocation
+  nameWithType: MetadataKind.DILocation
+- uid: Llvm.NET.MetadataKind.DIMacro
+  name: DIMacro
+  href: api/Llvm.NET.MetadataKind.html#Llvm_NET_MetadataKind_DIMacro
+  commentId: F:Llvm.NET.MetadataKind.DIMacro
+  fullName: Llvm.NET.MetadataKind.DIMacro
+  nameWithType: MetadataKind.DIMacro
+- uid: Llvm.NET.MetadataKind.DIMacroFile
+  name: DIMacroFile
+  href: api/Llvm.NET.MetadataKind.html#Llvm_NET_MetadataKind_DIMacroFile
+  commentId: F:Llvm.NET.MetadataKind.DIMacroFile
+  fullName: Llvm.NET.MetadataKind.DIMacroFile
+  nameWithType: MetadataKind.DIMacroFile
+- uid: Llvm.NET.MetadataKind.DIModule
+  name: DIModule
+  href: api/Llvm.NET.MetadataKind.html#Llvm_NET_MetadataKind_DIModule
+  commentId: F:Llvm.NET.MetadataKind.DIModule
+  fullName: Llvm.NET.MetadataKind.DIModule
+  nameWithType: MetadataKind.DIModule
+- uid: Llvm.NET.MetadataKind.DINamespace
+  name: DINamespace
+  href: api/Llvm.NET.MetadataKind.html#Llvm_NET_MetadataKind_DINamespace
+  commentId: F:Llvm.NET.MetadataKind.DINamespace
+  fullName: Llvm.NET.MetadataKind.DINamespace
+  nameWithType: MetadataKind.DINamespace
+- uid: Llvm.NET.MetadataKind.DIObjCProperty
+  name: DIObjCProperty
+  href: api/Llvm.NET.MetadataKind.html#Llvm_NET_MetadataKind_DIObjCProperty
+  commentId: F:Llvm.NET.MetadataKind.DIObjCProperty
+  fullName: Llvm.NET.MetadataKind.DIObjCProperty
+  nameWithType: MetadataKind.DIObjCProperty
+- uid: Llvm.NET.MetadataKind.DistinctMDOperandPlaceholder
+  name: DistinctMDOperandPlaceholder
+  href: api/Llvm.NET.MetadataKind.html#Llvm_NET_MetadataKind_DistinctMDOperandPlaceholder
+  commentId: F:Llvm.NET.MetadataKind.DistinctMDOperandPlaceholder
+  fullName: Llvm.NET.MetadataKind.DistinctMDOperandPlaceholder
+  nameWithType: MetadataKind.DistinctMDOperandPlaceholder
+- uid: Llvm.NET.MetadataKind.DISubprogram
+  name: DISubprogram
+  href: api/Llvm.NET.MetadataKind.html#Llvm_NET_MetadataKind_DISubprogram
+  commentId: F:Llvm.NET.MetadataKind.DISubprogram
+  fullName: Llvm.NET.MetadataKind.DISubprogram
+  nameWithType: MetadataKind.DISubprogram
+- uid: Llvm.NET.MetadataKind.DISubrange
+  name: DISubrange
+  href: api/Llvm.NET.MetadataKind.html#Llvm_NET_MetadataKind_DISubrange
+  commentId: F:Llvm.NET.MetadataKind.DISubrange
+  fullName: Llvm.NET.MetadataKind.DISubrange
+  nameWithType: MetadataKind.DISubrange
+- uid: Llvm.NET.MetadataKind.DISubroutineType
+  name: DISubroutineType
+  href: api/Llvm.NET.MetadataKind.html#Llvm_NET_MetadataKind_DISubroutineType
+  commentId: F:Llvm.NET.MetadataKind.DISubroutineType
+  fullName: Llvm.NET.MetadataKind.DISubroutineType
+  nameWithType: MetadataKind.DISubroutineType
+- uid: Llvm.NET.MetadataKind.DITemplateTypeParameter
+  name: DITemplateTypeParameter
+  href: api/Llvm.NET.MetadataKind.html#Llvm_NET_MetadataKind_DITemplateTypeParameter
+  commentId: F:Llvm.NET.MetadataKind.DITemplateTypeParameter
+  fullName: Llvm.NET.MetadataKind.DITemplateTypeParameter
+  nameWithType: MetadataKind.DITemplateTypeParameter
+- uid: Llvm.NET.MetadataKind.DITemplateValueParameter
+  name: DITemplateValueParameter
+  href: api/Llvm.NET.MetadataKind.html#Llvm_NET_MetadataKind_DITemplateValueParameter
+  commentId: F:Llvm.NET.MetadataKind.DITemplateValueParameter
+  fullName: Llvm.NET.MetadataKind.DITemplateValueParameter
+  nameWithType: MetadataKind.DITemplateValueParameter
+- uid: Llvm.NET.MetadataKind.GenericDINode
+  name: GenericDINode
+  href: api/Llvm.NET.MetadataKind.html#Llvm_NET_MetadataKind_GenericDINode
+  commentId: F:Llvm.NET.MetadataKind.GenericDINode
+  fullName: Llvm.NET.MetadataKind.GenericDINode
+  nameWithType: MetadataKind.GenericDINode
+- uid: Llvm.NET.MetadataKind.LocalAsMetadata
+  name: LocalAsMetadata
+  href: api/Llvm.NET.MetadataKind.html#Llvm_NET_MetadataKind_LocalAsMetadata
+  commentId: F:Llvm.NET.MetadataKind.LocalAsMetadata
+  fullName: Llvm.NET.MetadataKind.LocalAsMetadata
+  nameWithType: MetadataKind.LocalAsMetadata
+- uid: Llvm.NET.MetadataKind.MDString
+  name: MDString
+  href: api/Llvm.NET.MetadataKind.html#Llvm_NET_MetadataKind_MDString
+  commentId: F:Llvm.NET.MetadataKind.MDString
+  fullName: Llvm.NET.MetadataKind.MDString
+  nameWithType: MetadataKind.MDString
+- uid: Llvm.NET.MetadataKind.MDTuple
+  name: MDTuple
+  href: api/Llvm.NET.MetadataKind.html#Llvm_NET_MetadataKind_MDTuple
+  commentId: F:Llvm.NET.MetadataKind.MDTuple
+  fullName: Llvm.NET.MetadataKind.MDTuple
+  nameWithType: MetadataKind.MDTuple
 - uid: Llvm.NET.ModuleFlag
   name: ModuleFlag
   href: api/Llvm.NET.ModuleFlag.html
@@ -39053,6 +39458,18 @@ references:
   commentId: Overload:Llvm.NET.Values.GlobalObject.Comdat
   fullName: Llvm.NET.Values.GlobalObject.Comdat
   nameWithType: GlobalObject.Comdat
+- uid: Llvm.NET.Values.GlobalObject.Metadata
+  name: Metadata
+  href: api/Llvm.NET.Values.GlobalObject.Metadata.html#Llvm_NET_Values_GlobalObject_Metadata
+  commentId: P:Llvm.NET.Values.GlobalObject.Metadata
+  fullName: Llvm.NET.Values.GlobalObject.Metadata
+  nameWithType: GlobalObject.Metadata
+- uid: Llvm.NET.Values.GlobalObject.Metadata*
+  name: Metadata
+  href: api/Llvm.NET.Values.GlobalObject.Metadata.html
+  commentId: Overload:Llvm.NET.Values.GlobalObject.Metadata
+  fullName: Llvm.NET.Values.GlobalObject.Metadata
+  nameWithType: GlobalObject.Metadata
 - uid: Llvm.NET.Values.GlobalObject.Section
   name: Section
   href: api/Llvm.NET.Values.GlobalObject.Section.html#Llvm_NET_Values_GlobalObject_Section
@@ -39065,6 +39482,18 @@ references:
   commentId: Overload:Llvm.NET.Values.GlobalObject.Section
   fullName: Llvm.NET.Values.GlobalObject.Section
   nameWithType: GlobalObject.Section
+- uid: Llvm.NET.Values.GlobalObject.SetMetadata(System.UInt32,Llvm.NET.LlvmMetadata)
+  name: SetMetadata(UInt32, LlvmMetadata)
+  href: api/Llvm.NET.Values.GlobalObject.SetMetadata.html#Llvm_NET_Values_GlobalObject_SetMetadata_System_UInt32_Llvm_NET_LlvmMetadata_
+  commentId: M:Llvm.NET.Values.GlobalObject.SetMetadata(System.UInt32,Llvm.NET.LlvmMetadata)
+  fullName: Llvm.NET.Values.GlobalObject.SetMetadata(System.UInt32, Llvm.NET.LlvmMetadata)
+  nameWithType: GlobalObject.SetMetadata(UInt32, LlvmMetadata)
+- uid: Llvm.NET.Values.GlobalObject.SetMetadata*
+  name: SetMetadata
+  href: api/Llvm.NET.Values.GlobalObject.SetMetadata.html
+  commentId: Overload:Llvm.NET.Values.GlobalObject.SetMetadata
+  fullName: Llvm.NET.Values.GlobalObject.SetMetadata
+  nameWithType: GlobalObject.SetMetadata
 - uid: Llvm.NET.Values.GlobalObjectExtensions
   name: GlobalObjectExtensions
   href: api/Llvm.NET.Values.GlobalObjectExtensions.html
