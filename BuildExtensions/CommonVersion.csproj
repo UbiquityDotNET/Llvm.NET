@@ -1,4 +1,5 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
+    <Sdk Name="Microsoft.Build.CentralPackageVersions"/>
     <!--
     This Project is used by the build scripts in automated builds to generate version information used
     for all projects in the build.

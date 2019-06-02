@@ -1,5 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project Sdk="Microsoft.NET.Sdk">
+  <Sdk Name="Microsoft.Build.CentralPackageVersions"/>
   <PropertyGroup>
     <AssemblyVersion>0.0.1.0</AssemblyVersion>
     <TargetFrameworks>netcoreapp2.1;net47</TargetFrameworks>

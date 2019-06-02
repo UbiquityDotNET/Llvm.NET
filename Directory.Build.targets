@@ -1,5 +1,11 @@
 <Project>
   <!--
+    It is tempting to place the SDK ref here so that all the projects benefit from it
+    However, since this repo has C++ VCXPROJ projects, that doesn't work. It will pull
+    in requirements that break a VCXPROJ (or anything still stuck in the dark ages with Packages.config)
+    <Sdk Name="Microsoft.Build.CentralPackageVersions"/>
+  -->
+  <!--
   Since Nuget.config is configured to include the build output location this
   will ensure the folder exists during restore so that it won't fail.
   -->
