@@ -225,10 +225,10 @@ function Get-BuildPaths([string]$repoRoot)
 function Get-BuildInformation($buildPaths)
 {
     Write-Information "Restoring NuGet for $($buildPaths.GenerateVersionProj)"
-    Invoke-MSBuild -Targets Restore -Project $buildPaths.GenerateVersionProj -LoggerArgs $msbuildLoggerArgs
+    Invoke-MSBuild -Targets 'Restore' -Project $buildPaths.GenerateVersionProj -LoggerArgs ($msbuildLoggerArgs + @("/bl:GenerateVersion-Restore.binlog") )
 
-    Write-Information "Computing Build information"
-    Invoke-MSBuild -Targets GenerateVersionJson -Project $buildPaths.GenerateVersionProj -LoggerArgs $msbuildLoggerArgs
+    Write-Information "Generating version info from $($buildPaths.GenerateVersionProj)"
+    Invoke-MSBuild -Targets 'GenerateVersionJson' -Project $buildPaths.GenerateVersionProj -LoggerArgs ($msbuildLoggerArgs + @("/bl:GenerateVersion-Build.binlog") )
 
     $semVer = get-content (Join-Path $buildPaths.BuildOutputPath GeneratedVersion.json) | ConvertFrom-Json
 

@@ -1,4 +1,5 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
+  <Sdk Name="Microsoft.Build.CentralPackageVersions"/>
   <PropertyGroup>
     <OutputType>Exe</OutputType>
     <TargetFrameworks>net47;netcoreapp2.1</TargetFrameworks>

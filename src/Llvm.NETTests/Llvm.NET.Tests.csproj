@@ -1,6 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
-    <Sdk Name="Microsoft.Build.CentralPackageVersions" Version="2.0.1" />
-    <PropertyGroup>
+  <Sdk Name="Microsoft.Build.CentralPackageVersions"/>
+  <PropertyGroup>
       <TargetFrameworks>netcoreapp2.1;net47</TargetFrameworks>
       <IsPackable>false</IsPackable>
       <LangVersion>7.2</LangVersion>

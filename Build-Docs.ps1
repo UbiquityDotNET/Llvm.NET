@@ -1,7 +1,7 @@
 Param(
     [string]$Configuration="Release",
     [switch]$AllowVsPreReleases,
-    [switch]$NoClone,
+    [switch]$NoClone = (!($env:APPVEYOR)),
     [Parameter(ParameterSetName='FullBuild')]
     $BuildInfo
 )
@@ -72,8 +72,12 @@ try
         }
     }
 
+    # DocFX.console build support is peculiar and a bit fragile, It requires a separate restore path or it won't do anything for the build target.
+    Write-Information "Restoring Docs Project"
+    Invoke-MSBuild -Targets 'Restore' -Project docfx\Llvm.NET.DocFX.csproj -Properties $msBuildProperties -LoggerArgs $msbuildLoggerArgs ($msbuildLoggerArgs + @("/bl:Llvm.NET-docfx-Build.binlog") )
+
     Write-Information "Building Docs Project"
-    Invoke-MSBuild -Targets 'Restore;Build' -Project docfx\Llvm.NET.DocFX.csproj -Properties $msBuildProperties -LoggerArgs $msbuildLoggerArgs ($msbuildLoggerArgs + @("/bl:Llvm.NET-docfx.binlog") )
+    Invoke-MSBuild -Targets 'Build' -Project docfx\Llvm.NET.DocFX.csproj -Properties $msBuildProperties -LoggerArgs $msbuildLoggerArgs ($msbuildLoggerArgs + @("/bl:Llvm.NET-docfx-Build.binlog") )
 }
 finally
 {

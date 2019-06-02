@@ -356,16 +356,6 @@
         <param name="Val">TODO: Provide details of parameter Val</param>
         <returns>TODO: Document return value</returns>
     </Function>
-    <Function name="LibLLVMGlobalObjectGetComdat">
-        <summary>TODO: Provide summary for Function LibLLVMGlobalObjectGetComdat</summary>
-        <param name="Val">TODO: Provide details of parameter Val</param>
-        <returns>TODO: Document return value</returns>
-    </Function>
-    <Function name="LibLLVMGlobalObjectSetComdat">
-        <summary>TODO: Provide summary for Function LibLLVMGlobalObjectSetComdat</summary>
-        <param name="Val">TODO: Provide details of parameter Val</param>
-        <param name="comdatRef">TODO: Provide details of parameter comdatRef</param>
-    </Function>
     <Function name="LibLLVMGlobalVariableAddDebugExpression">
         <summary>TODO: Provide summary for Function LibLLVMGlobalVariableAddDebugExpression</summary>
         <param name="globalVar">TODO: Provide details of parameter globalVar</param>

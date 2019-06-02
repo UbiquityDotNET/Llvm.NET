@@ -86,26 +86,27 @@ try
                             LlvmVersion = $BuildInfo.LlvmVersion
                           }
 
-    # Need to invoke NuGet directly for restore of vcxproj as /t:Restore target doesn't support packages.config
-    # and PackageReference isn't supported for native projects... [Sigh...]
-    Write-Information "Restoring NuGet Packages"
-    Invoke-NuGet restore 'src\Interop\Interop.sln' -PackagesDirectory $buildPaths.NuGetRepositoryPath -Verbosity quiet
-
     Write-Information "Building LllvmBindingsGenerator"
     # manual restore needed so that the CppSharp libraries are available during the build phase as CppSharp NuGet package
     # is basically hostile to the newer SDK project format.
     Invoke-MSBuild -Targets 'Restore;Build' -Project 'src\Interop\LlvmBindingsGenerator\LlvmBindingsGenerator.csproj' -Properties $msBuildProperties -LoggerArgs ($msbuildLoggerArgs + @("/bl:LlvmBindingsGenerator.binlog") )
 
-    Write-Information "Generating P/Invoke Binding code"
+    Write-Information "Generating P/Invoke Bindings"
     & "$($buildPaths.BuildOutputPath)\bin\LlvmBindingsGenerator\Release\net47\LlvmBindingsGenerator.exe" $buildPaths.LlvmLibsRoot (Join-Path $buildPaths.SrcRoot 'Interop\LibLLVM') (Join-Path $buildPaths.SrcRoot 'Interop\Llvm.NET.Interop')
     if($LASTEXITCODE -eq 0)
     {
         # now build the projects that consume generated output for the bindings
+
+        # Need to invoke NuGet directly for restore of vcxproj as /t:Restore target doesn't support packages.config
+        # and PackageReference isn't supported for native projects... [Sigh...]
+        Write-Information "Restoring LibLLVM"
+        Invoke-NuGet restore 'src\Interop\LibLLVM\LibLLVM.vcxproj'
+
         Write-Information "Building LibLLVM"
-        Invoke-MSBuild -Targets Build -Project 'src\Interop\LibLLVM\LibLLVM.vcxproj' -Properties $msBuildProperties -LoggerArgs ($msbuildLoggerArgs + @("/bl:LibLLVM-build.binlog") )
+        Invoke-MSBuild -Targets 'Build' -Project 'src\Interop\LibLLVM\LibLLVM.vcxproj' -Properties $msBuildProperties -LoggerArgs ($msbuildLoggerArgs + @("/bl:LibLLVM.binlog") )
 
         Write-Information "Building Lllvm.NET.Interop"
-        Invoke-MSBuild -Targets Build -Project 'src\Interop\Llvm.NET.Interop\Llvm.NET.Interop.csproj' -Properties $msBuildProperties -LoggerArgs ($msbuildLoggerArgs + @("/bl:Llvm.NET.Interop.binlog") )
+        Invoke-MSBuild -Targets 'Restore;Build' -Project 'src\Interop\Llvm.NET.Interop\Llvm.NET.Interop.csproj' -Properties $msBuildProperties -LoggerArgs ($msbuildLoggerArgs + @("/bl:Llvm.NET.Interop.binlog") )
     }
     else
     {
