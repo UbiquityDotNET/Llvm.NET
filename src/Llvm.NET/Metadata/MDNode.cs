@@ -75,11 +75,13 @@ namespace Llvm.NET
                 throw new InvalidOperationException( Resources.Cannot_Replace_all_uses_of_a_null_descriptor );
             }
 
+            // grab the context before replacement as replace deletes and invalidates the node
+            var context = Context;
             LLVMMetadataReplaceAllUsesWith( MetadataHandle, other.MetadataHandle );
 
             // remove current node mapping from the context.
             // It won't be valid for use after clearing the handle
-            Context.RemoveDeletedNode( this );
+            context.RemoveDeletedNode( this );
             MetadataHandle = default;
         }
 

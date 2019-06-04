@@ -12,7 +12,6 @@ using Kaleidoscope.Grammar.AST;
 using Kaleidoscope.Runtime;
 using Llvm.NET;
 using Llvm.NET.Instructions;
-using Llvm.NET.JIT;
 using Llvm.NET.Transforms;
 using Llvm.NET.Values;
 
@@ -71,13 +70,13 @@ namespace Kaleidoscope.Chapter5
                 // claims to the contrary in the official tutorial text. (Though,
                 // to be fair it may have been true in the original JIT and might
                 // still be true for the interpreter)
-                if( FunctionModuleMap.Remove( definition.Name, out IJitModuleHandle handle ) )
+                if( FunctionModuleMap.Remove( definition.Name, out ulong handle ) )
                 {
                     JIT.RemoveModule( handle );
                 }
 
                 var function = ( IrFunction )definition.Accept( this );
-                var jitHandle = JIT.AddModule( function.ParentModule );
+                ulong jitHandle = JIT.AddModule( function.ParentModule );
                 if( definition.IsAnonymous )
                 {
                     var nativeFunc = JIT.GetFunctionDelegate<KaleidoscopeJIT.CallbackHandler0>( function.Name );
@@ -413,7 +412,7 @@ namespace Kaleidoscope.Chapter5
         private readonly bool DisableOptimizations;
         private BitcodeModule Module;
         private readonly KaleidoscopeJIT JIT = new KaleidoscopeJIT( );
-        private readonly Dictionary<string, IJitModuleHandle> FunctionModuleMap = new Dictionary<string, IJitModuleHandle>( );
+        private readonly Dictionary<string, ulong> FunctionModuleMap = new Dictionary<string, ulong>( );
         #endregion
     }
 }

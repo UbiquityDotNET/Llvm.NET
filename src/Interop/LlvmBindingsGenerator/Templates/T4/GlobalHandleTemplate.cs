@@ -120,8 +120,8 @@ namespace Llvm.NET.Interop
             
             #line default
             #line hidden
-            this.Write("( handle );\r\n            }\r\n            return true;\r\n        }\r\n\r\n        privat" +
-                    "e ");
+            this.Write("( prevHandle );\r\n            }\r\n            return true;\r\n        }\r\n\r\n        pr" +
+                    "ivate ");
             
             #line 57 "D:\GitHub\Ubiquity.NET\Llvm.Net\src\Interop\LlvmBindingsGenerator\Templates\T4\GlobalHandleTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(HandleName));

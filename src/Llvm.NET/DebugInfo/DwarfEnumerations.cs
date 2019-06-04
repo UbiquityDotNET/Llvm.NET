@@ -178,24 +178,26 @@ namespace Llvm.NET.DebugInfo
         Invalid = 0,
 
         // Encoding attribute values
-        Address = 0x01,
-        Boolean = 0x02,
-        ComplexFloat = 0x03,
-        Float = 0x04,
-        Signed = 0x05,
-        SignedChar = 0x06,
-        Unsigned = 0x07,
-        UnsignedChar = 0x08,
-        ImaginaryFloat = 0x09,
-        PackedDecimal = 0x0a,
-        NumericString = 0x0b,
-        Edited = 0x0c,
-        SignedFixed = 0x0d,
-        UnsignedFixed = 0x0e,
-        DecimalFloat = 0x0f,
-        UTF = 0x10,
-        LoUser = 0x80,
-        HiUser = 0xff
+        Address = LibLLVMDwarfAttributeEncoding.DW_ATE_address,
+        Boolean = LibLLVMDwarfAttributeEncoding.DW_ATE_boolean,
+        ComplexFloat = LibLLVMDwarfAttributeEncoding.DW_ATE_complex_float,
+        Float = LibLLVMDwarfAttributeEncoding.DW_ATE_float,
+        Signed = LibLLVMDwarfAttributeEncoding.DW_ATE_signed,
+        SignedChar = LibLLVMDwarfAttributeEncoding.DW_ATE_signed_char,
+        Unsigned = LibLLVMDwarfAttributeEncoding.DW_ATE_unsigned,
+        UnsignedChar = LibLLVMDwarfAttributeEncoding.DW_ATE_unsigned_char,
+        ImaginaryFloat = LibLLVMDwarfAttributeEncoding.DW_ATE_imaginary_float,
+        PackedDecimal = LibLLVMDwarfAttributeEncoding.DW_ATE_packed_decimal,
+        NumericString = LibLLVMDwarfAttributeEncoding.DW_ATE_numeric_string,
+        Edited = LibLLVMDwarfAttributeEncoding.DW_ATE_edited,
+        SignedFixed = LibLLVMDwarfAttributeEncoding.DW_ATE_signed_fixed,
+        UnsignedFixed = LibLLVMDwarfAttributeEncoding.DW_ATE_unsigned_fixed,
+        DecimalFloat = LibLLVMDwarfAttributeEncoding.DW_ATE_decimal_float,
+        UTF = LibLLVMDwarfAttributeEncoding.DW_ATE_UTF,
+        UCS = LibLLVMDwarfAttributeEncoding.DW_ATE_UCS,
+        ASCII = LibLLVMDwarfAttributeEncoding.DW_ATE_ASCII,
+        LoUser = LibLLVMDwarfAttributeEncoding.DW_ATE_lo_user,
+        HiUser = LibLLVMDwarfAttributeEncoding.DW_ATE_hi_user
     }
 
     /// <summary>Debug information flags</summary>
@@ -245,7 +247,6 @@ namespace Llvm.NET.DebugInfo
         PtrToMemberRep = LLVMDIFlags.LLVMDIFlagPtrToMemberRep
     }
 
-#pragma warning disable SA1300 // Element must begin with upper-case letter
     /// <summary>Debug information expression operator</summary>
     [SuppressMessage( "Microsoft.Design", "CA1028:EnumStorageShouldBeInt32", Justification = "Matches underlying interop type" )]
     public enum ExpressionOp : long
@@ -413,5 +414,4 @@ namespace Llvm.NET.DebugInfo
         GnuAddrIndex = 0xfb,
         GnuConstIndex = 0xfc
     }
-#pragma warning restore SA1300 // Element must begin with upper-case letter
 }

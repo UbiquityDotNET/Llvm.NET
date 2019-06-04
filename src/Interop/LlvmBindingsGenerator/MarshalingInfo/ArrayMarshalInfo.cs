@@ -11,13 +11,13 @@ using LlvmBindingsGenerator.CppSharpExtensions;
 
 namespace LlvmBindingsGenerator
 {
-    // [MarshalAs(UnmanagedType.LPArray, ArraySubType = UnmanagedType.I1)] =>IN
-    // [MarshalAs(UnmanagedType.LPArray, ArraySubType = UnmanagedType.I1, SizeParamIndex = n)] =>OUT,INOUT
+    // [MarshalAs(UnmanagedType.LPArray, ArraySubType = UnmanagedType.U1)] =>IN
+    // [MarshalAs(UnmanagedType.LPArray, ArraySubType = UnmanagedType.U1, SizeParamIndex = n)] =>OUT,INOUT
     internal class ArrayMarshalInfo
         : MarshalInfoBase
     {
         public ArrayMarshalInfo( string functionName, string paramName )
-            : this(functionName, paramName, UnmanagedType.I1, ParamSemantics.In, null )
+            : this(functionName, paramName, UnmanagedType.U1, ParamSemantics.In, null )
         {
         }
 
@@ -45,12 +45,7 @@ namespace LlvmBindingsGenerator
 
         public override QualifiedType TransformType( QualifiedType type )
         {
-            if( ElementMarshalType == UnmanagedType.I1 )
-            {
-                return new QualifiedType( new CILType( typeof( byte[ ] ) ) );
-            }
-
-            return new QualifiedType( new ArrayType( ) { QualifiedType = type } );
+            return new QualifiedType( new ArrayType( ) { QualifiedType = ( type.Type as PointerType ).QualifiedPointee } );
         }
 
         public override IEnumerable<CppSharp.AST.Attribute> Attributes
@@ -86,7 +81,7 @@ namespace LlvmBindingsGenerator
 
         private readonly TargetedAttribute Attrib;
 
-        private static readonly Attribute InAttribute = new TargetedAttribute( typeof( InAttribute ) );
-        private static readonly Attribute OutAttribute = new TargetedAttribute( typeof( OutAttribute ) );
+        private static readonly CppSharp.AST.Attribute InAttribute = new TargetedAttribute( typeof( InAttribute ) );
+        private static readonly CppSharp.AST.Attribute OutAttribute = new TargetedAttribute( typeof( OutAttribute ) );
     }
 }

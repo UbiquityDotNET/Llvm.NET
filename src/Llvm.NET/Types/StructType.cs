@@ -53,15 +53,7 @@ namespace Llvm.NET.Types
         public void SetBody( bool packed, params ITypeRef[ ] elements )
         {
             LLVMTypeRef[ ] llvmArgs = elements.Select( e => e.GetTypeRef() ).ToArray( );
-            uint argsLength = (uint)llvmArgs.Length;
-
-            // To interop correctly, we need to have an array of at least size one.
-            if ( argsLength == 0 )
-            {
-                llvmArgs = new LLVMTypeRef[ 1 ];
-            }
-
-            LLVMStructSetBody( TypeRefHandle, out llvmArgs[ 0 ], argsLength, packed );
+            LLVMStructSetBody( TypeRefHandle, llvmArgs, (uint)llvmArgs.Length, packed );
         }
 
         public string Name => LLVMGetStructName( TypeRefHandle );
@@ -80,7 +72,7 @@ namespace Llvm.NET.Types
                     uint count = LLVMCountStructElementTypes( TypeRefHandle );
                     if (count > 0)
                     {
-                        LLVMTypeRef[] structElements = new LLVMTypeRef[ count ];
+                        var structElements = new LLVMTypeRef[ count ];
                         LLVMGetStructElementTypes( TypeRefHandle, out structElements[ 0 ] );
                         members.AddRange( structElements.Select( FromHandle<ITypeRef> ) );
                     }

@@ -11,7 +11,7 @@ DEFINE_SIMPLE_CONVERSION_FUNCTIONS( MDOperand, LibLLVMMDOperandRef )
 
 template <typename DIT> DIT* unwrapDI( LLVMMetadataRef Ref )
 {
-    return ( DIT* )( Ref ? unwrap<MDNode>( Ref ) : nullptr );
+    return (DIT* )( Ref ? unwrap<MDNode>( Ref ) : nullptr );
 }
 
 static DINode::DIFlags map_from_llvmDIFlags( LLVMDIFlags Flags )
@@ -44,9 +44,9 @@ extern "C"
         return pSub->describes( unwrap<Function>( F ) );
     }
 
-    unsigned int LibLLVMDIBasicTypeGetEncoding( LLVMMetadataRef /*DIBasicType*/ basicType )
+    LibLLVMDwarfAttributeEncoding LibLLVMDIBasicTypeGetEncoding( LLVMMetadataRef /*DIBasicType*/ basicType )
     {
-        return unwrap<DIBasicType>( basicType )->getEncoding( );
+        return static_cast< LibLLVMDwarfAttributeEncoding >( unwrap<DIBasicType>( basicType )->getEncoding( ) );
     }
 
     void LibLLVMDIBuilderFinalizeSubProgram( LLVMDIBuilderRef dref, LLVMMetadataRef /*DISubProgram*/ subProgram )
@@ -57,10 +57,10 @@ extern "C"
     LLVMMetadataRef LibLLVMDILocation( LLVMContextRef context, unsigned Line, unsigned Column, LLVMMetadataRef scope, LLVMMetadataRef InlinedAt )
     {
         DILocation* pLoc = DILocation::get( *unwrap( context )
-                                           , Line
-                                           , Column
-                                           , unwrap<DILocalScope>( scope )
-                                           , InlinedAt ? unwrap<DILocation>( InlinedAt ) : nullptr
+                                            , Line
+                                            , Column
+                                            , unwrap<DILocalScope>( scope )
+                                            , InlinedAt ? unwrap<DILocation>( InlinedAt ) : nullptr
         );
         return wrap( pLoc );
     }
@@ -80,23 +80,23 @@ extern "C"
     LibLLVMDwarfTag LibLLVMDIDescriptorGetTag( LLVMMetadataRef descriptor )
     {
         DINode* desc = unwrap<DINode>( descriptor );
-        return ( LibLLVMDwarfTag )desc->getTag( );
+        return (LibLLVMDwarfTag )desc->getTag( );
     }
 
     LLVMMetadataRef LibLLVMDIBuilderCreateTempFunctionFwdDecl( LLVMDIBuilderRef Builder
-                                                            , LLVMMetadataRef /*DIScope* */Scope
-                                                            , char const* Name
-                                                            , size_t NameLen
-                                                            , char const* LinkageName
-                                                            , size_t LinkageNameLen
-                                                            , LLVMMetadataRef /*DIFile* */ File
-                                                            , unsigned LineNo
-                                                            , LLVMMetadataRef /*DISubroutineType* */ Ty
-                                                            , LLVMBool isLocalToUnit
-                                                            , LLVMBool isDefinition
-                                                            , unsigned ScopeLine
-                                                            , LLVMDIFlags Flags /*= 0*/
-                                                            , LLVMBool isOptimized /*= false*/
+                                                               , LLVMMetadataRef /*DIScope* */Scope
+                                                               , char const* Name
+                                                               , size_t NameLen
+                                                               , char const* LinkageName
+                                                               , size_t LinkageNameLen
+                                                               , LLVMMetadataRef /*DIFile* */ File
+                                                               , unsigned LineNo
+                                                               , LLVMMetadataRef /*DISubroutineType* */ Ty
+                                                               , LLVMBool isLocalToUnit
+                                                               , LLVMBool isDefinition
+                                                               , unsigned ScopeLine
+                                                               , LLVMDIFlags Flags /*= 0*/
+                                                               , LLVMBool isOptimized /*= false*/
     )
     {
         return wrap( unwrap( Builder )->createTempFunctionFwdDecl(
@@ -209,8 +209,8 @@ extern "C"
     }
 
     LLVMMetadataRef LibLLVMMDNode2( LLVMContextRef C
-                                 , LLVMMetadataRef* MDs
-                                 , unsigned Count
+                                    , LLVMMetadataRef* MDs
+                                    , unsigned Count
     )
     {
         auto node = MDNode::get( *unwrap( C )
@@ -220,8 +220,8 @@ extern "C"
     }
 
     void LibLLVMAddNamedMetadataOperand2( LLVMModuleRef M
-                                       , char const* name
-                                       , LLVMMetadataRef Val
+                                          , char const* name
+                                          , LLVMMetadataRef Val
     )
     {
         NamedMDNode* N = unwrap( M )->getOrInsertNamedMetadata( name );

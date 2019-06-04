@@ -1,6 +1,6 @@
 {
     "sdk": {
-        "version": "2.1.300"
+        "version": "2.2.200"
     },
     "msbuild-sdks": {
         "Microsoft.Build.NoTargets": "1.0.53",

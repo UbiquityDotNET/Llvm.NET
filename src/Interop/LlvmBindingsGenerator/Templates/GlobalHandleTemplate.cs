@@ -4,8 +4,6 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
-using System;
-
 namespace LlvmBindingsGenerator.Templates
 {
     internal partial class GlobalHandleTemplate
@@ -18,7 +16,7 @@ namespace LlvmBindingsGenerator.Templates
             NeedsAlias = needsAlias;
         }
 
-        public Version ToolVersion => GetType( ).Assembly.GetName( ).Version;
+        public string ToolVersion => GetType( ).Assembly.GetAssemblyInformationalVersion( );
 
         public string HandleName { get; }
 

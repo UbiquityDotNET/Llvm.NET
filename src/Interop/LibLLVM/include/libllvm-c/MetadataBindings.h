@@ -8,6 +8,13 @@
 #ifdef __cplusplus
 extern "C" {
 #endif
+    typedef enum LibLLVMDwarfAttributeEncoding
+    {
+#define HANDLE_DW_ATE(ID, NAME, VERSION, VENDOR) DW_ATE_##NAME = ID,
+#include "llvm/BinaryFormat/Dwarf.def"
+        DW_ATE_lo_user = 0x80,
+        DW_ATE_hi_user = 0xff
+    } LibLLVMDwarfAttributeEncoding;
 
     typedef enum LibLLVMDwarfTag
     {
@@ -26,7 +33,7 @@ extern "C" {
 
     typedef struct LLVMOpaqueMDOperand* LibLLVMMDOperandRef;
 
-    unsigned int LibLLVMDIBasicTypeGetEncoding( LLVMMetadataRef /*DIBasicType*/ basicType );
+    LibLLVMDwarfAttributeEncoding LibLLVMDIBasicTypeGetEncoding( LLVMMetadataRef /*DIBasicType*/ basicType );
     LLVMBool LibLLVMSubProgramDescribes( LLVMMetadataRef subProgram, LLVMValueRef /*const Function **/F );
     LLVMContextRef LibLLVMGetNodeContext( LLVMMetadataRef /*MDNode*/ node );
 

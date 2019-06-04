@@ -529,8 +529,8 @@ namespace Llvm.NET
         /// common non-canonical forms of triples.
         /// </remarks>
         public Triple( string tripleTxt )
+            : this( LibLLVMParseTriple( tripleTxt ) )
         {
-            TripleHandle = LibLLVMParseTriple( tripleTxt );
         }
 
         /// <summary>Retrieves the final string form of the triple</summary>

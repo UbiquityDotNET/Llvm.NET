@@ -1,0 +1,14 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <Sdk Name="Microsoft.Build.CentralPackageVersions"/>
+  <PropertyGroup>
+      <TargetFramework>net47</TargetFramework>
+      <IsPackable>false</IsPackable>
+      <LangVersion>7.2</LangVersion>
+  </PropertyGroup>
+  <ItemGroup>
+      <PackageReference Include="Microsoft.NET.Test.Sdk" />
+      <PackageReference Include="MSTest.TestFramework" />
+      <PackageReference Include="MSTest.TestAdapter" />
+      <PackageReference Include="Llvm.NET.Interop" VersionOverride="[8.0.0-*,9)" />
+  </ItemGroup>
+</Project>

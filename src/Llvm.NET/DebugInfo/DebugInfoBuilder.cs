@@ -468,13 +468,7 @@ namespace Llvm.NET.DebugInfo
         public DITypeArray CreateTypeArray( IEnumerable<DIType> types )
         {
             var handles = types.Select( t => t.MetadataHandle ).ToArray( );
-            long count = handles.LongLength;
-            if( count == 0 )
-            {
-                handles = new[ ] { default( LLVMMetadataRef ) };
-            }
-
-            var handle = LLVMDIBuilderGetOrCreateTypeArray( BuilderHandle, out handles[ 0 ], ( UInt64 )count );
+            var handle = LLVMDIBuilderGetOrCreateTypeArray( BuilderHandle, handles, handles.LongLength );
             return new DITypeArray( MDNode.FromHandle<MDTuple>( handle ) );
         }
 
@@ -895,13 +889,7 @@ namespace Llvm.NET.DebugInfo
             var buf = elements.Select( d => d?.MetadataHandle ?? default ).ToArray( );
             long actualLen = buf.LongLength;
 
-            // for the out parameter trick to work - need to have a valid array with at least one element
-            if( buf.LongLength == 0 )
-            {
-                buf = new LLVMMetadataRef[ 1 ];
-            }
-
-            var handle = LLVMDIBuilderGetOrCreateArray( BuilderHandle, out buf[ 0 ], ( UInt64 )actualLen );
+            var handle = LLVMDIBuilderGetOrCreateArray( BuilderHandle, buf, buf.LongLength );
             return new DINodeArray( LlvmMetadata.FromHandle<MDTuple>( OwningModule.Context, handle ) );
         }
 
@@ -916,7 +904,7 @@ namespace Llvm.NET.DebugInfo
         public DITypeArray GetOrCreateTypeArray( IEnumerable<DIType> types )
         {
             var buf = types.Select( t => t?.MetadataHandle ?? default ).ToArray( );
-            var handle = LLVMDIBuilderGetOrCreateTypeArray( BuilderHandle, out buf[ 0 ], ( UInt64 )buf.LongLength );
+            var handle = LLVMDIBuilderGetOrCreateTypeArray( BuilderHandle, buf, buf.LongLength );
             return new DITypeArray( MDNode.FromHandle<MDTuple>( handle ) );
         }
 
@@ -1344,13 +1332,7 @@ namespace Llvm.NET.DebugInfo
         public DIExpression CreateExpression( IEnumerable<ExpressionOp> operations )
         {
             long[ ] args = operations.Cast<long>( ).ToArray( );
-            long actualCount = args.LongLength;
-            if( args.Length == 0 )
-            {
-                args = new long[ 1 ];
-            }
-
-            var handle = LLVMDIBuilderCreateExpression( BuilderHandle, out args[ 0 ], size_t.FromInt64( actualCount ) );
+            var handle = LLVMDIBuilderCreateExpression( BuilderHandle, args, args.LongLength );
             return new DIExpression( handle );
         }
 
@@ -1410,8 +1392,8 @@ namespace Llvm.NET.DebugInfo
         {
             owningModule.ValidateNotNull( nameof( owningModule ) );
             BuilderHandle = allowUnresolved
-                ? LLVMCreateDIBuilderDisallowUnresolved( owningModule.ModuleHandle )
-                : LLVMCreateDIBuilder( owningModule.ModuleHandle );
+                ? LLVMCreateDIBuilder( owningModule.ModuleHandle )
+                : LLVMCreateDIBuilderDisallowUnresolved( owningModule.ModuleHandle );
 
             OwningModule = owningModule;
         }

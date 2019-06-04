@@ -11,354 +11,355 @@
 -->
 <LibLlvmAPI>
     <Enumeration name="LibLLVMDwarfTag">
-        <summary>TODO: Provide summary for LibLLVMDwarfTag Enumeration</summary>
+        <summary>Enumeration for DWARF debug information tags</summary>
+        <remarks>For full details of the tags and their meanings see the <see href="http://dwarfstd.org/">DWARF</see> specifications</remarks>
         <Item name="LibLLVMDwarfTagnull">
-            <summary>TODO: Provide summary for LibLLVMDwarfTag.LibLLVMDwarfTagnull Enumeration</summary>
+            <summary>Null/Invalid tag</summary>
         </Item>
         <Item name="LibLLVMDwarfTagarray_type">
-            <summary>TODO: Provide summary for LibLLVMDwarfTag.LibLLVMDwarfTagarray_type Enumeration</summary>
+            <summary>DW_TAG_array_type</summary>
         </Item>
         <Item name="LibLLVMDwarfTagclass_type">
-            <summary>TODO: Provide summary for LibLLVMDwarfTag.LibLLVMDwarfTagclass_type Enumeration</summary>
+            <summary>DW_TAG_class_type</summary>
         </Item>
         <Item name="LibLLVMDwarfTagentry_point">
-            <summary>TODO: Provide summary for LibLLVMDwarfTag.LibLLVMDwarfTagentry_point Enumeration</summary>
+            <summary>DW_TAG_entry_point</summary>
         </Item>
         <Item name="LibLLVMDwarfTagenumeration_type">
-            <summary>TODO: Provide summary for LibLLVMDwarfTag.LibLLVMDwarfTagenumeration_type Enumeration</summary>
+            <summary>DW_TAG_enumeration_type</summary>
         </Item>
         <Item name="LibLLVMDwarfTagformal_parameter">
-            <summary>TODO: Provide summary for LibLLVMDwarfTag.LibLLVMDwarfTagformal_parameter Enumeration</summary>
+            <summary>DW_TAG_formal_parameter</summary>
         </Item>
         <Item name="LibLLVMDwarfTagimported_declaration">
-            <summary>TODO: Provide summary for LibLLVMDwarfTag.LibLLVMDwarfTagimported_declaration Enumeration</summary>
+            <summary>DW_TAG_imported_declaration</summary>
         </Item>
         <Item name="LibLLVMDwarfTaglabel">
-            <summary>TODO: Provide summary for LibLLVMDwarfTag.LibLLVMDwarfTaglabel Enumeration</summary>
+            <summary>DW_TAG_label</summary>
         </Item>
         <Item name="LibLLVMDwarfTaglexical_block">
-            <summary>TODO: Provide summary for LibLLVMDwarfTag.LibLLVMDwarfTaglexical_block Enumeration</summary>
+            <summary>DW_TAG_lexical_block</summary>
         </Item>
         <Item name="LibLLVMDwarfTagmember">
-            <summary>TODO: Provide summary for LibLLVMDwarfTag.LibLLVMDwarfTagmember Enumeration</summary>
+            <summary>DW_TAG_member</summary>
         </Item>
         <Item name="LibLLVMDwarfTagpointer_type">
-            <summary>TODO: Provide summary for LibLLVMDwarfTag.LibLLVMDwarfTagpointer_type Enumeration</summary>
+            <summary>DW_TAG_pointer_type</summary>
         </Item>
         <Item name="LibLLVMDwarfTagreference_type">
-            <summary>TODO: Provide summary for LibLLVMDwarfTag.LibLLVMDwarfTagreference_type Enumeration</summary>
+            <summary>DW_TAG_reference_type</summary>
         </Item>
         <Item name="LibLLVMDwarfTagcompile_unit">
-            <summary>TODO: Provide summary for LibLLVMDwarfTag.LibLLVMDwarfTagcompile_unit Enumeration</summary>
+            <summary>DW_TAG_compile_unit</summary>
         </Item>
         <Item name="LibLLVMDwarfTagstring_type">
-            <summary>TODO: Provide summary for LibLLVMDwarfTag.LibLLVMDwarfTagstring_type Enumeration</summary>
+            <summary>DW_TAG_string_type</summary>
         </Item>
         <Item name="LibLLVMDwarfTagstructure_type">
-            <summary>TODO: Provide summary for LibLLVMDwarfTag.LibLLVMDwarfTagstructure_type Enumeration</summary>
+            <summary>DW_TAG_structure_type</summary>
         </Item>
         <Item name="LibLLVMDwarfTagsubroutine_type">
-            <summary>TODO: Provide summary for LibLLVMDwarfTag.LibLLVMDwarfTagsubroutine_type Enumeration</summary>
+            <summary>DW_TAG_subroutine_type</summary>
         </Item>
         <Item name="LibLLVMDwarfTagtypedef">
-            <summary>TODO: Provide summary for LibLLVMDwarfTag.LibLLVMDwarfTagtypedef Enumeration</summary>
+            <summary>DW_TAG_typedef</summary>
         </Item>
         <Item name="LibLLVMDwarfTagunion_type">
-            <summary>TODO: Provide summary for LibLLVMDwarfTag.LibLLVMDwarfTagunion_type Enumeration</summary>
+            <summary>DW_TAG_union_type</summary>
         </Item>
         <Item name="LibLLVMDwarfTagunspecified_parameters">
-            <summary>TODO: Provide summary for LibLLVMDwarfTag.LibLLVMDwarfTagunspecified_parameters Enumeration</summary>
+            <summary>DW_TAG_unspecified_parameters</summary>
         </Item>
         <Item name="LibLLVMDwarfTagvariant">
-            <summary>TODO: Provide summary for LibLLVMDwarfTag.LibLLVMDwarfTagvariant Enumeration</summary>
+            <summary>DW_TAG_variant</summary>
         </Item>
         <Item name="LibLLVMDwarfTagcommon_block">
-            <summary>TODO: Provide summary for LibLLVMDwarfTag.LibLLVMDwarfTagcommon_block Enumeration</summary>
+            <summary>DW_TAG_common_block</summary>
         </Item>
         <Item name="LibLLVMDwarfTagcommon_inclusion">
-            <summary>TODO: Provide summary for LibLLVMDwarfTag.LibLLVMDwarfTagcommon_inclusion Enumeration</summary>
+            <summary>DW_TAG_common_inclusion</summary>
         </Item>
         <Item name="LibLLVMDwarfTaginheritance">
-            <summary>TODO: Provide summary for LibLLVMDwarfTag.LibLLVMDwarfTaginheritance Enumeration</summary>
+            <summary>DW_TAG_inheritance</summary>
         </Item>
         <Item name="LibLLVMDwarfTaginlined_subroutine">
-            <summary>TODO: Provide summary for LibLLVMDwarfTag.LibLLVMDwarfTaginlined_subroutine Enumeration</summary>
+            <summary>DW_TAG_inlined_subroutine</summary>
         </Item>
         <Item name="LibLLVMDwarfTagmodule">
-            <summary>TODO: Provide summary for LibLLVMDwarfTag.LibLLVMDwarfTagmodule Enumeration</summary>
+            <summary>DW_TAG_module</summary>
         </Item>
         <Item name="LibLLVMDwarfTagptr_to_member_type">
-            <summary>TODO: Provide summary for LibLLVMDwarfTag.LibLLVMDwarfTagptr_to_member_type Enumeration</summary>
+            <summary>DW_TAG_ptr_to_member_type</summary>
         </Item>
         <Item name="LibLLVMDwarfTagset_type">
-            <summary>TODO: Provide summary for LibLLVMDwarfTag.LibLLVMDwarfTagset_type Enumeration</summary>
+            <summary>DW_TAG_et_type</summary>
         </Item>
         <Item name="LibLLVMDwarfTagsubrange_type">
-            <summary>TODO: Provide summary for LibLLVMDwarfTag.LibLLVMDwarfTagsubrange_type Enumeration</summary>
+            <summary>DW_TAG_ubrange_type</summary>
         </Item>
         <Item name="LibLLVMDwarfTagwith_stmt">
-            <summary>TODO: Provide summary for LibLLVMDwarfTag.LibLLVMDwarfTagwith_stmt Enumeration</summary>
+            <summary>DW_TAG_with_stmt</summary>
         </Item>
         <Item name="LibLLVMDwarfTagaccess_declaration">
-            <summary>TODO: Provide summary for LibLLVMDwarfTag.LibLLVMDwarfTagaccess_declaration Enumeration</summary>
+            <summary>DW_TAG_access_declaration</summary>
         </Item>
         <Item name="LibLLVMDwarfTagbase_type">
-            <summary>TODO: Provide summary for LibLLVMDwarfTag.LibLLVMDwarfTagbase_type Enumeration</summary>
+            <summary>DW_TAG_base_type</summary>
         </Item>
         <Item name="LibLLVMDwarfTagcatch_block">
-            <summary>TODO: Provide summary for LibLLVMDwarfTag.LibLLVMDwarfTagcatch_block Enumeration</summary>
+            <summary>DW_TAG_catch_block</summary>
         </Item>
         <Item name="LibLLVMDwarfTagconst_type">
-            <summary>TODO: Provide summary for LibLLVMDwarfTag.LibLLVMDwarfTagconst_type Enumeration</summary>
+            <summary>DW_TAG_const_type</summary>
         </Item>
         <Item name="LibLLVMDwarfTagconstant">
-            <summary>TODO: Provide summary for LibLLVMDwarfTag.LibLLVMDwarfTagconstant Enumeration</summary>
+            <summary>DW_TAG_constant</summary>
         </Item>
         <Item name="LibLLVMDwarfTagenumerator">
-            <summary>TODO: Provide summary for LibLLVMDwarfTag.LibLLVMDwarfTagenumerator Enumeration</summary>
+            <summary>DW_TAG_enumerator</summary>
         </Item>
         <Item name="LibLLVMDwarfTagfile_type">
-            <summary>TODO: Provide summary for LibLLVMDwarfTag.LibLLVMDwarfTagfile_type Enumeration</summary>
+            <summary>DW_TAG_file_type</summary>
         </Item>
         <Item name="LibLLVMDwarfTagfriend">
-            <summary>TODO: Provide summary for LibLLVMDwarfTag.LibLLVMDwarfTagfriend Enumeration</summary>
+            <summary>DW_TAG_friend</summary>
         </Item>
         <Item name="LibLLVMDwarfTagnamelist">
-            <summary>TODO: Provide summary for LibLLVMDwarfTag.LibLLVMDwarfTagnamelist Enumeration</summary>
+            <summary>DW_TAG_namelist</summary>
         </Item>
         <Item name="LibLLVMDwarfTagnamelist_item">
-            <summary>TODO: Provide summary for LibLLVMDwarfTag.LibLLVMDwarfTagnamelist_item Enumeration</summary>
+            <summary>DW_TAG_namelist_item</summary>
         </Item>
         <Item name="LibLLVMDwarfTagpacked_type">
-            <summary>TODO: Provide summary for LibLLVMDwarfTag.LibLLVMDwarfTagpacked_type Enumeration</summary>
+            <summary>DW_TAG_packed_type</summary>
         </Item>
         <Item name="LibLLVMDwarfTagsubprogram">
-            <summary>TODO: Provide summary for LibLLVMDwarfTag.LibLLVMDwarfTagsubprogram Enumeration</summary>
+            <summary>DW_TAG_ubprogram</summary>
         </Item>
         <Item name="LibLLVMDwarfTagtemplate_type_parameter">
-            <summary>TODO: Provide summary for LibLLVMDwarfTag.LibLLVMDwarfTagtemplate_type_parameter Enumeration</summary>
+            <summary>DW_TAG_template_type_parameter</summary>
         </Item>
         <Item name="LibLLVMDwarfTagtemplate_value_parameter">
-            <summary>TODO: Provide summary for LibLLVMDwarfTag.LibLLVMDwarfTagtemplate_value_parameter Enumeration</summary>
+            <summary>DW_TAG_template_value_parameter</summary>
         </Item>
         <Item name="LibLLVMDwarfTagthrown_type">
-            <summary>TODO: Provide summary for LibLLVMDwarfTag.LibLLVMDwarfTagthrown_type Enumeration</summary>
+            <summary>DW_TAG_thrown_type</summary>
         </Item>
         <Item name="LibLLVMDwarfTagtry_block">
-            <summary>TODO: Provide summary for LibLLVMDwarfTag.LibLLVMDwarfTagtry_block Enumeration</summary>
+            <summary>DW_TAG_try_block</summary>
         </Item>
         <Item name="LibLLVMDwarfTagvariant_part">
-            <summary>TODO: Provide summary for LibLLVMDwarfTag.LibLLVMDwarfTagvariant_part Enumeration</summary>
+            <summary>DW_TAG_variant_part</summary>
         </Item>
         <Item name="LibLLVMDwarfTagvariable">
-            <summary>TODO: Provide summary for LibLLVMDwarfTag.LibLLVMDwarfTagvariable Enumeration</summary>
+            <summary>DW_TAG_variable</summary>
         </Item>
         <Item name="LibLLVMDwarfTagvolatile_type">
-            <summary>TODO: Provide summary for LibLLVMDwarfTag.LibLLVMDwarfTagvolatile_type Enumeration</summary>
+            <summary>DW_TAG_volatile_type</summary>
         </Item>
         <Item name="LibLLVMDwarfTagdwarf_procedure">
-            <summary>TODO: Provide summary for LibLLVMDwarfTag.LibLLVMDwarfTagdwarf_procedure Enumeration</summary>
+            <summary>DW_TAG_dwarf_procedure</summary>
         </Item>
         <Item name="LibLLVMDwarfTagrestrict_type">
-            <summary>TODO: Provide summary for LibLLVMDwarfTag.LibLLVMDwarfTagrestrict_type Enumeration</summary>
+            <summary>DW_TAG_restrict_type</summary>
         </Item>
         <Item name="LibLLVMDwarfTaginterface_type">
-            <summary>TODO: Provide summary for LibLLVMDwarfTag.LibLLVMDwarfTaginterface_type Enumeration</summary>
+            <summary>DW_TAG_interface_type</summary>
         </Item>
         <Item name="LibLLVMDwarfTagnamespace">
-            <summary>TODO: Provide summary for LibLLVMDwarfTag.LibLLVMDwarfTagnamespace Enumeration</summary>
+            <summary>DW_TAG_namespace</summary>
         </Item>
         <Item name="LibLLVMDwarfTagimported_module">
-            <summary>TODO: Provide summary for LibLLVMDwarfTag.LibLLVMDwarfTagimported_module Enumeration</summary>
+            <summary>DW_TAG_imported_module</summary>
         </Item>
         <Item name="LibLLVMDwarfTagunspecified_type">
-            <summary>TODO: Provide summary for LibLLVMDwarfTag.LibLLVMDwarfTagunspecified_type Enumeration</summary>
+            <summary>DW_TAG_unspecified_type</summary>
         </Item>
         <Item name="LibLLVMDwarfTagpartial_unit">
-            <summary>TODO: Provide summary for LibLLVMDwarfTag.LibLLVMDwarfTagpartial_unit Enumeration</summary>
+            <summary>DW_TAG_partial_unit</summary>
         </Item>
         <Item name="LibLLVMDwarfTagimported_unit">
-            <summary>TODO: Provide summary for LibLLVMDwarfTag.LibLLVMDwarfTagimported_unit Enumeration</summary>
+            <summary>DW_TAG_imported_unit</summary>
         </Item>
         <Item name="LibLLVMDwarfTagcondition">
-            <summary>TODO: Provide summary for LibLLVMDwarfTag.LibLLVMDwarfTagcondition Enumeration</summary>
+            <summary>DW_TAG_condition</summary>
         </Item>
         <Item name="LibLLVMDwarfTagshared_type">
-            <summary>TODO: Provide summary for LibLLVMDwarfTag.LibLLVMDwarfTagshared_type Enumeration</summary>
+            <summary>DW_TAG_hared_type</summary>
         </Item>
         <Item name="LibLLVMDwarfTagtype_unit">
-            <summary>TODO: Provide summary for LibLLVMDwarfTag.LibLLVMDwarfTagtype_unit Enumeration</summary>
+            <summary>DW_TAG_type_unit</summary>
         </Item>
         <Item name="LibLLVMDwarfTagrvalue_reference_type">
-            <summary>TODO: Provide summary for LibLLVMDwarfTag.LibLLVMDwarfTagrvalue_reference_type Enumeration</summary>
+            <summary>DW_TAG_rvalue_reference_type</summary>
         </Item>
         <Item name="LibLLVMDwarfTagtemplate_alias">
-            <summary>TODO: Provide summary for LibLLVMDwarfTag.LibLLVMDwarfTagtemplate_alias Enumeration</summary>
+            <summary>DW_TAG_template_alias</summary>
         </Item>
         <Item name="LibLLVMDwarfTagcoarray_type">
-            <summary>TODO: Provide summary for LibLLVMDwarfTag.LibLLVMDwarfTagcoarray_type Enumeration</summary>
+            <summary>DW_TAG_coarray_type</summary>
         </Item>
         <Item name="LibLLVMDwarfTaggeneric_subrange">
-            <summary>TODO: Provide summary for LibLLVMDwarfTag.LibLLVMDwarfTaggeneric_subrange Enumeration</summary>
+            <summary>DW_TAG_generic_subrange</summary>
         </Item>
         <Item name="LibLLVMDwarfTagdynamic_type">
-            <summary>TODO: Provide summary for LibLLVMDwarfTag.LibLLVMDwarfTagdynamic_type Enumeration</summary>
+            <summary>DW_TAG_dynamic_type</summary>
         </Item>
         <Item name="LibLLVMDwarfTagatomic_type">
-            <summary>TODO: Provide summary for LibLLVMDwarfTag.LibLLVMDwarfTagatomic_type Enumeration</summary>
+            <summary>DW_TAG_atomic_type</summary>
         </Item>
         <Item name="LibLLVMDwarfTagcall_site">
-            <summary>TODO: Provide summary for LibLLVMDwarfTag.LibLLVMDwarfTagcall_site Enumeration</summary>
+            <summary>DW_TAG_call_site</summary>
         </Item>
         <Item name="LibLLVMDwarfTagcall_site_parameter">
-            <summary>TODO: Provide summary for LibLLVMDwarfTag.LibLLVMDwarfTagcall_site_parameter Enumeration</summary>
+            <summary>DW_TAG_call_site_parameter</summary>
         </Item>
         <Item name="LibLLVMDwarfTagskeleton_unit">
-            <summary>TODO: Provide summary for LibLLVMDwarfTag.LibLLVMDwarfTagskeleton_unit Enumeration</summary>
+            <summary>DW_TAG_keleton_unit</summary>
         </Item>
         <Item name="LibLLVMDwarfTagimmutable_type">
-            <summary>TODO: Provide summary for LibLLVMDwarfTag.LibLLVMDwarfTagimmutable_type Enumeration</summary>
+            <summary>DW_TAG_immutable_type</summary>
         </Item>
         <Item name="LibLLVMDwarfTagMIPS_loop">
-            <summary>TODO: Provide summary for LibLLVMDwarfTag.LibLLVMDwarfTagMIPS_loop Enumeration</summary>
+            <summary>DW_TAG_MIPS_loop</summary>
         </Item>
         <Item name="LibLLVMDwarfTagformat_label">
-            <summary>TODO: Provide summary for LibLLVMDwarfTag.LibLLVMDwarfTagformat_label Enumeration</summary>
+            <summary>DW_TAG_format_label</summary>
         </Item>
         <Item name="LibLLVMDwarfTagfunction_template">
-            <summary>TODO: Provide summary for LibLLVMDwarfTag.LibLLVMDwarfTagfunction_template Enumeration</summary>
+            <summary>DW_TAG_function_template</summary>
         </Item>
         <Item name="LibLLVMDwarfTagclass_template">
-            <summary>TODO: Provide summary for LibLLVMDwarfTag.LibLLVMDwarfTagclass_template Enumeration</summary>
+            <summary>DW_TAG_class_template</summary>
         </Item>
         <Item name="LibLLVMDwarfTagGNU_template_template_param">
-            <summary>TODO: Provide summary for LibLLVMDwarfTag.LibLLVMDwarfTagGNU_template_template_param Enumeration</summary>
+            <summary>DW_TAG_GNU_template_template_param</summary>
         </Item>
         <Item name="LibLLVMDwarfTagGNU_template_parameter_pack">
-            <summary>TODO: Provide summary for LibLLVMDwarfTag.LibLLVMDwarfTagGNU_template_parameter_pack Enumeration</summary>
+            <summary>DW_TAG_GNU_template_parameter_pack</summary>
         </Item>
         <Item name="LibLLVMDwarfTagGNU_formal_parameter_pack">
-            <summary>TODO: Provide summary for LibLLVMDwarfTag.LibLLVMDwarfTagGNU_formal_parameter_pack Enumeration</summary>
+            <summary>DW_TAG_GNU_formal_parameter_pack</summary>
         </Item>
         <Item name="LibLLVMDwarfTagGNU_call_site">
-            <summary>TODO: Provide summary for LibLLVMDwarfTag.LibLLVMDwarfTagGNU_call_site Enumeration</summary>
+            <summary>DW_TAG_GNU_call_site</summary>
         </Item>
         <Item name="LibLLVMDwarfTagGNU_call_site_parameter">
-            <summary>TODO: Provide summary for LibLLVMDwarfTag.LibLLVMDwarfTagGNU_call_site_parameter Enumeration</summary>
+            <summary>DW_TAG_GNU_call_site_parameter</summary>
         </Item>
         <Item name="LibLLVMDwarfTagAPPLE_property">
-            <summary>TODO: Provide summary for LibLLVMDwarfTag.LibLLVMDwarfTagAPPLE_property Enumeration</summary>
+            <summary>DW_TAG_APPLE_property</summary>
         </Item>
         <Item name="LibLLVMDwarfTagBORLAND_property">
-            <summary>TODO: Provide summary for LibLLVMDwarfTag.LibLLVMDwarfTagBORLAND_property Enumeration</summary>
+            <summary>DW_TAG_BORLAND_property</summary>
         </Item>
         <Item name="LibLLVMDwarfTagBORLAND_Delphi_string">
-            <summary>TODO: Provide summary for LibLLVMDwarfTag.LibLLVMDwarfTagBORLAND_Delphi_string Enumeration</summary>
+            <summary>DW_TAG_BORLAND_Delphi_string</summary>
         </Item>
         <Item name="LibLLVMDwarfTagBORLAND_Delphi_dynamic_array">
-            <summary>TODO: Provide summary for LibLLVMDwarfTag.LibLLVMDwarfTagBORLAND_Delphi_dynamic_array Enumeration</summary>
+            <summary>DW_TAG_BORLAND_Delphi_dynamic_array</summary>
         </Item>
         <Item name="LibLLVMDwarfTagBORLAND_Delphi_set">
-            <summary>TODO: Provide summary for LibLLVMDwarfTag.LibLLVMDwarfTagBORLAND_Delphi_set Enumeration</summary>
+            <summary>DW_TAG_BORLAND_Delphi_set</summary>
         </Item>
         <Item name="LibLLVMDwarfTagBORLAND_Delphi_variant">
-            <summary>TODO: Provide summary for LibLLVMDwarfTag.LibLLVMDwarfTagBORLAND_Delphi_variant Enumeration</summary>
+            <summary>DW_TAG_BORLAND_Delphi_variant</summary>
         </Item>
     </Enumeration>
     <Enumeration name="LibLLVMMetadataKind">
-        <summary>TODO: Provide summary for LibLLVMMetadataKind Enumeration</summary>
+        <summary>Enumeration for the Kinds of metadata, which is effectively a discriminated union</summary>
         <Item name="LibLLVMMetadataKind_MDString">
-            <summary>TODO: Provide summary for LibLLVMMetadataKind.LibLLVMMetadataKind_MDString Enumeration</summary>
+            <summary>Metadata string</summary>
         </Item>
         <Item name="LibLLVMMetadataKind_ConstantAsMetadata">
-            <summary>TODO: Provide summary for LibLLVMMetadataKind.LibLLVMMetadataKind_ConstantAsMetadata Enumeration</summary>
+            <summary>Constant value as metadata</summary>
         </Item>
         <Item name="LibLLVMMetadataKind_LocalAsMetadata">
-            <summary>TODO: Provide summary for LibLLVMMetadataKind.LibLLVMMetadataKind_LocalAsMetadata Enumeration</summary>
+            <summary>Local value as metadata</summary>
         </Item>
         <Item name="LibLLVMMetadataKind_DistinctMDOperandPlaceholder">
-            <summary>TODO: Provide summary for LibLLVMMetadataKind.LibLLVMMetadataKind_DistinctMDOperandPlaceholder Enumeration</summary>
+            <summary>Distinct MDOperand Placeholder</summary>
         </Item>
         <Item name="LibLLVMMetadataKind_MDTuple">
-            <summary>TODO: Provide summary for LibLLVMMetadataKind.LibLLVMMetadataKind_MDTuple Enumeration</summary>
+            <summary>MDTuple</summary>
         </Item>
         <Item name="LibLLVMMetadataKind_DILocation">
-            <summary>TODO: Provide summary for LibLLVMMetadataKind.LibLLVMMetadataKind_DILocation Enumeration</summary>
+            <summary>DILocation</summary>
         </Item>
         <Item name="LibLLVMMetadataKind_DIExpression">
-            <summary>TODO: Provide summary for LibLLVMMetadataKind.LibLLVMMetadataKind_DIExpression Enumeration</summary>
+            <summary>DIExpression</summary>
         </Item>
         <Item name="LibLLVMMetadataKind_DIGlobalVariableExpression">
-            <summary>TODO: Provide summary for LibLLVMMetadataKind.LibLLVMMetadataKind_DIGlobalVariableExpression Enumeration</summary>
+            <summary>DIGlobalVariableExpression</summary>
         </Item>
         <Item name="LibLLVMMetadataKind_GenericDINode">
-            <summary>TODO: Provide summary for LibLLVMMetadataKind.LibLLVMMetadataKind_GenericDINode Enumeration</summary>
+            <summary>GenericDINode</summary>
         </Item>
         <Item name="LibLLVMMetadataKind_DISubrange">
-            <summary>TODO: Provide summary for LibLLVMMetadataKind.LibLLVMMetadataKind_DISubrange Enumeration</summary>
+            <summary>DISubrange</summary>
         </Item>
         <Item name="LibLLVMMetadataKind_DIEnumerator">
-            <summary>TODO: Provide summary for LibLLVMMetadataKind.LibLLVMMetadataKind_DIEnumerator Enumeration</summary>
+            <summary>DIEnumerator</summary>
         </Item>
         <Item name="LibLLVMMetadataKind_DIBasicType">
-            <summary>TODO: Provide summary for LibLLVMMetadataKind.LibLLVMMetadataKind_DIBasicType Enumeration</summary>
+            <summary>DIBasicType</summary>
         </Item>
         <Item name="LibLLVMMetadataKind_DIDerivedType">
-            <summary>TODO: Provide summary for LibLLVMMetadataKind.LibLLVMMetadataKind_DIDerivedType Enumeration</summary>
+            <summary>DIDerivedType</summary>
         </Item>
         <Item name="LibLLVMMetadataKind_DICompositeType">
-            <summary>TODO: Provide summary for LibLLVMMetadataKind.LibLLVMMetadataKind_DICompositeType Enumeration</summary>
+            <summary>DICompositeType</summary>
         </Item>
         <Item name="LibLLVMMetadataKind_DISubroutineType">
-            <summary>TODO: Provide summary for LibLLVMMetadataKind.LibLLVMMetadataKind_DISubroutineType Enumeration</summary>
+            <summary>DISubroutineType</summary>
         </Item>
         <Item name="LibLLVMMetadataKind_DIFile">
-            <summary>TODO: Provide summary for LibLLVMMetadataKind.LibLLVMMetadataKind_DIFile Enumeration</summary>
+            <summary>DIFile</summary>
         </Item>
         <Item name="LibLLVMMetadataKind_DICompileUnit">
-            <summary>TODO: Provide summary for LibLLVMMetadataKind.LibLLVMMetadataKind_DICompileUnit Enumeration</summary>
+            <summary>DICompileUnit</summary>
         </Item>
         <Item name="LibLLVMMetadataKind_DISubprogram">
-            <summary>TODO: Provide summary for LibLLVMMetadataKind.LibLLVMMetadataKind_DISubprogram Enumeration</summary>
+            <summary>DISubprogram</summary>
         </Item>
         <Item name="LibLLVMMetadataKind_DILexicalBlock">
-            <summary>TODO: Provide summary for LibLLVMMetadataKind.LibLLVMMetadataKind_DILexicalBlock Enumeration</summary>
+            <summary>DILexicalBlock</summary>
         </Item>
         <Item name="LibLLVMMetadataKind_DILexicalBlockFile">
-            <summary>TODO: Provide summary for LibLLVMMetadataKind.LibLLVMMetadataKind_DILexicalBlockFile Enumeration</summary>
+            <summary>DILexicalBlockFile</summary>
         </Item>
         <Item name="LibLLVMMetadataKind_DINamespace">
-            <summary>TODO: Provide summary for LibLLVMMetadataKind.LibLLVMMetadataKind_DINamespace Enumeration</summary>
+            <summary>DINamespace</summary>
         </Item>
         <Item name="LibLLVMMetadataKind_DIModule">
-            <summary>TODO: Provide summary for LibLLVMMetadataKind.LibLLVMMetadataKind_DIModule Enumeration</summary>
+            <summary>DIModule</summary>
         </Item>
         <Item name="LibLLVMMetadataKind_DITemplateTypeParameter">
-            <summary>TODO: Provide summary for LibLLVMMetadataKind.LibLLVMMetadataKind_DITemplateTypeParameter Enumeration</summary>
+            <summary>DITemplateTypeParameter</summary>
         </Item>
         <Item name="LibLLVMMetadataKind_DITemplateValueParameter">
-            <summary>TODO: Provide summary for LibLLVMMetadataKind.LibLLVMMetadataKind_DITemplateValueParameter Enumeration</summary>
+            <summary>DITemplateValueParameter</summary>
         </Item>
         <Item name="LibLLVMMetadataKind_DIGlobalVariable">
-            <summary>TODO: Provide summary for LibLLVMMetadataKind.LibLLVMMetadataKind_DIGlobalVariable Enumeration</summary>
+            <summary>DIGlobalVariable</summary>
         </Item>
         <Item name="LibLLVMMetadataKind_DILocalVariable">
-            <summary>TODO: Provide summary for LibLLVMMetadataKind.LibLLVMMetadataKind_DILocalVariable Enumeration</summary>
+            <summary>DILocalVariable</summary>
         </Item>
         <Item name="LibLLVMMetadataKind_DILabel">
-            <summary>TODO: Provide summary for LibLLVMMetadataKind.LibLLVMMetadataKind_DILabel Enumeration</summary>
+            <summary>DILabel</summary>
         </Item>
         <Item name="LibLLVMMetadataKind_DIObjCProperty">
-            <summary>TODO: Provide summary for LibLLVMMetadataKind.LibLLVMMetadataKind_DIObjCProperty Enumeration</summary>
+            <summary>DIObjCProperty</summary>
         </Item>
         <Item name="LibLLVMMetadataKind_DIImportedEntity">
-            <summary>TODO: Provide summary for LibLLVMMetadataKind.LibLLVMMetadataKind_DIImportedEntity Enumeration</summary>
+            <summary>DIImportedEntity</summary>
         </Item>
         <Item name="LibLLVMMetadataKind_DIMacro">
-            <summary>TODO: Provide summary for LibLLVMMetadataKind.LibLLVMMetadataKind_DIMacro Enumeration</summary>
+            <summary>DIMacro</summary>
         </Item>
         <Item name="LibLLVMMetadataKind_DIMacroFile">
-            <summary>TODO: Provide summary for LibLLVMMetadataKind.LibLLVMMetadataKind_DIMacroFile Enumeration</summary>
+            <summary>DIMacroFile</summary>
         </Item>
     </Enumeration>
     <Function name="LibLLVMDIBasicTypeGetEncoding">

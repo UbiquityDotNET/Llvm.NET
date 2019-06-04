@@ -4,14 +4,12 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
-using System;
-
 namespace LlvmBindingsGenerator.Templates
 {
     internal partial class LLVMErrorRefTemplate
         : IHandleCodeTemplate
     {
-        public Version ToolVersion => GetType( ).Assembly.GetName( ).Version;
+        public string ToolVersion => GetType( ).Assembly.GetAssemblyInformationalVersion( );
 
         public string HandleName => "LLVMErrorRef";
 

@@ -35,14 +35,12 @@ namespace Llvm.NET.Values
         /// <inheritdoc/>
         public IEnumerator<BasicBlock> GetEnumerator( )
         {
-            uint count = LLVMCountBasicBlocks( ContainingFunction.ValueHandle );
-            var buf = new LLVMBasicBlockRef[ count ];
-            if( count > 0 )
+            LLVMBasicBlockRef blockRef = LLVMGetFirstBasicBlock( ContainingFunction.ValueHandle );
+            while( blockRef != default )
             {
-                LLVMGetBasicBlocks( ContainingFunction.ValueHandle, out buf[ 0 ] );
+                yield return BasicBlock.FromHandle( blockRef );
+                blockRef = LLVMGetNextBasicBlock( blockRef );
             }
-
-            return buf.Select( BasicBlock.FromHandle ).GetEnumerator( );
         }
 
         /// <inheritdoc/>
