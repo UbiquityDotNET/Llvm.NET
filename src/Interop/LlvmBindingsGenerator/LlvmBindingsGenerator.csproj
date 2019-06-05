@@ -1,10 +1,10 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
-    <Sdk Name="Microsoft.Build.CentralPackageVersions"/>
+    <Sdk Name="Microsoft.Build.CentralPackageVersions" />
     <PropertyGroup>
         <OutputType>Exe</OutputType>
         <TargetFrameworks>net47</TargetFrameworks>
         <LangVersion>7.3</LangVersion>
-        <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+        <AllowUnsafeBlocks>false</AllowUnsafeBlocks>
         <DebugType>portable</DebugType>
         <DebugSymbols>true</DebugSymbols>
         <SignAssembly>False</SignAssembly>
@@ -14,8 +14,8 @@
         <Service Include="{508349b6-6b84-4df5-91f0-309beebad82d}" />
     </ItemGroup>
     <ItemGroup>
-        <PackageReference Include="Ubiquity.ArgValidators"/>
-        <PackageReference Include="CppSharp"/>
+        <PackageReference Include="Ubiquity.ArgValidators" />
+        <PackageReference Include="CppSharp" />
     </ItemGroup>
     <!-- Runtime T4 templates need to specify the single file generator for the code behind -->
     <ItemGroup>
@@ -107,11 +107,8 @@
           <CppSharpPkgPath>%(CppSharpPkg.ResolvedPath)</CppSharpPkgPath>
         </PropertyGroup>
         <ItemGroup>
-            <_CppSharpOutputFiles Include="$(CppSharpPkgPath)\output\**\*.*"/>
+            <_CppSharpOutputFiles Include="$(CppSharpPkgPath)\output\**\*.*" />
         </ItemGroup>
-        <Copy
-            SkipUnchangedFiles="true"
-            SourceFiles="@(_CppSharpOutputFiles)"
-            DestinationFiles="@(_CppSharpOutputFiles->'$(OutDir)\%(RecursiveDir)%(Filename)%(Extension)')"/>
+        <Copy SkipUnchangedFiles="true" SourceFiles="@(_CppSharpOutputFiles)" DestinationFiles="@(_CppSharpOutputFiles->'$(OutDir)\%(RecursiveDir)%(Filename)%(Extension)')" />
     </Target>
 </Project>

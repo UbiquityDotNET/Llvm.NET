@@ -173,16 +173,7 @@ namespace Llvm.NET
             }
 
             LLVMTypeRef[ ] llvmArgs = args.Select( a => a.GetTypeRef( ) ).ToArray( );
-            int argCount = llvmArgs.Length;
-
-            // have to pass a valid addressable object to native interop
-            // so allocate space for a single value but tell LLVM the length is 0
-            if( llvmArgs.Length == 0 )
-            {
-                llvmArgs = new LLVMTypeRef[ 1 ];
-            }
-
-            var signature = LLVMFunctionType( returnType.GetTypeRef( ), out llvmArgs[ 0 ], ( uint )argCount, isVarArgs );
+            var signature = LLVMFunctionType( returnType.GetTypeRef( ), llvmArgs, ( uint )llvmArgs.Length, isVarArgs );
             return TypeRef.FromHandle<IFunctionType>( signature );
         }
 
@@ -321,12 +312,7 @@ namespace Llvm.NET
             values.ValidateNotNull( nameof( values ) );
 
             var valueHandles = values.Select( v => v.ValueHandle ).ToArray( );
-            if( valueHandles.Length == 0 )
-            {
-                throw new ArgumentException( Resources.structure_must_have_at_least_one_element, nameof( values ) );
-            }
-
-            var handle = LLVMConstStructInContext( ContextHandle, out valueHandles[ 0 ], ( uint )valueHandles.Length, packed );
+            var handle = LLVMConstStructInContext( ContextHandle, valueHandles, ( uint )valueHandles.Length, packed );
             return Value.FromHandle<Constant>( handle );
         }
 
@@ -405,14 +391,7 @@ namespace Llvm.NET
                 throw new ArgumentException( msg.ToString( ) );
             }
 
-            // To interop correctly, we need to have an array of at least size one.
-            uint valuesLength = ( uint )valueHandles.Length;
-            if( valuesLength == 0 )
-            {
-                valueHandles = new LLVMValueRef[ 1 ];
-            }
-
-            var handle = LLVMConstNamedStruct( type.GetTypeRef( ), out valueHandles[ 0 ], valuesLength );
+            var handle = LLVMConstNamedStruct( type.GetTypeRef( ), valueHandles, (uint)valueHandles.Length );
             return Value.FromHandle<Constant>( handle );
         }
 
@@ -445,7 +424,7 @@ namespace Llvm.NET
                 llvmArgs[ i ] = elements[ i - 1 ].GetTypeRef( );
             }
 
-            var handle = LLVMStructTypeInContext( ContextHandle, out llvmArgs[ 0 ], ( uint )llvmArgs.Length, packed );
+            var handle = LLVMStructTypeInContext( ContextHandle, llvmArgs, ( uint )llvmArgs.Length, packed );
             return TypeRef.FromHandle<IStructType>( handle );
         }
 
@@ -491,7 +470,7 @@ namespace Llvm.NET
         public MDNode CreateMDNode( string value )
         {
             var elements = new[ ] { CreateMetadataString( value ).MetadataHandle };
-            var hNode = LibLLVMMDNode2( ContextHandle, out elements[ 0 ], ( uint )elements.Length );
+            var hNode = LibLLVMMDNode2( ContextHandle, elements, ( uint )elements.Length );
             return MDNode.FromHandle<MDNode>( hNode );
         }
 

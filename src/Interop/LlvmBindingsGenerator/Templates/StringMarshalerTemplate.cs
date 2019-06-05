@@ -4,8 +4,6 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
-using System;
-
 namespace LlvmBindingsGenerator.Templates
 {
     internal partial class StringMarshalerTemplate
@@ -23,7 +21,7 @@ namespace LlvmBindingsGenerator.Templates
 
         public string NativeDisposer { get; }
 
-        public Version ToolVersion => GetType( ).Assembly.GetName( ).Version;
+        public string ToolVersion => GetType( ).Assembly.GetAssemblyInformationalVersion( );
 
         public string FileExtension => "g.cs";
 

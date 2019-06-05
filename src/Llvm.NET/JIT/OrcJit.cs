@@ -43,18 +43,18 @@ namespace Llvm.NET.JIT
         /// Once the module is provided to the engine it is fully owned by the engine and should
         /// be considered res-only to the calling app.
         /// </remarks>
-        public IJitModuleHandle AddModule( BitcodeModule bitcodeModule )
+        public ulong AddModule( BitcodeModule bitcodeModule )
         {
-            return ( JitModuleHandle<UInt64> )AddModule( bitcodeModule, DefaultSymbolResolver );
+            return AddModule( bitcodeModule, DefaultSymbolResolver );
         }
 
         /// <summary>Add a module to the engine</summary>
-        /// <param name="module">The module to add to the engine</param>
+        /// <param name="bitcodeModule">The module to add to the engine</param>
         /// <param name="resolver">Symbol resolver delegate</param>
         /// <returns>Handle for the module in the engine</returns>
         /// <remarks>
         /// <note type="warning">
-        /// Ownership of the <paramref name="module"/> is transfered to the JIT engine and therefore,
+        /// Ownership of the <paramref name="bitcodeModule"/> is transfered to the JIT engine and therefore,
         /// after successful completion of this call the module reports as disposed.
         /// </note>
         /// <note type="important">
@@ -64,70 +64,54 @@ namespace Llvm.NET.JIT
         /// the application.
         /// </note>
         /// </remarks>
-        public IJitModuleHandle AddModule( BitcodeModule module, LLVMOrcSymbolResolverFn resolver )
+        public ulong AddModule( BitcodeModule bitcodeModule, LLVMOrcSymbolResolverFn resolver )
         {
-            var wrappedResolver = new WrappedNativeCallback<LLVMOrcSymbolResolverFn>( resolver );
 #if LLVM_COFF_EXPORT_BUG_FIXED
 /* see: https://reviews.llvm.org/rL258665 */
-            var err = LLVMOrcAddEagerlyCompiledIR( JitStackHandle, out UInt64 retHandle, module.SharedModuleRef, wrappedResolver.NativeFuncPtr, IntPtr.Zero );
-#else
-            // symbols are resolved if lazy compiled, requesting the address looks up the symbol in the IR module
-            // where the COFF bug doesn't get in the way. The function is then JIT compiled to produce a native
-            // function and the address of that function is returned.
-            var err = LLVMOrcAddLazilyCompiledIR( JitStackHandle, out UInt64 retHandle, module.ModuleHandle, wrappedResolver, IntPtr.Zero );
-#endif
+            var wrappedResolver = new WrappedNativeCallback<LLVMOrcSymbolResolverFn>( resolver );
+            var err = LLVMOrcAddEagerlyCompiledIR( JitStackHandle, out ulong retHandle, bitcodeModule.ModuleHandle, wrappedResolver, IntPtr.Zero );
             if( !err.IsInvalid )
             {
                 throw new LlvmException( err.ToString( ) );
             }
 
-            module.Detach( );
+            bitcodeModule.Detach( );
 
             // keep resolver delegate alive as native code needs to call it after this function exits
             SymbolResolvers.Add( retHandle, wrappedResolver );
-            return ( JitModuleHandle<UInt64> )retHandle;
+            return retHandle;
+#else
+            return LazyAddModule( bitcodeModule, resolver );
+#endif
         }
 
         /// <inheritdoc/>
-        public void RemoveModule( IJitModuleHandle handle )
+        public void RemoveModule( ulong handle )
         {
-            if( !( handle is JitModuleHandle<UInt64> orcHandle ) )
-            {
-                throw new ArgumentException( Resources.Invalid_handle_provided, nameof( handle ) );
-            }
-
-            var err = LLVMOrcRemoveModule( JitStackHandle, orcHandle );
+            var err = LLVMOrcRemoveModule( JitStackHandle, handle );
             if( !err.IsInvalid )
             {
-                throw new LlvmException( LLVMOrcGetErrorMsg( JitStackHandle ) );
+                throw new LlvmException( err.ToString() );
             }
 
-            SymbolResolvers.Remove( orcHandle );
+            SymbolResolvers.Remove( handle );
         }
 
         /// <inheritdoc/>
         [SuppressMessage( "Design", "CA1031:Do not catch general exception types", Justification = "Native callback function *MUST NOT* surface managed exceptions" )]
-        public UInt64 DefaultSymbolResolver( string name, IntPtr ctx )
+        public ulong DefaultSymbolResolver( string name, IntPtr ctx )
         {
             try
             {
-                var err = LLVMOrcGetSymbolAddress( JitStackHandle, out UInt64 retAddr, name );
+                var err = LLVMOrcGetSymbolAddress( JitStackHandle, out ulong retAddr, name );
                 if( !err.IsInvalid )
                 {
                     throw new InvalidOperationException( string.Format( CultureInfo.CurrentCulture, Resources.Unresolved_Symbol_0_1, name, LLVMOrcGetErrorMsg( JitStackHandle ) ) );
                 }
 
-                if( retAddr != 0 )
-                {
-                    return retAddr;
-                }
-
-                if( GlobalInteropFunctions.TryGetValue( name, out WrappedNativeCallback callBack ) )
-                {
-                    return ( UInt64 )callBack.ToIntPtr().ToInt64( );
-                }
-
-                return 0;
+                return retAddr != 0
+                    ? retAddr
+                    : GlobalInteropFunctions.TryGetValue( name, out WrappedNativeCallback callBack ) ? ( ulong )callBack.ToIntPtr().ToInt64( ) : 0;
             }
             catch
             {
@@ -189,24 +173,23 @@ namespace Llvm.NET.JIT
             GlobalInteropFunctions.Add( mangledName, new WrappedNativeCallback<T>( @delegate ) );
         }
 
-#if LLVM_COFF_EXPORT_BUG_FIXED
-/* see: https://reviews.llvm.org/rL258665 */
         /// <inheritdoc/>
-        public IJitModuleHandle LazyAddModule( BitcodeModule module, SymbolResolver resolver )
+        public ulong LazyAddModule( BitcodeModule bitcodeModule, LLVMOrcSymbolResolverFn resolver )
         {
-            var wrappedResolver = new WrappedNativeCallback( resolver );
+            var wrappedResolver = new WrappedNativeCallback<LLVMOrcSymbolResolverFn>( resolver );
 
-            var err = LLVMOrcAddLazilyCompiledIR( JitStackHandle, out UInt64 retHandle, module.SharedModuleRef, wrappedResolver.NativeFuncPtr, IntPtr.Zero );
-            if( err != LLVMOrcErrorCode.LLVMOrcErrSuccess )
+            var err = LLVMOrcAddLazilyCompiledIR( JitStackHandle, out ulong retHandle, bitcodeModule.ModuleHandle, wrappedResolver, IntPtr.Zero );
+            if( !err.IsInvalid )
             {
-                throw new Exception( LLVMOrcGetErrorMsg( JitStackHandle ) );
+                throw new LlvmException( err.ToString( ) );
             }
+
+            bitcodeModule.Detach( );
 
             // keep resolver delegate alive as native code needs to call it after this function exits
             SymbolResolvers.Add( retHandle, wrappedResolver );
-            return ( JitModuleHandle<UInt64> )retHandle;
+            return retHandle;
         }
-#endif
 
         /// <inheritdoc/>
         public void AddLazyFunctionGenerator( string name, LazyFunctionCompiler generator, IntPtr context )
@@ -221,7 +204,7 @@ namespace Llvm.NET.JIT
                     (string implName, BitcodeModule module) = generator( );
                     if( module == null )
                     {
-                        return default;
+                        return 0;
                     }
 
                     AddModule( module );
@@ -244,7 +227,7 @@ namespace Llvm.NET.JIT
                 catch
                 {
                     // native callback - MUST NOT leak exceptions out of this call.
-                    return default;
+                    return 0;
                 }
 #pragma warning restore CA1031 // Do not catch general exception types
             }

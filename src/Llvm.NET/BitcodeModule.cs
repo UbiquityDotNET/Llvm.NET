@@ -11,6 +11,7 @@ using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using System.IO;
 using System.Linq;
+using System.Threading;
 using Llvm.NET.DebugInfo;
 using Llvm.NET.Instructions;
 using Llvm.NET.Interop;
@@ -838,8 +839,6 @@ namespace Llvm.NET
         }
 
         internal LLVMModuleRef ModuleHandle { get; private set; }
-
-        /* internal LLVMSharedModuleRef SharedModuleRef { get; private set; } */
 
         internal LLVMModuleRef Detach( )
         {

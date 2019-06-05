@@ -4,8 +4,6 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
-using System;
-
 namespace LlvmBindingsGenerator.Templates
 {
     internal partial class ContextHandleTemplate
@@ -16,7 +14,7 @@ namespace LlvmBindingsGenerator.Templates
             HandleName = name;
         }
 
-        public Version ToolVersion => GetType( ).Assembly.GetName( ).Version;
+        public string ToolVersion => GetType( ).Assembly.GetAssemblyInformationalVersion();
 
         public string HandleName { get; }
 

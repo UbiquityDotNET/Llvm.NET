@@ -6,6 +6,7 @@
 
 using System;
 using System.Runtime.InteropServices;
+using Llvm.NET.Interop;
 
 namespace Llvm.NET.JIT
 {
@@ -24,14 +25,14 @@ namespace Llvm.NET.JIT
         /// the underlying LLVM module as the module is considered fully owned by the engine.</para>
         /// </note>
         /// </remarks>
-        IJitModuleHandle AddModule( BitcodeModule bitcodeModule );
+        ulong AddModule( BitcodeModule bitcodeModule );
 
         /// <summary>Removes a module from the engine</summary>
         /// <param name="handle"><see cref="AddModule(BitcodeModule)"/> to remove</param>
         /// <remarks>
         /// This effectively transfers ownership of the module back to the caller.
         /// </remarks>
-        void RemoveModule( IJitModuleHandle handle );
+        void RemoveModule( ulong handle );
 
         /// <summary>Gets a delegate for the native compiled function in the engine</summary>
         /// <typeparam name="T">Type of the delegate to retrieve</typeparam>
@@ -58,27 +59,35 @@ namespace Llvm.NET.JIT
     public interface ILazyCompileExecutionEngine
         : IExecutionEngine
     {
-#if LLVM_COFF_EXPORT_BUG_FIXED
-        /* see: https://reviews.llvm.org/rL258665 */
-
         /// <summary>Add a module to the engine</summary>
-        /// <param name="module">The module to add to the engine</param>
-        /// <param name="resolver">Symbol resolver for symbols external to the module</param>
+        /// <param name="bitcodeModule">The module to add to the engine</param>
+        /// <param name="resolver">Symbol resolver delegate</param>
         /// <returns>Handle for the module in the engine</returns>
         /// <remarks>
         /// <note type="warning">
-        /// <para>For the legacy JIT engine the input <paramref name="module"/> is disconnected from
-        /// the underlying LLVM module as the module is considered fully owned by the engine.
-        /// Thus, upon return the <see cref="BitcodeModule.IsDisposed"/> property is <see langword="true"/></para>
-        /// <para>For the OrcJit, however, the module is shared with the engine using a reference
-        /// count. In this case <see cref="BitcodeModule.IsDisposed"/> property is <see langword="false"/> and the
-        /// <see cref="BitcodeModule.IsShared"/> property is <see langword="true"/>. Callers may continue to use the
-        /// module in this case, though modifying it or interned data from it's context may result in undefined
-        /// behavior.</para>
+        /// Ownership of the <paramref name="bitcodeModule"/> is transfered to the JIT engine and therefore,
+        /// after successful completion of this call the module reports as disposed.
+        /// </note>
+        /// <note type="important">
+        /// The <paramref name="resolver"/> must not throw an exception as the native LLVM JIT engine
+        /// won't understand it and would leave the engine and LLVM in an inconsistent state. If the
+        /// symbol isn't found LLVM generates an error message in debug builds and in all builds, terminates
+        /// the application.
         /// </note>
         /// </remarks>
-        IJitModuleHandle LazyAddModule( BitcodeModule module, SymbolResolver resolver );
-#endif
+        ulong AddModule( BitcodeModule bitcodeModule, LLVMOrcSymbolResolverFn resolver );
+
+        /// <summary>Adds a module for lazy compilation</summary>
+        /// <param name="bitcodeModule">The module to add to the engine</param>
+        /// <param name="resolver">Symbol resolver delegate</param>
+        /// <returns>Handle for the module in the engine</returns>
+        /// <remarks>
+        /// <note type="warning">
+        /// <para>For the JIT engine the input <paramref name="bitcodeModule"/> is disconnected from
+        /// the underlying LLVM module as the module is considered fully owned by the engine.</para>
+        /// </note>
+        /// </remarks>
+        ulong LazyAddModule( BitcodeModule bitcodeModule, LLVMOrcSymbolResolverFn resolver );
 
         /// <summary>Add a lazy function generator</summary>
         /// <param name="name">name of the function</param>
@@ -98,7 +107,7 @@ namespace Llvm.NET.JIT
         /// <param name="name">Symbol name to resolve</param>
         /// <param name="ctx">Resolver context</param>
         /// <returns>Address of the symbol</returns>
-        UInt64 DefaultSymbolResolver( string name, IntPtr ctx );
+        ulong DefaultSymbolResolver( string name, IntPtr ctx );
     }
 
     /// <summary>Extension class to add common default behavior for implementations of ILazyCompileExecutionEngine</summary>
@@ -124,16 +133,13 @@ namespace Llvm.NET.JIT
             jit.AddLazyFunctionGenerator( name, generator, IntPtr.Zero );
         }
 
-#if LLVM_COFF_EXPORT_BUG_FIXED
-        /* see: https://reviews.llvm.org/rL258665 */
         /// <summary>Adds a module to the JIT for lazy compilation using the engine's default symbol resolver</summary>
         /// <param name="jit">JIT engine to add the module to</param>
         /// <param name="module">module to add</param>
         /// <returns>Handle for the module in the engine</returns>
-        public static IJitModuleHandle LazyAddModule(this ILazyCompileExecutionEngine jit, BitcodeModule module)
+        public static ulong LazyAddModule(this ILazyCompileExecutionEngine jit, BitcodeModule module)
         {
             return jit.LazyAddModule( module, jit.DefaultSymbolResolver );
         }
-#endif
     }
 }

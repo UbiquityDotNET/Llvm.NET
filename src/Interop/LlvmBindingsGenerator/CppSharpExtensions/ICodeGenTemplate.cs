@@ -4,13 +4,11 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
-using System;
-
 namespace LlvmBindingsGenerator.Templates
 {
     internal interface ICodeGenTemplate
     {
-        Version ToolVersion { get; }
+        string ToolVersion { get; }
 
         string FileExtension { get; }
 

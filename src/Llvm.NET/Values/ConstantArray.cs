@@ -60,13 +60,7 @@ namespace Llvm.NET.Values
             }
 
             var valueHandles = values.Select( v => v.ValueHandle ).ToArray( );
-            int argCount = valueHandles.Length;
-            if( argCount == 0 )
-            {
-                valueHandles = new LLVMValueRef[ 1 ];
-            }
-
-            var handle = LLVMConstArray( elementType.GetTypeRef(), out valueHandles[ 0 ], (uint)argCount );
+            var handle = LLVMConstArray( elementType.GetTypeRef(), valueHandles, (uint)valueHandles.Length );
             return FromHandle<Constant>( handle );
         }
 

@@ -4,7 +4,6 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using CppSharp.AST;
@@ -19,7 +18,7 @@ namespace LlvmBindingsGenerator.Templates
             Unit = tu;
         }
 
-        public Version ToolVersion => GetType( ).Assembly.GetName( ).Version;
+        public string ToolVersion => GetType( ).Assembly.GetAssemblyInformationalVersion( );
 
         public string FileExtension => "xml";
 

@@ -49,7 +49,7 @@ namespace Llvm.NET.Interop
 
             if( prevHandle != IntPtr.Zero )
             {
-                <#=HandleDisposeFunction#>( handle );
+                <#=HandleDisposeFunction#>( prevHandle );
             }
             return true;
         }

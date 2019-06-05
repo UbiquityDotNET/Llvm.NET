@@ -52,7 +52,7 @@ namespace Llvm.NET.Types
                 }
 
                 var paramTypes = new LLVMTypeRef[ paramCount ];
-                LLVMGetParamTypes( TypeRefHandle, out paramTypes[ 0 ] );
+                LLVMGetParamTypes( TypeRefHandle, paramTypes );
                 return paramTypes.Select( FromHandle<TypeRef> )
                                  .ToList( )
                                  .AsReadOnly( );

@@ -1,5 +1,5 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
-  <Sdk Name="Microsoft.Build.CentralPackageVersions"/>
+  <Sdk Name="Microsoft.Build.CentralPackageVersions" />
   <PropertyGroup>
     <TargetFrameworks>netstandard2.0;net47</TargetFrameworks>
     <LangVersion>7.3</LangVersion>
@@ -12,14 +12,13 @@
     <MinClientVersion>4.0</MinClientVersion>
     <Authors>.NET Foundation,LLVM.org,Ubiquity.NET</Authors>
     <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
-    <Description>
-    .NET Low Level Interop Bindings for Ubiquity.LibLLVM. Direct use of this low level API is discouraged, instead you should
-    use the Llvm.NET package, which provides a full C# object model projection of the LLVM APIs on top of this library.
-    </Description>
+    <Description>.NET Low Level Interop Bindings for Ubiquity.LibLLVM. Direct use of this low level API is discouraged, instead you should use the Llvm.NET package, which provides a full C# object model projection of the LLVM APIs on top of this library.
+</Description>
     <PackageTags>LLVM,Compiler,JIT,Ubiquity.NET</PackageTags>
     <NoPackageAnalysis>true</NoPackageAnalysis>
     <RepositoryType>git</RepositoryType>
     <RepositoryUrl>https://github.com/UbiquityDotNET/Llvm.Net.git</RepositoryUrl>
+    <PackageProjectUrl>https://github.com/UbiquityDotNET/Llvm.Net</PackageProjectUrl>
   </PropertyGroup>
   <ItemGroup>
     <Content Include="..\..\..\BuildOutput\bin\LibLLVM\$(Configuration)\x64\LibLLVM.dll" Link="runtimes\win-x64\native\LibLLVM.dll">
@@ -49,7 +48,7 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-      <PackageReference Include="Ubiquity.ArgValidators"/>
+      <PackageReference Include="Ubiquity.ArgValidators" />
   </ItemGroup>
   <!--
     Version numbers are computed at build time after any declarative properties are evaluated
