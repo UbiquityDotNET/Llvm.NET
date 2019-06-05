@@ -15,9 +15,6 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <None Include="EXPORTS.DEF">
-      <Filter>Source Files</Filter>
-    </None>
     <None Include="packages.config" />
     <None Include="cpp.hint" />
     <None Include="include\ReadMe.md">
