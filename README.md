@@ -66,6 +66,15 @@ The following is an example of the minimal configuration file needed to use Llvm
 ### API Documentation
 The full API documentation on using Llvm.NET is available on the [Llvm.NET documentation site](https://ubiquitydotnet.github.io/Llvm.NET/).
 
+### Sample Applications
+#### Code Generation With Debug Information
+The [CodeGenWithDebugInfo](https://github.com/UbiquityDotNET/Llvm.Net/tree/master/Samples/CodeGenWithDebugInfo) sample application provides an example of using Llvm.NET to generate
+LLVM Bit code equivalent to what the Clang compiler generates for a [simple C language file](https://github.com/UbiquityDotNET/Llvm.Net/blob/master/Samples/CodeGenWithDebugInfo/Support%20Files/test.c).
+The sample application doesn't actually parse the source, instead it is a manually constructed and documented example of how to use Llvm.NET to accomplish the bit-code generation. 
+
+#### Kaleidoscope Tutorial
+An Llvm.NET version of the LLVM sample [Kaleidoscope language tutorial](https://ubiquitydotnet.github.io/Llvm.NET/articles/Samples/Kaleidoscope.html) is provided to walk through many aspects of code generation and JIT execution with Llvm.NET. This tutorial implements a complete JIT execution engine for the Kaleidoscope language, along with AOT compilation, optimization and debug symbol generation. This, covers a significant surface area of the Llvm.NET classes and methods to provide a solid grounding on the use of the library.
+
 ## Building Llvm.NET
 ### Prerequsites
 * Visual Studio 2017 (15.4+) [Community Edition OK]
@@ -80,15 +89,6 @@ Llvm.NET source code during development.
 The Automated build support for Llvm.NET uses BuildAll.ps1 PowerShell script to build all the binaries and generate a
 NuGet package. To build the full package simply run `BuildAll.ps1` from a PowerShell command prompt with MSBuild tools
 on the system search path.
-
-### Sample Applications
-#### Code Generation With Debug Information
-The [CodeGenWithDebugInfo](https://github.com/UbiquityDotNET/Llvm.Net/tree/master/Samples/CodeGenWithDebugInfo) sample application provides an example of using Llvm.NET to generate
-LLVM Bit code equivalent to what the Clang compiler generates for a [simple C language file](https://github.com/UbiquityDotNET/Llvm.Net/blob/master/Samples/CodeGenWithDebugInfo/Support%20Files/test.c).
-The sample application doesn't actually parse the source, instead it is a manually constructed and documented example of how to use Llvm.NET to accomplish the bit-code generation. 
-
-#### Kaleidoscope Tutorial
-An Llvm.NET version of the LLVM sample [Kaleidoscope language tutorial](https://ubiquitydotnet.github.io/Llvm.NET/articles/Samples/Kaleidoscope.html) is provided to walk through many aspects of code generation and JIT execution with Llvm.NET. This tutorial implements a complete JIT execution engine for the Kaleidoscope language, along with AOT compilation, optimization and debug symbol generation. This, covers a significant surface area of the Llvm.NET classes and methods to provide a solid grounding on the use of the library.
 
 ### Code of Conduct
 This project has adopted the code of conduct defined by the [Contributor Covenant](http://contributor-covenant.org/)
