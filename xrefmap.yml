@@ -4892,6 +4892,12 @@ references:
   commentId: F:Llvm.NET.DebugInfo.DiTypeKind.Address
   fullName: Llvm.NET.DebugInfo.DiTypeKind.Address
   nameWithType: DiTypeKind.Address
+- uid: Llvm.NET.DebugInfo.DiTypeKind.ASCII
+  name: ASCII
+  href: api/Llvm.NET.DebugInfo.DiTypeKind.html#Llvm_NET_DebugInfo_DiTypeKind_ASCII
+  commentId: F:Llvm.NET.DebugInfo.DiTypeKind.ASCII
+  fullName: Llvm.NET.DebugInfo.DiTypeKind.ASCII
+  nameWithType: DiTypeKind.ASCII
 - uid: Llvm.NET.DebugInfo.DiTypeKind.Boolean
   name: Boolean
   href: api/Llvm.NET.DebugInfo.DiTypeKind.html#Llvm_NET_DebugInfo_DiTypeKind_Boolean
@@ -4976,6 +4982,12 @@ references:
   commentId: F:Llvm.NET.DebugInfo.DiTypeKind.SignedFixed
   fullName: Llvm.NET.DebugInfo.DiTypeKind.SignedFixed
   nameWithType: DiTypeKind.SignedFixed
+- uid: Llvm.NET.DebugInfo.DiTypeKind.UCS
+  name: UCS
+  href: api/Llvm.NET.DebugInfo.DiTypeKind.html#Llvm_NET_DebugInfo_DiTypeKind_UCS
+  commentId: F:Llvm.NET.DebugInfo.DiTypeKind.UCS
+  fullName: Llvm.NET.DebugInfo.DiTypeKind.UCS
+  nameWithType: DiTypeKind.UCS
 - uid: Llvm.NET.DebugInfo.DiTypeKind.Unsigned
   name: Unsigned
   href: api/Llvm.NET.DebugInfo.DiTypeKind.html#Llvm_NET_DebugInfo_DiTypeKind_Unsigned
@@ -10508,6 +10520,132 @@ references:
   commentId: Overload:Llvm.NET.Interop.LibLLVMComdatIteratorCallback.Invoke
   fullName: Llvm.NET.Interop.LibLLVMComdatIteratorCallback.Invoke
   nameWithType: LibLLVMComdatIteratorCallback.Invoke
+- uid: Llvm.NET.Interop.LibLLVMDwarfAttributeEncoding
+  name: LibLLVMDwarfAttributeEncoding
+  href: api/Llvm.NET.Interop.LibLLVMDwarfAttributeEncoding.html
+  commentId: T:Llvm.NET.Interop.LibLLVMDwarfAttributeEncoding
+  fullName: Llvm.NET.Interop.LibLLVMDwarfAttributeEncoding
+  nameWithType: LibLLVMDwarfAttributeEncoding
+- uid: Llvm.NET.Interop.LibLLVMDwarfAttributeEncoding.DW_ATE_address
+  name: DW_ATE_address
+  href: api/Llvm.NET.Interop.LibLLVMDwarfAttributeEncoding.html#Llvm_NET_Interop_LibLLVMDwarfAttributeEncoding_DW_ATE_address
+  commentId: F:Llvm.NET.Interop.LibLLVMDwarfAttributeEncoding.DW_ATE_address
+  fullName: Llvm.NET.Interop.LibLLVMDwarfAttributeEncoding.DW_ATE_address
+  nameWithType: LibLLVMDwarfAttributeEncoding.DW_ATE_address
+- uid: Llvm.NET.Interop.LibLLVMDwarfAttributeEncoding.DW_ATE_ASCII
+  name: DW_ATE_ASCII
+  href: api/Llvm.NET.Interop.LibLLVMDwarfAttributeEncoding.html#Llvm_NET_Interop_LibLLVMDwarfAttributeEncoding_DW_ATE_ASCII
+  commentId: F:Llvm.NET.Interop.LibLLVMDwarfAttributeEncoding.DW_ATE_ASCII
+  fullName: Llvm.NET.Interop.LibLLVMDwarfAttributeEncoding.DW_ATE_ASCII
+  nameWithType: LibLLVMDwarfAttributeEncoding.DW_ATE_ASCII
+- uid: Llvm.NET.Interop.LibLLVMDwarfAttributeEncoding.DW_ATE_boolean
+  name: DW_ATE_boolean
+  href: api/Llvm.NET.Interop.LibLLVMDwarfAttributeEncoding.html#Llvm_NET_Interop_LibLLVMDwarfAttributeEncoding_DW_ATE_boolean
+  commentId: F:Llvm.NET.Interop.LibLLVMDwarfAttributeEncoding.DW_ATE_boolean
+  fullName: Llvm.NET.Interop.LibLLVMDwarfAttributeEncoding.DW_ATE_boolean
+  nameWithType: LibLLVMDwarfAttributeEncoding.DW_ATE_boolean
+- uid: Llvm.NET.Interop.LibLLVMDwarfAttributeEncoding.DW_ATE_complex_float
+  name: DW_ATE_complex_float
+  href: api/Llvm.NET.Interop.LibLLVMDwarfAttributeEncoding.html#Llvm_NET_Interop_LibLLVMDwarfAttributeEncoding_DW_ATE_complex_float
+  commentId: F:Llvm.NET.Interop.LibLLVMDwarfAttributeEncoding.DW_ATE_complex_float
+  fullName: Llvm.NET.Interop.LibLLVMDwarfAttributeEncoding.DW_ATE_complex_float
+  nameWithType: LibLLVMDwarfAttributeEncoding.DW_ATE_complex_float
+- uid: Llvm.NET.Interop.LibLLVMDwarfAttributeEncoding.DW_ATE_decimal_float
+  name: DW_ATE_decimal_float
+  href: api/Llvm.NET.Interop.LibLLVMDwarfAttributeEncoding.html#Llvm_NET_Interop_LibLLVMDwarfAttributeEncoding_DW_ATE_decimal_float
+  commentId: F:Llvm.NET.Interop.LibLLVMDwarfAttributeEncoding.DW_ATE_decimal_float
+  fullName: Llvm.NET.Interop.LibLLVMDwarfAttributeEncoding.DW_ATE_decimal_float
+  nameWithType: LibLLVMDwarfAttributeEncoding.DW_ATE_decimal_float
+- uid: Llvm.NET.Interop.LibLLVMDwarfAttributeEncoding.DW_ATE_edited
+  name: DW_ATE_edited
+  href: api/Llvm.NET.Interop.LibLLVMDwarfAttributeEncoding.html#Llvm_NET_Interop_LibLLVMDwarfAttributeEncoding_DW_ATE_edited
+  commentId: F:Llvm.NET.Interop.LibLLVMDwarfAttributeEncoding.DW_ATE_edited
+  fullName: Llvm.NET.Interop.LibLLVMDwarfAttributeEncoding.DW_ATE_edited
+  nameWithType: LibLLVMDwarfAttributeEncoding.DW_ATE_edited
+- uid: Llvm.NET.Interop.LibLLVMDwarfAttributeEncoding.DW_ATE_float
+  name: DW_ATE_float
+  href: api/Llvm.NET.Interop.LibLLVMDwarfAttributeEncoding.html#Llvm_NET_Interop_LibLLVMDwarfAttributeEncoding_DW_ATE_float
+  commentId: F:Llvm.NET.Interop.LibLLVMDwarfAttributeEncoding.DW_ATE_float
+  fullName: Llvm.NET.Interop.LibLLVMDwarfAttributeEncoding.DW_ATE_float
+  nameWithType: LibLLVMDwarfAttributeEncoding.DW_ATE_float
+- uid: Llvm.NET.Interop.LibLLVMDwarfAttributeEncoding.DW_ATE_hi_user
+  name: DW_ATE_hi_user
+  href: api/Llvm.NET.Interop.LibLLVMDwarfAttributeEncoding.html#Llvm_NET_Interop_LibLLVMDwarfAttributeEncoding_DW_ATE_hi_user
+  commentId: F:Llvm.NET.Interop.LibLLVMDwarfAttributeEncoding.DW_ATE_hi_user
+  fullName: Llvm.NET.Interop.LibLLVMDwarfAttributeEncoding.DW_ATE_hi_user
+  nameWithType: LibLLVMDwarfAttributeEncoding.DW_ATE_hi_user
+- uid: Llvm.NET.Interop.LibLLVMDwarfAttributeEncoding.DW_ATE_imaginary_float
+  name: DW_ATE_imaginary_float
+  href: api/Llvm.NET.Interop.LibLLVMDwarfAttributeEncoding.html#Llvm_NET_Interop_LibLLVMDwarfAttributeEncoding_DW_ATE_imaginary_float
+  commentId: F:Llvm.NET.Interop.LibLLVMDwarfAttributeEncoding.DW_ATE_imaginary_float
+  fullName: Llvm.NET.Interop.LibLLVMDwarfAttributeEncoding.DW_ATE_imaginary_float
+  nameWithType: LibLLVMDwarfAttributeEncoding.DW_ATE_imaginary_float
+- uid: Llvm.NET.Interop.LibLLVMDwarfAttributeEncoding.DW_ATE_lo_user
+  name: DW_ATE_lo_user
+  href: api/Llvm.NET.Interop.LibLLVMDwarfAttributeEncoding.html#Llvm_NET_Interop_LibLLVMDwarfAttributeEncoding_DW_ATE_lo_user
+  commentId: F:Llvm.NET.Interop.LibLLVMDwarfAttributeEncoding.DW_ATE_lo_user
+  fullName: Llvm.NET.Interop.LibLLVMDwarfAttributeEncoding.DW_ATE_lo_user
+  nameWithType: LibLLVMDwarfAttributeEncoding.DW_ATE_lo_user
+- uid: Llvm.NET.Interop.LibLLVMDwarfAttributeEncoding.DW_ATE_numeric_string
+  name: DW_ATE_numeric_string
+  href: api/Llvm.NET.Interop.LibLLVMDwarfAttributeEncoding.html#Llvm_NET_Interop_LibLLVMDwarfAttributeEncoding_DW_ATE_numeric_string
+  commentId: F:Llvm.NET.Interop.LibLLVMDwarfAttributeEncoding.DW_ATE_numeric_string
+  fullName: Llvm.NET.Interop.LibLLVMDwarfAttributeEncoding.DW_ATE_numeric_string
+  nameWithType: LibLLVMDwarfAttributeEncoding.DW_ATE_numeric_string
+- uid: Llvm.NET.Interop.LibLLVMDwarfAttributeEncoding.DW_ATE_packed_decimal
+  name: DW_ATE_packed_decimal
+  href: api/Llvm.NET.Interop.LibLLVMDwarfAttributeEncoding.html#Llvm_NET_Interop_LibLLVMDwarfAttributeEncoding_DW_ATE_packed_decimal
+  commentId: F:Llvm.NET.Interop.LibLLVMDwarfAttributeEncoding.DW_ATE_packed_decimal
+  fullName: Llvm.NET.Interop.LibLLVMDwarfAttributeEncoding.DW_ATE_packed_decimal
+  nameWithType: LibLLVMDwarfAttributeEncoding.DW_ATE_packed_decimal
+- uid: Llvm.NET.Interop.LibLLVMDwarfAttributeEncoding.DW_ATE_signed
+  name: DW_ATE_signed
+  href: api/Llvm.NET.Interop.LibLLVMDwarfAttributeEncoding.html#Llvm_NET_Interop_LibLLVMDwarfAttributeEncoding_DW_ATE_signed
+  commentId: F:Llvm.NET.Interop.LibLLVMDwarfAttributeEncoding.DW_ATE_signed
+  fullName: Llvm.NET.Interop.LibLLVMDwarfAttributeEncoding.DW_ATE_signed
+  nameWithType: LibLLVMDwarfAttributeEncoding.DW_ATE_signed
+- uid: Llvm.NET.Interop.LibLLVMDwarfAttributeEncoding.DW_ATE_signed_char
+  name: DW_ATE_signed_char
+  href: api/Llvm.NET.Interop.LibLLVMDwarfAttributeEncoding.html#Llvm_NET_Interop_LibLLVMDwarfAttributeEncoding_DW_ATE_signed_char
+  commentId: F:Llvm.NET.Interop.LibLLVMDwarfAttributeEncoding.DW_ATE_signed_char
+  fullName: Llvm.NET.Interop.LibLLVMDwarfAttributeEncoding.DW_ATE_signed_char
+  nameWithType: LibLLVMDwarfAttributeEncoding.DW_ATE_signed_char
+- uid: Llvm.NET.Interop.LibLLVMDwarfAttributeEncoding.DW_ATE_signed_fixed
+  name: DW_ATE_signed_fixed
+  href: api/Llvm.NET.Interop.LibLLVMDwarfAttributeEncoding.html#Llvm_NET_Interop_LibLLVMDwarfAttributeEncoding_DW_ATE_signed_fixed
+  commentId: F:Llvm.NET.Interop.LibLLVMDwarfAttributeEncoding.DW_ATE_signed_fixed
+  fullName: Llvm.NET.Interop.LibLLVMDwarfAttributeEncoding.DW_ATE_signed_fixed
+  nameWithType: LibLLVMDwarfAttributeEncoding.DW_ATE_signed_fixed
+- uid: Llvm.NET.Interop.LibLLVMDwarfAttributeEncoding.DW_ATE_UCS
+  name: DW_ATE_UCS
+  href: api/Llvm.NET.Interop.LibLLVMDwarfAttributeEncoding.html#Llvm_NET_Interop_LibLLVMDwarfAttributeEncoding_DW_ATE_UCS
+  commentId: F:Llvm.NET.Interop.LibLLVMDwarfAttributeEncoding.DW_ATE_UCS
+  fullName: Llvm.NET.Interop.LibLLVMDwarfAttributeEncoding.DW_ATE_UCS
+  nameWithType: LibLLVMDwarfAttributeEncoding.DW_ATE_UCS
+- uid: Llvm.NET.Interop.LibLLVMDwarfAttributeEncoding.DW_ATE_unsigned
+  name: DW_ATE_unsigned
+  href: api/Llvm.NET.Interop.LibLLVMDwarfAttributeEncoding.html#Llvm_NET_Interop_LibLLVMDwarfAttributeEncoding_DW_ATE_unsigned
+  commentId: F:Llvm.NET.Interop.LibLLVMDwarfAttributeEncoding.DW_ATE_unsigned
+  fullName: Llvm.NET.Interop.LibLLVMDwarfAttributeEncoding.DW_ATE_unsigned
+  nameWithType: LibLLVMDwarfAttributeEncoding.DW_ATE_unsigned
+- uid: Llvm.NET.Interop.LibLLVMDwarfAttributeEncoding.DW_ATE_unsigned_char
+  name: DW_ATE_unsigned_char
+  href: api/Llvm.NET.Interop.LibLLVMDwarfAttributeEncoding.html#Llvm_NET_Interop_LibLLVMDwarfAttributeEncoding_DW_ATE_unsigned_char
+  commentId: F:Llvm.NET.Interop.LibLLVMDwarfAttributeEncoding.DW_ATE_unsigned_char
+  fullName: Llvm.NET.Interop.LibLLVMDwarfAttributeEncoding.DW_ATE_unsigned_char
+  nameWithType: LibLLVMDwarfAttributeEncoding.DW_ATE_unsigned_char
+- uid: Llvm.NET.Interop.LibLLVMDwarfAttributeEncoding.DW_ATE_unsigned_fixed
+  name: DW_ATE_unsigned_fixed
+  href: api/Llvm.NET.Interop.LibLLVMDwarfAttributeEncoding.html#Llvm_NET_Interop_LibLLVMDwarfAttributeEncoding_DW_ATE_unsigned_fixed
+  commentId: F:Llvm.NET.Interop.LibLLVMDwarfAttributeEncoding.DW_ATE_unsigned_fixed
+  fullName: Llvm.NET.Interop.LibLLVMDwarfAttributeEncoding.DW_ATE_unsigned_fixed
+  nameWithType: LibLLVMDwarfAttributeEncoding.DW_ATE_unsigned_fixed
+- uid: Llvm.NET.Interop.LibLLVMDwarfAttributeEncoding.DW_ATE_UTF
+  name: DW_ATE_UTF
+  href: api/Llvm.NET.Interop.LibLLVMDwarfAttributeEncoding.html#Llvm_NET_Interop_LibLLVMDwarfAttributeEncoding_DW_ATE_UTF
+  commentId: F:Llvm.NET.Interop.LibLLVMDwarfAttributeEncoding.DW_ATE_UTF
+  fullName: Llvm.NET.Interop.LibLLVMDwarfAttributeEncoding.DW_ATE_UTF
+  nameWithType: LibLLVMDwarfAttributeEncoding.DW_ATE_UTF
 - uid: Llvm.NET.Interop.LibLLVMDwarfSourceLanguage
   name: LibLLVMDwarfSourceLanguage
   href: api/Llvm.NET.Interop.LibLLVMDwarfSourceLanguage.html
@@ -19823,15 +19961,15 @@ references:
   commentId: Overload:Llvm.NET.Interop.NativeMethods.LibLLVMLookupInstrinsicId
   fullName: Llvm.NET.Interop.NativeMethods.LibLLVMLookupInstrinsicId
   nameWithType: NativeMethods.LibLLVMLookupInstrinsicId
-- uid: Llvm.NET.Interop.NativeMethods.LibLLVMMDNode2(Llvm.NET.Interop.LLVMContextRef,Llvm.NET.Interop.LLVMMetadataRef@,System.UInt32)
-  name: LibLLVMMDNode2(LLVMContextRef, out LLVMMetadataRef, UInt32)
-  href: api/Llvm.NET.Interop.NativeMethods.LibLLVMMDNode2.html#Llvm_NET_Interop_NativeMethods_LibLLVMMDNode2_Llvm_NET_Interop_LLVMContextRef_Llvm_NET_Interop_LLVMMetadataRef__System_UInt32_
-  commentId: M:Llvm.NET.Interop.NativeMethods.LibLLVMMDNode2(Llvm.NET.Interop.LLVMContextRef,Llvm.NET.Interop.LLVMMetadataRef@,System.UInt32)
-  name.vb: LibLLVMMDNode2(LLVMContextRef, ByRef LLVMMetadataRef, UInt32)
-  fullName: Llvm.NET.Interop.NativeMethods.LibLLVMMDNode2(Llvm.NET.Interop.LLVMContextRef, out Llvm.NET.Interop.LLVMMetadataRef, System.UInt32)
-  fullName.vb: Llvm.NET.Interop.NativeMethods.LibLLVMMDNode2(Llvm.NET.Interop.LLVMContextRef, ByRef Llvm.NET.Interop.LLVMMetadataRef, System.UInt32)
-  nameWithType: NativeMethods.LibLLVMMDNode2(LLVMContextRef, out LLVMMetadataRef, UInt32)
-  nameWithType.vb: NativeMethods.LibLLVMMDNode2(LLVMContextRef, ByRef LLVMMetadataRef, UInt32)
+- uid: Llvm.NET.Interop.NativeMethods.LibLLVMMDNode2(Llvm.NET.Interop.LLVMContextRef,Llvm.NET.Interop.LLVMMetadataRef[],System.UInt32)
+  name: LibLLVMMDNode2(LLVMContextRef, LLVMMetadataRef[], UInt32)
+  href: api/Llvm.NET.Interop.NativeMethods.LibLLVMMDNode2.html#Llvm_NET_Interop_NativeMethods_LibLLVMMDNode2_Llvm_NET_Interop_LLVMContextRef_Llvm_NET_Interop_LLVMMetadataRef___System_UInt32_
+  commentId: M:Llvm.NET.Interop.NativeMethods.LibLLVMMDNode2(Llvm.NET.Interop.LLVMContextRef,Llvm.NET.Interop.LLVMMetadataRef[],System.UInt32)
+  name.vb: LibLLVMMDNode2(LLVMContextRef, LLVMMetadataRef(), UInt32)
+  fullName: Llvm.NET.Interop.NativeMethods.LibLLVMMDNode2(Llvm.NET.Interop.LLVMContextRef, Llvm.NET.Interop.LLVMMetadataRef[], System.UInt32)
+  fullName.vb: Llvm.NET.Interop.NativeMethods.LibLLVMMDNode2(Llvm.NET.Interop.LLVMContextRef, Llvm.NET.Interop.LLVMMetadataRef(), System.UInt32)
+  nameWithType: NativeMethods.LibLLVMMDNode2(LLVMContextRef, LLVMMetadataRef[], UInt32)
+  nameWithType.vb: NativeMethods.LibLLVMMDNode2(LLVMContextRef, LLVMMetadataRef(), UInt32)
 - uid: Llvm.NET.Interop.NativeMethods.LibLLVMMDNode2*
   name: LibLLVMMDNode2
   href: api/Llvm.NET.Interop.NativeMethods.LibLLVMMDNode2.html
@@ -22133,15 +22271,15 @@ references:
   commentId: Overload:Llvm.NET.Interop.NativeMethods.LLVMBuildIntToPtr
   fullName: Llvm.NET.Interop.NativeMethods.LLVMBuildIntToPtr
   nameWithType: NativeMethods.LLVMBuildIntToPtr
-- uid: Llvm.NET.Interop.NativeMethods.LLVMBuildInvoke2(Llvm.NET.Interop.LLVMBuilderRef,Llvm.NET.Interop.LLVMTypeRef,Llvm.NET.Interop.LLVMValueRef,Llvm.NET.Interop.LLVMValueRef@,System.UInt32,Llvm.NET.Interop.LLVMBasicBlockRef,Llvm.NET.Interop.LLVMBasicBlockRef,System.String)
-  name: LLVMBuildInvoke2(LLVMBuilderRef, LLVMTypeRef, LLVMValueRef, out LLVMValueRef, UInt32, LLVMBasicBlockRef, LLVMBasicBlockRef, String)
-  href: api/Llvm.NET.Interop.NativeMethods.LLVMBuildInvoke2.html#Llvm_NET_Interop_NativeMethods_LLVMBuildInvoke2_Llvm_NET_Interop_LLVMBuilderRef_Llvm_NET_Interop_LLVMTypeRef_Llvm_NET_Interop_LLVMValueRef_Llvm_NET_Interop_LLVMValueRef__System_UInt32_Llvm_NET_Interop_LLVMBasicBlockRef_Llvm_NET_Interop_LLVMBasicBlockRef_System_String_
-  commentId: M:Llvm.NET.Interop.NativeMethods.LLVMBuildInvoke2(Llvm.NET.Interop.LLVMBuilderRef,Llvm.NET.Interop.LLVMTypeRef,Llvm.NET.Interop.LLVMValueRef,Llvm.NET.Interop.LLVMValueRef@,System.UInt32,Llvm.NET.Interop.LLVMBasicBlockRef,Llvm.NET.Interop.LLVMBasicBlockRef,System.String)
-  name.vb: LLVMBuildInvoke2(LLVMBuilderRef, LLVMTypeRef, LLVMValueRef, ByRef LLVMValueRef, UInt32, LLVMBasicBlockRef, LLVMBasicBlockRef, String)
-  fullName: Llvm.NET.Interop.NativeMethods.LLVMBuildInvoke2(Llvm.NET.Interop.LLVMBuilderRef, Llvm.NET.Interop.LLVMTypeRef, Llvm.NET.Interop.LLVMValueRef, out Llvm.NET.Interop.LLVMValueRef, System.UInt32, Llvm.NET.Interop.LLVMBasicBlockRef, Llvm.NET.Interop.LLVMBasicBlockRef, System.String)
-  fullName.vb: Llvm.NET.Interop.NativeMethods.LLVMBuildInvoke2(Llvm.NET.Interop.LLVMBuilderRef, Llvm.NET.Interop.LLVMTypeRef, Llvm.NET.Interop.LLVMValueRef, ByRef Llvm.NET.Interop.LLVMValueRef, System.UInt32, Llvm.NET.Interop.LLVMBasicBlockRef, Llvm.NET.Interop.LLVMBasicBlockRef, System.String)
-  nameWithType: NativeMethods.LLVMBuildInvoke2(LLVMBuilderRef, LLVMTypeRef, LLVMValueRef, out LLVMValueRef, UInt32, LLVMBasicBlockRef, LLVMBasicBlockRef, String)
-  nameWithType.vb: NativeMethods.LLVMBuildInvoke2(LLVMBuilderRef, LLVMTypeRef, LLVMValueRef, ByRef LLVMValueRef, UInt32, LLVMBasicBlockRef, LLVMBasicBlockRef, String)
+- uid: Llvm.NET.Interop.NativeMethods.LLVMBuildInvoke2(Llvm.NET.Interop.LLVMBuilderRef,Llvm.NET.Interop.LLVMTypeRef,Llvm.NET.Interop.LLVMValueRef,Llvm.NET.Interop.LLVMValueRef[],System.UInt32,Llvm.NET.Interop.LLVMBasicBlockRef,Llvm.NET.Interop.LLVMBasicBlockRef,System.String)
+  name: LLVMBuildInvoke2(LLVMBuilderRef, LLVMTypeRef, LLVMValueRef, LLVMValueRef[], UInt32, LLVMBasicBlockRef, LLVMBasicBlockRef, String)
+  href: api/Llvm.NET.Interop.NativeMethods.LLVMBuildInvoke2.html#Llvm_NET_Interop_NativeMethods_LLVMBuildInvoke2_Llvm_NET_Interop_LLVMBuilderRef_Llvm_NET_Interop_LLVMTypeRef_Llvm_NET_Interop_LLVMValueRef_Llvm_NET_Interop_LLVMValueRef___System_UInt32_Llvm_NET_Interop_LLVMBasicBlockRef_Llvm_NET_Interop_LLVMBasicBlockRef_System_String_
+  commentId: M:Llvm.NET.Interop.NativeMethods.LLVMBuildInvoke2(Llvm.NET.Interop.LLVMBuilderRef,Llvm.NET.Interop.LLVMTypeRef,Llvm.NET.Interop.LLVMValueRef,Llvm.NET.Interop.LLVMValueRef[],System.UInt32,Llvm.NET.Interop.LLVMBasicBlockRef,Llvm.NET.Interop.LLVMBasicBlockRef,System.String)
+  name.vb: LLVMBuildInvoke2(LLVMBuilderRef, LLVMTypeRef, LLVMValueRef, LLVMValueRef(), UInt32, LLVMBasicBlockRef, LLVMBasicBlockRef, String)
+  fullName: Llvm.NET.Interop.NativeMethods.LLVMBuildInvoke2(Llvm.NET.Interop.LLVMBuilderRef, Llvm.NET.Interop.LLVMTypeRef, Llvm.NET.Interop.LLVMValueRef, Llvm.NET.Interop.LLVMValueRef[], System.UInt32, Llvm.NET.Interop.LLVMBasicBlockRef, Llvm.NET.Interop.LLVMBasicBlockRef, System.String)
+  fullName.vb: Llvm.NET.Interop.NativeMethods.LLVMBuildInvoke2(Llvm.NET.Interop.LLVMBuilderRef, Llvm.NET.Interop.LLVMTypeRef, Llvm.NET.Interop.LLVMValueRef, Llvm.NET.Interop.LLVMValueRef(), System.UInt32, Llvm.NET.Interop.LLVMBasicBlockRef, Llvm.NET.Interop.LLVMBasicBlockRef, System.String)
+  nameWithType: NativeMethods.LLVMBuildInvoke2(LLVMBuilderRef, LLVMTypeRef, LLVMValueRef, LLVMValueRef[], UInt32, LLVMBasicBlockRef, LLVMBasicBlockRef, String)
+  nameWithType.vb: NativeMethods.LLVMBuildInvoke2(LLVMBuilderRef, LLVMTypeRef, LLVMValueRef, LLVMValueRef(), UInt32, LLVMBasicBlockRef, LLVMBasicBlockRef, String)
 - uid: Llvm.NET.Interop.NativeMethods.LLVMBuildInvoke2*
   name: LLVMBuildInvoke2
   href: api/Llvm.NET.Interop.NativeMethods.LLVMBuildInvoke2.html
@@ -22844,15 +22982,15 @@ references:
   commentId: Overload:Llvm.NET.Interop.NativeMethods.LLVMConstAnd
   fullName: Llvm.NET.Interop.NativeMethods.LLVMConstAnd
   nameWithType: NativeMethods.LLVMConstAnd
-- uid: Llvm.NET.Interop.NativeMethods.LLVMConstArray(Llvm.NET.Interop.LLVMTypeRef,Llvm.NET.Interop.LLVMValueRef@,System.UInt32)
-  name: LLVMConstArray(LLVMTypeRef, out LLVMValueRef, UInt32)
-  href: api/Llvm.NET.Interop.NativeMethods.LLVMConstArray.html#Llvm_NET_Interop_NativeMethods_LLVMConstArray_Llvm_NET_Interop_LLVMTypeRef_Llvm_NET_Interop_LLVMValueRef__System_UInt32_
-  commentId: M:Llvm.NET.Interop.NativeMethods.LLVMConstArray(Llvm.NET.Interop.LLVMTypeRef,Llvm.NET.Interop.LLVMValueRef@,System.UInt32)
-  name.vb: LLVMConstArray(LLVMTypeRef, ByRef LLVMValueRef, UInt32)
-  fullName: Llvm.NET.Interop.NativeMethods.LLVMConstArray(Llvm.NET.Interop.LLVMTypeRef, out Llvm.NET.Interop.LLVMValueRef, System.UInt32)
-  fullName.vb: Llvm.NET.Interop.NativeMethods.LLVMConstArray(Llvm.NET.Interop.LLVMTypeRef, ByRef Llvm.NET.Interop.LLVMValueRef, System.UInt32)
-  nameWithType: NativeMethods.LLVMConstArray(LLVMTypeRef, out LLVMValueRef, UInt32)
-  nameWithType.vb: NativeMethods.LLVMConstArray(LLVMTypeRef, ByRef LLVMValueRef, UInt32)
+- uid: Llvm.NET.Interop.NativeMethods.LLVMConstArray(Llvm.NET.Interop.LLVMTypeRef,Llvm.NET.Interop.LLVMValueRef[],System.UInt32)
+  name: LLVMConstArray(LLVMTypeRef, LLVMValueRef[], UInt32)
+  href: api/Llvm.NET.Interop.NativeMethods.LLVMConstArray.html#Llvm_NET_Interop_NativeMethods_LLVMConstArray_Llvm_NET_Interop_LLVMTypeRef_Llvm_NET_Interop_LLVMValueRef___System_UInt32_
+  commentId: M:Llvm.NET.Interop.NativeMethods.LLVMConstArray(Llvm.NET.Interop.LLVMTypeRef,Llvm.NET.Interop.LLVMValueRef[],System.UInt32)
+  name.vb: LLVMConstArray(LLVMTypeRef, LLVMValueRef(), UInt32)
+  fullName: Llvm.NET.Interop.NativeMethods.LLVMConstArray(Llvm.NET.Interop.LLVMTypeRef, Llvm.NET.Interop.LLVMValueRef[], System.UInt32)
+  fullName.vb: Llvm.NET.Interop.NativeMethods.LLVMConstArray(Llvm.NET.Interop.LLVMTypeRef, Llvm.NET.Interop.LLVMValueRef(), System.UInt32)
+  nameWithType: NativeMethods.LLVMConstArray(LLVMTypeRef, LLVMValueRef[], UInt32)
+  nameWithType.vb: NativeMethods.LLVMConstArray(LLVMTypeRef, LLVMValueRef(), UInt32)
 - uid: Llvm.NET.Interop.NativeMethods.LLVMConstArray*
   name: LLVMConstArray
   href: api/Llvm.NET.Interop.NativeMethods.LLVMConstArray.html
@@ -23105,15 +23243,15 @@ references:
   commentId: Overload:Llvm.NET.Interop.NativeMethods.LLVMConstICmp
   fullName: Llvm.NET.Interop.NativeMethods.LLVMConstICmp
   nameWithType: NativeMethods.LLVMConstICmp
-- uid: Llvm.NET.Interop.NativeMethods.LLVMConstInBoundsGEP(Llvm.NET.Interop.LLVMValueRef,Llvm.NET.Interop.LLVMValueRef@,System.UInt32)
-  name: LLVMConstInBoundsGEP(LLVMValueRef, out LLVMValueRef, UInt32)
-  href: api/Llvm.NET.Interop.NativeMethods.LLVMConstInBoundsGEP.html#Llvm_NET_Interop_NativeMethods_LLVMConstInBoundsGEP_Llvm_NET_Interop_LLVMValueRef_Llvm_NET_Interop_LLVMValueRef__System_UInt32_
-  commentId: M:Llvm.NET.Interop.NativeMethods.LLVMConstInBoundsGEP(Llvm.NET.Interop.LLVMValueRef,Llvm.NET.Interop.LLVMValueRef@,System.UInt32)
-  name.vb: LLVMConstInBoundsGEP(LLVMValueRef, ByRef LLVMValueRef, UInt32)
-  fullName: Llvm.NET.Interop.NativeMethods.LLVMConstInBoundsGEP(Llvm.NET.Interop.LLVMValueRef, out Llvm.NET.Interop.LLVMValueRef, System.UInt32)
-  fullName.vb: Llvm.NET.Interop.NativeMethods.LLVMConstInBoundsGEP(Llvm.NET.Interop.LLVMValueRef, ByRef Llvm.NET.Interop.LLVMValueRef, System.UInt32)
-  nameWithType: NativeMethods.LLVMConstInBoundsGEP(LLVMValueRef, out LLVMValueRef, UInt32)
-  nameWithType.vb: NativeMethods.LLVMConstInBoundsGEP(LLVMValueRef, ByRef LLVMValueRef, UInt32)
+- uid: Llvm.NET.Interop.NativeMethods.LLVMConstInBoundsGEP(Llvm.NET.Interop.LLVMValueRef,Llvm.NET.Interop.LLVMValueRef[],System.UInt32)
+  name: LLVMConstInBoundsGEP(LLVMValueRef, LLVMValueRef[], UInt32)
+  href: api/Llvm.NET.Interop.NativeMethods.LLVMConstInBoundsGEP.html#Llvm_NET_Interop_NativeMethods_LLVMConstInBoundsGEP_Llvm_NET_Interop_LLVMValueRef_Llvm_NET_Interop_LLVMValueRef___System_UInt32_
+  commentId: M:Llvm.NET.Interop.NativeMethods.LLVMConstInBoundsGEP(Llvm.NET.Interop.LLVMValueRef,Llvm.NET.Interop.LLVMValueRef[],System.UInt32)
+  name.vb: LLVMConstInBoundsGEP(LLVMValueRef, LLVMValueRef(), UInt32)
+  fullName: Llvm.NET.Interop.NativeMethods.LLVMConstInBoundsGEP(Llvm.NET.Interop.LLVMValueRef, Llvm.NET.Interop.LLVMValueRef[], System.UInt32)
+  fullName.vb: Llvm.NET.Interop.NativeMethods.LLVMConstInBoundsGEP(Llvm.NET.Interop.LLVMValueRef, Llvm.NET.Interop.LLVMValueRef(), System.UInt32)
+  nameWithType: NativeMethods.LLVMConstInBoundsGEP(LLVMValueRef, LLVMValueRef[], UInt32)
+  nameWithType.vb: NativeMethods.LLVMConstInBoundsGEP(LLVMValueRef, LLVMValueRef(), UInt32)
 - uid: Llvm.NET.Interop.NativeMethods.LLVMConstInBoundsGEP*
   name: LLVMConstInBoundsGEP
   href: api/Llvm.NET.Interop.NativeMethods.LLVMConstInBoundsGEP.html
@@ -23270,15 +23408,15 @@ references:
   commentId: Overload:Llvm.NET.Interop.NativeMethods.LLVMConstMul
   fullName: Llvm.NET.Interop.NativeMethods.LLVMConstMul
   nameWithType: NativeMethods.LLVMConstMul
-- uid: Llvm.NET.Interop.NativeMethods.LLVMConstNamedStruct(Llvm.NET.Interop.LLVMTypeRef,Llvm.NET.Interop.LLVMValueRef@,System.UInt32)
-  name: LLVMConstNamedStruct(LLVMTypeRef, out LLVMValueRef, UInt32)
-  href: api/Llvm.NET.Interop.NativeMethods.LLVMConstNamedStruct.html#Llvm_NET_Interop_NativeMethods_LLVMConstNamedStruct_Llvm_NET_Interop_LLVMTypeRef_Llvm_NET_Interop_LLVMValueRef__System_UInt32_
-  commentId: M:Llvm.NET.Interop.NativeMethods.LLVMConstNamedStruct(Llvm.NET.Interop.LLVMTypeRef,Llvm.NET.Interop.LLVMValueRef@,System.UInt32)
-  name.vb: LLVMConstNamedStruct(LLVMTypeRef, ByRef LLVMValueRef, UInt32)
-  fullName: Llvm.NET.Interop.NativeMethods.LLVMConstNamedStruct(Llvm.NET.Interop.LLVMTypeRef, out Llvm.NET.Interop.LLVMValueRef, System.UInt32)
-  fullName.vb: Llvm.NET.Interop.NativeMethods.LLVMConstNamedStruct(Llvm.NET.Interop.LLVMTypeRef, ByRef Llvm.NET.Interop.LLVMValueRef, System.UInt32)
-  nameWithType: NativeMethods.LLVMConstNamedStruct(LLVMTypeRef, out LLVMValueRef, UInt32)
-  nameWithType.vb: NativeMethods.LLVMConstNamedStruct(LLVMTypeRef, ByRef LLVMValueRef, UInt32)
+- uid: Llvm.NET.Interop.NativeMethods.LLVMConstNamedStruct(Llvm.NET.Interop.LLVMTypeRef,Llvm.NET.Interop.LLVMValueRef[],System.UInt32)
+  name: LLVMConstNamedStruct(LLVMTypeRef, LLVMValueRef[], UInt32)
+  href: api/Llvm.NET.Interop.NativeMethods.LLVMConstNamedStruct.html#Llvm_NET_Interop_NativeMethods_LLVMConstNamedStruct_Llvm_NET_Interop_LLVMTypeRef_Llvm_NET_Interop_LLVMValueRef___System_UInt32_
+  commentId: M:Llvm.NET.Interop.NativeMethods.LLVMConstNamedStruct(Llvm.NET.Interop.LLVMTypeRef,Llvm.NET.Interop.LLVMValueRef[],System.UInt32)
+  name.vb: LLVMConstNamedStruct(LLVMTypeRef, LLVMValueRef(), UInt32)
+  fullName: Llvm.NET.Interop.NativeMethods.LLVMConstNamedStruct(Llvm.NET.Interop.LLVMTypeRef, Llvm.NET.Interop.LLVMValueRef[], System.UInt32)
+  fullName.vb: Llvm.NET.Interop.NativeMethods.LLVMConstNamedStruct(Llvm.NET.Interop.LLVMTypeRef, Llvm.NET.Interop.LLVMValueRef(), System.UInt32)
+  nameWithType: NativeMethods.LLVMConstNamedStruct(LLVMTypeRef, LLVMValueRef[], UInt32)
+  nameWithType.vb: NativeMethods.LLVMConstNamedStruct(LLVMTypeRef, LLVMValueRef(), UInt32)
 - uid: Llvm.NET.Interop.NativeMethods.LLVMConstNamedStruct*
   name: LLVMConstNamedStruct
   href: api/Llvm.NET.Interop.NativeMethods.LLVMConstNamedStruct.html
@@ -23651,15 +23789,15 @@ references:
   commentId: Overload:Llvm.NET.Interop.NativeMethods.LLVMConstStruct
   fullName: Llvm.NET.Interop.NativeMethods.LLVMConstStruct
   nameWithType: NativeMethods.LLVMConstStruct
-- uid: Llvm.NET.Interop.NativeMethods.LLVMConstStructInContext(Llvm.NET.Interop.LLVMContextRef,Llvm.NET.Interop.LLVMValueRef@,System.UInt32,System.Boolean)
-  name: LLVMConstStructInContext(LLVMContextRef, out LLVMValueRef, UInt32, Boolean)
-  href: api/Llvm.NET.Interop.NativeMethods.LLVMConstStructInContext.html#Llvm_NET_Interop_NativeMethods_LLVMConstStructInContext_Llvm_NET_Interop_LLVMContextRef_Llvm_NET_Interop_LLVMValueRef__System_UInt32_System_Boolean_
-  commentId: M:Llvm.NET.Interop.NativeMethods.LLVMConstStructInContext(Llvm.NET.Interop.LLVMContextRef,Llvm.NET.Interop.LLVMValueRef@,System.UInt32,System.Boolean)
-  name.vb: LLVMConstStructInContext(LLVMContextRef, ByRef LLVMValueRef, UInt32, Boolean)
-  fullName: Llvm.NET.Interop.NativeMethods.LLVMConstStructInContext(Llvm.NET.Interop.LLVMContextRef, out Llvm.NET.Interop.LLVMValueRef, System.UInt32, System.Boolean)
-  fullName.vb: Llvm.NET.Interop.NativeMethods.LLVMConstStructInContext(Llvm.NET.Interop.LLVMContextRef, ByRef Llvm.NET.Interop.LLVMValueRef, System.UInt32, System.Boolean)
-  nameWithType: NativeMethods.LLVMConstStructInContext(LLVMContextRef, out LLVMValueRef, UInt32, Boolean)
-  nameWithType.vb: NativeMethods.LLVMConstStructInContext(LLVMContextRef, ByRef LLVMValueRef, UInt32, Boolean)
+- uid: Llvm.NET.Interop.NativeMethods.LLVMConstStructInContext(Llvm.NET.Interop.LLVMContextRef,Llvm.NET.Interop.LLVMValueRef[],System.UInt32,System.Boolean)
+  name: LLVMConstStructInContext(LLVMContextRef, LLVMValueRef[], UInt32, Boolean)
+  href: api/Llvm.NET.Interop.NativeMethods.LLVMConstStructInContext.html#Llvm_NET_Interop_NativeMethods_LLVMConstStructInContext_Llvm_NET_Interop_LLVMContextRef_Llvm_NET_Interop_LLVMValueRef___System_UInt32_System_Boolean_
+  commentId: M:Llvm.NET.Interop.NativeMethods.LLVMConstStructInContext(Llvm.NET.Interop.LLVMContextRef,Llvm.NET.Interop.LLVMValueRef[],System.UInt32,System.Boolean)
+  name.vb: LLVMConstStructInContext(LLVMContextRef, LLVMValueRef(), UInt32, Boolean)
+  fullName: Llvm.NET.Interop.NativeMethods.LLVMConstStructInContext(Llvm.NET.Interop.LLVMContextRef, Llvm.NET.Interop.LLVMValueRef[], System.UInt32, System.Boolean)
+  fullName.vb: Llvm.NET.Interop.NativeMethods.LLVMConstStructInContext(Llvm.NET.Interop.LLVMContextRef, Llvm.NET.Interop.LLVMValueRef(), System.UInt32, System.Boolean)
+  nameWithType: NativeMethods.LLVMConstStructInContext(LLVMContextRef, LLVMValueRef[], UInt32, Boolean)
+  nameWithType.vb: NativeMethods.LLVMConstStructInContext(LLVMContextRef, LLVMValueRef(), UInt32, Boolean)
 - uid: Llvm.NET.Interop.NativeMethods.LLVMConstStructInContext*
   name: LLVMConstStructInContext
   href: api/Llvm.NET.Interop.NativeMethods.LLVMConstStructInContext.html
@@ -24551,15 +24689,15 @@ references:
   commentId: Overload:Llvm.NET.Interop.NativeMethods.LLVMDIBuilderCreateEnumerationType
   fullName: Llvm.NET.Interop.NativeMethods.LLVMDIBuilderCreateEnumerationType
   nameWithType: NativeMethods.LLVMDIBuilderCreateEnumerationType
-- uid: Llvm.NET.Interop.NativeMethods.LLVMDIBuilderCreateExpression(Llvm.NET.Interop.LLVMDIBuilderRef,System.Int64@,Llvm.NET.Interop.size_t)
-  name: LLVMDIBuilderCreateExpression(LLVMDIBuilderRef, out Int64, size_t)
-  href: api/Llvm.NET.Interop.NativeMethods.LLVMDIBuilderCreateExpression.html#Llvm_NET_Interop_NativeMethods_LLVMDIBuilderCreateExpression_Llvm_NET_Interop_LLVMDIBuilderRef_System_Int64__Llvm_NET_Interop_size_t_
-  commentId: M:Llvm.NET.Interop.NativeMethods.LLVMDIBuilderCreateExpression(Llvm.NET.Interop.LLVMDIBuilderRef,System.Int64@,Llvm.NET.Interop.size_t)
-  name.vb: LLVMDIBuilderCreateExpression(LLVMDIBuilderRef, ByRef Int64, size_t)
-  fullName: Llvm.NET.Interop.NativeMethods.LLVMDIBuilderCreateExpression(Llvm.NET.Interop.LLVMDIBuilderRef, out System.Int64, Llvm.NET.Interop.size_t)
-  fullName.vb: Llvm.NET.Interop.NativeMethods.LLVMDIBuilderCreateExpression(Llvm.NET.Interop.LLVMDIBuilderRef, ByRef System.Int64, Llvm.NET.Interop.size_t)
-  nameWithType: NativeMethods.LLVMDIBuilderCreateExpression(LLVMDIBuilderRef, out Int64, size_t)
-  nameWithType.vb: NativeMethods.LLVMDIBuilderCreateExpression(LLVMDIBuilderRef, ByRef Int64, size_t)
+- uid: Llvm.NET.Interop.NativeMethods.LLVMDIBuilderCreateExpression(Llvm.NET.Interop.LLVMDIBuilderRef,System.Int64[],Llvm.NET.Interop.size_t)
+  name: LLVMDIBuilderCreateExpression(LLVMDIBuilderRef, Int64[], size_t)
+  href: api/Llvm.NET.Interop.NativeMethods.LLVMDIBuilderCreateExpression.html#Llvm_NET_Interop_NativeMethods_LLVMDIBuilderCreateExpression_Llvm_NET_Interop_LLVMDIBuilderRef_System_Int64___Llvm_NET_Interop_size_t_
+  commentId: M:Llvm.NET.Interop.NativeMethods.LLVMDIBuilderCreateExpression(Llvm.NET.Interop.LLVMDIBuilderRef,System.Int64[],Llvm.NET.Interop.size_t)
+  name.vb: LLVMDIBuilderCreateExpression(LLVMDIBuilderRef, Int64(), size_t)
+  fullName: Llvm.NET.Interop.NativeMethods.LLVMDIBuilderCreateExpression(Llvm.NET.Interop.LLVMDIBuilderRef, System.Int64[], Llvm.NET.Interop.size_t)
+  fullName.vb: Llvm.NET.Interop.NativeMethods.LLVMDIBuilderCreateExpression(Llvm.NET.Interop.LLVMDIBuilderRef, System.Int64(), Llvm.NET.Interop.size_t)
+  nameWithType: NativeMethods.LLVMDIBuilderCreateExpression(LLVMDIBuilderRef, Int64[], size_t)
+  nameWithType.vb: NativeMethods.LLVMDIBuilderCreateExpression(LLVMDIBuilderRef, Int64(), size_t)
 - uid: Llvm.NET.Interop.NativeMethods.LLVMDIBuilderCreateExpression*
   name: LLVMDIBuilderCreateExpression
   href: api/Llvm.NET.Interop.NativeMethods.LLVMDIBuilderCreateExpression.html
@@ -24974,15 +25112,15 @@ references:
   commentId: Overload:Llvm.NET.Interop.NativeMethods.LLVMDIBuilderFinalize
   fullName: Llvm.NET.Interop.NativeMethods.LLVMDIBuilderFinalize
   nameWithType: NativeMethods.LLVMDIBuilderFinalize
-- uid: Llvm.NET.Interop.NativeMethods.LLVMDIBuilderGetOrCreateArray(Llvm.NET.Interop.LLVMDIBuilderRef,Llvm.NET.Interop.LLVMMetadataRef@,Llvm.NET.Interop.size_t)
-  name: LLVMDIBuilderGetOrCreateArray(LLVMDIBuilderRef, out LLVMMetadataRef, size_t)
-  href: api/Llvm.NET.Interop.NativeMethods.LLVMDIBuilderGetOrCreateArray.html#Llvm_NET_Interop_NativeMethods_LLVMDIBuilderGetOrCreateArray_Llvm_NET_Interop_LLVMDIBuilderRef_Llvm_NET_Interop_LLVMMetadataRef__Llvm_NET_Interop_size_t_
-  commentId: M:Llvm.NET.Interop.NativeMethods.LLVMDIBuilderGetOrCreateArray(Llvm.NET.Interop.LLVMDIBuilderRef,Llvm.NET.Interop.LLVMMetadataRef@,Llvm.NET.Interop.size_t)
-  name.vb: LLVMDIBuilderGetOrCreateArray(LLVMDIBuilderRef, ByRef LLVMMetadataRef, size_t)
-  fullName: Llvm.NET.Interop.NativeMethods.LLVMDIBuilderGetOrCreateArray(Llvm.NET.Interop.LLVMDIBuilderRef, out Llvm.NET.Interop.LLVMMetadataRef, Llvm.NET.Interop.size_t)
-  fullName.vb: Llvm.NET.Interop.NativeMethods.LLVMDIBuilderGetOrCreateArray(Llvm.NET.Interop.LLVMDIBuilderRef, ByRef Llvm.NET.Interop.LLVMMetadataRef, Llvm.NET.Interop.size_t)
-  nameWithType: NativeMethods.LLVMDIBuilderGetOrCreateArray(LLVMDIBuilderRef, out LLVMMetadataRef, size_t)
-  nameWithType.vb: NativeMethods.LLVMDIBuilderGetOrCreateArray(LLVMDIBuilderRef, ByRef LLVMMetadataRef, size_t)
+- uid: Llvm.NET.Interop.NativeMethods.LLVMDIBuilderGetOrCreateArray(Llvm.NET.Interop.LLVMDIBuilderRef,Llvm.NET.Interop.LLVMMetadataRef[],Llvm.NET.Interop.size_t)
+  name: LLVMDIBuilderGetOrCreateArray(LLVMDIBuilderRef, LLVMMetadataRef[], size_t)
+  href: api/Llvm.NET.Interop.NativeMethods.LLVMDIBuilderGetOrCreateArray.html#Llvm_NET_Interop_NativeMethods_LLVMDIBuilderGetOrCreateArray_Llvm_NET_Interop_LLVMDIBuilderRef_Llvm_NET_Interop_LLVMMetadataRef___Llvm_NET_Interop_size_t_
+  commentId: M:Llvm.NET.Interop.NativeMethods.LLVMDIBuilderGetOrCreateArray(Llvm.NET.Interop.LLVMDIBuilderRef,Llvm.NET.Interop.LLVMMetadataRef[],Llvm.NET.Interop.size_t)
+  name.vb: LLVMDIBuilderGetOrCreateArray(LLVMDIBuilderRef, LLVMMetadataRef(), size_t)
+  fullName: Llvm.NET.Interop.NativeMethods.LLVMDIBuilderGetOrCreateArray(Llvm.NET.Interop.LLVMDIBuilderRef, Llvm.NET.Interop.LLVMMetadataRef[], Llvm.NET.Interop.size_t)
+  fullName.vb: Llvm.NET.Interop.NativeMethods.LLVMDIBuilderGetOrCreateArray(Llvm.NET.Interop.LLVMDIBuilderRef, Llvm.NET.Interop.LLVMMetadataRef(), Llvm.NET.Interop.size_t)
+  nameWithType: NativeMethods.LLVMDIBuilderGetOrCreateArray(LLVMDIBuilderRef, LLVMMetadataRef[], size_t)
+  nameWithType.vb: NativeMethods.LLVMDIBuilderGetOrCreateArray(LLVMDIBuilderRef, LLVMMetadataRef(), size_t)
 - uid: Llvm.NET.Interop.NativeMethods.LLVMDIBuilderGetOrCreateArray*
   name: LLVMDIBuilderGetOrCreateArray
   href: api/Llvm.NET.Interop.NativeMethods.LLVMDIBuilderGetOrCreateArray.html
@@ -25001,15 +25139,15 @@ references:
   commentId: Overload:Llvm.NET.Interop.NativeMethods.LLVMDIBuilderGetOrCreateSubrange
   fullName: Llvm.NET.Interop.NativeMethods.LLVMDIBuilderGetOrCreateSubrange
   nameWithType: NativeMethods.LLVMDIBuilderGetOrCreateSubrange
-- uid: Llvm.NET.Interop.NativeMethods.LLVMDIBuilderGetOrCreateTypeArray(Llvm.NET.Interop.LLVMDIBuilderRef,Llvm.NET.Interop.LLVMMetadataRef@,Llvm.NET.Interop.size_t)
-  name: LLVMDIBuilderGetOrCreateTypeArray(LLVMDIBuilderRef, out LLVMMetadataRef, size_t)
-  href: api/Llvm.NET.Interop.NativeMethods.LLVMDIBuilderGetOrCreateTypeArray.html#Llvm_NET_Interop_NativeMethods_LLVMDIBuilderGetOrCreateTypeArray_Llvm_NET_Interop_LLVMDIBuilderRef_Llvm_NET_Interop_LLVMMetadataRef__Llvm_NET_Interop_size_t_
-  commentId: M:Llvm.NET.Interop.NativeMethods.LLVMDIBuilderGetOrCreateTypeArray(Llvm.NET.Interop.LLVMDIBuilderRef,Llvm.NET.Interop.LLVMMetadataRef@,Llvm.NET.Interop.size_t)
-  name.vb: LLVMDIBuilderGetOrCreateTypeArray(LLVMDIBuilderRef, ByRef LLVMMetadataRef, size_t)
-  fullName: Llvm.NET.Interop.NativeMethods.LLVMDIBuilderGetOrCreateTypeArray(Llvm.NET.Interop.LLVMDIBuilderRef, out Llvm.NET.Interop.LLVMMetadataRef, Llvm.NET.Interop.size_t)
-  fullName.vb: Llvm.NET.Interop.NativeMethods.LLVMDIBuilderGetOrCreateTypeArray(Llvm.NET.Interop.LLVMDIBuilderRef, ByRef Llvm.NET.Interop.LLVMMetadataRef, Llvm.NET.Interop.size_t)
-  nameWithType: NativeMethods.LLVMDIBuilderGetOrCreateTypeArray(LLVMDIBuilderRef, out LLVMMetadataRef, size_t)
-  nameWithType.vb: NativeMethods.LLVMDIBuilderGetOrCreateTypeArray(LLVMDIBuilderRef, ByRef LLVMMetadataRef, size_t)
+- uid: Llvm.NET.Interop.NativeMethods.LLVMDIBuilderGetOrCreateTypeArray(Llvm.NET.Interop.LLVMDIBuilderRef,Llvm.NET.Interop.LLVMMetadataRef[],Llvm.NET.Interop.size_t)
+  name: LLVMDIBuilderGetOrCreateTypeArray(LLVMDIBuilderRef, LLVMMetadataRef[], size_t)
+  href: api/Llvm.NET.Interop.NativeMethods.LLVMDIBuilderGetOrCreateTypeArray.html#Llvm_NET_Interop_NativeMethods_LLVMDIBuilderGetOrCreateTypeArray_Llvm_NET_Interop_LLVMDIBuilderRef_Llvm_NET_Interop_LLVMMetadataRef___Llvm_NET_Interop_size_t_
+  commentId: M:Llvm.NET.Interop.NativeMethods.LLVMDIBuilderGetOrCreateTypeArray(Llvm.NET.Interop.LLVMDIBuilderRef,Llvm.NET.Interop.LLVMMetadataRef[],Llvm.NET.Interop.size_t)
+  name.vb: LLVMDIBuilderGetOrCreateTypeArray(LLVMDIBuilderRef, LLVMMetadataRef(), size_t)
+  fullName: Llvm.NET.Interop.NativeMethods.LLVMDIBuilderGetOrCreateTypeArray(Llvm.NET.Interop.LLVMDIBuilderRef, Llvm.NET.Interop.LLVMMetadataRef[], Llvm.NET.Interop.size_t)
+  fullName.vb: Llvm.NET.Interop.NativeMethods.LLVMDIBuilderGetOrCreateTypeArray(Llvm.NET.Interop.LLVMDIBuilderRef, Llvm.NET.Interop.LLVMMetadataRef(), Llvm.NET.Interop.size_t)
+  nameWithType: NativeMethods.LLVMDIBuilderGetOrCreateTypeArray(LLVMDIBuilderRef, LLVMMetadataRef[], size_t)
+  nameWithType.vb: NativeMethods.LLVMDIBuilderGetOrCreateTypeArray(LLVMDIBuilderRef, LLVMMetadataRef(), size_t)
 - uid: Llvm.NET.Interop.NativeMethods.LLVMDIBuilderGetOrCreateTypeArray*
   name: LLVMDIBuilderGetOrCreateTypeArray
   href: api/Llvm.NET.Interop.NativeMethods.LLVMDIBuilderGetOrCreateTypeArray.html
@@ -25385,15 +25523,15 @@ references:
   commentId: Overload:Llvm.NET.Interop.NativeMethods.LLVMFreeMachineCodeForFunction
   fullName: Llvm.NET.Interop.NativeMethods.LLVMFreeMachineCodeForFunction
   nameWithType: NativeMethods.LLVMFreeMachineCodeForFunction
-- uid: Llvm.NET.Interop.NativeMethods.LLVMFunctionType(Llvm.NET.Interop.LLVMTypeRef,Llvm.NET.Interop.LLVMTypeRef@,System.UInt32,System.Boolean)
-  name: LLVMFunctionType(LLVMTypeRef, out LLVMTypeRef, UInt32, Boolean)
-  href: api/Llvm.NET.Interop.NativeMethods.LLVMFunctionType.html#Llvm_NET_Interop_NativeMethods_LLVMFunctionType_Llvm_NET_Interop_LLVMTypeRef_Llvm_NET_Interop_LLVMTypeRef__System_UInt32_System_Boolean_
-  commentId: M:Llvm.NET.Interop.NativeMethods.LLVMFunctionType(Llvm.NET.Interop.LLVMTypeRef,Llvm.NET.Interop.LLVMTypeRef@,System.UInt32,System.Boolean)
-  name.vb: LLVMFunctionType(LLVMTypeRef, ByRef LLVMTypeRef, UInt32, Boolean)
-  fullName: Llvm.NET.Interop.NativeMethods.LLVMFunctionType(Llvm.NET.Interop.LLVMTypeRef, out Llvm.NET.Interop.LLVMTypeRef, System.UInt32, System.Boolean)
-  fullName.vb: Llvm.NET.Interop.NativeMethods.LLVMFunctionType(Llvm.NET.Interop.LLVMTypeRef, ByRef Llvm.NET.Interop.LLVMTypeRef, System.UInt32, System.Boolean)
-  nameWithType: NativeMethods.LLVMFunctionType(LLVMTypeRef, out LLVMTypeRef, UInt32, Boolean)
-  nameWithType.vb: NativeMethods.LLVMFunctionType(LLVMTypeRef, ByRef LLVMTypeRef, UInt32, Boolean)
+- uid: Llvm.NET.Interop.NativeMethods.LLVMFunctionType(Llvm.NET.Interop.LLVMTypeRef,Llvm.NET.Interop.LLVMTypeRef[],System.UInt32,System.Boolean)
+  name: LLVMFunctionType(LLVMTypeRef, LLVMTypeRef[], UInt32, Boolean)
+  href: api/Llvm.NET.Interop.NativeMethods.LLVMFunctionType.html#Llvm_NET_Interop_NativeMethods_LLVMFunctionType_Llvm_NET_Interop_LLVMTypeRef_Llvm_NET_Interop_LLVMTypeRef___System_UInt32_System_Boolean_
+  commentId: M:Llvm.NET.Interop.NativeMethods.LLVMFunctionType(Llvm.NET.Interop.LLVMTypeRef,Llvm.NET.Interop.LLVMTypeRef[],System.UInt32,System.Boolean)
+  name.vb: LLVMFunctionType(LLVMTypeRef, LLVMTypeRef(), UInt32, Boolean)
+  fullName: Llvm.NET.Interop.NativeMethods.LLVMFunctionType(Llvm.NET.Interop.LLVMTypeRef, Llvm.NET.Interop.LLVMTypeRef[], System.UInt32, System.Boolean)
+  fullName.vb: Llvm.NET.Interop.NativeMethods.LLVMFunctionType(Llvm.NET.Interop.LLVMTypeRef, Llvm.NET.Interop.LLVMTypeRef(), System.UInt32, System.Boolean)
+  nameWithType: NativeMethods.LLVMFunctionType(LLVMTypeRef, LLVMTypeRef[], UInt32, Boolean)
+  nameWithType.vb: NativeMethods.LLVMFunctionType(LLVMTypeRef, LLVMTypeRef(), UInt32, Boolean)
 - uid: Llvm.NET.Interop.NativeMethods.LLVMFunctionType*
   name: LLVMFunctionType
   href: api/Llvm.NET.Interop.NativeMethods.LLVMFunctionType.html
@@ -25562,15 +25700,15 @@ references:
   commentId: Overload:Llvm.NET.Interop.NativeMethods.LLVMGetBasicBlockParent
   fullName: Llvm.NET.Interop.NativeMethods.LLVMGetBasicBlockParent
   nameWithType: NativeMethods.LLVMGetBasicBlockParent
-- uid: Llvm.NET.Interop.NativeMethods.LLVMGetBasicBlocks(Llvm.NET.Interop.LLVMValueRef,Llvm.NET.Interop.LLVMBasicBlockRef@)
-  name: LLVMGetBasicBlocks(LLVMValueRef, out LLVMBasicBlockRef)
-  href: api/Llvm.NET.Interop.NativeMethods.LLVMGetBasicBlocks.html#Llvm_NET_Interop_NativeMethods_LLVMGetBasicBlocks_Llvm_NET_Interop_LLVMValueRef_Llvm_NET_Interop_LLVMBasicBlockRef__
-  commentId: M:Llvm.NET.Interop.NativeMethods.LLVMGetBasicBlocks(Llvm.NET.Interop.LLVMValueRef,Llvm.NET.Interop.LLVMBasicBlockRef@)
-  name.vb: LLVMGetBasicBlocks(LLVMValueRef, ByRef LLVMBasicBlockRef)
-  fullName: Llvm.NET.Interop.NativeMethods.LLVMGetBasicBlocks(Llvm.NET.Interop.LLVMValueRef, out Llvm.NET.Interop.LLVMBasicBlockRef)
-  fullName.vb: Llvm.NET.Interop.NativeMethods.LLVMGetBasicBlocks(Llvm.NET.Interop.LLVMValueRef, ByRef Llvm.NET.Interop.LLVMBasicBlockRef)
-  nameWithType: NativeMethods.LLVMGetBasicBlocks(LLVMValueRef, out LLVMBasicBlockRef)
-  nameWithType.vb: NativeMethods.LLVMGetBasicBlocks(LLVMValueRef, ByRef LLVMBasicBlockRef)
+- uid: Llvm.NET.Interop.NativeMethods.LLVMGetBasicBlocks(Llvm.NET.Interop.LLVMValueRef,Llvm.NET.Interop.LLVMBasicBlockRef[])
+  name: LLVMGetBasicBlocks(LLVMValueRef, LLVMBasicBlockRef[])
+  href: api/Llvm.NET.Interop.NativeMethods.LLVMGetBasicBlocks.html#Llvm_NET_Interop_NativeMethods_LLVMGetBasicBlocks_Llvm_NET_Interop_LLVMValueRef_Llvm_NET_Interop_LLVMBasicBlockRef___
+  commentId: M:Llvm.NET.Interop.NativeMethods.LLVMGetBasicBlocks(Llvm.NET.Interop.LLVMValueRef,Llvm.NET.Interop.LLVMBasicBlockRef[])
+  name.vb: LLVMGetBasicBlocks(LLVMValueRef, LLVMBasicBlockRef())
+  fullName: Llvm.NET.Interop.NativeMethods.LLVMGetBasicBlocks(Llvm.NET.Interop.LLVMValueRef, Llvm.NET.Interop.LLVMBasicBlockRef[])
+  fullName.vb: Llvm.NET.Interop.NativeMethods.LLVMGetBasicBlocks(Llvm.NET.Interop.LLVMValueRef, Llvm.NET.Interop.LLVMBasicBlockRef())
+  nameWithType: NativeMethods.LLVMGetBasicBlocks(LLVMValueRef, LLVMBasicBlockRef[])
+  nameWithType.vb: NativeMethods.LLVMGetBasicBlocks(LLVMValueRef, LLVMBasicBlockRef())
 - uid: Llvm.NET.Interop.NativeMethods.LLVMGetBasicBlocks*
   name: LLVMGetBasicBlocks
   href: api/Llvm.NET.Interop.NativeMethods.LLVMGetBasicBlocks.html
@@ -27134,15 +27272,15 @@ references:
   commentId: Overload:Llvm.NET.Interop.NativeMethods.LLVMGetParams
   fullName: Llvm.NET.Interop.NativeMethods.LLVMGetParams
   nameWithType: NativeMethods.LLVMGetParams
-- uid: Llvm.NET.Interop.NativeMethods.LLVMGetParamTypes(Llvm.NET.Interop.LLVMTypeRef,Llvm.NET.Interop.LLVMTypeRef@)
-  name: LLVMGetParamTypes(LLVMTypeRef, out LLVMTypeRef)
-  href: api/Llvm.NET.Interop.NativeMethods.LLVMGetParamTypes.html#Llvm_NET_Interop_NativeMethods_LLVMGetParamTypes_Llvm_NET_Interop_LLVMTypeRef_Llvm_NET_Interop_LLVMTypeRef__
-  commentId: M:Llvm.NET.Interop.NativeMethods.LLVMGetParamTypes(Llvm.NET.Interop.LLVMTypeRef,Llvm.NET.Interop.LLVMTypeRef@)
-  name.vb: LLVMGetParamTypes(LLVMTypeRef, ByRef LLVMTypeRef)
-  fullName: Llvm.NET.Interop.NativeMethods.LLVMGetParamTypes(Llvm.NET.Interop.LLVMTypeRef, out Llvm.NET.Interop.LLVMTypeRef)
-  fullName.vb: Llvm.NET.Interop.NativeMethods.LLVMGetParamTypes(Llvm.NET.Interop.LLVMTypeRef, ByRef Llvm.NET.Interop.LLVMTypeRef)
-  nameWithType: NativeMethods.LLVMGetParamTypes(LLVMTypeRef, out LLVMTypeRef)
-  nameWithType.vb: NativeMethods.LLVMGetParamTypes(LLVMTypeRef, ByRef LLVMTypeRef)
+- uid: Llvm.NET.Interop.NativeMethods.LLVMGetParamTypes(Llvm.NET.Interop.LLVMTypeRef,Llvm.NET.Interop.LLVMTypeRef[])
+  name: LLVMGetParamTypes(LLVMTypeRef, LLVMTypeRef[])
+  href: api/Llvm.NET.Interop.NativeMethods.LLVMGetParamTypes.html#Llvm_NET_Interop_NativeMethods_LLVMGetParamTypes_Llvm_NET_Interop_LLVMTypeRef_Llvm_NET_Interop_LLVMTypeRef___
+  commentId: M:Llvm.NET.Interop.NativeMethods.LLVMGetParamTypes(Llvm.NET.Interop.LLVMTypeRef,Llvm.NET.Interop.LLVMTypeRef[])
+  name.vb: LLVMGetParamTypes(LLVMTypeRef, LLVMTypeRef())
+  fullName: Llvm.NET.Interop.NativeMethods.LLVMGetParamTypes(Llvm.NET.Interop.LLVMTypeRef, Llvm.NET.Interop.LLVMTypeRef[])
+  fullName.vb: Llvm.NET.Interop.NativeMethods.LLVMGetParamTypes(Llvm.NET.Interop.LLVMTypeRef, Llvm.NET.Interop.LLVMTypeRef())
+  nameWithType: NativeMethods.LLVMGetParamTypes(LLVMTypeRef, LLVMTypeRef[])
+  nameWithType.vb: NativeMethods.LLVMGetParamTypes(LLVMTypeRef, LLVMTypeRef())
 - uid: Llvm.NET.Interop.NativeMethods.LLVMGetParamTypes*
   name: LLVMGetParamTypes
   href: api/Llvm.NET.Interop.NativeMethods.LLVMGetParamTypes.html
@@ -32777,15 +32915,15 @@ references:
   commentId: Overload:Llvm.NET.Interop.NativeMethods.LLVMStructGetTypeAtIndex
   fullName: Llvm.NET.Interop.NativeMethods.LLVMStructGetTypeAtIndex
   nameWithType: NativeMethods.LLVMStructGetTypeAtIndex
-- uid: Llvm.NET.Interop.NativeMethods.LLVMStructSetBody(Llvm.NET.Interop.LLVMTypeRef,Llvm.NET.Interop.LLVMTypeRef@,System.UInt32,System.Boolean)
-  name: LLVMStructSetBody(LLVMTypeRef, out LLVMTypeRef, UInt32, Boolean)
-  href: api/Llvm.NET.Interop.NativeMethods.LLVMStructSetBody.html#Llvm_NET_Interop_NativeMethods_LLVMStructSetBody_Llvm_NET_Interop_LLVMTypeRef_Llvm_NET_Interop_LLVMTypeRef__System_UInt32_System_Boolean_
-  commentId: M:Llvm.NET.Interop.NativeMethods.LLVMStructSetBody(Llvm.NET.Interop.LLVMTypeRef,Llvm.NET.Interop.LLVMTypeRef@,System.UInt32,System.Boolean)
-  name.vb: LLVMStructSetBody(LLVMTypeRef, ByRef LLVMTypeRef, UInt32, Boolean)
-  fullName: Llvm.NET.Interop.NativeMethods.LLVMStructSetBody(Llvm.NET.Interop.LLVMTypeRef, out Llvm.NET.Interop.LLVMTypeRef, System.UInt32, System.Boolean)
-  fullName.vb: Llvm.NET.Interop.NativeMethods.LLVMStructSetBody(Llvm.NET.Interop.LLVMTypeRef, ByRef Llvm.NET.Interop.LLVMTypeRef, System.UInt32, System.Boolean)
-  nameWithType: NativeMethods.LLVMStructSetBody(LLVMTypeRef, out LLVMTypeRef, UInt32, Boolean)
-  nameWithType.vb: NativeMethods.LLVMStructSetBody(LLVMTypeRef, ByRef LLVMTypeRef, UInt32, Boolean)
+- uid: Llvm.NET.Interop.NativeMethods.LLVMStructSetBody(Llvm.NET.Interop.LLVMTypeRef,Llvm.NET.Interop.LLVMTypeRef[],System.UInt32,System.Boolean)
+  name: LLVMStructSetBody(LLVMTypeRef, LLVMTypeRef[], UInt32, Boolean)
+  href: api/Llvm.NET.Interop.NativeMethods.LLVMStructSetBody.html#Llvm_NET_Interop_NativeMethods_LLVMStructSetBody_Llvm_NET_Interop_LLVMTypeRef_Llvm_NET_Interop_LLVMTypeRef___System_UInt32_System_Boolean_
+  commentId: M:Llvm.NET.Interop.NativeMethods.LLVMStructSetBody(Llvm.NET.Interop.LLVMTypeRef,Llvm.NET.Interop.LLVMTypeRef[],System.UInt32,System.Boolean)
+  name.vb: LLVMStructSetBody(LLVMTypeRef, LLVMTypeRef(), UInt32, Boolean)
+  fullName: Llvm.NET.Interop.NativeMethods.LLVMStructSetBody(Llvm.NET.Interop.LLVMTypeRef, Llvm.NET.Interop.LLVMTypeRef[], System.UInt32, System.Boolean)
+  fullName.vb: Llvm.NET.Interop.NativeMethods.LLVMStructSetBody(Llvm.NET.Interop.LLVMTypeRef, Llvm.NET.Interop.LLVMTypeRef(), System.UInt32, System.Boolean)
+  nameWithType: NativeMethods.LLVMStructSetBody(LLVMTypeRef, LLVMTypeRef[], UInt32, Boolean)
+  nameWithType.vb: NativeMethods.LLVMStructSetBody(LLVMTypeRef, LLVMTypeRef(), UInt32, Boolean)
 - uid: Llvm.NET.Interop.NativeMethods.LLVMStructSetBody*
   name: LLVMStructSetBody
   href: api/Llvm.NET.Interop.NativeMethods.LLVMStructSetBody.html
@@ -32807,15 +32945,15 @@ references:
   commentId: Overload:Llvm.NET.Interop.NativeMethods.LLVMStructType
   fullName: Llvm.NET.Interop.NativeMethods.LLVMStructType
   nameWithType: NativeMethods.LLVMStructType
-- uid: Llvm.NET.Interop.NativeMethods.LLVMStructTypeInContext(Llvm.NET.Interop.LLVMContextRef,Llvm.NET.Interop.LLVMTypeRef@,System.UInt32,System.Boolean)
-  name: LLVMStructTypeInContext(LLVMContextRef, out LLVMTypeRef, UInt32, Boolean)
-  href: api/Llvm.NET.Interop.NativeMethods.LLVMStructTypeInContext.html#Llvm_NET_Interop_NativeMethods_LLVMStructTypeInContext_Llvm_NET_Interop_LLVMContextRef_Llvm_NET_Interop_LLVMTypeRef__System_UInt32_System_Boolean_
-  commentId: M:Llvm.NET.Interop.NativeMethods.LLVMStructTypeInContext(Llvm.NET.Interop.LLVMContextRef,Llvm.NET.Interop.LLVMTypeRef@,System.UInt32,System.Boolean)
-  name.vb: LLVMStructTypeInContext(LLVMContextRef, ByRef LLVMTypeRef, UInt32, Boolean)
-  fullName: Llvm.NET.Interop.NativeMethods.LLVMStructTypeInContext(Llvm.NET.Interop.LLVMContextRef, out Llvm.NET.Interop.LLVMTypeRef, System.UInt32, System.Boolean)
-  fullName.vb: Llvm.NET.Interop.NativeMethods.LLVMStructTypeInContext(Llvm.NET.Interop.LLVMContextRef, ByRef Llvm.NET.Interop.LLVMTypeRef, System.UInt32, System.Boolean)
-  nameWithType: NativeMethods.LLVMStructTypeInContext(LLVMContextRef, out LLVMTypeRef, UInt32, Boolean)
-  nameWithType.vb: NativeMethods.LLVMStructTypeInContext(LLVMContextRef, ByRef LLVMTypeRef, UInt32, Boolean)
+- uid: Llvm.NET.Interop.NativeMethods.LLVMStructTypeInContext(Llvm.NET.Interop.LLVMContextRef,Llvm.NET.Interop.LLVMTypeRef[],System.UInt32,System.Boolean)
+  name: LLVMStructTypeInContext(LLVMContextRef, LLVMTypeRef[], UInt32, Boolean)
+  href: api/Llvm.NET.Interop.NativeMethods.LLVMStructTypeInContext.html#Llvm_NET_Interop_NativeMethods_LLVMStructTypeInContext_Llvm_NET_Interop_LLVMContextRef_Llvm_NET_Interop_LLVMTypeRef___System_UInt32_System_Boolean_
+  commentId: M:Llvm.NET.Interop.NativeMethods.LLVMStructTypeInContext(Llvm.NET.Interop.LLVMContextRef,Llvm.NET.Interop.LLVMTypeRef[],System.UInt32,System.Boolean)
+  name.vb: LLVMStructTypeInContext(LLVMContextRef, LLVMTypeRef(), UInt32, Boolean)
+  fullName: Llvm.NET.Interop.NativeMethods.LLVMStructTypeInContext(Llvm.NET.Interop.LLVMContextRef, Llvm.NET.Interop.LLVMTypeRef[], System.UInt32, System.Boolean)
+  fullName.vb: Llvm.NET.Interop.NativeMethods.LLVMStructTypeInContext(Llvm.NET.Interop.LLVMContextRef, Llvm.NET.Interop.LLVMTypeRef(), System.UInt32, System.Boolean)
+  nameWithType: NativeMethods.LLVMStructTypeInContext(LLVMContextRef, LLVMTypeRef[], UInt32, Boolean)
+  nameWithType.vb: NativeMethods.LLVMStructTypeInContext(LLVMContextRef, LLVMTypeRef(), UInt32, Boolean)
 - uid: Llvm.NET.Interop.NativeMethods.LLVMStructTypeInContext*
   name: LLVMStructTypeInContext
   href: api/Llvm.NET.Interop.NativeMethods.LLVMStructTypeInContext.html
@@ -33712,12 +33850,12 @@ references:
   fullName.vb: Llvm.NET.JIT.IExecutionEngine.GetFunctionDelegate(Of T)(System.String)
   nameWithType: IExecutionEngine.GetFunctionDelegate<T>(String)
   nameWithType.vb: IExecutionEngine.GetFunctionDelegate(Of T)(String)
-- uid: Llvm.NET.JIT.IExecutionEngine.RemoveModule(Llvm.NET.JIT.IJitModuleHandle)
-  name: RemoveModule(IJitModuleHandle)
-  href: api/Llvm.NET.JIT.IExecutionEngine.RemoveModule.html#Llvm_NET_JIT_IExecutionEngine_RemoveModule_Llvm_NET_JIT_IJitModuleHandle_
-  commentId: M:Llvm.NET.JIT.IExecutionEngine.RemoveModule(Llvm.NET.JIT.IJitModuleHandle)
-  fullName: Llvm.NET.JIT.IExecutionEngine.RemoveModule(Llvm.NET.JIT.IJitModuleHandle)
-  nameWithType: IExecutionEngine.RemoveModule(IJitModuleHandle)
+- uid: Llvm.NET.JIT.IExecutionEngine.RemoveModule(System.UInt64)
+  name: RemoveModule(UInt64)
+  href: api/Llvm.NET.JIT.IExecutionEngine.RemoveModule.html#Llvm_NET_JIT_IExecutionEngine_RemoveModule_System_UInt64_
+  commentId: M:Llvm.NET.JIT.IExecutionEngine.RemoveModule(System.UInt64)
+  fullName: Llvm.NET.JIT.IExecutionEngine.RemoveModule(System.UInt64)
+  nameWithType: IExecutionEngine.RemoveModule(UInt64)
 - uid: Llvm.NET.JIT.IExecutionEngine.RemoveModule*
   name: RemoveModule
   href: api/Llvm.NET.JIT.IExecutionEngine.RemoveModule.html
@@ -33736,12 +33874,6 @@ references:
   commentId: Overload:Llvm.NET.JIT.IExecutionEngine.TargetMachine
   fullName: Llvm.NET.JIT.IExecutionEngine.TargetMachine
   nameWithType: IExecutionEngine.TargetMachine
-- uid: Llvm.NET.JIT.IJitModuleHandle
-  name: IJitModuleHandle
-  href: api/Llvm.NET.JIT.IJitModuleHandle.html
-  commentId: T:Llvm.NET.JIT.IJitModuleHandle
-  fullName: Llvm.NET.JIT.IJitModuleHandle
-  nameWithType: IJitModuleHandle
 - uid: Llvm.NET.JIT.ILazyCompileExecutionEngine
   name: ILazyCompileExecutionEngine
   href: api/Llvm.NET.JIT.ILazyCompileExecutionEngine.html
@@ -33760,6 +33892,18 @@ references:
   commentId: Overload:Llvm.NET.JIT.ILazyCompileExecutionEngine.AddLazyFunctionGenerator
   fullName: Llvm.NET.JIT.ILazyCompileExecutionEngine.AddLazyFunctionGenerator
   nameWithType: ILazyCompileExecutionEngine.AddLazyFunctionGenerator
+- uid: Llvm.NET.JIT.ILazyCompileExecutionEngine.AddModule(Llvm.NET.BitcodeModule,Llvm.NET.Interop.LLVMOrcSymbolResolverFn)
+  name: AddModule(BitcodeModule, LLVMOrcSymbolResolverFn)
+  href: api/Llvm.NET.JIT.ILazyCompileExecutionEngine.AddModule.html#Llvm_NET_JIT_ILazyCompileExecutionEngine_AddModule_Llvm_NET_BitcodeModule_Llvm_NET_Interop_LLVMOrcSymbolResolverFn_
+  commentId: M:Llvm.NET.JIT.ILazyCompileExecutionEngine.AddModule(Llvm.NET.BitcodeModule,Llvm.NET.Interop.LLVMOrcSymbolResolverFn)
+  fullName: Llvm.NET.JIT.ILazyCompileExecutionEngine.AddModule(Llvm.NET.BitcodeModule, Llvm.NET.Interop.LLVMOrcSymbolResolverFn)
+  nameWithType: ILazyCompileExecutionEngine.AddModule(BitcodeModule, LLVMOrcSymbolResolverFn)
+- uid: Llvm.NET.JIT.ILazyCompileExecutionEngine.AddModule*
+  name: AddModule
+  href: api/Llvm.NET.JIT.ILazyCompileExecutionEngine.AddModule.html
+  commentId: Overload:Llvm.NET.JIT.ILazyCompileExecutionEngine.AddModule
+  fullName: Llvm.NET.JIT.ILazyCompileExecutionEngine.AddModule
+  nameWithType: ILazyCompileExecutionEngine.AddModule
 - uid: Llvm.NET.JIT.ILazyCompileExecutionEngine.DefaultSymbolResolver(System.String,System.IntPtr)
   name: DefaultSymbolResolver(String, IntPtr)
   href: api/Llvm.NET.JIT.ILazyCompileExecutionEngine.DefaultSymbolResolver.html#Llvm_NET_JIT_ILazyCompileExecutionEngine_DefaultSymbolResolver_System_String_System_IntPtr_
@@ -33772,6 +33916,18 @@ references:
   commentId: Overload:Llvm.NET.JIT.ILazyCompileExecutionEngine.DefaultSymbolResolver
   fullName: Llvm.NET.JIT.ILazyCompileExecutionEngine.DefaultSymbolResolver
   nameWithType: ILazyCompileExecutionEngine.DefaultSymbolResolver
+- uid: Llvm.NET.JIT.ILazyCompileExecutionEngine.LazyAddModule(Llvm.NET.BitcodeModule,Llvm.NET.Interop.LLVMOrcSymbolResolverFn)
+  name: LazyAddModule(BitcodeModule, LLVMOrcSymbolResolverFn)
+  href: api/Llvm.NET.JIT.ILazyCompileExecutionEngine.LazyAddModule.html#Llvm_NET_JIT_ILazyCompileExecutionEngine_LazyAddModule_Llvm_NET_BitcodeModule_Llvm_NET_Interop_LLVMOrcSymbolResolverFn_
+  commentId: M:Llvm.NET.JIT.ILazyCompileExecutionEngine.LazyAddModule(Llvm.NET.BitcodeModule,Llvm.NET.Interop.LLVMOrcSymbolResolverFn)
+  fullName: Llvm.NET.JIT.ILazyCompileExecutionEngine.LazyAddModule(Llvm.NET.BitcodeModule, Llvm.NET.Interop.LLVMOrcSymbolResolverFn)
+  nameWithType: ILazyCompileExecutionEngine.LazyAddModule(BitcodeModule, LLVMOrcSymbolResolverFn)
+- uid: Llvm.NET.JIT.ILazyCompileExecutionEngine.LazyAddModule*
+  name: LazyAddModule
+  href: api/Llvm.NET.JIT.ILazyCompileExecutionEngine.LazyAddModule.html
+  commentId: Overload:Llvm.NET.JIT.ILazyCompileExecutionEngine.LazyAddModule
+  fullName: Llvm.NET.JIT.ILazyCompileExecutionEngine.LazyAddModule
+  nameWithType: ILazyCompileExecutionEngine.LazyAddModule
 - uid: Llvm.NET.JIT.LazyCompilationExecutionEngineExtensions
   name: LazyCompilationExecutionEngineExtensions
   href: api/Llvm.NET.JIT.LazyCompilationExecutionEngineExtensions.html
@@ -33790,6 +33946,18 @@ references:
   commentId: Overload:Llvm.NET.JIT.LazyCompilationExecutionEngineExtensions.AddLazyFunctionGenerator
   fullName: Llvm.NET.JIT.LazyCompilationExecutionEngineExtensions.AddLazyFunctionGenerator
   nameWithType: LazyCompilationExecutionEngineExtensions.AddLazyFunctionGenerator
+- uid: Llvm.NET.JIT.LazyCompilationExecutionEngineExtensions.LazyAddModule(Llvm.NET.JIT.ILazyCompileExecutionEngine,Llvm.NET.BitcodeModule)
+  name: LazyAddModule(ILazyCompileExecutionEngine, BitcodeModule)
+  href: api/Llvm.NET.JIT.LazyCompilationExecutionEngineExtensions.LazyAddModule.html#Llvm_NET_JIT_LazyCompilationExecutionEngineExtensions_LazyAddModule_Llvm_NET_JIT_ILazyCompileExecutionEngine_Llvm_NET_BitcodeModule_
+  commentId: M:Llvm.NET.JIT.LazyCompilationExecutionEngineExtensions.LazyAddModule(Llvm.NET.JIT.ILazyCompileExecutionEngine,Llvm.NET.BitcodeModule)
+  fullName: Llvm.NET.JIT.LazyCompilationExecutionEngineExtensions.LazyAddModule(Llvm.NET.JIT.ILazyCompileExecutionEngine, Llvm.NET.BitcodeModule)
+  nameWithType: LazyCompilationExecutionEngineExtensions.LazyAddModule(ILazyCompileExecutionEngine, BitcodeModule)
+- uid: Llvm.NET.JIT.LazyCompilationExecutionEngineExtensions.LazyAddModule*
+  name: LazyAddModule
+  href: api/Llvm.NET.JIT.LazyCompilationExecutionEngineExtensions.LazyAddModule.html
+  commentId: Overload:Llvm.NET.JIT.LazyCompilationExecutionEngineExtensions.LazyAddModule
+  fullName: Llvm.NET.JIT.LazyCompilationExecutionEngineExtensions.LazyAddModule
+  nameWithType: LazyCompilationExecutionEngineExtensions.LazyAddModule
 - uid: Llvm.NET.JIT.LazyFunctionCompiler
   name: LazyFunctionCompiler
   href: api/Llvm.NET.JIT.LazyFunctionCompiler.html
@@ -33898,12 +34066,24 @@ references:
   fullName.vb: Llvm.NET.JIT.OrcJit.GetFunctionDelegate(Of T)(System.String)
   nameWithType: OrcJit.GetFunctionDelegate<T>(String)
   nameWithType.vb: OrcJit.GetFunctionDelegate(Of T)(String)
-- uid: Llvm.NET.JIT.OrcJit.RemoveModule(Llvm.NET.JIT.IJitModuleHandle)
-  name: RemoveModule(IJitModuleHandle)
-  href: api/Llvm.NET.JIT.OrcJit.RemoveModule.html#Llvm_NET_JIT_OrcJit_RemoveModule_Llvm_NET_JIT_IJitModuleHandle_
-  commentId: M:Llvm.NET.JIT.OrcJit.RemoveModule(Llvm.NET.JIT.IJitModuleHandle)
-  fullName: Llvm.NET.JIT.OrcJit.RemoveModule(Llvm.NET.JIT.IJitModuleHandle)
-  nameWithType: OrcJit.RemoveModule(IJitModuleHandle)
+- uid: Llvm.NET.JIT.OrcJit.LazyAddModule(Llvm.NET.BitcodeModule,Llvm.NET.Interop.LLVMOrcSymbolResolverFn)
+  name: LazyAddModule(BitcodeModule, LLVMOrcSymbolResolverFn)
+  href: api/Llvm.NET.JIT.OrcJit.LazyAddModule.html#Llvm_NET_JIT_OrcJit_LazyAddModule_Llvm_NET_BitcodeModule_Llvm_NET_Interop_LLVMOrcSymbolResolverFn_
+  commentId: M:Llvm.NET.JIT.OrcJit.LazyAddModule(Llvm.NET.BitcodeModule,Llvm.NET.Interop.LLVMOrcSymbolResolverFn)
+  fullName: Llvm.NET.JIT.OrcJit.LazyAddModule(Llvm.NET.BitcodeModule, Llvm.NET.Interop.LLVMOrcSymbolResolverFn)
+  nameWithType: OrcJit.LazyAddModule(BitcodeModule, LLVMOrcSymbolResolverFn)
+- uid: Llvm.NET.JIT.OrcJit.LazyAddModule*
+  name: LazyAddModule
+  href: api/Llvm.NET.JIT.OrcJit.LazyAddModule.html
+  commentId: Overload:Llvm.NET.JIT.OrcJit.LazyAddModule
+  fullName: Llvm.NET.JIT.OrcJit.LazyAddModule
+  nameWithType: OrcJit.LazyAddModule
+- uid: Llvm.NET.JIT.OrcJit.RemoveModule(System.UInt64)
+  name: RemoveModule(UInt64)
+  href: api/Llvm.NET.JIT.OrcJit.RemoveModule.html#Llvm_NET_JIT_OrcJit_RemoveModule_System_UInt64_
+  commentId: M:Llvm.NET.JIT.OrcJit.RemoveModule(System.UInt64)
+  fullName: Llvm.NET.JIT.OrcJit.RemoveModule(System.UInt64)
+  nameWithType: OrcJit.RemoveModule(UInt64)
 - uid: Llvm.NET.JIT.OrcJit.RemoveModule*
   name: RemoveModule
   href: api/Llvm.NET.JIT.OrcJit.RemoveModule.html

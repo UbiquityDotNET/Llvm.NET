@@ -2524,6 +2524,9 @@
                                 </li>
                               </ul>  </li>
                           <li class="">
+                            <a href="Llvm.NET.Interop.LibLLVMDwarfAttributeEncoding.html" title="LibLLVMDwarfAttributeEncoding" class="">LibLLVMDwarfAttributeEncoding</a>
+                          </li>
+                          <li class="">
                             <a href="Llvm.NET.Interop.LibLLVMDwarfSourceLanguage.html" title="LibLLVMDwarfSourceLanguage" class="">LibLLVMDwarfSourceLanguage</a>
                           </li>
                           <li class="active">
@@ -7369,9 +7372,6 @@
                                 </li>
                               </ul>  </li>
                           <li class="">
-                            <a href="Llvm.NET.JIT.IJitModuleHandle.html" title="IJitModuleHandle" class="">IJitModuleHandle</a>
-                          </li>
-                          <li class="">
                             <span class="expand-stub"></span>
                             <a href="Llvm.NET.JIT.ILazyCompileExecutionEngine.html" title="ILazyCompileExecutionEngine" class="">ILazyCompileExecutionEngine</a>
                               
@@ -7380,7 +7380,13 @@
                                   <a href="Llvm.NET.JIT.ILazyCompileExecutionEngine.AddLazyFunctionGenerator.html" title="AddLazyFunctionGenerator" class="">AddLazyFunctionGenerator</a>
                                 </li>
                                 <li class="">
+                                  <a href="Llvm.NET.JIT.ILazyCompileExecutionEngine.AddModule.html" title="AddModule" class="">AddModule</a>
+                                </li>
+                                <li class="">
                                   <a href="Llvm.NET.JIT.ILazyCompileExecutionEngine.DefaultSymbolResolver.html" title="DefaultSymbolResolver" class="">DefaultSymbolResolver</a>
+                                </li>
+                                <li class="">
+                                  <a href="Llvm.NET.JIT.ILazyCompileExecutionEngine.LazyAddModule.html" title="LazyAddModule" class="">LazyAddModule</a>
                                 </li>
                               </ul>  </li>
                           <li class="">
@@ -7390,6 +7396,9 @@
                               <ul class="nav level3">
                                 <li class="">
                                   <a href="Llvm.NET.JIT.LazyCompilationExecutionEngineExtensions.AddLazyFunctionGenerator.html" title="AddLazyFunctionGenerator" class="">AddLazyFunctionGenerator</a>
+                                </li>
+                                <li class="">
+                                  <a href="Llvm.NET.JIT.LazyCompilationExecutionEngineExtensions.LazyAddModule.html" title="LazyAddModule" class="">LazyAddModule</a>
                                 </li>
                               </ul>  </li>
                           <li class="">
@@ -7417,6 +7426,9 @@
                                 </li>
                                 <li class="">
                                   <a href="Llvm.NET.JIT.OrcJit.GetFunctionDelegate.html" title="GetFunctionDelegate" class="">GetFunctionDelegate</a>
+                                </li>
+                                <li class="">
+                                  <a href="Llvm.NET.JIT.OrcJit.LazyAddModule.html" title="LazyAddModule" class="">LazyAddModule</a>
                                 </li>
                                 <li class="">
                                   <a href="Llvm.NET.JIT.OrcJit.-ctor.html" title="OrcJit" class="">OrcJit</a>
@@ -8460,7 +8472,7 @@
   
   <h1 id="Llvm_NET_Interop_LibLLVMDwarfTag" data-uid="Llvm.NET.Interop.LibLLVMDwarfTag" class="text-break">Enum LibLLVMDwarfTag
   </h1>
-  <div class="markdown level0 summary"><p>TODO: Provide summary for LibLLVMDwarfTag Enumeration</p>
+  <div class="markdown level0 summary"><p>Enumeration for DWARF debug information tags</p>
 </div>
   <div class="markdown level0 conceptual"></div>
 
@@ -8479,428 +8491,431 @@
   
   
   
+  <h3 id="Llvm_NET_Interop_LibLLVMDwarfTag_remarks"><strong>Remarks</strong></h3>
+  <div class="markdown level0 remarks"><p>For full details of the tags and their meanings see the <a href="http://dwarfstd.org/">DWARF</a> specifications</p>
+</div>
   
   <h3 id="fields">Fields
   </h3>
   <table class="table table-bordered table-striped table-condensed">
       <tr>
         <td id="Llvm_NET_Interop_LibLLVMDwarfTag_LibLLVMDwarfTagaccess_declaration">LibLLVMDwarfTagaccess_declaration</td>
-        <td><p>TODO: Provide summary for LibLLVMDwarfTag.LibLLVMDwarfTagaccess_declaration Enumeration</p>
+        <td><p>DW_TAG_access_declaration</p>
 </td>
       </tr>
       <tr>
         <td id="Llvm_NET_Interop_LibLLVMDwarfTag_LibLLVMDwarfTagAPPLE_property">LibLLVMDwarfTagAPPLE_property</td>
-        <td><p>TODO: Provide summary for LibLLVMDwarfTag.LibLLVMDwarfTagAPPLE_property Enumeration</p>
+        <td><p>DW_TAG_APPLE_property</p>
 </td>
       </tr>
       <tr>
         <td id="Llvm_NET_Interop_LibLLVMDwarfTag_LibLLVMDwarfTagarray_type">LibLLVMDwarfTagarray_type</td>
-        <td><p>TODO: Provide summary for LibLLVMDwarfTag.LibLLVMDwarfTagarray_type Enumeration</p>
+        <td><p>DW_TAG_array_type</p>
 </td>
       </tr>
       <tr>
         <td id="Llvm_NET_Interop_LibLLVMDwarfTag_LibLLVMDwarfTagatomic_type">LibLLVMDwarfTagatomic_type</td>
-        <td><p>TODO: Provide summary for LibLLVMDwarfTag.LibLLVMDwarfTagatomic_type Enumeration</p>
+        <td><p>DW_TAG_atomic_type</p>
 </td>
       </tr>
       <tr>
         <td id="Llvm_NET_Interop_LibLLVMDwarfTag_LibLLVMDwarfTagbase_type">LibLLVMDwarfTagbase_type</td>
-        <td><p>TODO: Provide summary for LibLLVMDwarfTag.LibLLVMDwarfTagbase_type Enumeration</p>
+        <td><p>DW_TAG_base_type</p>
 </td>
       </tr>
       <tr>
         <td id="Llvm_NET_Interop_LibLLVMDwarfTag_LibLLVMDwarfTagBORLAND_Delphi_dynamic_array">LibLLVMDwarfTagBORLAND_Delphi_dynamic_array</td>
-        <td><p>TODO: Provide summary for LibLLVMDwarfTag.LibLLVMDwarfTagBORLAND_Delphi_dynamic_array Enumeration</p>
+        <td><p>DW_TAG_BORLAND_Delphi_dynamic_array</p>
 </td>
       </tr>
       <tr>
         <td id="Llvm_NET_Interop_LibLLVMDwarfTag_LibLLVMDwarfTagBORLAND_Delphi_set">LibLLVMDwarfTagBORLAND_Delphi_set</td>
-        <td><p>TODO: Provide summary for LibLLVMDwarfTag.LibLLVMDwarfTagBORLAND_Delphi_set Enumeration</p>
+        <td><p>DW_TAG_BORLAND_Delphi_set</p>
 </td>
       </tr>
       <tr>
         <td id="Llvm_NET_Interop_LibLLVMDwarfTag_LibLLVMDwarfTagBORLAND_Delphi_string">LibLLVMDwarfTagBORLAND_Delphi_string</td>
-        <td><p>TODO: Provide summary for LibLLVMDwarfTag.LibLLVMDwarfTagBORLAND_Delphi_string Enumeration</p>
+        <td><p>DW_TAG_BORLAND_Delphi_string</p>
 </td>
       </tr>
       <tr>
         <td id="Llvm_NET_Interop_LibLLVMDwarfTag_LibLLVMDwarfTagBORLAND_Delphi_variant">LibLLVMDwarfTagBORLAND_Delphi_variant</td>
-        <td><p>TODO: Provide summary for LibLLVMDwarfTag.LibLLVMDwarfTagBORLAND_Delphi_variant Enumeration</p>
+        <td><p>DW_TAG_BORLAND_Delphi_variant</p>
 </td>
       </tr>
       <tr>
         <td id="Llvm_NET_Interop_LibLLVMDwarfTag_LibLLVMDwarfTagBORLAND_property">LibLLVMDwarfTagBORLAND_property</td>
-        <td><p>TODO: Provide summary for LibLLVMDwarfTag.LibLLVMDwarfTagBORLAND_property Enumeration</p>
+        <td><p>DW_TAG_BORLAND_property</p>
 </td>
       </tr>
       <tr>
         <td id="Llvm_NET_Interop_LibLLVMDwarfTag_LibLLVMDwarfTagcall_site">LibLLVMDwarfTagcall_site</td>
-        <td><p>TODO: Provide summary for LibLLVMDwarfTag.LibLLVMDwarfTagcall_site Enumeration</p>
+        <td><p>DW_TAG_call_site</p>
 </td>
       </tr>
       <tr>
         <td id="Llvm_NET_Interop_LibLLVMDwarfTag_LibLLVMDwarfTagcall_site_parameter">LibLLVMDwarfTagcall_site_parameter</td>
-        <td><p>TODO: Provide summary for LibLLVMDwarfTag.LibLLVMDwarfTagcall_site_parameter Enumeration</p>
+        <td><p>DW_TAG_call_site_parameter</p>
 </td>
       </tr>
       <tr>
         <td id="Llvm_NET_Interop_LibLLVMDwarfTag_LibLLVMDwarfTagcatch_block">LibLLVMDwarfTagcatch_block</td>
-        <td><p>TODO: Provide summary for LibLLVMDwarfTag.LibLLVMDwarfTagcatch_block Enumeration</p>
+        <td><p>DW_TAG_catch_block</p>
 </td>
       </tr>
       <tr>
         <td id="Llvm_NET_Interop_LibLLVMDwarfTag_LibLLVMDwarfTagclass_template">LibLLVMDwarfTagclass_template</td>
-        <td><p>TODO: Provide summary for LibLLVMDwarfTag.LibLLVMDwarfTagclass_template Enumeration</p>
+        <td><p>DW_TAG_class_template</p>
 </td>
       </tr>
       <tr>
         <td id="Llvm_NET_Interop_LibLLVMDwarfTag_LibLLVMDwarfTagclass_type">LibLLVMDwarfTagclass_type</td>
-        <td><p>TODO: Provide summary for LibLLVMDwarfTag.LibLLVMDwarfTagclass_type Enumeration</p>
+        <td><p>DW_TAG_class_type</p>
 </td>
       </tr>
       <tr>
         <td id="Llvm_NET_Interop_LibLLVMDwarfTag_LibLLVMDwarfTagcoarray_type">LibLLVMDwarfTagcoarray_type</td>
-        <td><p>TODO: Provide summary for LibLLVMDwarfTag.LibLLVMDwarfTagcoarray_type Enumeration</p>
+        <td><p>DW_TAG_coarray_type</p>
 </td>
       </tr>
       <tr>
         <td id="Llvm_NET_Interop_LibLLVMDwarfTag_LibLLVMDwarfTagcommon_block">LibLLVMDwarfTagcommon_block</td>
-        <td><p>TODO: Provide summary for LibLLVMDwarfTag.LibLLVMDwarfTagcommon_block Enumeration</p>
+        <td><p>DW_TAG_common_block</p>
 </td>
       </tr>
       <tr>
         <td id="Llvm_NET_Interop_LibLLVMDwarfTag_LibLLVMDwarfTagcommon_inclusion">LibLLVMDwarfTagcommon_inclusion</td>
-        <td><p>TODO: Provide summary for LibLLVMDwarfTag.LibLLVMDwarfTagcommon_inclusion Enumeration</p>
+        <td><p>DW_TAG_common_inclusion</p>
 </td>
       </tr>
       <tr>
         <td id="Llvm_NET_Interop_LibLLVMDwarfTag_LibLLVMDwarfTagcompile_unit">LibLLVMDwarfTagcompile_unit</td>
-        <td><p>TODO: Provide summary for LibLLVMDwarfTag.LibLLVMDwarfTagcompile_unit Enumeration</p>
+        <td><p>DW_TAG_compile_unit</p>
 </td>
       </tr>
       <tr>
         <td id="Llvm_NET_Interop_LibLLVMDwarfTag_LibLLVMDwarfTagcondition">LibLLVMDwarfTagcondition</td>
-        <td><p>TODO: Provide summary for LibLLVMDwarfTag.LibLLVMDwarfTagcondition Enumeration</p>
+        <td><p>DW_TAG_condition</p>
 </td>
       </tr>
       <tr>
         <td id="Llvm_NET_Interop_LibLLVMDwarfTag_LibLLVMDwarfTagconst_type">LibLLVMDwarfTagconst_type</td>
-        <td><p>TODO: Provide summary for LibLLVMDwarfTag.LibLLVMDwarfTagconst_type Enumeration</p>
+        <td><p>DW_TAG_const_type</p>
 </td>
       </tr>
       <tr>
         <td id="Llvm_NET_Interop_LibLLVMDwarfTag_LibLLVMDwarfTagconstant">LibLLVMDwarfTagconstant</td>
-        <td><p>TODO: Provide summary for LibLLVMDwarfTag.LibLLVMDwarfTagconstant Enumeration</p>
+        <td><p>DW_TAG_constant</p>
 </td>
       </tr>
       <tr>
         <td id="Llvm_NET_Interop_LibLLVMDwarfTag_LibLLVMDwarfTagdwarf_procedure">LibLLVMDwarfTagdwarf_procedure</td>
-        <td><p>TODO: Provide summary for LibLLVMDwarfTag.LibLLVMDwarfTagdwarf_procedure Enumeration</p>
+        <td><p>DW_TAG_dwarf_procedure</p>
 </td>
       </tr>
       <tr>
         <td id="Llvm_NET_Interop_LibLLVMDwarfTag_LibLLVMDwarfTagdynamic_type">LibLLVMDwarfTagdynamic_type</td>
-        <td><p>TODO: Provide summary for LibLLVMDwarfTag.LibLLVMDwarfTagdynamic_type Enumeration</p>
+        <td><p>DW_TAG_dynamic_type</p>
 </td>
       </tr>
       <tr>
         <td id="Llvm_NET_Interop_LibLLVMDwarfTag_LibLLVMDwarfTagentry_point">LibLLVMDwarfTagentry_point</td>
-        <td><p>TODO: Provide summary for LibLLVMDwarfTag.LibLLVMDwarfTagentry_point Enumeration</p>
+        <td><p>DW_TAG_entry_point</p>
 </td>
       </tr>
       <tr>
         <td id="Llvm_NET_Interop_LibLLVMDwarfTag_LibLLVMDwarfTagenumeration_type">LibLLVMDwarfTagenumeration_type</td>
-        <td><p>TODO: Provide summary for LibLLVMDwarfTag.LibLLVMDwarfTagenumeration_type Enumeration</p>
+        <td><p>DW_TAG_enumeration_type</p>
 </td>
       </tr>
       <tr>
         <td id="Llvm_NET_Interop_LibLLVMDwarfTag_LibLLVMDwarfTagenumerator">LibLLVMDwarfTagenumerator</td>
-        <td><p>TODO: Provide summary for LibLLVMDwarfTag.LibLLVMDwarfTagenumerator Enumeration</p>
+        <td><p>DW_TAG_enumerator</p>
 </td>
       </tr>
       <tr>
         <td id="Llvm_NET_Interop_LibLLVMDwarfTag_LibLLVMDwarfTagfile_type">LibLLVMDwarfTagfile_type</td>
-        <td><p>TODO: Provide summary for LibLLVMDwarfTag.LibLLVMDwarfTagfile_type Enumeration</p>
+        <td><p>DW_TAG_file_type</p>
 </td>
       </tr>
       <tr>
         <td id="Llvm_NET_Interop_LibLLVMDwarfTag_LibLLVMDwarfTagformal_parameter">LibLLVMDwarfTagformal_parameter</td>
-        <td><p>TODO: Provide summary for LibLLVMDwarfTag.LibLLVMDwarfTagformal_parameter Enumeration</p>
+        <td><p>DW_TAG_formal_parameter</p>
 </td>
       </tr>
       <tr>
         <td id="Llvm_NET_Interop_LibLLVMDwarfTag_LibLLVMDwarfTagformat_label">LibLLVMDwarfTagformat_label</td>
-        <td><p>TODO: Provide summary for LibLLVMDwarfTag.LibLLVMDwarfTagformat_label Enumeration</p>
+        <td><p>DW_TAG_format_label</p>
 </td>
       </tr>
       <tr>
         <td id="Llvm_NET_Interop_LibLLVMDwarfTag_LibLLVMDwarfTagfriend">LibLLVMDwarfTagfriend</td>
-        <td><p>TODO: Provide summary for LibLLVMDwarfTag.LibLLVMDwarfTagfriend Enumeration</p>
+        <td><p>DW_TAG_friend</p>
 </td>
       </tr>
       <tr>
         <td id="Llvm_NET_Interop_LibLLVMDwarfTag_LibLLVMDwarfTagfunction_template">LibLLVMDwarfTagfunction_template</td>
-        <td><p>TODO: Provide summary for LibLLVMDwarfTag.LibLLVMDwarfTagfunction_template Enumeration</p>
+        <td><p>DW_TAG_function_template</p>
 </td>
       </tr>
       <tr>
         <td id="Llvm_NET_Interop_LibLLVMDwarfTag_LibLLVMDwarfTaggeneric_subrange">LibLLVMDwarfTaggeneric_subrange</td>
-        <td><p>TODO: Provide summary for LibLLVMDwarfTag.LibLLVMDwarfTaggeneric_subrange Enumeration</p>
+        <td><p>DW_TAG_generic_subrange</p>
 </td>
       </tr>
       <tr>
         <td id="Llvm_NET_Interop_LibLLVMDwarfTag_LibLLVMDwarfTagGNU_call_site">LibLLVMDwarfTagGNU_call_site</td>
-        <td><p>TODO: Provide summary for LibLLVMDwarfTag.LibLLVMDwarfTagGNU_call_site Enumeration</p>
+        <td><p>DW_TAG_GNU_call_site</p>
 </td>
       </tr>
       <tr>
         <td id="Llvm_NET_Interop_LibLLVMDwarfTag_LibLLVMDwarfTagGNU_call_site_parameter">LibLLVMDwarfTagGNU_call_site_parameter</td>
-        <td><p>TODO: Provide summary for LibLLVMDwarfTag.LibLLVMDwarfTagGNU_call_site_parameter Enumeration</p>
+        <td><p>DW_TAG_GNU_call_site_parameter</p>
 </td>
       </tr>
       <tr>
         <td id="Llvm_NET_Interop_LibLLVMDwarfTag_LibLLVMDwarfTagGNU_formal_parameter_pack">LibLLVMDwarfTagGNU_formal_parameter_pack</td>
-        <td><p>TODO: Provide summary for LibLLVMDwarfTag.LibLLVMDwarfTagGNU_formal_parameter_pack Enumeration</p>
+        <td><p>DW_TAG_GNU_formal_parameter_pack</p>
 </td>
       </tr>
       <tr>
         <td id="Llvm_NET_Interop_LibLLVMDwarfTag_LibLLVMDwarfTagGNU_template_parameter_pack">LibLLVMDwarfTagGNU_template_parameter_pack</td>
-        <td><p>TODO: Provide summary for LibLLVMDwarfTag.LibLLVMDwarfTagGNU_template_parameter_pack Enumeration</p>
+        <td><p>DW_TAG_GNU_template_parameter_pack</p>
 </td>
       </tr>
       <tr>
         <td id="Llvm_NET_Interop_LibLLVMDwarfTag_LibLLVMDwarfTagGNU_template_template_param">LibLLVMDwarfTagGNU_template_template_param</td>
-        <td><p>TODO: Provide summary for LibLLVMDwarfTag.LibLLVMDwarfTagGNU_template_template_param Enumeration</p>
+        <td><p>DW_TAG_GNU_template_template_param</p>
 </td>
       </tr>
       <tr>
         <td id="Llvm_NET_Interop_LibLLVMDwarfTag_LibLLVMDwarfTagimmutable_type">LibLLVMDwarfTagimmutable_type</td>
-        <td><p>TODO: Provide summary for LibLLVMDwarfTag.LibLLVMDwarfTagimmutable_type Enumeration</p>
+        <td><p>DW_TAG_immutable_type</p>
 </td>
       </tr>
       <tr>
         <td id="Llvm_NET_Interop_LibLLVMDwarfTag_LibLLVMDwarfTagimported_declaration">LibLLVMDwarfTagimported_declaration</td>
-        <td><p>TODO: Provide summary for LibLLVMDwarfTag.LibLLVMDwarfTagimported_declaration Enumeration</p>
+        <td><p>DW_TAG_imported_declaration</p>
 </td>
       </tr>
       <tr>
         <td id="Llvm_NET_Interop_LibLLVMDwarfTag_LibLLVMDwarfTagimported_module">LibLLVMDwarfTagimported_module</td>
-        <td><p>TODO: Provide summary for LibLLVMDwarfTag.LibLLVMDwarfTagimported_module Enumeration</p>
+        <td><p>DW_TAG_imported_module</p>
 </td>
       </tr>
       <tr>
         <td id="Llvm_NET_Interop_LibLLVMDwarfTag_LibLLVMDwarfTagimported_unit">LibLLVMDwarfTagimported_unit</td>
-        <td><p>TODO: Provide summary for LibLLVMDwarfTag.LibLLVMDwarfTagimported_unit Enumeration</p>
+        <td><p>DW_TAG_imported_unit</p>
 </td>
       </tr>
       <tr>
         <td id="Llvm_NET_Interop_LibLLVMDwarfTag_LibLLVMDwarfTaginheritance">LibLLVMDwarfTaginheritance</td>
-        <td><p>TODO: Provide summary for LibLLVMDwarfTag.LibLLVMDwarfTaginheritance Enumeration</p>
+        <td><p>DW_TAG_inheritance</p>
 </td>
       </tr>
       <tr>
         <td id="Llvm_NET_Interop_LibLLVMDwarfTag_LibLLVMDwarfTaginlined_subroutine">LibLLVMDwarfTaginlined_subroutine</td>
-        <td><p>TODO: Provide summary for LibLLVMDwarfTag.LibLLVMDwarfTaginlined_subroutine Enumeration</p>
+        <td><p>DW_TAG_inlined_subroutine</p>
 </td>
       </tr>
       <tr>
         <td id="Llvm_NET_Interop_LibLLVMDwarfTag_LibLLVMDwarfTaginterface_type">LibLLVMDwarfTaginterface_type</td>
-        <td><p>TODO: Provide summary for LibLLVMDwarfTag.LibLLVMDwarfTaginterface_type Enumeration</p>
+        <td><p>DW_TAG_interface_type</p>
 </td>
       </tr>
       <tr>
         <td id="Llvm_NET_Interop_LibLLVMDwarfTag_LibLLVMDwarfTaglabel">LibLLVMDwarfTaglabel</td>
-        <td><p>TODO: Provide summary for LibLLVMDwarfTag.LibLLVMDwarfTaglabel Enumeration</p>
+        <td><p>DW_TAG_label</p>
 </td>
       </tr>
       <tr>
         <td id="Llvm_NET_Interop_LibLLVMDwarfTag_LibLLVMDwarfTaglexical_block">LibLLVMDwarfTaglexical_block</td>
-        <td><p>TODO: Provide summary for LibLLVMDwarfTag.LibLLVMDwarfTaglexical_block Enumeration</p>
+        <td><p>DW_TAG_lexical_block</p>
 </td>
       </tr>
       <tr>
         <td id="Llvm_NET_Interop_LibLLVMDwarfTag_LibLLVMDwarfTagmember">LibLLVMDwarfTagmember</td>
-        <td><p>TODO: Provide summary for LibLLVMDwarfTag.LibLLVMDwarfTagmember Enumeration</p>
+        <td><p>DW_TAG_member</p>
 </td>
       </tr>
       <tr>
         <td id="Llvm_NET_Interop_LibLLVMDwarfTag_LibLLVMDwarfTagMIPS_loop">LibLLVMDwarfTagMIPS_loop</td>
-        <td><p>TODO: Provide summary for LibLLVMDwarfTag.LibLLVMDwarfTagMIPS_loop Enumeration</p>
+        <td><p>DW_TAG_MIPS_loop</p>
 </td>
       </tr>
       <tr>
         <td id="Llvm_NET_Interop_LibLLVMDwarfTag_LibLLVMDwarfTagmodule">LibLLVMDwarfTagmodule</td>
-        <td><p>TODO: Provide summary for LibLLVMDwarfTag.LibLLVMDwarfTagmodule Enumeration</p>
+        <td><p>DW_TAG_module</p>
 </td>
       </tr>
       <tr>
         <td id="Llvm_NET_Interop_LibLLVMDwarfTag_LibLLVMDwarfTagnamelist">LibLLVMDwarfTagnamelist</td>
-        <td><p>TODO: Provide summary for LibLLVMDwarfTag.LibLLVMDwarfTagnamelist Enumeration</p>
+        <td><p>DW_TAG_namelist</p>
 </td>
       </tr>
       <tr>
         <td id="Llvm_NET_Interop_LibLLVMDwarfTag_LibLLVMDwarfTagnamelist_item">LibLLVMDwarfTagnamelist_item</td>
-        <td><p>TODO: Provide summary for LibLLVMDwarfTag.LibLLVMDwarfTagnamelist_item Enumeration</p>
+        <td><p>DW_TAG_namelist_item</p>
 </td>
       </tr>
       <tr>
         <td id="Llvm_NET_Interop_LibLLVMDwarfTag_LibLLVMDwarfTagnamespace">LibLLVMDwarfTagnamespace</td>
-        <td><p>TODO: Provide summary for LibLLVMDwarfTag.LibLLVMDwarfTagnamespace Enumeration</p>
+        <td><p>DW_TAG_namespace</p>
 </td>
       </tr>
       <tr>
         <td id="Llvm_NET_Interop_LibLLVMDwarfTag_LibLLVMDwarfTagnull">LibLLVMDwarfTagnull</td>
-        <td><p>TODO: Provide summary for LibLLVMDwarfTag.LibLLVMDwarfTagnull Enumeration</p>
+        <td><p>Null/Invalid tag</p>
 </td>
       </tr>
       <tr>
         <td id="Llvm_NET_Interop_LibLLVMDwarfTag_LibLLVMDwarfTagpacked_type">LibLLVMDwarfTagpacked_type</td>
-        <td><p>TODO: Provide summary for LibLLVMDwarfTag.LibLLVMDwarfTagpacked_type Enumeration</p>
+        <td><p>DW_TAG_packed_type</p>
 </td>
       </tr>
       <tr>
         <td id="Llvm_NET_Interop_LibLLVMDwarfTag_LibLLVMDwarfTagpartial_unit">LibLLVMDwarfTagpartial_unit</td>
-        <td><p>TODO: Provide summary for LibLLVMDwarfTag.LibLLVMDwarfTagpartial_unit Enumeration</p>
+        <td><p>DW_TAG_partial_unit</p>
 </td>
       </tr>
       <tr>
         <td id="Llvm_NET_Interop_LibLLVMDwarfTag_LibLLVMDwarfTagpointer_type">LibLLVMDwarfTagpointer_type</td>
-        <td><p>TODO: Provide summary for LibLLVMDwarfTag.LibLLVMDwarfTagpointer_type Enumeration</p>
+        <td><p>DW_TAG_pointer_type</p>
 </td>
       </tr>
       <tr>
         <td id="Llvm_NET_Interop_LibLLVMDwarfTag_LibLLVMDwarfTagptr_to_member_type">LibLLVMDwarfTagptr_to_member_type</td>
-        <td><p>TODO: Provide summary for LibLLVMDwarfTag.LibLLVMDwarfTagptr_to_member_type Enumeration</p>
+        <td><p>DW_TAG_ptr_to_member_type</p>
 </td>
       </tr>
       <tr>
         <td id="Llvm_NET_Interop_LibLLVMDwarfTag_LibLLVMDwarfTagreference_type">LibLLVMDwarfTagreference_type</td>
-        <td><p>TODO: Provide summary for LibLLVMDwarfTag.LibLLVMDwarfTagreference_type Enumeration</p>
+        <td><p>DW_TAG_reference_type</p>
 </td>
       </tr>
       <tr>
         <td id="Llvm_NET_Interop_LibLLVMDwarfTag_LibLLVMDwarfTagrestrict_type">LibLLVMDwarfTagrestrict_type</td>
-        <td><p>TODO: Provide summary for LibLLVMDwarfTag.LibLLVMDwarfTagrestrict_type Enumeration</p>
+        <td><p>DW_TAG_restrict_type</p>
 </td>
       </tr>
       <tr>
         <td id="Llvm_NET_Interop_LibLLVMDwarfTag_LibLLVMDwarfTagrvalue_reference_type">LibLLVMDwarfTagrvalue_reference_type</td>
-        <td><p>TODO: Provide summary for LibLLVMDwarfTag.LibLLVMDwarfTagrvalue_reference_type Enumeration</p>
+        <td><p>DW_TAG_rvalue_reference_type</p>
 </td>
       </tr>
       <tr>
         <td id="Llvm_NET_Interop_LibLLVMDwarfTag_LibLLVMDwarfTagset_type">LibLLVMDwarfTagset_type</td>
-        <td><p>TODO: Provide summary for LibLLVMDwarfTag.LibLLVMDwarfTagset_type Enumeration</p>
+        <td><p>DW_TAG_et_type</p>
 </td>
       </tr>
       <tr>
         <td id="Llvm_NET_Interop_LibLLVMDwarfTag_LibLLVMDwarfTagshared_type">LibLLVMDwarfTagshared_type</td>
-        <td><p>TODO: Provide summary for LibLLVMDwarfTag.LibLLVMDwarfTagshared_type Enumeration</p>
+        <td><p>DW_TAG_hared_type</p>
 </td>
       </tr>
       <tr>
         <td id="Llvm_NET_Interop_LibLLVMDwarfTag_LibLLVMDwarfTagskeleton_unit">LibLLVMDwarfTagskeleton_unit</td>
-        <td><p>TODO: Provide summary for LibLLVMDwarfTag.LibLLVMDwarfTagskeleton_unit Enumeration</p>
+        <td><p>DW_TAG_keleton_unit</p>
 </td>
       </tr>
       <tr>
         <td id="Llvm_NET_Interop_LibLLVMDwarfTag_LibLLVMDwarfTagstring_type">LibLLVMDwarfTagstring_type</td>
-        <td><p>TODO: Provide summary for LibLLVMDwarfTag.LibLLVMDwarfTagstring_type Enumeration</p>
+        <td><p>DW_TAG_string_type</p>
 </td>
       </tr>
       <tr>
         <td id="Llvm_NET_Interop_LibLLVMDwarfTag_LibLLVMDwarfTagstructure_type">LibLLVMDwarfTagstructure_type</td>
-        <td><p>TODO: Provide summary for LibLLVMDwarfTag.LibLLVMDwarfTagstructure_type Enumeration</p>
+        <td><p>DW_TAG_structure_type</p>
 </td>
       </tr>
       <tr>
         <td id="Llvm_NET_Interop_LibLLVMDwarfTag_LibLLVMDwarfTagsubprogram">LibLLVMDwarfTagsubprogram</td>
-        <td><p>TODO: Provide summary for LibLLVMDwarfTag.LibLLVMDwarfTagsubprogram Enumeration</p>
+        <td><p>DW_TAG_ubprogram</p>
 </td>
       </tr>
       <tr>
         <td id="Llvm_NET_Interop_LibLLVMDwarfTag_LibLLVMDwarfTagsubrange_type">LibLLVMDwarfTagsubrange_type</td>
-        <td><p>TODO: Provide summary for LibLLVMDwarfTag.LibLLVMDwarfTagsubrange_type Enumeration</p>
+        <td><p>DW_TAG_ubrange_type</p>
 </td>
       </tr>
       <tr>
         <td id="Llvm_NET_Interop_LibLLVMDwarfTag_LibLLVMDwarfTagsubroutine_type">LibLLVMDwarfTagsubroutine_type</td>
-        <td><p>TODO: Provide summary for LibLLVMDwarfTag.LibLLVMDwarfTagsubroutine_type Enumeration</p>
+        <td><p>DW_TAG_subroutine_type</p>
 </td>
       </tr>
       <tr>
         <td id="Llvm_NET_Interop_LibLLVMDwarfTag_LibLLVMDwarfTagtemplate_alias">LibLLVMDwarfTagtemplate_alias</td>
-        <td><p>TODO: Provide summary for LibLLVMDwarfTag.LibLLVMDwarfTagtemplate_alias Enumeration</p>
+        <td><p>DW_TAG_template_alias</p>
 </td>
       </tr>
       <tr>
         <td id="Llvm_NET_Interop_LibLLVMDwarfTag_LibLLVMDwarfTagtemplate_type_parameter">LibLLVMDwarfTagtemplate_type_parameter</td>
-        <td><p>TODO: Provide summary for LibLLVMDwarfTag.LibLLVMDwarfTagtemplate_type_parameter Enumeration</p>
+        <td><p>DW_TAG_template_type_parameter</p>
 </td>
       </tr>
       <tr>
         <td id="Llvm_NET_Interop_LibLLVMDwarfTag_LibLLVMDwarfTagtemplate_value_parameter">LibLLVMDwarfTagtemplate_value_parameter</td>
-        <td><p>TODO: Provide summary for LibLLVMDwarfTag.LibLLVMDwarfTagtemplate_value_parameter Enumeration</p>
+        <td><p>DW_TAG_template_value_parameter</p>
 </td>
       </tr>
       <tr>
         <td id="Llvm_NET_Interop_LibLLVMDwarfTag_LibLLVMDwarfTagthrown_type">LibLLVMDwarfTagthrown_type</td>
-        <td><p>TODO: Provide summary for LibLLVMDwarfTag.LibLLVMDwarfTagthrown_type Enumeration</p>
+        <td><p>DW_TAG_thrown_type</p>
 </td>
       </tr>
       <tr>
         <td id="Llvm_NET_Interop_LibLLVMDwarfTag_LibLLVMDwarfTagtry_block">LibLLVMDwarfTagtry_block</td>
-        <td><p>TODO: Provide summary for LibLLVMDwarfTag.LibLLVMDwarfTagtry_block Enumeration</p>
+        <td><p>DW_TAG_try_block</p>
 </td>
       </tr>
       <tr>
         <td id="Llvm_NET_Interop_LibLLVMDwarfTag_LibLLVMDwarfTagtype_unit">LibLLVMDwarfTagtype_unit</td>
-        <td><p>TODO: Provide summary for LibLLVMDwarfTag.LibLLVMDwarfTagtype_unit Enumeration</p>
+        <td><p>DW_TAG_type_unit</p>
 </td>
       </tr>
       <tr>
         <td id="Llvm_NET_Interop_LibLLVMDwarfTag_LibLLVMDwarfTagtypedef">LibLLVMDwarfTagtypedef</td>
-        <td><p>TODO: Provide summary for LibLLVMDwarfTag.LibLLVMDwarfTagtypedef Enumeration</p>
+        <td><p>DW_TAG_typedef</p>
 </td>
       </tr>
       <tr>
         <td id="Llvm_NET_Interop_LibLLVMDwarfTag_LibLLVMDwarfTagunion_type">LibLLVMDwarfTagunion_type</td>
-        <td><p>TODO: Provide summary for LibLLVMDwarfTag.LibLLVMDwarfTagunion_type Enumeration</p>
+        <td><p>DW_TAG_union_type</p>
 </td>
       </tr>
       <tr>
         <td id="Llvm_NET_Interop_LibLLVMDwarfTag_LibLLVMDwarfTagunspecified_parameters">LibLLVMDwarfTagunspecified_parameters</td>
-        <td><p>TODO: Provide summary for LibLLVMDwarfTag.LibLLVMDwarfTagunspecified_parameters Enumeration</p>
+        <td><p>DW_TAG_unspecified_parameters</p>
 </td>
       </tr>
       <tr>
         <td id="Llvm_NET_Interop_LibLLVMDwarfTag_LibLLVMDwarfTagunspecified_type">LibLLVMDwarfTagunspecified_type</td>
-        <td><p>TODO: Provide summary for LibLLVMDwarfTag.LibLLVMDwarfTagunspecified_type Enumeration</p>
+        <td><p>DW_TAG_unspecified_type</p>
 </td>
       </tr>
       <tr>
         <td id="Llvm_NET_Interop_LibLLVMDwarfTag_LibLLVMDwarfTagvariable">LibLLVMDwarfTagvariable</td>
-        <td><p>TODO: Provide summary for LibLLVMDwarfTag.LibLLVMDwarfTagvariable Enumeration</p>
+        <td><p>DW_TAG_variable</p>
 </td>
       </tr>
       <tr>
         <td id="Llvm_NET_Interop_LibLLVMDwarfTag_LibLLVMDwarfTagvariant">LibLLVMDwarfTagvariant</td>
-        <td><p>TODO: Provide summary for LibLLVMDwarfTag.LibLLVMDwarfTagvariant Enumeration</p>
+        <td><p>DW_TAG_variant</p>
 </td>
       </tr>
       <tr>
         <td id="Llvm_NET_Interop_LibLLVMDwarfTag_LibLLVMDwarfTagvariant_part">LibLLVMDwarfTagvariant_part</td>
-        <td><p>TODO: Provide summary for LibLLVMDwarfTag.LibLLVMDwarfTagvariant_part Enumeration</p>
+        <td><p>DW_TAG_variant_part</p>
 </td>
       </tr>
       <tr>
         <td id="Llvm_NET_Interop_LibLLVMDwarfTag_LibLLVMDwarfTagvolatile_type">LibLLVMDwarfTagvolatile_type</td>
-        <td><p>TODO: Provide summary for LibLLVMDwarfTag.LibLLVMDwarfTagvolatile_type Enumeration</p>
+        <td><p>DW_TAG_volatile_type</p>
 </td>
       </tr>
       <tr>
         <td id="Llvm_NET_Interop_LibLLVMDwarfTag_LibLLVMDwarfTagwith_stmt">LibLLVMDwarfTagwith_stmt</td>
-        <td><p>TODO: Provide summary for LibLLVMDwarfTag.LibLLVMDwarfTagwith_stmt Enumeration</p>
+        <td><p>DW_TAG_with_stmt</p>
 </td>
       </tr>
   </table>
@@ -8926,7 +8941,7 @@
             <span class="pull-right">
               <a href="#top">Back to top</a>
             </span>
-            Copyright (C) 2017, Dot NET Foundation<br><strong>Build:</strong> 8.0.0-alpha.0.0.ci-BLD.464790682
+            Copyright (C) 2017, Dot NET Foundation<br><strong>Build:</strong> 8.0.0-alpha.0.0.ci-BLD.464985420
             
           </div>
         </div>

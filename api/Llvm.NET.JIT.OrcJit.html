@@ -2524,6 +2524,9 @@
                                 </li>
                               </ul>  </li>
                           <li class="">
+                            <a href="Llvm.NET.Interop.LibLLVMDwarfAttributeEncoding.html" title="LibLLVMDwarfAttributeEncoding" class="">LibLLVMDwarfAttributeEncoding</a>
+                          </li>
+                          <li class="">
                             <a href="Llvm.NET.Interop.LibLLVMDwarfSourceLanguage.html" title="LibLLVMDwarfSourceLanguage" class="">LibLLVMDwarfSourceLanguage</a>
                           </li>
                           <li class="">
@@ -7369,9 +7372,6 @@
                                 </li>
                               </ul>  </li>
                           <li class="">
-                            <a href="Llvm.NET.JIT.IJitModuleHandle.html" title="IJitModuleHandle" class="">IJitModuleHandle</a>
-                          </li>
-                          <li class="">
                             <span class="expand-stub"></span>
                             <a href="Llvm.NET.JIT.ILazyCompileExecutionEngine.html" title="ILazyCompileExecutionEngine" class="">ILazyCompileExecutionEngine</a>
                               
@@ -7380,7 +7380,13 @@
                                   <a href="Llvm.NET.JIT.ILazyCompileExecutionEngine.AddLazyFunctionGenerator.html" title="AddLazyFunctionGenerator" class="">AddLazyFunctionGenerator</a>
                                 </li>
                                 <li class="">
+                                  <a href="Llvm.NET.JIT.ILazyCompileExecutionEngine.AddModule.html" title="AddModule" class="">AddModule</a>
+                                </li>
+                                <li class="">
                                   <a href="Llvm.NET.JIT.ILazyCompileExecutionEngine.DefaultSymbolResolver.html" title="DefaultSymbolResolver" class="">DefaultSymbolResolver</a>
+                                </li>
+                                <li class="">
+                                  <a href="Llvm.NET.JIT.ILazyCompileExecutionEngine.LazyAddModule.html" title="LazyAddModule" class="">LazyAddModule</a>
                                 </li>
                               </ul>  </li>
                           <li class="">
@@ -7390,6 +7396,9 @@
                               <ul class="nav level3">
                                 <li class="">
                                   <a href="Llvm.NET.JIT.LazyCompilationExecutionEngineExtensions.AddLazyFunctionGenerator.html" title="AddLazyFunctionGenerator" class="">AddLazyFunctionGenerator</a>
+                                </li>
+                                <li class="">
+                                  <a href="Llvm.NET.JIT.LazyCompilationExecutionEngineExtensions.LazyAddModule.html" title="LazyAddModule" class="">LazyAddModule</a>
                                 </li>
                               </ul>  </li>
                           <li class="">
@@ -7417,6 +7426,9 @@
                                 </li>
                                 <li class="">
                                   <a href="Llvm.NET.JIT.OrcJit.GetFunctionDelegate.html" title="GetFunctionDelegate" class="">GetFunctionDelegate</a>
+                                </li>
+                                <li class="">
+                                  <a href="Llvm.NET.JIT.OrcJit.LazyAddModule.html" title="LazyAddModule" class="">LazyAddModule</a>
                                 </li>
                                 <li class="">
                                   <a href="Llvm.NET.JIT.OrcJit.-ctor.html" title="OrcJit" class="">OrcJit</a>
@@ -8612,8 +8624,15 @@ clients. For more details on the implementation see the LLVM Documentation.</p>
 </td>
       </tr>
       <tr>
-        <td id="Llvm_NET_JIT_OrcJit_RemoveModule_Llvm_NET_JIT_IJitModuleHandle_" data-uid="Llvm.NET.JIT.OrcJit.RemoveModule(Llvm.NET.JIT.IJitModuleHandle)">
-          <a class="xref" href="Llvm.NET.JIT.OrcJit.RemoveModule.html#Llvm_NET_JIT_OrcJit_RemoveModule_Llvm_NET_JIT_IJitModuleHandle_">RemoveModule(IJitModuleHandle)</a>
+        <td id="Llvm_NET_JIT_OrcJit_LazyAddModule_Llvm_NET_BitcodeModule_Llvm_NET_Interop_LLVMOrcSymbolResolverFn_" data-uid="Llvm.NET.JIT.OrcJit.LazyAddModule(Llvm.NET.BitcodeModule,Llvm.NET.Interop.LLVMOrcSymbolResolverFn)">
+          <a class="xref" href="Llvm.NET.JIT.OrcJit.LazyAddModule.html#Llvm_NET_JIT_OrcJit_LazyAddModule_Llvm_NET_BitcodeModule_Llvm_NET_Interop_LLVMOrcSymbolResolverFn_">LazyAddModule(BitcodeModule, LLVMOrcSymbolResolverFn)</a>
+        </td>
+        <td class="markdown level1 summary"><p>Adds a module for lazy compilation</p>
+</td>
+      </tr>
+      <tr>
+        <td id="Llvm_NET_JIT_OrcJit_RemoveModule_System_UInt64_" data-uid="Llvm.NET.JIT.OrcJit.RemoveModule(System.UInt64)">
+          <a class="xref" href="Llvm.NET.JIT.OrcJit.RemoveModule.html#Llvm_NET_JIT_OrcJit_RemoveModule_System_UInt64_">RemoveModule(UInt64)</a>
         </td>
         <td class="markdown level1 summary"><p>Removes a module from the engine</p>
 </td>
@@ -8622,6 +8641,9 @@ clients. For more details on the implementation see the LLVM Documentation.</p>
   <h3 id="extensionmethods">Extension Methods</h3>
   <div>
       <a class="xref" href="Llvm.NET.JIT.LazyCompilationExecutionEngineExtensions.AddLazyFunctionGenerator.html#Llvm_NET_JIT_LazyCompilationExecutionEngineExtensions_AddLazyFunctionGenerator_Llvm_NET_JIT_ILazyCompileExecutionEngine_System_String_Llvm_NET_JIT_LazyFunctionCompiler_">LazyCompilationExecutionEngineExtensions.AddLazyFunctionGenerator(ILazyCompileExecutionEngine, String, LazyFunctionCompiler)</a>
+  </div>
+  <div>
+      <a class="xref" href="Llvm.NET.JIT.LazyCompilationExecutionEngineExtensions.LazyAddModule.html#Llvm_NET_JIT_LazyCompilationExecutionEngineExtensions_LazyAddModule_Llvm_NET_JIT_ILazyCompileExecutionEngine_Llvm_NET_BitcodeModule_">LazyCompilationExecutionEngineExtensions.LazyAddModule(ILazyCompileExecutionEngine, BitcodeModule)</a>
   </div>
 </article>
           </div>
@@ -8646,7 +8668,7 @@ clients. For more details on the implementation see the LLVM Documentation.</p>
             <span class="pull-right">
               <a href="#top">Back to top</a>
             </span>
-            Copyright (C) 2017, Dot NET Foundation<br><strong>Build:</strong> 8.0.0-alpha.0.0.ci-BLD.464790682
+            Copyright (C) 2017, Dot NET Foundation<br><strong>Build:</strong> 8.0.0-alpha.0.0.ci-BLD.464985420
             
           </div>
         </div>
