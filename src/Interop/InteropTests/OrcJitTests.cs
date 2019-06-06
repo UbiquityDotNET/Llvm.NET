@@ -46,6 +46,7 @@ namespace InteropTests
                         LLVMOrcJITStackRef orcJit = LLVMOrcCreateInstance( machine );
                         using( orcJit )
                         {
+                            // try several different modules with the same function name replacing the previous
                             AddAndExecuteTestModule( orcJit, context, machine, 42 );
                             AddAndExecuteTestModule( orcJit, context, machine, 12345678 );
                             AddAndExecuteTestModule( orcJit, context, machine, 87654321 );
@@ -63,8 +64,8 @@ namespace InteropTests
 
             // ORC now owns the module, so it must never be released
             module = LLVMModuleRef.Zero;
-
-            err = LLVMOrcGetSymbolAddress( orcJit, out ulong funcAddress, "main" );
+            LLVMOrcGetMangledSymbol( orcJit, out string mangledName, "main" );
+            err = LLVMOrcGetSymbolAddress( orcJit, out ulong funcAddress, mangledName );
             Assert.IsTrue( err.IsInvalid );
             Assert.AreNotEqual( 0ul, funcAddress );
             var callableMain = Marshal.GetDelegateForFunctionPointer<TestMain>( ( IntPtr )funcAddress );
@@ -75,6 +76,7 @@ namespace InteropTests
 
         private static ulong SymbolResolver( string Name, IntPtr LookupCtx )
         {
+            // Should never get here as the test won't include any resolution of functions not generated.
             return 0;
         }
 
@@ -88,9 +90,11 @@ namespace InteropTests
             LLVMTypeRef signature = LLVMFunctionType( int32T, null, 0, false );
             LLVMValueRef main = LLVMAddFunction( module, "main", signature );
             LLVMBasicBlockRef entryBlock = LLVMAppendBasicBlock( main, "entry" );
+
             LLVMBuilderRef builder = LLVMCreateBuilder( );
-            LLVMValueRef constNum = LLVMConstInt( int32T, ( ulong )magicNumber, true );
             LLVMPositionBuilderAtEnd( builder, entryBlock );
+
+            LLVMValueRef constNum = LLVMConstInt( int32T, ( ulong )magicNumber, true );
             LLVMBuildRet( builder, constNum );
             Debug.WriteLine( LLVMPrintModuleToString( module ) );
             return module;

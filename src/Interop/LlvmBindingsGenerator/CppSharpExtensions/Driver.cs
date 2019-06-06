@@ -207,7 +207,7 @@ namespace LlvmBindingsGenerator
                         string fullFilePathfile = Path.Combine( templateOutputPath, fileName );
                         File.WriteAllText( fullFilePathfile, template.Generate( ) );
 
-                        Diagnostics.Message( "Generated '{0}'", fileName );
+                        Diagnostics.Debug( "Generated '{0}'", fileName );
                     }
                     catch( System.IO.IOException ex )
                     {

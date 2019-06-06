@@ -38,10 +38,6 @@
         <param name="MangledSymbol">TODO: Provide details of parameter MangledSymbol</param>
         <param name="Symbol">TODO: Provide details of parameter Symbol</param>
     </Function>
-    <Function name="LLVMOrcDisposeMangledSymbol">
-        <summary>TODO: Provide summary for Function LLVMOrcDisposeMangledSymbol</summary>
-        <param name="MangledSymbol">TODO: Provide details of parameter MangledSymbol</param>
-    </Function>
     <Function name="LLVMOrcCreateLazyCompileCallback">
         <summary>TODO: Provide summary for Function LLVMOrcCreateLazyCompileCallback</summary>
         <param name="JITStack">TODO: Provide details of parameter JITStack</param>
