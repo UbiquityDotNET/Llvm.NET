@@ -10,6 +10,69 @@
 ;; ==============================================================================
 -->
 <LibLlvmAPI>
+    <Enumeration name="LibLLVMDwarfAttributeEncoding">
+        <summary>TODO: Provide summary for LibLLVMDwarfAttributeEncoding Enumeration</summary>
+        <Item name="DW_ATE_address">
+            <summary>TODO: Provide summary for LibLLVMDwarfAttributeEncoding.DW_ATE_address Enumeration</summary>
+        </Item>
+        <Item name="DW_ATE_boolean">
+            <summary>TODO: Provide summary for LibLLVMDwarfAttributeEncoding.DW_ATE_boolean Enumeration</summary>
+        </Item>
+        <Item name="DW_ATE_complex_float">
+            <summary>TODO: Provide summary for LibLLVMDwarfAttributeEncoding.DW_ATE_complex_float Enumeration</summary>
+        </Item>
+        <Item name="DW_ATE_float">
+            <summary>TODO: Provide summary for LibLLVMDwarfAttributeEncoding.DW_ATE_float Enumeration</summary>
+        </Item>
+        <Item name="DW_ATE_signed">
+            <summary>TODO: Provide summary for LibLLVMDwarfAttributeEncoding.DW_ATE_signed Enumeration</summary>
+        </Item>
+        <Item name="DW_ATE_signed_char">
+            <summary>TODO: Provide summary for LibLLVMDwarfAttributeEncoding.DW_ATE_signed_char Enumeration</summary>
+        </Item>
+        <Item name="DW_ATE_unsigned">
+            <summary>TODO: Provide summary for LibLLVMDwarfAttributeEncoding.DW_ATE_unsigned Enumeration</summary>
+        </Item>
+        <Item name="DW_ATE_unsigned_char">
+            <summary>TODO: Provide summary for LibLLVMDwarfAttributeEncoding.DW_ATE_unsigned_char Enumeration</summary>
+        </Item>
+        <Item name="DW_ATE_imaginary_float">
+            <summary>TODO: Provide summary for LibLLVMDwarfAttributeEncoding.DW_ATE_imaginary_float Enumeration</summary>
+        </Item>
+        <Item name="DW_ATE_packed_decimal">
+            <summary>TODO: Provide summary for LibLLVMDwarfAttributeEncoding.DW_ATE_packed_decimal Enumeration</summary>
+        </Item>
+        <Item name="DW_ATE_numeric_string">
+            <summary>TODO: Provide summary for LibLLVMDwarfAttributeEncoding.DW_ATE_numeric_string Enumeration</summary>
+        </Item>
+        <Item name="DW_ATE_edited">
+            <summary>TODO: Provide summary for LibLLVMDwarfAttributeEncoding.DW_ATE_edited Enumeration</summary>
+        </Item>
+        <Item name="DW_ATE_signed_fixed">
+            <summary>TODO: Provide summary for LibLLVMDwarfAttributeEncoding.DW_ATE_signed_fixed Enumeration</summary>
+        </Item>
+        <Item name="DW_ATE_unsigned_fixed">
+            <summary>TODO: Provide summary for LibLLVMDwarfAttributeEncoding.DW_ATE_unsigned_fixed Enumeration</summary>
+        </Item>
+        <Item name="DW_ATE_decimal_float">
+            <summary>TODO: Provide summary for LibLLVMDwarfAttributeEncoding.DW_ATE_decimal_float Enumeration</summary>
+        </Item>
+        <Item name="DW_ATE_UTF">
+            <summary>TODO: Provide summary for LibLLVMDwarfAttributeEncoding.DW_ATE_UTF Enumeration</summary>
+        </Item>
+        <Item name="DW_ATE_UCS">
+            <summary>TODO: Provide summary for LibLLVMDwarfAttributeEncoding.DW_ATE_UCS Enumeration</summary>
+        </Item>
+        <Item name="DW_ATE_ASCII">
+            <summary>TODO: Provide summary for LibLLVMDwarfAttributeEncoding.DW_ATE_ASCII Enumeration</summary>
+        </Item>
+        <Item name="DW_ATE_lo_user">
+            <summary>TODO: Provide summary for LibLLVMDwarfAttributeEncoding.DW_ATE_lo_user Enumeration</summary>
+        </Item>
+        <Item name="DW_ATE_hi_user">
+            <summary>TODO: Provide summary for LibLLVMDwarfAttributeEncoding.DW_ATE_hi_user Enumeration</summary>
+        </Item>
+    </Enumeration>
     <Enumeration name="LibLLVMDwarfTag">
         <summary>Enumeration for DWARF debug information tags</summary>
         <remarks>For full details of the tags and their meanings see the <see href="http://dwarfstd.org/">DWARF</see> specifications</remarks>

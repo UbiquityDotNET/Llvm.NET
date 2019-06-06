@@ -228,11 +228,12 @@ namespace LlvmBindingsGenerator
                 InternalFunctions =
                 {
                     /* Disposal methods used and generated in Handle wrappers directly*/
-                    { "LLVMDisposeMessage", false },
-                    { "LLVMDisposeErrorMessage", false },
-                    { "LLVMConsumeError", false },
+                    { "LLVMDisposeMessage", true },
+                    { "LLVMDisposeErrorMessage", true },
+                    { "LLVMConsumeError", true },
                     { "LLVMGetErrorMessage", true },
                     { "LLVMCreateMessage", true }, // Not relevant to managed projections
+                    { "LLVMOrcDisposeMangledSymbol", true },
                     /* Declared but not present in LibLLVM */
                     { "LLVMConstGEP2", true },         // declared in LLVM headers but never defined [Go, Figure!]
                     { "LLVMConstInBoundsGEP2", true }, // declared in LLVM headers but never defined [Go, Figure!]

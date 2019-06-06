@@ -50,6 +50,14 @@
   <ItemGroup>
       <PackageReference Include="Ubiquity.ArgValidators" />
   </ItemGroup>
+  <ItemGroup>
+    <Content Update="..\..\..\BuildOutput\bin\LibLLVM\Debug\x64\LibLLVM.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Update="..\..\..\BuildOutput\bin\LibLLVM\Debug\x64\LibLLVM.pdb">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
   <!--
     Version numbers are computed at build time after any declarative properties are evaluated
     so this is needed to update the NuSpec properties with the dynamically generated values
