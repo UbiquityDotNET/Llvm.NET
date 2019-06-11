@@ -49,6 +49,7 @@ try
     $BuildInfo = Get-BuildInformation $buildPaths
     if($env:APPVEYOR)
     {
+        Write-Information "Updating APPVEYOR version: $($BuildInfo.FullBuildNumber)"
         Update-AppVeyorBuild -Version $BuildInfo.FullBuildNumber
     }
 
