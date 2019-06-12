@@ -14,6 +14,9 @@ environment:
   docspush_username: cibuild-telliam
   docspush_access_token:
     secure: QqWCIyFM6uBBbkW1jnlVGsMQWy+9aPY9rhD56oNT2L/0Cmw2bynROEsrUrOPpBrk
+  matrix:
+    - BuildMode: Source
+    - BuildMode: Docs
 
 skip_commits:
   files:
@@ -40,8 +43,3 @@ test_script:
 
 artifacts:
   - path: .\BuildOutput\Nuget\*.nupkg
-
-environment:
-  matrix:
-    - BuildMode: Source
-    - BuildMode: Docs
