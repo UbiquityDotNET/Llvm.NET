@@ -29,7 +29,7 @@ nuget:
   project_feed: true
 
 build_script:
-  - ps: .\BuildAll.ps1
+  - ps: .\BuildAll.ps1 -BuildMode $env:BuildMode
 
 deploy_script:
   - ps: .\Push-Docs.ps1
@@ -40,4 +40,8 @@ test_script:
 
 artifacts:
   - path: .\BuildOutput\Nuget\*.nupkg
-  
+
+environment:
+  matrix:
+    - BuildMode: Source
+    - BuildMode: Docs
