@@ -38,8 +38,7 @@ deploy_script:
   - ps: .\Push-Docs.ps1
 
 test_script:
-  - ps: .\Invoke-UnitTests.ps1
-  - ps: Set-Culture fr-FR; .\Invoke-UnitTests.ps1
+  - ps: if($env:BuildMode -eq 'Source') { .\Invoke-UnitTests.ps1; Set-Culture fr-FR; .\Invoke-UnitTests.ps1; }
 
 artifacts:
   - path: .\BuildOutput\Nuget\*.nupkg
