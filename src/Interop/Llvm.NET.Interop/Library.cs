@@ -72,7 +72,7 @@ namespace Llvm.NET.Interop
         /// <param name="args">Arguments to parse</param>
         /// <param name="overview">overview of the application for help/diagnostics</param>
         /// <remarks>
-        /// Use for this method is discouraged as calling applications should control
+        /// Use of this method is discouraged as calling applications should control
         /// options directly without reliance on particulars of the LLVM argument handling
         /// </remarks>
         [Obsolete( "Applications should manage options directly without relying on the LLVM argument handling" )]
@@ -86,27 +86,44 @@ namespace Llvm.NET.Interop
             LLVMParseCommandLineOptions( args.Length, args, overview );
         }
 
+        // TODO: Figure out how to read targets.def to get the full set of target architectures
+        // and generate all of the registration (including skipping of any init calls that don't exist).
+
         // basic pattern to follow for any new targets in the future
         /*
-        public static void RegisterXXX( TargetRegistrations registrations = TargetRegistration.All )
+        /// <summary>Registers components for the XXX target</summary>
+        /// <param name="registrations">Flags indicating which components to register/enable</param>
+        public static void RegisterXXX( TargetRegistrations registrations = TargetRegistrations.All )
         {
             if( registrations.HasFlag( TargetRegistrations.Target ) )
-                LLVMNative.InitializeXXXTarget( );
+            {
+                LLVMInitializeXXXTarget( );
+            }
 
             if( registrations.HasFlag( TargetRegistrations.TargetInfo ) )
-                LLVMNative.InitializeXXXTargetInfo( );
+            {
+                LLVMInitializeXXXTargetInfo( );
+            }
 
             if( registrations.HasFlag( TargetRegistrations.TargetMachine ) )
-                LLVMNative.InitializeXXXTargetMC( );
+            {
+                LLVMInitializeXXXTargetMC( );
+            }
 
             if( registrations.HasFlag( TargetRegistrations.AsmPrinter ) )
-                LLVMNative.InitializeXXXAsmPrinter( );
+            {
+                LLVMInitializeXXXAsmPrinter( );
+            }
 
             if( registrations.HasFlag( TargetRegistrations.Disassembler ) )
-                LLVMNative.InitializeXXXDisassembler( );
+            {
+                LLVMInitializeXXXDisassembler( );
+            }
 
             if( registrations.HasFlag( TargetRegistrations.AsmParser ) )
-                LLVMNative.InitializeXXXAsmParser( );
+            {
+                LLVMInitializeXXXAsmParser( );
+            }
         }
         */
 
@@ -156,10 +173,10 @@ namespace Llvm.NET.Interop
 
             /* Not supported on this platform
             //if( registrations.HasFlag( TargetRegistration.TargetInfo ) )
-            //    LLVMNative.InitializeNativeTargetInfo( );
+            //    LLVMInitializeNativeTargetInfo( );
 
             //if( registrations.HasFlag( TargetRegistration.TargetMachine ) )
-            //    LLVMNative.InitializeNativeTargetMC( );
+            //    LLVMInitializeNativeTargetMC( );
             */
 
             if( registrations.HasFlag( TargetRegistrations.AsmPrinter ) )
@@ -213,6 +230,41 @@ namespace Llvm.NET.Interop
             }
         }
 
+        /// <summary>Registers components for AMDGPU targets</summary>
+        /// <param name="registrations">Flags indicating which components to register/enable</param>
+        public static void RegisterAMDGPU( TargetRegistrations registrations = TargetRegistrations.All )
+        {
+            if( registrations.HasFlag( TargetRegistrations.Target ) )
+            {
+                LLVMInitializeAMDGPUTarget( );
+            }
+
+            if( registrations.HasFlag( TargetRegistrations.TargetInfo ) )
+            {
+                LLVMInitializeAMDGPUTargetInfo( );
+            }
+
+            if( registrations.HasFlag( TargetRegistrations.TargetMachine ) )
+            {
+                LLVMInitializeAMDGPUTargetMC( );
+            }
+
+            if( registrations.HasFlag( TargetRegistrations.AsmPrinter ) )
+            {
+                LLVMInitializeAMDGPUAsmPrinter( );
+            }
+
+            if( registrations.HasFlag( TargetRegistrations.Disassembler ) )
+            {
+                LLVMInitializeAMDGPUDisassembler( );
+            }
+
+            if( registrations.HasFlag( TargetRegistrations.AsmParser ) )
+            {
+                LLVMInitializeAMDGPUAsmParser( );
+            }
+        }
+
         /// <summary>Registers components for ARM 32bit and 16bit thumb targets</summary>
         /// <param name="registrations">Flags indicating which components to register/enable</param>
         public static void RegisterARM( TargetRegistrations registrations = TargetRegistrations.All )
@@ -248,6 +300,41 @@ namespace Llvm.NET.Interop
             }
         }
 
+        /// <summary>Registers components for the Berkeley Packet Filter (BPF) target</summary>
+        /// <param name="registrations">Flags indicating which components to register/enable</param>
+        public static void RegisterBPF( TargetRegistrations registrations = TargetRegistrations.All )
+        {
+            if( registrations.HasFlag( TargetRegistrations.Target ) )
+            {
+                LLVMInitializeBPFTarget( );
+            }
+
+            if( registrations.HasFlag( TargetRegistrations.TargetInfo ) )
+            {
+                LLVMInitializeBPFTargetInfo( );
+            }
+
+            if( registrations.HasFlag( TargetRegistrations.TargetMachine ) )
+            {
+                LLVMInitializeBPFTargetMC( );
+            }
+
+            if( registrations.HasFlag( TargetRegistrations.AsmPrinter ) )
+            {
+                LLVMInitializeBPFAsmPrinter( );
+            }
+
+            if( registrations.HasFlag( TargetRegistrations.Disassembler ) )
+            {
+                LLVMInitializeBPFDisassembler( );
+            }
+
+            if( registrations.HasFlag( TargetRegistrations.AsmParser ) )
+            {
+                LLVMInitializeBPFAsmParser( );
+            }
+        }
+
         /// <summary>Registers components for the Hexagon CPU</summary>
         /// <param name="registrations">Flags indicating which components to register/enable</param>
         public static void RegisterHexagon( TargetRegistrations registrations = TargetRegistrations.All )
@@ -277,10 +364,45 @@ namespace Llvm.NET.Interop
                 LLVMInitializeHexagonDisassembler( );
             }
 
-            /*
-            //if( registrations.HasFlag( TargetRegistration.AsmParser ) )
-            //    LLVMNative.InitializeHexagonAsmParser( );
-            */
+            if( registrations.HasFlag( TargetRegistrations.AsmParser ) )
+            {
+                LLVMInitializeHexagonAsmParser( );
+            }
+        }
+
+        /// <summary>Registers components for the Lanai target</summary>
+        /// <param name="registrations">Flags indicating which components to register/enable</param>
+        public static void RegisterLanai( TargetRegistrations registrations = TargetRegistrations.All )
+        {
+            if( registrations.HasFlag( TargetRegistrations.Target ) )
+            {
+                LLVMInitializeLanaiTarget( );
+            }
+
+            if( registrations.HasFlag( TargetRegistrations.TargetInfo ) )
+            {
+                LLVMInitializeLanaiTargetInfo( );
+            }
+
+            if( registrations.HasFlag( TargetRegistrations.TargetMachine ) )
+            {
+                LLVMInitializeLanaiTargetMC( );
+            }
+
+            if( registrations.HasFlag( TargetRegistrations.AsmPrinter ) )
+            {
+                LLVMInitializeLanaiAsmPrinter( );
+            }
+
+            if( registrations.HasFlag( TargetRegistrations.Disassembler ) )
+            {
+                LLVMInitializeLanaiDisassembler( );
+            }
+
+            if( registrations.HasFlag( TargetRegistrations.AsmParser ) )
+            {
+                LLVMInitializeLanaiAsmParser( );
+            }
         }
 
         /// <summary>Registers components for MIPS targets</summary>
@@ -342,13 +464,15 @@ namespace Llvm.NET.Interop
                 LLVMInitializeMSP430AsmPrinter( );
             }
 
-            /*
-            //if( registrations.HasFlag( TargetRegistration.Disassembler ) )
-            //    LLVMNative.InitializeMSP430Disassembler( );
+            if( registrations.HasFlag( TargetRegistrations.Disassembler ) )
+            {
+                LLVMInitializeMSP430Disassembler( );
+            }
 
-            //if( registrations.HasFlag( TargetRegistration.AsmParser ) )
-            //    LLVMNative.InitializeMSP430AsmParser( );
-            */
+            if( registrations.HasFlag( TargetRegistrations.AsmParser ) )
+            {
+                LLVMInitializeMSP430AsmParser( );
+            }
         }
 
         /// <summary>Registers components for the NVPTX targets</summary>
@@ -376,11 +500,15 @@ namespace Llvm.NET.Interop
             }
 
             /*
-            //if( registrations.HasFlag( TargetRegistration.Disassembler ) )
-            //    LLVMNative.InitializeNVPTXDisassembler( );
+            if( registrations.HasFlag( TargetRegistrations.Disassembler ) )
+            {
+                LLVMInitializeNVPTXDisassembler( );
+            }
 
-            //if( registrations.HasFlag( TargetRegistration.AsmParser ) )
-            //    LLVMNative.InitializeNVPTXAsmParser( );
+            if( registrations.HasFlag( TargetRegistrations.AsmParser ) )
+            {
+                LLVMInitializeNVPTXAsmParser( );
+            }
             */
         }
 
@@ -416,41 +544,6 @@ namespace Llvm.NET.Interop
             if( registrations.HasFlag( TargetRegistrations.AsmParser ) )
             {
                 LLVMInitializePowerPCAsmParser( );
-            }
-        }
-
-        /// <summary>Registers components for AMDGPU targets</summary>
-        /// <param name="registrations">Flags indicating which components to register/enable</param>
-        public static void RegisterAMDGPU( TargetRegistrations registrations = TargetRegistrations.All )
-        {
-            if( registrations.HasFlag( TargetRegistrations.Target ) )
-            {
-                LLVMInitializeAMDGPUTarget( );
-            }
-
-            if( registrations.HasFlag( TargetRegistrations.TargetInfo ) )
-            {
-                LLVMInitializeAMDGPUTargetInfo( );
-            }
-
-            if( registrations.HasFlag( TargetRegistrations.TargetMachine ) )
-            {
-                LLVMInitializeAMDGPUTargetMC( );
-            }
-
-            if( registrations.HasFlag( TargetRegistrations.AsmPrinter ) )
-            {
-                LLVMInitializeAMDGPUAsmPrinter( );
-            }
-
-            /*
-            //if( registrations.HasFlag( TargetRegistration.Disassembler ) )
-            //    LLVMNative.InitializeAMDGPUDisassembler( );
-            */
-
-            if( registrations.HasFlag( TargetRegistrations.AsmParser ) )
-            {
-                LLVMInitializeAMDGPUAsmParser( );
             }
         }
 
@@ -524,6 +617,41 @@ namespace Llvm.NET.Interop
             }
         }
 
+        /// <summary>Registers components for the WebAssembly target</summary>
+        /// <param name="registrations">Flags indicating which components to register/enable</param>
+        public static void RegisterWebAssembly( TargetRegistrations registrations = TargetRegistrations.All )
+        {
+            if( registrations.HasFlag( TargetRegistrations.Target ) )
+            {
+                LLVMInitializeWebAssemblyTarget( );
+            }
+
+            if( registrations.HasFlag( TargetRegistrations.TargetInfo ) )
+            {
+                LLVMInitializeWebAssemblyTargetInfo( );
+            }
+
+            if( registrations.HasFlag( TargetRegistrations.TargetMachine ) )
+            {
+                LLVMInitializeWebAssemblyTargetMC( );
+            }
+
+            if( registrations.HasFlag( TargetRegistrations.AsmPrinter ) )
+            {
+                LLVMInitializeWebAssemblyAsmPrinter( );
+            }
+
+            if( registrations.HasFlag( TargetRegistrations.Disassembler ) )
+            {
+                LLVMInitializeWebAssemblyDisassembler( );
+            }
+
+            if( registrations.HasFlag( TargetRegistrations.AsmParser ) )
+            {
+                LLVMInitializeWebAssemblyAsmParser( );
+            }
+        }
+
         /// <summary>Registers components for X86 targets</summary>
         /// <param name="registrations">Flags indicating which components to register/enable</param>
         public static void RegisterX86( TargetRegistrations registrations = TargetRegistrations.All )
@@ -589,8 +717,10 @@ namespace Llvm.NET.Interop
             }
 
             /*
-            //if( registrations.HasFlag( TargetRegistration.AsmParser ) )
-            //    LLVMNative.InitializeXCoreAsmParser( );
+            if( registrations.HasFlag( TargetRegistrations.AsmParser ) )
+            {
+                LLVMInitializeXCoreAsmParser( );
+            }
             */
         }
 
@@ -623,6 +753,7 @@ namespace Llvm.NET.Interop
             string packageRoot = Path.GetFullPath( Path.Combine( thisModulePath, "..", ".." ) );
             var paths = new List<string>( );
 
+            // TODO: support other non-windows runtimes via .NET CORE
             string osArch = Environment.Is64BitProcess ? "Win-x64" : "win-x86";
             string runTimePath = Path.Combine( "runtimes", osArch, "native" );
 
@@ -641,7 +772,17 @@ namespace Llvm.NET.Interop
               )
             {
                 string msgFmt = Resources.Mismatched_LibLLVM_version_Expected_0_1_2_Actual_3_4_5;
-                throw new InvalidOperationException( string.Format(CultureInfo.CurrentCulture, msgFmt, VersionMajor, VersionMinor, VersionPatch, versionInfo.Major, versionInfo.Minor, versionInfo.Patch ) );
+                string msg = string.Format( CultureInfo.CurrentCulture
+                                          , msgFmt
+                                          , VersionMajor
+                                          , VersionMinor
+                                          , VersionPatch
+                                          , versionInfo.Major
+                                          , versionInfo.Minor
+                                          , versionInfo.Patch
+                                          );
+
+                throw new InvalidOperationException( msg );
             }
 
             // initialize the static fields
