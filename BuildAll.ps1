@@ -62,7 +62,7 @@ try
         if($env:APPVEYOR)
         {
             Write-Information "Updating APPVEYOR version: $($BuildInfo.FullBuildNumber)"
-            Update-AppVeyorBuild -Version $BuildInfo.FullBuildNumber
+            Update-AppVeyorBuild -Version "$($BuildInfo.FullBuildNumber) [$([DateTime]::Now())]"
         }
 
         $packProperties = @{ version=$($BuildInfo.PackageVersion)
