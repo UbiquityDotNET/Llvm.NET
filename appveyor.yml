@@ -35,7 +35,7 @@ build_script:
   - ps: .\BuildAll.ps1 -BuildMode $env:BuildMode
 
 deploy_script:
-  - ps: .\Push-Docs.ps1
+  - ps: if($env:BuildMode -eq 'Docs') { .\Push-Docs.ps1 }
 
 test_script:
   - ps: if($env:BuildMode -eq 'Source') { .\Invoke-UnitTests.ps1; Set-Culture fr-FR; .\Invoke-UnitTests.ps1; }
