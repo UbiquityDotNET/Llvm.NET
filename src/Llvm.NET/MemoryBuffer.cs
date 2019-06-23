@@ -5,7 +5,6 @@
 // -----------------------------------------------------------------------
 
 using System;
-using System.Diagnostics.CodeAnalysis;
 using System.Runtime.InteropServices;
 using Llvm.NET.Interop;
 using Llvm.NET.Properties;
@@ -28,16 +27,21 @@ namespace Llvm.NET
                 throw new InternalCodeGeneratorException( msg );
             }
 
-            BufferHandle_.Value = handle;
+            BufferHandle = handle;
         }
 
         /// <summary>Gets the size of the buffer</summary>
-        public int Size => BufferHandle == default ? 0 : ( int )LLVMGetBufferSize( BufferHandle );
+        public int Size => (BufferHandle == default | BufferHandle.IsInvalid) ? 0 : ( int )LLVMGetBufferSize( BufferHandle );
 
         /// <summary>Gets an array of bytes from the buffer</summary>
         /// <returns>Array of bytes copied from the buffer</returns>
         public byte[] ToArray()
         {
+            if( BufferHandle.IsInvalid )
+            {
+                throw new InvalidOperationException( );
+            }
+
             IntPtr bufferStart = LLVMGetBufferStart( BufferHandle );
             byte[ ] retVal = new byte[ Size ];
             Marshal.Copy( bufferStart, retVal, 0, Size );
@@ -51,6 +55,11 @@ namespace Llvm.NET
         /// <remarks>Creates an efficient means of accessing the raw data of a buffer</remarks>
         public ReadOnlySpan<byte> Slice( int start = 0, int length = -1 )
         {
+            if( BufferHandle.IsInvalid )
+            {
+                throw new InvalidOperationException( );
+            }
+
             if( length == -1 )
             {
                 length = Size - start;
@@ -71,22 +80,23 @@ namespace Llvm.NET
             }
         }
 
+        /// <summary>Detaches the underlying buffer from automatic management</summary>
+        /// <remarks>
+        /// This is used when passing the memory buffer to an LLVM object (like <see cref="Llvm.NET.ObjectFile.TargetObjectFile"/>
+        /// that takes ownership of the underlying buffer. Any use of the buffer after this point results in
+        /// an <see cref="InvalidOperationException"/>.
+        /// </remarks>
+        public void Detach()
+        {
+            BufferHandle.SetHandleAsInvalid( );
+        }
+
         internal MemoryBuffer( LLVMMemoryBufferRef bufferHandle )
         {
             bufferHandle.ValidateNotDefault( nameof( bufferHandle ) );
-
-            BufferHandle_.Value = bufferHandle;
+            BufferHandle = bufferHandle;
         }
 
-        internal LLVMMemoryBufferRef BufferHandle => BufferHandle_;
-
-        // keep as a private field so this is usable as an out parameter in constructor
-        // do not write to it directly, treat it as read-only.
-        [SuppressMessage( "StyleCop.CSharp.NamingRules"
-                        , "SA1310:Field names must not contain underscore"
-                        , Justification = "Trailing _ indicates should not be written to directly even internally"
-                        )
-        ]
-        private readonly WriteOnce<LLVMMemoryBufferRef> BufferHandle_ = new WriteOnce<LLVMMemoryBufferRef>();
+        internal LLVMMemoryBufferRef BufferHandle { get; }
     }
 }

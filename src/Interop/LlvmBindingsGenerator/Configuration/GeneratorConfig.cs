@@ -26,8 +26,10 @@ namespace LlvmBindingsGenerator.Configuration
         // these out completely (default)
         public Dictionary<string, string> DeprecatedFunctionToMessageMap { get; set; } = new Dictionary<string, string>( );
 
-        // Functions that have manually placed P/Invoke in the templates should be ignored
-        // to prevent confusion. These are normally the string disposal types.
+        // Functions that have manually placed P/Invoke in the templates should not be generated into the
+        // NativeMethods static class to prevent confusion of use. These are normally the string disposal types.
+        // Any entry in this dictionary with the bool value (ignore) set to true will not even appear in the
+        // generated EXPORTS.g.def so won't be callable even with some other P/Invoke (templated or manual)
         public IDictionary<string, bool> InternalFunctions { get; set; } = new Dictionary<string, bool>( );
 
         // maps a handle type name to a template for generating the interop for the handle

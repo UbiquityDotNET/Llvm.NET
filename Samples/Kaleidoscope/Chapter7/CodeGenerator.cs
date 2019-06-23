@@ -12,7 +12,6 @@ using Kaleidoscope.Grammar.AST;
 using Kaleidoscope.Runtime;
 using Llvm.NET;
 using Llvm.NET.Instructions;
-using Llvm.NET.JIT;
 using Llvm.NET.Transforms;
 using Llvm.NET.Values;
 

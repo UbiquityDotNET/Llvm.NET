@@ -73,6 +73,9 @@ namespace Llvm.NET.Instructions
             }
         }
 
+        /// <summary>Gets the function this builder currently inserts into</summary>
+        public IrFunction InsertFunction => InsertBlock?.ContainingFunction;
+
         /// <summary>Positions the builder at the end of a given <see cref="BasicBlock"/></summary>
         /// <param name="basicBlock">Block to set the position of</param>
         public void PositionAtEnd( BasicBlock basicBlock )

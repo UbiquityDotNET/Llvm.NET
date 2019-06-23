@@ -167,7 +167,6 @@ namespace LlvmBindingsGenerator
                     new StringMarshalInfo( "lto_module_get_linkeropts", StringDisposal.CopyAlias ),
                     new StringMarshalInfo( "thinlto_module_get_object_file", StringDisposal.CopyAlias ),
                     new StringMarshalInfo( "LLVMGetSectionName", StringDisposal.CopyAlias ),
-                    new StringMarshalInfo( "LLVMGetSectionContents", StringDisposal.CopyAlias ),
                     new StringMarshalInfo( "LLVMGetSymbolName", StringDisposal.CopyAlias ),
                     new StringMarshalInfo( "LLVMGetRelocationTypeName", StringDisposal.DisposeMessage ),
                     new StringMarshalInfo( "LLVMGetRelocationValueString", StringDisposal.DisposeMessage ),
@@ -197,6 +196,7 @@ namespace LlvmBindingsGenerator
                     new StringMarshalInfo("LLVMGetHostCPUName", StringDisposal.DisposeMessage),
                     new StringMarshalInfo("LLVMGetHostCPUFeatures", StringDisposal.DisposeMessage),
                     new PrimitiveTypeMarshalInfo("LLVMHasMetadata", CppSharp.AST.PrimitiveType.Bool),
+                    new PrimitiveTypeMarshalInfo("LLVMGetSectionContents", CppSharp.AST.PrimitiveType.IntPtr),
                 },
                 /* Functions that are deprecated in LLVM and should be marked obsolte in generation (or by default ommitted completely)*/
                 DeprecatedFunctionToMessageMap = new Dictionary<string, string>
@@ -228,12 +228,12 @@ namespace LlvmBindingsGenerator
                 InternalFunctions =
                 {
                     /* Disposal methods used and generated in Handle wrappers directly*/
-                    { "LLVMDisposeMessage", true },
-                    { "LLVMDisposeErrorMessage", true },
-                    { "LLVMConsumeError", true },
-                    { "LLVMGetErrorMessage", true },
+                    { "LLVMDisposeMessage", false },
+                    { "LLVMDisposeErrorMessage", false },
+                    { "LLVMConsumeError", false },
+                    { "LLVMGetErrorMessage", false },
                     { "LLVMCreateMessage", true }, // Not relevant to managed projections
-                    { "LLVMOrcDisposeMangledSymbol", true },
+                    { "LLVMOrcDisposeMangledSymbol", false },
                     /* Declared but not present in LibLLVM */
                     { "LLVMConstGEP2", true },         // declared in LLVM headers but never defined [Go, Figure!]
                     { "LLVMConstInBoundsGEP2", true }, // declared in LLVM headers but never defined [Go, Figure!]
