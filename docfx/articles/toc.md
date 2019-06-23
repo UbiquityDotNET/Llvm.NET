@@ -12,8 +12,11 @@
 ### [Chapter 7.1 - Extreme Lazy JIT](Samples/Kaleidoscope-ch7.1.md)
 ### [Chapter 8 - AOT Compilation](Samples/Kaleidoscope-ch8.md)
 ### [Chapter 9 - Debug Information](Samples/Kaleidoscope-ch9.md)
-### [ParseTree Visitor](Samples/Kaleidoscope-ParseTreeVisitor.md)
-### [ParseTree Examples](Samples/Kaleidoscope-ParseTree-examples.md)
+### Additional Support
+#### [Kaleidoscope.Runtime](Samples/Kaleidoscope-Runtime.md)
+#### [Kaleidoscope AST](Samples/Kaleidoscope-AST.md)
+#### [ParseTree Visitor](Samples/Kaleidoscope-ParseTreeVisitor.md)
+#### [ParseTree Examples](Samples/Kaleidoscope-ParseTree-examples.md)
 
 # [Internal Details](InternalDetails/index.md)
 ## LLVM-C API Handles

@@ -26,7 +26,7 @@ namespace Llvm.NET.ObjectFile
             buffer.Detach( );
         }
 
-        /// <summary>Gets the symbols in this <see cref="ObjFileRef"/></summary>
+        /// <summary>Gets the symbols in this <see cref="TargetObjectFile"/></summary>
         public IEnumerable<Symbol> Symbols
         {
             get
@@ -42,7 +42,7 @@ namespace Llvm.NET.ObjectFile
             }
         }
 
-        /// <summary>Gets the sections in this <see cref="ObjFileRef"/></summary>
+        /// <summary>Gets the sections in this <see cref="TargetObjectFile"/></summary>
         public IEnumerable<Section> Sections
         {
             get
@@ -58,7 +58,7 @@ namespace Llvm.NET.ObjectFile
             }
         }
 
-        /// <summary>Opens an <see cref="ObjectFile"/> from a path</summary>
+        /// <summary>Opens a <see cref="TargetObjectFile"/> from a path</summary>
         /// <param name="path">path to the object file binary</param>
         /// <returns>new object file</returns>
         /// <exception cref="System.IO.IOException">File IO failures</exception>

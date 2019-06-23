@@ -1,6 +1,6 @@
-# Code Generation
+# [Code Generation](codegeneration.md)
 ## [CodeGenerator With Debug Information](codegeneration.md)
-# Kaleidoscope
+# [Kaleidoscope](Kaleidoscope.md)
 ## [Chapter 1 - Language Introduction](Kaleidoscope.md)
 ## [Chapter 2 - Implementing the parser](Kaleidoscope-ch2.md)
 ## [Chapter 3 - Generating LLVM IR](Kaleidoscope-ch3.md)

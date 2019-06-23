@@ -1,6 +1,6 @@
 # 7. Kaleidoscope: Mutable Variables
 The previous chapters introduced the Kaleidoscope language and progressively implemented a variety of
-language features to make a fully featured, if not simplistic, functional programming language. To a
+language features to make a fully featured, though simplistic, functional programming language. To a
 certain extent the choice of a functional language was a bit of a cheat. Generating LLVM IR for a 
 functional language is straight forward as functional languages map very easily into the LLVM native
 [SSA form](http://en.wikipedia.org/wiki/Static_single_assignment_form). While the SSA form is very
@@ -11,6 +11,11 @@ daunting task that might scare off a number of users. The good news is, there is
 front-end to convert to SSA form directly. In fact, it is generally discouraged! LLVM already has very
 efficient, and more importantly, well tested, support for converting to SSA form (though how that works
 might be a bit surprising).
+
+>[!IMPORTANT]
+>There is no need for a language front-end to convert to SSA form directly. In fact, it is generally
+> discouraged! LLVM already has very efficient, and more importantly, well tested, support for
+> converting to SSA form described in this chapter.
 
 ## Mutable Variables in LLVM
 ### Mutable Variables vs. SSA, What's the big deal?
@@ -179,8 +184,8 @@ the array size of the allocation is 1.
 1. mem2reg is not capable of promoting structs or arrays to registers. (The SROA pass is more powerful and can promote structs, unions and arrays in many cases)
 
 These may seem onerous but are really fairly straight forward and easy to abide, the rest of this chapter
-will focus on doing that with the Kaleidoscope language. If you are considering doing your own SSA consider
-the following aspects of the existing LLVM patterns and mem2reg:
+will focus on doing that with the Kaleidoscope language. If you are considering doing your own SSA construction,
+then please stop and consider the following aspects of the existing LLVM patterns and mem2reg:
 
 * The mem2reg and alloca pattern is proven and very well tested. The most common clients of LLVM use this
 for the bulk of their variables, bugs are found fast and early.
@@ -273,16 +278,17 @@ into the entry block.
 
 ### InitializeModuleAndPassManager
 The last piece required for mutable variables support is to include the optimization pass to promote memory
-to registers.
+to registers. This is always enabled, so that the proper SSA for is correctly generated.
 
 [!code-csharp[InitializeModuleAndPassManager](../../../Samples/Kaleidoscope/Chapter7/CodeGenerator.cs#InitializeModuleAndPassManager)]
 
 ### Add operator support for Assignment Expressions
 Unlike the other binary operators assignment doesn't follow the same emit left, emit right, emit operator
 sequence. This is because an expression like '(x+1) = expression' is nonsensical and therefore not allowed.
-The left hand side is always an alloca as the destination of a store. To handle this special case the
-Generator doesn't generate for the left side, but instead looks up the Alloca for the variable. The generator
-then implements a store operation of the right hand side value to the Alloca for the left side.
+The left hand side is always a variable reference expression as the destination of a store. To handle this
+special case the Generator doesn't generate for the left side, but instead looks up the Alloca for the
+variable for the store. The generator then implements a store operation of the right hand side value to the
+Alloca for the left side.
 
 [!code-csharp[BinaryOperatorExpression](../../../Samples/Kaleidoscope/Chapter7/CodeGenerator.cs#BinaryOperatorExpression)]
 

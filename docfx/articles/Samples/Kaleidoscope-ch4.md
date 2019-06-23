@@ -122,9 +122,16 @@ value.
 The code generation needs an update to support using a JIT engine to generate and execute the Kaleidescope
 code provided by the user.
 
+To use the Optimization transforms the generator needs a new namespace using declaration.
+
+```C#
+using Llvm.NET.Transforms;
+```
+
+#### Generator fields
 To begin with, the generator needs some additional members, including the JIT engine.
 
-[!code-csharp[Main](../../../Samples/Kaleidoscope/Chapter4/CodeGenerator.cs#Initialization)]
+[!code-csharp[PrivateMembers](../../../Samples/Kaleidoscope/Chapter4/CodeGenerator.cs#PrivateMembers)]
 
 The JIT engine is retained for the generator to use. The same engine is retained for the lifetime of the
 generator so that functions are added to the same engine and can call functions previously added. The JIT
@@ -133,31 +140,70 @@ normally used to remove the module from the JIT engine when re-defining a functi
 function names and the JIT handle created for them is maintained. Additionally, a collection of defined
 function prototypes is retained to enable matching a function call to a previously defined function.
 Since the JIT support uses a module per function approach, lookups on the current module aren't sufficient.
-Finally, a native function call delegate is defined for top level anonymous expressions so that, after
-the JIT engine has generated the code, the application can call it through a delegate.
 
+#### Generator initialization
 The initialization of the generator requires updating to support the new members.
 
-[!code-csharp[Main](../../../Samples/Kaleidoscope/Chapter4/CodeGenerator.cs#Initialization)]
+[!code-csharp[Initialization](../../../Samples/Kaleidoscope/Chapter4/CodeGenerator.cs#Initialization)]
+The bool indicating if optimizations are enabled or not is stored and an initial module and pass manager
+is created.
 
-Additionally, since the JIT engine is disposable, the code generators Dispose() method must call the
-Dispose() method on the JIT engine.
+The option to disable optimizations is useful for debugging the code generation itself as optimizations
+can alter or even eliminate incorrectly generated code. Thus, when modifying the generation itself, it
+is useful to disable the optimizations.
 
+#### JIT Engine
 The JIT engine itself is a class provided in the Kaleidoscope.Runtime library derived from the Llvm.NET
 OrcJIT engine.
 
-[!code-csharp[Main](../../../Samples/Kaleidoscope/Kaleidoscope.Runtime/KaleidoscopeJIT.cs)]
+[!code-csharp[Kaleidoscope JIT](../../../Samples/Kaleidoscope/Kaleidoscope.Runtime/KaleidoscopeJIT.cs)]
 
 [OrcJit](xref:Llvm.NET.JIT.OrcJit) provides support for declaring functions that are external to the JIT
 that the JIT'd module code can call. For Kaleidoscope, two such functions are defined directly in
-KaleidoscoptJIT (putchard and printd), which is consistent with the same functions used in the official
-LLVM C++ tutorial. Thus, allowing sharing of samples between the two.
+KaleidoscopeJIT (putchard and printd), which is consistent with the same functions used in the official
+LLVM C++ tutorial. Thus, allowing sharing of samples between the two. These functions are used to provide
+rudimentary console output support.
 
 > [!WARNING]
 > All such methods implemented in .NET must block any exception from bubbling out of the call as the JIT
 > engine doesn't know anything about them and neither does the Kaleidoscope language. Exceptions thrown
 > in these functions would produce undefined results, at best - crashing the application.
 
+#### PassManager
+Every time a new function definition is processed the generator creates a new module and initializes
+the function pass manager for the module. This is done is a new method InitializeModuleAndPassManager()
+
+[!code-csharp[Initialization](../../../Samples/Kaleidoscope/Chapter4/CodeGenerator.cs#InitializeModuleAndPassManager)]
+
+The module creation is pretty straight forward, of importance is the layout information pulled from the
+target machine for the JIT and applied to the module. 
+
+Once the module is created, the [FunctionPassManager](xref:Llvm.NET.Transforms.FunctionPassManager) is
+constructed. If optimizations are not disabled, the optimization passes are added to the pass manager.
+The set of passes used is a very basic set since the Kaleidoscope language isn't particularly complex
+at this point.
+
+
+#### Generator Dispose
+Since the JIT engine is disposable, the code generators Dispose() method must now call the
+Dispose() method on the JIT engine.
+
+[!code-csharp[Dispose](../../../Samples/Kaleidoscope/Chapter4/CodeGenerator.cs#Dispose)]
+
+#### Generate Method
+To actually execute the code the generated modules are added to the JIT. If the function is an 
+anonymous top level expression a delegate is retrieved from the JIT to allow calling the compiled
+function directly. The delegate is then called to get the result. Once an anonymous function produces
+a value, it is no longer used so is removed from the JIT and the result value returned. For other functions
+the module is added to the JIT and the function is returned.
+
+[!code-csharp[Dispose](../../../Samples/Kaleidoscope/Chapter4/CodeGenerator.cs#Generate)]
+
+Keeping all the JIT interaction in the generate method isolates the rest of the generation from any
+awareness of the JIT. This will help when adding truly lazy JIT compilation in [Chapter 7.1](Kaleidoscope-ch7.1.md)
+and AOT compilation in [Chapter 8](Kaleidoscope-ch8.md)
+
+#### Function call expressions
 Since functions are no longer collected into a single module the code to find the target for a function
 call requires updating to lookup the function from a collection of functions mapped by name.
 
@@ -168,6 +214,7 @@ found. If the prototype wasn't found then it falls back to the previous lookup i
 This fall back is needed to support recursive functions where the referenced function actually is in the
 current module.
 
+#### GetOrDeclareFunction()
 Next is to update the GetOrDeclareFunction() to handle mapping the functions prototype and re-definition
 of functions.
 
@@ -177,30 +224,12 @@ This distinguishes the special case of an anonymous top level expression as thos
 prototype maps. They are only in the JIT engine long enough to execute once and are then removed. Since
 they are, by definition, anonymous they can never be referenced by anything else.
 
-Visiting a function definition needs updating to support adding/removing the function's module in the JIT,
-tracking the JIT handle for the module and ultimately re-initializing a new module and pass manager for
-the next function.
+#### Function Definitions
+Visiting a function definition needs to add a call to the function pass manager to run the optimization
+passes for the function. This, makes sense to do, immediately after completing the generation of the function.
 
 [!code-csharp[Main](../../../Samples/Kaleidoscope/Chapter4/CodeGenerator.cs#FunctionDefinition)]
 
-When visiting a FunctionDefinition top level anonymous expressions needs some additional work to make
-the JIT actually work. The generator will convert the function to LLVM IR, as before, however it will
-also capture the JIT handle so it can remove it later. The real 'magic' of the JIT happens in the next
-2 lines:
-
-```C#
-var nativeFunc = JIT.GetDelegateForFunction<AnonExpressionFunc>( proto.Identifier.Name );
-var retVal = Context.CreateConstant( nativeFunc( ) );
-```
-
-This asks the JIT engine to provide a delegate matching the AnonExpressionFunc signature for a function
-with the name of the anonymous function just created (and compiled to native code). The function is then
-called through the delegate to produce a result. Since the result is a raw native double and all of the
-visitor methods must return a [Value](xref:Llvm.NET.Values.Value) a new [ConstantFP](xref:Llvm.NET.Values.ConstantFP)
-is created for the result of the call.
-
-After making the call to the generated function, the anonymous function is removed from the prototype
-mapping and then removed from the JIT module as it is no longer needed.
 
 ## Conclusion
 While the amount of words needed to describe the changes to support optimization and JIT execution here

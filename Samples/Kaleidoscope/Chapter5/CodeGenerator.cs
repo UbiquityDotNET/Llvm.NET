@@ -42,12 +42,14 @@ namespace Kaleidoscope.Chapter5
         }
         #endregion
 
+        #region Dispose
         public void Dispose( )
         {
             JIT.Dispose( );
             Module.Dispose( );
             Context.Dispose( );
         }
+        #endregion
 
         #region Generate
         public Value Generate( IAstNode ast, Action<CodeGeneratorException> codeGenerationErroHandler )
@@ -110,8 +112,10 @@ namespace Kaleidoscope.Chapter5
             {
             case BuiltInOperatorKind.Less:
                 {
-                    var tmp = InstructionBuilder.Compare( RealPredicate.UnorderedOrLessThan, binaryOperator.Left.Accept( this ), binaryOperator.Right.Accept( this ) )
-                                                .RegisterName( "cmptmp" );
+                    var tmp = InstructionBuilder.Compare( RealPredicate.UnorderedOrLessThan
+                                                        , binaryOperator.Left.Accept( this )
+                                                        , binaryOperator.Right.Accept( this )
+                                                        ).RegisterName( "cmptmp" );
                     return InstructionBuilder.UIToFPCast( tmp, InstructionBuilder.Context.DoubleType )
                                              .RegisterName( "booltmp" );
                 }
@@ -119,21 +123,31 @@ namespace Kaleidoscope.Chapter5
             case BuiltInOperatorKind.Pow:
                 {
                     var pow = GetOrDeclareFunction( new Prototype( "llvm.pow.f64", "value", "power" ) );
-                    return InstructionBuilder.Call( pow, binaryOperator.Left.Accept( this ), binaryOperator.Right.Accept( this ) )
-                                             .RegisterName( "powtmp" );
+                    return InstructionBuilder.Call( pow
+                                                  , binaryOperator.Left.Accept( this )
+                                                  , binaryOperator.Right.Accept( this )
+                                                  ).RegisterName( "powtmp" );
                 }
 
             case BuiltInOperatorKind.Add:
-                return InstructionBuilder.FAdd( binaryOperator.Left.Accept( this ), binaryOperator.Right.Accept( this ) ).RegisterName( "addtmp" );
+                return InstructionBuilder.FAdd( binaryOperator.Left.Accept( this )
+                                              , binaryOperator.Right.Accept( this )
+                                              ).RegisterName( "addtmp" );
 
             case BuiltInOperatorKind.Subtract:
-                return InstructionBuilder.FSub( binaryOperator.Left.Accept( this ), binaryOperator.Right.Accept( this ) ).RegisterName( "subtmp" );
+                return InstructionBuilder.FSub( binaryOperator.Left.Accept( this )
+                                              , binaryOperator.Right.Accept( this )
+                                              ).RegisterName( "subtmp" );
 
             case BuiltInOperatorKind.Multiply:
-                return InstructionBuilder.FMul( binaryOperator.Left.Accept( this ), binaryOperator.Right.Accept( this ) ).RegisterName( "multmp" );
+                return InstructionBuilder.FMul( binaryOperator.Left.Accept( this )
+                                              , binaryOperator.Right.Accept( this )
+                                              ).RegisterName( "multmp" );
 
             case BuiltInOperatorKind.Divide:
-                return InstructionBuilder.FDiv( binaryOperator.Left.Accept( this ), binaryOperator.Right.Accept( this ) ).RegisterName( "divtmp" );
+                return InstructionBuilder.FDiv( binaryOperator.Left.Accept( this )
+                                              , binaryOperator.Right.Accept( this )
+                                              ).RegisterName( "divtmp" );
 
             default:
                 throw new CodeGeneratorException( $"ICE: Invalid binary operator {binaryOperator.Op}" );
@@ -243,7 +257,7 @@ namespace Kaleidoscope.Chapter5
             InstructionBuilder.Branch( continueBlock );
 
             // capture the insert in case generating else adds new blocks
-            thenBlock = InstructionBuilder.InsertBlock;
+            var thenResultBlock = InstructionBuilder.InsertBlock;
 
             // generate else block
             function.BasicBlocks.Add( elseBlock );
@@ -255,7 +269,7 @@ namespace Kaleidoscope.Chapter5
             }
 
             InstructionBuilder.Branch( continueBlock );
-            elseBlock = InstructionBuilder.InsertBlock;
+            var elseResultBlock = InstructionBuilder.InsertBlock;
 
             // generate continue block
             function.BasicBlocks.Add( continueBlock );
@@ -263,8 +277,8 @@ namespace Kaleidoscope.Chapter5
             var phiNode = InstructionBuilder.PhiNode( function.Context.DoubleType )
                                             .RegisterName( "iftmp" );
 
-            phiNode.AddIncoming( thenValue, thenBlock );
-            phiNode.AddIncoming( elseValue, elseBlock );
+            phiNode.AddIncoming( thenValue, thenResultBlock );
+            phiNode.AddIncoming( elseValue, elseResultBlock );
             return phiNode;
         }
         #endregion
@@ -341,8 +355,10 @@ namespace Kaleidoscope.Chapter5
                 endCondition = InstructionBuilder.Compare( RealPredicate.OrderedAndNotEqual, endCondition, Context.CreateConstant( 0.0 ) )
                                                  .RegisterName( "loopcond" );
 
-                // Create the "after loop" block and insert it.
+                // capture loop end result block for loop variable PHI node
                 var loopEndBlock = InstructionBuilder.InsertBlock;
+
+                // Create the "after loop" block and insert it.
                 var afterBlock = function.AppendBasicBlock( "afterloop" );
 
                 // Insert the conditional branch into the end of LoopEndBB.
@@ -379,7 +395,7 @@ namespace Kaleidoscope.Chapter5
 
         #region GetOrDeclareFunction
 
-        // Retrieves a Function" for a prototype from the current module if it exists,
+        // Retrieves a Function for a prototype from the current module if it exists,
         // otherwise declares the function and returns the newly declared function.
         private IrFunction GetOrDeclareFunction( Prototype prototype )
         {

@@ -47,10 +47,12 @@ namespace Kaleidoscope.Chapter9
 
         public BitcodeModule Module { get; private set; }
 
+        #region Dispose
         public void Dispose( )
         {
             Context.Dispose( );
         }
+        #endregion
 
         #region Generate
         public Value Generate( IAstNode ast, Action<CodeGeneratorException> codeGenerationErroHandler )
@@ -110,8 +112,10 @@ namespace Kaleidoscope.Chapter9
             {
             case BuiltInOperatorKind.Less:
                 {
-                    var tmp = InstructionBuilder.Compare( RealPredicate.UnorderedOrLessThan, binaryOperator.Left.Accept( this ), binaryOperator.Right.Accept( this ) )
-                                                .RegisterName( "cmptmp" );
+                    var tmp = InstructionBuilder.Compare( RealPredicate.UnorderedOrLessThan
+                                                        , binaryOperator.Left.Accept( this )
+                                                        , binaryOperator.Right.Accept( this )
+                                                        ).RegisterName( "cmptmp" );
                     return InstructionBuilder.UIToFPCast( tmp, InstructionBuilder.Context.DoubleType )
                                              .RegisterName( "booltmp" );
                 }
@@ -119,21 +123,31 @@ namespace Kaleidoscope.Chapter9
             case BuiltInOperatorKind.Pow:
                 {
                     var pow = GetOrDeclareFunction( new Prototype( "llvm.pow.f64", "value", "power" ) );
-                    return InstructionBuilder.Call( pow, binaryOperator.Left.Accept( this ), binaryOperator.Right.Accept( this ) )
-                                             .RegisterName( "powtmp" );
+                    return InstructionBuilder.Call( pow
+                                                  , binaryOperator.Left.Accept( this )
+                                                  , binaryOperator.Right.Accept( this )
+                                                  ).RegisterName( "powtmp" );
                 }
 
             case BuiltInOperatorKind.Add:
-                return InstructionBuilder.FAdd( binaryOperator.Left.Accept( this ), binaryOperator.Right.Accept( this ) ).RegisterName( "addtmp" );
+                return InstructionBuilder.FAdd( binaryOperator.Left.Accept( this )
+                                              , binaryOperator.Right.Accept( this )
+                                              ).RegisterName( "addtmp" );
 
             case BuiltInOperatorKind.Subtract:
-                return InstructionBuilder.FSub( binaryOperator.Left.Accept( this ), binaryOperator.Right.Accept( this ) ).RegisterName( "subtmp" );
+                return InstructionBuilder.FSub( binaryOperator.Left.Accept( this )
+                                              , binaryOperator.Right.Accept( this )
+                                              ).RegisterName( "subtmp" );
 
             case BuiltInOperatorKind.Multiply:
-                return InstructionBuilder.FMul( binaryOperator.Left.Accept( this ), binaryOperator.Right.Accept( this ) ).RegisterName( "multmp" );
+                return InstructionBuilder.FMul( binaryOperator.Left.Accept( this )
+                                              , binaryOperator.Right.Accept( this )
+                                              ).RegisterName( "multmp" );
 
             case BuiltInOperatorKind.Divide:
-                return InstructionBuilder.FDiv( binaryOperator.Left.Accept( this ), binaryOperator.Right.Accept( this ) ).RegisterName( "divtmp" );
+                return InstructionBuilder.FDiv( binaryOperator.Left.Accept( this )
+                                              , binaryOperator.Right.Accept( this )
+                                              ).RegisterName( "divtmp" );
 
             case BuiltInOperatorKind.Assign:
                 Alloca target = LookupVariable( ( ( VariableReferenceExpression )binaryOperator.Left ).Name );
@@ -507,17 +521,17 @@ namespace Kaleidoscope.Chapter9
                 var signature = Context.CreateFunctionType( Module.DIBuilder, DoubleType, prototype.Parameters.Select( _ => DoubleType ) );
                 var lastParamLocation = parameters.Count > 0 ? parameters[ parameters.Count - 1 ].Location : prototype.Location;
 
-                retVal = Module.CreateFunction( Module.DICompileUnit
-                                              , prototype.Name
-                                              , null
-                                              , debugFile
-                                              , ( uint )prototype.Location.StartLine
+                retVal = Module.CreateFunction( scope: Module.DICompileUnit
+                                              , name: prototype.Name
+                                              , linkageName: null
+                                              , file: debugFile
+                                              , line: ( uint )prototype.Location.StartLine
                                               , signature
-                                              , false
-                                              , true
-                                              , ( uint )lastParamLocation.EndLine
-                                              , prototype.IsCompilerGenerated ? DebugInfoFlags.Artificial : DebugInfoFlags.Prototyped
-                                              , false
+                                              , isLocalToUnit: false
+                                              , isDefinition: true
+                                              , scopeLine: ( uint )lastParamLocation.EndLine
+                                              , debugFlags: prototype.IsCompilerGenerated ? DebugInfoFlags.Artificial : DebugInfoFlags.Prototyped
+                                              , isOptimized: false
                                               );
             }
 
@@ -538,19 +552,19 @@ namespace Kaleidoscope.Chapter9
             uint line = ( uint )param.Location.StartLine;
             uint col = ( uint )param.Location.StartColumn;
 
-            DILocalVariable debugVar = Module.DIBuilder.CreateArgument( function.DISubProgram
-                                                                      , param.Name
-                                                                      , function.DISubProgram.File
+            DILocalVariable debugVar = Module.DIBuilder.CreateArgument( scope: function.DISubProgram
+                                                                      , name: param.Name
+                                                                      , file: function.DISubProgram.File
                                                                       , line
-                                                                      , DoubleType
-                                                                      , true
-                                                                      , DebugInfoFlags.None
-                                                                      , checked(( ushort )( param.Index + 1 )) // Debug index starts at 1!
+                                                                      , type: DoubleType
+                                                                      , alwaysPreserve: true
+                                                                      , debugFlags: DebugInfoFlags.None
+                                                                      , argNo: checked(( ushort )( param.Index + 1 )) // Debug index starts at 1!
                                                                       );
-            Module.DIBuilder.InsertDeclare( argSlot
-                                          , debugVar
-                                          , new DILocation( Context, line, col, function.DISubProgram )
-                                          , InstructionBuilder.InsertBlock
+            Module.DIBuilder.InsertDeclare( storage: argSlot
+                                          , varInfo: debugVar
+                                          , location: new DILocation( Context, line, col, function.DISubProgram )
+                                          , insertAtEnd: InstructionBuilder.InsertBlock
                                           );
         }
 
@@ -559,18 +573,18 @@ namespace Kaleidoscope.Chapter9
             uint line = ( uint )localVar.Location.StartLine;
             uint col = ( uint )localVar.Location.StartColumn;
 
-            DILocalVariable debugVar = Module.DIBuilder.CreateLocalVariable( function.DISubProgram
-                                                                           , localVar.Name
-                                                                           , function.DISubProgram.File
+            DILocalVariable debugVar = Module.DIBuilder.CreateLocalVariable( scope: function.DISubProgram
+                                                                           , name: localVar.Name
+                                                                           , file: function.DISubProgram.File
                                                                            , line
-                                                                           , DoubleType
-                                                                           , false
-                                                                           , DebugInfoFlags.None
+                                                                           , type: DoubleType
+                                                                           , alwaysPreserve: false
+                                                                           , debugFlags: DebugInfoFlags.None
                                                                            );
-            Module.DIBuilder.InsertDeclare( argSlot
-                                          , debugVar
-                                          , new DILocation( Context, line, col, function.DISubProgram )
-                                          , InstructionBuilder.InsertBlock
+            Module.DIBuilder.InsertDeclare( storage: argSlot
+                                          , varInfo: debugVar
+                                          , location: new DILocation( Context, line, col, function.DISubProgram )
+                                          , insertAtEnd: InstructionBuilder.InsertBlock
                                           );
         }
         #endregion

@@ -356,7 +356,7 @@ fibi(10);
 ```
 
 ## Parse Tree
-ANTLR produces a low level parse tree with nodes corresponding to each of the rules defined in teh grammar.
+ANTLR produces a low level parse tree with nodes corresponding to each of the rules defined in the grammar.
 In most cases this is extremely verbose and more details than is actually needed for generating code. (Though,
 it can be used as-is in some cases.) Typically code generation will walk the parse tree to provide a simpler
 Abstract Syntax Tree that represents the actual language concepts independent of the syntax of the language.
@@ -437,7 +437,7 @@ more scenarios and catch breaking issues quicker.)
 
 ### Special case for Chapter 2
 Chapter 2 sample code, while still following the general patterns used in all of the chapters, is a bit
-unique, it doesn't actually use Lllvm.NET at all. Instead, it is only focused on the language and parsing.
+unique, it doesn't actually use Lllvm.NET at all! Instead, it is only focused on the language and parsing.
 This helps in understanding the basic patterns of the code. Furthermore, this chapter serves as an aid in
 understanding the language itself. Of particular use is the ability to generate DGML and [blockdiag](http://blockdiag.com)
 representations of the parse tree for a given parse.

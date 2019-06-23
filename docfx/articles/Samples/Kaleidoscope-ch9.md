@@ -41,10 +41,10 @@ Another important item for debug information is called the Compilation Unit. In 
 [DICompileUnit](xref:Llvm.NET.DebugInfo.DICompileUnit). The compile unit is the top level scope for
 storing debug information, there is only ever one per module and generally it represents the full source
 file that was used to create the module. Since the compile unit, like the builder is really tied to the
-module it is exposed as the [DIBuilder](xref:Llvm.NET.BitcodeModule.DIBuilder) property. However, unlike
-a builder it isn't something that a module can automatically construct without more information. Therefore,
-Llvm.NET provides overloads for the creation of a module that includes the additional data needed to create
-the DICompileUnit for you.
+module it is exposed as the [DICompileUnit](xref:Llvm.NET.BitcodeModule.DICompileUnit) property. However,
+unlike a builder it isn't something that a module can automatically construct without more information.
+Therefore, Llvm.NET provides overloads for the creation of a module that includes the additional data
+needed to create the DICompileUnit for you.
 
 The updated InitializeModuleAndPassManager() function looks like this:
 
@@ -54,7 +54,7 @@ There are a few points of interest here. First the compile unit is created for t
 however it is using the [SourceLanguage.C](xref:Llvm.NET.DebugInfo.SourceLanguage.C) value. This is
 because a debugger won't likely understand the Kaleidoscope language, runtime, or calling conventions.
 (We just invented it and only now setting up debugger support after all!) The good news is that the
-language follows the C language ABI in the code generation (generally a good idea unless you ave a really
+language follows the C language ABI in the code generation (generally a good idea unless you have a really
 good reason not to). Therefore, the C language is fairly accurate. This allows calling functions from the
 debugger and it will execute them.
 
@@ -68,15 +68,12 @@ is provided so that it becomes the root compile unit.
 > [Finish](xref:Llvm.NET.DebugInfo.DebugInfoBuilder.Finish(Llvm.NET.DebugInfo.DISubProgram))
 > method. (In Llvm.NET this method is called Finish() to avoid conflicts with the .NET runtime defined
 > Finalize() and to avoid confusion on the term as the idea of "finalization" has a very different meaning
-> in .NET then what happens here).
+> in .NET then what applies to the DIBuilder).
 
-The tutorial takes care of finishing the debug information in Main after the running the parsing loop to
-process all the input text for the source file.
+The tutorial takes care of finishing the debug information in the generator's Generate method after
+completing code generation for the module.
 
-```C#
-replLoop.Run( );
-generator.Module.DIBuilder.Finish( );
-```
+[!code-csharp[Generate](../../../Samples/Kaleidoscope/Chapter9/CodeGenerator.cs#Generate)]
 
 ## Functions
 With the basics of the DIBuilder and DICompile unit setup for the module it is time to focus on providing
@@ -92,7 +89,7 @@ intern the file definition so that it won't actually end up with duplicates.
 [!code-csharp[GetIrDeclareFunction](../../../Samples/Kaleidoscope/Chapter9/CodeGenerator.cs#GetOrDeclareFunction)]
 
 ## Debug Locations
-The parse tree contains full location information for each parsed node in the tree. This allows building
+The AST contains full location information for each parsed node from the parse tree. This allows building
 debug location information for each node fairly easily. The general idea is to set the location in the
 InstructionBuilder so that it is applied to all instructions emitted until it is changed. This saves on
 manually adding the location on every instruction.
