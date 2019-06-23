@@ -55,6 +55,9 @@
     <ClCompile Include="DIBuilderBindings.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="include\libllvm-c\ObjectFileBindings.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Resource.rc">
@@ -105,6 +108,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="targetver.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\libllvm-c\ObjectFileBindings.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

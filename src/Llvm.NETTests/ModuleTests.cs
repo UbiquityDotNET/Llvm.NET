@@ -270,6 +270,8 @@ namespace Llvm.NET.Tests
                 using( var ctx = new Context( ) )
                 using( var module2 = BitcodeModule.LoadFrom( path, ctx ) )
                 {
+                    // force a GC to ensure buffer created in LoadFrom is handled correctly
+                    GC.Collect( GC.MaxGeneration );
                     IrFunction testFunc = module2.GetFunction( "foo" );
 
                     // verify basics
