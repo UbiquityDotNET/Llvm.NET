@@ -10,7 +10,7 @@ generate correct .NET interop code. There are several tables of information
 used in the various passes.
 
 ## StatusReturningFunctions
-This table is a simple [SortedSet](xref:System.Collections.Generic.SortedSet{T}) of
+This table is a simple [SortedSet](xref:System.Collections.Generic.SortedSet`1) of
 strings. Each entry is the name of an LLVM function that semantically returns a status.
 The return type is transformed to an LLVMStatus to differentiate such types from a
 boolean or other integral values (in the case of a C Declaration that simply returns an
@@ -30,7 +30,7 @@ a message explaining what the alternative is, if there is one. This is used to c
 declaration with the Obsolete attribute in .NET. 
 >[!NOTE]
 >At present this table is only used to completely filter out the deprecated functions so they
->do not even appear in the generated output.
+>do not even appear in the generated output or EXPORTS.
 
 ## InternalFunctions
 This property contains a dictionary of functions that are considered internal or just completely
@@ -57,9 +57,9 @@ marshaling. The following is a summary of the handle types (for more details see
 
 #### Alias handles
 On occasion there are places where the LLVM-C APIs retrieve a handle to an object that is just
-an alias (e.g. not ultimately owned by the caller after the call completes). These are usually
-child objects returning a reference to the parent. In such cases the application should never
-dispose the handle as it doesn't own it.
+an alias (e.g. not ultimately owned by the caller after the call completes). These are usually,
+but not always, child objects returning a reference to the parent. In such cases the application
+should never dispose the handle as it doesn't own it.
 
 ### ContextHandleTemplate
 Contextual handles are those that are always references to objects owned by a parent container

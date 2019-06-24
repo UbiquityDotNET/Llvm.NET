@@ -12,13 +12,18 @@ the LLVM code, you can launch the debug version of the app without debugging, th
 select native and managed debugging. (Hopefully this feature will be restored to these projects in the
 future so this rather hacky trick isn't needed...)
 
+>UPDATE:
+>As of VS2019 this hack is no longer needed as it is now possible to set an SDK project to allow native
+>debugging directly from the project's debugging settings page. (Yeah! :triumph:)
+
 ### Initializing Llvm.NET
 The underlying LLVM library requires initialization for it's internal data, furthermore Llvm.NET must load
 the actual underlying library specific to the current system architecture. Thus, the Llvm.NET as a whole
 requires initialization.
 
 ```C#
-using static Llvm.NET.StaticState;
+using static Llvm.NET.Interop.Library;
+
 // [...]
 
 using( InitializeLLVM() )
@@ -59,7 +64,7 @@ provided in the Kaleidoscope.Runtime assembly.
 In many cases successfully parsing the input code isn't sufficient to determine correctness of the code in
 a given context. In particular attempting to re-define a function already defined in the current module is
 a problem. (Later, chapters deal with re-definition by using a new module for each function, but that is
-more a side-effect of working with the JIT) To handle error in the generation the REPL loop will catch any
+more a side-effect of working with the JIT) To handle errors in the generation, the REPL loop will catch any
 CodeGenerationException and call the error handler callback provided by the application. The application
 handles the error by indicating the error to the user. This allows the application to continue processing input
 while still informing the user that what they tried to do didn't work.
@@ -98,10 +103,11 @@ The Generate method is used by the REPL loop to generate the final output from a
 implementation simply passes the tree to the AST generating parse tree visitor to generate the AST and
 process the AST nodes from that. Due to the simplicity of the Kaleidoscope language the AST is more of
 a List than a tree. In fact, the AstBuilder creates an enumerable sequence of nodes that are either a
-function declaration or a function definition. For the interactive mode should always be a single element.
-(When doing Ahead of Time (AOT) compilation in [Chapter 8](Kaleidoscope-ch8.md) this sequence can contain
-many declarations and definitions in any order.) To handle the different node types the generate method
-simply uses pattern matching to detect the type of node to dispatch to a visitor function for that kind of node.
+function declaration or a function definition. For the interactive mode only a single element is parsed
+at a time. However, when doing Ahead of Time (AOT) compilation in [Chapter 8](Kaleidoscope-ch8.md)
+this sequence can contain many declarations and definitions in any order. To handle the different node
+types the generate method simply uses pattern matching to detect the type of node to dispatch to a visitor
+function for that kind of node.
 
 [!code-csharp[Main](../../../Samples/Kaleidoscope/Chapter3/CodeGenerator.cs#Generate)]
 
@@ -118,7 +124,7 @@ VisitFunctionDefinition() Method.
 [!code-csharp[Main](../../../Samples/Kaleidoscope/Chapter3/CodeGenerator.cs#FunctionDefinition)]
 
 VisitFunctionDefinition() simply extracts the function prototype from the AST node. A private utility 
-method GetOrDeclareFunction() us used to get an existing function or declare a new one.
+method GetOrDeclareFunction() is used to get an existing function or declare a new one.
 
 [!code-csharp[Main](../../../Samples/Kaleidoscope/Chapter3/CodeGenerator.cs#GetOrDeclareFunction)]
 
@@ -153,7 +159,8 @@ it is quite useful to detect errors early.)
 #### Top Level Expression
 Top level expressions in Kaleidoscope are transformed into an anonymous function definition by the
 AstBuilder. Since this chapter is focused on generating the IR module there isn't any special handling
-needed for a top level expression. They are simply just another function definition.
+needed for a top level expression - they are simply just another function definition. (JIT execution of
+the top level expression comes in the next chapter)
 
 ### Constant expression
 In Kaleidoscope all values are floating point and constants are represented in LLVM IR as [ConstantFP](xref:Llvm.NET.Values.ConstantFP)
@@ -194,13 +201,14 @@ the actual operator.
 [!code-csharp[Main](../../../Samples/Kaleidoscope/Chapter3/CodeGenerator.cs#BinaryOperatorExpression)]
 
 The process of transforming the operator starts by generating an LLVM IR Value from the right-hand side
-parse tree. A simple switch statement based on the token type of the operator is used to generate the
+expression. A simple switch statement based on the token type of the operator is used to generate the
 actual LLVM IR instruction(s) for the operator.
 
 LLVM has strict rules on the operators and their values for the IR, in particular the types of the
 operands must be identical and, usually must also match the type of the result. For the Kaleidoscope
 language that's easy to manage as it only supports one data type. Other languages might need to insert
-additional conversion logic as part of emitting the operators.
+additional conversion logic as part of emitting the operators. (Kaleidoscope does this for boolean
+values when supporting conditional control flow in [Chapter 5](Kaleidoscope-ch5.md))
 
 The Generation of the IR instructions uses the current InstructionBuilder and the [RegisterName](xref:Llvm.NET.Values.ValueExtensions.RegisterName``1(``0,System.String))
 extension method to provide a name for the result in LLVM IR. The name helps with readability of the IR

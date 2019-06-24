@@ -52,7 +52,7 @@ Since the code branch could flow into the continuation block from either the 'el
 instruction is placed at the beginning of the continuation block with appropriate values for the result
 from each of the two predecessor blocks. The resulting value is then provided as the return of the function.
 It is important to note that using the phi node in this fashion does not require generating all of the code
-in SSA form. In fact, doing that in the front end is generally discouraged. Generally speaking there are
+in SSA form. In fact, doing that in the front end is strongly discouraged. Generally speaking there are
 only two reasons where a phi node may crop up:
 
  1. Mutable variables like x = 1; x = x + 1;
@@ -60,8 +60,8 @@ only two reasons where a phi node may crop up:
 
 [Chapter 7](Kaleidoscope-ch7.md) Covers the mutable variables case in detail and the techniques for
 generating the code without using a phi node. For cases like this one where it is straight forward and easy
-to insert the phi node directly then there's no reason not to. Though, the solution provided in Chapter 7 can
-also eliminate the need to manually insert the phi node here as well.
+to insert the phi node directly then there's no reason not to. Though, the solution provided in Chapter 7 can,
+and does, eliminate the need to manually insert the phi node here as well.
 
 ### Code Generation
 Generating the code for the condition expression follows the pattern shown above with the following high
@@ -72,9 +72,9 @@ level steps:
 3. Create a block for the then expression
 4. Create a block for the else expression
 5. Create a block for the if continuation
-5. Emit conditional branch to the then, else blocks
-6. Switch to the then expression block
-7. Emit code for the then expression
+6. Emit conditional branch to the then, else blocks
+7. Switch to the then expression block
+8. Emit code for the then expression
 9. Capture the insertion block location as generating the then expression may add new blocks
 10. Emit a branch to the if continuation block
 11. Switch to the else block
@@ -93,11 +93,11 @@ is captured. This is needed as the generation for the sub expression may include
 expression, which may contain a conditional sub expression, ... Thus, the 'current block' may well have
 changed from the starting block. The phi node needs the immediate predecessor block and the value it
 produced, so the current block is captured after generation, before switching the block to the next one
-for generation.
+for generation to ensure that the correct block is used with the value.
 
 The actual code follows the description pretty closely and should now be fairly easy to follow:
 
-[!code-csharp[Main](../../../Samples/Kaleidoscope/Chapter5/CodeGenerator.cs#ConditionalExpression)]
+[!code-csharp[ConditionalExpression](../../../Samples/Kaleidoscope/Chapter5/CodeGenerator.cs#ConditionalExpression)]
 
 ## For Loop
 Now that the basics of control flow are available it is possible to leverage the same concepts to
@@ -160,13 +160,14 @@ Thus, the basic pattern to generate the for loop code consists of the following 
 12. Emit the code to compute the next value (e.g. next = current + step )
 13. Emit code for the end condition
 14. Emit code to convert the result of the condition to an LLVM i1 for a conditional branch
-15. Create after loop block
-16. Emit conditional branch to the loop body block or after loop block depending on the result of the end
+15. Capture loop end block for PHI node
+16. Create after loop block
+17. Emit conditional branch to the loop body block or after loop block depending on the result of the end
 condition
-17. Add an incoming predecessor to the phi node at the beginning of the loop body for the next loop value
+18. Add an incoming predecessor to the phi node at the beginning of the loop body for the next loop value
 and the loop end block it comes from
-18. Switch to after block
-19. Create constant value of 0.0 as the result expression of the for loop
+19. Switch to after block
+20. Create constant value of 0.0 as the result expression of the for loop
 
 That's a few more steps than even the if-then-else but the basic concepts of blocks, conditional branches
 and direct phi-nodes remains the same.
@@ -176,16 +177,16 @@ The code to generate a for loop follows this pattern pretty closely.
 [!code-csharp[Main](../../../Samples/Kaleidoscope/Chapter5/CodeGenerator.cs#ForInExpression)]
 
 The only new functionality in that is the use of the ScopeStack class to support nested scopes and the named
-variables within them. ScopeStack is provided in the Kaleidoscope.Runtime library. It is basically a stack
-of name to value mapping dictionaries. The EnterScope method will push a new dictionary on to the stack and
-return an IDisposable that will handle popping it back off. This allows for nested expressions to use variables
-in the parent scope and to override them with its own value too. That, is the symbols available in a loop
-include the loop variable and any variables in the parent scope, all the way back to the function parameters.
-The stack nature allows for deeper scopes to shadow the variable of the same name in the parent, while allowing
-access to all other variables from other scopes.
+variables within them. [ScopeStack](xref:Llvm.NET.ScopeStack`1) is provided in the Llvm.NET library. It is
+basically a stack of name to value mapping dictionaries. The EnterScope method will push a new dictionary on
+to the stack and return an IDisposable that will handle popping it back off. This allows for nested expressions
+to use variables in the parent scope and to override them with its own value too. That, is the symbols available
+in a loop include the loop variable and any variables in the parent scope, all the way back to the function
+parameters. The stack nature allows for deeper scopes to shadow the variable of the same name in the parent,
+while allowing access to all other variables from other scopes.
 
 ## Conclusion
 Control flow is certainly more complex to generate than any of the other language constructs but it relies on
 a few basic primitive building block patterns. Thus, it is fairly easy to understand and implement once the
-basic patterns are understood. With the inclusion of control flow the Kaleidoscope language is a complete,
+basic patterns are understood. With the inclusion of control flow the Kaleidoscope language is now a complete,
 albeit simplistic, functional language.

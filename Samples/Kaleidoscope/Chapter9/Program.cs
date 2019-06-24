@@ -93,13 +93,13 @@ namespace Kaleidoscope.Chapter9
         // really simple command line handling, just loops through the input arguments
         private static (string SourceFilePath, int ExitCode) ProcessArgs( string[ ] args )
         {
-            bool waitforDebugger = false;
+            bool waitForDebugger = false;
             string sourceFilePath = string.Empty;
             foreach( string arg in args )
             {
                 if( string.Compare( arg, "waitfordebugger", StringComparison.OrdinalIgnoreCase ) == 0 )
                 {
-                    waitforDebugger = true;
+                    waitForDebugger = true;
                 }
                 else
                 {
@@ -111,7 +111,7 @@ namespace Kaleidoscope.Chapter9
                 }
             }
 
-            WaitForDebugger( waitforDebugger );
+            WaitForDebugger( waitForDebugger );
 
             if( string.IsNullOrWhiteSpace( sourceFilePath ) )
             {

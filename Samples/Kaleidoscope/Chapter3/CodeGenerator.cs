@@ -79,8 +79,10 @@ namespace Kaleidoscope.Chapter3
             {
             case BuiltInOperatorKind.Less:
                 {
-                    var tmp = InstructionBuilder.Compare( RealPredicate.UnorderedOrLessThan, binaryOperator.Left.Accept( this ), binaryOperator.Right.Accept( this ) )
-                                                .RegisterName( "cmptmp" );
+                    var tmp = InstructionBuilder.Compare( RealPredicate.UnorderedOrLessThan
+                                                        , binaryOperator.Left.Accept( this )
+                                                        , binaryOperator.Right.Accept( this )
+                                                        ).RegisterName( "cmptmp" );
                     return InstructionBuilder.UIToFPCast( tmp, InstructionBuilder.Context.DoubleType )
                                              .RegisterName( "booltmp" );
                 }
@@ -88,21 +90,31 @@ namespace Kaleidoscope.Chapter3
             case BuiltInOperatorKind.Pow:
                 {
                     var pow = GetOrDeclareFunction( new Prototype( "llvm.pow.f64", "value", "power" ) );
-                    return InstructionBuilder.Call( pow, binaryOperator.Left.Accept( this ), binaryOperator.Right.Accept( this ) )
-                                             .RegisterName( "powtmp" );
+                    return InstructionBuilder.Call( pow
+                                                  , binaryOperator.Left.Accept( this )
+                                                  , binaryOperator.Right.Accept( this )
+                                                  ).RegisterName( "powtmp" );
                 }
 
             case BuiltInOperatorKind.Add:
-                return InstructionBuilder.FAdd( binaryOperator.Left.Accept( this ), binaryOperator.Right.Accept( this ) ).RegisterName( "addtmp" );
+                return InstructionBuilder.FAdd( binaryOperator.Left.Accept( this )
+                                              , binaryOperator.Right.Accept( this )
+                                              ).RegisterName( "addtmp" );
 
             case BuiltInOperatorKind.Subtract:
-                return InstructionBuilder.FSub( binaryOperator.Left.Accept( this ), binaryOperator.Right.Accept( this ) ).RegisterName( "subtmp" );
+                return InstructionBuilder.FSub( binaryOperator.Left.Accept( this )
+                                              , binaryOperator.Right.Accept( this )
+                                              ).RegisterName( "subtmp" );
 
             case BuiltInOperatorKind.Multiply:
-                return InstructionBuilder.FMul( binaryOperator.Left.Accept( this ), binaryOperator.Right.Accept( this ) ).RegisterName( "multmp" );
+                return InstructionBuilder.FMul( binaryOperator.Left.Accept( this )
+                                              , binaryOperator.Right.Accept( this )
+                                              ).RegisterName( "multmp" );
 
             case BuiltInOperatorKind.Divide:
-                return InstructionBuilder.FDiv( binaryOperator.Left.Accept( this ), binaryOperator.Right.Accept( this ) ).RegisterName( "divtmp" );
+                return InstructionBuilder.FDiv( binaryOperator.Left.Accept( this )
+                                              , binaryOperator.Right.Accept( this )
+                                              ).RegisterName( "divtmp" );
 
             default:
                 throw new CodeGeneratorException( $"ICE: Invalid binary operator {binaryOperator.Op}" );

@@ -43,6 +43,29 @@ Kaleidoscope is a simple functional language with the following major features:
       Though, ANTLR4's flexibility made it fairly easy to do once fully understood. (more details in
       [Chapter 6](Kaleidoscope-ch6.md))
 
+### Expressions
+In Kaleidoscope, everything is an expression (e.g. everything has or returns a value even if the value
+is a constant 0.0). There are no statements and no "void" functions etc...
+
+#### Multi-line expressions
+There are a few different ways to represent an expression that is long enough to warrant splitting it across
+multiple lines when typing it out.
+
+##### Expression Continuation Marker
+One mechanism for handling multi-line expressions that is used in most shell scripting languages is a line
+continuation marker. In such cases a special character followed by a line-termination char or char sequence
+indicates that the expression continues on the next line (e.g. it isn't complete yet).
+
+##### Expression Complete Marker
+Another approach to handling long expressions spanning multiple lines is basically the opposite of line
+continuation, expression complete markers. This marker indicates the end of a potentially multi-line expression. (A variant
+of this might require a line termination following the marker as with the line continuation).
+
+##### Kaleidoscope Implementation
+The original LLVM C++ implementation chose the expression completion approach using a semicolon as the completion.
+(So it seems familiar like statements in other C like languages) Therefore, the LLVM.NET tutorial follows the same
+design. [Implementing the line continuation mechanism in Kaleidoscope is left as an exercise for the reader :wink:]
+
 ### Example
 The following example is a complete program in Kaleidoscope that will generate a textual representation
 of the classic Mandelbrot Set.
