@@ -82,7 +82,7 @@
                   <ul class="nav level1">
                     <li class="">
                       <span class="expand-stub"></span>
-                      <a class="">Code Generation</a>
+                      <a href="codegeneration.html" title="Code Generation" class="">Code Generation</a>
                         
                         <ul class="nav level2">
                           <li class="">
@@ -91,7 +91,7 @@
                         </ul>  </li>
                     <li class="">
                       <span class="expand-stub"></span>
-                      <a class="">Kaleidoscope</a>
+                      <a href="Kaleidoscope.html" title="Kaleidoscope" class="">Kaleidoscope</a>
                         
                         <ul class="nav level2">
                           <li class="">
@@ -126,7 +126,7 @@
                           </li>
                           <li class="">
                             <span class="expand-stub"></span>
-                            <a class="">Additional Support</a>
+                            <a href="Kaleidoscope.html" title="Additional Support" class="">Additional Support</a>
                               
                               <ul class="nav level3">
                                 <li class="">
@@ -157,7 +157,7 @@
 language. Thus far, the tutorial has avoided details of the parsing. One of the benefits of using a tool
 like ANTLR4 is that you can accomplish a lot without needing to spend a lot of time thinking about the
 parser too much. With user defined operators we&#39;ll break that and get down and dirty with the parser a bit
-to make the operators work. </p>
+to make the operators work, in particular implementing user defined precedence.</p>
 <div class="TIP"><h5>Tip</h5><p>The actual value of user defined operator precedence in a language is a bit debatable, and the
 initial plan for the Llvm.NET tutorials was to skip this chapter as it doesn&#39;t involve any new
 LLVM IR or code generation. After the code was done to get the other chapters working - this one
@@ -166,21 +166,22 @@ was ultimately too tempting to resist, and we now have a full implementation wit
 extensions on top! (Exponent operator &#39;^&#39;, &#39;=&#39; vs &#39;==&#39;, &#39;++&#39;, and &#39;--&#39;)</p>
 </div>
 <h2 id="general-idea-of-user-defined-operators">General idea of user defined operators</h2>
-<p>User defined operators in Kaleidoscope are a bit unique. Unlike C++ and other similar languages the
-precedence of the user defined operators are not fixed. Though, the built-in operators all use a fixed
-precedence. That poses some interesting challenges for a parser as it must dynamically adapt to the state
-of the language runtime as it is parsing so that it can correctly evaluate the operator expressions.
-Making that work while using ANTLR requires looking under the hood to how ANTLR4 ordinarily handles
+<p>User defined operators in Kaleidoscope are a bit unique. Unlike C++ and other similar languages, the
+precedence of the user defined operators in Kaleidoscope are not fixed. Though, the built-in operators
+all use a fixed precedence. That poses some interesting challenges for a parser as it must dynamically
+adapt to the state of the language runtime as it is parsing so that it can correctly evaluate the operator
+expressions.</p>
+<p>Making that work while using ANTLR requires looking under the hood to how ANTLR4 ordinarily handles
 precedence. A full treatise on the subject is outside the scope of this tutorial, but the
 <a href="https://github.com/antlr/antlr4/blob/master/doc/left-recursion.md">ANTLR GitHub site</a>
 has a good description of the details of the precedence climbing approach used in ANTLR. The general idea
 is that the expression rule takes an additional precedence argument and the operator expressions include
-a semantic predicate that tests the current precedence level. If the current level is less than or equal
+a semantic predicate that tests the current precedence level. If the current level is greater than or equal
 to the current level then that operator rule expression is allowed to match the input. Otherwise, the rule
 is skipped. Usually this is all hidden by the implicit support for precedence climbing and left recursion
 that is built-in to ANTLR4. However that requires fixing the precedence for operators in the grammar.
-Thus, Kaleidoscope doesn&#39;t use the default left-recursion support, but does use the same concepts with a
-custom hook in the code behind.</p>
+Thus, Kaleidoscope doesn&#39;t use the default left-recursion support, but does use the same concepts with
+custom semantic predicates in the code behind.</p>
 <pre><code class="lang-antlr">// pull the initializer out to a distinct rule so it is easier to get at
 // the list of initializers when walking the parse tree
 initializer
@@ -282,7 +283,7 @@ internal int GetNextPrecedence( int tokenType )
 }
 </code></pre><p>This provides the core ability for looking up and handling precedence. Though, as shown so far, it is just
 a rather convoluted form of what ANTLR4 gives us for free. The real point of this runtime state is the
-ability of the language to dynamically add user operators. By adding operators to the runtime state the
+ability of the language to <em>dynamically add user operators</em>. By adding operators to the runtime state the
 lookup process will include them during parsing.</p>
 <p>Actually adding the operators to the table is handled in the parsing process itself using a feature of the
 ANTLR generated parser called a &quot;Parse Listener&quot;. A parse listener is attached to the parser and effectively
@@ -337,6 +338,10 @@ namespace Kaleidoscope.Runtime
 processed to produce the AST the user defined operators are transformed to simple function declarations and
 function calls. This simplification allows the generator and later stages to remain blissfully ignorant of the
 issue of precedence and even the existence of user defined operators.</p>
+<p>Ordinarily it is best to design parsers without any sort of context or feedback mechanisms to keep them easier
+to maintain. However, the language design of the Kaleidoscope language requires some level of feedback so that
+the parser can handle precedence correctly. Using the state, listener and semantic predicates keeps the roles
+of each part clear while allowing for completely isolating the feedback to the parsing alone.</p>
 <h4 id="ast">AST</h4>
 <p>When building the AST Prototypes for user defined operators are transformed to a FunctionDeclaration</p>
 <pre><code class="lang-csharp" name="UserOperatorPrototypes">public override IAstNode VisitBinaryPrototype( [NotNull] BinaryPrototypeContext context )
@@ -348,8 +353,8 @@ public override IAstNode VisitUnaryPrototype( [NotNull] UnaryPrototypeContext co
 {
     return BuildPrototype( context, CreateUnaryFunctionName( context.OpToken ) );
 }
-</code></pre><p>During construction of the AST all occurrences of a user defined operator expression are transformed into a function call for the
-function that actually implements the behavior for the operator.</p>
+</code></pre><p>During construction of the AST all occurrences of a user defined operator expression are transformed into a function
+call for the function that actually implements the behavior for the operator.</p>
 <pre><code class="lang-csharp" name="UserBinaryOpExpression">default:
     {
         // User defined op?
@@ -382,13 +387,16 @@ function that actually implements the behavior for the operator.</p>
     var arg = ( IExpression )context.Rhs.Accept( this );
     return new FunctionCallExpression( context.GetSourceSpan( ), function, arg );
 }
-</code></pre><h3 id="codegen-and-driver">CodeGen and Driver</h3>
-<p>If you compare the code generation and driver code between Chapter 5 and Chapter 6 you&#39;ll see the only difference is the
-language level setting, it got a bump (Literally a single enum on one line of each component). Everything else is identical.
-This is because the real work is on the parser and AST not the code generation. This is where having a good parser + AST model
-can help keep the code generation simpler. If the parse tree alone was used, then the code generation would need additional
-support similar to what is found in the AST generation. Putting it into the AST generation keeps things much cleaner as, obviously,
-the support for user defined operators and precedence has nothing to do with code generation. Keeping the code generation simpler is
+</code></pre><p>Thus, after AST transformation completes, the user defined operators, and any issues of precedence no longer
+exist!</p>
+<h3 id="codegen-and-driver">CodeGen and Driver</h3>
+<p>If you compare the code generation and driver code between Chapter 5 and Chapter 6 you&#39;ll see the only differences
+are the change of namespace and the language level setting - it got a bump (Literally a single enum on one line of
+each component). Everything else is identical. This is because the real work is on the parser and AST not the code
+generation. This is where having a good parser + AST model can help keep the code generation simpler. If the parse
+tree alone was used, then the code generation would need additional support similar to what is found in the AST
+generation. Putting it into the AST generation keeps things much cleaner as, obviously, the support for user
+defined operators and precedence has nothing to do with code generation. Keeping the code generation simpler is
 generally a really good thing!</p>
 <p>That completes the support for user defined operators.</p>
 <h3 id="example">Example</h3>
@@ -509,17 +517,10 @@ Ready&gt;
 </code></pre><h2 id="conclusion">Conclusion</h2>
 <p>Adding user defined operators with user defined precedence is fairly straight forward to implement in
 terms of the code generation. No new code generation is required (Can&#39;t get any simpler than that! <span class="emoji" shortcode="grin">😁</span> ).
-ANTLR4 has support for left-recursion in the grammar and precedence of expressions. Even though ANTLR only
+ANTLR4 has support for left-recursion in the grammar and precedence of expressions. Even though ANTLR4 only
 directly supports fixed precedence it is rather easy to extend the underlying support to handle dynamic
 precedence and associativity, once the underlying mechanics are understood. The rest is on the AST
 construction as it converts the user defined operators to function definitions and function calls. </p>
-<p>If you compare the code generation and driver code between Chapter 5 and Chapter 6 you&#39;ll see the only difference is the
-language level setting, it got a bump (Literally a single enum on one line of each component). Everything else is identical.
-This is because the real work is on the parser and AST not the code generation. This is where having a good parser + AST model
-can help keep the code generation simpler. If the parse tree alone was used, then the code generation would need additional code
-similar to what is found in the AST generation. Putting it into the AST generation keeps things much cleaner as, obviously, the
-support for user defined operators and precedence has nothing to do with code generation. Keeping the code generation simpler is
-generally a really good thing! </p>
 <div class="TIP"><h5>Tip</h5><p>An early version of these samples skipped the use of an AST and used the parse tree directly. You can compare the history of
 the generators for that transition to see how the AST helps simplify the code generation. (Not to mention sets the stage for
 an otherwise unimplemented feature - truly lazy compilation, which is covered in <a href="Kaleidoscope-ch7.1.html">Chapter 7.1</a>.)</p>
@@ -546,7 +547,7 @@ an otherwise unimplemented feature - truly lazy compilation, which is covered in
             <span class="pull-right">
               <a href="#top">Back to top</a>
             </span>
-            Copyright (C) 2017, Dot NET Foundation<br><strong>Build:</strong> 8.0.0-alpha.0.0.ci-BLD.466166633
+            Copyright (C) 2017, Dot NET Foundation<br><strong>Build:</strong> 8.0.0-alpha.0.0.ci-BLD.466223925
             
           </div>
         </div>

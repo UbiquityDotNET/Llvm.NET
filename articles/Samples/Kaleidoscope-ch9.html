@@ -82,7 +82,7 @@
                   <ul class="nav level1">
                     <li class="">
                       <span class="expand-stub"></span>
-                      <a class="">Code Generation</a>
+                      <a href="codegeneration.html" title="Code Generation" class="">Code Generation</a>
                         
                         <ul class="nav level2">
                           <li class="">
@@ -91,7 +91,7 @@
                         </ul>  </li>
                     <li class="">
                       <span class="expand-stub"></span>
-                      <a class="">Kaleidoscope</a>
+                      <a href="Kaleidoscope.html" title="Kaleidoscope" class="">Kaleidoscope</a>
                         
                         <ul class="nav level2">
                           <li class="">
@@ -126,7 +126,7 @@
                           </li>
                           <li class="">
                             <span class="expand-stub"></span>
-                            <a class="">Additional Support</a>
+                            <a href="Kaleidoscope.html" title="Additional Support" class="">Additional Support</a>
                               
                               <ul class="nav level3">
                                 <li class="">
@@ -190,10 +190,10 @@ is bound to the module.</p>
 <a class="xref" href="../../api/Llvm.NET.DebugInfo.DICompileUnit.html">DICompileUnit</a>. The compile unit is the top level scope for
 storing debug information, there is only ever one per module and generally it represents the full source
 file that was used to create the module. Since the compile unit, like the builder is really tied to the
-module it is exposed as the <a class="xref" href="../../api/Llvm.NET.BitcodeModule.DIBuilder.html#Llvm_NET_BitcodeModule_DIBuilder">DIBuilder</a> property. However, unlike
-a builder it isn&#39;t something that a module can automatically construct without more information. Therefore,
-Llvm.NET provides overloads for the creation of a module that includes the additional data needed to create
-the DICompileUnit for you.</p>
+module it is exposed as the <a class="xref" href="../../api/Llvm.NET.BitcodeModule.DICompileUnit.html#Llvm_NET_BitcodeModule_DICompileUnit">DICompileUnit</a> property. However,
+unlike a builder it isn&#39;t something that a module can automatically construct without more information.
+Therefore, Llvm.NET provides overloads for the creation of a module that includes the additional data
+needed to create the DICompileUnit for you.</p>
 <p>The updated InitializeModuleAndPassManager() function looks like this:</p>
 <pre><code class="lang-csharp" name="InitializeModuleAndPassManager">private void InitializeModuleAndPassManager( string sourcePath )
 {
@@ -219,7 +219,7 @@ the DICompileUnit for you.</p>
 however it is using the <a class="xref" href="../../api/Llvm.NET.DebugInfo.SourceLanguage.html#Llvm_NET_DebugInfo_SourceLanguage_C">SourceLanguage.C</a> value. This is
 because a debugger won&#39;t likely understand the Kaleidoscope language, runtime, or calling conventions.
 (We just invented it and only now setting up debugger support after all!) The good news is that the
-language follows the C language ABI in the code generation (generally a good idea unless you ave a really
+language follows the C language ABI in the code generation (generally a good idea unless you have a really
 good reason not to). Therefore, the C language is fairly accurate. This allows calling functions from the
 debugger and it will execute them.</p>
 <p>Another point to note is that the module ID is derived from the source file path and the source file path
@@ -230,12 +230,49 @@ remember that somewhere after generating all code and debug information to call 
 <a class="xref" href="../../api/Llvm.NET.DebugInfo.DebugInfoBuilder.Finish.html#Llvm_NET_DebugInfo_DebugInfoBuilder_Finish_Llvm_NET_DebugInfo_DISubProgram_">Finish</a>
 method. (In Llvm.NET this method is called Finish() to avoid conflicts with the .NET runtime defined
 Finalize() and to avoid confusion on the term as the idea of &quot;finalization&quot; has a very different meaning
-in .NET then what happens here).</p>
+in .NET then what applies to the DIBuilder).</p>
 </div>
-<p>The tutorial takes care of finishing the debug information in Main after the running the parsing loop to
-process all the input text for the source file.</p>
-<pre><code class="lang-C#">replLoop.Run( );
-generator.Module.DIBuilder.Finish( );
+<p>The tutorial takes care of finishing the debug information in the generator&#39;s Generate method after
+completing code generation for the module.</p>
+<pre><code class="lang-csharp" name="Generate">public Value Generate( IAstNode ast, Action&lt;CodeGeneratorException&gt; codeGenerationErroHandler )
+{
+    try
+    {
+        ast.Accept( this );
+
+        if( AnonymousFunctions.Count &gt; 0 )
+        {
+            var mainFunction = Module.AddFunction( &quot;main&quot;, Context.GetFunctionType( Context.VoidType ) );
+            var block = mainFunction.AppendBasicBlock( &quot;entry&quot; );
+            var irBuilder = new InstructionBuilder( block );
+            var printdFunc = Module.AddFunction( &quot;printd&quot;, Context.GetFunctionType( Context.DoubleType, Context.DoubleType ) );
+            foreach( var anonFunc in AnonymousFunctions )
+            {
+                var value = irBuilder.Call( anonFunc );
+                irBuilder.Call( printdFunc, value );
+            }
+
+            irBuilder.Return( );
+
+            // Use always inline and Dead Code Elimination module passes to inline all of the
+            // anonymous functions. This effectively strips all the calls just generated for main()
+            // and inlines each of the anonymous functions directly into main, dropping the now
+            // unused original anonymous functions all while retaining all of the original source
+            // debug information locations.
+            var mpm = new ModulePassManager( )
+                      .AddAlwaysInlinerPass( )
+                      .AddGlobalDCEPass( );
+            mpm.Run( Module );
+            Module.DIBuilder.Finish( );
+        }
+    }
+    catch(CodeGeneratorException ex) when ( codeGenerationErroHandler != null)
+    {
+        codeGenerationErroHandler( ex );
+    }
+
+    return null;
+}
 </code></pre><h2 id="functions">Functions</h2>
 <p>With the basics of the DIBuilder and DICompile unit setup for the module it is time to focus on providing
 debug information for functions. This requires adding a few extra calls to build the context of the debug
@@ -270,17 +307,17 @@ private IrFunction GetOrDeclareFunction( Prototype prototype )
         var signature = Context.CreateFunctionType( Module.DIBuilder, DoubleType, prototype.Parameters.Select( _ =&gt; DoubleType ) );
         var lastParamLocation = parameters.Count &gt; 0 ? parameters[ parameters.Count - 1 ].Location : prototype.Location;
 
-        retVal = Module.CreateFunction( Module.DICompileUnit
-                                      , prototype.Name
-                                      , null
-                                      , debugFile
-                                      , ( uint )prototype.Location.StartLine
+        retVal = Module.CreateFunction( scope: Module.DICompileUnit
+                                      , name: prototype.Name
+                                      , linkageName: null
+                                      , file: debugFile
+                                      , line: ( uint )prototype.Location.StartLine
                                       , signature
-                                      , false
-                                      , true
-                                      , ( uint )lastParamLocation.EndLine
-                                      , prototype.IsCompilerGenerated ? DebugInfoFlags.Artificial : DebugInfoFlags.Prototyped
-                                      , false
+                                      , isLocalToUnit: false
+                                      , isDefinition: true
+                                      , scopeLine: ( uint )lastParamLocation.EndLine
+                                      , debugFlags: prototype.IsCompilerGenerated ? DebugInfoFlags.Artificial : DebugInfoFlags.Prototyped
+                                      , isOptimized: false
                                       );
     }
 
@@ -294,7 +331,7 @@ private IrFunction GetOrDeclareFunction( Prototype prototype )
     return retVal;
 }
 </code></pre><h2 id="debug-locations">Debug Locations</h2>
-<p>The parse tree contains full location information for each parsed node in the tree. This allows building
+<p>The AST contains full location information for each parsed node from the parse tree. This allows building
 debug location information for each node fairly easily. The general idea is to set the location in the
 InstructionBuilder so that it is applied to all instructions emitted until it is changed. This saves on
 manually adding the location on every instruction.</p>
@@ -389,19 +426,19 @@ parameters and local variables.</p>
     uint line = ( uint )param.Location.StartLine;
     uint col = ( uint )param.Location.StartColumn;
 
-    DILocalVariable debugVar = Module.DIBuilder.CreateArgument( function.DISubProgram
-                                                              , param.Name
-                                                              , function.DISubProgram.File
+    DILocalVariable debugVar = Module.DIBuilder.CreateArgument( scope: function.DISubProgram
+                                                              , name: param.Name
+                                                              , file: function.DISubProgram.File
                                                               , line
-                                                              , DoubleType
-                                                              , true
-                                                              , DebugInfoFlags.None
-                                                              , checked(( ushort )( param.Index + 1 )) // Debug index starts at 1!
+                                                              , type: DoubleType
+                                                              , alwaysPreserve: true
+                                                              , debugFlags: DebugInfoFlags.None
+                                                              , argNo: checked(( ushort )( param.Index + 1 )) // Debug index starts at 1!
                                                               );
-    Module.DIBuilder.InsertDeclare( argSlot
-                                  , debugVar
-                                  , new DILocation( Context, line, col, function.DISubProgram )
-                                  , InstructionBuilder.InsertBlock
+    Module.DIBuilder.InsertDeclare( storage: argSlot
+                                  , varInfo: debugVar
+                                  , location: new DILocation( Context, line, col, function.DISubProgram )
+                                  , insertAtEnd: InstructionBuilder.InsertBlock
                                   );
 }
 
@@ -410,18 +447,18 @@ private void AddDebugInfoForAlloca( Alloca argSlot, IrFunction function, LocalVa
     uint line = ( uint )localVar.Location.StartLine;
     uint col = ( uint )localVar.Location.StartColumn;
 
-    DILocalVariable debugVar = Module.DIBuilder.CreateLocalVariable( function.DISubProgram
-                                                                   , localVar.Name
-                                                                   , function.DISubProgram.File
+    DILocalVariable debugVar = Module.DIBuilder.CreateLocalVariable( scope: function.DISubProgram
+                                                                   , name: localVar.Name
+                                                                   , file: function.DISubProgram.File
                                                                    , line
-                                                                   , DoubleType
-                                                                   , false
-                                                                   , DebugInfoFlags.None
+                                                                   , type: DoubleType
+                                                                   , alwaysPreserve: false
+                                                                   , debugFlags: DebugInfoFlags.None
                                                                    );
-    Module.DIBuilder.InsertDeclare( argSlot
-                                  , debugVar
-                                  , new DILocation( Context, line, col, function.DISubProgram )
-                                  , InstructionBuilder.InsertBlock
+    Module.DIBuilder.InsertDeclare( storage: argSlot
+                                  , varInfo: debugVar
+                                  , location: new DILocation( Context, line, col, function.DISubProgram )
+                                  , insertAtEnd: InstructionBuilder.InsertBlock
                                   );
 }
 </code></pre><h2 id="conclusion">Conclusion</h2>
@@ -451,7 +488,7 @@ compiler for custom languages, including debug support a lot easier.</p>
             <span class="pull-right">
               <a href="#top">Back to top</a>
             </span>
-            Copyright (C) 2017, Dot NET Foundation<br><strong>Build:</strong> 8.0.0-alpha.0.0.ci-BLD.466166633
+            Copyright (C) 2017, Dot NET Foundation<br><strong>Build:</strong> 8.0.0-alpha.0.0.ci-BLD.466223925
             
           </div>
         </div>

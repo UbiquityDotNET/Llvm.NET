@@ -82,7 +82,7 @@
                   <ul class="nav level1">
                     <li class="">
                       <span class="expand-stub"></span>
-                      <a class="">Code Generation</a>
+                      <a href="codegeneration.html" title="Code Generation" class="">Code Generation</a>
                         
                         <ul class="nav level2">
                           <li class="">
@@ -91,7 +91,7 @@
                         </ul>  </li>
                     <li class="">
                       <span class="expand-stub"></span>
-                      <a class="">Kaleidoscope</a>
+                      <a href="Kaleidoscope.html" title="Kaleidoscope" class="">Kaleidoscope</a>
                         
                         <ul class="nav level2">
                           <li class="">
@@ -126,7 +126,7 @@
                           </li>
                           <li class="">
                             <span class="expand-stub"></span>
-                            <a class="">Additional Support</a>
+                            <a href="Kaleidoscope.html" title="Additional Support" class="">Additional Support</a>
                               
                               <ul class="nav level3">
                                 <li class="">
@@ -164,11 +164,16 @@ does not support launching mixed native+managed debugging. When you need to go a
 the LLVM code, you can launch the debug version of the app without debugging, then attach to it and
 select native and managed debugging. (Hopefully this feature will be restored to these projects in the
 future so this rather hacky trick isn&#39;t needed...)</p>
+<blockquote><p>UPDATE:
+As of VS2019 this hack is no longer needed as it is now possible to set an SDK project to allow native
+debugging directly from the project&#39;s debugging settings page. (Yeah! <span class="emoji" shortcode="triumph">😤</span>)</p>
+</blockquote>
 <h3 id="initializing-llvmnet">Initializing Llvm.NET</h3>
 <p>The underlying LLVM library requires initialization for it&#39;s internal data, furthermore Llvm.NET must load
 the actual underlying library specific to the current system architecture. Thus, the Llvm.NET as a whole
 requires initialization.</p>
-<pre><code class="lang-C#">using static Llvm.NET.StaticState;
+<pre><code class="lang-C#">using static Llvm.NET.Interop.Library;
+
 // [...]
 
 using( InitializeLLVM() )
@@ -219,7 +224,7 @@ provided in the Kaleidoscope.Runtime assembly.</p>
 <p>In many cases successfully parsing the input code isn&#39;t sufficient to determine correctness of the code in
 a given context. In particular attempting to re-define a function already defined in the current module is
 a problem. (Later, chapters deal with re-definition by using a new module for each function, but that is
-more a side-effect of working with the JIT) To handle error in the generation the REPL loop will catch any
+more a side-effect of working with the JIT) To handle errors in the generation, the REPL loop will catch any
 CodeGenerationException and call the error handler callback provided by the application. The application
 handles the error by indicating the error to the user. This allows the application to continue processing input
 while still informing the user that what they tried to do didn&#39;t work.</p>
@@ -303,10 +308,11 @@ private readonly IDictionary&lt;string, Value&gt; NamedValues = new Dictionary&l
 implementation simply passes the tree to the AST generating parse tree visitor to generate the AST and
 process the AST nodes from that. Due to the simplicity of the Kaleidoscope language the AST is more of
 a List than a tree. In fact, the AstBuilder creates an enumerable sequence of nodes that are either a
-function declaration or a function definition. For the interactive mode should always be a single element.
-(When doing Ahead of Time (AOT) compilation in <a href="Kaleidoscope-ch8.html">Chapter 8</a> this sequence can contain
-many declarations and definitions in any order.) To handle the different node types the generate method
-simply uses pattern matching to detect the type of node to dispatch to a visitor function for that kind of node.</p>
+function declaration or a function definition. For the interactive mode only a single element is parsed
+at a time. However, when doing Ahead of Time (AOT) compilation in <a href="Kaleidoscope-ch8.html">Chapter 8</a>
+this sequence can contain many declarations and definitions in any order. To handle the different node
+types the generate method simply uses pattern matching to detect the type of node to dispatch to a visitor
+function for that kind of node.</p>
 <pre><code class="lang-csharp" name="Main">public Value Generate( IAstNode ast, Action&lt;CodeGeneratorException&gt; codeGenerationErroHandler )
 {
     try
@@ -477,7 +483,7 @@ VisitFunctionDefinition() Method.</p>
     }
 }
 </code></pre><p>VisitFunctionDefinition() simply extracts the function prototype from the AST node. A private utility 
-method GetOrDeclareFunction() us used to get an existing function or declare a new one.</p>
+method GetOrDeclareFunction() is used to get an existing function or declare a new one.</p>
 <pre><code class="lang-csharp" name="Main">
 // Retrieves a Function for a prototype from the current module if it exists,
 // otherwise declares the function and returns the newly declared function.
@@ -525,7 +531,8 @@ it is quite useful to detect errors early.)</p>
 <h4 id="top-level-expression">Top Level Expression</h4>
 <p>Top level expressions in Kaleidoscope are transformed into an anonymous function definition by the
 AstBuilder. Since this chapter is focused on generating the IR module there isn&#39;t any special handling
-needed for a top level expression. They are simply just another function definition.</p>
+needed for a top level expression - they are simply just another function definition. (JIT execution of
+the top level expression comes in the next chapter)</p>
 <h3 id="constant-expression">Constant expression</h3>
 <p>In Kaleidoscope all values are floating point and constants are represented in LLVM IR as <a class="xref" href="../../api/Llvm.NET.Values.ConstantFP.html">ConstantFP</a>
 The AST provides the value of the constant as a C# <code>double</code>.</p>
@@ -624,8 +631,10 @@ the actual operator.</p>
     {
     case BuiltInOperatorKind.Less:
         {
-            var tmp = InstructionBuilder.Compare( RealPredicate.UnorderedOrLessThan, binaryOperator.Left.Accept( this ), binaryOperator.Right.Accept( this ) )
-                                        .RegisterName( &quot;cmptmp&quot; );
+            var tmp = InstructionBuilder.Compare( RealPredicate.UnorderedOrLessThan
+                                                , binaryOperator.Left.Accept( this )
+                                                , binaryOperator.Right.Accept( this )
+                                                ).RegisterName( &quot;cmptmp&quot; );
             return InstructionBuilder.UIToFPCast( tmp, InstructionBuilder.Context.DoubleType )
                                      .RegisterName( &quot;booltmp&quot; );
         }
@@ -633,33 +642,44 @@ the actual operator.</p>
     case BuiltInOperatorKind.Pow:
         {
             var pow = GetOrDeclareFunction( new Prototype( &quot;llvm.pow.f64&quot;, &quot;value&quot;, &quot;power&quot; ) );
-            return InstructionBuilder.Call( pow, binaryOperator.Left.Accept( this ), binaryOperator.Right.Accept( this ) )
-                                     .RegisterName( &quot;powtmp&quot; );
+            return InstructionBuilder.Call( pow
+                                          , binaryOperator.Left.Accept( this )
+                                          , binaryOperator.Right.Accept( this )
+                                          ).RegisterName( &quot;powtmp&quot; );
         }
 
     case BuiltInOperatorKind.Add:
-        return InstructionBuilder.FAdd( binaryOperator.Left.Accept( this ), binaryOperator.Right.Accept( this ) ).RegisterName( &quot;addtmp&quot; );
+        return InstructionBuilder.FAdd( binaryOperator.Left.Accept( this )
+                                      , binaryOperator.Right.Accept( this )
+                                      ).RegisterName( &quot;addtmp&quot; );
 
     case BuiltInOperatorKind.Subtract:
-        return InstructionBuilder.FSub( binaryOperator.Left.Accept( this ), binaryOperator.Right.Accept( this ) ).RegisterName( &quot;subtmp&quot; );
+        return InstructionBuilder.FSub( binaryOperator.Left.Accept( this )
+                                      , binaryOperator.Right.Accept( this )
+                                      ).RegisterName( &quot;subtmp&quot; );
 
     case BuiltInOperatorKind.Multiply:
-        return InstructionBuilder.FMul( binaryOperator.Left.Accept( this ), binaryOperator.Right.Accept( this ) ).RegisterName( &quot;multmp&quot; );
+        return InstructionBuilder.FMul( binaryOperator.Left.Accept( this )
+                                      , binaryOperator.Right.Accept( this )
+                                      ).RegisterName( &quot;multmp&quot; );
 
     case BuiltInOperatorKind.Divide:
-        return InstructionBuilder.FDiv( binaryOperator.Left.Accept( this ), binaryOperator.Right.Accept( this ) ).RegisterName( &quot;divtmp&quot; );
+        return InstructionBuilder.FDiv( binaryOperator.Left.Accept( this )
+                                      , binaryOperator.Right.Accept( this )
+                                      ).RegisterName( &quot;divtmp&quot; );
 
     default:
         throw new CodeGeneratorException( $&quot;ICE: Invalid binary operator {binaryOperator.Op}&quot; );
     }
 }
 </code></pre><p>The process of transforming the operator starts by generating an LLVM IR Value from the right-hand side
-parse tree. A simple switch statement based on the token type of the operator is used to generate the
+expression. A simple switch statement based on the token type of the operator is used to generate the
 actual LLVM IR instruction(s) for the operator.</p>
 <p>LLVM has strict rules on the operators and their values for the IR, in particular the types of the
 operands must be identical and, usually must also match the type of the result. For the Kaleidoscope
 language that&#39;s easy to manage as it only supports one data type. Other languages might need to insert
-additional conversion logic as part of emitting the operators.</p>
+additional conversion logic as part of emitting the operators. (Kaleidoscope does this for boolean
+values when supporting conditional control flow in <a href="Kaleidoscope-ch5.html">Chapter 5</a>)</p>
 <p>The Generation of the IR instructions uses the current InstructionBuilder and the <a class="xref" href="../../api/Llvm.NET.Values.ValueExtensions.RegisterName.html#Llvm_NET_Values_ValueExtensions_RegisterName__1___0_System_String_">RegisterName</a>
 extension method to provide a name for the result in LLVM IR. The name helps with readability of the IR
 when generated in the textual form of LLVM IR assembly. A nice feature of LLVM is that it will automatically
@@ -749,7 +769,7 @@ Ready&gt;
             <span class="pull-right">
               <a href="#top">Back to top</a>
             </span>
-            Copyright (C) 2017, Dot NET Foundation<br><strong>Build:</strong> 8.0.0-alpha.0.0.ci-BLD.466166633
+            Copyright (C) 2017, Dot NET Foundation<br><strong>Build:</strong> 8.0.0-alpha.0.0.ci-BLD.466223925
             
           </div>
         </div>

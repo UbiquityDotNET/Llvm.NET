@@ -82,7 +82,7 @@
                   <ul class="nav level1">
                     <li class="">
                       <span class="expand-stub"></span>
-                      <a class="">Code Generation</a>
+                      <a href="codegeneration.html" title="Code Generation" class="">Code Generation</a>
                         
                         <ul class="nav level2">
                           <li class="">
@@ -91,7 +91,7 @@
                         </ul>  </li>
                     <li class="">
                       <span class="expand-stub"></span>
-                      <a class="">Kaleidoscope</a>
+                      <a href="Kaleidoscope.html" title="Kaleidoscope" class="">Kaleidoscope</a>
                         
                         <ul class="nav level2">
                           <li class="">
@@ -126,7 +126,7 @@
                           </li>
                           <li class="">
                             <span class="expand-stub"></span>
-                            <a class="">Additional Support</a>
+                            <a href="Kaleidoscope.html" title="Additional Support" class="">Additional Support</a>
                               
                               <ul class="nav level3">
                                 <li class="">
@@ -196,7 +196,7 @@ code for the expressions for each part of the conditional and a final branch to 
 instruction is placed at the beginning of the continuation block with appropriate values for the result
 from each of the two predecessor blocks. The resulting value is then provided as the return of the function.
 It is important to note that using the phi node in this fashion does not require generating all of the code
-in SSA form. In fact, doing that in the front end is generally discouraged. Generally speaking there are
+in SSA form. In fact, doing that in the front end is strongly discouraged. Generally speaking there are
 only two reasons where a phi node may crop up:</p>
 <ol>
 <li>Mutable variables like x = 1; x = x + 1;</li>
@@ -204,8 +204,8 @@ only two reasons where a phi node may crop up:</p>
 </ol>
 <p><a href="Kaleidoscope-ch7.html">Chapter 7</a> Covers the mutable variables case in detail and the techniques for
 generating the code without using a phi node. For cases like this one where it is straight forward and easy
-to insert the phi node directly then there&#39;s no reason not to. Though, the solution provided in Chapter 7 can
-also eliminate the need to manually insert the phi node here as well.</p>
+to insert the phi node directly then there&#39;s no reason not to. Though, the solution provided in Chapter 7 can,
+and does, eliminate the need to manually insert the phi node here as well.</p>
 <h3 id="code-generation">Code Generation</h3>
 <p>Generating the code for the condition expression follows the pattern shown above with the following high
 level steps:</p>
@@ -236,9 +236,9 @@ is captured. This is needed as the generation for the sub expression may include
 expression, which may contain a conditional sub expression, ... Thus, the &#39;current block&#39; may well have
 changed from the starting block. The phi node needs the immediate predecessor block and the value it
 produced, so the current block is captured after generation, before switching the block to the next one
-for generation.</p>
+for generation to ensure that the correct block is used with the value.</p>
 <p>The actual code follows the description pretty closely and should now be fairly easy to follow:</p>
-<pre><code class="lang-csharp" name="Main">public override Value Visit( ConditionalExpression conditionalExpression )
+<pre><code class="lang-csharp" name="ConditionalExpression">public override Value Visit( ConditionalExpression conditionalExpression )
 {
     var condition = conditionalExpression.Condition.Accept( this );
     if( condition == null )
@@ -267,7 +267,7 @@ for generation.</p>
     InstructionBuilder.Branch( continueBlock );
 
     // capture the insert in case generating else adds new blocks
-    thenBlock = InstructionBuilder.InsertBlock;
+    var thenResultBlock = InstructionBuilder.InsertBlock;
 
     // generate else block
     function.BasicBlocks.Add( elseBlock );
@@ -279,7 +279,7 @@ for generation.</p>
     }
 
     InstructionBuilder.Branch( continueBlock );
-    elseBlock = InstructionBuilder.InsertBlock;
+    var elseResultBlock = InstructionBuilder.InsertBlock;
 
     // generate continue block
     function.BasicBlocks.Add( continueBlock );
@@ -287,8 +287,8 @@ for generation.</p>
     var phiNode = InstructionBuilder.PhiNode( function.Context.DoubleType )
                                     .RegisterName( &quot;iftmp&quot; );
 
-    phiNode.AddIncoming( thenValue, thenBlock );
-    phiNode.AddIncoming( elseValue, elseBlock );
+    phiNode.AddIncoming( thenValue, thenResultBlock );
+    phiNode.AddIncoming( elseValue, elseResultBlock );
     return phiNode;
 }
 </code></pre><h2 id="for-loop">For Loop</h2>
@@ -343,6 +343,7 @@ afterloop:      ; preds = %loop
 <li>Emit the code to compute the next value (e.g. next = current + step )</li>
 <li>Emit code for the end condition</li>
 <li>Emit code to convert the result of the condition to an LLVM i1 for a conditional branch</li>
+<li>Capture loop end block for PHI node</li>
 <li>Create after loop block</li>
 <li>Emit conditional branch to the loop body block or after loop block depending on the result of the end
 condition</li>
@@ -425,8 +426,10 @@ and direct phi-nodes remains the same.</p>
         endCondition = InstructionBuilder.Compare( RealPredicate.OrderedAndNotEqual, endCondition, Context.CreateConstant( 0.0 ) )
                                          .RegisterName( &quot;loopcond&quot; );
 
-        // Create the &quot;after loop&quot; block and insert it.
+        // capture loop end result block for loop variable PHI node
         var loopEndBlock = InstructionBuilder.InsertBlock;
+
+        // Create the &quot;after loop&quot; block and insert it.
         var afterBlock = function.AppendBasicBlock( &quot;afterloop&quot; );
 
         // Insert the conditional branch into the end of LoopEndBB.
@@ -441,17 +444,17 @@ and direct phi-nodes remains the same.</p>
     }
 }
 </code></pre><p>The only new functionality in that is the use of the ScopeStack class to support nested scopes and the named
-variables within them. ScopeStack is provided in the Kaleidoscope.Runtime library. It is basically a stack
-of name to value mapping dictionaries. The EnterScope method will push a new dictionary on to the stack and
-return an IDisposable that will handle popping it back off. This allows for nested expressions to use variables
-in the parent scope and to override them with its own value too. That, is the symbols available in a loop
-include the loop variable and any variables in the parent scope, all the way back to the function parameters.
-The stack nature allows for deeper scopes to shadow the variable of the same name in the parent, while allowing
-access to all other variables from other scopes.</p>
+variables within them. <a class="xref" href="../../api/Llvm.NET.ScopeStack-1.html">ScopeStack</a> is provided in the Llvm.NET library. It is
+basically a stack of name to value mapping dictionaries. The EnterScope method will push a new dictionary on
+to the stack and return an IDisposable that will handle popping it back off. This allows for nested expressions
+to use variables in the parent scope and to override them with its own value too. That, is the symbols available
+in a loop include the loop variable and any variables in the parent scope, all the way back to the function
+parameters. The stack nature allows for deeper scopes to shadow the variable of the same name in the parent,
+while allowing access to all other variables from other scopes.</p>
 <h2 id="conclusion">Conclusion</h2>
 <p>Control flow is certainly more complex to generate than any of the other language constructs but it relies on
 a few basic primitive building block patterns. Thus, it is fairly easy to understand and implement once the
-basic patterns are understood. With the inclusion of control flow the Kaleidoscope language is a complete,
+basic patterns are understood. With the inclusion of control flow the Kaleidoscope language is now a complete,
 albeit simplistic, functional language.</p>
 </article>
           </div>
@@ -475,7 +478,7 @@ albeit simplistic, functional language.</p>
             <span class="pull-right">
               <a href="#top">Back to top</a>
             </span>
-            Copyright (C) 2017, Dot NET Foundation<br><strong>Build:</strong> 8.0.0-alpha.0.0.ci-BLD.466166633
+            Copyright (C) 2017, Dot NET Foundation<br><strong>Build:</strong> 8.0.0-alpha.0.0.ci-BLD.466223925
             
           </div>
         </div>

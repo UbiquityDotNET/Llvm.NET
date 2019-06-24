@@ -141,7 +141,7 @@ LlvmBindingsGenerator to transform the AST so that subsequent stages will
 generate correct .NET interop code. There are several tables of information
 used in the various passes.</p>
 <h2 id="statusreturningfunctions">StatusReturningFunctions</h2>
-<p>This table is a simple <a href="xref:System.Collections.Generic.SortedSet{T}">SortedSet</a> of
+<p>This table is a simple <a class="xref" href="https://msdn.microsoft.com/en-us/library/dd412070(v=vs.110).aspx">SortedSet</a> of
 strings. Each entry is the name of an LLVM function that semantically returns a status.
 The return type is transformed to an LLVMStatus to differentiate such types from a
 boolean or other integral values (in the case of a C Declaration that simply returns an
@@ -158,7 +158,7 @@ declaring the table is made a lot easier by the various IMarshalInfo implementat
 a message explaining what the alternative is, if there is one. This is used to create the
 declaration with the Obsolete attribute in .NET. </p>
 <div class="NOTE"><h5>Note</h5><p>At present this table is only used to completely filter out the deprecated functions so they
-do not even appear in the generated output.</p>
+do not even appear in the generated output or EXPORTS.</p>
 </div>
 <h2 id="internalfunctions">InternalFunctions</h2>
 <p>This property contains a dictionary of functions that are considered internal or just completely
@@ -182,9 +182,9 @@ marshaling. The following is a summary of the handle types (for more details see
 <a href="llvm-handles.html">Handle Marshaling</a>)</p>
 <h4 id="alias-handles">Alias handles</h4>
 <p>On occasion there are places where the LLVM-C APIs retrieve a handle to an object that is just
-an alias (e.g. not ultimately owned by the caller after the call completes). These are usually
-child objects returning a reference to the parent. In such cases the application should never
-dispose the handle as it doesn&#39;t own it.</p>
+an alias (e.g. not ultimately owned by the caller after the call completes). These are usually,
+but not always, child objects returning a reference to the parent. In such cases the application
+should never dispose the handle as it doesn&#39;t own it.</p>
 <h3 id="contexthandletemplate">ContextHandleTemplate</h3>
 <p>Contextual handles are those that are always references to objects owned by a parent container
 of some sort. Most objects in LLVM are owned by an LLVM Context or module and only disposed of
@@ -226,7 +226,7 @@ alias that the caller <strong>MUST NOT</strong> destroy/dispose.</p>
             <span class="pull-right">
               <a href="#top">Back to top</a>
             </span>
-            Copyright (C) 2017, Dot NET Foundation<br><strong>Build:</strong> 8.0.0-alpha.0.0.ci-BLD.466166633
+            Copyright (C) 2017, Dot NET Foundation<br><strong>Build:</strong> 8.0.0-alpha.0.0.ci-BLD.466223925
             
           </div>
         </div>

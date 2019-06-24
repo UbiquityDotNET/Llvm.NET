@@ -82,16 +82,16 @@
                   <ul class="nav level1">
                     <li class="">
                       <span class="expand-stub"></span>
-                      <a class="">Code Generation</a>
+                      <a href="codegeneration.html" title="Code Generation" class="">Code Generation</a>
                         
                         <ul class="nav level2">
                           <li class="">
                             <a href="codegeneration.html" title="CodeGenerator With Debug Information" class="">CodeGenerator With Debug Information</a>
                           </li>
                         </ul>  </li>
-                    <li class="">
+                    <li class="active">
                       <span class="expand-stub"></span>
-                      <a class="">Kaleidoscope</a>
+                      <a href="Kaleidoscope.html" title="Kaleidoscope" class="active">Kaleidoscope</a>
                         
                         <ul class="nav level2">
                           <li class="active">
@@ -126,7 +126,7 @@
                           </li>
                           <li class="">
                             <span class="expand-stub"></span>
-                            <a class="">Additional Support</a>
+                            <a href="Kaleidoscope.html" title="Additional Support" class="">Additional Support</a>
                               
                               <ul class="nav level3">
                                 <li class="">
@@ -196,6 +196,24 @@ Though, ANTLR4&#39;s flexibility made it fairly easy to do once fully understood
 </ul>
 </li>
 </ul>
+<h3 id="expressions">Expressions</h3>
+<p>In Kaleidoscope, everything is an expression (e.g. everything has or returns a value even if the value
+is a constant 0.0). There are no statements and no &quot;void&quot; functions etc...</p>
+<h4 id="multi-line-expressions">Multi-line expressions</h4>
+<p>There are a few different ways to represent an expression that is long enough to warrant splitting it across
+multiple lines when typing it out.</p>
+<h5 id="expression-continuation-marker">Expression Continuation Marker</h5>
+<p>One mechanism for handling multi-line expressions that is used in most shell scripting languages is a line
+continuation marker. In such cases a special character followed by a line-termination char or char sequence
+indicates that the expression continues on the next line (e.g. it isn&#39;t complete yet).</p>
+<h5 id="expression-complete-marker">Expression Complete Marker</h5>
+<p>Another approach to handling long expressions spanning multiple lines is basically the opposite of line
+continuation, expression complete markers. This marker indicates the end of a potentially multi-line expression. (A variant
+of this might require a line termination following the marker as with the line continuation).</p>
+<h5 id="kaleidoscope-implementation">Kaleidoscope Implementation</h5>
+<p>The original LLVM C++ implementation chose the expression completion approach using a semicolon as the completion.
+(So it seems familiar like statements in other C like languages) Therefore, the LLVM.NET tutorial follows the same
+design. [Implementing the line continuation mechanism in Kaleidoscope is left as an exercise for the reader <span class="emoji" shortcode="wink">😉</span>]</p>
 <h3 id="example">Example</h3>
 <p>The following example is a complete program in Kaleidoscope that will generate a textual representation
 of the classic Mandelbrot Set.</p>
@@ -341,7 +359,7 @@ serves well as an example of what you can do with Llvm.NET.</p>
             <span class="pull-right">
               <a href="#top">Back to top</a>
             </span>
-            Copyright (C) 2017, Dot NET Foundation<br><strong>Build:</strong> 8.0.0-alpha.0.0.ci-BLD.466166633
+            Copyright (C) 2017, Dot NET Foundation<br><strong>Build:</strong> 8.0.0-alpha.0.0.ci-BLD.466223925
             
           </div>
         </div>

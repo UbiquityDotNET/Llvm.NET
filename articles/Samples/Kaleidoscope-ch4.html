@@ -82,7 +82,7 @@
                   <ul class="nav level1">
                     <li class="">
                       <span class="expand-stub"></span>
-                      <a class="">Code Generation</a>
+                      <a href="codegeneration.html" title="Code Generation" class="">Code Generation</a>
                         
                         <ul class="nav level2">
                           <li class="">
@@ -91,7 +91,7 @@
                         </ul>  </li>
                     <li class="">
                       <span class="expand-stub"></span>
-                      <a class="">Kaleidoscope</a>
+                      <a href="Kaleidoscope.html" title="Kaleidoscope" class="">Kaleidoscope</a>
                         
                         <ul class="nav level2">
                           <li class="">
@@ -126,7 +126,7 @@
                           </li>
                           <li class="">
                             <span class="expand-stub"></span>
-                            <a class="">Additional Support</a>
+                            <a href="Kaleidoscope.html" title="Additional Support" class="">Additional Support</a>
                               
                               <ul class="nav level3">
                                 <li class="">
@@ -259,32 +259,29 @@ value.</p>
 <h3 id="code-generator">Code Generator</h3>
 <p>The code generation needs an update to support using a JIT engine to generate and execute the Kaleidescope
 code provided by the user.</p>
+<p>To use the Optimization transforms the generator needs a new namespace using declaration.</p>
+<pre><code class="lang-C#">using Llvm.NET.Transforms;
+</code></pre><h4 id="generator-fields">Generator fields</h4>
 <p>To begin with, the generator needs some additional members, including the JIT engine.</p>
-<pre><code class="lang-csharp" name="Main">public CodeGenerator( DynamicRuntimeState globalState, bool disableOptimization = false )
-    : base( null )
-{
-    if( globalState.LanguageLevel &gt; LanguageLevel.SimpleExpressions )
-    {
-        throw new ArgumentException( &quot;Language features not supported by this generator&quot;, nameof( globalState ) );
-    }
-
-    RuntimeState = globalState;
-    Context = new Context( );
-    DisableOptimizations = disableOptimization;
-    InitializeModuleAndPassManager( );
-    InstructionBuilder = new InstructionBuilder( Context );
-}
+<pre><code class="lang-csharp" name="PrivateMembers">private readonly DynamicRuntimeState RuntimeState;
+private readonly Context Context;
+private readonly InstructionBuilder InstructionBuilder;
+private readonly IDictionary&lt;string, Value&gt; NamedValues = new Dictionary&lt;string, Value&gt;( );
+private FunctionPassManager FunctionPassManager;
+private readonly bool DisableOptimizations;
+private BitcodeModule Module;
+private readonly KaleidoscopeJIT JIT = new KaleidoscopeJIT( );
+private readonly Dictionary&lt;string, ulong&gt; FunctionModuleMap = new Dictionary&lt;string, ulong&gt;( );
 </code></pre><p>The JIT engine is retained for the generator to use. The same engine is retained for the lifetime of the
 generator so that functions are added to the same engine and can call functions previously added. The JIT
 provides a &#39;handle&#39; for every module added, which is used to reference the module in the JIT, this is
 normally used to remove the module from the JIT engine when re-defining a function. Thus, a map of the
 function names and the JIT handle created for them is maintained. Additionally, a collection of defined
 function prototypes is retained to enable matching a function call to a previously defined function.
-Since the JIT support uses a module per function approach, lookups on the current module aren&#39;t sufficient.
-Finally, a native function call delegate is defined for top level anonymous expressions so that, after
-the JIT engine has generated the code, the application can call it through a delegate.</p>
+Since the JIT support uses a module per function approach, lookups on the current module aren&#39;t sufficient.</p>
+<h4 id="generator-initialization">Generator initialization</h4>
 <p>The initialization of the generator requires updating to support the new members.</p>
-<pre><code class="lang-csharp" name="Main">public CodeGenerator( DynamicRuntimeState globalState, bool disableOptimization = false )
+<pre><code class="lang-csharp" name="Initialization">public CodeGenerator( DynamicRuntimeState globalState, bool disableOptimization = false )
     : base( null )
 {
     if( globalState.LanguageLevel &gt; LanguageLevel.SimpleExpressions )
@@ -298,11 +295,15 @@ the JIT engine has generated the code, the application can call it through a del
     InitializeModuleAndPassManager( );
     InstructionBuilder = new InstructionBuilder( Context );
 }
-</code></pre><p>Additionally, since the JIT engine is disposable, the code generators Dispose() method must call the
-Dispose() method on the JIT engine.</p>
+</code></pre><p>The bool indicating if optimizations are enabled or not is stored and an initial module and pass manager
+is created.</p>
+<p>The option to disable optimizations is useful for debugging the code generation itself as optimizations
+can alter or even eliminate incorrectly generated code. Thus, when modifying the generation itself, it
+is useful to disable the optimizations.</p>
+<h4 id="jit-engine">JIT Engine</h4>
 <p>The JIT engine itself is a class provided in the Kaleidoscope.Runtime library derived from the Llvm.NET
 OrcJIT engine.</p>
-<pre><code class="lang-csharp" name="Main">// -----------------------------------------------------------------------
+<pre><code class="lang-csharp" name="Kaleidoscope JIT">// -----------------------------------------------------------------------
 // &lt;copyright file=&quot;KaleidoscopeJIT.cs&quot; company=&quot;Ubiquity.NET Contributors&quot;&gt;
 // Copyright (c) Ubiquity.NET Contributors. All rights reserved.
 // &lt;/copyright&gt;
@@ -411,12 +412,101 @@ namespace Kaleidoscope.Runtime
 }
 </code></pre><p><a class="xref" href="../../api/Llvm.NET.JIT.OrcJit.html">OrcJit</a> provides support for declaring functions that are external to the JIT
 that the JIT&#39;d module code can call. For Kaleidoscope, two such functions are defined directly in
-KaleidoscoptJIT (putchard and printd), which is consistent with the same functions used in the official
-LLVM C++ tutorial. Thus, allowing sharing of samples between the two.</p>
+KaleidoscopeJIT (putchard and printd), which is consistent with the same functions used in the official
+LLVM C++ tutorial. Thus, allowing sharing of samples between the two. These functions are used to provide
+rudimentary console output support.</p>
 <div class="WARNING"><h5>Warning</h5><p>All such methods implemented in .NET must block any exception from bubbling out of the call as the JIT
 engine doesn&#39;t know anything about them and neither does the Kaleidoscope language. Exceptions thrown
 in these functions would produce undefined results, at best - crashing the application.</p>
 </div>
+<h4 id="passmanager">PassManager</h4>
+<p>Every time a new function definition is processed the generator creates a new module and initializes
+the function pass manager for the module. This is done is a new method InitializeModuleAndPassManager()</p>
+<pre><code class="lang-csharp" name="Initialization">private void InitializeModuleAndPassManager( )
+{
+    Module = Context.CreateBitcodeModule( );
+    Module.Layout = JIT.TargetMachine.TargetData;
+    FunctionPassManager = new FunctionPassManager( Module );
+
+    if( !DisableOptimizations )
+    {
+        FunctionPassManager.AddInstructionCombiningPass( )
+                           .AddReassociatePass( )
+                           .AddGVNPass( )
+                           .AddCFGSimplificationPass( );
+    }
+
+    FunctionPassManager.Initialize( );
+}
+</code></pre><p>The module creation is pretty straight forward, of importance is the layout information pulled from the
+target machine for the JIT and applied to the module. </p>
+<p>Once the module is created, the <a class="xref" href="../../api/Llvm.NET.Transforms.FunctionPassManager.html">FunctionPassManager</a> is
+constructed. If optimizations are not disabled, the optimization passes are added to the pass manager.
+The set of passes used is a very basic set since the Kaleidoscope language isn&#39;t particularly complex
+at this point.</p>
+<h4 id="generator-dispose">Generator Dispose</h4>
+<p>Since the JIT engine is disposable, the code generators Dispose() method must now call the
+Dispose() method on the JIT engine.</p>
+<pre><code class="lang-csharp" name="Dispose">public void Dispose( )
+{
+    JIT.Dispose( );
+    Module.Dispose( );
+    Context.Dispose( );
+}
+</code></pre><h4 id="generate-method">Generate Method</h4>
+<p>To actually execute the code the generated modules are added to the JIT. If the function is an 
+anonymous top level expression a delegate is retrieved from the JIT to allow calling the compiled
+function directly. The delegate is then called to get the result. Once an anonymous function produces
+a value, it is no longer used so is removed from the JIT and the result value returned. For other functions
+the module is added to the JIT and the function is returned.</p>
+<pre><code class="lang-csharp" name="Dispose">public Value Generate( IAstNode ast, Action&lt;CodeGeneratorException&gt; codeGenerationErroHandler )
+{
+    try
+    {
+        // Prototypes, including extern are ignored as AST generation
+        // adds them to the RuntimeState so that already has the declarations
+        if( !( ast is FunctionDefinition definition ) )
+        {
+            return null;
+        }
+
+        InitializeModuleAndPassManager( );
+
+        // Destroy any previously generated module for this function.
+        // This allows re-definition as the new module will provide the
+        // implementation. This is needed, otherwise both the MCJIT
+        // and OrcJit engines will resolve to the original module, despite
+        // claims to the contrary in the official tutorial text. (Though,
+        // to be fair it may have been true in the original JIT and might
+        // still be true for the interpreter)
+        if( FunctionModuleMap.Remove( definition.Name, out ulong handle ) )
+        {
+            JIT.RemoveModule( handle );
+        }
+
+        var function = ( IrFunction )definition.Accept( this );
+        ulong jitHandle = JIT.AddModule( function.ParentModule );
+        if( definition.IsAnonymous )
+        {
+            var nativeFunc = JIT.GetFunctionDelegate&lt;KaleidoscopeJIT.CallbackHandler0&gt;( function.Name );
+            var retVal = Context.CreateConstant( nativeFunc( ) );
+            JIT.RemoveModule( jitHandle );
+            return retVal;
+        }
+
+        FunctionModuleMap.Add( function.Name, jitHandle );
+        return function;
+    }
+    catch( CodeGeneratorException ex ) when( codeGenerationErroHandler != null )
+    {
+        codeGenerationErroHandler( ex );
+        return null;
+    }
+}
+</code></pre><p>Keeping all the JIT interaction in the generate method isolates the rest of the generation from any
+awareness of the JIT. This will help when adding truly lazy JIT compilation in <a href="Kaleidoscope-ch7.1.html">Chapter 7.1</a>
+and AOT compilation in <a href="Kaleidoscope-ch8.html">Chapter 8</a></p>
+<h4 id="function-call-expressions">Function call expressions</h4>
 <p>Since functions are no longer collected into a single module the code to find the target for a function
 call requires updating to lookup the function from a collection of functions mapped by name.</p>
 <pre><code class="lang-csharp" name="Main">public override Value Visit( FunctionCallExpression functionCall )
@@ -441,10 +531,11 @@ call requires updating to lookup the function from a collection of functions map
 found. If the prototype wasn&#39;t found then it falls back to the previous lookup in the current module.
 This fall back is needed to support recursive functions where the referenced function actually is in the
 current module.</p>
+<h4 id="getordeclarefunction">GetOrDeclareFunction()</h4>
 <p>Next is to update the GetOrDeclareFunction() to handle mapping the functions prototype and re-definition
 of functions.</p>
 <pre><code class="lang-csharp" name="Main">
-// Retrieves a Function&quot; for a prototype from the current module if it exists,
+// Retrieves a Function for a prototype from the current module if it exists,
 // otherwise declares the function and returns the newly declared function.
 private IrFunction GetOrDeclareFunction( Prototype prototype )
 {
@@ -469,9 +560,9 @@ private IrFunction GetOrDeclareFunction( Prototype prototype )
 </code></pre><p>This distinguishes the special case of an anonymous top level expression as those are never added to the
 prototype maps. They are only in the JIT engine long enough to execute once and are then removed. Since
 they are, by definition, anonymous they can never be referenced by anything else.</p>
-<p>Visiting a function definition needs updating to support adding/removing the function&#39;s module in the JIT,
-tracking the JIT handle for the module and ultimately re-initializing a new module and pass manager for
-the next function.</p>
+<h4 id="function-definitions">Function Definitions</h4>
+<p>Visiting a function definition needs to add a call to the function pass manager to run the optimization
+passes for the function. This, makes sense to do, immediately after completing the generation of the function.</p>
 <pre><code class="lang-csharp" name="Main">public override Value Visit( FunctionDefinition definition )
 {
     var function = GetOrDeclareFunction( definition.Signature );
@@ -503,20 +594,7 @@ the next function.</p>
         throw;
     }
 }
-</code></pre><p>When visiting a FunctionDefinition top level anonymous expressions needs some additional work to make
-the JIT actually work. The generator will convert the function to LLVM IR, as before, however it will
-also capture the JIT handle so it can remove it later. The real &#39;magic&#39; of the JIT happens in the next
-2 lines:</p>
-<pre><code class="lang-C#">var nativeFunc = JIT.GetDelegateForFunction&lt;AnonExpressionFunc&gt;( proto.Identifier.Name );
-var retVal = Context.CreateConstant( nativeFunc( ) );
-</code></pre><p>This asks the JIT engine to provide a delegate matching the AnonExpressionFunc signature for a function
-with the name of the anonymous function just created (and compiled to native code). The function is then
-called through the delegate to produce a result. Since the result is a raw native double and all of the
-visitor methods must return a <a class="xref" href="../../api/Llvm.NET.Values.Value.html">Value</a> a new <a class="xref" href="../../api/Llvm.NET.Values.ConstantFP.html">ConstantFP</a>
-is created for the result of the call.</p>
-<p>After making the call to the generated function, the anonymous function is removed from the prototype
-mapping and then removed from the JIT module as it is no longer needed.</p>
-<h2 id="conclusion">Conclusion</h2>
+</code></pre><h2 id="conclusion">Conclusion</h2>
 <p>While the amount of words needed to describe the changes to support optimization and JIT execution here
 isn&#39;t exactly small, the actual code changes required really are. The Parser and JIT engine do all the
 heavy lifting. Llvm.NET provides a clean interface to the JIT that fits with common patterns and runtime
@@ -543,7 +621,7 @@ support for .NET. Very cool, indeed!</p>
             <span class="pull-right">
               <a href="#top">Back to top</a>
             </span>
-            Copyright (C) 2017, Dot NET Foundation<br><strong>Build:</strong> 8.0.0-alpha.0.0.ci-BLD.466166633
+            Copyright (C) 2017, Dot NET Foundation<br><strong>Build:</strong> 8.0.0-alpha.0.0.ci-BLD.466223925
             
           </div>
         </div>
