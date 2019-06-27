@@ -30,7 +30,10 @@ namespace Llvm.NETTests
         }
 
         [AssemblyCleanup]
-        public static void AssemblyCleanup( ) => LlvmInit.Dispose( );
+        public static void AssemblyCleanup( )
+        {
+            LlvmInit.Dispose( );
+        }
 
         private static IDisposable LlvmInit;
     }

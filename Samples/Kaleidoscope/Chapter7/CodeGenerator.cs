@@ -12,6 +12,7 @@ using Kaleidoscope.Grammar.AST;
 using Kaleidoscope.Runtime;
 using Llvm.NET;
 using Llvm.NET.Instructions;
+using Llvm.NET.JIT;
 using Llvm.NET.Transforms;
 using Llvm.NET.Values;
 
@@ -46,7 +47,8 @@ namespace Kaleidoscope.Chapter7
         public void Dispose( )
         {
             JIT.Dispose( );
-            Module.Dispose( );
+            Module?.Dispose( );
+            FunctionPassManager?.Dispose( );
             Context.Dispose( );
         }
         #endregion
@@ -65,30 +67,37 @@ namespace Kaleidoscope.Chapter7
 
                 InitializeModuleAndPassManager( );
 
-                // Destroy any previously generated module for this function.
-                // This allows re-definition as the new module will provide the
-                // implementation. This is needed, otherwise both the MCJIT
-                // and OrcJit engines will resolve to the original module, despite
-                // claims to the contrary in the official tutorial text. (Though,
-                // to be fair it may have been true in the original JIT and might
-                // still be true for the interpreter)
-                if( FunctionModuleMap.Remove( definition.Name, out ulong handle ) )
-                {
-                    JIT.RemoveModule( handle );
-                }
-
                 var function = ( IrFunction )definition.Accept( this );
-                ulong jitHandle = JIT.AddModule( function.ParentModule );
+
                 if( definition.IsAnonymous )
                 {
-                    var nativeFunc = JIT.GetFunctionDelegate<KaleidoscopeJIT.CallbackHandler0>( function.Name );
+                    // eagerly compile modules for anonymous functions as calling the function is the guaranteed next step
+                    ulong jitHandle = JIT.AddEagerlyCompiledModule( Module );
+                    var nativeFunc = JIT.GetFunctionDelegate<KaleidoscopeJIT.CallbackHandler0>( definition.Name );
                     var retVal = Context.CreateConstant( nativeFunc( ) );
                     JIT.RemoveModule( jitHandle );
                     return retVal;
                 }
+                else
+                {
+                    // Destroy any previously generated module for this function.
+                    // This allows re-definition as the new module will provide the
+                    // implementation. This is needed, otherwise both the MCJIT
+                    // and OrcJit engines will resolve to the original module, despite
+                    // claims to the contrary in the official tutorial text. (Though,
+                    // to be fair it may have been true in the original JIT and might
+                    // still be true for the interpreter)
+                    if( FunctionModuleMap.Remove( definition.Name, out ulong handle ) )
+                    {
+                        JIT.RemoveModule( handle );
+                    }
 
-                FunctionModuleMap.Add( function.Name, jitHandle );
-                return function;
+                    // Unknown if any future input will call the function so add it for lazy compilation.
+                    // Native code is generated for the module automatically only when required.
+                    ulong jitHandle = JIT.AddLazyCompiledModule( Module );
+                    FunctionModuleMap.Add( definition.Name, jitHandle );
+                    return function;
+                }
             }
             catch( CodeGeneratorException ex ) when( codeGenerationErroHandler != null )
             {
@@ -264,7 +273,7 @@ namespace Kaleidoscope.Chapter7
             var continueBlock = function.AppendBasicBlock( "ifcont" );
             InstructionBuilder.Branch( condBool, thenBlock, elseBlock );
 
-            // generate then block
+            // generate then block instructions
             InstructionBuilder.PositionAtEnd( thenBlock );
             var thenValue = conditionalExpression.ThenExpression.Accept( this );
             if( thenValue == null )
@@ -276,7 +285,6 @@ namespace Kaleidoscope.Chapter7
             InstructionBuilder.Branch( continueBlock );
 
             // generate else block
-            function.BasicBlocks.Add( elseBlock );
             InstructionBuilder.PositionAtEnd( elseBlock );
             var elseValue = conditionalExpression.ElseExpression.Accept( this );
             if( elseValue == null )
@@ -288,7 +296,6 @@ namespace Kaleidoscope.Chapter7
             InstructionBuilder.Branch( continueBlock );
 
             // generate continue block
-            function.BasicBlocks.Add( continueBlock );
             InstructionBuilder.PositionAtEnd( continueBlock );
 
             // since the Alloca is created as a non-opaque pointer it is OK to just use the
@@ -434,8 +441,8 @@ namespace Kaleidoscope.Chapter7
         {
             Module = Context.CreateBitcodeModule( );
             Module.Layout = JIT.TargetMachine.TargetData;
-            FunctionPassManager = new FunctionPassManager( Module )
-                                      .AddPromoteMemoryToRegisterPass( );
+            FunctionPassManager = new FunctionPassManager( Module );
+            FunctionPassManager.AddPromoteMemoryToRegisterPass( );
 
             if( !DisableOptimizations )
             {

@@ -58,6 +58,9 @@
     <ClCompile Include="include\libllvm-c\ObjectFileBindings.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="LibLlvmOrcJitBindings.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Resource.rc">
@@ -111,6 +114,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="include\libllvm-c\ObjectFileBindings.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\libllvm-c\LibLlvmOrcJitBindings.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

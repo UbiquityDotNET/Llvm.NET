@@ -59,13 +59,13 @@ namespace InteropTests
         private static void AddAndExecuteTestModule( LLVMOrcJITStackRef orcJit, LLVMContextRef context, LLVMTargetMachineRef machine, int expectedResult )
         {
             LLVMModuleRef module = CreateModule( context, machine, expectedResult );
-            LLVMErrorRef err = LLVMOrcAddLazilyCompiledIR( orcJit, out ulong jitHandle, module, SymbolResolver, IntPtr.Zero );
+            LLVMErrorRef err = LLVMOrcAddEagerlyCompiledIR( orcJit, out ulong jitHandle, module, SymbolResolver, IntPtr.Zero );
             Assert.IsTrue( err.IsInvalid );
 
             // ORC now owns the module, so it must never be released
-            module = LLVMModuleRef.Zero;
+            module.SetHandleAsInvalid();
             LLVMOrcGetMangledSymbol( orcJit, out string mangledName, "main" );
-            err = LLVMOrcGetSymbolAddress( orcJit, out ulong funcAddress, mangledName );
+            err = LibLLVMOrcGetSymbolAddress( orcJit, out ulong funcAddress, mangledName, false );
             Assert.IsTrue( err.IsInvalid );
             Assert.AreNotEqual( 0ul, funcAddress );
             var callableMain = Marshal.GetDelegateForFunctionPointer<TestMain>( ( IntPtr )funcAddress );

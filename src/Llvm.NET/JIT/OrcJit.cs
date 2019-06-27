@@ -36,53 +36,39 @@ namespace Llvm.NET.JIT
         /// <inheritdoc/>
         public TargetMachine TargetMachine { get; }
 
-        /// <summary>Add a module to the engine</summary>
-        /// <param name="bitcodeModule">The module to add to the engine</param>
-        /// <returns>Handle for the module in the engine</returns>
-        /// <remarks>
-        /// Once the module is provided to the engine it is fully owned by the engine and should
-        /// be considered res-only to the calling app.
-        /// </remarks>
-        public ulong AddModule( BitcodeModule bitcodeModule )
+        /// <inheritdoc/>
+        public ulong AddEagerlyCompiledModule( BitcodeModule bitcodeModule, LLVMOrcSymbolResolverFn resolver )
         {
-            return AddModule( bitcodeModule, DefaultSymbolResolver );
-        }
-
-        /// <summary>Add a module to the engine</summary>
-        /// <param name="bitcodeModule">The module to add to the engine</param>
-        /// <param name="resolver">Symbol resolver delegate</param>
-        /// <returns>Handle for the module in the engine</returns>
-        /// <remarks>
-        /// <note type="warning">
-        /// Ownership of the <paramref name="bitcodeModule"/> is transfered to the JIT engine and therefore,
-        /// after successful completion of this call the module reports as disposed.
-        /// </note>
-        /// <note type="important">
-        /// The <paramref name="resolver"/> must not throw an exception as the native LLVM JIT engine
-        /// won't understand it and would leave the engine and LLVM in an inconsistent state. If the
-        /// symbol isn't found LLVM generates an error message in debug builds and in all builds, terminates
-        /// the application.
-        /// </note>
-        /// </remarks>
-        public ulong AddModule( BitcodeModule bitcodeModule, LLVMOrcSymbolResolverFn resolver )
-        {
-#if LLVM_COFF_EXPORT_BUG_FIXED
-/* see: https://reviews.llvm.org/rL258665 */
+            // detach the module before providing to JIT as JIT takes ownership
+            LLVMModuleRef moduleHandle = bitcodeModule.Detach( );
             var wrappedResolver = new WrappedNativeCallback<LLVMOrcSymbolResolverFn>( resolver );
-            var err = LLVMOrcAddEagerlyCompiledIR( JitStackHandle, out ulong retHandle, bitcodeModule.ModuleHandle, wrappedResolver, IntPtr.Zero );
+            var err = LLVMOrcAddEagerlyCompiledIR( JitStackHandle, out ulong retHandle, moduleHandle, wrappedResolver, IntPtr.Zero );
+            moduleHandle.SetHandleAsInvalid( );
             if( !err.IsInvalid )
             {
                 throw new LlvmException( err.ToString( ) );
             }
 
-            bitcodeModule.Detach( );
+            // keep resolver delegate alive as native code needs to call it after this function exits
+            SymbolResolvers.Add( retHandle, wrappedResolver );
+            return retHandle;
+        }
+
+        /// <inheritdoc/>
+        public ulong AddLazyCompiledModule( BitcodeModule bitcodeModule, LLVMOrcSymbolResolverFn resolver )
+        {
+            LLVMModuleRef moduleHandle = bitcodeModule.Detach( );
+            var wrappedResolver = new WrappedNativeCallback<LLVMOrcSymbolResolverFn>( resolver );
+            var err = LLVMOrcAddLazilyCompiledIR( JitStackHandle, out ulong retHandle, moduleHandle, wrappedResolver, IntPtr.Zero );
+            moduleHandle.SetHandleAsInvalid( );
+            if( !err.IsInvalid )
+            {
+                throw new LlvmException( err.ToString( ) );
+            }
 
             // keep resolver delegate alive as native code needs to call it after this function exits
             SymbolResolvers.Add( retHandle, wrappedResolver );
             return retHandle;
-#else
-            return LazyAddModule( bitcodeModule, resolver );
-#endif
         }
 
         /// <inheritdoc/>
@@ -98,12 +84,15 @@ namespace Llvm.NET.JIT
         }
 
         /// <inheritdoc/>
-        [SuppressMessage( "Design", "CA1031:Do not catch general exception types", Justification = "Native callback function *MUST NOT* surface managed exceptions" )]
         public ulong DefaultSymbolResolver( string name, IntPtr ctx )
         {
             try
             {
-                var err = LLVMOrcGetSymbolAddress( JitStackHandle, out ulong retAddr, name );
+                // Workaround OrcJit+Windows/COFF bug/limitation where functions in the generated obj are
+                // not marked as exported, so the official llvm-c API doesn't see the symbol to get the address
+                // LibLLVM variant takes the additional bool so that is used on Windows to find non-exported symbols.
+                bool exportedOnly = Environment.OSVersion.Platform != PlatformID.Win32NT;
+                var err = LibLLVMOrcGetSymbolAddress( JitStackHandle, out ulong retAddr, name, exportedOnly );
                 if( !err.IsInvalid )
                 {
                     throw new InvalidOperationException( string.Format( CultureInfo.CurrentCulture, Resources.Unresolved_Symbol_0_1, name, LLVMOrcGetErrorMsg( JitStackHandle ) ) );
@@ -113,6 +102,7 @@ namespace Llvm.NET.JIT
                     ? retAddr
                     : GlobalInteropFunctions.TryGetValue( name, out WrappedNativeCallback callBack ) ? ( ulong )callBack.ToIntPtr().ToInt64( ) : 0;
             }
+#pragma warning disable CA1031 // Do not catch general exception types
             catch
             {
                 // Allowing exceptions outside this call is not helpful as the LLVM
@@ -121,12 +111,17 @@ namespace Llvm.NET.JIT
                 // logged in a debugger before being swallowed here.
                 return 0;
             }
+#pragma warning restore CA1031 // Do not catch general exception types
         }
 
         /// <inheritdoc/>
         public T GetFunctionDelegate<T>( string name )
         {
-            var err = LLVMOrcGetSymbolAddress( JitStackHandle, out UInt64 retAddr, name );
+            // Workaround OrcJit+Windows/COFF bug/limitation where functions in the generated obj are
+            // not marked as exported, so the official llvm-c API doesn't see the symbol to get the address
+            // LibLLVM variant takes the additional bool so that is used on Windows to find non-exported symbols.
+            bool exportedOnly = Environment.OSVersion.Platform != PlatformID.Win32NT;
+            var err = LibLLVMOrcGetSymbolAddress( JitStackHandle, out UInt64 retAddr, name, exportedOnly );
             if( !err.IsInvalid )
             {
                 throw new LlvmException( err.ToString( ) );
@@ -174,24 +169,6 @@ namespace Llvm.NET.JIT
         }
 
         /// <inheritdoc/>
-        public ulong LazyAddModule( BitcodeModule bitcodeModule, LLVMOrcSymbolResolverFn resolver )
-        {
-            var wrappedResolver = new WrappedNativeCallback<LLVMOrcSymbolResolverFn>( resolver );
-
-            var err = LLVMOrcAddLazilyCompiledIR( JitStackHandle, out ulong retHandle, bitcodeModule.ModuleHandle, wrappedResolver, IntPtr.Zero );
-            if( !err.IsInvalid )
-            {
-                throw new LlvmException( err.ToString( ) );
-            }
-
-            bitcodeModule.Detach( );
-
-            // keep resolver delegate alive as native code needs to call it after this function exits
-            SymbolResolvers.Add( retHandle, wrappedResolver );
-            return retHandle;
-        }
-
-        /// <inheritdoc/>
         public void AddLazyFunctionGenerator( string name, LazyFunctionCompiler generator, IntPtr context )
         {
             LLVMOrcGetMangledSymbol( JitStackHandle, out string mangledName, name );
@@ -207,8 +184,13 @@ namespace Llvm.NET.JIT
                         return 0;
                     }
 
-                    AddModule( module );
-                    var e = LLVMOrcGetSymbolAddress( JitStackHandle, out UInt64 implAddr, implName );
+                    AddEagerlyCompiledModule( module, DefaultSymbolResolver );
+
+                    // Workaround OrcJit+Windows/COFF bug/limitation where functions in the generated obj are
+                    // not marked as exported, so the official llvm-c API doesn't see the symbol to get the address
+                    // LibLLVM variant takes the additional bool so that is used on Windows to find non-exported symbols.
+                    bool exportedOnly = Environment.OSVersion.Platform != PlatformID.Win32NT;
+                    var e = LibLLVMOrcGetSymbolAddress( JitStackHandle, out UInt64 implAddr, name, exportedOnly );
                     if( !e.IsInvalid )
                     {
                         throw new LlvmException( e.ToString() );
@@ -251,10 +233,10 @@ namespace Llvm.NET.JIT
         /// <inheritdoc/>
         protected override void Dispose( bool disposing )
         {
+            JitStackHandle.Dispose( );
             DisposeCallbacks( GlobalInteropFunctions );
             DisposeCallbacks( SymbolResolvers );
             DisposeCallbacks( LazyFunctionGenerators );
-            JitStackHandle.Dispose( );
         }
 
         private static void DisposeCallbacks<T,T2>( IDictionary<T, T2> map )

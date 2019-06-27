@@ -205,12 +205,30 @@ namespace Llvm.NET.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Basic block already exists in the function.
+        /// </summary>
+        internal static string Block_already_exists_in_function {
+            get {
+                return ResourceManager.GetString("Block_already_exists_in_function", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Call site argument type mismatch for function {0} at index {1}; argType={2}; signatureType={3}.
         /// </summary>
         internal static string Call_site_argument_type_mismatch_for_function_0_at_index_1_argType_equals_2_signatureType_equals_3 {
             get {
                 return ResourceManager.GetString("Call_site_argument_type_mismatch_for_function_0_at_index_1_argType_equals_2_signa" +
                         "tureType_equals_3", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Cannot add a block belonging to a different function.
+        /// </summary>
+        internal static string Cannot_add_a_block_belonging_to_a_different_function {
+            get {
+                return ResourceManager.GetString("Cannot_add_a_block_belonging_to_a_different_function", resourceCulture);
             }
         }
         

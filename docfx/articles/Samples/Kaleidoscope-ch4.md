@@ -192,12 +192,21 @@ Dispose() method on the JIT engine.
 
 #### Generate Method
 To actually execute the code the generated modules are added to the JIT. If the function is an 
-anonymous top level expression a delegate is retrieved from the JIT to allow calling the compiled
-function directly. The delegate is then called to get the result. Once an anonymous function produces
+anonymous top level expression, it is eagerly compiled and a delegate is retrieved from the JIT
+to allow calling the compiled function directly. The delegate is then called to get the result. Once an anonymous function produces
 a value, it is no longer used so is removed from the JIT and the result value returned. For other functions
 the module is added to the JIT and the function is returned.
 
-[!code-csharp[Dispose](../../../Samples/Kaleidoscope/Chapter4/CodeGenerator.cs#Generate)]
+For named function definitions, the module is lazy added to the JIT as it isn't known if/when the functions
+is called. The JIT engine will compile modules lazy added into native code on first use. (Though if the
+function is never used, then creating the IR module was wasted. ([Chapter 7.1](Kaleidoscope-ch7.1.md) has a
+solution for even that extra overhead - truly lazy JIT). Since Kaleidoscope is generally a dynamic language
+it is possible and reasonable for the user to re-define a function (to fix an error, or provide a completely
+different implementation all together). Therefore, any named functions are removed from the JIT, if they
+existed, before adding in the new definition. Otherwise the JIT resolver would still resolve to the previously
+compiled instance.
+
+[!code-csharp[Generate](../../../Samples/Kaleidoscope/Chapter4/CodeGenerator.cs#Generate)]
 
 Keeping all the JIT interaction in the generate method isolates the rest of the generation from any
 awareness of the JIT. This will help when adding truly lazy JIT compilation in [Chapter 7.1](Kaleidoscope-ch7.1.md)

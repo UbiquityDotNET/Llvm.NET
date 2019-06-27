@@ -50,6 +50,7 @@ namespace Kaleidoscope.Chapter9
         #region Dispose
         public void Dispose( )
         {
+            FunctionPassManager?.Dispose( );
             Context.Dispose( );
         }
         #endregion
@@ -290,7 +291,7 @@ namespace Kaleidoscope.Chapter9
             var continueBlock = function.AppendBasicBlock( "ifcont" );
             InstructionBuilder.Branch( condBool, thenBlock, elseBlock );
 
-            // generate then block
+            // generate then block instructions
             InstructionBuilder.PositionAtEnd( thenBlock );
             var thenValue = conditionalExpression.ThenExpression.Accept( this );
             if( thenValue == null )
@@ -302,7 +303,6 @@ namespace Kaleidoscope.Chapter9
             InstructionBuilder.Branch( continueBlock );
 
             // generate else block
-            function.BasicBlocks.Add( elseBlock );
             InstructionBuilder.PositionAtEnd( elseBlock );
             var elseValue = conditionalExpression.ElseExpression.Accept( this );
             if( elseValue == null )
@@ -314,7 +314,6 @@ namespace Kaleidoscope.Chapter9
             InstructionBuilder.Branch( continueBlock );
 
             // generate continue block
-            function.BasicBlocks.Add( continueBlock );
             InstructionBuilder.PositionAtEnd( continueBlock );
 
             // since the Alloca is created as a non-opaque pointer it is OK to just use the
@@ -467,8 +466,8 @@ namespace Kaleidoscope.Chapter9
             Module.Layout = TargetMachine.TargetData;
             DoubleType = new DebugBasicType( Context.DoubleType, Module, "double", DiTypeKind.Float );
 
-            FunctionPassManager = new FunctionPassManager( Module )
-                                      .AddPromoteMemoryToRegisterPass( );
+            FunctionPassManager = new FunctionPassManager( Module );
+            FunctionPassManager.AddPromoteMemoryToRegisterPass( );
 
             if( !DisableOptimizations )
             {

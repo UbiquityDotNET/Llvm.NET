@@ -164,23 +164,24 @@ namespace TestDebugInfo
                             using( var modForOpt = module.Clone( ) )
                             {
                                 // NOTE:
-                                // The ordering of passes can matter depending on the pass and passes may be added more than once
+                                // The ordering of passes can matter depending on the pass, and passes may be added more than once
                                 // the caller has full control of ordering, this is just a sample of effectively randomly picked
                                 // passes and not necessarily a reflection of any particular use case.
-                                var pm = new ModulePassManager( )
-                                         .AddAlwaysInlinerPass( )
-                                         .AddAggressiveDCEPass( )
-                                         .AddArgumentPromotionPass( )
-                                         .AddBasicAliasAnalysisPass( )
-                                         .AddBitTrackingDCEPass( )
-                                         .AddCFGSimplificationPass( )
-                                         .AddConstantMergePass( )
-                                         .AddConstantPropagationPass( )
-                                         .AddFunctionInliningPass( )
-                                         .AddGlobalOptimizerPass( )
-                                         .AddInstructionCombiningPass( );
-
-                                pm.Run( modForOpt );
+                                using( var pm = new ModulePassManager( ) )
+                                {
+                                    pm.AddAlwaysInlinerPass( )
+                                      .AddAggressiveDCEPass( )
+                                      .AddArgumentPromotionPass( )
+                                      .AddBasicAliasAnalysisPass( )
+                                      .AddBitTrackingDCEPass( )
+                                      .AddCFGSimplificationPass( )
+                                      .AddConstantMergePass( )
+                                      .AddConstantPropagationPass( )
+                                      .AddFunctionInliningPass( )
+                                      .AddGlobalOptimizerPass( )
+                                      .AddInstructionCombiningPass( )
+                                      .Run( modForOpt );
+                                }
                             }
                         }
 
