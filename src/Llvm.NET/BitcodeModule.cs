@@ -311,7 +311,7 @@ namespace Llvm.NET
             }
 
             Context.RemoveModule( otherModule );
-            otherModule.ModuleHandle = LLVMModuleRef.Zero;
+            otherModule.Detach().SetHandleAsInvalid();
         }
 
         /// <summary>Verifies a bit-code module</summary>
