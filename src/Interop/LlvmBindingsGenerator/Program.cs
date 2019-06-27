@@ -317,7 +317,7 @@ namespace LlvmBindingsGenerator
                 {
                     new GlobalHandleTemplate( "LLVMMemoryBufferRef","LLVMDisposeMemoryBuffer" ),
                     new GlobalHandleTemplate( "LLVMContextRef" , "LLVMContextDispose", needsAlias: true ),
-                    new ContextHandleTemplate( "LLVMModuleRef" ),
+                    new GlobalHandleTemplate( "LLVMModuleRef", "LLVMDisposeModule", needsAlias: true ),
                     new ContextHandleTemplate( "LLVMTypeRef" ),
                     new ContextHandleTemplate( "LLVMValueRef" ),
                     new ContextHandleTemplate( "LLVMBasicBlockRef" ),
@@ -379,6 +379,8 @@ namespace LlvmBindingsGenerator
                     "LibLLVMGetNodeContext",
                     "LLVMGetModuleContext",
                     "LLVMGetGlobalContext",
+                    "LLVMGetGlobalParent",
+                    "LibLLVMNamedMetadataGetParentModule",
                     "LLVMGetExecutionEngineTargetMachine",
                     "LLVMGetExecutionEngineTargetData",
                 }

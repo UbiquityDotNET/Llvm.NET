@@ -47,7 +47,8 @@ namespace Kaleidoscope.Chapter71
         public void Dispose( )
         {
             JIT.Dispose( );
-            Module.Dispose( );
+            Module?.Dispose( );
+            FunctionPassManager?.Dispose( );
             Context.Dispose( );
         }
         #endregion
@@ -64,32 +65,34 @@ namespace Kaleidoscope.Chapter71
                     return null;
                 }
 
-                Value retVal = null;
-
                 // Anonymous functions are called immediately then removed from the JIT
                 // so no point in setting them up as a lazy compilation item.
                 if( definition.IsAnonymous )
                 {
+                    InitializeModuleAndPassManager( );
                     var function = ( IrFunction )definition.Accept( this );
-                    var jitHandle = JIT.AddModule( function.ParentModule );
+
+                    // eagerly compile modules for anonymous functions as calling the function is the guaranteed next step
+                    ulong jitHandle = JIT.AddEagerlyCompiledModule( Module );
                     var nativeFunc = JIT.GetFunctionDelegate<KaleidoscopeJIT.CallbackHandler0>( definition.Name );
-                    retVal = Context.CreateConstant( nativeFunc( ) );
+                    var retVal = Context.CreateConstant( nativeFunc( ) );
                     JIT.RemoveModule( jitHandle );
+                    return retVal;
                 }
-                else
+
+                // Unknown if any future input will call the function so don't even generate IR
+                // until it is needed. JIT triggers the callback to generate the IR module so the JIT
+                // can then generate native code only when required.
+                FunctionDefinition implDefinition = CloneAndRenameFunction( definition );
+
+                // register the generator as a stub with the original source name
+                JIT.AddLazyFunctionGenerator( definition.Name, ( ) =>
                 {
-                    FunctionDefinition implDefinition = CloneAndRenameFunction( definition );
-
-                    // register the generator as a stub with the original source name
-                    JIT.AddLazyFunctionGenerator( definition.Name, ( ) =>
-                    {
-                        InitializeModuleAndPassManager( );
-                        var function = ( IrFunction )implDefinition.Accept( this );
-                        return (implDefinition.Name, function.ParentModule);
-                    } );
-                }
-
-                return retVal;
+                    InitializeModuleAndPassManager( );
+                    var function = ( IrFunction )implDefinition.Accept( this );
+                    return (implDefinition.Name, function.ParentModule);
+                } );
+                return null;
             }
             catch( CodeGeneratorException ex ) when( codeGenerationErroHandler != null )
             {
@@ -265,7 +268,7 @@ namespace Kaleidoscope.Chapter71
             var continueBlock = function.AppendBasicBlock( "ifcont" );
             InstructionBuilder.Branch( condBool, thenBlock, elseBlock );
 
-            // generate then block
+            // generate then block instructions
             InstructionBuilder.PositionAtEnd( thenBlock );
             var thenValue = conditionalExpression.ThenExpression.Accept( this );
             if( thenValue == null )
@@ -277,7 +280,6 @@ namespace Kaleidoscope.Chapter71
             InstructionBuilder.Branch( continueBlock );
 
             // generate else block
-            function.BasicBlocks.Add( elseBlock );
             InstructionBuilder.PositionAtEnd( elseBlock );
             var elseValue = conditionalExpression.ElseExpression.Accept( this );
             if( elseValue == null )
@@ -289,7 +291,6 @@ namespace Kaleidoscope.Chapter71
             InstructionBuilder.Branch( continueBlock );
 
             // generate continue block
-            function.BasicBlocks.Add( continueBlock );
             InstructionBuilder.PositionAtEnd( continueBlock );
 
             // since the Alloca is created as a non-opaque pointer it is OK to just use the
@@ -435,8 +436,8 @@ namespace Kaleidoscope.Chapter71
         {
             Module = Context.CreateBitcodeModule( );
             Module.Layout = JIT.TargetMachine.TargetData;
-            FunctionPassManager = new FunctionPassManager( Module )
-                                      .AddPromoteMemoryToRegisterPass( );
+            FunctionPassManager = new FunctionPassManager( Module );
+            FunctionPassManager.AddPromoteMemoryToRegisterPass( );
 
             if( !DisableOptimizations )
             {

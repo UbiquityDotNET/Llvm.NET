@@ -12,6 +12,7 @@ namespace Llvm.NET.Transforms
 {
     /// <summary>Common base class for pass managers</summary>
     public class PassManager
+        : DisposableObject
     {
         internal PassManager( LLVMPassManagerRef handle )
         {
@@ -19,5 +20,11 @@ namespace Llvm.NET.Transforms
         }
 
         internal LLVMPassManagerRef Handle { get; }
+
+        /// <inheritdoc/>
+        protected override void Dispose( bool disposing )
+        {
+            Handle.Dispose();
+        }
     }
 }

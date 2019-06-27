@@ -4,6 +4,7 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
+using System;
 using System.Collections.Generic;
 
 // Internal types don't require XML docs, despite settings in stylecop.json the analyzer still
@@ -12,12 +13,12 @@ using System.Collections.Generic;
 
 namespace Llvm.NET
 {
-    internal interface IHandleInterning<in THandle, out TMappedType>
+    internal interface IHandleInterning<THandle, TMappedType>
         : IEnumerable<TMappedType>
     {
         Context Context { get; }
 
-        TMappedType GetOrCreateItem( THandle handle );
+        TMappedType GetOrCreateItem( THandle handle, Action<THandle> foundHandleRelease = null );
 
         void Remove( THandle handle );
 

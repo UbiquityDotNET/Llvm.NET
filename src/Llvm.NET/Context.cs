@@ -792,7 +792,8 @@ namespace Llvm.NET
                 throw new ArgumentException( Resources.Incorrect_context_for_module );
             }
 
-            return ModuleCache.GetOrCreateItem( moduleRef );
+            // make sure handle to existing module isn't auto disposed.
+            return ModuleCache.GetOrCreateItem( moduleRef, h => h.SetHandleAsInvalid() );
         }
 
         internal void RemoveDeletedNode( MDNode node )
@@ -840,10 +841,14 @@ namespace Llvm.NET
         /// <inheritdoc />
         protected override void Dispose( bool disposing )
         {
-            // disconnect all modules as some may be shared modules shared to a JIT
-            foreach( var module in Modules )
+            // disconnect all modules so that any future critical finalization has no impact
+            var handles = from m in Modules
+                          where m.ModuleHandle != null && !m.ModuleHandle.IsClosed && !m.ModuleHandle.IsInvalid
+                          select m.ModuleHandle;
+
+            foreach( var handle in handles )
             {
-                module.Dispose( );
+                handle.SetHandleAsInvalid( );
             }
 
             ValueCache.Dispose( );

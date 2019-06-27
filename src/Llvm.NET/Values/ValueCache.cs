@@ -18,17 +18,19 @@ using static Llvm.NET.Interop.NativeMethods;
 
 namespace Llvm.NET.Values
 {
+    [SuppressMessage( "Maintainability", "CA1506:Avoid excessive class coupling", Justification = "Interop projection factory" )]
     internal class ValueCache
         : DisposableObject
         , IHandleInterning<LLVMValueRef, Value>
     {
         public Context Context { get; }
 
-        public Value GetOrCreateItem( LLVMValueRef valueRef )
+        public Value GetOrCreateItem( LLVMValueRef valueRef, Action<LLVMValueRef> foundHandleRelease = null )
         {
             IntPtr managedHandlePtr = LibLLVMValueCacheLookup( Handle, valueRef );
             if( managedHandlePtr != IntPtr.Zero )
             {
+                foundHandleRelease?.Invoke( valueRef );
                 return (Value)GCHandle.FromIntPtr( managedHandlePtr ).Target;
             }
 

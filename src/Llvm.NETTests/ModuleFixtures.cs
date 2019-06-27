@@ -20,6 +20,8 @@ namespace Llvm.NETTests
         [AssemblyInitialize]
         public static void AssemblyInitialize( TestContext ctx )
         {
+            TestContext = ctx;
+            TestContext.WriteLine( "Initializing LLVM" );
             if( ctx == null )
             {
                 throw new ArgumentNullException( nameof( ctx ) );
@@ -30,8 +32,13 @@ namespace Llvm.NETTests
         }
 
         [AssemblyCleanup]
-        public static void AssemblyCleanup( ) => LlvmInit.Dispose( );
+        public static void AssemblyCleanup( )
+        {
+            TestContext.WriteLine( "Shutting down LLVM" );
+            LlvmInit.Dispose( );
+        }
 
+        private static TestContext TestContext;
         private static IDisposable LlvmInit;
     }
 }

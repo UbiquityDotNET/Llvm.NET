@@ -4,6 +4,7 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
+using System;
 using System.Collections;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
@@ -15,7 +16,7 @@ namespace Llvm.NET
     {
         public Context Context { get; }
 
-        public TMappedType GetOrCreateItem( THandle handle )
+        public TMappedType GetOrCreateItem( THandle handle, Action<THandle> foundHandleRelease = null )
         {
             if( EqualityComparer<THandle>.Default.Equals( handle, default ) )
             {
@@ -24,11 +25,13 @@ namespace Llvm.NET
 
             if( HandleMap.TryGetValue( handle, out TMappedType retVal ) )
             {
+                foundHandleRelease?.Invoke( handle );
                 return retVal;
             }
 
             retVal = ItemFactory( handle );
             HandleMap.Add( handle, retVal );
+
             return retVal;
         }
 

@@ -69,7 +69,7 @@ namespace Llvm.NET
         , IExtensiblePropertyContainer
     {
         /// <summary>Gets a value indicating whether the module is disposed or not</summary>
-        public bool IsDisposed => ModuleHandle == default;
+        public bool IsDisposed => ModuleHandle == default || ModuleHandle.IsInvalid || ModuleHandle.IsClosed;
 
         /// <summary>Gets or sets the name of the source file generating this module</summary>
         public string SourceFileName
@@ -100,20 +100,14 @@ namespace Llvm.NET
         public ComdatCollection Comdats { get; }
 
         /// <summary>Gets the <see cref="Context"/> this module belongs to</summary>
-        public Context Context
-        {
-            get
-            {
-                ThrowIfDisposed( );
-                return ModuleHandle == default ? null : GetContextFor( ModuleHandle );
-            }
-        }
+        public Context Context { get; }
 
         /// <summary>Gets the Metadata for module level flags</summary>
         public IReadOnlyDictionary<string, ModuleFlag> ModuleFlags
         {
             get
             {
+                ThrowIfDisposed( );
                 var retVal = new Dictionary<string, ModuleFlag>( );
                 using(LLVMModuleFlagEntry flags = LLVMCopyModuleFlagsMetadata(ModuleHandle, out size_t len))
                 {
@@ -285,11 +279,10 @@ namespace Llvm.NET
             // finalized after the context has already run its
             // finalizer, which would cause an access violation
             // in the native LLVM layer.
-            if( ModuleHandle != default )
+            if( !IsDisposed )
             {
                 // remove the module handle from the module cache.
-                Context.RemoveModule( this );
-                LLVMDisposeModule( ModuleHandle );
+                ModuleHandle.Dispose( );
                 ModuleHandle = default;
             }
         }
@@ -824,6 +817,7 @@ namespace Llvm.NET
         /// single context in order to link them into a single final module for
         /// optimization.
         /// </remarks>
+        [SuppressMessage( "Reliability", "CA2000:Dispose objects before losing scope", Justification = "Module created here is owned, and disposed of via the projected BitcodeModule" )]
         public static BitcodeModule LoadFrom( MemoryBuffer buffer, Context context )
         {
             buffer.ValidateNotNull( nameof( buffer ) );
@@ -841,6 +835,7 @@ namespace Llvm.NET
 
         internal LLVMModuleRef Detach( )
         {
+            ThrowIfDisposed( );
             Context.RemoveModule( this );
             var retVal = ModuleHandle;
             ModuleHandle = default;
@@ -909,11 +904,13 @@ namespace Llvm.NET
             }
         }
 
+        [SuppressMessage( "Reliability", "CA2000:Dispose objects before losing scope", Justification = "Context created here is owned, and disposed of via the ContextCache" )]
         private BitcodeModule( LLVMModuleRef handle )
         {
             handle.ValidateNotDefault( nameof( handle ) );
 
             ModuleHandle = handle;
+            Context = ContextCache.GetContextFor( LLVMGetModuleContext( handle ) );
             LazyDiBuilder = new Lazy<DebugInfoBuilder>( ( ) => new DebugInfoBuilder( this ) );
             Comdats = new ComdatCollection( this );
         }
@@ -941,10 +938,5 @@ namespace Llvm.NET
 
         private readonly ExtensiblePropertyContainer PropertyBag = new ExtensiblePropertyContainer( );
         private readonly Lazy<DebugInfoBuilder> LazyDiBuilder;
-
-        private static Context GetContextFor( LLVMModuleRef handle )
-        {
-            return handle == default ? null : ContextCache.GetContextFor( LLVMGetModuleContext( handle ) );
-        }
     }
 }

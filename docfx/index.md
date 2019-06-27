@@ -21,4 +21,12 @@ For more details see the full [API documentation](api/index.md)
   3. Leverage existing LLVM-C APIs underneath whenever possible
      1. Extend only when needed with custom wrappers
   4. FxCop/Code Analysis Clean
-  
+
+## Features
+* LLVM Cross target code generation from .NET code
+* JIT engine support for creating dynamic domain specific language
+  runtimes with full lazy JIT support. (See [Kaleidoscope language tutorial](articles/Samples/Kaleidoscope.md) for more details)
+* Ahead of time compilation with support for Link time optimization
+* Object model that reflects the underlying LLVM classes
+
+[Release Notes](ReleaseNotes.md)

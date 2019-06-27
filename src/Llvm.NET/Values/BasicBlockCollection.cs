@@ -9,6 +9,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using Llvm.NET.Interop;
+using Llvm.NET.Properties;
 using Ubiquity.ArgValidators;
 
 using static Llvm.NET.Interop.NativeMethods;
@@ -19,7 +20,7 @@ namespace Llvm.NET.Values
         : ICollection<BasicBlock>
     {
         /// <summary>Gets a count of the blocks in the collection</summary>
-        public int Count => checked((int)LLVMCountBasicBlocks( ContainingFunction.ValueHandle ));
+        public int Count => checked(( int )LLVMCountBasicBlocks( ContainingFunction.ValueHandle ));
 
         /// <summary>Add a block to the underlying function</summary>
         /// <param name="item"><see cref="BasicBlock"/> to add to the function</param>
@@ -29,7 +30,18 @@ namespace Llvm.NET.Values
         public void Add( BasicBlock item )
         {
             item.ValidateNotNull( nameof( item ) );
-            LibLLVMFunctionAppendBasicBlock( ContainingFunction.ValueHandle, item.BlockHandle );
+
+            if( item.ContainingFunction == null )
+            {
+                LibLLVMFunctionAppendBasicBlock( ContainingFunction.ValueHandle, item.BlockHandle );
+            }
+
+            if( item.ContainingFunction != ContainingFunction )
+            {
+                throw new ArgumentException( Resources.Cannot_add_a_block_belonging_to_a_different_function, nameof( item ) );
+            }
+
+            throw new ArgumentException( Resources.Block_already_exists_in_function, nameof( item ) );
         }
 
         /// <inheritdoc/>
@@ -68,7 +80,7 @@ namespace Llvm.NET.Values
                 throw new ArgumentOutOfRangeException( nameof( arrayIndex ) );
             }
 
-            foreach(var block in this)
+            foreach( var block in this )
             {
                 array[ arrayIndex++ ] = block;
             }
