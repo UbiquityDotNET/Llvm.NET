@@ -16865,90 +16865,30 @@ references:
   commentId: T:Llvm.NET.Interop.LLVMModuleRef
   fullName: Llvm.NET.Interop.LLVMModuleRef
   nameWithType: LLVMModuleRef
-- uid: Llvm.NET.Interop.LLVMModuleRef.Equals(Llvm.NET.Interop.LLVMModuleRef)
-  name: Equals(LLVMModuleRef)
-  href: api/Llvm.NET.Interop.LLVMModuleRef.Equals.html#Llvm_NET_Interop_LLVMModuleRef_Equals_Llvm_NET_Interop_LLVMModuleRef_
-  commentId: M:Llvm.NET.Interop.LLVMModuleRef.Equals(Llvm.NET.Interop.LLVMModuleRef)
-  fullName: Llvm.NET.Interop.LLVMModuleRef.Equals(Llvm.NET.Interop.LLVMModuleRef)
-  nameWithType: LLVMModuleRef.Equals(LLVMModuleRef)
-- uid: Llvm.NET.Interop.LLVMModuleRef.Equals(System.Object)
-  name: Equals(Object)
-  href: api/Llvm.NET.Interop.LLVMModuleRef.Equals.html#Llvm_NET_Interop_LLVMModuleRef_Equals_System_Object_
-  commentId: M:Llvm.NET.Interop.LLVMModuleRef.Equals(System.Object)
-  fullName: Llvm.NET.Interop.LLVMModuleRef.Equals(System.Object)
-  nameWithType: LLVMModuleRef.Equals(Object)
-- uid: Llvm.NET.Interop.LLVMModuleRef.Equals*
-  name: Equals
-  href: api/Llvm.NET.Interop.LLVMModuleRef.Equals.html
-  commentId: Overload:Llvm.NET.Interop.LLVMModuleRef.Equals
-  fullName: Llvm.NET.Interop.LLVMModuleRef.Equals
-  nameWithType: LLVMModuleRef.Equals
-- uid: Llvm.NET.Interop.LLVMModuleRef.GetHashCode
-  name: GetHashCode()
-  href: api/Llvm.NET.Interop.LLVMModuleRef.GetHashCode.html#Llvm_NET_Interop_LLVMModuleRef_GetHashCode
-  commentId: M:Llvm.NET.Interop.LLVMModuleRef.GetHashCode
-  fullName: Llvm.NET.Interop.LLVMModuleRef.GetHashCode()
-  nameWithType: LLVMModuleRef.GetHashCode()
-- uid: Llvm.NET.Interop.LLVMModuleRef.GetHashCode*
-  name: GetHashCode
-  href: api/Llvm.NET.Interop.LLVMModuleRef.GetHashCode.html
-  commentId: Overload:Llvm.NET.Interop.LLVMModuleRef.GetHashCode
-  fullName: Llvm.NET.Interop.LLVMModuleRef.GetHashCode
-  nameWithType: LLVMModuleRef.GetHashCode
-- uid: Llvm.NET.Interop.LLVMModuleRef.op_Equality(Llvm.NET.Interop.LLVMModuleRef,Llvm.NET.Interop.LLVMModuleRef)
-  name: Equality(LLVMModuleRef, LLVMModuleRef)
-  href: api/Llvm.NET.Interop.LLVMModuleRef.op_Equality.html#Llvm_NET_Interop_LLVMModuleRef_op_Equality_Llvm_NET_Interop_LLVMModuleRef_Llvm_NET_Interop_LLVMModuleRef_
-  commentId: M:Llvm.NET.Interop.LLVMModuleRef.op_Equality(Llvm.NET.Interop.LLVMModuleRef,Llvm.NET.Interop.LLVMModuleRef)
-  fullName: Llvm.NET.Interop.LLVMModuleRef.Equality(Llvm.NET.Interop.LLVMModuleRef, Llvm.NET.Interop.LLVMModuleRef)
-  nameWithType: LLVMModuleRef.Equality(LLVMModuleRef, LLVMModuleRef)
-- uid: Llvm.NET.Interop.LLVMModuleRef.op_Equality*
-  name: Equality
-  href: api/Llvm.NET.Interop.LLVMModuleRef.op_Equality.html
-  commentId: Overload:Llvm.NET.Interop.LLVMModuleRef.op_Equality
-  fullName: Llvm.NET.Interop.LLVMModuleRef.Equality
-  nameWithType: LLVMModuleRef.Equality
-- uid: Llvm.NET.Interop.LLVMModuleRef.op_Implicit(Llvm.NET.Interop.LLVMModuleRef)~System.IntPtr
-  name: Implicit(LLVMModuleRef to IntPtr)
-  href: api/Llvm.NET.Interop.LLVMModuleRef.op_Implicit.html#Llvm_NET_Interop_LLVMModuleRef_op_Implicit_Llvm_NET_Interop_LLVMModuleRef__System_IntPtr
-  commentId: M:Llvm.NET.Interop.LLVMModuleRef.op_Implicit(Llvm.NET.Interop.LLVMModuleRef)~System.IntPtr
-  name.vb: Widening(LLVMModuleRef to IntPtr)
-  fullName: Llvm.NET.Interop.LLVMModuleRef.Implicit(Llvm.NET.Interop.LLVMModuleRef to System.IntPtr)
-  fullName.vb: Llvm.NET.Interop.LLVMModuleRef.Widening(Llvm.NET.Interop.LLVMModuleRef to System.IntPtr)
-  nameWithType: LLVMModuleRef.Implicit(LLVMModuleRef to IntPtr)
-  nameWithType.vb: LLVMModuleRef.Widening(LLVMModuleRef to IntPtr)
-- uid: Llvm.NET.Interop.LLVMModuleRef.op_Implicit*
-  name: Implicit
-  href: api/Llvm.NET.Interop.LLVMModuleRef.op_Implicit.html
-  commentId: Overload:Llvm.NET.Interop.LLVMModuleRef.op_Implicit
-  name.vb: Widening
-  fullName: Llvm.NET.Interop.LLVMModuleRef.Implicit
-  fullName.vb: Llvm.NET.Interop.LLVMModuleRef.Widening
-  nameWithType: LLVMModuleRef.Implicit
-  nameWithType.vb: LLVMModuleRef.Widening
-- uid: Llvm.NET.Interop.LLVMModuleRef.op_Inequality(Llvm.NET.Interop.LLVMModuleRef,Llvm.NET.Interop.LLVMModuleRef)
-  name: Inequality(LLVMModuleRef, LLVMModuleRef)
-  href: api/Llvm.NET.Interop.LLVMModuleRef.op_Inequality.html#Llvm_NET_Interop_LLVMModuleRef_op_Inequality_Llvm_NET_Interop_LLVMModuleRef_Llvm_NET_Interop_LLVMModuleRef_
-  commentId: M:Llvm.NET.Interop.LLVMModuleRef.op_Inequality(Llvm.NET.Interop.LLVMModuleRef,Llvm.NET.Interop.LLVMModuleRef)
-  fullName: Llvm.NET.Interop.LLVMModuleRef.Inequality(Llvm.NET.Interop.LLVMModuleRef, Llvm.NET.Interop.LLVMModuleRef)
-  nameWithType: LLVMModuleRef.Inequality(LLVMModuleRef, LLVMModuleRef)
-- uid: Llvm.NET.Interop.LLVMModuleRef.op_Inequality*
-  name: Inequality
-  href: api/Llvm.NET.Interop.LLVMModuleRef.op_Inequality.html
-  commentId: Overload:Llvm.NET.Interop.LLVMModuleRef.op_Inequality
-  fullName: Llvm.NET.Interop.LLVMModuleRef.Inequality
-  nameWithType: LLVMModuleRef.Inequality
-- uid: Llvm.NET.Interop.LLVMModuleRef.ToIntPtr
-  name: ToIntPtr()
-  href: api/Llvm.NET.Interop.LLVMModuleRef.ToIntPtr.html#Llvm_NET_Interop_LLVMModuleRef_ToIntPtr
-  commentId: M:Llvm.NET.Interop.LLVMModuleRef.ToIntPtr
-  fullName: Llvm.NET.Interop.LLVMModuleRef.ToIntPtr()
-  nameWithType: LLVMModuleRef.ToIntPtr()
-- uid: Llvm.NET.Interop.LLVMModuleRef.ToIntPtr*
-  name: ToIntPtr
-  href: api/Llvm.NET.Interop.LLVMModuleRef.ToIntPtr.html
-  commentId: Overload:Llvm.NET.Interop.LLVMModuleRef.ToIntPtr
-  fullName: Llvm.NET.Interop.LLVMModuleRef.ToIntPtr
-  nameWithType: LLVMModuleRef.ToIntPtr
+- uid: Llvm.NET.Interop.LLVMModuleRef.#ctor(System.IntPtr,System.Boolean)
+  name: LLVMModuleRef(IntPtr, Boolean)
+  href: api/Llvm.NET.Interop.LLVMModuleRef.-ctor.html#Llvm_NET_Interop_LLVMModuleRef__ctor_System_IntPtr_System_Boolean_
+  commentId: M:Llvm.NET.Interop.LLVMModuleRef.#ctor(System.IntPtr,System.Boolean)
+  fullName: Llvm.NET.Interop.LLVMModuleRef.LLVMModuleRef(System.IntPtr, System.Boolean)
+  nameWithType: LLVMModuleRef.LLVMModuleRef(IntPtr, Boolean)
+- uid: Llvm.NET.Interop.LLVMModuleRef.#ctor*
+  name: LLVMModuleRef
+  href: api/Llvm.NET.Interop.LLVMModuleRef.-ctor.html
+  commentId: Overload:Llvm.NET.Interop.LLVMModuleRef.#ctor
+  fullName: Llvm.NET.Interop.LLVMModuleRef.LLVMModuleRef
+  nameWithType: LLVMModuleRef.LLVMModuleRef
+- uid: Llvm.NET.Interop.LLVMModuleRef.ReleaseHandle
+  name: ReleaseHandle()
+  href: api/Llvm.NET.Interop.LLVMModuleRef.ReleaseHandle.html#Llvm_NET_Interop_LLVMModuleRef_ReleaseHandle
+  commentId: M:Llvm.NET.Interop.LLVMModuleRef.ReleaseHandle
+  fullName: Llvm.NET.Interop.LLVMModuleRef.ReleaseHandle()
+  nameWithType: LLVMModuleRef.ReleaseHandle()
+- uid: Llvm.NET.Interop.LLVMModuleRef.ReleaseHandle*
+  name: ReleaseHandle
+  href: api/Llvm.NET.Interop.LLVMModuleRef.ReleaseHandle.html
+  commentId: Overload:Llvm.NET.Interop.LLVMModuleRef.ReleaseHandle
+  fullName: Llvm.NET.Interop.LLVMModuleRef.ReleaseHandle
+  nameWithType: LLVMModuleRef.ReleaseHandle
 - uid: Llvm.NET.Interop.LLVMModuleRef.Zero
   name: Zero
   href: api/Llvm.NET.Interop.LLVMModuleRef.Zero.html#Llvm_NET_Interop_LLVMModuleRef_Zero
@@ -16961,6 +16901,12 @@ references:
   commentId: Overload:Llvm.NET.Interop.LLVMModuleRef.Zero
   fullName: Llvm.NET.Interop.LLVMModuleRef.Zero
   nameWithType: LLVMModuleRef.Zero
+- uid: Llvm.NET.Interop.LLVMModuleRefAlias
+  name: LLVMModuleRefAlias
+  href: api/Llvm.NET.Interop.LLVMModuleRefAlias.html
+  commentId: T:Llvm.NET.Interop.LLVMModuleRefAlias
+  fullName: Llvm.NET.Interop.LLVMModuleRefAlias
+  nameWithType: LLVMModuleRefAlias
 - uid: Llvm.NET.Interop.LLVMNamedMDNodeRef
   name: LLVMNamedMDNodeRef
   href: api/Llvm.NET.Interop.LLVMNamedMDNodeRef.html
@@ -20240,6 +20186,36 @@ references:
   commentId: Overload:Llvm.NET.Interop.NativeMethods.LibLLVMNamedMetadataGetParentModule
   fullName: Llvm.NET.Interop.NativeMethods.LibLLVMNamedMetadataGetParentModule
   nameWithType: NativeMethods.LibLLVMNamedMetadataGetParentModule
+- uid: Llvm.NET.Interop.NativeMethods.LibLLVMOrcGetSymbolAddress(Llvm.NET.Interop.LLVMOrcJITStackRef,System.UInt64@,System.String,System.Boolean)
+  name: LibLLVMOrcGetSymbolAddress(LLVMOrcJITStackRef, out UInt64, String, Boolean)
+  href: api/Llvm.NET.Interop.NativeMethods.LibLLVMOrcGetSymbolAddress.html#Llvm_NET_Interop_NativeMethods_LibLLVMOrcGetSymbolAddress_Llvm_NET_Interop_LLVMOrcJITStackRef_System_UInt64__System_String_System_Boolean_
+  commentId: M:Llvm.NET.Interop.NativeMethods.LibLLVMOrcGetSymbolAddress(Llvm.NET.Interop.LLVMOrcJITStackRef,System.UInt64@,System.String,System.Boolean)
+  name.vb: LibLLVMOrcGetSymbolAddress(LLVMOrcJITStackRef, ByRef UInt64, String, Boolean)
+  fullName: Llvm.NET.Interop.NativeMethods.LibLLVMOrcGetSymbolAddress(Llvm.NET.Interop.LLVMOrcJITStackRef, out System.UInt64, System.String, System.Boolean)
+  fullName.vb: Llvm.NET.Interop.NativeMethods.LibLLVMOrcGetSymbolAddress(Llvm.NET.Interop.LLVMOrcJITStackRef, ByRef System.UInt64, System.String, System.Boolean)
+  nameWithType: NativeMethods.LibLLVMOrcGetSymbolAddress(LLVMOrcJITStackRef, out UInt64, String, Boolean)
+  nameWithType.vb: NativeMethods.LibLLVMOrcGetSymbolAddress(LLVMOrcJITStackRef, ByRef UInt64, String, Boolean)
+- uid: Llvm.NET.Interop.NativeMethods.LibLLVMOrcGetSymbolAddress*
+  name: LibLLVMOrcGetSymbolAddress
+  href: api/Llvm.NET.Interop.NativeMethods.LibLLVMOrcGetSymbolAddress.html
+  commentId: Overload:Llvm.NET.Interop.NativeMethods.LibLLVMOrcGetSymbolAddress
+  fullName: Llvm.NET.Interop.NativeMethods.LibLLVMOrcGetSymbolAddress
+  nameWithType: NativeMethods.LibLLVMOrcGetSymbolAddress
+- uid: Llvm.NET.Interop.NativeMethods.LibLLVMOrcGetSymbolAddressIn(Llvm.NET.Interop.LLVMOrcJITStackRef,System.UInt64@,System.UInt64,System.String,System.Boolean)
+  name: LibLLVMOrcGetSymbolAddressIn(LLVMOrcJITStackRef, out UInt64, UInt64, String, Boolean)
+  href: api/Llvm.NET.Interop.NativeMethods.LibLLVMOrcGetSymbolAddressIn.html#Llvm_NET_Interop_NativeMethods_LibLLVMOrcGetSymbolAddressIn_Llvm_NET_Interop_LLVMOrcJITStackRef_System_UInt64__System_UInt64_System_String_System_Boolean_
+  commentId: M:Llvm.NET.Interop.NativeMethods.LibLLVMOrcGetSymbolAddressIn(Llvm.NET.Interop.LLVMOrcJITStackRef,System.UInt64@,System.UInt64,System.String,System.Boolean)
+  name.vb: LibLLVMOrcGetSymbolAddressIn(LLVMOrcJITStackRef, ByRef UInt64, UInt64, String, Boolean)
+  fullName: Llvm.NET.Interop.NativeMethods.LibLLVMOrcGetSymbolAddressIn(Llvm.NET.Interop.LLVMOrcJITStackRef, out System.UInt64, System.UInt64, System.String, System.Boolean)
+  fullName.vb: Llvm.NET.Interop.NativeMethods.LibLLVMOrcGetSymbolAddressIn(Llvm.NET.Interop.LLVMOrcJITStackRef, ByRef System.UInt64, System.UInt64, System.String, System.Boolean)
+  nameWithType: NativeMethods.LibLLVMOrcGetSymbolAddressIn(LLVMOrcJITStackRef, out UInt64, UInt64, String, Boolean)
+  nameWithType.vb: NativeMethods.LibLLVMOrcGetSymbolAddressIn(LLVMOrcJITStackRef, ByRef UInt64, UInt64, String, Boolean)
+- uid: Llvm.NET.Interop.NativeMethods.LibLLVMOrcGetSymbolAddressIn*
+  name: LibLLVMOrcGetSymbolAddressIn
+  href: api/Llvm.NET.Interop.NativeMethods.LibLLVMOrcGetSymbolAddressIn.html
+  commentId: Overload:Llvm.NET.Interop.NativeMethods.LibLLVMOrcGetSymbolAddressIn
+  fullName: Llvm.NET.Interop.NativeMethods.LibLLVMOrcGetSymbolAddressIn
+  nameWithType: NativeMethods.LibLLVMOrcGetSymbolAddressIn
 - uid: Llvm.NET.Interop.NativeMethods.LibLLVMParseTriple(System.String)
   name: LibLLVMParseTriple(String)
   href: api/Llvm.NET.Interop.NativeMethods.LibLLVMParseTriple.html#Llvm_NET_Interop_NativeMethods_LibLLVMParseTriple_System_String_
@@ -25337,18 +25313,6 @@ references:
   commentId: Overload:Llvm.NET.Interop.NativeMethods.LLVMDisasmInstruction
   fullName: Llvm.NET.Interop.NativeMethods.LLVMDisasmInstruction
   nameWithType: NativeMethods.LLVMDisasmInstruction
-- uid: Llvm.NET.Interop.NativeMethods.LLVMDisposeModule(Llvm.NET.Interop.LLVMModuleRef)
-  name: LLVMDisposeModule(LLVMModuleRef)
-  href: api/Llvm.NET.Interop.NativeMethods.LLVMDisposeModule.html#Llvm_NET_Interop_NativeMethods_LLVMDisposeModule_Llvm_NET_Interop_LLVMModuleRef_
-  commentId: M:Llvm.NET.Interop.NativeMethods.LLVMDisposeModule(Llvm.NET.Interop.LLVMModuleRef)
-  fullName: Llvm.NET.Interop.NativeMethods.LLVMDisposeModule(Llvm.NET.Interop.LLVMModuleRef)
-  nameWithType: NativeMethods.LLVMDisposeModule(LLVMModuleRef)
-- uid: Llvm.NET.Interop.NativeMethods.LLVMDisposeModule*
-  name: LLVMDisposeModule
-  href: api/Llvm.NET.Interop.NativeMethods.LLVMDisposeModule.html
-  commentId: Overload:Llvm.NET.Interop.NativeMethods.LLVMDisposeModule
-  fullName: Llvm.NET.Interop.NativeMethods.LLVMDisposeModule
-  nameWithType: NativeMethods.LLVMDisposeModule
 - uid: Llvm.NET.Interop.NativeMethods.LLVMDisposeTemporaryMDNode(Llvm.NET.Interop.LLVMMetadataRef)
   name: LLVMDisposeTemporaryMDNode(LLVMMetadataRef)
   href: api/Llvm.NET.Interop.NativeMethods.LLVMDisposeTemporaryMDNode.html#Llvm_NET_Interop_NativeMethods_LLVMDisposeTemporaryMDNode_Llvm_NET_Interop_LLVMMetadataRef_
@@ -33895,18 +33859,30 @@ references:
   commentId: T:Llvm.NET.JIT.IExecutionEngine
   fullName: Llvm.NET.JIT.IExecutionEngine
   nameWithType: IExecutionEngine
-- uid: Llvm.NET.JIT.IExecutionEngine.AddModule(Llvm.NET.BitcodeModule)
-  name: AddModule(BitcodeModule)
-  href: api/Llvm.NET.JIT.IExecutionEngine.AddModule.html#Llvm_NET_JIT_IExecutionEngine_AddModule_Llvm_NET_BitcodeModule_
-  commentId: M:Llvm.NET.JIT.IExecutionEngine.AddModule(Llvm.NET.BitcodeModule)
-  fullName: Llvm.NET.JIT.IExecutionEngine.AddModule(Llvm.NET.BitcodeModule)
-  nameWithType: IExecutionEngine.AddModule(BitcodeModule)
-- uid: Llvm.NET.JIT.IExecutionEngine.AddModule*
-  name: AddModule
-  href: api/Llvm.NET.JIT.IExecutionEngine.AddModule.html
-  commentId: Overload:Llvm.NET.JIT.IExecutionEngine.AddModule
-  fullName: Llvm.NET.JIT.IExecutionEngine.AddModule
-  nameWithType: IExecutionEngine.AddModule
+- uid: Llvm.NET.JIT.IExecutionEngine.AddEagerlyCompiledModule(Llvm.NET.BitcodeModule,Llvm.NET.Interop.LLVMOrcSymbolResolverFn)
+  name: AddEagerlyCompiledModule(BitcodeModule, LLVMOrcSymbolResolverFn)
+  href: api/Llvm.NET.JIT.IExecutionEngine.AddEagerlyCompiledModule.html#Llvm_NET_JIT_IExecutionEngine_AddEagerlyCompiledModule_Llvm_NET_BitcodeModule_Llvm_NET_Interop_LLVMOrcSymbolResolverFn_
+  commentId: M:Llvm.NET.JIT.IExecutionEngine.AddEagerlyCompiledModule(Llvm.NET.BitcodeModule,Llvm.NET.Interop.LLVMOrcSymbolResolverFn)
+  fullName: Llvm.NET.JIT.IExecutionEngine.AddEagerlyCompiledModule(Llvm.NET.BitcodeModule, Llvm.NET.Interop.LLVMOrcSymbolResolverFn)
+  nameWithType: IExecutionEngine.AddEagerlyCompiledModule(BitcodeModule, LLVMOrcSymbolResolverFn)
+- uid: Llvm.NET.JIT.IExecutionEngine.AddEagerlyCompiledModule*
+  name: AddEagerlyCompiledModule
+  href: api/Llvm.NET.JIT.IExecutionEngine.AddEagerlyCompiledModule.html
+  commentId: Overload:Llvm.NET.JIT.IExecutionEngine.AddEagerlyCompiledModule
+  fullName: Llvm.NET.JIT.IExecutionEngine.AddEagerlyCompiledModule
+  nameWithType: IExecutionEngine.AddEagerlyCompiledModule
+- uid: Llvm.NET.JIT.IExecutionEngine.DefaultSymbolResolver(System.String,System.IntPtr)
+  name: DefaultSymbolResolver(String, IntPtr)
+  href: api/Llvm.NET.JIT.IExecutionEngine.DefaultSymbolResolver.html#Llvm_NET_JIT_IExecutionEngine_DefaultSymbolResolver_System_String_System_IntPtr_
+  commentId: M:Llvm.NET.JIT.IExecutionEngine.DefaultSymbolResolver(System.String,System.IntPtr)
+  fullName: Llvm.NET.JIT.IExecutionEngine.DefaultSymbolResolver(System.String, System.IntPtr)
+  nameWithType: IExecutionEngine.DefaultSymbolResolver(String, IntPtr)
+- uid: Llvm.NET.JIT.IExecutionEngine.DefaultSymbolResolver*
+  name: DefaultSymbolResolver
+  href: api/Llvm.NET.JIT.IExecutionEngine.DefaultSymbolResolver.html
+  commentId: Overload:Llvm.NET.JIT.IExecutionEngine.DefaultSymbolResolver
+  fullName: Llvm.NET.JIT.IExecutionEngine.DefaultSymbolResolver
+  nameWithType: IExecutionEngine.DefaultSymbolResolver
 - uid: Llvm.NET.JIT.IExecutionEngine.GetFunctionDelegate*
   name: GetFunctionDelegate
   href: api/Llvm.NET.JIT.IExecutionEngine.GetFunctionDelegate.html
@@ -33952,6 +33928,18 @@ references:
   commentId: T:Llvm.NET.JIT.ILazyCompileExecutionEngine
   fullName: Llvm.NET.JIT.ILazyCompileExecutionEngine
   nameWithType: ILazyCompileExecutionEngine
+- uid: Llvm.NET.JIT.ILazyCompileExecutionEngine.AddLazyCompiledModule(Llvm.NET.BitcodeModule,Llvm.NET.Interop.LLVMOrcSymbolResolverFn)
+  name: AddLazyCompiledModule(BitcodeModule, LLVMOrcSymbolResolverFn)
+  href: api/Llvm.NET.JIT.ILazyCompileExecutionEngine.AddLazyCompiledModule.html#Llvm_NET_JIT_ILazyCompileExecutionEngine_AddLazyCompiledModule_Llvm_NET_BitcodeModule_Llvm_NET_Interop_LLVMOrcSymbolResolverFn_
+  commentId: M:Llvm.NET.JIT.ILazyCompileExecutionEngine.AddLazyCompiledModule(Llvm.NET.BitcodeModule,Llvm.NET.Interop.LLVMOrcSymbolResolverFn)
+  fullName: Llvm.NET.JIT.ILazyCompileExecutionEngine.AddLazyCompiledModule(Llvm.NET.BitcodeModule, Llvm.NET.Interop.LLVMOrcSymbolResolverFn)
+  nameWithType: ILazyCompileExecutionEngine.AddLazyCompiledModule(BitcodeModule, LLVMOrcSymbolResolverFn)
+- uid: Llvm.NET.JIT.ILazyCompileExecutionEngine.AddLazyCompiledModule*
+  name: AddLazyCompiledModule
+  href: api/Llvm.NET.JIT.ILazyCompileExecutionEngine.AddLazyCompiledModule.html
+  commentId: Overload:Llvm.NET.JIT.ILazyCompileExecutionEngine.AddLazyCompiledModule
+  fullName: Llvm.NET.JIT.ILazyCompileExecutionEngine.AddLazyCompiledModule
+  nameWithType: ILazyCompileExecutionEngine.AddLazyCompiledModule
 - uid: Llvm.NET.JIT.ILazyCompileExecutionEngine.AddLazyFunctionGenerator(System.String,Llvm.NET.JIT.LazyFunctionCompiler,System.IntPtr)
   name: AddLazyFunctionGenerator(String, LazyFunctionCompiler, IntPtr)
   href: api/Llvm.NET.JIT.ILazyCompileExecutionEngine.AddLazyFunctionGenerator.html#Llvm_NET_JIT_ILazyCompileExecutionEngine_AddLazyFunctionGenerator_System_String_Llvm_NET_JIT_LazyFunctionCompiler_System_IntPtr_
@@ -33964,48 +33952,36 @@ references:
   commentId: Overload:Llvm.NET.JIT.ILazyCompileExecutionEngine.AddLazyFunctionGenerator
   fullName: Llvm.NET.JIT.ILazyCompileExecutionEngine.AddLazyFunctionGenerator
   nameWithType: ILazyCompileExecutionEngine.AddLazyFunctionGenerator
-- uid: Llvm.NET.JIT.ILazyCompileExecutionEngine.AddModule(Llvm.NET.BitcodeModule,Llvm.NET.Interop.LLVMOrcSymbolResolverFn)
-  name: AddModule(BitcodeModule, LLVMOrcSymbolResolverFn)
-  href: api/Llvm.NET.JIT.ILazyCompileExecutionEngine.AddModule.html#Llvm_NET_JIT_ILazyCompileExecutionEngine_AddModule_Llvm_NET_BitcodeModule_Llvm_NET_Interop_LLVMOrcSymbolResolverFn_
-  commentId: M:Llvm.NET.JIT.ILazyCompileExecutionEngine.AddModule(Llvm.NET.BitcodeModule,Llvm.NET.Interop.LLVMOrcSymbolResolverFn)
-  fullName: Llvm.NET.JIT.ILazyCompileExecutionEngine.AddModule(Llvm.NET.BitcodeModule, Llvm.NET.Interop.LLVMOrcSymbolResolverFn)
-  nameWithType: ILazyCompileExecutionEngine.AddModule(BitcodeModule, LLVMOrcSymbolResolverFn)
-- uid: Llvm.NET.JIT.ILazyCompileExecutionEngine.AddModule*
-  name: AddModule
-  href: api/Llvm.NET.JIT.ILazyCompileExecutionEngine.AddModule.html
-  commentId: Overload:Llvm.NET.JIT.ILazyCompileExecutionEngine.AddModule
-  fullName: Llvm.NET.JIT.ILazyCompileExecutionEngine.AddModule
-  nameWithType: ILazyCompileExecutionEngine.AddModule
-- uid: Llvm.NET.JIT.ILazyCompileExecutionEngine.DefaultSymbolResolver(System.String,System.IntPtr)
-  name: DefaultSymbolResolver(String, IntPtr)
-  href: api/Llvm.NET.JIT.ILazyCompileExecutionEngine.DefaultSymbolResolver.html#Llvm_NET_JIT_ILazyCompileExecutionEngine_DefaultSymbolResolver_System_String_System_IntPtr_
-  commentId: M:Llvm.NET.JIT.ILazyCompileExecutionEngine.DefaultSymbolResolver(System.String,System.IntPtr)
-  fullName: Llvm.NET.JIT.ILazyCompileExecutionEngine.DefaultSymbolResolver(System.String, System.IntPtr)
-  nameWithType: ILazyCompileExecutionEngine.DefaultSymbolResolver(String, IntPtr)
-- uid: Llvm.NET.JIT.ILazyCompileExecutionEngine.DefaultSymbolResolver*
-  name: DefaultSymbolResolver
-  href: api/Llvm.NET.JIT.ILazyCompileExecutionEngine.DefaultSymbolResolver.html
-  commentId: Overload:Llvm.NET.JIT.ILazyCompileExecutionEngine.DefaultSymbolResolver
-  fullName: Llvm.NET.JIT.ILazyCompileExecutionEngine.DefaultSymbolResolver
-  nameWithType: ILazyCompileExecutionEngine.DefaultSymbolResolver
-- uid: Llvm.NET.JIT.ILazyCompileExecutionEngine.LazyAddModule(Llvm.NET.BitcodeModule,Llvm.NET.Interop.LLVMOrcSymbolResolverFn)
-  name: LazyAddModule(BitcodeModule, LLVMOrcSymbolResolverFn)
-  href: api/Llvm.NET.JIT.ILazyCompileExecutionEngine.LazyAddModule.html#Llvm_NET_JIT_ILazyCompileExecutionEngine_LazyAddModule_Llvm_NET_BitcodeModule_Llvm_NET_Interop_LLVMOrcSymbolResolverFn_
-  commentId: M:Llvm.NET.JIT.ILazyCompileExecutionEngine.LazyAddModule(Llvm.NET.BitcodeModule,Llvm.NET.Interop.LLVMOrcSymbolResolverFn)
-  fullName: Llvm.NET.JIT.ILazyCompileExecutionEngine.LazyAddModule(Llvm.NET.BitcodeModule, Llvm.NET.Interop.LLVMOrcSymbolResolverFn)
-  nameWithType: ILazyCompileExecutionEngine.LazyAddModule(BitcodeModule, LLVMOrcSymbolResolverFn)
-- uid: Llvm.NET.JIT.ILazyCompileExecutionEngine.LazyAddModule*
-  name: LazyAddModule
-  href: api/Llvm.NET.JIT.ILazyCompileExecutionEngine.LazyAddModule.html
-  commentId: Overload:Llvm.NET.JIT.ILazyCompileExecutionEngine.LazyAddModule
-  fullName: Llvm.NET.JIT.ILazyCompileExecutionEngine.LazyAddModule
-  nameWithType: ILazyCompileExecutionEngine.LazyAddModule
 - uid: Llvm.NET.JIT.LazyCompilationExecutionEngineExtensions
   name: LazyCompilationExecutionEngineExtensions
   href: api/Llvm.NET.JIT.LazyCompilationExecutionEngineExtensions.html
   commentId: T:Llvm.NET.JIT.LazyCompilationExecutionEngineExtensions
   fullName: Llvm.NET.JIT.LazyCompilationExecutionEngineExtensions
   nameWithType: LazyCompilationExecutionEngineExtensions
+- uid: Llvm.NET.JIT.LazyCompilationExecutionEngineExtensions.AddEagerlyCompiledModule(Llvm.NET.JIT.IExecutionEngine,Llvm.NET.BitcodeModule)
+  name: AddEagerlyCompiledModule(IExecutionEngine, BitcodeModule)
+  href: api/Llvm.NET.JIT.LazyCompilationExecutionEngineExtensions.AddEagerlyCompiledModule.html#Llvm_NET_JIT_LazyCompilationExecutionEngineExtensions_AddEagerlyCompiledModule_Llvm_NET_JIT_IExecutionEngine_Llvm_NET_BitcodeModule_
+  commentId: M:Llvm.NET.JIT.LazyCompilationExecutionEngineExtensions.AddEagerlyCompiledModule(Llvm.NET.JIT.IExecutionEngine,Llvm.NET.BitcodeModule)
+  fullName: Llvm.NET.JIT.LazyCompilationExecutionEngineExtensions.AddEagerlyCompiledModule(Llvm.NET.JIT.IExecutionEngine, Llvm.NET.BitcodeModule)
+  nameWithType: LazyCompilationExecutionEngineExtensions.AddEagerlyCompiledModule(IExecutionEngine, BitcodeModule)
+- uid: Llvm.NET.JIT.LazyCompilationExecutionEngineExtensions.AddEagerlyCompiledModule*
+  name: AddEagerlyCompiledModule
+  href: api/Llvm.NET.JIT.LazyCompilationExecutionEngineExtensions.AddEagerlyCompiledModule.html
+  commentId: Overload:Llvm.NET.JIT.LazyCompilationExecutionEngineExtensions.AddEagerlyCompiledModule
+  fullName: Llvm.NET.JIT.LazyCompilationExecutionEngineExtensions.AddEagerlyCompiledModule
+  nameWithType: LazyCompilationExecutionEngineExtensions.AddEagerlyCompiledModule
+- uid: Llvm.NET.JIT.LazyCompilationExecutionEngineExtensions.AddLazyCompiledModule(Llvm.NET.JIT.ILazyCompileExecutionEngine,Llvm.NET.BitcodeModule)
+  name: AddLazyCompiledModule(ILazyCompileExecutionEngine, BitcodeModule)
+  href: api/Llvm.NET.JIT.LazyCompilationExecutionEngineExtensions.AddLazyCompiledModule.html#Llvm_NET_JIT_LazyCompilationExecutionEngineExtensions_AddLazyCompiledModule_Llvm_NET_JIT_ILazyCompileExecutionEngine_Llvm_NET_BitcodeModule_
+  commentId: M:Llvm.NET.JIT.LazyCompilationExecutionEngineExtensions.AddLazyCompiledModule(Llvm.NET.JIT.ILazyCompileExecutionEngine,Llvm.NET.BitcodeModule)
+  fullName: Llvm.NET.JIT.LazyCompilationExecutionEngineExtensions.AddLazyCompiledModule(Llvm.NET.JIT.ILazyCompileExecutionEngine, Llvm.NET.BitcodeModule)
+  nameWithType: LazyCompilationExecutionEngineExtensions.AddLazyCompiledModule(ILazyCompileExecutionEngine, BitcodeModule)
+- uid: Llvm.NET.JIT.LazyCompilationExecutionEngineExtensions.AddLazyCompiledModule*
+  name: AddLazyCompiledModule
+  href: api/Llvm.NET.JIT.LazyCompilationExecutionEngineExtensions.AddLazyCompiledModule.html
+  commentId: Overload:Llvm.NET.JIT.LazyCompilationExecutionEngineExtensions.AddLazyCompiledModule
+  fullName: Llvm.NET.JIT.LazyCompilationExecutionEngineExtensions.AddLazyCompiledModule
+  nameWithType: LazyCompilationExecutionEngineExtensions.AddLazyCompiledModule
 - uid: Llvm.NET.JIT.LazyCompilationExecutionEngineExtensions.AddLazyFunctionGenerator(Llvm.NET.JIT.ILazyCompileExecutionEngine,System.String,Llvm.NET.JIT.LazyFunctionCompiler)
   name: AddLazyFunctionGenerator(ILazyCompileExecutionEngine, String, LazyFunctionCompiler)
   href: api/Llvm.NET.JIT.LazyCompilationExecutionEngineExtensions.AddLazyFunctionGenerator.html#Llvm_NET_JIT_LazyCompilationExecutionEngineExtensions_AddLazyFunctionGenerator_Llvm_NET_JIT_ILazyCompileExecutionEngine_System_String_Llvm_NET_JIT_LazyFunctionCompiler_
@@ -34018,18 +33994,6 @@ references:
   commentId: Overload:Llvm.NET.JIT.LazyCompilationExecutionEngineExtensions.AddLazyFunctionGenerator
   fullName: Llvm.NET.JIT.LazyCompilationExecutionEngineExtensions.AddLazyFunctionGenerator
   nameWithType: LazyCompilationExecutionEngineExtensions.AddLazyFunctionGenerator
-- uid: Llvm.NET.JIT.LazyCompilationExecutionEngineExtensions.LazyAddModule(Llvm.NET.JIT.ILazyCompileExecutionEngine,Llvm.NET.BitcodeModule)
-  name: LazyAddModule(ILazyCompileExecutionEngine, BitcodeModule)
-  href: api/Llvm.NET.JIT.LazyCompilationExecutionEngineExtensions.LazyAddModule.html#Llvm_NET_JIT_LazyCompilationExecutionEngineExtensions_LazyAddModule_Llvm_NET_JIT_ILazyCompileExecutionEngine_Llvm_NET_BitcodeModule_
-  commentId: M:Llvm.NET.JIT.LazyCompilationExecutionEngineExtensions.LazyAddModule(Llvm.NET.JIT.ILazyCompileExecutionEngine,Llvm.NET.BitcodeModule)
-  fullName: Llvm.NET.JIT.LazyCompilationExecutionEngineExtensions.LazyAddModule(Llvm.NET.JIT.ILazyCompileExecutionEngine, Llvm.NET.BitcodeModule)
-  nameWithType: LazyCompilationExecutionEngineExtensions.LazyAddModule(ILazyCompileExecutionEngine, BitcodeModule)
-- uid: Llvm.NET.JIT.LazyCompilationExecutionEngineExtensions.LazyAddModule*
-  name: LazyAddModule
-  href: api/Llvm.NET.JIT.LazyCompilationExecutionEngineExtensions.LazyAddModule.html
-  commentId: Overload:Llvm.NET.JIT.LazyCompilationExecutionEngineExtensions.LazyAddModule
-  fullName: Llvm.NET.JIT.LazyCompilationExecutionEngineExtensions.LazyAddModule
-  nameWithType: LazyCompilationExecutionEngineExtensions.LazyAddModule
 - uid: Llvm.NET.JIT.LazyFunctionCompiler
   name: LazyFunctionCompiler
   href: api/Llvm.NET.JIT.LazyFunctionCompiler.html
@@ -34054,6 +34018,18 @@ references:
   commentId: Overload:Llvm.NET.JIT.OrcJit.#ctor
   fullName: Llvm.NET.JIT.OrcJit.OrcJit
   nameWithType: OrcJit.OrcJit
+- uid: Llvm.NET.JIT.OrcJit.AddEagerlyCompiledModule(Llvm.NET.BitcodeModule,Llvm.NET.Interop.LLVMOrcSymbolResolverFn)
+  name: AddEagerlyCompiledModule(BitcodeModule, LLVMOrcSymbolResolverFn)
+  href: api/Llvm.NET.JIT.OrcJit.AddEagerlyCompiledModule.html#Llvm_NET_JIT_OrcJit_AddEagerlyCompiledModule_Llvm_NET_BitcodeModule_Llvm_NET_Interop_LLVMOrcSymbolResolverFn_
+  commentId: M:Llvm.NET.JIT.OrcJit.AddEagerlyCompiledModule(Llvm.NET.BitcodeModule,Llvm.NET.Interop.LLVMOrcSymbolResolverFn)
+  fullName: Llvm.NET.JIT.OrcJit.AddEagerlyCompiledModule(Llvm.NET.BitcodeModule, Llvm.NET.Interop.LLVMOrcSymbolResolverFn)
+  nameWithType: OrcJit.AddEagerlyCompiledModule(BitcodeModule, LLVMOrcSymbolResolverFn)
+- uid: Llvm.NET.JIT.OrcJit.AddEagerlyCompiledModule*
+  name: AddEagerlyCompiledModule
+  href: api/Llvm.NET.JIT.OrcJit.AddEagerlyCompiledModule.html
+  commentId: Overload:Llvm.NET.JIT.OrcJit.AddEagerlyCompiledModule
+  fullName: Llvm.NET.JIT.OrcJit.AddEagerlyCompiledModule
+  nameWithType: OrcJit.AddEagerlyCompiledModule
 - uid: Llvm.NET.JIT.OrcJit.AddInteropCallback*
   name: AddInteropCallback
   href: api/Llvm.NET.JIT.OrcJit.AddInteropCallback.html
@@ -34069,6 +34045,18 @@ references:
   fullName.vb: Llvm.NET.JIT.OrcJit.AddInteropCallback(Of T)(System.String, T)
   nameWithType: OrcJit.AddInteropCallback<T>(String, T)
   nameWithType.vb: OrcJit.AddInteropCallback(Of T)(String, T)
+- uid: Llvm.NET.JIT.OrcJit.AddLazyCompiledModule(Llvm.NET.BitcodeModule,Llvm.NET.Interop.LLVMOrcSymbolResolverFn)
+  name: AddLazyCompiledModule(BitcodeModule, LLVMOrcSymbolResolverFn)
+  href: api/Llvm.NET.JIT.OrcJit.AddLazyCompiledModule.html#Llvm_NET_JIT_OrcJit_AddLazyCompiledModule_Llvm_NET_BitcodeModule_Llvm_NET_Interop_LLVMOrcSymbolResolverFn_
+  commentId: M:Llvm.NET.JIT.OrcJit.AddLazyCompiledModule(Llvm.NET.BitcodeModule,Llvm.NET.Interop.LLVMOrcSymbolResolverFn)
+  fullName: Llvm.NET.JIT.OrcJit.AddLazyCompiledModule(Llvm.NET.BitcodeModule, Llvm.NET.Interop.LLVMOrcSymbolResolverFn)
+  nameWithType: OrcJit.AddLazyCompiledModule(BitcodeModule, LLVMOrcSymbolResolverFn)
+- uid: Llvm.NET.JIT.OrcJit.AddLazyCompiledModule*
+  name: AddLazyCompiledModule
+  href: api/Llvm.NET.JIT.OrcJit.AddLazyCompiledModule.html
+  commentId: Overload:Llvm.NET.JIT.OrcJit.AddLazyCompiledModule
+  fullName: Llvm.NET.JIT.OrcJit.AddLazyCompiledModule
+  nameWithType: OrcJit.AddLazyCompiledModule
 - uid: Llvm.NET.JIT.OrcJit.AddLazyFunctionGenerator(System.String,Llvm.NET.JIT.LazyFunctionCompiler,System.IntPtr)
   name: AddLazyFunctionGenerator(String, LazyFunctionCompiler, IntPtr)
   href: api/Llvm.NET.JIT.OrcJit.AddLazyFunctionGenerator.html#Llvm_NET_JIT_OrcJit_AddLazyFunctionGenerator_System_String_Llvm_NET_JIT_LazyFunctionCompiler_System_IntPtr_
@@ -34081,24 +34069,6 @@ references:
   commentId: Overload:Llvm.NET.JIT.OrcJit.AddLazyFunctionGenerator
   fullName: Llvm.NET.JIT.OrcJit.AddLazyFunctionGenerator
   nameWithType: OrcJit.AddLazyFunctionGenerator
-- uid: Llvm.NET.JIT.OrcJit.AddModule(Llvm.NET.BitcodeModule)
-  name: AddModule(BitcodeModule)
-  href: api/Llvm.NET.JIT.OrcJit.AddModule.html#Llvm_NET_JIT_OrcJit_AddModule_Llvm_NET_BitcodeModule_
-  commentId: M:Llvm.NET.JIT.OrcJit.AddModule(Llvm.NET.BitcodeModule)
-  fullName: Llvm.NET.JIT.OrcJit.AddModule(Llvm.NET.BitcodeModule)
-  nameWithType: OrcJit.AddModule(BitcodeModule)
-- uid: Llvm.NET.JIT.OrcJit.AddModule(Llvm.NET.BitcodeModule,Llvm.NET.Interop.LLVMOrcSymbolResolverFn)
-  name: AddModule(BitcodeModule, LLVMOrcSymbolResolverFn)
-  href: api/Llvm.NET.JIT.OrcJit.AddModule.html#Llvm_NET_JIT_OrcJit_AddModule_Llvm_NET_BitcodeModule_Llvm_NET_Interop_LLVMOrcSymbolResolverFn_
-  commentId: M:Llvm.NET.JIT.OrcJit.AddModule(Llvm.NET.BitcodeModule,Llvm.NET.Interop.LLVMOrcSymbolResolverFn)
-  fullName: Llvm.NET.JIT.OrcJit.AddModule(Llvm.NET.BitcodeModule, Llvm.NET.Interop.LLVMOrcSymbolResolverFn)
-  nameWithType: OrcJit.AddModule(BitcodeModule, LLVMOrcSymbolResolverFn)
-- uid: Llvm.NET.JIT.OrcJit.AddModule*
-  name: AddModule
-  href: api/Llvm.NET.JIT.OrcJit.AddModule.html
-  commentId: Overload:Llvm.NET.JIT.OrcJit.AddModule
-  fullName: Llvm.NET.JIT.OrcJit.AddModule
-  nameWithType: OrcJit.AddModule
 - uid: Llvm.NET.JIT.OrcJit.DefaultSymbolResolver(System.String,System.IntPtr)
   name: DefaultSymbolResolver(String, IntPtr)
   href: api/Llvm.NET.JIT.OrcJit.DefaultSymbolResolver.html#Llvm_NET_JIT_OrcJit_DefaultSymbolResolver_System_String_System_IntPtr_
@@ -34138,18 +34108,6 @@ references:
   fullName.vb: Llvm.NET.JIT.OrcJit.GetFunctionDelegate(Of T)(System.String)
   nameWithType: OrcJit.GetFunctionDelegate<T>(String)
   nameWithType.vb: OrcJit.GetFunctionDelegate(Of T)(String)
-- uid: Llvm.NET.JIT.OrcJit.LazyAddModule(Llvm.NET.BitcodeModule,Llvm.NET.Interop.LLVMOrcSymbolResolverFn)
-  name: LazyAddModule(BitcodeModule, LLVMOrcSymbolResolverFn)
-  href: api/Llvm.NET.JIT.OrcJit.LazyAddModule.html#Llvm_NET_JIT_OrcJit_LazyAddModule_Llvm_NET_BitcodeModule_Llvm_NET_Interop_LLVMOrcSymbolResolverFn_
-  commentId: M:Llvm.NET.JIT.OrcJit.LazyAddModule(Llvm.NET.BitcodeModule,Llvm.NET.Interop.LLVMOrcSymbolResolverFn)
-  fullName: Llvm.NET.JIT.OrcJit.LazyAddModule(Llvm.NET.BitcodeModule, Llvm.NET.Interop.LLVMOrcSymbolResolverFn)
-  nameWithType: OrcJit.LazyAddModule(BitcodeModule, LLVMOrcSymbolResolverFn)
-- uid: Llvm.NET.JIT.OrcJit.LazyAddModule*
-  name: LazyAddModule
-  href: api/Llvm.NET.JIT.OrcJit.LazyAddModule.html
-  commentId: Overload:Llvm.NET.JIT.OrcJit.LazyAddModule
-  fullName: Llvm.NET.JIT.OrcJit.LazyAddModule
-  nameWithType: OrcJit.LazyAddModule
 - uid: Llvm.NET.JIT.OrcJit.RemoveModule(System.UInt64)
   name: RemoveModule(UInt64)
   href: api/Llvm.NET.JIT.OrcJit.RemoveModule.html#Llvm_NET_JIT_OrcJit_RemoveModule_System_UInt64_
@@ -35966,6 +35924,18 @@ references:
   commentId: T:Llvm.NET.Transforms.PassManager
   fullName: Llvm.NET.Transforms.PassManager
   nameWithType: PassManager
+- uid: Llvm.NET.Transforms.PassManager.Dispose(System.Boolean)
+  name: Dispose(Boolean)
+  href: api/Llvm.NET.Transforms.PassManager.Dispose.html#Llvm_NET_Transforms_PassManager_Dispose_System_Boolean_
+  commentId: M:Llvm.NET.Transforms.PassManager.Dispose(System.Boolean)
+  fullName: Llvm.NET.Transforms.PassManager.Dispose(System.Boolean)
+  nameWithType: PassManager.Dispose(Boolean)
+- uid: Llvm.NET.Transforms.PassManager.Dispose*
+  name: Dispose
+  href: api/Llvm.NET.Transforms.PassManager.Dispose.html
+  commentId: Overload:Llvm.NET.Transforms.PassManager.Dispose
+  fullName: Llvm.NET.Transforms.PassManager.Dispose
+  nameWithType: PassManager.Dispose
 - uid: Llvm.NET.Transforms.Sanitizers
   name: Sanitizers
   href: api/Llvm.NET.Transforms.Sanitizers.html

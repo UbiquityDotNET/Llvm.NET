@@ -59,7 +59,7 @@
                           <a href="http://LLVM.org" title="LLVM.org">LLVM.org</a>
                       </li>
                       <li>
-                          <a href="http://releases.llvm.org/6.0.1/docs/index.html" title="LLVM Docs">LLVM Docs</a>
+                          <a href="http://releases.llvm.org/8.0.0/docs/index.html" title="LLVM Docs">LLVM Docs</a>
                       </li>
                 </ul>    </div>
           </div>
@@ -407,7 +407,7 @@ expression.</p>
     var continueBlock = function.AppendBasicBlock( &quot;ifcont&quot; );
     InstructionBuilder.Branch( condBool, thenBlock, elseBlock );
 
-    // generate then block
+    // generate then block instructions
     InstructionBuilder.PositionAtEnd( thenBlock );
     var thenValue = conditionalExpression.ThenExpression.Accept( this );
     if( thenValue == null )
@@ -419,7 +419,6 @@ expression.</p>
     InstructionBuilder.Branch( continueBlock );
 
     // generate else block
-    function.BasicBlocks.Add( elseBlock );
     InstructionBuilder.PositionAtEnd( elseBlock );
     var elseValue = conditionalExpression.ElseExpression.Accept( this );
     if( elseValue == null )
@@ -431,7 +430,6 @@ expression.</p>
     InstructionBuilder.Branch( continueBlock );
 
     // generate continue block
-    function.BasicBlocks.Add( continueBlock );
     InstructionBuilder.PositionAtEnd( continueBlock );
 
     // since the Alloca is created as a non-opaque pointer it is OK to just use the
@@ -584,8 +582,8 @@ to registers. This is always enabled, so that the proper SSA for is correctly ge
 {
     Module = Context.CreateBitcodeModule( );
     Module.Layout = JIT.TargetMachine.TargetData;
-    FunctionPassManager = new FunctionPassManager( Module )
-                              .AddPromoteMemoryToRegisterPass( );
+    FunctionPassManager = new FunctionPassManager( Module );
+    FunctionPassManager.AddPromoteMemoryToRegisterPass( );
 
     if( !DisableOptimizations )
     {
@@ -728,7 +726,7 @@ without needing to manually deal with PHI nodes or generate SSA form! Now, that&
             <span class="pull-right">
               <a href="#top">Back to top</a>
             </span>
-            Copyright (C) 2017, Dot NET Foundation<br><strong>Build:</strong> 8.0.0-alpha.0.0.ci-BLD.466223925
+            Copyright (C) 2017, Dot NET Foundation<br><strong>Build:</strong> 8.0.0-alpha.0.0.ci-BLD.466460754
             
           </div>
         </div>

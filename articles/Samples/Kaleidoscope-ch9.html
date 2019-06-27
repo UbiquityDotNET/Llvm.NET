@@ -59,7 +59,7 @@
                           <a href="http://LLVM.org" title="LLVM.org">LLVM.org</a>
                       </li>
                       <li>
-                          <a href="http://releases.llvm.org/6.0.1/docs/index.html" title="LLVM Docs">LLVM Docs</a>
+                          <a href="http://releases.llvm.org/8.0.0/docs/index.html" title="LLVM Docs">LLVM Docs</a>
                       </li>
                 </ul>    </div>
           </div>
@@ -202,8 +202,8 @@ needed to create the DICompileUnit for you.</p>
     Module.Layout = TargetMachine.TargetData;
     DoubleType = new DebugBasicType( Context.DoubleType, Module, &quot;double&quot;, DiTypeKind.Float );
 
-    FunctionPassManager = new FunctionPassManager( Module )
-                              .AddPromoteMemoryToRegisterPass( );
+    FunctionPassManager = new FunctionPassManager( Module );
+    FunctionPassManager.AddPromoteMemoryToRegisterPass( );
 
     if( !DisableOptimizations )
     {
@@ -488,7 +488,7 @@ compiler for custom languages, including debug support a lot easier.</p>
             <span class="pull-right">
               <a href="#top">Back to top</a>
             </span>
-            Copyright (C) 2017, Dot NET Foundation<br><strong>Build:</strong> 8.0.0-alpha.0.0.ci-BLD.466223925
+            Copyright (C) 2017, Dot NET Foundation<br><strong>Build:</strong> 8.0.0-alpha.0.0.ci-BLD.466460754
             
           </div>
         </div>

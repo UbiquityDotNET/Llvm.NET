@@ -59,7 +59,7 @@
                           <a href="http://LLVM.org" title="LLVM.org">LLVM.org</a>
                       </li>
                       <li>
-                          <a href="http://releases.llvm.org/6.0.1/docs/index.html" title="LLVM Docs">LLVM Docs</a>
+                          <a href="http://releases.llvm.org/8.0.0/docs/index.html" title="LLVM Docs">LLVM Docs</a>
                       </li>
                 </ul>    </div>
           </div>
@@ -450,16 +450,25 @@ Dispose() method on the JIT engine.</p>
 <pre><code class="lang-csharp" name="Dispose">public void Dispose( )
 {
     JIT.Dispose( );
-    Module.Dispose( );
+    Module?.Dispose( );
+    FunctionPassManager?.Dispose( );
     Context.Dispose( );
 }
 </code></pre><h4 id="generate-method">Generate Method</h4>
 <p>To actually execute the code the generated modules are added to the JIT. If the function is an 
-anonymous top level expression a delegate is retrieved from the JIT to allow calling the compiled
-function directly. The delegate is then called to get the result. Once an anonymous function produces
+anonymous top level expression, it is eagerly compiled and a delegate is retrieved from the JIT
+to allow calling the compiled function directly. The delegate is then called to get the result. Once an anonymous function produces
 a value, it is no longer used so is removed from the JIT and the result value returned. For other functions
 the module is added to the JIT and the function is returned.</p>
-<pre><code class="lang-csharp" name="Dispose">public Value Generate( IAstNode ast, Action&lt;CodeGeneratorException&gt; codeGenerationErroHandler )
+<p>For named function definitions, the module is lazy added to the JIT as it isn&#39;t known if/when the functions
+is called. The JIT engine will compile modules lazy added into native code on first use. (Though if the
+function is never used, then creating the IR module was wasted. (<a href="Kaleidoscope-ch7.1.html">Chapter 7.1</a> has a
+solution for even that extra overhead - truly lazy JIT). Since Kaleidoscope is generally a dynamic language
+it is possible and reasonable for the user to re-define a function (to fix an error, or provide a completely
+different implementation all together). Therefore, any named functions are removed from the JIT, if they
+existed, before adding in the new definition. Otherwise the JIT resolver would still resolve to the previously
+compiled instance.</p>
+<pre><code class="lang-csharp" name="Generate">public Value Generate( IAstNode ast, Action&lt;CodeGeneratorException&gt; codeGenerationErroHandler )
 {
     try
     {
@@ -472,30 +481,37 @@ the module is added to the JIT and the function is returned.</p>
 
         InitializeModuleAndPassManager( );
 
-        // Destroy any previously generated module for this function.
-        // This allows re-definition as the new module will provide the
-        // implementation. This is needed, otherwise both the MCJIT
-        // and OrcJit engines will resolve to the original module, despite
-        // claims to the contrary in the official tutorial text. (Though,
-        // to be fair it may have been true in the original JIT and might
-        // still be true for the interpreter)
-        if( FunctionModuleMap.Remove( definition.Name, out ulong handle ) )
-        {
-            JIT.RemoveModule( handle );
-        }
-
         var function = ( IrFunction )definition.Accept( this );
-        ulong jitHandle = JIT.AddModule( function.ParentModule );
+
         if( definition.IsAnonymous )
         {
-            var nativeFunc = JIT.GetFunctionDelegate&lt;KaleidoscopeJIT.CallbackHandler0&gt;( function.Name );
+            // eagerly compile modules for anonymous functions as calling the function is the guaranteed next step
+            ulong jitHandle = JIT.AddEagerlyCompiledModule( Module );
+            var nativeFunc = JIT.GetFunctionDelegate&lt;KaleidoscopeJIT.CallbackHandler0&gt;( definition.Name );
             var retVal = Context.CreateConstant( nativeFunc( ) );
             JIT.RemoveModule( jitHandle );
             return retVal;
         }
+        else
+        {
+            // Destroy any previously generated module for this function.
+            // This allows re-definition as the new module will provide the
+            // implementation. This is needed, otherwise both the MCJIT
+            // and OrcJit engines will resolve to the original module, despite
+            // claims to the contrary in the official tutorial text. (Though,
+            // to be fair it may have been true in the original JIT and might
+            // still be true for the interpreter)
+            if( FunctionModuleMap.Remove( definition.Name, out ulong handle ) )
+            {
+                JIT.RemoveModule( handle );
+            }
 
-        FunctionModuleMap.Add( function.Name, jitHandle );
-        return function;
+            // Unknown if any future input will call the function so add it for lazy compilation.
+            // Native code is generated for the module automatically only when required.
+            ulong jitHandle = JIT.AddLazyCompiledModule( Module );
+            FunctionModuleMap.Add( definition.Name, jitHandle );
+            return function;
+        }
     }
     catch( CodeGeneratorException ex ) when( codeGenerationErroHandler != null )
     {
@@ -621,7 +637,7 @@ support for .NET. Very cool, indeed!</p>
             <span class="pull-right">
               <a href="#top">Back to top</a>
             </span>
-            Copyright (C) 2017, Dot NET Foundation<br><strong>Build:</strong> 8.0.0-alpha.0.0.ci-BLD.466223925
+            Copyright (C) 2017, Dot NET Foundation<br><strong>Build:</strong> 8.0.0-alpha.0.0.ci-BLD.466460754
             
           </div>
         </div>
