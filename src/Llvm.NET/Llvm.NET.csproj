@@ -16,6 +16,7 @@
         <Description>.NET Bindings for LLVM</Description>
         <PackageTags>LLVM,Compiler,JIT,Ubiquity.NET</PackageTags>
         <NoPackageAnalysis>true</NoPackageAnalysis>
+        <PackageProjectUrl>https://github.com/UbiquityDotNET/Llvm.Net</PackageProjectUrl>
     </PropertyGroup>
     <ItemGroup>
         <!--Keep docfx generated OBJ folder junk from cluttering solution view-->
