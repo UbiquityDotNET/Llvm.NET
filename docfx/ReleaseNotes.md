@@ -54,7 +54,10 @@ This is a Major release and, as such, can, and does, have breaking changes inclu
 6. PassManager, ModulePassManager, and FunctionPassManager are IDisposable to help apps
    ensure that a function pass manager, which is bound to a module, is destroyed before
    the module it is bound to.
-7. Shared references for BitC
+7. BitcodeModule.MakeShared and shared refs of modules is removed. (This was created for
+   OrcJIT use of shared_ptr under the hood, which is no longer used. OrcJit now uses the
+   same ownership transfer model as the legacy engines. E.g. the ownership for the module
+   is transferred to the JIT engine)
 7. BitCodeModule is now Disposable backed by a safe handle, this allows for detaching and
    invalidating the underlying LLVMModuleRef when the module is provided to the JIT 
 

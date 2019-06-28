@@ -25,6 +25,7 @@
       {
         "files": [ "toc.yml",
                    "index.md",
+                   "ReleaseNotes.md",
                    "api/**.md",
                    "api/**.yml",
                    "articles/**.md",
@@ -58,10 +59,10 @@
     "globalMetadata":
     {
       "_appTitle" : "Llvm.NET",
-      "_appFooter" : "Copyright (C) 2017, Dot NET Foundation",
+      "_appFooter" : "Copyright (C) 2017-2019, Ubiquity.NET Contributors",
       "_appLogoPath": "DragonSharp48x48.png",
       "_disableBreadcrumb" : true,
-      "llvmVersion": "6.0.1",
+      "llvmVersion": "8.0.0",
       "assemblies": ["Llvm.NET", "Llvm.NET.Interop"],
       "_gitContribute": {
           "repo": "https://github.com/UbiquityDotNET/Llvm.NET",
