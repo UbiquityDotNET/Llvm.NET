@@ -625,4 +625,9 @@
         <param name="metadataHandle">TODO: Provide details of parameter metadataHandle</param>
         <returns>TODO: Document return value</returns>
     </Function>
+    <Function name="LibLLVMDIVariableGetLine">
+        <summary>TODO: Provide summary for Function LibLLVMDIVariableGetLine</summary>
+        <param name="_0">TODO: Provide details of parameter _0</param>
+        <returns>TODO: Document return value</returns>
+    </Function>
 </LibLlvmAPI>

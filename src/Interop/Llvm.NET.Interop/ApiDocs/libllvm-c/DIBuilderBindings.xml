@@ -169,4 +169,32 @@
         <param name="DebugInfoForProfiling">Value to indicate if the debug info includes profiling</param>
         <returns>Handle for a new compile unit</returns>
     </Function>
+    <Function name="LibLLVMDIBuilderCreateAutoVariable">
+        <summary>TODO: Provide summary for Function LibLLVMDIBuilderCreateAutoVariable</summary>
+        <param name="Builder">TODO: Provide details of parameter Builder</param>
+        <param name="Scope">TODO: Provide details of parameter Scope</param>
+        <param name="Name">TODO: Provide details of parameter Name</param>
+        <param name="NameLen">TODO: Provide details of parameter NameLen</param>
+        <param name="File">TODO: Provide details of parameter File</param>
+        <param name="LineNo">TODO: Provide details of parameter LineNo</param>
+        <param name="Ty">TODO: Provide details of parameter Ty</param>
+        <param name="AlwaysPreserve">TODO: Provide details of parameter AlwaysPreserve</param>
+        <param name="Flags">TODO: Provide details of parameter Flags</param>
+        <param name="AlignInBits">TODO: Provide details of parameter AlignInBits</param>
+        <returns>TODO: Document return value</returns>
+    </Function>
+    <Function name="LibLLVMDIBuilderCreateParameterVariable">
+        <summary>TODO: Provide summary for Function LibLLVMDIBuilderCreateParameterVariable</summary>
+        <param name="Builder">TODO: Provide details of parameter Builder</param>
+        <param name="Scope">TODO: Provide details of parameter Scope</param>
+        <param name="Name">TODO: Provide details of parameter Name</param>
+        <param name="NameLen">TODO: Provide details of parameter NameLen</param>
+        <param name="ArgNo">TODO: Provide details of parameter ArgNo</param>
+        <param name="File">TODO: Provide details of parameter File</param>
+        <param name="LineNo">TODO: Provide details of parameter LineNo</param>
+        <param name="Ty">TODO: Provide details of parameter Ty</param>
+        <param name="AlwaysPreserve">TODO: Provide details of parameter AlwaysPreserve</param>
+        <param name="Flags">TODO: Provide details of parameter Flags</param>
+        <returns>TODO: Document return value</returns>
+    </Function>
 </LibLlvmAPI>

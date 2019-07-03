@@ -35,6 +35,31 @@ LLVMMetadataRef LibLLVMDIBuilderCreateCompileUnit(
     LLVMBool SplitDebugInlining,
     LLVMBool DebugInfoForProfiling );
 
+/* Same as LLVMDIBuilderCreateAutoVariable except this correctly allows File == nullptr*/
+LLVMMetadataRef LibLLVMDIBuilderCreateAutoVariable(
+    LLVMDIBuilderRef Builder,
+    LLVMMetadataRef Scope,
+    const char* Name,
+    size_t NameLen,
+    LLVMMetadataRef File,
+    unsigned LineNo,
+    LLVMMetadataRef Ty,
+    LLVMBool AlwaysPreserve,
+    LLVMDIFlags Flags,
+    uint32_t AlignInBits );
+
+/* Same as LLVMDIBuilderCreateParameterVariable except this correctly allows File == nullptr*/
+LLVMMetadataRef LibLLVMDIBuilderCreateParameterVariable(
+    LLVMDIBuilderRef Builder,
+    LLVMMetadataRef Scope,
+    const char* Name,
+    size_t NameLen,
+    unsigned ArgNo,
+    LLVMMetadataRef File,
+    unsigned LineNo,
+    LLVMMetadataRef Ty,
+    LLVMBool AlwaysPreserve,
+    LLVMDIFlags Flags );
 
 #ifdef __cplusplus
 }

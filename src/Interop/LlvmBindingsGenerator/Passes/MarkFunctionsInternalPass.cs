@@ -7,6 +7,7 @@
 using System.Collections.Generic;
 using CppSharp.AST;
 using CppSharp.Passes;
+using LlvmBindingsGenerator.Configuration;
 
 namespace LlvmBindingsGenerator.Passes
 {
@@ -19,7 +20,7 @@ namespace LlvmBindingsGenerator.Passes
     internal class MarkFunctionsInternalPass
         : TranslationUnitPass
     {
-        public MarkFunctionsInternalPass( IDictionary<string, bool> internalFunctions )
+        public MarkFunctionsInternalPass( IGeneratorConfig config )
         {
             VisitOptions.VisitClassBases = false;
             VisitOptions.VisitClassFields = false;
@@ -36,7 +37,7 @@ namespace LlvmBindingsGenerator.Passes
             VisitOptions.VisitPropertyAccessors = false;
             VisitOptions.VisitTemplateArguments = false;
 
-            InternalFunctions = internalFunctions;
+            Configuration = config;
         }
 
         public override bool VisitASTContext( ASTContext context )
@@ -61,9 +62,9 @@ namespace LlvmBindingsGenerator.Passes
                 function.Ignore = true;
             }
 
-            if( InternalFunctions.TryGetValue( function.Name, out bool isIgnored ) )
+            if( Configuration.FunctionBindings.TryGetValue( function.Name, out YamlFunctionBinding binding ) && !binding.IsProjected )
             {
-                if( isIgnored )
+                if( !binding.IsExported )
                 {
                     function.Ignore = true;
                 }
@@ -76,6 +77,6 @@ namespace LlvmBindingsGenerator.Passes
             return false;
         }
 
-        private static IDictionary<string, bool> InternalFunctions;
+        private readonly IGeneratorConfig Configuration;
     }
 }

@@ -200,8 +200,7 @@ namespace Llvm.NET.DebugInfo
         public bool TryGetExtendedPropertyValue<TProperty>( string id, out TProperty value )
         {
             return PropertyContainer.TryGetExtendedPropertyValue( id, out value )
-                ? true
-                : NativeType.TryGetExtendedPropertyValue( id, out value );
+                || NativeType.TryGetExtendedPropertyValue( id, out value );
         }
 
         /// <inheritdoc/>

@@ -10,6 +10,7 @@ using System.Linq;
 using CppSharp;
 using CppSharp.Generators;
 using CppSharp.Passes;
+using LlvmBindingsGenerator.Configuration;
 using LlvmBindingsGenerator.Templates;
 
 using static LlvmBindingsGenerator.EnumExtensions;
@@ -24,9 +25,9 @@ namespace LlvmBindingsGenerator
     internal class LibLlvmTemplateFactory
         : ICodeGeneratorTemplateFactory
     {
-        public LibLlvmTemplateFactory( HandleTemplateMap map )
+        public LibLlvmTemplateFactory( IGeneratorConfig config )
         {
-            HandleToTemplateMap = map;
+            HandleToTemplateMap = config.BuildTemplateMap();
         }
 
         public void SetupPasses( BindingContext bindingContext )

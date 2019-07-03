@@ -260,13 +260,19 @@ namespace Llvm.NET
             }
         }
 
-        /*/// <summary>Gets a value indicating whether this module is shared with a JIT engine</summary>
-        //public bool IsShared => SharedModuleRef != null;
-        */
+        /// <summary>Gets or sets the module level inline assembly</summary>
+        public string ModuleInlineAsm
+        {
+            get => LLVMGetModuleInlineAsm( ModuleHandle, out size_t _ );
+            set => LLVMSetModuleInlineAsm2( ModuleHandle, value, value.Length );
+        }
 
-        /* TODO: Module level inline asm accessors
-            string ModuleInlineAsm { get; set; }
-        */
+        /// <summary>Appends inline assembly to the module's inline assembly</summary>
+        /// <param name="asm">assembly text</param>
+        public void AppendInlineAsm(string asm)
+        {
+            LLVMAppendModuleInlineAsm( ModuleHandle, asm, asm.Length );
+        }
 
         /// <inheritdoc/>
         public void Dispose( )

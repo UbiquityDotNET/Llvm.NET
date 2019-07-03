@@ -12,6 +12,7 @@ namespace LlvmBindingsGenerator.Templates
 {
     internal class HandleTemplateMap
         : KeyedCollection<string, IHandleCodeTemplate>
+        , IReadOnlyDictionary<string, IHandleCodeTemplate>
     {
         public bool TryGetValue( string name, out IHandleCodeTemplate item )
         {
@@ -26,10 +27,22 @@ namespace LlvmBindingsGenerator.Templates
         }
 
         public IEnumerable<string> DisposeFunctionNames
-            => from item in this
+            => from item in Items
                let ght = item as GlobalHandleTemplate
                where ght != null && !string.IsNullOrWhiteSpace( ght.HandleDisposeFunction )
                select ght.HandleDisposeFunction;
+
+        public IEnumerable<string> Keys => Items.Select( GetKeyForItem );
+
+        public IEnumerable<IHandleCodeTemplate> Values => Items;
+
+        public bool ContainsKey( string key ) => TryGetValue( key, out IHandleCodeTemplate _ );
+
+        IEnumerator<KeyValuePair<string, IHandleCodeTemplate>> IEnumerable<KeyValuePair<string, IHandleCodeTemplate>>.GetEnumerator( )
+        {
+            return Items.Select( i => new KeyValuePair<string, IHandleCodeTemplate>( GetKeyForItem( i ), i ) )
+                        .GetEnumerator( );
+        }
 
         protected override string GetKeyForItem( IHandleCodeTemplate item ) => item.HandleName;
     }

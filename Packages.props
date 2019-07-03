@@ -21,5 +21,6 @@
         <PackageReference Update="docfx.console" Version="2.42.2" />
         <PackageReference Update="memberpage" Version="2.42.2" />
         <PackageReference Update="msdn.4.5.2" Version="0.1.0-alpha-1611021200" />
+        <PackageReference Update="YamlDotNet" Version="6.1.1" />
     </ItemGroup>
 </Project>

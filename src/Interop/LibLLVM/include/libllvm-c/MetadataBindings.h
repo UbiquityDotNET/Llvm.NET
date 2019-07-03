@@ -94,6 +94,7 @@ extern "C" {
 
     LLVMMetadataRef LibLLVMDIGlobalVarExpGetVariable( LLVMMetadataRef /*DIGlobalVariableExpression*/ metadataHandle );
 
+    uint32_t LibLLVMDIVariableGetLine( LLVMMetadataRef /*DIVariable*/ );
 #ifdef __cplusplus
 } // extern "C"
 #endif

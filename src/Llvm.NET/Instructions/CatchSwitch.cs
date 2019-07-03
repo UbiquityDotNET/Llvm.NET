@@ -17,9 +17,12 @@ namespace Llvm.NET.Instructions
     public class CatchSwitch
         : Instruction
     {
-        /// <summary>Gets the Parent pad for this <see cref="CatchSwitch"/></summary>
-        public Value ParentPad => GetOperand<Value>( 0 );
-        /* TODO: ParentPad { set; } */
+        /// <summary>Gets or sets the Parent pad for this <see cref="CatchSwitch"/></summary>
+        public Value ParentPad
+        {
+            get => GetOperand<Value>( 0 );
+            set => SetOperand( 0, value );
+        }
 
         /* TODO: Enable UnwindDestination once the non-operand properties are enabled
             BasicBlock UnwindDestination

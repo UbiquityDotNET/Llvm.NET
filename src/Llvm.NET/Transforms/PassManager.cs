@@ -6,8 +6,6 @@
 
 using Llvm.NET.Interop;
 
-/* TODO: implement PassManagerBuilder support... */
-
 namespace Llvm.NET.Transforms
 {
     /// <summary>Common base class for pass managers</summary>

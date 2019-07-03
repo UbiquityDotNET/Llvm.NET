@@ -27,7 +27,7 @@ namespace LlvmBindingsGenerator
         /// <remarks>
         /// The <paramref name="llvmRoot"/> only needs to have the files required to parse the LLVM-C API
         /// </remarks>
-        public LibLlvmGeneratorLibrary( GeneratorConfig configuration, string llvmRoot, string extensionsRoot, string outputPath )
+        public LibLlvmGeneratorLibrary( IGeneratorConfig configuration, string llvmRoot, string extensionsRoot, string outputPath )
         {
             Configuration = configuration;
             CommonInclude = Path.Combine( llvmRoot, "include" );
@@ -66,15 +66,15 @@ namespace LlvmBindingsGenerator
             Driver.AddTranslationUnitPass( new AddTypeMapsPass( ) );
             Driver.AddTranslationUnitPass( new PODToValueTypePass( ) );
             Driver.AddTranslationUnitPass( new CheckFlagEnumsPass( ) );
-            Driver.AddTranslationUnitPass( new MarkFunctionsInternalPass( Configuration.InternalFunctions ) );
+            Driver.AddTranslationUnitPass( new MarkFunctionsInternalPass( Configuration ) );
 
             // General transformations
             Driver.AddTranslationUnitPass( new FixInconsistentLLVMHandleDeclarations( ) );
-            Driver.AddTranslationUnitPass( new ConvertLLVMBoolPass( Configuration.StatusReturningFunctions ) );
-            Driver.AddTranslationUnitPass( new DeAnonymizeEnumsPass( Configuration.AnonymousEnumNames ) );
-            Driver.AddTranslationUnitPass( new MapHandleAliasTypesPass( Configuration.AliasReturningFunctions ) );
-            Driver.AddTranslationUnitPass( new MarkDeprecatedFunctionsAsObsoletePass( Configuration.DeprecatedFunctionToMessageMap, true ) );
-            Driver.AddTranslationUnitPass( new AddMarshalingAttributesPass( new MarshalingInfoMap( Driver.Context.ASTContext, Configuration.MarshalingInfo ) ) );
+            Driver.AddTranslationUnitPass( new ConvertLLVMBoolPass( Configuration ) );
+            Driver.AddTranslationUnitPass( new DeAnonymizeEnumsPass( Configuration.AnonymousEnums ) );
+            Driver.AddTranslationUnitPass( new MapHandleAliasTypesPass( Configuration ) );
+            Driver.AddTranslationUnitPass( new MarkDeprecatedFunctionsAsObsoletePass( Configuration, true ) );
+            Driver.AddTranslationUnitPass( new AddMarshalingAttributesPass( Configuration ) );
 
             // validations apply after all transforms
             Driver.AddTranslationUnitPass( new ValidateMarshalingInfoPass( ) );
@@ -94,12 +94,12 @@ namespace LlvmBindingsGenerator
 
         public IEnumerable<ICodeGenerator> CreateGenerators( )
         {
-            var templateFactory = new LibLlvmTemplateFactory( Configuration.HandleToTemplateMap );
+            var templateFactory = new LibLlvmTemplateFactory( Configuration );
             return templateFactory.CreateTemplates( Driver.Context );
         }
 
         private IDriver Driver;
-        private readonly GeneratorConfig Configuration;
+        private readonly IGeneratorConfig Configuration;
         private readonly string CommonInclude;
         private readonly string ArchInclude;
         private readonly string ExtensionsInclude;

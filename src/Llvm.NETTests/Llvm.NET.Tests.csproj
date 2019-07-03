@@ -1,5 +1,5 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
-  <Sdk Name="Microsoft.Build.CentralPackageVersions"/>
+  <Sdk Name="Microsoft.Build.CentralPackageVersions" />
   <PropertyGroup>
       <TargetFrameworks>netcoreapp2.1;net47</TargetFrameworks>
       <IsPackable>false</IsPackable>
@@ -8,6 +8,7 @@
   <ItemGroup>
     <ProjectReference Include="$(BuildRootDir)src\Llvm.NET\Llvm.NET.csproj">
         <Name>Llvm.NET</Name>
+        <Private>true</Private>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

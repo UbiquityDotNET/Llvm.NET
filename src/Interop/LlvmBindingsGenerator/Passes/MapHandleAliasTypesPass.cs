@@ -9,13 +9,14 @@ using System.Linq;
 using CppSharp;
 using CppSharp.AST;
 using CppSharp.Passes;
+using LlvmBindingsGenerator.Configuration;
 
 namespace LlvmBindingsGenerator.Passes
 {
     internal class MapHandleAliasTypesPass
         : TranslationUnitPass
     {
-        public MapHandleAliasTypesPass( SortedSet<string> aliasReturningFunctions )
+        public MapHandleAliasTypesPass( IGeneratorConfig config )
         {
             VisitOptions.VisitClassBases = false;
             VisitOptions.VisitClassFields = false;
@@ -33,7 +34,11 @@ namespace LlvmBindingsGenerator.Passes
             VisitOptions.VisitPropertyAccessors = false;
             VisitOptions.VisitTemplateArguments = false;
 
-            AliasReturningFunctions = aliasReturningFunctions;
+            var aliasFuncs = from f in config.FunctionBindings.Values
+                             where f.ReturnTransform != null && f.ReturnTransform.IsAlias && f.IsProjected
+                             select f.Name;
+
+            AliasReturningFunctions = new SortedSet<string>( aliasFuncs );
         }
 
         public override bool VisitASTContext( ASTContext context )

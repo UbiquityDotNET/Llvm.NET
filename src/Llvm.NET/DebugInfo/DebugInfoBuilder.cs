@@ -357,17 +357,17 @@ namespace Llvm.NET.DebugInfo
             scope.ValidateNotNull( nameof( scope ) );
             type.ValidateNotNull( nameof( type ) );
 
-            var handle = LLVMDIBuilderCreateAutoVariable( BuilderHandle
-                                                        , scope.MetadataHandle
-                                                        , name
-                                                        , name.Length
-                                                        , file?.MetadataHandle ?? default
-                                                        , line
-                                                        , type.MetadataHandle
-                                                        , alwaysPreserve
-                                                        , ( LLVMDIFlags )debugFlags
-                                                        , alignInBits
-                                                        );
+            var handle = LibLLVMDIBuilderCreateAutoVariable( BuilderHandle
+                                                           , scope.MetadataHandle
+                                                           , name
+                                                           , name.Length
+                                                           , file?.MetadataHandle ?? default
+                                                           , line
+                                                           , type.MetadataHandle
+                                                           , alwaysPreserve
+                                                           , ( LLVMDIFlags )debugFlags
+                                                           , alignInBits
+                                                           );
             return MDNode.FromHandle<DILocalVariable>( handle );
         }
 
@@ -395,17 +395,17 @@ namespace Llvm.NET.DebugInfo
             scope.ValidateNotNull( nameof( scope ) );
             type.ValidateNotNull( nameof( type ) );
 
-            var handle = LLVMDIBuilderCreateParameterVariable( BuilderHandle
-                                                             , scope.MetadataHandle
-                                                             , name
-                                                             , name.Length
-                                                             , argNo
-                                                             , file?.MetadataHandle ?? default
-                                                             , line
-                                                             , type.MetadataHandle
-                                                             , alwaysPreserve
-                                                             , ( LLVMDIFlags )debugFlags
-                                                             );
+            var handle = LibLLVMDIBuilderCreateParameterVariable( BuilderHandle
+                                                                , scope.MetadataHandle
+                                                                , name
+                                                                , name.Length
+                                                                , argNo
+                                                                , file?.MetadataHandle ?? default
+                                                                , line
+                                                                , type.MetadataHandle
+                                                                , alwaysPreserve
+                                                                , ( LLVMDIFlags )debugFlags
+                                                                );
             return MDNode.FromHandle<DILocalVariable>( handle );
         }
 

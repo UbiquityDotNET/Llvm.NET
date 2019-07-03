@@ -20,10 +20,12 @@ namespace Llvm.NET.Instructions
     public class CatchPad
         : FuncletPad
     {
-        /// <summary>Gets the <seealso cref="Llvm.NET.Instructions.CatchSwitch"/> for this pad</summary>
-        public CatchSwitch CatchSwitch => GetOperand<CatchSwitch>( -1 );
-
-        /* TODO: Switch {set;} */
+        /// <summary>Gets or sets the <seealso cref="Llvm.NET.Instructions.CatchSwitch"/> for this pad</summary>
+        public CatchSwitch CatchSwitch
+        {
+            get => GetOperand<CatchSwitch>( -1 );
+            set => SetOperand( -1, value );
+        }
 
         internal CatchPad( LLVMValueRef valueRef )
             : base( valueRef )
