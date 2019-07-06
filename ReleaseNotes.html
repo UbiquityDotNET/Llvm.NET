@@ -136,7 +136,12 @@ OrcJIT use of shared_ptr under the hood, which is no longer used. OrcJit now use
 same ownership transfer model as the legacy engines. E.g. the ownership for the module
 is transferred to the JIT engine)</li>
 <li>BitCodeModule is now Disposable backed by a safe handle, this allows for detaching and
-invalidating the underlying LLVMModuleRef when the module is provided to the JIT </li>
+invalidating the underlying LLVMModuleRef when the module is provided to the JIT</li>
+<li>Renamed Function class to IrFunction to avoid potential collision with common language
+keywords</li>
+<li>Renamed Select to SelectInstruction to avoid potential collision with language keyword
+and make consistent with ReturnInstruction, ResumeInstruction and other similar cases
+for instructions.</li>
 </ol>
 </article>
           </div>
@@ -160,7 +165,7 @@ invalidating the underlying LLVMModuleRef when the module is provided to the JIT
             <span class="pull-right">
               <a href="#top">Back to top</a>
             </span>
-            Copyright (C) 2017-2019, Ubiquity.NET Contributors<br><strong>Build:</strong> 8.0.0-alpha.0.0.ci-BLD.466518031
+            Copyright (C) 2017-2019, Ubiquity.NET Contributors<br><strong>Build:</strong> 8.0.0-alpha.0.0.ci-BLD.467039418
             
           </div>
         </div>

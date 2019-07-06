@@ -139,6 +139,18 @@ references:
   commentId: Overload:Llvm.NET.BitcodeModule.Aliases
   fullName: Llvm.NET.BitcodeModule.Aliases
   nameWithType: BitcodeModule.Aliases
+- uid: Llvm.NET.BitcodeModule.AppendInlineAsm(System.String)
+  name: AppendInlineAsm(String)
+  href: api/Llvm.NET.BitcodeModule.AppendInlineAsm.html#Llvm_NET_BitcodeModule_AppendInlineAsm_System_String_
+  commentId: M:Llvm.NET.BitcodeModule.AppendInlineAsm(System.String)
+  fullName: Llvm.NET.BitcodeModule.AppendInlineAsm(System.String)
+  nameWithType: BitcodeModule.AppendInlineAsm(String)
+- uid: Llvm.NET.BitcodeModule.AppendInlineAsm*
+  name: AppendInlineAsm
+  href: api/Llvm.NET.BitcodeModule.AppendInlineAsm.html
+  commentId: Overload:Llvm.NET.BitcodeModule.AppendInlineAsm
+  fullName: Llvm.NET.BitcodeModule.AppendInlineAsm
+  nameWithType: BitcodeModule.AppendInlineAsm
 - uid: Llvm.NET.BitcodeModule.Clone
   name: Clone()
   href: api/Llvm.NET.BitcodeModule.Clone.html#Llvm_NET_BitcodeModule_Clone
@@ -472,6 +484,18 @@ references:
   commentId: Overload:Llvm.NET.BitcodeModule.ModuleFlags
   fullName: Llvm.NET.BitcodeModule.ModuleFlags
   nameWithType: BitcodeModule.ModuleFlags
+- uid: Llvm.NET.BitcodeModule.ModuleInlineAsm
+  name: ModuleInlineAsm
+  href: api/Llvm.NET.BitcodeModule.ModuleInlineAsm.html#Llvm_NET_BitcodeModule_ModuleInlineAsm
+  commentId: P:Llvm.NET.BitcodeModule.ModuleInlineAsm
+  fullName: Llvm.NET.BitcodeModule.ModuleInlineAsm
+  nameWithType: BitcodeModule.ModuleInlineAsm
+- uid: Llvm.NET.BitcodeModule.ModuleInlineAsm*
+  name: ModuleInlineAsm
+  href: api/Llvm.NET.BitcodeModule.ModuleInlineAsm.html
+  commentId: Overload:Llvm.NET.BitcodeModule.ModuleInlineAsm
+  fullName: Llvm.NET.BitcodeModule.ModuleInlineAsm
+  nameWithType: BitcodeModule.ModuleInlineAsm
 - uid: Llvm.NET.BitcodeModule.Name
   name: Name
   href: api/Llvm.NET.BitcodeModule.Name.html#Llvm_NET_BitcodeModule_Name
@@ -5042,6 +5066,18 @@ references:
   commentId: Overload:Llvm.NET.DebugInfo.DIVariable.File
   fullName: Llvm.NET.DebugInfo.DIVariable.File
   nameWithType: DIVariable.File
+- uid: Llvm.NET.DebugInfo.DIVariable.Line
+  name: Line
+  href: api/Llvm.NET.DebugInfo.DIVariable.Line.html#Llvm_NET_DebugInfo_DIVariable_Line
+  commentId: P:Llvm.NET.DebugInfo.DIVariable.Line
+  fullName: Llvm.NET.DebugInfo.DIVariable.Line
+  nameWithType: DIVariable.Line
+- uid: Llvm.NET.DebugInfo.DIVariable.Line*
+  name: Line
+  href: api/Llvm.NET.DebugInfo.DIVariable.Line.html
+  commentId: Overload:Llvm.NET.DebugInfo.DIVariable.Line
+  fullName: Llvm.NET.DebugInfo.DIVariable.Line
+  nameWithType: DIVariable.Line
 - uid: Llvm.NET.DebugInfo.DIVariable.Name
   name: Name
   href: api/Llvm.NET.DebugInfo.DIVariable.Name.html#Llvm_NET_DebugInfo_DIVariable_Name
@@ -7037,6 +7073,105 @@ references:
   fullName.vb: Llvm.NET.DebugInfo.TupleTypedArrayWrapper(Of T).Tuple
   nameWithType: TupleTypedArrayWrapper<T>.Tuple
   nameWithType.vb: TupleTypedArrayWrapper(Of T).Tuple
+- uid: Llvm.NET.Disassembler
+  name: Disassembler
+  href: api/Llvm.NET.Disassembler.html
+  commentId: T:Llvm.NET.Disassembler
+  fullName: Llvm.NET.Disassembler
+  nameWithType: Disassembler
+- uid: Llvm.NET.Disassembler.#ctor(Llvm.NET.Triple,System.IntPtr,System.Int32,Llvm.NET.Interop.LLVMOpInfoCallback,Llvm.NET.Interop.LLVMSymbolLookupCallback)
+  name: Disassembler(Triple, IntPtr, Int32, LLVMOpInfoCallback, LLVMSymbolLookupCallback)
+  href: api/Llvm.NET.Disassembler.-ctor.html#Llvm_NET_Disassembler__ctor_Llvm_NET_Triple_System_IntPtr_System_Int32_Llvm_NET_Interop_LLVMOpInfoCallback_Llvm_NET_Interop_LLVMSymbolLookupCallback_
+  commentId: M:Llvm.NET.Disassembler.#ctor(Llvm.NET.Triple,System.IntPtr,System.Int32,Llvm.NET.Interop.LLVMOpInfoCallback,Llvm.NET.Interop.LLVMSymbolLookupCallback)
+  fullName: Llvm.NET.Disassembler.Disassembler(Llvm.NET.Triple, System.IntPtr, System.Int32, Llvm.NET.Interop.LLVMOpInfoCallback, Llvm.NET.Interop.LLVMSymbolLookupCallback)
+  nameWithType: Disassembler.Disassembler(Triple, IntPtr, Int32, LLVMOpInfoCallback, LLVMSymbolLookupCallback)
+- uid: Llvm.NET.Disassembler.#ctor(Llvm.NET.Triple,System.String,System.IntPtr,System.Int32,Llvm.NET.Interop.LLVMOpInfoCallback,Llvm.NET.Interop.LLVMSymbolLookupCallback)
+  name: Disassembler(Triple, String, IntPtr, Int32, LLVMOpInfoCallback, LLVMSymbolLookupCallback)
+  href: api/Llvm.NET.Disassembler.-ctor.html#Llvm_NET_Disassembler__ctor_Llvm_NET_Triple_System_String_System_IntPtr_System_Int32_Llvm_NET_Interop_LLVMOpInfoCallback_Llvm_NET_Interop_LLVMSymbolLookupCallback_
+  commentId: M:Llvm.NET.Disassembler.#ctor(Llvm.NET.Triple,System.String,System.IntPtr,System.Int32,Llvm.NET.Interop.LLVMOpInfoCallback,Llvm.NET.Interop.LLVMSymbolLookupCallback)
+  fullName: Llvm.NET.Disassembler.Disassembler(Llvm.NET.Triple, System.String, System.IntPtr, System.Int32, Llvm.NET.Interop.LLVMOpInfoCallback, Llvm.NET.Interop.LLVMSymbolLookupCallback)
+  nameWithType: Disassembler.Disassembler(Triple, String, IntPtr, Int32, LLVMOpInfoCallback, LLVMSymbolLookupCallback)
+- uid: Llvm.NET.Disassembler.#ctor(Llvm.NET.Triple,System.String,System.String,System.IntPtr,System.Int32,Llvm.NET.Interop.LLVMOpInfoCallback,Llvm.NET.Interop.LLVMSymbolLookupCallback)
+  name: Disassembler(Triple, String, String, IntPtr, Int32, LLVMOpInfoCallback, LLVMSymbolLookupCallback)
+  href: api/Llvm.NET.Disassembler.-ctor.html#Llvm_NET_Disassembler__ctor_Llvm_NET_Triple_System_String_System_String_System_IntPtr_System_Int32_Llvm_NET_Interop_LLVMOpInfoCallback_Llvm_NET_Interop_LLVMSymbolLookupCallback_
+  commentId: M:Llvm.NET.Disassembler.#ctor(Llvm.NET.Triple,System.String,System.String,System.IntPtr,System.Int32,Llvm.NET.Interop.LLVMOpInfoCallback,Llvm.NET.Interop.LLVMSymbolLookupCallback)
+  fullName: Llvm.NET.Disassembler.Disassembler(Llvm.NET.Triple, System.String, System.String, System.IntPtr, System.Int32, Llvm.NET.Interop.LLVMOpInfoCallback, Llvm.NET.Interop.LLVMSymbolLookupCallback)
+  nameWithType: Disassembler.Disassembler(Triple, String, String, IntPtr, Int32, LLVMOpInfoCallback, LLVMSymbolLookupCallback)
+- uid: Llvm.NET.Disassembler.#ctor*
+  name: Disassembler
+  href: api/Llvm.NET.Disassembler.-ctor.html
+  commentId: Overload:Llvm.NET.Disassembler.#ctor
+  fullName: Llvm.NET.Disassembler.Disassembler
+  nameWithType: Disassembler.Disassembler
+- uid: Llvm.NET.Disassembler.Disassemble(System.ReadOnlySpan{System.Byte},System.UInt64,System.Int32)
+  name: Disassemble(ReadOnlySpan<Byte>, UInt64, Int32)
+  href: api/Llvm.NET.Disassembler.Disassemble.html#Llvm_NET_Disassembler_Disassemble_System_ReadOnlySpan_System_Byte__System_UInt64_System_Int32_
+  commentId: M:Llvm.NET.Disassembler.Disassemble(System.ReadOnlySpan{System.Byte},System.UInt64,System.Int32)
+  name.vb: Disassemble(ReadOnlySpan(Of Byte), UInt64, Int32)
+  fullName: Llvm.NET.Disassembler.Disassemble(System.ReadOnlySpan<System.Byte>, System.UInt64, System.Int32)
+  fullName.vb: Llvm.NET.Disassembler.Disassemble(System.ReadOnlySpan(Of System.Byte), System.UInt64, System.Int32)
+  nameWithType: Disassembler.Disassemble(ReadOnlySpan<Byte>, UInt64, Int32)
+  nameWithType.vb: Disassembler.Disassemble(ReadOnlySpan(Of Byte), UInt64, Int32)
+- uid: Llvm.NET.Disassembler.Disassemble*
+  name: Disassemble
+  href: api/Llvm.NET.Disassembler.Disassemble.html
+  commentId: Overload:Llvm.NET.Disassembler.Disassemble
+  fullName: Llvm.NET.Disassembler.Disassemble
+  nameWithType: Disassembler.Disassemble
+- uid: Llvm.NET.Disassembler.SetOptions(Llvm.NET.DisassemblerOptions)
+  name: SetOptions(DisassemblerOptions)
+  href: api/Llvm.NET.Disassembler.SetOptions.html#Llvm_NET_Disassembler_SetOptions_Llvm_NET_DisassemblerOptions_
+  commentId: M:Llvm.NET.Disassembler.SetOptions(Llvm.NET.DisassemblerOptions)
+  fullName: Llvm.NET.Disassembler.SetOptions(Llvm.NET.DisassemblerOptions)
+  nameWithType: Disassembler.SetOptions(DisassemblerOptions)
+- uid: Llvm.NET.Disassembler.SetOptions*
+  name: SetOptions
+  href: api/Llvm.NET.Disassembler.SetOptions.html
+  commentId: Overload:Llvm.NET.Disassembler.SetOptions
+  fullName: Llvm.NET.Disassembler.SetOptions
+  nameWithType: Disassembler.SetOptions
+- uid: Llvm.NET.DisassemblerOptions
+  name: DisassemblerOptions
+  href: api/Llvm.NET.DisassemblerOptions.html
+  commentId: T:Llvm.NET.DisassemblerOptions
+  fullName: Llvm.NET.DisassemblerOptions
+  nameWithType: DisassemblerOptions
+- uid: Llvm.NET.DisassemblerOptions.AsmPrinterVariant
+  name: AsmPrinterVariant
+  href: api/Llvm.NET.DisassemblerOptions.html#Llvm_NET_DisassemblerOptions_AsmPrinterVariant
+  commentId: F:Llvm.NET.DisassemblerOptions.AsmPrinterVariant
+  fullName: Llvm.NET.DisassemblerOptions.AsmPrinterVariant
+  nameWithType: DisassemblerOptions.AsmPrinterVariant
+- uid: Llvm.NET.DisassemblerOptions.ImmediatesAsHex
+  name: ImmediatesAsHex
+  href: api/Llvm.NET.DisassemblerOptions.html#Llvm_NET_DisassemblerOptions_ImmediatesAsHex
+  commentId: F:Llvm.NET.DisassemblerOptions.ImmediatesAsHex
+  fullName: Llvm.NET.DisassemblerOptions.ImmediatesAsHex
+  nameWithType: DisassemblerOptions.ImmediatesAsHex
+- uid: Llvm.NET.DisassemblerOptions.InstructionComments
+  name: InstructionComments
+  href: api/Llvm.NET.DisassemblerOptions.html#Llvm_NET_DisassemblerOptions_InstructionComments
+  commentId: F:Llvm.NET.DisassemblerOptions.InstructionComments
+  fullName: Llvm.NET.DisassemblerOptions.InstructionComments
+  nameWithType: DisassemblerOptions.InstructionComments
+- uid: Llvm.NET.DisassemblerOptions.None
+  name: None
+  href: api/Llvm.NET.DisassemblerOptions.html#Llvm_NET_DisassemblerOptions_None
+  commentId: F:Llvm.NET.DisassemblerOptions.None
+  fullName: Llvm.NET.DisassemblerOptions.None
+  nameWithType: DisassemblerOptions.None
+- uid: Llvm.NET.DisassemblerOptions.PrintLatency
+  name: PrintLatency
+  href: api/Llvm.NET.DisassemblerOptions.html#Llvm_NET_DisassemblerOptions_PrintLatency
+  commentId: F:Llvm.NET.DisassemblerOptions.PrintLatency
+  fullName: Llvm.NET.DisassemblerOptions.PrintLatency
+  nameWithType: DisassemblerOptions.PrintLatency
+- uid: Llvm.NET.DisassemblerOptions.UseMarkup
+  name: UseMarkup
+  href: api/Llvm.NET.DisassemblerOptions.html#Llvm_NET_DisassemblerOptions_UseMarkup
+  commentId: F:Llvm.NET.DisassemblerOptions.UseMarkup
+  fullName: Llvm.NET.DisassemblerOptions.UseMarkup
+  nameWithType: DisassemblerOptions.UseMarkup
 - uid: Llvm.NET.ExtensiblePropertyContainer
   name: ExtensiblePropertyContainer
   href: api/Llvm.NET.ExtensiblePropertyContainer.html
@@ -19601,6 +19736,18 @@ references:
   commentId: Overload:Llvm.NET.Interop.NativeMethods.LibLLVMDIBasicTypeGetEncoding
   fullName: Llvm.NET.Interop.NativeMethods.LibLLVMDIBasicTypeGetEncoding
   nameWithType: NativeMethods.LibLLVMDIBasicTypeGetEncoding
+- uid: Llvm.NET.Interop.NativeMethods.LibLLVMDIBuilderCreateAutoVariable(Llvm.NET.Interop.LLVMDIBuilderRef,Llvm.NET.Interop.LLVMMetadataRef,System.String,Llvm.NET.Interop.size_t,Llvm.NET.Interop.LLVMMetadataRef,System.UInt32,Llvm.NET.Interop.LLVMMetadataRef,System.Boolean,Llvm.NET.Interop.LLVMDIFlags,System.UInt32)
+  name: LibLLVMDIBuilderCreateAutoVariable(LLVMDIBuilderRef, LLVMMetadataRef, String, size_t, LLVMMetadataRef, UInt32, LLVMMetadataRef, Boolean, LLVMDIFlags, UInt32)
+  href: api/Llvm.NET.Interop.NativeMethods.LibLLVMDIBuilderCreateAutoVariable.html#Llvm_NET_Interop_NativeMethods_LibLLVMDIBuilderCreateAutoVariable_Llvm_NET_Interop_LLVMDIBuilderRef_Llvm_NET_Interop_LLVMMetadataRef_System_String_Llvm_NET_Interop_size_t_Llvm_NET_Interop_LLVMMetadataRef_System_UInt32_Llvm_NET_Interop_LLVMMetadataRef_System_Boolean_Llvm_NET_Interop_LLVMDIFlags_System_UInt32_
+  commentId: M:Llvm.NET.Interop.NativeMethods.LibLLVMDIBuilderCreateAutoVariable(Llvm.NET.Interop.LLVMDIBuilderRef,Llvm.NET.Interop.LLVMMetadataRef,System.String,Llvm.NET.Interop.size_t,Llvm.NET.Interop.LLVMMetadataRef,System.UInt32,Llvm.NET.Interop.LLVMMetadataRef,System.Boolean,Llvm.NET.Interop.LLVMDIFlags,System.UInt32)
+  fullName: Llvm.NET.Interop.NativeMethods.LibLLVMDIBuilderCreateAutoVariable(Llvm.NET.Interop.LLVMDIBuilderRef, Llvm.NET.Interop.LLVMMetadataRef, System.String, Llvm.NET.Interop.size_t, Llvm.NET.Interop.LLVMMetadataRef, System.UInt32, Llvm.NET.Interop.LLVMMetadataRef, System.Boolean, Llvm.NET.Interop.LLVMDIFlags, System.UInt32)
+  nameWithType: NativeMethods.LibLLVMDIBuilderCreateAutoVariable(LLVMDIBuilderRef, LLVMMetadataRef, String, size_t, LLVMMetadataRef, UInt32, LLVMMetadataRef, Boolean, LLVMDIFlags, UInt32)
+- uid: Llvm.NET.Interop.NativeMethods.LibLLVMDIBuilderCreateAutoVariable*
+  name: LibLLVMDIBuilderCreateAutoVariable
+  href: api/Llvm.NET.Interop.NativeMethods.LibLLVMDIBuilderCreateAutoVariable.html
+  commentId: Overload:Llvm.NET.Interop.NativeMethods.LibLLVMDIBuilderCreateAutoVariable
+  fullName: Llvm.NET.Interop.NativeMethods.LibLLVMDIBuilderCreateAutoVariable
+  nameWithType: NativeMethods.LibLLVMDIBuilderCreateAutoVariable
 - uid: Llvm.NET.Interop.NativeMethods.LibLLVMDIBuilderCreateCompileUnit(Llvm.NET.Interop.LLVMDIBuilderRef,Llvm.NET.Interop.LibLLVMDwarfSourceLanguage,Llvm.NET.Interop.LLVMMetadataRef,System.String,Llvm.NET.Interop.size_t,System.Boolean,System.String,Llvm.NET.Interop.size_t,System.UInt32,System.String,Llvm.NET.Interop.size_t,Llvm.NET.Interop.LLVMDWARFEmissionKind,System.UInt32,System.Boolean,System.Boolean)
   name: LibLLVMDIBuilderCreateCompileUnit(LLVMDIBuilderRef, LibLLVMDwarfSourceLanguage, LLVMMetadataRef, String, size_t, Boolean, String, size_t, UInt32, String, size_t, LLVMDWARFEmissionKind, UInt32, Boolean, Boolean)
   href: api/Llvm.NET.Interop.NativeMethods.LibLLVMDIBuilderCreateCompileUnit.html#Llvm_NET_Interop_NativeMethods_LibLLVMDIBuilderCreateCompileUnit_Llvm_NET_Interop_LLVMDIBuilderRef_Llvm_NET_Interop_LibLLVMDwarfSourceLanguage_Llvm_NET_Interop_LLVMMetadataRef_System_String_Llvm_NET_Interop_size_t_System_Boolean_System_String_Llvm_NET_Interop_size_t_System_UInt32_System_String_Llvm_NET_Interop_size_t_Llvm_NET_Interop_LLVMDWARFEmissionKind_System_UInt32_System_Boolean_System_Boolean_
@@ -19625,6 +19772,18 @@ references:
   commentId: Overload:Llvm.NET.Interop.NativeMethods.LibLLVMDIBuilderCreateEnumeratorValue
   fullName: Llvm.NET.Interop.NativeMethods.LibLLVMDIBuilderCreateEnumeratorValue
   nameWithType: NativeMethods.LibLLVMDIBuilderCreateEnumeratorValue
+- uid: Llvm.NET.Interop.NativeMethods.LibLLVMDIBuilderCreateParameterVariable(Llvm.NET.Interop.LLVMDIBuilderRef,Llvm.NET.Interop.LLVMMetadataRef,System.String,Llvm.NET.Interop.size_t,System.UInt32,Llvm.NET.Interop.LLVMMetadataRef,System.UInt32,Llvm.NET.Interop.LLVMMetadataRef,System.Boolean,Llvm.NET.Interop.LLVMDIFlags)
+  name: LibLLVMDIBuilderCreateParameterVariable(LLVMDIBuilderRef, LLVMMetadataRef, String, size_t, UInt32, LLVMMetadataRef, UInt32, LLVMMetadataRef, Boolean, LLVMDIFlags)
+  href: api/Llvm.NET.Interop.NativeMethods.LibLLVMDIBuilderCreateParameterVariable.html#Llvm_NET_Interop_NativeMethods_LibLLVMDIBuilderCreateParameterVariable_Llvm_NET_Interop_LLVMDIBuilderRef_Llvm_NET_Interop_LLVMMetadataRef_System_String_Llvm_NET_Interop_size_t_System_UInt32_Llvm_NET_Interop_LLVMMetadataRef_System_UInt32_Llvm_NET_Interop_LLVMMetadataRef_System_Boolean_Llvm_NET_Interop_LLVMDIFlags_
+  commentId: M:Llvm.NET.Interop.NativeMethods.LibLLVMDIBuilderCreateParameterVariable(Llvm.NET.Interop.LLVMDIBuilderRef,Llvm.NET.Interop.LLVMMetadataRef,System.String,Llvm.NET.Interop.size_t,System.UInt32,Llvm.NET.Interop.LLVMMetadataRef,System.UInt32,Llvm.NET.Interop.LLVMMetadataRef,System.Boolean,Llvm.NET.Interop.LLVMDIFlags)
+  fullName: Llvm.NET.Interop.NativeMethods.LibLLVMDIBuilderCreateParameterVariable(Llvm.NET.Interop.LLVMDIBuilderRef, Llvm.NET.Interop.LLVMMetadataRef, System.String, Llvm.NET.Interop.size_t, System.UInt32, Llvm.NET.Interop.LLVMMetadataRef, System.UInt32, Llvm.NET.Interop.LLVMMetadataRef, System.Boolean, Llvm.NET.Interop.LLVMDIFlags)
+  nameWithType: NativeMethods.LibLLVMDIBuilderCreateParameterVariable(LLVMDIBuilderRef, LLVMMetadataRef, String, size_t, UInt32, LLVMMetadataRef, UInt32, LLVMMetadataRef, Boolean, LLVMDIFlags)
+- uid: Llvm.NET.Interop.NativeMethods.LibLLVMDIBuilderCreateParameterVariable*
+  name: LibLLVMDIBuilderCreateParameterVariable
+  href: api/Llvm.NET.Interop.NativeMethods.LibLLVMDIBuilderCreateParameterVariable.html
+  commentId: Overload:Llvm.NET.Interop.NativeMethods.LibLLVMDIBuilderCreateParameterVariable
+  fullName: Llvm.NET.Interop.NativeMethods.LibLLVMDIBuilderCreateParameterVariable
+  nameWithType: NativeMethods.LibLLVMDIBuilderCreateParameterVariable
 - uid: Llvm.NET.Interop.NativeMethods.LibLLVMDIBuilderCreateTempFunctionFwdDecl(Llvm.NET.Interop.LLVMDIBuilderRef,Llvm.NET.Interop.LLVMMetadataRef,System.String,Llvm.NET.Interop.size_t,System.String,Llvm.NET.Interop.size_t,Llvm.NET.Interop.LLVMMetadataRef,System.UInt32,Llvm.NET.Interop.LLVMMetadataRef,System.Boolean,System.Boolean,System.UInt32,Llvm.NET.Interop.LLVMDIFlags,System.Boolean)
   name: LibLLVMDIBuilderCreateTempFunctionFwdDecl(LLVMDIBuilderRef, LLVMMetadataRef, String, size_t, String, size_t, LLVMMetadataRef, UInt32, LLVMMetadataRef, Boolean, Boolean, UInt32, LLVMDIFlags, Boolean)
   href: api/Llvm.NET.Interop.NativeMethods.LibLLVMDIBuilderCreateTempFunctionFwdDecl.html#Llvm_NET_Interop_NativeMethods_LibLLVMDIBuilderCreateTempFunctionFwdDecl_Llvm_NET_Interop_LLVMDIBuilderRef_Llvm_NET_Interop_LLVMMetadataRef_System_String_Llvm_NET_Interop_size_t_System_String_Llvm_NET_Interop_size_t_Llvm_NET_Interop_LLVMMetadataRef_System_UInt32_Llvm_NET_Interop_LLVMMetadataRef_System_Boolean_System_Boolean_System_UInt32_Llvm_NET_Interop_LLVMDIFlags_System_Boolean_
@@ -19709,6 +19868,18 @@ references:
   commentId: Overload:Llvm.NET.Interop.NativeMethods.LibLLVMDILocationGetInlinedAtScope
   fullName: Llvm.NET.Interop.NativeMethods.LibLLVMDILocationGetInlinedAtScope
   nameWithType: NativeMethods.LibLLVMDILocationGetInlinedAtScope
+- uid: Llvm.NET.Interop.NativeMethods.LibLLVMDIVariableGetLine(Llvm.NET.Interop.LLVMMetadataRef)
+  name: LibLLVMDIVariableGetLine(LLVMMetadataRef)
+  href: api/Llvm.NET.Interop.NativeMethods.LibLLVMDIVariableGetLine.html#Llvm_NET_Interop_NativeMethods_LibLLVMDIVariableGetLine_Llvm_NET_Interop_LLVMMetadataRef_
+  commentId: M:Llvm.NET.Interop.NativeMethods.LibLLVMDIVariableGetLine(Llvm.NET.Interop.LLVMMetadataRef)
+  fullName: Llvm.NET.Interop.NativeMethods.LibLLVMDIVariableGetLine(Llvm.NET.Interop.LLVMMetadataRef)
+  nameWithType: NativeMethods.LibLLVMDIVariableGetLine(LLVMMetadataRef)
+- uid: Llvm.NET.Interop.NativeMethods.LibLLVMDIVariableGetLine*
+  name: LibLLVMDIVariableGetLine
+  href: api/Llvm.NET.Interop.NativeMethods.LibLLVMDIVariableGetLine.html
+  commentId: Overload:Llvm.NET.Interop.NativeMethods.LibLLVMDIVariableGetLine
+  fullName: Llvm.NET.Interop.NativeMethods.LibLLVMDIVariableGetLine
+  nameWithType: NativeMethods.LibLLVMDIVariableGetLine
 - uid: Llvm.NET.Interop.NativeMethods.LibLLVMFunctionAppendBasicBlock(Llvm.NET.Interop.LLVMValueRef,Llvm.NET.Interop.LLVMBasicBlockRef)
   name: LibLLVMFunctionAppendBasicBlock(LLVMValueRef, LLVMBasicBlockRef)
   href: api/Llvm.NET.Interop.NativeMethods.LibLLVMFunctionAppendBasicBlock.html#Llvm_NET_Interop_NativeMethods_LibLLVMFunctionAppendBasicBlock_Llvm_NET_Interop_LLVMValueRef_Llvm_NET_Interop_LLVMBasicBlockRef_
@@ -25298,15 +25469,15 @@ references:
   commentId: Overload:Llvm.NET.Interop.NativeMethods.LLVMDILocationGetScope
   fullName: Llvm.NET.Interop.NativeMethods.LLVMDILocationGetScope
   nameWithType: NativeMethods.LLVMDILocationGetScope
-- uid: Llvm.NET.Interop.NativeMethods.LLVMDisasmInstruction(Llvm.NET.Interop.LLVMDisasmContextRef,System.Byte[],System.UInt64,System.UInt64,System.Text.StringBuilder@,Llvm.NET.Interop.size_t)
-  name: LLVMDisasmInstruction(LLVMDisasmContextRef, Byte[], UInt64, UInt64, ref StringBuilder, size_t)
-  href: api/Llvm.NET.Interop.NativeMethods.LLVMDisasmInstruction.html#Llvm_NET_Interop_NativeMethods_LLVMDisasmInstruction_Llvm_NET_Interop_LLVMDisasmContextRef_System_Byte___System_UInt64_System_UInt64_System_Text_StringBuilder__Llvm_NET_Interop_size_t_
-  commentId: M:Llvm.NET.Interop.NativeMethods.LLVMDisasmInstruction(Llvm.NET.Interop.LLVMDisasmContextRef,System.Byte[],System.UInt64,System.UInt64,System.Text.StringBuilder@,Llvm.NET.Interop.size_t)
-  name.vb: LLVMDisasmInstruction(LLVMDisasmContextRef, Byte(), UInt64, UInt64, ByRef StringBuilder, size_t)
-  fullName: Llvm.NET.Interop.NativeMethods.LLVMDisasmInstruction(Llvm.NET.Interop.LLVMDisasmContextRef, System.Byte[], System.UInt64, System.UInt64, ref System.Text.StringBuilder, Llvm.NET.Interop.size_t)
-  fullName.vb: Llvm.NET.Interop.NativeMethods.LLVMDisasmInstruction(Llvm.NET.Interop.LLVMDisasmContextRef, System.Byte(), System.UInt64, System.UInt64, ByRef System.Text.StringBuilder, Llvm.NET.Interop.size_t)
-  nameWithType: NativeMethods.LLVMDisasmInstruction(LLVMDisasmContextRef, Byte[], UInt64, UInt64, ref StringBuilder, size_t)
-  nameWithType.vb: NativeMethods.LLVMDisasmInstruction(LLVMDisasmContextRef, Byte(), UInt64, UInt64, ByRef StringBuilder, size_t)
+- uid: Llvm.NET.Interop.NativeMethods.LLVMDisasmInstruction(Llvm.NET.Interop.LLVMDisasmContextRef,System.IntPtr,System.UInt64,System.UInt64,System.Text.StringBuilder@,Llvm.NET.Interop.size_t)
+  name: LLVMDisasmInstruction(LLVMDisasmContextRef, IntPtr, UInt64, UInt64, ref StringBuilder, size_t)
+  href: api/Llvm.NET.Interop.NativeMethods.LLVMDisasmInstruction.html#Llvm_NET_Interop_NativeMethods_LLVMDisasmInstruction_Llvm_NET_Interop_LLVMDisasmContextRef_System_IntPtr_System_UInt64_System_UInt64_System_Text_StringBuilder__Llvm_NET_Interop_size_t_
+  commentId: M:Llvm.NET.Interop.NativeMethods.LLVMDisasmInstruction(Llvm.NET.Interop.LLVMDisasmContextRef,System.IntPtr,System.UInt64,System.UInt64,System.Text.StringBuilder@,Llvm.NET.Interop.size_t)
+  name.vb: LLVMDisasmInstruction(LLVMDisasmContextRef, IntPtr, UInt64, UInt64, ByRef StringBuilder, size_t)
+  fullName: Llvm.NET.Interop.NativeMethods.LLVMDisasmInstruction(Llvm.NET.Interop.LLVMDisasmContextRef, System.IntPtr, System.UInt64, System.UInt64, ref System.Text.StringBuilder, Llvm.NET.Interop.size_t)
+  fullName.vb: Llvm.NET.Interop.NativeMethods.LLVMDisasmInstruction(Llvm.NET.Interop.LLVMDisasmContextRef, System.IntPtr, System.UInt64, System.UInt64, ByRef System.Text.StringBuilder, Llvm.NET.Interop.size_t)
+  nameWithType: NativeMethods.LLVMDisasmInstruction(LLVMDisasmContextRef, IntPtr, UInt64, UInt64, ref StringBuilder, size_t)
+  nameWithType.vb: NativeMethods.LLVMDisasmInstruction(LLVMDisasmContextRef, IntPtr, UInt64, UInt64, ByRef StringBuilder, size_t)
 - uid: Llvm.NET.Interop.NativeMethods.LLVMDisasmInstruction*
   name: LLVMDisasmInstruction
   href: api/Llvm.NET.Interop.NativeMethods.LLVMDisasmInstruction.html
@@ -41051,6 +41222,21 @@ references:
   commentId: Overload:Llvm.NET.Values.User.Operands
   fullName: Llvm.NET.Values.User.Operands
   nameWithType: User.Operands
+- uid: Llvm.NET.Values.User.SetOperand*
+  name: SetOperand
+  href: api/Llvm.NET.Values.User.SetOperand.html
+  commentId: Overload:Llvm.NET.Values.User.SetOperand
+  fullName: Llvm.NET.Values.User.SetOperand
+  nameWithType: User.SetOperand
+- uid: Llvm.NET.Values.User.SetOperand``1(System.Int32,``0)
+  name: SetOperand<T>(Int32, T)
+  href: api/Llvm.NET.Values.User.SetOperand.html#Llvm_NET_Values_User_SetOperand__1_System_Int32___0_
+  commentId: M:Llvm.NET.Values.User.SetOperand``1(System.Int32,``0)
+  name.vb: SetOperand(Of T)(Int32, T)
+  fullName: Llvm.NET.Values.User.SetOperand<T>(System.Int32, T)
+  fullName.vb: Llvm.NET.Values.User.SetOperand(Of T)(System.Int32, T)
+  nameWithType: User.SetOperand<T>(Int32, T)
+  nameWithType.vb: User.SetOperand(Of T)(Int32, T)
 - uid: Llvm.NET.Values.User.Uses
   name: Uses
   href: api/Llvm.NET.Values.User.Uses.html#Llvm_NET_Values_User_Uses

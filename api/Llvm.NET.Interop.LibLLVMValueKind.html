@@ -117,6 +117,9 @@
                                   <a href="Llvm.NET.BitcodeModule.Aliases.html" title="Aliases" class="">Aliases</a>
                                 </li>
                                 <li class="">
+                                  <a href="Llvm.NET.BitcodeModule.AppendInlineAsm.html" title="AppendInlineAsm" class="">AppendInlineAsm</a>
+                                </li>
+                                <li class="">
                                   <a href="Llvm.NET.BitcodeModule.Clone.html" title="Clone" class="">Clone</a>
                                 </li>
                                 <li class="">
@@ -190,6 +193,9 @@
                                 </li>
                                 <li class="">
                                   <a href="Llvm.NET.BitcodeModule.ModuleFlags.html" title="ModuleFlags" class="">ModuleFlags</a>
+                                </li>
+                                <li class="">
+                                  <a href="Llvm.NET.BitcodeModule.ModuleInlineAsm.html" title="ModuleInlineAsm" class="">ModuleInlineAsm</a>
                                 </li>
                                 <li class="">
                                   <a href="Llvm.NET.BitcodeModule.Name.html" title="Name" class="">Name</a>
@@ -453,6 +459,24 @@
                                   <a href="Llvm.NET.DataLayout.ToString.html" title="ToString" class="">ToString</a>
                                 </li>
                               </ul>  </li>
+                          <li class="">
+                            <span class="expand-stub"></span>
+                            <a href="Llvm.NET.Disassembler.html" title="Disassembler" class="">Disassembler</a>
+                              
+                              <ul class="nav level3">
+                                <li class="">
+                                  <a href="Llvm.NET.Disassembler.Disassemble.html" title="Disassemble" class="">Disassemble</a>
+                                </li>
+                                <li class="">
+                                  <a href="Llvm.NET.Disassembler.-ctor.html" title="Disassembler" class="">Disassembler</a>
+                                </li>
+                                <li class="">
+                                  <a href="Llvm.NET.Disassembler.SetOptions.html" title="SetOptions" class="">SetOptions</a>
+                                </li>
+                              </ul>  </li>
+                          <li class="">
+                            <a href="Llvm.NET.DisassemblerOptions.html" title="DisassemblerOptions" class="">DisassemblerOptions</a>
+                          </li>
                           <li class="">
                             <span class="expand-stub"></span>
                             <a href="Llvm.NET.ExtensiblePropertyContainer.html" title="ExtensiblePropertyContainer" class="">ExtensiblePropertyContainer</a>
@@ -1666,6 +1690,9 @@
                                 </li>
                                 <li class="">
                                   <a href="Llvm.NET.DebugInfo.DIVariable.File.html" title="File" class="">File</a>
+                                </li>
+                                <li class="">
+                                  <a href="Llvm.NET.DebugInfo.DIVariable.Line.html" title="Line" class="">Line</a>
                                 </li>
                                 <li class="">
                                   <a href="Llvm.NET.DebugInfo.DIVariable.Name.html" title="Name" class="">Name</a>
@@ -3891,10 +3918,16 @@
                                   <a href="Llvm.NET.Interop.NativeMethods.LibLLVMDIBasicTypeGetEncoding.html" title="LibLLVMDIBasicTypeGetEncoding" class="">LibLLVMDIBasicTypeGetEncoding</a>
                                 </li>
                                 <li class="">
+                                  <a href="Llvm.NET.Interop.NativeMethods.LibLLVMDIBuilderCreateAutoVariable.html" title="LibLLVMDIBuilderCreateAutoVariable" class="">LibLLVMDIBuilderCreateAutoVariable</a>
+                                </li>
+                                <li class="">
                                   <a href="Llvm.NET.Interop.NativeMethods.LibLLVMDIBuilderCreateCompileUnit.html" title="LibLLVMDIBuilderCreateCompileUnit" class="">LibLLVMDIBuilderCreateCompileUnit</a>
                                 </li>
                                 <li class="">
                                   <a href="Llvm.NET.Interop.NativeMethods.LibLLVMDIBuilderCreateEnumeratorValue.html" title="LibLLVMDIBuilderCreateEnumeratorValue" class="">LibLLVMDIBuilderCreateEnumeratorValue</a>
+                                </li>
+                                <li class="">
+                                  <a href="Llvm.NET.Interop.NativeMethods.LibLLVMDIBuilderCreateParameterVariable.html" title="LibLLVMDIBuilderCreateParameterVariable" class="">LibLLVMDIBuilderCreateParameterVariable</a>
                                 </li>
                                 <li class="">
                                   <a href="Llvm.NET.Interop.NativeMethods.LibLLVMDIBuilderCreateTempFunctionFwdDecl.html" title="LibLLVMDIBuilderCreateTempFunctionFwdDecl" class="">LibLLVMDIBuilderCreateTempFunctionFwdDecl</a>
@@ -3916,6 +3949,9 @@
                                 </li>
                                 <li class="">
                                   <a href="Llvm.NET.Interop.NativeMethods.LibLLVMDILocationGetInlinedAtScope.html" title="LibLLVMDILocationGetInlinedAtScope" class="">LibLLVMDILocationGetInlinedAtScope</a>
+                                </li>
+                                <li class="">
+                                  <a href="Llvm.NET.Interop.NativeMethods.LibLLVMDIVariableGetLine.html" title="LibLLVMDIVariableGetLine" class="">LibLLVMDIVariableGetLine</a>
                                 </li>
                                 <li class="">
                                   <a href="Llvm.NET.Interop.NativeMethods.LibLLVMFunctionAppendBasicBlock.html" title="LibLLVMFunctionAppendBasicBlock" class="">LibLLVMFunctionAppendBasicBlock</a>
@@ -8559,6 +8595,9 @@
                                   <a href="Llvm.NET.Values.User.Operands.html" title="Operands" class="">Operands</a>
                                 </li>
                                 <li class="">
+                                  <a href="Llvm.NET.Values.User.SetOperand.html" title="SetOperand" class="">SetOperand</a>
+                                </li>
+                                <li class="">
                                   <a href="Llvm.NET.Values.User.Uses.html" title="Uses" class="">Uses</a>
                                 </li>
                               </ul>  </li>
@@ -8666,387 +8705,483 @@ supports a method to get at the underlying value.
   <table class="table table-bordered table-striped table-condensed">
       <tr>
         <td id="Llvm_NET_Interop_LibLLVMValueKind_AddKind">AddKind</td>
-        <td></td>
+        <td><p>TODO: Provide summary for LibLLVMValueKind.AddKind Enumeration</p>
+</td>
       </tr>
       <tr>
         <td id="Llvm_NET_Interop_LibLLVMValueKind_AddrSpaceCastKind">AddrSpaceCastKind</td>
-        <td></td>
+        <td><p>TODO: Provide summary for LibLLVMValueKind.AddrSpaceCastKind Enumeration</p>
+</td>
       </tr>
       <tr>
         <td id="Llvm_NET_Interop_LibLLVMValueKind_AllocaKind">AllocaKind</td>
-        <td></td>
+        <td><p>TODO: Provide summary for LibLLVMValueKind.AllocaKind Enumeration</p>
+</td>
       </tr>
       <tr>
         <td id="Llvm_NET_Interop_LibLLVMValueKind_AndKind">AndKind</td>
-        <td></td>
+        <td><p>TODO: Provide summary for LibLLVMValueKind.AndKind Enumeration</p>
+</td>
       </tr>
       <tr>
         <td id="Llvm_NET_Interop_LibLLVMValueKind_ArgumentKind">ArgumentKind</td>
-        <td></td>
+        <td><p>TODO: Provide summary for LibLLVMValueKind.ArgumentKind Enumeration</p>
+</td>
       </tr>
       <tr>
         <td id="Llvm_NET_Interop_LibLLVMValueKind_AShrKind">AShrKind</td>
-        <td></td>
+        <td><p>TODO: Provide summary for LibLLVMValueKind.AShrKind Enumeration</p>
+</td>
       </tr>
       <tr>
         <td id="Llvm_NET_Interop_LibLLVMValueKind_AtomicCmpXchgKind">AtomicCmpXchgKind</td>
-        <td></td>
+        <td><p>TODO: Provide summary for LibLLVMValueKind.AtomicCmpXchgKind Enumeration</p>
+</td>
       </tr>
       <tr>
         <td id="Llvm_NET_Interop_LibLLVMValueKind_AtomicRMWKind">AtomicRMWKind</td>
-        <td></td>
+        <td><p>TODO: Provide summary for LibLLVMValueKind.AtomicRMWKind Enumeration</p>
+</td>
       </tr>
       <tr>
         <td id="Llvm_NET_Interop_LibLLVMValueKind_BasicBlockKind">BasicBlockKind</td>
-        <td></td>
+        <td><p>TODO: Provide summary for LibLLVMValueKind.BasicBlockKind Enumeration</p>
+</td>
       </tr>
       <tr>
         <td id="Llvm_NET_Interop_LibLLVMValueKind_BitCastKind">BitCastKind</td>
-        <td></td>
+        <td><p>TODO: Provide summary for LibLLVMValueKind.BitCastKind Enumeration</p>
+</td>
       </tr>
       <tr>
         <td id="Llvm_NET_Interop_LibLLVMValueKind_BlockAddressKind">BlockAddressKind</td>
-        <td></td>
+        <td><p>TODO: Provide summary for LibLLVMValueKind.BlockAddressKind Enumeration</p>
+</td>
       </tr>
       <tr>
         <td id="Llvm_NET_Interop_LibLLVMValueKind_BrKind">BrKind</td>
-        <td></td>
+        <td><p>TODO: Provide summary for LibLLVMValueKind.BrKind Enumeration</p>
+</td>
       </tr>
       <tr>
         <td id="Llvm_NET_Interop_LibLLVMValueKind_CallKind">CallKind</td>
-        <td></td>
+        <td><p>TODO: Provide summary for LibLLVMValueKind.CallKind Enumeration</p>
+</td>
       </tr>
       <tr>
         <td id="Llvm_NET_Interop_LibLLVMValueKind_CatchPadKind">CatchPadKind</td>
-        <td></td>
+        <td><p>TODO: Provide summary for LibLLVMValueKind.CatchPadKind Enumeration</p>
+</td>
       </tr>
       <tr>
         <td id="Llvm_NET_Interop_LibLLVMValueKind_CatchRetKind">CatchRetKind</td>
-        <td></td>
+        <td><p>TODO: Provide summary for LibLLVMValueKind.CatchRetKind Enumeration</p>
+</td>
       </tr>
       <tr>
         <td id="Llvm_NET_Interop_LibLLVMValueKind_CatchSwitchKind">CatchSwitchKind</td>
-        <td></td>
+        <td><p>TODO: Provide summary for LibLLVMValueKind.CatchSwitchKind Enumeration</p>
+</td>
       </tr>
       <tr>
         <td id="Llvm_NET_Interop_LibLLVMValueKind_CleanupPadKind">CleanupPadKind</td>
-        <td></td>
+        <td><p>TODO: Provide summary for LibLLVMValueKind.CleanupPadKind Enumeration</p>
+</td>
       </tr>
       <tr>
         <td id="Llvm_NET_Interop_LibLLVMValueKind_CleanupRetKind">CleanupRetKind</td>
-        <td></td>
+        <td><p>TODO: Provide summary for LibLLVMValueKind.CleanupRetKind Enumeration</p>
+</td>
       </tr>
       <tr>
         <td id="Llvm_NET_Interop_LibLLVMValueKind_ConstantAggregateFirstValKind">ConstantAggregateFirstValKind</td>
-        <td></td>
+        <td><p>TODO: Provide summary for LibLLVMValueKind.ConstantAggregateFirstValKind Enumeration</p>
+</td>
       </tr>
       <tr>
         <td id="Llvm_NET_Interop_LibLLVMValueKind_ConstantAggregateLastValKind">ConstantAggregateLastValKind</td>
-        <td></td>
+        <td><p>TODO: Provide summary for LibLLVMValueKind.ConstantAggregateLastValKind Enumeration</p>
+</td>
       </tr>
       <tr>
         <td id="Llvm_NET_Interop_LibLLVMValueKind_ConstantAggregateZeroKind">ConstantAggregateZeroKind</td>
-        <td></td>
+        <td><p>TODO: Provide summary for LibLLVMValueKind.ConstantAggregateZeroKind Enumeration</p>
+</td>
       </tr>
       <tr>
         <td id="Llvm_NET_Interop_LibLLVMValueKind_ConstantArrayKind">ConstantArrayKind</td>
-        <td></td>
+        <td><p>TODO: Provide summary for LibLLVMValueKind.ConstantArrayKind Enumeration</p>
+</td>
       </tr>
       <tr>
         <td id="Llvm_NET_Interop_LibLLVMValueKind_ConstantDataArrayKind">ConstantDataArrayKind</td>
-        <td></td>
+        <td><p>TODO: Provide summary for LibLLVMValueKind.ConstantDataArrayKind Enumeration</p>
+</td>
       </tr>
       <tr>
         <td id="Llvm_NET_Interop_LibLLVMValueKind_ConstantDataFirstValKind">ConstantDataFirstValKind</td>
-        <td></td>
+        <td><p>TODO: Provide summary for LibLLVMValueKind.ConstantDataFirstValKind Enumeration</p>
+</td>
       </tr>
       <tr>
         <td id="Llvm_NET_Interop_LibLLVMValueKind_ConstantDataLastValKind">ConstantDataLastValKind</td>
-        <td></td>
+        <td><p>TODO: Provide summary for LibLLVMValueKind.ConstantDataLastValKind Enumeration</p>
+</td>
       </tr>
       <tr>
         <td id="Llvm_NET_Interop_LibLLVMValueKind_ConstantDataVectorKind">ConstantDataVectorKind</td>
-        <td></td>
+        <td><p>TODO: Provide summary for LibLLVMValueKind.ConstantDataVectorKind Enumeration</p>
+</td>
       </tr>
       <tr>
         <td id="Llvm_NET_Interop_LibLLVMValueKind_ConstantExprKind">ConstantExprKind</td>
-        <td></td>
+        <td><p>TODO: Provide summary for LibLLVMValueKind.ConstantExprKind Enumeration</p>
+</td>
       </tr>
       <tr>
         <td id="Llvm_NET_Interop_LibLLVMValueKind_ConstantFirstValKind">ConstantFirstValKind</td>
-        <td></td>
+        <td><p>TODO: Provide summary for LibLLVMValueKind.ConstantFirstValKind Enumeration</p>
+</td>
       </tr>
       <tr>
         <td id="Llvm_NET_Interop_LibLLVMValueKind_ConstantFPKind">ConstantFPKind</td>
-        <td></td>
+        <td><p>TODO: Provide summary for LibLLVMValueKind.ConstantFPKind Enumeration</p>
+</td>
       </tr>
       <tr>
         <td id="Llvm_NET_Interop_LibLLVMValueKind_ConstantIntKind">ConstantIntKind</td>
-        <td></td>
+        <td><p>TODO: Provide summary for LibLLVMValueKind.ConstantIntKind Enumeration</p>
+</td>
       </tr>
       <tr>
         <td id="Llvm_NET_Interop_LibLLVMValueKind_ConstantLastValKind">ConstantLastValKind</td>
-        <td></td>
+        <td><p>TODO: Provide summary for LibLLVMValueKind.ConstantLastValKind Enumeration</p>
+</td>
       </tr>
       <tr>
         <td id="Llvm_NET_Interop_LibLLVMValueKind_ConstantPointerNullKind">ConstantPointerNullKind</td>
-        <td></td>
+        <td><p>TODO: Provide summary for LibLLVMValueKind.ConstantPointerNullKind Enumeration</p>
+</td>
       </tr>
       <tr>
         <td id="Llvm_NET_Interop_LibLLVMValueKind_ConstantStructKind">ConstantStructKind</td>
-        <td></td>
+        <td><p>TODO: Provide summary for LibLLVMValueKind.ConstantStructKind Enumeration</p>
+</td>
       </tr>
       <tr>
         <td id="Llvm_NET_Interop_LibLLVMValueKind_ConstantTokenNoneKind">ConstantTokenNoneKind</td>
-        <td></td>
+        <td><p>TODO: Provide summary for LibLLVMValueKind.ConstantTokenNoneKind Enumeration</p>
+</td>
       </tr>
       <tr>
         <td id="Llvm_NET_Interop_LibLLVMValueKind_ConstantVectorKind">ConstantVectorKind</td>
-        <td></td>
+        <td><p>TODO: Provide summary for LibLLVMValueKind.ConstantVectorKind Enumeration</p>
+</td>
       </tr>
       <tr>
         <td id="Llvm_NET_Interop_LibLLVMValueKind_ExtractElementKind">ExtractElementKind</td>
-        <td></td>
+        <td><p>TODO: Provide summary for LibLLVMValueKind.ExtractElementKind Enumeration</p>
+</td>
       </tr>
       <tr>
         <td id="Llvm_NET_Interop_LibLLVMValueKind_ExtractValueKind">ExtractValueKind</td>
-        <td></td>
+        <td><p>TODO: Provide summary for LibLLVMValueKind.ExtractValueKind Enumeration</p>
+</td>
       </tr>
       <tr>
         <td id="Llvm_NET_Interop_LibLLVMValueKind_FAddKind">FAddKind</td>
-        <td></td>
+        <td><p>TODO: Provide summary for LibLLVMValueKind.FAddKind Enumeration</p>
+</td>
       </tr>
       <tr>
         <td id="Llvm_NET_Interop_LibLLVMValueKind_FCmpKind">FCmpKind</td>
-        <td></td>
+        <td><p>TODO: Provide summary for LibLLVMValueKind.FCmpKind Enumeration</p>
+</td>
       </tr>
       <tr>
         <td id="Llvm_NET_Interop_LibLLVMValueKind_FDivKind">FDivKind</td>
-        <td></td>
+        <td><p>TODO: Provide summary for LibLLVMValueKind.FDivKind Enumeration</p>
+</td>
       </tr>
       <tr>
         <td id="Llvm_NET_Interop_LibLLVMValueKind_FenceKind">FenceKind</td>
-        <td></td>
+        <td><p>TODO: Provide summary for LibLLVMValueKind.FenceKind Enumeration</p>
+</td>
       </tr>
       <tr>
         <td id="Llvm_NET_Interop_LibLLVMValueKind_FMulKind">FMulKind</td>
-        <td></td>
+        <td><p>TODO: Provide summary for LibLLVMValueKind.FMulKind Enumeration</p>
+</td>
       </tr>
       <tr>
         <td id="Llvm_NET_Interop_LibLLVMValueKind_FNegKind">FNegKind</td>
-        <td></td>
+        <td><p>TODO: Provide summary for LibLLVMValueKind.FNegKind Enumeration</p>
+</td>
       </tr>
       <tr>
         <td id="Llvm_NET_Interop_LibLLVMValueKind_FPExtKind">FPExtKind</td>
-        <td></td>
+        <td><p>TODO: Provide summary for LibLLVMValueKind.FPExtKind Enumeration</p>
+</td>
       </tr>
       <tr>
         <td id="Llvm_NET_Interop_LibLLVMValueKind_FPToSIKind">FPToSIKind</td>
-        <td></td>
+        <td><p>TODO: Provide summary for LibLLVMValueKind.FPToSIKind Enumeration</p>
+</td>
       </tr>
       <tr>
         <td id="Llvm_NET_Interop_LibLLVMValueKind_FPToUIKind">FPToUIKind</td>
-        <td></td>
+        <td><p>TODO: Provide summary for LibLLVMValueKind.FPToUIKind Enumeration</p>
+</td>
       </tr>
       <tr>
         <td id="Llvm_NET_Interop_LibLLVMValueKind_FPTruncKind">FPTruncKind</td>
-        <td></td>
+        <td><p>TODO: Provide summary for LibLLVMValueKind.FPTruncKind Enumeration</p>
+</td>
       </tr>
       <tr>
         <td id="Llvm_NET_Interop_LibLLVMValueKind_FRemKind">FRemKind</td>
-        <td></td>
+        <td><p>TODO: Provide summary for LibLLVMValueKind.FRemKind Enumeration</p>
+</td>
       </tr>
       <tr>
         <td id="Llvm_NET_Interop_LibLLVMValueKind_FSubKind">FSubKind</td>
-        <td></td>
+        <td><p>TODO: Provide summary for LibLLVMValueKind.FSubKind Enumeration</p>
+</td>
       </tr>
       <tr>
         <td id="Llvm_NET_Interop_LibLLVMValueKind_FunctionKind">FunctionKind</td>
-        <td></td>
+        <td><p>TODO: Provide summary for LibLLVMValueKind.FunctionKind Enumeration</p>
+</td>
       </tr>
       <tr>
         <td id="Llvm_NET_Interop_LibLLVMValueKind_GetElementPtrKind">GetElementPtrKind</td>
-        <td></td>
+        <td><p>TODO: Provide summary for LibLLVMValueKind.GetElementPtrKind Enumeration</p>
+</td>
       </tr>
       <tr>
         <td id="Llvm_NET_Interop_LibLLVMValueKind_GlobalAliasKind">GlobalAliasKind</td>
-        <td></td>
+        <td><p>TODO: Provide summary for LibLLVMValueKind.GlobalAliasKind Enumeration</p>
+</td>
       </tr>
       <tr>
         <td id="Llvm_NET_Interop_LibLLVMValueKind_GlobalIFuncKind">GlobalIFuncKind</td>
-        <td></td>
+        <td><p>TODO: Provide summary for LibLLVMValueKind.GlobalIFuncKind Enumeration</p>
+</td>
       </tr>
       <tr>
         <td id="Llvm_NET_Interop_LibLLVMValueKind_GlobalVariableKind">GlobalVariableKind</td>
-        <td></td>
+        <td><p>TODO: Provide summary for LibLLVMValueKind.GlobalVariableKind Enumeration</p>
+</td>
       </tr>
       <tr>
         <td id="Llvm_NET_Interop_LibLLVMValueKind_ICmpKind">ICmpKind</td>
-        <td></td>
+        <td><p>TODO: Provide summary for LibLLVMValueKind.ICmpKind Enumeration</p>
+</td>
       </tr>
       <tr>
         <td id="Llvm_NET_Interop_LibLLVMValueKind_IndirectBrKind">IndirectBrKind</td>
-        <td></td>
+        <td><p>TODO: Provide summary for LibLLVMValueKind.IndirectBrKind Enumeration</p>
+</td>
       </tr>
       <tr>
         <td id="Llvm_NET_Interop_LibLLVMValueKind_InlineAsmKind">InlineAsmKind</td>
-        <td></td>
+        <td><p>TODO: Provide summary for LibLLVMValueKind.InlineAsmKind Enumeration</p>
+</td>
       </tr>
       <tr>
         <td id="Llvm_NET_Interop_LibLLVMValueKind_InsertElementKind">InsertElementKind</td>
-        <td></td>
+        <td><p>TODO: Provide summary for LibLLVMValueKind.InsertElementKind Enumeration</p>
+</td>
       </tr>
       <tr>
         <td id="Llvm_NET_Interop_LibLLVMValueKind_InsertValueKind">InsertValueKind</td>
-        <td></td>
+        <td><p>TODO: Provide summary for LibLLVMValueKind.InsertValueKind Enumeration</p>
+</td>
       </tr>
       <tr>
         <td id="Llvm_NET_Interop_LibLLVMValueKind_InstructionKind">InstructionKind</td>
-        <td></td>
+        <td><p>TODO: Provide summary for LibLLVMValueKind.InstructionKind Enumeration</p>
+</td>
       </tr>
       <tr>
         <td id="Llvm_NET_Interop_LibLLVMValueKind_IntToPtrKind">IntToPtrKind</td>
-        <td></td>
+        <td><p>TODO: Provide summary for LibLLVMValueKind.IntToPtrKind Enumeration</p>
+</td>
       </tr>
       <tr>
         <td id="Llvm_NET_Interop_LibLLVMValueKind_InvokeKind">InvokeKind</td>
-        <td></td>
+        <td><p>TODO: Provide summary for LibLLVMValueKind.InvokeKind Enumeration</p>
+</td>
       </tr>
       <tr>
         <td id="Llvm_NET_Interop_LibLLVMValueKind_LandingPadKind">LandingPadKind</td>
-        <td></td>
+        <td><p>TODO: Provide summary for LibLLVMValueKind.LandingPadKind Enumeration</p>
+</td>
       </tr>
       <tr>
         <td id="Llvm_NET_Interop_LibLLVMValueKind_LoadKind">LoadKind</td>
-        <td></td>
+        <td><p>TODO: Provide summary for LibLLVMValueKind.LoadKind Enumeration</p>
+</td>
       </tr>
       <tr>
         <td id="Llvm_NET_Interop_LibLLVMValueKind_LShrKind">LShrKind</td>
-        <td></td>
+        <td><p>TODO: Provide summary for LibLLVMValueKind.LShrKind Enumeration</p>
+</td>
       </tr>
       <tr>
         <td id="Llvm_NET_Interop_LibLLVMValueKind_MemoryDefKind">MemoryDefKind</td>
-        <td></td>
+        <td><p>TODO: Provide summary for LibLLVMValueKind.MemoryDefKind Enumeration</p>
+</td>
       </tr>
       <tr>
         <td id="Llvm_NET_Interop_LibLLVMValueKind_MemoryPhiKind">MemoryPhiKind</td>
-        <td></td>
+        <td><p>TODO: Provide summary for LibLLVMValueKind.MemoryPhiKind Enumeration</p>
+</td>
       </tr>
       <tr>
         <td id="Llvm_NET_Interop_LibLLVMValueKind_MemoryUseKind">MemoryUseKind</td>
-        <td></td>
+        <td><p>TODO: Provide summary for LibLLVMValueKind.MemoryUseKind Enumeration</p>
+</td>
       </tr>
       <tr>
         <td id="Llvm_NET_Interop_LibLLVMValueKind_MetadataAsValueKind">MetadataAsValueKind</td>
-        <td></td>
+        <td><p>TODO: Provide summary for LibLLVMValueKind.MetadataAsValueKind Enumeration</p>
+</td>
       </tr>
       <tr>
         <td id="Llvm_NET_Interop_LibLLVMValueKind_MulKind">MulKind</td>
-        <td></td>
+        <td><p>TODO: Provide summary for LibLLVMValueKind.MulKind Enumeration</p>
+</td>
       </tr>
       <tr>
         <td id="Llvm_NET_Interop_LibLLVMValueKind_OrKind">OrKind</td>
-        <td></td>
+        <td><p>TODO: Provide summary for LibLLVMValueKind.OrKind Enumeration</p>
+</td>
       </tr>
       <tr>
         <td id="Llvm_NET_Interop_LibLLVMValueKind_PHIKind">PHIKind</td>
-        <td></td>
+        <td><p>TODO: Provide summary for LibLLVMValueKind.PHIKind Enumeration</p>
+</td>
       </tr>
       <tr>
         <td id="Llvm_NET_Interop_LibLLVMValueKind_PtrToIntKind">PtrToIntKind</td>
-        <td></td>
+        <td><p>TODO: Provide summary for LibLLVMValueKind.PtrToIntKind Enumeration</p>
+</td>
       </tr>
       <tr>
         <td id="Llvm_NET_Interop_LibLLVMValueKind_ResumeKind">ResumeKind</td>
-        <td></td>
+        <td><p>TODO: Provide summary for LibLLVMValueKind.ResumeKind Enumeration</p>
+</td>
       </tr>
       <tr>
         <td id="Llvm_NET_Interop_LibLLVMValueKind_RetKind">RetKind</td>
-        <td></td>
+        <td><p>TODO: Provide summary for LibLLVMValueKind.RetKind Enumeration</p>
+</td>
       </tr>
       <tr>
         <td id="Llvm_NET_Interop_LibLLVMValueKind_SDivKind">SDivKind</td>
-        <td></td>
+        <td><p>TODO: Provide summary for LibLLVMValueKind.SDivKind Enumeration</p>
+</td>
       </tr>
       <tr>
         <td id="Llvm_NET_Interop_LibLLVMValueKind_SelectKind">SelectKind</td>
-        <td></td>
+        <td><p>TODO: Provide summary for LibLLVMValueKind.SelectKind Enumeration</p>
+</td>
       </tr>
       <tr>
         <td id="Llvm_NET_Interop_LibLLVMValueKind_SExtKind">SExtKind</td>
-        <td></td>
+        <td><p>TODO: Provide summary for LibLLVMValueKind.SExtKind Enumeration</p>
+</td>
       </tr>
       <tr>
         <td id="Llvm_NET_Interop_LibLLVMValueKind_ShlKind">ShlKind</td>
-        <td></td>
+        <td><p>TODO: Provide summary for LibLLVMValueKind.ShlKind Enumeration</p>
+</td>
       </tr>
       <tr>
         <td id="Llvm_NET_Interop_LibLLVMValueKind_ShuffleVectorKind">ShuffleVectorKind</td>
-        <td></td>
+        <td><p>TODO: Provide summary for LibLLVMValueKind.ShuffleVectorKind Enumeration</p>
+</td>
       </tr>
       <tr>
         <td id="Llvm_NET_Interop_LibLLVMValueKind_SIToFPKind">SIToFPKind</td>
-        <td></td>
+        <td><p>TODO: Provide summary for LibLLVMValueKind.SIToFPKind Enumeration</p>
+</td>
       </tr>
       <tr>
         <td id="Llvm_NET_Interop_LibLLVMValueKind_SRemKind">SRemKind</td>
-        <td></td>
+        <td><p>TODO: Provide summary for LibLLVMValueKind.SRemKind Enumeration</p>
+</td>
       </tr>
       <tr>
         <td id="Llvm_NET_Interop_LibLLVMValueKind_StoreKind">StoreKind</td>
-        <td></td>
+        <td><p>TODO: Provide summary for LibLLVMValueKind.StoreKind Enumeration</p>
+</td>
       </tr>
       <tr>
         <td id="Llvm_NET_Interop_LibLLVMValueKind_SubKind">SubKind</td>
-        <td></td>
+        <td><p>TODO: Provide summary for LibLLVMValueKind.SubKind Enumeration</p>
+</td>
       </tr>
       <tr>
         <td id="Llvm_NET_Interop_LibLLVMValueKind_SwitchKind">SwitchKind</td>
-        <td></td>
+        <td><p>TODO: Provide summary for LibLLVMValueKind.SwitchKind Enumeration</p>
+</td>
       </tr>
       <tr>
         <td id="Llvm_NET_Interop_LibLLVMValueKind_TruncKind">TruncKind</td>
-        <td></td>
+        <td><p>TODO: Provide summary for LibLLVMValueKind.TruncKind Enumeration</p>
+</td>
       </tr>
       <tr>
         <td id="Llvm_NET_Interop_LibLLVMValueKind_UDivKind">UDivKind</td>
-        <td></td>
+        <td><p>TODO: Provide summary for LibLLVMValueKind.UDivKind Enumeration</p>
+</td>
       </tr>
       <tr>
         <td id="Llvm_NET_Interop_LibLLVMValueKind_UIToFPKind">UIToFPKind</td>
-        <td></td>
+        <td><p>TODO: Provide summary for LibLLVMValueKind.UIToFPKind Enumeration</p>
+</td>
       </tr>
       <tr>
         <td id="Llvm_NET_Interop_LibLLVMValueKind_UndefValueKind">UndefValueKind</td>
-        <td></td>
+        <td><p>TODO: Provide summary for LibLLVMValueKind.UndefValueKind Enumeration</p>
+</td>
       </tr>
       <tr>
         <td id="Llvm_NET_Interop_LibLLVMValueKind_UnreachableKind">UnreachableKind</td>
-        <td></td>
+        <td><p>TODO: Provide summary for LibLLVMValueKind.UnreachableKind Enumeration</p>
+</td>
       </tr>
       <tr>
         <td id="Llvm_NET_Interop_LibLLVMValueKind_URemKind">URemKind</td>
-        <td></td>
+        <td><p>TODO: Provide summary for LibLLVMValueKind.URemKind Enumeration</p>
+</td>
       </tr>
       <tr>
         <td id="Llvm_NET_Interop_LibLLVMValueKind_UserOp1Kind">UserOp1Kind</td>
-        <td></td>
+        <td><p>TODO: Provide summary for LibLLVMValueKind.UserOp1Kind Enumeration</p>
+</td>
       </tr>
       <tr>
         <td id="Llvm_NET_Interop_LibLLVMValueKind_UserOp2Kind">UserOp2Kind</td>
-        <td></td>
+        <td><p>TODO: Provide summary for LibLLVMValueKind.UserOp2Kind Enumeration</p>
+</td>
       </tr>
       <tr>
         <td id="Llvm_NET_Interop_LibLLVMValueKind_VAArgKind">VAArgKind</td>
-        <td></td>
+        <td><p>TODO: Provide summary for LibLLVMValueKind.VAArgKind Enumeration</p>
+</td>
       </tr>
       <tr>
         <td id="Llvm_NET_Interop_LibLLVMValueKind_XorKind">XorKind</td>
-        <td></td>
+        <td><p>TODO: Provide summary for LibLLVMValueKind.XorKind Enumeration</p>
+</td>
       </tr>
       <tr>
         <td id="Llvm_NET_Interop_LibLLVMValueKind_ZExtKind">ZExtKind</td>
-        <td></td>
+        <td><p>TODO: Provide summary for LibLLVMValueKind.ZExtKind Enumeration</p>
+</td>
       </tr>
   </table>
   
@@ -9071,7 +9206,7 @@ supports a method to get at the underlying value.
             <span class="pull-right">
               <a href="#top">Back to top</a>
             </span>
-            Copyright (C) 2017-2019, Ubiquity.NET Contributors<br><strong>Build:</strong> 8.0.0-alpha.0.0.ci-BLD.466518031
+            Copyright (C) 2017-2019, Ubiquity.NET Contributors<br><strong>Build:</strong> 8.0.0-alpha.0.0.ci-BLD.467039418
             
           </div>
         </div>
