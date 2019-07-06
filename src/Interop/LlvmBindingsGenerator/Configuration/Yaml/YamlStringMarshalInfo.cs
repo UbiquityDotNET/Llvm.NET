@@ -5,13 +5,15 @@
 // -----------------------------------------------------------------------
 
 using System.Collections.Generic;
+using System.Diagnostics;
+using System.Diagnostics.CodeAnalysis;
 using System.Runtime.InteropServices;
 using System.Text;
 using CppSharp.AST;
 using LlvmBindingsGenerator.CppSharpExtensions;
 using LlvmBindingsGenerator.Templates;
 
-namespace LlvmBindingsGenerator
+namespace LlvmBindingsGenerator.Configuration
 {
     internal enum StringDisposal
     {
@@ -21,27 +23,12 @@ namespace LlvmBindingsGenerator
         DisposeErrorMesage
     }
 
-    internal class StringMarshalInfo
-        : MarshalInfoBase
+    [SuppressMessage( "Performance", "CA1812:Avoid uninstantiated internal classes", Justification = "Instantiated via de-serialization" )]
+    [DebuggerDisplay( "string=>{Kind}" )]
+    internal class YamlStringMarshalInfo
+        : YamlBindingTransform
     {
-        public StringMarshalInfo( string functionName, StringDisposal disposalKind = StringDisposal.CopyAlias )
-            : this(functionName, string.Empty, ParamSemantics.Return, disposalKind )
-        {
-        }
-
-        public StringMarshalInfo( string functionName, string paramName, ParamSemantics semantics, StringDisposal disposalKind = StringDisposal.CopyAlias )
-            : base( functionName, paramName, semantics )
-        {
-            DisposalKind = disposalKind;
-        }
-
-        public StringDisposal DisposalKind { get; }
-
-        public override QualifiedType TransformType( QualifiedType type )
-        {
-            var transformedType = Semantics == ParamSemantics.InOut ? StringBuilderType : StringType;
-            return new QualifiedType( transformedType );
-        }
+        public StringDisposal Kind { get; set; }
 
         public override IEnumerable<Attribute> Attributes
         {
@@ -55,7 +42,7 @@ namespace LlvmBindingsGenerator
                     break;
                 case ParamSemantics.Return:
                 case ParamSemantics.Out:
-                    var (marshalClassName, _) = StringDisposalMarshalerMap.LookupMarshaler( DisposalKind );
+                    var (marshalClassName, _) = StringDisposalMarshalerMap.LookupMarshaler( Kind );
                     args.Add( "UnmanagedType.CustomMarshaler" );
                     args.Add( $"MarshalTypeRef = typeof( {marshalClassName} )" );
                     break;
@@ -64,12 +51,17 @@ namespace LlvmBindingsGenerator
                     yield break;
                 }
 
-                yield return new TargetedAttribute(
-                    Semantics == ParamSemantics.Return ? AttributeTarget.Return : AttributeTarget.Default,
-                    typeof( MarshalAsAttribute ),
-                    args
-                    );
+                yield return new TargetedAttribute( Semantics == ParamSemantics.Return ? AttributeTarget.Return : AttributeTarget.Default
+                                                  , typeof( MarshalAsAttribute )
+                                                  , args
+                                                  );
             }
+        }
+
+        public override QualifiedType TransformType( QualifiedType type )
+        {
+            var transformedType = Semantics == ParamSemantics.InOut ? StringBuilderType : StringType;
+            return new QualifiedType( transformedType );
         }
 
         private static readonly CILType StringType = new CILType( typeof( string ) );

@@ -5,6 +5,7 @@
 // -----------------------------------------------------------------------
 
 using System.Collections.Generic;
+using System.Linq;
 using CppSharp.AST;
 using CppSharp.Passes;
 
@@ -14,7 +15,7 @@ namespace LlvmBindingsGenerator.Passes
     internal class IgnoreSystemHeadersPass
         : TranslationUnitPass
     {
-        public IgnoreSystemHeadersPass(ISet<string> ignoredHeaders)
+        public IgnoreSystemHeadersPass(IReadOnlyCollection<string> ignoredHeaders)
         {
             IgnoredHeaders = ignoredHeaders;
         }
@@ -53,6 +54,6 @@ namespace LlvmBindingsGenerator.Passes
             return true;
         }
 
-        private readonly ISet<string> IgnoredHeaders;
+        private readonly IReadOnlyCollection<string> IgnoredHeaders;
     }
 }

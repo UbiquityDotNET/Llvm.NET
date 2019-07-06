@@ -15,9 +15,12 @@ namespace Llvm.NET.Instructions
     public class CleanupReturn
         : Terminator
     {
-        /// <summary>Gets the <see cref="CleanupPad"/> for this instruction</summary>
-        public CleanupPad CleanupPad => GetOperand<CleanupPad>( 0 );
-        /* TODO: CleanupPad { set; } */
+        /// <summary>Gets or sets the <see cref="CleanupPad"/> for this instruction</summary>
+        public CleanupPad CleanupPad
+        {
+            get => GetOperand<CleanupPad>( 0 );
+            set => SetOperand( 0, value );
+        }
 
         /* TODO: Enable UnwindDestination once the non-operand properties are enabled
             BasicBlock UnwindDestination

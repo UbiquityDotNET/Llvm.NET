@@ -9,6 +9,7 @@ using System.Runtime.InteropServices;
 using CppSharp;
 using CppSharp.AST;
 using CppSharp.Passes;
+using LlvmBindingsGenerator.Configuration;
 using LlvmBindingsGenerator.CppSharpExtensions;
 
 namespace LlvmBindingsGenerator.Passes
@@ -16,7 +17,7 @@ namespace LlvmBindingsGenerator.Passes
     internal class ConvertLLVMBoolPass
         : TranslationUnitPass
     {
-        public ConvertLLVMBoolPass( ISet<string> functionNames )
+        public ConvertLLVMBoolPass( IGeneratorConfig config )
         {
             VisitOptions.VisitClassBases = false;
             VisitOptions.VisitClassFields = false;
@@ -34,7 +35,7 @@ namespace LlvmBindingsGenerator.Passes
             VisitOptions.VisitPropertyAccessors = false;
             VisitOptions.VisitTemplateArguments = false;
 
-            FunctionNames = functionNames;
+            Configuration = config;
         }
 
         public override bool VisitASTContext( ASTContext context )
@@ -55,7 +56,7 @@ namespace LlvmBindingsGenerator.Passes
             // Any function listed in the map is converted regardless of declared return type
             // Some functions use int instead of LLVMBool, apparently to avoid the confusion.
             // Unfortunately since this is not consistent, it creates more confusion.
-            case Type _ when FunctionNames.Contains( function.Name ):
+            case Type _ when IsStatusReturning( function ):
                 function.ReturnType = LlvmStatusType;
                 signature.ReturnType = function.ReturnType;
                 Diagnostics.Debug( "Converted return type of function {0} to LLVMStatus", function.Name );
@@ -83,7 +84,13 @@ namespace LlvmBindingsGenerator.Passes
             return true;
         }
 
-        private readonly ISet<string> FunctionNames;
+        private bool IsStatusReturning( Function function )
+        {
+            return Configuration.FunctionBindings.TryGetValue( function.Name, out YamlFunctionBinding binding )
+                   && binding.ReturnTransform is YamlReturnStatusMarshalInfo;
+        }
+
+        private readonly IGeneratorConfig Configuration;
         private static QualifiedType BoolType = new QualifiedType( new CILType( typeof(bool ) ) );
         private static QualifiedType LlvmStatusType =
             new QualifiedType(

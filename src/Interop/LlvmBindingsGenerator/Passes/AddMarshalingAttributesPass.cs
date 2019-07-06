@@ -12,6 +12,7 @@ using CppSharp;
 using CppSharp.AST;
 using CppSharp.AST.Extensions;
 using CppSharp.Passes;
+using LlvmBindingsGenerator.Configuration;
 using LlvmBindingsGenerator.CppSharpExtensions;
 
 namespace LlvmBindingsGenerator.Passes
@@ -19,7 +20,7 @@ namespace LlvmBindingsGenerator.Passes
     internal class AddMarshalingAttributesPass
         : TranslationUnitPass
     {
-        public AddMarshalingAttributesPass( MarshalingInfoMap marshalInfo )
+        public AddMarshalingAttributesPass( IGeneratorConfig configuration )
         {
             VisitOptions.VisitClassBases = false;
             VisitOptions.VisitClassMethods = false;
@@ -36,7 +37,7 @@ namespace LlvmBindingsGenerator.Passes
             VisitOptions.VisitPropertyAccessors = false;
             VisitOptions.VisitTemplateArguments = false;
 
-            ParamMarshalingMap = marshalInfo;
+            Configuration = configuration;
         }
 
         // Add LayoutKind.Sequential to all value types
@@ -117,9 +118,9 @@ namespace LlvmBindingsGenerator.Passes
             var scope = DeclarationStack.Peek( );
 
             // mapped settings override any implicit handling
-            if( ParamMarshalingMap.TryGetValue( scope.Name, parameter.Index, out IMarshalInfo marshalInfo ) )
+            if( TryGetTransformInfo( scope.Name, parameter.Name, out YamlBindingTransform xform ) )
             {
-                ApplyParameterMarshaling( parameter, marshalInfo );
+                ApplyParameterMarshaling( parameter, xform );
             }
             else
             {
@@ -132,10 +133,10 @@ namespace LlvmBindingsGenerator.Passes
         private bool VisitReturnType( FunctionType signature )
         {
             var scope = DeclarationStack.Peek( );
-            if( ParamMarshalingMap.TryGetValue( scope.Name, MarshalingInfoMap.ReturnParamIndex, out IMarshalInfo marshalInfo ) )
+            if(TryGetTransformInfo(scope.Name, out YamlBindingTransform xform))
             {
-                signature.ReturnType = marshalInfo.TransformType( signature.ReturnType );
-                scope.Attributes.AddRange( marshalInfo.Attributes );
+                signature.ReturnType = xform.TransformType( signature.ReturnType );
+                scope.Attributes.AddRange( xform.Attributes );
                 if( scope is Function f )
                 {
                     // sadly the CppSharp AST treats Function.ReturnType distinct from Function.FunctionType.ReturnType.
@@ -191,15 +192,12 @@ namespace LlvmBindingsGenerator.Passes
             }
         }
 
-        private static void ApplyParameterMarshaling( Parameter parameter, IMarshalInfo marshaling )
+        private static void ApplyParameterMarshaling( Parameter parameter, YamlBindingTransform marshaling )
         {
             parameter.Attributes.AddRange( marshaling.Attributes );
             parameter.QualifiedType = marshaling.TransformType( parameter.QualifiedType );
             switch( marshaling.Semantics )
             {
-            case ParamSemantics.Return:
-                break;
-
             case ParamSemantics.In:
                 parameter.Usage = ParameterUsage.In;
                 break;
@@ -234,6 +232,30 @@ namespace LlvmBindingsGenerator.Passes
             function.Attributes.Add( new TargetedAttribute( typeof( DllImportAttribute ), args ) );
         }
 
+        private bool TryGetTransformInfo( string functionName, string paramName, out YamlBindingTransform xform )
+        {
+            xform = null;
+            return Configuration.FunctionBindings.TryGetValue( functionName, out YamlFunctionBinding binding )
+                && binding.ParamTransforms.TryGetValue( paramName, out xform );
+        }
+
+        private bool TryGetTransformInfo( string name, out YamlBindingTransform xform )
+        {
+            xform = null;
+            if( !Configuration.FunctionBindings.TryGetValue( name, out YamlFunctionBinding binding ) )
+            {
+                return false;
+            }
+
+            if( binding.ReturnTransform == null )
+            {
+                return false;
+            }
+
+            xform = binding.ReturnTransform;
+            return true;
+        }
+
         private static CppSharp.AST.Attribute SuppressUnmanagedSecAttrib { get; }
             = new CppSharp.AST.Attribute( )
             {
@@ -241,7 +263,7 @@ namespace LlvmBindingsGenerator.Passes
                 Value = string.Empty
             };
 
-        private readonly MarshalingInfoMap ParamMarshalingMap;
+        private readonly IGeneratorConfig Configuration;
 
         private readonly Stack<Declaration> DeclarationStack = new Stack<Declaration>();
 

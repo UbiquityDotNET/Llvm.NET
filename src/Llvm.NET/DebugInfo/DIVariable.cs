@@ -4,7 +4,10 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
+using System;
 using Llvm.NET.Interop;
+
+using static Llvm.NET.Interop.NativeMethods;
 
 namespace Llvm.NET.DebugInfo
 {
@@ -12,7 +15,8 @@ namespace Llvm.NET.DebugInfo
     public class DIVariable
         : DINode
     {
-        /* TODO: UInt32 Line => NativeMethods.LLVMDIVariableGetLine( MetadataHandle ); */
+        /// <summary>Gets the line for the variable</summary>
+        public UInt32 Line => LibLLVMDIVariableGetLine( MetadataHandle );
 
         /// <summary>Gets the Debug information scope for this variable</summary>
         public DIScope Scope => Operands[ 0 ] as DIScope;

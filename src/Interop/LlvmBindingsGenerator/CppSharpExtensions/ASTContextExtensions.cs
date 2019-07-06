@@ -126,5 +126,20 @@ namespace LlvmBindingsGenerator
 
             return false;
         }
+
+        public static FunctionType GetFunctionPointerType( this TypedefNameDecl td )
+        {
+            return (td.Type is PointerType pt && pt.Pointee is FunctionType ft) ? ft : null;
+        }
+
+        public static IReadOnlyDictionary<string, FunctionType> GetFunctionPointers(this ASTContext context)
+        {
+            return ( from tu in context.TranslationUnits
+                     from td in tu.Typedefs
+                     let ft = td.GetFunctionPointerType( )
+                     where ft != null
+                     select (td.Name, Signature: ft)
+                   ).ToDictionary( item => item.Name, item => item.Signature );
+        }
     }
 }

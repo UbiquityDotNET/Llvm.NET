@@ -36,6 +36,11 @@
         <PackageReference Include="System.Memory" />
     </ItemGroup>
     <ItemGroup>
+      <ProjectReference Include="..\Interop\Llvm.NET.Interop\Llvm.NET.Interop.csproj" >
+          <Private>true</Private>
+      </ProjectReference>
+    </ItemGroup>
+    <ItemGroup>
         <Compile Update="Properties\Resources.Designer.cs">
             <DesignTime>True</DesignTime>
             <AutoGen>True</AutoGen>
@@ -48,23 +53,6 @@
             <LastGenOutput>Resources.Designer.cs</LastGenOutput>
         </EmbeddedResource>
     </ItemGroup>
-    <Choose>
-        <!--
-          For VS developer builds allow range, including pre-release builds to simplify development
-          Local dev builds are generated with a version that has a higher precedence then other builds
-        -->
-        <When Condition="'$(PackageVersion)'==''">
-            <ItemGroup>
-                <PackageReference Include="Llvm.NET.Interop" VersionOverride="[8.0.0-*,9)" />
-            </ItemGroup>
-        </When>
-        <Otherwise>
-            <ItemGroup>
-                <PackageReference Include="Llvm.NET.Interop" VersionOverride="$(PackageVersion)" />
-            </ItemGroup>
-        </Otherwise>
-    </Choose>
-
     <!--
     Version numbers are computed at build time after any declarative properties are evaluated
     so this is needed to update the NuSpec properties with the dynamically generated values

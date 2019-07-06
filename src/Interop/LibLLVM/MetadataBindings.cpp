@@ -277,4 +277,9 @@ extern "C"
         auto pExp = unwrap<DIGlobalVariableExpression>( metadataHandle );
         return wrap( pExp->getVariable( ) );
     }
+
+    uint32_t LibLLVMDIVariableGetLine( LLVMMetadataRef /*DIVariable*/ metadataHandle)
+    {
+        return unwrap<DIVariable>( metadataHandle )->getLine();
+    }
 }

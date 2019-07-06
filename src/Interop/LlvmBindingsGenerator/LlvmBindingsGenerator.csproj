@@ -2,6 +2,7 @@
     <Sdk Name="Microsoft.Build.CentralPackageVersions" />
     <PropertyGroup>
         <OutputType>Exe</OutputType>
+        <!--Due to current limitations of the CppSharp library NUGET package, this only supports the Windows Desktop .NET Framework (64 bit)-->
         <TargetFrameworks>net47</TargetFrameworks>
         <LangVersion>7.3</LangVersion>
         <AllowUnsafeBlocks>false</AllowUnsafeBlocks>
@@ -16,9 +17,18 @@
     <ItemGroup>
         <PackageReference Include="Ubiquity.ArgValidators" />
         <PackageReference Include="CppSharp" />
+        <PackageReference Include="YamlDotNet" />
+    </ItemGroup>
+    <ItemGroup>
+      <Reference Include="System.ComponentModel.Annotations">
+        <HintPath>C:\Program Files\dotnet\sdk\NuGetFallbackFolder\microsoft.netcore.app\2.1.0\ref\netcoreapp2.1\System.ComponentModel.Annotations.dll</HintPath>
+      </Reference>
     </ItemGroup>
     <!-- Runtime T4 templates need to specify the single file generator for the code behind -->
     <ItemGroup>
+        <None Update="BindingsConfig.yml">
+          <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+        </None>
         <None Update="Templates\T4\ContextHandleTemplate.tt">
             <Generator>TextTemplatingFilePreprocessor</Generator>
             <LastGenOutput>ContextHandleTemplate.cs</LastGenOutput>

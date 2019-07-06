@@ -6,8 +6,10 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using CppSharp.AST;
 using CppSharp.Passes;
+using LlvmBindingsGenerator.Configuration;
 using LlvmBindingsGenerator.CppSharpExtensions;
 
 namespace LlvmBindingsGenerator.Passes
@@ -15,7 +17,7 @@ namespace LlvmBindingsGenerator.Passes
     internal class MarkDeprecatedFunctionsAsObsoletePass
         : TranslationUnitPass
     {
-        public MarkDeprecatedFunctionsAsObsoletePass( IReadOnlyDictionary<string, string> map, bool ignoreObsolete )
+        public MarkDeprecatedFunctionsAsObsoletePass( IGeneratorConfig config, bool ignoreObsolete )
         {
             VisitOptions.VisitClassBases = false;
             VisitOptions.VisitClassFields = false;
@@ -33,7 +35,11 @@ namespace LlvmBindingsGenerator.Passes
             VisitOptions.VisitPropertyAccessors = false;
             VisitOptions.VisitTemplateArguments = false;
 
-            Map = map;
+            Map = ( from f in config.FunctionBindings.Values
+                    where f.IsObsolete && f.IsProjected
+                    select f
+                  ).ToDictionary( f => f.Name, f => f.DeprecationMessage );
+
             IgnoreObsoleteFunctions = ignoreObsolete;
         }
 

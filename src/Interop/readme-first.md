@@ -69,13 +69,15 @@ understanding it is a more complex matter this document is aimed towards.
 
 ### Manually (developer inner loop)
 While it is possible to use the PowerShell script as part of the development of the interop libraries themselves,
-it is generally easier to use the Interop.sln. The solution contains projects for the native libraries, the
-bindings generator and the managed interop. Using the solution requires that you manually build/run the projects.
+it is generally easier to use the solution file. The solution contains projects for the native libraries, the
+bindings generator and the managed interop. _**Using the solution requires that you manually build/run the projects
+in the correct order to get changes to propagate correctly.**_
 
 1. Build LlvmBindingsGenerator project
 2. Run LlvmBindingsGenerator (via command line or debugger launch) with the location of the LLVM headers, the
 LibLLVM headers, and the output location of generated code for the Llvm.NET.Interop project.
-     1. This, generates C# interop source files AND also generates the native C++ EXPORTS.DEF for the LibLLVM library
+     1. (See above for full command line options for LlvmBindingsGenerator)
+     2. This, generates C# interop source files AND also generates the native C++ EXPORTS.DEF for the LibLLVM library
 and therefore, must run before building either of the other libraries.
 3. Build LibLLVM project for all architectures and configurations.
    1. At present the only supported runtime and architecture is Windows 64bit so batch building, etc.. isn't required.

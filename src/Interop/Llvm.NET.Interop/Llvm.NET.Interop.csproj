@@ -22,9 +22,11 @@
   <ItemGroup>
     <Content Include="..\..\..\BuildOutput\bin\LibLLVM\$(Configuration)\x64\LibLLVM.dll" Link="runtimes\win-x64\native\LibLLVM.dll">
         <PackagePath>runtimes\win-x64\native</PackagePath>
+        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="..\..\..\BuildOutput\bin\LibLLVM\$(Configuration)\x64\LibLLVM.pdb" Link="runtimes\win-x64\native\LibLLVM.pdb">
         <PackagePath>runtimes\win-x64\native</PackagePath>
+        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="NugetPkg\build\Llvm.NET.Interop.props">
         <PackagePath>build\Llvm.NET.Interop.props</PackagePath>
@@ -48,14 +50,6 @@
   </ItemGroup>
   <ItemGroup>
       <PackageReference Include="Ubiquity.ArgValidators" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Update="..\..\..\BuildOutput\bin\LibLLVM\Debug\x64\LibLLVM.dll">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Update="..\..\..\BuildOutput\bin\LibLLVM\Debug\x64\LibLLVM.pdb">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
   </ItemGroup>
   <!--
     Version numbers are computed at build time after any declarative properties are evaluated
