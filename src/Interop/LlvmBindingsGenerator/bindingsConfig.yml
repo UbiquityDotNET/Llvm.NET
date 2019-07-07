@@ -1,8 +1,8 @@
 ﻿#FunctionBindings:
 #    - Name: <Function Name>
-#      IsObsolete: [true|false] # indicates if the function is considered obsolete
-#      IsExported: [true|false] # indicates if the function is exported from LibLLVM.dll
-#      IsProjected: [true|false] # indicates if the function is projected to .NET via Llvm.NET.Interop.dll
+#      IsObsolete: [true|false] # indicates if the function is considered obsolete [Default is false]
+#      IsExported: [true|false] # indicates if the function is exported from LibLLVM.dll [ Default is true]
+#      IsProjected: [true|false] # indicates if the function is projected to .NET via Llvm.NET.Interop.dll [Default is true]
 #      ReturnMarshaling: <Marshaling info, see below for details>
 #      ParamMarshaling:
 #        - <Marshaling info, see below for details>
@@ -34,1510 +34,949 @@
 FunctionBindings:
   - Name: LLVMParseBitCode
     IsObsolete: True
-    IsExported: True
-    IsProjected: True
     DeprecationMessage: "Use LLVMParseBitcod2 instead"
 
   - Name: LLVMParseBitcodeInContext
     IsObsolete: True
-    IsExported: True
-    IsProjected: True
     DeprecationMessage: "Use LLVMParseBitcodeInContext2 instead"
     ParamTransforms:
       - !String {Name: OutMessage, Semantics: Out, Kind: DisposeMessage }
 
   - Name: LLVMGetBitcodeModuleInContext
     IsObsolete: True
-    IsExported: True
-    IsProjected: True
     DeprecationMessage: "Use LLVMGetBitcodeModuleInContext2 instead"
     ParamTransforms:
       - !String {Name: OutMessage, Semantics: Out, Kind: DisposeMessage }
 
   - Name: LVMGetBitcodeModule
     IsObsolete: True
-    IsExported: True
-    IsProjected: True
     DeprecationMessage: "Use LLVMGetBitcodeModule2 instead"
 
   - Name: LLVMWriteBitcodeToFileHandle
     IsObsolete: True
-    IsExported: True
-    IsProjected: True
     DeprecationMessage: "Use LLVMWriteBitcodeToFD instead"
     ReturnTransform: !Status {}
 
   - Name: LLVMGetDataLayout
     IsObsolete: True
-    IsExported: True
-    IsProjected: True
     DeprecationMessage: "Use LLVMGetDataLayoutStr instead"
     ReturnTransform: !String {Kind: CopyAlias }
 
   - Name: LLVMSetModuleInlineAsm
     IsObsolete: True
-    IsExported: True
-    IsProjected: True
     DeprecationMessage: "Use LLVMSetModuleInlineAsm2 instead"
 
   - Name: LLVMGetValueName
     IsObsolete: True
-    IsExported: True
-    IsProjected: True
     DeprecationMessage: "Use LLVMGetValueName2 instead"
     ReturnTransform: !String {Kind: CopyAlias }
 
   - Name: LLVMSetValueName
     IsObsolete: True
-    IsExported: True
-    IsProjected: True
     DeprecationMessage: "Use LLVMSetValueName2 instead"
 
   - Name: LLVMConstInlineAsm
     IsObsolete: True
-    IsExported: True
-    IsProjected: True
     DeprecationMessage: "Use LLVMGetInlineAsm instead"
 
   - Name: LLVMHasUnnamedAddr
     IsObsolete: True
-    IsExported: True
-    IsProjected: True
     DeprecationMessage: "Use LLVMGetUnnamedAddress instead"
 
   - Name: LLVMSetUnnamedAddr
     IsObsolete: True
-    IsExported: True
-    IsProjected: True
     DeprecationMessage: "Use LLVMSetUnnamedAddress instead"
 
   - Name: LLVMBuildInvoke
     IsObsolete: True
-    IsExported: True
-    IsProjected: True
     DeprecationMessage: "Use LLVMBuildInvoke2 instead"
 
   - Name: LLVMBuildLoad
     IsObsolete: True
-    IsExported: True
-    IsProjected: True
     DeprecationMessage: "Use LLVMBuildLoad2 instead"
 
   - Name: LLVMBuildGEP
     IsObsolete: True
-    IsExported: True
-    IsProjected: True
     DeprecationMessage: "Use LLVMBuildGEP2 instead"
 
   - Name: LLVMBuildInBoundsGEP
     IsObsolete: True
-    IsExported: True
-    IsProjected: True
     DeprecationMessage: "Use LLVMBuildInBoundsGEP2 instead"
 
   - Name: LLVMBuildStructGEP
     IsObsolete: True
-    IsExported: True
-    IsProjected: True
     DeprecationMessage: "Use LLVMBuildStructGEP2 instead"
 
   - Name: LLVMBuildIntCast
     IsObsolete: True
-    IsExported: True
-    IsProjected: True
     DeprecationMessage: "Use LLVMBuildIntCast2 instead"
 
   - Name: LLVMBuildCall
     IsObsolete: True
-    IsExported: True
-    IsProjected: True
     DeprecationMessage: "Use LLVMBuildCall2 instead"
 
   - Name: LLVMCreateFunctionPassManager
     IsObsolete: True
-    IsExported: True
-    IsProjected: True
     DeprecationMessage: "Use LLVMCreateFunctionPassManagerForModule instead"
 
   - Name: LLVMStartMultithreaded
     IsObsolete: True
-    IsExported: True
-    IsProjected: True
     DeprecationMessage: "This function is deprecated, multi-threading support is a compile-time variable and cannot be changed at run-time"
 
   - Name: LLVMStopMultithreaded
     IsObsolete: True
-    IsExported: True
-    IsProjected: True
     DeprecationMessage: "This function is deprecated, multi-threading support is a compile-time variable and cannot be changed at run-time"
 
   - Name: LLVMDisposeMessage
-    IsObsolete: False
-    IsExported: True
     IsProjected: False
 
   - Name: LLVMDisposeErrorMessage
-    IsObsolete: False
-    IsExported: True
     IsProjected: False
 
   - Name: LLVMConsumeError
-    IsObsolete: False
-    IsExported: True
     IsProjected: False
 
   - Name: LLVMGetErrorMessage
-    IsObsolete: False
-    IsExported: True
     IsProjected: False
 
   - Name: LLVMCreateMessage
-    IsObsolete: False
     IsExported: False
     IsProjected: False
 
   - Name: LLVMOrcDisposeMangledSymbol
-    IsObsolete: False
-    IsExported: True
     IsProjected: False
 
 # LLVMConstGEP2 appears in Core.h, but has no implementation [Go, Figure!]
   - Name: LLVMConstGEP2
-    IsObsolete: False
     IsExported: False
     IsProjected: False
 
 # LLVMConstInBoundsGEP2 appears in Core.h, but has no implementation [Go, Figure!]
   - Name: LLVMConstInBoundsGEP2
-    IsObsolete: False
     IsExported: False
     IsProjected: False
 
   - Name: LLVMOptRemarkVersion
-    IsObsolete: False
     IsExported: False
     IsProjected: False
 
   - Name: llvm_create_optimizer
-    IsObsolete: False
     IsExported: False
     IsProjected: False
 
   - Name: llvm_destroy_optimizer
-    IsObsolete: False
     IsExported: False
     IsProjected: False
 
   - Name: llvm_optimize_modules
-    IsObsolete: False
     IsExported: False
     IsProjected: False
 
   - Name: llvm_read_object_file
-    IsObsolete: False
     IsExported: False
     IsProjected: False
 
   - Name: lto_api_version
-    IsObsolete: False
     IsExported: False
     IsProjected: False
 
   - Name: lto_codegen_add_module
-    IsObsolete: False
     IsExported: False
     IsProjected: False
 
   - Name: lto_codegen_add_must_preserve_symbol
-    IsObsolete: False
     IsExported: False
     IsProjected: False
 
   - Name: lto_codegen_compile
-    IsObsolete: False
     IsExported: False
     IsProjected: False
 
   - Name: lto_codegen_compile_optimized
-    IsObsolete: False
     IsExported: False
     IsProjected: False
 
   - Name: lto_codegen_compile_to_file
-    IsObsolete: False
     IsExported: False
     IsProjected: False
 
   - Name: lto_codegen_create
-    IsObsolete: False
     IsExported: False
     IsProjected: False
 
   - Name: lto_codegen_create_in_local_context
-    IsObsolete: False
     IsExported: False
     IsProjected: False
 
   - Name: lto_codegen_debug_options
-    IsObsolete: False
     IsExported: False
     IsProjected: False
 
   - Name: lto_codegen_dispose
-    IsObsolete: False
     IsExported: False
     IsProjected: False
 
   - Name: lto_codegen_optimize
-    IsObsolete: False
     IsExported: False
     IsProjected: False
 
   - Name: lto_codegen_set_assembler_args
-    IsObsolete: False
     IsExported: False
     IsProjected: False
 
   - Name: lto_codegen_set_assembler_path
-    IsObsolete: False
     IsExported: False
     IsProjected: False
 
   - Name: lto_codegen_set_cpu
-    IsObsolete: False
     IsExported: False
     IsProjected: False
 
   - Name: lto_codegen_set_debug_model
-    IsObsolete: False
     IsExported: False
     IsProjected: False
 
   - Name: lto_codegen_set_diagnostic_handler
-    IsObsolete: False
     IsExported: False
     IsProjected: False
 
   - Name: lto_codegen_set_module
-    IsObsolete: False
     IsExported: False
     IsProjected: False
 
   - Name: lto_codegen_set_pic_model
-    IsObsolete: False
     IsExported: False
     IsProjected: False
 
   - Name: lto_codegen_set_should_embed_uselists
-    IsObsolete: False
     IsExported: False
     IsProjected: False
 
   - Name: lto_codegen_set_should_internalize
-    IsObsolete: False
     IsExported: False
     IsProjected: False
 
   - Name: lto_codegen_write_merged_modules
-    IsObsolete: False
     IsExported: False
     IsProjected: False
 
   - Name: lto_get_error_message
-    IsObsolete: False
     IsExported: False
     IsProjected: False
     ReturnTransform: !String {Kind: CopyAlias }
 
   - Name: lto_get_version
-    IsObsolete: False
     IsExported: False
     IsProjected: False
     ReturnTransform: !String {Kind: CopyAlias }
 
   - Name: lto_initialize_disassembler
-    IsObsolete: False
     IsExported: False
     IsProjected: False
 
   - Name: lto_module_create
-    IsObsolete: False
     IsExported: False
     IsProjected: False
 
   - Name: lto_module_create_from_fd
-    IsObsolete: False
     IsExported: False
     IsProjected: False
 
   - Name: lto_module_create_from_fd_at_offset
-    IsObsolete: False
     IsExported: False
     IsProjected: False
 
   - Name: lto_module_create_from_memory
-    IsObsolete: False
     IsExported: False
     IsProjected: False
 
   - Name: lto_module_create_from_memory_with_path
-    IsObsolete: False
     IsExported: False
     IsProjected: False
 
   - Name: lto_module_create_in_codegen_context
-    IsObsolete: False
     IsExported: False
     IsProjected: False
 
   - Name: lto_module_create_in_local_context
-    IsObsolete: False
     IsExported: False
     IsProjected: False
 
   - Name: lto_module_dispose
-    IsObsolete: False
     IsExported: False
     IsProjected: False
 
   - Name: lto_module_get_linkeropts
-    IsObsolete: False
     IsExported: False
     IsProjected: False
     ReturnTransform: !String {Kind: CopyAlias }
 
   - Name: lto_module_get_num_symbols
-    IsObsolete: False
     IsExported: False
     IsProjected: False
 
   - Name: lto_module_get_symbol_attribute
-    IsObsolete: False
     IsExported: False
     IsProjected: False
 
   - Name: lto_module_get_symbol_name
-    IsObsolete: False
     IsExported: False
     IsProjected: False
     ReturnTransform: !String {Kind: CopyAlias }
 
   - Name: lto_module_get_target_triple
-    IsObsolete: False
     IsExported: False
     IsProjected: False
     ReturnTransform: !String {Kind: CopyAlias }
 
   - Name: lto_module_has_objc_category
-    IsObsolete: False
     IsExported: False
     IsProjected: False
 
   - Name: lto_module_is_object_file
-    IsObsolete: False
     IsExported: False
     IsProjected: False
 
   - Name: lto_module_is_object_file_for_target
-    IsObsolete: False
     IsExported: False
     IsProjected: False
 
   - Name: lto_module_is_object_file_in_memory
-    IsObsolete: False
     IsExported: False
     IsProjected: False
 
   - Name: lto_module_is_object_file_in_memory_for_target
-    IsObsolete: False
     IsExported: False
     IsProjected: False
 
   - Name: lto_module_is_thinlto
-    IsObsolete: False
     IsExported: False
     IsProjected: False
 
   - Name: lto_module_set_target_triple
-    IsObsolete: False
     IsExported: False
     IsProjected: False
 
   - Name: thinlto_codegen_add_cross_referenced_symbol
-    IsObsolete: False
     IsExported: False
     IsProjected: False
 
   - Name: thinlto_codegen_add_module
-    IsObsolete: False
     IsExported: False
     IsProjected: False
 
   - Name: thinlto_codegen_add_must_preserve_symbol
-    IsObsolete: False
     IsExported: False
     IsProjected: False
 
   - Name: thinlto_codegen_disable_codegen
-    IsObsolete: False
     IsExported: False
     IsProjected: False
 
   - Name: thinlto_codegen_dispose
-    IsObsolete: False
     IsExported: False
     IsProjected: False
 
   - Name: thinlto_codegen_process
-    IsObsolete: False
     IsExported: False
     IsProjected: False
 
   - Name: thinlto_codegen_set_cache_dir
-    IsObsolete: False
     IsExported: False
     IsProjected: False
 
   - Name: thinlto_codegen_set_cache_entry_expiration
-    IsObsolete: False
     IsExported: False
     IsProjected: False
 
   - Name: thinlto_codegen_set_cache_pruning_interval
-    IsObsolete: False
     IsExported: False
     IsProjected: False
 
   - Name: thinlto_codegen_set_cache_size_bytes
-    IsObsolete: False
     IsExported: False
     IsProjected: False
 
   - Name: thinlto_codegen_set_cache_size_files
-    IsObsolete: False
     IsExported: False
     IsProjected: False
 
   - Name: thinlto_codegen_set_cache_size_megabytes
-    IsObsolete: False
     IsExported: False
     IsProjected: False
 
   - Name: thinlto_codegen_set_codegen_only
-    IsObsolete: False
     IsExported: False
     IsProjected: False
 
   - Name: thinlto_codegen_set_cpu
-    IsObsolete: False
     IsExported: False
     IsProjected: False
 
   - Name: thinlto_codegen_set_final_cache_size_relative_to_available_space
-    IsObsolete: False
     IsExported: False
     IsProjected: False
 
   - Name: thinlto_codegen_set_pic_model
-    IsObsolete: False
     IsExported: False
     IsProjected: False
 
   - Name: thinlto_codegen_set_savetemps_dir
-    IsObsolete: False
     IsExported: False
     IsProjected: False
 
   - Name: thinlto_create_codegen
-    IsObsolete: False
     IsExported: False
     IsProjected: False
 
   - Name: thinlto_debug_options
-    IsObsolete: False
     IsExported: False
     IsProjected: False
 
   - Name: thinlto_module_get_num_object_files
-    IsObsolete: False
     IsExported: False
     IsProjected: False
 
   - Name: thinlto_module_get_num_objects
-    IsObsolete: False
     IsExported: False
     IsProjected: False
 
   - Name: thinlto_module_get_object
-    IsObsolete: False
     IsExported: False
     IsProjected: False
 
   - Name: thinlto_module_get_object_file
-    IsObsolete: False
     IsExported: False
     IsProjected: False
     ReturnTransform: !String {Kind: CopyAlias }
 
   - Name: thinlto_set_generated_objects_dir
-    IsObsolete: False
     IsExported: False
     IsProjected: False
 
   - Name: LLVMDisposeMemoryBuffer
-    IsObsolete: False
-    IsExported: True
     IsProjected: False
 
   - Name: LLVMContextDispose
-    IsObsolete: False
-    IsExported: True
     IsProjected: False
 
   - Name: LLVMDisposeModule
-    IsObsolete: False
-    IsExported: True
     IsProjected: False
 
   - Name: LLVMDisposeBuilder
-    IsObsolete: False
-    IsExported: True
     IsProjected: False
 
   - Name: LLVMDisposeDIBuilder
-    IsObsolete: False
-    IsExported: True
     IsProjected: False
 
   - Name: LLVMDisposeModuleProvider
-    IsObsolete: False
-    IsExported: True
     IsProjected: False
 
   - Name: LLVMDisposePassManager
-    IsObsolete: False
-    IsExported: True
     IsProjected: False
 
   - Name: LLVMPassRegistryDispose
-    IsObsolete: False
-    IsExported: True
     IsProjected: False
 
   - Name: LLVMDisposeGenericValue
-    IsObsolete: False
-    IsExported: True
     IsProjected: False
 
   - Name: LLVMDisposeExecutionEngine
-    IsObsolete: False
-    IsExported: True
     IsProjected: False
 
   - Name: LLVMDisposeMCJITMemoryManager
-    IsObsolete: False
-    IsExported: True
     IsProjected: False
 
   - Name: LLVMDisposeTargetData
-    IsObsolete: False
-    IsExported: True
     IsProjected: False
 
   - Name: LLVMDisposeTargetMachine
-    IsObsolete: False
-    IsExported: True
     IsProjected: False
 
   - Name: LLVMDisposeObjectFile
-    IsObsolete: False
-    IsExported: True
     IsProjected: False
 
   - Name: LLVMDisposeSectionIterator
-    IsObsolete: False
-    IsExported: True
     IsProjected: False
 
   - Name: LLVMDisposeSymbolIterator
-    IsObsolete: False
-    IsExported: True
     IsProjected: False
 
   - Name: LLVMDisposeRelocationIterator
-    IsObsolete: False
-    IsExported: True
     IsProjected: False
 
   - Name: LLVMOptRemarkParserDispose
-    IsObsolete: False
-    IsExported: True
     IsProjected: False
 
   - Name: LLVMOrcDisposeInstance
-    IsObsolete: False
-    IsExported: True
     IsProjected: False
 
   - Name: LLVMPassManagerBuilderDispose
-    IsObsolete: False
-    IsExported: True
     IsProjected: False
 
   - Name: LLVMDisposeValueMetadataEntries
-    IsObsolete: False
-    IsExported: True
     IsProjected: False
 
   - Name: LLVMDisposeModuleFlagsMetadata
-    IsObsolete: False
-    IsExported: True
     IsProjected: False
 
   - Name: LLVMDisasmDispose
-    IsObsolete: False
-    IsExported: True
     IsProjected: False
 
   - Name: LibLLVMDisposeTriple
-    IsObsolete: False
-    IsExported: True
     IsProjected: False
 
   - Name: LibLLVMDisposeValueCache
-    IsObsolete: False
-    IsExported: True
     IsProjected: False
 
   - Name: LLVMVerifyModule
-    IsObsolete: False
-    IsExported: True
-    IsProjected: True
     ReturnTransform: !Status {}
     ParamTransforms:
       - !String {Name: OutMessage, Semantics: Out, Kind: DisposeMessage }
 
   - Name: LLVMParseBitcode
-    IsObsolete: False
-    IsExported: True
-    IsProjected: True
     ParamTransforms:
       - !String {Name: OutMessage, Semantics: Out, Kind: DisposeMessage }
 
   - Name: LLVMGetBitcodeModule
-    IsObsolete: False
-    IsExported: True
-    IsProjected: True
     ParamTransforms:
       - !String {Name: OutMessage, Semantics: Out, Kind: DisposeMessage }
 
   - Name: LLVMPrintModuleToFile
-    IsObsolete: False
-    IsExported: True
-    IsProjected: True
     ReturnTransform: !Status {}
     ParamTransforms:
       - !String {Name: ErrorMessage, Semantics: Out, Kind: DisposeMessage }
 
   - Name: LLVMCreateMemoryBufferWithContentsOfFile
-    IsObsolete: False
-    IsExported: True
-    IsProjected: True
     ReturnTransform: !Status {}
     ParamTransforms:
       - !String {Name: OutMessage, Semantics: Out, Kind: DisposeMessage }
 
   - Name: LLVMCreateMemoryBufferWithSTDIN
-    IsObsolete: False
-    IsExported: True
-    IsProjected: True
     ReturnTransform: !Status {}
     ParamTransforms:
       - !String {Name: OutMessage, Semantics: Out, Kind: DisposeMessage }
 
   - Name: LLVMCreateExecutionEngineForModule
-    IsObsolete: False
-    IsExported: True
-    IsProjected: True
     ReturnTransform: !Status {}
     ParamTransforms:
       - !String {Name: OutError, Semantics: Out, Kind: DisposeMessage }
 
   - Name: LLVMCreateInterpreterForModule
-    IsObsolete: False
-    IsExported: True
-    IsProjected: True
     ReturnTransform: !Status {}
     ParamTransforms:
       - !String {Name: OutError, Semantics: Out, Kind: DisposeMessage }
 
   - Name: LLVMCreateJITCompilerForModule
-    IsObsolete: False
-    IsExported: True
-    IsProjected: True
     ReturnTransform: !Status {}
     ParamTransforms:
       - !String {Name: OutError, Semantics: Out, Kind: DisposeMessage }
 
   - Name: LLVMCreateMCJITCompilerForModule
-    IsObsolete: False
-    IsExported: True
-    IsProjected: True
     ReturnTransform: !Status {}
     ParamTransforms:
       - !String {Name: OutError, Semantics: Out, Kind: DisposeMessage }
 
   - Name: LLVMRemoveModule
-    IsObsolete: False
-    IsExported: True
-    IsProjected: True
     ReturnTransform: !Status {}
     ParamTransforms:
       - !String {Name: OutError, Semantics: Out, Kind: DisposeMessage }
 
   - Name: LLVMGetTargetFromTriple
-    IsObsolete: False
-    IsExported: True
-    IsProjected: True
     ReturnTransform: !Status {}
     ParamTransforms:
       - !String {Name: ErrorMessage, Semantics: Out, Kind: DisposeMessage }
 
   - Name: LLVMTargetMachineEmitToFile
-    IsObsolete: False
-    IsExported: True
-    IsProjected: True
     ReturnTransform: !Status {}
     ParamTransforms:
       - !String {Name: ErrorMessage, Semantics: Out, Kind: DisposeMessage }
       - !String {Name: Filename, Semantics: In, Kind: CopyAlias }
 
   - Name: LLVMTargetMachineEmitToMemoryBuffer
-    IsObsolete: False
-    IsExported: True
-    IsProjected: True
     ReturnTransform: !Status {}
     ParamTransforms:
       - !String {Name: ErrorMessage, Semantics: Out, Kind: DisposeMessage }
 
   - Name: LLVMParseIRInContext
-    IsObsolete: False
-    IsExported: True
-    IsProjected: True
     ReturnTransform: !Status {}
     ParamTransforms:
       - !String {Name: OutMessage, Semantics: Out, Kind: DisposeMessage }
 
   - Name: LLVMOrcGetMangledSymbol
-    IsObsolete: False
-    IsExported: True
-    IsProjected: True
     ParamTransforms:
       - !String {Name: MangledSymbol, Semantics: Out, Kind: OrcDisposeMangledSymbol }
 
   - Name: LLVMGetInlineAsm
-    IsObsolete: False
-    IsExported: True
-    IsProjected: True
     ParamTransforms:
       - !String {Name: AsmString, Semantics: In, Kind: CopyAlias }
       - !String {Name: Constraints, Semantics: In, Kind: CopyAlias }
 
   - Name: LLVMDisasmInstruction
-    IsObsolete: False
-    IsExported: True
-    IsProjected: True
     ParamTransforms:
       - !String {Name: OutString, Semantics: InOut, Kind: CopyAlias }
       - !Primitive { Name: Bytes, Semantics: In, Kind: IntPtr }
 
   - Name: LibLLVMVerifyFunctionEx
-    IsObsolete: False
-    IsExported: True
-    IsProjected: True
     ReturnTransform: !Status {}
     ParamTransforms:
       - !String {Name: OutMessages, Semantics: Out, Kind: DisposeMessage }
 
   - Name: LLVMCopyStringRepOfTargetData
-    IsObsolete: False
-    IsExported: True
-    IsProjected: True
     ReturnTransform: !String {Kind: DisposeMessage }
 
   - Name: LibLLVMMetadataAsString
-    IsObsolete: False
-    IsExported: True
-    IsProjected: True
     ReturnTransform: !String {Kind: DisposeMessage }
 
   - Name: LLVMDIBuilderCreateEnumerationType
-    IsObsolete: False
-    IsExported: True
-    IsProjected: True
     ParamTransforms:
       - !Array {SubType: SysInt, Name: Elements, Semantics: In }
 
   - Name: LLVMDIBuilderCreateSubroutineType
-    IsObsolete: False
-    IsExported: True
-    IsProjected: True
     ParamTransforms:
       - !Array {SubType: SysInt, Name: ParameterTypes, Semantics: In }
 
   - Name: LLVMDIBuilderCreateStructType
-    IsObsolete: False
-    IsExported: True
-    IsProjected: True
     ParamTransforms:
       - !Array {SubType: SysInt, Name: Elements, Semantics: In }
 
   - Name: LLVMDIBuilderCreateUnionType
-    IsObsolete: False
-    IsExported: True
-    IsProjected: True
     ParamTransforms:
       - !Array {SubType: SysInt, Name: Elements, Semantics: In }
 
   - Name: LLVMDIBuilderCreateArrayType
-    IsObsolete: False
-    IsExported: True
-    IsProjected: True
     ParamTransforms:
       - !Array {SubType: SysInt, Name: Subscripts, Semantics: In }
 
   - Name: LLVMDIBuilderCreateVectorType
-    IsObsolete: False
-    IsExported: True
-    IsProjected: True
     ParamTransforms:
       - !Array {SubType: SysInt, Name: Subscripts, Semantics: In }
 
   - Name: LLVMAddInternalizePass
-    IsObsolete: False
-    IsExported: True
-    IsProjected: True
     ParamTransforms:
       - !Primitive { Name: AllButMain, Semantics: In, Kind: Bool }
 
   - Name: LLVMGetCallSiteAttributes
-    IsObsolete: False
-    IsExported: True
-    IsProjected: True
     ParamTransforms:
       - !Array {SubType: SysInt, Name: Attrs, Semantics: InOut }
 
   - Name: LLVMGetAttributesAtIndex
-    IsObsolete: False
-    IsExported: True
-    IsProjected: True
     ParamTransforms:
       - !Array {SubType: SysInt, Name: Attrs, Semantics: InOut }
 
   - Name: LLVMAddIncoming
-    IsObsolete: False
-    IsExported: True
-    IsProjected: True
     ParamTransforms:
       - !Array {SubType: SysInt, Name: IncomingValues, Semantics: In }
       - !Array {SubType: SysInt, Name: IncomingBlocks, Semantics: In }
 
   - Name: LLVMGetIntrinsicDeclaration
-    IsObsolete: False
-    IsExported: True
-    IsProjected: True
     ParamTransforms:
       - !Array {SubType: SysInt, Name: ParamTypes, Semantics: In }
 
   - Name: LLVMIntrinsicGetType
-    IsObsolete: False
-    IsExported: True
-    IsProjected: True
     ParamTransforms:
       - !Array {SubType: SysInt, Name: ParamTypes, Semantics: In }
 
   - Name: LLVMIntrinsicCopyOverloadedName
-    IsObsolete: False
-    IsExported: True
-    IsProjected: True
     ReturnTransform: !String {Kind: CopyAlias }
     ParamTransforms:
       - !Array {SubType: SysInt, Name: ParamTypes, Semantics: In }
 
   - Name: LLVMBuildCall2
-    IsObsolete: False
-    IsExported: True
-    IsProjected: True
     ParamTransforms:
       - !Array {SubType: SysInt, Name: Args, Semantics: In }
 
   - Name: LLVMBuildInBoundsGEP2
-    IsObsolete: False
-    IsExported: True
-    IsProjected: True
     ParamTransforms:
       - !Array {SubType: SysInt, Name: Indices, Semantics: In }
 
   - Name: LLVMConstGEP
-    IsObsolete: False
-    IsExported: True
-    IsProjected: True
     ParamTransforms:
       - !Array {SubType: SysInt, Name: ConstantIndices, Semantics: In }
 
   - Name: LLVMBuildGEP2
-    IsObsolete: False
-    IsExported: True
-    IsProjected: True
     ParamTransforms:
       - !Array {SubType: SysInt, Name: Indices, Semantics: In }
 
   - Name: LLVMDIBuilderCreateExpression
-    IsObsolete: False
-    IsExported: True
-    IsProjected: True
     ParamTransforms:
       - !Array {SubType: I8, Name: Addr, Semantics: In }
 
   - Name: LLVMFunctionType
-    IsObsolete: False
-    IsExported: True
-    IsProjected: True
     ParamTransforms:
       - !Array {SubType: SysInt, Name: ParamTypes, Semantics: In }
 
   - Name: LLVMConstStructInContext
-    IsObsolete: False
-    IsExported: True
-    IsProjected: True
     ParamTransforms:
       - !Array {SubType: SysInt, Name: ConstantVals, Semantics: In }
 
   - Name: LLVMConstNamedStruct
-    IsObsolete: False
-    IsExported: True
-    IsProjected: True
     ParamTransforms:
       - !Array {SubType: SysInt, Name: ConstantVals, Semantics: In }
 
   - Name: LLVMStructTypeInContext
-    IsObsolete: False
-    IsExported: True
-    IsProjected: True
     ParamTransforms:
       - !Array {SubType: SysInt, Name: ElementTypes, Semantics: In }
 
   - Name: LibLLVMMDNode2
-    IsObsolete: False
-    IsExported: True
-    IsProjected: True
     ParamTransforms:
       - !Array {SubType: SysInt, Name: MDs, Semantics: In }
 
   - Name: LLVMDIBuilderGetOrCreateTypeArray
-    IsObsolete: False
-    IsExported: True
-    IsProjected: True
     ParamTransforms:
       - !Array {SubType: SysInt, Name: Data, Semantics: In }
 
   - Name: LLVMDIBuilderGetOrCreateArray
-    IsObsolete: False
-    IsExported: True
-    IsProjected: True
     ParamTransforms:
       - !Array {SubType: SysInt, Name: Data, Semantics: In }
 
   - Name: LLVMBuildInvoke2
-    IsObsolete: False
-    IsExported: True
-    IsProjected: True
     ParamTransforms:
       - !Array {SubType: SysInt, Name: Args, Semantics: In }
 
   - Name: LLVMConstInBoundsGEP
-    IsObsolete: False
-    IsExported: True
-    IsProjected: True
     ParamTransforms:
       - !Array {SubType: SysInt, Name: ConstantIndices, Semantics: In }
 
   - Name: LLVMGetParamTypes
-    IsObsolete: False
-    IsExported: True
-    IsProjected: True
     ParamTransforms:
       - !Array {SubType: SysInt, Name: Dest, Semantics: InOut }
 
   - Name: LLVMStructSetBody
-    IsObsolete: False
-    IsExported: True
-    IsProjected: True
     ParamTransforms:
       - !Array {SubType: SysInt, Name: ElementTypes, Semantics: In }
 
   - Name: LLVMGetBasicBlocks
-    IsObsolete: False
-    IsExported: True
-    IsProjected: True
     ParamTransforms:
       - !Array {SubType: SysInt, Name: BasicBlocks, Semantics: In }
 
   - Name: LLVMConstArray
-    IsObsolete: False
-    IsExported: True
-    IsProjected: True
     ParamTransforms:
       - !Array {SubType: SysInt, Name: ConstantVals, Semantics: In }
 
   - Name: LLVMGetDiagInfoDescription
-    IsObsolete: False
-    IsExported: True
-    IsProjected: True
     ReturnTransform: !String {Kind: DisposeMessage }
 
   - Name: LLVMGetStringAttributeKind
-    IsObsolete: False
-    IsExported: True
-    IsProjected: True
     ReturnTransform: !String {Kind: CopyAlias }
 
   - Name: LLVMGetStringAttributeValue
-    IsObsolete: False
-    IsExported: True
-    IsProjected: True
     ReturnTransform: !String {Kind: CopyAlias }
 
   - Name: LLVMGetModuleIdentifier
-    IsObsolete: False
-    IsExported: True
-    IsProjected: True
     ReturnTransform: !String {Kind: CopyAlias }
 
   - Name: LLVMGetSourceFileName
-    IsObsolete: False
-    IsExported: True
-    IsProjected: True
     ReturnTransform: !String {Kind: CopyAlias }
 
   - Name: LLVMGetDataLayoutStr
-    IsObsolete: False
-    IsExported: True
-    IsProjected: True
     ReturnTransform: !String {Kind: CopyAlias }
 
   - Name: LLVMGetTarget
-    IsObsolete: False
-    IsExported: True
-    IsProjected: True
     ReturnTransform: !String {Kind: CopyAlias }
 
   - Name: LLVMModuleFlagEntriesGetKey
-    IsObsolete: False
-    IsExported: True
-    IsProjected: True
     ReturnTransform: !String {Kind: CopyAlias }
 
   - Name: LLVMGetModuleInlineAsm
-    IsObsolete: False
-    IsExported: True
-    IsProjected: True
     ReturnTransform: !String {Kind: CopyAlias }
 
   - Name: LLVMGetNamedMetadataName
-    IsObsolete: False
-    IsExported: True
-    IsProjected: True
     ReturnTransform: !String {Kind: CopyAlias }
 
   - Name: LLVMGetDebugLocDirectory
-    IsObsolete: False
-    IsExported: True
-    IsProjected: True
     ReturnTransform: !String {Kind: CopyAlias }
 
   - Name: LLVMGetDebugLocFilename
-    IsObsolete: False
-    IsExported: True
-    IsProjected: True
     ReturnTransform: !String {Kind: CopyAlias }
 
   - Name: LLVMGetStructName
-    IsObsolete: False
-    IsExported: True
-    IsProjected: True
     ReturnTransform: !String {Kind: CopyAlias }
 
   - Name: LLVMGetValueName2
-    IsObsolete: False
-    IsExported: True
-    IsProjected: True
     ReturnTransform: !String {Kind: CopyAlias }
 
   - Name: LLVMGetAsString
-    IsObsolete: False
-    IsExported: True
-    IsProjected: True
     ReturnTransform: !String {Kind: CopyAlias }
 
   - Name: LLVMGetSection
-    IsObsolete: False
-    IsExported: True
-    IsProjected: True
     ReturnTransform: !String {Kind: CopyAlias }
 
   - Name: LLVMIntrinsicGetName
-    IsObsolete: False
-    IsExported: True
-    IsProjected: True
     ReturnTransform: !String {Kind: CopyAlias }
 
   - Name: LLVMGetGC
-    IsObsolete: False
-    IsExported: True
-    IsProjected: True
     ReturnTransform: !String {Kind: CopyAlias }
 
   - Name: LLVMGetMDString
-    IsObsolete: False
-    IsExported: True
-    IsProjected: True
     ReturnTransform: !String {Kind: CopyAlias }
 
   - Name: LLVMGetBasicBlockName
-    IsObsolete: False
-    IsExported: True
-    IsProjected: True
     ReturnTransform: !String {Kind: CopyAlias }
 
   - Name: LLVMDITypeGetName
-    IsObsolete: False
-    IsExported: True
-    IsProjected: True
     ReturnTransform: !String {Kind: CopyAlias }
 
   - Name: LLVMGetTargetName
-    IsObsolete: False
-    IsExported: True
-    IsProjected: True
     ReturnTransform: !String {Kind: CopyAlias }
 
   - Name: LLVMGetTargetDescription
-    IsObsolete: False
-    IsExported: True
-    IsProjected: True
     ReturnTransform: !String {Kind: CopyAlias }
 
   - Name: LLVMGetSectionName
-    IsObsolete: False
-    IsExported: True
-    IsProjected: True
     ReturnTransform: !String {Kind: CopyAlias }
 
   - Name: LLVMGetSymbolName
-    IsObsolete: False
-    IsExported: True
-    IsProjected: True
     ReturnTransform: !String {Kind: CopyAlias }
 
   - Name: LLVMGetRelocationTypeName
-    IsObsolete: False
-    IsExported: True
-    IsProjected: True
     ReturnTransform: !String {Kind: DisposeMessage }
 
   - Name: LLVMGetRelocationValueString
-    IsObsolete: False
-    IsExported: True
-    IsProjected: True
     ReturnTransform: !String {Kind: DisposeMessage }
 
   - Name: LLVMOptRemarkParserGetErrorMessage
-    IsObsolete: False
-    IsExported: True
-    IsProjected: True
     ReturnTransform: !String {Kind: CopyAlias }
 
   - Name: LLVMOrcGetErrorMsg
-    IsObsolete: False
-    IsExported: True
-    IsProjected: True
     ReturnTransform: !String {Kind: CopyAlias }
 
   - Name: LLVMPrintModuleToString
-    IsObsolete: False
-    IsExported: True
-    IsProjected: True
     ReturnTransform: !String {Kind: DisposeMessage }
 
   - Name: LLVMPrintTypeToString
-    IsObsolete: False
-    IsExported: True
-    IsProjected: True
     ReturnTransform: !String {Kind: DisposeMessage }
 
   - Name: LLVMPrintValueToString
-    IsObsolete: False
-    IsExported: True
-    IsProjected: True
     ReturnTransform: !String {Kind: DisposeMessage }
 
   - Name: LLVMGetTargetMachineTriple
-    IsObsolete: False
-    IsExported: True
-    IsProjected: True
     ReturnTransform: !String {Kind: DisposeMessage }
 
   - Name: LLVMGetTargetMachineCPU
-    IsObsolete: False
-    IsExported: True
-    IsProjected: True
     ReturnTransform: !String {Kind: DisposeMessage }
 
   - Name: LLVMGetTargetMachineFeatureString
-    IsObsolete: False
-    IsExported: True
-    IsProjected: True
     ReturnTransform: !String {Kind: DisposeMessage }
 
   - Name: LLVMGetBufferStart
-    IsObsolete: False
-    IsExported: True
-    IsProjected: True
     ReturnTransform: !Primitive {Kind: IntPtr }
 
   - Name: LibLLVMGetMDStringText
-    IsObsolete: False
-    IsExported: True
-    IsProjected: True
     ReturnTransform: !String {Kind: CopyAlias }
 
   - Name: LibLLVMAttributeToString
-    IsObsolete: False
-    IsExported: True
-    IsProjected: True
     ReturnTransform: !String {Kind: DisposeErrorMesage }
 
   - Name: LibLLVMGetModuleSourceFileName
-    IsObsolete: False
-    IsExported: True
-    IsProjected: True
     ReturnTransform: !String {Kind: CopyAlias }
 
   - Name: LibLLVMGetModuleName
-    IsObsolete: False
-    IsExported: True
-    IsProjected: True
     ReturnTransform: !String {Kind: CopyAlias }
 
   - Name: LibLLVMComdatGetName
-    IsObsolete: False
-    IsExported: True
-    IsProjected: True
     ReturnTransform: !String {Kind: DisposeErrorMesage }
 
   - Name: LibLLVMTripleAsString
-    IsObsolete: False
-    IsExported: True
-    IsProjected: True
     ReturnTransform: !String {Kind: DisposeMessage }
 
   - Name: LibLLVMTripleGetArchTypeName
-    IsObsolete: False
-    IsExported: True
-    IsProjected: True
     ReturnTransform: !String {Kind: DisposeMessage }
 
   - Name: LibLLVMTripleGetSubArchTypeName
-    IsObsolete: False
-    IsExported: True
-    IsProjected: True
     ReturnTransform: !String {Kind: DisposeMessage }
 
   - Name: LibLLVMTripleGetVendorTypeName
-    IsObsolete: False
-    IsExported: True
-    IsProjected: True
     ReturnTransform: !String {Kind: DisposeMessage }
 
   - Name: LibLLVMTripleGetOsTypeName
-    IsObsolete: False
-    IsExported: True
-    IsProjected: True
     ReturnTransform: !String {Kind: DisposeMessage }
 
   - Name: LibLLVMTripleGetEnvironmentTypeName
-    IsObsolete: False
-    IsExported: True
-    IsProjected: True
     ReturnTransform: !String {Kind: DisposeMessage }
 
   - Name: LibLLVMTripleGetObjectFormatTypeName
-    IsObsolete: False
-    IsExported: True
-    IsProjected: True
     ReturnTransform: !String {Kind: DisposeMessage }
 
   - Name: LLVMNormalizeTargetTriple
-    IsObsolete: False
-    IsExported: True
-    IsProjected: True
     ReturnTransform: !String {Kind: DisposeMessage }
 
   - Name: LLVMGetDefaultTargetTriple
-    IsObsolete: False
-    IsExported: True
-    IsProjected: True
     ReturnTransform: !String {Kind: DisposeMessage }
 
   - Name: LLVMGetHostCPUName
-    IsObsolete: False
-    IsExported: True
-    IsProjected: True
     ReturnTransform: !String {Kind: DisposeMessage }
 
   - Name: LLVMGetHostCPUFeatures
-    IsObsolete: False
-    IsExported: True
-    IsProjected: True
     ReturnTransform: !String {Kind: DisposeMessage }
 
   - Name: LLVMHasMetadata
-    IsObsolete: False
-    IsExported: True
-    IsProjected: True
     ReturnTransform: !Primitive {Kind: Bool }
 
   - Name: LLVMGetSectionContents
-    IsObsolete: False
-    IsExported: True
-    IsProjected: True
     ReturnTransform: !Primitive {Kind: IntPtr }
 
   - Name: LLVMSetDisasmOptions
-    IsObsolete: False
-    IsExported: True
-    IsProjected: True
     ReturnTransform: !Primitive {Kind: Bool }
 
   - Name: LLVMFindFunction
-    IsObsolete: False
-    IsExported: True
-    IsProjected: True
     ReturnTransform: !Status {}
 
   - Name: LLVMGetBitcodeModule2
-    IsObsolete: False
-    IsExported: True
-    IsProjected: True
     ReturnTransform: !Status {}
 
   - Name: LLVMGetBitcodeModuleInContext2
-    IsObsolete: False
-    IsExported: True
-    IsProjected: True
     ReturnTransform: !Status {}
 
   - Name: LLVMInitializeNativeAsmParser
-    IsObsolete: False
-    IsExported: True
-    IsProjected: True
     ReturnTransform: !Status {}
 
   - Name: LLVMInitializeNativeAsmPrinter
-    IsObsolete: False
-    IsExported: True
-    IsProjected: True
     ReturnTransform: !Status {}
 
   - Name: LLVMInitializeNativeDisassembler
-    IsObsolete: False
-    IsExported: True
-    IsProjected: True
     ReturnTransform: !Status {}
 
   - Name: LLVMInitializeNativeTarget
-    IsObsolete: False
-    IsExported: True
-    IsProjected: True
     ReturnTransform: !Status {}
 
   - Name: LLVMLinkModules2
-    IsObsolete: False
-    IsExported: True
-    IsProjected: True
     ReturnTransform: !Status {}
 
   - Name: LLVMParseBitcode2
-    IsObsolete: False
-    IsExported: True
-    IsProjected: True
     ReturnTransform: !Status {}
 
   - Name: LLVMParseBitcodeInContext2
-    IsObsolete: False
-    IsExported: True
-    IsProjected: True
     ReturnTransform: !Status {}
 
   - Name: LLVMWriteBitcodeToFD
-    IsObsolete: False
-    IsExported: True
-    IsProjected: True
     ReturnTransform: !Status {}
 
   - Name: LLVMWriteBitcodeToFile
-    IsObsolete: False
-    IsExported: True
-    IsProjected: True
     ReturnTransform: !Status {}
 
   - Name: LibLLVMGetNodeContext
-    IsObsolete: False
-    IsExported: True
-    IsProjected: True
     ReturnTransform: !Alias {}
 
   - Name: LibLLVMNamedMetadataGetParentModule
-    IsObsolete: False
-    IsExported: True
-    IsProjected: True
     ReturnTransform: !Alias {}
 
   - Name: LLVMGetExecutionEngineTargetData
-    IsObsolete: False
-    IsExported: True
-    IsProjected: True
     ReturnTransform: !Alias {}
 
   - Name: LLVMGetExecutionEngineTargetMachine
-    IsObsolete: False
-    IsExported: True
-    IsProjected: True
     ReturnTransform: !Alias {}
 
   - Name: LLVMGetGlobalContext
-    IsObsolete: False
-    IsExported: True
-    IsProjected: True
     ReturnTransform: !Alias {}
 
   - Name: LLVMGetGlobalParent
-    IsObsolete: False
-    IsExported: True
-    IsProjected: True
     ReturnTransform: !Alias {}
 
   - Name: LLVMGetModuleContext
-    IsObsolete: False
-    IsExported: True
-    IsProjected: True
     ReturnTransform: !Alias {}
 
   - Name: LLVMGetTypeContext
-    IsObsolete: False
-    IsExported: True
-    IsProjected: True
     ReturnTransform: !Alias {}
 
 

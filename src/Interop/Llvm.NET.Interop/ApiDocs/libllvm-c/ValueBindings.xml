@@ -16,9 +16,9 @@
             In order to map from an arbitrary LLVMValueRef to a wrapped managed type the
             exact kind of value must be known. However, the LLVM-C API uses a value kind
             that is not complete and doesn't match the underlying enum values. (It includes
-            complex transforms to ensure the 'C' API is "stable". This, causes problems for
-            managed projections like Llvm.NET. So as an extension to LLVM-C the LibLLVM library
-            supports a method to get at the underlying value.
+            complex transforms to ensure the 'C' API is "stable" though incomplete. This,
+            causes problems for managed projections like Llvm.NET. So as an extension to
+            LLVM-C the LibLLVM library supports a method to get at the underlying value.
             <note type="Important">
                 It is important to note that the enumerated values here are subject to change with
                 every version of LLVM. Generally, this is only intended for use within the object model
@@ -339,9 +339,9 @@
         <summary>Gets an ID for the concrete type of this object.</summary>
         <param name="valueRef">Value to get the ID from</param>
         <remarks>
-        This is used to implement the classof checks that enable interop code to determine the
-        correct derived type for a generic <see cref="LLVMValueRef"/>. This should not be used
-        for any other purpose, as the values do change as LLVM evolves. Also, note that for
+        This is used to implement the class-of type checks that enable interop code to determine
+        the correct derived type for a generic <see cref="LLVMValueRef"/>. This should not be
+        used for any other purpose, as the values do change as LLVM evolves. Also, note that for
         instructions, the Instruction's opcode is added to InstructionVal.
         </remarks>
         <returns>Type id of the value</returns>

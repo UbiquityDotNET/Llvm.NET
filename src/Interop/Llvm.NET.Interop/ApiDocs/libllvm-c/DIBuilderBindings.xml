@@ -170,31 +170,32 @@
         <returns>Handle for a new compile unit</returns>
     </Function>
     <Function name="LibLLVMDIBuilderCreateAutoVariable">
-        <summary>TODO: Provide summary for Function LibLLVMDIBuilderCreateAutoVariable</summary>
-        <param name="Builder">TODO: Provide details of parameter Builder</param>
-        <param name="Scope">TODO: Provide details of parameter Scope</param>
-        <param name="Name">TODO: Provide details of parameter Name</param>
-        <param name="NameLen">TODO: Provide details of parameter NameLen</param>
-        <param name="File">TODO: Provide details of parameter File</param>
-        <param name="LineNo">TODO: Provide details of parameter LineNo</param>
-        <param name="Ty">TODO: Provide details of parameter Ty</param>
-        <param name="AlwaysPreserve">TODO: Provide details of parameter AlwaysPreserve</param>
-        <param name="Flags">TODO: Provide details of parameter Flags</param>
-        <param name="AlignInBits">TODO: Provide details of parameter AlignInBits</param>
-        <returns>TODO: Document return value</returns>
+        <summary>Same as LLVMDIBuilderCreateAutoVariable except this correctly allows File == <see langword="null"/></summary>
+        <param name="Builder"><see cref="LLVMDIBuilderRef"/> to create the variable</param>
+        <param name="Scope">Scope containing the variable</param>
+        <param name="Name">Name of the variable</param>
+        <param name="NameLen">Length of the variable</param>
+        <param name="File">File the variable belongs to (May be <see langword="null"/>)</param>
+        <param name="LineNo">Line number the variable is declared on</param>
+        <param name="Ty">TYpe of the variable</param>
+        <param name="AlwaysPreserve">Indicates if the existence of the variable is always preserved even if optimization can remove the variable</param>
+        <param name="Flags">Debug info flags for the variable</param>
+        <param name="AlignInBits">Variable alignment in bits</param>
+        <returns>Handle for the variable</returns>
     </Function>
     <Function name="LibLLVMDIBuilderCreateParameterVariable">
-        <summary>TODO: Provide summary for Function LibLLVMDIBuilderCreateParameterVariable</summary>
-        <param name="Builder">TODO: Provide details of parameter Builder</param>
-        <param name="Scope">TODO: Provide details of parameter Scope</param>
-        <param name="Name">TODO: Provide details of parameter Name</param>
-        <param name="NameLen">TODO: Provide details of parameter NameLen</param>
-        <param name="ArgNo">TODO: Provide details of parameter ArgNo</param>
-        <param name="File">TODO: Provide details of parameter File</param>
-        <param name="LineNo">TODO: Provide details of parameter LineNo</param>
-        <param name="Ty">TODO: Provide details of parameter Ty</param>
-        <param name="AlwaysPreserve">TODO: Provide details of parameter AlwaysPreserve</param>
-        <param name="Flags">TODO: Provide details of parameter Flags</param>
-        <returns>TODO: Document return value</returns>
+        <summary>Same as LLVMDIBuilderCreateParameterVariable except this correctly allows File == <see langword="null"/></summary>
+        <param name="Builder"><see cref="LLVMDIBuilderRef"/> to create the variable</param>
+        <param name="Scope">Scope containing the variable</param>
+        <param name="Name">Name of the variable</param>
+        <param name="NameLen">Length of the variable</param>
+        <param name="ArgNo">Index of the parameter (1 based)</param>
+        <param name="File">File the variable belongs to (May be <see langword="null"/>)</param>
+        <param name="LineNo">Line number the variable is declared on</param>
+        <param name="Ty">TYpe of the variable</param>
+        <param name="AlwaysPreserve">Indicates if the existence of the variable is always preserved even if optimization can remove the variable</param>
+        <param name="Flags">Debug info flags for the variable</param>
+        <param name="AlignInBits">Variable alignment in bits</param>
+        <returns>Handle for the variable</returns>
     </Function>
 </LibLlvmAPI>
