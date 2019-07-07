@@ -8690,9 +8690,9 @@
   <div class="markdown level0 remarks"><p>In order to map from an arbitrary LLVMValueRef to a wrapped managed type the
 exact kind of value must be known. However, the LLVM-C API uses a value kind
 that is not complete and doesn&apos;t match the underlying enum values. (It includes
-complex transforms to ensure the &apos;C&apos; API is &quot;stable&quot;. This, causes problems for
-managed projections like Llvm.NET. So as an extension to LLVM-C the LibLLVM library
-supports a method to get at the underlying value.
+complex transforms to ensure the &apos;C&apos; API is &quot;stable&quot; though incomplete. This,
+causes problems for managed projections like Llvm.NET. So as an extension to
+LLVM-C the LibLLVM library supports a method to get at the underlying value.
 <div class="NOTE"><h5>Important</h5><p>
     It is important to note that the enumerated values here are subject to change with
     every version of LLVM. Generally, this is only intended for use within the object model
@@ -9206,7 +9206,7 @@ supports a method to get at the underlying value.
             <span class="pull-right">
               <a href="#top">Back to top</a>
             </span>
-            Copyright (C) 2017-2019, Ubiquity.NET Contributors<br><strong>Build:</strong> 8.0.0-alpha.0.0.ci-BLD.467044441
+            Copyright (C) 2017-2019, Ubiquity.NET Contributors<br><strong>Build:</strong> 8.0.0-alpha.0.0.ci-BLD.467106891
             
           </div>
         </div>

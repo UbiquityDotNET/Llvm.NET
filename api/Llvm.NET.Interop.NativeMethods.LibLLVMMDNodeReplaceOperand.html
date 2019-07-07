@@ -8674,7 +8674,7 @@
 
 <a id="Llvm_NET_Interop_NativeMethods_LibLLVMMDNodeReplaceOperand_" data-uid="Llvm.NET.Interop.NativeMethods.LibLLVMMDNodeReplaceOperand*"></a>
 <h2 id="Llvm_NET_Interop_NativeMethods_LibLLVMMDNodeReplaceOperand_Llvm_NET_Interop_LLVMMetadataRef_System_UInt32_Llvm_NET_Interop_LLVMMetadataRef_" data-uid="Llvm.NET.Interop.NativeMethods.LibLLVMMDNodeReplaceOperand(Llvm.NET.Interop.LLVMMetadataRef,System.UInt32,Llvm.NET.Interop.LLVMMetadataRef)">LibLLVMMDNodeReplaceOperand(LLVMMetadataRef, UInt32, LLVMMetadataRef)</h2>
-<div class="markdown level1 summary"><p>TODO: Provide summary for Function LibLLVMMDNodeReplaceOperand</p>
+<div class="markdown level1 summary"><p>Replace an operand in a node</p>
 </div>
 <div class="markdown level1 conceptual"></div>
 <h3 class="decalaration">Declaration
@@ -8686,22 +8686,30 @@
     <tr>
       <td><a class="xref" href="Llvm.NET.Interop.LLVMMetadataRef.html">LLVMMetadataRef</a></td>
       <td><span class="parametername">node</span></td>
-      <td><p>TODO: Provide details of parameter node</p>
+      <td><p>Node to replace the operand in</p>
 </td>
     </tr>
     <tr>
       <td><a class="xref" href="https://msdn.microsoft.com/en-us/library/system.uint32(v=vs.110).aspx">UInt32</a></td>
       <td><span class="parametername">index</span></td>
-      <td><p>TODO: Provide details of parameter index</p>
+      <td><p>Index of the operand</p>
 </td>
     </tr>
     <tr>
       <td><a class="xref" href="Llvm.NET.Interop.LLVMMetadataRef.html">LLVMMetadataRef</a></td>
       <td><span class="parametername">operand</span></td>
-      <td><p>TODO: Provide details of parameter operand</p>
+      <td><p>New operand value</p>
 </td>
     </tr>
 </table>
+<h2 id="Llvm_NET_Interop_NativeMethods_LibLLVMMDNodeReplaceOperand_Llvm_NET_Interop_LLVMMetadataRef_System_UInt32_Llvm_NET_Interop_LLVMMetadataRef__remarks">Remarks</h2>
+<div class="markdown level1 remarks"><p>It is important to fully understand the node hierarchy and actual
+kinds of operands for a given node type as there is no type checking
+with this function. It is very easy to create invalid metadata nodes
+by setting the operands incorrectly. This, function is intended as
+a very low-level function that is called from some higher level that
+will validate correct usage.</p>
+</div>
 </h3></article>
           </div>
           <div class="contribution-panel mobile-hide">
@@ -8723,7 +8731,7 @@
             <span class="pull-right">
               <a href="#top">Back to top</a>
             </span>
-            Copyright (C) 2017-2019, Ubiquity.NET Contributors<br><strong>Build:</strong> 8.0.0-alpha.0.0.ci-BLD.467044441
+            Copyright (C) 2017-2019, Ubiquity.NET Contributors<br><strong>Build:</strong> 8.0.0-alpha.0.0.ci-BLD.467106891
             
           </div>
         </div>

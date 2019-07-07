@@ -8674,7 +8674,7 @@
 
 <a id="Llvm_NET_Interop_NativeMethods_LibLLVMDIBuilderCreateParameterVariable_" data-uid="Llvm.NET.Interop.NativeMethods.LibLLVMDIBuilderCreateParameterVariable*"></a>
 <h2 id="Llvm_NET_Interop_NativeMethods_LibLLVMDIBuilderCreateParameterVariable_Llvm_NET_Interop_LLVMDIBuilderRef_Llvm_NET_Interop_LLVMMetadataRef_System_String_Llvm_NET_Interop_size_t_System_UInt32_Llvm_NET_Interop_LLVMMetadataRef_System_UInt32_Llvm_NET_Interop_LLVMMetadataRef_System_Boolean_Llvm_NET_Interop_LLVMDIFlags_" data-uid="Llvm.NET.Interop.NativeMethods.LibLLVMDIBuilderCreateParameterVariable(Llvm.NET.Interop.LLVMDIBuilderRef,Llvm.NET.Interop.LLVMMetadataRef,System.String,Llvm.NET.Interop.size_t,System.UInt32,Llvm.NET.Interop.LLVMMetadataRef,System.UInt32,Llvm.NET.Interop.LLVMMetadataRef,System.Boolean,Llvm.NET.Interop.LLVMDIFlags)">LibLLVMDIBuilderCreateParameterVariable(LLVMDIBuilderRef, LLVMMetadataRef, String, size_t, UInt32, LLVMMetadataRef, UInt32, LLVMMetadataRef, Boolean, LLVMDIFlags)</h2>
-<div class="markdown level1 summary"><p>TODO: Provide summary for Function LibLLVMDIBuilderCreateParameterVariable</p>
+<div class="markdown level1 summary"><p>Same as LLVMDIBuilderCreateParameterVariable except this correctly allows File == <span class="xref">null</span></p>
 </div>
 <div class="markdown level1 conceptual"></div>
 <h3 class="decalaration">Declaration
@@ -8686,61 +8686,61 @@
     <tr>
       <td><a class="xref" href="Llvm.NET.Interop.LLVMDIBuilderRef.html">LLVMDIBuilderRef</a></td>
       <td><span class="parametername">Builder</span></td>
-      <td><p>TODO: Provide details of parameter Builder</p>
+      <td><p><a class="xref" href="Llvm.NET.Interop.LLVMDIBuilderRef.html">LLVMDIBuilderRef</a> to create the variable</p>
 </td>
     </tr>
     <tr>
       <td><a class="xref" href="Llvm.NET.Interop.LLVMMetadataRef.html">LLVMMetadataRef</a></td>
       <td><span class="parametername">Scope</span></td>
-      <td><p>TODO: Provide details of parameter Scope</p>
+      <td><p>Scope containing the variable</p>
 </td>
     </tr>
     <tr>
       <td><a class="xref" href="https://msdn.microsoft.com/en-us/library/system.string(v=vs.110).aspx">String</a></td>
       <td><span class="parametername">Name</span></td>
-      <td><p>TODO: Provide details of parameter Name</p>
+      <td><p>Name of the variable</p>
 </td>
     </tr>
     <tr>
       <td><a class="xref" href="Llvm.NET.Interop.size_t.html">size_t</a></td>
       <td><span class="parametername">NameLen</span></td>
-      <td><p>TODO: Provide details of parameter NameLen</p>
+      <td><p>Length of the variable</p>
 </td>
     </tr>
     <tr>
       <td><a class="xref" href="https://msdn.microsoft.com/en-us/library/system.uint32(v=vs.110).aspx">UInt32</a></td>
       <td><span class="parametername">ArgNo</span></td>
-      <td><p>TODO: Provide details of parameter ArgNo</p>
+      <td><p>Index of the parameter (1 based)</p>
 </td>
     </tr>
     <tr>
       <td><a class="xref" href="Llvm.NET.Interop.LLVMMetadataRef.html">LLVMMetadataRef</a></td>
       <td><span class="parametername">File</span></td>
-      <td><p>TODO: Provide details of parameter File</p>
+      <td><p>File the variable belongs to (May be <span class="xref">null</span>)</p>
 </td>
     </tr>
     <tr>
       <td><a class="xref" href="https://msdn.microsoft.com/en-us/library/system.uint32(v=vs.110).aspx">UInt32</a></td>
       <td><span class="parametername">LineNo</span></td>
-      <td><p>TODO: Provide details of parameter LineNo</p>
+      <td><p>Line number the variable is declared on</p>
 </td>
     </tr>
     <tr>
       <td><a class="xref" href="Llvm.NET.Interop.LLVMMetadataRef.html">LLVMMetadataRef</a></td>
       <td><span class="parametername">Ty</span></td>
-      <td><p>TODO: Provide details of parameter Ty</p>
+      <td><p>TYpe of the variable</p>
 </td>
     </tr>
     <tr>
       <td><a class="xref" href="https://msdn.microsoft.com/en-us/library/system.boolean(v=vs.110).aspx">Boolean</a></td>
       <td><span class="parametername">AlwaysPreserve</span></td>
-      <td><p>TODO: Provide details of parameter AlwaysPreserve</p>
+      <td><p>Indicates if the existence of the variable is always preserved even if optimization can remove the variable</p>
 </td>
     </tr>
     <tr>
       <td><a class="xref" href="Llvm.NET.Interop.LLVMDIFlags.html">LLVMDIFlags</a></td>
       <td><span class="parametername">Flags</span></td>
-      <td><p>TODO: Provide details of parameter Flags</p>
+      <td><p>Debug info flags for the variable</p>
 </td>
     </tr>
 </table>
@@ -8748,7 +8748,7 @@
 <table class="table table-bordered table-striped table-condensed">
     <tr>
       <td><a class="xref" href="Llvm.NET.Interop.LLVMMetadataRef.html">LLVMMetadataRef</a></td>
-      <td><p>TODO: Document return value</p>
+      <td><p>Handle for the variable</p>
 </td>
     </tr>
 </table>
@@ -8773,7 +8773,7 @@
             <span class="pull-right">
               <a href="#top">Back to top</a>
             </span>
-            Copyright (C) 2017-2019, Ubiquity.NET Contributors<br><strong>Build:</strong> 8.0.0-alpha.0.0.ci-BLD.467044441
+            Copyright (C) 2017-2019, Ubiquity.NET Contributors<br><strong>Build:</strong> 8.0.0-alpha.0.0.ci-BLD.467106891
             
           </div>
         </div>
