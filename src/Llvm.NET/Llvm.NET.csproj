@@ -36,7 +36,7 @@
         <PackageReference Include="System.Memory" />
     </ItemGroup>
     <ItemGroup>
-      <ProjectReference Include="..\Interop\Llvm.NET.Interop\Llvm.NET.Interop.csproj" >
+      <ProjectReference Include="..\Interop\Llvm.NET.Interop\Llvm.NET.Interop.csproj">
           <Private>true</Private>
       </ProjectReference>
     </ItemGroup>

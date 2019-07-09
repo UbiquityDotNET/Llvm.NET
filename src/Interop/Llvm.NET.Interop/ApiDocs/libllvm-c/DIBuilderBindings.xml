@@ -195,7 +195,6 @@
         <param name="Ty">TYpe of the variable</param>
         <param name="AlwaysPreserve">Indicates if the existence of the variable is always preserved even if optimization can remove the variable</param>
         <param name="Flags">Debug info flags for the variable</param>
-        <param name="AlignInBits">Variable alignment in bits</param>
         <returns>Handle for the variable</returns>
     </Function>
 </LibLlvmAPI>

@@ -11,6 +11,8 @@
       <PackageReference Include="MSTest.TestAdapter" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Llvm.NET.Interop\Llvm.NET.Interop.csproj" />
+    <ProjectReference Include="..\Llvm.NET.Interop\Llvm.NET.Interop.csproj">
+      <IncludeAssets>All</IncludeAssets>
+    </ProjectReference>
   </ItemGroup>
 </Project>
