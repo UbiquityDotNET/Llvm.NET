@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
     <Sdk Name="Microsoft.Build.CentralPackageVersions" />
     <PropertyGroup>
-        <TargetFrameworks>netstandard2.0;net47</TargetFrameworks>
+        <TargetFramework>netstandard2.0</TargetFramework>
         <RuntimeIdentifiers>win-x64</RuntimeIdentifiers>
         <LangVersion>7.3</LangVersion>
         <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
@@ -34,11 +34,7 @@
     </ItemGroup>
     <ItemGroup>
         <PackageReference Include="System.Memory" />
-    </ItemGroup>
-    <ItemGroup>
-      <ProjectReference Include="..\Interop\Llvm.NET.Interop\Llvm.NET.Interop.csproj">
-          <Private>true</Private>
-      </ProjectReference>
+        <PackageReference Include="Llvm.NET.Interop" VersionOverride="[8.0.0-*,9)" />
     </ItemGroup>
     <ItemGroup>
         <Compile Update="Properties\Resources.Designer.cs">

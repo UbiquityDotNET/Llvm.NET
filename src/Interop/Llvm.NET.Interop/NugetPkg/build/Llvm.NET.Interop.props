@@ -3,7 +3,7 @@
         <LibLlvmPkgRoot>$([MSBuild]::NormalizeDirectory('$(MSBuildThisFileDirectory)..'))</LibLlvmPkgRoot>
     </PropertyGroup>
 
-    <ItemGroup>
+    <!--<ItemGroup>
         <Content Include="$(LibLlvmPkgRoot)runtimes\win-x64\native\LibLLVM.dll">
             <Link>runtimes\win-x64\native\LibLLVM.dll</Link>
             <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
@@ -14,5 +14,5 @@
             <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
             <PackagePath>runtimes\win-x64\native\LibLLVM.pdb</PackagePath>
         </Content>
-    </ItemGroup>
+    </ItemGroup>-->
 </Project>

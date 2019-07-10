@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <Sdk Name="Microsoft.Build.CentralPackageVersions" />
   <PropertyGroup>
-    <TargetFrameworks>netstandard2.0;net47</TargetFrameworks>
+    <TargetFramework>netstandard2.0</TargetFramework>
     <LangVersion>7.2</LangVersion>
   </PropertyGroup>
 
@@ -10,7 +10,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Antlr4"/>
+    <PackageReference Include="Antlr4" />
     <PackageReference Include="OpenSoftware.DgmlBuilder" Condition="'$(TargetFramework)'=='net47'" />
     <PackageReference Include="System.Collections.Immutable" />
     <PackageReference Include="Ubiquity.ArgValidators" />
