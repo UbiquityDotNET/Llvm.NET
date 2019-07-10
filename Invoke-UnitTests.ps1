@@ -27,21 +27,6 @@ if ("${ENV:APPVEYOR_JOB_ID}" -ne "")
     dir .\BuildOutput\Test-Results\*.trx | %{ $wc.UploadFile( $JobUrl, $_) }
 }
 
-Write-Information 'Running sample app for net47'
-if($APPVEYOR)
-{
-    Add-AppVeyorTest -Name 'CodeGenWithDebugInfo (net47)' -Framework 'NETFX' -FileName 'CodeGenWithDebugInfo.exe' -Outcome Running
-}
-pushd '.\BuildOutput\bin\CodeGenWithDebugInfo\Release\net47'
-.\CodeGenWithDebugInfo.exe M3 'Support Files\test.c'
-$testsFailed = $testsFailed -or ($LASTEXITCODE -ne 0)
-$outcome = @('Passed','Failed')[($LASTEXITCODE -eq 0)]
-if($APPVEYOR)
-{
-    Update-AppVeyorTest -Name 'CodeGenWithDebugInfo (net47)' -Framework 'NETFX' -FileName 'CodeGenWithDebugInfo.exe' -Outcome $outcome
-}
-popd
-
 Write-Information 'Running sample app for .NET Core'
 if($APPVEYOR)
 {

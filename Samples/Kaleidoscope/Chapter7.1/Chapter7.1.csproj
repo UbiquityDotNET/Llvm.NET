@@ -1,8 +1,8 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
-  <Sdk Name="Microsoft.Build.CentralPackageVersions"/>
+  <Sdk Name="Microsoft.Build.CentralPackageVersions" />
   <PropertyGroup>
     <OutputType>Exe</OutputType>
-    <TargetFrameworks>netcoreapp2.1;net47</TargetFrameworks>
+    <TargetFramework>netcoreapp2.1</TargetFramework>
     <AssemblyName>kls7.1</AssemblyName>
     <RootNamespace>Kaleidoscope</RootNamespace>
     <LangVersion>7.2</LangVersion>
