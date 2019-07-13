@@ -579,6 +579,7 @@
     <Rule Id="IDE0022WithoutSuggestion" Action="None" />
     <Rule Id="IDE0034" Action="Warning" />
     <Rule Id="IDE0058" Action="None" />
+    <Rule Id="IDE0067" Action="None"/>
   </Rules>
   <Rules AnalyzerId="Microsoft.CodeAnalysis.VisualBasic" RuleNamespace="Microsoft.CodeAnalysis.VisualBasic">
     <Rule Id="AD0001" Action="None" />

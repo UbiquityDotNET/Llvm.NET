@@ -39,9 +39,16 @@ Llvm.NET.Interop Library and NuGet Package.
 * Added accessors to allow retrieval/addition of metadata on instructions
 
 # Breaking Changes
-This is a Major release and, as such, can, and does, have breaking changes including:
+This is a Major release and, as such, can, and does, have breaking changes. While there
+are several such changes the actual impact to a code base is fairly trivial. Most are
+driven by either obsolecense of functionality in LLVM or general naming cleanup in the
+Llvm.NET library:
 
-1. New namespace for some classes (Llvm.NET.Interop)
+1. New namespace and assembly for some classes (Llvm.NET.Interop)
+    1. Llvm.NET.DisposableAction -> Llvm.NET.Interop.DisposableAction
+    2. Llvm.NET.DisposableObject -> Llvm.NET.Interop.DisposableObject
+    3. Llvm.NET.StaticState -> Llvm.NET.Interop.Library
+    4. Llvm.NET.TargetRegistrations -> Llvm.NET.Interop.TargetRegistrations
 2. StaticState class is renamed to Llvm.NET.Interop.Library as it is fundamentally 
    part of the low level interop (and "StaticState" was always a bad name)
 3. Instructions no longer have a SetDebugLocation, instead that is provided via a new
@@ -49,20 +56,73 @@ This is a Major release and, as such, can, and does, have breaking changes inclu
    on the builder and then generate a sequence of IR instructions for a given expression
    in code. 
 4. Legacy JIT engine support is dropped. ORCJit is the only supported JIT engine
+    1. Removed Llvm.NET.JIT.EngineKind
+    2. Removed all use of Llvm.NET.JIT.IJitModuleHandle. Handles are now just an itegral value
+    3. Removed Llvm.NET.LegacyExecutionEngine
 5. Context.CreateBasicBlock() now only creates detached blocks, if append to a function
-   is desired, there is a method on Function to create and append a new block.
+   is desired, there is a method on IrFunction to create and append a block.
+    1. CreateBasicBlock signature changed to remove the function and block parameters 
 6. PassManager, ModulePassManager, and FunctionPassManager are IDisposable to help apps
    ensure that a function pass manager, which is bound to a module, is destroyed before
-   the module it is bound to.
-7. BitcodeModule.MakeShared and shared refs of modules is removed. (This was created for
-   OrcJIT use of shared_ptr under the hood, which is no longer used. OrcJit now uses the
-   same ownership transfer model as the legacy engines. E.g. the ownership for the module
-   is transferred to the JIT engine)
-8. BitCodeModule is now Disposable backed by a safe handle, this allows for detaching and
-   invalidating the underlying LLVMModuleRef when the module is provided to the JIT
-9. Renamed Function class to IrFunction to avoid potential collision with common language
+   the module it is bound to. Failure to do so can result in app crashes from access
+   violations in the native LLVM code.
+7. BitcodeModule
+    1. MakeShared and shared refs of modules is removed. (This was created for
+        OrcJIT use of shared_ptr under the hood, which is no longer used. OrcJit now uses the
+        same ownership transfer model as the legacy engines. E.g. the ownership for the module
+        is transferred to the JIT engine)
+    2. BitCodeModule is now Disposable backed by a safe handle, this allows for detaching and
+       invalidating the underlying LLVMModuleRef when the module is provided to the JIT
+    3. CreateFunction() signature changed, Dropped the default null node parameters
+       not supported by the LLVM-C implementation.
+
+8. Renamed Function class to IrFunction to avoid potential collision with common language
    keywords
-10. Renamed Select to SelectInstruction to avoid potential collision with language keyword
+9. Renamed Select to SelectInstruction to avoid potential collision with language keyword
     and make consistent with ReturnInstruction, ResumeInstruction and other similar cases
     for instructions.
+10. Removed transform pass functions not supported in LLVM-C
+    1. SclaraTransforms.AddLateCFGSimplificationPass()
+11. `GlobalValueExtensions.UnnameAddress<T>(T,bool)` was changed to
+    `GlobalValueExtensions.UnnameAddress<T>(T,UnnamedAddressKind)` to support changes in
+    underlying LLVM
+12. Removed ValueExtensions.SetDugLocation() [All overloaded forms], debug location is set
+    in the InstructionBuilder and remains in effect for all instructions until reset or
+    cleared by setting it to null.
+13. DIBuilder
+    1. CreateFunction() signature changed, Dropped the default null node parameters
+       not supported by the LLVM-C implementation.
+    2. DIBuilder.CreateReplaceableCompositeType() and CreateUnionType() signatures changed to
+       include unique ID
+       1. The id is set to default to string.Empty so this should largely go without actually
+          breaking anything
+    3. CreateBasicType Added DebugIngoFlags parameter
+    4. CreateEnumerationType removed uniqueId string parameter as it isn't supported by LLVM-C
+    5. Obsoleted CreateStructType signature taking `DINodeArray` in favor of `IEnumerable<DINode>`
+14. Llvm.NET.DebugInfo.ExpressionOp names changed to correct PascalCasing and eliminate
+    underscores in the value names ofr better consistency and style compliance.
+15. Renamed some Llvm.NET.DebugInfo.SourceLanguage vendor specific values to conform with
+    underlying LLVM names
+    1. RenderScript -> GoogleRenderScript
+    2. Delphi -> BorlandDelphi
+16. Renamed or removed some of the Llvm.NET.DebugInfo.Tag values to better reflect underlying
+    LLVM names and avoid potential language kwyword conflicts.
+    1. Label -> TagLabel
+    2. PtrToMemberType -> PointerToMemberType
+    3. Removed AutoVariable, ArgVariable, Expression, UserBase, LoUser and MipsLoop as they
+       don't exist in the LLVM support.
+17. InstructionBuilder
+    1. Obsoleted Methods that don't support opaque pointers in preperation for LLVM's transition
+    2. Changed MemCpy, MemMove, and MemSet signatures to remove alignment as LLVM instrinsic no
+       longer includes alignment a parameter. It is applied as a parameter attribute for each 
+       of the pointer parameters (source and destination).
+18. Llvm.NET.JIT.IExecutionEngine
+    1. Replaced AddModule with AddEagerlyCompiledModule to make it more explicit on the behavior
+19. Llvm.NET.ILazyCompileExecutionEngine
+    1. Replaced AddModule [From IExecutionEngine] with AddLazyCompiledModule to make it explicit
+    2. Removed DefalultSymbolResolver from interface as it should not have been in the interface
+       to start with.
+20. Deleted Llvm.NET.LegacyExecutionEngine
+21. Llvm.NET.JIT.OrcJit - updated to reflect changes in the IExecutionEngine and
+    ILazyCompileExecutionEngine interfaces.
 
