@@ -116,32 +116,117 @@ Llvm.NET.Interop Library and NuGet Package. </p>
 <li>Added accessors to allow retrieval/addition of metadata on instructions</li>
 </ul>
 <h1 id="breaking-changes">Breaking Changes</h1>
-<p>This is a Major release and, as such, can, and does, have breaking changes including:</p>
+<p>This is a Major release and, as such, can, and does, have breaking changes. While there
+are several such changes the actual impact to a code base is fairly trivial. Most are
+driven by either obsolecense of functionality in LLVM or general naming cleanup in the
+Llvm.NET library:</p>
 <ol>
-<li>New namespace for some classes (Llvm.NET.Interop)</li>
+<li>New namespace and assembly for some classes (Llvm.NET.Interop)<ol>
+<li>Llvm.NET.DisposableAction -&gt; Llvm.NET.Interop.DisposableAction</li>
+<li>Llvm.NET.DisposableObject -&gt; Llvm.NET.Interop.DisposableObject</li>
+<li>Llvm.NET.StaticState -&gt; Llvm.NET.Interop.Library</li>
+<li>Llvm.NET.TargetRegistrations -&gt; Llvm.NET.Interop.TargetRegistrations</li>
+</ol>
+</li>
 <li>StaticState class is renamed to Llvm.NET.Interop.Library as it is fundamentally 
 part of the low level interop (and &quot;StaticState&quot; was always a bad name)</li>
 <li>Instructions no longer have a SetDebugLocation, instead that is provided via a new
 fluent method on the InstructionBuilder since the normal use is to set the location
 on the builder and then generate a sequence of IR instructions for a given expression
 in code. </li>
-<li>Legacy JIT engine support is dropped. ORCJit is the only supported JIT engine</li>
+<li>Legacy JIT engine support is dropped. ORCJit is the only supported JIT engine<ol>
+<li>Removed Llvm.NET.JIT.EngineKind</li>
+<li>Removed all use of Llvm.NET.JIT.IJitModuleHandle. Handles are now just an itegral value</li>
+<li>Removed Llvm.NET.LegacyExecutionEngine</li>
+</ol>
+</li>
 <li>Context.CreateBasicBlock() now only creates detached blocks, if append to a function
-is desired, there is a method on Function to create and append a new block.</li>
+is desired, there is a method on IrFunction to create and append a block.<ol>
+<li>CreateBasicBlock signature changed to remove the function and block parameters </li>
+</ol>
+</li>
 <li>PassManager, ModulePassManager, and FunctionPassManager are IDisposable to help apps
 ensure that a function pass manager, which is bound to a module, is destroyed before
-the module it is bound to.</li>
-<li>BitcodeModule.MakeShared and shared refs of modules is removed. (This was created for
-OrcJIT use of shared_ptr under the hood, which is no longer used. OrcJit now uses the
-same ownership transfer model as the legacy engines. E.g. the ownership for the module
-is transferred to the JIT engine)</li>
+the module it is bound to. Failure to do so can result in app crashes from access
+violations in the native LLVM code.</li>
+<li><p>BitcodeModule</p>
+<ol>
+<li>MakeShared and shared refs of modules is removed. (This was created for
+ OrcJIT use of shared_ptr under the hood, which is no longer used. OrcJit now uses the
+ same ownership transfer model as the legacy engines. E.g. the ownership for the module
+ is transferred to the JIT engine)</li>
 <li>BitCodeModule is now Disposable backed by a safe handle, this allows for detaching and
 invalidating the underlying LLVMModuleRef when the module is provided to the JIT</li>
-<li>Renamed Function class to IrFunction to avoid potential collision with common language
-keywords</li>
+<li>CreateFunction() signature changed, Dropped the default null node parameters
+not supported by the LLVM-C implementation.</li>
+</ol>
+</li>
+<li><p>Renamed Function class to IrFunction to avoid potential collision with common language
+keywords</p>
+</li>
 <li>Renamed Select to SelectInstruction to avoid potential collision with language keyword
-and make consistent with ReturnInstruction, ResumeInstruction and other similar cases
-for instructions.</li>
+ and make consistent with ReturnInstruction, ResumeInstruction and other similar cases
+ for instructions.</li>
+<li>Removed transform pass functions not supported in LLVM-C<ol>
+<li>SclaraTransforms.AddLateCFGSimplificationPass()</li>
+</ol>
+</li>
+<li><code>GlobalValueExtensions.UnnameAddress&lt;T&gt;(T,bool)</code> was changed to
+<code>GlobalValueExtensions.UnnameAddress&lt;T&gt;(T,UnnamedAddressKind)</code> to support changes in
+underlying LLVM</li>
+<li>Removed ValueExtensions.SetDugLocation() [All overloaded forms], debug location is set
+in the InstructionBuilder and remains in effect for all instructions until reset or
+cleared by setting it to null.</li>
+<li>DIBuilder<ol>
+<li>CreateFunction() signature changed, Dropped the default null node parameters
+not supported by the LLVM-C implementation.</li>
+<li>DIBuilder.CreateReplaceableCompositeType() and CreateUnionType() signatures changed to
+include unique ID<ol>
+<li>The id is set to default to string.Empty so this should largely go without actually
+breaking anything</li>
+</ol>
+</li>
+<li>CreateBasicType Added DebugIngoFlags parameter</li>
+<li>CreateEnumerationType removed uniqueId string parameter as it isn&#39;t supported by LLVM-C</li>
+<li>Obsoleted CreateStructType signature taking <code>DINodeArray</code> in favor of <code>IEnumerable&lt;DINode&gt;</code></li>
+</ol>
+</li>
+<li>Llvm.NET.DebugInfo.ExpressionOp names changed to correct PascalCasing and eliminate
+underscores in the value names ofr better consistency and style compliance.</li>
+<li>Renamed some Llvm.NET.DebugInfo.SourceLanguage vendor specific values to conform with
+underlying LLVM names<ol>
+<li>RenderScript -&gt; GoogleRenderScript</li>
+<li>Delphi -&gt; BorlandDelphi</li>
+</ol>
+</li>
+<li>Renamed or removed some of the Llvm.NET.DebugInfo.Tag values to better reflect underlying
+LLVM names and avoid potential language kwyword conflicts.<ol>
+<li>Label -&gt; TagLabel</li>
+<li>PtrToMemberType -&gt; PointerToMemberType</li>
+<li>Removed AutoVariable, ArgVariable, Expression, UserBase, LoUser and MipsLoop as they
+don&#39;t exist in the LLVM support.</li>
+</ol>
+</li>
+<li>InstructionBuilder<ol>
+<li>Obsoleted Methods that don&#39;t support opaque pointers in preperation for LLVM&#39;s transition</li>
+<li>Changed MemCpy, MemMove, and MemSet signatures to remove alignment as LLVM instrinsic no
+longer includes alignment a parameter. It is applied as a parameter attribute for each 
+of the pointer parameters (source and destination).</li>
+</ol>
+</li>
+<li>Llvm.NET.JIT.IExecutionEngine<ol>
+<li>Replaced AddModule with AddEagerlyCompiledModule to make it more explicit on the behavior</li>
+</ol>
+</li>
+<li>Llvm.NET.ILazyCompileExecutionEngine<ol>
+<li>Replaced AddModule [From IExecutionEngine] with AddLazyCompiledModule to make it explicit</li>
+<li>Removed DefalultSymbolResolver from interface as it should not have been in the interface
+to start with.</li>
+</ol>
+</li>
+<li>Deleted Llvm.NET.LegacyExecutionEngine</li>
+<li>Llvm.NET.JIT.OrcJit - updated to reflect changes in the IExecutionEngine and
+ILazyCompileExecutionEngine interfaces.</li>
 </ol>
 </article>
           </div>
@@ -165,7 +250,7 @@ for instructions.</li>
             <span class="pull-right">
               <a href="#top">Back to top</a>
             </span>
-            Copyright (C) 2017-2019, Ubiquity.NET Contributors<br><strong>Build:</strong> 8.0.0-alpha.0.0.ci-BLD.467297219
+            Copyright (C) 2017-2019, Ubiquity.NET Contributors<br><strong>Build:</strong> 8.0.0-alpha.0.0.ci-BLD.467560874
             
           </div>
         </div>
