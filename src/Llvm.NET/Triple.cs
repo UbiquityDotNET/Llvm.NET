@@ -275,7 +275,7 @@ namespace Llvm.NET
             KalimbaSubArch_v5 = LibLLVMTripleSubArchType.LibLLVMTripleSubArchType_KalimbaSubArch_v5,
 
             /// <summary>MIPS R6</summary>
-            MipsSibArch_r6 = LibLLVMTripleSubArchType.LibLLVMTripleSubArchType_MipsSubArch_r6
+            MipsSubArch_r6 = LibLLVMTripleSubArchType.LibLLVMTripleSubArchType_MipsSubArch_r6
         }
 
         /// <summary>Vendor type for the triple</summary>

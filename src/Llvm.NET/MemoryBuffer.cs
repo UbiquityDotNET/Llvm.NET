@@ -5,6 +5,7 @@
 // -----------------------------------------------------------------------
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 using System.Runtime.InteropServices;
 using Llvm.NET.Interop;
 using Llvm.NET.Properties;
@@ -47,6 +48,12 @@ namespace Llvm.NET
             Marshal.Copy( bufferStart, retVal, 0, Size );
             return retVal;
         }
+
+        /// <summary>Implicit convert to a <see cref="ReadOnlySpan{T}"/></summary>
+        /// <param name="buffer">Buffer to convert</param>
+        /// <remarks>This is a simple wrapper around calling <see cref="Slice(int, int)"/> with default parameters</remarks>
+        [SuppressMessage( "Usage", "CA2225:Operator overloads have named alternates", Justification = "Named alternate exists - Slice()" )]
+        public static implicit operator ReadOnlySpan<byte>( MemoryBuffer buffer ) => buffer.Slice( 0, -1 );
 
         /// <summary>Create a <see cref="System.ReadOnlySpan{T}"/> for a slice of the buffer</summary>
         /// <param name="start">Starting index for the slice [default = 0]</param>
