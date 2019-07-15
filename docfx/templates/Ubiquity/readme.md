@@ -17,4 +17,5 @@ Changes:
 * Added Collapse region for Implemented interfaces (Initially collapsed)
 * Added llvm IR, and EBNF from highlightjs.org as those languages are not part of the docfx.vendor.js by default
 * Added custom ANTLR grammar syntax highlighting as that is not part of standard grammars for highlight js
+* Added custom Kaleidoscope grammar syntax highlighting as that is not part of standard grammars for highlight js
 

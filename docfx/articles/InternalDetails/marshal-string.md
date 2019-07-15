@@ -20,5 +20,5 @@ a common base type [CustomStringMarshalerBase](xref:Llvm.NET.Interop.CustomStrin
 
 ### Marshaling configuration
 LLVMBindingsGenerator supports a flexible configuration to identify which functions require which
-form of marshalling. For strings this is an instance of the [StringMarshalInfo](LLVMBindingsGenerator.StringMarshalInfo)
+form of marshaling. For strings this is an instance of the `StringMarshalInfo`
 class

@@ -2,7 +2,7 @@
 The bindings generator uses a configuration data structure that consists of a
 number of tables used by the code generation passes for resolving the various
 ambiguities of generating the code. The configuration is an instance of the
-[GeneratorConfig](xref:LlvmBindingsGenerator.Configuration.GeneratorConfig) class.
+`LlvmBindingsGenerator.Configuration.GeneratorConfig` class.
 
 The GeneratorConfig class holds all the data used by the various passes in
 LlvmBindingsGenerator to transform the AST so that subsequent stages will 
@@ -18,7 +18,7 @@ int as a status value) This helps to keep the interop layer clean, and semantica
 consistent, without actually breaking the ABI of the LLVM-C APIs. 
 
 ## MarshalingInfo
-This is a collection of [IMarshalInfo](xref:LlvmBindingsGenerator.IMarshalInfo) instances
+This is a collection of `LlvmBindingsGenerator.IMarshalInfo` instances
 used to transform function parameter and return types as well as add appropriate marshaling
 attributes for them. This is the most complex implementations of all the passes. Though
 declaring the table is made a lot easier by the various IMarshalInfo implementation types.
