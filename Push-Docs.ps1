@@ -4,7 +4,7 @@
 $remoteUrl = git ls-remote --get-url
 if($remoteUrl -ne "https://github.com/UbiquityDotNET/Llvm.NET.git")
 {
-    throw "Pushing docs is only allowed when the origin remote is the official source release"
+    #throw "Pushing docs is only allowed when the origin remote is the official source release"
 }
 
 if($env:CI)
@@ -19,13 +19,22 @@ pushd .\BuildOutput\docs -ErrorAction Stop
 try
 {
     Write-Information "Adding files to git"
-    git add *
+    git add -A .
+    git ls-files -o --exclude-standard | %{ git add $_}
+    if(!$?)
+    {
+        throw "git add failed"
+    }
 
     Write-Information "Committing changes to git"
     git commit -m "CI Docs Update"
+    if(!$?)
+    {
+        throw "git commit failed"
+    }
 
-    Write-Information "pushing changes to git"
-    git push -q
+#    Write-Information "pushing changes to git"
+#    git push -q
 }
 finally
 {

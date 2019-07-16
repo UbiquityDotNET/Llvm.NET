@@ -65,6 +65,10 @@ try
         try
         {
             git clone https://github.com/UbiquityDotNET/Llvm.NET.git -b gh-pages docs -q
+            if( !$? )
+            {
+                throw "Git clone failed"
+            }
         }
         finally
         {
