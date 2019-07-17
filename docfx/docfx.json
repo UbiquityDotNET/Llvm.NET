@@ -6,16 +6,12 @@
       [
         {
             "files": [
-                "src/Llvm.Net/Llvm.NET.csproj",
-                "BuildOutput/bin/Llvm.NET.Interop/Release/net47/Llvm.NET.Interop.dll"
+                "src/Llvm.Net/Llvm.NET.csproj"
             ],
           "src":".."
         }
       ],
-      "dest": "api",
-      "properties": {
-          "TargetFramework": "net47"
-      }
+      "dest": "api"
     }
   ],
   "build":
@@ -63,7 +59,10 @@
       "_appLogoPath": "DragonSharp48x48.png",
       "_disableBreadcrumb" : true,
       "llvmVersion": "8.0.0",
-      "assemblies": ["Llvm.NET", "Llvm.NET.Interop"],
+      "assemblies":
+        [
+            "Llvm.NET"
+        ],
       "_gitContribute": {
           "repo": "https://github.com/UbiquityDotNET/Llvm.NET",
           "branch":  "master"
