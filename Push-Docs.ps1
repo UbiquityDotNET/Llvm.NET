@@ -19,7 +19,7 @@ pushd .\BuildOutput\docs -ErrorAction Stop
 try
 {
     Write-Information "Adding files to git"
-    git add -A .
+    git add -A
     git ls-files -o --exclude-standard | %{ git add $_}
     if(!$?)
     {

@@ -23,5 +23,5 @@ This namespace contains the support for defining and querying LLVM types
 #### [Llvm.NET.Values](xref:Llvm.NET.Values)
 This namespace contains support for manipulating LLVM Values and the hierarchy of value object types
 
-#### [Llvm.NET.Interop](xref:Llvm.NET.Interop)
+#### Llvm.NET.Interop
 This namespace contains the low level interop layer for the native LLVM C API surface

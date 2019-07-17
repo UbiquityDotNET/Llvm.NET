@@ -16,7 +16,7 @@ on the P/Invoke signature so it is both clear and easy to use for the upper laye
 The [LlvmBindingsGenerator](https://github.com/UbiquityDotNET/Llvm.NET/tree/master/src/Interop/LlvmBindingsGenerator)
 Creates concrete custom marshalers for every string disposal type supported. To
 keep things simple and eliminate redundancies, the generated marshalers all derive from
-a common base type [CustomStringMarshalerBase](xref:Llvm.NET.Interop.CustomStringMarshalerBase).
+a common base type CustomStringMarshalerBase.
 
 ### Marshaling configuration
 LLVMBindingsGenerator supports a flexible configuration to identify which functions require which
