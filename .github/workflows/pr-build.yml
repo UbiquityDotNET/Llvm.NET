@@ -12,11 +12,11 @@ jobs:
         run: git submodule update --init --recursive
 
       - name: Build Repo for Windows
-        run: .\build-All.ps1
+        run: .\buildAll.ps1
         env:
           IsAutomatedBuild: true
           IsPullRequestBuild: true
           IsReleaseBuild: false
 
-      -name: Run unit tests
-       run: .\Invoke-unittests.ps1
+      - name: Run unit tests
+        run: .\Invoke-unittests.ps1
