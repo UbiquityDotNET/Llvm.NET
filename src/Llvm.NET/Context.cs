@@ -742,7 +742,8 @@ namespace Llvm.NET
         /// <remarks>
         /// These IDs are uniqued across all modules in this context.
         /// </remarks>
-        public uint GetMDKindId( string name ) => LLVMGetMDKindIDInContext( ContextHandle, name, ( uint )name.Length );
+        public uint GetMDKindId( string name )
+            => LLVMGetMDKindIDInContext( ContextHandle, name, name == null ? 0u : ( uint )name.Length );
 
         /// <summary>Gets or sets a value indicating whether the context keeps a map for uniqueing debug info identifiers across the context</summary>
         public bool OdrUniqueDebugTypes

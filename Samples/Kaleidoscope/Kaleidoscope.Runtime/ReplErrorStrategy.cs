@@ -5,6 +5,7 @@
 // -----------------------------------------------------------------------
 
 using Antlr4.Runtime;
+using Ubiquity.ArgValidators;
 
 namespace Kaleidoscope.Runtime
 {
@@ -17,6 +18,7 @@ namespace Kaleidoscope.Runtime
     {
         protected override void ReportFailedPredicate( Antlr4.Runtime.Parser recognizer, FailedPredicateException e )
         {
+            e.ValidateNotNull( nameof( e ) );
             switch( e.Predicate )
             {
             case "FeatureControlFlow":

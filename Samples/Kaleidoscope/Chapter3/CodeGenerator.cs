@@ -13,6 +13,7 @@ using Kaleidoscope.Runtime;
 using Llvm.NET;
 using Llvm.NET.Instructions;
 using Llvm.NET.Values;
+using Ubiquity.ArgValidators;
 
 using ConstantExpression = Kaleidoscope.Grammar.AST.ConstantExpression;
 
@@ -28,6 +29,7 @@ namespace Kaleidoscope.Chapter3
         public CodeGenerator( DynamicRuntimeState globalState )
             : base(null)
         {
+            globalState.ValidateNotNull( nameof( globalState ) );
             if( globalState.LanguageLevel > LanguageLevel.SimpleExpressions )
             {
                 throw new ArgumentException( "Language features not supported by this generator", nameof(globalState) );
@@ -68,6 +70,7 @@ namespace Kaleidoscope.Chapter3
         #region ConstantExpression
         public override Value Visit( ConstantExpression constant )
         {
+            constant.ValidateNotNull( nameof( constant ) );
             return Context.CreateConstant( constant.Value );
         }
         #endregion
@@ -75,6 +78,7 @@ namespace Kaleidoscope.Chapter3
         #region BinaryOperatorExpression
         public override Value Visit( BinaryOperatorExpression binaryOperator )
         {
+            binaryOperator.ValidateNotNull( nameof( binaryOperator ) );
             switch( binaryOperator.Op )
             {
             case BuiltInOperatorKind.Less:
@@ -125,6 +129,7 @@ namespace Kaleidoscope.Chapter3
         #region FunctionCallExpression
         public override Value Visit( FunctionCallExpression functionCall )
         {
+            functionCall.ValidateNotNull( nameof( functionCall ) );
             string targetName = functionCall.FunctionPrototype.Name;
             IrFunction function;
 
@@ -146,6 +151,7 @@ namespace Kaleidoscope.Chapter3
         #region FunctionDefinition
         public override Value Visit( FunctionDefinition definition )
         {
+            definition.ValidateNotNull( nameof( definition ) );
             var function = GetOrDeclareFunction( definition.Signature );
             if( !function.IsDeclaration )
             {
@@ -178,6 +184,7 @@ namespace Kaleidoscope.Chapter3
         #region VariableReferenceExpression
         public override Value Visit( VariableReferenceExpression reference )
         {
+            reference.ValidateNotNull( nameof( reference ) );
             if( !NamedValues.TryGetValue( reference.Name, out Value value ) )
             {
                 // Source input is validated by the parser and AstBuilder, therefore

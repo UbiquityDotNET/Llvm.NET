@@ -10,6 +10,7 @@ using System.Diagnostics.CodeAnalysis;
 using Llvm.NET.Interop;
 using Llvm.NET.Properties;
 using Llvm.NET.Values;
+using Ubiquity.ArgValidators;
 
 using static Llvm.NET.Interop.NativeMethods;
 
@@ -452,7 +453,7 @@ namespace Llvm.NET.Instructions
         {
             get => FromHandle<MetadataAsValue>( LLVMGetMetadata( ValueHandle, ( uint )kindKey ) );
 
-            set => LLVMSetMetadata( ValueHandle, ( uint )kindKey, value.ValueHandle );
+            set => LLVMSetMetadata( ValueHandle, ( uint )kindKey, value.ValidateNotNull(nameof(value)).ValueHandle );
         }
 
         /// <summary>Gets a snap-shot collection of the metadata for this instruction, filtering out all the debug location nodes</summary>

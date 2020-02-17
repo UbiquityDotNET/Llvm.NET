@@ -33,6 +33,7 @@ namespace Llvm.NETTests
 
         public new string NoExceptionMessage => base.NoExceptionMessage;
 
+        [System.Diagnostics.CodeAnalysis.SuppressMessage( "Design", "CA1062:Validate arguments of public methods", Justification = "Validated by Assert" )]
         protected override void Verify( Exception exception )
         {
             Assert.IsNotNull(exception);

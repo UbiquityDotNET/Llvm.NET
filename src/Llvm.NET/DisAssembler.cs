@@ -7,6 +7,7 @@ using System;
 using System.Runtime.InteropServices;
 using System.Text;
 using Llvm.NET.Interop;
+using Ubiquity.ArgValidators;
 
 using static Llvm.NET.Interop.NativeMethods;
 
@@ -51,6 +52,7 @@ namespace Llvm.NET
                            , LLVMSymbolLookupCallback symbolLookup
                            )
         {
+            triple.ValidateNotNull( nameof( triple ) );
             InfoCallBack = infoCallBack;
             SymbolLookupCallback = symbolLookup;
             DisasmHandle = LLVMCreateDisasm( triple.ToString( ), disInfo, tagType, InfoCallBack, SymbolLookupCallback );
@@ -71,6 +73,7 @@ namespace Llvm.NET
                            , LLVMSymbolLookupCallback symbolLookup
                            )
         {
+            triple.ValidateNotNull( nameof( triple ) );
             InfoCallBack = infoCallBack;
             SymbolLookupCallback = symbolLookup;
             DisasmHandle = LLVMCreateDisasmCPU( triple.ToString( ), cpu, disInfo, tagType, InfoCallBack, SymbolLookupCallback );
@@ -93,6 +96,7 @@ namespace Llvm.NET
                            , LLVMSymbolLookupCallback symbolLookup
                            )
         {
+            triple.ValidateNotNull( nameof( triple ) );
             InfoCallBack = infoCallBack;
             SymbolLookupCallback = symbolLookup;
             DisasmHandle = LLVMCreateDisasmCPUFeatures( triple.ToString( ), cpu, features, disInfo, tagType, InfoCallBack, SymbolLookupCallback );

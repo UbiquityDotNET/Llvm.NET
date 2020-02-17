@@ -14,6 +14,7 @@ using Llvm.NET;
 using Llvm.NET.Instructions;
 using Llvm.NET.Transforms;
 using Llvm.NET.Values;
+using Ubiquity.ArgValidators;
 
 using ConstantExpression = Kaleidoscope.Grammar.AST.ConstantExpression;
 
@@ -29,6 +30,7 @@ namespace Kaleidoscope.Chapter8
         public CodeGenerator( DynamicRuntimeState globalState, TargetMachine machine, bool disableOptimization = false )
             : base(null)
         {
+            globalState.ValidateNotNull( nameof( globalState ) );
             if( globalState.LanguageLevel > LanguageLevel.MutableVariables )
             {
                 throw new ArgumentException( "Language features not supported by this generator", nameof( globalState ) );
@@ -56,6 +58,7 @@ namespace Kaleidoscope.Chapter8
         #region Generate
         public Value Generate( IAstNode ast, Action<CodeGeneratorException> codeGenerationErroHandler )
         {
+            ast.ValidateNotNull( nameof( ast ) );
             try
             {
                 ast.Accept( this );
@@ -79,10 +82,12 @@ namespace Kaleidoscope.Chapter8
                     // and inlines each of the anonymous functions directly into main, dropping the now
                     // unused original anonymous functions all while retaining all of the original source
                     // debug information locations.
-                    var mpm = new ModulePassManager( )
-                              .AddAlwaysInlinerPass( )
-                              .AddGlobalDCEPass( );
-                    mpm.Run( Module );
+                    using( var mpm = new ModulePassManager( ) )
+                    {
+                        mpm.AddAlwaysInlinerPass( )
+                           .AddGlobalDCEPass( )
+                           .Run( Module );
+                    }
                 }
             }
             catch(CodeGeneratorException ex) when ( codeGenerationErroHandler != null)
@@ -97,6 +102,7 @@ namespace Kaleidoscope.Chapter8
         #region ConstantExpression
         public override Value Visit( ConstantExpression constant )
         {
+            constant.ValidateNotNull( nameof( constant ) );
             return Context.CreateConstant( constant.Value );
         }
         #endregion
@@ -104,6 +110,7 @@ namespace Kaleidoscope.Chapter8
         #region BinaryOperatorExpression
         public override Value Visit( BinaryOperatorExpression binaryOperator )
         {
+            binaryOperator.ValidateNotNull( nameof( binaryOperator ) );
             switch( binaryOperator.Op )
             {
             case BuiltInOperatorKind.Less:
@@ -160,6 +167,7 @@ namespace Kaleidoscope.Chapter8
         #region FunctionCallExpression
         public override Value Visit( FunctionCallExpression functionCall )
         {
+            functionCall.ValidateNotNull( nameof( functionCall ) );
             string targetName = functionCall.FunctionPrototype.Name;
             IrFunction function;
 
@@ -181,6 +189,7 @@ namespace Kaleidoscope.Chapter8
         #region FunctionDefinition
         public override Value Visit( FunctionDefinition definition )
         {
+            definition.ValidateNotNull( nameof( definition ) );
             var function = GetOrDeclareFunction( definition.Signature );
             if( !function.IsDeclaration )
             {
@@ -238,6 +247,7 @@ namespace Kaleidoscope.Chapter8
         #region VariableReferenceExpression
         public override Value Visit( VariableReferenceExpression reference )
         {
+            reference.ValidateNotNull( nameof( reference ) );
             var value = LookupVariable( reference.Name );
 
             // since the Alloca is created as a non-opaque pointer it is OK to just use the
@@ -251,6 +261,7 @@ namespace Kaleidoscope.Chapter8
         #region ConditionalExpression
         public override Value Visit( ConditionalExpression conditionalExpression )
         {
+            conditionalExpression.ValidateNotNull( nameof( conditionalExpression ) );
             var result = LookupVariable( conditionalExpression.ResultVariable.Name );
 
             var condition = conditionalExpression.Condition.Accept( this );
@@ -305,6 +316,7 @@ namespace Kaleidoscope.Chapter8
         #region ForInExpression
         public override Value Visit( ForInExpression forInExpression )
         {
+            forInExpression.ValidateNotNull(nameof(forInExpression));
             var function = InstructionBuilder.InsertBlock.ContainingFunction;
             string varName = forInExpression.LoopVariable.Name;
             Alloca allocaVar = LookupVariable( varName );
@@ -392,6 +404,7 @@ namespace Kaleidoscope.Chapter8
         #region VarInExpression
         public override Value Visit( VarInExpression varInExpression )
         {
+            varInExpression.ValidateNotNull( nameof( varInExpression ) );
             using( NamedValues.EnterScope( ) )
             {
                 EmitBranchToNewBlock( "VarInScope" );

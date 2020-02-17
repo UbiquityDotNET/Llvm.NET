@@ -29,7 +29,7 @@ namespace Kaleidoscope.Runtime
                 {
                     prompt?.Invoke( );
 
-                    line = await input.ReadLineAsync( );
+                    line = await input.ReadLineAsync( ).ConfigureAwait(true);
                     if( line != null )
                     {
                         observer.OnNext( line );

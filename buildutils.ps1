@@ -2,7 +2,8 @@ function Find-OnPath
 {
     [CmdletBinding()]
     Param( [Parameter(Mandatory=$True,Position=0)][string]$exeName)
-    $path = where.exe $exeName 2>$null
+
+    $path = where.exe $exeName 2>$null | select -First 1
     if(!$path)
     {
         Write-Verbose "'$exeName' not found on PATH"

@@ -496,4 +496,7 @@ Types are:
   <data name="Block_already_exists_in_function" xml:space="preserve">
     <value>Basic block already exists in the function</value>
   </data>
+  <data name="Cannot_Reset_Type_to_null" xml:space="preserve">
+    <value>Cannot reset the native DIType to null</value>
+  </data>
 </root>

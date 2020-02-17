@@ -4,6 +4,8 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
+using Ubiquity.ArgValidators;
+
 namespace Kaleidoscope.Grammar.AST
 {
     public class AstVisitorBase<TResult>
@@ -35,6 +37,7 @@ namespace Kaleidoscope.Grammar.AST
 
         public virtual TResult VisitChildren( IAstNode node )
         {
+            node.ValidateNotNull( nameof( node ) );
             TResult aggregate = DefaultResult;
             foreach( var child in node.Children )
             {

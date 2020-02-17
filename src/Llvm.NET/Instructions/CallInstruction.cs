@@ -10,6 +10,7 @@ using System.Linq;
 using Llvm.NET.Interop;
 using Llvm.NET.Properties;
 using Llvm.NET.Values;
+using Ubiquity.ArgValidators;
 
 using static Llvm.NET.Interop.NativeMethods;
 
@@ -90,6 +91,7 @@ namespace Llvm.NET.Instructions
         /// <inheritdoc/>
         public void RemoveAttributeAtIndex( FunctionAttributeIndex index, string name )
         {
+            name.ValidateNotNullOrWhiteSpace( nameof( name ) );
             LLVMRemoveCallSiteStringAttribute( ValueHandle, ( LLVMAttributeIndex )index, name, ( uint )name.Length );
         }
 

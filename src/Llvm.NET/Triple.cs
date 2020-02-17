@@ -199,7 +199,7 @@ namespace Llvm.NET
         }
 
         /// <summary>Processor sub architecture type</summary>
-        [SuppressMessage( "Naming", "CA1707:Identifiers should not contain underscores", Justification = "Harder to understand without them")]
+        [SuppressMessage( "Naming", "CA1707:Identifiers should not contain underscores", Justification = "Harder to understand without them" )]
         public enum SubArchType
         {
             /// <summary>No sub architecture</summary>
@@ -613,9 +613,10 @@ namespace Llvm.NET
         /// <summary>Equality test for a triple</summary>
         /// <param name="other">triple to compare this triple to</param>
         /// <returns><see langword="true"/> if the two triples are equivalent</returns>
+        [SuppressMessage( "Common Practices and Code Improvements", "RECS0059:Conditional expression can be simplified", Justification = "Over 'simplification' makes it more complex" )]
         public bool Equals( Triple other )
         {
-            return (other != null && ReferenceEquals( this, other )) || LibLLVMTripleOpEqual( TripleHandle, other.TripleHandle );
+            return other == null ? false : ReferenceEquals( this, other ) || LibLLVMTripleOpEqual( TripleHandle, other.TripleHandle );
         }
 
         /// <summary>Equality test for a triple</summary>
@@ -646,7 +647,7 @@ namespace Llvm.NET
         /// <param name="arch">Architecture type</param>
         /// <param name="os">Operating system type</param>
         /// <returns>Default object format</returns>
-        [SuppressMessage( "Maintainability", "CA1502:Avoid excessive complexity", Justification = "Type factory from naitve typekind" )]
+        [SuppressMessage( "Maintainability", "CA1502:Avoid excessive complexity", Justification = "Type factory from native typekind" )]
         public static ObjectFormatType GetDefaultObjectFormat( ArchType arch, OSType os )
         {
             arch.ValidateDefined( nameof( arch ) );
@@ -780,7 +781,7 @@ namespace Llvm.NET
 
         /// <summary>Implicitly converts a triple to a string</summary>
         /// <param name="triple"><see cref="Triple"/> to convert</param>
-        public static implicit operator string(Triple triple) => triple.ToString();
+        public static implicit operator string( Triple triple ) => triple.ValidateNotNull( nameof( triple ) ).ToString( );
 
         private Triple( LibLLVMTripleRef handle )
         {

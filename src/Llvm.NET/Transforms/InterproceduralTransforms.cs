@@ -4,6 +4,8 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
+using Ubiquity.ArgValidators;
+
 using static Llvm.NET.Interop.NativeMethods;
 
 namespace Llvm.NET.Transforms
@@ -17,9 +19,10 @@ namespace Llvm.NET.Transforms
         /// <param name="passManager">Pass manager to add the pass to</param>
         /// <returns><paramref name="passManager"/> for fluent style construction of a pass manager</returns>
         /// <seealso href="xref:llvm_docs_passes#argpromotion-promote-by-reference-arguments-to-scalars">LLVM: Promote ‘by reference’ arguments to scalars</seealso>
-        public static T AddArgumentPromotionPass<T>( this T passManager )
+        public static T AddArgumentPromotionPass<T>( [ValidatedNotNull] this T passManager )
             where T : PassManager
         {
+            passManager.ValidateNotNull( nameof( passManager ) );
             LLVMAddArgumentPromotionPass( passManager.Handle );
             return passManager;
         }
@@ -29,9 +32,10 @@ namespace Llvm.NET.Transforms
         /// <param name="passManager">Pass manager to add the pass to</param>
         /// <returns><paramref name="passManager"/> for fluent style construction of a pass manager</returns>
         /// <seealso href="xref:llvm_docs_passes#constmerge-merge-duplicate-global-constants">LLVM: Simple constant propagation</seealso>
-        public static T AddConstantMergePass<T>( this T passManager )
+        public static T AddConstantMergePass<T>( [ValidatedNotNull] this T passManager )
             where T : PassManager
         {
+            passManager.ValidateNotNull( nameof( passManager ) );
             LLVMAddConstantMergePass( passManager.Handle );
             return passManager;
         }
@@ -41,9 +45,10 @@ namespace Llvm.NET.Transforms
         /// <param name="passManager">Pass manager to add the pass to</param>
         /// <returns><paramref name="passManager"/> for fluent style construction of a pass manager</returns>
         /// <seealso href="xref:llvm_docs_passes#deadargelim-dead-argument-elimination">LLVM: Dead Argument Elimination</seealso>
-        public static T AddDeadArgEliminationPass<T>( this T passManager )
+        public static T AddDeadArgEliminationPass<T>( [ValidatedNotNull] this T passManager )
             where T : PassManager
         {
+            passManager.ValidateNotNull( nameof( passManager ) );
             LLVMAddDeadArgEliminationPass( passManager.Handle );
             return passManager;
         }
@@ -53,9 +58,10 @@ namespace Llvm.NET.Transforms
         /// <param name="passManager">Pass manager to add the pass to</param>
         /// <returns><paramref name="passManager"/> for fluent style construction of a pass manager</returns>
         /// <seealso href="xref:llvm_docs_passes#functionattrs-deduce-function-attributes">LLVM: Deduce function attributes</seealso>
-        public static T AddFunctionAttrsPass<T>( this T passManager )
+        public static T AddFunctionAttrsPass<T>( [ValidatedNotNull] this T passManager )
             where T : PassManager
         {
+            passManager.ValidateNotNull( nameof( passManager ) );
             LLVMAddFunctionAttrsPass( passManager.Handle );
             return passManager;
         }
@@ -65,9 +71,10 @@ namespace Llvm.NET.Transforms
         /// <param name="passManager">Pass manager to add the pass to</param>
         /// <returns><paramref name="passManager"/> for fluent style construction of a pass manager</returns>
         /// <seealso href="xref:llvm_docs_passes#inline-function-integration-inlining">LLVM: Function Integration/Inlining</seealso>
-        public static T AddFunctionInliningPass<T>( this T passManager )
+        public static T AddFunctionInliningPass<T>( [ValidatedNotNull] this T passManager )
             where T : PassManager
         {
+            passManager.ValidateNotNull( nameof( passManager ) );
             LLVMAddFunctionInliningPass( passManager.Handle );
             return passManager;
         }
@@ -77,9 +84,10 @@ namespace Llvm.NET.Transforms
         /// <param name="passManager">Pass manager to add the pass to</param>
         /// <returns><paramref name="passManager"/> for fluent style construction of a pass manager</returns>
         /// <seealso href="xref:llvm_docs_passes#always-inline-inliner-for-always-inline-functions">LLVM: Inliner for always_inline functions</seealso>
-        public static T AddAlwaysInlinerPass<T>( this T passManager )
+        public static T AddAlwaysInlinerPass<T>( [ValidatedNotNull] this T passManager )
             where T : PassManager
         {
+            passManager.ValidateNotNull( nameof( passManager ) );
             LLVMAddAlwaysInlinerPass( passManager.Handle );
             return passManager;
         }
@@ -95,9 +103,10 @@ namespace Llvm.NET.Transforms
         /// recursive chunks of the program which are unreachable.
         /// </remarks>
         /// <seealso href="xref:llvm_docs_passes#globaldce-dead-global-elimination">LLVM: Global Dead Code Elimination pass</seealso>
-        public static T AddGlobalDCEPass<T>( this T passManager )
+        public static T AddGlobalDCEPass<T>( [ValidatedNotNull] this T passManager )
             where T : PassManager
         {
+            passManager.ValidateNotNull( nameof( passManager ) );
             LLVMAddGlobalDCEPass( passManager.Handle );
             return passManager;
         }
@@ -111,9 +120,10 @@ namespace Llvm.NET.Transforms
         /// If obviously true, it marks read/write globals as constant, deletes variables only stored to, etc.
         /// </remarks>
         /// <seealso href="xref:llvm_docs_passes#globalopt-global-variable-optimizer">LLVM: Global Variable Optimizer pass</seealso>
-        public static T AddGlobalOptimizerPass<T>( this T passManager )
+        public static T AddGlobalOptimizerPass<T>( [ValidatedNotNull] this T passManager )
             where T : PassManager
         {
+            passManager.ValidateNotNull( nameof( passManager ) );
             LLVMAddGlobalOptimizerPass( passManager.Handle );
             return passManager;
         }
@@ -129,9 +139,10 @@ namespace Llvm.NET.Transforms
         /// this to clean up the mess.
         /// </remarks>
         /// <seealso href="xref:llvm_docs_passes#ipconstprop-interprocedural-constant-propagation">LLVM: Inter-procedural constant propagation pass</seealso>
-        public static T AddIPConstantPropagationPass<T>( this T passManager )
+        public static T AddIPConstantPropagationPass<T>( [ValidatedNotNull] this T passManager )
             where T : PassManager
         {
+            passManager.ValidateNotNull( nameof( passManager ) );
             LLVMAddIPConstantPropagationPass( passManager.Handle );
             return passManager;
         }
@@ -146,9 +157,10 @@ namespace Llvm.NET.Transforms
         /// implements this as a bottom-up traversal of the call-graph.
         /// </remarks>
         /// <seealso href="xref:llvm_docs_passes#prune-eh-remove-unused-exception-handling-info">LLVM: Prune unused exception handling info pass</seealso>
-        public static T AddPruneEHPass<T>( this T passManager )
+        public static T AddPruneEHPass<T>( [ValidatedNotNull] this T passManager )
             where T : PassManager
         {
+            passManager.ValidateNotNull( nameof( passManager ) );
             LLVMAddPruneEHPass( passManager.Handle );
             return passManager;
         }
@@ -159,9 +171,10 @@ namespace Llvm.NET.Transforms
         /// <returns><paramref name="passManager"/> for fluent style construction of a pass manager</returns>
         /// <seealso href="xref:llvm_docs_passes#Sparse Conditional Constant Propagation"/>
         /// <seealso cref="ScalarTransforms.AddSCCPPass{T}(T)">LLVM: Inter-procedural Sparse Conditional Constant Propagation pass</seealso>
-        public static T AddIPSCCPPass<T>( this T passManager )
+        public static T AddIPSCCPPass<T>( [ValidatedNotNull] this T passManager )
             where T : PassManager
         {
+            passManager.ValidateNotNull( nameof( passManager ) );
             LLVMAddIPSCCPPass( passManager.Handle );
             return passManager;
         }
@@ -176,9 +189,10 @@ namespace Llvm.NET.Transforms
         /// main function is found, all other functions and all global variables with initializers are marked as internal.
         /// </remarks>
         /// <seealso href="xref:llvm_docs_passes#internalize-internalize-global-symbols">LLVM: Internalize Global Symbols pass</seealso>
-        public static T AddInternalizePass<T>( this T passManager, bool allButMain )
+        public static T AddInternalizePass<T>( [ValidatedNotNull] this T passManager, bool allButMain )
             where T : PassManager
         {
+            passManager.ValidateNotNull( nameof( passManager ) );
             LLVMAddInternalizePass( passManager.Handle, allButMain );
             return passManager;
         }
@@ -193,9 +207,10 @@ namespace Llvm.NET.Transforms
         /// available (i.e., declarations for unused library functions).
         /// </remarks>
         /// <seealso href="xref:llvm_docs_passes#strip-dead-prototypes-strip-unused-function-prototypes">LLVM: Strip Unused Function Prototypes pass</seealso>
-        public static T AddStripDeadPrototypesPass<T>( this T passManager )
+        public static T AddStripDeadPrototypesPass<T>( [ValidatedNotNull] this T passManager )
             where T : PassManager
         {
+            passManager.ValidateNotNull( nameof( passManager ) );
             LLVMAddStripDeadPrototypesPass( passManager.Handle );
             return passManager;
         }
@@ -214,9 +229,10 @@ namespace Llvm.NET.Transforms
         /// </note>
         /// </remarks>
         /// <seealso href="xref:llvm_docs_passes#strip-strip-all-symbols-from-a-module">LLVM: Strip symbols from module pass</seealso>
-        public static T AddStripSymbolsPass<T>( this T passManager )
+        public static T AddStripSymbolsPass<T>( [ValidatedNotNull] this T passManager )
             where T : PassManager
         {
+            passManager.ValidateNotNull( nameof( passManager ) );
             LLVMAddStripSymbolsPass( passManager.Handle );
             return passManager;
         }

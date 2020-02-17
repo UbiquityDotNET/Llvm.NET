@@ -6,6 +6,7 @@
 
 using System.Collections.Generic;
 using Llvm.NET.Interop;
+using Ubiquity.ArgValidators;
 
 using static Llvm.NET.Interop.NativeMethods;
 
@@ -19,12 +20,24 @@ namespace Llvm.NET.ObjectFile
         /// <param name="buffer">Memory buffer containing the raw binary data of the object file</param>
         public TargetObjectFile( MemoryBuffer buffer )
         {
+            buffer.ValidateNotNull( nameof( buffer ) );
             ObjFileRef = LLVMCreateObjectFile( buffer.BufferHandle );
 
             // ObjFile now internally owns the buffer, so detach to prevent GC from releasing it in
             // non-deterministic finalization.
             buffer.Detach( );
         }
+
+        /*
+        TODO: (Needs extension C APIs)
+            string FileFormatName { get; }
+            TripleArchType ArchType { get; }
+            SubTargetFeatures Features { get; }
+            UInt64 StartAddress { get; }
+            Triple Triple { get; }
+            bool IsRelocatable { get; }
+            void SetArmSubArch( Triple triple); // should validate triple is an arm arch and has a subArch to set...
+        */
 
         /// <summary>Gets the symbols in this <see cref="TargetObjectFile"/></summary>
         public IEnumerable<Symbol> Symbols

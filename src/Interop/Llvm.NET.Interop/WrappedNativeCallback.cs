@@ -31,7 +31,7 @@ namespace Llvm.NET.Interop
 
         /// <summary>Converts a callback to an IntPtr suitable for passing to native code</summary>
         /// <param name="cb">Callback to cast to an <see cref="IntPtr"/></param>
-        public static implicit operator IntPtr( WrappedNativeCallback cb ) => cb.ToIntPtr( );
+        public static implicit operator IntPtr( WrappedNativeCallback cb ) => cb.ValidateNotNull(nameof( cb ) ).ToIntPtr( );
 
         /// <summary>Initializes a new instance of the <see cref="WrappedNativeCallback"/> class.</summary>
         /// <param name="d">Delegate</param>
@@ -113,6 +113,6 @@ namespace Llvm.NET.Interop
         /// <param name="cb">Callback to get the delegate for</param>
         /// <returns>Delegate suitable for passing as an "in" parameter to native methods</returns>
         [SuppressMessage( "Usage", "CA2225:Operator overloads have named alternates", Justification = "ToDelegate serves the purpose without confusion on generic parameter name" )]
-        public static implicit operator T(WrappedNativeCallback<T> cb) => cb.ToDelegate();
+        public static implicit operator T(WrappedNativeCallback<T> cb) => cb.ValidateNotNull(nameof(cb)).ToDelegate();
     }
 }

@@ -6,6 +6,7 @@
 
 using System.Collections.Generic;
 using System.Text;
+using Ubiquity.ArgValidators;
 
 namespace Kaleidoscope.Grammar.AST
 {
@@ -28,7 +29,7 @@ namespace Kaleidoscope.Grammar.AST
 
         public bool CompilerGenerated { get; }
 
-        public TResult Accept<TResult>( IAstVisitor<TResult> visitor ) => visitor.Visit( this );
+        public TResult Accept<TResult>( IAstVisitor<TResult> visitor ) => visitor.ValidateNotNull( nameof( visitor ) ).Visit( this );
 
         public IEnumerable<IAstNode> Children
         {

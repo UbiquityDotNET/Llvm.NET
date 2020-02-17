@@ -4,6 +4,8 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
+using Ubiquity.ArgValidators;
+
 using static Llvm.NET.Interop.NativeMethods;
 
 namespace Llvm.NET.Transforms
@@ -16,9 +18,10 @@ namespace Llvm.NET.Transforms
         /// <param name="passManager">Pass manager to add the pass to</param>
         /// <returns><paramref name="passManager"/>for fluent support</returns>
         /// <seealso href="xref:llvm_docs_passes#adce-aggressive-dead-code-elimination">LLVM: Aggressive Dead Elimination</seealso>
-        public static T AddAggressiveDCEPass<T>( this T passManager )
+        public static T AddAggressiveDCEPass<T>( [ValidatedNotNull] this T passManager )
             where T : PassManager
         {
+            passManager.ValidateNotNull( nameof( passManager ) );
             LLVMAddAggressiveDCEPass( passManager.Handle );
             return passManager;
         }
@@ -27,9 +30,10 @@ namespace Llvm.NET.Transforms
         /// <typeparam name="T">Type of pass manager to add the pass to</typeparam>
         /// <param name="passManager">Pass manager to add the pass to</param>
         /// <returns><paramref name="passManager"/>for fluent support</returns>
-        public static T AddBitTrackingDCEPass<T>( this T passManager )
+        public static T AddBitTrackingDCEPass<T>( [ValidatedNotNull] this T passManager )
             where T : PassManager
         {
+            passManager.ValidateNotNull( nameof( passManager ) );
             LLVMAddBitTrackingDCEPass( passManager.Handle );
             return passManager;
         }
@@ -38,9 +42,10 @@ namespace Llvm.NET.Transforms
         /// <typeparam name="T">Type of pass manager to add the pass to</typeparam>
         /// <param name="passManager">Pass manager to add the pass to</param>
         /// <returns><paramref name="passManager"/>for fluent support</returns>
-        public static T AddAlignmentFromAssumptionsPass<T>( this T passManager )
+        public static T AddAlignmentFromAssumptionsPass<T>( [ValidatedNotNull] this T passManager )
             where T : PassManager
         {
+            passManager.ValidateNotNull( nameof( passManager ) );
             LLVMAddAlignmentFromAssumptionsPass( passManager.Handle );
             return passManager;
         }
@@ -50,9 +55,10 @@ namespace Llvm.NET.Transforms
         /// <param name="passManager">Pass manager to add the pass to</param>
         /// <returns><paramref name="passManager"/>for fluent support</returns>
         /// <seealso href="xref:llvm_docs_passes#passes-simplifycfg">LLVM: Simplify CFG</seealso>
-        public static T AddCFGSimplificationPass<T>( this T passManager )
+        public static T AddCFGSimplificationPass<T>( [ValidatedNotNull] this T passManager )
             where T : PassManager
         {
+            passManager.ValidateNotNull( nameof( passManager ) );
             LLVMAddCFGSimplificationPass( passManager.Handle );
             return passManager;
         }
@@ -62,9 +68,10 @@ namespace Llvm.NET.Transforms
         /// <param name="passManager">Pass manager to add the pass to</param>
         /// <returns><paramref name="passManager"/>for fluent support</returns>
         /// <seealso href="xref:llvm_docs_passes#dse-dead-store-elimination">LLVM: Dead Store Elimination</seealso>
-        public static T AddDeadStoreEliminationPass<T>( this T passManager )
+        public static T AddDeadStoreEliminationPass<T>( [ValidatedNotNull] this T passManager )
             where T : PassManager
         {
+            passManager.ValidateNotNull( nameof( passManager ) );
             LLVMAddDeadStoreEliminationPass( passManager.Handle );
             return passManager;
         }
@@ -73,9 +80,10 @@ namespace Llvm.NET.Transforms
         /// <typeparam name="T">Type of pass manager to add the pass to</typeparam>
         /// <param name="passManager">Pass manager to add the pass to</param>
         /// <returns><paramref name="passManager"/>for fluent support</returns>
-        public static T AddScalarizerPass<T>( this T passManager )
+        public static T AddScalarizerPass<T>( [ValidatedNotNull] this T passManager )
             where T : PassManager
         {
+            passManager.ValidateNotNull( nameof( passManager ) );
             LLVMAddScalarizerPass( passManager.Handle );
             return passManager;
         }
@@ -84,9 +92,10 @@ namespace Llvm.NET.Transforms
         /// <typeparam name="T">Type of pass manager to add the pass to</typeparam>
         /// <param name="passManager">Pass manager to add the pass to</param>
         /// <returns><paramref name="passManager"/>for fluent support</returns>
-        public static T AddMergedLoadStoreMotionPass<T>( this T passManager )
+        public static T AddMergedLoadStoreMotionPass<T>( [ValidatedNotNull] this T passManager )
             where T : PassManager
         {
+            passManager.ValidateNotNull( nameof( passManager ) );
             LLVMAddMergedLoadStoreMotionPass( passManager.Handle );
             return passManager;
         }
@@ -96,9 +105,10 @@ namespace Llvm.NET.Transforms
         /// <param name="passManager">Pass manager to add the pass to</param>
         /// <returns><paramref name="passManager"/>for fluent support</returns>
         /// <seealso href="xref:llvm_docs_passes#gvn-global-value-numbering">LLVM: Global Value Numbering</seealso>
-        public static T AddGVNPass<T>( this T passManager )
+        public static T AddGVNPass<T>( [ValidatedNotNull] this T passManager )
             where T : PassManager
         {
+            passManager.ValidateNotNull( nameof( passManager ) );
             LLVMAddGVNPass( passManager.Handle );
             return passManager;
         }
@@ -107,9 +117,10 @@ namespace Llvm.NET.Transforms
         /// <typeparam name="T">Type of pass manager to add the pass to</typeparam>
         /// <param name="passManager">Pass manager to add the pass to</param>
         /// <returns><paramref name="passManager"/>for fluent support</returns>
-        public static T AddNewGVNPass<T>( this T passManager )
+        public static T AddNewGVNPass<T>( [ValidatedNotNull] this T passManager )
             where T : PassManager
         {
+            passManager.ValidateNotNull( nameof( passManager ) );
             LLVMAddNewGVNPass( passManager.Handle );
             return passManager;
         }
@@ -119,9 +130,10 @@ namespace Llvm.NET.Transforms
         /// <param name="passManager">Pass manager to add the pass to</param>
         /// <returns><paramref name="passManager"/>for fluent support</returns>
         /// <seealso href="xref:llvm_docs_passes#indvars-canonicalize-induction-variables">LLVM: Canonicalize Induction Variables</seealso>
-        public static T AddIndVarSimplifyPass<T>( this T passManager )
+        public static T AddIndVarSimplifyPass<T>( [ValidatedNotNull] this T passManager )
             where T : PassManager
         {
+            passManager.ValidateNotNull( nameof( passManager ) );
             LLVMAddIndVarSimplifyPass( passManager.Handle );
             return passManager;
         }
@@ -131,9 +143,10 @@ namespace Llvm.NET.Transforms
         /// <param name="passManager">Pass manager to add the pass to</param>
         /// <returns><paramref name="passManager"/>for fluent support</returns>
         /// <seealso href="xref:llvm_docs_passes#instcombine-combine-redundant-instructions">LLVM: Combine redundant instructions</seealso>
-        public static T AddInstructionCombiningPass<T>( this T passManager )
+        public static T AddInstructionCombiningPass<T>( [ValidatedNotNull] this T passManager )
             where T : PassManager
         {
+            passManager.ValidateNotNull( nameof( passManager ) );
             LLVMAddInstructionCombiningPass( passManager.Handle );
             return passManager;
         }
@@ -143,9 +156,10 @@ namespace Llvm.NET.Transforms
         /// <param name="passManager">Pass manager to add the pass to</param>
         /// <returns><paramref name="passManager"/>for fluent support</returns>
         /// <seealso href="xref:llvm_docs_passes#jump-threading-jump-threading">LLVM: Jump Threading</seealso>
-        public static T AddJumpThreadingPass<T>( this T passManager )
+        public static T AddJumpThreadingPass<T>( [ValidatedNotNull] this T passManager )
             where T : PassManager
         {
+            passManager.ValidateNotNull( nameof( passManager ) );
             LLVMAddJumpThreadingPass( passManager.Handle );
             return passManager;
         }
@@ -155,9 +169,10 @@ namespace Llvm.NET.Transforms
         /// <param name="passManager">Pass manager to add the pass to</param>
         /// <returns><paramref name="passManager"/>for fluent support</returns>
         /// <seealso href="xref:llvm_docs_passes#licm-loop-invariant-code-motion">LLVM: Loop Invariant Code Motion</seealso>
-        public static T AddLICMPass<T>( this T passManager )
+        public static T AddLICMPass<T>( [ValidatedNotNull] this T passManager )
             where T : PassManager
         {
+            passManager.ValidateNotNull( nameof( passManager ) );
             LLVMAddLICMPass( passManager.Handle );
             return passManager;
         }
@@ -167,9 +182,10 @@ namespace Llvm.NET.Transforms
         /// <param name="passManager">Pass manager to add the pass to</param>
         /// <returns><paramref name="passManager"/>for fluent support</returns>
         /// <seealso href="xref:llvm_docs_passes#loop-deletion-delete-dead-loops">LLVM: Delete dead loops</seealso>
-        public static T AddLoopDeletionPass<T>( this T passManager )
+        public static T AddLoopDeletionPass<T>( [ValidatedNotNull] this T passManager )
             where T : PassManager
         {
+            passManager.ValidateNotNull( nameof( passManager ) );
             LLVMAddLoopDeletionPass( passManager.Handle );
             return passManager;
         }
@@ -178,9 +194,10 @@ namespace Llvm.NET.Transforms
         /// <typeparam name="T">Type of pass manager to add the pass to</typeparam>
         /// <param name="passManager">Pass manager to add the pass to</param>
         /// <returns><paramref name="passManager"/>for fluent support</returns>
-        public static T AddLoopIdiomPass<T>( this T passManager )
+        public static T AddLoopIdiomPass<T>( [ValidatedNotNull] this T passManager )
             where T : PassManager
         {
+            passManager.ValidateNotNull( nameof( passManager ) );
             LLVMAddLoopIdiomPass( passManager.Handle );
             return passManager;
         }
@@ -190,9 +207,10 @@ namespace Llvm.NET.Transforms
         /// <param name="passManager">Pass manager to add the pass to</param>
         /// <returns><paramref name="passManager"/>for fluent support</returns>
         /// <seealso href="xref:llvm_docs_passes#loop-rotate-rotate-loops">LLVM: Rotate Loops</seealso>
-        public static T AddLoopRotatePass<T>( this T passManager )
+        public static T AddLoopRotatePass<T>( [ValidatedNotNull] this T passManager )
             where T : PassManager
         {
+            passManager.ValidateNotNull( nameof( passManager ) );
             LLVMAddLoopRotatePass( passManager.Handle );
             return passManager;
         }
@@ -201,9 +219,10 @@ namespace Llvm.NET.Transforms
         /// <typeparam name="T">Type of pass manager to add the pass to</typeparam>
         /// <param name="passManager">Pass manager to add the pass to</param>
         /// <returns><paramref name="passManager"/>for fluent support</returns>
-        public static T AddLoopRerollPass<T>( this T passManager )
+        public static T AddLoopRerollPass<T>( [ValidatedNotNull] this T passManager )
             where T : PassManager
         {
+            passManager.ValidateNotNull( nameof( passManager ) );
             LLVMAddLoopRerollPass( passManager.Handle );
             return passManager;
         }
@@ -213,9 +232,10 @@ namespace Llvm.NET.Transforms
         /// <param name="passManager">Pass manager to add the pass to</param>
         /// <returns><paramref name="passManager"/>for fluent support</returns>
         /// <seealso href="xref:llvm_docs_passes#loop-unroll-unroll-loops">LLVM: Unroll Loops</seealso>
-        public static T AddLoopUnrollPass<T>( this T passManager )
+        public static T AddLoopUnrollPass<T>( [ValidatedNotNull] this T passManager )
             where T : PassManager
         {
+            passManager.ValidateNotNull( nameof( passManager ) );
             LLVMAddLoopUnrollPass( passManager.Handle );
             return passManager;
         }
@@ -225,9 +245,10 @@ namespace Llvm.NET.Transforms
         /// <param name="passManager">Pass manager to add the pass to</param>
         /// <returns><paramref name="passManager"/>for fluent support</returns>
         /// <seealso href="xref:llvm_docs_passes#loop-unroll-unroll-loops">LLVM: Unroll Loops</seealso>
-        public static T AddLoopUnrollAndJamPass<T>( this T passManager )
+        public static T AddLoopUnrollAndJamPass<T>( [ValidatedNotNull] this T passManager )
             where T : PassManager
         {
+            passManager.ValidateNotNull( nameof( passManager ) );
             LLVMAddLoopUnrollAndJamPass( passManager.Handle );
             return passManager;
         }
@@ -237,9 +258,10 @@ namespace Llvm.NET.Transforms
         /// <param name="passManager">Pass manager to add the pass to</param>
         /// <returns><paramref name="passManager"/>for fluent support</returns>
         /// <seealso href="xref:llvm_docs_passes#loop-unswitch-unswitch-loops">LLVM: Unswitch loops</seealso>
-        public static T AddLoopUnswitchPass<T>( this T passManager )
+        public static T AddLoopUnswitchPass<T>( [ValidatedNotNull] this T passManager )
             where T : PassManager
         {
+            passManager.ValidateNotNull( nameof( passManager ) );
             LLVMAddLoopUnswitchPass( passManager.Handle );
             return passManager;
         }
@@ -249,9 +271,10 @@ namespace Llvm.NET.Transforms
         /// <param name="passManager">Pass manager to add the pass to</param>
         /// <returns><paramref name="passManager"/>for fluent support</returns>
         /// <seealso href="xref:llvm_docs_passes#loweratomic-lower-atomic-intrinsics-to-non-atomic-form">LLVM: Lower atomic</seealso>
-        public static T LowerAtomicPass<T>( this T passManager )
+        public static T LowerAtomicPass<T>( [ValidatedNotNull] this T passManager )
             where T : PassManager
         {
+            passManager.ValidateNotNull( nameof( passManager ) );
             LLVMAddLowerAtomicPass( passManager.Handle );
             return passManager;
         }
@@ -261,9 +284,10 @@ namespace Llvm.NET.Transforms
         /// <param name="passManager">Pass manager to add the pass to</param>
         /// <returns><paramref name="passManager"/>for fluent support</returns>
         /// <seealso href="xref:llvm_docs_passes#memcpyopt-memcpy-optimization">LLVM: MemCpy Optimization</seealso>
-        public static T AddMemCpyOptPass<T>( this T passManager )
+        public static T AddMemCpyOptPass<T>( [ValidatedNotNull] this T passManager )
             where T : PassManager
         {
+            passManager.ValidateNotNull( nameof( passManager ) );
             LLVMAddMemCpyOptPass( passManager.Handle );
             return passManager;
         }
@@ -273,9 +297,10 @@ namespace Llvm.NET.Transforms
         /// <param name="passManager">Pass manager to add the pass to</param>
         /// <returns><paramref name="passManager"/>for fluent support</returns>
         /// <seealso href="xref:llvm_docs_passes#partial-inliner-partial-inliner">LLVM: Partial Inliner</seealso>
-        public static T AddPartiallyInlineLibCallsPass<T>( this T passManager )
+        public static T AddPartiallyInlineLibCallsPass<T>( [ValidatedNotNull] this T passManager )
             where T : PassManager
         {
+            passManager.ValidateNotNull( nameof( passManager ) );
             LLVMAddPartiallyInlineLibCallsPass( passManager.Handle );
             return passManager;
         }
@@ -285,9 +310,10 @@ namespace Llvm.NET.Transforms
         /// <param name="passManager">Pass manager to add the pass to</param>
         /// <returns><paramref name="passManager"/>for fluent support</returns>
         /// <seealso href="xref:llvm_docs_passes#lowerswitch-lower-switchinsts-to-branches">LLVM: Lower SwitchInst to branches</seealso>
-        public static T AddLowerSwitchPass<T>( this T passManager )
+        public static T AddLowerSwitchPass<T>( [ValidatedNotNull] this T passManager )
             where T : PassManager
         {
+            passManager.ValidateNotNull( nameof( passManager ) );
             LLVMAddLowerSwitchPass( passManager.Handle );
             return passManager;
         }
@@ -297,9 +323,10 @@ namespace Llvm.NET.Transforms
         /// <param name="passManager">Pass manager to add the pass to</param>
         /// <returns><paramref name="passManager"/>for fluent support</returns>
         /// <seealso href="xref:llvm_docs_passes#mem2reg-promote-memory-to-register">LLVM: Promote Memory to Register</seealso>
-        public static T AddPromoteMemoryToRegisterPass<T>( this T passManager )
+        public static T AddPromoteMemoryToRegisterPass<T>( [ValidatedNotNull] this T passManager )
             where T : PassManager
         {
+            passManager.ValidateNotNull( nameof( passManager ) );
             LLVMAddPromoteMemoryToRegisterPass( passManager.Handle );
             return passManager;
         }
@@ -309,9 +336,10 @@ namespace Llvm.NET.Transforms
         /// <param name="passManager">Pass manager to add the pass to</param>
         /// <returns><paramref name="passManager"/>for fluent support</returns>
         /// <seealso href="xref:llvm_docs_passes#reassociate-reassociate-expressions">LLVM: Reassociate expressions</seealso>
-        public static T AddReassociatePass<T>( this T passManager )
+        public static T AddReassociatePass<T>( [ValidatedNotNull] this T passManager )
             where T : PassManager
         {
+            passManager.ValidateNotNull( nameof( passManager ) );
             LLVMAddReassociatePass( passManager.Handle );
             return passManager;
         }
@@ -321,9 +349,10 @@ namespace Llvm.NET.Transforms
         /// <param name="passManager">Pass manager to add the pass to</param>
         /// <returns><paramref name="passManager"/>for fluent support</returns>
         /// <seealso href="xref:llvm_docs_passes#sccp-sparse-conditional-constant-propagation">LLVM: Sparse Conditional Constant Propagation</seealso>
-        public static T AddSCCPPass<T>( this T passManager )
+        public static T AddSCCPPass<T>( [ValidatedNotNull] this T passManager )
             where T : PassManager
         {
+            passManager.ValidateNotNull( nameof( passManager ) );
             LLVMAddSCCPPass( passManager.Handle );
             return passManager;
         }
@@ -333,9 +362,10 @@ namespace Llvm.NET.Transforms
         /// <param name="passManager">Pass manager to add the pass to</param>
         /// <returns><paramref name="passManager"/>for fluent support</returns>
         /// <seealso href="xref:llvm_docs_passes#sroa-scalar-replacement-of-aggregates">LLVM: Scalar Replacement of Aggregates</seealso>
-        public static T AddScalarReplAggregatesPass<T>( this T passManager )
+        public static T AddScalarReplAggregatesPass<T>( [ValidatedNotNull] this T passManager )
             where T : PassManager
         {
+            passManager.ValidateNotNull( nameof( passManager ) );
             LLVMAddScalarReplAggregatesPass( passManager.Handle );
             return passManager;
         }
@@ -345,9 +375,10 @@ namespace Llvm.NET.Transforms
         /// <param name="passManager">Pass manager to add the pass to</param>
         /// <returns><paramref name="passManager"/>for fluent support</returns>
         /// <seealso href="xref:llvm_docs_passes#sroa-scalar-replacement-of-aggregates">LLVM: Scalar Replacement of Aggregates</seealso>
-        public static T AddScalarReplAggregatesPassSSA<T>( this T passManager )
+        public static T AddScalarReplAggregatesPassSSA<T>( [ValidatedNotNull] this T passManager )
             where T : PassManager
         {
+            passManager.ValidateNotNull( nameof( passManager ) );
             LLVMAddScalarReplAggregatesPassSSA( passManager.Handle );
             return passManager;
         }
@@ -358,9 +389,10 @@ namespace Llvm.NET.Transforms
         /// <param name="threshold">Threshold for this pass</param>
         /// <returns><paramref name="passManager"/>for fluent support</returns>
         /// <seealso href="xref:llvm_docs_passes#sroa-scalar-replacement-of-aggregates">LLVM: Scalar Replacement of Aggregates</seealso>
-        public static T AddScalarReplAggregatesPassWithThreshold<T>( this T passManager, int threshold )
+        public static T AddScalarReplAggregatesPassWithThreshold<T>( [ValidatedNotNull] this T passManager, int threshold )
             where T : PassManager
         {
+            passManager.ValidateNotNull( nameof( passManager ) );
             LLVMAddScalarReplAggregatesPassWithThreshold( passManager.Handle, threshold );
             return passManager;
         }
@@ -369,9 +401,10 @@ namespace Llvm.NET.Transforms
         /// <typeparam name="T">Type of pass manager to add the pass to</typeparam>
         /// <param name="passManager">Pass manager to add the pass to</param>
         /// <returns><paramref name="passManager"/>for fluent support</returns>
-        public static T AddSimplifyLibCallsPass<T>( this T passManager )
+        public static T AddSimplifyLibCallsPass<T>( [ValidatedNotNull] this T passManager )
             where T : PassManager
         {
+            passManager.ValidateNotNull( nameof( passManager ) );
             LLVMAddSimplifyLibCallsPass( passManager.Handle );
             return passManager;
         }
@@ -381,9 +414,10 @@ namespace Llvm.NET.Transforms
         /// <param name="passManager">Pass manager to add the pass to</param>
         /// <returns><paramref name="passManager"/>for fluent support</returns>
         /// <seealso href="xref:llvm_docs_passes#tailcallelim-tail-call-elimination">LLVM: Tail Call Elimination</seealso>
-        public static T AddTailCallEliminationPass<T>( this T passManager )
+        public static T AddTailCallEliminationPass<T>( [ValidatedNotNull] this T passManager )
             where T : PassManager
         {
+            passManager.ValidateNotNull( nameof( passManager ) );
             LLVMAddTailCallEliminationPass( passManager.Handle );
             return passManager;
         }
@@ -393,9 +427,10 @@ namespace Llvm.NET.Transforms
         /// <param name="passManager">Pass manager to add the pass to</param>
         /// <returns><paramref name="passManager"/>for fluent support</returns>
         /// <seealso href="xref:llvm_docs_passes#constprop-simple-constant-propagation">LLVM: Simple constant propagation</seealso>
-        public static T AddConstantPropagationPass<T>( this T passManager )
+        public static T AddConstantPropagationPass<T>( [ValidatedNotNull] this T passManager )
             where T : PassManager
         {
+            passManager.ValidateNotNull( nameof( passManager ) );
             LLVMAddConstantPropagationPass( passManager.Handle );
             return passManager;
         }
@@ -405,9 +440,10 @@ namespace Llvm.NET.Transforms
         /// <param name="passManager">Pass manager to add the pass to</param>
         /// <returns><paramref name="passManager"/>for fluent support</returns>
         /// <seealso href="xref:llvm_docs_passes#reg2mem-demote-all-values-to-stack-slots">LLVM: Demote all values to stack slots</seealso>
-        public static T AddDemoteMemoryToRegisterPass<T>( this T passManager )
+        public static T AddDemoteMemoryToRegisterPass<T>( [ValidatedNotNull] this T passManager )
             where T : PassManager
         {
+            passManager.ValidateNotNull( nameof( passManager ) );
             LLVMAddDemoteMemoryToRegisterPass( passManager.Handle );
             return passManager;
         }
@@ -417,9 +453,10 @@ namespace Llvm.NET.Transforms
         /// <param name="passManager">Pass manager to add the pass to</param>
         /// <returns><paramref name="passManager"/>for fluent support</returns>
         /// <seealso href="xref:llvm_docs_passes#verify-module-verifier">LLVM: Module Verifier</seealso>
-        public static T AddVerifierPass<T>( this T passManager )
+        public static T AddVerifierPass<T>( [ValidatedNotNull] this T passManager )
             where T : PassManager
         {
+            passManager.ValidateNotNull( nameof( passManager ) );
             LLVMAddVerifierPass( passManager.Handle );
             return passManager;
         }
@@ -428,9 +465,10 @@ namespace Llvm.NET.Transforms
         /// <typeparam name="T">Type of pass manager to add the pass to</typeparam>
         /// <param name="passManager">Pass manager to add the pass to</param>
         /// <returns><paramref name="passManager"/>for fluent support</returns>
-        public static T AddCorrelatedValuePropagationPass<T>( this T passManager )
+        public static T AddCorrelatedValuePropagationPass<T>( [ValidatedNotNull] this T passManager )
             where T : PassManager
         {
+            passManager.ValidateNotNull( nameof( passManager ) );
             LLVMAddCorrelatedValuePropagationPass( passManager.Handle );
             return passManager;
         }
@@ -439,9 +477,10 @@ namespace Llvm.NET.Transforms
         /// <typeparam name="T">Type of pass manager to add the pass to</typeparam>
         /// <param name="passManager">Pass manager to add the pass to</param>
         /// <returns><paramref name="passManager"/>for fluent support</returns>
-        public static T AddEarlyCSEPass<T>( this T passManager )
+        public static T AddEarlyCSEPass<T>( [ValidatedNotNull] this T passManager )
             where T : PassManager
         {
+            passManager.ValidateNotNull( nameof( passManager ) );
             LLVMAddEarlyCSEPass( passManager.Handle );
             return passManager;
         }
@@ -450,9 +489,10 @@ namespace Llvm.NET.Transforms
         /// <typeparam name="T">Type of pass manager to add the pass to</typeparam>
         /// <param name="passManager">Pass manager to add the pass to</param>
         /// <returns><paramref name="passManager"/>for fluent support</returns>
-        public static T AddEarlyCSEMemSSAPass<T>( this T passManager )
+        public static T AddEarlyCSEMemSSAPass<T>( [ValidatedNotNull] this T passManager )
             where T : PassManager
         {
+            passManager.ValidateNotNull( nameof( passManager ) );
             LLVMAddEarlyCSEMemSSAPass( passManager.Handle );
             return passManager;
         }
@@ -461,9 +501,10 @@ namespace Llvm.NET.Transforms
         /// <typeparam name="T">Type of pass manager to add the pass to</typeparam>
         /// <param name="passManager">Pass manager to add the pass to</param>
         /// <returns><paramref name="passManager"/>for fluent support</returns>
-        public static T AddLowerExpectIntrinsicPass<T>( this T passManager )
+        public static T AddLowerExpectIntrinsicPass<T>( [ValidatedNotNull] this T passManager )
             where T : PassManager
         {
+            passManager.ValidateNotNull( nameof( passManager ) );
             LLVMAddLowerExpectIntrinsicPass( passManager.Handle );
             return passManager;
         }
@@ -472,9 +513,10 @@ namespace Llvm.NET.Transforms
         /// <typeparam name="T">Type of pass manager to add the pass to</typeparam>
         /// <param name="passManager">Pass manager to add the pass to</param>
         /// <returns><paramref name="passManager"/>for fluent support</returns>
-        public static T AddTypeBasedAliasAnalysisPass<T>( this T passManager )
+        public static T AddTypeBasedAliasAnalysisPass<T>( [ValidatedNotNull] this T passManager )
             where T : PassManager
         {
+            passManager.ValidateNotNull( nameof( passManager ) );
             LLVMAddTypeBasedAliasAnalysisPass( passManager.Handle );
             return passManager;
         }
@@ -483,9 +525,10 @@ namespace Llvm.NET.Transforms
         /// <typeparam name="T">Type of pass manager to add the pass to</typeparam>
         /// <param name="passManager">Pass manager to add the pass to</param>
         /// <returns><paramref name="passManager"/>for fluent support</returns>
-        public static T AddScopedNoAliasAAPass<T>( this T passManager )
+        public static T AddScopedNoAliasAAPass<T>( [ValidatedNotNull] this T passManager )
             where T : PassManager
         {
+            passManager.ValidateNotNull( nameof( passManager ) );
             LLVMAddScopedNoAliasAAPass( passManager.Handle );
             return passManager;
         }
@@ -495,9 +538,10 @@ namespace Llvm.NET.Transforms
         /// <param name="passManager">Pass manager to add the pass to</param>
         /// <returns><paramref name="passManager"/>for fluent support</returns>
         /// <seealso href="xref:llvm_docs_passes#basicaa-basic-alias-analysis-stateless-aa-impl">LLVM: Basic Alias Analysis</seealso>
-        public static T AddBasicAliasAnalysisPass<T>( this T passManager )
+        public static T AddBasicAliasAnalysisPass<T>( [ValidatedNotNull] this T passManager )
             where T : PassManager
         {
+            passManager.ValidateNotNull( nameof( passManager ) );
             LLVMAddBasicAliasAnalysisPass( passManager.Handle );
             return passManager;
         }

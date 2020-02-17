@@ -5,9 +5,11 @@
 // -----------------------------------------------------------------------
 
 using System.Xml.Linq;
+
 using Antlr4.Runtime;
-using Antlr4.Runtime.Misc;
 using Antlr4.Runtime.Tree;
+
+using Ubiquity.ArgValidators;
 
 namespace Kaleidoscope.Grammar
 {
@@ -24,29 +26,34 @@ namespace Kaleidoscope.Grammar
 
         public XDocument Document { get; }
 
-        public override void EnterUnaryOpExpression( [NotNull] KaleidoscopeParser.UnaryOpExpressionContext context )
+        public override void EnterUnaryOpExpression( [ValidatedNotNull] KaleidoscopeParser.UnaryOpExpressionContext context )
         {
+            context.ValidateNotNull( nameof( context ) );
             ActiveNode.Add( new XAttribute( "Op", context.Op ) );
         }
 
-        public override void EnterExpression( [NotNull] KaleidoscopeParser.ExpressionContext context )
+        public override void EnterExpression( [ValidatedNotNull] KaleidoscopeParser.ExpressionContext context )
         {
+            context.ValidateNotNull( nameof( context ) );
             base.EnterExpression( context );
         }
 
-        public override void VisitTerminal( [NotNull] ITerminalNode node )
+        public override void VisitTerminal( [ValidatedNotNull] ITerminalNode node )
         {
+            node.ValidateNotNull( nameof( node ) );
             ActiveNode.Add( new XElement( "Terminal", new XAttribute( "Value", node.GetText( ) ) ) );
         }
 
-        public override void EnterEveryRule( [NotNull] ParserRuleContext context )
+        public override void EnterEveryRule( [ValidatedNotNull] ParserRuleContext context )
         {
+            context.ValidateNotNull( nameof( context ) );
             string typeName = context.GetType( ).Name;
             Push( new XElement( typeName.Substring( 0, typeName.Length - ContextTypeNameSuffix.Length ) ) );
         }
 
-        public override void ExitEveryRule( [NotNull] ParserRuleContext context )
+        public override void ExitEveryRule( [ValidatedNotNull] ParserRuleContext context )
         {
+            context.ValidateNotNull( nameof( context ) );
             base.ExitEveryRule( context );
             ActiveNode.Add( new XAttribute( "Text", context.GetSourceText( Recognizer ) ) );
             ActiveNode.Add( new XAttribute( "RuleIndex", context.RuleIndex ) );

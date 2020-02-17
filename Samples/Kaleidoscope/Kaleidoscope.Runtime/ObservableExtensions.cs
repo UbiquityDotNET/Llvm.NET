@@ -5,6 +5,7 @@
 // -----------------------------------------------------------------------
 
 using System;
+using System.Collections.Generic;
 using System.Reactive.Linq;
 
 using Kaleidoscope.Grammar.AST;
@@ -48,11 +49,14 @@ namespace Kaleidoscope.Runtime
         /// and no output for the failing input node is produced.
         /// </remarks>
         #region GenerateResults
-        public static IObservable<T> GenerateResults<T>( this IObservable<IAstNode> nodes, IKaleidoscopeCodeGenerator<T> generator, Action<CodeGeneratorException> codeGeneratorExceptionHandler )
+        public static IObservable<T> GenerateResults<T>( this IObservable<IAstNode> nodes
+                                                       , IKaleidoscopeCodeGenerator<T> generator
+                                                       , Action<CodeGeneratorException> codeGeneratorExceptionHandler
+                                                       )
         {
             return from n in nodes
                    let v = generator.Generate( n, codeGeneratorExceptionHandler )
-                   where v != default
+                   where !EqualityComparer<T>.Default.Equals(v, default) // v != default( T )
                    select v;
         }
         #endregion

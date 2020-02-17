@@ -242,6 +242,7 @@ namespace Llvm.NET.DebugInfo
                            , uint bitAlignment = 0
                            )
         {
+            module.ValidateNotNull( nameof( module ) );
             DebugMembers = new ReadOnlyCollection<DebugMemberInfo>( debugElements as IList<DebugMemberInfo> ?? debugElements.ToList( ) );
             SetBody( packed, nativeElements.ToArray() );
             var memberTypes = from memberInfo in DebugMembers

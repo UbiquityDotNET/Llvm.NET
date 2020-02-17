@@ -3,6 +3,8 @@
 // Copyright (c) Ubiquity.NET Contributors. All rights reserved.
 // </copyright>
 // -----------------------------------------------------------------------
+using Ubiquity.ArgValidators;
+
 using static Llvm.NET.Interop.NativeMethods;
 
 namespace Llvm.NET.Transforms
@@ -22,6 +24,7 @@ namespace Llvm.NET.Transforms
         /// <returns><see langword="true"/> if one of the passes modified the module</returns>
         public bool Run( BitcodeModule target )
         {
+            target.ValidateNotNull( nameof( target ) );
             return LLVMRunPassManager( Handle, target.ModuleHandle );
         }
     }
