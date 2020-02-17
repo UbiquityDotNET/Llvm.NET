@@ -40,7 +40,7 @@
         <BuildOutputPackagesDir Condition="'$(BuildOutputPackagesDir)'==''">$(BaseBuildOutputPath)packages\</BuildOutputPackagesDir>
 
         <BuildVersionXml Condition="'$(BuildVersionXmlFile)'==''">$(MSBuildThisFileDirectory)BuildVersion.xml</BuildVersionXml>
-        <IsAutomatedBuild Condition="'$(IsAutomatedBuild)'=='' AND '$(APPVEYOR)'!=''">true</IsAutomatedBuild>
+        <IsAutomatedBuild Condition="'$(IsAutomatedBuild)'=='' AND '$(CI)'!=''">true</IsAutomatedBuild>
         <IsAutomatedBuild Condition="'$(IsAutomatedBuild)'==''">false</IsAutomatedBuild>
 
         <IsPullRequestBuild Condition="'$(IsPullRequestBuild)'=='' AND '$(APPVEYOR_PULL_REQUEST_NUMBER)'!=''">true</IsPullRequestBuild>

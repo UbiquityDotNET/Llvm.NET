@@ -41,7 +41,7 @@ Llvm.NET.Interop Library and NuGet Package.
 # Breaking Changes
 This is a Major release and, as such, can, and does, have breaking changes. While there
 are several such changes the actual impact to a code base is fairly trivial. Most are
-driven by either obsolecense of functionality in LLVM or general naming cleanup in the
+driven by either obsolescence of functionality in LLVM or general naming cleanup in the
 Llvm.NET library:
 
 1. New namespace and assembly for some classes (Llvm.NET.Interop)
@@ -57,7 +57,7 @@ Llvm.NET library:
    in code. 
 4. Legacy JIT engine support is dropped. ORCJit is the only supported JIT engine
     1. Removed Llvm.NET.JIT.EngineKind
-    2. Removed all use of Llvm.NET.JIT.IJitModuleHandle. Handles are now just an itegral value
+    2. Removed all use of Llvm.NET.JIT.IJitModuleHandle. Handles are now just an integral value
     3. Removed Llvm.NET.LegacyExecutionEngine
 5. Context.CreateBasicBlock() now only creates detached blocks, if append to a function
    is desired, there is a method on IrFunction to create and append a block.
@@ -100,21 +100,21 @@ Llvm.NET library:
     4. CreateEnumerationType removed uniqueId string parameter as it isn't supported by LLVM-C
     5. Obsoleted CreateStructType signature taking `DINodeArray` in favor of `IEnumerable<DINode>`
 14. Llvm.NET.DebugInfo.ExpressionOp names changed to correct PascalCasing and eliminate
-    underscores in the value names ofr better consistency and style compliance.
+    underscores in the value names for better consistency and style compliance.
 15. Renamed some Llvm.NET.DebugInfo.SourceLanguage vendor specific values to conform with
     underlying LLVM names
     1. RenderScript -> GoogleRenderScript
     2. Delphi -> BorlandDelphi
 16. Renamed or removed some of the Llvm.NET.DebugInfo.Tag values to better reflect underlying
-    LLVM names and avoid potential language kwyword conflicts.
+    LLVM names and avoid potential language keyword conflicts.
     1. Label -> TagLabel
     2. PtrToMemberType -> PointerToMemberType
     3. Removed AutoVariable, ArgVariable, Expression, UserBase, LoUser and MipsLoop as they
        don't exist in the LLVM support.
 17. InstructionBuilder
-    1. Obsoleted Methods that don't support opaque pointers in preperation for LLVM's transition
-    2. Changed MemCpy, MemMove, and MemSet signatures to remove alignment as LLVM instrinsic no
-       longer includes alignment a parameter. It is applied as a parameter attribute for each 
+    1. Obsoleted Methods that don't support opaque pointers in preparation for LLVM's transition
+    2. Changed MemCpy, MemMove, and MemSet signatures to remove alignment as LLVM intrinsic no
+       longer includes an alignment parameter. It is applied as a parameter attribute for each 
        of the pointer parameters (source and destination).
 18. Llvm.NET.JIT.IExecutionEngine
     1. Replaced AddModule with AddEagerlyCompiledModule to make it more explicit on the behavior

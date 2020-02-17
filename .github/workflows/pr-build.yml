@@ -1,0 +1,22 @@
+name: CI-Build
+on: [pull_request]
+
+jobs:
+  build:
+    runs-on: windows-latest
+    steps:
+      - name: Checkout Repo
+        uses: actions/checkout@v2
+
+      - name: Checkout submodules
+        run: git submodule update --init --recursive
+
+      - name: Build Repo for Windows
+        run: .\build-All.ps1
+        env:
+          IsAutomatedBuild: true
+          IsPullRequestBuild: true
+          IsReleaseBuild: false
+
+      -name: Run unit tests
+       run: .\Invoke-unittests.ps1

@@ -38,7 +38,7 @@ ignored for the interop layer. Generally these are the disposal methods that are
 types or custom string marshalers. Sometimes they are for functions declared int the headers but
 not implemented in the library. (the LTO APIs for instance are not included as they are intended for
 use in an actual linker) The values in the dictionary are a boolean that indicates if the function
-is just completely ignored (true) or used internally only (false). The MarkFunctionsInteralPass
+is just completely ignored (true) or used internally only (false). The MarkFunctionsInternalPass
 uses this information to mark the functions appropriately for subsequent passes.
 
 ## HandleToTemplateMap
