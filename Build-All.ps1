@@ -6,8 +6,6 @@ Param(
     [System.String]$BuildMode = 'All'
 )
 
-. .\buildutils.ps1
-
 # Main Script entry point -----------
 pushd $PSScriptRoot
 $oldPath = $env:Path
@@ -15,18 +13,16 @@ $ErrorActionPreference = "Stop"
 $InformationPreference = "Continue"
 $BuildSource = $false
 $BuildDocs = $false;
+
+. .\buildutils.ps1
+
+Initialize-BuildEnvironment
+
 switch($BuildMode)
 {
 'All' { $BuildSource = $true; $BuildDocs = $true; }
 'Source' { $BuildSource = $true }
 'Docs' { $BuildDocs = $true }
-}
-
-# for an automated build, get the ISO-8601 formatted time stamp of the HEAD commit
-$isAutomatedBuild = $env:CI -or $env:IsAutomatedBuild
-if($isAutomatedBuild -and !$env:BuildTime)
-{
-    $env:BuildTime = (git show -s --format=%cI)
 }
 
 try

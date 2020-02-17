@@ -334,3 +334,36 @@ function Install-LlvmLibs($destPath, $llvmversion, $compiler, $compilerversion)
         Expand-Archive $localLlvmLibs7zPath $destPath
     }
 }
+
+function Initialize-BuildEnvironment
+{
+    $isAutomatedBuild = $env:CI -or $env:IsAutomatedBuild -or $env:APPVEYOR -or $env:GITHUB_ACTIONS
+    if($isAutomatedBuild)
+    {
+        $env:IsAutomatedBuild = 'true'
+        if($env:GITHUB_ACTIONS -and $env:GITHUB_BASE_REF)
+        {
+            $env:IsPullRequestBuild = 'true'
+        }
+
+        # for an automated build, get the ISO-8601 formatted time stamp of the HEAD commit
+        if($isAutomatedBuild -and !$env:BuildTime)
+        {
+            $env:BuildTime = (git show -s --format=%cI)
+        }
+
+        # TODO: Determine how to detect release tag builds with GITHUB ACTIONS
+        if($env:APPVEYOR_REPO_TAG -and !$env:APPVEYOR_PULL_REQUEST_NUMBER)
+        {
+            $env:IsReleaseBuild = 'true'
+        }
+    }
+    else
+    {
+        $env:IsAutomatedBuild = 'false'
+        $env:IsPullRequestBuild = 'false'
+        $env:IsReleaseBuild = 'false'
+    }
+
+    dir env:* | format-table -Property Name, value
+}
