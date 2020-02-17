@@ -9,6 +9,9 @@ function Find-VSInstance
 }
 
 # Main Script entry point -----------
+. .\buildutils.ps1
+Initialize-BuildEnvironment
+
 if( $env:APPVEYOR )
 {
     $loggerArgs = '/logger:Appveyor'
