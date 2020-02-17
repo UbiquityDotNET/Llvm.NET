@@ -22,6 +22,13 @@ switch($BuildMode)
 'Docs' { $BuildDocs = $true }
 }
 
+# for an automated build, get the ISO-8601 formatted time stamp of the HEAD commit
+$isAutomatedBuild = $env:CI -or $env:IsAutomatedBuild
+if($isAutomatedBuild -and !$env:BuildTime)
+{
+    $env:BuildTime = (git show -s --format=%cI)
+}
+
 try
 {
     $msbuild = Find-MSBuild -AllowVsPrereleases:$AllowVsPreReleases
