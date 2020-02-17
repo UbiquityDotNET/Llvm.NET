@@ -8,6 +8,7 @@ using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Linq;
 using System.Text;
+using Ubiquity.ArgValidators;
 using static Kaleidoscope.Grammar.KaleidoscopeParser;
 
 namespace Kaleidoscope.Grammar.AST
@@ -87,7 +88,7 @@ namespace Kaleidoscope.Grammar.AST
         public IReadOnlyList<ParameterDeclaration> Parameters { get; }
 
         /// <inheritdoc/>
-        public TResult Accept<TResult>( IAstVisitor<TResult> visitor ) => visitor.Visit( this );
+        public TResult Accept<TResult>( IAstVisitor<TResult> visitor ) => visitor.ValidateNotNull( nameof( visitor ) ).Visit( this );
 
         /// <inheritdoc/>
         public IEnumerable<IAstNode> Children => Parameters;

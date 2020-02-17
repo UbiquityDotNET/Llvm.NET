@@ -76,7 +76,8 @@ namespace Llvm.NET
         /// <summary>Retrieves an LLVM integer type with the same bit width as a pointer for the default address space of the target</summary>
         /// <param name="context">LLVM <see cref="Context"/> that owns the definition of the pointer type to retrieve</param>
         /// <returns>Integer type matching the bit width of a native pointer in the target's default address space</returns>
-        public ITypeRef IntPtrType( Context context ) => TypeRef.FromHandle( LLVMIntPtrTypeInContext( context.ContextHandle, DataLayoutHandle ) );
+        public ITypeRef IntPtrType( Context context )
+            => TypeRef.FromHandle( LLVMIntPtrTypeInContext( context.ValidateNotNull(nameof(context)).ContextHandle, DataLayoutHandle ) );
 
         /* TODO: Additional properties for DataLayout
         bool IsLegalIntegerWidth(UInt64 width);
@@ -103,6 +104,7 @@ namespace Llvm.NET
         /// <returns>Integer type matching the bit width of a native pointer in the target's address space</returns>
         public ITypeRef IntPtrType( Context context, uint addressSpace )
         {
+            context.ValidateNotNull( nameof( context ) );
             var typeHandle = LLVMIntPtrTypeForASInContext( context.ContextHandle, DataLayoutHandle, addressSpace );
             return TypeRef.FromHandle( typeHandle );
         }

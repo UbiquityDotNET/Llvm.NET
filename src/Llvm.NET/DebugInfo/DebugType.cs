@@ -70,7 +70,7 @@ namespace Llvm.NET.DebugInfo
         where TNative : class, ITypeRef
         where TDebug : DIType
     {
-        /// <summary>Gets or sets the Debug information type for this </summary>
+        /// <summary>Gets or sets the Debug information type for this binding</summary>
         /// <remarks>
         /// Setting the debug type is only allowed when the debug type is null or <see cref="MDNode.IsTemporary"/>
         /// is <see langword="true"/>. If the debug type node is a temporary setting the type will replace all uses
@@ -83,6 +83,17 @@ namespace Llvm.NET.DebugInfo
             get => DIType_;
             set
             {
+                if( value == null )
+                {
+                    if( DIType != null )
+                    {
+                        throw new ArgumentException( Resources.Cannot_Reset_Type_to_null, nameof( value ) );
+                    }
+
+                    // NOP if setting null when already null
+                    return;
+                }
+
                 if( DIType_ == null )
                 {
                     DIType_ = value;

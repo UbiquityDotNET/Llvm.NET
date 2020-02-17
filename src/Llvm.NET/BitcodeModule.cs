@@ -264,14 +264,14 @@ namespace Llvm.NET
         public string ModuleInlineAsm
         {
             get => LLVMGetModuleInlineAsm( ModuleHandle, out size_t _ );
-            set => LLVMSetModuleInlineAsm2( ModuleHandle, value, value.Length );
+            set => LLVMSetModuleInlineAsm2( ModuleHandle, value, string.IsNullOrEmpty(value) ? 0 : value.Length );
         }
 
         /// <summary>Appends inline assembly to the module's inline assembly</summary>
         /// <param name="asm">assembly text</param>
         public void AppendInlineAsm(string asm)
         {
-            LLVMAppendModuleInlineAsm( ModuleHandle, asm, asm.Length );
+            LLVMAppendModuleInlineAsm( ModuleHandle, asm, string.IsNullOrEmpty(asm) ? 0 : asm.Length );
         }
 
         /// <inheritdoc/>

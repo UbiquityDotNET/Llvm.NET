@@ -35,6 +35,7 @@ namespace Kaleidoscope.Chapter8
         /// for mixed mode native+managed debugging as the SDK project system does
         /// not support that on launch.
         /// </remarks>
+        [SuppressMessage( "Design", "CA1062:Validate arguments of public methods", Justification = "Provided by platform" )]
         public static int Main( string[ ] args )
         {
             (string sourceFilePath, int exitCode) = ProcessArgs( args );

@@ -32,11 +32,11 @@ namespace Llvm.NET
         }
 
         /// <summary>Gets the size of the buffer</summary>
-        public int Size => (BufferHandle == default | BufferHandle.IsInvalid) ? 0 : ( int )LLVMGetBufferSize( BufferHandle );
+        public int Size => ( BufferHandle == default | BufferHandle.IsInvalid ) ? 0 : ( int )LLVMGetBufferSize( BufferHandle );
 
         /// <summary>Gets an array of bytes from the buffer</summary>
         /// <returns>Array of bytes copied from the buffer</returns>
-        public byte[] ToArray()
+        public byte[ ] ToArray( )
         {
             if( BufferHandle.IsInvalid )
             {
@@ -53,7 +53,7 @@ namespace Llvm.NET
         /// <param name="buffer">Buffer to convert</param>
         /// <remarks>This is a simple wrapper around calling <see cref="Slice(int, int)"/> with default parameters</remarks>
         [SuppressMessage( "Usage", "CA2225:Operator overloads have named alternates", Justification = "Named alternate exists - Slice()" )]
-        public static implicit operator ReadOnlySpan<byte>( MemoryBuffer buffer ) => buffer.Slice( 0, -1 );
+        public static implicit operator ReadOnlySpan<byte>( MemoryBuffer buffer ) => buffer.ValidateNotNull( nameof( buffer ) ).Slice( 0, -1 );
 
         /// <summary>Create a <see cref="System.ReadOnlySpan{T}"/> for a slice of the buffer</summary>
         /// <param name="start">Starting index for the slice [default = 0]</param>
@@ -75,7 +75,7 @@ namespace Llvm.NET
             start.ValidateRange( 0, Size - 1, nameof( start ) );
             length.ValidateRange( 0, Size, nameof( length ) );
 
-            if( (start + length) > Size )
+            if( ( start + length ) > Size )
             {
                 throw new ArgumentException( Resources.start_plus_length_exceeds_size_of_buffer );
             }
@@ -93,7 +93,7 @@ namespace Llvm.NET
         /// that takes ownership of the underlying buffer. Any use of the buffer after this point results in
         /// an <see cref="InvalidOperationException"/>.
         /// </remarks>
-        public void Detach()
+        public void Detach( )
         {
             BufferHandle.SetHandleAsInvalid( );
         }

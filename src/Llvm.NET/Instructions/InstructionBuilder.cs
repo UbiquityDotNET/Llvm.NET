@@ -9,12 +9,13 @@ using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using System.Linq;
-using JetBrains.Annotations;
+
 using Llvm.NET.DebugInfo;
 using Llvm.NET.Interop;
 using Llvm.NET.Properties;
 using Llvm.NET.Types;
 using Llvm.NET.Values;
+
 using Ubiquity.ArgValidators;
 
 using static Llvm.NET.Interop.NativeMethods;
@@ -47,7 +48,7 @@ namespace Llvm.NET.Instructions
         public DILocation CurrentDebugLocation
         {
             get => MDNode.FromHandle<DILocation>( LLVMValueAsMetadata( LLVMGetCurrentDebugLocation( BuilderHandle ) ) );
-            set => LLVMSetCurrentDebugLocation( BuilderHandle, LLVMMetadataAsValue( Context.ContextHandle, value.MetadataHandle ) );
+            set => LLVMSetCurrentDebugLocation( BuilderHandle, LLVMMetadataAsValue( Context.ContextHandle, value.ValidateNotNull( nameof( value ) ).MetadataHandle ) );
         }
 
         /// <summary>Set the current debug location for this <see cref="InstructionBuilder"/></summary>
@@ -402,6 +403,7 @@ namespace Llvm.NET.Instructions
         [Obsolete( "Use overload accepting a type and opaque pointer instead" )]
         public Load Load( Value sourcePtr )
         {
+            sourcePtr.ValidateNotNull( nameof( sourcePtr ) );
             if( !( sourcePtr.NativeType is IPointerType ptrType ) )
             {
                 throw new ArgumentException( Resources.Expected_a_pointer_value, nameof( sourcePtr ) );
@@ -605,7 +607,7 @@ namespace Llvm.NET.Instructions
         /// former makes the first index explicit. LLVM requires an explicit first index, even if it is
         /// zero, in order to properly compute the offset for a given element in an aggregate type.
         /// </remarks>
-        public Value GetElementPtr( ITypeRef type, Value pointer, IEnumerable<Value> args )
+        public Value GetElementPtr( [ValidatedNotNull] ITypeRef type, [ValidatedNotNull] Value pointer, [ValidatedNotNull] IEnumerable<Value> args )
         {
             var llvmArgs = GetValidatedGEPArgs( type, pointer, args );
             var handle = LLVMBuildGEP2( BuilderHandle
@@ -640,7 +642,8 @@ namespace Llvm.NET.Instructions
         /// former makes the first index explicit. LLVM requires an explicit first index, even if it is
         /// zero, in order to properly compute the offset for a given element in an aggregate type.
         /// </remarks>
-        public Value GetElementPtr( Value pointer, IEnumerable<Value> args ) => GetElementPtr( pointer.NativeType, pointer, args );
+        public Value GetElementPtr( Value pointer, IEnumerable<Value> args )
+            => GetElementPtr( pointer.ValidateNotNull( nameof( pointer ) ).NativeType, pointer, args );
 
         /// <summary>Creates a <see cref="Value"/> that accesses an element of a type referenced by a pointer</summary>
         /// <param name="pointer">pointer to get an element from</param>
@@ -691,7 +694,7 @@ namespace Llvm.NET.Instructions
         [Obsolete( "Use overload that takes a pointer type and opaque pointer" )]
         public Value GetElementPtrInBounds( Value pointer, IEnumerable<Value> args )
         {
-            return GetElementPtrInBounds( pointer.NativeType, pointer, args );
+            return GetElementPtrInBounds( pointer.ValidateNotNull( nameof( pointer ) ).NativeType, pointer, args );
         }
 
         /// <summary>Creates a <see cref="Value"/> that accesses an element of a type referenced by a pointer</summary>
@@ -810,6 +813,7 @@ namespace Llvm.NET.Instructions
         /// </remarks>
         public static Value ConstGetElementPtrInBounds( Value pointer, params Value[ ] args )
         {
+            pointer.ValidateNotNull( nameof( pointer ) );
             var llvmArgs = GetValidatedGEPArgs( pointer.NativeType, pointer, args );
             var handle = LLVMConstInBoundsGEP( pointer.ValueHandle, llvmArgs, ( uint )llvmArgs.Length );
             return Value.FromHandle( handle );
@@ -1574,6 +1578,9 @@ namespace Llvm.NET.Instructions
         /// <returns>Instruction as a <see cref="Value"/></returns>
         public Value AddWithOverflow( Value lhs, Value rhs, bool signed )
         {
+            lhs.ValidateNotNull( nameof( lhs ) );
+            rhs.ValidateNotNull( nameof( rhs ) );
+
             char kind = signed ? 's' : 'u';
             string name = $"llvm.{kind}add.with.overflow.i";
             var module = GetModuleOrThrow( );
@@ -1589,6 +1596,9 @@ namespace Llvm.NET.Instructions
         /// <returns>Instruction as a <see cref="Value"/></returns>
         public Value SubWithOverflow( Value lhs, Value rhs, bool signed )
         {
+            lhs.ValidateNotNull( nameof( lhs ) );
+            rhs.ValidateNotNull( nameof( rhs ) );
+
             char kind = signed ? 's' : 'u';
             string name = $"llvm.{kind}sub.with.overflow.i";
             uint id = Intrinsic.LookupId( name );
@@ -1605,6 +1615,9 @@ namespace Llvm.NET.Instructions
         /// <returns>Instruction as a <see cref="Value"/></returns>
         public Value MulWithOverflow( Value lhs, Value rhs, bool signed )
         {
+            lhs.ValidateNotNull( nameof( lhs ) );
+            rhs.ValidateNotNull( nameof( rhs ) );
+
             char kind = signed ? 's' : 'u';
             string name = $"llvm.{kind}mul.with.overflow.i";
             uint id = Intrinsic.LookupId( name );
@@ -1614,9 +1627,11 @@ namespace Llvm.NET.Instructions
             return Call( function, lhs, rhs );
         }
 
-        internal static LLVMValueRef[ ] GetValidatedGEPArgs( ITypeRef type, Value pointer, IEnumerable<Value> args )
+        internal static LLVMValueRef[ ] GetValidatedGEPArgs( [ValidatedNotNull] ITypeRef type, [ValidatedNotNull] Value pointer, [ValidatedNotNull] IEnumerable<Value> args )
         {
-            type.ValidateNotDefault( nameof( type ) );
+            type.ValidateNotNull( nameof( type ) );
+            pointer.ValidateNotNull( nameof( pointer ) );
+            args.ValidateNotNull( nameof( args ) );
 
             if( !( pointer.NativeType is IPointerType pointerType ) )
             {
@@ -1716,9 +1731,10 @@ namespace Llvm.NET.Instructions
         // a unary operator instruction may actually be a constant value and not an instruction
         // this deals with that to produce a correct managed wrapper type
         private Value BuildUnaryOp( Func<LLVMBuilderRef, LLVMValueRef, string, LLVMValueRef> opFactory
-                                  , Value operand
+                                  , [ValidatedNotNull] Value operand
                                   )
         {
+            operand.ValidateNotNull( nameof( operand ) );
             var valueRef = opFactory( BuilderHandle, operand.ValueHandle, string.Empty );
             return Value.FromHandle( valueRef );
         }
@@ -1727,10 +1743,13 @@ namespace Llvm.NET.Instructions
         // a binary operator instruction may actually be a constant value and not an instruction
         // this deals with that to produce a correct managed wrapper type
         private Value BuildBinOp( Func<LLVMBuilderRef, LLVMValueRef, LLVMValueRef, string, LLVMValueRef> opFactory
-                                , Value lhs
-                                , Value rhs
+                                , [ValidatedNotNull] Value lhs
+                                , [ValidatedNotNull] Value rhs
                                 )
         {
+            lhs.ValidateNotNull( nameof( lhs ) );
+            rhs.ValidateNotNull( nameof( rhs ) );
+
             if( lhs.NativeType != rhs.NativeType )
             {
                 throw new ArgumentException( Resources.Types_of_binary_operators_must_be_identical );
@@ -1740,8 +1759,11 @@ namespace Llvm.NET.Instructions
             return Value.FromHandle( valueRef );
         }
 
-        private AtomicRMW BuildAtomicRMW( LLVMAtomicRMWBinOp op, Value ptr, Value val )
+        private AtomicRMW BuildAtomicRMW( LLVMAtomicRMWBinOp op, [ValidatedNotNull] Value ptr, [ValidatedNotNull] Value val )
         {
+            ptr.ValidateNotNull( nameof( ptr ) );
+            val.ValidateNotNull( nameof( val ) );
+
             if( !( ptr.NativeType is IPointerType ptrType ) )
             {
                 throw new ArgumentException( Resources.Expected_pointer_type, nameof( ptr ) );
@@ -1756,8 +1778,11 @@ namespace Llvm.NET.Instructions
             return Value.FromHandle<AtomicRMW>( handle );
         }
 
-        private static FunctionType ValidateCallArgs( [NotNull] Value func, IReadOnlyList<Value> args )
+        private static FunctionType ValidateCallArgs( [ValidatedNotNull] Value func, [ValidatedNotNull] IReadOnlyList<Value> args )
         {
+            func.ValidateNotNull( nameof( func ) );
+            args.ValidateNotNull( nameof( args ) );
+
             if( !( func.NativeType is IPointerType funcPtrType ) )
             {
                 throw new ArgumentException( Resources.Expected_pointer_to_function, nameof( func ) );
@@ -1785,12 +1810,13 @@ namespace Llvm.NET.Instructions
             return signatureType;
         }
 
-        private LLVMValueRef BuildCall( Value func, params Value[ ] args ) => BuildCall( func, ( IReadOnlyList<Value> )args );
+        private LLVMValueRef BuildCall( [ValidatedNotNull] Value func, params Value[ ] args ) => BuildCall( func, ( IReadOnlyList<Value> )args );
 
-        private LLVMValueRef BuildCall( Value func ) => BuildCall( func, new List<Value>( ) );
+        private LLVMValueRef BuildCall( [ValidatedNotNull] Value func ) => BuildCall( func, new List<Value>( ) );
 
-        private LLVMValueRef BuildCall( Value func, IReadOnlyList<Value> args )
+        private LLVMValueRef BuildCall( [ValidatedNotNull] Value func, IReadOnlyList<Value> args )
         {
+            func.ValidateNotNull( nameof( func ) );
             FunctionType sig = ValidateCallArgs( func, args );
             LLVMValueRef[ ] llvmArgs = args.Select( v => v.ValueHandle ).ToArray( );
             return LLVMBuildCall2( BuilderHandle, sig.TypeHandle, func.ValueHandle, llvmArgs, ( uint )llvmArgs.Length, string.Empty );

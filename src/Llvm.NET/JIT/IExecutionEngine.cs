@@ -7,6 +7,7 @@
 using System;
 using System.Runtime.InteropServices;
 using Llvm.NET.Interop;
+using Ubiquity.ArgValidators;
 
 namespace Llvm.NET.JIT
 {
@@ -117,8 +118,9 @@ namespace Llvm.NET.JIT
         /// must contain everything necessary to generate the <see cref="BitcodeModule"/> for the function. Typically, this is
         /// a closure that captured the AST for the language and generates the IR from that state.</para>
         /// </remarks>
-        public static void AddLazyFunctionGenerator( this ILazyCompileExecutionEngine jit, string name, LazyFunctionCompiler generator )
+        public static void AddLazyFunctionGenerator( [ValidatedNotNull] this ILazyCompileExecutionEngine jit, string name, LazyFunctionCompiler generator )
         {
+            jit.ValidateNotNull( nameof( jit ) );
             jit.AddLazyFunctionGenerator( name, generator, IntPtr.Zero );
         }
 
@@ -126,8 +128,9 @@ namespace Llvm.NET.JIT
         /// <param name="jit">JIT engine to add the module to</param>
         /// <param name="module">module to add</param>
         /// <returns>Handle for the module in the engine</returns>
-        public static ulong AddEagerlyCompiledModule( this IExecutionEngine jit, BitcodeModule module )
+        public static ulong AddEagerlyCompiledModule( [ValidatedNotNull] this IExecutionEngine jit, BitcodeModule module )
         {
+            jit.ValidateNotNull( nameof( jit ) );
             return jit.AddEagerlyCompiledModule( module, jit.DefaultSymbolResolver );
         }
 
@@ -135,8 +138,9 @@ namespace Llvm.NET.JIT
         /// <param name="jit">JIT engine to add the module to</param>
         /// <param name="module">module to add</param>
         /// <returns>Handle for the module in the engine</returns>
-        public static ulong AddLazyCompiledModule( this ILazyCompileExecutionEngine jit, BitcodeModule module)
+        public static ulong AddLazyCompiledModule( [ValidatedNotNull] this ILazyCompileExecutionEngine jit, BitcodeModule module)
         {
+            jit.ValidateNotNull( nameof( jit ) );
             return jit.AddLazyCompiledModule( module, jit.DefaultSymbolResolver );
         }
     }

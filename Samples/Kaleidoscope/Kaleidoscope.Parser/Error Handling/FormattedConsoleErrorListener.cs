@@ -17,12 +17,12 @@ namespace Kaleidoscope.Grammar
     {
         /// <inheritdoc/>
         public void SyntaxError( IRecognizer recognizer
-                               , int offendingSymbol
-                               , int line
-                               , int charPositionInLine
-                               , string msg
-                               , RecognitionException e
-                               )
+                             , int offendingSymbol
+                             , int line
+                             , int charPositionInLine
+                             , string msg
+                             , RecognitionException e
+                             )
         {
             recognizer.ValidateNotNull( nameof( recognizer ) );
             Console.ForegroundColor = ConsoleColor.White;
@@ -32,9 +32,9 @@ namespace Kaleidoscope.Grammar
                 Console.WriteLine( new string( ' ', charPositionInLine ) + "^" );
                 Console.ForegroundColor = ConsoleColor.Red;
                 Console.Error.WriteLine( "error KLX{0:D04}: {1}"
-                                        , recognizer.State
-                                        , msg
-                                        );
+                                     , recognizer.State
+                                     , msg
+                                     );
             }
             finally
             {
@@ -44,13 +44,14 @@ namespace Kaleidoscope.Grammar
 
         /// <inheritdoc/>
         public void SyntaxError( IRecognizer recognizer
-                               , IToken offendingSymbol
-                               , int line
-                               , int charPositionInLine
-                               , string msg
-                               , RecognitionException e
-                               )
+                             , IToken offendingSymbol
+                             , int line
+                             , int charPositionInLine
+                             , string msg
+                             , RecognitionException e
+                             )
         {
+            recognizer.ValidateNotNull( nameof( recognizer ) );
             Console.ForegroundColor = ConsoleColor.White;
             try
             {
@@ -59,9 +60,9 @@ namespace Kaleidoscope.Grammar
                 Console.ForegroundColor = ConsoleColor.Red;
                 Console.WriteLine( new string( ' ', charPositionInLine ) + '^' );
                 Console.Error.WriteLine( "error KLP{0:D04}: {1}"
-                                       , recognizer.State
-                                       , msg
-                                       );
+                                     , recognizer.State
+                                     , msg
+                                     );
             }
             finally
             {

@@ -7,25 +7,28 @@
 #if !NETCOREAPP2_0
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using Ubiquity.ArgValidators;
 
 namespace Kaleidoscope
 {
     // compatibility shims for consistency - so much for the "standard" part of .NET Standard... [Sigh...]
     public static class RuntimeCompatShim
     {
-        public static bool Remove<TKey, TValue>( this IDictionary<TKey,TValue> dictionary, TKey key, out TValue value )
+        public static bool Remove<TKey, TValue>( [ValidatedNotNull] this IDictionary<TKey,TValue> self, TKey key, out TValue value )
         {
-            if( !dictionary.TryGetValue( key, out value ) )
+            self.ValidateNotNull( nameof( self ) );
+            if( !self.TryGetValue( key, out value ) )
             {
                 return false;
             }
 
-            dictionary.Remove( key );
+            self.Remove( key );
             return true;
         }
 
-        public static bool TryGetValue<TKey,TValue>( this KeyedCollection<TKey,TValue> self, TKey key, out TValue item )
+        public static bool TryGetValue<TKey,TValue>( [ValidatedNotNull] this KeyedCollection<TKey,TValue> self, TKey key, out TValue item )
         {
+            self.ValidateNotNull( nameof( self ) );
             item = default;
             if( !self.Contains( key ) )
             {

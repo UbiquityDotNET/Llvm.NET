@@ -32,6 +32,7 @@ namespace TestDebugInfo
         /// <remarks>
         /// <code language="c" title="Example code generated" source="test.c" />
         /// </remarks>
+        [SuppressMessage( "Design", "CA1062:Validate arguments of public methods", Justification = "Provided by platform" )]
         public static void Main( string[ ] args )
         {
             #region CommandlineArguments

@@ -9,6 +9,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Llvm.NET.Interop;
 using Llvm.NET.Types;
+using Ubiquity.ArgValidators;
 
 using static Llvm.NET.Interop.NativeMethods;
 
@@ -44,6 +45,7 @@ namespace Llvm.NET.Values
         /// </remarks>
         public static Constant From( ITypeRef elementType, int len, params Constant[] values )
         {
+            elementType.ValidateNotNull( nameof( elementType ) );
             var zeroFilledValues = ZeroFill( elementType, len, values ).ToList( );
             return From( elementType, zeroFilledValues );
         }

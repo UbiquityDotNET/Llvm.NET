@@ -10,7 +10,7 @@ using System.Text;
 using Antlr4.Runtime;
 using Antlr4.Runtime.Misc;
 using Antlr4.Runtime.Tree;
-
+using Ubiquity.ArgValidators;
 using static System.Math;
 
 namespace Kaleidoscope.Grammar
@@ -23,6 +23,7 @@ namespace Kaleidoscope.Grammar
         /// <returns>Character based interval covered by the context</returns>
         public static Interval GetCharInterval( this ParserRuleContext ruleContext )
         {
+            ruleContext.ValidateNotNull( nameof( ruleContext ) );
             if( ruleContext.start.Type == Recognizer<IToken, Antlr4.Runtime.Atn.ParserATNSimulator>.Eof )
             {
                 return Interval.Invalid;
@@ -38,12 +39,10 @@ namespace Kaleidoscope.Grammar
         /// <returns>The character stream or null if not available.</returns>
         public static ICharStream GetSourceStream( this IRecognizer recognizer )
         {
-            if( recognizer.InputStream != null && recognizer.InputStream is ITokenStream tokenStream )
-            {
-                return tokenStream.TokenSource.InputStream;
-            }
-
-            return null;
+            recognizer.ValidateNotNull( nameof( recognizer ) );
+            return recognizer.InputStream != null && recognizer.InputStream is ITokenStream tokenStream
+                ? tokenStream.TokenSource.InputStream
+                : null;
         }
 
         /// <summary>Gets the source input text for a <see cref="ParserRuleContext"/> produced by an <see cref="IRecognizer"/></summary>
@@ -67,12 +66,7 @@ namespace Kaleidoscope.Grammar
             }
 
             var span = ruleContext.GetCharInterval( );
-            if( span.a < 0 )
-            {
-                return string.Empty;
-            }
-
-            return charStream.GetText( span );
+            return span.a < 0 ? string.Empty : charStream.GetText( span );
         }
 
         /// <summary>Generates a Unique ID for a parse tree node</summary>
@@ -85,6 +79,7 @@ namespace Kaleidoscope.Grammar
         /// </remarks>
         public static string GetUniqueNodeId( this IParseTree tree )
         {
+            tree.ValidateNotNull( nameof( tree ) );
             var bldr = new StringBuilder( tree.GetHashCode( ).ToString( CultureInfo.InvariantCulture ) );
             if( tree.Parent != null )
             {
@@ -101,6 +96,7 @@ namespace Kaleidoscope.Grammar
         /// <returns>Zero based index in the parent or -1 if the item is not a child of <paramref name="tree"/></returns>
         public static int GetChildIndex( this IParseTree tree, IParseTree item )
         {
+            tree.ValidateNotNull( nameof( tree ) );
             for( int i = 0; i < tree.ChildCount; ++i )
             {
                 if( item == tree.GetChild( i ) )
@@ -117,6 +113,7 @@ namespace Kaleidoscope.Grammar
         /// <returns>Enumerable for all the characters in the builder</returns>
         public static IEnumerable<char> AsEnumerable( this StringBuilder bldr )
         {
+            bldr.ValidateNotNull( nameof( bldr ) );
             for( int i = 0; i < bldr.Length; ++i )
             {
                 yield return bldr[ i ];

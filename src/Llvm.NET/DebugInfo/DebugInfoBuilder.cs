@@ -93,6 +93,16 @@ namespace Llvm.NET.DebugInfo
                                               , uint runtimeVersion
                                               )
         {
+            if( producer == null )
+            {
+                producer = string.Empty;
+            }
+
+            if( compilationFlags == null )
+            {
+                compilationFlags = string.Empty;
+            }
+
             if( OwningModule.DICompileUnit != null )
             {
                 throw new InvalidOperationException( Resources.LLVM_only_allows_one_DICompileUnit_per_module );
@@ -356,6 +366,7 @@ namespace Llvm.NET.DebugInfo
         {
             scope.ValidateNotNull( nameof( scope ) );
             type.ValidateNotNull( nameof( type ) );
+            name.ValidateNotNullOrWhiteSpace( nameof( name ) );
 
             var handle = LibLLVMDIBuilderCreateAutoVariable( BuilderHandle
                                                            , scope.MetadataHandle
@@ -394,6 +405,7 @@ namespace Llvm.NET.DebugInfo
         {
             scope.ValidateNotNull( nameof( scope ) );
             type.ValidateNotNull( nameof( type ) );
+            name.ValidateNotNullOrWhiteSpace( nameof( name ) );
 
             var handle = LibLLVMDIBuilderCreateParameterVariable( BuilderHandle
                                                                 , scope.MetadataHandle
@@ -417,6 +429,7 @@ namespace Llvm.NET.DebugInfo
         /// <returns>Basic type debugging information</returns>
         public DIBasicType CreateBasicType( string name, UInt64 bitSize, DiTypeKind encoding, DebugInfoFlags diFlags = DebugInfoFlags.None )
         {
+            name.ValidateNotNullOrWhiteSpace( nameof( name ) );
             var handle = LLVMDIBuilderCreateBasicType( BuilderHandle, name, name.Length, bitSize, ( uint )encoding, ( LLVMDIFlags )diFlags );
             return MDNode.FromHandle<DIBasicType>( handle );
         }
@@ -429,7 +442,7 @@ namespace Llvm.NET.DebugInfo
         /// <param name="addressSpace">Address space for the pointer</param>
         /// <returns>Pointer type</returns>
         [SuppressMessage( "Microsoft.Design", "CA1011:ConsiderPassingBaseTypesAsParameters", Justification = "Specific type required by interop call" )]
-        public DIDerivedType CreatePointerType( DIType pointeeType, string name, UInt64 bitSize, UInt32 bitAlign = 0, uint addressSpace = 0)
+        public DIDerivedType CreatePointerType( DIType pointeeType, string name, UInt64 bitSize, UInt32 bitAlign = 0, uint addressSpace = 0 )
         {
             var handle = LLVMDIBuilderCreatePointerType( BuilderHandle
                                                        , pointeeType?.MetadataHandle ?? default // null == void
@@ -477,7 +490,7 @@ namespace Llvm.NET.DebugInfo
         /// <param name="types">Parameter types</param>
         /// <returns><see cref="DISubroutineType"/></returns>
         [SuppressMessage( "Microsoft.Design", "CA1011:ConsiderPassingBaseTypesAsParameters", Justification = "Specific type required by interop call" )]
-        [Obsolete("Use overload supporting Array or IEnumerable of DIType")]
+        [Obsolete( "Use overload supporting Array or IEnumerable of DIType" )]
         public DISubroutineType CreateSubroutineType( DebugInfoFlags debugFlags, DITypeArray types )
         {
             return CreateSubroutineType( debugFlags, types.AsEnumerable( ) );
@@ -515,7 +528,7 @@ namespace Llvm.NET.DebugInfo
         /// <returns><see cref="DISubroutineType"/></returns>
         public DISubroutineType CreateSubroutineType( DebugInfoFlags debugFlags )
         {
-            return CreateSubroutineType( debugFlags, Array.Empty<DIType>() );
+            return CreateSubroutineType( debugFlags, Array.Empty<DIType>( ) );
         }
 
         /// <summary>Creates a <see cref="DISubroutineType"/> to provide debug information for a function/procedure signature</summary>
@@ -540,7 +553,7 @@ namespace Llvm.NET.DebugInfo
         /// <param name="elements">Node array describing the elements of the structure</param>
         /// <returns><see cref="DICompositeType"/></returns>
         [SuppressMessage( "Microsoft.Design", "CA1011:ConsiderPassingBaseTypesAsParameters", Justification = "Specific type required by interop call" )]
-        [Obsolete("Use overload accepting array or IEnumerable of DINode")]
+        [Obsolete( "Use overload accepting array or IEnumerable of DINode" )]
         public DICompositeType CreateStructType( DIScope scope
                                                , string name
                                                , DIFile file
@@ -552,7 +565,7 @@ namespace Llvm.NET.DebugInfo
                                                , DINodeArray elements
                                                )
         {
-            return CreateStructType( scope, name, file, line, bitSize, bitAlign, debugFlags, derivedFrom, (IEnumerable<DINode>)elements );
+            return CreateStructType( scope, name, file, line, bitSize, bitAlign, debugFlags, derivedFrom, ( IEnumerable<DINode> )elements );
         }
 
         /// <summary>Creates debug description of a structure type</summary>
@@ -575,9 +588,9 @@ namespace Llvm.NET.DebugInfo
                                                , DebugInfoFlags debugFlags
                                                , DIType derivedFrom
                                                , params DINode[ ] elements
-                                               )
+                                                )
         {
-            return CreateStructType( scope, name, file, line, bitSize, bitAlign, debugFlags, derivedFrom, (IEnumerable<DINode>)( elements ) );
+            return CreateStructType( scope, name, file, line, bitSize, bitAlign, debugFlags, derivedFrom, ( IEnumerable<DINode> )( elements ) );
         }
 
         /// <summary>Creates debug description of a structure type</summary>
@@ -610,6 +623,8 @@ namespace Llvm.NET.DebugInfo
         {
             scope.ValidateNotNull( nameof( scope ) );
             elements.ValidateNotNull( nameof( elements ) );
+            name.ValidateNotNullOrWhiteSpace( nameof( name ) );
+
             var elementHandles = elements.Select( e => e.MetadataHandle ).ToArray( );
             var handle = LLVMDIBuilderCreateStructType( BuilderHandle
                                                       , scope.MetadataHandle
@@ -676,7 +691,7 @@ namespace Llvm.NET.DebugInfo
                                               , params DINode[ ] elements
                                               )
         {
-            return CreateUnionType( scope, name, file, line, bitSize, bitAlign, debugFlags, (IEnumerable<DINode>)elements);
+            return CreateUnionType( scope, name, file, line, bitSize, bitAlign, debugFlags, ( IEnumerable<DINode> )elements );
         }
 
         /// <summary>Creates debug description of a union type</summary>
@@ -692,19 +707,21 @@ namespace Llvm.NET.DebugInfo
         /// <param name="uniqueId">A unique identifier for the type</param>
         /// <returns><see cref="DICompositeType"/></returns>
         public DICompositeType CreateUnionType( DIScope scope
-                                               , string name
-                                               , DIFile file
-                                               , uint line
-                                               , UInt64 bitSize
-                                               , UInt32 bitAlign
-                                               , DebugInfoFlags debugFlags
-                                               , IEnumerable<DINode> elements
-                                               , uint runTimeLang = 0
-                                               , string uniqueId = ""
-                                               )
+                                              , string name
+                                              , DIFile file
+                                              , uint line
+                                              , UInt64 bitSize
+                                              , UInt32 bitAlign
+                                              , DebugInfoFlags debugFlags
+                                              , IEnumerable<DINode> elements
+                                              , uint runTimeLang = 0
+                                              , string uniqueId = ""
+                                              )
         {
             scope.ValidateNotNull( nameof( scope ) );
             elements.ValidateNotNull( nameof( elements ) );
+            name.ValidateNotNullOrWhiteSpace( nameof( name ) );
+
             var elementHandles = elements.Select( e => e.MetadataHandle ).ToArray( );
             var handle = LLVMDIBuilderCreateUnionType( BuilderHandle
                                                      , scope.MetadataHandle
@@ -750,6 +767,7 @@ namespace Llvm.NET.DebugInfo
         {
             scope.ValidateNotNull( nameof( scope ) );
             type.ValidateNotNull( nameof( type ) );
+            name.ValidateNotNullOrWhiteSpace( nameof( name ) );
 
             var handle = LLVMDIBuilderCreateMemberType( BuilderHandle
                                                       , scope.MetadataHandle
@@ -786,7 +804,7 @@ namespace Llvm.NET.DebugInfo
         /// <returns><see cref="DICompositeType"/> for the array</returns>
         public DICompositeType CreateArrayType( UInt64 bitSize, UInt32 bitAlign, DIType elementType, params DINode[ ] subscripts )
         {
-            return CreateArrayType( bitSize, bitAlign, elementType, (IEnumerable<DINode>)subscripts );
+            return CreateArrayType( bitSize, bitAlign, elementType, ( IEnumerable<DINode> )subscripts );
         }
 
         /// <summary>Creates debug information for an array type</summary>
@@ -825,7 +843,7 @@ namespace Llvm.NET.DebugInfo
         /// <returns><see cref="DICompositeType"/> for the Vector</returns>
         public DICompositeType CreateVectorType( UInt64 bitSize, UInt32 bitAlign, DIType elementType, params DINode[ ] subscripts )
         {
-            return CreateVectorType( bitSize, bitAlign, elementType, (IEnumerable<DINode>)subscripts );
+            return CreateVectorType( bitSize, bitAlign, elementType, ( IEnumerable<DINode> )subscripts );
         }
 
         /// <summary>Creates debug information for a vector type</summary>
@@ -854,6 +872,7 @@ namespace Llvm.NET.DebugInfo
         [SuppressMessage( "Microsoft.Design", "CA1011:ConsiderPassingBaseTypesAsParameters", Justification = "Specific type required by interop call" )]
         public DIDerivedType CreateTypedef( DIType type, string name, DIFile file, uint line, DINode context )
         {
+            name.ValidateNotNullOrWhiteSpace( nameof( name ) );
             var handle = LLVMDIBuilderCreateTypedef( BuilderHandle
                                                    , type?.MetadataHandle ?? default
                                                    , name
@@ -941,6 +960,7 @@ namespace Llvm.NET.DebugInfo
         {
             scope.ValidateNotNull( nameof( scope ) );
             underlyingType.ValidateNotNull( nameof( underlyingType ) );
+            name.ValidateNotNullOrWhiteSpace( nameof( name ) );
 
             var elementHandles = elements.Select( e => e.MetadataHandle ).ToArray( );
             var handle = LLVMDIBuilderCreateEnumerationType( BuilderHandle
@@ -986,6 +1006,11 @@ namespace Llvm.NET.DebugInfo
         {
             scope.ValidateNotNull( nameof( scope ) );
             type.ValidateNotNull( nameof( type ) );
+            name.ValidateNotNullOrWhiteSpace( nameof( name ) );
+            if( string.IsNullOrWhiteSpace( linkageName ) )
+            {
+                linkageName = name;
+            }
 
             var handle = LLVMDIBuilderCreateGlobalVariableExpression( BuilderHandle
                                                                     , scope.MetadataHandle
@@ -1008,6 +1033,7 @@ namespace Llvm.NET.DebugInfo
         /// <param name="subProgram"><see cref="DISubProgram"/> to finalize debug information for</param>
         public void Finish( DISubProgram subProgram )
         {
+            subProgram.ValidateNotNull( nameof( subProgram ) );
             LibLLVMDIBuilderFinalizeSubProgram( BuilderHandle, subProgram.MetadataHandle );
         }
 
@@ -1361,7 +1387,14 @@ namespace Llvm.NET.DebugInfo
                                                              , string uniqueId = ""
                                                              )
         {
-            // TODO: validate that tag is really valid or document the result if it isn't (as long as LLVM won't crash at least)
+            tag.ValidateDefined( nameof( tag ) );
+            name.ValidateNotNullOrWhiteSpace( nameof( name ) );
+            if( uniqueId == null )
+            {
+                uniqueId = string.Empty;
+            }
+
+            // TODO: validate that tag is really valid for a composite type or document the result if it isn't (as long as LLVM won't crash at least)
             var handle = LLVMDIBuilderCreateReplaceableCompositeType( BuilderHandle
                                                                     , ( uint )tag
                                                                     , name

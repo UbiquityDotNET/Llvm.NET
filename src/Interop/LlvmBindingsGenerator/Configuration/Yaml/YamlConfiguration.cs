@@ -31,7 +31,7 @@ namespace LlvmBindingsGenerator.Configuration
             using( var input = File.OpenText( path ) )
             {
                 var deserializer = new DeserializerBuilder( )
-                                .WithNamingConvention( new PascalCaseNamingConvention( ))
+                                .WithNamingConvention( PascalCaseNamingConvention.Instance )
                                 .IgnoreUnmatchedProperties()
                                 .WithTagMapping("!Status", typeof(YamlReturnStatusMarshalInfo))
                                 .WithTagMapping("!String", typeof(YamlStringMarshalInfo))

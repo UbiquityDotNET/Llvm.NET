@@ -6,13 +6,15 @@
 
 using Antlr4.Runtime;
 using Antlr4.Runtime.Tree;
+using Ubiquity.ArgValidators;
 
 namespace Kaleidoscope.Grammar
 {
     public static class LocationExtensions
     {
-        public static SourceSpan GetSourceSpan(this ParserRuleContext ctx)
+        public static SourceSpan GetSourceSpan( [ValidatedNotNull] this ParserRuleContext ctx )
         {
+            ctx.ValidateNotNull( nameof( ctx ) );
             return new SourceSpan( ctx.Start.Line
                                  , ctx.Start.Column
                                  , ctx.Stop.Line
@@ -20,8 +22,9 @@ namespace Kaleidoscope.Grammar
                                  );
         }
 
-        public static SourceSpan GetSourceSpan(this RuleContext ctx)
+        public static SourceSpan GetSourceSpan( [ValidatedNotNull]this RuleContext ctx )
         {
+            ctx.ValidateNotNull( nameof( ctx ) );
             if( ctx is ParserRuleContext ruleCtx )
             {
                 GetSourceSpan( ruleCtx );
@@ -30,13 +33,15 @@ namespace Kaleidoscope.Grammar
             return default;
         }
 
-        public static SourceSpan GetSourceSpan( this ITerminalNode node )
+        public static SourceSpan GetSourceSpan( [ValidatedNotNull] this ITerminalNode node )
         {
+            node.ValidateNotNull( nameof( node ) );
             return GetSourceSpan( node.Symbol );
         }
 
-        public static SourceSpan GetSourceSpan( this IToken token )
+        public static SourceSpan GetSourceSpan( [ValidatedNotNull] this IToken token )
         {
+            token.ValidateNotNull( nameof( token ) );
             return new SourceSpan( token.Line, token.Column, token.Line, token.Column + token.Text.Length );
         }
     }

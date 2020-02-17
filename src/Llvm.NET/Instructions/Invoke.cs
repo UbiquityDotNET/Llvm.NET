@@ -80,6 +80,7 @@ namespace Llvm.NET.Instructions
         /// <inheritdoc/>
         public void RemoveAttributeAtIndex( FunctionAttributeIndex index, string name )
         {
+            name.ValidateNotNullOrWhiteSpace( nameof( name ) );
             LLVMRemoveCallSiteStringAttribute( ValueHandle, ( LLVMAttributeIndex )index, name, ( uint )name.Length );
         }
 

@@ -4,6 +4,8 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
+using Ubiquity.ArgValidators;
+
 using static Llvm.NET.Interop.NativeMethods;
 
 using IrFunction = Llvm.NET.Values.IrFunction;
@@ -17,7 +19,7 @@ namespace Llvm.NET.Transforms
         /// <summary>Initializes a new instance of the <see cref="FunctionPassManager"/> class.</summary>
         /// <param name="module">Module that owns the functions this manager works on</param>
         public FunctionPassManager( BitcodeModule module )
-            : base( LLVMCreateFunctionPassManagerForModule( module.ModuleHandle ))
+            : base( LLVMCreateFunctionPassManagerForModule( module.ValidateNotNull( nameof( module ) ).ModuleHandle ) )
         {
         }
 
@@ -33,7 +35,7 @@ namespace Llvm.NET.Transforms
         /// <returns><see langword="true"/>if any of the passes modified the module</returns>
         public bool Run( IrFunction target )
         {
-            return LLVMRunFunctionPassManager( Handle, target.ValueHandle );
+            return LLVMRunFunctionPassManager( Handle, target.ValidateNotNull( nameof( target ) ).ValueHandle );
         }
 
         /// <summary>Finalizes all of the function passes scheduled in the function pass manager.</summary>

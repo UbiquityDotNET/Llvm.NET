@@ -120,6 +120,7 @@ namespace Llvm.NET.Types
 
         internal static TypeRef FromHandle( LLVMTypeRef typeRef ) => FromHandle<TypeRef>( typeRef );
 
+        [SuppressMessage( "Reliability", "CA2000:Dispose objects before losing scope", Justification = "Context is owned and disposed by global ContextCache" )]
         internal static T FromHandle<T>( LLVMTypeRef typeRef )
             where T : class, ITypeRef
         {

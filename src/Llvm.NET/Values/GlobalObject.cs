@@ -8,6 +8,7 @@ using System;
 using System.Collections.Generic;
 using Llvm.NET.Interop;
 using Llvm.NET.Properties;
+using Ubiquity.ArgValidators;
 
 using static Llvm.NET.Interop.NativeMethods;
 
@@ -61,6 +62,7 @@ namespace Llvm.NET.Values
         /// <param name="node">Metadata wrapped as a value</param>
         public void SetMetadata( uint kindID, LlvmMetadata node )
         {
+            node.ValidateNotNull( nameof( node ) );
             LLVMGlobalSetMetadata( ValueHandle, kindID, node.MetadataHandle );
         }
 

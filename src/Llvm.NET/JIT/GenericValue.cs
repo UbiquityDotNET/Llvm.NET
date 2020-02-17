@@ -56,12 +56,14 @@ namespace Llvm.NET.JIT
         /// <summary>Gets the value as a <see cref="Single"/></summary>
         /// <param name="ctx">Context to use for the LLVM float type definition</param>
         /// <returns>Floating point value</returns>
-        public float ToFloat( Context ctx ) => ( float )LLVMGenericValueToFloat( ctx.FloatType.GetTypeRef(), Handle );
+        public float ToFloat( Context ctx )
+            => ( float )LLVMGenericValueToFloat( ctx.ValidateNotNull(nameof(ctx)).FloatType.GetTypeRef(), Handle );
 
         /// <summary>Gets the value as a <see cref="Double"/></summary>
         /// <param name="ctx">Context to use for the LLVM double type definition</param>
         /// <returns>Floating point value</returns>
-        public double ToDouble( Context ctx ) => LLVMGenericValueToFloat( ctx.DoubleType.GetTypeRef( ), Handle );
+        public double ToDouble( Context ctx )
+            => LLVMGenericValueToFloat( ctx.ValidateNotNull( nameof( ctx ) ).DoubleType.GetTypeRef( ), Handle );
 
         private readonly LLVMGenericValueRef Handle;
     }

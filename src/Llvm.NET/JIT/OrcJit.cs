@@ -10,6 +10,7 @@ using System.Globalization;
 using System.Runtime.InteropServices;
 using Llvm.NET.Interop;
 using Llvm.NET.Properties;
+using Ubiquity.ArgValidators;
 
 using static Llvm.NET.Interop.NativeMethods;
 
@@ -28,6 +29,8 @@ namespace Llvm.NET.JIT
         /// <param name="machine">Target machine for the JIT</param>
         public OrcJit( TargetMachine machine )
         {
+            machine.ValidateNotNull( nameof( machine ) );
+
             JitStackHandle = LLVMOrcCreateInstance( machine.TargetMachineHandle );
             TargetMachine = machine;
         }
@@ -38,6 +41,9 @@ namespace Llvm.NET.JIT
         /// <inheritdoc/>
         public ulong AddEagerlyCompiledModule( BitcodeModule bitcodeModule, LLVMOrcSymbolResolverFn resolver )
         {
+            bitcodeModule.ValidateNotNull( nameof( bitcodeModule ) );
+            resolver.ValidateNotNull( nameof( resolver ) );
+
             // detach the module before providing to JIT as JIT takes ownership
             LLVMModuleRef moduleHandle = bitcodeModule.Detach( );
             var wrappedResolver = new WrappedNativeCallback<LLVMOrcSymbolResolverFn>( resolver );
@@ -56,6 +62,9 @@ namespace Llvm.NET.JIT
         /// <inheritdoc/>
         public ulong AddLazyCompiledModule( BitcodeModule bitcodeModule, LLVMOrcSymbolResolverFn resolver )
         {
+            bitcodeModule.ValidateNotNull( nameof( bitcodeModule ) );
+            resolver.ValidateNotNull( nameof( resolver ) );
+
             LLVMModuleRef moduleHandle = bitcodeModule.Detach( );
             var wrappedResolver = new WrappedNativeCallback<LLVMOrcSymbolResolverFn>( resolver );
             var err = LLVMOrcAddLazilyCompiledIR( JitStackHandle, out ulong retHandle, moduleHandle, wrappedResolver, IntPtr.Zero );

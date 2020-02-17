@@ -6,7 +6,7 @@
 
 using System;
 using Antlr4.Runtime;
-
+using Ubiquity.ArgValidators;
 using static Kaleidoscope.Grammar.KaleidoscopeParser;
 
 namespace Kaleidoscope.Grammar
@@ -86,6 +86,7 @@ namespace Kaleidoscope.Grammar
         /// </remarks>
         public bool TryAddOperator( IToken token, OperatorKind kind, int precedence )
         {
+            token.ValidateNotNull( nameof( token ) );
             return TryAddOperator( token.Type, kind, precedence );
         }
 
@@ -94,12 +95,7 @@ namespace Kaleidoscope.Grammar
         /// <returns>Operator info for the operator or default if not found</returns>
         public OperatorInfo GetBinOperatorInfo( int tokenType )
         {
-            if( BinOpPrecedence.TryGetValue( tokenType, out var value ) )
-            {
-                return value;
-            }
-
-            return default;
+            return BinOpPrecedence.TryGetValue( tokenType, out var value ) ? value : ( default );
         }
 
         /// <summary>Gets the unary operator information for a given token type</summary>
@@ -107,12 +103,7 @@ namespace Kaleidoscope.Grammar
         /// <returns>Operator info for the operator or default if not found</returns>
         public OperatorInfo GetUnaryOperatorInfo( int tokenType )
         {
-            if( UnaryOps.TryGetValue( tokenType, out var value ) )
-            {
-                return value;
-            }
-
-            return default;
+            return UnaryOps.TryGetValue( tokenType, out var value ) ? value : ( default );
         }
 
         /// <summary>Generates a new unique name for an anonymous function</summary>
@@ -133,12 +124,7 @@ namespace Kaleidoscope.Grammar
         {
             var operatorInfo = GetBinOperatorInfo( tokenType );
             int retVal = operatorInfo.Precedence;
-            if( operatorInfo.Kind == OperatorKind.InfixRightAssociative || operatorInfo.Kind == OperatorKind.PreFix )
-            {
-                return retVal;
-            }
-
-            return retVal + 1;
+            return operatorInfo.Kind == OperatorKind.InfixRightAssociative || operatorInfo.Kind == OperatorKind.PreFix ? retVal : retVal + 1;
         }
 
         private bool TryAddOperator( int tokenType, OperatorKind kind, int precedence )

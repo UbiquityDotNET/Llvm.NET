@@ -342,6 +342,15 @@ namespace Llvm.NET.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Cannot reset the native DIType to null.
+        /// </summary>
+        internal static string Cannot_Reset_Type_to_null {
+            get {
+                return ResourceManager.GetString("Cannot_Reset_Type_to_null", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Condition value must be an i1 or vector of i1.
         /// </summary>
         internal static string Condition_value_must_be_an_i1_or_vector_of_i1 {

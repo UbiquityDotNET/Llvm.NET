@@ -130,16 +130,11 @@ namespace Llvm.NET.DebugInfo
             ITypeRef[ ] nativeMembers = { null };
             foreach( var elem in debugElements )
             {
-                /* ReSharper disable ConditionIsAlwaysTrueOrFalse */
-                /* ReSharper disable HeuristicUnreachableCode */
                 ulong? bitSize = elem.ExplicitLayout?.BitSize ?? module.Layout?.BitSizeOf( elem.DebugType );
                 if( !bitSize.HasValue )
                 {
                     throw new ArgumentException( Resources.Cannot_determine_layout_for_element__The_element_must_have_an_explicit_layout_or_the_module_has_a_layout_to_use, nameof( debugElements ) );
                 }
-
-                /* ReSharper enable HeuristicUnreachableCode */
-                /* ReSharper enable ConditionIsAlwaysTrueOrFalse */
 
                 if(maxSize >= bitSize.Value)
                 {
@@ -155,8 +150,8 @@ namespace Llvm.NET.DebugInfo
 
             // Debug info contains details of each member of the union
             DebugMembers = new ReadOnlyCollection<DebugMemberInfo>( debugElements as IList<DebugMemberInfo> ?? debugElements.ToList( ) );
-            var memberTypes = from memberInfo in DebugMembers
-                              select module.DIBuilder.CreateMemberType( scope: DIType
+            var memberTypes = ( from memberInfo in DebugMembers
+                                select module.DIBuilder.CreateMemberType( scope: DIType
                                                                       , name: memberInfo.Name
                                                                       , file: memberInfo.File
                                                                       , line: memberInfo.Line
@@ -165,14 +160,19 @@ namespace Llvm.NET.DebugInfo
                                                                       , bitOffset: 0
                                                                       , debugFlags: memberInfo.DebugInfoFlags
                                                                       , type: memberInfo.DebugType.DIType
-                                                                      );
+                                                                      )
+                               ).ToList();
 
+            var ( unionBitSize, unionAlign)
+                = memberTypes.Aggregate( (MaxSize: 0ul, MaxAlign: 0ul)
+                                       , ( a, d ) => (Math.Max( a.MaxSize, d.BitSize ), Math.Max( a.MaxAlign, d.BitAlignment ))
+                                       );
             var concreteType = module.DIBuilder.CreateUnionType( scope: scope
                                                                , name: DIType.Name
                                                                , file: file
                                                                , line: line
-                                                               , bitSize: 0 // TODO: find largest sized member
-                                                               , bitAlign: 0 // TODO: Find most restrictive alignment
+                                                               , bitSize: checked((uint)unionBitSize)
+                                                               , bitAlign: checked((uint)unionAlign)
                                                                , debugFlags: debugFlags
                                                                , elements: memberTypes
                                                                );

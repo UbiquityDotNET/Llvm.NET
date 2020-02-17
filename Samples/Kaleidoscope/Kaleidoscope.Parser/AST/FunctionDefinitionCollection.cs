@@ -6,6 +6,7 @@
 
 using System.Collections.ObjectModel;
 using Kaleidoscope.Grammar.AST;
+using Ubiquity.ArgValidators;
 
 namespace Kaleidoscope.Grammar
 {
@@ -18,6 +19,6 @@ namespace Kaleidoscope.Grammar
             Add( item );
         }
 
-        protected override string GetKeyForItem( FunctionDefinition item ) => item.Name;
+        protected override string GetKeyForItem( FunctionDefinition item ) => item.ValidateNotNull( nameof( item ) ).Name;
     }
 }

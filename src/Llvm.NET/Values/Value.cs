@@ -7,6 +7,7 @@
 using System;
 using Llvm.NET.Interop;
 using Llvm.NET.Types;
+using Ubiquity.ArgValidators;
 
 using static Llvm.NET.Interop.NativeMethods;
 
@@ -38,7 +39,7 @@ namespace Llvm.NET.Values
         {
             get => Context.IsDisposed ? string.Empty : LLVMGetValueName2( ValueHandle, out size_t _ );
 
-            set => LLVMSetValueName2( ValueHandle, value, value.Length );
+            set => LLVMSetValueName2( ValueHandle, value, value.ValidateNotNull( nameof( value ) ).Length );
         }
 
         /// <summary>Gets a value indicating whether this value is Undefined</summary>
@@ -65,7 +66,7 @@ namespace Llvm.NET.Values
             get
             {
                 var kind = LibLLVMGetValueKind( ValueHandle );
-                return (kind == LibLLVMValueKind.CallKind) || (kind == LibLLVMValueKind.InvokeKind);
+                return ( kind == LibLLVMValueKind.CallKind ) || ( kind == LibLLVMValueKind.InvokeKind );
             }
         }
 

@@ -4,6 +4,9 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
+using System;
+using Ubiquity.ArgValidators;
+
 using static Llvm.NET.Interop.NativeMethods;
 
 namespace Llvm.NET.Transforms
@@ -14,8 +17,9 @@ namespace Llvm.NET.Transforms
         /// <summary>Adds an Address Sanitizer Function pass</summary>
         /// <param name="passManager">Pass manager to add the pass to</param>
         /// <returns><paramref name="passManager"/>for fluent support</returns>
-        public static FunctionPassManager AddAddressSanitizerPass( this FunctionPassManager passManager )
+        public static FunctionPassManager AddAddressSanitizerPass( [ValidatedNotNull] this FunctionPassManager passManager )
         {
+            passManager.ValidateNotNull( nameof( passManager ) );
             LibLLVMAddAddressSanitizerFunctionPass( passManager.Handle );
             return passManager;
         }
@@ -23,8 +27,9 @@ namespace Llvm.NET.Transforms
         /// <summary>Adds an Address Sanitizer Function pass</summary>
         /// <param name="passManager">Pass manager to add the pass to</param>
         /// <returns><paramref name="passManager"/>for fluent support</returns>
-        public static ModulePassManager AddSanitizerPass(this ModulePassManager passManager)
+        public static ModulePassManager AddSanitizerPass( [ValidatedNotNull] this ModulePassManager passManager )
         {
+            passManager.ValidateNotNull( nameof( passManager ) );
             LibLLVMAddAddressSanitizerModulePass( passManager.Handle );
             return passManager;
         }
@@ -32,8 +37,9 @@ namespace Llvm.NET.Transforms
         /// <summary>Adds a Thread Sanitizer Function pass</summary>
         /// <param name="passManager">Pass manager to add the pass to</param>
         /// <returns><paramref name="passManager"/>for fluent support</returns>
-        public static FunctionPassManager AddThreadSanitizerPass( this FunctionPassManager passManager )
+        public static FunctionPassManager AddThreadSanitizerPass( [ValidatedNotNull] this FunctionPassManager passManager )
         {
+            passManager.ValidateNotNull( nameof( passManager ) );
             LibLLVMAddThreadSanitizerPass( passManager.Handle );
             return passManager;
         }
@@ -41,8 +47,9 @@ namespace Llvm.NET.Transforms
         /// <summary>Adds a Memory Sanitizer Function pass</summary>
         /// <param name="passManager">Pass manager to add the pass to</param>
         /// <returns><paramref name="passManager"/>for fluent support</returns>
-        public static FunctionPassManager AddMemorySanitizerPass( this FunctionPassManager passManager )
+        public static FunctionPassManager AddMemorySanitizerPass( [ValidatedNotNull] this FunctionPassManager passManager )
         {
+            passManager.ValidateNotNull( nameof( passManager ) );
             LibLLVMAddMemorySanitizerPass( passManager.Handle );
             return passManager;
         }
@@ -51,9 +58,16 @@ namespace Llvm.NET.Transforms
         /// <param name="passManager">Pass manager to add the pass to</param>
         /// <param name="abiListFile">ABI List Files</param>
         /// <returns><paramref name="passManager"/>for fluent support</returns>
-        public static ModulePassManager AddDataFlowSanitizerPass( this ModulePassManager passManager, string[] abiListFile )
+        public static ModulePassManager AddDataFlowSanitizerPass( [ValidatedNotNull] this ModulePassManager passManager, string[ ] abiListFile )
         {
-            LibLLVMAddDataFlowSanitizerPass( passManager.Handle,abiListFile.Length, abiListFile );
+            passManager.ValidateNotNull( nameof( passManager ) );
+            if( abiListFile == null)
+            {
+                abiListFile = Array.Empty<string>( );
+            }
+
+            passManager.ValidateNotNull( nameof( passManager ) );
+            LibLLVMAddDataFlowSanitizerPass( passManager.Handle, abiListFile.Length, abiListFile );
             return passManager;
         }
     }

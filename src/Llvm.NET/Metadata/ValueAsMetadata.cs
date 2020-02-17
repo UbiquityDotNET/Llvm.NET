@@ -8,6 +8,7 @@ using System.Diagnostics.CodeAnalysis;
 using Llvm.NET.Interop;
 using Llvm.NET.Types;
 using Llvm.NET.Values;
+using Ubiquity.ArgValidators;
 
 using static Llvm.NET.Interop.NativeMethods;
 
@@ -30,7 +31,7 @@ namespace Llvm.NET
         /// <param name="md"><see cref="ValueAsMetadata"/> to get the value for</param>
         /// <remarks>This is a simple wrapper around the <see cref="Value"/> property</remarks>
         [SuppressMessage( "Usage", "CA2225:Operator overloads have named alternates", Justification = "Value property provides this functionality already" )]
-        public static implicit operator Value( ValueAsMetadata md ) => md.Value;
+        public static implicit operator Value( ValueAsMetadata md ) => md.ValidateNotNull( nameof( md ) ).Value;
 
         private protected ValueAsMetadata( LLVMMetadataRef handle )
             : base( handle )

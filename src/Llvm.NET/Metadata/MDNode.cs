@@ -140,6 +140,7 @@ namespace Llvm.NET
             Operands = new OperandList<LlvmMetadata>( this );
         }
 
+        [SuppressMessage( "Reliability", "CA2000:Dispose objects before losing scope", Justification = "Context created here is owned, and disposed of via the ContextCache" )]
         internal static T FromHandle<T>( LLVMMetadataRef handle )
         where T : MDNode
         {
