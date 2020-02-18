@@ -23,7 +23,7 @@ jobs:
         run: ./Build-All.ps1
 
       - name: Publish build logs
-        if: github.event_name == 'pull_request'
+        if: always() && github.event_name == 'pull_request'
         run: dir ./BuildOutput/*.*
 #        uses: actions/upload-artifact@v1
 #        with:
