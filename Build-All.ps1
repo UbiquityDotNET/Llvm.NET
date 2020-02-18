@@ -71,7 +71,6 @@ try
         .\Build-Docs.ps1 -BuildInfo $BuildInfo
     }
 
-    Get-ChildItem *.binlog | Move-Item -Destination $buildPaths.BuildOutputPath
     if( $env:APPVEYOR_PULL_REQUEST_NUMBER )
     {
         $binLogs = join-path $buildPaths.BuildOutputPath '*.binlog'
