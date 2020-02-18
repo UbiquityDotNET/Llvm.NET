@@ -76,6 +76,7 @@ try
         $binLogs = join-path $buildPaths.BuildOutputPath '*.binlog'
         Get-ChildItem  -Filter *.binlog (Join-Path $buildPaths.BuildOutputPath '*.binlog') | %{ Push-AppveyorArtifact $_.FullName }
     }
+    dir $buildPaths.BuildOutputPath
 }
 finally
 {
