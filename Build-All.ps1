@@ -51,55 +51,19 @@ try
     Write-Information "Build Paths:"
     Write-Information ($buildPaths | Format-Table | Out-String)
 
+    if( (Test-Path -PathType Container $buildPaths.BuildOutputPath) -and !$NoClean )
+    {
+        Write-Information "Cleaning output folder from previous builds"
+        rd -Recurse -Force -Path $buildPaths.BuildOutputPath
+    }
+
+    md $buildPaths.NuGetOutputPath -ErrorAction SilentlyContinue| Out-Null
+
+    $BuildInfo = Get-BuildInformation $buildPaths
+
     if($BuildSource)
     {
-        if( (Test-Path -PathType Container $buildPaths.BuildOutputPath) -and !$NoClean )
-        {
-            Write-Information "Cleaning output folder from previous builds"
-            rd -Recurse -Force -Path $buildPaths.BuildOutputPath
-        }
-
-        md $buildPaths.NuGetOutputPath -ErrorAction SilentlyContinue| Out-Null
-
-        $BuildInfo = Get-BuildInformation $buildPaths
-        if($env:APPVEYOR)
-        {
-            Write-Information "Updating APPVEYOR version: $($BuildInfo.FullBuildNumber)"
-            Update-AppVeyorBuild -Version "$($BuildInfo.FullBuildNumber) [$([DateTime]::Now)]"
-        }
-
-        $packProperties = @{ version=$($BuildInfo.PackageVersion)
-                             llvmversion=$($BuildInfo.LlvmVersion)
-                             buildbinoutput=(normalize-path (Join-path $($buildPaths.BuildOutputPath) 'bin'))
-                             configuration=$Configuration
-                           }
-
-        $msBuildProperties = @{ Configuration = $Configuration
-                                FullBuildNumber = $BuildInfo.FullBuildNumber
-                                PackageVersion = $BuildInfo.PackageVersion
-                                FileVersionMajor = $BuildInfo.FileVersionMajor
-                                FileVersionMinor = $BuildInfo.FileVersionMinor
-                                FileVersionBuild = $BuildInfo.FileVersionBuild
-                                FileVersionRevision = $BuildInfo.FileVersionRevision
-                                FileVersion = $BuildInfo.FileVersion
-                                LlvmVersion = $BuildInfo.LlvmVersion
-                              }
-
-        Write-Information "Build Parameters:"
-        Write-Information ($BuildInfo | Format-Table | Out-String)
-
-        # Download and unpack the LLVM libs if not already present, this doesn't use NuGet as the NuGet compression
-        # is insufficient to keep the size reasonable enough to support posting to public galleries. Additionally, the
-        # support for native lib projects in NuGet is tenuous at best. Due to various compiler version dependencies
-        # and incompatibilities libs are generally not something published in a package. However, since the build time
-        # for the libraries exceeds the time allowed for most hosted build services these must be pre-built for the
-        # automated builds.
-        Install-LlvmLibs $buildPaths.LlvmLibsRoot "8.0.0" "msvc" "15.9"
-
-        .\Build-Interop.ps1 -BuildInfo $BuildInfo
-
-        Write-Information "Restoring NuGet Packages for Llvm.NET"
-        Invoke-MSBuild -Targets 'Restore;Build' -Project src\Llvm.NET.sln -Properties $msBuildProperties -LoggerArgs ($msbuildLoggerArgs + @("/bl:Llvm.NET.binlog") )
+        .\Build-Source.ps1 -BuildInfo $BuildInfo
     }
 
     if($BuildDocs)

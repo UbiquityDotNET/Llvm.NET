@@ -14,6 +14,7 @@ environment:
   docspush_username: cibuild-telliam
   docspush_access_token:
     secure: QqWCIyFM6uBBbkW1jnlVGsMQWy+9aPY9rhD56oNT2L/0Cmw2bynROEsrUrOPpBrk
+  IsAutomatedBuild: 'true'
 
 skip_commits:
   files:
