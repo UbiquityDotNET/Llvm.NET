@@ -24,10 +24,11 @@ jobs:
 
       - name: Publish build logs
         if: github.event_name == 'pull_request'
-        uses: actions/upload-artifact@v1
-        with:
-            name: Build Logs
-            path: ./BuildOutput/*.binlog
+        run: dir ./BuildOutput/*.*
+#        uses: actions/upload-artifact@v1
+#        with:
+#            name: Build Logs
+#            path: ./BuildOutput/*.binlog
 
       - name: Publish Artifacts
         uses: actions/upload-artifact@v1
