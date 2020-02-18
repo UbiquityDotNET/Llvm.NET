@@ -365,5 +365,5 @@ function Initialize-BuildEnvironment
         $env:IsReleaseBuild = 'false'
     }
 
-    dir env:* | format-table -Property Name, value
+    Write-Verbose (dir env:* | format-table -Property Name, value | out-string)
 }
