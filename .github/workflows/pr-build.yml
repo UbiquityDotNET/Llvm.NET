@@ -33,7 +33,7 @@ jobs:
         uses: actions/upload-artifact@v1
           with:
             name: Build Logs
-            path: ./**/*.binlog
+            path: ./BuildOutput/*.binlog
 
       - name: Publish Artifacts
         uses: actions/upload-artifact@v1
