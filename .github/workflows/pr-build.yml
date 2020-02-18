@@ -24,7 +24,7 @@ jobs:
 
       - name: Publish build logs
         if: always() #&& github.event_name == 'pull_request'
-        run: dir .\BuildOutput\*.*
+        run: dir .\BuildOutput
 #        uses: actions/upload-artifact@v1
 #        with:
 #            name: Build Logs
