@@ -1,7 +1,6 @@
 Param(
     [string]$Configuration="Release",
     [switch]$AllowVsPreReleases,
-    [switch]$NoClone = (!([bool]$env:IsAutomatedBuild)),
     [Parameter(ParameterSetName='FullBuild')]
     $BuildInfo
 )
@@ -41,11 +40,20 @@ try
     {
         $buildPaths = Get-BuildPaths $PSScriptRoot
         $BuildInfo = Get-BuildInformation $buildPaths
-        if($env:APPVEYOR)
-        {
-            Update-AppVeyorBuild -Version $BuildInfo.FullBuildNumber
-        }
     }
+
+    if($env:APPVEYOR)
+    {
+        Write-Information "Updating APPVEYOR version: $($BuildInfo.FullBuildNumber)"
+        Update-AppVeyorBuild -Version "$($BuildInfo.FullBuildNumber) [$([DateTime]::Now)]"
+    }
+
+    $packProperties = @{ version=$($BuildInfo.PackageVersion)
+                         llvmversion=$($BuildInfo.LlvmVersion)
+                         buildbinoutput=(normalize-path (Join-path $($buildPaths.BuildOutputPath) 'bin'))
+                         configuration=$Configuration
+                       }
+
     $msBuildProperties = @{ Configuration = $Configuration
                             FullBuildNumber = $BuildInfo.FullBuildNumber
                             PackageVersion = $BuildInfo.PackageVersion
@@ -57,31 +65,21 @@ try
                             LlvmVersion = $BuildInfo.LlvmVersion
                           }
 
-    # clone docs output location so it is available as a destination for the Generated docs content
-    if(!$NoClone -and !(Test-Path (Join-Path $buildPaths.DocsOutput '.git') -PathType Container))
-    {
-        Write-Information "Cloning Docs repository"
-        pushd BuildOutput -ErrorAction Stop
-        try
-        {
-            git clone https://github.com/UbiquityDotNET/Llvm.NET.git -b gh-pages docs -q
-            if( !$? )
-            {
-                throw "Git clone failed"
-            }
-        }
-        finally
-        {
-            popd
-        }
-    }
+    Write-Information "Build Parameters:"
+    Write-Information ($BuildInfo | Format-Table | Out-String)
 
-    # DocFX.console build support is peculiar and a bit fragile, It requires a separate restore path or it won't do anything for the build target.
-    Write-Information "Restoring Docs Project"
-    Invoke-MSBuild -Targets 'Restore' -Project docfx\Llvm.NET.DocFX.csproj -Properties $msBuildProperties -LoggerArgs $msbuildLoggerArgs ($msbuildLoggerArgs + @("/bl:Llvm.NET-docfx-Build.binlog") )
+    # Download and unpack the LLVM libs if not already present, this doesn't use NuGet as the NuGet compression
+    # is insufficient to keep the size reasonable enough to support posting to public galleries. Additionally, the
+    # support for native lib projects in NuGet is tenuous at best. Due to various compiler version dependencies
+    # and incompatibilities libs are generally not something published in a package. However, since the build time
+    # for the libraries exceeds the time allowed for most hosted build services these must be pre-built for the
+    # automated builds.
+    Install-LlvmLibs $buildPaths.LlvmLibsRoot "8.0.0" "msvc" "15.9"
 
-    Write-Information "Building Docs Project"
-    Invoke-MSBuild -Targets 'Build' -Project docfx\Llvm.NET.DocFX.csproj -Properties $msBuildProperties -LoggerArgs $msbuildLoggerArgs ($msbuildLoggerArgs + @("/bl:Llvm.NET-docfx-Build.binlog") )
+    .\Build-Interop.ps1 -BuildInfo $BuildInfo
+
+    Write-Information "Restoring NuGet Packages for Llvm.NET"
+    Invoke-MSBuild -Targets 'Restore;Build' -Project src\Llvm.NET.sln -Properties $msBuildProperties -LoggerArgs ($msbuildLoggerArgs + @("/bl:Llvm.NET.binlog") )
 }
 finally
 {

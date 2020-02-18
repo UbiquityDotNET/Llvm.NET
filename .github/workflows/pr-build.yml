@@ -20,7 +20,7 @@ jobs:
         run: git submodule update --init --recursive
 
       - name: Build Source
-        run: ./Build-All.ps1 -BuildMode Source
+        run: ./Build-Source.ps1
 
       - name: Run unit tests
         run: ./Invoke-unittests.ps1
