@@ -73,10 +73,8 @@ try
 
     if( $env:APPVEYOR_PULL_REQUEST_NUMBER )
     {
-        foreach( $item in Get-ChildItem *.binlog )
-        {
-            Push-AppveyorArtifact $item.FullName
-        }
+        $binLogs = join-path $buildPaths.BuildOutputPath '*.binlog'
+        Get-ChildItem  -Filter *.binlog (Join-Path $buildPaths.BuildOutputPath '*.binlog') | %{ Push-AppveyorArtifact $_.FullName }
     }
 }
 finally

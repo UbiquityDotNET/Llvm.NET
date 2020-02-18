@@ -20,20 +20,15 @@ jobs:
         run: git submodule update --init --recursive
 
       - name: Build Source
-        run: ./Build-Source.ps1
-
-      - name: Run unit tests
-        run: ./Invoke-unittests.ps1
-
-      - name: Build Docs
-        run: ./Build-Docs.ps1
+        run: ./Build-All.ps1
 
       - name: Publish build logs
         if: github.event_name == 'pull_request'
-        uses: actions/upload-artifact@v1
-        with:
-            name: Build Logs
-            path: ./**/*.binlog
+        run: dir ./BuildOutput/*.*
+#        uses: actions/upload-artifact@v1
+#        with:
+#            name: Build Logs
+#            path: ./BuildOutput/*.binlog
 
       - name: Publish Artifacts
         uses: actions/upload-artifact@v1
