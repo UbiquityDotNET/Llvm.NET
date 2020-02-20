@@ -19,6 +19,11 @@ jobs:
       - name: Checkout submodules
         run: git submodule update --init --recursive
 
+      - name: Setup .NET Core
+        uses: actions/setup-dotnet@v1
+        with:
+          dotnet-version: 2.2.108
+
       - name: Build Source
         run: .\Build-All.ps1
 
