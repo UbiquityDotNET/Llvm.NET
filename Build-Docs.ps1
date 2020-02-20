@@ -10,8 +10,6 @@ Param(
 
 Initialize-BuildEnvironment
 
-$env:COREHOST_TRACE = 1
-
 # Main Script entry point -----------
 $ErrorActionPreference = "Stop"
 $InformationPreference = "Continue"
