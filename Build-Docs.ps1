@@ -10,6 +10,8 @@ Param(
 
 Initialize-BuildEnvironment
 
+Write-Information (dir env:* | format-table -Property Name, value | out-string)
+
 # Main Script entry point -----------
 $ErrorActionPreference = "Stop"
 $InformationPreference = "Continue"
