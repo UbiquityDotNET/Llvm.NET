@@ -107,8 +107,8 @@ try
         Invoke-MSBuild -Targets 'Build' -Project 'src\Interop\LibLLVM\LibLLVM.vcxproj' -Properties $msBuildProperties -LoggerArgs ($msbuildLoggerArgs + @("/bl:LibLLVM.binlog") )
 
         Write-Information "Building Lllvm.NET.Interop"
-        $interopRestoreBinLogPath = Join-Path $buildPaths.BuildOutputPath Llvm.NET.Interop-restore.binlog
-        $interopBinLog = Join-Path $buildPaths.BuildOutputPath Llvm.NET.Interop.binlog
+        $interopRestoreBinLogPath = Join-Path $buildPaths.BinLogsPath Llvm.NET.Interop-restore.binlog
+        $interopBinLog = Join-Path $buildPaths.BinLogsPath Llvm.NET.Interop.binlog
         Invoke-MSBuild -Targets 'Restore' -Project 'src\Interop\Llvm.NET.Interop\Llvm.NET.Interop.csproj' -Properties $msBuildProperties -LoggerArgs ($msbuildLoggerArgs + @("/bl:$InteropRestoreBinLogPath") )
         Invoke-MSBuild -Targets 'Build' -Project 'src\Interop\Llvm.NET.Interop\Llvm.NET.Interop.csproj' -Properties $msBuildProperties -LoggerArgs ($msbuildLoggerArgs + @("/bl:$interopBinLog") )
     }

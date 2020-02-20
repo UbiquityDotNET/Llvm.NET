@@ -76,8 +76,8 @@ try
         }
     }
 
-    $docfxRestoreBinLogPath = Join-Path $buildPaths.BuildOutputPath Llvm.NET-docfx-Build.restore.binlog
-    $docfxBinLogPath = Join-Path $buildPaths.BuildOutputPath Llvm.NET-docfx-Build.binlog
+    $docfxRestoreBinLogPath = Join-Path $buildPaths.BinLogsPath Llvm.NET-docfx-Build.restore.binlog
+    $docfxBinLogPath = Join-Path $buildPaths.BinLogsPath Llvm.NET-docfx-Build.binlog
 
     # DocFX.console build support is peculiar and a bit fragile, It requires a separate restore path or it won't do anything for the build target.
     Write-Information "Restoring Docs Project"

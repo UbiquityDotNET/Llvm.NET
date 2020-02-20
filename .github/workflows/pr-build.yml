@@ -23,12 +23,11 @@ jobs:
         run: .\Build-All.ps1
 
       - name: Publish build logs
-        if: always() #&& github.event_name == 'pull_request'
-        run: dir .\BuildOutput\Nuget
-#        uses: actions/upload-artifact@v1
-#        with:
-#            name: Build Logs
-#            path: .\BuildOutput\*.binlog
+        if: always() && github.event_name == 'pull_request'
+        uses: actions/upload-artifact@v1
+        with:
+            name: Build Logs
+            path: .\BuildOutput\BinLogs
 
       - name: Publish Artifacts
         uses: actions/upload-artifact@v1
@@ -40,4 +39,4 @@ jobs:
         if: success() && github.event_name == 'push'
         env:
           docspush_access_token: ${{secrets.docspush_access_token}}
-        run: .\Publish-Docs.ps1
+        run: .\Push-Docs.ps1
