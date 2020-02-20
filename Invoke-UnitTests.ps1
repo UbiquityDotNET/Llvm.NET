@@ -31,7 +31,7 @@ if ("${ENV:APPVEYOR_JOB_ID}" -ne "")
 }
 
 Write-Information 'Running sample app for .NET Core'
-if($APPVEYOR)
+if($env:APPVEYOR)
 {
     Add-AppVeyorTest -Name 'CodeGenWithDebugInfo (CoreCLR)' -Framework 'CORECLR' -FileName 'CodeGenWithDebugInfo.exe' -Outcome Running
 }
@@ -39,7 +39,7 @@ pushd '.\BuildOutput\bin\CodeGenWithDebugInfo\Release\netcoreapp2.1'
 dotnet CodeGenWithDebugInfo.dll M3 'Support Files\test.c'
 $testsFailed = $testsFailed -or ($LASTEXITCODE -ne 0)
 $outcome = @('Passed','Failed')[($LASTEXITCODE -eq 0)]
-if($APPVEYOR)
+if($env:APPVEYOR)
 {
     Update-AppVeyorTest -Name 'CodeGenWithDebugInfo (CoreCLR)' -Framework 'CORECLR' -FileName 'CodeGenWithDebugInfo.exe' -Outcome $outcome
 }
