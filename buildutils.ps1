@@ -220,6 +220,7 @@ function Get-BuildPaths([string]$repoRoot)
     $buildPaths.BuildExtensionsRoot = ([IO.Path]::Combine( $repoRoot, 'BuildExtensions') )
     $buildPaths.GenerateVersionProj = ([IO.Path]::Combine( $buildPaths.BuildExtensionsRoot, 'CommonVersion.csproj') )
     $buildPaths.DocsOutput = ([IO.Path]::Combine( $buildPaths.BuildOutputPath, 'docs') )
+    $buildPaths.BinLogsPath = Normalize-Path (Join-Path $buildPaths.BuildOutputPath 'BinLogs')
     return $buildPaths
 }
 
