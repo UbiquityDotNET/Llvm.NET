@@ -369,4 +369,4 @@ function Initialize-BuildEnvironment
     Write-Verbose (dir env:* | format-table -Property Name, value | out-string)
 }
 
-Set-StrictMode -version latest
+Set-StrictMode -version 1.0
