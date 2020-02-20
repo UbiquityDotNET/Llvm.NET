@@ -10,7 +10,7 @@ Param(
 
 Initialize-BuildEnvironment
 
-Write-Information (dir env:* | format-table -Property Name, value | out-string)
+$env:COREHOST_TRACE = 1
 
 # Main Script entry point -----------
 $ErrorActionPreference = "Stop"
