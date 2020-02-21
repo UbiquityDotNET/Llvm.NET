@@ -31,7 +31,7 @@ if($env:APPVEYOR)
 {
     Add-AppVeyorTest -Name 'CodeGenWithDebugInfo (CoreCLR)' -Framework 'CORECLR' -FileName 'CodeGenWithDebugInfo.exe' -Outcome Running
 }
-pushd (Join-path $buildPaths.BuildOutputPath bin\CodeGenWithDebugInfo\Release\netcoreapp2.1)
+pushd (Join-path $buildPaths.BuildOutputPath bin\CodeGenWithDebugInfo\Release\netcoreapp3.1)
 dotnet CodeGenWithDebugInfo.dll M3 'Support Files\test.c' $buildPaths.TestResultsPath
 $testsFailed = $testsFailed -or ($LASTEXITCODE -ne 0)
 $outcome = @('Passed','Failed')[($LASTEXITCODE -eq 0)]
