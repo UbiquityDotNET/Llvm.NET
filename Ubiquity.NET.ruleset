@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<RuleSet Name="Analysis and refactoring rules for Llvm.NET" Description="Code analysis rules for Ubiquity.NET projects" ToolsVersion="16.0">
+<RuleSet Name="Analysis and refactoring rules for Ubiquity.NET" Description="Code analysis rules for Ubiquity.NET projects" ToolsVersion="16.0">
   <Rules AnalyzerId="CSharpEssentials" RuleNamespace="CSharpEssentials">
     <Rule Id="FadedToken" Action="None" />
   </Rules>

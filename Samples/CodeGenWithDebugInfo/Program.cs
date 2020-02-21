@@ -36,11 +36,13 @@ namespace TestDebugInfo
         public static void Main( string[ ] args )
         {
             #region CommandlineArguments
-            if( args.Length != 2 )
+            if( args.Length < 2 || args.Length > 3 )
             {
                 ShowUsage( );
                 return;
             }
+
+            string outputPath = args.Length == 3 ? args[2] : Environment.CurrentDirectory;
 
             string srcPath = args[ 1 ];
             if( !File.Exists( srcPath ) )
@@ -187,10 +189,10 @@ namespace TestDebugInfo
                         }
 
                         // Module is good, so generate the output files
-                        module.WriteToFile( "test.bc" );
-                        File.WriteAllText( "test.ll", module.WriteToString( ) );
-                        TargetDetails.TargetMachine.EmitToFile( module, "test.o", CodeGenFileType.ObjectFile );
-                        TargetDetails.TargetMachine.EmitToFile( module, "test.s", CodeGenFileType.AssemblySource );
+                        module.WriteToFile( Path.Combine( outputPath, "test.bc" ) );
+                        File.WriteAllText( Path.Combine( outputPath, "test.ll" ), module.WriteToString( ) );
+                        TargetDetails.TargetMachine.EmitToFile( module, Path.Combine( outputPath, "test.o" ), CodeGenFileType.ObjectFile );
+                        TargetDetails.TargetMachine.EmitToFile( module, Path.Combine( outputPath, "test.s" ), CodeGenFileType.AssemblySource );
                         Console.WriteLine( "Generated test.bc, test.ll, test.o, and test.s" );
                     }
                 }

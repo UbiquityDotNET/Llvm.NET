@@ -17,28 +17,9 @@ pushd $PSScriptRoot
 $oldPath = $env:Path
 try
 {
-    $msbuild = Find-MSBuild -AllowVsPrereleases:$AllowVsPreReleases
-    if( !$msbuild )
-    {
-        throw "MSBuild not found"
-    }
-
-    if( !$msbuild.FoundOnPath )
-    {
-        $env:Path = "$env:Path;$($msbuild.BinPath)"
-    }
-
-    # setup standard MSBuild logging for this build
-    $msbuildLoggerArgs = @('/clp:Verbosity=Minimal')
-
-    if (Test-Path "C:\Program Files\AppVeyor\BuildAgent\Appveyor.MSBuildLogger.dll")
-    {
-        $msbuildLoggerArgs = $msbuildLoggerArgs + @("/logger:`"C:\Program Files\AppVeyor\BuildAgent\Appveyor.MSBuildLogger.dll`"")
-    }
-
+    $buildPaths = Get-BuildPaths $PSScriptRoot
     if(!$BuildInfo)
     {
-        $buildPaths = Get-BuildPaths $PSScriptRoot
         $BuildInfo = Get-BuildInformation $buildPaths
     }
 
@@ -65,9 +46,6 @@ try
                             LlvmVersion = $BuildInfo.LlvmVersion
                           }
 
-    Write-Information "Build Parameters:"
-    Write-Information ($BuildInfo | Format-Table | Out-String)
-
     # Download and unpack the LLVM libs if not already present, this doesn't use NuGet as the NuGet compression
     # is insufficient to keep the size reasonable enough to support posting to public galleries. Additionally, the
     # support for native lib projects in NuGet is tenuous at best. Due to various compiler version dependencies
@@ -80,7 +58,7 @@ try
 
     $buildLogPath = Join-Path $buildPaths.BinLogsPath Llvm.NET.binlog
     Write-Information "Restoring NuGet Packages for Llvm.NET"
-    Invoke-MSBuild -Targets 'Restore;Build' -Project src\Llvm.NET.sln -Properties $msBuildProperties -LoggerArgs ($msbuildLoggerArgs + @("/bl:$buildLogPath") )
+    Invoke-MSBuild -Targets 'Restore;Build' -Project src\Llvm.NET.sln -Properties $msBuildProperties -LoggerArgs ($BuildInfo.MsBuildLoggerArgs + @("/bl:$buildLogPath") )
 }
 finally
 {

@@ -173,31 +173,24 @@ function Find-MSBuild([switch]$AllowVsPreReleases)
             }
 }
 
-function Invoke-msbuild([string]$project, [hashtable]$properties, [string[]]$targets, [string[]]$loggerArgs=@(), [string[]]$additionalArgs=@())
+function Invoke-msbuild([string]$project, [hashtable]$properties, $targets, $loggerArgs=@(), $additionalArgs=@())
 {
-    $oldPath = $env:Path
-    try
+    $projName = [System.IO.Path]::GetFileNameWithoutExtension($project)
+    $msbuildArgs = @($project, "/m", "/t:$($targets -join ';')") + $loggerArgs + $additionalArgs
+    if( $properties )
     {
-        $projName = [System.IO.Path]::GetFileNameWithoutExtension($project)
-        $msbuildArgs = @($project, "/m", "/t:$($targets -join ';')") + $loggerArgs + $additionalArgs
-        if( $properties )
-        {
-            $msbuildArgs += @( "/p:$(ConvertTo-PropertyList $properties)" )
-        }
-
-        Write-Information "msbuild $($msbuildArgs -join ' ')"
-        msbuild $msbuildArgs
-        if($LASTEXITCODE -ne 0)
-        {
-            Write-Error "Error running msbuild: $LASTEXITCODE"
-        }
+        $msbuildArgs += @( "/p:$(ConvertTo-PropertyList $properties)" )
     }
-    finally
+
+    Write-Information "msbuild $($msbuildArgs -join ' ')"
+    msbuild $msbuildArgs
+    if($LASTEXITCODE -ne 0)
     {
-        $env:Path = $oldPath
+        Write-Error "Error running msbuild: $LASTEXITCODE"
     }
 }
 
+# ensures a full path that includes a terminating separator
 function Normalize-Path([string]$path)
 {
     $path = [System.IO.Path]::GetFullPath($path)
@@ -221,16 +214,24 @@ function Get-BuildPaths([string]$repoRoot)
     $buildPaths.GenerateVersionProj = ([IO.Path]::Combine( $buildPaths.BuildExtensionsRoot, 'CommonVersion.csproj') )
     $buildPaths.DocsOutput = ([IO.Path]::Combine( $buildPaths.BuildOutputPath, 'docs') )
     $buildPaths.BinLogsPath = Normalize-Path (Join-Path $buildPaths.BuildOutputPath 'BinLogs')
+    $buildPaths.TestResultsPath = Join-Path $buildPaths.BuildOutputPath 'Test-Results'
     return $buildPaths
 }
 
-function Get-BuildInformation($buildPaths)
+function Get-BuildInformation($buildPaths, $DefaultVerbosity='Minimal')
 {
+    $msbuildLoggerArgs = @("/clp:Verbosity=$DefaultVerbosity")
+
+    if (Test-Path "C:\Program Files\AppVeyor\BuildAgent\Appveyor.MSBuildLogger.dll")
+    {
+        $msbuildLoggerArgs += "/logger:`"C:\Program Files\AppVeyor\BuildAgent\Appveyor.MSBuildLogger.dll`""
+    }
+
     Write-Information "Restoring NuGet for $($buildPaths.GenerateVersionProj)"
-    Invoke-MSBuild -Targets 'Restore' -Project $buildPaths.GenerateVersionProj -LoggerArgs ($msbuildLoggerArgs + @("/bl:GenerateVersion-Restore.binlog") )
+    $ignored = Invoke-MSBuild -Targets 'Restore' -Project $buildPaths.GenerateVersionProj -LoggerArgs ($msbuildLoggerArgs + @("/bl:GenerateVersion-Restore.binlog") )
 
     Write-Information "Generating version info from $($buildPaths.GenerateVersionProj)"
-    Invoke-MSBuild -Targets 'GenerateVersionJson' -Project $buildPaths.GenerateVersionProj -LoggerArgs ($msbuildLoggerArgs + @("/bl:GenerateVersion-Build.binlog") )
+    $ignored = Invoke-MSBuild -Targets 'GenerateVersionJson' -Project $buildPaths.GenerateVersionProj -LoggerArgs ($msbuildLoggerArgs + @("/bl:GenerateVersion-Build.binlog") )
 
     $semVer = get-content (Join-Path $buildPaths.BuildOutputPath GeneratedVersion.json) | ConvertFrom-Json
 
@@ -242,6 +243,7 @@ function Get-BuildInformation($buildPaths)
               FileVersionRevision = $semver.FileVersionRevision
               FileVersion= "$($semVer.FileVersionMajor).$($semVer.FileVersionMinor).$($semVer.FileVersionBuild).$($semVer.FileVersionRevision)"
               LlvmVersion = "8.0.0" # TODO: Figure out how to extract this from the llvmlibs download
+              MsBuildLoggerArgs = $msbuildLoggerArgs
             }
 }
 
@@ -366,5 +368,18 @@ function Initialize-BuildEnvironment
         $env:IsReleaseBuild = 'false'
     }
 
+    $msbuild = Find-MSBuild
+    if( !$msbuild )
+    {
+        throw "MSBuild not found"
+    }
+
+    if( !$msbuild.FoundOnPath )
+    {
+        $env:Path = "$env:Path;$($msbuild.BinPath)"
+    }
+
     Write-Verbose (dir env:* | format-table -Property Name, value | out-string)
 }
+
+Set-StrictMode -version 1.0
