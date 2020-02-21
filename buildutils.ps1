@@ -344,7 +344,9 @@ function Initialize-BuildEnvironment
     if($isAutomatedBuild)
     {
         $env:IsAutomatedBuild = 'true'
-        if($env:GITHUB_ACTIONS -and $env:GITHUB_BASE_REF)
+        $env:IsPullRequestBuild = 'false'
+        $env:IsReleaseBuild = 'false'
+        if(($env:GITHUB_ACTIONS -and $env:GITHUB_BASE_REF) -or $env:APPVEYOR_PULL_REQUEST_NUMBER)
         {
             $env:IsPullRequestBuild = 'true'
         }

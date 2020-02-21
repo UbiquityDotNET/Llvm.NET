@@ -50,6 +50,7 @@ try
         .\Build-Docs.ps1 -BuildInfo $BuildInfo
     }
 
+    # AppVeyor specific artifact push. (Should be part of YML so scripts are build infra neutral...)
     if( $env:APPVEYOR_PULL_REQUEST_NUMBER )
     {
         Get-ChildItem  -Filter *.binlog $buildPaths.BinLogsPath | %{ Push-AppveyorArtifact $_.FullName }
