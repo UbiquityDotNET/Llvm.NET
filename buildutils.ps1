@@ -109,15 +109,14 @@ function Merge-Environment( [hashtable]$OtherEnv, [string[]]$IgnoreNames )
     $otherEnv.GetEnumerator() | ?{ !($ignoreNames -icontains $_.Name) } | %{ Set-Item -Path "env:$($_.Name)" -value $_.Value }
 }
 
-function Find-VSInstance([switch]$PreRelease)
+function Find-VSInstance([switch]$PreRelease, [string[]]$Requires = @('Microsoft.Component.MSBuild'))
 {
     if( !(Get-Module -ListAvailable VSSetup))
     {
         Install-Module VSSetup -Scope CurrentUser -Force | Out-Null
     }
     Get-VSSetupInstance -Prerelease:$PreRelease |
-        Select-VSSetupInstance -Require 'Microsoft.Component.MSBuild' |
-        select -First 1
+        Select-VSSetupInstance -Require $Requires -Latest
 }
 
 function Initialize-VCVars($vsInstance = (Find-VSInstance))
@@ -143,14 +142,14 @@ function Find-MSBuild([switch]$AllowVsPreReleases)
     $msBuildPath = Find-OnPath msbuild.exe -ErrorAction Continue
     if( !$msBuildPath )
     {
-        Write-Verbose "MSBuild not found attempting to locate VS installation"
+        Write-Information "MSBuild not found on PATH attempting to locate VS installation"
         $vsInstall = Find-VSInstance -Prerelease:$AllowVsPreReleases
         if( !$vsInstall )
         {
             throw "MSBuild not found on PATH and No instances of VS found to use"
         }
 
-        Write-Verbose "VS installation found: $vsInstall"
+        Write-Information "VS installation found: $($vsInstall | Format-List | Out-String)"
         $msBuildPath = [System.IO.Path]::Combine( $vsInstall.InstallationPath, 'MSBuild', '15.0', 'bin', 'MSBuild.exe')
         if(!(Test-Path -PathType Leaf $msBuildPath))
         {
@@ -162,11 +161,11 @@ function Find-MSBuild([switch]$AllowVsPreReleases)
 
     if( !(Test-Path -PathType Leaf $msBuildPath ) )
     {
-        Write-Verbose 'MSBuild not found'
+        Write-Information 'MSBuild not found'
         return $null
     }
 
-    Write-Verbose "MSBuild Found at: $msBuildPath"
+    Write-Information "MSBuild Found at: $msBuildPath"
     return @{ FullPath=$msBuildPath
               BinPath=[System.IO.Path]::GetDirectoryName( $msBuildPath )
               FoundOnPath=$foundOnPath
