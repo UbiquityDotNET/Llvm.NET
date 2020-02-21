@@ -379,6 +379,12 @@ function Initialize-BuildEnvironment
         Write-Information (dir env:* | Format-Table -Property Name, value | Out-String)
         Write-Information 'PATH:'
         $($env:Path -split ';') | %{ Write-Information $_ }
+
+        Write-Information ".NET Runtimes:"
+        Write-Information (dotnet --list-runtimes | Out-String)
+
+        Write-Information ".NET SDKs:"
+        Write-Information (dotnet --list-sdks | Out-String)
     }
     else
     {
