@@ -142,7 +142,7 @@ function Find-MSBuild([switch]$AllowVsPreReleases)
     $msBuildPath = Find-OnPath msbuild.exe -ErrorAction Continue
     if( !$msBuildPath )
     {
-        Write-Information "MSBuild not found on PATH attempting to locate VS installation"
+        Write-Verbose "MSBuild not found on PATH attempting to locate VS installation"
         $vsInstall = Find-VSInstance -Prerelease:$AllowVsPreReleases
         if( !$vsInstall )
         {
@@ -165,10 +165,12 @@ function Find-MSBuild([switch]$AllowVsPreReleases)
         return $null
     }
 
-    Write-Information "MSBuild Found at: $msBuildPath"
+    Write-Verbose "MSBuild Found at: $msBuildPath"
+    $versionInfo = & $msBuildPath -version
     return @{ FullPath=$msBuildPath
               BinPath=[System.IO.Path]::GetDirectoryName( $msBuildPath )
               FoundOnPath=$foundOnPath
+              Version = $versionInfo[-1]
             }
 }
 
@@ -379,7 +381,9 @@ function Initialize-BuildEnvironment
     {
         $env:Path = "$env:Path;$($msbuild.BinPath)"
     }
-    Write-Information (dir env:Is* | format-table -Property Name, value | out-string)
+
+    Write-Information "MSBUILD:`n$($msbuild | Format-Table -AutoSize | Out-String)"
+    Write-Information (dir env:Is* | Format-Table -Property Name, value | Out-String)
 }
 
 Set-StrictMode -version 1.0
