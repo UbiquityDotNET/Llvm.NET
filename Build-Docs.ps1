@@ -7,7 +7,6 @@ Param(
 )
 
 . .\buildutils.ps1
-
 Initialize-BuildEnvironment
 
 # Main Script entry point -----------
@@ -18,25 +17,6 @@ pushd $PSScriptRoot
 $oldPath = $env:Path
 try
 {
-    $msbuild = Find-MSBuild -AllowVsPrereleases:$AllowVsPreReleases
-    if( !$msbuild )
-    {
-        throw "MSBuild not found"
-    }
-
-    if( !$msbuild.FoundOnPath )
-    {
-        $env:Path = "$env:Path;$($msbuild.BinPath)"
-    }
-
-    # setup standard MSBuild logging for this build
-    $msbuildLoggerArgs = @('/clp:Verbosity=Minimal')
-
-    if (Test-Path "C:\Program Files\AppVeyor\BuildAgent\Appveyor.MSBuildLogger.dll")
-    {
-        $msbuildLoggerArgs = $msbuildLoggerArgs + @("/logger:`"C:\Program Files\AppVeyor\BuildAgent\Appveyor.MSBuildLogger.dll`"")
-    }
-
     if(!$BuildInfo)
     {
         $buildPaths = Get-BuildPaths $PSScriptRoot
@@ -81,10 +61,10 @@ try
 
     # DocFX.console build support is peculiar and a bit fragile, It requires a separate restore path or it won't do anything for the build target.
     Write-Information "Restoring Docs Project"
-    Invoke-MSBuild -Targets 'Restore' -Project docfx\Llvm.NET.DocFX.csproj -Properties $msBuildProperties -LoggerArgs $msbuildLoggerArgs ($msbuildLoggerArgs + @("/bl:$docfxRestoreBinLogPath") )
+    Invoke-MSBuild -Targets 'Restore' -Project docfx\Llvm.NET.DocFX.csproj -Properties $msBuildProperties -LoggerArgs ($BuildInfo.MsBuildLoggerArgs + @("/bl:$docfxRestoreBinLogPath") )
 
     Write-Information "Building Docs Project"
-    Invoke-MSBuild -Targets 'Build' -Project docfx\Llvm.NET.DocFX.csproj -Properties $msBuildProperties -LoggerArgs $msbuildLoggerArgs ($msbuildLoggerArgs + @("/bl:$docfxBinLogPath") )
+    Invoke-MSBuild -Targets 'Build' -Project docfx\Llvm.NET.DocFX.csproj -Properties $msBuildProperties -LoggerArgs ($BuildInfo.MsBuildLoggerArgs + @("/bl:$docfxBinLogPath") )
 }
 finally
 {

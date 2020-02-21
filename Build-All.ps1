@@ -6,17 +6,15 @@ Param(
     [System.String]$BuildMode = 'All'
 )
 
-# Main Script entry point -----------
+. .\buildutils.ps1
+Initialize-BuildEnvironment
+
 pushd $PSScriptRoot
 $oldPath = $env:Path
 $ErrorActionPreference = "Stop"
 $InformationPreference = "Continue"
 $BuildSource = $false
 $BuildDocs = $false;
-
-. .\buildutils.ps1
-
-Initialize-BuildEnvironment
 
 switch($BuildMode)
 {
@@ -27,25 +25,6 @@ switch($BuildMode)
 
 try
 {
-    $msbuild = Find-MSBuild -AllowVsPrereleases:$AllowVsPreReleases
-    if( !$msbuild )
-    {
-        throw "MSBuild not found"
-    }
-
-    if( !$msbuild.FoundOnPath )
-    {
-        $env:Path = "$env:Path;$($msbuild.BinPath)"
-    }
-
-    # setup standard MSBuild logging for this build
-    $msbuildLoggerArgs = @('/clp:Verbosity=Minimal')
-
-    if (Test-Path "C:\Program Files\AppVeyor\BuildAgent\Appveyor.MSBuildLogger.dll")
-    {
-        $msbuildLoggerArgs = $msbuildLoggerArgs + @("/logger:`"C:\Program Files\AppVeyor\BuildAgent\Appveyor.MSBuildLogger.dll`"")
-    }
-
     $buildPaths = Get-BuildPaths $PSScriptRoot
 
     Write-Information "Build Paths:"
@@ -75,7 +54,6 @@ try
     {
         Get-ChildItem  -Filter *.binlog $buildPaths.BinLogsPath | %{ Push-AppveyorArtifact $_.FullName }
     }
-    dir $buildPaths.BuildOutputPath
 }
 finally
 {
