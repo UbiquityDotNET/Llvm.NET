@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.Build.NoTargets">
   <Sdk Name="Microsoft.Build.CentralPackageVersions" />
   <PropertyGroup>
-    <TargetFramework>net47</TargetFramework>
+    <TargetFramework>netstandard2.0</TargetFramework>
   </PropertyGroup>
 
   <ItemGroup>
@@ -49,7 +49,6 @@
     <VersionCheck Condition="$(MSBuildVersion)!=''" MaximumSupportedVersion="17.0.999" ActualVersion="$(MSBuildVersion)">
       <Output TaskParameter="IsValidVersion" PropertyName="IsSupportedMSBuild" />
     </VersionCheck>
-    <!-- NOTE: MSBuildVersion property is new in 15.6 (as of 15.6.0-pre.4.0 the value is 15.6.76 )  -->
     <Error Code="DOCFX:0001" ContinueOnError="false" Condition="!$(IsSupportedMSBuild)" Text="As of DOCFX 2.40 docfx cannot generate metadata for CSPROJ files using MSBuild &gt; 16.0.xx (Current MSBuild is $(MSBuildVersion))" />
   </Target>
 

@@ -1,73 +1,71 @@
 {
-  "metadata":
-  [
-    {
-      "src":
-      [
+    "metadata": [
         {
-            "files": [
-                "src/Llvm.Net/Llvm.NET.csproj"
+            "src": [
+                {
+                    "files": [
+                        "src/Llvm.Net/Llvm.NET.csproj"
+                    ],
+                    "src": ".."
+                }
             ],
-          "src":".."
+            "dest": "api",
+            "properties": {
+                "TargetFramework": "netstandard2.0"
+            }
+
         }
-      ],
-      "dest": "api"
-    }
-  ],
-  "build":
-  {
-    "content":
-    [
-      {
-        "files": [ "toc.yml",
-                   "index.md",
-                   "ReleaseNotes.md",
-                   "api/**.md",
-                   "api/**.yml",
-                   "articles/**.md",
-                   "articles/**.yml"
-                 ],
-        "exclude": [ "obj/**" ]
-      }
     ],
-    "resource":
-    [
-      {
-        "files": ["favicon.ico",
-                  "DragonSharp48x48.png",
-                  "DragonSharp.png",
-                  "articles/**.svg"
-                 ]
-      }
-    ],
-    "overwrite":
-    [
-      {
-        "files": [ "apidoc/**.md" ],
-        "exclude": [ "obj/**" ]
-      }
-    ],
-    "dest": "../BuildOutput/docs",
-    "globalMetadataFiles": [],
-    "fileMetadataFiles": [],
-    "postProcessors": [],
-    "noLangKeyword": false,
-    "globalMetadata":
-    {
-      "_appTitle" : "Llvm.NET",
-      "_appFooter" : "Copyright (C) 2017-2019, Ubiquity.NET Contributors",
-      "_appLogoPath": "DragonSharp48x48.png",
-      "_disableBreadcrumb" : true,
-      "llvmVersion": "8.0.0",
-      "assemblies":
-        [
-            "Llvm.NET"
+    "build": {
+        "content": [
+            {
+                "files": [
+                    "toc.yml",
+                    "index.md",
+                    "ReleaseNotes.md",
+                    "api/**.md",
+                    "api/**.yml",
+                    "articles/**.md",
+                    "articles/**.yml"
+                ],
+                "exclude": [ "obj/**" ]
+            }
         ],
-      "_gitContribute": {
-          "repo": "https://github.com/UbiquityDotNET/Llvm.NET",
-          "branch":  "master"
-      },
-      "_gitUrlPattern": "github"
+        "resource": [
+            {
+                "files": [
+                    "favicon.ico",
+                    "DragonSharp48x48.png",
+                    "DragonSharp.png",
+                    "articles/**.svg"
+                ]
+            }
+        ],
+        "overwrite": [
+            {
+                "files": [ "apidoc/**.md" ],
+                "exclude": [ "obj/**" ]
+            }
+        ],
+        "dest": "../BuildOutput/docs",
+        "globalMetadataFiles": [],
+        "fileMetadataFiles": [],
+        "postProcessors": [],
+        "noLangKeyword": false,
+        "globalMetadata": {
+            "_appTitle": "Llvm.NET",
+            "_appFooter": "Copyright (C) 2017-2019, Ubiquity.NET Contributors",
+            "_appLogoPath": "DragonSharp48x48.png",
+            "_disableBreadcrumb": true,
+            "llvmVersion": "8.0.0",
+            "assemblies": [
+                "Llvm.NET"
+            ],
+            "_gitContribute": {
+                "repo": "https://github.com/UbiquityDotNET/Llvm.NET",
+                "branch": "master"
+            },
+            "_gitUrlPattern": "github"
+        }
     }
-  }
 }
