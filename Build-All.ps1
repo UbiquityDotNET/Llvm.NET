@@ -7,7 +7,7 @@ Param(
 )
 
 . .\buildutils.ps1
-Initialize-BuildEnvironment
+Initialize-BuildEnvironment -Verbose
 
 pushd $PSScriptRoot
 $oldPath = $env:Path

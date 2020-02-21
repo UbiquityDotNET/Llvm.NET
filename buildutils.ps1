@@ -341,6 +341,10 @@ function Install-LlvmLibs($destPath, $llvmversion, $compiler, $compilerversion)
 
 function Initialize-BuildEnvironment
 {
+    # support common parameters
+    [cmdletbinding()]
+    Param()
+
     $msbuild = Find-MSBuild
     if( !$msbuild )
     {
@@ -374,17 +378,6 @@ function Initialize-BuildEnvironment
         {
             $env:IsReleaseBuild = 'true'
         }
-
-        Write-Information "MSBUILD:`n$($msbuild | Format-Table -AutoSize | Out-String)"
-        Write-Information (dir env:* | Format-Table -Property Name, value | Out-String)
-        Write-Information 'PATH:'
-        $($env:Path -split ';') | %{ Write-Information $_ }
-
-        Write-Information ".NET Runtimes:"
-        Write-Information (dotnet --list-runtimes | Out-String)
-
-        Write-Information ".NET SDKs:"
-        Write-Information (dotnet --list-sdks | Out-String)
     }
     else
     {
@@ -392,6 +385,17 @@ function Initialize-BuildEnvironment
         $env:IsPullRequestBuild = 'false'
         $env:IsReleaseBuild = 'false'
     }
+
+    Write-Verbose "MSBUILD:`n$($msbuild | Format-Table -AutoSize | Out-String)"
+    Write-Verbose (dir env:* | Format-Table -Property Name, value | Out-String)
+    Write-Verbose 'PATH:'
+    $($env:Path -split ';') | %{ Write-Verbose $_ }
+
+    Write-Verbose ".NET Runtimes:"
+    Write-Verbose (dotnet --list-runtimes | Out-String)
+
+    Write-Verbose ".NET SDKs:"
+    Write-Verbose (dotnet --list-sdks | Out-String)
 }
 
 Set-StrictMode -version 1.0
