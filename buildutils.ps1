@@ -341,6 +341,17 @@ function Install-LlvmLibs($destPath, $llvmversion, $compiler, $compilerversion)
 
 function Initialize-BuildEnvironment
 {
+    $msbuild = Find-MSBuild
+    if( !$msbuild )
+    {
+        throw "MSBuild not found"
+    }
+
+    if( !$msbuild.FoundOnPath )
+    {
+        $env:Path = "$env:Path;$($msbuild.BinPath)"
+    }
+
     $isAutomatedBuild = $env:CI -or ($env:IsAutomatedBuild -and [System.Convert]::ToBoolean($env:IsAutomatedBuild)) -or $env:APPVEYOR -or $env:GITHUB_ACTIONS
     if($isAutomatedBuild)
     {
@@ -363,6 +374,11 @@ function Initialize-BuildEnvironment
         {
             $env:IsReleaseBuild = 'true'
         }
+
+        Write-Information "MSBUILD:`n$($msbuild | Format-Table -AutoSize | Out-String)"
+        Write-Information (dir env:* | Format-Table -Property Name, value | Out-String)
+        Write-Information 'PATH:'
+        $($env:Path -split ';') | %{ Write-Information $_ }
     }
     else
     {
@@ -370,20 +386,6 @@ function Initialize-BuildEnvironment
         $env:IsPullRequestBuild = 'false'
         $env:IsReleaseBuild = 'false'
     }
-
-    $msbuild = Find-MSBuild
-    if( !$msbuild )
-    {
-        throw "MSBuild not found"
-    }
-
-    if( !$msbuild.FoundOnPath )
-    {
-        $env:Path = "$env:Path;$($msbuild.BinPath)"
-    }
-
-    Write-Information "MSBUILD:`n$($msbuild | Format-Table -AutoSize | Out-String)"
-    Write-Information (dir env:Is* | Format-Table -Property Name, value | Out-String)
 }
 
 Set-StrictMode -version 1.0
