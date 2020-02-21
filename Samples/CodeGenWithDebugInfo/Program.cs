@@ -76,125 +76,119 @@ namespace TestDebugInfo
                 #endregion
 
                 #region CreatingModule
-                using( var context = new Context( ) )
-                using( var module = context.CreateBitcodeModule( moduleName, SourceLanguage.C99, srcPath, VersionIdentString ) )
-                {
-                    module.SourceFileName = Path.GetFileName( srcPath );
-                    module.TargetTriple = TargetDetails.TargetMachine.Triple;
-                    module.Layout = TargetDetails.TargetMachine.TargetData;
+                using var context = new Context( );
+                using var module = context.CreateBitcodeModule( moduleName, SourceLanguage.C99, srcPath, VersionIdentString );
+                module.SourceFileName = Path.GetFileName( srcPath );
+                module.TargetTriple = TargetDetails.TargetMachine.Triple;
+                module.Layout = TargetDetails.TargetMachine.TargetData;
 
-                    TargetDependentAttributes = TargetDetails.BuildTargetDependentFunctionAttributes( context );
-                    #endregion
+                TargetDependentAttributes = TargetDetails.BuildTargetDependentFunctionAttributes( context );
+                #endregion
 
-                    var diFile = module.DIBuilder.CreateFile( srcPath );
+                var diFile = module.DIBuilder.CreateFile( srcPath );
 
-                    #region CreatingBasicTypesWithDebugInfo
-                    // Create basic types used in this compilation
-                    var i32 = new DebugBasicType( module.Context.Int32Type, module, "int", DiTypeKind.Signed );
-                    var f32 = new DebugBasicType( module.Context.FloatType, module, "float", DiTypeKind.Float );
-                    var voidType = DebugType.Create( module.Context.VoidType, ( DIType )null );
-                    var i32Array_0_32 = i32.CreateArrayType( module, 0, 32 );
-                    #endregion
+                #region CreatingBasicTypesWithDebugInfo
+                // Create basic types used in this compilation
+                var i32 = new DebugBasicType( module.Context.Int32Type, module, "int", DiTypeKind.Signed );
+                var f32 = new DebugBasicType( module.Context.FloatType, module, "float", DiTypeKind.Float );
+                var voidType = DebugType.Create( module.Context.VoidType, ( DIType )null );
+                var i32Array_0_32 = i32.CreateArrayType( module, 0, 32 );
+                #endregion
 
 #pragma warning disable SA1500 // "Warning SA1500  Braces for multi - line statements must not share line" (simple table format)
-                    #region CreatingStructureTypes
-                    // create the LLVM structure type and body with full debug information
-                    var fooBody = new[ ]
+                #region CreatingStructureTypes
+                // create the LLVM structure type and body with full debug information
+                var fooBody = new[ ]
                         { new DebugMemberInfo { File = diFile, Line = 3, Name = "a", DebugType = i32, Index = 0 }
                         , new DebugMemberInfo { File = diFile, Line = 4, Name = "b", DebugType = f32, Index = 1 }
                         , new DebugMemberInfo { File = diFile, Line = 5, Name = "c", DebugType = i32Array_0_32, Index = 2 }
                         };
 
-                    var fooType = new DebugStructType( module, "struct.foo", module.DICompileUnit, "foo", diFile, 1, DebugInfoFlags.None, fooBody );
-                    #endregion
+                var fooType = new DebugStructType( module, "struct.foo", module.DICompileUnit, "foo", diFile, 1, DebugInfoFlags.None, fooBody );
+                #endregion
 #pragma warning restore SA1500
-                    #region CreatingGlobalsAndMetadata
-                    // add global variables and constants
-                    var constArray = ConstantArray.From( i32, 32, module.Context.CreateConstant( 3 ), module.Context.CreateConstant( 4 ) );
-                    var barValue = module.Context.CreateNamedConstantStruct( fooType
-                                                                           , module.Context.CreateConstant( 1 )
-                                                                           , module.Context.CreateConstant( 2.0f )
-                                                                           , constArray
-                                                                           );
+                #region CreatingGlobalsAndMetadata
+                // add global variables and constants
+                var constArray = ConstantArray.From( i32, 32, module.Context.CreateConstant( 3 ), module.Context.CreateConstant( 4 ) );
+                var barValue = module.Context.CreateNamedConstantStruct( fooType
+                                                                       , module.Context.CreateConstant( 1 )
+                                                                       , module.Context.CreateConstant( 2.0f )
+                                                                       , constArray
+                                                                       );
 
-                    var bar = module.AddGlobal( fooType, false, 0, barValue, "bar" );
-                    bar.Alignment = module.Layout.AbiAlignmentOf( fooType );
-                    bar.AddDebugInfo( module.DIBuilder.CreateGlobalVariableExpression( module.DICompileUnit, "bar", string.Empty, diFile, 8, fooType.DIType, false, null ) );
+                var bar = module.AddGlobal( fooType, false, 0, barValue, "bar" );
+                bar.Alignment = module.Layout.AbiAlignmentOf( fooType );
+                bar.AddDebugInfo( module.DIBuilder.CreateGlobalVariableExpression( module.DICompileUnit, "bar", string.Empty, diFile, 8, fooType.DIType, false, null ) );
 
-                    var baz = module.AddGlobal( fooType, false, Linkage.Common, Constant.NullValueFor( fooType ), "baz" );
-                    baz.Alignment = module.Layout.AbiAlignmentOf( fooType );
-                    baz.AddDebugInfo( module.DIBuilder.CreateGlobalVariableExpression( module.DICompileUnit, "baz", string.Empty, diFile, 9, fooType.DIType, false, null ) );
+                var baz = module.AddGlobal( fooType, false, Linkage.Common, Constant.NullValueFor( fooType ), "baz" );
+                baz.Alignment = module.Layout.AbiAlignmentOf( fooType );
+                baz.AddDebugInfo( module.DIBuilder.CreateGlobalVariableExpression( module.DICompileUnit, "baz", string.Empty, diFile, 9, fooType.DIType, false, null ) );
 
-                    // add module flags and compiler identifiers...
-                    // this can technically occur at any point, though placing it here makes
-                    // comparing against clang generated files easier
-                    AddModuleFlags( module );
-                    #endregion
+                // add module flags and compiler identifiers...
+                // this can technically occur at any point, though placing it here makes
+                // comparing against clang generated files easier
+                AddModuleFlags( module );
+                #endregion
 
-                    #region CreatingQualifiedTypes
-                    // create types for function args
-                    var constFoo = module.DIBuilder.CreateQualifiedType( fooType.DIType, QualifiedTypeTag.Const );
-                    var fooPtr = new DebugPointerType( fooType, module );
-                    #endregion
+                #region CreatingQualifiedTypes
+                // create types for function args
+                var constFoo = module.DIBuilder.CreateQualifiedType( fooType.DIType, QualifiedTypeTag.Const );
+                var fooPtr = new DebugPointerType( fooType, module );
+                #endregion
 
-                    // Create the functions
-                    // NOTE: The declaration ordering is reversed from that of the sample code file (test.c)
-                    //       However, this is what Clang ends up doing for some reason so it is
-                    //       replicated here to aid in comparing the generated LL files.
-                    IrFunction doCopyFunc = DeclareDoCopyFunc( module, diFile, voidType );
-                    IrFunction copyFunc = DeclareCopyFunc( module, diFile, voidType, constFoo, fooPtr );
+                // Create the functions
+                // NOTE: The declaration ordering is reversed from that of the sample code file (test.c)
+                //       However, this is what Clang ends up doing for some reason so it is
+                //       replicated here to aid in comparing the generated LL files.
+                IrFunction doCopyFunc = DeclareDoCopyFunc( module, diFile, voidType );
+                IrFunction copyFunc = DeclareCopyFunc( module, diFile, voidType, constFoo, fooPtr );
 
-                    CreateCopyFunctionBody( module, copyFunc, diFile, fooType, fooPtr, constFoo );
-                    CreateDoCopyFunctionBody( module, doCopyFunc, fooType, bar, baz, copyFunc );
+                CreateCopyFunctionBody( module, copyFunc, diFile, fooType, fooPtr, constFoo );
+                CreateDoCopyFunctionBody( module, doCopyFunc, fooType, bar, baz, copyFunc );
 
-                    // finalize the debug information
-                    // all temporaries must be replaced by now, this resolves any remaining
-                    // forward declarations and marks the builder to prevent adding any
-                    // nodes that are not completely resolved.
-                    module.DIBuilder.Finish( );
+                // finalize the debug information
+                // all temporaries must be replaced by now, this resolves any remaining
+                // forward declarations and marks the builder to prevent adding any
+                // nodes that are not completely resolved.
+                module.DIBuilder.Finish( );
 
-                    // verify the module is still good and print any errors found
-                    if( !module.Verify( out string msg ) )
-                    {
-                        Console.Error.WriteLine( "ERROR: {0}", msg );
+                // verify the module is still good and print any errors found
+                if( !module.Verify( out string msg ) )
+                {
+                    Console.Error.WriteLine( "ERROR: {0}", msg );
+                }
+                else
+                {
+                    // test optimization works, but don't save it as that makes it harder to do a compare with official clang builds
+                    {// force a GC to verify callback delegate for diagnostics is still valid, this is for test only and wouldn't
+                     // normally be done in production code.
+                        GC.Collect( GC.MaxGeneration );
+                        using var modForOpt = module.Clone( );
+                        // NOTE:
+                        // The ordering of passes can matter depending on the pass, and passes may be added more than once
+                        // the caller has full control of ordering, this is just a sample of effectively randomly picked
+                        // passes and not necessarily a reflection of any particular use case.
+                        using var pm = new ModulePassManager( );
+                        pm.AddAlwaysInlinerPass( )
+                          .AddAggressiveDCEPass( )
+                          .AddArgumentPromotionPass( )
+                          .AddBasicAliasAnalysisPass( )
+                          .AddBitTrackingDCEPass( )
+                          .AddCFGSimplificationPass( )
+                          .AddConstantMergePass( )
+                          .AddConstantPropagationPass( )
+                          .AddFunctionInliningPass( )
+                          .AddGlobalOptimizerPass( )
+                          .AddInstructionCombiningPass( )
+                          .Run( modForOpt );
                     }
-                    else
-                    {
-                        // test optimization works, but don't save it as that makes it harder to do a compare with official clang builds
-                        {// force a GC to verify callback delegate for diagnostics is still valid, this is for test only and wouldn't
-                         // normally be done in production code.
-                            GC.Collect( GC.MaxGeneration );
-                            using( var modForOpt = module.Clone( ) )
-                            {
-                                // NOTE:
-                                // The ordering of passes can matter depending on the pass, and passes may be added more than once
-                                // the caller has full control of ordering, this is just a sample of effectively randomly picked
-                                // passes and not necessarily a reflection of any particular use case.
-                                using( var pm = new ModulePassManager( ) )
-                                {
-                                    pm.AddAlwaysInlinerPass( )
-                                      .AddAggressiveDCEPass( )
-                                      .AddArgumentPromotionPass( )
-                                      .AddBasicAliasAnalysisPass( )
-                                      .AddBitTrackingDCEPass( )
-                                      .AddCFGSimplificationPass( )
-                                      .AddConstantMergePass( )
-                                      .AddConstantPropagationPass( )
-                                      .AddFunctionInliningPass( )
-                                      .AddGlobalOptimizerPass( )
-                                      .AddInstructionCombiningPass( )
-                                      .Run( modForOpt );
-                                }
-                            }
-                        }
 
-                        // Module is good, so generate the output files
-                        module.WriteToFile( Path.Combine( outputPath, "test.bc" ) );
-                        File.WriteAllText( Path.Combine( outputPath, "test.ll" ), module.WriteToString( ) );
-                        TargetDetails.TargetMachine.EmitToFile( module, Path.Combine( outputPath, "test.o" ), CodeGenFileType.ObjectFile );
-                        TargetDetails.TargetMachine.EmitToFile( module, Path.Combine( outputPath, "test.s" ), CodeGenFileType.AssemblySource );
-                        Console.WriteLine( "Generated test.bc, test.ll, test.o, and test.s" );
-                    }
+                    // Module is good, so generate the output files
+                    module.WriteToFile( Path.Combine( outputPath, "test.bc" ) );
+                    File.WriteAllText( Path.Combine( outputPath, "test.ll" ), module.WriteToString( ) );
+                    TargetDetails.TargetMachine.EmitToFile( module, Path.Combine( outputPath, "test.o" ), CodeGenFileType.ObjectFile );
+                    TargetDetails.TargetMachine.EmitToFile( module, Path.Combine( outputPath, "test.s" ), CodeGenFileType.AssemblySource );
+                    Console.WriteLine( "Generated test.bc, test.ll, test.o, and test.s" );
                 }
             }
         }
@@ -226,11 +220,11 @@ namespace TestDebugInfo
         }
 
         private static IrFunction DeclareCopyFunc( BitcodeModule module
-                                               , DIFile diFile
-                                               , IDebugType<ITypeRef, DIType> voidType
-                                               , DIDerivedType constFoo
-                                               , DebugPointerType fooPtr
-                                               )
+                                                 , DIFile diFile
+                                                 , IDebugType<ITypeRef, DIType> voidType
+                                                 , DIDerivedType constFoo
+                                                 , DebugPointerType fooPtr
+                                                 )
         {
             // Since the first parameter is passed by value
             // using the pointer + alloca + memcopy pattern, the actual

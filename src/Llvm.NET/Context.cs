@@ -126,21 +126,15 @@ namespace Llvm.NET
                 throw new ArgumentException( Resources.Integer_bit_width_must_be_greater_than_0 );
             }
 
-            switch( bitWidth )
+            return bitWidth switch
             {
-            case 1:
-                return BoolType;
-            case 8:
-                return Int8Type;
-            case 16:
-                return Int16Type;
-            case 32:
-                return Int32Type;
-            case 64:
-                return Int64Type;
-            default:
-                return TypeRef.FromHandle( LLVMIntTypeInContext( ContextHandle, bitWidth ) );
-            }
+                1 => BoolType,
+                8 => Int8Type,
+                16 => Int16Type,
+                32 => Int32Type,
+                64 => Int64Type,
+                _ => TypeRef.FromHandle( LLVMIntTypeInContext( ContextHandle, bitWidth ) ),
+            };
         }
 
         /// <summary>Get an LLVM Function type (e.g. signature)</summary>

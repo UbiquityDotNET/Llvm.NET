@@ -144,39 +144,29 @@ namespace Llvm.NET.Types
             private protected override ITypeRef ItemFactory( LLVMTypeRef handle )
             {
                 var kind = ( TypeKind )LLVMGetTypeKind( handle );
-                switch( kind )
+                return kind switch
                 {
-                case TypeKind.Struct:
-                    return new StructType( handle );
-
-                case TypeKind.Array:
-                    return new ArrayType( handle );
-
-                case TypeKind.Pointer:
-                    return new PointerType( handle );
-
-                case TypeKind.Vector:
-                    return new VectorType( handle );
-
-                case TypeKind.Function: // NOTE: This is a signature rather than a Function, which is a Value
-                    return new FunctionType( handle );
-
-                // other types not yet supported in Object wrappers
-                // but the pattern for doing so should be pretty obvious...
-                // case TypeKind.Void:
-                // case TypeKind.Float16:
-                // case TypeKind.Float32:
-                // case TypeKind.Float64:
-                // case TypeKind.X86Float80:
-                // case TypeKind.Float128m112:
-                // case TypeKind.Float128:
-                // case TypeKind.Label:
-                // case TypeKind.Integer:
-                // case TypeKind.Metadata:
-                // case TypeKind.X86MMX:
-                default:
-                    return new TypeRef( handle );
-                }
+                    TypeKind.Struct => new StructType( handle ),
+                    TypeKind.Array => new ArrayType( handle ),
+                    TypeKind.Pointer => new PointerType( handle ),
+                    TypeKind.Vector => new VectorType( handle ),
+                    TypeKind.Function => new FunctionType( handle ), // NOTE: This is a signature rather than a Function, which is a Value
+                    /* other types not yet supported in Object wrappers
+                    // but the pattern for doing so should be pretty obvious...
+                    // case TypeKind.Void:
+                    // case TypeKind.Float16:
+                    // case TypeKind.Float32:
+                    // case TypeKind.Float64:
+                    // case TypeKind.X86Float80:
+                    // case TypeKind.Float128m112:
+                    // case TypeKind.Float128:
+                    // case TypeKind.Label:
+                    // case TypeKind.Integer:
+                    // case TypeKind.Metadata:
+                    // case TypeKind.X86MMX:
+                    */
+                    _ => new TypeRef( handle ),
+                };
             }
         }
 

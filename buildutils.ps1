@@ -340,7 +340,7 @@ function Install-LlvmLibs($destPath, $llvmversion, $compiler, $compilerversion)
 
 function Initialize-BuildEnvironment
 {
-    $isAutomatedBuild = $env:CI -or $env:IsAutomatedBuild -or $env:APPVEYOR -or $env:GITHUB_ACTIONS
+    $isAutomatedBuild = $env:CI -or ($env:IsAutomatedBuild -and [System.Convert]::ToBoolean($env:IsAutomatedBuild)) -or $env:APPVEYOR -or $env:GITHUB_ACTIONS
     if($isAutomatedBuild)
     {
         $env:IsAutomatedBuild = 'true'
@@ -378,8 +378,7 @@ function Initialize-BuildEnvironment
     {
         $env:Path = "$env:Path;$($msbuild.BinPath)"
     }
-
-    Write-Verbose (dir env:* | format-table -Property Name, value | out-string)
+    Write-Information (dir env:Is* | format-table -Property Name, value | out-string)
 }
 
 Set-StrictMode -version 1.0

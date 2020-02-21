@@ -15,23 +15,12 @@ namespace Llvm.NET.Instructions
         : Instruction
     {
         /// <summary>Gets the predicate for the comparison</summary>
-        public Predicate Predicate
+        public Predicate Predicate => Opcode switch
         {
-            get
-            {
-                switch( Opcode )
-                {
-                case OpCode.ICmp:
-                    return ( Predicate )LLVMGetICmpPredicate( ValueHandle );
-
-                case OpCode.FCmp:
-                    return ( Predicate )LLVMGetFCmpPredicate( ValueHandle );
-
-                default:
-                    return Predicate.BadFcmpPredicate;
-                }
-            }
-        }
+            OpCode.ICmp => ( Predicate )LLVMGetICmpPredicate( ValueHandle ),
+            OpCode.FCmp => ( Predicate )LLVMGetFCmpPredicate( ValueHandle ),
+            _ => Predicate.BadFcmpPredicate,
+        };
 
         /* TODO: Predicate {set;} */
 

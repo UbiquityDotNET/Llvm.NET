@@ -55,34 +55,32 @@ namespace Kaleidoscope.Chapter9
 
                 var machine = new TargetMachine( Triple.HostTriple );
                 var parser = new Parser( LanguageLevel.MutableVariables );
-                using( var generator = new CodeGenerator( parser.GlobalState, machine, sourceFilePath, true ) )
+                using var generator = new CodeGenerator( parser.GlobalState, machine, sourceFilePath, true );
+                Console.WriteLine( "Llvm.NET Kaleidoscope Compiler - {0}", parser.LanguageLevel );
+                Console.WriteLine( "Compiling {0}", sourceFilePath );
+
+                // time the parse and code generation
+                var timer = System.Diagnostics.Stopwatch.StartNew( );
+                IAstNode ast = parser.Parse( rdr );
+                generator.Generate( ast, null );
+                if( !generator.Module.Verify( out string errMsg ) )
                 {
-                    Console.WriteLine( "Llvm.NET Kaleidoscope Compiler - {0}", parser.LanguageLevel );
-                    Console.WriteLine( "Compiling {0}", sourceFilePath );
+                    Console.Error.WriteLine( errMsg );
+                }
+                else
+                {
+                    machine.EmitToFile( generator.Module, objFilePath, CodeGenFileType.ObjectFile );
+                    timer.Stop( );
 
-                    // time the parse and code generation
-                    var timer = System.Diagnostics.Stopwatch.StartNew( );
-                    IAstNode ast = parser.Parse( rdr );
-                    generator.Generate( ast, null );
-                    if( !generator.Module.Verify( out string errMsg ) )
+                    Console.WriteLine( "Wrote {0}", objFilePath );
+                    if( !generator.Module.WriteToTextFile( irFilePath, out string msg ) )
                     {
-                        Console.Error.WriteLine( errMsg );
+                        Console.Error.WriteLine( msg );
+                        return -1;
                     }
-                    else
-                    {
-                        machine.EmitToFile( generator.Module, objFilePath, CodeGenFileType.ObjectFile );
-                        timer.Stop( );
 
-                        Console.WriteLine( "Wrote {0}", objFilePath );
-                        if( !generator.Module.WriteToTextFile( irFilePath, out string msg ) )
-                        {
-                            Console.Error.WriteLine( msg );
-                            return -1;
-                        }
-
-                        machine.EmitToFile( generator.Module, asmPath, CodeGenFileType.AssemblySource );
-                        Console.WriteLine( "Compilation Time: {0}", timer.Elapsed );
-                    }
+                    machine.EmitToFile( generator.Module, asmPath, CodeGenFileType.AssemblySource );
+                    Console.WriteLine( "Compilation Time: {0}", timer.Elapsed );
                 }
             }
 

@@ -462,13 +462,11 @@ namespace Llvm.NET.Instructions
         {
             get
             {
-                using( var entries = LLVMInstructionGetAllMetadataOtherThanDebugLoc( ValueHandle, out size_t numEntries ) )
+                using var entries = LLVMInstructionGetAllMetadataOtherThanDebugLoc( ValueHandle, out size_t numEntries );
+                for( long i = 0; i < numEntries.ToInt32( ); ++i )
                 {
-                    for( long i = 0; i < numEntries.ToInt32( ); ++i )
-                    {
-                        LLVMMetadataRef handle = LLVMValueMetadataEntriesGetMetadata( entries, ( uint )i );
-                        yield return MDNode.FromHandle<MDNode>( handle );
-                    }
+                    LLVMMetadataRef handle = LLVMValueMetadataEntriesGetMetadata( entries, ( uint )i );
+                    yield return MDNode.FromHandle<MDNode>( handle );
                 }
             }
         }
