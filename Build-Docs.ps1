@@ -77,6 +77,7 @@ try
 
             Write-Information "Committing changes to git"
             git commit --allow-empty -m "CI Docs Update"
+            Write-Information "git commit exit code: $LASTEXITCODE"
             if($LASTEXITCODE -ne 0)
             {
                 throw "git commit failed: Exit code $LASTEXITCODE"
