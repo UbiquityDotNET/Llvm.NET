@@ -36,10 +36,11 @@ jobs:
             path: .\BuildOutput\Nuget
 
       - name: Set Docs Push Credentials
-        if: success() && github.event_name == 'push'
+        if: github.event_name == 'push'
         env:
           docspush_access_token: ${{secrets.docspush_access_token}}
         run: .\Set-PushCredentials.ps1
 
       - name: Publish Docs
+        if: github.event_name == 'push'
         run: .\Push-Docs.ps1
