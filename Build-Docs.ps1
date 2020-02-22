@@ -70,16 +70,16 @@ try
             Write-Information "Adding files to git"
             git add -A
             git ls-files -o --exclude-standard | %{ git add $_}
-            if(!$?)
+            if($LASTEXITCODE -ne 0)
             {
                 throw "git add failed"
             }
 
             Write-Information "Committing changes to git"
-            git commit -m "CI Docs Update"
-            if(!$?)
+            git commit --allow-empty -m "CI Docs Update"
+            if($LASTEXITCODE -ne 0)
             {
-                throw "git commit failed"
+                throw "git commit failed: Exit code $LASTEXITCODE"
             }
         }
         finally
