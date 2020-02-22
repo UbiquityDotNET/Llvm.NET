@@ -2,6 +2,8 @@
 
 Initialize-BuildEnvironment
 
+Write-Information "Preparing to PUSH updated docs to GitHub IO"
+
 $canPush = $env:IsAutomatedBuild -and ($env:IsPullRequestBuild -ieq 'false')
 if(!$canPush)
 {
@@ -13,6 +15,9 @@ if(!$canPush)
 # This ensures that the links to source in the generated docs will have the correct URLs
 # (e.g. docs pushed to the official repository MUST not have links to source in some private fork)
 $remoteUrl = git ls-remote --get-url
+
+Write-Information "Remote URL: $remoteUrl"
+
 if($remoteUrl -ne "https://github.com/UbiquityDotNET/Llvm.NET.git")
 {
     throw "Pushing docs is only allowed when the origin remote is the official source release current remote is '$remoteUrl'"
