@@ -8,7 +8,7 @@
     <title>3. Kaleidoscope: Generating LLVM IR | Llvm.NET </title>
     <meta name="viewport" content="width=device-width">
     <meta name="title" content="3. Kaleidoscope: Generating LLVM IR | Llvm.NET ">
-    <meta name="generator" content="docfx 2.42.2.0">
+    <meta name="generator" content="docfx 2.48.1.0">
     
     <link rel="shortcut icon" href="../../favicon.ico">
     <link rel="stylesheet" href="../../styles/docfx.vendor.css">
@@ -193,31 +193,32 @@ target is the one the host application is running on. So, only the native target
 generation loop. Subsequent, chapters will focus on additional functionality including JIT compilation,
 Debugging information, and Native Module generation.</p>
 <pre><code class="lang-csharp" name="Main">var parser = new Parser( LanguageFeatureLevel );
-using( var generator = new CodeGenerator( parser.GlobalState ) )
+using var generator = new CodeGenerator( parser.GlobalState );
+var readyState = new ReadyStateManager( );
+
+// Create Observable chain to provide the REPL implementation
+var replSeq = parser.Parse( Console.In.ToObservableStatements( ShowPrompt ), ShowCodeGenError )
+                    .GenerateResults( generator, ShowCodeGenError );
+
+// Run the sequence
+using( replSeq.Subscribe( ShowResults ) )
 {
-    var readyState = new ReadyStateManager( );
-
-    // Create Observable chain to provide the REPL implementation
-    var replSeq = parser.Parse( Console.In.ToObservableStatements( ShowPrompt ), ShowCodeGenError )
-                        .GenerateResults( generator, ShowCodeGenError );
-
-    // Run the sequence
-    using( replSeq.Subscribe( ShowResults ) )
-    {
-    }
-
-    Console.WriteLine( generator.Module.WriteToString( ) );
 }
+
+Console.WriteLine( generator.Module.WriteToString( ) );
 </code></pre><p>This adds the <code>GenerateResults</code> operator to the sequence from Chapter 2 to generate the LLVM IR.</p>
 <h4 id="generateresults-rxnet-operator">GenerateResults Rx.NET operator</h4>
 <p>The GenerateResults operator is responsible for transforming the input sequence of AST nodes into a
 sequence of Llvm.NET.Values. The implementation of the operator is common to all result types and is
 provided in the Kaleidoscope.Runtime assembly.</p>
-<pre><code class="lang-csharp" name="GenerateResults">public static IObservable&lt;T&gt; GenerateResults&lt;T&gt;( this IObservable&lt;IAstNode&gt; nodes, IKaleidoscopeCodeGenerator&lt;T&gt; generator, Action&lt;CodeGeneratorException&gt; codeGeneratorExceptionHandler )
+<pre><code class="lang-csharp" name="GenerateResults">public static IObservable&lt;T&gt; GenerateResults&lt;T&gt;( this IObservable&lt;IAstNode&gt; nodes
+                                               , IKaleidoscopeCodeGenerator&lt;T&gt; generator
+                                               , Action&lt;CodeGeneratorException&gt; codeGeneratorExceptionHandler
+                                               )
 {
     return from n in nodes
            let v = generator.Generate( n, codeGeneratorExceptionHandler )
-           where v != default
+           where !EqualityComparer&lt;T&gt;.Default.Equals(v, default) // v != default( T )
            select v;
 }
 </code></pre><h3 id="handling-errors-in-code-generation">Handling errors in code generation</h3>
@@ -262,6 +263,7 @@ private readonly IDictionary&lt;string, Value&gt; NamedValues = new Dictionary&l
 <pre><code class="lang-csharp" name="Main">public CodeGenerator( DynamicRuntimeState globalState )
     : base(null)
 {
+    globalState.ValidateNotNull( nameof( globalState ) );
     if( globalState.LanguageLevel &gt; LanguageLevel.SimpleExpressions )
     {
         throw new ArgumentException( &quot;Language features not supported by this generator&quot;, nameof(globalState) );
@@ -340,6 +342,7 @@ using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Linq;
 using System.Text;
+using Ubiquity.ArgValidators;
 using static Kaleidoscope.Grammar.KaleidoscopeParser;
 
 namespace Kaleidoscope.Grammar.AST
@@ -419,7 +422,7 @@ namespace Kaleidoscope.Grammar.AST
         public IReadOnlyList&lt;ParameterDeclaration&gt; Parameters { get; }
 
         /// &lt;inheritdoc/&gt;
-        public TResult Accept&lt;TResult&gt;( IAstVisitor&lt;TResult&gt; visitor ) =&gt; visitor.Visit( this );
+        public TResult Accept&lt;TResult&gt;( IAstVisitor&lt;TResult&gt; visitor ) =&gt; visitor.ValidateNotNull( nameof( visitor ) ).Visit( this );
 
         /// &lt;inheritdoc/&gt;
         public IEnumerable&lt;IAstNode&gt; Children =&gt; Parameters;
@@ -455,6 +458,7 @@ namespace Kaleidoscope.Grammar.AST
 VisitFunctionDefinition() Method.</p>
 <pre><code class="lang-csharp" name="Main">public override Value Visit( FunctionDefinition definition )
 {
+    definition.ValidateNotNull( nameof( definition ) );
     var function = GetOrDeclareFunction( definition.Signature );
     if( !function.IsDeclaration )
     {
@@ -545,6 +549,7 @@ The AST provides the value of the constant as a C# <code>double</code>.</p>
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
+using Ubiquity.ArgValidators;
 
 namespace Kaleidoscope.Grammar.AST
 {
@@ -561,7 +566,7 @@ namespace Kaleidoscope.Grammar.AST
 
         public SourceSpan Location { get; }
 
-        public TResult Accept&lt;TResult&gt;( IAstVisitor&lt;TResult&gt; visitor ) =&gt; visitor.Visit( this );
+        public TResult Accept&lt;TResult&gt;( IAstVisitor&lt;TResult&gt; visitor ) =&gt; visitor.ValidateNotNull(nameof(visitor)).Visit( this );
 
         public IEnumerable&lt;IAstNode&gt; Children =&gt; Enumerable.Empty&lt;IAstNode&gt;( );
 
@@ -574,6 +579,7 @@ namespace Kaleidoscope.Grammar.AST
 </code></pre><p>Generation of the LLVM IR for a constant is quite simple.</p>
 <pre><code class="lang-csharp" name="Main">public override Value Visit( ConstantExpression constant )
 {
+    constant.ValidateNotNull( nameof( constant ) );
     return Context.CreateConstant( constant.Value );
 }
 </code></pre><div class="NOTE"><h5>Note</h5><p>The constant value is uniqued in LLVM so that multiple calls given the same input value will
@@ -589,6 +595,7 @@ will introduce loop induction variables and variable assignment. The implementat
 pattern to retrieve the value or throw an exception if the variable doesn&#39;t exist.</p>
 <pre><code class="lang-csharp" name="Main">public override Value Visit( VariableReferenceExpression reference )
 {
+    reference.ValidateNotNull( nameof( reference ) );
     if( !NamedValues.TryGetValue( reference.Name, out Value value ) )
     {
         // Source input is validated by the parser and AstBuilder, therefore
@@ -627,6 +634,7 @@ namespace Kaleidoscope.Grammar.AST
 the actual operator.</p>
 <pre><code class="lang-csharp" name="Main">public override Value Visit( BinaryOperatorExpression binaryOperator )
 {
+    binaryOperator.ValidateNotNull( nameof( binaryOperator ) );
     switch( binaryOperator.Op )
     {
     case BuiltInOperatorKind.Less:
@@ -769,7 +777,7 @@ Ready&gt;
             <span class="pull-right">
               <a href="#top">Back to top</a>
             </span>
-            Copyright (C) 2017-2019, Ubiquity.NET Contributors<br><strong>Build:</strong> 8.0.0-alpha.0.0.ci-BLD.467560874
+            Copyright (C) 2017-2019, Ubiquity.NET Contributors<br><strong>Build:</strong> 8.0.0-beta
             
           </div>
         </div>

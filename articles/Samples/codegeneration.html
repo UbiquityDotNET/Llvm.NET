@@ -8,7 +8,7 @@
     <title>CodeGenWithDebugInfo | Llvm.NET </title>
     <meta name="viewport" content="width=device-width">
     <meta name="title" content="CodeGenWithDebugInfo | Llvm.NET ">
-    <meta name="generator" content="docfx 2.42.2.0">
+    <meta name="generator" content="docfx 2.48.1.0">
     
     <link rel="shortcut icon" href="../../favicon.ico">
     <link rel="stylesheet" href="../../styles/docfx.vendor.css">
@@ -265,14 +265,13 @@ source file name that it was generated from, the <a class="xref" href="../../api
 the target and a target specific <a class="xref" href="../../api/Llvm.NET.DataLayout.html">DataLayout</a>. The sample application
 extracts these from the <a class="xref" href="../../api/Llvm.NET.TargetMachine.html">TargetMachine</a> provided by the target
 details interface for the selected target.</p>
-<pre><code class="lang-csharp" name="Main">using( var context = new Context( ) )
-using( var module = context.CreateBitcodeModule( moduleName, SourceLanguage.C99, srcPath, VersionIdentString ) )
-{
-    module.SourceFileName = Path.GetFileName( srcPath );
-    module.TargetTriple = TargetDetails.TargetMachine.Triple;
-    module.Layout = TargetDetails.TargetMachine.TargetData;
+<pre><code class="lang-csharp" name="Main">using var context = new Context( );
+using var module = context.CreateBitcodeModule( moduleName, SourceLanguage.C99, srcPath, VersionIdentString );
+module.SourceFileName = Path.GetFileName( srcPath );
+module.TargetTriple = TargetDetails.TargetMachine.Triple;
+module.Layout = TargetDetails.TargetMachine.TargetData;
 
-    TargetDependentAttributes = TargetDetails.BuildTargetDependentFunctionAttributes( context );
+TargetDependentAttributes = TargetDetails.BuildTargetDependentFunctionAttributes( context );
 </code></pre><h2 id="creating-the-dicompileunit">Creating the DICompileUnit</h2>
 <p>LLVM Debug information is all scoped to a top level <a class="xref" href="../../api/Llvm.NET.DebugInfo.DICompileUnit.html">DICompileUnit</a>.
 There is exactly one DICompileUnit for a BitcodeModule and all debug information metadata is ultimately
@@ -349,10 +348,10 @@ data in a simple single call. The sample only needs to create one such type for 
 in the example source code.</p>
 <pre><code class="lang-csharp" name="Main">// create the LLVM structure type and body with full debug information
 var fooBody = new[ ]
-    { new DebugMemberInfo { File = diFile, Line = 3, Name = &quot;a&quot;, DebugType = i32, Index = 0 }
-    , new DebugMemberInfo { File = diFile, Line = 4, Name = &quot;b&quot;, DebugType = f32, Index = 1 }
-    , new DebugMemberInfo { File = diFile, Line = 5, Name = &quot;c&quot;, DebugType = i32Array_0_32, Index = 2 }
-    };
+        { new DebugMemberInfo { File = diFile, Line = 3, Name = &quot;a&quot;, DebugType = i32, Index = 0 }
+        , new DebugMemberInfo { File = diFile, Line = 4, Name = &quot;b&quot;, DebugType = f32, Index = 1 }
+        , new DebugMemberInfo { File = diFile, Line = 5, Name = &quot;c&quot;, DebugType = i32Array_0_32, Index = 2 }
+        };
 
 var fooType = new DebugStructType( module, &quot;struct.foo&quot;, module.DICompileUnit, &quot;foo&quot;, diFile, 1, DebugInfoFlags.None, fooBody );
 </code></pre><h2 id="creating-module-metadata-and-global-variables">Creating module metadata and global variables</h2>
@@ -471,11 +470,11 @@ as needed. </p>
 }
 
 private static IrFunction DeclareCopyFunc( BitcodeModule module
-                                       , DIFile diFile
-                                       , IDebugType&lt;ITypeRef, DIType&gt; voidType
-                                       , DIDerivedType constFoo
-                                       , DebugPointerType fooPtr
-                                       )
+                                         , DIFile diFile
+                                         , IDebugType&lt;ITypeRef, DIType&gt; voidType
+                                         , DIDerivedType constFoo
+                                         , DebugPointerType fooPtr
+                                         )
 {
     // Since the first parameter is passed by value
     // using the pointer + alloca + memcopy pattern, the actual
@@ -643,7 +642,7 @@ attributes #2 = { argmemonly nounwind }
             <span class="pull-right">
               <a href="#top">Back to top</a>
             </span>
-            Copyright (C) 2017-2019, Ubiquity.NET Contributors<br><strong>Build:</strong> 8.0.0-alpha.0.0.ci-BLD.467560874
+            Copyright (C) 2017-2019, Ubiquity.NET Contributors<br><strong>Build:</strong> 8.0.0-beta
             
           </div>
         </div>

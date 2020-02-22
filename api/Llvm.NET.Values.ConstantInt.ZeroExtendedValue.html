@@ -10,7 +10,7 @@
     <meta name="viewport" content="width=device-width">
     <meta name="title" content="Property ZeroExtendedValue
    | Llvm.NET ">
-    <meta name="generator" content="docfx 2.42.2.0">
+    <meta name="generator" content="docfx 2.48.1.0">
     
     <link rel="shortcut icon" href="../favicon.ico">
     <link rel="stylesheet" href="../styles/docfx.vendor.css">
@@ -268,6 +268,9 @@
                                 </li>
                                 <li class="">
                                   <a href="Llvm.NET.ComdatCollection.GetEnumerator.html" title="GetEnumerator" class="">GetEnumerator</a>
+                                </li>
+                                <li class="">
+                                  <a href="Llvm.NET.ComdatCollection.System-Collections-IEnumerable-GetEnumerator.html" title="IEnumerable.GetEnumerator" class="">IEnumerable.GetEnumerator</a>
                                 </li>
                                 <li class="">
                                   <a href="Llvm.NET.ComdatCollection.InsertOrUpdate.html" title="InsertOrUpdate" class="">InsertOrUpdate</a>
@@ -1753,6 +1756,9 @@
                                 </li>
                                 <li class="">
                                   <a href="Llvm.NET.DebugInfo.TupleTypedArrayWrapper-1.GetEnumerator.html" title="GetEnumerator" class="">GetEnumerator</a>
+                                </li>
+                                <li class="">
+                                  <a href="Llvm.NET.DebugInfo.TupleTypedArrayWrapper-1.System-Collections-IEnumerable-GetEnumerator.html" title="IEnumerable.GetEnumerator" class="">IEnumerable.GetEnumerator</a>
                                 </li>
                                 <li class="">
                                   <a href="Llvm.NET.DebugInfo.TupleTypedArrayWrapper-1.Item.html" title="Item" class="">Item</a>
@@ -3737,13 +3743,21 @@
 <div class="markdown level1 conceptual"></div>
 <h3 class="decalaration">Declaration
 <div class="codewrapper">
-  <pre><code class="lang-csharp hljs">public UInt64 ZeroExtendedValue { get; }</code></pre>
+  <pre><code class="lang-csharp hljs">public ulong ZeroExtendedValue { get; }</code></pre>
 </div>
 <h2 class="propertyValue">Property Value</h2>
 <table class="table table-bordered table-striped table-condensed">
     <tr>
-      <td><span class="xref">UInt64</span></td>
+      <td><a class="xref" href="https://msdn.microsoft.com/en-us/library/system.uint64(v=vs.110).aspx">UInt64</a></td>
       <td></td>
+    </tr>
+</table>
+<h2 class="exceptions">Exceptions</h2>
+<table class="table table-bordered table-striped table-condensed">
+    <tr>
+      <td><a class="xref" href="https://msdn.microsoft.com/en-us/library/system.invalidoperationexception(v=vs.110).aspx">InvalidOperationException</a></td>
+      <td><p>If <a class="xref" href="Llvm.NET.Values.ConstantInt.BitWidth.html#Llvm_NET_Values_ConstantInt_BitWidth">BitWidth</a> is greater than 64 bits</p>
+</td>
     </tr>
 </table>
 </h3></article>
@@ -3769,7 +3783,7 @@
             <span class="pull-right">
               <a href="#top">Back to top</a>
             </span>
-            Copyright (C) 2017-2019, Ubiquity.NET Contributors<br><strong>Build:</strong> 8.0.0-alpha.0.0.ci-BLD.467560874
+            Copyright (C) 2017-2019, Ubiquity.NET Contributors<br><strong>Build:</strong> 8.0.0-beta
             
           </div>
         </div>

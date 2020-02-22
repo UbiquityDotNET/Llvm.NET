@@ -8,7 +8,7 @@
     <title>LLVM 8.0 Support | Llvm.NET </title>
     <meta name="viewport" content="width=device-width">
     <meta name="title" content="LLVM 8.0 Support | Llvm.NET ">
-    <meta name="generator" content="docfx 2.42.2.0">
+    <meta name="generator" content="docfx 2.48.1.0">
     
     <link rel="shortcut icon" href="favicon.ico">
     <link rel="stylesheet" href="styles/docfx.vendor.css">
@@ -118,7 +118,7 @@ Llvm.NET.Interop Library and NuGet Package. </p>
 <h1 id="breaking-changes">Breaking Changes</h1>
 <p>This is a Major release and, as such, can, and does, have breaking changes. While there
 are several such changes the actual impact to a code base is fairly trivial. Most are
-driven by either obsolecense of functionality in LLVM or general naming cleanup in the
+driven by either obsolescence of functionality in LLVM or general naming cleanup in the
 Llvm.NET library:</p>
 <ol>
 <li>New namespace and assembly for some classes (Llvm.NET.Interop)<ol>
@@ -136,7 +136,7 @@ on the builder and then generate a sequence of IR instructions for a given expre
 in code. </li>
 <li>Legacy JIT engine support is dropped. ORCJit is the only supported JIT engine<ol>
 <li>Removed Llvm.NET.JIT.EngineKind</li>
-<li>Removed all use of Llvm.NET.JIT.IJitModuleHandle. Handles are now just an itegral value</li>
+<li>Removed all use of Llvm.NET.JIT.IJitModuleHandle. Handles are now just an integral value</li>
 <li>Removed Llvm.NET.LegacyExecutionEngine</li>
 </ol>
 </li>
@@ -192,7 +192,7 @@ breaking anything</li>
 </ol>
 </li>
 <li>Llvm.NET.DebugInfo.ExpressionOp names changed to correct PascalCasing and eliminate
-underscores in the value names ofr better consistency and style compliance.</li>
+underscores in the value names for better consistency and style compliance.</li>
 <li>Renamed some Llvm.NET.DebugInfo.SourceLanguage vendor specific values to conform with
 underlying LLVM names<ol>
 <li>RenderScript -&gt; GoogleRenderScript</li>
@@ -200,7 +200,7 @@ underlying LLVM names<ol>
 </ol>
 </li>
 <li>Renamed or removed some of the Llvm.NET.DebugInfo.Tag values to better reflect underlying
-LLVM names and avoid potential language kwyword conflicts.<ol>
+LLVM names and avoid potential language keyword conflicts.<ol>
 <li>Label -&gt; TagLabel</li>
 <li>PtrToMemberType -&gt; PointerToMemberType</li>
 <li>Removed AutoVariable, ArgVariable, Expression, UserBase, LoUser and MipsLoop as they
@@ -208,9 +208,9 @@ don&#39;t exist in the LLVM support.</li>
 </ol>
 </li>
 <li>InstructionBuilder<ol>
-<li>Obsoleted Methods that don&#39;t support opaque pointers in preperation for LLVM&#39;s transition</li>
-<li>Changed MemCpy, MemMove, and MemSet signatures to remove alignment as LLVM instrinsic no
-longer includes alignment a parameter. It is applied as a parameter attribute for each 
+<li>Obsoleted Methods that don&#39;t support opaque pointers in preparation for LLVM&#39;s transition</li>
+<li>Changed MemCpy, MemMove, and MemSet signatures to remove alignment as LLVM intrinsic no
+longer includes an alignment parameter. It is applied as a parameter attribute for each 
 of the pointer parameters (source and destination).</li>
 </ol>
 </li>
@@ -250,7 +250,7 @@ ILazyCompileExecutionEngine interfaces.</li>
             <span class="pull-right">
               <a href="#top">Back to top</a>
             </span>
-            Copyright (C) 2017-2019, Ubiquity.NET Contributors<br><strong>Build:</strong> 8.0.0-alpha.0.0.ci-BLD.467560874
+            Copyright (C) 2017-2019, Ubiquity.NET Contributors<br><strong>Build:</strong> 8.0.0-beta
             
           </div>
         </div>

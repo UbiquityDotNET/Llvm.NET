@@ -8,7 +8,7 @@
     <title>Kaleidoscope Abstract Syntax Tree | Llvm.NET </title>
     <meta name="viewport" content="width=device-width">
     <meta name="title" content="Kaleidoscope Abstract Syntax Tree | Llvm.NET ">
-    <meta name="generator" content="docfx 2.42.2.0">
+    <meta name="generator" content="docfx 2.48.1.0">
     
     <link rel="shortcut icon" href="../../favicon.ico">
     <link rel="stylesheet" href="../../styles/docfx.vendor.css">
@@ -271,6 +271,7 @@ additional node types are needed for unary operators in the AST.</p>
 // -----------------------------------------------------------------------
 
 using System.Collections.Generic;
+using Ubiquity.ArgValidators;
 
 namespace Kaleidoscope.Grammar.AST
 {
@@ -329,7 +330,7 @@ namespace Kaleidoscope.Grammar.AST
         }
 
         /// &lt;inheritdoc/&gt;
-        public virtual TResult Accept&lt;TResult&gt;( IAstVisitor&lt;TResult&gt; visitor ) =&gt; visitor.Visit( this );
+        public virtual TResult Accept&lt;TResult&gt;( IAstVisitor&lt;TResult&gt; visitor ) =&gt; visitor.ValidateNotNull( nameof( visitor ) ).Visit( this );
 
         public override string ToString( )
         {
@@ -364,6 +365,7 @@ expressions for all of the arguments to the function.</p>
 using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Linq;
+using Ubiquity.ArgValidators;
 
 namespace Kaleidoscope.Grammar.AST
 {
@@ -388,7 +390,7 @@ namespace Kaleidoscope.Grammar.AST
 
         public IReadOnlyList&lt;IExpression&gt; Arguments { get; }
 
-        public TResult Accept&lt;TResult&gt;( IAstVisitor&lt;TResult&gt; visitor ) =&gt; visitor.Visit( this );
+        public TResult Accept&lt;TResult&gt;( IAstVisitor&lt;TResult&gt; visitor ) =&gt; visitor.ValidateNotNull( nameof( visitor ) ).Visit( this );
 
         public IEnumerable&lt;IAstNode&gt; Children
         {
@@ -419,6 +421,7 @@ when used as the left hand side of an assignment operator, it has &quot;store&qu
 // -----------------------------------------------------------------------
 
 using System.Collections.Generic;
+using Ubiquity.ArgValidators;
 
 namespace Kaleidoscope.Grammar.AST
 {
@@ -437,7 +440,7 @@ namespace Kaleidoscope.Grammar.AST
 
         public string Name =&gt; Declaration.Name;
 
-        public TResult Accept&lt;TResult&gt;( IAstVisitor&lt;TResult&gt; visitor ) =&gt; visitor.Visit( this );
+        public TResult Accept&lt;TResult&gt;( IAstVisitor&lt;TResult&gt; visitor ) =&gt; visitor.ValidateNotNull( nameof( visitor ) ).Visit( this );
 
         public IEnumerable&lt;IAstNode&gt; Children
         {
@@ -463,6 +466,7 @@ like the ternary operator expression <code>( x ? y : z )</code> in C and related
 // -----------------------------------------------------------------------
 
 using System.Collections.Generic;
+using Ubiquity.ArgValidators;
 
 namespace Kaleidoscope.Grammar.AST
 {
@@ -497,7 +501,7 @@ namespace Kaleidoscope.Grammar.AST
         // pure SSA form this isn&#39;t needed as a PHI node would be used instead.
         public LocalVariableDeclaration ResultVariable { get; }
 
-        public TResult Accept&lt;TResult&gt;( IAstVisitor&lt;TResult&gt; visitor ) =&gt; visitor.Visit( this );
+        public TResult Accept&lt;TResult&gt;( IAstVisitor&lt;TResult&gt; visitor ) =&gt; visitor.ValidateNotNull(nameof(visitor)).Visit( this );
 
         public IEnumerable&lt;IAstNode&gt; Children
         {
@@ -524,6 +528,7 @@ namespace Kaleidoscope.Grammar.AST
 // -----------------------------------------------------------------------
 
 using System.Collections.Generic;
+using Ubiquity.ArgValidators;
 
 namespace Kaleidoscope.Grammar.AST
 {
@@ -554,7 +559,7 @@ namespace Kaleidoscope.Grammar.AST
 
         public IExpression Body { get; }
 
-        public TResult Accept&lt;TResult&gt;( IAstVisitor&lt;TResult&gt; visitor ) =&gt; visitor.Visit( this );
+        public TResult Accept&lt;TResult&gt;( IAstVisitor&lt;TResult&gt; visitor ) =&gt; visitor.ValidateNotNull( nameof( visitor ) ).Visit( this );
 
         public IEnumerable&lt;IAstNode&gt; Children
         {
@@ -583,6 +588,7 @@ namespace Kaleidoscope.Grammar.AST
 
 using System.Collections.Generic;
 using System.Text;
+using Ubiquity.ArgValidators;
 
 namespace Kaleidoscope.Grammar.AST
 {
@@ -602,7 +608,7 @@ namespace Kaleidoscope.Grammar.AST
 
         public IExpression Body { get; }
 
-        public TResult Accept&lt;TResult&gt;( IAstVisitor&lt;TResult&gt; visitor ) =&gt; visitor.Visit( this );
+        public TResult Accept&lt;TResult&gt;( IAstVisitor&lt;TResult&gt; visitor ) =&gt; visitor.ValidateNotNull( nameof( visitor ) ).Visit( this );
 
         public IEnumerable&lt;IAstNode&gt; Children
         {
@@ -663,6 +669,7 @@ using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Linq;
 using System.Text;
+using Ubiquity.ArgValidators;
 using static Kaleidoscope.Grammar.KaleidoscopeParser;
 
 namespace Kaleidoscope.Grammar.AST
@@ -742,7 +749,7 @@ namespace Kaleidoscope.Grammar.AST
         public IReadOnlyList&lt;ParameterDeclaration&gt; Parameters { get; }
 
         /// &lt;inheritdoc/&gt;
-        public TResult Accept&lt;TResult&gt;( IAstVisitor&lt;TResult&gt; visitor ) =&gt; visitor.Visit( this );
+        public TResult Accept&lt;TResult&gt;( IAstVisitor&lt;TResult&gt; visitor ) =&gt; visitor.ValidateNotNull( nameof( visitor ) ).Visit( this );
 
         /// &lt;inheritdoc/&gt;
         public IEnumerable&lt;IAstNode&gt; Children =&gt; Parameters;
@@ -781,6 +788,7 @@ namespace Kaleidoscope.Grammar.AST
 
 using System.Collections.Generic;
 using System.Text;
+using Ubiquity.ArgValidators;
 
 namespace Kaleidoscope.Grammar.AST
 {
@@ -803,7 +811,7 @@ namespace Kaleidoscope.Grammar.AST
 
         public bool CompilerGenerated { get; }
 
-        public TResult Accept&lt;TResult&gt;( IAstVisitor&lt;TResult&gt; visitor ) =&gt; visitor.Visit( this );
+        public TResult Accept&lt;TResult&gt;( IAstVisitor&lt;TResult&gt; visitor ) =&gt; visitor.ValidateNotNull( nameof( visitor ) ).Visit( this );
 
         public IEnumerable&lt;IAstNode&gt; Children
         {
@@ -845,6 +853,7 @@ namespace Kaleidoscope.Grammar.AST
 
 using System.Collections.Generic;
 using System.Linq;
+using Ubiquity.ArgValidators;
 
 namespace Kaleidoscope.Grammar.AST
 {
@@ -866,7 +875,7 @@ namespace Kaleidoscope.Grammar.AST
 
         public bool CompilerGenerated =&gt; false;
 
-        public TResult Accept&lt;TResult&gt;( IAstVisitor&lt;TResult&gt; visitor ) =&gt; visitor.Visit( this );
+        public TResult Accept&lt;TResult&gt;( IAstVisitor&lt;TResult&gt; visitor ) =&gt; visitor.ValidateNotNull( nameof( visitor ) ).Visit( this );
 
         public IEnumerable&lt;IAstNode&gt; Children =&gt; Enumerable.Empty&lt;IAstNode&gt;( );
 
@@ -887,6 +896,7 @@ and the full body of the function.</p>
 
 using System.Collections.Generic;
 using System.Collections.Immutable;
+using Ubiquity.ArgValidators;
 
 namespace Kaleidoscope.Grammar.AST
 {
@@ -939,7 +949,7 @@ namespace Kaleidoscope.Grammar.AST
 
         public IReadOnlyList&lt;LocalVariableDeclaration&gt; LocalVariables { get; }
 
-        public TResult Accept&lt;TResult&gt;( IAstVisitor&lt;TResult&gt; visitor ) =&gt; visitor.Visit( this );
+        public TResult Accept&lt;TResult&gt;( IAstVisitor&lt;TResult&gt; visitor ) =&gt; visitor.ValidateNotNull( nameof( visitor ) ).Visit( this );
 
         public IEnumerable&lt;IAstNode&gt; Children
         {
@@ -978,7 +988,7 @@ namespace Kaleidoscope.Grammar.AST
             <span class="pull-right">
               <a href="#top">Back to top</a>
             </span>
-            Copyright (C) 2017-2019, Ubiquity.NET Contributors<br><strong>Build:</strong> 8.0.0-alpha.0.0.ci-BLD.467560874
+            Copyright (C) 2017-2019, Ubiquity.NET Contributors<br><strong>Build:</strong> 8.0.0-beta
             
           </div>
         </div>

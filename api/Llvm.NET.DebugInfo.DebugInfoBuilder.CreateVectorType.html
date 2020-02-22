@@ -10,7 +10,7 @@
     <meta name="viewport" content="width=device-width">
     <meta name="title" content="Method CreateVectorType
    | Llvm.NET ">
-    <meta name="generator" content="docfx 2.42.2.0">
+    <meta name="generator" content="docfx 2.48.1.0">
     
     <link rel="shortcut icon" href="../favicon.ico">
     <link rel="stylesheet" href="../styles/docfx.vendor.css">
@@ -268,6 +268,9 @@
                                 </li>
                                 <li class="">
                                   <a href="Llvm.NET.ComdatCollection.GetEnumerator.html" title="GetEnumerator" class="">GetEnumerator</a>
+                                </li>
+                                <li class="">
+                                  <a href="Llvm.NET.ComdatCollection.System-Collections-IEnumerable-GetEnumerator.html" title="IEnumerable.GetEnumerator" class="">IEnumerable.GetEnumerator</a>
                                 </li>
                                 <li class="">
                                   <a href="Llvm.NET.ComdatCollection.InsertOrUpdate.html" title="InsertOrUpdate" class="">InsertOrUpdate</a>
@@ -1753,6 +1756,9 @@
                                 </li>
                                 <li class="">
                                   <a href="Llvm.NET.DebugInfo.TupleTypedArrayWrapper-1.GetEnumerator.html" title="GetEnumerator" class="">GetEnumerator</a>
+                                </li>
+                                <li class="">
+                                  <a href="Llvm.NET.DebugInfo.TupleTypedArrayWrapper-1.System-Collections-IEnumerable-GetEnumerator.html" title="IEnumerable.GetEnumerator" class="">IEnumerable.GetEnumerator</a>
                                 </li>
                                 <li class="">
                                   <a href="Llvm.NET.DebugInfo.TupleTypedArrayWrapper-1.Item.html" title="Item" class="">Item</a>
@@ -3725,30 +3731,30 @@
 
 <span class="small pull-right mobile-hide">
   <span class="divider">&nbsp;</span>
-  <a href="https://github.com/UbiquityDotNET/Llvm.NET/new/master/apiSpec/new?filename=Llvm_NET_DebugInfo_DebugInfoBuilder_CreateVectorType_UInt64_UInt32_Llvm_NET_DebugInfo_DIType_Llvm_NET_DebugInfo_DINodeArray_.md&amp;value=---%0Auid%3A%20Llvm.NET.DebugInfo.DebugInfoBuilder.CreateVectorType(UInt64%2CUInt32%2CLlvm.NET.DebugInfo.DIType%2CLlvm.NET.DebugInfo.DINodeArray)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A" title="Improve this Doc" class="fab-small btn-warning pull-right"><i class="glyphicon glyphicon-pencil"></i></a>
+  <a href="https://github.com/UbiquityDotNET/Llvm.NET/new/master/apiSpec/new?filename=Llvm_NET_DebugInfo_DebugInfoBuilder_CreateVectorType_System_UInt64_System_UInt32_Llvm_NET_DebugInfo_DIType_Llvm_NET_DebugInfo_DINodeArray_.md&amp;value=---%0Auid%3A%20Llvm.NET.DebugInfo.DebugInfoBuilder.CreateVectorType(System.UInt64%2CSystem.UInt32%2CLlvm.NET.DebugInfo.DIType%2CLlvm.NET.DebugInfo.DINodeArray)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A" title="Improve this Doc" class="fab-small btn-warning pull-right"><i class="glyphicon glyphicon-pencil"></i></a>
 </span>
 <span class="small pull-right mobile-hide">
-  <a href="https://github.com/UbiquityDotNET/Llvm.NET/blob/master/src/Llvm.NET/DebugInfo/DebugInfoBuilder.cs/#L814" title="View Source" class="fab-small btn-info pull-right"><i class="fa fa-code"></i></a>
+  <a href="https://github.com/UbiquityDotNET/Llvm.NET/blob/master/src/Llvm.NET/DebugInfo/DebugInfoBuilder.cs/#L832" title="View Source" class="fab-small btn-info pull-right"><i class="fa fa-code"></i></a>
 </span>
 <a id="Llvm_NET_DebugInfo_DebugInfoBuilder_CreateVectorType_" data-uid="Llvm.NET.DebugInfo.DebugInfoBuilder.CreateVectorType*"></a>
-<h2 id="Llvm_NET_DebugInfo_DebugInfoBuilder_CreateVectorType_UInt64_UInt32_Llvm_NET_DebugInfo_DIType_Llvm_NET_DebugInfo_DINodeArray_" data-uid="Llvm.NET.DebugInfo.DebugInfoBuilder.CreateVectorType(UInt64,UInt32,Llvm.NET.DebugInfo.DIType,Llvm.NET.DebugInfo.DINodeArray)">CreateVectorType(UInt64, UInt32, DIType, DINodeArray)</h2>
+<h2 id="Llvm_NET_DebugInfo_DebugInfoBuilder_CreateVectorType_System_UInt64_System_UInt32_Llvm_NET_DebugInfo_DIType_Llvm_NET_DebugInfo_DINodeArray_" data-uid="Llvm.NET.DebugInfo.DebugInfoBuilder.CreateVectorType(System.UInt64,System.UInt32,Llvm.NET.DebugInfo.DIType,Llvm.NET.DebugInfo.DINodeArray)">CreateVectorType(UInt64, UInt32, DIType, DINodeArray)</h2>
 <div class="markdown level1 summary"><p>Creates debug information for a vector type</p>
 </div>
 <div class="markdown level1 conceptual"></div>
 <h3 class="decalaration">Declaration
 <div class="codewrapper">
-  <pre><code class="lang-csharp hljs">public DICompositeType CreateVectorType(UInt64 bitSize, UInt32 bitAlign, DIType elementType, DINodeArray subscripts)</code></pre>
+  <pre><code class="lang-csharp hljs">public DICompositeType CreateVectorType(ulong bitSize, uint bitAlign, DIType elementType, DINodeArray subscripts)</code></pre>
 </div>
 <h2 class="parameters">Parameters</h2>
 <table class="table table-bordered table-striped table-condensed">
     <tr>
-      <td><span class="xref">UInt64</span></td>
+      <td><a class="xref" href="https://msdn.microsoft.com/en-us/library/system.uint64(v=vs.110).aspx">UInt64</a></td>
       <td><span class="parametername">bitSize</span></td>
       <td><p>Size, in bits for the type</p>
 </td>
     </tr>
     <tr>
-      <td><span class="xref">UInt32</span></td>
+      <td><a class="xref" href="https://msdn.microsoft.com/en-us/library/system.uint32(v=vs.110).aspx">UInt32</a></td>
       <td><span class="parametername">bitAlign</span></td>
       <td><p>Alignment in bits for the type</p>
 </td>
@@ -3776,30 +3782,30 @@
 </table>
 <span class="small pull-right mobile-hide">
   <span class="divider">&nbsp;</span>
-  <a href="https://github.com/UbiquityDotNET/Llvm.NET/new/master/apiSpec/new?filename=Llvm_NET_DebugInfo_DebugInfoBuilder_CreateVectorType_UInt64_UInt32_Llvm_NET_DebugInfo_DIType_Llvm_NET_DebugInfo_DINode___.md&amp;value=---%0Auid%3A%20Llvm.NET.DebugInfo.DebugInfoBuilder.CreateVectorType(UInt64%2CUInt32%2CLlvm.NET.DebugInfo.DIType%2CLlvm.NET.DebugInfo.DINode%5B%5D)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A" title="Improve this Doc" class="fab-small btn-warning pull-right"><i class="glyphicon glyphicon-pencil"></i></a>
+  <a href="https://github.com/UbiquityDotNET/Llvm.NET/new/master/apiSpec/new?filename=Llvm_NET_DebugInfo_DebugInfoBuilder_CreateVectorType_System_UInt64_System_UInt32_Llvm_NET_DebugInfo_DIType_Llvm_NET_DebugInfo_DINode___.md&amp;value=---%0Auid%3A%20Llvm.NET.DebugInfo.DebugInfoBuilder.CreateVectorType(System.UInt64%2CSystem.UInt32%2CLlvm.NET.DebugInfo.DIType%2CLlvm.NET.DebugInfo.DINode%5B%5D)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A" title="Improve this Doc" class="fab-small btn-warning pull-right"><i class="glyphicon glyphicon-pencil"></i></a>
 </span>
 <span class="small pull-right mobile-hide">
-  <a href="https://github.com/UbiquityDotNET/Llvm.NET/blob/master/src/Llvm.NET/DebugInfo/DebugInfoBuilder.cs/#L826" title="View Source" class="fab-small btn-info pull-right"><i class="fa fa-code"></i></a>
+  <a href="https://github.com/UbiquityDotNET/Llvm.NET/blob/master/src/Llvm.NET/DebugInfo/DebugInfoBuilder.cs/#L844" title="View Source" class="fab-small btn-info pull-right"><i class="fa fa-code"></i></a>
 </span>
 <a id="Llvm_NET_DebugInfo_DebugInfoBuilder_CreateVectorType_" data-uid="Llvm.NET.DebugInfo.DebugInfoBuilder.CreateVectorType*"></a>
-<h2 id="Llvm_NET_DebugInfo_DebugInfoBuilder_CreateVectorType_UInt64_UInt32_Llvm_NET_DebugInfo_DIType_Llvm_NET_DebugInfo_DINode___" data-uid="Llvm.NET.DebugInfo.DebugInfoBuilder.CreateVectorType(UInt64,UInt32,Llvm.NET.DebugInfo.DIType,Llvm.NET.DebugInfo.DINode[])">CreateVectorType(UInt64, UInt32, DIType, DINode[])</h2>
+<h2 id="Llvm_NET_DebugInfo_DebugInfoBuilder_CreateVectorType_System_UInt64_System_UInt32_Llvm_NET_DebugInfo_DIType_Llvm_NET_DebugInfo_DINode___" data-uid="Llvm.NET.DebugInfo.DebugInfoBuilder.CreateVectorType(System.UInt64,System.UInt32,Llvm.NET.DebugInfo.DIType,Llvm.NET.DebugInfo.DINode[])">CreateVectorType(UInt64, UInt32, DIType, DINode[])</h2>
 <div class="markdown level1 summary"><p>Creates debug information for a vector type</p>
 </div>
 <div class="markdown level1 conceptual"></div>
 <h3 class="decalaration">Declaration
 <div class="codewrapper">
-  <pre><code class="lang-csharp hljs">public DICompositeType CreateVectorType(UInt64 bitSize, UInt32 bitAlign, DIType elementType, params DINode[] subscripts)</code></pre>
+  <pre><code class="lang-csharp hljs">public DICompositeType CreateVectorType(ulong bitSize, uint bitAlign, DIType elementType, params DINode[] subscripts)</code></pre>
 </div>
 <h2 class="parameters">Parameters</h2>
 <table class="table table-bordered table-striped table-condensed">
     <tr>
-      <td><span class="xref">UInt64</span></td>
+      <td><a class="xref" href="https://msdn.microsoft.com/en-us/library/system.uint64(v=vs.110).aspx">UInt64</a></td>
       <td><span class="parametername">bitSize</span></td>
       <td><p>Size, in bits for the type</p>
 </td>
     </tr>
     <tr>
-      <td><span class="xref">UInt32</span></td>
+      <td><a class="xref" href="https://msdn.microsoft.com/en-us/library/system.uint32(v=vs.110).aspx">UInt32</a></td>
       <td><span class="parametername">bitAlign</span></td>
       <td><p>Alignment in bits for the type</p>
 </td>
@@ -3827,30 +3833,30 @@
 </table>
 <span class="small pull-right mobile-hide">
   <span class="divider">&nbsp;</span>
-  <a href="https://github.com/UbiquityDotNET/Llvm.NET/new/master/apiSpec/new?filename=Llvm_NET_DebugInfo_DebugInfoBuilder_CreateVectorType_UInt64_UInt32_Llvm_NET_DebugInfo_DIType_IEnumerable_Llvm_NET_DebugInfo_DINode__.md&amp;value=---%0Auid%3A%20Llvm.NET.DebugInfo.DebugInfoBuilder.CreateVectorType(UInt64%2CUInt32%2CLlvm.NET.DebugInfo.DIType%2CIEnumerable%7BLlvm.NET.DebugInfo.DINode%7D)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A" title="Improve this Doc" class="fab-small btn-warning pull-right"><i class="glyphicon glyphicon-pencil"></i></a>
+  <a href="https://github.com/UbiquityDotNET/Llvm.NET/new/master/apiSpec/new?filename=Llvm_NET_DebugInfo_DebugInfoBuilder_CreateVectorType_System_UInt64_System_UInt32_Llvm_NET_DebugInfo_DIType_System_Collections_Generic_IEnumerable_Llvm_NET_DebugInfo_DINode__.md&amp;value=---%0Auid%3A%20Llvm.NET.DebugInfo.DebugInfoBuilder.CreateVectorType(System.UInt64%2CSystem.UInt32%2CLlvm.NET.DebugInfo.DIType%2CSystem.Collections.Generic.IEnumerable%7BLlvm.NET.DebugInfo.DINode%7D)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A" title="Improve this Doc" class="fab-small btn-warning pull-right"><i class="glyphicon glyphicon-pencil"></i></a>
 </span>
 <span class="small pull-right mobile-hide">
-  <a href="https://github.com/UbiquityDotNET/Llvm.NET/blob/master/src/Llvm.NET/DebugInfo/DebugInfoBuilder.cs/#L837" title="View Source" class="fab-small btn-info pull-right"><i class="fa fa-code"></i></a>
+  <a href="https://github.com/UbiquityDotNET/Llvm.NET/blob/master/src/Llvm.NET/DebugInfo/DebugInfoBuilder.cs/#L855" title="View Source" class="fab-small btn-info pull-right"><i class="fa fa-code"></i></a>
 </span>
 <a id="Llvm_NET_DebugInfo_DebugInfoBuilder_CreateVectorType_" data-uid="Llvm.NET.DebugInfo.DebugInfoBuilder.CreateVectorType*"></a>
-<h2 id="Llvm_NET_DebugInfo_DebugInfoBuilder_CreateVectorType_UInt64_UInt32_Llvm_NET_DebugInfo_DIType_IEnumerable_Llvm_NET_DebugInfo_DINode__" data-uid="Llvm.NET.DebugInfo.DebugInfoBuilder.CreateVectorType(UInt64,UInt32,Llvm.NET.DebugInfo.DIType,IEnumerable{Llvm.NET.DebugInfo.DINode})">CreateVectorType(UInt64, UInt32, DIType, IEnumerable&lt;DINode&gt;)</h2>
+<h2 id="Llvm_NET_DebugInfo_DebugInfoBuilder_CreateVectorType_System_UInt64_System_UInt32_Llvm_NET_DebugInfo_DIType_System_Collections_Generic_IEnumerable_Llvm_NET_DebugInfo_DINode__" data-uid="Llvm.NET.DebugInfo.DebugInfoBuilder.CreateVectorType(System.UInt64,System.UInt32,Llvm.NET.DebugInfo.DIType,System.Collections.Generic.IEnumerable{Llvm.NET.DebugInfo.DINode})">CreateVectorType(UInt64, UInt32, DIType, IEnumerable&lt;DINode&gt;)</h2>
 <div class="markdown level1 summary"><p>Creates debug information for a vector type</p>
 </div>
 <div class="markdown level1 conceptual"></div>
 <h3 class="decalaration">Declaration
 <div class="codewrapper">
-  <pre><code class="lang-csharp hljs">public DICompositeType CreateVectorType(UInt64 bitSize, UInt32 bitAlign, DIType elementType, IEnumerable&lt;DINode&gt; subscripts)</code></pre>
+  <pre><code class="lang-csharp hljs">public DICompositeType CreateVectorType(ulong bitSize, uint bitAlign, DIType elementType, IEnumerable&lt;DINode&gt; subscripts)</code></pre>
 </div>
 <h2 class="parameters">Parameters</h2>
 <table class="table table-bordered table-striped table-condensed">
     <tr>
-      <td><span class="xref">UInt64</span></td>
+      <td><a class="xref" href="https://msdn.microsoft.com/en-us/library/system.uint64(v=vs.110).aspx">UInt64</a></td>
       <td><span class="parametername">bitSize</span></td>
       <td><p>Size, in bits for the type</p>
 </td>
     </tr>
     <tr>
-      <td><span class="xref">UInt32</span></td>
+      <td><a class="xref" href="https://msdn.microsoft.com/en-us/library/system.uint32(v=vs.110).aspx">UInt32</a></td>
       <td><span class="parametername">bitAlign</span></td>
       <td><p>Alignment in bits for the type</p>
 </td>
@@ -3862,7 +3868,7 @@
 </td>
     </tr>
     <tr>
-      <td><span class="xref">IEnumerable</span>&lt;<a class="xref" href="Llvm.NET.DebugInfo.DINode.html">DINode</a>&gt;</td>
+      <td><a class="xref" href="https://msdn.microsoft.com/en-us/library/9eekhta0(v=vs.110).aspx">IEnumerable</a>&lt;<a class="xref" href="Llvm.NET.DebugInfo.DINode.html">DINode</a>&gt;</td>
       <td><span class="parametername">subscripts</span></td>
       <td><p>Dimensions for the Vector</p>
 </td>
@@ -3880,7 +3886,7 @@
           </div>
           <div class="contribution-panel mobile-hide">
               <a href="https://github.com/UbiquityDotNET/Llvm.NET/new/master/apiSpec/new?filename=Llvm_NET_DebugInfo_DebugInfoBuilder_CreateVectorType_.md&amp;value=---%0Auid%3A%20Llvm.NET.DebugInfo.DebugInfoBuilder.CreateVectorType*%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A" title="Improve this Doc" class="fab btn-warning pull-right"><i class="glyphicon glyphicon-pencil"></i></a>
-              <a href="https://github.com/UbiquityDotNET/Llvm.NET/blob/master/src/Llvm.NET/DebugInfo/DebugInfoBuilder.cs/#L814" title="View Source" class="fab btn-info pull-right"><i class="fa fa-code"></i></a>
+              <a href="https://github.com/UbiquityDotNET/Llvm.NET/blob/master/src/Llvm.NET/DebugInfo/DebugInfoBuilder.cs/#L832" title="View Source" class="fab btn-info pull-right"><i class="fa fa-code"></i></a>
           </div>
           
           <div class="hidden-sm col-md-2" role="complementary">
@@ -3899,7 +3905,7 @@
             <span class="pull-right">
               <a href="#top">Back to top</a>
             </span>
-            Copyright (C) 2017-2019, Ubiquity.NET Contributors<br><strong>Build:</strong> 8.0.0-alpha.0.0.ci-BLD.467560874
+            Copyright (C) 2017-2019, Ubiquity.NET Contributors<br><strong>Build:</strong> 8.0.0-beta
             
           </div>
         </div>

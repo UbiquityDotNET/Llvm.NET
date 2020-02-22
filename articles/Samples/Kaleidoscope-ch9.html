@@ -8,7 +8,7 @@
     <title>9. Kaleidoscope: Adding Debug Information | Llvm.NET </title>
     <meta name="viewport" content="width=device-width">
     <meta name="title" content="9. Kaleidoscope: Adding Debug Information | Llvm.NET ">
-    <meta name="generator" content="docfx 2.42.2.0">
+    <meta name="generator" content="docfx 2.48.1.0">
     
     <link rel="shortcut icon" href="../../favicon.ico">
     <link rel="stylesheet" href="../../styles/docfx.vendor.css">
@@ -234,45 +234,46 @@ in .NET then what applies to the DIBuilder).</p>
 </div>
 <p>The tutorial takes care of finishing the debug information in the generator&#39;s Generate method after
 completing code generation for the module.</p>
-<pre><code class="lang-csharp" name="Generate">public Value Generate( IAstNode ast, Action&lt;CodeGeneratorException&gt; codeGenerationErroHandler )
-{
-    try
-    {
-        ast.Accept( this );
-
-        if( AnonymousFunctions.Count &gt; 0 )
+<pre><code class="lang-csharp" name="Generate">        public Value Generate( IAstNode ast, Action&lt;CodeGeneratorException&gt; codeGenerationErroHandler )
         {
-            var mainFunction = Module.AddFunction( &quot;main&quot;, Context.GetFunctionType( Context.VoidType ) );
-            var block = mainFunction.AppendBasicBlock( &quot;entry&quot; );
-            var irBuilder = new InstructionBuilder( block );
-            var printdFunc = Module.AddFunction( &quot;printd&quot;, Context.GetFunctionType( Context.DoubleType, Context.DoubleType ) );
-            foreach( var anonFunc in AnonymousFunctions )
+            ast.ValidateNotNull( nameof( ast ) );
+            try
             {
-                var value = irBuilder.Call( anonFunc );
-                irBuilder.Call( printdFunc, value );
+                ast.Accept( this );
+
+                if( AnonymousFunctions.Count &gt; 0 )
+                {
+                    var mainFunction = Module.AddFunction( &quot;main&quot;, Context.GetFunctionType( Context.VoidType ) );
+                    var block = mainFunction.AppendBasicBlock( &quot;entry&quot; );
+                    var irBuilder = new InstructionBuilder( block );
+                    var printdFunc = Module.AddFunction( &quot;printd&quot;, Context.GetFunctionType( Context.DoubleType, Context.DoubleType ) );
+                    foreach( var anonFunc in AnonymousFunctions )
+                    {
+                        var value = irBuilder.Call( anonFunc );
+                        irBuilder.Call( printdFunc, value );
+                    }
+
+                    irBuilder.Return( );
+
+                    // Use always inline and Dead Code Elimination module passes to inline all of the
+                    // anonymous functions. This effectively strips all the calls just generated for main()
+                    // and inlines each of the anonymous functions directly into main, dropping the now
+                    // unused original anonymous functions all while retaining all of the original source
+                    // debug information locations.
+                    using var mpm = new ModulePassManager( );
+                    mpm.AddAlwaysInlinerPass( )
+.AddGlobalDCEPass( )
+.Run( Module );
+                    Module.DIBuilder.Finish( );
+                }
+            }
+            catch(CodeGeneratorException ex) when ( codeGenerationErroHandler != null)
+            {
+                codeGenerationErroHandler( ex );
             }
 
-            irBuilder.Return( );
-
-            // Use always inline and Dead Code Elimination module passes to inline all of the
-            // anonymous functions. This effectively strips all the calls just generated for main()
-            // and inlines each of the anonymous functions directly into main, dropping the now
-            // unused original anonymous functions all while retaining all of the original source
-            // debug information locations.
-            var mpm = new ModulePassManager( )
-                      .AddAlwaysInlinerPass( )
-                      .AddGlobalDCEPass( );
-            mpm.Run( Module );
-            Module.DIBuilder.Finish( );
+            return null;
         }
-    }
-    catch(CodeGeneratorException ex) when ( codeGenerationErroHandler != null)
-    {
-        codeGenerationErroHandler( ex );
-    }
-
-    return null;
-}
 </code></pre><h2 id="functions">Functions</h2>
 <p>With the basics of the DIBuilder and DICompile unit setup for the module it is time to focus on providing
 debug information for functions. This requires adding a few extra calls to build the context of the debug
@@ -355,6 +356,7 @@ for the function is finalized, this is needed to allow for any optimizations to 
 level.</p>
 <pre><code class="lang-csharp" name="DefineFunction">public override Value Visit( FunctionDefinition definition )
 {
+    definition.ValidateNotNull( nameof( definition ) );
     var function = GetOrDeclareFunction( definition.Signature );
     if( !function.IsDeclaration )
     {
@@ -488,7 +490,7 @@ compiler for custom languages, including debug support a lot easier.</p>
             <span class="pull-right">
               <a href="#top">Back to top</a>
             </span>
-            Copyright (C) 2017-2019, Ubiquity.NET Contributors<br><strong>Build:</strong> 8.0.0-alpha.0.0.ci-BLD.467560874
+            Copyright (C) 2017-2019, Ubiquity.NET Contributors<br><strong>Build:</strong> 8.0.0-beta
             
           </div>
         </div>

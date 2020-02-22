@@ -8,7 +8,7 @@
     <title>8. Kaleidoscope: Compiling to Object Code | Llvm.NET </title>
     <meta name="viewport" content="width=device-width">
     <meta name="title" content="8. Kaleidoscope: Compiling to Object Code | Llvm.NET ">
-    <meta name="generator" content="docfx 2.42.2.0">
+    <meta name="generator" content="docfx 2.48.1.0">
     
     <link rel="shortcut icon" href="../../favicon.ico">
     <link rel="stylesheet" href="../../styles/docfx.vendor.css">
@@ -214,50 +214,52 @@ the Always inliner and a global dead code elimination pass. The always inliner w
 marked as inline and the dead code elimination pass will eliminate unused internal/private global symbols.
 This has the effect of generating the main function with all top level expressions inlined and the originally
 generated anonymous functions removed. </p>
-<pre><code class="lang-csharp" name="Generate">public Value Generate( IAstNode ast, Action&lt;CodeGeneratorException&gt; codeGenerationErroHandler )
-{
-    try
-    {
-        ast.Accept( this );
-
-        if( AnonymousFunctions.Count &gt; 0 )
+<pre><code class="lang-csharp" name="Generate">        public Value Generate( IAstNode ast, Action&lt;CodeGeneratorException&gt; codeGenerationErroHandler )
         {
-            var mainFunction = Module.AddFunction( &quot;main&quot;, Context.GetFunctionType( Context.VoidType ) );
-            var block = mainFunction.AppendBasicBlock( &quot;entry&quot; );
-            var irBuilder = new InstructionBuilder( block );
-            var printdFunc = Module.AddFunction( &quot;printd&quot;, Context.GetFunctionType( Context.DoubleType, Context.DoubleType ) );
-            foreach( var anonFunc in AnonymousFunctions )
+            ast.ValidateNotNull( nameof( ast ) );
+            try
             {
-                var value = irBuilder.Call( anonFunc );
-                irBuilder.Call( printdFunc, value );
+                ast.Accept( this );
+
+                if( AnonymousFunctions.Count &gt; 0 )
+                {
+                    var mainFunction = Module.AddFunction( &quot;main&quot;, Context.GetFunctionType( Context.VoidType ) );
+                    var block = mainFunction.AppendBasicBlock( &quot;entry&quot; );
+                    var irBuilder = new InstructionBuilder( block );
+                    var printdFunc = Module.AddFunction( &quot;printd&quot;, Context.GetFunctionType( Context.DoubleType, Context.DoubleType ) );
+                    foreach( var anonFunc in AnonymousFunctions )
+                    {
+                        var value = irBuilder.Call( anonFunc );
+                        irBuilder.Call( printdFunc, value );
+                    }
+
+                    irBuilder.Return( );
+
+                    // Use always inline and Dead Code Elimination module passes to inline all of the
+                    // anonymous functions. This effectively strips all the calls just generated for main()
+                    // and inlines each of the anonymous functions directly into main, dropping the now
+                    // unused original anonymous functions all while retaining all of the original source
+                    // debug information locations.
+                    using var mpm = new ModulePassManager( );
+                    mpm.AddAlwaysInlinerPass( )
+.AddGlobalDCEPass( )
+.Run( Module );
+                }
+            }
+            catch(CodeGeneratorException ex) when ( codeGenerationErroHandler != null)
+            {
+                codeGenerationErroHandler( ex );
             }
 
-            irBuilder.Return( );
-
-            // Use always inline and Dead Code Elimination module passes to inline all of the
-            // anonymous functions. This effectively strips all the calls just generated for main()
-            // and inlines each of the anonymous functions directly into main, dropping the now
-            // unused original anonymous functions all while retaining all of the original source
-            // debug information locations.
-            var mpm = new ModulePassManager( )
-                      .AddAlwaysInlinerPass( )
-                      .AddGlobalDCEPass( );
-            mpm.Run( Module );
+            return null;
         }
-    }
-    catch(CodeGeneratorException ex) when ( codeGenerationErroHandler != null)
-    {
-        codeGenerationErroHandler( ex );
-    }
-
-    return null;
-}
 </code></pre><p>Most of the rest of the changes are pretty straightforward following the steps listed previously.</p>
 <h3 id="anonymous-function-definitions">Anonymous Function Definitions</h3>
 <p>As previously mentioned, when generating the top level expression the resulting function is added to the
 list of anonymous functions to generate a call to it from main().</p>
 <pre><code class="lang-csharp" name="FunctionDefinition">public override Value Visit( FunctionDefinition definition )
 {
+    definition.ValidateNotNull( nameof( definition ) );
     var function = GetOrDeclareFunction( definition.Signature );
     if( !function.IsDeclaration )
     {
@@ -383,6 +385,7 @@ here either. The general plan is:</p>
 /// for mixed mode native+managed debugging as the SDK project system does
 /// not support that on launch.
 /// &lt;/remarks&gt;
+[SuppressMessage( &quot;Design&quot;, &quot;CA1062:Validate arguments of public methods&quot;, Justification = &quot;Provided by platform&quot; )]
 public static int Main( string[ ] args )
 {
     (string sourceFilePath, int exitCode) = ProcessArgs( args );
@@ -402,34 +405,32 @@ public static int Main( string[ ] args )
 
         var machine = new TargetMachine( Triple.HostTriple );
         var parser = new Parser( LanguageLevel.MutableVariables );
-        using( var generator = new CodeGenerator( parser.GlobalState, machine ) )
+        using var generator = new CodeGenerator( parser.GlobalState, machine );
+        Console.WriteLine( &quot;Llvm.NET Kaleidoscope Compiler - {0}&quot;, parser.LanguageLevel );
+        Console.WriteLine( &quot;Compiling {0}&quot;, sourceFilePath );
+
+        // time the parse and code generation
+        var timer = System.Diagnostics.Stopwatch.StartNew( );
+        IAstNode ast = parser.Parse( rdr );
+        generator.Generate( ast, null );
+        if( !generator.Module.Verify( out string errMsg ) )
         {
-            Console.WriteLine( &quot;Llvm.NET Kaleidoscope Compiler - {0}&quot;, parser.LanguageLevel );
-            Console.WriteLine( &quot;Compiling {0}&quot;, sourceFilePath );
+            Console.Error.WriteLine( errMsg );
+        }
+        else
+        {
+            machine.EmitToFile( generator.Module, objFilePath, CodeGenFileType.ObjectFile );
+            timer.Stop( );
 
-            // time the parse and code generation
-            var timer = System.Diagnostics.Stopwatch.StartNew( );
-            IAstNode ast = parser.Parse( rdr );
-            generator.Generate( ast, null );
-            if( !generator.Module.Verify( out string errMsg ) )
+            Console.WriteLine( &quot;Wrote {0}&quot;, objFilePath );
+            if( !generator.Module.WriteToTextFile( irFilePath, out string msg ) )
             {
-                Console.Error.WriteLine( errMsg );
+                Console.Error.WriteLine( msg );
+                return -1;
             }
-            else
-            {
-                machine.EmitToFile( generator.Module, objFilePath, CodeGenFileType.ObjectFile );
-                timer.Stop( );
 
-                Console.WriteLine( &quot;Wrote {0}&quot;, objFilePath );
-                if( !generator.Module.WriteToTextFile( irFilePath, out string msg ) )
-                {
-                    Console.Error.WriteLine( msg );
-                    return -1;
-                }
-
-                machine.EmitToFile( generator.Module, asmPath, CodeGenFileType.AssemblySource );
-                Console.WriteLine( &quot;Compilation Time: {0}&quot;, timer.Elapsed );
-            }
+            machine.EmitToFile( generator.Module, asmPath, CodeGenFileType.AssemblySource );
+            Console.WriteLine( &quot;Compilation Time: {0}&quot;, timer.Elapsed );
         }
     }
 
@@ -462,7 +463,7 @@ this feature is &quot;left as an exercise for the reader&quot; <span class="emoj
             <span class="pull-right">
               <a href="#top">Back to top</a>
             </span>
-            Copyright (C) 2017-2019, Ubiquity.NET Contributors<br><strong>Build:</strong> 8.0.0-alpha.0.0.ci-BLD.467560874
+            Copyright (C) 2017-2019, Ubiquity.NET Contributors<br><strong>Build:</strong> 8.0.0-beta
             
           </div>
         </div>

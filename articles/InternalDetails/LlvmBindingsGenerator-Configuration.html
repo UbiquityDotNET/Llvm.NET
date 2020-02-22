@@ -8,7 +8,7 @@
     <title>LlvmBindings Configuration | Llvm.NET </title>
     <meta name="viewport" content="width=device-width">
     <meta name="title" content="LlvmBindings Configuration | Llvm.NET ">
-    <meta name="generator" content="docfx 2.42.2.0">
+    <meta name="generator" content="docfx 2.48.1.0">
     
     <link rel="shortcut icon" href="../../favicon.ico">
     <link rel="stylesheet" href="../../styles/docfx.vendor.css">
@@ -135,7 +135,7 @@
 <p>The bindings generator uses a configuration data structure that consists of a
 number of tables used by the code generation passes for resolving the various
 ambiguities of generating the code. The configuration is an instance of the
-<a href="xref:LlvmBindingsGenerator.Configuration.GeneratorConfig">GeneratorConfig</a> class.</p>
+<code>LlvmBindingsGenerator.Configuration.GeneratorConfig</code> class.</p>
 <p>The GeneratorConfig class holds all the data used by the various passes in
 LlvmBindingsGenerator to transform the AST so that subsequent stages will 
 generate correct .NET interop code. There are several tables of information
@@ -148,7 +148,7 @@ boolean or other integral values (in the case of a C Declaration that simply ret
 int as a status value) This helps to keep the interop layer clean, and semantically self
 consistent, without actually breaking the ABI of the LLVM-C APIs. </p>
 <h2 id="marshalinginfo">MarshalingInfo</h2>
-<p>This is a collection of <a href="xref:LlvmBindingsGenerator.IMarshalInfo">IMarshalInfo</a> instances
+<p>This is a collection of <code>LlvmBindingsGenerator.IMarshalInfo</code> instances
 used to transform function parameter and return types as well as add appropriate marshaling
 attributes for them. This is the most complex implementations of all the passes. Though
 declaring the table is made a lot easier by the various IMarshalInfo implementation types.
@@ -166,7 +166,7 @@ ignored for the interop layer. Generally these are the disposal methods that are
 types or custom string marshalers. Sometimes they are for functions declared int the headers but
 not implemented in the library. (the LTO APIs for instance are not included as they are intended for
 use in an actual linker) The values in the dictionary are a boolean that indicates if the function
-is just completely ignored (true) or used internally only (false). The MarkFunctionsInteralPass
+is just completely ignored (true) or used internally only (false). The MarkFunctionsInternalPass
 uses this information to mark the functions appropriately for subsequent passes.</p>
 <h2 id="handletotemplatemap">HandleToTemplateMap</h2>
 <p>The LlvmBindings generator supports creating safe handles for all of the LLVM object handle types.
@@ -226,7 +226,7 @@ alias that the caller <strong>MUST NOT</strong> destroy/dispose.</p>
             <span class="pull-right">
               <a href="#top">Back to top</a>
             </span>
-            Copyright (C) 2017-2019, Ubiquity.NET Contributors<br><strong>Build:</strong> 8.0.0-alpha.0.0.ci-BLD.467560874
+            Copyright (C) 2017-2019, Ubiquity.NET Contributors<br><strong>Build:</strong> 8.0.0-beta
             
           </div>
         </div>

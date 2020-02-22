@@ -8,7 +8,7 @@
     <title>7. Kaleidoscope: Mutable Variables | Llvm.NET </title>
     <meta name="viewport" content="width=device-width">
     <meta name="title" content="7. Kaleidoscope: Mutable Variables | Llvm.NET ">
-    <meta name="generator" content="docfx 2.42.2.0">
+    <meta name="generator" content="docfx 2.48.1.0">
     
     <link rel="shortcut icon" href="../../favicon.ico">
     <link rel="stylesheet" href="../../styles/docfx.vendor.css">
@@ -373,6 +373,7 @@ a load through the pointer created with an alloca instruction. This is pretty st
 scope map now stores the alloca instructions for the variable.</p>
 <pre><code class="lang-csharp" name="VisitVariableExpression">public override Value Visit( VariableReferenceExpression reference )
 {
+    reference.ValidateNotNull( nameof( reference ) );
     var value = LookupVariable( reference.Name );
 
     // since the Alloca is created as a non-opaque pointer it is OK to just use the
@@ -389,6 +390,7 @@ continue block load the value from the location so that it is available as a val
 expression.</p>
 <pre><code class="lang-csharp" name="VisitConditionalExpression">public override Value Visit( ConditionalExpression conditionalExpression )
 {
+    conditionalExpression.ValidateNotNull( nameof( conditionalExpression ) );
     var result = LookupVariable( conditionalExpression.ResultVariable.Name );
 
     var condition = conditionalExpression.Condition.Accept( this );
@@ -443,6 +445,7 @@ expression.</p>
 use of load/store for the variables and removal of the manually generated PHI nodes.</p>
 <pre><code class="lang-csharp" name="VisitForExpression">public override Value Visit( ForInExpression forInExpression )
 {
+    forInExpression.ValidateNotNull( nameof( forInExpression ) );
     var function = InstructionBuilder.InsertBlock.ContainingFunction;
     string varName = forInExpression.LoopVariable.Name;
     Alloca allocaVar = LookupVariable( varName );
@@ -532,6 +535,7 @@ generation tracks the variable declarations in a function so they are all availa
 into the entry block.</p>
 <pre><code class="lang-csharp" name="DefineFunction">public override Value Visit( FunctionDefinition definition )
 {
+    definition.ValidateNotNull( nameof( definition ) );
     var function = GetOrDeclareFunction( definition.Signature );
     if( !function.IsDeclaration )
     {
@@ -604,6 +608,7 @@ variable for the store. The generator then implements a store operation of the r
 Alloca for the left side.</p>
 <pre><code class="lang-csharp" name="BinaryOperatorExpression">public override Value Visit( BinaryOperatorExpression binaryOperator )
 {
+    binaryOperator.ValidateNotNull( nameof( binaryOperator ) );
     switch( binaryOperator.Op )
     {
     case BuiltInOperatorKind.Less:
@@ -683,6 +688,7 @@ child expression &quot;scope&quot; is emitted, which may contain another VarIn o
 completes, the variable scope is popped from the stack to restore back the previous level.</p>
 <pre><code class="lang-csharp" name="VisitVarInExpression">public override Value Visit( VarInExpression varInExpression )
 {
+    varInExpression.ValidateNotNull( nameof( varInExpression ) );
     using( NamedValues.EnterScope( ) )
     {
         EmitBranchToNewBlock( &quot;VarInScope&quot; );
@@ -726,7 +732,7 @@ without needing to manually deal with PHI nodes or generate SSA form! Now, that&
             <span class="pull-right">
               <a href="#top">Back to top</a>
             </span>
-            Copyright (C) 2017-2019, Ubiquity.NET Contributors<br><strong>Build:</strong> 8.0.0-alpha.0.0.ci-BLD.467560874
+            Copyright (C) 2017-2019, Ubiquity.NET Contributors<br><strong>Build:</strong> 8.0.0-beta
             
           </div>
         </div>

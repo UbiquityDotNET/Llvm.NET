@@ -8,7 +8,7 @@
     <title>Marshaling strings in LLVM.NET | Llvm.NET </title>
     <meta name="viewport" content="width=device-width">
     <meta name="title" content="Marshaling strings in LLVM.NET | Llvm.NET ">
-    <meta name="generator" content="docfx 2.42.2.0">
+    <meta name="generator" content="docfx 2.48.1.0">
     
     <link rel="shortcut icon" href="../../favicon.ico">
     <link rel="stylesheet" href="../../styles/docfx.vendor.css">
@@ -147,10 +147,10 @@ on the P/Invoke signature so it is both clear and easy to use for the upper laye
 <p>The <a href="https://github.com/UbiquityDotNET/Llvm.NET/tree/master/src/Interop/LlvmBindingsGenerator">LlvmBindingsGenerator</a>
 Creates concrete custom marshalers for every string disposal type supported. To
 keep things simple and eliminate redundancies, the generated marshalers all derive from
-a common base type <a href="xref:Llvm.NET.Interop.CustomStringMarshalerBase">CustomStringMarshalerBase</a>.</p>
+a common base type CustomStringMarshalerBase.</p>
 <h3 id="marshaling-configuration">Marshaling configuration</h3>
 <p>LLVMBindingsGenerator supports a flexible configuration to identify which functions require which
-form of marshalling. For strings this is an instance of the <a href="LLVMBindingsGenerator.StringMarshalInfo">StringMarshalInfo</a>
+form of marshaling. For strings this is an instance of the <code>StringMarshalInfo</code>
 class</p>
 </article>
           </div>
@@ -174,7 +174,7 @@ class</p>
             <span class="pull-right">
               <a href="#top">Back to top</a>
             </span>
-            Copyright (C) 2017-2019, Ubiquity.NET Contributors<br><strong>Build:</strong> 8.0.0-alpha.0.0.ci-BLD.467560874
+            Copyright (C) 2017-2019, Ubiquity.NET Contributors<br><strong>Build:</strong> 8.0.0-beta
             
           </div>
         </div>

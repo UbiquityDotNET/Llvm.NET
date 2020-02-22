@@ -8,7 +8,7 @@
     <title>5. Kaleidoscope: Control Flow | Llvm.NET </title>
     <meta name="viewport" content="width=device-width">
     <meta name="title" content="5. Kaleidoscope: Control Flow | Llvm.NET ">
-    <meta name="generator" content="docfx 2.42.2.0">
+    <meta name="generator" content="docfx 2.48.1.0">
     
     <link rel="shortcut icon" href="../../favicon.ico">
     <link rel="stylesheet" href="../../styles/docfx.vendor.css">
@@ -240,6 +240,7 @@ for generation to ensure that the correct block is used with the value.</p>
 <p>The actual code follows the description pretty closely and should now be fairly easy to follow:</p>
 <pre><code class="lang-csharp" name="ConditionalExpression">public override Value Visit( ConditionalExpression conditionalExpression )
 {
+    conditionalExpression.ValidateNotNull( nameof( conditionalExpression ) );
     var condition = conditionalExpression.Condition.Accept( this );
     if( condition == null )
     {
@@ -354,6 +355,7 @@ and direct phi-nodes remains the same.</p>
 <p>The code to generate a for loop follows this pattern pretty closely.</p>
 <pre><code class="lang-csharp" name="Main">public override Value Visit( ForInExpression forInExpression )
 {
+    forInExpression.ValidateNotNull( nameof( forInExpression ) );
     var function = InstructionBuilder.InsertBlock.ContainingFunction;
     string varName = forInExpression.LoopVariable.Name;
 
@@ -475,7 +477,7 @@ albeit simplistic, functional language.</p>
             <span class="pull-right">
               <a href="#top">Back to top</a>
             </span>
-            Copyright (C) 2017-2019, Ubiquity.NET Contributors<br><strong>Build:</strong> 8.0.0-alpha.0.0.ci-BLD.467560874
+            Copyright (C) 2017-2019, Ubiquity.NET Contributors<br><strong>Build:</strong> 8.0.0-beta
             
           </div>
         </div>
