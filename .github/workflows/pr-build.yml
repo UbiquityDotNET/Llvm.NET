@@ -20,7 +20,7 @@ jobs:
 
       - name: Checkout submodules
         run: |
-            git remote set-url https://github.com/UbiquityDotNET/Llvm.NET.git
+            git remote set-url origin https://github.com/UbiquityDotNET/Llvm.NET.git
             git submodule update --init --recursive
 
       - name: Build Source
