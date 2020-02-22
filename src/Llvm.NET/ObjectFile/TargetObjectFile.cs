@@ -44,13 +44,11 @@ namespace Llvm.NET.ObjectFile
         {
             get
             {
-                using( LLVMSymbolIteratorRef iterator = LLVMGetSymbols( ObjFileRef ) )
+                using LLVMSymbolIteratorRef iterator = LLVMGetSymbols( ObjFileRef );
+                while( !LLVMIsSymbolIteratorAtEnd( ObjFileRef, iterator ) )
                 {
-                    while( !LLVMIsSymbolIteratorAtEnd( ObjFileRef, iterator ) )
-                    {
-                        yield return new Symbol( this, iterator );
-                        LLVMMoveToNextSymbol( iterator );
-                    }
+                    yield return new Symbol( this, iterator );
+                    LLVMMoveToNextSymbol( iterator );
                 }
             }
         }
@@ -60,13 +58,11 @@ namespace Llvm.NET.ObjectFile
         {
             get
             {
-                using( LLVMSectionIteratorRef iterator = LLVMGetSections( ObjFileRef ) )
+                using LLVMSectionIteratorRef iterator = LLVMGetSections( ObjFileRef );
+                while( !LLVMIsSectionIteratorAtEnd( ObjFileRef, iterator ) )
                 {
-                    while( !LLVMIsSectionIteratorAtEnd( ObjFileRef, iterator ) )
-                    {
-                        yield return new Section( this, iterator );
-                        LLVMMoveToNextSection( iterator );
-                    }
+                    yield return new Section( this, iterator );
+                    LLVMMoveToNextSection( iterator );
                 }
             }
         }

@@ -19,39 +19,35 @@ namespace Llvm.NET.Tests
         public void TestEagerIRCompilation()
         {
             Library.RegisterNative( );
-            using(var ctx = new Context())
+            using var ctx = new Context( );
+            var nativeTriple = Triple.HostTriple;
+            var target = Target.FromTriple( nativeTriple );
+            var machine = target.CreateTargetMachine( nativeTriple );
+            using var orcJit = new OrcJit( machine );
+            using( var lazyModule = CreateModule( ctx, machine, 10101010, "lazy1", "lazy1" ) )
             {
-                var nativeTriple = Triple.HostTriple;
-                var target = Target.FromTriple( nativeTriple );
-                var machine = target.CreateTargetMachine( nativeTriple );
-                using( var orcJit = new OrcJit(machine))
-                {
-                    using( var lazyModule = CreateModule( ctx, machine, 10101010, "lazy1", "lazy1" ) )
-                    {
-                        orcJit.AddLazyCompiledModule( lazyModule );
-                    }
+                orcJit.AddLazyCompiledModule( lazyModule );
+            }
 
-                    using( var lazyModule = CreateModule( ctx, machine, 20202020, "lazy2", "lazy2" ) )
-                    {
-                        orcJit.AddLazyCompiledModule( lazyModule );
-                    }
+            using( var lazyModule = CreateModule( ctx, machine, 20202020, "lazy2", "lazy2" ) )
+            {
+                orcJit.AddLazyCompiledModule( lazyModule );
+            }
 
-                    // try several different modules with the same function name replacing the previous
-                    using( var module = CreateModule(ctx, orcJit.TargetMachine, 42 ) )
-                    {
-                        AddAndExecuteTestModule(orcJit, module, 42 );
-                    }
+            // try several different modules with the same function name replacing the previous
+            using( var module = CreateModule( ctx, orcJit.TargetMachine, 42 ) )
+            {
+                AddAndExecuteTestModule( orcJit, module, 42 );
+            }
 
-                    using( var module = CreateModule( ctx, orcJit.TargetMachine, 12345678 ) )
-                    {
-                        AddAndExecuteTestModule( orcJit, module, 12345678 );
-                    }
+            using( var module = CreateModule( ctx, orcJit.TargetMachine, 12345678 ) )
+            {
+                AddAndExecuteTestModule( orcJit, module, 12345678 );
+            }
 
-                    using( var module = CreateModule( ctx, orcJit.TargetMachine, 87654321 ) )
-                    {
-                        AddAndExecuteTestModule( orcJit, module, 87654321 );
-                    }
-                }
+            using( var module = CreateModule( ctx, orcJit.TargetMachine, 87654321 ) )
+            {
+                AddAndExecuteTestModule( orcJit, module, 87654321 );
             }
         }
 

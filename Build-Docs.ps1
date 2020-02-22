@@ -1,7 +1,7 @@
 Param(
     [string]$Configuration="Release",
     [switch]$AllowVsPreReleases,
-    [switch]$NoClone = (!([bool]$env:IsAutomatedBuild)),
+    [switch]$NoClone = (!([System.Convert]::ToBoolean($env:IsAutomatedBuild))),
     [Parameter(ParameterSetName='FullBuild')]
     $BuildInfo
 )

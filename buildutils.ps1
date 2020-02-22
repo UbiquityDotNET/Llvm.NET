@@ -109,15 +109,14 @@ function Merge-Environment( [hashtable]$OtherEnv, [string[]]$IgnoreNames )
     $otherEnv.GetEnumerator() | ?{ !($ignoreNames -icontains $_.Name) } | %{ Set-Item -Path "env:$($_.Name)" -value $_.Value }
 }
 
-function Find-VSInstance([switch]$PreRelease)
+function Find-VSInstance([switch]$PreRelease, [string[]]$Requires = @('Microsoft.Component.MSBuild'))
 {
     if( !(Get-Module -ListAvailable VSSetup))
     {
         Install-Module VSSetup -Scope CurrentUser -Force | Out-Null
     }
     Get-VSSetupInstance -Prerelease:$PreRelease |
-        Select-VSSetupInstance -Require 'Microsoft.Component.MSBuild' |
-        select -First 1
+        Select-VSSetupInstance -Require $Requires -Latest
 }
 
 function Initialize-VCVars($vsInstance = (Find-VSInstance))
@@ -143,14 +142,14 @@ function Find-MSBuild([switch]$AllowVsPreReleases)
     $msBuildPath = Find-OnPath msbuild.exe -ErrorAction Continue
     if( !$msBuildPath )
     {
-        Write-Verbose "MSBuild not found attempting to locate VS installation"
+        Write-Verbose "MSBuild not found on PATH attempting to locate VS installation"
         $vsInstall = Find-VSInstance -Prerelease:$AllowVsPreReleases
         if( !$vsInstall )
         {
             throw "MSBuild not found on PATH and No instances of VS found to use"
         }
 
-        Write-Verbose "VS installation found: $vsInstall"
+        Write-Information "VS installation found: $($vsInstall | Format-List | Out-String)"
         $msBuildPath = [System.IO.Path]::Combine( $vsInstall.InstallationPath, 'MSBuild', '15.0', 'bin', 'MSBuild.exe')
         if(!(Test-Path -PathType Leaf $msBuildPath))
         {
@@ -162,14 +161,16 @@ function Find-MSBuild([switch]$AllowVsPreReleases)
 
     if( !(Test-Path -PathType Leaf $msBuildPath ) )
     {
-        Write-Verbose 'MSBuild not found'
+        Write-Information 'MSBuild not found'
         return $null
     }
 
     Write-Verbose "MSBuild Found at: $msBuildPath"
+    $versionInfo = & $msBuildPath -version
     return @{ FullPath=$msBuildPath
               BinPath=[System.IO.Path]::GetDirectoryName( $msBuildPath )
               FoundOnPath=$foundOnPath
+              Version = $versionInfo[-1]
             }
 }
 
@@ -340,11 +341,28 @@ function Install-LlvmLibs($destPath, $llvmversion, $compiler, $compilerversion)
 
 function Initialize-BuildEnvironment
 {
-    $isAutomatedBuild = $env:CI -or $env:IsAutomatedBuild -or $env:APPVEYOR -or $env:GITHUB_ACTIONS
+    # support common parameters
+    [cmdletbinding()]
+    Param()
+
+    $msbuild = Find-MSBuild
+    if( !$msbuild )
+    {
+        throw "MSBuild not found"
+    }
+
+    if( !$msbuild.FoundOnPath )
+    {
+        $env:Path = "$env:Path;$($msbuild.BinPath)"
+    }
+
+    $isAutomatedBuild = $env:CI -or ($env:IsAutomatedBuild -and [System.Convert]::ToBoolean($env:IsAutomatedBuild)) -or $env:APPVEYOR -or $env:GITHUB_ACTIONS
     if($isAutomatedBuild)
     {
         $env:IsAutomatedBuild = 'true'
-        if($env:GITHUB_ACTIONS -and $env:GITHUB_BASE_REF)
+        $env:IsPullRequestBuild = 'false'
+        $env:IsReleaseBuild = 'false'
+        if(($env:GITHUB_ACTIONS -and $env:GITHUB_BASE_REF) -or $env:APPVEYOR_PULL_REQUEST_NUMBER)
         {
             $env:IsPullRequestBuild = 'true'
         }
@@ -368,18 +386,16 @@ function Initialize-BuildEnvironment
         $env:IsReleaseBuild = 'false'
     }
 
-    $msbuild = Find-MSBuild
-    if( !$msbuild )
-    {
-        throw "MSBuild not found"
-    }
+    Write-Verbose "MSBUILD:`n$($msbuild | Format-Table -AutoSize | Out-String)"
+    Write-Verbose (dir env:* | Format-Table -Property Name, value | Out-String)
+    Write-Verbose 'PATH:'
+    $($env:Path -split ';') | %{ Write-Verbose $_ }
 
-    if( !$msbuild.FoundOnPath )
-    {
-        $env:Path = "$env:Path;$($msbuild.BinPath)"
-    }
+    Write-Verbose ".NET Runtimes:"
+    Write-Verbose (dotnet --list-runtimes | Out-String)
 
-    Write-Verbose (dir env:* | format-table -Property Name, value | out-string)
+    Write-Verbose ".NET SDKs:"
+    Write-Verbose (dotnet --list-sdks | Out-String)
 }
 
 Set-StrictMode -version 1.0

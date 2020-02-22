@@ -34,101 +34,94 @@ namespace Llvm.NET.Tests
         public static void Initialize( TestContext ctx )
         {
             _ = ctx; // unused
-            using( var llvmContext = new Context( ) )
-            using( var module = llvmContext.CreateBitcodeModule( "test", SourceLanguage.C, TestSrcFileName, "unit tests" ) )
-            {
-                var tm = TargetMachine.FromTriple( Triple.HostTriple );
-                module.TargetTriple = tm.Triple;
-                module.Layout = tm.TargetData;
+            using var llvmContext = new Context( );
+            using var module = llvmContext.CreateBitcodeModule( "test", SourceLanguage.C, TestSrcFileName, "unit tests" );
+            var tm = TargetMachine.FromTriple( Triple.HostTriple );
+            module.TargetTriple = tm.Triple;
+            module.Layout = tm.TargetData;
 
-                var doubleType = new DebugBasicType( llvmContext.DoubleType, module, "double", DiTypeKind.Float );
-                var voidType = DebugType.Create( module.Context.VoidType, ( DIType )null );
+            var doubleType = new DebugBasicType( llvmContext.DoubleType, module, "double", DiTypeKind.Float );
+            var voidType = DebugType.Create( module.Context.VoidType, ( DIType )null );
 
-                var printDecl = module.CreateFunction( PrintFuncName, false, voidType, doubleType );
+            var printDecl = module.CreateFunction( PrintFuncName, false, voidType, doubleType );
 
-                var bldr = CreateFunctionAndGetBuilder(module, doubleType, AddFuncName, AddSectionName, 0);
-                bldr.CurrentDebugLocation = new DILocation( llvmContext, 2, 1, bldr.InsertFunction.DISubProgram );
-                var result = bldr.FAdd( bldr.InsertFunction.Parameters[ 0 ], bldr.InsertFunction.Parameters[ 1 ] );
-                _ = bldr.Call( printDecl, result );
-                bldr.Return( result );
+            var bldr = CreateFunctionAndGetBuilder(module, doubleType, AddFuncName, AddSectionName, 0);
+            bldr.CurrentDebugLocation = new DILocation( llvmContext, 2, 1, bldr.InsertFunction.DISubProgram );
+            var result = bldr.FAdd( bldr.InsertFunction.Parameters[ 0 ], bldr.InsertFunction.Parameters[ 1 ] );
+            _ = bldr.Call( printDecl, result );
+            bldr.Return( result );
 
-                bldr = CreateFunctionAndGetBuilder(module, doubleType, SubFuncName, SubSectionName, 5 );
-                bldr.CurrentDebugLocation = new DILocation( llvmContext, 7, 1, bldr.InsertFunction.DISubProgram );
-                result = bldr.FSub( bldr.InsertFunction.Parameters[ 0 ], bldr.InsertFunction.Parameters[ 1 ] );
-                _ = bldr.Call( printDecl, result );
-                bldr.Return( result );
+            bldr = CreateFunctionAndGetBuilder( module, doubleType, SubFuncName, SubSectionName, 5 );
+            bldr.CurrentDebugLocation = new DILocation( llvmContext, 7, 1, bldr.InsertFunction.DISubProgram );
+            result = bldr.FSub( bldr.InsertFunction.Parameters[ 0 ], bldr.InsertFunction.Parameters[ 1 ] );
+            _ = bldr.Call( printDecl, result );
+            bldr.Return( result );
 
-                bldr = CreateFunctionAndGetBuilder( module, doubleType, MulFuncName, MulSectionName, 10 );
-                bldr.CurrentDebugLocation = new DILocation( llvmContext, 12, 1, bldr.InsertFunction.DISubProgram );
-                result = bldr.FMul( bldr.InsertFunction.Parameters[ 0 ], bldr.InsertFunction.Parameters[ 1 ] );
-                _ = bldr.Call( printDecl, result );
-                bldr.Return( result );
+            bldr = CreateFunctionAndGetBuilder( module, doubleType, MulFuncName, MulSectionName, 10 );
+            bldr.CurrentDebugLocation = new DILocation( llvmContext, 12, 1, bldr.InsertFunction.DISubProgram );
+            result = bldr.FMul( bldr.InsertFunction.Parameters[ 0 ], bldr.InsertFunction.Parameters[ 1 ] );
+            _ = bldr.Call( printDecl, result );
+            bldr.Return( result );
 
-                bldr = CreateFunctionAndGetBuilder( module, doubleType, DivFuncName, DivSectionName, 15 );
-                bldr.CurrentDebugLocation = new DILocation( llvmContext, 17, 1, bldr.InsertFunction.DISubProgram );
-                result = bldr.FDiv( bldr.InsertFunction.Parameters[ 0 ], bldr.InsertFunction.Parameters[ 1 ] );
-                _ = bldr.Call( printDecl, result );
-                bldr.Return( result );
+            bldr = CreateFunctionAndGetBuilder( module, doubleType, DivFuncName, DivSectionName, 15 );
+            bldr.CurrentDebugLocation = new DILocation( llvmContext, 17, 1, bldr.InsertFunction.DISubProgram );
+            result = bldr.FDiv( bldr.InsertFunction.Parameters[ 0 ], bldr.InsertFunction.Parameters[ 1 ] );
+            _ = bldr.Call( printDecl, result );
+            bldr.Return( result );
 
-                Debug.WriteLine( module.WriteToString( ) );
-                tm.EmitToFile( module, TestObjFileName, CodeGenFileType.ObjectFile );
-            }
+            Debug.WriteLine( module.WriteToString( ) );
+            tm.EmitToFile( module, TestObjFileName, CodeGenFileType.ObjectFile );
         }
 
         [TestMethod]
         public void LoadObjFileTest()
         {
-            using( var obj = TargetObjectFile.Open( TestObjFileName ) )
-            {
-            }
+            using var obj = TargetObjectFile.Open( TestObjFileName );
         }
 
         [TestMethod]
         [Description("All the declared section names should exist")]
         public void DeclaredSectionsTest()
         {
-            using( var obj = TargetObjectFile.Open( TestObjFileName ) )
-            {
-                // all the declared section names should be present (There may be additional obj format specific sections as well)
-                Assert.IsTrue( obj.Sections.SingleOrDefault( s => s.Name == AddSectionName ) != default );
-                Assert.IsTrue( obj.Sections.SingleOrDefault( s => s.Name == SubSectionName ) != default );
-                Assert.IsTrue( obj.Sections.SingleOrDefault( s => s.Name == MulSectionName ) != default );
-                Assert.IsTrue( obj.Sections.SingleOrDefault( s => s.Name == DivSectionName ) != default );
-            }
+            using var obj = TargetObjectFile.Open( TestObjFileName );
+
+            // all the declared section names should be present (There may be additional obj format specific sections as well)
+            Assert.IsTrue( obj.Sections.SingleOrDefault( s => s.Name == AddSectionName ) != default );
+            Assert.IsTrue( obj.Sections.SingleOrDefault( s => s.Name == SubSectionName ) != default );
+            Assert.IsTrue( obj.Sections.SingleOrDefault( s => s.Name == MulSectionName ) != default );
+            Assert.IsTrue( obj.Sections.SingleOrDefault( s => s.Name == DivSectionName ) != default );
         }
 
         [TestMethod]
         [Description("Symbols should exist for all the declared functions")]
         public void DeclaredSymbolsTest()
         {
-            using( var obj = TargetObjectFile.Open( TestObjFileName ) )
-            {
-                // symbols should be present for all the declared functions
-                Assert.IsTrue( obj.Symbols.SingleOrDefault( s => s.Name == AddFuncName ) != default );
-                Assert.IsTrue( obj.Symbols.SingleOrDefault( s => s.Name == SubFuncName ) != default );
-                Assert.IsTrue( obj.Symbols.SingleOrDefault( s => s.Name == MulFuncName ) != default );
-                Assert.IsTrue( obj.Symbols.SingleOrDefault( s => s.Name == DivFuncName ) != default );
-            }
+            using var obj = TargetObjectFile.Open( TestObjFileName );
+
+            // symbols should be present for all the declared functions
+            Assert.IsTrue( obj.Symbols.SingleOrDefault( s => s.Name == AddFuncName ) != default );
+            Assert.IsTrue( obj.Symbols.SingleOrDefault( s => s.Name == SubFuncName ) != default );
+            Assert.IsTrue( obj.Symbols.SingleOrDefault( s => s.Name == MulFuncName ) != default );
+            Assert.IsTrue( obj.Symbols.SingleOrDefault( s => s.Name == DivFuncName ) != default );
         }
 
         [TestMethod]
         [Description( "Declared sections should have one relocation for the declared function" )]
         public void DeclaredFunctionRelocationTest( )
         {
-            using( var obj = TargetObjectFile.Open( TestObjFileName ) )
-            {
-                // all the declared section names should be present (There may be additional obj format specific sections as well)
-                var declaredSections = from sec in obj.Sections
-                                       where sec.Name == AddSectionName
+            using var obj = TargetObjectFile.Open( TestObjFileName );
+
+            // all the declared section names should be present (There may be additional obj format specific sections as well)
+            var declaredSections = from sec in obj.Sections
+                                   where sec.Name == AddSectionName
                                           || sec.Name == SubSectionName
                                           || sec.Name == MulSectionName
                                           || sec.Name == DivSectionName
-                                       select sec;
+                                   select sec;
 
-                foreach(var sec in declaredSections)
-                {
-                    Assert.AreEqual( PrintFuncName, sec.Relocations.First( ).Symbol.Name);
-                }
+            foreach( var sec in declaredSections )
+            {
+                Assert.AreEqual( PrintFuncName, sec.Relocations.First( ).Symbol.Name );
             }
         }
 

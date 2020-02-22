@@ -37,9 +37,12 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Repo Items", "Repo Items", "{BA4F7BCF-67BC-49E4-B2F9-DCED3D57619D}"
 	ProjectSection(SolutionItems) = preProject
 		..\.editorconfig = ..\.editorconfig
+		..\.gitignore = ..\.gitignore
 		..\appveyor.yml = ..\appveyor.yml
+		..\Build-All.ps1 = ..\Build-All.ps1
+		..\Build-Docs.ps1 = ..\Build-Docs.ps1
 		..\Build-Interop.ps1 = ..\Build-Interop.ps1
-		..\BuildAll.ps1 = ..\BuildAll.ps1
+		..\Build-Source.ps1 = ..\Build-Source.ps1
 		..\buildutils.ps1 = ..\buildutils.ps1
 		..\BuildVersion.xml = ..\BuildVersion.xml
 		..\CODE_OF_CONDUCT.md = ..\CODE_OF_CONDUCT.md

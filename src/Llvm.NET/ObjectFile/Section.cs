@@ -29,13 +29,11 @@ namespace Llvm.NET.ObjectFile
         {
             get
             {
-                using( LLVMRelocationIteratorRef iterator = LLVMGetRelocations( IteratorRef ) )
+                using LLVMRelocationIteratorRef iterator = LLVMGetRelocations( IteratorRef );
+                while( !LLVMIsRelocationIteratorAtEnd( IteratorRef, iterator ) )
                 {
-                    while( !LLVMIsRelocationIteratorAtEnd( IteratorRef, iterator ) )
-                    {
-                        yield return new Relocation( this, iterator );
-                        LLVMMoveToNextRelocation( iterator );
-                    }
+                    yield return new Relocation( this, iterator );
+                    LLVMMoveToNextRelocation( iterator );
                 }
             }
         }

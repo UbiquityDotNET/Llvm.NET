@@ -17,6 +17,7 @@ namespace Llvm.NET.Tests
         {
             var target = Target.FromTriple( DefaultTargetTriple );
             var machine = GetTargetMachine( target );
+
             Assert.IsNotNull( machine );
             Assert.AreSame( target, machine.Target );
             Assert.AreEqual( DefaultTargetTriple, machine.Triple );

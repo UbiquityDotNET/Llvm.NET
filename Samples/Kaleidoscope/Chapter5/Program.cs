@@ -44,18 +44,16 @@ namespace Kaleidoscope.Chapter5
 
                 #region GeneratorLoop
                 var parser = new Parser( LanguageFeatureLevel );
-                using( var generator = new CodeGenerator( parser.GlobalState ) )
-                {
-                    var readyState = new ReadyStateManager( );
+                using var generator = new CodeGenerator( parser.GlobalState );
+                var readyState = new ReadyStateManager( );
 
-                    // Create Observable chain to provide the REPL implementation
-                    var replSeq = parser.Parse( Console.In.ToObservableStatements( ShowPrompt ), ShowCodeGenError )
+                // Create Observable chain to provide the REPL implementation
+                var replSeq = parser.Parse( Console.In.ToObservableStatements( ShowPrompt ), ShowCodeGenError )
                                         .GenerateResults( generator, ShowCodeGenError );
 
-                    // Run the sequence
-                    using( replSeq.Subscribe( ShowResults ) )
-                    {
-                    }
+                // Run the sequence
+                using( replSeq.Subscribe( ShowResults ) )
+                {
                 }
                 #endregion
             }

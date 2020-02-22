@@ -3,11 +3,11 @@
   <Sdk Name="Microsoft.Build.CentralPackageVersions" />
   <PropertyGroup>
     <AssemblyVersion>0.0.1.0</AssemblyVersion>
-    <TargetFramework>netcoreapp2.1</TargetFramework>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
     <OutputType>exe</OutputType>
     <OutputTypeEx>exe</OutputTypeEx>
     <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
-    <LangVersion>7.2</LangVersion>
+    <LangVersion>8.0</LangVersion>
   </PropertyGroup>
   <ItemGroup>
     <None Include="Support Files\ClangCompile.cmd">

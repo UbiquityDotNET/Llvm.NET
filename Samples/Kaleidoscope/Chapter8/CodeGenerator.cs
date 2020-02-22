@@ -82,12 +82,10 @@ namespace Kaleidoscope.Chapter8
                     // and inlines each of the anonymous functions directly into main, dropping the now
                     // unused original anonymous functions all while retaining all of the original source
                     // debug information locations.
-                    using( var mpm = new ModulePassManager( ) )
-                    {
-                        mpm.AddAlwaysInlinerPass( )
-                           .AddGlobalDCEPass( )
-                           .Run( Module );
-                    }
+                    using var mpm = new ModulePassManager( );
+                    mpm.AddAlwaysInlinerPass( )
+.AddGlobalDCEPass( )
+.Run( Module );
                 }
             }
             catch(CodeGeneratorException ex) when ( codeGenerationErroHandler != null)
