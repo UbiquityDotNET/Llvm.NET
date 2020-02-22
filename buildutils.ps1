@@ -353,16 +353,16 @@ function Initialize-BuildEnvironment
 
     # IsPullRequestBuild indicates an automated buddy build and should not be trusted
     $global:IsPullRequestBuild = [System.Convert]::ToBoolean($env:IsPullRequestBuild)
-    if(!$IsPullRequestBuild -and $IsAutomatedBuild)
+    if(!$global:IsPullRequestBuild -and $global:IsAutomatedBuild)
     {
-        $IsPullRequestBuild = $env:GITHUB_BASE_REF -or $env:APPVEYOR_PULL_REQUEST_NUMBER
+        $global:IsPullRequestBuild = $env:GITHUB_BASE_REF -or $env:APPVEYOR_PULL_REQUEST_NUMBER
     }
 
     $global:IsReleaseBuild = [System.Convert]::ToBoolean($env:IsReleaseBuild)
-    if(!$IsReleaseBuild -and $IsAutomatedBuild -and !$IsPullRequestBuild)
+    if(!$global:IsReleaseBuild -and $global:IsAutomatedBuild -and !$global:IsPullRequestBuild)
     {
         # TODO: Determine how to detect release tag builds with GITHUB ACTIONS
-        $IsReleaseBuild = $env:APPVEYOR_REPO_TAG
+        $global:IsReleaseBuild = $env:APPVEYOR_REPO_TAG
     }
 
     # set/reset environment vars for non-script tools (i.e. msbuild.exe)
@@ -387,7 +387,7 @@ function Initialize-BuildEnvironment
     }
 
     # for an automated build, get the ISO-8601 formatted time stamp of the HEAD commit
-    if($IsAutomatedBuild -and !$env:BuildTime)
+    if($global:IsAutomatedBuild -and !$env:BuildTime)
     {
         $env:BuildTime = (git show -s --format=%cI)
     }
