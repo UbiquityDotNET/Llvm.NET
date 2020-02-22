@@ -59,7 +59,7 @@
       <DocFxCrossRefMap Include="$(MsdnXrefPath)\content\namespaces.4.5.2.zip" />
     </ItemGroup>
     <PropertyGroup>
-      <LogLevel>Verbose</LogLevel>
+      <LogLevel>Warning</LogLevel>
       <LogFile>$(IntermediateOutputPath)DocFx-Metadata.log</LogFile>
       <DocParameters>$(DocParameters) --globalMetadata="{_buildVersion:\"$(FullBuildNumber)\"}"</DocParameters>
       <DocParameters>$(DocParameters) --intermediateFolder="$(IntermediateOutputPath.TrimEnd('\'))"</DocParameters>
