@@ -87,6 +87,8 @@ try
             popd
         }
     }
+
+    Write-Information "Finished building docs"
 }
 finally
 {
