@@ -15,6 +15,10 @@ jobs:
     steps:
       - name: Checkout Repo
         uses: actions/checkout@v2
+        with:
+            fetch-depth: 0
+        run:
+            git remote set-url https://github.com/UbiquityDotNET/Llvm.NET.git
 
       - name: Checkout submodules
         run: git submodule update --init --recursive
