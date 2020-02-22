@@ -15,7 +15,7 @@ if(!$canPush)
 # This ensures that the links to source in the generated docs will have the correct URLs
 # (e.g. docs pushed to the official repository MUST not have links to source in some private fork)
 $remoteUrl = git ls-remote --get-url
-if($remoteUrl -ine "https://github.com/UbiquityDotNET/Llvm.NET.git")
+if(!($remoteUrl -like 'https://github.com/UbiquityDotNET/Llvm.NET*'))
 {
     throw "Pushing docs is only allowed when the origin remote is the official source release current remote is '$remoteUrl'"
 }

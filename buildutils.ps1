@@ -355,8 +355,7 @@ function Initialize-BuildEnvironment
     $global:IsPullRequestBuild = [System.Convert]::ToBoolean($env:IsPullRequestBuild)
     if(!$IsPullRequestBuild -and $IsAutomatedBuild)
     {
-        $IsPullRequestBuild = ($env:GITHUB_ACTIONS -and $env:GITHUB_BASE_REF) `
-                              -or $env:APPVEYOR_PULL_REQUEST_NUMBER
+        $IsPullRequestBuild = $env:GITHUB_BASE_REF -or $env:APPVEYOR_PULL_REQUEST_NUMBER
     }
 
     $global:IsReleaseBuild = [System.Convert]::ToBoolean($env:IsReleaseBuild)
