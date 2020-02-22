@@ -372,6 +372,8 @@ function Initialize-BuildEnvironment
     $env:IsReleaseBuild = $global:IsReleaseBuild
 
     Write-Information (dir env:Is* | Format-Table -Property Name, value | Out-String)
+    Write-Information (dir env:GITHUB* | Format-Table -Property Name, value | Out-String)
+    Write-Information (dir env:APPVEYOR* | Format-Table -Property Name, value | Out-String)
 
     $msbuild = Find-MSBuild
     if( !$msbuild )
