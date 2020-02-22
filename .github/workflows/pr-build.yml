@@ -15,13 +15,9 @@ jobs:
     steps:
       - name: Checkout Repo
         uses: actions/checkout@v2
-        with:
-            fetch-depth: 0
 
       - name: Checkout submodules
-        run: |
-            git remote set-url origin https://github.com/UbiquityDotNET/Llvm.NET.git
-            git submodule update --init --recursive
+        run: git submodule update --init --recursive
 
       - name: Build Source
         run: .\Build-All.ps1
@@ -41,6 +37,6 @@ jobs:
 
       - name: Publish Docs
         if: success() && github.event_name == 'push'
-#        env:
-#          docspush_access_token: ${{secrets.docspush_access_token}}
+        env:
+          docspush_access_token: ${{secrets.docspush_access_token}}
         run: .\Push-Docs.ps1
