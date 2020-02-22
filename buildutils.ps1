@@ -345,6 +345,32 @@ function Initialize-BuildEnvironment
     [cmdletbinding()]
     Param()
 
+    # IsAutomatedBuild is the top level gate (e.g. if it is false, all the others must be false)
+    $global:IsAutomatedBuild = [System.Convert]::ToBoolean($env:IsAutomatedBuild) `
+                               -or $env:CI `
+                               -or $env:APPVEYOR `
+                               -or $env:GITHUB_ACTIONS
+
+    # IsPullRequestBuild indicates an automated buddy build and should not be trusted
+    $global:IsPullRequestBuild = [System.Convert]::ToBoolean($env:IsPullRequestBuild)
+    if(!$global:IsPullRequestBuild -and $global:IsAutomatedBuild)
+    {
+        $global:IsPullRequestBuild = $env:GITHUB_BASE_REF -or $env:APPVEYOR_PULL_REQUEST_NUMBER
+    }
+
+    $global:IsReleaseBuild = [System.Convert]::ToBoolean($env:IsReleaseBuild)
+    if(!$global:IsReleaseBuild -and $global:IsAutomatedBuild -and !$global:IsPullRequestBuild)
+    {
+        # TODO: Determine how to detect release tag builds with GITHUB ACTIONS
+        $global:IsReleaseBuild = $env:APPVEYOR_REPO_TAG
+    }
+
+    # set/reset environment vars for non-script tools (i.e. msbuild.exe)
+    # Script code should ALWAYS use the globals as they don't require conversion to bool
+    $env:IsAutomatedBuild = $global:IsAutomatedBuild
+    $env:IsPullRequestBuild = $global:IsPullRequestBuild
+    $env:IsReleaseBuild = $global:IsReleaseBuild
+
     $msbuild = Find-MSBuild
     if( !$msbuild )
     {
@@ -356,34 +382,10 @@ function Initialize-BuildEnvironment
         $env:Path = "$env:Path;$($msbuild.BinPath)"
     }
 
-    $isAutomatedBuild = $env:CI -or ($env:IsAutomatedBuild -and [System.Convert]::ToBoolean($env:IsAutomatedBuild)) -or $env:APPVEYOR -or $env:GITHUB_ACTIONS
-    if($isAutomatedBuild)
+    # for an automated build, get the ISO-8601 formatted time stamp of the HEAD commit
+    if($global:IsAutomatedBuild -and !$env:BuildTime)
     {
-        $env:IsAutomatedBuild = 'true'
-        $env:IsPullRequestBuild = 'false'
-        $env:IsReleaseBuild = 'false'
-        if(($env:GITHUB_ACTIONS -and $env:GITHUB_BASE_REF) -or $env:APPVEYOR_PULL_REQUEST_NUMBER)
-        {
-            $env:IsPullRequestBuild = 'true'
-        }
-
-        # for an automated build, get the ISO-8601 formatted time stamp of the HEAD commit
-        if($isAutomatedBuild -and !$env:BuildTime)
-        {
-            $env:BuildTime = (git show -s --format=%cI)
-        }
-
-        # TODO: Determine how to detect release tag builds with GITHUB ACTIONS
-        if($env:APPVEYOR_REPO_TAG -and !$env:APPVEYOR_PULL_REQUEST_NUMBER)
-        {
-            $env:IsReleaseBuild = 'true'
-        }
-    }
-    else
-    {
-        $env:IsAutomatedBuild = 'false'
-        $env:IsPullRequestBuild = 'false'
-        $env:IsReleaseBuild = 'false'
+        $env:BuildTime = (git show -s --format=%cI)
     }
 
     Write-Verbose "MSBUILD:`n$($msbuild | Format-Table -AutoSize | Out-String)"
