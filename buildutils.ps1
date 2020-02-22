@@ -345,26 +345,32 @@ function Initialize-BuildEnvironment
     [cmdletbinding()]
     Param()
 
-    # IsAutomatedBuild is the top level gate (e.g. if it is false, all the others must be false)
-    $global:IsAutomatedBuild = [System.Convert]::ToBoolean($env:IsAutomatedBuild) `
-                                -or $env:CI `
-                                -or $env:APPVEYOR `
-                                -or $env:GITHUB_ACTIONS
+    $global:IsAutomatedBuild = [System.Convert]::ToBoolean($env:IsAutomatedBuild)
+    $global:IsPullRequestBuild = [System.Convert]::ToBoolean($env:IsPullRequestBuild)
+    $global:IsReleaseBuild = [System.Convert]::ToBoolean($env:IsReleaseBuild)
 
-    $global:IsPullRequestBuild = [System.Convert]::ToBoolean($env:IsPullRequestBuild) `
-                                 -and $IsAutomatedBuild `
-                                 -and ( ($env:GITHUB_ACTIONS -and $env:GITHUB_BASE_REF) -or $env:APPVEYOR_PULL_REQUEST_NUMBER)
+    # IsAutomatedBuild is the top level gate (e.g. if it is false, all the others must be false)
+    $global:IsAutomatedBuild = $IsAutomatedBuild `
+                               -or $env:CI `
+                               -or $env:APPVEYOR `
+                               -or $env:GITHUB_ACTIONS
+
+    $global:IsPullRequestBuild = $IsAutomatedBuild `
+                                 -and ( $IsPullRequestBuild `
+                                        -or ( ($env:GITHUB_ACTIONS -and $env:GITHUB_BASE_REF) `
+                                              -or $env:APPVEYOR_PULL_REQUEST_NUMBER ) )
 
     # TODO: Determine how to detect release tag builds with GITHUB ACTIONS
-    $global:IsReleaseBuild = [System.Convert]::ToBoolean($env:IsReleaseBuild) `
-                             -and $IsAutomatedBuild `
-                             -and ($env:APPVEYOR_REPO_TAG -and !$IsPullRequestBuild)
+    $global:IsReleaseBuild = $IsAutomatedBuild `
+                             -and ($IsReleaseBuildBuild -or ($env:APPVEYOR_REPO_TAG -and !$IsPullRequestBuild ) )
 
     # set/reset environment vars for non-script tools (i.e. msbuild.exe)
     # Script code should ALWAYS use the globals as they don't require conversion to bool
     $env:IsAutomatedBuild = $global:IsAutomatedBuild
     $env:IsPullRequestBuild = $global:IsPullRequestBuild
     $env:IsReleaseBuild = $global:IsReleaseBuild
+
+    Write-Information (dir env:Is* | Format-Table -Property Name, value | Out-String)
 
     $msbuild = Find-MSBuild
     if( !$msbuild )
