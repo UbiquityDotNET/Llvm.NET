@@ -41,6 +41,6 @@ jobs:
 
       - name: Publish Docs
         if: success() && github.event_name == 'push'
-        env:
-          docspush_access_token: ${{secrets.docspush_access_token}}
+#        env:
+#          docspush_access_token: ${{secrets.docspush_access_token}}
         run: .\Push-Docs.ps1
