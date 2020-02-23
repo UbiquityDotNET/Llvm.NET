@@ -69,6 +69,7 @@ catch
 {
     cmd /c echo Error pushing docs:
     cmd /c echo ($_.Exception | out-string)
+    throw
 }
 finally
 {
