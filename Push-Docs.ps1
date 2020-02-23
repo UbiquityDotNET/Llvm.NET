@@ -17,13 +17,16 @@ if(!$canPush)
 $remoteUrl = git ls-remote --get-url
 if(!($remoteUrl -like 'https://github.com/UbiquityDotNET/Llvm.NET*'))
 {
-    Write-Error "Pushing docs is only allowed when the origin remote is the official source release current remote is '$remoteUrl'"
+    throw "Pushing docs is only allowed when the origin remote is the official source release current remote is '$remoteUrl'"
 }
 
 pushd .\BuildOutput\docs -ErrorAction Stop
 try
 {
-    Write-Information "pushing changes to git from $((Get-Location).Path)"
+    # Best effort, on git commands as they can return non-zero even if nothing is wrong.
+    $ErrorActionPreference = 'Continue'
+
+    Write-Information "pushing changes to git"
     git push
 }
 finally
