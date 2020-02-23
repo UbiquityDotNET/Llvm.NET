@@ -18,7 +18,7 @@ $remoteUrl = git ls-remote --get-url
 
 Write-Information "Remote URL: $remoteUrl"
 
-if($remoteUrl -like "https://github.com/UbiquityDotNET/Llvm.NET*")
+if(!($remoteUrl -like "https://github.com/UbiquityDotNET/Llvm.NET*"))
 {
     throw "Pushing docs is only allowed when the origin remote is the official source release current remote is '$remoteUrl'"
 }
