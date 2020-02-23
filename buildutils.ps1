@@ -413,6 +413,7 @@ function Initialize-BuildEnvironment
         Write-Information ".NET SDKs:"
         Write-Information (dotnet --list-sdks | Out-String)
     }
+
+    Set-StrictMode -version 1.0
 }
 
-Set-StrictMode -version 1.0
