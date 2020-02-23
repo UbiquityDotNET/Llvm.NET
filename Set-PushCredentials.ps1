@@ -2,9 +2,11 @@
 
 Initialize-BuildEnvironment
 
+$buildPaths = Get-BuildPaths $PSScriptRoot
+
 if( $IsAutomatedBuild -and !$IsPullRequestBuild )
 {
-    pushd $BuildInfo.BuildOutputDocs
+    pushd $buildPaths.DocsOutput
     try
     {
         if(!$env:docspush_access_token)
