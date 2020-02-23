@@ -1,7 +1,7 @@
 Param(
     [string]$Configuration="Release",
     [switch]$AllowVsPreReleases,
-    [switch]$NoClone = !($IsAutomatedBuild),
+    [switch]$NoClone = (!([System.Convert]::ToBoolean($env:IsAutomatedBuild))),
     [Parameter(ParameterSetName='FullBuild')]
     $BuildInfo
 )
@@ -21,6 +21,10 @@ try
     {
         $buildPaths = Get-BuildPaths $PSScriptRoot
         $BuildInfo = Get-BuildInformation $buildPaths
+        if($env:APPVEYOR)
+        {
+            Update-AppVeyorBuild -Version $BuildInfo.FullBuildNumber
+        }
     }
     $msBuildProperties = @{ Configuration = $Configuration
                             FullBuildNumber = $BuildInfo.FullBuildNumber
@@ -61,29 +65,6 @@ try
 
     Write-Information "Building Docs Project"
     Invoke-MSBuild -Targets 'Build' -Project docfx\Llvm.NET.DocFX.csproj -Properties $msBuildProperties -LoggerArgs ($BuildInfo.MsBuildLoggerArgs + @("/bl:$docfxBinLogPath") )
-
-    if(!$NoClone -and $IsAutomatedBuild -and !$IsPullRequestBuild)
-    {
-        pushd $buildPaths.DocsOutput
-        try
-        {
-            # Best effort, on git commands as they can return non-zero even if
-            # nothing is wrong.
-            $ErrorActionPreference = Continue
-            Write-Information "Adding files to git"
-            git add -A
-            git ls-files -o --exclude-standard | %{ git add $_}
-
-            Write-Information "Committing changes to git"
-            git commit --allow-empty -m "CI Docs Update"
-        }
-        finally
-        {
-            popd
-        }
-    }
-
-    Write-Information "Finished building docs"
 }
 finally
 {

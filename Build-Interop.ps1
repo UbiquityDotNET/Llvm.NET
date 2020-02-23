@@ -51,6 +51,10 @@ try
     if(!$BuildInfo)
     {
         $BuildInfo = Get-BuildInformation $buildPaths
+        if($env:APPVEYOR)
+        {
+            Update-AppVeyorBuild -Version $BuildInfo.FullBuildNumber
+        }
     }
 
     $msBuildProperties = @{ Configuration = $Configuration

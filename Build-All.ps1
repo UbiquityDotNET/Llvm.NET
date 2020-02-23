@@ -39,11 +39,6 @@ try
     md $buildPaths.NuGetOutputPath -ErrorAction SilentlyContinue| Out-Null
 
     $BuildInfo = Get-BuildInformation $buildPaths
-    if($env:APPVEYOR)
-    {
-        Write-Information "Updating APPVEYOR version: $($BuildInfo.FullBuildNumber)"
-        Update-AppVeyorBuild -Version "$($BuildInfo.FullBuildNumber) [$([DateTime]::Now)]"
-    }
 
     if($BuildSource)
     {
@@ -58,7 +53,6 @@ try
     # AppVeyor specific artifact push. (Should be part of YML so scripts are build infra neutral...)
     if( $env:APPVEYOR_PULL_REQUEST_NUMBER )
     {
-        Write-Information "Uploading BINLOG artifacts"
         Get-ChildItem  -Filter *.binlog $buildPaths.BinLogsPath | %{ Push-AppveyorArtifact $_.FullName }
     }
 }
@@ -67,5 +61,3 @@ finally
     popd
     $env:Path = $oldPath
 }
-
-Write-Information "Build finished"
