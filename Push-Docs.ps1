@@ -67,7 +67,8 @@ try
 }
 catch
 {
-    Write-Error $_.Exception
+    cmd /c echo Error pushing docs:
+    cmd /c echo ($_.Exception | out-string)
 }
 finally
 {
