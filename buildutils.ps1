@@ -403,7 +403,7 @@ function Initialize-BuildEnvironment
     if($LogDetails)
     {
         Write-Information "MSBUILD:`n$($msbuild | Format-Table -AutoSize | Out-String)"
-        Write-Information (dir env:* | Format-Table -Property Name, value | Out-String)
+        Write-Information (dir env:Is* | Format-Table -Property Name, value | Out-String)
         Write-Information 'PATH:'
         $($env:Path -split ';') | %{ Write-Information $_ }
 
