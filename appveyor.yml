@@ -30,13 +30,13 @@ nuget:
   project_feed: true
 
 build_script:
-  - ps: .\Build-All.ps1 -BuildMode Docs
+  - ps: .\Build-All.ps1
 
 #deploy_script:
 #  - ps: .\Push-Docs.ps1
 
-#test_script:
-#  - ps: .\Invoke-UnitTests.ps1; Set-Culture fr-FR; .\Invoke-UnitTests.ps1;
+test_script:
+  - ps: .\Invoke-UnitTests.ps1; Set-Culture fr-FR; .\Invoke-UnitTests.ps1;
 
-#artifacts:
-#  - path: .\BuildOutput\Nuget\*.nupkg
+artifacts:
+  - path: .\BuildOutput\Nuget\*.nupkg

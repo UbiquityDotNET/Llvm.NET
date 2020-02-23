@@ -69,7 +69,5 @@ finally
 {
     popd
     $env:Path = $oldPath
+    Write-Information "Build finished"
 }
-
-Write-Information "Build finished"
-return 0

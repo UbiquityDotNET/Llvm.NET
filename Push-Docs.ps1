@@ -26,10 +26,6 @@ try
     Write-Information "pushing changes to git from $((Get-Location).Path)"
     git push
 }
-catch
-{
-    Write-Information "Caught Exception:`n$($_.Exception)"
-}
 finally
 {
     popd
