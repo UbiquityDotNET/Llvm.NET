@@ -1,8 +1,6 @@
 Param(
     [string]$Configuration="Release",
-    [switch]$AllowVsPreReleases,
-    [Parameter(ParameterSetName='FullBuild')]
-    $BuildInfo
+    [switch]$AllowVsPreReleases
 )
 
 . .\buildutils.ps1
@@ -17,12 +15,6 @@ pushd $PSScriptRoot
 $oldPath = $env:Path
 try
 {
-    $buildPaths = Get-BuildPaths $PSScriptRoot
-    if(!$BuildInfo)
-    {
-        $BuildInfo = Get-BuildInformation $buildPaths
-    }
-
     if($env:APPVEYOR)
     {
         Write-Information "Updating APPVEYOR version: $($BuildInfo.FullBuildNumber)"
@@ -31,7 +23,7 @@ try
 
     $packProperties = @{ version=$($BuildInfo.PackageVersion)
                          llvmversion=$($BuildInfo.LlvmVersion)
-                         buildbinoutput=(normalize-path (Join-path $($buildPaths.BuildOutputPath) 'bin'))
+                         buildbinoutput=(normalize-path (Join-path $($BuildPaths.BuildOutputPath) 'bin'))
                          configuration=$Configuration
                        }
 
@@ -52,11 +44,11 @@ try
     # and incompatibilities libs are generally not something published in a package. However, since the build time
     # for the libraries exceeds the time allowed for most hosted build services these must be pre-built for the
     # automated builds.
-    Install-LlvmLibs $buildPaths.LlvmLibsRoot "8.0.0" "msvc" "15.9"
+    Install-LlvmLibs $BuildPaths.LlvmLibsRoot "8.0.0" "msvc" "15.9"
 
     .\Build-Interop.ps1 -BuildInfo $BuildInfo
 
-    $buildLogPath = Join-Path $buildPaths.BinLogsPath Llvm.NET.binlog
+    $buildLogPath = Join-Path $BuildPaths.BinLogsPath Llvm.NET.binlog
     Write-Information "Restoring NuGet Packages for Llvm.NET"
     Invoke-MSBuild -Targets 'Restore;Build' -Project src\Llvm.NET.sln -Properties $msBuildProperties -LoggerArgs ($BuildInfo.MsBuildLoggerArgs + @("/bl:$buildLogPath") )
 }

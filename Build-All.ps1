@@ -25,20 +25,13 @@ switch($BuildMode)
 
 try
 {
-    $buildPaths = Get-BuildPaths $PSScriptRoot
-
-    Write-Information "Build Paths:"
-    Write-Information ($buildPaths | Format-Table | Out-String)
-
-    if( (Test-Path -PathType Container $buildPaths.BuildOutputPath) -and !$NoClean )
+    if( (Test-Path -PathType Container $BuildPaths.BuildOutputPath) -and !$NoClean )
     {
         Write-Information "Cleaning output folder from previous builds"
-        rd -Recurse -Force -Path $buildPaths.BuildOutputPath
+        rd -Recurse -Force -Path $BuildPaths.BuildOutputPath
     }
 
-    md $buildPaths.NuGetOutputPath -ErrorAction SilentlyContinue| Out-Null
-
-    $BuildInfo = Get-BuildInformation $buildPaths
+    md $BuildPaths.NuGetOutputPath -ErrorAction SilentlyContinue| Out-Null
 
     if($BuildSource)
     {
@@ -53,7 +46,7 @@ try
     # AppVeyor specific artifact push. (Should be part of YML so scripts are build infra neutral...)
     if( $env:APPVEYOR_PULL_REQUEST_NUMBER )
     {
-        Get-ChildItem  -Filter *.binlog $buildPaths.BinLogsPath | %{ Push-AppveyorArtifact $_.FullName }
+        Get-ChildItem  -Filter *.binlog $BuildPaths.BinLogsPath | %{ Push-AppveyorArtifact $_.FullName }
     }
 }
 finally

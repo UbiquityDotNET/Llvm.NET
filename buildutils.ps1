@@ -204,22 +204,22 @@ function Normalize-Path([string]$path)
 
 function Get-BuildPaths([string]$repoRoot)
 {
-    $buildPaths =  @{}
-    $buildPaths.RepoRoot = $repoRoot
-    $buildPaths.BuildOutputPath = Normalize-Path (Join-Path $repoRoot 'BuildOutput')
-    $buildPaths.NuGetRepositoryPath = Normalize-Path (Join-Path $buildPaths.BuildOutputPath 'packages')
-    $buildPaths.NuGetOutputPath = Normalize-Path (Join-Path $buildPaths.BuildOutputPath 'NuGet')
-    $buildPaths.SrcRoot = Normalize-Path (Join-Path $repoRoot 'src')
-    $buildPaths.LlvmLibsRoot = Normalize-Path (Join-Path $buildPaths.repoRoot 'llvm')
-    $buildPaths.BuildExtensionsRoot = ([IO.Path]::Combine( $repoRoot, 'BuildExtensions') )
-    $buildPaths.GenerateVersionProj = ([IO.Path]::Combine( $buildPaths.BuildExtensionsRoot, 'CommonVersion.csproj') )
-    $buildPaths.DocsOutput = ([IO.Path]::Combine( $buildPaths.BuildOutputPath, 'docs') )
-    $buildPaths.BinLogsPath = Normalize-Path (Join-Path $buildPaths.BuildOutputPath 'BinLogs')
-    $buildPaths.TestResultsPath = Join-Path $buildPaths.BuildOutputPath 'Test-Results'
-    return $buildPaths
+    $BuildPaths =  @{}
+    $BuildPaths.RepoRoot = $repoRoot
+    $BuildPaths.BuildOutputPath = Normalize-Path (Join-Path $repoRoot 'BuildOutput')
+    $BuildPaths.NuGetRepositoryPath = Normalize-Path (Join-Path $BuildPaths.BuildOutputPath 'packages')
+    $BuildPaths.NuGetOutputPath = Normalize-Path (Join-Path $BuildPaths.BuildOutputPath 'NuGet')
+    $BuildPaths.SrcRoot = Normalize-Path (Join-Path $repoRoot 'src')
+    $BuildPaths.LlvmLibsRoot = Normalize-Path (Join-Path $BuildPaths.repoRoot 'llvm')
+    $BuildPaths.BuildExtensionsRoot = ([IO.Path]::Combine( $repoRoot, 'BuildExtensions') )
+    $BuildPaths.GenerateVersionProj = ([IO.Path]::Combine( $BuildPaths.BuildExtensionsRoot, 'CommonVersion.csproj') )
+    $BuildPaths.DocsOutput = ([IO.Path]::Combine( $BuildPaths.BuildOutputPath, 'docs') )
+    $BuildPaths.BinLogsPath = Normalize-Path (Join-Path $BuildPaths.BuildOutputPath 'BinLogs')
+    $BuildPaths.TestResultsPath = Join-Path $BuildPaths.BuildOutputPath 'Test-Results'
+    return $BuildPaths
 }
 
-function Get-BuildInformation($buildPaths, $DefaultVerbosity='Minimal')
+function Get-BuildInformation($BuildPaths, $DefaultVerbosity='Minimal')
 {
     $msbuildLoggerArgs = @("/clp:Verbosity=$DefaultVerbosity")
 
@@ -228,13 +228,13 @@ function Get-BuildInformation($buildPaths, $DefaultVerbosity='Minimal')
         $msbuildLoggerArgs += "/logger:`"C:\Program Files\AppVeyor\BuildAgent\Appveyor.MSBuildLogger.dll`""
     }
 
-    Write-Information "Restoring NuGet for $($buildPaths.GenerateVersionProj)"
-    $ignored = Invoke-MSBuild -Targets 'Restore' -Project $buildPaths.GenerateVersionProj -LoggerArgs ($msbuildLoggerArgs + @("/bl:GenerateVersion-Restore.binlog") )
+    Write-Information "Restoring NuGet for $($BuildPaths.GenerateVersionProj)"
+    $ignored = Invoke-MSBuild -Targets 'Restore' -Project $BuildPaths.GenerateVersionProj -LoggerArgs ($msbuildLoggerArgs + @("/bl:GenerateVersion-Restore.binlog") )
 
-    Write-Information "Generating version info from $($buildPaths.GenerateVersionProj)"
-    $ignored = Invoke-MSBuild -Targets 'GenerateVersionJson' -Project $buildPaths.GenerateVersionProj -LoggerArgs ($msbuildLoggerArgs + @("/bl:GenerateVersion-Build.binlog") )
+    Write-Information "Generating version info from $($BuildPaths.GenerateVersionProj)"
+    $ignored = Invoke-MSBuild -Targets 'GenerateVersionJson' -Project $BuildPaths.GenerateVersionProj -LoggerArgs ($msbuildLoggerArgs + @("/bl:GenerateVersion-Build.binlog") )
 
-    $semVer = get-content (Join-Path $buildPaths.BuildOutputPath GeneratedVersion.json) | ConvertFrom-Json
+    $semVer = get-content (Join-Path $BuildPaths.BuildOutputPath GeneratedVersion.json) | ConvertFrom-Json
 
     return @{ FullBuildNumber = $semVer.FullBuildNumber
               PackageVersion = $semVer.FullBuildNumber
@@ -343,7 +343,33 @@ function Initialize-BuildEnvironment
 {
     # support common parameters
     [cmdletbinding()]
-    Param()
+    Param([switch]$LogDetails)
+
+    # IsAutomatedBuild is the top level gate (e.g. if it is false, all the others must be false)
+    $global:IsAutomatedBuild = [System.Convert]::ToBoolean($env:IsAutomatedBuild) `
+                               -or $env:CI `
+                               -or $env:APPVEYOR `
+                               -or $env:GITHUB_ACTIONS
+
+    # IsPullRequestBuild indicates an automated buddy build and should not be trusted
+    $global:IsPullRequestBuild = [System.Convert]::ToBoolean($env:IsPullRequestBuild)
+    if(!$global:IsPullRequestBuild -and $global:IsAutomatedBuild)
+    {
+        $global:IsPullRequestBuild = $env:GITHUB_BASE_REF -or $env:APPVEYOR_PULL_REQUEST_NUMBER
+    }
+
+    $global:IsReleaseBuild = [System.Convert]::ToBoolean($env:IsReleaseBuild)
+    if(!$global:IsReleaseBuild -and $global:IsAutomatedBuild -and !$global:IsPullRequestBuild)
+    {
+        # TODO: Determine how to detect release tag builds with GITHUB ACTIONS
+        $global:IsReleaseBuild = $env:APPVEYOR_REPO_TAG
+    }
+
+    # set/reset environment vars for non-script tools (i.e. msbuild.exe)
+    # Script code should ALWAYS use the globals as they don't require conversion to bool
+    $env:IsAutomatedBuild = $global:IsAutomatedBuild
+    $env:IsPullRequestBuild = $global:IsPullRequestBuild
+    $env:IsReleaseBuild = $global:IsReleaseBuild
 
     $msbuild = Find-MSBuild
     if( !$msbuild )
@@ -356,46 +382,37 @@ function Initialize-BuildEnvironment
         $env:Path = "$env:Path;$($msbuild.BinPath)"
     }
 
-    $isAutomatedBuild = $env:CI -or ($env:IsAutomatedBuild -and [System.Convert]::ToBoolean($env:IsAutomatedBuild)) -or $env:APPVEYOR -or $env:GITHUB_ACTIONS
-    if($isAutomatedBuild)
+    # for an automated build, get the ISO-8601 formatted time stamp of the HEAD commit
+    if($global:IsAutomatedBuild -and !$env:BuildTime)
     {
-        $env:IsAutomatedBuild = 'true'
-        $env:IsPullRequestBuild = 'false'
-        $env:IsReleaseBuild = 'false'
-        if(($env:GITHUB_ACTIONS -and $env:GITHUB_BASE_REF) -or $env:APPVEYOR_PULL_REQUEST_NUMBER)
-        {
-            $env:IsPullRequestBuild = 'true'
-        }
-
-        # for an automated build, get the ISO-8601 formatted time stamp of the HEAD commit
-        if($isAutomatedBuild -and !$env:BuildTime)
-        {
-            $env:BuildTime = (git show -s --format=%cI)
-        }
-
-        # TODO: Determine how to detect release tag builds with GITHUB ACTIONS
-        if($env:APPVEYOR_REPO_TAG -and !$env:APPVEYOR_PULL_REQUEST_NUMBER)
-        {
-            $env:IsReleaseBuild = 'true'
-        }
-    }
-    else
-    {
-        $env:IsAutomatedBuild = 'false'
-        $env:IsPullRequestBuild = 'false'
-        $env:IsReleaseBuild = 'false'
+        $env:BuildTime = (git show -s --format=%cI)
     }
 
-    Write-Verbose "MSBUILD:`n$($msbuild | Format-Table -AutoSize | Out-String)"
-    Write-Verbose (dir env:* | Format-Table -Property Name, value | Out-String)
-    Write-Verbose 'PATH:'
-    $($env:Path -split ';') | %{ Write-Verbose $_ }
+    if(!$global:BuildPaths)
+    {
+        $global:BuildPaths = Get-BuildPaths $PSScriptRoot
+        $global:BuildInfo = Get-BuildInformation $BuildPaths
 
-    Write-Verbose ".NET Runtimes:"
-    Write-Verbose (dotnet --list-runtimes | Out-String)
+        Write-Information 'Build Paths:'
+        Write-Information ($global:BuildPaths | Format-Table | Out-String)
 
-    Write-Verbose ".NET SDKs:"
-    Write-Verbose (dotnet --list-sdks | Out-String)
+        Write-Information 'Build Info:'
+        Write-Information ($global:BuildInfo | Format-Table | Out-String)
+    }
+
+    if($LogDetails)
+    {
+        Write-Information "MSBUILD:`n$($msbuild | Format-Table -AutoSize | Out-String)"
+        Write-Information (dir env:* | Format-Table -Property Name, value | Out-String)
+        Write-Information 'PATH:'
+        $($env:Path -split ';') | %{ Write-Information $_ }
+
+        Write-Information ".NET Runtimes:"
+        Write-Information (dotnet --list-runtimes | Out-String)
+
+        Write-Information ".NET SDKs:"
+        Write-Information (dotnet --list-sdks | Out-String)
+    }
 }
 
 Set-StrictMode -version 1.0

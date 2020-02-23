@@ -44,19 +44,6 @@ $ErrorActionPreference = "Stop"
 $InformationPreference = "Continue"
 try
 {
-    $buildPaths = Get-BuildPaths $PSScriptRoot
-
-    md $buildPaths.NuGetOutputPath -ErrorAction SilentlyContinue | Out-Null
-
-    if(!$BuildInfo)
-    {
-        $BuildInfo = Get-BuildInformation $buildPaths
-        if($env:APPVEYOR)
-        {
-            Update-AppVeyorBuild -Version $BuildInfo.FullBuildNumber
-        }
-    }
-
     $msBuildProperties = @{ Configuration = $Configuration
                             FullBuildNumber = $BuildInfo.FullBuildNumber
                             PackageVersion = $BuildInfo.PackageVersion
@@ -69,13 +56,13 @@ try
                           }
 
     Write-Information "Building LllvmBindingsGenerator"
-    $generatorBuildLogPath = Join-Path $buildPaths.BuildOutputPath LlvmBindingsGenerator.binlog
+    $generatorBuildLogPath = Join-Path $BuildPaths.BuildOutputPath LlvmBindingsGenerator.binlog
     # manual restore needed so that the CppSharp libraries are available during the build phase as CppSharp NuGet package
     # is basically hostile to the newer SDK project format.
     Invoke-MSBuild -Targets 'Restore;Build' -Project 'src\Interop\LlvmBindingsGenerator\LlvmBindingsGenerator.csproj' -Properties $msBuildProperties -LoggerArgs ($BuildInfo.MsBuildLoggerArgs + @("/bl:$generatorBuildLogPath"))
 
     Write-Information "Generating P/Invoke Bindings"
-    & "$($buildPaths.BuildOutputPath)\bin\LlvmBindingsGenerator\Release\net47\LlvmBindingsGenerator.exe" $buildPaths.LlvmLibsRoot (Join-Path $buildPaths.SrcRoot 'Interop\LibLLVM') (Join-Path $buildPaths.SrcRoot 'Interop\Llvm.NET.Interop')
+    & "$($BuildPaths.BuildOutputPath)\bin\LlvmBindingsGenerator\Release\net47\LlvmBindingsGenerator.exe" $BuildPaths.LlvmLibsRoot (Join-Path $BuildPaths.SrcRoot 'Interop\LibLLVM') (Join-Path $BuildPaths.SrcRoot 'Interop\Llvm.NET.Interop')
     if($LASTEXITCODE -eq 0)
     {
         # now build the projects that consume generated output for the bindings
@@ -89,8 +76,8 @@ try
         Invoke-MSBuild -Targets 'Build' -Project 'src\Interop\LibLLVM\LibLLVM.vcxproj' -Properties $msBuildProperties -LoggerArgs ($BuildInfo.MsBuildLoggerArgs + @("/bl:LibLLVM.binlog") )
 
         Write-Information "Building Lllvm.NET.Interop"
-        $interopRestoreBinLogPath = Join-Path $buildPaths.BinLogsPath Llvm.NET.Interop-restore.binlog
-        $interopBinLog = Join-Path $buildPaths.BinLogsPath Llvm.NET.Interop.binlog
+        $interopRestoreBinLogPath = Join-Path $BuildPaths.BinLogsPath Llvm.NET.Interop-restore.binlog
+        $interopBinLog = Join-Path $BuildPaths.BinLogsPath Llvm.NET.Interop.binlog
         Invoke-MSBuild -Targets 'Restore' -Project 'src\Interop\Llvm.NET.Interop\Llvm.NET.Interop.csproj' -Properties $msBuildProperties -LoggerArgs ($BuildInfo.MsBuildLoggerArgs + @("/bl:$InteropRestoreBinLogPath") )
         Invoke-MSBuild -Targets 'Build' -Project 'src\Interop\Llvm.NET.Interop\Llvm.NET.Interop.csproj' -Properties $msBuildProperties -LoggerArgs ($BuildInfo.MsBuildLoggerArgs + @("/bl:$interopBinLog") )
     }
