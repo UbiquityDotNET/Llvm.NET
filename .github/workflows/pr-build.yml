@@ -38,8 +38,6 @@ jobs:
       - name: Set Docs Push Credentials
         if: github.event_name == 'push'
         env:
-          docspush_email: 32618965+cibuild-telliam@users.noreply.github.com
-          docspush_username: cibuild-telliam
           docspush_access_token: ${{secrets.docspush_access_token}}
         run: .\Set-PushCredentials.ps1
 
