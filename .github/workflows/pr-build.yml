@@ -20,7 +20,7 @@ jobs:
         run: git submodule update --init --recursive
 
       - name: Build Source
-        run: .\Build-All.ps1
+        run: .\Build-All.ps1 -BuildMode Docs
 
       - name: Publish build logs
         if: always() && github.event_name == 'pull_request'
@@ -38,7 +38,9 @@ jobs:
       - name: Publish Docs
         if: github.event_name == 'push'
         env:
-          docspush_access_token: ${{secrets.GITHUB_TOKEN}}
+          docspush_email: 32618965+cibuild-telliam@users.noreply.github.com
+          docspush_username: cibuild-telliam
+          docspush_access_token: ${{secrets.docspush_access_token}}
         run: |
              .\Set-PushCredentials.ps1
              .\Push-Docs.ps1
