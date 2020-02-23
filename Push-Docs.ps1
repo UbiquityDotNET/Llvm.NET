@@ -23,6 +23,21 @@ if(!($remoteUrl -like "https://github.com/UbiquityDotNET/Llvm.NET*"))
     throw "Pushing docs is only allowed when the origin remote is the official source release current remote is '$remoteUrl'"
 }
 
+if(!$env:docspush_access_token)
+{
+    Write-Error "Missing docspush_access_token"
+}
+
+if(!$env:docspush_email)
+{
+    Write-Error "Missing docspush_email"
+}
+
+if(!$env:docspush_username)
+{
+    Write-Error "Missing docspush_username"
+}
+
 pushd .\BuildOutput\docs -ErrorAction Stop
 try
 {
@@ -48,6 +63,10 @@ try
 
     Write-Information "pushing changes to git"
     git push -q
+}
+catch
+{
+    Write-Error $_.Exception
 }
 finally
 {
