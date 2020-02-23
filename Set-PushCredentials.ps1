@@ -10,7 +10,7 @@ if( $IsAutomatedBuild -and !$IsPullRequestBuild )
     }
 
     # Best effort, on git commands as they can return non-zero even if nothing is wrong.
-    $ErrorActionPreference = 'Continue'
+    $ErrorActionPreference = Continue
 
     Write-Information "Setting credential.helper"
     git config --global credential.helper store
