@@ -1,3 +1,7 @@
+Param(
+    [switch]$SkipPush
+)
+
 . .\buildutils.ps1
 
 Initialize-BuildEnvironment
@@ -62,8 +66,11 @@ try
         throw "git commit failed"
     }
 
-    cmd /c echo Pushing changes to git
-    git push
+    if($SkipPush)
+    {
+        cmd /c echo Pushing changes to git
+        git push
+    }
 }
 catch
 {
