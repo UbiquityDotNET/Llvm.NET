@@ -62,7 +62,7 @@ try
     }
 
     Write-Information "pushing changes to git"
-    git push -q
+    git push
 }
 catch
 {
