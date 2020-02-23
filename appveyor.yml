@@ -30,7 +30,7 @@ nuget:
   project_feed: true
 
 build_script:
-  - ps: .\Build-All.ps1 -BuildMode All
+  - ps: .\Build-All.ps1
 
 #deploy_script:
 #  - ps: .\Push-Docs.ps1
