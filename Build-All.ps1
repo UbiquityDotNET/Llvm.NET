@@ -26,6 +26,12 @@ switch($BuildMode)
 try
 {
     $buildPaths = Get-BuildPaths $PSScriptRoot
+    $BuildInfo = Get-BuildInformation $buildPaths
+    if($env:APPVEYOR)
+    {
+        Write-Information "Updating APPVEYOR version: $($BuildInfo.FullBuildNumber)"
+        Update-AppVeyorBuild -Version "$($BuildInfo.FullBuildNumber) [$([DateTime]::Now)]"
+    }
 
     Write-Information "Build Paths:"
     Write-Information ($buildPaths | Format-Table | Out-String)
@@ -37,13 +43,6 @@ try
     }
 
     md $buildPaths.NuGetOutputPath -ErrorAction SilentlyContinue| Out-Null
-
-    $BuildInfo = Get-BuildInformation $buildPaths
-    if($env:APPVEYOR)
-    {
-        Write-Information "Updating APPVEYOR version: $($BuildInfo.FullBuildNumber)"
-        Update-AppVeyorBuild -Version "$($BuildInfo.FullBuildNumber) [$([DateTime]::Now)]"
-    }
 
     if($BuildSource)
     {
