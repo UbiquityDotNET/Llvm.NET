@@ -23,8 +23,11 @@ if(!($remoteUrl -like 'https://github.com/UbiquityDotNET/Llvm.NET*'))
 pushd .\BuildOutput\docs -ErrorAction Stop
 try
 {
+    # Best effort, on git commands as they can return non-zero even if nothing is wrong.
+    $ErrorActionPreference = 'Continue'
+
     Write-Information "pushing changes to git"
-    git push -q
+    git push
 }
 finally
 {
