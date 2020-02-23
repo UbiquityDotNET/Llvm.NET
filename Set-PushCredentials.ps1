@@ -4,9 +4,19 @@ Initialize-BuildEnvironment
 
 if( $IsAutomatedBuild -and !$IsPullRequestBuild )
 {
-    if(!$env:docspush_access_token -or !$env:docspush_email -or !$env:docspush_username)
+    if(!$env:docspush_access_token)
     {
-        throw "Env vars missing!"
+        Write-Error "Missing docspush_access_token"
+    }
+
+    if(!$env:docspush_email)
+    {
+        Write-Error "Missing docspush_email"
+    }
+
+    if(!$env:docspush_username)
+    {
+        Write-Error "Missing docspush_username"
     }
 
     # Best effort, on git commands as they can return non-zero even if nothing is wrong.
