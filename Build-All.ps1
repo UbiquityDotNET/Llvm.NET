@@ -61,13 +61,10 @@ try
         Get-ChildItem  -Filter *.binlog $buildPaths.BinLogsPath | %{ Push-AppveyorArtifact $_.FullName }
     }
 }
-catch
-{
-    Write-Information "Caught Exception:`n$($_.Exception)"
-}
 finally
 {
     popd
     $env:Path = $oldPath
-    Write-Information "Build finished"
 }
+
+Write-Information "Build finished"

@@ -61,7 +61,6 @@ try
 
     Write-Information "Building Docs Project"
     Invoke-MSBuild -Targets 'Build' -Project docfx\Llvm.NET.DocFX.csproj -Properties $msBuildProperties -LoggerArgs ($BuildInfo.MsBuildLoggerArgs + @("/bl:$docfxBinLogPath") )
-    Write-Information "Finished building docs"
 
     if(!$NoClone -and $IsAutomatedBuild -and !$IsPullRequestBuild)
     {
@@ -83,6 +82,8 @@ try
             popd
         }
     }
+
+    Write-Information "Finished building docs"
 }
 finally
 {

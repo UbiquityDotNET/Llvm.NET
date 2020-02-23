@@ -11,6 +11,11 @@ if( $IsAutomatedBuild -and !$IsPullRequestBuild )
     {
         if(!$env:docspush_access_token)
         {
+            $env:docspush_access_token = $env:GITHUB_TOKEN
+        }
+
+        if(!$env:docspush_access_token)
+        {
             Write-Information "Adding credentials For GIT"
             git config --local credential.helper store --file "$env:USERPROFILE\.git-credentials"
             Add-Content "$env:USERPROFILE\.git-credentials" "https://$($env:docspush_access_token):x-oauth-basic@github.com`n"
