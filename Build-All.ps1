@@ -7,7 +7,7 @@ Param(
 )
 
 . .\buildutils.ps1
-Initialize-BuildEnvironment -LogDetails
+Initialize-BuildEnvironment -FullInit
 
 pushd $PSScriptRoot
 $oldPath = $env:Path

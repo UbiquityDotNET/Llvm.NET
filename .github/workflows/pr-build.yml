@@ -22,6 +22,12 @@ jobs:
       - name: Checkout submodules
         run: git submodule update --init --recursive
 
+      - name: Setup NuGet
+        uses: NuGet/setup-nuget@v1.0.2
+        with:
+#          nuget-api-key: ${{ secrets.NUGET_API_KEY }}
+          nuget-version: latest
+
       - name: Build Source
         run: .\Build-All.ps1
 
@@ -46,8 +52,15 @@ jobs:
         run: .\Push-Docs.ps1 -SkipPush
 
       - name: Push Docs
+        if: github.event_name == 'push'
         uses: ad-m/github-push-action@master
         with:
             github_token: ${{ secrets.GITHUB_TOKEN }}
             directory: .\BuildOutput\docs
             branch: gh-pages
+
+      - name: Push to GitHub Packages
+        if: github.event_name == 'push'
+        run: |
+            nuget sources Add -Name "GPR" -Source https://nuget.pkg.github.com/ubiquitydotnet/index.json -UserName 'cibuild-telliam' -Password ${{ secrets.GITHUB_TOKEN }}
+            nuget push .\BuildOutput\NuGet\*.nupkg -Source "GPR"
