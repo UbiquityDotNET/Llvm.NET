@@ -28,11 +28,6 @@ jobs:
 #          nuget-api-key: ${{ secrets.NUGET_API_KEY }}
           nuget-version: latest
 
-      - name: Setup .NET Core SDK
-        uses: actions/setup-dotnet@v1
-        with:
-          dotnet-version: 3.1.101
-
       - name: Build Source
         run: .\Build-All.ps1
 
