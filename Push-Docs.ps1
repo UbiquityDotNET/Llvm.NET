@@ -45,10 +45,14 @@ if(!$env:docspush_username)
 pushd .\BuildOutput\docs -ErrorAction Stop
 try
 {
-    git config --global credential.helper store
-    Add-Content "$env:USERPROFILE\.git-credentials" "https://$($env:docspush_access_token):x-oauth-basic@github.com`n"
-    git config --global user.email "$env:docspush_email"
-    git config --global user.name "$env:docspush_username"
+    if($env:docspush_access_token)
+    {
+        git config --local credential.helper store
+        Add-Content "$env:USERPROFILE\.git-credentials" "https://$($env:docspush_access_token):x-oauth-basic@github.com`n"
+    }
+
+    git config --local user.email "$env:docspush_email"
+    git config --local user.name "$env:docspush_username"
 
     # use cmd /c to get message output from GH Actions that are suppressed when a secret is used.
     cmd /c echo Adding files to git
@@ -66,7 +70,7 @@ try
         throw "git commit failed"
     }
 
-    if($SkipPush)
+    if(!$SkipPush)
     {
         cmd /c echo Pushing changes to git
         git push
