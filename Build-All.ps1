@@ -48,6 +48,11 @@ try
     {
         Get-ChildItem  -Filter *.binlog $BuildPaths.BinLogsPath | %{ Push-AppveyorArtifact $_.FullName }
     }
+
+    if($IsAutomatedBuild -and !$IsPullRequestId)
+    {
+        dotnet nuget push (join-path $BuildPaths.NuGetOutputPath "*.nupkg") --source "github"
+    }
 }
 finally
 {
