@@ -1,9 +1,6 @@
 ## Llvm.NET
 
 Status:  
-
-[![Build Status](https://img.shields.io/appveyor/ci/UbiquityDotNet/Llvm-NET/master.svg?style=flat-square)](https://ci.appveyor.com/project/UbiquityDotNet/llvm-net)
-[![Test Status](https://img.shields.io/appveyor/tests/UbiquityDotNet/Llvm-NET/master.svg?style=flat-square)](https://ci.appveyor.com/project/UbiquityDotNet/llvm-net/build/tests)
 [![CI-Build](https://github.com/UbiquityDotNET/Llvm.NET/workflows/CI-Build/badge.svg?branch=master&event=push)](https://github.com/UbiquityDotNET/Llvm.NET/actions?query=workflow%3ACI-Build+branch%3Amaster+is%3Ain_progress)
 
 ### Welcome to Llvm.NET!
