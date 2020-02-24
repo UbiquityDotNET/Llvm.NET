@@ -343,7 +343,7 @@ function Initialize-BuildEnvironment
 {
     # support common parameters
     [cmdletbinding()]
-    Param([switch]$LogDetails)
+    Param([switch]$FullInit)
 
     # IsAutomatedBuild is the top level gate (e.g. if it is false, all the others must be false)
     $global:IsAutomatedBuild = [System.Convert]::ToBoolean($env:IsAutomatedBuild) `
@@ -388,7 +388,7 @@ function Initialize-BuildEnvironment
         $env:BuildTime = (git show -s --format=%cI)
     }
 
-    if(!$global:BuildPaths)
+    if($FullInit)
     {
         $global:BuildPaths = Get-BuildPaths $PSScriptRoot
         $global:BuildInfo = Get-BuildInformation $BuildPaths
@@ -398,10 +398,7 @@ function Initialize-BuildEnvironment
 
         Write-Information 'Build Info:'
         Write-Information ($global:BuildInfo | Format-Table | Out-String)
-    }
 
-    if($LogDetails)
-    {
         Write-Information "MSBUILD:`n$($msbuild | Format-Table -AutoSize | Out-String)"
         Write-Information (dir env:Is* | Format-Table -Property Name, value | Out-String)
         Write-Information 'PATH:'

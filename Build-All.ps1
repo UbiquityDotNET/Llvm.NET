@@ -7,7 +7,7 @@ Param(
 )
 
 . .\buildutils.ps1
-Initialize-BuildEnvironment -LogDetails
+Initialize-BuildEnvironment -FullInit
 
 pushd $PSScriptRoot
 $oldPath = $env:Path
@@ -47,11 +47,6 @@ try
     if( $env:APPVEYOR_PULL_REQUEST_NUMBER )
     {
         Get-ChildItem  -Filter *.binlog $BuildPaths.BinLogsPath | %{ Push-AppveyorArtifact $_.FullName }
-    }
-
-    if($IsAutomatedBuild -and !$IsPullRequestId)
-    {
-        dotnet nuget push (join-path $BuildPaths.NuGetOutputPath "*.nupkg") --source "github"
     }
 }
 finally
