@@ -27,7 +27,7 @@ if(!($remoteUrl -like "https://github.com/UbiquityDotNET/Llvm.NET*"))
     throw "Pushing docs is only allowed when the origin remote is the official source release current remote is '$remoteUrl'"
 }
 
-if(!$env:docspush_access_token)
+if(!$env:docspush_access_token -and !$SkipPush)
 {
     Write-Error "Missing docspush_access_token"
 }

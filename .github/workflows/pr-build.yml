@@ -37,6 +37,9 @@ jobs:
 
       - name: Commit Docs
         if: github.event_name == 'push'
+        env:
+          docspush_email: 32618965+cibuild-telliam@users.noreply.github.com
+          docspush_username: cibuild-telliam
         run: .\Push-Docs.ps1 -SkipPush
 
       - name: Push Docs
