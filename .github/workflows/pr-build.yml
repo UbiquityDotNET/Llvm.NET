@@ -2,12 +2,12 @@ name: CI-Build
 on:
   push:
     branches:
-      - GHActions
+      - master
     paths-ignore:
       - '**.md'
   pull_request:
     branches:
-      - GHActions
+      - master
 
 jobs:
   build:
@@ -15,6 +15,9 @@ jobs:
     steps:
       - name: Checkout Repo
         uses: actions/checkout@v2
+        with:
+           persist-credentials: false
+           fetch-depth: 0
 
       - name: Checkout submodules
         run: git submodule update --init --recursive
@@ -35,8 +38,16 @@ jobs:
             name: Nuget Packages
             path: .\BuildOutput\Nuget
 
-      - name: Publish Docs
-        if: success() && github.event_name == 'push'
+      - name: Commit Docs
+        if: github.event_name == 'push'
         env:
-          docspush_access_token: ${{secrets.docspush_access_token}}
-        run: .\Push-Docs.ps1
+          docspush_email: 32618965+cibuild-telliam@users.noreply.github.com
+          docspush_username: cibuild-telliam
+        run: .\Push-Docs.ps1 -SkipPush
+
+      - name: Push Docs
+        uses: ad-m/github-push-action@master
+        with:
+            github_token: ${{ secrets.GITHUB_TOKEN }}
+            directory: .\BuildOutput\docs
+            branch: gh-pages
