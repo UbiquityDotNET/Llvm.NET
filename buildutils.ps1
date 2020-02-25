@@ -361,8 +361,14 @@ function Initialize-BuildEnvironment
     $global:IsReleaseBuild = [System.Convert]::ToBoolean($env:IsReleaseBuild)
     if(!$global:IsReleaseBuild -and $global:IsAutomatedBuild -and !$global:IsPullRequestBuild)
     {
-        # TODO: Determine how to detect release tag builds with GITHUB ACTIONS
-        $global:IsReleaseBuild = $env:APPVEYOR_REPO_TAG
+        if($env:APPVEYOR)
+        {
+            $global:IsReleaseBuild = $env:APPVEYOR_REPO_TAG
+        }
+        else
+        {
+            $global:IsReleaseBuild = $env:GITHUB_REF -like 'refs/tags/*'
+        }
     }
 
     # set/reset environment vars for non-script tools (i.e. msbuild.exe)
