@@ -1,6 +1,6 @@
 name: Release-Build
 on:
-  releas:
+  release:
     type: created
     branches:
       - master
