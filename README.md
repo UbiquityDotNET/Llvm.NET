@@ -44,7 +44,7 @@ dynamic loading support and include the appropriate P/Invokable binaries)
 
 ### CI Build NuGet Packages
 The CI Builds of the NuGet package built from the latest source in the master branch are available as build artifacts from the build. 
-Unfrotunately with an all GitHub build via GitHub Actions we don't have a goos storay for accessing the packages from unreleased automated builds. While GitHub does support a package registry (GPR), it really doesn't meet the needs of CI builds. In particular:
+Unfortunately with an all GitHub build via GitHub Actions we don't have a good story for accessing the packages from unreleased automated builds. While GitHub does support a package registry (GPR), it really doesn't meet the needs of CI builds. In particular:
 * GPR Doesn't support deletion of older CI build packages (Cluttering the feed)
 * GPR requires complex logon/Tokens just to get packages from the feed, despite being a public repro...
 * Tool integration (esp. Visual Studio) is not well supported and difficult to setup.
