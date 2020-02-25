@@ -43,23 +43,13 @@ creating multiple build configurations and release vehicles for applications. (A
 dynamic loading support and include the appropriate P/Invokable binaries)
 
 ### CI Build NuGet Packages
-The CI Builds on AppVeyor provide a [NuGet Feed](https://ci.appveyor.com/NuGet/Ubiquity.Llvm.NET
-) of the NuGet package built from the latest source in the master branch. There are a number of ways to
-reference cusom feeds depending on preferences. But one of the simplest is a [Nuget.Config](https://docs.microsoft.com/en-us/nuget/reference/nuget-config-file)
-file checked into the source control along with the rest of your project. This eliminates the need for
-each developer to manually set up the feed references when working with the CI builds.
+The CI Builds of the NuGet package built from the latest source in the master branch are available as build artifacts from the build. 
+Unfortunately with an all GitHub build via GitHub Actions we don't have a good story for accessing the packages from unreleased automated builds. While GitHub does support a package registry (GPR), it really doesn't meet the needs of CI builds. In particular:
+* GPR Doesn't support deletion of older CI build packages (Cluttering the feed)
+* GPR requires complex logon/Tokens just to get packages from the feed, despite being a public repro...
+* Tool integration (esp. Visual Studio) is not well supported and difficult to setup.
 
-The following is an example of the minimal configuration file needed to use Llvm.NET:
-
-```xml
-<?xml version="1.0" encoding="utf-8"?>
-<configuration>
-  <packageSources>
-    <add key="AppveyorLlvmNet"
-         value="https://ci.appveyor.com/nuget/Ubiquity.Llvm.NET" />
-  </packageSources>
-</configuration>
-```
+Given all of the above the CI builds are not published to a feed at this time and GPR isn't used for publishing releases. (Official Nuget will serve that role)
 
 ### API Documentation
 The full API documentation on using Llvm.NET is available on the [Llvm.NET documentation site](https://ubiquitydotnet.github.io/Llvm.NET/).
