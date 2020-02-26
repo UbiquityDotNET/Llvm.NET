@@ -59,8 +59,8 @@ jobs:
           asset_content_type: application/zip
 
       - uses: actions/setup-dotnet@v1
-          with:
-            source-url: https://api.nuget.org/v3/index.json
+        with:
+          source-url: https://api.nuget.org/v3/index.json
         env:
           NUGET_AUTH_TOKEN: ${{ secrets.nugetpush_access_token }}
 
