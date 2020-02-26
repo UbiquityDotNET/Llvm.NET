@@ -49,8 +49,11 @@ try
     .\Build-Interop.ps1 -BuildInfo $BuildInfo
 
     $buildLogPath = Join-Path $BuildPaths.BinLogsPath Llvm.NET.binlog
-    Write-Information "Restoring NuGet Packages for Llvm.NET"
+    Write-Information "Building Llvm.NET"
     Invoke-MSBuild -Targets 'Restore;Build' -Project src\Llvm.NET.sln -Properties $msBuildProperties -LoggerArgs ($BuildInfo.MsBuildLoggerArgs + @("/bl:$buildLogPath") )
+
+    pushd $BuildPaths.NuGetOutputPath
+    Compress-Archive -Path *.* -DestinationPath (join-path $BuildPaths.BuildOutputPath Nuget.Packages.zip)
 }
 finally
 {
