@@ -21,7 +21,7 @@ if( $localCommitSha -ne $remoteCommitSha )
     throw "Local HEAD is not the same as origin, these must be in sync so that only the tag itself is pushed"
 }
 
-[xml]$buildVersionXml = Get-Content Get-Content .\BuildVersion.xml
+[xml]$buildVersionXml = Get-Content .\BuildVersion.xml
 $buildVersionData = $buildVersionXml.BuildVersionData
 $preReleaseSuffix=""
 if(![string]::IsNullOrWhiteSpace($buildVersionData.PreReleaseName))
