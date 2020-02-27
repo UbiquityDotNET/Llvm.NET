@@ -246,150 +246,6 @@
       "source_relative_path": "api/Llvm.NET.BitcodeModule.yml",
       "output": {
         ".html": {
-          "relative_path": "api/Llvm.NET.BitcodeModule.GetTypeByName.html",
-          "hash": "FB5uYV/jGy0hP9+5RiIAzw=="
-        }
-      },
-      "is_incremental": false,
-      "version": ""
-    },
-    {
-      "type": "ManagedReference",
-      "source_relative_path": "api/Llvm.NET.BitcodeModule.yml",
-      "output": {
-        ".html": {
-          "relative_path": "api/Llvm.NET.BitcodeModule.GetNamedGlobal.html",
-          "hash": "/i/BsPb8UK4j84e0Mg+E2g=="
-        }
-      },
-      "is_incremental": false,
-      "version": ""
-    },
-    {
-      "type": "ManagedReference",
-      "source_relative_path": "api/Llvm.NET.BitcodeModule.yml",
-      "output": {
-        ".html": {
-          "relative_path": "api/Llvm.NET.BitcodeModule.AddModuleFlag.html",
-          "hash": "w/Y0FQ7sKevMfEzheB7mZg=="
-        }
-      },
-      "is_incremental": false,
-      "version": ""
-    },
-    {
-      "type": "ManagedReference",
-      "source_relative_path": "api/Llvm.NET.BitcodeModule.yml",
-      "output": {
-        ".html": {
-          "relative_path": "api/Llvm.NET.BitcodeModule.AddNamedMetadataOperand.html",
-          "hash": "qUOi62yHbyJrq9XqHAvD7w=="
-        }
-      },
-      "is_incremental": false,
-      "version": ""
-    },
-    {
-      "type": "ManagedReference",
-      "source_relative_path": "api/Llvm.NET.BitcodeModule.yml",
-      "output": {
-        ".html": {
-          "relative_path": "api/Llvm.NET.BitcodeModule.AddVersionIdentMetadata.html",
-          "hash": "pPn2FyAwg2pWLF4hZwPZUQ=="
-        }
-      },
-      "is_incremental": false,
-      "version": ""
-    },
-    {
-      "type": "ManagedReference",
-      "source_relative_path": "api/Llvm.NET.BitcodeModule.yml",
-      "output": {
-        ".html": {
-          "relative_path": "api/Llvm.NET.BitcodeModule.CreateFunction.html",
-          "hash": "BeOZPjDs6uh8uAuOmf5XKQ=="
-        }
-      },
-      "is_incremental": false,
-      "version": ""
-    },
-    {
-      "type": "ManagedReference",
-      "source_relative_path": "api/Llvm.NET.BitcodeModule.yml",
-      "output": {
-        ".html": {
-          "relative_path": "api/Llvm.NET.BitcodeModule.GetIntrinsicDeclaration.html",
-          "hash": "xCex+hF6zOuQhktzhD7icQ=="
-        }
-      },
-      "is_incremental": false,
-      "version": ""
-    },
-    {
-      "type": "ManagedReference",
-      "source_relative_path": "api/Llvm.NET.BitcodeModule.yml",
-      "output": {
-        ".html": {
-          "relative_path": "api/Llvm.NET.BitcodeModule.Clone.html",
-          "hash": "pczyLB3l75r2I2YbhcERdw=="
-        }
-      },
-      "is_incremental": false,
-      "version": ""
-    },
-    {
-      "type": "ManagedReference",
-      "source_relative_path": "api/Llvm.NET.BitcodeModule.yml",
-      "output": {
-        ".html": {
-          "relative_path": "api/Llvm.NET.BitcodeModule.Llvm-NET-IExtensiblePropertyContainer-TryGetExtendedPropertyValue.html",
-          "hash": "TRl8orrFnZrFTNBw/5Vm6g=="
-        }
-      },
-      "is_incremental": false,
-      "version": ""
-    },
-    {
-      "type": "ManagedReference",
-      "source_relative_path": "api/Llvm.NET.BitcodeModule.yml",
-      "output": {
-        ".html": {
-          "relative_path": "api/Llvm.NET.BitcodeModule.Llvm-NET-IExtensiblePropertyContainer-AddExtendedPropertyValue.html",
-          "hash": "5pIvJHUIQnvoL4xQdIsd/Q=="
-        }
-      },
-      "is_incremental": false,
-      "version": ""
-    },
-    {
-      "type": "ManagedReference",
-      "source_relative_path": "api/Llvm.NET.BitcodeModule.yml",
-      "output": {
-        ".html": {
-          "relative_path": "api/Llvm.NET.BitcodeModule.LoadFrom.html",
-          "hash": "Vo1PeSsxYH0trCqBjSLbmg=="
-        }
-      },
-      "is_incremental": false,
-      "version": ""
-    },
-    {
-      "type": "ManagedReference",
-      "source_relative_path": "api/Llvm.NET.BitcodeModule.yml",
-      "output": {
-        ".html": {
-          "relative_path": "api/Llvm.NET.BitcodeModule.html",
-          "hash": "dFuGDNhqfy00q7mvOg6Glw=="
-        }
-      },
-      "is_incremental": false,
-      "version": ""
-    },
-    {
-      "type": "ManagedReference",
-      "source_relative_path": "api/Llvm.NET.BitcodeModule.yml",
-      "output": {
-        ".html": {
           "relative_path": "api/Llvm.NET.BitcodeModule.Name.html",
           "hash": "WOd76yyoZ8m7sh9VIXWqjA=="
         }
@@ -572,6 +428,150 @@
         ".html": {
           "relative_path": "api/Llvm.NET.BitcodeModule.AddGlobal.html",
           "hash": "+GVIa88FNsuJaA8GW8ioZg=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Llvm.NET.BitcodeModule.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Llvm.NET.BitcodeModule.GetTypeByName.html",
+          "hash": "FB5uYV/jGy0hP9+5RiIAzw=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Llvm.NET.BitcodeModule.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Llvm.NET.BitcodeModule.GetNamedGlobal.html",
+          "hash": "/i/BsPb8UK4j84e0Mg+E2g=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Llvm.NET.BitcodeModule.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Llvm.NET.BitcodeModule.AddModuleFlag.html",
+          "hash": "w/Y0FQ7sKevMfEzheB7mZg=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Llvm.NET.BitcodeModule.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Llvm.NET.BitcodeModule.AddNamedMetadataOperand.html",
+          "hash": "qUOi62yHbyJrq9XqHAvD7w=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Llvm.NET.BitcodeModule.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Llvm.NET.BitcodeModule.AddVersionIdentMetadata.html",
+          "hash": "pPn2FyAwg2pWLF4hZwPZUQ=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Llvm.NET.BitcodeModule.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Llvm.NET.BitcodeModule.CreateFunction.html",
+          "hash": "BeOZPjDs6uh8uAuOmf5XKQ=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Llvm.NET.BitcodeModule.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Llvm.NET.BitcodeModule.GetIntrinsicDeclaration.html",
+          "hash": "xCex+hF6zOuQhktzhD7icQ=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Llvm.NET.BitcodeModule.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Llvm.NET.BitcodeModule.Clone.html",
+          "hash": "pczyLB3l75r2I2YbhcERdw=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Llvm.NET.BitcodeModule.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Llvm.NET.BitcodeModule.Llvm-NET-IExtensiblePropertyContainer-TryGetExtendedPropertyValue.html",
+          "hash": "TRl8orrFnZrFTNBw/5Vm6g=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Llvm.NET.BitcodeModule.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Llvm.NET.BitcodeModule.Llvm-NET-IExtensiblePropertyContainer-AddExtendedPropertyValue.html",
+          "hash": "5pIvJHUIQnvoL4xQdIsd/Q=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Llvm.NET.BitcodeModule.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Llvm.NET.BitcodeModule.LoadFrom.html",
+          "hash": "Vo1PeSsxYH0trCqBjSLbmg=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Llvm.NET.BitcodeModule.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Llvm.NET.BitcodeModule.html",
+          "hash": "dFuGDNhqfy00q7mvOg6Glw=="
         }
       },
       "is_incremental": false,
@@ -4746,18 +4746,6 @@
       "source_relative_path": "api/Llvm.NET.IExtensiblePropertyContainer.yml",
       "output": {
         ".html": {
-          "relative_path": "api/Llvm.NET.IExtensiblePropertyContainer.TryGetExtendedPropertyValue.html",
-          "hash": "BgpF8xoG+e9j1Ssxj6FfRQ=="
-        }
-      },
-      "is_incremental": false,
-      "version": ""
-    },
-    {
-      "type": "ManagedReference",
-      "source_relative_path": "api/Llvm.NET.IExtensiblePropertyContainer.yml",
-      "output": {
-        ".html": {
           "relative_path": "api/Llvm.NET.IExtensiblePropertyContainer.AddExtendedPropertyValue.html",
           "hash": "awLJ/eO7z/+M/7WvD1jW3w=="
         }
@@ -4772,6 +4760,18 @@
         ".html": {
           "relative_path": "api/Llvm.NET.IExtensiblePropertyContainer.html",
           "hash": "988iknLUaNxOyUYVL5JN6w=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Llvm.NET.IExtensiblePropertyContainer.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Llvm.NET.IExtensiblePropertyContainer.TryGetExtendedPropertyValue.html",
+          "hash": "BgpF8xoG+e9j1Ssxj6FfRQ=="
         }
       },
       "is_incremental": false,
@@ -7470,30 +7470,6 @@
       "source_relative_path": "api/Llvm.NET.JIT.OrcJit.yml",
       "output": {
         ".html": {
-          "relative_path": "api/Llvm.NET.JIT.OrcJit.Dispose.html",
-          "hash": "+qB65/U6dP4lKvPa3dl3vA=="
-        }
-      },
-      "is_incremental": false,
-      "version": ""
-    },
-    {
-      "type": "ManagedReference",
-      "source_relative_path": "api/Llvm.NET.JIT.OrcJit.yml",
-      "output": {
-        ".html": {
-          "relative_path": "api/Llvm.NET.JIT.OrcJit.html",
-          "hash": "ADJYWSidpBln+XZDckdDnw=="
-        }
-      },
-      "is_incremental": false,
-      "version": ""
-    },
-    {
-      "type": "ManagedReference",
-      "source_relative_path": "api/Llvm.NET.JIT.OrcJit.yml",
-      "output": {
-        ".html": {
           "relative_path": "api/Llvm.NET.JIT.OrcJit.-ctor.html",
           "hash": "betZYYPHhkCsXrOd1Sl6CA=="
         }
@@ -7592,6 +7568,30 @@
         ".html": {
           "relative_path": "api/Llvm.NET.JIT.OrcJit.AddLazyFunctionGenerator.html",
           "hash": "xHHcZZsNcpQtAnn5oROFgA=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Llvm.NET.JIT.OrcJit.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Llvm.NET.JIT.OrcJit.Dispose.html",
+          "hash": "+qB65/U6dP4lKvPa3dl3vA=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Llvm.NET.JIT.OrcJit.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Llvm.NET.JIT.OrcJit.html",
+          "hash": "ADJYWSidpBln+XZDckdDnw=="
         }
       },
       "is_incremental": false,
@@ -11946,18 +11946,6 @@
       "source_relative_path": "api/Llvm.NET.Values.GlobalValueExtensions.yml",
       "output": {
         ".html": {
-          "relative_path": "api/Llvm.NET.Values.GlobalValueExtensions.Visibility.html",
-          "hash": "0bOv/sUQx30iN7EGGhtVTw=="
-        }
-      },
-      "is_incremental": false,
-      "version": ""
-    },
-    {
-      "type": "ManagedReference",
-      "source_relative_path": "api/Llvm.NET.Values.GlobalValueExtensions.yml",
-      "output": {
-        ".html": {
           "relative_path": "api/Llvm.NET.Values.GlobalValueExtensions.Linkage.html",
           "hash": "elSTtXiPSP3/5RTBZTnBeQ=="
         }
@@ -11984,6 +11972,18 @@
         ".html": {
           "relative_path": "api/Llvm.NET.Values.GlobalValueExtensions.html",
           "hash": "m+bhsURVWr07TBfvUJWj+Q=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Llvm.NET.Values.GlobalValueExtensions.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Llvm.NET.Values.GlobalValueExtensions.Visibility.html",
+          "hash": "0bOv/sUQx30iN7EGGhtVTw=="
         }
       },
       "is_incremental": false,
@@ -13266,13 +13266,6 @@
         "full_build_reason_code": "NoAvailableBuildCache"
       },
       "processors": {
-        "TocDocumentProcessor": {
-          "can_incremental": false,
-          "details": "Processor TocDocumentProcessor cannot support incremental build because the processor doesn't implement ISupportIncrementalDocumentProcessor interface.",
-          "incrementalPhase": "build",
-          "total_file_count": 0,
-          "skipped_file_count": 0
-        },
         "ResourceDocumentProcessor": {
           "can_incremental": false,
           "details": "Processor ResourceDocumentProcessor cannot support incremental build because the processor doesn't implement ISupportIncrementalDocumentProcessor interface.",
@@ -13284,6 +13277,13 @@
           "can_incremental": false,
           "incrementalPhase": "build",
           "total_file_count": 29,
+          "skipped_file_count": 0
+        },
+        "TocDocumentProcessor": {
+          "can_incremental": false,
+          "details": "Processor TocDocumentProcessor cannot support incremental build because the processor doesn't implement ISupportIncrementalDocumentProcessor interface.",
+          "incrementalPhase": "build",
+          "total_file_count": 0,
           "skipped_file_count": 0
         },
         "ManagedReferenceDocumentProcessor": {
