@@ -64,4 +64,4 @@ jobs:
           DOTNET_CLI_TELEMETRY_OPTOUT: 1
         run: |
             cd '.\BuildOutput\NuGet'
-            dotnet nuget push *.nupkg -k $env:NUGET_AUTH_TOKEN -s 'https://api.nuget.org/v3/index.json'
+            dotnet nuget push *.nupkg -n -k $env:NUGET_AUTH_TOKEN -s 'https://api.nuget.org/v3/index.json'
