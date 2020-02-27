@@ -61,4 +61,7 @@ jobs:
       - name: Publish packages to NuGet.org
         env:
           NUGET_AUTH_TOKEN: ${{ secrets.nugetpush_access_token }}
-        run: dotnet nuget push ./BuildOutput/Nuget/*.nupkg -k $env:NUGET_AUTH_TOKEN -s https://api.nuget.org/v3/index.json
+          DOTNET_CLI_TELEMETRY_OPTOUT: 1
+        run: |
+            dir './BuildOutput/NuGet'
+            dotnet nuget push './BuildOutput/NuGet/*.nupkg' -k $env:NUGET_AUTH_TOKEN -s 'https://api.nuget.org/v3/index.json'
