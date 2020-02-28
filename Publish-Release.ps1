@@ -27,6 +27,10 @@ $preReleaseSuffix=""
 if(![string]::IsNullOrWhiteSpace($buildVersionData.PreReleaseName))
 {
     $preReleaseSuffix = "-$($buildVersionData.PreReleaseName)"
+    if(![string]::IsNullOrWhiteSpace($buildVersionData.PreReleaseNumber))
+    {
+        $preReleaseSuffix += ".$($buildVersionData.PreReleaseNumber)"
+    }
 }
 
 $tagName = "v.$($buildVersionData.BuildMajor).$($buildVersionData.BuildMinor).$($buildVersionData.BuildPatch)$preReleaseSuffix"

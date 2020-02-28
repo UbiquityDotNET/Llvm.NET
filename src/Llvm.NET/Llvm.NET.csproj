@@ -19,6 +19,7 @@
         <PackageProjectUrl>https://github.com/UbiquityDotNET/Llvm.Net</PackageProjectUrl>
         <RepositoryUrl>https://github.com/UbiquityDotNET/Llvm.NET.git</RepositoryUrl>
         <RepositoryType>git</RepositoryType>
+        <PackageLicenseExpression>NCSA</PackageLicenseExpression>
     </PropertyGroup>
     <ItemGroup>
         <!--Keep docfx generated OBJ folder junk from cluttering solution view-->

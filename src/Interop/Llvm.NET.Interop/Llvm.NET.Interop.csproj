@@ -18,6 +18,7 @@
     <RepositoryType>git</RepositoryType>
     <RepositoryUrl>https://github.com/UbiquityDotNET/Llvm.Net.git</RepositoryUrl>
     <PackageProjectUrl>https://github.com/UbiquityDotNET/Llvm.Net</PackageProjectUrl>
+    <PackageLicenseExpression>NCSA</PackageLicenseExpression>
   </PropertyGroup>
   <ItemGroup>
     <Content Include="..\..\..\BuildOutput\bin\LibLLVM\$(Configuration)\x64\LibLLVM.dll" Link="runtimes\win-x64\native\LibLLVM.dll">
