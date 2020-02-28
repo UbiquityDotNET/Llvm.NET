@@ -5,14 +5,14 @@ Param(
     [ValidateSet('All','Source','Docs')]
     [System.String]$BuildMode = 'All'
 )
+$ErrorActionPreference = "Stop"
+$InformationPreference = "Continue"
 
 . .\buildutils.ps1
 Initialize-BuildEnvironment -FullInit
 
 pushd $PSScriptRoot
 $oldPath = $env:Path
-$ErrorActionPreference = "Stop"
-$InformationPreference = "Continue"
 $BuildSource = $false
 $BuildDocs = $false;
 

@@ -73,7 +73,8 @@ try
         Invoke-NuGet restore 'src\Interop\LibLLVM\LibLLVM.vcxproj'
 
         Write-Information "Building LibLLVM"
-        Invoke-MSBuild -Targets 'Build' -Project 'src\Interop\LibLLVM\LibLLVM.vcxproj' -Properties $msBuildProperties -LoggerArgs ($BuildInfo.MsBuildLoggerArgs + @("/bl:LibLLVM.binlog") )
+        $libLLVMBinLogPath = Join-Path $BuildPaths.BinLogsPath Llvm.NET.Interop-restore.binlog
+        Invoke-MSBuild -Targets 'Build' -Project 'src\Interop\LibLLVM\LibLLVM.vcxproj' -Properties $msBuildProperties -LoggerArgs ($BuildInfo.MsBuildLoggerArgs + @("/bl:$libLLVMBinLogPath") )
 
         Write-Information "Building Lllvm.NET.Interop"
         $interopRestoreBinLogPath = Join-Path $BuildPaths.BinLogsPath Llvm.NET.Interop-restore.binlog
