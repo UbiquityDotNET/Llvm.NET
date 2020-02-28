@@ -1,8 +1,10 @@
 ## Llvm.NET
 
-Status:  
+#### Build Status
 [![CI-Build](https://github.com/UbiquityDotNET/Llvm.NET/workflows/CI-Build/badge.svg?branch=master&event=push)](https://github.com/UbiquityDotNET/Llvm.NET/actions?query=workflow%3ACI-Build+branch%3Amaster+is%3Ain_progress)
 ![Release-Build](https://github.com/ubiquitydotnet/llvm.net/workflows/Release-Build/badge.svg)
+### Nuget
+![Nuget](https://img.shields.io/nuget/dt/Llvm.NET.svg)
 
 ### Welcome to Llvm.NET!
 Llvm.NET provides LLVM language and runtime bindings for .NET based applications. Llvm.NET's goal is to provide
