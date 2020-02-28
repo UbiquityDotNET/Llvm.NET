@@ -229,10 +229,12 @@ function Get-BuildInformation($BuildPaths, $DefaultVerbosity='Minimal')
     }
 
     Write-Information "Restoring NuGet for $($BuildPaths.GenerateVersionProj)"
-    $ignored = Invoke-MSBuild -Targets 'Restore' -Project $BuildPaths.GenerateVersionProj -LoggerArgs ($msbuildLoggerArgs + @("/bl:GenerateVersion-Restore.binlog") )
+    $binLogPath = Join-Path $BuildPaths.BinLogsPath GenerateVersion-Restore.binlog
+    $ignored = Invoke-MSBuild -Targets 'Restore' -Project $BuildPaths.GenerateVersionProj -LoggerArgs ($msbuildLoggerArgs + @("/bl:$binLogPath") )
 
     Write-Information "Generating version info from $($BuildPaths.GenerateVersionProj)"
-    $ignored = Invoke-MSBuild -Targets 'GenerateVersionJson' -Project $BuildPaths.GenerateVersionProj -LoggerArgs ($msbuildLoggerArgs + @("/bl:GenerateVersion-Build.binlog") )
+    $binLogPath = Join-Path $BuildPaths.BinLogsPath GenerateVersion-Restore.binlog
+    $ignored = Invoke-MSBuild -Targets 'GenerateVersionJson' -Project $BuildPaths.GenerateVersionProj -LoggerArgs ($msbuildLoggerArgs + @("/bl:$binLogPath") )
 
     $semVer = get-content (Join-Path $BuildPaths.BuildOutputPath GeneratedVersion.json) | ConvertFrom-Json
 
