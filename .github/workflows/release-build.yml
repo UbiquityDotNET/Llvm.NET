@@ -58,14 +58,9 @@ jobs:
           asset_name: Nuget.Packages.zip
           asset_content_type: application/zip
 
-      - uses: actions/setup-dotnet@v1
-        with:
-          source-url: 'https://api.nuget.org/v3/index.json'
+      - name: Publish packages to NuGet.org
         env:
           NUGET_AUTH_TOKEN: ${{ secrets.nugetpush_access_token }}
           DOTNET_CLI_TELEMETRY_OPTOUT: 1
-
-      - name: Publish packages to NuGet.org
         run: |
-          cd '.\BuildOutput\NuGet'
-          dotnet nuget push *.nupkg -n
+            dir .\BuildOutput\NuGet\*.nupkg | %{dotnet nuget push $_ -k $env:NUGET_AUTH_TOKEN -s 'https://api.nuget.org/v3/index.json' -n }
