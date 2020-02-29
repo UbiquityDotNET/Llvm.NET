@@ -32,9 +32,15 @@ namespace Llvm.NET.DebugInfo
         /// <param name="name">Source language name of the type</param>
         /// <param name="encoding">Encoding for the type</param>
         public DebugBasicType( ITypeRef llvmType, BitcodeModule module, string name, DiTypeKind encoding )
+            : base( llvmType,
+                    module.ValidateNotNull(nameof(module))
+                          .DIBuilder
+                          .CreateBasicType( name
+                                          , module.Layout.BitSizeOf( llvmType )
+                                          , encoding
+                                          )
+                  )
         {
-            llvmType.ValidateNotNull( nameof( llvmType ) );
-            module.ValidateNotNull( nameof( module ) );
             name.ValidateNotNullOrWhiteSpace( nameof( name ) );
 
             if( module.Layout == null )
@@ -57,13 +63,6 @@ namespace Llvm.NET.DebugInfo
             default:
                 throw new ArgumentException( Resources.Expected_a_primitive_type, nameof( llvmType ) );
             }
-
-            NativeType = llvmType;
-            DIType = module.DIBuilder
-                           .CreateBasicType( name
-                                           , module.Layout.BitSizeOf( llvmType )
-                                           , encoding
-                                           );
         }
     }
 }

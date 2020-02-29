@@ -46,7 +46,7 @@ namespace Llvm.NET.Tests
             Assert.IsNotNull( module );
             Assert.IsNotNull( module.Context );
             Assert.AreSame( string.Empty, module.DataLayoutString );
-            Assert.IsNull( module.Layout );
+            Assert.IsNotNull( module.Layout );
             Assert.AreSame( string.Empty, module.TargetTriple );
             Assert.IsNotNull( module.DIBuilder );
 
@@ -72,7 +72,7 @@ namespace Llvm.NET.Tests
             Assert.IsNotNull( module );
             Assert.IsNotNull( module.Context );
             Assert.AreSame( string.Empty, module.DataLayoutString );
-            Assert.IsNull( module.Layout );
+            Assert.IsNotNull( module.Layout );
             Assert.AreSame( string.Empty, module.TargetTriple );
             Assert.IsNotNull( module.DIBuilder );
 
@@ -98,7 +98,7 @@ namespace Llvm.NET.Tests
             Assert.IsNotNull( module );
             Assert.IsNotNull( module.Context );
             Assert.AreSame( string.Empty, module.DataLayoutString );
-            Assert.IsNull( module.Layout );
+            Assert.IsNotNull( module.Layout );
             Assert.AreSame( string.Empty, module.TargetTriple );
             Assert.IsNotNull( module.DIBuilder );
             Assert.IsNotNull( module.DICompileUnit );
@@ -246,7 +246,7 @@ namespace Llvm.NET.Tests
 
                 // force a GC to ensure buffer created in LoadFrom is handled correctly
                 GC.Collect( GC.MaxGeneration );
-                IrFunction testFunc = module2.GetFunction( "foo" );
+                IrFunction? testFunc = module2.GetFunction( "foo" );
 
                 // verify basics
                 Assert.IsNotNull( testFunc );
@@ -305,10 +305,13 @@ namespace Llvm.NET.Tests
         {
             using var context = new Context( );
             using var module = context.CreateBitcodeModule( TestModuleName );
+            Assert.IsNotNull( module );
 
             module.AddGlobal( module.Context.Int32Type, "TestInt" );
-            GlobalVariable globalVar = module.GetNamedGlobal( "TestInt" );
-            Assert.AreEqual( "TestInt", globalVar.Name );
+            GlobalVariable? globalVar = module.GetNamedGlobal( "TestInt" );
+            Assert.IsNotNull( globalVar );
+
+            Assert.AreEqual( "TestInt", globalVar!.Name );
             Assert.AreSame( module.Context.Int32Type.CreatePointerType( ), globalVar.NativeType );
         }
 
@@ -322,9 +325,10 @@ namespace Llvm.NET.Tests
             module.AddGlobal( module.Context.Int32Type, true, Linkage.WeakODR, module.Context.CreateConstant( 0x12345678 ) );
             var globalVar = module.Globals.First( );
             Assert.IsNotNull( globalVar );
+            Assert.IsNotNull( globalVar.Initializer );
             Assert.IsTrue( string.IsNullOrWhiteSpace( globalVar.Name ) );
             Assert.AreSame( module.Context.Int32Type.CreatePointerType( ), globalVar.NativeType );
-            Assert.AreSame( module.Context.Int32Type, globalVar.Initializer.NativeType );
+            Assert.AreSame( module.Context.Int32Type, globalVar.Initializer!.NativeType );
             Assert.AreEqual( Linkage.WeakODR, globalVar.Linkage );
             Assert.IsTrue( globalVar.IsConstant );
             Assert.IsInstanceOfType( globalVar.Initializer, typeof( ConstantInt ) );
@@ -340,10 +344,13 @@ namespace Llvm.NET.Tests
             using var module = context.CreateBitcodeModule( TestModuleName );
 
             module.AddGlobal( module.Context.Int32Type, true, Linkage.WeakODR, module.Context.CreateConstant( 0x12345678 ), "TestInt" );
-            GlobalVariable globalVar = module.GetNamedGlobal( "TestInt" );
+            GlobalVariable? globalVar = module.GetNamedGlobal( "TestInt" );
+            Assert.IsNotNull( globalVar );
+            Assert.IsNotNull( globalVar!.Initializer );
+
             Assert.AreEqual( "TestInt", globalVar.Name );
             Assert.AreSame( module.Context.Int32Type.CreatePointerType( ), globalVar.NativeType );
-            Assert.AreSame( module.Context.Int32Type, globalVar.Initializer.NativeType );
+            Assert.AreSame( module.Context.Int32Type, globalVar.Initializer!.NativeType );
             Assert.AreEqual( Linkage.WeakODR, globalVar.Linkage );
             Assert.IsTrue( globalVar.IsConstant );
             Assert.IsInstanceOfType( globalVar.Initializer, typeof( ConstantInt ) );
@@ -471,7 +478,10 @@ namespace Llvm.NET.Tests
             Assert.IsTrue( clone.Comdats.Contains( globalName ), "Cloned module should have the referenced comdat" );
 
             var clonedGlobal = clone.GetNamedGlobal( globalName );
-            Assert.AreEqual( globalName, clonedGlobal.Comdat.Name, "Name of the comdat on the cloned global should match the one set in the original module" );
+            Assert.IsNotNull( clonedGlobal );
+            Assert.IsNotNull( clonedGlobal!.Comdat );
+
+            Assert.AreEqual( globalName, clonedGlobal.Comdat!.Name, "Name of the comdat on the cloned global should match the one set in the original module" );
             Assert.AreEqual( ComdatKind.Any, module.Comdats[ globalName ].Kind );
         }
 
@@ -505,7 +515,9 @@ namespace Llvm.NET.Tests
             Assert.IsTrue( clone.Comdats.Contains( globalName ), "Cloned module should have the referenced comdat" );
 
             var clonedGlobal = clone.GetFunction( globalName );
-            Assert.AreEqual( globalName, clonedGlobal.Comdat.Name, "Name of the comdat on the cloned global should match the one set in the original module" );
+            Assert.IsNotNull( clonedGlobal );
+            Assert.IsNotNull( clonedGlobal!.Comdat );
+            Assert.AreEqual( globalName, clonedGlobal.Comdat!.Name, "Name of the comdat on the cloned global should match the one set in the original module" );
             Assert.AreEqual( ComdatKind.Any, module.Comdats[ globalName ].Kind );
         }
 
@@ -522,9 +534,11 @@ namespace Llvm.NET.Tests
             Assert.IsNotNull( ctx );
 
             var testFunc = module.AddFunction( name, ctx.GetFunctionType( ctx.VoidType ) );
-            testFunc.AppendBasicBlock( "entry" );
+            var entryBlock = testFunc.AppendBasicBlock( "entry" );
+            Assert.IsNotNull( testFunc.EntryBlock );
+            Assert.AreSame( entryBlock, testFunc.EntryBlock );
 
-            var irBuilder = new InstructionBuilder( testFunc.EntryBlock );
+            var irBuilder = new InstructionBuilder( testFunc.EntryBlock! );
             irBuilder.Return( );
             return testFunc;
         }

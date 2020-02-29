@@ -19,7 +19,7 @@ namespace Llvm.NET.DebugInfo
         public T GetValue<T>( )
             where T : LlvmMetadata
         {
-            return GetOperand<T>( 2 );
+            return GetOperand<T>( 2 ) ?? throw new InternalCodeGeneratorException("Could not get a valid value from LLVM interop");
         }
 
         internal DITemplateValueParameter( LLVMMetadataRef handle )

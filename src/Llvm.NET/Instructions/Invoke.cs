@@ -21,7 +21,7 @@ namespace Llvm.NET.Instructions
         , IAttributeAccessor
     {
         /// <summary>Gets the target function of the invocation</summary>
-        public IrFunction TargetFunction => FromHandle<IrFunction>( LLVMGetCalledValue( ValueHandle ) );
+        public IrFunction TargetFunction => FromHandle<IrFunction>( LLVMGetCalledValue( ValueHandle ).ThrowIfInvalid( ) )!;
 
         /// <summary>Gets the attributes for this call site</summary>
         public IAttributeDictionary Attributes { get; }

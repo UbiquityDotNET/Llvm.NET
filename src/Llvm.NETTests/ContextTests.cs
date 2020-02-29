@@ -170,7 +170,7 @@ namespace Llvm.NET.Tests
             Assert.IsFalse( funcSig.IsVoid );
 
             Assert.IsNotNull( funcSig.DIType );
-            var subroutineType = funcSig.DIType;
+            DISubroutineType subroutineType = funcSig.DIType!;
             Assert.IsNotNull( subroutineType );
             Assert.AreSame( context, subroutineType.Context );
             Assert.AreEqual( DebugInfoFlags.None, subroutineType.DebugInfoFlags );
@@ -936,7 +936,7 @@ namespace Llvm.NET.Tests
 
             var arrayType = value.NativeType as IArrayType;
             Assert.IsNotNull( arrayType );
-            Assert.AreSame( context, arrayType.Context );
+            Assert.AreSame( context, arrayType!.Context );
             Assert.AreSame( context.Int8Type, arrayType.ElementType );
             Assert.AreEqual( ( uint )str.Length, arrayType.Length );
             string valueStr = value.ExtractAsString( );

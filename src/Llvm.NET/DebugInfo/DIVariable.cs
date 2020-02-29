@@ -19,16 +19,16 @@ namespace Llvm.NET.DebugInfo
         public UInt32 Line => LibLLVMDIVariableGetLine( MetadataHandle );
 
         /// <summary>Gets the Debug information scope for this variable</summary>
-        public DIScope Scope => Operands[ 0 ] as DIScope;
+        public DIScope? Scope => Operands[ 0 ] as DIScope;
 
         /// <summary>Gets the Debug information name for this variable</summary>
         public string Name => ( Operands[ 1 ] as MDString )?.ToString( ) ?? string.Empty;
 
         /// <summary>Gets the Debug information file for this variable</summary>
-        public DIFile File => Operands[ 2 ] as DIFile;
+        public DIFile? File => Operands[ 2 ] as DIFile;
 
         /// <summary>Gets the Debug information type for this variable</summary>
-        public DIType DIType => Operands[ 3 ] as DIType;
+        public DIType DIType => GetOperand<DIType>( 3 ); // TODO: Can this ever legitimately be null? (Previous releases essentially allowed for that)
 
         internal DIVariable( LLVMMetadataRef handle )
             : base( handle )

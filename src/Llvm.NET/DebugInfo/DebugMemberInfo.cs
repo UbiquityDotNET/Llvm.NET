@@ -18,23 +18,46 @@ namespace Llvm.NET.DebugInfo
     /// </remarks>
     public class DebugMemberInfo
     {
-        /// <summary>Gets or sets the LLVM structure element index this descriptor describes</summary>
-        public uint Index { get; set; }
+        /// <summary>Initializes a new instance of the <see cref="DebugMemberInfo"/> class.</summary>
+        /// <param name="index">Member index</param>
+        /// <param name="name">Member name</param>
+        /// <param name="file">File containing the declaration of the member</param>
+        /// <param name="line">Line number containing the member</param>
+        /// <param name="debugType">Debug type for the member</param>
+        /// <param name="debugInfoFlags">Flags for the member</param>
+        public DebugMemberInfo( uint index
+                              , string name
+                              , DIFile file
+                              , uint line
+                              , IDebugType<ITypeRef, DIType> debugType
+                              , DebugInfoFlags debugInfoFlags = DebugInfoFlags.None
+                              )
+        {
+            Index = index;
+            Name = name;
+            File = file;
+            Line = line;
+            DebugType = debugType;
+            DebugInfoFlags = debugInfoFlags;
+        }
 
-        /// <summary>Gets or sets the name of the field</summary>
-        public string Name { get; set; }
+        /// <summary>Gets the LLVM structure element index this descriptor describes</summary>
+        public uint Index { get; }
 
-        /// <summary>Gets or sets the file the field is declared in</summary>
-        public DIFile File { get; set; }
+        /// <summary>Gets the name of the field</summary>
+        public string Name { get; }
 
-        /// <summary>Gets or sets the source line the field is declared on</summary>
-        public uint Line { get; set; }
+        /// <summary>Gets the file the field is declared in</summary>
+        public DIFile File { get; }
 
-        /// <summary>Gets or sets the flags for the field declaration</summary>
-        public DebugInfoFlags DebugInfoFlags { get; set; }
+        /// <summary>Gets the source line the field is declared on</summary>
+        public uint Line { get; }
 
-        /// <summary>Gets or sets the debug type information for this field</summary>
-        public IDebugType<ITypeRef, DIType> DebugType { get; set; }
+        /// <summary>Gets the flags for the field declaration</summary>
+        public DebugInfoFlags DebugInfoFlags { get; }
+
+        /// <summary>Gets the debug type information for this field</summary>
+        public IDebugType<ITypeRef, DIType> DebugType { get; }
 
         /// <summary>Gets or sets the explicit layout information for this member</summary>
         /// <remarks>If this is <see langword="null"/> then <see href="xref:Llvm.NET.DebugInfo.DebugStructType.SetBody*">DebugStructType.SetBody</see>
@@ -46,6 +69,6 @@ namespace Llvm.NET.DebugInfo
         /// include the "packed" modifier.
         /// </note>
         /// </remarks>
-        public DebugMemberLayout ExplicitLayout { get; set; }
+        public DebugMemberLayout? ExplicitLayout { get; set; }
     }
 }

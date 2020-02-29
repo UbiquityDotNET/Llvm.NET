@@ -14,7 +14,7 @@ namespace Llvm.NET
         : ValueAsMetadata
     {
         /// <summary>Gets the <see cref="Constant"/> this node wraps</summary>
-        public Constant Constant => Value as Constant;
+        public Constant Constant => (Value as Constant)!;
 
         internal ConstantAsMetadata( LLVMMetadataRef handle )
             : base( handle )

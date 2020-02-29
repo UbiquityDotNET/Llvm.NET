@@ -69,7 +69,7 @@ namespace Llvm.NET
         , IExtensiblePropertyContainer
     {
         /// <summary>Gets a value indicating whether the module is disposed or not</summary>
-        public bool IsDisposed => ModuleHandle == default || ModuleHandle.IsInvalid || ModuleHandle.IsClosed;
+        public bool IsDisposed => (ModuleHandle is null) || ModuleHandle.IsInvalid || ModuleHandle.IsClosed;
 
         /// <summary>Gets or sets the name of the source file generating this module</summary>
         public string SourceFileName
@@ -115,8 +115,8 @@ namespace Llvm.NET
                     {
                         var behavior = LLVMModuleFlagEntriesGetFlagBehavior( flags, i );
                         string key = LLVMModuleFlagEntriesGetKey( flags, i, out size_t _ );
-                        var metadata = LlvmMetadata.FromHandle<LlvmMetadata>( Context, LLVMModuleFlagEntriesGetMetadata( flags, i ) );
-                        retVal.Add( key, new ModuleFlag( (ModuleFlagBehavior)behavior, key, metadata ) );
+                        var metadata = LlvmMetadata.FromHandle<LlvmMetadata>( Context, LLVMModuleFlagEntriesGetMetadata( flags, i ).ThrowIfInvalid( ) );
+                        retVal.Add( key, new ModuleFlag( (ModuleFlagBehavior)behavior, key, metadata! ) );
                     }
                 }
 
@@ -136,7 +136,7 @@ namespace Llvm.NET
         }
 
         /// <summary>Gets the Debug Compile unit for this module</summary>
-        public DICompileUnit DICompileUnit { get; internal set; }
+        public DICompileUnit? DICompileUnit { get; internal set; }
 
         /// <summary>Gets the Data layout string for this module</summary>
         /// <remarks>
@@ -162,14 +162,12 @@ namespace Llvm.NET
             get
             {
                 ThrowIfDisposed( );
-                return CachedLayout;
+                return DataLayout.FromHandle( LLVMGetModuleDataLayout( ModuleHandle ) );
             }
 
             set
             {
                 ThrowIfDisposed( );
-
-                CachedLayout = value;
                 LLVMSetDataLayout( ModuleHandle, value?.ToString( ) ?? string.Empty );
             }
         }
@@ -199,7 +197,7 @@ namespace Llvm.NET
                 var current = LLVMGetFirstGlobal( ModuleHandle );
                 while( current != default )
                 {
-                    yield return Value.FromHandle<GlobalVariable>( current );
+                    yield return Value.FromHandle<GlobalVariable>( current )!;
                     current = LLVMGetNextGlobal( current );
                 }
             }
@@ -214,7 +212,7 @@ namespace Llvm.NET
                 var current = LLVMGetFirstFunction( ModuleHandle );
                 while( current != default )
                 {
-                    yield return Value.FromHandle<IrFunction>( current );
+                    yield return Value.FromHandle<IrFunction>( current )!;
                     current = LLVMGetNextFunction( current );
                 }
             }
@@ -229,7 +227,7 @@ namespace Llvm.NET
                 var current = LibLLVMModuleGetFirstGlobalAlias( ModuleHandle );
                 while( current != default )
                 {
-                    yield return Value.FromHandle<GlobalAlias>( current );
+                    yield return Value.FromHandle<GlobalAlias>( current )!;
                     current = LibLLVMModuleGetNextGlobalAlias( current );
                 }
             }
@@ -288,7 +286,7 @@ namespace Llvm.NET
             if( !IsDisposed )
             {
                 // remove the module handle from the module cache.
-                ModuleHandle.Dispose( );
+                ModuleHandle!.Dispose( );
                 ModuleHandle = default;
             }
         }
@@ -332,7 +330,7 @@ namespace Llvm.NET
         /// <summary>Gets a function by name from this module</summary>
         /// <param name="name">Name of the function to get</param>
         /// <returns>The function or null if not found</returns>
-        public IrFunction GetFunction( string name )
+        public IrFunction? GetFunction( string name )
         {
             ThrowIfDisposed( );
             name.ValidateNotNullOrWhiteSpace( nameof( name ) );
@@ -358,7 +356,8 @@ namespace Llvm.NET
             name.ValidateNotNullOrWhiteSpace( nameof( name ) );
             signature.ValidateNotNull( nameof( signature ) );
 
-            return Value.FromHandle<IrFunction>( LibLLVMGetOrInsertFunction( ModuleHandle, name, signature.GetTypeRef( ) ) );
+            LLVMValueRef valueRef = LibLLVMGetOrInsertFunction( ModuleHandle, name, signature.GetTypeRef( ) );
+            return Value.FromHandle<IrFunction>( valueRef.ThrowIfInvalid( ) )!;
         }
 
         /// <summary>Writes a bit-code module to a file</summary>
@@ -425,13 +424,13 @@ namespace Llvm.NET
             aliasName.ValidateNotNullOrWhiteSpace( nameof( aliasName ) );
 
             var handle = LLVMAddAlias( ModuleHandle, aliasee.NativeType.GetTypeRef( ), aliasee.ValueHandle, aliasName );
-            return Value.FromHandle<GlobalAlias>( handle );
+            return Value.FromHandle<GlobalAlias>( handle.ThrowIfInvalid( ) )!;
         }
 
         /// <summary>Get an alias by name</summary>
         /// <param name="name">name of the alias to get</param>
         /// <returns>Alias matching <paramref name="name"/> or null if no such alias exists</returns>
-        public GlobalAlias GetAlias( string name )
+        public GlobalAlias? GetAlias( string name )
         {
             ThrowIfDisposed( );
             name.ValidateNotNullOrWhiteSpace( nameof( name ) );
@@ -455,7 +454,7 @@ namespace Llvm.NET
             name.ValidateNotNullOrWhiteSpace( nameof( name ) );
 
             var handle = LLVMAddGlobalInAddressSpace( ModuleHandle, typeRef.GetTypeRef( ), name, addressSpace );
-            return Value.FromHandle<GlobalVariable>( handle );
+            return Value.FromHandle<GlobalVariable>( handle.ThrowIfInvalid( ) )!;
         }
 
         /// <summary>Adds a global to this module</summary>
@@ -512,7 +511,7 @@ namespace Llvm.NET
             name.ValidateNotNull( nameof( name ) );
 
             var handle = LLVMAddGlobal( ModuleHandle, typeRef.GetTypeRef( ), name );
-            return Value.FromHandle<GlobalVariable>( handle );
+            return Value.FromHandle<GlobalVariable>( handle.ThrowIfInvalid( ) )!;
         }
 
         /// <summary>Adds a global to this module</summary>
@@ -556,7 +555,7 @@ namespace Llvm.NET
         /// <summary>Retrieves a <see cref="ITypeRef"/> by name from the module</summary>
         /// <param name="name">Name of the type</param>
         /// <returns>The type or null if no type with the specified name exists in the module</returns>
-        public ITypeRef GetTypeByName( string name )
+        public ITypeRef? GetTypeByName( string name )
         {
             ThrowIfDisposed( );
             name.ValidateNotNullOrWhiteSpace( nameof( name ) );
@@ -568,7 +567,7 @@ namespace Llvm.NET
         /// <summary>Retrieves a named global from the module</summary>
         /// <param name="name">Name of the global</param>
         /// <returns><see cref="GlobalVariable"/> or <see langword="null"/> if not found</returns>
-        public GlobalVariable GetNamedGlobal( string name )
+        public GlobalVariable? GetNamedGlobal( string name )
         {
             ThrowIfDisposed( );
             name.ValidateNotNullOrWhiteSpace( nameof( name ) );
@@ -643,7 +642,7 @@ namespace Llvm.NET
         /// <returns>Function described by the arguments</returns>
         public IrFunction CreateFunction( DIScope scope
                                       , string name
-                                      , string linkageName
+                                      , string? linkageName
                                       , DIFile file
                                       , uint line
                                       , DebugFunctionType signature
@@ -756,7 +755,8 @@ namespace Llvm.NET
             }
 
             LLVMTypeRef[ ] llvmArgs = args.Select( a => a.GetTypeRef( ) ).ToArray( );
-            return (IrFunction) Value.FromHandle( LLVMGetIntrinsicDeclaration( ModuleHandle, id, llvmArgs, llvmArgs.Length ));
+            LLVMValueRef valueRef = LLVMGetIntrinsicDeclaration( ModuleHandle, id, llvmArgs, llvmArgs.Length );
+            return ( IrFunction )Value.FromHandle( valueRef.ThrowIfInvalid( ) )!;
         }
 
         /// <summary>Clones the current module</summary>
@@ -764,7 +764,7 @@ namespace Llvm.NET
         public BitcodeModule Clone( )
         {
             ThrowIfDisposed( );
-            return FromHandle( LLVMCloneModule( ModuleHandle ) );
+            return FromHandle( LLVMCloneModule( ModuleHandle ).ThrowIfInvalid() )!;
         }
 
         /// <summary>Clones the module into a new <see cref="Context"/></summary>
@@ -791,7 +791,7 @@ namespace Llvm.NET
             => PropertyBag.TryGetExtendedPropertyValue( id, out value );
 
         /// <inheritdoc/>
-        void IExtensiblePropertyContainer.AddExtendedPropertyValue( string id, object value )
+        void IExtensiblePropertyContainer.AddExtendedPropertyValue( string id, object? value )
             => PropertyBag.AddExtendedPropertyValue( id, value );
 
         /// <summary>Load a bit-code module from a given file</summary>
@@ -837,7 +837,7 @@ namespace Llvm.NET
             return context.GetModuleFor( modRef );
         }
 
-        internal LLVMModuleRef ModuleHandle { get; private set; }
+        internal LLVMModuleRef? ModuleHandle { get; private set; }
 
         internal LLVMModuleRef Detach( )
         {
@@ -845,11 +845,11 @@ namespace Llvm.NET
             Context.RemoveModule( this );
             var retVal = ModuleHandle;
             ModuleHandle = default;
-            return retVal;
+            return retVal!; // can't be null as ThrowIfDisposed would consider it disposed
         }
 
         [SuppressMessage( "Reliability", "CA2000:Dispose objects before losing scope", Justification = "Context created here is owned, and disposed of via the ContextCache" )]
-        internal static BitcodeModule FromHandle( LLVMModuleRef nativeHandle )
+        internal static BitcodeModule? FromHandle( LLVMModuleRef nativeHandle )
         {
             nativeHandle.ValidateNotDefault( nameof( nativeHandle ) );
             var contextRef = LLVMGetModuleContext( nativeHandle );
@@ -928,19 +928,6 @@ namespace Llvm.NET
                 throw new ObjectDisposedException( Resources.Module_was_explicitly_destroyed_or_ownership_transferred_to_native_library );
             }
         }
-
-        // TODO: leverage LLVMGetModuleDataLayout and LLVMSetDataLayout instead of this manual caching
-        // the underlying implementation is that the data layout is exposed, by ref, and copy assigned
-        // on set, so the LLVMTargetDataAlias is valid to use.
-        //
-        // Do not write to this directly, use the property setter
-        // This is cached since internally the LLVM module APIs
-        // deal with C++ references. While that is manageable as
-        // a getter, it is problematic as a setter since there isn't
-        // any sort of ownership transfer and the ownership is a bit
-        // murky, especially with a managed projection. Thus, the LLVM-C
-        // API sticks to the string form of the layout.
-        private DataLayout CachedLayout;
 
         private readonly ExtensiblePropertyContainer PropertyBag = new ExtensiblePropertyContainer( );
         private readonly Lazy<DebugInfoBuilder> LazyDiBuilder;

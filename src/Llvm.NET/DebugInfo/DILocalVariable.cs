@@ -21,7 +21,7 @@ namespace Llvm.NET.DebugInfo
         */
 
         /// <summary>Gets the local scope containing this variable</summary>
-        public new DILocalScope Scope => base.Scope as DILocalScope;
+        public new DILocalScope Scope => ( DILocalScope )base.Scope!;
 
         internal DILocalVariable( LLVMMetadataRef handle )
             : base( handle )

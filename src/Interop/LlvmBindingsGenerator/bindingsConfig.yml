@@ -979,6 +979,8 @@ FunctionBindings:
   - Name: LLVMGetTypeContext
     ReturnTransform: !Alias {}
 
+  - Name: LLVMGetModuleDataLayout
+    ReturnTransform: !Alias {}
 
 HandleMap:
   - !GlobalHandle {HandleName: LLVMMemoryBufferRef, Disposer: LLVMDisposeMemoryBuffer, Alias: False}

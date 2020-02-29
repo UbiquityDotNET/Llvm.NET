@@ -7,7 +7,7 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
-using JetBrains.Annotations;
+
 using Llvm.NET.Interop;
 using Llvm.NET.Properties;
 using Llvm.NET.Types;
@@ -77,7 +77,11 @@ namespace Llvm.NET
         /// <param name="context">LLVM <see cref="Context"/> that owns the definition of the pointer type to retrieve</param>
         /// <returns>Integer type matching the bit width of a native pointer in the target's default address space</returns>
         public ITypeRef IntPtrType( Context context )
-            => TypeRef.FromHandle( LLVMIntPtrTypeInContext( context.ValidateNotNull(nameof(context)).ContextHandle, DataLayoutHandle ) );
+        {
+            context.ValidateNotNull( nameof( context ) );
+            LLVMTypeRef typeRef = LLVMIntPtrTypeInContext( context.ContextHandle, DataLayoutHandle );
+            return TypeRef.FromHandle( typeRef.ThrowIfInvalid( ) )!;
+        }
 
         /* TODO: Additional properties for DataLayout
         bool IsLegalIntegerWidth(UInt64 width);
@@ -106,7 +110,7 @@ namespace Llvm.NET
         {
             context.ValidateNotNull( nameof( context ) );
             var typeHandle = LLVMIntPtrTypeForASInContext( context.ContextHandle, DataLayoutHandle, addressSpace );
-            return TypeRef.FromHandle( typeHandle );
+            return TypeRef.FromHandle( typeHandle.ThrowIfInvalid( ) )!;
         }
 
         /// <summary>Returns the number of bits necessary to hold the specified type.</summary>
@@ -262,7 +266,7 @@ namespace Llvm.NET
         internal LLVMTargetDataRef DataLayoutHandle { get; }
 
         // ReSharper disable once ParameterOnlyUsedForPreconditionCheck.Local
-        private static void VerifySized( [ValidatedNotNull] ITypeRef type, [InvokerParameterName] string name )
+        private static void VerifySized( [ValidatedNotNull] ITypeRef type, string name )
         {
             if( type == null )
             {

@@ -13,13 +13,12 @@ namespace Llvm.NET.DebugInfo
     public class DINamespace
         : DIScope
     {
-        // ReSharper disable IdentifierTypo
         /* TODO: non-operand properties
         public bool ExportSymbols => LLVMDINamespaceGetExportSymbols( MetadataHandle );
         */
 
         /// <inheritdoc/>
-        public override DIScope Scope => GetOperand<DIScope>( 1 );
+        public override DIScope Scope => GetOperand<DIScope>( 1 )!;
 
         /// <inheritdoc/>
         public override string Name => GetOperandString( 2 );

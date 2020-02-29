@@ -13,7 +13,7 @@ namespace Llvm.NET.DebugInfo
     public class DICompositeTypeArray
         : TupleTypedArrayWrapper<DINode>
     {
-        internal DICompositeTypeArray( MDTuple tuple )
+        internal DICompositeTypeArray( MDTuple? tuple )
             : base( tuple )
         {
         }

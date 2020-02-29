@@ -38,18 +38,19 @@ namespace Llvm.NET.Instructions
         long IOperandContainer<Constant>.Count => Operands.Count;
 
         /// <inheritdoc/>
-        Constant IOperandContainer<Constant>.this[ int index ]
+        Constant? IOperandContainer<Constant>.this[ int index ]
         {
             get => GetOperand<Constant>( index );
-            set => Operands[ index ] = value;
+            set => Operands[ index ] = value.ValidateNotNull( nameof( value ) )!;
         }
 
         /// <inheritdoc/>
-        void IOperandContainer<Constant>.Add( Constant item )
+        /// <remarks>The <paramref name="item"/> parameter must not be <see langword="null"/></remarks>
+        void IOperandContainer<Constant>.Add( Constant? item )
         {
             item.ValidateNotNull( nameof( item ) );
 
-            LLVMAddClause( ValueHandle, item.ValueHandle );
+            LLVMAddClause( ValueHandle, item!.ValueHandle );
         }
 
         internal LandingPad( LLVMValueRef valueRef )

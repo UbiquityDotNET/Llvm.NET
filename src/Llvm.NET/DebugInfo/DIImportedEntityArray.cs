@@ -13,7 +13,7 @@ namespace Llvm.NET.DebugInfo
     public class DIImportedEntityArray
         : TupleTypedArrayWrapper<DINode>
     {
-        internal DIImportedEntityArray( MDTuple tuple )
+        internal DIImportedEntityArray( MDTuple? tuple )
             : base( tuple )
         {
         }

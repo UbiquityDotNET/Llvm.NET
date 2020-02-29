@@ -38,7 +38,7 @@ namespace Llvm.NET.Values
         /// empty string will remove any comdat setting for the
         /// global object.
         /// </remarks>
-        public Comdat Comdat
+        public Comdat? Comdat
         {
             get
             {
@@ -76,7 +76,7 @@ namespace Llvm.NET.Values
                 for( long i = 0; i < numEntries.ToInt32( ); ++i )
                 {
                     LLVMMetadataRef handle = LLVMValueMetadataEntriesGetMetadata( entries, ( uint )i );
-                    yield return MDNode.FromHandle<MDNode>( handle );
+                    yield return MDNode.FromHandle<MDNode>( handle.ThrowIfInvalid( ) )!;
                 }
             }
         }

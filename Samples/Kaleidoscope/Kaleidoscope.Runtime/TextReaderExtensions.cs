@@ -9,7 +9,6 @@ using System.Collections.Generic;
 using System.IO;
 using System.Reactive.Linq;
 using System.Text;
-using JetBrains.Annotations;
 
 namespace Kaleidoscope.Runtime
 {
@@ -20,7 +19,7 @@ namespace Kaleidoscope.Runtime
         /// <param name="input">Input reader</param>
         /// <param name="prompt"><see cref="Action"/> to provide a prompt before new lines are read from the reader</param>
         /// <returns>Observable of the lines read from the reader</returns>
-        public static IObservable<string> ToObservableLines( this TextReader input, [CanBeNull] Action prompt )
+        public static IObservable<string> ToObservableLines( this TextReader input, Action? prompt )
         {
             return Observable.Create<string>( async observer =>
             {
@@ -68,7 +67,7 @@ namespace Kaleidoscope.Runtime
         /// <param name="reader">Input reader</param>
         /// <param name="prompt">Action to provide prompts when the transform requires new data from the reader</param>
         /// <returns>Observable sequence of complete statements ready for parsing</returns>
-        public static IObservable<string> ToObservableStatements(this TextReader reader, [CanBeNull] Action<ReadyState> prompt )
+        public static IObservable<string> ToObservableStatements(this TextReader reader, Action<ReadyState>? prompt )
         {
             var stateManager = new ReadyStateManager( );
 
@@ -86,7 +85,7 @@ namespace Kaleidoscope.Runtime
             // the last entry is an empty string, but a single blank line
             // as input isn't considered completed.
             int completeStatements = statements.Length - 1;
-            bool wasLastTerminated = string.IsNullOrEmpty( statements[ statements.Length - 1 ] ) && statements.Length > 1;
+            bool wasLastTerminated = string.IsNullOrEmpty( statements[ ^1 ] ) && statements.Length > 1;
             if( wasLastTerminated && completeStatements > 1 )
             {
                 ++completeStatements;
@@ -109,7 +108,7 @@ namespace Kaleidoscope.Runtime
 
             if( !wasLastTerminated )
             {
-                string partial = statements[ statements.Length - 1 ];
+                string partial = statements[ ^1 ];
                 buffer.AppendLine( partial );
                 yield return (partial, true);
             }

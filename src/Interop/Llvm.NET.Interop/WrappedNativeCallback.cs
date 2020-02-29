@@ -75,7 +75,7 @@ namespace Llvm.NET.Interop
         private readonly IntPtr NativeFuncPtr;
 
         // keeps a live ref for the delegate around so GC won't clean it up
-        private Delegate UnpinnedDelegate;
+        private Delegate? UnpinnedDelegate;
 
         private readonly GCHandle Handle;
     }

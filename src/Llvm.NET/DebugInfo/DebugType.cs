@@ -72,41 +72,29 @@ namespace Llvm.NET.DebugInfo
     {
         /// <summary>Gets or sets the Debug information type for this binding</summary>
         /// <remarks>
-        /// Setting the debug type is only allowed when the debug type is null or <see cref="MDNode.IsTemporary"/>
+        /// <para>Setting the debug type is only allowed when the debug type is null or <see cref="MDNode.IsTemporary"/>
         /// is <see langword="true"/>. If the debug type node is a temporary setting the type will replace all uses
-        /// of the temporary type automatically, via <see cref="MDNode.ReplaceAllUsesWith(LlvmMetadata)"/>
+        /// of the temporary type automatically, via <see cref="MDNode.ReplaceAllUsesWith(LlvmMetadata)"/></para>
+        /// <para>Since setting this property will replace all uses with (RAUW) the new value setting this property with <see langword="null"/>
+        /// is not allowed. However, until set this property will be <see  langword="null"/></para>
         /// </remarks>
         /// <exception cref="System.InvalidOperationException">The type is not <see langword="null"/> or not a temporary</exception>
         [SuppressMessage( "Microsoft.Naming", "CA2204:Literals should be spelled correctly", MessageId = "DIType", Justification = "It is spelled correctly 8^)" )]
         public TDebug DIType
         {
-            get => DIType_;
+            get => RawDebugInfoType;
             set
             {
-                if( value == null )
-                {
-                    if( DIType != null )
-                    {
-                        throw new ArgumentException( Resources.Cannot_Reset_Type_to_null, nameof( value ) );
-                    }
-
-                    // NOP if setting null when already null
-                    return;
-                }
-
-                if( DIType_ == null )
-                {
-                    DIType_ = value;
-                }
-                else if( DIType_.IsTemporary )
+                value.ValidateNotNull( nameof( value ) );
+                if( ( RawDebugInfoType != null ) && RawDebugInfoType.IsTemporary )
                 {
                     if( value.IsTemporary )
                     {
                         throw new InvalidOperationException( Resources.Cannot_replace_a_temporary_with_another_temporary );
                     }
 
-                    DIType_.ReplaceAllUsesWith( value );
-                    DIType_ = value;
+                    RawDebugInfoType.ReplaceAllUsesWith( value );
+                    RawDebugInfoType = value;
                 }
                 else
                 {
@@ -188,7 +176,7 @@ namespace Llvm.NET.DebugInfo
         {
             if( DIType == null )
             {
-                throw new ArgumentException( Resources.Type_does_not_have_associated_Debug_type_from_which_to_construct_a_pointer_type );
+                throw new InvalidOperationException( Resources.Type_does_not_have_associated_Debug_type_from_which_to_construct_a_pointer_type );
             }
 
             var nativePointer = NativeType.CreatePointerType( addressSpace );
@@ -200,7 +188,7 @@ namespace Llvm.NET.DebugInfo
         {
             if( DIType == null )
             {
-                throw new ArgumentException( Resources.Type_does_not_have_associated_Debug_type_from_which_to_construct_an_array_type );
+                throw new InvalidOperationException( Resources.Type_does_not_have_associated_Debug_type_from_which_to_construct_an_array_type );
             }
 
             var llvmArray = NativeType.CreateArrayType( count );
@@ -215,24 +203,25 @@ namespace Llvm.NET.DebugInfo
         }
 
         /// <inheritdoc/>
-        public void AddExtendedPropertyValue( string id, object value )
+        public void AddExtendedPropertyValue( string id, object? value )
         {
             PropertyContainer.AddExtendedPropertyValue( id, value );
         }
 
         /// <summary>Converts a <see cref="DebugType{TNative, TDebug}"/> to <typeparamref name="TDebug"/> by accessing the <see cref="DIType"/> property</summary>
         /// <param name="self">The type to convert</param>
-        [SuppressMessage( "Microsoft.Usage", "CA2225:OperatorOverloadsHaveNamedAlternates", Justification = "Available as a property, this is for convenience" )]
-        public static implicit operator TDebug( DebugType<TNative, TDebug> self ) => self.ValidateNotNull(nameof(self)).DIType;
+        [SuppressMessage( "Microsoft.Usage", "CA2225:OperatorOverloadsHaveNamedAlternates", Justification = "DIType is available as a property, this is for convenience" )]
+        public static implicit operator TDebug( DebugType<TNative, TDebug> self ) => self.ValidateNotNull( nameof( self ) ).DIType;
 
-        internal DebugType( )
+        internal DebugType( TNative llvmType, TDebug debugInfoType )
         {
+            llvmType.ValidateNotNull( nameof( llvmType ) );
+
+            NativeType_.Value = llvmType;
+            RawDebugInfoType = debugInfoType;
         }
 
-        internal DebugType( TNative llvmType )
-        {
-            NativeType_.Value = llvmType ?? throw new ArgumentNullException( nameof( llvmType ) );
-        }
+        private TDebug RawDebugInfoType;
 
         // This can't be an auto property as the setter needs Enforce Set Once semantics
         [SuppressMessage( "StyleCop.CSharp.NamingRules"
@@ -241,16 +230,6 @@ namespace Llvm.NET.DebugInfo
                         )
         ]
         private readonly WriteOnce<TNative> NativeType_ = new WriteOnce<TNative>();
-
-        // This can't be an auto property as the setter needs Enforce Set Once semantics
-        // NOTE: WriteOnce isn't really viable here as this has a special case to allow replacing
-        // a temporary type.
-        [SuppressMessage( "StyleCop.CSharp.NamingRules"
-                        , "SA1310:Field names must not contain underscore"
-                        , Justification = "Trailing _ indicates value MUST NOT be written to directly, even internally"
-                        )
-        ]
-        private TDebug DIType_;
 
         private readonly ExtensiblePropertyContainer PropertyContainer = new ExtensiblePropertyContainer( );
     }
@@ -262,7 +241,7 @@ namespace Llvm.NET.DebugInfo
         /// <typeparam name="TNative">Type of the Native LLVM type for the association</typeparam>
         /// <typeparam name="TDebug">Type of the debug information type for the association</typeparam>
         /// <param name="nativeType"><typeparamref name="TNative"/> type instance for this association</param>
-        /// <param name="debugType"><typeparamref name="TDebug"/> type instance for this association</param>
+        /// <param name="debugType"><typeparamref name="TDebug"/> type instance for this association (use <see cref="DITypeVoid.Instance"/> for void)</param>
         /// <returns><see cref="IDebugType{NativeT, DebugT}"/> implementation for the specified association</returns>
         public static IDebugType<TNative, TDebug> Create<TNative, TDebug>( TNative nativeType
                                                                          , TDebug debugType
@@ -270,7 +249,7 @@ namespace Llvm.NET.DebugInfo
             where TNative : class, ITypeRef
             where TDebug : DIType
         {
-            return new DebugType<TNative, TDebug>( nativeType ) { DIType = debugType };
+            return new DebugType<TNative, TDebug>( nativeType, debugType );
         }
 
         /// <summary>Convenience extensions for determining if the <see cref="DIType"/> property is valid</summary>

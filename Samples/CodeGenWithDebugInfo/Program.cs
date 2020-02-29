@@ -81,6 +81,7 @@ namespace TestDebugInfo
                 module.SourceFileName = Path.GetFileName( srcPath );
                 module.TargetTriple = TargetDetails.TargetMachine.Triple;
                 module.Layout = TargetDetails.TargetMachine.TargetData;
+                System.Diagnostics.Debug.Assert( !( module.DICompileUnit is null ), "Expected module with non-null compile unit" );
 
                 TargetDependentAttributes = TargetDetails.BuildTargetDependentFunctionAttributes( context );
                 #endregion
@@ -91,22 +92,22 @@ namespace TestDebugInfo
                 // Create basic types used in this compilation
                 var i32 = new DebugBasicType( module.Context.Int32Type, module, "int", DiTypeKind.Signed );
                 var f32 = new DebugBasicType( module.Context.FloatType, module, "float", DiTypeKind.Float );
-                var voidType = DebugType.Create( module.Context.VoidType, ( DIType )null );
+                var voidType = DebugType.Create<ITypeRef,DIType>( module.Context.VoidType, DITypeVoid.Instance );
                 var i32Array_0_32 = i32.CreateArrayType( module, 0, 32 );
                 #endregion
 
-#pragma warning disable SA1500 // "Warning SA1500  Braces for multi - line statements must not share line" (simple table format)
                 #region CreatingStructureTypes
                 // create the LLVM structure type and body with full debug information
                 var fooBody = new[ ]
-                        { new DebugMemberInfo { File = diFile, Line = 3, Name = "a", DebugType = i32, Index = 0 }
-                        , new DebugMemberInfo { File = diFile, Line = 4, Name = "b", DebugType = f32, Index = 1 }
-                        , new DebugMemberInfo { File = diFile, Line = 5, Name = "c", DebugType = i32Array_0_32, Index = 2 }
-                        };
+                    {
+                        new DebugMemberInfo( 0, "a", diFile, 3, i32 ),
+                        new DebugMemberInfo( 1, "b", diFile, 4, f32 ),
+                        new DebugMemberInfo( 2, "c", diFile, 5, i32Array_0_32 ),
+                    };
 
                 var fooType = new DebugStructType( module, "struct.foo", module.DICompileUnit, "foo", diFile, 1, DebugInfoFlags.None, fooBody );
                 #endregion
-#pragma warning restore SA1500
+
                 #region CreatingGlobalsAndMetadata
                 // add global variables and constants
                 var constArray = ConstantArray.From( i32, 32, module.Context.CreateConstant( 3 ), module.Context.CreateConstant( 4 ) );
@@ -278,6 +279,7 @@ namespace TestDebugInfo
                                                   , DIType constFooType
                                                   )
         {
+            System.Diagnostics.Debug.Assert( copyFunc.DISubProgram != null, "Expected function with a valid debug subprogram" );
             var diBuilder = module.DIBuilder;
 
             copyFunc.Parameters[ 0 ].Name = "src";
@@ -400,8 +402,11 @@ namespace TestDebugInfo
         // obviously this is not clang but using an identical name helps in comparisons with actual clang output
         private const string VersionIdentString = "clang version 5.0.0 (tags/RELEASE_500/rc4)";
 
+        // these fields are initialized in main before being used elswhere
+#pragma warning disable CS8618 // Non-nullable field is uninitialized. Consider declaring as nullable.
         private static ITargetDependentDetails TargetDetails;
 
         private static IEnumerable<AttributeValue> TargetDependentAttributes { get; set; }
+#pragma warning restore CS8618 // Non-nullable field is uninitialized. Consider declaring as nullable.
     }
 }

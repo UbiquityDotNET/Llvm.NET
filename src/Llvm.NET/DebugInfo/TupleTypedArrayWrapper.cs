@@ -26,10 +26,10 @@ namespace Llvm.NET.DebugInfo
         where T : LlvmMetadata
     {
         /// <summary>Gets the underlying tuple for this wrapper</summary>
-        public MDTuple Tuple { get; }
+        public MDTuple? Tuple { get; }
 
         /// <inheritdoc />
-        public int Count => Tuple.Operands.Count;
+        public int Count => Tuple?.Operands.Count ?? 0;
 
         /// <inheritdoc />
         public T this[ int index ]
@@ -46,14 +46,16 @@ namespace Llvm.NET.DebugInfo
                     throw new ArgumentOutOfRangeException( nameof( index ) );
                 }
 
-                return Tuple.Operands[ index ] as T;
+                return ( T )Tuple.Operands[ index ];
             }
         }
 
         /// <inheritdoc />
         public IEnumerator<T> GetEnumerator( )
         {
-            return Tuple.Operands
+            return Tuple is null
+                ? Enumerable.Empty<T>( ).GetEnumerator()
+                : Tuple.Operands
                         .Cast<T>()
                         .GetEnumerator();
         }
@@ -61,7 +63,7 @@ namespace Llvm.NET.DebugInfo
         /// <inheritdoc />
         IEnumerator IEnumerable.GetEnumerator( ) => GetEnumerator();
 
-        internal TupleTypedArrayWrapper( MDTuple tuple )
+        internal TupleTypedArrayWrapper( MDTuple? tuple )
         {
             Tuple = tuple;
         }

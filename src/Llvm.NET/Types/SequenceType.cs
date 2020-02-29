@@ -37,12 +37,7 @@ namespace Llvm.NET.Types
             get
             {
                 var typeRef = LLVMGetElementType( this.GetTypeRef() );
-                if( typeRef == default )
-                {
-                    return null;
-                }
-
-                return FromHandle( typeRef );
+                return FromHandle( typeRef.ThrowIfInvalid( ) )!;
             }
         }
 

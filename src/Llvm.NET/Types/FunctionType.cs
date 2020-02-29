@@ -38,7 +38,7 @@ namespace Llvm.NET.Types
         public bool IsVarArg => LLVMIsFunctionVarArg( TypeRefHandle );
 
         /// <inheritdoc/>
-        public ITypeRef ReturnType => FromHandle<ITypeRef>( LLVMGetReturnType( TypeRefHandle ) );
+        public ITypeRef ReturnType => FromHandle<ITypeRef>( LLVMGetReturnType( TypeRefHandle ).ThrowIfInvalid( ) )!;
 
         /// <inheritdoc/>
         public IReadOnlyList<ITypeRef> ParameterTypes
@@ -53,9 +53,10 @@ namespace Llvm.NET.Types
 
                 var paramTypes = new LLVMTypeRef[ paramCount ];
                 LLVMGetParamTypes( TypeRefHandle, paramTypes );
-                return paramTypes.Select( FromHandle<TypeRef> )
-                                 .ToList( )
-                                 .AsReadOnly( );
+                return ( from p in paramTypes
+                         select FromHandle<TypeRef>( p.ThrowIfInvalid( ) )!
+                       ).ToList( )
+                        .AsReadOnly( );
             }
         }
 

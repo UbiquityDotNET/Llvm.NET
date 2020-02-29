@@ -18,7 +18,7 @@ namespace Llvm.NET.DebugInfo
         */
 
         /// <summary>Gets the Debug information for the file containing this property</summary>
-        public DIFile File => GetOperand<DIFile>( 1 );
+        public DIFile File => GetOperand<DIFile>( 1 )!;
 
         /// <summary>Gets the name of the property</summary>
         public string Name => GetOperandString( 0 );
@@ -30,7 +30,7 @@ namespace Llvm.NET.DebugInfo
         public string SetterName => GetOperandString( 3 );
 
         /// <summary>Gets the type of the property</summary>
-        public DIType Type => GetOperand<DIType>( 4 );
+        public DIType Type => GetOperand<DIType>( 4 )!;
 
         internal DIObjCProperty( LLVMMetadataRef handle )
             : base( handle )

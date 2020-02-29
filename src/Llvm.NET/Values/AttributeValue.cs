@@ -64,7 +64,7 @@ namespace Llvm.NET.Values
 
         /// <summary>Gets the value for named attributes with values</summary>
         /// <value>The value as a string or <see lang="null"/> if the attribute has no value</value>
-        public string StringValue => !IsString ? null : LLVMGetStringAttributeValue( NativeAttribute, out uint _ );
+        public string? StringValue => !IsString ? null : LLVMGetStringAttributeValue( NativeAttribute, out uint _ );
 
         /// <summary>Gets the Integer value of the attribute or <see lang="null"/> if the attribute doesn't have a value</summary>
         public UInt64? IntegerValue => IsInt ? LLVMGetEnumAttributeValue( NativeAttribute ) : ( UInt64? )null;

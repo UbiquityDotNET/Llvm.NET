@@ -5,7 +5,7 @@
 // -----------------------------------------------------------------------
 
 using System.Collections.Generic;
-using JetBrains.Annotations;
+
 using Llvm.NET.Interop;
 using Llvm.NET.Values;
 
@@ -22,8 +22,7 @@ namespace Llvm.NET.Instructions
         public bool IsConditional => Operands.Count == 3;
 
         /// <summary>Gets the condition for the branch, if any</summary>
-        [property: CanBeNull]
-        public Value Condition => IsConditional ? GetOperand<Value>( -3 ) : null;
+        public Value? Condition => IsConditional ? GetOperand<Value>( -3 ) : null;
 
         /// <summary>Gets the successor block(s) for this branch</summary>
         public IReadOnlyList<BasicBlock> Successors

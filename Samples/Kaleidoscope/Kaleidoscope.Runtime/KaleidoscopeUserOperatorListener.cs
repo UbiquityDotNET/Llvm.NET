@@ -4,7 +4,6 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
-using JetBrains.Annotations;
 using Kaleidoscope.Grammar;
 
 namespace Kaleidoscope.Runtime
@@ -21,7 +20,7 @@ namespace Kaleidoscope.Runtime
 
         // upon successful parse of a function definition check if it is a user defined operator
         // and update the RuntimeState accordingly, if it is.
-        public override void ExitFunctionDefinition( [NotNull] KaleidoscopeParser.FunctionDefinitionContext context )
+        public override void ExitFunctionDefinition( KaleidoscopeParser.FunctionDefinitionContext context )
         {
             switch( context.Signature )
             {

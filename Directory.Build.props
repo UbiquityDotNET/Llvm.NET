@@ -57,6 +57,7 @@
                 <CodeAnalysisIgnoreGeneratedCode>true</CodeAnalysisIgnoreGeneratedCode>
                 <Determenistic>true</Determenistic>
                 <IsTestProject>$(MSBuildProjectName.Contains('Test'))</IsTestProject>
+                <Nullable>enable</Nullable>
             </PropertyGroup>
             <ItemGroup Condition="'$(NoCommonAnalyzers)'!='true'">
                 <AdditionalFiles Include="$(MSBuildThisFileDirectory)stylecop.json" Link="stylecop.json" />

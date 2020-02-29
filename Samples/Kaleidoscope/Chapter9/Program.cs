@@ -15,9 +15,6 @@ using Llvm.NET;
 using static Kaleidoscope.Runtime.Utilities;
 using static Llvm.NET.Interop.Library;
 
-[assembly: SuppressMessage( "StyleCop.CSharp.DocumentationRules", "SA1652:Enable XML documentation output", Justification = "Sample application" )]
-#pragma warning disable SA1512, SA1513, SA1515 // single line comments used to tag regions for extraction into docs
-
 namespace Kaleidoscope.Chapter9
 {
     public static class Program
@@ -48,7 +45,7 @@ namespace Kaleidoscope.Chapter9
             string irFilePath = Path.ChangeExtension( sourceFilePath, ".ll" );
             string asmPath = Path.ChangeExtension( sourceFilePath, ".s" );
 
-            using( TextReader rdr = File.OpenText( sourceFilePath ) )
+            using( var rdr = File.OpenText( sourceFilePath ) )
             using( InitializeLLVM( ) )
             {
                 RegisterNative( );
@@ -61,34 +58,42 @@ namespace Kaleidoscope.Chapter9
 
                 // time the parse and code generation
                 var timer = System.Diagnostics.Stopwatch.StartNew( );
-                IAstNode ast = parser.Parse( rdr );
-                generator.Generate( ast, null );
-                if( !generator.Module.Verify( out string errMsg ) )
+                if( parser.TryParse( rdr, out IAstNode? ast ) )
                 {
-                    Console.Error.WriteLine( errMsg );
-                }
-                else
-                {
-                    machine.EmitToFile( generator.Module, objFilePath, CodeGenFileType.ObjectFile );
-                    timer.Stop( );
-
-                    Console.WriteLine( "Wrote {0}", objFilePath );
-                    if( !generator.Module.WriteToTextFile( irFilePath, out string msg ) )
+                    generator.Generate( ast, ErrorHandler );
+                    if( !generator.Module.Verify( out string errMsg ) )
                     {
-                        Console.Error.WriteLine( msg );
-                        return -1;
+                        Console.Error.WriteLine( errMsg );
                     }
+                    else
+                    {
+                        machine.EmitToFile( generator.Module, objFilePath, CodeGenFileType.ObjectFile );
+                        timer.Stop( );
 
-                    machine.EmitToFile( generator.Module, asmPath, CodeGenFileType.AssemblySource );
-                    Console.WriteLine( "Compilation Time: {0}", timer.Elapsed );
+                        Console.WriteLine( "Wrote {0}", objFilePath );
+                        if( !generator.Module.WriteToTextFile( irFilePath, out string msg ) )
+                        {
+                            Console.Error.WriteLine( msg );
+                            return -1;
+                        }
+
+                        machine.EmitToFile( generator.Module, asmPath, CodeGenFileType.AssemblySource );
+                        Console.WriteLine( "Compilation Time: {0}", timer.Elapsed );
+                    }
                 }
             }
 
             return 0;
         }
+
+        private static void ErrorHandler( CodeGeneratorException obj )
+        {
+            Console.Error.Write( obj.Message );
+        }
         #endregion
 
         #region ProcessArgs
+
         // really simple command line handling, just loops through the input arguments
         private static (string SourceFilePath, int ExitCode) ProcessArgs( string[ ] args )
         {
@@ -106,6 +111,7 @@ namespace Kaleidoscope.Chapter9
                     {
                         Console.Error.WriteLine( "Source path already provided, unrecognized option: '{0}'", arg );
                     }
+
                     sourceFilePath = Path.GetFullPath( arg );
                 }
             }
@@ -115,13 +121,13 @@ namespace Kaleidoscope.Chapter9
             if( string.IsNullOrWhiteSpace( sourceFilePath ) )
             {
                 Console.Error.WriteLine( "Missing source file name!" );
-                return (null, -1);
+                return (string.Empty, -1);
             }
 
             if( !File.Exists( sourceFilePath ) )
             {
                 Console.Error.WriteLine( "Source file '{0}' - not found!", sourceFilePath );
-                return (null, -2);
+                return (string.Empty, -2);
             }
 
             return (sourceFilePath, 0);

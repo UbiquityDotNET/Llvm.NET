@@ -359,7 +359,7 @@ namespace Llvm.NET.Values
                         return false;
                     }
 
-                    IrFunction function;
+                    IrFunction? function;
                     switch( value )
                     {
                     case IrFunction f:
@@ -407,7 +407,7 @@ namespace Llvm.NET.Values
 
             if( index >= FunctionAttributeIndex.Parameter0 )
             {
-                IrFunction function;
+                IrFunction? function;
                 switch( value )
                 {
                 case IrFunction f:

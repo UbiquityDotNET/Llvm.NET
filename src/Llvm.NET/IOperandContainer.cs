@@ -15,6 +15,7 @@ namespace Llvm.NET
     /// exposed as a public property on the container.
     /// </remarks>
     internal interface IOperandContainer<T>
+        where T : class
     {
         /// <summary>Gets the count of operands in the container</summary>
         long Count { get; }
@@ -22,11 +23,12 @@ namespace Llvm.NET
         /// <summary>Gets or sets an operand</summary>
         /// <param name="index">Raw index of the operand in the container</param>
         /// <returns>Operand from the container</returns>
-        T this[ int index ] { get; set; }
+        T? this[ int index ] { get; set; }
 
         /// <summary>Adds an item to the container</summary>
         /// <param name="item">item to add</param>
         /// <exception cref="NotSupportedException">If the container doesn't support adding items</exception>
-        void Add( T item );
+        /// <exception cref="ArgumentNullException">If the container doesn't support adding null items</exception>
+        void Add( T? item );
     }
 }

@@ -8,6 +8,7 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
+using Llvm.NET.Properties;
 using Llvm.NET.Types;
 using Ubiquity.ArgValidators;
 
@@ -36,29 +37,26 @@ namespace Llvm.NET.DebugInfo
                               , string nativeName
                               , DIScope scope
                               , string name
-                              , DIFile file
+                              , DIFile? file
                               , uint line
                               , DebugInfoFlags debugFlags
                               , IEnumerable<DebugMemberInfo> debugElements
-                              , DIType derivedFrom = null
+                              , DIType? derivedFrom = null
                               , bool packed = false
                               , uint? bitSize = null
                               , uint bitAlignment = 0
                               )
+            : base( module.ValidateNotNull( nameof( module ) )
+                          .Context.CreateStructType( nativeName, packed, debugElements.Select( e => e.DebugType ).ToArray( ) )
+                  , module.DIBuilder.CreateReplaceableCompositeType( Tag.StructureType
+                                                                   , name
+                                                                   , scope
+                                                                   , file
+                                                                   , line
+                                                                   )
+            )
         {
-            module.ValidateNotNull( nameof( module ) );
             DebugMembers = new ReadOnlyCollection<DebugMemberInfo>( debugElements as IList<DebugMemberInfo> ?? debugElements.ToList( ) );
-
-            NativeType = module.Context.CreateStructType( nativeName, packed, debugElements.Select( e => e.DebugType ).ToArray( ) );
-
-            // create a temp opaque type to act as scope for members
-            // this is RAUW with the full struct once it is defined
-            DIType = module.DIBuilder.CreateReplaceableCompositeType( Tag.StructureType
-                                                                    , name
-                                                                    , scope
-                                                                    , file
-                                                                    , line
-                                                                    );
 
             var memberTypes = from memberInfo in DebugMembers
                               select CreateMemberType( module, memberInfo );
@@ -100,20 +98,20 @@ namespace Llvm.NET.DebugInfo
                               , IEnumerable<DIType> elements
                               , uint bitAlignment = 0
                               )
-            : base( llvmType )
+            : base( llvmType
+                  , module.ValidateNotNull( nameof( module ) )
+                          .DIBuilder.CreateStructType( scope
+                                                     , name
+                                                     , file
+                                                     , line
+                                                     , module.Layout.BitSizeOf( llvmType )
+                                                     , bitAlignment
+                                                     , debugFlags
+                                                     , derivedFrom
+                                                     , elements
+                                                     )
+                  )
         {
-            module.ValidateNotNull( nameof( module ) );
-            DIType = module.DIBuilder
-                           .CreateStructType( scope
-                                            , name
-                                            , file
-                                            , line
-                                            , module.Layout.BitSizeOf( llvmType )
-                                            , bitAlignment
-                                            , debugFlags
-                                            , derivedFrom
-                                            , elements
-                                            );
         }
 
         /// <summary>Initializes a new instance of the <see cref="DebugStructType"/> class.</summary>
@@ -129,21 +127,22 @@ namespace Llvm.NET.DebugInfo
         /// </remarks>
         public DebugStructType( IStructType llvmType
                               , BitcodeModule module
-                              , DIScope scope
+                              , DIScope? scope
                               , string name
-                              , DIFile file
+                              , DIFile? file
                               , uint line
                               )
-            : base( llvmType )
+            : base( llvmType
+                  , module.ValidateNotNull( nameof( module ) )
+                          .DIBuilder
+                          .CreateReplaceableCompositeType( Tag.StructureType
+                                                         , name
+                                                         , scope
+                                                         , file
+                                                         , line
+                                                         )
+                  )
         {
-            DIType = module.ValidateNotNull( nameof( module ) )
-                           .DIBuilder
-                           .CreateReplaceableCompositeType( Tag.StructureType
-                                                          , name
-                                                          , scope
-                                                          , file
-                                                          , line
-                                                          );
         }
 
         /// <summary>Initializes a new instance of the <see cref="DebugStructType"/> class.</summary>
@@ -161,7 +160,7 @@ namespace Llvm.NET.DebugInfo
                               , string nativeName
                               , DIScope scope
                               , string name
-                              , DIFile file = null
+                              , DIFile? file = null
                               , uint line = 0
                               )
             : this( module.ValidateNotNull( nameof( module ) ).Context.CreateStructType( nativeName )
@@ -187,7 +186,7 @@ namespace Llvm.NET.DebugInfo
         public string Name => NativeType.Name;
 
         /// <summary>Gets the Source/Debug name</summary>
-        public string SourceName => DIType.Name;
+        public string SourceName => DIType?.Name ?? string.Empty;
 
         /// <inheritdoc/>
         public void SetBody( bool packed, params ITypeRef[ ] elements )
@@ -237,7 +236,7 @@ namespace Llvm.NET.DebugInfo
                            , DebugInfoFlags debugFlags
                            , IEnumerable<ITypeRef> nativeElements
                            , IEnumerable<DebugMemberInfo> debugElements
-                           , DIType derivedFrom = null
+                           , DIType? derivedFrom = null
                            , uint? bitSize = null
                            , uint bitAlignment = 0
                            )
@@ -249,7 +248,7 @@ namespace Llvm.NET.DebugInfo
                               select CreateMemberType( module, memberInfo );
 
             var concreteType = module.DIBuilder.CreateStructType( scope: scope
-                                                                , name: DIType.Name
+                                                                , name: DIType?.Name ?? string.Empty
                                                                 , file: file
                                                                 , line: line
                                                                 , bitSize: bitSize ?? module.Layout.BitSizeOf( NativeType )
@@ -262,10 +261,15 @@ namespace Llvm.NET.DebugInfo
         }
 
         /// <summary>Gets a list of descriptors for each members</summary>
-        public IReadOnlyList<DebugMemberInfo> DebugMembers { get; private set; }
+        public IReadOnlyList<DebugMemberInfo>? DebugMembers { get; private set; }
 
         private DIDerivedType CreateMemberType( BitcodeModule module, DebugMemberInfo memberInfo )
         {
+            if( DIType == null )
+            {
+                throw new InvalidOperationException( Resources.Type_does_not_have_associated_Debug_type_from_which_to_construct_a_Member );
+            }
+
             UInt64 bitSize;
             UInt32 bitAlign;
             UInt64 bitOffset;

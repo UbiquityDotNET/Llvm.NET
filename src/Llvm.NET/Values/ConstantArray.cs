@@ -63,7 +63,7 @@ namespace Llvm.NET.Values
 
             var valueHandles = values.Select( v => v.ValueHandle ).ToArray( );
             var handle = LLVMConstArray( elementType.GetTypeRef(), valueHandles, (uint)valueHandles.Length );
-            return FromHandle<Constant>( handle );
+            return FromHandle<Constant>( handle.ThrowIfInvalid( ) )!;
         }
 
         internal ConstantArray( LLVMValueRef valueRef )

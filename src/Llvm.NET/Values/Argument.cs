@@ -5,7 +5,7 @@
 // -----------------------------------------------------------------------
 
 using System.Collections.Generic;
-using JetBrains.Annotations;
+
 using Llvm.NET.Interop;
 using Ubiquity.ArgValidators;
 
@@ -18,7 +18,7 @@ namespace Llvm.NET.Values
         : Value
     {
         /// <summary>Gets the function this argument belongs to</summary>
-        public IrFunction ContainingFunction => FromHandle<IrFunction>( LLVMGetParamParent( ValueHandle ) );
+        public IrFunction ContainingFunction => FromHandle<IrFunction>( LLVMGetParamParent( ValueHandle ).ThrowIfInvalid( ) )!;
 
         /// <summary>Gets the zero based index of the argument</summary>
         public uint Index => LibLLVMGetArgumentIndex( ValueHandle );
@@ -35,12 +35,13 @@ namespace Llvm.NET.Values
         }
 
         /// <summary>Gets the attributes for this argument</summary>
-        public ICollection<AttributeValue> Attributes => new ValueAttributeCollection( ContainingFunction, FunctionAttributeIndex.Parameter0 + ( int )Index );
+        public ICollection<AttributeValue> Attributes
+            => new ValueAttributeCollection( ContainingFunction, FunctionAttributeIndex.Parameter0 + ( int )Index );
 
         /// <summary>Adds attributes to an <see cref="Argument"/></summary>
         /// <param name="values"><see cref="AttributeKind"/>s to add</param>
         /// <returns>This Argument for Fluent use</returns>
-        public Argument AddAttributes( [CanBeNull] params AttributeKind[ ] values )
+        public Argument AddAttributes( params AttributeKind[ ] values )
         {
             if( values != null )
             {
@@ -98,12 +99,7 @@ namespace Llvm.NET.Values
         public Argument RemoveAttribute( AttributeKind kind )
         {
             kind.ValidateDefined( nameof( kind ) );
-            if( kind == AttributeKind.None )
-            {
-                return this;
-            }
-
-            return RemoveAttribute( kind.GetAttributeName( ) );
+            return kind == AttributeKind.None ? ( this ) : RemoveAttribute( kind.GetAttributeName( ) );
         }
 
         /// <summary>Removes a named attribute from an <see cref="Argument"/></summary>

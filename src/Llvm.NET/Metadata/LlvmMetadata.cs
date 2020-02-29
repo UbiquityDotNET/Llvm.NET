@@ -15,7 +15,7 @@ using static Llvm.NET.Interop.NativeMethods;
 namespace Llvm.NET
 {
     /// <summary>Enumeration to define metadata type kind</summary>
-    [SuppressMessage( "Design", "CA1027:Mark enums with FlagsAttribute", Justification = "It's not a flags enum, get over it...")]
+    [SuppressMessage( "Design", "CA1027:Mark enums with FlagsAttribute", Justification = "It's not a flags enum, get over it..." )]
     public enum MetadataKind
     {
         /// <summary>Metadata string</summary>
@@ -144,10 +144,35 @@ namespace Llvm.NET
 
         internal LLVMMetadataRef MetadataHandle { get; /*protected*/ set; }
 
-        internal static T FromHandle<T>( Context context, LLVMMetadataRef handle )
+        internal static T? FromHandle<T>( Context context, LLVMMetadataRef handle )
             where T : LlvmMetadata
         {
-            return handle == default ? null : ( T )context.GetNodeFor( handle );
+            TryGetFromHandle<T>( context, handle, out T? retVal );
+            return retVal;
+        }
+
+        internal static bool TryGetFromHandle<T>( Context context, LLVMMetadataRef handle, [MaybeNullWhen( false )] out T node )
+            where T : LlvmMetadata
+        {
+            if( handle == default )
+            {
+                // special case for void debug type to simplify the use of non-nullable ref types
+                // when looking up a debug type that has a null handle, then treat it as the void
+                // type, since that is how LLVM represents a void debug type. :(
+                if( typeof( T ) == typeof( DIType ) )
+                {
+                    // T Is known to be DIType so this can't result in node == null,
+                    // but the compiler isn't *that* smart about checking for nullability
+                    node = ( DITypeVoid.Instance as T )!;
+                    return true;
+                }
+
+                node = null!;
+                return false;
+            }
+
+            node = ( T )context.GetNodeFor( handle );
+            return true;
         }
 
         internal class InterningFactory
@@ -266,7 +291,7 @@ namespace Llvm.NET
 
         private protected LlvmMetadata( LLVMMetadataRef handle )
         {
-            if( handle == default )
+            if( handle == default && GetType( ) != typeof( DITypeVoid ) )
             {
                 throw new ArgumentNullException( nameof( handle ) );
             }

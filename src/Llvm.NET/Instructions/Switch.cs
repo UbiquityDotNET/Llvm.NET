@@ -17,7 +17,7 @@ namespace Llvm.NET.Instructions
         : Terminator
     {
         /// <summary>Gets the default <see cref="BasicBlock"/> for the switch</summary>
-        public BasicBlock Default => BasicBlock.FromHandle( LLVMGetSwitchDefaultDest( ValueHandle ) );
+        public BasicBlock Default => BasicBlock.FromHandle( LLVMGetSwitchDefaultDest( ValueHandle ).ThrowIfInvalid( ) )!;
 
         /// <summary>Adds a new case to the <see cref="Switch"/> instruction</summary>
         /// <param name="onVal">Value for the case to match</param>

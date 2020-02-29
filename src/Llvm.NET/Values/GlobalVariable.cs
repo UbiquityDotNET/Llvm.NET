@@ -39,17 +39,12 @@ namespace Llvm.NET.Values
         }
 
         /// <summary>Gets or sets the initial value for the variable</summary>
-        public Constant Initializer
+        public Constant? Initializer
         {
             get
             {
                 var handle = LLVMGetInitializer( ValueHandle );
-                if( handle == default )
-                {
-                    return null;
-                }
-
-                return FromHandle<Constant>( handle );
+                return handle == default ? null : FromHandle<Constant>( handle );
             }
 
             set => LLVMSetInitializer( ValueHandle, value?.ValueHandle ?? LLVMValueRef.Zero );

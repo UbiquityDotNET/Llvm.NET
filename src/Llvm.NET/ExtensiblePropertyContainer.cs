@@ -6,6 +6,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using Llvm.NET.Properties;
 
 namespace Llvm.NET
@@ -19,11 +20,11 @@ namespace Llvm.NET
         : IExtensiblePropertyContainer
     {
         /// <inheritdoc/>
-        public void AddExtendedPropertyValue( string id, object value )
+        public void AddExtendedPropertyValue( string id, object? value )
         {
             lock ( Items )
             {
-                if( Items.TryGetValue( id, out object currentValue ) )
+                if( Items.TryGetValue( id, out object? currentValue ) )
                 {
                     if( currentValue != null && value != null && currentValue.GetType( ) != value.GetType( ) )
                     {
@@ -36,10 +37,10 @@ namespace Llvm.NET
         }
 
         /// <inheritdoc/>
-        public bool TryGetExtendedPropertyValue<T>( string id, out T value )
+        public bool TryGetExtendedPropertyValue<T>( string id, [MaybeNullWhen( false )] out T value )
         {
-            value = default;
-            object item;
+            value = default!;
+            object? item;
             lock ( Items )
             {
                 if( !Items.TryGetValue( id, out item ) )
@@ -57,6 +58,6 @@ namespace Llvm.NET
             return true;
         }
 
-        private readonly Dictionary<string, object> Items = new Dictionary<string, object>();
+        private readonly Dictionary<string, object?> Items = new Dictionary<string, object?>();
     }
 }

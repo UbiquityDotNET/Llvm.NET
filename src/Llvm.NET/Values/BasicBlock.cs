@@ -6,7 +6,7 @@
 
 using System;
 using System.Collections.Generic;
-using JetBrains.Annotations;
+
 using Llvm.NET.Instructions;
 using Llvm.NET.Interop;
 using Llvm.NET.Properties;
@@ -25,7 +25,7 @@ namespace Llvm.NET.Values
         : Value
     {
         /// <summary>Gets the function containing the block</summary>
-        public IrFunction ContainingFunction
+        public IrFunction? ContainingFunction
         {
             get
             {
@@ -43,8 +43,7 @@ namespace Llvm.NET.Values
         }
 
         /// <summary>Gets the first instruction in the block</summary>
-        [CanBeNull]
-        public Instruction FirstInstruction
+        public Instruction? FirstInstruction
         {
             get
             {
@@ -54,8 +53,7 @@ namespace Llvm.NET.Values
         }
 
         /// <summary>Gets the last instruction in the block</summary>
-        [CanBeNull]
-        public Instruction LastInstruction
+        public Instruction? LastInstruction
         {
             get
             {
@@ -69,8 +67,7 @@ namespace Llvm.NET.Values
         /// May be null if the block is not yet well-formed
         /// as is commonly the case while generating code for a new block
         /// </remarks>
-        [CanBeNull]
-        public Instruction Terminator
+        public Instruction? Terminator
         {
             get
             {
@@ -97,7 +94,7 @@ namespace Llvm.NET.Values
         /// <param name="instruction">instruction in the block to get the next instruction from</param>
         /// <returns>Next instruction or null if none</returns>
         /// <exception cref="ArgumentException">Thrown when <paramref cref="Instruction"/> is from a different block</exception>
-        public Instruction GetNextInstruction( Instruction instruction )
+        public Instruction? GetNextInstruction( Instruction instruction )
         {
             if( instruction == null )
             {
@@ -120,7 +117,7 @@ namespace Llvm.NET.Values
 
         internal LLVMBasicBlockRef BlockHandle => LLVMValueAsBasicBlock( ValueHandle );
 
-        internal static BasicBlock FromHandle( LLVMBasicBlockRef basicBlockRef )
+        internal static BasicBlock? FromHandle( LLVMBasicBlockRef basicBlockRef )
         {
             return FromHandle<BasicBlock>( LLVMBasicBlockAsValue( basicBlockRef ) );
         }

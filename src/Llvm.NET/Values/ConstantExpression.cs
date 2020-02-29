@@ -43,7 +43,8 @@ namespace Llvm.NET.Values
                 throw new ArgumentException( Resources.Pointer_type_expected, nameof( type ) );
             }
 
-            return FromHandle<Constant>( LLVMConstIntToPtr( value.ValueHandle, type.GetTypeRef( ) ) );
+            LLVMValueRef valueRef = LLVMConstIntToPtr( value.ValueHandle, type.GetTypeRef( ) );
+            return FromHandle<Constant>( valueRef.ThrowIfInvalid( ) )!;
         }
 
         /// <summary>Creates a constant bit cast expression</summary>
@@ -56,7 +57,7 @@ namespace Llvm.NET.Values
             value.ValidateNotNull( nameof( value ) );
 
             var handle = LLVMConstBitCast( value.ValueHandle, toType.GetTypeRef( ) );
-            return FromHandle<Constant>( handle );
+            return FromHandle<Constant>( handle.ThrowIfInvalid( ) )!;
         }
 
         /// <summary>Creates a constant GetElementPtr expression</summary>
@@ -70,13 +71,13 @@ namespace Llvm.NET.Values
         /// <param name="value">Constant value to get the element pointer for</param>
         /// <param name="args">Pointer index args</param>
         /// <returns>GetElementPtr expression</returns>
-        [SuppressMessage("Microsoft.Design", "CA1011:ConsiderPassingBaseTypesAsParameters", Justification = "Specific type required by interop call")]
-        public static Constant GetElementPtr(Constant value, IEnumerable<Constant> args)
+        [SuppressMessage( "Microsoft.Design", "CA1011:ConsiderPassingBaseTypesAsParameters", Justification = "Specific type required by interop call" )]
+        public static Constant GetElementPtr( Constant value, IEnumerable<Constant> args )
         {
             value.ValidateNotNull( nameof( value ) );
             var llvmArgs = InstructionBuilder.GetValidatedGEPArgs(value.NativeType, value, args);
             var handle = LLVMConstGEP( value.ValueHandle, llvmArgs, (uint)llvmArgs.Length);
-            return FromHandle<Constant>(handle);
+            return FromHandle<Constant>( handle.ThrowIfInvalid( ) )!;
         }
 
         internal ConstantExpression( LLVMValueRef valueRef )

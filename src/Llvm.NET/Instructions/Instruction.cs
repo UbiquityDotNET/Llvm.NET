@@ -426,7 +426,8 @@ namespace Llvm.NET.Instructions
         : User
     {
         /// <summary>Gets the <see cref="BasicBlock"/> that contains this instruction</summary>
-        public BasicBlock ContainingBlock => BasicBlock.FromHandle( LLVMGetInstructionParent( ValueHandle ) );
+        public BasicBlock ContainingBlock
+            => BasicBlock.FromHandle( LLVMGetInstructionParent( ValueHandle ).ThrowIfInvalid( ) )!;
 
         /// <summary>Gets the LLVM opcode for the instruction</summary>
         public OpCode Opcode => ( OpCode )LLVMGetInstructionOpcode( ValueHandle );
@@ -449,11 +450,11 @@ namespace Llvm.NET.Instructions
         /// <summary>Gets or sets Metadata (as a value) for this instruction</summary>
         /// <param name="kindKey">Metadata kind to get</param>
         /// <returns>Metadata for the kind or <see langword="null"/> if not present</returns>
-        public MetadataAsValue this[MetadataKind kindKey]
+        public MetadataAsValue? this[MetadataKind kindKey]
         {
             get => FromHandle<MetadataAsValue>( LLVMGetMetadata( ValueHandle, ( uint )kindKey ) );
 
-            set => LLVMSetMetadata( ValueHandle, ( uint )kindKey, value.ValidateNotNull(nameof(value)).ValueHandle );
+            set => LLVMSetMetadata( ValueHandle, ( uint )kindKey, value.ValidateNotNull(nameof(value))!.ValueHandle );
         }
 
         /// <summary>Gets a snap-shot collection of the metadata for this instruction, filtering out all the debug location nodes</summary>
@@ -466,7 +467,7 @@ namespace Llvm.NET.Instructions
                 for( long i = 0; i < numEntries.ToInt32( ); ++i )
                 {
                     LLVMMetadataRef handle = LLVMValueMetadataEntriesGetMetadata( entries, ( uint )i );
-                    yield return MDNode.FromHandle<MDNode>( handle );
+                    yield return MDNode.FromHandle<MDNode>( handle.ThrowIfInvalid( ) )!;
                 }
             }
         }

@@ -205,10 +205,19 @@ namespace Llvm.NET.Values
         , IAttributeAccessor
     {
         /// <summary>Gets the signature type of the function</summary>
-        public IFunctionType Signature => TypeRef.FromHandle<IFunctionType>( LLVMGetElementType( LLVMTypeOf( ValueHandle ) ) );
+        public IFunctionType Signature
+        {
+            get
+            {
+                LLVMTypeRef ty = LLVMTypeOf( ValueHandle ).ThrowIfInvalid();
+                LLVMTypeRef typeRef = LLVMGetElementType( ty ).ThrowIfInvalid();
+                return TypeRef.FromHandle<IFunctionType>( typeRef )!;
+            }
+        }
 
         /// <summary>Gets the Entry block for this function</summary>
-        public BasicBlock EntryBlock => LLVMCountBasicBlocks( ValueHandle ) == 0 ? null : BasicBlock.FromHandle( LLVMGetEntryBasicBlock( ValueHandle ) );
+        public BasicBlock? EntryBlock
+            => LLVMCountBasicBlocks( ValueHandle ) == 0 ? null : BasicBlock.FromHandle( LLVMGetEntryBasicBlock( ValueHandle ) );
 
         /// <summary>Gets the basic blocks for the function</summary>
         public ICollection<BasicBlock> BasicBlocks { get; }
@@ -233,15 +242,15 @@ namespace Llvm.NET.Values
         public ITypeRef ReturnType => Signature.ReturnType;
 
         /// <summary>Gets or sets the personality function for exception handling in this function</summary>
-        public IrFunction PersonalityFunction
+        public IrFunction? PersonalityFunction
         {
-            get => !LLVMHasPersonalityFn( ValueHandle ) ? null : FromHandle<IrFunction>( LLVMGetPersonalityFn( ValueHandle ) );
+            get => !LLVMHasPersonalityFn( ValueHandle ) ? null : FromHandle<IrFunction>( LLVMGetPersonalityFn( ValueHandle.ThrowIfInvalid( ) ) )!;
 
             set => LLVMSetPersonalityFn( ValueHandle, value?.ValueHandle ?? LLVMValueRef.Zero );
         }
 
         /// <summary>Gets or sets the debug information for this function</summary>
-        public DISubProgram DISubProgram
+        public DISubProgram? DISubProgram
         {
             get => MDNode.FromHandle<DISubProgram>( LLVMGetSubprogram( ValueHandle ) );
 
@@ -298,7 +307,7 @@ namespace Llvm.NET.Values
             else
             {
                 var blockRef = LLVMInsertBasicBlockInContext( NativeType.Context.ContextHandle, firstBlock, name );
-                retVal = BasicBlock.FromHandle( blockRef );
+                retVal = BasicBlock.FromHandle( blockRef.ThrowIfInvalid( ) )!;
             }
 
             return retVal;
@@ -310,7 +319,7 @@ namespace Llvm.NET.Values
         public BasicBlock AppendBasicBlock( string name )
         {
             LLVMBasicBlockRef blockRef = LLVMAppendBasicBlockInContext( NativeType.Context.ContextHandle, ValueHandle, name );
-            return BasicBlock.FromHandle( blockRef );
+            return BasicBlock.FromHandle( blockRef.ThrowIfInvalid( ) )!;
         }
 
         /// <summary>Inserts a basic block before another block in the function</summary>
@@ -326,7 +335,8 @@ namespace Llvm.NET.Values
                 throw new ArgumentException( "Basic block belongs to another function", nameof( insertBefore ) );
             }
 
-            return BasicBlock.FromHandle( LLVMInsertBasicBlockInContext( NativeType.Context.ContextHandle, insertBefore.BlockHandle, name ) );
+            LLVMBasicBlockRef basicBlockRef = LLVMInsertBasicBlockInContext( NativeType.Context.ContextHandle, insertBefore.BlockHandle, name );
+            return BasicBlock.FromHandle( basicBlockRef.ThrowIfInvalid( ) )!;
         }
 
         /// <summary>Retrieves or creates block by name</summary>
@@ -338,10 +348,7 @@ namespace Llvm.NET.Values
         /// </remarks>
         public BasicBlock FindOrCreateNamedBlock( string name )
         {
-            var retVal = BasicBlocks.FirstOrDefault( b => b.Name == name ) ?? AppendBasicBlock( name );
-
-            Debug.Assert( retVal.ContainingFunction.ValueHandle == ValueHandle, "Expected block parented to this function" );
-            return retVal;
+            return BasicBlocks.FirstOrDefault( b => b.Name == name ) ?? AppendBasicBlock( name );
         }
 
         /// <inheritdoc/>

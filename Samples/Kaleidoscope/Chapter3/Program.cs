@@ -30,7 +30,7 @@ namespace Kaleidoscope.Chapter3
         /// for mixed mode native+managed debugging as the SDK project system does
         /// not support that on launch.
         /// </remarks>
-        [System.Diagnostics.CodeAnalysis.SuppressMessage( "Design", "CA1062:Validate arguments of public methods", Justification = "platform provided" )]
+        [System.Diagnostics.CodeAnalysis.SuppressMessage( "Design", "CA1062:Validate arguments of public methods", Justification = "Provided by platform" )]
         public static void Main( string[ ] args )
         {
             string helloMsg = $"Llvm.NET Kaleidoscope Interpreter - {LanguageFeatureLevel}";
@@ -79,7 +79,7 @@ namespace Kaleidoscope.Chapter3
         #endregion
 
         #region ShowResults
-        private static void ShowResults( Value resultValue )
+        private static void ShowResults( Value? resultValue )
         {
             switch( resultValue )
             {

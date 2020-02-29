@@ -26,7 +26,8 @@ namespace Llvm.NET.Values
                     throw new ArgumentOutOfRangeException( nameof( index ) );
                 }
 
-                return Value.FromHandle<Argument>( LLVMGetParam( OwningFunction.ValueHandle, ( uint )index ) );
+                LLVMValueRef valueRef = LLVMGetParam( OwningFunction.ValueHandle, ( uint )index );
+                return Value.FromHandle<Argument>( valueRef.ThrowIfInvalid( ) )!;
             }
         }
 
@@ -44,12 +45,7 @@ namespace Llvm.NET.Values
             for( uint i = 0; i < Count; ++i )
             {
                 LLVMValueRef val = LLVMGetParam( OwningFunction.ValueHandle, i );
-                if( val == default )
-                {
-                    yield break;
-                }
-
-                yield return Value.FromHandle<Argument>( val );
+                yield return Value.FromHandle<Argument>( val.ThrowIfInvalid( ) )!;
             }
         }
 

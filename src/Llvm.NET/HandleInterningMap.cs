@@ -8,6 +8,7 @@ using System;
 using System.Collections;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
+using Ubiquity.ArgValidators;
 
 namespace Llvm.NET
 {
@@ -16,12 +17,9 @@ namespace Llvm.NET
     {
         public Context Context { get; }
 
-        public TMappedType GetOrCreateItem( THandle handle, Action<THandle> foundHandleRelease = null )
+        public TMappedType GetOrCreateItem( THandle handle, Action<THandle>? foundHandleRelease = null )
         {
-            if( EqualityComparer<THandle>.Default.Equals( handle, default ) )
-            {
-                return default;
-            }
+            handle.ValidateNotDefault( nameof( handle ) );
 
             if( HandleMap.TryGetValue( handle, out TMappedType retVal ) )
             {

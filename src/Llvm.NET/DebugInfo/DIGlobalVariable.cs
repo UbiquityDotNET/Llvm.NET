@@ -25,7 +25,7 @@ namespace Llvm.NET.DebugInfo
         public string LinkageName => GetOperandString( 5 );
 
         /// <summary>Gets the static data member declaration for the variable</summary>
-        public DIDerivedType StaticDataMemberDeclaration => GetOperand<DIDerivedType>( 6 );
+        public DIDerivedType? StaticDataMemberDeclaration => GetOperand<DIDerivedType>( 6 );
 
         internal DIGlobalVariable( LLVMMetadataRef handle )
             : base( handle )

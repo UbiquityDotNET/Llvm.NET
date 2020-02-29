@@ -13,7 +13,7 @@ namespace Llvm.NET.DebugInfo
     public class DIGlobalVariableExpressionArray
         : TupleTypedArrayWrapper<DINode>
     {
-        internal DIGlobalVariableExpressionArray( MDTuple tuple )
+        internal DIGlobalVariableExpressionArray( MDTuple? tuple )
             : base( tuple )
         {
         }

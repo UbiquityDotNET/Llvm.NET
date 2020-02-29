@@ -49,7 +49,7 @@ namespace Llvm.NET.Values
         public bool IsNull => LLVMIsNull( ValueHandle );
 
         /// <summary>Gets the type of the value</summary>
-        public ITypeRef NativeType => TypeRef.FromHandle( LLVMTypeOf( ValueHandle ) );
+        public ITypeRef NativeType => TypeRef.FromHandle( LLVMTypeOf( ValueHandle ).ThrowIfInvalid( ) )!;
 
         /// <summary>Gets the context for this value</summary>
         public Context Context => NativeType.Context;
@@ -90,7 +90,7 @@ namespace Llvm.NET.Values
         public bool TryGetExtendedPropertyValue<T>( string id, out T value ) => ExtensibleProperties.TryGetExtendedPropertyValue( id, out value );
 
         /// <inheritdoc/>
-        public void AddExtendedPropertyValue( string id, object value ) => ExtensibleProperties.AddExtendedPropertyValue( id, value );
+        public void AddExtendedPropertyValue( string id, object? value ) => ExtensibleProperties.AddExtendedPropertyValue( id, value );
 
         internal Value( LLVMValueRef valueRef )
         {
@@ -112,7 +112,7 @@ namespace Llvm.NET.Values
         /// input handle returns the same managed instance so that reference equality
         /// works as expected.
         /// </remarks>
-        internal static Value FromHandle( LLVMValueRef valueRef ) => FromHandle<Value>( valueRef );
+        internal static Value? FromHandle( LLVMValueRef valueRef ) => FromHandle<Value>( valueRef );
 
         /// <summary>Gets an Llvm.NET managed wrapper for a LibLLVM value handle</summary>
         /// <typeparam name="T">Required type for the handle</typeparam>
@@ -124,12 +124,12 @@ namespace Llvm.NET.Values
         /// works as expected.
         /// </remarks>
         /// <exception cref="InvalidCastException">When the handle is for a different type of handle than specified by <typeparamref name="T"/></exception>
-        internal static T FromHandle<T>( LLVMValueRef valueRef )
+        internal static T? FromHandle<T>( LLVMValueRef valueRef )
             where T : Value
         {
             var context = valueRef.GetContext( );
 
-            return ( T )context.GetValueFor( valueRef );
+            return context.GetValueFor( valueRef ) as T;
         }
 
         private readonly ExtensiblePropertyContainer ExtensibleProperties = new ExtensiblePropertyContainer( );

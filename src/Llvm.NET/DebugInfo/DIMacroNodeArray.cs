@@ -13,7 +13,7 @@ namespace Llvm.NET.DebugInfo
     public class DIMacroNodeArray
         : TupleTypedArrayWrapper<DINode>
     {
-        internal DIMacroNodeArray( MDTuple tuple )
+        internal DIMacroNodeArray( MDTuple? tuple )
             : base( tuple )
         {
         }

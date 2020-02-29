@@ -119,8 +119,8 @@ namespace Llvm.NET
         /// <param name="codeModel"><see cref="CodeModel"/> to use for generated code</param>
         /// <returns><see cref="TargetMachine"/> based on the specified parameters</returns>
         public TargetMachine CreateTargetMachine( Triple triple
-                                                , string cpu = null
-                                                , string features = null
+                                                , string? cpu = null
+                                                , string? features = null
                                                 , CodeGenOpt optLevel = CodeGenOpt.Default
                                                 , RelocationMode relocationMode = RelocationMode.Default
                                                 , CodeModel codeModel = CodeModel.Default
@@ -139,8 +139,8 @@ namespace Llvm.NET
         /// <param name="codeModel"><see cref="CodeModel"/> to use for generated code</param>
         /// <returns><see cref="TargetMachine"/> based on the specified parameters</returns>
         public TargetMachine CreateTargetMachine( string triple
-                                                , string cpu = null
-                                                , string features = null
+                                                , string? cpu = null
+                                                , string? features = null
                                                 , CodeGenOpt optLevel = CodeGenOpt.Default
                                                 , RelocationMode relocationMode = RelocationMode.Default
                                                 , CodeModel codeModel = CodeModel.Default
@@ -193,7 +193,7 @@ namespace Llvm.NET
 
         internal LLVMTargetRef TargetHandle { get; }
 
-        internal static LLVMTargetMachineRef InternalCreateTargetMachine( Target target, string triple, string cpu, string features, CodeGenOpt optLevel, RelocationMode relocationMode, CodeModel codeModel )
+        internal static LLVMTargetMachineRef InternalCreateTargetMachine( Target target, string triple, string? cpu, string? features, CodeGenOpt optLevel, RelocationMode relocationMode, CodeModel codeModel )
         {
             triple.ValidateNotNullOrWhiteSpace( nameof( triple ) );
             optLevel.ValidateDefined( nameof( optLevel ) );

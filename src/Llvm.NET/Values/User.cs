@@ -97,14 +97,14 @@ namespace Llvm.NET.Values
         long IOperandContainer<Value>.Count => LLVMGetNumOperands( ValueHandle );
 
         /// <inheritdoc/>
-        Value IOperandContainer<Value>.this[ int index ]
+        Value? IOperandContainer<Value>.this[ int index ]
         {
             get => FromHandle( LLVMGetOperand( ValueHandle, ( uint )index ) );
-            set => LLVMSetOperand( ValueHandle, ( uint )index, value.ValueHandle );
+            set => LLVMSetOperand( ValueHandle, ( uint )index, value?.ValueHandle ?? LLVMValueRef.Zero);
         }
 
         /// <inheritdoc/>
-        void IOperandContainer<Value>.Add( Value item ) => throw new NotSupportedException( );
+        void IOperandContainer<Value>.Add( Value? item ) => throw new NotSupportedException( );
 
         internal User( LLVMValueRef userRef )
             : base( userRef )

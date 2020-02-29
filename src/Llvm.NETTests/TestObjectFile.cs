@@ -8,6 +8,7 @@ using System.Linq;
 using Llvm.NET.DebugInfo;
 using Llvm.NET.Instructions;
 using Llvm.NET.ObjectFile;
+using Llvm.NET.Types;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 // signatures required by test framework
@@ -41,30 +42,30 @@ namespace Llvm.NET.Tests
             module.Layout = tm.TargetData;
 
             var doubleType = new DebugBasicType( llvmContext.DoubleType, module, "double", DiTypeKind.Float );
-            var voidType = DebugType.Create( module.Context.VoidType, ( DIType )null );
+            var voidType = DebugType.Create<ITypeRef, DIType>( module.Context.VoidType, DITypeVoid.Instance );
 
             var printDecl = module.CreateFunction( PrintFuncName, false, voidType, doubleType );
 
             var bldr = CreateFunctionAndGetBuilder(module, doubleType, AddFuncName, AddSectionName, 0);
-            bldr.CurrentDebugLocation = new DILocation( llvmContext, 2, 1, bldr.InsertFunction.DISubProgram );
+            bldr.CurrentDebugLocation = new DILocation( llvmContext, 2, 1, bldr.InsertFunction!.DISubProgram! );
             var result = bldr.FAdd( bldr.InsertFunction.Parameters[ 0 ], bldr.InsertFunction.Parameters[ 1 ] );
             _ = bldr.Call( printDecl, result );
             bldr.Return( result );
 
             bldr = CreateFunctionAndGetBuilder( module, doubleType, SubFuncName, SubSectionName, 5 );
-            bldr.CurrentDebugLocation = new DILocation( llvmContext, 7, 1, bldr.InsertFunction.DISubProgram );
+            bldr.CurrentDebugLocation = new DILocation( llvmContext, 7, 1, bldr.InsertFunction!.DISubProgram! );
             result = bldr.FSub( bldr.InsertFunction.Parameters[ 0 ], bldr.InsertFunction.Parameters[ 1 ] );
             _ = bldr.Call( printDecl, result );
             bldr.Return( result );
 
             bldr = CreateFunctionAndGetBuilder( module, doubleType, MulFuncName, MulSectionName, 10 );
-            bldr.CurrentDebugLocation = new DILocation( llvmContext, 12, 1, bldr.InsertFunction.DISubProgram );
+            bldr.CurrentDebugLocation = new DILocation( llvmContext, 12, 1, bldr.InsertFunction!.DISubProgram! );
             result = bldr.FMul( bldr.InsertFunction.Parameters[ 0 ], bldr.InsertFunction.Parameters[ 1 ] );
             _ = bldr.Call( printDecl, result );
             bldr.Return( result );
 
             bldr = CreateFunctionAndGetBuilder( module, doubleType, DivFuncName, DivSectionName, 15 );
-            bldr.CurrentDebugLocation = new DILocation( llvmContext, 17, 1, bldr.InsertFunction.DISubProgram );
+            bldr.CurrentDebugLocation = new DILocation( llvmContext, 17, 1, bldr.InsertFunction!.DISubProgram! );
             result = bldr.FDiv( bldr.InsertFunction.Parameters[ 0 ], bldr.InsertFunction.Parameters[ 1 ] );
             _ = bldr.Call( printDecl, result );
             bldr.Return( result );
@@ -136,7 +137,7 @@ namespace Llvm.NET.Tests
             DIFile file = module.DIBuilder.CreateFile(TestSrcFileName);
 
             DebugFunctionType signature = module.Context.CreateFunctionType( module.DIBuilder, doubleType, doubleType, doubleType );
-            var func = module.CreateFunction(module.DICompileUnit, name, name, file, line, signature, true, true, line + 1, DebugInfoFlags.None, false);
+            var func = module.CreateFunction(module.DICompileUnit!, name, name, file, line, signature, true, true, line + 1, DebugInfoFlags.None, false);
             func.Section = section;
             var entry = func.AppendBasicBlock( "entry" );
             return new InstructionBuilder( entry );

@@ -9,6 +9,7 @@ using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Threading;
 using Llvm.NET.Interop;
+using Ubiquity.ArgValidators;
 
 namespace Llvm.NET
 {
@@ -33,10 +34,7 @@ namespace Llvm.NET
 
         internal static Context GetContextFor( LLVMContextRef contextRef )
         {
-            if( contextRef == default )
-            {
-                return null;
-            }
+            contextRef.ValidateNotNull( nameof( contextRef ) );
 
             if( TryGetValue( contextRef, out Context retVal ) )
             {

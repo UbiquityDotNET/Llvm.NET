@@ -18,7 +18,7 @@ namespace Llvm.NET
     {
         Context Context { get; }
 
-        TMappedType GetOrCreateItem( THandle handle, Action<THandle> foundHandleRelease = null );
+        TMappedType GetOrCreateItem( THandle handle, Action<THandle>? foundHandleRelease = null );
 
         void Remove( THandle handle );
 

@@ -499,4 +499,7 @@ Types are:
   <data name="Cannot_Reset_Type_to_null" xml:space="preserve">
     <value>Cannot reset the native DIType to null</value>
   </data>
+  <data name="Type_does_not_have_associated_Debug_type_from_which_to_construct_a_Member" xml:space="preserve">
+    <value>Type does not have associated Debug type from which to construct a Member</value>
+  </data>
 </root>

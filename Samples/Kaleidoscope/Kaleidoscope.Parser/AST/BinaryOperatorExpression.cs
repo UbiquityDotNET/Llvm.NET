@@ -5,6 +5,7 @@
 // -----------------------------------------------------------------------
 
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using Ubiquity.ArgValidators;
 
 namespace Kaleidoscope.Grammar.AST
@@ -64,7 +65,11 @@ namespace Kaleidoscope.Grammar.AST
         }
 
         /// <inheritdoc/>
-        public virtual TResult Accept<TResult>( IAstVisitor<TResult> visitor ) => visitor.ValidateNotNull( nameof( visitor ) ).Visit( this );
+        public virtual TResult? Accept<TResult>( IAstVisitor<TResult> visitor )
+            where TResult : class
+        {
+            return visitor.ValidateNotNull( nameof( visitor ) ).Visit( this );
+        }
 
         public override string ToString( )
         {

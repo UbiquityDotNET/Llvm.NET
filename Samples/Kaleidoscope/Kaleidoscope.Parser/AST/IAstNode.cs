@@ -5,6 +5,7 @@
 // -----------------------------------------------------------------------
 
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Kaleidoscope.Grammar.AST
 {
@@ -21,6 +22,7 @@ namespace Kaleidoscope.Grammar.AST
         /// <typeparam name="TResult">Result type for the visitor</typeparam>
         /// <param name="visitor">Visitor to dispatch the concrete type to</param>
         /// <returns>Result of visiting this node</returns>
-        TResult Accept<TResult>( IAstVisitor<TResult> visitor );
+        TResult? Accept<TResult>( IAstVisitor<TResult> visitor )
+            where TResult : class;
     }
 }

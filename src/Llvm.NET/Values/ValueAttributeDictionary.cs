@@ -8,6 +8,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 
 namespace Llvm.NET.Values
@@ -52,9 +53,9 @@ namespace Llvm.NET.Values
                    ).GetEnumerator( );
         }
 
-        public bool TryGetValue( FunctionAttributeIndex key, out ICollection<AttributeValue> value )
+        public bool TryGetValue( FunctionAttributeIndex key, [MaybeNullWhen(false)] out ICollection<AttributeValue> value )
         {
-            value = null;
+            value = null!;
             if( ContainsKey( key ) )
             {
                 return false;

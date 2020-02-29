@@ -614,7 +614,7 @@ namespace Llvm.NET
         /// <param name="other">triple to compare this triple to</param>
         /// <returns><see langword="true"/> if the two triples are equivalent</returns>
         [SuppressMessage( "Common Practices and Code Improvements", "RECS0059:Conditional expression can be simplified", Justification = "Over 'simplification' makes it more complex" )]
-        public bool Equals( Triple other )
+        public bool Equals( Triple? other )
         {
             return other == null ? false : ReferenceEquals( this, other ) || LibLLVMTripleOpEqual( TripleHandle, other.TripleHandle );
         }
@@ -630,7 +630,7 @@ namespace Llvm.NET
         /// <inheritdoc/>
         public override int GetHashCode( )
         {
-            return ToString( ).GetHashCode( );
+            return ToString( ).GetHashCode(StringComparison.Ordinal);
         }
 
         /// <summary>Normalizes a triple string</summary>

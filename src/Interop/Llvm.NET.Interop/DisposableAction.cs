@@ -37,7 +37,7 @@ namespace Llvm.NET.Interop
         /// <inheritdoc/>
         public override bool Equals( object obj )
         {
-            return OnDispose.Equals( obj );
+            return OnDispose?.Equals( obj ) ?? false;
         }
 
         /// <inheritdoc/>
@@ -49,7 +49,7 @@ namespace Llvm.NET.Interop
         /// <inheritdoc/>
         public bool Equals( DisposableAction other )
         {
-            return OnDispose.Equals( other.OnDispose );
+            return OnDispose?.Equals( other.OnDispose ) ?? false;
         }
 
         /// <summary>Compares two actions for equality</summary>
@@ -64,7 +64,7 @@ namespace Llvm.NET.Interop
         /// <returns><see langword="true"/> if the delegates the actions wrap are not equal <see langword="false"/> if not</returns>
         public static bool operator !=( DisposableAction left, DisposableAction right ) => !( left == right );
 
-        private Action OnDispose;
+        private Action? OnDispose;
         private readonly int HashCode;
     }
 }

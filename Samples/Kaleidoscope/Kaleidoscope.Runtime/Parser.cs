@@ -5,6 +5,7 @@
 // -----------------------------------------------------------------------
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using Antlr4.Runtime;
 using Antlr4.Runtime.Misc;
@@ -57,10 +58,10 @@ namespace Kaleidoscope.Runtime
         /// <param name="lexErrorListener">Error listener for Lexer errors</param>
         /// <param name="parseErrorListener">Error listener for parer errors</param>
         public Parser( DynamicRuntimeState globalState
-                          , DiagnosticRepresentations diagnostics
-                          , IAntlrErrorListener<int> lexErrorListener
-                          , IAntlrErrorListener<IToken> parseErrorListener
-                          )
+                     , DiagnosticRepresentations diagnostics
+                     , IAntlrErrorListener<int> lexErrorListener
+                     , IAntlrErrorListener<IToken> parseErrorListener
+                     )
         {
             GlobalState = globalState.ValidateNotNull( nameof( globalState ) );
             Diagnostics = diagnostics;
@@ -82,40 +83,43 @@ namespace Kaleidoscope.Runtime
         public DynamicRuntimeState GlobalState { get; }
 
         /// <inheritdoc/>
-        public IAstNode Parse( string txt )
+        public bool TryParse( string txt, [MaybeNullWhen( false )] out IAstNode astNode )
         {
-            return Parse( new AntlrInputStream( txt ), ParseMode.ReplLoop );
+            return TryParse( new AntlrInputStream( txt ), ParseMode.ReplLoop, out astNode! );
         }
 
         /// <inheritdoc/>
-        public IAstNode Parse( TextReader reader )
+        public bool TryParse( TextReader reader, [MaybeNullWhen( false )] out IAstNode astNode )
         {
-            return Parse( new AntlrInputStream( reader ), ParseMode.FullSource );
+            return TryParse( new AntlrInputStream( reader ), ParseMode.FullSource, out astNode! );
         }
 
         /// <inheritdoc/>
         public IObservable<IAstNode> Parse( IObservable<string> inputSource, Action<CodeGeneratorException> errorHandler)
         {
+            inputSource.ValidateNotNull( nameof( inputSource ) );
+            errorHandler.ValidateNotNull( nameof( errorHandler ) );
             return inputSource.ParseWith( this, errorHandler );
         }
 
-        private IAstNode Parse( ICharStream inputStream, ParseMode mode )
+        private bool TryParse( ICharStream inputStream, ParseMode mode, [MaybeNullWhen(false)] out IAstNode astNode )
         {
+            astNode = null!;
             try
             {
-                Lexer = new KaleidoscopeLexer( inputStream )
+                var lexer = new KaleidoscopeLexer( inputStream )
                 {
                     LanguageLevel = GlobalState.LanguageLevel
                 };
 
                 if( LexErrorListener != null )
                 {
-                    Lexer.AddErrorListener( LexErrorListener );
+                    lexer.AddErrorListener( LexErrorListener );
                 }
 
-                TokenStream = new CommonTokenStream( Lexer );
+                var tokenStream = new CommonTokenStream( lexer );
 
-                AntlrParser = new KaleidoscopeParser( TokenStream )
+                var antlrParser = new KaleidoscopeParser( tokenStream )
                 {
                     BuildParseTree = true,
                     ErrorHandler = ErrorStrategy,
@@ -124,36 +128,36 @@ namespace Kaleidoscope.Runtime
 
                 if( Diagnostics.HasFlag( DiagnosticRepresentations.DebugTraceParser ) )
                 {
-                    AntlrParser.AddParseListener( new DebugTraceListener( AntlrParser ) );
+                    antlrParser.AddParseListener( new DebugTraceListener( antlrParser ) );
                 }
 
-                if( AntlrParser.FeatureUserOperators )
+                if( antlrParser.FeatureUserOperators )
                 {
-                    AntlrParser.AddParseListener( new KaleidoscopeUserOperatorListener( GlobalState ) );
+                    antlrParser.AddParseListener( new KaleidoscopeUserOperatorListener( GlobalState ) );
                 }
 
                 if( ParseErrorListener != null )
                 {
-                    AntlrParser.RemoveErrorListeners( );
-                    AntlrParser.AddErrorListener( ParseErrorListener );
+                    antlrParser.RemoveErrorListeners( );
+                    antlrParser.AddErrorListener( ParseErrorListener );
                 }
 
-                var parseTree = mode == ParseMode.ReplLoop ? ( IParseTree )AntlrParser.repl( ) : AntlrParser.fullsrc( );
+                var parseTree = mode == ParseMode.ReplLoop ? ( IParseTree )antlrParser.repl( ) : antlrParser.fullsrc( );
 
                 if( Diagnostics.HasFlag( DiagnosticRepresentations.Xml ) )
                 {
-                    var docListener = new XDocumentListener( AntlrParser );
+                    var docListener = new XDocumentListener( antlrParser );
                     ParseTreeWalker.Default.Walk( docListener, parseTree );
                     docListener.Document.Save( "ParseTree.xml" );
                 }
 
-                if( AntlrParser.NumberOfSyntaxErrors > 0 )
+                if( antlrParser.NumberOfSyntaxErrors > 0 )
                 {
-                    return null;
+                    return false;
                 }
 
                 var astBuilder = new AstBuilder( GlobalState );
-                var astNode = astBuilder.Visit( parseTree );
+                astNode = astBuilder.Visit( parseTree );
 
 #if NET47
                 if( Diagnostics.HasFlag( DiagnosticRepresentations.Dgml ) || Diagnostics.HasFlag( DiagnosticRepresentations.BlockDiag ) )
@@ -177,17 +181,14 @@ namespace Kaleidoscope.Runtime
                     }
                 }
 #endif
-                return astNode;
+                return true;
             }
             catch( ParseCanceledException )
             {
-                return default;
+                astNode = null!;
+                return false;
             }
         }
-
-        private CommonTokenStream TokenStream;
-        private KaleidoscopeLexer Lexer;
-        private KaleidoscopeParser AntlrParser;
 
         private readonly IAntlrErrorListener<int> LexErrorListener;
         private readonly IAntlrErrorListener<IToken> ParseErrorListener;

@@ -13,10 +13,10 @@ namespace Llvm.NET.DebugInfo
         : DIMacroNode
     {
         /// <summary>Gets the file information for this macro file</summary>
-        public DIFile File => GetOperand<DIFile>( 0 );
+        public DIFile File => GetOperand<DIFile>( 0 )!;
 
         /// <summary>Gets the elements of this macro file</summary>
-        public DIMacroNodeArray Elements => new DIMacroNodeArray( GetOperand<MDTuple>( 1 ) );
+        public DIMacroNodeArray Elements => new DIMacroNodeArray( GetOperand<MDTuple>( 1 )! );
 
         internal DIMacroFile( LLVMMetadataRef handle)
             : base( handle )

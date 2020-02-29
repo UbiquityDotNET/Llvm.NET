@@ -5,7 +5,6 @@
 // -----------------------------------------------------------------------
 
 using System;
-using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using Llvm.NET.Interop;
 using Llvm.NET.Values;
@@ -83,7 +82,7 @@ namespace Llvm.NET.Types
         public Constant GetNullValue() => Constant.NullValueFor( this );
 
         /// <inheritdoc/>
-        public IArrayType CreateArrayType( uint count ) => FromHandle<IArrayType>( LLVMArrayType( TypeRefHandle, count ) );
+        public IArrayType CreateArrayType( uint count ) => FromHandle<IArrayType>( LLVMArrayType( TypeRefHandle, count ).ThrowIfInvalid( ) )!;
 
         /// <inheritdoc/>
         public IPointerType CreatePointerType( ) => CreatePointerType( 0 );
@@ -96,13 +95,13 @@ namespace Llvm.NET.Types
                 throw new InvalidOperationException( "Cannot create pointer to void in LLVM, use i8* instead" );
             }
 
-            return FromHandle<IPointerType>( LLVMPointerType( TypeRefHandle, addressSpace ) );
+            return FromHandle<IPointerType>( LLVMPointerType( TypeRefHandle, addressSpace ).ThrowIfInvalid( ) )!;
         }
 
         public bool TryGetExtendedPropertyValue<T>( string id, out T value )
             => ExtensibleProperties.TryGetExtendedPropertyValue( id, out value );
 
-        public void AddExtendedPropertyValue( string id, object value )
+        public void AddExtendedPropertyValue( string id, object? value )
             => ExtensibleProperties.AddExtendedPropertyValue( id, value );
 
         /// <summary>Builds a string representation for this type in LLVM assembly language form</summary>
@@ -118,10 +117,10 @@ namespace Llvm.NET.Types
             }
         }
 
-        internal static TypeRef FromHandle( LLVMTypeRef typeRef ) => FromHandle<TypeRef>( typeRef );
+        internal static TypeRef? FromHandle( LLVMTypeRef typeRef ) => FromHandle<TypeRef>( typeRef );
 
         [SuppressMessage( "Reliability", "CA2000:Dispose objects before losing scope", Justification = "Context is owned and disposed by global ContextCache" )]
-        internal static T FromHandle<T>( LLVMTypeRef typeRef )
+        internal static T? FromHandle<T>( LLVMTypeRef typeRef )
             where T : class, ITypeRef
         {
             if( typeRef == default )
@@ -130,7 +129,7 @@ namespace Llvm.NET.Types
             }
 
             var ctx = GetContextFor( typeRef );
-            return ( T )ctx.GetTypeFor( typeRef );
+            return ctx.GetTypeFor( typeRef ) as T;
         }
 
         internal class InterningFactory
@@ -177,12 +176,11 @@ namespace Llvm.NET.Types
         {
             if( handle == default )
             {
-                return null;
+                throw new ArgumentException( "Handle is null", nameof( handle ) );
             }
 
             var hContext = LLVMGetTypeContext( handle );
-            Debug.Assert( hContext != default, "Should not get a null pointer from LLVM" );
-            return ContextCache.GetContextFor( hContext );
+            return ContextCache.GetContextFor( hContext.ThrowIfInvalid( ) );
         }
 
         private readonly ExtensiblePropertyContainer ExtensibleProperties = new ExtensiblePropertyContainer( );

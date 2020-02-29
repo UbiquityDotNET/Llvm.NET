@@ -1059,6 +1059,15 @@ namespace Llvm.NET.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Type does not have associated Debug type from which to construct a Member.
+        /// </summary>
+        internal static string Type_does_not_have_associated_Debug_type_from_which_to_construct_a_Member {
+            get {
+                return ResourceManager.GetString("Type_does_not_have_associated_Debug_type_from_which_to_construct_a_Member", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Type does not have associated Debug type from which to construct a pointer type.
         /// </summary>
         internal static string Type_does_not_have_associated_Debug_type_from_which_to_construct_a_pointer_type {

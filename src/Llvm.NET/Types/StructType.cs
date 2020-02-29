@@ -74,7 +74,9 @@ namespace Llvm.NET.Types
                     {
                         var structElements = new LLVMTypeRef[ count ];
                         LLVMGetStructElementTypes( TypeRefHandle, out structElements[ 0 ] );
-                        members.AddRange( structElements.Select( FromHandle<ITypeRef> ) );
+                        members.AddRange( from e in structElements
+                                          select FromHandle<ITypeRef>( e.ThrowIfInvalid( ) )!
+                                        );
                     }
                 }
 

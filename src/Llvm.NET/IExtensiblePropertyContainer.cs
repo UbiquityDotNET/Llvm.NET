@@ -4,6 +4,8 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
+using System.Diagnostics.CodeAnalysis;
+
 namespace Llvm.NET
 {
     /// <summary>Interface to allow adding arbitrary named data items to an object</summary>
@@ -21,7 +23,7 @@ namespace Llvm.NET
         /// <returns>
         /// true if the item was found and it's type matches <typeparamref name="T"/> false otherwise.
         /// </returns>
-        bool TryGetExtendedPropertyValue<T>( string id, out T value );
+        bool TryGetExtendedPropertyValue<T>( string id, [MaybeNull] out T value );
 
         /// <summary>Adds a value to the container</summary>
         /// <param name="id">Id of the value</param>
@@ -32,6 +34,6 @@ namespace Llvm.NET
         /// it is replaced. If the existing value is of a different type, then
         /// an ArgumentException is thrown.
         /// </remarks>
-        void AddExtendedPropertyValue( string id, object value );
+        void AddExtendedPropertyValue( string id, object? value );
     }
 }

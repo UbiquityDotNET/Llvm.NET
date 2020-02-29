@@ -13,7 +13,7 @@ namespace Llvm.NET.DebugInfo
     [SuppressMessage( "Microsoft.Naming", "CA1710:IdentifiersShouldHaveCorrectSuffix", Justification = "This matches the wrapped native type" )]
     public class DINodeArray : TupleTypedArrayWrapper<DINode>
     {
-        internal DINodeArray( MDTuple tuple )
+        internal DINodeArray( MDTuple? tuple )
             : base( tuple )
         {
         }

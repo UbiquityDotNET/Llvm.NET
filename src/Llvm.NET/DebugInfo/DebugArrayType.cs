@@ -31,18 +31,8 @@ namespace Llvm.NET.DebugInfo
                              , uint lowerBound = 0
                              , uint alignment = 0
                              )
-            : base( llvmType )
+            : base( llvmType, BuildDebugType( llvmType, elementType, module, count, lowerBound, alignment ) )
         {
-            llvmType.ValidateNotNull( nameof( llvmType ) );
-            elementType.ValidateNotNull( nameof( elementType ) );
-            module.ValidateNotNull( nameof( module ) );
-
-            if( llvmType.ElementType.GetTypeRef( ) != elementType.GetTypeRef( ) )
-            {
-                throw new ArgumentException( Resources.ElementType_doesn_t_match_array_element_type );
-            }
-
-            DIType = CreateDebugInfoForArray( llvmType, elementType, module, count, lowerBound, alignment );
             DebugElementType = elementType;
         }
 
@@ -102,28 +92,37 @@ namespace Llvm.NET.DebugInfo
             if( DIType.IsTemporary && !DIType.IsResolved )
             {
                 DIType = diBuilder.CreateArrayType( layout.BitSizeOf( NativeType )
-                                               , layout.AbiBitAlignmentOf( NativeType )
-                                               , DebugElementType.DIType
-                                               , diBuilder.CreateSubRange( LowerBound, NativeType.Length )
-                                               );
+                                                  , layout.AbiBitAlignmentOf( NativeType )
+                                                  , DebugElementType.DIType
+                                                  , diBuilder.CreateSubRange( LowerBound, NativeType.Length )
+                                                  );
             }
         }
 
-        private static DICompositeType CreateDebugInfoForArray( IArrayType llvmType
-                                                         , IDebugType<ITypeRef, DIType> elementType
-                                                         , BitcodeModule module
-                                                         , uint count
-                                                         , uint lowerBound
-                                                         , uint alignment
-                                                         )
+        private static DICompositeType BuildDebugType( [ValidatedNotNull] IArrayType llvmType
+                                                     , [ValidatedNotNull] IDebugType<ITypeRef, DIType> elementType
+                                                     , [ValidatedNotNull] BitcodeModule module
+                                                     , uint count
+                                                     , uint lowerBound
+                                                     , uint alignment
+                                                     )
         {
+            llvmType.ValidateNotNull( nameof( llvmType ) );
+            elementType.ValidateNotNull( nameof( elementType ) );
+            module.ValidateNotNull( nameof( module ) );
+
+            if( llvmType.ElementType.GetTypeRef( ) != elementType.GetTypeRef( ) )
+            {
+                throw new ArgumentException( Resources.ElementType_doesn_t_match_array_element_type );
+            }
+
             if( llvmType.IsSized )
             {
                 return module.DIBuilder.CreateArrayType( module.Layout.BitSizeOf( llvmType )
-                                                   , alignment
-                                                   , elementType.DIType
-                                                   , module.DIBuilder.CreateSubRange( lowerBound, count )
-                                                   );
+                                                       , alignment
+                                                       , elementType.DIType
+                                                       , module.DIBuilder.CreateSubRange( lowerBound, count )
+                                                       );
             }
 
             return module.DIBuilder.CreateReplaceableCompositeType( Tag.ArrayType, string.Empty, module.DICompileUnit, null, 0 );

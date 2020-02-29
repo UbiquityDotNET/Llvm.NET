@@ -13,7 +13,7 @@ namespace Llvm.NET.DebugInfo
     public class DIScopeArray
         : TupleTypedArrayWrapper<DINode>
     {
-        internal DIScopeArray( MDTuple tuple )
+        internal DIScopeArray( MDTuple? tuple )
             : base( tuple )
         {
         }

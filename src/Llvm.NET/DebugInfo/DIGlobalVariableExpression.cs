@@ -16,10 +16,10 @@ namespace Llvm.NET.DebugInfo
         : MDNode
     {
         /// <summary>Gets the <see cref="DIGlobalVariable"/> for this node</summary>
-        public DIGlobalVariable Variable => GetOperand<DIGlobalVariable>( 0 );
+        public DIGlobalVariable Variable => GetOperand<DIGlobalVariable>( 0 )!;
 
         /// <summary>Gets the <see cref="DIExpression"/> for this node</summary>
-        public DIExpression Expression => GetOperand<DIExpression>( 1 );
+        public DIExpression Expression => GetOperand<DIExpression>( 1 )!;
 
         internal DIGlobalVariableExpression( LLVMMetadataRef handle )
             : base( handle )

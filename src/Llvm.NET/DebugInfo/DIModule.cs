@@ -8,12 +8,12 @@ using Llvm.NET.Interop;
 
 namespace Llvm.NET.DebugInfo
 {
-    /// <summary>A (Clang) module that is imported by a compile unit</summary>
+    /// <summary>A source module that is imported by a compile unit</summary>
     public class DIModule
         : DIScope
     {
         /// <inheritdoc/>
-        public override DIScope Scope => GetOperand<DIScope>( 0 );
+        public override DIScope Scope => GetOperand<DIScope>( 0 )!;
 
         /// <inheritdoc/>
         public override string Name => GetOperandString( 1 );

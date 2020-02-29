@@ -32,9 +32,9 @@ namespace Llvm.NETTests
         [AssemblyCleanup]
         public static void AssemblyCleanup( )
         {
-            LlvmInit.Dispose( );
+            LlvmInit?.Dispose( );
         }
 
-        private static IDisposable LlvmInit;
+        private static IDisposable? LlvmInit;
     }
 }

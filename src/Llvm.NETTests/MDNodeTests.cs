@@ -40,8 +40,9 @@ namespace Llvm.NET.Tests
             var arrayType = new DebugArrayType(intType, module, 3u);
             Assert.IsNotNull( arrayType );
 
-            var mdnode = arrayType.DIType;
-            Assert.IsNotNull( mdnode.Operands );
+            DICompositeType? mdnode = arrayType.DIType;
+            Assert.IsNotNull( mdnode );
+            Assert.IsNotNull( mdnode!.Operands );
             Assert.AreEqual( CompositeTypeOperandCount, mdnode.Operands.Count );
 
             Assert.IsNull( mdnode.File );

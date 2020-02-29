@@ -52,14 +52,14 @@ namespace Llvm.NET.DebugInfo
                                 , IDebugType<ITypeRef,DIType> retType
                                 , params IDebugType<ITypeRef, DIType>[ ] argTypes
                                 )
-            : base( llvmType.ValidateNotNull( nameof( llvmType ) ) )
+            : base( llvmType.ValidateNotNull( nameof( llvmType ) )
+                  , module.ValidateNotNull( nameof( module ) )
+                          .DIBuilder.CreateSubroutineType( debugFlags
+                                                         , retType.ValidateNotNull( nameof( retType ) ).DIType
+                                                         , argTypes.Select( t => t.DIType )
+                                                         )
+                  )
         {
-            DIType = module.ValidateNotNull( nameof( module ) )
-                           .DIBuilder
-                           .CreateSubroutineType( debugFlags
-                                                , retType.ValidateNotNull( nameof( retType ) ).DIType
-                                                , argTypes.Select( t => t.DIType )
-                                                );
         }
 
         /// <inheritdoc/>
@@ -76,9 +76,8 @@ namespace Llvm.NET.DebugInfo
         /// <param name="rawType">Raw native type</param>
         /// <param name="sub">Debug information to bind with the native type</param>
         internal DebugFunctionType( IFunctionType rawType, DISubroutineType sub )
-            : base( rawType )
+            : base( rawType, sub )
         {
-            DIType = sub;
         }
     }
 }

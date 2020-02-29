@@ -36,28 +36,28 @@ namespace Llvm.NET.DebugInfo
         public string LinkageName => GetOperandString( 3 );
 
         /// <summary>Gets the signature of this <see cref="DISubProgram"/></summary>
-        public DISubroutineType Signature => GetOperand<DISubroutineType>( 4 );
+        public DISubroutineType Signature => GetOperand<DISubroutineType>( 4 )!;
 
         /// <summary>Gets the <see cref="DICompileUnit"/> that contains this <see cref="DISubProgram"/></summary>
-        public DICompileUnit CompileUnit => GetOperand<DICompileUnit>( 5 );
+        public DICompileUnit CompileUnit => GetOperand<DICompileUnit>( 5 )!;
 
         /* TODO: CompileUnit set => LLVMDISubProgramReplaceUnit() - needs new interop API */
 
         /// <summary>Gets the <see cref="DISubProgram"/> that declares this <see cref="DISubProgram"/></summary>
-        public DISubProgram Declaration => GetOperand<DISubProgram>( 6 );
+        public DISubProgram Declaration => GetOperand<DISubProgram>( 6 )!;
 
         /// <summary>Gets the variables of this <see cref="DISubProgram"/></summary>
-        public DILocalVariableArray Variables => new DILocalVariableArray( GetOperand<MDTuple>( 7 ) );
+        public DILocalVariableArray Variables => new DILocalVariableArray( GetOperand<MDTuple>( 7 )! );
 
         /// <summary>Gets the type that contains this <see cref="DISubProgram"/>, if any</summary>
-        public DIType ContainingType => Operands.Count < 9 ? null : GetOperand<DIType>( 8 );
+        public DIType? ContainingType => Operands.Count < 9 ? null : GetOperand<DIType>( 8 );
 
         /// <summary>Gets the template parameters of this <see cref="DISubProgram"/>, if any</summary>
-        public DITemplateParameterArray TemplateParams => Operands.Count < 10 ? null : new DITemplateParameterArray( GetOperand<MDTuple>( 9 ) );
+        public DITemplateParameterArray? TemplateParams => Operands.Count < 10 ? null : new DITemplateParameterArray( GetOperand<MDTuple>( 9 )! );
 
         /// <summary>Gets the exception types this <see cref="DISubProgram"/> can throw</summary>
         // Does the list include exceptions thrown by the complete call graph? or only those explicitly thrown by this function?
-        public DITypeArray ThrownTypes => Operands.Count < 11 ? null : new DITypeArray( GetOperand<MDTuple>( 10 ) );
+        public DITypeArray? ThrownTypes => Operands.Count < 11 ? null : new DITypeArray( GetOperand<MDTuple>( 10 ) );
 
         /// <summary>Determines if this instance describes a given <see cref="IrFunction"/></summary>
         /// <param name="function"><see cref="IrFunction"/> to test</param>

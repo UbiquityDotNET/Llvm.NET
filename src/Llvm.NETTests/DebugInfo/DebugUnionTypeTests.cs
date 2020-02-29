@@ -33,10 +33,10 @@ namespace Llvm.NET.Tests
 
             Assert.IsTrue( module.Verify( out string errMsg ), errMsg );
 
-            Assert.IsNotNull( union.DIType );
+            Assert.IsNotNull( union!.DIType );
             Assert.IsNotNull( union.NativeType );
 
-            Assert.AreEqual( Tag.UnionType, union.DIType.Tag );
+            Assert.AreEqual( Tag.UnionType, union.DIType!.Tag );
             Assert.AreEqual( nativeUnionName, union.Name );
             Assert.AreEqual( nativeUnionName, union.NativeType.Name );
             Assert.AreEqual( unionSymbolName, union.DIType.Name );
@@ -108,19 +108,19 @@ namespace Llvm.NET.Tests
             var f32 = new DebugBasicType( module.Context.FloatType, module, "float", DiTypeKind.Float );
 
             var members = new[ ]
-                    { new DebugMemberInfo { File = diFile, Line = 3, Name = "a", DebugType = i32, Index = 0 }
-                    , new DebugMemberInfo { File = diFile, Line = 4, Name = "b", DebugType = i16, Index = 1 }
-                    , new DebugMemberInfo { File = diFile, Line = 5, Name = "c", DebugType = f32, Index = 2 }
+                    { new DebugMemberInfo( 0, "a", diFile, 3, i32 )
+                    , new DebugMemberInfo( 1, "b", diFile, 4, i16 )
+                    , new DebugMemberInfo( 2, "c", diFile, 5, f32 )
                     };
 
             var llvmType = module.Context.CreateStructType( nativeUnionName );
             var union = new DebugUnionType( llvmType, module, diCompileUnit, unionSymbolName, diFile, 0, DebugInfoFlags.None, members );
             Assert.IsNotNull( union );
-            Assert.IsNotNull( union.DIType );
+            Assert.IsNotNull( union!.DIType );
             Assert.IsNotNull( union.NativeType );
-            Assert.AreEqual( Tag.UnionType, union.DIType.Tag );
+            Assert.AreEqual( Tag.UnionType, union.DIType!.Tag );
             Assert.AreEqual( nativeUnionName, union.Name );
-            Assert.AreEqual( nativeUnionName, union.NativeType.Name );
+            Assert.AreEqual( nativeUnionName, union.NativeType!.Name );
             Assert.AreEqual( unionSymbolName, union.DIType.Name );
             Assert.IsNull( union.DIType.Scope );
             Assert.AreEqual( diFile, union.DIType.File );
@@ -178,7 +178,7 @@ namespace Llvm.NET.Tests
             {
                 var memberType = union.DIType.Elements[ i ] as DIDerivedType;
                 Assert.IsNotNull( memberType );
-                Assert.AreEqual( Tag.Member, memberType.Tag );
+                Assert.AreEqual( Tag.Member, memberType!.Tag );
                 Assert.AreEqual( members[ i ].Name, memberType.Name );
                 Assert.AreEqual( members[ i ].DebugType.DIType, memberType.BaseType );
             }

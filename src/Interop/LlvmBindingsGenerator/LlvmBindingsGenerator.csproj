@@ -4,12 +4,13 @@
         <OutputType>Exe</OutputType>
         <!--Due to current limitations of the CppSharp library NUGET package, this only supports the Windows Desktop .NET Framework (64 bit)-->
         <TargetFramework>net47</TargetFramework>
-        <LangVersion>7.3</LangVersion>
+        <LangVersion>latest</LangVersion>
         <AllowUnsafeBlocks>false</AllowUnsafeBlocks>
         <DebugType>portable</DebugType>
         <DebugSymbols>true</DebugSymbols>
         <SignAssembly>False</SignAssembly>
         <PlatformTarget>x64</PlatformTarget>
+        <Nullable />
     </PropertyGroup>
     <ItemGroup>
         <PackageReference Include="Ubiquity.ArgValidators" />
@@ -93,6 +94,9 @@
             <AutoGen>True</AutoGen>
             <DependentUpon>StringMarshalerTemplate.tt</DependentUpon>
         </Compile>
+    </ItemGroup>
+    <ItemGroup>
+      <Service Include="{508349b6-6b84-4df5-91f0-309beebad82d}" />
     </ItemGroup>
 
     <!--

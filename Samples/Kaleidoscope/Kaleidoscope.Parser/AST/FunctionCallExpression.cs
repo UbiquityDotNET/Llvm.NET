@@ -6,6 +6,7 @@
 
 using System.Collections.Generic;
 using System.Collections.Immutable;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using Ubiquity.ArgValidators;
 
@@ -32,7 +33,11 @@ namespace Kaleidoscope.Grammar.AST
 
         public IReadOnlyList<IExpression> Arguments { get; }
 
-        public TResult Accept<TResult>( IAstVisitor<TResult> visitor ) => visitor.ValidateNotNull( nameof( visitor ) ).Visit( this );
+        public TResult? Accept<TResult>( IAstVisitor<TResult> visitor )
+            where TResult : class
+        {
+            return visitor.ValidateNotNull( nameof( visitor ) ).Visit( this );
+        }
 
         public IEnumerable<IAstNode> Children
         {

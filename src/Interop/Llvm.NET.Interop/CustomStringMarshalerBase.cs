@@ -42,11 +42,11 @@ namespace Llvm.NET.Interop
         public object MarshalNativeToManaged( IntPtr pNativeData )
             => StringNormalizer.NormalizeLineEndings( pNativeData );
 
-        internal CustomStringMarshalerBase( Action<IntPtr> disposer = null )
+        internal CustomStringMarshalerBase( Action<IntPtr>? disposer = null )
         {
             NativeDisposer = disposer;
         }
 
-        private readonly Action<IntPtr> NativeDisposer;
+        private readonly Action<IntPtr>? NativeDisposer;
     }
 }

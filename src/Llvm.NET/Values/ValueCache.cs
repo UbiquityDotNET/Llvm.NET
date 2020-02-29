@@ -25,7 +25,7 @@ namespace Llvm.NET.Values
     {
         public Context Context { get; }
 
-        public Value GetOrCreateItem( LLVMValueRef valueRef, Action<LLVMValueRef> foundHandleRelease = null )
+        public Value GetOrCreateItem( LLVMValueRef valueRef, Action<LLVMValueRef>? foundHandleRelease = null )
         {
             IntPtr managedHandlePtr = LibLLVMValueCacheLookup( Handle, valueRef );
             if( managedHandlePtr != IntPtr.Zero )

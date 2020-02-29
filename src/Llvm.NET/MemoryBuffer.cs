@@ -32,7 +32,7 @@ namespace Llvm.NET
         }
 
         /// <summary>Gets the size of the buffer</summary>
-        public int Size => ( BufferHandle == default | BufferHandle.IsInvalid ) ? 0 : ( int )LLVMGetBufferSize( BufferHandle );
+        public int Size => BufferHandle.IsInvalid ? 0 : ( int )LLVMGetBufferSize( BufferHandle );
 
         /// <summary>Gets an array of bytes from the buffer</summary>
         /// <returns>Array of bytes copied from the buffer</returns>

@@ -36,7 +36,9 @@ namespace Llvm.NET.Instructions
         /// <summary>Initializes a new instance of the <see cref="InstructionBuilder"/> class for a <see cref="BasicBlock"/></summary>
         /// <param name="block">Block this builder is initially attached to</param>
         public InstructionBuilder( BasicBlock block )
-            : this( block.ValidateNotNull( nameof( block ) ).ContainingFunction.ParentModule.Context )
+            : this( block.ValidateNotNull( nameof( block ) )
+                         .Context
+                  )
         {
             PositionAtEnd( block );
         }
@@ -45,10 +47,20 @@ namespace Llvm.NET.Instructions
         public Context Context { get; }
 
         /// <summary>Gets or sets the current Debug Location for this <see cref="InstructionBuilder"/></summary>
-        public DILocation CurrentDebugLocation
+        public DILocation? CurrentDebugLocation
         {
-            get => MDNode.FromHandle<DILocation>( LLVMValueAsMetadata( LLVMGetCurrentDebugLocation( BuilderHandle ) ) );
-            set => LLVMSetCurrentDebugLocation( BuilderHandle, LLVMMetadataAsValue( Context.ContextHandle, value.ValidateNotNull( nameof( value ) ).MetadataHandle ) );
+            get
+            {
+                MDNode.TryGetFromHandle<DILocation>( LLVMValueAsMetadata( LLVMGetCurrentDebugLocation( BuilderHandle ) ), out DILocation? retVal );
+                return retVal;
+            }
+
+            set
+            {
+                value.ValidateNotNull( nameof( value ) );
+                var valueAsMetadata = LLVMMetadataAsValue( Context.ContextHandle, value!.MetadataHandle );
+                LLVMSetCurrentDebugLocation( BuilderHandle, valueAsMetadata );
+            }
         }
 
         /// <summary>Set the current debug location for this <see cref="InstructionBuilder"/></summary>
@@ -57,14 +69,14 @@ namespace Llvm.NET.Instructions
         /// <param name="scope"><see cref="DIScope"/> for the location</param>
         /// <param name="inlinedAt"><see cref="DIScope"/>the location is inlined into</param>
         /// <returns>This builder for fluent API usage</returns>
-        public InstructionBuilder SetDebugLocation( uint line, uint col, DIScope scope = null, DIScope inlinedAt = null )
+        public InstructionBuilder SetDebugLocation( uint line, uint col, DIScope? scope = null, DIScope? inlinedAt = null )
         {
             LibLLVMSetCurrentDebugLocation2( BuilderHandle, line, col, scope?.MetadataHandle ?? default, inlinedAt?.MetadataHandle ?? default );
             return this;
         }
 
         /// <summary>Gets the <see cref="BasicBlock"/> this builder is building instructions for</summary>
-        public BasicBlock InsertBlock
+        public BasicBlock? InsertBlock
         {
             get
             {
@@ -74,7 +86,7 @@ namespace Llvm.NET.Instructions
         }
 
         /// <summary>Gets the function this builder currently inserts into</summary>
-        public IrFunction InsertFunction => InsertBlock?.ContainingFunction;
+        public IrFunction? InsertFunction => InsertBlock?.ContainingFunction;
 
         /// <summary>Positions the builder at the end of a given <see cref="BasicBlock"/></summary>
         /// <param name="basicBlock">Block to set the position of</param>
@@ -237,8 +249,14 @@ namespace Llvm.NET.Instructions
         /// <returns><see cref="Instructions.Alloca"/> instruction</returns>
         public Alloca Alloca( ITypeRef typeRef )
         {
+            typeRef.ValidateNotNull( nameof( typeRef ) );
             var handle = LLVMBuildAlloca( BuilderHandle, typeRef.GetTypeRef( ), string.Empty );
-            return Value.FromHandle<Alloca>( handle );
+            if( handle == default )
+            {
+                throw new InternalCodeGeneratorException( "Failed to build an Alloca instruction" );
+            }
+
+            return Value.FromHandle<Alloca>( handle )!;
         }
 
         /// <summary>Creates an alloca instruction</summary>
@@ -259,7 +277,12 @@ namespace Llvm.NET.Instructions
             }
 
             var instHandle = LLVMBuildArrayAlloca( BuilderHandle, typeRef.GetTypeRef( ), elements.ValueHandle, string.Empty );
-            return Value.FromHandle<Alloca>( instHandle );
+            if( instHandle == default )
+            {
+                throw new InternalCodeGeneratorException( "Failed to build an Alloca array instruction" );
+            }
+
+            return Value.FromHandle<Alloca>( instHandle )!;
         }
 
         /// <summary>Creates a return instruction for a function that has no return value</summary>
@@ -267,12 +290,22 @@ namespace Llvm.NET.Instructions
         /// <exception cref="ArgumentException"> the function has a non-void return type</exception>
         public ReturnInstruction Return( )
         {
+            if( InsertBlock is null )
+            {
+                throw new InvalidOperationException( "No insert block is set for this builder" );
+            }
+
+            if( InsertBlock.ContainingFunction is null )
+            {
+                throw new InvalidOperationException( "Insert block is not associated with a function; inserting a return requires validation of the function signature" );
+            }
+
             if( !InsertBlock.ContainingFunction.ReturnType.IsVoid )
             {
                 throw new ArgumentException( "Return instruction for non-void function must have a value" );
             }
 
-            return Value.FromHandle<ReturnInstruction>( LLVMBuildRetVoid( BuilderHandle ) );
+            return Value.FromHandle<ReturnInstruction>( LLVMBuildRetVoid( BuilderHandle ).ThrowIfInvalid( ) )!;
         }
 
         /// <summary>Creates a return instruction with the return value for a function</summary>
@@ -281,6 +314,15 @@ namespace Llvm.NET.Instructions
         public ReturnInstruction Return( Value value )
         {
             value.ValidateNotNull( nameof( value ) );
+            if( InsertBlock is null )
+            {
+                throw new InvalidOperationException( "No insert block is set for this builder" );
+            }
+
+            if( InsertBlock.ContainingFunction is null )
+            {
+                throw new InvalidOperationException( "Insert block is not associated with a function; inserting a return requires validation of the function signature" );
+            }
 
             var retType = InsertBlock.ContainingFunction.ReturnType;
             if( retType.IsVoid )
@@ -293,8 +335,8 @@ namespace Llvm.NET.Instructions
                 throw new ArgumentException( Resources.Value_for_return_must_match_the_function_signature_s_return_type, nameof( value ) );
             }
 
-            var handle = LLVMBuildRet( BuilderHandle, value.ValueHandle );
-            return Value.FromHandle<ReturnInstruction>( handle );
+            var handle = LLVMBuildRet( BuilderHandle, value.ValueHandle ).ThrowIfInvalid();
+            return Value.FromHandle<ReturnInstruction>( handle )!;
         }
 
         /// <summary>Creates a call function</summary>
@@ -309,9 +351,8 @@ namespace Llvm.NET.Instructions
         /// <returns><see cref="CallInstruction"/></returns>
         public CallInstruction Call( Value func, IReadOnlyList<Value> args )
         {
-            LLVMValueRef hCall = BuildCall( func, args );
-            var retVal = Value.FromHandle<CallInstruction>( hCall );
-            return retVal;
+            LLVMValueRef hCall = BuildCall( func, args ).ThrowIfInvalid();
+            return Value.FromHandle<CallInstruction>( hCall )!;
         }
 
         /// <summary>Creates an <see cref="Instructions.Invoke"/> instruction</summary>
@@ -337,7 +378,7 @@ namespace Llvm.NET.Instructions
                                                   , string.Empty
                                                   );
 
-            return Value.FromHandle<Invoke>( invoke );
+            return Value.FromHandle<Invoke>( invoke.ThrowIfInvalid() )!;
         }
 
         /// <summary>Creates a <see cref="Instructions.LandingPad"/> instruction</summary>
@@ -352,7 +393,7 @@ namespace Llvm.NET.Instructions
                                                          , string.Empty
                                                          );
 
-            return Value.FromHandle<LandingPad>( landingPad );
+            return Value.FromHandle<LandingPad>( landingPad.ThrowIfInvalid() )!;
         }
 
         /// <summary>Creates a <see cref="Instructions.ResumeInstruction"/></summary>
@@ -363,7 +404,7 @@ namespace Llvm.NET.Instructions
             exception.ValidateNotNull( nameof( exception ) );
 
             LLVMValueRef resume = LLVMBuildResume( BuilderHandle, exception.ValueHandle );
-            return Value.FromHandle<ResumeInstruction>( resume );
+            return Value.FromHandle<ResumeInstruction>( resume.ThrowIfInvalid( ) )!;
         }
 
         /// <summary>Builds an LLVM Store instruction</summary>
@@ -393,7 +434,8 @@ namespace Llvm.NET.Instructions
                 throw new ArgumentException( string.Format( CultureInfo.CurrentCulture, Resources.Incompatible_types_destination_pointer_must_be_same_type_0_1, ptrType.ElementType, value.NativeType ) );
             }
 
-            return Value.FromHandle<Store>( LLVMBuildStore( BuilderHandle, value.ValueHandle, destination.ValueHandle ) );
+            LLVMValueRef valueRef = LLVMBuildStore( BuilderHandle, value.ValueHandle, destination.ValueHandle );
+            return Value.FromHandle<Store>( valueRef.ThrowIfInvalid( ) )!;
         }
 
         /// <summary>Creates a <see cref="Instructions.Load"/> instruction</summary>
@@ -436,7 +478,7 @@ namespace Llvm.NET.Instructions
 
             // TODO: validate sourceptr is opaque or sourcePtr.Type.ElementType == type
             var handle = LLVMBuildLoad2( BuilderHandle, type.GetTypeRef( ), sourcePtr.ValueHandle, string.Empty );
-            return Value.FromHandle<Load>( handle );
+            return Value.FromHandle<Load>( handle.ThrowIfInvalid( ) )!;
         }
 
         /// <summary>Creates an atomic exchange (Read, Modify, Write) instruction</summary>
@@ -539,7 +581,7 @@ namespace Llvm.NET.Instructions
                                                , LLVMAtomicOrdering.LLVMAtomicOrderingSequentiallyConsistent
                                                , false
                                                );
-            return Value.FromHandle<AtomicCmpXchg>( handle );
+            return Value.FromHandle<AtomicCmpXchg>( handle.ThrowIfInvalid( ) )!;
         }
 
         /// <summary>Creates a <see cref="Value"/> that accesses an element (field) of a structure</summary>
@@ -560,7 +602,7 @@ namespace Llvm.NET.Instructions
 
             // TODO: verify pointer isn't an opaque pointer
             var handle = LLVMBuildStructGEP2( BuilderHandle, pointer.NativeType.GetTypeRef( ), pointer.ValueHandle, index, string.Empty );
-            return Value.FromHandle( handle );
+            return Value.FromHandle( handle.ThrowIfInvalid( ) )!;
         }
 
         /// <summary>Creates a <see cref="Value"/> that accesses an element (field) of a structure</summary>
@@ -581,7 +623,7 @@ namespace Llvm.NET.Instructions
 
             // TODO: verify pointer is an opaque pointer or type == pointer.NativeTYpe
             var handle = LLVMBuildStructGEP2( BuilderHandle, type.GetTypeRef( ), pointer.ValueHandle, index, string.Empty );
-            return Value.FromHandle( handle );
+            return Value.FromHandle( handle.ThrowIfInvalid( ) )!;
         }
 
         /// <summary>Creates a <see cref="Value"/> that accesses an element of a type referenced by a pointer</summary>
@@ -617,7 +659,7 @@ namespace Llvm.NET.Instructions
                                       , ( uint )llvmArgs.Length
                                       , string.Empty
                                       );
-            return Value.FromHandle( handle );
+            return Value.FromHandle( handle.ThrowIfInvalid( ) )!;
         }
 
         /// <summary>Creates a <see cref="Value"/> that accesses an element of a type referenced by a pointer</summary>
@@ -730,7 +772,7 @@ namespace Llvm.NET.Instructions
                                                , ( uint )llvmArgs.Length
                                                , string.Empty
                                                );
-            return Value.FromHandle( hRetVal );
+            return Value.FromHandle( hRetVal.ThrowIfInvalid( ) )!;
         }
 
         /// <summary>Creates a <see cref="Value"/> that accesses an element of a type referenced by a pointer</summary>
@@ -816,7 +858,7 @@ namespace Llvm.NET.Instructions
             pointer.ValidateNotNull( nameof( pointer ) );
             var llvmArgs = GetValidatedGEPArgs( pointer.NativeType, pointer, args );
             var handle = LLVMConstInBoundsGEP( pointer.ValueHandle, llvmArgs, ( uint )llvmArgs.Length );
-            return Value.FromHandle( handle );
+            return Value.FromHandle( handle.ThrowIfInvalid( ) )!;
         }
 
         /// <summary>Builds a cast from an integer to a pointer</summary>
@@ -834,13 +876,11 @@ namespace Llvm.NET.Instructions
             intValue.ValidateNotNull( nameof( intValue ) );
             ptrType.ValidateNotNull( nameof( ptrType ) );
 
-            if( intValue is Constant )
-            {
-                return Value.FromHandle( LLVMConstIntToPtr( intValue.ValueHandle, ptrType.GetTypeRef( ) ) );
-            }
+            var handle = (intValue is Constant)
+                         ? LLVMConstIntToPtr( intValue.ValueHandle, ptrType.GetTypeRef( ) )
+                         : LLVMBuildIntToPtr( BuilderHandle, intValue.ValueHandle, ptrType.GetTypeRef( ), string.Empty );
 
-            var handle = LLVMBuildIntToPtr( BuilderHandle, intValue.ValueHandle, ptrType.GetTypeRef( ), string.Empty );
-            return Value.FromHandle( handle );
+            return Value.FromHandle( handle.ThrowIfInvalid( ) )!;
         }
 
         /// <summary>Builds a cast from a pointer to an integer type</summary>
@@ -867,20 +907,21 @@ namespace Llvm.NET.Instructions
                 throw new ArgumentException( Resources.Expected_pointer_to_integral_type, nameof( intType ) );
             }
 
-            if( ptrValue is Constant )
-            {
-                return Value.FromHandle( LLVMConstPtrToInt( ptrValue.ValueHandle, intType.GetTypeRef( ) ) );
-            }
+            var handle = ( ptrValue is Constant )
+                         ? LLVMConstPtrToInt( ptrValue.ValueHandle, intType.GetTypeRef( ) )
+                         : LLVMBuildPtrToInt( BuilderHandle, ptrValue.ValueHandle, intType.GetTypeRef( ), string.Empty );
 
-            var handle = LLVMBuildPtrToInt( BuilderHandle, ptrValue.ValueHandle, intType.GetTypeRef( ), string.Empty );
-            return Value.FromHandle( handle );
+            return Value.FromHandle( handle.ThrowIfInvalid( ) )!;
         }
 
         /// <summary>Create an unconditional branch</summary>
         /// <param name="target">Target block for the branch</param>
         /// <returns><see cref="Instructions.Branch"/></returns>
         public Branch Branch( BasicBlock target )
-            => Value.FromHandle<Branch>( LLVMBuildBr( BuilderHandle, target.ValidateNotNull( nameof( target ) ).BlockHandle ) );
+        {
+            LLVMValueRef valueRef = LLVMBuildBr( BuilderHandle, target.ValidateNotNull( nameof( target ) ).BlockHandle );
+            return Value.FromHandle<Branch>( valueRef.ThrowIfInvalid( ) )!;
+        }
 
         /// <summary>Creates a conditional branch instruction</summary>
         /// <param name="ifCondition">Condition for the branch</param>
@@ -899,13 +940,13 @@ namespace Llvm.NET.Instructions
                                         , elseTarget.BlockHandle
                                         );
 
-            return Value.FromHandle<Branch>( handle );
+            return Value.FromHandle<Branch>( handle.ThrowIfInvalid( ) )!;
         }
 
         /// <summary>Creates an <see cref="Instructions.Unreachable"/> instruction</summary>
         /// <returns><see cref="Instructions.Unreachable"/> </returns>
         public Unreachable Unreachable( )
-            => Value.FromHandle<Unreachable>( LLVMBuildUnreachable( BuilderHandle ) );
+            => Value.FromHandle<Unreachable>( LLVMBuildUnreachable( BuilderHandle ).ThrowIfInvalid( ) )!;
 
         /// <summary>Builds an Integer compare instruction</summary>
         /// <param name="predicate">Integer predicate for the comparison</param>
@@ -929,7 +970,7 @@ namespace Llvm.NET.Instructions
             }
 
             var handle = LLVMBuildICmp( BuilderHandle, ( LLVMIntPredicate )predicate, lhs.ValueHandle, rhs.ValueHandle, string.Empty );
-            return Value.FromHandle( handle );
+            return Value.FromHandle( handle.ThrowIfInvalid( ) )!;
         }
 
         /// <summary>Builds a Floating point compare instruction</summary>
@@ -959,7 +1000,7 @@ namespace Llvm.NET.Instructions
                                       , rhs.ValueHandle
                                       , string.Empty
                                       );
-            return Value.FromHandle( handle );
+            return Value.FromHandle( handle.ThrowIfInvalid( ) )!;
         }
 
         /// <summary>Builds a compare instruction</summary>
@@ -1002,7 +1043,7 @@ namespace Llvm.NET.Instructions
                 ? LLVMConstZExtOrBitCast( valueRef.ValueHandle, targetType.GetTypeRef( ) )
                 : LLVMBuildZExtOrBitCast( BuilderHandle, valueRef.ValueHandle, targetType.GetTypeRef( ), string.Empty );
 
-            return Value.FromHandle( handle );
+            return Value.FromHandle( handle.ThrowIfInvalid( ) )!;
         }
 
         /// <summary>Creates a sign extend or bit cast instruction</summary>
@@ -1022,10 +1063,10 @@ namespace Llvm.NET.Instructions
 
             LLVMValueRef handle;
             handle = valueRef is Constant
-                ? LLVMConstSExtOrBitCast( valueRef.ValueHandle, targetType.GetTypeRef( ) )
-                : LLVMBuildSExtOrBitCast( BuilderHandle, valueRef.ValueHandle, targetType.GetTypeRef( ), string.Empty );
+                     ? LLVMConstSExtOrBitCast( valueRef.ValueHandle, targetType.GetTypeRef( ) )
+                     : LLVMBuildSExtOrBitCast( BuilderHandle, valueRef.ValueHandle, targetType.GetTypeRef( ), string.Empty );
 
-            return Value.FromHandle( handle );
+            return Value.FromHandle( handle.ThrowIfInvalid( ) )!;
         }
 
         /// <summary>Creates a trunc or bit cast instruction</summary>
@@ -1045,10 +1086,10 @@ namespace Llvm.NET.Instructions
 
             LLVMValueRef handle;
             handle = valueRef is Constant
-                ? LLVMConstTruncOrBitCast( valueRef.ValueHandle, targetType.GetTypeRef( ) )
-                : LLVMBuildTruncOrBitCast( BuilderHandle, valueRef.ValueHandle, targetType.GetTypeRef( ), string.Empty );
+                     ? LLVMConstTruncOrBitCast( valueRef.ValueHandle, targetType.GetTypeRef( ) )
+                     : LLVMBuildTruncOrBitCast( BuilderHandle, valueRef.ValueHandle, targetType.GetTypeRef( ), string.Empty );
 
-            return Value.FromHandle( handle );
+            return Value.FromHandle( handle.ThrowIfInvalid( ) )!;
         }
 
         /// <summary>Creates a Zero Extend instruction</summary>
@@ -1062,10 +1103,10 @@ namespace Llvm.NET.Instructions
 
             LLVMValueRef handle;
             handle = valueRef is Constant
-                ? LLVMConstZExt( valueRef.ValueHandle, targetType.GetTypeRef( ) )
-                : LLVMBuildZExt( BuilderHandle, valueRef.ValueHandle, targetType.GetTypeRef( ), string.Empty );
+                     ? LLVMConstZExt( valueRef.ValueHandle, targetType.GetTypeRef( ) )
+                     : LLVMBuildZExt( BuilderHandle, valueRef.ValueHandle, targetType.GetTypeRef( ), string.Empty );
 
-            return Value.FromHandle( handle );
+            return Value.FromHandle( handle.ThrowIfInvalid( ) )!;
         }
 
         /// <summary>Creates a Sign Extend instruction</summary>
@@ -1077,13 +1118,11 @@ namespace Llvm.NET.Instructions
             valueRef.ValidateNotNull( nameof( valueRef ) );
             targetType.ValidateNotNull( nameof( targetType ) );
 
-            if( valueRef is Constant )
-            {
-                return Value.FromHandle( LLVMConstSExt( valueRef.ValueHandle, targetType.GetTypeRef( ) ) );
-            }
+            var handle = ( valueRef is Constant )
+                       ? LLVMConstSExt( valueRef.ValueHandle, targetType.GetTypeRef( ) )
+                       : LLVMBuildSExt( BuilderHandle, valueRef.ValueHandle, targetType.GetTypeRef( ), string.Empty );
 
-            var retValueRef = LLVMBuildSExt( BuilderHandle, valueRef.ValueHandle, targetType.GetTypeRef( ), string.Empty );
-            return Value.FromHandle( retValueRef );
+            return Value.FromHandle( handle.ThrowIfInvalid( ) )!;
         }
 
         /// <summary>Creates a bitcast instruction</summary>
@@ -1103,10 +1142,10 @@ namespace Llvm.NET.Instructions
 
             LLVMValueRef handle;
             handle = valueRef is Constant
-                ? LLVMConstBitCast( valueRef.ValueHandle, targetType.GetTypeRef( ) )
-                : LLVMBuildBitCast( BuilderHandle, valueRef.ValueHandle, targetType.GetTypeRef( ), string.Empty );
+                   ? LLVMConstBitCast( valueRef.ValueHandle, targetType.GetTypeRef( ) )
+                   : LLVMBuildBitCast( BuilderHandle, valueRef.ValueHandle, targetType.GetTypeRef( ), string.Empty );
 
-            return Value.FromHandle( handle );
+            return Value.FromHandle( handle.ThrowIfInvalid( ) )!;
         }
 
         /// <summary>Creates an integer cast instruction</summary>
@@ -1121,10 +1160,10 @@ namespace Llvm.NET.Instructions
 
             LLVMValueRef handle;
             handle = valueRef is Constant
-                ? LLVMConstIntCast( valueRef.ValueHandle, targetType.GetTypeRef( ), isSigned )
-                : LLVMBuildIntCast2( BuilderHandle, valueRef.ValueHandle, targetType.GetTypeRef( ), isSigned, string.Empty );
+                   ? LLVMConstIntCast( valueRef.ValueHandle, targetType.GetTypeRef( ), isSigned )
+                   : LLVMBuildIntCast2( BuilderHandle, valueRef.ValueHandle, targetType.GetTypeRef( ), isSigned, string.Empty );
 
-            return Value.FromHandle( handle );
+            return Value.FromHandle( handle.ThrowIfInvalid( ) )!;
         }
 
         /// <summary>Creates a trunc instruction</summary>
@@ -1136,9 +1175,11 @@ namespace Llvm.NET.Instructions
             valueRef.ValidateNotNull( nameof( valueRef ) );
             targetType.ValidateNotNull( nameof( targetType ) );
 
-            return Value.FromHandle( valueRef is Constant
-                                    ? LLVMConstTrunc( valueRef.ValueHandle, targetType.GetTypeRef( ) )
-                                    : LLVMBuildTrunc( BuilderHandle, valueRef.ValueHandle, targetType.GetTypeRef( ), string.Empty ) );
+            var handle = valueRef is Constant
+                       ? LLVMConstTrunc( valueRef.ValueHandle, targetType.GetTypeRef( ) )
+                       : LLVMBuildTrunc( BuilderHandle, valueRef.ValueHandle, targetType.GetTypeRef( ), string.Empty );
+
+            return Value.FromHandle( handle.ThrowIfInvalid( ) )!;
         }
 
         /// <summary>Creates a signed integer to floating point cast instruction</summary>
@@ -1152,10 +1193,10 @@ namespace Llvm.NET.Instructions
 
             LLVMValueRef handle;
             handle = valueRef is Constant
-                     ? LLVMConstSIToFP( valueRef.ValueHandle, targetType.GetTypeRef( ) )
-                     : LLVMBuildSIToFP( BuilderHandle, valueRef.ValueHandle, targetType.GetTypeRef( ), string.Empty );
+                   ? LLVMConstSIToFP( valueRef.ValueHandle, targetType.GetTypeRef( ) )
+                   : LLVMBuildSIToFP( BuilderHandle, valueRef.ValueHandle, targetType.GetTypeRef( ), string.Empty );
 
-            return Value.FromHandle( handle );
+            return Value.FromHandle( handle.ThrowIfInvalid( ) )!;
         }
 
         /// <summary>Creates an unsigned integer to floating point cast instruction</summary>
@@ -1169,10 +1210,10 @@ namespace Llvm.NET.Instructions
 
             LLVMValueRef handle;
             handle = valueRef is Constant
-                     ? LLVMConstUIToFP( valueRef.ValueHandle, targetType.GetTypeRef( ) )
-                     : LLVMBuildUIToFP( BuilderHandle, valueRef.ValueHandle, targetType.GetTypeRef( ), string.Empty );
+                   ? LLVMConstUIToFP( valueRef.ValueHandle, targetType.GetTypeRef( ) )
+                   : LLVMBuildUIToFP( BuilderHandle, valueRef.ValueHandle, targetType.GetTypeRef( ), string.Empty );
 
-            return Value.FromHandle( handle );
+            return Value.FromHandle( handle.ThrowIfInvalid( ) )!;
         }
 
         /// <summary>Creates a Floating point to unsigned integer cast instruction</summary>
@@ -1186,10 +1227,10 @@ namespace Llvm.NET.Instructions
 
             LLVMValueRef handle;
             handle = valueRef is Constant
-                     ? LLVMConstFPToUI( valueRef.ValueHandle, targetType.GetTypeRef( ) )
-                     : LLVMBuildFPToUI( BuilderHandle, valueRef.ValueHandle, targetType.GetTypeRef( ), string.Empty );
+                   ? LLVMConstFPToUI( valueRef.ValueHandle, targetType.GetTypeRef( ) )
+                   : LLVMBuildFPToUI( BuilderHandle, valueRef.ValueHandle, targetType.GetTypeRef( ), string.Empty );
 
-            return Value.FromHandle( handle );
+            return Value.FromHandle( handle.ThrowIfInvalid( ) )!;
         }
 
         /// <summary>Creates a floating point to signed integer cast instruction</summary>
@@ -1203,10 +1244,10 @@ namespace Llvm.NET.Instructions
 
             LLVMValueRef handle;
             handle = valueRef is Constant
-                     ? LLVMConstFPToSI( valueRef.ValueHandle, targetType.GetTypeRef( ) )
-                     : LLVMBuildFPToSI( BuilderHandle, valueRef.ValueHandle, targetType.GetTypeRef( ), string.Empty );
+                   ? LLVMConstFPToSI( valueRef.ValueHandle, targetType.GetTypeRef( ) )
+                   : LLVMBuildFPToSI( BuilderHandle, valueRef.ValueHandle, targetType.GetTypeRef( ), string.Empty );
 
-            return Value.FromHandle( handle );
+            return Value.FromHandle( handle.ThrowIfInvalid( ) )!;
         }
 
         /// <summary>Creates a floating point extend instruction</summary>
@@ -1220,10 +1261,10 @@ namespace Llvm.NET.Instructions
 
             LLVMValueRef handle;
             handle = valueRef is Constant
-                     ? LLVMConstFPExt( valueRef.ValueHandle, targetType.GetTypeRef( ) )
-                     : LLVMBuildFPExt( BuilderHandle, valueRef.ValueHandle, targetType.GetTypeRef( ), string.Empty );
+                   ? LLVMConstFPExt( valueRef.ValueHandle, targetType.GetTypeRef( ) )
+                   : LLVMBuildFPExt( BuilderHandle, valueRef.ValueHandle, targetType.GetTypeRef( ), string.Empty );
 
-            return Value.FromHandle( handle );
+            return Value.FromHandle( handle.ThrowIfInvalid( ) )!;
         }
 
         /// <summary>Creates a floating point truncate instruction</summary>
@@ -1237,10 +1278,10 @@ namespace Llvm.NET.Instructions
 
             LLVMValueRef handle;
             handle = valueRef is Constant
-                     ? LLVMConstFPTrunc( valueRef.ValueHandle, targetType.GetTypeRef( ) )
-                     : LLVMBuildFPTrunc( BuilderHandle, valueRef.ValueHandle, targetType.GetTypeRef( ), string.Empty );
+                   ? LLVMConstFPTrunc( valueRef.ValueHandle, targetType.GetTypeRef( ) )
+                   : LLVMBuildFPTrunc( BuilderHandle, valueRef.ValueHandle, targetType.GetTypeRef( ), string.Empty );
 
-            return Value.FromHandle( handle );
+            return Value.FromHandle( handle.ThrowIfInvalid( ) )!;
         }
 
         /// <summary>Builds a <see cref="Llvm.NET.Instructions.SelectInstruction"/> instruction</summary>
@@ -1291,7 +1332,7 @@ namespace Llvm.NET.Instructions
                                         , elseValue.ValueHandle
                                         , string.Empty
                                         );
-            return Value.FromHandle( handle );
+            return Value.FromHandle( handle.ThrowIfInvalid( ) )!;
         }
 
         /// <summary>Creates a Phi instruction</summary>
@@ -1300,7 +1341,7 @@ namespace Llvm.NET.Instructions
         public PhiNode PhiNode( ITypeRef resultType )
         {
             var handle = LLVMBuildPhi( BuilderHandle, resultType.GetTypeRef( ), string.Empty );
-            return Value.FromHandle<PhiNode>( handle );
+            return Value.FromHandle<PhiNode>( handle.ThrowIfInvalid( ) )!;
         }
 
         /// <summary>Creates an extractvalue instruction</summary>
@@ -1312,7 +1353,7 @@ namespace Llvm.NET.Instructions
             instance.ValidateNotNull( nameof( instance ) );
 
             var handle = LLVMBuildExtractValue( BuilderHandle, instance.ValueHandle, index, string.Empty );
-            return Value.FromHandle( handle );
+            return Value.FromHandle( handle.ThrowIfInvalid( ) )!;
         }
 
         /// <summary>Creates a switch instruction</summary>
@@ -1330,7 +1371,7 @@ namespace Llvm.NET.Instructions
             defaultCase.ValidateNotNull( nameof( defaultCase ) );
 
             var handle = LLVMBuildSwitch( BuilderHandle, value.ValueHandle, defaultCase.BlockHandle, numCases );
-            return Value.FromHandle<Switch>( handle );
+            return Value.FromHandle<Switch>( handle.ThrowIfInvalid( ) )!;
         }
 
         /// <summary>Creates a call to the llvm.donothing intrinsic</summary>
@@ -1343,7 +1384,7 @@ namespace Llvm.NET.Instructions
             BitcodeModule module = GetModuleOrThrow( );
             var func = module.GetIntrinsicDeclaration( "llvm.donothing" );
             var hCall = BuildCall( func );
-            return Value.FromHandle<CallInstruction>( hCall );
+            return Value.FromHandle<CallInstruction>( hCall.ThrowIfInvalid( ) )!;
         }
 
         /// <summary>Creates a llvm.debugtrap call</summary>
@@ -1430,7 +1471,7 @@ namespace Llvm.NET.Instructions
                                 , len
                                 , module.Context.CreateConstant( isVolatile )
                                 );
-            return Value.FromHandle( call );
+            return Value.FromHandle( call.ThrowIfInvalid( ) )!;
         }
 
         /// <summary>Builds a memmove intrinsic call</summary>
@@ -1492,7 +1533,7 @@ namespace Llvm.NET.Instructions
             var func = module.GetIntrinsicDeclaration( "llvm.memmove.p.p.i", dstPtrType, srcPtrType, len.NativeType );
 
             var call = BuildCall( func, destination, source, len, module.Context.CreateConstant( isVolatile ) );
-            return Value.FromHandle( call );
+            return Value.FromHandle( call.ThrowIfInvalid( ) )!;
         }
 
         /// <summary>Builds a memset intrinsic call</summary>
@@ -1554,7 +1595,7 @@ namespace Llvm.NET.Instructions
                                 , module.Context.CreateConstant( isVolatile )
                                 );
 
-            return Value.FromHandle( call );
+            return Value.FromHandle( call.ThrowIfInvalid( ) )!;
         }
 
         /// <summary>Builds an <see cref="Llvm.NET.Instructions.InsertValue"/> instruction </summary>
@@ -1568,7 +1609,7 @@ namespace Llvm.NET.Instructions
             elementValue.ValidateNotNull( nameof( elementValue ) );
 
             var handle = LLVMBuildInsertValue( BuilderHandle, aggValue.ValueHandle, elementValue.ValueHandle, index, string.Empty );
-            return Value.FromHandle( handle );
+            return Value.FromHandle( handle.ThrowIfInvalid( ) )!;
         }
 
         /// <summary>Generates a call to the llvm.[s|u]add.with.overflow intrinsic</summary>
@@ -1736,7 +1777,7 @@ namespace Llvm.NET.Instructions
         {
             operand.ValidateNotNull( nameof( operand ) );
             var valueRef = opFactory( BuilderHandle, operand.ValueHandle, string.Empty );
-            return Value.FromHandle( valueRef );
+            return Value.FromHandle( valueRef.ThrowIfInvalid( ) )!;
         }
 
         // LLVM will automatically perform constant folding, thus the result of applying
@@ -1756,7 +1797,7 @@ namespace Llvm.NET.Instructions
             }
 
             var valueRef = opFactory( BuilderHandle, lhs.ValueHandle, rhs.ValueHandle, string.Empty );
-            return Value.FromHandle( valueRef );
+            return Value.FromHandle( valueRef.ThrowIfInvalid( ) )!;
         }
 
         private AtomicRMW BuildAtomicRMW( LLVMAtomicRMWBinOp op, [ValidatedNotNull] Value ptr, [ValidatedNotNull] Value val )
@@ -1775,7 +1816,7 @@ namespace Llvm.NET.Instructions
             }
 
             var handle = LLVMBuildAtomicRMW( BuilderHandle, op, ptr.ValueHandle, val.ValueHandle, LLVMAtomicOrdering.LLVMAtomicOrderingSequentiallyConsistent, false );
-            return Value.FromHandle<AtomicRMW>( handle );
+            return Value.FromHandle<AtomicRMW>( handle.ThrowIfInvalid( ) )!;
         }
 
         private static FunctionType ValidateCallArgs( [ValidatedNotNull] Value func, [ValidatedNotNull] IReadOnlyList<Value> args )

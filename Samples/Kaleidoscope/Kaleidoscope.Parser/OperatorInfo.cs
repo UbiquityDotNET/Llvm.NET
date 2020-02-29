@@ -48,7 +48,7 @@ namespace Kaleidoscope.Grammar
     {
         public bool TryAddOrReplaceItem( OperatorInfo item )
         {
-            if(!this.TryGetValue( item.TokenType, out var existingItem ))
+            if(!TryGetValue( item.TokenType, out var existingItem ))
             {
                 Add( item );
                 return true;

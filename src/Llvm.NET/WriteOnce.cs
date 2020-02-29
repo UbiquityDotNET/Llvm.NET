@@ -6,6 +6,7 @@
 
 using System;
 using System.Diagnostics;
+using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using Llvm.NET.Properties;
 
@@ -30,6 +31,7 @@ namespace Llvm.NET
         /// <summary>Gets or sets the value for this instance</summary>
         /// <exception cref="InvalidOperationException">Getting the value when no value is set</exception>
         /// <exception cref="InvalidOperationException">Setting the value when a value is already set</exception>
+        [MaybeNull]
         public T Value
         {
             get
@@ -76,8 +78,9 @@ namespace Llvm.NET
 
         /// <summary>Convenience implicit cast as a wrapper around the <see cref="Value"/> parameter</summary>
         /// <param name="value"> <see cref="WriteOnce{T}"/> instance to extract a value from</param>
+        [return: MaybeNull]
         public static implicit operator T( WriteOnce<T> value ) => value.Value;
 
-        private T ActualValue;
+        private T ActualValue = default!;
     }
 }

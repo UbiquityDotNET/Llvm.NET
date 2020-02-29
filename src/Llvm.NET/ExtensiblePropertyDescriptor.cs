@@ -5,6 +5,7 @@
 // -----------------------------------------------------------------------
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 using Ubiquity.ArgValidators;
 
 namespace Llvm.NET
@@ -33,17 +34,24 @@ namespace Llvm.NET
         /// <summary>Gets a value for the property from the container</summary>
         /// <param name="container">container</param>
         /// <returns>Value retrieved from the property or the default value of type <typeparamref name="T"/></returns>
+        [return: MaybeNull]
         public T GetValueFrom( IExtensiblePropertyContainer container )
         {
-            return GetValueFrom( container, default( T ) );
+            return GetValueFrom( container, default( T )! );
         }
+
+        /// <summary>Default value factory for a property in the container</summary>
+        /// <returns>Default value for the property, <see langword="null"/> is allowed as the return for nullable types</returns>
+        [return: MaybeNull]
+        public delegate T LazyDefaultFactory( );
 
         /// <summary>Gets a value for the property from the container</summary>
         /// <param name="container">container</param>
         /// <param name="defaultValue">default value if the value is not yet present as an extended property</param>
         /// <returns>Value retrieved from the property or <paramref name="defaultValue"/> if it wasn't found</returns>
         /// <remarks>If the value didn't exist a new value with <paramref name="defaultValue"/> is added to the container</remarks>
-        public T GetValueFrom( IExtensiblePropertyContainer container, T defaultValue )
+        [return: MaybeNull]
+        public T GetValueFrom( IExtensiblePropertyContainer container, [AllowNull] T defaultValue )
         {
             return GetValueFrom( container, ( ) => defaultValue );
         }
@@ -53,25 +61,26 @@ namespace Llvm.NET
         /// <param name="lazyDefaultFactory">default value factory delegate to create the default value if the value is not yet present as an extended property</param>
         /// <returns>Value retrieved from the property or default value created by <paramref name="lazyDefaultFactory"/> if it wasn't found</returns>
         /// <remarks>If the value didn't exist a new value created by calling with <paramref name="lazyDefaultFactory"/> is added to the container</remarks>
-        public T GetValueFrom( [ValidatedNotNull] IExtensiblePropertyContainer container, Func<T> lazyDefaultFactory )
+        [return: MaybeNull]
+        public T GetValueFrom( [ValidatedNotNull] IExtensiblePropertyContainer container, LazyDefaultFactory lazyDefaultFactory )
         {
             container.ValidateNotNull( nameof( container ) );
             lazyDefaultFactory.ValidateNotNull( nameof( lazyDefaultFactory ) );
 
-            if( container.TryGetExtendedPropertyValue( Name, out T retVal ) )
+            if( container.TryGetExtendedPropertyValue( Name, out T existingValue ) )
             {
-                return retVal;
+                return existingValue;
             }
 
-            retVal = lazyDefaultFactory( );
-            container.AddExtendedPropertyValue( Name, retVal );
-            return retVal;
+            var defaultValue = lazyDefaultFactory( );
+            container.AddExtendedPropertyValue( Name, defaultValue );
+            return defaultValue;
         }
 
         /// <summary>Sets the value of an extended property in a container</summary>
         /// <param name="container">Container to set the value in</param>
         /// <param name="value">value of the property</param>
-        public void SetValueIn( [ValidatedNotNull] IExtensiblePropertyContainer container, T value )
+        public void SetValueIn( [ValidatedNotNull] IExtensiblePropertyContainer container, [AllowNull] T value )
         {
             container.ValidateNotNull( nameof( container ) );
             container.AddExtendedPropertyValue( Name, value );

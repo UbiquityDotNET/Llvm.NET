@@ -49,7 +49,7 @@ namespace Kaleidoscope.Chapter5
 
                 // Create Observable chain to provide the REPL implementation
                 var replSeq = parser.Parse( Console.In.ToObservableStatements( ShowPrompt ), ShowCodeGenError )
-                                        .GenerateResults( generator, ShowCodeGenError );
+                                    .GenerateResults( generator, ShowCodeGenError );
 
                 // Run the sequence
                 using( replSeq.Subscribe( ShowResults ) )
@@ -77,7 +77,7 @@ namespace Kaleidoscope.Chapter5
         #endregion
 
         #region ShowResults
-        private static void ShowResults( Value resultValue )
+        private static void ShowResults( Value? resultValue )
         {
             switch( resultValue )
             {
@@ -91,7 +91,7 @@ namespace Kaleidoscope.Chapter5
                 break;
 
             case IrFunction function:
-#if GENERATE_LLVM_IR
+#if SAVE_LLVM_IR
                 function.ParentModule.WriteToTextFile( System.IO.Path.ChangeExtension( GetSafeFileName( function.Name ), "ll" ), out string ignoredMsg );
 #endif
                 break;

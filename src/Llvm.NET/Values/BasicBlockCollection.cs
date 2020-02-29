@@ -50,7 +50,7 @@ namespace Llvm.NET.Values
             LLVMBasicBlockRef blockRef = LLVMGetFirstBasicBlock( ContainingFunction.ValueHandle );
             while( blockRef != default )
             {
-                yield return BasicBlock.FromHandle( blockRef );
+                yield return BasicBlock.FromHandle( blockRef )!;
                 blockRef = LLVMGetNextBasicBlock( blockRef );
             }
         }

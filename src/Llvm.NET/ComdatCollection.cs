@@ -139,7 +139,7 @@ namespace Llvm.NET
         private void ClearComdatFromGlobals( string name )
         {
             var matchingGlobals = from gv in GetModuleGlobalObjects()
-                                  where gv.Comdat.Name == name
+                                  where gv.Comdat != null && gv.Comdat.Name == name
                                   select gv;
 
             foreach( var gv in matchingGlobals )

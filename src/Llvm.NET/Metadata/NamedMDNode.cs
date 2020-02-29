@@ -27,7 +27,7 @@ namespace Llvm.NET
         public IList<MDNode> Operands { get; }
 
         /// <summary>Gets the module that owns this node</summary>
-        public BitcodeModule ParentModule => BitcodeModule.FromHandle( LibLLVMNamedMetadataGetParentModule( NativeHandle ) );
+        public BitcodeModule ParentModule => BitcodeModule.FromHandle( LibLLVMNamedMetadataGetParentModule( NativeHandle ).ThrowIfInvalid( ) )!;
 
         /// <summary>Erases this node from its parent</summary>
         public void EraseFromParent() => LibLLVMNamedMetadataEraseFromParent( NativeHandle );
@@ -48,7 +48,7 @@ namespace Llvm.NET
                 {
                     index.ValidateRange( 0, Count, nameof( index ) );
                     var nodeHanlde = LibLLVMNamedMDNodeGetOperand( OwningNode.NativeHandle, ( uint )index );
-                    return LlvmMetadata.FromHandle<MDNode>( OwningNode.ParentModule.Context, nodeHanlde );
+                    return LlvmMetadata.FromHandle<MDNode>( OwningNode.ParentModule.Context, nodeHanlde.ThrowIfInvalid( ) )!;
                 }
 
                 set

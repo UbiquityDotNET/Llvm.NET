@@ -23,8 +23,8 @@ namespace Llvm.NET
         /// <param name="relocationMode">Relocation mode for machine code generation</param>
         /// <param name="codeModel">Code model for machine code generation</param>
         public TargetMachine( Triple triple
-                            , string cpu = null
-                            , string features = null
+                            , string? cpu = null
+                            , string? features = null
                             , CodeGenOpt optLevel = CodeGenOpt.Default
                             , RelocationMode relocationMode = RelocationMode.Default
                             , CodeModel codeModel = CodeModel.Default
@@ -51,7 +51,7 @@ namespace Llvm.NET
             get
             {
                 var handle = LLVMCreateTargetDataLayout( TargetMachineHandle );
-                return handle == default ? null : DataLayout.FromHandle( handle );
+                return DataLayout.FromHandle( handle.ThrowIfInvalid( ) )!;
             }
         }
 
@@ -124,8 +124,8 @@ namespace Llvm.NET
         /// <param name="codeModel"><see cref="CodeModel"/> to use for generated code</param>
         /// <returns><see cref="TargetMachine"/> based on the specified parameters</returns>
         public static TargetMachine FromTriple( Triple triple
-                                              , string cpu = null
-                                              , string features = null
+                                              , string? cpu = null
+                                              , string? features = null
                                               , CodeGenOpt optLevel = CodeGenOpt.Default
                                               , RelocationMode relocationMode = RelocationMode.Default
                                               , CodeModel codeModel = CodeModel.Default

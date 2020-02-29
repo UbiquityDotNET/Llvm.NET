@@ -4,6 +4,7 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
+using System;
 using System.Diagnostics;
 using Llvm.NET.Instructions;
 using Llvm.NET.Interop;
@@ -61,13 +62,10 @@ namespace Llvm.NET.Values
         {
             if( valueRef == default )
             {
-                return null;
+                throw new ArgumentException( "Value ref is null", nameof( valueRef ) );
             }
 
-            var hType = LLVMTypeOf( valueRef );
-            Debug.Assert( hType != default, Resources.Assert_Should_not_get_a_null_pointer_from_LLVM );
-            var type = TypeRef.FromHandle( hType );
-            return type.Context;
+            return TypeRef.FromHandle( LLVMTypeOf( valueRef ).ThrowIfInvalid( ) )!.Context;
         }
     }
 }

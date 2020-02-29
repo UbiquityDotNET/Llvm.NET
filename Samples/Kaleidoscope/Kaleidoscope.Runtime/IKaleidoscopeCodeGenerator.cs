@@ -5,7 +5,7 @@
 // -----------------------------------------------------------------------
 
 using System;
-using JetBrains.Annotations;
+using System.Diagnostics.CodeAnalysis;
 using Kaleidoscope.Grammar.AST;
 
 namespace Kaleidoscope.Runtime
@@ -17,6 +17,7 @@ namespace Kaleidoscope.Runtime
     /// <see cref="Llvm.NET.Values.Value"/>. Though any type is viable.
     /// </remarks>
     public interface IKaleidoscopeCodeGenerator<TResult>
+        where TResult : class
     {
         /// <summary>Generates output from the tree</summary>
         /// <param name="ast">Tree to generate</param>
@@ -39,6 +40,6 @@ namespace Kaleidoscope.Runtime
         /// reported to the caller via the provided <paramref name="codeGenerationErroHandler"/> for reference types
         /// null is returned. Thus the default value indicates an unusable result</para>
         /// </remarks>
-        TResult Generate( IAstNode ast, [CanBeNull] Action<CodeGeneratorException> codeGenerationErroHandler );
+        TResult? Generate( IAstNode ast, Action<CodeGeneratorException> codeGenerationErroHandler );
     }
 }

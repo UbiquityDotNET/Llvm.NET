@@ -74,9 +74,9 @@ namespace Llvm.NET
         /// <param name="name">Name of the value</param>
         /// <param name="value">Value</param>
         /// <returns><see langword="true"/> if the symbol was found from a search of the scopes</returns>
-        public bool TryGetValue( string name, out T value )
+        public bool TryGetValue( string name, [MaybeNullWhenAttribute(false)] out T value )
         {
-            value = default;
+            value = default!;
             foreach( var scope in Scopes )
             {
                 if( scope.TryGetValue( name, out value ) )

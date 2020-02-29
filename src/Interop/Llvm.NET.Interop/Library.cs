@@ -729,8 +729,8 @@ namespace Llvm.NET.Interop
         private const int VersionMinor = 0;
         private const int VersionPatch = 0;
 
-        private static IDisposable LlvmInitializationState;
-        private static object InitializationSyncObj;
+        private static IDisposable LlvmInitializationState = new DisposableAction( ()=> { } );
+        private static object InitializationSyncObj = new object();
         private static bool LlvmStateInitialized;
 
         private static void FatalErrorHandler( string reason )
@@ -793,9 +793,14 @@ namespace Llvm.NET.Interop
 
         private static void InternalShutdownLLVM( IntPtr hLibLLVM )
         {
+            if( InitializationSyncObj is null )
+            {
+                throw new InvalidOperationException( );
+            }
+
             lock( InitializationSyncObj )
             {
-                LlvmInitializationState = null;
+                LlvmInitializationState = new DisposableAction( ( ) => { } );
                 LlvmStateInitialized = false;
                 LLVMShutdown( );
                 if( hLibLLVM != IntPtr.Zero )
@@ -806,6 +811,6 @@ namespace Llvm.NET.Interop
         }
 
         // lazy initialized singleton unmanaged delegate so it is never collected
-        private static Lazy<LLVMFatalErrorHandler> FatalErrorHandlerDelegate;
+        private static Lazy<LLVMFatalErrorHandler>? FatalErrorHandlerDelegate;
     }
 }

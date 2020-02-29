@@ -1,6 +1,25 @@
 # Release Notes
+# v10.0.0-alpha
+With the 10.* release the LLVM libs are all updated to target .NET Standard 2.1 and C#8. This allows use of nullable types
+to make nullability more explicit. This necessitated a few minor breaking changes in the object model surface.
+
+| Name            | Description  |
+|-----------------|--------------|
+| DebugMemberInfo | Removed setters of non-nullable properties and added constructor to allow building the type with non-null values | 
+| DIType          | null is no longer used to represent a void type, instead a new singleton DITypeVoid.Instance is used.|
+
+## Removed redundant APIs
+LLVM has made additional APIs available in the standard LLVM-C library that are either identical to or functionaly equivalent to 
+APIs that were custom in previous versions of the Llvm.NET DLLs. This is only observable at the interop library layer where some
+of the custom APIs were removed and replaced with the official ones.
+
+| Removed custom API | New Official API |
+|--------------------|------------------|
+| LibLLVMFoo         | LLVMFoo          |
+
 ## v8.0.1
 ### Bug Fixes
+
 
 | Bug | Description |
 |-------|--------------|
@@ -8,10 +27,10 @@
 | [152](https://github.com/UbiquityDotNET/Llvm.NET/issues/152) | Corrected docs copy/paste error [renaming part of the issue is left for the next major release as that is a breaking change] |
 
 ### Additional changes
-Additionally the internal build scripts were updated to simplify the consistent corss solution versioning. Previously,
+Additionally the internal build scripts were updated to simplify the consistent cross solution versioning. Previously,
 a complex process of building a dummy project to generate a data file was used, however that was no longer necessary
 as the [CSemVer.Build.Tasks ](https://github.com/UbiquityDotNET/CSemVer.GitBuild) package can figure out all except
-the CiBuildIndex, which, for this project, is an ISO-8601 formatted timestamp (of the latest commit for automated
+the CiBuildIndex, which, for this project, is an ISO-8601 formatted time-stamp (of the latest commit for automated
 builds or the build start for local developer builds)
 
 ## v8.0.0

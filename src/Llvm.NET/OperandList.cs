@@ -29,11 +29,12 @@ namespace Llvm.NET
             get
             {
                 index.ValidateRange( 0, Count - 1, nameof( index ) );
-                return Container[ index + Offset ];
+                return Container[ index + Offset ]!;
             }
 
             set
             {
+                value.ValidateNotNull( nameof( value ) );
                 index.ValidateRange( 0, Count - 1, nameof( index ) );
                 Container[ index + Offset ] = value;
             }
