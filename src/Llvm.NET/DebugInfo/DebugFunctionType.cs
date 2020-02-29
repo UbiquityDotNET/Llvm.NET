@@ -49,8 +49,8 @@ namespace Llvm.NET.DebugInfo
         public DebugFunctionType( IFunctionType llvmType
                                 , BitcodeModule module
                                 , DebugInfoFlags debugFlags
-                                , DebugType<ITypeRef,DIType> retType
-                                , params DebugType<ITypeRef, DIType>[ ] argTypes
+                                , IDebugType<ITypeRef,DIType> retType
+                                , params IDebugType<ITypeRef, DIType>[ ] argTypes
                                 )
             : base( llvmType.ValidateNotNull( nameof( llvmType ) ) )
         {

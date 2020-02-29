@@ -56,7 +56,7 @@ try
                           }
 
     Write-Information "Building LllvmBindingsGenerator"
-    $generatorBuildLogPath = Join-Path $BuildPaths.BuildOutputPath LlvmBindingsGenerator.binlog
+    $generatorBuildLogPath = Join-Path $BuildPaths.BinLogsPath LlvmBindingsGenerator.binlog
     # manual restore needed so that the CppSharp libraries are available during the build phase as CppSharp NuGet package
     # is basically hostile to the newer SDK project format.
     Invoke-MSBuild -Targets 'Restore;Build' -Project 'src\Interop\LlvmBindingsGenerator\LlvmBindingsGenerator.csproj' -Properties $msBuildProperties -LoggerArgs ($BuildInfo.MsBuildLoggerArgs + @("/bl:$generatorBuildLogPath"))

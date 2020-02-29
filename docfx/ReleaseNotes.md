@@ -1,5 +1,13 @@
-# LLVM 8.0 Support
-## Llvm.NET.Interop (New library)
+# Release Notes
+## v8.0.1
+### Patch release
+
+| Bug | Description |
+|-------|--------------|
+| [151](https://github.com/UbiquityDotNET/Llvm.NET/issues/151) | Updated DebugFunctionType signature to use interface instead of concrete type |
+
+## v8.0.0
+### Llvm.NET.Interop (New library)
 Llvm.NET 8.0 adds a new library (Llvm.NET.Interop)  that contains the raw P/Invoke
 APIs and support needed to inter-operate with the native library. The NuGet package
 for the interop library includes the native code binaries as they are tightly coupled.
@@ -13,7 +21,7 @@ getting new functionality in the object model requires new custom extensions. At
 this point in time both libraries are built together and share build numbers.
 Though, that may change in the future. 
 
-### Auto-generated P/Invoke
+#### Auto-generated P/Invoke
 LLVM-C API now includes most of the debug APIs so, significantly fewer custom
 extensions are needed (That's a good thing!). To try and keep things simpler this
 moves the interop back to using code generation for the bulk of the P/Invoke interop.
@@ -29,7 +37,7 @@ additional "by-hand" tweaking of the generated code, such as:
 The generated code is combined with some fixed support classes to create a new
 Llvm.NET.Interop Library and NuGet Package. 
 
-## New features
+### New features
 * ObjectFile Support
   * LLvm.NET.ObjectFile namespace contains support for processing object files using LLVM
 * Eager compilation JIT
@@ -38,7 +46,7 @@ Llvm.NET.Interop Library and NuGet Package.
   * Including - BPF, Lanai, WebAssembly, MSP430, NVPTX, AMDGPU, Hexagon, and XCore
 * Added accessors to allow retrieval/addition of metadata on instructions
 
-# Breaking Changes
+### Breaking Changes
 This is a Major release and, as such, can, and does, have breaking changes. While there
 are several such changes the actual impact to a code base is fairly trivial. Most are
 driven by either obsolescence of functionality in LLVM or general naming cleanup in the
