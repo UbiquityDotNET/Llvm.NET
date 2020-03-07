@@ -40,7 +40,7 @@ try
     Invoke-MSBuild -Targets 'Restore;Build' -Project src\Llvm.NET.sln -Properties $msBuildProperties -LoggerArgs ($BuildInfo.MsBuildLoggerArgs + @("/bl:$buildLogPath") )
 
     pushd $BuildPaths.NuGetOutputPath
-    Compress-Archive -Path *.* -DestinationPath (join-path $BuildPaths.BuildOutputPath Nuget.Packages.zip)
+    Compress-Archive -Force -Path *.* -DestinationPath (join-path $BuildPaths.BuildOutputPath Nuget.Packages.zip)
 }
 finally
 {

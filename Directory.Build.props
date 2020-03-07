@@ -40,13 +40,8 @@
         <BuildOutputPackagesDir Condition="'$(BuildOutputPackagesDir)'==''">$(BaseBuildOutputPath)packages\</BuildOutputPackagesDir>
 
         <BuildVersionXml Condition="'$(BuildVersionXmlFile)'==''">$(MSBuildThisFileDirectory)BuildVersion.xml</BuildVersionXml>
-        <IsAutomatedBuild Condition="'$(IsAutomatedBuild)'=='' AND '$(CI)'!=''">true</IsAutomatedBuild>
         <IsAutomatedBuild Condition="'$(IsAutomatedBuild)'==''">false</IsAutomatedBuild>
-
-        <IsPullRequestBuild Condition="'$(IsPullRequestBuild)'=='' AND '$(APPVEYOR_PULL_REQUEST_NUMBER)'!=''">true</IsPullRequestBuild>
         <IsPullRequestBuild Condition="'$(IsPullRequestBuild)'==''">false</IsPullRequestBuild>
-
-        <IsReleaseBuild Condition="'$(IsReleaseBuild)'=='' AND '$(APPVEYOR_REPO_TAG)'=='true' AND '$(APPVEYOR_PULL_REQUEST_NUMBER)'==''">true</IsReleaseBuild>
         <IsReleaseBuild Condition="'$(IsReleaseBuild)'==''">false</IsReleaseBuild>
         <BuildTime Condition="'$(BuildTime)'=='' AND '$(APPVEYOR_REPO_COMMIT_TIMESTAMP)'!=''">$(APPVEYOR_REPO_COMMIT_TIMESTAMP)</BuildTime>
         <LlvmVersionMajor Condition="'$(LlvmVersionMajor)'==''">8</LlvmVersionMajor>

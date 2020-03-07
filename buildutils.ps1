@@ -393,11 +393,6 @@ function Get-CurrentBuildKind
         }
     }
 
-    # set/reset legacy environment vars for non-script tools (i.e. msbuild.exe)
-    $env:IsAutomatedBuild = $global:CurrentBuildKind -ne [BuildKind]::LocalBuild
-    $env:IsPullRequestBuild = $global:CurrentBuildKind -eq [BuildKind]::PullRequestBuild
-    $env:IsReleaseBuild = $global:CurrentBuildKind -eq [BuildKind]::ReleaseBuild
-
     return $currentBuildKind
 }
 
@@ -409,6 +404,20 @@ function Initialize-BuildEnvironment
 
     # Script code should ALWAYS use the global CurrentBuildKind
     $global:CurrentBuildKind = Get-CurrentBuildKind
+
+    # set/reset legacy environment vars for non-script tools (i.e. msbuild.exe)
+    $env:IsAutomatedBuild = $global:CurrentBuildKind -ne [BuildKind]::LocalBuild
+    $env:IsPullRequestBuild = $global:CurrentBuildKind -eq [BuildKind]::PullRequestBuild
+    $env:IsReleaseBuild = $global:CurrentBuildKind -eq [BuildKind]::ReleaseBuild
+
+    switch($global:CurrentBuildKind)
+    {
+        ([BuildKind]::LocalBuild) { $env:CiBuildName = 'ZZZ' }
+        ([BuildKind]::PullRequestBuild) { $env:CiBuildName = 'PRQ' }
+        ([BuildKind]::CiBuild) { $env:CiBuildName = 'BLD' }
+        ([BuildKind]::ReleaseBuild) { $env:CiBuildName = '' }
+        default { throw "Invalid build kind" }
+    }
 
     # get the ISO-8601 formatted time stamp of the HEAD commit or the current UTC time for local builds
     if(!$env:BuildTime -or $FullInit)
@@ -434,11 +443,14 @@ function Initialize-BuildEnvironment
         $env:Path = "$env:Path;$($msbuild.BinPath)"
     }
 
-    if($FullInit)
+    if($FullInit -or !$global:BuildPaths -or !$global:BuildInfo)
     {
         $global:BuildPaths = Get-BuildPaths $PSScriptRoot
         $global:BuildInfo = Get-BuildInformation $BuildPaths
+    }
 
+    if($FullInit)
+    {
         Write-Information 'Build Paths:'
         Write-Information ($global:BuildPaths | Format-Table | Out-String)
 
