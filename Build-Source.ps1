@@ -15,12 +15,6 @@ pushd $PSScriptRoot
 $oldPath = $env:Path
 try
 {
-    if($env:APPVEYOR)
-    {
-        Write-Information "Updating APPVEYOR version: $($BuildInfo.FullBuildNumber)"
-        Update-AppVeyorBuild -Version "$($BuildInfo.FullBuildNumber) [$([DateTime]::Now)]"
-    }
-
     $packProperties = @{ version=$($BuildInfo.PackageVersion)
                          llvmversion=$($BuildInfo.LlvmVersion)
                          buildbinoutput=(normalize-path (Join-path $($BuildPaths.BuildOutputPath) 'bin'))
@@ -28,13 +22,6 @@ try
                        }
 
     $msBuildProperties = @{ Configuration = $Configuration
-                            FullBuildNumber = $BuildInfo.FullBuildNumber
-                            PackageVersion = $BuildInfo.PackageVersion
-                            FileVersionMajor = $BuildInfo.FileVersionMajor
-                            FileVersionMinor = $BuildInfo.FileVersionMinor
-                            FileVersionBuild = $BuildInfo.FileVersionBuild
-                            FileVersionRevision = $BuildInfo.FileVersionRevision
-                            FileVersion = $BuildInfo.FileVersion
                             LlvmVersion = $BuildInfo.LlvmVersion
                           }
 

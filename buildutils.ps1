@@ -211,40 +211,33 @@ function Get-BuildPaths([string]$repoRoot)
     $BuildPaths.NuGetOutputPath = Normalize-Path (Join-Path $BuildPaths.BuildOutputPath 'NuGet')
     $BuildPaths.SrcRoot = Normalize-Path (Join-Path $repoRoot 'src')
     $BuildPaths.LlvmLibsRoot = Normalize-Path (Join-Path $BuildPaths.repoRoot 'llvm')
-    $BuildPaths.BuildExtensionsRoot = ([IO.Path]::Combine( $repoRoot, 'BuildExtensions') )
-    $BuildPaths.GenerateVersionProj = ([IO.Path]::Combine( $BuildPaths.BuildExtensionsRoot, 'CommonVersion.csproj') )
     $BuildPaths.DocsOutput = ([IO.Path]::Combine( $BuildPaths.BuildOutputPath, 'docs') )
     $BuildPaths.BinLogsPath = Normalize-Path (Join-Path $BuildPaths.BuildOutputPath 'BinLogs')
     $BuildPaths.TestResultsPath = Join-Path $BuildPaths.BuildOutputPath 'Test-Results'
     return $BuildPaths
 }
 
+function Parse-BuildVersionXml
+{
+    $repoVersionInfo = ((Get-Content .\BuildVersion.xml) -as [xml]).BuildVersionData
+
+    # force prerelese number and fix values if not supporte
+    if([string]::IsNullOrWhiteSpace($repoVersionInfo['PreReleaseName']))
+    {
+        $repoVersionInfo['PreReleaseNumber'] = 0
+    }
+
+    if(($repoVersionInfo['PreReleaseNumber'] -as [int]) -eq 0)
+    {
+        $repoVersionInfo['PreReleaseFix'] = 0
+    }
+}
+
 function Get-BuildInformation($BuildPaths, $DefaultVerbosity='Minimal')
 {
     $msbuildLoggerArgs = @("/clp:Verbosity=$DefaultVerbosity")
 
-    if (Test-Path "C:\Program Files\AppVeyor\BuildAgent\Appveyor.MSBuildLogger.dll")
-    {
-        $msbuildLoggerArgs += "/logger:`"C:\Program Files\AppVeyor\BuildAgent\Appveyor.MSBuildLogger.dll`""
-    }
-
-    Write-Information "Restoring NuGet for $($BuildPaths.GenerateVersionProj)"
-    $binLogPath = Join-Path $BuildPaths.BinLogsPath GenerateVersion-Restore.binlog
-    $ignored = Invoke-MSBuild -Targets 'Restore' -Project $BuildPaths.GenerateVersionProj -LoggerArgs ($msbuildLoggerArgs + @("/bl:$binLogPath") )
-
-    Write-Information "Generating version info from $($BuildPaths.GenerateVersionProj)"
-    $binLogPath = Join-Path $BuildPaths.BinLogsPath GenerateVersion-Restore.binlog
-    $ignored = Invoke-MSBuild -Targets 'GenerateVersionJson' -Project $BuildPaths.GenerateVersionProj -LoggerArgs ($msbuildLoggerArgs + @("/bl:$binLogPath") )
-
-    $semVer = get-content (Join-Path $BuildPaths.BuildOutputPath GeneratedVersion.json) | ConvertFrom-Json
-
-    return @{ FullBuildNumber = $semVer.FullBuildNumber
-              PackageVersion = $semVer.FullBuildNumber
-              FileVersionMajor = $semVer.FileVersionMajor
-              FileVersionMinor = $semVer.FileVersionMinor
-              FileVersionBuild = $semVer.FileVersionBuild
-              FileVersionRevision = $semver.FileVersionRevision
-              FileVersion= "$($semVer.FileVersionMajor).$($semVer.FileVersionMinor).$($semVer.FileVersionBuild).$($semVer.FileVersionRevision)"
+    return @{
               LlvmVersion = "8.0.0" # TODO: Figure out how to extract this from the llvmlibs download
               MsBuildLoggerArgs = $msbuildLoggerArgs
             }
@@ -272,7 +265,7 @@ function Get-GitHubTaggedRelease($org, $project, $tag)
 }
 
 Function Expand-Archive([string]$Path, [string]$Destination) {
-    $7zPath = Find7Zip
+    $7zPath = Find-7Zip
     $7zArgs = @(
         'x'  # eXtract with full path
         '-y' # auto apply Yes for all prompts
@@ -282,7 +275,7 @@ Function Expand-Archive([string]$Path, [string]$Destination) {
     & $7zPath $7zArgs
 }
 
-function Find7Zip()
+function Find-7Zip()
 {
     $path7Z = Find-OnPath '7z.exe' -ErrorAction SilentlyContinue
     if(!$path7Z)
@@ -341,43 +334,93 @@ function Install-LlvmLibs($destPath, $llvmversion, $compiler, $compilerversion)
     }
 }
 
+enum BuildKind
+{
+    LocalBuild
+    PullRequestBuild
+    CiBuild
+    ReleaseBuild
+}
+
+function Get-CurrentBuildKind
+{
+    # force invalid env values to null
+    $env:CurrentBuildKind = $currentBuildKind = $env:CurrentBuildKind -as [BuildKind]
+
+    if(!$currentBuildKind)
+    {
+        $currentBuildKind = [BuildKind]::LocalBuild
+
+        # IsAutomatedBuild is the top level gate (e.g. if it is false, all the others must be false)
+        $isAutomatedBuild = [System.Convert]::ToBoolean($env:IsAutomatedBuild) `
+                            -or $env:CI `
+                            -or $env:APPVEYOR `
+                            -or $env:GITHUB_ACTIONS
+
+        if( $isAutomatedBuild )
+        {
+            # IsPullRequestBuild indicates an automated buddy build and should not be trusted
+            $isPullRequestBuild = [System.Convert]::ToBoolean($env:IsPullRequestBuild)
+            if(!$isPullRequestBuild)
+            {
+                $isPullRequestBuild = $env:GITHUB_BASE_REF -or $env:APPVEYOR_PULL_REQUEST_NUMBER
+            }
+
+            if($isPullRequestBuild)
+            {
+                $currentBuildKind = [BuildKind]::PullRequestBuild
+            }
+            else
+            {
+                $isReleaseBuild = [System.Convert]::ToBoolean($env:IsReleaseBuild)
+                if(!$isReleaseBuild -and !$isPullRequestBuild)
+                {
+                    if($env:APPVEYOR)
+                    {
+                        $isReleaseBuild = $env:APPVEYOR_REPO_TAG
+                    }
+                    else
+                    {
+                        $isReleaseBuild = $env:GITHUB_REF -like 'refs/tags/*'
+                    }
+                }
+
+                if($isReleaseBuild)
+                {
+                    $currentBuildKind = [BuildKind]::PullRequestBuild
+                }
+            }
+        }
+    }
+
+    return $currentBuildKind
+}
+
 function Initialize-BuildEnvironment
 {
     # support common parameters
     [cmdletbinding()]
     Param([switch]$FullInit)
 
-    # IsAutomatedBuild is the top level gate (e.g. if it is false, all the others must be false)
-    $global:IsAutomatedBuild = [System.Convert]::ToBoolean($env:IsAutomatedBuild) `
-                               -or $env:CI `
-                               -or $env:APPVEYOR `
-                               -or $env:GITHUB_ACTIONS
+    # set/reset legacy environment vars for non-script tools (i.e. msbuild.exe)
+    # Script code should ALWAYS use the global CurrentBuildKind
+    $global:CurrentBuildKind = Get-CurrentBuildKind
+    $env:IsAutomatedBuild = $global:CurrentBuildKind -ne [BuildKind]::LocalBuild
+    $env:IsPullRequestBuild = $global:CurrentBuildKind -eq [BuildKind]::PullRequestBuild
+    $env:IsReleaseBuild = $global:CurrentBuildKind -eq [BuildKind]::ReleaseBuild
 
-    # IsPullRequestBuild indicates an automated buddy build and should not be trusted
-    $global:IsPullRequestBuild = [System.Convert]::ToBoolean($env:IsPullRequestBuild)
-    if(!$global:IsPullRequestBuild -and $global:IsAutomatedBuild)
+    # get the ISO-8601 formatted time stamp of the HEAD commit or the current UTC time for local builds
+    if(!$env:BuildTime -or $FullInit)
     {
-        $global:IsPullRequestBuild = $env:GITHUB_BASE_REF -or $env:APPVEYOR_PULL_REQUEST_NUMBER
-    }
-
-    $global:IsReleaseBuild = [System.Convert]::ToBoolean($env:IsReleaseBuild)
-    if(!$global:IsReleaseBuild -and $global:IsAutomatedBuild -and !$global:IsPullRequestBuild)
-    {
-        if($env:APPVEYOR)
+        if($global:CurrentBuildKind -ne [BuildKind]::LocalBuild)
         {
-            $global:IsReleaseBuild = $env:APPVEYOR_REPO_TAG
+            $env:BuildTime = (git show -s --format=%cI)
         }
         else
         {
-            $global:IsReleaseBuild = $env:GITHUB_REF -like 'refs/tags/*'
+            $env:BuildTime = ([System.DateTime]::UtcNow.ToString("o"))
         }
     }
-
-    # set/reset environment vars for non-script tools (i.e. msbuild.exe)
-    # Script code should ALWAYS use the globals as they don't require conversion to bool
-    $env:IsAutomatedBuild = $global:IsAutomatedBuild
-    $env:IsPullRequestBuild = $global:IsPullRequestBuild
-    $env:IsReleaseBuild = $global:IsReleaseBuild
 
     $msbuild = Find-MSBuild
     if( !$msbuild )
@@ -388,12 +431,6 @@ function Initialize-BuildEnvironment
     if( !$msbuild.FoundOnPath )
     {
         $env:Path = "$env:Path;$($msbuild.BinPath)"
-    }
-
-    # for an automated build, get the ISO-8601 formatted time stamp of the HEAD commit
-    if($global:IsAutomatedBuild -and !$env:BuildTime)
-    {
-        $env:BuildTime = (git show -s --format=%cI)
     }
 
     if($FullInit)
