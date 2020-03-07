@@ -6,7 +6,9 @@
 ### Nuget
 [![Nuget](https://img.shields.io/nuget/dt/Llvm.NET.svg)](https://www.nuget.org/packages/Llvm.NET/)
 
-### Welcome to Llvm.NET!
+For details of releases, see the [release notes](https://github.com/UbiquityDotNET/Llvm.NET/blob/master/docfx/ReleaseNotes.md)
+
+## Welcome to Llvm.NET!
 Llvm.NET provides LLVM language and runtime bindings for .NET based applications. Llvm.NET's goal is to provide
 a robust Class library that accurately reflects the underlying LLVM C++ model. This is done through an extended
 LLVM-C API bundled as a native windows DLL (LibLLVM.DLL). Llvm.NET uses the support of LibLLVM to gain access
