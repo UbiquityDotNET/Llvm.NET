@@ -352,12 +352,16 @@ function Get-CurrentBuildKind
         $currentBuildKind = [BuildKind]::LocalBuild
 
         # IsAutomatedBuild is the top level gate (e.g. if it is false, all the others must be false)
-        $isAutomatedBuild = $env:CI `
-                          -or $env:APPVEYOR `
-                          -or $env:GITHUB_ACTIONS
+        $isAutomatedBuild = [System.Convert]::ToBoolean($env:CI) `
+                          -or [System.Convert]::ToBoolean($env:APPVEYOR) `
+                          -or [System.Convert]::ToBoolean($env:GITHUB_ACTIONS)
 
         if( $isAutomatedBuild )
         {
+            # PR and release builds have externally detected indicators that are tested
+            # below, so default to a CiBuild (e.g. not a PR, And not a RELEASE)
+            $currentBuildKind = [BuildKind]::CiBuild
+
             # IsPullRequestBuild indicates an automated buddy build and should not be trusted
             $isPullRequestBuild = $env:GITHUB_BASE_REF -or $env:APPVEYOR_PULL_REQUEST_NUMBER
 
@@ -367,11 +371,11 @@ function Get-CurrentBuildKind
             }
             else
             {
-                if($env:APPVEYOR)
+                if([System.Convert]::ToBoolean($env:APPVEYOR))
                 {
                     $isReleaseBuild = $env:APPVEYOR_REPO_TAG
                 }
-                elseif($env:GITHUB_ACTIONS)
+                elseif([System.Convert]::ToBoolean($env:GITHUB_ACTIONS))
                 {
                     $isReleaseBuild = $env:GITHUB_REF -like 'refs/tags/*'
                 }
@@ -450,6 +454,7 @@ function Initialize-BuildEnvironment
 
         Write-Information "MSBUILD:`n$($msbuild | Format-Table -AutoSize | Out-String)"
         Write-Information (dir env:Is* | Format-Table -Property Name, value | Out-String)
+        Write-Information (dir env:GITHUB* | Format-Table -Property Name, value | Out-String)
         Write-Information "BuildKind: $global:CurrentBuildKind"
         Write-Information "CiBuildName: $env:CiBuildName"
         Write-Information 'PATH:'
