@@ -1901,15 +1901,15 @@ references:
   commentId: T:Llvm.NET.DebugInfo.DebugFunctionType
   fullName: Llvm.NET.DebugInfo.DebugFunctionType
   nameWithType: DebugFunctionType
-- uid: Llvm.NET.DebugInfo.DebugFunctionType.#ctor(Llvm.NET.Types.IFunctionType,Llvm.NET.BitcodeModule,Llvm.NET.DebugInfo.DebugInfoFlags,Llvm.NET.DebugInfo.DebugType{Llvm.NET.Types.ITypeRef,Llvm.NET.DebugInfo.DIType},Llvm.NET.DebugInfo.DebugType{Llvm.NET.Types.ITypeRef,Llvm.NET.DebugInfo.DIType}[])
-  name: DebugFunctionType(IFunctionType, BitcodeModule, DebugInfoFlags, DebugType<ITypeRef, DIType>, DebugType<ITypeRef, DIType>[])
-  href: api/Llvm.NET.DebugInfo.DebugFunctionType.-ctor.html#Llvm_NET_DebugInfo_DebugFunctionType__ctor_Llvm_NET_Types_IFunctionType_Llvm_NET_BitcodeModule_Llvm_NET_DebugInfo_DebugInfoFlags_Llvm_NET_DebugInfo_DebugType_Llvm_NET_Types_ITypeRef_Llvm_NET_DebugInfo_DIType__Llvm_NET_DebugInfo_DebugType_Llvm_NET_Types_ITypeRef_Llvm_NET_DebugInfo_DIType____
-  commentId: M:Llvm.NET.DebugInfo.DebugFunctionType.#ctor(Llvm.NET.Types.IFunctionType,Llvm.NET.BitcodeModule,Llvm.NET.DebugInfo.DebugInfoFlags,Llvm.NET.DebugInfo.DebugType{Llvm.NET.Types.ITypeRef,Llvm.NET.DebugInfo.DIType},Llvm.NET.DebugInfo.DebugType{Llvm.NET.Types.ITypeRef,Llvm.NET.DebugInfo.DIType}[])
-  name.vb: DebugFunctionType(IFunctionType, BitcodeModule, DebugInfoFlags, DebugType(Of ITypeRef, DIType), DebugType(Of ITypeRef, DIType)())
-  fullName: Llvm.NET.DebugInfo.DebugFunctionType.DebugFunctionType(Llvm.NET.Types.IFunctionType, Llvm.NET.BitcodeModule, Llvm.NET.DebugInfo.DebugInfoFlags, Llvm.NET.DebugInfo.DebugType<Llvm.NET.Types.ITypeRef, Llvm.NET.DebugInfo.DIType>, Llvm.NET.DebugInfo.DebugType<Llvm.NET.Types.ITypeRef, Llvm.NET.DebugInfo.DIType>[])
-  fullName.vb: Llvm.NET.DebugInfo.DebugFunctionType.DebugFunctionType(Llvm.NET.Types.IFunctionType, Llvm.NET.BitcodeModule, Llvm.NET.DebugInfo.DebugInfoFlags, Llvm.NET.DebugInfo.DebugType(Of Llvm.NET.Types.ITypeRef, Llvm.NET.DebugInfo.DIType), Llvm.NET.DebugInfo.DebugType(Of Llvm.NET.Types.ITypeRef, Llvm.NET.DebugInfo.DIType)())
-  nameWithType: DebugFunctionType.DebugFunctionType(IFunctionType, BitcodeModule, DebugInfoFlags, DebugType<ITypeRef, DIType>, DebugType<ITypeRef, DIType>[])
-  nameWithType.vb: DebugFunctionType.DebugFunctionType(IFunctionType, BitcodeModule, DebugInfoFlags, DebugType(Of ITypeRef, DIType), DebugType(Of ITypeRef, DIType)())
+- uid: Llvm.NET.DebugInfo.DebugFunctionType.#ctor(Llvm.NET.Types.IFunctionType,Llvm.NET.BitcodeModule,Llvm.NET.DebugInfo.DebugInfoFlags,Llvm.NET.DebugInfo.IDebugType{Llvm.NET.Types.ITypeRef,Llvm.NET.DebugInfo.DIType},Llvm.NET.DebugInfo.IDebugType{Llvm.NET.Types.ITypeRef,Llvm.NET.DebugInfo.DIType}[])
+  name: DebugFunctionType(IFunctionType, BitcodeModule, DebugInfoFlags, IDebugType<ITypeRef, DIType>, IDebugType<ITypeRef, DIType>[])
+  href: api/Llvm.NET.DebugInfo.DebugFunctionType.-ctor.html#Llvm_NET_DebugInfo_DebugFunctionType__ctor_Llvm_NET_Types_IFunctionType_Llvm_NET_BitcodeModule_Llvm_NET_DebugInfo_DebugInfoFlags_Llvm_NET_DebugInfo_IDebugType_Llvm_NET_Types_ITypeRef_Llvm_NET_DebugInfo_DIType__Llvm_NET_DebugInfo_IDebugType_Llvm_NET_Types_ITypeRef_Llvm_NET_DebugInfo_DIType____
+  commentId: M:Llvm.NET.DebugInfo.DebugFunctionType.#ctor(Llvm.NET.Types.IFunctionType,Llvm.NET.BitcodeModule,Llvm.NET.DebugInfo.DebugInfoFlags,Llvm.NET.DebugInfo.IDebugType{Llvm.NET.Types.ITypeRef,Llvm.NET.DebugInfo.DIType},Llvm.NET.DebugInfo.IDebugType{Llvm.NET.Types.ITypeRef,Llvm.NET.DebugInfo.DIType}[])
+  name.vb: DebugFunctionType(IFunctionType, BitcodeModule, DebugInfoFlags, IDebugType(Of ITypeRef, DIType), IDebugType(Of ITypeRef, DIType)())
+  fullName: Llvm.NET.DebugInfo.DebugFunctionType.DebugFunctionType(Llvm.NET.Types.IFunctionType, Llvm.NET.BitcodeModule, Llvm.NET.DebugInfo.DebugInfoFlags, Llvm.NET.DebugInfo.IDebugType<Llvm.NET.Types.ITypeRef, Llvm.NET.DebugInfo.DIType>, Llvm.NET.DebugInfo.IDebugType<Llvm.NET.Types.ITypeRef, Llvm.NET.DebugInfo.DIType>[])
+  fullName.vb: Llvm.NET.DebugInfo.DebugFunctionType.DebugFunctionType(Llvm.NET.Types.IFunctionType, Llvm.NET.BitcodeModule, Llvm.NET.DebugInfo.DebugInfoFlags, Llvm.NET.DebugInfo.IDebugType(Of Llvm.NET.Types.ITypeRef, Llvm.NET.DebugInfo.DIType), Llvm.NET.DebugInfo.IDebugType(Of Llvm.NET.Types.ITypeRef, Llvm.NET.DebugInfo.DIType)())
+  nameWithType: DebugFunctionType.DebugFunctionType(IFunctionType, BitcodeModule, DebugInfoFlags, IDebugType<ITypeRef, DIType>, IDebugType<ITypeRef, DIType>[])
+  nameWithType.vb: DebugFunctionType.DebugFunctionType(IFunctionType, BitcodeModule, DebugInfoFlags, IDebugType(Of ITypeRef, DIType), IDebugType(Of ITypeRef, DIType)())
 - uid: Llvm.NET.DebugInfo.DebugFunctionType.#ctor*
   name: DebugFunctionType
   href: api/Llvm.NET.DebugInfo.DebugFunctionType.-ctor.html
