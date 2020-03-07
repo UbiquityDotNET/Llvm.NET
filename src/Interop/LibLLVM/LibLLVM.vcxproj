@@ -3,7 +3,7 @@
   <PropertyGroup>
     <PackagesRoot>$(MSBuildThisFileDirectory)..\..\..\BuildOutput\packages\</PackagesRoot>
   </PropertyGroup>
-  <Import Project="$(PackagesRoot)CSemVer.Build.Tasks.2.0.1\build\CSemVer.Build.Tasks.props" Condition="Exists('$(PackagesRoot)CSemVer.Build.Tasks.2.0.1\build\CSemVer.Build.Tasks.props')" />
+  <Import Project="$(PackagesRoot)CSemVer.Build.Tasks.2.0.5\build\CSemVer.Build.Tasks.props" Condition="Exists('$(PackagesRoot)CSemVer.Build.Tasks.2.0.5\build\CSemVer.Build.Tasks.props')" />
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Debug|x64">
@@ -45,7 +45,7 @@
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
   <ImportGroup Label="ExtensionSettings">
     <Import Project="$(PackagesRoot)PdbGit.3.0.41\build\PdbGit.targets" Condition="Exists('$(PackagesRoot)PdbGit.3.0.41\build\PdbGit.targets')" />
-    <Import Project="$(PackagesRoot)CSemVer.Build.Tasks.2.0.1\build\CSemVer.Build.Tasks.targets" Condition="Exists('$(PackagesRoot)CSemVer.Build.Tasks.2.0.1\build\CSemVer.Build.Tasks.targets')" />
+    <Import Project="$(PackagesRoot)CSemVer.Build.Tasks.2.0.5\build\CSemVer.Build.Tasks.targets" Condition="Exists('$(PackagesRoot)CSemVer.Build.Tasks.2.0.5\build\CSemVer.Build.Tasks.targets')" />
   </ImportGroup>
   <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="PropertySheets">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
@@ -161,7 +161,7 @@
     <Message Importance="High" Text="PlatformConfiguration: $(Platform)|$(Configuration)" />
     <Error Condition="!Exists('$(PackagesRoot)PdbGit.3.0.41\build\PdbGit.props')" Text="$([System.String]::Format('$(ErrorText)', '$(PackagesRoot)PdbGit.3.0.41\build\PdbGit.props'))" />
     <Error Condition="!Exists('$(PackagesRoot)PdbGit.3.0.41\build\PdbGit.targets')" Text="$([System.String]::Format('$(ErrorText)', '$(PackagesRoot)PdbGit.3.0.41\build\PdbGit.targets'))" />
-    <Error Condition="!Exists('$(PackagesRoot)CSemVer.Build.Tasks.2.0.1\build\CSemVer.Build.Tasks.props')" Text="$([System.String]::Format('$(ErrorText)', '$(PackagesRoot)CSemVer.Build.Tasks.2.0.1\build\CSemVer.Build.Tasks.props'))" />
-    <Error Condition="!Exists('$(PackagesRoot)CSemVer.Build.Tasks.2.0.1\build\CSemVer.Build.Tasks.targets')" Text="$([System.String]::Format('$(ErrorText)', '$(PackagesRoot)CSemVer.Build.Tasks.2.0.1\build\CSemVer.Build.Tasks.targets'))" />
+    <Error Condition="!Exists('$(PackagesRoot)CSemVer.Build.Tasks.2.0.5\build\CSemVer.Build.Tasks.props')" Text="$([System.String]::Format('$(ErrorText)', '$(PackagesRoot)CSemVer.Build.Tasks.2.0.5\build\CSemVer.Build.Tasks.props'))" />
+    <Error Condition="!Exists('$(PackagesRoot)CSemVer.Build.Tasks.2.0.5\build\CSemVer.Build.Tasks.targets')" Text="$([System.String]::Format('$(ErrorText)', '$(PackagesRoot)CSemVer.Build.Tasks.2.0.5\build\CSemVer.Build.Tasks.targets'))" />
   </Target>
 </Project>
