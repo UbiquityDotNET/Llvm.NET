@@ -1,10 +1,18 @@
 # Release Notes
 ## v8.0.1
-### Patch release
+### Bug Fixes
 
 | Bug | Description |
 |-------|--------------|
 | [151](https://github.com/UbiquityDotNET/Llvm.NET/issues/151) | Updated DebugFunctionType signature to use interface instead of concrete type |
+| [152](https://github.com/UbiquityDotNET/Llvm.NET/issues/152) | Corrected docs copy/paste error [renaming part of the issue is left for the next major release as that is a breaking change] |
+
+### Additional changes
+Additionally the internal build scripts were updated to simplify the consistent corss solution versioning. Previously,
+a complex process of building a dummy project to generate a data file was used, however that was no longer necessary
+as the [CSemVer.Build.Tasks ](https://github.com/UbiquityDotNET/CSemVer.GitBuild) package can figure out all except
+the CiBuildIndex, which, for this project, is an ISO-8601 formatted timestamp (of the latest commit for automated
+builds or the build start for local developer builds)
 
 ## v8.0.0
 ### Llvm.NET.Interop (New library)
