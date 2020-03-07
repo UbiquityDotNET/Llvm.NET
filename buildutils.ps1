@@ -387,11 +387,16 @@ function Get-CurrentBuildKind
 
                 if($isReleaseBuild)
                 {
-                    $currentBuildKind = [BuildKind]::PullRequestBuild
+                    $currentBuildKind = [BuildKind]::ReleaseBuild
                 }
             }
         }
     }
+
+    # set/reset legacy environment vars for non-script tools (i.e. msbuild.exe)
+    $env:IsAutomatedBuild = $global:CurrentBuildKind -ne [BuildKind]::LocalBuild
+    $env:IsPullRequestBuild = $global:CurrentBuildKind -eq [BuildKind]::PullRequestBuild
+    $env:IsReleaseBuild = $global:CurrentBuildKind -eq [BuildKind]::ReleaseBuild
 
     return $currentBuildKind
 }
@@ -402,12 +407,8 @@ function Initialize-BuildEnvironment
     [cmdletbinding()]
     Param([switch]$FullInit)
 
-    # set/reset legacy environment vars for non-script tools (i.e. msbuild.exe)
     # Script code should ALWAYS use the global CurrentBuildKind
     $global:CurrentBuildKind = Get-CurrentBuildKind
-    $env:IsAutomatedBuild = $global:CurrentBuildKind -ne [BuildKind]::LocalBuild
-    $env:IsPullRequestBuild = $global:CurrentBuildKind -eq [BuildKind]::PullRequestBuild
-    $env:IsReleaseBuild = $global:CurrentBuildKind -eq [BuildKind]::ReleaseBuild
 
     # get the ISO-8601 formatted time stamp of the HEAD commit or the current UTC time for local builds
     if(!$env:BuildTime -or $FullInit)
@@ -446,6 +447,7 @@ function Initialize-BuildEnvironment
 
         Write-Information "MSBUILD:`n$($msbuild | Format-Table -AutoSize | Out-String)"
         Write-Information (dir env:Is* | Format-Table -Property Name, value | Out-String)
+        Write-Information "BuildKind: $global:BuildKind"
         Write-Information 'PATH:'
         $($env:Path -split ';') | %{ Write-Information $_ }
 
