@@ -352,19 +352,14 @@ function Get-CurrentBuildKind
         $currentBuildKind = [BuildKind]::LocalBuild
 
         # IsAutomatedBuild is the top level gate (e.g. if it is false, all the others must be false)
-        $isAutomatedBuild = [System.Convert]::ToBoolean($env:IsAutomatedBuild) `
-                            -or $env:CI `
-                            -or $env:APPVEYOR `
-                            -or $env:GITHUB_ACTIONS
+        $isAutomatedBuild = $env:CI `
+                          -or $env:APPVEYOR `
+                          -or $env:GITHUB_ACTIONS
 
         if( $isAutomatedBuild )
         {
             # IsPullRequestBuild indicates an automated buddy build and should not be trusted
-            $isPullRequestBuild = [System.Convert]::ToBoolean($env:IsPullRequestBuild)
-            if(!$isPullRequestBuild)
-            {
-                $isPullRequestBuild = $env:GITHUB_BASE_REF -or $env:APPVEYOR_PULL_REQUEST_NUMBER
-            }
+            $isPullRequestBuild = $env:GITHUB_BASE_REF -or $env:APPVEYOR_PULL_REQUEST_NUMBER
 
             if($isPullRequestBuild)
             {
@@ -372,17 +367,13 @@ function Get-CurrentBuildKind
             }
             else
             {
-                $isReleaseBuild = [System.Convert]::ToBoolean($env:IsReleaseBuild)
-                if(!$isReleaseBuild -and !$isPullRequestBuild)
+                if($env:APPVEYOR)
                 {
-                    if($env:APPVEYOR)
-                    {
-                        $isReleaseBuild = $env:APPVEYOR_REPO_TAG
-                    }
-                    else
-                    {
-                        $isReleaseBuild = $env:GITHUB_REF -like 'refs/tags/*'
-                    }
+                    $isReleaseBuild = $env:APPVEYOR_REPO_TAG
+                }
+                elseif($env:GITHUB_ACTIONS)
+                {
+                    $isReleaseBuild = $env:GITHUB_REF -like 'refs/tags/*'
                 }
 
                 if($isReleaseBuild)
@@ -459,7 +450,8 @@ function Initialize-BuildEnvironment
 
         Write-Information "MSBUILD:`n$($msbuild | Format-Table -AutoSize | Out-String)"
         Write-Information (dir env:Is* | Format-Table -Property Name, value | Out-String)
-        Write-Information "BuildKind: $global:BuildKind"
+        Write-Information "BuildKind: $global:CurrentBuildKind"
+        Write-Information "CiBuildName: $env:CiBuildName"
         Write-Information 'PATH:'
         $($env:Path -split ';') | %{ Write-Information $_ }
 
