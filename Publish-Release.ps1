@@ -30,9 +30,14 @@ if(![string]::IsNullOrWhiteSpace($buildVersionData.PreReleaseName))
     if(![string]::IsNullOrWhiteSpace($buildVersionData.PreReleaseNumber))
     {
         $preReleaseSuffix += ".$($buildVersionData.PreReleaseNumber)"
+        if(![string]::IsNullOrWhiteSpace($buildVersionData.PreReleaseFix))
+        {
+            $preReleaseSuffix += ".$($buildVersionData.PreReleaseFix)"
+        }
     }
 }
 
-$tagName = "v.$($buildVersionData.BuildMajor).$($buildVersionData.BuildMinor).$($buildVersionData.BuildPatch)$preReleaseSuffix"
+#pushing the tag to GitHub triggers the offical build and release of the Nuget Packages
+$tagName = "v$($buildVersionData.BuildMajor).$($buildVersionData.BuildMinor).$($buildVersionData.BuildPatch)$preReleaseSuffix"
 git tag -a $tagname -m "Official release: $tagname"
 git push origin $tagname

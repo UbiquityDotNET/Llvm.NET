@@ -16,13 +16,6 @@ $oldPath = $env:Path
 try
 {
     $msBuildProperties = @{ Configuration = $Configuration
-                            FullBuildNumber = $BuildInfo.FullBuildNumber
-                            PackageVersion = $BuildInfo.PackageVersion
-                            FileVersionMajor = $BuildInfo.FileVersionMajor
-                            FileVersionMinor = $BuildInfo.FileVersionMinor
-                            FileVersionBuild = $BuildInfo.FileVersionBuild
-                            FileVersionRevision = $BuildInfo.FileVersionRevision
-                            FileVersion = $BuildInfo.FileVersion
                             LlvmVersion = $BuildInfo.LlvmVersion
                           }
 

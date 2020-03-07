@@ -209,7 +209,7 @@ namespace Llvm.NET.Instructions
         SignedLessOrEqual = LLVMIntPredicate.LLVMIntSLE
     }
 
-    /// <summary>Predicate enumeration for integer comparison</summary>
+    /// <summary>Predicate enumeration for floating point comparison</summary>
     /// <remarks>
     /// Floating point predicates "Ordered" means that neither operand is a QNAN
     /// while unordered means that either operand may be a QNAN.
